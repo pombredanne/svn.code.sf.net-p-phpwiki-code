@@ -45,14 +45,11 @@ rcs_id('$Id PhpWeather.php 2002-08-26 15:30:13 rurban$');
 
 // We require the base class from PHP Weather, adjust this to match
 // the location of PhpWeather on your server:
-$WEATHER = $_SERVER['DOCUMENT_ROOT'] . '/phpweather/phpweather.php';
-if(! @include_once($WEATHER)) {
-    if(!in_array($WEATHER, get_included_files()) ) {
-        $error = sprintf(_("Could not open file %s."), "'$WEATHER'") . " ";
-        $error .= sprintf(_("Make sure %s is installed and properly configured."),
-                          'PHP Weather');
-        trigger_error($error);
-    }
+if (!defined('PHPWEATHER_BASE_DIR')) {
+    /* PhpWeather has not been loaded before. We include the base
+     * class from PhpWeather, adjust this to match the location of
+     * PhpWeather on your server: */
+    @include_once($_SERVER['DOCUMENT_ROOT'] . '/phpweather-2.1.0/phpweather.php');
 }
 
 class WikiPlugin_PhpWeather
@@ -68,7 +65,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
@@ -84,7 +81,7 @@ extends WikiPlugin
         // When 'phpweather/phpweather.php' is not installed then
         // PHPWEATHER_BASE_DIR will be undefined
         if (!defined('PHPWEATHER_BASE_DIR'))
-            return fmt("Plugin %s failed.", $this->getName()); //early return
+            return $this->error(_("You have to configure it before use.")); //early return
 
         require_once(PHPWEATHER_BASE_DIR . '/output/pw_images.php');
         require_once(PHPWEATHER_BASE_DIR . '/pw_utilities.php');
@@ -198,6 +195,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2003/01/18 22:01:43  carstenklapp
+// Code cleanup:
+// Reformatting & tabs to spaces;
+// Added copyleft, getVersion, getDescription, rcs_id.
+//
 // Revision 1.7  2002/12/31 20:53:40  carstenklapp
 // Bugfixes: Fixed menu language selection (incorrect parameters to
 // $w->get_languages_select() & form input 'language' instead of 'lang').
