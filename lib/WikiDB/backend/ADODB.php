@@ -1,8 +1,8 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.21 2004-04-01 06:29:51 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.22 2004-04-16 14:11:55 rurban Exp $');
 
 /*
- Copyright 2002 $ThePhpWikiProgrammingTeam
+ Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -23,21 +23,67 @@ rcs_id('$Id: ADODB.php,v 1.21 2004-04-01 06:29:51 rurban Exp $');
 */ 
 
 /**
- *  Based on PearDB.php. 
- *  Author: Lawrence Akka.
+ * Based on PearDB.php. 
+ * @author: Lawrence Akka
  *
-  Comments:
-  1)  ADODB's GetRow() is slightly different from that in PEAR.  It does not accept a fetchmode parameter
-      That doesn't matter too much here, since we only ever use FETCHMODE_ASSOC
-  
-  2)  No need for ''s arond strings in sprintf arguments - qstr puts them there automatically
-  
-  3)  ADODB has a version of GetOne, but it is difficult to use it when FETCH_ASSOC is in effect.
-      Instead, use $rs = Execute($query); $value = $rs->fields["$colname"]
-  4)  No error handling yet - could use ADOConnection->raiseErrorFn
-  5)  It used to be faster then PEAR/DB at the beginning of 2002. 
-      Now at August 2002 PEAR/DB with our own page cache added, performance is comparable.
-*/
+ * Now (phpwiki-1.3.10) with adodb-4.21, by Reini Urban:
+ * 1) Extended to use all available database backend, not only mysql.
+ * 2) It uses the ultra-fast binary adodb extension if loaded.
+ * 3) We use FETCH_NUM instead of FETCH_ASSOC (faster and more generic)
+ * 4) To support generic iterators which return ASSOC fields, and to support queries with 
+ *    variable columns, some trickery was needed to use recordset specific fetchMode.
+ *    The first Execute uses the global fetchMode (ASSOC), then it's resetted back to NUM 
+ *    and the recordset fetchmode is set to ASSOC.
+ * 5) 2 patches to the adodb-4.21 library where needed:
+
+$ diff -bu ../../adodb/drivers/adodb-mysql.inc.php lib/WikiDB/adodb/drivers/adodb-mysql.inc.php
+--- ../../adodb/drivers/adodb-mysql.inc.php     2004-03-20 09:20:29.000000000 +0100
++++ lib/WikiDB/adodb/drivers/adodb-mysql.inc.php        2004-04-16 12:00:33.234375000 +0100
+@@ -552,7 +551,7 @@
+        function &GetRowAssoc($upper=true)
+        {
+                if ($this->fetchMode == MYSQL_ASSOC && !$upper) return $this->fields;
+-               $row =& ADORecordSet::GetRowAssoc($upper);
++               $row =& parent::GetRowAssoc($upper);
+                return $row;
+        }
+
+@@ -604,7 +603,13 @@
+
+        function _fetch()
+        {
+-               $this->fields =  @mysql_fetch_array($this->_queryID,$this->fetchMode);
++               // workaround for strange mysql_fetch_array bug, ignoring the mode arg
++               if ($this->fetchMode == MYSQL_ASSOC)
++                   $this->fields =  @mysql_fetch_assoc($this->_queryID);
++               elseif ($this->fetchMode == MYSQL_NUM)
++                   $this->fields =  @mysql_fetch_row($this->_queryID);
++                else
++                   $this->fields =  @mysql_fetch_array($this->_queryID, $this->fetchMode);
+                return is_array($this->fields);
+        }
+
+ * ADODB basic differences to PearDB: It pre-fetches the first row into fields, 
+ * is dirtier in style, layout and more low-level ("worse is better").
+ * It has less needed basic features (modifyQuery, locks, ...), but some more 
+ * unneeded features included: paging, monitoring and sessions, and much more drivers.
+ * No locking (which PearDB supports in some backends), and sequences are very 
+ * bad compared to PearDB.
+
+ * Old Comments, by Lawrence Akka:
+ * 1)  ADODB's GetRow() is slightly different from that in PEAR.  It does not 
+ *     accept a fetchmode parameter
+ *     That doesn't matter too much here, since we only ever use FETCHMODE_ASSOC
+ * 2)  No need for ''s around strings in sprintf arguments - qstr puts them 
+ *     there automatically
+ * 3)  ADODB has a version of GetOne, but it is difficult to use it when 
+ *     FETCH_ASSOC is in effect.
+ *     Instead, use $rs = Execute($query); $value = $rs->fields["$colname"]
+ * 4)  No error handling yet - could use ADOConnection->raiseErrorFn
+ * 5)  It used to be faster then PEAR/DB at the beginning of 2002. 
+ *     Now at August 2002 PEAR/DB with our own page cache added, 
+ *     performance is comparable.
+ */
 
 require_once('lib/WikiDB/backend.php');
 // Error handling - calls trigger_error.  NB - does not close the connection.  Does it need to?
@@ -50,26 +96,25 @@ extends WikiDB_backend
 {
 
     function WikiDB_backend_ADODB ($dbparams) {
-        /*
-        $dbh->setFetchMode(ADODB_FETCH_ASSOC);
-        */
         $parsed = parseDSN($dbparams['dsn']);
-        $this->_dbh = &ADONewConnection($parsed['phptype']); // Probably only MySql works just now
+        $this->_dbh = &ADONewConnection($parsed['phptype']);
         $conn = $this->_dbh->Connect($parsed['hostspec'],$parsed['username'], 
                                      $parsed['password'], $parsed['database']);
 
-        //  Uncomment the following line to enable debugging output (not very pretty!)		
-        //	$this->_dbh->debug = true;
-		
-	$GLOBALS['ADODB_FETCH_MODE'] = ADODB_FETCH_ASSOC;
+        //$this->_dbh->debug = true;
+        
+        // Since 1.3.10 we use the faster ADODB_FETCH_NUM,
+        // with some ASSOC based recordsets.
+	$GLOBALS['ADODB_FETCH_MODE'] = ADODB_FETCH_NUM;
+        $this->_dbh->SetFetchMode(ADODB_FETCH_NUM);
 
-        //  The next line should speed up queries if enabled, but:
+        // Old comment:
+        //  With ADODB_COUNTRECS false it should speed up queries, but:
         //  1)  It only works with PHP >= 4.0.6; and
         //  2)  At the moment, I haven't figured out why the wrong results are returned'
-        //$GLOBALS['ADODB_COUNTRECS'] = false;
+        $GLOBALS['ADODB_COUNTRECS'] = false;
 
         $prefix = isset($dbparams['prefix']) ? $dbparams['prefix'] : '';
-
         $this->_table_names
             = array('page_tbl'     => $prefix . 'page',
                     'version_tbl'  => $prefix . 'version',
@@ -78,17 +123,22 @@ extends WikiDB_backend
                     'nonempty_tbl' => $prefix . 'nonempty');
         $page_tbl = $this->_table_names['page_tbl'];
         $version_tbl = $this->_table_names['version_tbl'];
-        $this->page_tbl_fields = "$page_tbl.id as id, $page_tbl.pagename as pagename, " .
-            "$page_tbl.hits as hits, $page_tbl.pagedata as pagedata";
-        $this->version_tbl_fields = "$version_tbl.version as version, $version_tbl.mtime as mtime, ".
-            "$version_tbl.minor_edit as minor_edit, $version_tbl.content as content, ".
-            "$version_tbl.versiondata as versiondata";
+        $this->page_tbl_fields = "$page_tbl.id as id, $page_tbl.pagename as pagename, "
+            . "$page_tbl.hits as hits, $page_tbl.pagedata as pagedata";
+        $this->version_tbl_fields = "$version_tbl.version as version, "
+            . "$version_tbl.mtime as mtime, "
+            . "$version_tbl.minor_edit as minor_edit, $version_tbl.content as content, "
+            . "$version_tbl.versiondata as versiondata";
 
         $this->_expressions
             = array('maxmajor'     => "MAX(CASE WHEN minor_edit=0 THEN version END)",
                     'maxminor'     => "MAX(CASE WHEN minor_edit<>0 THEN version END)",
                     'maxversion'   => "MAX(version)");
-        
+        /*
+        // FIXME: Older MySQL's don't have CASE WHEN ... END
+        $this->_expressions['maxmajor'] = "MAX(IF(minor_edit=0,version,0))";
+        $this->_expressions['maxminor'] = "MAX(IF(minor_edit<>0,version,0))"; 
+        */
         $this->_lock_count = 0;
     }
     
@@ -115,30 +165,17 @@ extends WikiDB_backend
     function is_wiki_page($pagename) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-        $rs = $dbh->Execute(sprintf("SELECT $page_tbl.id AS id"
+        $row = $dbh->GetRow(sprintf("SELECT $page_tbl.id AS id"
                                     . " FROM $nonempty_tbl, $page_tbl"
                                     . " WHERE $nonempty_tbl.id=$page_tbl.id"
                                     . "   AND pagename=%s",
                                     $dbh->qstr($pagename)));
-        if (!$rs->EOF) {
-            $result = $rs->fields["id"];
-            $rs->Close();
-            return $result;
-        } else {
-            $rs->Close();
-            return false;
-    	}
+        return $row ? $row[0] : false;
     }
         
     function get_all_pagenames() {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-        //return $dbh->getCol("SELECT pagename"
-        //                    . " FROM $nonempty_tbl, $page_tbl"
-        //                    . " WHERE $nonempty_tbl.id=$page_tbl.id");
-
-        //Original code (above) return the column in an indexed array - 0 based
-        //So, hopefully, does this
         $result = $dbh->Execute("SELECT pagename"
                                 . " FROM $nonempty_tbl, $page_tbl"
                                 . " WHERE $nonempty_tbl.id=$page_tbl.id");
@@ -151,18 +188,15 @@ extends WikiDB_backend
     function get_pagedata($pagename) {
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
-        $result = $dbh->GetRow(sprintf("SELECT * FROM $page_tbl WHERE pagename=%s",
+        $row = $dbh->GetRow(sprintf("SELECT hits,pagedata FROM $page_tbl WHERE pagename=%s",
                                        $dbh->qstr($pagename)));
-        if (!$result)
-            return false;
-        return $this->_extract_page_data($result);
+        return $row ? $this->_extract_page_data($row[1],$row[0]) : false;
     }
 
-    function  _extract_page_data(&$query_result) {
-        extract($query_result);
-        $data = empty($pagedata) ? array() : unserialize($pagedata);
-        $data['hits'] = $hits;
-        return $data;
+    function  _extract_page_data($data, $hits) {
+        $pagedata = empty($data) ? array() : unserialize($data);
+        $pagedata['hits'] = $hits;
+        return $pagedata;
     }
 
     function update_pagedata($pagename, $newdata) {
@@ -175,11 +209,13 @@ extends WikiDB_backend
             // have a record in the page table.  Since it's just the
             // hit count, who cares?
             $dbh->Execute(sprintf("UPDATE $page_tbl SET hits=%d WHERE pagename=%s",
-                                $newdata['hits'], $dbh->qstr($pagename)));
+                                  $newdata['hits'], $dbh->qstr($pagename)));
             return;
         }
-
-        $this->lock();
+	$where = sprintf("pagename=%s",$dbh->qstr($pagename));
+        $dbh->BeginTrans( );
+        $dbh->RowLock($page_tbl,$where);
+        
         $data = $this->get_pagedata($pagename);
         if (!$data) {
             $data = array();
@@ -197,54 +233,67 @@ extends WikiDB_backend
             else
                 $data[$key] = $val;
         }
-
-        $dbh->Execute(sprintf("UPDATE $page_tbl"
-                            . " SET hits=%d, pagedata=%s"
-                            . " WHERE pagename=%s",
-                            $hits,
-                            $dbh->qstr(serialize($data)),
-                            $dbh->qstr($pagename)));
-
-        $this->unlock();
+        if ($dbh->Execute(sprintf("UPDATE $page_tbl"
+                                  . " SET hits=%d, pagedata=%s"
+                                  . " WHERE pagename=%s",
+                                  $hits,
+                                  $dbh->qstr(serialize($data)),
+                                  $dbh->qstr($pagename))))
+	    $dbh->CommitTrans( );
+	else
+	    $dbh->RollbackTrans( );
     }
 
     function _get_pageid($pagename, $create_if_missing = false) {
         
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
-        
         $query = sprintf("SELECT id FROM $page_tbl WHERE pagename=%s",
                          $dbh->qstr($pagename));
-
-        if (!$create_if_missing) {
-            $rs = $dbh->Execute($query);
-            return $rs->fields['id'];
+        if (! $create_if_missing ) {
+            $row = $dbh->GetRow($query);
+            return $row ? $row[0] : false;
         }
-        $this->lock();
-        $rs = $dbh->Execute($query);
-        $id = $rs->fields['id'];
-        if (empty($id)) {
-            // kludge necessary because an assoc array is returned with a reserved name as the key
-            $rs = $dbh->Execute("SELECT MAX(id) AS M FROM $page_tbl");
-            $id = $rs->fields['M'] + 1;
-            $dbh->Execute(sprintf("INSERT INTO $page_tbl"
-                                  . " (id,pagename,hits)"
-                                  . " VALUES (%d,%s,0)",
-                                  $id, $dbh->qstr($pagename)));
+        $row = $dbh->GetRow($query);
+        if (! $row) {
+            if ((substr($dbh->databaseType,0,5) == 'mysql') or isa($dbh,'ADODB_sqlite')) {
+                // have auto-incrementing and atomic version
+                $rs = $dbh->Execute(sprintf("INSERT INTO $page_tbl"
+                                            . " (pagename,hits)"
+                                            . " VALUES (%s,0)",
+                                            $dbh->qstr($pagename)));
+                $id = $dbh->_insertid();
+            } else {
+                //$id = $dbh->GenID($page_tbl . 'seq');
+                // Better generic version than with adodob::genID
+                $this->lock();
+                $dbh->BeginTrans( );
+                $dbh->CommitLock($page_tbl);
+                $row = $dbh->GetRow("SELECT MAX(id) FROM $page_tbl");
+                $id = $row[0] + 1;
+                $rs = $dbh->Execute(sprintf("INSERT INTO $page_tbl"
+                                            . " (id,pagename,hits)"
+                                            . " VALUES (%d,%s,0)",
+                                            $id, $dbh->qstr($pagename)));
+                if ($rs) $dbh->CommitTrans( );
+                else $dbh->RollbackTrans( );
+                $this->unlock();
+            }
+        } else {
+            $id = $row[0];
         }
-        $this->unlock();
         return $id;
     }
 
     function get_latest_version($pagename) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-        $rs = $dbh->Execute(sprintf("SELECT latestversion"
-                                      . " FROM $page_tbl, $recent_tbl"
-                                      . " WHERE $page_tbl.id=$recent_tbl.id"
-                                      . "  AND pagename=%s",
-                                      $dbh->qstr($pagename)));
-        return (int)$rs->fields['latestversion'];
+        $row = $dbh->GetRow(sprintf("SELECT latestversion"
+                                    . " FROM $page_tbl, $recent_tbl"
+                                    . " WHERE $page_tbl.id=$recent_tbl.id"
+                                    . "  AND pagename=%s",
+                                    $dbh->qstr($pagename)));
+        return $row ? (int)$row[0] : false;
     }
 
     function get_previous_version($pagename, $version) {
@@ -252,15 +301,15 @@ extends WikiDB_backend
         extract($this->_table_names);
         // Use SELECTLIMIT for maximum portability
         $rs = $dbh->SelectLimit(sprintf("SELECT version"
-                                      . " FROM $version_tbl, $page_tbl"
-                                      . " WHERE $version_tbl.id=$page_tbl.id"
-                                      . "  AND pagename=%s"
-                                      . "  AND version < %d"
-                                      . " ORDER BY version DESC"
-                                      ,$dbh->qstr($pagename),
-                                      $version),
-									  1);
-        return (int)$rs->fields['version'];
+                                        . " FROM $version_tbl, $page_tbl"
+                                        . " WHERE $version_tbl.id=$page_tbl.id"
+                                        . "  AND pagename=%s"
+                                        . "  AND version < %d"
+                                        . " ORDER BY version DESC"
+                                        ,$dbh->qstr($pagename),
+                                        $version),
+				1);
+        return $rs->fields[0] ? (int)$rs->fields[0] : false;
     }
     
     /**
@@ -275,55 +324,67 @@ extends WikiDB_backend
         $dbh = &$this->_dbh;
         extract($this->_table_names);
                 
-        assert(!empty($pagename));
+        assert(is_string($pagename) and $pagename != '');
         assert($version > 0);
         
         // FIXME: optimization: sometimes don't get page data?
         if ($want_content) {
-            $fields = $this->page_tbl_fields.','.$this->version_tbl_fields;
+            $fields = $this->page_tbl_fields
+                . ', ' . $this->version_tbl_fields;
         } else {
-            $fields =  $this->page_tbl_fields . ", "
-                       . "mtime, minor_edit, versiondata,"
-                       . "content<>'' AS have_content";
+            $fields = $this->page_tbl_fields
+                . ", $version_tbl.version as version, $version_tbl.mtime as mtime, "
+                . "$version_tbl.minor_edit as minor_edit, $version_tbl.content<>'' as have_content, "
+                . "$version_tbl.versiondata as versiondata";
         }
-        // removed ref to FETCH_MODE in next line
-        $result = $dbh->GetRow(sprintf("SELECT $fields"
-                                       . " FROM $page_tbl, $version_tbl"
-                                       . " WHERE $page_tbl.id=$version_tbl.id"
-                                       . "  AND pagename=%s"
-                                       . "  AND version=%d",
-                                       $dbh->qstr($pagename), $version));
-
-        return $this->_extract_version_data($result);
+        $row = $dbh->GetRow(sprintf("SELECT $fields"
+                                    . " FROM $page_tbl, $version_tbl"
+                                    . " WHERE $page_tbl.id=$version_tbl.id"
+                                    . "  AND pagename=%s"
+                                    . "  AND version=%d",
+                                    $dbh->qstr($pagename), $version));
+        return $row ? $this->_extract_version_data_num($row, $want_content) : false;
     }
 
-    function _extract_version_data(&$query_result) {
-        if (!$query_result)
+    function _extract_version_data_num(&$row, $want_content) {
+        if (!$row)
             return false;
 
-        extract($query_result);
-        $data = empty($versiondata) ? array() : unserialize($versiondata);
+        //$id       &= $row[0];
+        //$pagename &= $row[1];
+        $data = empty($row[8]) ? array() : unserialize($row[8]);
+        $data['mtime']         = $row[5];
+        $data['is_minor_edit'] = !empty($row[6]);
+        if ($want_content) {
+            $data['%content'] = $row[7];
+        } else {
+            $data['%content'] = !empty($row[7]);
+        }
+        if (!empty($row[3])) {
+            $data['%pagedata'] = $this->_extract_page_data($row[3],$row[2]);
+        }
+        return $data;
+    }
 
+    function _extract_version_data_assoc(&$row) {
+        if (!$row)
+            return false;
+
+        extract($row);
+        $data = empty($versiondata) ? array() : unserialize($versiondata);
         $data['mtime'] = $mtime;
         $data['is_minor_edit'] = !empty($minor_edit);
-        
         if (isset($content))
             $data['%content'] = $content;
         elseif ($have_content)
             $data['%content'] = true;
         else
             $data['%content'] = '';
-
-        // FIXME: this is ugly.
-        if (isset($pagename)) {
-            // Query also includes page data.
-            // We might as well send that back too...
-            $data['%pagedata'] = $this->_extract_page_data($query_result);
+        if (!empty($pagedata)) {
+            $data['%pagedata'] = $this->_extract_page_data($pagedata,$hits);
         }
-
         return $data;
     }
-
 
     /**
      * Create a new revision of a page.
@@ -344,22 +405,33 @@ extends WikiDB_backend
         unset($data['%pagedata']);
         
         $this->lock();
+        $dbh->BeginTrans( );
+        $dbh->CommitLock($version_tbl);
         $id = $this->_get_pageid($pagename, true);
 
-        // FIXME: optimize: mysql can do this with one REPLACE INTO (I think).
-        $dbh->Execute(sprintf("DELETE FROM $version_tbl"
-                            . " WHERE id=%d AND version=%d",
-                            $id, $version));
-        $dbh->Execute(sprintf("INSERT INTO $version_tbl"
-                            . " (id,version,mtime,minor_edit,content,versiondata)"
-                            . " VALUES(%d,%d,%d,%d,%s,%s)",
-                            $id, $version, $mtime, $minor_edit,
-                            $dbh->qstr($content),
-                            $dbh->qstr(serialize($data))));
-
+        // optimize: mysql can do this with one REPLACE INTO.
+        if (substr($dbh->databaseType,0,5) == 'mysql') {
+            $dbh->Execute(sprintf("REPLACE INTO $version_tbl"
+                                  . " (id,version,mtime,minor_edit,content,versiondata)"
+                                  . " VALUES(%d,%d,%d,%d,%s,%s)",
+                                  $id, $version, $mtime, $minor_edit,
+                                  $dbh->qstr($content),
+                                  $dbh->qstr(serialize($data))));
+        } else {
+            $dbh->Execute(sprintf("DELETE FROM $version_tbl"
+                                  . " WHERE id=%d AND version=%d",
+                                  $id, $version));
+            $dbh->Execute(sprintf("INSERT INTO $version_tbl"
+                                  . " (id,version,mtime,minor_edit,content,versiondata)"
+                                  . " VALUES(%d,%d,%d,%d,%s,%s)",
+                                  $id, $version, $mtime, $minor_edit,
+                                  $dbh->qstr($content),
+                                  $dbh->qstr(serialize($data))));
+        }
         $this->_update_recent_table($id);
         $this->_update_nonempty_table($id);
-        
+        if ($rs) $dbh->CommitTrans( );
+        else $dbh->RollbackTrans( );
         $this->unlock();
     }
     
@@ -456,7 +528,8 @@ extends WikiDB_backend
             list($have,$want) = array('linker', 'linkee');
 
         $qpagename = $dbh->qstr($pagename);
-        // removed ref to FETCH_MODE in next line        
+        $dbh->SetFetchMode(ADODB_FETCH_ASSOC);
+        // removed ref to FETCH_MODE in next line
         $result = $dbh->Execute("SELECT $want.id as id, $want.pagename as pagename,"
                                 . " $want.hits as hits, $want.pagedata as pagedata"
                                 . " FROM $link_tbl, $page_tbl AS linker, $page_tbl AS linkee"
@@ -464,7 +537,7 @@ extends WikiDB_backend
                                 . " AND $have.pagename=$qpagename"
                                 //. " GROUP BY $want.id"
                                 . " ORDER BY $want.pagename");
-        
+        $dbh->SetFetchMode(ADODB_FETCH_NUM);
         return new WikiDB_backend_ADODB_iter($this, $result);
     }
 
@@ -475,6 +548,7 @@ extends WikiDB_backend
         else         $limit = '';
         if ($sortby) $orderby = 'ORDER BY ' . PageList::sortby($sortby,'db');
         else         $orderby = '';
+        $dbh->SetFetchMode(ADODB_FETCH_ASSOC);
         if (strstr($orderby,' mtime')) {
             if ($include_deleted) {
                 $result = $dbh->Execute("SELECT * FROM $page_tbl, $recent_tbl, $version_tbl"
@@ -493,7 +567,9 @@ extends WikiDB_backend
             }
         } else {
             if ($include_deleted) {
-                $result = $dbh->Execute("SELECT * FROM $page_tbl $orderby $limit");
+                $result = $dbh->Execute("SELECT "
+                                        . $this->page_tbl_fields
+                                        . " FROM $page_tbl $orderby $limit");
             } else {
                 $result = $dbh->Execute("SELECT "
                                         . $this->page_tbl_fields
@@ -502,6 +578,7 @@ extends WikiDB_backend
                                         . " $orderby $limit");
             }
         }
+        $dbh->SetFetchMode(ADODB_FETCH_NUM);
         return new WikiDB_backend_ADODB_iter($this, $result);
     }
         
@@ -529,12 +606,13 @@ extends WikiDB_backend
         }
         
         $search_clause = $search->makeSqlClause($callback);
-        
+        $dbh->SetFetchMode(ADODB_FETCH_ASSOC);
         $result = $dbh->Execute("SELECT $fields FROM $table"
                                 . " WHERE $join_clause"
                                 . "  AND ($search_clause)"
                                 . " ORDER BY pagename");
 
+        $dbh->SetFetchMode(ADODB_FETCH_NUM);
         return new WikiDB_backend_ADODB_iter($this, $result);
     }
 
@@ -573,13 +651,15 @@ extends WikiDB_backend
         if ($sortby) $orderby = 'ORDER BY ' . PageList::sortby($sortby,'db');
         else         $orderby = "ORDER BY hits $order";
         $limit = $limit ? $limit : -1;
+
+        $dbh->SetFetchMode(ADODB_FETCH_ASSOC);
         $result = $dbh->SelectLimit("SELECT " 
                                     . $this->page_tbl_fields
                                     . " FROM $nonempty_tbl, $page_tbl"
                                     . " WHERE $nonempty_tbl.id=$page_tbl.id"
                                     . " $orderby"
                                     , $limit);
-
+        $dbh->SetFetchMode(ADODB_FETCH_NUM);
         return new WikiDB_backend_ADODB_iter($this, $result);
     }
 
@@ -646,13 +726,15 @@ extends WikiDB_backend
 
         // FIXME: use SQL_BUFFER_RESULT for mysql?
         // Use SELECTLIMIT for portability
+        $dbh->SetFetchMode(ADODB_FETCH_ASSOC);
         $result = $dbh->SelectLimit("SELECT "
                                     . $this->page_tbl_fields . ", " . $this->version_tbl_fields
                                     . " FROM $table"
                                     . " WHERE $where_clause"
                                     . " ORDER BY mtime $order",
                                     $limit);
-
+        $dbh->SetFetchMode(ADODB_FETCH_NUM);
+        //$result->fields['version'] = $result->fields[6];
         return new WikiDB_backend_ADODB_iter($this, $result);
     }
 
@@ -686,18 +768,26 @@ extends WikiDB_backend
 
         $pageid = (int)$pageid;
 
-        $this->lock();
-
-        $dbh->Execute("DELETE FROM $recent_tbl"
+        // optimize: mysql can do this with one REPLACE INTO.
+        if (substr($dbh->databaseType,0,5) == 'mysql') {
+            $dbh->Execute("REPLACE INTO $recent_tbl"
+                          . " (id, latestversion, latestmajor, latestminor)"
+                          . " SELECT id, $maxversion, $maxmajor, $maxminor"
+                          . " FROM $version_tbl"
+                          . ( $pageid ? " WHERE id=$pageid" : "")
+                          . " GROUP BY id" );
+        } else {
+            $this->lock();
+            $dbh->Execute("DELETE FROM $recent_tbl"
                       . ( $pageid ? " WHERE id=$pageid" : ""));
-        
-        $dbh->Execute( "INSERT INTO $recent_tbl"
-                       . " (id, latestversion, latestmajor, latestminor)"
-                       . " SELECT id, $maxversion, $maxmajor, $maxminor"
-                       . " FROM $version_tbl"
-                     . ( $pageid ? " WHERE id=$pageid" : "")
-                       . " GROUP BY id" );
-        $this->unlock();
+            $dbh->Execute( "INSERT INTO $recent_tbl"
+                           . " (id, latestversion, latestmajor, latestminor)"
+                           . " SELECT id, $maxversion, $maxmajor, $maxminor"
+                           . " FROM $version_tbl"
+                           . ( $pageid ? " WHERE id=$pageid" : "")
+                           . " GROUP BY id" );
+            $this->unlock();
+        }
     }
 
     function _update_nonempty_table($pageid = false) {
@@ -706,20 +796,28 @@ extends WikiDB_backend
 
         $pageid = (int)$pageid;
 
-        $this->lock();
-
-        $dbh->Execute("DELETE FROM $nonempty_tbl"
-                      . ( $pageid ? " WHERE id=$pageid" : ""));
-
-        $dbh->Execute("INSERT INTO $nonempty_tbl (id)"
-                      . " SELECT $recent_tbl.id"
-                      . " FROM $recent_tbl, $version_tbl"
-                      . " WHERE $recent_tbl.id=$version_tbl.id"
-                      . "       AND version=latestversion"
-                      . "  AND content<>''"
-                      . ( $pageid ? " AND $recent_tbl.id=$pageid" : ""));
-
-        $this->unlock();
+        // optimize: mysql can do this with one REPLACE INTO.
+        if (substr($dbh->databaseType,0,5) == 'mysql') {
+            $dbh->Execute("REPLACE INTO $nonempty_tbl (id)"
+                          . " SELECT $recent_tbl.id"
+                          . " FROM $recent_tbl, $version_tbl"
+                          . " WHERE $recent_tbl.id=$version_tbl.id"
+                          . "       AND version=latestversion"
+                          . "  AND content<>''"
+                          . ( $pageid ? " AND $recent_tbl.id=$pageid" : ""));
+        } else {
+            $this->lock();
+            $dbh->Execute("DELETE FROM $nonempty_tbl"
+                          . ( $pageid ? " WHERE id=$pageid" : ""));
+            $dbh->Execute("INSERT INTO $nonempty_tbl (id)"
+                          . " SELECT $recent_tbl.id"
+                          . " FROM $recent_tbl, $version_tbl"
+                          . " WHERE $recent_tbl.id=$version_tbl.id"
+                          . "       AND version=latestversion"
+                          . "  AND content<>''"
+                          . ( $pageid ? " AND $recent_tbl.id=$pageid" : ""));
+            $this->unlock();
+        }
     }
 
 
@@ -732,6 +830,7 @@ extends WikiDB_backend
      * @access protected
      */
     function lock($write_lock = true) {
+    	$this->_dbh->StartTrans();
         if ($this->_lock_count++ == 0)
             $this->_lock_tables($write_lock);
     }
@@ -740,6 +839,7 @@ extends WikiDB_backend
      * Actually lock the required tables.
      */
     function _lock_tables($write_lock) {
+        return;
         trigger_error("virtual", E_USER_ERROR);
     }
     
@@ -754,18 +854,22 @@ extends WikiDB_backend
      * @see _lock_database
      */
     function unlock($force = false) {
-        if ($this->_lock_count == 0)
+        if ($this->_lock_count == 0) {
+            $this->_dbh->CompleteTrans(! $force);
             return;
+        }
         if (--$this->_lock_count <= 0 || $force) {
             $this->_unlock_tables();
             $this->_lock_count = 0;
         }
+    	$this->_dbh->CompleteTrans(! $force);
     }
 
     /**
      * Actually unlock the required tables.
      */
     function _unlock_tables($write_lock) {
+        return;
         trigger_error("virtual", E_USER_ERROR);
     }
 };
@@ -779,28 +883,35 @@ extends WikiDB_backend_iterator
     }
     
     function count() {
-        if (!$this->_result)
+        if (!$this->_result) {
             return false;
+        }
         return $this->_result->numRows();
     }
 
     function next() {
         $result = &$this->_result;
+        $backend = &$this->_backend;
         if (!$result || $result->EOF) {
             $this->free();
             return false;
         }
-        $backend = &$this->_backend;
-
-//      $record = $this->_result->fetchRow(DB_FETCHMODE_ASSOC);
+        if (substr($backend->_dbh->databaseType,0,5) == 'mysql')
+            $result->fetchMode = 1;
+        else
+            $result->fetchMode = 2;
         $record = $result->fields;
+        if (isset($record[0])) {
+            $record = $result->GetRowAssoc(2);
+        } else {
+            $record = $result->fields;
+        }
         $result->MoveNext();
         return $record;
     }
 
     function free () {
         if ($this->_result) {
-//          $this->_result->free();
             $this->_result->Close();
             $this->_result = false;
         }
@@ -812,26 +923,30 @@ extends WikiDB_backend_ADODB_generic_iter
 {
     function next() {
         $result = &$this->_result;
+        $backend = &$this->_backend;
         if (!$result || $result->EOF) {
             $this->free();
             return false;
         }
-
-//      $record = $this->_result->fetchRow(DB_FETCHMODE_ASSOC);
+        if (substr($backend->_dbh->databaseType,0,5) == 'mysql')
+            $result->fetchMode = 1;
+        else
+            $result->fetchMode = 2;
         $record = $result->fields;
+        if (isset($record[0])) {
+            $record = $result->GetRowAssoc(2);
+        } else {
+            $record = $result->fields;
+        }
         $result->MoveNext();
         
-        $backend = &$this->_backend;
-
-        $pagedata = $backend->_extract_page_data($record);
+        $pagedata = $backend->_extract_page_data(&$record['pagedata'], $record['hits']);
         $rec = array('pagename' => $record['pagename'],
                      'pagedata' => $pagedata);
-
         if (!empty($record['version'])) {
-            $rec['versiondata'] = $backend->_extract_version_data($record);
+            $rec['versiondata'] = $backend->_extract_version_data_assoc($record);
             $rec['version'] = $record['version'];
         }
-        
         return $rec;
     }
 }
