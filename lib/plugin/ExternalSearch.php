@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ExternalSearch.php,v 1.8 2004-04-18 01:11:52 rurban Exp $');
+rcs_id('$Id: ExternalSearch.php,v 1.9 2004-04-19 18:27:46 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -38,11 +38,11 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function _getInterWikiUrl(&$request) {
-        $intermap = PageType_interwikimap::GetMap($request);
+        $intermap = getInterwikiMap();
         $map = $intermap->_map;
 
         if (in_array($this->_url, array_keys($map))) {
@@ -118,6 +118,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/04/18 01:11:52  rurban
+// more numeric pagename fixes.
+// fixed action=upload with merge conflict warnings.
+// charset changed from constant to global (dynamic utf-8 switching)
+//
 // Revision 1.7  2004/02/22 23:20:33  rurban
 // fixed DumpHtmlToDir,
 // enhanced sortby handling in PageList

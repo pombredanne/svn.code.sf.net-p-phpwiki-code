@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.25 2004-03-26 01:04:16 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.26 2004-04-19 18:27:45 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004 $ThePhpWikiProgrammingTeam
 
@@ -118,6 +118,12 @@ class PageType_wikiblog extends PageType {}
 class PageType_comment extends PageType {}
 class PageType_wikiforum extends PageType {}
 
+/* To prevent from PHP5 Fatal error: Using $this when not in object context */
+function getInterwikiMap () {
+    $map = new PageType_interwikimap();
+    return $map;
+}
+
 class PageType_interwikimap extends PageType
 {
     function PageType_interwikimap() {
@@ -132,6 +138,7 @@ class PageType_interwikimap extends PageType
     }
 
     function GetMap ($request = false) {
+    	/*PHP5 Fatal error: Using $this when not in object context */
         if (empty($this->_map)) {
             $map = new PageType_interwikimap();
             return $map;

@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.169 2004-04-15 21:29:48 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.170 2004-04-19 18:27:45 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -97,6 +97,9 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
         elseif (isa($pagename, 'WikiPageName')) {
             $anchor = $pagename->anchor;
             $pagename = $pagename->name;
+        } else { // php5
+            $anchor = $pagename->anchor;
+            $pagename = $pagename->name;
         }
     }
     
@@ -161,7 +164,7 @@ function AbsoluteURL ($url) {
  */
 function IconForLink($protocol_or_url) {
     global $Theme;
-    if ($filename_suffix = false) {
+    if (0 and $filename_suffix == false) {
         // display apache style icon for file type instead of protocol icon
         // - archive: unix:gz,bz2,tgz,tar,z; mac:dmg,dmgz,bin,img,cpt,sit; pc:zip;
         // - document: html, htm, text, txt, rtf, pdf, doc
@@ -374,7 +377,7 @@ function LinkPhpwikiURL($url, $text = '', $basepage) {
  * Now with subpages and anchors, parsing and passing around
  * pagenames is more complicated.  This should help.
  */
-class WikiPagename
+class WikiPageName
 {
     /** Short name for page.
      *
@@ -559,7 +562,7 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
         // change ! escapes to ~'s.
         global $AllowedProtocols, $WikiNameRegexp, $request;
         //include_once('lib/interwiki.php');
-        $map = PageType_interwikimap::GetMap($request);
+        $map = getInterwikiMap();
         $bang_esc[] = "(?:$AllowedProtocols):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]";
         $bang_esc[] = $map->getRegexp() . ":[^\\s.,;?()]+"; // FIXME: is this really needed?
         $bang_esc[] = $WikiNameRegexp;
@@ -1019,6 +1022,8 @@ function __vsprintf ($fmt, $args) {
 function file_mtime ($filename) {
     if ($stat = stat($filename))
         return $stat[9];
+    else 
+        return false;
 }
 
 function sort_file_mtime ($a, $b) {
@@ -1377,6 +1382,9 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.169  2004/04/15 21:29:48  rurban
+// allow [0] with new markup: link to page "0"
+//
 // Revision 1.168  2004/04/10 02:30:49  rurban
 // Fixed gettext problem with VIRTUAL_PATH scripts (Windows only probably)
 // Fixed "cannot setlocale..." (sf.net problem)

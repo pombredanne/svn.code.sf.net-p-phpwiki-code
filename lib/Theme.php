@@ -1,5 +1,5 @@
-<?php rcs_id('$Id: Theme.php,v 1.87 2004-04-19 09:13:23 rurban Exp $');
-/* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
+<?php rcs_id('$Id: Theme.php,v 1.88 2004-04-19 18:27:45 rurban Exp $');
+/* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
  * 
@@ -64,6 +64,8 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
     
     if (isa($page_or_rev, 'WikiDB_PageRevision')) {
         $version = $page_or_rev->getVersion();
+        if ($page_or_rev->isCurrent())
+            $version = false;
         $page = $page_or_rev->getPage();
         $pagename = $page->getName();
         $wikipage = $pagename;
@@ -107,8 +109,10 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
     // WikiLink makes A link, not a string of fancy ones.
     // (I think that the fancy split links are just confusing.)
     // Todo: test external ImageLinks http://some/images/next.gif
-    if (isa($wikipage, 'WikiPageName') and !$label 
-        and strchr(substr($wikipage->shortName,1), SUBPAGE_SEPARATOR)) {
+    if (isa($wikipage, 'WikiPageName') and 
+        ! $label and 
+        strchr(substr($wikipage->shortName,1), SUBPAGE_SEPARATOR))
+    {
         $parts = explode(SUBPAGE_SEPARATOR, $wikipage->shortName);
         $last_part = array_pop($parts);
         $sep = '';
@@ -1262,6 +1266,9 @@ class RelatedExternalLinksBox extends SidebarBox {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.87  2004/04/19 09:13:23  rurban
+// new pref: googleLink
+//
 // Revision 1.86  2004/04/18 01:11:51  rurban
 // more numeric pagename fixes.
 // fixed action=upload with merge conflict warnings.

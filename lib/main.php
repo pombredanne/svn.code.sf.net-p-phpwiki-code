@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.130 2004-04-18 00:25:53 rurban Exp $');
+rcs_id('$Id: main.php,v 1.131 2004-04-19 18:27:45 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -813,6 +813,8 @@ function main () {
 
     global $request;
 
+    if (extension_loaded("apd"))
+        apd_set_session_trace(9);
     $request = new WikiRequest();
 
     /*
@@ -880,6 +882,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.130  2004/04/18 00:25:53  rurban
+// allow "0" pagename
+//
 // Revision 1.129  2004/04/07 23:13:19  rurban
 // fixed pear/File_Passwd for Windows
 // fixed FilePassUser sessions (filehandle revive) and password update

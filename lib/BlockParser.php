@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.43 2004-04-18 01:11:51 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.44 2004-04-19 18:27:45 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -821,7 +821,7 @@ class Block_oldlists extends Block_list
         }
         else {
             // this is where php5 breaks
-            if (DEBUG && check_php_version(5)) {
+            if (0 and DEBUG and check_php_version(5)) {
                 if (function_exists("xdebug_get_function_stack")) {
                     var_dump (xdebug_get_function_stack());
                 } elseif (count($this->_content) != 2) {
@@ -860,7 +860,8 @@ class Block_oldlists extends Block_list
                     echo "</pre>";
                 }
             }
-            assert(count($this->_content) == 2);
+            if (!check_php_version(5))
+                assert(count($this->_content) == 2);
             $dt = &$this->_content[0];
             $dd = &$this->_content[1];
             $dt->setTightness($top, false);

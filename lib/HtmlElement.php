@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.34 2004-03-24 19:39:02 rurban Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.35 2004-04-19 18:27:45 rurban Exp $');
 /**
  * Code for writing the HTML subset of XML.
  * @author: Jeff Dairiki
@@ -20,7 +20,21 @@ class HtmlElement extends XmlElement
     }
 
     function _init ($args) {
-        XmlElement::_init($args);
+        if (!is_array($args))
+            $args = func_get_args();
+
+        assert(count($args) >= 1);
+        assert(is_string($args[0]));
+        $this->_tag = array_shift($args);
+        
+        if ($args && is_array($args[0]))
+            $this->_attr = array_shift($args);
+        else {
+            $this->_attr = array();
+            if ($args && $args[0] === false)
+                array_shift($args);
+        }
+        $this->setContent($args);
         $this->_properties = HTML::getTagProperties($this->_tag);
     }
 
@@ -497,6 +511,20 @@ function IfJavaScript($if_content = false, $else_content = false) {
     
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.34  2004/03/24 19:39:02  rurban
+ php5 workaround code (plus some interim debugging code in XmlElement)
+   php5 doesn't work yet with the current XmlElement class constructors,
+   WikiUserNew does work better than php4.
+ rewrote WikiUserNew user upgrading to ease php5 update
+ fixed pref handling in WikiUserNew
+ added Email Notification
+ added simple Email verification
+ removed emailVerify userpref subclass: just a email property
+ changed pref binary storage layout: numarray => hash of non default values
+ print optimize message only if really done.
+ forced new cookie policy: delete pref cookies, use only WIKI_ID as plain string.
+   prefs should be stored in db or homepage, besides the current session.
+
  Revision 1.33  2004/03/18 22:32:33  rurban
  work to make it php5 compatible
 

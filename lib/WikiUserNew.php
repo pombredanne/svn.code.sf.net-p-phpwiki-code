@@ -1,6 +1,22 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.56 2004-04-19 09:13:24 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.57 2004-04-19 18:27:45 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
+ *
+ * This file is part of PhpWiki.
+ * 
+ * PhpWiki is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * PhpWiki is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 /**
  * This is a complete OOP rewrite of the old WikiUser code with various
@@ -68,9 +84,8 @@ rcs_id('$Id: WikiUserNew.php,v 1.56 2004-04-19 09:13:24 rurban Exp $');
  *    anymore, only in homepage and/or database, but always in the 
  *    current session. old pref cookies will get deleted.
  * 2004-04-04 rurban
- * 7) TODO:
- *    Certain themes should be able to extend the predefined list 
- *    of preferences. Display/editing is done in the theme specific userprefs.tmpl
+ * 7) Certain themes should be able to extend the predefined list 
+ *    of preferences. Display/editing is done in the theme specific userprefs.tmpl,
  *    but storage must be extended to the Get/SetPreferences methods.
  *    <theme>/themeinfo.php must provide CustomUserPreferences:
  *      A list of name => _UserPreference class pairs.
@@ -530,7 +545,7 @@ class _WikiUser
             $user = new $class($userid,$this->_prefs);
             /*PHP5 patch*/$this = $user;
             $this->_level = $authlevel;
-            return UpgradeUser($user,$this);
+            return $user;
         }
         $this->_userid = $userid;
         $this->_level = $authlevel;
@@ -848,7 +863,7 @@ extends _AnonUser
                             $user = new _HttpAuthPassUser($UserName,$this->_prefs);
                             //todo: with php5 comment the following line.
                             /*PHP5 patch*/$this = $user;
-                            return UpgradeUser($user,$this);
+                            return $user;
                         }
                     } elseif (!empty($DBAuthParams['auth_check']) and 
                               (!empty($DBAuthParams['auth_dsn']) or !empty($GLOBALS ['DBParams']['dsn']))) {
@@ -858,7 +873,7 @@ extends _AnonUser
                             $user = new _DbPassUser($UserName,$this->_prefs);
                             //todo: with php5 comment the following line.
                             /*PHP5 patch*/$this = $user;
-                            return UpgradeUser($user,$this);
+                            return $user;
                         }
                     } elseif (defined('LDAP_AUTH_HOST') and defined('LDAP_BASE_DN') and function_exists('ldap_open')) {
                         if (check_php_version(5))
@@ -867,7 +882,7 @@ extends _AnonUser
                             $user = new _LDAPPassUser($UserName,$this->_prefs);
                             //todo: with php5 comment the following line.
                             /*PHP5 patch*/$this = $user;
-                            return UpgradeUser($user,$this);
+                            return $user;
                         }
                     } elseif (defined('IMAP_AUTH_HOST') and function_exists('imap_open')) {
                         if (check_php_version(5))
@@ -876,7 +891,7 @@ extends _AnonUser
                             $user = new _IMAPPassUser($UserName,$this->_prefs);
                             //todo: with php5 comment the following line.
                             /*PHP5 patch*/$this = $user;
-                            return UpgradeUser($user,$this);
+                            return $user;
                         }
                     } elseif (defined('AUTH_USER_FILE')) {
                         if (check_php_version(5))
@@ -885,7 +900,7 @@ extends _AnonUser
                             $user = new _FilePassUser($UserName,$this->_prefs);
                             //todo: with php5 comment the following line.
                             /*PHP5 patch*/$this = $user;
-                            return UpgradeUser($user,$this);
+                            return $user;
                         }
                     } else {
                         if (check_php_version(5))
@@ -894,7 +909,7 @@ extends _AnonUser
                             $user = new _PersonalPagePassUser($UserName,$this->_prefs);
                             //todo: with php5 comment the following line.
                             /*PHP5 patch*/$this = $user;
-                            return UpgradeUser($user,$this);
+                            return $user;
                         }
                     }
                 }
@@ -1027,7 +1042,7 @@ extends _AnonUser
         while ($user = new $class($this->_userid,$this->_prefs)) {
             //todo: with php5 comment the following line:
             /*PHP5 patch*/$this = $user;
-            UpgradeUser($this,$user);
+            //UpgradeUser($this,$user);
             if ($user->userExists()) {
                 return true;
             }
@@ -1152,7 +1167,7 @@ extends _AnonUser
             while ($user = new $class($this->_userid,$this->_prefs)) {
                 //todo: with php5 comment the following line:
                 /*PHP5 patch*/$this = $user;
-                $user = UpgradeUser($this, $user);
+                //$user = UpgradeUser($this, $user);
                 if ($user->userExists()) {
                     return true;
                 }
@@ -1419,7 +1434,7 @@ extends _PassUser
                 $user = new _AdoDbPassUser($UserName,$this->_prefs);
                 //todo: with php5 comment the following line:
                 /*PHP5 patch*/$this = $user;
-                return UpgradeUser($user, $this);
+                return $user;
             }
         }
         elseif ($GLOBALS['DBParams']['dbtype'] == 'SQL') {
@@ -1429,7 +1444,7 @@ extends _PassUser
                 $user = new _PearDbPassUser($UserName,$this->_prefs);
                 //todo: with php5 comment the following line:
                 /*PHP5 patch*/$this = $user;
-                return UpgradeUser($user, $this);
+                return $user;
             }
         }
         return false;
@@ -2328,6 +2343,8 @@ extends _UserPreference
         $pages = $this->_page_split($value);
         // Limitation: only current user.
         $user = $GLOBALS['request']->getUser();
+        if (!$user or !method_exists($user,'UserName')) return;
+        // This fails with php5 and a WIKI_ID cookie:
         $userid = $user->UserName();
         $email  = $user->_prefs->get('email');
         $verified = $user->_prefs->_prefs['email']->getraw('emailVerified');
@@ -2771,6 +2788,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.56  2004/04/19 09:13:24  rurban
+// new pref: googleLink
+//
 // Revision 1.54  2004/04/18 00:24:45  rurban
 // re-use our simple prepare: just for table prefix warnings
 //
