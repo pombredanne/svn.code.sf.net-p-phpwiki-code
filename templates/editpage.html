@@ -4,7 +4,7 @@
 <html>
 <head>
 <!-- phpwiki source:
-$Id: editpage.html,v 1.23 2001-11-29 02:59:21 dairiki Exp $
+$Id: editpage.html,v 1.24 2001-12-01 13:01:45 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <base href="${BASE_URL}" />
@@ -75,12 +75,13 @@ $_("Edit") <a href="${BROWSE}${PAGEURL}"
   </td>
 </tr></table>
 <p style="clear: both; padding: 2ex 0ex 0ex;">
-  $_("You can change the size of the editing area.")
-  $_("See") <?php echo LinkExistingWikiWord(_("UserPreferences")); ?>.
-  $_("Also see") <?php echo LinkExistingWikiWord(_("GoodStyle")) ?> $_("tips for editing.")
+  $_("You can change the size of the editing area in")
+  <?php echo LinkExistingWikiWord(_("UserPreferences")); ?>.
+  $_("See") <?php echo LinkExistingWikiWord(_("GoodStyle")) ?> $_("tips for editing.")
 </p>
 <hr noshade="noshade" />
 <small>
+<?php echo LinkExistingWikiWord(_("TextFormattingRules")) ?><br>
 <b>$_("Emphasis:")</b>
   '' $_("for italics"),
   __ $_("for bold"),
@@ -94,14 +95,12 @@ $_("Edit") <a href="${BROWSE}${PAGEURL}"
 <br /><b>$_("Footnotes:")</b>
    $_("Use [1],[2],[3],...")
 <br /><b>$_("Preventing linking:")</b>
-   $_("Avoid linking with '!': !DoNotHyperlink,")
+   $_("Prefix with '!': !DoNotHyperlink,")
    $_("name links like [[text | URL] (double up on the '[')")
 <br /><b>$_("Misc:")</b>
    "!", "!!", "!!!" $_("make headings"),
    "%%%" $_("makes a linebreak"),
    "- - - -" $_("makes a horizontal rule")
-<br />
-$_("more on") <?php echo LinkExistingWikiWord(_("TextFormattingRules")) ?>
 </small>
 
 <input type="hidden" name="action" value="save" />
