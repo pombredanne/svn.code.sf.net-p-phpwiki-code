@@ -1,5 +1,5 @@
 /*
-  $Id: phpwiki.css,v 1.22 2002-01-16 18:12:34 dairiki Exp $
+  $Id: phpwiki.css,v 1.23 2002-01-22 09:23:09 carstenklapp Exp $
 
   Classes:
 
@@ -300,6 +300,10 @@ div.wiki-edithelp {
 /* These don't work in NS4 -- it completely ignores <del> and <ins>. */
 .diff del	{ background: #f99; }
 .diff ins	{ background: #9f9; }
+
+/* PageList output */
+tr.pagelistcolor { background: #eeeeee; }
+tr.pagelistnocolor { background: white; }
 
 /* For emacs users
  *
