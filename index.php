@@ -35,7 +35,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.0-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.37 2001-12-07 05:27:03 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.38 2001-12-07 05:37:13 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -269,6 +269,8 @@ $logo = "images/wikibase.png";
 // '*' icon is shown when the link type has no icon listed here,
 // but ONLY for the AllowedProtocols specified in in part four!
 // 'interwiki' icon indicates a Wiki listed in lib/interwiki.map
+// If you want icons just to differentiate between urls and Wikis then
+// turn on only 'interwiki' and '*', comment out the other four.
 /*
 $URL_LINK_ICONS = array(
                     'http'	=> 'images/http.png',
