@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.6 2002-01-21 16:53:35 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.7 2002-01-21 17:13:47 carstenklapp Exp $');
 
 // This will relieve some of the work of plugins like LikePages,
 // MostPopular and allows dynamic expansion of those plugins do
@@ -50,69 +50,13 @@ class PageList {
     }
     
     function getHTML() {
-        // TODO: Generate a list instead of a table when only one
-        // column (pagenames only).
-
-        $summary = "FIXME: add brief summary and column names";
-
-        $table = HTML::table(array('cellpadding' => 0,
-                                   'cellspacing' => 1,
-                                   'border' => 0,
-                                   'summary' => $summary,
-                                   'width' => '100%')
-                            );
-
-        $pad = new RawXml('&nbsp;&nbsp;');
-
         $caption = HTML::div(array('align' => 'left'), $this->getCaption());
 
-        $thead = HTML::thead();
-        foreach ($this->_columns as $column_name) {
-            if ($this->_column_align($column_name) == 'right') {
-                $thead->pushContent(HTML::td(array('align' => 'right'), $pad, HTML::u($column_name)));
-            } else {
-                $thead->pushContent(HTML::td($pad, HTML::u($column_name)));
-            }
+        if (count($this->_columns) == 1) {
+            return array($caption, $this->_generateList());
+        } else {
+            return $this->_generateTable($caption);
         }
-
-        $tbody = HTML::tbody();
-        foreach ($this->_pages as $page_handle) {
-            $row = HTML::tr();
-            foreach ($this->_columns as $column_name) {
-                $col = HTML::td();
-                $field = $this->_colname_to_dbfield($column_name);
-                if ($this->_does_require_rev($column_name)) {
-                    $current = $page_handle->getCurrentRevision();
-                    $value = $current->get($field);
-                    if ($field=='mtime') {
-                        global $Theme;
-                        $td = ($Theme->formatDateTime($value));
-                    } else {
-                        $td = ($value);
-                    }
-                } else {
-                    //TODO: make method to determine formatting
-                    if ($field=='pagename') {
-                        $td = (new RawXml (LinkExistingWikiWord($page_handle->getName())));
-                    } else {
-                        $td = ($page_handle->get($field));
-                    }
-                }
-
-                if ($this->_column_align($column_name) == 'right') {
-                    $row->pushContent (HTML::td(array('align' => 'right'), $pad, $td));
-                } else {
-                    $row->pushContent (HTML::td($pad, $td));
-                }
-            }
-            $tbody->pushContent($row);
-        }
-
-        // Final table assembly
-        $table->pushContent(HTML::caption(array('align'=>'top'), $caption));
-        $table->pushContent($thead);
-        $table->pushContent($tbody);
-        return $table;
     }
     
     ////////////////////
@@ -177,7 +121,77 @@ class PageList {
         $key = $map[$column_name];
         return $key;
     }
-    
+
+    // make a table given the caption
+    function _generateTable($caption) {
+        $pad = new RawXml('&nbsp;&nbsp;');
+
+        $thead = HTML::thead();
+        foreach ($this->_columns as $column_name) {
+            if ($this->_column_align($column_name) == 'right') {
+                $thead->pushContent(HTML::td(array('align' => 'right'), $pad, HTML::u($column_name)));
+            } else {
+                $thead->pushContent(HTML::td($pad, HTML::u($column_name)));
+            }
+        }
+
+        $tbody = HTML::tbody();
+        foreach ($this->_pages as $page_handle) {
+            $row = HTML::tr();
+            foreach ($this->_columns as $column_name) {
+                $col = HTML::td();
+                $field = $this->_colname_to_dbfield($column_name);
+                if ($this->_does_require_rev($column_name)) {
+                    $current = $page_handle->getCurrentRevision();
+                    $value = $current->get($field);
+                    if ($field=='mtime') {
+                        global $Theme;
+                        $td = ($Theme->formatDateTime($value));
+                    } else {
+                        $td = ($value);
+                    }
+                } else {
+                    //TODO: make method to determine formatting
+                    if ($field=='pagename') {
+                        $td = (new RawXml (LinkExistingWikiWord($page_handle->getName())));
+                    } else {
+                        $td = ($page_handle->get($field));
+                    }
+                }
+
+                if ($this->_column_align($column_name) == 'right') {
+                    $row->pushContent (HTML::td(array('align' => 'right'), $pad, $td));
+                } else {
+                    $row->pushContent (HTML::td($pad, $td));
+                }
+            }
+            $tbody->pushContent($row);
+        }
+
+        $summary = "FIXME: add brief summary and column names";
+
+        // Final table assembly
+        $table = HTML::table(array('cellpadding' => 0,
+                                   'cellspacing' => 1,
+                                   'border' => 0,
+                                   'summary' => $summary,
+                                   'width' => '100%')
+                            );
+
+        $table->pushContent(HTML::caption(array('align'=>'top'), $caption));
+        $table->pushContent($thead);
+        $table->pushContent($tbody);
+        return $table;
+    }
+
+    function _generateList() {
+        $list = HTML::ul();
+        foreach ($this->_pages as $page_handle) {
+            $list->pushContent(HTML::li(_LinkWikiWord($page_handle->getName())));
+        }
+        return $list;
+    }
+
 };
 
 
