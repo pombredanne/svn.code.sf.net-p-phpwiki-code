@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiBlog.php,v 1.6 2003-02-21 04:20:09 dairiki Exp $');
+rcs_id('$Id: WikiBlog.php,v 1.7 2003-11-17 16:23:55 carstenklapp Exp $');
 /*
  Copyright 2002, 2003 $ThePhpWikiProgrammingTeam
  
@@ -80,7 +80,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     // Arguments:
@@ -200,8 +200,9 @@ extends WikiPlugin
             // change to ISO formatted time? 2003-01-11T24:03:02
             // Yes, I think that's a good idea. -- JeffDairiki.
 
-            $time = strftime ('%Y%m%d%H%M%S', $now);
-            $p = $dbi->getPage($parent . SUBPAGE_SEPARATOR . "Blog-$time");
+            //$time = strftime ('%Y%m%d%H%M%S', $now);
+            $time = Iso8601DateTime();
+            $p = $dbi->getPage($parent . SUBPAGE_SEPARATOR . "Blog" . SUBPAGE_SEPARATOR . str_replace("T", SUBPAGE_SEPARATOR, "$time"));
             $pr = $p->getCurrentRevision();
 
             // Version should be zero.  If not, page already exists
@@ -295,9 +296,9 @@ extends WikiPlugin
             if (substr($name, 0, $pfxlen) != $prefix)
                 continue;
             $current = $page->getCurrentRevision();
-
-            if (preg_match("/^Blog-([[:digit:]]{14})$/", substr($name, $pfxlen))
-                or $current->get('pagetype') == 'wikiblog') {
+//use only pagetype
+            if (/*preg_match("/^Blog-([[:digit:]]{14})$/", substr($name, $pfxlen))
+                or */$current->get('pagetype') == 'wikiblog') {
                 $blogs[] = $current;
             }
         }
@@ -312,6 +313,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2003/02/21 04:20:09  dairiki
+// Big refactor. Formatting now done by the stuff in PageType.php.
+// Split the template into two separate ones: one for the add comment form,
+// one for comment display.
+//
 // Revision 1.5  2003/02/16 19:47:17  dairiki
 // Update WikiDB timestamp when editing or deleting pages.
 //
