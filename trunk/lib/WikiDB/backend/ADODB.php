@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.29 2004-05-12 10:49:55 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.30 2004-06-07 19:31:31 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -870,7 +870,11 @@ extends WikiDB_backend
         return $this->_dbh->MetaTables();
     }
     function listOfFields($database,$table) {
-        return $this->_dbh->MetaColumns($table,false);
+        $field_list = array();
+        foreach ($this->_dbh->MetaColumns($table,false) as $field) {
+            $field_list[] = $field->name;
+        }
+        return $field_list;
     }
 
 };
@@ -1067,6 +1071,13 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.29  2004/05/12 10:49:55  rurban
+// require_once fix for those libs which are loaded before FileFinder and
+//   its automatic include_path fix, and where require_once doesn't grok
+//   dirname(__FILE__) != './lib'
+// upgrade fix with PearDB
+// navbar.tmpl: remove spaces for IE &nbsp; button alignment
+//
 // Revision 1.28  2004/05/06 19:26:16  rurban
 // improve stability, trying to find the InlineParser endless loop on sf.net
 //
