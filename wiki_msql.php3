@@ -1,4 +1,4 @@
-<!-- $Id: wiki_msql.php3,v 1.9 2000-06-30 02:47:07 wainstead Exp $ -->
+<!-- $Id: wiki_msql.php3,v 1.10 2000-08-11 18:45:23 wainstead Exp $ -->
 <?
 
    /*
@@ -23,7 +23,7 @@
    function OpenDataBase($dbinfo) {
       global $msql_db;
 
-      if (! ($dbc = msql_pconnect())) {
+      if (! ($dbc = msql_connect())) {
          echo "Cannot establish connection to database, giving up.";
          echo "Error message: ", msql_error(), "<br>\n";
          exit();
@@ -42,9 +42,8 @@
 
 
    function CloseDataBase($dbi) {
-      // NOP function
-      // msql connections are established as persistant
-      // they cannot be closed through msql_close()
+      // I found msql_pconnect unstable so we go the slow route.
+      return msql_close($dbi);
    }
 
 
