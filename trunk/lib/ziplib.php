@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.22 2002-01-25 05:04:49 carstenklapp Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.23 2002-01-25 16:46:02 dairiki Exp $');
 
 /**
  * GZIP stuff.
@@ -501,43 +501,62 @@ function MimeMultipart ($parts)
     return $head . $sep . implode($sep, $parts) . "\r\n--${boundary}--\r\n";
 }
 
+/**
+ * For reference see:
+ * http://www.nacs.uci.edu/indiv/ehood/MIME/2045/rfc2045.html
+ * http://www.faqs.org/rfcs/rfc2045.html
+ * (RFC 1521 has been superceeded by RFC 2045 & others).
+ *
+ * Also see http://www.faqs.org/rfcs/rfc2822.html
+ *
+ *
+ * Notes on content-transfer-encoding.
+ *
+ * "7bit" means short lines of US-ASCII.
+ * "8bit" means short lines of octets with (possibly) the high-order bit set.
+ * "binary" means lines are not necessarily short enough for SMTP
+ * transport, and non-ASCII characters may be present.
+ *
+ * Only "7bit", "quoted-printable", and "base64" are universally safe
+ * for transport via e-mail.  (Though many MTAs can/will be configured to
+ * automatically convert encodings to a safe type if they receive
+ * mail encoded in '8bit' and/or 'binary' encodings.
+ */
 function MimeifyPageRevision ($revision) {
-    // This is a dirty hack to allow saving binary text files. See below.
-    global $pagedump_format;
     $page = $revision->getPage();
     // FIXME: add 'hits' to $params 
-    $params = array('pagename'     => rawurlencode($page->getName()),
-                    'author'       => rawurlencode($revision->get('author')),
+    $params = array('pagename'     => $page->getName(),
+                    'author'       => $revision->get('author'),
                     'version'      => $revision->getVersion(),
                     'flags'        => "",
-                    'lastmodified' => $revision->get('mtime'));
+                    'lastmodified' => $revision->get('mtime'),
+                    'charset'	   => CHARSET);
 
-    if ($pagedump_format == 'quoted-printable') {
-        $params = array_merge(array('charset' => 'US-ASCII',
-                                    'format'  => 'flowed'), $params);
-    } else if ($pagedump_format == 'binary') {
-        $params = array_merge(array('charset' => 'ISO-8859-1'), $params);
-    } else { // This is a little risky
-        $params = array_merge(array('charset' => CHARSET), $params);
-    }
-
+    
     if ($page->get('mtime'))
         $params['created'] = $page->get('mtime');
     if ($page->get('locked'))
         $params['flags'] = 'PAGE_LOCKED';
     if ($revision->get('author_id'))
         $params['author_id'] = $revision->get('author_id');
-    
+
+    // Non-US-ASCII is not allowed in Mime headers (at least not without
+    // special handling) --- so we urlencode all parameter values.
+    foreach ($params as $key => $val)
+        $params[$key] = rawurlencode($val);
     
     $out = MimeContentTypeHeader('application', 'x-phpwiki', $params);
+    $out .= sprintf("Content-Transfer-Encoding: %s\r\n",
+                    STRICT_MAILABLE_PAGEDUMPS ? 'quoted-printable' : 'binary');
 
     $out .= "\r\n";
     
     foreach ($revision->getContent() as $line) {
         // This is a dirty hack to allow saving binary text files. See above.
-        $out .= ($pagedump_format == "quoted-printable") ?
-            QuotedPrintableEncode(chop($line)) : chop($line);
-        $out .= "\r\n";
+        $line = rtrim($line);
+        if (STRICT_MAILABLE_PAGEDUMPS)
+            $line = QuotedPrintableEncode(rtrim($line));
+        $out .= "$line\r\n";
     }
     return $out;
 }
