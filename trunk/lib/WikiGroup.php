@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.42 2004-11-01 10:43:56 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.43 2004-11-10 15:29:21 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -235,7 +235,7 @@ class WikiGroup{
 
         global $request;
         /* WikiPage users: */
-        $dbh = $request->getDbh();
+        $dbh =& $request->_dbi;
         $page_iter = $dbh->getAllPages();
         $users = array();
         while ($page = $page_iter->next()) {
@@ -249,37 +249,37 @@ class WikiGroup{
         else 
             $dbi = false;
 
-        if ($dbi and !empty($GLOBALS['DBAuthParams']['pref_select'])) {
+        if ($dbi and $dbh->getAuthParam('pref_select')) {
             //get prefs table
             $sql = preg_replace('/SELECT .+ FROM/i','SELECT userid FROM',
-                                $GLOBALS['DBAuthParams']['pref_select']);
+                                $dbh->getAuthParam('pref_select'));
             //don't strip WHERE, only the userid stuff.
-            $sql = preg_replace('/(WHERE.*?)\s+\w+\s*=\s*["\']\$userid[\'"]/i','\\1 AND 1',$sql);
+            $sql = preg_replace('/(WHERE.*?)\s+\w+\s*=\s*["\']\$userid[\'"]/i','\\1 AND 1', $sql);
             $sql = str_replace('WHERE AND 1','',$sql);
-            if ($GLOBALS['DBParams']['dbtype'] == 'ADODB') {
+            if (isa($dbi, 'WikiDB_backend_ADODB')) {
                 $db_result = $dbi->Execute($sql);
                 foreach ($db_result->GetArray() as $u) {
                     $users = array_merge($users,array_values($u));
                 }
-            } elseif ($GLOBALS['DBParams']['dbtype'] == 'SQL') {
+            } elseif (isa($dbi, 'WikiDB_backend_PearDB')) {
                 $users = array_merge($users,$dbi->getCol($sql));
             }
         }
 
         /* WikiDB users from users: */
         // Fixme: don't strip WHERE, only the userid stuff.
-        if ($dbi and !empty($GLOBALS['DBAuthParams']['auth_user_exists'])) {
+        if ($dbi and $dbh->getAuthParam('auth_user_exists')) {
             //don't strip WHERE, only the userid stuff.
             $sql = preg_replace('/(WHERE.*?)\s+\w+\s*=\s*["\']\$userid[\'"]/i','\\1 AND 1',
-                                $GLOBALS['DBAuthParams']['auth_user_exists']);
-            $sql = str_replace('WHERE AND 1','',$sql);
-            if ($GLOBALS['DBParams']['dbtype'] == 'ADODB') {
+                                $dbh->getAuthParam('auth_user_exists'));
+            $sql = str_replace('WHERE AND 1','', $sql);
+            if (isa($dbi, 'WikiDB_backend_ADODB')) {
                 $db_result = $dbi->Execute($sql);
                 foreach ($db_result->GetArray() as $u) {
-                   $users = array_merge($users,array_values($u));
+                   $users = array_merge($users, array_values($u));
                 }
-            } elseif ($GLOBALS['DBParams']['dbtype'] == 'SQL') {
-                $users = array_merge($users,$dbi->getCol($sql));
+            } elseif (isa($dbi, 'WikiDB_backend_PearDB')) {
+                $users = array_merge($users, $dbi->getCol($sql));
             }
         }
 
@@ -1091,6 +1091,12 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.42  2004/11/01 10:43:56  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 // Revision 1.41  2004/09/17 14:21:28  rurban
 // fix LDAP ou= issue, wrong strstr arg order
 //

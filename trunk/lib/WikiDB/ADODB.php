@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.6 2004-11-09 17:11:16 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.7 2004-11-10 15:29:21 rurban Exp $');
 
 require_once('lib/WikiDB.php');
 
@@ -43,6 +43,44 @@ class WikiDB_ADODB extends WikiDB
         }
         return $this->_cache->_id_cache[$pagename];
     }
+
+    // ADODB handles everything as string
+    function quote ($s) {
+        if (is_int($in) || is_double($in)) {
+            return $in;
+        } elseif (is_bool($in)) {
+            return $in ? 1 : 0;
+        } elseif (is_null($in)) {
+            return 'NULL';
+        } else {
+            return $this->_backend->_dbh->qstr($s);
+        }
+    }
+
+    function isOpen () {
+        global $request;
+        if (!$request->_dbi) return false;
+        return is_resource($this->_backend->connection());
+    }
+
+    // SQL result: for simple select or create/update queries
+    // returns the database specific resource type
+    function genericSqlQuery($sql) {
+        if (!($result = $this->_backend->_dbh->Execute($sql))) {
+            trigger_error("SQL Error: ".$this->_backend->_dbh->ErrorMsg(), E_USER_WARNING);
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    // SQL iter: for simple select or create/update queries
+    // returns the generic iterator object (count,next)
+    function genericSqlIter($sql, $field_list = NULL) {
+        $result = $this->genericSqlQuery($sql);
+        return new WikiDB_backend_ADODB_generic_iter($this->_backend, $result, $field_list);
+    }
+
 };
   
 // For emacs users

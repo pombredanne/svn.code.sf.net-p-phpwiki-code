@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.77 2004-11-09 17:11:04 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.78 2004-11-10 15:29:20 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -771,7 +771,7 @@ class Request_AccessLog {
      * @param $logfile string  Log file name.
      */
     function Request_AccessLog ($logfile, $do_sql = false) {
-        //global $request;
+        //global $request; // request not yet initialized!
 
         $this->logfile = $logfile;
         if ($logfile and !is_writeable($logfile)) {
@@ -792,7 +792,7 @@ class Request_AccessLog {
             if (!in_array($DBParams['dbtype'], array('SQL','ADODB'))) {
                 trigger_error("Unsupported database backend for ACCESS_LOG_SQL.\nNeed DATABASE_TYPE=SQL or ADODB");
             } else {
-                $this->_dbi =& $request->_dbi;
+                //$this->_dbi =& $request->_dbi;
                 $this->logtable = (!empty($DBParams['prefix']) ? $DBParams['prefix'] : '')."accesslog";
             }
         }
@@ -816,7 +816,7 @@ class Request_AccessLog {
      * For internal log analyzers: RecentReferrers, WikiAccessRestrictions
      */
     function read() {
-        return $this->_dbi ? $this->read_sql() : $this->read_file();
+        return $this->logtable ? $this->read_sql() : $this->read_file();
     }
 
     /**
@@ -857,9 +857,9 @@ class Request_AccessLog {
      * Return iterator of matching host items reverse sorted (latest first).
      */
     function get_host($host, $since_minutes=20) {
-        if ($this->_dbi) {
+        if ($this->logtable) {
             // mysql specific only:
-            return $this->read_sql("request_host='".$dbh->quote($host)."' AND time_stamp > ". (time()-$since_minutes*60) 
+            return $this->read_sql("request_host=".$dbh->quote($host)." AND time_stamp > ". (time()-$since_minutes*60) 
                             ." ORDER BY time_stamp DESC");
         } else {
             $iter = new WikiDB_Array_generic_iter();
@@ -902,7 +902,7 @@ class Request_AccessLog {
         }
     }
     function _read_sql_query($where='') {
-        $dbh =& $this->_dbi;
+        $dbh =& $GLOBALS['request']->_dbi;
         $log_tbl =& $this->logtable;
         return $dbh->genericSqlIter("SELECT *,request_uri as request,request_time as time,remote_user as user,"
                                     ."remote_host as host,agent as user_agent"
@@ -917,7 +917,8 @@ class Request_AccessLog {
 
     /* done in request->finish() before the db is closed */
     function write_sql() {
-        if (isset($this->entries) and $this->_dbi and $this->_dbi->isOpen())
+    	$dbh =& $GLOBALS['request']->_dbi;
+        if (isset($this->entries) and $dbh and $dbh->isOpen())
             foreach ($this->entries as $entry) {
                 $entry->write_sql();
             }
@@ -933,7 +934,7 @@ class Request_AccessLog {
     /* in an ideal world... */
     function write() {
         if ($this->logfile) $this->write_file();
-        if ($this->_dbi) $this->write_sql();
+        if ($this->logtable) $this->write_sql();
         unset($this->entries);
     }
 }
@@ -1047,7 +1048,7 @@ class Request_AccessLogEntry
 
     function write() {
         if ($this->_accesslog->logfile) $this->write_file();
-        if ($this->_accesslog->_dbh) $this->write_sql();
+        if ($this->_accesslog->logtable) $this->write_sql();
     }
 
     /**
@@ -1076,7 +1077,7 @@ class Request_AccessLogEntry
     /* This is better been done by apache mod_log_sql */
     /* If ACCESS_LOG_SQL & 2 we do write it by our own */
     function write_sql() {
-        $dbh =& $this->_accesslog->_dbi;
+        $dbh =& $GLOBALS['request']->_dbi;
         if ($dbh and $dbh->isOpen()) {
             $log_tbl =& $this->_accesslog->logtable;
             if ($GLOBALS['request']->get('REQUEST_METHOD') == "POST") {
@@ -1088,21 +1089,18 @@ class Request_AccessLogEntry
             } else { 
           	$this->request_args = $GLOBALS['request']->get('QUERY_STRING'); 
             }
-            $referer = ($this->referer ? $dbh->quote($this->referer) : ""); 
             $dbh->genericSqlQuery
                 (
                  sprintf("INSERT DELAYED INTO $log_tbl"
                          . " (time_stamp,remote_host,remote_user,request_method,request_line,request_uri,"
                          .   "request_args,request_time,status,bytes_sent,referer,agent,request_duration)"
-                         . ($dbh->getParam('dbtype') == 'ADODB' //adodb adds quotes, peardb not
-                            ? " VALUES(%d,%s,%s,%s,%s,%s,%s,%s,%d,%d,%s,%s,%f)"
-                            : " VALUES(%d,'%s','%s','%s','%s','%s','%s','%s','%d','%d','%s','%s','%f')"),
+                         . " VALUES(%d,%s,%s,%s,%s,%s,%s,%s,%d,%d,%s,%s,%f)",
                      $this->time,
                      $dbh->quote($this->host), $dbh->quote($this->user),
                      $dbh->quote($GLOBALS['request']->get('REQUEST_METHOD')), $dbh->quote($this->request), 
                      $dbh->quote($GLOBALS['request']->get('REQUEST_URI')), $dbh->quote($this->request_args),
                      $dbh->quote($this->_ncsa_time($this->time)), $this->status, $this->size,
-                     $referer,
+                     $dbh->quote($this->referer),
                      $dbh->quote($this->user_agent),
                      $this->duration));
         }
@@ -1307,6 +1305,17 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.77  2004/11/09 17:11:04  rurban
+// * revert to the wikidb ref passing. there's no memory abuse there.
+// * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively
+//   store page ids with getPageLinks (GleanDescription) of all existing pages, which
+//   are also needed at the rendering for linkExistingWikiWord().
+//   pass options to pageiterator.
+//   use this cache also for _get_pageid()
+//   This saves about 8 SELECT count per page (num all pagelinks).
+// * fix passing of all page fields to the pageiterator.
+// * fix overlarge session data which got broken with the latest ACCESS_LOG_SQL changes
+//
 // Revision 1.76  2004/11/09 08:15:18  rurban
 // fix ADODB quoting style
 //

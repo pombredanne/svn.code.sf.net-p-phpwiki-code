@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: SQL.php,v 1.9 2004-11-09 17:11:16 rurban Exp $');
+<?php rcs_id('$Id: SQL.php,v 1.10 2004-11-10 15:29:21 rurban Exp $');
 
 require_once('lib/WikiDB.php');
 //require_once('lib/WikiDB/backend/PearDB.php');
@@ -18,7 +18,7 @@ class WikiDB_SQL extends WikiDB
         include_once ("lib/WikiDB/backend/PearDB_".$backend_type.".php");
         $backend_class = "WikiDB_backend_PearDB_".$backend_type;
         $backend = & new $backend_class($dbparams);
-        $this->_iwpcache = array();
+        //$this->_iwpcache = array();
         
         $this->WikiDB($backend, $dbparams);
     }
@@ -45,11 +45,43 @@ class WikiDB_SQL extends WikiDB
         $pagename = (string) $pagename;
         if ($pagename === '') return false;
         //if (empty($this->_iwpcache)) {  $this->_iwpcache = array();  }
-        if (!array_key_exists($pagename, $this->_iwpcache)) {
-            $this->_iwpcache[$pagename] = $this->_backend->is_wiki_page($pagename);
+        if (empty($this->_cache->id_cache[$pagename])) {
+            $this->_cache->_id_cache[$pagename] = $this->_backend->is_wiki_page($pagename);
         }
-        return $this->_iwpcache[$pagename];
+        return $this->_cache->_id_cache[$pagename];
     }
+
+    // return with surrounding quotes as ADODB!
+    function quote ($s) {
+        return $this->_backend->_dbh->quoteSmart($s);
+    }
+    
+    function isOpen () {
+        global $request;
+        if (!$request->_dbi) return false;
+        return is_resource($this->_backend->connection());
+    }
+
+    // SQL result: for simple select or create/update queries
+    // returns the database specific resource type
+    function genericSqlQuery($sql) {
+        $result = $this->_backend->_dbh->query($sql);
+        if (DB::isError($result)) {
+            $msg = $result->getMessage();
+            trigger_error("SQL Error: ".DB::errorMessage($result), E_USER_WARNING);
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    // SQL iter: for simple select or create/update queries
+    // returns the generic iterator object (count,next)
+    function genericSqlIter($sql, $field_list = NULL) {
+        $result = $this->genericSqlQuery($sql);
+        return new WikiDB_backend_PearDB_generic_iter($this->_backend, $result);
+    }
+
 };
 
   

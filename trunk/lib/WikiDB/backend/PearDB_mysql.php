@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_mysql.php,v 1.9 2004-11-09 17:11:17 rurban Exp $');
+rcs_id('$Id: PearDB_mysql.php,v 1.10 2004-11-10 15:29:21 rurban Exp $');
 
 require_once('lib/WikiDB/backend/PearDB.php');
 
@@ -70,8 +70,8 @@ extends WikiDB_backend_PearDB
                             . " (id,version,mtime,minor_edit,content,versiondata)"
                             . " VALUES(%d,%d,%d,%d,'%s','%s')",
                             $id, $version, $mtime, $minor_edit,
-                            $dbh->quoteString($content),
-                            $dbh->quoteString($this->_serialize($data))
+                            $dbh->escapeSimple($content),
+                            $dbh->escapeSimple($this->_serialize($data))
                             ));
         // real binding (prepare,execute) only since mysqli + PHP5
         $this->_update_recent_table($id);

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.116 2004-11-05 21:03:27 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.117 2004-11-10 15:29:21 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1005,11 +1005,11 @@ extends _AnonUser
         // old-style: "'$userid'"
         // new-style: '"\$userid"' or just "userid"
         $new = str_replace(array("'",'"','\$','$'),'',$var);
-        if (!in_array($new,$valid_variables)) {
+        if (!in_array($new, $valid_variables)) {
             trigger_error("Unknown DBAuthParam statement variable: ". $new, E_USER_ERROR);
             return false;
         }
-        return !$oldstyle ? "'$".$new."'" : '"\$'.$new.'"';
+        return !$oldstyle ? "'$".$new."'" : '\$'.$new;
     }
 
     // TODO: use it again for the auth and member tables
@@ -1017,13 +1017,13 @@ extends _AnonUser
         global $request;
         $dbi = $request->getDbh();
         $this->getAuthDbh();
-        // "'\$userid"' => '%s'
+        // "'\$userid"' => %s
         // variables can be old-style: '"\$userid"' or new-style: "'$userid'" or just "userid"
         // old-style strings don't survive pear/Config/IniConfig treatment, that's why we changed it.
         $new = array();
         if (is_array($variables)) {
             for ($i=0; $i < count($variables); $i++) { 
-                $var = $this->_normalize_stmt_var($variables[$i],$oldstyle);
+                $var = $this->_normalize_stmt_var($variables[$i], $oldstyle);
                 if (!$var)
                     trigger_error(sprintf("DbAuthParams: Undefined or empty statement variable %s in %s",
                                           $variables[$i], $stmt), E_USER_WARNING);
@@ -1032,10 +1032,10 @@ extends _AnonUser
                 else $new[] = '%s';
             }
         } else {
-            $var = $this->_normalize_stmt_var($variables,$oldstyle);
+            $var = $this->_normalize_stmt_var($variables, $oldstyle);
             if (!$var)
                 trigger_error(sprintf("DbAuthParams: Undefined or empty statement variable %s in %s",
-                                      $variables,$stmt), E_USER_WARNING);
+                                      $variables, $stmt), E_USER_WARNING);
             $variables = $var;
             if (!$var) $new = ''; 
             else $new = '%s'; 
@@ -2022,6 +2022,10 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.116  2004/11/05 21:03:27  rurban
+// new DEBUG flag: _DEBUG_LOGIN (64)
+//   verbose login debug-msg (settings and reason for failure)
+//
 // Revision 1.115  2004/11/05 20:53:35  rurban
 // login cleanup: better debug msg on failing login,
 // checked password less immediate login (bogo or anon),

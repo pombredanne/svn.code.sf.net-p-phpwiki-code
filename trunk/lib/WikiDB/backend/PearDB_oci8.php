@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_oci8.php,v 1.2 2004-07-08 15:35:17 rurban Exp $');
+rcs_id('$Id: PearDB_oci8.php,v 1.3 2004-11-10 15:29:21 rurban Exp $');
 
 /**
  * Oracle extensions for the Pear DB backend.
@@ -78,7 +78,7 @@ extends WikiDB_backend_PearDB
     // Page name
     function _sql_match_clause($word) {
         $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
-        $word = $this->_dbh->quoteString($word);
+        $word = $this->_dbh->escapeSimple($word);
         return "LOWER(pagename) LIKE '%$word%'";
     }
 
@@ -88,7 +88,7 @@ extends WikiDB_backend_PearDB
     // Intermedia Text option, so let's stick to the 'simple' thing
     function _fullsearch_sql_match_clause($word) {
         $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
-        $word = $this->_dbh->quoteString($word);
+        $word = $this->_dbh->escapeSimple($word);
         return "LOWER(pagename) LIKE '%$word%' " 
                . "OR DBMS_LOB.INSTR(content, '$word') > 0";
     }
