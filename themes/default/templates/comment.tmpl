@@ -1,4 +1,4 @@
-<!-- $Id: comment.tmpl,v 1.2 2004-03-14 16:40:45 rurban Exp $ -->
+<!-- $Id: comment.tmpl,v 1.3 2004-03-14 20:08:24 rurban Exp $ -->
 <?php
 $CDATE = $Theme->formatDateTime($COMMENT_CTIME);
 $buttons = $modified = '';
@@ -23,22 +23,20 @@ if ($rev->get('mtime') != $COMMENT_CTIME) {
 <!-- FIXME: move table formatting to css -->
 <div title="<?= fmt("Comments on %s by %s.", $COMMENT_PARENT, $COMMENT_CREATOR)?>"
      class="wikicomment wikitext">
+  <div class="wikicomment-footer">
+    <strong class="floatright"><?= WikiLink($COMMENT_CREATOR, 'if_known') ?>  <?= WikiLink($page, 'known', $CDATE) ?></strong>
+    <br clear="all" class="clear-floats" />
+  </div>
+  <?php if ($buttons or $modified) { ?>
+    <div class="floatright">
+      <?= $buttons ?>
+      <?= $modified ?>
+      <br clear="all" />
+    </div>
+  <?php } ?>
   <div class="wikicomment-body">
     <?= $CONTENT ?>
   </div>
-  <div class="wikicomment-header">
-    <strong class="floatright"><?= WikiLink($COMMENT_CREATOR, 'if_known') ?>  <?= WikiLink($page, 'known', $CDATE) ?></strong>
-    <?php if (!$buttons and !$modified) { ?>
-      <br clear="all" class="clear-floats" />
-    <?php } ?>
-  </div>
-  <?php if ($buttons or $modified) { ?>
-    <div class="wikicomment-footer">
-      <?= $buttons ?>
-      <?= $modified ?>
-      <br clear="all" class="clear-floats" />
-    </div>
-  <?php } ?>
 
 </div>
 <hr class="no-css" />
