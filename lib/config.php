@@ -2,7 +2,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.8 2000-10-25 14:41:32 ahollosi Exp $');
+   rcs_id('$Id: config.php,v 1.9 2000-10-28 17:44:00 ahollosi Exp $');
 
    /*
       Constants and settings. Edit the values below for
@@ -37,6 +37,7 @@
  
    $LANG="C"; // (What should be the) Default: English
    // $LANG="nl";  // We all speak dutch, no?
+   // $LANG="es";  // We all speak spanish, no?
 
    if (!function_exists ('gettext')) {
       $lcfile = "locale/$LANG/LC_MESSAGES/phpwiki.php";
@@ -100,6 +101,9 @@
    $WikiDataBase  = "wiki"; // name of the database in Postgresql
    $WikiPageStore = "wiki"; // name of the table where pages are stored
    $ArchivePageStore = "archive"; // name of the table where pages are archived
+   $WikiLinksPageStore = "wikilinks";
+   $HotTopicsPageStore = "hottopics";
+   $HitCountPageStore = "hitcount";
    $pg_dbhost    = "localhost";
    $pg_dbport    = "5432";
 */

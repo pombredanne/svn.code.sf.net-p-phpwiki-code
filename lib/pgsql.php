@@ -1,4 +1,4 @@
-<!-- $Id: pgsql.php,v 1.1 2000-10-08 17:33:26 wainstead Exp $ -->
+<!-- $Id: pgsql.php,v 1.2 2000-10-28 17:44:00 ahollosi Exp $ -->
 <?php
 
    /*
@@ -28,7 +28,9 @@
    function OpenDataBase($table) {
       global $WikiDataBase, $pg_dbhost, $pg_dbport;
 
-      $connectstring = "host=$pg_dbhost port=$pg_dbport dbname=$WikiDataBase";
+      $connectstring = $pg_dbhost?"host=$pg_dbhost ":"";
+	 $connectstring .= $pg_dbport?"pport=$pg_dbport ":"";
+	 $connectstring .= $WikiDataBase?"dbname=$WikiDataBase":"";
 
       if (!($dbc = pg_pconnect($connectstring))) {
          echo "Cannot establish connection to database, giving up.";
@@ -96,6 +98,12 @@
       $pagehash["content"] = addslashes($pagehash["content"]);
       $pagehash["pagename"] = addslashes($pagehash["pagename"]);
       $pagehash["refs"] = serialize($pagehash["refs"]);
+
+	 // Check for empty variables which can cause a sql error
+	 if(empty($pagehash["created"]))
+	 	$pagehash["created"] = time();
+	 if(empty($pagehash["version"]))
+	 	$pagehash["version"] = 1;
 
       // record the time of modification
       $pagehash["lastmodified"] = time();
@@ -236,8 +244,9 @@
 
 
    function IsWikiPage($dbi, $pagename) {
+      global $WikiPageStore;   	
       $pagename = addslashes($pagename);
-      $query = "select count(*) from wiki where pagename='$pagename'";
+      $query = "select count(*) from $WikiPageStore where pagename='$pagename'";
       $res = pg_exec($query);
       $array = pg_fetch_array($res, 0);
       return $array[0];
@@ -245,8 +254,9 @@
 
 
    function IsInArchive($dbi, $pagename) {
+	 global $ArchivePageStore;
       $pagename = addslashes($pagename);
-      $query = "select count(*) from archive where pagename='$pagename'";
+      $query = "select count(*) from $ArchivePageStore where pagename='$pagename'";
       $res = pg_exec($query);
       $array = pg_fetch_array($res, 0);
       return $array[0];
@@ -317,12 +327,12 @@
 
 
    function IncreaseHitCount($dbi, $pagename) {
-
-      $query = "update hitcount set hits=hits+1 where pagename='$pagename'";
+      global $HitCountPageStore;
+      $query = "update $HitCountPageStore set hits=hits+1 where pagename='$pagename'";
       $res = pg_exec($dbi['dbc'], $query);
 
       if (!pg_cmdtuples($res)) {
-         $query = "insert into hitcount (pagename, hits) " .
+         $query = "insert into $HitCountPageStore (pagename, hits) " .
                   "values ('$pagename', 1)";
 	 $res = pg_exec($dbi['dbc'], $query);
       }
@@ -331,8 +341,8 @@
    }
 
    function GetHitCount($dbi, $pagename) {
-
-      $query = "select hits from hitcount where pagename='$pagename'";
+      global $HitCountPageStore;
+      $query = "select hits from $HitCountPageStore where pagename='$pagename'";
       $res = pg_exec($dbi['dbc'], $query);
       if (pg_cmdtuples($res)) {
          $hits = pg_result($res, 0, "hits");
@@ -347,10 +357,10 @@
 
    function InitMostPopular($dbi, $limit) {
 
-      global $pg_most_pop_ctr;
+      global $pg_most_pop_ctr, $HitCountPageStore;
       $pg_most_pop_ctr = 0;
 
-      $query = "select * from hitcount " .
+      $query = "select * from $HitCountPageStore " .
                "order by hits desc, pagename limit $limit";
       $res = pg_exec($dbi['dbc'], $query);
       return $res;
@@ -368,8 +378,8 @@
    }
 
    function GetAllWikiPageNames($dbi) {
-
-      $res = pg_exec($dbi['dbc'], "select pagename from wiki");
+      global $WikiPageStore;
+      $res = pg_exec($dbi['dbc'], "select pagename from $WikiPageStore");
       $rows = pg_numrows($res);
       for ($i = 0; $i < $rows; $i++) {
 	 $pages[$i] = pg_result($res, $i, "pagename");
@@ -379,11 +389,11 @@
 
    ////////////////////////////////////////
    // functionality for the wikilinks table
-/*
+
    // takes a page name, returns array of links
    function GetWikiPageLinks($dbi, $pagename) {
-
-      $query = "select frompage from wikilinks where topage='$pagename'";
+      global $WikiLinksPageStore;
+      $query = "select frompage from $WikiLinksPageStore where topage='$pagename'";
       $res = pg_exec($dbi['dbc'], $query);
       $rows = pg_numrows($res);
       for ($i = 0; $i < $rows; $i++) {
@@ -398,11 +408,11 @@
    // the $linklist is an array where the keys are the page names
 
    function SetWikiPageLinks($dbi, $pagename, $linklist) {
-
+      global $WikiLinksPageStore;
       $frompage = addslashes($pagename);
 
       // first delete the old list of links
-      $query = "delete from wikilinks where frompage='$frompage'";
+      $query = "delete from $WikiLinksPageStore where frompage='$frompage'";
 //      echo "$query<br>\n";
       $res = pg_exec($dbi['dbc'], $query);
 
@@ -414,12 +424,12 @@
       reset($linklist);
       while (list($topage, $count) = each($linklist)) {
          $topage = addslashes($topage);
-         $query = "insert into wikilinks (frompage, topage) " .
+         $query = "insert into $WikiLinksPageStore (frompage, topage) " .
                   "values ('$frompage', '$topage')";
 //         echo "$query<br>\n";
          $res = pg_exec($dbi['dbc'], $query);
       }
    }
-*/
+
 
 ?>
