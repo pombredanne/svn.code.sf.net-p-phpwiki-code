@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.4 2004-04-20 17:08:19 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.5 2004-04-20 17:21:57 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -95,7 +95,7 @@ function IniConfig($file)
     global $_IC_VALID_VALUE, $_IC_VALID_BOOL;
 
     foreach ($_IC_VALID_VALUE as $item) {
-        if (array_key_exists($item, $rs)) {
+        if (array_key_exists($item, $rs) and !defined($item)) {
             define($item, $rs[$item]);
         }
     }
@@ -107,16 +107,18 @@ function IniConfig($file)
     foreach ($_IC_VALID_BOOL as $item) {
         if (array_key_exists($item, $rs)) {
             $val = $rs[$item];
-            if (!$val) {
+            if (!$val and !defined($item)) {
                 define($item, false);
             }
             else if (strtolower($val) == 'false' ||
                      strtolower($val) == 'no' ||
                      $val == '0') {
-                define($item, false);
+                if (!defined($item))
+                    define($item, false);
             }
             else {
-                define($item, true);
+                if (!defined($item))
+                    define($item, true);
             }
         }
     }
@@ -229,6 +231,14 @@ function IniConfig($file)
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/04/20 17:08:19  rurban
+// Some IniConfig fixes: prepend our private lib/pear dir
+//   switch from " to ' in the auth statements
+//   use error handling.
+// WikiUserNew changes for the new "'$variable'" syntax
+//   in the statements
+// TODO: optimization to put config vars into the session.
+//
 
 // (c-file-style: "gnu")
 // Local Variables:
