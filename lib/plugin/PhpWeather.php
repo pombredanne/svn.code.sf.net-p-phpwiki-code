@@ -1,39 +1,33 @@
 <?php // -*-php-*-
 rcs_id('$Id PhpWeather.php 2002-08-26 15:30:13 rurban$');
 /**
- * This plugin requires a separate program called PHPWeather.
- * For more information and to download PHPWeather,
- * See: http://sourceforge.net/projects/phpweather/
+ * This plugin requires a separate program called PhpWeather. For more
+ * information and to download PhpWeather, see:
  *
- * There are still some problems with this plugin.
- *
- * Make sure you download the latest CVS version of PHPWeather from
- * http://phpweather.sourceforge.net/downloads/
- *
- * Coming soon: When no ICAO code is provided, a popup of cities will be presented.
+ *   http://sourceforge.net/projects/phpweather/
  *
  * Usage:
- * <?plugin PhpWeather?>
+ *
+ * <?plugin PhpWeather ?>
+ * <?plugin PhpWeather menu=true ?>
  * <?plugin PhpWeather icao=KJFK ?>
- * <?plugin PhpWeather icao=LOWG language=en version=1.61 location=Graz-Thalerhof-Flughafen ?>
+ * <?plugin PhpWeather lang=en ?>
+ * <?plugin PhpWeather units=only_metric ?>
+ * <?plugin PhpWeather icao||=CYYZ lang||=en menu=true ?>
+ *
+ * If you want a menu, and you also want to change the default station
+ * or language, then you have to use the ||= form, or else the user
+ * wont be able to change the station or language.
+ *
+ * The units argument should be one of only_metric, only_imperial,
+ * both_metric, or both_imperial.
  */
 
-// Name the PHPWeather folder 'phpweather' and put it anywhere inside
-// phpwiki, such as the plugin folder
-if (!defined('PHPWEATHER_FOLDER')) {
-    if (preg_match('/sourceforge\.net/', SERVER_NAME)) {
-        define('PHPWEATHER_FOLDER', '/home/groups/p/ph/phpwiki/htdocs/demo/lib/plugin/phpweather');
-        define('PHPWEATHER_VERSION', 1.92);
-    } elseif (isWindows()) {
-        //define('PHPWEATHER_FOLDER', 'V:/home/rurban/phpweather-1.61');
-        //define('PHPWEATHER_VERSION', 1.61);
-        define('PHPWEATHER_FOLDER', 'V:/home/rurban/phpweather');
-        define('PHPWEATHER_VERSION', 1.92);
-    } else { // defaults to a parallel dir to phpwiki
-        define('PHPWEATHER_VERSION', 1.92);
-        define('PHPWEATHER_FOLDER', PHPWIKI_DIR . '/../phpweather');
-    }
-}
+// We require the base class from PHP Weather, adjust this to match
+// the location of PhpWeather on your server:
+require_once($_SERVER['DOCUMENT_ROOT'] . '/phpweather/phpweather.php');
+require_once(PHPWEATHER_BASE_DIR . '/output/pw_images.php');
+require_once(PHPWEATHER_BASE_DIR . '/pw_utilities.php');
 
 class WikiPlugin_PhpWeather
 extends WikiPlugin
@@ -41,113 +35,125 @@ extends WikiPlugin
     function getName () {
         return _("PhpWeather");
     }
+    
     function getDescription () {
         return _("The PhpWeather plugin provides weather reports from the Internet.");
     }
     function getDefaultArguments() {
         global $LANG;
-        return array('icao' => 'KJFK',
-                     'language' => $LANG == 'C' ? 'en' : $LANG,
-                     'version'  => PHPWEATHER_VERSION,
-                     'location' => '', // needed for version < 1.9
-                     'popups' => 0
-                     );
+        return array('icao'  => 'EKAH',
+                     'cc'    => 'DK',
+                     'lang'  => 'en',
+                     'menu'  => false,
+                     'units' => 'both_metric');
     }
+    
     function run($dbi, $argstr, $request) {
         extract($this->getArgs($argstr, $request));
-        $html = HTML::form(array('action' => $request->getURLtoSelf(),
-                                 'method' => "POST"));
-        if ($version > 1.7) { // The newer version as class
-            require_once(PHPWEATHER_FOLDER . '/phpweather.php');
-            $w = new phpweather(array() /*$properties*/);
-        } else { // The old and latest stable release (currently 1.61)
-            @include(PHPWEATHER_FOLDER . "/locale_$language.inc");
-            @include(PHPWEATHER_FOLDER . '/config-dist.inc');
-            @include(PHPWEATHER_FOLDER . '/config.inc');
-            include(PHPWEATHER_FOLDER . '/phpweather.inc');
-            $cities = array(
-                            'BGTL' => 'Thule A. B., Greenland',
-                            'EGKK' => 'London / Gatwick Airport, United Kingdom',
-                            'EKCH' => 'Copenhagen / Kastrup, Denmark',
-                            'ENGM' => 'Oslo / Gardermoen, Norway',
-                            'ESSA' => 'Stockholm / Arlanda, Sweden',
-                            'FCBB' => 'Brazzaville / Maya-Maya, Congo',
-                            'LEMD' => 'Madrid / Barajas, Spain',
-                            'LFPB' => 'Paris / Le Bourget, France',
-                            'LHBP' => 'Budapest / Ferihegy, Hungary',
-                            'LIRA' => 'Roma / Ciampino, Italy',
-                            'LMML' => 'Luqa International Airport, Malta',
-                            'KNYC' => 'New York City, Central Park, NY, United States',
-                            'NZCM' => 'Williams Field, Antarctic',
-                            'UUEE' => 'Moscow / Sheremet\'Ye , Russian Federation',
-                            'RKSS' => 'Seoul / Kimp\'O International Airport, Korea',
-                            'YSSY' => 'Sydney Airport, Australia',
-                            'ZBAA' => 'Beijing, China'
-                            );
-        }
-        if (!$icao) $icao = $request->getArg('icao');
-        if ($icao) {
-            if ($version > 1.7) { // The newer version as class
-                $w->set_icao($icao);
-                if (!in_array($language,explode(',','en,da,de,hu,no'))) $language = 'en';
-                $w->set_language($language);
-                $m = $w->print_pretty();
-            } else {
-                $metar = get_metar($icao);
-                $data = process_metar($metar);
-                // catch output into buffer and return it as string
-                ob_start();
-                pretty_print_metar($metar, $location);
-                $m = ob_get_contents();
-                ob_end_clean();
+        $html = HTML();
+        
+        $w = new phpweather(); // Our weather object
+        
+        if (!empty($icao)) {
+            /* We assign the ICAO to the weather object: */
+            $w->set_icao($icao);
+            if (!$w->get_country_code()) {
+                /* The country code couldn't be resolved, so we
+                 * shouldn't use the ICAO: */
+                trigger_error(sprintf(_("The ICAO '%s' wasn't recognized."),
+                                      $icao), E_USER_NOTICE);
+                $icao = '';
             }
-            $html->pushContent(new RawXml($m));
         }
-        $popups = $popups || !$icao;
-        if ($popups) {
-            // display the popups: cc and stations
-            $options = HTML();
-            if ($version > 1.7) {
-                $countries = $GLOBALS['obj']->db->get_countries();
-                $selected_cc = $request->getArg('cc');
-                while (list($cc, $country) = each($countries)) {
-                    if ($cc == $selected_cc) {
-                        $options->pushContent(HTML::option(array('value' => $cc, 'selected' => 'selected'), 
-                                                           ($country ? $country : $cc) . "\n"));
-                    } else {
-                        $options->pushContent(HTML::option(array('value' => $cc),
-                                                           ($country ? $country : $cc) . "\n"));
-                    }
-                }
-                if ($selected_cc) $html->pushContent(HTML::input(array('type' => "hidden", 'name' => "old_cc", 'value' => $selected_cc))); 
-                $html->pushContent(HTML::select(array('name' => "cc", 'id' => 'cc'),
-                                                $options));
+        
+        if (!empty($icao)) {
+            
+            /* We check and correct the language if necessary: */
+            if (!in_array($lang, array_keys($w->get_languages('text')))) {
+                trigger_error(sprintf(_("%s does not know about the language '%s', using 'en' instead."),
+                                      $this->getName(), $lang), E_USER_NOTICE);
+                $lang = 'en';
             }
-            if ($selected_cc or $version < 1.7) {
-                $options = HTML();
-                $country = '';
-                if ($version > 1.7)
-                    $cities = $GLOBALS['obj']->db->get_icaos($selected_cc, $country); 
-                $selected_icao = $request->getArg('icao');
-                while (list($icao, $name) = each($cities)) { 
-                    if ($icao == $selected_icao) {
-                        $options->pushContent(HTML::option(array('value' => $icao, 'selected' => 'selected'), 
-                                                           ($name ? $name : $icao) . "\n"));
-                    } else {
-                        $options->pushContent(HTML::option(array('value' => $icao), 
-                                                           ($name ? $name : $icao) . "\n"));
-                    }
-                }
-                if ($selected_icao) $html->pushContent(HTML::input(array('type' => "hidden",'name' => "old_icao",'value' => $selected_icao))); 
-                $html->pushContent(HTML::select(array('name' => "icao", 'id' => 'icao'),
-                                                $options));
-            }
-            $html->pushContent(HTML::input(array('type' => "submit")));
+            
+            $class = "pw_text_$lang";
+            require_once(PHPWEATHER_BASE_DIR . "/output/$class.php");
+            
+            $t = new $class($w);
+            $t->set_pref_units($units);            
+            $i = new pw_images($w);
+
+            $i_temp = HTML::img(array('src' => $i->get_temp_image()));
+            $i_wind = HTML::img(array('src' => $i->get_winddir_image()));
+            $i_sky  = HTML::img(array('src' => $i->get_sky_image()));
+
+            $m = $t->print_pretty();
+            
+            $m_td = HTML::td(HTML::p(new RawXml($m)));
+            
+            $i_tr = HTML::tr();
+            $i_tr->pushContent(HTML::td($i_temp));
+            $i_tr->pushContent(HTML::td($i_wind));
+            
+            $i_table = HTML::table($i_tr);
+            $i_table->pushContent(HTML::tr(HTML::td(array('colspan' => '2'),
+                                                    $i_sky)));
+            
+            $tr = HTML::tr();
+            $tr->pushContent($m_td);
+            $tr->pushContent(HTML::td($i_table));
+            
+            $html->pushContent(HTML::table($tr));
+            
         }
-        // trigger_error("required argument 'icao' missing");
+        
+        /* We make a menu if asked to, or if $icao is empty: */
+        if ($menu || empty($icao)) {
+            
+            $form_arg = array('action' => $request->getURLtoSelf(),
+                              'method' => 'get');
+            
+            /* The country box is always part of the menu: */
+            $p1 = HTML::p(new RawXml(get_countries_select($w, $cc)));
+            
+            /* We want to save the language: */
+            $p1->pushContent(HTML::input(array('type'  => 'hidden',
+                                               'name'  => 'lang',
+                                               'value' => $lang)));
+            /* And also the ICAO: */
+            $p1->pushContent(HTML::input(array('type'  => 'hidden',
+                                               'name'  => 'icao',
+                                               'value' => $icao)));
+            
+            $caption = (empty($cc) ? _("Submit country") : _("Change country"));
+            $p1->pushContent(HTML::input(array('type'  => 'submit',
+                                               'value' => $caption)));
+            
+            $html->pushContent(HTML::form($form_arg, $p1));
+            
+            if (!empty($cc)) {
+                /* We have selected a country, now display a list with
+                 * the available stations in that country: */
+                $p2 = HTML::p();
+                
+                /* We need the country code after the form is submitted: */
+                $p2->pushContent(HTML::input(array('type'  => 'hidden',
+                                                   'name'  => 'cc',
+                                                   'value' => $cc)));
+
+                $p2->pushContent(new RawXml(get_stations_select($w, $cc, $icao)));
+                $p2->pushContent(new RawXml(get_languages_select($w, $lang)));
+                $p2->pushContent(HTML::input(array('type'  => 'submit',
+                                                   'value' => 'Submit location')));
+
+                $html->pushContent(HTML::form($form_arg, $p2));
+                
+            }
+            
+        }
+        
         return $html;
     }
-}
+};
 
 // For emacs users
 // Local Variables:
