@@ -1,5 +1,5 @@
 ! Synopsis
-TextFormateringsregler%%%
+Textformateringsregler%%%
 __Markering:__ '____' för lutande, _''''_ för fet, '____'_''''_ för både och.%%%
 __Listor:__ * för punktlistor, # för numrerade listor, ''__;__ term __:__ definition'' för definitionslistor.%%%
 __Referenser:__ !BindIhopOrdMedStoraBokstäver eller använd hakar för en [[länk] eller URL [[!http://cool.wiki.int/].%%%
