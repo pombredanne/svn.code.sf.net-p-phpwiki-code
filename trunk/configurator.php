@@ -1,11 +1,12 @@
 <?php 
+// $Id: configurator.php,v 1.24 2005-02-15 15:58:37 rurban Exp $
 /**
- * Started automatically the first time by IniConfig(config/config.ini) if it doesn't exist
+ * Started automatically the first time by IniConfig("config/config.ini") if it doesn't exist
  *
  * 1.3.11 TODO:
+ * fix SQL quotes, AUTH_ORDER quotes and file forward slashes
  * read config-default.ini
  * read config-dist.ini into sections, comments, and optional/required settings
- * convert DATABASE and AUTH arrays.
  *
  * 1.3.9 Todo: 
  * validate input (fix javascript, add POST checks)
@@ -18,7 +19,7 @@
  */
 
 $tdwidth = 700;
-$config_file = 'config/config.ini';
+$config_file = (substr(PHP_OS,0,3) == 'WIN') ? 'config\\config.ini' : 'config/config.ini';
 $fs_config_file = dirname(__FILE__) . (substr(PHP_OS,0,3) == 'WIN' ? '\\' : '/') . $config_file;
 if (isset($HTTP_POST_VARS['create']))  header('Location: configurator.php?create=1#create');
 printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'iso-8859-1'); 
@@ -27,7 +28,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'iso-8859-1');
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.23 2004-11-30 12:07:10 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.24 2005-02-15 15:58:37 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
@@ -40,8 +41,8 @@ tr { border: none }
 tr.hidden { border: none; display: none; }
 td.part { background-color: #eeeeee; color: inherit; }
 td.instructions { background-color: #ffffee; width: <?php echo $tdwidth ?>px; color: inherit; }
-td.unchangeable-variable-top   { border-bottom: none; background-color: #eeeeee; color:inherit; }
-td.unchangeable-variable-left  { border-top: none; background-color: #eeeeee; color:inherit; }
+td.unchangeable-variable-top   { border-bottom: none; background-color: #ffffee; color:inherit; }
+td.unchangeable-variable-left  { border-top: none; background-color: #ffffee; color:inherit; }
 -->
 </style>
 <script language="JavaScript" type="text/javascript">
@@ -125,7 +126,7 @@ function do_init() {
       <h1>Configuration for PhpWiki <?php echo $config_file ?></h1>
 
 <?php
-define('DEBUG', 1);
+//define('DEBUG', 1);
 /**
  * The Configurator is a php script to aid in the configuration of PhpWiki.
  * Parts of this file are based on PHPWeather's configurator.php file.
@@ -173,15 +174,16 @@ $preamble = "
 ; Note that certain characters are used as comment char and therefore 
 ; these entries must be in double-quotes. Such as \":\", \";\", \",\" and \"|\"
 ;
-; This file is divided into seven parts: Parts Zero, One, Two, Three,
-; Four, Five and Six. Each one has different configuration settings you can
+; This file is divided into eight parts: Parts Zero, One, Two, Three,
+; Four, Five, Six and Seven. Each one has different configuration settings you can
 ; change; in all cases the default should work on your system,
 ; however, we recommend you tailor things to your particular setting.
 ";
 
 $properties["Part Zero"] =
 new part('_part0', $SEPARATOR."\n", "
-Part Zero: Latest Development and Tricky Options");
+Part Zero: (optional)
+Latest Development and Tricky Options");
 
 if (substr(PHP_OS,0,3) == 'WIN') {
     $include_path = dirname(__FILE__) . ';' . ini_get('include_path');
@@ -211,6 +213,93 @@ Set DEBUG to 1 to view the XHTML and CSS validator icons, page
 processing timer, and possibly other debugging messages at the
 bottom of each page. 65 for a more verbose level. 
 See lib/config.php for all supported values.");
+
+$properties["ENABLE_USER_NEW"] =
+new boolean_define_commented_optional
+('ENABLE_USER_NEW', 
+ array('true'  => "Enabled",
+       'false' => "Disabled."), "
+Enable the new method of handling WikiUser Authetincation and Preferences. 
+It's best to leave it on, and only disable it if you have problems with it.
+Servers with memory-limit problems might want to turn it off. It costs ~300KB
+Default: true");
+
+$properties["ENABLE_PAGEPERM"] =
+new boolean_define_commented_optional
+('ENABLE_PAGEPERM', 
+ array('true'  => "Enabled",
+       'false' => "Disabled."), "
+I suspect ACL page permissions to degrade speed by 10%. Default: true");
+
+$properties["ENABLE_EDIT_TOOLBAR"] =
+new boolean_define_commented_optional
+('ENABLE_EDIT_TOOLBAR', 
+ array('true'  => "Enabled",
+       'false' => "Disabled."), "
+Graphical buttons on edit. Default: true
+Reportedly broken on MacOSX Safari");
+
+$properties["JS_SEARCHREPLACE"] =
+new boolean_define_commented_optional
+('JS_SEARCHREPLACE', 
+ array('true'  => "Enabled",
+       'false' => "Disabled."), "
+Adds two additional buttons in EDIT_TOOLBAR, Search&Replace and Undo. 
+Undo is experimental.");
+
+$properties["ENABLE_DOUBLECLICKEDIT"] =
+new boolean_define_commented_optional
+('ENABLE_DOUBLECLICKEDIT', 
+ array('true'  => "Enabled",
+       'false' => "Disabled."), "
+Default: true");
+
+$properties["ENABLE_XHTML_XML"] =
+new boolean_define_commented_optional
+('ENABLE_XHTML_XML', 
+ array('true'  => "Enabled",
+       'false' => "Disabled."), "
+Needed for inlined SVG and MathM, but may conflict with document.write(). 
+Experimental. Default: false");
+
+$properties["USECACHE"] =
+new boolean_define_commented_optional
+('USECACHE', 
+ array('true'  => "Enabled",
+       'false' => "Disabled."), "
+Store DB query results in memory to avoid duplicate queries.
+Disable only for old php's with low memory or memory_limit=8MB.
+Default: true");
+
+$properties["ENABLE_SPAMASSASSIN"] =
+new boolean_define_commented_optional
+('ENABLE_SPAMASSASSIN', 
+ array('true'  => "Enabled",
+       'false' => "Disabled."), "
+Needs babycart installed. See http://phpwiki.org/SpamAssassinIntegration
+Optionally define BABYCART_PATH. Default: /usr/local/bin/babycart");
+
+$properties["GOOGLE_LINKS_NOFOLLOW"] =
+new boolean_define_commented_optional
+('GOOGLE_LINKS_NOFOLLOW', 
+ array('true'  => "Enabled",
+       'false' => "Disabled."), "
+If enabled ref=nofollow is added to all external links to discourage spam. 
+You might want to turn it off, if you want to improve pageranks on external links.");
+
+$properties["ENABLE_LIVESEARCH"] =
+new boolean_define_commented_optional
+('ENABLE_LIVESEARCH', 
+ array('true'  => "Enabled",
+       'false' => "Disabled."), "
+LiveSearch enables immediate title search results via XMLHttpRequest.
+Displays the results in a dropdown under the titlesearch inputbox
+while typing. (experimental, only with certain themes)
+You'll have to copy livesearch.js from http://blog.bitflux.ch/wiki/LiveSearch
+to themes/default/ and define ENABLE_LIVESEARCH in config.ini to true. 
+See themes/blog/themeinfo.php.
+Currently we use the bitflux.ch library, but we will change to 
+the russian acdropdown soon. http://momche.net/publish/article.php?page=acdropdown");
 
 $properties["Part One"] =
 new part('_partone', $SEPARATOR."\n", "
@@ -304,8 +393,6 @@ RFC 2822 e-mail messages.
 Probably, you can just leave this set to false, in which case you get
 raw ('binary' content-encoding) page dumps.");
 
-
-
 $properties["HTML Dump Filename Suffix"] =
 new _variable('HTML_DUMP_SUFFIX', ".html", "
 Here you can change the filename suffix used for XHTML page dumps.
@@ -361,7 +448,7 @@ new _define_selection_optional
        'STRICT' => 'STRICT',
        'NO_CACHE' => 'NO_CACHE',
        'ALLOW_STALE' => 'ALLOW_STALE'),
- "
+"
 HTTP CACHE_CONTROL
 
 This controls how PhpWiki sets the HTTP cache control
@@ -417,7 +504,7 @@ new boolean_define_commented_optional
 ('WIKIDB_NOCACHE_MARKUP',
  array('false' => 'Enable markup cache',
        'true' => 'Disable markup cache'),
- "
+"
 MARKUP CACHING
 
 PhpWiki normally caches a preparsed version (i.e. mostly
@@ -454,29 +541,31 @@ $properties["Part Two"] =
 new part('_parttwo', $SEPARATOR."\n", "
 
 Part Two:
-Database Selection
+Database Configuration
 ");
 
 $properties["Database Type"] =
 new _define_selection("DATABASE_TYPE",
-              array('dba'   => "dba handler",
+              array('dba'   => "dba",
                     'SQL'   => "SQL PEAR",
                     'ADODB' => "SQL ADODB",
+                    'PDO'   => "PDO (php5 only)",
                     'file'   => "flatfile",
                     'cvs'   => "CVS File handler"), "
 Select the database backend type:
 Choose dba (default) to use one of the standard UNIX dba libraries. This is the fastest.
 Choose ADODB or SQL to use an SQL database with ADODB or PEAR.
+Choose PDO on php5 to use an SQL database.
 flatfile is simple and slow.
-CVS is highly experimental.
-Recommended is dba or SQL PEAR.");
+CVS is highly experimental and slow.
+Recommended is dba or SQL: PEAR or ADODB.");
 
-$properties["SQL dsn Setup"] =
+$properties["SQL DSN Setup"] =
 new unchangeable_variable('_sqldsnstuff', "", "
 For SQL based backends, specify the database as a DSN
 The most general form of a DSN looks like:
 <pre>
-  phptype(dbsyntax)://username:password@protocol+hostspec/database
+  phptype(dbsyntax)://username:password@protocol+hostspec/database?option=value
 </pre>
 For a MySQL database, the following should work:
 <pre>
@@ -486,22 +575,26 @@ To connect over a unix socket, use something like
 <pre>
    mysql://user:password@unix(/path/to/socket)/databasename
 </pre>
-<pre>'dsn' => 'mysql://guest@:/var/lib/mysql/mysql.sock/test',
-'dsn' => 'mysql://guest@localhost/test',
-'dsn' => 'pgsql://localhost/test',</pre>");
+<pre>
+  DATABASE_DSN = mysql://guest@:/var/lib/mysql/mysql.sock/phpwiki
+  DATABASE_DSN = mysql://guest@localhost/phpwiki
+  DATABASE_DSN = pgsql://localhost/user_phpwiki
+</pre>");
 
 // Choose ADODB or SQL to use an SQL database with ADODB or PEAR.
 // Choose dba to use one of the standard UNIX dbm libraries.
 
 $properties["SQL Type"] =
 new _variable_selection('_dsn_sqltype',
-              array('mysql' => "MySQL",
-                    'pgsql' => "PostgreSQL",
-                    'mssql' => "Microsoft SQL Server",
-                    'oci8'  => "Oracle 8",
-                    'mysqli' => "mysqli",
-                    'mysqlt' => "mysqlt",
-                    'ODBC' => "ODBC (only ADODB)",
+              array('mysql'  => "MySQL",
+                    'pgsql'  => "PostgreSQL",
+                    'mssql'  => "Microsoft SQL Server",
+                    'oci8'   => "Oracle 8",
+                    'mysqli' => "mysqli (only ADODB)",
+                    'mysqlt' => "mysqlt (only ADODB)",
+                    'ODBC'   => "ODBC (only ADODB or PDO)",
+                    'firebird' => "Firebird (only PDO)",
+                    'oracle'  => "Oracle (only PDO)",
 ), "
 SQL DB types. The DSN hosttype.");
 
@@ -509,13 +602,9 @@ $properties["SQL User"] =
 new _variable('_dsn_sqluser', "wikiuser", "
 SQL User Id:");
 
-
-
 $properties["SQL Password"] =
 new _variable('_dsn_sqlpass', "", "
 SQL Password:");
-
-
 
 $properties["SQL Database Host"] =
 new _variable('_dsn_sqlhostorsock', "localhost", "
@@ -525,23 +614,24 @@ To connect over a local named socket, use something like
 <pre>
   unix(/var/lib/mysql/mysql.sock)
 </pre>
-here.");
-
-
+here. 
+mysql on Windows via named pipes might need 127.0.0.1");
 
 $properties["SQL Database Name"] =
 new _variable('_dsn_sqldbname', "phpwiki", "
 SQL Database Name:");
 
-list($dsn_sqltype,) = $properties["SQL Type"]->value();
+$dsn_sqltype = $properties["SQL Type"]->value();
 $dsn_sqluser = $properties["SQL User"]->value();
 $dsn_sqlpass = $properties["SQL Password"]->value();
 $dsn_sqlhostorsock = $properties["SQL Database Host"]->value();
 $dsn_sqldbname = $properties["SQL Database Name"]->value();
+$dsn_sqlstring = $dsn_sqltype."://{$dsn_sqluser}:{$dsn_sqlpass}@{$dsn_sqlhostorsock}/{$dsn_sqldbname}";
 
 $properties["SQL dsn"] =
-new unchangeable_variable("DATABASE_DSN", 
-"DATABASE_DSN = \"\$dsn_sqltype://{$dsn_sqluser}:{$dsn_sqlpass}@{$dsn_sqlhostorsock}/{$dsn_sqldbname}\"");
+new unchangeable_define("DATABASE_DSN", 
+                        "DATABASE_DSN = \"$dsn_sqlstring\"", "
+Calculated from the settings above:");
 
 $properties["Filename / Table name Prefix"] =
 new _define_commented("DATABASE_PREFIX", "", "
@@ -561,31 +651,33 @@ A word of warning - any prefix defined above will be prepended to whatever is gi
 ");
 
 //TODO: $TEMP
+$temp = !empty($_ENV['TEMP']) ? $_ENV['TEMP'] : "/tmp";
 $properties["dba directory"] =
-new _define("DATABASE_DIRECTORY", "/tmp", "
+new _define("DATABASE_DIRECTORY", $temp, "
 dba directory:");
 
 // TODO: list the available methods
 $properties["dba handler"] =
 new _define_selection('DATABASE_DBA_HANDLER',
-              array('gdbm' => "Gdbm - GNU database manager",
+              array('gdbm' => "Gdbm - GNU database manager (recommended)",
                     'dbm'  => "DBM - Redhat default. On sf.net there's dbm and gdbm",
                     'db2'  => "DB2 - Sleepycat Software's DB2",
-                    'db3'  => "DB3 - Sleepycat Software's DB3. Fine on Windows but not on every Linux"), "
-Use 'gdbm', 'dbm', 'db2' or 'db3' depending on your DBA handler methods supported:");
+                    'db3'  => "DB3 - Sleepycat Software's DB3. Default on Windows but not on every Linux",
+                    'db4'  => "DB4 - Sleepycat Software's DB4."), "
+Use 'gdbm', 'dbm', 'db2', 'db3' or 'db4' depending on your DBA handler methods supported: <br >  "
+                      . (function_exists("dba_handlers") ? join(", ",dba_handlers()) : ""));
 
 $properties["dba timeout"] =
-new _define("DATABASE_TIMEOUT", "20", "
-Recommended values are 20 or 5.");
+new numeric_define("DATABASE_TIMEOUT", "12", "
+Recommended values are 10-20.");
 
-/*
 ///////////////////
 
 $properties["Page Revisions"] =
 new unchangeable_variable('_parttworevisions', "", "
 
-The next section controls how many old revisions of each page are
-kept in the database.
+Section 2a: Archive Cleanup
+The next section controls how many old revisions of each page are kept in the database.
 
 There are two basic classes of revisions: major and minor. Which
 class a revision belongs in is determined by whether the author
@@ -638,31 +730,42 @@ is not changed.
 // an unchangeable property. You'll have to edit the resulting
 // config file if you really want to change these from the default.
 
-$properties["Expiration Parameters for Major Edits"] =
-new unchangeable_variable('ExpireParams|major',
-"\$ExpireParams['major'] = array('max_age' => 32,
-                               'keep'    => 8);", "
-Keep up to 8 major edits, but keep them no longer than a month.");
+$properties["Major Edits: keep minumum days"] =
+    new numeric_define("MAJOR_MIN_KEEP", "2147483647", "
+Default: Keep at least for unlimited time. 
+Set to 0 to enable archive cleanup");
+$properties["Minor Edits: keep minumum days"] =
+    new numeric_define("MINOR_MIN_KEEP", "2147483647", "
+Default: Keep at least for unlimited time. 
+Set to 0 to enable archive cleanup");
 
-$properties["Expiration Parameters for Minor Edits"] =
-new unchangeable_variable('ExpireParams|minor',
-"\$ExpireParams['minor'] = array('max_age' => 7,
-                               'keep'    => 4);", "
-Keep up to 4 minor edits, but keep them no longer than a week.");
+$properties["Major Edits: how many"] =
+    new numeric_define("MAJOR_KEEP", "8", "
+Keep up to 8 major edits");
+$properties["Major Edits: how many days"] =
+    new numeric_define("MAJOR_MAX_AGE", "32", "
+keep them no longer than a month");
 
+$properties["Minor Edits: how many"] =
+    new numeric_define("MINOR_KEEP", "4", "
+Keep up to 4 minor edits");
+$properties["Minor Edits: how many days"] =
+    new numeric_define("MINOR_MAX_AGE", "7", "
+keep them no longer than a week");
 
-
-$properties["Expiration Parameters by Author"] =
-new unchangeable_variable('ExpireParams|author',
-"\$ExpireParams['author'] = array('max_age'  => 365,
-                                'keep'     => 8,
-                                'min_age'  => 7,
-                                'max_keep' => 20);", "
-Keep the latest contributions of the last 8 authors up to a year.
+$properties["per Author: how many"] =
+    new numeric_define("AUTHOR_KEEP", "8", "
+Keep the latest contributions of the last 8 authors,");
+$properties["per Author: how many days"] =
+    new numeric_define("AUTHOR_MAX_AGE", "365", "
+up to a year.");
+$properties["per Author: keep minumum days"] =
+    new numeric_define("AUTHOR_MIN_AGE", "7", "
 Additionally, (in the case of a particularly active page) try to
-keep the latest contributions of all authors in the last week (even
-if there are more than eight of them,) but in no case keep more
-than twenty unique author revisions.");
+keep the latest contributions of all authors in the last week (even if there are more than eight of them,)");
+$properties["per Author: max revisions"] =
+    new numeric_define("AUTHOR_MAX_KEEP", "20", "
+but in no case keep more than twenty unique author revisions.");
 
 /////////////////////////////////////////////////////////////////////
 
@@ -670,85 +773,395 @@ $properties["Part Three"] =
 new part('_partthree', $SEPARATOR."\n", "
 
 Part Three: (optional)
-User Authentication
+Basic User Authentication Setup
 ");
 
-$properties["User Authentication"] =
-new boolean_define_optional('ALLOW_USER_LOGIN',
-                    array('true'  => "true. Check any defined passwords. (Default)",
-                          'false' => "false. Don't check passwords. Legacy &lt; 1.3.4"), "
-If ALLOW_USER_LOGIN is true, any defined internal and external
-authentication method is tried. 
-If not, we don't care about passwords, but check the next two constants.");
+$properties["Publicly viewable"] =
+new boolean_define_optional('ALLOW_ANON_USER',
+                    array('true'  => "true. Permit anonymous view. (Default)",
+                          'false' => "false. Force login even on view (strictly private)"), "
+If ALLOW_ANON_USER is false, you have to login before viewing any page or doing any other action on a page.");
 
-$properties["HTTP Authentication"] =
-new boolean_define_optional('ALLOW_HTTP_AUTH_LOGIN',
-                    array('false' => "false. Ignore HTTP Authentication. (Default)",
-			  'true'  => "true. Allow .htpasswd users login automatically."), "
-The wiki can be optionally be protected by HTTP Auth. Use the username and password 
-from there, and if this fails, try the other methods also.");
+$properties["Allow anonymous edit"] =
+new boolean_define_optional('ALLOW_ANON_EDIT',
+                    array('true'  => "true. Permit anonymous users to edit. (Default)",
+                          'false' => "false. Force login on edit (moderately locked)"), "
+If ALLOW_ANON_EDIT is false, you have to login before editing or changing any page. See below.");
 
-$properties["Strict Login"] =
+$properties["Allow Bogo Login"] =
 new boolean_define_optional('ALLOW_BOGO_LOGIN',
-                    array('true'  => "Users may Sign In with any WikiWord",
-                          'false' => "Only admin may Sign In"), "
-If ALLOW_BOGO_LOGIN is true, users are allowed to login (with
-any/no password) using any userid which: 1) is not the ADMIN_USER,
-2) is a valid WikiWord (matches \$WikiNameRegexp.)
-If true, users may be created by themselves. Otherwise we need seperate auth.");
+                    array('true'  => "true. Users may Sign In with any WikiWord, without password. (Default)",
+                          'false' => "false. Require stricter authentication."), "
+If ALLOW_BOGO_LOGIN is false, you may not login with any wikiword username and empty password. 
+If true, users are allowed to create themselves with any WikiWord username. See below.");
 
-$properties["Require Sign In Before Editing"] =
-new boolean_define_optional('REQUIRE_SIGNIN_BEFORE_EDIT',
-                    array('false' => "Do not require Sign In",
-                          'true'  => "Require Sign In"), "
-If set, then if an anonymous user attempts to edit a page he will
-be required to sign in.  (If ALLOW_BOGO_LOGIN is true, of course,
-no password is required, but the user must still sign in under
-some sort of BogoUserId.)");
+$properties["Allow User Passwords"] =
+new boolean_define_optional('ALLOW_USER_PASSWORDS',
+                    array('true'  => "True user authentication with password checking. (Default)",
+                          'false' => "false. Ignore authentication settings below."), "
+If ALLOW_USER_PASSWORDS is true, the authentication settings below define where and how to 
+check against given username/passwords. For completely security disable BOGO_LOGIN and ANON_EDIT above.");
+
+$properties["Allow User Passwords"] =
+    new array_define('USER_AUTH_ORDER', array("PersonalPage", "Db"), "
+Many different methods can be used to check user's passwords. 
+Try any of these in the given order:
+<dl>
+<dt>BogoLogin</dt>
+	<dd>WikiWord username, with no *actual* password checking,
+        although the user will still have to enter one.</dd>
+<dt>PersonalPage</dt>
+	<dd>Store passwords in the users homepage metadata (simple)</dd>
+<dt>Db</dt>
+	<dd>Use DBAUTH_AUTH_* (see below) with PearDB or ADODB only.</dd>
+<dt>LDAP</dt>
+	<dd>Authenticate against LDAP_AUTH_HOST with LDAP_BASE_DN</dd>
+<dt>IMAP</dt>
+	<dd>Authenticate against IMAP_AUTH_HOST (email account)</dd>
+<dt>POP3</dt>
+	<dd>Authenticate against POP3_AUTH_HOST (email account)</dd>
+<dt>Session</dt>
+	<dd>Get username and level from a PHP session variable. (e.g. for gforge)</dd>
+<dt>File</dt>
+	<dd>Store username:crypted-passwords in .htaccess like files. 
+         Use Apache's htpasswd to manage this file.</dd>
+<dt>HttpAuth</dt>
+	<dd>Use the protection by the webserver (.htaccess/.htpasswd) (experimental)
+	Enforcing HTTP Auth not yet. Note that the ADMIN_USER should exist also.
+        Using HttpAuth disables all other methods and no userauth sessions are used.</dd>
+</dl>
+
+Several of these methods can be used together, in the manner specified by
+USER_AUTH_POLICY, below.  To specify multiple authentication methods,
+separate the name of each one with colons.
+<pre>
+  USER_AUTH_ORDER = 'PersonalPage : Db'
+  USER_AUTH_ORDER = 'BogoLogin : PersonalPage'</pre>");
+
+$properties["PASSWORD_LENGTH_MINIMUM"] =
+    new numeric_define("PASSWORD_LENGTH_MINIMUM", "6", "
+For 'security' purposes, you can specify that a password be at least a
+certain number of characters long.  This applies even to the BogoLogin method. 
+Default: 0 (to allow immediate passwordless BogoLogin)");
+
+$properties["USER_AUTH_POLICY"] =
+new _define_selection('USER_AUTH_POLICY',
+              array('first-only' => "first-only - use only the first method in USER_AUTH_ORDER",
+                    'old'  	=> "old - ignore USER_AUTH_ORDER (legacy)",
+                    'strict'  	=> "strict - check all methods for userid + password (recommended)",
+                    'stacked'  	=> "stacked - check all methods for userid, and if found for password"), "
+The following policies are available for user authentication:
+<dl>
+<dt>first-only</dt>
+	<dd>use only the first method in USER_AUTH_ORDER</dd>
+<dt>old</dt>
+	<dd>ignore USER_AUTH_ORDER and try to use all available 
+        methods as in the previous PhpWiki releases (slow)</dd>
+<dt>strict</dt>
+	<dd>check if the user exists for all methods: 
+        on the first existing user, try the password. 
+        dont try the other methods on failure then</dd>
+<dt>stacked</dt>
+	<dd>check the given user - password combination for all
+        methods and return true on the first success.</dd></dl>");
+
+///////////////////
+
+$properties["Part Three A"] =
+new part('_partthree_a', $SEPARATOR."\n", "
+
+Part Three A: (optional)
+Group Membership");
+
+$properties["Group membership"] =
+new _define_selection("GROUP_METHOD",
+              array('WIKIPAGE' => "WIKIPAGE - List at \"CategoryGroup\". (Slowest, but easiest to maintain)",
+                    '"NONE"'   => "NONE - Disable group membership (Fastest)",
+                    'DB'       => "DB - SQL Database, Optionally external. See USERS/GROUPS queries",
+                    'FILE'     => "Flatfile. See AUTH_GROUP_FILE below.",
+                    'LDAP'     => "LDAP - See \"LDAP authentication options\" above. (Experimental)"), "
+Group membership.  PhpWiki supports defining permissions for a group as
+well as for individual users.  This defines how group membership information
+is obtained.  Supported values are:
+<dl>
+<dt>\"NONE\"</dt>
+          <dd>Disable group membership (Fastest). Note the required quoting.</dd>
+<dt>WIKIPAGE</dt>
+          <dd>Define groups as list at \"CategoryGroup\". (Slowest, but easiest to maintain)</dd>
+<dt>DB</dt>
+          <dd>Stored in an SQL database. Optionally external. See USERS/GROUPS queries</dd>
+<dt>FILE</dt>
+          <dd>Flatfile. See AUTH_GROUP_FILE below.</dd>
+<dt>LDAP</dt>
+          <dd>LDAP groups. See \"LDAP authentication options\" above and 
+          lib/WikiGroup.php. (experimental)</dd></dl>");
+
+$properties["CATEGORY_GROUP_PAGE"] =
+  new _define_optional('CATEGORY_GROUP_PAGE', _("CategoryGroup"), "
+If GROUP_METHOD = WIKIPAGE:
+
+Page where all groups are listed.");
+
+$properties["AUTH_GROUP_FILE"] =
+  new _define_optional('AUTH_GROUP_FILE', _("/etc/groups"), "
+For GROUP_METHOD = FILE, the file given below is referenced to obtain
+group membership information.  It should be in the same format as the
+standard unix /etc/groups(5) file.");
+
+$properties["Part Three B"] =
+new part('_partthree_b', $SEPARATOR."\n", "
+
+Part Three B: (optional)
+External database authentication and authorization.
+
+If USER_AUTH_ORDER includes Db, or GROUP_METHOD = DB, the options listed
+below define the SQL queries used to obtain the information out of the
+database, and (optionally) store the information back to the DB.");
+
+$properties["DBAUTH_AUTH_DSN"] =
+  new _define_optional('DBAUTH_AUTH_DSN', $dsn_sqlstring, "
+A database DSN to connect to.  Defaults to the DSN specified for the Wiki as a whole.");
+
+$properties["User Exists Query"] =
+  new _define('DBAUTH_AUTH_USER_EXISTS', "\"SELECT userid FROM user WHERE userid='\$userid'\"", "
+USER/PASSWORD queries:
+
+For USER_AUTH_POLICY=strict and the Db method is required");
+
+$properties["Check Query"] =
+  new _define_optional('DBAUTH_AUTH_CHECK', "\"SELECT IF(passwd='\$password',1,0) AS ok FROM user WHERE userid='\$userid'\"", "
+
+Check to see if the supplied username/password pair is OK
+
+Plaintext passwords: (DBAUTH_AUTH_CRYPT_METHOD = plain)<br>
+; DBAUTH_AUTH_CHECK = \"SELECT IF(passwd='\$password',1,0) AS ok FROM user WHERE userid='\$userid'\"
+
+database-hashed passwords (more secure):<br>
+; DBAUTH_AUTH_CHECK = \"SELECT IF(passwd=PASSWORD('\$password'),1,0) AS ok FROM user WHERE userid='\$userid'\"");
+
+$properties["Crypt Method"] =
+new _define_selection_optional
+('DBAUTH_AUTH_CRYPT_METHOD',
+ array('plain' => 'plain',
+       'crypt' => 'crypt'), "
+If you want to use Unix crypt()ed passwords, you can use DBAUTH_AUTH_CHECK
+to get the password out of the database with a simple SELECT query, and
+specify DBAUTH_AUTH_USER_EXISTS and DBAUTH_AUTH_CRYPT_METHOD:
+
+; DBAUTH_AUTH_CHECK = \"SELECT passwd FROM user where userid='\$userid'\" <br>
+; DBAUTH_AUTH_CRYPT_METHOD = crypt");
+
+$properties["Update the user's authentication credential"] =
+    new _define('DBAUTH_AUTH_UPDATE', "\"UPDATE user SET passwd='\$password' WHERE userid='\$userid'\"", "
+If this is not defined but DBAUTH_AUTH_CHECK is, then the user will be unable to update their
+password.
+
+Plaintext passwords:<br>
+  DBAUTH_AUTH_UPDATE = \"UPDATE user SET passwd='\$password' WHERE userid='\$userid'\"<br>
+Database-hashed passwords:<br>
+  DBAUTH_AUTH_UPDATE = \"UPDATE user SET passwd=PASSWORD('\$password') WHERE userid='\$userid'\"");
+
+$properties["Allow the user to create their own account"] =
+    new _define_optional('DBAUTH_AUTH_CREATE', "\"INSERT INTO user SET passwd=PASSWORD('\$password'),userid='\$userid'\"", "
+If this is empty, Db users cannot subscribe by their own.");
+
+$properties["USER/PREFERENCE queries"] =
+    new _define_optional('DBAUTH_PREF_SELECT', "\"SELECT prefs FROM user WHERE userid='\$userid'\"", "
+If you choose to store your preferences in an external database, enable
+the following queries.  Note that if you choose to store user preferences
+in the 'user' table, only registered users get their prefs from the database,
+self-created users do not.  Better to use the special 'pref' table.
+
+The prefs field stores the serialized form of the user's preferences array,
+to ease the complication of storage.
+<pre>
+  DBAUTH_PREF_SELECT = \"SELECT prefs FROM user WHERE userid='\$userid'\"
+  DBAUTH_PREF_SELECT = \"SELECT prefs FROM pref WHERE userid='\$userid'\"
+</pre>");
+
+$properties["Update the user's preferences"] =
+    new _define_optional('DBAUTH_PREF_UPDATE', "\"UPDATE user SET prefs='\$pref_blob' WHERE userid='\$userid'\"", "
+Note that REPLACE works only with mysql and destroy all other columns!
+
+Mysql: DBAUTH_PREF_UPDATE = \"REPLACE INTO pref SET prefs='\$pref_blob',userid='\$userid'\"");
+
+$properties["USERS/GROUPS queries"] =
+    new _define_optional('DBAUTH_IS_MEMBER', "\"SELECT user FROM user WHERE user='\$userid' AND group='\$groupname'\"", "
+You can define 1:n or n:m user<=>group relations, as you wish.
+
+Sample configurations:
+
+only one group per user (1:n):<br>
+   DBAUTH_IS_MEMBER = \"SELECT user FROM user WHERE user='\$userid' AND group='\$groupname'\"<br>
+   DBAUTH_GROUP_MEMBERS = \"SELECT user FROM user WHERE group='\$groupname'\"<br>
+   DBAUTH_USER_GROUPS = \"SELECT group FROM user WHERE user='\$userid'\"<br>
+multiple groups per user (n:m):<br>
+   DBAUTH_IS_MEMBER = \"SELECT userid FROM member WHERE userid='\$userid' AND groupname='\$groupname'\"<br>
+   DBAUTH_GROUP_MEMBERS = \"SELECT DISTINCT userid FROM member WHERE groupname='\$groupname'\"<br>
+   DBAUTH_USER_GROUPS = \"SELECT groupname FROM member WHERE userid='\$userid'\"<br>");
+$properties["DBAUTH_GROUP_MEMBERS"] =
+    new _define_optional('DBAUTH_GROUP_MEMBERS', "\"SELECT user FROM user WHERE group='\$groupname'\"", "");
+$properties["DBAUTH_USER_GROUPS"] =
+    new _define_optional('DBAUTH_USER_GROUPS', "\"SELECT group FROM user WHERE user='\$userid'\"", "");
 
 if (function_exists('ldap_connect')) {
-$properties["LDAP Authentication"] =
-  new boolean_define_optional('ALLOW_LDAP_LOGIN',
-                    array('true'  => "Allow LDAP Authentication",
-	                  'false' => "Ignore LDAP"), "
-LDAP Authentication
-");
-$properties["LDAP Host"] =
-  new _define_optional('LDAP_AUTH_HOST', "localhost", "");
-$properties["LDAP Root Search"] =
+
+$properties["LDAP AUTH Host"] =
+  new _define_optional('LDAP_AUTH_HOST', "ldap://localhost:389", "
+If USER_AUTH_ORDER contains Ldap:
+
+The LDAP server to connect to.  Can either be a hostname, or a complete
+URL to the server (useful if you want to use ldaps or specify a different
+port number).");
+
+$properties["LDAP BASE DN"] =
   new _define_optional('LDAP_BASE_DN', "ou=mycompany.com,o=My Company", "
-Give the right LDAP root search information in the next statement.");
+The organizational or domain BASE DN: e.g. \"dc=mydomain,dc=com\".
+
+Note: ou=Users and ou=Groups are used for GroupLdap Membership
+Better use LDAP_OU_USERS and LDAP_OU_GROUP with GROUP_METHOD=LDAP.");
+
+$properties["LDAP SET OPTION"] =
+    new _define_optional('LDAP_SET_OPTION', "LDAP_OPT_PROTOCOL_VERSION=3:LDAP_OPT_REFERRALS=0", "
+Some LDAP servers need some more options, such as the Windows Active
+Directory Server.  Specify the options (as allowed by the PHP LDAP module)
+and their values as NAME=value pairs separated by colons.");
+
+$properties["LDAP AUTH USER"] =
+    new _define_optional('LDAP_AUTH_USER', "CN=ldapuser,ou=Users,o=Development,dc=mycompany.com", "
+DN to initially bind to the LDAP server as. This is needed if the server doesn't 
+allow anonymous queries. (Windows Active Directory Server)");
+
+$properties["LDAP AUTH PASSWORD"] =
+    new _define_optional('LDAP_AUTH_PASSWORD', "secret", "
+Password to use to initially bind to the LDAP server, as the DN 
+specified in the LDAP_AUTH_USER option (above).");
+
+$properties["LDAP SEARCH FIELD"] =
+    new _define_optional('LDAP_SEARCH_FIELD', "uid", "
+If you want to match usernames against an attribute other than uid,
+specify it here. Default: uid
+
+e.g.: LDAP_SEARCH_FIELD = sAMAccountName");
+
+$properties["LDAP OU USERS"] =
+    new _define_optional('LDAP_OU_USERS', "ou=Users", "
+If you have an organizational unit for all users, define it here.
+This narrows the search, and is needed for LDAP group membership (if GROUP_METHOD=LDAP)
+Default: ou=Users");
+
+$properties["LDAP OU GROUP"] =
+    new _define_optional('LDAP_OU_GROUP', "ou=Groups", "
+If you have an organizational unit for all groups, define it here.
+This narrows the search, and is needed for LDAP group membership (if GROUP_METHOD=LDAP)
+The entries in this ou must have a gidNumber and cn attribute.
+Default: ou=Groups");
 
 } else {
 
-*/
-/*$properties["LDAP Authentication"] =
-new unchangeable_define('ALLOW_LDAP_LOGIN', "
-if (!defined('ALLOW_LDAP_LOGIN')) define('ALLOW_LDAP_LOGIN', true and function_exists('ldap_connect'));
-if (!defined('LDAP_AUTH_HOST'))   define('LDAP_AUTH_HOST', 'localhost');
-// Give the right LDAP root search information in the next statement. 
-if (!defined('LDAP_BASE_DN')) define('LDAP_BASE_DN', 'ou=mycompany.com,o=My Company');
-", "
-Ignored. No LDAP support in this php. configure --with-ldap");
+$properties["LDAP Authentication"] =
+new unchangeable_define('LDAP Authentication', "
+If USER_AUTH_ORDER contains Ldap:
+
+The LDAP server to connect to.  Can either be a hostname, or a complete
+URL to the server (useful if you want to use ldaps or specify a different
+port number).
+;LDAP_AUTH_HOST = \"ldap://localhost:389\"
+
+; The organizational or domain BASE DN: e.g. \"dc=mydomain,dc=com\".
+;
+; Note: ou=Users and ou=Groups are used for GroupLdap Membership
+; Better use LDAP_OU_USERS and LDAP_OU_GROUP with GROUP_METHOD=LDAP.
+;LDAP_BASE_DN = \"ou=Users,o=Development,dc=mycompany.com\"
+
+; Some LDAP servers need some more options, such as the Windows Active
+; Directory Server.  Specify the options (as allowed by the PHP LDAP module)
+; and their values as NAME=value pairs separated by colons.
+; LDAP_SET_OPTION = \"LDAP_OPT_PROTOCOL_VERSION=3:LDAP_OPT_REFERRALS=0\"
+
+; DN to initially bind to the LDAP server as. This is needed if the server doesn't 
+; allow anonymous queries. (Windows Active Directory Server)
+; LDAP_AUTH_USER = \"CN=ldapuser,ou=Users,o=Development,dc=mycompany.com\"
+
+; Password to use to initially bind to the LDAP server, as the DN 
+; specified in the LDAP_AUTH_USER option (above).
+; LDAP_AUTH_PASSWORD = secret
+
+; If you want to match usernames against an attribute other than uid,
+; specify it here. Default: uid
+; LDAP_SEARCH_FIELD = sAMAccountName
+
+; If you have an organizational unit for all users, define it here.
+; This narrows the search, and is needed for LDAP group membership (if GROUP_METHOD=LDAP)
+; Default: ou=Users
+; LDAP_OU_USERS = ou=Users
+
+; If you have an organizational unit for all groups, define it here.
+; This narrows the search, and is needed for LDAP group membership (if GROUP_METHOD=LDAP)
+; The entries in this ou must have a gidNumber and cn attribute.
+; Default: ou=Groups
+; LDAP_OU_GROUP = ou=Groups", "
+; Ignored. No LDAP support in this php. configure --with-ldap");
 }
+
 if (function_exists('imap_open')) {
-$properties["IMAP Authentication"] =
-  new boolean_define_optional('ALLOW_IMAP_LOGIN',
-                    array('true'  => "Allow IMAP Authentication",
-	                  'false' => "Ignore IMAP"), "
-IMAP Authentication
-");
-$properties["IMAP Host"] =
-  new _define_optional('IMAP_AUTH_HOST', 'localhost', '');
+
+$properties["IMAP Auth Host"] =
+  new _define_optional('IMAP_AUTH_HOST', 'localhost:143/imap/notls', "
+If USER_AUTH_ORDER contains IMAP:
+
+The IMAP server to check usernames from. Defaults to localhost.
+
+Some IMAP_AUTH_HOST samples:
+  localhost, localhost:143/imap/notls, 
+  localhost:993/imap/ssl/novalidate-cert (SuSE refuses non-SSL conections)");
+
 } else {
+
 $properties["IMAP Authentication"] =
-  new unchangeable_define('ALLOW_IMAP_LOGIN',"
-// IMAP auth: check userid/passwords from a imap server, defaults to localhost
-if (!defined('ALLOW_IMAP_LOGIN')) define('ALLOW_IMAP_LOGIN', true and function_exists('imap_open'));
-if (!defined('IMAP_AUTH_HOST'))   define('IMAP_AUTH_HOST', 'localhost');
-", "Ignored. No IMAP support in this php. configure --with-imap");
+  new unchangeable_define('IMAP_AUTH_HOST',"
+; If USER_AUTH_ORDER contains IMAP:
+; The IMAP server to check usernames from. Defaults to localhost.
+; 
+; Some IMAP_AUTH_HOST samples:
+;   localhost, localhost:143/imap/notls, 
+;   localhost:993/imap/ssl/novalidate-cert (SuSE refuses non-SSL conections)
+;IMAP_AUTH_HOST = localhost:143/imap/notls", "
+Ignored. No IMAP support in this php. configure --with-imap");
+
 }
-*/
+
+$properties["POP3 Authentication"] =
+  new _define_optional('POP3_AUTH_HOST', 'localhost:110', "
+If USER_AUTH_ORDER contains POP3:
+
+The POP3 mail server to check usernames and passwords against.");
+$properties["File Authentication"] =
+  new _define_optional('AUTH_USER_FILE', '/etc/shadow', "
+If USER_AUTH_ORDER contains File:
+
+File to read for authentication information.
+Popular choices are /etc/shadow and /etc/httpd/.htpasswd");
+
+$properties["File Storable?"] =
+new boolean_define_commented_optional
+('AUTH_USER_FILE_STORABLE',
+ array('false'  => "Disabled",
+       'true'   => "Enabled"), "
+Defines whether the user is able to change their own password via PhpWiki.
+Note that this means that the webserver user must be able to write to the
+file specified in AUTH_USER_FILE.");
+
+$properties["Session Auth USER"] =
+  new _define_optional('AUTH_SESS_USER', 'userid', "
+If USER_AUTH_ORDER contains Session:
+
+Name of the session variable which holds the already authenticated username.
+Sample: 'userid', 'user[username]', 'user->username'");
+
+$properties["Session Auth LEVEL"] =
+  new numeric_define('AUTH_SESS_LEVEL', '2', "
+Which level will the user be? 1 = Bogo or 2 = Pass");
 
 /////////////////////////////////////////////////////////////////////
 
@@ -756,8 +1169,7 @@ $properties["Part Four"] =
 new part('_partfour', $SEPARATOR."\n", "
 
 Part Four:
-Page appearance and layout
-");
+Page appearance and layout");
 
 $properties["Theme"] =
 new _define_selection_optional('THEME',
@@ -769,8 +1181,11 @@ new _define_selection_optional('THEME',
                     'Hawaiian' => "Hawaiian",
                     'Sidebar'  => "Sidebar",
                     'Crao'     => 'Crao',
-                    'wikilens' => 'wikilens',
-                    'SpaceWiki' => "SpaceWiki"
+                    'wikilens' => 'wikilens (Ratings)',
+                    'SpaceWiki' => "SpaceWiki",
+                    'shamino_com' => 'shamino_com',
+                    'MonoBook'  => 'MonoBook [experimental]',
+                    'blog' 	=> 'blog [experimental]',
                     ), "
 THEME
 
@@ -781,20 +1196,11 @@ There are a number of pre-defined themes shipped with PhpWiki.
 Or you may create your own (e.g. by copying and then modifying one of
 stock themes.)
 
-Pick one.
+Problems:
 <pre>
-THEME = default
-; THEME = MacOSX
-; THEME = smaller
-; THEME = Wordpress
-; THEME = Portland
-; THEME = Hawaiian
-; THEME = Sidebar
-; THEME = Crao
-; THEME = wikilens
+  THEME = MonoBook (WikiPedia) [experimental. MSIE problems]
+  THEME = blog     (Kubrick)   [experimental. Several links missing]
 </pre>");
-
-
 
 $properties["Character Set"] =
 new _define_optional('CHARSET', 'iso-8859-1', "
@@ -812,20 +1218,18 @@ charset, and of course the same is true for the web browser. (Some
 work is in progress hopefully to allow more flexibility in this 
 area in the future).");
 
-
-
 $properties["Language"] =
 new _define_selection_optional('DEFAULT_LANGUAGE',
-              array('en' => "English",
-                    'nl' => "Nederlands",
-                    'es' => "Español",
-                    'fr' => "Français",
-                    'de' => "Deutsch",
-                    'sv' => "Svenska",
-                    'it' => "Italiano",
-                    'ja' => "Japanese",
-                    'zh' => "Chinese",
-                    ''   => "none"), "
+               array('en' => "English",
+                     ''   => "<empty> (user-specific)",
+                     'fr' => "Français",
+                     'de' => "Deutsch",
+                     'nl' => "Nederlands",
+                     'es' => "Español",
+                     'sv' => "Svenska",
+                     'it' => "Italiano",
+                     'ja' => "Japanese",
+                     'zh' => "Chinese"), "
 Select your language/locale - default language is \"en\" for English.
 Other languages available:<pre>
 English \"en\"  (English    - HomePage)
@@ -858,8 +1262,7 @@ define('WIKI_PGSRC',
        '../Logs/Hamwiki/hamwiki-20010830.zip'); 
 </pre>");
 
-
-
+/*
 $properties["Default Wiki Page Source"] =
 new _define('DEFAULT_WIKI_PGSRC', 'pgsrc', "
 DEFAULT_WIKI_PGSRC is only used when the language is *not* the
@@ -870,44 +1273,35 @@ DEFAULT_WIKI_PGSRC defines where the English pages reside.
 FIXME: is this really needed?
 ");
 
-
-
 $properties["Generic Pages"] =
 new array_variable('GenericPages', array('ReleaseNotes', 'SteveWainstead', 'TestPage'), "
 These are the pages which will get loaded from DEFAULT_WIKI_PGSRC.	
 
-FIXME: is this really needed?  Can't we just copy these pages into
+FIXME: is this really needed?  Cannot we just copy these pages into
 the localized pgsrc?
 ");
+*/
 
-
-
+///////////////////
 
 $properties["Part Five"] =
 new part('_partfive', $SEPARATOR."\n", "
 
 Part Five:
-Mark-up options.
-");
-
-
+Mark-up options");
 
 $properties["Allowed Protocols"] =
-new list_variable('AllowedProtocols', 'http|https|mailto|ftp|news|nntp|ssh|gopher', "
-allowed protocols for links - be careful not to allow \"javascript:\"
+new list_define('ALLOWED_PROTOCOLS', 'http|https|mailto|ftp|news|nntp|ssh|gopher', "
+Allowed protocols for links - be careful not to allow \"javascript:\"
 URL of these types will be automatically linked.
 within a named link [name|uri] one more protocol is defined: phpwiki");
 
-
-
 $properties["Inline Images"] =
-new list_variable('InlineImages', 'png|jpg|gif', "
+new list_define('INLINE_IMAGES', 'png|jpg|gif', "
 URLs ending with the following extension should be inlined as images");
 
-
-
 $properties["WikiName Regexp"] =
-new _variable('WikiNameRegexp', "(?<![[:alnum:]])(?:[[:upper:]][[:lower:]]+){2,}(?![[:alnum:]])", "
+new _define('WIKI_NAME_REGEXP', "(?<![[:alnum:]])(?:[[:upper:]][[:lower:]]+){2,}(?![[:alnum:]])", "
 Perl regexp for WikiNames (\"bumpy words\")
 (?&lt;!..) &amp; (?!...) used instead of '\b' because \b matches '_' as well");
 
@@ -933,38 +1327,78 @@ new boolean_define('WARN_NONPUBLIC_INTERWIKIMAP',
 Display a warning if the internal lib/interwiki.map is used, and 
 not the public InterWikiMap page. This map is not readable from outside.");
 
-$properties["Keyword Link Regexp"] =
-new _variable('KeywordLinkRegexp',
-              '(?<=^Category|^Topic)[[:upper:]].*$',
-              "
-Regexp used for automatic keyword extraction.
 
-Any links on a page to pages whose names match this regexp will
-be used keywords in the keywords meta tag.  (This is an aid to
-classification by search engines.)  The value of the match is
+$properties["Keyword Link Regexp"] =
+new _define_optional('KEYWORDS', '\"Category* OR Topic*\"', "
+Search term used for automatic page classification by keyword extraction.
+
+Any links on a page to pages whose names match this search 
+will be used keywords in the keywords html meta tag. This is an aid to
+classification by search engines. The value of the match is
 used as the keyword.
 
-The default behavior is to match Category* and Topic* links.");
+The default behavior is to match Category* or Topic* links.");
+
+$properties["Author and Copyright Site Navigation Links"] =
+new _define_commented_optional('COPYRIGHTPAGE_TITLE', "GNU General Public License", "
+
+These will be inserted as <link rel> tags in the html header of
+every page, for search engines and for browsers like Mozilla which
+take advantage of link rel site navigation.
+
+If you have your own copyright and contact information pages change
+these as appropriate.");
+
+$properties["COPYRIGHTPAGE URL"] =
+new _define_commented_optional('COPYRIGHTPAGE_URL', "http://www.gnu.org/copyleft/gpl.html#SEC1", "
+
+Other useful alternatives to consider:
+<pre>
+ COPYRIGHTPAGE_TITLE = \"GNU Free Documentation License\"
+ COPYRIGHTPAGE_URL = \"http://www.gnu.org/copyleft/fdl.html\"
+ COPYRIGHTPAGE_TITLE = \"Creative Commons License 2.0\"
+ COPYRIGHTPAGE_URL = \"http://creativecommons.org/licenses/by/2.0/\"</pre>
+See http://creativecommons.org/learn/licenses/ for variations");
+
+$properties["AUTHORPAGE_TITLE"] =
+    new _define_commented_optional('AUTHORPAGE_TITLE', "The PhpWiki Programming Team", "
+Default Author Names");
+$properties["AUTHORPAGE_URL"] =
+    new _define_commented_optional('AUTHORPAGE_URL', "http://phpwiki.org/ThePhpWikiProgrammingTeam", "
+Default Author URL");
+
+new boolean_define_optional
+('TOC_FULL_SYNTAX', 
+ array('true'  => "Enabled",
+       'false' => "Disabled."), "
+Allow full markup in headers to be parsed by the CreateToc plugin.
+
+If false you may not use WikiWords or [] links or any other markup in 
+headers in pages with the CreateToc plugin. But if false the parsing is 
+faster and more stable.");
+
+///////////////////
 
 $properties["Part Six"] =
 new part('_partsix', $SEPARATOR."\n", "
 
 Part Six (optional):
 URL options -- you can probably skip this section.
-");
 
+For a pretty wiki (no index.php in the url) set a seperate DATA_PATH.");
+
+global $HTTP_SERVER_VARS;
 $properties["Server Name"] =
 new _define_commented_optional('SERVER_NAME', $HTTP_SERVER_VARS['SERVER_NAME'], "
 Canonical name and httpd port of the server on which this PhpWiki
 resides.");
 
 
-
 $properties["Server Port"] =
 new numeric_define_commented('SERVER_PORT', $HTTP_SERVER_VARS['SERVER_PORT'], "",
 "onchange=\"validate_ereg('Sorry, \'%s\' is no valid port number.', '^[0-9]+$', 'SERVER_PORT', this);\"");
 
-$scriptname = preg_replace('/configurator.php/','index.php',$HTTP_SERVER_VARS["SCRIPT_NAME"]);
+$scriptname = str_replace('configurator.php','index.php',$HTTP_SERVER_VARS["SCRIPT_NAME"]);
 
 $properties["Script Name"] =
 new _define_commented_optional('SCRIPT_NAME', $scriptname, "
@@ -978,7 +1412,6 @@ be either a relative URL (from the directory where the top-level
 PhpWiki script is) or an absolute one.");
 
 
-
 $properties["PhpWiki Install Directory"] =
 new _define_commented_optional('PHPWIKI_DIR', dirname(__FILE__), "
 Path to the PhpWiki install directory.  This is the local
@@ -987,8 +1420,6 @@ DATA_PATH, your probably have to set this as well.)  This can be
 either an absolute path, or a relative path interpreted from the
 directory where the top-level PhpWiki script (normally index.php)
 resides.");
-
-
 
 $properties["Use PATH_INFO"] =
 new boolean_define_commented_optional('USE_PATH_INFO', 
@@ -1016,10 +1447,10 @@ $properties["Virtual Path"] =
 new _define_commented_optional('VIRTUAL_PATH', '/SomeWiki', "
 VIRTUAL_PATH is the canonical URL path under which your your wiki
 appears. Normally this is the same as dirname(SCRIPT_NAME), however
-using, e.g. apaches mod_actions (or mod_rewrite), you can make it
+using, e.g. seperate starter scripts, apaches mod_actions (or mod_rewrite), you can make it
 something different.
 
-If you do this, you should set VIRTUAL_PATH here.
+If you do this, you should set VIRTUAL_PATH here or in the starter scripts.
 
 E.g. your phpwiki might be installed at at /scripts/phpwiki/index.php,
 but you've made it accessible through eg. /wiki/HomePage.
@@ -1037,6 +1468,7 @@ In that case you should set VIRTUAL_PATH to '/wiki'.
 (VIRTUAL_PATH is only used if USE_PATH_INFO is true.)
 ");
 
+///////////////////
 
 $properties["Part Seven"] =
 new part('_partseven', $SEPARATOR."\n", "
@@ -1067,6 +1499,11 @@ allow these redirects.  (On Lycos the result in an \"Internal Server Error\"
 report.)  In that case you can set DISABLE_HTTP_REDIRECT to true.
 (In which case, PhpWiki will revert to sneakier tricks to try to
 redirect the browser...)");
+
+$properties["EDITING_POLICY"] =
+  new _define_optional('EDITING_POLICY', "EditingPolicy", "
+An interim page which gets displayed on every edit attempt, if it exists.");
+
 
 $end = "\n".$SEPARATOR."\n";
 
@@ -1162,8 +1599,9 @@ class _variable {
     }
 
     function get_html() {
+    	$size = strlen($this->default_value) > 45 ? 90 : 50;
 	return $this->get_config_item_header() . 
-	    "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name() . "\" value=\"" . htmlspecialchars($this->default_value) . "\" " . 
+	    "<input type=\"text\" size=\"$50\" name=\"" . $this->get_config_item_name() . "\" value=\"" . htmlspecialchars($this->default_value) . "\" " . 
 	    $this->jscheck . " />" . "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: green\">Input accepted.</p>";
     }
 }
@@ -1189,7 +1627,7 @@ extends _variable {
         $i = "<h3>" . $title . "</h3>\n    " . nl2p($this->_get_description()) . "\n";
         // $i .= "<em>Not editable.</em><br />\n<pre>" . $this->default_value."</pre>";
         return '<tr><td width="100%" class="unchangeable-variable-top" colspan="2">'."\n".$i."</td></tr>\n" 
-	. '<tr style="border-top: none;"><td class="unchangeable-variable-left" width="'.$tdwidth.'" bgcolor="#eeeeee">&nbsp;</td>';
+	. '<tr style="border-top: none;"><td class="unchangeable-variable-left" width="'.$tdwidth.'">&nbsp;</td>';
     }
 }
 
@@ -1206,7 +1644,6 @@ extends unchangeable_variable {
     }
 }
 
-
 class _variable_selection
 extends _variable {
     function value() {
@@ -1214,8 +1651,8 @@ extends _variable {
         if (!empty($HTTP_POST_VARS[$this->config_item_name]))
             return $HTTP_POST_VARS[$this->config_item_name];
         else {
-	    list($option, $label) = current($this->default_value);
-            return $this->$option;
+	    list($option, $label) = each($this->default_value);
+            return $option;
         }
     }
     function get_html() {
@@ -1245,9 +1682,10 @@ extends _variable {
             return "${n}" . $this->_config_format($posted_value);
     }
     function get_html() {
+    	$size = strlen($this->default_value) > 45 ? 90 : 50;
 	return $this->get_config_item_header() 
-            . "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name() 
-            . "\" value=\"" . $this->default_value . "\" {$this->jscheck} />" 
+            . "<input type=\"text\" size=\"$size\" name=\"" . htmlentities($this->get_config_item_name()) 
+            . "\" value=\"" . htmlentities($this->default_value) . "\" {$this->jscheck} />" 
             . "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: green\">Input accepted.</p>";
     }
 }
@@ -1311,8 +1749,11 @@ extends _variable {
 
 class numeric_define_commented
 extends _define {
-    //    var $jscheck = "onchange=\"validate_ereg('Sorry, \'%s\' is not an integer.', '^[-+]?[0-9]+$', '" . $this->get_config_item_name() . "', this);\"";
-
+    function numeric_define_commented($config_item_name, $default_value, $description, $jscheck = '') {
+        $this->_define($config_item_name, $default_value, $description, $jscheck);
+        if (!$jscheck) 
+            $this->jscheck = "onchange=\"validate_ereg('Sorry, \'%s\' is not an integer.', '^[-+]?[0-9]+$', '" . $this->get_config_item_name() . "', this);\"";
+    }
     function get_html() {
 	return numeric_define::get_html();
     }
@@ -1365,8 +1806,12 @@ extends _variable_selection {
 
 class _define_password
 extends _define {
-    //    var $jscheck = "onchange=\"validate_ereg('Sorry, \'%s\' cannot be empty.', '^.+$', '" . $this->get_config_item_name() . "', this);\"";
 
+    function _define_password($config_item_name, $default_value, $description, $jscheck = '') {
+        $this->_define($config_item_name, $default_value, $description, $jscheck);
+        if (!$jscheck)
+            $this->jscheck = "onchange=\"validate_ereg('Sorry, \'%s\' cannot be empty.', '^.+$', '" . $this->get_config_item_name() . "', this);\"";
+    }
     function _get_config_line($posted_value) {
         if ($this->description)
             $n = "\n";
@@ -1407,8 +1852,11 @@ extends _define_password {
 
 class _variable_password
 extends _variable {
-    //    var $jscheck = "onchange=\"validate_ereg('Sorry, \'%s\' cannot be empty.', '^.+$', '" . $this->get_config_item_name() . "', this);\"";
-
+    function _variable_password($config_item_name, $default_value, $description, $jscheck = '') {
+        $this->_define($config_item_name, $default_value, $description, $jscheck);
+        if (!$jscheck)
+            $this->jscheck = "onchange=\"validate_ereg('Sorry, \'%s\' cannot be empty.', '^.+$', '" . $this->get_config_item_name() . "', this);\"";
+    }
     function get_html() {
 	global $HTTP_POST_VARS, $HTTP_GET_VARS;
 	$s = $this->get_config_item_header();
@@ -1433,8 +1881,12 @@ extends _variable {
 
 class numeric_define
 extends _define {
-    //    var $jscheck = "onchange=\"validate_ereg('Sorry, \'%s\' is not an integer.', '^[-+]?[0-9]+$', '" . $this->get_config_item_name() . "', this);\"";
 
+    function numeric_define($config_item_name, $default_value, $description, $jscheck = '') {
+        $this->_define($config_item_name, $default_value, $description, $jscheck);
+        if (!$jscheck)
+            $this->jscheck = "onchange=\"validate_ereg('Sorry, \'%s\' is not an integer.', '^[-+]?[0-9]+$', '" . $this->get_config_item_name() . "', this);\"";
+    }
     function _config_format($value) {
         //return sprintf("define('%s', %s);", $this->get_config_item_name(), $value);
         return sprintf("%s = %s", $this->get_config_item_name(), $value);
@@ -1470,10 +1922,30 @@ extends _variable {
     }
 }
 
+class list_define
+extends _define {
+    function _get_config_line($posted_value) {
+        $list_values = preg_split("/[\s,]+/", $posted_value, -1, PREG_SPLIT_NO_EMPTY);
+        $list_values = join("|", $list_values);
+        return _variable::_get_config_line($list_values);
+    }
+    function get_html() {
+        $list_values = explode("|", $this->default_value);
+        $rows = max(3, count($list_values) +1);
+        $list_values = join("\n", $list_values);
+        $ta = $this->get_config_item_header();
+	$ta .= "<textarea cols=\"18\" rows=\"". $rows ."\" name=\"".$this->get_config_item_name()."\" {$this->jscheck}>";
+        $ta .= $list_values . "</textarea>";
+	$ta .= "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: green\">Input accepted.</p>";
+        return $ta;
+    }
+}
+
 class array_variable
 extends _variable {
     function _config_format($value) {
-        return sprintf("%s = \"%s\"", join(':',$this->get_config_item_name()), $value);
+        return sprintf("%s = \"%s\"", $this->get_config_item_name(), 
+                       is_array($value) ? join(':', $value) : $value);
     }
     function _get_config_line($posted_value) {
         // split the phrase by any number of commas or space characters,
@@ -1481,6 +1953,33 @@ extends _variable {
         $list_values = preg_split("/[\s,]+/", $posted_value, -1, PREG_SPLIT_NO_EMPTY);
         if (!empty($list_values)) {
             $list_values = "'".join("', '", $list_values)."'";
+            return "\n" . $this->_config_format($list_values);
+        } else
+            return "\n;" . $this->_config_format('');
+    }
+    function get_html() {
+        $list_values = join("\n", $this->default_value);
+        $rows = max(3, count($this->default_value) +1);
+        $ta = $this->get_config_item_header();
+        $ta .= "<textarea cols=\"18\" rows=\"". $rows ."\" name=\"".$this->get_config_item_name()."\" {$this->jscheck}>";
+        $ta .= $list_values . "</textarea>";
+	$ta .= "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: green\">Input accepted.</p>";
+        return $ta;
+    }
+}
+
+class array_define
+extends _define {
+    function _config_format($value) {
+        return sprintf("%s = \"%s\"", $this->get_config_item_name(), 
+                       is_array($value) ? join(' : ', $value) : $value);
+    }
+    function _get_config_line($posted_value) {
+        // split the phrase by any number of commas or space characters,
+        // which include " ", \r, \t, \n and \f
+        $list_values = preg_split("/[\s,:]+/", $posted_value, -1, PREG_SPLIT_NO_EMPTY);
+        if (!empty($list_values)) {
+            $list_values = "'".join("' : '", $list_values)."'";
             return "\n" . $this->_config_format($list_values);
         } else
             return "\n;" . $this->_config_format('');
@@ -1625,20 +2124,6 @@ function stripHtml($text) {
 
 include_once(dirname(__FILE__)."/lib/stdlib.php");
 
-function rand_ascii($length = 1) {
-    better_srand();
-    $s = "";
-    for ($i = 1; $i <= $length; $i++) {
-	// return only typeable 7 bit ascii, avoid quotes
-	if (function_exists('mt_rand'))
-	    // the usually bad glibc srand()
-	    $s .= chr(mt_rand(40, 126)); 
-	else
-	    $s .= chr(rand(40, 126));
-    }
-    return $s;
-}
-
 ////
 // Function to create better user passwords (much larger keyspace),
 // suitable for user passwords.
@@ -1686,7 +2171,8 @@ if (!function_exists('is_a')) {
 }
 
 
-if (@$HTTP_POST_VARS['action'] == 'make_config') {
+if (!empty($HTTP_POST_VARS['action']) 
+    and $HTTP_POST_VARS['action'] == 'make_config') {
 
     $timestamp = date ('dS of F, Y H:i:s');
 
@@ -1717,7 +2203,7 @@ if (@$HTTP_POST_VARS['action'] == 'make_config') {
     //
     // So I'm disabling it...
 
-    if (defined(ENABLE_FILE_OUTPUT) and ENABLE_FILE_OUPUT) {
+    if (defined('ENABLE_FILE_OUTPUT') and ENABLE_FILE_OUPUT) {
       // We first check if the config-file exists.
       if (file_exists($fs_config_file)) {
         // We make a backup copy of the file
@@ -1768,7 +2254,7 @@ if (@$HTTP_POST_VARS['action'] == 'make_config') {
     while(list($property, $obj) = each($properties)) {
         echo $obj->get_instructions($property);
         if ($h = $obj->get_html()) {
-            if (defined('DEBUG'))  $h = get_class($obj) . "<br />\n" . $h;
+            if (defined('DEBUG') and DEBUG)  $h = get_class($obj) . "<br />\n" . $h;
             echo "<td>".$h."</td>\n";
         }
 	echo '</tr>';
