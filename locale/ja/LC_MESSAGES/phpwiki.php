@@ -86,8 +86,6 @@ $locale["Contents"] =
    "コンテンツ";
 $locale["Count"] =
    "カウント";
-$locale["Create Homepage:"] =
-   "ホームページ作成:";
 $locale["Create: %s"] =
    "作成: %s";
 $locale["Creating pages"] =
@@ -102,10 +100,6 @@ $locale["Date Format"] =
    "データフォーマット";
 $locale["DebugInfo"] =
    "デバグ情報";
-$locale["Default system language:"] =
-   "デフォルトシステム言語";
-$locale["Default system theme:"] =
-   "デフォルトシステムテーマ";
 $locale["Default theme: '%s'"] =
    "デフォルトテーマ: %s";
 $locale["Deleted."] =
@@ -138,6 +132,8 @@ $locale["Edit Area Size"] =
    "編集エリアのサイズ";
 $locale["Edit Area Size:"] =
    "編集エリアサイズ";
+$locale["Edit Old Revision"] =
+   "古いリビジョンを編集する";
 $locale["Edit aborted."] =
    "編集を中断しました。";
 $locale["Edit metadata for %s"] =
@@ -148,8 +144,6 @@ $locale["EditMetaData"] =
    "METAデータの編集";
 $locale["Editing pages"] =
    "ページを編集しています。";
-$locale["Email Notification"] =
-   "メール通知";
 $locale["Email not yet verified."] =
    "メールアドレスを確認出来ませんでした。";
 $locale["Email verified."] =
@@ -216,8 +210,6 @@ $locale["Last edited on %s."] =
    "最終編集日時: %s";
 $locale["List PageHistory for %s"] =
    "%s のページ履歴一覧";
-$locale["Listing all pages."] =
-   "全ページ一覧";
 $locale["Load File"] =
    "ファイル読込み";
 $locale["Loading '%s'"] =
@@ -236,6 +228,8 @@ $locale["MIME file %s"] =
    "MIMEファイル %s";
 $locale["Markup"] =
    "マークアップ";
+$locale["Markup cache purged!"] =
+   "マークアップキャッシュを破棄しました!";
 $locale["Markup:"] =
    "マークアップ:";
 $locale["Name"] =
@@ -260,8 +254,8 @@ $locale["None"] =
    "なし";
 $locale["Note:"] =
    "ノート:";
-$locale["Notify"] =
-   "通知";
+$locale["Okay"] =
+   "おっけー";
 $locale["OldStyleTable"] =
    "旧スタイルのテーブル";
 $locale["Optimizing %s"] =
@@ -292,8 +286,6 @@ $locale["PageInfo"] =
    "ページ情報";
 $locale["Pagedata size: %d Kb"] =
    "ページデーターサイズ: %s キロバイト";
-$locale["Password"] =
-   "パスワード";
 $locale["Password:"] =
    "パスワード:";
 $locale["Personal language:"] =
@@ -330,6 +322,10 @@ $locale["Previous Month"] =
    "前の月";
 $locale["Previous Revision"] =
    "前のリビジョン";
+$locale["Printer"] =
+   "プリンター";
+$locale["Purge Markup Cache"] =
+   "マークアップキャッシュの破棄";
 $locale["RandomPage"] =
    "ランダムページ";
 $locale["Raw HTML"] =
@@ -346,8 +342,6 @@ $locale["Remove page"] =
    "ページ削除";
 $locale["Remove selected pages"] =
    "選択ページを全て削除";
-$locale["Removed page '%s' succesfully."] =
-   "'%s' の削除に成功しました。";
 $locale["Removing pages"] =
    "ページを削除中です。";
 $locale["Return to %s"] =
@@ -366,14 +360,8 @@ $locale["See %s"] =
    "%s を参照";
 $locale["See: %s"] =
    "参照: %s";
-$locale["Select your personal language:"] =
-   "貴方個人の言語を選択";
-$locale["Select your personal theme:"] =
-   "あなたの個人のテーマを選択:";
 $locale["Select: "] =
    "選択:";
-$locale["Selected"] =
-   "選択しました";
 $locale["Serialized file %s"] =
    "シリアライズファイル %s";
 $locale["Sidebar"] =
@@ -408,10 +396,10 @@ $locale["Supported languages"] =
    "サポート言語一覧";
 $locale["Supported themes"] =
    "サポートテーマ一覧";
+$locale["Synopsis"] =
+   "要約";
 $locale["SystemInfo"] =
    "システム情報";
-$locale["The PhpWiki Programming Team"] =
-   "PukiWikiプログラミングチーム";
 $locale["Theme"] =
    "テーマ";
 $locale["Time Zone"] =
@@ -440,6 +428,8 @@ $locale["Upload"] =
    "アップロード";
 $locale["Uploading %s"] =
    "%s をアップロード中です。";
+$locale["Use old markup"] =
+   "古いマークアップを使用";
 $locale["User page"] =
    "ユーザーページ";
 $locale["User statistics"] =
@@ -462,10 +452,14 @@ $locale["View Source"] =
    "ソースを見る";
 $locale["View Source: %s"] =
    "ソースを見る: %s";
+$locale["View the current version"] =
+   "現在のバージョンを表示する";
 $locale["W"] =
    "幅";
 $locale["Warning!"] =
    "警告!";
+$locale["Warning: You are editing an old revision."] =
+   "警告: あなたは古いリビジョンを編集しています。";
 $locale["Width"] =
    "幅";
 $locale["Wiki Name"] =

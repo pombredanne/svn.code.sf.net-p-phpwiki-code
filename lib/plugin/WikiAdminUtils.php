@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminUtils.php,v 1.7 2004-04-01 08:05:52 rurban Exp $');
+rcs_id('$Id: WikiAdminUtils.php,v 1.8 2004-04-01 15:57:11 rurban Exp $');
 /**
  Copyright 2003 $ThePhpWikiProgrammingTeam
 
@@ -35,7 +35,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -154,6 +154,7 @@ extends WikiPlugin
         $emailVerified = new _PageList_Column_emailVerified('emailVerified',_("Verification Status"),'center');
         $pagelist->_columns[] = $email;
         $pagelist->_columns[] = $emailVerified;
+        //This is the best method to find all users (Db and PersonalPage)
         $group = WikiGroup::getGroup($request);
         foreach ($group->_allUsers() as $username) {
             if (ENABLE_USER_NEW)
@@ -192,6 +193,8 @@ extends WikiPlugin
         }
     }
 };
+
+require_once("lib/PageList.php");
 
 class _PageList_Column_email 
 extends _PageList_Column {

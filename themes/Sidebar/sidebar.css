@@ -1,5 +1,5 @@
 /**
- * $Id: sidebar.css,v 1.20 2004-03-26 03:45:43 rurban Exp $
+ * $Id: sidebar.css,v 1.21 2004-04-01 15:57:20 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -18,11 +18,6 @@
 /**
  * General settings
  */
-body {
-  margin-top: 6ex; /* area under fixed h1 */
-  margin-left: 14em;
-  padding-bottom: 4ex; /* area under fixed #actionbar (editdate) */ 
-}
 
 div.wikitext {
   margin-left: 0.5em;
@@ -40,12 +35,12 @@ div.wikitext {
   #6d6a5c;
   #b3ae97;
  **/
-
 div#logo img {
-  position: fixed;
+  /*  position: fixed; */
   left: 1ex;
-  top:  1.2ex;
+  top:  1ex;
 }
+/*
 div#clock {
   position: fixed;
   left: 0.7ex;
@@ -56,7 +51,7 @@ div#calendar {
   left:  0.7ex;
   top:  31ex;
 }
-
+*/
 h1 {
   position: fixed;
   top: 0;
@@ -102,7 +97,7 @@ h1 a.backlinks { text-decoration: none; }
   color: black;
   background: white;
   text-align: left;
-  position: fixed;
+/*  position: fixed; */
   left:   0.5em;
   /* ie5.1 ignores max-width and sets the box
      width to the width of the whole page.
@@ -130,7 +125,7 @@ h1 a.backlinks { text-decoration: none; }
 div#navbuttons:before {
   /* bonus for css2 browsers */
   display: block;
-  content: "PhpWiki Navigation"; /* localise with dynamic css? */
+  /* content: "PhpWiki Navigation"; */ /* localise with dynamic css? */
   border-bottom: 2px solid black;
 }
 #navbuttons { top: 5.5ex; }
@@ -143,12 +138,12 @@ div#actionbuttons:before {
   display: block;
   content: "Actions"; /* localise with dynamic css? */
 }
-div#actionbuttons { bottom: 10ex; }
+/* div#actionbuttons { bottom: 10ex; } */
 
 /**
  * Sign In
  */
-div#signin { position: fixed; bottom: 0; }
+/* div#signin { position: fixed; bottom: 0; } */
 div#signin
 {
  margin-bottom: 1ex;
@@ -174,6 +169,7 @@ p.editdate {
   margin-bottom: 0.5ex;
 }
 
+/*
 div#actionbar {
   color: black;
   background: ivory;
@@ -184,7 +180,7 @@ div#actionbar {
   bottom: 0;
   margin: 0;
 }
-
+*/
 
 /**
  * Other

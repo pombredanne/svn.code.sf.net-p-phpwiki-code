@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.165 2004-03-24 19:39:03 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.166 2004-04-01 15:57:10 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -742,9 +742,11 @@ function split_pagename ($page) {
         $RE[] = "/(?<= |${sep}|^)([AI])([[:upper:]][[:lower:]])/";
         // Split numerals from following letters.
         $RE[] = '/(\d)([[:alpha:]])/';
+        // Split at subpage seperators
+        $RE[] = "/(${sep})([${sep}^]+)/";
         
-        foreach ($RE as $key => $val)
-            $RE[$key] = pcre_fix_posix_classes($val);
+        foreach ($RE as $key)
+            $RE[$key] = pcre_fix_posix_classes($key);
     }
 
     foreach ($RE as $regexp) {
@@ -1375,6 +1377,20 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.165  2004/03/24 19:39:03  rurban
+// php5 workaround code (plus some interim debugging code in XmlElement)
+//   php5 doesn't work yet with the current XmlElement class constructors,
+//   WikiUserNew does work better than php4.
+// rewrote WikiUserNew user upgrading to ease php5 update
+// fixed pref handling in WikiUserNew
+// added Email Notification
+// added simple Email verification
+// removed emailVerify userpref subclass: just a email property
+// changed pref binary storage layout: numarray => hash of non default values
+// print optimize message only if really done.
+// forced new cookie policy: delete pref cookies, use only WIKI_ID as plain string.
+//   prefs should be stored in db or homepage, besides the current session.
+//
 // Revision 1.164  2004/03/18 21:41:09  rurban
 // fixed sqlite support
 // WikiUserNew: PHP5 fixes: don't assign $this (untested)

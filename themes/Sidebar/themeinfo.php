@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.12 2004-03-26 03:13:23 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.13 2004-04-01 15:57:20 rurban Exp $');
 
 /*
  * This file defines the Sidebar appearance ("theme") of PhpWiki.
@@ -11,20 +11,31 @@ class Theme_Sidebar extends Theme {
 
     function findTemplate ($name) {
         // hack for navbar.tmpl to hide the buttonseparator
-        if ($name == "navbar" || $name == "actionbar" || $name == "signin") {
+        if ($name == "navbar") {
+            //$old = $Theme->getButtonSeparator();
+            $this->setButtonSeparator(HTML::Raw('<br /> &middot; '));
+            //$this->setButtonSeparator("\n");
+            //$Theme->setButtonSeparator($old);
+        }
+        if ($name == "actionbar" || $name == "signin") {
             //$old = $Theme->getButtonSeparator();
             //$this->setButtonSeparator(HTML::br());
-            $this->setButtonSeparator("\n");
+            $this->setButtonSeparator(" ");
             //$Theme->setButtonSeparator($old);
         }
         return $this->_path . $this->_findFile("templates/$name.tmpl");
     }
+
     function calendarLink($date = false) {
-        return $this->calendarBase() . SUBPAGE_SEPARATOR . strftime("%Y-%m-%d", $date ? $date : time());
+        return $this->calendarBase() . SUBPAGE_SEPARATOR . 
+               strftime("%Y-%m-%d", $date ? $date : time());
     }
+
     function calendarBase() {
         static $UserCalPageTitle = false;
-        if (!$UserCalPageTitle) $UserCalPageTitle = $GLOBALS['request']->_user->getId() . SUBPAGE_SEPARATOR . _("Calendar");
+        if (!$UserCalPageTitle) 
+            $UserCalPageTitle = $GLOBALS['request']->_user->getId() . 
+                                SUBPAGE_SEPARATOR . _("Calendar");
         return $UserCalPageTitle;
     }
 }
@@ -34,15 +45,18 @@ $dbi = $GLOBALS['request']->getDbh();
 // display flat calender dhtml under the clock
 if ($dbi->isWikiPage($Theme->calendarBase())) {
     $jslang = @$GLOBALS['LANG'];
-    $Theme->addMoreHeaders($Theme->_CSSlink(0,$Theme->_findFile('jscalendar/calendar-phpwiki.css'),'all'));
+    $Theme->addMoreHeaders($Theme->_CSSlink(0,
+        $Theme->_findFile('jscalendar/calendar-phpwiki.css'),'all'));
     $Theme->addMoreHeaders("\n");
-    $Theme->addMoreHeaders(JavaScript('',array('src' => $Theme->_findData('jscalendar/calendar_stripped.js'))));
+    $Theme->addMoreHeaders(JavaScript('',
+        array('src' => $Theme->_findData('jscalendar/calendar_stripped.js'))));
     $Theme->addMoreHeaders("\n");
     if (!($langfile = $Theme->_findData("jscalendar/lang/calendar-$jslang.js")))
         $langfile = $Theme->_findData("jscalendar/lang/calendar-en.js");
     $Theme->addMoreHeaders(JavaScript('',array('src' => $langfile)));
     $Theme->addMoreHeaders("\n");
-    $Theme->addMoreHeaders(JavaScript('',array('src' => $Theme->_findData('jscalendar/calendar-setup_stripped.js'))));
+    $Theme->addMoreHeaders(JavaScript('',
+        array('src' => $Theme->_findData('jscalendar/calendar-setup_stripped.js'))));
     $Theme->addMoreHeaders("\n");
 }
 
@@ -50,8 +64,9 @@ if ($dbi->isWikiPage($Theme->calendarBase())) {
 // style.  The companion '*-heavy.css' file isn't defined, it's just
 // expected to be in the same directory that the base style is in.
 
-$Theme->setDefaultCSS(_("Sidebar"), 'sidebar.css');
-$Theme->addAlternateCSS('PhpWiki', 'phpwiki.css');
+//$Theme->setDefaultCSS(_("Sidebar"), 'sidebar.css');
+//$Theme->addAlternateCSS('PhpWiki', 'phpwiki.css');
+$Theme->setDefaultCSS('PhpWiki', 'phpwiki.css');
 $Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
 $Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
 
@@ -86,7 +101,15 @@ $Theme->setLinkIcon('*', 'url');
  * WikiWords can automatically be split by inserting spaces between
  * the words. The default is to leave WordsSmashedTogetherLikeSo.
  */
-//$Theme->setAutosplitWikiWords(false);
+$Theme->setAutosplitWikiWords(true);
+
+/**
+ * If true (default) show create '?' buttons on not existing pages, even if the 
+ * user is not signed in.
+ * If false, anon users get no links and it looks cleaner, but then they 
+ * cannot easily fix missing pages.
+ */
+$Theme->setAnonEditUnknownLinks(false);
 
 /*
  * You may adjust the formats used for formatting dates and times

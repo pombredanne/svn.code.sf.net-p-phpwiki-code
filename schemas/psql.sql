@@ -1,4 +1,4 @@
--- $Id: psql.sql,v 1.4 2003-03-04 01:44:58 dairiki Exp $
+-- $Id: psql.sql,v 1.5 2004-04-01 15:57:20 rurban Exp $
 
 \set QUIET
 
@@ -20,7 +20,7 @@
 -- Commonly, connections from php are made under
 -- the user name of 'nobody', 'apache' or 'www'.
 
-\set httpd_user	'apache'
+\set httpd_user	'rurban'
 
 --================================================================
 --
@@ -140,4 +140,4 @@ GRANT ALL ON :version_tbl	TO :httpd_user;
 GRANT ALL ON :recent_tbl	TO :httpd_user;
 GRANT ALL ON :nonempty_tbl	TO :httpd_user;
 GRANT ALL ON :link_tbl		TO :httpd_user;
-GRANT ALL ON :session_tbl		TO :httpd_user;
+GRANT ALL ON :session_tbl	TO :httpd_user;

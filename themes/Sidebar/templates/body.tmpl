@@ -1,23 +1,66 @@
 <?php // -*-html-*-
-rcs_id('$Id: body.tmpl,v 1.1 2004-03-26 03:13:23 rurban Exp $');
+rcs_id('$Id: body.tmpl,v 1.2 2004-04-01 15:57:20 rurban Exp $');
 ?>
 <body<?= $Theme->getMoreAttr('body') ?>>
-
-<div id="header"><?php // for top-and-bottom toolbars style sheet ?>
-  <?= Template('top') ?>
+<table class="sidebar" width="100%">
+  <tr>
+    <td valign="top"><table class="sidebar" width="160">
+      <tr>
+        <td valign="top" width="160">
+<div class="box">
+<?= Template('top') ?>
 </div>
 <?php
+global $HIDE_TOOLBARS;
+if (!$HIDE_TOOLBARS) {
+?>
+<div class="box"><div class="box-title"><?= _("Navigation") ?></div>
+<div class="box-data">
+  <?= Template('navbar') ?>
+</div></div>
+<?php }
   /* Today's calendar page for the user, if the Calender subpage is defined. */
   $UserCalPageTitle = $user->getId() . SUBPAGE_SEPARATOR . _("Calendar");
   $dbi = $request->getDbh();
   // display flat calender dhtml under the clock
   if ($dbi->isWikiPage($UserCalPageTitle)) { ?>
+<div class="box">
+<div class="box-title"><?= WikiLink($UserCalPageTitle,'known',_("Calendar")) ?></div>
+<div class="box-data">
     <?= Template('calendar') ?>
+</div></div>
 <?php } else { ?>
 <div id="clock">
-<? include($Theme->_findFile("clock.php")); ?>
+<? // include($Theme->_findFile("clock.php")); ?>
 </div>
 <?php } ?>
+<?php 
+  $box = new RelatedLinksBox(); 
+  printXml($box->format());
+
+  $box = new PluginSidebarBox("RecentChanges",array('limit'=>10)); 
+  printXml($box->format());
+
+  $box = new PluginSidebarBox("WhoIsOnline"); 
+  printXml($box->format());
+
+?>
+        </td>
+      </tr>
+    </table></td>
+    <td valign="top"><table class="sidebar" width="100%">
+      <tr>
+        <td valign="top">
+<!-- Page title -->
+<h1><?= $HEADER ?></h1>
+<div class="toolbar">
+<?= Template('actionbar') ?>
+</div>
 <?= $CONTENT ?>
+        </td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
 <?= Template('bottom') ?>
 </body>

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.87 2004-03-30 02:14:03 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.88 2004-04-01 15:57:10 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -474,11 +474,13 @@ extends _RecentChanges_HtmlFormatter
         include_once('lib/InlineParser.php');
         $last_date = '';
         $first = true;
-        $html = HTML::ol();
+        $html = HTML();
+        $counter = 1;
+        $sp = HTML::Raw('&middot; ');
         while ($rev = $changes->next()) {
             // enforce view permission
             if (mayAccessPage('view',$rev->_pagename)) {
-                $html->pushContent(HTML::li($this->pageLink($rev)));
+                $html->pushContent($sp,$this->pageLink($rev),HTML::br());
                 if ($first)
                     $this->setValidators($rev);
                 $first = false;
@@ -649,7 +651,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.87 $");
+                            "\$Revision: 1.88 $");
     }
 
     function managesValidators() {
@@ -775,7 +777,10 @@ extends WikiPlugin
         if (!isset($args['limit'])) $args['limit'] = 15;
         $args['format'] = 'box';
         $args['show_minor'] = false;
+        $args['show_major'] = true;
         $args['show_deleted'] = false;
+        $args['show_all'] = false;
+        $args['days'] = 90;
         return $this->makeBox(WikiLink(_("RecentChanges"),'',_("Recent Changes")),
                               $this->format($this->getChanges($request->_dbi, $args), $args));
     }
@@ -831,6 +836,13 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.87  2004/03/30 02:14:03  rurban
+// fixed yet another Prefs bug
+// added generic PearDb_iter
+// $request->appendValidators no so strict as before
+// added some box plugin methods
+// PageList commalist for condensed output
+//
 // Revision 1.86  2004/03/12 13:31:43  rurban
 // enforce PagePermissions, errormsg if not Admin
 //
