@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.92 2005-01-29 20:37:21 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.93 2005-02-27 19:31:52 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -262,12 +262,16 @@ class PageEditor
         /* generate notification emails done in WikiDB::save to catch all direct calls 
           (admin plugins) */
 
+        // look at the errorstack
+        $errors = $this->_postponed_errors;
+        $warnings = $GLOBALS['ErrorManager']->getPostponedErrorsAsHTML(); 
+        $GLOBALS['ErrorManager']->_postponed_errors = $errors;
+
         $dbi = $request->getDbh();
-        $warnings = $dbi->GenericWarnings();
         $dbi->touch();
         
         global $WikiTheme;
-        if (empty($warnings) && ! $WikiTheme->getImageURL('signature')) {
+        if (empty($warnings->_content) && ! $WikiTheme->getImageURL('signature')) {
             // Do redirect to browse page if no signature has
             // been defined.  In this case, the user will most
             // likely not see the rest of the HTML we generate
@@ -281,7 +285,7 @@ class PageEditor
 
         $template = Template('savepage', $this->tokens);
         $template->replace('CONTENT', $newrevision->getTransformedContent());
-        if (!empty($warnings))
+        if (!empty($warnings->_content))
             $template->replace('WARNINGS', $warnings);
 
         $pagelink = WikiLink($page);
@@ -710,6 +714,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.92  2005/01/29 20:37:21  rurban
+ no edit toolbar at all if ENABLE_EDITTOOLBAR = false
+
  Revision 1.91  2005/01/25 07:05:49  rurban
  extract toolbar code, support new tags to get rid of php inside templates
 
