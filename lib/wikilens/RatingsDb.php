@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RatingsDb.php,v 1.2 2004-06-19 10:22:41 rurban Exp $');
+rcs_id('$Id: RatingsDb.php,v 1.3 2004-06-30 20:05:36 dfrankow Exp $');
 
 /*
  * @author:  Dan Frankowski (wikilens author), Reini Urban (as plugin)
@@ -31,6 +31,7 @@ define('RATING_STORAGE','SQL');          // only for mysql yet.
 
 class RatingsDb extends WikiDB {
 
+       
     function RatingsDb() {
         global $request;
         $this->_dbi = &$request->_dbi;
@@ -40,7 +41,7 @@ class RatingsDb extends WikiDB {
         else
             $this->dbtype = "ADODB";
         $this->iter_class = "WikiDB_backend_".$this->dbtype."_generic_iter";
-
+        
         extract($this->_backend->_table_names);
         if (empty($rating_tbl)) {
             $rating_tbl = (!empty($GLOBALS['DBParams']['prefix']) 
@@ -48,11 +49,22 @@ class RatingsDb extends WikiDB {
             $request->_dbi->_backend->_table_names['rating_tbl'] = $rating_tbl;
         }
     }
+    
+    // this is a singleton.  It ensures there is only 1 ratingsDB.
+    function &getTheRatingsDb(){
+        static $_theRatingsDb;
+        
+        if (!isset($_theRatingsDb)){
+            $_theRatingsDb = new RatingsDb();
+        } 
+        //echo "rating db is $_theRatingsDb";
+        return $_theRatingsDb;
+    }
+   
 
 /// *************************************************************************************
 // FIXME    
 // from Reini Urban's RateIt plugin
-
     function addRating($rating, $userid, $pagename, $dimension) {
         if (RATING_STORAGE == 'SQL') {
             $page = $this->_dbi->getPage($pagename);
@@ -74,11 +86,8 @@ class RatingsDb extends WikiDB {
             $this->metadata_set_rating($userid, $pagename, $dimension, -1);
         }
     }
-
+    
     function getRating($userid=null, $pagename=null, $dimension=null) {
-        if (is_null($dimension)) $dimension = $this->dimension;
-        if (is_null($userid))    $userid = $this->userid; 
-        if (is_null($pagename))  $pagename = $this->pagename;
         if (RATING_STORAGE == 'SQL') {
             $ratings_iter = $this->sql_get_rating($dimension, $userid, $pagename);
             if ($rating = $ratings_iter->next()) {
@@ -148,13 +157,14 @@ class RatingsDb extends WikiDB {
     function get_rating($dimension=null, $rater=null, $ratee=null,
                         $orderby = null, $pageinfo = "ratee") {
         if (RATING_STORAGE == 'SQL') {
-            $ratings_iter = $this->sql_get_rating($dimension, $userid, $pagename);
+            $ratings_iter = $this->sql_get_rating($dimension, $rater, $pagename);
             if ($rating = $ratings_iter->next()) {
                 return $rating['ratingvalue'];
             } else 
                 return false;
+               // return $ratings_iter;
         } else {
-            return $this->metadata_get_rating($userid, $pagename, $dimension);
+            return $this->metadata_get_rating($rater, $pagename, $dimension);
         }
         /*
         return $this->_backend->get_rating($dimension, $rater, $ratee,
@@ -166,7 +176,7 @@ class RatingsDb extends WikiDB {
         if (RATING_STORAGE == 'SQL') {
             $ratings_iter = $this->sql_get_users_rated($dimension, $orderby);
             if ($rating = $ratings_iter->next()) {
-                return $rating['ratingvalue'];
+               return $rating['ratingvalue'];
             } else 
                 return false;
         } else {
@@ -403,7 +413,6 @@ class RatingsDb extends WikiDB {
         // pageinfo must be 'rater' or 'ratee'
         if (($pageinfo != "ratee") && ($pageinfo != "rater"))
             return;
-
         $dbi = &$this->_dbi->_backend;
         //$dbh = &$this->_dbi;
         extract($dbi->_table_names);
@@ -425,13 +434,12 @@ class RatingsDb extends WikiDB {
         }
         if (isset($rater) or isset($ratee)) $what = '*';
         // same as _get_users_rated_result()
-        else $what = 'DISTINCT p.pagename';
+        else $what = 'DISTINCT p.pagename, r.ratingvalue, r.dimension';
 
         $query = "SELECT $what"
                . " FROM $rating_tbl r, $page_tbl p "
                . $where
                . $orderbyStr;
-
         $result = $dbi->_dbh->query($query);
         return $result;
     }
@@ -491,16 +499,14 @@ class RatingsDb extends WikiDB {
         $rateeid = $dbi->_get_pageid($ratee, true);
         assert($raterid);
         assert($rateeid);
+        //we changed back to delete and insert because update didn't work if it was a new rating
+        
+        $dbi->_dbh->query("DELETE from $rating_tbl WHERE dimension=$dimension AND raterpage=$raterid AND rateepage=$rateeid");
         $where = "WHERE raterpage='$raterid' AND rateepage='$rateeid'";
-        if (isset($dimension)) $where .= " AND dimension='$dimension'";
-        // atomic transaction:
-        $dbi->_dbh->query("UPDATE $rating_tbl SET ratingvalue='$rating', rateeversion='$rateeversion' $where");
 
-        /*
-        $dbi->_dbh->query("DELETE FROM $rating_tbl $where");
-        // NOTE: Leave tstamp off the insert, and MySQL automatically updates it (only if MySQL is used)
-        $dbi->_dbh->query("INSERT INTO $rating_tbl (dimension, raterpage, rateepage, ratingvalue, rateeversion) VALUES ('$dimension', $raterid, $rateeid, '$rating', '$rateeversion')");
-        */
+        $insert = "INSERT INTO $rating_tbl (dimension, raterpage, rateepage, ratingvalue, rateeversion) VALUES ('$dimension', $raterid, $rateeid, '$rating', '$rateeversion')";
+        $dbi->_dbh->query($insert);
+        
         //$dbi->unlock();
         return true;
     }
@@ -655,6 +661,9 @@ extends WikiDB_backend_PearDB {
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/06/19 10:22:41  rurban
+// outcomment the pear specific methods to let all pages load
+//
 // Revision 1.1  2004/06/18 14:42:17  rurban
 // added wikilens libs (not yet merged good enough, some work for DanFr)
 // 
