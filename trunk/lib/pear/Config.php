@@ -15,19 +15,19 @@
 // | Author: Bertrand Mansion <bmansion@mamasam.com>                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: Config.php,v 1.2 2004-04-20 16:41:35 zorloc Exp $
+// $Id: Config.php,v 1.3 2004-04-20 17:08:38 rurban Exp $
 
 require_once('lib/pear/PEAR.php');
 require_once('lib/pear/Config/Container.php');
 
 $GLOBALS['CONFIG_TYPES'] = 
         array(
-            'apache'        =>array('Config/Container/Apache.php','Config_Container_Apache'),
-            'genericconf'   =>array('Config/Container/GenericConf.php','Config_Container_GenericConf'),
-            'inifile'       =>array('Config/Container/IniFile.php','Config_Container_IniFile'),
-            'inicommented'  =>array('Config/Container/IniCommented.php','Config_Container_IniCommented'),
-            'phparray'      =>array('Config/Container/PHPArray.php','Config_Container_PHPArray'),
-            'xml'           =>array('Config/Container/XML.php','Config_Container_XML')
+            'apache'        =>array('lib/pear/Config/Container/Apache.php','Config_Container_Apache'),
+            'genericconf'   =>array('lib/pear/Config/Container/GenericConf.php','Config_Container_GenericConf'),
+            'inifile'       =>array('lib/pear/Config/Container/IniFile.php','Config_Container_IniFile'),
+            'inicommented'  =>array('lib/pear/Config/Container/IniCommented.php','Config_Container_IniCommented'),
+            'phparray'      =>array('lib/pear/Config/Container/PHPArray.php','Config_Container_PHPArray'),
+            'xml'           =>array('lib/pear/Config/Container/XML.php','Config_Container_XML')
             );
 
 /**
@@ -183,7 +183,7 @@ class Config {
     {
         $configType = strtolower($configType);
         if (!$this->isConfigTypeRegistered($configType)) {
-            return PEAR::raiseError("Configuration type '$configType' is not registered in Config::parseConfig.", null, PEAR_ERROR_RETURN);
+            PEAR::raiseError("Configuration type '$configType' is not registered in Config::parseConfig.", null, PEAR_ERROR_RETURN);
         }
         $includeFile = $GLOBALS['CONFIG_TYPES'][$configType][0];
         $className = $GLOBALS['CONFIG_TYPES'][$configType][1];
@@ -191,8 +191,8 @@ class Config {
 
         $parser = new $className($options);
         $error = $parser->parseDatasrc($datasrc, $this);
-        if ($error !== true) {
-            return $error;
+        if (PEAR::isError($error)) {
+            PEAR::raiseError($error, null, PEAR_ERROR_DIE);
         }
         $this->parserOptions = $parser->options;
         $this->datasrc = $datasrc;
