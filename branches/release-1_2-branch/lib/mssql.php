@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: mssql.php,v 1.1.2.3 2001-11-04 03:43:36 dairiki Exp $');
+<?php rcs_id('$Id: mssql.php,v 1.1.2.4 2001-11-07 18:58:14 dairiki Exp $');
 
    /* Microsoft SQL-Server library for PHPWiki
       Author: Andrew K. Pearson
@@ -217,15 +217,16 @@
    {
       global $HitCountStore;
 
+      $qpagename = addslashes($pagename);
       $rowexists = 0;
-      if ($res = mssql_query("select count(*) from $dbi[table] where pagename='$pagename'", $dbi['dbc'])) {
+      if ($res = mssql_query("select count(*) from $dbi[table] where pagename='$qpagename'", $dbi['dbc'])) {
          $rowexists = (mssql_result($res, 0, 0));
       }
 
       if ($rowexists)
-         $res = mssql_query("update $HitCountStore set hits=hits+1 where pagename='$pagename'", $dbi['dbc']);
+         $res = mssql_query("update $HitCountStore set hits=hits+1 where pagename='$qpagename'", $dbi['dbc']);
       else
-	     $res = mssql_query("insert into $HitCountStore (pagename, hits) values ('$pagename', 1)", $dbi['dbc']);
+	     $res = mssql_query("insert into $HitCountStore (pagename, hits) values ('$qpagename', 1)", $dbi['dbc']);
 
       return $res;
    }
@@ -234,7 +235,8 @@
    {
       global $HitCountStore;
 
-      $res = mssql_query("select hits from $HitCountStore where pagename='$pagename'", $dbi['dbc']);
+      $qpagename = addslashes($pagename);
+      $res = mssql_query("select hits from $HitCountStore where pagename='$qpagename'", $dbi['dbc']);
       if (mssql_num_rows($res))
          $hits = mssql_result($res, 0, 0);
       else
