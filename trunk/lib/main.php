@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.115 2004-02-15 21:34:37 rurban Exp $');
+rcs_id('$Id: main.php,v 1.116 2004-02-24 15:17:14 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -206,7 +206,15 @@ class WikiRequest extends Request {
         // Ignore password unless POST'ed.
         if (!$this->isPost())
             unset($auth_args['passwd']);
-
+/*
+        if (!empty($auth_args['logout'])) {
+            if (ENABLE_USER_NEW)
+                $this->_setUser();
+            else
+                $this->_setUser(new WikiUser($this->request()));
+            return;
+        }
+*/
         $olduser = $this->_user;
         $user = $this->_user->AuthCheck($auth_args);
         if (isa($user,WikiUserClassname())) {
@@ -306,19 +314,19 @@ class WikiRequest extends Request {
         static $actionDescriptions;
         if (! $actionDescriptions) {
             $actionDescriptions
-            = array('browse'     => _("browse pages in this wiki"),
-                    'diff'       => _("diff pages in this wiki"),
-                    'dumphtml'   => _("dump html pages from this wiki"),
-                    'dumpserial' => _("dump serial pages from this wiki"),
-                    'edit'       => _("edit pages in this wiki"),
-                    'create'     => _("create pages in this wiki"),
+            = array('browse'     => _("view this page"),
+                    'diff'       => _("diff this page"),
+                    'dumphtml'   => _("dump html pages"),
+                    'dumpserial' => _("dump serial pages"),
+                    'edit'       => _("edit this page"),
+                    'create'     => _("create this page"),
                     'loadfile'   => _("load files into this wiki"),
-                    'lock'       => _("lock pages in this wiki"),
-                    'remove'     => _("remove pages from this wiki"),
-                    'unlock'     => _("unlock pages in this wiki"),
-                    'upload'     => _("upload a zip dump to this wiki"),
+                    'lock'       => _("lock this page"),
+                    'remove'     => _("remove this page"),
+                    'unlock'     => _("unlock this page"),
+                    'upload'     => _("upload a zip dump"),
                     'verify'     => _("verify the current action"),
-                    'viewsource' => _("view the source of pages in this wiki"),
+                    'viewsource' => _("view the source of this page"),
                     'xmlrpc'     => _("access this wiki via XML-RPC"),
                     'zip'        => _("download a zip dump from this wiki"),
                     'ziphtml'    => _("download an html zip dump from this wiki")
@@ -864,6 +872,15 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.115  2004/02/15 21:34:37  rurban
+// PageList enhanced and improved.
+// fixed new WikiAdmin... plugins
+// editpage, Theme with exp. htmlarea framework
+//   (htmlarea yet committed, this is really questionable)
+// WikiUser... code with better session handling for prefs
+// enhanced UserPreferences (again)
+// RecentChanges for show_deleted: how should pages be deleted then?
+//
 // Revision 1.114  2004/02/15 17:30:13  rurban
 // workaround for lost db connnection handle on session restauration (->_auth_dbi)
 // fixed getPreferences() (esp. from sessions)
