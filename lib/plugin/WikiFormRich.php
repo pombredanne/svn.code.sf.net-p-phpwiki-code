@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiFormRich.php,v 1.4 2004-11-23 15:17:20 rurban Exp $');
+rcs_id('$Id: WikiFormRich.php,v 1.5 2004-11-24 10:14:36 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -35,6 +35,10 @@ rcs_id('$Id: WikiFormRich.php,v 1.4 2004-11-23 15:17:20 rurban Exp $');
  
  * values which are constants are evaluated.
  * The cancel button must be supported by the action. (which?)
+
+ * TODO:
+ * improve layout, 
+ * add pulldown, possibly with <!plugin-list !>
 
  Samples:
    <?plugin WikiFormRich action=dumpserial method=GET 
@@ -73,7 +77,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
     function getDefaultArguments() {
         return array('action' => false,     // required argument
@@ -135,7 +139,12 @@ extends WikiPlugin
                     $input['text'] = gettext($input['name'])."=".$input['value'];
                 $text = $input['text'];
                 unset($input['text']);
-                if (!empty($input['checked'])) $input['checked'] = 'checked';
+                if (empty($input['checked'])) {
+                    if ($request->getArg($input['name']))
+                        $input['checked'] = 'checked';
+                } else {
+                    $input['checked'] = 'checked';
+                }
                 $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $text));
                 break;
               case 'editbox':
@@ -144,6 +153,8 @@ extends WikiPlugin
                     return $this->error("A required argument '%s' is missing.","editbox[][name]");
                 if (empty($input['text'])) $input['text'] = gettext($input['name']);
                 $text = $input['text'];
+                if (empty($input['value']) and ($s = $request->getArg($input['name'])))
+                    $input['value'] = $s;
                 unset($input['text']);
                 $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $text));
                 break;
@@ -186,6 +197,14 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/11/23 15:17:20  rurban
+// better support for case_exact search (not caseexact for consistency),
+// plugin args simplification:
+//   handle and explode exclude and pages argument in WikiPlugin::getArgs
+//     and exclude in advance (at the sql level if possible)
+//   handle sortby and limit from request override in WikiPlugin::getArgs
+// ListSubpages: renamed pages to maxpages
+//
 // Revision 1.3  2004/07/09 13:05:34  rurban
 // just aesthetics
 //
