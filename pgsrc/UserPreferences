@@ -1,14 +1,11 @@
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
-X-RCS_ID: $Id: UserPreferences,v 1.3 2002-01-09 05:48:18 carstenklapp Exp $
+X-RCS_ID: $Id: UserPreferences,v 1.4 2002-01-23 19:20:05 dairiki Exp $
 Content-Type: application/x-phpwiki;
   pagename=UserPreferences;
   flags=PAGE_LOCKED;
-  lastmodified=1009096691;
+  lastmodified=1011808433;
 Content-Transfer-Encoding: binary
 
 You can now set some user preferences. The values of these preferences are currently stored in a cookie (so you must have cookies enabled to use this feature.)
 
-! !EditArea Dimensions.
-
-[Set Width | phpwiki:?action=setprefs&edit_area_width=3()]
-[Set Height | phpwiki:?action=setprefs&edit_area_height=3()]
+<?plugin UserPreferences?>
