@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _BackendInfo.php,v 1.13 2002-02-22 23:12:54 carstenklapp Exp $');
+rcs_id('$Id: _BackendInfo.php,v 1.14 2002-08-22 23:32:33 rurban Exp $');
 require_once('lib/Template.php');
 /**
  */
@@ -51,7 +51,7 @@ extends WikiPlugin
                 $content = '<true>';
             elseif (strlen($content) > 40)
                 $content = substr($content,0,40) . " ...";
-
+            unset($vdata['%pagedata']); // problem in backend
             $table->pushContent(HTML::tr(HTML::td(array('colspan' => 2))));
             $table->pushContent($this->_showhash("get_versiondata('$page',$version)",
                                                  $vdata));
@@ -67,14 +67,21 @@ extends WikiPlugin
                            HTML::td(array('colspan' => 2,
                                           'style' => 'color:#000000'), $heading));
         ksort($hash);
-        foreach ($hash as $key => $val)
-            $rows[] = HTML::tr(HTML::td(array('align' => 'right',
+        foreach ($hash as $key => $val) {
+            if (is_string($val) and (substr($val,0,2) == 'a:')) {
+                $val = unserialize($val);
+                $rows[] = $this->_showhash (NBSP . NBSP . "%pagedata '$key' array" , $val);
+            } else {
+                if ($key == 'passwd') $val = $val ? '<not displayed>' : '<empty>';
+                $rows[] = HTML::tr(HTML::td(array('align' => 'right',
                                               'bgcolor' => '#cccccc',
                                               'style' => 'color:#000000'),
                                         NBSP . $key . NBSP),
                                HTML::td(array('bgcolor' => '#ffffff',
                                               'style' => 'color:#000000'),
                                         $val ? $val : NBSP));
+            }
+        }
         return $rows;
     }
 };

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.1 2002-08-20 20:34:20 rurban Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.2 2002-08-22 23:32:33 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -20,7 +20,8 @@ rcs_id('$Id: WikiAdminRemove.php,v 1.1 2002-08-20 20:34:20 rurban Exp $');
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-//require_once('lib/PageList.php');
+// maybe display more attributes with this class...
+//require_once('lib/PageList.php'); 
 
 class WikiPlugin_WikiAdminRemove
 extends WikiPlugin
@@ -45,10 +46,6 @@ extends WikiPlugin
             $pagename = $pagehandle->getName();
             if (empty($list[$pagename])) $list[$pagename] = 0;
         }
-    }
-
-    function sortCollectedPages(&$list) {
-        
     }
 
     function addTableHead(&$table) {
@@ -101,16 +98,16 @@ extends WikiPlugin
         $this->_list = array();
         // array_multisort($this->_list, SORT_NUMERIC, SORT_DESC);
         $pagename = $request->getArg('pagename');
-        $form = HTML::form(array('action' => WikiURL($pagename),'method' => 'POST'));
+        $form = HTML::form(array('action' => $_SERVER['REQUEST_URI'], 'method' => 'POST'));
         if ($request->isPost() and $request->getArg('verify')) {
             // List all to be deleted pages again.
-            foreach ($GLOBALS['HTTP_POST_VARS']['p'] as $page => $name) { // requires php-4.2.0
+            foreach ($GLOBALS['HTTP_POST_VARS']['p'] as $page => $name) {
                 $this->_list[$name] = 1;
             }
         } elseif ($request->isPost() and $request->getArg('remove')) {
             // Real delete.
             $ul = HTML::ul();
-            foreach ($GLOBALS['HTTP_POST_VARS']['p'] as $page => $name) { // requires php-4.2.0
+            foreach ($GLOBALS['HTTP_POST_VARS']['p'] as $page => $name) {
                 $dbi = $request->getDbh();
                 $dbi->deletePage($name);
                 $ul->pushContent(HTML::li(fmt("Removed page '%s' succesfully.", $name)));

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TitleSearch.php,v 1.15 2002-02-28 00:46:51 carstenklapp Exp $');
+rcs_id('$Id: TitleSearch.php,v 1.16 2002-08-22 23:32:33 rurban Exp $');
 
 require_once('lib/TextSearchQuery.php');
 require_once('lib/PageList.php');
