@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: info.tmpl,v 1.9 2002-09-18 19:29:44 dairiki Exp $ -->
+<!-- $Id: info.tmpl,v 1.10 2002-12-15 01:30:47 carstenklapp Exp $ -->
 <?php
 
 $modifed = $Theme->formatDateTime($revision->get('mtime'));
@@ -67,14 +67,14 @@ if ($is_current = $revision->isCurrent()) {
         $LOCKED_CB->setAttr('onclick', $clickcheckb);
     }
 
-    $label['date'] = _("Last Modified") . ':';
-    $label['author'] = _("Last Author") . ':';
-    $label['summary'] = _("Last Summary") . ':';
+    $label['date'] = _("Last Modified:");
+    $label['author'] = _("Last Author:");
+    $label['summary'] = _("Last Summary:");
 
 } else {
-    $label['date'] = _("Saved on") . ':';
-    $label['author'] = _("Author") . ':';
-    $label['summary'] = _("Summary") . ':';
+    $label['date'] = _("Saved on:");
+    $label['author'] = _("Author:");
+    $label['summary'] = _("Summary:");
 }
 
 $tableSummary = fmt("Statistics about %s.", $page->getName());
@@ -88,7 +88,7 @@ $Sep = $Theme->getButtonSeparator();
 
 <?php if (!$is_current) { ?>
   <tr>
-    <td align="right" class="pageinfo"><?=_("Supplanted on")?>:</td>
+    <td align="right" class="pageinfo"><?=_("Supplanted on:")?></td>
     <td><?= $Theme->formatDateTime($revision->get('_supplanted')) ?></td>
   </tr>
 <?php } ?>
@@ -100,18 +100,18 @@ $Sep = $Theme->getButtonSeparator();
     <td align="right" class="pageinfo"><?= $label['author'] ?></td>
     <td><?= $author ?> <span class="pageinfo-authorid">(<?= $authorId ?>)</span></td>
   </tr><tr>
-    <td align="right" class="pageinfo"><?=_("Page Version")?>:</td>
+    <td align="right" class="pageinfo"><?=_("Page Version:")?></td>
     <td><?= $version ?></td>
   </tr><tr>
-    <td align="right" class="pageinfo"><?=_("Markup")?>:</td>
+    <td align="right" class="pageinfo"><?=_("Markup:")?></td>
     <td><?= $markupVersion ?></td>
   </tr><tr>
-    <td align="right" class="pageinfo"><?=_("Size")?>:</td>
+    <td align="right" class="pageinfo"><?=_("Size:")?></td>
     <td><?= $wordcount ?>, <?= $size ?></td>
 
 <?php if ($is_current) { ?>
   </tr><tr>
-    <td align="right" class="pageinfo"><?= _("Hits") ?>:</td>
+    <td align="right" class="pageinfo"><?= _("Hits:") ?></td>
     <td><?= $hits ?></td>
 <?php } ?>
 
