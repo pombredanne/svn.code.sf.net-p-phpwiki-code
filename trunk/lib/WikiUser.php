@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.33 2003-01-22 03:21:40 zorloc Exp $');
+rcs_id('$Id: WikiUser.php,v 1.34 2003-02-15 02:21:54 dairiki Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -53,8 +53,8 @@ class WikiUser {
      * @param mixed $userid String of username or WikiUser object.
      * @param integer $authlevel Authorization level.
      */
-    function WikiUser ($userid = false, $authlevel = false) {
-        $this->_request = &$GLOBALS['request'];
+    function WikiUser (&$request, $userid = false, $authlevel = false) {
+        $this->_request = &$request;
         $this->_dbi = &$this->_request->getDbh();
 
         if (isa($userid, 'WikiUser')) {
@@ -144,7 +144,7 @@ class WikiUser {
         $require_level = max(0, min(WIKIAUTH_ADMIN, (int)$require_level));
 
         if ($logout)
-            return new WikiUser; // Log out
+            return new WikiUser($this->_request); // Log out
         elseif ($cancel)
             return false;        // User hit cancel button.
         elseif (!$login && !$userid)
@@ -157,7 +157,7 @@ class WikiUser {
             return _("Insufficient permissions.");
 
         // Successful login.
-        $user = new WikiUser;
+        $user = new WikiUser($this->_request);
         $user->_userid = $userid;
         $user->_level = $authlevel;
         return $user;
@@ -467,10 +467,14 @@ class WikiUser {
                          }
 
 // create user and default user homepage
+// FIXME: delete this, not used?
+/*
 function createUser ($userid, $pref) {
-    $user = new WikiUser ($userid);
+    global $request;
+    $user = new WikiUser ($request, $userid);
     $user->createUser($pref);
 }
+*/
 
 class _UserPreference
 {
@@ -638,6 +642,11 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.33  2003/01/22 03:21:40  zorloc
+// Modified WikiUser constructor to move the DB request for the homepage to
+// the end of the logic to prevent it from being requested and then dropped.
+// Added more phpdoc comments.
+//
 // Revision 1.32  2003/01/21 07:40:50  zorloc
 // Modified WikiUser::_ok() -- Inverted the logic so the default is to return
 // false and to return true only in the desired condition.  Added phpdoc
