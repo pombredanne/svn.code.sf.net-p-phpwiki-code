@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.82 2004-05-16 22:07:35 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.83 2004-05-18 13:35:39 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -397,6 +397,7 @@ class PageList {
     var $_options = array();
     var $_selected = array();
     var $_sortby = array();
+    var $_maxlen = 0;
 
     function PageList ($columns = false, $exclude = false, $options = false) {
         // let plugins predefine only certain objects, such its own custom pagelist columns
@@ -522,6 +523,7 @@ class PageList {
         $group = (int)(count($this->_rows) / $this->_group_rows);
         $class = ($group % 2) ? 'oddrow' : 'evenrow';
         $revision_handle = false;
+        $this->_maxlen = max($this->_maxlen,strlen($page_handle->getName()));
 
         if (count($this->_columns) > 1) {
             $row = HTML::tr(array('class' => $class));
@@ -537,6 +539,7 @@ class PageList {
     }
 
     function addPages ($page_iter) {
+        //Todo: if limit check max(strlen(pagename))
         while ($page = $page_iter->next())
             $this->addPage($page);
     }
@@ -545,6 +548,23 @@ class PageList {
         reset ($list);
         while ($page = next($list))
             $this->addPage((string)$page);
+    }
+
+    function maxLen() {
+        global $DBParams, $request;
+        if ($DBParams['dbtype'] == 'SQL' or $DBParams['dbtype'] == 'ADODB') {
+            $dbi =& $request->getDbh();
+            extract($dbi->_backend->_table_names);
+            if ($DBParams['dbtype'] == 'SQL') {
+                $res = $dbi->_backend->_dbh->getOne("SELECT max(length(pagename)) FROM $page_tbl LIMIT 1");
+                if (DB::isError($res) || empty($res)) return false;
+                else return $res;
+            } elseif ($DBParams['dbtype'] == 'ADODB') {
+                $row = $dbi->_backend->_dbh->getRow("SELECT max(length(pagename)) FROM $page_tbl LIMIT 1");
+                return $row ? $row[0] : false;
+            }
+        } else 
+            return false;
     }
 
     function getContent() {
@@ -759,10 +779,18 @@ class PageList {
         if (!empty($this->_columns_seen['checkbox'])) {
             $table->pushContent($this->_jsFlipAll());
         }
+        $do_paging = ( isset($this->_options['paging']) and 
+                       !empty($this->_options['limit']) and $this->getTotal() and
+                       $this->_options['paging'] != 'none' );
         $row = HTML::tr();
         $table_summary = array();
         foreach ($this->_columns as $col) {
-            $row->pushContent($col->button_heading());
+            $heading = $col->button_heading();
+            if ($do_paging and 
+                isset($col->_field) and $col->_field == 'pagename' and 
+                ($maxlen = $this->maxLen()))
+                $heading->setAttr('width',$maxlen * 7);
+            $row->pushContent($heading);
             if (is_string($col->_heading))
                 $table_summary[] = $col->_heading;
         }
@@ -770,10 +798,7 @@ class PageList {
         $table->setAttr('summary', sprintf(_("Columns: %s."), 
                                            implode(", ", $table_summary)));
 
-        if ( isset($this->_options['paging']) and 
-             !empty($this->_options['limit']) and $this->getTotal() and
-             $this->_options['paging'] != 'none')
-        {
+        if ( $do_paging ) {
             // if there are more pages than the limit, show a table-header, -footer
             list($offset,$pagesize) = $this->limit($this->_options['limit']);
             $numrows = $this->getTotal();
@@ -917,6 +942,14 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.82  2004/05/16 22:07:35  rurban
+// check more config-default and predefined constants
+// various PagePerm fixes:
+//   fix default PagePerms, esp. edit and view for Bogo and Password users
+//   implemented Creator and Owner
+//   BOGOUSERS renamed to BOGOUSER
+// fixed syntax errors in signin.tmpl
+//
 // Revision 1.81  2004/05/13 12:30:35  rurban
 // fix for MacOSX border CSS attr, and if sort buttons are not found
 //
