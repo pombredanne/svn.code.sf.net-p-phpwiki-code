@@ -1,32 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
+<!-- phpwiki source:
+###RCS_IDS###
+-->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<base href="###BASE_URL###">
 <title>###PAGE###</title>
 </head>
 
 <body bgcolor=ivory text=black alink=red link=darkblue vlink=darkmagenta>
-<h1><a href="###SCRIPTURL###"><img src="###LOGO###" border=0 alt="[phpwiki]" align=middle width=50 height=50></a>
-<a href="###SCRIPTURL###?full=###PAGEURL###">###PAGE###</a></h1>
-###IF:ADMIN###<FORM ACTION="###SCRIPTURL###" METHOD=POST>
-###IF LOCK###[<a href="###SCRIPTURL###?unlock=###PAGEURL###">Unlock page</a>]
-###IF !LOCK###[<a href="###SCRIPTURL###?lock=###PAGEURL###">Lock page</a>]
+<h1><a href="###BROWSE###FrontPage"><img src="###LOGO###" border=0 alt="[phpwiki]" align=middle width=50 height=50></a>
+<a href="###ACTION###search&amp;searchtype=full&amp;searchterm=###PAGEURL###">###PAGE###</a></h1>
+###IF:!ANONYMOUS###
+<p>You are logged in as <em>###USERID###</em>.
+[<a href="###ACTION###logout">Log Out</a>]</p>
+###IF:ADMIN###
+###IF LOCK###[<a href="###ACTION###unlock">Unlock page</a>]
+###IF !LOCK###[<a href="###ACTION###lock">Lock page</a>]
 - - 
-[<a href="###SCRIPTURL###?remove=###PAGEURL###">Remove page</A>]
-<hr noshade>
+[<a href="###ACTION###remove">Remove page</a>]
 ###ENDIF:ADMIN###
+<hr noshade>
+###ENDIF:!ANONYMOUS###
 <P>
 ###CONTENT###
 <hr noshade>
-###IF ADMIN###<a href="###SCRIPTURL###?edit=###PAGEURL###">EditText</a> of this page
+###IF ADMIN###<a href="###ACTION###edit">EditText</a> of this page
 ###IF:!ADMIN###
 ###IF LOCK###Page locked
-###IF !LOCK###<a href="###SCRIPTURL###?edit=###PAGEURL###">EditText</a> of this page
+###IF !LOCK###<a href="###ACTION###edit">EditText</a> of this page
 ###ENDIF:!ADMIN###
 (last edited ###LASTMODIFIED###)
-[<a href="###SCRIPTURL###?info=###PAGEURL###">info</a>]
-[<a href="###SCRIPTURL###?diff=###PAGEURL###">diff</a>])
+[<a href="###ACTION###info">info</a>]
+[<a href="###ACTION###diff">diff</a>])
 <br>
-<a href="###SCRIPTURL###?FindPage">FindPage</a> by browsing or searching
+<a href="###BROWSE###FindPage">FindPage</a> by browsing or searching
 <hr noshade>
 <small>###RELATEDPAGES###</small>
 

@@ -1,76 +1,61 @@
-<!-- $Id: pageinfo.php,v 1.5 2000-11-01 11:31:41 ahollosi Exp $ -->
+<!-- $Id: pageinfo.php,v 1.6 2001-02-10 22:15:08 dairiki Exp $ -->
 <!-- Display the internal structure of a page. Steve Wainstead, June 2000 -->
 <?php
-   if (get_magic_quotes_gpc()) {
-      $info = stripslashes($info);
+
+
+
+function ViewpageProps($name, $pagestore)
+{
+   global $dbi, $showpagesource, $datetimeformat, $FieldSeparator;
+
+   $pagehash = RetrievePage($dbi, $name, $pagestore);
+   if ($pagehash == -1) {
+      return QElement('p',
+		      sprintf (gettext ("Page name '%s' is not in the database"),
+			       $name));
    }
 
-   $encname = htmlspecialchars($info);
-   $enter = gettext ("Enter a page name");
-   $go = gettext ("Go");
-   $html = "<form action=\"$ScriptUrl\" METHOD=GET>\n" .
-	   "<input name=\"info\" value=\"$encname\">" .
-	   " $enter\n" .
-	   "<input type=submit value=$go><br>\n" .
-	   "<input type=checkbox name=showpagesource";
+   $rows = '';
+   while (list($key, $val) = each($pagehash)) {
+      if ($key > 0 || !$key)
+	 continue; //key is an array index
+      $cols = QElement('td', array('align' => 'right'), $key);
 
-   if (isset($showpagesource) && ($showpagesource == "on")) {
-      $html .= " checked";
-   }
-   $html .= "> ";
-   $html .= gettext ("Show the page source and references");
-   $html .= "\n</form>\n";
-
-   // don't bother unless we were asked
-   if (! $info) {
-      GeneratePage('MESSAGE', $html, gettext("PageInfo"), 0);
-      exit;
-   }
-
-   function ViewpageProps($name, $pagestore)
-   {
-      global $dbi, $showpagesource, $datetimeformat, $FieldSeparator;
-
-      $pagehash = RetrievePage($dbi, $name, $pagestore);
-      if ($pagehash == -1) {
-         $table = sprintf (gettext ("Page name '%s' is not in the database"),
-		$name) . "\n";
+      if (is_array($val))
+      {
+	 if (empty($showpagesource))
+	    continue;
+	 $cols .= Element('td',
+			  nl2br(htmlspecialchars(join("\n", $val))));
       }
-      else {
-	 $table = "<table border=1 bgcolor=white>\n";
-
-	 while (list($key, $val) = each($pagehash)) {
-	    if ($key > 0 || !$key) #key is an array index
-	       continue;
-            if ((gettype($val) == "array") && ($showpagesource == "on")) {
-               $val = implode($val, "$FieldSeparator#BR#$FieldSeparator\n");
-	       $val = htmlspecialchars($val);
-	       $val = str_replace("$FieldSeparator#BR#$FieldSeparator", "<br>", $val);
-            }
-	    elseif (($key == 'lastmodified') || ($key == 'created'))
-	       $val = date($datetimeformat, $val);
-	    else
-	       $val = htmlspecialchars($val);
-
-            $table .= "<tr><td>$key</td><td>$val</td></tr>\n";
-	 }
-
-	 $table .= "</table>";
-      }
-      return $table;
+      elseif (($key == 'lastmodified') || ($key == 'created'))
+	 $cols .= QElement('td',
+			   date($datetimeformat, $val));
+      else
+	 $cols .= QElement('td', $val);
+      
+      $rows .= Element('tr', $cols);
    }
 
-   $html .= "<P><B>";
-   $html .= gettext ("Current version");
-   $html .= "</B></p>";
-   // $dbi = OpenDataBase($WikiPageStore);   --- done by index.php
-   $html .= ViewPageProps($info, $WikiPageStore);
+   return Element('table', array('border' => 1, 'bgcolor' => 'white'), $rows);
+}
 
-   $html .= "<P><B>";
-   $html .= gettext ("Archived version");
-   $html .= "</B></p>";
-   // $dbi = OpenDataBase($ArchivePageStore);
-   $html .= ViewPageProps($info, $ArchivePageStore);
 
-   GeneratePage('MESSAGE', $html, gettext("PageInfo").": '$info'", 0);
+$html = '';
+
+if (empty($showpagesource))
+{
+   $text = gettext ("Show the page source");
+   $url = WikiURL($pagename, array('action' => 'info',
+				   'showpagesource' => 'on'));
+   $html .= QElement('a', array('href' => $url), $text);
+}
+
+$html .= Element('p', QElement('b', gettext ("Current version")));
+$html .= ViewPageProps($pagename, $WikiPageStore);
+
+$html .= Element('p', QElement('b', gettext ("Archived version")));
+$html .= ViewPageProps($pagename, $ArchivePageStore);
+
+GeneratePage('MESSAGE', $html, gettext("PageInfo").": '$pagename'", 0);
 ?>

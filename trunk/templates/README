@@ -1,4 +1,4 @@
-$Id: README,v 1.3 2000-11-08 16:19:01 ahollosi Exp $
+$Id: README,v 1.4 2001-02-10 22:15:08 dairiki Exp $
 
 PhpWiki distinguishes between four different templates:
 
@@ -41,10 +41,30 @@ Following placeholders are provided by PhpWiki:
 	The actual page content. This is either the Wikipage itself,
 	the search result, or a message text.
 
-###ALLOWEDPROTOCOLS###
-	Protocols allowed for external links and references.
-	Default: http|https|mailto|ftp|news|gopher
+###USERID###
+        The userid of the current users.  For non-authenticated users,
+        the userid is the host name or IP number of the user.
 
+###LOGO###
+        URL of the phpwiki logo image.
+
+###RCS_IDS###
+        The RCS ids of the php source files which contributed to the current
+        page.
+
+###BROWSE_PAGE###
+        The URL to use to browse the current page.
+
+###ACTION###
+        The leading part of the URL for performing an action on the current page.
+	Eg. <a href="###ACTION###edit">Edit this page</a>.
+
+###BROWSE### 
+        The leading part of the URL for browsing to another page.
+	Eg. <a href="###BROWSE###FindPage">Edit this page</a>.
+
+###BASE_URL###
+        The base URL for the current page.
 
 Conditional placeholders:
 
@@ -67,13 +87,24 @@ Block:
 
 Conditions to test:
 
-COPY    If page has a copy in the archive. Usually used to display/omit
-	the EditCopy link in the editpage template.
-
 ADMIN	If the current user is an admin. Used in e.g. browse template
 	to display admin buttons at the top.
 
+ANONYMOUS
+        If the current user is not authenticated.
+
+COPY    If page has a copy in the archive. Usually used to display/omit
+	the EditCopy link in the editpage template.
+
 LOCK	If current page is locked and thus cannot be edited.
+
+MINOR_EDIT_CHECKBOX
+        If the current user is the same as the last editor of this
+        page, this will contain the complete HTML for a checkbox,
+        which, when checked will prevent a backup copy from being made.
+
+        If the current user is different than the last editor, 
+        MINOR_EDIT_CHECKBOX will be blank.
 
 For examples see browse.html and editpage.html
 
@@ -96,20 +127,17 @@ The following placeholders are not available for the 'MESSAGE' template:
 	Note: this is also used for detecting concurrent updates to a page.
 	See hidden input field in EDITPAGE template for how to use it.
 
+###HITS###
+        The hit count of the current page.
 
-Only for EditLinks:
-
-###1###, ###2###, ....
-	Placeholder for references. Up to NUM_LINKS placeholders will be
-	substituted. NUM_LINKS is defined in lib/config.php
-
-
+###RELATEDPAGES###
+        The related pages list for the current page.
 
 Examples:
 
-<A HREF="###SCRIPTURL###">the entry (default) page</A>
-<A HREF="###SCRIPTURL###?###PAGEURL###">the current page</A>
-<A HREF="###SCRIPTURL###?FindPage">the FindPage page</A>
+<A HREF="###BROWSE###FrontPage">the entry (default) page</A>
+<A HREF="###BROWSE_PAGE###">the current page</A>
+<A HREF="###BROWSE###FindPage">the FindPage page</A>
 <head><title>PhpWiki Page: ###PAGE###</title></head>
 
 See the default templates for more examples.

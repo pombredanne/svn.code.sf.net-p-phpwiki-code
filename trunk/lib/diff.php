@@ -1,4 +1,4 @@
-<!-- $Id: diff.php,v 1.5 2001-02-07 18:35:09 dairiki Exp $ -->
+<!-- $Id: diff.php,v 1.6 2001-02-10 22:15:08 dairiki Exp $ -->
 <?php
 // diff.php
 //
@@ -158,6 +158,8 @@ class _WikiDiffEngine
    */
   function _diag ($xoff, $xlim, $yoff, $ylim, $nchunks)
       {
+	$flip = false;
+	
 	if ($xlim - $xoff > $ylim - $yoff)
 	  {
 	    // Things seems faster (I'm not sure I understand why)
@@ -195,7 +197,7 @@ class _WikiDiffEngine
 		    continue;
 		reset($matches);
 		while (list ($junk, $y) = each($matches))
-		    if (! $this->in_seq[$y])
+		    if (empty($this->in_seq[$y]))
 		      {
 			$k = $this->_lcs_pos($y);
 			USE_ASSERTS && assert($k > 0);
@@ -213,7 +215,7 @@ class _WikiDiffEngine
 			$this->seq[$k] = $y;
 			$this->in_seq[$y] = 1;
 		      }
-		    else if (! $this->in_seq[$y])
+		    else if (empty($this->in_seq[$y]))
 		      {
 			$k = $this->_lcs_pos($y);
 			USE_ASSERTS && assert($k > 0);
@@ -817,17 +819,18 @@ class WikiDiffFormatter
 
   function format ($diff, $from_lines)
       {
-	$html = '<table width="100%" bgcolor="black"' .
-		"cellspacing=2 cellpadding=2 border=0>\n";
-	$html .= $this->_format($diff->edits, $from_lines);
-	$html .= "</table>\n";
-
-	return $html;
+	return Element('table',
+		       array('width' => '100%',
+			     'bgcolor' => 'black',
+			     'cellspacing' => 2,
+			     'cellpadding' => 2,
+			     'border' => 0),
+		       $this->_format($diff->edits, $from_lines));
       }
     
   function _format ($edits, $from_lines)
       {
-	$html = '';
+	$rows = '';
 	$x = 0; $y = 0;
 	$xlim = sizeof($from_lines);
 
@@ -897,8 +900,7 @@ class WikiDiffFormatter
 			list ($xbeg, $xlen, $ybeg, $ylen)
 			    = array($ybeg, $ylen, $xbeg, $xlen);
 
-		    $html .= $this->_emit_diff($xbeg,$xlen,$ybeg,$ylen,
-					       $hunks);
+		    $rows .= $this->_emit_diff($xbeg,$xlen,$ybeg,$ylen, $hunks);
 		    unset($hunks);
 		  }
 		else if ($ncopy)
@@ -916,30 +918,31 @@ class WikiDiffFormatter
 	    $x += $ncopy;
 	    $y += $ncopy;
 	  }
-	return $html;
+	return $rows;
       }
 
   function _emit_lines($lines,  $prefix, $color)
       {
 	$html = '';
+	$prefix = Element('td', array('bgcolor' => '#cccccc'), $prefix);
 	reset($lines);
 	while (list ($junk, $line) = each($lines))
 	  {
-	    $html .= "<tr bgcolor=\"$color\"><td><tt>$prefix</tt>";
-	    $html .= "<tt>" . htmlspecialchars($line) . "</tt></td></tr>\n";
+	    $line = empty($line) ? '&nbsp;' : htmlspecialchars($line);
+	    $html .= Element('tr', 
+			     $prefix . Element('td', array('bgcolor' => $color),
+					       Element('tt', $line)));
 	  }
 	return $html;
       }
 
   function _emit_diff ($xbeg,$xlen,$ybeg,$ylen,$hunks)
       {
-	$html = '<tr><td><table width="100%" bgcolor="white"'
-	      . " cellspacing=0 border=0 cellpadding=4>\n"
-	      . '<tr bgcolor="#cccccc"><td><tt>'
-	      . $this->_diff_header($xbeg, $xlen, $ybeg, $ylen)
-	      . "</tt></td></tr>\n<tr><td>\n"
-	      . "<table width=\"100%\" cellspacing=0 border=0 cellpadding=2>\n";
-
+	$header = Element('tr', array('bgcolor' => '#cccccc'),
+			  Element('td', array('colspan' => 2),
+				  QElement('tt',
+					   $this->_diff_header($xbeg, $xlen, $ybeg, $ylen))));
+	
 	$prefix = array('c' => $this->context_prefix,
 			'a' => $this->adds_prefix,
 			'd' => $this->deletes_prefix);
@@ -947,21 +950,30 @@ class WikiDiffFormatter
 		       'a' => '#ffcccc',
 		       'd' => '#ccffcc');
 
+	$diff = '';
 	for (reset($hunks); $hunk = current($hunks); next($hunks))
 	  {
 	    if (!empty($hunk['c']))
-		$html .= $this->_emit_lines($hunk['c'],
+		$diff .= $this->_emit_lines($hunk['c'],
 		                            $this->context_prefix, '#ffffff');
 	    if (!empty($hunk['d']))
-		$html .= $this->_emit_lines($hunk['d'],
+		$diff .= $this->_emit_lines($hunk['d'],
 		                            $this->deletes_prefix, '#ccffcc');
 	    if (!empty($hunk['a']))
-		$html .= $this->_emit_lines($hunk['a'],
+		$diff .= $this->_emit_lines($hunk['a'],
 		                            $this->adds_prefix, '#ffcccc');
 	  }
 
-	$html .= "</table></td></tr></table></td></tr>\n";
-	return $html;
+
+	return Element('tr', Element('td',
+				     Element('table',
+					     array('width' => '100%',
+						   'bgcolor' => 'white',
+						   'cellspacing' => 0,
+						   'cellpadding' => 4,
+						   'border' => 0),
+					     $header. $diff)));
+	
       }
 
   function _diff_header ($xbeg,$xlen,$ybeg,$ylen)
@@ -1008,55 +1020,40 @@ class WikiUnifiedDiffFormatter extends WikiDiffFormatter
 
 /////////////////////////////////////////////////////////////////
 
-if ($diff)
+function PageInfoRow ($label, $hash)
 {
-  if (get_magic_quotes_gpc()) {
-     $diff = stripslashes($diff);
-  }
+   global $datetimeformat;
+   
+   $cols = QElement('td', array('align' => 'right'), $label);
+   
 
-  $pagename = $diff;
+   if (is_array($hash)) {
+      extract($hash);
+      $cols .= QElement('td',
+			sprintf(gettext ("version %s"), $version));
+      $cols .= QElement('td',
+			sprintf(gettext ("last modified on %s"),
+				date($datetimeformat, $lastmodified)));
+      $cols .= QElement('td',
+			sprintf(gettext ("by %s"), $author));
+   } else {
+      $cols .= QElement('td', array('colspan' => '3'),
+			gettext ("None"));
+   }
+   return Element('tr', $cols);
+}
 
+if (isset($pagename))
+{
   $wiki = RetrievePage($dbi, $pagename, $WikiPageStore);
-//  $dba = OpenDataBase($ArchivePageStore);
   $archive= RetrievePage($dbi, $pagename, $ArchivePageStore);
 
-  $html = '<table><tr><td align="right">';
-  $html .= gettext ("Current page:");
-  $html .= '</td>';
-  if (is_array($wiki)) {
-      $html .= "<td>";
-      $html .= sprintf(gettext ("version %s"), $wiki['version']);
-      $html .= "</td><td>";
-      $html .= sprintf(gettext ("last modified on %s"),
-	date($datetimeformat, $wiki['lastmodified']));
-      $html .= "</td><td>";
-      $html .= sprintf (gettext ("by %s"), $wiki['author']);
-      $html .= "</td>";
-  } else {
-      $html .= "<td colspan=3><em>";
-      $html .= gettext ("None");
-      $html .= "</em></td>";
-  }
-  $html .= "</tr>\n";
-  $html .= '<tr><td align="right">';
-  $html .= gettext ("Archived page:");
-  $html .= '</td>';
-  if (is_array($archive)) {
-      $html .= "<td>";
-      $html .= sprintf(gettext ("version %s"), $archive['version']);
-      $html .= "</td><td>";
-      $html .= sprintf(gettext ("last modified on %s"),
-	date($datetimeformat, $archive['lastmodified']));
-      $html .= "</td><td>";
-      $html .= sprintf(gettext ("by %s"), $archive['author']);
-      $html .= "</td>";
-  } else {
-      $html .= "<td colspan=3><em>";
-      $html .= gettext ("None");
-      $html .= "</em></td>";
-  }
-  $html .= "</tr></table><p>\n";
-
+  $html = Element('table',
+		  PageInfoRow(gettext ("Current page:"), $wiki)
+		  . PageInfoRow(gettext ("Archived page:"), $archive));
+		  
+  $html .= "<p>\n";
+  
   if (is_array($wiki) && is_array($archive))
     {
       $diff = new WikiDiff($archive['content'], $wiki['content']);

@@ -1,20 +1,22 @@
 <?php
    // Title search: returns pages having a name matching the search term
-   rcs_id('$Id: search.php,v 1.3 2001-01-02 00:10:28 wainstead Exp $');
+   rcs_id('$Id: search.php,v 1.4 2001-02-10 22:15:08 dairiki Exp $');
 
-   if(get_magic_quotes_gpc())
-      $search = stripslashes($search);
+   if (empty($searchterm))
+      $searchterm = '';		// FIXME: do something better here?
+
+   fix_magic_quotes_gpc($searchterm);
 
    $html = "<P><B>"
 	   . sprintf(gettext ("Searching for \"%s\" ....."),
-		     htmlspecialchars($search))
+		     htmlspecialchars($searchterm))
 	   . "</B></P>\n";
 
    // quote regexp chars
-   $search = preg_quote($search);
+   $search = preg_quote($searchterm);
 
    // search matching pages
-   $query = InitTitleSearch($dbi, $search);
+   $query = InitTitleSearch($dbi, $searchterm);
    $found = 0;
    while ($page = TitleSearchNextMatch($dbi, $query)) {
       $found++;

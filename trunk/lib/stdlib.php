@@ -1,8 +1,12 @@
-<?php rcs_id('$Id: stdlib.php,v 1.26 2001-02-08 18:18:10 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.27 2001-02-10 22:15:08 dairiki Exp $');
+
 
    /*
       Standard functions for Wiki functionality
          ExitWiki($errormsg)
+         MakeURLAbsolute($url, $base = false)
+         WikiURL($pagename, $args, $abs)
+	 
          LinkExistingWikiWord($wikiword, $linktext) 
          LinkUnknownWikiWord($wikiword, $linktext) 
          LinkURL($url, $linktext)
@@ -17,6 +21,26 @@
          LinkRelatedPages($dbi, $pagename)
 	 GeneratePage($template, $content, $name, $hash)
    */
+
+function fix_magic_quotes_gpc (&$text)
+{
+   if (get_magic_quotes_gpc()) {
+      $text = stripslashes($text);
+   }
+   return $text;
+}
+
+
+function get_remote_host () {
+   // Apache won't show REMOTE_HOST unless the admin configured it
+   // properly. We'll be nice and see if it's there.
+   if (getenv('REMOTE_HOST'))
+      return getenv('REMOTE_HOST');
+   $host = getenv('REMOTE_ADDR');
+   if (ENABLE_REVERSE_DNS)
+      return gethostbyaddr($host);
+   return $host;
+}
 
 
    function ExitWiki($errormsg)
@@ -38,65 +62,123 @@
       exit;
    }
 
-
-   function LinkExistingWikiWord($wikiword, $linktext='') {
+   function MakeURLAbsolute($url, $base = false) {
       global $ScriptUrl;
-      $enc_word = rawurlencode($wikiword);
-      if(empty($linktext))
-         $linktext = htmlspecialchars($wikiword);
-      return "<a href=\"$ScriptUrl?$enc_word\">$linktext</a>";
+
+      if (preg_match('@^(\w+:|/)@', $url))
+	 return $url;
+      
+      return preg_replace('@[^/]*$@', '', empty($base) ? $ScriptUrl : $base) . $url;
+   }
+	  
+
+   function WikiURL($pagename, $args = '', $make_abs_url = false) {
+      global $ScriptName, $ScriptUrl;
+
+      if (is_array($args))
+      {
+	 reset($args);
+	 $enc_args = array();
+	 while (list ($key, $val) = each($args)) {
+	    $enc_args[] = urlencode($key) . '=' . urlencode($val);
+	 }
+	 $args = join('&', $enc_args);
+      }
+
+      if (USE_PATH_INFO) {
+	 $url = $make_abs_url ? "$ScriptUrl/" : '';
+         $url .= rawurlencode($pagename);
+	 if ($args)
+	    $url .= "?$args";
+      }
+      else {
+	 $url = $make_abs_url ? $ScriptUrl : $ScriptName;
+         $url .= "?pagename=" . rawurlencode($pagename);
+	 if ($args)
+	    $url .= "&$args";
+      }
+      return $url;
    }
 
-   function LinkUnknownWikiWord($wikiword, $linktext='') {
-      global $ScriptUrl;
-      $enc_word = rawurlencode($wikiword);
-      if(empty($linktext))
-         $linktext = htmlspecialchars($wikiword);
-      return "<u>$linktext</u><a href=\"$ScriptUrl?edit=$enc_word\">?</a>";
+   define('NO_END_TAG_PAT',
+	  '/^' . join('|', array('area', 'base', 'basefont',
+				 'br', 'col', 'frame',
+				 'hr', 'image', 'input',
+				 'isindex', 'link', 'meta',
+				 'param')) . '$/i');
+	  
+   function Element($tag, $args = '', $content = '')
+   {
+      $html = "<$tag";
+      if (is_array($args))
+      {
+	 while (list($key, $val) = each($args)) 
+	    $html .= sprintf(' %s="%s"', $key, htmlspecialchars($val));
+      }
+      else
+	 $content = $args;
+      
+      $html .= '>';
+      if (!preg_match(NO_END_TAG_PAT, $tag))
+      {
+	 $html .= $content;
+	 $html .= "</$tag>";
+      }
+      return $html;
    }
 
+   function QElement($tag, $args = '', $content = '')
+   {
+      if (is_array($args))
+	 return Element($tag, $args, htmlspecialchars($content));
+      else
+      {
+	 $content = $args;
+	 return Element($tag, htmlspecialchars($content));
+      }
+   }
+   
    function LinkURL($url, $linktext='') {
-      global $ScriptUrl;
+      // FIXME: Is this needed (or sufficient?)
       if(ereg("[<>\"]", $url)) {
          return "<b><u>BAD URL -- remove all of &lt;, &gt;, &quot;</u></b>";
       }
-      if(empty($linktext))
-         $linktext = htmlspecialchars($url);
-      return "<a href=\"$url\">$linktext</a>";
+      return QElement('a', array('href' => $url), ($linktext ? $linktext : $url));
    }
 
+   function LinkExistingWikiWord($wikiword, $linktext='') {
+      return LinkURL(WikiURL($wikiword),
+		     $linktext ? $linktext : $wikiword);
+   }
+
+   function LinkUnknownWikiWord($wikiword, $linktext='') {
+      if (empty($linktext))
+	 $linktext = $wikiword;
+
+      return QElement('u', $linktext)
+	 . QElement('a', array('href' => WikiURL($wikiword, array('action' => 'edit'))),
+		    '?');
+   }
+
+
    function LinkImage($url, $alt='[External Image]') {
-      global $ScriptUrl;
+      // FIXME: Is this needed (or sufficient?)
+      //  As long as the src in htmlspecialchars()ed I think it's safe.
       if(ereg('[<>"]', $url)) {
          return "<b><u>BAD URL -- remove all of &lt;, &gt;, &quot;</u></b>";
       }
-      return "<img src=\"$url\" ALT=\"$alt\">";
+      return Element('img', array('src' => $url, 'alt' => $alt));
    }
 
    function LinkInterWikiLink($link, $linktext='') {
       global $interwikimap;
 
       list( $wiki, $page ) = split( ":", $link );
-      if(empty($linktext))
-         $linktext = htmlspecialchars($link);
-      $page = urlencode($page);
-      return "<a href=\"$interwikimap[$wiki]$page\">$linktext</a>";
-   }
-
-
-   function ParseAdminTokens($line) {
-      global $ScriptUrl;
       
-      while (preg_match("/%%ADMIN-INPUT-(.*?)-(\w+)%%/", $line, $matches)) {
-	 $head = str_replace('_', ' ', $matches[2]);
-         $form = "<FORM ACTION=\"$ScriptUrl\" METHOD=POST>"
-		."$head: <INPUT NAME=$matches[1] SIZE=20> "
-		."<INPUT TYPE=SUBMIT VALUE=\"" . gettext("Go") . "\">"
-		."</FORM>";
-	 $line = str_replace($matches[0], $form, $line);
-      }
-      return $line;
+      $url = $interwikimap[$wiki] . urlencode($page);
+      return LinkURL($url, $linktext ? $linktext : $link);
    }
+
 
    // converts spaces to tabs
    function CookSpaces($pagearray) {
@@ -137,6 +219,79 @@
    // end class definition
 
 
+   function MakeWikiForm ($pagename, $args, $button_text = '') {
+      global $ScriptUrl;
+
+      $formargs['action'] = USE_PATH_INFO ? WikiURL($pagename) : $ScriptUrl;
+      $formargs['method'] = 'post';
+      $contents = '';
+      $input_seen = 0;
+      
+      while (list($key, $val) = each($args))
+      {
+	 $a = array('name' => $key, 'value' => $val, 'type' => 'hidden');
+	 
+	 if (preg_match('/^ (\d*) \( (.*) \) $/x', $val, $m))
+	 {
+	    $input_seen++;
+	    $a['type'] = 'text';
+	    $a['size'] = $m[1] ? $m[1] : 30;
+	    $a['value'] = $m[2];
+	 }
+
+	 $contents .= Element('input', $a);
+      }
+
+      if (!empty($button_text)) {
+	 if ($input_seen)
+	    $contents .= '&nbsp;&nbsp;';
+	 $contents .= Element('input', array('type' => 'submit',
+					     'value' => $button_text));
+      }
+
+      return Element('form', $formargs, $contents);
+   }
+
+   function SplitQueryArgs ($query_args = '') 
+   {
+      $split_args = split('&', $query_args);
+      $args = array();
+      while (list($key, $val) = each($split_args))
+	 if (preg_match('/^ ([^=]+) =? (.*) /x', $val, $m))
+	    $args[$m[1]] = $m[2];
+      return $args;
+   }
+   
+   function LinkPhpwikiURL($url, $text = '') {
+      global $pagename;
+      $args = array();
+      $page = $pagename;
+
+      if (!preg_match('/^ phpwiki: ([^?]*) [?]? (.*) $/x', $url, $m))
+         return "<b><u>BAD phpwiki: URL</u></b>";
+
+      if ($m[1])
+	 $page = urldecode($m[1]);
+      $qargs = $m[2];
+      
+      if (!$page && preg_match('/^(diff|edit|links|info|diff)=([^&]+)$/', $qargs, $m))
+      {
+	 // Convert old style links (to not break diff links in RecentChanges).
+	 $page = urldecode($m[2]);
+	 $args = array("action" => $m[1]);
+      }
+      else
+      {
+	 $args = SplitQueryArgs($qargs);
+      }
+
+      // FIXME: ug, don't like this
+      if (preg_match('/=\d*\(/', $qargs))
+	 return MakeWikiForm($page, $args, $text);
+      else
+	 return LinkURL(WikiURL($page, $args), $text ? $text : $url);
+   }
+
    function ParseAndLink($bracketlink) {
       global $dbi, $ScriptUrl, $AllowedProtocols, $InlineImages;
       global $InterWikiLinking, $InterWikiLinkRegexp;
@@ -152,7 +307,7 @@
       if (isset($matches[3])) {
          // named link of the form  "[some link name | http://blippy.com/]"
          $URL = trim($matches[3]);
-         $linkname = htmlspecialchars(trim($matches[1]));
+         $linkname = trim($matches[1]);
 	 $linktype = 'named';
       } else {
          // unnamed link of the form "[http://blippy.com/] or [wiki page]"
@@ -175,9 +330,7 @@
 	 }
       } elseif (preg_match("#^phpwiki:(.*)#", $URL, $match)) {
 	 $link['type'] = "url-wiki-$linktype";
-	 if(empty($linkname))
-	    $linkname = htmlspecialchars($URL);
-	 $link['link'] = "<a href=\"$ScriptUrl$match[1]\">$linkname</a>";
+	 $link['link'] = LinkPhpwikiURL($URL, $linkname);
       } elseif (preg_match("#^\d+$#", $URL)) {
          $link['type'] = "footnote-$linktype";
 	 $link['link'] = $URL;
@@ -284,7 +437,8 @@
    {
       global $ScriptUrl, $AllowedProtocols, $templates;
       global $datetimeformat, $dbi, $logo, $FieldSeparator;
-
+      global $user;
+      
       if (!is_array($hash))
          unset($hash);
 
@@ -328,35 +482,48 @@
       _iftoken('COPY', isset($hash['copy']), $page);
       _iftoken('LOCK',	(isset($hash['flags']) &&
 			($hash['flags'] & FLAG_PAGE_LOCKED)), $page);
-      _iftoken('ADMIN', defined('WIKI_ADMIN'), $page);
-      _iftoken('MINOR_EDIT', isset($hash['minor_edit']), $page);	
+      _iftoken('ADMIN', $user->is_admin(), $page);
+      _iftoken('ANONYMOUS', !$user->is_authenticated(), $page);
 
-      _dotoken('SCRIPTURL', $ScriptUrl, $page);
+      if (empty($hash['minor_edit_checkbox']))
+	  $hash['minor_edit_checkbox'] = '';
+      _iftoken('MINOR_EDIT_CHECKBOX', $hash['minor_edit_checkbox'], $page);
+      
+      _dotoken('MINOR_EDIT_CHECKBOX', $hash['minor_edit_checkbox'], $page);
+
+      _dotoken('USERID', htmlspecialchars($user->id()), $page);
+      _dotoken('SCRIPTURL', htmlspecialchars($ScriptUrl), $page);
       _dotoken('PAGE', htmlspecialchars($name), $page);
-      _dotoken('ALLOWEDPROTOCOLS', $AllowedProtocols, $page);
-      _dotoken('LOGO', $logo, $page);
+      _dotoken('LOGO', htmlspecialchars(MakeURLAbsolute($logo)), $page);
+      global $RCS_IDS;
+      _dotoken('RCS_IDS', join("\n", $RCS_IDS), $page);
+      
+      // FIXME: Clean up this stuff
+      $browse_page = WikiURL($name);
+      _dotoken('BROWSE_PAGE', $browse_page, $page);
+      $arg_sep = strstr($browse_page, '?') ? '&amp;' : '?';
+      _dotoken('ACTION', $browse_page . $arg_sep . "action=", $page);
+      _dotoken('BROWSE', WikiURL(''), $page);
+
+      // FIXME: this is possibly broken.
+      _dotoken('BASE_URL',  WikiURL($name, '', 'absolute_url'), $page);
       
       // invalid for messages (search results, error messages)
       if ($template != 'MESSAGE') {
          _dotoken('PAGEURL', rawurlencode($name), $page);
-         _dotoken('LASTMODIFIED',
-			date($datetimeformat, $hash['lastmodified']), $page);
-         _dotoken('LASTAUTHOR', $hash['author'], $page);
-         _dotoken('VERSION', $hash['version'], $page);
+	 if (!empty($hash['lastmodified']))
+	    _dotoken('LASTMODIFIED',
+		     date($datetimeformat, $hash['lastmodified']), $page);
+	 if (!empty($hash['author']))
+	    _dotoken('LASTAUTHOR', $hash['author'], $page);
+	 if (!empty($hash['version']))
+	    _dotoken('VERSION', $hash['version'], $page);
 	 if (strstr($page, "$FieldSeparator#HITS$FieldSeparator#")) {
             _dotoken('HITS', GetHitCount($dbi, $name), $page);
 	 }
 	 if (strstr($page, "$FieldSeparator#RELATEDPAGES$FieldSeparator#")) {
             _dotoken('RELATEDPAGES', LinkRelatedPages($dbi, $name), $page);
 	 }
-      }
-
-      // valid only for EditLinks
-      if ($template == 'EDITLINKS') {
-	 for ($i = 1; $i <= NUM_LINKS; $i++) {
-            $ref = isset($hash['refs'][$i]) ? $hash['refs'][$i] : '';
-	    _dotoken("R$i", $ref, $page);
-         }
       }
 
       _dotoken('CONTENT', $content, $page);

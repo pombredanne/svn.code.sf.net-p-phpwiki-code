@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: mysql.php,v 1.10 2001-01-04 18:37:56 ahollosi Exp $');
+<?php rcs_id('$Id: mysql.php,v 1.11 2001-02-10 22:15:08 dairiki Exp $');
 
    /*
       Database functions:
@@ -118,9 +118,9 @@
 
       if (!mysql_query("replace into $dbi[table] ($COLUMNS) values ($VALUES)",
       			$dbi['dbc'])) {
-            $msg = sprintf(gettext ("Error writing page '%s'"), $pagename);
+            $msg = htmlspecialchars(sprintf(gettext ("Error writing page '%s'"), $pagename));
 	    $msg .= "<BR>";
-	    $msg .= sprintf(gettext ("MySQL error: %s"), mysql_error());
+	    $msg .= htmlspecialchars(sprintf(gettext ("MySQL error: %s"), mysql_error()));
             ExitWiki($msg);
       }
    }
@@ -293,7 +293,8 @@
    // takes a page name, returns array of scored incoming and outgoing links
    function GetWikiPageLinks($dbi, $pagename) {
       global $WikiLinksStore, $WikiScoreStore, $HitCountStore;
-
+      $links = array();
+      
       $pagename = addslashes($pagename);
       $res = mysql_query("select topage, score from $WikiLinksStore, $WikiScoreStore where topage=pagename and frompage='$pagename' order by score desc, topage");
       $rows = mysql_num_rows($res);

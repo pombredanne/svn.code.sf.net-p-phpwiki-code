@@ -1,12 +1,22 @@
-!!! This works only if you are logged in as ADMIN
+__Note__: The actions on this page require administrative privileges.
+They won't work unless you have set an admin username and password in the PhpWiki config file.
 
 -----------
+! Log In
+
+ __[Log In | phpwiki:?action=login]__
+
+This allows you to login.
+While you are logged in you will be able to ''lock'', ''unlock'' and ''delete'' pages.
+You will also be able edit ''locked'' pages.
+
+----------
 
 ! ZIP files of database
 
- __[ZIP Snapshot | phpwiki:?zip=snapshot]__ : contains only the latest versions
+ __[ZIP Snapshot | phpwiki:?action=zip]__ : contains only the latest versions
 
- __[ZIP Dump | phpwiki:?zip=all]__ : contains all archived versions
+ __[ZIP Dump | phpwiki:?action=zip&include=all]__ : contains all archived versions
 
 These links lead to zip files, generated on the fly, which contain the most
 recent versions of all pages in the PhpWiki. The pages are stored, one per
@@ -27,7 +37,7 @@ choice.
 
 __Dump__
 
-%%ADMIN-INPUT-dumpserial-Dump_serialized_pages%%
+[ Dump Serialized Pages | phpwiki:?action=dumpserial&directory=%/tmp/wikidump ]
 
 Pages will be written out as "serialized" strings of a PHP
 associative array, meaning they will not be human readable. If
@@ -36,7 +46,7 @@ Ensure that your server has write permissions to the directory!
 
 __Load__
 
-%%ADMIN-INPUT-loadserial-Load_serialized_pages%%
+[ Load Serialized Pages | phpwiki:?action=loadserial&directory=%/tmp/wikidump ]
 
 If you have dumped a set of pages from PhpWiki, you can reload them here.
 Note that pages in your database will be overwritten; thus, if you dumped
