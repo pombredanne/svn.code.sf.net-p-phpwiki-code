@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _BackendInfo.php,v 1.5 2002-01-05 13:02:26 carstenklapp Exp $');
+rcs_id('$Id: _BackendInfo.php,v 1.6 2002-01-05 15:09:07 carstenklapp Exp $');
 require_once('lib/Template.php');
 /**
  */
@@ -15,7 +15,7 @@ extends WikiPlugin
     }
     
     function WikiPlugin__BackendInfo() {
-        $html .= '<tr bgcolor="#ffcccc">'."\n";
+        $html = '<tr bgcolor="#ffcccc">'."\n";
         $html .= '  <td colspan="2">${header}</td>'."\n";
         $html .= '</tr>'."\n";
         $html .= '<?php foreach ($hash as $key => $val) { ?>'."\n";
