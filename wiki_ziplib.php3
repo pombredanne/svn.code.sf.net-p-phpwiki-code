@@ -1,4 +1,4 @@
-<? rcs_id("$Id: wiki_ziplib.php3,v 1.4.2.2 2000-08-01 18:19:43 dairiki Exp $");
+<? rcs_id("$Id: wiki_ziplib.php3,v 1.4.2.3 2000-08-03 19:18:56 dairiki Exp $");
 
 //FIXME: get rid of this.
 function warn ($msg)
@@ -75,38 +75,6 @@ function gzip_uncompress ($data) {
 }
 
 /**
- * Functions to pack and unpack integers into DOS order byte strings.
- */
-function zip_pack ($val, $len)
-{
-  $oval = $val;
-  $packed = chr($val & 0xff);
-  if (--$len)
-    {
-      $val >>= 8;
-      $val &= 0x00ffffff;
-      $packed .= chr($val & 0xff);
-      while (--$len)
-	  $packed .= chr(($val >>= 8) & 0xff);
-    }
-  if (($val & ~0xff) != 0)
-      die("value ($oval) out of range");
-  return $packed;
-}
-
-function zip_unpack ($str, $offset, $len)
-{
-  $val = 0;
-  for ($i = $offset + $len - 1; $i >= $offset; $i--)
-    {
-      $val <<= 8;
-      $val |= ord($str[$i]) & 0xff;
-    }
-  return $val;
-}
-
-      
-/**
  * CRC32 computation.  Hacked from Info-zip's zip-2.3 source code.
  */
 /* NOTE: The range of PHP ints seems to be -0x80000000 to 0x7fffffff.
@@ -177,51 +145,49 @@ function zip_crc32 ($str, $crc = 0)
   return ~$crc;
 }
 
+define('GZIP_MAGIC', "\037\213");
+define('GZIP_DEFLATE', 010);
+
 function zip_deflate ($content)
 {
-  
   // Compress content, and suck information from gzip header.
   $z = gzip_compress($content);
-  
-  if (substr($z,0,3) != "\037\213\010")
-      die("Bad gzip magic");
-
-  $gz_flags = ord($z[3]);
-  if (($gz_flags & 0x3e) != 0)
-      die(sprintf("Bad flags (0x%02x)", $gz_flags));
 
   // Suck OS type byte from gzip header. FIXME: this smells bad.
-  $os_type = ord($z[9]);
+
+  extract(unpack("a2magic/Ccomp_type/Cflags/@9/Cos_type", $z));
+  
+  if ($magic != GZIP_MAGIC)
+      die("Bad gzip magic");
+  if ($comp_type != GZIP_DEFLATE)
+      die("Bad gzip comp type");
+  if (($flags & 0x3e) != 0)
+      die(sprintf("Bad flags (0x%02x)", $flags));
 
   $gz_header_len = 10;
   $gz_data_len = strlen($z) - $gz_header_len - 8;
   if ($gz_data_len < 0)
       die("not enough gzip output?");
 
-  $comptype = zip_unpack($z, 2, 1);
-  $crc32 = zip_unpack($z, $gz_header_len + $gz_data_len, 4);
+  extract(unpack("Vcrc32", substr($z, $gz_header_len + $gz_data_len)));
 
   return array(substr($z, $gz_header_len, $gz_data_len), // gzipped data
 	       $crc32,		// crc
-	       $comptype,	// compression type code
 	       $os_type		// OS type
       );
 }
 
-function zip_inflate ($data, $crc32, $uncomp_size, $comp_type)
+function zip_inflate ($data, $crc32, $uncomp_size)
 {
+  if (!function_exists('gzopen'))
+      die("Can't inflate data: zlib support not enabled in this PHP");
+
   // Reconstruct gzip header and ungzip the data.
-  $head = "\037\213";		// Magic.
-  $head .= chr($comp_type);
-  $head .= "\0";		// flags
-  $head .= zip_pack(time(), 4); // (Bogus) mtime.
-  $head .= "\0";		// (bogus) extra flags  (Is this okay?)
-  $head .= "\0";		// (bogus) os type (Is this okay?)
+  $mtime = time();		//(Bogus mtime)
 
-  $tail = zip_pack($crc32, 4);
-  $tail .= zip_pack($uncomp_size, 4);
-
-  return gzip_uncompress($head . $data . $tail);
+  return gzip_uncompress( pack("a2CxV@10", GZIP_MAGIC, GZIP_DEFLATE, $mtime)
+			   . $data
+			   . pack("VV", $crc32, $uncomp_size) );
 }
 
 function unixtime2dostime ($unix_time) {
@@ -240,9 +206,28 @@ function unixtime2dostime ($unix_time) {
   return array($dosdate, $dostime);
 }
 
+function dostime2unixtime ($dosdate, $dostime) {
+  $mday = $dosdate & 0x1f;
+  $month = ($dosdate >> 5) & 0x0f;
+  $year = 1980 + (($dosdate >> 9) & 0x7f);
+
+  $sec = ($dostime & 0x1f) * 2;
+  $min = ($dostime >> 5) & 0x3f;
+  $hour = ($dostime >> 11) & 0x1f;
+
+  return mktime($hour, $min, $sec, $month, $mday, $year);
+}
+
+
 /**
  * Class for zipfile creation.
  */
+define('ZIP_DEFLATE', GZIP_DEFLATE);
+define('ZIP_STORE', 0);
+define('ZIP_CENTHEAD_MAGIC', "PK\001\002");
+define('ZIP_LOCHEAD_MAGIC', "PK\003\004");
+define('ZIP_ENDDIR_MAGIC', "PK\005\006");
+
 class ZipWriter
 {
   function ZipWriter ($comment = "", $zipname = "archive.zip") {
@@ -263,15 +248,18 @@ class ZipWriter
     $size = strlen($content);
     if (function_exists('gzopen'))
       {
-	list ($data, $crc32, $comptype, $os_type) = zip_deflate($content);
+	list ($data, $crc32, $os_type) = zip_deflate($content);
 	if (strlen($data) < $size)
+	  {
 	    $content = $data;	// Use compressed data.
+	    $comp_type = ZIP_DEFLATE;
+	  }
 	else
 	    unset($crc32);	// force plain store.
       }
     if (!isset($crc32))
       {
-	$comptype = 0;
+	$comp_type = ZIP_STORE;
 	$crc32 = zip_crc32($content);
       }
     
@@ -288,31 +276,34 @@ class ZipWriter
 
     // Construct parts common to "Local file header" and "Central
     // directory file header."
-    
-    $head = zip_pack(20, 2); // Version needed to extract (FIXME: is this right?)
-    $head .= "\0\0"; //zip_pack(0, 2); // Gen purp bit flag
-    $head .= zip_pack($comptype, 2);	// Compression type (DEFLATE)
-    $head .= zip_pack($mod_time, 2);
-    $head .= zip_pack($mod_date, 2);
-    $head .= zip_pack($crc32, 4);
-    $head .= zip_pack(strlen($content), 4);
-    $head .= zip_pack($size, 4);
-    $head .= zip_pack(strlen($filename), 2);
-    $head .= zip_pack(strlen($attrib['extra_field']), 2);
+
+    $head = pack("vvvvvVVVvv",
+		 20,	// Version needed to extract (FIXME: is this right?)
+		 0,		// Gen purp bit flag
+		 $comp_type,
+		 $mod_time,
+		 $mod_date,
+		 $crc32,
+		 strlen($content),
+		 $size,
+		 strlen($filename),
+		 strlen($attrib['extra_field']));
 
     // Construct the "Local file header"
-    $lheader = "PK\003\004" . $head . $filename . $attrib['extra_field'];
+    $lheader = ZIP_LOCHEAD_MAGIC . $head . $filename . $attrib['extra_field'];
 
     // Construct the "central directory file header"
-    $this->dir .= "PK\001\002";	// Magic
-    // (FIXME: is this right?)   
-    $this->dir .= zip_pack(($os_type << 8) + 23, 2); // Version made by
+    $this->dir .= pack("a4CC",
+		       ZIP_CENTHEAD_MAGIC,
+		       23,	// Version made by (FIXME: is this right?)
+		       $os_type);
     $this->dir .= $head;
-    $this->dir .= zip_pack(strlen($attrib['file_comment']), 2);
-    $this->dir .= "\0\0";//zip_pack(0, 2);	// Disk number start
-    $this->dir .= zip_pack($ati, 2);// Internal file attributes
-    $this->dir .= zip_pack($atx, 4);	// External file attributes
-    $this->dir .= zip_pack($this->offset, 4);	// Relative offset of local header
+    $this->dir .= pack("vvvVV",
+		       strlen($attrib['file_comment']),
+		       0,	// Disk number start
+		       $ati,	// Internal file attributes
+		       $atx,	// External file attributes
+		       $this->offset); // Relative offset of local header
     $this->dir .= $filename . $attrib['extra_field'] . $attrib['file_comment'];
 
     // Output the "Local file header" and file contents.
@@ -328,14 +319,15 @@ class ZipWriter
     echo $this->dir;
 
     // Construct the "End of central directory record"
-    echo "PK\005\006";
-    echo zip_pack(0, 2);	// Number of this disk.
-    echo zip_pack(0, 2);	// Number of this disk with start of c dir
-    echo zip_pack($this->nfiles, 2);	// Number entries on this disk
-    echo zip_pack($this->nfiles, 2);	// Number entries
-    echo zip_pack(strlen($this->dir), 4);	// Size of central directory
-    echo zip_pack($this->offset, 4);	// Offset of central directory
-    echo zip_pack(strlen($this->comment), 2);// Offset of central directory
+    echo ZIP_ENDDIR_MAGIC;
+    echo pack("vvvvVVv",
+	      0,		// Number of this disk.
+	      0,		// Number of disk with start of c dir
+	      $this->nfiles,	// Number entries on this disk
+	      $this->nfiles,	// Number entries
+	      strlen($this->dir), // Size of central directory
+	      $this->offset,	// Offset of central directory
+	      strlen($this->comment));
     echo $this->comment;
   }
 }
@@ -378,23 +370,19 @@ class ZipReader
   function readFile () {
     $head = $this->_read(30);
 
-    $magic = substr($head,0,4);
-    //FIXME: we should probably check this:
-    //$req_version = zip_unpack($head,4,2);
-    $flags = zip_unpack($head,6,2);
-    $comp_type = zip_unpack($head, 8, 2);
-    //$mod_time = zip_unpack($head, 10, 2);
-    //$mod_date = zip_unpack($head, 12, 2);
-    $crc32 = zip_unpack($head, 14, 4);
-    $comp_size = zip_unpack($head, 18, 4);
-    $uncomp_size = zip_unpack($head, 22, 4);
-    $filename_len = zip_unpack($head, 26, 2);
-    $extrafld_len = zip_unpack($head, 28, 2);
+    extract(unpack("a4magic/vreq_version/vflags/vcomp_type"
+		   . "/vmod_time/vmod_date"
+		   . "/Vcrc32/Vcomp_size/Vuncomp_size"
+		   . "/vfilename_len/vextrafld_len",
+		   $head));
     
-    if ($magic != "PK\003\004")
+    //FIXME: we should probably check $req_version.
+    $attrib['mtime'] = dostime2unixtime($mod_date, $mod_time);
+    
+    if ($magic != ZIP_LOCHEAD_MAGIC)
       {
-	if ($magic != "PK\001\002") // "Central directory header"
-	    die("Bad header type: " . htmlspecialchars($magic));
+	if ($magic != ZIP_CENTHEAD_MAGIC)
+	    die("Bad header type: " . htmlspecialchars($magic)); // FIXME: better message?
 	return $this->done();
       }
     if (($flags & 0x21) != 0)
@@ -408,13 +396,11 @@ class ZipReader
 
     $data = $this->_read($comp_size);
 
-    if ($comp_type == 8)
+    if ($comp_type == ZIP_DEFLATE)
       {
-	if (!function_exists('gzopen'))
-	    die("Can't inflate data: zlib support not enabled in this PHP");
-	$data = zip_inflate($data, $crc32, $uncomp_size, $comp_type);
+	$data = zip_inflate($data, $crc32, $uncomp_size);
       }
-    else if ($comp_type == 0)
+    else if ($comp_type == ZIP_STORE)
       {
 	$crc = zip_crc32($data);
 	if ($crc32 != $crc)
