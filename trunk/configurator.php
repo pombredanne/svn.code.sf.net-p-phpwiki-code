@@ -13,14 +13,14 @@
 $tdwidth = 700;
 $config_file = 'index-user.php';
 $fs_config_file = dirname(__FILE__) . (substr(PHP_OS,0,3) == 'WIN' ? '\\' : "/") . $config_file;
-if ($HTTP_POST_VARS['create'])  header('Location: configurator.php?create=1#create');
+if (isset($HTTP_POST_VARS['create']))  header('Location: configurator.php?create=1#create');
 printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'iso-8859-1'); 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.8 2002-09-15 16:30:27 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.9 2002-09-15 17:28:27 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki 1.3.x</title>
 <style type="text/css" media="screen">
@@ -240,7 +240,7 @@ $properties["Part Null Settings"] =
 new unchangeable_variable('_partnullsettings', "
 define ('PHPWIKI_VERSION', '1.3.4pre');
 require \"lib/prepend.php\";
-rcs_id('\$Id: configurator.php,v 1.8 2002-09-15 16:30:27 rurban Exp $');", "");
+rcs_id('\$Id: configurator.php,v 1.9 2002-09-15 17:28:27 rurban Exp $');", "");
 
 
 $properties["Part One"] =
@@ -265,19 +265,19 @@ new boolean_define('ENABLE_REVERSE_DNS',
                     array('true'  => "true. perform additional reverse dns lookups",
                           'false' => "false. just record the address as given by the httpd server"), "
 If set, we will perform reverse dns lookups to try to convert the
-users IP number to a host name, even if the http server didn't do
-it for us.");
-
-
+users IP number to a host name, even if the http server didn't do it for us.");
 
 $properties["Admin Username"] =
-new _define_optional('ADMIN_USER', "", "
-<a name=\"create\">You must set this! Username and password of the administrator.</a>");
+new _define_optional_notempty('ADMIN_USER', "", "
+<a name=\"create\">You must set this! Username and password of the administrator.</a>",
+"onchange=\"validate_ereg('Sorry, ADMIN_USER cannot be empty.', '^.+$', 'ADMIN_USER', this);\"");
 
 $properties["Admin Password"] =
 new _define_password_optional('ADMIN_PASSWD', "", "
 For heaven's sake pick a good password.
-You can also use our <a target=\"_new\" href=\"passencrypt.php\">passwordencrypter</a> to encrypt an existing password.");
+You can also use our <a target=\"_new\" href=\"passencrypt.php\">passwordencrypter</a> to encrypt an existing password or 
+the \"Create Password\" button to create a good password.",
+"onchange=\"validate_ereg('Sorry, ADMIN_PASSWD must be at least 4 chars long.', '^....+$', 'ADMIN_PASSWD', this);\"");
 
 $properties["Encrypted Password"] = 
 new boolean_define_optional('ENCRYPTED_PASSWD',
@@ -856,7 +856,9 @@ Perl regexp for WikiNames (\"bumpy words\")
 
 $properties["Subpage Separator"] =
 new _define_optional('SUBPAGE_SEPARATOR', '/', "
-One character which seperates pages from subpages. Defaults to '/', but '.' or ':' were also used.");
+One character which seperates pages from subpages. Defaults to '/', but '.' or ':' were also used.",
+"onchange=\"validate_ereg('Sorry, \'%s\' must be a single character. Currently only :, / or .', '^[/:.]$', 'SUBPAGE_SEPARATOR', this);\""
+);
 
 $properties["InterWiki Map File"] =
 new _define('INTERWIKI_MAP_FILE', 'lib/interwiki.map', "
@@ -890,7 +892,8 @@ resides.");
 
 
 $properties["Server Port"] =
-new numeric_define_commented('SERVER_PORT', $HTTP_SERVER_VARS['SERVER_PORT'], "");
+new numeric_define_commented('SERVER_PORT', $HTTP_SERVER_VARS['SERVER_PORT'], "",
+"onchange=\"validate_ereg('Sorry, \'%s\' is no valid port number.', '^[0-9]+$', 'SERVER_PORT', this);\"");
 
 $scriptname = preg_replace('/configurator.php/','index.php',$HTTP_SERVER_VARS["SCRIPT_NAME"]);
 
@@ -1012,11 +1015,13 @@ class _variable {
     var $default_value;
     var $description;
     var $prefix;
+    var $jscheck;
 
-    function _variable($config_item_name, $default_value, $description) {
+    function _variable($config_item_name, $default_value, $description, $jscheck = '') {
         $this->config_item_name = $config_item_name;
         $this->description = $description;
         $this->default_value = $default_value;
+	$this->jscheck = $jscheck;
         if (preg_match("/variable/i",get_class($this)))
 	    $this->prefix = "\$";
 	elseif (preg_match("/ini_set/i",get_class($this)))
@@ -1027,8 +1032,8 @@ class _variable {
 
     function value() {
       global $HTTP_POST_VARS;
-      if ($v = $HTTP_POST_VARS[$this->config_item_name])
-          return $v;
+      if (isset($HTTP_POST_VARS[$this->config_item_name]))
+          return $HTTP_POST_VARS[$this->config_item_name];
       else 
           return $this->default_value;
     }
@@ -1080,7 +1085,8 @@ class _variable {
 
     function get_html() {
 	return $this->get_config_item_header() . 
-	    "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\" />";
+	    "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\" " . 
+	    $this->jscheck . " />" . "<p id=\"" . $this->get_config_item_name() . "\" style=\"color: green\">Input accepted.</p>";
     }
 }
 
@@ -1127,8 +1133,8 @@ class _variable_selection
 extends _variable {
     function value() {
         global $HTTP_POST_VARS;
-        if ($v = $HTTP_POST_VARS[$this->config_item_name])
-            return $v;
+        if (!empty($HTTP_POST_VARS[$this->config_item_name]))
+            return $HTTP_POST_VARS[$this->config_item_name];
         else {
 	    list($option, $label) = current($this->default_value);
             return $this->$option;
@@ -1162,7 +1168,8 @@ extends _variable {
     }
     function get_html() {
 	return $this->get_config_item_header() . 
-	    "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\" />";
+	    "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\" {$this->jscheck} />" .
+	    "<p id=\"" . $this->get_config_item_name() . "\" style=\"color: green\">Input accepted.</p>";
     }
 }
 
@@ -1196,6 +1203,18 @@ extends _define {
     }
 }
 
+class _define_optional_notempty
+extends _define_optional {
+    function get_html() {
+	$s = $this->get_config_item_header() . 
+	    "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\" {$this->jscheck} />";
+        if (empty($this->default_value))
+	    return $s . "<p id=\"" . $this->get_config_item_name() . "\" style=\"color: red\">Cannot be empty.</p>";
+	else
+	    return $s . "<p id=\"" . $this->get_config_item_name() . "\" style=\"color: green\">Input accepted.</p>";
+    }
+}
+
 class _variable_commented
 extends _variable {
     function _get_config_line($posted_value) {
@@ -1212,6 +1231,8 @@ extends _variable {
 
 class numeric_define_commented
 extends _define {
+    //    var $jscheck = "onchange=\"validate_ereg('Sorry, \'%s\' is not an integer.', '^[-+]?[0-9]+$', '" . $this->get_config_item_name() . "', this);\"";
+
     function get_html() {
 	return numeric_define::get_html();
     }
@@ -1263,6 +1284,8 @@ extends _variable_selection {
 
 class _define_password
 extends _define {
+    //    var $jscheck = "onchange=\"validate_ereg('Sorry, \'%s\' cannot be empty.', '^.+$', '" . $this->get_config_item_name() . "', this);\"";
+
     function _get_config_line($posted_value) {
         if ($this->description)
             $n = "\n";
@@ -1310,28 +1333,34 @@ extends _define_password {
 
 class _variable_password
 extends _variable {
+    //    var $jscheck = "onchange=\"validate_ereg('Sorry, \'%s\' cannot be empty.', '^.+$', '" . $this->get_config_item_name() . "', this);\"";
+
     function get_html() {
 	global $HTTP_POST_VARS, $HTTP_GET_VARS;
 	$s = $this->get_config_item_header();
-        $s .= "<input type=\"password\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\" />" . 
+        $s .= "<input type=\"password\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\" {$this->jscheck} />" . 
 "&nbsp;&nbsp;<input type=\"submit\" name=\"create\" value=\"Create Password\" />";
-        if ($HTTP_POST_VARS['create'] or $HTTP_GET_VARS['create']) {
+        if (isset($HTTP_POST_VARS['create']) or isset($HTTP_GET_VARS['create'])) {
 	    $new_password = random_good_password();
 	    $this->default_value = $new_password;
 	    $s .= "<br />&nbsp;<br />Created password: <strong>$new_password</strong>";
 	}
+	if (empty($this->default_value))
+	    $s .= "<p id=\"" . $this->get_config_item_name() . "\" style=\"color: red\">Cannot be empty.</p>";
+	elseif (strlen($this->default_value) < 4)
+	    $s .= "<p id=\"" . $this->get_config_item_name() . "\" style=\"color: red\">Must be longer than 4 chars.</p>";
+	else
+	    $s .= "<p id=\"" . $this->get_config_item_name() . "\" style=\"color: green\">Input accepted.</p>";
 	return $s;
     }
 }
 
 class numeric_define
 extends _define {
+    //    var $jscheck = "onchange=\"validate_ereg('Sorry, \'%s\' is not an integer.', '^[-+]?[0-9]+$', '" . $this->get_config_item_name() . "', this);\"";
+
     function _config_format($value) {
         return sprintf("define('%s', %s);", $this->get_config_item_name(), $value);
-    }
-    function get_html() {
-	$ori = _define::get_html();
-	return substr($ori,0,-2) . " onchange=\"validate_ereg('Sorry, \'%s\' is not an integer.', '^[-+]?[0-9]+$', '" . $this->get_config_item_name() . "', this);" . '" />';
     }
     function _get_config_line($posted_value) {
         if ($this->description)
@@ -1357,8 +1386,9 @@ extends _variable {
         $rows = max(3, count($list_values) +1);
         $list_values = join("\n", $list_values);
         $ta = $this->get_config_item_header();
-	$ta .= "<textarea cols=\"18\" rows=\"". $rows ."\" name=\"".$this->get_config_item_name()."\">";
+	$ta .= "<textarea cols=\"18\" rows=\"". $rows ."\" name=\"".$this->get_config_item_name()."\" {$this->jscheck}>";
         $ta .= $list_values . "</textarea>";
+	$ta .= "<p id=\"" . $this->get_config_item_name() . "\" style=\"color: green\">Input accepted.</p>";
         return $ta;
     }
 }
@@ -1382,8 +1412,9 @@ extends _variable {
         $list_values = join("\n", $this->default_value);
         $rows = max(3, count($this->default_value) +1);
         $ta = $this->get_config_item_header();
-        $ta .= "<textarea cols=\"18\" rows=\"". $rows ."\" name=\"".$this->get_config_item_name()."\">";
+        $ta .= "<textarea cols=\"18\" rows=\"". $rows ."\" name=\"".$this->get_config_item_name()."\" {$this->jscheck}>";
         $ta .= $list_values . "</textarea>";
+	$ta .= "<p id=\"" . $this->get_config_item_name() . "\" style=\"color: green\">Input accepted.</p>";
         return $ta;
     }
 
@@ -1419,7 +1450,7 @@ extends _define {
     }
     function get_html() {
         $output = $this->get_config_item_header();
-        $output .= '<select name="' . $this->get_config_item_name() . "\">\n";
+        $output .= '<select name="' . $this->get_config_item_name() . "\" {$this->jscheck}>\n";
         /* The first option is the default */
         list($option, $label) = each($this->default_value);
         $output .= "  <option value=\"$option\" selected>$label</option>\n";
@@ -1587,7 +1618,7 @@ function printArray($a) {
 /////////////////////////////
 // begin auto generation code
 
-if ($HTTP_POST_VARS['action'] == 'make_config') {
+if (@$HTTP_POST_VARS['action'] == 'make_config') {
 
     $timestamp = date ('dS of F, Y H:i:s');
 
