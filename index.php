@@ -73,7 +73,7 @@ define('ENABLE_USER_NEW',true); // this will disappear with 1.4.0
 
 define ('PHPWIKI_VERSION', '1.3.8');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.129 2004-02-29 04:10:55 rurban Exp $');
+rcs_id('$Id: index.php,v 1.130 2004-03-09 17:16:43 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -518,8 +518,8 @@ if (!defined('LDAP_BASE_DN')) define('LDAP_BASE_DN', "ou=Users,o=Development,dc=
 // LDAP Auth Optional:
 // Some LDAP servers disallow anonymous binds, and need some more options,
 // such as the Windows Active Directory Server:
-// $LDAP_SET_OPTION = array(LDAP_OPT_PROTOCOL_VERSION => 3,
-//                          LDAP_OPT_REFERRALS, 0);
+// $LDAP_SET_OPTION = array('LDAP_OPT_PROTOCOL_VERSION' => 3,
+//                          'LDAP_OPT_REFERRALS' => 0);
 // define(LDAP_AUTH_USER, "CN=ldapuser,CN=Users,DC=uai,DC=int");
 // define(LDAP_AUTH_PASSWORD, '');
 // define(LDAP_SEARCH_FIELD, 'sAMAccountName'); // might be different from uid, 
@@ -585,10 +585,14 @@ $DBAuthParams = array (
    // USER => PREFERENCES
    //   This can be optionally defined in the phpwiki db.
    //   The default is to store it the users homepage.
-   'pref_select' => 'SELECT prefs FROM user WHERE userid="$userid"',
-   //users must be predefined:
-   //Don't use replace here or all other fields here get erased! (passwords e.g.)
-   'pref_update' => 'UPDATE user SET prefs="$pref_blob" WHERE userid="$userid"',
+   // If you choose the user table, only registered user get their prefs from the DB,
+   // self-created users not. Better use the special pref table.
+   //'pref_select' => 'SELECT prefs FROM user WHERE userid="$userid"',
+   'pref_select' => 'SELECT prefs FROM pref WHERE userid="$userid"',
+   //Don't use replace with user or all other fields here get erased! (passwords e.g.)
+   //'pref_update' => 'UPDATE user SET prefs="$pref_blob" WHERE userid="$userid"',
+   // The special prefs table is safe to erase. All users can store their prefs here.
+   'pref_update' => 'REPLACE INTO pref SET prefs="$pref_blob",userid="$userid"',
 
    // USERS <=> GROUPS
    //   DB methods for lib/WikiGroup.php, see also AUTH_GROUP_FILE above.
@@ -900,7 +904,7 @@ if (!defined('AUTHORPAGE_URL')) define('AUTHORPAGE_URL',
  */
 //if (!defined('DISABLE_HTTP_REDIRECT')) define ('DISABLE_HTTP_REDIRECT', true);
 
-if (defined('WIKI_SOAP') and WIKI_SOAP) return;
+//if (defined('WIKI_SOAP') and WIKI_SOAP) return;
 
 ////////////////////////////////////////////////////////////////
 // PrettyWiki
@@ -937,6 +941,10 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 //include "lib/main.php";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.129  2004/02/29 04:10:55  rurban
+// new POP3 auth (thanks to BiloBilo: pentothal at despammed dot com)
+// fixed syntax error in index.php
+//
 // Revision 1.128  2004/02/29 02:06:05  rurban
 // And this is the SOAP server. Just a view methods for now. (page content)
 // I would like to see common-wiki soap wdsl.
