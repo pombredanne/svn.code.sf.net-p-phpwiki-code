@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminChmod.php,v 1.3 2004-02-24 04:02:06 rurban Exp $');
+rcs_id('$Id: WikiAdminChmod.php,v 1.4 2004-02-24 15:20:06 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -48,7 +48,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -63,7 +63,8 @@ extends WikiPlugin_WikiAdminSelect
                      );
     }
 
-    // todo: change permstring to some kind default ACL hash. See PagePermission class
+    // todo: change permstring to some kind of default ACL hash. 
+    // See PagePermission class
     function chmodHelper($permstring) {
         $perm = array();
         return $perm;
@@ -76,10 +77,10 @@ extends WikiPlugin_WikiAdminSelect
         if ($perm = new PagePermission($acl)) {
             foreach ($pages as $name) {
                 if ( $perm->store($dbi->getPage($name)) ) {
-                    $ul->pushContent(HTML::li(fmt("chmod page '%s' to '%s'.",$name, $perm)));
+                    $ul->pushContent(HTML::li(fmt("chmod page '%s' to '%s'.",$name, $permstring)));
                     $count++;
                 } else {
-                    $ul->pushContent(HTML::li(fmt("Couldn't chmod page '%s' to '%s'.", $name, $perm)));
+                    $ul->pushContent(HTML::li(fmt("Couldn't chmod page '%s' to '%s'.", $name, $permstring)));
                 }
             }
         } else {
@@ -144,7 +145,7 @@ extends WikiPlugin_WikiAdminSelect
             $header = $this->chmodForm($header, $post_args);
             $header->pushContent(
               HTML::p(HTML::strong(
-                                   _("Are you sure you want to permanently change the selected files?"))));
+                _("Are you sure you want to permanently change the selected files?"))));
         }
         else {
             $button_label = _("Chmod");
@@ -169,7 +170,8 @@ extends WikiPlugin_WikiAdminSelect
 
     function chmodForm(&$header, $post_args) {
         $header->pushContent(
-            HTML::p(HTML::em(_("This plugin is currently under development and does not work!"))));
+            HTML::p(HTML::em(
+               _("This plugin is currently under development and does not work!"))));
         $header->pushContent(_("Chmod to permission:"));
         $header->pushContent(HTML::input(array('name' => 'admin_chmod[perm]',
                                                'value' => $post_args['perm'])));
@@ -190,6 +192,9 @@ extends WikiPlugin_WikiAdminSelect
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/02/24 04:02:06  rurban
+// Better warning messages
+//
 // Revision 1.2  2004/02/24 03:21:40  rurban
 // enabled require_all check in WikiPoll
 // better handling of <20 min visiting client: display results so far

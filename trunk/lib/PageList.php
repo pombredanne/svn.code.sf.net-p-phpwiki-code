@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.57 2004-02-23 21:30:25 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.58 2004-02-24 15:20:05 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -83,8 +83,11 @@ class _PageList_Column_base {
             // multiple comma-delimited sortby args: "+hits,+pagename"
             // asc or desc: +pagename, -pagename
             $sortby = PageList::sortby($this->_field,'flip_order');
-            $s = HTML::a(array('href' => $GLOBALS['request']->GetURLtoSelf(array('sortby' => $sortby)),
-                               'class' => 'pagetitle', 
+            //Fixme: pass all also other GET args along. (limit, p[])
+            $s = HTML::a(array('href' => 
+                               $GLOBALS['request']->GetURLtoSelf(array('sortby' => $sortby,
+                                                                       'nopurge' => 'cache')),
+                               'class' => 'pagetitle',
                                'title' => sprintf(_("Sort by %s"),$this->_field)), 
                          HTML::raw('&nbsp;'), HTML::u($this->_heading), HTML::raw('&nbsp;'));
         } else {
@@ -113,6 +116,7 @@ class _PageList_Column_base {
                 $sortby = PageList::sortby($this->_field,'init');
             }
             $s = HTML::a(array('href' => 
+                               //Fixme: pass all also other GET args along. (limit, p[])
                                $request->GetURLtoSelf(array('sortby' => $sortby,
                                                             'nopurge' => 'cache')),
                                'class' => 'gridbutton', 

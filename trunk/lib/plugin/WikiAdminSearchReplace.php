@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSearchReplace.php,v 1.5 2004-02-17 12:11:36 rurban Exp $');
+rcs_id('$Id: WikiAdminSearchReplace.php,v 1.6 2004-02-24 15:20:07 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
@@ -56,6 +56,7 @@ extends WikiPlugin_WikiAdminSelect
                      'info'     => 'some',
                      /* How to sort */
                      'sortby'   => 'pagename',
+                     'limit'    => 0,
                      );
     }
 
@@ -89,7 +90,7 @@ extends WikiPlugin_WikiAdminSelect
         $ul = HTML::ul();
         $count = 0;
         $post_args = $request->getArg('admin_replace');
-        $caseexact = $post_args['caseexact'] == 1;
+        $caseexact = !empty($post_args['caseexact']);
         foreach ($pages as $pagename) {
             if (($result = $this->replaceHelper(&$dbi,$pagename,$from,$to,$caseexact))) {
                 $ul->pushContent(HTML::li(fmt("Replaced '%s' with '%s' in page '%s'.", $from, $to, WikiLink($pagename))));
@@ -136,7 +137,7 @@ extends WikiPlugin_WikiAdminSelect
             if ($post_args['action'] == 'select') {
                 if (!empty($post_args['from']))
                     $next_action = 'verify';
-                if (is_array($p[0])) {
+                if (is_array($p) and isset($p[0])) {
                   foreach ($p as $name) {
                     $pages[$name] = 1;
                   }
@@ -147,7 +148,7 @@ extends WikiPlugin_WikiAdminSelect
         }
         if ($next_action == 'select' and empty($pages)) {
             // List all pages to select from.
-            $pages = $this->collectPages($pages, $dbi, $args['sortby']);
+            $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit']);
         }
 
         if ($next_action == 'verify') {
@@ -200,7 +201,7 @@ extends WikiPlugin_WikiAdminSelect
         $checkbox = HTML::input(array('type' => 'checkbox',
                                       'name' => 'admin_replace[caseexact]',
                                       'value' => 1));
-        if ($post_args['caseexact'])
+        if (!empty($post_args['caseexact']))
             $checkbox->setAttr('checked','checked');
         $header->pushContent($checkbox);
         $header->pushContent(HTML::br());
@@ -236,6 +237,9 @@ function stri_replace($find,$replace,$string) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/02/17 12:11:36  rurban
+// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
+//
 // Revision 1.4  2004/02/15 21:34:37  rurban
 // PageList enhanced and improved.
 // fixed new WikiAdmin... plugins

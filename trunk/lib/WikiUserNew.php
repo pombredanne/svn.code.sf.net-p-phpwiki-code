@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.17 2004-02-17 12:16:42 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.18 2004-02-24 15:20:05 rurban Exp $');
 
 // This is a complete OOP rewrite of the old WikiUser code with various
 // configurable external authentification methods.
@@ -1335,7 +1335,9 @@ extends _PassUser
                 }
             }
         } else {
-            trigger_error(_("Unable to connect to LDAP server "). LDAP_AUTH_HOST, E_USER_WARNING);
+            trigger_error(fmt("Unable to connect to LDAP server %s", LDAP_AUTH_HOST), 
+                          E_USER_WARNING);
+            //return false;
         }
 
         if (USER_AUTH_POLICY === 'strict') {
@@ -1905,6 +1907,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.17  2004/02/17 12:16:42  rurban
+// started with changePass support. not yet used.
+//
 // Revision 1.16  2004/02/15 22:23:45  rurban
 // oops, fixed showstopper (endless recursion)
 //

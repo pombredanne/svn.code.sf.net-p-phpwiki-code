@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.5 2004-02-23 21:30:25 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.6 2004-02-24 15:20:05 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -163,6 +163,8 @@ function action2access ($action) {
         return 'view';
     case 'zip':
     case 'ziphtml':
+    case 'dumpserial':
+    case 'dumphtml':
         return 'dump';
     case 'edit':
         return 'edit';
@@ -175,9 +177,8 @@ function action2access ($action) {
             return 'view'; 
         break;
     case 'upload':
-    case 'dumpserial':
-    case 'dumphtml':
-    case 'loadfile':
+    case 'loadfile': 
+        // probably create/edit but we cannot check all page permissions, can we?
     case 'remove':
     case 'lock':
     case 'unlock':
@@ -534,6 +535,11 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/02/23 21:30:25  rurban
+// more PagePerm stuff: (working against 1.4.0)
+//   ACL editing and simplification of ACL's to simple rwx------ string
+//   not yet working.
+//
 // Revision 1.4  2004/02/12 13:05:36  rurban
 // Rename functional for PearDB backend
 // some other minor changes

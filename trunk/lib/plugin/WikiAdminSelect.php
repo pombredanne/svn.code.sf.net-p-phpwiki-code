@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSelect.php,v 1.13 2004-02-22 23:20:33 rurban Exp $');
+rcs_id('$Id: WikiAdminSelect.php,v 1.14 2004-02-24 15:20:07 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -47,7 +47,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.13 $");
+                            "\$Revision: 1.14 $");
     }
 
     function getDefaultArguments() {
@@ -60,7 +60,7 @@ extends WikiPlugin
                      'debug'   => false);
     }
 
-    function collectPages(&$list, &$dbi, $sortby, $limit) {
+    function collectPages(&$list, &$dbi, $sortby, $limit=0) {
         $allPages = $dbi->getAllPages(0,$sortby,$limit);
         while ($pagehandle = $allPages->next()) {
             $pagename = $pagehandle->getName();
@@ -225,6 +225,13 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2004/02/22 23:20:33  rurban
+// fixed DumpHtmlToDir,
+// enhanced sortby handling in PageList
+//   new button_heading th style (enabled),
+// added sortby and limit support to the db backends and plugins
+//   for paging support (<<prev, next>> links on long lists)
+//
 // Revision 1.12  2004/02/19 22:05:57  rurban
 // Allow s arg from get requests (plugin-form as in PhpWikiAdministration)
 //
