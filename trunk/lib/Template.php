@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.53 2004-02-22 23:20:31 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.54 2004-03-02 18:11:39 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -61,7 +61,7 @@ class Template
         if (empty($loader))
             $loader = new WikiPluginLoader;
         
-        $this->_print($loader->expandPI($pi, $this->_request, $this->_basepage));
+        $this->_print($loader->expandPI($pi, $this->_request, $this, $this->_basepage));
     }
     
     function _print ($val) {
@@ -245,6 +245,13 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.53  2004/02/22 23:20:31  rurban
+// fixed DumpHtmlToDir,
+// enhanced sortby handling in PageList
+//   new button_heading th style (enabled),
+// added sortby and limit support to the db backends and plugins
+//   for paging support (<<prev, next>> links on long lists)
+//
 // Revision 1.52  2003/12/20 23:59:19  carstenklapp
 // Internal change: Added rcs Log tag & emacs php mode tag (sorry, forgot
 // this in the last commit).

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.37 2004-02-22 23:20:31 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.38 2004-03-02 18:11:40 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,7 +87,7 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.37 $");
+        //                    "\$Revision: 1.38 $");
     }
 
     function getArgs($argstr, $request=false, $defaults = false) {
@@ -304,7 +304,7 @@ class WikiPlugin
 class WikiPluginLoader {
     var $_errors;
 
-    function expandPI($pi, &$request, $basepage=false) {
+    function expandPI($pi, &$request, &$markup, $basepage=false) {
         if (!($ppi = $this->parsePi($pi)))
             return false;
         list($pi_name, $plugin, $plugin_args) = $ppi;
@@ -318,6 +318,9 @@ class WikiPluginLoader {
             case 'plugin':
                 // FIXME: change API for run() (no $dbi needed).
                 $dbi = $request->getDbh();
+                // pass the parsed CachedMarkup context in dbi to the plugin 
+                // to be able to know about itself, or even to change the markup XmlTree (CreateToc)
+                $dbi->_markup = &$markup; 
                 // FIXME: could do better here...
                 if (! $plugin->managesValidators()) {
                     // Output of plugin (potentially) depends on
