@@ -1,6 +1,6 @@
-<!-- $Id: wikiblog.tmpl,v 1.2 2003-02-27 23:55:52 dairiki Exp $ -->
+<!-- $Id: wikiblog.tmpl,v 1.3 2004-06-14 11:26:53 rurban Exp $ -->
 <?php
-$CDATE = $Theme->formatDateTime($BLOG_CTIME);
+$CDATE = $WikiTheme->formatDateTime($BLOG_CTIME);
 
 $buttons = $modified = '';
 
@@ -14,7 +14,7 @@ if ($user->isAdmin() or $user->getId() == $BLOG_CREATOR) {
 // This is a hack, but since we only have a fake PageRevision,
 // we can't get the version.
 if ($rev->get('mtime') != $BLOG_CTIME) {
-    $mtime = $Theme->formatDateTime($rev->get('mtime'));
+    $mtime = $WikiTheme->formatDateTime($rev->get('mtime'));
     $modified = HTML::small(array('class' => 'floatright'),
 			    fmt("Comment modified on %s by %s",
 				$mtime, $rev->get('author')));

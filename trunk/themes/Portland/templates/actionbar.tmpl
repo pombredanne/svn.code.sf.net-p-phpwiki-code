@@ -1,7 +1,7 @@
 <?php // -*-html-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.19 2003-11-20 19:52:36 carstenklapp Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.20 2004-06-14 11:26:50 rurban Exp $ -->
 <?php
-  $Sep = $Theme->getButtonSeparator();
+  $Sep = $WikiTheme->getButtonSeparator();
 
   if (!$page->get('locked') || $user->isAdmin())
       $EditB = Button("edit",
@@ -14,7 +14,7 @@
 
 <?= $EditB ?> 
 <a href="<?=WikiURL($revision,array('action'=>'diff'))?>"
-   ><?= $Theme->getLastModifiedMessage($revision) ?></a>
+   ><?= $WikiTheme->getLastModifiedMessage($revision) ?></a>
 	<?=$Sep?><?= Button("PageHistory", _("PageHistory")) ?>
     <?=$Sep?><?= Button("PageInfo", _("PageInfo")) ?>
 <?php if (defined('DEBUG') && DEBUG || $user->isAdmin()) { ?>

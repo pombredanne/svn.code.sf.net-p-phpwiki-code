@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: navbar.tmpl,v 1.1 2004-06-11 09:01:51 rurban Exp $ -->
+<!-- $Id: navbar.tmpl,v 1.2 2004-06-14 11:26:49 rurban Exp $ -->
 <?php
 // With MonoBook it is similar to Sidebar, named boxes at the left.
 // navigation, search, toolbox
@@ -40,7 +40,7 @@
       <li id="t-whatlinkshere"><?= Button(array('action'=>'BackLinks'), _("What links here"), $page->getName()) ?></li>
       <?php } ?>
       <?php $links = $page->getPageLinks(); if ($links->count() > 1) { ?>
-    <li id="t-recentchangeslinked"><?= $Theme->makeLinkButton($revision,_("RelatedChanges"),_("RelatedChanges")) ?></li>
+    <li id="t-recentchangeslinked"><?= $WikiTheme->makeLinkButton($revision,_("RelatedChanges"),_("RelatedChanges")) ?></li>
     <?php } ?> 
     <?php if (!empty($user) && $user->isAdmin()) { ?>
     <li><?= WikiLink(_("PhpWikiAdministration"), "","Administration") ?></li>

@@ -1,6 +1,6 @@
 <?php // -*-php-*-
 
-rcs_id('$Id: themeinfo.php,v 1.3 2003-12-05 01:31:51 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.4 2004-06-14 11:26:51 rurban Exp $');
 
 /**
  * This theme is by design completely css-based so unfortunately it
@@ -33,51 +33,51 @@ class Theme_SpaceWiki extends Theme {
     }
 }
 
-$Theme = new Theme_SpaceWiki('SpaceWiki');
+$WikiTheme = new Theme_SpaceWiki('SpaceWiki');
 
 // CSS file defines fonts, colors and background images for this
 // style.  The companion '*-heavy.css' file isn't defined, it's just
 // expected to be in the same directory that the base style is in.
 
-$Theme->setDefaultCSS('SpaceWiki', 'SpaceWiki.css');
-$Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
-$Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
-$Theme->addAlternateCSS('PhpWiki', 'phpwiki.css');
+$WikiTheme->setDefaultCSS('SpaceWiki', 'SpaceWiki.css');
+$WikiTheme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
+$WikiTheme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
+$WikiTheme->addAlternateCSS('PhpWiki', 'phpwiki.css');
 
 /**
  * The logo image appears on every page and links to the HomePage.
  */
-//$Theme->addImageAlias('logo', 'logo.png');
-$Theme->addImageAlias('logo', 'Ufp-logo.jpg');
-$Theme->addImageAlias('logo', WIKI_NAME . 'Logo.png');
+//$WikiTheme->addImageAlias('logo', 'logo.png');
+$WikiTheme->addImageAlias('logo', 'Ufp-logo.jpg');
+$WikiTheme->addImageAlias('logo', WIKI_NAME . 'Logo.png');
 
 /**
  * The Signature image is shown after saving an edited page. If this
  * is set to false then the "Thank you for editing..." screen will
  * be omitted.
  */
-$Theme->addImageAlias('signature', 'lights.gif');
-$Theme->addImageAlias('signature', WIKI_NAME . "Signature.png");
+$WikiTheme->addImageAlias('signature', 'lights.gif');
+$WikiTheme->addImageAlias('signature', WIKI_NAME . "Signature.png");
 // Uncomment this next line to disable the signature.
-//$Theme->addImageAlias('signature', false);
+//$WikiTheme->addImageAlias('signature', false);
 
-$Theme->addImageAlias('hr', 'hr.png');
+$WikiTheme->addImageAlias('hr', 'hr.png');
 
-$Theme->setButtonSeparator(" ");
+$WikiTheme->setButtonSeparator(" ");
 
 /**
  * WikiWords can automatically be split by inserting spaces between
  * the words. The default is to leave WordsSmashedTogetherLikeSo.
  */
-//$Theme->setAutosplitWikiWords(false);
+//$WikiTheme->setAutosplitWikiWords(false);
 
 /**
  * The "stardate" format here is really just metricdate.24hourtime. A
  * "real" date2startdate conversion function might be fun but not very
  * useful on a wiki.
  */
-$Theme->setTimeFormat("%H%M%S");
-$Theme->setDateFormat("%Y%m%d"); // must not contain time
+$WikiTheme->setTimeFormat("%H%M%S");
+$WikiTheme->setDateFormat("%Y%m%d"); // must not contain time
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

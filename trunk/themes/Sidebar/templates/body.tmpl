@@ -1,7 +1,7 @@
 <?php // -*-html-*-
-rcs_id('$Id: body.tmpl,v 1.5 2004-06-03 16:56:21 rurban Exp $');
+rcs_id('$Id: body.tmpl,v 1.6 2004-06-14 11:26:51 rurban Exp $');
 ?>
-<body<?= $Theme->getMoreAttr('body') ?>>
+<body<?= $WikiTheme->getMoreAttr('body') ?>>
 <table class="sidebar" width="100%">
   <tr>
     <td align="left" valign="top"><table class="sidebar" width="160">
@@ -31,7 +31,7 @@ if (!$HIDE_TOOLBARS) {
 </div></div>
 <?php } else { ?>
 <div id="clock">
-<? // include($Theme->_findFile("clock.php")); ?>
+<? // include($WikiTheme->_findFile("clock.php")); ?>
 </div>
 <?php } ?>
 <?php 

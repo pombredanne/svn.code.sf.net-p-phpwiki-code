@@ -1,8 +1,8 @@
 <?php // -*-php-*- ?>
-<!-- $Id: info.tmpl,v 1.1 2004-06-11 09:01:51 rurban Exp $ -->
+<!-- $Id: info.tmpl,v 1.2 2004-06-14 11:26:49 rurban Exp $ -->
 <?php
 
-$modifed = $Theme->formatDateTime($revision->get('mtime'));
+$modifed = $WikiTheme->formatDateTime($revision->get('mtime'));
 
 $author = $revision->get('author');
 global $WikiNameRegexp;
@@ -79,7 +79,7 @@ if ($is_current = $revision->isCurrent()) {
 }
 
 $tableSummary = fmt("Statistics about %s.", $page->getName());
-$Sep = $Theme->getButtonSeparator();
+$Sep = $WikiTheme->getButtonSeparator();
 
 ?>
 
@@ -90,7 +90,7 @@ $Sep = $Theme->getButtonSeparator();
 <?php if (!$is_current) { ?>
   <tr>
     <td align="right" class="pageinfo"><?=_("Supplanted on:")?></td>
-    <td><?= $Theme->formatDateTime($revision->get('_supplanted')) ?></td>
+    <td><?= $WikiTheme->formatDateTime($revision->get('_supplanted')) ?></td>
   </tr>
 <?php } ?>
 
@@ -187,6 +187,9 @@ if (0 and isSubPage($page->getName())) {
 <?php
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/06/11 09:01:51  rurban
+// new MonoBook theme (copied from mediawiki)
+//
 // Revision 1.2  2004/05/18 14:47:21  rurban
 // Simplified strings for easier translation
 //

@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.25 2004-02-28 21:09:57 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.26 2004-06-14 11:26:48 rurban Exp $');
 
 /**
  * WikiWiki Hawaiian theme for PhpWiki.
@@ -19,58 +19,58 @@ class Theme_Hawaiian extends Theme {
         return $css;
     }
 }
-$Theme = new Theme_Hawaiian('Hawaiian');
+$WikiTheme = new Theme_Hawaiian('Hawaiian');
 
 // CSS file defines fonts, colors and background images for this
 // style.  The companion '*-heavy.css' file isn't defined, it's just
 // expected to be in the same directory that the base style is in.
 
-$Theme->setDefaultCSS('Hawaiian', 'Hawaiian.css');
-$Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
-$Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
-$Theme->addAlternateCSS('PhpWiki', 'phpwiki.css');
+$WikiTheme->setDefaultCSS('Hawaiian', 'Hawaiian.css');
+$WikiTheme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
+$WikiTheme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
+$WikiTheme->addAlternateCSS('PhpWiki', 'phpwiki.css');
 
 /**
  * The logo image appears on every page and links to the HomePage.
  */
-$Theme->addImageAlias('logo', 'PalmBeach.jpg');
-$Theme->addImageAlias('logo', WIKI_NAME . 'Logo.png');
+$WikiTheme->addImageAlias('logo', 'PalmBeach.jpg');
+$WikiTheme->addImageAlias('logo', WIKI_NAME . 'Logo.png');
 
 /**
  * The Signature image is shown after saving an edited page. If this
  * is set to false then the "Thank you for editing..." screen will
  * be omitted.
  */
-//$Theme->addImageAlias('signature', 'SubmersiblePiscesV.jpg');
-$Theme->addImageAlias('signature', 'WaterFall.jpg');
-$Theme->addImageAlias('signature', WIKI_NAME . "Signature.png");
+//$WikiTheme->addImageAlias('signature', 'SubmersiblePiscesV.jpg');
+$WikiTheme->addImageAlias('signature', 'WaterFall.jpg');
+$WikiTheme->addImageAlias('signature', WIKI_NAME . "Signature.png");
 // Uncomment this next line to disable the signature.
-//$Theme->addImageAlias('signature', false);
+//$WikiTheme->addImageAlias('signature', false);
 
 // If you want to see more than just the waterfall let a random
 // picture be chosen for the signature image:
-//include_once($Theme->file('lib/random.php'));
-include_once("themes/$Theme->_name/lib/random.php");
-$imgSet = new randomImage($Theme->file("images/pictures"));
+//include_once($WikiTheme->file('lib/random.php'));
+include_once("themes/$WikiTheme->_name/lib/random.php");
+$imgSet = new randomImage($WikiTheme->file("images/pictures"));
 $imgFile = "pictures/" . $imgSet->filename;
-$Theme->addImageAlias('signature', $imgFile);
+$WikiTheme->addImageAlias('signature', $imgFile);
 
 //To test out the randomization just use logo instead of signature
-//$Theme->addImageAlias('logo', $imgFile);
+//$WikiTheme->addImageAlias('logo', $imgFile);
 
 /*
  * Link Icons
  */
-$Theme->setLinkIcon('interwiki');
-$Theme->setLinkIcon('*', 'flower.png');
+$WikiTheme->setLinkIcon('interwiki');
+$WikiTheme->setLinkIcon('*', 'flower.png');
 
-$Theme->setButtonSeparator(' ');
+$WikiTheme->setButtonSeparator(' ');
 
 /**
  * WikiWords can automatically be split by inserting spaces between
  * the words. The default is to leave WordsSmashedTogetherLikeSo.
  */
-$Theme->setAutosplitWikiWords(true);
+$WikiTheme->setAutosplitWikiWords(true);
 
 /*
  * You may adjust the formats used for formatting dates and times
@@ -80,7 +80,7 @@ $Theme->setAutosplitWikiWords(true);
  * Do not include the server's zone (%Z), times are converted to the
  * user's time zone.
  */
-//$Theme->setDateFormat("%B %d, %Y");	    // must not contain time
+//$WikiTheme->setDateFormat("%B %d, %Y");	    // must not contain time
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

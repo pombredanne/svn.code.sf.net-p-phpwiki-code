@@ -1,5 +1,5 @@
 <?php // -*-php-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.3 2004-06-08 14:11:59 rurban Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.4 2004-06-14 11:26:53 rurban Exp $ -->
 <?php
   if (!$page->get('locked') || $user->isAdmin())
       $EditB = Button("edit",
@@ -7,12 +7,12 @@
   else
       $EditB = Button("viewsource", _("View Source"));
 
-  $Sep = $Theme->getButtonSeparator();
+  $Sep = $WikiTheme->getButtonSeparator();
 ?>
 <!-- I would like not to have to use these tables, and managed to
      get this stuff to work more or less correctly using
      CSSs float:left; and float:right;.  However float:right; seems
-     to cause MSIE4.01/NT to hang. 
+     to cause MSIE4.01/NT to hang.
      So, we use tables...  -->
 <table summary="Toolbar 1: Page actions and user login."
        width="100%" cellpadding="0" cellspacing="0" border="0">
@@ -32,10 +32,10 @@
      <?php } ?>
     <?php } ?>
     <?=$Sep?><?= Button(array('action'=>'PageInfo'),_("Info"),$page->getName()) ?>
-<?php if (((defined('DEBUG') and DEBUG and $request->getArg('action') == 'browse')) || $user->isAdmin()) { ?> 
+<?php if (((defined('DEBUG') and DEBUG and $request->getArg('action') == 'browse')) || $user->isAdmin()) { ?>
       <!-- Buttons really only for debugging -->
       <?=$Sep?><?= Button(_("PageHistory")) ?>
-      <?=$Sep?><?= Button("diff") ?> 
+      <?=$Sep?><?= Button("diff") ?>
       <?=$Sep?><?= Button(_("PageDump")) ?>
 <?php
      $PurgeCache = Button(array('nocache' => 'purge'),

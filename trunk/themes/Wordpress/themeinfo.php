@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.3 2004-04-11 10:42:03 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.4 2004-06-14 11:26:51 rurban Exp $');
 
 /*
  * This file defines an appearance ("theme") of PhpWiki similar to the 
@@ -51,21 +51,21 @@ class Theme_Wordpress extends Theme {
     }
 }
 
-$Theme = new Theme_Wordpress('Wordpress');
+$WikiTheme = new Theme_Wordpress('Wordpress');
 
 // CSS file defines fonts, colors and background images for this
 // style.  The companion '*-heavy.css' file isn't defined, it's just
 // expected to be in the same directory that the base style is in.
 
-$Theme->setDefaultCSS('Wordpress', 'Wordpress.css');
-$Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
-$Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
-$Theme->addAlternateCSS('PhpWiki', 'phpwiki.css');
+$WikiTheme->setDefaultCSS('Wordpress', 'Wordpress.css');
+$WikiTheme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
+$WikiTheme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
+$WikiTheme->addAlternateCSS('PhpWiki', 'phpwiki.css');
 
 /**
  * The logo image appears on every page and links to the HomePage.
  */
-//$Theme->addImageAlias('logo', 'logo.png');
+//$WikiTheme->addImageAlias('logo', 'logo.png');
 
 /**
  * The Signature image is shown after saving an edited page. If this
@@ -73,25 +73,25 @@ $Theme->addAlternateCSS('PhpWiki', 'phpwiki.css');
  * is not defined by index.php or in here then the "Thank you for
  * editing..." screen will be omitted.
  */
-$Theme->addImageAlias('signature', 'signature.png');
+$WikiTheme->addImageAlias('signature', 'signature.png');
 
 /*
  * Link icons.
  */
-//$Theme->setLinkIcon('http');
-//$Theme->setLinkIcon('https');
-//$Theme->setLinkIcon('ftp');
-//$Theme->setLinkIcon('mailto');
-//$Theme->setLinkIcon('interwiki');
-//$Theme->setLinkIcon('*', 'url');
+//$WikiTheme->setLinkIcon('http');
+//$WikiTheme->setLinkIcon('https');
+//$WikiTheme->setLinkIcon('ftp');
+//$WikiTheme->setLinkIcon('mailto');
+//$WikiTheme->setLinkIcon('interwiki');
+//$WikiTheme->setLinkIcon('*', 'url');
 
-$Theme->setButtonSeparator(' ');
+$WikiTheme->setButtonSeparator(' ');
 
 /**
  * WikiWords can automatically be split by inserting spaces between
  * the words. The default is to leave WordsSmashedTogetherLikeSo.
  */
-$Theme->setAutosplitWikiWords(false);
+$WikiTheme->setAutosplitWikiWords(false);
 
 /*
  * You may adjust the formats used for formatting dates and times
@@ -101,7 +101,7 @@ $Theme->setAutosplitWikiWords(false);
  * Do not include the server's zone (%Z), times are converted to the
  * user's time zone.
  */
-$Theme->setDateFormat("%B %d, %Y", false);
+$WikiTheme->setDateFormat("%B %d, %Y", false);
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

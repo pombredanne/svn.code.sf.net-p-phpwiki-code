@@ -1,12 +1,12 @@
 <?php // -*-php-*-
-  rcs_id('$Id: actionbar.tmpl,v 1.30 2004-06-08 13:53:16 rurban Exp $');
+  rcs_id('$Id: actionbar.tmpl,v 1.31 2004-06-14 11:26:52 rurban Exp $');
   if (!$page->get('locked') || $user->isAdmin())
       $EditB = Button("edit",
                       $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
   else
       $EditB = Button("viewsource", _("View Source"));
 
-  $Sep = $Theme->getButtonSeparator();
+  $Sep = $WikiTheme->getButtonSeparator();
 ?>
 <?php /* I would like not to have to use these tables, and managed to
        * get this stuff to work more or less correctly using

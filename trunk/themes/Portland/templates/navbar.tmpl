@@ -1,7 +1,7 @@
 <?php // -*-html-*- ?>
-<!-- $Id: navbar.tmpl,v 1.9 2002-09-18 19:29:43 dairiki Exp $ -->
+<!-- $Id: navbar.tmpl,v 1.10 2004-06-14 11:26:50 rurban Exp $ -->
 <?php
-  $Sep = $Theme->getButtonSeparator();
+  $Sep = $WikiTheme->getButtonSeparator();
 ?>
 <!-- The bottom navigation/search bar -->
 
@@ -17,7 +17,7 @@
 <!-- I would like not to have to use these tables, and managed to
      get this stuff to work more or less correctly using
      CSSs float:left; and float:right;.  However float:right; seems
-     to cause MSIE4.01/NT to hang. 
+     to cause MSIE4.01/NT to hang.
      So, we use tables...  -->
 <table summary="Toolbar 1: Navigation and user login."
        class="toolbar" width="100%"

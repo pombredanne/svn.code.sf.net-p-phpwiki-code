@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.1 2004-06-11 09:01:50 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.2 2004-06-14 11:26:49 rurban Exp $');
 /**
  * The new mediawiki (Wikipedia.org) default style.
  * Mediawiki 'monobook' style sheet for CSS2-capable browsers.
@@ -43,17 +43,17 @@ class Theme_MonoBook extends Theme {
     }
 }
 
-$Theme = new Theme_MonoBook('MonoBook');
-$Theme->addMoreHeaders(JavaScript('',array('src' => $Theme->_findData("wikibits.js"))));
+$WikiTheme = new Theme_MonoBook('MonoBook');
+$WikiTheme->addMoreHeaders(JavaScript('',array('src' => $WikiTheme->_findData("wikibits.js"))));
 if (isBrowserIE()) {
-    $Theme->addMoreHeaders($Theme->_CSSlink(0,
-        $Theme->_findFile('IEFixes.css'),'all'));
-    $Theme->addMoreHeaders("\n");
-    $Theme->addMoreHeaders(JavaScript('',array('src' => $Theme->_findData("IEFixes.js"))));
-    $Theme->addMoreHeaders("\n");
-    $Theme->addMoreHeaders(HTML::Raw('<meta http-equiv="imagetoolbar" content="no" />'));
+    $WikiTheme->addMoreHeaders($WikiTheme->_CSSlink(0,
+        $WikiTheme->_findFile('IEFixes.css'),'all'));
+    $WikiTheme->addMoreHeaders("\n");
+    $WikiTheme->addMoreHeaders(JavaScript('',array('src' => $WikiTheme->_findData("IEFixes.js"))));
+    $WikiTheme->addMoreHeaders("\n");
+    $WikiTheme->addMoreHeaders(HTML::Raw('<meta http-equiv="imagetoolbar" content="no" />'));
 }
-$Theme->addMoreAttr('body', HTML::Raw('class="ns-0"'));
+$WikiTheme->addMoreAttr('body', HTML::Raw('class="ns-0"'));
 
 // CSS file defines fonts, colors and background images for this
 // style.  The companion '*-heavy.css' file isn't defined, it's just
@@ -61,21 +61,21 @@ $Theme->addMoreAttr('body', HTML::Raw('class="ns-0"'));
 
 // This should result in phpwiki-printer.css being used when
 // printing or print-previewing with style "PhpWiki" or "MacOSX" selected.
-$Theme->setDefaultCSS('PhpWiki',
+$WikiTheme->setDefaultCSS('PhpWiki',
                        array(''      => 'monobook.css',
                              'print' => 'commonPrint.css'));
 
 // This allows one to manually select "Printer" style (when browsing page)
 // to see what the printer style looks like.
-$Theme->addAlternateCSS(_("Printer"), 'commonPrint.css', 'print, screen');
-$Theme->addAlternateCSS(_("Top & bottom toolbars"), 'phpwiki-topbottombars.css');
-$Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
+$WikiTheme->addAlternateCSS(_("Printer"), 'commonPrint.css', 'print, screen');
+$WikiTheme->addAlternateCSS(_("Top & bottom toolbars"), 'phpwiki-topbottombars.css');
+$WikiTheme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
 
 /**
  * The logo image appears on every page and links to the HomePage.
  */
-$Theme->addImageAlias('logo', 'MonoBook-Logo.png');
-//$Theme->addImageAlias('logo', WIKI_NAME . 'Logo.png');
+$WikiTheme->addImageAlias('logo', 'MonoBook-Logo.png');
+//$WikiTheme->addImageAlias('logo', WIKI_NAME . 'Logo.png');
 
 /**
  * The Signature image is shown after saving an edited page. If this
@@ -83,32 +83,32 @@ $Theme->addImageAlias('logo', 'MonoBook-Logo.png');
  * be omitted.
  */
 
-$Theme->addImageAlias('signature', WIKI_NAME . "Signature.png");
+$WikiTheme->addImageAlias('signature', WIKI_NAME . "Signature.png");
 // Uncomment this next line to disable the signature.
-$Theme->addImageAlias('signature', false);
+$WikiTheme->addImageAlias('signature', false);
 
 /*
  * Link icons.
  */
 /*
-$Theme->setLinkIcon('http');
-$Theme->setLinkIcon('https');
-$Theme->setLinkIcon('ftp');
-$Theme->setLinkIcon('mailto');
-//$Theme->setLinkIcon('interwiki');
+$WikiTheme->setLinkIcon('http');
+$WikiTheme->setLinkIcon('https');
+$WikiTheme->setLinkIcon('ftp');
+$WikiTheme->setLinkIcon('mailto');
+//$WikiTheme->setLinkIcon('interwiki');
 */
-$Theme->setLinkIcon('wikiuser');
-$Theme->setLinkIcon('*', 'url');
+$WikiTheme->setLinkIcon('wikiuser');
+$WikiTheme->setLinkIcon('*', 'url');
 // front or after
-$Theme->setLinkIconAttr('after');
+$WikiTheme->setLinkIconAttr('after');
 
-//$Theme->setButtonSeparator("\n | ");
+//$WikiTheme->setButtonSeparator("\n | ");
 
 /**
  * WikiWords can automatically be split by inserting spaces between
  * the words. The default is to leave WordsSmashedTogetherLikeSo.
  */
-//$Theme->setAutosplitWikiWords(false);
+//$WikiTheme->setAutosplitWikiWords(false);
 
 /**
  * Layout improvement with dangling links for mostly closed wiki's:
@@ -117,7 +117,7 @@ $Theme->setLinkIconAttr('after');
  * If true (default), any user will see the ?, but will be presented 
  * the PrintLoginForm on a click.
  */
-$Theme->setAnonEditUnknownLinks(false);
+$WikiTheme->setAnonEditUnknownLinks(false);
 
 /*
  * You may adjust the formats used for formatting dates and times
@@ -127,15 +127,14 @@ $Theme->setAnonEditUnknownLinks(false);
  * Do not include the server's zone (%Z), times are converted to the
  * user's time zone.
  */
-$Theme->setDateFormat("%B %d, %Y");
-$Theme->setTimeFormat("%H:%M");
+$WikiTheme->setDateFormat("%B %d, %Y");
+$WikiTheme->setTimeFormat("%H:%M");
 
 /*
  * To suppress times in the "Last edited on" messages, give a
  * give a second argument of false:
  */
-//$Theme->setDateFormat("%B %d, %Y", false); 
-
+//$WikiTheme->setDateFormat("%B %d, %Y", false); 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // (c-file-style: "gnu")
