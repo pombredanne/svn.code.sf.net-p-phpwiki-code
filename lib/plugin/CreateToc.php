@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.11 2004-03-15 09:52:59 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.12 2004-03-22 14:13:53 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     function getDefaultArguments() {
@@ -110,21 +110,22 @@ extends WikiPlugin
                         $s = trim($match[2]);
                         $anchor = $this->_nextAnchor($s);
                         $headers[] = array('text' => $s, 'anchor' => $anchor, 'level' => $level);
-                        // change original wikitext, but that is useless art...
+                        // Change original wikitext, but that is useless art...
                         $content[$i] = $match[1]." #[|$anchor][$s|#TOC]";
-                        // and now change the to be printed markup (XmlTree):
-                        // search <hn>$s</hn> line in markup
+                        // And now change the to be printed markup (XmlTree):
+                        // Search <hn>$s</hn> line in markup
+                        //Fixme: Find wikilink'ed headers also.
                         $j = $this->searchHeader($markup->_content, $j, $s, $match[1]);
                         if (  $j and isset($markup->_content[$j]) and 
                               is_string($markup->_content[$j])  ) {
                             $x = $markup->_content[$j];
                             $heading = preg_quote($s);
                             if ($x = preg_replace('/(<h\d>)('.$heading.')(<\/h\d>)/',
-                                                  "\$1<a name=\"$anchor\">\$2</a>\$3",$x)) {
+                                                  "\$1<a name=\"$anchor\">\$2</a>\$3",$x,1)) {
                                 if ($backlink)
                                     $x = preg_replace('/(<h\d>)('.$heading.')(<\/h\d>)/',
                                                       "\$1<a href=\"$basepage#TOC\" name=\"$anchor\">\$2</a>\$3",
-                                                      $markup->_content[$j]);
+                                                      $markup->_content[$j],1);
                                 $markup->_content[$j] = $x;
                             }
                         }
@@ -215,6 +216,9 @@ function toggletoc(a) {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/03/15 09:52:59  rurban
+// jshide button: dynamic titles
+//
 // Revision 1.10  2004/03/14 20:30:21  rurban
 // jshide button
 //
