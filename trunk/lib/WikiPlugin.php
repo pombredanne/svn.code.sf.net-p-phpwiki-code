@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.49 2004-07-08 21:32:35 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.50 2004-09-06 08:25:01 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,7 +87,7 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.49 $");
+        //                    "\$Revision: 1.50 $");
     }
 
     function getArgs($argstr, $request=false, $defaults = false) {
@@ -109,7 +109,7 @@ class WikiPlugin
                 $args[$arg] = $default_val;
             }
             // expand [arg]
-            if ($request and strstr($args[$arg], "[")) {
+            if ($request and is_string($args[$arg]) and strstr($args[$arg], "[")) {
                 $args[$arg] = $this->expandArg($args[$arg], $request);
             }
 
@@ -154,8 +154,24 @@ class WikiPlugin
 
         $args = array();
         $defaults = array();
-	    if (empty($argstr))
+	if (empty($argstr))
             return array($args,$defaults);
+        // handle plugin-list seperately
+        $plugin_p = '<'.'\?plugin-list\s+\w+.*\?'.'>';
+        if (preg_match("/^($arg_p) $opt_ws ($op_p) $opt_ws ($plugin_p) $opt_ws/x", $argstr, $m)) {
+            @ list(,$arg, $op, $plugin_val) = $m;
+            $argstr = substr($argstr, strlen($m[0]));
+            $loader = new WikiPluginLoader();
+            $markup = null;
+            $basepage = null;
+            $val = $loader->expandPI($plugin_val, $GLOBALS['request'], $markup, $basepage);
+            if ($op == '=') {
+                $args[$arg] = $val; // comma delimited pagenames or array()?
+            } else {
+                assert($op == '||=');
+                $defaults[$arg] = $val;
+            }
+        }
         while (preg_match("/^$opt_ws $argspec_p $opt_ws/x", $argstr, $m)) {
             @ list(,$arg,$op,$qq_val,$q_val,$gt_val,$word_val) = $m;
             $argstr = substr($argstr, strlen($m[0]));
@@ -196,6 +212,20 @@ class WikiPlugin
     function handle_plugin_args_cruft($argstr, $args) {
         trigger_error(sprintf(_("trailing cruft in plugin args: '%s'"),
                               $argstr), E_USER_NOTICE);
+    }
+
+    /* handle plugin-list argument: use run(). */
+    function makeList($plugin_args, $request, $basepage) {
+        $dbi = $request->getDbh();
+        $pagelist = $this->run($dbi, $plugin_args, $request, $basepage);
+        $list = array();
+        if (is_object($pagelist) and isa($pagelist, 'PageList')) {
+            // table or list?
+            foreach ($pagelist->_pages as $page) {
+            	$list[] = $page->_page->_pagename;
+            }
+        }
+        return $list;
     }
 
     function getDefaultLinkArguments() {
@@ -392,6 +422,8 @@ class WikiPluginLoader {
                                                      '%weak' => true));
                 }
                 return $plugin->run($dbi, $plugin_args, $request, $basepage);
+            case 'plugin-list':
+                return $plugin->makeList($plugin_args, $request, $basepage);
             case 'plugin-link':
                 return $plugin->makeLink($plugin_args, $request);
             case 'plugin-form':
@@ -411,7 +443,7 @@ class WikiPluginLoader {
     }
     
     function parsePI($pi) {
-        if (!preg_match('/^\s*<\?(plugin(?:-form|-link)?)\s+(\w+)\s*(.*?)\s*\?>\s*$/s', $pi, $m))
+        if (!preg_match('/^\s*<\?(plugin(?:-form|-link|-list)?)\s+(\w+)\s*(.*?)\s*\?>\s*$/s', $pi, $m))
             return $this->_error(sprintf("Bad %s", 'PI'));
 
         list(, $pi_name, $plugin_name, $plugin_args) = $m;
