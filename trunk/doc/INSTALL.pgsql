@@ -4,6 +4,9 @@ FIXME: The pgsql backend has not yet been ported to the new database
 scheme.  (Though it should not be very hard, and is certainly in
 the works.)
 
+See http://www.sslug.dk/~chlor/phpwiki-pgsql-install.html for notes how 
+to install it for 1.3.4 (and later)
+
 ----------
 NOTE for the 1.2 release: You may see a few warnings when you first
 load the pages. They may look like this:
@@ -80,4 +83,4 @@ swain@panix.com
 
 Report bugs to phpwiki-talk@lists.sourceforge.net
 
-$Id: INSTALL.pgsql,v 1.3 2001-12-19 06:22:06 carstenklapp Exp $
+$Id: INSTALL.pgsql,v 1.4 2004-04-10 10:13:22 rurban Exp $
