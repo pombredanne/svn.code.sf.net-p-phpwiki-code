@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.32 2002-01-28 01:01:26 dairiki Exp $');
+<?php rcs_id('$Id: Template.php,v 1.33 2002-02-19 22:59:37 carstenklapp Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -206,6 +206,30 @@ function GeneratePage($content, $title, $page_revision = false, $args = false) {
         $args['HEADER'] = $title;
     
     printXML(new Template('top', $request, $args));
+}
+
+
+/**
+ * For dumping pages as html to a file.
+ */
+function GeneratePageasXML($content, $title, $page_revision = false, $args = false) {
+    global $request;
+    
+    if (!is_array($args))
+        $args = array();
+
+    $args['CONTENT'] = $content;
+    $args['TITLE'] = $title;
+    $args['revision'] = $page_revision;
+    
+    if (!isset($args['HEADER']))
+        $args['HEADER'] = $title;
+    
+    global $HIDE_TOOLBARS;
+    $HIDE_TOOLBARS = true;
+    $html = asXML(new Template('top', $request, $args));
+    $HIDE_TOOLBARS = false;
+    return $html;
 }
 
 
