@@ -94,11 +94,14 @@ $USER_AUTH_ORDER is an array of the following strings. You can en-/disable any a
 
 * __~BogoLogin__:  This will eventually replace the old ALLOW_BOGO_LOGIN constant, but it will require PASSWORD_LENGTH_MINIMUM. So non-empty passwords can be disabled.
 * __~PersonalPage__:  Store passwords in the users homepage metadata (simple)
-* __~HttpAuth__:  Use the protection by the webserver, either .htaccess or httpd.conf
 * __Db__:        Use $DBAuthParams~[~] (see below) with PearDB or ADODB only. If 'auth_dsn' is undefined, and wiki pages are stored via SQL or ADODB, it uses the same database. (fastest)
 * __LDAP__:      Authenticate against LDAP_AUTH_HOST with the LDAP_AUTH_SEARCH settings
 * __IMAP__:      Authenticate against IMAP_AUTH_HOST (e.g. an existing email account)
 * __File__:      Check username:crypted-passwords in .htaccess like files. Use Apache's htpasswd program to manage this file.
+* __~HttpAuth__:  Use the protection by the webserver, either .htaccess or httpd.conf
+                  If no HTTP AUTH is enforced by the webserver (e.g no require valid-user), then
+                  this method will enforce error 401 to force the client to display a password 
+                  entry dialog.
 
 Each method is a WikiUser (in fact a ~_PassUser) class, which defines the checkPass() and userExists() methods and optionally mayChangePass() and storePass().
 

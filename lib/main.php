@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.122 2004-03-08 18:17:09 rurban Exp $');
+rcs_id('$Id: main.php,v 1.123 2004-03-10 15:41:27 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -19,13 +19,13 @@ class WikiRequest extends Request {
 
     function WikiRequest () {
         $this->_dbi = WikiDB::open($GLOBALS['DBParams']);
-        // does pear reset the error mask to 1?
         if (USE_DB_SESSION) {
             include_once('lib/DB_Session.php');
             $prefix = isset($GLOBALS['DBParams']['prefix']) ? $GLOBALS['DBParams']['prefix'] : '';
             $this->_dbsession = & new DB_Session($this->getDbh(),
                                                  $prefix . $GLOBALS['DBParams']['db_session_table']);
         }
+        // Fixme: Does pear reset the error mask to 1? We have to find the culprit
         $x = error_reporting();
         
         $this->Request();
@@ -843,6 +843,11 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.122  2004/03/08 18:17:09  rurban
+// added more WikiGroup::getMembersOf methods, esp. for special groups
+// fixed $LDAP_SET_OPTIONS
+// fixed _AuthInfo group methods
+//
 // Revision 1.121  2004/03/01 13:48:45  rurban
 // rename fix
 // p[] consistency fix

@@ -1,4 +1,4 @@
--- $Id: mysql.sql,v 1.7 2004-02-07 14:20:18 rurban Exp $
+-- $Id: mysql.sql,v 1.8 2004-03-10 15:41:27 rurban Exp $
 
 drop table if exists page;
 CREATE TABLE page (
@@ -57,20 +57,20 @@ CREATE TABLE session (
 -- For these tables below the default table prefix must be used 
 -- in the DBAuthParam SQL statements also.
 
--- Don't know if you should auth against pref table also. 
--- the password is stored there also.
---drop table if exists pref;
---CREATE TABLE pref (
---  	userid 	CHAR(48) BINARY NOT NULL UNIQUE,
---  	prefs  	TEXT NULL DEFAULT '',
---  	PRIMARY KEY (userid)
---) TYPE=MyISAM;
+drop table if exists pref;
+CREATE TABLE pref (
+  	userid 	CHAR(48) BINARY NOT NULL UNIQUE,
+  	prefs  	TEXT NULL DEFAULT '',
+  	PRIMARY KEY (userid)
+) TYPE=MyISAM;
 
+-- better use the extra pref table where such users can be created easily 
+-- without password.
 drop table if exists user;
 CREATE TABLE user (
   	userid 	CHAR(48) BINARY NOT NULL UNIQUE,
   	passwd 	CHAR(48) BINARY DEFAULT '',
-	prefs  	TEXT NULL DEFAULT '',
+--	prefs  	TEXT NULL DEFAULT '',
 --	groupname CHAR(48) BINARY DEFAULT 'users',
   	PRIMARY KEY (userid)
 ) TYPE=MyISAM;
