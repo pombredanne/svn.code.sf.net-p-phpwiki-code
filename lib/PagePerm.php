@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.32 2004-09-25 18:56:09 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.33 2004-09-26 11:47:52 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -218,13 +218,22 @@ function action2access ($action) {
 }
 
 // Recursive helper to do the real work
+// TODO: check if a perm cache for page-(current+edit+change?)action pairs will help
 function _requiredAuthorityForPagename($access, $pagename) {
     global $request;
+    static $permcache = array();
+    
+    if (array_key_exists($pagename, $permcache)
+        and array_key_exists($access, $permcache[$pagename]))
+        return $permcache[$pagename][$access];
+        
     $page = $request->getPage($pagename);
     // Page not found; check against default permissions
     if (! $page->exists() ) {
         $perm = new PagePermission();
-        return ($perm->isAuthorized($access, $request->_user) === true);
+        $result = ($perm->isAuthorized($access, $request->_user) === true);
+        $permcache[$pagename][$access] = $result;
+        return $result;
     }
     // no ACL defined; check for special dotfile or walk down
     if (! ($perm = getPagePermissions($page))) { 
@@ -235,19 +244,27 @@ function _requiredAuthorityForPagename($access, $pagename) {
                 trigger_error(". (dotpage == rootpage for inheriting pageperm ACLs) exists without any ACL!\n".
                               "Please do ?action=setacl&pagename=.", E_USER_WARNING);
             }
-            return ($perm->isAuthorized($access, $request->_user) === true);
+            $result = ($perm->isAuthorized($access, $request->_user) === true);
+            $permcache[$pagename][$access] = $result;
+            return $result;
         } elseif ($pagename[0] == '.') {
             $perm = new PagePermission(PagePermission::dotPerms());
-            return ($perm->isAuthorized($access, $request->_user) === true);
+            $result = ($perm->isAuthorized($access, $request->_user) === true);
+            $permcache[$pagename][$access] = $result;
+            return $result;
         }
         return _requiredAuthorityForPagename($access, getParentPage($pagename));
     }
     // ACL defined; check if isAuthorized returns true or false or undecided
     $authorized = $perm->isAuthorized($access, $request->_user);
-    if ($authorized !== -1) // interestingly true is also -1
+    if ($authorized !== -1) { // interestingly true is also -1
+        $permcache[$pagename][$access] = $authorized;
         return $authorized;
-    else
+    } elseif ($pagename == '.') {
+    	return false;
+    } else {	
         return _requiredAuthorityForPagename($access, getParentPage($pagename));
+    }
 }
 
 /**
@@ -710,6 +727,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.32  2004/09/25 18:56:09  rurban
+// avoid recursion bug on setacl for "."
+//
 // Revision 1.31  2004/09/25 18:34:45  rurban
 // fix and warn on too restrictive ACL handling without ACL in existing . (dotpage)
 //
