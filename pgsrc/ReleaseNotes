@@ -1,9 +1,9 @@
-Date: Fri, 19 Nov 2004 14:27:36 +0100
+Date: Fri, 17 Dec 2004 17:30:18 +0200 
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.11pre)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.48 2004-11-26 18:35:18 rurban Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.49 2004-12-17 16:32:28 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.48 $";
+  pgsrc_version="2 $Revision: 1.49 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
@@ -11,10 +11,13 @@ Content-Transfer-Encoding: binary
 
 1.3.11 (not yet released), Reini Urban:
 
-Lots of bugfixes, a new EDIT_TOOLBAR from mediawiki, more page 
-permission enhancements, reduce memory usage for pagelists which 
-need no page content, related improvement for OldMarkup crashes 
-because of PCRE memory exhaustion, and admin plugin overhaul.
+Lots of bugfixes, and some feature enhancements.
+A new EDIT_TOOLBAR from mediawiki, more page permission enhancements, 
+reduced memory usage for pagelists which need no page content, 
+related improvement for OldMarkup crashes because of PCRE 
+memory exhaustion, and admin plugin overhaul.
+New <!plugin-list !> syntax and PhpWiki:PageListLibrary args.
+Because of SQL changes you'd need to ?action=upgrade to update for SQL.
 
 fixes:
 * fixed Today link in all templates if USE_PATH_INFO = false
@@ -27,6 +30,7 @@ fixes:
 * fixed syntax errors in signin.tmpl 
 * fixed important WikiDB bug with DEBUG > 0: wrong assertion 
   around line 172 (#954648)
+* fixed flatfile ArchiveCleaner assertion
 * RssFeedPlugin stability fix for empty feeds or broken connections 
 * fixed Sidebar theme CSS, added existing dates to jscalendar
 * fixed PhpWiki:ImageLinks, broken since 1.3.10 (Bug #956068)
@@ -65,8 +69,12 @@ fixes:
   typical PageList memory exhaustion on simple page lists.
 * fixed crash after login, by eliminating endless recursion in 
   group isAdmin() checks
-* fixed and improve WikiDB pageid caching.
+* fixed and improved WikiDB pageid caching.
 * fixed some WikiGroup errors for WIKIPAGE and DB
+* fixed JS_SEARCHREPLACE
+* fixed xmlrpc to be able to use the native xmlrpc extension.
+* fixed xmlrpc wiki.listLinks method: name => page param
+* fixed WikiAdminUtils behaviour on POST.
 
 changes:
 * ~WikiAdminSetAcl functional
@@ -112,6 +120,10 @@ changes:
 * INCLUDE_PATH is now prepended, not appended. PHPWIKI_DIR is forced to be first.
 * rewrote OldTextFormattingRules, AnciennesR%E8glesDeFormatage
   for proper importing (PCRE+memory related crashes on older php's)
+* added extra page.cached_html column. ?action=upgrade or PhpWikiAdministration
+  "Convert cached_html" is needed to convert your old pagedata "_cached_html".
+* page deletion is now undoable and being seen in RecentChanges. Purge pages 
+  by new admin button.
 
 new:
 * new ENABLE_EDIT_TOOLBAR (from mediawiki), JS_SEARCHREPLACE, AddCategory button
@@ -125,7 +137,7 @@ new:
 * new action=chown|setacl|rename|dump action shortcuts pointing to the plugin
 * new SyntaxHighlighter plugin (based on work by alecthomas),
   needs highlight from http://www.andre-simon.de/
-* new PloticusPlugin. full application/xhtml+xml support not yet 
+* new PloticusPlugin. Full application/xhtml+xml support not yet 
   (javascript document.write() not supported with ENABLE_XHTML_XML)
 * new ListPages plugin (by Dan Frankowski)
 * new TeX2pngPlugin (by Pierrick Meignen)
@@ -146,16 +158,32 @@ new:
   and enabled the new args on most plugins.
 * added experimental SearchHighlight feature (not for HTML yet)
 * added [OverWrite All] button to loadfile action on the first page.
+* added [Load & OverWrite] button to PhpWikiAdministration
 * performance: use cached static config/config.php, if it's writable by 
   the webserver.
 * added ACCESS_LOG_SQL &1: read, &2 write. new accesslog sql table. 
   for various log analysis: abuse prevention, recent referrers.
 * added more PageChangeNotification on other actions: rename, remove.
   changed subject on create. Collapse mult. emails to one.
-* added WikiPluginCached support for image maps and svg
+* added WikiPluginCached support for image maps, static cache in uploads/ and SVG
 * added case-sensitive and regex searching
 * added new PhpWiki:WikiFormRich plugin
 * added new AppendTextPlugin (by Pascal Giard)
+* added xmlrpc testsuite
+* added RSS2 link (format=rss2)  in RecentChanges. (no cloud channel yet)
+* added PhpWikiAdministration WikiDB buttons:
+  [Purge all empty unreferenced pages], [Convert cached_html]
+* new experimental ModeratedPage feature. (i.e. delayed POST actions)
+* new edit "[] old markup [Convert]" button to convert and save to new markup.
+* new LinkDatabase plugin and actionpage for the http://touchgraph.sourceforge.net/ ~WikiBrowser
+* new hyperwiki applet in Sidebar. See http://hypergraph.sourceforge.net/
+
+1.2.5 (the old-stable version) Nov, 28 2004, Reini Urban:
+* works with register_globals=off
+* adds user/password to pgsql, 
+* fix zip and dumpserial on dba, dbm, msql and file,
+* and fixes a minor (un)lock issue, displaying the (un)locked page afterwards 
+  and not the FrontPage.
 
 1.3.10 May, 13 2004, Reini Urban, Joby Walker:
 
@@ -218,6 +246,7 @@ new:
 * new Crao theme from http://wiki.crao.net, by Arnaud Fontaine and Laurent Lunati
 * extended PhpWiki:InlineImages markup (size, border, ...)
 
+
 1.3.9-p1 May,5 2004, Reini Urban:
 
 Bugfix patch for the following 1.3.9 problems:
@@ -232,14 +261,17 @@ Bugfix patch for the following 1.3.9 problems:
 * HttpClient fixes for older php's
 * RssFeed for allow_url_fopen=false, IMAGE support, empty ITEM list
 
+
 1.2.4 (the old-stable version) May, 4 2004, Reini Urban:
 * improves possible deadlocks in DBA, 
 * fixes problems with DBA open failures.
+
 
 1.2.3 (the old-stable version) Apr, 29 2004, Reini Urban:
 * added the most popular footer for dba
 * added remove for dba
 * fixed a warning on info page
+
 
 1.3.9 Apr, 12 2004, Reini Urban:
 
