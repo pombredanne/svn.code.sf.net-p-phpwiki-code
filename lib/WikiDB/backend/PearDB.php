@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.13 2001-12-19 08:54:15 carstenklapp Exp $');
+rcs_id('$Id: PearDB.php,v 1.14 2001-12-19 12:07:53 carstenklapp Exp $');
 
 //require_once('DB.php');
 require_once('lib/WikiDB/backend.php');
@@ -54,7 +54,7 @@ extends WikiDB_backend
         if (!$this->_dbh)
             return;
         if ($this->_lock_count) {
-            trigger_error(sprintf(_("WARNING: database still locked (lock_count = %s)"),$this->_lock_count) . "\n<br>",
+            trigger_error( _("WARNING: database still locked") . '(lock_count = $this->_lock_count)' . "\n<br>",
                           E_USER_WARNING);
         }
         $this->_dbh->setErrorHandling(PEAR_ERROR_PRINT);	// prevent recursive loops.
@@ -689,6 +689,7 @@ extends WikiDB_backend
             // Last query was not of the sort which doesn't return any data.
             return false;
         }
+        //" <--(kludge for dumb syntax coloring)
         
         if (! in_array('ismanip', get_class_methods('DB'))) {
             // Pear shipped with PHP 4.0.4pl1 (and before, presumably)
@@ -707,7 +708,7 @@ extends WikiDB_backend
 
     function _pear_error_message($error) {
         $class = get_class($this);
-        $message = sprintf(_("%s: fatal database error"),$class) ."\n"
+        $message = $class ": " . _("fatal database error") ."\n"
              . "\t" . $error->getMessage() . "\n"
              . "\t(" . $error->getDebugInfo() . ")\n";
 

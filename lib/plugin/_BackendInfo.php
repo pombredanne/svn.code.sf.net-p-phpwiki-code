@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _BackendInfo.php,v 1.3 2001-12-16 18:33:25 dairiki Exp $');
+rcs_id('$Id: _BackendInfo.php,v 1.4 2001-12-19 12:07:30 carstenklapp Exp $');
 require_once('lib/Template.php');
 /**
  */
@@ -11,7 +11,7 @@ extends WikiPlugin
     }
 
     function getDescription () {
-        return _("Get debugging information for [pagename].");
+        return sprintf(_("Get debugging information for %s."),'[pagename]');
     }
     
     function WikiPlugin__BackendInfo() {
@@ -48,7 +48,7 @@ extends WikiPlugin
         $rows = '';
         $pagedata = $backend->get_pagedata($page);
         if (!$pagedata)
-            $html .= QElement('p', sprintf(_("No pagedata for %s\n"), $page));
+            $html .= QElement('p', sprintf(_("No pagedata for %s"), $page) . "\n");
         else {
             ksort($pagedata);
             $rows .= $this->_hashtemplate->
