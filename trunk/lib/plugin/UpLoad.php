@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.8 2004-04-12 09:12:22 rurban Exp $');
+rcs_id('$Id: UpLoad.php,v 1.9 2004-04-12 10:18:22 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -99,15 +99,15 @@ swf
 url
 vb[esx]?
 vxd
-ws[cfh]
-\{[[:xdigit:]]{8}(?:-[[:xdigit:]]{4}){3}-[[:xdigit:]]{12}\}");
+ws[cfh]");
+        //removed "\{[[:xdigit:]]{8}(?:-[[:xdigit:]]{4}){3}-[[:xdigit:]]{12}\}"
 
         $args = $this->getArgs($argstr, $request);
         extract($args);
 
         $file_dir = defined('PHPWIKI_DIR') ? 
             PHPWIKI_DIR . "/uploads/" : "uploads/";
-        $url_prefix = SERVER_NAME.DATA_PATH; 
+        $url_prefix = SERVER_NAME . DATA_PATH; 
 
         $form = HTML::form(array('action' => $request->getPostURL(),
                                  'enctype' => 'multipart/form-data',
@@ -241,6 +241,9 @@ ws[cfh]
 // End:
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/04/12 09:12:22  rurban
+// fix syntax errors
+//
 // Revision 1.7  2004/04/09 17:49:03  rurban
 // Added PhpWiki RssFeed to Sidebar
 // sidebar formatting
