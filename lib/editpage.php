@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.93 2005-02-27 19:31:52 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.94 2005-02-28 20:23:31 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -263,7 +263,7 @@ class PageEditor
           (admin plugins) */
 
         // look at the errorstack
-        $errors = $this->_postponed_errors;
+        $errors = $GLOBALS['ErrorManager']->_postponed_errors;
         $warnings = $GLOBALS['ErrorManager']->getPostponedErrorsAsHTML(); 
         $GLOBALS['ErrorManager']->_postponed_errors = $errors;
 
@@ -714,6 +714,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.93  2005/02/27 19:31:52  rurban
+ hack: display errorstack without sideeffects (save and restore)
+
  Revision 1.92  2005/01/29 20:37:21  rurban
  no edit toolbar at all if ENABLE_EDITTOOLBAR = false
 
