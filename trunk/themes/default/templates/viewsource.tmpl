@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: viewsource.tmpl,v 1.17 2002-02-10 21:42:23 carstenklapp Exp $ -->
+<!-- $Id: viewsource.tmpl,v 1.18 2002-02-10 23:51:22 carstenklapp Exp $ -->
 
 <?php if ($page->get('locked') && !$user->isAdmin()) { ?>
   <p><strong><?=_("Note:")?></strong>
@@ -13,6 +13,8 @@
   <?php } ?>
 <!-- Dummy form else NS4 does not like the textarea -->
 <form method="post" action="<?=BASE_URL?>" accept-charset="<?=CHARSET?>">
+<?php /* To clear beyond a larger logo, such as in the Hawaiian theme */ ?>
+<br clear="both" />
 <!-- wrap=virtual is not HTML4, but without it NS4 does not wrap long lines -->
 <textarea class="wikiedit"
 name="content"

@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.25 2002-02-10 21:42:23 carstenklapp Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.26 2002-02-10 23:51:22 carstenklapp Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
@@ -55,13 +55,14 @@ $s = $Theme->getButtonSeparator();
 <form method="post" name="editpage"
       action="<?=WikiURL($page,array('action'=>'edit'))?>"
       accept-charset="<?=CHARSET?>">
+  <?php /* To clear beyond a larger logo, such as in the Hawaiian theme */ ?>
+  <br clear="both" />
   <div id="editarea-size">
     <?=_("Edit Area Size:")?>
     <b><?=_("H")?></b> <?=$HeightI?>
     <b><?=_("W")?></b> <?=$WidthI?>
     <noscript><?=Button("submit:", _("Adjust"))?></noscript>
   </div>
-
   <a name="editarea" id="editarea"><?=$EDIT_TEXTAREA?></a>
 
 <!-- FIXME: fix layout, move CSS to CSS -->
