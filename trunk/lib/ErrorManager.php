@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.38 2004-10-19 17:34:55 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.39 2004-11-05 18:04:20 rurban Exp $');
 
 if (isset($GLOBALS['ErrorManager'])) return;
 
@@ -450,11 +450,17 @@ class PhpError {
            $dir .= '/';
         $errfile = preg_replace('|^' . preg_quote($dir) . '|', '', $this->errfile);
         $lines = explode("\n", $this->errstr);
-
-        $msg = sprintf("%s:%d: %s[%d]: %s",
-                       $errfile, $this->errline,
-                       $this->getDescription(), $this->errno,
-                       array_shift($lines));
+        if (DEBUG & _DEBUG_VERBOSE) {
+          $msg = sprintf("%s:%d: %s[%d]: %s",
+                         $errfile, $this->errline,
+                         $this->getDescription(), $this->errno,
+                         array_shift($lines));
+        } else {
+          $msg = sprintf("%s:%d: %s: \"%s\"",
+                         $errfile, $this->errline,
+                         $this->getDescription(),
+                         array_shift($lines));
+        }
         
         //$html = HTML::div(array('class' => $this->getHtmlClass()), HTML::p($msg));
         // The class is now used for the div container.
@@ -571,9 +577,11 @@ class PhpErrorOnce extends PhpError {
            $dir .= '/';
         $errfile = preg_replace('|^' . preg_quote($dir) . '|', '', $this->errfile);
         $lines = explode("\n", $this->errstr);
-        $msg = sprintf("%s:%d: %s[%d]: %s %s",
+        $errtype = (DEBUG & _DEBUG_VERBOSE) ? sprintf("%s[%d]", $this->getDescription(), $this->errno)
+                                            : sprintf("%s", $this->getDescription());
+        $msg = sprintf("%s:%d: %s: %s %s",
                        $errfile, $this->errline,
-                       $this->getDescription(), $this->errno,
+                       $errtype,
                        array_shift($lines),
                        $count > 1 ? sprintf(" (...repeated %d times)",$count) : ""
                        );
@@ -597,6 +605,9 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.38  2004/10/19 17:34:55  rurban
+// <4.3 fix
+//
 // Revision 1.37  2004/10/14 19:23:58  rurban
 // remove debugging prints
 //
