@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentReferrers.php,v 1.1 2004-11-06 04:52:29 rurban Exp $');
+rcs_id('$Id: RecentReferrers.php,v 1.2 2004-11-07 18:34:29 rurban Exp $');
 
 /**
  * Analyze our ACCESS_LOG
@@ -16,7 +16,7 @@ class WikiPlugin_RecentReferrers extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -41,25 +41,16 @@ class WikiPlugin_RecentReferrers extends WikiPlugin
             $table->pushContent(HTML::caption(array('align'=>'top'), $args['caption']));
         $logs = array();
         $limit = $args['limit'];
-        $logentry = new Request_AccessLogEntry(ACCESS_LOG);
-        while ($logentry->read()) {
-            if (!empty($logentry->referer)) {
-            	$logs[] = $logentry;
-                if ($limit and count($logs) > $limit)
-                    array_shift($logs);
-                $logentry = new Request_AccessLogEntry(ACCESS_LOG);
-            }
-        }
-        if ($logs) {
-            $logs = array_reverse($logs);
+        $accesslog =& $request->_accesslog;
+        if ($logiter = $accesslog->get_referer($limit, "external_only")
+            and $logiter->count()) {
             $table->pushContent(HTML::tr(HTML::th("Target"),HTML::th("Referrer"),
                                          HTML::th("Host"),HTML::th("Date")));
-            $logs = array_slice($logs,0,min($limit,count($logs)));
-            foreach ($logs as $logentry) {
-                $table->pushContent(HTML::tr(HTML::td($logentry->request),
-                                             HTML::td($logentry->referer),
-                                             HTML::td($logentry->host),
-                                             HTML::td($logentry->time)
+            while($logentry = $logiter->next()) {
+                $table->pushContent(HTML::tr(HTML::td($logentry['request']),
+                                             HTML::td($logentry['referer']),
+                                             HTML::td($logentry['host']),
+                                             HTML::td($logentry['time'])
                                              ));
             }
             return $table;
@@ -68,6 +59,9 @@ class WikiPlugin_RecentReferrers extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/11/06 04:52:29  rurban
+// simple version at first
+//
 
 // (c-file-style: "gnu")
 // Local Variables:

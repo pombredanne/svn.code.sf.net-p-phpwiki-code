@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.97 2004-11-07 16:02:51 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.98 2004-11-07 18:34:29 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -571,8 +571,7 @@ class WikiDB {
     // SQL result: for simple select or create/update queries
     // returns the database specific resource type
     function genericSqlQuery($sql) {
-        global $DBParams;
-        if ($DBParams['dbtype'] == 'SQL') {
+        if ($this->getParam('dbtype') == 'SQL') {
             $result = $this->_backend->_dbh->query($sql);
             if (DB::isError($result)) {
                 $msg = $result->getMessage();
@@ -581,33 +580,48 @@ class WikiDB {
             } else {
                 return $result;
             }
-        } elseif ($DBParams['dbtype'] == 'ADODB') {
+        } elseif ($this->getParam('dbtype') == 'ADODB') {
             if (!($result = $this->_backend->_dbh->Execute($sql))) {
                 trigger_error("SQL Error: ".$this->_backend->_dbh->ErrorMsg(), E_USER_WARNING);
                 return false;
             } else {
                 return $result;
             }
+        } else {
+            trigger_error("no SQL database");
         }
         return false;
     }
 
     function quote ($s) {
-        global $DBParams;
-        if ($DBParams['dbtype'] == 'SQL')
+        if ($this->getParam('dbtype') == 'SQL')
             return $this->_backend->_dbh->quoteString($s);
-        else
+        elseif ($this->getParam('dbtype') == 'ADODB')
             return $this->_backend->_dbh->qstr($s);
+        else return $s;
+    }
+    
+    function isOpen () {
+        global $request;
+        if (!$request->_dbi) return false;
+        if ($this->getParam('dbtype') == 'SQL')
+            return is_resource($this->_backend->connection());
+        elseif ($this->getParam('dbtype') == 'ADODB') 
+            return is_resource($this->_backend->connection());
+        else return true;
     }
 
     // SQL iter: for simple select or create/update queries
     // returns the generic iterator object (count,next)
     function genericSqlIter($sql) {
-        $result = $this->genericSqlQuery($sql);
         if ($this->getParam('dbtype') == 'ADODB') {
+            $result = $this->genericSqlQuery($sql);
             return new WikiDB_backend_ADODB_generic_iter($this->_backend, $result);
-        } else {
+        } elseif ($this->getParam('dbtype') == 'SQL') {
+            $result = $this->genericSqlQuery($sql);
             return new WikiDB_backend_PearDB_generic_iter($this->_backend, $result);
+        } else {
+            trigger_error("no SQL database");
         }
     }
 
@@ -2040,6 +2054,11 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.97  2004/11/07 16:02:51  rurban
+// new sql access log (for spam prevention), and restructured access log class
+// dbh->quote (generic)
+// pear_db: mysql specific parts seperated (using replace)
+//
 // Revision 1.96  2004/11/05 22:32:15  rurban
 // encode the subject to be 7-bit safe
 //
