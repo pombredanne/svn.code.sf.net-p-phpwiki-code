@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UnfoldSubpages.php,v 1.5 2003-01-18 22:11:44 carstenklapp Exp $');
+rcs_id('$Id: UnfoldSubpages.php,v 1.6 2003-02-11 09:34:34 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -39,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
@@ -119,11 +119,15 @@ extends WikiPlugin
         $subpages = explodePageList($pagename . SUBPAGE_SEPARATOR . '*');
         if (! $subpages) {
             return $this->error(_("The current page has no subpages defined."));
-        }
+        }           
         include_once('lib/BlockParser.php');
         extract($this->getArgs($argstr, $request));
         $content = HTML();
-        foreach (array_reverse($subpages) as $page) {
+        $subpages = array_reverse($subpages);
+        if($pages) {
+          $subpages = array_slice ($subpages, 0, $pages);        
+        }
+        foreach ($subpages as $page) {
             // A page cannot include itself. Avoid doublettes.
             static $included_pages = array();
             if (in_array($page, $included_pages)) {
@@ -179,6 +183,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2003/01/18 22:11:44  carstenklapp
+// Code cleanup:
+// Reformatting & tabs to spaces;
+// Added copyleft, getVersion, getDescription, rcs_id.
+//
 // Revision 1.4  2003/01/05 02:37:30  carstenklapp
 // New: Implemented 'smalltitle' argument and date sorting fix from
 // Cuthbert Cat's sf patch 655095. Added getVersion & getDescription;
