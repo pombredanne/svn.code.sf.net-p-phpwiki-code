@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.19 2002-02-10 05:16:38 carstenklapp Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.20 2002-02-15 05:34:49 carstenklapp Exp $');
 
 class WikiPlugin
 {
@@ -37,7 +37,7 @@ class WikiPlugin
         return $this->getName();
     }
 
-    
+
     function getArgs($argstr, $request, $defaults = false) {
         if ($defaults === false)
             $defaults = $this->getDefaultArguments();
@@ -55,7 +55,7 @@ class WikiPlugin
                 $args[$arg] = $default_val;
 
             $args[$arg] = $this->expandArg($args[$arg], $request);
-            
+
             unset($argstr_args[$arg]);
             unset($argstr_defaults[$arg]);
         }
@@ -64,7 +64,7 @@ class WikiPlugin
             trigger_error(sprintf(_("argument '%s' not declared by plugin"),
                                   $arg), E_USER_NOTICE);
         }
-        
+
         return $args;
     }
 
@@ -72,8 +72,8 @@ class WikiPlugin
         return preg_replace('/\[(\w[\w\d]*)\]/e', '$request->getArg("$1")',
                             $argval);
     }
-    
-        
+
+
     function parseArgStr($argstr) {
         $arg_p = '\w+';
         $op_p = '(?:\|\|)?=';
@@ -87,7 +87,7 @@ class WikiPlugin
 
         $args = array();
         $defaults = array();
-        
+
         while (preg_match("/^$opt_ws $argspec_p $opt_ws/x", $argstr, $m)) {
             @ list(,$arg,$op,$qq_val,$q_val,$gt_val,$word_val) = $m;
             $argstr = substr($argstr, strlen($m[0]));
@@ -116,15 +116,15 @@ class WikiPlugin
                 $defaults[$arg] = $val;
             }
         }
-        
+
         if ($argstr) {
             trigger_error(sprintf(_("trailing cruft in plugin args: '%s'"),
-                                  $argstr), E_USER_NOTICE);
+                                    $argstr), E_USER_NOTICE);
         }
 
         return array($args, $defaults);
     }
-    
+
 
     function getDefaultLinkArguments() {
         return array('targetpage' => $this->getName(),
@@ -137,10 +137,10 @@ class WikiPlugin
         $defaults = $this->getDefaultArguments();
         $link_defaults = $this->getDefaultLinkArguments();
         $defaults = array_merge($defaults, $link_defaults);
-
+    
         $args = $this->getArgs($argstr, $request, $defaults);
         $plugin = $this->getName();
-        
+    
         $query_args = array();
         foreach ($args as $arg => $val) {
             if (isset($link_defaults[$arg]))
@@ -148,48 +148,49 @@ class WikiPlugin
             if ($val != $defaults[$arg])
                 $query_args[$arg] = $val;
         }
-
+    
         $link = Button($query_args, $args['linktext'], $args['targetpage']);
         if (!empty($args['description']))
             $link->addTooltip($args['description']);
-
+    
         return $link;
     }
-
+    
     function getDefaultFormArguments() {
         return array('targetpage' => $this->getName(),
-                     'buttontext' => $this->getName(),
-                     'class' => 'wikiaction',
-                     'method' => 'get',
-                     'textinput' => 's',
-                     'description' => $this->getDescription(),
-                     'formsize' => 30);
+                    'buttontext' => $this->getName(),
+                    'class' => 'wikiaction',
+                    'method' => 'get',
+                    'textinput' => 's',
+                    'description' => $this->getDescription(),
+                    'formsize' => 30);
     }
-
+    
     function makeForm($argstr, $request) {
         $form_defaults = $this->getDefaultFormArguments();
         $defaults = array_merge($this->getDefaultArguments(),
                                 $form_defaults);
-
+    
         $args = $this->getArgs($argstr, $request, $defaults);
         $plugin = $this->getName();
         $textinput = $args['textinput'];
         assert(!empty($textinput) && isset($args['textinput']));
-
+    
         $form = HTML::form(array('action' => WikiURL($args['targetpage']),
-                                 'method' => $args['method'],
-                                 'class' => $args['class'],
-                                 'accept-charset' => CHARSET));
-        $contents = HTML::td();
-        
+                                'method' => $args['method'],
+                                'class' => $args['class'],
+                                'accept-charset' => CHARSET));
+        $contents = HTML::div();
+        $contents->setAttr('class', $args['class']);
+    
         foreach ($args as $arg => $val) {
             if (isset($form_defaults[$arg]))
                 continue;
             if ($arg != $textinput && $val == $defaults[$arg])
                 continue;
-
+    
             $i = HTML::input(array('name' => $arg, 'value' => $val));
-            
+    
             if ($arg == $textinput) {
                 //if ($inputs[$arg] == 'file')
                 //    $attr['type'] = 'file';
@@ -203,7 +204,7 @@ class WikiPlugin
                 $i->setAttr('type', 'hidden');
             }
             $contents->pushContent($i);
-
+    
             // FIXME: hackage
             if ($i->getAttr('type') == 'file') {
                 $form->setAttr('enctype', 'multipart/form-data');
@@ -213,27 +214,26 @@ class WikiPlugin
                                                          'type' => 'hidden')));
             }
         }
-
+    
         if (!empty($args['buttontext']))
             $contents->pushContent(HTML::input(array('type' => 'submit',
                                                      'class' => 'button',
                                                      'value' => $args['buttontext'])));
-
-        //FIXME: can we do without this table?
-        $form->pushContent(HTML::table(HTML::tr($contents)));
+    
+        $form->pushContent($contents);
         return $form;
     }
-
+    
     function error ($message) {
         return HTML::div(array('class' => 'errors'),
-                         HTML::strong(fmt("Plugin %s failed.", $this->getName())), ' ',
-                         $message);
+                        HTML::strong(fmt("Plugin %s failed.", $this->getName())), ' ',
+                        $message);
     }
 }
 
 class WikiPluginLoader {
     var $_errors;
-    
+
     function expandPI($pi, $request) {
         if (!preg_match('/^\s*<\?(plugin(?:-form|-link)?)\s+(\w+)\s*(.*?)\s*\?>\s*$/s', $pi, $m))
             return $this->_error(sprintf("Bad %s", 'PI'));
@@ -246,20 +246,20 @@ class WikiPluginLoader {
                                    $this->getErrorDetail());
         }
         switch ($pi_name) {
-        case 'plugin':
-            // FIXME: change API for run() (no $dbi needed).
-            $dbi = $request->getDbh();
-            return $plugin->run($dbi, $plugin_args, $request);
-        case 'plugin-link':
-            return $plugin->makeLink($plugin_args, $request);
-        case 'plugin-form':
-            return $plugin->makeForm($plugin_args, $request);
+            case 'plugin':
+                // FIXME: change API for run() (no $dbi needed).
+                $dbi = $request->getDbh();
+                return $plugin->run($dbi, $plugin_args, $request);
+            case 'plugin-link':
+                return $plugin->makeLink($plugin_args, $request);
+            case 'plugin-form':
+                return $plugin->makeForm($plugin_args, $request);
         }
     }
-    
+
     function getPlugin($plugin_name) {
         global $ErrorManager;
-        
+
         // Note that there seems to be no way to trap parse errors
         // from this include.  (At least not via set_error_handler().)
         $plugin_source = "lib/plugin/$plugin_name.php";
@@ -267,7 +267,7 @@ class WikiPluginLoader {
         $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_plugin_error_filter'));
         $include_failed = !include_once("lib/plugin/$plugin_name.php");
         $ErrorManager->popErrorHandler();
-        
+
         $plugin_class = "WikiPlugin_$plugin_name";
         if (!class_exists($plugin_class)) {
             if ($include_failed)
@@ -275,7 +275,7 @@ class WikiPluginLoader {
                                              $plugin_source));
             return $this->_error(sprintf("%s: no such class", $plugin_class));
         }
-    
+
         $plugin = new $plugin_class;
         if (!is_subclass_of($plugin, "WikiPlugin"))
             return $this->_error(sprintf("%s: not a subclass of WikiPlugin",
@@ -289,17 +289,17 @@ class WikiPluginLoader {
             return true;        // Ignore this error --- it's expected.
         return false;
     }
-    
+
     function getErrorDetail() {
         return $this->_errors;
     }
-    
+
     function _error($message) {
         $this->_errors = $message;
         return false;
     }
 
-        
+
 };
 
 // (c-file-style: "gnu")
@@ -309,5 +309,5 @@ class WikiPluginLoader {
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End:
 ?>

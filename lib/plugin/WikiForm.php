@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiForm.php,v 1.2 2002-02-14 03:58:50 carstenklapp Exp $');
+rcs_id('$Id: WikiForm.php,v 1.3 2002-02-15 05:35:02 carstenklapp Exp $');
 /**
  * This is a replacement for MagicPhpWikiURL forms.
  *
@@ -71,11 +71,8 @@ extends WikiPlugin
         $input->addTooltip($buttontext);
         $button = Button('submit:', $buttontext, $class);
 
-        $form->pushContent(HTML::table(array('cellspacing' => 0,
-                                             'cellpadding' => 2,
-                                             'border' => 0),
-                                       HTML::tr(HTML::td($input),
-                                                HTML::td($button))));
+        $form->pushContent(HTML::div(array('class' => $class),
+                                     $input, $button));
 
         return $form;
     }
