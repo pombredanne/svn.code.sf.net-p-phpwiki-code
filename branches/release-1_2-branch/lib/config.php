@@ -10,7 +10,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.24.2.2 2001-05-21 16:06:50 dairiki Exp $'); 
+   rcs_id('$Id: config.php,v 1.24.2.3 2001-11-02 05:11:16 wainstead Exp $'); 
    // end essential internal stuff
 
 
@@ -44,7 +44,7 @@
    /////////////////////////////////////////////////////////////////////
 
    $WhichDatabase = 'default'; // use one of "dbm", "dba", "mysql",
-                           // "pgsql", "msql", or "file"
+                           // "pgsql", "msql", "mssql", or "file"
 
    // DBM and DBA settings (default)
    if ($WhichDatabase == 'dbm' or $WhichDatabase == 'dba' or
@@ -125,7 +125,20 @@
       $WikiDB['hitcount']  = "$DBdir/hitcount";
       include "lib/db_filesystem.php";
 
-    } else die("Invalid '\$WhichDatabase' in lib/config.php"); 
+   // MS SQLServer settings
+   } elseif ($WhichDatabase == 'mssql') {
+      $WikiPageStore = "wiki";
+      $ArchivePageStore = "archive";
+      $WikiLinksStore = "wikilinks";
+      $WikiScoreStore = "wikiscore";
+      $HitCountStore = "hitcount";
+      $mssql_server = 'servername';
+      $mssql_user = '';
+      $mssql_pwd = '';
+      $mssql_db = '';
+      include "lib/mssql.php";
+
+   } else die("Invalid '\$WhichDatabase' in lib/config.php"); 
 
 
    /////////////////////////////////////////////////////////////////////
