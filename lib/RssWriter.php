@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: RssWriter.php,v 1.3 2002-01-01 06:14:40 carstenklapp Exp $');
+<?php rcs_id('$Id: RssWriter.php,v 1.4 2002-01-10 23:24:52 carstenklapp Exp $');
 /*
  * Code for creating RSS 1.0.
  */
@@ -234,7 +234,7 @@ class RssWriter extends XmlElement
         
     
     /**
-     * Create a new RDF <i>typedNode</i>.
+     * Create a new RDF <em>typedNode</em>.
      */
     function __node($type, $properties, $uri = false) {
 	if (! $uri)
@@ -258,7 +258,7 @@ class RssWriter extends XmlElement
     }
 
     /**
-     * Convert hash of RDF properties to <i>propertyElt</i>s.
+     * Convert hash of RDF properties to <em>propertyElt</em>s.
      */
     function __elementize ($elements) {
 	$out = array();
@@ -284,7 +284,7 @@ class RssWriter extends XmlElement
     }
 
     /**
-     * Create a <i>propertyElt</i> which references another node in the RSS.
+     * Create a <em>propertyElt</em> which references another node in the RSS.
      */
     function __ref($predicate, $reference) {
         $attr['rdf:resource'] = $reference->get('rdf:about');
