@@ -1,10 +1,17 @@
 * Don't show signature image if $SignatureImg (in config.php) is left unset
-* Bug fix: hang on full zip dump 
-* Bug fix: hang on diff
-* Bug fix: unzip failed on some old zip-dumps
-* Bug fix: check for DB files in /tmp was broken
-* Minor security fix: pagename must now be url-encoded
-* Spelling fixes in pgsrc/*
+* Much improved german pgsrc/
+* Spelling fixes in english pgsrc/*
+* Minor security fixes:
+  + pagename must now be url-encoded
+  + added permission checks in admin/{load,dump}serial.php
+* Bugs fixed
+  + hang on full zip dump 
+  + hang on diff
+  + unzip failed on some old zip-dumps
+  + check for DB files in /tmp was broken
+  + encode HTML entities within edit textarea 
+  + ensure page linkification in "Describe foo here."
+  + fixes to transform code to improve HTML validity
 
 1.2.0 02/01/01
 * Support for PHP 4.0.4 (using the dba_* interface for DBM files),
