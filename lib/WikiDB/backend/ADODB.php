@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.31 2004-06-16 10:38:59 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.32 2004-06-25 14:15:08 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -97,7 +97,7 @@ extends WikiDB_backend
         $page_tbl = $this->_table_names['page_tbl'];
         $version_tbl = $this->_table_names['version_tbl'];
         $this->page_tbl_fields = "$page_tbl.id as id, $page_tbl.pagename as pagename, "
-            . "$page_tbl.hits as hits, $page_tbl.pagedata as pagedata";
+            . "$page_tbl.hits as hits";
         $this->version_tbl_fields = "$version_tbl.version as version, "
             . "$version_tbl.mtime as mtime, "
             . "$version_tbl.minor_edit as minor_edit, $version_tbl.content as content, "
@@ -165,7 +165,7 @@ extends WikiDB_backend
     function get_pagedata($pagename) {
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
-        $row = $dbh->GetRow(sprintf("SELECT hits,pagedata FROM $page_tbl WHERE pagename=%s",
+        $row = $dbh->GetRow(sprintf("SELECT hits, pagedata FROM $page_tbl WHERE pagename=%s",
                                        $dbh->qstr($pagename)));
         return $row ? $this->_extract_page_data($row[1],$row[0]) : false;
     }
@@ -306,7 +306,7 @@ extends WikiDB_backend
         
         // FIXME: optimization: sometimes don't get page data?
         if ($want_content) {
-            $fields = $this->page_tbl_fields
+            $fields = $this->page_tbl_fields . ", $page_tbl.pagedata as pagedata"
                 . ', ' . $this->version_tbl_fields;
         } else {
             $fields = $this->page_tbl_fields
@@ -507,7 +507,7 @@ extends WikiDB_backend
         $dbh->SetFetchMode(ADODB_FETCH_ASSOC);
         // removed ref to FETCH_MODE in next line
         $result = $dbh->Execute("SELECT $want.id as id, $want.pagename as pagename,"
-                                . " $want.hits as hits, $want.pagedata as pagedata"
+                                . " $want.hits as hits"
                                 . " FROM $link_tbl, $page_tbl AS linker, $page_tbl AS linkee"
                                 . " WHERE linkfrom=linker.id AND linkto=linkee.id"
                                 . " AND $have.pagename=$qpagename"
@@ -527,7 +527,9 @@ extends WikiDB_backend
         $dbh->SetFetchMode(ADODB_FETCH_ASSOC);
         if (strstr($orderby,' mtime')) {
             if ($include_deleted) {
-                $result = $dbh->Execute("SELECT * FROM $page_tbl, $recent_tbl, $version_tbl"
+                $result = $dbh->Execute("SELECT "
+                                        . $this->page_tbl_fields
+                                        ." FROM $page_tbl, $recent_tbl, $version_tbl"
                                         . " WHERE $page_tbl.id=$recent_tbl.id"
                                         . " AND $page_tbl.id=$version_tbl.id AND latestversion=version"
                                         . " $orderby $limit");
@@ -577,7 +579,7 @@ extends WikiDB_backend
             $table .= ", $version_tbl";
             $join_clause .= " AND $page_tbl.id=$version_tbl.id AND latestversion=version";
 
-            $fields .= "," . $this->version_tbl_fields;
+            $fields .= ",$page_tbl.pagedata as pagedata," . $this->version_tbl_fields;
             $callback = new WikiMethodCb($this, '_fullsearch_sql_match_clause');
         }
         
@@ -1071,6 +1073,15 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.31  2004/06/16 10:38:59  rurban
+// Disallow refernces in calls if the declaration is a reference
+// ("allow_call_time_pass_reference clean").
+//   PhpWiki is now allow_call_time_pass_reference = Off clean,
+//   but several external libraries may not.
+//   In detail these libs look to be affected (not tested):
+//   * Pear_DB odbc
+//   * adodb oracle
+//
 // Revision 1.30  2004/06/07 19:31:31  rurban
 // fixed ADOOB upgrade: listOfFields()
 //

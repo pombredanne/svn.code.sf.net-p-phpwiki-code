@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.71 2004-06-21 16:22:30 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.72 2004-06-25 14:15:08 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -1563,8 +1563,10 @@ class WikiDB_PageIterator
             var_dump($next);
             return false;
         }
-        if (isset($next['pagedata']))
+        // there's always hits, but we cache only if more
+        if (isset($next['pagedata']) and count($next['pagedata']) > 1) {
             $this->_wikidb->_cache->cache_data($next);
+        }
 
         return new WikiDB_Page($this->_wikidb, $pagename);
     }
@@ -1872,6 +1874,16 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.71  2004/06/21 16:22:30  rurban
+// add DEFAULT_DUMP_DIR and HTML_DUMP_DIR constants, for easier cmdline dumps,
+// fixed dumping buttons locally (images/buttons/),
+// support pages arg for dumphtml,
+// optional directory arg for dumpserial + dumphtml,
+// fix a AllPages warning,
+// show dump warnings/errors on DEBUG,
+// don't warn just ignore on wikilens pagelist columns, if not loaded.
+// RateIt pagelist column is called "rating", not "ratingwidget" (Dan?)
+//
 // Revision 1.70  2004/06/18 14:39:31  rurban
 // actually check USECACHE
 //
