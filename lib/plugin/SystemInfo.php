@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SystemInfo.php,v 1.10 2004-03-08 18:17:10 rurban Exp $');
+rcs_id('$Id: SystemInfo.php,v 1.11 2004-03-13 19:24:21 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -58,7 +58,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     function getExpire($dbi, $argarray, $request) {
@@ -312,8 +312,8 @@ extends WikiPlugin
         $available_languages = array('en');
         $dir_root = 'locale/';
         if (defined('PHPWIKI_DIR'))
-            $dir_root = PHPWIKI_DIR . '/$dir_root';
-        $dir = dir($dir_root);
+            $dir_root = PHPWIKI_DIR . "/$dir_root";
+        $dir = @dir($dir_root);
         if ($dir) {
             while($entry = $dir->read()) {
                 if (is_dir($dir_root . $entry)
@@ -341,8 +341,8 @@ extends WikiPlugin
         $available_themes = array();
         $dir_root = 'themes/';
         if (defined('PHPWIKI_DIR'))
-            $dir_root = PHPWIKI_DIR . '/$dir_root';
-        $dir = dir($dir_root);
+            $dir_root = PHPWIKI_DIR . "/$dir_root";
+        $dir = @dir($dir_root);
         if ($dir) {
             while($entry = $dir->read()) {
                 if (is_dir($dir_root.$entry)
@@ -519,6 +519,11 @@ function stddev(&$hits, $total = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/03/08 18:17:10  rurban
+// added more WikiGroup::getMembersOf methods, esp. for special groups
+// fixed $LDAP_SET_OPTIONS
+// fixed _AuthInfo group methods
+//
 // Revision 1.9  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //
