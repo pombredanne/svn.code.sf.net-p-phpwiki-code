@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.64 2002-09-12 11:45:33 rurban Exp $');
+rcs_id('$Id: config.php,v 1.65 2002-09-12 17:36:01 rurban Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -351,20 +351,20 @@ if (!defined('ADMIN_PASSWD') or ADMIN_PASSWD == '')
     trigger_error(_("The admin password cannot be empty. Please update your /index.php"));
 
 if (defined('USE_DB_SESSION') and USE_DB_SESSION) {
-    if ($DBParams['dbtype']!='SQL') {
+    if ($DBParams['dbtype'] != 'SQL') {
         trigger_error(sprintf(_("You can use %s only with %s"), 
                                 'DB_Session', '$DBParams[\'dbtype\']: SQL'), 
                           E_USER_ERROR);
-        define('USE_DB_SESSION','false');
+        define('USE_DB_SESSION',false);
     }
     elseif (! $DBParams['db_session_table'] ) {
         trigger_error(_("Empty db_session_table. Turn USE_DB_SESSION off or define the table name."), 
                           E_USER_ERROR);
-        define('USE_DB_SESSION','false');
+        define('USE_DB_SESSION',false);
     }
 } else {
     if (!defined('USE_DB_SESSION')) 
-        define('USE_DB_SESSION','false');
+        define('USE_DB_SESSION',false);
 }
 
 // For emacs users
