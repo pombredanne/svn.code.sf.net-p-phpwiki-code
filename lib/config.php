@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.83 2004-02-16 00:20:30 rurban Exp $');
+rcs_id('$Id: config.php,v 1.84 2004-02-26 01:41:24 rurban Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -405,14 +405,7 @@ if (!defined('ADMIN_PASSWD') or ADMIN_PASSWD == '')
     trigger_error(_("The admin password cannot be empty. Please update your /index.php"));
 
 if (defined('USE_DB_SESSION') and USE_DB_SESSION) {
-    if ($DBParams['dbtype'] != 'SQL') {
-        trigger_error(sprintf(_("You can use %s only with %s"), 
-                                'DB_Session', '$DBParams[\'dbtype\']: SQL'), 
-                          E_USER_ERROR);
-        // this is flawed. constants cannot be changed.
-        define('USE_DB_SESSION',false);
-    }
-    elseif (! $DBParams['db_session_table'] ) {
+    if (! $DBParams['db_session_table'] ) {
         trigger_error(_("Empty db_session_table. Turn USE_DB_SESSION off or define the table name."), 
                           E_USER_ERROR);
         // this is flawed. constants cannot be changed.
