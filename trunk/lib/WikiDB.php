@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.95 2004-11-05 20:53:35 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.96 2004-11-05 22:32:15 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -251,7 +251,7 @@ class WikiDB {
                 if (!empty($emails)) {
                     $editedby = sprintf(_("Edited by: %s"), $GLOBALS['request']->_user->getId()); // Todo: host_id
                     $emails = join(',', $emails);
-                    $subject = sprintf(_("Page deleted %s"), $pagename);
+                    $subject = sprintf(_("Page deleted %s"), urlencode($pagename));
                     if (mail($emails,"[".WIKI_NAME."] ".$subject, 
                              $subject."\n".
                              $editedby."\n\n".
@@ -973,7 +973,7 @@ class WikiDB_Page
         }
 
         $backend = &$request->_dbi->_backend;
-        $subject = _("Page change").' '.$this->_pagename;
+        $subject = _("Page change").' '.urlencode($this->_pagename);
         $previous = $backend->get_previous_version($this->_pagename, $version);
         if (!isset($meta['mtime'])) $meta['mtime'] = time();
         if ($previous) {
@@ -1023,7 +1023,7 @@ class WikiDB_Page
             $from = $this->_pagename;
             $editedby = sprintf(_("Edited by: %s"), $meta['author']) . ' ' . $meta['author_id'];
             $emails = join(',',$emails);
-            $subject = sprintf(_("Page rename %s to %s"), $from, $to);
+            $subject = sprintf(_("Page rename %s to %s"), urlencode($from), urlencode($to));
             $link = WikiURL($to, true);
             if (mail($emails,"[".WIKI_NAME."] ".$subject, 
                      $subject."\n".
@@ -2034,6 +2034,13 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.95  2004/11/05 20:53:35  rurban
+// login cleanup: better debug msg on failing login,
+// checked password less immediate login (bogo or anon),
+// checked olduser pref session error,
+// better PersonalPage without password warning on minimal password length=0
+//   (which is default now)
+//
 // Revision 1.94  2004/11/01 10:43:56  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session
