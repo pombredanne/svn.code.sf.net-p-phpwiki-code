@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiPluginCached.php,v 1.3 2002-08-19 06:41:28 rurban Exp $');
+<?php rcs_id('$Id: WikiPluginCached.php,v 1.4 2003-02-21 23:01:09 dairiki Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -113,14 +113,15 @@ class WikiPluginCached extends WikiPlugin
      * @access protected
      * @param  dbi       WikiDB  database abstraction class
      * @param  argstr    string  plugin arguments in the call from PhpWiki
-     * @param  request   Request ??? 
+     * @param  request   Request ???
+     * @param  string    basepage Pagename to use to interpret links [/relative] page names.
      * @return           string  HTML output to be printed to browser
      *
      * @see #getHtml
      * @see #getImage
      * @see #getMap
      */
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, $request, $basepage) {
         $cache = WikiPluginCached::newCache();
         $cacheparams = $GLOBALS['CacheParams'];
 
@@ -141,7 +142,7 @@ class WikiPluginCached extends WikiPlugin
             case PLUGIN_CACHED_HTML:
                 if (!$content || !$content['html']) {
                     $this->resetError();
-                    $content['html'] = $this->getHtml($dbi,$sortedargs,$request);
+                    $content['html'] = $this->getHtml($dbi,$sortedargs,$request,$basepage);
                     if ($errortext = $this->getError()) {
                         WikiPluginCached::printError($errortext,'html');
                         return HTML();
@@ -285,10 +286,11 @@ class WikiPluginCached extends WikiPlugin
      *                                image. It is not necessary to call 
      *                                WikiPlugin->getArgs anymore.
      * @param  request   Request      ??? 
+     * @param  string    $basepage    Pagename to use to interpret links [/relative] page names.
      * @return           string       html to be printed in place of the plugin command
      *                                false if an error occured
      */
-    function getHtml($dbi, $argarray, $request) {
+    function getHtml($dbi, $argarray, $request, $basepage) {
         trigger_error('WikiPluginCached::getHtml: pure virtual function in file ' 
                       . __FILE__ . ' line ' . __LINE__, E_USER_ERROR);
     }
