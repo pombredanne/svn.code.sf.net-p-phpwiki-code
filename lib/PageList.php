@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.31 2002-01-31 01:14:14 dairiki Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.32 2002-02-02 20:17:41 carstenklapp Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -284,15 +284,16 @@ class PageList {
                                    'cellspacing' => 1,
                                    'border'      => 0,
                                    'class'	 => 'pagelist'));
-        $table->setAttr('summary', "FIXME: add brief summary and column names");
-
-
         if ($caption)
             $table->pushContent(HTML::caption(array('align'=>'top'), $caption));
 
         $row = HTML::tr();
-        foreach ($this->_columns as $col)
+        foreach ($this->_columns as $col) {
             $row->pushContent($col->heading());
+            $table_summary[] = $col->_heading;
+        }
+        // Table summary for non-visual browsers.
+        $table->setAttr('summary', sprintf(_("Columns: %s."), implode(", ", $table_summary)));
 
         $table->pushContent(HTML::thead($row),
                             HTML::tbody(false, $this->_rows));
