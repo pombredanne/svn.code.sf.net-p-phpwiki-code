@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.15 2002-02-07 20:20:24 carstenklapp Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.16 2002-02-07 22:01:33 dairiki Exp $ -->
 <?php
 
 /**
@@ -29,18 +29,13 @@ for ($z = -14; $z < 12; $z++) {
 
 $TimeZoneSelect = HTML::select(array('name' => "pref[timeOffset]"), $select);
 
-$RelativeDatesCB = HTML::input(array('type' => 'checkbox',
-                                     'name' => 'pref[relativeDates]'//,
-//                                     'disabled' => false,
-//                                     'checked' => false,
-//                                     'value' => 0
-                               ));
-
-if ($request->getPref('relativeDates')) {
-  $val = $request->getPref('relativeDates');
-  $RelativeDatesCB->setAttr('checked', (bool)$val);
-  $RelativeDatesCB->setAttr('value', !$val ? 1 : 0);
-}
+$RelativeDatesCB = HTML(HTML::input(array('type' => 'hidden',
+                                          'name' => 'pref[relativeDates][]',
+                                          'value' => '0')),
+                        HTML::input(array('type' => 'checkbox',
+                                          'name' => 'pref[relativeDates][]',
+                                          'value' => '1',
+                                          'checked' => (bool) $request->getPref('relativeDates'))));
 ?>
 <form action="<?=WikiURL($page)?>" method="post">
   <input type="hidden" name="pagename" value="<?=$request->getArg('pagename')?>" />
