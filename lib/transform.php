@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.36 2002-01-26 01:51:13 dairiki Exp $');
+<?php rcs_id('$Id: transform.php,v 1.37 2002-01-26 03:30:23 dairiki Exp $');
 require_once('lib/WikiPlugin.php');
 require_once('lib/HtmlElement.php');
 
@@ -188,7 +188,7 @@ class WikiTransform
        
        $retval = $this->SetHTMLMode($list_type, 2 * $level - 1);
        if ($list_type == 'dl') {
-           $retval .= AsXML(HTML::dt($defn_term));
+           $retval .= AsXML(HTML::dt(HTML::raw($defn_term)));
            $retval .= $this->SetHTMLMode('dd', 2 * $level);
        }
        else {

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.11 2002-01-24 06:52:12 carstenklapp Exp $');
+rcs_id('$Id: Calendar.php,v 1.12 2002-01-26 03:30:23 dairiki Exp $');
 
 if (!defined('SECONDS_PER_DAY'))
     define('SECONDS_PER_DAY', 24 * 3600);
@@ -113,7 +113,7 @@ extends WikiPlugin
                             $t['tm_mday']);
         }
 
-        return  HTML::td(array('align' => 'center'), NBSP . $date . NBSP);
+        return  HTML::td(array('align' => 'center'), NBSP, $date, NBSP);
     }
 
     function run($dbi, $argstr, $request) {
