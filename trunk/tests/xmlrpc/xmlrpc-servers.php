@@ -27,25 +27,46 @@ function get_wiki_servers($include_user=true) {
    $list = 
    array (
       array('title' => " local ",
-            'info_link' => "http://".$GLOBALS['SERVER_NAME'].dirname($GLOBALS['PHP_SELF'])."/../../RPC2.php",
+            'info_link' => "http://".$GLOBALS['SERVER_NAME'].dirname($GLOBALS['PHP_SELF'])."/../../index.php",
             'args' => null,
             'host' => $GLOBALS['SERVER_NAME'],
-            'uri' => dirname($GLOBALS['PHP_SELF'])."/../../RPC2.php",
+            'uri' => dirname($GLOBALS['PHP_SELF'])."/../../index.php",
             'port' => $GLOBALS['SERVER_PORT'],
             "default" => true
             ),
+      array('title' => "local dba-test",
+            'info_link' => "http://".$GLOBALS['SERVER_NAME']."/wiki/dba",
+            'args' => null,
+            'host' => $GLOBALS['SERVER_NAME'],
+            'uri' => "/wiki/dba",
+            'port' => 80
+            ),
+      array('title' => "local pear-test",
+            'info_link' => "http://".$GLOBALS['SERVER_NAME']."/wiki/pear",
+            'args' => null,
+            'host' => $GLOBALS['SERVER_NAME'],
+            'uri' => "/wiki/pear",
+            'port' => 80
+            ),
+      array('title' => "local adodb-test",
+            'info_link' => "http://".$GLOBALS['SERVER_NAME']."/wiki/adodb",
+            'args' => null,
+            'host' => $GLOBALS['SERVER_NAME'],
+            'uri' => "/wiki/adodb",
+            'port' => 80
+            ),
       array('title' => "PhpWiki",
-            'info_link' => "http://phpwiki.sourceforge.net/phpwiki/RPC2.php",
+            'info_link' => "http://phpwiki.sourceforge.net/phpwiki/",
             'args' => null,
             'host' => "phpwiki.sourceforge.net",
-            'uri' => "/phpwiki/RPC2.PHP",
+            'uri' => "/phpwiki/",
             'port' => 80
             ),
       array('title' => "PhpWikiDemo",
-            'info_link' => "http://phpwiki.sourceforge.net/demo/RPC2.php",
+            'info_link' => "http://phpwiki.sourceforge.net/demo/",
             'args' => null,
             'host' => "phpwiki.sourceforge.net",
-            'uri' => "/demo/RPC2.php",
+            'uri' => "/demo/",
             'port' => 80
             ),
       );

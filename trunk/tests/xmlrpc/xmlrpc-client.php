@@ -89,11 +89,11 @@ function match($a, $b) {
 }
 
 function pass($method) {
-   echo "<font color='green'><b>pass</b></font> $method()<br>";
+   echo "<font color=\"green\"><b>pass</b></font> $method()<br>";
 }
 
 function fail($method, $sent, $received) {
-   echo "<font color='red'><b>fail</b></font> $method()<br>";
+   echo "<font color=\"red\"><b>fail</b></font> $method()<br>";
    if ($sent) {
      echo "<h3>sent</h3><xmp>";
      var_dump($sent);
@@ -107,6 +107,7 @@ function fail($method, $sent, $received) {
    }
 }
 
+// this needs to be fixed.
 function check_if_matches($method, $sent, $received) {
    if (match($sent, $received)) {
        pass($method);
@@ -120,10 +121,13 @@ function foo($method_name, $args) {
     xmlrpc_encode_request($method_name, $args);
 }
 
-function run_test($server, $debug, $output, $method, $args) {
+function run_test($server, $debug, $output, $method, $args='', $expected='') {
     global $HTTP_GET_VARS;
     echo "<hr>";
-    $params = array($args);
+    if (!is_array($args))
+        $params = $args ? array($args) : array();
+    else
+        $params = $args;
     if (!empty($HTTP_GET_VARS['start_debug'])) // zend ide support
         $server['uri'] .= "?start_debug=1";
     $result =  xu_rpc_http_concise(array('method' => $method,
@@ -133,11 +137,12 @@ function run_test($server, $debug, $output, $method, $args) {
                                          'port'   => $server['port'], 
                                          'debug'  => $debug,
                                          'output' => $output));
-    check_if_matches($method, $args, $result);
+    check_if_matches($method, $expected, $result);
     echo "</hr>";
     flush();
 }
 
+// should return non-zero integer
 function run_no_param_test($server, $debug, $output, $method) {
     global $HTTP_GET_VARS;
     echo "<hr>";
@@ -164,12 +169,36 @@ function run_no_param_test($server, $debug, $output, $method) {
 // a method to run wiki tests against remote server. tests described at bottom.
 function run_easy_tests($server, $debug=0, $output = null) {
 
-    global $wiki_dmap;
+    //global $wiki_dmap;
 
-    run_no_param_test($server, $debug, $output, "wiki.getRPCVersionSupported");
-    // of the last day:
-    run_test($server, $debug, $output, "wiki.getRecentChanges", iso8601_encode(time()-86400, 1));
-    /* ... */
+    run_test($server, $debug, $output, "wiki.getRPCVersionSupported", '', 1);
+    
+    // getRecentChanges of the last day:
+    // Note: may crash with dba
+    run_test($server, $debug, $output, "wiki.getRecentChanges", iso8601_encode(time()-86400));
+    
+    run_test($server, $debug, $output, "wiki.getPage", "HomePage", "* What is a WikiWikiWeb? A description of this application. * Learn HowToUseWiki and learn about AddingPages. * Use the SandBox page to experiment with Wiki pages. * Please sign your name in RecentVisitors. * See RecentChanges for the latest page additions and changes. * Find out which pages are MostPopular. * Read the ReleaseNotes and RecentReleases. * Administer this wiki via PhpWikiAdministration. * See more PhpWikiDocumentation.");
+    run_test($server, $debug, $output, "wiki.getPageVersion", array("HomePage", 1));
+    run_test($server, $debug, $output, "wiki.getPageHTML", "HomePage");
+    run_test($server, $debug, $output, "wiki.getPageHTMLVersion", array("HomePage", 1));
+    run_test($server, $debug, $output, "wiki.getAllPages");
+    run_test($server, $debug, $output, "wiki.getPageInfo", "HomePage");
+    run_test($server, $debug, $output, "wiki.getPageInfoVersion", array("HomePage", 1));
+    run_test($server, $debug, $output, "wiki.listLinks", "HomePage");
+
+    run_test($server, $debug, $output, "wiki.putPage", 
+             array("PutPage", "new PutPage content", "XxXx"),
+             array('code' => 200, 'version' => 1, 'message' => "Page PutPage version 1 created"));
+    run_test($server, $debug, $output, "wiki.putPage", 
+             array("PutPage", "new PutPage content", "XxXx"),
+             array('code' => 400, 'version' => 1, 'message' => "Page PutPage unchanged"));
+    run_test($server, $debug, $output, "wiki.putPage",
+             array("PutPage", "new PutPage content", "disallowed"),
+             array('code' => 401, 'version' => 0, 'message' => "no permission for disallowed"));
+
+    run_test($server, $debug, $output, "wiki.rssPleaseNotify", "HomePage", 0);
+    run_test($server, $debug, $output, "wiki.mailPasswordToUser", ADMIN_USER);
+    
 }
 
 function run_stress_tests($server, $debug=0, $output=null) {
