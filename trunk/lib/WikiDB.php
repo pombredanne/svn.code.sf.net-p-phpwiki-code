@@ -1,7 +1,8 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.20 2003-02-18 21:52:06 dairiki Exp $');
+rcs_id('$Id: WikiDB.php,v 1.21 2003-02-21 04:26:55 dairiki Exp $');
 
 require_once('lib/stdlib.php');
+require_once('lib/PageType.php');
 
 //FIXME: arg on get*Revision to hint that content is wanted.
 
@@ -349,14 +350,16 @@ class WikiDB {
      * @param string $page   Find blog entries related to this page.
      * @return WikiDB_PageIterator A WikiDB_PageIterator containing the relevant pages.
      */
-    function blogSearch($page, $order) {
-      //FIXME: implement ordering
-
-      require_once('lib/TextSearchQuery.php');
-      $query = new TextSearchQuery ($page . SUBPAGE_SEPARATOR);
-
-      return $this->titleSearch($query);
-    }
+    // Deleting until such time as this is properly implemented...
+    // (As long as it's just a title search, just use titleSearch.)
+    //function blogSearch($page, $order) {
+    //  //FIXME: implement ordering
+    //
+    //  require_once('lib/TextSearchQuery.php');
+    //  $query = new TextSearchQuery ($page . SUBPAGE_SEPARATOR);
+    //
+    //  return $this->titleSearch($query);
+    //}
 
     /** Get timestamp when database was last modified.
      *
@@ -672,6 +675,37 @@ class WikiDB_Page
                                        $data);
     }
 
+    /** A higher-level interface to createRevision.
+     *
+     * This takes care of computing the links, and storing
+     * a cached version of the transformed wiki-text.
+     *
+     * @param string $wikitext  The page content.
+     *
+     * @param int $version Version number for new revision.  
+     * To ensure proper serialization of edits, $version must be
+     * exactly one higher than the current latest version.
+     * (You can defeat this check by setting $version to
+     * {@link WIKIDB_FORCE_CREATE} --- not usually recommended.)
+     *
+     * @param hash $meta  Meta-data for new revision.
+     */
+    function save($wikitext, $version, $meta) {
+	$formatted = new TransformedText($this, $wikitext, $meta);
+        $type = $formatted->getType();
+	$meta['pagetype'] = $type->getName();
+	$links = $formatted->getWikiPageLinks();
+
+	$backend = &$this->_wikidb->_backend;
+	$backend->lock();
+	$newrevision = $this->createRevision($version, $wikitext, $meta, $links);
+	if ($newrevision)
+	    $this->set('_cached_html', $formatted->pack());
+	$backend->unlock();
+        $newrevision->_transformedContent = $formatted;
+	return $newrevision;
+    }
+
     /**
      * Get the most recent revision of a page.
      *
@@ -933,6 +967,8 @@ class WikiDB_Page
  */
 class WikiDB_PageRevision
 {
+    var $_transformedContent = false; // set by WikiDB_Page::save()
+    
     function WikiDB_PageRevision(&$wikidb, $pagename, $version,
                                  $versiondata = false)
         {
@@ -1021,7 +1057,74 @@ class WikiDB_PageRevision
         }
         return $this->_iscurrent;
     }
-    
+
+    /**
+     * Get the transformed content of a page.
+     *
+     * @param string $pagetype  Override the page-type of the revision.
+     *
+     * @return object An XmlContent-like object containing the page transformed
+     * contents.
+     */
+    function getTransformedContent($pagetype_override=false) {
+	$backend = &$this->_wikidb->_backend;
+        
+	if ($pagetype_override) {
+	    // Figure out the normal page-type for this page.
+            $type = PageType::GetPageType($this->get('pagetype'));
+	    if ($type->getName() == $pagetype_override)
+		$pagetype_override = false; // Not really an override...
+	}
+
+        if ($pagetype_override) {
+            // Overriden page type, don't cache (or check cache).
+	    return new TransformedText($this->getPage(),
+                                       $this->getPackedContent(),
+                                       $this->getMetaData(),
+                                       $pagetype_override);
+        }
+
+        $possibly_cache_results = true;
+
+        if (defined('WIKIDB_NOCACHE_MARKUP') and WIKIDB_NOCACHE_MARKUP) {
+            if (WIKIDB_NOCACHE_MARKUP == 'purge') {
+                // flush cache for this page.
+                $page = $this->getPage();
+                $page->set('_cached_html', false);
+            }
+            $possibly_cache_results = false;
+        }
+        elseif (!$this->_transformedContent) {
+            $backend->lock();
+            if ($this->isCurrent()) {
+                $page = $this->getPage();
+                $this->_transformedContent = TransformedText::unpack($page->get('_cached_html'));
+            }
+            else {
+                $possibly_cache_results = false;
+            }
+            $backend->unlock();
+	}
+        
+        if (!$this->_transformedContent) {
+            $this->_transformedContent
+                = new TransformedText($this->getPage(),
+                                      $this->getPackedContent(),
+                                      $this->getMetaData());
+            
+            if ($possibly_cache_results) {
+                // If we're still the current version, cache the transfomed page.
+                $backend->lock();
+                if ($this->isCurrent()) {
+                    $page->set('_cached_html', $this->_transformedContent->pack());
+                }
+                $backend->unlock();
+            }
+        }
+
+        return $this->_transformedContent;
+    }
+
     /**
      * Get the content as a string.
      *
@@ -1035,9 +1138,10 @@ class WikiDB_PageRevision
 
         
         if (empty($data['%content'])) {
+            include_once('lib/InlineParser.php');
             // Replace empty content with default value.
             return sprintf(_("Describe %s here."), 
-			   "[" . WikiPageName::escape($this->_pagename) . "]");
+			   "[" . WikiEscape($this->_pagename) . "]");
         }
 
         // There is (non-default) content.
