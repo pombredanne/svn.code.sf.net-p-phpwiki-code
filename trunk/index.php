@@ -68,7 +68,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.56 2002-01-09 15:52:14 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.57 2002-01-10 01:03:51 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -382,24 +382,6 @@ $templates = array("BROWSE"   => "templates/browse.html",
                    "EDITPAGE" => "templates/editpage.html",
                    "MESSAGE"  => "templates/message.html");
 
-// The themeinfo file can be used to override default settings above this line
-// (i.e. templates, logo, signature etc.)
-// comment out the $theme= lines to revert to the standard interface
-// which defaults to /templates and /images
-//$theme="default";
-//$theme="Hawaiian";
-//$theme="MacOSX";
-//$theme="WikiTrek";
-if (!empty($theme)) {
-    if (file_exists("themes/$theme/themeinfo.php")) {
-        include "themes/$theme/themeinfo.php";
-    } else {
-        // FIXME: gettext doesn't work in index.php or themeinfo.php
-        trigger_error(sprintf(("Unable to open file '%s' for reading"),
-                              "themes/$theme/themeinfo.php"), E_USER_NOTICE);
-    }
-}
-
 /* WIKI_PGSRC -- specifies the source for the initial page contents of
 * the Wiki. The setting of WIKI_PGSRC only has effect when the wiki is
 * accessed for the first time (or after clearing the database.)
@@ -448,6 +430,24 @@ $WikiNameRegexp = "(?<![[:alnum:]])([[:upper:]][[:lower:]]+){2,}(?![[:alnum:]])"
 // Intermap file for InterWikiLinks -- define other wikis there
 // Leave this undefined to disable InterWiki linking.
 define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
+
+// The themeinfo file can be used to override default settings above this line
+// (i.e. templates, logo, signature etc.)
+// comment out the $theme= lines to revert to the standard interface
+// which defaults to /templates and /images
+//$theme="default";
+//$theme="Hawaiian";
+//$theme="MacOSX";
+//$theme="WikiTrek";
+if (!empty($theme)) {
+    if (file_exists("themes/$theme/themeinfo.php")) {
+        include "themes/$theme/themeinfo.php";
+    } else {
+        // FIXME: gettext doesn't work in index.php or themeinfo.php
+        trigger_error(sprintf(("Unable to open file '%s' for reading"),
+                              "themes/$theme/themeinfo.php"), E_USER_NOTICE);
+    }
+}
 
 /////////////////////////////////////////////////////////////////////
 //
