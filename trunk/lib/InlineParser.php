@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.49 2004-05-10 11:19:15 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.50 2004-05-12 10:49:54 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004 Reini Urban
  *
@@ -35,10 +35,9 @@ rcs_id('$Id: InlineParser.php,v 1.49 2004-05-10 11:19:15 rurban Exp $');
  */
 define('ESCAPE_CHAR', '~');
 
-require_once('lib/HtmlElement.php');
+require_once(dirname(__FILE__).'/HtmlElement.php');
 require_once('lib/CachedMarkup.php');
-//require_once('lib/interwiki.php');
-require_once('lib/stdlib.php');
+require_once(dirname(__FILE__).'/stdlib.php');
 
 
 function WikiEscape($text) {
@@ -59,17 +58,14 @@ class RegexpSet_match {
      * The text leading up the the next match.
      */
     var $prematch;
-
     /**
      * The matched text.
      */
     var $match;
-
     /**
      * The text following the matched text.
      */
     var $postmatch;
-
     /**
      * Index of the regular expression which matched.
      */
@@ -166,6 +162,8 @@ class RegexpSet
                 $regexp_ind = $i;
             }
         }
+        // To overcome ANCHORED:
+        // We could sort by longest match and iterate over these.
         if (empty($matched)) return false;
         $match = new RegexpSet_match;
         
@@ -629,9 +627,6 @@ class InlineTransformer
                                   'html_emphasis', 'html_abbr', 'plugin');
         foreach ($markup_types as $mtype) {
             $class = "Markup_$mtype";
-            /*if ($GLOBALS['HTTP_SERVER_VARS']['SERVER_NAME'] == 'phpwiki.sourceforge.net' and 
-                in_array($mtype,array('interwiki','plugin')))
-                continue; */
             $this->_addMarkup(new $class);
         }
     }
@@ -665,7 +660,8 @@ class InlineTransformer
                 // No start pattern found before end pattern.
                 // We're all done!
                 if (isset($markup) and is_object($markup) and isa($markup,'Markup_plugin')) {
-                    $output->_content[count($output->_content)-1]->setTightness(!empty($match->prematch),false);
+                    $current =& $output->_content[count($output->_content)-1];
+                    $current->setTightness(true,true);
                 }
                 $output->pushContent($match->prematch);
                 $text = $match->postmatch;
@@ -685,8 +681,8 @@ class InlineTransformer
             // FIXME: combine adjacent strings.
             $current = $markup->markup($match->match, $body);
             $input = $match->postmatch;
-            if (isa($markup,'Markup_plugin')) {
-                $current->setTightness(!empty($match->prematch),!empty($match->postmatch));
+            if (isset($markup) and is_object($markup) and isa($markup,'Markup_plugin')) {
+                $current->setTightness(true,true);
             }
             $output->pushContent($match->prematch, $current);
 

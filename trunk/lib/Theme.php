@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.92 2004-05-03 21:57:47 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.93 2004-05-12 10:49:55 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -23,7 +23,7 @@
  * and more formatting.
  */
 
-require_once('lib/HtmlElement.php');
+require_once(dirname(__FILE__).'/HtmlElement.php');
 
 /**
  * Make a link to a wiki page (in this wiki).
@@ -729,7 +729,7 @@ class Theme {
         if ($imgurl)
             return new ImageButton($text, $url, $class, $imgurl);
         else
-            return new Button($text, $url, $class);
+            return new Button($this->maybeSplitWikiWord($text), $url, $class);
     }
 
     function makeSubmitButton ($text, $name, $class = false) {
@@ -814,7 +814,7 @@ class Theme {
         $args = $version ? array('version' => $version) : false;
         if ($action) $args['action'] = $action;
 
-        return $this->makeButton($label ? $label : $this->maybeSplitWikiWord($pagename), 
+        return $this->makeButton($label ? $label : $pagename, 
                                  WikiURL($pagename, $args), 'wiki');
     }
 
@@ -1306,6 +1306,12 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.92  2004/05/03 21:57:47  rurban
+// locale updates: we previously lost some words because of wrong strings in
+//   PhotoAlbum, german rewording.
+// fixed $_SESSION registering (lost session vars, esp. prefs)
+// fixed ending slash in listAvailableLanguages/Themes
+//
 // Revision 1.91  2004/05/03 11:40:42  rurban
 // put listAvailableLanguages() and listAvailableThemes() from SystemInfo and
 // UserPreferences into Themes.php

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-  rcs_id('$Id: actionbar.tmpl,v 1.27 2004-05-09 00:57:33 rurban Exp $');
+  rcs_id('$Id: actionbar.tmpl,v 1.28 2004-05-12 10:49:56 rurban Exp $');
   if (!$page->get('locked') || $user->isAdmin())
       $EditB = Button("edit",
                       $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
@@ -8,7 +8,6 @@
 
   $Sep = $Theme->getButtonSeparator();
 ?>
-
 <?php /* I would like not to have to use these tables, and managed to
        * get this stuff to work more or less correctly using
        * CSSs float:left; and float:right;.  However float:right; seems
@@ -27,16 +26,17 @@
     <?=$Sep?><?= Button("PageHistory", _("PageHistory")) ?>
     <?=$Sep?><?= Button("diff") ?> 
     <?=$Sep?><?= Button("PageInfo", _("PageInfo")) ?>
-<?php if ((defined('DEBUG') && DEBUG) || $user->isAdmin()) { ?> 
+<?php if (((defined('DEBUG') and DEBUG and $request->getArg('action') == 'browse')) || $user->isAdmin()) { ?> 
     <!-- Buttons really only for debugging -->
     <?=$Sep?><?= Button("DebugInfo", _("DebugInfo")) ?>
     <?=$Sep?><?= Button("PageDump", _("PageDump")) ?>
-<?php
-     $PurgeCache = Button(array('nocache' => 'purge'),
+    <?php if (1 or CACHE_CONTROL != 'NONE') {
+       $PurgeCache = Button(array('nocache' => 'purge'),
                      _("PurgeHtmlCache"), $page->getName());
-     $PurgeCache->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed."));
-?>
-    <?=$Sep?><?= $PurgeCache ?>
+       $PurgeCache->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed."));
+       ?>
+      <?=$Sep?><?= $PurgeCache ?>
+    <?php } ?>
     <!-- End debugging buttons -->
 <?php } ?>
   </div>

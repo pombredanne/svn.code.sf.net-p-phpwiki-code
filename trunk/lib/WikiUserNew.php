@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.71 2004-05-10 12:34:47 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.72 2004-05-12 10:49:55 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -953,7 +953,7 @@ extends _AnonUser
         // new-style: '"\$userid"' or just "userid"
         $new = str_replace(array("'",'"','\$','$'),'',$var);
         if (!in_array($new,$valid_variables)) {
-            trigger_error("Unknown DBAuthParam statement variable: ". $var, E_USER_ERROR);
+            trigger_error("Unknown DBAuthParam statement variable: ". $new, E_USER_ERROR);
             return false;
         }
         return !$oldstyle ? "'$".$new."'" : '"\$'.$new.'"';
@@ -2867,6 +2867,12 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.71  2004/05/10 12:34:47  rurban
+// stabilize DbAuthParam statement pre-prozessor:
+//   try old-style and new-style (double-)quoting
+//   reject unknown $variables
+//   use ->prepare() for all calls (again)
+//
 // Revision 1.70  2004/05/06 19:26:16  rurban
 // improve stability, trying to find the InlineParser endless loop on sf.net
 //

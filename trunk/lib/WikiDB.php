@@ -1,7 +1,7 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.53 2004-05-08 14:06:12 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.54 2004-05-12 10:49:55 rurban Exp $');
 
-require_once('lib/stdlib.php');
+//require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
 
 //FIXME: arg on get*Revision to hint that content is wanted.
@@ -1765,6 +1765,10 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.53  2004/05/08 14:06:12  rurban
+// new support for inlined image attributes: [image.jpg size=50x30 align=right]
+// minor stability and portability fixes
+//
 // Revision 1.52  2004/05/06 19:26:16  rurban
 // improve stability, trying to find the InlineParser endless loop on sf.net
 //

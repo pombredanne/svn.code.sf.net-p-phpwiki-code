@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.50 2004-05-06 17:30:39 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.51 2004-05-12 10:49:55 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -852,6 +852,9 @@ extends WikiDB_backend
     function backendType() {
         return $this->_dbh->phptype;
     }
+    function connection() {
+        return $this->_dbh->connection;
+    }
 
     function listOfTables() {
         return $this->_dbh->getListOf('tables');
@@ -859,7 +862,11 @@ extends WikiDB_backend
     function listOfFields($database,$table) {
         if ($this->backendType() == 'mysql') {
             $fields = array();
-  	    $result = mysql_list_fields($database,$session_tbl);
+            assert(!empty($database));
+            assert(!empty($table));
+  	    $result = mysql_list_fields($database, $table, $this->_dbh->connection) or 
+  	        trigger_error(__FILE__.':'.__LINE__.' '.mysql_error(),E_USER_WARNING);
+  	    if (!$result) return array();
   	    $columns = mysql_num_fields($result);
             for ($i = 0; $i < $columns; $i++) {
                 $fields[] = mysql_field_name($result, $i);
@@ -955,6 +962,17 @@ extends WikiDB_backend_PearDB_generic_iter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.50  2004/05/06 17:30:39  rurban
+// CategoryGroup: oops, dos2unix eol
+// improved phpwiki_version:
+//   pre -= .0001 (1.3.10pre: 1030.099)
+//   -p1 += .001 (1.3.9-p1: 1030.091)
+// improved InstallTable for mysql and generic SQL versions and all newer tables so far.
+// abstracted more ADODB/PearDB methods for action=upgrade stuff:
+//   backend->backendType(), backend->database(),
+//   backend->listOfFields(),
+//   backend->listOfTables(),
+//
 // Revision 1.49  2004/05/03 21:35:30  rurban
 // don't use persistent connections with postgres
 //
