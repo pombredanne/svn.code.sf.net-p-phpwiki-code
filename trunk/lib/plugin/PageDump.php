@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageDump.php,v 1.1 2003-12-12 00:52:55 carstenklapp Exp $');
+rcs_id('$Id: PageDump.php,v 1.2 2003-12-12 01:08:30 carstenklapp Exp $');
 /**
  * PhpWikiPlugin for PhpWiki developers to generate single page dumps
  * for checking into cvs, or for users or the admin to produce a
@@ -39,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -199,7 +199,7 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
         $return = explode("\n", $mailified);
 
         // Leave message intact for backing up, just add Message-Id header before transmitting.
-        $item_to_insert = "Message-Id: " . $this->MessageId;
+        $item_to_insert = "Message-Id: <" . $this->MessageId .">";
         $insert_into_key_position = 2;
         $returnval_ignored = array_splice($return,
                                           $insert_into_key_position,
@@ -251,6 +251,13 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2003/12/12 00:52:55  carstenklapp
+// New feature: Plugin to download page dumps of individual pages. In the
+// future this could be used as a rudimentary way to sync pages between
+// wikis.
+// Internal changes: enhanced and renamed from the experimental
+// _MailifyPage plugin.
+//
 // Revision 1.3  2003/11/16 00:11:25  carstenklapp
 // Fixed previous Log comment interfering with PHP (sorry).
 // Improved error handling.
