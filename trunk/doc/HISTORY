@@ -12,9 +12,12 @@
 * InterWiki image buttons
 * fixed XHTML dumps (css, images, unlinked pages, \r\r\n issue)
 * enabled WikiGroup
+* PageList: enhanced sortby + limit support, sortable gridbuttons enforced
 * preliminary SOAP support
 * minor theme/default overhaul and new theme/smaller
 * Japanese language support added, thanks to Tadashi Jokagi <webmaster@elf.no-ip.org>
+* fixed UnfoldSubpages sortby
+* preliminary action=upgrade
 
 1.3.4 until 1.3.7, 2002-2003 Jeff, Carsten and Steve Wainstead:
 
@@ -376,4 +379,4 @@ URL's.
 Prior to 0.02, there were no numbered releases, and in fact there
 was only one release, so I guess that would be 0.01 :-)
 
-$Id: HISTORY,v 1.5 2004-03-11 12:30:48 rurban Exp $
+$Id: HISTORY,v 1.6 2004-03-12 16:06:16 rurban Exp $
