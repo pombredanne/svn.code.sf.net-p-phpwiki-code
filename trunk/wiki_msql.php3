@@ -1,4 +1,4 @@
-<!-- $Id: wiki_msql.php3,v 1.4 2000-06-26 03:55:27 wainstead Exp $ -->
+<!-- $Id: wiki_msql.php3,v 1.5 2000-06-27 03:57:40 wainstead Exp $ -->
 <?
 
    /*
@@ -45,6 +45,46 @@
       // NOP function
       // msql connections are established as persistant
       // they cannot be closed through msql_close()
+   }
+
+
+   function msqlDecomposeString($string) {
+      $ret_arr = array();
+      $el = 0;
+   
+      // zero, one, infinity
+      // account for the small case
+      if (strlen($string) < MSQL_MAX_LINE_LENGTH) { 
+         $ret_arr[$el] = $string;
+         return $ret_arr;
+      }
+   
+      $words = array();
+      $line = $string2 = "";
+   
+      // split on single spaces
+      $words = preg_split("/ /", $string);
+      $num_words = count($words);
+   
+      reset($words);
+      $ret_arr[0] = $words[0];
+      $line = " $words[1]";
+   
+      // for all words, build up lines < MSQL_MAX_LINE_LENGTH in $ret_arr
+      for ($x = 2; $x < $num_words; $x++) {
+         $length = strlen($line) + strlen($words[$x]) 
+                   + strlen($ret_arr[$el]) + 1;
+
+         if ($length < MSQL_MAX_LINE_LENGTH) {
+            $line .= " " .  $words[$x];
+         } else {
+            // put this line in the return array, reset, continue
+            $ret_arr[$el++] .= $line;
+            $line = " $words[$x]"; // reset 	
+         }
+      }
+      $ret_arr[$el] = $line;
+      return $ret_arr;
    }
 
 
