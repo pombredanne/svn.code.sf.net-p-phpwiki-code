@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.50 2004-12-04 11:14:18 rurban Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.51 2004-12-11 14:50:16 rurban Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
@@ -69,7 +69,7 @@ $s = $WikiTheme->getButtonSeparator();
 <tr valign="middle">
   <td> 
     <?=$MINOR_EDIT_CB ?> <?=_("This is a minor change.")?><br />
-    <?=$OLD_MARKUP_CB?>  <?=_("Use old markup")?>
+    <?=$OLD_MARKUP_CB?>  <?=_("Use old markup")?> <?=$OLD_MARKUP_CONVERT?>
   </td>
   <td align="center">
     <?= $PREVIEW_B ?>
