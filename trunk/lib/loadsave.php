@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.84 2003-11-26 20:47:47 carstenklapp Exp $');
+rcs_id('$Id: loadsave.php,v 1.85 2003-11-30 18:18:13 carstenklapp Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -397,7 +397,7 @@ function SavePage (&$request, $pageinfo, $source, $filename)
     if ( (! $current->hasDefaultContents())
          && ($current->getPackedContent() != $content)
          && ($merging == true) ) {
-        require_once('lib/editpage.php');
+        include_once('lib/editpage.php');
         $request->setArg('pagename', $pagename);
         $r = $current->getVersion();
         $request->setArg('revision', $current->getVersion());
@@ -835,6 +835,10 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.84  2003/11/26 20:47:47  carstenklapp
+ Redo bugfix: My last refactoring broke merge-edit & overwrite
+ functionality again, should be fixed now. Sorry.
+
  Revision 1.83  2003/11/20 22:18:54  carstenklapp
  New feature: h1 during merge-edit displays WikiLink to original page.
  Internal changes: Replaced some hackish url-generation code in

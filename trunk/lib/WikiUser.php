@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.41 2003-11-21 21:32:39 carstenklapp Exp $');
+rcs_id('$Id: WikiUser.php,v 1.42 2003-11-30 18:18:13 carstenklapp Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -166,7 +166,7 @@ class WikiUser {
 
     function PrintLoginForm (&$request, $args, $fail_message = false,
                              $seperate_page = true) {
-        require_once('lib/Template.php');
+        include_once('lib/Template.php');
         // Call update_locale in case the system's default language is not 'en'.
         // (We have no user pref for lang at this point yet, no one is logged in.)
         update_locale(DEFAULT_LANGUAGE);
@@ -656,6 +656,14 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.41  2003/11/21 21:32:39  carstenklapp
+// Bugfix: When DEFAULT_LANGUAGE was not 'en', a user's language prefs
+// would revert to 'en' when the default <system language> was selected
+// in UserPreferences and the user saved his preferences. (Check for
+// empty or blank language pref in sanify function of class
+// _UserPreference_language and return DEFAULT_LANGUAGE if nothing or
+// default selected in UserPreferences.)
+//
 // Revision 1.40  2003/11/21 16:54:58  carstenklapp
 // Bugfix: login.tmpl was always displayed in English despite
 // DEFAULT_LANGUAGE set in index.php. (Added call to
