@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.49 2004-11-23 13:06:30 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.50 2004-11-24 18:58:41 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -1058,7 +1058,7 @@ class GroupLdap extends WikiGroup {
         if ($ldap = $this->_user->_init()) {
             $base_dn = (LDAP_OU_GROUP ? LDAP_OU_GROUP : "ou=Groups")
                 .($this->base_dn ? ",".$this->base_dn : '');
-            $sr2 = ldap_search($ldap, $base_dn, "cn=$group");
+            $sr = ldap_search($ldap, $base_dn, "cn=$group");
             if ($sr)
                 $info = ldap_get_entries($ldap, $sr);
             else {
@@ -1092,6 +1092,15 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.49  2004/11/23 13:06:30  rurban
+// several fixes and suggestions by Charles Corrigan:
+// * fix GROUP_BOGO_USER check
+// * allow group pages to have the link to the user page in [ ] brackets
+// * fix up the implementation of GroupWikiPage::getMembersOf and allow the
+//   user page to be linked in [ ] brackets
+// * added _OWNER and _CREATOR to special wikigroups
+// * check against those two for group membership also, not only the user.
+//
 // Revision 1.48  2004/11/19 19:22:03  rurban
 // ModeratePage part1: change status
 //
