@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: SystemInfo.php,v 1.1 2002-09-01 16:33:19 rurban Exp $');
+<?php rcs_id('$Id: SystemInfo.php,v 1.2 2002-09-02 08:44:49 rurban Exp $');
 /**
  * Usage: <?plugin SystemInfo all ?>
  *        or <?plugin SystemInfo pagestats cachestats discspace hitstats ?> 
@@ -273,6 +273,9 @@ extends WikiPlugin
             $dir->close();
         }
         natcasesort($available_languages);
+        // keep this only for a short time.
+        if (empty($GLOBALS['default_language'])) 
+            $GLOBALS['default_language'] = $GLOBALS['LANG'];
         return sprintf(_("Total %d languages: "),count($available_languages)) . 
             implode(', ',$available_languages) . ". " .
             sprintf(_("Current language: '%s'"), $GLOBALS['LANG']) .
@@ -340,8 +343,8 @@ extends WikiPlugin
             $allargs = array('appname' 		=> _("Application name"),
                              'version' 		=> _("PhpWiki engine version"),
                              'database'   	=> _("Database"),
-//                             'cachestats' 	=> _("Cache statistics"),
-//                             'pagestats'  	=> _("Page statistics"),
+                             'cachestats' 	=> _("Cache statistics"),
+                             'pagestats'  	=> _("Page statistics"),
                              //'revisionstats'   	=> _("Page revision statistics"),
                              //'linkstats'  	=> _("Link statistics"),
                              'userstats'  	=> _("User statistics"),
