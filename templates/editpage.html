@@ -1,6 +1,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<base href="###SCRIPTURL###">
 <title>###PAGE###</title>
 </head>
 
@@ -19,14 +20,14 @@
 
 <input type="checkbox" name="convert" value="tabs" >
 I can't type tabs.
-Please <a href="###SCRIPTURL###?ConvertSpacesToTabs">ConvertSpacesToTabs</a>
+Please <a href="###BROWSE ConvertSpacesToTabs###">ConvertSpacesToTabs</a>
 for me when I save.
-<p><a href="###SCRIPTURL###?GoodStyle">GoodStyle</a> tips for editing.
+<p><a href="###BROWSE GoodStyle###">GoodStyle</a> tips for editing.
 
 <br>
-<a href="###SCRIPTURL###?links=###PAGEURL###">EditLinks</a> to other web servers.
+<a href="###LINKS###">EditLinks</a> to other web servers.
 
-###IFCOPY###<br><a href="###SCRIPTURL###?copy=###PAGEURL###">EditCopy</a> from previous author
+###IFCOPY###<br><a href="###COPY###">EditCopy</a> from previous author
 
 <hr noshade>
 <small>
@@ -37,10 +38,11 @@ for me when I save.
 <br><b>Misc:</b>"!", "!!", "!!!" make headings,
 "%%%" makes a linebreak, "- - - -" makes a horizontal rule, escape "[" with "[["
 <br>more on
-<a href="###SCRIPTURL###?TextFormattingRules"><b>TextFormattingRules</b></a>
+<a href="###BROWSE TextFormattingRules###"><b>TextFormattingRules</b></a>
 </small>
 
-<input type="hidden" name="post" value="###PAGEURL###">
+<input type="hidden" name="pagename" value="###PAGEURL###">
+<input type="hidden" name="action" value="post">
 <input type="hidden" name="editversion" value="###VERSION###">
 </form>
 </body>

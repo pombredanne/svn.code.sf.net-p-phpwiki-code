@@ -1,104 +1,94 @@
-<!-- $Id: wiki_stdlib.php3,v 1.23 2000-07-15 18:06:40 ahollosi Exp $ -->
+<!-- $Id: wiki_stdlib.php3,v 1.23.2.1 2000-07-21 18:29:07 dairiki Exp $ -->
 <?
    /*
       Standard functions for Wiki functionality
 	 GeneratePage($template, $content, $name, $hash)
+         WikiURL ($pagename, $action)
          LinkExistingWikiWord($wikiword) 
          LinkUnknownWikiWord($wikiword) 
-         LinkURL($url)
+	 LinkWikiWord($wikiword)
+	 LinkExternal($text [,$url [,$inline]])
          RenderQuickSearch() 
          RenderFullSearch() 
          RenderMostPopular()
          CookSpaces($pagearray) 
-         class Stack
-         SetHTMLOutputMode($newmode, $depth)
          UpdateRecentChanges($dbi, $pagename, $isnewpage) 
-         SaveCopyToArchive($pagename, $pagehash) 
-         ParseAndLink($bracketlink)
+         SaveCopyToArchive($pagename, $pagehash)
+
+	 strip_magic_quotes_gpc($string)
    */
 
+   require('wiki_renderlib.php3');
 
-   function GeneratePage($template, $content, $name, $hash)
+   function GeneratePage ($template, $content, $name, $hash)
    {
-      global $ScriptUrl, $AllowedProtocols, $templates;
-      global $datetimeformat, $dbi, $logo;
+      $start = utime();
+      $gen = new WikiPageGenerator($name, $hash);
+      print $gen->generate($template, $content);
+      printf("<hr><b>Page generation took %f seconds</b>\n", utime() - $start);
+   }
+      
 
-      if (!is_array($hash))
-         unset($hash);
+   function WikiURL ($pagename, $action = false) {
+      global $ScriptUrl;
 
-      $page = join('', file($templates[$template]));
-      $page = str_replace('###', "#$FieldSeparator#", $page);
-
-      // valid for all pagetypes
-      $page = str_replace("#$FieldSeparator#SCRIPTURL#$FieldSeparator#",
-			$ScriptUrl, $page);
-      $page = str_replace("#$FieldSeparator#PAGE#$FieldSeparator#",
-			htmlspecialchars($name), $page);
-      $page = str_replace("#$FieldSeparator#ALLOWEDPROTOCOLS#$FieldSeparator#",
-			$AllowedProtocols, $page);
-      $page = str_replace("#$FieldSeparator#LOGO#$FieldSeparator#",
-                        $logo, $page);
-
-      // invalid for messages (search results, error messages)
-      if ($template != 'MESSAGE') {
-         $page = str_replace("#$FieldSeparator#PAGEURL#$FieldSeparator#",
-			rawurlencode($name), $page);
-         $page = str_replace("#$FieldSeparator#LASTMODIFIED#$FieldSeparator#",
-			date($datetimeformat, $hash['lastmodified']), $page);
-         $page = str_replace("#$FieldSeparator#LASTAUTHOR#$FieldSeparator#",
-			$hash['author'], $page);
-         $page = str_replace("#$FieldSeparator#VERSION#$FieldSeparator#",
-			$hash['version'], $page);
-	 if (strstr($page, "#$FieldSeparator#HITS#$FieldSeparator#")) {
-            $page = str_replace("#$FieldSeparator#HITS#$FieldSeparator#",
-			GetHitCount($dbi, $name), $page);
-	 }
+      $pagename = rawurlencode($pagename);
+      if ($action == 'browse')
+	  unset($action);
+      else
+	  $action = rawurlencode($action);
+      
+      if (WIKI_PAGENAME_IN_PATHINFO) {
+	 $url = "$ScriptUrl/$pagename";
+	 if ($action)
+	     $url .= "?action=$action";
       }
-
-      // valid only for EditLinks
-      if ($template == 'EDITLINKS') {
-	 for ($i = 1; $i <= NUM_LINKS; $i++)
-	    $page = str_replace("#$FieldSeparator#R$i#$FieldSeparator#",
-			$hash['refs'][$i], $page);
+      else {
+	 $url = "$ScriptUrl?";
+	 if ($action)
+	    $url .= "$action=";
+	 $url .= $pagename;
       }
-
-      if ($hash['copy']) {
-	 $page = str_replace("#$FieldSeparator#IFCOPY#$FieldSeparator#",
-			'', $page);
-      } else {
-	 $page = ereg_replace("#$FieldSeparator#IFCOPY#$FieldSeparator#[^\n]*",
-			'', $page);
-      }
-
-      $page = str_replace("#$FieldSeparator#CONTENT#$FieldSeparator#",
-			$content, $page);
-      print $page;
+      return $url;
    }
 
-
    function LinkExistingWikiWord($wikiword) {
-      global $ScriptUrl;
-      $enc_word = rawurlencode($wikiword);
-      $wikiword = htmlspecialchars($wikiword);
-      return "<a href=\"$ScriptUrl?$enc_word\">$wikiword</a>";
+      return sprintf('<a href="%s">%s</a>',
+		     WikiURL($wikiword), htmlspecialchars($wikiword));
    }
 
    function LinkUnknownWikiWord($wikiword) {
-      global $ScriptUrl;
-      $enc_word = rawurlencode($wikiword);
-      $wikiword = htmlspecialchars($wikiword);
-      return "<u>$wikiword</u><a href=\"$ScriptUrl?edit=$enc_word\">?</a>";
+      return sprintf('<u>%s</u><a href="%s">?</a>',
+		     htmlspecialchars($wikiword),
+		     WikiURL($wikiword, 'edit'));
    }
 
-   function LinkURL($url) {
-      global $ScriptUrl;
-      if(ereg("[<>\"]", $url)) {
-         return "<b><u>BAD URL -- remove all of &lt;, &gt;, &quot;</u></b>";
-      }
-      $enc_url = htmlspecialchars($url);
-      return "<a href=\"$url\">$enc_url</a>";
+   function LinkWikiWord ($page) {
+      global $dbi;
+      return ( IsWikiPage($dbi, $page)
+	       ? LinkExistingWikiWord($page)
+	       : LinkUnknownWikiWord($page) );
    }
 
+   function LinkExternal ($text, $url = false, $inline = false) {
+     if ( ! $url)
+	 $url = $text;
+      
+     if (!preg_match('/^' . SAFE_URL_REGEXP . '$/', $url))
+       {
+	 // Illegal URL
+	 if ($url != $text)
+	     $text .= "($url)";
+	 return htmlspecialchars($text);
+       }
+
+     if ($inline)
+	 $fmt = "<img src=\"%s\" alt=\"%s\">";
+     else
+	 $fmt = "<a href=\"%s\">%s</a>";
+
+     return sprintf($fmt, $url, htmlspecialchars($text));
+   }
    
    function RenderQuickSearch() {
       global $value, $ScriptUrl;
@@ -129,130 +119,6 @@
    function CookSpaces($pagearray) {
       return preg_replace("/ {3,8}/", "\t", $pagearray);
    }
-
-
-   class Stack {
-      var $items;
-      var $size = 0;
-
-      function push($item) {
-         $this->items[$this->size] = $item;
-         $this->size++;
-         return true;
-      }  
-   
-      function pop() {
-         if ($this->size == 0) {
-            return false; // stack is empty
-         }  
-         $this->size--;
-         return $this->items[$this->size];
-      }  
-   
-      function cnt() {
-         return $this->size;
-      }  
-
-      function top() {
-         return $this->items[$this->size - 1];
-      }  
-
-   }  
-   // end class definition
-
-
-   // I couldn't move this to wiki_config.php3 because it 
-   // wasn't declared yet.
-   $stack = new Stack;
-
-   /* 
-      Wiki HTML output can, at any given time, be in only one mode.
-      It will be something like Unordered List, Preformatted Text,
-      plain text etc. When we change modes we have to issue close tags
-      for one mode and start tags for another.
-   */
-
-   function SetHTMLOutputMode($tag, $tagdepth, $tabcount) {
-      global $stack;
-      $retvar = "";
-   
-      if ($tagdepth == SINGLE_DEPTH) {
-         if ($tabcount < $stack->cnt()) {
-            // there are fewer tabs than stack,
-	    // reduce stack to that tab count
-            while ($stack->cnt() > $tabcount) {
-               $closetag = $stack->pop();
-               if ($closetag == false) {
-                  //echo "bounds error in tag stack";
-                  break;
-               }
-               $retvar .= "</$closetag>\n";
-            }
-
-	    // if list type isn't the same,
-	    // back up one more and push new tag
-	    if ($tag != $stack->top()) {
-	       $closetag = $stack->pop();
-	       $retvar .= "</$closetag><$tag>\n";
-	       $stack->push($tag);
-	    }
-   
-         } elseif ($tabcount > $stack->cnt()) {
-            // we add the diff to the stack
-            // stack might be zero
-            while ($stack->cnt() < $tabcount) {
-               #echo "<$tag>\n";
-               $retvar .= "<$tag>\n";
-               $stack->push($tag);
-               if ($stack->cnt() > 10) {
-                  // arbitrarily limit tag nesting
-                  echo "Stack bounds exceeded in SetHTMLOutputMode\n";
-                  exit();
-               }
-            }
-   
-         } else {
-            if ($tag == $stack->top()) {
-               return;
-            } else {
-               $closetag = $stack->pop();
-               #echo "</$closetag>\n";
-               #echo "<$tag>\n";
-               $retvar .= "</$closetag>\n";
-               $retvar .= "<$tag>\n";
-               $stack->push($tag);
-            }
-         }
-   
-      } elseif ($tagdepth == ZERO_DEPTH) {
-         // empty the stack for $depth == 0;
-         // what if the stack is empty?
-         if ($tag == $stack->top()) {
-            return;
-         }
-         while ($stack->cnt() > 0) {
-            $closetag = $stack->pop();
-            #echo "</$closetag>\n";
-            $retvar .= "</$closetag>\n";
-         }
-   
-         if ($tag) {
-            #echo "<$tag>\n";
-            $retvar .= "<$tag>\n";
-            $stack->push($tag);
-         }
-   
-      } else {
-         // error
-         echo "Passed bad tag depth value in SetHTMLOutputMode\n";
-         exit();
-      }
-
-      return $retvar;
-
-   }
-   // end SetHTMLOutputMode
-
 
 
    // The Recent Changes file is solely handled here
@@ -337,54 +203,7 @@
       InsertPage($adbi, $newpagename, $pagehash);
    }
 
-
-   function ParseAndLink($bracketlink) {
-      global $dbi, $AllowedProtocols;
-
-      // $bracketlink will start and end with brackets; in between
-      // will be either a page name, a URL or both seperated by a pipe.
-
-      // strip brackets and leading space
-      preg_match("/(\[\s*)(.+?)(\s*\])/", $bracketlink, $match);
-      $linkdata = $match[2];
-
-      // send back links that are only numbers (they are references)
-      if (preg_match("/^\d+$/", $linkdata)) {
-         return $bracketlink;
-      }
-
-      // send back escaped ([[) bracket sets
-      if (preg_match("/^\[/", $linkdata)) {
-         return htmlspecialchars(substr($bracketlink, 1));
-      }
-
-      // match the contents 
-      preg_match("/([^|]+)(\|)?([^|]+)?/", $linkdata, $matches);
-
-      if (isset($matches[3])) {
-         $URL = trim($matches[3]);
-         $linkname = htmlspecialchars(trim($matches[1]));
-         // assert proper URL's
-         if (preg_match("#^($AllowedProtocols):#", $URL)) {
-            return "<a href=\"$URL\">$linkname</a>";
-         } else {
-            return "<b><u>BAD URL -- links have to start with one of " . 				                "$AllowedProtocols followed by ':'</u></b>";
-         }
-      }
-
-      if (isset($matches[1])) {
-         $linkname = trim($matches[1]);
-         if (IsWikiPage($dbi, $linkname)) {
-            return LinkExistingWikiWord($linkname);
-         } elseif (preg_match("#^($AllowedProtocols):#", $linkname)) {
-            return LinkURL($linkname);
-	 } else {
-            return LinkUnknownWikiWord($linkname);
-         }
-      }
-
-      return $bracketlink;
-
+   function strip_magic_quotes_gpc ($string) {
+      return get_magic_quotes_gpc() ? stripslashes($string) : $string;
    }
-
 ?>

@@ -2,7 +2,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: wiki_config.php3,v 1.19 2000-07-18 05:15:58 dairiki Exp $');
+   rcs_id('$Id: wiki_config.php3,v 1.19.2.1 2000-07-21 18:29:07 dairiki Exp $');
 
    /*
       Constants and settings. Edit the values below for
@@ -13,17 +13,14 @@
       can just give the URL without the script name.
    */
 
-   // You should set the $ServerAddress below, and comment out
-   // the if/else that follows. The if/else sets the server address
-   // dynamically, and you can save some cycles on the server by
-   // setting $ServerAddress yourself.
+   // You should set the $ServerAddress below.  But you probably don't
+   // have to: if you don't it will be figured out dynamically.
+
    //$ServerAddress = "http://127.0.0.1:8080/phpwiki/";
 
-
-   if (preg_match("#(.*?)([^/]*$)#", $REQUEST_URI, $matches)) {
-      $ServerAddress = "http://$SERVER_NAME:$SERVER_PORT" . $matches[1];
-   } else {
-      $ServerAddress = "http://$SERVER_NAME:$SERVER_PORT$REQUEST_URI";
+   if (!$ServerAddress) {
+      $ServerAddress = "http://$HTTP_HOST"
+	   . preg_replace(':[^/]*$:', '', $SCRIPT_NAME);
    }
 
    // if you are using MySQL instead of a DBM to store your
@@ -89,6 +86,21 @@
    // end mSQL settings
 */
 
+   /* WIKI_PAGENAME_IN_PATHINFO
+    *
+    * If true, then wiki page names are encoded in the PATH_INFO part
+    * of link URLS.  Eg.:
+    *   http://some.host.com/path/index.php3/FrontPage
+    *   http://some.host.com/path/index.php3/FrontPage?action=edit
+    *
+    * If false, then page names go into QUERY_STRING (this is the old
+    * behavior.):
+    *
+    *   http://some.host.com/path/index.php3?FrontPage
+    *   http://some.host.com/path/index.php3?edit=FrontPage
+    */  
+   define('WIKI_PAGENAME_IN_PATHINFO', true);
+
    /* WIKI_PGSRC
     *
     * This constant specifies the source for the initial page contents
@@ -139,7 +151,7 @@
    $LogoImage = "<img src='${ServerAddress}$logo' border='0'>";
    $LogoImage = "<a href='$ScriptUrl'>$LogoImage</a>";
 
-   $FieldSeparator = "\263";
+
 
    // Apache won't show REMOTE_HOST unless the admin configured it
    // properly. We'll be nice and see if it's there.
@@ -153,11 +165,17 @@
    // try this many times if the dbm is unavailable
    define("MAX_DBM_ATTEMPTS", 20);
 
-   // constants used for HTML output. List tags like UL and 
-   // OL have a depth of one, PRE has a depth of 0.
-   define("ZERO_DEPTH", 0);
-   define("SINGLE_DEPTH", 1);
-
    // constants for flags in $pagehash
    define("FLAG_PAGE_LOCKED", 1);
+
+   // Some useful regexps.
+   /*
+    * A pagename can contain any printable characters from ISO Latin1
+    * except for the characters [, ], \, or |.  It may also contain spaces,
+    * but the pagename may not begin or end with a space.
+    *
+    * Some issues: tabs? multiple adjacent spaces? backslashses?
+    */
+   define('PAGENAME_REGEXP', '(?!\s)[ !-Z^-{}~\xa1-\xff]+(?<!\s)');
+   define('SAFE_URL_REGEXP', '(?:' . $AllowedProtocols . '):[^][\s<>"()]+');
 ?>

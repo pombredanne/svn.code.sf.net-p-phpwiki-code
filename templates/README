@@ -1,4 +1,4 @@
-$Id: README,v 1.1 2000-06-18 16:05:34 ahollosi Exp $
+$Id: README,v 1.1.2.1 2000-07-21 18:29:07 dairiki Exp $
 
 PhpWiki distinguishes between four different templates:
 
@@ -67,6 +67,29 @@ The following placeholders are not available for the 'MESSAGE' template:
 	Special placeholder. Should only be used in EDITPAGE template.
 	If EditCopy link should be shown, then ###IFCOPY### is ignored.
 	If EditCopy should not be shown, the rest of the line is deleted.
+
+
+URLS to wiki pages (in all these cases, if WikiPageName is omitted,
+it defaults to the current page):
+
+###BROWSE WikiPageName###
+	A URL which links to the page WikiPageName.
+
+###EDIT WikiPageName###
+	A URL which links to the edit page for WikiPageName.
+
+###LINKS WikiPageName###
+	A URL which links to the editlink page for WikiPageName.
+
+###DIFF WikiPageName###
+	A URL which links to the diff page for WikiPageName.
+
+###INFO WikiPageName###
+	A URL which links to the info page for WikiPageName.
+
+###BACKLINKS WikiPageName###
+	A URL which links to the backlinks page for WikiPageName.
+
 
 
 Only for EditLinks:
