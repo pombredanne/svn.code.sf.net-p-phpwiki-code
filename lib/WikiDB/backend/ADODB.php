@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.6 2002-02-08 22:51:26 lakka Exp $');
+rcs_id('$Id: ADODB.php,v 1.7 2002-02-09 23:07:01 lakka Exp $');
 
 /*This file is part of PhpWiki.
 
@@ -598,15 +598,9 @@ extends WikiDB_backend
         extract($this->_table_names);
 
         $pick = array();
-        $order = "DESC";
-		if ($since < 0){
-		    $order = "ASC";
-			$since = -$since;
-			$pick[] = "mtime <= $since";
-			}
-		elseif ($since > 0){
+		if ($since)
 		    $pick[] = "mtime >= $since";
-		}
+		
         
         if ($include_all_revisions) {
             // Include all revisions of each page.
@@ -641,6 +635,11 @@ extends WikiDB_backend
                 $pick[] ='version=latestversion';
             }
         }
+        $order = "DESC";
+		if($limit < 0){
+    		$order = "ASC";
+	    	$limit = -$limit;
+		}
         $limit = $limit ? $limit : -1;
         $where_clause = $join_clause;
         if ($pick)

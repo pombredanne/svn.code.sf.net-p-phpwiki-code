@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: cvs.php,v 1.10 2002-02-08 22:51:26 lakka Exp $');
+rcs_id('$Id: cvs.php,v 1.11 2002-02-09 23:07:01 lakka Exp $');
 /**
  * Backend for handling CVS repository. 
  *
@@ -429,33 +429,29 @@ extends WikiDB_backend
         // TODO: needs to be tested ...
         // most recent are those pages with the highest time value ...
         $mr = $this->_getMostRecent();
-        $reverse = ($params['since'] < 0 );
-		if ($reverse) {
-		    $params['since'] = -$params['since'];
-			asort ($mp, SORT_NUMERIC );
-		}
-	    else arsort( $mp, SORT_NUMERIC );
+        $rev = false;
         $returnVal = array();
-
-        if ( isset( $params['limit'] ) ) {
+		if ( isset( $params['limit'] ) ) {
             $limit = $params['limit'];
+			$rev = $limit < 0;
+        }
+        if($rev){
+		arsort( $mp, SORT_NUMERIC );
+		} else
+		asort( $mr, SORT_NUMERIC );
+		}
+        if ( isset( $limit ) ) {
             while ( (list($key, $val) = each($a)) && $limit > 0 ) {
                 $returnVal[] = $key;
                 $limit--;
             }
         } else if ( isset( $params['since'] ) ) {
             while ( (list($key, $val) = each($a)) ) {
-                if($reverse){
-    				if ( $val < $params['since'] ) {
-                        $returnVal[] = $key;
-                    }
-				}
-				else {
+                
 					if ( $val > $params['since'] ) {
                     	$returnVal[] = $key;
                     }
-				}
-            }
+			}
         }
 
         return new Cvs_Backend_Array_Iterator( $returnVal );
