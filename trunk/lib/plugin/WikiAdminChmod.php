@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminChmod.php,v 1.1 2004-02-23 21:30:25 rurban Exp $');
+rcs_id('$Id: WikiAdminChmod.php,v 1.2 2004-02-24 03:21:40 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -21,7 +21,8 @@ rcs_id('$Id: WikiAdminChmod.php,v 1.1 2004-02-23 21:30:25 rurban Exp $');
  */
 
 /**
- * Set individual PagePermissions
+ * Set individual PagePermissions, simplifying effective ACLs to 
+ * unix-like rwxr--r--+ permissions. (as in cygwin)
  *
  * Usage:   <?plugin WikiAdminChmod ?> or called via WikiAdminSelect
  * Author:  Reini Urban <rurban@x-ray.at>
@@ -47,7 +48,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -167,7 +168,8 @@ extends WikiPlugin_WikiAdminSelect
     }
 
     function chmodForm(&$header, $post_args) {
-        $header->pushContent(HTML::p(HTML::em(_("This plugin is currently under development and does not work!"))));
+        $header->pushContent(
+            HTML::p(HTML::em(_("This plugin is currently under development and does not work!"))));
         $header->pushContent(_("Chmod to permission:"));
         $header->pushContent(HTML::input(array('name' => 'admin_chmod[perm]',
                                                'value' => $post_args['perm'])));
@@ -188,6 +190,11 @@ extends WikiPlugin_WikiAdminSelect
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/02/23 21:30:25  rurban
+// more PagePerm stuff: (working against 1.4.0)
+//   ACL editing and simplification of ACL's to simple rwx------ string
+//   not yet working.
+//
 //
 
 // Local Variables:

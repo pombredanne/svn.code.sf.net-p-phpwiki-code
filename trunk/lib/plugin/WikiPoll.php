@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiPoll.php,v 1.1 2004-02-24 02:45:45 rurban Exp $');
+rcs_id('$Id: WikiPoll.php,v 1.2 2004-02-24 03:21:46 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
@@ -38,7 +38,6 @@ rcs_id('$Id: WikiPoll.php,v 1.1 2004-02-24 02:45:45 rurban Exp $');
  * and protect this page properly (e.g. PhpWikiPoll/Admin)
  *
  * TODO:
- *     check all required buttons if require_all
  *     admin page (view and reset statistics)
  *
  * Author: ReiniUrban
@@ -59,7 +58,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -144,9 +143,13 @@ extends WikiPlugin
         // check ip and last visit
         $poll = $page->get("poll");
         $ip = $_SERVER['REMOTE_ADDR'];
-        if (isset($poll['ip'][$ip]) and ((time() - $poll['ip'][$ip]) < 20*60))
-            //todo: view at least the result or disable the Go button
-            return HTML::strong(_("Sorry! You must wait at least 20 minutes until you can vote again!"));
+        $disable_submit = false;
+        if (isset($poll['ip'][$ip]) and ((time() - $poll['ip'][$ip]) < 20*60)) {
+            //view at least the result or disable the Go button
+            $html = HTML(HTML::strong(_("Sorry! You must wait at least 20 minutes until you can vote again!")));
+            $html->pushContent($this->doPoll(&$page, &$request, $request->getArg('answer'),true));
+            return $html;
+        }
             
         $poll['ip'][$ip] = time();
         // purge older ip's
@@ -154,15 +157,22 @@ extends WikiPlugin
             if ((time() - $time) > 21*60)
                 unset($poll['ip'][$ip]);
         }
-        $page->set("poll",$poll);    
-
-        if ($request->isPost() and $request->getArg('answer')) {
-            // update statistics and present them the user
-            return $this->doPoll(&$page, &$request, $request->getArg('answer'));
-        }
-        
         $html = HTML::form(array('action' => $request->getPostURL(),
                                  'method' => 'POST'));
+
+        if ($request->isPost()) {
+            // checkme: check if all answers are answered
+            if ($request->getArg('answer') and 
+                  ($args['require_all'] and
+                   count($request->getArg('answer')) == count($question))) {
+                $page->set("poll",$poll);
+                // update statistics and present them the user
+                return $this->doPoll(&$page, &$request, $request->getArg('answer'));
+            } else {
+            	$html->pushContent(HTML::p(HTML::strong(_("You must answer all questions!"))));
+            }
+        }
+       
         $init = isset($question[0]) ? 0 : 1;
         for ($i = $init; $i <= count($question); $i++) {
             if (!isset($question[$i])) break;
@@ -192,17 +202,20 @@ extends WikiPlugin
                 $html->pushContent(HTML::p(HTML::strong($q)),$row);
             }
         }
-        $html->pushContent(HTML::p(
+        if (!$disable_submit)
+            $html->pushContent(HTML::p(
         	HTML::input(array('type' => 'submit',
                                   'name' => "WikiPoll",
                                   'value' => _("Ok"))),
         	HTML::input(array('type' => 'reset',
                                   'name' => "reset",
                                   'value' => _("Reset")))));
+        else 
+             $html->pushContent(HTML::p(),HTML::strong(_("Sorry! You must wait at least 20 minutes until you can vote again!")));
         return $html;
     }
 
-    function doPoll($page, $request, $answers) {
+    function doPoll($page, $request, $answers, $readonly = false) {
     	$question = $this->_args['question'];
     	$answer   = $this->_args['answer'];
         $html = HTML::table(array('cellspacing' => 2));
@@ -215,7 +228,8 @@ extends WikiPlugin
             if (!isset($answer[$i]))
             	trigger_error(fmt("missing %s for %s","answer"."[$i]","question"."[$i]"),
             	              E_USER_ERROR);
-            $page->set('poll',$poll);
+            if (!$readonly)
+                $page->set('poll',$poll);
             $a = $answer[$i];
             if (! is_array($a) ) {
                 $checkbox = HTML::input(array('type' => 'checkbox',
@@ -223,7 +237,10 @@ extends WikiPlugin
                                               'value' => $a));
                 if ($answers[$i])
                     $checkbox->setAttr('checked',1);
-                list($percent,$count,$all) = $this->storeResult(&$page, $i, $answers[$i] ? 1 : 0);
+	        if (!$readonly)
+                    list($percent,$count,$all) = $this->storeResult(&$page, $i, $answers[$i] ? 1 : 0);
+                else 
+                    list($percent,$count,$all) = $this->getResult(&$page, $i, 1);
                 $result = sprintf(_("  %d%% selected this (%d/%d)"),$percent,$count,$all);
                 $html->pushContent(HTML::tr(HTML::th(array('colspan' => 3,'align'=>'left'),$q)));
                 $html->pushContent(HTML::tr(HTML::td($checkbox),
@@ -232,7 +249,8 @@ extends WikiPlugin
             } else {
                 $html->pushContent(HTML::tr(HTML::th(array('colspan' => 3,'align'=>'left'),$q)));
                 $row = HTML();
-                $this->storeResult(&$page,$i,$answers[$i]);
+                if (!$readonly)
+                    $this->storeResult(&$page,$i,$answers[$i]);
                 for ($j=0; $j <= count($a); $j++) {
                     if (isset($a[$j])) {
                     	list($percent,$count,$all) = $this->getResult(&$page,$i,$j);
@@ -250,7 +268,11 @@ extends WikiPlugin
                 $html->pushContent($row);
             }
         }
-        return HTML($html,HTML::p(_("Thanks for participating!")));
+        if (!$readonly)
+            return HTML(HTML::h3(_("The result of this poll so far:")),$html,HTML::p(_("Thanks for participating!")));
+        else  
+            return HTML(HTML::h3(_("The result of this poll so far:")),$html);
+  
     }
     
     function getResult($page,$i,$j) {
