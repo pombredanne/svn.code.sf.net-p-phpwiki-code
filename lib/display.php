@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.55 2004-09-26 14:58:35 rurban Exp $');
+rcs_id('$Id: display.php,v 1.56 2004-10-14 13:44:14 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -155,7 +155,7 @@ function displayPage(&$request, $template=false) {
             include_once('lib/WikiPlugin.php');
 	    $loader = new WikiPluginLoader;
             $xml = $loader->expandPI('<'.'?plugin SearchHighLight s="'.$result['query'].'"?'.'>', $request, $markup);
-            if ($xml) {
+            if ($xml and is_array($xml)) {
               foreach (array_reverse($xml) as $line) {
                 array_unshift($page_content->_content, $line);
               }
@@ -207,6 +207,9 @@ function displayPage(&$request, $template=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.55  2004/09/26 14:58:35  rurban
+// naive SearchHighLight implementation
+//
 // Revision 1.54  2004/09/17 14:19:41  rurban
 // disable Content-Type header for now, until it is fixed
 //
