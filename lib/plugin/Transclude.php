@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Transclude.php,v 1.5 2003-02-24 14:34:44 carstenklapp Exp $');
+rcs_id('$Id: Transclude.php,v 1.6 2003-02-25 05:45:34 carstenklapp Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -57,7 +57,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
@@ -94,7 +94,7 @@ extends WikiPlugin
                         'class' => 'transclude',
                         "onload" => "adjust_iframe_height(this);");
 
-        $noframe_msg[] = HTML::a(array('href' => $src), $src);
+        $noframe_msg[] = fmt("See: %s", HTML::a(array('href' => $src), $src));
 
         $noframe_msg = HTML::div(array('class' => 'transclusion'),
                                  HTML::p(array(), $noframe_msg));
@@ -153,6 +153,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2003/02/24 14:34:44  carstenklapp
+// Added iframe title (bobby.org accessibility guidelines).
+// Simplified output for non-iframe and non-visual browsers (as suggested
+// by http://www.uwosh.edu/programs/accessibility/tutorial.html).
+//
 // Revision 1.4  2003/01/18 22:08:01  carstenklapp
 // Code cleanup:
 // Reformatting & tabs to spaces;
