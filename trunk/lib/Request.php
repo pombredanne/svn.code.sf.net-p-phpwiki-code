@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.55 2004-05-15 18:31:00 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.56 2004-05-17 17:43:29 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -73,7 +73,7 @@ class Request {
         if (!empty($GLOBALS['HTTP_SERVER_VARS']))
             $vars = &$GLOBALS['HTTP_SERVER_VARS'];
         else // cgi or other servers than Apache
-            $vars = &$GLOBALS['_ENV'];
+            $vars = &$GLOBALS['HTTP_ENV_VARS'];
 
         if (isset($vars[$key]))
             return $vars[$key];
@@ -982,6 +982,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.55  2004/05/15 18:31:00  rurban
+// some action=pdf Request fixes: With MSIE it works now. Now the work with the page formatting begins.
+//
 // Revision 1.54  2004/05/04 22:34:25  rurban
 // more pdf support
 //

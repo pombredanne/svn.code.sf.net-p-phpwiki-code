@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.22 2004-05-16 22:07:35 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.23 2004-05-17 17:43:29 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -357,6 +357,9 @@ function fix_configs() {
         define('SCRIPT_NAME', deduce_script_name());
 
     if (!defined('USE_PATH_INFO')) {
+        if (substr($GLOBALS['HTTP_SERVER_VARS']['GATEWAY_INTERFACE'],0,3) == 'CGI')
+            define('USE_PATH_INFO', false);
+        else {
             /*
              * If SCRIPT_NAME does not look like php source file,
              * or user cgi we assume that php is getting run by an
@@ -380,6 +383,7 @@ function fix_configs() {
                 break;
             }
         }
+    }
      
     // If user has not defined PHPWIKI_DIR, and we need it
     if (!defined('PHPWIKI_DIR') and !file_exists("themes/default")) {
@@ -532,6 +536,14 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.22  2004/05/16 22:07:35  rurban
+// check more config-default and predefined constants
+// various PagePerm fixes:
+//   fix default PagePerms, esp. edit and view for Bogo and Password users
+//   implemented Creator and Owner
+//   BOGOUSERS renamed to BOGOUSER
+// fixed syntax errors in signin.tmpl
+//
 // Revision 1.21  2004/05/08 22:55:12  rurban
 // Fixed longstanding sf.net:demo problem. endless loop, caused by an empty definition of
 // WIKI_NAME_REGEXP. Exactly this constant wasn't checked for its default setting.
