@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.85 2004-12-26 17:08:36 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.86 2005-01-04 20:26:34 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -139,8 +139,11 @@ class Request {
         return (float) $m[1];
     }
     
+    /* Redirects after edit may fail if no theme signature image is defined. 
+     * Set DISABLE_HTTP_REDIRECT = true then.
+     */
     function redirect($url, $noreturn=true) {
-        $bogus = defined('DISABLE_HTTP_REDIRECT') and DISABLE_HTTP_REDIRECT;
+        $bogus = defined('DISABLE_HTTP_REDIRECT') && DISABLE_HTTP_REDIRECT;
         
         if (!$bogus) {
             header("Location: $url");
@@ -169,7 +172,9 @@ class Request {
 
         if ($noreturn) {
             include_once('lib/Template.php');
-            $this->discardOutput();
+            $this->_is_buffering_output = false;
+            //$this->discardOutput(); // this prints the gzip headers
+            $this->buffer_output(false);
             $tmpl = new Template('redirect', $this, array('REDIRECT_URL' => $url));
             $tmpl->printXML();
             $this->finish();
@@ -447,6 +452,8 @@ class Request {
             //}
             while (@ob_end_flush());
             $this->_is_buffering_output = false;
+        } else {
+            while (@ob_end_flush()); // hmm. there's some error in redirect
         }
         exit;
     }
@@ -1313,6 +1320,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.85  2004/12/26 17:08:36  rurban
+// php5 fixes: case-sensitivity, no & new
+//
 // Revision 1.84  2004/12/17 16:37:30  rurban
 // avoid warning
 //
