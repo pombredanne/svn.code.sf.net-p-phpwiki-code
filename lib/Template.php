@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.71 2005-02-02 19:29:30 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.72 2005-02-02 20:35:41 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -90,12 +90,12 @@ class Template
         // FIXME: big hack!        
         //if (!$template->_request)
         //    $template->_request = &$this->_request;
-        if (defined('DEBUG') and DEBUG) {
+        if (DEBUG) {
             echo "<!-- Begin $template->_name -->\n";
         }
         // Expand sub-template with defaults from this template.
         $template->printExpansion($this->_vars);
-        if (defined('DEBUG') and DEBUG) {
+        if (DEBUG) {
             echo "<!-- End $template->_name -->\n";
         }
     }
@@ -130,6 +130,7 @@ class Template
 
         global $WikiTheme, $RCS_IDS, $charset; 
         //$this->_dump_template();
+        $SEP = $WikiTheme->getButtonSeparator();
 
         global $ErrorManager;
         $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_errorHandler'));
@@ -276,6 +277,9 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.71  2005/02/02 19:29:30  rurban
+// support theme overrides
+//
 // Revision 1.70  2005/01/25 07:01:26  rurban
 // update comments about future plans
 //
