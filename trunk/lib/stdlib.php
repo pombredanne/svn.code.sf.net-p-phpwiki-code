@@ -1,4 +1,4 @@
-<!-- $Id: stdlib.php,v 1.4 2000-10-20 11:42:52 ahollosi Exp $ -->
+<!-- $Id: stdlib.php,v 1.5 2000-10-25 14:48:29 ahollosi Exp $ -->
 <?php
    /*
       Standard functions for Wiki functionality
@@ -170,25 +170,29 @@
    }
 
 
-   function LinkImage($url) {
+   function LinkImage($url, $alt="[External Image]") {
       global $ScriptUrl;
       if(ereg("[<>\"]", $url)) {
          return "<b><u>BAD URL -- remove all of &lt;, &gt;, &quot;</u></b>";
       }
-      return "<img src=\"$url\">";
+      return "<img src=\"$url\" ALT=\"$alt\">";
    }
 
    
-   function RenderQuickSearch() {
-      global $value, $ScriptUrl;
-      $formtext = "<form action='$ScriptUrl'>\n<input type='text' size='40' name='search' value='$value'>\n</form>\n";
-      return $formtext;
+   function RenderQuickSearch($value = "") {
+      global $ScriptUrl;
+      return "<form action=\"$ScriptUrl\">\n" .
+	     "<input type=text size=30 name=search value=\"$value\">\n" .
+	     "<input type=submit value=\"". gettext("Search") .
+	     "\"></form>\n";
    }
 
-   function RenderFullSearch() {
-      global $value, $ScriptUrl;
-      $formtext = "<form action='$ScriptUrl'>\n<input type='text' size='40' name='full' value='$value'>\n</form>\n";
-      return $formtext;
+   function RenderFullSearch($value = "") {
+      global $ScriptUrl;
+      return "<form action=\"$ScriptUrl\">\n" .
+	     "<input type=text size=30 name=full value=\"$value\">\n" .
+	     "<input type=submit value=\"". gettext("Search") .
+	     "\"></form>\n";
    }
 
    function RenderMostPopular() {
@@ -384,10 +388,10 @@
          $newpage[$k++] = $recentchanges["content"][$i++];
       }
       if($isnewpage) {
-         $newpage[$k++] = "\t* [$pagename] (new) ..... $remoteuser\r";
+         $newpage[$k++] = "* [$pagename] (new) ..... $remoteuser\r";
       } else {
 	 $diffurl = "$ScriptUrl?diff=" . rawurlencode($pagename);
-         $newpage[$k++] = "\t* [$pagename] ([diff|$diffurl]) ..... $remoteuser\r";
+         $newpage[$k++] = "* [$pagename] ([diff|$diffurl]) ..... $remoteuser\r";
       }
 
       // copy the rest of the page into the new array
@@ -409,31 +413,15 @@
 
 
    function ParseAndLink($bracketlink) {
-      global $dbi, $AllowedProtocols;
+      global $dbi, $AllowedProtocols, $InlineImages;
 
       // $bracketlink will start and end with brackets; in between
       // will be either a page name, a URL or both separated by a pipe.
 
       // strip brackets and leading space
       preg_match("/(\[\s*)(.+?)(\s*\])/", $bracketlink, $match);
-      $linkdata = $match[2];
-
-      // send back links that are only numbers (they are references)
-      if (preg_match("/^\d+$/", $linkdata)) {
-         $link['type'] = 'ref';
-	 $link['link'] = $bracketlink;
-         return $link;
-      }
-
-      // send back escaped ([[) bracket sets
-      if (preg_match("/^\[/", $linkdata)) {
-         $link['type'] = 'none';
-	 $link['link'] = htmlspecialchars(substr($bracketlink, 1));
-         return $link;
-      }
-
       // match the contents 
-      preg_match("/([^|]+)(\|)?([^|]+)?/", $linkdata, $matches);
+      preg_match("/([^|]+)(\|)?([^|]+)?/", $match[2], $matches);
 
 
       // if $matches[3] is set, this is a link in the form of:
@@ -444,8 +432,13 @@
          $linkname = htmlspecialchars(trim($matches[1]));
          // assert proper URL's
          if (preg_match("#^($AllowedProtocols):#", $URL)) {
-            $link['type'] = 'url-named';
-	    $link['link'] = "<a href=\"$URL\">$linkname</a>";
+            if (preg_match("/($InlineImages)$/i", $URL)) {
+	       $link['type'] = 'image-named';
+               $link['link'] = LinkImage($URL, $linkname);
+            } else {
+	       $link['type'] = 'url-named';
+               $link['link'] = "<a href=\"$URL\">$linkname</a>";
+	    }
          } else {
             $link['type'] = 'url-bad';
             $link['link'] = "<b><u>BAD URL -- links have to start with one" . 
@@ -465,8 +458,8 @@
             $link['link'] = LinkExistingWikiWord($linkname);
          } elseif (preg_match("#^($AllowedProtocols):#", $linkname)) {
             // if it's an image, embed it; otherwise, it's a regular link
-            if (preg_match("/jpg$|png$|gif$/i", $linkname)) {
-	       $link['type'] = 'url-image';
+            if (preg_match("/($InlineImages)$/i", $linkname)) {
+	       $link['type'] = 'image-simple';
                $link['link'] = LinkImage($linkname);
             } else {
 	       $link['type'] = 'url-simple';
@@ -505,9 +498,9 @@
             $line = preg_replace("|$brktlink|", '', $line);
 	 }
 
-         if (preg_match_all("#!?\b(([A-Z][a-z]+){2,})\b#", $line, $link)) {
+         if (preg_match_all("/!?$WikiNameRegexp/", $line, $link)) {
             for ($i = 0; $link[0][$i]; $i++) {
-               if(!strstr($link[0][$i], '!'))
+               if($link[0][$i][0] <> '!')
                   $wikilinks[$link[0][$i]]++;
 	    }
          }
