@@ -1,8 +1,8 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.76 2005-01-31 00:31:00 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.77 2005-01-31 12:14:15 rurban Exp $');
 
 /**
- * A configurator intended to read it's config from a PHP-style INI file,
+ * A configurator intended to read its config from a PHP-style INI file,
  * instead of a PHP file.
  *
  * Pass a filename to the IniConfig() function and it will read all it's
@@ -772,6 +772,9 @@ function fixup_dynamic_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.76  2005/01/31 00:31:00  rurban
+// translate errmsg
+//
 // Revision 1.75  2005/01/30 21:52:09  rurban
 // print early warning on wrong DATABASE_TYPE
 //
