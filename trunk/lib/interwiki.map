@@ -41,6 +41,7 @@ FrWikiPedia http://fr.wikipedia.org/
 FreeBSDman http://www.FreeBSD.org/cgi/man.cgi?apropos=1&query=
 FreeNetworks http://www.freenetworks.org/index.cgi/
 FreshMeat http://freshmeat.net/
+Froogle http://froogle.google.com/froogle?q=
 Google http://www.google.com/search?q=
 GoogleGroups http://groups.google.com/groups?q=
 GreenCheese http://www.greencheese.org/
@@ -66,7 +67,8 @@ MbTest http://www.usemod.com/cgi-bin/mbtest.pl?
 MeatBall http://www.usemod.com/cgi-bin/mb.pl?
 MetaWiki http://sunir.org/apps/meta.pl?
 MetaWikiPedia http://meta.wikipedia.com/wiki/
-MoinMoin http://purl.net/wiki/moin/
+MoinMoin http://moinmoin.wikiwikiweb.de/
+MoinMaster http://moinmaster.wikiwikiweb.de/
 MuWeb http://www.dunstable.com/scripts/MuWebWeb?
 NetVillage http://www.netbros.com/?
 OpenWiki http://openwiki.com/?
@@ -82,7 +84,8 @@ PhpWikiDemo http://phpwiki.sourceforge.net/demo/
 Pikie http://pikie.darktech.org/cgi/pikie?
 PlWikiPedia http://pl.wikipedia.org/
 PolitizenWiki http://www.politizen.com/wiki.asp?
-PurlNet http://purl.oclc.org/NET/
+PoundPython http://twistedmatrix.com/wiki/python/
+PurlNet http://www.palowireless.com/zigbee/
 PyWiki http://www.voght.com/cgi-bin/pywiki?
 PythonInfo http://www.python.org/cgi-bin/moinmoin/
 PythonWiki http://www.pythonwiki.de/
@@ -102,7 +105,6 @@ Tavi http://tavi.sourceforge.net/index.php?
 Thesaurus http://www.thesaurus.com/cgi-bin/search?config=roget&words=
 Thinki http://www.thinkware.se/cgi-bin/thinki.cgi/
 TmNet http://www.technomanifestos.net/?
-TwistedWiki http://purl.net/wiki/twisted/
 Unreal http://wiki.beyondunreal.com/wiki/
 UseMod http://www.usemod.com/cgi-bin/wiki.pl?
 VisualWorks http://wiki.cs.uiuc.edu/VisualWorks/
