@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.95 2004-06-16 10:38:58 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.96 2004-06-16 12:42:06 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -867,6 +867,10 @@ extends _AnonUser
                                                         array("userid", "pref_blob"));
             }
         } else {
+            if (!$this->_prefs) {
+            	$this->_prefs = new UserPreferences();
+            	$need_pref = true;
+            }
             $this->_prefs->_method = 'HomePage';
         }
         
@@ -3011,6 +3015,15 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.95  2004/06/16 10:38:58  rurban
+// Disallow refernces in calls if the declaration is a reference
+// ("allow_call_time_pass_reference clean").
+//   PhpWiki is now allow_call_time_pass_reference = Off clean,
+//   but several external libraries may not.
+//   In detail these libs look to be affected (not tested):
+//   * Pear_DB odbc
+//   * adodb oracle
+//
 // Revision 1.94  2004/06/15 10:40:35  rurban
 // minor WikiGroup cleanup: no request param, start of current user independency
 //
