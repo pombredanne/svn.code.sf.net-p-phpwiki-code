@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminUtils.php,v 1.9 2004-04-02 15:06:56 rurban Exp $');
+rcs_id('$Id: WikiAdminUtils.php,v 1.10 2004-04-07 23:13:19 rurban Exp $');
 /**
  Copyright 2003 $ThePhpWikiProgrammingTeam
 
@@ -35,7 +35,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
@@ -155,8 +155,14 @@ extends WikiPlugin
         $pagelist->_columns[] = $email;
         $pagelist->_columns[] = $emailVerified;
         //This is the best method to find all users (Db and PersonalPage)
-        $group = WikiGroup::getGroup($request);
-        foreach ($group->_allUsers() as $username) {
+        $current_user = $request->_user;
+	if (empty($args['verify'])) {
+            $group = WikiGroup::getGroup($request);
+	    $allusers = $group->_allUsers();
+	} else {
+	    $allusers = array_keys($args['user']);
+	}
+        foreach ($allusers as $username) {
             if (ENABLE_USER_NEW)
                 $user = WikiUser($username);
             else 
@@ -171,17 +177,19 @@ extends WikiPlugin
                 $page_handle = $dbi->getPage($username);
                 $row->pushContent($pagelist->_columns[0]->format($pagelist, $page_handle, $page_handle));
                 $row->pushContent($email->format($pagelist, &$prefs, $page_handle));
-		if (!empty($args['verified'])) {
-		    $prefs->_prefs['email']->set('emailVerified',empty($args['user'][$username]) ? 0 : 2);
+		if (!empty($args['verify'])) {
+		    $prefs->_prefs['email']->set('emailVerified',empty($args['verified'][$username]) ? 0 : 2);
+		    $user->setPreferences($prefs);
 		}
-                $row->pushContent($emailVerified->format($pagelist, &$prefs, $args['verified']));
+                $row->pushContent($emailVerified->format($pagelist, &$prefs, $args['verify']));
                 $pagelist->_rows[] = $row;
             }
         }
-        if (!empty($args['verified'])) {
+        $request->_user = $current_user;
+        if (!empty($args['verify'])) {
             return HTML($pagelist->_generateTable(false));
         } else {
-            $args['verified'] = 1;
+            $args['verify'] = 1;
 	    $args['return_url'] = $request->getURLtoSelf();
             return HTML::form(array('action' => $request->getPostURL(),
                                     'method' => 'post'),
@@ -190,8 +198,10 @@ extends WikiPlugin
                                              WIKIAUTH_ADMIN)),
                           HiddenInputs($request->getArgs()),
                           $pagelist->_generateTable(false),                   
-                          HTML::p(Button('submit:', _("Change Verification Status"), 'wikiadmin'))
-                          );
+                          HTML::p(Button('submit:', _("Change Verification Status"), 'wikiadmin'),
+                                  HTML::Raw('&nbsp;'),
+                                  Button('cancel', _("Cancel")))
+                                 );
         }
     }
 };
@@ -210,13 +220,15 @@ extends _PageList_Column {
     function _getValue ($prefs, $status) {
     	$name = $prefs->get('userid');
     	$input = HTML::input(array('type' => 'checkbox',
-    	                           'name' => 'wikiadminutils[user]['.$name.']',
+    	                           'name' => 'wikiadminutils[verified]['.$name.']',
     	                           'value' => 1));
     	if ($prefs->get('emailVerified'))
     	    $input->setAttr('checked','1');
 	if ($status)
     	    $input->setAttr('disabled','1');
-    	return $input;
+    	return HTML($input,HTML::input(array('type' => 'hidden',
+    	                                     'name' => 'wikiadminutils[user]['.$name.']',
+    	                                     'value' => $name)));
     }
 }
 

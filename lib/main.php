@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.128 2004-04-02 15:06:55 rurban Exp $');
+rcs_id('$Id: main.php,v 1.129 2004-04-07 23:13:19 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -22,6 +22,9 @@ class WikiRequest extends Request {
         if (USE_DB_SESSION) {
             include_once('lib/DB_Session.php');
             $prefix = isset($GLOBALS['DBParams']['prefix']) ? $GLOBALS['DBParams']['prefix'] : '';
+            if (in_array('File',$GLOBALS['USER_AUTH_ORDER'])) {
+                include_once 'lib/pear/File_Passwd.php';
+            }
             $this->_dbsession = & new DB_Session($this->getDbh(),
                                                  $prefix . $GLOBALS['DBParams']['db_session_table']);
         }
@@ -45,11 +48,21 @@ class WikiRequest extends Request {
                 // restore old auth level here or in updateAuthAndPrefs?
                 //$user = $this->getSessionVar('wiki_user');
                 // revive db handle, because these don't survive sessions
-                if (isset($this->_user) and (!isa($this->_user,WikiUserClassname()))) {
-                    $this->_user = new WikiUser($this, $this->_deduceUsername());
+                if (isset($this->_user) and 
+                     ( ! isa($this->_user,WikiUserClassname())
+                       or (strtolower(get_class($this->_user)) == '_passuser')))
+                {
+                    $this->_user = WikiUser($userid,$this->_user->_prefs);
                 }
 	        unset($this->_user->_HomePagehandle);
 	        $this->_user->hasHomePage();
+	        // update the lockfile filehandle
+	        if (  isa($this->_user,'_FilePassUser') and 
+	              $this->_user->_file->lockfile and 
+	              !$this->_user->_file->fplock  )
+	        {
+		    $this->_user = new _FilePassUser($userid,$this->_user->_prefs,$this->_user->_file->filename);
+	        }
 	        /*
                 if (!isa($user,WikiUserClassname()) or empty($this->_user->_level)) {
                     $user = UpgradeUser($this->_user,$user);
@@ -867,6 +880,13 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.128  2004/04/02 15:06:55  rurban
+// fixed a nasty ADODB_mysql session update bug
+// improved UserPreferences layout (tabled hints)
+// fixed UserPreferences auth handling
+// improved auth stability
+// improved old cookie handling: fixed deletion of old cookies with paths
+//
 // Revision 1.127  2004/03/25 17:00:31  rurban
 // more code to convert old-style pref array to new hash
 //

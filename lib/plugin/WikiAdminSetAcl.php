@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSetAcl.php,v 1.4 2004-03-17 20:23:44 rurban Exp $');
+rcs_id('$Id: WikiAdminSetAcl.php,v 1.5 2004-04-07 23:13:19 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -47,7 +47,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -136,7 +136,14 @@ extends WikiPlugin_WikiAdminSelect
         if ($next_action == 'verify') {
             $args['info'] = "checkbox,pagename,perm,owner,group,mtime,author";
         }
-        $pagelist = new PageList_Selectable($args['info'], $exclude);
+        $pagelist = new PageList_Selectable($args['info'], 
+                                            $exclude,
+                                            array('types' => array(
+                                                  'perm'
+                                                  => new _PageList_Column_perm('perm', _("Permission")),
+                                                  'acl'
+                                                  => new _PageList_Column_acl('acl', _("ACL")))));
+
         $pagelist->addPageList($pages);
 
         $header = HTML::p();
@@ -176,9 +183,12 @@ extends WikiPlugin_WikiAdminSelect
         foreach ($pagehash as $name => $checked) {
 	   if ($checked) $pages[] = $name;
         }
-        $perm_tree = pagePermissions($pagename);
+        $perm_tree = pagePermissions($name);
         $table = pagePermissionsAclFormat($perm_tree,true);
-        $header->pushContent(HTML::p(fmt("Pages: %s",join(',',$pages))));
+        $header->pushContent(HTML::p(fmt("Pages: %s",join(', ',$pages))));
+        if (DEBUG) {
+            $header->pushContent(HTML::pre("Permission tree for $name:\n",print_r($perm_tree,true)));
+        }
         $type = $perm_tree[0];
         if ($type == 'inherited')
             $type = sprintf(_("page permission inherited from %s"),$perm_tree[1][0]);
@@ -201,7 +211,7 @@ extends WikiPlugin_WikiAdminSelect
         $checkbox = HTML::input(array('type' => 'checkbox',
                                       'name' => 'admin_setacl[updatechildren]',
                                       'value' => 1));
-        if ($post_args['updatechildren'])  $checkbox->setAttr('checked','checked');
+        if (!empty($post_args['updatechildren']))  $checkbox->setAttr('checked','checked');
         $header->pushContent($checkbox,
         	_("Propagate new permissions to all subpages?"),
         	HTML::raw("&nbsp;&nbsp;"),
@@ -209,10 +219,42 @@ extends WikiPlugin_WikiAdminSelect
         $header->pushContent(HTML::hr(),HTML::p());
         return $header;
     }
-
 }
 
+class _PageList_Column_acl extends _PageList_Column {
+    function _getValue ($page_handle, &$revision_handle) {
+        $perm_tree = pagePermissions($page_handle->_pagename);
+        return pagePermissionsAclFormat($perm_tree);
+        if (0) {
+            ob_start();
+            var_dump($perm_array);
+            $xml = ob_get_contents();
+            ob_end_clean();
+            return $xml;
+        }
+    }
+};
+
+class _PageList_Column_perm extends _PageList_Column {
+    function _getValue ($page_handle, &$revision_handle) {
+        $perm_array = pagePermissions($page_handle->_pagename);
+        return pagePermissionsSimpleFormat($perm_array,
+                                           $page_handle->get('author'),
+                                           $page_handle->get('group'));
+        if (0) {
+            ob_start();
+            var_dump($perm_array);
+            $xml = ob_get_contents();
+            ob_end_clean();
+            return $xml;
+        }
+    }
+};
+
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/03/17 20:23:44  rurban
+// fixed p[] pagehash passing from WikiAdminSelect, fixed problem removing pages with [] in the pagename
+//
 // Revision 1.3  2004/03/12 13:31:43  rurban
 // enforce PagePermissions, errormsg if not Admin
 //

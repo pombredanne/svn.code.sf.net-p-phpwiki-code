@@ -16,7 +16,7 @@
 // | Author: Rasmus Lerdorf <rasmus@php.net>                              |
 // +----------------------------------------------------------------------+
 //
-// $Id: File_Passwd.php,v 1.3 2004-03-11 13:30:47 rurban Exp $
+// $Id: File_Passwd.php,v 1.4 2004-04-07 23:13:19 rurban Exp $
 //
 // Manipulate standard UNIX passwd,.htpasswd and CVS pserver passwd files
 
@@ -103,6 +103,7 @@ class File_Passwd {
             $array = explode(':', $line);
             if (count($array) and strlen(trim($array[0]))) {
                 $user = trim($array[0]);
+                if (in_array(substr($user,0,1),array('#',';'))) continue;
                 if (empty($array[1])) $array[1]='';
                 $this->users[$user] = trim($array[1]);
                 if (count($array) >= 3)
@@ -163,7 +164,7 @@ class File_Passwd {
     */
     
     function delUser($user) {
-        if(isset($this->users[$user]) && $this->locked) {
+        if (isset($this->users[$user]) && $this->locked) {
             unset($this->users[$user]);
             unset($this->cvs[$user]);
         } else {
@@ -181,11 +182,27 @@ class File_Passwd {
     * @access public		
     */
     function verifyPassword($user, $pass) {
-        if(isset($this->users[$user])) {
-            if($this->users[$user] == crypt($pass, substr($this->users[$user], 0, 2))) return true;
+        //if ($this->users[$user] == crypt($pass, substr($this->users[$user], 0, 2)))
+        //  return true;
+        if (isset($this->users[$user])) {
+            $stored_password = $this->users[$user];
+            if (function_exists('crypt')) {
+                if (crypt($pass, $stored_password) == $stored_password)
+                    return true; // matches encrypted password
+                else
+                    return false;
+            } else {
+                if ($pass == $stored_password)
+                    return true; // matches plaintext password
+                else {
+                    trigger_error(_("The crypt function is not available in this version of PHP."),
+                                  E_USER_WARNING);
+                    return false;
+                }
+            }
         }
         return false;
-    } // end func verifyPassword()
+    }
 
     /**
     * Return all users from passwd file
@@ -211,11 +228,35 @@ class File_Passwd {
                     fputs($this->fplock, "$user:$pass\n");
                 }
             }
-            rename($this->lockfile, $this->filename);
-            flock($this->fplock, LOCK_UN);
-            $this->locked = false;
-            fclose($this->fplock);
+            @unlink($this->filename.'.bak');
+            if (isWindows()) {
+              // windows doesn't allow renaming of open files
+              flock($this->fplock, LOCK_UN);
+              $this->locked = false;
+              fclose($this->fplock);
+              rename($this->filename,$this->filename.'.bak');
+              rename($this->lockfile, $this->filename);
+            } else {
+              rename($this->filename,$this->filename.'.bak');
+              rename($this->lockfile, $this->filename);
+              flock($this->fplock, LOCK_UN);
+              $this->locked = false;
+              fclose($this->fplock);
+            }
+            if (file_exists($this->filename))
+                @unlink($this->filename.'.bak');
+            else {
+                rename($this->filename.'.bak',$this->filename);
+            }
         }
     } // end func close()
 }
+
+// Local Variables:
+// mode: php
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
+// End:
 ?>

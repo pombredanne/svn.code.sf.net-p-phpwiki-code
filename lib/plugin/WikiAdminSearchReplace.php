@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSearchReplace.php,v 1.8 2004-03-17 20:23:44 rurban Exp $');
+rcs_id('$Id: WikiAdminSearchReplace.php,v 1.9 2004-04-07 23:13:19 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
@@ -156,7 +156,11 @@ extends WikiPlugin_WikiAdminSelect
         if ($next_action == 'verify') {
             $args['info'] = "checkbox,pagename,hi_content";
         }
-        $pagelist = new PageList_Selectable($args['info'], $exclude);
+        $pagelist = new PageList_Selectable($args['info'], $exclude,
+                                            array('types' => array(
+                                                  'hi_content' // with highlighted search for SearchReplace
+                                                   => new _PageList_Column_content('rev:hi_content', _("Content")))));
+
         $pagelist->addPageList($pages);
 
         $header = HTML::p();
@@ -239,6 +243,9 @@ function stri_replace($find,$replace,$string) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/03/17 20:23:44  rurban
+// fixed p[] pagehash passing from WikiAdminSelect, fixed problem removing pages with [] in the pagename
+//
 // Revision 1.7  2004/03/12 13:31:43  rurban
 // enforce PagePermissions, errormsg if not Admin
 //
