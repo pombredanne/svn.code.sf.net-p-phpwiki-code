@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Transclude.php,v 1.2 2002-09-17 02:34:18 dairiki Exp $');
+rcs_id('$Id: Transclude.php,v 1.3 2002-09-17 03:34:06 dairiki Exp $');
 /**
  * Transclude:  Include an external web page within the body of a wiki page.
  * 
@@ -114,7 +114,14 @@ extends WikiPlugin
               // is from the same server...
               return;
             }
-          }';
+          }
+
+          window.addEventListener("resize", function() {
+            f = this.document.body.getElementsByTagName("iframe");
+            for (var i = 0; i < f.length; i++)
+              adjust_iframe_height(f[i]);
+          }, false);
+          ';
 
         return  HTML::script(array('language' => 'JavaScript',
                                    'type'     => 'text/javascript'),
