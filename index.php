@@ -68,7 +68,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.60 2002-01-13 02:37:53 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.61 2002-01-13 04:46:43 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -443,9 +443,7 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
 //$theme="MacOSX";
 //$theme="WikiTrek";
 if (!empty($theme)) {
-    if (file_exists("themes/$theme/themeinfo.php")) {
-        include "themes/$theme/themeinfo.php";
-    } else {
+    if (! @include("themes/$theme/themeinfo.php")) {
         // FIXME: gettext doesn't work in index.php or themeinfo.php
         trigger_error(sprintf(("Unable to open file '%s' for reading"),
                               "themes/$theme/themeinfo.php"), E_USER_NOTICE);
