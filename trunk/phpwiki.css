@@ -221,6 +221,18 @@ div.transclusion {
   margin: 0.5ex 0px;
 }
 
+/* The transclusion of the TextEditingRules Synopsis on templates/editpage.html */
+div.wiki-edithelp .transclusion {
+  font-size: smaller;
+  background: inherit;
+  padding: 0.5ex 0.5em;
+  margin: 0.2ex 5%;
+}
+div.wiki-edithelp .transclusion p {
+  margin: 0;
+}
+
+  
 /****************************************************************
  **
  ** Diff Output
