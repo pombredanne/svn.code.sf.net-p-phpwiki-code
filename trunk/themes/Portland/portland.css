@@ -1,60 +1,45 @@
 /**
- * $Id: portland.css,v 1.5 2002-01-26 09:19:42 carstenklapp Exp $
+ * $Id: portland.css,v 1.6 2002-02-08 08:30:11 carstenklapp Exp $
  *
- * PhpWiki style sheet for the printed page:
- * Black on white only, with no toolbar commands and no link icons.
+ * PhpWiki style sheet
  * Styles are kept to a minimum, so the printed page will otherwise
  * appear according to your browser's default font settings.
  */
 body {
-        color :      black;
-        background : white; 
+  color : black;
+  background : white;
 }
 
-/**
- * Render links with black text and no underlines for readability on b&w
- * printers which try to render colors as greys. (Greyscale text is often
- * difficult to read on older 300dpi lasers.)
- */
 a {
-        text-decoration : underline;
+  text-decoration : underline;
 }
-
-/**
- * Override the above to keep underlines for WikiLinks and generic urls,
- * they are useful indicators on the printed page.
- * (most browsers underline links by default anyway but this overrides
- * any user-defined default style sheets.)
- */
-.wiki {
-        text-decoration : underline;
-        font-weight :     normal;
-}
-
 .rawurl {
-        text-decoration : underline;
+  text-decoration : underline;
 }
 
-/**
- * Hide image borders for older browsers--newer broswers default to a zero
- * border around images anyway.
- */
+.wiki {
+  text-decoration : underline;
+  font-weight : normal;
+}
+
 img {
-        border : none;
+  border : 0 none;
 }
-
-/* Hide other non-essential page elements from the printer. */
 .linkicon {
-        /**
-         * Some browsers ignore this completely: OmniWeb 4.1
-         * also shrink down the image to nothing so the text flows around it.
-         */
-        visibility : hidden;
-        width :  0;
-        height : 0;
+  visibility : hidden;
+  width :  0;
+  height : 0;
 }
-.wiki-edithelp { font-size: smaller; }
 
-/* PageList output */
-.pagelist tr.evenrow { background: #eeeeee; }
-.pagelist tr.oddrow  { background: white; }
+.wiki-edithelp {
+  font-size : smaller;
+}
+
+.pagelist tr.evenrow {
+  color : black;
+  background : #eee;
+}
+.pagelist tr.oddrow {
+  color : black;
+  background : white;
+}
