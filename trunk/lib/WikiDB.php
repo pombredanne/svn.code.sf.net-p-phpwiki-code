@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.48 2004-04-29 23:03:54 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.49 2004-05-03 11:16:40 rurban Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -754,7 +754,7 @@ class WikiDB_Page
             if (!empty($notify) and is_array($notify)) {
                 list($emails,$userids) = $this->getPageChangeEmails($notify);
                 if (!empty($emails))
-                    $this->sendPageChangeNotification($emails,$userids);
+                    $this->sendPageChangeNotification($wikitext, $version, $meta, $emails, $userids);
             }
         }
 
@@ -806,8 +806,9 @@ class WikiDB_Page
         return array($emails,$userids);
     }
 
-    function sendPageChangeNotification($emails, $userids) {
-        $subject = sprintf(_("PageChange Notification %s"),$this->_pagename);
+    function sendPageChangeNotification(&$wikitext, $version, $meta, $emails, $userids) {
+        $backend = &$this->_wikidb->_backend;
+        $subject = _("Page change").' '.$this->_pagename;
         $previous = $backend->get_previous_version($this->_pagename, $version);
         if ($previous) {
             $difflink = WikiURL($this->_pagename,array('action'=>'diff'),true);
@@ -1701,6 +1702,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.48  2004/04/29 23:03:54  rurban
+// fixed sf.net bug #940996
+//
 // Revision 1.47  2004/04/29 19:39:44  rurban
 // special support for formatted plugins (one-liners)
 //   like <small><plugin BlaBla ></small>
