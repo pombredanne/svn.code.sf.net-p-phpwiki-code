@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: VisualWiki.php,v 1.6 2003-01-18 22:11:45 carstenklapp Exp $');
+rcs_id('$Id: VisualWiki.php,v 1.7 2003-03-03 13:57:31 carstenklapp Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -29,11 +29,30 @@ rcs_id('$Id: VisualWiki.php,v 1.6 2003-01-18 22:11:45 carstenklapp Exp $');
  * @version 0.8
  */
 define('VISUALWIKI_ALLOWOPTIONS', true);
-// Name of the Truetypefont - Helvetica is probably easier to read
-//define('VISUALWIKIFONT', 'Helvetica');
-//define('VISUALWIKIFONT', 'Times');
-define('VISUALWIKIFONT', 'Arial');
-$dotbin = '/usr/local/bin/dot';
+global $dotbin;
+if (PHP_OS == "Darwin") { // Mac OS X
+    $dotbin = '/sw/bin/dot'; // graphviz via Fink
+    //$dotbin = '/usr/local/bin/dot';
+
+    // Name of the Truetypefont - at least LucidaSansRegular.ttf is always present on OS X
+    define('VISUALWIKIFONT', 'LucidaSansRegular');
+
+    // The default font paths do not find your fonts, set the path here:
+    $fontpath = "/System/Library/Frameworks/JavaVM.framework/Versions/1.3.1/Home/lib/fonts/";
+    //$fontpath = "/usr/X11R6/lib/X11/fonts/TTF/";
+}
+else { // other os
+    $dotbin = '/usr/local/bin/dot';
+
+    // Name of the Truetypefont - Helvetica is probably easier to read
+    //define('VISUALWIKIFONT', 'Helvetica');
+    //define('VISUALWIKIFONT', 'Times');
+    define('VISUALWIKIFONT', 'Arial');
+
+    // The default font paths do not find your fonts, set the path here:
+    //$fontpath = "/usr/X11R6/lib/X11/fonts/TTF/";
+    //$fontpath = "/usr/share/fonts/default/TrueType/";
+}
 
 if (!defined('VISUALWIKI_ALLOWOPTIONS'))
     define('VISUALWIKI_ALLOWOPTIONS', false);
@@ -61,7 +80,7 @@ extends WikiPluginCached
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     /**
@@ -470,6 +489,7 @@ extends WikiPluginCached
         $nametonumber = array_flip($names);
 
         $dot = "digraph VisualWiki {\n" // }
+             . (!empty($fontpath) ? "    fontpath=\"$fontpath\"\n" : "")
              . "    size=\"$width,$height\";\n    ";
 
         switch ($shape) {
@@ -617,14 +637,16 @@ extends WikiPluginCached
                             'alt' => $url)));
                 }
             fclose($fp);
+//trigger_error("url=".$url);
         }
 
         // clean up tempfiles
         if ($ok && empty($_GET['debug']) && $tempfiles) {
-            unlink($tempfiles);
-            unlink("$tempfiles.$gif");
-            unlink($tempfiles . '.map');
-            unlink($tempfiles . '.dot');
+            //unlink($tempfiles);
+            //unlink("$tempfiles.$gif");
+            //unlink($tempfiles . '.map');
+            //unlink($tempfiles . '.dot');
+//trigger_error($tempfiles);
         }
 
         if ($ok)
@@ -697,6 +719,11 @@ function interpolate($a, $b, $pos) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2003/01/18 22:11:45  carstenklapp
+// Code cleanup:
+// Reformatting & tabs to spaces;
+// Added copyleft, getVersion, getDescription, rcs_id.
+//
 
 // Local Variables:
 // mode: php
