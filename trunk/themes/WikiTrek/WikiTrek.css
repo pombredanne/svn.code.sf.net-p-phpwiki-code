@@ -1,5 +1,5 @@
 /**
- * $Id: WikiTrek.css,v 1.19 2002-02-07 19:36:53 carstenklapp Exp $
+ * $Id: WikiTrek.css,v 1.20 2002-02-07 21:58:19 carstenklapp Exp $
  *
  * This theme will probably be renamed something like "Space" to
  * avoid any potential copyright issues.
@@ -169,7 +169,7 @@ h1 {
   background-color: #fff313;
   padding-top:      0.25ex;
   padding-left:     0.5em;
-  padding-right:    0.5em;
+  padding-right:    0.25em;
   padding-bottom:   1px;
 }
 h1 a.wiki, h1 a.backlinks {
@@ -177,8 +177,8 @@ h1 a.wiki, h1 a.backlinks {
   background-color: #000;
   text-decoration:  none;
   padding-top:      0.25ex;
-  padding-left:     0.5em;
-  padding-right:    0.5em;
+  padding-left:     0.25em;
+  padding-right:    0.25em;
   padding-bottom:   1px;
 }
 
@@ -190,6 +190,7 @@ color:            #000;
   padding-right:    0.5em;
   padding-bottom:   1px;
   margin-top:       2ex;
+  margin-left:      0.5em;
 }
 
 h3 {
@@ -200,6 +201,7 @@ h3 {
   padding-right:    0.5em;
   padding-bottom:   1px;
   margin-top:       2ex;
+  margin-left:      1.0em;
 }
 
 h4 {
@@ -210,6 +212,29 @@ h4 {
   padding-right:    0.5em;
   padding-bottom:   1px;
   margin-top:       2ex;
+  margin-left:      1.5em;
+}
+
+h5 {
+  color:            #000;
+  background-color: #888;
+  padding-top:      0.25ex;
+  padding-left:     0.5em;
+  padding-right:    0.5em;
+  padding-bottom:   1px;
+  margin-top:       2ex;
+  margin-left:      2.0em;
+}
+
+h6 {
+  color:            #000;
+  background-color: #aaa;
+  padding-top:      0.25ex;
+  padding-left:     0.5em;
+  padding-right:    0.5em;
+  padding-bottom:   1px;
+  margin-top:       2ex;
+  margin-left:      2.5em;
 }
 
 
