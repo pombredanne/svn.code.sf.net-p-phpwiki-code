@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.116 2004-12-10 22:15:00 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.117 2004-12-13 08:15:09 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -1542,7 +1542,7 @@ class WikiDB_PageRevision
             if (WIKIDB_NOCACHE_MARKUP == 'purge') {
                 // flush cache for this page.
                 $page = $this->getPage();
-                $page->set('_cached_html', false);
+                $page->set('_cached_html', '');
             }
             $possibly_cache_results = false;
         }
@@ -2141,6 +2141,11 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.116  2004/12/10 22:15:00  rurban
+// fix $page->get('_cached_html)
+// refactor upgrade db helper _convert_cached_html() to be able to call them from WikiAdminUtils also.
+// support 2nd genericSqlQuery param (bind huge arg)
+//
 // Revision 1.115  2004/12/10 02:45:27  rurban
 // SQL optimization:
 //   put _cached_html from pagedata into a new seperate blob, not huge serialized string.
