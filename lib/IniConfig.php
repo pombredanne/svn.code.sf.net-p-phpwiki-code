@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.18 2004-05-08 16:58:19 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.19 2004-05-08 19:55:29 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -123,7 +123,7 @@ function IniConfig($file) {
         }
         
         // calculate them later: old or dynamic constants
-        if (!$val and $val != '' and 
+        if ($val === false and
             in_array($item,array('USE_PATH_INFO','USE_DB_SESSION',
                                  'ALLOW_HTTP_AUTH_LOGIN','ALLOW_LDAP_LOGIN',
                                  'ALLOW_IMAP_LOGIN','ALLOW_USER_LOGIN',
@@ -521,6 +521,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.18  2004/05/08 16:58:19  rurban
+// don't ignore some false config values (e.g. USE_PATH_INFO false was ignored)
+//
 // Revision 1.17  2004/05/06 19:26:15  rurban
 // improve stability, trying to find the InlineParser endless loop on sf.net
 //

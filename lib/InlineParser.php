@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.45 2004-05-08 19:20:27 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.46 2004-05-08 19:55:29 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -583,6 +583,8 @@ class Markup_plugin extends SimpleMarkup
     var $_match_regexp = '<\?plugin(?:-form)?\s[^\n]+?\?>';
 
     function markup ($match) {
+	//$xml = new Cached_PluginInvocation($match);
+	//$xml->setTightness(true,true);
 	return new Cached_PluginInvocation($match);
     }
 }
@@ -610,9 +612,9 @@ class InlineTransformer
 
         foreach ($markup_types as $mtype) {
             $class = "Markup_$mtype";
-            if ($GLOBALS['HTTP_SERVER_VARS']['SERVER_NAME'] == 'phpwiki.sourceforge.net' and 
+            /*if ($GLOBALS['HTTP_SERVER_VARS']['SERVER_NAME'] == 'phpwiki.sourceforge.net' and 
                 in_array($mtype,array('interwiki','plugin')))
-                continue;
+                continue; */
             $this->_addMarkup(new $class);
         }
     }
@@ -645,6 +647,9 @@ class InlineTransformer
             if ($match->regexp_ind == 0) {
                 // No start pattern found before end pattern.
                 // We're all done!
+                if (isa($markup,'Markup_plugin')) {
+                    $output->_content[count($output->_content)-1]->setTightness(!empty($match->prematch),false);
+                }
                 $output->pushContent($match->prematch);
                 $text = $match->postmatch;
                 return $output;
@@ -661,9 +666,12 @@ class InlineTransformer
 
             // Matched markup.  Eat input, push output.
             // FIXME: combine adjacent strings.
+            $current = $markup->markup($match->match, $body);
             $input = $match->postmatch;
-            $output->pushContent($match->prematch,
-                                 $markup->markup($match->match, $body));
+            if (isa($markup,'Markup_plugin')) {
+                $current->setTightness(!empty($match->prematch),!empty($match->postmatch));
+            }
+            $output->pushContent($match->prematch, $current);
 
             $match = $regexps->match($input);
         }
@@ -677,7 +685,7 @@ class InlineTransformer
         if (isa($markup, 'SimpleMarkup'))
             return true;        // Done. SimpleMarkup is simple.
 
-        if (!is_object($markup)) return false;
+        if (!is_object($markup)) return false; // Some error: Should assert
         array_unshift($end_regexps, $markup->getEndRegexp($match));
 
         // Optimization: if no end pattern in text, we know the
