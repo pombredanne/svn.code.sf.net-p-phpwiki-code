@@ -1,7 +1,5 @@
 <?php
 
-$locale["./pgsrc"] =
-   "locale/nl/pgsrc";
 $locale["templates/browse.html"] =
    "locale/nl/templates/browse.html";
 $locale["templates/editpage.html"] =
@@ -10,6 +8,8 @@ $locale["templates/editlinks.html"] =
    "locale/nl/templates/editlinks.html";
 $locale["templates/message.html"] =
    "locale/nl/templates/message.html";
+$locale["./pgsrc"] =
+   "locale/nl/pgsrc";
 $locale["Current page:"] =
    "Huidige pagina:";
 $locale["version %s"] =

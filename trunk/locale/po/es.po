@@ -1,205 +1,218 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# es.po -- PhpWiki's spanish language file
+# Copyright (C) 2000 Sandino Araico Sánchez <sandino@sandino.net>.
+# Sandino Araico Sánchez <sandino@sandino.net>, 2000.
 #
-#, fuzzy
+#
+# Don't change the format of the first three lines,
+# the TP robot wants them like this (I hope).
+#
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: phpwiki 1.1.8\n"
 "POT-Creation-Date: 2000-11-02 22:18+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2000-10-27 16:10-0500\n"
+"Last-Translator: Sandino Araico Sánchez <sandino@sandino.net>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: ENCODING\n"
+"Content-Type: text/plain; charset=8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Date: 2000-10-27 16:10-0500\n"
+"From:  <sandino@sandino.net>\n"
 
 #: lib/config.php:148
 msgid "templates/browse.html"
-msgstr ""
+msgstr "locale/es/templates/browse.html"
 
 #: lib/config.php:149
 msgid "templates/editpage.html"
-msgstr ""
+msgstr "locale/es/templates/editpage.html"
 
 #: lib/config.php:150
 msgid "templates/editlinks.html"
-msgstr ""
+msgstr "locale/es/templates/editlinks.html"
 
 #: lib/config.php:151
 msgid "templates/message.html"
-msgstr ""
+msgstr "locale/es/templates/message.html"
 
 #: lib/config.php:167
 msgid "./pgsrc"
-msgstr ""
+msgstr "locale/es/pgsrc"
 
 #: lib/diff.php:682
 #, c-format
 msgid "WikiDiff::apply: line count mismatch: %s != %s"
-msgstr ""
+msgstr "WikiDiff::apply: conteo de l&iacute;neas difiere: %s != %s"
 
 #: lib/diff.php:742
 msgid "WikiDiff::_check: failed"
-msgstr ""
+msgstr "WikiDiff::_check: fall&oacute;"
 
 #: lib/diff.php:752
 msgid "WikiDiff::_check: edit sequence is non-optimal"
-msgstr ""
+msgstr "WikiDiff::_check: secuencia de edici&oacute;n no es &oacute;ptima"
 
 #: lib/diff.php:756
 #, c-format
 msgid "WikiDiff Okay: LCS = %s"
-msgstr ""
+msgstr "WikiDiff Ok: LCS = %s"
 
 #: lib/diff.php:997
 msgid "Current page:"
-msgstr ""
+msgstr "P&aacute;gina actual:"
 
 #: lib/diff.php:1001 lib/diff.php:1019
 #, c-format
 msgid "version %s"
-msgstr ""
+msgstr "versi&oacute;n %s"
 
 #: lib/diff.php:1003 lib/diff.php:1021
 #, c-format
 msgid "last modified on %s"
-msgstr ""
+msgstr "modificado por &uacute;ltima vez el %s"
 
 #: lib/diff.php:1006 lib/diff.php:1024
 #, c-format
 msgid "by %s"
-msgstr ""
+msgstr "por %s"
 
 #: lib/diff.php:1010 lib/diff.php:1028
 msgid "None"
-msgstr ""
+msgstr "Ninguno"
 
 #: lib/diff.php:1015
 msgid "Archived page:"
-msgstr ""
+msgstr "P&aacute;gina archivada:"
 
 #: lib/diff.php:1037
 msgid "Versions are identical"
-msgstr ""
+msgstr "Las versiones son id&eacute;nticas"
 
 #: lib/diff.php:1045
 #, c-format
 msgid "Diff of %s."
-msgstr ""
+msgstr "Diferencia de %s."
 
 #: lib/display.php:14
 msgid "FrontPage"
-msgstr ""
+msgstr "PrimeraPlana"
 
 #: lib/display.php:31 lib/editpage.php:50
 #, c-format
 msgid "Describe %s here."
-msgstr ""
+msgstr "Describe %s aqu&iacute;."
 
 #: lib/editpage.php:19
 #, c-format
 msgid "Copy of %s"
-msgstr ""
+msgstr "Copia de %s"
 
 #: lib/editpage.php:23
 msgid "No page name passed into editpage!"
 msgstr ""
+"¡Ning&uacute;n nombre de p&aacute;gina pas&oacute; dentro de la "
+"p&aacute;gina de edici&oacute;n!"
 
 #: lib/editpage.php:31 lib/savepage.php:52
 msgid "This page has been locked by the administrator and cannot be edited."
 msgstr ""
+"Esta p&aacute;gina ha sido bloqueada por el administrador y no puede ser "
+"editada."
 
 #: lib/editpage.php:33 lib/savepage.php:32 lib/savepage.php:53
+#, fuzzy
 msgid "Sorry for the inconvenience."
-msgstr ""
+msgstr "Disculpe la inconveniencia."
 
 #: lib/editpage.php:35 lib/savepage.php:54
 #, c-format
 msgid "Problem while editing %s"
-msgstr ""
+msgstr "Problema al editar %s"
 
 #: lib/fullsearch.php:15
 #, c-format
 msgid "Searching for \"%s\" ....."
-msgstr ""
+msgstr "Buscando \"%s\" ..."
 
 #: lib/fullsearch.php:44
 #, c-format
 msgid "%d matches found in %d pages."
-msgstr ""
+msgstr "%d veces encontrado en %d p&aacute;ginas."
 
 #: lib/fullsearch.php:47
 msgid "Full Text Search Results"
-msgstr ""
+msgstr "Resultados de la búsqueda en el texto completo"
 
 #: lib/msql.php:29 lib/mysql.php:33
 msgid "Cannot establish connection to database, giving up."
 msgstr ""
+"No se puede establecer conexi&oacute;n con la base de datos, me doy por "
+"vencido."
 
 #: lib/msql.php:31 lib/msql.php:37
 #, c-format
 msgid "Error message: %s"
-msgstr ""
+msgstr "Mensaje de error: %s"
 
 #: lib/msql.php:35 lib/mysql.php:39
 #, c-format
 msgid "Cannot open database %s, giving up."
-msgstr ""
+msgstr "No puedo abrir la base de datos %s me doy por vencido."
 
 #: lib/msql.php:200 lib/msql.php:276
 #, c-format
 msgid "Insert/update failed: %s"
-msgstr ""
+msgstr "Inserci&oacute;n/actualizaci&oacute;n fall&oacute;: %s"
 
 #: lib/msql.php:211 lib/msql.php:286
 #, c-format
 msgid "Delete on %s failed: %s"
-msgstr ""
+msgstr "Eliminaci&oacute;n en %s fall&oacute;: %s"
 
 #: lib/msql.php:227 lib/msql.php:302
 #, c-format
 msgid "Insert into %s failed: %s"
-msgstr ""
+msgstr "Inserci&oacute;n en %s fall&oacute;: %s"
 
 #: lib/mysql.php:35 lib/mysql.php:41 lib/mysql.php:115
 #, c-format
 msgid "MySQL error: %s"
-msgstr ""
+msgstr "Error de MySQL: %s"
 
 #: lib/mysql.php:113
 #, c-format
 msgid "Error writing page '%s'"
-msgstr ""
+msgstr "Error al escribir la p&aacute;gina `%s'"
 
 #: lib/pageinfo.php:9
 msgid "Enter a page name"
-msgstr ""
+msgstr "Escriba un nombre de p&aacute;gina"
 
 #: lib/pageinfo.php:10
 msgid "Go"
-msgstr ""
+msgstr "Aceptar"
 
 #: lib/pageinfo.php:21
 msgid "Show the page source and references"
-msgstr ""
+msgstr "Mostrar la fuente de la p&aacute;gina y referencias"
 
 #: lib/pageinfo.php:26 lib/pageinfo.php:75
 msgid "PageInfo"
-msgstr ""
+msgstr "InformacionDeLaPagina"
 
 #: lib/pageinfo.php:36
 #, c-format
 msgid "Page name '%s' is not in the database"
-msgstr ""
+msgstr "El nombre de la p&aacute;gina `%s' no est&aacute; en la base de datos"
 
 #: lib/pageinfo.php:64
 msgid "Current version"
-msgstr ""
+msgstr "Versi&oacute;n actual:"
 
 #: lib/pageinfo.php:70
 msgid "Archived version"
-msgstr ""
+msgstr "Versi&oacute;n archivada:"
 
 #: lib/savepage.php:18
 msgid ""
@@ -239,42 +252,42 @@ msgid "Press <b>Save</b> again."
 msgstr ""
 
 #: lib/savepage.php:36
-#, c-format
+#, fuzzy, c-format
 msgid "Problem while updating %s"
-msgstr ""
+msgstr "Problema al editar %s"
 
 #: lib/savepage.php:76
 #, c-format
 msgid "Thank you for editing %s."
-msgstr ""
+msgstr "Gracias por editar %s."
 
 #: lib/savepage.php:106
 msgid "Your careful attention to detail is much appreciated."
-msgstr ""
+msgstr "Tu cuidadosa atenci&oacute;n a los detalles es muy agradecida."
 
 #: lib/setupwiki.php:21
 #, c-format
 msgid "Inserting page %s, version %s from %s"
-msgstr ""
+msgstr "Insertando p&aacute;gina %s, versi&oacute;n %s de %s"
 
 #: lib/stdlib.php:36
 msgid "WikiFatalError"
-msgstr ""
+msgstr "ErrorFatalDeWiki"
 
 #: lib/stdlib.php:53
 #, c-format
 msgid "%d best incoming links:"
-msgstr ""
+msgstr "%d mejores ligas de entrada:"
 
 #: lib/stdlib.php:63
 #, c-format
 msgid "%d best outgoing links:"
-msgstr ""
+msgstr "%d mejores ligas de salida:"
 
 #: lib/stdlib.php:74
 #, c-format
 msgid "%d most popular nearby:"
-msgstr ""
+msgstr "%d las m&aacute;s populares:"
 
 #: lib/stdlib.php:186 lib/stdlib.php:194
 msgid "Search"
@@ -282,8 +295,8 @@ msgstr ""
 
 #: lib/stdlib.php:295
 msgid "Stack bounds exceeded in SetHTMLOutputMode"
-msgstr ""
+msgstr "L&iacute;mites de la pila excedidos en SetHTMLOutputMode"
 
 #: lib/stdlib.php:349 lib/stdlib.php:412
 msgid "RecentChanges"
-msgstr ""
+msgstr "CambiosRecientes"
