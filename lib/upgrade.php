@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.38 2005-01-25 07:57:02 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.39 2005-01-30 23:09:17 rurban Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -409,6 +409,29 @@ function CheckDatabaseUpdate(&$request) {
             echo _("OK");
         }
         echo "<br />\n";
+        if (substr($backend_type,0,5) == 'mysql') {
+            // upgrade to 4.1.8 destroyed my session table: 
+            // sess_id => varchar(10), sess_data => varchar(5). For others obviously also.
+  	    echo _("check for new session.sess_id sanity")," ... ";
+            $result = $dbh->genericSqlQuery("DESCRIBE $session_tbl");
+            if ($DBParams['dbtype'] == 'SQL') {
+            	$iter = new WikiDB_backend_PearDB_generic_iter($backend, $result);
+            } else {
+            	$iter = new WikiDB_backend_ADODB_generic_iter($backend, $result, 
+            		        array("Field", "Type", "Null", "Key", "Default", "Extra"));
+            }
+            while ($col = $iter->next()) {
+                if ($col["Field"] == 'sess_id' and !strstr(strtolower($col["Type"]), 'char(32)')) {
+            	    $dbh->genericSqlQuery("ALTER TABLE $session_tbl CHANGE sess_id sess_id CHAR(32) NOT NULL");
+            	    echo "sess_id ", $col["Type"], " ", _("fixed"), " =&gt; CHAR(32) ";
+            	}
+            	if ($col["Field"] == 'sess_ip' and !strstr(strtolower($col["Type"]), 'char(15)')) {
+            	    $dbh->genericSqlQuery("ALTER TABLE $session_tbl CHANGE sess_ip sess_ip CHAR(15) NOT NULL");
+            	    echo "sess_ip ", $col["Type"], " ", _("fixed"), " =&gt; CHAR(15) ";
+            	}
+            }
+            echo "<br />\n";
+        }
     }
 
     // mysql >= 4.0.4 requires LOCK TABLE privileges
@@ -810,6 +833,9 @@ function DoUpgrade($request) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.38  2005/01/25 07:57:02  rurban
+ add dbadmin form, add mysql LOCK TABLES check, add plugin args updater (not yet activated)
+
  Revision 1.37  2005/01/20 10:19:08  rurban
  add InterWikiMap to special pages
 
