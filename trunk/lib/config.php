@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.71 2003-02-22 21:06:10 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.72 2003-02-23 20:06:58 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -399,7 +399,8 @@ if (defined('USE_DB_SESSION') and USE_DB_SESSION) {
 }
 
 if (ALLOW_USER_LOGIN and empty($DBAuthParams['auth_dsn']) and empty($DBAuthParams['auth_user_file'])) {
-    $DBAuthParams['auth_dsn'] = $DBParams['dsn'];
+    if (isset($DBParams['dsn']))
+        $DBAuthParams['auth_dsn'] = $DBParams['dsn'];
 }
 
 
