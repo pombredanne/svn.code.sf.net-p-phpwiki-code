@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: difflib.php,v 1.3 2001-12-15 02:39:43 dairiki Exp $');
+rcs_id('$Id: difflib.php,v 1.4 2001-12-16 16:47:17 dairiki Exp $');
 // difflib.php
 //
 // A PHP diff engine for phpwiki.
@@ -20,6 +20,14 @@ class _DiffOp {
     
     function reverse() {
         trigger_error("pure virtual", E_USER_ERROR);
+    }
+
+    function norig() {
+        return $this->orig ? sizeof($this->orig) : 0;
+    }
+
+    function nfinal() {
+        return $this->final ? sizeof($this->final) : 0;
     }
 }
 
@@ -100,13 +108,17 @@ class _DiffOp_Change extends _DiffOp {
  */
 class _DiffEngine
 {
-    var $xv = array(), $yv = array();
-
     function diff ($from_lines, $to_lines) {
         $n_from = sizeof($from_lines);
         $n_to = sizeof($to_lines);
 
-
+        $this->xchanged = $this->ychanged = array();
+        $this->xv = $this->yv = array();
+        $this->xind = $this->yind = array();
+        unset($this->seq);
+        unset($this->in_seq);
+        unset($this->lcs);
+         
         // Skip leading common lines.
         for ($skip = 0; $skip < $n_from && $skip < $n_to; $skip++) {
             if ($from_lines[$skip] != $to_lines[$skip])
@@ -579,7 +591,7 @@ class Diff
         }
         return $lines;
     }
-        
+
     /**
      * Check a Diff for validity. 
      *
@@ -610,15 +622,7 @@ class Diff
     }
 }
 
-
-if (!function_exists('array_map')) {
-    function array_map($map_func, $array) {
-        $result = array();
-        foreach ($array as $x)
-            $result[] = call_user_func($map_func, $x);
-        return $result;
-    }
-}
+            
 
             
 /**
