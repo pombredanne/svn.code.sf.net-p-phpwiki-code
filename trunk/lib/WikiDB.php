@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.94 2004-11-01 10:43:56 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.95 2004-11-05 20:53:35 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -928,9 +928,16 @@ class WikiDB_Page
                                 $request->_dbi->set('notify', $notify);
                             }
                         } else {
-                            $u = WikiUser($userid);
-                            $u->getPreferences();
-                            if ($u->_prefs->get('emailVerified')) {
+                            // not current user
+                            if (ENABLE_USER_NEW) {
+                                $u = WikiUser($userid);
+                                $u->getPreferences();
+                                $prefs = &$u->_prefs;
+                            } else {
+                                $u = new WikiUser($GLOBALS['request'], $userid);
+                                $prefs = $u->getPreferences();
+                            }
+                            if ($prefs->get('emailVerified')) {
                                 $emails[] = $user['email'];
                                 $userids[] = $userid;
                                 $notify[$page][$userid]['verified'] = 1;
@@ -2027,6 +2034,12 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.94  2004/11/01 10:43:56  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 // Revision 1.93  2004/10/14 17:17:57  rurban
 // remove dbi WikiDB_Page param: use global request object instead. (memory)
 // allow most_popular sortby arguments

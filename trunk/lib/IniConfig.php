@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.58 2004-11-03 16:50:31 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.59 2004-11-05 20:53:35 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -72,6 +72,7 @@ function IniConfig($file) {
          'DEFAULT_DUMP_DIR', 'HTML_DUMP_DIR',
          'HTML_DUMP_SUFFIX', 'MAX_UPLOAD_SIZE', 'MINOR_EDIT_TIMEOUT',
          'ACCESS_LOG', 'CACHE_CONTROL', 'CACHE_CONTROL_MAX_AGE',
+         'COOKIE_EXPIRATION_DAYS', 'COOKIE_DOMAIN',
          'PASSWORD_LENGTH_MINIMUM', 'USER_AUTH_POLICY', 
          'GROUP_METHOD',
          'EDITING_POLICY', 'THEME', 'CHARSET',
@@ -82,7 +83,6 @@ function IniConfig($file) {
          'AUTHORPAGE_TITLE', 'AUTHORPAGE_URL', 'SERVER_NAME', 'SERVER_PORT',
          'SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH',
          'WIKI_NAME_REGEXP',
-         //'PLUGIN_CACHED_CACHE_DIR',
          'PLUGIN_CACHED_DATABASE', 'PLUGIN_CACHED_FILENAME_PREFIX',
          'PLUGIN_CACHED_HIGHWATER', 'PLUGIN_CACHED_LOWWATER', 'PLUGIN_CACHED_MAXLIFETIME',
          'PLUGIN_CACHED_MAXARGLEN', 'PLUGIN_CACHED_IMGTYPES'
@@ -644,6 +644,8 @@ function fix_configs() {
     if (!defined('REQUIRE_SIGNIN_BEFORE_EDIT')) define('REQUIRE_SIGNIN_BEFORE_EDIT', ! ALLOW_ANON_EDIT);
     if (!defined('ALLOW_BOGO_LOGIN')) define('ALLOW_BOGO_LOGIN', true);
     if (!ENABLE_USER_NEW) {
+      if (!defined('ALLOW_HTTP_AUTH_LOGIN'))
+          define('ALLOW_HTTP_AUTH_LOGIN', false);
       if (!defined('ALLOW_LDAP_LOGIN')) 
           define('ALLOW_LDAP_LOGIN', function_exists('ldap_connect') and defined('LDAP_AUTH_HOST'));
       if (!defined('ALLOW_IMAP_LOGIN')) 
@@ -657,6 +659,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.58  2004/11/03 16:50:31  rurban
+// some new defaults and constants, renamed USE_DOUBLECLICKEDIT to ENABLE_DOUBLECLICKEDIT
+//
 // Revision 1.57  2004/11/01 10:43:55  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session
