@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.7\n"
-"POT-Creation-Date: 2001-12-21 02:13-0500\n"
+"POT-Creation-Date: 2001-12-21 03:31-0500\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -490,9 +490,9 @@ msgstr ""
 msgid "(Any password will work, except, of course for the admin user.)"
 msgstr ""
 
-#: ../lib/diff.php:172
-#, fuzzy
-msgid "version"
+#: ../lib/diff.php:172 ../lib/diff.php:201 ../lib/diff.php:211
+#, fuzzy, c-format
+msgid "version %d"
 msgstr "versie %s"
 
 #: ../lib/diff.php:175
@@ -508,11 +508,6 @@ msgstr "door %s"
 #: ../lib/diff.php:180
 msgid "None"
 msgstr "Geen"
-
-#: ../lib/diff.php:201 ../lib/diff.php:211
-#, fuzzy, c-format
-msgid "version %d"
-msgstr "versie %s"
 
 #: ../lib/diff.php:205
 #, fuzzy
@@ -1050,6 +1045,10 @@ msgid ""
 "DBA files are in the %s directory. Please read the INSTALL file and move the "
 "DB file to a permanent location or risk losing all the pages!"
 msgstr ""
+
+#, fuzzy
+#~ msgid "version"
+#~ msgstr "versie %s"
 
 #, fuzzy
 #~ msgid "Version"
