@@ -1,5 +1,5 @@
 /*
-  $Id: Hawaiian.css,v 1.14 2002-01-26 09:19:42 carstenklapp Exp $
+  $Id: Hawaiian.css,v 1.15 2002-02-03 09:10:06 carstenklapp Exp $
 
   Classes:
 
@@ -193,12 +193,11 @@ textarea.wikiedit { width: 100%; margin-top: 1ex; }
 
 
 /* Calendar plugin */
-
 a.cal-hide, a.cal-arrow { text-decoration: none; }
-.cal-arrow { font-weight: bold; }
-.cal-header { font-size: larger; }
-.cal-dayname { font-size: smaller; text-decoration: underline; }
-table.cal { border: thin solid black; } 
+.cal-arrow       { font-weight: bold; }
+table.cal-header { font-size: larger; }
+.cal-dayname     { font-size: smaller; text-decoration: underline; }
+table.cal        { border: thin solid black; } 
 
 
 /* IncludePage plugin */

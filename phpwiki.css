@@ -1,5 +1,5 @@
 /*
-  $Id: phpwiki.css,v 1.28 2002-01-26 09:19:42 carstenklapp Exp $
+  $Id: phpwiki.css,v 1.29 2002-02-03 09:10:07 carstenklapp Exp $
 
   Classes:
 
@@ -203,11 +203,11 @@ textarea.wikiedit { width: 100%; margin-top: 1ex; }
 /* Calendar plugin */
 
 a.cal-hide, a.cal-arrow { text-decoration: none; }
-.cal-arrow      { font-weight: bold; }
-.cal-header     { font-size: larger; }
-.cal-dayname    { font-size: smaller; text-decoration: underline; }
+.cal-arrow       { font-weight: bold; }
+table.cal-header { font-size: larger; }
+.cal-dayname     { font-size: smaller; text-decoration: underline; }
 td.cal-today,
-table.cal       { border: thin solid black; } 
+ table.cal       { border: thin solid black; } 
 
 /* IncludePage plugin */
 .transclusion-title {

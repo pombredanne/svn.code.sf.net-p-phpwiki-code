@@ -1,5 +1,5 @@
 /*
-  $Id: phpwiki-modern.css,v 1.8 2002-02-02 20:54:11 carstenklapp Exp $
+  $Id: phpwiki-modern.css,v 1.9 2002-02-03 09:10:06 carstenklapp Exp $
 
   Inspiration for this stylesheet:
 
@@ -37,7 +37,7 @@ TODO: Get rid of tables in wikiaction forms.
 
 /* FIXME: logo needs to be moved, it's floating upwards in Mozilla for some reason */
 img { border : 0;
-      vertical-align: baseline; }
+      /*vertical-align: baseline;*/ }
 
 BODY {
  background: #EEEEEE; /* light grey */
@@ -275,12 +275,12 @@ textarea.wikiedit { width: 100%; margin-top: 1ex; }
 
 
 /* Calendar plugin */
-
-a.cal-hide, a.cal-arrow { text-decoration: none; }
-.cal-arrow      { font-weight: bold; }
-.cal-header     { font-size: larger; }
-.cal-dayname    { font-size: smaller; text-decoration: underline; }
-table.cal       { border: thin solid black; } 
+a.cal-hide,
+ a.cal-arrow { text-decoration: none; }
+.cal-arrow       { font-weight: bold; }
+table.cal-header { font-size: larger; }
+.cal-dayname     { font-size: smaller; text-decoration: underline; }
+table.cal        { border: thin solid black; } 
 
 
 /* IncludePage plugin */

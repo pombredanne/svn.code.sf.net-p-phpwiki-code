@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.14 2002-01-26 04:43:39 dairiki Exp $');
+rcs_id('$Id: Calendar.php,v 1.15 2002-02-03 09:10:06 carstenklapp Exp $');
 
 if (!defined('SECONDS_PER_DAY'))
     define('SECONDS_PER_DAY', 24 * 3600);
@@ -69,7 +69,8 @@ extends WikiPlugin
         
         return HTML::tr(HTML::td(array('colspan' => 7,
                                        'align'   => 'center'),
-                                 HTML::table(array('width' => '100%'), $row)));
+                                 HTML::table(array('width' => '100%',
+                                                   'class' => 'cal-header'), $row)));
     }
 
 

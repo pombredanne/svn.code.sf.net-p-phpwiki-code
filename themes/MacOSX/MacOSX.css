@@ -1,5 +1,5 @@
 /*
-  $Id: MacOSX.css,v 1.16 2002-01-26 09:20:59 carstenklapp Exp $
+  $Id: MacOSX.css,v 1.17 2002-02-03 09:10:06 carstenklapp Exp $
 
   Classes:
 
@@ -178,14 +178,34 @@ textarea.wikiedit { width: 100%; margin-top: 1ex; }
 
 
 /* Calendar plugin */
-
-a.cal-hide, a.cal-arrow { text-decoration: none; }
-.cal-arrow { font-weight: bold; }
-.cal-header { font-size: larger; }
-.cal-dayname { font-size: smaller; text-decoration: underline; }
-table.cal   { border: thin solid black; } 
-td.cal-today { background: #c4e0fb; }
-
+a.cal-hide,
+ a.cal-arrow { text-decoration: none; }
+.cal-arrow   { font-weight: bold; }
+.cal-dayname { font-size: smaller;
+               text-decoration: none; }
+table.cal   { 
+  border-top:    solid 1px #7c7c7c;
+  border-left:   solid 1px #c3c3c3;
+  border-bottom: solid 1px #dddddd;
+  border-right:  solid 1px #c3c3c3;
+  background:    #bebebe; } 
+table.cal td {
+  background: white;
+  border-top:    solid 1px #7c7c7c;
+  border-left:   solid 1px #c3c3c3;
+  border-bottom: solid 1px #dddddd;
+  border-right:  solid 1px #c3c3c3; }
+table.cal-header td {
+  font-size:  larger;
+  background: white;
+  border: 0px; }
+table.cal td.cal-dayname { background: #f4f4f4; }
+table.cal td.cal-today {
+  background:    #f4f4f4;
+  border-top:    solid 1px #7c7c7c;
+  border-left:   solid 1px #c3c3c3;
+  border-bottom: solid 1px #dddddd;
+  border-right:  solid 1px #c3c3c3; }
 
 /* IncludePage plugin */
 .transclusion-title {
