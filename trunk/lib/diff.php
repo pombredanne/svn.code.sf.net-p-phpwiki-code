@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.11 2001-04-07 00:34:30 dairiki Exp $');
+rcs_id('$Id: diff.php,v 1.12 2001-06-26 18:03:41 uckelman Exp $');
 // diff.php
 //
 // A PHP diff engine for phpwiki.
@@ -1049,24 +1049,33 @@ function PageInfoRow ($label, $hash)
 
 if (isset($pagename))
 {
-  $wiki = RetrievePage($dbi, $pagename, $WikiPageStore);
-  $archive= RetrievePage($dbi, $pagename, $ArchivePageStore);
+	if (!isset($ver1)) {
+		if (isset($ver2)) $ver1 = $ver2 - 1;
+		else {
+			$ver1 = GetMaxVersionNumber($dbi, $pagename, $ArchivePageStore);
+			$ver2 = 0;
+		}
+	}
+	elseif (!isset($ver2)) $ver2 = 0;
+
+	$older = RetrievePage($dbi, $pagename, SelectStore($dbi, $pagename, $ver1, $WikiPageStore, $ArchivePageStore), $ver1);
+	$newer = RetrievePage($dbi, $pagename, SelectStore($dbi, $pagename, $ver2, $WikiPageStore, $ArchivePageStore), $ver2);
 
   $html = Element('table',
-		  PageInfoRow(gettext ("Current page:"), $wiki)
-		  . PageInfoRow(gettext ("Archived page:"), $archive));
+		  PageInfoRow(gettext ("Newer page:"), $newer)
+		  . PageInfoRow(gettext ("Older page:"), $older));
 		  
   $html .= "<p>\n";
   
-  if (is_array($wiki) && is_array($archive))
+  if (is_array($newer) && is_array($older))
     {
-      $diff = new WikiDiff($archive['content'], $wiki['content']);
+      $diff = new WikiDiff($older['content'], $newer['content']);
       if ($diff->isEmpty()) {
 	  $html .= '<hr>[' . gettext ("Versions are identical") . ']';
       } else {
 	  //$fmt = new WikiDiffFormatter;
 	  $fmt = new WikiUnifiedDiffFormatter;
-	  $html .= $fmt->format($diff, $archive['content']);
+	  $html .= $fmt->format($diff, $older['content']);
       }
     }
 
