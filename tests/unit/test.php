@@ -63,8 +63,9 @@ $rootdir = $cur_dir . '/../../';
 $ini_sep = substr(PHP_OS,0,3) == 'WIN' ? ';' : ':';
 $include_path = ini_get('include_path') . $ini_sep . $rootdir . $ini_sep . $rootdir . "lib/pear";
 ini_set('include_path', $include_path);
+define('DEFAULT_LANGUAGE','en'); // don't use browser detection
 
-if ($HTTP_SERVER_VARS["SERVER_NAME"] == 'phpwiki.sourceforge.net') {
+if (!empty($HTTP_SERVER_VARS) and $HTTP_SERVER_VARS["SERVER_NAME"] == 'phpwiki.sourceforge.net') {
     ini_set('include_path', ini_get('include_path') . ":/usr/share/pear");
     //define('ENABLE_PAGEPERM',false); // costs nothing
     define('USECACHE',false); // really?
@@ -78,6 +79,7 @@ $database_backends = array(
                            'SQL',
                            'ADODB',
                            );
+//TODO: convert cvs test                           
 //TODO: read some database values from config.ini, just use the "test_" prefix
 // "flatfile" testing occurs in "tests/unit/.testbox/"
 // "dba" needs the DATABASE_DBA_HANDLER, also in the .textbox directory
@@ -373,6 +375,7 @@ elseif (!ini_get("register_argc_argv"))
 // purge the testbox
     
 $debug_level = 1; //was 9, _DEBUG_VERBOSE | _DEBUG_TRACE
+if (defined('E_STRICT')) $debug_level = 5; // add PARSER flag on php5
 $user_level  = 1; // BOGO (conflicts with RateIt)
 // use argv (from cli) or tests (from browser) params to run only certain tests
 // avoid pear: Console::Getopt
