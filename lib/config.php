@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.36 2001-03-11 17:56:36 wainstead Exp $');
+rcs_id('$Id: config.php,v 1.37 2001-03-14 19:48:29 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
  *
@@ -116,6 +116,52 @@ else
 
 if (setlocale('LC_CTYPE', 0) == 'C')
    setlocale('LC_CTYPE', 'en_US.iso-8859-1');
+
+/** string pcre_fix_posix_classes (string $regexp)
+ *
+ * Older version (pre 3.x?) of the PCRE library do not support
+ * POSIX named character classes (e.g. [[:alnum:]]).
+ *
+ * This is a helper function which can be used to convert a regexp
+ * which contains POSIX named character classes to one that doesn't.
+ *
+ * All instances of strings like '[:<class>:]' are replaced by the equivalent
+ * enumerated character class.
+ *
+ * Implementation Notes:
+ *
+ * Currently we use hard-coded values which are valid only for
+ * ISO-8859-1.  Also, currently on the classes [:alpha:], [:alnum:],
+ * [:upper:] and [:lower:] are implemented.  (The missing classes:
+ * [:blank:], [:cntrl:], [:digit:], [:graph:], [:print:], [:punct:],
+ * [:space:], and [:xdigit:] could easily be added if needed.)
+ *
+ * This is a hack.  I tried to generate these classes automatically
+ * using ereg(), but discovered that in my PHP, at least, ereg() is
+ * slightly broken w.r.t. POSIX character classes.  (It includes
+ * "\xaa" and "\xba" in [:alpha:].)
+ *
+ * So for now, this will do.  --Jeff <dairiki@dairiki.org> 14 Mar, 2001
+ */
+function pcre_fix_posix_classes ($regexp) {
+   // First check to see if our PCRE lib supports POSIX character
+   // classes.  If it does, there's nothing to do.
+   if (preg_match('/[[:upper:]]/', 'A'))
+      return $regexp;
+
+   static $classes = array(
+      'alnum' => "0-9A-Za-z\xc0-\xd6\xd8-\xf6\xf8-\xff",
+      'alpha' => "A-Za-z\xc0-\xd6\xd8-\xf6\xf8-\xff",
+      'upper' => "A-Z\xc0-\xd6\xd8-\xde",
+      'lower' => "a-z\xdf-\xf6\xf8-\xff"
+      );
+
+   $keys = join('|', array_keys($classes));
+
+   return preg_replace("/\[:($keys):]/e", '$classes["\1"]', $regexp);
+}
+	 
+$WikiNameRegexp = pcre_fix_posix_classes($WikiNameRegexp);
 
 //////////////////////////////////////////////////////////////////
 // Autodetect URL settings:
