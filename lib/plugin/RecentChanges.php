@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.105 2005-01-25 03:50:54 uckelman Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.106 2005-02-02 19:39:10 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -135,7 +135,7 @@ extends _RecentChanges_Formatter
 
     function pageLink ($rev, $link_text=false) {
 
-        return WikiLink($rev,'auto',$link_text);
+        return WikiLink($this->include_versions_in_URLs() ? $rev : $rev->getPage(),'auto',$link_text);
         /*
         $page = $rev->getPage();
         global $WikiTheme;
@@ -735,7 +735,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.105 $");
+                            "\$Revision: 1.106 $");
     }
 
     function managesValidators() {
@@ -922,6 +922,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.105  2005/01/25 03:50:54  uckelman
+// pre_description is a member function, so call with $this->.
+//
 // Revision 1.104  2005/01/24 23:15:16  uckelman
 // The extra description for RelatedChanges was appearing in RecentChanges
 // and PageHistory due to a bad test in _RecentChanges_HtmlFormatter. Fixed.
