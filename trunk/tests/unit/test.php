@@ -27,6 +27,8 @@
  * These tests are unrelated to test/maketest.pl, which do not use PHPUnit.
  * These tests run from the command-line as well as from the browser.
  * Use the argv (from cli) or tests (from browser) params to run only certain tests.
+ *
+ * $ tests.php test=<testname1> test=<testname2> ... db=dba debug=9 level=10
  */
 /****************************************************************
    User definable options
@@ -66,16 +68,9 @@ $rootdir = $cur_dir . '/../../';
 $ini_sep = substr(PHP_OS,0,3) == 'WIN' ? ';' : ':';
 ini_set('include_path', ini_get('include_path') . $ini_sep . $rootdir);
 
-# This quiets a warning in config.php
+# Quiet warnings in IniConfig.php
 $HTTP_SERVER_VARS['REMOTE_ADDR'] = '127.0.0.1';
 $HTTP_SERVER_VARS['HTTP_USER_AGENT'] = "PHPUnit";
-
-define('PHPWIKI_NOMAIN',true);
-define('DEBUG', 9); //_DEBUG_VERBOSE | _DEBUG_TRACE
-
-# Other needed files
-require_once $rootdir.'index.php';
-require_once $rootdir.'lib/main.php';
 
 function printSimpleTrace($bt) {
     //print_r($bt);
@@ -102,7 +97,10 @@ $foo = assert_options( ASSERT_CALLBACK, 'assert_callback');
 # Get error reporting to call back, too
 #
 // set the error reporting level for this script
-error_reporting(E_ALL);
+if (defined('E_STRICT') and (E_ALL & E_STRICT)) // strict php5?
+    error_reporting(E_ALL & ~E_STRICT); 	// exclude E_STRICT
+else
+    error_reporting(E_ALL); // php4
 // This is too strict, fails on every notice and warning. 
 /*
 function myErrorHandler$errno, $errstr, $errfile, $errline) {
@@ -125,45 +123,6 @@ function _ErrorHandler_CB(&$error) {
 // This is already done via _DEBUG_TRACE
 //$ErrorManager->pushErrorHandler(new WikiFunctionCb('_ErrorHandler_CB'));
 */
-
-if (ENABLE_USER_NEW) {
-    class MockUser extends _WikiUser {
-        function MockUser($name, $isSignedIn) {
-            $this->_userid = $name;
-            $this->_isSignedIn = $isSignedIn;
-        }
-        function isSignedIn() {
-            return $this->_isSignedIn;
-        }
-    }
-} else {
-    class MockUser extends WikiUser {
-        function MockUser($name, $isSignedIn) {
-            $this->_userid = $name;
-            $this->_isSignedIn = $isSignedIn;
-        }
-        function isSignedIn() {
-            return $this->_isSignedIn;
-        }
-    }
-}
-
-//FIXME: ignore cached requests (if-modified-since) from cli
-class MockRequest extends WikiRequest {
-    function MockRequest(&$dbparams) {
-        $this->_dbi = WikiDB::open($dbparams);
-        $this->_user = new MockUser("a_user", true);
-        $this->_group = WikiGroup::getGroup();
-        $this->_args = array('pagename' => 'HomePage', 'action' => 'browse');
-        $this->Request();
-    }
-    function getGroup() {
-    	if (is_object($this->_group))
-            return $this->_group;
-        else // FIXME: this is set to "/f:" somewhere.
-            return WikiGroup::getGroup();
-    }
-}
 
 function purge_dir($dir) {
     static $finder;
@@ -206,19 +165,6 @@ function purge_testbox() {
     }
 }
 
-global $ErrorManager;
-$ErrorManager->setPostponedErrorMask(EM_FATAL_ERRORS|EM_WARNING_ERRORS|EM_NOTICE_ERRORS);
-
-/*
-if (ENABLE_USER_NEW)
-    $request->_user = WikiUser('AnonUser');
-else {
-    $request->_user = new WikiUser($request, 'AnonUser');
-    $request->_prefs = $request->_user->getPreferences();
-}
-*/
-include_once("themes/" . THEME . "/themeinfo.php");
-
 ####################################################################
 #
 # End of preamble, run the test suite ..
@@ -233,6 +179,111 @@ if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']))
     echo "<pre>\n";
 // purge the testbox
     
+$debug_level = 9; //_DEBUG_VERBOSE | _DEBUG_TRACE
+$user_level  = 1; // BOGO
+// use argv (from cli) or tests (from browser) params to run only certain tests
+// avoid pear: Console::Getopt
+$alltests = array('InlineParserTest','HtmlParserTest','PageListTest','ListPagesTest',
+                  'SetupWiki','DumpHtml','AllPagesTest','AllUsersTest','OrphanedPagesTest');
+if (isset($HTTP_SERVER_VARS['REQUEST_METHOD'])) {
+    $argv = array();
+    foreach ($HTTP_GET_VARS as $key => $val) {
+        $argv[] = $key."=".$val;
+    }
+} elseif (!empty($argv) and preg_match("/test\.php$/", $argv[0]))
+    array_shift($argv);
+if (!empty($argv)) {
+    //support db=file db=dba test=SetupWiki test=DumpHtml debug=num
+    $runtests = array();
+    $run_database_backends = array();
+    foreach ($argv as $arg) {
+        if (in_array($arg, $alltests))
+            $runtests[] = $arg;
+        elseif (preg_match("/test=(.+)/",$arg,$m) and in_array($m[1], $alltests))
+            $runtests[] = $m[1];
+        elseif (preg_match("/db=(.+)/",$arg,$m) and in_array($m[1], $database_backends))
+            $run_database_backends[] = $m[1];
+        elseif (preg_match("/debug=(\d+)/",$arg,$m))
+            $debug_level = $m[1];
+        elseif (preg_match("/level=(\d+)/",$arg,$m))
+            $user_level = $m[1];
+        elseif ($debug_level & 1)
+            echo "ignored arg: ", $arg, "\n";
+    }
+    if (!empty($run_database_backends))
+        $database_backends = $run_database_backends;
+    if (!empty($runtests))
+        $alltests = $runtests;
+    if ($debug_level & 1) {
+        echo "test=", join(",",$alltests),"\n";
+        echo "db=", join(",",$database_backends),"\n";
+        echo "debug=", $debug_level,"\n";
+        echo "level=", $user_level,"\n";
+        echo "pid=",getmypid(),"\n";
+        echo "\n";
+    }
+    flush();
+}
+define('DEBUG', $debug_level); 
+
+define('PHPWIKI_NOMAIN', true);
+# Other needed files
+require_once $rootdir.'index.php';
+require_once $rootdir.'lib/main.php';
+
+global $ErrorManager;
+$ErrorManager->setPostponedErrorMask(EM_FATAL_ERRORS|EM_WARNING_ERRORS|EM_NOTICE_ERRORS);
+//FIXME: ignore cached requests (if-modified-since) from cli
+class MockRequest extends WikiRequest {
+    function MockRequest(&$dbparams) {
+        $this->_dbi = WikiDB::open($dbparams);
+        $this->_user = new MockUser("a_user", $GLOBALS['user_level']);
+        $this->_group = WikiGroup::getGroup();
+        $this->_args = array('pagename' => 'HomePage', 'action' => 'browse');
+        $this->Request();
+    }
+    function getGroup() {
+    	if (is_object($this->_group))
+            return $this->_group;
+        else // FIXME: this is set to "/f:" somewhere.
+            return WikiGroup::getGroup();
+    }
+}
+
+if (ENABLE_USER_NEW) {
+    class MockUser extends _WikiUser {
+        function MockUser($name, $level) {
+            $this->_userid = $name;
+            $this->_isSignedIn = $level > 1;
+            $this->_level = $level;
+        }
+        function isSignedIn() {
+            return $this->_isSignedIn;
+        }
+    }
+} else {
+    class MockUser extends WikiUser {
+        function MockUser($name, $level) {
+            $this->_userid = $name;
+            $this->_isSignedIn = $level > 1;
+            $this->_level = $level;
+        }
+        function isSignedIn() {
+            return $this->_isSignedIn;
+        }
+    }
+}
+
+/*
+if (ENABLE_USER_NEW)
+    $request->_user = WikiUser('AnonUser');
+else {
+    $request->_user = new WikiUser($request, 'AnonUser');
+    $request->_prefs = $request->_user->getPreferences();
+}
+*/
+include_once("themes/" . THEME . "/themeinfo.php");
+
 // save and restore all args for each test.
 class phpwiki_TestCase extends PHPUnit_TestCase {
     function setUp() { 
@@ -246,7 +297,9 @@ class phpwiki_TestCase extends PHPUnit_TestCase {
         if (DEBUG & _DEBUG_TRACE) {
             echo "-- MEMORY USAGE: ";
             if (isWindows()) { // requires a newer cygwin
-	        echo `cat /proc/meminfo | grep Mem:|perl -ane"print \$F[2];"`,"\n";
+                // what we want is the process memory only: apache or php
+	        $pid = getmypid();
+	        echo `cat /proc/$pid/statm |cut -f1`,"\n";
             } elseif (function_exists('memory_get_usage')) {
                 echo memory_get_usage(),"\n";
             } elseif (function_exists('getrusage')) {
@@ -259,24 +312,6 @@ class phpwiki_TestCase extends PHPUnit_TestCase {
             flush();
         }
     }
-}
-
-// use argv (from cli) or tests (from browser) params to run only certain tests
-$alltests = array('InlineParserTest','HtmlParserTest','PageListTest','ListPagesTest',
-                  'SetupWiki','DumpHtml','AllPagesTest','AllUsersTest','OrphanedPagesTest');
-if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']) and !empty($HTTP_GET_VARS['tests']))
-    $argv = explode(',',$HTTP_GET_VARS['tests']);
-if (!empty($argv) and preg_match("/test\.php$/", $argv[0]))
-    array_shift($argv);
-if (!empty($argv)) {
-    $runtests = array();
-    foreach ($argv as $test) {
-        if (in_array($test,$alltests))
-            $runtests[] = $test;
-    }
-    $alltests = $runtests;
-    print_r($runtests);
-    flush();
 }
 
 # Test all db backends.
