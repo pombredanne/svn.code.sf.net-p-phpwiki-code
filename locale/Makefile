@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.19 2002-01-31 11:33:35 carstenklapp Exp $
+# $Id: Makefile,v 1.20 2002-02-03 22:25:37 carstenklapp Exp $
 #
 # locale/Makefile
 #
@@ -86,6 +86,7 @@ ${POT_FILE}: ../lib/plugin/_BackendInfo.php
 ${POT_FILE}: ../lib/plugin/BackLinks.php
 ${POT_FILE}: ../lib/plugin/Calendar.php
 ${POT_FILE}: ../lib/plugin/FullTextSearch.php
+${POT_FILE}: ../lib/plugin/FuzzyPages.php
 ${POT_FILE}: ../lib/plugin/HelloWorld.php
 ${POT_FILE}: ../lib/plugin/IncludePage.php
 ${POT_FILE}: ../lib/plugin/LikePages.php
@@ -109,7 +110,16 @@ ${POT_FILE}: ../lib/Theme.php
 ${POT_FILE}: ../lib/transform.php
 ${POT_FILE}: ../lib/WikiCallback.php
 ${POT_FILE}: ../lib/WikiDB.php
+${POT_FILE}: ../lib/WikiDB/ADODB.php
+${POT_FILE}: ../lib/WikiDB/adodb/adodb.inc.php
+${POT_FILE}: ../lib/WikiDB/adodb/adodb-access.inc.php
+${POT_FILE}: ../lib/WikiDB/adodb/adodb-errorhandler.inc.php
+${POT_FILE}: ../lib/WikiDB/adodb/adodb-errorpear.inc.php
+${POT_FILE}: ../lib/WikiDB/adodb/adodb-lib.inc.php
+${POT_FILE}: ../lib/WikiDB/adodb/adodb-mysql.inc.php
 ${POT_FILE}: ../lib/WikiDB/backend.php
+${POT_FILE}: ../lib/WikiDB/backend/ADODB.php
+${POT_FILE}: ../lib/WikiDB/backend/ADODB_mysql.php
 ${POT_FILE}: ../lib/WikiDB/backend/cvs.php
 ${POT_FILE}: ../lib/WikiDB/backend/dba.php
 ${POT_FILE}: ../lib/WikiDB/backend/dbaBase.php
@@ -144,7 +154,6 @@ ${POT_FILE}: ../themes/default/themeinfo.php
 ${POT_FILE}: ../themes/Hawaiian/lib/random.php
 ${POT_FILE}: ../themes/Hawaiian/themeinfo.php
 ${POT_FILE}: ../themes/MacOSX/lib/RecentChanges.php
-${POT_FILE}: ../themes/MacOSX/templates/actionbar.tmpl
 ${POT_FILE}: ../themes/MacOSX/themeinfo.php
 ${POT_FILE}: ../themes/Portland/lib/RecentChanges.php
 ${POT_FILE}: ../themes/Portland/templates/actionbar.tmpl
@@ -154,5 +163,7 @@ ${POT_FILE}: ../themes/Portland/templates/editpage.tmpl
 ${POT_FILE}: ../themes/Portland/templates/navbar.tmpl
 ${POT_FILE}: ../themes/Portland/templates/viewsource.tmpl
 ${POT_FILE}: ../themes/Portland/themeinfo.php
+${POT_FILE}: ../themes/Sidebar/templates/actionbar.tmpl
+${POT_FILE}: ../themes/Sidebar/themeinfo.php
 ${POT_FILE}: ../themes/WikiTrek/lib/RecentChanges.php
 ${POT_FILE}: ../themes/WikiTrek/themeinfo.php
