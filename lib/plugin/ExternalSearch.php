@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ExternalSearch.php,v 1.3 2003-01-18 21:41:01 carstenklapp Exp $');
+rcs_id('$Id: ExternalSearch.php,v 1.4 2003-01-30 02:46:46 carstenklapp Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -38,7 +38,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function _getInterWikiUrl(&$request) {
@@ -95,8 +95,10 @@ extends WikiPlugin
 
         $this->_getInterWikiUrl($request);
 
-        $form = HTML::form(array('action' => $this->getname(),
-                                 'method' => 'POST',
+        $form = HTML::form(array('action' => USE_PATH_INFO
+                                             ? WikiURL($request->getPage())
+                                             : SCRIPT_NAME,
+                                 'method' => 'post',
                                  //'class'  => 'class', //fixme
                                  'accept-charset' => CHARSET));
 
@@ -117,6 +119,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2003/01/18 21:41:01  carstenklapp
+// Code cleanup:
+// Reformatting & tabs to spaces;
+// Added copyleft, getVersion, getDescription, rcs_id.
+//
 
 // Local Variables:
 // mode: php
