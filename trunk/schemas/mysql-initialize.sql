@@ -1,7 +1,11 @@
--- $Id: mysql-initialize.sql,v 1.4 2004-12-10 02:45:27 rurban Exp $
+-- $Id: mysql-initialize.sql,v 1.5 2005-01-25 08:13:14 rurban Exp $
 
 CREATE TABLE page (
 	id              INT NOT NULL AUTO_INCREMENT,
+-- for mysql => 4.1 define the charset here
+-- this is esp. needed for mysql 4.1.0 up to 4.1.6. not yet confirmed, at least since 4.1.8 it's okay with binary.
+--      pagename        VARCHAR(100) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
+-- otherwise use the old syntax to do case-sensitive comparison
         pagename        VARCHAR(100) BINARY NOT NULL,
 	hits            INT NOT NULL DEFAULT 0,
         pagedata        MEDIUMTEXT NOT NULL DEFAULT '',
@@ -9,7 +13,7 @@ CREATE TABLE page (
 	cached_html 	MEDIUMBLOB,
         PRIMARY KEY (id),
 	UNIQUE KEY (pagename)
-);
+) CHARSET=latin1;
 
 CREATE TABLE version (
 	id              INT NOT NULL,
@@ -56,6 +60,8 @@ CREATE TABLE session (
 -- CREATE INDEX sess_date on session (sess_date);
 -- update to 1.3.10: (see lib/upgrade.php)
 -- ALTER TABLE page CHANGE id id INT NOT NULL AUTO_INCREMENT;
+-- update to 1.3.11: (see lib/upgrade.php)
+-- ALTER TABLE page ADD cached_html MEDIUMBLOB;
 
 -- Optional DB Auth and Prefs
 -- For these tables below the default table prefix must be used 
