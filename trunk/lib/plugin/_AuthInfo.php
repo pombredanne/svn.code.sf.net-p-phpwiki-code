@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _AuthInfo.php,v 1.16 2004-06-25 14:29:22 rurban Exp $');
+rcs_id('$Id: _AuthInfo.php,v 1.17 2004-10-21 21:00:59 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.16 $");
+                            "\$Revision: 1.17 $");
     }
 
     function getDefaultArguments() {
@@ -107,26 +107,32 @@ extends WikiPlugin
             //$table->pushContent(HTML::tr(HTML::td(array('colspan' => 2))));
             $userdata = obj2hash($user);
             $table->pushContent($this->_showhash("User: Object of ".get_class($user), $userdata));
-            $group = &$request->getGroup();
-            $groups = $group->getAllGroupsIn();
-            $groupdata = obj2hash($group);
-            unset($groupdata['request']);
-            $table->pushContent($this->_showhash("Group: Object of ".get_class($group), $groupdata));
-            $groups = $group->getAllGroupsIn();
-            $groupdata = array('getAllGroupsIn' => $groups);
-            foreach ($groups as $g) {
+            if (1 or ENABLE_USER_NEW) {
+              $group = &$request->getGroup();
+              $groups = $group->getAllGroupsIn();
+              $groupdata = obj2hash($group);
+              unset($groupdata['request']);
+              $table->pushContent($this->_showhash("Group: Object of ".get_class($group), $groupdata));
+              $groups = $group->getAllGroupsIn();
+              $groupdata = array('getAllGroupsIn' => $groups);
+              foreach ($groups as $g) {
                 $groupdata["getMembersOf($g)"] = $group->getMembersOf($g);
                 $groupdata["isMember($g)"] = $group->isMember($g);
+              }
+              $table->pushContent($this->_showhash("Group Methods: ", $groupdata));
             }
-            $table->pushContent($this->_showhash("Group Methods: ", $groupdata));
             $html->pushContent($table);
         }
         return $html;
     }
 
-    function _showhash ($heading, $hash) {
+    function _showhash ($heading, $hash, $depth = 0) {
     	static $seen = array();
+    	static $maxdepth = 0;
         $rows = array();
+        $maxdepth++;
+        if ($maxdepth > 35) return $heading;
+        
         if ($heading)
             $rows[] = HTML::tr(array('bgcolor' => '#ffcccc',
                                      'style' => 'color:#000000'),
@@ -140,25 +146,27 @@ extends WikiPlugin
             foreach ($hash as $key => $val) {
                 if (is_object($val)) {
                     $heading = "Object of ".get_class($val);
-                    if ($heading == "Object of wikidb_sql") $val = $heading;
+                    if ($depth > 3) $val = $heading;
+                    elseif ($heading == "Object of wikidb_sql") $val = $heading;
                     elseif (substr($heading,0,13) == "Object of db_") $val = $heading;
                     elseif (!isset($seen[$heading])) {
                         //if (empty($seen[$heading])) $seen[$heading] = 1;
                         $val = HTML::table(array('border' => 1,
                                                  'cellpadding' => 2,
                                                  'cellspacing' => 0),
-                                           $this->_showhash($heading, obj2hash($val)));
+                                           $this->_showhash($heading, obj2hash($val), $depth+1));
                     } else {
                         $val = $heading;
                     }
                 } elseif (is_array($val)) {
                     $heading = $key."[]";
-                    if (!isset($seen[$heading])) {
+                    if ($depth > 3) $val = $heading;
+                    elseif (!isset($seen[$heading])) {
                         //if (empty($seen[$heading])) $seen[$heading] = 1;
                         $val = HTML::table(array('border' => 1,
                                                  'cellpadding' => 2,
                                                  'cellspacing' => 0),
-                                           $this->_showhash($heading, $val));
+                                           $this->_showhash($heading, $val, $depth+1));
                     } else {
                         $val = $heading;
                     }
@@ -190,6 +198,13 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2004/06/25 14:29:22  rurban
+// WikiGroup refactoring:
+//   global group attached to user, code for not_current user.
+//   improved helpers for special groups (avoid double invocations)
+// new experimental config option ENABLE_XHTML_XML (fails with IE, and document.write())
+// fixed a XHTML validation error on userprefs.tmpl
+//
 // Revision 1.15  2004/06/16 10:38:59  rurban
 // Disallow refernces in calls if the declaration is a reference
 // ("allow_call_time_pass_reference clean").
