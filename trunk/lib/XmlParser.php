@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: XmlParser.php,v 1.1 2004-05-24 17:31:31 rurban Exp $');
+rcs_id('$Id: XmlParser.php,v 1.2 2004-06-01 15:28:00 rurban Exp $');
 /**
  * Base XmlParser Class.
  * Requires the expat.so/.dll, usually enabled by default.
@@ -155,22 +155,7 @@ class XmlParser {
             fclose($fp);
         } else {
             // other url_fopen workarounds: curl, socket (http 80 only)
-            require_once("lib/HttpClient.php");
-            $bits = parse_url($file);
-            $host = $bits['host'];
-            $port = isset($bits['port']) ? $bits['port'] : 80;
-            $path = isset($bits['path']) ? $bits['path'] : '/';
-            if (isset($bits['query'])) {
-                $path .= '?'.$bits['query'];
-            }
-            $client = new HttpClient($host, $port);
-            $client->use_gzip = false;
-            if ($debug) $client->debug = true;
-            if (!$client->get($path)) {
-                $data = false;
-            } else {
-                $data = $client->getContent();
-            }
+            $data = url_get_contents($file);
             if (empty($data)) return;
             $this->parse($data);
         }
@@ -178,6 +163,9 @@ class XmlParser {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/05/24 17:31:31  rurban
+// new XmlParser and HtmlParser, RssParser based on that.
+//
 //
 // 2004-04-09 16:30:50 rurban: 
 //  added fsockopen allow_url_fopen = Off workaround

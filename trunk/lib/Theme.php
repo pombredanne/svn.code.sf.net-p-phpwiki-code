@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.98 2004-05-27 17:49:05 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.99 2004-06-01 15:27:59 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -424,7 +424,7 @@ class Theme {
      * Format the "Author" and "Owner" messages for a page revision.
      */
     function getOwnerMessage ($page) {
-        $dbi =& $GLOBALS['request']->_dbi;
+    	$dbi =& $GLOBALS['request']->_dbi;
         $owner = $page->getOwner();
         if ($owner) {
             if ( $dbi->isWikiPage($owner) )
@@ -433,6 +433,7 @@ class Theme {
                 return fmt("Owner: \"%s\"", $owner);
         }
     }
+
     function getAuthorMessage ($revision, $only_authenticated = true) {
         $dbi =& $GLOBALS['request']->_dbi;
         $author = $revision->get('author_id');
@@ -1343,6 +1344,15 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.98  2004/05/27 17:49:05  rurban
+// renamed DB_Session to DbSession (in CVS also)
+// added WikiDB->getParam and WikiDB->getAuthParam method to get rid of globals
+// remove leading slash in error message
+// added force_unlock parameter to File_Passwd (no return on stale locks)
+// fixed adodb session AffectedRows
+// added FileFinder helpers to unify local filenames and DATA_PATH names
+// editpage.php: new edit toolbar javascript on ENABLE_EDIT_TOOLBAR
+//
 // Revision 1.97  2004/05/18 16:23:39  rurban
 // rename split_pagename to SplitPagename
 //

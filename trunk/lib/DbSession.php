@@ -1,7 +1,7 @@
-<?php rcs_id('$Id: DbSession.php,v 1.17 2004-05-27 17:49:05 rurban Exp $');
+<?php rcs_id('$Id: DbSession.php,v 1.18 2004-06-01 15:27:59 rurban Exp $');
 
 /**
- * Store sessions data in Pear DB / ADODB ....
+ * Store sessions data in Pear DB / ADODB / dba / ....
  *
  * History
  *
@@ -186,7 +186,7 @@ extends DbSession
         $qip = $dbh->quote($GLOBALS['request']->get('REMOTE_ADDR'));
         $time = time();
 	if (DEBUG and $sess_data == 'wiki_user|N;') {
-	    trigger_error("delete session $qid",E_USER_WARNING);
+	    trigger_error("delete empty session $qid", E_USER_WARNING);
 	    /*echo "<pre>";
 	    print_r($GLOBALS['request']->_user);
 	    echo "</pre>";

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.152 2004-05-27 17:49:06 rurban Exp $');
+rcs_id('$Id: main.php,v 1.153 2004-06-01 15:28:00 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -455,6 +455,16 @@ $this->version = phpwiki_version();
             case 'unlock':
             case 'upgrade':
                 return WIKIAUTH_ADMIN;
+
+            /* authcheck occurs only in the plugin.
+               required actionpage RateIt */
+            /*
+            case 'rate':
+            case 'delete_rating':
+                // Perhaps this should be WIKIAUTH_USER
+                return WIKIAUTH_BOGO;
+            */
+
             default:
                 global $WikiNameRegexp;
                 if (preg_match("/$WikiNameRegexp\Z/A", $action))
@@ -613,8 +623,10 @@ $this->version = phpwiki_version();
 
     function _deduceUsername() {
         global $HTTP_SERVER_VARS, $HTTP_ENV_VARS;
+
         if (!empty($this->args['auth']) and !empty($this->args['auth']['userid']))
             return $this->args['auth']['userid'];
+
         if (!empty($HTTP_SERVER_VARS['PHP_AUTH_USER']))
             return $HTTP_SERVER_VARS['PHP_AUTH_USER'];
         if (!empty($HTTP_ENV_VARS['REMOTE_USER']))
@@ -945,6 +957,15 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.152  2004/05/27 17:49:06  rurban
+// renamed DB_Session to DbSession (in CVS also)
+// added WikiDB->getParam and WikiDB->getAuthParam method to get rid of globals
+// remove leading slash in error message
+// added force_unlock parameter to File_Passwd (no return on stale locks)
+// fixed adodb session AffectedRows
+// added FileFinder helpers to unify local filenames and DATA_PATH names
+// editpage.php: new edit toolbar javascript on ENABLE_EDIT_TOOLBAR
+//
 // Revision 1.151  2004/05/25 12:40:48  rurban
 // trim the pagename
 //

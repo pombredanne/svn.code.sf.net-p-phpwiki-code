@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PhotoAlbum.php,v 1.7 2004-05-03 20:44:55 rurban Exp $');
+rcs_id('$Id: PhotoAlbum.php,v 1.8 2004-06-01 15:28:01 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
  
@@ -152,7 +152,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -476,7 +476,7 @@ extends WikiPlugin
             }
         } else {
             // fixed: get current value, not stored value.
-            // todo: use lib/HttpClient.php
+            // todo: use lib/HttpClient.php (stdlib.php:url_get_contents())
             if (! get_cfg_var('allow_url_fopen')) {
                 return $this->error(fmt("Wrong server setting: allow_url_fopen set to Off"));
             }
@@ -502,6 +502,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/05/03 20:44:55  rurban
+// fixed gettext strings
+// new SqlResult plugin
+// _WikiTranslation: fixed init_locale
+//
 // Revision 1.6  2004/04/18 00:19:30  rurban
 // better default example with local src, don't require weblocation for
 // the default setup, better docs, fixed ini_get => get_cfg_var("allow_url_fopen"),

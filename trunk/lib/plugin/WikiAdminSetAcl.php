@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSetAcl.php,v 1.10 2004-05-27 17:49:06 rurban Exp $');
+rcs_id('$Id: WikiAdminSetAcl.php,v 1.11 2004-06-01 15:28:02 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -28,8 +28,6 @@ rcs_id('$Id: WikiAdminSetAcl.php,v 1.10 2004-05-27 17:49:06 rurban Exp $');
  *
  * KNOWN ISSUES:
  * Doesn't accept yet s=wildcard preselection
- * Fixed to use PagePermissions authorization.
- *   (require_authority_for_post != WIKIAUTH_ADMIN)
  * Requires PHP 4.2 so far.
  */
 require_once('lib/PageList.php');
@@ -48,7 +46,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     function getDefaultArguments() {
@@ -125,6 +123,7 @@ extends WikiPlugin_WikiAdminSelect
             $exclude = explodePageList($args['exclude']);
         else
             $exclude = false;
+        $this->preSelectS(&$args, &$request);
 
         $p = $request->getArg('p');
         $post_args = $request->getArg('admin_setacl');
@@ -132,6 +131,8 @@ extends WikiPlugin_WikiAdminSelect
         $pages = array();
         if ($p && !$request->isPost())
             $pages = $p;
+        elseif ($this->_list)
+            $pages = $this->_list;
         $header = HTML::p();
         if ($p && $request->isPost() &&
             !empty($post_args['acl']) && empty($post_args['cancel'])) {
@@ -287,6 +288,15 @@ class _PageList_Column_perm extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/05/27 17:49:06  rurban
+// renamed DB_Session to DbSession (in CVS also)
+// added WikiDB->getParam and WikiDB->getAuthParam method to get rid of globals
+// remove leading slash in error message
+// added force_unlock parameter to File_Passwd (no return on stale locks)
+// fixed adodb session AffectedRows
+// added FileFinder helpers to unify local filenames and DATA_PATH names
+// editpage.php: new edit toolbar javascript on ENABLE_EDIT_TOOLBAR
+//
 // Revision 1.9  2004/05/24 17:34:53  rurban
 // use ACLs
 //

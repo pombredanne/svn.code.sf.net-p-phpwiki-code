@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.78 2004-05-27 17:49:06 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.79 2004-06-01 15:27:59 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -166,9 +166,14 @@ function _determineAdminUserOrOtherUser($UserName) {
     if (!$UserName)
         return $GLOBALS['ForbiddenUser'];
 
-    $group = &WikiGroup::getGroup($GLOBALS['request']);
-    if ($UserName == ADMIN_USER or $group->isMember(GROUP_ADMIN))
+    //FIXME: check admin membership later at checkPass. now we cannot raise the level.
+    //$group = &WikiGroup::getGroup($GLOBALS['request']);
+    if ($UserName == ADMIN_USER)
         return new _AdminUser($UserName);
+    /* elseif ($group->isMember(GROUP_ADMIN)) {
+        return _determineBogoUserOrPassUser($UserName);
+    }
+    */
     else
         return _determineBogoUserOrPassUser($UserName);
 }
@@ -486,11 +491,15 @@ class _WikiUser
     function isAuthenticated () {
         //return isa($this,'_PassUser');
         //return isa($this,'_BogoUser') || isa($this,'_PassUser');
-        return $this->_level >= WIKIAUTH_BOGO; // hmm.
+        return $this->_level >= WIKIAUTH_BOGO;
     }
 
     function isAdmin () {
-        return $this->_level == WIKIAUTH_ADMIN;
+        static $group; 
+        if ($this->_level == WIKIAUTH_ADMIN) return true;
+
+        if (!$group) $group = &WikiGroup::getGroup($GLOBALS['request']);
+        return ($this->_level > WIKIAUTH_BOGO and $group->isMember(GROUP_ADMIN));
     }
 
     /** Name or IP for a signed user. UserName could come from a cookie e.g.
@@ -515,6 +524,7 @@ class _WikiUser
 
     /**
      * Called on an auth_args POST request, such as login, logout or signin.
+     * TODO: Check BogoLogin users with empty password. (self-signed users)
      */
     function AuthCheck ($postargs) {
         // Normalize args, and extract.
@@ -527,6 +537,7 @@ class _WikiUser
 
         if ($logout) { // Log out
             $GLOBALS['request']->_user = new _AnonUser();
+            $GLOBALS['request']->_user->_userid = '';
             return $GLOBALS['request']->_user; 
         } elseif ($cancel)
             return false;        // User hit cancel button.
@@ -534,9 +545,12 @@ class _WikiUser
             return false;       // Nothing to do?
 
         $authlevel = $this->checkPass($passwd === false ? '' : $passwd);
-        if (!$authlevel)
-            return _("Invalid password or userid.");
-        elseif ($authlevel < $require_level)
+        if (!$authlevel) {
+            if ($passwd)	
+                return _("Invalid password.");
+            else
+                return _("Invalid password or userid.");
+        } elseif ($authlevel < $require_level)
             return _("Insufficient permissions.");
 
         // Successful login.
@@ -795,8 +809,6 @@ extends _AnonUser
  *
  * Default is PersonalPage auth and prefs.
  * 
- * TODO: email verification
- *
  * @author: Reini Urban
  * @tables: pref
  */
@@ -925,14 +937,13 @@ extends _AnonUser
 
         $dbh = $request->getDbh();
         // session restauration doesn't re-connect to the database automatically, 
-        // so dirty it here.
-        if (($dbh->getParam('dbtype') == 'SQL') and isset($this->_auth_dbi) and 
-             empty($this->_auth_dbi->connection))
-            unset($this->_auth_dbi);
-        if (($dbh->getParam('dbtype') == 'ADODB') and isset($this->_auth_dbi) and 
-             empty($this->_auth_dbi->_connectionID))
-            unset($this->_auth_dbi);
-
+        // so dirty it here, to force a reconnect.
+        if (isset($this->_auth_dbi)) {
+            if (($dbh->getParam('dbtype') == 'SQL') and empty($this->_auth_dbi->connection))
+                unset($this->_auth_dbi);
+            if (($dbh->getParam('dbtype') == 'ADODB') and empty($this->_auth_dbi->_connectionID))
+                unset($this->_auth_dbi);
+        }
         if (empty($this->_auth_dbi)) {
             if ($dbh->getParam('dbtype') != 'SQL' and $dbh->getParam('dbtype') != 'ADODB')
                 return false;
@@ -1125,7 +1136,7 @@ extends _AnonUser
     function _checkPass($submitted_password, $stored_password) {
         if(!empty($submitted_password)) {
             if (strlen($stored_password) < PASSWORD_LENGTH_MINIMUM) {
-                // Todo. hmm...
+                // With the EditMetaData plugin
                 trigger_error(_("The length of the stored password is shorter than the system policy allows. Sorry, you cannot login.\n You have to ask the System Administrator to reset your password."));
                 return false;
             }
@@ -1253,7 +1264,11 @@ extends _PassUser
                 return $this->_level;
             }
         }
-        $this->userExists();
+        if (isWikiWord($this->_userid)) {
+            $this->_level = WIKIAUTH_BOGO;
+        } else {
+            $this->_level = WIKIAUTH_ANON;
+        }
         return $this->_level;
     }
 }
@@ -1284,7 +1299,7 @@ extends _PassUser
                 _("\nYou stored an empty password in your '%s' page.\n").
                 _("Your access permissions are only for a BogoUser.\n").
                 _("Please set your password in UserPreferences."),
-                                        $this->_userid), E_USER_NOTICE);
+                                        $this->_userid), E_USER_WARNING);
                 $this->_level = WIKIAUTH_BOGO;
                 return $this->_level;
             }
@@ -2186,6 +2201,11 @@ extends _PassUser
 /**
  * For security, this class should not be extended. Instead, extend
  * from _PassUser (think of this as unix "root").
+ *
+ * FIXME: This should be a singleton class. Only ADMIN_USER may be of class AdminUser!
+ * Other members of the Administrators group must raise their level otherwise somehow.
+ * Currently every member is a AdminUser, which will not work for the various 
+ * storage methods.
  */
 class _AdminUser
 extends _PassUser
@@ -2194,14 +2214,22 @@ extends _PassUser
         return false;
     }
     function checkPass($submitted_password) {
-        $stored_password = ADMIN_PASSWD;
+    	if ($this->_userid == ADMIN_USER)
+            $stored_password = ADMIN_PASSWD;
+        else {
+            // TODO: safety check if really member of the ADMIN group?
+            
+            $stored_password = $this->_pref->get('passwd');
+        }
         if ($this->_checkPass($submitted_password, $stored_password)) {
             $this->_level = WIKIAUTH_ADMIN;
             return $this->_level;
         } else {
-            $this->_level = WIKIAUTH_ANON;
-            return $this->_level;
+            return $this->_tryNextPass($submitted_password);
+            //$this->_level = WIKIAUTH_ANON;
+            //return $this->_level;
         }
+        
     }
     function storePass($submitted_password) {
         return false;
@@ -2483,7 +2511,7 @@ extends _UserPreference
         if (!empty($value) and !$verified) {
             list($ok,$msg) = ValidateMail($value);
             if ($ok and mail($value,"[".WIKI_NAME ."] "._("Email Verification"),
-                     sprintf(_("Welcome to %s!\nYou email account is verified and\nwill be used to send pagechange notifications.\nSee %s"),
+                     sprintf(_("Welcome to %s!\nYour email account is verified and\nwill be used to send page change notifications.\nSee %s"),
                              WIKI_NAME, WikiURL($GLOBALS['request']->getArg('pagename'),'',true))))
                 $this->set('emailVerified',1);
         }
@@ -2879,6 +2907,15 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.78  2004/05/27 17:49:06  rurban
+// renamed DB_Session to DbSession (in CVS also)
+// added WikiDB->getParam and WikiDB->getAuthParam method to get rid of globals
+// remove leading slash in error message
+// added force_unlock parameter to File_Passwd (no return on stale locks)
+// fixed adodb session AffectedRows
+// added FileFinder helpers to unify local filenames and DATA_PATH names
+// editpage.php: new edit toolbar javascript on ENABLE_EDIT_TOOLBAR
+//
 // Revision 1.77  2004/05/18 14:49:51  rurban
 // Simplified strings for easier translation
 //
