@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.56 2001-12-07 22:14:32 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.57 2001-12-11 17:47:10 dairiki Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -100,6 +100,30 @@ function QElement($tag, $args = '', $content = '')
         return Element($tag, htmlspecialchars($content));
     }
 }
+
+function IconForLink($protocol_or_url) {
+    global $URL_LINK_ICONS;
+
+    list ($proto) = explode(':', $protocol_or_url, 2);
+    echo "PROTO: $proto<br>\n";
+    
+    if (isset($URL_LINK_ICONS[$proto])) {
+        $linkimg = $URL_LINK_ICONS[$proto];
+    }
+    elseif (isset($URL_LINK_ICONS['*'])) {
+        $linkimg = $URL_LINK_ICONS['*'];
+    }
+
+    echo "IMG: $linkimg<br>\n";
+    
+    if (empty($linkimg))
+        return '';
+    
+    return Element('img', array('src' => DataURL($linkimg),
+                                'alt' => $proto,
+                                'class' => 'linkicon'));
+}
+    
    
 function LinkURL($url, $linktext = '') {
     // FIXME: Is this needed (or sufficient?)
@@ -118,20 +142,9 @@ function LinkURL($url, $linktext = '') {
     else {
         $attr['class'] = 'namedurl';
     }
-    $linktext = htmlspecialchars($linktext);
-      
-    $linkproto = substr($url, 0, strpos($url, ":"));
-    $ICONS = &$GLOBALS['URL_LINK_ICONS'];
-      
-    $linkimg = isset($ICONS[$linkproto]) ? $ICONS[$linkproto] : $ICONS['*'];
-    if (!empty($linkimg)) {
-        $imgtag = Element('img', array('src' => DataURL($linkimg),
-                                       'alt' => $linkproto,
-                                       'class' => 'linkicon'));
-        $linktext = $imgtag . $linktext;
-    }
 
-    return Element('a', $attr, $linktext);
+    return Element('a', $attr,
+                   IconForLink($url) . htmlspecialchars($linktext));
 }
 
 function LinkWikiWord($wikiword, $linktext='') {

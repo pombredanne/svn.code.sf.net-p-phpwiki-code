@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: interwiki.php,v 1.10 2001-12-07 05:27:20 carstenklapp Exp $');
+<?php rcs_id('$Id: interwiki.php,v 1.11 2001-12-11 17:47:10 dairiki Exp $');
 
 function generate_interwikimap_and_regexp()
 {
@@ -47,21 +47,11 @@ function LinkInterWikiLink($link, $linktext='')
         $class = 'interwiki';
     }
 
-    $linkproto='interwiki';
-    $ICONS = &$GLOBALS['URL_LINK_ICONS'];
-    
-    $linkimg = isset($ICONS[$linkproto]) ? $ICONS[$linkproto] : $ICONS['*'];
-    if (!empty($linkimg)) {
-        $imgtag = Element('img', array('src' => DataURL($linkimg),
-                                       'alt' => $linkproto,
-                                       'class' => 'linkicon'));
-        $linktext = $imgtag . $linktext;
-    }
-
     return Element('a', array('href' => $url,
                               'class' => $class),
-                   $linktext);
+                   IconForLink('interwiki') . $linktext);
 }
+
 
 // Link InterWiki links
 // These can be protected by a '!' like Wiki words.
