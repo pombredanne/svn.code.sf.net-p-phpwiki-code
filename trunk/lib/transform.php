@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.33 2002-01-22 03:17:47 dairiki Exp $');
+<?php rcs_id('$Id: transform.php,v 1.34 2002-01-23 05:10:22 dairiki Exp $');
 require_once('lib/WikiPlugin.php');
 require_once('lib/HtmlElement.php');
 
@@ -103,7 +103,8 @@ class WikiTransform
 	 
       if ($level > 20) {
 	 // arbitrarily limit tag nesting
-	 ExitWiki(gettext ("Lists nested too deep in SetHTMLOutputMode"));
+          global $request;
+          $request->finish(_("Lists nested too deep in SetHTMLOutputMode"));
       }
       
       if ($level <= $this->stack->cnt()) {
@@ -225,7 +226,7 @@ class WikiTransform
 	 
 	 $this->linenumber = $lnum;
 	 $line = $this->content[$lnum];
-
+         
 	 // blank lines clear the current mode (to force new paragraph)
 	 if (!strlen($line) || $line == "\r") {
             $html .= $this->SetHTMLMode('', 0);
@@ -466,10 +467,12 @@ function wtt_footnoterefs($match, &$trfrm)
 
 function wtt_bracketlinks($match, &$trfrm)
 {
+    
     if (preg_match('/^\[\s*\]$/', $match))
         return $match;
-    
+
     $link = LinkBracketLink($match);
+
     if ($link->isInlineElement())
         return $link;
 
@@ -536,12 +539,12 @@ function wtm_linebreak($line, &$transformer) {
 //
 function wtm_plugin_link($line, &$transformer) {
     // FIXME: is this good syntax?
-    global $dbi, $request;      // FIXME: make these non-global?
+    global $request;      // FIXME: make these non-global?
     
     if (preg_match('/^(.*?)(<\?plugin-link\s+.*?\?>)(.*)$/', $line, $m)) {
         list(, $prematch, $plugin_pi, $postmatch) = $m;
         $loader = new WikiPluginLoader;
-        $html = $loader->expandPI($plugin_pi, $dbi, $request);
+        $html = $loader->expandPI($plugin_pi, $request);
         $line = $prematch . $transformer->token($html) . $postmatch;
     }
     return $line;
@@ -549,11 +552,14 @@ function wtm_plugin_link($line, &$transformer) {
 
 function wtm_plugin($line, &$transformer) {
     // FIXME: is this good syntax?
-    global $dbi, $request;      // FIXME: make these non-global?
+    global $request;      // FIXME: make these non-global?
+
+    echo nl2br(htmlspecialchars("wtm_plugin: '$line'\n"));
     
     if (preg_match('/^<\?plugin(-form)?\s.*\?>\s*$/', $line)) {
         $loader = new WikiPluginLoader;
-        $html = $loader->expandPI($line, $dbi, $request);
+        $html = $loader->expandPI($line, $request);
+    echo nl2br(htmlspecialchars("wtm_plugin: OUT '$html'\n"));
         $line = $transformer->SetHTMLMode('', 0) . $transformer->token($html);
     }
     return $line;

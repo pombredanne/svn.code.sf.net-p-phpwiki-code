@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.86 2002-01-22 03:17:47 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.87 2002-01-23 05:10:22 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -18,7 +18,7 @@
     class Stack { push($item), pop(), cnt(), top() }
 
     split_pagename ($page)
-    NoSuchRevision ($page, $version)
+    NoSuchRevision ($request, $page, $version)
     TimezoneOffset ($time, $no_colon)
     Iso8601DateTime ($time)
     Rfc2822DateTime ($time)
@@ -37,6 +37,17 @@
 
 
 function WikiURL($pagename, $args = '', $get_abs_url = false) {
+    if (is_object($pagename)) {
+        if (isa($pagename, 'WikiDB_Page')) {
+            $pagename = $pagename->getName();
+        }
+        elseif (isa($pagename, 'WikiDB_PageRevision')) {
+            $page = $pagename->getPage();
+            $args['version'] = $pagename->getVersion();
+            $pagename = $page->getName();
+        }
+    }
+    
     if (is_array($args)) {
         $enc_args = array();
         foreach  ($args as $key => $val) {
@@ -87,7 +98,8 @@ function LinkURL($url, $linktext = '') {
 }
 
 function LinkWikiWord($wikiword, $linktext = '', $version = false) {
-    global $dbi, $Theme;
+    global $request, $Theme;
+    $dbi = $request->getDbh();
     if ($dbi->isWikiPage($wikiword))
         $link = $Theme->linkExistingWikiWord($wikiword, $linktext, $version);
     else
@@ -242,8 +254,7 @@ function LinkPhpwikiURL($url, $text = '') {
         $class = 'wikiaction';
     else {
         // Don't allow administrative links on unlocked pages.
-        global $dbi;
-        $page = $dbi->getPage($GLOBALS['pagename']);
+        $page = $GLOBALS['request']->getPage();
         if (!$page->get('locked'))
             return HTML::span(array('class' => 'wikiunsafe'),
                               HTML::u(_("Lock page to enable link")));
@@ -262,8 +273,9 @@ function LinkPhpwikiURL($url, $text = '') {
 }
 
 function LinkBracketLink($bracketlink) {
-    global $dbi, $AllowedProtocols, $InlineImages;
+    global $request, $AllowedProtocols, $InlineImages;
     global $InterWikiLinkRegexp, $Theme;
+
     
     // $bracketlink will start and end with brackets; in between will
     // be either a page name, a URL or both separated by a pipe.
@@ -282,7 +294,8 @@ function LinkBracketLink($bracketlink) {
         $URL = trim($matches[1]);
         $linkname = false;
     }
-    
+
+    $dbi = $request->getDbh();
     if ($dbi->isWikiPage($URL))
         return $Theme->linkExistingWikiWord($URL, $linkname);
     elseif (preg_match("#^($AllowedProtocols):#", $URL)) {
@@ -297,8 +310,10 @@ function LinkBracketLink($bracketlink) {
     elseif (function_exists('LinkInterWikiLink')
             && preg_match("/^$InterWikiLinkRegexp:/", $URL))
         return LinkInterWikiLink($URL, $linkname);
-    else
+    else {
         return $Theme->linkUnknownWikiWord($URL, $linkname);
+    }
+    
 }
 
 /* FIXME: this should be done by the transform code */
@@ -378,12 +393,12 @@ function split_pagename ($page) {
     return $page;
 }
 
-function NoSuchRevision ($page, $version) {
+function NoSuchRevision (&$request, $page, $version) {
     $html[] = HTML::p(fmt("I'm sorry.  Version %d of %s is not in my database.",
                           $version, LinkWikiWord($page->getName())));
     include_once('lib/Template.php');
     echo GeneratePage('MESSAGE', $html, _("Bad Version"));
-    ExitWiki ("");
+    $request->finish();
 }
 
 

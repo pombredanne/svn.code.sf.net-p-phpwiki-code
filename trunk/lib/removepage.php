@@ -1,8 +1,8 @@
 <?php
-rcs_id('$Id: removepage.php,v 1.4 2002-01-22 03:17:47 dairiki Exp $');
+rcs_id('$Id: removepage.php,v 1.5 2002-01-23 05:10:22 dairiki Exp $');
 require_once('lib/Template.php');
 
-function RemovePage ($dbi, $request) {
+function RemovePage (&$request) {
     global $Theme;
     $pagename = $request->getArg('pagename');
     $pagelink = $Theme->linkExistingWikiWord($pagename);
@@ -17,16 +17,17 @@ function RemovePage ($dbi, $request) {
         $html[] =HTML::div(array('class' => 'toolbar'),
                            $removeB,
                            $Theme->getButtonSeparator(),
-                           $cancelB));
+                           $cancelB);
     }
     else {
+        $dbi = $request->getDbh();
         $dbi->deletePage($pagename);
         $html[] = HTML::h2(fmt("Removed page '%s' succesfully.", $pagename));
     }
     echo GeneratePage('MESSAGE', $html, _("Remove page"));
 }
 
-RemovePage($dbi, $request);
+RemovePage($request);
 
 // For emacs users
 // Local Variables:

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.8 2002-01-19 07:21:58 dairiki Exp $');
+<?php rcs_id('$Id: Request.php,v 1.9 2002-01-23 05:10:22 dairiki Exp $');
 
 // FIXME: write log entry.
 
@@ -79,6 +79,10 @@ class Request {
         return WikiURL($this->getArg('pagename'), $get_args);
     }
     
+
+    function isPost () {
+        return $this->get("REQUEST_METHOD") == "POST";
+    }
     
     function redirect($url) {
         header("Location: $url");
@@ -337,7 +341,7 @@ class Request_AccessLogEntry
      * @param $request object  Request object for current request.
      * @param $logfile string  Log file name.
      */
-    function Request_AccessLogEntry ($request, $logfile) {
+    function Request_AccessLogEntry (&$request, $logfile) {
         $this->logfile = $logfile;
         
         $this->host  = $request->get('REMOTE_HOST');

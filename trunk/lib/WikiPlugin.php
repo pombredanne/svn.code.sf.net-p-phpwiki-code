@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.12 2002-01-22 06:57:34 dairiki Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.13 2002-01-23 05:10:22 dairiki Exp $');
 
 class WikiPlugin
 {
@@ -221,7 +221,7 @@ class WikiPlugin
 class WikiPluginLoader {
     var $_errors;
     
-    function expandPI($pi, $dbi, $request) {
+    function expandPI($pi, $request) {
         if (!preg_match('/^\s*<\?(plugin(?:-form|-link)?)\s+(\w+)\s*(.*?)\s*\?>\s*$/s', $pi, $m))
             return $this->_error(sprintf(_("Bad %s"),'PI'));
 
@@ -234,6 +234,8 @@ class WikiPluginLoader {
         }
         switch ($pi_name) {
         case 'plugin':
+            // FIXME: change API for run() (no $dbi needed).
+            $dbi = $request->getDbh();
             return $plugin->run($dbi, $plugin_args, $request);
         case 'plugin-link':
             return $plugin->makeLink($plugin_args, $request);

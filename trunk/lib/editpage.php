@@ -1,15 +1,15 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.27 2002-01-22 03:17:47 dairiki Exp $');
+rcs_id('$Id: editpage.php,v 1.28 2002-01-23 05:10:22 dairiki Exp $');
 
 require_once('lib/transform.php');
 require_once('lib/Template.php');
 
-function editPage($dbi, $request, $do_preview = false) {
+function editPage(&$request, $do_preview = false) {
     // editpage relies on $pagename, $version
     $pagename = $request->getArg('pagename');
     $version  = $request->getArg('version');
     
-    $page    = $dbi->getPage($pagename);
+    $page    = $request->getPage();
     $current = $page->getCurrentRevision();
 
     if ($version === false) {
@@ -18,10 +18,10 @@ function editPage($dbi, $request, $do_preview = false) {
     else {
         $selected = $page->getRevision($version);
         if (!$selected)
-            NoSuchRevision($page, $version); // noreturn
+            NoSuchRevision($request, $page, $version); // noreturn
     }
 
-    global $user;               // FIXME: make this non-global.
+    $user = $request->getUser();
     $pagelink = LinkExistingWikiWord($pagename, '', $version);
 
     $wrapper = new WikiTemplate('top');

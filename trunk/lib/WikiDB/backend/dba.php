@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: dba.php,v 1.2 2001-12-19 08:54:05 carstenklapp Exp $');
+<?php rcs_id('$Id: dba.php,v 1.3 2002-01-23 05:10:22 dairiki Exp $');
 
 require_once('lib/WikiDB/backend/dbaBase.php');
 
@@ -21,7 +21,8 @@ extends WikiDB_backend_dbaBase
         $db->set_timeout($timeout);
         if (!$db->open('c')) {
             trigger_error(sprintf(_("%s: Can't open dba database"),$dbfile), E_USER_ERROR);
-            ExitWikit();
+            global $request;
+            $request->finish(fmt("%s: Can't open dba database", $dbfile));
         }
 
         $this->WikiDB_backend_dbaBase($db);
