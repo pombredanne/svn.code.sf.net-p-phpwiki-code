@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiBlog.php,v 1.2 2002-12-15 01:55:30 carstenklapp Exp $');
+rcs_id('$Id: WikiBlog.php,v 1.3 2003-01-06 02:29:02 carstenklapp Exp $');
 /**
  * Author: MichaelVanDam
  */
@@ -52,6 +52,11 @@ extends WikiPlugin
         return sprintf(_("Show and add blogs for %s"),'[pagename]');
     }
 
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.3 $");
+    }
+
     // Arguments:
     //
     //  page - page which is blogged to (default current page)
@@ -77,7 +82,8 @@ extends WikiPlugin
     function getDefaultArguments() {
         return array('page'       => '[pagename]',
                      'order'      => 'normal',
-                     'mode'       => 'show,add'
+                     'mode'       => 'show,add',
+                     'noheader'   => false
                     );
     }
 
@@ -172,6 +178,9 @@ extends WikiPlugin
             // Also, it helps for now during rendering because we
             // don't need to create a new PageType class just yet...
 
+            // FIXME: move summary into the page's summary field
+            // PageType now displays the summary field when viewing
+            // an individual blog page
             $summary = trim($request->getArg('blog_summary'));
             $body = trim($request->getArg('blog_body'));
 
@@ -315,6 +324,8 @@ extends WikiPlugin
             $author_id = $pr->get('author_id');
             $author_orig = $author;
 
+            $summary = $pr->get('summary');
+
             if (preg_match("/^$WikiNameRegexp\$/", $author)
                                && $dbi->isWikiPage($author))
                 $author = WikiLink($author);
@@ -356,17 +367,36 @@ extends WikiPlugin
             // FIXME: for now we just show all links on all entries.
             // This should be customizable, or at least show only
             // 'edit' 'remove' for admin and creator.
-
+/*
             $one_comment->pushContent(HTML::tr(HTML::td(array('colspan'=>2),
                $browselink, ' ', $editlink, ' ', $removelink)));
-
-
+*/
+/*
             $all_comments->pushContent(HTML::div(array('margin-bottom'=>'330px', 'margin-left'=>'1.0em', 'margin-right'=>'1.0em'),HTML::table(array('border'=>0,'align'=>'center','width'=>'96%'),HTML::tr(HTML::td($one_comment))),HTML::br(),HTML::br()));
-
+*/
+            // $args set here to be available as variables in the template
+            $args['noheader'] = $this->_args['noheader']; // should always be false for
+                                                          // subsequent comments when there
+                                                          // is more than one comment
+            $args['pagelink'] = WikiLink($page);
+            $args['pagename'] = $page;
+            $args['browselink'] = $browselink;
+            $args['editlink'] = $editlink;
+            $args['removelink'] = $removelink;
+            $args['authorlink'] = $author;
+            $args['author'] = $p->get('creator'); //fixme
+            $args['summary'] = $summary;
+            $args['comment'] = $transformedContent;
+            $args['date'] = $ctime;
+            $args['datemodified'] = $mtime;
+            $args['authormodified'] = $pr->get('author');
+            $template = new Template('blog', $request, $args);
+            $all_comments->pushContent(($template));
         }
 
-        $header = HTML::h2('Comments on ', WikiLink($page), ':');
-        return HTML($header,$all_comments);
+        //$header = HTML::h4('Comments on ', WikiLink($page), ':');
+        //return HTML($header,$all_comments);
+        return $all_comments;
 
     }
 
@@ -406,13 +436,15 @@ extends WikiPlugin
                             HTML::tr(HTML::th(),HTML::td(array('align'=>'center'),$button))
                 ));
 
-        $header = HTML::h2('Add new comment:');
+        $header = HTML::h4('Add new comment:');
         return HTML($header, $form);
 
     }
 
 
 };
+
+// $Log: not supported by cvs2svn $
 
 // For emacs users
 // Local Variables:
@@ -422,5 +454,4 @@ extends WikiPlugin
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-
 ?>
