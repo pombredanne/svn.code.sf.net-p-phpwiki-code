@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.96 2004-04-19 23:13:03 zorloc Exp $');
+rcs_id('$Id: loadsave.php,v 1.97 2004-04-29 22:39:50 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -538,7 +538,8 @@ function _tryinsertInterWikiMap($content) {
         $error_html = sprintf(" "._("%s: not defined"), "INTERWIKI_MAP_FILE");
         $goback = true;
     }
-    if (!$goback && !file_exists(INTERWIKI_MAP_FILE)) {
+    $mapfile = FindFile(INTERWIKI_MAP_FILE,1);
+    if (!$goback && !file_exists($mapfile)) {
         $error_html = sprintf(" "._("%s: file not found"), INTERWIKI_MAP_FILE);
         $goback = true;
     }
@@ -550,12 +551,11 @@ function _tryinsertInterWikiMap($content) {
     if ($goback)
         return $content;
 
-    $filename = INTERWIKI_MAP_FILE;
     trigger_error(sprintf(_("Loading InterWikiMap from external file %s."),
-                          $filename), E_USER_NOTICE);
+                          $$mapfile), E_USER_NOTICE);
 
-    $fd = fopen ($filename, "rb");
-    $data = fread ($fd, filesize($filename));
+    $fd = fopen ($mapfile, "rb");
+    $data = fread ($fd, filesize($mapfile));
     fclose ($fd);
     $content = $content . "\n<verbatim>\n$data</verbatim>\n";
     return $content;
@@ -881,6 +881,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.96  2004/04/19 23:13:03  zorloc
+ Connect the rest of PhpWiki to the IniConfig system.  Also the keyword regular expression is not a config setting
+
  Revision 1.95  2004/04/18 01:11:52  rurban
  more numeric pagename fixes.
  fixed action=upload with merge conflict warnings.
