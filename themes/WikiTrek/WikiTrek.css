@@ -1,5 +1,5 @@
 /**
- * $Id: WikiTrek.css,v 1.24 2002-02-16 23:39:10 carstenklapp Exp $
+ * $Id: WikiTrek.css,v 1.25 2002-02-17 01:13:07 carstenklapp Exp $
  *
  * This theme will probably be renamed something like "Space" to
  * avoid any potential copyright issues.
@@ -45,6 +45,7 @@ table {
   /* For Mozilla */
   empty-cells: show;
 }
+td { color: white; } /* for NS4 */
 caption {
   caption-side: top;
   text-align: left;
@@ -54,6 +55,7 @@ caption {
   width: 100%;
 }
 a { color: #0053db; }
+a:hover { color: #5791ff; }
 
 
 /**
@@ -93,7 +95,12 @@ div.wikitext pre { font-family: monospace; }
  * The div inside the wikiadmin upload form does not
  * have a class yet, so it must be referenced indirectly
  */
-div.wikiaction { background-color: black; }
+div.wikiaction, form.wikiadmin div {
+  background-color: black;
+  border: 1px solid #006;
+  margin-top: 0.5ex;
+  margin-bottom: 0.5ex;
+  padding: 0.5ex 0.5em; }
 /* div.wikiadmin { background-color: black; } */
 form.wikiadmin div { background-color: black; }
 
@@ -135,17 +142,18 @@ a.wikiadmin:hover { color: #ef0032; }
 
 /* Unknown links */
 .wikiunknown, .named-wikiunknown {
+  color: gray;
   font-weight: normal;
   font-size: 100%;
 }
  /* QuestionMark #600 */
 .wikiunknown a, .named-wikiunknown a {
-  color: black;
-  background-color: #ddd;
+  color: #0053db;
+  background: #1b1722;
   text-decoration: none;
   font-weight: normal;
-  font-size: smaller;
 }
+.wikiunknown a:hover, .named-wikiunknown a:hover { color: #5791ff; }
 
 /* Backlinks */
 .backlinks { text-decoration: none; }
@@ -162,27 +170,19 @@ h1 .backlinks { text-decoration: none; }
  * Headings
  */
 h1 {
-  color:            #000;
+  color: #000;
   background-color: #fff313;
-  padding-top:      0.25ex;
-  padding-left:     0.5em;
-  padding-right:    0.25em;
-  padding-bottom:   1px;
 }
-div.toolbar h1 a.wiki, h1 a.backlinks {
+div.toolbar h1 a.wiki, h1 a.backlinks, h2 a.wiki {
   border: 0;
-  color:            #fff313;
+  color: #fff313;
   background-color: #000;
-  text-decoration:  none;
-  padding-top:      0.25ex;
-  padding-left:     0.25em;
-  padding-right:    0.25em;
-  padding-bottom:   1px;
+  text-decoration: none;
 }
-div.toolbar h1 a.wiki {
+div.toolbar h1 a.wiki, h2 a.wiki {
   color: #0053db;
 }
-div.toolbar h1 a.wiki:hover {
+div.toolbar h1 a.wiki:hover, h1 a.wiki:hover, h2 a.wiki:hover {
   border: 0;
   color: #5791ff;
 }
@@ -260,7 +260,7 @@ caption { font-family: Arial, Helvetica, sans-serif; }
  */
 .toolbar, input.button, #signin { font-family: Arial, Helvetica, sans-serif; }
 .toolbar hr { visibility: hidden; }
-div.toolbar {
+div.toolbar, #signin {
   color: white;
   padding: 0;
   margin:  0;
@@ -288,10 +288,6 @@ div.toolbar { margin-top: 1ex; }
 }
 
 div.toolbar input {
-  border:  1px solid #0053db;
-  padding: 1px;
-  font-size:   smaller;
-  text-align:  left;
   font-family: Helvetica, Arial, sans-serif;
 }
 
@@ -326,32 +322,33 @@ textarea.wikiedit {
 .transclusion-title {
   font-style: oblique;
   font-size: smaller; /* 0.75em; */
-  text-decoration: underline;
+  text-decoration: none;
   text-align: right;
 } 
 .wiki-edithelp, .transclusion {
   background: #1b1722;
   border: 1px solid #403752;
-  margin: 0.5ex 0px;
-  font-size: smaller; /* 0.75em; */
 }
-
+.wiki-edithelp {
+  font-size: smaller;
+  margin: 0.5ex 0px;
+}
 .wiki-edithelp, div.transclusion {
   color: #a2a2a2;
   background-color: #1b1722;
   padding-left:  0.5em;
   padding-right: 0.5em;
-  padding-top:    0.75ex;
-  padding-bottom: 0.75ex;
+  padding-top:    0.5ex;
+  padding-bottom: 0.5ex;
   margin-left:  0;
   margin-right: 0;
-  margin-top: 1ex;
-  margin-bottom: 1ex;
 }
 .wiki-edithelp .wiki {
   color:           #fff313;
   font-weight:     bold;
   text-decoration: none;
+  margin-top: 1ex;
+  margin-bottom: 1ex;
 }
 .wiki-edithelp p {
   font-family: Arial, Helvetica, sans-serif;
@@ -493,23 +490,14 @@ b.wikisummary {
 
 /* PHP Warnings */
 div.errors {
-  color: black;
-  background: #eee;
-  margin-top:    1em;
-  margin-bottom: 1em;
-  padding-left:  0.8em; 
-  padding-right: 0.8em; 
-  padding-top:    0.8ex;
-  padding-bottom: 0;
-  font-size: smaller;
+  color: red;
+  background: black;
   border: medium solid red;
-  width: 100%; /* for Netscape 4 */
   clear: both;
 }
 .errors h4 {
-  color: red;
-  margin:  0;
-  padding: 0;
+  color: black;
+  background: red;
   text-decoration: underline;
 }
 .error { font-family: monospace; }
@@ -526,7 +514,7 @@ div.errors {
   margin-left:  0;
   margin-right: 0;
   padding: 0.5ex 0.5em;
-  border: 1px solid gray;
+  border: medium solid gray;
   display: table;
 }
 
