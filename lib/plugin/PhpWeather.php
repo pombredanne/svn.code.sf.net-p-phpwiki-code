@@ -11,9 +11,9 @@ rcs_id('$Id PhpWeather.php 2002-08-26 15:30:13 rurban$');
  * <?plugin PhpWeather ?>
  * <?plugin PhpWeather menu=true ?>
  * <?plugin PhpWeather icao=KJFK ?>
- * <?plugin PhpWeather lang=en ?>
+ * <?plugin PhpWeather language=en ?>
  * <?plugin PhpWeather units=only_metric ?>
- * <?plugin PhpWeather icao||=CYYZ lang||=en menu=true ?>
+ * <?plugin PhpWeather icao||=CYYZ cc||=CA language||=en menu=true ?>
  *
  * If you want a menu, and you also want to change the default station
  * or language, then you have to use the ||= form, or else the user
@@ -49,7 +49,7 @@ extends WikiPlugin
         global $LANG;
         return array('icao'  => 'EKAH',
                      'cc'    => 'DK',
-                     'lang'  => 'en',
+                     'language'  => 'en',
                      'menu'  => false,
                      'units' => 'both_metric');
     }
@@ -83,14 +83,14 @@ extends WikiPlugin
         if (!empty($icao)) {
 
             /* We check and correct the language if necessary: */
-            //if (!in_array($lang, array_keys($w->get_languages('text')))) {
-            if (!in_array($lang, array_keys(get_languages('text')))) {
+            //if (!in_array($language, array_keys($w->get_languages('text')))) {
+            if (!in_array($language, array_keys(get_languages('text')))) {
                 trigger_error(sprintf(_("%s does not know about the language '%s', using 'en' instead."),
-                                      $this->getName(), $lang), E_USER_NOTICE);
-                $lang = 'en';
+                                      $this->getName(), $language), E_USER_NOTICE);
+                $language = 'en';
             }
 
-            $class = "pw_text_$lang";
+            $class = "pw_text_$language";
             require_once(PHPWEATHER_BASE_DIR . "/output/$class.php");
 
             $t = new $class($w);
@@ -132,8 +132,8 @@ extends WikiPlugin
 
             /* We want to save the language: */
             $p1->pushContent(HTML::input(array('type'  => 'hidden',
-                                               'name'  => 'lang',
-                                               'value' => $lang)));
+                                               'name'  => 'language',
+                                               'value' => $language)));
             /* And also the ICAO: */
             $p1->pushContent(HTML::input(array('type'  => 'hidden',
                                                'name'  => 'icao',
@@ -156,9 +156,9 @@ extends WikiPlugin
                                                    'value' => $cc)));
 
                 $p2->pushContent(new RawXml(get_stations_select($w, $cc, $icao)));
-                $p2->pushContent(new RawXml(get_languages_select($w, $lang)));
+                $p2->pushContent(new RawXml(get_languages_select($language)));
                 $p2->pushContent(HTML::input(array('type'  => 'submit',
-                                                   'value' => 'Submit location')));
+                                                   'value' => _("Submit location"))));
 
                 $html->pushContent(HTML::form($form_arg, $p2));
 
@@ -169,6 +169,10 @@ extends WikiPlugin
         return $html;
     }
 };
+
+/**
+ $Log: not supported by cvs2svn $
+ */
 
 // For emacs users
 // Local Variables:
