@@ -1,9 +1,9 @@
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
-X-RCS_ID: $Id: FindPage,v 1.8 2002-01-09 06:27:54 carstenklapp Exp $
+X-RCS_ID: "$Id: FindPage,v 1.9 2002-01-25 21:44:11 carstenklapp Exp $"
 Content-Type: application/x-phpwiki;
   pagename=FindPage;
   flags=PAGE_LOCKED;
-  lastmodified=1009096690;
+  charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
 Here are some good starting points for browsing.
