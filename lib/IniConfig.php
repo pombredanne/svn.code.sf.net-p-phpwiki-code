@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.65 2004-11-11 10:31:26 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.66 2004-11-17 17:23:12 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -600,16 +600,18 @@ function fixup_dynamic_configs() {
         //    then bindtextdomain() fails, but after chdir to the correct path it will work okay.
         // 2. But the weird error "Undefined variable: bindtextdomain" is generated then.
         $bindtextdomain_path = FindFile("locale", false, true);
+        $chback = 0;
         if (isWindows())
             $bindtextdomain_path = str_replace("/","\\",$bindtextdomain_path);
         $bindtextdomain_real = @bindtextdomain("phpwiki", $bindtextdomain);
         if ($bindtextdomain_real != $bindtextdomain_path) {
             // this will happen with virtual_paths. chdir and try again.
             chdir($bindtextdomain_path);
+            $chback = 1;
             $bindtextdomain_real = @bindtextdomain("phpwiki", $bindtextdomain);
         }
         textdomain("phpwiki");
-        if ($bindtextdomain_real != $bindtextdomain_path) { // change back
+        if ($chback) { // change back
             chdir($bindtextdomain_real . (isWindows() ? "\\.." : "/.."));
         }
     }
@@ -748,6 +750,11 @@ function fixup_dynamic_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.65  2004/11/11 10:31:26  rurban
+// Disable default options in config-dist.ini
+// Add new CATEGORY_GROUP_PAGE root page: Default: Translation of "CategoryGroup"
+// Clarify more options.
+//
 // Revision 1.64  2004/11/09 17:11:03  rurban
 // * revert to the wikidb ref passing. there's no memory abuse there.
 // * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively
