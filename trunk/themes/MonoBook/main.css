@@ -38,7 +38,7 @@
 
 body {
     font: x-small sans-serif;
-    background: #f9f9f9 url("headbg.jpg") 0px 0px no-repeat;
+    background: #f9f9f9 url("images/headbg.jpg") 0px 0px no-repeat;
     color: Black;
     margin: 0;
     padding: 0;
@@ -114,7 +114,7 @@ ul {
     list-style-type: square;
     margin: 0.3em 0 0 1.5em;
     padding:0;
-    list-style-image: url("bullet.gif");
+    list-style-image: url("images/bullet.gif");
 }
 ol {
     line-height: 1.5em;
@@ -437,31 +437,31 @@ td.diff-context { background:#eeeeee; }
 */
 #bodyContent a[href ^="http://"],
 #bodyContent a[href ^="gopher://"] {
-    background: url(external.png) center right no-repeat;
+    background: url("images/url.png") center right no-repeat;
     padding-right: 13px;
 }
 #bodyContent a[href ^="https://"],
 .link-https {
-    background: url("lock_icon.gif") center right no-repeat;
+    background: url("images/lock_icon.gif") center right no-repeat;
     padding-right: 16px;
 }
 #bodyContent a[href ^="mailto:"],
 .link-mailto {
-    background: url("mail_icon.gif") center right no-repeat;
+    background: url("images/mail_icon.gif") center right no-repeat;
     padding-right: 18px;
 }
 #bodyContent a[href ^="news://"] {
-    background: url("news_icon.png") center right no-repeat;
+    background: url("images/news_icon.png") center right no-repeat;
     padding-right: 18px;
 }
 #bodyContent a[href ^="ftp://"],
 .link-ftp {
-    background: url("file_icon.gif") center right no-repeat;
+    background: url("images/file_icon.gif") center right no-repeat;
     padding-right: 18px;
 }
 #bodyContent a[href ^="irc://"],
 .link-irc {
-    background: url("discussionitem_icon.gif")  center right no-repeat;
+    background: url("images/discussionitem_icon.gif")  center right no-repeat;
     padding-right: 18px;
 }
 /* disable interwiki styling */
@@ -536,7 +536,7 @@ special external link styling */
 .portlet ul {
     line-height: 1.5em;
     list-style-type: square;
-    list-style-image: url("bullet.gif");
+    list-style-image: url("images/bullet.gif");
     font-size:95%;
 }
 .portlet li {
@@ -681,7 +681,7 @@ in bg url to hide it from iemac */
 li#pt-userpage,
 li#pt-anonuserpage,
 li#pt-login {
-    background:  url('user.gif') top left no-repeat;
+    background:  url('images/wikiuser.gif') top left no-repeat;
     background-repeat: no-repeat;
     padding-left: 20px;
     text-transform: none;
