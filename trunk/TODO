@@ -16,3 +16,8 @@ Write/proofread pages on wiki markup
 
 Add a TestPage which tests all markup features: wikinames, external
 links, lists, and other markup
+
+Add lastmodified and created features to DBM version
+
+In wiki_msql.php3, when strings are decomposed, a single word longer than
+MSQL_MAX_LINE_LENGTH will have unknown consequences.
