@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PluginManager.php,v 1.5 2003-02-22 20:49:56 dairiki Exp $');
+rcs_id('$Id: PluginManager.php,v 1.6 2003-02-24 00:56:53 carstenklapp Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
@@ -142,11 +142,14 @@ extends WikiPlugin
                 // don't link to actionpages and plugins starting with
                 // an _ from page list
                 if ( !preg_match("/^_/", $pname)
-                     //&& !(@$request->isActionPage($pname)) //FIXME
-                    )
-                    $plink = WikiLink($ppname, 'unknown');
-                else
-                    $plink = false;
+                     //&& !(@$request->isActionPage($pname)) //FIXME?
+                    ) {
+                        // $plink = WikiLink($ppname, 'unknown');
+                        global $Theme;
+                        $plink = $Theme->linkUnknownWikiWord($ppname);
+                    }
+                        else
+                            $plink = false;
             }
             // highlight alternate rows
             $row_no++;
@@ -178,6 +181,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2003/02/22 20:49:56  dairiki
+// Fixes for "Call-time pass by reference has been deprecated" errors.
+//
 // Revision 1.4  2003/02/20 18:13:38  carstenklapp
 // Workaround for recent changes to WikiPlugin->getPlugin.
 // Made admin restriction for viewing this page optional.
