@@ -1,3 +1,6 @@
+Sandino Araico Sánchez <sandino@sandino.net> contributed a patch for
+Spanish translations for PhpWiki.
+
 Jan Nieuwenhuizen <janneke@gnu.org> contributed a major patch to
 supply default pages in Dutch; this led to an architecture to support
 internationalization, and PhpWiki can now accomodate pages in any
@@ -6,7 +9,7 @@ language.
 Neil Brown <neilb@cse.unsw.edu.au> has contributed numerous useful
 patches for the 1.1.8 release.
 
-Aredridel Niothke     <aredridel@nbtsc.org> has started a flat file
+Aredridel Niothke <aredridel@nbtsc.org> has started a flat file
 database for Phpwiki, which is included in the 1.1.8 release.
 
 Arno Hollosi wrote the MySQL library, the templates, and wrote the 
