@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ButtonFactory.php,v 1.4 2002-01-17 20:35:44 dairiki Exp $');
+<?php rcs_id('$Id: ButtonFactory.php,v 1.5 2002-01-18 01:25:32 dairiki Exp $');
 
 /**
  * A class representing a clickable "button".
@@ -74,6 +74,7 @@ class ImageButton extends Button {
             $this->_img_attr = $img_attr;
         $this->_img_attr['src'] = $img_url;
         $this->_img_attr['alt'] = $text;
+        $this->_img_attr['class'] = 'wiki-button';
         $this->_img_attr['border'] = 0;
     }
 
