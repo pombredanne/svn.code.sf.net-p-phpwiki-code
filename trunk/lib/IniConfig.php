@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.6 2004-04-20 18:10:27 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.7 2004-04-20 22:26:27 zorloc Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -52,7 +52,6 @@ include_once "lib/config.php";
  
 function IniConfig($file)
 {
-    require_once('lib/pear/Config.php');
  
     // List of all valid config options to be define()d which take "values" (not
     // booleans). Needs to be categorised, and generally made a lot tidier.
@@ -84,15 +83,12 @@ function IniConfig($file)
          'WARN_NONPUBLIC_INTERWIKIMAP', 'USE_PATH_INFO',
          'DISABLE_HTTP_REDIRECT');
 
-    $config = new Config();
-    $root = &$config->parseConfig($file, 'inicommented');
-    if (PEAR::isError($root)) {
-        trigger_error("Datasource file config/config.ini does not exist.", E_USER_ERROR);
+    if(!file_exists($file)){
+        trigger_error("Datasource file '$file' does not exist", E_USER_ERROR);
         exit();
     }
-    $out = $root->toArray();
-
-    $rs = &$out['root'];
+         
+    $rs = @parse_ini_file($file);
 
     foreach ($_IC_VALID_VALUE as $item) {
         if (array_key_exists($item, $rs) and !defined($item)) {
@@ -464,6 +460,14 @@ function fix_configs() {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/04/20 18:10:27  rurban
+// config refactoring:
+//   FileFinder is needed for WikiFarm scripts calling index.php
+//   config run-time calls moved to lib/IniConfig.php:fix_configs()
+//   added PHPWIKI_DIR smart-detection code (Theme finder)
+//   moved FileFind to lib/FileFinder.php
+//   cleaned lib/config.php
+//
 // Revision 1.5  2004/04/20 17:21:57  rurban
 // WikiFarm code: honor predefined constants
 //
