@@ -1,4 +1,4 @@
-<!-- $Id: stdlib.php,v 1.2 2000-10-19 21:36:50 ahollosi Exp $ -->
+<!-- $Id: stdlib.php,v 1.3 2000-10-19 22:25:45 ahollosi Exp $ -->
 <?php
    /*
       Standard functions for Wiki functionality
@@ -17,7 +17,28 @@
          UpdateRecentChanges($dbi, $pagename, $isnewpage) 
          ParseAndLink($bracketlink)
          ExtractWikiPageLinks($content)
+	 ExitWiki($errormsg)
    */
+
+
+   function ExitWiki($errormsg)
+   {
+      static $exitwiki = 0;
+      global $dbi;
+
+      if($exitwiki)		// just in case CloseDataBase calls us
+         exit();
+      $exitwiki = 1;
+
+      CloseDataBase($dbi);
+
+      if($errormsg <> '') {
+         print "<P><hr noshade><h2>WikiFatalError</h2>\n";
+         print $errormsg;
+         print "\n</BODY></HTML>";
+      }
+      exit();
+   }
 
 
    function LinkRelatedPages($dbi, $pagename)
@@ -258,8 +279,7 @@
                $stack->push($tag);
                if ($stack->cnt() > 10) {
                   // arbitrarily limit tag nesting
-                  echo "Stack bounds exceeded in SetHTMLOutputMode\n";
-                  exit();
+                  ExitWiki("Stack bounds exceeded in SetHTMLOutputMode");
                }
             }
    
@@ -294,10 +314,8 @@
             $stack->push($tag);
          }
    
-      } else {
-         // error
-         echo "Passed bad tag depth value in SetHTMLOutputMode\n";
-         exit();
+      } else {    // error
+         ExitWiki("Passed bad tag depth value in SetHTMLOutputMode");
       }
 
       return $retvar;
@@ -488,5 +506,5 @@
       }
 
       return $wikilinks;
-   }      
+   }
 ?>

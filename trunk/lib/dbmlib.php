@@ -1,6 +1,6 @@
 <?php  
 
-   rcs_id('$Id: dbmlib.php,v 1.1 2000-10-08 17:33:26 wainstead Exp $');
+   rcs_id('$Id: dbmlib.php,v 1.2 2000-10-19 22:25:45 ahollosi Exp $');
 
    /*
       Database functions:
@@ -36,9 +36,7 @@
       while (list($key, $file) = each($WikiDB)) {
          while (($dbi[$key] = @dbmopen($file, "c")) < 1) {
             if ($numattempts > MAX_DBM_ATTEMPTS) {
-               echo "Cannot open database '$key' : '$file', giving up.";
-               // we should close the files here... but...
-               exit();
+               ExitWiki("Cannot open database '$key' : '$file', giving up.");
             }
             $numattempts++;
             sleep(1);
@@ -98,8 +96,7 @@
 
       if (dbminsert($dbi['wiki'], $pagename, $pagedata)) {
          if (dbmreplace($dbi['wiki'], $pagename, $pagedata)) {
-            echo "error writing value";
-            exit();
+            ExitWiki("Error inserting page '$pagename'");
          }
       } 
    }
@@ -113,8 +110,7 @@
 
       if (dbminsert($dbi[$ArchivePageStore], $pagename, $pagedata)) {
          if (dbmreplace($dbi['archive'], $pagename, $pagedata)) {
-            echo "error writing value";
-            exit();
+            ExitWiki("Error storing '$pagename' into archive");
          }
       } 
    }
