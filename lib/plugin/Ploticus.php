@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Ploticus.php,v 1.11 2004-10-14 13:48:07 rurban Exp $');
+rcs_id('$Id: Ploticus.php,v 1.12 2004-12-13 14:37:22 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -100,7 +100,7 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
     function getDefaultArguments() {
         return array(
@@ -161,7 +161,8 @@ extends WikiPluginCached
         //unset ($other_imgtypes[$def['imgtype']]);
         $helparr = array(
             '<?plugin Ploticus ' .
-            'device'           => ' = "' . $def['device'] . "(default)|" . join('|',$GLOBALS['PLUGIN_CACHED_IMGTYPES']).'"',
+            'device'           => ' = "' . $def['device'] . "(default)|" 
+                                  . join('|',$GLOBALS['PLUGIN_CACHED_IMGTYPES']).'"',
             'data'             => ' <!plugin-list !>: pagelist as input',
             'alt'              => ' = "alternate text"',
             '-csmap'           => ' bool: clickable map?',
@@ -235,7 +236,8 @@ extends WikiPluginCached
             //    return $this->error(fmt("Couldn't start commandline '%s'", $commandLine));
             sleep(1);
             if (! file_exists("$tempfile.$gif") ) {
-                $this->_errortext .= sprintf(_("Ploticus error: Outputfile '%s' not created"), "$tempfile.$gif");
+                $this->_errortext .= sprintf(_("%s error: outputfile '%s' not created"), 
+                                             "Ploticus", "$tempfile.$gif");
                 $this->_errortext .= ("\ncmd-line: cat script | " . PLOTICUS_EXE . "$args");
                 return false;
             }
@@ -261,6 +263,9 @@ extends WikiPluginCached
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/10/14 13:48:07  rurban
+// wait for fs and print failing cmdline
+//
 // Revision 1.10  2004/10/04 23:43:35  rurban
 // honor _ENV PLOTICUS_PREFABS
 //
