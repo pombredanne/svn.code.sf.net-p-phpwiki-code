@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.10 2002-01-13 02:42:55 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.11 2002-01-15 23:22:26 carstenklapp Exp $');
 
 /**
  * This is really just a template to copy for designing new
@@ -35,6 +35,15 @@ $CSS_URLS = array_merge($CSS_URLS,
 // used. If it is not defined by index.php or in here then the "Thank
 // you for editing..." screen will be omitted.
 //$SignatureImg = "themes/$theme/signature.png";
+
+// This defines separators used in RecentChanges and RecentEdits lists.
+// If undefined, defaults to '' (nothing) and '...' (three periods).
+//define("RC_SEPARATOR_A", ' . . . ');
+//define("RC_SEPARATOR_B", ' --');
+
+// Controls whether the '?' appears before or after UnknownWikiWords.
+// The PhpWiki default is for the '?' to appear before.
+//define('WIKIMARK_AFTER', true);
 
 // If this theme defines any templates, they will completely override
 // whatever templates have been defined in index.php.
