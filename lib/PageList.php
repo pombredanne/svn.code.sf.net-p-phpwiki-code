@@ -1,10 +1,10 @@
-<?php rcs_id('$Id: PageList.php,v 1.89 2004-06-17 13:16:08 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.90 2004-06-18 14:38:21 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
  * This library relieves some work for these plugins:
  *
- * AllPages, BackLinks, LikePages, Mostpopular, TitleSearch and more
+ * AllPages, BackLinks, LikePages, MostPopular, TitleSearch, WikiAdmin* and more
  *
  * It also allows dynamic expansion of those plugins to include more
  * columns in their output.
@@ -21,9 +21,9 @@
  * 'minor'    _("Minor Edit"), _("minor")
  * 'markup'   _("Markup")
  * 'size'     _("Size")
- * 'creator'  _("Creator"),  //todo: implement this again for PagePerm
- * 'owner'    _("Owner"),    //todo: implement this again for PagePerm
- * 'checkbox'  A selectable checkbox appears at the left.
+ * 'creator'  _("Creator")
+ * 'owner'    _("Owner")
+ * 'checkbox'  selectable checkbox at the left.
  * 'content'  
  *
  * Special, custom columns: Either theme or plugin (WikiAdmin*) specific.
@@ -31,7 +31,7 @@
  * 'perm'     _("Permission Mask")
  * 'acl'      _("ACL")
  * 'renamed_pagename'   _("Rename to")
- * 'ratingwidget' wikilens theme specific.
+ * 'ratingwidget', ... wikilens theme specific.
  * 'custom'   See plugin/WikiTranslation
  *
  * Symbolic 'info=' arguments:
@@ -90,7 +90,7 @@ class _PageList_Column_base {
     // old-style heading
     function heading () {
         // allow sorting?
-        if (1 or in_array($this->_field,PageList::sortable_columns())) {
+        if (1 or in_array($this->_field, PageList::sortable_columns())) {
             // multiple comma-delimited sortby args: "+hits,+pagename"
             // asc or desc: +pagename, -pagename
             $sortby = PageList::sortby($this->_field, 'flip_order');
@@ -197,8 +197,9 @@ class _PageList_Column extends _PageList_Column_base {
 
         $this->_need_rev = substr($field, 0, 4) == 'rev:';
         $this->_iscustom = substr($field, 0, 7) == 'custom:';
-        if ($this->_iscustom)
+        if ($this->_iscustom) {
             $this->_field = substr($field, 7);
+        }
         elseif ($this->_need_rev)
             $this->_field = substr($field, 4);
         else
@@ -220,6 +221,18 @@ class _PageList_Column extends _PageList_Column_base {
         return _PageList_Column::_getValue($page_handle, $revision_handle);
     }
 };
+
+/* overcome a call_user_func limitation by not being able to do:
+ * call_user_func_array(array(&$class, $class_name), $params);
+ * So we need $class = new $classname($params);
+ * And we add a 4th param for the parent $pagelist object
+ */
+class _PageList_Column_custom extends _PageList_Column {
+    function _PageList_Column_custom($params) {
+    	$this->_pagelist =& $params[3];
+        $this->_PageList_Column($params[0], $params[1], $params[2]);
+    }
+}
 
 class _PageList_Column_size extends _PageList_Column {
     function _getValue ($page_handle, &$revision_handle) {
@@ -250,6 +263,7 @@ class _PageList_Column_bool extends _PageList_Column {
     }
 
     function _getValue ($page_handle, &$revision_handle) {
+    	//FIXME: check if $this is available in the parent (->need_rev)
         $val = _PageList_Column::_getValue($page_handle, $revision_handle);
         return $val ? $this->_textIfTrue : $this->_textIfFalse;
     }
@@ -319,7 +333,7 @@ class _PageList_Column_version extends _PageList_Column {
 // FIXME: old PHP without superglobals
 class _PageList_Column_content extends _PageList_Column {
     function _PageList_Column_content ($field, $default_heading, $align = false) {
-        _PageList_Column::_PageList_Column($field, $default_heading, $align);
+        $this->_PageList_Column($field, $default_heading, $align);
         $this->bytes = 50;
         if ($field == 'content') {
             $this->_heading .= sprintf(_(" ... first %d bytes"),
@@ -893,9 +907,16 @@ class PageList {
             $this->_types = array();
         // add plugin specific pageList columns, initialized by $options['types']
         $this->_types = array_merge($standard_types, $this->_types);
-        // add theme specific pageList columns
-        if (!empty($customPageListColumns))
+        // add theme custom specific pageList columns: 
+        //   set the 4th param as the current pagelist object.
+        if (!empty($customPageListColumns)) {
+            foreach ($customPageListColumns as $column => $params) {
+                $class_name = array_shift($params);
+                $params[3] =& $this;
+                $class = new $class_name($params);
+            }
             $this->_types = array_merge($this->_types, $customPageListColumns);
+        }
     }
 
     function getOption($option) {
@@ -952,6 +973,12 @@ class PageList {
      * @param $col object   An object derived from _PageList_Column.
      **/
     function addColumnObject($col) {
+    	if (is_array($col)) {// custom column object
+    	    $params =& $col;
+            $class_name = array_shift($params);
+            $$params[3] =& $this;
+            $col = new $class_name($params);
+        }
         $heading = $col->getHeading();
         if (!empty($heading))
             $col->setHeading($heading);
@@ -1073,7 +1100,7 @@ class PageList {
                 ($offset + $pagesize < 0)) 
             {
                 $table->pushContent(HTML::thead($row),
-                                    HTML::tbody(false, $this->_pages));
+                                    HTML::tbody(false, $rows));
                 return $table;
             }
             global $request;
@@ -1114,7 +1141,7 @@ class PageList {
             }
             $paging = new Template("pagelink", $request, $tokens);
             $table->pushContent(HTML::thead($paging),
-                                HTML::tbody(false,HTML($row,$this->_pages)),
+                                HTML::tbody(false, HTML($row, $rows)),
                                 HTML::tfoot($paging));
             return $table;
         }
@@ -1207,6 +1234,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.89  2004/06/17 13:16:08  rurban
+// apply wikilens work to PageList: all columns are sortable (slightly fixed)
+//
 // Revision 1.88  2004/06/14 11:31:35  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList
