@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PluginManager.php,v 1.7 2003-02-24 01:36:25 dairiki Exp $');
+rcs_id('$Id: PluginManager.php,v 1.8 2003-11-15 21:53:53 wainstead Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -103,6 +103,7 @@ extends WikiPlugin
             $plugin_dir = PHPWIKI_DIR . "/$plugin_dir";
         $pd = new fileSet($plugin_dir, '*.php');
         $plugins = $pd->getFiles();
+        sort($plugins);
         // table body
         $tbody = HTML::tbody();
         global $WikiNameRegexp;
@@ -184,6 +185,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2003/02/24 01:36:25  dairiki
+// Don't use PHPWIKI_DIR unless it's defined.
+// (Also typo/bugfix in SystemInfo plugin.)
+//
 // Revision 1.6  2003/02/24 00:56:53  carstenklapp
 // Updated to work with recent changes to WikiLink function (fix "==Object(wikipagename)==" for unknown wiki links).
 //
