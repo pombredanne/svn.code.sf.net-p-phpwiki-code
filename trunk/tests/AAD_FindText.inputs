@@ -1,10 +1,10 @@
 # Test the page WabiSabi for the text
 # string "imperfect, impermanent, and incomplete"
-# $Id: AAD_FindText.inputs,v 1.1 2001-09-20 21:33:09 wainstead Exp $
+# $Id: AAD_FindText.inputs,v 1.2 2002-01-29 22:15:31 wainstead Exp $
 
 # get the starting page
 type: starting_page
-start_url: http://127.0.0.1:8080/~swain/phpwiki/index.php/WabiSabi
+start_url: index.php/WabiSabi
 assert_text: imperfect, impermanent, and incomplete
 go
 
