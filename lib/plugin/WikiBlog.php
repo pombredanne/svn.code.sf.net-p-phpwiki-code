@@ -1,15 +1,41 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiBlog.php,v 1.5 2003-02-16 19:47:17 dairiki Exp $');
+rcs_id('$Id: WikiBlog.php,v 1.6 2003-02-21 04:20:09 dairiki Exp $');
+/*
+ Copyright 2002, 2003 $ThePhpWikiProgrammingTeam
+ 
+ This file is part of PhpWiki.
+
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 /**
- * Author: MichaelVanDam
+ * Author: MichaelVanDam, major refactor by JeffDairiki
  */
 
 require_once('lib/TextSearchQuery.php');
-//require_once('lib/plugin/IncludePage.php');
 
 /**
  * This plugin shows 'blogs' (comments/news) associated with a
  * particular page and provides an input form for adding a new blog.
+ *
+ * HINTS/COMMENTS:
+ *
+ * To have comments show up on a separate page:
+ * On TopPage, use
+ *   <?plugin WikiBlog mode=add?>
+ * Create TopPage/Comments with:
+ *   <?plugin WikiBlog page=TopPage mode=show?>
  *
  * TODO:
  *
@@ -54,7 +80,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     // Arguments:
@@ -87,307 +113,208 @@ extends WikiPlugin
                     );
     }
 
-
     function run($dbi, $argstr, $request) {
-        $this->_args = $this->getArgs($argstr, $request);
-        extract($this->_args);
-        if (!$page)
-            return '';
+        $args = $this->getArgs($argstr, $request);
+        if (!$args['page'])
+            return $this->error("No page specified");
 
-
-        // Look at arguments to see if blog was submitted.  If so,
-        // process this before displaying anything.
-
-        if ($request->getArg('addblog')) {
-
-            // TODO: change args to blog[page], blog[summary], blog[body] etc
-
-            $blog_page = $request->getArg('blog[page]');
-
-
-            // Generate the page name.  For now, we use the format:
-            //   Rootname/Blog-YYYYMMDDHHMMSS
-            // This gives us natural chronological order when sorted
-            // alphabetically.
-            // This is inside a loop because there is a small
-            // chance that another user could add a blog with
-            // the same timestamp.  If such a conflict is
-            // detected, increment timestamp by 1 second until
-            // a unique name is found.
-
-            $now = time();
-
-            $p = false;  // will store our page
-            $time = false; // will store our timestamp
-
-            $saved = false;
-            while (!$saved) {
-
-//change to ISO formatted time? 2003-01-11T24:03:02
-                $time = strftime ('%Y%m%d%H%M%S', $now);
-
-//add a subpage between, to allow one to create a page containing only all the blogs of the parent page
-//                $p = $dbi->getPage($blog_page . SUBPAGE_SEPARATOR . _("Comments") . SUBPAGE_SEPARATOR . "Blog-$time");
-                $p = $dbi->getPage($blog_page . SUBPAGE_SEPARATOR . "Blog-$time");
-
-                $pr = $p->getCurrentRevision();
-
-                // Version should be zero.  If not, page already exists
-                // so increment timestamp and try again.
-
-                if ($pr->getVersion() > 0) $now ++;
-                else $saved = true;
-
-            }
-
-
-            // Generate meta-data for page
-            // This is info that won't change for each revision:
-            //   ctime (time of creation), creator, and creator_id.
-            // Create-date is really the relevant date for a blog,
-            // not the last-modified date.
-
-            // FIXME:  For now all blogs are locked.  It would be
-            // nice to allow only the 'creator' to edit by default.
-
-            $user = $request->getUser();
-            $user_id = $user->getId();
-            $user_auth_id = $user->getAuthenticatedId();
-
-            $p->set ('ctime', $now);
-            $p->set ('creator', $user_id);
-            $p->set ('creator_id', $user_auth_id);
-            $p->set ('locked', true);  // lock by default
-            $p->set ('pagetype', 'wikiblog');
-
-            // Generate meta-data for page revision
-
-            $meta = array('author' => $user_id,
-                          'author_id' => $user_auth_id,
-                          'markup' => 2.0,   // assume new markup
-                          'summary' => _("New comment."),
-                          );
-
-            // FIXME: For now the page format is:
-            //
-            //   __Summary__
-            //   Body
-            //
-            // This helps during editing (using standard editor)
-            // when the page/revision metadata is not available
-            // to the user.  If we had a pagetype-specific editor
-            // then we could put the Summary into meta-data and
-            // still make it available for editing.
-            // Also, it helps for now during rendering because we
-            // don't need to create a new PageType class just yet...
-
-            // FIXME: move summary into the page's summary field
-            // PageType now displays the summary field when viewing
-            // an individual blog page
-            $summary = trim($request->getArg('blog[summary]'));
-            $body = trim($request->getArg('blog[body]'));
-
-            if ($summary)
-                $meta['summary'] = $summary;
-
-            $pr = $p->createRevision($pr->getVersion()+1,
-                                     $body,
-                                     $meta,
-                                     ExtractWikiPageLinks($body));
-
-            // FIXME: Detect if !$pr ??  How to handle errors?
-
-            $dbi->touch();
-
-            // Save was successful.  Unset all the arguments and
-            // redirect to page that user was viewing before.
-            // Unsetting arguments will prevent double-submitting
-            // problem and will clear out the text-boxes.
-
-            $request->setArg('addblog', false);
-            $request->setArg('blog[page]', false);
-            $request->setArg('blog[body]', false);
-            $request->setArg('blog[summary]', false);
-
-            $url = $request->getURLtoSelf();
-            $request->redirect($url);
-
-            // FIXME: when submit a comment from preview mode,
-            // adds the comment properly but jumps to browse mode.
-            // Any way to jump back to preview mode???
-
-
-            // The rest of the output will not be seen due to
-            // the redirect.
+        // Get our form args.
+        $blog = $request->getArg("blog");
+        $request->setArg('blog', false);
+            
+        if ($request->isPost() and !empty($blog['addblog'])) {
+            $this->addBlog($request, $blog); // noreturn
         }
 
         // Now we display previous comments and/or provide entry box
         // for new comments
-
-        $showblogs = true;
-        $showblogform = true;
-
-        switch ($mode) {
-
-            case 'show':
-                $showblogform = false;
-
-            case 'add':
-                $showblogs = false;
-
-            case 'show,add':
-            case 'add,show':
-            default:
-
-            // TODO: implement ordering show,add vs add,show !
-
-        }
-
-
         $html = HTML();
-
-        if ($showblogs) {
-            $html->pushContent($this->showBlogs ($dbi, $request, $page, $order));
+        foreach (explode(',', $args['mode']) as $show) {
+            if (!empty($seen[$show]))
+                continue;
+            $seen[$show] = 1;
+                
+            switch ($show) {
+            case 'show':
+                $html->pushContent($this->showBlogs($request, $args));
+                break;
+            case 'add':
+                $html->pushContent($this->showBlogForm($request, $args));
+                break;
+            default:
+                return $this->error(sprintf("Bad mode ('%s')", $show));
+            }
         }
-
-        if ($showblogform) {
-            $html->pushContent($this->showBlogForm ($dbi, $request, $page));
-        }
-
         return $html;
-
     }
 
 
-    function showBlogs ($dbi, $request, $page, $order) {
+    function addBlog (&$request, $blog) {
+        if (!($parent = $blog['page']))
+            $request->finish("No page specified for blog.");
 
-        // Display comments:
+        $user = $request->getUser();
+        $now = time();
+        $dbi = $request->getDbh();
+        
+        /*
+         * Page^H^H^H^H Blog meta-data
+         *
+         * This is info that won't change for each revision.
+         * Nevertheless, it's now stored in the revision meta-data.
+         * Several reasons:
+         *  o It's more convenient to have all information required
+         *    to render a page revision in the revision meta-data.
+         *  o We can avoid a race condition, since version meta-data
+         *    updates are atomic with the version creation.
+         */
 
+        $blog_meta = array('ctime' => $now,
+                           'creator' => $user->getId(),
+                           'creator_id' => $user->getAuthenticatedId(),
+                           );
+        
+
+        // Version meta-data
+        $summary = trim($blog['summary']);
+        $version_meta = array('author' => $blog_meta['creator'],
+                              'author_id' => $blog_meta['creator_id'],
+                              'markup' => 2.0,   // assume new markup
+                              'summary' => $summary ? $summary : _("New comment."),
+                              'mtime' => $now,
+                              'pagetype' => 'wikiblog',
+                              'wikiblog' => $blog_meta,
+                              );
+
+        // Comment body.
+        $body = trim($blog['body']);
+
+        $saved = false;
+        while (!$saved) {
+            // Generate the page name.  For now, we use the format:
+            //   Rootname/Blog-YYYYMMDDHHMMSS
+            // This gives us natural chronological order when sorted
+            // alphabetically.
+            // a unique name is found.
+
+            // change to ISO formatted time? 2003-01-11T24:03:02
+            // Yes, I think that's a good idea. -- JeffDairiki.
+
+            $time = strftime ('%Y%m%d%H%M%S', $now);
+            $p = $dbi->getPage($parent . SUBPAGE_SEPARATOR . "Blog-$time");
+            $pr = $p->getCurrentRevision();
+
+            // Version should be zero.  If not, page already exists
+            // so increment timestamp and try again.
+            if ($pr->getVersion() > 0) {
+                $now++;
+                continue;
+            }
+            
+
+            // FIXME: there's a slight, but currently unimportant
+            // race condition here.  If someone else happens to
+            // have just created a blog with the same name,
+            // we'll have locked it before we discover that the name
+            // is taken.
+            /*
+             * FIXME:  For now all blogs are locked.  It would be
+             * nice to allow only the 'creator' to edit by default.
+             */
+            $p->set('locked', true); //lock by default
+            $saved = $p->save($body, 1, $version_meta);
+
+            $now++;
+        }
+        
+        $dbi->touch();
+        $request->redirect($request->getURLtoSelf()); // noreturn
+
+        // FIXME: when submit a comment from preview mode,
+        // adds the comment properly but jumps to browse mode.
+        // Any way to jump back to preview mode???
+    }
+
+    function showBlogs (&$request, $args) {
         // FIXME: currently blogSearch uses WikiDB->titleSearch to
         // get results, so results are in alphabetical order.
         // When PageTypes fully implemented, could have smarter
         // blogSearch implementation / naming scheme.
+        
+        $dbi = $request->getDbh();
 
-        $pages = $dbi->blogSearch($page, $order);
+        $parent = $args['page'];
+        $blogs = $this->findBlogs($dbi, $parent);
+        $html = HTML();
 
-        $all_comments = HTML();
+        if ($blogs) {
+            if ($args['order'] == 'reverse')
+                $blogs = array_reverse($blogs);
+            
+            if (!$args['noheader'])
+                $html->pushContent(HTML::h2(array('class' => 'wikiblog-heading'),
+                                            fmt("Comments on %s:", WikiLink($parent))));
+            foreach ($blogs as $rev) {
+                if (!$rev->get('wikiblog')) {
+                    // Ack! this is an old-style blog with data ctime in page meta-data.
+                    $content = $this->_transformOldFormatBlog($rev);
+                }
+                else
+                    $content = $rev->getTransformedContent('wikiblog');
 
-        while ($p = $pages->next()) {
+                $html->pushContent($content);
+            }
+            
+        }
+        return $html;
+    }
 
+    function _transformOldFormatBlog($rev) {
+        $page = $rev->getPage();
+
+        foreach (array('ctime', 'creator', 'creator_id') as $key)
+            $blog_meta[$key] = $page->get($key);
+        $meta = $rev->getMetaData();
+        $meta['wikiblog'] = $blog_meta;
+        return new TransformedText($page, $rev->getPackedContent(), $meta, 'wikiblog');
+    }
+
+    function findBlogs (&$dbi, $parent) {
+        $prefix = $parent . SUBPAGE_SEPARATOR;
+        $pfxlen = strlen($prefix);
+            require_once('lib/TextSearchQuery.php');
+        $pages = $dbi->titleSearch(new TextSearchQuery ($prefix));
+
+        $blogs = array();
+        while ($page = $pages->next()) {
             // FIXME:
             // Verify that it is a blog page.  If not, go to next page.
             // When we proper blogSearch implementation this will not
-            // be necessary.  Non-blog pages will not be returned by
-            // blogSearch.
-
-            $name = $p->getName();
-            // If page contains '/', we must escape them
-            // FIXME: only works for '/' SUBPAGE_SEPARATOR
-            $escpage = preg_replace ("/\//", '\/', $page);
-            if (!preg_match("/^$escpage\/Blog-([[:digit:]]{14})$/", $name, $matches))
+            // be necessary. 
+            $name = $page->getName();
+            if (substr($name, 0, $pfxlen) != $prefix)
                 continue;
+            $current = $page->getCurrentRevision();
 
-            // Display contents:
-
-            // TODO: ultimately have a function in PageType to handle
-            // display of blog entries...
-
-            // If we want to use IncludePage plugin to display blog:
-            // $i = new WikiPlugin_IncludePage;
-            // $html->pushContent($i->run($dbi, "page=$name", $request));
-
-            global $WikiNameRegexp;
-            global $Theme;
-
-            $ctime = $p->get('ctime');
-            $ctime = $Theme->formatDateTime($ctime);
-
-            $creator = $p->get('creator');
-            $creator_id = $p->get('creator_id');
-            $creator_orig = $creator;
-
-            if (preg_match("/^$WikiNameRegexp\$/", $creator)
-                               && $dbi->isWikiPage($creator))
-                $creator = WikiLink($creator);
-
-            $pr = $p->getCurrentRevision();
-
-            $modified = ($pr->getVersion() > 1);
-
-            $mtime = $pr->get('mtime');
-            $mtime = $Theme->formatDateTime($mtime);
-
-            $author    = $pr->get('author');
-            $author_id = $pr->get('author_id');
-            $author_orig = $author;
-
-            $summary = $pr->get('summary');
-
-            if (preg_match("/^$WikiNameRegexp\$/", $author)
-                               && $dbi->isWikiPage($author))
-                $authorlink = WikiLink($author);
-
-            $browseaction = WikiURL($name);
-            $editaction = WikiURL($name, array('action' => 'edit'));
-            $removeaction = WikiURL($name, array('action' => 'remove'));
-
-            $browselink = HTML::a(array('href' => $browseaction,
-                                        'class'=>'wiki'), $ctime);
-            $editlink = HTML::a(array('href' => $editaction,
-                                      'class' => 'wikiaction'), 'Edit');
-            $removelink = HTML::a(array('href' => $removeaction,
-                                        'class'=>'wikiadmin'), 'Delete');
-
-            // FIXME if necessary:
-            $creator_id_string = (strcmp($creator_orig, $creator_id) == 0) ? '' : ' (' . $creator_id . ')';
-
-            // FIXME if necessary:
-            $author_id_string = (strcmp($author_orig, $author_id) == 0) ? '' : ' (' . $author_id . ')';
-
-            // FIXME: for now we just show all links on all entries.
-            // This should be customizable.
-
-            @$blognumber++; //hackish fixme                                              
-            $args['SHOWHEADER'] = (! $this->_args['noheader'])
-                                  && ($blognumber == 1);
-            $args['SHOWBLOGFORM'] = false;
-            $args['SHOWBLOG'] = true;
-
-            $args['PAGELINK'] = WikiLink($page);
-            $args['PAGENAME'] = $page;
-            $args['AUTHOR'] = $author;
-
-             // FIXME: use $request's api to get user
-            $isadmin = $request->_user->isadmin();
-            $isauthor = $request->_user->getId() == $author;
-
-            $args['EDITLINK'] = ($isadmin) || ($isauthor) ? $editlink : "";
-            $args['REMOVELINK'] = ($isadmin) ? $removelink : "";
-            $args['AUTHORLINK'] = $authorlink;
-            $args['SUMMARY'] = $summary;
-            $args['CONTENT'] = TransformInline($pr->getPackedContent());
-            $args['DATELINK'] = $browselink;
-
-            $args['datemodified'] = $modified ? $mtime : '';
-            $args['authormodified'] = $pr->get('author');
-            $blogformtemplate = new Template('blog', $request, $args);
-            $all_comments->pushContent($blogformtemplate);
+            if (preg_match("/^Blog-([[:digit:]]{14})$/", substr($name, $pfxlen))
+                or $current->get('pagetype') == 'wikiblog') {
+                $blogs[] = $current;
+            }
         }
-        return $all_comments;
+        return $blogs;
     }
-
-    function showBlogForm ($dbi, $request, $page) {
+    
+    function showBlogForm (&$request, $args) {
         // Show blog-entry form.
-            $args['PAGENAME'] = $page;
-            $args['SHOWHEADER'] = false;
-            $args['SHOWBLOGFORM'] = true;
-            $args['SHOWBLOG'] = false;
-            $blogformtemplate = new Template('blog', $request, $args);
-            return $blogformtemplate;
+        return new Template('blogform', $request,
+                            array('PAGENAME' => $args['page']));
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2003/02/16 19:47:17  dairiki
+// Update WikiDB timestamp when editing or deleting pages.
+//
 // Revision 1.4  2003/01/11 22:23:00  carstenklapp
 // More refactoring to use templated output. Use page meta "summary" field.
 //
