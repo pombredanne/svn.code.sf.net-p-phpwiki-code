@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.69 2004-06-13 15:33:20 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.70 2004-06-18 14:39:31 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -1831,7 +1831,7 @@ class WikiDB_cache
     }
 	
     function get_latest_version($pagename)  {
-	if (defined('USECACHE')){
+	if (defined('USECACHE') and USECACHE) {
             assert (is_string($pagename) && $pagename != '');
             $cache = &$this->_glv_cache;	
             if (!isset($cache[$pagename])) {
@@ -1848,6 +1848,10 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.69  2004/06/13 15:33:20  rurban
+// new support for arguments owner, author, creator in most relevant
+// PageList plugins. in WikiAdmin* via preSelectS()
+//
 // Revision 1.68  2004/06/08 21:03:20  rurban
 // updated RssParser for XmlParser quirks (store parser object params in globals)
 //
