@@ -1,9 +1,9 @@
 <?php
-rcs_id('$Id: config.php,v 1.110 2004-05-16 23:10:44 rurban Exp $');
+rcs_id('$Id: config.php,v 1.111 2004-05-17 17:43:29 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
- * The run-time code have been moved to lib/IniConfig.php:fix_configs()
+ * The run-time code has been moved to lib/IniConfig.php:fix_configs()
  */
  
 /** 
@@ -323,6 +323,11 @@ if (!function_exists('is_scalar')) { // lib/stdlib.php:hash()
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.110  2004/05/16 23:10:44  rurban
+// update_locale wrongly resetted LANG, which broke japanese.
+// japanese now correctly uses EUC_JP, not utf-8.
+// more charset and lang headers to help the browser.
+//
 // Revision 1.109  2004/05/08 14:06:12  rurban
 // new support for inlined image attributes: [image.jpg size=50x30 align=right]
 // minor stability and portability fixes

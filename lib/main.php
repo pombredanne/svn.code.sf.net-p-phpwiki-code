@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.147 2004-05-15 19:48:33 rurban Exp $');
+rcs_id('$Id: main.php,v 1.148 2004-05-17 17:43:29 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -533,6 +533,12 @@ $this->version = phpwiki_version();
 
         if (USE_PATH_INFO) {
             $pathinfo = $this->get('PATH_INFO');
+            if (empty($pathinfo)) { // fix for CGI
+                $path = $this->get('REQUEST_URI');
+                $script = $this->get('SCRIPT_NAME');
+                $pathinfo = substr($path,strlen($script));
+                $pathinfo = preg_replace('/\?.+$/','',$pathinfo);
+            }
             $tail = substr($pathinfo, strlen(PATH_INFO_PREFIX));
 
             if ($tail != '' and $pathinfo == PATH_INFO_PREFIX . $tail) {
@@ -544,7 +550,7 @@ $this->version = phpwiki_version();
              * In general, for security reasons, HTTP_GET_VARS should be ignored
              * on POST requests, but we make an exception here (only for pagename).
              *
-             * The justifcation for this hack is the following
+             * The justification for this hack is the following
              * asymmetry: When POSTing with USE_PATH_INFO set, the
              * pagename can (and should) be communicated through the
              * request URL via PATH_INFO.  When POSTing with
@@ -927,6 +933,12 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.147  2004/05/15 19:48:33  rurban
+// fix some too loose PagePerms for signed, but not authenticated users
+//  (admin, owner, creator)
+// no double login page header, better login msg.
+// moved action_pdf to lib/pdf.php
+//
 // Revision 1.146  2004/05/15 18:31:01  rurban
 // some action=pdf Request fixes: With MSIE it works now. Now the work with the page formatting begins.
 //
