@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Toolbar.php,v 1.9 2002-01-09 18:06:50 carstenklapp Exp $');
+rcs_id('$Id: Toolbar.php,v 1.10 2002-01-10 20:59:09 carstenklapp Exp $');
 /**
  * Usage:
  *
@@ -54,7 +54,7 @@ extends WikiPlugin
     function mkimglinks($text, $action, $imgurl) {
         // ImageLinks would be helpful here
         if ($imgurl)
-            return "<a href=\"". BaseURL() .$action ."\"><img alt=\"" .$text ."\" src=\"" .($imgurl) ."\" border=\"0\"></a>";
+            return "<a href=\"". VIRTUAL_PATH ."/" .$action ."\"><img alt=\"" .$text ."\" src=\"" .($imgurl) ."\" border=\"0\"></a>";
         else
             return "&nbsp;". $this->mklinks($text, 'phpwiki:' .$action) ."&nbsp;";
     }
