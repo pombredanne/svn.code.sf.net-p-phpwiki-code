@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.74 2003-03-07 02:44:29 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.75 2003-03-07 20:51:57 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -242,6 +242,7 @@ function pcre_fix_posix_classes ($regexp) {
 }
 
 $WikiNameRegexp = pcre_fix_posix_classes($WikiNameRegexp);
+$KeywordLinkRegexp = pcre_fix_posix_classes($KeywordLinkRegexp);
 
 //////////////////////////////////////////////////////////////////
 // Autodetect URL settings:

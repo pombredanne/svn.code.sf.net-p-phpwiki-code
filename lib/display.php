@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.44 2003-02-27 20:02:47 dairiki Exp $');
+rcs_id('$Id: display.php,v 1.45 2003-03-07 20:51:59 dairiki Exp $');
 
 require_once('lib/Template.php');
 
@@ -39,6 +39,24 @@ function GleanDescription ($rev) {
     return '';
 }
 
+/**
+ * Extract keywords from Category* links on page. 
+ */
+function GleanKeywords ($page) {
+    global $KeywordLinkRegexp;
+
+    $links = $page->getLinks(false);
+
+    $keywords[] = split_pagename($page->getName());
+    
+    while ($link = $links->next())
+        if (preg_match("/${KeywordLinkRegexp}/x", $link->getName(), $m))
+            $keywords[] = split_pagename($m[0]);
+
+    $keywords[] = WIKI_NAME;
+    
+    return join(', ', $keywords);
+}
 
 /** Make a link back to redirecting page.
  *
@@ -156,6 +174,7 @@ function displayPage(&$request, $template=false) {
     $toks['revision'] = $revision;
     $toks['ROBOTS_META'] = 'index,follow';
     $toks['PAGE_DESCRIPTION'] = GleanDescription($revision);
+    $toks['PAGE_KEYWORDS'] = GleanKeywords($page);
     
     if (!$template)
         $template = new Template('html', $request);

@@ -1,13 +1,15 @@
 <?php  // -*-html-*-
-  rcs_id('$Id: head.tmpl,v 1.9 2003-03-07 02:45:51 dairiki Exp $');
+  rcs_id('$Id: head.tmpl,v 1.10 2003-03-07 20:51:59 dairiki Exp $');
 ?>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
 <?php $ROBOTS_CONTENT = $ROBOTS_META ? $ROBOTS_META : "noindex,nofollow"; ?>
 <meta name="robots" content="<?= $ROBOTS_CONTENT ?>" />
-<meta name="keywords" content="<?=split_pagename($page->getName())?>, <?=WIKI_NAME?>" />
 <?php if (!empty($PAGE_DESCRIPTION)) { ?>
 <meta name="description" content="<?=$PAGE_DESCRIPTION?>" />
+<?php } ?>
+<?php if (!empty($PAGE_KEYWORDS)) { ?>
+<meta name="keywords" content="<?=$PAGE_KEYWORDS?>" />
 <?php } ?>
 <meta name="language" content="<?=$LANG?>" />
 <meta name="document-type" content="Public" />
@@ -106,6 +108,10 @@
 <?php
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2003/03/07 02:45:51  dairiki
+// Rename BASE_URL to PHPWIKI_BASE_URL.  Lycos pre-defines BASE_URL (to
+// the wrong thing).
+//
 // Revision 1.8  2003/03/05 21:38:15  dairiki
 // More HTML comment reduction patches by "Klaus-Guenter Leiss"
 // <Leiss.Klaus-Guenter@epost.de>

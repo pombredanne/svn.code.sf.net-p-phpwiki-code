@@ -20,7 +20,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'iso-8859-1');
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.14 2003-03-07 06:31:16 dairiki Exp $ -->
+<!-- $Id: configurator.php,v 1.15 2003-03-07 20:51:49 dairiki Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki 1.3.x</title>
 <style type="text/css" media="screen">
@@ -270,7 +270,7 @@ $properties["Part Null Settings"] =
 new unchangeable_variable('_partnullsettings', "
 define ('PHPWIKI_VERSION', '1.3.5pre');
 require \"lib/prepend.php\";
-rcs_id('\$Id: configurator.php,v 1.14 2003-03-07 06:31:16 dairiki Exp $');", "");
+rcs_id('\$Id: configurator.php,v 1.15 2003-03-07 20:51:49 dairiki Exp $');", "");
 
 
 $properties["Part One"] =
@@ -1013,6 +1013,18 @@ new boolean_define('WARN_NONPUBLIC_INTERWIKIMAP',
 Display a warning if the internal lib/interwiki.map is used, and 
 not the public InterWikiMap page. This map is not readable from outside.");
 
+$properties["Keyword Link Regexp"] =
+new _variable('KeywordLinkRegexp',
+              '(?<=^Category|^Topic)[[:upper:]].*$',
+              "
+Regexp used for automatic keyword extraction.
+
+Any links on a page to pages whose names match this regexp will
+be used keywords in the keywords meta tag.  (This is an aid to
+classification by search engines.)  The value of the match is
+used as the keyword.
+
+The default behavior is to match Category* and Topic* links.");
 
 $properties["Part Six"] =
 new part('_partsix', $SEPARATOR."\n", "
