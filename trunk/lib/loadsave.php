@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.17 2001-12-19 09:55:30 carstenklapp Exp $');
+rcs_id('$Id: loadsave.php,v 1.18 2002-01-09 02:42:29 carstenklapp Exp $');
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
 
@@ -38,6 +38,7 @@ function MailifyPage ($page, $nversions = 1)
    $head .= "From: $from (PhpWiki)\r\n";
    $head .= "Date: " . Rfc2822DateTime($current->get('mtime')) . "\r\n";
    $head .= sprintf("Mime-Version: 1.0 (Produced by PhpWiki %s)\r\n", PHPWIKI_VERSION);
+   $head .= "X-RCS_ID: $Id: loadsave.php,v 1.18 2002-01-09 02:42:29 carstenklapp Exp $";
 
    $iter = $page->getAllRevisions();
    $parts = array();
@@ -388,7 +389,12 @@ function IsZipFile ($filename_or_fd)
    
 function LoadAny ($dbi, $file_or_dir, $files = false, $exclude = false)
 {
-   $type = filetype($file_or_dir);
+    // FIXME: This is a partial workaround for sf bug #501145
+    if (substr_count($file_or_dir,"/") < 1)
+        $type = filetype(rawurlencode($file_or_dir));
+    else {
+	$type = filetype($file_or_dir);
+    }
 
    if ($type == 'dir')
    {
