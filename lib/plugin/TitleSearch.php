@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TitleSearch.php,v 1.21 2004-02-17 12:11:36 rurban Exp $');
+rcs_id('$Id: TitleSearch.php,v 1.22 2004-11-23 13:35:49 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,16 +37,20 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.21 $");
+                            "\$Revision: 1.22 $");
     }
 
     function getDefaultArguments() {
-        return array('s'             => false,
-                     'auto_redirect' => false,
-                     'noheader'      => false,
-                     'exclude'       => '',
-                     'info'          => false
-                     );
+        return array_merge
+            (
+             PageList::supportedArgs(), // paging and more.
+             array('s'             => false,
+                   'auto_redirect' => false,
+                   'noheader'      => false,
+                   'exclude'       => '',
+                   'info'          => false,
+                   'caseexact'     => false
+                   ));
     }
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor
@@ -59,11 +63,10 @@ extends WikiPlugin
 
         extract($args);
 
-        $query = new TextSearchQuery($s);
-        $pages = $dbi->titleSearch($query);
+        $query = new TextSearchQuery($s, $caseexact);
+        $pages = $dbi->titleSearch($query, $caseexact);
 
-        $pagelist = new PageList($info, $exclude);
-
+        $pagelist = new PageList($info, $exclude, $args);
         while ($page = $pages->next()) {
             $pagelist->addPage($page);
             $last_name = $page->getName();
@@ -85,6 +88,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.21  2004/02/17 12:11:36  rurban
+// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
+//
 // Revision 1.20  2003/11/02 20:42:35  carstenklapp
 // Allow for easy page creation when search returns no matches.
 // Based on cuthbertcat's patch, SF#655090 2002-12-17.

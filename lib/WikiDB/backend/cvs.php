@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: cvs.php,v 1.20 2004-10-14 17:19:17 rurban Exp $');
+rcs_id('$Id: cvs.php,v 1.21 2004-11-23 13:35:48 rurban Exp $');
 /**
  * Backend for handling CVS repository. 
  *
@@ -392,6 +392,7 @@ extends WikiDB_backend
         $megaHash = get_pagedata( $pagename );
         return $megaHash[CMD_LINK_ATT];
     }
+
     /* function get_all_revisions($pagename) {
         // TODO: should replace this with something more efficient
         include_once('lib/WikiDB/backend/dumb/AllRevisionsIter.php');

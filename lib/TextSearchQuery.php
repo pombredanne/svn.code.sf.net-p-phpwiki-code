@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.8 2004-11-21 11:59:16 rurban Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.9 2004-11-23 13:35:31 rurban Exp $');
 /**
  * A text search query.
  *
@@ -33,6 +33,10 @@
  * double-up on the quote character: 'I''m hungry' is equivalent to
  * "I'm hungry".
  *
+ * FIXME: Clarify wildcards usage. none, glob-style, SQL-style, pcre-style, regex-style
+ * This only converts to PCRE, not to ANSI-SQL or other SQL functions.
+ * But see makeSqlClause().
+ *
  * @author: Jeff Dairiki
  */
 class TextSearchQuery {
@@ -42,10 +46,11 @@ class TextSearchQuery {
      * @param $search_query string The query.  Syntax is as described above.
      * Note that an empty $search_query will match anything.
      * @see TextSearchQuery
+     * TODO: support $regex arg
      */
     function TextSearchQuery($search_query, $case_exact=false, $regex=false) {
         $parser = new TextSearchQuery_Parser;
-        $this->_tree = $parser->parse($search_query);
+        $this->_tree = $parser->parse($search_query, $case_exact);
         $this->_optimize();
     }
 
@@ -108,6 +113,7 @@ class TextSearchQuery {
      * TODO: support db-specific extensions, like MATCH AGAINST or REGEX
      *       mysql => 4.0.1 can also do Google: MATCH AGAINST IN BOOLEAN MODE
      *       How? WikiDB backend method?
+     *       Case-sensitivity option.
      *
      * Example usage:
      * <pre>
@@ -456,8 +462,8 @@ class TextSearchQuery_Parser
      * '[^']*'		WORD
      */
 
-    function parse ($search_expr) {
-        $this->lexer = new TextSearchQuery_Lexer($search_expr);
+    function parse ($search_expr, $case_exact=false) {
+        $this->lexer = new TextSearchQuery_Lexer($search_expr, $case_exact);
         $tree = $this->get_list('toplevel');
         assert($this->lexer->eof());
         unset($this->lexer);
@@ -538,8 +544,8 @@ class TextSearchQuery_Parser
 }
 
 class TextSearchQuery_Lexer {
-    function TextSearchQuery_Lexer ($query_str) {
-        $this->tokens = $this->tokenize($query_str);
+    function TextSearchQuery_Lexer ($query_str, $case_exact=false) {
+        $this->tokens = $this->tokenize($query_str, $case_exact);
         $this->pos = 0;
     }
 
@@ -555,16 +561,16 @@ class TextSearchQuery_Lexer {
         return $this->pos == count($this->tokens);
     }
 
-    function tokenize($string) {
+    function tokenize($string, $case_exact=false) {
         $tokens = array();
-        $buf = strtolower(ltrim($string));
+        $buf = $case_exact ? ltrim($string) : strtolower(ltrim($string));
         while (!empty($buf)) {
-            if (preg_match('/^(and|or)\b\s*/', $buf, $m)) {
-                $val = $m[1];
+            if (preg_match('/^(and|or)\b\s*/i', $buf, $m)) {
+                $val = strtolower($m[1]);
                 $type = TSQ_TOK_BINOP;
             }
-            elseif (preg_match('/^(-|not\b)\s*/', $buf, $m)) {
-                $val = $m[1];
+            elseif (preg_match('/^(-|not\b)\s*/i', $buf, $m)) {
+                $val = strtolower($m[1]);
                 $type = TSQ_TOK_NOT;
             }
             elseif (preg_match('/^([()])\s*/', $buf, $m)) {

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.55 2004-11-21 11:59:26 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.56 2004-11-23 13:35:48 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -1245,6 +1245,9 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.55  2004/11/21 11:59:26  rurban
+// remove final \n to be ob_cache independent
+//
 // Revision 1.54  2004/11/20 17:49:39  rurban
 // add fast exclude support to SQL get_all_pages
 //

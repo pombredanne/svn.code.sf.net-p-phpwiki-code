@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: dbaBase.php,v 1.13 2004-11-21 11:59:26 rurban Exp $');
+<?php rcs_id('$Id: dbaBase.php,v 1.14 2004-11-23 13:35:49 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -212,7 +212,6 @@ extends WikiDB_backend
         $pagedb->set($pagename, (int)$latest . ':' . (int)$flags . ":$pagedata");
     }
 
-    //FIXME: support limit, exclude
     function get_all_pages($include_empty = false, $sortby=false, $limit=false, $exclude=false) {
         $pagedb = &$this->_pagedb;
         $pages = array();
@@ -221,7 +220,7 @@ extends WikiDB_backend
                 assert(!empty($page));
                 continue;
             }
-            if ($exclude and in_array($page,$exclude)) continue; 
+            if ($exclude and in_array($page, $exclude)) continue; 
             if ($limit and count($pages) > $limit) break;
             if (!$include_empty) {
             	if (!($data = $pagedb->get($page))) continue;
