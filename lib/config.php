@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.132 2005-02-07 15:39:02 rurban Exp $');
+rcs_id('$Id: config.php,v 1.133 2005-02-08 13:26:59 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -249,10 +249,12 @@ function guessing_setlocale ($category, $locale) {
         $try = $try . '.' . $GLOBALS['charset'];
         if ($res = setlocale($category, $try))
             return $res;
-        foreach (array('@', ".", '_') as $sep) {
-            list ($try) = split($sep, $try);
-            if ($res = setlocale($category, $try))
-                return $res;
+        foreach (array(".", '@', '_') as $sep) {
+            if ($i = strpos($try, $sep)) {
+                $try = substr($try, 0, $i);
+                if (($res = setlocale($category, $try)))
+                    return $res;
+            }
         }
     }
     return false;
@@ -526,6 +528,9 @@ function getUploadDataPath() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.132  2005/02/07 15:39:02  rurban
+// another locale fix
+//
 // Revision 1.131  2005/02/05 15:32:09  rurban
 // force guessing_setlocale (again)
 //
