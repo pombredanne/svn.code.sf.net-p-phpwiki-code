@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-    rcs_id('$Id: navbar.tmpl,v 1.28 2004-05-17 16:56:49 rurban Exp $');
+    rcs_id('$Id: navbar.tmpl,v 1.29 2004-05-18 13:37:06 rurban Exp $');
 
     $s = $Theme->getButtonSeparator();
 ?>
@@ -19,7 +19,7 @@
        onmouseout="window.status=''; return true;" />
 <?php if (!empty($revision)) { ?>
 <?=$s?><?= $Theme->makeLinkButton($revision,_("LikePages"),_("LikePages")) ?><?=$s?><?= $Theme->makeLinkButton($revision,_("BackLinks"),_("BackLinks")) ?><?php
-  $links = $page->getLinks();
+  $links = $page->getLinks(false);
   if ($links->count() > 1) { ?><?=$s?><?= $Theme->makeLinkButton($revision,_("RelatedChanges"),_("RelatedChanges")) ?><?php } ?>
 <?php } ?>
 <?php if (!empty($user) && $user->isSignedIn()) { ?>
