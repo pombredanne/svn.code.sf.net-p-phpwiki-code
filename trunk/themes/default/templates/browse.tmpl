@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: browse.tmpl,v 1.13 2002-02-01 18:06:23 carstenklapp Exp $ -->
+<!-- $Id: browse.tmpl,v 1.14 2002-02-03 21:32:08 carstenklapp Exp $ -->
 <?php 
   $mtime = $Theme->formatDateTime($revision->get('mtime'));
 
@@ -23,7 +23,7 @@
 <div class="wikitext"><?=$CONTENT?></div>
 <hr class="ignore" noshade="noshade" />
 
-<p><?= $LastModifiedMsg ?></p>
+<p class="editdate"><?= $LastModifiedMsg ?></p>
 <div id="actionbar">
 <hr class="toolbar" noshade="noshade" />
 <?= Template('actionbar') ?>

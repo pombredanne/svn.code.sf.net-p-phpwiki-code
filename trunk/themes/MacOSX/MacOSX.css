@@ -1,5 +1,5 @@
 /*
-  $Id: MacOSX.css,v 1.17 2002-02-03 09:10:06 carstenklapp Exp $
+  $Id: MacOSX.css,v 1.18 2002-02-03 21:32:07 carstenklapp Exp $
 
   Classes:
 
@@ -43,7 +43,7 @@ h1, h2, h3, .toolbar, td { font-family: "Lucida Grande", Helvetica, Arial, sans-
 
 input.button { font-family: "Lucida Grande", Helvetica, Arial, sans-serif; }
 
-.wikitext pre { font-family: monospace; }
+.wikitext pre { font-family: Monaco, monospace; }
 
 div.wikitext {
   background: white;
@@ -109,13 +109,13 @@ div.errors {
 
 p.error {
  font-size: smaller;
- font-family: monospace;
+ font-family: Monaco, monospace;
  margin:0px;
 }
 .error ul
 {
  font-size: smaller;
- font-family: monospace;
+ font-family: Monaco, monospace;
 }
 
 /*
@@ -176,6 +176,7 @@ a.backlinks { color: #006; }
 /* Make the textarea on the edit page full width */
 textarea.wikiedit { width: 100%; margin-top: 1ex; }
 
+p.editdate { font-size: smaller; margin-bottom: -1ex; font-family: "Lucida Grande", Helvetica, Arial, sans-serif; }
 
 /* Calendar plugin */
 a.cal-hide,

@@ -1,5 +1,5 @@
 /**
- * $Id: WikiTrek.css,v 1.16 2002-01-26 09:19:42 carstenklapp Exp $
+ * $Id: WikiTrek.css,v 1.17 2002-02-03 21:32:08 carstenklapp Exp $
  *
  * This PhpWiki theme is experimental and will likely not appear as
  * part of any release. ("accessories not included"--download
@@ -69,6 +69,8 @@ div.wikitext {
         margin :      0.5ex;
         clear :       both;
 }
+
+p.editdate { margin-bottom: 0ex; }
 
 h1 {
         color :            #000;

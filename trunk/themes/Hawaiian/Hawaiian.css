@@ -1,5 +1,5 @@
 /*
-  $Id: Hawaiian.css,v 1.15 2002-02-03 09:10:06 carstenklapp Exp $
+  $Id: Hawaiian.css,v 1.16 2002-02-03 21:32:06 carstenklapp Exp $
 
   Classes:
 
@@ -65,6 +65,8 @@ div.wikitext {
  */
  clear: both;
 }
+
+p.editdate { margin-bottom: 0ex; }
 
 input.wikitext { margin:0px; }
 
