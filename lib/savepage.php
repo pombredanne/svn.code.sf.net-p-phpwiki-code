@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.23 2002-01-08 00:12:26 carstenklapp Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.24 2002-01-08 00:31:24 dairiki Exp $');
 require_once('lib/Template.php');
 require_once('lib/transform.php');
 require_once('lib/ArchiveCleaner.php');
@@ -148,20 +148,12 @@ function savePage ($dbi, $request) {
                                          $content, $meta,
                                          ExtractWikiPageLinks($content));
 
-    // This should be refactored to avoid a global, for now it allows
-    // the actual messages to be moved away from this page. $thankyou is
-    // required in the GeneratePage() function.
-    global $thankyou;
+    $template = new WikiTemplate('BROWSE');
+    $template->replace('TITLE', $pagename);
 
-    if (!is_object($newrevision)) {
-        // Save failed.
-        $thankyou = ConcurrentUpdates($pagename);
-        $thankyou .= "<hr noshade=\"noshade\" />";
-        $html = do_transform($current->getContent());
-        echo GeneratePage('BROWSE', $html, $pagename, $current);
+    if (is_object($newrevision)) {
+        // New contents successfully saved...
 
-    } else {
-    
         // Clean out archived versions of this page.
         $cleaner = new ArchiveCleaner($GLOBALS['ExpireParams']);
         $cleaner->cleanPageRevisions($page);
@@ -176,12 +168,21 @@ function savePage ($dbi, $request) {
                 $request->redirect(WikiURL($pagename, false, 'absolute_url'));
             }
         }
-        $thankyou = toolbar_Info_ThankYou($pagename, $warnings);
-        $html = do_transform($newrevision->getContent());
-        echo GeneratePage('BROWSE', $html, $pagename, $newrevision);
+        
+        $template->replace('THANK_YOU',
+                           toolbar_Info_ThankYou($pagename, $warnings));
+    } else {
+        // Save failed.
+        // (This is a bit kludgy...)
+        $template->replace('THANK_YOU',
+                           ConcurrentUpdates($pagename)
+                           . "<hr noshade=\"noshade\" />");
+        $newrevision = $current;
     }
 
-
+    $template->setPageRevisionTokens($newrevision);
+    $template->replace('CONTENT', do_transform($newrevision->getContent()));
+    echo $template->getExpansion();
 }
 
     
