@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.102 2004-04-29 23:25:12 rurban Exp $');
+rcs_id('$Id: config.php,v 1.103 2004-04-30 00:04:14 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -102,7 +102,7 @@ function guessing_setlocale ($category, $locale) {
                  'it' => array('it_IT'),
                  'sv' => array('sv_SE'),
                  'ja' => array('ja_JP','ja_JP.eucJP','japanese.euc'),
-                 //'zh' => array('zh_TW', 'zh_CN')
+                 'zh' => array('zh_TW', 'zh_CN'),
                  );
     if (strlen($locale) == 2)
         $lang = $locale;
@@ -282,6 +282,11 @@ function IsProbablyRedirectToIndex () {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.102  2004/04/29 23:25:12  rurban
+// re-ordered locale init (as in 1.3.9)
+// fixed loadfile with subpages, and merge/restore anyway
+//   (sf.net bug #844188)
+//
 // Revision 1.101  2004/04/26 13:22:32  rurban
 // calculate bool old or dynamic constants later
 //
