@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: CachedMarkup.php,v 1.5 2003-03-07 21:46:55 dairiki Exp $');
+<?php rcs_id('$Id: CachedMarkup.php,v 1.6 2003-03-13 18:57:53 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -65,13 +65,20 @@ class CacheableMarkup extends XmlContent {
      * A list of wiki page names (strings).
      */
     function getWikiPageLinks() {
+        include_once('lib/WikiPlugin.php');
+        $ploader = new WikiPluginLoader();
+        
 	$links = array();
-	foreach ($this->_content as $link) {
-	    if (! isa($link, 'Cached_WikiLink'))
-		continue;
-	    if (($pagename = $link->getPagename($this->_basepage)))
+	foreach ($this->_content as $item) {
+	    if (!isa($item, 'Cached_DynamicContent'))
+                continue;
+
+            if (!($item_links = $item->getWikiPageLinks($this->_basepage)))
+                continue;
+            foreach ($item_links as $pagename)
                 $links[$pagename] = 1;
-	}
+        }
+
 	return array_keys($links);
     }
 
@@ -222,6 +229,10 @@ class Cached_DynamicContent {
     function expand($basepage) {
         trigger_error("Pure virtual", E_USER_ERROR);
     }
+
+    function getWikiPageLinks($basepage) {
+        return false;
+    }
 }
 
 class XmlRpc_LinkInfo {
@@ -271,6 +282,10 @@ class Cached_WikiLink extends Cached_Link {
     function getPagename($basepage) {
 	$page = new WikiPageName($this->_page, $basepage);
 	return $page->name;
+    }
+
+    function getWikiPageLinks($basepage) {
+        return array($this->getPagename($basepage));
     }
 
     function _getName($basepage) {
@@ -409,12 +424,7 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
     }
 
     function expand($basepage) {
-        static $loader = false;
-
-	if (!$loader) {
-            include_once('lib/WikiPlugin.php');
-	    $loader = new WikiPluginLoader;
-        }
+        $loader = &$this->_getLoader();
 
         $xml = HTML::div(array('class' => 'plugin'),
 			 $loader->expandPI($this->_pi, $GLOBALS['request'], $basepage));
@@ -430,6 +440,23 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 
     function asString() {
         return $this->_pi;
+    }
+
+
+    function getWikiPageLinks($basepage) {
+        $loader = &$this->_getLoader();
+
+        return $loader->getWikiPageLinks($this->_pi, $basepage);
+    }
+
+    function _getLoader() {
+        static $loader = false;
+
+	if (!$loader) {
+            include_once('lib/WikiPlugin.php');
+	    $loader = new WikiPluginLoader;
+        }
+        return $loader;
     }
 }
 

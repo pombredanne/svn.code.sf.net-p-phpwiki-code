@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: IncludePage.php,v 1.21 2003-02-21 04:12:06 dairiki Exp $');
+rcs_id('$Id: IncludePage.php,v 1.22 2003-03-13 18:57:56 dairiki Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.21 $");
+                            "\$Revision: 1.22 $");
     }
 
     function getDefaultArguments() {
@@ -93,10 +93,26 @@ extends WikiPlugin
         return array(sprintf(_("<%s: no such section>"), $mesg));
     }
 
-    function run($dbi, $argstr, $request) {
+    function getWikiPageLinks($argstr, $basepage) {
+        extract($this->getArgs($argstr));
+        print "PAGE: $page<br>\n";
+        if ($page) {
+            // Expand relative page names.
+            $page = new WikiPageName($page, $basepage);
+        }
+        if (!$page or !$page->name)
+            return false;
+        return array($page->name);
+    }
+                
+    function run($dbi, $argstr, $request, $basepage) {
 
         extract($this->getArgs($argstr, $request));
-
+        if ($page) {
+            // Expand relative page names.
+            $page = new WikiPageName($page, $basepage);
+            $page = $page->name;
+        }
         if (!$page) {
             return $this->error(_("no page specified"));
         }
@@ -176,6 +192,9 @@ extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.21  2003/02/21 04:12:06  dairiki
+// Minor fixes for new cached markup.
+//
 // Revision 1.20  2003/01/18 21:41:02  carstenklapp
 // Code cleanup:
 // Reformatting & tabs to spaces;
