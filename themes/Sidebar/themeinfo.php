@@ -1,13 +1,29 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.16 2004-06-14 11:26:51 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.17 2004-12-14 21:32:46 rurban Exp $');
 
 /*
  * This file defines the Sidebar appearance ("theme") of PhpWiki.
+ * This use the dynamic jscalendar, which doesn't need extra requests per month/year change..
  */
 
 require_once('lib/Theme.php');
 
 class Theme_Sidebar extends Theme {
+
+    function Theme ($theme_name='Sidebar') {
+        $this->_name = $theme_name;
+        $this->_themes_dir = NormalizeLocalFileName("themes");
+        $this->_path  = defined('PHPWIKI_DIR') ? NormalizeLocalFileName("") : "";
+        $this->_theme = "themes/$theme_name";
+        if (ENABLE_DOUBLECLICKEDIT) // by pixels
+            $this->initDoubleClickEdit();
+
+        if ($theme_name != 'default')
+            $this->_default_theme = new Theme;
+        $this->_css = array();
+
+        $this->calendarInit();
+    }
 
     function findTemplate ($name) {
         // hack for navbar.tmpl to hide the buttonseparator
@@ -38,37 +54,41 @@ class Theme_Sidebar extends Theme {
                                 SUBPAGE_SEPARATOR . _("Calendar");
         return $UserCalPageTitle;
     }
-}
-$WikiTheme = new Theme_Sidebar('Sidebar');
 
-$dbi = $GLOBALS['request']->getDbh();
-// display flat calender dhtml under the clock
-if ($dbi->isWikiPage($WikiTheme->calendarBase())) {
-    $jslang = @$GLOBALS['LANG'];
-    $WikiTheme->addMoreHeaders($WikiTheme->_CSSlink(0,
-        $WikiTheme->_findFile('jscalendar/calendar-phpwiki.css'),'all'));
-    $WikiTheme->addMoreHeaders("\n");
-    $WikiTheme->addMoreHeaders(JavaScript('',
-        array('src' => $WikiTheme->_findData('jscalendar/calendar_stripped.js'))));
-    $WikiTheme->addMoreHeaders("\n");
-    if (!($langfile = $WikiTheme->_findData("jscalendar/lang/calendar-$jslang.js")))
-        $langfile = $WikiTheme->_findData("jscalendar/lang/calendar-en.js");
-    $WikiTheme->addMoreHeaders(JavaScript('',array('src' => $langfile)));
-    $WikiTheme->addMoreHeaders("\n");
-    $WikiTheme->addMoreHeaders(JavaScript('',
-        array('src' => $WikiTheme->_findData('jscalendar/calendar-setup_stripped.js'))));
-    $WikiTheme->addMoreHeaders("\n");
-    require_once("lib/TextSearchQuery.php");
-    // get existing date entries for the current user:
-    $iter = $dbi->titleSearch(new TextSearchQuery($WikiTheme->calendarBase().SUBPAGE_SEPARATOR));
-    $existing = array();
-    while ($page = $iter->next()) {
-        if ($page->exists())
-            $existing[] = basename($page->_pagename);
-    }
-    $js_exist = '{"'.join('":1,"',$existing).'":1}';
-    //var SPECIAL_DAYS = {"2004-05-11":1,"2004-05-12":1,"2004-06-01":1}
-    $WikiTheme->addMoreHeaders(JavaScript('
+    function calendarInit() {
+        $dbi = $GLOBALS['request']->getDbh();
+        // display flat calender dhtml under the clock
+        if ($dbi->isWikiPage($this->calendarBase())) {
+            $jslang = @$GLOBALS['LANG'];
+            $this->addMoreHeaders
+                (
+                 $this->_CSSlink(0, 
+                                 $this->_findFile('jscalendar/calendar-phpwiki.css'), 'all'));
+            $this->addMoreHeaders("\n");
+            $this->addMoreHeaders
+                (JavaScript('',
+                            array('src' => $this->_findData('jscalendar/calendar_stripped.js'))));
+            $this->addMoreHeaders("\n");
+            if (!($langfile = $this->_findData("jscalendar/lang/calendar-$jslang.js")))
+                $langfile = $this->_findData("jscalendar/lang/calendar-en.js");
+            $this->addMoreHeaders(JavaScript('',array('src' => $langfile)));
+            $this->addMoreHeaders("\n");
+            $this->addMoreHeaders
+                (JavaScript('',
+                            array('src' => 
+                                  $this->_findData('jscalendar/calendar-setup_stripped.js'))));
+            $this->addMoreHeaders("\n");
+            require_once("lib/TextSearchQuery.php");
+            // get existing date entries for the current user:
+            $iter = $dbi->titleSearch(new TextSearchQuery("^".$this->calendarBase().SUBPAGE_SEPARATOR, true));
+            $existing = array();
+            while ($page = $iter->next()) {
+                if ($page->exists())
+                    $existing[] = basename($page->_pagename);
+            }
+            $js_exist = '{"'.join('":1,"',$existing).'":1}';
+            //var SPECIAL_DAYS = {"2004-05-11":1,"2004-05-12":1,"2004-06-01":1}
+            $this->addMoreHeaders(JavaScript('
 // this table holds the existing calender entries for the current user
 // calculated from the database
 var SPECIAL_DAYS = '.$js_exist.';
@@ -90,7 +110,11 @@ function dateStatusHandler(date, y, m, d) {
     if (dateExists(date, y, m, d)) return "existing";
     else return false;
 }'));
+        }
+    }
 }
+
+$WikiTheme = new Theme_Sidebar('Sidebar');
 
 // CSS file defines fonts, colors and background images for this
 // style.  The companion '*-heavy.css' file isn't defined, it's just
