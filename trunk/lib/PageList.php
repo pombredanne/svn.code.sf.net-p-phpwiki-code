@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.54 2004-02-15 21:41:29 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.55 2004-02-17 12:14:07 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -34,8 +34,13 @@
  * database.  If lots of revisions have been made to a page, it's more than likely
  * that some older revisions (include revision 1) have been cleaned (deleted).
  *
- * TODO: limit, offset, rows arguments for multiple pages/multiple rows.
- *       check PagePerm "list" access-type
+ * TODO: 
+ *   limit, offset, rows arguments for multiple pages/multiple rows.
+ *
+ *   check PagePerm "list" access-type
+ *
+ *   ->supportedArgs() which arguments are supported, so that the plugin 
+ *                     doesn't explictly need to declare it
  */
 class _PageList_Column_base {
     var $_tdattr = array();
@@ -207,13 +212,15 @@ class _PageList_Column_content extends _PageList_Column {
     function _PageList_Column_content ($field, $default_heading, $align = false) {
         _PageList_Column::_PageList_Column($field, $default_heading, $align);
         $this->bytes = 50;
-        if ($field == 'content')
+        if ($field == 'content') {
             $this->_heading .= sprintf(_(" ... first %d bytes"),
                                        $this->bytes);
-        elseif ($field == 'hi_content') {
-            $search = $_POST['admin_replace']['from'];
-            $this->_heading .= sprintf(_(" ... around %s"),
+        } elseif ($field == 'hi_content') {
+            if (!empty($_POST['admin_replace'])) {
+              $search = $_POST['admin_replace']['from'];
+              $this->_heading .= sprintf(_(" ... around %s"),
                                        '»'.$search.'«');
+            }
         }
     }
     function _getValue ($page_handle, &$revision_handle) {
@@ -332,6 +339,31 @@ class PageList {
 
         $this->_options = $options;
         $this->_messageIfEmpty = _("<no matches>");
+    }
+
+    // Currently PageList takes these arguments:
+    // 1: info, 2: exclude, 3: hash of options
+    // Here we declare which options are supported, so that 
+    // the calling plugin may simply merge this with its own default arguments 
+    function supportedArgs () {
+        return array(//Currently supported options:
+                     'info'              => 'pagename',
+                     'exclude'           => '',          // also wildcards and comma-seperated lists
+
+                     // for the sort buttons in <th>
+                     'sortby'            => '',   // same as for WikiDB::getAllPages
+
+                     //PageList pager options:
+                     // These options may also be given to _generate(List|Table) later
+                     // But limit and offset might help the query WikiDB::getAllPages()
+                     //cols    => 1,       // side-by-side display of list (1-3)
+                     //limit   => 50,      // length of one column
+                     //offset  => 0,       // needed internally for the pager
+                     //paging  => 'auto',  // '':     normal paging mode
+                     //			   // 'auto': drop 'info' columns and enhance rows 
+                     //                    //         when the list becomes large
+                     //                    // 'none': don't page at all
+                     );
     }
 
     function setCaption ($caption_string) {
@@ -468,6 +500,7 @@ class PageList {
     ////////////////////
     // private
     ////////////////////
+    //Performance Fixme: Initialize only the requested objects
     function _initAvailableColumns() {
         if (!empty($this->_types))
             return;
@@ -614,10 +647,11 @@ function flipAll(formObj) {
             $html->pushContent(HTML::blockquote(HTML::p($this->_messageIfEmpty)));
         return $html;
     }
+
 };
 
 /* List pages with checkboxes to select from.
- * Todo: All, None jscript buttons.
+ * The [Select] button toggles via _jsFlipAll
  */
 
 class PageList_Selectable
