@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiBlog.php,v 1.3 2003-01-06 02:29:02 carstenklapp Exp $');
+rcs_id('$Id: WikiBlog.php,v 1.4 2003-01-11 22:23:00 carstenklapp Exp $');
 /**
  * Author: MichaelVanDam
  */
@@ -54,7 +54,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     // Arguments:
@@ -102,7 +102,7 @@ extends WikiPlugin
 
             // TODO: change args to blog[page], blog[summary], blog[body] etc
 
-            $blog_page = $request->getArg('blog_page');
+            $blog_page = $request->getArg('blog[page]');
 
 
             // Generate the page name.  For now, we use the format:
@@ -123,8 +123,11 @@ extends WikiPlugin
             $saved = false;
             while (!$saved) {
 
+//change to ISO formatted time? 2003-01-11T24:03:02
                 $time = strftime ('%Y%m%d%H%M%S', $now);
 
+//add a subpage between, to allow one to create a page containing only all the blogs of the parent page
+//                $p = $dbi->getPage($blog_page . SUBPAGE_SEPARATOR . _("Comments") . SUBPAGE_SEPARATOR . "Blog-$time");
                 $p = $dbi->getPage($blog_page . SUBPAGE_SEPARATOR . "Blog-$time");
 
                 $pr = $p->getCurrentRevision();
@@ -163,7 +166,7 @@ extends WikiPlugin
                           'author_id' => $user_auth_id,
                           'markup' => 2.0,   // assume new markup
                           'summary' => _("New comment."),
-                         );
+                          );
 
             // FIXME: For now the page format is:
             //
@@ -181,24 +184,18 @@ extends WikiPlugin
             // FIXME: move summary into the page's summary field
             // PageType now displays the summary field when viewing
             // an individual blog page
-            $summary = trim($request->getArg('blog_summary'));
-            $body = trim($request->getArg('blog_body'));
+            $summary = trim($request->getArg('blog[summary]'));
+            $body = trim($request->getArg('blog[body]'));
 
-            $content = '';
-
-            if ($summary) {
-                $content .= '__' . $summary . '__%%%' . "\n";
-            }
-
-            $content .= $body;
+            if ($summary)
+                $meta['summary'] = $summary;
 
             $pr = $p->createRevision($pr->getVersion()+1,
-                                     $content,
+                                     $body,
                                      $meta,
-                                     ExtractWikiPageLinks($content));
+                                     ExtractWikiPageLinks($body));
 
             // FIXME: Detect if !$pr ??  How to handle errors?
-
 
             // Save was successful.  Unset all the arguments and
             // redirect to page that user was viewing before.
@@ -206,9 +203,9 @@ extends WikiPlugin
             // problem and will clear out the text-boxes.
 
             $request->setArg('addblog', false);
-            $request->setArg('blog_page', false);
-            $request->setArg('blog_body', false);
-            $request->setArg('blog_summary', false);
+            $request->setArg('blog[page]', false);
+            $request->setArg('blog[body]', false);
+            $request->setArg('blog[summary]', false);
 
             $url = $request->getURLtoSelf();
             $request->redirect($url);
@@ -220,9 +217,7 @@ extends WikiPlugin
 
             // The rest of the output will not be seen due to
             // the redirect.
-
         }
-
 
         // Now we display previous comments and/or provide entry box
         // for new comments
@@ -328,123 +323,74 @@ extends WikiPlugin
 
             if (preg_match("/^$WikiNameRegexp\$/", $author)
                                && $dbi->isWikiPage($author))
-                $author = WikiLink($author);
+                $authorlink = WikiLink($author);
 
-            $content = $pr->getPackedContent();
+            $browseaction = WikiURL($name);
+            $editaction = WikiURL($name, array('action' => 'edit'));
+            $removeaction = WikiURL($name, array('action' => 'remove'));
 
-            $browseaction = WikiURL($name, array('action'=>'browse'));
-            $editaction = WikiURL($name, array('action'=>'edit'));
-            $removeaction = WikiURL($name,array('action'=>'remove'));
-
-            $browselink = HTML::a(array('href'=>$browseaction, 'class'=>'wikiaction'), 'Browse');
-            $editlink = HTML::a(array('href'=>$editaction, 'class'=>'wikiadmin'),'Edit');
-            $removelink = HTML::a(array('href'=>$removeaction, 'class'=>'wikiadmin'), 'Delete');
-
-            $one_comment = HTML();
-
-            // FIXME if necessary:
-            $creator_id_string = (strcmp($creator_orig,$creator_id) == 0) ? '' : ' (' . $creator_id . ')';
-
-            $one_comment->pushContent(HTML::tr(array('bgcolor'=>'#CCCCFF'),
-               HTML::td(array('align'=>'left'), HTML::strong($ctime)),
-               HTML::td(array('align'=>'right'),
-                 HTML::strong($creator , $creator_id_string))
-            ));
-
-
-            $transformedContent = TransformInline($content);
-
-            $one_comment->pushContent(HTML::tr(array('bgcolor'=>'#EEEEEE'),HTML::td(array('colspan'=>2),$transformedContent)));
+            $browselink = HTML::a(array('href' => $browseaction,
+                                        'class'=>'wiki'), $ctime);
+            $editlink = HTML::a(array('href' => $editaction,
+                                      'class' => 'wikiaction'), 'Edit');
+            $removelink = HTML::a(array('href' => $removeaction,
+                                        'class'=>'wikiadmin'), 'Delete');
 
             // FIXME if necessary:
-            $author_id_string = (strcmp($author_orig,$author_id) == 0) ? '' : ' (' . $author_id . ')';
+            $creator_id_string = (strcmp($creator_orig, $creator_id) == 0) ? '' : ' (' . $creator_id . ')';
 
-            if ($modified) {
-                $one_comment->pushContent(HTML::tr(array('bgcolor'=>'#EEEEFF'),
-                   HTML::td(array('align'=>'right','colspan'=>'2'),HTML::small('Comment modified on ',$mtime,  ' by ', $author , $author_id_string))));
-            }
+            // FIXME if necessary:
+            $author_id_string = (strcmp($author_orig, $author_id) == 0) ? '' : ' (' . $author_id . ')';
 
             // FIXME: for now we just show all links on all entries.
-            // This should be customizable, or at least show only
-            // 'edit' 'remove' for admin and creator.
-/*
-            $one_comment->pushContent(HTML::tr(HTML::td(array('colspan'=>2),
-               $browselink, ' ', $editlink, ' ', $removelink)));
-*/
-/*
-            $all_comments->pushContent(HTML::div(array('margin-bottom'=>'330px', 'margin-left'=>'1.0em', 'margin-right'=>'1.0em'),HTML::table(array('border'=>0,'align'=>'center','width'=>'96%'),HTML::tr(HTML::td($one_comment))),HTML::br(),HTML::br()));
-*/
-            // $args set here to be available as variables in the template
-            $args['noheader'] = $this->_args['noheader']; // should always be false for
-                                                          // subsequent comments when there
-                                                          // is more than one comment
-            $args['pagelink'] = WikiLink($page);
-            $args['pagename'] = $page;
-            $args['browselink'] = $browselink;
-            $args['editlink'] = $editlink;
-            $args['removelink'] = $removelink;
-            $args['authorlink'] = $author;
-            $args['author'] = $p->get('creator'); //fixme
-            $args['summary'] = $summary;
-            $args['comment'] = $transformedContent;
-            $args['date'] = $ctime;
-            $args['datemodified'] = $mtime;
+            // This should be customizable.
+
+            @$blognumber++; //hackish fixme                                              
+            $args['SHOWHEADER'] = (! $this->_args['noheader'])
+                                  && ($blognumber == 1);
+            $args['SHOWBLOGFORM'] = false;
+            $args['SHOWBLOG'] = true;
+
+            $args['PAGELINK'] = WikiLink($page);
+            $args['PAGENAME'] = $page;
+            $args['AUTHOR'] = $author;
+
+             // FIXME: use $request's api to get user
+            $isadmin = $request->_user->isadmin();
+            $isauthor = $request->_user->getId() == $author;
+
+            $args['EDITLINK'] = ($isadmin) || ($isauthor) ? $editlink : "";
+            $args['REMOVELINK'] = ($isadmin) ? $removelink : "";
+            $args['AUTHORLINK'] = $authorlink;
+            $args['SUMMARY'] = $summary;
+            $args['CONTENT'] = TransformInline($pr->getPackedContent());
+            $args['DATELINK'] = $browselink;
+
+            $args['datemodified'] = $modified ? $mtime : '';
             $args['authormodified'] = $pr->get('author');
-            $template = new Template('blog', $request, $args);
-            $all_comments->pushContent(($template));
+            $blogformtemplate = new Template('blog', $request, $args);
+            $all_comments->pushContent($blogformtemplate);
         }
-
-        //$header = HTML::h4('Comments on ', WikiLink($page), ':');
-        //return HTML($header,$all_comments);
         return $all_comments;
-
     }
-
 
     function showBlogForm ($dbi, $request, $page) {
-
         // Show blog-entry form.
-
-        $hiddenfield = HTML::input(array('type'=>'hidden',
-                                         'name'=>'blog_page',
-                                         'value'=>$page));
-
-        $summaryfield = HTML::input(array('class'=>'wikitext',
-                                        'type'=>'text',
-                                        'size'=>60,
-                                        'maxlength' => 256,
-                                        'name' => 'blog_summary',
-                                        'value' => ''));
-
-        $contentfield = HTML::textarea(array('class'=>'wikiedit',
-                                           'rows'=>5,
-                                           'cols'=>60,
-                                           'name' => 'blog_body',
-                                           'wrap'=>'virtual'),
-                                     '');
-
-        $buttontext = 'Submit';
-        $class = false;
-        $button = Button('submit:addblog', $buttontext, $class);
-
-        $action = $request->getURLtoSelf();
-
-        $form = HTML::form(array('action' => $action,
-                                 'method' => 'post'), $hiddenfield,
-                HTML::table(array('align'=>'center'),HTML::tr(array('bgcolor'=>'#EEEEEE'),HTML::th('Summary:'), HTML::td($summaryfield)),
-                            HTML::tr(array('bgcolor'=>'#EEEEEE'),HTML::th('Comment:'), HTML::td($contentfield)),
-                            HTML::tr(HTML::th(),HTML::td(array('align'=>'center'),$button))
-                ));
-
-        $header = HTML::h4('Add new comment:');
-        return HTML($header, $form);
-
+            $args['PAGENAME'] = $page;
+            $args['SHOWHEADER'] = false;
+            $args['SHOWBLOGFORM'] = true;
+            $args['SHOWBLOG'] = false;
+            $blogformtemplate = new Template('blog', $request, $args);
+            return $blogformtemplate;
     }
-
-
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2003/01/06 02:29:02  carstenklapp
+// New: use blog.tmpl template to format output. Some cosmetic
+// issues, it mostly works but code still needs cleanup. Added
+// getVersion() for PluginManager.
+//
 
 // For emacs users
 // Local Variables:
