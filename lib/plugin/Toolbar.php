@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Toolbar.php,v 1.5 2002-01-08 22:59:33 carstenklapp Exp $');
+rcs_id('$Id: Toolbar.php,v 1.6 2002-01-08 23:17:21 carstenklapp Exp $');
 /**
  * Usage:
  *
@@ -54,7 +54,7 @@ extends WikiPlugin
     function mkimglinks($text, $action, $imgurl) {
         // ImageLinks would be helpful here
         if ($imgurl)
-            return "<a href=\"". BaseURL() .$action ."\"><img alt=\"$text\" src=\"" .($imgurl) ."\" border=\"0\"></a>";
+            return "<a href=\"". BaseURL() .$action ."\"><img alt=\"" .$text ."\" src=\"" .($imgurl) ."\" border=\"0\"></a>";
         else
             return "&nbsp;". $this->mklinks($text, 'phpwiki:' .$action) ."&nbsp;";
     }
@@ -98,6 +98,15 @@ extends WikiPlugin
             break;
         //default:
             //$sep = $sep ." ";
+        }
+
+        if (empty($label)) {
+            switch ($name) {
+            case _("RecentChanges") :
+                $label = _("Show changes for: %s");
+            case _("RecentEdits") :
+                $label = _("Show edits for: %s");
+            }
         }
 
         if (($name == _("RecentChanges") || $name == _("RecentEdits")) && $days) {
