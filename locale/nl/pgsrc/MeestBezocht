@@ -1,1 +1,1 @@
-<?plugin MostPopular limit=20 ?>
+<?plugin MostPopular limit||=20 noheader||=0 info||='' ?> 

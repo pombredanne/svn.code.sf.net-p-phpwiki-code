@@ -1,12 +1,12 @@
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
-X-RCS_ID: $Id: FullTextSearch,v 1.2 2002-01-09 06:36:36 carstenklapp Exp $
+X-RCS_ID: $Id: FullTextSearch,v 1.3 2002-01-22 06:49:01 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=FullTextSearch;
   flags=PAGE_LOCKED;
-  lastmodified=1009096690;
+  lastmodified=1009096691;
 Content-Transfer-Encoding: binary
 
-<?plugin FullTextSearch?>
+<?plugin FullTextSearch s||='' noheader||=0 ?>  
 ----
 Search Again:
 <?plugin-form TitleSearch?>
