@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: login.tmpl,v 1.20 2002-12-15 01:30:47 carstenklapp Exp $ -->
+<!-- $Id: login.tmpl,v 1.21 2003-02-17 06:08:25 dairiki Exp $ -->
 <!-- The login form -->
 
 <?php if ($fail_message) { ?>
@@ -21,7 +21,7 @@
   </p>
 <?php } ?>
 
-<form method="post" action="<?= $request->getURLtoSelf() ?>" accept-charset="<?=CHARSET?>" name="login">
+<form method="post" action="<?= $request->getPostURL() ?>" accept-charset="<?=CHARSET?>" name="login">
 
 <table cellspacing="4">
 <tr>
@@ -50,8 +50,7 @@
 
 <input type="hidden" name="auth[require_level]" value="<?=$require_level?>" />
 <input type="hidden" name="auth[login]" value="1" />
-<?= HiddenPosts(array('auth')) ?>
-<? //HiddenGets(array('auth')) ?>
+<?= HiddenInputs($request->getArgs(), false, array('auth')) ?>
 </form>
 
 <script language="JavaScript" type="text/javascript">

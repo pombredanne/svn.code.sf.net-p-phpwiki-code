@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.31 2002-12-15 01:30:47 carstenklapp Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.32 2003-02-17 06:08:25 dairiki Exp $ -->
 <?php
 // Todo: Move the logic and code to the plugin
 // This is very experimental and the read-only part an ugly hack so far.
@@ -96,7 +96,7 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
 <?= $errmsg ?>
 
 <?php if ($isForm) { ?>
-<form action="<?=$request->getURLtoSelf()?>" method="post">
+<form action="<?=$request->getPostURL()?>" method="post">
 <?php } else { 
   $user = $request->_user; 
   $fill = "&nbsp;";
@@ -193,7 +193,7 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
 <?php if ($isForm) { ?>
   <hr />
   <p><?=Button("submit:", _("Update Preferences"), 'wikiadmin')?><?=Button("submit:cancel", _("Cancel"), 'button')?></p>
-<input type="hidden" name="action" value="<?=$request->getArg('pagename')?>">
-<?= HiddenGets(array('pref')) ?>
+
+<?= HiddenInputs($request->getArgs(), false, array('pref')) ?>
 </form>
 <?php } ?>
