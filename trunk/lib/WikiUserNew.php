@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.32 2004-03-14 16:30:52 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.33 2004-03-16 15:42:04 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -1318,12 +1318,12 @@ extends _DbPassUser
             return $this->_tryNextUser();
         }
         // Prepare the configured auth statements
-        if (!empty($DBAuthParams['auth_check']) and !$this->_authselect) {
+        if (!empty($DBAuthParams['auth_check']) and empty($this->_authselect)) {
             $this->_authselect = str_replace(array('"$userid"','"$password"'),
                                              array('%s','%s'),
                                              $DBAuthParams['auth_check']);
         }
-        if (!$this->_authselect)
+        if (empty($this->_authselect))
             trigger_error("Either \$DBAuthParams['auth_check'] is missing or \$DBParams['dbtype'] != 'SQL'",
                           E_USER_WARNING);
         //NOTE: for auth_crypt_method='crypt' no special auth_user_exists is needed
@@ -1345,11 +1345,11 @@ extends _DbPassUser
         // maybe the user is allowed to create himself. Generally not wanted in 
         // external databases, but maybe wanted for the wiki database, for performance 
         // reasons
-        if (!isset($this->_authcreate) and !empty($DBAuthParams['auth_create'])) {
+        if (empty($this->_authcreate) and !empty($DBAuthParams['auth_create'])) {
             $this->_authcreate = str_replace(array('"$userid"','"$password"'),array('%s','%s'),
                                               $DBAuthParams['auth_create']);
         }
-        if ($this->_authcreate) return true;
+        if (!empty($this->_authcreate)) return true;
 
         return $this->_tryNextUser();
     }
@@ -1360,7 +1360,7 @@ extends _DbPassUser
         if (!$this->_auth_dbi) {  // needed?
             return $this->_tryNextPass($submitted_password);
         }
-        if (!$this->_authselect)
+        if (empty($this->_authselect))
             trigger_error("Either \$DBAuthParams['auth_check'] is missing or \$DBParams['dbtype'] != 'SQL'",
                           E_USER_WARNING);
 
@@ -1392,12 +1392,12 @@ extends _DbPassUser
     function storePass($submitted_password) {
         global $DBAuthParams;
         $dbh = &$this->_auth_dbi;
-        if (!empty($DBAuthParams['auth_update']) and !$this->_authupdate) {
+        if (!empty($DBAuthParams['auth_update']) and empty($this->_authupdate)) {
             $this->_authupdate = str_replace(array('"$userid"','"$password"'),
                                              array('%s','%s'),
                                              $DBAuthParams['auth_update']);
         }
-        if (!$this->_authupdate) {
+        if (empty($this->_authupdate)) {
             trigger_error("Either \$DBAuthParams['auth_update'] not defined or \$DBParams['dbtype'] != 'SQL'",
                           E_USER_WARNING);
             return false;
@@ -1512,11 +1512,11 @@ extends _DbPassUser
  
     function userExists() {
         global $DBAuthParams;
-        if (!$this->_authselect and !empty($DBAuthParams['auth_check'])) {
+        if (empty($this->_authselect) and !empty($DBAuthParams['auth_check'])) {
             $this->_authselect = str_replace(array('"$userid"','"$password"'),array('%s','%s'),
                                               $DBAuthParams['auth_check']);
         }
-        if (!$this->_authselect)
+        if (empty($this->_authselect))
             trigger_error("Either \$DBAuthParams['auth_check'] is missing or \$DBParams['dbtype'] != 'ADODB'",
                           E_USER_WARNING);
         //$this->getAuthDbh();
@@ -1552,14 +1552,14 @@ extends _DbPassUser
             $this->_authcreate = str_replace(array('"$userid"','"$password"'),array('%s','%s'),
                                               $DBAuthParams['auth_create']);
         }
-        if ($this->_authcreate) return true;
+        if (!empty($this->_authcreate)) return true;
         
         return $this->_tryNextUser();
     }
 
     function checkPass($submitted_password) {
         global $DBAuthParams;
-        if (!$this->_authselect and !empty($DBAuthParams['auth_check'])) {
+        if (empty($this->_authselect) and !empty($DBAuthParams['auth_check'])) {
             $this->_authselect = str_replace(array('"$userid"','"$password"'),array('%s','%s'),
                                               $DBAuthParams['auth_check']);
         }
@@ -2303,6 +2303,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.32  2004/03/14 16:30:52  rurban
+// db-handle session revivification, dba fixes
+//
 // Revision 1.31  2004/03/12 23:20:58  rurban
 // pref fixes (base64)
 //
