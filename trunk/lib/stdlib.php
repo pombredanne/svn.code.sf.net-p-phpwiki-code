@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.105 2002-02-08 15:31:34 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.106 2002-02-08 16:55:00 carstenklapp Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -79,7 +79,7 @@ function IconForLink($protocol_or_url) {
     list ($proto) = explode(':', $protocol_or_url, 2);
     $src = $Theme->getLinkIconURL($proto);
     if ($src)
-        return HTML::img(array('src' => $src, 'alt' => $proto, 'class' => 'linkicon'));
+        return HTML::img(array('src' => $src, 'alt' => $proto, 'class' => 'linkicon', 'border' => 0));
     else
         return false;
 }
