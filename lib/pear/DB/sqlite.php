@@ -18,7 +18,7 @@
 // | Maintainer: Daniel Convissor <danielc@php.net>                       |
 // +----------------------------------------------------------------------+
 //
-// $Id: sqlite.php,v 1.4 2004-06-21 08:39:38 rurban Exp $
+// $Id: sqlite.php,v 1.5 2005-02-28 21:24:33 rurban Exp $
 
 require_once 'DB/common.php';
 
@@ -27,7 +27,7 @@ require_once 'DB/common.php';
  * PECL extension.
  *
  * @package  DB
- * @version  $Id: sqlite.php,v 1.4 2004-06-21 08:39:38 rurban Exp $
+ * @version  $Id: sqlite.php,v 1.5 2005-02-28 21:24:33 rurban Exp $
  * @category Database
  * @author   Urs Gehrig <urs@circle.ch>
  * @author   Mika Tuupola <tuupola@appelsiini.net>
@@ -185,7 +185,7 @@ class DB_sqlite extends DB_common
         $ismanip = DB::isManip($query);
         $this->last_query = $query;
         $query = $this->_modifyQuery($query);
-        ini_set('track_errors', true);
+        @ini_set('track_errors', true);
         $result = @sqlite_query($query, $this->connection);
         ini_restore('track_errors');
         $this->_lasterror = isset($php_errormsg) ? $php_errormsg : '';

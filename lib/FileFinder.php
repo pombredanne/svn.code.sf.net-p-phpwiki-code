@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.30 2004-11-10 19:32:21 rurban Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.31 2005-02-28 21:24:32 rurban Exp $');
 
 require_once(dirname(__FILE__).'/stdlib.php');
 
@@ -274,7 +274,7 @@ class FileFinder
          * This following line should be in the above if-block, but we
          * put it here, as it seems to work-around the bug.
          */
-        ini_set('include_path', implode($this->_get_ini_separator(), $this->_path));
+        @ini_set('include_path', implode($this->_get_ini_separator(), $this->_path));
     }
 
     /**
@@ -292,7 +292,7 @@ class FileFinder
             array_splice($this->_path, $i, 1);
         }
         array_unshift($this->_path, $dir);
-        ini_set('include_path', implode($this->_path, $this->_get_ini_separator()));
+        @ini_set('include_path', implode($this->_path, $this->_get_ini_separator()));
     }
 
     // Return all the possible shortened locale specifiers for the given locale.
@@ -587,6 +587,13 @@ function isCygwin() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.30  2004/11/10 19:32:21  rurban
+// * optimize increaseHitCount, esp. for mysql.
+// * prepend dirs to the include_path (phpwiki_dir for faster searches)
+// * Pear_DB version logic (awful but needed)
+// * fix broken ADODB quote
+// * _extract_page_data simplification
+//
 // Revision 1.29  2004/11/09 17:11:03  rurban
 // * revert to the wikidb ref passing. there's no memory abuse there.
 // * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively
