@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.11 2002-01-22 03:17:47 dairiki Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.12 2002-01-22 06:57:34 dairiki Exp $');
 
 class WikiPlugin
 {
@@ -155,7 +155,7 @@ class WikiPlugin
                      'class' => 'wikiaction',
                      'method' => 'get',
                      'textinput' => 's',
-                     'description' => false,
+                     'description' => $this->getDescription(),
                      'formsize' => 30);
     }
 
