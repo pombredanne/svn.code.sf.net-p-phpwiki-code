@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.172 2004-07-03 08:04:19 rurban Exp $');
+rcs_id('$Id: main.php,v 1.173 2004-07-05 12:57:54 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -19,6 +19,8 @@ class WikiRequest extends Request {
 
     function WikiRequest () {
         $this->_dbi = WikiDB::open($GLOBALS['DBParams']);
+        //if ((DEBUG & _DEBUG_TRACE) or (time() % 50 == 0))
+        //    $this->_dbi->_backend->optimize();
         if (in_array('File', $this->_dbi->getAuthParam('USER_AUTH_ORDER'))) {
             // force our local copy, until the pear version is fixed.
             include_once(dirname(__FILE__)."/pear/File_Passwd.php");
@@ -1071,6 +1073,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.172  2004/07/03 08:04:19  rurban
+// fixed implicit PersonalPage login (e.g. on edit), fixed to check against create ACL on create, not edit
+//
 // Revision 1.171  2004/06/29 09:30:42  rurban
 // force string hash
 //

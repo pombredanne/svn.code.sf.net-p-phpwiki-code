@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.37 2004-07-04 10:24:43 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.38 2004-07-05 12:57:54 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -70,7 +70,9 @@ extends WikiDB_backend
 
     function WikiDB_backend_ADODB ($dbparams) {
         $parsed = parseDSN($dbparams['dsn']);
+	$this->_dbparams = $dbparams;
         $this->_dbh = &ADONewConnection($parsed['phptype']);
+        $this->_dsn = $parsed;
         if (!empty($parsed['persistent']))
             $conn = $this->_dbh->PConnect($parsed['hostspec'],$parsed['username'], 
                                          $parsed['password'], $parsed['database']);
@@ -1137,6 +1139,9 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.37  2004/07/04 10:24:43  rurban
+// forgot the expressions
+//
 // Revision 1.36  2004/07/03 16:51:06  rurban
 // optional DBADMIN_USER:DBADMIN_PASSWD for action=upgrade (if no ALTER permission)
 // added atomic mysql REPLACE for PearDB as in ADODB

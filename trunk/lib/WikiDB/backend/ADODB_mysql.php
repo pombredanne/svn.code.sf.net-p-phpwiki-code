@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_mysql.php,v 1.6 2004-06-04 20:32:53 rurban Exp $');
+rcs_id('$Id: ADODB_mysql.php,v 1.7 2004-07-05 12:57:54 rurban Exp $');
 
 require_once('lib/WikiDB/backend/ADODB.php');
 
@@ -35,7 +35,7 @@ extends WikiDB_backend_ADODB
         $this->_serverinfo = $this->_dbh->ServerInfo();
         if (!empty($this->_serverinfo['version'])) {
             $arr = explode('.',$this->_serverinfo['version']);
-            $this->_serverinfo['version'] = (string)(($arr[0] * 100) + $arr[1]) . "." . $arr[2];
+            $this->_serverinfo['version'] = (string)(($arr[0] * 100) + $arr[1]) . "." . (integer)$arr[2];
         }
         if ($this->_serverinfo['version'] < 323.0) {
             // Older MySQL's don't have CASE WHEN ... END
@@ -45,10 +45,28 @@ extends WikiDB_backend_ADODB
     }
     
     /**
+     * Kill timed out processes. ( so far only called on about every 50-th save. )
+     */
+    function _timeout() {
+    	if (empty($this->_dbparams['timeout'])) return;
+	$result = mysql_query("SHOW processlist");
+	while ($row = mysql_fetch_array($result)) { 
+	    if ($row["db"] == $this->_dsn['database']
+	        and $row["User"] == $this->_dsn['username']
+	        and $row["Time"] > $this->_dbparams['timeout']
+	        and $row["Command"] == "Sleep") {
+	            $process_id = $row["Id"]; 
+	            mysql_query("KILL $process_id");
+	    }
+	}
+    }
+
+    /**
      * Pack tables.
      */
     function optimize() {
         $dbh = &$this->_dbh;
+        $this->_timeout();
         foreach ($this->_table_names as $table) {
             $dbh->Execute("OPTIMIZE TABLE $table");
         }
