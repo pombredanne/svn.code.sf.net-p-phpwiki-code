@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.9 2004-04-26 12:15:01 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.10 2004-04-26 13:22:32 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -99,6 +99,7 @@ function IniConfig($file) {
             define($item, $rs[$item]);
         } elseif (array_key_exists($item, $rsdef)) {
             define($item, $rsdef[$item]);
+        // calculate them later:
         } elseif (in_array($item,array('SERVER_NAME', 'SERVER_PORT',
          	'SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH'))) {
             ;
@@ -120,18 +121,26 @@ function IniConfig($file) {
         } else {
             ; //trigger_error(sprintf("missing boolean config setting for %s",$item));
         }
-        if (!$val and !defined($item)) {
+        
+        // calculate them later: old or dynamic constants
+        if (in_array($item,array('USE_PATH_INFO','USE_DB_SESSION',
+                                 'ALLOW_HTTP_AUTH_LOGIN','ALLOW_LDAP_LOGIN',
+                                 'ALLOW_IMAP_LOGIN','ALLOW_USER_LOGIN',
+                                 'REQUIRE_SIGNIN_BEFORE_EDIT',
+                                 'WIKIDB_NOCACHE_MARKUP')))
+        {
+            ;
+        }
+        elseif (!$val) {
             define($item, false);
         }
-        else if (strtolower($val) == 'false' ||
-                 strtolower($val) == 'no' ||
-                 $val == '0') {
-            if (!defined($item))
-                define($item, false);
+        elseif (strtolower($val) == 'false' ||
+                strtolower($val) == 'no' ||
+                $val == '0') {
+            define($item, false);
         }
         else {
-            if (!defined($item))
-                define($item, true);
+            define($item, true);
         }
     }
 
@@ -482,6 +491,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/04/26 12:15:01  rurban
+// check default config values
+//
 // Revision 1.8  2004/04/23 16:55:59  zorloc
 // If using Db auth and DBAUTH_AUTH_DSN is empty set DBAUTH_AUTH_DSN to $DBParams['dsn']
 //
