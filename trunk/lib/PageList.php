@@ -1,12 +1,10 @@
-<?php rcs_id('$Id: PageList.php,v 1.4 2002-01-21 08:19:17 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.5 2002-01-21 16:28:28 carstenklapp Exp $');
 
 // This will relieve some of the work of plugins like LikePages,
 // MostPopular and allows dynamic expansion of those plugins do
 // include more columns in their output.
 //
 // There are still a few rough edges.
-//
-// TODO: use the new HtmlElement functions
 
 class PageList {
     function PageList ($pagelist_name = '') {
@@ -54,52 +52,59 @@ class PageList {
     function getHTML() {
         // TODO: Generate a list instead of a table when only one
         // column (pagenames only).
-        // TODO: use the new html functions
-        $html = "";
-        $pad = "&nbsp;&nbsp;";
-        $html .= "<p>" . $this->getCaption() . "</p>";
+
         $summary = "FIXME: add brief summary and column names";
-        $html .= "<table summary=\"$summary\" border=\"0\" padding=\"0\" cellspacing=\"0\">";
 
-        $html .= "<tr>";
+        $table = HTML::table(array('cellpadding' => 0,
+                                   'cellspacing' => 1,
+                                   'border' => 0,
+                                   'summary' => $summary)
+                            );
+
+        $pad = new RawXml('&nbsp;&nbsp;');
+
+        $head = HTML::tr();
         foreach ($this->_columns as $column_name) {
-            $html .= $this->_column_align($column_name) == 'right' ? "<td align=\"right\">" : "<td>";
-            $html .= $pad;
-
-            $html .= "<u>".$column_name."</u>";
-            $html .= "</td>";
+            if ($this->_column_align($column_name) == 'right') {
+                $head->pushContent(HTML::td(array('align' => 'right'), $pad, HTML::u($column_name)));
+            } else {
+                $head->pushContent(HTML::td($pad, HTML::u($column_name)));
+            }
         }
-        $html .= "</tr>";
+        $table->pushContent($head);
 
         foreach ($this->_pages as $page_handle) {
-            $html .= "<tr>";
+            $row = HTML::tr();
             foreach ($this->_columns as $column_name) {
-                $html .= $this->_column_align($column_name) == 'right' ? "<td align=\"right\">" : "<td>";
-                $html .= $pad;
+                $col = HTML::td();
                 $field = $this->_colname_to_dbfield($column_name);
                 if ($this->_does_require_rev($column_name)) {
                     $current = $page_handle->getCurrentRevision();
                     $value = $current->get($field);
                     if ($field=='mtime') {
                         global $Theme;
-                        $html .= $Theme->formatDateTime($value);
-                    }else{
-                        $html .= $value;
+                        $td = ($Theme->formatDateTime($value));
+                    } else {
+                        $td = ($value);
                     }
                 } else {
                     //TODO: make method to determine formatting
                     if ($field=='pagename') {
-                        $html .= LinkExistingWikiWord($page_handle->getName());
+                        $td = (new RawXml (LinkExistingWikiWord($page_handle->getName())));
                     } else {
-                        $html .= $page_handle->get($field);
+                        $td = ($page_handle->get($field));
                     }
                 }
-                $html .= "</td>";
+
+                if ($this->_column_align($column_name) == 'right') {
+                    $row->pushContent (HTML::td(array('align' => 'right'), $pad, $td));
+                } else {
+                    $row->pushContent (HTML::td($pad, $td));
+                }
             }
-            $html .= "</tr>\n";
+            $table->pushContent(HTML::tr($row));
         }
-        $html .= "</table>\n";
-        return $html;
+        return array(HTML::p($this->getCaption()), $table);
     }
     
     ////////////////////
@@ -119,8 +124,6 @@ class PageList {
                      );
 
         $key = $map[$column_name];
-//            trigger_error("_column_align: key for '$column_name' is '$key'",
-//                          E_USER_ERROR); //tempdebug
 
         if (! $key) {
             //FIXME: localise after wording has been finalized.
