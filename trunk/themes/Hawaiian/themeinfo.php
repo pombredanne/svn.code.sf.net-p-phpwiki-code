@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.12 2002-01-18 22:46:32 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.13 2002-01-19 00:04:50 carstenklapp Exp $');
 
 /**
  * WikiWiki Hawaiian theme for PhpWiki.
@@ -39,8 +39,6 @@ $Theme->addImageAlias('signature', $imgFile);
  */
 $Theme->setLinkIcon('interwiki');
 $Theme->setLinkIcon('*', 'flower.png');
-
-$Theme->setButtonSep(' | ');
 
 
 // This defines separators used in RecentChanges and RecentEdits lists.

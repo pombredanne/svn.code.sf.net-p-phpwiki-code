@@ -1,6 +1,6 @@
 <?php // -*-php-*-
 
-rcs_id('$Id: themeinfo.php,v 1.10 2002-01-18 06:11:39 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.11 2002-01-19 00:04:50 carstenklapp Exp $');
 
 /**
  * This PhpWiki theme is experimental and will likely not appear as
@@ -40,14 +40,11 @@ $Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
 // The logo image
 $Theme->addImageAlias('logo', 'Ufp-logo.jpg');
 
-
 // Signature image which is shown after saving an edited page.  If
 // this is left blank, any signature defined in index.php will be
 // used. If it is not defined by index.php or in here then the "Thank
 // you for editing..." screen will be omitted.
 $Theme->addImageAlias('signature', 'lights.gif');
-
-$Theme->setButtonSep(' | ');
 
 // The gettext() function does not work here because we are included
 // from 'index.php'. Normally themes shouldn't override date & time

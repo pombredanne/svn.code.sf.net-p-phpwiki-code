@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.1 2002-01-18 19:23:11 dairiki Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.2 2002-01-19 00:04:50 carstenklapp Exp $ -->
 <?php
   $BF = &$ButtonFactory;
 
@@ -20,7 +20,7 @@
 
   $SignInB = $BF->makeActionButton($user->is_authenticated() ? 'logout' : 'login');
 
-  $Sep = $Theme->buttonSep;
+  $Sep = $Theme->getButtonSeparator();
 ?>
 
 <!-- I would like not to have to use these tables, and managed to
