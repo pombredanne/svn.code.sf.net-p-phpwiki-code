@@ -1,9 +1,9 @@
 <?php // -*-php-*-
-rcs_id('$Id: WhoIsOnline.php,v 1.9 2004-12-18 17:04:24 rurban Exp $');
+rcs_id('$Id: WhoIsOnline.php,v 1.10 2005-02-01 16:22:58 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
- This file is (not yet) part of PhpWiki.
+ This file is part of PhpWiki.
 
  PhpWiki is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
@@ -114,24 +114,27 @@ extends WikiPlugin
                 if (empty($date)) continue;
                 $num_online++;
                 $user = @unserialize($data);
-                if (!empty($user)) {
-                    if ($mode == 'summary' and in_array($user->_userid,$uniquenames)) continue;
-                    $uniquenames[] = $user->_userid;
+                if (!empty($user) and !isa($user, "__PHP_incomplete_Class")) {
+                    // if "__PHP_incomplete_Class" try to avoid notice
+                    $userid = @$user->_userid;
+                    $level = @$user->_level;
+                    if ($mode == 'summary' and in_array($userid, $uniquenames)) continue;
+                    $uniquenames[] = $userid;
                     $page = _("<unknown>");  // where is he?
 	            $action = 'browse';
 	            $objvars = array_keys(get_object_vars($user));
                     if (in_array('action',$objvars))
-                        $action = $user->action;
+                        $action = @$user->action;
                     if (in_array('page',$objvars))
-                        $page = $user->page;
-                    if ($user->_level and $user->_userid) { // registered or guest or what?
+                        $page = @$user->page;
+                    if ($level and $userid) { // registered or guest or what?
                         //FIXME: htmlentitities name may not be called here. but where then?
                         $num_registered++;
-                        $registered[] = array('name'  => $user->_userid,
+                        $registered[] = array('name'  => $userid,
                                               'date'  => $date,
                                               'action'=> $action,
                                               'page'  => $page,
-                                              'level' => $user->_level,
+                                              'level' => $level,
                                               'ip'    => $ip,
                                               'x'     => 'x');
                         if ($user->_level == WIKIAUTH_ADMIN)
@@ -142,7 +145,7 @@ extends WikiPlugin
                                           'date'  => $date,
                                           'action'=> $action,
                                           'page'  => $page,
-                                          'level' => $user->_level,
+                                          'level' => $level,
                                           'ip'    => $ip,
                                           'x'     => 'x');
                     }
@@ -194,6 +197,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/12/18 17:04:24  rurban
+// stabilize not to call UserName() of an incomplete (not loaded) object
+//
 // Revision 1.8  2004/06/14 11:31:39  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList
