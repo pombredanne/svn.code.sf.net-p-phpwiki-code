@@ -1,5 +1,5 @@
 /**
- * $Id: sidebar.css,v 1.27 2004-06-11 09:01:52 rurban Exp $
+ * $Id: sidebar.css,v 1.28 2004-11-08 17:09:34 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -136,10 +136,11 @@ div#actionbar {
  * Other
  */
 .debug {
-  position: fixed;
+  margin-left:  0.5em;
   left: 0.5em;
+  /*position: fixed;
   top: 42ex;
-  width: 13em;
+  width: 13em; */
   max-width: 13em; /* ie ignores this */
 }
 
@@ -148,9 +149,9 @@ div#xhtml-validator { display: none; }
  */
 
 div#xhtml-validator {
-  position: fixed;
+  /*  position: fixed; */
   right: 0.75em;
-  top: 1ex;
+  /*  top: 1ex; */
 }
 
 .clear-floats {
