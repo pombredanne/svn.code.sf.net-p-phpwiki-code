@@ -1,0 +1,23 @@
+<?php
+  rcs_id('$Id: blogform.tmpl,v 1.1 2004-05-12 19:42:16 rurban Exp $');
+?>
+<div class="wikiblog wikiblog-form">
+<form action="<?=$request->getPostURL()?>" method="post" class="wikiaction"
+      accept-charset="<?=CHARSET?>">
+  <input type="hidden" name="blog[page]" value="<?=$PAGENAME?>" />
+  <?= HiddenInputs($request->getArgs()) ?>
+  <fieldset id="wikiblog-form">
+     <legend><?=_("Add a Comment")?></legend>
+
+     <label><?=_("Summary:")?>&nbsp;
+         <input class="wikitext" type="text" size="60"
+                    maxlength="256" name="blog[summary]" value="" /></label><br />&nbsp;<br />
+     <label><?=_("Comment:")?>&nbsp;
+         <textarea class="blogedit" rows="5" cols="60"
+                       name="blog[body]" wrap="virtual"></textarea></label><br />&nbsp;<br />
+     <input type="submit" value="<?=_("Add Comment")?>"
+                     name="blog[addblog]" class="wikiaction" /></fieldset>
+     
+</form>
+</div>
+
