@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.86 2004-09-23 18:52:06 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.87 2004-09-25 16:25:40 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -232,6 +232,33 @@ class WikiDB {
     function deletePage($pagename) {
         $this->_cache->delete_page($pagename);
 
+        /* Generate notification emails? */
+        if (! $this->isWikiPage($pagename) ) {
+            $notify = $this->_wikidb->get('notify');
+            if (!empty($notify) and is_array($notify)) {
+                //TODO: deferr it (quite a massive load if you remove some pages).
+                //TODO: notification class which catches all changes,
+                //  and decides at the end of the request what to mail. (type, page, who, what, users, emails)
+                // could be used for PageModeration also.
+                list($emails, $userids) = WikiDB_Page::getPageChangeEmails($notify);
+                if (!empty($emails)) {
+                    $notify = $this->get('notify');
+                    $editedby = sprintf(_("Edited by: %s"), $GLOBALS['request']->UserName()); // Todo: host_id
+                    $emails = join(',', $emails);
+                    $subject = sprintf(_("Page deleted %s"), $pagename);
+                    if (mail($emails,"[".WIKI_NAME."] ".$subject, 
+                             $subject."\n".
+                             $editedby."\n\n".
+                             "Deleted $pagename"))
+                        trigger_error(sprintf(_("PageChange Notification of %s sent to %s"),
+                                              $this->_pagename, join(',',$userids)), E_USER_NOTICE);
+                    else
+                        trigger_error(sprintf(_("PageChange Notification Error: Couldn't send %s to %s"),
+                                              $this->_pagename, join(',',$userids)), E_USER_WARNING);
+                }
+            }
+        }
+
         //How to create a RecentChanges entry with explaining summary?
         /*
         $page = $this->getPage($pagename);
@@ -259,10 +286,12 @@ class WikiDB {
      *     in the WikiDB which have non-default contents.
      */
     function getAllPages($include_empty=false, $sortby=false, $limit=false) {
-        // HACK: memory_limit=8M will fail on too large pagesets. unix only!
+        // HACK: memory_limit=8M will fail on too large pagesets. old php on unix only!
     	$mem = ini_get("memory_limit");
-    	if (ini_get("memory_limit") and !$limit and !isWindows()) {
+    	if (ini_get("memory_limit") and !$limit and !isWindows() and !check_php_version(4,3)) {
     	    $limit = 450;
+            $GLOBALS['request']->setArg('limit',$limit);
+            $GLOBALS['request']->setArg('paging','auto');
     	}
         $result = $this->_backend->get_all_pages($include_empty, $sortby, $limit);
         return new WikiDB_PageIterator($this, $result);
@@ -421,7 +450,31 @@ class WikiDB {
                 $result = $this->_backend->rename_page($from, $to);
             }
         } else {
-            trigger_error(_("WikiDB::renamePage() not yet implemented for this backend"),E_USER_WARNING);
+            trigger_error(_("WikiDB::renamePage() not yet implemented for this backend"),
+                          E_USER_WARNING);
+        }
+        /* Generate notification emails? */
+        if ($result) {
+            $notify = $this->_wikidb->get('notify');
+            if (!empty($notify) and is_array($notify)) {
+                list($emails, $userids) = WikiDB_Page::getPageChangeEmails($notify);
+                if (!empty($emails)) {
+                    $editedby = sprintf(_("Edited by: %s"), $meta['author']) . ' ' . $meta['author_id'];
+                    $emails = join(',',$emails);
+                    $subject = sprintf(_("Page rename %s to %s"),$from,$to);
+                    $link = WikiURL($to, true);
+                    if (mail($emails,"[".WIKI_NAME."] ".$subject, 
+                             $subject."\n".
+                             $editedby."\n".
+                             $link."\n\n".
+                             "Renamed $from to $to"))
+                        trigger_error(sprintf(_("PageChange Notification of %s sent to %s"),
+                                              $this->_pagename, join(',',$userids)), E_USER_NOTICE);
+                    else
+                        trigger_error(sprintf(_("PageChange Notification Error: Couldn't send %s to %s"),
+                                              $this->_pagename, join(',',$userids)), E_USER_WARNING);
+                }
+            }
         }
         return $result;
     }
@@ -844,8 +897,13 @@ class WikiDB_Page
             $notify = $this->_wikidb->get('notify');
             if (!empty($notify) and is_array($notify)) {
                 list($emails, $userids) = $this->getPageChangeEmails($notify);
-                if (!empty($emails))
-                    $this->sendPageChangeNotification($wikitext, $version, $meta, $emails, $userids);
+                if (!empty($emails)) {
+                    if (is_array($GLOBALS['deferredPageChangeNotification'])) {
+                        $GLOBALS['deferredPageChangeNotification'][] = array($this->_pagename, $emails, $userids);
+                    } else {
+                        $this->sendPageChangeNotification($wikitext, $version, $meta, $emails, $userids);
+                    }
+                }
             }
         }
 
@@ -1922,6 +1980,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.86  2004/09/23 18:52:06  rurban
+// only fortune at create
+//
 // Revision 1.85  2004/09/16 08:00:51  rurban
 // just some comments
 //
