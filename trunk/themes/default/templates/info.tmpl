@@ -1,65 +1,100 @@
 <?php // -*-html-*- ?>
-<!-- $Id: info.tmpl,v 1.1 2002-02-16 00:08:28 carstenklapp Exp $ -->
+<!-- $Id: info.tmpl,v 1.2 2002-02-16 01:46:06 carstenklapp Exp $ -->
 <?php
 
-  $lastModifed =  $Theme->formatDateTime($revision->get('mtime'));
-  $lastAuthor =   $revision->get('author');
-  $lastAuthorId = $revision->get('author_id');
-  $version =      $revision->getVersion();
-  $is_minor =     $revision->get('is_minor') ? _("(minor edit)") : "";
+$modifed = $Theme->formatDateTime($revision->get('mtime'));
+$author = $revision->get('author');
+$authorId = $revision->get('author_id');
+$version = $revision->getVersion();
+$is_minor = $revision->get('is_minor') ? _("(minor edit)") : "";
+$hits = $page->get('hits');
 
-  $markupVersion = $revision->get('markup');
-  $markupVersion = $markupVersion ? fmt("Version %s", $markupVersion) : _("Original (1.2 or 1.0)");
+/* better way to do this? */
+$data = &$revision->_data;
+$bytes = strlen(&$data['%content']);
+if ($bytes < 1024 )
+    $size = fmt("%s bytes", $bytes);
+else {
+    $kb = round($bytes / 1024, 1);
+    $size = fmt("%s Kb (%s bytes)", $kb, $bytes);
+}
 
-  $summary = HTML::textarea(array('name' => 'summary',
-                                  'class' => 'summary',
-                                  'rows' => $request->getPref('editHeight')/4, /* use fixed dimensions? */
-                                  'cols' => $request->getPref('editWidth')/2,
-                                  'readonly' => 'readonly',
-                                  'wrap' => 'virtual'), /* for netscape */
-                            $revision->get('summary'));
+$markupVersion = ($markupVersion = $revision->get('markup'))
+               ? fmt("Version %s", $markupVersion)
+               : _("Original (1.2 or 1.0)");
 
-  $is_current = $revision->isCurrent();
+$summary = HTML::textarea(array('name' => 'summary',
+                                'class' => 'summary',
+                                /* use fixed dimensions? */
+                                'rows' => $request->getPref('editHeight')/4,
+                                'cols' => $request->getPref('editWidth')/2,
+                                'readonly' => 'readonly',
+                                'wrap' => 'virtual'), /* for Netscape 4 */
+                          $revision->get('summary'));
 
-  $LOCKED_CB = HTML::input(array('type' => 'checkbox',
-                                 'name' => 'edit[locked]',
-                                 'disabled' => !$user->isadmin() || !$is_current,
-                                 'checked'  => $page->get('locked')));
+if ($is_current = $revision->isCurrent()) {
 
-  if ($is_current) {
+    $LOCKED_CB = HTML::input(array('type' => 'checkbox',
+                                   'name' => 'edit[locked]',
+                                   'disabled' => !$user->isadmin(),
+                                   'checked'  => $page->get('locked')));
+
     $label['date'] = _("Last Modified:");
     $label['author'] = _("Last Author:");
     $label['summary'] = _("Last Summary:");
-  } else {
+
+} else {
     $label['date'] = _("Saved on:");
     $label['author'] = _("Author:");
     $label['summary'] = _("Summary:");
-  }
+}
+
+$tableSummary = fmt("Statistics about %s.", $page->getName());
 
 ?>
 
 <!-- FIXME: move table formatting to css -->
-<table summary="FIXME" class="pageinfo"
+<table summary="<?= $tableSummary ?>" class="pageinfo"
        border="0" cellspacing="0" cellpadding="3">
 
 <?php if (!$is_current) { ?>
   <tr>
-    <td align="right"><b><?=_("Supplanted on:")?></b></td><td><?= $Theme->formatDateTime($revision->get('_supplanted')) ?></td>
+    <td align="right" class="pageinfo"><?=_("Supplanted on:")?></td>
+    <td><?= $Theme->formatDateTime($revision->get('_supplanted')) ?></td>
   </tr>
 <?php } ?>
 
   <tr>
-    <td align="right" nowrap="nowrap"><b><?= $label['date'] ?></b></td><td><?= $lastModifed ?> <em><?=$is_minor?></em> </td>
+    <td align="right" nowrap="nowrap" class="pageinfo"><?= $label['date'] ?></td>
+    <td><?= $modifed ?> <span class="pageinfo-minoredit"><?= $is_minor ?></span></td>
   </tr><tr>
-    <td align="right"><b><?= $label['author'] ?></b></td><td><?= $lastAuthor ?> (<?= $lastAuthorId ?>)</td>
+    <td align="right" class="pageinfo"><?= $label['author'] ?></td>
+    <td><?= $author ?> <span class="pageinfo-authorid">(<?= $authorId ?>)</span></td>
   </tr><tr>
-    <td align="right"><b><?=_("Page Version:")?></b></td><td><?= $version ?></td>
+    <td align="right" class="pageinfo"><?=_("Page Version:")?></td>
+    <td><?= $version ?></td>
   </tr><tr>
-    <td align="right"><b><?=_("Markup:")?></b></td><td><?= $markupVersion ?></td>
+    <td align="right" class="pageinfo"><?=_("Markup:")?></td>
+    <td><?= $markupVersion ?></td>
   </tr><tr>
-    <td align="right" valign="top"><b><?= $label['summary'] ?></b></td><td><?= $summary ?></td>
+    <td align="right" class="pageinfo"><?=_("Size:")?></td>
+    <td><?= $size ?></td>
+
+<?php if ($is_current) { ?>
   </tr><tr>
-    <td align="right"><?= $LOCKED_CB ?></td><td><b><?=_("Locked")?></b></td>
+    <td align="right" class="pageinfo"><?= _("Hits:") ?></td>
+    <td><?= $hits ?></td>
+<?php } ?>
+
+  </tr><tr>
+    <td align="right" valign="top" class="pageinfo"><?= $label['summary'] ?></td>
+    <td><?= $summary ?></td>
+
+<?php if ($is_current) { ?>
+  </tr><tr>
+    <td align="right"><?= $LOCKED_CB ?></td>
+    <td class="pageinfo"><?=_("Locked")?></td>
+<?php } ?>
+
   </tr>
 </table>
-
