@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.50 2004-09-06 08:25:01 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.51 2004-09-14 10:29:59 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,7 +87,7 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.50 $");
+        //                    "\$Revision: 1.51 $");
     }
 
     function getArgs($argstr, $request=false, $defaults = false) {
@@ -142,6 +142,11 @@ class WikiPlugin
     }
 
     function parseArgStr($argstr) {
+        $args = array();
+        $defaults = array();
+	if (empty($argstr))
+            return array($args,$defaults);
+            
         $arg_p = '\w+';
         $op_p = '(?:\|\|)?=';
         $word_p = '\S+';
@@ -152,18 +157,15 @@ class WikiPlugin
         $gt_p = "_\\( $opt_ws $qq_p $opt_ws \\)";
         $argspec_p = "($arg_p) $opt_ws ($op_p) $opt_ws (?: $qq_p|$q_p|$gt_p|($word_p))";
 
-        $args = array();
-        $defaults = array();
-	if (empty($argstr))
-            return array($args,$defaults);
-        // handle plugin-list seperately
-        $plugin_p = '<'.'\?plugin-list\s+\w+.*\?'.'>';
-        if (preg_match("/^($arg_p) $opt_ws ($op_p) $opt_ws ($plugin_p) $opt_ws/x", $argstr, $m)) {
+        // handle plugin-list arguments seperately
+        $plugin_p = '<!plugin-list\s+\w+.*?!>';
+        while (preg_match("/^($arg_p) $opt_ws ($op_p) $opt_ws ($plugin_p) $opt_ws/x", $argstr, $m)) {
             @ list(,$arg, $op, $plugin_val) = $m;
             $argstr = substr($argstr, strlen($m[0]));
             $loader = new WikiPluginLoader();
             $markup = null;
             $basepage = null;
+            $plugin_val = preg_replace(array("/^<!/","/!>$/"),array("<?","?>"),$plugin_val);
             $val = $loader->expandPI($plugin_val, $GLOBALS['request'], $markup, $basepage);
             if ($op == '=') {
                 $args[$arg] = $val; // comma delimited pagenames or array()?
