@@ -1,8 +1,20 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.16 2002-09-01 16:33:18 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.17 2002-09-15 03:56:22 dairiki Exp $');
 
 //FIXME: arg on get*Revision to hint that content is wanted.
 
+/**
+ * The classes in the file define the interface to the
+ * page database.
+ *
+ * @package WikiDB
+ * @author Geoffrey T. Dairiki <dairiki@dairiki.org>
+ */
+
+/**
+ * Force the creation of a new revision.
+ * @see WikiDB_Page::createRevision()
+ */
 define('WIKIDB_FORCE_CREATE', -1);
 
 // FIXME:  used for debugging only.  Comment out if cache does not work
@@ -39,7 +51,7 @@ class WikiDB {
      *
      * @access public
      *
-     * @param $dbparams hash Database configuration parameters.
+     * @param hash $dbparams Database configuration parameters.
      * Some pertinent paramters are:
      * <dl>
      * <dt> dbtype
@@ -75,7 +87,7 @@ class WikiDB {
      *      'gdbm' or 'db2'.
      * </dl>
      *
-     * @return object A WikiDB object.
+     * @return WikiDB A WikiDB object.
      **/
     function open ($dbparams) {
         $dbtype = $dbparams{'dbtype'};
@@ -87,8 +99,10 @@ class WikiDB {
 
 
     /**
-     * Constructor
-     * @access protected
+     * Constructor.
+     *
+     * @access private
+     * @see open()
      */
     function WikiDB ($backend, $dbparams) {
         $this->_backend = &$backend;
@@ -135,12 +149,12 @@ class WikiDB {
     /**
      * Get a WikiDB_Page from a WikiDB.
      *
-     * A WikiDB consists of the (infinite) set of all possible pages,
+     * A {@link WikiDB} consists of the (infinite) set of all possible pages,
      * therefore this method never fails.
      *
      * @access public
-     * @param $pagename string Which page to get.
-     * @return object The requested WikiDB_Page.
+     * @param string $pagename Which page to get.
+     * @return WikiDB_Page The requested WikiDB_Page.
      */
     function getPage($pagename) {
         assert(is_string($pagename) && $pagename);
@@ -170,7 +184,7 @@ class WikiDB {
      *
      * @access public
      *
-     * @param $pagename string Which page to check.
+     * @param string $pagename string Which page to check.
      *
      * @return boolean True if the page actually exists with
      * non-default contents in the WikiDataBase.
@@ -189,7 +203,7 @@ class WikiDB {
      *
      * @access public
      *
-     * @param $pagename string Name of page to delete.
+     * @param string $pagename Name of page to delete.
      */
     function deletePage($pagename) {
         $this->_cache->delete_page($pagename);
@@ -206,12 +220,12 @@ class WikiDB {
      *
      * @access public
      *
-     * @param $include_defaulted boolean Normally pages whose most
+     * @param boolean $include_defaulted Normally pages whose most
      * recent revision has empty content are considered to be
      * non-existant. Unless $include_defaulted is set to true, those
      * pages will not be returned.
      *
-     * @return object A WikiDB_PageIterator which contains all pages
+     * @return WikiDB_PageIterator A WikiDB_PageIterator which contains all pages
      *     in the WikiDB which have non-default contents.
      */
     function getAllPages($include_defaulted = false) {
@@ -231,8 +245,8 @@ class WikiDB {
      * FIXME: should titleSearch and fullSearch be combined?  I think so.
      *
      * @access public
-     * @param $search object A TextSearchQuery
-     * @return object A WikiDB_PageIterator containing the matching pages.
+     * @param TextSearchQuery $search A TextSearchQuery object
+     * @return WikiDB_PageIterator A WikiDB_PageIterator containing the matching pages.
      * @see TextSearchQuery
      */
     function titleSearch($search) {
@@ -252,8 +266,8 @@ class WikiDB {
      *
      * @access public
      *
-     * @param $search object A TextSearchQuery object.
-     * @return object A WikiDB_PageIterator containing the matching pages.
+     * @param TextSearchQuery $search A TextSearchQuery object.
+     * @return WikiDB_PageIterator A WikiDB_PageIterator containing the matching pages.
      * @see TextSearchQuery
      */
     function fullSearch($search) {
@@ -268,11 +282,11 @@ class WikiDB {
      *
      * @access public
      *
-     * @param $limit signed integer The maximum number of pages to return.
+     * @param integer $limit The maximum number of pages to return.
      * Set $limit to zero to return all pages.  If $limit < 0, pages will
-	 * be sorted in decreasing order of popularity.
+     * be sorted in decreasing order of popularity.
      *
-     * @return object A WikiDB_PageIterator containing the matching
+     * @return WikiDB_PageIterator A WikiDB_PageIterator containing the matching
      * pages.
      */
     function mostPopular($limit = 20) {
@@ -287,7 +301,7 @@ class WikiDB {
      *
      * @access public
      *
-     * @param $params hash This hash is used to specify various optional
+     * @param hash $params This hash is used to specify various optional
      *   parameters:
      * <dl>
      * <dt> limit 
@@ -305,7 +319,7 @@ class WikiDB {
      *         for each page.
      * </dl>
      *
-     * @return object A WikiDB_PageRevisionIterator containing the
+     * @return WikiDB_PageRevisionIterator A WikiDB_PageRevisionIterator containing the
      * matching revisions.
      */
     function mostRecent($params = false) {
@@ -325,9 +339,9 @@ class WikiDB {
      *
      * @access public
      *
-     * @param $order   string  'normal' (chronological) or 'reverse'
-     * @param $page    string  Find blog entries related to this page.
-     * @return object A WikiDB_PageIterator containing the relevant pages.
+     * @param string $order  'normal' (chronological) or 'reverse'
+     * @param string $page   Find blog entries related to this page.
+     * @return WikiDB_PageIterator A WikiDB_PageIterator containing the relevant pages.
      */
     function blogSearch($page, $order) {
       //FIXME: implement ordering
@@ -376,7 +390,7 @@ class WikiDB_Page
      *
      * @access public
      *
-     * @param $version integer Which revision to delete.  (You can also
+     * @param integer $version Which revision to delete.  (You can also
      *  use a WikiDB_PageRevision object here.)
      */
     function deleteRevision($version) {
@@ -475,25 +489,24 @@ class WikiDB_Page
 
     
     /**
-     * Create a new revision of a WikiDB_Page.
+     * Create a new revision of a {@link WikiDB_Page}.
      *
      * @access public
      *
-     * @param $content string Contents of new revision.
-     *
-     * @param $metadata hash Metadata for new revision.
-     * All values in the hash should be scalars (strings or integers).
-     *
-     *
-     * @param $version int Version number for new revision.  
+     * @param int $version Version number for new revision.  
      * To ensure proper serialization of edits, $version must be
      * exactly one higher than the current latest version.
      * (You can defeat this check by setting $version to
-     * WIKIDB_FORCE_CREATE --- not usually recommended.)
+     * {@link WIKIDB_FORCE_CREATE} --- not usually recommended.)
      *
-     * @param $links array List of pagenames which this page links to.
+     * @param string $content Contents of new revision.
      *
-     * @return object Returns the new WikiDB_PageRevision object. If
+     * @param hash $metadata Metadata for new revision.
+     * All values in the hash should be scalars (strings or integers).
+     *
+     * @param array $links List of pagenames which this page links to.
+     *
+     * @return WikiDB_PageRevision  Returns the new WikiDB_PageRevision object. If
      * $version was incorrect, returns false
      */
     function createRevision($version, &$content, $metadata, $links) {
@@ -570,7 +583,7 @@ class WikiDB_Page
      *
      * @access public
      *
-     * @return object The current WikiDB_PageRevision object. 
+     * @return WikiDB_PageRevision The current WikiDB_PageRevision object. 
      */
     function getCurrentRevision() {
         $backend = &$this->_wikidb->_backend;
@@ -590,10 +603,10 @@ class WikiDB_Page
      *
      * @access public
      *
-     * @param $version integer Which revision to get.
+     * @param integer $version  Which revision to get.
      *
-     * @return object The requested WikiDB_PageRevision object, or
-     * false if the requested revision does not exist in the WikiDB.
+     * @return WikiDB_PageRevision The requested WikiDB_PageRevision object, or
+     * false if the requested revision does not exist in the {@link WikiDB}.
      * Note that version zero of any page always exists.
      */
     function getRevision($version) {
@@ -619,11 +632,11 @@ class WikiDB_Page
      *
      * @access public
      *
-     * @param $version integer Find most recent revision before this version.
+     * @param integer $version  Find most recent revision before this version.
      *  You can also use a WikiDB_PageRevision object to specify the $version.
      *
-     * @return object The requested WikiDB_PageRevision object, or false if the
-     * requested revision does not exist in the WikiDB.  Note that
+     * @return WikiDB_PageRevision The requested WikiDB_PageRevision object, or false if the
+     * requested revision does not exist in the {@link WikiDB}.  Note that
      * unless $version is greater than zero, a revision (perhaps version zero,
      * the default revision) will always be found.
      */
@@ -649,9 +662,9 @@ class WikiDB_Page
      * This does not include the version zero (default) revision in the
      * returned revision set.
      *
-     * @return object a WikiDB_PageRevisionIterator containing all
-     * revisions of this WikiDB_Page in reverse order by version
-     * number.
+     * @return WikiDB_PageRevisionIterator A
+     * WikiDB_PageRevisionIterator containing all revisions of this
+     * WikiDB_Page in reverse order by version number.
      */
     function getAllRevisions() {
         $backend = &$this->_wikidb->_backend;
@@ -664,9 +677,10 @@ class WikiDB_Page
      *
      * @access public
      *
-     * @param $reversed enum Which links to find: true for backlinks (default).
+     * @param boolean $reversed Which links to find: true for backlinks (default).
      *
-     * @return object A WikiDB_PageIterator containing all matching pages.
+     * @return WikiDB_PageIterator A WikiDB_PageIterator containing
+     * all matching pages.
      */
     function getLinks($reversed = true) {
         $backend = &$this->_wikidb->_backend;
@@ -679,7 +693,7 @@ class WikiDB_Page
      *
      * @access public
      *
-     * @param $key string Which meta data to get.
+     * @param string $key Which meta data to get.
      * Some reserved meta-data keys are:
      * <dl>
      * <dt>'locked'<dd> Is page locked?
@@ -725,8 +739,8 @@ class WikiDB_Page
      * @see get
      * @access public
      *
-     * @param $key string Meta-data key to set.
-     * @param $newval string New value.
+     * @param string $key  Meta-data key to set.
+     * @param string $newval  New value.
      */
     function set($key, $newval) {
         $cache = &$this->_wikidb->_cache;
@@ -795,10 +809,10 @@ class WikiDB_Page
 
     /**
      * @access private
-     * @param $version_or_pagerevision int or object
+     * @param integer_or_object $version_or_pagerevision
      * Takes either the version number (and int) or a WikiDB_PageRevision
      * object.
-     * @return int The version number.
+     * @return integer The version number.
      */
     function _coerce_to_version($version_or_pagerevision) {
         if (method_exists($version_or_pagerevision, "getContent"))
@@ -844,7 +858,7 @@ class WikiDB_PageRevision
      *
      * @access public
      *
-     * @return object The WikiDB_Page which this revision belongs to.
+     * @return WikiDB_Page The WikiDB_Page which this revision belongs to.
      */
     function getPage() {
         return new WikiDB_Page($this->_wikidb, $this->_pagename);
@@ -855,7 +869,7 @@ class WikiDB_PageRevision
      *
      * @access public
      *
-     * @return int The version number of this revision.
+     * @return integer The version number of this revision.
      */
     function getVersion() {
         return $this->_version;
@@ -908,7 +922,7 @@ class WikiDB_PageRevision
      *
      * @access public
      *
-     * @return bool True iff the revision is the latest (most recent) one.
+     * @return boolean True iff the revision is the latest (most recent) one.
      */
     function isCurrent() {
         if (!isset($this->_iscurrent)) {
@@ -979,7 +993,7 @@ class WikiDB_PageRevision
      *
      * @access public
      *
-     * @param $key string Which meta-data to access.
+     * @param string $key Which meta-data to access.
      *
      * Some reserved revision meta-data keys are:
      * <dl>
@@ -1073,7 +1087,7 @@ class WikiDB_PageIterator
      *
      * @access public
      *
-     * @return object The next WikiDB_Page in the sequence.
+     * @return WikiDB_Page The next WikiDB_Page in the sequence.
      */
     function next () {
         if ( ! ($next = $this->_pages->next()) )
@@ -1148,7 +1162,8 @@ class WikiDB_PageRevisionIterator
      *
      * @access public
      *
-     * @return object The next WikiDB_PageRevision in the sequence.
+     * @return WikiDB_PageRevision
+     * The next WikiDB_PageRevision in the sequence.
      */
     function next () {
         if ( ! ($next = $this->_revisions->next()) )
@@ -1190,7 +1205,7 @@ class WikiDB_PageRevisionIterator
  *
  * FIXME: Maybe rename this to caching_backend (or some such).
  *
- * @access protected
+ * @access private
  */
 class WikiDB_cache 
 {
