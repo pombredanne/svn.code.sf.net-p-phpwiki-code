@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.30 2004-04-18 03:36:01 rurban Exp $
+ * $Id: phpwiki.css,v 1.31 2004-05-03 20:46:51 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -787,6 +787,21 @@ div.rss { margin: 1em; padding: 1em; font-size: 0.9em; background-color: #eeeeee
 div.feed { color: #333; margin: -0.5em; margin-bottom: 0em; padding: 0.3em; font-weight: bold; background-color: #f2f2f2; font-size: 1.2em; }
 div.itemdesc {  padding-left: 1em; }
 div.rssitem { border-top: thin dashed #aaa; }
+
+/* SqlResult */
+table.sqlresult { 
+  border: 1px outset gray;
+  background: white;
+  margin: 0.5ex 0.5em;
+  padding: 1px;
+}
+.sqlresult tr.evenrow { background: #eee; }
+.sqlresult tr.oddrow  { background: white; }
+table.sqlresult td {
+  margin: 1px;
+  border: 1px solid gray;
+}
+
 
 /* For emacs users
  *
