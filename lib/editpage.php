@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.86 2004-12-11 14:50:15 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.87 2004-12-16 18:28:05 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -796,7 +796,6 @@ function undo_save() {
         $this->_currentVersion = $current->getVersion();
         $this->_content = $selected->getPackedContent();
 
-        $this->meta['summary'] = '';
         $this->locked = $this->page->get('locked');
 
         // If author same as previous author, default minor_edit to on.
@@ -813,6 +812,10 @@ function undo_save() {
 
         $this->meta['markup'] = $is_new_markup ? 2.0: false;
         $this->meta['pagetype'] = $selected->get('pagetype');
+        if ($this->meta['pagetype'] == 'wikiblog')
+            $this->meta['summary'] = $selected->get('summary'); // keep blog title
+        else
+            $this->meta['summary'] = '';
         $this->editaction = 'edit';
     }
 }
@@ -904,6 +907,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.86  2004/12/11 14:50:15  rurban
+ new edit_convert button, to get rid of old markup eventually
+
  Revision 1.85  2004/12/06 19:49:56  rurban
  enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
  renamed delete_page to purge_page.
