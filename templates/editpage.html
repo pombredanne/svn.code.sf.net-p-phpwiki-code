@@ -4,7 +4,7 @@
 <html>
 <head>
 <!-- phpwiki source:
-$Id: editpage.html,v 1.43 2002-01-10 23:16:01 rurban Exp $
+$Id: editpage.html,v 1.44 2002-01-11 00:07:49 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <base href="${BASE_URL}" />
@@ -30,12 +30,13 @@ ${EDIT_WARNINGS}
  * a redirect from a page to itself.)
  * I would rather prefer ${ACTION}edit --ReiniUrban
  */ ?>
-
+<?php //<textarea wrap="virtual"> is not valid xhtml but Netscape 4 requires it to wrap long lines. ?>
 <form method="post" action="${BROWSE}EditPage" accept-charset="${CHARSET}">
 <textarea class="wikiedit"
           name="content"
           rows="${EDIT_AREA_HEIGHT}"
-          cols="${EDIT_AREA_WIDTH}">$FORMVARS[content]</textarea>
+          cols="${EDIT_AREA_WIDTH}"
+          wrap="virtual">$FORMVARS[content]</textarea>
 
 <div class="toolbar" style="text-align: center;">
   $_("Summary:")<input type="text" class="wikitext"
