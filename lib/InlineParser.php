@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.10 2002-02-08 05:44:54 dairiki Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.11 2002-09-16 18:51:41 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -17,6 +17,16 @@
  * along with PhpWiki; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+/**
+ * This is the code which deals with the inline part of the (new-style)
+ * wiki-markup.
+ *
+ * @package Markup
+ * @author Geoffrey T. Dairiki
+ */
+/**
+ */
+
 require_once('lib/HtmlElement.php');
 require_once('lib/interwiki.php');
 
@@ -59,10 +69,10 @@ class RegexpSet
 {
     /** Constructor
      *
-     * @param $regexps array A list of regular expressions.  The
+     * @param array $regexps A list of regular expressions.  The
      * regular expressions should not include any sub-pattern groups
      * "(...)".  (Anonymous groups, like "(?:...)", as well as
-     * look-ahead and look-behind assertions are fine.)
+     * look-ahead and look-behind assertions are okay.)
      */
     function RegexpSet ($regexps) {
         $this->_regexps = $regexps;
@@ -71,9 +81,9 @@ class RegexpSet
     /**
      * Search text for the next matching regexp from the Regexp Set.
      *
-     * @param $text string The text to search.
+     * @param string $text The text to search.
      *
-     * @return object  A RegexpSet_match object, or false if no match.
+     * @return RegexpSet_match  A RegexpSet_match object, or false if no match.
      */
     function match ($text) {
         return $this->_match($text, $this->_regexps, '*?');
@@ -89,14 +99,13 @@ class RegexpSet
      * If that fails, match the whole RegexpSet, starting after the position of the
      * previous match.
      *
-     * @param $text string Text to search.
+     * @param string $text Text to search.
      *
-     * @param $prevMatch A RegexpSet_match object
-     *
+     * @param RegexpSet_match $prevMatch A RegexpSet_match object.
      * $prevMatch should be a match object obtained by a previous
      * match upon the same value of $text.
      *
-     * @return object  A RegexpSet_match object, or false if no match.
+     * @return RegexpSet_match A RegexpSet_match object, or false if no match.
      */
     function nextMatch ($text, $prevMatch) {
         // Try to find match at same position.
@@ -168,7 +177,7 @@ class SimpleMarkup
 
     /** Markup matching text.
      *
-     * @param $match string The text which matched the regexp
+     * @param string $match The text which matched the regexp
      * (obtained from getMatchRegexp).
      *
      * @return mixed The expansion of the matched text.
@@ -197,7 +206,7 @@ class BalancedMarkup
     
     /** Get the ending regexp for this rule.
      *
-     * @param $match string  The text which matched the starting regexp.
+     * @param string $match The text which matched the starting regexp.
      *
      * @return string The ending regexp.
      */
@@ -207,9 +216,9 @@ class BalancedMarkup
 
     /** Get expansion for matching input.
      *
-     * @param $match string  The text which matched the starting regexp.
+     * @param string $match The text which matched the starting regexp.
      *
-     * @param $body mixed Transformed text found between the starting
+     * @param mixed $body Transformed text found between the starting
      * and ending regexps.
      *
      * @return mixed The expansion of the matched text.
@@ -326,7 +335,8 @@ class Markup_nestled_emphasis extends BalancedMarkup
 class Markup_html_emphasis extends BalancedMarkup
 {
     var $_start_regexp = "<(?: b|big|i|small|tt|
-                               abbr|acronym|cite|code|dfn|kbd|samp|strong|var|
+                               em|strong|
+                               abbr|acronym|cite|code|dfn|kbd|samp|var|
                                sup|sub )>";
 
     function getEndRegexp ($match) {
