@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.31 2003-03-04 01:49:27 dairiki Exp $');
+rcs_id('$Id: PearDB.php,v 1.32 2003-03-04 05:33:00 dairiki Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -66,7 +66,6 @@ extends WikiDB_backend
         $this->unlock('force');
 
         $this->_dbh->disconnect();
-        $this->_dbh = false;
     }
 
 

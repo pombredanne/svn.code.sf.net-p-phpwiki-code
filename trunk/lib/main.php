@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.97 2003-02-26 03:40:22 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.98 2003-03-04 05:33:00 dairiki Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -9,18 +9,15 @@ require_once('lib/Request.php');
 require_once("lib/WikiUser.php");
 require_once('lib/WikiDB.php');
 
-if (USE_DB_SESSION) {
-    include_once('lib/DB_Session.php');
-}
-
 class WikiRequest extends Request {
     // var $_dbi;
 
     function WikiRequest () {
         if (USE_DB_SESSION) {
+            include_once('lib/DB_Session.php');
             $this->_dbi = $this->getDbh();
-            new DB_Session($this->_dbi->_backend->_dbh,
-                           $GLOBALS['DBParams']['db_session_table']);
+            $this->_dbsession = & new DB_Session($this->_dbi,
+                                                 $GLOBALS['DBParams']['db_session_table']);
         }
         
         $this->Request();
