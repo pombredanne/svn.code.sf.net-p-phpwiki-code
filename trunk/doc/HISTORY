@@ -1,23 +1,26 @@
 1.3.8 Jan-Mar 2004, Reini Urban:
 
 * new WikiUserNew class (after a kick in the ass by Carsten Klapp), 
-  (recursive) with new Preferences (finally from DB), and
-  improved DB_Session (+ ADODB support)
-* individual PagePermissions (not yet enforced)
-* fixed WikiAdminSelect, WikiAdminRemove
+  with new Preferences (finally from DB), and improved DB_Session (+ ADODB support)
+* changed cookie policy: only WIKI_ID stored as string, older pref cookies deleted.
+  They should be stored in the users homepage or in a db.
+* individual PagePermissions (enabled, but not yet enforced)
+* enabled WikiGroup
 * new WikiAdminRename, WikiAdminSearchReplace, WikiAdminSetAcl
 * several other new plugins: WikiPoll, WhoIsOnline, UpLoad, 
-  RichTable, CreateToc
-* pear DB update
+  RichTable, CreateToc, AddComment, _WikiTranslation, TranslateText
+* pear DB update, pear DB query simplification as in ADODB.
 * InterWiki image buttons
-* fixed XHTML dumps (css, images, unlinked pages, \r\r\n issue)
-* enabled WikiGroup
-* PageList: enhanced sortby + limit support, sortable gridbuttons enforced
-* preliminary SOAP support
-* minor theme/default overhaul and new theme/smaller
+* PageList + WikiDB: enhanced sortby + limit support, sortable gridbuttons enforced
+* preliminary SOAP support (only nusoap, no soap extension yet)
 * Japanese language support added, thanks to Tadashi Jokagi <webmaster@elf.no-ip.org>
+* minor theme/default overhaul and new theme/smaller
+* fixed WikiAdminSelect, WikiAdminRemove
 * fixed UnfoldSubpages sortby
-* preliminary action=upgrade
+* fixed XHTML dumps (css, images, unlinked pages, \r\r\n issue)
+* preliminary experimental action=upgrade
+* experimental PearDB sqlite support
+* started work for php5 fixes (XmlElement problems)
 
 1.3.4 until 1.3.7, 2002-2003 Jeff, Carsten and Steve Wainstead:
 
@@ -379,4 +382,4 @@ URL's.
 Prior to 0.02, there were no numbered releases, and in fact there
 was only one release, so I guess that would be 0.01 :-)
 
-$Id: HISTORY,v 1.6 2004-03-12 16:06:16 rurban Exp $
+$Id: HISTORY,v 1.7 2004-03-20 17:02:19 rurban Exp $
