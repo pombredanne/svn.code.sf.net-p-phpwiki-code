@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.47 2001-12-11 22:41:39 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.48 2001-12-17 02:08:58 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -130,7 +130,7 @@ if (setlocale(LC_CTYPE, 0) == 'C')
 function pcre_fix_posix_classes ($regexp) {
     // First check to see if our PCRE lib supports POSIX character
     // classes.  If it does, there's nothing to do.
-    if (preg_match('/[[:upper:]]/', 'A'))
+    if (preg_match('/[[:upper:]]/', 'Ä'))
         return $regexp;
 
     static $classes = array(
