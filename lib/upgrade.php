@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.46 2005-02-12 17:22:18 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.47 2005-02-27 19:13:27 rurban Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -548,11 +548,13 @@ function CheckDatabaseUpdate(&$request) {
                 echo _("OK"), "<br />\n";
             } else {
                 //SET CHARACTER SET latin1
+                $charset = CHARSET;
+                if ($charset == 'iso-8859-1') $charset = 'latin1';
                 $dbh->genericSqlQuery("ALTER TABLE $page_tbl CHANGE pagename "
-                                      ."pagename VARCHAR(100) CHARACTER SET ".CHARSET
-                                      ." COLLATE ".CHARSET."_bin NOT NULL");
+                                      ."pagename VARCHAR(100) "
+                                      ."CHARACTER SET '$charset' COLLATE '$charset"."_bin' NOT NULL");
                 echo sprintf(_("version <em>%s</em>"), $mysql_version), 
-                    "<b>",_("FIXED"),"</b>",
+                    " <b>",_("FIXED"),"</b>",
                     "<br />\n";
             }
         } elseif ($DBParams['dbtype'] != 'PDO') {
@@ -882,6 +884,10 @@ function DoUpgrade($request) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.46  2005/02/12 17:22:18  rurban
+ locale update: missing . : fixed. unified strings
+ proper linebreaks
+
  Revision 1.45  2005/02/10 19:01:19  rurban
  add PDO support
 
