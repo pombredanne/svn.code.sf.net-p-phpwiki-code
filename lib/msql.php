@@ -1,4 +1,4 @@
-<!-- $Id: msql.php,v 1.6 2001-02-01 04:24:26 wainstead Exp $ -->
+<!-- $Id: msql.php,v 1.6.2.1 2001-08-18 00:34:27 dairiki Exp $ -->
 <?php
 
    /*
@@ -15,6 +15,9 @@
       TitleSearchNextMatch($dbi, &$pos)
       InitFullSearch($dbi, $search)
       FullSearchNextMatch($dbi, &$pos)
+      MakeBackLinkSearchRegexp($pagename)
+      InitBackLinkSearch($dbi, $pagename) 
+      BackLinkSearchNextMatch($dbi, &$pos) 
       GetAllWikiPageNames($dbi)
    */
 
@@ -388,6 +391,67 @@
    ////////////////////////
    // new database features
 
+   // Compute PCRE suitable for searching for links to the given page.
+   function MakeBackLinkSearchRegexp($pagename) {
+      global $WikiNameRegexp;
+
+      // Note that in (at least some) PHP 3.x's, preg_quote only takes
+      // (at most) one argument.  Also it doesn't quote '/'s.
+      // It does quote '='s, so we'll use that for the delimeter.
+      $quoted_pagename = preg_quote($pagename);
+      if (preg_match("/^$WikiNameRegexp\$/", $pagename)) {
+	 # FIXME: This may need modification for non-standard (non-english) $WikiNameRegexp.
+	 return "=(?<![A-Za-z0-9!])$quoted_pagename(?![A-Za-z0-9])=";
+      }
+      else {
+	 // Note from author: Sorry. :-/
+	 return ( '='
+		  . '(?<!\[)\[(?!\[)' // Single, isolated '['
+		  . '([^]|]*\|)?'     // Optional stuff followed by '|'
+	          . '\s*'             // Optional space
+		  . $quoted_pagename  // Pagename
+		  . '\s*\]=' );	      // Optional space, followed by ']'
+	 // FIXME: the above regexp is still not quite right.
+	 // Consider the text: " [ [ test page ]".  This is a link to a page
+	 // named '[ test page'.  The above regexp will recognize this
+	 // as a link either to '[ test page' (good) or to 'test page' (wrong).
+      } 
+   }
+
+   // setup for back-link search
+   function InitBackLinkSearch($dbi, $pagename) {
+      global $WikiLinksStore;
+     
+      $topage = addslashes($pagename);
+
+      // FIXME: this is buggy.  If a [multiword link] is split accross
+      // multiple lines int the page_table, we wont find it.
+      // (Probably the best fix is to implement the link table, and use it.)
+      $res['regexp'] = MakeBackLinkSearchRegexp($pagename);
+      $res['res'] = msql_query( "SELECT pagename, line FROM $dbi[page_table]"
+				. " WHERE line LIKE '%$topage%'"
+				. " ORDER BY pagename",
+				$dbi["dbc"]);
+      $res['lastpage'] = '';
+      
+      return $res;
+   }
+
+
+   // iterating through database
+   function BackLinkSearchNextMatch($dbi, $res) {
+      while (true) {
+	 if ( ! ($o = msql_fetch_object($res['res']))) {
+	    return 0;
+	 }
+	 if ( $res['lastpage'] == $o->pagename )
+	    continue;
+	 if ( ! preg_match($res['regexp'], $a->line) )
+	    continue;
+	 $res['lastpage'] = $o->pagename;
+	 return $o->pagename;
+      }
+   }
 
    function IncreaseHitCount($dbi, $pagename) {
 
