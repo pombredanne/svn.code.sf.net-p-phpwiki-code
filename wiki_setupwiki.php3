@@ -1,4 +1,4 @@
-<!-- $Id: wiki_setupwiki.php3,v 1.12 2000-08-01 18:57:38 dairiki Exp $ -->
+<!-- $Id: wiki_setupwiki.php3,v 1.13 2000-08-03 19:41:18 dairiki Exp $ -->
 <?
 require 'wiki_ziplib.php3';
 
@@ -23,15 +23,17 @@ function SavePage ($dbi, $page, $source)
   InsertPage($dbi, $pagename, $page);
 }
       
-function LoadFile ($dbi, $filename, $text)
+function LoadFile ($dbi, $filename, $text, $mtime)
 {
   set_time_limit(30);	// Reset watchdog.
-  $now = time();
+  if (!$mtime)
+      $mtime = time();	// Last resort.
+
   $defaults = array('author' => 'The PhpWiki programming team',
 		    'pagename' => rawurldecode($filename),
-		    'created' => $now,
+		    'created' => $mtime,
 		    'flags' => 0,
-		    'lastmodified' => $now,
+		    'lastmodified' => $mtime,
 		    'refs' => array(),
 		    'version' => 1);
   
@@ -74,7 +76,7 @@ function LoadZipOrDir ($dbi, $zip_or_dir)
     {
       $zip = new ZipReader($zip_or_dir);
       while (list ($fn, $data, $attrib) = $zip->readFile())
-	  LoadFile($dbi, $fn, $data);
+	  LoadFile($dbi, $fn, $data, $attrib['mtime']);
     }
   else if ($type == 'dir')
     {
@@ -85,7 +87,9 @@ function LoadZipOrDir ($dbi, $zip_or_dir)
 	{
 	  if (filetype("$dir/$fn") != 'file')
 	      continue;
-	  LoadFile($dbi, $fn, implode("", file("$dir/$fn")));
+	  $stat = stat("$dir/$fn");
+	  $mtime = $stat[9];
+	  LoadFile($dbi, $fn, implode("", file("$dir/$fn")), $mtime);
 	}
       closedir($handle); 
     }
