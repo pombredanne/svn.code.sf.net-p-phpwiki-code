@@ -1,13 +1,22 @@
 Date: Mon, 12 Apr 2004 17:28:55 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.9)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.22 2004-04-12 17:42:02 rurban Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.23 2004-04-21 04:26:47 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.22 $";
+  pgsrc_version="2 $Revision: 1.23 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
+
+1.3.10 ??.Apr 2004, Reini Urban:
+
+fixes:
+* 
+changes: 
+* PageChangeNotification: userids, not emails are printed
+new:
+* GoogleLink pref
 
 1.3.9 12.Apr 2004, Reini Urban:
 
