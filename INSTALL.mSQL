@@ -1,0 +1,49 @@
+mSQL support is new (as of 1.1.6) and is fairly stable.
+
+Setting up mSQL is beyond the scope of this document. See
+http://www.hughes.com.au/ for information on downloading and
+instructions.
+
+Create the database. You might need system privledges to do this:
+
+[root@localhost phpwiki]# msqladmin create wiki
+Database "wiki" created.
+[root@localhost phpwiki]# 
+
+Load the database schema:
+
+[swain@localhost phpwiki]$ msql wiki < schemas/schema.minisql 
+
+You will see a few error messages like this: 
+
+mSQL >     -> 
+
+ERROR : Unknown table "wiki"
+
+This is normal because the schema file drops the table and then
+creates it... dropping a nonexistent table is a nonfatal error and you
+don't have to worry about it. You should see a lot of these:
+
+mSQL >     ->     -> 
+Query OK.  1 row(s) modified or retrieved.
+
+
+
+
+mSQL >     -> 
+Bye!
+
+[swain@localhost phpwiki]$ 
+
+
+Now the database is created; edit wiki_config.php3 and comment out the
+DBM file settings. Uncomment the mSQL settings, making sure the values
+are correct.
+
+That should be all! Try accessing your Wiki now. Read INSTALL and
+README for more information, plus the comments in wiki_config.php3.
+
+--Steve Wainstead
+swain@panix.com
+
+$Id: INSTALL.mSQL,v 1.1 2000-07-15 20:53:00 wainstead Exp $
