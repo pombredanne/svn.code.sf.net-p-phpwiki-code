@@ -1,0 +1,35 @@
+<!-- -*-html-*- -->
+<!-- $Id: viewsource.tmpl,v 1.1 2002-01-20 02:49:03 carstenklapp Exp $ -->
+<p><strong><?=_("Note:")?></strong>
+<?=_("This page has been locked by the administrator and cannot be edited.")?>
+<?php if (! $IS_CURRENT) { ?>
+  <br /><?=_("You are viewing an old revision of this page.")?>
+  <?= $ButtonFactory->makeActionButton('edit', _("View the current version"), $page->getCurrentRevision())?>.
+<?php } ?>
+</p>
+<!-- Dummy form else NS4 doesn't like the textarea -->
+<form method="post" action="<?= WikiUrl($PAGE) ?>" accept-charset="<?=CHARSET?>">
+<!-- wrap=virtual is not HTML4, but without it NS4 doesn't wrap long lines -->
+<textarea class="wikiedit"
+          name="content"
+          rows="<?=$EDIT_AREA_HEIGHT?>"
+          cols="<?=$EDIT_AREA_WIDTH?>"
+	  readonly="readonly"
+          wrap="virtual"><?= $FORMVARS['content'] ?></textarea>
+<?php
+  $mtime = $Theme->formatDateTime($revision->get('mtime'));
+  $PageHistoryB = $ButtonFactory->makeLabelActionPageButton($mtime, _("PageHistory"));
+
+  if ($IS_CURRENT)
+      $LastModifiedMsg = sprintf(_("(last edited %s)"), $PageHistoryB->asHTML());
+  else
+      $LastModifiedMsg = __sprintf(_("(version %s, saved on %s)"),
+                                   $VERSION, $PageHistoryB->asHTML());
+
+?>
+<input type="hidden" name="action" value="browse" />
+<input type="hidden" name="pagename" value="<?=$FORMVARS['pagename']?>" />
+<input type="hidden" name="version" value="<?=$FORMVARS['version']?>" />
+</form>
+<hr />
+<?= $LastModifiedMsg ?><br />
