@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.47 2002-01-30 23:41:54 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.48 2002-01-31 03:18:42 dairiki Exp $');
 /**
  */
 
@@ -12,8 +12,8 @@ class _RecentChanges_Formatter
         $this->_args = $rc_args;
         $this->_diffargs = array('action' => 'diff');
 
-	if ($rc_args['show_major'] && !$rc_args['show_minor'])
-            $this->_diffargs['previous'] = 'major';
+	if ($rc_args['show_minor'] || !$rc_args['show_major'])
+            $this->_diffargs['previous'] = 'minor';
     }
 
     function include_versions_in_URLs() {

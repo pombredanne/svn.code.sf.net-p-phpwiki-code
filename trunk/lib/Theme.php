@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.26 2002-01-30 23:41:54 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.27 2002-01-31 03:18:42 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -92,7 +92,7 @@ function WikiLink ($page_or_rev, $type = false, $label = false) {
  * <dt>'submit:'[name]</dt><dd>Make a form submission button with the given name.
  *      ([name] can be blank for a nameless submit button.)</dd>
  * <dt>a hash</dt><dd>Query args for the action. E.g.<pre>
- *      array('action' => 'diff', 'previous' => 'major')
+ *      array('action' => 'diff', 'previous' => 'author')
  * </pre></dd>
  * </dl>
  *
