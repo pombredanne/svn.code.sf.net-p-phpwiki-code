@@ -1,4 +1,4 @@
-$Id: README,v 1.2 2000-10-08 18:12:14 wainstead Exp $
+$Id: README,v 1.3 2000-11-08 16:19:01 ahollosi Exp $
 
 PhpWiki distinguishes between four different templates:
 
@@ -46,6 +46,39 @@ Following placeholders are provided by PhpWiki:
 	Default: http|https|mailto|ftp|news|gopher
 
 
+Conditional placeholders:
+
+Placeholders that test a condition and depending on it include/omit
+certain HTML. These placeholders may be nested. The general syntax
+looks like this:
+
+Line by line:
+###IF xxx###
+	If condition 'xxx' is false, this line is omitted.
+###IF !xxx###
+	If condition 'xxx' is true, this line is omitted.
+Block:
+###IF:xxx### .... ###ENDIF:xxx###
+	If condition 'xxx' is false, then everything between the start
+	and end placeholder is omitted.
+###IF:!xxx### .... ###ENDIF:!xxx###
+	If condition 'xxx' is true, then everything between the start
+        and end placeholder is omitted.
+
+Conditions to test:
+
+COPY    If page has a copy in the archive. Usually used to display/omit
+	the EditCopy link in the editpage template.
+
+ADMIN	If the current user is an admin. Used in e.g. browse template
+	to display admin buttons at the top.
+
+LOCK	If current page is locked and thus cannot be edited.
+
+For examples see browse.html and editpage.html
+
+
+
 The following placeholders are not available for the 'MESSAGE' template:
 
 ###PAGEURL###
@@ -63,13 +96,9 @@ The following placeholders are not available for the 'MESSAGE' template:
 	Note: this is also used for detecting concurrent updates to a page.
 	See hidden input field in EDITPAGE template for how to use it.
 
-###IFCOPY###
-	Special placeholder. Should only be used in EDITPAGE template.
-	If EditCopy link should be shown, then ###IFCOPY### is ignored.
-	If EditCopy should not be shown, the rest of the line is deleted.
-
 
 Only for EditLinks:
+
 ###1###, ###2###, ....
 	Placeholder for references. Up to NUM_LINKS placeholders will be
 	substituted. NUM_LINKS is defined in lib/config.php
@@ -83,4 +112,4 @@ Examples:
 <A HREF="###SCRIPTURL###?FindPage">the FindPage page</A>
 <head><title>PhpWiki Page: ###PAGE###</title></head>
 
-see default templates for more examples.
+See the default templates for more examples.
