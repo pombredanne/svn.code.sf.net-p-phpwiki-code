@@ -1,4 +1,4 @@
-<!-- $Id: pgsql.php,v 1.4 2000-11-02 04:23:59 wainstead Exp $ -->
+<!-- $Id: pgsql.php,v 1.5 2001-02-12 01:43:10 dairiki Exp $ -->
 <?php
 
    /*
@@ -24,17 +24,30 @@
       SetWikiPageLinks($dbi, $pagename, $linklist)
    */
 
+$WikiPageStore = $DBParams['prefix'] . "wiki";
+$ArchivePageStore = $DBParams['prefix'] . "archive";
+$WikiLinksPageStore = $DBParams['prefix'] . "wikilinks";
+$HotTopicsPageStore = $DBParams['prefix'] . "hottopics";
+$HitCountPageStore = $DBParams['prefix'] . "hitcount";
 
    // open a database and return a hash
 
    function OpenDataBase($table) {
-      global $WikiDataBase, $pg_dbhost, $pg_dbport;
+      extract($GLOBALS['DBParams']);
+      
+      $args = array();
+      if (!empty($server))
+	 $args[] = "host=$server";
+      if (!empty($port))
+	 $args[] = "port=$port";
+      if (!empty($database))
+	 $args[] = "dbname=$database";
+      if (!empty($user))
+	 $args[] = "user=$user";
+      if (!empty($password))
+	 $args[] = "password=$password";
 
-      $connectstring = $pg_dbhost?"host=$pg_dbhost ":"";
-	 $connectstring .= $pg_dbport?"port=$pg_dbport ":"";
-	 $connectstring .= $WikiDataBase?"dbname=$WikiDataBase":"";
-
-      if (!($dbc = pg_pconnect($connectstring))) {
+      if (!($dbc = pg_pconnect(join(' ', $args)))) {
          echo "Cannot establish connection to database, giving up.";
          exit();
       }
@@ -418,5 +431,9 @@
 
    }
 
-
+// For emacs users
+// Local Variables:
+// mode: php
+// c-file-style: "ellemtel"
+// End:   
 ?>

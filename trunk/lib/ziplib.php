@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: ziplib.php,v 1.5 2001-02-10 22:15:08 dairiki Exp $');
+rcs_id('$Id: ziplib.php,v 1.6 2001-02-12 01:43:10 dairiki Exp $');
 
 //FIXME: get rid of this.
 function warn ($msg)
@@ -357,7 +357,9 @@ class ZipWriter
 class ZipReader
 {
   function ZipReader ($zipfile) {
-    if (!($this->fp = fopen($zipfile, "rb")))
+    if (!is_string($zipfile))
+	$this->fp = $zipfile;	// File already open
+    else if (!($this->fp = fopen($zipfile, "rb")))
 	die("Can't open zip file '$zipfile' for reading");
   }
 
@@ -523,7 +525,7 @@ function MimeifyPage ($pagehash) {
   if (($flags & FLAG_PAGE_LOCKED) != 0)
       $params['flags'] = 'PAGE_LOCKED';
 
-  if (is_array($refs))
+  if (isset($refs) && is_array($refs))
     {
       // phpwiki's with versions > 1.2.x shouldn't have references.
       for ($i = 1; $i <= 12 /*NUM_LINKS*/; $i++) 
@@ -695,14 +697,21 @@ function ParseMimeifiedPages ($data)
     }
 
   // FIXME: more sanity checking?
-  $pagehash = array('pagename' => rawurldecode($params['pagename']),
-		    'author' => rawurldecode($params['author']),
-		    'version' => $params['version'],
-		    'lastmodified' => $params['lastmodified'],
-		    'created' => $params['created']);
+  $pagehash = array('pagename' => '',
+		    'author' => '',
+		    'version' => 0,
+		    'lastmodified' => '',
+		    'created' => '');
+  while(list($key, $val) = each ($pagehash))
+      if (!empty($params[$key]))
+	  $pagehash[$key] = rawurldecode($params[$key]);
+
   $pagehash['flags'] = 0;
-  if (preg_match('/PAGE_LOCKED/', $params['flags']))
-      $pagehash['flags'] |= FLAG_PAGE_LOCKED;
+  if (!empty($params['flags']))
+    {
+      if (preg_match('/PAGE_LOCKED/', $params['flags']))
+	  $pagehash['flags'] |= FLAG_PAGE_LOCKED;
+    }
 
   $encoding = strtolower($headers['content-transfer-encoding']);
   if ($encoding == 'quoted-printable')

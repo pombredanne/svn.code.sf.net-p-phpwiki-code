@@ -1,6 +1,6 @@
 <?php  
 
-   rcs_id('$Id: dbalib.php,v 1.2 2001-01-31 02:01:27 wainstead Exp $');
+   rcs_id('$Id: dbalib.php,v 1.3 2001-02-12 01:43:10 dairiki Exp $');
 
    /*
       Database functions:
@@ -26,6 +26,26 @@
    */
 
 
+// Initialize our globals:
+function _dbname($base)
+{
+  extract($GLOBALS['DBParams']);
+  return "$directory/${database}${prefix}${base}";
+}
+
+$WikiPageStore = "wiki";
+$ArchivePageStore = "archive";
+$WikiDB = array('wiki'		=> _dbname('pagesdb'),
+		'archive'	=> _dbname('archivedb'),
+		'wikilinks'	=> _dbname('linksdb'),
+		'hottopics'	=> _dbname('hottopicsdb'),
+		'hitcount'	=> _dbname('hitcountdb'));
+
+if (preg_match('@%/tmp\b@', $DBParams['directory']))
+   $DBWarning = "DBA files are in the /tmp directory.";
+
+define('MAX_DBM_ATTEMPTS', $DBParams['timeout']);
+   
    // open a database and return the handle
    // loop until we get a handle; php has its own
    // locking mechanism, thank god.
@@ -75,8 +95,6 @@
       return chop($data);
    }
 
-
-
    // Return hash of page + attributes or default
    function RetrievePage($dbi, $pagename, $pagestore) {
       if ($data = dba_fetch($pagename, $dbi[$pagestore])) {
@@ -87,7 +105,6 @@
          return -1;
       }
    }
-
 
    // Either insert or replace a key/value (a page)
    function InsertPage($dbi, $pagename, $pagehash) {
@@ -254,4 +271,9 @@
       return $namelist;
    }
 
+// For emacs users
+// Local Variables:
+// mode: php
+// c-file-style: "ellemtel"
+// End:   
 ?>

@@ -1,4 +1,4 @@
-<!-- $Id: pageinfo.php,v 1.6 2001-02-10 22:15:08 dairiki Exp $ -->
+<!-- $Id: pageinfo.php,v 1.7 2001-02-12 01:43:10 dairiki Exp $ -->
 <!-- Display the internal structure of a page. Steve Wainstead, June 2000 -->
 <?php
 
@@ -57,5 +57,6 @@ $html .= ViewPageProps($pagename, $WikiPageStore);
 $html .= Element('p', QElement('b', gettext ("Archived version")));
 $html .= ViewPageProps($pagename, $ArchivePageStore);
 
-GeneratePage('MESSAGE', $html, gettext("PageInfo").": '$pagename'", 0);
+echo GeneratePage('MESSAGE', $html,
+		  gettext("PageInfo").": '$pagename'", 0);
 ?>

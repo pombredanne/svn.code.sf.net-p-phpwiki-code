@@ -1,6 +1,6 @@
 <?php
    // Title search: returns pages having a name matching the search term
-   rcs_id('$Id: search.php,v 1.4 2001-02-10 22:15:08 dairiki Exp $');
+   rcs_id('$Id: search.php,v 1.5 2001-02-12 01:43:10 dairiki Exp $');
 
    if (empty($searchterm))
       $searchterm = '';		// FIXME: do something better here?
@@ -27,5 +27,5 @@
 	    . sprintf(gettext ("%d pages match your query."), $found)
 	    . "\n";
 
-   GeneratePage('MESSAGE', $html, gettext ("Title Search Results"), 0);
+   echo GeneratePage('MESSAGE', $html, gettext ("Title Search Results"), 0);
 ?>

@@ -1,7 +1,7 @@
 <?php
    // display.php: fetch page or get default content
    // calls transform.php for actual transformation of wiki markup to HTML
-   rcs_id('$Id: display.php,v 1.7 2001-02-10 22:15:08 dairiki Exp $');
+   rcs_id('$Id: display.php,v 1.8 2001-02-12 01:43:10 dairiki Exp $');
  
    $html = "";
 
@@ -16,8 +16,13 @@
 		       LinkUnknownWikiWord($pagename));
    }
 
-   GeneratePage('BROWSE', $html, $pagename, $pagehash);
+   echo GeneratePage('BROWSE', $html, $pagename, $pagehash);
    flush();
 
    IncreaseHitCount($dbi, $pagename);
+// For emacs users
+// Local Variables:
+// mode: php
+// c-file-style: "ellemtel"
+// End:   
 ?>

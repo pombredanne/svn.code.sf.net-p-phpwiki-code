@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.10 2001-02-10 22:15:08 dairiki Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.11 2001-02-12 01:43:10 dairiki Exp $');
 
 /*
    All page saving events take place here.
@@ -101,8 +101,8 @@
       $html .= gettext ("Sorry for the inconvenience.");
       $html .= "</P>";
 
-      GeneratePage('MESSAGE', $html,
-	sprintf (gettext ("Problem while updating %s"), $pagename), 0);
+      echo GeneratePage('MESSAGE', $html,
+			sprintf (gettext ("Problem while updating %s"), $pagename), 0);
       exit;
    }
 
@@ -120,7 +120,8 @@
       if (($pagehash['flags'] & FLAG_PAGE_LOCKED) && ! $user->is_admin()) {
 	 $html = "<p>" . gettext ("This page has been locked by the administrator and cannot be edited.");
 	 $html .= "\n<p>" . gettext ("Sorry for the inconvenience.");
-	 GeneratePage('MESSAGE', $html, sprintf (gettext ("Problem while editing %s"), $pagename), 0);
+	 echo GeneratePage('MESSAGE', $html,
+			   sprintf (gettext ("Problem while editing %s"), $pagename), 0);
 	 ExitWiki ("");
       }
 
@@ -166,18 +167,18 @@
    $html .= "\n";
 
    // fixme: no test for flat file db system
-   if (isset($DBMdir) && preg_match('@^/tmp\b@', $DBMdir)) {
-      $html .= "<P><B>Warning: the Wiki DB files still live in the " .
-		"/tmp directory. Please read the INSTALL file and move " .
-		"the DBM file to a permanent location or risk losing " .
+   if (!empty($DBWarning)) {
+      $html .= "<P><B>Warning: $DBWarning" .
+		"Please read the INSTALL file and move " .
+		"the DB file to a permanent location or risk losing " .
 		"all the pages!</B>\n";
    }
 
    if (!empty($SignatureImg))
-      $html .= sprintf("<P><img src=\"%s\"></P>\n", MakeURLAbsolute($SignatureImg));
+      $html .= sprintf("<P><img src=\"%s\"></P>\n", DataURL($SignatureImg));
       
    $html .= "<hr noshade><P>";
    include('lib/transform.php');
 
-   GeneratePage('BROWSE', $html, $pagename, $pagehash);
+   echo GeneratePage('BROWSE', $html, $pagename, $pagehash);
 ?>

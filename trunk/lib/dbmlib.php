@@ -1,6 +1,6 @@
 <?php  
 
-   rcs_id('$Id: dbmlib.php,v 1.7 2001-01-31 03:11:25 wainstead Exp $');
+   rcs_id('$Id: dbmlib.php,v 1.8 2001-02-12 01:43:10 dairiki Exp $');
 
    /*
       Database functions:
@@ -21,6 +21,26 @@
       MostPopularNextMatch($dbi, $res)
    */
 
+// Initialize our globals:
+function _dbname($base)
+{
+  extract($GLOBALS['DBParams']);
+  return "$directory/${database}${prefix}${base}";
+}
+
+$WikiPageStore = "wiki";
+$ArchivePageStore = "archive";
+$WikiDB = array('wiki'		=> _dbname('pagesdb'),
+		'archive'	=> _dbname('archivedb'),
+		'wikilinks'	=> _dbname('linksdb'),
+		'hottopics'	=> _dbname('hottopicsdb'),
+		'hitcount'	=> _dbname('hitcountdb'));
+
+if (preg_match('@%/tmp\b@', $DBParams['directory']))
+   $DBWarning = "DBM files are in the /tmp directory.";
+
+define('MAX_DBM_ATTEMPTS', $DBParams['timeout']);
+  
 
    // open a database and return the handle
    // loop until we get a handle; php has its own
@@ -480,4 +500,9 @@
 
    }
 
+// For emacs users
+// Local Variables:
+// mode: php
+// c-file-style: "ellemtel"
+// End:   
 ?>
