@@ -1,4 +1,4 @@
-<!-- $Id: diff.php,v 1.6 2001-02-10 22:15:08 dairiki Exp $ -->
+<!-- $Id: diff.php,v 1.7 2001-02-12 01:43:10 dairiki Exp $ -->
 <?php
 // diff.php
 //
@@ -1066,7 +1066,8 @@ if (isset($pagename))
       }
     }
 
-  GeneratePage('MESSAGE', $html, sprintf(gettext ("Diff of %s."),
-	htmlspecialchars($pagename)), 0);
+  echo GeneratePage('MESSAGE', $html,
+		    sprintf(gettext ("Diff of %s."),
+			    htmlspecialchars($pagename)), 0);
 }
 ?>

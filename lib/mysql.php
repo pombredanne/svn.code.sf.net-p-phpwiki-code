@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: mysql.php,v 1.11 2001-02-10 22:15:08 dairiki Exp $');
+<?php rcs_id('$Id: mysql.php,v 1.12 2001-02-12 01:43:10 dairiki Exp $');
 
    /*
       Database functions:
@@ -26,20 +26,31 @@
       SetWikiPageLinks($dbi, $pagename, $linklist)
    */
 
+$WikiPageStore = $DBParams['prefix'] . "wiki";
+$ArchivePageStore = $DBParams['prefix'] . "archive";
+$WikiLinksStore = $DBParams['prefix'] . "wikilinks";
+$WikiScoreStore = $DBParams['prefix'] . "wikiscore";
+$HitCountStore = $DBParams['prefix'] . "hitcount";
+
    // open a database and return the handle
    // ignores MAX_DBM_ATTEMPTS
 
    function OpenDataBase($dbname) {
-      global $mysql_server, $mysql_user, $mysql_pwd, $mysql_db;
+      extract($GLOBALS['DBParams']);
 
-      if (!($dbc = mysql_pconnect($mysql_server, $mysql_user, $mysql_pwd))) {
+      if (empty($server))
+	 $server = $socket;
+      else if (!empty($port))
+	 $server .= ":$port";
+      
+      if (!($dbc = mysql_pconnect($server, $user, $password))) {
          $msg = gettext ("Cannot establish connection to database, giving up.");
 	 $msg .= "<BR>";
 	 $msg .= sprintf(gettext ("MySQL error: %s"), mysql_error());
 	 ExitWiki($msg);
       }
-      if (!mysql_select_db($mysql_db, $dbc)) {
-         $msg =  sprintf(gettext ("Cannot open database %s, giving up."), $mysql_db);
+      if (!mysql_select_db($database, $dbc)) {
+         $msg =  sprintf(gettext ("Cannot open database %s, giving up."), $database);
 	 $msg .= "<BR>";
 	 $msg .= sprintf(gettext ("MySQL error: %s"), mysql_error());
 	 ExitWiki($msg);
@@ -354,4 +365,10 @@
 orphans:
 select pagename from wiki left join wikilinks on pagename=topage where topage is NULL;
 */
+
+// For emacs users
+// Local Variables:
+// mode: php
+// c-file-style: "ellemtel"
+// End:   
 ?>

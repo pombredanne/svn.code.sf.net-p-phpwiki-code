@@ -12,8 +12,10 @@ class WikiUser
 {
    // Arg $login_mode:
    //   default:  Anonymous users okay.
+   //   'ANON_OK': Anonymous access is fine.
+   //   'REQUIRE_AUTH': User must be authenticated.
    //   'LOGOUT':  Force logout.
-   //   'REQUIRE_AUTH':   Force authenticated login.
+   //   'LOGIN':   Force authenticated login.
    function WikiUser ($auth_mode = '') {
       // Restore from cookie.
       global $WIKI_AUTH;
@@ -26,12 +28,18 @@ class WikiUser
       else
 	 $this = unserialize(fix_magic_quotes_gpc($WIKI_AUTH));
 
- 
+      if ($this->state == 'authorized' && $auth_mode == 'LOGIN')
+      {
+	 // ...logout
+	 $this->realm++;
+	 $this->state = 'loggedout';
+      }
+      
       if ($auth_mode != 'LOGOUT')
       {
 	 $user = $this->_get_authenticated_userid();
 
-	 if (!$user && $auth_mode == 'REQUIRE_AUTH')
+	 if (!$user && $auth_mode != 'ANON_OK')
 	    $warning = $this->_demand_http_authentication(); //NORETURN
       }
 
@@ -124,4 +132,9 @@ class WikiUser
    }
 }
 
+// For emacs users
+// Local Variables:
+// mode: php
+// c-file-style: "ellemtel"
+// End:   
 ?>

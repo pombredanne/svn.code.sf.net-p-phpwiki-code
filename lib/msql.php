@@ -1,4 +1,4 @@
-<!-- $Id: msql.php,v 1.6 2001-02-01 04:24:26 wainstead Exp $ -->
+<!-- $Id: msql.php,v 1.7 2001-02-12 01:43:10 dairiki Exp $ -->
 <?php
 
    /*
@@ -19,20 +19,30 @@
    */
 
 
+// Get rid of these globals!
+$WikiPageStore['table']         = $DBParams['prefix'] . "wiki";
+$WikiPageStore['page_table']    = $DBParams['prefix'] . "wikipages";
+$ArchivePageStore['table']      = $DBParams['prefix'] . "archive";
+$ArchivePageStore['page_table'] = $DBParams['prefix'] . "archivepages";
+
+// should be the same as wikipages.line
+define("MSQL_MAX_LINE_LENGTH", 128);
+
    // open a database and return the handle
    // ignores MAX_DBM_ATTEMPTS
 
    function OpenDataBase($dbinfo) {
-      global $msql_db;
-
+      extract($GLOBALS['DBParams']);
+      // FIXME: use $host, $port, $user, $password
       if (! ($dbc = msql_connect())) {
          $msg = gettext ("Cannot establish connection to database, giving up.");
 	 $msg .= "<BR>";
 	 $msg .= sprintf(gettext ("Error message: %s"), msql_error());
 	 ExitWiki($msg);
       }
-      if (!msql_select_db($msql_db, $dbc)) {
-         $msg = gettext ("Cannot open database %s, giving up.");
+      if (!msql_select_db($database, $dbc)) {
+         $msg = sprintf(gettext ("Cannot open database %s, giving up."),
+			$database);
 	 $msg .= "<BR>";
 	 $msg .= sprintf(gettext ("Error message: %s"), msql_error());
 	 ExitWiki($msg);
@@ -513,4 +523,9 @@
    }
 */
 
+// For emacs users
+// Local Variables:
+// mode: php
+// c-file-style: "ellemtel"
+// End:   
 ?>

@@ -1,7 +1,7 @@
-<!-- $Id: editpage.php,v 1.10 2001-02-10 22:15:08 dairiki Exp $ -->
+<!-- $Id: editpage.php,v 1.11 2001-02-12 01:43:10 dairiki Exp $ -->
 <?php
 
-   // editpage relies on $pagename and $ScriptUrl
+   // editpage relies on $pagename, $version
 
    $currentpage = RetrievePage($dbi, $pagename, $WikiPageStore);
    $editing_copy = isset($version) && $version == 'archive';
@@ -16,13 +16,14 @@
 
    if (is_array($pagehash)) {
 
-      if (($pagehash['flags'] & FLAG_PAGE_LOCKED) && $user->is_admin()) {
+      if (($pagehash['flags'] & FLAG_PAGE_LOCKED) && !$user->is_admin()) {
 	 $html = "<p>";
 	 $html .= gettext ("This page has been locked by the administrator and cannot be edited.");
 	 $html .= "\n<p>";
 	 $html .= gettext ("Sorry for the inconvenience.");
 	 $html .= "\n";
-	 GeneratePage('MESSAGE', $html, sprintf (gettext ("Problem while editing %s"), $pagename), 0);
+	 echo GeneratePage('MESSAGE', $html,
+			   sprintf (gettext ("Problem while editing %s"), $pagename), 0);
 	 ExitWiki ("");
       }
 
@@ -45,16 +46,35 @@
       $currentpage = $pagehash;
    }
 
-
-   if ($user->id() == $currentpage['author'] || $user->is_admin()) {
-      $ckbox = element('input', array('type' => 'checkbox',
-				      'name' => 'minor_edit',
-				      'value' => 'yes'));
+   if (empty($pagehash['copy']))
+      $do_archive = false;
+   else if ( $user->is_admin() )
+      $do_archive = 'probably';
+   else if ( $user->id() == $currentpage['author'] )
+   {
       $page_age = time() - $currentpage['lastmodified'];
-      if ($user->id() == $currentpage['author'] && $page_age < MINOR_EDIT_TIMEOUT)
-	 $ckbox .= " checked";
-      $pagehash['minor_edit_checkbox'] = $ckbox . '>';
+      if ($page_age < MINOR_EDIT_TIMEOUT)
+	 $do_archive = 'maybe';
+      else
+	 $do_archive = 'probably';
+   }
+   else
+      $do_archive = 'force';
+
+   if ($do_archive == 'probably' || $do_archive == 'maybe')
+   {
+      $pagehash['minor_edit_checkbox']
+	  = Element('input', array('type' => 'checkbox',
+				   'name' => 'minor_edit',
+				   'value' => 'yes',
+				   'checked' => ($do_archive == 'probably')));
    }
 
-   GeneratePage('EDITPAGE', $textarea, $pagename, $pagehash);   
+   echo GeneratePage('EDITPAGE', $textarea, $pagename, $pagehash);   
+
+// For emacs users
+// Local Variables:
+// mode: php
+// c-file-style: "ellemtel"
+// End:   
 ?>

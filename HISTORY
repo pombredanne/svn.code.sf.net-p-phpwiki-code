@@ -1,3 +1,24 @@
+02/11/01 Jeff's hacks continue:
+
+* Moved user configuration stuff into index.php.  What was index.php is
+  now in lib/main.php.
+
+* Refactored the DB configuration variables.  There's one define() constant
+  which specifies type database type, and one hash (used by all the 
+  databases) which holds database, file, and server selection.
+  The actual file/table names are now "hard-coded" into the individual
+  database modules --- I have added the hook for setting a prefix
+  to be applied to all file/table names.
+  I think it's much cleaner, but let me know if you think otherwise.
+  (I've only tested the dba and mysql backends.)
+  
+* Refactored the dump/load zip/directory stuff.  You can now upload zip-dumps
+  or individual files from your local (client) machine.
+  See PhpWikiAdministration.
+
+* Fixed a bunch of bugs --- mostly the one's I introduced in my last big
+  commit.
+
 02/09/01 Jeff hack's again:
 
 * Pagename in PATH_INFO support added.  This is configurable,

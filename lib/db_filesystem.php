@@ -1,4 +1,4 @@
-<?php  rcs_id('$Id: db_filesystem.php,v 1.4 2001-01-01 23:18:46 ahollosi Exp $');
+<?php  rcs_id('$Id: db_filesystem.php,v 1.5 2001-02-12 01:43:10 dairiki Exp $');
    /*
       Database functions:
 
@@ -18,11 +18,30 @@
       MostPopularNextMatch($dbi, $res)
    */
 
+$WikiPageStore = "wiki";
+$ArchivePageStore = "archive";
 
+// Initialize our globals:
+function _dbname($base)
+{
+  extract($GLOBALS['DBParams']);
+  return "$directory/$database/${prefix}${base}";
+}
+
+$WikiDB['wiki']      = _dbname('pages');
+$WikiDB['archive']   = _dbname('archive');
+$WikiDB['wikilinks'] = _dbname('links');
+$WikiDB['hottopics'] = _dbname('hottopics');
+$WikiDB['hitcount']  = _dbname('hitcount');
+
+if (preg_match('@%/tmp\b@', $DBParams['directory']))
+   $DBWarning = "Filesystem DB directory is in the /tmp directory.";
+   
    // open a database and return the handle
    // loop until we get a handle; php has its own
    // locking mechanism, thank god.
    // Suppress ugly error message with @.
+
 
    function OpenDataBase($dbname) {
       global $WikiDB;
@@ -233,4 +252,9 @@ return;
 
       return $namelist;
    }
+// For emacs users
+// Local Variables:
+// mode: php
+// c-file-style: "ellemtel"
+// End:   
 ?>

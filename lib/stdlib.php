@@ -1,10 +1,9 @@
-<?php rcs_id('$Id: stdlib.php,v 1.27 2001-02-10 22:15:08 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.28 2001-02-12 01:43:10 dairiki Exp $');
 
 
    /*
       Standard functions for Wiki functionality
          ExitWiki($errormsg)
-         MakeURLAbsolute($url, $base = false)
          WikiURL($pagename, $args, $abs)
 	 
          LinkExistingWikiWord($wikiword, $linktext) 
@@ -42,6 +41,36 @@ function get_remote_host () {
    return $host;
 }
 
+function SearchPath ($file, $missing_ok = false, $path = false) 
+{
+   if (ereg('^/', $file))
+      return $file;		// absolute path.
+
+   if (!$path)
+      $path = $GLOBALS['DataPath'];
+   
+   while (list($i, $dir) = each($path))
+   {
+      if (file_exists("$dir/$file"))
+	 return "$dir/$file";
+   }
+   if ($missing_ok)
+      return false;
+   die("$file: file not found");
+}
+
+function arrays_equal ($a, $b) 
+{
+   if (sizeof($a) != sizeof($b))
+      return false;
+   for ($i = 0; $i < sizeof($a); $i++)
+      if ($a[$i] != $b[$i])
+	 return false;
+   return true;
+}
+
+   
+   
 
    function ExitWiki($errormsg)
    {
@@ -62,19 +91,13 @@ function get_remote_host () {
       exit;
    }
 
-   function MakeURLAbsolute($url, $base = false) {
-      global $ScriptUrl;
-
+   function DataURL($url) {
       if (preg_match('@^(\w+:|/)@', $url))
 	 return $url;
-      
-      return preg_replace('@[^/]*$@', '', empty($base) ? $ScriptUrl : $base) . $url;
+      return SERVER_URL . DATA_PATH . "/$url";
    }
 	  
-
-   function WikiURL($pagename, $args = '', $make_abs_url = false) {
-      global $ScriptName, $ScriptUrl;
-
+   function WikiURL($pagename, $args = '') {
       if (is_array($args))
       {
 	 reset($args);
@@ -86,17 +109,17 @@ function get_remote_host () {
       }
 
       if (USE_PATH_INFO) {
-	 $url = $make_abs_url ? "$ScriptUrl/" : '';
-         $url .= rawurlencode($pagename);
+         $url = rawurlencode($pagename);
 	 if ($args)
 	    $url .= "?$args";
       }
       else {
-	 $url = $make_abs_url ? $ScriptUrl : $ScriptName;
-         $url .= "?pagename=" . rawurlencode($pagename);
+	 $url = basename(SCRIPT_NAME) .
+	     "?pagename=" . rawurlencode($pagename);
 	 if ($args)
 	    $url .= "&$args";
       }
+
       return $url;
    }
 
@@ -112,8 +135,13 @@ function get_remote_host () {
       $html = "<$tag";
       if (is_array($args))
       {
-	 while (list($key, $val) = each($args)) 
-	    $html .= sprintf(' %s="%s"', $key, htmlspecialchars($val));
+	 while (list($key, $val) = each($args))
+	 {
+	    if (is_string($val) || is_numeric($val))
+	       $html .= sprintf(' %s="%s"', $key, htmlspecialchars($val));
+	    else if ($val)
+	       $html .= " $key";
+	 }
       }
       else
 	 $content = $args;
@@ -122,7 +150,7 @@ function get_remote_host () {
       if (!preg_match(NO_END_TAG_PAT, $tag))
       {
 	 $html .= $content;
-	 $html .= "</$tag>";
+	 $html .= "</$tag>\n";//FIXME: newline might not always be desired.
       }
       return $html;
    }
@@ -170,15 +198,6 @@ function get_remote_host () {
       return Element('img', array('src' => $url, 'alt' => $alt));
    }
 
-   function LinkInterWikiLink($link, $linktext='') {
-      global $interwikimap;
-
-      list( $wiki, $page ) = split( ":", $link );
-      
-      $url = $interwikimap[$wiki] . urlencode($page);
-      return LinkURL($url, $linktext ? $linktext : $link);
-   }
-
 
    // converts spaces to tabs
    function CookSpaces($pagearray) {
@@ -219,10 +238,9 @@ function get_remote_host () {
    // end class definition
 
 
-   function MakeWikiForm ($pagename, $args, $button_text = '') {
-      global $ScriptUrl;
-
-      $formargs['action'] = USE_PATH_INFO ? WikiURL($pagename) : $ScriptUrl;
+   function MakeWikiForm ($pagename, $args, $button_text = '')
+   {
+      $formargs['action'] = USE_PATH_INFO ? WikiURL($pagename) : SCRIPT_NAME;
       $formargs['method'] = 'post';
       $contents = '';
       $input_seen = 0;
@@ -231,25 +249,36 @@ function get_remote_host () {
       {
 	 $a = array('name' => $key, 'value' => $val, 'type' => 'hidden');
 	 
-	 if (preg_match('/^ (\d*) \( (.*) \) $/x', $val, $m))
+	 if (preg_match('/^ (\d*) \( (.*) \) ((upload)?) $/xi', $val, $m))
 	 {
 	    $input_seen++;
 	    $a['type'] = 'text';
 	    $a['size'] = $m[1] ? $m[1] : 30;
 	    $a['value'] = $m[2];
+	    if ($m[3])
+	    {
+	       $a['type'] = 'file';
+	       $formargs['enctype'] = 'multipart/form-data';
+	       $contents .= Element('input',
+				    array('name' => 'MAX_FILE_SIZE',
+					  'value' => MAX_UPLOAD_SIZE,
+					  'type' => 'hidden'));
+	    }
 	 }
 
 	 $contents .= Element('input', $a);
       }
 
+      $row = Element('td', $contents);
+      
       if (!empty($button_text)) {
-	 if ($input_seen)
-	    $contents .= '&nbsp;&nbsp;';
-	 $contents .= Element('input', array('type' => 'submit',
-					     'value' => $button_text));
+	 $row .= Element('td', Element('input', array('type' => 'submit',
+						      'value' => $button_text)));
       }
 
-      return Element('form', $formargs, $contents);
+      return Element('form', $formargs,
+		     Element('table',
+			     Element('tr', $row)));
    }
 
    function SplitQueryArgs ($query_args = '') 
@@ -285,6 +314,17 @@ function get_remote_host () {
 	 $args = SplitQueryArgs($qargs);
       }
 
+
+      // FIXME: ug, don't like this
+      
+      if (!empty($args['action']) && !IsSafeAction($args['action']))
+      {
+         // Don't allow administrative links on unlocked pages.
+	 global $pagehash;
+	 if (($pagehash['flags'] & FLAG_PAGE_LOCKED) == 0)
+	    return QElement('u', gettext('Lock page to enable link'));
+      }
+      
       // FIXME: ug, don't like this
       if (preg_match('/=\d*\(/', $qargs))
 	 return MakeWikiForm($page, $args, $text);
@@ -293,8 +333,8 @@ function get_remote_host () {
    }
 
    function ParseAndLink($bracketlink) {
-      global $dbi, $ScriptUrl, $AllowedProtocols, $InlineImages;
-      global $InterWikiLinking, $InterWikiLinkRegexp;
+      global $dbi, $AllowedProtocols, $InlineImages;
+      global $InterWikiLinkRegexp;
 
       // $bracketlink will start and end with brackets; in between
       // will be either a page name, a URL or both separated by a pipe.
@@ -334,7 +374,7 @@ function get_remote_host () {
       } elseif (preg_match("#^\d+$#", $URL)) {
          $link['type'] = "footnote-$linktype";
 	 $link['link'] = $URL;
-      } elseif ($InterWikiLinking &&
+      } elseif (function_exists('LinkInterWikiLink') &&
 		preg_match("#^$InterWikiLinkRegexp:#", $URL)) {
 	 $link['type'] = "interwiki-$linktype";
 	 $link['link'] = LinkInterWikiLink($URL, $linkname);
@@ -379,7 +419,6 @@ function get_remote_host () {
       }
       return $wikilinks;
    }      
-
 
    function LinkRelatedPages($dbi, $pagename)
    {
@@ -435,9 +474,9 @@ function get_remote_host () {
 
    function GeneratePage($template, $content, $name, $hash)
    {
-      global $ScriptUrl, $AllowedProtocols, $templates;
+      global $templates;
       global $datetimeformat, $dbi, $logo, $FieldSeparator;
-      global $user;
+      global $user, $pagename;
       
       if (!is_array($hash))
          unset($hash);
@@ -475,7 +514,7 @@ function get_remote_host () {
 	 }
       }
 
-      $page = join('', file($templates[$template]));
+      $page = join('', file(SearchPath($templates[$template])));
       $page = str_replace('###', "$FieldSeparator#", $page);
 
       // valid for all pagetypes
@@ -492,9 +531,8 @@ function get_remote_host () {
       _dotoken('MINOR_EDIT_CHECKBOX', $hash['minor_edit_checkbox'], $page);
 
       _dotoken('USERID', htmlspecialchars($user->id()), $page);
-      _dotoken('SCRIPTURL', htmlspecialchars($ScriptUrl), $page);
       _dotoken('PAGE', htmlspecialchars($name), $page);
-      _dotoken('LOGO', htmlspecialchars(MakeURLAbsolute($logo)), $page);
+      _dotoken('LOGO', htmlspecialchars(DataURL($logo)), $page);
       global $RCS_IDS;
       _dotoken('RCS_IDS', join("\n", $RCS_IDS), $page);
       
@@ -505,8 +543,11 @@ function get_remote_host () {
       _dotoken('ACTION', $browse_page . $arg_sep . "action=", $page);
       _dotoken('BROWSE', WikiURL(''), $page);
 
-      // FIXME: this is possibly broken.
-      _dotoken('BASE_URL',  WikiURL($name, '', 'absolute_url'), $page);
+      if (USE_PATH_INFO)
+	 _dotoken('BASE_URL',
+		  SERVER_URL . VIRTUAL_PATH . "/" . WikiURL($pagename), $page);
+      else
+	 _dotoken('BASE_URL', SERVER_URL . SCRIPT_NAME, $page);
       
       // invalid for messages (search results, error messages)
       if ($template != 'MESSAGE') {
@@ -527,6 +568,11 @@ function get_remote_host () {
       }
 
       _dotoken('CONTENT', $content, $page);
-      print $page;
+      return $page;
    }
+// For emacs users
+// Local Variables:
+// mode: php
+// c-file-style: "ellemtel"
+// End:   
 ?>

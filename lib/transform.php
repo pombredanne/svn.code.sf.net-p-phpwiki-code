@@ -1,8 +1,11 @@
-<?php rcs_id('$Id: transform.php,v 1.14 2001-02-10 22:15:08 dairiki Exp $');
+<?php rcs_id('$Id: transform.php,v 1.15 2001-02-12 01:43:10 dairiki Exp $');
 
 define('WT_TOKENIZER', 1);
 define('WT_SIMPLE_MARKUP', 2);
 define('WT_MODE_MARKUP', 3);
+
+define("ZERO_LEVEL", 0);
+define("NESTED_LEVEL", 1);
 
 class WikiTransform
 {
@@ -198,7 +201,7 @@ class WikiTransform
 
    $transform->register(WT_TOKENIZER, 'wtt_bracketlinks');
    $transform->register(WT_TOKENIZER, 'wtt_urls');
-   if ($InterWikiLinking) {
+   if (function_exists('wtt_interwikilinks')) {
       $transform->register(WT_TOKENIZER, 'wtt_interwikilinks');
    }
    $transform->register(WT_TOKENIZER, 'wtt_bumpylinks');
@@ -322,28 +325,6 @@ of tokenized strings is done by do_transform().
    }
 
 
-
-   // Link InterWiki links
-   // These can be protected by a '!' like Wiki words.
-   function wtt_interwikilinks($line, &$trfrm)
-   {
-      global $InterWikiLinkRegexp, $WikiNameRegexp;
-
-      $n = $ntok = $trfrm->tokencounter;
-      $line = wt_tokenize($line, "!?(?<![A-Za-z0-9])$InterWikiLinkRegexp:$WikiNameRegexp", $trfrm->replacements, $ntok);
-      while ($n < $ntok) {
-	 $old = $trfrm->replacements[$n];
-	 if ($old[0] == '!') {
-	    $trfrm->replacements[$n] = substr($old,1);
-	 } else {
-	    $trfrm->replacements[$n] = LinkInterWikiLink($old);
-	 }
-	 $n++;
-      }
-
-      $trfrm->tokencounter = $ntok;
-      return $line;
-   }
 
 
    // Link Wiki words (BumpyText)
@@ -527,4 +508,10 @@ of tokenized strings is done by do_transform().
       $line = $trfrm->SetHTMLMode('p', ZERO_LEVEL, 0) . $line;
       return $line;
    }
+
+// For emacs users
+// Local Variables:
+// mode: php
+// c-file-style: "ellemtel"
+// End:   
 ?>

@@ -1,6 +1,6 @@
 <?php
    // Search the text of pages for a match.
-   rcs_id('$Id: fullsearch.php,v 1.5 2001-02-10 22:15:08 dairiki Exp $');
+   rcs_id('$Id: fullsearch.php,v 1.6 2001-02-12 01:43:10 dairiki Exp $');
 
    if (empty($searchterm))
       $searchterm = '';		// FIXME: do something better here?
@@ -44,5 +44,5 @@
 		       $found, $count)
 	    . "\n";
 
-   GeneratePage('MESSAGE', $html, gettext ("Full Text Search Results"), 0);
+   echo GeneratePage('MESSAGE', $html, gettext ("Full Text Search Results"), 0);
 ?>
