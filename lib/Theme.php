@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.118 2004-12-13 14:34:46 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.119 2004-12-14 21:38:12 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -486,7 +486,6 @@ class Theme {
     ////////////////////////////////////////////////////////////////
 
     var $_autosplitWikiWords = false;
-
     function setAutosplitWikiWords($autosplit=false) {
         $this->_autosplitWikiWords = $autosplit ? true : false;
     }
@@ -1395,6 +1394,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.118  2004/12/13 14:34:46  rurban
+// box parent method exists
+//
 // Revision 1.117  2004/11/30 17:44:54  rurban
 // revisison neutral
 //
