@@ -320,8 +320,6 @@ $locale["PageHistory for %s"] =
    "Historique de %s";
 $locale["Pages in this wiki (%d total):"] =
    "Pages dans ce wiki (%d au total) :";
-$locale["Password"] =
-   "Mot de passe";
 $locale["PhpWikiAdministration"] =
    "AdministrationDePhpWiki";
 $locale["Please check it through before saving."] =

@@ -1,5 +1,7 @@
 <?php
 
+$locale["%4d  %s\n"] =
+   "%4d  %s\n";
 $locale["%s bytes"] =
    "%s octetos";
 $locale["%s bytes written"] =
@@ -102,8 +104,6 @@ $locale["Page Name"] =
    "Nombre de la Página";
 $locale["Page now locked."] =
    "Página bloqueada.";
-$locale["Password"] =
-   "Contraseña";
 $locale["Plugin %s failed."] =
    "Inserción de '%s' falló";
 $locale["Preview"] =

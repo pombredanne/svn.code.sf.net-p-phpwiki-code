@@ -1,5 +1,7 @@
 <?php
 
+$locale["%4d  %s\n"] =
+   "%4d  %s\n";
 $locale["%s: %s"] =
    "%s: %s";
 $locale["(diff)"] =

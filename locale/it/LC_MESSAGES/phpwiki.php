@@ -1,5 +1,7 @@
 <?php
 
+$locale["%4d  %s\n"] =
+   "%4d  %s\n";
 $locale["%s Kb (%s bytes)"] =
    "%s Kb (%s byte)";
 $locale["%s at %s"] =

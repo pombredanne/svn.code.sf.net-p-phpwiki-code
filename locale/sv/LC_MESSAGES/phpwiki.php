@@ -1,5 +1,7 @@
 <?php
 
+$locale["%4d  %s\n"] =
+   "%4d  %s\n";
 $locale["%s at %s"] =
    "%s i %s";
 $locale["%s days"] =
@@ -14,6 +16,8 @@ $locale["(diff)"] =
    "(diff)";
 $locale["1 day"] =
    "1 dag";
+$locale["<no matches>"] =
+   "<ingen matchar>";
 $locale["Adjust"] =
    "Justera";
 $locale["Calendar"] =
@@ -28,6 +32,8 @@ $locale["Describe %s here."] =
    "Beskriv %s här.";
 $locale["Diff"] =
    "Diff";
+$locale["Diff: %s"] =
+   "Diff av: %s";
 $locale["Edit"] =
    "Redigera";
 $locale["Edit %s"] =
@@ -100,8 +106,6 @@ $locale["Page Locked"] =
    "Sidan är Låst";
 $locale["Page Name"] =
    "Namn på Sidan";
-$locale["Password"] =
-   "Lösenord";
 $locale["Preview"] =
    "Översikt";
 $locale["Previous"] =
@@ -134,6 +138,10 @@ $locale["See %s tips for editing."] =
    "%s: Redigeringstips.";
 $locale["Show relative dates using 'Today' and 'Yesterday'."] =
    "Andvänd relativt datum";
+$locale["Sign In"] =
+   "Anslut";
+$locale["Sign Out"] =
+   "Logga ut";
 $locale["Sorry for the inconvenience."] =
    "Ledsen för allt besvär.";
 $locale["Synopsis"] =
