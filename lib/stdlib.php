@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.151 2003-11-29 19:30:01 carstenklapp Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.152 2003-11-30 18:20:34 carstenklapp Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1110,7 +1110,9 @@ function explodeList($input, $allnames, $glob_style = true, $case_sensitive = tr
     $list = explode(',',$input);
     // expand wildcards from list of $allnames
     if (preg_match('/[\?\*]/',$input)) {
-        for ($i = 0; $i < sizeof($list); $i++) {
+        // Optimizing loop invariants:
+        // http://phplens.com/lens/php-book/optimizing-debugging-php.php
+        for ($i = 0; $max = $i < sizeof($list); $i < $max; $i++) {
             $f = $list[$i];
             if (preg_match('/[\?\*]/',$f)) {
             	reset($allnames);
@@ -1329,6 +1331,9 @@ class Alert {
                       
         
 // $Log: not supported by cvs2svn $
+// Revision 1.151  2003/11/29 19:30:01  carstenklapp
+// New function ByteFormatter.
+//
 // Revision 1.150  2003/09/13 22:43:00  carstenklapp
 // New preference to hide LinkIcons.
 //
