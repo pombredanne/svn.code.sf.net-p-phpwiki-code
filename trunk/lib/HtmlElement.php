@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.14 2002-01-30 00:43:07 dairiki Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.15 2002-02-02 01:58:17 carstenklapp Exp $');
 /*
  * Code for writing XML.
  */
@@ -287,6 +287,14 @@ class HTML extends HtmlElement {
     }
     function textarea (/*...*/) {
         $el = new HtmlElement('textarea');
+        return $el->_init2(func_get_args());
+    }
+    function select (/*...*/) {
+        $el = new HtmlElement('select');
+        return $el->_init2(func_get_args());
+    }
+    function option (/*...*/) {
+        $el = new HtmlElement('option');
         return $el->_init2(func_get_args());
     }
 }
