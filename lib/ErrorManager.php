@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.36 2004-10-12 15:35:43 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.37 2004-10-14 19:23:58 rurban Exp $');
 
 if (isset($GLOBALS['ErrorManager'])) return;
 
@@ -245,7 +245,7 @@ class ErrorManager
         // Error was either fatal, or was not handled by a handler.
         // Handle it ourself.
         if ($error->isFatal()) {
-            echo "<html><body><div style=\"font-width:bold; color:red\">Fatal</div>\n";
+            echo "<html><body><div style=\"font-weight:bold; color:red\">Fatal Error:</div>\n";
             if (defined('DEBUG') and (DEBUG & _DEBUG_TRACE)) {
                 echo "error_reporting=",error_reporting(),"\n<br>";
                 $error->printSimpleTrace(debug_backtrace());
@@ -595,6 +595,9 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.36  2004/10/12 15:35:43  rurban
+// avoid Php Notice header
+//
 // Revision 1.35  2004/10/12 13:13:19  rurban
 // php5 compatibility (5.0.1 ok)
 //

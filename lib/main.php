@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.182 2004-10-12 13:13:19 rurban Exp $');
+rcs_id('$Id: main.php,v 1.183 2004-10-14 19:23:58 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -31,8 +31,7 @@ class WikiRequest extends Request {
             $this->_dbsession = & new DbSession($dbi, $dbi->getParam('prefix') . $dbi->getParam('db_session_table'));
         }
 // Fixme: Does pear reset the error mask to 1? We have to find the culprit
-$x = error_reporting();
-//echo "main: ", error_reporting();
+//$x = error_reporting();
 $this->version = phpwiki_version();
         $this->Request();
 
@@ -1104,7 +1103,7 @@ if (defined('WIKI_SOAP')   and WIKI_SOAP)   return;
     $request->finish();
 }
 
-$x = error_reporting();  // DEBUG: why is it 1 here? should be E_ALL
+//$x = error_reporting();  // DEBUG: why is it 1 here? should be E_ALL
 if (defined('E_STRICT') and (E_ALL & E_STRICT)) // strict php5?
     error_reporting(E_ALL & ~E_STRICT); 	// exclude E_STRICT
 else
@@ -1115,6 +1114,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.182  2004/10/12 13:13:19  rurban
+// php5 compatibility (5.0.1 ok)
+//
 // Revision 1.181  2004/10/07 16:08:58  rurban
 // fixed broken FileUser session handling.
 //   thanks to Arnaud Fontaine for detecting this.
