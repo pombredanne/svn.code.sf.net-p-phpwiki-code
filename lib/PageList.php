@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.32 2002-02-02 20:17:41 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.33 2002-02-06 17:25:37 carstenklapp Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -33,7 +33,7 @@ class _PageList_Column_base {
         if ($align)
             $this->_tdattr['align'] = $align;
     }
-    
+
     function format ($page_handle, &$revision_handle) {
         return HTML::td($this->_tdattr,
                         NBSP,
@@ -44,7 +44,7 @@ class _PageList_Column_base {
     function setHeading ($heading) {
         $this->_heading = $heading;
     }
-    
+
     function heading () {
         return HTML::td(array('align' => 'center'),
                         NBSP, HTML::u($this->_heading), NBSP);
@@ -54,14 +54,14 @@ class _PageList_Column_base {
 class _PageList_Column extends _PageList_Column_base {
     function _PageList_Column ($field, $default_heading, $align = false) {
         $this->_PageList_Column_base($default_heading, $align);
-        
+
         $this->_need_rev = substr($field, 0, 4) == 'rev:';
         if ($this->_need_rev)
             $this->_field = substr($field, 4);
         else
             $this->_field = $field;
     }
-    
+
     function _getValue ($page_handle, &$revision_handle) {
         if ($this->_need_rev) {
             if (!$revision_handle)
@@ -80,7 +80,7 @@ class _PageList_Column_bool extends _PageList_Column {
         $this->_textIfTrue = $text;
         $this->_textIfFalse = new RawXml('&#8212;');
     }
-    
+
     function _getValue ($page_handle, &$revision_handle) {
         $val = _PageList_Column::_getValue($page_handle, $revision_handle);
         return $val ? $this->_textIfTrue : $this->_textIfFalse;
@@ -91,7 +91,7 @@ class _PageList_Column_time extends _PageList_Column {
     function _PageList_Column_time ($field, $default_heading) {
         $this->_PageList_Column($field, $default_heading, 'right');
     }
-    
+
     function _getValue ($page_handle, &$revision_handle) {
         global $Theme;
         $time = _PageList_Column::_getValue($page_handle, $revision_handle);
@@ -109,11 +109,10 @@ class _PageList_Column_version extends _PageList_Column {
 
 class _PageList_Column_author extends _PageList_Column {
     function _getValue ($page_handle, &$revision_handle) {
-        global $WikiNameRegexp, $request;
-        $dbi = $request->getDbh();
+        global $WikiNameRegexp;
 
         $author = _PageList_Column::_getValue($page_handle, $revision_handle);
-        if (preg_match("/^$WikiNameRegexp\$/", $author) && $dbi->isWikiPage($author))
+        if (preg_match("/^$WikiNameRegexp\$/", $author))
             return WikiLink($author);
         else
             return $author;
@@ -124,13 +123,13 @@ class _PageList_Column_pagename extends _PageList_Column_base {
     function _PageList_Column_pagename () {
         $this->_PageList_Column_base(_("Page Name"));
     }
-    
+
     function _getValue ($page_handle, &$revision_handle) {
         return WikiLink($page_handle);
     }
 };
 
-        
+
 
 class PageList {
     var $_group_rows = 3;
@@ -139,7 +138,7 @@ class PageList {
     var $_rows = array();
     var $_caption = "";
     var $_pagename_seen = false;
-    
+
     function PageList ($columns = false, $exclude = false) {
         if ($columns) {
             if (!is_array($columns))
@@ -154,7 +153,7 @@ class PageList {
                 $exclude = explode(',', $exclude);
             $this->_excluded_pages = $exclude;
         }
-        
+
         $this->_messageIfEmpty = _("<no matches>");
     }
 
@@ -181,7 +180,7 @@ class PageList {
     function isEmpty () {
         return empty($this->_rows);
     }
-    
+
     function addPage ($page_handle) {
         if (in_array($page_handle->getName(), $this->_excluded_pages))
             return;             // exclude page.
@@ -208,7 +207,7 @@ class PageList {
         while ($page = $page_iter->next())
             $this->addPage($page);
     }
-    
+
 
     function getContent() {
         // Note that the <caption> element wants inline content.
@@ -246,11 +245,11 @@ class PageList {
                             'summary'
                             => new _PageList_Column('rev:summary',  _("Last Summary")),
                             'version'
-                            => new _PageList_Column_version('rev:version',  _("Version"), 'right'),
+                            => new _PageList_Column_version('rev:version', _("Version"), 'right'),
                             'author'
-                            => new _PageList_Column_author('rev:author',  _("Last Author")),
+                            => new _PageList_Column_author('rev:author', _("Last Author")),
                             'locked'
-                            => new _PageList_Column_bool('locked',  _("Locked"), _("locked")),
+                            => new _PageList_Column_bool('locked', _("Locked"), _("locked")),
                             'minor'
                             => new _PageList_Column_bool('rev:is_minor_edit',
                                                          _("Minor Edit"), _("minor"))
@@ -260,7 +259,7 @@ class PageList {
         if (isset($this->_columns_seen[$column]))
             return false;       // Already have this one.
         $this->_columns_seen[$column] = true;
-        
+
         if (strstr($column, ':'))
             list ($column, $heading) = explode(':', $column, 2);
 
@@ -274,16 +273,16 @@ class PageList {
             $col->setHeading($heading);
 
         $this->_columns[] = $col;
-        
+
         return true;
     }
-    
+
     // make a table given the caption
     function _generateTable($caption) {
         $table = HTML::table(array('cellpadding' => 0,
                                    'cellspacing' => 1,
                                    'border'      => 0,
-                                   'class'	 => 'pagelist'));
+                                   'class'       => 'pagelist'));
         if ($caption)
             $table->pushContent(HTML::caption(array('align'=>'top'), $caption));
 
@@ -323,5 +322,5 @@ class PageList {
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End:
 ?>
