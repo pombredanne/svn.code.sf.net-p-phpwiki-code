@@ -1,3 +1,11 @@
+!Synopsis
+__Nadruk:__ '__' voor schuin, _''_ voor vet, '__'_''_ voor beide.%%%
+__Lijsten:__ * voor punt lijsten, # voor genummerde lijsten, ''; Term : Definitie'' voor definitie lijsten.%%%
+__Verwijzingen:__ KapitaliseerEnSchrijfAanElkaar of gebruik vierkante haken [[pagina koppeling] of URL [[http://koel.wiki.int/].%%%
+__Footnotes:__ Gebruik [[1],[[2],[[3],...%%%
+__Vermijden van koppelingen:__ Vermijdt kopplingen met "!": !!KoppelNiet, noem koppelingen met [[[naam | URL].%%%
+__Allerlei:__ "!", "!!", "!!!" maak koppen, "%''''%%" maak regelbreuk, "-''''---" maak horizontale lijn.
+
 ! Alinea's
 
 * Spring alinea's niet in (zoals engelstaligen dat doen).

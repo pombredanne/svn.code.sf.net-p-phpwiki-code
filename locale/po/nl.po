@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.7\n"
-"POT-Creation-Date: 2001-12-28 06:12-0500\n"
+"POT-Creation-Date: 2001-12-31 00:53-0500\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -32,7 +32,7 @@ msgstr ""
 #: ../templates/browse.html:35
 #, fuzzy
 msgid "View the current version"
-msgstr "is gelijk aaan huidige versie %d"
+msgstr "is gelijk aaan huidige versie"
 
 #: ../templates/browse.html:50
 #, fuzzy, c-format
@@ -52,7 +52,7 @@ msgstr "RecenteVeranderingen"
 
 #: ../templates/browse.html:57
 msgid "FindPage"
-msgstr ""
+msgstr "ZoekPagina"
 
 #: ../templates/browse.html:60
 #, fuzzy
@@ -61,11 +61,11 @@ msgstr "Zoek snel een pagina op:"
 
 #: ../templates/browse.html:70
 msgid "Page locked"
-msgstr ""
+msgstr "Sidan är låst"
 
 #: ../templates/browse.html:73
 msgid "Edit"
-msgstr ""
+msgstr "Verander"
 
 #: ../templates/browse.html:76
 msgid "Edit old revision"
@@ -74,21 +74,20 @@ msgstr ""
 #: ../templates/browse.html:81
 #, fuzzy
 msgid "Unlock page"
-msgstr "Verwijder pagina"
+msgstr "Sluit pagina af"
 
 #: ../templates/browse.html:83
 #, fuzzy
 msgid "Lock page"
-msgstr "Verwijder pagina"
+msgstr "Open pagina"
 
 #: ../lib/removepage.php:20 ../templates/browse.html:85
 msgid "Remove page"
 msgstr "Verwijder pagina"
 
 #: ../templates/browse.html:89 ../templates/browse.html:92
-#, fuzzy
 msgid "Diff"
-msgstr "Diff van %s."
+msgstr "Diff"
 
 #: ../templates/browse.html:97
 #, c-format
@@ -119,9 +118,9 @@ msgstr ""
 
 #: ../templates/editpage.html:16 ../templates/editpage.html:25
 #: ../templates/editpage.html:26
-#, fuzzy, c-format
+#, c-format
 msgid "Edit: %s"
-msgstr "Diff van %s."
+msgstr "Verander: %s"
 
 #: ../lib/plugin/BackLinks.php:9 ../templates/editpage.html:25
 msgid "BackLinks"
@@ -153,12 +152,12 @@ msgstr ""
 
 #: ../templates/editpage.html:66
 msgid "Save"
-msgstr ""
+msgstr "Bewaar"
 
 #: ../templates/editpage.html:70
 #, c-format
 msgid "You are signed in as %s."
-msgstr ""
+msgstr "Je bent ingelogd als %s."
 
 #: ../templates/editpage.html:72
 #, c-format
@@ -168,25 +167,24 @@ msgstr ""
 #: ../templates/editpage.html:79
 #, c-format
 msgid "You can change the size of the editing area in %s."
-msgstr ""
+msgstr "Je kunt de afmetingen van het invoerveld veranderen. Zie %s."
 
 #: ../templates/editpage.html:79
-#, fuzzy
 msgid "UserPreferences"
-msgstr "!Referenties"
+msgstr "GebruikersVoorkeuren"
 
 #: ../templates/editpage.html:80
-#, fuzzy, c-format
+#, c-format
 msgid "See %s tips for editing."
-msgstr "Bedankt voor het veranderen van %s."
+msgstr "%s tips for veranderen."
 
 #: ../templates/editpage.html:80
 msgid "GoodStyle"
-msgstr ""
+msgstr "GoedeStijl"
 
 #: ../templates/editpage.html:84
 msgid "TextFormattingRules"
-msgstr ""
+msgstr "TekstFormatteringsRegels"
 
 #: ../templates/editpage.html:84
 msgid "Synopsis"
@@ -225,19 +223,17 @@ msgid "Edit %s"
 msgstr ""
 
 #: ../lib/main.php:120 ../lib/plugin/FullTextSearch.php:12
-#, fuzzy
 msgid "FullTextSearch"
-msgstr "Volledige tekst zoek resultaten"
+msgstr "VolledigeTekstZoek"
 
 #: ../lib/plugin/FullTextSearch.php:16
-#, fuzzy
 msgid "Full Text Search"
-msgstr "Volledige tekst zoek resultaten"
+msgstr "Volledige tekst zoek"
 
 #: ../lib/plugin/FullTextSearch.php:52
-#, c-format
+#, fuzzy, c-format
 msgid "Full text search results for '%s'"
-msgstr ""
+msgstr "Volledige tekst zoek resultaten '%s'"
 
 #: ../lib/plugin/FullTextSearch.php:54 ../lib/plugin/TitleSearch.php:52
 msgid "<no matches>"
@@ -308,8 +304,9 @@ msgid "<none>"
 msgstr ""
 
 #: ../lib/plugin/MostPopular.php:9
+#, fuzzy
 msgid "MostPopular"
-msgstr ""
+msgstr "Meestbezochte"
 
 #: ../lib/plugin/MostPopular.php:13
 msgid "List the most popular pages"
@@ -317,11 +314,11 @@ msgstr ""
 
 #: ../lib/plugin/MostPopular.php:27
 msgid "Hits"
-msgstr ""
+msgstr "Teller"
 
 #: ../lib/plugin/MostPopular.php:28
 msgid "Page Name"
-msgstr ""
+msgstr "Pagina"
 
 #: ../lib/plugin/MostPopular.php:42
 #, c-format
@@ -427,20 +424,18 @@ msgid "Search"
 msgstr "Zoek"
 
 #: ../lib/plugin/RecentChanges.php:253 ../lib/plugin/TitleSearch.php:16
-#, fuzzy
 msgid "Title Search"
-msgstr "Titel zoek resultaten"
+msgstr "Titel zoek"
 
 #: ../lib/main.php:123 ../lib/plugin/RecentChanges.php:255
 #: ../lib/plugin/TitleSearch.php:12
-#, fuzzy
 msgid "TitleSearch"
-msgstr "Titel zoek resultaten"
+msgstr "TitelZoek"
 
 #: ../lib/plugin/TitleSearch.php:48
-#, c-format
+#, fuzzy, c-format
 msgid "Title search results for '%s'"
-msgstr ""
+msgstr "Titel zoek resultaten '%s'"
 
 #: ../lib/plugin/UserPage.php:35
 #, c-format
@@ -622,9 +617,9 @@ msgid "None"
 msgstr "Geen"
 
 #: ../lib/diff.php:201 ../lib/diff.php:211
-#, fuzzy, c-format
+#, c-format
 msgid "version %d"
-msgstr "versie %s"
+msgstr "versie %d"
 
 #: ../lib/diff.php:205
 #, fuzzy
@@ -658,7 +653,7 @@ msgstr ""
 
 #: ../lib/diff.php:257
 msgid "Previous Author"
-msgstr ""
+msgstr "Vorige Auteur"
 
 #: ../lib/diff.php:267
 msgid "Other diffs:"
@@ -680,7 +675,7 @@ msgstr "Versies zijn identiek"
 #: ../lib/diff.php:298
 #, fuzzy, c-format
 msgid "Diff: %s"
-msgstr "Diff van %s."
+msgstr "Diff van: %s"
 
 #: ../lib/editpage.php:26 ../lib/savepage.php:45
 msgid "This page has been locked by the administrator and cannot be edited."
@@ -703,7 +698,7 @@ msgstr "Klaar."
 #: ../lib/loadsave.php:18
 #, fuzzy, c-format
 msgid "Return to %s"
-msgstr "Terug naar "
+msgstr "Terug naar %s"
 
 #: ../lib/loadsave.php:125
 msgid "You must specify a directory to dump to"
@@ -1033,9 +1028,8 @@ msgid "[%d] See [%s]"
 msgstr "[%d] Zie [%s]"
 
 #: ../lib/ziplib.php:630
-#, fuzzy
 msgid "References"
-msgstr "!Referenties"
+msgstr "Referenties"
 
 #: ../lib/ziplib.php:651
 #, c-format
