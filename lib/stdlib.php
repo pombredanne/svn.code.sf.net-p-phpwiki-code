@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.21.2.4 2001-08-18 01:30:56 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.21.2.5 2001-08-18 01:50:47 dairiki Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -340,7 +340,7 @@
 
    function ExtractWikiPageLinks($content)
    {
-      global $WikiNameRegexp;
+      global $WikiNameRegexp, $AllowedProtocols;
 
       $wikilinks = array();
       $numlines = count($content);
@@ -360,6 +360,10 @@
             $line = preg_replace("|$brktlink|", '', $line);
 	 }
 
+	 // Remove URLs (think about "http:a.b.com/WikiWords").
+	 $line = preg_replace("/!?\b($AllowedProtocols):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]/",
+			      ' ', $line);
+	 
          // BumpyText old-style wiki links
          if (preg_match_all("/!?$WikiNameRegexp/", $line, $link)) {
             for ($i = 0; isset($link[0][$i]); $i++) {
