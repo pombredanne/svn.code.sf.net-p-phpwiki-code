@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: VisualWiki.php,v 1.15 2004-09-08 13:38:00 rurban Exp $');
+rcs_id('$Id: VisualWiki.php,v 1.16 2004-10-12 15:34:47 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -87,7 +87,7 @@ extends WikiPluginCached
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.15 $");
+                            "\$Revision: 1.16 $");
     }
 
     /**
@@ -599,7 +599,7 @@ extends WikiPluginCached
      */
     function execute($cmd, $until = false) {
         $errstr = exec($cmd); //, $outarr, $returnval); // normally 127
-        // $errstr = join('',$outarr);
+        //$errstr = join('',$outarr);
         $ok = empty($errstr);
         if (!$ok) {
             trigger_error("\n".$cmd." failed: $errstr", E_USER_WARNING);
@@ -649,8 +649,10 @@ extends WikiPluginCached
             && $this->createDotFile($tempfiles.'.dot',$argarray)
             // && $this->filterThroughCmd('',"$dotbin -T$gif $tempfiles.dot -o $outfile")
             // && $this->filterThroughCmd('',"$dotbin -Timap $tempfiles.dot -o ".$tempfiles.".map")
-            && $this->execute("$dotbin -T$gif $tempfiles.dot -o $outfile" . ($debug ? " > $tempout 2>&1" : ""), $outfile)
-            && $this->execute("$dotbin -Timap $tempfiles.dot -o ".$tempfiles.".map" . ($debug ? " > $tempout 2>&1" : ""), $tempfiles.".map")
+            && $this->execute("$dotbin -T$gif $tempfiles.dot -o $outfile" . 
+                              ($debug ? " > $tempout 2>&1" : " 2>&1"), $outfile)
+            && $this->execute("$dotbin -Timap $tempfiles.dot -o ".$tempfiles.".map" . 
+                              ($debug ? " > $tempout 2>&1" : " 2>&1"), $tempfiles.".map")
             && file_exists( $outfile )
             && file_exists( $tempfiles.'.map' )
             && ($img = $ImageCreateFromFunc($outfile))
@@ -699,9 +701,12 @@ extends WikiPluginCached
             fclose($fp);
             //trigger_error("url=".$url);
         } else {
-            trigger_error("
-$outfile: ".(file_exists($outfile) ? filesize($outfile):'missing')."
-$tempfiles.map: ".(file_exists("$tempfiles.map") ? filesize("$tempfiles.map"):'missing'), E_USER_WARNING);
+            $this->_errortext = 
+                ("$outfile: ".(file_exists($outfile) ? filesize($outfile):'missing')."\n".
+                 "$tempfiles.map: ".(file_exists("$tempfiles.map") ? filesize("$tempfiles.map"):'missing'));
+            $this->_errortext .= ("\ncmd-line: $dotbin -T$gif $tempfiles.dot -o $outfile");
+            trigger_error($this->_errortext, E_USER_WARNING);
+            return array(false, false);
         }
 
         // clean up tempfiles
@@ -818,6 +823,11 @@ function interpolate($a, $b, $pos) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2004/09/08 13:38:00  rurban
+// improve loadfile stability by using markup=2 as default for undefined markup-style.
+// use more refs for huge objects.
+// fix debug=static issue in WikiPluginCached
+//
 // Revision 1.14  2004/09/07 13:26:31  rurban
 // new WikiPluginCached option debug=static and some more sf.net defaults for VisualWiki
 //
