@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiBlog.php,v 1.13 2004-03-15 10:59:40 rurban Exp $');
+rcs_id('$Id: WikiBlog.php,v 1.14 2004-03-29 21:33:32 rurban Exp $');
 /*
  Copyright 2002, 2003 $ThePhpWikiProgrammingTeam
  
@@ -83,7 +83,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.13 $");
+                            "\$Revision: 1.14 $");
     }
 
     // Arguments:
@@ -109,7 +109,7 @@ extends WikiPlugin
 
 
     function getDefaultArguments() {
-        return array('page'       => '[pagename]',
+        return array('pagename'   => '[pagename]',
                      'order'      => 'normal',
                      'mode'       => 'show,add',
                      'noheader'   => false
@@ -118,8 +118,8 @@ extends WikiPlugin
 
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
-        if (!$args['page'])
-            return $this->error("No page specified");
+        if (!$args['pagename'])
+            return $this->error(_("No pagename specified"));
 
         // Get our form args.
         $blog = $request->getArg("blog");
@@ -152,8 +152,8 @@ extends WikiPlugin
     }
 
     function add (&$request, $blog, $type='wikiblog') {
-        if (!($parent = $blog['page']))
-            $request->finish(fmt("No page specified for %s",$type));
+        if (!($parent = $blog['pagename']))
+            $request->finish(fmt("No pagename specified for %s",$type));
 
         $user = $request->getUser();
         $now = time();
@@ -209,6 +209,28 @@ extends WikiPlugin
             elseif ($type == 'wikiforum')
                 $pagename = "Topic";
 
+            // Check intermediate pages. If not existing they should RedirectTo the parent page.
+            $redirected = $parent . SUBPAGE_SEPARATOR . $pagename;
+            if (!$dbi->isWikiPage($redirected)) {
+                require_once('lib/loadsave.php');
+                $pageinfo = array('pagename' => $redirected,
+                                  'content'  => '<?plugin RedirectTo page='.$parent.' ?>',
+                                  'pagedata' => array(),
+                                  'versiondata' => array('author' => $blog_meta['creator']),
+                                  );
+                SavePage($request, $pageinfo, '', '');
+            }
+            $redirected = $parent . SUBPAGE_SEPARATOR . $pagename . SUBPAGE_SEPARATOR . preg_replace("/T.*/", "", "$time");
+            if (!$dbi->isWikiPage($redirected)) {
+                require_once('lib/loadsave.php');
+                $pageinfo = array('pagename' => $redirected,
+                                  'content'  => '<?plugin RedirectTo page='.$parent.' ?>',
+                                  'pagedata' => array(),
+                                  'versiondata' => array('author' => $blog_meta['creator']),
+                                  );
+                SavePage($request, $pageinfo, '', '');
+            }
+
             $p = $dbi->getPage($parent . SUBPAGE_SEPARATOR . $pagename . SUBPAGE_SEPARATOR . str_replace("T", SUBPAGE_SEPARATOR, "$time"));
             $pr = $p->getCurrentRevision();
 
@@ -250,7 +272,7 @@ extends WikiPlugin
         
         $dbi = $request->getDbh();
 
-        $parent = $args['page'];
+        $parent = $args['pagename'];
         $blogs = $this->findBlogs($dbi, $parent, $type);
         $html = HTML();
         if ($blogs) {
@@ -323,11 +345,14 @@ extends WikiPlugin
     function showForm (&$request, $args, $template='blogform') {
         // Show blog-entry form.
         return new Template($template, $request,
-                            array('PAGENAME' => $args['page']));
+                            array('PAGENAME' => $args['pagename']));
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2004/03/15 10:59:40  rurban
+// fix also early attach type bug, attached as wikiblog pagetype
+//
 // Revision 1.11  2004/03/12 20:59:31  rurban
 // important cookie fix by Konstantin Zadorozhny
 // new editpage feature: JS_SEARCHREPLACE
