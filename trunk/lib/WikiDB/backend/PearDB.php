@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.43 2004-03-30 02:14:03 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.44 2004-04-16 14:11:55 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -226,8 +226,8 @@ extends WikiDB_backend
     function get_versiondata($pagename, $version, $want_content = false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-                
-        assert(!empty($pagename));
+
+        assert(is_string($pagename) and $pagename != "");
         assert($version > 0);
         
         //trigger_error("GET_REVISION $pagename $version $want_content", E_USER_NOTICE);

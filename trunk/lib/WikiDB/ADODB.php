@@ -1,28 +1,26 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.2 2004-04-06 20:00:10 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.3 2004-04-16 14:11:54 rurban Exp $');
 
 require_once('lib/WikiDB.php');
 
 /**
- * WikiDB layer for ADODB, which does nothing more than calling the mysql-specific ADODB backend.
+ * WikiDB layer for ADODB, which does nothing more than calling the 
+ * mysql-specific ADODB backend.
  * Support for a newer adodb library, the adodb extension library 
- * and more databases will come with PhpWiki v1.3.9
+ * and more databases will come with PhpWiki v1.3.10
  *
  * @author: Lawrence Akka
  */
 class WikiDB_ADODB extends WikiDB
 {
     function WikiDB_ADODB ($dbparams) {
-        $backend_type = 'mysql';   // default value.  FIXME
-        /* if (preg_match('/^(\w+):/', $dbparams['dsn'], $m))
-             $backend_type = $m[1];  */
-        include_once("lib/WikiDB/backend/ADODB_$backend_type.php");
-        $backend_class = "WikiDB_backend_ADODB_$backend_type";
+        $backend_type = 'ADODB';
+        include_once("lib/WikiDB/backend/ADODB.php");
+        $backend_class = "WikiDB_backend_ADODB";
         $backend = new $backend_class($dbparams);
-
         $this->WikiDB($backend, $dbparams);
     }
-    
+   
     
     /**
      * Determine whether page exists (in non-default form).
@@ -46,7 +44,6 @@ class WikiDB_ADODB extends WikiDB
         */
     }
 };
-
   
 // For emacs users
 // Local Variables:
@@ -56,5 +53,4 @@ class WikiDB_ADODB extends WikiDB
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-
 ?>
