@@ -73,7 +73,7 @@ define('ENABLE_USER_NEW',true);
 
 define ('PHPWIKI_VERSION', '1.3.8pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.119 2004-02-01 09:14:10 rurban Exp $');
+rcs_id('$Id: index.php,v 1.120 2004-02-03 09:45:39 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -526,7 +526,7 @@ if (!defined('GROUP_METHOD')) define('GROUP_METHOD', "WIKIPAGE");
 //if (!defined('GROUP_METHOD')) define('GROUP_METHOD', "LDAP");
 //if (!defined('AUTH_GROUP_FILE')) define('AUTH_GROUP_FILE', '/etc/groups'); // or '/etc/httpd/.htgroup'
 // not yet!
-//if (!defined('GROUP_LDAP_QUERY')) define('GROUP_LDAP_QUERY', 'member=');
+//if (!defined('GROUP_LDAP_QUERY')) define('GROUP_LDAP_QUERY', 'ou=Groups');
 
 // Seperate DB User Authentication.
 //   Can be external, like radius, phpnuke, courier authmysql,
@@ -906,6 +906,22 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 include "lib/main.php";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.119  2004/02/01 09:14:10  rurban
+// Started with Group_Ldap (not yet ready)
+// added new _AuthInfo plugin to help in auth problems (warning: may display passwords)
+// fixed some configurator vars
+// renamed LDAP_AUTH_SEARCH to LDAP_BASE_DN
+// changed PHPWIKI_VERSION from 1.3.8a to 1.3.8pre
+// USE_DB_SESSION defaults to true on SQL
+// changed GROUP_METHOD definition to string, not constants
+// changed sample user DBAuthParams from UPDATE to REPLACE to be able to
+//   create users. (Not to be used with external databases generally, but
+//   with the default internal user table)
+//
+// fixed the IndexAsConfigProblem logic. this was flawed:
+//   scripts which are the same virtual path defined their own lib/main call
+//   (hmm, have to test this better, phpwiki.sf.net/demo works again)
+//
 // Revision 1.118  2004/01/28 14:34:13  rurban
 // session table takes the common prefix
 // + various minor stuff
