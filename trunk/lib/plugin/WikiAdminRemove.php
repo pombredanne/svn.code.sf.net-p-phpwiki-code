@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.20 2004-05-03 11:02:30 rurban Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.21 2004-05-04 16:34:22 rurban Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.20 $");
+                            "\$Revision: 1.21 $");
     }
 
     function getDefaultArguments() {
@@ -169,6 +169,7 @@ extends WikiPlugin
                 $name = str_replace(array('%5B','%5D'),array('[',']'),$name);
                 $pages[$name] = $c;
             }
+            $request->setArg('p',false);
         }
         if ($next_action == 'select') {
             // List all pages to select from.
@@ -236,6 +237,9 @@ class _PageList_Column_remove extends _PageList_Column {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2004/05/03 11:02:30  rurban
+// fix passing args from WikiAdminSelect to WikiAdminRemove
+//
 // Revision 1.19  2004/04/12 09:12:23  rurban
 // fix syntax errors
 //
