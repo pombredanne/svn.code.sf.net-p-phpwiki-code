@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.119 2004-12-14 21:38:12 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.120 2004-12-20 13:20:23 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1274,6 +1274,7 @@ class SubmitImageButton extends SubmitButton {
 class SidebarBox {
 
     function SidebarBox($title, $body) {
+        require_once('lib/WikiPlugin.php');
         $this->title = $title;
         $this->body = $body;
     }
@@ -1394,6 +1395,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.119  2004/12/14 21:38:12  rurban
+// just aesthetics
+//
 // Revision 1.118  2004/12/13 14:34:46  rurban
 // box parent method exists
 //

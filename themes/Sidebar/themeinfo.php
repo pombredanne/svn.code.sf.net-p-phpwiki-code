@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.18 2004-12-19 18:30:17 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.19 2004-12-20 13:20:23 rurban Exp $');
 
 /*
  * This file defines the Sidebar appearance ("theme") of PhpWiki.
@@ -7,6 +7,7 @@ rcs_id('$Id: themeinfo.php,v 1.18 2004-12-19 18:30:17 rurban Exp $');
  */
 
 require_once('lib/Theme.php');
+require_once('lib/WikiPlugin.php');
 
 class Theme_Sidebar extends Theme {
 
