@@ -1,4 +1,4 @@
-<!-- $Id: wiki_stdlib.php3,v 1.22 2000-07-05 14:52:04 ahollosi Exp $ -->
+<!-- $Id: wiki_stdlib.php3,v 1.23 2000-07-15 18:06:40 ahollosi Exp $ -->
 <?
    /*
       Standard functions for Wiki functionality
@@ -260,6 +260,7 @@
 
       global $remoteuser; // this is set in the config
       global $dateformat;
+      global $ScriptUrl;
 
       $recentchanges = RetrievePage($dbi, "RecentChanges");
 
@@ -306,7 +307,8 @@
       if($isnewpage) {
          $newpage[$k++] = "\t* [$pagename] (new) ..... $remoteuser\r";
       } else {
-         $newpage[$k++] = "\t* [$pagename] ..... $remoteuser\r";
+	 $diffurl = "$ScriptUrl?diff=" . rawurlencode($pagename);
+         $newpage[$k++] = "\t* [$pagename] ([diff|$diffurl]) ..... $remoteuser\r";
       }
 
       // copy the rest of the page into the new array
