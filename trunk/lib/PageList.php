@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.10 2002-01-21 21:00:21 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.11 2002-01-21 21:06:13 carstenklapp Exp $');
 
 // This relieves some work for these plugins:
 //
@@ -121,7 +121,7 @@ class PageList {
                      _("Visitors")        => 'hits',
                      _("Date Created")    => '_ctime',
                      _("Creation Date")   => '_ctime',
-                     _("# of revisions")  => '',        //FIXME: count revisions in db
+                     _("# Of Revisions")  => '',        //FIXME: count revisions in db
                      _("Last Summary")    => 'summary',
                      _("Last Author")     => 'author',
                      _("Last Edited By")  => 'author',
@@ -241,10 +241,10 @@ class PageList {
         $summary = "FIXME: add brief summary and column names";
 
         // Final table assembly
-        $table = HTML::table(array('cellpadding' => 0,
+        $table = HTML::table(array('summary'     => $summary,
+                                   'cellpadding' => 0,
                                    'cellspacing' => 1,
                                    'border'      => 0,
-                                   'summary'     => $summary,
                                    'width'       => '100%'));
 
         $table->pushContent(HTML::caption(array('align'=>'top'), $caption));
