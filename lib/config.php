@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.88 2004-03-14 13:17:51 rurban Exp $');
+rcs_id('$Id: config.php,v 1.89 2004-03-14 16:32:18 rurban Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -120,7 +120,7 @@ function guessing_setlocale ($category, $locale) {
     // ISO-8859-1 or UTF-8.
 }
 
-function update_locale ($loc) {
+function update_locale($loc) {
     $newlocale = guessing_setlocale(LC_ALL, $loc);
     if (!$newlocale) {
         trigger_error(sprintf(_("Can't set locale: '%s'"), $loc), E_USER_NOTICE);
@@ -148,7 +148,6 @@ function update_locale ($loc) {
         if ( ($lcfile = FindLocalizedFile("LC_MESSAGES/phpwiki.php", 'missing_ok','reinit')) ) {
             include($lcfile);
         }
-        FindLocalizedButtonFile("",'missing_ok','reinit');
     }
 
     // To get the POSIX character classes in the PCRE's (e.g.
@@ -380,11 +379,13 @@ define('PHPWIKI_BASE_URL',
 if (empty($DBParams['dbtype']))
     $DBParams['dbtype'] = 'dba';
 
-if (!defined('WIKI_NAME'))
-    define('WIKI_NAME', _("An unnamed PhpWiki"));
-
 if (!defined('THEME'))
     define('THEME', 'default');
+
+update_locale(DEFAULT_LANGUAGE);
+
+if (!defined('WIKI_NAME'))
+    define('WIKI_NAME', _("An unnamed PhpWiki"));
 
 if (!defined('HOME_PAGE'))
     define('HOME_PAGE', _("HomePage"));
