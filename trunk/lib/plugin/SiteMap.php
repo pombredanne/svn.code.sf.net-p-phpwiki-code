@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SiteMap.php,v 1.4 2002-11-04 06:48:46 carstenklapp Exp $');
+rcs_id('$Id: SiteMap.php,v 1.5 2002-11-04 19:17:16 carstenklapp Exp $');
 /**
 http://sourceforge.net/tracker/?func=detail&aid=537380&group_id=6121&atid=306121
 
@@ -11,6 +11,14 @@ CategoryCategory, then a RecBackLinks there will produce a contents
 page for the entire site.
 
 The list is as deep as the recursion level.
+
+direction: Get BackLinks or forward links (links listed on the page)
+
+firstreversed: If true, get BackLinks for the first page and forward
+links for the rest. Only applicable when direction = 'forward'.
+
+excludeunknown: If true (default) then exclude any mentioned pages
+which don't exist yet.  Only applicable when direction = 'forward'.
 */
 
 require_once('lib/PageList.php');
@@ -23,7 +31,7 @@ extends WikiPlugin
     }
 
     function getDescription () {
-        return sprintf(_("SiteMap: Recursively get BackLinks for %s"),
+        return sprintf(_("SiteMap: Recursively get BackLinks or links for %s"),
                        '[pagename]');
     }
 
@@ -34,7 +42,10 @@ extends WikiPlugin
                      'page'		=> '[pagename]',
                      'description'	=> $this->getDescription(),
                      'reclimit'         => 4,
-                     'info'		=> false
+                     'info'		=> false,
+                     'direction'	=> 'back',
+                     'firstreversed'	=> false,
+                     'excludeunknown'	=> true
                      );
     }
     // info arg allows multiple columns
@@ -43,13 +54,12 @@ extends WikiPlugin
     // exclude arg allows multiple pagenames
     // exclude=HomePage,RecentChanges
 
-    function recursivelyGetLinks($startpage, $pagearr, $level = '*', 
+    function recursivelyGetBackLinks($startpage, $pagearr, $level = '*', 
                                  $reclimit = '***') {
         static $VisitedPages = array();
 
         $startpagename = $startpage->getName();
-        // echo "<br> recursivelyGetLinks( " . $startpagename . " , "
-        // . $level . " )\n";
+        //trigger_error("DEBUG: recursivelyGetBackLinks( $startpagename , $level )");
         if ($level == $reclimit)
             return $pagearr;
         if (in_array($startpagename, $VisitedPages))
@@ -61,12 +71,41 @@ extends WikiPlugin
             if (($linkpagename != $startpagename)
                 && !in_array($linkpagename, $this->ExcludedPages)) {
                 $pagearr[$level . " [$linkpagename]"] = $link;
-                $pagearr = $this->recursivelyGetLinks($link, $pagearr, 
+                $pagearr = $this->recursivelyGetBackLinks($link, $pagearr, 
                                                       $level . '*', $reclimit);
             }
         }
         return $pagearr;
     }
+
+    function recursivelyGetLinks($startpage, $pagearr, $level = '*', 
+                                 $reclimit = '***') {
+        static $VisitedPages = array();
+
+        $startpagename = $startpage->getName();
+        //trigger_error("DEBUG: recursivelyGetLinks( $startpagename , $level )");
+        if ($level == $reclimit)
+            return $pagearr;
+        if (in_array($startpagename, $VisitedPages))
+            return $pagearr;
+        array_push($VisitedPages, $startpagename);
+        $reversed = (($this->firstreversed) && ($startpagename == $this->initialpage));
+        //trigger_error("DEBUG: \$reversed = $reversed");
+        $pagelinks = $startpage->getLinks($reversed);
+        while ($link = $pagelinks->next()) {
+            $linkpagename = $link->getName();
+            if (($linkpagename != $startpagename)
+                && !in_array($linkpagename, $this->ExcludedPages)) {
+                if (!$this->excludeunknown || $this->dbi->isWikiPage($linkpagename)) {
+                    $pagearr[$level . " [$linkpagename]"] = $link;
+                    $pagearr = $this->recursivelyGetLinks($link, $pagearr, 
+                                                      $level . '*', $reclimit);
+                }
+            }
+        }
+        return $pagearr;
+    }
+
 
     function run($dbi, $argstr, $request) {
         $args = $this->getArgs($argstr, $request, false);
@@ -95,8 +134,16 @@ extends WikiPlugin
         $p = $dbi->getPage($page);
 
         $pagearr = array();
-        $pagearr = $this->recursivelyGetLinks($p, $pagearr, "*", $limit);
-
+        if ($direction == 'back')
+            $pagearr = $this->recursivelyGetBackLinks($p, $pagearr, "*", $limit);
+        else {
+            $this->dbi = $dbi;
+            $this->initialpage = $page;
+            $this->firstreversed = $firstreversed;
+            $this->excludeunknown = $excludeunknown;
+            $pagearr = $this->recursivelyGetLinks($p, $pagearr, "*", $limit);
+        }
+        
         reset($pagearr);
         while (list($key, $link) = each($pagearr)) {
             $out .= $key . "\n";
