@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.209 2004-10-14 19:19:34 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.210 2004-10-14 21:06:02 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -163,9 +163,11 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
         $args = join('&', $enc_args);
     }
 
-    if (USE_PATH_INFO) {
+    if (USE_PATH_INFO or $GLOBALS['WikiTheme']->HTML_DUMP_SUFFIX) {
         $url = $get_abs_url ? SERVER_URL . VIRTUAL_PATH . "/" : "";
         $url .= preg_replace('/%2f/i', '/', rawurlencode($pagename));
+        if ($GLOBALS['WikiTheme']->HTML_DUMP_SUFFIX)
+            $url .= $GLOBALS['WikiTheme']->HTML_DUMP_SUFFIX;
         if ($args)
             $url .= "?$args";
     }
@@ -1775,6 +1777,10 @@ function string_starts_with($string, $prefix) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.209  2004/10/14 19:19:34  rurban
+// loadsave: check if the dumped file will be accessible from outside.
+// and some other minor fixes. (cvsclient native not yet ready)
+//
 // Revision 1.208  2004/10/12 13:13:20  rurban
 // php5 compatibility (5.0.1 ok)
 //

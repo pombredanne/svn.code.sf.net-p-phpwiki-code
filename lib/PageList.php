@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.116 2004-10-14 19:19:33 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.117 2004-10-14 21:06:01 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -620,7 +620,7 @@ class PageList {
         return empty($this->_pages);
     }
 
-    function addPage(&$page_handle) {
+    function addPage($page_handle) {
     	if (!empty($this->_excluded_pages)) {
             if (!in_array((is_string($page_handle) ? $page_handle : $page_handle->getName()),
                           $this->_excluded_pages))
@@ -630,10 +630,10 @@ class PageList {
         }
     }
 
-    function _getPageFromHandle(&$page_handle) {
+    function _getPageFromHandle($page_handle) {
         if (is_string($page_handle)) {
             if (empty($page_handle)) return $page_handle;
-            //$dbi = $GLOBALS['request']->getDbh(); // memory!
+            //$dbi = $GLOBALS['request']->getDbh(); // no, safe memory!
             $page_handle = $GLOBALS['request']->_dbi->getPage($page_handle);
         }
         return $page_handle;
@@ -1424,6 +1424,10 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.116  2004/10/14 19:19:33  rurban
+// loadsave: check if the dumped file will be accessible from outside.
+// and some other minor fixes. (cvsclient native not yet ready)
+//
 // Revision 1.115  2004/10/14 17:15:05  rurban
 // remove class _PageList_Page, fix sortby=0 (start with 1, use strings), fix _PageList_Column_content for old phps, hits as int
 //
