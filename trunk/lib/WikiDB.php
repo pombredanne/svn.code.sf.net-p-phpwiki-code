@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.129 2005-04-06 05:50:29 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.130 2005-04-06 06:19:30 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -884,7 +884,7 @@ class WikiDB_Page
 
 	$backend = &$this->_wikidb->_backend;
 	$newrevision = $this->createRevision($version, $wikitext, $meta, $links);
-	if ($newrevision and !WIKIDB_NOCACHE_MARKUP and USECACHE)
+	if ($newrevision and !WIKIDB_NOCACHE_MARKUP)
             $this->set('_cached_html', $formatted->pack());
 
 	// FIXME: probably should have some global state information
@@ -1252,7 +1252,7 @@ class WikiDB_Page
         if (!$key || $key[0] == '%')
             return false;
         // several new SQL backends optimize this.
-        if (USECACHE 
+        if (!WIKIDB_NOCACHE_MARKUP
             and $key == '_cached_html' 
             and method_exists($backend, 'get_cached_html')) 
         {
@@ -1295,7 +1295,7 @@ class WikiDB_Page
         assert($key && $key[0] != '%');
 
         // several new SQL backends optimize this.
-        if (USECACHE 
+        if (!WIKIDB_NOCACHE_MARKUP 
             and $key == '_cached_html' 
             and method_exists($backend, 'set_cached_html'))
         {
@@ -1571,7 +1571,7 @@ class WikiDB_PageRevision
                                       $this->getPackedContent(),
                                       $this->getMetaData());
             
-            if (USECACHE and $possibly_cache_results) {
+            if ($possibly_cache_results and !WIKIDB_NOCACHE_MARKUP) {
                 // If we're still the current version, cache the transfomed page.
                 //$backend->lock();
                 if ($this->isCurrent()) {
@@ -2135,6 +2135,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.129  2005/04/06 05:50:29  rurban
+// honor !USECACHE for _cached_html, fixes #1175761
+//
 // Revision 1.128  2005/04/01 16:11:42  rurban
 // just whitespace
 //
