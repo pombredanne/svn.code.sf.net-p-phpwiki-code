@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.28 2001-12-06 18:41:21 dairiki Exp $');
+<?php rcs_id('$Id: transform.php,v 1.29 2001-12-12 23:38:53 dairiki Exp $');
 require_once('lib/WikiPlugin.php');
 
 define('WT_SIMPLE_MARKUP', 0);
@@ -185,6 +185,8 @@ class WikiTransform
     */
    function ListItem($list_type, $level, $defn_term = '')
    {
+       $level = min($level, 10);
+       
        $retval = $this->SetHTMLMode($list_type, 2 * $level - 1);
        if ($list_type == 'dl') {
            $retval .= Element('dt', $defn_term);
