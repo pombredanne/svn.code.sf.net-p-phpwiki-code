@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: UnfoldSubpages.php,v 1.14 2004-07-03 08:19:40 rurban Exp $');
+rcs_id('$Id: UnfoldSubpages.php,v 1.15 2004-07-03 14:48:18 rurban Exp $');
 /*
- Copyright 2002 $ThePhpWikiProgrammingTeam
+ Copyright 2002, 2004 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -23,8 +23,7 @@ rcs_id('$Id: UnfoldSubpages.php,v 1.14 2004-07-03 08:19:40 rurban Exp $');
 /**
  * UnfoldSubpages:  Lists the content of all SubPages of the current page.
  *   This is e.g. useful for the CalendarPlugin, to see all entries at once.
- *   Warning: Don't use it with subpages where the RedirectTo plugin is used
- *            or with non-existant sections!
+ *   Warning: Don't use it with non-existant sections!
  *	      The section extractor is currently quite unstable.
  * Usage:   <?plugin UnfoldSubpages sortby=-mtime words=50 maxpages=5 ?>
  * Author:  Reini Urban <rurban@x-ray.at>
@@ -42,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.14 $");
+                            "\$Revision: 1.15 $");
     }
 
     function getDefaultArguments() {
@@ -197,6 +196,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2004/07/03 08:19:40  rurban
+// trap recursive redirects
+//
 // Revision 1.13  2004/03/12 15:48:08  rurban
 // fixed explodePageList: wrong sortby argument order in UnfoldSubpages
 // simplified lib/stdlib.php:explodePageList

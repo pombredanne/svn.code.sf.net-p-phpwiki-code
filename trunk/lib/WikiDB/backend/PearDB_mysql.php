@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_mysql.php,v 1.4 2004-03-24 19:39:03 rurban Exp $');
+rcs_id('$Id: PearDB_mysql.php,v 1.5 2004-07-03 14:48:18 rurban Exp $');
 
 require_once('lib/WikiDB/backend/PearDB.php');
 
@@ -12,9 +12,17 @@ extends WikiDB_backend_PearDB
     function WikiDB_backend_mysql($dbparams) {
         $this->WikiDB_backend_PearDB($dbparams);
 
-        // Older MySQL's don't have CASE WHEN ... END
-        $this->_expressions['maxmajor'] = "MAX(IF(minor_edit=0,version,0))";
-        $this->_expressions['maxminor'] = "MAX(IF(minor_edit<>0,version,0))";
+        //$this->_serverinfo = $this->_dbh->ServerInfo();
+        $row = $this->_dbh->GetOne("SELECT version()");
+        if (!DB::isError($row) and !empty($row)) {
+            $arr = explode('.',$row);
+            $this->_serverinfo['version'] = (string)(($arr[0] * 100) + $arr[1]) . "." . (integer)$arr[2];
+            if ($this->_serverinfo['version'] < 323.0) {
+                // Older MySQL's don't have CASE WHEN ... END
+                $this->_expressions['maxmajor'] = "MAX(IF(minor_edit=0,version,0))";
+                $this->_expressions['maxminor'] = "MAX(IF(minor_edit<>0,version,0))";
+            }
+        }
     }
     
     /**
