@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: browse.tmpl,v 1.1 2004-05-12 19:42:16 rurban Exp $ -->
+<!-- $Id: browse.tmpl,v 1.2 2004-06-18 08:40:39 rurban Exp $ -->
 
 <?php if (! $revision->isCurrent()) { ?>
   <p><strong><?=_("Note:")?></strong>
@@ -14,7 +14,7 @@
 
 
 <div id="revision">
-<p class="editdate"><?= $Theme->getLastModifiedMessage($revision) ?></p>
+<p class="editdate"><?= $WikiTheme->getLastModifiedMessage($revision) ?></p>
 <?php
 global $HIDE_TOOLBARS;
 if (!$HIDE_TOOLBARS) {
