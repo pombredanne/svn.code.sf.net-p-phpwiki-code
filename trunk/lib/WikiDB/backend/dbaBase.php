@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: dbaBase.php,v 1.20 2004-12-08 12:55:51 rurban Exp $');
+<?php rcs_id('$Id: dbaBase.php,v 1.21 2005-04-01 16:05:48 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -161,12 +161,23 @@ extends WikiDB_backend
     }
 
     function rename_page($pagename, $to) {
-	$data = get_pagedata($pagename);
-	if (isset($data['pagename']))
-	  $data['pagename'] = $to;
-        //$vdata = get_versiondata($pagename, $version, 1);
-	//$this->delete_page($pagename);
-	$this->update_pagedata($to, $data);
+        $result = $this->_pagedb->get($pagename);
+        if ($result) {
+            list($version,$flags,$data) = explode(':', $result, 3);
+            $data = unserialize($data);
+        }
+        else
+            return false;
+
+        $this->_pagedb->delete($pagename);
+        $data['pagename'] = $to;
+        $this->_pagedb->set($to,
+                            (int)$version . ':'
+                            . (int)$flags . ':'
+                            . serialize($data));
+        // move over the latest version only
+        $pvdata = $this->get_versiondata($pagename, $version, true);
+        $this->set_versiondata($to, $version, $pvdata);
 	return true;
     }
             
