@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BackLinks.php,v 1.14 2002-01-28 01:01:27 dairiki Exp $');
+rcs_id('$Id: BackLinks.php,v 1.15 2002-01-30 18:27:13 carstenklapp Exp $');
 /**
  */
 
@@ -17,23 +17,23 @@ extends WikiPlugin
     }
   
     function getDefaultArguments() {
-        // FIXME: how to exclude multiple pages?
         return array('exclude'		=> '',
                      'include_self'	=> 0,
                      'noheader'		=> 0,
-                     'page'		=> '[pagename]',
+                     'pagename'		=> '[pagename]',
                      'info'		=> false
                      );
     }
     // info arg allows multiple columns info=mtime,hits,summary,version,author,locked,minor
-
+    // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
+ 
     function run($dbi, $argstr, $request) {
         $this->_args = $this->getArgs($argstr, $request);
         extract($this->_args);
-        if (!$page)
+        if (!$pagename)
             return '';
 
-        $p = $dbi->getPage($page);
+        $p = $dbi->getPage($pagename);
         $backlinks = $p->getLinks();
 
         $pagelist = new PageList;
@@ -42,24 +42,29 @@ extends WikiPlugin
             foreach (explode(",", $info) as $col)
                 $pagelist->insertColumn($col);
 
-        while ($backlink = $backlinks->next()) {
-            $name = $backlink->getName();
-            if ($exclude && $name == $exclude)
-                continue;
-            if (!$include_self && $name == $page)
-                continue;
+        if ($exclude)
+            foreach (explode(",", $exclude) as $excludepage)
+                $pagelist->excludePageName($excludepage);
+        if (!$include_self)
+                $pagelist->excludePageName($pagename);
 
+        while ($backlink = $backlinks->next()) {
             $pagelist->addPage($backlink);
         }
 
         if (!$noheader) {
-            $pagelink = LinkWikiWord($page);
-            
+            $pagelink = LinkWikiWord($pagename);
+
             if ($pagelist->isEmpty())
                 return HTML::p(fmt("No pages link to %s.", $pagelink));
 
-            $pagelist->setCaption(fmt("%d pages link to %s:",
-                                      $pagelist->getTotal(), $pagelink));
+            if ($pagelist->getTotal() == 1)
+                $pagelist->setCaption(fmt("1 page links to %s:",
+                                          $pagelink));
+            else
+                $pagelist->setCaption(fmt("%s pages link to %s:",
+                                          $pagelist->getTotal(), $pagelink));
+
             $pagelist->setMessageIfEmpty('');
         }
 
