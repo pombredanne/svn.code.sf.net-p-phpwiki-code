@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki-heavy.css,v 1.22 2002-02-18 01:35:46 carstenklapp Exp $
+ * $Id: phpwiki-heavy.css,v 1.23 2002-02-19 06:49:13 carstenklapp Exp $
  *
  * This is stuff which should be in phpwiki.css, but which breaks Netscape 4.
  *
@@ -44,7 +44,11 @@ input.numeric { text-align: right; }
  */
 /* div.wikiaction, div.wikiadmin { */
 div.wikiaction, form.wikiadmin div {
-  border: 1px inset #006;
+  border-bottom: 1px solid #d8d8e7;
+  border-right:  1px solid #d8d8e7;
+  border-top:  1px solid #96a2ae;
+  border-left: 1px solid #96a2ae;
+
   margin-top: 0.5ex;
   margin-bottom: 0.5ex;
   padding: 0.5ex 0.5em;
@@ -59,13 +63,20 @@ div.wikiaction input[type=text], div.wikiadmin input[type=text], form.wikiadmin 
 
 /**
  * Links
+  border-top:  1px solid #b2b2d1;
+  border-left: 1px solid #d2d2f1;
+  border-bottom: 1px solid #86929e;
+  border-right:  1px solid #86929e;
  */
 
 /* Make wikiaction links look like buttons */ 
 a.wikiaction, a.wikiadmin, a.wikiunsafe,
 input.wikiaction, input.wikiadmin, input.wikiunsafe, input.button {
   color: black;
-  border: 1px outset #006;
+  border-top:  1px solid #c6d2de;
+  border-left: 1px solid #c6d2de;
+  border-bottom: 1px solid #494f5d;
+  border-right:  1px solid #494f5d;
   padding-top:    0.2ex;
   padding-bottom: 0.1ex;
   padding-left:  .5em;
@@ -77,11 +88,14 @@ a.wikiaction, a.wikiadmin { line-height: 2.6ex; }
 
 /* QuestionMark */
 .wikiunknown a, .named-wikiunknown a {
-  border: 1px outset black;
+  border-top:  1px solid #c6d2de;
+  border-left: 1px solid #c6d2de;
+  border-bottom: 1px solid #a2a2a2;
+  border-right:  1px solid #a2a2a2;
   padding-left:  1px;
   padding-right: 1px;
   padding-top: 1px;
-  margin-right: 1px;
+  margin-right: .15em;
 }
 
 /* Link icons */
