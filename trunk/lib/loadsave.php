@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.108 2004-06-16 12:43:01 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.109 2004-06-17 11:31:05 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -60,8 +60,19 @@ function EndLoadDump(&$request)
         global $ErrorManager;
         $ErrorManager->popErrorHandler();
     }
-    // FIXME: This is a hack
-    $pagelink = WikiLink($request->getPage());
+    $action = $request->getArg('action');
+    $label = '';
+    switch ($action) {
+    case 'zip':        $label = _("ZIP files of database"); break;
+    case 'dumpserial': $label = _("Dump to directory"); break;
+    case 'upload':     $label = _("Upload File"); break;
+    case 'loadfile':   $label = _("Load File"); break;
+    case 'upgrade':    $label = _("Upgrade"); break;
+    case 'dumphtml': 
+    case 'ziphtml':    $label = _("Dump pages as XHTML"); break;
+    }
+    if ($label) $label = str_replace(" ","_",$label);
+    $pagelink = WikiLink(new WikiPageName(_("PhpWikiAdministration"),false,$label));
 
     PrintXML(HTML::p(HTML::strong(_("Complete."))),
              HTML::p(fmt("Return to %s", $pagelink)));
@@ -998,6 +1009,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.108  2004/06/16 12:43:01  rurban
+ 4.0.6 cannot use this errorhandler (not found)
+
  Revision 1.107  2004/06/14 11:31:37  rurban
  renamed global $Theme to $WikiTheme (gforge nameclash)
  inherit PageList default options from PageList
