@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.36 2002-02-08 05:29:08 carstenklapp Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.37 2002-02-08 19:02:24 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -368,27 +368,6 @@ class Theme {
             $image = $proto;
 
         $this->_linkIcons[$proto] = $image;
-    }
-
-    var $_hr = false;
-    function sethr($image = false) {
-        if (!$image)
-            $image = $this->getImageURL('hr');
-
-        $this->_hr = $image;
-    }
-    function hr(){
-        if ($this->_hr) {
-            $h = new HtmlElement('img');
-            $h->setAttr('src', $this->_hr);
-            $h->setAttr('class', 'wikihr');
-
-            $d = new HtmlElement('div');
-            $d->setAttr('align', 'center');
-            $d->setAttr('class', 'wikihr');
-            $d->_content[0] = $h;
-            return $d;
-        }
     }
 
     function getLinkIconURL ($proto) {
