@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.189 2004-11-09 17:11:16 rurban Exp $');
+rcs_id('$Id: main.php,v 1.190 2004-11-15 15:56:40 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -12,7 +12,19 @@ if (ENABLE_USER_NEW)
 else
     require_once("lib/WikiUser.php");
 require_once("lib/WikiGroup.php");
-require_once("lib/PagePerm.php");
+if (ENABLE_PAGEPERM)
+    require_once("lib/PagePerm.php");
+
+/**
+ * Check permission per page.
+ * Returns true or false.
+ */
+function mayAccessPage ($access, $pagename) {
+    if (ENABLE_PAGEPERM)
+        return _requiredAuthorityForPagename($access, $pagename);
+    else
+        return true;
+}
 
 class WikiRequest extends Request {
     // var $_dbi;
@@ -162,7 +174,7 @@ $this->version = phpwiki_version();
             $this->_handleAuthRequest($auth_args); // possible NORETURN
         }
         elseif ( ! $this->_user or 
-                 (isa($this->_user,WikiUserClassname()) and ! $this->_user->isSignedIn())) {
+                 (isa($this->_user, WikiUserClassname()) and ! $this->_user->isSignedIn())) {
             // If not auth request, try to sign in as saved user.
             if (($saved_user = $this->getPref('userid')) != false) {
                 $this->_signIn($saved_user);
@@ -1124,6 +1136,17 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.189  2004/11/09 17:11:16  rurban
+// * revert to the wikidb ref passing. there's no memory abuse there.
+// * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively
+//   store page ids with getPageLinks (GleanDescription) of all existing pages, which
+//   are also needed at the rendering for linkExistingWikiWord().
+//   pass options to pageiterator.
+//   use this cache also for _get_pageid()
+//   This saves about 8 SELECT count per page (num all pagelinks).
+// * fix passing of all page fields to the pageiterator.
+// * fix overlarge session data which got broken with the latest ACCESS_LOG_SQL changes
+//
 // Revision 1.188  2004/11/07 16:02:52  rurban
 // new sql access log (for spam prevention), and restructured access log class
 // dbh->quote (generic)
