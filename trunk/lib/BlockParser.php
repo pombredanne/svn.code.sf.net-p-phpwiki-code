@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.22 2002-02-08 03:01:11 dairiki Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.23 2002-02-08 05:46:16 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -148,6 +148,14 @@ class BlockParser_Input {
 
         $this->_lines = preg_split('/[^\S\n]*\n/', $text);
         $this->_pos = 0;
+        $this->_atSpace = false;
+
+        while ($this->_pos < count($this->_lines)) {
+            if ($this->_lines[$this->_pos] != '')
+                break;
+            $this->_pos++;
+            $this->_atSpace = true;
+        }
     }
 
     function currentLine () {
@@ -157,22 +165,34 @@ class BlockParser_Input {
     }
         
     function nextLine () {
-        $this->_pos++;
-        if ($this->_pos >= count($this->_lines))
-            return false;
-        return $this->_lines[$this->_pos];
+        $this->_atSpace = false;
+        while (++$this->_pos < count($this->_lines)) {
+            if (($line = $this->_lines[$this->_pos]) != '')
+                return $line;
+            $this->_atSpace = true;
+        }
+        return false;
     }
 
+    function atSpace () {
+        return $this->_atSpace;
+    }
+    
     function advance () {
-        $this->_pos++;
+        $this->_atSpace = false;
+        while (++$this->_pos < count($this->_lines)) {
+            if ($this->_lines[$this->_pos] != '')
+                return;
+            $this->_atSpace = true;
+        }
     }
     
     function getPos () {
-        return $this->_pos;
+        return array($this->_pos, $this->_atSpace);
     }
 
     function setPos ($pos) {
-        $this->_pos = $pos;
+        list($this->_pos, $this->_atSpace) = $pos;
     }
 
     function getPrefix () {
@@ -206,12 +226,25 @@ class BlockParser_InputSubBlock extends BlockParser_Input
 {
     function BlockParser_InputSubBlock (&$input, $prefix_re, $initial_prefix = false) {
         $this->_input = &$input;
-        $this->_prefix_pat = "/$prefix_re|\\s*\$/Ax";
+        $this->_prefix_pat = "/$prefix_re/Ax";
         $this->_prefix = $initial_prefix;
+        $this->_atSpace = false;
 
-        // FIXME: hackish
-        $this->_block_types = &$input->_block_types;
-        $this->_regexpset = &$input->_regexpset;
+        if ($initial_prefix) {
+            if (($line = $input->currentLine()) !== false) {
+                if (strlen($initial_prefix) == strlen($line)) {
+                    $this->_prefix = false;
+                    $this->_atSpace = true;
+                    $input->advance();
+                }
+            }
+        }
+        while (($line = $input->currentLine()) !== false) {
+            if (!preg_match($this->_prefix_pat, $line, $m) || $m[0] != $line)
+                break;
+            $input->advance();
+            $this->_atSpace = true;
+        }
     }
 
     function currentLine () {
@@ -226,30 +259,46 @@ class BlockParser_InputSubBlock extends BlockParser_Input
     }
         
     function nextLine () {
-        if (($line = $this->_input->nextLine()) === false) {
-            $this->_prefix = false;
-            return false;
+        $this->_atSpace = false;
+        while (($line = $this->_input->nextLine()) !== false) {
+            if (!preg_match($this->_prefix_pat, $line, $m))
+                break;
+            if ($m[0] != $line) {
+                $this->_prefix = $m[0];
+                return (string) substr($line, strlen($this->_prefix));
+            }
+            $this->_atSpace = true;
         }
-        if (!preg_match($this->_prefix_pat, $line, $m)) {
-            $this->_prefix = false;
-            return false;
-        }
-        $this->_prefix = $m[0];
-        return (string) substr($line, strlen($this->_prefix));
+        $this->_prefix = false;
+        return false;
     }
 
     function advance () {
+        $this->_atSpace = false;
         $this->_prefix = false;
-        $this->_input->advance();
+        while (($line = $this->_input->nextLine()) !== false) {
+            if (!preg_match($this->_prefix_pat, $line, $m))
+                return;
+            if ($m[0] != $line) {
+                $this->_prefix = $m[0];
+                return;
+            }
+            $this->_atSpace = true;
+        }
+    }
+
+    function atSpace () {
+        return $this->_atSpace || $this->_input->atSpace();
     }
     
     function getPos () {
-        return array($this->_prefix, $this->_input->getPos());
+        return array($this->_prefix, $this->_atSpace, $this->_input->getPos());
     }
 
     function setPos ($pos) {
         $this->_prefix = $pos[0];
-        $this->_input->setPos($pos[1]);
+        $this->_atSpace = $pos[1];
+        $this->_input->setPos($pos[2]);
     }
     
     function getPrefix () {
@@ -370,50 +419,27 @@ class ParsedBlock extends Tightenable {
         $this->_regexpset = new AnchoredRegexpSet($this->_regexps);
     }
 
-    function _getLine (&$input) {
-        $line = $input->currentLine();
-        if ( $line || $line === false) {
-            $this->_atSpace = false;
-            return $line;
-        }
-        
-        $pos = $input->getPos();
-        while ( ($line = $input->nextLine()) !== false ) {
-            if ($line) {
-                $this->_atSpace = true;
-                $this->_isLoose = true;
-                return $line;
-            }
-        }
-        // EOF.
-        $input->setPos($pos);
-        return false;
-    }
-        
     function _getBlock (&$input) {
-        if (! ($line = $this->_getLine($input)) )
+        if (! ($line = $input->currentLine()) )
             return false;
 
+        $this->_atSpace = $input->atSpace();
+        if ($this->_atSpace)
+            $this->_isLoose = true;
+        
         $re_set = &$this->_regexpset;
         for ($m = $re_set->match($line); $m; $m = $re_set->nextMatch($line, $m)) {
             $block = $this->_block_types[$m->regexp_ind];
-            //$this->_debug('>', get_class($block));
+            //$input->_debug('>', get_class($block));
             
             if ($block->_match($input, $m)) {
-                //$this->_debug('<', get_class($block));
-                //$block->_follows_space = $this->_atSpace;
+                //$input->_debug('<', get_class($block));
                 return $block;
             }
-            //$this->_debug('[', "_match failed");
+            //$input->_debug('[', "_match failed");
         }
 
-
-        //if ($input->getDepth() == 0) {
-        // We should never get here.
-        //preg_match('/.*/A', substr($this->_text, $this->_pos), $m);// get first line
         trigger_error("Couldn't match block: '$line'", E_USER_NOTICE);
-        //}
-        
         return false;
     }
 }
@@ -550,19 +576,13 @@ class Block_dl extends Block_list
         $firstIndent = strspn($m->match, ' ');
         $pat = sprintf('/\ {%d,%d}(?=\s*\S)/A', $firstIndent + 1, $firstIndent + 5);
 
-        while ( ($line = $input->nextLine()) !== false ) {
-            if (preg_match($pat, $line, $mm)) {
-                $indent = strlen($mm[0]);
-                break;
-            }
-        }
-        $input->setPos($pos);
-        
-        if (!isset($indent))
+        $line = $input->nextLine();
+        if (!$line || !preg_match($pat, $line, $mm)) {
+            $input->setPos($pos);
             return false;       // No body found.
+        }
 
-        $input->advance();      // Skip the first line.
-
+        $indent = strlen($mm[0]);
         $term = TransformInline(rtrim(substr(trim($m->match),0,-1)));
         $defn = new SubBlock($input, sprintf("\\ {%d}", $indent), false, 'dd');
         return array($term, $defn);
@@ -838,7 +858,7 @@ class Block_plugin extends Block_pre
     }
 }
 
-class Block_email_blockquote extends Block_blockquote
+class Block_email_blockquote extends BlockMarkup
 {
     // FIXME: move CSS to CSS.
     var $_attr = array('style' => 'border-left-width: medium; border-left-color: #0f0; border-left-style: ridge; padding-left: 1em; margin-left: 0em; margin-right: 0em;');
@@ -846,10 +866,14 @@ class Block_email_blockquote extends Block_blockquote
     var $_re = '>\ ?';
     
     function _match (&$input, $m) {
-        $indent = str_replace(' ', '\\ ', $m->match);
+        $indent = str_replace(' ', '\\ ', $m->match) . '|>$';
         $this->_block = new SubBlock($input, $indent, $m->match,
                                      'blockquote', $this->_attr);
         return true;
+    }
+
+    function finish () {
+        return $this->_block;
     }
 }
 
@@ -932,6 +956,8 @@ function TransformText ($text, $markup = 2.0) {
     $text = preg_replace('/^\ *[^\ \S\n][^\S\n]*/me', "str_repeat(' ', strlen('\\0'))", $text);
     assert(!preg_match('/^\ *\t/', $text));
 
+    //set_time_limit(2);
+    
     $output = new WikiText($text);
     return $output;
 }
