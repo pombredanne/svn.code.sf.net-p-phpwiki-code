@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.56 2004-06-19 10:21:32 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.57 2004-06-20 15:26:29 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004 Reini Urban
  *
@@ -338,9 +338,15 @@ function LinkBracketLink($bracketlink) {
      *   "[http:/server/~name/]" will work as expected
      *   "http:/server/~name/"   will NOT work as expected, will remove the ~
      */
-    if (strstr($rawlink, "http://") or strstr($rawlink, "https://"))
+    if (strstr($rawlink, "http://") or strstr($rawlink, "https://")) {
         $link = $rawlink;
-    else
+        // Mozilla Browser URI Obfuscation Weakness 2004-06-14
+        //   http://www.securityfocus.com/bid/10532/
+        //   goodurl+"%2F%20%20%20."+badurl
+        if (preg_match("/%2F(%20)+\./i", $rawlink)) {
+            $rawlink = preg_replace("/%2F(%20)+\./i","%2F.",$rawlink);
+        }
+    } else
         $link  = UnWikiEscape($rawlink);
 
     // [label|link]
