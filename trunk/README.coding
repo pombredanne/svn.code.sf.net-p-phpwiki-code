@@ -24,7 +24,7 @@ but I think we're better off using just spaces because aligned
 comments in the right region will not align correctly.
 
 Use php-mode as well. This is freely available on the net
-(http://sourceforge.net/projects/php-mode/). Put something like this
+(http://www.ontosys.com/src/php-mode.el). Put something like this
 in your .emacs file:
 
 (load "your-path-to-lisp-files/php-mode")
@@ -34,6 +34,9 @@ in your .emacs file:
 
 so when you open .php files in Emacs it will start PHP mode
 automatically.
+
+There is another php-mode.el I have not tried:
+http://sourceforge.net/projects/php-mode/
 
 I'm sure Vim has a similar mode, if someone would let us know I'll add
 it to this README.
