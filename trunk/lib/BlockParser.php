@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.36 2003-02-21 05:09:24 dairiki Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.37 2003-02-26 17:17:52 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -418,7 +418,7 @@ class TightSubBlock extends SubBlock {
         // If content is a single paragraph, eliminate the paragraph...
         if (count($this->_content) == 1) {
             $elem = $this->_content[0];
-            if ($elem->getTag() == 'p') {
+            if (isa($elem, 'XmlElement') and $elem->getTag() == 'p') {
                 assert($elem->getAttr('class') == 'tightenable top bottom');
                 $this->setContent($elem->getContent());
             }
