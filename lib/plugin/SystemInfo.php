@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SystemInfo.php,v 1.5 2003-01-18 22:08:01 carstenklapp Exp $');
+rcs_id('$Id: SystemInfo.php,v 1.6 2003-02-21 23:01:11 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -58,17 +58,17 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getExpire($dbi, $argarray, $request) {
         return '+1800'; // 30 minutes
     }
-    function getHtml($dbi, $argarray, $request) {
+    function getHtml($dbi, $argarray, $request, $basepage) {
         $loader = new WikiPluginLoader;
         return $loader->expandPI('<?plugin SystemInfo '
                                  . WikiPluginCached::glueArgs($argarray) // all
-                                 . ' ?>', $request);
+                                 . ' ?>', $request, $basepage);
     }
     /*
     function getDefaultArguments() {
@@ -369,7 +369,7 @@ extends WikiPlugin
             return $this->error(sprintf(_("unknown argument '%s' to SystemInfo"), $arg));
     }
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, $request, $basepage) {
         // don't parse argstr for name=value pairs. instead we use just 'name'
         //$args = $this->getArgs($argstr, $request);
         $args['seperator'] = ' ';
@@ -515,6 +515,11 @@ function stddev(&$hits, $total = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2003/01/18 22:08:01  carstenklapp
+// Code cleanup:
+// Reformatting & tabs to spaces;
+// Added copyleft, getVersion, getDescription, rcs_id.
+//
 
 // Local Variables:
 // mode: php

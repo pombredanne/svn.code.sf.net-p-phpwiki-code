@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: CachedMarkup.php,v 1.1 2003-02-21 04:06:45 dairiki Exp $');
+<?php rcs_id('$Id: CachedMarkup.php,v 1.2 2003-02-21 23:01:09 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -343,7 +343,7 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
         }
 
         $xml = HTML::div(array('class' => 'plugin'),
-			 $loader->expandPI($this->_pi, $GLOBALS['request']));
+			 $loader->expandPI($this->_pi, $GLOBALS['request'], $basepage));
         
 	if (isset($this->_tightenable)) {
 	    $xml->setInClass('tightenable');
