@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.14 2002-01-18 06:11:38 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.15 2002-01-19 00:04:50 carstenklapp Exp $');
 
 /*
  * This file defines the default appearance ("theme") of PhpWiki.
@@ -37,7 +37,7 @@ $Theme->setLinkIcon('mailto');
 $Theme->setLinkIcon('interwiki');
 $Theme->setLinkIcon('*', 'url');
 
-$Theme->setButtonSep(' | ');
+//$Theme->setButtonSeparator(' | ');
 
 // This defines separators used in RecentChanges and RecentEdits lists.
 // If undefined, defaults to '' (nothing) and '...' (three periods).
