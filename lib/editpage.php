@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.29 2002-01-23 05:32:08 carstenklapp Exp $');
+rcs_id('$Id: editpage.php,v 1.30 2002-01-24 00:45:28 dairiki Exp $');
 
 require_once('lib/transform.php');
 require_once('lib/Template.php');
@@ -25,19 +25,14 @@ function editPage(&$request, $do_preview = false) {
     $user = $request->getUser();
     $pagelink = $Theme->LinkExistingWikiWord($pagename, '', $version);
 
-    $wrapper = new WikiTemplate('top');
-    $wrapper->setPageRevisionTokens($selected);
-
     if ($page->get('locked') && !$user->isAdmin()) {
-        $wrapper->qreplace('TITLE', sprintf(_("Page source for %s"), $pagename));
-        $wrapper->replace('HEADER', fmt("View Source: %s", $pagelink));
-        $template = new WikiTemplate('viewsource');
+        $title = fmt("View Source: %s", $pagelink);
+        $template = Template('viewsource');
         $do_preview = false;
     }
     else {
-        $wrapper->qreplace('TITLE', sprintf(_("Edit: %s"), split_pagename($pagename)));
-        $wrapper->replace('HEADER', fmt("Edit: %s", $pagelink));
-        $template = new WikiTemplate('editpage');
+        $title = fmt("Edit: %s", $pagelink);
+        $template = Template('editpage');
     }
 
     if ($do_preview) {
@@ -53,7 +48,7 @@ function editPage(&$request, $do_preview = false) {
     else {
         $age = time() - $current->get('mtime');
         $minor_edit = ( $age < MINOR_EDIT_TIMEOUT && $current->get('author') == $user->getId() );
-
+        
         $formvars = array('content'     => $selected->getPackedContent(),
                           'minor_edit'  => $minor_edit,
                           'version'     => $selected->getVersion(),
@@ -64,7 +59,7 @@ function editPage(&$request, $do_preview = false) {
     }
 
     $template->replace('FORMVARS', $formvars);
-    $wrapper->printExpansion($template);
+    GeneratePage($template, $title, $selected);
 }
 
 // Local Variables:

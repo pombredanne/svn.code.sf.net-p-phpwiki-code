@@ -1,35 +1,42 @@
-<?php rcs_id('$Id: Template.php,v 1.27 2002-01-23 19:21:43 dairiki Exp $');
+<?php rcs_id('$Id: Template.php,v 1.28 2002-01-24 00:45:28 dairiki Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
+require_once("lib/ButtonFactory.php");
 
-//FIXME: This is a mess and needs to be refactored.
-//  (In other words: this is all in a state of flux, so don't count on any
-//   of this being the same tomorrow...)
 
+/** An HTML template.
+ */
 class Template
 {
-    function Template($tmpl) {
-        //$this->_tmpl = $this->_munge_input($tmpl);
-	$this->_tmpl = $tmpl;
-        $this->_vars = array();
+    /**
+     *
+     */
+    function Template ($name, &$request, $args = false) {
+        global $Theme;
+
+        $this->_request = &$request;
+        $this->_name = $name;
+
+        $file = $Theme->findTemplate($name);
+        $fp = fopen($file, "rb");
+        $this->_tmpl = fread($fp, filesize($file));
+        fclose($fp);
+
+        if (is_array($args))
+            $this->_locals = $args;
+        elseif ($args)
+            $this->_locals = array('CONTENT' => $args);
+        else
+            $this->_locals = array();
     }
 
     function _munge_input($template) {
-	// Expand "< ?plugin-* ...? >"
-	preg_match_all('/<\?plugin.*?\?>/s', $template, $m);
-	foreach (array_unique($m[0]) as $plugin_pi) {
-	    $orig[] = '/' . preg_quote($plugin_pi, '/') . '/s';
-            // Plugin args like 'description=_("Get backlinks")' get
-            // gettexted.
-            // FIXME: move this to WikiPlugin.php.
-            $translated_pi = preg_replace('/(\s\w+=)_\("((?:[^"\\\\]|\\.)*)"\)/xse',
-                                          '"\1\"" . gettext("\2") . "\""',
-                                          $plugin_pi);
-            $repl[] = sprintf('<?php $this->_printPluginPI("%s");?>',
-                              addslashes($translated_pi));
-	}
 
+        // Convert < ?plugin expr ? > to < ?php $this->_printPluginPI("expr"); ? >
+	$orig[] = '/<\?plugin.*?\?>/se';
+        $repl[] = "\$this->_mungePlugin('\\0')";
+        
         // Convert < ?= expr ? > to < ?php $this->_print(expr); ? >
         $orig[] = '/<\?=(.*?)\?>/s';
         $repl[] = '<?php $this->_print(\1);?>';
@@ -37,21 +44,31 @@ class Template
         return preg_replace($orig, $repl, $template);
     }
 
+    function _mungePlugin($pi) {
+        // HACK ALERT: PHP's preg_replace, with the /e option seems to
+        // escape both single and double quotes with backslashes.
+        // So we need to unescape the double quotes here...
+
+        $pi = preg_replace('/(?!<\\\\)\\\\"/x', '"', $pi);
+        return sprintf('<?php $this->_printPlugin(%s); ?>',
+                       "'" . str_replace("'", "\'", $pi) . "'");
+    }
     
-    function _printPluginPI ($pi) {
-	global $request;	// FIXME: no globals?
+    function _printPlugin ($pi) {
 	static $loader;
 
         if (empty($loader))
             $loader = new WikiPluginLoader;
         
-        $this->_print($loader->expandPI($pi, $request));
+        $this->_print($loader->expandPI($pi, $this->_request));
     }
     
     function _print ($val) {
         if (isa($val, 'Template')) {
             // Expand sub-template with defaults from this template.
+            echo "<!-- Begin $val->_name -->\n";
             $val->printExpansion($this->_vars);
+            echo "<!-- End $val->_name -->\n";
         }
         else
             PrintXML($val);
@@ -69,60 +86,23 @@ class Template
      * @param $replacement string Replacement HTML text.
      */
     function replace($varname, $value) {
-        $this->_vars[$varname] = $value;
+        $this->_locals[$varname] = $value;
     }
 
-    /**
-     * Substitute text for tokens in template. 
-     *
-     * FIXME: this is now identical to Template::replace();
-     * @access public
-     *
-     * @param $token string Name of token to substitute for.
-     *
-     * @param $replacement string Replacement text.
-     * The replacement text is run through htmlspecialchars()
-     * to escape any special characters.
-     */
-    function qreplace($varname, $value) {
-        //$this->_vars[$varname] = htmlspecialchars($value);
-        $this->_vars[$varname] = $value;
-    }
-    
-
-    /**
-     * Include/remove conditional text in template.
-     *
-     * @access public
-     *
-     * @param $token string Conditional token name.
-     * The text within any matching if blocks (or single line ifs) will
-     * be included in the template expansion, while the text in matching
-     * negated if blocks will be excluded. 
-     */
-    /*
-    function setConditional($token, $value = true) {
-        $this->_iftoken[$token] = $value;
-    }
-    */
     
     function printExpansion ($defaults = false) {
-        $vars = &$this->_vars;
-        if ($defaults !== false) {
-            $save_vars = $vars;
-            if (!is_array($defaults)) {
-                if (!isset($vars['CONTENT']))
-                    $vars['CONTENT'] = $defaults;
-            }
-            else {
-                foreach ($defaults as $key => $val)
-                    if (!isset($vars[$key]))
-                        $vars[$key] = $val;
-            }
-        }
-        extract($vars);
+        if (!is_array($defaults))
+            $defaults = array('CONTENT' => $defaults);
+        $this->_vars = array_merge($defaults, $this->_locals);
+        extract($this->_vars);
 
-        global $request;        // Make $request available.
+        $request = &$this->_request;
+        $user = &$request->getUser();
+        $page = &$request->getPage();
+
+        global $Theme, $RCS_IDS, $ButtonFactory;
+        if (empty($ButtonFactory))
+            $ButtonFactory = new ButtonFactory();
         
         //$this->_dump_template();
 
@@ -132,9 +112,6 @@ class Template
         eval('?>' . $this->_munge_input($this->_tmpl));
 
         $ErrorManager->popErrorHandler();
-
-        if (isset($save_vars))
-            $vars = $save_vars;
     }
 
     function printXML () {
@@ -160,152 +137,68 @@ class Template
     }
 
     function _errorHandler($error) {
-        if (!preg_match('/: eval\(\)\'d code$/', $error->errfile))
-	    return false;
+        //if (!preg_match('/: eval\(\)\'d code$/', $error->errfile))
+	//    return false;
 
-        // Hack alert: Ignore 'undefined variable' messages for variables
-        //  whose names are ALL_CAPS.
-        if (preg_match('/Undefined variable:\s*[_A-Z]+\s*$/', $error->errstr))
-            return true;
         
-	$error->errfile = "In template";
+        if (preg_match('/: eval\(\)\'d code$/', $error->errfile)) {
+            $error->errfile = "In template '$this->_name'";
+            // Hack alert: Ignore 'undefined variable' messages for variables
+            //  whose names are ALL_CAPS.
+            if (preg_match('/Undefined variable:\s*[_A-Z]+\s*$/', $error->errstr))
+                return true;
+        }
+        else
+            $error->errfile .= "(In template '$this->_name'?)";
+        
 	$lines = explode("\n", $this->_tmpl);
+        
 	if (isset($lines[$error->errline - 1]))
 	    $error->errstr .= ":\n\t" . $lines[$error->errline - 1];
 	return $error;
     }
 };
 
-class TemplateFile
-extends Template
-{
-    function TemplateFile($filename) {
-	$this->_template_file = $filename;
-        $fp = fopen($filename, "rb");
-        $data = fread($fp, filesize($filename));
-        fclose($fp);
-        $this->Template($data);
-    }
-
+/**
+ * Get a templates
+ *
+ * This is a convenience function and is equivalent to:
+ * <pre>
+ *   new Template(...)
+ * </pre>
+ */
+function Template($name, $args = false) {
+    global $request;
+    return new Template($name, $request, $args);
 }
 
-class WikiTemplate
-extends TemplateFile
-{
-    /**
-     * Constructor.
-     *
-     * Constructs a new WikiTemplate based upon the named template.
-     *
-     * @access public
-     *
-     * @param $template string Which template.
-     */
-    function WikiTemplate($template, $page_revision = false) {
-        global $Theme;
-        $this->TemplateFile($Theme->findTemplate($template));
-        $this->_template_name = $template;
-        $this->setGlobalTokens();
-        if ($page_revision)
-            $this->setPageRevisionTokens($page_revision);
-    }
-
-    
-    function setPageTokens(&$page) {
-	/*
-        if ($page->get('locked'))
-            $this->setConditional('LOCK');
-        // HACK: note that EDITABLE may also be set in setWikiUserTokens.
-        if (!$page->get('locked'))
-            $this->setConditional('EDITABLE');
-	*/
-	
-        $pagename = $page->getName();
-
-        $this->replace('page', $page);
-        $this->qreplace('PAGE', $pagename);
-        $this->qreplace('PAGEURL', rawurlencode($pagename));
-        $this->qreplace('SPLIT_PAGE', split_pagename($pagename));
-        $this->qreplace('BROWSE_PAGE', WikiURL($pagename));
-
-        // FIXME: this is a bit of dangerous hackage.
-        $this->qreplace('ACTION', WikiURL($pagename, array('action' => '')));
-    }
-
-    function setPageRevisionTokens(&$revision) {
-        $page = & $revision->getPage();
-        
-        $current = & $page->getCurrentRevision();
-        $previous = & $page->getRevisionBefore($revision->getVersion());
-
-        $this->replace('IS_CURRENT',
-		       $current->getVersion() == $revision->getVersion());
-	
-        global $datetimeformat;
-        
-        //$this->qreplace('LASTMODIFIED',
-        //              strftime($datetimeformat, $revision->get('mtime')));
-
-        $this->qreplace('LASTAUTHOR', $revision->get('author'));
-        $this->qreplace('VERSION', $revision->getVersion());
-        $this->qreplace('CURRENT_VERSION', $current->getVersion());
-
-        $this->replace('revision', $revision);
-        
-        //$this->setPageTokens($page);
-    }
-
-    function setGlobalTokens () {
-        global $RCS_IDS, $Theme, $request;
-        
-        // FIXME: This a a bit of dangerous hackage.
-        $this->replace('Theme', $Theme);
-        $this->qreplace('BROWSE', WikiURL(''));
-        $this->qreplace('WIKI_NAME', WIKI_NAME);
-
-        $this->replace('user', $request->getUser());
-        $this->replace('query_args', $request->getArgs());
-        $this->replace('preferences', $request->getPrefs());
-
-        $this->setPageTokens($request->getPage());
-
-        if (isset($RCS_IDS))
-            $this->qreplace('RCS_IDS', $RCS_IDS);
-
-        require_once('lib/ButtonFactory.php');
-        $this->replace('ButtonFactory', new ButtonFactory);
-    }
-};
-
-
 /**
- * Generate page contents using a template.
+ * Make and expand the top-level template. 
  *
- * This is a convenience function for backwards compatibility with the old
- * GeneratePage().
  *
- * @param $template string name of the template (see config.php for list of names)
- *
- * @param $content string html content to put into the page
- *
+ * @param $content mixed html content to put into the page
  * @param $title string page title
- *
- * @param $page_revision object Current WikiDB_PageRevision, if available.
+ * @param $page_revision object A WikiDB_PageRevision object
+ * @param $args hash Extract args for top-level template
  *
  * @return string HTML expansion of template.
  */
-function GeneratePage($template, $content, $title, $page_revision = false) {
-    // require_once("lib/template.php");
-    // FIXME: More hackage.  Really GeneratePage should go away, at some point.
-    assert($template == 'MESSAGE');
-    $t = new WikiTemplate('top');
-    $t->qreplace('TITLE', $title);
-    $t->qreplace('HEADER', $title);
-    if ($page_revision)
-        $t->setPageRevisionTokens($page_revision);
-    $t->replace('CONTENT', $content);
-    return $t->asXML();
+function GeneratePage($content, $title, $page_revision = false, $args = false) {
+    global $request;
+    
+    if (!is_array($args))
+        $args = array();
+
+    $args['CONTENT'] = $content;
+    $args['TITLE'] = $title;
+    $args['revision'] = $page_revision;
+    
+    if (!isset($args['HEADER']))
+        $args['HEADER'] = $title;
+    
+    printXML(new Template('top', $request, $args));
 }
+
 
 // Local Variables:
 // mode: php

@@ -1,13 +1,13 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.32 2002-01-23 05:35:13 carstenklapp Exp $');
+rcs_id('$Id: loadsave.php,v 1.33 2002-01-24 00:45:28 dairiki Exp $');
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
 
-function StartLoadDump($title, $html = '')
+function StartLoadDump(&$request, $title, $html = '')
 {
     // FIXME: This is a hack
-    echo ereg_replace('</body>.*', '',
-                      GeneratePage('MESSAGE', $html, $title, 0));
+    $tmpl = Template('top', $request, array('TITLE' => $title));
+    echo ereg_replace('</body>.*', '', $tmpl->getExpansion($html));
 }
 
 function EndLoadDump(&$request)
@@ -147,7 +147,7 @@ function DumpToDir (&$request)
     }
 
     $html .= "MIME " . $pagedump_format . "<br />\n";
-    StartLoadDump( _("Dumping Pages"), $html);
+    StartLoadDump($request, _("Dumping Pages"), $html);
 
     $dbi = $request->getDbh();
     $pages = $dbi->getAllPages();
@@ -446,7 +446,7 @@ function LoadAny (&$request, $file_or_dir, $files = false, $exclude = false)
 function LoadFileOrDir (&$request)
 {
     $source = $request->getArg('source');
-    StartLoadDump( sprintf(_("Loading '%s'"),$source) );
+    StartLoadDump($request, sprintf(_("Loading '%s'"), $source));
     echo "<dl>\n";
     LoadAny($request->getDbh(), $source/*, false, array(gettext("RecentChanges"))*/);
     echo "</dl>\n";
@@ -470,7 +470,7 @@ function SetupWiki (&$request)
     $request->_user = new WikiUser(_("The PhpWiki programming team"),
                                    WIKIAUTH_BOGO);
     
-    StartLoadDump(_("Loading up virgin wiki"));
+    StartLoadDump($request, _("Loading up virgin wiki"));
     echo "<dl>\n";
     
     LoadAny($request, FindLocalizedFile(WIKI_PGSRC)/*, false, $ignore*/);
@@ -491,7 +491,7 @@ function LoadPostFile (&$request)
         $request->finish(_("No uploaded file to upload?"));
     
     // Dump http headers.
-    StartLoadDump( sprintf(_("Uploading %s"),$upload->getName()) );
+    StartLoadDump($request, sprintf(_("Uploading %s"),$upload->getName()));
     echo "<dl>\n";
     
     $fd = $upload->open();

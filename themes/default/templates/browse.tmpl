@@ -1,17 +1,18 @@
 <?php // -*-html-*- ?>
-<!-- $Id: browse.tmpl,v 1.7 2002-01-21 06:55:47 dairiki Exp $ -->
+<!-- $Id: browse.tmpl,v 1.8 2002-01-24 00:45:28 dairiki Exp $ -->
 <?php 
   $mtime = $Theme->formatDateTime($revision->get('mtime'));
-  if ($IS_CURRENT)
-      $LastModifiedMsg = sprintf(_("Last edited on %s."), $mtime);
+
+  if ($revision->isCurrent())
+      $LastModifiedMsg = fmt("Last edited on %s.", $mtime);
   else
-      $LastModifiedMsg = __sprintf("Version %s, saved on %s.",
-                                   $VERSION, $mtime);
+      $LastModifiedMsg = fmt("Version %s, saved on %s.",
+                             $revision->getVersion(), $mtime);
 ?>
 
 <div class="br"><br clear="all" class="ignore" /></div>
 
-<?php if (! $IS_CURRENT) { ?>
+<?php if (! $revision->isCurrent()) { ?>
   <p><strong><?=_("Note:")?></strong>
      <?=_("You are viewing an old revision of this page.")?>
   <?= $ButtonFactory->makeActionButton('edit', _("View the current version"), $page->getCurrentRevision())?>.
@@ -24,5 +25,5 @@
 
 <p><?= $LastModifiedMsg ?></p>
 <hr class="toolbar" noshade="noshade" />
-<?= new WikiTemplate('actionbar') ?>
+<?= Template('actionbar') ?>
 <!-- RELATEDPAGES were here. -->

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.4 2002-01-10 23:28:54 carstenklapp Exp $');
+rcs_id('$Id: WikiDB.php,v 1.5 2002-01-24 00:45:28 dairiki Exp $');
 
 //FIXME: arg on get*Revision to hint that content is wanted.
 
@@ -820,6 +820,22 @@ class WikiDB_PageRevision
         return explode("\n", $this->getPackedContent());
     }
 
+    /**
+     * Determine whether revision is the latest.
+     *
+     * @access public
+     *
+     * @return bool True iff the revision is the latest (most recent) one.
+     */
+    function isCurrent() {
+        if (!isset($this->_iscurrent)) {
+            $page = $this->getPage();
+            $current = $page->getCurrentRevision();
+            $this->_iscurrent = $this->getVersion() == $current->getVersion();
+        }
+        return $this->_iscurrent;
+    }
+    
     /**
      * Get the content as a string.
      *

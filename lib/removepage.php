@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: removepage.php,v 1.5 2002-01-23 05:10:22 dairiki Exp $');
+rcs_id('$Id: removepage.php,v 1.6 2002-01-24 00:45:28 dairiki Exp $');
 require_once('lib/Template.php');
 
 function RemovePage (&$request) {
@@ -24,7 +24,8 @@ function RemovePage (&$request) {
         $dbi->deletePage($pagename);
         $html[] = HTML::h2(fmt("Removed page '%s' succesfully.", $pagename));
     }
-    echo GeneratePage('MESSAGE', $html, _("Remove page"));
+
+    GeneratePage($html, _("Remove page"));
 }
 
 RemovePage($request);

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.32 2002-01-23 05:10:22 dairiki Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.33 2002-01-24 00:45:28 dairiki Exp $');
 require_once('lib/Template.php');
 require_once('lib/transform.php');
 require_once('lib/ArchiveCleaner.php');
@@ -43,8 +43,8 @@ function ConcurrentUpdates(&$request) {
 
     $html[] = HTML::p(_("Sorry for the inconvenience."));
 
-    echo GeneratePage('MESSAGE', $html,
-                      sprintf(_("Problem while updating %s"), $request->getArg('pagename')));
+    $pagelink = LinkWikiWord($request->getPage());
+    GeneratePage($html, fmt("Problem while updating %s", $pagelink));
     $request->finish();
 }
 
@@ -55,16 +55,16 @@ function PageIsLocked (&$request) {
                       _("Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor."));
     $html[] = HTML::p(_("Sorry for the inconvenience."));
     
-    echo GeneratePage('MESSAGE', $html,
-                      sprintf (_("Problem while editing %s"), $request->getArg('pagename')));
+    $pagelink = LinkWikiWord($request->getPage());
+    GeneratePage($html, fmt("Problem while editing %s", $pagelink));
     $request->finish();
 }
 
 function BadFormVars (&$request) {
     $html[] = HTML::p(_("Bad form submission"));
     $html[] = HTML::p(_("Required form variables are missing."));
-    echo GeneratePage('MESSAGE', $html,
-                      sprintf(_("Edit aborted: %s"), $request->getArg('pagename')));
+    $pagelink = LinkWikiWord($request->getPage());
+    GeneratePage($html, fmt("Edit aborted: %s", $pagelink));
     $request->finish();
 }
 
@@ -149,18 +149,13 @@ function savePage (&$request) {
     // Force browse of current page version.
     $request->setArg('version', false);
     
-    $wrapper = new WikiTemplate('top');
-    $wrapper->qreplace('TITLE', sprintf(_("Saved: %s"), $pagename));
-    $wrapper->replace('HEADER', fmt("Saved: %s",
-                                    $Theme->linkExistingWikiWord($pagename)));
-    $wrapper->setPageRevisionTokens($newrevision);
-
-    $template = new WikiTemplate('savepage');
+    $template = Template('savepage', do_transform($newrevision->getContent()));
     if (!empty($warnings))
-        $template->qreplace('WARNINGS', $warnings);
-    $template->replace('CONTENT', do_transform($newrevision->getContent()));
+        $template->replace('WARNINGS', $warnings);
 
-    $wrapper->printExpansion($template);
+    $pagelink = $Theme->linkExistingWikiWord($pagename);
+    
+    GeneratePage($template, fmt("Saved: %s", $pagelink), $newrevision);
 }
 
 // Local Variables:

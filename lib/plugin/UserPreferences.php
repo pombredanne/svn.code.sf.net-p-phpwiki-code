@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.1 2002-01-23 19:20:05 dairiki Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.2 2002-01-24 00:45:28 dairiki Exp $');
 /**
  * Plugin to allow user to adjust his preferences.
  */
@@ -17,7 +17,7 @@ extends WikiPlugin
     */
     
     function run($dbi, $argstr, $request) {
-        return new WikiTemplate('userprefs');
+        return Template('userprefs');
     }
 };
 

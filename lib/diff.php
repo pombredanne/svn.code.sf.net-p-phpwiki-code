@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.30 2002-01-23 05:31:33 carstenklapp Exp $');
+rcs_id('$Id: diff.php,v 1.31 2002-01-24 00:45:28 dairiki Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -357,8 +357,7 @@ function showDiff (&$request) {
     }
     
     include_once('lib/Template.php');
-    echo GeneratePage('MESSAGE', $html,
-                      sprintf(_("Diff: %s"), $pagename), $new);
+    GeneratePage($html, sprintf(_("Diff: %s"), $pagename), $new);
 }
   
 // Local Variables:

@@ -1,33 +1,38 @@
 <!-- -*-html-*- -->
-<!-- $Id: viewsource.tmpl,v 1.4 2002-01-23 19:21:43 dairiki Exp $ -->
-<p><strong><?=_("Note:")?></strong>
-<?=_("This page has been locked by the administrator and cannot be edited.")?>
-</p>
-<?php if (! $IS_CURRENT) { ?>
+<!-- $Id: viewsource.tmpl,v 1.5 2002-01-24 00:45:28 dairiki Exp $ -->
+<?php
+  $mtime = $Theme->formatDateTime($revision->get('mtime'));
+  if ($revision->isCurrent())
+      $LastModifiedMsg = fmt("Last edited on %s.", $mtime);
+  else
+      $LastModifiedMsg = fmt("Version %s, saved on %s.",
+                             $revision->getVersion(), $mtime);
+?>
+
+<?php if ($page->get('locked') && !$user->isAdmin()) { ?>
+  <p><strong><?=_("Note:")?></strong>
+    <?=_("This page has been locked by the administrator and cannot be edited.")?>
+  </p>
+<?php } ?>
+<?php if (! $revision->isCurrent()) { ?>
   <p><?=_("You are viewing an old revision of this page.")?>
-  <?= $ButtonFactory->makeActionButton('edit', _("View the current version"), $page->getCurrentRevision())?>.
+    <?= $ButtonFactory->makeActionButton('edit', _("View the current version"),
+                                         $page->getCurrentRevision()) ?>.
+  </p>
   <hr class="ignore" noshade="noshade" />
 <?php } ?>
 <!-- Dummy form else NS4 doesn't like the textarea -->
-<form method="post" action="<?= WikiUrl($PAGE) ?>" accept-charset="<?=CHARSET?>">
+<form method="post" action="<?=BASE_URL?>" accept-charset="<?=CHARSET?>">
 <!-- wrap=virtual is not HTML4, but without it NS4 doesn't wrap long lines -->
 <textarea class="wikiedit"
           name="content"
-          rows="<?=$preferences->get('editHeight')?>"
-          cols="<?=$preferences->get('editWidth')?>"
+          rows="<?=$request->getPref('editHeight')?>"
+          cols="<?=$request->getPref('editWidth')?>"
 	  readonly="readonly"
           wrap="virtual"><?= $FORMVARS['content'] ?></textarea>
-<?php
-  $mtime = $Theme->formatDateTime($revision->get('mtime'));
-  if ($IS_CURRENT)
-      $LastModifiedMsg = sprintf(_("Last edited on %s."), $mtime);
-  else
-      $LastModifiedMsg = __sprintf("Version %s, saved on %s.",
-                                   $VERSION, $mtime);
-?>
 <p><?= $LastModifiedMsg ?></p>
 <hr class="toolbar" noshade="noshade" />
-<?= new WikiTemplate('actionbar') ?>
+<?= Template('actionbar') ?>
 <!-- RELATEDPAGES were here. -->
 <input type="hidden" name="action" value="browse" />
 <input type="hidden" name="pagename" value="<?=$FORMVARS['pagename']?>" />

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.13 2002-01-23 05:10:22 dairiki Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.14 2002-01-24 00:45:28 dairiki Exp $');
 
 class WikiPlugin
 {
@@ -77,21 +77,28 @@ class WikiPlugin
         $arg_p = '\w+';
         $op_p = '(?:\|\|)?=';
         $word_p = '\S+';
-        $qq_p = '"[^"]*"';
-        $q_p = "'[^']*'";
         $opt_ws = '\s*';
-        $argspec_p = "($arg_p) $opt_ws ($op_p) $opt_ws ($qq_p|$q_p|$word_p)";
+        $qq_p = '" ( (?:[^"\\\\]|\\\\.)* ) "';
+        $q_p  = "' ( (?:[^'\\\\]|\\\\.)* ) '";
+        $gt_p = "_\\( $opt_ws $qq_p $opt_ws \\)";
+        $argspec_p = "($arg_p) $opt_ws ($op_p) $opt_ws (?: $qq_p|$q_p|$gt_p|($word_p))";
 
         $args = array();
         $defaults = array();
         
         while (preg_match("/^$opt_ws $argspec_p $opt_ws/x", $argstr, $m)) {
-            @ list(,$arg,$op,$val) = $m;
+            @ list(,$arg,$op,$qq_val,$q_val,$gt_val,$word_val) = $m;
             $argstr = substr($argstr, strlen($m[0]));
 
             // Remove quotes from string values.
-            if ($val && ($val[0] == '"' || $val[0] == "'"))
-                $val = substr($val, 1, strlen($val) - 2);
+            if ($qq_val)
+                $val = stripslashes($qq_val);
+            elseif ($q_val)
+                $val = stripslashes($q_val);
+            elseif ($gt_val)
+                $val = gettext(stripslashes($gt_val));
+            else
+                $val = $word_val;
 
             if ($op == '=') {
                 $args[$arg] = $val;

@@ -1,7 +1,7 @@
 <?php
 // display.php: fetch page or get default content
 // calls transform.php for actual transformation of wiki markup to HTML
-rcs_id('$Id: display.php,v 1.16 2002-01-23 05:10:22 dairiki Exp $');
+rcs_id('$Id: display.php,v 1.17 2002-01-24 00:45:28 dairiki Exp $');
 
 require_once('lib/Template.php');
 require_once('lib/transform.php');
@@ -50,7 +50,7 @@ function displayPage(&$request, $tmpl = 'browse') {
     if ($version) {
         $revision = $page->getRevision($version);
         if (!$revision)
-            NoSuchRevision($request, $pagename, $version);
+            NoSuchRevision($request, $page, $version);
     }
     else {
         $revision = $page->getCurrentRevision();
@@ -64,18 +64,11 @@ function displayPage(&$request, $tmpl = 'browse') {
     $pagetitle->addTooltip(sprintf(_("BackLinks for %s"), $pagename));
 
 
-    $wrapper = new WikiTemplate('top');
-    $wrapper->setPageRevisionTokens($revision);
-    $wrapper->qreplace('TITLE', $splitname);
-    $wrapper->replace('HEADER', $pagetitle);
-    $wrapper->qreplace('ROBOTS_META', 'index,follow');
+    $template = Template($tmpl, do_transform($revision->getContent()));
 
-
-    $template = new WikiTemplate($tmpl);
-    $template->replace('CONTENT', do_transform($revision->getContent()));
-    $template->qreplace('PAGE_DESCRIPTION', GleanDescription($revision));
-
-    $wrapper->printExpansion($template);
+    GeneratePage($template, $pagetitle, $revision,
+                 array('ROBOTS_META'	=> 'index,follow',
+                       'PAGE_DESCRIPTION' => GleanDescription($revision)));
     flush();
     $page->increaseHitCount();
 }
