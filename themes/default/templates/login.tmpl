@@ -1,5 +1,5 @@
 <?php // -*-php-*- ?>
-<!-- $Id: login.tmpl,v 1.33 2004-06-07 22:44:41 rurban Exp $ -->
+<!-- $Id: login.tmpl,v 1.34 2004-11-05 20:56:12 rurban Exp $ -->
 <!-- The login form -->
 <?php if ($fail_message) { ?>
   <p><strong><?=$fail_message?></strong></p>
@@ -16,9 +16,17 @@ if (DEBUG) {
 	       ALLOW_USER_PASSWORDS ? "true" : "false",
                ENABLE_PAGEPERM ? "true" : "false");
   if (ALLOW_USER_PASSWORDS) {
-    $t .= sprintf("  USER_AUTH_ORDER: %s", join(" => ", $GLOBALS['USER_AUTH_ORDER'])) 
-        . sprintf(",  USER_AUTH_POLICY: %s", USER_AUTH_POLICY)
-        . sprintf(",  PASSWORD_LENGTH_MINIMUM: %s", PASSWORD_LENGTH_MINIMUM);
+    if ($fail_message) { // add for each method the exact failing reason.
+      $t .= "  USER_AUTH_ORDER: ";
+      foreach ($GLOBALS['USER_AUTH_ORDER'] as $auth) {
+          $t .= " => $auth";
+          if ($fail = @$GLOBALS['USER_AUTH_ERROR']["_".strtolower($auth)."passuser"])
+              $t .= " ($fail)";
+      }
+    } else
+      $t .= sprintf("  USER_AUTH_ORDER: %s", join(" => ", $GLOBALS['USER_AUTH_ORDER']));
+    $t .= sprintf(",  USER_AUTH_POLICY: %s", USER_AUTH_POLICY)
+       . sprintf(",  PASSWORD_LENGTH_MINIMUM: %s", PASSWORD_LENGTH_MINIMUM);
   }
   echo asXML(HTML::div(array('class' => 'debug'),$t));
   echo "<br />\n";
