@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.200 2004-12-26 17:08:36 rurban Exp $');
+rcs_id('$Id: main.php,v 1.201 2005-01-20 10:18:17 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -89,14 +89,16 @@ $this->version = phpwiki_version();
                     $this->_user = WikiUser($userid, $this->_user->_prefs);
                 }
 	        // revive other db handle
-	        if (isset($this->_user->_prefs->_method) and 
-	                 ($this->_user->_prefs->_method == 'SQL' or 
-	                 $this->_user->_prefs->_method == 'ADODB'))
+	        if (isset($this->_user->_prefs->_method)
+                    and ($this->_user->_prefs->_method == 'SQL' 
+                         or $this->_user->_prefs->_method == 'ADODB' 
+                         or $this->_user->_prefs->_method == 'HomePage')) {
 	            $this->_user->_HomePagehandle = $this->getPage($userid);
+	        }
 	        // need to update the lockfile filehandle
-	        if (  isa($this->_user,'_FilePassUser') and 
-	              $this->_user->_file->lockfile and 
-	              !$this->_user->_file->fplock  )
+	        if ( isa($this->_user,'_FilePassUser') 
+                     and $this->_user->_file->lockfile 
+                     and !$this->_user->_file->fplock )
 	        {
 	            //$level = $this->_user->_level;
 	            $this->_user = UpgradeUser($this->_user, 
@@ -179,8 +181,9 @@ $this->version = phpwiki_version();
             $this->setArg('auth', false);
             $this->_handleAuthRequest($auth_args); // possible NORETURN
         }
-        elseif ( ! $this->_user or 
-                 (isa($this->_user, WikiUserClassname()) and ! $this->_user->isSignedIn())) {
+        elseif ( ! $this->_user 
+                 or (isa($this->_user, WikiUserClassname()) 
+                     and ! $this->_user->isSignedIn())) {
             // If not auth request, try to sign in as saved user.
             if (($saved_user = $this->getPref('userid')) != false) {
                 $this->_signIn($saved_user);
@@ -1191,6 +1194,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.200  2004/12/26 17:08:36  rurban
+// php5 fixes: case-sensitivity, no & new
+//
 // Revision 1.199  2004/12/19 00:58:01  rurban
 // Enforce PASSWORD_LENGTH_MINIMUM in almost all PassUser checks,
 // Provide an errormessage if so. Just PersonalPage and BogoLogin not.
