@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.22 2002-02-12 22:12:01 carstenklapp Exp $
+# $Id: Makefile,v 1.23 2002-02-19 04:24:54 carstenklapp Exp $
 #
 # locale/Makefile
 #
@@ -76,6 +76,7 @@ ${POT_FILE}: ../lib/interwiki.php
 ${POT_FILE}: ../lib/loadsave.php
 ${POT_FILE}: ../lib/main.php
 ${POT_FILE}: ../lib/PageList.php
+${POT_FILE}: ../lib/PageType.php
 ${POT_FILE}: ../lib/plugin/AllPages.php
 ${POT_FILE}: ../lib/plugin/_BackendInfo.php
 ${POT_FILE}: ../lib/plugin/BackLinks.php
@@ -86,6 +87,7 @@ ${POT_FILE}: ../lib/plugin/HelloWorld.php
 ${POT_FILE}: ../lib/plugin/IncludePage.php
 ${POT_FILE}: ../lib/plugin/LikePages.php
 ${POT_FILE}: ../lib/plugin/MostPopular.php
+${POT_FILE}: ../lib/plugin/OrphanedPages.php
 ${POT_FILE}: ../lib/plugin/PageGroup.php
 ${POT_FILE}: ../lib/plugin/PageHistory.php
 ${POT_FILE}: ../lib/plugin/RandomPage.php
@@ -138,7 +140,9 @@ ${POT_FILE}: ../lib/ziplib.php
 ${POT_FILE}: ../themes/default/templates/actionbar.tmpl
 ${POT_FILE}: ../themes/default/templates/body.tmpl
 ${POT_FILE}: ../themes/default/templates/browse.tmpl
+${POT_FILE}: ../themes/default/templates/debug.tmpl
 ${POT_FILE}: ../themes/default/templates/editpage.tmpl
+${POT_FILE}: ../themes/default/templates/info.tmpl
 ${POT_FILE}: ../themes/default/templates/login.tmpl
 ${POT_FILE}: ../themes/default/templates/navbar.tmpl
 ${POT_FILE}: ../themes/default/templates/nochanges.tmpl
