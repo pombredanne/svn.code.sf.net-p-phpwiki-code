@@ -1,4 +1,4 @@
-<!-- $Id: wiki_config.php3,v 1.13 2000-06-26 03:54:10 wainstead Exp $ -->
+<!-- $Id: wiki_config.php3,v 1.14 2000-06-29 04:35:06 wainstead Exp $ -->
 <?
    /*
       Constants and settings. Edit the values below for
@@ -9,17 +9,19 @@
       can just give the URL without the script name.
    */
 
-   // You should set the $ServerAddress as below, and comment out
-   // the if/else below.
-   $ServerAddress = "http://127.0.0.1:8080/phpwiki/";
+   // You should set the $ServerAddress below, and comment out
+   // the if/else that follows. The if/else sets the server address
+   // dynamically, and you can save some cycles on the server by
+   // setting $ServerAddress yourself.
+   //$ServerAddress = "http://127.0.0.1:8080/phpwiki/";
 
-/*
+
    if (preg_match("#(.*?)([^/]*$)#", $REQUEST_URI, $matches)) {
       $ServerAddress = "http://$SERVER_NAME:$SERVER_PORT" . $matches[1];
    } else {
       $ServerAddress = "http://$SERVER_NAME:$SERVER_PORT$REQUEST_URI";
    }
-*/
+
    // if you are using MySQL instead of a DBM to store your
    // Wiki pages, use wiki_mysql.php3 instead of wiki_dbmlib.php3
    // See INSTALL.mysql for details on using MySQL
@@ -66,7 +68,7 @@
    include "wiki_msql.php3";
    $msql_db = "wiki";
    // should be the same as wikipages.line
-   define("MSQL_MAX_LINE_LENGTH", 512);
+   define("MSQL_MAX_LINE_LENGTH", 128);
    $WikiDataBase = array();
    $ArchiveDataBase = array();
 
@@ -74,6 +76,7 @@
    $WikiDataBase['page_table']    = "wikipages";
    $ArchiveDataBase['table']      = "archive";
    $ArchiveDataBase['page_table'] = "archivepages";
+   // end mSQL settings
 */
 
    $ScriptName = "index.php3";
