@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.27 2003-02-16 20:04:46 dairiki Exp $');
+<?php rcs_id('$Id: Request.php,v 1.28 2003-02-21 04:16:20 dairiki Exp $');
 // FIXME: write log entry.
 
 /*
@@ -12,7 +12,16 @@
  */
 if (!defined('CACHE_CONTROL_MAX_AGE'))
      define('CACHE_CONTROL_MAX_AGE', 0);
-     
+
+// backward compatibility for PHP < 4.2.0
+if (!function_exists('ob_clean')) {
+    function ob_clean() {
+        ob_end_clean();
+        ob_start();
+    }
+}
+
+        
 class Request {
         
     function Request() {
@@ -91,6 +100,12 @@ class Request {
 
     // Well oh well. Do we really want to pass POST params back as GET?
     function getURLtoSelf($args = false, $exclude = array()) {
+
+        // Err... good point...
+        if ($this->isPost())
+            trigger_error("Request::getURLtoSelf() should probably not be from POST",
+                          E_USER_NOTICE);
+        
         $get_args = $this->args;
         if ($args)
             $get_args = array_merge($get_args, $args);
@@ -117,11 +132,45 @@ class Request {
         return in_array($this->get('REQUEST_METHOD'),
                         array('GET', 'HEAD'));
     }
+
+    function httpVersion() {
+        if (!preg_match('@HTTP\s*/\s*(\d+.\d+)@', $this->get('SERVER_PROTOCOL'), $m))
+            return false;
+        return (float) $m[1];
+    }
     
-    function redirect($url) {
+    function redirect($url, $noreturn=true) {
         header("Location: $url");
-        if (isset($this->_log_entry))
-            $this->_log_entry->setStatus(302);
+        /*
+         *"302 Found" is not really meant to be sent in response
+         * to a POST.  Worse still, according to (both HTTP 1.0 and 1.1) spec,
+         * the user, if it is sent, the user agent is supposed to use the same
+         * method to fetch the redirected URI as the original.
+         *
+         * That means if we redirect from a POST, the user-agent supposed to
+         * generate another POST.  Not what we want.  (We do this after
+         * a page save after all.)
+         *
+         * Fortunately, most/all browsers don't do that.
+         *
+         * "303 See Other" is what we really want.  But it only exists in HTTP/1.1
+         *
+         * FIXME: this is still not spec compliant for HTTP version < 1.1.
+         */
+        $status = $this->httpVersion() >= 1.1 ? 303 : 302;
+
+        $this->setStatus($status);
+
+        if ($noreturn) {
+            $this->discardOutput();
+
+            print "<html><head><title>Redirect</title></head><body>\n";
+            print "<h1>Redirect</h1>\n<p>";
+            printf('Your browser should have redirected you to <a href="%s">%s</a>.',
+                   htmlspecialchars($url), htmlspecialchars($url));
+            print "</p></body></html>\n";
+            $this->finish();
+        }
     }
 
     /** Set validators for this response.
@@ -190,6 +239,7 @@ class Request {
             // Return short response due to failed conditionals
             $this->setStatus($status);
             print "\n\n";
+            $this->discardOutput();
             $this->finish();
             exit();
         }
@@ -216,14 +266,16 @@ class Request {
         }
         else {
             $status = (integer) $status;
-            $reasons = array('200' => 'OK',
-                             '302' => 'Found',
-                             '304' => 'Not Modified',
-                             '400' => 'Bad Request',
-                             '401' => 'Unauthorized',
-                             '403' => 'Forbidden',
-                             '404' => 'Not Found',
-                             '412' => 'Precondition Failed');
+            $reason = array('200' => 'OK',
+                            '302' => 'Found',
+                            '303' => 'See Other',
+                            '304' => 'Not Modified',
+                            '400' => 'Bad Request',
+                            '401' => 'Unauthorized',
+                            '403' => 'Forbidden',
+                            '404' => 'Not Found',
+                            '412' => 'Precondition Failed');
+            // FIXME: is it always okay to send HTTP/1.1 here, even for older clients?
             header(sprintf("HTTP/1.1 %d %s", $status, $reason[$status]));
         }
 
@@ -237,13 +289,26 @@ class Request {
              && version_compare(phpversion(), '4.2.3', ">=")
              ){
             ob_start('ob_gzhandler');
-            $this->_is_compressing_output = true;
         }
+        else {
+            // Now we alway buffer output.
+            // This is so we can set HTTP headers (e.g. for redirect)
+            // at any point.
+            // FIXME: change the name of this method.
+            ob_start();
+        }
+        $this->_is_compressing_output = true;
     }
 
+    function discardOutput() {
+        if (!empty($this->_is_compressing_output))
+            ob_clean();
+    }
+    
     function finish() {
         if (!empty($this->_is_compressing_output))
             ob_end_flush();
+        exit;
     }
 
     function getSessionVar($key) {
