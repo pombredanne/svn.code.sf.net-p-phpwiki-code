@@ -72,7 +72,7 @@ if (!defined('DEBUG')) define ('DEBUG', 0);
 
 define ('PHPWIKI_VERSION', '1.3.7pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.113 2003-12-05 15:51:37 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.114 2003-12-05 16:00:42 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -649,7 +649,7 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
 // used as the keyword.
 //
 // The default behavior is to match Category* and Topic* links.
-$keywords = array(_("Category"), _("Topic"));
+$keywords = array("Category", "Topic");
 $KeywordLinkRegexp = '(?<=^'. join('|^', $keywords) . ')[[:upper:]].*$';
 
 // Author and Copyright Site Navigation Links
@@ -665,7 +665,7 @@ if (!defined('COPYRIGHTPAGE_TITLE')) define('COPYRIGHTPAGE_TITLE',
 if (!defined('COPYRIGHTPAGE_URL')) define('COPYRIGHTPAGE_URL',
     'http://www.gnu.org/copyleft/gpl.html#SEC1');
 if (!defined('AUTHORPAGE_TITLE')) define('AUTHORPAGE_TITLE',
-    _("The PhpWiki Programming Team"));
+    "The PhpWiki Programming Team");
 if (!defined('AUTHORPAGE_URL')) define('AUTHORPAGE_URL',
     'http://phpwiki.sourceforge.net/phpwiki/ThePhpWikiProgrammingTeam');
 
@@ -831,6 +831,30 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 // End:   
 
 // $Log: not supported by cvs2svn $
+// Revision 1.113  2003/12/05 15:51:37  carstenklapp
+// Added note that use of the configurator is depreciated.
+//
+// Enable localization/gettextification of $KeywordLinkRegexp. (Also, now
+// users not familiar with regex can more easily just edit the $keywords
+// array).
+//
+// Added four new constants to define author and copyright link rel~s
+// used in html head. This makes it easier to run multiple wikis off of
+// one set of code.
+//
+// Eliminated RECENT_CHANGES constant for RSS auto discovery because it's
+// another step to watch out for when running a non-english wiki. Now
+// simply defined as _("RecentChanges") in head.tmpl itself. Non-standard
+// wikis where the RecentChanges page has been named to something else
+// will have to modify this in head.tmpl (along with all other places the
+// word RecentChanges appears in the code, something that already would
+// have had to be done on such a wiki anyway).
+//
+// Added a little more info and instructions to flesh out:
+// DEBUG, WIKI_NAME, ADMIN_USER, $DisabledActions, $DBParams, CHARSET.
+//
+// A few typos and spelling mistakes corrected, and some text rewrapped.
+//
 // Revision 1.112  2003/11/17 15:49:21  carstenklapp
 // Updated version number to 1.3.7pre (beyond current release
 // 1.3.6). Disabled DEBUG output by default (hide DebugInfo, XHTML &
