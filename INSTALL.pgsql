@@ -1,4 +1,4 @@
-$Id: INSTALL.pgsql,v 1.3 2000-06-23 02:54:50 wainstead Exp $
+$Id: INSTALL.pgsql,v 1.4 2000-07-11 02:57:05 wainstead Exp $
 
 These instructions are not quite complete yet. If you find something
 I missed, please let me know (swain@panix.com).
@@ -12,6 +12,11 @@ Red Hat Linux, all you need to do is install the PHP RPM and the
 Postgresql RPM and edit your Apache httpd.conf file, and uncomment 
 the lines for all PHP files (and add index.php3 to the list of directory
 files while you're at it! :-)
+
+Also note that Postgresql by default has a hard limit of 8K per
+row. This is a Really Bad Thing. You can change that when you compile
+Postgresql to allow 32K per row, but supposedly performance
+suffers. The 7.x release of Postgresql is supposed to fix this.
 
 It's probably a good idea to install PhpWiki as-is first, running it
 off the DBM file. This way you can test most of the functionality of
