@@ -1,11 +1,14 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.67 2004-05-27 17:49:06 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.68 2004-06-01 15:28:00 rurban Exp $');
 
 require_once('lib/Template.php');
 
+// USE_HTMLAREA - WYSIWYG HTML Editor
 // Not yet enabled, since we cannot convert HTML to Wiki Markup yet.
+// (See HtmlParser.php for the ongoing efforts)
 // We might use a HTML PageType, which is contra wiki, but some people might prefer HTML markup.
-// Todo: change from constant to user preference variable. (or checkbox setting)
+// TODO: Change from constant to user preference variable (checkbox setting),
+//       when HtmlParser is finished.
 if (!defined('USE_HTMLAREA')) define('USE_HTMLAREA',false);
 if (USE_HTMLAREA) require_once('lib/htmlarea.php');
 
@@ -57,6 +60,7 @@ class PageEditor
                 $this->_content = $current->getPackedContent();
             } elseif ($initial_content = $request->getArg('initial_content')) {
                 $this->_content = $initial_content;
+                $this->_redirect_to = $request->getArg('save_and_redirect_to');
             }
         }
         if (!headers_sent())
@@ -72,9 +76,18 @@ class PageEditor
                 return $this->viewSource();
             $tokens['PAGE_LOCKED_MESSAGE'] = $this->getLockedMessage();
         }
-        elseif ($this->editaction == 'save') {
-            if ($this->savePage())
+        elseif ($this->request->getArg('save_and_redirect_to') != "") {
+            if ($this->savePage()) {
+                // noreturn
+                $this->request->redirect(WikiURL($this->request->getArg('save_and_redirect_to')));
                 return true;    // Page saved.
+            }
+            $saveFailed = true;
+        }
+        elseif ($this->editaction == 'save') {
+            if ($this->savePage()) {
+                return true;    // Page saved.
+            }
             $saveFailed = true;
         }
 
@@ -107,6 +120,7 @@ class PageEditor
 
         $tokens = array_merge($tokens, $this->getFormElements());
 
+        // TODO: add this to the EDIT_TOOLBAR
         if (defined('JS_SEARCHREPLACE') and JS_SEARCHREPLACE) {
             $tokens['JS_SEARCHREPLACE'] = 1;
             $GLOBALS['Theme']->addMoreHeaders(Javascript("
@@ -192,53 +206,53 @@ function speich() {
         global $Theme;
         $toolarray = array(
                            array(
-                                 "image"=>"button_bold.png",
+                                 "image"=>"ed_format_bold.gif",
                                  "open"=>"*",
                                  "close"=>"*",
-                                 "sample"=>_("bold_sample"),
-                                 "tip"=>_("bold_tip")),
-                           array("image"=>"button_italic.png",
+                                 "sample"=>_("Bold text"),
+                                 "tip"=>_("Bold text")),
+                           array("image"=>"ed_format_italic.gif",
                                  "open"=>"_",
                                  "close"=>"_",
-                                 "sample"=>_("italic_sample"),
-                                 "tip"=>_("italic_tip")),
-                           array("image"=>"button_link.png",
+                                 "sample"=>_("Italic text"),
+                                 "tip"=>_("Italic text")),
+                           array("image"=>"ed_pagelink.gif",
                                  "open"=>"[",
                                  "close"=>"]",
-                                 "sample"=>_("link_sample"),
-                                 "tip"=>_("link_tip")),
-                           array("image"=>"button_extlink.png",
+                                 "sample"=>_("[ Label | PageName]"),
+                                 "tip"=>_("Link to page")),
+                           array("image"=>"ed_link.gif",
                                  "open"=>"[",
                                  "close"=>"]",
-                                 "sample"=>_("extlink_sample"),
-                                 "tip"=>_("extlink_tip")),
-                           array("image"=>"button_headline.png",
+                                 "sample"=>_("[label | http://www.example.com]"),
+                                 "tip"=>_("External link (remember http:// prefix)")),
+                           array("image"=>"ed_headline.gif",
                                  "open"=>"\\n!!! ",
                                  "close"=>"\\n",
-                                 "sample"=>_("headline_sample"),
-                                 "tip"=>_("headline_tip")),
-                           array("image"=>"button_image.png",
+                                 "sample"=>_("Headline text"),
+                                 "tip"=>_("Level 1 headline")),
+                           array("image"=>"ed_image.gif",
                                  "open"=>"[ ",
                                  "close"=>" ]",
-                                 "sample"=>_("image_sample"),
-                                 "tip"=>_("image_tip")),
-                           array("image"=>"button_nowiki.png",
+                                 "sample"=>_("Example.jpg"),
+                                 "tip"=>_("Embedded image")),
+                           array("image"=>"ed_nowiki.gif",
                                  "open"=>"\\n\\<verbatim\\>\\n",
                                  "close"=>"\\n\\</verbatim\\>\\n",
-                                 "sample"=>_("nowiki_sample"),
-                                 "tip"=>_("nowiki_tip")),
-                           array("image"=>"button_sig.png",
+                                 "sample"=>_("Insert non-formatted text here"),
+                                 "tip"=>_("Ignore wiki formatting")),
+                           array("image"=>"ed_sig.gif",
                                  "open" => "--" . $GLOBALS['request']->_user->UserName(),
                                  "close" => "",
                                  "sample"=>"",
-                                 "tip"=>_("sig_tip")),
-                           array("image"=>"button_hr.png",
+                                 "tip"=>_("Your signature")),
+                           array("image"=>"ed_hr.gif",
                                  "open"=>"\\n----\\n",
                                  "close"=>"",
                                  "sample"=>"",
-                                 "tip"=>_("hr_tip"))
+                                 "tip"=>_("Horizontal line"))
                            );
-        $toolbar = "document.writeln(\"<div id=\\\"toolbar\\\">\");\n";
+        $toolbar = "document.writeln(\"<div class=\\\"edit-toolbar\\\" id=\\\"toolbar\\\">\");\n";
         foreach ($toolarray as $tool) {
             $image = $Theme->getImageURL($tool["image"]);
             $open  = $tool["open"];
@@ -703,6 +717,21 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision _1.6  2004/05/26 15:48:00  syilek
+ fixed problem with creating page with slashes from one true page
+
+ Revision _1.5  2004/05/25 16:51:53  syilek
+ added ability to create a page from the category page and not have to edit it
+
+ Revision 1.67  2004/05/27 17:49:06  rurban
+ renamed DB_Session to DbSession (in CVS also)
+ added WikiDB->getParam and WikiDB->getAuthParam method to get rid of globals
+ remove leading slash in error message
+ added force_unlock parameter to File_Passwd (no return on stale locks)
+ fixed adodb session AffectedRows
+ added FileFinder helpers to unify local filenames and DATA_PATH names
+ editpage.php: new edit toolbar javascript on ENABLE_EDIT_TOOLBAR
+
  Revision 1.66  2004/04/29 23:25:12  rurban
  re-ordered locale init (as in 1.3.9)
  fixed loadfile with subpages, and merge/restore anyway

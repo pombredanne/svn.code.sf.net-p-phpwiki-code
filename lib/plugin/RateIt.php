@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RateIt.php,v 1.7 2004-04-21 04:29:50 rurban Exp $');
+rcs_id('$Id: RateIt.php,v 1.8 2004-06-01 15:28:01 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -110,7 +110,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function RatingWidgetJavascript() {
@@ -152,13 +152,13 @@ function click(actionImg, pagename, version, imgPrefix, dimension, rating) {
 }
 function submitRating(actionImg, page, version, dimension, rating) {
   var myRand = Math.round(Math.random()*(1000000));
-  var imgSrc = page + '?version=' + version + '&action=".urlencode(_("RateIt"))."&mode=add&rating=' + rating + '&dimension=' + dimension + '&nopurge=cache&rand=' + myRand;
+  var imgSrc = escape(page) + '?version=' + version + '&action=".urlencode(_("RateIt"))."&mode=add&rating=' + rating + '&dimension=' + dimension + '&nopurge=cache&rand=' + myRand;
   //alert('submitRating(' + page + ', ' + version + ', ' + dimension + ', ' + rating + ') => '+imgSrc);
   document[actionImg].src= imgSrc;
 }
 function deleteRating(actionImg, page, dimension) {
   var myRand = Math.round(Math.random()*(1000000));
-  var imgSrc = '".$urlprefix."' + page + '?action=".urlencode(_("RateIt"))."&mode=delete&dimension=' + dimension + '&nopurge=cache&rand=' + myRand;
+  var imgSrc = '".$urlprefix."' + escape(page) + '?action=".urlencode(_("RateIt"))."&mode=delete&dimension=' + dimension + '&nopurge=cache&rand=' + myRand;
   //alert('deleteRating(' + page + ', ' + version + ', ' + dimension + ')');
   document[actionImg].src= imgSrc;
 }
@@ -371,6 +371,21 @@ function deleteRating(actionImg, page, dimension) {
         }
     }
 
+    function getUsersRated($dimension=null, $orderby = null) {
+        if (is_null($dimension)) $dimension = $this->dimension;
+        if (is_null($userid))    $userid = $this->userid; 
+        if (is_null($pagename))  $pagename = $this->pagename;
+        if (RATING_STORAGE == 'SQL') {
+            $ratings_iter = $this->sql_get_users_rated($dimension, $orderby);
+            if ($rating = $ratings_iter->next()) {
+                return $rating['ratingvalue'];
+            } else 
+                return false;
+        } else {
+            return $this->metadata_get_users_rated($dimension, $orderby);
+        }
+    }
+
     // TODO
     // Currently we have to call the "suggest" CGI
     //   http://www-users.cs.umn.edu/~karypis/suggest/
@@ -512,20 +527,15 @@ function deleteRating(actionImg, page, dimension) {
         return new $this->iter_class($this, $result);
     }
 
-    /**
-     * Like get_rating(), but return a result suitable for WikiDB_PageIterator
-     */
-    function _sql_get_rating_page($dimension=null, $rater=null, $ratee=null,
-                                  $orderby=null, $pageinfo = "ratee") {
+    function sql_get_users_rated($dimension=null, $orderby=null) {
         if (empty($dimension)) $dimension=null;
-        $result = $this->_sql_get_rating_result($dimension, $rater, $ratee, $orderby, $pageinfo);
-        
+        $result = $this->_sql_get_rating_result($dimension, null, null, $orderby, "rater");
         return new $this->iter_class($this, $result);
     }
 
     /**
      * @access private
-     * @return DB iterator with results
+     * @return result ressource, suitable to the iterator
      */
     function _sql_get_rating_result($dimension=null, $rater=null, $ratee=null,
                                     $orderby=null, $pageinfo = "ratee") {
@@ -552,8 +562,11 @@ function deleteRating(actionImg, page, dimension) {
         if (isset($orderby)) {
             $orderbyStr = " ORDER BY " . $orderby;
         }
+        if (isset($rater) or isset($ratee)) $what = '*';
+        // same as _get_users_rated_result()
+        else $what = 'DISTINCT p.pagename';
 
-        $query = "SELECT *"
+        $query = "SELECT $what"
                . " FROM $rating_tbl r, $page_tbl p "
                . $where
                . $orderbyStr;
@@ -579,7 +592,7 @@ function deleteRating(actionImg, page, dimension) {
         $dbi = &$this->_dbi->_backend;
         extract($dbi->_table_names);
 
-        $dbi->lock(array('page','rating'));
+        $dbi->lock();
         $raterid = $dbi->_get_pageid($rater, true);
         $rateeid = $dbi->_get_pageid($ratee, true);
         $where = "WHERE raterpage=$raterid and rateepage=$rateeid";
@@ -587,7 +600,7 @@ function deleteRating(actionImg, page, dimension) {
             $where .= " AND dimension=$dimension";
         }
         $dbi->_dbh->query("DELETE FROM $rating_tbl $where");
-        $dbi->unlock(array('page','rating'));
+        $dbi->unlock();
         return true;
     }
 
@@ -605,22 +618,29 @@ function deleteRating(actionImg, page, dimension) {
      *
      * @return true upon success
      */
-    //$this->userid, $this->pagename, $this->dimension, $rating);
+    //               ($this->userid, $this->pagename, $this->dimension, $rating);
     function sql_rate($rater, $ratee, $rateeversion, $dimension, $rating) {
         $dbi = &$this->_dbi->_backend;
         extract($dbi->_table_names);
         if (empty($rating_tbl))
-            $rating_tbl = (!empty($GLOBALS['DBParams']['prefix']) ? $GLOBALS['DBParams']['prefix'] : '') . 'rating';
+            $rating_tbl = $this->_dbi->getParam('prefix') . 'rating';
 
-        $dbi->lock(array('page','rating'));
+        //$dbi->lock();
         $raterid = $dbi->_get_pageid($rater, true);
         $rateeid = $dbi->_get_pageid($ratee, true);
-        $where = "WHERE raterpage=$raterid AND rateepage=$rateeid";
-        if (isset($dimension)) $where .= " AND dimension=$dimension";
+        assert($raterid);
+        assert($rateeid);
+        $where = "WHERE raterpage='$raterid' AND rateepage='$rateeid'";
+        if (isset($dimension)) $where .= " AND dimension='$dimension'";
+        // atomic transaction:
+        $dbi->_dbh->query("UPDATE $rating_tbl SET ratingvalue='$rating', rateeversion='$rateeversion' $where");
+
+        /*
         $dbi->_dbh->query("DELETE FROM $rating_tbl $where");
         // NOTE: Leave tstamp off the insert, and MySQL automatically updates it (only if MySQL is used)
         $dbi->_dbh->query("INSERT INTO $rating_tbl (dimension, raterpage, rateepage, ratingvalue, rateeversion) VALUES ('$dimension', $raterid, $rateeid, '$rating', '$rateeversion')");
-        $dbi->unlock(array('page','rating'));
+        */
+        //$dbi->unlock();
         return true;
     }
 
@@ -684,7 +704,7 @@ function deleteRating(actionImg, page, dimension) {
             $none[$i] = $Theme->_findData("images/RateItRk$i.png");
         }
         if (!$small) {
-            $html->pushContent(Button(_("RateIt"),_("RateIt"),$pagename));
+            $html->pushContent(Button(_("RateIt"),_("RateIt"), $pagename));
             $html->pushContent(HTML::raw('&nbsp;'));
         }
        
@@ -747,6 +767,13 @@ function deleteRating(actionImg, page, dimension) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision _1.2  2004/04/29 17:55:03  dfrankow
+// Check in escape() changes to protect against leading spaces in pagename.
+// This is untested with Reini's _("RateIt") additions to this plugin.
+//
+// Revision 1.7  2004/04/21 04:29:50  rurban
+// write WikiURL consistently (not WikiUrl)
+//
 // Revision 1.6  2004/04/12 14:07:12  rurban
 // more docs
 //

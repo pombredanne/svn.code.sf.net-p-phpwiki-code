@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSelect.php,v 1.14 2004-02-24 15:20:07 rurban Exp $');
+rcs_id('$Id: WikiAdminSelect.php,v 1.15 2004-06-01 15:28:01 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -47,7 +47,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.14 $");
+                            "\$Revision: 1.15 $");
     }
 
     function getDefaultArguments() {
@@ -70,6 +70,27 @@ extends WikiPlugin
         return $list;
     }
 
+    function preSelectS (&$args, &$request) {
+        if (!empty($request->getArg['s']))
+            $args['s'] = $request->getArg['s'];
+        if ( !empty($args['s']) ) {
+            $s = $args['s'];
+            $sl = explodePageList($args['s']);
+            $this->_list = array();
+            if ($sl) {
+                $request->setArg('verify', 1);
+                foreach ($sl as $name) {
+                    $this->_list[$name] = 1;
+                }
+            }
+        } else {
+            $s = '*';
+            if (!empty($args['s']))
+                $s = $args['s'];
+            $this->_list = array();
+        }
+    }
+
     function run($dbi, $argstr, &$request, $basepage) {
         //if ($request->getArg('action') != 'browse')
         //    return $this->disabled("(action != 'browse')");
@@ -84,6 +105,7 @@ extends WikiPlugin
             $exclude = false;
         $info = $args['info'];
         $this->debug = $args['debug'];
+        //TODO: use the method preSelectS()
         if (!empty($request->getArg['s']))
             $args['s'] = $request->getArg['s'];
         if (  //( $request->getArg('WikiAdminSelect') == _("Go")) and 
@@ -225,6 +247,9 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2004/02/24 15:20:07  rurban
+// fixed minor warnings: unchecked args, POST => Get urls for sortby e.g.
+//
 // Revision 1.13  2004/02/22 23:20:33  rurban
 // fixed DumpHtmlToDir,
 // enhanced sortby handling in PageList

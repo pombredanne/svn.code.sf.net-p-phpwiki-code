@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRename.php,v 1.11 2004-05-24 17:34:53 rurban Exp $');
+rcs_id('$Id: WikiAdminRename.php,v 1.12 2004-06-01 15:28:01 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -47,7 +47,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     function getDefaultArguments() {
@@ -117,7 +117,7 @@ extends WikiPlugin_WikiAdminSelect
         if ($p && $request->isPost() &&
             !empty($post_args['rename']) && empty($post_args['cancel'])) {
 
-            // FIXME: check individual PagePermissions
+            // DONE: check individual PagePermissions
             /*
             if (!$request->_user->isAdmin()) {
                 $request->_notAuthorized(WIKIAUTH_ADMIN);
@@ -125,7 +125,7 @@ extends WikiPlugin_WikiAdminSelect
             }
             */
 
-            // FIXME: error message if not admin.
+            // DONE: error message if not allowed.
             if ($post_args['action'] == 'verify') {
                 // Real action
                 return $this->renamePages($dbi, $request, array_keys($p), 
@@ -227,6 +227,9 @@ class _PageList_Column_renamed_pagename extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/05/24 17:34:53  rurban
+// use ACLs
+//
 // Revision 1.10  2004/04/06 20:00:11  rurban
 // Cleanup of special PageList column types
 // Added support of plugin and theme specific Pagelist Types
