@@ -1,4 +1,4 @@
-<!-- $Id: wiki_transform.php3,v 1.11 2000-07-07 04:49:25 wainstead Exp $ -->
+<!-- $Id: wiki_transform.php3,v 1.12 2000-07-11 03:59:06 wainstead Exp $ -->
 <?
    // expects $pagehash and $html to be set
 
@@ -203,6 +203,31 @@ your web server it is highly advised that you do not allow this.
          $tmpline = preg_replace("/^(\t+)(\*|\d+|#)/", "", $tmpline);
          $html .= SetHTMLOutputMode($listtag, SINGLE_DEPTH, $numtabs);
          $html .= "<li>";
+
+      // tabless markup for unordered and ordered lists
+
+      // first, unordered lists: one or more astericks at the
+      // start of a line indicate a <UL> block
+
+      } elseif (preg_match("/^([*]+)/", $tmpline, $matches)) {
+         // this is part of an unordered list
+         $numtabs = strlen($matches[1]);
+         $listtag = "ul";
+
+         $tmpline = preg_replace("/^([*]+)/", "", $tmpline);
+         $html .= SetHTMLOutputMode($listtag, SINGLE_DEPTH, $numtabs);
+         $html .= "<li>";
+
+      // second, ordered lists <OL>
+      } elseif (preg_match("/^([#]+)/", $tmpline, $matches)) {
+         // this is part of an ordered list
+         $numtabs = strlen($matches[1]);
+         $listtag = "ol";
+
+         $tmpline = preg_replace("/^([#]+)/", "", $tmpline);
+         $html .= SetHTMLOutputMode($listtag, SINGLE_DEPTH, $numtabs);
+         $html .= "<li>";
+
 
       } elseif (preg_match("/^\s+/", $tmpline)) {
          // this is preformatted text, i.e. <pre>
