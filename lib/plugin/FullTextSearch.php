@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.18 2004-02-26 04:24:03 rurban Exp $');
+rcs_id('$Id: FullTextSearch.php,v 1.19 2004-02-26 04:27:39 rurban Exp $');
 /*
 Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -38,7 +38,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.18 $");
+                            "\$Revision: 1.19 $");
     }
 
     function getDefaultArguments() {
@@ -87,7 +87,7 @@ extends WikiPlugin
             if ($hilight_re)
                 $list->pushContent($this->showhits($page, $hilight_re));
         }
-        if ($count >= $limit)
+        if ($limit and $count >= $limit)
             $list->pushContent(HTML::dd(fmt("only %d pages displayed",$limit)));
         if (!$list->getContent())
             $list->pushContent(HTML::dd(_("<no matches>")));
@@ -122,6 +122,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.18  2004/02/26 04:24:03  rurban
+// simplify quiet handling by using PageList
+//
 // Revision 1.17  2004/02/26 04:03:39  rurban
 // added quiet, limit and exclude to FullTextSearch,
 // fixed explodePageList with previously unloaded PageList
