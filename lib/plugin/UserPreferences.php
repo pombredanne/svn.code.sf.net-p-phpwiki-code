@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.10 2003-09-13 21:57:26 carstenklapp Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.11 2003-09-19 22:01:19 carstenklapp Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -36,7 +36,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     function getDefaultArguments() {
@@ -77,7 +77,9 @@ extends WikiPlugin
             $no_args['isForm'] = false;
             return Template('userprefs', $no_args);
         }
-        if ($user->isAuthenticated() and $args['userid'] == $user->_userid) {
+        if (((defined('ALLOW_BOGO_LOGIN') && ALLOW_BOGO_LOGIN && $user->isSignedIn())
+             || $user->isAuthenticated())
+            && $args['userid'] == $user->_userid) {
             if ($request->isPost()) {
                 if ($request->_prefs) {
                     $pref = $request->_prefs;
@@ -136,6 +138,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2003/09/13 21:57:26  carstenklapp
+// Reformatting only.
+//
 // Revision 1.9  2003/09/13 21:53:41  carstenklapp
 // Added lang and theme arguments, getVersion(), copyright and cvs log.
 //
