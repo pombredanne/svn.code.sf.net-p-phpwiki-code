@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.16 2004-02-15 22:23:45 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.17 2004-02-17 12:16:42 rurban Exp $');
 
 // This is a complete OOP rewrite of the old WikiUser code with various
 // configurable external authentification methods.
@@ -397,7 +397,7 @@ class _WikiUser
     function isAuthenticated () {
         //return isa($this,'_PassUser');
         //return isa($this,'_BogoUser') || isa($this,'_PassUser');
-        return $this->_level >= WIKIAUTH_BOGO;
+        return $this->_level >= WIKIAUTH_BOGO; // hmm.
     }
 
     function isAdmin () {
@@ -597,6 +597,8 @@ extends _AnonUser
  *
  * Default is PersonalPage auth and prefs.
  * 
+ *  TODO: password changing
+ *  TODO: email verification
  */
 {
     var $_auth_dbi, $_prefmethod, $_prefselect, $_prefupdate;
@@ -743,9 +745,6 @@ extends _AnonUser
         return $this->_auth_dbi->prepare(str_replace($variables,$new,$stmt));
     }
 
-    //TODO: password changing
-    //TODO: email verification
-
     function getPreferences() {
         if ($this->_prefmethod == 'ADODB') {
             _AdoDbPassUser::_AdoDbPassUser();
@@ -872,6 +871,25 @@ extends _AnonUser
         }
         return false;
     }
+
+    //The default method is storing the password in prefs. 
+    // Child methods (DB,File) may store in external auth also, but this 
+    // must be explicitly enabled.
+    // This may be called by plugin/UserPreferences or by ->SetPreferences()
+    function changePass($submitted_password) {
+        $stored_password = $this->_prefs->get('passwd');
+        // check if authenticated
+        if ($this->isAuthenticated() and $stored_password != $submitted_password) {
+            $this->_prefs->set('passwd',$submitted_password);
+            //update the storage (session, homepage, ...)
+            $this->SetPreferences($this->_prefs);
+            return true;
+        }
+        //Todo: return an error msg to the caller what failed? 
+        // same password or no privilege
+        return false;
+    }
+
 }
 
 class _BogoLoginUser
@@ -888,7 +906,7 @@ extends _PassUser
     }
 
     function checkPass($submitted_password) {
-        // A BogoLoginUser requires PASSWORD_LENGTH_MINIMUM.
+        // A BogoLoginUser requires PASSWORD_LENGTH_MINIMUM. hmm..
         if ($this->userExists())
             return $this->_level;
     }
@@ -1887,6 +1905,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2004/02/15 22:23:45  rurban
+// oops, fixed showstopper (endless recursion)
+//
 // Revision 1.15  2004/02/15 21:34:37  rurban
 // PageList enhanced and improved.
 // fixed new WikiAdmin... plugins
