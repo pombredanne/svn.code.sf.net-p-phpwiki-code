@@ -12,34 +12,35 @@ The out-of-the-box version uses a dbm file in the /tmp directory; you may
 wish a more permanent place for yours, but make sure it's read/writable
 by your web server!
 
-index.php:            the "main page", really a set of branching instructions
-lib/config.php:      configuration options, constants, global variables
-lib/dbmlib.php:      database access functions for dbm files
-lib/display.php:     display a page (this calls "lib/transform.php")
-lib/editlinks.php:   edit the embedded links of a page
-lib/editpage.php:    edit a page
-lib/fullsearch.php:  full page text search
-lib/mysql.php:       database access functions for mySQL
-lib/pageinfo.php:    gives detailed low-level info on the page structure
-lib/pgsql.php:       database access functions for PostgreSQL
-lib/savepage.php:    save a page to db, thank user
-lib/search.php:      page title search
-lib/setupwiki.php:   load a set of pages from ./pgsrc/ directory
-lib/stdlib.php:      standard library of functions (non-db related)
-lib/transform.php:   convert wiki markup into HTML
+index.php:             the "main page", really a set of branching instructions
+admin.php:             entry page for doing wiki administration
+
+lib/config.php:        configuration options, constants, global variables
+lib/db_filesystem.php  alpha support for flat file Wiki	
+lib/dbmlib.php:        database access functions for dbm files
+lib/display.php:       display a page (this calls "lib/transform.php")
+lib/editlinks.php:     edit the embedded links of a page
+lib/editpage.php:      edit a page
+lib/fullsearch.php:    full page text search
+lib/mysql.php:         database access functions for mySQL
+lib/pageinfo.php:      gives detailed low-level info on the page structure
+lib/pgsql.php:         database access functions for PostgreSQL
+lib/savepage.php:      save a page to db, thank user
+lib/search.php:        page title search
+lib/setupwiki.php:     load a set of pages from ./pgsrc/ directory
+lib/stdlib.php:        standard library of functions (non-db related)
+lib/transform.php:     convert wiki markup into HTML
+lib/ziplib.php:        support for zip/unzip, used for page dumps
 
 admin/:
-index.php3:            entry point for administration forms
-shrinkdbm.pl:          Perl script to reduce size of DBM files
-wiki_adminforms.php:   the HTML forms for administration
-wiki_auth.php3:        authorization code for admin features
-wiki_dumpHTML.php:     dump the Wiki out as HTML pages
-wiki_dumpserial.php:   dump the Wiki out as serialize() pages
-wiki_loadserial.php:   load Wiki pages that were dumped with dumpserial
-wiki_lockpage.php:     lock a page so it cannot be edited
-wiki_port1_0.php:      import a 1.0 PhpWiki database
-wiki_rebuilddbms.php:  rebuild DBM files to reclaim disk space
-wiki_zip.php3:         create a Zip archive of all Wiki pages
+admin/dumpserial.php:        dump the Wiki out as serialize() pages
+admin/loadserial.php:        load Wiki pages that were dumped with dumpserial
+admin/lockpage.php:          lock a page so it cannot be edited
+admin/shrinkdbm.pl:          Perl script to reduce size of DBM files
+admin/wiki_dumpHTML.php:     dump the Wiki out as HTML pages
+admin/wiki_port1_0.php:      import a 1.0 PhpWiki database
+admin/wiki_rebuilddbms.php:  rebuild DBM files to reclaim disk space
+admin/zip.php3:              create a Zip archive of all Wiki pages
 
 templates/:
 browse.html:           for rendering most pages
@@ -54,4 +55,4 @@ Steve Wainstead
 swain@wcsb.org
 http://wcsb.org/~swain/
 
-$Id: README,v 1.6 2000-10-08 18:12:13 wainstead Exp $
+$Id: README,v 1.7 2000-12-12 17:11:14 wainstead Exp $
