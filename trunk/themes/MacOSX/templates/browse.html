@@ -4,16 +4,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- phpwiki source:
-$Id: browse.html,v 1.6 2002-01-11 00:27:40 carstenklapp Exp $
+$Id: browse.html,v 1.7 2002-01-11 23:47:38 carstenklapp Exp $
 ${RCS_IDS}
 -->
+<meta http-equiv="Content-Type" content="text/html; charset=${CHARSET}" />
+<!-- <meta name="robots" content="index,follow" /> -->
 <meta name="keywords" content="${SPLIT_PAGE}, ${WIKI_NAME}" />
 <?php if (!empty($PAGE_DESCRIPTION)) { ?>
   <meta name="description" content="${PAGE_DESCRIPTION}" />
 <?php } ?>
-<meta http-equiv="Content-Type" content="text/html; charset=${CHARSET}" />
-<!-- <meta name="robots" content="index,follow" /> -->
 <base href="${BASE_URL}" />
+<link rel="shortcut icon" href="favicon.ico" />
 ${CSS}
 <title>${WIKI_NAME}: ${SPLIT_PAGE}</title>
 
@@ -79,6 +80,9 @@ ${LASTMODIFIED}
     <?php if ($user->is_authenticated()) { ?>
       <?php printf(_("You are signed in as %s"), LinkWikiWord($USERID)); ?>
       &nbsp;</td><td width="100%"><a class="wikiaction" href="${ACTION}logout"><img border="0" alt="SignOut" src="themes/MacOSX/locale/en/buttons/SignOut.png" /></a>
+      <?php if ($user->is_admin()) { ?>
+        <a class="wikiadmin" href="${BROWSE}PhpWikiAdministration"><img border="0" alt="PhpWikiAdministration" src="themes/MacOSX/locale/en/buttons/PhpWikiAdministration.png" /></a>
+      <?php } ?>
     <?php } else { ?>
       <a class="wikiaction" href="${ACTION}login"><img border="0" alt="SignIn" src="themes/MacOSX/locale/en/buttons/SignIn.png" /></a>
     <?php } ?>
