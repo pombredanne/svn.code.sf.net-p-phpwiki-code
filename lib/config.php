@@ -1,20 +1,31 @@
 <?php
+   // essential internal stuff -- skip it
+   set_magic_quotes_runtime(0);
+   error_reporting(E_ALL ^ E_NOTICE);
+
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.14 2000-11-01 10:24:58 ahollosi Exp $');
+   rcs_id('$Id: config.php,v 1.15 2000-11-08 15:40:00 ahollosi Exp $');
+   // end essential internal stuff
+
 
    /////////////////////////////////////////////////////////////////////
    // Constants and settings. Edit the values below for your site.
+   /////////////////////////////////////////////////////////////////////
+
 
    // URL of index.php e.g. http://yoursite.com/phpwiki/index.php
    // you can leave this empty - it will be calculated automatically
    $ScriptUrl = "";
+   // URL of admin.php e.g. http://yoursite.com/phpwiki/admin.php
+   // you can leave this empty - it will be calculated automatically
+   // if you fill in $ScriptUrl you *MUST* fill in $AdminUrl as well!
+   $AdminUrl = "";
 
    //  Select your language - default language "C": English
    // other languages available: Dutch "nl", Spanish "es"
    $LANG="C";
-
    /////////////////////////////////////////////////////////////////////
    // Database section
    // set your database here and edit the according section below
@@ -179,8 +190,11 @@
    // you shouldn't have to edit anyting below this line
 
    if (empty($ScriptUrl)) {
-      $ScriptUrl = "http://$SERVER_NAME:$SERVER_PORT$SCRIPT_NAME";
+      $port = ($SERVER_PORT == 80) ? '' : ":$SERVER_PORT";
+      $ScriptUrl = "http://$SERVER_NAME$port$SCRIPT_NAME";
    }
+   if (defined('WIKI_ADMIN') && !empty($AdminUrl))
+      $ScriptUrl = $AdminUrl;
 
    $LogoImage = "<img src=\"$logo\" border=0 ALT=\"[PhpWiki!]\">";
    $LogoImage = "<a href=\"$ScriptUrl\">$LogoImage</a>";

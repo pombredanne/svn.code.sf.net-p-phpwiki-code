@@ -1,4 +1,4 @@
-<!-- $Id: transform.php,v 1.6 2000-10-31 19:24:08 ahollosi Exp $ -->
+<!-- $Id: transform.php,v 1.7 2000-11-08 15:40:00 ahollosi Exp $ -->
 <?php
    // expects $pagehash and $html to be set
 
@@ -235,6 +235,8 @@ your web server it is highly advised that you do not allow this.
       $tmpline = str_replace("%%Search%%", $quick_search_box, $tmpline);
       $tmpline = str_replace("%%Fullsearch%%", $full_search_box, $tmpline);
       $tmpline = str_replace("%%Mostpopular%%", $most_popular_list, $tmpline);
+      if(defined('WIKI_ADMIN') && strstr($tmpline, "%%ADMIN-"))
+         $tmpline = ParseAdminTokens($tmpline);
 
       ///////////////////////////////////////////////////////
       // Replace tokens
