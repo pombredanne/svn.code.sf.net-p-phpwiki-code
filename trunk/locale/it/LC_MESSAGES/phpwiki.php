@@ -12,8 +12,6 @@ $locale["(diff)"] =
    "(diff)";
 $locale["(last edited %s)"] =
    "(ultima modifica %s)";
-$locale["(version %s, saved on %s)"] =
-   "(versione %s, salvata su %s)";
 $locale["- saved to database as version %d"] =
    "- salvata a base di dati a versione %d";
 $locale["1 day"] =
@@ -44,16 +42,20 @@ $locale["First"] =
    "Prima";
 $locale["Full Text Search"] =
    "Una ricerca completa del testo";
+$locale["FullTextSearch"] =
+   "RicercaDelTesto";
 $locale["GoodStyle"] =
    "BuonStile";
 $locale["HomePage"] =
    "PaginaPrincipale";
 $locale["Include of '%s' failed"] =
-   "Inserimento in '%s' fallito";
+   "Inserimento di '%s' fallito";
 $locale["Last"] =
    "Ultima";
 $locale["Last Modified"] =
-   "Ultima Modifica su";
+   "Ultima Modifica";
+$locale["Last edited %s."] =
+   "Ultima modifica %s.";
 $locale["Last edited on %s."] =
    "Ultima modifica su %s.";
 $locale["Lock Page"] =
@@ -65,7 +67,7 @@ $locale["Make changes to the file again. Paste your additions from the clipboard
 $locale["Modern"] =
    "Moderno";
 $locale["MostPopular"] =
-   "PiuPopolari";
+   "PiùPopolari";
 $locale["Next"] =
    "Seguente";
 $locale["None"] =
@@ -106,16 +108,22 @@ $locale["The %d most popular pages of this wiki:"] =
    "Le %d pagine più popolari di questo wiki sono:";
 $locale["This page has been locked by the administrator and cannot be edited."] =
    "Questa pagina è stata bloccata dall'amministratore e non può essere modificata.";
+$locale["Time Zone"] =
+   "Fuso Orario";
 $locale["Title Search"] =
    "La ricerca su tutto il testo";
 $locale["Title search results for '%s'"] =
    "Risultati della ricerca su tutto il testo '%s'";
+$locale["TitleSearch"] =
+   "RicercaSuTutto";
 $locale["Unlock Page"] =
    "Sblocca la Pagina";
 $locale["Version"] =
    "Versione";
 $locale["Version %d"] =
    "Versione %d";
+$locale["Version %s, saved %s."] =
+   "Versione %s, salvata %s.";
 $locale["Version %s, saved on %s."] =
    "Versione %s, salvata su %s.";
 $locale["Versions are identical"] =
@@ -146,5 +154,9 @@ $locale["version %d"] =
    "versione %d";
 $locale["version %s"] =
    "versione %s";
+$locale["version %s, saved %s."] =
+   "versione %s, salvata %s.";
+$locale["version %s, saved on %s."] =
+   "versione %s, salvata su %s.";
 
 ?>

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.2.0\n"
-"POT-Creation-Date: 2002-02-03 17:20-0500\n"
+"POT-Creation-Date: 2002-02-04 17:06-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marco Milanesi <kpanic@ada2.unipv.it>\n"
 "Language-Team: \n"
@@ -21,80 +21,85 @@ msgstr ""
 msgid "HomePage"
 msgstr "PaginaPrincipale"
 
-#: ../lib/diff.php:240
-#, c-format
-msgid "version %s"
-msgstr "versione %s"
+#: ../lib/diff.php:247
+#, fuzzy, c-format
+msgid "last modified %s"
+msgstr "ultima modifica su %s"
 
-#: ../lib/diff.php:241
+#: ../lib/diff.php:249
 #, c-format
 msgid "last modified on %s"
 msgstr "ultima modifica su %s"
 
-#: ../lib/diff.php:243
+#: ../lib/diff.php:251
+#, c-format
+msgid "version %s"
+msgstr "versione %s"
+
+#: ../lib/diff.php:254
 #, c-format
 msgid "by %s"
 msgstr "di %s"
 
-#: ../lib/diff.php:245
+#: ../lib/diff.php:256
 msgid "None"
 msgstr "Nessuno"
 
-#: ../lib/diff.php:267 ../lib/diff.php:277
+#: ../lib/diff.php:278 ../lib/diff.php:288
 #, c-format
 msgid "version %d"
 msgstr "versione %d"
 
-#: ../lib/diff.php:271
+#: ../lib/diff.php:282
 msgid "current version"
 msgstr "versione corrente"
 
-#: ../lib/diff.php:288
+#: ../lib/diff.php:299
 msgid "revision by previous author"
 msgstr ""
 
-#: ../lib/diff.php:294
+#: ../lib/diff.php:305
 msgid "previous revision"
 msgstr ""
 
-#: ../lib/diff.php:304
+#: ../lib/diff.php:315
 msgid "predecessor to the previous major change"
 msgstr ""
 
-#: ../lib/diff.php:314
+#: ../lib/diff.php:325
 #, c-format
 msgid "Differences between %s and %s of %s."
 msgstr ""
 
-#: ../lib/diff.php:317
+#: ../lib/diff.php:328
 msgid "Other diffs:"
 msgstr ""
 
-#: ../lib/diff.php:318
+#: ../lib/diff.php:329
 msgid "Previous Major Revision"
 msgstr ""
 
-#: ../lib/diff.php:319
+#: ../lib/diff.php:330
 msgid "Previous Revision"
 msgstr ""
 
-#: ../lib/diff.php:320
+#: ../lib/diff.php:331
 msgid "Previous Author"
 msgstr ""
 
-#: ../lib/diff.php:337
+#: ../lib/diff.php:348
 msgid "Newer page:"
 msgstr ""
 
-#: ../lib/diff.php:338
+#: ../lib/diff.php:349
 msgid "Older page:"
 msgstr ""
 
-#: ../lib/diff.php:345
+#: ../lib/diff.php:356
 msgid "Versions are identical"
 msgstr "Le versioni sono identiche"
 
-#: ../lib/diff.php:358
+#: ../lib/diff.php:369
 #, fuzzy, c-format
 msgid "Diff: %s"
 msgstr "Differenza di: %s"
@@ -109,26 +114,26 @@ msgstr ""
 msgid "BackLinks for %s"
 msgstr ""
 
-#: ../lib/Theme.php:287 ../lib/editpage.php:63
+#: ../lib/Theme.php:287 ../lib/editpage.php:64
 #, c-format
 msgid "Edit: %s"
 msgstr "Modifica: %s"
 
-#: ../lib/editpage.php:94
+#: ../lib/editpage.php:95
 #, fuzzy, c-format
 msgid "View Source: %s"
 msgstr "Mostra il sorgente della pagina: %s"
 
-#: ../lib/editpage.php:150
+#: ../lib/editpage.php:171
 #, c-format
 msgid "Saved: %s"
 msgstr "Salvata: %s"
 
-#: ../lib/editpage.php:190 ../themes/MacOSX/themeinfo.php:113
+#: ../lib/editpage.php:211 ../themes/MacOSX/themeinfo.php:113
 msgid "Page Locked"
 msgstr "Pagina Bloccata"
 
-#: ../lib/editpage.php:191
+#: ../lib/editpage.php:212
 #, fuzzy
 msgid ""
 "This page has been locked by the administrator so your changes can not be "
@@ -137,7 +142,7 @@ msgstr ""
 "Questa pagina è stata bloccata dall'amministratore e non può essere "
 "modificata"
 
-#: ../lib/editpage.php:192
+#: ../lib/editpage.php:213
 #, fuzzy
 msgid ""
 "(Copy your changes to the clipboard. You can try editing a different page or "
@@ -146,16 +151,16 @@ msgstr ""
 "Copia le tue modifiche nella clipboard o temporaneamente in unaltro posto "
 "(es: un editor di testo)"
 
-#: ../lib/editpage.php:193 ../lib/editpage.php:215
+#: ../lib/editpage.php:214 ../lib/editpage.php:236
 msgid "Sorry for the inconvenience."
 msgstr "Scusa per l'inconveniente."
 
-#: ../lib/editpage.php:203
+#: ../lib/editpage.php:224
 #, fuzzy
 msgid "Edit the new version"
 msgstr "Mostra il versione corrente"
 
-#: ../lib/editpage.php:205
+#: ../lib/editpage.php:226
 msgid ""
 "Copy your changes to the clipboard or to another temporary place (e.g. text "
 "editor)."
@@ -163,15 +168,15 @@ msgstr ""
 "Copia le tue modifiche nella clipboard o temporaneamente in unaltro posto "
 "(es: un editor di testo)"
 
-#: ../lib/editpage.php:206
+#: ../lib/editpage.php:227
 #, fuzzy, c-format
 msgid ""
 "%s of the page. You should now see the most current version of the page. "
 "Your changes are no longer there."
 msgstr ""
-"<b>Aggiorna</b> la pagina. Dovresti vedere l'ultima versione senzamodifiche"
+"%s della pagina. Dovresti vedere l'ultima versione senzamodifiche"
 
-#: ../lib/editpage.php:208
+#: ../lib/editpage.php:229
 msgid ""
 "Make changes to the file again. Paste your additions from the clipboard (or "
 "text editor)."
@@ -179,31 +184,31 @@ msgstr ""
 "Cambia ancora il file ed installa le tue modifiche dalla clipboard (o "
 "dall'editor di testo)"
 
-#: ../lib/editpage.php:209
+#: ../lib/editpage.php:230
 msgid "Save your updated changes."
 msgstr ""
 
-#: ../lib/editpage.php:211
+#: ../lib/editpage.php:232
 msgid "Conflicting Edits!"
 msgstr ""
 
-#: ../lib/editpage.php:212
+#: ../lib/editpage.php:233
 msgid ""
 "In the time since you started editing this page, another user has saved a "
 "new version of it.  Your changes can not be saved, since doing so would "
 "overwrite the other author's changes."
 msgstr ""
 
-#: ../lib/editpage.php:213
+#: ../lib/editpage.php:234
 #, fuzzy
 msgid "In order to recover from this situation, follow these steps:"
 msgstr "Per risolvere questa situazione segui questi passi:"
 
-#: ../lib/editpage.php:265
+#: ../lib/editpage.php:292
 msgid "Preview"
 msgstr ""
 
-#: ../lib/editpage.php:268
+#: ../lib/editpage.php:295
 msgid "Save"
 msgstr ""
 
@@ -226,65 +231,64 @@ msgstr ""
 msgid "Loading InterWikiMap from external file %s."
 msgstr ""
 
-#: ../lib/loadsave.php:20 ../lib/loadsave2.php:21
+#: ../lib/loadsave.php:20
 msgid "Complete."
 msgstr ""
 
-#: ../lib/loadsave.php:21 ../lib/loadsave2.php:22
+#: ../lib/loadsave.php:21
 #, c-format
 msgid "Return to %s"
 msgstr ""
 
-#: ../lib/loadsave.php:149 ../lib/loadsave2.php:150
+#: ../lib/loadsave.php:149
 msgid "You must specify a directory to dump to"
 msgstr ""
 
-#: ../lib/loadsave.php:154 ../lib/loadsave2.php:155
+#: ../lib/loadsave.php:154
 #, c-format
 msgid "Cannot create directory '%s'"
 msgstr ""
 
-#: ../lib/loadsave.php:156 ../lib/loadsave2.php:157
+#: ../lib/loadsave.php:156
 #, c-format
 msgid "Created directory '%s' for the page dump..."
 msgstr ""
 
-#: ../lib/loadsave.php:159 ../lib/loadsave2.php:160
+#: ../lib/loadsave.php:159
 #, c-format
 msgid "Using directory '%s'"
 msgstr ""
 
-#: ../lib/loadsave.php:162 ../lib/loadsave2.php:163
+#: ../lib/loadsave.php:162
 msgid "Dumping Pages"
 msgstr ""
 
-#: ../lib/loadsave.php:174 ../lib/loadsave2.php:175
+#: ../lib/loadsave.php:174
 #, c-format
 msgid "saved as %s"
 msgstr "salvata a %s"
 
-#: ../lib/loadsave.php:184 ../lib/loadsave2.php:182
-#: ../lib/plugin/text2png.php:154
+#: ../lib/loadsave.php:184 ../lib/plugin/text2png.php:154
 #, c-format
 msgid "couldn't open file '%s' for writing"
 msgstr ""
 
-#: ../lib/loadsave.php:190 ../lib/loadsave2.php:188
+#: ../lib/loadsave.php:190
 #, c-format
 msgid "%s bytes written"
 msgstr ""
 
-#: ../lib/loadsave.php:213 ../lib/loadsave2.php:211
+#: ../lib/loadsave.php:213
 #, fuzzy
 msgid "Empty pagename!"
 msgstr "Scrivi un nome di una pagina"
 
-#: ../lib/loadsave.php:234 ../lib/loadsave2.php:234
+#: ../lib/loadsave.php:234
 #, c-format
 msgid "from %s"
 msgstr "dalla %s"
 
-#: ../lib/loadsave.php:239 ../lib/loadsave2.php:239
+#: ../lib/loadsave.php:239
 msgid "new page"
 msgstr ""
 
@@ -298,70 +302,60 @@ msgstr ""
 msgid "- saved to database as version %d"
 msgstr "- salvata a base di dati a versione %d"
 
-#: ../lib/loadsave.php:346 ../lib/loadsave2.php:357
+#: ../lib/loadsave.php:346
 #, c-format
 msgid "MIME file %s"
 msgstr ""
 
-#: ../lib/loadsave.php:351 ../lib/loadsave2.php:362
+#: ../lib/loadsave.php:351
 #, c-format
 msgid "Serialized file %s"
 msgstr ""
 
-#: ../lib/loadsave.php:365 ../lib/loadsave2.php:376
+#: ../lib/loadsave.php:365
 #, c-format
 msgid "plain file %s"
 msgstr "archivio del testo %s"
 
-#: ../lib/loadsave.php:379 ../lib/loadsave.php:391 ../lib/loadsave2.php:391
-#: ../lib/loadsave2.php:418
+#: ../lib/loadsave.php:379 ../lib/loadsave.php:391
 msgid "Skipping"
 msgstr ""
 
-#: ../lib/loadsave.php:488 ../lib/loadsave2.php:524
+#: ../lib/loadsave.php:488
 #, c-format
 msgid "Bad file type: %s"
 msgstr ""
 
-#: ../lib/loadsave.php:502 ../lib/loadsave2.php:538
+#: ../lib/loadsave.php:502
 #, c-format
 msgid "Loading '%s'"
 msgstr ""
 
-#: ../lib/loadsave.php:523 ../lib/loadsave2.php:559
+#: ../lib/loadsave.php:523
 msgid "The PhpWiki programming team"
 msgstr ""
 
-#: ../lib/loadsave.php:526 ../lib/loadsave2.php:562
+#: ../lib/loadsave.php:526
 msgid "Loading up virgin wiki"
 msgstr ""
 
-#: ../lib/loadsave.php:543 ../lib/loadsave2.php:579
+#: ../lib/loadsave.php:543
 msgid "No uploaded file to upload?"
 msgstr ""
 
-#: ../lib/loadsave.php:547 ../lib/loadsave2.php:583
+#: ../lib/loadsave.php:547
 #, c-format
 msgid "Uploading %s"
 msgstr ""
 
 #: ../lib/RSSWriter091.php:115 ../lib/loadsave.php:552
-#: ../lib/loadsave2.php:588 ../lib/plugin/RecentChanges.php:190
-#: ../lib/plugin/RecentChanges.php:311 ../lib/plugin/RecentChanges.php:388
+#: ../lib/plugin/RecentChanges.php:212 ../lib/plugin/RecentChanges.php:333
+#: ../lib/plugin/RecentChanges.php:410
 #: ../themes/Portland/templates/navbar.tmpl:30
 #: ../themes/default/templates/navbar.tmpl:12
 #, fuzzy
 msgid "RecentChanges"
 msgstr "CambiamentiRecenti o ModificheRecenti?"
-
-#: ../lib/loadsave2.php:224 ../lib/plugin/RecentChanges.php:89
-msgid "New page."
-msgstr ""
-
-#: ../lib/loadsave2.php:429
-#, fuzzy
-msgid "Loaded"
-msgstr "Bloccata"
 
 #: ../lib/main.php:227
 #, c-format
@@ -393,13 +387,11 @@ msgid "Fatal PhpWiki Error"
 msgstr "Errore Fatale Di PhpWiki"
 
 #: ../lib/main.php:407 ../lib/plugin/FullTextSearch.php:12
-#, fuzzy
 msgid "FullTextSearch"
 msgstr "RicercaDelTesto"
 
-#: ../lib/main.php:410 ../lib/plugin/RecentChanges.php:302
+#: ../lib/main.php:410 ../lib/plugin/RecentChanges.php:324
 #: ../lib/plugin/TitleSearch.php:13
-#, fuzzy
 msgid "TitleSearch"
 msgstr "RicercaSuTutto"
 
@@ -413,7 +405,7 @@ msgstr ""
 
 #: ../lib/PageList.php:243
 msgid "Last Modified"
-msgstr "Ultima Modifica su"
+msgstr "Ultima Modifica"
 
 #: ../lib/PageList.php:245
 msgid "Hits"
@@ -431,7 +423,7 @@ msgstr "Versione"
 msgid "Last Author"
 msgstr ""
 
-#: ../lib/PageList.php:253
+#: ../lib/PageList.php:253 ../themes/default/templates/editpage.tmpl:91
 msgid "Locked"
 msgstr "Bloccata"
 
@@ -460,12 +452,12 @@ msgstr ""
 msgid "All Pages"
 msgstr ""
 
-#: ../lib/plugin/AllPages.php:35
+#: ../lib/plugin/AllPages.php:37
 #, c-format
 msgid "Pages in this wiki (%d total):"
 msgstr ""
 
-#: ../lib/plugin/AllPages.php:45
+#: ../lib/plugin/AllPages.php:47
 #, c-format
 msgid "elapsed time: %s s"
 msgstr ""
@@ -616,7 +608,7 @@ msgstr ""
 
 #: ../lib/plugin/MostPopular.php:12
 msgid "MostPopular"
-msgstr "PiuPopolari"
+msgstr "PiùPopolari"
 
 #: ../lib/plugin/MostPopular.php:16
 msgid "List the most popular pages"
@@ -706,8 +698,7 @@ msgid "History of changes."
 msgstr ""
 
 #: ../lib/plugin/PageHistory.php:221 ../lib/plugin/RecentChanges.php:47
-#: ../themes/Portland/templates/actionbar.tmpl:12
-#: ../themes/Portland/templates/viewsource.tmpl:27
+#: ../themes/Portland/templates/viewsource.tmpl:28
 #: ../themes/Sidebar/templates/actionbar.tmpl:22
 #: ../themes/default/templates/actionbar.tmpl:30
 msgid "PageHistory"
@@ -725,6 +716,10 @@ msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:87
 msgid "Deleted."
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:89
+msgid "New page."
 msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:101
@@ -747,65 +742,70 @@ msgstr ""
 msgid "minor edits"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:166
-#, fuzzy
-msgid "day"
-msgstr "1 giorno"
-
-#: ../lib/plugin/RecentChanges.php:166 ../lib/plugin/RecentChanges.php:516
+#: ../lib/plugin/RecentChanges.php:186
 #, c-format
-msgid "%s days"
-msgstr "%s giorni"
-
-#: ../lib/plugin/RecentChanges.php:171
-#, c-format
-msgid "The %d most recent %s during the past %s are listed below."
+msgid "The %d most recent %s during the past day are listed below."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:174
+#: ../lib/plugin/RecentChanges.php:189
+#, c-format
+msgid "The %d most recent %s during the past %s days are listed below."
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:192
 #, c-format
 msgid "The %d most recent %s are listed below."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:179
+#: ../lib/plugin/RecentChanges.php:198
 #, c-format
-msgid "The most recent %s during the past %s are listed below."
+msgid "The most recent %s during the past day are listed below."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:182
+#: ../lib/plugin/RecentChanges.php:201
+#, c-format
+msgid "The most recent %s during the past %s days are listed below."
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:204
 #, c-format
 msgid "All %s are listed below."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:190
+#: ../lib/plugin/RecentChanges.php:212
 #: ../themes/Portland/templates/editpage.tmpl:62
 msgid "RecentEdits"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:299
+#: ../lib/plugin/RecentChanges.php:321
 msgid "Search"
 msgstr "Ricerca"
 
-#: ../lib/plugin/RecentChanges.php:300 ../lib/plugin/TitleSearch.php:17
+#: ../lib/plugin/RecentChanges.php:322 ../lib/plugin/TitleSearch.php:17
 msgid "Title Search"
 msgstr "La ricerca su tutto il testo"
 
-#: ../lib/plugin/RecentChanges.php:488
+#: ../lib/plugin/RecentChanges.php:510
 msgid "Show minor edits for:"
 msgstr "Mostrare le modifiche secondarie per:"
 
-#: ../lib/plugin/RecentChanges.php:490
+#: ../lib/plugin/RecentChanges.php:512
 msgid "Show all changes for:"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:492
+#: ../lib/plugin/RecentChanges.php:514
 #, fuzzy
 msgid "Show changes for:"
 msgstr "Mostra il sorgente della pagina e le sue referenze"
 
-#: ../lib/plugin/RecentChanges.php:512
+#: ../lib/plugin/RecentChanges.php:534
 msgid "1 day"
 msgstr "1 giorno"
+
+#: ../lib/plugin/RecentChanges.php:538
+#, c-format
+msgid "%s days"
+msgstr "%s giorni"
 
 #: ../lib/plugin/text2png.php:37
 msgid "Sorry, this version of PHP cannot create PNG image files."
@@ -1035,7 +1035,7 @@ msgstr ""
 #: ../lib/WikiPlugin.php:276
 #, c-format
 msgid "Include of '%s' failed"
-msgstr "Inserimento in '%s' fallito"
+msgstr "Inserimento di '%s' fallito"
 
 #: ../lib/WikiUser.php:109
 msgid "Invalid password or userid."
@@ -1058,12 +1058,12 @@ msgstr ""
 msgid "Unexpected EOF in zip file"
 msgstr ""
 
-#: ../lib/ziplib.php:668
+#: ../lib/ziplib.php:667
 #, c-format
 msgid "[%d] See [%s]"
 msgstr ""
 
-#: ../lib/ziplib.php:676
+#: ../lib/ziplib.php:675
 msgid "References"
 msgstr ""
 
@@ -1082,9 +1082,9 @@ msgstr "Mostra il sorgente della pagina"
 
 #: ../themes/default/templates/browse.tmpl:9
 #: ../themes/default/templates/viewsource.tmpl:9
-#, fuzzy, c-format
+#, c-format
 msgid "Last edited %s."
-msgstr "Ultima modifica su %s."
+msgstr "Ultima modifica %s."
 
 #: ../themes/default/templates/browse.tmpl:11
 #: ../themes/default/templates/viewsource.tmpl:11
@@ -1094,9 +1094,9 @@ msgstr "Ultima modifica su %s."
 
 #: ../themes/default/templates/browse.tmpl:14
 #: ../themes/default/templates/viewsource.tmpl:14
-#, fuzzy, c-format
+#, c-format
 msgid "Version %s, saved %s."
-msgstr "Versione %s, salvata su %s."
+msgstr "Versione %s, salvata %s."
 
 #: ../themes/default/templates/browse.tmpl:17
 #: ../themes/default/templates/viewsource.tmpl:17
@@ -1181,23 +1181,23 @@ msgid "Author will be logged as %s."
 msgstr ""
 
 #: ../themes/Portland/templates/editpage.tmpl:81
-#: ../themes/default/templates/editpage.tmpl:95
+#: ../themes/default/templates/editpage.tmpl:100
 #, c-format
 msgid "See %s tips for editing."
 msgstr "%s consigli per le modifiche."
 
 #: ../themes/Portland/templates/editpage.tmpl:81
-#: ../themes/default/templates/editpage.tmpl:95
+#: ../themes/default/templates/editpage.tmpl:100
 msgid "GoodStyle"
 msgstr "BuonStile"
 
 #: ../themes/Portland/templates/editpage.tmpl:83
-#: ../themes/default/templates/editpage.tmpl:96
+#: ../themes/default/templates/editpage.tmpl:101
 msgid "TextFormattingRules"
 msgstr "RegoleDiFormattazioneDelTesto"
 
 #: ../themes/Portland/templates/editpage.tmpl:83
-#: ../themes/default/templates/editpage.tmpl:96
+#: ../themes/default/templates/editpage.tmpl:101
 msgid "Synopsis"
 msgstr "Sinossi"
 
@@ -1226,24 +1226,36 @@ msgstr "TrovaPagina"
 msgid "PhpWikiAdministration"
 msgstr ""
 
-#: ../themes/default/templates/nochanges.tmpl:4
+#: ../themes/default/templates/nochanges.tmpl:6
+#: ../themes/default/templates/savepage.tmpl:7
+#, fuzzy
+msgid "Page now locked."
+msgstr "Pagina Bloccata"
+
+#: ../themes/default/templates/nochanges.tmpl:7
+#: ../themes/default/templates/savepage.tmpl:8
+#, fuzzy
+msgid "Page now unlocked."
+msgstr "Pagina Bloccata"
+
+#: ../themes/default/templates/nochanges.tmpl:11
 msgid "Edit aborted."
 msgstr ""
 
-#: ../themes/default/templates/nochanges.tmpl:5
+#: ../themes/default/templates/nochanges.tmpl:12
 msgid "You have not made any changes so no new version has been saved."
 msgstr ""
 
-#: ../themes/default/templates/savepage.tmpl:8
+#: ../themes/default/templates/savepage.tmpl:12
 #, c-format
 msgid "Thank you for editing %s."
 msgstr "Grazie per le modifiche! %s."
 
-#: ../themes/default/templates/savepage.tmpl:10
+#: ../themes/default/templates/savepage.tmpl:13
 msgid "Your careful attention to detail is much appreciated."
 msgstr "La tua cura verso il dettaglio è molto apprezzata."
 
-#: ../themes/default/templates/savepage.tmpl:14
+#: ../themes/default/templates/savepage.tmpl:16
 msgid "Warning!"
 msgstr "Avvertimento!"
 
@@ -1270,7 +1282,7 @@ msgstr ""
 
 #: ../themes/default/templates/userprefs.tmpl:56
 msgid "Time Zone"
-msgstr ""
+msgstr "Fuso Orario"
 
 #: ../themes/default/templates/userprefs.tmpl:58
 msgid "Server time:"
@@ -1313,16 +1325,27 @@ msgid "%s of this page"
 msgstr "%s di questa pagina"
 
 #: ../themes/Portland/templates/actionbar.tmpl:15
-#: ../themes/Portland/templates/viewsource.tmpl:30
+#: ../themes/WikiTrek/lib/RecentChanges.php:54
+msgid "diff"
+msgstr "diff"
+
+#: ../themes/Portland/templates/actionbar.tmpl:18
+#: ../themes/Portland/templates/viewsource.tmpl:31
 #, c-format
 msgid "(last edited %s)"
 msgstr "(ultima modifica %s)"
 
-#: ../themes/Portland/templates/actionbar.tmpl:17
-#: ../themes/Portland/templates/viewsource.tmpl:32
+#: ../themes/Portland/templates/actionbar.tmpl:21
+#: ../themes/Portland/templates/viewsource.tmpl:34
 #, c-format
-msgid "(version %s, saved on %s)"
-msgstr "(versione %s, salvata su %s)"
+msgid "version %s, saved %s."
+msgstr "versione %s, salvata %s."
+
+#: ../themes/Portland/templates/actionbar.tmpl:24
+#: ../themes/Portland/templates/viewsource.tmpl:37
+#, c-format
+msgid "version %s, saved on %s."
+msgstr "versione %s, salvata su %s."
 
 #: ../themes/Portland/templates/editpage.tmpl:61
 #, c-format
@@ -1331,13 +1354,15 @@ msgid ""
 msgstr ""
 
 #: ../themes/Sidebar/themeinfo.php:30
-#, fuzzy
 msgid "Sidebar"
-msgstr "Ricerca"
+msgstr ""
 
-#: ../themes/WikiTrek/lib/RecentChanges.php:54
-msgid "diff"
-msgstr "diff"
+#, fuzzy
+#~ msgid "day"
+#~ msgstr "1 giorno"
+
+#~ msgid "(version %s, saved on %s)"
+#~ msgstr "(versione %s, salvata su %s)"
 
 #~ msgid "Use your browser's <b>Back</b> button to go back to the edit page."
 #~ msgstr ""
@@ -1383,7 +1408,7 @@ msgstr "diff"
 #~ msgstr "Copia di %s"
 
 #~ msgid "PHP %s Warnings"
-#~ msgstr "Avvertimenti Di PHP 4.1"
+#~ msgstr "Avvertimenti Di PHP %s"
 
 #, fuzzy
 #~ msgid "ViewSource"
