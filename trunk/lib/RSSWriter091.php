@@ -21,7 +21,7 @@
 // for outputting RecentChanges in RSS 0.91 format
 // ----------------------------------------------------------------------
 
-rcs_id('$Id: RSSWriter091.php,v 1.5 2002-01-23 05:10:22 dairiki Exp $');
+rcs_id('$Id: RSSWriter091.php,v 1.6 2002-10-30 23:19:04 dairiki Exp $');
 
 include_once "lib/RssWriter.php";
 class RSSWriter091 extends RSSWriter
@@ -114,8 +114,10 @@ extends _RecentChanges_RSSFormatter
         return array('title' => WIKI_NAME,
                      'description' => _("RecentChanges"),
                      'link' => $rc_url,
-                     'language' => 'EN-us');
-    
+                     'language' => 'en-US');
+
+        /* FIXME: language should come from $LANG (or other config variable). */
+        
             /* FIXME: other things one might like in <channel>:                   
              * managingEditor
              * webmaster
