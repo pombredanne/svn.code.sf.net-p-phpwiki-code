@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.23 2002-02-09 23:53:58 carstenklapp Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.24 2002-02-10 20:32:24 carstenklapp Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
@@ -37,7 +37,6 @@ $s = $Theme->getButtonSeparator();
 <?php if (! $IS_CURRENT) { ?>
   <p><strong><?=_("Warning: You are editing an old revision.")?>
         <?=_("Saving this page will overwrite the current version.")?></strong></p>
-  <hr class="ignore" noshade="noshade" />
 <?php } ?>
 
 <?php /*
