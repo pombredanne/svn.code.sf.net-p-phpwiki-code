@@ -1,6 +1,7 @@
 #!/bin/sh
 # TODO: need to check write perms to the .testbox/* (mixed web/cli perms)
 
+chmod -R a+rw .testbox .dumphtml
 if [ -d .testbox/page_data -a ! -w .testbox/page_data/AllPages ]; then
   rm -rf .testbox/*
 fi
