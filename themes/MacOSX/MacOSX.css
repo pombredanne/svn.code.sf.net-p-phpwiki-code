@@ -1,5 +1,5 @@
 /*
- $Id: MacOSX.css,v 1.34 2003-11-27 16:47:11 carstenklapp Exp $
+ $Id: MacOSX.css,v 1.35 2003-11-30 19:35:09 carstenklapp Exp $
 
  Classes:
 
@@ -33,6 +33,12 @@ body { background: #fafafa url("images/bgpaper8.png"); }
 body.edit { background: #fafafa url("images/bggranular.png"); }
 
 body { }
+
+/* Ensure identical vertical alignment for adjacent form buttons,
+   whether image based (Theme buttons) or not */
+input[type=submit],
+input[type=cancel],
+input[type=image] { vertical-align: middle }
 
 /*
  * NS4, defaults from body don't always propagate correctly.
