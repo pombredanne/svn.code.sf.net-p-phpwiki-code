@@ -4,7 +4,7 @@ function rcs_id($id) {
   $RcsIdentifiers .= "$id\n";
 };
 
-rcs_id('$Id: wiki_config.php3,v 1.19.2.2 2000-07-29 00:36:45 dairiki Exp $');
+rcs_id('$Id: wiki_config.php3,v 1.19.2.3 2000-07-30 22:30:36 dairiki Exp $');
 
    /*
       Constants and settings. Edit the values below for
@@ -193,4 +193,6 @@ rcs_id('$Id: wiki_config.php3,v 1.19.2.2 2000-07-29 00:36:45 dairiki Exp $');
     */
    define('PAGENAME_REGEXP', '(?!\s)[ !-Z^-{}~\xa1-\xff]{1,100}(?<!\s)');
    define('SAFE_URL_REGEXP', '(?:' . $AllowedProtocols . '):[^][\s<>"()]+');
+
+   set_magic_quotes_runtime(0);
 ?>
