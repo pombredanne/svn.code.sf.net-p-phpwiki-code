@@ -44,8 +44,6 @@ $locale["Problem while editing %s"] =
    "Si sono verificati problemi durante la modifica %s";
 $locale["Problem while updating %s"] =
    "Problemi durante l'aggiornamento %s";
-$locale["RecentChanges"] =
-   "ModificheRecenti";
 $locale["Remove page"] =
    "Rimuovi la pagina";
 $locale["Removed page '%s' succesfully."] =
