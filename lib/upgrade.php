@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.34 2004-12-11 09:39:28 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.35 2004-12-13 14:35:41 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -482,29 +482,35 @@ function _upgrade_db_init (&$dbh) {
  * it is only rarelely needed: for current page only, if-not-modified
  * but was extracetd for every simple page iteration.
  */
-function _upgrade_cached_html (&$dbh) {
+function _upgrade_cached_html (&$dbh, $verbose=true) {
     global $DBParams;
     if (!in_array($DBParams['dbtype'], array('SQL','ADODB'))) return;
-
+    $count = 0;
     if (phpwiki_version() >= 1030.10) {
-  	echo _("check for extra page.cached_html column")," ... ";
+        if ($verbose)
+            echo _("check for extra page.cached_html column")," ... ";
   	$database = $dbh->_backend->database();
         extract($dbh->_backend->_table_names);
         $fields = $dbh->_backend->listOfFields($database, $page_tbl);
         if (!strstr(strtolower(join(':', $fields)), "cached_html")) {
-            echo "<b>",_("ADDING"),"</b>"," ... ";
+            if ($verbose)
+                echo "<b>",_("ADDING"),"</b>"," ... ";
             $backend_type = $dbh->_backend->backendType();
             if (substr($backend_type,0,5) == 'mysql')
                 $dbh->genericSqlQuery("ALTER TABLE $page_tbl ADD cached_html MEDIUMBLOB");
             else
                 $dbh->genericSqlQuery("ALTER TABLE $page_tbl ADD cached_html BLOB");
-            echo "<b>",_("CONVERTING"),"</b>"," ... ";
-            _convert_cached_html($dbh);
-            echo _("OK"), "<br />\n";
+            if ($verbose)
+                echo "<b>",_("CONVERTING"),"</b>"," ... ";
+            $count = _convert_cached_html($dbh);
+            if ($verbose)
+                echo $count, " ", _("OK"), "<br />\n";
         } else {
-            echo _("OK"), "<br />\n";
+            if ($verbose)
+                echo _("OK"), "<br />\n";
         }
     }
+    return $count;
 }
 
 /** 
@@ -640,6 +646,9 @@ function DoUpgrade($request) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.34  2004/12/11 09:39:28  rurban
+ needed init for ref
+
  Revision 1.33  2004/12/10 22:33:39  rurban
  add WikiAdminUtils method for convert-cached-html
  missed some vars.

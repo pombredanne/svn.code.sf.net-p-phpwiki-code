@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminUtils.php,v 1.15 2004-12-10 22:33:40 rurban Exp $');
+rcs_id('$Id: WikiAdminUtils.php,v 1.16 2004-12-13 14:35:42 rurban Exp $');
 /**
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -42,7 +42,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.15 $");
+                            "\$Revision: 1.16 $");
     }
 
     function getDefaultArguments() {
@@ -181,20 +181,10 @@ extends WikiPlugin
     function _do_convert_cached_html(&$request, $args) {
 
         require_once("lib/upgrade.php");
+        $dbh = $request->_dbi;
         _upgrade_db_init($dbh);
 
-  	$database = $dbh->_backend->database();
-        extract($dbh->_backend->_table_names);
-        $fields = $dbh->_backend->listOfFields($database, $page_tbl);
-        if (!strstr(strtolower(join(':', $fields)), "cached_html")) {
-            $backend_type = $dbh->_backend->backendType();
-            if (substr($backend_type,0,5) == 'mysql')
-                $dbh->genericSqlQuery("ALTER TABLE $page_tbl ADD cached_html MEDIUMBLOB");
-            else
-                $dbh->genericSqlQuery("ALTER TABLE $page_tbl ADD cached_html BLOB");
-        }
-
-        $count = _convert_cached_html($dbh);
+        $count = _upgrade_cached_html($dbh, false);
 
         if (!$count)
             return _("No old _cached_html pagedata found.");
