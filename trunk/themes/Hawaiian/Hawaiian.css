@@ -1,5 +1,5 @@
 /*
-  $Id: Hawaiian.css,v 1.1 2001-12-31 23:24:37 carstenklapp Exp $
+  $Id: Hawaiian.css,v 1.2 2002-01-01 21:40:46 carstenklapp Exp $
 
   Classes:
 
@@ -25,18 +25,18 @@
 TODO: Get rid of tables in wikiaction forms.
 */
 
+BODY {
+/* the background image url is relative to this file's directory */
+        color :             #000;
+        background-color :  #fff;
+        background-image :  url("uhhbackground.jpg");
+        background-repeat : repeat;
+}
+
 /* NS4 doesn't grok @import.  This allows us to put things which
  * break NS4 in another file. As of OmniWeb 4.1, OW now @imports :-(
  */
-@import url(Hawaiian-heavy.css.css);
-
-BODY {
-/* Mozilla ignores the background image, with or without a background color specified (?) */
-        color :             #000;
-        background-color :  #fff;
-        background-image :  url("themes/Hawaiian/uhhbackground.jpg");
-        background-repeat : repeat;
-}
+@import url(Hawaiian-heavy.css);
 
 BODY { font-family: arial, helvetica, sans-serif; }
 
