@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.3 2001-11-29 03:04:36 dairiki Exp $
+# $Id: Makefile,v 1.4 2001-12-17 23:03:42 carstenklapp Exp $
 #
 # locale/Makefile
 #
@@ -12,7 +12,8 @@ PO_FILES = $(patsubst %, po/%.po, ${ALL_LINGUAS})
 MO_FILES = $(patsubst %, %/LC_MESSAGES/phpwiki.mo, ${ALL_LINGUAS})
 PHP_FILES = ${MO_FILES:.mo=.php}
 
-PHP_SRC := $(wildcard ../lib/*.php ../admin/*.php ../templates/*.html)
+#PHP_SRC := $(wildcard ../lib/*.php ../admin/*.php ../templates/*.html)
+PHP_SRC := $(wildcard ../templates/*.html ../lib/plugin/*.php ../lib/*.php ../lib/WikiDB/backend/*.php ../lib/WikiDB/*.php)
 
 .PHONY: all po mo
 
