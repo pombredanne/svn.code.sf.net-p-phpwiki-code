@@ -21,7 +21,7 @@ rcs_id('$Id PhpWeather.php 2002-08-26 15:30:13 rurban$');
 // Name the PHPWeather folder 'phpweather' and put it anywhere inside
 // phpwiki, such as the plugin folder
 if (!defined('PHPWEATHER_FOLDER')) {
-    if (ereg('/sourcefourge\.net/', SERVER_NAME)) {
+    if (ereg('/sourceforge\.net/', SERVER_NAME)) {
         define('PHPWEATHER_FOLDER', '/home/groups/p/ph/phpwiki/htdocs/demo/lib/plugin/phpweather');
         define('PHPWEATHER_VERSION', 1.92);
     } elseif (isWindows()) {
@@ -31,7 +31,7 @@ if (!defined('PHPWEATHER_FOLDER')) {
         define('PHPWEATHER_VERSION', 1.92);
     } else { // defaults to a parallel dir to phpwiki
         define('PHPWEATHER_VERSION', 1.92);
-        define('PHPWEATHER_FOLDER', PHPWIKI_DIR . '../phpweather');
+        define('PHPWEATHER_FOLDER', PHPWIKI_DIR . '/../phpweather');
     }
 }
 
