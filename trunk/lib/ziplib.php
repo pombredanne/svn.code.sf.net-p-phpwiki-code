@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.30 2003-03-17 22:20:20 dairiki Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.31 2003-11-09 01:24:13 carstenklapp Exp $');
 
 /**
  * GZIP stuff.
@@ -34,18 +34,30 @@ function gzip_compress ($data) {
     if (!($fp = gzopen($filename, "wb")))
         trigger_error(sprintf("%s failed", 'gzopen'), E_USER_ERROR);
     gzwrite($fp, $data, strlen($data));
-    if (!gzclose($fp))
+    if (!gzclose($fp)) {
         trigger_error(sprintf("%s failed", 'gzclose'), E_USER_ERROR);
-    
-    $size = filesize($filename);
-    
-    if (!($fp = fopen($filename, "rb")))
+	}
+/* ---- Original code ----  
+	$size = filesize($filename);
+    if (!($fp = fopen($filename, "rb"))) {
         trigger_error(sprintf("%s failed", 'fopen'), E_USER_ERROR);
+	}
     if (!($z = fread($fp, $size)) || strlen($z) != $size)
         trigger_error(sprintf("%s failed", 'fread'), E_USER_ERROR);
     if (!fclose($fp))
         trigger_error(sprintf("%s failed", 'fclose'), E_USER_ERROR);
-    
+*/
+// -- FIX -------------
+	$z = NULL;
+    if (!($fp = fopen($filename,"rb"))) {
+        trigger_error(sprintf("%s failed", 'fopen'), E_USER_ERROR);
+    }
+    while(!feof($fp)) {
+        $z.= fread($fp,1024);
+    }
+    if (!fclose($fp))
+        trigger_error(sprintf("%s failed", 'fclose'), E_USER_ERROR);
+// -- End FIX ----------
     unlink($filename);
     return $z;
 }
@@ -154,7 +166,7 @@ function zip_deflate ($content)
     if (function_exists('gzencode'))
         $z = gzencode($content);
     else
-        $z = gzip_compress($content);
+    $z = gzip_compress($content);
     
     // Suck OS type byte from gzip header. FIXME: this smells bad.
     
