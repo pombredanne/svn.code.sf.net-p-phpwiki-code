@@ -1,5 +1,5 @@
 /*
-  $Id: MacOSX.css,v 1.15 2002-01-22 15:36:42 dairiki Exp $
+  $Id: MacOSX.css,v 1.16 2002-01-26 09:20:59 carstenklapp Exp $
 
   Classes:
 
@@ -46,15 +46,16 @@ input.button { font-family: "Lucida Grande", Helvetica, Arial, sans-serif; }
 .wikitext pre { font-family: monospace; }
 
 div.wikitext {
- background: white;
- border: 0.5pt;
- border-color: #888;
- border-style: solid;
- padding-left: 0.8em; 
- padding-right: 0.8em; 
- padding-top: 0px;
- padding-bottom: 0px;
- margin: 0.5ex 0px;
+  background: white;
+  border-top:    solid 1px #7c7c7c;
+  border-left:   solid 1px #c3c3c3;
+  border-bottom: solid 1px #dddddd;
+  border-right:  solid 1px #c3c3c3;
+  padding-left: 0.8em; 
+  padding-right: 0.8em; 
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  margin: 0.5ex 0px;
  /* This breaks Netscape 4: (display does not go full width).
     width: auto;
  */
@@ -182,21 +183,28 @@ a.cal-hide, a.cal-arrow { text-decoration: none; }
 .cal-arrow { font-weight: bold; }
 .cal-header { font-size: larger; }
 .cal-dayname { font-size: smaller; text-decoration: underline; }
-table.cal { border: thin solid black; } 
+table.cal   { border: thin solid black; } 
+td.cal-today { background: #c4e0fb; }
 
 
 /* IncludePage plugin */
 .transclusion-title {
-  font-style: oblique;
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  /* font-style: oblique; */
   font-size: smaller; /* 0.75em; */
   text-decoration: underline;
   text-align: right;
 } 
 
 div.transclusion { 
-  background: #cfc;
-  border: thin;
-  border-style: solid;
+  /* background: #fff url("images/bgpaper8.png"); */
+  /* background: white; */
+  background: #fdfdfd;
+  border-top:    solid 1px #7c7c7c;
+  border-left:   solid 1px #c3c3c3;
+  border-bottom: solid 1px #dddddd;
+  border-right:  solid 1px #c3c3c3;
+
   padding-left: 0.8em; 
   padding-right: 0.8em; 
   padding-top: 0px;
@@ -215,8 +223,13 @@ div.wiki-edithelp .transclusion p {
   margin: 0;
 }
 div.wiki-edithelp {
-  background: #fff url("images/bgpaper8.png");
-  border: solid 1px #d8d8d8;
+  /* background: #fff url("images/bgpaper8.png"); */
+  background: white;
+  border-top:    solid 1px #7c7c7c;
+  border-left:   solid 1px #c3c3c3;
+  border-bottom: solid 1px #dddddd;
+  border-right:  solid 1px #c3c3c3;
+
   font-size: smaller;
   padding: 6pt;
 }
@@ -225,7 +238,7 @@ div.wiki-message {
   border: solid 1px #d8d8d8;
   padding: 6pt;
 }
-  
+
 /****************************************************************
  **
  ** Diff Output
@@ -256,8 +269,8 @@ div.wiki-message {
 .diff ins	{ background: #9f9; }
 
 /* PageList output */
-tr.pagelist .evenrow { background: #eeeeee; }
-tr.pagelist .oddrow  { background: white; }
+.pagelist tr.evenrow { background: #eee; }
+.pagelist tr.oddrow  { background: #f7f7f7; }
 
 /* For emacs users
  *
