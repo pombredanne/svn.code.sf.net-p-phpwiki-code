@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.4 2002-01-22 03:17:47 dairiki Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.5 2002-01-23 16:22:14 dairiki Exp $ -->
 <?php
   $BF = &$ButtonFactory;
 
@@ -37,7 +37,8 @@
     <?php if ($user->isAdmin()) { ?>
      <?=$Sep?><?= $LockPageB ?><?=$Sep?><?= $RemovePageB ?>
     <?php } ?>
-   <?=$Sep?><?= $PageHistoryB ?><?=$Sep?><?= $DiffB ?> 
+   <?=$Sep?><?= $PageHistoryB ?>
+   <?=$Sep?><?= $DiffB ?> 
    <?=$Sep?><?= $DebugInfoB ?> <!-- For debugging only, really -->
   </td>
   <td align="right">
