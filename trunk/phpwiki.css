@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.49 2002-02-14 00:53:29 carstenklapp Exp $
+ * $Id: phpwiki.css,v 1.50 2002-02-14 03:27:58 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up. It has not yet been tested against NS4.
@@ -80,19 +80,19 @@ div.wikitext pre { font-family: monospace; }
   font-weight: bold;
 }
 
-/* wikiaction, wikiadmin, wikiunsafe: */
-.wikiaction, .wikiadmin, .wiki-rc-action {
+/* Action buttons */
+.wikiaction, .wikiadmin, .wiki-rc-action, .wikiunsafe {
   text-decoration: none;
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.wikiaction, .wikiaction table, span.wikiaction, input.button { background-color: #ddd; }
-.wikiadmin, .wikiadmin table { background-color: #fdd; }
-.wikiunsafe { background-color: #ccc; }
-.
-/**
- * Unknown links
- */
+.wikiaction, span.wikiaction, input.button { background-color: #ddd; }
+.wikiunsafe { background-color: #fcc; }
+
+.wikiadmin  { background-color: #fdd; }
+form.wikiadmin { background-color: #eee; }
+
+/* Unknown links */
 .wikiunknown, .named-wikiunknown {
   font-weight: normal;
   font-size: normal;
@@ -106,6 +106,7 @@ div.wikitext pre { font-family: monospace; }
   font-size: smaller;
 }
 
+/* Backlinks */
 .backlinks {
   text-decoration: underline;
   color: #006;
@@ -338,6 +339,7 @@ div.errors {
   color: black;
   background: white;
   font-family: monospace;
+  font-size: smaller;
   margin: 1ex 0;
   padding: 0.5ex 0.5em;
   border: medium solid #fff8dc; /* darker ivory */
