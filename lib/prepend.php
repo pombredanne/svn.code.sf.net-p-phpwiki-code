@@ -5,10 +5,11 @@
  */
 $RCS_IDS = '';
 function rcs_id ($id) { $GLOBALS['RCS_IDS'] .= "$id\n"; }
-rcs_id('$Id: prepend.php,v 1.4 2001-09-18 19:16:23 dairiki Exp $');
+rcs_id('$Id: prepend.php,v 1.5 2001-11-21 19:46:50 dairiki Exp $');
 
 error_reporting(E_ALL);
 require_once('lib/ErrorManager.php');
+require_once('lib/WikiCallback.php');
 
 // FIXME: make this part of Request?
 function ExitWiki($errormsg = false)
@@ -42,7 +43,7 @@ function ExitWiki($errormsg = false)
 }
 
 $ErrorManager->setPostponedErrorMask(E_ALL);
-$ErrorManager->setFatalHandler('ExitWiki');
+$ErrorManager->setFatalHandler(new WikiFunctionCb('ExitWiki'));
 
 
 // (c-file-style: "gnu")

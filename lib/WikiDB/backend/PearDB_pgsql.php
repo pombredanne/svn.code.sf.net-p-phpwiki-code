@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_pgsql.php,v 1.1 2001-09-18 19:16:23 dairiki Exp $');
+rcs_id('$Id: PearDB_pgsql.php,v 1.2 2001-11-21 19:46:50 dairiki Exp $');
 
 require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB.php');
@@ -20,7 +20,7 @@ extends WikiDB_backend_PearDB
         // not consequential.)  
 
         global $ErrorManager;
-        $ErrorManager->pushErrorHandler(array($this,'_pgsql_open_error'));
+        $ErrorManager->pushErrorHandler(new WikiMethodCb($this,'_pgsql_open_error'));
         $this->WikiDB_backend_PearDB($dbparams);
         $ErrorManager->popErrorHandler();
     }
