@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: interwiki.php,v 1.15 2002-01-31 05:10:28 dairiki Exp $');
+<?php rcs_id('$Id: interwiki.php,v 1.16 2002-02-03 05:21:59 carstenklapp Exp $');
 
 class InterWikiMap {
     function InterWikiMap (&$request) {
@@ -43,18 +43,20 @@ class InterWikiMap {
             $url = sprintf($url, $page_enc);
         else
             $url .= $page_enc;
-        
-        $link = HTML::a(array('href' => $url),
-                        IconForLink('interwiki'));
 
-        if (!$linktext) {
-            $link->pushContent("$moniker:",
-                               HTML::span(array('class' => 'wikipage'), $page));
-            $link->setAttr('class', 'interwiki');
-        }
-        else {
-            $link->pushContent($linktext);
-            $link->setAttr('class', 'named-interwiki');
+        if ($moniker . $page == "CategoryCategory") {
+            $link = HTML::a(array('href' => $url, 'class' => 'wiki'), $moniker .":". $page);
+        } else {
+            $link = HTML::a(array('href' => $url),
+                            IconForLink('interwiki'));
+            if (!$linktext) {
+                $link->pushContent("$moniker:",
+                                   HTML::span(array('class' => 'wikipage'), $page));
+                $link->setAttr('class', 'interwiki');
+            } else {
+                $link->pushContent($linktext);
+                $link->setAttr('class', 'named-interwiki');
+            }
         }
         
         return $link;
@@ -68,6 +70,7 @@ class InterWikiMap {
             return false;
         foreach ($matches as $m)
             $map[$m[1]] = $m[2];
+        $map['Category'] = 'Category';
         return $map;
     }
         
