@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: msql.php,v 1.6.2.5 2001-11-16 01:22:27 wainstead Exp $');
+<?php rcs_id('$Id: msql.php,v 1.6.2.6 2001-11-16 02:42:27 wainstead Exp $');
 
    /*
       Database functions:
@@ -230,10 +230,11 @@
 
       for ($x = 0; $x < count($pagehash["content"]); $x++) {
          $line = addslashes($pagehash["content"][$x]);
+         $esc_pagename = addslashes($pagename);
          $query = "INSERT INTO $dbi[page_table] " .
                   "(pagename, lineno, line) " .
-                  "VALUES('$pagename', $x, '$line')";
-         // echo "Page line insert query: $query<br>\n";
+                  "VALUES('$esc_pagename', $x, '$line')";
+          echo "Page line insert query: $query<br>\n";
          $retval = msql_query($query, $dbi['dbc']);
          if ($retval == false) { 
             printf(gettext ("Insert into %s failed: %s"), $dbi[page_table],
