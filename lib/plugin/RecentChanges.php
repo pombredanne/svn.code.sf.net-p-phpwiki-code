@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.78 2003-03-04 01:55:05 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.79 2003-04-29 14:34:20 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -263,7 +263,7 @@ extends _RecentChanges_Formatter
         $pagetitle = $show_minor ? _("RecentEdits") : _("RecentChanges");
 
         global $request;
-        $sidebarurl = WikiURL($pagetitle, false, 'absurl') . "?format=sidebar";
+        $sidebarurl = WikiURL($pagetitle, array('format' => 'sidebar'), 'absurl');
 
         $addsidebarjsfunc =
             "function addPanel() {\n"
@@ -603,7 +603,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.78 $");
+                            "\$Revision: 1.79 $");
     }
 
     function managesValidators() {
@@ -770,6 +770,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.78  2003/03/04 01:55:05  dairiki
+// Fix to ensure absolute URL for logo in RSS recent changes.
+//
 // Revision 1.77  2003/02/27 23:23:38  dairiki
 // Fix my breakage of CSS and sidebar RecentChanges output.
 //
