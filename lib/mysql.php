@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: mysql.php,v 1.10 2001-01-04 18:37:56 ahollosi Exp $');
+<?php rcs_id('$Id: mysql.php,v 1.10.2.1 2001-08-18 00:35:10 dairiki Exp $');
 
    /*
       Database functions:
@@ -19,6 +19,8 @@
       TitleSearchNextMatch($dbi, $res)
       InitFullSearch($dbi, $search)
       FullSearchNextMatch($dbi, $res)
+      InitBackLinkSearch($dbi, $pagename) 
+      BackLinkSearchNextMatch($dbi, &$pos) 
       InitMostPopular($dbi, $limit)
       MostPopularNextMatch($dbi, $res)
       GetAllWikiPageNames($dbi)
@@ -261,6 +263,30 @@
          return 0;
       }
    }
+
+   // setup for back-link search
+   function InitBackLinkSearch($dbi, $pagename) {
+      global $WikiLinksStore;
+     
+      $topage = addslashes($pagename);
+      $res = mysql_query( "SELECT DISTINCT frompage FROM $WikiLinksStore"
+			  . " WHERE topage='$topage'"
+			  . " ORDER BY frompage",
+			  $dbi["dbc"]);
+      return $res;
+   }
+
+
+   // iterating through database
+   function BackLinkSearchNextMatch($dbi, $res) {
+      if($a = mysql_fetch_row($res)) {
+         return $a[0];
+      }
+      else {
+         return 0;
+      }
+   }
+
 
    function InitMostPopular($dbi, $limit) {
       global $HitCountStore;

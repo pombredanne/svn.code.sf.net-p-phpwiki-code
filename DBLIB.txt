@@ -118,6 +118,23 @@ The functions are:
                (advances $pos to next result field as well)
 
 
+      MakeBackLinkSearchRegexp($pagename)
+      takes: a page name
+      returns: A PCRE suitable for searching for a link to the given page
+               within page (wiki-markup) text.  
+
+      InitBackLinkSearch($dbi, $pagename)
+      takes:   db reference, page name
+      returns: a handle to identify the query and the current position
+               within the result set.
+
+      BackLinkSearchNextMatch($dbi, &$pos)
+      takes:   db reference, reference to a hash created by
+               InitBackLinkSearch
+      returns: the next page name that contains a link to the specified page.
+               (advances $pos to next result field as well)
+
+
       IncreaseHitCount($dbi, $pagename)
       takes: db reference, string (name of a page)
       returns: nothing (MySQL implementation returns the last result
@@ -156,5 +173,5 @@ The functions are:
       This deletes the existing list of linking pages and inserts all
       the page names in $linklist.
 
-$Id: DBLIB.txt,v 1.8 2000-12-12 21:53:20 wainstead Exp $
+$Id: DBLIB.txt,v 1.8.2.1 2001-08-18 00:35:10 dairiki Exp $
 

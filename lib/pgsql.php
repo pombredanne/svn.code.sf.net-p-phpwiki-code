@@ -1,4 +1,4 @@
-<!-- $Id: pgsql.php,v 1.4 2000-11-02 04:23:59 wainstead Exp $ -->
+<!-- $Id: pgsql.php,v 1.4.2.1 2001-08-18 00:35:10 dairiki Exp $ -->
 <?php
 
    /*
@@ -15,6 +15,8 @@
       TitleSearchNextMatch($dbi, $res)
       InitFullSearch($dbi, $search)
       FullSearchNextMatch($dbi, $res)
+      InitBackLinkSearch($dbi, $pagename) 
+      BackLinkSearchNextMatch($dbi, &$pos) 
       IncreaseHitCount($dbi, $pagename)
       GetHitCount($dbi, $pagename)
       InitMostPopular($dbi, $limit)
@@ -288,6 +290,29 @@
 
    ////////////////////////
    // new database features
+
+   // setup for back-link search
+   function InitBackLinkSearch($dbi, $pagename) {
+      global $WikiLinksPageStore;
+     
+      $topage = addslashes($pagename);
+      $res['res'] = pg_exec( $dbi["dbc"], ( "SELECT DISTINCT frompage FROM $WikiLinksPageStore"
+					    . " WHERE topage='$topage'"
+					    . " ORDER BY frompage" ));
+      $res['row'] = 0;
+      return $res;
+   }
+
+
+   // iterating through database
+   function BackLinkSearchNextMatch($dbi, $res) {
+      if($a = @pg_fetch_row($res['res'], $res['row']++)) {
+	 return $a[0];
+      }
+      else {
+         return 0;
+      }
+   }
 
 
    function IncreaseHitCount($dbi, $pagename) {
