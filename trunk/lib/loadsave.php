@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.129 2004-11-25 08:11:40 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.130 2004-11-25 08:28:12 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
@@ -212,7 +212,7 @@ function MakeWikiZip (&$request)
         $ErrorManager->pushErrorHandler(new WikiFunctionCb('_dump_error_handler'));
     }
 
-    $dbi = $request->getDbh();
+    $dbi =& $request->_dbi;
     $thispage = $request->getArg('pagename'); // for "Return to ..."
     if ($exclude = $request->getArg('exclude')) {   // exclude which pagenames
         $excludeList = explodePageList($exclude); 
@@ -288,7 +288,7 @@ function DumpToDir (&$request)
 
     StartLoadDump($request, _("Dumping Pages"), $html);
 
-    $dbi = $request->getDbh();
+    $dbi =& $request->_dbi;
     $thispage = $request->getArg('pagename'); // for "Return to ..."
     if ($exclude = $request->getArg('exclude')) {   // exclude which pagenames
         $excludeList = explodePageList($exclude); 
@@ -497,7 +497,7 @@ function DumpHtmlToDir (&$request)
     if (!empty($WikiTheme->dumped_images) and is_array($WikiTheme->dumped_images)) {
         @mkdir("$directory/images");
         foreach ($WikiTheme->dumped_images as $img_file) {
-            if (($from = $WikiTheme->_findFile($img_file)) and basename($from)) {
+            if (($from = $WikiTheme->_findFile($img_file, true)) and basename($from)) {
                 $target = "$directory/images/".basename($img_file);
                 if (copy($WikiTheme->_path . $from, $target)) {
                     $msg = HTML(HTML::br(), HTML($from), HTML::small(fmt("... copied to %s", $target)));
@@ -505,7 +505,7 @@ function DumpHtmlToDir (&$request)
                         PrintXML($msg);
                 }
             } else {
-                $msg = HTML(HTML::br(), HTML($from), HTML::small(fmt("... not found", $target)));
+                $msg = HTML(HTML::br(), HTML($img_file), HTML::small(fmt("... not found", $target)));
                 if (!isa($request,'MockRequest'))
                     PrintXML($msg);
             }
@@ -515,7 +515,7 @@ function DumpHtmlToDir (&$request)
     	// Buttons also
         @mkdir("$directory/images/buttons");
         foreach ($WikiTheme->dumped_buttons as $text => $img_file) {
-            if (($from = $WikiTheme->_findFile($img_file)) and basename($from)) {
+            if (($from = $WikiTheme->_findFile($img_file, true)) and basename($from)) {
                 $target = "$directory/images/buttons/".basename($img_file);
                 if (copy($WikiTheme->_path . $from, $target)) {
                     $msg = HTML(HTML::br(), HTML($from), HTML::small(fmt("... copied to %s", $target)));
@@ -523,7 +523,7 @@ function DumpHtmlToDir (&$request)
                         PrintXML($msg);
                 }
             } else {
-                $msg = HTML(HTML::br(), HTML($from), HTML::small(fmt("... not found", $target)));
+                $msg = HTML(HTML::br(), HTML($img_file), HTML::small(fmt("... not found", $target)));
                 if (!isa($request,'MockRequest'))
                     PrintXML($msg);
             }
@@ -531,7 +531,7 @@ function DumpHtmlToDir (&$request)
     }
     if (!empty($WikiTheme->dumped_css) and is_array($WikiTheme->dumped_css)) {
       foreach ($WikiTheme->dumped_css as $css_file) {
-          if (($from = $WikiTheme->_findFile(basename($css_file))) and basename($from)) {
+          if (($from = $WikiTheme->_findFile(basename($css_file), true)) and basename($from)) {
               $target = "$directory/" . basename($css_file);
               if (copy($WikiTheme->_path . $from, $target)) {
                   $msg = HTML(HTML::br(), HTML($from), HTML::small(fmt("... copied to %s", $target)));
@@ -539,7 +539,7 @@ function DumpHtmlToDir (&$request)
                       PrintXML($msg);
               }
           } else {
-              $msg = HTML(HTML::br(), HTML($from), HTML::small(fmt("... not found", $target)));
+              $msg = HTML(HTML::br(), HTML($css_file), HTML::small(fmt("... not found", $target)));
               if (!isa($request,'MockRequest'))
                   PrintXML($msg);
           }
@@ -567,7 +567,7 @@ function MakeWikiZipHtml (&$request)
     $request->_TemplatesProcessed = array();
     $zipname = "wikihtml.zip";
     $zip = new ZipWriter("Created by PhpWiki " . PHPWIKI_VERSION, $zipname);
-    $dbi = $request->getDbh();
+    $dbi =& $request->_dbi;
     $thispage = $request->getArg('pagename'); // for "Return to ..."
     if ($exclude = $request->getArg('exclude')) {   // exclude which pagenames
         $excludeList = explodePageList($exclude); 
@@ -678,7 +678,7 @@ function SavePage (&$request, &$pageinfo, $source, $filename)
     if ($pagename ==_("InterWikiMap"))
         $content = _tryinsertInterWikiMap($content);
 
-    $dbi = $request->getDbh();
+    $dbi =& $request->_dbi;
     $page = $dbi->getPage($pagename);
 
     // Try to merge if updated pgsrc contents are different. This
@@ -830,7 +830,7 @@ function RevertPage (&$request)
                  HTML::dd(_("missing required version argument")));
         return;
     }
-    $dbi = $request->getDbh();
+    $dbi =& $request->_dbi;
     $page = $dbi->getPage($pagename);
     $current = $page->getCurrentRevision();
     if ($current->getVersion() == 0) {
@@ -1193,6 +1193,7 @@ function SetupWiki (&$request)
     }
     $request->setArg('overwrite',false);
     LoadAny($request, $pgsrc);
+    $dbi =& $request->_dbi;
 
     // Ensure that all mandatory pages are loaded
     $finder = new FileFinder;
@@ -1202,7 +1203,7 @@ function SetupWiki (&$request)
         $page = gettext($f);
         if (isSubPage($page))
             $page = urlencode($page);
-        if (! $request->_dbi->isWikiPage(urldecode($page)) ) {
+        if (! $dbi->isWikiPage(urldecode($page)) ) {
             // translated version provided?
             if ($lf = FindLocalizedFile($pgsrc . $finder->_pathsep . $page, 1))
                 LoadAny($request, $lf);
@@ -1211,7 +1212,7 @@ function SetupWiki (&$request)
                 $page = $f;
             }
         }
-        if (!$request->_dbi->isWikiPage(urldecode($page))) {
+        if (! $dbi->isWikiPage(urldecode($page))) {
             trigger_error(sprintf("Mandatory file %s couldn't be loaded!", $page),
                           E_USER_WARNING);
         }
@@ -1245,6 +1246,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.129  2004/11/25 08:11:40  rurban
+ pass exclude to the get_all_pages backend
+
  Revision 1.128  2004/11/16 16:16:44  rurban
  enable Overwrite All for upgrade
 
