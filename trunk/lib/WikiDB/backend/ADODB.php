@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.65 2004-12-10 22:15:00 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.66 2004-12-13 14:39:16 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -223,7 +223,7 @@ extends WikiDB_backend
             $this->_get_pageid($pagename, true); // Creates page record
         }
         
-        @$hits = (int)$data['hits'];
+        $hits = (empty($data['hits'])) ? 0 : (int)$data['hits'];
         unset($data['hits']);
 
         foreach ($newdata as $key => $val) {
@@ -1385,6 +1385,11 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.65  2004/12/10 22:15:00  rurban
+// fix $page->get('_cached_html)
+// refactor upgrade db helper _convert_cached_html() to be able to call them from WikiAdminUtils also.
+// support 2nd genericSqlQuery param (bind huge arg)
+//
 // Revision 1.64  2004/12/10 02:45:27  rurban
 // SQL optimization:
 //   put _cached_html from pagedata into a new seperate blob, not huge serialized string.
