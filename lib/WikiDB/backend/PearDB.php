@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.22 2002-01-31 17:32:50 dairiki Exp $');
+rcs_id('$Id: PearDB.php,v 1.23 2002-02-08 20:30:48 lakka Exp $');
 
 //require_once('DB.php');
 require_once('lib/WikiDB/backend.php');
@@ -487,12 +487,16 @@ extends WikiDB_backend
     function most_popular($limit) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-
+        $order = "DESC";
+		if ($limit < 0){ 
+			$order = "ASC";
+			$limit = -$limit;
+			}
         $limitclause = $limit ? " LIMIT $limit" : '';
         $result = $dbh->query("SELECT $page_tbl.*"
                               . " FROM $nonempty_tbl, $page_tbl"
                               . " WHERE $nonempty_tbl.id=$page_tbl.id"
-                              . " ORDER BY hits DESC"
+                              . " ORDER BY hits $order"
                               . " $limitclause");
 
         return new WikiDB_backend_PearDB_iter($this, $result);

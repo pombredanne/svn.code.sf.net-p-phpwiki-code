@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopular.php,v 1.19 2002-01-31 01:14:14 dairiki Exp $');
+rcs_id('$Id: MostPopular.php,v 1.20 2002-02-08 20:30:48 lakka Exp $');
 /**
  */
 
@@ -19,7 +19,7 @@ extends WikiPlugin
     function getDefaultArguments() {
         return array('pagename'	    => '[pagename]', // hackish
                      'exclude'      => '',
-                     'limit'        => 20,
+                     'limit'        => 20, // limit <0 returns least popular pages
                      'noheader'	    => 0,
                      'info'         => false
                     );
@@ -39,7 +39,8 @@ extends WikiPlugin
 
         while ($page = $pages->next()) {
             $hits = $page->get('hits');
-            if ($hits == 0)
+            if ($hits == 0 && $limit > 0)  // don't show pages with no hits if most
+										   // popular pages wanted
                 break;
             $pagelist->addPage($page);
         }
@@ -49,8 +50,11 @@ extends WikiPlugin
             if ($limit > 0) {
                 $pagelist->setCaption(_("The %d most popular pages of this wiki:"));
             } else {
+			if ($limit < 0) {
+				$pagelist->setCaption(_("The %d least popular pages of this wiki:"));
+			} else {
                 $pagelist->setCaption(_("Visited pages on this wiki, ordered by popularity:"));
-            }
+            }}
         }
 
         return $pagelist;

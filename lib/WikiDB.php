@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.9 2002-02-07 23:40:41 lakka Exp $');
+rcs_id('$Id: WikiDB.php,v 1.10 2002-02-08 20:30:48 lakka Exp $');
 
 //FIXME: arg on get*Revision to hint that content is wanted.
 
@@ -268,8 +268,9 @@ class WikiDB {
      *
      * @access public
      *
-     * @param $limit unsigned The maximum number of pages to return.
-     * Set $limit to zero to return all pages.
+     * @param $limit signed integer The maximum number of pages to return.
+     * Set $limit to zero to return all pages.  If $limit < 0, pages will
+	 * be sorted in decreasing order of popularity.
      *
      * @return object A WikiDB_PageIterator containing the matching
      * pages.

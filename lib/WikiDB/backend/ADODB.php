@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.4 2002-02-06 03:04:10 dairiki Exp $');
+rcs_id('$Id: ADODB.php,v 1.5 2002-02-08 20:30:48 lakka Exp $');
 
 /*This file is part of PhpWiki.
 
@@ -563,17 +563,21 @@ extends WikiDB_backend
     }
 
     /**
-     * Find highest hit counts.
+     * Find highest or lowest hit counts.
      */
     function most_popular($limit) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-
-        $limit = $limit ? $limit : -1;
+        $order = "DESC";
+		if ($limit < 0){ 
+		    $order = "ASC"; 
+			$limit = -$limit;
+			}
+		$limit = $limit ? $limit : -1;
         $result = $dbh->SelectLimit("SELECT $page_tbl.*"
                               . " FROM $nonempty_tbl, $page_tbl"
                               . " WHERE $nonempty_tbl.id=$page_tbl.id"
-                              . " ORDER BY hits DESC"
+                              . " ORDER BY hits $order"
                               , $limit);
 
         return new WikiDB_backend_ADODB_iter($this, $result);
