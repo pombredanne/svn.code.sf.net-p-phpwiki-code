@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbSession.php,v 1.29 2005-01-30 23:08:22 rurban Exp $');
+<?php rcs_id('$Id: DbSession.php,v 1.30 2005-02-01 13:42:10 rurban Exp $');
 
 /**
  * Store sessions data in Pear DB / ADODB / dba / ....
@@ -204,7 +204,7 @@ extends DbSession
         $res = $dbh->query("UPDATE $table"
                            . " SET sess_data=$qdata, sess_date=$time, sess_ip=$qip"
                            . " WHERE sess_id=$qid");
-        $result = $dbh->Affected_Rows();
+        $result = $dbh->AffectedRows();
         if ( $result === false or $result < 1 ) { // 0 cannot happen, -1 (failure) on mysql
             $res = $dbh->query("INSERT INTO $table"
                                . " (sess_id, sess_data, sess_date, sess_ip)"
