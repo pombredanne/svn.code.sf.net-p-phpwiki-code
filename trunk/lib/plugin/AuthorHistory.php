@@ -1,0 +1,258 @@
+<?php // -*-php-*-
+rcs_id('$Id carstenklapp Exp $');
+/**
+ Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+
+ This file is part of PhpWiki.
+
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+
+/*
+ *** EXPERIMENTAL PLUGIN ******************
+ Needs a lot of work! Use at your own risk.
+ ****************************************** 
+   
+ try this in a page called AuthorHistory:
+    
+<?plugin AuthorHistory page=username includeminor=true ?>
+----
+<?plugin AuthorHistory page=all ?>
+
+
+ try this in a subpage of your UserName: (UserName/AuthorHistory)
+
+<?plugin AuthorHistory page=all includeminor=true ?>
+    
+
+* Displays a list of revision edits by one particular user, for the
+* current page, a specified page, or all pages.
+
+* This is a big hack to create a PageList like table. (PageList
+* doesn't support page revisions yet, only pages.)
+
+* Make a new subclass of PageHistory to filter changes of one (or all)
+* page(s) by a single author?
+
+*/
+
+/*
+ reference
+ _PageHistory_PageRevisionIter
+ WikiDB_PageIterator(&$wikidb, &$pages
+ WikiDB_PageRevisionIterator(&$wikidb, &$revisions)
+*/
+
+
+/**
+ */
+require_once('lib/PageList.php');
+
+//include_once('lib/debug.php');
+
+class WikiPlugin_AuthorHistory
+extends WikiPlugin
+{
+    function getName() {
+        return _("AuthorHistory");
+    }
+
+    function getDescription() {
+        return sprintf(_("List all page revisions edited by one user with diff links, or show a PageHistory-like list of a single page for only one user."));
+    }
+    
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.1 $");
+    }
+    
+    function getDefaultArguments() {
+        global $request;
+        return array('exclude'      => '',
+                     'noheader'     => false,
+                     'includeminor' => false,
+                     'includedeleted' => false,
+                     'author'       => $request->_user->_userid,
+                     'page'         => '[pagename]',
+                     'info'         => 'version,minor,author,summary,mtime'
+                     );
+    }
+    // info arg allows multiple columns
+    // info=mtime,hits,summary,version,author,locked,minor
+    // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
+    
+    function run($dbi, $argstr, $request) {
+        $this->_args = $this->getArgs($argstr, $request);
+        extract($this->_args);
+        //trigger_error("1 p= $page a= $author");
+        if ($page && $page == 'username') //FIXME: use [username]!!!!!
+            $page = $author;
+        //trigger_error("2 p= $page a= $author");
+        if (!$page || !$author) //user not signed in or no author specified
+            return '';
+        //$pagelist = new PageList($info, $exclude);
+        ///////////////////////////
+        
+        $nbsp = HTML::raw('&nbsp;');
+        
+        global $Theme; // date & time formatting
+        
+        if (! ($page == 'all')) {
+            $p = $dbi->getPage($page);
+            
+            $t = HTML::table(array('class'=> 'pagelist',
+                                   'style' => 'font-size:smaller'));
+            $th = HTML::thead();
+            $tb = HTML::tbody();
+            
+            
+            $th->pushContent(HTML::tr(HTML::td(array('align'=> 'right'),
+                                               _("Version")),
+                                      $includeminor ? HTML::td(_("Minor")) : "",
+                                      HTML::td(_("Author")),
+                                      HTML::td(_("Summary")),
+                                      HTML::td(_("Modified"))
+                                      ));
+            
+            $allrevisions_iter = $p->getAllRevisions();
+            while ($rev = $allrevisions_iter->next()) {
+                
+                $isminor = $rev->get('is_minor_edit');
+                $authordoesmatch = $author == $rev->get('author');
+                
+                if ($authordoesmatch && (!$isminor || ($includeminor && $isminor))) {
+                    $difflink = Button(array('action' => 'diff',
+                                             'previous' => 'minor'),
+                                       $rev->getversion(), $rev);
+                    $tr = HTML::tr(HTML::td(array('align'=> 'right'),
+                                            $difflink, $nbsp),
+                                   $includeminor ? (HTML::td($nbsp, ($isminor ? "minor" : "major"), $nbsp)) : "",
+                                   HTML::td($nbsp, WikiLink($rev->get('author'),
+                                                            'if_known'), $nbsp),
+                                   HTML::td($nbsp, $rev->get('summary')),
+                                   HTML::td(array('align'=> 'right'),
+                                            $Theme->formatdatetime($rev->get('mtime')))
+                                   );
+                    
+                    $class = $isminor ? 'evenrow' : 'oddrow';
+                    $tr->setAttr('class', $class);
+                    $tb->pushContent($tr);
+                    //$pagelist->addPage($rev->getPage());
+                }
+            }
+            $captext = fmt($includeminor ? "History of all major and minor edits by %s to page %s."  : "History of all major edits by %s to page %s." ,
+                           WikiLink($author, 'auto'),
+                           WikiLink($page, 'auto'));
+            $t->pushContent(HTML::caption($captext));
+            $t->pushContent($th, $tb);
+        }
+        else {
+            
+            //search all pages for all edits by this author
+            
+            /////////////////////////////////////////////////////////////
+            
+            $t = HTML::table(array('class'=> 'pagelist',
+                                   'style' => 'font-size:smaller'));
+            $th = HTML::thead();
+            $tb = HTML::tbody();
+            
+            
+            $th->pushContent(HTML::tr(HTML::td(_("Page Name")),
+                                      HTML::td(array('align'=> 'right'),
+                                               _("Version")),
+                                      $includeminor ? HTML::td(_("Minor")) : "",
+                                      HTML::td(_("Summary")),
+                                      HTML::td(_("Modified"))
+                                      ));
+            /////////////////////////////////////////////////////////////
+            
+            $allpages_iter = $dbi->getAllPages($includedeleted);
+            while ($p = $allpages_iter->next()) {
+                /////////////////////////////////////////////////////////////
+                
+                $allrevisions_iter = $p->getAllRevisions();
+                while ($rev = $allrevisions_iter->next()) {
+                    $isminor = $rev->get('is_minor_edit');
+                    $authordoesmatch = $author == $rev->get('author');
+                    if ($authordoesmatch && (!$isminor || ($includeminor && $isminor))) {
+                        $difflink = Button(array('action' => 'diff',
+                                                 'previous' => 'minor'),
+                                           $rev->getversion(), $rev);
+                        $tr = HTML::tr(
+                                       HTML::td($nbsp,
+                                                ($isminor ? $rev->_pagename : WikiLink($rev->_pagename, 'auto'))
+                                                ),
+                                       HTML::td(array('align'=> 'right'),
+                                                $difflink, $nbsp),
+                                       $includeminor ? (HTML::td($nbsp, ($isminor ? "minor" : "major"), $nbsp)) : "",
+                                       HTML::td($nbsp, $rev->get('summary')),
+                                       HTML::td(array('align'=> 'right'),
+                                                $Theme->formatdatetime($rev->get('mtime')), $nbsp)
+                                       );
+                        
+                        $class = $isminor ? 'evenrow' : 'oddrow';
+                        $tr->setAttr('class', $class);
+                        $tb->pushContent($tr);
+                        //$pagelist->addPage($rev->getPage());
+                    }
+                }
+                
+                /////////////////////////////////////////////////////////////
+                
+            }
+            
+            $captext = fmt($includeminor ? "History of all major and minor modifcations for any page edited by %s."  : "History of major modifcations for any page edited by %s." ,
+                           WikiLink($author, 'auto'));
+            $t->pushContent(HTML::caption($captext));
+            $t->pushContent($th, $tb);
+        }
+        
+        //        if (!$noheader) {
+        // total minor, major edits. if include minoredits was specified
+        //        }
+        return $t;
+        
+        //        if (!$noheader) {
+        //            $pagelink = WikiLink($page, 'auto');
+        //
+        //            if ($pagelist->isEmpty())
+        //                return HTML::p(fmt("No pages link to %s.", $pagelink));
+        //
+        //            if ($pagelist->getTotal() == 1)
+        //                $pagelist->setCaption(fmt("One page links to %s:",
+        //                                          $pagelink));
+        //            else
+        //                $pagelist->setCaption(fmt("%s pages link to %s:",
+        //                                          $pagelist->getTotal(), $pagelink));
+        //        }
+        //
+        //        return $pagelist;
+    }
+    
+};
+
+// $Log: not supported by cvs2svn $
+
+// For emacs users
+// Local Variables:
+// mode: php
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
+// End:
+?>
