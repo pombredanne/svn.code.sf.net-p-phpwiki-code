@@ -1,0 +1,89 @@
+$Id: DBLIB.txt,v 1.4 2000-06-20 03:41:43 wainstead Exp $
+
+This is a description of the database interface for PhpWiki. Regardless
+of what kind of data store is used (RDBMS, DBM files, flat text files)
+you should be able to write a library that supports that data store.
+
+A few notes: 
+
+* While most functions specify a "db reference" as the first value
+  passed in, this can be any kind of data type that your functions
+  know about. For example, in the DBM implementation this is an
+  integer that refers to an open database handle, but in the MySQL
+  version it's an associative array that contains the DB information.
+
+* Functions that return the page data must return a hash (associative
+  array) of all the data, where 'text' == the text of the page in Wiki
+  markup, 'version' is an integer representing the version, 'author'
+  the IP address or host name of the previous author and so on. See
+  the source code for the full listing.
+
+* The data structure. This is commonly named $pagehash in the source
+  code; it's an associative array with values that are integers,
+  strings and arrays (i.e. a heterogenous data structure). Here's a
+  current description:
+
+  $pagehash = {
+     author       => string,
+     content      => array (where each element is a line of the page),
+     created      => integer (a number in Unix time since the Epoch),
+     flags        => integer,
+     lastmodified => integer (Unix time),
+     pagename     => string,
+     version      => integer,
+     refs         => array (where each element is a reference)
+  };
+
+      OpenDataBase($dbname)
+      takes:   a string, the name of the database
+      returns: a reference to the database (a handle)
+
+
+      CloseDataBase($dbi)
+      takes:   a reference to the database (handle)
+      returns: the value of the close
+
+
+      RetrievePage($dbi, $pagename)
+      takes:   db reference, string which is the name of a page
+      returns: a PHP associative array containing the page data
+	       (text, version, author, etc)
+
+
+      InsertPage($dbi, $pagename, $pagehash)
+      takes:   db reference, page name (string), associative array
+	       of all page data
+      returns: nothing (hmm. It should probably return true/false)
+
+
+      IsWikiPage($dbi, $pagename)
+      takes:   db reference, string containing page name
+      returns: true or false, if the page already exists
+
+
+      InitTitleSearch($dbi, $search)
+      takes:   db reference, search string
+      returns: a handle to identify the query and the current position
+               within the result set.
+
+
+      TitleSearchNextMatch($dbi, &$pos)
+      takes:   db reference, reference to a hash created by
+               InitTitleSearch
+      returns: the next page name that contains a match to the search term
+               (advances $pos to next result field as well)
+
+
+      InitFullSearch($dbi, $search)
+      takes:   db reference, string containing search term
+      returns: similar to InitTitleSearch: a handle to identify the
+               query and the current position within the result set.
+
+
+      FullSearchNextMatch($dbi, &$pos)
+      takes:   db reference, reference to a hash created by
+               InitFullSearch
+      returns: an associative array, where:
+		  'name' -- contains the page name
+		  'hash' -- contains the hash of the page data
+               (advances $pos to next result field as well)
