@@ -1,4 +1,4 @@
-<!-- $Id: pgsql.php,v 1.3 2000-11-02 03:05:20 wainstead Exp $ -->
+<!-- $Id: pgsql.php,v 1.4 2000-11-02 04:23:59 wainstead Exp $ -->
 <?php
 
    /*
@@ -10,6 +10,7 @@
       InsertPage($dbi, $pagename, $pagehash)
       SaveCopyToArchive($dbi, $pagename, $pagehash) 
       IsWikiPage($dbi, $pagename)
+      IsInArchive($dbi, $pagename)
       InitTitleSearch($dbi, $search)
       TitleSearchNextMatch($dbi, $res)
       InitFullSearch($dbi, $search)
@@ -18,6 +19,7 @@
       GetHitCount($dbi, $pagename)
       InitMostPopular($dbi, $limit)
       MostPopularNextMatch($dbi, $res)
+      GetAllWikiPageNames($dbi)
       GetWikiPageLinks($dbi, $pagename)
       SetWikiPageLinks($dbi, $pagename, $linklist)
    */
@@ -83,10 +85,11 @@
    // Either insert or replace a key/value (a page)
    function InsertPage($dbi, $pagename, $pagehash) {
       $pagename = addslashes($pagename);
-//      echo "<p>dbi in InsertPage: '$dbi' '$dbi[table]' '$dbi[dbc]'<p>";
 
       // update the wikilinks table
-//      UpdateWikiLinks($dbi, $pagename, implode(" ",$pagehash['content']));
+      $linklist = ExtractWikiPageLinks($pagehash['content']);
+      SetWikiPageLinks($dbi, $pagename, $linklist);
+
 
       // prepare the content for storage
       if (!isset($pagehash["pagename"]))
@@ -202,51 +205,11 @@
    }
 
 
-   function UpdateWikiLinks($dbi, $pagename, $pagetext) {
-
-      global $AllowedProtocols;
-      // extract all links from the page, both [] and OldStyle
-
-      // this is [bracketlinks]
-      $numBracketLinks = preg_match_all("/\[.+?\]/s", $pagetext, $brktlinks);
-
-      // this is OldSchoolLinking
-      $numWikiLinks = preg_match_all("#!?\b(([A-Z][a-z]+){2,})\b#",
-                         $pagetext, $wikilinks);
-
-      for ($x = 0; $x < $numWikiLinks; $x++) {
-         if (preg_match("/^!/", $wikilinks[0][$x]))
-            continue;
-         $alllinks[$wikilinks[0][$x]]++;
-//echo "MATCH: ", $wikilinks[0][$x], "<P>\n";
-//echo "assigned ", $alllinks[$wikilinks[0][$x]], " ", $wikilinks[0][$x], " <br>\n";
-      }
-
-      for ($x = 0; $x < $numBracketLinks; $x++) {
-         // skip escaped bracket sets [[like this]
-         if (preg_match("/^\[\[/", $brktlinks[0][$x]))
-            continue;
-         // skip anything with an allowed protocol
-         if (preg_match("/$AllowedProtocols/", $brktlinks[0][$x]))
-            continue;
-
-
-         $alllinks[$brktlinks[0][$x]]++;
-
-//echo "MATCH: ", $brktlinks[0][$x], "<P>\n";
-//echo "assigned ", $alllinks[$brktlinks[0][$x]], " ", $brktlinks[0][$x], " <br>\n";
-      }
-
-      // call the right function to update the table
-      SetWikiPageLinks($dbi, $pagename, $alllinks);
-
-   }
-
-
    function IsWikiPage($dbi, $pagename) {
       global $WikiPageStore;   	
       $pagename = addslashes($pagename);
-      $query = "select count(*) from $WikiPageStore where pagename='$pagename'";
+      $query = "select count(*) from $WikiPageStore " .
+               "where pagename='$pagename'";
       $res = pg_exec($query);
       $array = pg_fetch_array($res, 0);
       return $array[0];
@@ -256,7 +219,8 @@
    function IsInArchive($dbi, $pagename) {
 	 global $ArchivePageStore;
       $pagename = addslashes($pagename);
-      $query = "select count(*) from $ArchivePageStore where pagename='$pagename'";
+      $query = "select count(*) from $ArchivePageStore " .
+               "where pagename='$pagename'";
       $res = pg_exec($query);
       $array = pg_fetch_array($res, 0);
       return $array[0];
@@ -273,7 +237,7 @@
       $search = addslashes($search);
       $query = "select pagename from $dbi[table] where lower(pagename) " .
                "like '%$search%' order by pagename";
-//      echo "search query: $query<br>\n";
+      //echo "search query: $query<br>\n";
       $res = pg_exec($dbi["dbc"], $query);
 
       return $res;
@@ -393,14 +357,31 @@
    // takes a page name, returns array of links
    function GetWikiPageLinks($dbi, $pagename) {
       global $WikiLinksPageStore;
-      $query = "select frompage from $WikiLinksPageStore where topage='$pagename'";
-      $res = pg_exec($dbi['dbc'], $query);
+      $pagename = addslashes($pagename);
+
+      $res = pg_exec("select topage, score from wikilinks, wikiscore where topage=pagename and frompage='$pagename' order by score desc, topage");
       $rows = pg_numrows($res);
       for ($i = 0; $i < $rows; $i++) {
-	 $pages[$i] = pg_result($res, $i, "frompage");
+	 $out = pg_fetch_array($res, $i);
+	 $links['out'][] = array($out['topage'], $out['score']);
       }
-      return $pages;
-      
+
+      $res = pg_exec("select frompage, score from wikilinks, wikiscore where frompage=pagename and topage='$pagename' order by score desc, frompage");
+      $rows = pg_numrows($res);
+      for ($i = 0; $i < $rows; $i++) {
+	 $out = pg_fetch_array($res, $i);
+	 $links['in'][] = array($out['frompage'], $out['score']);
+      }
+
+      $res = pg_exec("select distinct pagename, hits from wikilinks, hitcount where (frompage=pagename and topage='$pagename') or (topage=pagename and frompage='$pagename') order by hits desc, pagename");
+      $rows = pg_numrows($res);
+      for ($i = 0; $i < $rows; $i++) {
+	 $out = pg_fetch_array($res, $i);
+	 $links['popular'][] = array($out['pagename'], $out['hits']);
+      }
+
+      return $links;
+
    }
 
 
@@ -413,7 +394,7 @@
 
       // first delete the old list of links
       $query = "delete from $WikiLinksPageStore where frompage='$frompage'";
-//      echo "$query<br>\n";
+      //echo "$query<br>\n";
       $res = pg_exec($dbi['dbc'], $query);
 
       // the page may not have links, return if not
@@ -424,11 +405,17 @@
       reset($linklist);
       while (list($topage, $count) = each($linklist)) {
          $topage = addslashes($topage);
-         $query = "insert into $WikiLinksPageStore (frompage, topage) " .
-                  "values ('$frompage', '$topage')";
-//         echo "$query<br>\n";
-         $res = pg_exec($dbi['dbc'], $query);
+         if ($topage != $frompage) {
+            $query = "insert into $WikiLinksPageStore (frompage, topage) " .
+                     "values ('$frompage', '$topage')";
+            //echo "$query<br>\n";
+            $res = pg_exec($dbi['dbc'], $query);
+         }
       }
+      // update pagescore
+      pg_exec("delete from wikiscore");
+      pg_exec("insert into wikiscore select w1.topage, count(*) from wikilinks as w1, wikilinks as w2 where w2.topage=w1.frompage group by w1.topage");
+
    }
 
 
