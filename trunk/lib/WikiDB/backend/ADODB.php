@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.53 2004-11-20 17:35:58 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.54 2004-11-20 17:49:39 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -548,13 +548,13 @@ extends WikiDB_backend
         return new WikiDB_backend_ADODB_iter($this, $result, $this->page_tbl_field_list);
     }
 
-    function get_all_pages($include_empty=false, $sortby=false, $limit=false, $exclude='') {
+    function get_all_pages($include_empty=false, $sortby=false, $limit=false, $exclude=false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $orderby = $this->sortby($sortby, 'db');
         if ($orderby) $orderby = 'ORDER BY ' . $orderby;
-        //TODO: convert comma-sep glob to sql-style: _sql_match_clause
-        if ($exclude) $exclude = "pagename not like ".$this->_dbh->qstr($exclude);
+        if ($exclude) // array of pagenames
+            $exclude = " AND $page_tbl.pagename NOT IN ".$this->_sql_set($exclude);
         //$dbh->SetFetchMode(ADODB_FETCH_ASSOC);
         if (strstr($orderby, 'mtime ')) { // was ' mtime'
             if ($include_empty) {
@@ -1240,6 +1240,13 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.53  2004/11/20 17:35:58  rurban
+// improved WantedPages SQL backends
+// PageList::sortby new 3rd arg valid_fields (override db fields)
+// WantedPages sql pager inexact for performance reasons:
+//   assume 3 wantedfrom per page, to be correct, no getTotal()
+// support exclude argument for get_all_pages, new _sql_set()
+//
 // Revision 1.52  2004/11/17 20:07:17  rurban
 // just whitespace
 //
