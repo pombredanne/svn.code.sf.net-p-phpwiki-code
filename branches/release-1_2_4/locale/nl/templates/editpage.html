@@ -1,0 +1,48 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>###PAGE###</title>
+</head>
+
+<body>
+
+<form method="POST" action="###SCRIPTURL###">
+
+<h1><a href="###SCRIPTURL###"><img src="###LOGO###" border=0 alt="[phpwiki]" width=50 height=50></a>
+Verander ###PAGE###
+<input type="submit" value=" Bewaar "></h1>
+
+<textarea name="content" ROWS="22" COLS="80" wrap="virtual">###CONTENT###</textarea>
+<br>
+
+<input type="checkbox" name="convert" value="tabs" >
+Ik kan geen tabs tiepen. 
+<a href="###SCRIPTURL###?VertaalSpatiesNaarTabs">VertaalSpatiesNaarTabs</a>
+voor mij als ik bewaar.
+<p><a href="###SCRIPTURL###?GoedeStijl">GoedeStijl</a> tips for
+veranderen.
+
+<br>
+<a href="###SCRIPTURL###?links=###PAGEURL###">VeranderKoppelingen</a>
+naar andere webservers.
+
+###IF COPY###<br><a href="###SCRIPTURL###?copy=###PAGEURL###">VeranderKopie</a> van vorige auteur.
+
+<hr noshade>
+<small>
+<b>Nadruk:</b> '' voor schuin, ''' voor vet, ''''' voor beide.
+<br><b>Lijsten:</b> tab-* voor punt lijsten, tab-# voor genummerde lijsten, tab-Term:-tab voor definitie lijsten.
+<br><b>Verwijzingen:</b> KapitaliseerEnSchrijfAanElkaar of gebruik vierkante haken [pagina koppeling] of URL [http://koel.wiki.int/].
+<br><b>Verwijzingen:</b> Gebruik [1],[2],[3],... en VeranderKoppelingen.  Vermijdt kopplingen met "!": !KoppelNiet, noem koppelingen met [naam | URL].
+<br><b>Allerlei:</b>"!", "!!", "!!!" maak koppen,
+"%%%" maak regelbreuk, "- - - -" maak horizontale lijn, ontsnap "[" met "[[".
+<br>meer op
+<a href="###SCRIPTURL###?TekstFormatteringsRegels">
+<b>TekstFormatteringsRegels.</b></a>
+</small>
+
+<input type="hidden" name="post" value="###PAGEURL###">
+<input type="hidden" name="editversion" value="###VERSION###">
+</form>
+</body>
+</html>
