@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.7 2001-02-17 21:52:08 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.8 2001-02-20 13:44:03 dairiki Exp $');
 include "lib/config.php";
 include "lib/stdlib.php";
 include "lib/userauth.php";
@@ -17,13 +17,13 @@ if (USE_PATH_INFO && !isset($PATH_INFO)
     && (!isset($REDIRECT_URL) || !preg_match(',/$,', $REDIRECT_URL)))
 {
    $LogEntry->status = 302;	// "302 Found"
-   header("Location: " . SERVER_URL . $REQUEST_URI . '/');
+   header("Location: " . SERVER_URL . preg_replace('/(\?|$)/', '/\1', $REQUEST_URI, 1));
    exit;
 }
 
 function DeducePagename () 
 {
-   global $pagename, $PATH_INFO;
+   global $pagename, $PATH_INFO, $QUERY_STRING;
    
    if (isset($pagename))
       return fix_magic_quotes_gpc($pagename);
@@ -35,6 +35,9 @@ function DeducePagename ()
 	 return $m[1];
    }
 
+   if (isset($QUERY_STRING) && !preg_match('/[&=]/', $QUERY_STRING))
+      return urldecode(fix_magic_quotes_gpc($QUERY_STRING));
+   
    return gettext("FrontPage");
 }
 
