@@ -61,7 +61,6 @@ your web server it is highly advised that you do not allow this.
          rsort($brktlinks[0]);
          reset($brktlinks[0]);
          
-
          for ($i = 0; $i < $numBracketLinks; $i++) {
             $brktlink = preg_quote($brktlinks[0][$i]);
             $linktoken = "${FieldSeparator}brkt${i}brkt${FieldSeparator}";
@@ -103,6 +102,9 @@ your web server it is highly advised that you do not allow this.
          $tmpline = ereg_replace("^-{4,}", "<hr>", $tmpline);
 
 
+	 // %%% are linebreaks
+	 $tmpline = preg_replace("|%%%|", "<br>", $tmpline);
+
          // bold italics
          $tmpline = preg_replace("|(''''')(.*?)(''''')|",
                                  "<strong><em>\\2</em></strong>",
@@ -119,30 +121,42 @@ your web server it is highly advised that you do not allow this.
                                  $tmpline);
 
          // Link Wiki words
-         if (preg_match_all("#\b(([A-Z][a-z]+){2,})\b#",
+	 // Wikiwords preceeded by a '!' are not linked
+         if (preg_match_all("#!?\b(([A-Z][a-z]+){2,})\b#",
                             $tmpline, 
                             $link)) {
 
             // uniq the list of matches
-            $hash = "";
+            unset($hash);
             for ($i = 0; $link[0][$i]; $i++) {
                // $realfile = $link[0][$i];
                $hash[$link[0][$i]]++;
             }
 
-            reset($hash);
+	    // all '!WikiName' entries are sorted first
+            ksort($hash);
             while (list($realfile, $val) = each($hash)) {
-               if (IsWikiPage($dbi, $realfile)) {
-                  $tmpline = preg_replace("|\b$realfile\b|",
-                              LinkExistingWikiWord($realfile),
+	       if (strstr($realfile, '!')) {
+	         $tmpline = str_replace($realfile,
+			      "${FieldSeparator}nlnk${FieldSeparator}" .
+				substr($realfile, 1),
+		 	      $tmpline);
+	       }	       
+               elseif (IsWikiPage($dbi, $realfile)) {
+                  $tmpline = preg_replace(
+			      "#([^$FieldSeparator]|^)\b$realfile\b#",
+                              "\\1" . LinkExistingWikiWord($realfile),
                               $tmpline);
                } else {
-                  $tmpline = preg_replace("|\b$realfile\b|",
-                              LinkUnknownWikiWord($realfile),
+                  $tmpline = preg_replace(
+			      "#([^$FieldSeparator]|^)\b$realfile\b#",
+                              "\\1" . LinkUnknownWikiWord($realfile),
                               $tmpline);
                }
             }
-
+	    // get rid of placeholders
+	    $tmpline = str_replace("${FieldSeparator}nlnk${FieldSeparator}",
+	    		      "", $tmpline);
          }
 
          ///////////////////////////////////////////////////////
@@ -159,7 +173,6 @@ your web server it is highly advised that you do not allow this.
                                     $tmpline);
          }
          ///////////////////////////////////////////////////////
-
 
          // put URLs back, linked
          for ($i = 0; $i < $hasURLs; $i++) {
@@ -211,6 +224,14 @@ your web server it is highly advised that you do not allow this.
             // this is preformatted text, i.e. <pre>
             $html .= SetHTMLOutputMode("pre", ZERO_DEPTH, 0);
 
+	 } elseif (preg_match("/^(!{1,3})[^!]/", $tmpline, $whichheading)) {
+	    // lines starting with !,!!,!!! are headings
+	    if($whichheading[1] == '!') $heading = "h3";
+	    elseif($whichheading[1] == '!!') $heading = "h2";
+	    elseif($whichheading[1] == '!!!') $heading = "h1";
+	    $tmpline = preg_replace("/^!+/", "", $tmpline);
+	    $html .= SetHTMLOutputMode($heading, ZERO_DEPTH, 0);
+
          } else {
             // it's ordinary output if nothing else
             $html .= SetHTMLOutputMode("", ZERO_DEPTH, 0);
@@ -227,4 +248,3 @@ your web server it is highly advised that you do not allow this.
    $html .= WikiToolBar();
    $html .= WikiFooter();
 ?>
-

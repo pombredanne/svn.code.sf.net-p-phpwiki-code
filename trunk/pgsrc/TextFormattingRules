@@ -8,6 +8,7 @@
 
 	* Four or more minus signs make a horizontal rule
 
+	* %%''''% makes a linebreak (in headings and lists too)
 
 
 '''Lists'''
@@ -24,6 +25,16 @@
 
 	* Other leading whitespace signals preformatted text, changes font.
 
+
+'''Headings'''
+
+	* '!' at the start of a line makes a small heading
+
+	* '!!' at the start of a line makes a medium heading 
+
+	* '!!!' at the start of a line makes a large heading
+
+
 '''Fonts'''
 	* Indent with one or more spaces to use a monospace font:
 
@@ -31,12 +42,10 @@
 This is not
 
 
-
 '''Indented Paragraphs'''
 ''(Quotes)''
 
 	* tab-space-:-tab -- often used (with emphasis) for quotations.  (See SimulatingQuoteBlocks)
-
 
 
 '''Emphasis'''
@@ -50,7 +59,6 @@ This is not
 	* Emphasis can be used multiple times within a line, but cannot cross line boundaries
 
 
-
 '''References'''
 	* Hyperlinks to other pages within the Wiki are made by placing the page name in square brackets: [this is a page link]
 
@@ -59,6 +67,8 @@ This is not
 	* You can name the links to the external pages by providing a name, a bar (|) and then the hyperlink: [Steve's home page | http://wcsb.org/~swain/]  
 
 	* Old Wiki linking is still supported: JoinCapitalizedWords to make local references
+
+	* You can suppress linking to old-style references by preceeding the word with a '!', e.g. !NotLinkedAsWikiName
 
 	* [1], [2], [3], [4] refer to remote references. Click EditLinks on the edit form to enter URLs. These differ from the newer linking scheme; references are unique to a page.
 
