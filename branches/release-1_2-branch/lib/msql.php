@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: msql.php,v 1.6.2.4 2001-11-07 20:30:47 dairiki Exp $');
+<?php rcs_id('$Id: msql.php,v 1.6.2.5 2001-11-16 01:22:27 wainstead Exp $');
 
    /*
       Database functions:
@@ -424,35 +424,65 @@
       global $WikiLinksStore;
      
       $topage = addslashes($pagename);
+      $res[arr] = array();
 
       // FIXME: this is buggy.  If a [multiword link] is split accross
       // multiple lines int the page_table, we wont find it.
       // (Probably the best fix is to implement the link table, and use it.)
       $res['regexp'] = MakeBackLinkSearchRegexp($pagename);
-      $res['res'] = msql_query( "SELECT pagename, line FROM $dbi[page_table]"
-				. " WHERE line LIKE '%$topage%'"
-				. " ORDER BY pagename",
-				$dbi["dbc"]);
-      $res['lastpage'] = '';
+      $query = "SELECT pagename, line FROM $dbi[page_table]"
+           . " WHERE line LIKE '%$topage%'"
+           . " ORDER BY pagename";
+      
+      //echo "<p>$query<p>\n";
+      $res['res'] = msql_query($query, $dbi["dbc"]);
+
+      $count = 0;
+      $arr = array();
+
+      // build an array of the results.
+      while ($hash = msql_fetch_array($res[res]) ) {
+          if ($arr[$count -1 ] == $hash[pagename])
+              continue;
+          $arr[$count] = $hash[pagename];
+          $count++;
+      }
+
+      $res[count] = 0;
+      reset($arr);
+      $res[arr] = $arr;
       
       return $res;
    }
 
 
-   // iterating through database
-   function BackLinkSearchNextMatch($dbi, $res) {
-      while (true) {
-	 if ( ! ($o = msql_fetch_object($res['res']))) {
-	    return 0;
-	 }
-	 if ( $res['lastpage'] == $o->pagename )
-	    continue;
-	 if ( ! preg_match($res['regexp'], $a->line) )
-	    continue;
-	 $res['lastpage'] = $o->pagename;
-	 return $o->pagename;
-      }
-   }
+// iterating through database
+function BackLinkSearchNextMatch($dbi, &$res) {
+
+    if ($res[count] > count($res[arr]))
+        return 0;
+
+    $retval = $res[arr][$res[count]];
+    $res[count]++;
+
+    return $retval;
+}
+
+/*
+            if ( ($o = msql_fetch_object($res['res'])) == FALSE ) {
+            echo "returning zero<p>\n";
+            echo "it's '$o' <p>\n";
+            return 0;
+            }
+            if ( $res['lastpage'] == $o->pagename )
+            continue;
+            if ( ! preg_match($res['regexp'], $a->line) )
+            continue;
+            $res['lastpage'] = $o->pagename;
+            return $o->pagename;
+            }
+          */
+
 
    function IncreaseHitCount($dbi, $pagename) {
 
