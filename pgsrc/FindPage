@@ -1,10 +1,10 @@
-Date: Fri, 1 Mar 2002 23:44:38 -0500
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.3-jeffs-hacks)
-X-Rcs-Id: $Id: FindPage,v 1.14 2002-11-25 19:44:01 dairiki Exp $
+Date: Wed, 24 Nov 2004 10:56:40 +0100
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.11pre)
+X-Rcs-Id: $Id: FindPage,v 1.15 2004-11-24 10:00:59 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=FindPage;
+  pgsrc_version="2 $Revision: 1.15 $";
   flags=PAGE_LOCKED;
-  pgsrc_version="2 $Revision: 1.14 $";
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
@@ -16,19 +16,27 @@ Here are some good starting points for browsing.
 * MoreAboutMechanics of browsing and editing on this server.
 
 Here's a title search. Try something like ''wiki'' or ''sandwich''.
-<?plugin-form TitleSearch?>
+
+<?plugin-form TitleSearch?> |
+  <?plugin-form TitleSearch case_exact=1 buttontext=Case-exact ?>
 
 Use the following for a full text search. This takes a few seconds.
-The results will show all lines on a given page which contain a match.
-<?plugin-form FullTextSearch?>
+The results will show all lines on a given page which contain a
+match.
+
+<?plugin-form FullTextSearch?> |
+  <?plugin-form FullTextSearch case_exact=1 buttontext=Case-exact ?>
 
 In a fuzzy pages search the titles of all pages are examined to find
 those which are similarly spelled or similar sounding (english).
-<?plugin-form FuzzyPages?>
+
+<?plugin-form FuzzyPages ?>
 
 ------
 
 ! Tips
 Separate words with a space. All words have to match.
-%%%To exclude words from a title search or full text search, prepend a '-'.
-%%%Example: 'wiki text -php' looks for all pages containing the words 'wiki' __and__ 'text', but __not__ containing the word 'php'.
+%%%To exclude words from a title search or full text search, prepend
+a '-'.
+%%%Example: 'wiki text -php' looks for all pages containing the words
+'wiki' __and__ 'text', but __not__ containing the word 'php'.
