@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.36 2004-06-07 19:50:40 rurban Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.37 2004-06-07 22:28:04 rurban Exp $');
 
 /**
  * GZIP stuff.
@@ -566,6 +566,10 @@ function MimeifyPageRevision ($revision) {
         $params['hits'] = $page->get('hits');
     if ($page->get('owner'))
         $params['owner'] = $page->get('owner');
+    if ($page->get('perm')) {
+        $acl = getPagePermissions($page);
+        $params['acl'] = $acl->asAclLines();
+    }
 
     $params['charset'] = $GLOBALS['charset'];
 
@@ -789,6 +793,9 @@ function ParseMimeifiedPages ($data)
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.36  2004/06/07 19:50:40  rurban
+// add owner field to mimified dump
+//
 // Revision 1.35  2004/05/02 21:26:38  rurban
 // limit user session data (HomePageHandle and auth_dbi have to invalidated anyway)
 //   because they will not survive db sessions, if too large.

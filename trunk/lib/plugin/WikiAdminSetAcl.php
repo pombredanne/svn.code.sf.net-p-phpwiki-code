@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSetAcl.php,v 1.13 2004-06-04 20:32:54 rurban Exp $');
+rcs_id('$Id: WikiAdminSetAcl.php,v 1.14 2004-06-07 22:28:06 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -46,7 +46,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.13 $");
+                            "\$Revision: 1.14 $");
     }
 
     function getDefaultArguments() {
@@ -74,8 +74,9 @@ extends WikiPlugin_WikiAdminSelect
 	        $group = $acl['_new_group'][$access];
                 $acl[$access][$group] = isset($acl['_new_perm'][$access]) ? 1 : 0;
             }
-	    unset($acl['_add_group']); unset($acl['_new_group']); unset($acl['_new_perm']);
+	    unset($acl['_add_group']); 
         }
+        unset($acl['_new_group']); unset($acl['_new_perm']);
         if (isset($acl['_del_group'])) {
 	    //del groups with perm
             foreach ($acl['_del_group'] as $access => $del) {
@@ -90,11 +91,12 @@ extends WikiPlugin_WikiAdminSelect
             	// check if unchanged? we need a deep array_equal
             	$page = $dbi->getPage($pagename);
             	$oldperm = getPagePermissions($page);
-            	$oldperm->sanify();
-            	if ($perm->equal($oldperm->perm)) // (serialize($oldperm->perm) == serialize($perm->perm))
+                if ($oldperm)
+                    $oldperm->sanify();
+            	if ($oldperm and $perm->equal($oldperm->perm)) // (serialize($oldperm->perm) == serialize($perm->perm))
                     $ul->pushContent(HTML::li(fmt("ACL not changed for page '%s'.",$pagename)));
-                elseif (mayAccessPage('change',$pagename)) {
-                    setPagePermissions ($page,$perm);
+                elseif (mayAccessPage('change', $pagename)) {
+                    setPagePermissions ($page, $perm);
                     $ul->pushContent(HTML::li(fmt("ACL changed for page '%s'.",$pagename)));
                     $count++;
                 } else {
@@ -289,6 +291,11 @@ class _PageList_Column_perm extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2004/06/04 20:32:54  rurban
+// Several locale related improvements suggested by Pierrick Meignen
+// LDAP fix by John Cole
+// reanable admin check without ENABLE_PAGEPERM in the admin plugins
+//
 // Revision 1.12  2004/06/03 22:24:48  rurban
 // reenable admin check on !ENABLE_PAGEPERM, honor s=Wildcard arg, fix warning after Remove
 //
