@@ -1,5 +1,5 @@
 /*
-  $Id: Hawaiian.css,v 1.18 2002-02-08 16:19:03 carstenklapp Exp $
+  $Id: Hawaiian.css,v 1.19 2002-02-08 22:56:37 carstenklapp Exp $
 
   Classes:
 
@@ -47,6 +47,10 @@ body { font-family: arial, helvetica, sans-serif; }
 .wikitext, .toolbar, p, td { font-family: arial, helvetica, sans-serif; }
 
 input.button { font-family: arial, helvetica, sans-serif; }
+
+input.numeric {
+  text-align: right;
+}
 
 .wikitext PRE { font-family: monospace; }
 

@@ -1,5 +1,5 @@
 /*
-  $Id: phpwiki.css,v 1.32 2002-02-08 08:19:10 carstenklapp Exp $
+  $Id: phpwiki.css,v 1.33 2002-02-08 22:56:36 carstenklapp Exp $
 
   Classes:
 
@@ -41,6 +41,8 @@ body { font-family: arial, helvetica, sans-serif; }
 .wikitext, .toolbar, p, td { font-family: arial, helvetica, sans-serif; }
 
 input.button { font-family: arial, helvetica, sans-serif; }
+
+input.numeric { text-align: right; }
 
 .wikitext pre { font-family: monospace; }
 
