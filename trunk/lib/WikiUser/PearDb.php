@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: PearDb.php,v 1.5 2004-12-26 17:11:17 rurban Exp $');
+rcs_id('$Id: PearDb.php,v 1.6 2005-01-06 15:44:22 rurban Exp $');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -101,9 +101,6 @@ extends _DbPassUser
             trigger_error(_("Invalid username."),E_USER_WARNING);
             return $this->_tryNextUser();
         }
-        if (!$this->_checkPassLength($submitted_password)) {
-            return WIKIAUTH_FORBIDDEN;
-        }
         $dbi =& $GLOBALS['request']->_dbi;
         // Prepare the configured auth statements
         if ($dbi->getAuthParam('auth_check') and empty($this->_authselect)) {
@@ -155,6 +152,9 @@ extends _DbPassUser
         }
         if (!$this->isValidName()) {
             return $this->_tryNextPass($submitted_password);
+        }
+        if (!$this->_checkPassLength($submitted_password)) {
+            return WIKIAUTH_FORBIDDEN;
         }
         if (!isset($this->_authselect))
             $this->userExists();
@@ -219,6 +219,9 @@ extends _DbPassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/12/26 17:11:17  rurban
+// just copyright
+//
 // Revision 1.4  2004/12/20 16:05:01  rurban
 // gettext msg unification
 //
