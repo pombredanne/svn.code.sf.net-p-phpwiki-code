@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.24 2004-05-27 17:49:05 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.25 2004-06-02 10:18:36 rurban Exp $');
 
 require_once(dirname(__FILE__).'/HtmlElement.php');
 if (isset($GLOBALS['ErrorManager'])) return;
@@ -9,6 +9,13 @@ define ('EM_WARNING_ERRORS',
 	E_WARNING | E_CORE_WARNING | E_COMPILE_WARNING | E_USER_WARNING);
 define ('EM_NOTICE_ERRORS', E_NOTICE | E_USER_NOTICE);
 
+/* It is recommended to leave assertions on. 
+   You can simply comment the two lines below to leave them on.
+   Only where absolute speed is necessary you might want to turn 
+   them off.
+*/
+if (DEBUG) assert_options (ASSERT_ACTIVE, 1);
+else       assert_options (ASSERT_ACTIVE, 0);
 assert_options (ASSERT_CALLBACK, 'wiki_assert_handler');
 
 function wiki_assert_handler ($file, $line, $code) {
@@ -514,6 +521,15 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2004/05/27 17:49:05  rurban
+// renamed DB_Session to DbSession (in CVS also)
+// added WikiDB->getParam and WikiDB->getAuthParam method to get rid of globals
+// remove leading slash in error message
+// added force_unlock parameter to File_Passwd (no return on stale locks)
+// fixed adodb session AffectedRows
+// added FileFinder helpers to unify local filenames and DATA_PATH names
+// editpage.php: new edit toolbar javascript on ENABLE_EDIT_TOOLBAR
+//
 //
 
 // (c-file-style: "gnu")
