@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.57 2004-05-01 18:20:05 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.58 2004-05-15 19:48:33 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -16,6 +16,7 @@ class Template
 
         $this->_request = &$request;
         $this->_name = $name;
+        $GLOBALS['TemplatesProcessed'][$name] = 1;
         $this->_basepage = $request->getArg('pagename');
         
         $file = $Theme->findTemplate($name);
@@ -194,6 +195,9 @@ function Template($name, $args = false) {
     return new Template($name, $request, $args);
 }
 
+function alreadyTemplateProcessed($name) {
+    return !empty($GLOBALS['TemplatesProcessed'][$name]) ? true : false;
+}
 /**
  * Make and expand the top-level template. 
  *
@@ -251,6 +255,9 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.57  2004/05/01 18:20:05  rurban
+// Add $charset to template locals (instead of constant CHARSET)
+//
 // Revision 1.56  2004/04/12 13:04:50  rurban
 // added auth_create: self-registering Db users
 // fixed IMAP auth

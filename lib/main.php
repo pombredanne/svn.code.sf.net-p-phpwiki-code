@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.146 2004-05-15 18:31:01 rurban Exp $');
+rcs_id('$Id: main.php,v 1.147 2004-05-15 19:48:33 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -225,7 +225,7 @@ $this->version = phpwiki_version();
             {
                 $fail_message = false;
             }
-            $olduser->PrintLoginForm($this, $auth_args, $fail_message);
+            $olduser->PrintLoginForm($this, $auth_args, $fail_message, 'newpage');
             $this->finish();    //NORETURN
         }
         else {
@@ -274,7 +274,18 @@ $this->version = phpwiki_version();
     }
 
     /* Permission system */
-
+    function getLevelDescription($level) {
+    	static $levels = false;
+    	if (!$levels) 
+    	    $levels = array('-1'  => _("FORBIDDEN"),
+                             '0'  => _("ANON"),
+                             '1'  => _("BOGO"),
+                             '2'  => _("USER"),
+                             '10' => _("ADMIN"),
+                             '100'=> _("UNOBTAINABLE"));
+    	return $levels[$level];
+    }
+    
     function _notAuthorized ($require_level) {
         // Display the authority message in the Wiki's default
         // language, in case it is not english.
@@ -290,15 +301,22 @@ $this->version = phpwiki_version();
 
         // User does not have required authority.  Prompt for login.
         $what = $this->getActionDescription($this->getArg('action'));
-
+        $pass_required = ($require_level >= WIKIAUTH_USER);
         if ($require_level == WIKIAUTH_UNOBTAINABLE) {
-            if (class_exists('PagePermission'))
-                $this->finish(fmt("%s is disallowed on this wiki for user %s (level: %d).",
-                                  $this->getDisallowedActionDescription($this->getArg('action')),
-                                  $this->_user->UserName(),$this->_user->_level));
-            else
-                $this->finish(fmt("%s is disallowed on this wiki.",
-                                  $this->getDisallowedActionDescription($this->getArg('action'))));
+            if (class_exists('PagePermission')) {
+                $user =& $this->_user;
+            	$status = $user->isAuthenticated() ? _("authenticated") : _("not authenticated");
+            	$msg = fmt("%s is disallowed on this wiki for %s user '%s' (level: %s).",
+                           $this->getDisallowedActionDescription($this->getArg('action')),
+                           $status, $user->getId(),$this->getLevelDescription($user->_level));
+                $user->PrintLoginForm($this, compact('require_level','pass_required'), $msg);
+                $this->finish();
+            } else {
+            	$msg = fmt("%s is disallowed on this wiki.",
+                           $this->getDisallowedActionDescription($this->getArg('action')));
+                $this->_user->PrintLoginForm($this, compact('require_level','pass_required'), $msg);
+		$this->finish();
+            }
         }
         elseif ($require_level == WIKIAUTH_BOGO)
             $msg = fmt("You must sign in to %s.", $what);
@@ -306,7 +324,6 @@ $this->version = phpwiki_version();
             $msg = fmt("You must log in to %s.", $what);
         else
             $msg = fmt("You must be an administrator to %s.", $what);
-        $pass_required = ($require_level >= WIKIAUTH_USER);
 
         $this->_user->PrintLoginForm($this, compact('require_level','pass_required'), $msg);
         $this->finish();    // NORETURN
@@ -792,44 +809,10 @@ $this->version = phpwiki_version();
     }
 
     function action_pdf () {
-    	if (empty($this->_is_buffering_output))
-            $this->buffer_output(false/*'nocompress'*/);
-        if ($GLOBALS['LANG'] == 'ja') {
-            include_once("lib/fpdf/japanese.php");
-            $pdf = new PDF_Japanese;
-        } elseif ($GLOBALS['LANG'] == 'zh') {
-            include_once("lib/fpdf/chinese.php");
-            $pdf = new PDF_Chinese;
-        } else {
-            include_once("lib/pdf.php");
-            $pdf = new PDF;
-        }
-        include_once("lib/display.php");
-        displayPage($this);
-        $html = ob_get_contents();
-    	$pdf->Open();
-    	$pdf->AddPage();
-        $pdf->ConvertFromHTML($html);
-        $this->discardOutput();
-        
-        $this->buffer_output(false/*'nocompress'*/);
-        $pagename = $this->getArg('pagename');
-        $dest = $this->getArg('dest');
-        $pdf->Output($pagename.".pdf",$dest ? $dest : 'I');
-        if (!empty($errormsg)) {
-            $this->discardOutput();
-            /*
-            $GLOBALS['ErrorManager']->flushPostponedErrors();
-            PrintXML(HTML::br(),
-                     HTML::hr(),
-                     HTML::h2(_("Fatal PhpWiki Error")),
-                     $errormsg);
-            echo "\n</body></html>";
-            */
-        } else {
-            ; //ob_end_flush(); flushed by Request::finish()
-        }
+    	include_once("lib/pdf.php");
+    	ConvertAndDisplayPdf($this);
     }
+    
 }
 
 //FIXME: deprecated
@@ -944,6 +927,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.146  2004/05/15 18:31:01  rurban
+// some action=pdf Request fixes: With MSIE it works now. Now the work with the page formatting begins.
+//
 // Revision 1.145  2004/05/12 10:49:55  rurban
 // require_once fix for those libs which are loaded before FileFinder and
 //   its automatic include_path fix, and where require_once doesn't grok

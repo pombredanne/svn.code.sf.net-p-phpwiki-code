@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.12 2004-05-04 22:34:25 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.13 2004-05-15 19:48:33 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -151,8 +151,10 @@ function mayAccessPage ($access,$pagename) {
  * Todo: cache result per access and page in session?
  */
 function requiredAuthorityForPage ($action) {
-    if (_requiredAuthorityForPagename(action2access($action),
-                                      $GLOBALS['request']->getArg('pagename')))
+    $auth = _requiredAuthorityForPagename(action2access($action),
+                                          $GLOBALS['request']->getArg('pagename'));
+    assert($auth !== -1);
+    if ($auth)
         return $GLOBALS['request']->_user->_level;
     else
         return WIKIAUTH_UNOBTAINABLE;
@@ -330,8 +332,9 @@ class PagePermission {
         $member = &WikiGroup::getGroup($request);
         //$user = & $request->_user;
         if ($group === ACL_ADMIN)   // WIKI_ADMIN or member of _("Administrators")
-            return $user->isAdmin() or
-                   $member->isMember(GROUP_ADMIN);
+            return $user->isAdmin() or 
+                   ($user->isAuthenticated() and 
+                   $member->isMember(GROUP_ADMIN));
         if ($group === ACL_ANONYMOUS) 
             return ! $user->isSignedIn();
         if ($group === ACL_BOGOUSERS)
@@ -345,12 +348,14 @@ class PagePermission {
             return $user->isAuthenticated();
         if ($group === ACL_OWNER) {
             $page = $request->getPage();
-            return $page->get('author') === $user->UserName();
+            return ($page->get('author') === $user->UserName() and 
+                    $user->isAuthenticated());
         }
         if ($group === ACL_CREATOR) {
             $page = $request->getPage();
             $rev = $page->getRevision(1);
-            return $rev->get('author') === $user->UserName();
+            return ($rev->get('author') === $user->UserName() and 
+                    $user->isAuthenticated());
         }
         /* Or named groups or usernames.
          Note: We don't seperate groups and users here. 
@@ -546,6 +551,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2004/05/04 22:34:25  rurban
+// more pdf support
+//
 // Revision 1.11  2004/05/02 21:26:38  rurban
 // limit user session data (HomePageHandle and auth_dbi have to invalidated anyway)
 //   because they will not survive db sessions, if too large.
