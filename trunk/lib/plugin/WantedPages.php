@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WantedPages.php,v 1.5 2003-03-25 21:05:27 dairiki Exp $');
+rcs_id('$Id: WantedPages.php,v 1.6 2003-11-19 17:08:23 carstenklapp Exp $');
 /*
  This file is part of PhpWiki.
 
@@ -39,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
@@ -108,8 +108,15 @@ extends WikiPlugin
 
         } else {
             $spacer = new RawXml("&nbsp;&nbsp;&nbsp;&nbsp;");
+            // Clicking on the number in the links column does a
+            // FullTextSearch for the citations of the WantedPage links.
             foreach ($this->pagelist as $key => $val) {
-                $row = HTML::tr(HTML::td(array('align' => 'right'), $val),
+                $row = HTML::tr(HTML::td(array('align' => 'right'),
+                                         Button(array('s' => (string)$key),
+                                                $val, _("FullTextSearch"))),
+                                         // Alternatively, get BackLinks instead
+                                         //Button(array('action' => _("BackLinks")),
+                                         //       $val, (string)$key)),
                                 HTML::td(HTML($spacer,
                                               WikiLink((string)$key, 'unknown'))));
                 $this->_rows->pushContent($row);
@@ -188,6 +195,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2003/03/25 21:05:27  dairiki
+// Ensure pagenames are strings.
+//
 // Revision 1.4  2003/01/18 22:14:24  carstenklapp
 // Code cleanup:
 // Reformatting & tabs to spaces;
