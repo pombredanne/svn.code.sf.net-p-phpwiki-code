@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RedirectTo.php,v 1.7 2003-02-15 23:32:56 dairiki Exp $');
+rcs_id('$Id: RedirectTo.php,v 1.8 2003-02-16 19:49:18 dairiki Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -52,14 +52,13 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
         return array( 'href' => '',
                       // 'type' => 'Temp' // or 'Permanent' // so far ignored
                       'page' => false,
-                      'args' => false,  // pass more args to the page. TestMe!
                       );
     }
 
@@ -84,9 +83,9 @@ extends WikiPlugin
             }
         }
         else if ($page) {
-            $url = $request->getURLtoSelf(array_merge(array('pagename' => $page,
-                                                            'redirectfrom' => $request->getArg('pagename')),
-                                                      SplitQueryArgs($args['args'])));
+            $url = WikiURL($page,
+                           array('redirectfrom' => $request->getArg('pagename')),
+                           'abs_path');
         }
         else {
             return $this->error(fmt("%s or %s parameter missing",
@@ -111,12 +110,35 @@ extends WikiPlugin
             }
         }
         
-        
         return $request->redirect($url);
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2003/02/15 23:32:56  dairiki
+// Usability improvements for the RedirectTo plugin.
+//
+// (Mostly this applies when using RedirectTo with a page=OtherPage
+// argument to redirect to another page in the same wiki.)
+//
+// (Most of these ideas are stolen verbatim from UseModWiki.)
+//
+//  o Multiple redirects (PageOne -> PageTwo -> PageThree) not allowed.
+//
+//  o Redirects are not activated except when action == 'browse'.
+//
+//  o When redirections are disabled, (hopefully understandable)
+//    diagnostics are displayed.
+//
+//  o A link to the redirecting page is displayed after the title
+//    of the target page.  If the user follows this link, redirects
+//    are disabled.  This allows for easy editing of the redirecting
+//    page.
+//
+// FIXME: Stylesheets, and perhaps templates other than the defaults
+// will probably have to be updated before this works well in other
+// styles and/or themes.
+//
 // Revision 1.6  2003/01/18 22:01:44  carstenklapp
 // Code cleanup:
 // Reformatting & tabs to spaces;
