@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiPluginCached.php,v 1.10 2004-06-19 10:06:37 rurban Exp $');
+<?php rcs_id('$Id: WikiPluginCached.php,v 1.11 2004-09-06 09:12:46 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -28,12 +28,10 @@
  */
 
 require_once "lib/WikiPlugin.php";
-// require_once "lib/plugincache-config.php";
+// require_once "lib/plugincache-config.php"; // replaced by config.ini settings!
 
-// Try the installed pear class first. It might be newer. Not yet.
-// @require_once('Cache.php');
-// if (!class_exists('Cache'))
-require_once('Cache.php');
+// Try the system pear class. See newCache()
+@require_once('Cache.php');
 
 define('PLUGIN_CACHED_HTML',0);
 define('PLUGIN_CACHED_IMG_INLINE',1);
@@ -67,7 +65,7 @@ class WikiPluginCached extends WikiPlugin
      * @access private
      * @return array(id,url)  
      */
-    function genUrl($cache,$argarray) {
+    function genUrl($cache, $argarray) {
     	global $request;
         //$cacheparams = $GLOBALS['CacheParams'];
 
@@ -386,8 +384,13 @@ class WikiPluginCached extends WikiPlugin
   
         if (!is_object($staticcache)) {
             if (!class_exists('Cache')) {
+                // uuh, pear not in include_path! should print a warning.
+                // search some possible pear paths.
                 $pearFinder = new PearFileFinder;
-                $pearFinder->includeOnce('Cache.php');
+                if ($lib = $pearFinder->findFile('Cache.php', 'missing_ok'))
+                    require_once($lib);
+                else // fall back to our own copy
+                    require_once('lib/pear/Cache.php');
             }
             $cacheparams = array();
             foreach (explode(':','database:cache_dir:filename_prefix:highwater:lowwater'
@@ -861,6 +864,8 @@ class WikiPluginCached extends WikiPlugin
 
 } // WikiPluginCached
 
+
+// $Log: not supported by cvs2svn $
 
 // For emacs users
 // Local Variables:
