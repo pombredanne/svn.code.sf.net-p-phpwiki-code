@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: update-makefile.sh,v 1.1 2002-01-13 22:42:37 dairiki Exp $
+# $Id: update-makefile.sh,v 1.2 2002-01-14 00:05:41 dairiki Exp $
 #
 # This shell script is used to update the list of .po files and the
 # dependencies for phpwiki.pot in the Makefile.
@@ -28,7 +28,9 @@ EOF
 # Find all .po files in po/.
 #
 po_files () {
-    find po -name "*.po" -printf 'PO_FILES += %p\n'
+    find po -name "*.po" |
+	sed 's/^/PO_FILES += /;' |
+	sort
 }
 
 # Find all .php and .html source code which should be scanned
@@ -36,9 +38,9 @@ po_files () {
 #
 pot_file_deps () {
     find ../lib ../templates ../themes					\
-	\( -name "*.php" -o -name "*.html" \)				\
-	-printf '${POT_FILE}: %p\n' |
-	    sort
+	    \( -name "*.php" -o -name "*.html" \) |
+	sed 's/^/${POT_FILE}: /;' |
+	sort
 }
 
 # Generate the new Makefile
