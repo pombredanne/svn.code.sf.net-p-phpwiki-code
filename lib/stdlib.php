@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.227 2005-01-14 18:32:08 uckelman Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.228 2005-01-17 20:28:30 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -646,9 +646,11 @@ class WikiPageName
             $this->_warnings[] = _("White space converted to single space");
     
         // Delete any control characters.
-        $pagename = preg_replace('/[\x00-\x1f\x7f\x80-\x9f]/', '', $orig = $pagename);
-        if ($pagename != $orig)
-            $this->_errors[] = _("Control characters not allowed");
+        if (DATABASE_TYPE == 'cvs' or DATABASE_TYPE == 'file') {
+            $pagename = preg_replace('/[\x00-\x1f\x7f\x80-\x9f]/', '', $orig = $pagename);
+            if ($pagename != $orig)
+                $this->_errors[] = _("Control characters not allowed");
+        }
 
         // Strip leading and trailing white-space.
         $pagename = trim($pagename);
@@ -659,20 +661,24 @@ class WikiPageName
         if ($pagename != $orig)
             $this->_errors[] = sprintf(_("Leading %s not allowed"), SUBPAGE_SEPARATOR);
 
-        if (preg_match('/[:;]/', $pagename)) {
-            $this->_warnings[] = _("';' and ':' are deprecated");
-            $pagename = str_replace(':', '', $pagename);
+        // ";" is urlencoded, so safe from php arg-delim problems
+        /*if (strstr($pagename, ';')) {
+            $this->_warnings[] = _("';' is deprecated");
             $pagename = str_replace(';', '', $pagename);
-        }
+        }*/
         
+        // not only for the db backend, also to restrict url length
         if (strlen($pagename) > MAX_PAGENAME_LENGTH) {
             $pagename = substr($pagename, 0, MAX_PAGENAME_LENGTH);
             $this->_errors[] = _("too long");
         }
 
-        if (strstr($pagename, '..')) {
-            $this->_warnings[] = sprintf(_("illegal .. removed"), $pagename);
+        // disallow some chars only on file and cvs
+        if ((DATABASE_TYPE == 'cvs' or DATABASE_TYPE == 'file') 
+            and preg_match('/(:|\.\.)/', $pagename, $m)) {
+            $this->_warnings[] = sprintf(_("Illegal chars %s removed"), $m[1]);
             $pagename = str_replace('..', '', $pagename);
+            $pagename = str_replace(':', '', $pagename);
         }
         
         return $pagename;
@@ -1857,6 +1863,12 @@ function printSimpleTrace($bt) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.227  2005/01/14 18:32:08  uckelman
+// ConvertOldMarkup did not properly handle links containing pairs of pairs
+// of underscores. (E.g., [http://example.com/foo__bar__.html] would be
+// munged by the regex for bold text.) Now '__' in links are hidden prior to
+// conversion of '__' into '<strong>', and then unhidden afterwards.
+//
 // Revision 1.226  2004/12/26 17:12:06  rurban
 // avoid stdargs in url, php5 fixes
 //
