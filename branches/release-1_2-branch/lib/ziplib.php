@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: ziplib.php,v 1.2.2.1 2001-02-08 18:28:31 dairiki Exp $');
+rcs_id('$Id: ziplib.php,v 1.2.2.2 2001-02-10 05:26:00 dairiki Exp $');
 
 //FIXME: get rid of this.
 function warn ($msg)
@@ -66,6 +66,7 @@ function gzip_uncompress ($data) {
 
   if (!($fp = gzopen($filename, "rb")))
       die("gzopen failed");
+  $unz = '';
   while ($buf = gzread($fp, 4096))
       $unz .= $buf;
   if (!gzclose($fp))
@@ -264,20 +265,24 @@ class ZipWriter
 	$crc32 = zip_crc32($content);
       }
     
-    if ($attrib['write_protected'])
+    if (!empty($attrib['write_protected']))
 	$atx = (0100444 << 16) | 1; // S_IFREG + read permissions to everybody.
     else
 	$atx = (0100644 << 16); // Add owner write perms.
 
     $ati = $attrib['is_ascii'] ? 1 : 0;
 
-    if (!$attrib['mtime'])
+    if (empty($attrib['mtime']))
 	$attrib['mtime'] = time();
     list ($mod_date, $mod_time) = unixtime2dostime($attrib['mtime']);
 
     // Construct parts common to "Local file header" and "Central
     // directory file header."
-
+    if (!isset($attrib['extra_field']))
+	$attrib['extra_field'] = '';
+    if (!isset($attrib['file_comment']))
+	$attrib['file_comment'] = '';
+    
     $head = pack("vvvvvVVVvv",
 		 20,	// Version needed to extract (FIXME: is this right?)
 		 0,		// Gen purp bit flag
@@ -455,7 +460,7 @@ function QuotedPrintableEncode ($string)
       // The complicated regexp is to force quoting of trailing spaces.
       preg_match('/^([ !-<>-~]*)(?:([!-<>-~]$)|(.))/s', $string, $match);
       $quoted .= $match[1] . $match[2];
-      if ($match[3])
+      if (!empty($match[3]))
 	  $quoted .= sprintf("=%02X", ord($match[3]));
       $string = substr($string, strlen($match[0]));
     }
