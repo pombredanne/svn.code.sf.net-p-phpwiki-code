@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.28 2004-11-01 10:43:59 rurban Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.29 2004-11-09 17:11:17 rurban Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -46,7 +46,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.28 $");
+                            "\$Revision: 1.29 $");
     }
 
     function getDefaultArguments() {
@@ -81,7 +81,7 @@ extends WikiPlugin_WikiAdminSelect
 
         $now = time();
         
-        $allPages = $dbi->getAllPages('include_deleted',$sortby,$limit);
+        $allPages = $dbi->getAllPages('include_empty',$sortby,$limit);
         while ($pagehandle = $allPages->next()) {
             $pagename = $pagehandle->getName();
             $current = $pagehandle->getCurrentRevision();
@@ -237,6 +237,12 @@ class _PageList_Column_remove extends _PageList_Column {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.28  2004/11/01 10:43:59  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 // Revision 1.27  2004/06/16 10:38:59  rurban
 // Disallow refernces in calls if the declaration is a reference
 // ("allow_call_time_pass_reference clean").

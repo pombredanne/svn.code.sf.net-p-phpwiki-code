@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.32 2004-11-01 10:43:55 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.33 2004-11-09 17:11:03 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004 $ThePhpWikiProgrammingTeam
 
@@ -33,7 +33,7 @@ class TransformedText extends CacheableMarkup {
      * @param string $type_override  For markup of page using a different
      *        pagetype than that specified in its version meta-data.
      */
-    function TransformedText($page, &$text, $meta, $type_override=false) {
+    function TransformedText($page, $text, $meta, $type_override=false) {
     	$pagetype = false;
         if ($type_override)
             $pagetype = $type_override;

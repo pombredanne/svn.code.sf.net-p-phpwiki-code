@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: file.php,v 1.17 2004-07-09 13:05:34 rurban Exp $');
+rcs_id('$Id: file.php,v 1.18 2004-11-09 17:11:17 rurban Exp $');
 
 /**
  Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
@@ -560,7 +560,7 @@ extends WikiDB_backend
      *
      * @return object A WikiDB_backend_iterator.
      */
-    function get_all_pages($include_deleted=false, $sortby=false, $limit=false) {
+    function get_all_pages($include_empty=false, $sortby=false, $limit=false) {
     	require_once("lib/PageList.php");
         $this->_loadLatestVersions();
         $a = array_keys($this->_latest_versions);
@@ -724,6 +724,9 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.17  2004/07/09 13:05:34  rurban
+// just aesthetics
+//
 // Revision 1.16  2004/07/09 12:47:45  rurban
 // dont cache _ cached_html and pagename in flatfile page iterators
 //

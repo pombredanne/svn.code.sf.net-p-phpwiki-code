@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.63 2004-11-07 16:47:32 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.64 2004-11-09 17:11:03 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -116,14 +116,16 @@ function IniConfig($file) {
          'EDITING_POLICY', 'THEME', 'CHARSET',
          'DEFAULT_LANGUAGE', 'WIKI_PGSRC', 'DEFAULT_WIKI_PGSRC',
          'ALLOWED_PROTOCOLS', 'INLINE_IMAGES', 'SUBPAGE_SEPARATOR',
-         'DATABASE_PREFIX', 'DATABASE_DSN', 'DATABASE_TYPE',
+         // extra logic:
+         //'DATABASE_PREFIX', 'DATABASE_DSN', 'DATABASE_TYPE', 'DATABASE_DBHANDLER',
          'INTERWIKI_MAP_FILE', 'COPYRIGHTPAGE_TITLE', 'COPYRIGHTPAGE_URL',
-         'AUTHORPAGE_TITLE', 'AUTHORPAGE_URL', 'SERVER_NAME', 'SERVER_PORT',
-         'SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH',
+         'AUTHORPAGE_TITLE', 'AUTHORPAGE_URL', 
          'WIKI_NAME_REGEXP',
          'PLUGIN_CACHED_DATABASE', 'PLUGIN_CACHED_FILENAME_PREFIX',
          'PLUGIN_CACHED_HIGHWATER', 'PLUGIN_CACHED_LOWWATER', 'PLUGIN_CACHED_MAXLIFETIME',
          'PLUGIN_CACHED_MAXARGLEN', 'PLUGIN_CACHED_IMGTYPES',
+         // extra logic:
+         'SERVER_NAME','SERVER_PORT','SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH',
          );
 
     // Optional values which need to be defined.
@@ -144,17 +146,18 @@ function IniConfig($file) {
     // List of all valid config options to be define()d which take booleans.
     $_IC_VALID_BOOL = array
         ('ENABLE_USER_NEW', 'ENABLE_PAGEPERM', 'ENABLE_EDIT_TOOLBAR', 'JS_SEARCHREPLACE',
+         'ENABLE_XHTML_XML', 'ENABLE_DOUBLECLICKEDIT',
+         'USECACHE', 'WIKIDB_NOCACHE_MARKUP',
          'ENABLE_REVERSE_DNS', 'ENCRYPTED_PASSWD', 'ZIPDUMP_AUTH', 
          'ENABLE_RAW_HTML', 'ENABLE_RAW_HTML_LOCKEDONLY', 'ENABLE_RAW_HTML_SAFE', 
          'STRICT_MAILABLE_PAGEDUMPS', 'COMPRESS_OUTPUT',
-         'WIKIDB_NOCACHE_MARKUP', 'ALLOW_ANON_USER', 'ALLOW_ANON_EDIT',
+         'ALLOW_ANON_USER', 'ALLOW_ANON_EDIT',
          'ALLOW_BOGO_LOGIN', 'ALLOW_USER_PASSWORDS',
          'AUTH_USER_FILE_STORABLE', 'ALLOW_HTTP_AUTH_LOGIN',
          'ALLOW_USER_LOGIN', 'ALLOW_LDAP_LOGIN', 'ALLOW_IMAP_LOGIN',
          'WARN_NONPUBLIC_INTERWIKIMAP', 'USE_PATH_INFO',
          'DISABLE_HTTP_REDIRECT',
          'PLUGIN_CACHED_USECACHE', 'PLUGIN_CACHED_FORCE_SYNCMAP',
-         'ENABLE_XHTML_XML', 'ENABLE_DOUBLECLICKEDIT'
          );
 
     if(!file_exists($file)){
@@ -171,7 +174,8 @@ function IniConfig($file) {
     	    $rs[$k] = $v;
     	}
     }
-
+    unset($k); unset($v); 
+    
     foreach ($_IC_VALID_VALUE as $item) {
         if (defined($item)) {
             unset($rs[$item]);
@@ -194,7 +198,8 @@ function IniConfig($file) {
             trigger_error(sprintf("missing config setting for %s",$item));
         }
     }
-
+    unset($item);
+    
     // Boolean options are slightly special - if they're set to any of
     // '', 'false', '0', or 'no' (all case-insensitive) then the value will
     // be a boolean false, otherwise if there is anything set it'll
@@ -237,6 +242,7 @@ function IniConfig($file) {
         }
         unset($rs[$item]);
     }
+    unset($item);
 
     // Database
     global $DBParams;
@@ -273,6 +279,7 @@ function IniConfig($file) {
             define('USE_DB_SESSION', false);
         }
     }
+    unset($item); unset($k); 
 
     // Expiry stuff
     global $ExpireParams;
@@ -290,7 +297,8 @@ function IniConfig($file) {
             unset($rs[$item]);
     	}
     }
-
+    unset($item); unset($major); unset($max); 
+    
     // User authentication
     if (!isset($GLOBALS['USER_AUTH_ORDER']))
         if (isset($rs['USER_AUTH_ORDER']))
@@ -329,6 +337,15 @@ function IniConfig($file) {
         }
         unset($rs[$rskey]);
     }
+    unset($rskey); unset($apkey);
+    
+    // currently unsupported on non-SQL 
+    if (!empty($rs['ACCESS_LOG_SQL'])) {
+        if (!in_array($DBParams['dbtype'], array('SQL','ADODB')))
+            define('ACCESS_LOG_SQL', 0);
+    }
+    else
+        define('ACCESS_LOG_SQL', 0);
 
     // optional values will be set to '' to simplify the logic.
     foreach ($_IC_OPTIONAL_VALUE as $item) {
@@ -342,7 +359,8 @@ function IniConfig($file) {
         } else 
             define($item, '');
     }
-
+    unset($item); 
+    
     // LDAP bind options
     global $LDAP_SET_OPTION;
     if (defined('LDAP_SET_OPTION') and LDAP_SET_OPTION) {
@@ -358,6 +376,7 @@ function IniConfig($file) {
                 // Possibly throw some sort of error?
             }
         }
+        unset($opt); unset($bits);
     }
 
     // Default Wiki pages to force loading from pgsrc
@@ -394,7 +413,7 @@ function IniConfig($file) {
         if (!empty($rs['INCLUDE_PATH'])) {
             ini_set('include_path', $rs['INCLUDE_PATH']);
         }
-        if (!FindFile('/tmp/cache', 1)) {
+        if (!FindFile('/tmp/cache', 1)) { // [29ms]
             if (!FindFile('/tmp', 1)) {
                 mkdir('/tmp', 777);
             }
@@ -409,28 +428,29 @@ function IniConfig($file) {
     }
 
     // process the rest of the config.ini settings:
-    foreach ($rs as $item => $value) {
+    foreach ($rs as $item => $v) {
         if (defined($item)) {
             continue;
         } else {
-            define($item, $value);
+            define($item, $v);
         }
     }
+    unset($item); unset($v); 
 
     unset($rs); 
     unset($rsdef);
-    unset($apkey);
     
-    fixup_static_configs();
+    fixup_static_configs(); //[1ms]
     // Dump all globals and constants
     // The question is if reading this is faster then doing IniConfig() + fixup_static_configs()
     if (is_writable($dump)) {
         save_dump($dump);
     }
-    fixup_dynamic_configs(); // store locale[] in config.php? This is too problematic.
+    // store locale[] in config.php? This is too problematic.
+    fixup_dynamic_configs(); // [100ms]
 }
 
-// moved from lib/config.php
+// moved from lib/config.php [1ms]
 function fixup_static_configs() {
     global $FieldSeparator, $charset, $WikiNameRegexp, $KeywordLinkRegexp, $AllActionPages;
     global $HTTP_SERVER_VARS, $DBParams, $LANG;
@@ -722,6 +742,9 @@ function fixup_dynamic_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.63  2004/11/07 16:47:32  rurban
+// fix VIRTUAL_PATH
+//
 // Revision 1.62  2004/11/07 16:02:51  rurban
 // new sql access log (for spam prevention), and restructured access log class
 // dbh->quote (generic)

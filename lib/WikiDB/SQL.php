@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: SQL.php,v 1.8 2004-07-08 15:35:16 rurban Exp $');
+<?php rcs_id('$Id: SQL.php,v 1.9 2004-11-09 17:11:16 rurban Exp $');
 
 require_once('lib/WikiDB.php');
 //require_once('lib/WikiDB/backend/PearDB.php');
@@ -18,7 +18,8 @@ class WikiDB_SQL extends WikiDB
         include_once ("lib/WikiDB/backend/PearDB_".$backend_type.".php");
         $backend_class = "WikiDB_backend_PearDB_".$backend_type;
         $backend = & new $backend_class($dbparams);
-
+        $this->_iwpcache = array();
+        
         $this->WikiDB($backend, $dbparams);
     }
     
@@ -38,24 +39,16 @@ class WikiDB_SQL extends WikiDB
     
     /**
      * Determine whether page exists (in non-default form).
-     * @see WikiDB::isWikiPage
+     * @see WikiDB::isWikiPage for the slow generic version
      */
     function isWikiPage ($pagename) {
-        /*
-        if (empty($this->_iwpcache))
-            $this->_iwpcache = array_flip($this->_backend->get_all_pagenames());
-        return isset($this->_iwpcache[$pagename]);
-        */
-
-        if (!isset($this->_iwpcache[$pagename]))
+        $pagename = (string) $pagename;
+        if ($pagename === '') return false;
+        //if (empty($this->_iwpcache)) {  $this->_iwpcache = array();  }
+        if (!array_key_exists($pagename, $this->_iwpcache)) {
             $this->_iwpcache[$pagename] = $this->_backend->is_wiki_page($pagename);
+        }
         return $this->_iwpcache[$pagename];
-        
-        // Talk to the backend directly for max speed.
-        /*
-        $pagedata = $this->_cache->get_pagedata($pagename);
-        return !empty($pagedata[':non_default']);
-        */
     }
 };
 

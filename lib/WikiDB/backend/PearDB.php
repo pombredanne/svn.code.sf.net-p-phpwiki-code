@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.64 2004-11-07 16:02:52 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.65 2004-11-09 17:11:17 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -197,6 +197,11 @@ extends WikiDB_backend
 
     function _get_pageid($pagename, $create_if_missing = false) {
         
+        // check id_cache
+        global $request;
+        $cache =& $request->_dbi->_cache->_id_cache;
+        if ($cache[$pagename]) return $cache[$pagename];
+
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
         
@@ -446,7 +451,7 @@ extends WikiDB_backend
     /**
      * Find pages which link to or are linked from a page.
      */
-    function get_links($pagename, $reversed = true) {
+    function get_links($pagename, $reversed=true, $include_empty=false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
 
@@ -456,21 +461,22 @@ extends WikiDB_backend
             list($have,$want) = array('linker', 'linkee');
         
         $qpagename = $dbh->quoteString($pagename);
-        
         $result = $dbh->query("SELECT $want.id as id, $want.pagename as pagename, $want.hits as hits"
                                // Looks like 'AS' in column alias is a MySQL thing, Oracle does not like it
                                // and the PostgresSQL manual does not have it either
                                // Since it is optional in mySQL, just remove it...
                               . " FROM $link_tbl, $page_tbl linker, $page_tbl linkee"
+                              . (!$include_empty ? ", $nonempty_tbl" : '')
                               . " WHERE linkfrom=linker.id AND linkto=linkee.id"
                               . "  AND $have.pagename='$qpagename'"
+                              . (!$include_empty ? " AND $nonempty_tbl.id=$want.id" : "")
                               //. " GROUP BY $want.id"
                               . " ORDER BY $want.pagename");
         
         return new WikiDB_backend_PearDB_iter($this, $result);
     }
 
-    function get_all_pages($include_deleted=false, $sortby=false, $limit=false) {
+    function get_all_pages($include_empty=false, $sortby=false, $limit=false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         // Limit clause is NOT portable!
@@ -479,7 +485,7 @@ extends WikiDB_backend
         $orderby = $this->sortby($sortby, 'db');
         if ($orderby) $orderby = 'ORDER BY ' . $orderby;
         if (strstr($orderby, 'mtime ')) { // multiple columns possible
-            if ($include_deleted) {
+            if ($include_empty) {
                 $sql = "SELECT "
                     . $this->page_tbl_fields
                     . " FROM $page_tbl, $recent_tbl, $version_tbl"
@@ -497,7 +503,7 @@ extends WikiDB_backend
                     . " $orderby";
             }
         } else {
-            if ($include_deleted) {
+            if ($include_empty) {
                 $sql = "SELECT "
                     . $this->page_tbl_fields 
                     ." FROM $page_tbl $orderby";
@@ -1018,7 +1024,13 @@ extends WikiDB_backend_PearDB_generic_iter
         return $rec;
     }
 }
+
 // $Log: not supported by cvs2svn $
+// Revision 1.64  2004/11/07 16:02:52  rurban
+// new sql access log (for spam prevention), and restructured access log class
+// dbh->quote (generic)
+// pear_db: mysql specific parts seperated (using replace)
+//
 // Revision 1.63  2004/11/01 10:43:58  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.112 2004-11-03 16:50:31 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.113 2004-11-09 17:11:04 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -79,22 +79,22 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
     elseif (isa($page_or_rev, 'WikiPageName')) {
         $wikipage = $page_or_rev;
         $pagename = $wikipage->name;
+        if (!$wikipage->isValid('strict'))
+            return $WikiTheme->linkBadWikiWord($wikipage, $label);
     }
     else {
         $wikipage = new WikiPageName($page_or_rev, $request->getPage());
         $pagename = $wikipage->name;
+        if (!$wikipage->isValid('strict'))
+            return $WikiTheme->linkBadWikiWord($wikipage, $label);
     }
-    
-    if (!is_string($wikipage) and !$wikipage->isValid('strict'))
-        return $WikiTheme->linkBadWikiWord($wikipage, $label);
     
     if ($type == 'auto' or $type == 'if_known') {
         if (isset($page)) {
-            $current = $page->getCurrentRevision();
-            $exists = ! $current->hasDefaultContents();
+            $exists = $page->exists();
         }
         else {
-	    $dbi = $request->getDbh();
+	    $dbi =& $request->_dbi;
             $exists = $dbi->isWikiPage($wikipage->name);
         }
     }
@@ -1376,6 +1376,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.112  2004/11/03 16:50:31  rurban
+// some new defaults and constants, renamed USE_DOUBLECLICKEDIT to ENABLE_DOUBLECLICKEDIT
+//
 // Revision 1.111  2004/10/21 20:20:53  rurban
 // From patch #970004 "Double clic to edit" by pixels.
 //
