@@ -1,6 +1,6 @@
 <?php
 
-rcs_id( '$Id: file.php,v 1.2 2003-01-04 03:28:14 wainstead Exp $' );
+rcs_id( '$Id: file.php,v 1.3 2003-01-04 03:29:02 wainstead Exp $' );
 
 require_once( 'lib/WikiDB.php' );
 require_once( 'lib/WikiDB/backend/file.php' );
@@ -24,7 +24,10 @@ class WikiDB_file extends WikiDB
 }
 
 
-// $Log
+// $Log: not supported by cvs2svn $
+//
+// revision 1.2
+// Added credits, php emacs stuff, log tag for CVS.
 //
 // revision 1.1
 // date: 2003/01/04 03:21:00;  author: wainstead;  state: Exp;
