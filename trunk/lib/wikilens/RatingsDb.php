@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RatingsDb.php,v 1.9 2004-10-05 00:33:44 rurban Exp $');
+rcs_id('$Id: RatingsDb.php,v 1.10 2004-10-05 17:00:04 rurban Exp $');
 
 /*
  * @author:  Dan Frankowski (wikilens author), Reini Urban (as plugin)
@@ -53,12 +53,12 @@ class RatingsDb extends WikiDB {
             	$this->dbtype = "ADODB";
             }
             $this->iter_class = "WikiDB_backend_".$this->dbtype."_generic_iter";
-        
-            extract($this->_backend->_table_names);
+
+            extract($this->_sqlbackend->_table_names);
             if (empty($rating_tbl)) {
                 $rating_tbl = (!empty($GLOBALS['DBParams']['prefix']) 
                                ? $GLOBALS['DBParams']['prefix'] : '') . 'rating';
-                $this->_backend->_table_names['rating_tbl'] = $rating_tbl;
+                $this->_sqlbackend->_table_names['rating_tbl'] = $rating_tbl;
             }
         } else {
         	$this->iter_class = "WikiDB_Array_PageIterator";
@@ -528,7 +528,7 @@ class RatingsDb extends WikiDB {
         if (empty($rating_tbl))
             $rating_tbl = $this->_dbi->getParam('prefix') . 'rating';
 
-        //$dbi->lock();
+        $dbi->lock();
         $raterid = $this->_backend->_get_pageid($rater, true);
         $rateeid = $this->_backend->_get_pageid($ratee, true);
         assert($raterid);
@@ -541,7 +541,7 @@ class RatingsDb extends WikiDB {
         $insert = "INSERT INTO $rating_tbl (dimension, raterpage, rateepage, ratingvalue, rateeversion) VALUES ('$dimension', $raterid, $rateeid, '$rating', '$rateeversion')";
         $dbi->_dbh->query($insert);
         
-        //$dbi->unlock();
+        $dbi->unlock();
         return true;
     }
 
@@ -697,6 +697,9 @@ extends WikiDB_backend_PearDB {
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/10/05 00:33:44  rurban
+// intermediate fix for non-sql WikiDB and SQL rating
+//
 // Revision 1.8  2004/07/20 18:00:50  dfrankow
 // Add EXPLICIT_RATINGS_DIMENSION constant.  More dimensions on the way
 // for lists.

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.107 2004-10-04 23:42:15 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.108 2004-10-05 17:00:04 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1181,6 +1181,7 @@ extends _AnonUser
      */
     function _checkPass($submitted_password, $stored_password) {
         if(!empty($submitted_password)) {
+            //FIXME: This will work only on plaintext passwords.
             if (strlen($stored_password) < PASSWORD_LENGTH_MINIMUM) {
                 // With the EditMetaData plugin
                 trigger_error(_("The length of the stored password is shorter than the system policy allows. Sorry, you cannot login.\n You have to ask the System Administrator to reset your password."));
@@ -3055,6 +3056,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.107  2004/10/04 23:42:15  rurban
+// HttpAuth admin group logic. removed old logs
+//
 // Revision 1.106  2004/07/01 08:49:38  rurban
 // obsolete php5-patch.php: minor php5 login problem though
 //

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.112 2004-10-04 23:39:58 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.113 2004-10-05 17:00:03 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -1343,6 +1343,20 @@ function flipAll(formObj) {
                 $out->pushContent($this->_generateCommaList($this->_options['comma']));
             return $out;
         }
+
+        $do_paging = ( isset($this->_options['paging']) 
+        	       and !empty($this->_options['limit']) 
+        	       and $this->getTotal() 
+        	       and $this->_options['paging'] != 'none' );
+        if ( $do_paging ) {
+            $tokens = $this->pagingTokens($this->getTotal(), 
+                                           count($this->_columns), 
+                                           $this->_options['limit']);
+            if ($tokens) {
+                $paging = Template("pagelink", $tokens);
+                $out->pushContent(HTML::table($paging));
+            }
+        }
         if (!empty($this->_options['ordered']))
 	    $list = HTML::ol(array('class' => 'pagelist'));
 	else    
@@ -1357,6 +1371,9 @@ function flipAll(formObj) {
             $list->pushContent(HTML::li(array('class' => $class), $pagehtml));
         }
         $out->pushContent($list);
+        if ( $do_paging and $tokens ) {
+            $out->pushContent(HTML::table($paging));
+        }
         return $out;
     }
 
@@ -1435,6 +1452,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.112  2004/10/04 23:39:58  rurban
+// list of page objects
+//
 // Revision 1.111  2004/09/24 18:50:45  rurban
 // fix paging of SqlResult
 //
