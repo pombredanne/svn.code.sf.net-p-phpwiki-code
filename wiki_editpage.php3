@@ -1,4 +1,4 @@
-<!-- $Id: wiki_editpage.php3,v 1.10 2000-07-04 22:32:17 ahollosi Exp $ -->
+<!-- $Id: wiki_editpage.php3,v 1.11 2000-08-07 22:47:40 wainstead Exp $ -->
 <?
 
    // editpage relies on $pagename and $ScriptUrl
@@ -34,12 +34,12 @@
 
       $textarea = implode("\n", $pagehash["content"]);
       if($copy) {
-	 $cdbi = OpenDataBase($WikiDataBase);
+	 $cdbi = OpenDataBase($WikiPageStore);
 	 $currentpage = RetrievePage($cdbi, $pagename);
          $pagehash["version"] = $currentpage["version"];
       }
       elseif ($pagehash["version"] > 1) {
-	 $adbi = OpenDataBase($ArchiveDataBase);
+	 $adbi = OpenDataBase($ArchivePageStore);
 	 if(IsWikiPage($adbi, $pagename))
            $pagehash["copy"] = 1;
       }

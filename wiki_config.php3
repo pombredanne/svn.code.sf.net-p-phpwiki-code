@@ -2,7 +2,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: wiki_config.php3,v 1.19 2000-07-18 05:15:58 dairiki Exp $');
+   rcs_id('$Id: wiki_config.php3,v 1.20 2000-08-07 22:47:40 wainstead Exp $');
 
    /*
       Constants and settings. Edit the values below for
@@ -42,8 +42,8 @@
    // DBM settings (default)
    include "wiki_dbmlib.php3";
    $DBMdir = "/tmp";
-   $WikiDataBase = "wiki";
-   $ArchiveDataBase = "archive";
+   $WikiPageStore = "wiki";
+   $ArchivePageStore = "archive";
    $WikiDB['wiki']      = "$DBMdir/wikipagesdb";
    $WikiDB['archive']   = "$DBMdir/wikiarchivedb";
    $WikiDB['wikilinks'] = "$DBMdir/wikilinksdb";
@@ -55,8 +55,8 @@
    // Comment out the lines above (for the DBM) if you use these
 
    include "wiki_mysql.php3";
-   $WikiDataBase = "wiki";
-   $ArchiveDataBase = "archive";
+   $WikiPageStore = "wiki";
+   $ArchivePageStore = "archive";
    $mysql_server = 'localhost';
    $mysql_user = 'root';
    $mysql_pwd = '';
@@ -66,8 +66,8 @@
 /*
    // PostgreSQL settings. 
    include "wiki_pgsql.php3";
-   $WikiDataBase = "wiki";
-   $ArchiveDataBase = "archive";
+   $WikiPageStore = "wiki";
+   $ArchivePageStore = "archive";
    $pg_dbhost    = "localhost";
    $pg_dbport    = "5432";
 */
@@ -79,13 +79,13 @@
    $msql_db = "wiki";
    // should be the same as wikipages.line
    define("MSQL_MAX_LINE_LENGTH", 128);
-   $WikiDataBase = array();
-   $ArchiveDataBase = array();
+   $WikiPageStore = array();
+   $ArchivePageStore = array();
 
-   $WikiDataBase['table']         = "wiki";
-   $WikiDataBase['page_table']    = "wikipages";
-   $ArchiveDataBase['table']      = "archive";
-   $ArchiveDataBase['page_table'] = "archivepages";
+   $WikiPageStore['table']         = "wiki";
+   $WikiPageStore['page_table']    = "wikipages";
+   $ArchivePageStore['table']      = "archive";
+   $ArchivePageStore['page_table'] = "archivepages";
    // end mSQL settings
 */
 

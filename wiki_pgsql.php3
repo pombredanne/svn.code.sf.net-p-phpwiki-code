@@ -1,4 +1,4 @@
-<!-- $Id: wiki_pgsql.php3,v 1.12 2000-06-30 00:56:27 wainstead Exp $ -->
+<!-- $Id: wiki_pgsql.php3,v 1.13 2000-08-07 22:47:40 wainstead Exp $ -->
 <?
 
    /*
@@ -19,9 +19,9 @@
    // open a database and return a hash
 
    function OpenDataBase($table) {
-      global $WikiDataBase, $pg_dbhost, $pg_dbport;
+      global $WikiPageStore, $pg_dbhost, $pg_dbport;
 
-      $connectstring = "host=$pg_dbhost port=$pg_dbport dbname=$WikiDataBase";
+      $connectstring = "host=$pg_dbhost port=$pg_dbport dbname=$WikiPageStore";
 
       if (!($dbc = pg_pconnect($connectstring))) {
          echo "Cannot establish connection to database, giving up.";

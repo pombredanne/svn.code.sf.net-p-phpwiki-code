@@ -1,4 +1,4 @@
-<!-- $Id: wiki_stdlib.php3,v 1.23 2000-07-15 18:06:40 ahollosi Exp $ -->
+<!-- $Id: wiki_stdlib.php3,v 1.24 2000-08-07 22:47:40 wainstead Exp $ -->
 <?
    /*
       Standard functions for Wiki functionality
@@ -330,9 +330,9 @@
 
    // for archiving pages to a seperate dbm
    function SaveCopyToArchive($pagename, $pagehash) {
-      global $ArchiveDataBase;
+      global $ArchivePageStore;
 
-      $adbi = OpenDataBase($ArchiveDataBase);
+      $adbi = OpenDataBase($ArchivePageStore);
       $newpagename = $pagename;
       InsertPage($adbi, $newpagename, $pagehash);
    }

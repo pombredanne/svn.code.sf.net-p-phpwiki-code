@@ -1,4 +1,4 @@
-<!-- $Id: test_dbmlib.php3,v 1.4 2000-06-18 03:53:29 wainstead Exp $ -->
+<!-- $Id: test_dbmlib.php3,v 1.5 2000-08-07 22:47:40 wainstead Exp $ -->
 <html>
 <head>
 <title>Test bed for database library</title>
@@ -12,11 +12,11 @@
    // OpenDataBase()
    // Try to open the database
    //
-   $dbi = OpenDataBase($WikiDataBase);
+   $dbi = OpenDataBase($WikiPageStore);
 
    if ($dbi) {
       $vartype = gettype($dbi);
-      echo "Return type from OpenDataBase($WikiDataBase): $vartype<br>\n";
+      echo "Return type from OpenDataBase($WikiPageStore): $vartype<br>\n";
       if ($vartype == 'array') {
          reset($dbi);
          while (list($key, $val) = each($dbi)) {
