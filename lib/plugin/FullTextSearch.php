@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.4 2001-12-16 18:33:25 dairiki Exp $');
+rcs_id('$Id: FullTextSearch.php,v 1.5 2002-01-10 23:23:39 carstenklapp Exp $');
 
 require_once('lib/TextSearchQuery.php');
 
@@ -66,8 +66,8 @@ extends WikiPlugin
             $line = str_replace($FS, '', $line);
             $line = preg_replace("/$hilight_re/i", "${FS}OT\\0${FS}CT", $line);
             $line = htmlspecialchars($line);
-            $line = str_replace("${FS}OT", '<b>', $line);
-            $line = str_replace("${FS}CT", '</b>', $line);
+            $line = str_replace("${FS}OT", '<strong>', $line);
+            $line = str_replace("${FS}CT", '</strong>', $line);
             $html .= Element('dd', Element('small', $line)) . "\n";
         }
         return $html;
