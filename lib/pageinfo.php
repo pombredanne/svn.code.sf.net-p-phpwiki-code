@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: pageinfo.php,v 1.11 2001-09-18 19:16:23 dairiki Exp $');
+rcs_id('$Id: pageinfo.php,v 1.12 2001-10-29 18:24:26 dairiki Exp $');
 require_once('lib/Template.php');
 
 global $datetimeformat;
@@ -67,11 +67,14 @@ while ($rev = $iter->next()) {
 }
 
 $table = ("\n"
-         . Element('table', join("\n", $rows)) . "\n"
-         . Element('input', array('type' => 'hidden',
-                                  'name' => 'action',
-                                  'value' => 'diff')) . "\n"
-         . Element('input', array('type' => 'submit', 'value' => 'Run Diff')) . "\n");
+          . Element('table', join("\n", $rows)) . "\n"
+          . Element('input', array('type' => 'hidden',
+                                   'name' => 'action',
+                                   'value' => 'diff')) . "\n"
+          . Element('input', array('type' => 'hidden',
+                                   'name' => 'pagename',
+                                   'value' => $pagename)) . "\n"
+          . Element('input', array('type' => 'submit', 'value' => 'Run Diff')) . "\n");
 
 $formargs['action'] = USE_PATH_INFO ? WikiURL($pagename) : SCRIPT_NAME;
 $formargs['method'] = 'post';
