@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: index.php3,v 1.9 2000-08-15 02:46:58 wainstead Exp $ -->
-<?
+<!-- $Id: index.php3,v 1.10 2000-08-29 02:30:54 aredridel Exp $ -->
+<?php
    /*
       The main page, i.e. the main loop.
       This file is always called first.
