@@ -575,17 +575,17 @@ ol li, #sidebar ul ol li {
   }
 /* End Entry Lists */
 
-
+/* correct identation for non-browse actions */
+body p, #editpage, #content table, #content .diff { 
+  margin-left: 40px;
+  margin-right: 20px;
+}
 
 /* Begin Form Elements */
 #searchform {
   text-align: right;
 }
 
-body p, #editpage { 
-  margin-left: 40px;
-  margin-right: 20px;
-}
 /* End Form Elements */
 
 /* Begin Various Tags & Classes */
