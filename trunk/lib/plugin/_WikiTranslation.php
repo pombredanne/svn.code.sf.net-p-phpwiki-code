@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _WikiTranslation.php,v 1.8 2004-05-02 21:26:38 rurban Exp $');
+rcs_id('$Id: _WikiTranslation.php,v 1.9 2004-05-03 20:44:58 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -119,7 +119,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
@@ -144,18 +144,18 @@ extends WikiPlugin
     function init_locale($lang) {
         if ($lang != $this->lang)
             update_locale($lang);
-        // gettext module loaded: must load the LC_MESSAGES php hash
-        if (function_exists ('bindtextdomain')) {
-            include (FindLocalizedFile("LC_MESSAGES/phpwiki.php", 0,'reinit'));
-        } elseif ($lang == 'en') {
+        if ($lang == 'en') {
             //hack alert! we need hash for stepping through it, even if it's in the wrong language
             include (FindFile("locale/de/LC_MESSAGES/phpwiki.php", 0,'reinit'));
             foreach ($locale as $en => $de) {
             	$locale[$en] = $en;
             }
+        // gettext module loaded: must load the LC_MESSAGES php hash
+        } elseif (function_exists ('bindtextdomain')) {
+            include (FindLocalizedFile("LC_MESSAGES/phpwiki.php", 0,'reinit'));
         // we already have a $locale, but maybe it's in the wrong language
         } elseif ($lang != $this->lang or empty($GLOBALS['locale'])) {
-            include (FindFile("LC_MESSAGES/phpwiki.php", 0,'reinit'));
+            include (FindFile("locale/$lang/LC_MESSAGES/phpwiki.php", 0,'reinit'));
         } else {
            $locale = & $GLOBALS['locale'];
         }
@@ -220,26 +220,12 @@ extends WikiPlugin
         $this->lang = $from_lang;
 
         if (empty($languages)) {
-            // from lib/plugin/UserPreferences.php
-            $available_languages = array();
-            if ($from_lang != 'en')
-                array_push($available_languages, 'en');
-            $dir_root = 'locale/';
-            if (defined('PHPWIKI_DIR'))
-                $dir_root = PHPWIKI_DIR . "/$dir_root";
-            $dir = dir($dir_root);
-            if ($dir) {
-                while ($entry = $dir->read()) {
-                    if (is_dir($dir_root.$entry)
-                        && (substr($entry,0,1) != '.')
-                        && $entry != 'po'
-                        && $entry != $from_lang
-                        && $entry != 'CVS') {
-                        array_push($available_languages, $entry);
-                    }
-                }
-                $dir->close();
+            $available_languages = listAvailableLanguages();
+            if ($from_lang == 'en') {
+                // "en" is always the first.
+                array_shift($available_languages);
             }
+            // put from_lang to the very end.
             if (in_array($from_lang,$available_languages))
                 $languages = $available_languages;
             else
@@ -409,6 +395,14 @@ class _PageList_Column_custom extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/05/02 21:26:38  rurban
+// limit user session data (HomePageHandle and auth_dbi have to invalidated anyway)
+//   because they will not survive db sessions, if too large.
+// extended action=upgrade
+// some WikiTranslation button work
+// revert WIKIAUTH_UNOBTAINABLE (need it for main.php)
+// some temp. session debug statements
+//
 // Revision 1.7  2004/05/02 15:10:08  rurban
 // new finally reliable way to detect if /index.php is called directly
 //   and if to include lib/main.php
