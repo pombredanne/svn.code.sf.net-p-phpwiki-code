@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WantedPages.php,v 1.8 2004-02-17 12:11:36 rurban Exp $');
+rcs_id('$Id: WantedPages.php,v 1.9 2004-04-10 04:15:06 rurban Exp $');
 /*
  This file is part of PhpWiki.
 
@@ -39,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
@@ -73,6 +73,7 @@ extends WikiPlugin
             $allpages_iter = $dbi->getAllPages($include_empty = false);
             while ($page_handle = $allpages_iter->next()) {
                 $name = $page_handle->getName();
+                if ($name == _("InterWikiMap")) continue;
                 if (! in_array($name, $exclude))
                     $this->_iterateLinks($page_handle, $dbi);
             }
@@ -207,6 +208,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/02/17 12:11:36  rurban
+// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
+//
 // Revision 1.7  2003/12/19 06:57:49  carstenklapp
 // Bugfix: Enclose FullTextSearch query with quotes when the [Wiki Word]
 // contains spaces.
