@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.27 2004-05-03 13:16:47 rurban Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.28 2004-05-05 13:38:09 rurban Exp $');
 /**
  Copyright (C) 2001, 2002, 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.27 $");
+                            "\$Revision: 1.28 $");
     }
 
     function getDefaultArguments() {
@@ -85,7 +85,31 @@ extends WikiPlugin
  
             if ($request->isPost()) {
             	$errmsg = '';
-                if ($rp = $request->getArg('pref')) {
+                $delete = $request->getArg('delete');
+                if ($delete and $request->getArg('verify')) {
+                    // deleting prefs, verified
+                    $default_prefs = $pref->defaultPreferences();
+                    $default_prefs['userid'] = $user->UserName();
+                    $user->setPreferences($default_prefs);
+                    $request->_setUser($user);
+                    $request->setArg("verify",false);
+                    $request->setArg("delete",false);
+                    $alert = new Alert(_("Message"),
+                                       _("Your UserPreferences have been successfully deleted."),
+                                       array(_("Okay") => $request->getURLtoSelf()));
+                    $alert->show();
+                    return;
+                } elseif ($delete and !$request->getArg('verify')) {
+                    return HTML::form(array('action' => $request->getPostURL(),
+                                            'method' => 'post'),
+                                       HiddenInputs(array('verify' => 1)),
+                                       HiddenInputs($request->getArgs()),
+                                       HTML::p(_("Do you really want to delete all your UserPreferences?")),
+                                       HTML::p(Button('submit:delete', _("Yes"), 'delete'),
+                                               HTML::Raw('&nbsp;'),
+                                               Button('cancel', _("Cancel")))
+                                       );
+                } elseif ($rp = $request->getArg('pref')) {
                     // replace only changed prefs in $pref with those from request
                     if (!empty($rp['passwd']) and ($rp['passwd2'] != $rp['passwd'])) {
                         $errmsg = _("Wrong password. Try again.");
@@ -121,7 +145,7 @@ extends WikiPlugin
                             $request->_setUser($user);
                             $pref = $user->_prefs;	
                             $errmsg .= sprintf(_("%d UserPreferences fields successfully updated."), $num);
-                        }
+                        }  
                     }
                     $args['errmsg'] = HTML(HTML::h2($errmsg), HTML::hr());
                 }
@@ -140,6 +164,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.27  2004/05/03 13:16:47  rurban
+// fixed UserPreferences update, esp for boolean and int
+//
 // Revision 1.26  2004/05/03 11:40:42  rurban
 // put listAvailableLanguages() and listAvailableThemes() from SystemInfo and
 // UserPreferences into Themes.php

@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.48 2004-05-03 15:57:16 rurban Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.49 2004-05-05 13:38:09 rurban Exp $ -->
 <?php
 // Todo: Move the logic and code to the plugin
 // This is very experimental and the read-only part an ugly hack so far.
@@ -234,6 +234,7 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
 <?php if ($isForm) { ?>
   <hr />
   <p><?=Button("submit:", _("Update Preferences"), 'wikiadmin')?>
+  <?=Button("submit:delete", _("Remove Preferences"), 'wikiadmin')?>
   <?=Button("submit:cancel", _("Cancel"), 'button')?></p>
 
 <?= HiddenInputs($request->getArgs(), false, array('pref')) ?>
