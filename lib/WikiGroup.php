@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.7 2004-01-26 16:52:40 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.8 2004-01-27 23:23:39 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -306,7 +306,7 @@ class GroupWikiPage extends WikiGroup{
     /**
      * Determines all of the groups of which the current user is a member.
      * 
-     * Checks the root Group page ('CategoryGroups') for the list of all groups, 
+     * Checks the root Group page ('CategoryGroup') for the list of all groups, 
      * then checks each group to see if the current user is a member.
      * @param string $group Name of the group to check for membership.
      * @return array Array of groups to which the user belongs.
@@ -316,7 +316,7 @@ class GroupWikiPage extends WikiGroup{
         $username = $this->_getUserName();
         $membership = array();
         $dbh = &$request->getDbh();
-        $master_page = $request->getPage('CategoryGroups');
+        $master_page = $request->getPage('CategoryGroup');
         $master_list = $master_page->getLinks(true);
         while($group_page = $master_list->next()){
             if ($this->_inGroupPage($group_page)) {
@@ -568,6 +568,9 @@ class GroupFile extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/01/26 16:52:40  rurban
+// added GroupDB and GroupFile classes
+//
 // Revision 1.6  2003/12/07 19:29:11  carstenklapp
 // Code Housecleaning: fixed syntax errors. (php -l *.php)
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSelect.php,v 1.6 2004-01-26 19:15:29 rurban Exp $');
+rcs_id('$Id: WikiAdminSelect.php,v 1.7 2004-01-27 23:23:39 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -47,7 +47,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
@@ -172,8 +172,10 @@ extends WikiPlugin
             foreach ($actions as $f) {
                 $f = preg_replace('/.php$/','', $f);
                 $s = preg_replace('/^WikiAdmin/','', $f);
+//              if ($s != "Select") {
                 $form->pushContent(Button("submit:$f", _($s), "wikiadmin"));
                 $form->pushContent($Theme->getButtonSeparator());
+//              }
             }
             $form->pushContent(Button('submit:cancel', _("Cancel"), 'button'));
         }
@@ -186,6 +188,9 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/01/26 19:15:29  rurban
+// Interim fix
+//
 // Revision 1.5  2003/02/24 19:38:04  dairiki
 // Get rid of unused method Request::debugVars().
 //
