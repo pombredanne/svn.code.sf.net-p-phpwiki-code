@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.7 2002-01-22 17:21:12 dairiki Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.8 2002-01-22 17:34:49 dairiki Exp $ -->
 <?php
   $BF = &$ButtonFactory;
 
@@ -43,7 +43,7 @@
 
   <td align="right">
     <?php if ($user->isSignedIn()) { ?>
-      <form method="post" action="<?=$ACTION?>" accept-charset="<?=CHARSET?>" name="signin">
+      <form method="post" action="<?=BASE_URL?>" accept-charset="<?=CHARSET?>" name="signin">
         <input type="hidden" name="action" value="logout" />
         <input type="hidden" name="pagename" value="HomePage" />
         <!-- This extra table data is required to properly align an image
