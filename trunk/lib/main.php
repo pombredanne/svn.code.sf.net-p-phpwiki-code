@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.18 2001-11-26 22:43:24 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.19 2001-12-07 22:13:51 dairiki Exp $');
 
 include "lib/config.php";
 include "lib/stdlib.php";
@@ -67,9 +67,11 @@ function main ($request) {
     $pagename = $request->getArg('pagename');
     
     $action = $request->getArg('action');
-    if (!$action)
+    if (!$action) {
         $action = 'browse';
-
+        $request->setArg('action', $action);
+    }
+    
     global $user;               // FIXME: can we make this non-global?
     $user = new WikiUser($request, get_auth_mode($action));
     //FIXME:
