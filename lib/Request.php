@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.22 2002-09-18 22:11:21 dairiki Exp $');
+<?php rcs_id('$Id: Request.php,v 1.23 2002-10-10 00:18:01 carstenklapp Exp $');
 
 // FIXME: write log entry.
 
@@ -83,7 +83,7 @@ class Request {
         $get_args = $this->args;
         if ($args)
             $get_args = array_merge($get_args, $args);
-        if (DEBUG) 
+        if (defined('DEBUG'))
             $get_args = array_merge($get_args, $this->debugVars());
 
         foreach ($exclude as $ex) {
