@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.31 2003-01-15 05:37:20 carstenklapp Exp $');
+rcs_id('$Id: WikiUser.php,v 1.32 2003-01-21 07:40:50 zorloc Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -36,6 +36,9 @@ $UserPreferences = array(
                          'relativeDates' => new _UserPreference_bool()
                          );
 
+/**
+* 
+*/
 class WikiUser {
     var $_userid = false;
     var $_level  = false;
@@ -74,23 +77,20 @@ class WikiUser {
 
     /**
      * Invariant
+     * 
+     * If the WikiUser object has a valid authorization level and the 
+     * userid is a string returns true, else false.
+     * @return boolean If valid level and username string true, else false
      */
     function _ok () {
-        if (empty($this->_userid) || empty($this->_level)) {
-            // This is okay if truly logged out.
-            return $this->_userid === false && $this->_level === false;
+        if ((in_array($this->_level, array(WIKIAUTH_BOGO,
+                                           WIKIAUTH_USER,
+                                           WIKIAUTH_ADMIN))
+            &&
+            (is_string($this->_userid)))) {
+            return true;
         }
-        // User is logged in...
-
-        // Check for valid authlevel.
-        if (!in_array($this->_level, array(WIKIAUTH_BOGO, WIKIAUTH_USER,
-                                           WIKIAUTH_ADMIN)))
-            return false;
-
-        // Check for valid userid.
-        if (!is_string($this->_userid))
-            return false;
-        return true;
+        return false;
     }
 
     function getId () {
@@ -625,6 +625,9 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.31  2003/01/15 05:37:20  carstenklapp
+// code reformatting
+//
 // Revision 1.30  2003/01/15 04:59:27  carstenklapp
 // Bugfix: Previously stored preferences were not loading when user
 // signed in. (Fixed... I hope.)
