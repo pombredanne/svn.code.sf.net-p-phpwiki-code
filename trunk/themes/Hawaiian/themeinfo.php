@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.3 2002-01-03 00:09:18 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.4 2002-01-03 07:17:36 carstenklapp Exp $');
 
 /**
  * WikiWiki Hawaiian theme for PhpWiki.
@@ -16,7 +16,7 @@ rcs_id('$Id: themeinfo.php,v 1.3 2002-01-03 00:09:18 carstenklapp Exp $');
 
 $CSS_DEFAULT = "Hawaiian";
 
-$CSS_URLS = array_merge($CSS_URLS, array( "$CSS_DEFAULT" => "themes/$theme/${CSS_DEFAULT}.css" ) );
+$CSS_URLS = array_merge($CSS_URLS, array("$CSS_DEFAULT" => "themes/$theme/${CSS_DEFAULT}.css"));
 
 
 // Logo image appears on every page and links to the HomePage.
