@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.18 2004-05-27 17:49:05 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.19 2004-06-06 17:12:28 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -142,7 +142,10 @@ function pagePermissionsAclFormat($perm_tree, $editable=false) {
  * Returns true or false.
  */
 function mayAccessPage ($access, $pagename) {
-    return _requiredAuthorityForPagename($access, $pagename);
+    if (ENABLE_PAGEPERM)
+        return _requiredAuthorityForPagename($access, $pagename);
+    else
+        return true;
 }
 
 /** Check the permissions for the current action.
@@ -448,7 +451,7 @@ class PagePermission {
      * returns list of all supported access types.
      */
     function accessTypes() {
-        return array_keys($this->defaultPerms());
+        return array_keys(PagePermission::defaultPerms());
     }
 
     /**
@@ -459,7 +462,7 @@ class PagePermission {
         $def = array(ACL_ADMIN => true,
                      ACL_OWNER => true);
         $perm = array();
-        foreach ($this->accessTypes() as $access) {
+        foreach (PagePermission::accessTypes() as $access) {
             $perm[$access] = $def;
         }
         return $perm;
@@ -664,6 +667,15 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.18  2004/05/27 17:49:05  rurban
+// renamed DB_Session to DbSession (in CVS also)
+// added WikiDB->getParam and WikiDB->getAuthParam method to get rid of globals
+// remove leading slash in error message
+// added force_unlock parameter to File_Passwd (no return on stale locks)
+// fixed adodb session AffectedRows
+// added FileFinder helpers to unify local filenames and DATA_PATH names
+// editpage.php: new edit toolbar javascript on ENABLE_EDIT_TOOLBAR
+//
 // Revision 1.17  2004/05/16 23:10:44  rurban
 // update_locale wrongly resetted LANG, which broke japanese.
 // japanese now correctly uses EUC_JP, not utf-8.
