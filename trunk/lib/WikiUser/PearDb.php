@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: PearDb.php,v 1.3 2004-12-19 00:58:02 rurban Exp $');
+rcs_id('$Id: PearDb.php,v 1.4 2004-12-20 16:05:01 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 
@@ -97,7 +97,7 @@ extends _DbPassUser
             return $this->_tryNextUser();
         }
         if (!$this->isValidName()) {
-            trigger_error(_("Invalid username"),E_USER_WARNING);
+            trigger_error(_("Invalid username."),E_USER_WARNING);
             return $this->_tryNextUser();
         }
         if (!$this->_checkPassLength($submitted_password)) {
@@ -218,6 +218,12 @@ extends _DbPassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/12/19 00:58:02  rurban
+// Enforce PASSWORD_LENGTH_MINIMUM in almost all PassUser checks,
+// Provide an errormessage if so. Just PersonalPage and BogoLogin not.
+// Simplify httpauth logout handling and set sessions for all methods.
+// fix main.php unknown index "x" getLevelDescription() warning.
+//
 // Revision 1.2  2004/11/10 15:29:21  rurban
 // * requires newer Pear_DB (as the internal one): quote() uses now escapeSimple for strings
 // * ACCESS_LOG_SQL: fix cause request not yet initialized

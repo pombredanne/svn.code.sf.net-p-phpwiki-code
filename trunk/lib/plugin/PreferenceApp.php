@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: PreferenceApp.php,v 1.3 2004-07-08 20:30:07 rurban Exp $');
+rcs_id('$Id: PreferenceApp.php,v 1.4 2004-12-20 16:05:14 rurban Exp $');
 
 /**
 * 
@@ -11,7 +11,6 @@ require_once('lib/wikilens/Utils.php');
 require_once('lib/Theme.php');
 require_once('lib/wikilens/Buddy.php');
 require_once('lib/wikilens/RatingsDb.php');
-
 
 /**
  * PreferenceApp is used to analyze a category of items that a group
@@ -35,16 +34,16 @@ class WikiPlugin_PreferenceApp
 extends WikiPlugin
 {
     function getName () {
-        return _("Preference App");
+        return _("PreferenceApp");
     }
 
     function getDescription () {
-        return _("Analyzes Preferences based on voting budget and ratings.");
+        return _("Analyzes preferences based on voting budget and ratings.");
     }
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.125 2004-11-21 11:59:18 rurban Exp $');
+rcs_id('$Id: config.php,v 1.126 2004-12-20 16:05:00 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -259,7 +259,8 @@ function pcre_fix_posix_classes ($regexp) {
     if (in_array($GLOBALS['LANG'],array('zh')))
         $charset = 'utf-8';
     if (in_array($GLOBALS['LANG'],array('ja')))
-        $charset = 'EUC-JP';
+        $charset = 'utf-8';
+        //$charset = 'euc-jp';
     if (strtolower($charset) == 'utf-8') { // thanks to John McPherson
         // until posix class names/pcre work with utf-8
 	if (preg_match('/[[:upper:]]/', '\xc4\x80'))
@@ -410,6 +411,9 @@ function getUploadDataPath() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.125  2004/11/21 11:59:18  rurban
+// remove final \n to be ob_cache independent
+//
 // Revision 1.124  2004/11/09 17:11:16  rurban
 // * revert to the wikidb ref passing. there's no memory abuse there.
 // * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively

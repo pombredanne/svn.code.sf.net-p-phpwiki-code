@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.118 2004-12-13 13:22:57 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.119 2004-12-20 16:05:00 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -1033,7 +1033,7 @@ class WikiDB_Page
         } else {
             $difflink = WikiURL($this->_pagename,array(),true);
             $content = $this->_pagename . " " . $version . " " .  Iso8601DateTime($meta['mtime']) . "\n";
-            $content .= _("New Page");
+            $content .= _("New page");
         }
         $editedby = sprintf(_("Edited by: %s"), $meta['author']);
         $emails = join(',',$emails);
@@ -2144,6 +2144,10 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.118  2004/12/13 13:22:57  rurban
+// new BlogArchives plugin for the new blog theme. enable default box method
+// for all plugins. Minor search improvement.
+//
 // Revision 1.117  2004/12/13 08:15:09  rurban
 // false is wrong. null might be better but lets play safe.
 //
