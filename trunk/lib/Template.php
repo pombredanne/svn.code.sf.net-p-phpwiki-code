@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.26 2002-01-23 05:10:22 dairiki Exp $');
+<?php rcs_id('$Id: Template.php,v 1.27 2002-01-23 19:21:43 dairiki Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -121,6 +121,8 @@ class Template
             }
         }
         extract($vars);
+
+        global $request;        // Make $request available.
         
         //$this->_dump_template();
 
@@ -135,12 +137,16 @@ class Template
             $vars = $save_vars;
     }
 
-    function getExpansion ($defaults = false) {
+    function printXML () {
+        $this->printExpansion();
+    }
+
+    function asXML () {
         ob_start();
-        $this->printExpansion($defaults);
-        $html = ob_get_contents();
+        $this->printXML();
+        $xml = ob_get_contents();
         ob_end_clean();
-        return $html;
+        return $xml;
     }
 
     // Debugging:
@@ -246,7 +252,7 @@ extends TemplateFile
 
         $this->replace('revision', $revision);
         
-        $this->setPageTokens($page);
+        //$this->setPageTokens($page);
     }
 
     function setGlobalTokens () {
@@ -258,16 +264,16 @@ extends TemplateFile
         $this->qreplace('WIKI_NAME', WIKI_NAME);
 
         $this->replace('user', $request->getUser());
+        $this->replace('query_args', $request->getArgs());
+        $this->replace('preferences', $request->getPrefs());
+
+        $this->setPageTokens($request->getPage());
+
         if (isset($RCS_IDS))
             $this->qreplace('RCS_IDS', $RCS_IDS);
 
         require_once('lib/ButtonFactory.php');
         $this->replace('ButtonFactory', new ButtonFactory);
-
-        $this->replace('query_args', $request->getArgs());
-
-        $this->replace('EDIT_AREA_WIDTH', $request->getPref('edit_area.width'));
-        $this->replace('EDIT_AREA_HEIGHT', $request->getPref('edit_area.height'));
     }
 };
 
@@ -298,7 +304,7 @@ function GeneratePage($template, $content, $title, $page_revision = false) {
     if ($page_revision)
         $t->setPageRevisionTokens($page_revision);
     $t->replace('CONTENT', $content);
-    return $t->getExpansion();
+    return $t->asXML();
 }
 
 // Local Variables:

@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.6 2002-01-23 16:19:24 carstenklapp Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.7 2002-01-23 19:21:43 dairiki Exp $ -->
 <?php
 $SummaryInput = HTML::input(array('type' => 'text',
                                   'class' => 'wikitext',
@@ -61,8 +61,8 @@ $SaveB = HTML::input(array('type' => 'submit',
 </table>
 <textarea class="wikiedit"
           name="content"
-          rows="<?=$EDIT_AREA_HEIGHT?>"
-          cols="<?=$EDIT_AREA_WIDTH?>"
+          rows="<?=$preferences->get('editHeight')?>"
+          cols="<?=$preferences->get('editWidth')?>"
           wrap="virtual"><?=$FORMVARS['content']?></textarea>
   <br />
   <?=_("Summary:")?> <?= $SummaryInput ?>
@@ -71,15 +71,15 @@ $SaveB = HTML::input(array('type' => 'submit',
   <br />
   <?= $MinorEditCb ?>
   <?= fmt("I'm just doing minor edits. Please divert the usual logging to %s instead.",
-          $Theme->LinkExistingWikiWord(_("RecentEdits"))) ?>
+          $Theme->linkExistingWikiWord(_("RecentEdits"))) ?>
   <br /><br />
 <div name="#edit-tips"><?php
   // FIXME: convert this to use the IncludePage plugin. ?>
 <?= fmt("See %s tips for editing.",
-        $Theme->LinkExistingWikiWord(_("GoodStyle"))) ?>
+        $Theme->linkExistingWikiWord(_("GoodStyle"))) ?>
 <br />
 <?= fmt("You can change the size of the editing area in %s.",
-        $Theme->LinkExistingWikiWord(_("UserPreferences"))) ?>
+        $Theme->linkExistingWikiWord(_("UserPreferences"))) ?>
 </div>
 
 <div class="wiki-edithelp">

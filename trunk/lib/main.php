@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.28 2002-01-23 05:10:22 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.29 2002-01-23 19:21:43 dairiki Exp $');
 
 
 include "lib/config.php";
@@ -17,44 +17,70 @@ if (empty($Theme)) {
 }
 assert(!empty($Theme));
 
+class _UserPreference
+{
+    function _UserPreference ($default_value) {
+        $this->default_value = $default_value;
+    }
+
+    function sanify ($value) {
+        return (string) $value;
+    }
+}
+
+class _UserPreference_int extends _UserPreference 
+{
+    function _UserPreference_int ($default, $minval = false, $maxval = false) {
+        $this->_UserPreference((int) $default);
+        $this->_minval = (int) $minval;
+        $this->_maxval = (int) $maxval;
+    }
+    
+    function sanify ($value) {
+        $value = (int) $value;
+        if ($this->_minval !== false && $value < $this->_minval)
+            $value = $this->_minval;
+        if ($this->_maxval !== false && $value > $this->_maxval)
+            $value = $this->_maxval;
+        return $value;
+    }
+}
+
+$UserPreferences = array('editWidth' => new _UserPreference_int(80, 30, 150),
+                         'editHeight' => new _UserPreference_int(22, 5, 80),
+                         'userid' => new _UserPreference(''));
+
 class UserPreferences {
-    function UserPreferences ($prefs = false) {
-        if (isa($prefs, 'UserPreferences'))
-            $this->_prefs = $prefs->_prefs;
-        else
-            $this->_prefs = array();
+    function UserPreferences ($saved_prefs = false) {
+        $this->_prefs = array();
 
-        $this->sanitize();
-    }
-
-    function sanitize() {
-        // FIXME: needs cleanup.
-        
-        $LIMITS = array('edit_area.width' => array(30, 80, 150),
-                        'edit_area.height' => array(5, 22, 80));
-
-        $prefs = $this->_prefs;
-        $new = array();
-        foreach ($LIMITS as $key => $lims) {
-            list ($min, $default, $max) = $lims;
-            if (isset($prefs[$key]))
-                $new[$key] = min($max, max($min, (int)$prefs[$key]));
-            else
-                $new[$key] = $default;
+        if (isa($saved_prefs, 'UserPreferences')) {
+            foreach ($saved_prefs->_prefs as $name => $value)
+                $this->set($name, $value);
         }
-
-        $this->_prefs = $new;
     }
 
-    function get($key) {
-        return $this->_prefs[$key];
-    }
-
-    function setPrefs($new_prefs) {
-        if (is_array($new_prefs)) {
-            $this->_prefs = array_merge($this->_prefs, $new_prefs);
-            $this->sanitize();
+    function _getPref ($name) {
+        global $UserPreferences;
+        if (!isset($UserPreferences[$name])) {
+            trigger_error("$key: unknown preference", E_USER_NOTICE);
+            return false;
         }
+        return $UserPreferences[$name];
+    }
+    
+    function get ($name) {
+        if (isset($this->_prefs[$name]))
+            return $this->_prefs[$name];
+        if (!($pref = $this->_getPref($name)))
+            return false;
+        return $pref->default_value;
+    }
+
+    function set ($name, $value) {
+        if (!($pref = $this->_getPref($name)))
+            return false;
+        $this->_prefs[$name] = $pref->sanify($value);
     }
 }
 
@@ -63,22 +89,56 @@ class WikiRequest extends Request {
 
     function WikiRequest () {
         $this->Request();
+    }
 
+    // FIXME: make $request an argument of WikiTemplate,
+    // then subsume _init into WikiRequest().
+    function _init () {
         // Normalize args...
         $this->setArg('pagename', $this->_deducePagename());
         $this->setArg('action', $this->_deduceAction());
 
+        // Restore auth state
         $this->_user = new WikiUser($this->getSessionVar('auth_state'));
 
-        if (!($prefs = $this->getSessionVar('user_prefs')))
-            $prefs = $this->getCookieVar('WIKI_PREFS');
+        // Restore saved preferences
+        if (!($prefs = $this->getCookieVar('WIKI_PREFS')))
+            $prefs = $this->getSessionVar('user_prefs');
         $this->_prefs = new UserPreferences($prefs);
+
+        // Handle preference updates, an authentication requests, if any.
+        if ($new_prefs = $this->getArg('pref')) {
+            $this->setArg('pref', false);
+            $this->_setPreferences($new_prefs);
+        }
+
+        // Handle authentication request, if any.
+        if ($auth_args = $this->getArg('auth')) {
+            $this->setArg('auth', false);
+            $this->_handleAuthRequest($auth_args); // possible NORETURN
+        }
+        
+        if (!$auth_args && !$this->_user->isSignedIn()) {
+            // Try to sign in as saved user.
+            if (($saved_user = $this->getPref('userid')) != false)
+                $this->_signIn($saved_user);
+        }
+
+        // Ensure user has permissions for action
+        $require_level = $this->requiredAuthority($this->getArg('action'));
+        if (! $this->_user->hasAuthority($require_level))
+            $this->_notAuthorized($require_level); // NORETURN
     }
 
     function getUser () {
         return $this->_user;
     }
 
+    function getPrefs () {
+        return $this->_prefs;
+    }
+
+    // Convenience function:
     function getPref ($key) {
         return $this->_prefs->get($key);
     }
@@ -101,21 +161,19 @@ class WikiRequest extends Request {
         return $this->_dbi->getPage($this->getArg('pagename'));
     }
 
+    function _handleAuthRequest ($auth_args) {
+        if (!is_array($auth_args))
+            return;
 
+        // Ignore password unless POSTed.
+        if (!$this->isPost())
+            unset($auth_args['password']);
 
-    function handleAuthRequest () {
-        $auth_args = $this->getArg('auth');
-        $this->setArg('auth', false);
-        
-        if (!is_array($auth_args) || !$this->isPost())
-            return;             // Ignore if not posted.
-        
         $user = WikiUser::AuthCheck($auth_args);
 
         if (isa($user, 'WikiUser')) {
             // Successful login (or logout.)
-            $this->_user = $user;
-            $this->setSessionVar('auth_state', $user);
+            $this->_setUser($user);
         }
         elseif ($user) {
             // Login attempt failed.
@@ -128,28 +186,46 @@ class WikiRequest extends Request {
         }
     }
 
-    function checkAuthority () {
-        $action = $this->getArg('action');
-        $require_level = $this->requiredAuthority($action);
-        
-        $user = $this->getUser();
-        if (! $user->hasAuthority($require_level)) {
-            // User does not have required authority.  Prompt for login.
-            $what = HTML::em($action);
+    /**
+     * Attempt to sign in (bogo-login).
+     *
+     * Fails silently.
+     *
+     * @param $userid string Userid to attempt to sign in as.
+     * @access private
+     */
+    function _signIn ($userid) {
+        $user = WikiUser::AuthCheck(array('userid' => $userid));
+        if (isa($user, 'WikiUser'))
+            $this->_setUser($user); // success!
+    }
 
-            if ($require_level >= WIKIAUTH_FORBIDDEN) {
-                $this->finish(fmt("Action %s is disallowed on this wiki", $what));
-            }
-            elseif ($require_level == WIKIAUTH_BOGO)
-                $msg = fmt("You must sign in to %s this wiki", $what);
-            elseif ($require_level == WIKIAUTH_USER)
-                $msg = fmt("You must log in to %s this wiki", $what);
-            else
-                $msg = fmt("You must be an administrator to %s this wiki", $what);
-        
-            WikiUser::PrintLoginForm(compact('require_level'), $msg);
-            $this->finish();    // NORETURN
+    function _setUser ($user) {
+        $this->_user = $user;
+        $this->setSessionVar('auth_state', $user);
+        // Save userid to prefs..
+        if ($user->isSignedIn())
+            $this->_setPreferences(array('userid' => $user->getId()));
+        else
+            $this->_setPreferences(array('userid' => false));
+    }
+
+    function _notAuthorized ($require_level) {
+        // User does not have required authority.  Prompt for login.
+        $what = HTML::em($this->getArg('action'));
+
+        if ($require_level >= WIKIAUTH_FORBIDDEN) {
+            $this->finish(fmt("Action %s is disallowed on this wiki", $what));
         }
+        elseif ($require_level == WIKIAUTH_BOGO)
+            $msg = fmt("You must sign in to %s this wiki", $what);
+        elseif ($require_level == WIKIAUTH_USER)
+            $msg = fmt("You must log in to %s this wiki", $what);
+        else
+            $msg = fmt("You must be an administrator to %s this wiki", $what);
+        
+        WikiUser::PrintLoginForm(compact('require_level'), $msg);
+        $this->finish();    // NORETURN
     }
     
     function requiredAuthority ($action) {
@@ -180,16 +256,16 @@ class WikiRequest extends Request {
         }
     }
         
-    function handleSetPrefRequest () {
-        $new_prefs = $this->getArg('pref');
-        $this->setArg('pref', false);
-        if (!is_array($pref_args))
+    function _setPreferences ($new_prefs) {
+        if (!is_array($new_prefs))
             return;
 
         // Update and save preferences.
-        $this->_prefs->setPrefs($new_prefs);
-        $this->setSessionVar('user_prefs', $prefs);
-        $this->setCookieVar('WIKI_PREFS', $prefs, 365);
+        foreach ($new_prefs as $name => $value)
+            $this->_prefs->set($name, $value);
+        
+        $this->setSessionVar('user_prefs', $this->_prefs);
+        $this->setCookieVar('WIKI_PREFS', $this->_prefs, 365);
     }
 
     function deflowerDatabase () {
@@ -375,7 +451,7 @@ function main () {
     global $request;
 
     $request = new WikiRequest();
-
+    $request->_init();
     
     /* FIXME: is this needed anymore?
     if (USE_PATH_INFO && ! $request->get('PATH_INFO')
@@ -388,18 +464,6 @@ function main () {
     }
     */
 
-    // Handle authentication requests
-    if ($request->getArg('auth'))
-        $request->handleAuthRequest();
-
-    // FIXME: deprecated
-    //global $user;               // FIXME: can we make this non-global?
-    //$user = $request->getUser();
-
-    // Handle adjustments to user preferences
-    if ($request->getArg('pref'))
-        $request->handleSetPrefRequest();
-
     // Enable the output of most of the warning messages.
     // The warnings will screw up zip files and setpref though.
     global $ErrorManager;
@@ -408,9 +472,6 @@ function main () {
         $ErrorManager->setPostponedErrorMask(0);
     }
 
-    
-    // Ensure user has permissions for action
-    $request->checkAuthority();
     
     //FIXME:
     //if ($user->is_authenticated())
