@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: mysql.php,v 1.8 2000-11-24 22:07:34 wainstead Exp $');
+<?php rcs_id('$Id: mysql.php,v 1.9 2001-01-01 23:34:57 ahollosi Exp $');
 
    /*
       Database functions:
@@ -65,6 +65,8 @@
       $pagehash["author"] = addslashes($pagehash["author"]);
       $pagehash["content"] = implode("\n", $pagehash["content"]);
       $pagehash["content"] = addslashes($pagehash["content"]);
+      if (!isset($pagehash["refs"]))
+         $pagehash["refs"] = array();
       $pagehash["refs"] = serialize($pagehash["refs"]);
  
       return $pagehash;
