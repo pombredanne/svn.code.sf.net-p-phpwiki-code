@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.101 2003-11-25 21:49:44 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.102 2003-11-25 22:55:32 carstenklapp Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -236,6 +236,17 @@ class WikiRequest extends Request {
     }
 
     function _notAuthorized ($require_level) {
+        // Display the authority message in the Wiki's default
+        // language, in case it is not english.
+        //
+        // Note that normally a user will not see such an error once
+        // logged in, unless the admin has altered the default
+        // disallowed wikiactions. In that case we should probably
+        // check the user's language prefs too at this point; this
+        // would be a situation which is not really handled with the
+        // current code.
+        update_locale(DEFAULT_LANGUAGE);
+
         // User does not have required authority.  Prompt for login.
         $what = $this->getActionDescription($this->getArg('action'));
 
@@ -778,6 +789,15 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.101  2003/11/25 21:49:44  carstenklapp
+// Bugfix: For a non-english wiki or when the user's preference is not
+// english, the wiki would always use the english ActionPage first if it
+// was present rather than the appropriate localised variant. (PhpWikis
+// running only in english or Wikis running ONLY without any english
+// ActionPages would not notice this bug, only when both english and
+// localised ActionPages were in the DB.) Now we check for the localised
+// variant first.
+//
 // Revision 1.100  2003/11/18 16:54:18  carstenklapp
 // Reformatting only: Tabs to spaces, added rcs log.
 //
