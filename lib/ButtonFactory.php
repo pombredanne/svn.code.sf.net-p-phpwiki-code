@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ButtonFactory.php,v 1.3 2002-01-16 15:23:24 dairiki Exp $');
+<?php rcs_id('$Id: ButtonFactory.php,v 1.4 2002-01-17 20:35:44 dairiki Exp $');
 
 /**
  * A class representing a clickable "button".
@@ -58,7 +58,7 @@ class Button {
 /**
  * A clickable image button.
  */
-class ImageButton {
+class ImageButton extends Button {
     /** Constructor
      *
      * @param $text string The text for the button.
@@ -74,6 +74,7 @@ class ImageButton {
             $this->_img_attr = $img_attr;
         $this->_img_attr['src'] = $img_url;
         $this->_img_attr['alt'] = $text;
+        $this->_img_attr['border'] = 0;
     }
 
     /** Get img tag.
@@ -179,11 +180,9 @@ class ButtonFactory {
      * @return object A Button object.
      */
     function makeButton($text, $url, $class) {
-        global $THEME;
-
-        $button_class = empty($THEME['ButtonClass']) ? 'Button' : $THEME['ButtonClass'];
-        
-        return new $button_class($text, $url, $class);
+        // FIXME: can probably eliminate this method.
+        global $Theme;
+        return $Theme->makeButton($text, $url, $class);
     }
 
     function _get_name_and_rev ($page_or_rev) {
