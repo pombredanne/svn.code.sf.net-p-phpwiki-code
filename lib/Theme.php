@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.61 2003-02-18 21:52:05 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.62 2003-02-21 04:14:52 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -21,6 +21,7 @@ require_once('lib/HtmlElement.php');
  * <dt>'known'</dt><dd>Make link appropriate for an existing page.</dd>
  * <dt>'auto'</dt><dd>Either 'unknown' or 'known' as appropriate.</dd>
  * <dt>'button'</dt><dd>Make a button-style link.</dd>
+ * <dt>'if_known'</dt><dd>Only linkify if page exists.</dd>
  * </dl>
  * Unless $type of of the latter form, the link will be of class 'wiki', 'wikiunknown',
  * 'named-wiki', or 'named-wikiunknown', as appropriate.
@@ -61,7 +62,7 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
     }
     
 
-    if ($type == 'auto') {
+    if ($type == 'auto' or $type == 'if_known') {
         if (isset($page)) {
             $current = $page->getCurrentRevision();
             $exists = ! $current->hasDefaultContents();
@@ -104,6 +105,11 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
 
     if ($exists) {
         return $Theme->linkExistingWikiWord($wikipage, $label, $version);
+    }
+    elseif ($type == 'if_known') {
+        if (!$label && isa($wikipage, 'WikiPageName'))
+            $label = $wikipage->shortName;
+        return HTML($label ? $label : $pagename);
     }
     else {
         return $Theme->linkUnknownWikiWord($pagename, $label);
@@ -922,6 +928,13 @@ class SubmitImageButton extends SubmitButton {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.61  2003/02/18 21:52:05  dairiki
+// Fix so that one can still link to wiki pages with # in their names.
+// (This was made difficult by the introduction of named tags, since
+// '[Page #1]' is now a link to anchor '1' in page 'Page'.
+//
+// Now the ~ escape for page names should work: [Page ~#1].
+//
 // Revision 1.60  2003/02/15 01:59:47  dairiki
 // Theme::getCSS():  Add Default-Style HTTP(-eqiv) header in attempt
 // to fix default stylesheet selection on some browsers.
