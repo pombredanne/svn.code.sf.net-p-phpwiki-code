@@ -1,4 +1,4 @@
-<!-- $Id: wiki_stdlib.php3,v 1.17 2000-06-26 21:26:45 ahollosi Exp $ -->
+<!-- $Id: wiki_stdlib.php3,v 1.18 2000-06-27 20:00:08 ahollosi Exp $ -->
 <?
    /*
       Standard functions for Wiki functionality
@@ -256,7 +256,7 @@
    function UpdateRecentChanges($dbi, $pagename, $isnewpage) {
 
       global $remoteuser; // this is set in the config
-      global $dateformst;
+      global $dateformat;
 
       $recentchanges = RetrievePage($dbi, "RecentChanges");
 
