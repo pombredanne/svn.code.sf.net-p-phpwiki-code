@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.1 2004-02-08 12:29:30 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.2 2004-02-08 13:17:48 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -26,8 +26,8 @@ rcs_id('$Id: PagePerm.php,v 1.1 2004-02-08 12:29:30 rurban Exp $');
    opposed to the simplier unix like ugo:rwx system.
    The previous system was only based on action and current user. (lib/main.php)
 
-   Permissions maybe inherited its parent pages, and ultimatevily the 
-   master page (".")
+   Permissions maybe inherited its parent pages, and ultimativly the 
+   optional master page (".")
    For Authentification see WikiUserNew.php, WikiGroup.php and main.php
    Page Permssions are in PhpWiki since v1.3.9 and enabled since v1.4.0
 
@@ -48,7 +48,7 @@ rcs_id('$Id: PagePerm.php,v 1.1 2004-02-08 12:29:30 rurban Exp $');
        just returns the level per action, will be replaced with the 
        action + page pair
 
-     The defined main.php actions map to simplier access types here
+     The defined main.php actions map to simplier access types here:
        browse => view
        edit   => edit
        create => edit or create
@@ -71,27 +71,75 @@ define('ACL_CREATOR',	   '_CREATOR');
 // Walk down the inheritance tree. Collect all permissions until 
 // the minimum required level is gained, which is not 
 // overruled by more specific forbid rules.
+// Todo: cache result per access and page in session
 function requiredAuthorityForPage ($action) {
     global $request;
-    $current_page = $request->getPage();
-    $perm = getPagePermissions($current_page);
-    //translate action to access
-    $access = $action;
-    if ($perm->isAuthorized($access,$request->_user))
-        return $request->_user->_level;
-    //todo: recurse into parent page
-    return WIKIAUTH_FORBIDDEN;
+    // translate action to access
+    switch ($action) {
+    case 'browse':
+    case 'viewsource':
+    case 'diff':
+    case 'select':
+    case 'xmlrpc':
+    case 'search':
+        $access = 'view'; break;
+    case 'zip':
+    case 'ziphtml':
+        $access = 'dump'; break;
+    case 'edit':
+        $access = 'edit'; break;
+    case 'create':
+        $page = $this->getPage();
+        $current = $page->getCurrentRevision();
+        if ($current->hasDefaultContents())
+            $access = 'edit';
+        else
+            $access = 'view'; 
+        break;
+    case 'upload':
+    case 'dumpserial':
+    case 'dumphtml':
+    case 'loadfile':
+    case 'remove':
+    case 'lock':
+    case 'unlock':
+            $access = 'change'; break;
+    default:
+        if (isWikiWord($action))
+            $access = 'view';
+        else
+            $access = 'change';
+        break;
+    }
+    return _requiredAuthorityForPagename($access,$request->getArg('pagename'));
 }
 
+function _requiredAuthorityForPagename ($access,$pagename) {
+    global $request;
+    $page = $request->getPage($pagename);
+    if (! $page ) {
+        $perm = new PagePermission(); // check against default permissions
+        return ($perm->isAuthorized($access,$request->_user) === true);
+    }
+    $perm = getPagePermissions($page);
+    $authorized = $perm->isAuthorized($access,$request->_user);
+    if ($authorized != -1)
+        return $authorized ? $request->_user->_level : WIKIAUTH_FORBIDDEN;
+    else
+        return _requiredAuthorityForPagename($access,getParentPage($pagename));
+}
+
+
 /*
- * @param string $pagename   page from which the parent page is searched.
- * @return WikiDB_Page Object parent page or the (possibly pseudo) dot-page handle.
+ * @param  string $pagename   page from which the parent page is searched.
+ * @return string parent pagename or the (possibly pseudo) dot-pagename.
  */
 function getParentPage($pagename) {
+    global $request;
     if (ifSubPage($pagename)) {
-        return $request->getPage(subPageSlice($pagename,0));
+        return subPageSlice($pagename,0);
     } else {
-        return $request->getPage('.');
+        return '.';
     }
 }
 
@@ -111,7 +159,7 @@ function setPagePermissions ($page,$perm) {
 
 // provide ui helpers to view and change page permissions
 function displayPagePermissions () {
-    ;
+    return '';
 }
 
 /**
@@ -125,7 +173,6 @@ function displayPagePermissions () {
  * Define any special rules here, like don't list dot-pages.
  */ 
 class PagePermission {
-
     var $perm;
 
     function PagePermission($hash = array()) {
@@ -157,7 +204,7 @@ class PagePermission {
                     return $bool;
             }
         }
-        return false;
+        return -1; // undecided
     }
 
     /**
@@ -169,8 +216,8 @@ class PagePermission {
         if ($group === ACL_EVERY) return true;
         $member = &WikiGroup::getGroup($request);
         $user = & $request->_user;
-        if ($group === ACL_ADMIN) 
-            return $user->isAdmin() or // WIKI_ADMIN or member of _("Administrators")
+        if ($group === ACL_ADMIN)   // WIKI_ADMIN or member of _("Administrators")
+            return $user->isAdmin() or
                    $member->isMember(GROUP_ADMIN);
         if ($group === ACL_ANONYMOUS) 
             return ! $user->isSigned();
@@ -181,15 +228,16 @@ class PagePermission {
             return $user->isSigned();
         if ($group === ACL_AUTHENTICATED)
             return $user->isAuthenticated();
-        /* TODO: more special groups:
-         ACL_OWNER
-         ACL_CREATOR
-        */
-
-        /* 
-         or named groups:
-         or usernames:
-        */
+        if ($group === ACL_OWNER) {
+            $page = $request->getPage();
+            return $page->get('author') === $user->UserName();
+        }
+        if ($group === ACL_CREATOR) {
+            $page = $request->getPage();
+            $rev = $page->getRevision(1);
+            return $rev->get('author') === $user->UserName();
+        }
+        /* or named groups or usernames */
         return $user->UserName() === $group or
                $member->isMember($group);
     }
@@ -200,16 +248,34 @@ class PagePermission {
      */
     function defaultPerms() {
         //Todo: check for the existance of '.' and take this instead.
-        //Todo: honor index.php auth settings here
-        return array('view'   => array(ACL_EVERY => true),
-                     'edit'   => array(ACL_EVERY => true),
-                     'create' => array(ACL_EVERY => true),
-                     'list'   => array(ACL_EVERY => true),
-                     'remove' => array(ACL_ADMIN => true,
-                                       ACL_OWNER => true),
-                     'change' => array(ACL_ADMIN => true,
-                                       ACL_OWNER => true),
-                     );
+        //Todo: honor more index.php auth settings here
+        $perm = array('view'   => array(ACL_EVERY => true),
+                      'edit'   => array(ACL_EVERY => true),
+                      'create' => array(ACL_EVERY => true),
+                      'list'   => array(ACL_EVERY => true),
+                      'remove' => array(ACL_ADMIN => true,
+                                        ACL_OWNER => true),
+                      'change' => array(ACL_ADMIN => true,
+                                        ACL_OWNER => true));
+        if (defined('ZIPDUMP_AUTH') && ZIPDUMP_AUTH)
+            $perm['dump'] = array(ACL_ADMIN => true,
+                                  ACL_OWNER => true);
+        else
+            $perm['dump'] = array(ACL_EVERY => true);
+        if (defined('REQUIRE_SIGNIN_BEFORE_EDIT') && REQUIRE_SIGNIN_BEFORE_EDIT)
+            $perm['edit'] = array(ACL_SIGNIN => true);
+        if (defined('ALLOW_ANON_USER') && ! ALLOW_ANON_USER) {
+            if (defined('ALLOW_BOGO_USER') && ALLOW_BOGO_USER) {
+                $perm['view'] = array(ACL_BOGOUSER => true);
+                $perm['edit'] = array(ACL_BOGOUSER => true);
+            } elseif (defined('ALLOW_USER_PASSWORDS') && ALLOW_USER_PASSWORDS) {
+                $perm['view'] = array(ACL_AUTHENTICATED => true);
+                $perm['edit'] = array(ACL_AUTHENTICATED => true);
+            } else {
+                $perm['view'] = array(ACL_SIGNIN => true);
+                $perm['edit'] = array(ACL_SIGNIN => true);
+            }
+        }
     }
 
     /**
@@ -251,6 +317,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/02/08 12:29:30  rurban
+// initial version, not yet hooked into lib/main.php
+//
 //
 
 // Local Variables:
