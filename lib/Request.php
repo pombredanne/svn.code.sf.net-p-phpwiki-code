@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.78 2004-11-10 15:29:20 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.79 2004-11-11 18:29:44 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -1078,7 +1078,7 @@ class Request_AccessLogEntry
     /* If ACCESS_LOG_SQL & 2 we do write it by our own */
     function write_sql() {
         $dbh =& $GLOBALS['request']->_dbi;
-        if ($dbh and $dbh->isOpen()) {
+        if ($dbh and $dbh->isOpen() and $this->_accesslog->logtable) {
             $log_tbl =& $this->_accesslog->logtable;
             if ($GLOBALS['request']->get('REQUEST_METHOD') == "POST") {
           	if (check_php_version(4,2))
@@ -1305,6 +1305,13 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.78  2004/11/10 15:29:20  rurban
+// * requires newer Pear_DB (as the internal one): quote() uses now escapeSimple for strings
+// * ACCESS_LOG_SQL: fix cause request not yet initialized
+// * WikiDB: moved SQL specific methods upwards
+// * new Pear_DB quoting: same as ADODB and as newer Pear_DB.
+//   fixes all around: WikiGroup, WikiUserNew SQL methods, SQL logging
+//
 // Revision 1.77  2004/11/09 17:11:04  rurban
 // * revert to the wikidb ref passing. there's no memory abuse there.
 // * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively
