@@ -1,9 +1,15 @@
 <?php // -*-html-*- ?>
-<!-- $Id: info.tmpl,v 1.3 2002-02-16 02:20:32 carstenklapp Exp $ -->
+<!-- $Id: info.tmpl,v 1.4 2002-02-16 23:38:13 carstenklapp Exp $ -->
 <?php
 
 $modifed = $Theme->formatDateTime($revision->get('mtime'));
+
 $author = $revision->get('author');
+global $WikiNameRegexp;
+$dbi = $request->getDbh();
+if (preg_match("/^$WikiNameRegexp\$/", $author) && $dbi->isWikiPage($author))
+    $author = WikiLink($author);
+
 $authorId = $revision->get('author_id');
 $version = $revision->getVersion();
 $hits = $page->get('hits');
