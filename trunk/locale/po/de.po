@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.8\n"
-"POT-Creation-Date: 2001-12-31 00:53-0500\n"
+"POT-Creation-Date: 2001-12-31 10:54-0500\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Carsten Klapp <carstenklapp@mac.com>, Arno Hollosi "
 "<ahollosi@mail.com>\n"
