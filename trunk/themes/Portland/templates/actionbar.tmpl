@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.16 2002-02-22 23:23:47 carstenklapp Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.17 2002-09-18 19:29:43 dairiki Exp $ -->
 <?php
   $Sep = $Theme->getButtonSeparator();
 
@@ -15,9 +15,9 @@
 <?= $EditB ?> 
 <a href="<?=WikiURL($revision,array('action'=>'diff'))?>"
    ><?= $Theme->getLastModifiedMessage($revision) ?></a>
-	<?=$Sep?><?= Button(_("PageHistory")) ?>
+	<?=$Sep?><?= Button("PageHistory", _("PageHistory")) ?>
     <?=$Sep?><?= Button("info") ?>
 <?php if (defined('DEBUG') || $user->isAdmin()) { ?>
-	<?=$Sep?><?= Button(_("DebugInfo")) ?> <!-- For debugging only, really -->
+	<?=$Sep?><?= Button("DebugInfo", _("DebugInfo")) ?> <!-- For debugging only, really -->
 <?php } ?>
 <br />

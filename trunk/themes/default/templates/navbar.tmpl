@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: navbar.tmpl,v 1.16 2002-09-15 20:30:40 rurban Exp $ -->
+<!-- $Id: navbar.tmpl,v 1.17 2002-09-18 19:29:44 dairiki Exp $ -->
 <?php
 
 $s = $Theme->getButtonSeparator();
@@ -20,8 +20,8 @@ $s = $Theme->getButtonSeparator();
              onmouseover="window.status='<?=_("Quick Search")?>'; return true;"
              onmouseout="window.status=''; return true;" />
     <?php if (!empty($revision)) { ?>
-     <?=$s?><?= Button(_("LikePages")) ?>
-     <?=$s?><?= Button(_("BackLinks")) ?>
+     <?=$s?><?= Button("LikePages", _("LikePages")) ?>
+     <?=$s?><?= Button("BackLinks", _("BackLinks")) ?>
     <?php } ?>
     <?php if (!empty($user)) { ?>
     <?php

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.56 2002-09-16 22:12:48 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.57 2002-09-18 19:29:43 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -747,7 +747,7 @@ class Theme {
                 // 'setprefs'
                 // 'upload' 'dumpserial' 'loadfile' 'zip'
                 // 'save' 'browse'
-                return ucfirst($action);
+                return gettext(ucfirst($action));
         }
     }
 

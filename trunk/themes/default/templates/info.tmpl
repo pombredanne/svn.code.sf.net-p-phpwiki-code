@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: info.tmpl,v 1.8 2002-09-15 20:21:16 rurban Exp $ -->
+<!-- $Id: info.tmpl,v 1.9 2002-09-18 19:29:44 dairiki Exp $ -->
 <?php
 
 $modifed = $Theme->formatDateTime($revision->get('mtime'));
@@ -128,8 +128,8 @@ $Sep = $Theme->getButtonSeparator();
   </tr>
 </table>
 
-<?= Button(_("PageHistory")) ?>
+<?= Button("PageHistory", _("PageHistory")) ?>
 <?=$Sep?><?= Button("diff") ?> 
 <?php if (defined('DEBUG') || $user->isAdmin()) { ?>
-	<?=$Sep?><?= Button(_("DebugInfo")) ?> <!-- For debugging only, really -->
+	<?=$Sep?><?= Button("DebugInfo", _("DebugInfo")) ?> <!-- For debugging only, really -->
 <?php } ?>
