@@ -1,4 +1,4 @@
-<!-- $Id: wiki_msql.php3,v 1.2 2000-06-25 07:33:29 wainstead Exp $ -->
+<!-- $Id: wiki_msql.php3,v 1.3 2000-06-25 19:38:55 wainstead Exp $ -->
 <?
 
    /*
@@ -20,7 +20,7 @@
    // open a database and return the handle
    // ignores MAX_DBM_ATTEMPTS
 
-   function OpenDataBase($dbname) {
+   function OpenDataBase($dbinfo) {
       global $msql_db;
 
       if (! ($dbc = msql_pconnect())) {
@@ -29,13 +29,15 @@
          exit();
       }
       if (!msql_select_db($msql_db, $dbc)) {
-         echo "Cannot open database, giving up.";
+         echo "Cannot open database $msql_db, giving up.";
          echo "Error message: ", msql_error(), "<br>\n";
          exit();
       }
 
       $dbi['dbc'] = $dbc;
-      $dbi['table'] = $dbname;
+      $dbi['table'] = $dbinfo['table'];           // page metadata
+      $dbi['page_table'] = $dbinfo['page_table']; // page content
+//      echo "dbi[page_table]: $dbi[page_table], dbinfo[page_table]: $dbinfo[page_table]<br>\n";
       return $dbi;
    }
 
@@ -47,52 +49,27 @@
    }
 
 
+   // Take form data and prepare it for the db
    function MakeDBHash($pagename, $pagehash)
    {
       $pagehash["pagename"] = addslashes($pagename);
       if (!isset($pagehash["flags"]))
          $pagehash["flags"] = 0;
-
-      // build a list of unique words for this page
-      $list = $pagehash["content"];
-
-      // strip nonalphanumeric characters
-      reset($list);
-      $list = preg_replace("/\W/", " ", $list);
-
-      reset($list);
-      while($line = next($list)) {
-         //echo "<br><b>doing:</b> $line<br>\n";
-         $words = preg_split("/\s+/", $line);
-         reset($words);
-         while ($word = next($words)) {
-            //echo "$word ";
-            $terms[strtolower($word)]++;
-         }
-      }
-      //echo "<hr>\n";
-      reset($terms);
-      while (list($key, $val) = each($terms)) {
-         $pagehash["searchterms"] .= "$key ";         
-      }
-      //echo "<hr>\n";
-      //echo "size of search terms: ", strlen($pagehash["searchterms"]), "<br>\n";
-      //echo "<hr>\n";
-      //echo $pagehash["searchterms"];
-      //echo "<hr>\n";
       $pagehash["author"] = addslashes($pagehash["author"]);
-      $pagehash["content"] = implode("\n", $pagehash["content"]);
-      $pagehash["content"] = addslashes($pagehash["content"]);
       $pagehash["refs"] = serialize($pagehash["refs"]);
 
       return $pagehash;
    }
 
+
+   // Take db data and prepare it for display
    function MakePageHash($dbhash)
    {
       // unserialize/explode content
       $dbhash['refs'] = unserialize($dbhash['refs']);
-      $dbhash['content'] = explode("\n", $dbhash['content']);
+
+      // retrieve page lines from other table
+//      $dbhash['content'] = explode("\n", $dbhash['content']);
       return $dbhash;
    }
 
@@ -102,9 +79,18 @@
       $pagename = addslashes($pagename);
       $query = "select * from $dbi[table] where pagename='$pagename'";
       if ($res = msql_query($query, $dbi['dbc'])) {
-         if ($dbhash = msql_fetch_array($res)) {
-            return MakePageHash($dbhash);
+         $dbhash = msql_fetch_array($res);
+         $query = "select lineno,line from $dbi[page_table] " .
+                  "where pagename='$pagename' " .
+                  "order by lineno";
+         if ($res = msql_query($query, $dbi[dbc])) {
+            $dbhash["content"] = array();
+            while ($row = msql_fetch_array($res)) {
+               $dbhash["content"][ $row["lineno"] ] = $row["line"];
+            }
          }
+
+         return MakePageHash($dbhash);
       }
       return -1;
    }
@@ -115,7 +101,6 @@
    {
       $pagehash = MakeDBHash($pagename, $pagehash);
 
-
       // temporary hack until the time stuff is brought up to date
       $pagehash["created"] = time();
       $pagehash["lastmodified"] = time();
@@ -123,38 +108,60 @@
       if (IsWikiPage($dbi, $pagename)) {
 
          $PAIRS = "author='$pagehash[author]'," .
-                  "content='$pagehash[content]'," .
                   "created=$pagehash[created]," .
                   "flags=$pagehash[flags]," .
                   "lastmodified=$pagehash[lastmodified]," .
                   "pagename='$pagehash[pagename]'," .
                   "refs='$pagehash[refs]'," .
-                  "version=$pagehash[version]," .
-                  "searchterms='$pagehash[searchterms]'";
+                  "version=$pagehash[version]";
 
-         $query = "UPDATE $dbi[table] SET $PAIRS WHERE pagename='$pagename'";
+         $query  = "UPDATE $dbi[table] SET $PAIRS WHERE pagename='$pagename'";
 
       } else {
          // do an insert
          // build up the column names and values for the query
 
-      $COLUMNS = "author, content, created, flags, lastmodified, " .
-                 "pagename, refs, version, searchterms";
+         $COLUMNS = "author, created, flags, lastmodified, " .
+                    "pagename, refs, version";
 
-      $VALUES =  "'$pagehash[author]', '$pagehash[content]', " .
-                 "$pagehash[created], $pagehash[flags], " .
-                 "$pagehash[lastmodified], '$pagehash[pagename]', " .
-                 "'$pagehash[refs]', $pagehash[version], " .
-                 "'$pagehash[searchterms]'";
+         $VALUES =  "'$pagehash[author]', " .
+                    "$pagehash[created], $pagehash[flags], " .
+                    "$pagehash[lastmodified], '$pagehash[pagename]', " .
+                    "'$pagehash[refs]', $pagehash[version]";
 
 
          $query = "INSERT INTO $dbi[table] ($COLUMNS) VALUES($VALUES)";
       }
 
 //      echo "<p>Query: $query<p>\n";
+
+      // first, insert the metadata
       $retval = msql_query($query, $dbi['dbc']);
       if ($retval == false) 
-         echo "Insert/update failed: " . msql_error();
+         echo "Insert/update failed: ", msql_error(), "<br>\n";
+
+      // second, insert the page data
+      // remove old data from page_table
+      $query = "delete from $dbi[page_table] where pagename='$pagename'";
+      //echo "Delete query: $query<br>\n";
+      $retval = msql_query($query, $dbi['dbc']);
+      if ($retval == false) 
+         echo "Delete on $dbi[page_table] failed: ", msql_error(), "<br>\n";
+
+      // insert the new lines
+      reset($pagehash["content"]);
+
+      for ($x = 0; $x < count($pagehash["content"]); $x++) {
+         $line = addslashes($pagehash["content"][$x]);
+         $query = "INSERT INTO $dbi[page_table] " .
+                  "(pagename, lineno, line) " .
+                  "VALUES('$pagename', $x, '$line')";
+         //echo "Page line insert query: $query<br>\n";
+         $retval = msql_query($query, $dbi['dbc']);
+         if ($retval == false) 
+            echo "Insert into $dbi[page_table] failed: ", msql_error(), "<br>\n";;
+         
+      }
 
    }
 
@@ -204,8 +211,7 @@
    function FullSearchNextMatch($dbi, $res) {
       if($hash = msql_fetch_array($res)) {
          return MakePageHash($hash);
-      }
-      else {
+      } else {
          return 0;
       }
    }
