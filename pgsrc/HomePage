@@ -1,8 +1,9 @@
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
-X-RCS_ID: "$Id: HomePage,v 1.6 2002-01-25 21:42:51 carstenklapp Exp $"
+Date: Sun, 27 Jan 2002 17:28:55 -0500
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
+X-Rcs-Id: $Id: HomePage,v 1.7 2002-01-27 22:37:24 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=HomePage;
-  flags=PAGE_LOCKED;
+  flags="";
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
