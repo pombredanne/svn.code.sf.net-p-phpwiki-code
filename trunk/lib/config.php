@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.121 2004-10-14 17:48:19 rurban Exp $');
+rcs_id('$Id: config.php,v 1.122 2004-10-14 17:49:58 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -346,7 +346,7 @@ function safe_wordwrap($str, $width=80, $break="\n", $cut=false) {
         return wordwrap($str, $width, $break, $cut);
     else {
         $len = strlen($str);
-        $tag = 0; $result = '';
+        $tag = 0; $result = ''; $wordlen = 0;
         for ($i = 0; $i < $len; $i++) {
             $chr = $str[$i];
             // don't break inside xml tags
@@ -406,6 +406,9 @@ function getUploadDataPath() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.121  2004/10/14 17:48:19  rurban
+// typo in safe_wordwrap
+//
 // Revision 1.120  2004/09/22 13:46:26  rurban
 // centralize upload paths.
 // major WikiPluginCached feature enhancement:
