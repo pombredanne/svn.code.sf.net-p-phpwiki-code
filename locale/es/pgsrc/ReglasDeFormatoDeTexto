@@ -1,3 +1,11 @@
+!Synopsis
+__Énfasis:__ '____' para itálicas, _''''_ para bold, '____'_''''_ para ambos.%%%
+__Listas:__ * para listas de balazos, # para listas numeradas, ''; term : definición'' para listas de definiciones.%%%
+__Referencias:__ UnirPalabrasEnMayúsculas o usar corchetes para una [[enlace hacia una página] o URL [[http://cool.wiki.int/].%%%
+__Anotaciones:__ Use [[1],[[2],[[3],...%%%
+__Preveción enlazar:__ Evite hacer enlaces con "!": !!NoHiperEnlaces. Enlaces con nombres como [[[text | URL] (doble "[").%%%
+__Varios:__ "!", "!!", "!!!" para hacer títulos, "%''''%%" hace un salto de línea, "-''''---" Hace una linea horizontal. 
+
 ! Parrafos
 
 * No indente los parrafos
