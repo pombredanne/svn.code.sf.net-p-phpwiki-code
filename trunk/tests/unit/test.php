@@ -34,9 +34,11 @@
 *****************************************************************/
 // common cfg options are taken from config/config.ini
 
-define('GROUP_METHOD', 'NONE');
-define('USE_DB_SESSION', false);
+//TODO: let the user decide which constants to use: define="x=y"
 define('RATING_STORAGE', 'WIKIPAGE');
+define('GROUP_METHOD', 'NONE');
+//define('USE_DB_SESSION', false);
+//define('ENABLE_USER_NEW', false);
 
 // memory usage: (8MB limit on certain servers)
 // setupwiki
@@ -101,8 +103,8 @@ function printMemoryUsage($msg = '') {
         $oldmem = $mem;
         if (function_exists('memory_get_usage') and memory_get_usage()) {
             $mem = memory_get_usage();
-        } elseif (function_exists('getrusage') and ($u = getrusage()) and !empty($u['ru_maxrss'])) {
-            $mem = $u['ru_maxrss'];
+            //        } elseif (function_exists('getrusage') and ($u = getrusage()) and !empty($u['ru_maxrss'])) {
+            //            $mem = $u['ru_maxrss'];
         } elseif (substr(PHP_OS,0,3)=='WIN') { // requires a newer cygwin
             // what we want is the process memory only: apache or php
             $pid = getmypid();
@@ -143,8 +145,10 @@ function printSimpleTrace($bt) {
 function assert_callback( $script, $line, $message ) {
    echo "assert failed: script ", $script," line ", $line," :";
    echo "$message";
-   echo "Traceback:\n";
-   printSimpleTrace(debug_backtrace());
+   if (function_exists('debug_backtrace')) { // >= 4.3.0
+       echo "Traceback:\n";
+       printSimpleTrace(debug_backtrace());
+   }
    exit;
 }
 $foo = assert_options( ASSERT_CALLBACK, 'assert_callback');
@@ -222,6 +226,14 @@ function purge_testbox() {
     }
 }
 
+function printConstant($v) {
+    echo "$v=";
+    if (defined($v)) {
+        if (constant($v) or constant($v)===0 or constant($v)==='0') echo constant($v);
+        else echo "false";
+    } else echo "undefined";
+    echo "\n";
+}
 ####################################################################
 #
 # End of preamble, run the test suite ..
@@ -238,8 +250,8 @@ elseif (!ini_get("register_argc_argv"))
     echo "Could not read cmd args (register_argc_argv=Off?)\n";
 // purge the testbox
     
-$debug_level = 9; //_DEBUG_VERBOSE | _DEBUG_TRACE
-$user_level  = 1; // BOGO
+$debug_level = 1; //was 9, _DEBUG_VERBOSE | _DEBUG_TRACE
+$user_level  = 1; // BOGO (conflicts with RateIt)
 // use argv (from cli) or tests (from browser) params to run only certain tests
 // avoid pear: Console::Getopt
 $alltests = array('InlineParserTest','HtmlParserTest','PageListTest','ListPagesTest',
@@ -257,8 +269,9 @@ if (isset($HTTP_SERVER_VARS['REQUEST_METHOD'])) {
 } elseif (!empty($argv) and preg_match("/test\.php$/", $argv[0]))
     array_shift($argv);
 if (!empty($argv)) {
-    //support db=file db=dba test=SetupWiki test=DumpHtml debug=num
+    //support db=file db=dba test=SetupWiki test=DumpHtml debug=num -dconstant=value
     $runtests = array();
+    $define = array();
     $run_database_backends = array();
     foreach ($argv as $arg) {
         if (preg_match("/^test=(.+)$/",$arg,$m) and in_array($m[1], $alltests))
@@ -269,7 +282,12 @@ if (!empty($argv)) {
             $debug_level = $m[1];
         elseif (preg_match("/^level=(\d+)$/",$arg,$m))
             $user_level = $m[1];
-        elseif (in_array($arg, $alltests))
+        elseif (preg_match("/^\-d(\w+)=(.+)$/",$arg,$m)) {
+            $define[$m[1]] = $m[2];
+            if ($m[2] == 'true') $m[2] = true;
+            elseif ($m[2] == 'false') $m[2] = false;
+            if (!defined($m[1])) define($m[1], $m[2]);
+        } elseif (in_array($arg, $alltests))
             $runtests[] = $arg;
         elseif ($debug_level & 1)
             echo "ignored arg: ", $arg, "\n";
@@ -279,12 +297,16 @@ if (!empty($argv)) {
     if (!empty($runtests))
         $alltests = $runtests;
     if ($debug_level & 1) {
+        echo "PHP_SAPI=",php_sapi_name(), "\n";
         echo "PHP_OS=",PHP_OS, "\n";
         echo "PHP_VERSION=",PHP_VERSION, "\n";
         echo "test=", join(",",$alltests),"\n";
         echo "db=", join(",",$database_backends),"\n";
         echo "debug=", $debug_level,"\n";
         echo "level=", $user_level,"\n";
+        if (!empty($define)) {
+            foreach ($define as $k => $v) printConstant($k);
+        }
         if ($debug_level & 8) {
             echo "pid=",getmypid(),"\n";
         }
@@ -295,23 +317,29 @@ if (!empty($argv)) {
 define('DEBUG', $debug_level); 
 
 if (DEBUG & 8)
-    printMemoryUsage("before PEAR");
+    printMemoryUsage("beforePEAR");
 
 # Test files
 require_once 'PHPUnit.php';
 
 if (DEBUG & 8)
-    printMemoryUsage("after PEAR, before PhpWiki");
+    printMemoryUsage("beforePhpWiki");
 
 define('PHPWIKI_NOMAIN', true);
 # Other needed files
 require_once $rootdir.'index.php';
 require_once $rootdir.'lib/main.php';
 
-if ($debug_level & 9) {
-    // which constants affect memory?
-    foreach (explode(",","ENABLE_PAGEPERM,USECACHE,WIKIDB_NOCACHE_MARKUP") as $v)
-        echo "$v=",(defined($v) and constant($v)) ? constant($v) : "false","\n";
+if ($debug_level & 1) {
+    echo "\n";
+    echo "PHPWIKI_VERSION=",PHPWIKI_VERSION, strstr(PHPWIKI_VERSION,"pre") ? strftime("-%Y%m%d") : "","\n";
+    if ($debug_level & 9) {
+        // which constants affect memory?
+        foreach (explode(",","USECACHE,WIKIDB_NOCACHE_MARKUP,ENABLE_USER_NEW,ENABLE_PAGEPERM") as $v) {
+            printConstant($v);
+        }
+    }
+    echo "\n";
 }
 
 global $ErrorManager;
@@ -321,7 +349,7 @@ class MockRequest extends WikiRequest {
     function MockRequest(&$dbparams) {
         $this->_dbi = WikiDB::open($dbparams);
         $this->_user = new MockUser("a_user", $GLOBALS['user_level']);
-        $this->_group = WikiGroup::getGroup();
+        $this->_group = new GroupNone();
         $this->_args = array('pagename' => 'HomePage', 'action' => 'browse');
         $this->Request();
     }
@@ -329,7 +357,7 @@ class MockRequest extends WikiRequest {
     	if (is_object($this->_group))
             return $this->_group;
         else // FIXME: this is set to "/f:" somewhere.
-            return WikiGroup::getGroup();
+            return new GroupNone();
     }
 }
 
@@ -366,9 +394,8 @@ else {
 }
 */
 include_once("themes/" . THEME . "/themeinfo.php");
-
 if (DEBUG & _DEBUG_TRACE)
-    printMemoryUsage("PhpWiki loaded, not initialized");
+    printMemoryUsage("PhpWikiLoaded");
 
 // save and restore all args for each test.
 class phpwiki_TestCase extends PHPUnit_TestCase {
@@ -393,7 +420,7 @@ class phpwiki_TestCase extends PHPUnit_TestCase {
 foreach ($database_backends as $dbtype) {
 
     //    if (DEBUG & _DEBUG_TRACE)
-    //        printMemoryUsage("PHPUnit initialized");
+    //        printMemoryUsage("PHPUnitInitialized");
 
     $DBParams['dbtype']               = $dbtype;
     $DBParams['directory']            = $cur_dir . '/.testbox';
@@ -404,8 +431,12 @@ foreach ($database_backends as $dbtype) {
 
     echo "Testing DB Backend \"$dbtype\" ...\n";
     $request = new MockRequest($DBParams);
+    if ( ! ENABLE_USER_NEW ) {
+        $request->_user->_request =& $request;
+        $request->_user->_dbi =& $request->_dbi;
+    }
     if (DEBUG & _DEBUG_TRACE)
-        printMemoryUsage("PhpWiki initialized");
+        printMemoryUsage("PhpWikiInitialized");
 
     foreach ($alltests as $test) {
         $suite  = new PHPUnit_TestSuite("phpwiki");
@@ -424,6 +455,8 @@ foreach ($database_backends as $dbtype) {
             echo $result->toString();
         }
     }
+
+    $request->chunkOutput();
     unset($request);
     unset($suite);
     unset($result);
