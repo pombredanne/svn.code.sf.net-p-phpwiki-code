@@ -2,7 +2,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.13 2000-10-31 20:24:30 ahollosi Exp $');
+   rcs_id('$Id: config.php,v 1.14 2000-11-01 10:24:58 ahollosi Exp $');
 
    /////////////////////////////////////////////////////////////////////
    // Constants and settings. Edit the values below for your site.
@@ -88,7 +88,7 @@
    /////////////////////////////////////////////////////////////////////
    // Miscellanious
 
-   // logo image
+   // logo image (path relative to index.php)
    $logo = "images/wikibase.png";
    // signature image which is shown after saving an edited page
    $SignatureImg = "images/signature.png";
@@ -179,17 +179,11 @@
    // you shouldn't have to edit anyting below this line
 
    if (empty($ScriptUrl)) {
-      if (preg_match("#(.*?)([^/]*$)#", $REQUEST_URI, $matches)) {
-	 $ServerAddress = "http://$SERVER_NAME:$SERVER_PORT" . $matches[1];
-      } else {
-	 $ServerAddress = "http://$SERVER_NAME:$SERVER_PORT$REQUEST_URI";
-      }
-      $ScriptName = basename($HTTP_SERVER_VARS["PHP_SELF"]);
-      $ScriptUrl = $ServerAddress . $ScriptName;
+      $ScriptUrl = "http://$SERVER_NAME:$SERVER_PORT$SCRIPT_NAME";
    }
 
-   $LogoImage = "<img src='${ServerAddress}$logo' border='0'>";
-   $LogoImage = "<a href='$ScriptUrl'>$LogoImage</a>";
+   $LogoImage = "<img src=\"$logo\" border=0 ALT=\"[PhpWiki!]\">";
+   $LogoImage = "<a href=\"$ScriptUrl\">$LogoImage</a>";
 
    $FieldSeparator = "\263";
 
