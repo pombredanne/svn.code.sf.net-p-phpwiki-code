@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.37 2002-01-25 03:23:00 carstenklapp Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.38 2002-01-25 05:01:10 carstenklapp Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -28,6 +28,10 @@ function EndLoadDump(&$request)
 //
 ////////////////////////////////////////////////////////////////
 
+/**
+ * For reference see:
+ * http://www.oac.uci.edu/indiv/ehood/MIME/1521/rfc1521ToC.html
+ */
 function MailifyPage ($page, $nversions = 1)
 {
     global $SERVER_ADMIN, $pagedump_format;
@@ -35,6 +39,12 @@ function MailifyPage ($page, $nversions = 1)
     $current = $page->getCurrentRevision();
     $from = isset($SERVER_ADMIN) ? $SERVER_ADMIN : 'foo@bar';
     $head = "";
+    /**
+     * "7bit" means short lines of US-ASCII.
+     * "8bit" means short lines of octets with the high-order bit set.
+     * "binary" means lines are not necessarily short enough for SMTP
+     * transport, and non-ASCII characters may be present.
+     */
     if ($pagedump_format == 'quoted-printable') {
         $head = "From $from  " . CTime(time()) . "\r\n";
         $head .= "Subject: " . rawurlencode($page->getName()) . "\r\n";
@@ -42,12 +52,20 @@ function MailifyPage ($page, $nversions = 1)
         $head .= "Date: " . Rfc2822DateTime($current->get('mtime')) . "\r\n";
         $head .= sprintf("Mime-Version: 1.0 (Produced by PhpWiki %s)\r\n",
                          PHPWIKI_VERSION);
-    } else {
+        $head .= "Content-Transfer-Encoding: quoted-printable\r\n";
+    } else if ($pagedump_format == 'binary') {
         $head .= sprintf("Mime-Version: 1.0 (Produced by PhpWiki %s)\r\n",
                          PHPWIKI_VERSION."+carsten's-binary-hack");
+        $head .= "Content-Transfer-Encoding: binary\r\n";
+    } else {
+        $out .= "Content-Transfer-Encoding: " . $pagedump_format ."\r\n";
     }
-    $head .= "X-RCS_ID: $" ."Id" ."$" ."\r\n";
-    
+
+    // This might be better for actually emailing wiki pages--gateways
+    // are allowed to arbitrarily discard any X-* headers.
+    // The $Id: loadsave.php,v 1.38 2002-01-25 05:01:10 carstenklapp Exp $ also contains : so the line must be quoted.
+    $head .= "Content-ID: \"rcs_id('$" ."Id" ."$" ."')\"\r\n";
+
     $iter = $page->getAllRevisions();
     $parts = array();
     while ($revision = $iter->next()) {
