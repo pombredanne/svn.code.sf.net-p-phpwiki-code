@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbSession.php,v 1.19 2004-06-02 17:13:16 rurban Exp $');
+<?php rcs_id('$Id: DbSession.php,v 1.20 2004-06-28 16:34:30 rurban Exp $');
 
 /**
  * Store sessions data in Pear DB / ADODB / dba / ....
@@ -184,7 +184,7 @@ extends DbSession
         $table = $this->_table;
         $qid = $dbh->quote($id);
         $qip = $dbh->quote($GLOBALS['request']->get('REMOTE_ADDR'));
-        $time = time();
+        $time = $dbh->quote(time());
 	if (DEBUG and $sess_data == 'wiki_user|N;') {
 	    trigger_error("delete empty session $qid", E_USER_WARNING);
 	    /*echo "<pre>";
@@ -262,6 +262,8 @@ extends DbSession
             $ip   = $row['sess_ip'];
             if (preg_match('|^[a-zA-Z0-9/+=]+$|', $data))
                 $data = base64_decode($data);
+            if ($date < 908437560 or $date > 1588437560)
+                $date = 0;
             // session_data contains the <variable name> + "|" + <packed string>
             // we need just the wiki_user object (might be array as well)
             $user = strstr($data,"wiki_user|");
@@ -396,7 +398,7 @@ extends DbSession
         $table = $this->_table;
         $qid = $dbh->qstr($id);
         $qip = $dbh->qstr($GLOBALS['request']->get('REMOTE_ADDR'));
-        $time = time();
+        $time = $dbh->qstr(time());
 
         // postgres can't handle binary data in a TEXT field.
         if (isa($dbh, 'ADODB_postgres64'))
@@ -460,7 +462,7 @@ extends DbSession
         $sessions = array();
         $dbh = &$this->_connect();
         $table = $this->_table;
-        $rs = $this->Execute("SELECT sess_data,sess_date,sess_ip FROM $table ORDER BY sess_date DESC");
+        $rs = $dbh->Execute("SELECT sess_data,sess_date,sess_ip FROM $table ORDER BY sess_date DESC");
         if ($rs->EOF) {
             $rs->free();
             return $sessions;
@@ -472,6 +474,8 @@ extends DbSession
             $ip   = $row[2];
             if (preg_match('|^[a-zA-Z0-9/+=]+$|', $data))
                 $data = base64_decode($data);
+            if ($date < 908437560 or $date > 1588437560)
+                $date = 0;
             // session_data contains the <variable name> + "|" + <packed string>
             // we need just the wiki_user object (might be array as well)
             $user = strstr($data,"wiki_user|");
