@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-  rcs_id('$Id: actionbar.tmpl,v 1.32 2004-09-22 10:11:51 rurban Exp $');
+  rcs_id('$Id: actionbar.tmpl,v 1.33 2004-10-22 12:01:17 rurban Exp $');
   if (!$page->get('locked') || $user->isAdmin())
       $EditB = Button("edit",
                       $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
@@ -36,11 +36,13 @@
     <?=$Sep?><?= Button("DebugInfo", _("DebugInfo")) ?>
     <?=$Sep?><?= Button("PageDump", _("PageDump")) ?>
 <?php
-       $PurgeCache = Button(array('nocache' => 'purge'),
+    if (USECACHE) {
+      $PurgeCache = Button(array('nocache' => 'purge'),
                      _("PurgeHtmlCache"), $page->getName());
-       $PurgeCache->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed."));
+      $PurgeCache->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed."));
 ?>
       <?=$Sep?><?= $PurgeCache ?>
+<?php } ?>
     <!-- End debugging buttons -->
 <?php } ?>
 <?php if (defined('USE_EXTERNAL_HTML2PDF') and USE_EXTERNAL_HTML2PDF) { ?> 
