@@ -1,6 +1,6 @@
 <?php // -*-php-*-
-rcs_id('$Id: Ploticus.php,v 1.2 2004-06-02 19:37:07 rurban Exp $');
-/**
+rcs_id('$Id: Ploticus.php,v 1.3 2004-06-03 09:40:57 rurban Exp $');
+/*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
@@ -22,7 +22,7 @@ rcs_id('$Id: Ploticus.php,v 1.2 2004-06-02 19:37:07 rurban Exp $');
 
 /**
  * The Ploticus plugin passes all its arguments to the ploticus 
- * binary and displays the result as PNG, GIF, EPS or SVG.
+ * binary and displays the result as PNG, GIF, EPS, SVG or SWF.
  * Ploticus is a free, GPL, non-interactive software package 
  * for producing plots, charts, and graphics from data.
  * See http://ploticus.sourceforge.net/doc/welcome.html
@@ -33,22 +33,24 @@ rcs_id('$Id: Ploticus.php,v 1.2 2004-06-02 19:37:07 rurban Exp $');
  * - For windows you need either a gd library with GIF support or 
  *   a ploticus with PNG support. This comes only with the cygwin built.
  * - We support only images supported by GD so far (PNG most likely). 
- *   No EPS, PS, SVG or SVGZ support due to limitations in WikiPluginCached.
+ *   No EPS, PS, SWF, SVG or SVGZ support due to limitations in WikiPluginCached.
+ *   This will be fixed soon.
  *
  * Usage:
 <?plugin Ploticus device=png [ploticus options...]
    multiline ploticus script ...
 ?>
- * or without any script: 
+ * or without any script: (not tested)
 <?plugin Ploticus -prefab vbars data=myfile.dat delim=tab y=1 clickmapurl="http://mywiki.url/wiki/?pagename=@2" clickmaplabel="@3" -csmap ?>
  *
  * TODO: PloticusSql - create intermediate data from SQL. Similar to SqlResult, just in graphic form.
- * For example to proeduce nice looking pagehit statistics or ratings statistics.
+ * For example to produce nice looking pagehit statistics or ratings statistics.
  */
 
-if (isWindows())
+if (!defined("PLOTICUS_EXE"))
+  if (isWindows())
     define('PLOTICUS_EXE','pl.exe');
-else
+  else
     define('PLOTICUS_EXE','/usr/local/bin/pl');
 
 require_once "lib/WikiPluginCached.php"; 
@@ -78,7 +80,7 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
     function getDefaultArguments() {
         return array(
@@ -253,6 +255,9 @@ extends WikiPluginCached
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/06/02 19:37:07  rurban
+// extended description
+//
 // Revision 1.1  2004/06/02 19:12:42  rurban
 // new Ploticus plugin
 //

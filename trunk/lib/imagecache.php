@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: imagecache.php,v 1.6 2004-05-14 10:16:38 rurban Exp $');
+<?php rcs_id('$Id: imagecache.php,v 1.7 2004-06-03 09:40:57 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -96,42 +96,14 @@ function mainImageCache() {
     // normalize pagename
     $request->setArg('pagename', deducePagename($request));
     $pagename = $request->getArg('pagename');
-
-    // assume that every user may use the cache    
-    global $user; // FIXME: necessary ?
+    $request->_dbi = WikiDB::open($GLOBALS['DBParams']);
     if (ENABLE_USER_NEW) {
-        $userid = deduceUsername();	
-        if (isset($request->_user) and 
-            !empty($request->_user->_authhow) and 
-            $request->_user->_authhow == 'session')
-        {
-            if (isset($request->_user) and 
-                ( ! isa($request->_user,WikiUserClassname())
-                  or (strtolower(get_class($request->_user)) == '_passuser')))
-            {
-                $request->_user = WikiUser($userid,$request->_user->_prefs);
-            }
-            unset($request->_user->_HomePagehandle);
-            $request->_user->hasHomePage();
-            // update the lockfile filehandle
-            if (  isa($request->_user,'_FilePassUser') and 
-                  $request->_user->_file->lockfile and 
-                  !$request->_user->_file->fplock  )
-	    {
-                $request->_user = new _FilePassUser($userid,$request->_user->_prefs,$request->_user->_file->filename);
-            }
-            $request->_prefs = & $request->_user->_prefs;
-        } else {
-            $user = WikiUser($userid);
-            $request->_user =& $user;
-            $request->_prefs =& $request->_user->_prefs;
-        }
+        $request->_user = new _AnonUser();
+        $request->_prefs =& $request->_user->_prefs;
     } else {
-        $user = new WikiUser($request, deduceUsername());
-        $request->_user =& $user;
-        $request->_prefs = $request->_user->getPreferences();
+    	$request->_user = new WikiUser($request);
+        $request->_prefs = new UserPreferences();
     }
-    $dbi = WikiDB::open($GLOBALS['DBParams']);
     
     // Enable the output of most of the warning messages.
     // The warnings will screw up zip files and setpref though.
@@ -178,7 +150,7 @@ function mainImageCache() {
         $request->setStatus(200); // No, we do _not_ have an Error 404 :->
     }
 
-    WikiPluginCached::fetchImageFromCache($dbi,$request,'png');
+    WikiPluginCached::fetchImageFromCache($request->_dbi,$request,'png');
 }
 
 

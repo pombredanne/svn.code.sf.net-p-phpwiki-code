@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: VisualWiki.php,v 1.8 2004-01-26 09:18:00 rurban Exp $');
+rcs_id('$Id: VisualWiki.php,v 1.9 2004-06-03 09:40:57 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -50,7 +50,8 @@ elseif (isWindows()) {
     // Name of the Truetypefont - Helvetica is probably easier to read
     //define('VISUALWIKIFONT', 'Helvetica');
     //define('VISUALWIKIFONT', 'Times');
-    define('VISUALWIKIFONT', 'Arial');
+    //define('VISUALWIKIFONT', 'Arial');
+    define('VISUALWIKIFONT', 'luximr'); // sf.net, sf.net can only do gif
 
     // The default font paths do not find your fonts, set the path here:
     //$fontpath = "/usr/X11R6/lib/X11/fonts/TTF/";
@@ -83,7 +84,7 @@ extends WikiPluginCached
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     /**
@@ -114,6 +115,7 @@ extends WikiPluginCached
                      'exclude_list'   => '',
                      'include_list'   => '',
                      'fontsize'       => 10,
+                     'debug'          => false,
                      'help'           => false );
     }
 
@@ -584,8 +586,13 @@ extends WikiPluginCached
      * @return     boolean  error status; true=ok; false=error
      */
     function execute($cmd) {
-        exec($cmd, $errortxt, $returnval);
-        return ($returnval == 0);
+        exec($cmd, $outarr, $returnval); // normally 127
+        $errstr = join('',$outarr);
+        if (!empty($errstr))
+            trigger_error($cmd.": ".$errstr, E_USER_WARNING);
+        if (!isWindows())
+            usleep(1000);
+        return empty($errstr);
     }
 
     /**
@@ -641,15 +648,18 @@ extends WikiPluginCached
                 }
             fclose($fp);
 //trigger_error("url=".$url);
+        } else {
+            trigger_error("
+$tempfiles.$gif: ".(file_exists("$tempfiles.$gif") ? filesize("$tempfiles.$gif"):'missing')."
+$tempfiles.map: ".(file_exists("$tempfiles.map") ? filesize("$tempfiles.map"):'missing')."
+",E_USER_WARNING);
         }
 
         // clean up tempfiles
-        if ($ok && empty($_GET['debug']) && $tempfiles) {
-            //unlink($tempfiles);
-            //unlink("$tempfiles.$gif");
-            //unlink($tempfiles . '.map');
-            //unlink($tempfiles . '.dot');
-//trigger_error($tempfiles);
+        if ($ok or !$debug)
+        foreach (array('',".$gif",".map",".dot") as $ext) {
+            if (file_exists($tempfiles.$ext))
+                unlink($tempfiles.$ext);
         }
 
         if ($ok)
@@ -722,6 +732,26 @@ function interpolate($a, $b, $pos) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/01/26 09:18:00  rurban
+// * changed stored pref representation as before.
+//   the array of objects is 1) bigger and 2)
+//   less portable. If we would import packed pref
+//   objects and the object definition was changed, PHP would fail.
+//   This doesn't happen with an simple array of non-default values.
+// * use $prefs->retrieve and $prefs->store methods, where retrieve
+//   understands the interim format of array of objects also.
+// * simplified $prefs->get() and fixed $prefs->set()
+// * added $user->_userid and class '_WikiUser' portability functions
+// * fixed $user object ->_level upgrading, mostly using sessions.
+//   this fixes yesterdays problems with loosing authorization level.
+// * fixed WikiUserNew::checkPass to return the _level
+// * fixed WikiUserNew::isSignedIn
+// * added explodePageList to class PageList, support sortby arg
+// * fixed UserPreferences for WikiUserNew
+// * fixed WikiPlugin for empty defaults array
+// * UnfoldSubpages: added pagename arg, renamed pages arg,
+//   removed sort arg, support sortby arg
+//
 // Revision 1.7  2003/03/03 13:57:31  carstenklapp
 // Added fontpath (see PhpWiki:VisualWiki), tries to be smart about which OS.
 // (This plugin still doesn't work for me on OS X, but at least image files
