@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.102 2002-02-08 03:01:11 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.103 2002-02-08 03:17:09 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -317,18 +317,6 @@ function ExtractWikiPageLinks($content) {
  * @bugs FIXME: footnotes and old-style tables are known to be broken.
  */
 function ConvertOldMarkup ($text, $just_links = false) {
-    // PHPism: defining this function here, doesn't really make
-    // it function local, but it should.
-    function _ConvertOldListMarkup ($indent, $bullet) {
-        $indent = str_repeat('     ', strlen($indent));
-        if ($bullet[0] == ';') {
-            $term = ltrim(substr($bullet, 1));
-            return $indent . $term . "\n" . $indent . '     ';
-        }
-        else
-            return $indent . $bullet . ' ';
-    }
-
 
     static $orig, $repl, $link_orig, $link_repl;
 
@@ -377,6 +365,17 @@ function ConvertOldMarkup ($text, $just_links = false) {
     else
         return preg_replace($orig, $repl, $text);
 }
+
+function _ConvertOldListMarkup ($indent, $bullet) {
+    $indent = str_repeat('     ', strlen($indent));
+    if ($bullet[0] == ';') {
+        $term = ltrim(substr($bullet, 1));
+        return $indent . $term . "\n" . $indent . '     ';
+    }
+    else
+        return $indent . $bullet . ' ';
+}
+
 
 
 /**
