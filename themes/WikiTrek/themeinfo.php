@@ -1,6 +1,6 @@
 <?php // -*-php-*-
 
-rcs_id('$Id: themeinfo.php,v 1.11 2002-01-19 00:04:50 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.12 2002-01-19 01:02:46 carstenklapp Exp $');
 
 /**
  * This PhpWiki theme is experimental and will likely not appear as
@@ -46,12 +46,8 @@ $Theme->addImageAlias('logo', 'Ufp-logo.jpg');
 // you for editing..." screen will be omitted.
 $Theme->addImageAlias('signature', 'lights.gif');
 
-// The gettext() function does not work here because we are included
-// from 'index.php'. Normally themes shouldn't override date & time
-// settings because this will mess up any future user-specific
-// preferences for locale.
-$Theme->setDateTimeFormat("Stardate %B.%e.%Y"); // may contain time of day
-$Theme->setDateFormat("Stardate %B.%e.%Y"); // must not contain time
+$Theme->setDateTimeFormat("Stardate %Y%m%d.%H%M%S"); // may contain time of day
+$Theme->setDateFormat("Stardate %Y%m%d"); // must not contain time
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
