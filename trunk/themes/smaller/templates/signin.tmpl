@@ -1,5 +1,5 @@
 <?php // -*-html-*-
-rcs_id('$Id: signin.tmpl,v 1.2 2004-03-24 14:05:33 rurban Exp $');
+rcs_id('$Id: signin.tmpl,v 1.3 2004-03-24 14:33:31 rurban Exp $');
 
 if (empty($FORMNAME))
     $FORMNAME = 'signin';
@@ -32,7 +32,6 @@ if ($user->isAuthenticated()) {
     <?php
     $SignInInput = HTML::input(array('type' => 'text',
 				     'name' => "auth[userid]",
-				     'id' => 'auth.userid',
 				     'size' => 12,
 				     'maxlength' => 256,
 				     'onchange' => "SignIn(this.form,false);"));
@@ -43,7 +42,7 @@ if ($user->isAuthenticated()) {
 		   asXml(HTML::a(array(
 				       'href'=>'#',
 				       'title' => sprintf(_("Click to authenticate as %s"),$userid),
-				       'onclick'=>'SignIn(document.signin,"'.$userid.'");'),
+				       'onclick'=>'SignIn(document.forms["'.$FORMNAME.'"],"'.$userid.'");'),
 				 $userid)));
 ?>
 
@@ -56,7 +55,9 @@ if ($user->isAuthenticated()) {
                     'width=600,height=430,scrollbars=yes,resizable=yes,toolbar=yes');
       }
       <?php } ?>
-      if (userid) document.getElementById("auth.userid").value=userid;
+      if (userid) {
+        form.elements["auth[userid]"].value = userid;
+      }
       form.submit();
     }
     //-->
