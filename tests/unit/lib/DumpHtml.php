@@ -12,7 +12,8 @@ class DumpHtml extends phpwiki_TestCase {
         global $request, $cur_dir;
 
         $request->setArg('directory','.dumphtml');
-        $request->setArg('pages',$pagename);
+        $request->setArg('pages', $pagename);
+        $request->setArg('action', 'dumphtml');
         unlink($cur_dir."/.dumphtml/$pagename.html");
         DumpHtmlToDir($request);
         $this->assertTrue(file_exists($cur_dir."/.dumphtml/$pagename.html")); 
