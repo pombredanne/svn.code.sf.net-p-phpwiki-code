@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.13 2004-04-29 21:54:05 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.14 2004-04-29 23:25:12 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -272,7 +272,7 @@ function fix_configs() {
     // $FieldSeparator = "\xFF"; // this byte should never appear in utf-8
     // FIXME: get rid of constant. pref is dynamic and language specific
     $charset = CHARSET;
-    if (isset($GLOBALS['LANG']) and in_array($GLOBALS['LANG'],array('ja','zh')))
+    if (isset($LANG) and in_array($LANG,array('ja','zh')))
         $charset = 'utf-8';
     if (strtolower($charset) == 'utf-8')
         $FieldSeparator = "\xFF";
@@ -282,7 +282,8 @@ function fix_configs() {
     if (!defined('DEFAULT_LANGUAGE'))
         define('DEFAULT_LANGUAGE', 'en');
 
-    //
+    update_locale(isset($LANG) ? $LANG : DEFAULT_LANGUAGE);
+
     // Set up (possibly fake) gettext()
     //
     if (!function_exists ('bindtextdomain')) {
@@ -435,8 +436,6 @@ function fix_configs() {
     if (!defined('THEME'))
         define('THEME', 'default');
 
-    update_locale(isset($LANG) ? $LANG : DEFAULT_LANGUAGE);
-
     if (!defined('WIKI_NAME'))
         define('WIKI_NAME', _("An unnamed PhpWiki"));
 
@@ -469,6 +468,7 @@ function fix_configs() {
                           E_USER_ERROR);
             // this is flawed. constants cannot be changed.
             define('USE_DB_SESSION',false);
+            $DBParams['db_session_table'] = @$DBParams['prefix'] . 'session';
         }
     } else {
         // default: true (since v1.3.8)
@@ -488,10 +488,12 @@ function fix_configs() {
         if (isset($DBParams['dsn']))
             $DBAuthParams['auth_dsn'] = $DBParams['dsn'];
     }
-
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2004/04/29 21:54:05  rurban
+// typo
+//
 // Revision 1.12  2004/04/27 16:16:27  rurban
 // more subtle config problems with defaults
 //
