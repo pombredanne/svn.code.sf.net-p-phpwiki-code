@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.75 2004-04-09 17:49:03 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.76 2004-04-16 14:09:13 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -481,7 +481,7 @@ class PageList {
 
     function addPage ($page_handle) {
         if (is_string($page_handle)) {
-            if (empty($page_handle)) return;
+            if ($page_handle == '') return;
 	    if (in_array($page_handle, $this->_excluded_pages))
         	return;             // exclude page.
             $dbi = $GLOBALS['request']->getDbh();
@@ -524,7 +524,7 @@ class PageList {
     function addPageList (&$list) {
         reset ($list);
         while ($page = next($list))
-            $this->addPage($page);
+            $this->addPage((string)$page);
     }
 
     function getContent() {
@@ -816,8 +816,8 @@ extends PageList {
 
     function addPageList ($array) {
         while (list($pagename,$selected) = each($array)) {
-            if ($selected) $this->addPageSelected($pagename);
-            $this->addPage($pagename);
+            if ($selected) $this->addPageSelected((string)$pagename);
+            $this->addPage((string)$pagename);
         }
     }
 
