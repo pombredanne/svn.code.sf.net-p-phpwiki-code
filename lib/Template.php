@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.38 2002-08-22 23:28:31 rurban Exp $');
+<?php rcs_id('$Id: Template.php,v 1.39 2002-08-23 18:29:29 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -205,7 +205,22 @@ function GeneratePage($content, $title, $page_revision = false, $args = false) {
     if (!isset($args['HEADER']))
         $args['HEADER'] = $title;
     
-    printXML(new Template('top', $request, $args));
+    if ($frame = $request->getArg('frame')) {
+        if ($frame == 'top') $args['framesrc'] = $request->getArg('framesrc');
+        printXML(new Template($frame, $request, $args));
+        $request->setArg('framesrc',false);
+    } else {
+        // This is a hack but, it works fast enough... so beware of spaces
+        // The other possibility would be to redirect to an action=FrameInclude
+        $text = &$page_revision->getPackedContent();
+        if ($page_revision and strstr($text, '<?plugin FrameInclude')) {
+            $plugin = TransformText($page_revision);
+            $args['FRAMESET'] = $plugin->_content[0];
+            printXML(new Template('frameset', $request, $args));
+        } else {
+            printXML(new Template('html', $request, $args));
+        }
+    }
 }
 
 

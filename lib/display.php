@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.34 2002-08-22 23:28:31 rurban Exp $');
+rcs_id('$Id: display.php,v 1.35 2002-08-23 18:29:30 rurban Exp $');
 
 require_once('lib/Template.php');
 require_once('lib/BlockParser.php');
@@ -117,11 +117,20 @@ function displayPage(&$request, $tmpl = 'browse') {
         $pagetitle->addTooltip(sprintf(_("BackLinks for %s"), $pagename));
     }
 
-    include_once('lib/BlockParser.php');
+    //include_once('lib/BlockParser.php');
 
     require_once('lib/PageType.php');
-    $transformedContent = PageType($revision);
-    $template = Template('browse', array('CONTENT' => $transformedContent));
+    if ($frame = $request->getArg('frame')) {
+        if (in_array($frame,array('body','browse','editpage')))
+            $template = Template($frame, array('CONTENT' => PageType($revision)));
+        elseif ($frame == 'top')
+            $template = Template($frame, array('framesrc' => $request->getArg('framesrc')));
+        else
+            $template = Template($frame);
+    } else {
+        $transformedContent = PageType($revision);
+        $template = Template('browse', array('CONTENT' => $transformedContent));
+    }
 
     header("Content-Type: text/html; charset=" . CHARSET);
     // don't clobber date header given by RC

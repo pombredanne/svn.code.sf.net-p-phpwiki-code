@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.11 2002-08-22 23:28:31 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.12 2002-08-23 18:29:29 rurban Exp $');
 
 //FIXME: arg on get*Revision to hint that content is wanted.
 
@@ -312,6 +312,7 @@ class WikiDB {
         $result = $this->_backend->most_recent($params);
         return new WikiDB_PageRevisionIterator($this, $result);
     }
+
 };
 
 
@@ -775,6 +776,15 @@ class WikiDB_Page
         assert($version >= 0);
         return $version;
     }
+
+    function isUserPage ($include_empty = true) {
+        return $this->get('pref') ? true : false;
+        if ($include_empty)
+            return true;
+        $current = $this->getCurrentRevision();
+        return ! $current->hasDefaultContents();
+    }
+
 };
 
 /**
@@ -1250,121 +1260,121 @@ class WikiDB_cache
 };
 
 /**
- * An abstract base class which represents a User.
+ * FIXME! Class for externally authenticated users.
  *
- * A WikiDB_User stores preferences, is a member of 
- * Wiki_Group and the owner in a WikiDB_Page_Permission.
+ * We might have read-only access to the password and/or group membership,
+ * or we might even be able to update the entries.
  *
- *   special userid => preferences table
  *   Group: list of userid's in a special WikiDB_Page
  *   WikiDB_Page:  owner.group permission_flag in page metadata
- * 
- * We support external authentification also, which means the password 
- * is seperated from the other preferences. (read-only and from external dsn)
  *
+ * FIXME: This was written before we stored prefs as %pagedata, so 
  */
 class WikiDB_User
 extends WikiUser
 {
-    function WikiDB_User($userid, $authdb) {
-        $this->_authdb = &$authdb;
-        $this->_request = &$GLOBALS['request'];
-        $this->_dbi = &$this->_request->getDbh();
-        $this->_homepage = $this->_dbi->getPage($this->_userid);
+    var $_authdb;
+
+    function WikiDB_User($userid, $authlevel = false) {
+        $this->_authdb = new WikiAuthDB($GLOBALS['DBAuthParams']);
+        $this->_authmethod = 'AuthDB';
+        WikiUser::WikiUser($userid, $authlevel);
     }
 
-    /**
-     * Get the preferences object. 
-     * Method: cookies (?), session, page metadata and db.
-     *
-     * @access public
-     *
-     * @return object UserPreferences.
-     */
     function getPreferences() {
-        // Restore saved preferences.
-        // I'd rather prefer only to store the UserId in the cookie or session,
-        // and get the preferences from the db or page.
-        if (!($prefs = $this->_request->getCookieVar('WIKI_PREFS2')))
-            $prefs = $this->_request->getSessionVar('wiki_prefs');
-        if (!$prefs and USE_PREFS_IN_PAGE) // page metadata
-            $prefs = unserialize($this->_homepage->get('pref'));
-        // Todo: try our WikiDB backends.
-
-        return new UserPreferences($prefs);
+        // external prefs override internal ones?
+        if (! $this->_authdb->getPrefs() )
+            if ($pref = WikiUser::getPreferences())
+                return $prefs;
+        return false;
     }
 
     function setPreferences($prefs) {
-        $this->_request->setSessionVar('wiki_prefs', $prefs);
-        // No cookies anymore for all prefs, only the userid.
-        // PHP creates a session cookie in memory, which is much more efficient.
-        if (USE_PREFS_IN_PAGE) {
-            // how can we ensure that any password is encrypted? 
-            // we don't need any plaintext password
-            $this->_homepage->set('pref',serialize($prefs));
-        }
-        // else store it in the db
+        if (! $this->_authdb->setPrefs($prefs) )
+            return WikiUser::setPreferences();
     }
 
-    // can be overriden from the auth backends
     function exists() {
-        // check for user homepage with user flag.
-        if (USE_PREFS_IN_PAGE)
-            return $this->homePage_->get('user');
-    }
-
-    function homePage() {
-        if ($this->_homepage) 
-            return $this->_homepage;
-        else {
-            $this->_homepage = $this->_dbi->getPage($this->_userid);
-            return $this->_homepage;
-        }
+        return $this->_authdb->exists($this->_userid);
     }
 
     // create user and default user homepage
     function createUser ($pref) {
         if ($this->exists()) return;
-        $page = $this->homePage();
-        include "lib/editpage.php";
-        // fake the request's pagename
-        $fake_request = $this->_request;
-        $fake_request->setArg('pagename',$this->userid);
-        $fake_request->_user = $this->userid;
-        $e = new PageEditor ($fake_request);
-        $e->savePage();
-        if ($pref) {
-            $this->setPreferences($prefs);
+        if (! $this->_authdb->createUser($pref)) {
+            // external auth doesn't allow this.
+            // do our policies allow local users instead?
+            return WikiUser::createUser($pref);
         }
     }
 
-    // must be overriden from the auth backends
-    function checkPassword() {
-        trigger_error(sprintf("WikiDB_User->checkPassword() not yet written for '%s'",
-                              $this->_userid), E_USER_WARNING);
-        return false;
+    function checkPassword($passwd) {
+        return $this->_authdb->pwcheck($passwd);
     }
 
-    function changePassword() {
-        if (! $this->mayChangePassword()) {
+    function changePassword($passwd) {
+        if (! $this->mayChangePassword() ) {
             trigger_error(sprintf("Attempt to change an external password for '%s'",
                                   $this->_userid), E_USER_ERROR);
             return;
         }
-        trigger_error(sprintf("WikiDB_User->changePassword() not yet written for '%s'",
-                              $this->_userid), E_USER_WARNING);
+        return $this->_authdb->changePass($passwd);
     }
 
     function mayChangePassword() {
-        return $GLOBALS['DBAuthParams']['auth_pass_write'];
+        return $this->_authdb->auth_update;
     }
-
 }
 
-// create user and default user homepage
-function createUser ($userid, $pref) {
-    $user = new WikiDB_User ($userid, $GLOBALS['request']->getAuthDbh());
-    $user->createUser($pref);
+class WikiAuthDB
+extends WikiDB
+{
+    var $auth_dsn = false, $auth_check = false;
+    var $auth_crypt_method = 'crypt', $auth_update = false;
+    var $group_members = false, $user_groups = false;
+    var $pref_update = false, $pref_select = false;
+
+    function WikiAuthDB($DBAuthParams) {
+        foreach ($DBAuthParams as $key => $value) {
+            $this->$key = $value;
+        }
+    }
+
+    function getPrefs($prefs) {
+        if ($this->pref_select) {
+            trigger_error(sprintf("WikiAuthDB->getPrefs() not yet written for '%s'",
+                                  $this->_userid), E_USER_WARNING);
+        } else {
+            trigger_error(sprintf("WikiAuthDB->getPrefs() not defined for '%s'",
+                                  $this->_userid), E_USER_ERROR);
+        }
+        return false;
+    }
+    function setPrefs($prefs) {
+        if ($this->pref_write) {
+            trigger_error(sprintf("WikiAuthDB->setPrefs() not allowed for '%s'",
+                                  $this->_userid), E_USER_ERROR);
+        } else {
+            trigger_error(sprintf("WikiAuthDB->setPrefs() not yet written for '%s'",
+                                  $this->_userid), E_USER_WARNING);
+        }
+        return false;
+    }
+    function createUser ($pref) {
+        trigger_error(sprintf("WikiAuthDB->createUser() not yet written for '%s'",
+                              $this->_userid), E_USER_WARNING);
+        return false;
+    }
+    function exists() {
+        trigger_error(sprintf("WikiAuthDB->exists() not yet written for '%s'",
+                              $this->_userid), E_USER_WARNING);
+        return false;
+    }
+    function pwcheck($pass) {
+        trigger_error(sprintf("WikiAuthDB->pwcheck() not yet written for '%s'",
+                              $this->_userid), E_USER_WARNING);
+        return false;
+    }
 }
 
 // Local Variables:

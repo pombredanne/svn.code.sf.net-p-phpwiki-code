@@ -80,8 +80,6 @@ $locale["Last Modified:"] =
    "Ändringsdatum:";
 $locale["Last Summary"] =
    "Senaste Kommentar";
-$locale["Last Summary:"] =
-   "Senaste Kommentar:";
 $locale["Last edited %s."] =
    "Senast ändrad %s.";
 $locale["Last edited on %s."] =
@@ -144,8 +142,6 @@ $locale["Show relative dates using 'Today' and 'Yesterday'."] =
    "Andvänd relativt datum";
 $locale["Sorry for the inconvenience."] =
    "Ledsen för allt besvär.";
-$locale["Summary:"] =
-   "Kommentar:";
 $locale["Synopsis"] =
    "Översikt";
 $locale["TextFormattingRules"] =

@@ -6,21 +6,13 @@ $locale["%s at %s"] =
    "%s a %s";
 $locale["%s bytes"] =
    "%s byte";
-$locale["%s bytes written"] =
-   "%s byte scribere";
-$locale["%s bytes written\n"] =
-   "%s byte scribere\n";
 $locale["%s days"] =
    "%s giorni";
 $locale["%s of this page"] =
    "%s di questa pagina";
-$locale["%s words"] =
-   "%s giorni";
 $locale["%s: %s"] =
    "%s: %s";
 $locale["%s: file not found"] =
-   "%s: archivio non trovato";
-$locale["%s: not defined"] =
    "%s: archivio non trovato";
 $locale["(Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor.)"] =
    "(Copia le tue modifiche nella clipboard. Potete provare a modificare un'altra pagina o registra il vostro testo in un editor di testo.)";
@@ -32,8 +24,6 @@ $locale["1 day"] =
    "1 giorno";
 $locale["<no matches>"] =
    "<nessun risultati>";
-$locale["<none>"] =
-   "Nessuno";
 $locale["Author:"] =
    "Autore:";
 $locale["Calendar"] =
@@ -44,16 +34,12 @@ $locale["Columns: %s."] =
    "Caratteri: %s.";
 $locale["Contents"] =
    "Indice";
-$locale["Count"] =
-   "Indice";
 $locale["Deleted."] =
    "Rimossa.";
 $locale["Describe %s here."] =
    "Descrivi %s qui.";
 $locale["Diff"] =
    "Diff";
-$locale["Diff: %s"] =
-   "Differenza di: %s";
 $locale["Edit"] =
    "Modifica";
 $locale["Edit %s"] =
@@ -84,10 +70,6 @@ $locale["HomePage"] =
    "PaginaPrincipale";
 $locale["Include of '%s' failed"] =
    "Inserimento di '%s' fallito";
-$locale["IncludePage"] =
-   "InserireLaPagina";
-$locale["Included from %s"] =
-   "Inserire dalla %s";
 $locale["Last"] =
    "Ultima";
 $locale["Last Modified"] =
@@ -118,33 +100,19 @@ $locale["Note:"] =
    "Nota:";
 $locale["Optimizing %s"] =
    "Ottimizzando %s";
-$locale["Other version"] =
-   "Mostra il versione corrente";
 $locale["Page Locked"] =
    "Pagina Bloccata";
 $locale["Page Name"] =
    "Nome Della Pagina";
-$locale["Page Version:"] =
-   "Versione";
-$locale["Page now locked."] =
-   "Pagina bloccata.";
 $locale["Page now unlocked."] =
    "Pagina sbloccata.";
-$locale["Plugin %s failed."] =
-   "Inserimento di '%s' fallito";
 $locale["Previous"] =
    "Precedente";
 $locale["Printer"] =
    "Stampante";
-$locale["RecentChanges"] =
-   "CambiamentiRecenti";
 $locale["Remove Page"] =
    "Rimuovi la Pagina";
 $locale["Remove page"] =
-   "Rimuovi la pagina";
-$locale["Remove selected pages"] =
-   "Rimuovi la pagina";
-$locale["Remove the page now"] =
    "Rimuovi la pagina";
 $locale["Removed page '%s' succesfully."] =
    "La pagina '%s' è stata rimossa correttamente.";
@@ -166,18 +134,12 @@ $locale["Someone has edited the page!"] =
    "Qualcuno ha modificato la pagina!";
 $locale["Sorry for the inconvenience."] =
    "Scusa per l'inconveniente.";
-$locale["Statistics about %s."] =
-   "Informazioni della %s.";
-$locale["Summary:"] =
-   "Commenti:";
 $locale["Synopsis"] =
    "Sinossi";
 $locale["TextFormattingRules"] =
    "RegoleDiFormattazioneDelTesto";
 $locale["Thank you for editing %s."] =
    "Grazie per le modifiche! %s.";
-$locale["The %d least popular pages of this wiki:"] =
-   "Le %d pagine più popolari di questo wiki sono:";
 $locale["The %d most popular pages of this wiki:"] =
    "Le %d pagine più popolari di questo wiki sono:";
 $locale["This page has been locked by the administrator and cannot be edited."] =
@@ -196,8 +158,6 @@ $locale["Today"] =
    "Oggi";
 $locale["Unlock Page"] =
    "Sblocca la Pagina";
-$locale["UserPreferences"] =
-   "Preferenze";
 $locale["Version"] =
    "Versione";
 $locale["Version %d"] =
@@ -210,28 +170,16 @@ $locale["Version %s, saved on %s."] =
    "Versione %s, salvata su %s.";
 $locale["Versions are identical"] =
    "Le versioni sono identiche";
-$locale["View Source"] =
-   "Mostra il sorgente della pagina";
-$locale["View Source: %s"] =
-   "Mostra il sorgente della pagina: %s";
 $locale["View the current version"] =
    "Mostra il versione corrente";
 $locale["W"] =
    "L";
-$locale["Wanted Pages"] =
-   "TrovaPagina";
-$locale["WantedPages"] =
-   "TrovaPagina";
 $locale["Warning!"] =
    "Avvertimento!";
 $locale["Width"] =
    "Larghezza";
-$locale["You are about to remove '%s' permanently!"] =
-   "Stai per rimuovere '%s'";
 $locale["Your careful attention to detail is much appreciated."] =
    "La tua cura verso il dettaglio è molto apprezzata.";
-$locale["Your version"] =
-   "versione corrente";
 $locale["by %s"] =
    "di %s";
 $locale["current version"] =

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.14 2002-08-22 23:28:31 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.15 2002-08-23 18:29:29 rurban Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -253,9 +253,12 @@ class ErrorManager
  */
 function ErrorManager_errorHandler($errno, $errstr, $errfile, $errline) 
 {
-    global $ErrorManager;
+    if (!isset($GLOBALS['ErrorManager'])) {
+      $GLOBALS['ErrorManager'] = new ErrorManager;
+    }
+	
     $error = new PhpError($errno, $errstr, $errfile, $errline);
-    $ErrorManager->handleError($error);
+    $GLOBALS['ErrorManager']->handleError($error);
 }
 
 

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.24 2002-02-08 18:26:20 dairiki Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.25 2002-08-23 18:29:29 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -335,6 +335,7 @@ class TightenableParagraph extends Tightenable {
     function canTighten () {
         return true;
     }
+
 
     function printXML () {
         if ($this->_isTight)

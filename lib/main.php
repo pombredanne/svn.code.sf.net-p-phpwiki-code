@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.67 2002-08-22 23:28:31 rurban Exp $');
+rcs_id('$Id: main.php,v 1.68 2002-08-23 18:29:30 rurban Exp $');
 
 define ('DEBUG', 1);
 define ('USE_PREFS_IN_PAGE', true);
@@ -34,7 +34,7 @@ class WikiRequest extends Request {
         // Handle preference updates, an authentication requests, if any.
         if ($new_prefs = $this->getArg('pref')) {
             $this->setArg('pref', false);
-            if ($this->isPost() and isset($new_prefs['passwd2']) and 
+            if ($this->isPost() and !empty($new_prefs['passwd']) and 
                 ($new_prefs['passwd2'] != $new_prefs['passwd'])) {
                 $this->_prefs->set('passwd','');
                 // $this->_prefs->set('passwd2',''); // This is not stored anyway
@@ -66,12 +66,16 @@ class WikiRequest extends Request {
         // Save preferences in session and cookie
         $id_only = true;
         $this->_user->setPreferences($this->_prefs, $id_only);
-
+        /*
         if ($theme = $this->getPref('theme') ) {
             // Load user-defined theme
             include_once("themes/$theme/themeinfo.php");
         } else {
             // site theme
+            include_once("themes/" . THEME . "/themeinfo.php");
+        }
+        */
+        if (empty($Theme)) {
             include_once("themes/" . THEME . "/themeinfo.php");
         }
         if (empty($Theme)) {
@@ -291,8 +295,12 @@ class WikiRequest extends Request {
             case 'unlock':
                 return WIKIAUTH_ADMIN;
             default:
-                // Temp workaround for french single-word action page 'Historique'
-                $singleWordActionPages = array("Historique", "Info", _('Today'));
+                // Temp workaround for french single-word action pages 'Historique'
+                // Some of this make sense as SubPage actions or buttons.
+                $singleWordActionPages = 
+                    array("Historique", "Info",
+                          _("Preferences"), _("Administration"), 
+                          _("Today"), _("Help"));
                 if (in_array($action, $singleWordActionPages))
                     return WIKIAUTH_ANON; // ActionPage.
                 global $WikiNameRegexp;

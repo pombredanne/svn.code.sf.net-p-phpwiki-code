@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.2 2002-03-08 03:29:50 carstenklapp Exp $
+ * $Id: phpwiki.css,v 1.3 2002-08-23 18:29:33 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -413,6 +413,15 @@ div.errors {
   border: medium solid #fff8dc; /* darker ivory */
 }
 
+/* Hints */
+.hint {
+  color: black;
+  background: #eeeeee;
+  font-size: smaller;
+  margin-left: 5em;
+  /* padding: -0.5em 0 -0.5em; */
+  border: thin solid #aaaaaa;
+}
 
 /* For emacs users
  *

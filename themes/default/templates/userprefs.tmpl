@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.22 2002-08-22 23:28:32 rurban Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.23 2002-08-23 18:29:34 rurban Exp $ -->
 <?php
 
 $time = time();
@@ -20,7 +20,9 @@ $RelativeDatesCB = HTML(HTML::input(array('type' => 'hidden',
                                           'name' => 'pref[relativeDates][]',
                                           'value' => '1',
                                           'checked' => (bool) $request->getPref('relativeDates'))));
-$SelectOptions = HTML();
+$SelectThemes = ''; $SelectLanguages = '';
+$SelectThemesDesc = ''; $SelectLanguagesDesc = '';
+$SelectOptions = HTML(); 
 if (!empty($available_themes) and is_array($available_themes)) {
   foreach ($available_themes as $theme) {
     if ($theme == $request->getPref('theme'))
@@ -30,9 +32,26 @@ if (!empty($available_themes) and is_array($available_themes)) {
   }
   $SelectThemes = HTML::select(array('name' => "pref[theme]",'id' => 'theme'),
 			       $SelectOptions);
-} else {
-  $changeTheme = false;
+  $SelectThemesDesc = _("Select your theme");
 }
+
+$SelectOptions = HTML();
+if (!empty($available_languages) and is_array($available_languages)) {
+  foreach ($available_languages as $lang) {
+    if ($theme == $request->getPref('lang'))
+	$SelectOptions->pushContent(HTML::option(array('value' => $lang,'selected'=>"selected"),$lang));
+    else
+	$SelectOptions->pushContent(HTML::option(array('value' => $lang),$lang));
+  }
+  $SelectLanguages = HTML::select(array('name' => "pref[lang]",'id' => 'lang'),
+			       $SelectOptions);
+  $SelectLanguagesDesc = _("Select your language");
+} else {
+  if ($SelectThemes == '')
+    $appearance = false;
+}
+
+
 if (empty($errmsg)) $errmsg = false;
 else $errmsg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr());
 ?>
@@ -52,20 +71,28 @@ else $errmsg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr());
      <input type="text" name="pref[email]" size="30" maxlength="60"
 	    value="<?=$request->getPref('email')?>" />
   <?php } else { ?><?=$request->getPref('email')?><?php } ?>
+  &nbsp;&nbsp;<?= _("Status") ?>:&nbsp;&nbsp;
+  <?php if ($request->getPref('emailVerified')) { ?>
+    <?= _("Email verified.") ?>
+  <?php } else { ?>
+    <?= _("Email not yet verified.") ?>
+  <?php } ?>
   </p>
-     <p class="hint">(<?=_("Note, that user accounts with bouncing emails will be automatically disabled.")?>)</p>
+     <p class="hint">(<?=_("Note, that user accounts with bouncing emails will be disabled.")?>)</p>
   <?php if ($notifyPages) { ?>
    <p><?=_("Get an email notification at changes of the following pages")?>:<br />
    &nbsp;<textarea name="pref[notifyPages]" cols="50" rows="5"><?=$request->getPref('notifyPages')?></textarea>
-     <p class="hint">(<?=_("Enter pages seperated by space or brackets. Wildcards allowed.")?>)</p>
+     <p class="hint">(<?=_("Enter pages seperated by space or comma. Wildcards (fileglobbing) allowed.")?>)</p>
    </p>
   <?php } ?>
 <?php } ?>
 
-<?php if ($changeTheme) { ?>
-  <h2><?=_("Change Theme")?></h2>
-   <p><?=_("Select your default theme")?>:<br />
-       <?= $SelectThemes ?>
+<?php if ($appearance) { ?>
+  <h2><?=_("Appearance")?></h2>
+   <table>
+     <tr><td><?=$SelectThemesDesc?>:</td><td><?=$SelectLanguagesDesc?>:</td></tr>
+     <tr><td><?= $SelectThemes ?></td><td><?= $SelectLanguages ?></td></tr>
+   </table>
 <?php } ?>
 
 <?php if ($editAreaSize) { ?>
