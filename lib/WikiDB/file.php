@@ -1,6 +1,6 @@
 <?php
 
-rcs_id( '$Id: file.php,v 1.4 2003-01-04 03:41:46 wainstead Exp $' );
+rcs_id( '$Id: file.php,v 1.5 2005-02-18 20:41:28 uckelman Exp $' );
 
 /**
  Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
@@ -41,11 +41,18 @@ class WikiDB_file extends WikiDB
     {
         $backend = new WikiDB_backend_file( $dbparams );
         $this->WikiDB($backend, $dbparams);
+
+        if (empty($dbparams['directory'])
+            || preg_match('@^/tmp\b@', $dbparams['directory']))
+            trigger_error(_("Page files are in the /tmp directory. Please read the INSTALL file and move the database to a permanent location or risk losing all the pages!"), E_USER_WARNING);
     }
 }
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2003/01/04 03:41:46  wainstead
+// Added copyleft flowerboxes
+//
 // Revision 1.3  2003/01/04 03:29:02  wainstead
 // ok, this time log tag for sure.
 //
