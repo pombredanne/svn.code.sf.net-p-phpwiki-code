@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.38 2001-04-06 18:21:37 wainstead Exp $');
+rcs_id('$Id: config.php,v 1.39 2001-04-07 00:34:30 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
  *
@@ -26,9 +26,7 @@ define("FLAG_PAGE_LOCKED", 1);
 //
 // Set up localization
 //
-if (empty($LANG))
-   $LANG = "C";
-
+setlocale('LC_ALL', "");
    
 // Search PHP's include_path to find file or directory.
 function FindFile ($file, $missing_okay = false)
@@ -61,13 +59,31 @@ function FindFile ($file, $missing_okay = false)
 // Searches for "locale/$LANG/$file", then for "$file".
 function FindLocalizedFile ($file, $missing_okay = false)
 {
-   global $LANG;
+   $language = getenv("LC_ALL");
+   if (empty($language))
+      $language = getenv("LC_MESSAGES");
+   if (empty($language))
+      $language = getenv("LC_RESPONSES"); // deprecated
+   if (empty($language))
+      $language = getenv("LANG");
+   if (empty($language))
+      $language = "C";
+
    
    // FIXME: This wont work for DOS filenames.
    if (!ereg('^/', $file))
    {
-      if ( ($path = FindFile("locale/$LANG/$file", 'missing_is_okay')) )
+      if ( ($path = FindFile("locale/$language/$file", 'missing_is_okay')) )
 	 return $path;
+      // A locale can be, e.g. de_DE.iso8859-1@euro.
+      // Try less specific versions of the locale: 
+      $seps = array('@', '.', '_');
+      for ($i = 0; $i < count($seps); $i++)
+	 if ( ($tail = strchr($language, $seps[$i])) ) {
+	    $head = substr($language, 0, -strlen($tail));
+	    if ( ($path = FindFile("locale/$head/$file", 'missing_is_okay')) )
+	       return $path;
+	 }
    }
    return FindFile($file, $missing_okay);
 }
@@ -90,10 +106,11 @@ if (!function_exists ('gettext'))
 }
 else
 {
-   putenv ("LANG=$LANG");
-   bindtextdomain ("phpwiki", "./locale");
+   bindtextdomain ("phpwiki", FindFile("locale"));
    textdomain ("phpwiki");
 }
+
+
 
 // To get the POSIX character classes in the PCRE's (e.g.
 // [[:upper:]]) to match extended characters (e.g. GrüßGott), we have
@@ -113,7 +130,6 @@ else
 //
 // FIXME: Not all environments may support en_US?  We should probably
 // have a list of locales to try.
-
 if (setlocale('LC_CTYPE', 0) == 'C')
    setlocale('LC_CTYPE', 'en_US.iso-8859-1');
 
