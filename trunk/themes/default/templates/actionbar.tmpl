@@ -1,12 +1,12 @@
 <?php // -*-php-*-
-  rcs_id('$Id: actionbar.tmpl,v 1.33 2004-10-22 12:01:17 rurban Exp $');
-  if (!$page->get('locked') || $user->isAdmin())
-      $EditB = Button("edit",
-                      $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
-  else
-      $EditB = Button("viewsource", _("View Source"));
+  rcs_id('$Id: actionbar.tmpl,v 1.34 2004-12-14 21:32:46 rurban Exp $');
+if ((!$page->get('locked') || $user->isAdmin()) and $revision)
+    $EditB = Button("edit",
+                    $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
+ else
+     $EditB = Button("viewsource", _("View Source"));
 
-  $Sep = $WikiTheme->getButtonSeparator();
+$Sep = $WikiTheme->getButtonSeparator();
 ?>
 <?php /* I would like not to have to use these tables, and managed to
        * get this stuff to work more or less correctly using
@@ -36,7 +36,7 @@
     <?=$Sep?><?= Button("DebugInfo", _("DebugInfo")) ?>
     <?=$Sep?><?= Button("PageDump", _("PageDump")) ?>
 <?php
-    if (USECACHE) {
+    if (DEBUG & _DEBUG_SQL and USECACHE) {
       $PurgeCache = Button(array('nocache' => 'purge'),
                      _("PurgeHtmlCache"), $page->getName());
       $PurgeCache->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed."));
@@ -50,15 +50,14 @@
 <?php } ?>
   </div>
   </td>
+<?php if (empty($NOSIGNIN)) { ?>
 <?php
 /* valign="top" is not ideal here but required to get reasonable alignment
    with the other action buttons in some browsers, like OmniWeb and Safari
-   (therefore probably Konquorer too) */
-if (empty($NOSIGNIN)) {
-?>
+   (therefore probably Konquorer too) */ ?>
   <td align="right" valign="top">
     <div id="signin"><?= Template('signin') ?></div>
   </td>
+<?php } ?>
 </tr>
 </table>
-<?php } ?>
