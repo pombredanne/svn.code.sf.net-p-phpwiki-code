@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.46 2004-11-18 09:52:23 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.47 2004-11-19 13:23:47 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -256,13 +256,13 @@ class WikiGroup{
             //don't strip WHERE, only the userid stuff.
             $sql = preg_replace('/(WHERE.*?)\s+\w+\s*=\s*["\']\$userid[\'"]/i','\\1 AND 1', $sql);
             $sql = str_replace('WHERE AND 1','',$sql);
-            if (isa($dbi, 'WikiDB_backend_ADODB')) {
+            if (isa($dbi, 'ADOConnection')) {
                 $db_result = $dbi->Execute($sql);
                 foreach ($db_result->GetArray() as $u) {
                     $users = array_merge($users,array_values($u));
                 }
-            } elseif (isa($dbi, 'WikiDB_backend_PearDB')) {
-                $users = array_merge($users,$dbi->getCol($sql));
+            } elseif (isa($dbi, 'DB_common')) { // PearDB
+                $users = array_merge($users, $dbi->getCol($sql));
             }
         }
 
@@ -273,12 +273,12 @@ class WikiGroup{
             $sql = preg_replace('/(WHERE.*?)\s+\w+\s*=\s*["\']\$userid[\'"]/i','\\1 AND 1',
                                 $dbh->getAuthParam('auth_user_exists'));
             $sql = str_replace('WHERE AND 1','', $sql);
-            if (isa($dbi, 'WikiDB_backend_ADODB')) {
+            if (isa($dbi, 'ADOConnection')) {
                 $db_result = $dbi->Execute($sql);
                 foreach ($db_result->GetArray() as $u) {
                    $users = array_merge($users, array_values($u));
                 }
-            } elseif (isa($dbi, 'WikiDB_backend_PearDB')) {
+            } elseif (isa($dbi, 'DB_common')) {
                 $users = array_merge($users, $dbi->getCol($sql));
             }
         }
@@ -1096,6 +1096,9 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.46  2004/11/18 09:52:23  rurban
+// more safety, requested by Charles Corrigan
+//
 // Revision 1.45  2004/11/17 20:06:30  rurban
 // possible group fix
 //
