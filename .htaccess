@@ -1,0 +1,6 @@
+<IfModule mod_php4.c>
+  php_flag register_globals off
+  php_flag track_vars on
+
+  php_flag allow_url_fopen off
+</IfModule>
