@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.5 2002-01-24 00:45:28 dairiki Exp $');
+rcs_id('$Id: WikiDB.php,v 1.6 2002-01-24 06:50:45 carstenklapp Exp $');
 
 //FIXME: arg on get*Revision to hint that content is wanted.
 
@@ -8,28 +8,31 @@ define('WIKIDB_FORCE_CREATE', -1);
 /** 
  * Abstract base class for the database used by PhpWiki.
  *
- * A <tt>WikiDB</tt> is a container for <tt>WikiDB_Page</tt>s
- * which in turn contain <tt>WikiDB_PageRevision</tt>s.
+ * A <tt>WikiDB</tt> is a container for <tt>WikiDB_Page</tt>s which in
+ * turn contain <tt>WikiDB_PageRevision</tt>s.
  *
- * Conceptually a <tt>WikiDB</tt> contains all possible <tt>WikiDB_Page</tt>s,
- * whether they have been initialized or not.  Since all possible pages are already
- * contained in a WikiDB, a call to WikiDB::getPage() will never fail
- * (barring bugs and e.g. filesystem or SQL database problems.)
+ * Conceptually a <tt>WikiDB</tt> contains all possible
+ * <tt>WikiDB_Page</tt>s, whether they have been initialized or not.
+ * Since all possible pages are already contained in a WikiDB, a call
+ * to WikiDB::getPage() will never fail (barring bugs and
+ * e.g. filesystem or SQL database problems.)
  *
- * Also each <tt>WikiDB_Page</tt> always contains at least one <tt>WikiDB_PageRevision</tt>:
- * the default content (e.g. "Describe [PageName] here.").  This default content
- * has a version number of zero.
+ * Also each <tt>WikiDB_Page</tt> always contains at least one
+ * <tt>WikiDB_PageRevision</tt>: the default content (e.g. "Describe
+ * [PageName] here.").  This default content has a version number of
+ * zero.
  *
- * <tt>WikiDB_PageRevision</tt>s have read-only semantics.  One can only create new
- * revisions or delete old ones --- one can not modify an existing revision.
+ * <tt>WikiDB_PageRevision</tt>s have read-only semantics. One can
+ * only create new revisions or delete old ones --- one can not modify
+ * an existing revision.
  */
 class WikiDB {
     /**
      * Open a WikiDB database.
      *
-     * This is a static member function.   This function inspects its
-     * arguments to determine the proper subclass of WikiDB to instantiate,
-     * and then it instantiates it.
+     * This is a static member function. This function inspects its
+     * arguments to determine the proper subclass of WikiDB to
+     * instantiate, and then it instantiates it.
      *
      * @access public
      *
@@ -59,12 +62,14 @@ class WikiDB {
      *
      * <dt> timeout
      * <dd> (Used by the dba backend.)
-     *      Timeout in seconds for opening (and obtaining lock) on the db files.
+     *      Timeout in seconds for opening (and obtaining lock) on the
+     *      db files.
      *
      * <dt> dba_handler
      * <dd> (Used by the dba backend.)
-     *      Which dba handler to use.  Good choices are probably either 'gdbm'
-     *      or 'db2'.
+     *
+     *      Which dba handler to use. Good choices are probably either
+     *      'gdbm' or 'db2'.
      * </dl>
      *
      * @return object A WikiDB object.
@@ -92,15 +97,16 @@ class WikiDB {
     /**
      * Get any user-level warnings about this WikiDB.
      *
-     * Some back-ends, e.g. by default create there data files
-     * in the global /tmp directory.  We would like to warn the user
-     * when this happens (since /tmp files tend to get wiped
-     * periodically.)   Warnings such as these may be communicated
-     * from specific back-ends through this method.
+     * Some back-ends, e.g. by default create there data files in the
+     * global /tmp directory. We would like to warn the user when this
+     * happens (since /tmp files tend to get wiped periodically.)
+     * Warnings such as these may be communicated from specific
+     * back-ends through this method.
      *
      * @access public
      *
-     * @return string A warning message (or <tt>false</tt> if there is none.)
+     * @return string A warning message (or <tt>false</tt> if there is
+     * none.)
      */
     function genericWarnings() {
         return false;
@@ -112,8 +118,8 @@ class WikiDB {
      * The database may no longer be used after it is closed.
      *
      * Closing a WikiDB invalidates all <tt>WikiDB_Page</tt>s,
-     * <tt>WikiDB_PageRevision</tt>s and <tt>WikiDB_PageIterator</tt>s which
-     * have been obtained from it.
+     * <tt>WikiDB_PageRevision</tt>s and <tt>WikiDB_PageIterator</tt>s
+     * which have been obtained from it.
      *
      * @access public
      */
@@ -162,8 +168,8 @@ class WikiDB {
      *
      * @param $pagename string Which page to check.
      *
-     * @return boolean True if the page actually exists with non-default contents
-     * in the WikiDataBase.
+     * @return boolean True if the page actually exists with
+     * non-default contents in the WikiDataBase.
      */
     function isWikiPage ($pagename) {
         $page = $this->getPage($pagename);
@@ -174,8 +180,8 @@ class WikiDB {
     /**
      * Delete page from the WikiDB. 
      *
-     * Deletes all revisions of the page from the WikiDB.
-     * Also resets all page meta-data to the default values.
+     * Deletes all revisions of the page from the WikiDB. Also resets
+     * all page meta-data to the default values.
      *
      * @access public
      *
@@ -196,10 +202,10 @@ class WikiDB {
      *
      * @access public
      *
-     * @param $include_defaulted boolean Normally pages whose most recent
-     * revision has empty content are considered to be non-existant.
-     * Unless $include_defaulted is set to true, those pages will
-     * not be returned.
+     * @param $include_defaulted boolean Normally pages whose most
+     * recent revision has empty content are considered to be
+     * non-existant. Unless $include_defaulted is set to true, those
+     * pages will not be returned.
      *
      * @return object A WikiDB_PageIterator which contains all pages
      *     in the WikiDB which have non-default contents.
@@ -212,11 +218,11 @@ class WikiDB {
     /**
      * Title search.
      *
-     * Search for pages containing (or not containing) certain words in their
-     * names.
+     * Search for pages containing (or not containing) certain words
+     * in their names.
      *
-     * Pages are returned in alphabetical order whenever it is practical
-     * to do so.
+     * Pages are returned in alphabetical order whenever it is
+     * practical to do so.
      *
      * FIXME: should titleSearch and fullSearch be combined?  I think so.
      *
@@ -233,11 +239,12 @@ class WikiDB {
     /**
      * Full text search.
      *
-     * Search for pages containing (or not containing) certain words in their
-     * entire text (this includes the page content and the page name).
+     * Search for pages containing (or not containing) certain words
+     * in their entire text (this includes the page content and the
+     * page name).
      *
-     * Pages are returned in alphabetical order whenever it is practical
-     * to do so.
+     * Pages are returned in alphabetical order whenever it is
+     * practical to do so.
      *
      * @access public
      *
@@ -260,7 +267,8 @@ class WikiDB {
      * @param $limit unsigned The maximum number of pages to return.
      * Set $limit to zero to return all pages.
      *
-     * @return object A WikiDB_PageIterator containing the matching pages.
+     * @return object A WikiDB_PageIterator containing the matching
+     * pages.
      */
     function mostPopular($limit = 20) {
         $result = $this->_backend->most_popular($limit);
@@ -292,7 +300,8 @@ class WikiDB {
      *         for each page.
      * </dl>
      *
-     * @return object A WikiDB_PageRevisionIterator containing the matching revisions.
+     * @return object A WikiDB_PageRevisionIterator containing the
+     * matching revisions.
      */
     function mostRecent($params = false) {
         $result = $this->_backend->most_recent($params);
@@ -302,9 +311,11 @@ class WikiDB {
 
 
 /**
- * An abstract base class which representing a wiki-page within a WikiDB.
+ * An abstract base class which representing a wiki-page within a
+ * WikiDB.
  *
- * A WikiDB_Page contains a number (at least one) of WikiDB_PageRevisions.
+ * A WikiDB_Page contains a number (at least one) of
+ * WikiDB_PageRevisions.
  */
 class WikiDB_Page 
 {
@@ -327,7 +338,7 @@ class WikiDB_Page
 
 
     /**
-     * Delete an old revision of a WikiDB_Page. 
+     * Delete an old revision of a WikiDB_Page.
      *
      * Deletes the specified revision of the page.
      * It is a fatal error to attempt to delete the current revision.
@@ -350,8 +361,8 @@ class WikiDB_Page
         $latestversion = $backend->get_latest_version($pagename);
         if ($latestversion && $version == $latestversion) {
             $backend->unlock();
-            trigger_error(sprintf(_("Attempt to delete most recent revision of '%s'"),$pagename),
-                          E_USER_ERROR);
+            trigger_error(sprintf("Attempt to delete most recent revision of '%s'",
+                                  $pagename), E_USER_ERROR);
             return;
         }
 
@@ -369,12 +380,13 @@ class WikiDB_Page
      * spelling mistakes he just made.)
      *
      * Now some time later, where cleaning out old saved revisions,
-     * and would like to delete his minor revision (since there's really
-     * no point in keeping minor revisions around for a long time.)
+     * and would like to delete his minor revision (since there's
+     * really no point in keeping minor revisions around for a long
+     * time.)
      *
      * Note that the text after the minor revision probably represents
-     * what the author intended to write better than the text after the
-     * preceding major edit.
+     * what the author intended to write better than the text after
+     * the preceding major edit.
      *
      * So what we really want to do is merge the minor edit with the
      * preceding edit.
@@ -398,8 +410,8 @@ class WikiDB_Page
         $latestversion = $backend->get_latest_version($pagename);
         if ($latestversion && $version == $latestversion) {
             $backend->unlock();
-            trigger_error(sprintf(_("Attempt to merge most recent revision of '%s'"),$pagename),
-                          E_USER_ERROR);
+            trigger_error(sprintf("Attempt to merge most recent revision of '%s'",
+                                  $pagename), E_USER_ERROR);
             return;
         }
 
@@ -415,8 +427,9 @@ class WikiDB_Page
             if ($previous) {
                 $prevdata = $cache->get_versiondata($pagename, $previous);
                 if ($prevdata['author_id'] == $versiondata['author_id']) {
-                    // This is a minor revision, previous version is by the
-                    // same author.  We will merge the revisions.
+                    // This is a minor revision, previous version is
+                    // by the same author. We will merge the
+                    // revisions.
                     $cache->update_versiondata($pagename, $previous,
                                                array('%content' => $versiondata['%content'],
                                                      '_supplanted' => $versiondata['_supplanted']));
@@ -448,8 +461,8 @@ class WikiDB_Page
      *
      * @param $links array List of pagenames which this page links to.
      *
-     * @return object Returns the new WikiDB_PageRevision object.  If $version was incorrect,
-     * returns false
+     * @return object Returns the new WikiDB_PageRevision object. If
+     * $version was incorrect, returns false
      */
     function createRevision($version, &$content, $metadata, $links) {
         $backend = &$this->_wikidb->_backend;
@@ -485,13 +498,15 @@ class WikiDB_Page
             // Ensure mtimes are monotonic.
             $pdata = $cache->get_versiondata($pagename, $latestversion);
             if ($data['mtime'] < $pdata['mtime']) {
-                trigger_error(sprintf(_("%s: Date of new revision is %s"),$pagename,"'non-monotonic'"),
+                trigger_error(sprintf(_("%s: Date of new revision is %s"),
+                                      $pagename,"'non-monotonic'"),
                               E_USER_NOTICE);
                 $data['orig_mtime'] = $data['mtime'];
                 $data['mtime'] = $pdata['mtime'];
             }
             
-	    // FIXME: use (possibly user specified) 'mtime' time or time()?
+	    // FIXME: use (possibly user specified) 'mtime' time or
+	    // time()?
             $cache->update_versiondata($pagename, $latestversion,
                                        array('_supplanted' => $data['mtime']));
         }
@@ -507,14 +522,15 @@ class WikiDB_Page
 
         $backend->unlock();
 
-	// FIXME: probably should have some global state information in the backend
-        // to control when to optimize.
+	// FIXME: probably should have some global state information
+	// in the backend to control when to optimize.
         if (time() % 50 == 0) {
             trigger_error(sprintf(_("Optimizing %s"),'backend'), E_USER_NOTICE);
             $backend->optimize();
         }
 
-        return new WikiDB_PageRevision($this->_wikidb, $pagename, $newversion, $data);
+        return new WikiDB_PageRevision($this->_wikidb, $pagename, $newversion,
+                                       $data);
     }
 
     /**
@@ -544,9 +560,9 @@ class WikiDB_Page
      *
      * @param $version integer Which revision to get.
      *
-     * @return object The requested WikiDB_PageRevision object, or false if the
-     * requested revision does not exist in the WikiDB.  Note that
-     * version zero of any page always exists.
+     * @return object The requested WikiDB_PageRevision object, or
+     * false if the requested revision does not exist in the WikiDB.
+     * Note that version zero of any page always exists.
      */
     function getRevision($version) {
         $cache = &$this->_wikidb->_cache;
@@ -559,13 +575,15 @@ class WikiDB_Page
         $vdata = $cache->get_versiondata($pagename, $version);
         if (!$vdata)
             return false;
-        return new WikiDB_PageRevision($this->_wikidb, $pagename, $version, $vdata);
+        return new WikiDB_PageRevision($this->_wikidb, $pagename, $version,
+                                       $vdata);
     }
 
     /**
      * Get previous page revision.
      *
-     * This method find the most recent revision before a specified version.
+     * This method find the most recent revision before a specified
+     * version.
      *
      * @access public
      *
@@ -599,8 +617,9 @@ class WikiDB_Page
      * This does not include the version zero (default) revision in the
      * returned revision set.
      *
-     * @return object a WikiDB_PageRevisionIterator containing all revisions of
-     * this WikiDB_Page in reverse order by version number.
+     * @return object a WikiDB_PageRevisionIterator containing all
+     * revisions of this WikiDB_Page in reverse order by version
+     * number.
      */
     function getAllRevisions() {
         $backend = &$this->_wikidb->_backend;
@@ -754,18 +773,20 @@ class WikiDB_Page
  * This class represents a specific revision of a WikiDB_Page within
  * a WikiDB.
  *
- * A WikiDB_PageRevision has read-only semantics.  You may only
- * create new revisions (and delete old ones) --- you cannot
- * modify existing revisions.
+ * A WikiDB_PageRevision has read-only semantics. You may only create
+ * new revisions (and delete old ones) --- you cannot modify existing
+ * revisions.
  */
 class WikiDB_PageRevision
 {
-    function WikiDB_PageRevision(&$wikidb, $pagename, $version, $versiondata = false) {
-        $this->_wikidb = &$wikidb;
-        $this->_pagename = $pagename;
-        $this->_version = $version;
-        $this->_data = $versiondata ? $versiondata : array();
-    }
+    function WikiDB_PageRevision(&$wikidb, $pagename, $version,
+                                 $versiondata = false)
+        {
+            $this->_wikidb = &$wikidb;
+            $this->_pagename = $pagename;
+            $this->_version = $version;
+            $this->_data = $versiondata ? $versiondata : array();
+        }
     
     /**
      * Get the WikiDB_Page which this revision belongs to.
@@ -792,9 +813,9 @@ class WikiDB_PageRevision
     /**
      * Determine whether this revision has defaulted content.
      *
-     * The default revision (version 0) of each page, as well as
-     * any pages which are created with empty content
-     * have their content defaulted to something like:
+     * The default revision (version 0) of each page, as well as any
+     * pages which are created with empty content have their content
+     * defaulted to something like:
      * <pre>
      *   Describe [ThisPage] here.
      * </pre>
@@ -1050,7 +1071,8 @@ class WikiDB_PageRevisionIterator
         assert(is_array($versiondata));
         assert($version > 0);
 
-        return new WikiDB_PageRevision($this->_wikidb, $pagename, $version, $versiondata);
+        return new WikiDB_PageRevision($this->_wikidb, $pagename, $version,
+                                       $versiondata);
     }
 
     /**
@@ -1133,7 +1155,8 @@ class WikiDB_cache
     }
     
     function get_versiondata($pagename, $version, $need_content = false) {
-        $vdata = $this->_backend->get_versiondata($pagename, $version, $need_content);
+        $vdata = $this->_backend->get_versiondata($pagename, $version,
+                                                  $need_content);
         // FIXME: ugly
         if ($vdata && !empty($vdata['%pagedata']))
             $this->_pagedata_cache[$pagename] = $vdata['%pagedata'];

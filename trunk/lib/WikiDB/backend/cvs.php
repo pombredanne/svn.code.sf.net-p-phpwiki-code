@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: cvs.php,v 1.7 2002-01-22 03:17:47 dairiki Exp $');
+rcs_id('$Id: cvs.php,v 1.8 2002-01-24 06:53:35 carstenklapp Exp $');
 /**
  * Backend for handling CVS repository. 
  *
@@ -90,7 +90,7 @@ extends WikiDB_backend
                 && is_dir( $this->_repository . "/CVSROOT" )
                 && is_dir( $this->_repository . "/" . $this->_module_name ))) {
 
-            $this->_cvsDebug( sprintf(_("Creating new repository [%s]"),$this->_repository) );
+            $this->_cvsDebug( sprintf("Creating new repository [%s]", $this->_repository) );
 
             // doesn't exist, need to create it and the replace the wiki 
             // document directory.
@@ -125,7 +125,7 @@ extends WikiDB_backend
                 $d = opendir( $dbparam[CVS_PAGE_SOURCE] );
                 while ( $entry = readdir( $d ) ) {
                     $filename = $dbparam[CVS_PAGE_SOURCE] . "/" . $entry;
-                    $this->_cvsDebug( sprintf(_("Found [%s] in [%s]"),$entry,$dbparam[CVS_PAGE_SOURCE]) );
+                    $this->_cvsDebug( sprintf("Found [%s] in [%s]", $entry, $dbparam[CVS_PAGE_SOURCE]) );
                     
                     if ( is_file( $filename ) ) {
                         $metaData[CMD_CONTENT] = join('',file($filename));
@@ -179,7 +179,7 @@ extends WikiDB_backend
     {
         // check argument
         if ( ! is_array( $newdata ) ) {
-            trigger_error("update_pagedata: " . sprintf(_("Argument %s was not array"),"'newdata'"), 
+            trigger_error("update_pagedata: Argument 'newdata' was not array", 
                           E_USER_WARNING);
         }
 
@@ -187,7 +187,7 @@ extends WikiDB_backend
         $metaData = $this->get_pagedata( $pagename );
 
         if ( ! $metaData ) {
-            $this->_cvsDebug( "update_pagedata: " . _("no meta data found") );
+            $this->_cvsDebug("update_pagedata: no meta data found");
             // this means that the page does not exist, we need to create
             // it.
             $metaData = array();
@@ -240,7 +240,7 @@ extends WikiDB_backend
             // the version number is everything after the '1.'
             return $metaData[CMD_VERSION];
         } else {
-            $this->_cvsDebug( "get_latest_versioned " . sprintf(_("FAILED for [%s]"),$pagename) );
+            $this->_cvsDebug(sprintf("get_latest_versioned FAILED for [%s]", $pagename));
             return 0;
         }
     }
@@ -334,7 +334,7 @@ extends WikiDB_backend
         // TODO: This is, for CVS, difficult because it implies removing a
         // TODO: revision somewhere in the middle of a revision tree, and
         // TODO: this is basically not possible!
-        trigger_error( "delete_versiondata: " . _("Not Implemented"), E_USER_WARNING);
+        trigger_error("delete_versiondata: Not Implemented", E_USER_WARNING);
     }
 
     function set_versiondata($pagename, $version, $data) 
@@ -344,13 +344,13 @@ extends WikiDB_backend
         // TODO: version and this can't be done??? (You can edit the repository
         // TODO: file directly but i don't know of a way of doing it via
         // TODO: the cvs tools).
-        trigger_error( "set_versiondata: " . _("Not Implemented"), E_USER_WARNING);
+        trigger_error("set_versiondata: Not Implemented", E_USER_WARNING);
     }
 
     function update_versiondata($pagename, $version, $newdata) 
     {
         // TODO: same problem as set_versiondata
-        trigger_error( "set_versiondata: " . _("Not Implemented"), E_USER_WARNING);
+        trigger_error("set_versiondata: Not Implemented", E_USER_WARNING);
     }
 
     function set_links($pagename, $links) 
@@ -447,13 +447,13 @@ extends WikiDB_backend
     function lock($write_lock = true) 
     {
         // TODO: to be implemented
-        trigger_error( "lock: " . _("Not Implemented"), E_USER_WARNING);
+        trigger_error("lock: Not Implemented", E_USER_WARNING);
     }
 
     function unlock($force = false) 
     {
         // TODO: to be implemented
-        trigger_error( "unlock: " . _("Not Implemented"), E_USER_WARNING);
+        trigger_error("unlock: Not Implemented", E_USER_WARNING);
     }
 
     function close () 
@@ -517,7 +517,7 @@ extends WikiDB_backend
     {
         // this is used as part of an array walk and therefore takes
         // the backend argument
-        $backend->_cvsDebug( sprintf(_("Creating meta file for [%s]"),$page_name) );
+        $backend->_cvsDebug(sprintf("Creating meta file for [%s]", $page_name));
         $backend->update_pagedata( $page_name, array() );
     }
 
@@ -611,15 +611,15 @@ extends WikiDB_backend
         $this->_cvsDebug( "CP: revInfo 0: $revInfo[0]" );
         $this->_cvsDebug( "CP: $cmdOutput" );
         if ( isset( $revInfo[1] ) ) {
-            $this->_cvsDebug( "CP: " . _("got revision information") );
+            $this->_cvsDebug( "CP: got revision information" );
             return $revInfo[1];
         } else {
             ereg( "\ninitial revision: 1[.]([0-9]+)", $cmdOutput, $revInfo );
             if ( isset( $revInfo[1] ) ) {
-                $this->_cvsDebug( "CP: " . _("is initial release") );
+                $this->_cvsDebug( "CP: is initial release" );
                 return 1;
             }
-            $this->_cvsDebug( "CP: " . _("returning old version") );
+            $this->_cvsDebug( "CP: returning old version" );
             return $meta_data[CMD_VERSION];
         }
     }
@@ -686,7 +686,7 @@ extends WikiDB_backend
             $locked = flock($fd,2);  // Exclusive blocking lock 
 
             if (!$locked) { 
-                $this->_cvsError(_("Unable to delete file, lock was not obtained."),
+                $this->_cvsError("Unable to delete file, lock was not obtained.",
                                  __LINE__, $filename, EM_NOTICE_ERRORS );
             } 
 
@@ -696,7 +696,7 @@ extends WikiDB_backend
 
             return $rVal;
         } else {
-            $this->_cvsError( "deleteFile: " . _("Unable to open file"),
+            $this->_cvsError( "deleteFile: Unable to open file",
                       __LINE__, $filename, EM_NOTICE_ERRORS );
             return false;
         }
@@ -706,7 +706,7 @@ extends WikiDB_backend
      * Called when something happened that causes the CVS backend to 
      * fail.
      */
-    function _cvsError( $msg     = _("no message"), 
+    function _cvsError( $msg     = "no message", 
                         $errline = 0, 
                         $errfile = "lib/WikiDB/backend/cvs.php",
                         $errno   = EM_FATAL_ERRORS)
@@ -746,7 +746,7 @@ extends WikiDB_backend
         }
         else {
             // TODO: this should be replaced ...
-            printf( _("unable to locate/open [%s], turning debug off"),$filename)."\n";
+            printf("unable to locate/open [%s], turning debug off\n", $filename);
             $this->_debug_file = "";
         }
     }
@@ -757,15 +757,15 @@ extends WikiDB_backend
      */
     function _execCommand( $cmdLine, &$cmdOutput, $exitOnNonZero )
     {
-        $this->_cvsDebug( sprintf(_("Preparing to execute [%s]"),$cmdLine) );
+        $this->_cvsDebug( sprintf("Preparing to execute [%s]", $cmdLine) );
         exec( $cmdLine, $cmdOutput, $cmdReturnVal );
         if ( $exitOnNonZero && ($cmdReturnVal != 0) ) {
-            $this->_cvsDebug( sprintf(_("Command failed [%s], Output:"),$cmdLine) ." [". 
+            $this->_cvsDebug( sprintf("Command failed [%s], Output: ", $cmdLine) ."[". 
                               join("\n",$cmdOutput) . "]" );
-            $this->_cvsError( sprintf(_("Command failed [%s], Return value: %s"),$cmdLine,$cmdReturnVal),
+            $this->_cvsError( sprintf("Command failed [%s], Return value: %s", $cmdLine, $cmdReturnVal),
                             __LINE__ );
         }
-        $this->_cvsDebug( _("Done execution")." [" . join("\n", $cmdOutput ) . "]" );
+        $this->_cvsDebug( "Done execution [" . join("\n", $cmdOutput) . "]" );
 
         return $cmdReturnVal;
     }
@@ -779,14 +779,14 @@ extends WikiDB_backend
             $locked = flock( $fd, 1 ); // read lock
             if ( !$locked ) {
                 fclose( $fd );
-                $this->_cvsError( _("Unable to obtain read lock."),__LINE__);
+                $this->_cvsError( "Unable to obtain read lock.", __LINE__ );
             }
 
             $content = file( $filename );
             fclose( $fd );
             return $content;
         } else {
-            $this->_cvsError( sprintf(_("Unable to open file '%s' for reading"),$filename),
+            $this->_cvsError( sprintf("Unable to open file '%s' for reading", $filename),
                               __LINE__ );
             return false;
         }
@@ -805,7 +805,7 @@ extends WikiDB_backend
         if( $fd = fopen($filename, 'a') ) { 
             $locked = flock($fd,2);  // Exclusive blocking lock 
             if (!$locked) { 
-                $this->_cvsError( _("Timeout while obtaining lock."),__LINE__);
+                $this->_cvsError( "Timeout while obtaining lock.", __LINE__ );
             } 
 
             // Second filehandle -- we use this to write the contents
@@ -814,7 +814,7 @@ extends WikiDB_backend
             fclose($fdsafe); 
             fclose($fd);
         } else {
-            $this->_cvsError( sprintf(_("Could not open file '%s' for writing"),$filename), 
+            $this->_cvsError( sprintf("Could not open file '%s' for writing", $filename), 
                               __LINE__ );
         }
     }
@@ -824,23 +824,23 @@ extends WikiDB_backend
     */
     function _copyFilesFromDirectory( $src, $dest )
     {
-        $this->_cvsDebug( sprintf(_("Copying from [%s] to [%s]"),$src,$dest) );
+        $this->_cvsDebug( sprintf("Copying from [%s] to [%s]", $src, $dest) );
 
         if ( is_dir( $src ) && is_dir( $dest ) ) {
-            $this->_cvsDebug( _("Copying") ." " );
+            $this->_cvsDebug( "Copying " );
             $d = opendir( $src );
             while ( $entry = readdir( $d ) ) {
                 if ( is_file( $src . "/" . $entry )
                      && copy( $src . "/" . $entry, $dest . "/" . $entry ) ) {
-                    $this->_cvsDebug( sprintf(_("Copied to [%s]"),"$dest/$entry") );
+                    $this->_cvsDebug( sprintf("Copied to [%s]", "$dest/$entry") );
                 } else {
-                    $this->_cvsDebug( sprintf(_("Failed to copy [%s]"),"$src/$entry") );
+                    $this->_cvsDebug( sprintf("Failed to copy [%s]", "$src/$entry") );
                 }
             }
             closedir( $d );
             return true;
         } else {
-            $this->_cvsDebug( _("Not copying") );
+            $this->_cvsDebug( "Not copying" );
             return false;
         }
     }
