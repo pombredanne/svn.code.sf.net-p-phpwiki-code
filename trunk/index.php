@@ -35,7 +35,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.0-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.36 2001-12-06 22:11:23 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.37 2001-12-07 05:27:03 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -266,13 +266,16 @@ $logo = "images/wikibase.png";
 //$SignatureImg = "images/signature.png";
 
 // this turns on url indicator icons, inserted before embedded links
-// FIXME: need a special icon (question mark?) for unknown protocols.
+// '*' icon is shown when the link type has no icon listed here,
+// but ONLY for the AllowedProtocols specified in in part four!
+// 'interwiki' icon indicates a Wiki listed in lib/interwiki.map
 /*
 $URL_LINK_ICONS = array(
                     'http'	=> 'images/http.png',
                     'https'	=> 'images/https.png',
                     'ftp'	=> 'images/ftp.png',
                     'mailto'	=> 'images/mailto.png',
+                    'interwiki' => 'images/interwiki.png',
                     '*'		=> 'images/zapg.png'
                     );
 */                    
