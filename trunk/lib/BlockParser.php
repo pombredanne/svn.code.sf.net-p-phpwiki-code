@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.28 2002-11-01 16:49:29 dairiki Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.29 2002-11-25 22:25:49 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -537,7 +537,7 @@ class Block_list extends BlockMarkup
 class Block_dl extends Block_list
 {
     var $_tag = 'dl';
-    var $_re = '\ {0,4}\S.*:\s*$';
+    var $_re = '\ {0,4}\S.*(?<! ~):\s*$';
 
     function _match (&$input, $m) {
         if (!($p = $this->_do_match($input, $m)))
@@ -683,7 +683,7 @@ class Block_table_dl_defn extends XmlContent
 
 class Block_table_dl extends Block_dl
 {
-    var $_re = '\ {0,4} (?:\S.*)? \| \s* $';
+    var $_re = '\ {0,4} (?:\S.*)? (?<! ~) \| \s* $';
 
     function _match (&$input, $m) {
         if (!($p = $this->_do_match($input, $m)))
