@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.147 2003-03-13 20:17:05 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.148 2003-03-25 21:03:02 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -452,7 +452,9 @@ class WikiPagename
         elseif (isa($page, 'WikiPageName'))
 	    return $page->name;
         if (!is_string($page)) {
-            print "PAGE: " . gettype($page) . " " . get_class($page) . "<br>\n";
+            trigger_error(sprintf("Non-string pagename '%s' (%s)(%s)",
+                                  $page, gettype($page), get_class($page)),
+                          E_USER_NOTICE);
         }
 	//assert(is_string($page));
 	return $page;
@@ -1290,6 +1292,9 @@ class Alert {
                       
         
 // $Log: not supported by cvs2svn $
+// Revision 1.147  2003/03/13 20:17:05  dairiki
+// Bug fix: Fix linking of pages whose names contain a hash ('#').
+//
 // Revision 1.146  2003/03/07 02:46:24  dairiki
 // function_usable(): New function.
 //
