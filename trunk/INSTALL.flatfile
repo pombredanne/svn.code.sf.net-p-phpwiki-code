@@ -1,7 +1,10 @@
 If you cannot run PhpWiki on top of a relational database like
 MySQL or Postgresql, and your system does not support DBM files
 or (worse) has a broken implementation like NDBM on Solaris, then
-a flat file Wiki might work for you.
+a flat file Wiki should work for you. Note that as of 1.2 most of the
+Wiki functionality is there... the MostPopular is not implemented yet
+so you will want to delete that link from the FrontPage (or better
+yet, write it and mail us a patch ;-)
 
 Installation is similar to using a DBM file for storing the pages.
 You should read the main INSTALL file before this one (it's not long
@@ -78,8 +81,11 @@ directory owned by the web server.
 Another solution is to let the web server create the directory for
 you. The drawback to this approach is that you won't be able to edit
 the files or copy them from the command line, but most people can live
-with this limitation. This will require you to TEMPORARILY make the
-phpwiki/ directory world writable:
+with this limitation. (This is how you would do it on SourceForge, by
+the way; they have a cron job that sweeps the filesystem every few
+hours looking for things that are set world writable and change the
+permission.) This will require you to TEMPORARILY make the phpwiki/
+directory world writable:
 
 cd ..
 chmod o+wr phpwiki
@@ -123,4 +129,4 @@ phpwiki-talk list at phpwiki-talk@lists.sourceforge.net.
 Steve Wainstead
 swain@wcsb.org
 
-$Id: INSTALL.flatfile,v 1.1 2001-01-06 19:30:31 wainstead Exp $
+$Id: INSTALL.flatfile,v 1.2 2001-02-01 04:34:08 wainstead Exp $
