@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.63 2004-09-06 08:22:33 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.64 2004-10-04 23:40:35 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -173,8 +173,14 @@ class Template
             if (preg_match('/Undefined variable:\s*[_A-Z]+\s*$/', $error->errstr))
                 return true;
         }
-        else
+        // ignore recursively nested htmldump loop: browse -> body -> htmldump -> browse -> body ...
+        // FIXME for other possible loops also
+        elseif (strstr($error->errfile, "(In template 'htmldump')")) {
+            return $error;
+        }
+        else {
             $error->errfile .= " (In template '$this->_name')";
+        }
 
         if (!empty($this->_tmpl)) {
             $lines = explode("\n", $this->_tmpl);
@@ -258,6 +264,9 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.63  2004/09/06 08:22:33  rurban
+// prevent errorhandler to fail on empty templates
+//
 // Revision 1.62  2004/06/28 15:39:27  rurban
 // fixed endless recursion in WikiGroup: isAdmin()
 //
