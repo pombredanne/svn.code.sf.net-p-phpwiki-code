@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllUsers.php,v 1.15 2004-07-08 13:50:33 rurban Exp $');
+rcs_id('$Id: AllUsers.php,v 1.16 2004-09-25 16:37:18 rurban Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -42,19 +42,17 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.15 $");
+                            "\$Revision: 1.16 $");
     }
 
     function getDefaultArguments() {
-        return array('noheader'      => false,
-                     'include_empty' => true,
-                     'exclude'       => '',
-                     'info'          => '',   // which columns? default: list of pagenames only
-                     'sortby'        => '',   // +mtime,-pagename
-                     'limit'         => 50,
-                     'paging'        => 'auto',
-                     'debug'         => false
-                     );
+        return array_merge
+            (
+             PageList::supportedArgs(),
+             array('noheader'      => false,
+                   'include_empty' => true,
+                   'debug'         => false
+                   ));
     }
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor,markup or all
@@ -117,6 +115,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2004/07/08 13:50:33  rurban
+// various unit test fixes: print error backtrace on _DEBUG_TRACE; allusers fix; new PHPWIKI_NOMAIN constant for omitting the mainloop
+//
 // Revision 1.14  2004/06/25 14:29:22  rurban
 // WikiGroup refactoring:
 //   global group attached to user, code for not_current user.

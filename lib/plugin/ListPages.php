@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ListPages.php,v 1.6 2004-09-14 10:33:39 rurban Exp $');
+rcs_id('$Id: ListPages.php,v 1.7 2004-09-25 16:33:52 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -44,15 +44,18 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
-        return array('pages'    => false,
-                     'exclude'  => false,
-                     'info'     => 'pagename,top3recs',
-                     'dimension' => 0,
-                     );
+        return array_merge
+            (
+             PageList::supportedArgs(),
+             array('pages'    => false,
+                   'exclude'  => false,
+                   'info'     => 'pagename,top3recs',
+                   'dimension' => 0,
+                   ));
     }
 
     // info arg allows multiple columns
@@ -149,6 +152,9 @@ class _PageList_Column_ListPages_count extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/09/14 10:33:39  rurban
+// simplify exclude, add numbacklinks+numpagelinks
+//
 // Revision 1.5  2004/09/06 08:37:31  rurban
 // plugin-list support for pages and exclude args
 //

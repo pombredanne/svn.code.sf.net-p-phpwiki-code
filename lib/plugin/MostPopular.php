@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopular.php,v 1.28 2004-04-20 18:10:55 rurban Exp $');
+rcs_id('$Id: MostPopular.php,v 1.29 2004-09-25 16:33:52 rurban Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -38,18 +38,21 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.28 $");
+                            "\$Revision: 1.29 $");
     }
 
     function getDefaultArguments() {
-        return array('pagename' => '[pagename]', // hackish
-                     'exclude'  => '',
-                     'limit'    => 20, // limit <0 returns least popular pages
-                     'noheader' => 0,
-                     'sortby'   => 'hits',
-                     'info'     => false,
-                     'paging'   => 'auto'
-                    );
+        return array_merge
+            (
+             PageList::supportedArgs(),
+             array('pagename' => '[pagename]', // hackish
+                   'exclude'  => '',
+                   'limit'    => 20, // limit <0 returns least popular pages
+                   'noheader' => 0,
+                   'sortby'   => 'hits',
+                   'info'     => false,
+                   'paging'   => 'auto'
+                   ));
     }
     
     // info arg allows multiple columns
@@ -104,6 +107,14 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.28  2004/04/20 18:10:55  rurban
+// config refactoring:
+//   FileFinder is needed for WikiFarm scripts calling index.php
+//   config run-time calls moved to lib/IniConfig.php:fix_configs()
+//   added PHPWIKI_DIR smart-detection code (Theme finder)
+//   moved FileFind to lib/FileFinder.php
+//   cleaned lib/config.php
+//
 // Revision 1.27  2004/04/20 00:06:53  rurban
 // paging support
 //
