@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PhotoAlbum.php,v 1.6 2004-04-18 00:19:30 rurban Exp $');
+rcs_id('$Id: PhotoAlbum.php,v 1.7 2004-05-03 20:44:55 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
  
@@ -152,7 +152,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
@@ -430,8 +430,7 @@ extends WikiPlugin
     */
     function fromLocation($src, &$photos) {
     	if (!allow_album_location) {
-    	    return $this->error(_("Fixed album location is not allowed.
-    	                                 Please specify parameter src."));
+    	    return $this->error(_("Fixed album location is not allowed. Please specify parameter src."));
     	}
     	$photos[count($photos)] =
     	  array ("name" => album_location."/$src".album_default_extension,
@@ -464,7 +463,7 @@ extends WikiPlugin
                 natcasesort($list);
                 if (! $webpath ) {
                     // assume relative src. default: "themes/Hawaiian/images/pictures"
-                    $webpath = DATA_PATH . "/" . $src;
+                    $webpath = DATA_PATH . '/' . $src;
                 }
                 foreach ($list as $file) {
                     // convert local path to webpath
@@ -503,6 +502,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/04/18 00:19:30  rurban
+// better default example with local src, don't require weblocation for
+// the default setup, better docs, fixed ini_get => get_cfg_var("allow_url_fopen"),
+// no HttpClient lib yet.
+//
 // Revision 1.5  2004/03/09 12:10:23  rurban
 // fixed getimagesize problem with local dir.
 //
