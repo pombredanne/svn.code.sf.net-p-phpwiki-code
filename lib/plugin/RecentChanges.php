@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.6 2001-12-14 20:24:25 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.7 2001-12-14 20:32:02 dairiki Exp $');
 /**
  */
 
@@ -18,7 +18,7 @@ class _RecentChanges_Formatter
     }
 
     function include_versions_in_URLs() {
-        return (bool) $this->args['show_all'];
+        return (bool) $this->_args['show_all'];
     }
     
     function date ($rev) {
