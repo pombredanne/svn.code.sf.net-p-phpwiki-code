@@ -1,4 +1,4 @@
-<!-- $Id: savepage.php,v 1.4 2000-10-26 15:47:51 ahollosi Exp $ -->
+<!-- $Id: savepage.php,v 1.5 2000-11-01 11:31:41 ahollosi Exp $ -->
 <?php
 
 /*
@@ -85,7 +85,7 @@
       $pagehash["content"] = preg_split('/[ \t\r]*\n/', chop($content));
 
       // convert spaces to tabs at user request
-      if ($convert) {
+      if (isset($convert)) {
          $pagehash["content"] = CookSpaces($pagehash["content"]);      
       }
    }

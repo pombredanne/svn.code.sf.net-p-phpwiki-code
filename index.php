@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: index.php,v 1.3 2000-10-25 09:58:53 ahollosi Exp $ -->
+<!-- $Id: index.php,v 1.4 2000-11-01 11:31:40 ahollosi Exp $ -->
 <?php
    /*
       The main page, i.e. the main loop.
@@ -7,6 +7,7 @@
    */
 
    set_magic_quotes_runtime(0);
+   error_reporting(E_ALL ^ E_NOTICE);   // remove E_NOTICE for debugging
 
    include "lib/config.php";
    include "lib/stdlib.php";
@@ -16,27 +17,27 @@
 
 
    // Allow choice of submit buttons to determine type of search:
-   if ($searchtype == 'full')
+   if (isset($searchtype) && ($searchtype == 'full'))
       $full = $searchstring;
-   elseif ($searchstring)       // default to title search
+   elseif (isset($searchstring))     // default to title search
       $search = $searchstring;
 
-   if ($edit) {
+   if (isset($edit)) {
       $admin_edit = 0;
       include "lib/editpage.php";
-   } elseif ($links) {
+   } elseif (isset($links)) {
       include "lib/editlinks.php";
-   } elseif ($copy) {
+   } elseif (isset($copy)) {
       include "lib/editpage.php";
-   } elseif ($search) {
+   } elseif (isset($search)) {
       include "lib/search.php";
-   } elseif ($full) {
+   } elseif (isset($full)) {
       include "lib/fullsearch.php";
-   } elseif ($post) {
+   } elseif (isset($post)) {
       include "lib/savepage.php";
-   } elseif ($info) {
+   } elseif (isset($info)) {
       include "lib/pageinfo.php";
-   } elseif ($diff) {
+   } elseif (isset($diff)) {
       include "lib/diff.php";
    } else {
       include "lib/display.php"; // defaults to FrontPage

@@ -1,4 +1,4 @@
-<!-- $Id: pageinfo.php,v 1.4 2000-10-24 09:55:18 ahollosi Exp $ -->
+<!-- $Id: pageinfo.php,v 1.5 2000-11-01 11:31:41 ahollosi Exp $ -->
 <!-- Display the internal structure of a page. Steve Wainstead, June 2000 -->
 <?php
    if (get_magic_quotes_gpc()) {
@@ -6,7 +6,7 @@
    }
 
    $encname = htmlspecialchars($info);
-   $enter .= gettext ("Enter a page name");
+   $enter = gettext ("Enter a page name");
    $go = gettext ("Go");
    $html = "<form action=\"$ScriptUrl\" METHOD=GET>\n" .
 	   "<input name=\"info\" value=\"$encname\">" .
@@ -14,7 +14,7 @@
 	   "<input type=submit value=$go><br>\n" .
 	   "<input type=checkbox name=showpagesource";
 
-   if ($showpagesource == "on") {
+   if (isset($showpagesource) && ($showpagesource == "on")) {
       $html .= " checked";
    }
    $html .= "> ";
@@ -29,7 +29,7 @@
 
    function ViewpageProps($name, $pagestore)
    {
-      global $dbi, $showpagesource, $datetimeformat;
+      global $dbi, $showpagesource, $datetimeformat, $FieldSeparator;
 
       $pagehash = RetrievePage($dbi, $name, $pagestore);
       if ($pagehash == -1) {

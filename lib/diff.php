@@ -1,4 +1,4 @@
-<!-- $Id: diff.php,v 1.3 2000-10-20 11:42:52 ahollosi Exp $ -->
+<!-- $Id: diff.php,v 1.4 2000-11-01 11:31:41 ahollosi Exp $ -->
 <?php
 // diff.php
 //
@@ -28,6 +28,7 @@
 class _WikiDiffEngine
 {
   var $edits;	// List of editing operation to convert XV to YV.
+  var $xv = array(), $yv = array();
 
   function _WikiDiffEngine ($from_lines, $to_lines)
       {
@@ -49,6 +50,9 @@ class _WikiDiffEngine
 	$n_from -= $skip;
 	$n_to -= $skip;
 
+	$xlines = array();
+	$ylines = array();
+
 	// Ignore lines which do not exist in both files.
 	for ($x = 0; $x < $n_from; $x++)
 	    $xhash[$from_lines[$x + $skip]] = 1;
@@ -56,7 +60,7 @@ class _WikiDiffEngine
 	  {
 	    $line = $to_lines[$y + $skip];
 	    $ylines[] = $line;
-	    if ( ($this->ychanged[$y] = ! $xhash[$line]) )
+	    if ( ($this->ychanged[$y] = empty($xhash[$line])) )
 		continue;
 	    $yhash[$line] = 1;
 	    $this->yv[] = $line;
@@ -66,8 +70,9 @@ class _WikiDiffEngine
 	  {
 	    $line = $from_lines[$x + $skip];
 	    $xlines[] = $line;
-	    if ( ($this->xchanged[$x] = ! $yhash[$line]) )
-		continue;
+	    if ( ($this->xchanged[$x] = empty($yhash[$line])) )
+		continue;	// fixme? what happens to yhash/xhash when
+				// there are two identical lines??
 	    $this->xv[] = $line;
 	    $this->xind[] = $x;
 	  }
@@ -97,6 +102,7 @@ class _WikiDiffEngine
 
 	    // Skip matching "snake".
 	    $x0 = $x;
+	    $ncopy = 0;
 	    while ( $x < $n_from && $y < $n_to
 	            && !$this->xchanged[$x] && !$this->ychanged[$y])
 	      {
@@ -109,6 +115,7 @@ class _WikiDiffEngine
 
 	    // Find deletes.
 	    $x0 = $x;
+	    $ndelete = 0;
 	    while ($x < $n_from && $this->xchanged[$x])
 	      {
 		++$x;
@@ -126,7 +133,7 @@ class _WikiDiffEngine
 		$this->edits[] = $adds;
 	      }
 	  }
-	if ($endskip)
+	if (!empty($endskip))
 	    $this->edits[] = $endskip;
       }
 
@@ -353,7 +360,7 @@ class _WikiDiffEngine
 	    $start = $i;
 
 	    // Find the end of this run of changes.
-	    while ($changed[++$i])
+	    while (isset($changed[++$i]))
 		continue;
 	    while ($other_changed[$j])
 		$j++;
@@ -386,7 +393,7 @@ class _WikiDiffEngine
 		 * point where it corresponds to a changed run in the other file.
 		 * CORRESPONDING == LEN means no such point has been found.
 		 */
-		$corresponding = $other_changed[$j - 1] ? $i : $len;
+		$corresponding = empty($other_changed[$j - 1]) ? $len : $i;
 
 		/*
 		 * Move the changed region forward, so long as the
@@ -793,6 +800,7 @@ class WikiDiffFormatter
     
   function _format ($edits, $from_lines)
       {
+	$html = '';
 	$x = 0; $y = 0;
 	$xlim = sizeof($from_lines);
 
@@ -806,7 +814,7 @@ class WikiDiffFormatter
 	    else
 	      {
 		$ncopy = 0;
-		if (!$hunk)
+		if (empty($hunk))
 		  {
 		    // Start of an output hunk. 
 		    $xoff = max(0, $x - $this->context_lines);
@@ -835,7 +843,7 @@ class WikiDiffFormatter
 	      }
 
 	    $next = next($edits);
-	    if ($hunk)
+	    if (!empty($hunk))
 	      {
 		if ( !$next || $ncopy > 2 * $this->context_lines)
 		  {
@@ -886,6 +894,7 @@ class WikiDiffFormatter
 
   function _emit_lines($lines,  $prefix, $color)
       {
+	$html = '';
 	reset($lines);
 	while (list ($junk, $line) = each($lines))
 	  {
@@ -913,14 +922,14 @@ class WikiDiffFormatter
 
 	for (reset($hunks); $hunk = current($hunks); next($hunks))
 	  {
-	    if ($lines = $hunk['c'])
-		$html .= $this->_emit_lines($lines,
+	    if (!empty($hunk['c']))
+		$html .= $this->_emit_lines($hunk['c'],
 		                            $this->context_prefix, '#ffffff');
-	    if ($lines = $hunk['d'])
-		$html .= $this->_emit_lines($lines,
+	    if (!empty($hunk['d']))
+		$html .= $this->_emit_lines($hunk['d'],
 		                            $this->deletes_prefix, '#ccffcc');
-	    if ($lines = $hunk['a'])
-		$html .= $this->_emit_lines($lines,
+	    if (!empty($hunk['a']))
+		$html .= $this->_emit_lines($hunk['a'],
 		                            $this->adds_prefix, '#ffcccc');
 	  }
 
@@ -989,12 +998,12 @@ if ($diff)
   $html .= '</td>';
   if (is_array($wiki)) {
       $html .= "<td>";
-      $html .= sprintf(gettext ("version %s"), $wiki[version]);
+      $html .= sprintf(gettext ("version %s"), $wiki['version']);
       $html .= "</td><td>";
       $html .= sprintf(gettext ("last modified on %s"),
 	date($datetimeformat, $wiki['lastmodified']));
       $html .= "</td><td>";
-      $html .= sprintf (gettext ("by %s"), $wiki[author]);
+      $html .= sprintf (gettext ("by %s"), $wiki['author']);
       $html .= "</td>";
   } else {
       $html .= "<td colspan=3><em>";
@@ -1007,12 +1016,12 @@ if ($diff)
   $html .= '</td>';
   if (is_array($archive)) {
       $html .= "<td>";
-      $html .= sprintf(gettext ("version %s"), $archive[version]);
+      $html .= sprintf(gettext ("version %s"), $archive['version']);
       $html .= "</td><td>";
       $html .= sprintf(gettext ("last modified on %s"),
 	date($datetimeformat, $archive['lastmodified']));
       $html .= "</td><td>";
-      $html .= sprintf(gettext ("by %s"), $archive[author]);
+      $html .= sprintf(gettext ("by %s"), $archive['author']);
       $html .= "</td>";
   } else {
       $html .= "<td colspan=3><em>";

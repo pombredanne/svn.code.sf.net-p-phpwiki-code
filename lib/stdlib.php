@@ -1,4 +1,4 @@
-<!-- $Id: stdlib.php,v 1.7 2000-10-31 19:23:03 ahollosi Exp $ -->
+<!-- $Id: stdlib.php,v 1.8 2000-11-01 11:31:41 ahollosi Exp $ -->
 <?php
    /*
       Standard functions for Wiki functionality
@@ -87,7 +87,7 @@
    function GeneratePage($template, $content, $name, $hash)
    {
       global $ScriptUrl, $AllowedProtocols, $templates;
-      global $datetimeformat, $dbi, $logo;
+      global $datetimeformat, $dbi, $logo, $FieldSeparator;
 
       if (!is_array($hash))
          unset($hash);
@@ -132,7 +132,7 @@
 			$hash['refs'][$i], $page);
       }
 
-      if ($hash['copy']) {
+      if (isset($hash['copy'])) {
 	 $page = str_replace("#$FieldSeparator#IFCOPY#$FieldSeparator#",
 			'', $page);
       } else {
@@ -215,7 +215,7 @@
 
 
    class Stack {
-      var $items;
+      var $items = array();
       var $size = 0;
 
       function push($item) {
@@ -237,7 +237,10 @@
       }  
 
       function top() {
-         return $this->items[$this->size - 1];
+         if($this->size)
+            return $this->items[$this->size - 1];
+         else
+            return '';
       }  
 
    }  
@@ -395,7 +398,7 @@
 
       // copy the rest of the page into the new array
       $pagename = preg_quote($pagename);
-      for (; $i < ($numlines + 1); $i++) {
+      for (; $i < $numlines; $i++) {
          // skip previous entry for $pagename
          if (preg_match("|\[$pagename\]|", $recentchanges["content"][$i])) {
             continue;
@@ -492,16 +495,16 @@
 	 for ($i = 0; $i < $numBracketLinks; $i++) {
 	    $link = ParseAndLink($brktlinks[0][$i]);
 	    if($link['type'] == 'wiki' || $link['type'] == 'wiki-unknown')
-	       $wikilinks[$brktlinks[1][$i]]++;
+	       $wikilinks[$brktlinks[1][$i]] = 1;
 
             $brktlink = preg_quote($brktlinks[0][$i]);
             $line = preg_replace("|$brktlink|", '', $line);
 	 }
 
          if (preg_match_all("/!?$WikiNameRegexp/", $line, $link)) {
-            for ($i = 0; $link[0][$i]; $i++) {
+            for ($i = 0; isset($link[0][$i]); $i++) {
                if($link[0][$i][0] <> '!')
-                  $wikilinks[$link[0][$i]]++;
+                  $wikilinks[$link[0][$i]] = 1;
 	    }
          }
       }

@@ -1,4 +1,4 @@
-<!-- $Id: editpage.php,v 1.5 2000-10-26 15:38:38 ahollosi Exp $ -->
+<!-- $Id: editpage.php,v 1.6 2000-11-01 11:31:41 ahollosi Exp $ -->
 <?php
 
    // editpage relies on $pagename and $ScriptUrl
@@ -37,7 +37,7 @@
       }
 
       $textarea = implode("\n", $pagehash["content"]);
-      if ($copy) {
+      if (isset($copy)) {
 	 // $cdbi = OpenDataBase($WikiPageStore);
 	 $currentpage = RetrievePage($dbi, $pagename, $WikiPageStore);
          $pagehash["version"] = $currentpage["version"];
