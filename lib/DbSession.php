@@ -1,14 +1,14 @@
-<?php rcs_id('$Id: DbSession.php,v 1.32 2005-02-11 14:41:57 rurban Exp $');
+<?php rcs_id('$Id: DbSession.php,v 1.33 2005-02-27 19:40:36 rurban Exp $');
 
 /**
- * Store sessions data in Pear DB / ADODB / dba / ....
+ * Store sessions data in Pear DB / ADODB / dba / PDO, ....
  *
  * History
  *
  * Originally by Stanislav Shramko <stanis@movingmail.com>
  * Minor rewrite by Reini Urban <rurban@x-ray.at> for Phpwiki.
  * Quasi-major rewrite/decruft/fix by Jeff Dairiki <dairiki@dairiki.org>.
- * ADODB and dba classes by Reini Urban.
+ * ADODB, dba and PDO classes by Reini Urban.
  *
  * Warning: Enable USE_SAFE_DBSESSION if you get INSERT duplicate id warnings.
  */
@@ -19,20 +19,17 @@ class DbSession
      * Constructor
      *
      * @param mixed $dbh
-     * Pear DB handle, or WikiDB object (from which the Pear DB handle will
+     * DB handle, or WikiDB object (from which the DB handle will
      * be extracted.
      *
      * @param string $table
      * Name of SQL table containing session data.
      */
     function DbSession(&$dbh, $table = 'session') {
-        // Coerce WikiDB to PearDB or ADODB.
-        // Todo: adodb/dba handlers
+        // Check for existing DbSession handler
         $db_type = $dbh->getParam('dbtype');
         if (isa($dbh, 'WikiDB')) {
-            $backend = &$dbh->_backend;
-            $db_type = substr(get_class($dbh),7);
-            $class = "DbSession_".$db_type;
+            //$db_type = substr(get_class($dbh),7); // will fail with php4 and case-sensitive filesystem
             
             // < 4.1.2 crash on dba sessions at session_write_close(). 
             // (Tested with 4.1.1 and 4.1.2)
@@ -41,7 +38,10 @@ class DbSession
                 return false;
 
             @include_once("lib/DbSession/".$db_type.".php");
+            
+            $class = "DbSession_".$db_type;
             if (class_exists($class)) {
+                $backend = &$dbh->_backend;
                 $this->_backend = new $class($backend->_dbh, $table);
                 return $this->_backend;
             }
@@ -63,6 +63,9 @@ class DbSession
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.32  2005/02/11 14:41:57  rurban
+// seperate DbSession classes: less memory, a bit slower
+//
 
 // Local Variables:
 // mode: php
