@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.14 2002-02-07 05:11:33 carstenklapp Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.15 2002-02-07 20:20:24 carstenklapp Exp $ -->
 <?php
 
 /**
@@ -27,15 +27,20 @@ for ($z = -14; $z < 12; $z++) {
     $z = $z-0.5;
 }
 
-$TimeZoneSelect = HTML("GMT ", HTML::select(array('name' => "pref[timeOffset]"), $select));
+$TimeZoneSelect = HTML::select(array('name' => "pref[timeOffset]"), $select);
 
 $RelativeDatesCB = HTML::input(array('type' => 'checkbox',
-                                     'name' => 'pref[relativeDates]',
-// these doesn't work yet              'value'  => $request->getPref('relativeDates')?1:0,
-//                                     'checked'  => $request->getPref('relativeDates')
-                                     'disabled'  => true,
-                                     'checked'  => false
+                                     'name' => 'pref[relativeDates]'//,
+//                                     'disabled' => false,
+//                                     'checked' => false,
+//                                     'value' => 0
                                ));
+
+if ($request->getPref('relativeDates')) {
+  $val = $request->getPref('relativeDates');
+  $RelativeDatesCB->setAttr('checked', (bool)$val);
+  $RelativeDatesCB->setAttr('value', !$val ? 1 : 0);
+}
 ?>
 <form action="<?=WikiURL($page)?>" method="post">
   <input type="hidden" name="pagename" value="<?=$request->getArg('pagename')?>" />
@@ -67,22 +72,24 @@ $RelativeDatesCB = HTML::input(array('type' => 'checkbox',
       <td align="right"><?=_("Your time:")?></td>
       <td><?= $yourTime ?></td>
     </tr><tr>
-      <td></td>
+      <td align="right">GMT</td>
       <td>
         <?= $TimeZoneSelect ?>
       </td>
-    </tr><tr>
+    </tr>
       <!--until timezone functions have been fully debugged-->
-      <td></td><td><small>Times converted to your zone will be marked with an asterisk&nbsp;(*).</small></td>
+      <tr><td></td><td><small>Times converted to your zone will be marked with an asterisk&nbsp;(*) for debugging.</small></td></tr>
     <tr>
       <td colspan="2"><h2><?=_("Date Format")?></h2></td>
     </tr><tr>
-      <td></td>
+      <td align="right">
+        <?=$RelativeDatesCB?>
+      </td>
       <td>
-        <?= $RelativeDatesCB ?><?=_("Show relative dates using 'Today' and 'Yesterday'.")?>
+        <?=_("Show relative dates using 'Today' and 'Yesterday'.")?>
       </td>
     </tr>
-    <tr><td colspan="2" align="center"><em>(Not yet implemented).</em></td></tr>
+    <!--tr><td></td><td><small>Not yet implemented.</small></td></tr-->
   </table>
   </blockquote>
   <hr />
