@@ -1,3 +1,36 @@
+UPGRADING from 1.3.7
+
+mysql + postgres:
+
+ALTER TABLE session ADD sess_ip CHAR(15) NOT NULL;
+CREATE INDEX sess_date ON session (sess_date); 
+
+postgres:
+
+New pref and session tables have been added for more 
+efficiency.
+
+user and themes:
+
+WikiUser and signin.tmpl changed from $user->getId() to 
+$user->getAuthenticatedId()
+Authenticated reflects the level (confirmed by password), 
+Signed just the username (possibly by cookie only)
+
+pgsrc:
+
+To upgrade not-existing pages add "?action=upgrade" to 
+your HomePage url and press "Enter", which will
+add all fresh pages from pgsrc to your pageset.
+If you deleted some pages on purpose, you'll have to removed 
+them again with PhpWikiAdminisstration/Remove then.
+
+There's no smart "Merge Diffs" yet to upgrade existing docs,
+this will come with the next release. Also upgrading the
+database automatically.
+
+UPGRADING from 1.2.x
+
 FIXME: WARNING WARNING: the schemas used by the new databases
 are completely incompatible with schemas in any previous version
 (i.e. before release 1.3.1 of PhpWiki).  If you install this new
@@ -78,39 +111,7 @@ as the current contents.
 We really need to figure out a way to simplify this process, but, for now,
 that's what you gotta do.
 
-
 An older note of mine on the same subject can be found at:
  http://sourceforge.net/forum/message.php?msg_id=107858
 
-
-==========
-
-On the zip-dump bug in 1.2.0 and 1.2.1.
-
-There is a bug which causes PhpWiki release 1.2.0 or 1.2.1 to produce
-corrupt zip dumps if you are using the DBA, DBM or flat-file backends.
-
-To fix the bug, either upgrade to release 1.2.2, or patch your PhpWiki
-source code as follows:
-
-To Manually Patch PhpWiki 1.2.0 or 1.2.1:
-
- 1. Edit the appropriate backend driver:
-      Backend    Driver File
-      =======    ============
-      DBA        lib/dbalib.php
-      DBM        lib/dbmlib.php
-      flat file  lib/db_filesystem.php
-
- 2. Find the function definition for RetrievePage().  (Look for a file
-    which begins "function RetrievePage"...)
-
- 3. Within RetrievePage() look for the line which begins: 
-       $pagehash = unserialize(
-    (the exact arguments of unserialize depend on the backend.)
-
- 4. Immediately after that line add a line which reads:
-       $pagehash['pagename'] = $pagename;
-
-
-$Id: UPGRADING,v 1.6 2001-11-14 17:15:42 dairiki Exp $
+$Id: UPGRADING,v 1.7 2004-04-12 14:07:10 rurban Exp $
