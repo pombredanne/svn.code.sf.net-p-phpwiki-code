@@ -1,6 +1,6 @@
-<?php 
-/* $Id: dialog.tmpl,v 1.1 2003-02-21 04:13:18 dairiki Exp $
- *
+<?php
+rcs_id('$Id: dialog.tmpl,v 1.2 2003-03-04 23:34:11 dairiki Exp $');
+/* 
  * A "popup" dialog.  (Though it doesn't pop up yet.)
  */
 printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
@@ -9,7 +9,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: dialog.tmpl,v 1.1 2003-02-21 04:13:18 dairiki Exp $ -->
+<!-- $Id: dialog.tmpl,v 1.2 2003-03-04 23:34:11 dairiki Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
 <meta name="robots" content="noindex, nofollow" />
 <meta name="generator" content="phpWiki" />
@@ -26,7 +26,9 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
 <p class="buttons"><?=$BUTTONS?></a></p>
 </div>
 </body>
-<!-- phpwiki source:
-<?=$RCS_IDS?>
--->
+<?php
+if (defined('DEBUG') and DEBUG) {
+    printf("<!-- phpwiki source: \n%s-->\n", $RCS_IDS);
+}
+?>
 </html>

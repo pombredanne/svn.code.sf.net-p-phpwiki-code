@@ -1,7 +1,8 @@
 <?php  // -*-html-*-
-/* $Id: htmldump.tmpl,v 1.1 2002-08-27 22:00:04 rurban Exp $
- *
- * This template is used only for html file dumps, and is responsible mainly for the outer level <html> stuff and the and <head>.
+rcs_id('$Id: htmldump.tmpl,v 1.2 2003-03-04 23:34:11 dairiki Exp $');
+/*
+ * This template is used only for html file dumps, and is responsible
+ * mainly for the outer level <html> stuff and the and <head>.
  */
 printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
 ?>
@@ -9,7 +10,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: htmldump.tmpl,v 1.1 2002-08-27 22:00:04 rurban Exp $ -->
+<!-- $Id: htmldump.tmpl,v 1.2 2003-03-04 23:34:11 dairiki Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
 <?php /**
        * Additional navigation links are provided here in the html header for browsers
@@ -31,7 +32,9 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
 <title><?=WIKI_NAME?> - <?=AsString($TITLE)?></title>
 </head>
 <?= Template('body') ?>
-<!-- phpwiki source:
-<?=$RCS_IDS?>
--->
+<?php
+if (defined('DEBUG') and DEBUG) {
+    printf("<!-- phpwiki source: \n%s-->\n", $RCS_IDS); 
+}
+?>
 </html>

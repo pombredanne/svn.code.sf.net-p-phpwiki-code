@@ -1,6 +1,6 @@
 <?php  // -*-html-*-
-/* $Id: html.tmpl,v 1.2 2003-02-26 22:27:18 dairiki Exp $
- *
+rcs_id('$Id: html.tmpl,v 1.3 2003-03-04 23:34:11 dairiki Exp $');
+/*
  * This template is responsible mainly for the outer level <html> stuff.
  */
 printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
@@ -10,7 +10,9 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
 <html xmlns="http://www.w3.org/1999/xhtml">
 <?= Template('head') ?>
 <?= Template('body') ?>
-<!-- phpwiki source:
-<?=$RCS_IDS?>
--->
+<?php
+if (defined('DEBUG') and DEBUG) {
+    printf("<!-- phpwiki source: \n%s-->\n", $RCS_IDS);
+}
+?>
 </html>
