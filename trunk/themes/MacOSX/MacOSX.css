@@ -1,5 +1,5 @@
 /*
- $Id: MacOSX.css,v 1.31 2003-02-27 23:55:51 dairiki Exp $
+ $Id: MacOSX.css,v 1.32 2003-11-20 20:51:06 carstenklapp Exp $
 
  Classes:
 
@@ -413,6 +413,77 @@ div.wiki-message {
   clear: both;
 }
 
+dl {
+/*   position: relative; */
+display:table;
+/*   width: 85%; */
+  padding-top: 1.5ex;
+  padding-left: 0.75em;
+  padding-right: 0.75em;
+  border-style: solid;
+  border-width: thin;
+  border-color: #ccc;
+}
+/* dotted underline each dt. use display:table to shrink width */
+dt {
+  display: table;
+  font-weight: bold;
+  vertical-align: baseline;
+  margin-top: 1.25ex;
+  margin-bottom: 0.25ex;
+  padding-left: 0.25ex;
+  padding-right: 0.25ex;
+  border-bottom-style: dotted;
+  border-bottom-width: 2pt;
+  border-bottom-color: #9999cc;
+}
+/* No underlines for wiki-links in dt,
+   we already have dotted underline */
+dt a.wiki, dt a.named-wiki {
+  text-decoration: none;
+}
+/* No top margin for first dt */
+dl>dt:first-child {
+  margin-top: 0ex;
+}
+/* underline each dd.
+   use display:table to shrink width */
+dd {
+/* overflows wide text beyond containing dl */
+/* in most browsers :( Would have been nice */
+/*   display: table; */
+  position: relative;
+  margin-left: 3.5em;
+  margin-bottom: 0.5ex;
+  padding-left: 0.125em;
+  padding-bottom: 0.5ex;
+  padding-right: 0.125em;
+  border-bottom-style: solid;
+  border-bottom-width: thin;
+  border-bottom-color: #9999cc;
+}
+pre,
+div.plugin code {
+  color: black;
+  display: block;
+  background-color: #fcfcfc;
+  font-size: 90%;
+  line-height: 1.25em;
+  margin-top: 0.25em;
+  margin-left: 0em;
+  margin-bottom: 2ex;
+  margin-right: 0em;
+  padding-top: 0.25em;
+  padding-left: 0.5em;
+  padding-bottom: 0.25em;
+  padding-right: 0.5em;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ccc;
+}
+pre {
+  background: #fafafa url("images/bgpaper8.png");
+}
 /* For emacs users
  *
  * Local Variables:
