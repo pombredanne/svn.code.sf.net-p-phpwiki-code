@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: RatingsUser.php,v 1.2 2004-06-21 17:01:41 rurban Exp $');
+rcs_id('$Id: RatingsUser.php,v 1.3 2004-06-30 20:06:44 dfrankow Exp $');
 /* Copyright (C) 2004 Dan Frankowski
  *
  * This file is (not yet) part of PhpWiki.
@@ -72,7 +72,7 @@ class RatingsUser {
         // else that's less of a base class.
         if (isset($this->_rdbi))
             return $this->_rdbi;
-        $this->_rdbi = new RatingsDb();
+        $this->_rdbi = RatingsDb::getTheRatingsDb();
         return $this->_rdbi;
     }
 
@@ -146,6 +146,8 @@ class RatingsUser {
         $this->_load_ratings();
         if (isset($dimension))
         {
+            
+
             if (isset($this->_ratings[$pagename][$dimension]))
             {
                 return true;
@@ -165,8 +167,12 @@ class RatingsUser {
     {
         // XXX: does this really want to do a full ratings load?  (scalability?)
         $this->_load_ratings();
+
+
         if ($this->has_rated($pagename, $dimension))
         {
+
+            
             return $this->_ratings[$pagename][$dimension]->get_rating();
         }
         return false;
@@ -347,8 +353,10 @@ class RatingsUser {
 
             // passing null as first parameter to indicate all dimensions
             $dbi = $this->_get_rating_dbi();
+
             $rating_iter = $dbi->sql_get_rating(null, $this->_userid, null);
             //$rating_iter = $dbi->get_rating(null, $this->_userid);
+
             while($rating = $rating_iter->next())
             {
                 $this->_num_ratings++;
@@ -358,6 +366,7 @@ class RatingsUser {
                                     $rating['dimension'], 
                                     $rating['ratingvalue']);
             }
+
             $this->_ratings_loaded = true;
         }
     }
@@ -416,6 +425,9 @@ class _UserRating
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/06/21 17:01:41  rurban
+// fix typo and rating method call
+//
 // Revision 1.1  2004/06/18 14:42:17  rurban
 // added wikilens libs (not yet merged good enough, some work for DanFr)
 //
