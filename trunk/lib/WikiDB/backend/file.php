@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: file.php,v 1.14 2004-07-08 17:31:43 rurban Exp $');
+rcs_id('$Id: file.php,v 1.15 2004-07-09 10:06:50 rurban Exp $');
 
 /**
  Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
@@ -52,10 +52,9 @@ extends WikiDB_backend
     var $data_dir;
     var $_dir_names;
 
-    var $_page_data;  // temporarily stores the pagedata (via _loadPageData)
+    var $_page_data;          // temporarily stores the pagedata (via _loadPageData)
     var $_page_version_data;  // temporarily stores the versiondata (via _loadVersionData)
-    var $_latest_versions;  // temporarily stores the latest version-numbers (for every pagename)  (via _loadLatestVersions)
-    
+    var $_latest_versions;    // temporarily stores the latest version-numbers (for every pagename)
 
     function WikiDB_backend_file( $dbparam )
     {
@@ -147,9 +146,7 @@ extends WikiDB_backend
             trigger_error("delete file failed: ".$filename." ver: ".$version, E_USER_WARNING);
     }
 
-
     // *********************************************************************
-
 
     // *********************************************************************
     // Load/Save Version-Data
@@ -537,10 +534,12 @@ extends WikiDB_backend
      * @param $pagename string The page name.
      * @return object A WikiDB_backend_iterator.
      */
+    /*
     function get_all_revisions($pagename) {
         include_once('lib/WikiDB/backend/dumb/AllRevisionsIter.php');
         return new WikiDB_backend_dumb_AllRevisionsIter($this, $pagename);
     }
+    */
     
     /**
      * Get all pages in the database.
@@ -561,88 +560,28 @@ extends WikiDB_backend
      *
      * @return object A WikiDB_backend_iterator.
      */
-    function get_all_pages($include_deleted=false, $orderby='pagename') {
+    function get_all_pages($include_deleted=false, $sortby=false, $limit=false) {
+    	require_once("lib/PageList.php");
         $this->_loadLatestVersions();
         $a = array_keys($this->_latest_versions);
-
+        if (empty($a))
+            return new WikiDB_backend_file_iter($this, $a);
+        $sortby = $this->sortby($sortby, 'db');
+        switch ($sortby) {
+        case '': break;
+        case 'pagename ASC':  sort($a); break;
+        case 'pagename DESC': rsort($a); break;
+        }
         return new WikiDB_backend_file_iter($this, $a);
+    }
+
+    function sortable_columns() {
+        return array('pagename');
     }
 
     function numPages($filter=false, $exclude='') {
         $this->_loadLatestVersions();
         return count($this->_latest_versions);
-    }
-        
-    /**
-     * Title or full text search.
-     *
-     * Pages should be returned in alphabetical order if that is
-     * feasable.
-     *
-     * @access protected
-     *
-     * @param $search object A TextSearchQuery object describing what pages
-     * are to be searched for.
-     *
-     * @param $fullsearch boolean If true, a full text search is performed,
-     *  otherwise a title search is performed.
-     *
-     * @return object A WikiDB_backend_iterator.
-     *
-     * @see WikiDB::titleSearch
-     */
-    function text_search($search = '', $fullsearch = false) {
-        // This is method implements a simple linear search
-        // through all the pages in the database.
-        //
-        // It is expected that most backends will overload
-        // method with something more efficient.
-        include_once('lib/WikiDB/backend/dumb/TextSearchIter.php');
-        $pages = $this->get_all_pages(false);
-        return new WikiDB_backend_dumb_TextSearchIter($this, $pages, $search, $fullsearch);
-    }
-
-    /**
-     * Find pages with highest hit counts.
-     *
-     * Find the pages with the highest hit counts.  The pages should
-     * be returned in reverse order by hit count.
-     *
-     * @access protected
-     * @param $limit integer  No more than this many pages
-     * @return object A WikiDB_backend_iterator.
-     */
-    function most_popular($limit,$sortby = '') {
-        // This is method fetches all pages, then
-        // sorts them by hit count.
-        // (Not very efficient.)
-        //
-        // It is expected that most backends will overload
-        // method with something more efficient.
-        include_once('lib/WikiDB/backend/dumb/MostPopularIter.php');
-        $pages = $this->get_all_pages(false,'hits DESC');
-        
-        return new WikiDB_backend_dumb_MostPopularIter($this, $pages, $limit);
-    }
-
-    /**
-     * Find recent changes.
-     *
-     * @access protected
-     * @param $params hash See WikiDB::mostRecent for a description
-     *  of parameters which can be included in this hash.
-     * @return object A WikiDB_backend_iterator.
-     * @see WikiDB::mostRecent
-     */
-    function most_recent($params) {
-        // This method is very inefficient and searches through
-        // all pages for the most recent changes.
-        //
-        // It is expected that most backends will overload
-        // method with something more efficient.
-        include_once('lib/WikiDB/backend/dumb/MostRecentIter.php');
-        $pages = $this->get_all_pages(true,'mtime DESC');
-        return new WikiDB_backend_dumb_MostRecentIter($this, $pages, $params);
     }
 
     /**
@@ -693,7 +632,7 @@ extends WikiDB_backend
      * Optimize the database.
      */
     function optimize() {
-        //trigger_error("optimize: Not Implemented", E_USER_WARNING);
+        return 0;//trigger_error("optimize: Not Implemented", E_USER_WARNING);
     }
 
     /**
@@ -786,6 +725,9 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2004/07/08 17:31:43  rurban
+// improve numPages for file (fixing AllPagesTest)
+//
 // Revision 1.13  2004/07/08 15:23:59  rurban
 // less verbose for tests
 //

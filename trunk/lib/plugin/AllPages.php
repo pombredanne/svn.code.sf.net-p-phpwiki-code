@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllPages.php,v 1.29 2004-07-08 21:32:36 rurban Exp $');
+rcs_id('$Id: AllPages.php,v 1.30 2004-07-09 10:06:50 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.29 $");
+                            "\$Revision: 1.30 $");
     }
 
     function getDefaultArguments() {
@@ -79,12 +79,25 @@ extends WikiPlugin
 
         if ($args['debug'])
             $timer = new DebugTimer;
-        if ( !empty($args['owner']) )
+        $caption = _("All pages in this wiki (%d total):");
+        if ( !empty($args['owner']) ) {
             $pages = PageList::allPagesByOwner($args['owner'],$args['include_empty'],$args['sortby'],$args['limit']);
-        elseif ( !empty($args['author']) )
+            if ($args['owner'])
+                $caption = fmt("List of pages owned by [%s] (%d total):", 
+                               WikiLink($args['owner'], 'if_known'),
+                               count($pages));
+        } elseif ( !empty($args['author']) ) {
             $pages = PageList::allPagesByAuthor($args['author'],$args['include_empty'],$args['sortby'],$args['limit']);
-        elseif ( !empty($args['creator']) ) {
+            if ($args['author'])
+                $caption = fmt("List of pages last edited by [%s] (%d total):", 
+                               WikiLink($args['author'], 'if_known'), 
+                               count($pages));
+        } elseif ( !empty($args['creator']) ) {
             $pages = PageList::allPagesByCreator($args['creator'],$args['include_empty'],$args['sortby'],$args['limit']);
+            if ($args['creator'])
+                $caption = fmt("List of pages created by [%s] (%d total):", 
+                               WikiLink($args['creator'], 'if_known'), 
+                               count($pages));
         } else {
             if (! $request->getArg('count'))  $args['count'] = $dbi->numPages(false,$args['exclude']);
             else $args['count'] = $request->getArg('count');
@@ -93,19 +106,13 @@ extends WikiPlugin
         if (empty($args['count']) and !empty($pages))
             $args['count'] = count($pages);
         $pagelist = new PageList($args['info'], $args['exclude'], $args);
-        //if (!$sortby) $sorted='pagename';
-        if (!$args['noheader']) {
-            if (empty($pages))
-                $pagelist->setCaption(_("All pages in this wiki (%d total):"));
-            else
-                $pagelist->setCaption(_("List of pages (%d total):"));
-        }
+        if (!$args['noheader']) $pagelist->setCaption($caption);
 
         // deleted pages show up as version 0.
         if ($args['include_empty'])
             $pagelist->_addColumn('version');
 
-        if (!empty($pages))
+        if ($pages !== false)
             $pagelist->addPageList($pages);
         else
             $pagelist->addPages( $dbi->getAllPages($args['include_empty'], $args['sortby'], $args['limit']) );
@@ -124,6 +131,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.29  2004/07/08 21:32:36  rurban
+// Prevent from more warnings, minor db and sort optimizations
+//
 // Revision 1.28  2004/07/08 20:30:07  rurban
 // plugin->run consistency: request as reference, added basepage.
 // encountered strange bug in AllPages (and the test) which destroys ->_dbi

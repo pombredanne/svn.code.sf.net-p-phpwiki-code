@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.41 2004-07-08 21:32:35 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.42 2004-07-09 10:06:50 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -528,12 +528,12 @@ extends WikiDB_backend
         return new WikiDB_backend_ADODB_iter($this, $result);
     }
 
-    function get_all_pages($include_deleted=false,$sortby = false,$limit = false) {
+    function get_all_pages($include_deleted=false, $sortby=false, $limit=false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         //if ($limit)  $limit = "LIMIT $limit";
         //else         $limit = '';
-        $orderby = PageList::sortby($sortby,'db');
+        $orderby = $this->sortby($sortby, 'db');
         if ($orderby) $orderby = 'ORDER BY ' . $orderby;
         $dbh->SetFetchMode(ADODB_FETCH_ASSOC);
         if (strstr($orderby, 'mtime')) { // was ' mtime'
@@ -569,8 +569,7 @@ extends WikiDB_backend
         }
         if ($limit) {
             // extract from,count from limit
-            require_once("lib/PageList.php");
-            list($offset,$count) = PageList::limit($limit);
+            list($offset,$count) = $this->limit($limit);
             $result = $dbh->SelectLimit($sql, $count, $offset);
         } else {
             $result = $dbh->Execute($sql);
@@ -648,7 +647,7 @@ extends WikiDB_backend
         } else {
             $where = " AND hits > 0";
         }
-        if ($sortby) $orderby = " ORDER BY " . PageList::sortby($sortby,'db');
+        if ($sortby) $orderby = " ORDER BY " . $this->sortby($sortby, 'db');
         else         $orderby = " ORDER BY hits $order";
         $limit = $limit ? $limit : -1;
 
@@ -1143,6 +1142,9 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.41  2004/07/08 21:32:35  rurban
+// Prevent from more warnings, minor db and sort optimizations
+//
 // Revision 1.40  2004/07/08 16:56:16  rurban
 // use the backendType abstraction
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.8 2004-06-21 16:22:32 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.9 2004-07-09 10:06:49 rurban Exp $');
 
 /*
   Pagedata
@@ -280,7 +280,7 @@ class WikiDB_backend
      *
      * @return object A WikiDB_backend_iterator.
      */
-    function get_all_pages($include_defaulted, $orderby) {
+    function get_all_pages($include_defaulted, $orderby=false, $limit=false) {
         trigger_error("virtual", E_USER_ERROR);
     }
         
@@ -323,7 +323,7 @@ class WikiDB_backend
      * @param $limit integer  No more than this many pages
      * @return object A WikiDB_backend_iterator.
      */
-    function most_popular($limit,$sortby = '') {
+    function most_popular($limit) {
         // This is method fetches all pages, then
         // sorts them by hit count.
         // (Not very efficient.)
@@ -331,7 +331,7 @@ class WikiDB_backend
         // It is expected that most backends will overload
         // method with something more efficient.
         include_once('lib/WikiDB/backend/dumb/MostPopularIter.php');
-        $pages = $this->get_all_pages(false,'hits DESC');
+        $pages = $this->get_all_pages(false, 'hits DESC', $limit);
         
         return new WikiDB_backend_dumb_MostPopularIter($this, $pages, $limit);
     }
@@ -443,21 +443,92 @@ class WikiDB_backend
         }
         return array($words, $exclude);
     }
-        
+
+    /** 
+     * Split the given limit parameter into offset,pagesize. (offset is optional. default: 0)
+     * Duplicate the PageList function here to avoid loading the whole PageList.php 
+     * Usage: 
+     *   list($offset,$pagesize) = $this->limit($args['limit']);
+     */
+    function limit($limit) {
+        if (strstr($limit, ','))
+            return split(',', $limit);
+        else
+            return array(0, $limit);
+    }
+    
+    /** 
+     * Handle sortby requests for the DB iterator and table header links.
+     * Prefix the column with + or - like "+pagename","-mtime", ...
+     * supported actions: 'flip_order' "mtime" => "+mtime" => "-mtime" ...
+     *                    'db'         "-pagename" => "pagename DESC"
+     * In PageList all columns are sortable. (patch by DanFr)
+     * Here with the backend only some, the rest is delayed to PageList.
+     * (some kind of DumbIter)
+     * Duplicate the PageList function here to avoid loading the whole 
+     * PageList.php, and it forces the backend specific sortable_columns()
+     */
+    function sortby ($column, $action) {
+        if (empty($column)) return '';
+        //support multiple comma-delimited sortby args: "+hits,+pagename"
+        if (strstr($column,',')) {
+            $result = array();
+            foreach (explode(',',$column) as $col) {
+                $result[] = $this->sortby($col,$action);
+            }
+            return join(",",$result);
+        }
+        if (substr($column,0,1) == '+') {
+            $order = '+'; $column = substr($column,1);
+        } elseif (substr($column,0,1) == '-') {
+            $order = '-'; $column = substr($column,1);
+        }
+        // default order: +pagename, -mtime, -hits
+        if (empty($order))
+            if (in_array($column,array('mtime','hits')))
+                $order = '-';
+            else
+                $order = '+';
+        if ($action == 'flip_order') {
+            return ($order == '+' ? '-' : '+') . $column;
+        } elseif ($action == 'init') {
+            $this->_sortby[$column] = $order;
+            return $order . $column;
+        } elseif ($action == 'check') {
+            return (!empty($this->_sortby[$column]) or 
+                    ($GLOBALS['request']->getArg('sortby') and 
+                     strstr($GLOBALS['request']->getArg('sortby'),$column)));
+        } elseif ($action == 'db') {
+            // native sort possible?
+            $sortable_columns = $this->sortable_columns();
+            if (in_array($column, $sortable_columns))
+                // asc or desc: +pagename, -pagename
+                return $column . ($order == '+' ? ' ASC' : ' DESC');
+            else 
+                return '';
+        }
+        return '';
+    }
+
+    function sortable_columns() {
+        return array('pagename'/*,'mtime','author_id','author'*/);
+    }
+
 };
 
 /**
  * Iterator returned by backend methods which (possibly) return
  * multiple records.
  *
- * FIXME: this should be two seperate classes: page_iter and version_iter.
+ * FIXME: This might be two seperate classes: page_iter and version_iter.
+ * For the versions we have WikiDB_backend_dumb_AllRevisionsIter.
  */
 class WikiDB_backend_iterator
 {
     /**
      * Get the next record in the iterator set.
      *
-     * This returns a hash.  The has may contain the following keys:
+     * This returns a hash. The hash may contain the following keys:
      * <dl>
      * <dt> pagename <dt> (string) the page name
      * <dt> version  <dt> (int) the version number

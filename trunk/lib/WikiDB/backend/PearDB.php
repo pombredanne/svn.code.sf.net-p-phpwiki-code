@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.59 2004-07-08 21:32:36 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.60 2004-07-09 10:06:50 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -446,7 +446,6 @@ extends WikiDB_backend
             list($have,$want) = array('linkee', 'linker');
         else
             list($have,$want) = array('linker', 'linkee');
-
         
         $qpagename = $dbh->quoteString($pagename);
         
@@ -463,15 +462,15 @@ extends WikiDB_backend
         return new WikiDB_backend_PearDB_iter($this, $result);
     }
 
-    function get_all_pages($include_deleted=false,$sortby=false,$limit=false) {
+    function get_all_pages($include_deleted=false, $sortby=false, $limit=false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         // Limit clause is NOT portable!
         // if ($limit)  $limit = "LIMIT $limit";
         // else         $limit = '';
-        $orderby = PageList::sortby($sortby,'db');
+        $orderby = $this->sortby($sortby, 'db');
         if ($orderby) $orderby = 'ORDER BY ' . $orderby;
-        if (strstr($orderby,'mtime')) { // multiple columns possible
+        if (strstr($orderby, 'mtime ')) { // multiple columns possible
             if ($include_deleted) {
                 $sql = "SELECT "
                     . $this->page_tbl_fields
@@ -505,8 +504,7 @@ extends WikiDB_backend
         }
         if ($limit) {
             // extract from,count from limit
-            require_once("lib/PageList.php");
-            list($from,$count) = PageList::limit($limit);
+            list($from,$count) = $this->limit($limit);
             $result = $dbh->limitQuery($sql, $from, $count);
         } else {
             $result = $dbh->query($sql);
@@ -570,7 +568,7 @@ extends WikiDB_backend
     /**
      * Find highest or lowest hit counts.
      */
-    function most_popular($limit=false,$sortby = '') {
+    function most_popular($limit=false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $order = "DESC";
@@ -581,8 +579,7 @@ extends WikiDB_backend
         } else {
             $where = " AND hits > 0";
         }
-        if ($sortby) $orderby = ' ORDER BY ' . PageList::sortby($sortby,'db');
-        else         $orderby = " ORDER BY hits $order";
+        $orderby = " ORDER BY hits $order";
         //$limitclause = $limit ? " LIMIT $limit" : '';
         $sql = "SELECT "
             . $this->page_tbl_fields
@@ -591,8 +588,7 @@ extends WikiDB_backend
             . $where
             . $orderby;
          if ($limit) {
-             require_once("lib/PageList.php");
-             list($from,$count) = PageList::limit($limit);
+             list($from,$count) = $this->limit($limit);
              $result = $dbh->limitQuery($sql, $from, $count);
          } else {
              $result = $dbh->query($sql);
@@ -1034,6 +1030,9 @@ extends WikiDB_backend_PearDB_generic_iter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.59  2004/07/08 21:32:36  rurban
+// Prevent from more warnings, minor db and sort optimizations
+//
 // Revision 1.58  2004/07/08 16:56:16  rurban
 // use the backendType abstraction
 //

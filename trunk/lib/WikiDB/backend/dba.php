@@ -1,7 +1,6 @@
-<?php rcs_id('$Id: dba.php,v 1.5 2004-04-06 20:00:11 rurban Exp $');
+<?php rcs_id('$Id: dba.php,v 1.6 2004-07-09 10:06:50 rurban Exp $');
 
 require_once('lib/WikiDB/backend/dbaBase.php');
-
 require_once('lib/DbaDatabase.php');
 
 class WikiDB_backend_dba
