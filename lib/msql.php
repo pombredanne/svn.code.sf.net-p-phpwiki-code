@@ -1,4 +1,4 @@
-<!-- $Id: msql.php,v 1.3 2000-10-20 11:42:52 ahollosi Exp $ -->
+<!-- $Id: msql.php,v 1.4 2000-11-03 05:27:51 wainstead Exp $ -->
 <?php
 
    /*
@@ -58,6 +58,11 @@
 
    function msqlDecomposeString($string) {
       $ret_arr = array();
+
+      // initialize the array to satisfy E_NOTICE
+      for ($i = 0; $i < MSQL_MAX_LINE_LENGTH; $i++) {
+         $ret_arr[$i] = "";
+      }
       $el = 0;
    
       // zero, one, infinity
@@ -109,7 +114,11 @@
          $pagehash["content"] = msqlDecomposeString($pagehash["content"]);
       }
       $pagehash["author"] = addslashes($pagehash["author"]);
-      $pagehash["refs"] = serialize($pagehash["refs"]);
+      if (empty($pagehash["refs"])) {
+         $pagehash["refs"] = "";
+      } else {
+         $pagehash["refs"] = serialize($pagehash["refs"]);
+      }
 
       return $pagehash;
    }
@@ -140,6 +149,7 @@
                   "where pagename='$pagename' " .
                   "order by lineno";
 
+         $msql_content = "";
          if ($res = msql_query($query, $dbi['dbc'])) {
             $dbhash["content"] = array();
             while ($row = msql_fetch_array($res)) {
