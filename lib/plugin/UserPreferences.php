@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.34 2004-10-05 00:10:49 rurban Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.35 2004-10-13 14:13:55 rurban Exp $');
 /**
  Copyright (C) 2001, 2002, 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.34 $");
+                            "\$Revision: 1.35 $");
     }
 
     function getDefaultArguments() {
@@ -88,6 +88,7 @@ extends WikiPlugin
              $user->isAuthenticated() and !empty($userid))
         {
             $pref = &$request->_prefs;
+	    $args['isForm'] = true;
             //trigger_error("DEBUG: reading prefs from getPreferences".print_r($pref));
  
             if ($request->isPost()) {
@@ -169,6 +170,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.34  2004/10/05 00:10:49  rurban
+// adjust for unittests. They finally pass all tests
+//
 // Revision 1.33  2004/10/04 23:39:34  rurban
 // just aesthetics
 //
