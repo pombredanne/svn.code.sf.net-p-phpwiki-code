@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: random.php,v 1.3 2002-01-18 22:46:32 carstenklapp Exp $');
+rcs_id('$Id: random.php,v 1.4 2002-01-23 08:23:50 carstenklapp Exp $');
 
 class ImageSet {
 
@@ -27,12 +27,9 @@ class ImageSet {
     }
 
     function pickRandomImage() {
-        $random_num = mt_rand(0,count($this->imageList)-1);
-        $imgname = $this->imageList[$random_num];
+        $imgname = $this->imageList[array_rand($this->imageList)];
         //trigger_error(sprintf(_("random image chosen: %s"), $imgname),
         //              E_USER_NOTICE);//debugging
-        //return $this->dirname . "/" . $imgname;
-
         return $imgname;
     }
 
