@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.71 2002-08-27 21:51:31 rurban Exp $');
+rcs_id('$Id: main.php,v 1.72 2002-08-30 21:36:37 lakka Exp $');
 
 define ('DEBUG', 1);
 define ('USE_PREFS_IN_PAGE', true);
@@ -604,7 +604,7 @@ function main () {
     //  $LogEntry->user = $user->getId();
 
     $request->possiblyDeflowerVirginWiki();
-
+if(defined('WIKI_XMLRPC')) return;
     $request->handleAction();
 if (defined('DEBUG') and DEBUG>1) phpinfo(INFO_VARIABLES);
     $request->finish();
