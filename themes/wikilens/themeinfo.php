@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.6 2004-06-18 14:43:41 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.7 2004-06-18 14:46:11 rurban Exp $');
 /**
  * The wikilens theme is just a normal Theme (can be based on any, here based on default)
  * with additionally loads some wikilens libraries.
@@ -84,21 +84,8 @@ $WikiTheme->setTimeFormat("%H:%M");
  */
 //$WikiTheme->setDateFormat("%B %d, %Y", false); 
 
+require_once("lib/wikilens/CustomPrefs.php");
 require_once("lib/wikilens/PageListColumns.php");
-
-/*
-class _PageList_Column_rating extends _PageList_Column {
-    function _getValue ($page_handle, &$revision_handle) {
-        static $prefix = 0;
-        $loader = new WikiPluginLoader();
-        $args = "pagename=".$page_handle->_pagename;
-        $args .= " small=1";
-        $args .= " imgPrefix=".$prefix++;
-        return $loader->expandPi('<'."?plugin RateIt $args ?".'>',
-                                 $GLOBALS['request'], $page_handle);
-    }
-};
-*/
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // (c-file-style: "gnu")
