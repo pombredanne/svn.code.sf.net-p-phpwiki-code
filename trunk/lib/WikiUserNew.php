@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.64 2004-05-02 15:10:06 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.65 2004-05-03 13:16:47 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1508,7 +1508,7 @@ extends _DbPassUser
 
     function setPreferences($prefs, $id_only=false) {
         // if the prefs are changed
-        if (_AnonUser::setPreferences($prefs, 1)) {
+        if ($count = _AnonUser::setPreferences($prefs, 1)) {
             //global $request;
             //$user = $request->_user;
             //unset($user->_auth_dbi);
@@ -1526,7 +1526,7 @@ extends _DbPassUser
                 if ($this->_HomePagehandle and !$id_only)
                     $this->_HomePagehandle->set('pref', $packed);
             }
-            return count($this->_prefs->unpack($packed));
+            return $count; //count($this->_prefs->unpack($packed));
         }
         return 0;
     }
@@ -2192,14 +2192,18 @@ class _UserPreference
 
     // stores the value as $this->$name, and not as $this->value (clever?)
     function set ($name, $value) {
+    	$return = 0;
+    	$value = $this->sanify($value);
 	if ($this->get($name) != $value) {
 	    $this->update($value);
+	    $return = 1;
 	}
 	if ($value != $this->default_value) {
 	    $this->{$name} = $value;
-        }
-        else 
+        } else {
             unset($this->{$name});
+        }
+        return $return;
     }
 
     // default: no side-effects 
@@ -2610,34 +2614,46 @@ class UserPreferences
             $type = 'emailVerified'; $obj =& $this->_prefs['email'];
             $obj->_init = $init;
             if ($obj->get($type) !== $prefs->get($type)) {
-                $obj->set($type,$prefs->get($type));
-                $count++;
+                if ($obj->set($type,$prefs->get($type)))
+                    $count++;
             }
             foreach (array_keys($this->_prefs) as $type) {
             	$obj =& $this->_prefs[$type];
                 $obj->_init = $init;
-                if ($this->_prefs[$type]->get($type) !== $prefs->get($type)) {
-                    $this->_prefs[$type]->set($type,$prefs->get($type));
-                    $count++;
+                if ($prefs->get($type) !== $obj->get($type)) {
+                    // special systemdefault prefs: (probably not needed)
+                    if ($type == 'theme' and $prefs->get($type) == '' and $obj->get($type) == THEME) continue;
+                    if ($type == 'lang' and $prefs->get($type) == '' and $obj->get($type) == DEFAULT_LANGUAGE) continue;
+                    if ($this->_prefs[$type]->set($type,$prefs->get($type)))
+                        $count++;
                 }
             }
         } elseif (is_array($prefs)) {
             //unset($this->_prefs['userid']);
-	    if (isset($this->_method) and $this->_method == 'SQL') {
+	    if (isset($this->_method) and 
+	         ($this->_method == 'SQL' or $this->_method == 'ADODB')) {
                 unset($this->_prefs['passwd']);
 	    }
+	    // emailVerified at first, the rest later
             $type = 'emailVerified'; $obj =& $this->_prefs['email'];
             $obj->_init = $init;
             if (isset($prefs[$type]) and $obj->get($type) !== $prefs[$type]) {
-                $obj->set($type,$prefs[$type]);
-                $count++;
+                if ($obj->set($type,$prefs[$type]))
+                    $count++;
             }
             foreach (array_keys($this->_prefs) as $type) {
+                if (!isset($prefs[$type]) and isa($obj,"_UserPreference_bool")) 
+                    $prefs[$type] = false;
             	$obj =& $this->_prefs[$type];
                 $obj->_init = $init;
+                if (isset($prefs[$type]) and isa($obj,"_UserPreference_int"))
+                    $prefs[$type] = (int) $prefs[$type];
                 if (isset($prefs[$type]) and $obj->get($type) != $prefs[$type]) {
-                    $obj->set($type,$prefs[$type]);
-                    $count++;
+                    // special systemdefault prefs:
+                    if ($type == 'theme' and $prefs[$type] == '' and $obj->get($type) == THEME) continue;
+                    if ($type == 'lang' and $prefs[$type] == '' and $obj->get($type) == DEFAULT_LANGUAGE) continue;
+                    if ($obj->set($type,$prefs[$type]))
+                        $count++;
                 }
             }
         }
@@ -2800,6 +2816,16 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.64  2004/05/02 15:10:06  rurban
+// new finally reliable way to detect if /index.php is called directly
+//   and if to include lib/main.php
+// new global AllActionPages
+// SetupWiki now loads all mandatory pages: HOME_PAGE, action pages, and warns if not.
+// WikiTranslation what=buttons for Carsten to create the missing MacOSX buttons
+// PageGroupTestOne => subpages
+// renamed PhpWikiRss to PhpWikiRecentChanges
+// more docs, default configs, ...
+//
 // Revision 1.63  2004/05/01 15:59:29  rurban
 // more php-4.0.6 compatibility: superglobals
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.26 2004-05-03 11:40:42 rurban Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.27 2004-05-03 13:16:47 rurban Exp $');
 /**
  Copyright (C) 2001, 2002, 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.26 $");
+                            "\$Revision: 1.27 $");
     }
 
     function getDefaultArguments() {
@@ -65,7 +65,7 @@ extends WikiPlugin
 
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
-        $user = &$request->getUser();
+        $user =& $request->_user;
         if (! $request->isActionPage($request->getArg('pagename'))) {
             $no_args = $this->getDefaultArguments();
 // ?
@@ -80,7 +80,7 @@ extends WikiPlugin
         if (// ((defined('ALLOW_BOGO_LOGIN') && ALLOW_BOGO_LOGIN && $user->isSignedIn()) ||
              $user->isAuthenticated() and !empty($userid))
         {
-            $pref = $user->getPreferences();
+            $pref = &$request->_prefs;
             //trigger_error("DEBUG: reading prefs from getPreferences".print_r($pref));
  
             if ($request->isPost()) {
@@ -140,6 +140,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.26  2004/05/03 11:40:42  rurban
+// put listAvailableLanguages() and listAvailableThemes() from SystemInfo and
+// UserPreferences into Themes.php
+//
 // Revision 1.25  2004/04/07 23:13:19  rurban
 // fixed pear/File_Passwd for Windows
 // fixed FilePassUser sessions (filehandle revive) and password update
