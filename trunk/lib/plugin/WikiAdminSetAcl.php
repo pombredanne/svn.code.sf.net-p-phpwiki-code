@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSetAcl.php,v 1.3 2004-03-12 13:31:43 rurban Exp $');
+rcs_id('$Id: WikiAdminSetAcl.php,v 1.4 2004-03-17 20:23:44 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -47,7 +47,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -118,13 +118,13 @@ extends WikiPlugin_WikiAdminSelect
 
             if ($post_args['action'] == 'verify') {
                 // Real action
-                return $this->setaclPages($dbi, $request, $p, 
+                return $this->setaclPages($dbi, $request, array_keys($p), 
                                           $post_args['acl']);
             }
             if ($post_args['action'] == 'select') {
                 if (!empty($post_args['acl']))
                     $next_action = 'verify';
-                foreach ($p as $name) {
+                foreach ($p as $name => $c) {
                     $pages[$name] = 1;
                 }
             }
@@ -213,6 +213,9 @@ extends WikiPlugin_WikiAdminSelect
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/03/12 13:31:43  rurban
+// enforce PagePermissions, errormsg if not Admin
+//
 // Revision 1.2  2004/02/24 04:02:07  rurban
 // Better warning messages
 //

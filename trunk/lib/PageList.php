@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.68 2004-03-14 16:28:53 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.69 2004-03-17 20:23:43 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -186,7 +186,7 @@ class _PageList_Column_size extends _PageList_Column {
     }
 
     function _getSize($revision_handle) {
-        $bytes = strlen($revision_handle->_data['%content']);
+        $bytes = @strlen($revision_handle->_data['%content']);
         return ByteFormatter($bytes);
     }
 }
@@ -219,7 +219,11 @@ class _PageList_Column_checkbox extends _PageList_Column {
     }
     function _getValue ($pagelist, $page_handle, &$revision_handle) {
         $pagename = $page_handle->getName();
-        if (!empty($pagelist->_selected[$pagename])) {
+        $selected = !empty($pagelist->_selected[$pagename]);
+        if (strstr($pagename,'[') or strstr($pagename,']')) {
+            $pagename = str_replace(array('[',']'),array('%5B','%5D'),$pagename);
+        }
+        if ($selected) {
             return HTML::input(array('type' => 'checkbox',
                                      'name' => $this->_name . "[$pagename]",
                                      'value' => 1,

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.39 2004-03-08 18:57:58 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.40 2004-03-17 20:23:44 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,7 +87,7 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.39 $");
+        //                    "\$Revision: 1.40 $");
     }
 
     function getArgs($argstr, $request=false, $defaults = false) {
@@ -122,9 +122,16 @@ class WikiPlugin
         return $args;
     }
 
+    // Patch by Dan F:
+    // Expand [arg] to $request->getArg("arg") unless preceded by ~
     function expandArg($argval, $request) {
-        return preg_replace('/\[(\w[\w\d]*)\]/e', '$request->getArg("$1")',
-                            $argval);
+        // return preg_replace('/\[(\w[\w\d]*)\]/e', '$request->getArg("$1")',
+        // Replace the arg unless it is preceded by a ~
+        $ret = preg_replace('/([^~]|^)\[(\w[\w\d]*)\]/e',
+                            '"$1" . $request->getArg("$2")',
+                           $argval);
+        // Ditch the ~ so later versions can be expanded if desired
+        return preg_replace('/~(\[\w[\w\d]*\])/', '$1', $ret);
     }
 
     function parseArgStr($argstr) {
