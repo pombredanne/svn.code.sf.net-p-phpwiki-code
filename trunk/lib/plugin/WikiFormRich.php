@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiFormRich.php,v 1.6 2004-11-24 10:28:26 rurban Exp $');
+rcs_id('$Id: WikiFormRich.php,v 1.7 2004-11-24 10:40:04 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -66,6 +66,7 @@ rcs_id('$Id: WikiFormRich.php,v 1.6 2004-11-24 10:28:26 rurban Exp $');
   	   editbox[] name=s text=""
   	   checkbox[] name=case_exact ?>
 */
+
 class WikiPlugin_WikiFormRich
 extends WikiPlugin
 {
@@ -77,7 +78,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
     function getDefaultArguments() {
         return array('action' => false,     // required argument
@@ -128,6 +129,7 @@ extends WikiPlugin
                                  'accept-charset' => $GLOBALS['charset']),
                            HiddenInputs(array('action' => $action,
                                               'pagename' => $basepage)));
+        if ($nobr) $nbsp = HTML::Raw('&nbsp;');
         foreach ($this->inputbox as $inputbox) {
             foreach ($inputbox as $inputtype => $input) {
               switch($inputtype) {
@@ -137,8 +139,8 @@ extends WikiPlugin
                     return $this->error(fmt("A required argument '%s' is missing.",
                                             "checkbox[][name]"));
                 if (empty($input['value'])) $input['value'] = 1;
-                if (empty($input['text'])) 
-                    $input['text'] = gettext($input['name'])."=".$input['value'];
+                if (!isset($input['text'])) 
+                    $input['text'] = gettext($input['name']); //."=".$input['value'];
                 $text = $input['text'];
                 unset($input['text']);
                 if (empty($input['checked'])) {
@@ -148,7 +150,7 @@ extends WikiPlugin
                     $input['checked'] = 'checked';
                 }
                 if ($nobr)
-                    $form->pushContent(HTML::input($input), $text);
+                    $form->pushContent(HTML::input($input), $nbsp, $text, $nbsp);
                 else
                     $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $text));
                 break;
@@ -157,13 +159,13 @@ extends WikiPlugin
                 if (empty($input['name']))
                     return $this->error(fmt("A required argument '%s' is missing.",
                                             "editbox[][name]"));
-                if (empty($input['text'])) $input['text'] = gettext($input['name']);
+                if (!isset($input['text'])) $input['text'] = gettext($input['name']);
                 $text = $input['text'];
                 if (empty($input['value']) and ($s = $request->getArg($input['name'])))
                     $input['value'] = $s;
                 unset($input['text']);
                 if ($nobr)
-                    $form->pushContent(HTML::input($input), $text);
+                    $form->pushContent(HTML::input($input), $nbsp, $text, $nbsp);
                 else
                     $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $text));
                 break;
@@ -172,19 +174,20 @@ extends WikiPlugin
                 if (empty($input['name']))
                     return $this->error(fmt("A required argument '%s' is missing.",
                                             "radiobutton[][name]"));
-                if (empty($input['text'])) $input['text'] = gettext($input['name']);
+                if (!isset($input['text'])) $input['text'] = gettext($input['name']);
                 $text = $input['text'];
                 unset($input['text']);
                 if ($input['checked']) $input['checked'] = 'checked';
                 if ($nobr)
-                    $form->pushContent(HTML::input($input), $text);
+                    $form->pushContent(HTML::input($input), $nbsp, $text, $nbsp);
                 else
                     $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $text));
                 break;
               case 'hidden':
                 $input['type'] = 'hidden';
                 if (empty($input['name']))
-                    return $this->error("A required argument '%s' is missing.","hidden[][name]");
+                    return $this->error(fmt("A required argument '%s' is missing.",
+                    			    "hidden[][name]"));
                 unset($input['text']);
                 $form->pushContent(HTML::input($input));
               case 'pulldown':
