@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.8\n"
-"POT-Creation-Date: 2001-12-27 16:45-0500\n"
+"POT-Creation-Date: 2001-12-28 06:12-0500\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Carsten Klapp <carstenklapp@mac.com>, Arno Hollosi "
 "<ahollosi@mail.com>\n"
@@ -99,6 +99,11 @@ msgstr "PHP Warnungen"
 #: ../templates/browse.html:124
 msgid "DebugInfo"
 msgstr "DebugInfo"
+
+#: ../lib/plugin/ViewMarkup.php:12 ../templates/browse.html:128
+#: ../templates/browse.html:129
+msgid "ViewMarkup"
+msgstr ""
 
 #: ../templates/editpage.html:16 ../templates/editpage.html:25
 #: ../templates/editpage.html:26
@@ -377,7 +382,7 @@ msgstr "geringe Änderungen"
 #: ../lib/plugin/RecentChanges.php:140
 #, c-format
 msgid "The %d most recent %s during the past %.1f days are listed below."
-msgstr "Die %d Jüngste %s innerhalb %.1f Tagen sind unten auflistet."
+msgstr "Die %d Jüngste %s innerhalb von %.1f Tagen sind unten auflistet."
 
 #: ../lib/plugin/RecentChanges.php:143
 #, c-format
@@ -387,7 +392,7 @@ msgstr "Die %d Jüngste %s sind unten auflistet."
 #: ../lib/plugin/RecentChanges.php:148
 #, c-format
 msgid "The most recent %s during the past %.1f days are listed below."
-msgstr "Die Jüngste %s innerhalb %.1f Tagen sind unten auflistet."
+msgstr "Die Jüngste %s innerhalb von %.1f Tagen sind unten auflistet."
 
 #: ../lib/plugin/RecentChanges.php:151
 #, c-format
@@ -420,6 +425,51 @@ msgstr "Titelsuche"
 #, c-format
 msgid "Title search results for '%s'"
 msgstr "Titel-Suchresultate nach »%s«"
+
+#: ../lib/plugin/UserPage.php:35
+#, c-format
+msgid "Your sysadmin has disallowed use of the %s plugin!"
+msgstr ""
+
+#: ../lib/plugin/UserPage.php:41
+msgid "You should be logged in now."
+msgstr ""
+
+#: ../lib/plugin/UserPage.php:47
+#, c-format
+msgid "Before you can edit %s, you need to sign in."
+msgstr "Bevor du %s editieren kannst, du mußt dich anmelden."
+
+#: ../lib/plugin/UserPage.php:50
+msgid "The name you use to sign in must be in WikiWord format."
+msgstr ""
+
+#: ../lib/plugin/UserPage.php:55
+msgid "examples include: TomJefferson, AlexHamilton"
+msgstr "Beispiele: HerrMustermann, UweUte"
+
+#: ../lib/plugin/UserPage.php:63
+msgid "Please re-enter your name in this form."
+msgstr ""
+
+#: ../lib/plugin/UserPage.php:71
+msgid ""
+"Please enter your name as WordsStrungTogether (e.g. John Smith as JohnSmith)."
+msgstr ""
+
+#: ../lib/plugin/UserPage.php:73
+msgid "Sign in:"
+msgstr "Melde dich an:"
+
+#: ../lib/plugin/ViewMarkup.php:16
+#, c-format
+msgid "View WikiMarkup for page '%s'."
+msgstr ""
+
+#: ../lib/plugin/ViewMarkup.php:42
+#, c-format
+msgid "Revealing WikiMarkup for page '%s':"
+msgstr ""
 
 #: ../lib/plugin/_BackendInfo.php:14
 #, c-format
@@ -457,10 +507,47 @@ msgstr ""
 msgid "couldn't open file '%s' for writing"
 msgstr "Datei »%s« konnte nich geöffnet werden um es auszuschreiben"
 
+#: ../lib/DbaDatabase.php:46 ../lib/ziplib.php:35 ../lib/ziplib.php:38
+#: ../lib/ziplib.php:43 ../lib/ziplib.php:45 ../lib/ziplib.php:47
+#: ../lib/ziplib.php:56 ../lib/ziplib.php:59 ../lib/ziplib.php:62
+#: ../lib/ziplib.php:67
+#, c-format
+msgid "%s failed"
+msgstr "%s hat verfehlt"
+
+#: ../lib/ErrorManager.php:138
+msgid "error while handling error:"
+msgstr "Fehler während die Fehlerbehandlung von:"
+
+#: ../lib/FileFinder.php:82
+#, c-format
+msgid "%s: file not found"
+msgstr "%s Datei nicht gefunden"
+
+#: ../lib/WikiDB.php:353
+#, c-format
+msgid "Attempt to delete most recent revision of '%s'"
+msgstr ""
+
+#: ../lib/WikiDB.php:401
+#, c-format
+msgid "Attempt to merge most recent revision of '%s'"
+msgstr ""
+
+#: ../lib/WikiDB.php:488
+#, c-format
+msgid "%s: Date of new revision is %s"
+msgstr ""
+
+#: ../lib/WikiDB.php:513
+#, c-format
+msgid "Optimizing %s"
+msgstr "%s wird optimiert"
+
 #: ../lib/WikiDB.php:837
 #, c-format
-msgid "Describe [%s] here."
-msgstr "Beschreibe [%s] hier."
+msgid "Describe %s here."
+msgstr "Beschreibe %s hier."
 
 #: ../lib/WikiUser.php:97
 #, c-format
@@ -472,15 +559,16 @@ msgid "to do that"
 msgstr "um daß zu tun"
 
 #: ../lib/WikiUser.php:100
-msgid "You must be logged in as an administrator"
-msgstr "Du mußt dich als eine Systemverwalter AnMelden"
+#, c-format
+msgid "You must be logged in as an administrator %s"
+msgstr "Du mußt dich als eine Systemverwalter anmelden %s"
 
 #: ../lib/WikiUser.php:180
 msgid ""
 "You must set the administrator account and password before you can log in."
 msgstr ""
 "Du mußt der Systemverwalter-Account mit Passwort zuerst schützen bevor du "
-"dich AnMelden kannst."
+"dich anmelden kannst."
 
 #: ../lib/WikiUser.php:191
 msgid "You entered an invalid login or password."
@@ -488,7 +576,7 @@ msgstr "Du hast ein ungültiges Login oder Passwort eingegeben."
 
 #: ../lib/WikiUser.php:194
 msgid "You can log in using any valid WikiWord as a user ID."
-msgstr "Du kannst mit jedes gultiges WikiWort als Benutzername AnMelden."
+msgstr "Du kannst mit irgendeines gültiges WikiWort als Benutzername anmelden."
 
 #: ../lib/WikiUser.php:195
 msgid "(Any password will work, except, of course for the admin user.)"
@@ -496,10 +584,14 @@ msgstr ""
 "(Irgende Wörter können als Passwort angenommen werden sowieso, aber "
 "natürlich nicht für den Systemverwalter.)"
 
+#: ../lib/config.php:271
+msgid "An unnamed PhpWiki"
+msgstr "Ein unbenantes PhpWiki"
+
 #: ../lib/diff.php:172
-#, fuzzy, c-format
+#, c-format
 msgid "version %s"
-msgstr "Version %d."
+msgstr "Version %s."
 
 #: ../lib/diff.php:175
 #, c-format
@@ -680,7 +772,7 @@ msgstr "Wird ausgelassen"
 #: ../lib/loadsave.php:399
 #, c-format
 msgid "Bad file type: %s"
-msgstr "Filetyp von %s ungültig"
+msgstr "Ungültiger Filetyp: %s"
 
 #: ../lib/loadsave.php:414
 #, c-format
@@ -708,6 +800,15 @@ msgstr "%s wird heraufgeladet"
 #, c-format
 msgid "Action %s is disabled in this wiki."
 msgstr "In dieses Wikis wurde die Tatigkeit »%s« nicht erlauben."
+
+#: ../lib/main.php:185
+msgid "lock or unlock pages"
+msgstr "Seiten zu sperren oder freigeben"
+
+#: ../lib/main.php:219
+#, c-format
+msgid "Bad action: '%s'"
+msgstr "Ungültiges Tätigkeit: »%s«"
 
 #: ../lib/prepend.php:31
 msgid "WikiFatalError"
@@ -816,7 +917,11 @@ msgstr "Danke für das Editieren von %s."
 msgid "Your careful attention to detail is much appreciated."
 msgstr "Deine besondere Aufmerksamkeit für Details wird sehr geschätzt."
 
-#: ../lib/stdlib.php:134
+#: ../lib/savepage.php:162
+msgid "Warning!"
+msgstr "Warnung!"
+
+#: ../lib/stdlib.php:134 ../lib/stdlib.php:199
 msgid "BAD URL -- remove all of <, >, \""
 msgstr "URL Formfehler -- aller Zeichen <, >, \" wegnehmen"
 
@@ -848,9 +953,60 @@ msgstr "Version nicht vorliegend"
 msgid "I'm sorry.  Version %d of %s is not in my database."
 msgstr "Es tut mir leid.  Version %d. von %s war nicht in meine Datenbank."
 
+#: ../lib/stdlib.php:684
+#, c-format
+msgid "Can't mix '%s' with '%s' type format strings"
+msgstr ""
+
+#: ../lib/stdlib.php:692
+#, c-format
+msgid "%s: argument index out of range"
+msgstr "%s: Index des Arguments außer Reichweite"
+
 #: ../lib/transform.php:108
 msgid "Lists nested too deep in SetHTMLOutputMode"
 msgstr "Interner Fehler: Stackgrenze in SetHTMLOutputMode überschritten."
+
+#: ../lib/ziplib.php:161 ../lib/ziplib.php:163 ../lib/ziplib.php:165
+#: ../lib/ziplib.php:563 ../lib/ziplib.php:659
+#, c-format
+msgid "Bad %s"
+msgstr "Ungültige %s"
+
+#: ../lib/ziplib.php:183
+msgid "Can't inflate data: zlib support not enabled in this PHP"
+msgstr ""
+
+#: ../lib/ziplib.php:361
+#, c-format
+msgid "Can't open zip file '%s' for reading"
+msgstr "Konnte zip Datei »%s« nich öffnen zum lesen"
+
+#: ../lib/ziplib.php:367
+msgid "Unexpected EOF in zip file"
+msgstr "Unerwartetes Dateiende in zip Datei"
+
+#: ../lib/ziplib.php:391
+#, c-format
+msgid "Bad header type: %s"
+msgstr "Ungültiger Dateikopf form: %s "
+
+#: ../lib/ziplib.php:395
+msgid "Encryption and/or zip patches not supported."
+msgstr ""
+
+#: ../lib/ziplib.php:397
+msgid "Postponed CRC not yet supported."
+msgstr ""
+
+#: ../lib/ziplib.php:416
+#, c-format
+msgid "Compression method %s unsupported"
+msgstr ""
+
+#: ../lib/ziplib.php:419
+msgid "Uncompressed size mismatch"
+msgstr "Größe des Dekomprimierte Datei stimmt nicht"
 
 #: ../lib/ziplib.php:622
 #, c-format
@@ -858,18 +1014,13 @@ msgid "[%d] See [%s]"
 msgstr "[%d] Sehe [%s]"
 
 #: ../lib/ziplib.php:630
-msgid "!References"
-msgstr "!Fußnoten"
+msgid "References"
+msgstr "Fußnoten"
 
 #: ../lib/ziplib.php:651
 #, c-format
 msgid "Can't parse %s"
 msgstr "Könnte %s nicht analysieren"
-
-#: ../lib/ziplib.php:659
-#, c-format
-msgid "Bad %s"
-msgstr "Ungültige %s"
 
 #: ../lib/ziplib.php:704
 #, c-format
@@ -974,7 +1125,7 @@ msgstr "Ausgeführt."
 
 #: ../lib/WikiDB/backend/cvs.php:782
 msgid "Unable to obtain read lock."
-msgstr ""
+msgstr "Konnte Dateischloß nicht beschaffen zum lesen."
 
 #: ../lib/WikiDB/backend/cvs.php:789
 #, c-format
@@ -983,7 +1134,7 @@ msgstr "Konnte der Datei »%s« nich öffnen um einzuspeichern"
 
 #: ../lib/WikiDB/backend/cvs.php:808
 msgid "Timeout while obtaining lock."
-msgstr ""
+msgstr "Zeitüberschreitung während Dateischloß beschaffen"
 
 #: ../lib/WikiDB/backend/cvs.php:817
 #, c-format
@@ -1021,12 +1172,12 @@ msgstr "%s: Konnte dba Datenbank nich öffnen."
 #: ../lib/WikiDB/backend/dbaBase.php:330
 #, c-format
 msgid "Bad key in linktable: %s"
-msgstr "%s: Ungültiges Datenschlüssel in Links-Tabelle"
+msgstr "Ungültiger Datenschlüssel in Links-Tabelle: %s"
 
 #: ../lib/WikiDB/backend/dbaBase.php:352
 #, c-format
 msgid "Bad key %s in table"
-msgstr "Datenschlüssel %s in Tabelle ist Ungültig"
+msgstr "Ungültiger Datenschlüssel %s in Tabelle"
 
 #: ../lib/WikiDB/backend/dbaBase.php:360
 #, c-format

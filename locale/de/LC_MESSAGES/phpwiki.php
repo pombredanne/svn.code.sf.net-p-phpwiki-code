@@ -1,7 +1,5 @@
 <?php
 
-$locale["!References"] =
-   "!Fußnoten";
 $locale["%d best incoming links:"] =
    "Die %d besten hereinkommenden Links:";
 $locale["%d best outgoing links:"] =
@@ -10,10 +8,16 @@ $locale["%d most popular nearby:"] =
    "Die %d meistbesuchten Seiten in der Nähe:";
 $locale["%s bytes written"] =
    "%s Bytes geschrieben";
+$locale["%s failed"] =
+   "%s hat verfehlt";
 $locale["%s(%d): no such revision"] =
    "Es gibt keine Revision als %s(%d)";
 $locale["%s: Can't open dba database"] =
    "%s: Konnte dba Datenbank nich öffnen.";
+$locale["%s: argument index out of range"] =
+   "%s: Index des Arguments außer Reichweite";
+$locale["%s: file not found"] =
+   "%s Datei nicht gefunden";
 $locale["(Any password will work, except, of course for the admin user.)"] =
    "(Irgende Wörter können als Passwort angenommen werden sowieso, aber natürlich nicht für den Systemverwalter.)";
 $locale["(diff)"] =
@@ -34,6 +38,8 @@ $locale["Action %s is disabled in this wiki."] =
    "In dieses Wikis wurde die Tatigkeit »%s« nicht erlauben.";
 $locale["All %s are listed below."] =
    "Alle %s sind unten auflistet.";
+$locale["An unnamed PhpWiki"] =
+   "Ein unbenantes PhpWiki";
 $locale["Argument %s was not array"] =
    "Argument %s war nicht array";
 $locale["Author will be logged as %s."] =
@@ -46,16 +52,24 @@ $locale["Bad %s"] =
    "Ungültige %s";
 $locale["Bad Version"] =
    "Version nicht vorliegend";
+$locale["Bad action: '%s'"] =
+   "Ungültiges Tätigkeit: »%s«";
 $locale["Bad file type: %s"] =
-   "Filetyp von %s ungültig";
+   "Ungültiger Filetyp: %s";
+$locale["Bad header type: %s"] =
+   "Ungültiger Dateikopf form: %s ";
 $locale["Bad key %s in table"] =
-   "Datenschlüssel %s in Tabelle ist Ungültig";
+   "Ungültiger Datenschlüssel %s in Tabelle";
 $locale["Bad key in linktable: %s"] =
-   "%s: Ungültiges Datenschlüssel in Links-Tabelle";
+   "Ungültiger Datenschlüssel in Links-Tabelle: %s";
+$locale["Before you can edit %s, you need to sign in."] =
+   "Bevor du %s editieren kannst, du mußt dich anmelden.";
 $locale["Calendar"] =
    "Kalender";
 $locale["Can't connect to database: %s"] =
    "Kann Verbindung zu Datenbank nicht aufbauen: %s";
+$locale["Can't open zip file '%s' for reading"] =
+   "Konnte zip Datei »%s« nich öffnen zum lesen";
 $locale["Can't parse %s"] =
    "Könnte %s nicht analysieren";
 $locale["Cannot create directory '%s'"] =
@@ -90,8 +104,8 @@ $locale["DebugInfo"] =
    "DebugInfo";
 $locale["Deleted."] =
    "Gelöscht.";
-$locale["Describe [%s] here."] =
-   "Beschreibe [%s] hier.";
+$locale["Describe %s here."] =
+   "Beschreibe %s hier.";
 $locale["Diff"] =
    "Diff";
 $locale["Diff: %s"] =
@@ -200,6 +214,8 @@ $locale["Note:"] =
    "Hinweis:";
 $locale["Older page:"] =
    "Altere Seite:";
+$locale["Optimizing %s"] =
+   "%s wird optimiert";
 $locale["Other diffs:"] =
    "Andere Differenzen:";
 $locale["PHP Warnings"] =
@@ -248,6 +264,8 @@ $locale["RecentChanges"] =
    "FrischeSeiten";
 $locale["RecentEdits"] =
    "GeringeÄnderungen";
+$locale["References"] =
+   "Fußnoten";
 $locale["Remove page"] =
    "Seite löschen";
 $locale["Removed page '%s' succesfully."] =
@@ -266,6 +284,8 @@ $locale["See %s tips for editing."] =
    "Sehe %s tips fürs Editieren.";
 $locale["Serialized file %s"] =
    "Seriell-Datei %s";
+$locale["Sign in:"] =
+   "Melde dich an:";
 $locale["SignIn"] =
    "AnMelden";
 $locale["SignOut"] =
@@ -287,13 +307,13 @@ $locale["Thank you for editing %s."] =
 $locale["The %d most recent %s are listed below."] =
    "Die %d Jüngste %s sind unten auflistet.";
 $locale["The %d most recent %s during the past %.1f days are listed below."] =
-   "Die %d Jüngste %s innerhalb %.1f Tagen sind unten auflistet.";
+   "Die %d Jüngste %s innerhalb von %.1f Tagen sind unten auflistet.";
 $locale["The %s most popular pages of this wiki:"] =
    "Die %s meistbesuchten Seiten dieses Wikis:";
 $locale["The PhpWiki programming team"] =
    "Die Team-PhpWiki Programmierer";
 $locale["The most recent %s during the past %.1f days are listed below."] =
-   "Die Jüngste %s innerhalb %.1f Tagen sind unten auflistet.";
+   "Die Jüngste %s innerhalb von %.1f Tagen sind unten auflistet.";
 $locale["These pages link to %s:"] =
    "Diese Seiten sind in Verbindung mit %s:";
 $locale["These pages share an initial or final title word with '%s'"] =
@@ -302,6 +322,8 @@ $locale["This is a minor change."] =
    "Geringfügige Änderung";
 $locale["This page has been locked by the administrator and cannot be edited."] =
    "Diese Seite wurde vom Systemverwalter gesperrt und kann nicht editiert werden.";
+$locale["Timeout while obtaining lock."] =
+   "Zeitüberschreitung während Dateischloß beschaffen";
 $locale["Title Search"] =
    "Titelsuche";
 $locale["Title search results for '%s'"] =
@@ -310,10 +332,16 @@ $locale["TitleSearch"] =
    "Titelsuche";
 $locale["To cancel press the \"Back\" button of your browser."] =
    "Anderenfalls benütze die »Zurück« Funktion deines Browsers.";
+$locale["Unable to obtain read lock."] =
+   "Konnte Dateischloß nicht beschaffen zum lesen.";
 $locale["Unable to open file"] =
    "Datei könnte nicht geöffnet werden.";
 $locale["Unable to open file '%s' for reading"] =
    "Konnte der Datei »%s« nich öffnen um einzuspeichern";
+$locale["Uncompressed size mismatch"] =
+   "Größe des Dekomprimierte Datei stimmt nicht";
+$locale["Unexpected EOF in zip file"] =
+   "Unerwartetes Dateiende in zip Datei";
 $locale["Unknown %s"] =
    "Unbekannte %s";
 $locale["Unlock page"] =
@@ -336,6 +364,8 @@ $locale["View the current version"] =
    "Schaue die aktuellste Version";
 $locale["WARNING: database still locked"] =
    "WARNUNG: Datenbank ist gesperrt";
+$locale["Warning!"] =
+   "Warnung!";
 $locale["Warning: You are editing an old revision."] =
    "Warnung: Du editierst eine alte Revision.";
 $locale["WikiFatalError"] =
@@ -351,15 +381,15 @@ $locale["You are viewing an old revision of this page."] =
 $locale["You can change the size of the editing area in %s."] =
    "Du kannst die Größe des Texteingabefensters in %s ändern.";
 $locale["You can log in using any valid WikiWord as a user ID."] =
-   "Du kannst mit jedes gultiges WikiWort als Benutzername AnMelden.";
+   "Du kannst mit irgendeines gültiges WikiWort als Benutzername anmelden.";
 $locale["You entered an invalid login or password."] =
    "Du hast ein ungültiges Login oder Passwort eingegeben.";
 $locale["You have not made any changes."] =
    "Du hast keine Änderungen gemacht.";
-$locale["You must be logged in as an administrator"] =
-   "Du mußt dich als eine Systemverwalter AnMelden";
+$locale["You must be logged in as an administrator %s"] =
+   "Du mußt dich als eine Systemverwalter anmelden %s";
 $locale["You must set the administrator account and password before you can log in."] =
-   "Du mußt der Systemverwalter-Account mit Passwort zuerst schützen bevor du dich AnMelden kannst.";
+   "Du mußt der Systemverwalter-Account mit Passwort zuerst schützen bevor du dich anmelden kannst.";
 $locale["You must specify a directory to dump to"] =
    "Du mußt ein Sicherungsdateiverzeichnis spezifizieren.";
 $locale["Your careful attention to detail is much appreciated."] =
@@ -378,6 +408,10 @@ $locale["current version"] =
    "aktuellste Version";
 $locale["edits"] =
    "Änderungen";
+$locale["error while handling error:"] =
+   "Fehler während die Fehlerbehandlung von:";
+$locale["examples include: TomJefferson, AlexHamilton"] =
+   "Beispiele: HerrMustermann, UweUte";
 $locale["fatal database error"] =
    "fataler Datenbank Fehler";
 $locale["from %s"] =
@@ -392,6 +426,8 @@ $locale["last modified on %s"] =
    "zuletzt am %s verändert";
 $locale["link entry missing for backlink %s"] =
    "Es fehlt einer Link Datensatz für das BackLink %s";
+$locale["lock or unlock pages"] =
+   "Seiten zu sperren oder freigeben";
 $locale["major edits"] =
    "Hauptänderungen";
 $locale["minor edits"] =
@@ -426,5 +462,7 @@ $locale["unable to locate/open [%s], turning debug off"] =
    "könnte [%s] nicht auffinden/öffnen, Debug wird abgeschaltet.";
 $locale["version %d"] =
    "Version %d.";
+$locale["version %s"] =
+   "Version %s.";
 
 ;?>
