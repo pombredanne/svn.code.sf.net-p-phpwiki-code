@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.2.4\n"
-"POT-Creation-Date: 2002-02-04 00:35-0500\n"
+"POT-Creation-Date: 2002-02-04 17:06-0500\n"
 "PO-Revision-Date: 2001-09-24 00:00+0000\n"
 "Last-Translator: Stéphane Gourichon <stephane.gourichon@lip6.fr>, Pascal "
 "<pascal@phpfrance.com>\n"
@@ -127,27 +127,27 @@ msgstr ""
 msgid "BackLinks for %s"
 msgstr ""
 
-#: ../lib/Theme.php:287 ../lib/editpage.php:63
+#: ../lib/Theme.php:287 ../lib/editpage.php:64
 #, c-format
 msgid "Edit: %s"
 msgstr "Editer : %s"
 
-#: ../lib/editpage.php:94
+#: ../lib/editpage.php:95
 #, c-format
 msgid "View Source: %s"
 msgstr "Afficher la Source : %s"
 
-#: ../lib/editpage.php:150
+#: ../lib/editpage.php:171
 #, c-format
 msgid "Saved: %s"
 msgstr "Enregistrée : %s"
 
-#: ../lib/editpage.php:190 ../themes/MacOSX/themeinfo.php:113
+#: ../lib/editpage.php:211 ../themes/MacOSX/themeinfo.php:113
 msgid "Page Locked"
 msgstr "Page Verrouillée"
 
 # lib/editpage.php:31 lib/savepage.php:52
-#: ../lib/editpage.php:191
+#: ../lib/editpage.php:212
 msgid ""
 "This page has been locked by the administrator so your changes can not be "
 "saved."
@@ -156,7 +156,7 @@ msgstr ""
 "pas pu être enregistrée."
 
 # lib/savepage.php:24
-#: ../lib/editpage.php:192
+#: ../lib/editpage.php:213
 #, fuzzy
 msgid ""
 "(Copy your changes to the clipboard. You can try editing a different page or "
@@ -166,17 +166,17 @@ msgstr ""
 "exemple dans un éditeur de texte)."
 
 # lib/editpage.php:33 lib/savepage.php:32 lib/savepage.php:53
-#: ../lib/editpage.php:193 ../lib/editpage.php:215
+#: ../lib/editpage.php:214 ../lib/editpage.php:236
 msgid "Sorry for the inconvenience."
 msgstr "Désolé pour la gène occasionnée."
 
 # lib/pageinfo.php:64
-#: ../lib/editpage.php:203
+#: ../lib/editpage.php:224
 msgid "Edit the new version"
 msgstr "Editer le version nouveau"
 
 # lib/savepage.php:24
-#: ../lib/editpage.php:205
+#: ../lib/editpage.php:226
 msgid ""
 "Copy your changes to the clipboard or to another temporary place (e.g. text "
 "editor)."
@@ -185,17 +185,17 @@ msgstr ""
 "exemple)."
 
 # lib/savepage.php:26
-#: ../lib/editpage.php:206
+#: ../lib/editpage.php:227
 #, c-format
 msgid ""
 "%s of the page. You should now see the most current version of the page. "
 "Your changes are no longer there."
 msgstr ""
-"%s de la page. Tu devrais alors voir la version actuelle de la "
-"page. Tes modifications n'y sont pas."
+"%s de la page. Tu devrais alors voir la version actuelle de la page. Tes "
+"modifications n'y sont pas."
 
 # lib/savepage.php:28
-#: ../lib/editpage.php:208
+#: ../lib/editpage.php:229
 msgid ""
 "Make changes to the file again. Paste your additions from the clipboard (or "
 "text editor)."
@@ -203,15 +203,15 @@ msgstr ""
 "Ré-applique tes modifications, colle les ajouts depuis la fenêtre où tu les "
 "as placés."
 
-#: ../lib/editpage.php:209
+#: ../lib/editpage.php:230
 msgid "Save your updated changes."
 msgstr ""
 
-#: ../lib/editpage.php:211
+#: ../lib/editpage.php:232
 msgid "Conflicting Edits!"
 msgstr ""
 
-#: ../lib/editpage.php:212
+#: ../lib/editpage.php:233
 msgid ""
 "In the time since you started editing this page, another user has saved a "
 "new version of it.  Your changes can not be saved, since doing so would "
@@ -219,15 +219,15 @@ msgid ""
 msgstr ""
 
 # lib/savepage.php:20
-#: ../lib/editpage.php:213
+#: ../lib/editpage.php:234
 msgid "In order to recover from this situation, follow these steps:"
 msgstr "Pour remettre de l'ordre dans cette situation, suis ces étapes :"
 
-#: ../lib/editpage.php:265
+#: ../lib/editpage.php:292
 msgid "Preview"
 msgstr "Prévision"
 
-#: ../lib/editpage.php:268
+#: ../lib/editpage.php:295
 msgid "Save"
 msgstr "Enregistrer"
 
@@ -370,8 +370,8 @@ msgstr "Télécharger %s"
 
 # lib/stdlib.php:384 lib/stdlib.php:445
 #: ../lib/RSSWriter091.php:115 ../lib/loadsave.php:552
-#: ../lib/plugin/RecentChanges.php:190 ../lib/plugin/RecentChanges.php:311
-#: ../lib/plugin/RecentChanges.php:388
+#: ../lib/plugin/RecentChanges.php:212 ../lib/plugin/RecentChanges.php:333
+#: ../lib/plugin/RecentChanges.php:410
 #: ../themes/Portland/templates/navbar.tmpl:30
 #: ../themes/default/templates/navbar.tmpl:12
 msgid "RecentChanges"
@@ -413,7 +413,7 @@ msgid "FullTextSearch"
 msgstr "RechercheDeTexte"
 
 # lib/fullsearch.php:48
-#: ../lib/main.php:410 ../lib/plugin/RecentChanges.php:302
+#: ../lib/main.php:410 ../lib/plugin/RecentChanges.php:324
 #: ../lib/plugin/TitleSearch.php:13
 msgid "TitleSearch"
 msgstr "RechercheParTitre"
@@ -448,7 +448,7 @@ msgstr "Version"
 msgid "Last Author"
 msgstr "Auteur Précédent"
 
-#: ../lib/PageList.php:253
+#: ../lib/PageList.php:253 ../themes/default/templates/editpage.tmpl:91
 msgid "Locked"
 msgstr "Verrouillée"
 
@@ -477,12 +477,12 @@ msgstr "ToutesLesPages"
 msgid "All Pages"
 msgstr "Toutes les Pages"
 
-#: ../lib/plugin/AllPages.php:35
+#: ../lib/plugin/AllPages.php:37
 #, c-format
 msgid "Pages in this wiki (%d total):"
 msgstr ""
 
-#: ../lib/plugin/AllPages.php:45
+#: ../lib/plugin/AllPages.php:47
 #, c-format
 msgid "elapsed time: %s s"
 msgstr ""
@@ -769,69 +769,77 @@ msgstr "principales modifications"
 msgid "minor edits"
 msgstr "petites modifications"
 
-#: ../lib/plugin/RecentChanges.php:166
-msgid "day"
-msgstr "d'une jour"
-
-#: ../lib/plugin/RecentChanges.php:166 ../lib/plugin/RecentChanges.php:516
+#: ../lib/plugin/RecentChanges.php:186
 #, c-format
-msgid "%s days"
-msgstr "%s jours"
-
-#: ../lib/plugin/RecentChanges.php:171
-#, c-format
-msgid "The %d most recent %s during the past %s are listed below."
+msgid "The %d most recent %s during the past day are listed below."
 msgstr ""
-"Les %d %s les plus récentes pendant les derniers %s sont énumérées "
-"ci-dessous."
+"Les %d %s les plus récentes pendant le dernier jour sont énumérées ci-"
+"dessous."
 
-#: ../lib/plugin/RecentChanges.php:174
+#: ../lib/plugin/RecentChanges.php:189
+#, c-format
+msgid "The %d most recent %s during the past %s days are listed below."
+msgstr ""
+"Les %d %s les plus récentes pendant les derniers %s jours sont énumérées ci-"
+"dessous."
+
+#: ../lib/plugin/RecentChanges.php:192
 #, c-format
 msgid "The %d most recent %s are listed below."
 msgstr "Les %d %s les plus récents sont énumérés ci-dessous"
 
-#: ../lib/plugin/RecentChanges.php:179
+#: ../lib/plugin/RecentChanges.php:198
 #, c-format
-msgid "The most recent %s during the past %s are listed below."
+msgid "The most recent %s during the past day are listed below."
 msgstr ""
-"Les %s les plus récentes pendant les derniers %s sont énumérées ci-"
-"dessous."
+"Les %s les plus récentes pendant le dernier jour sont énumérées ci-dessous."
 
-#: ../lib/plugin/RecentChanges.php:182
+#: ../lib/plugin/RecentChanges.php:201
+#, c-format
+msgid "The most recent %s during the past %s days are listed below."
+msgstr ""
+"Les %s les plus récentes pendant les derniers %s jours sont énumérées ci-dessous."
+
+#: ../lib/plugin/RecentChanges.php:204
 #, c-format
 msgid "All %s are listed below."
 msgstr "Toutes les %s sont énumérées ci-dessous."
 
-#: ../lib/plugin/RecentChanges.php:190
+#: ../lib/plugin/RecentChanges.php:212
 #: ../themes/Portland/templates/editpage.tmpl:62
 msgid "RecentEdits"
 msgstr "PetitesModifs"
 
 # lib/stdlib.php:207 lib/stdlib.php:215
-#: ../lib/plugin/RecentChanges.php:299
+#: ../lib/plugin/RecentChanges.php:321
 msgid "Search"
 msgstr "Chercher"
 
 # lib/fullsearch.php:48
-#: ../lib/plugin/RecentChanges.php:300 ../lib/plugin/TitleSearch.php:17
+#: ../lib/plugin/RecentChanges.php:322 ../lib/plugin/TitleSearch.php:17
 msgid "Title Search"
 msgstr "Recherche par titre"
 
-#: ../lib/plugin/RecentChanges.php:488
+#: ../lib/plugin/RecentChanges.php:510
 msgid "Show minor edits for:"
 msgstr "Indiquez les petits modifs dans les :"
 
-#: ../lib/plugin/RecentChanges.php:490
+#: ../lib/plugin/RecentChanges.php:512
 msgid "Show all changes for:"
 msgstr "Indiquez toutes les changements dans les :"
 
-#: ../lib/plugin/RecentChanges.php:492
+#: ../lib/plugin/RecentChanges.php:514
 msgid "Show changes for:"
 msgstr "Indiquez les changements dans les :"
 
-#: ../lib/plugin/RecentChanges.php:512
+#: ../lib/plugin/RecentChanges.php:534
 msgid "1 day"
 msgstr "1 jour"
+
+#: ../lib/plugin/RecentChanges.php:538
+#, c-format
+msgid "%s days"
+msgstr "%s jours"
 
 #: ../lib/plugin/text2png.php:37
 msgid "Sorry, this version of PHP cannot create PNG image files."
@@ -1093,12 +1101,12 @@ msgstr ""
 msgid "Unexpected EOF in zip file"
 msgstr ""
 
-#: ../lib/ziplib.php:668
+#: ../lib/ziplib.php:667
 #, c-format
 msgid "[%d] See [%s]"
 msgstr ""
 
-#: ../lib/ziplib.php:676
+#: ../lib/ziplib.php:675
 msgid "References"
 msgstr ""
 
@@ -1117,7 +1125,7 @@ msgstr "Afficher la Source"
 # lib/diff.php:1003 lib/diff.php:1021
 #: ../themes/default/templates/browse.tmpl:9
 #: ../themes/default/templates/viewsource.tmpl:9
-#, fuzzy, c-format
+#, c-format
 msgid "Last edited %s."
 msgstr "Dernière modification %s."
 
@@ -1219,23 +1227,23 @@ msgid "Author will be logged as %s."
 msgstr "L'auteur sera enregistrée comme %s."
 
 #: ../themes/Portland/templates/editpage.tmpl:81
-#: ../themes/default/templates/editpage.tmpl:95
+#: ../themes/default/templates/editpage.tmpl:100
 #, c-format
 msgid "See %s tips for editing."
 msgstr "Voir les conseils pour éditer les pages dans %s."
 
 #: ../themes/Portland/templates/editpage.tmpl:81
-#: ../themes/default/templates/editpage.tmpl:95
+#: ../themes/default/templates/editpage.tmpl:100
 msgid "GoodStyle"
 msgstr "StyleCorrect"
 
 #: ../themes/Portland/templates/editpage.tmpl:83
-#: ../themes/default/templates/editpage.tmpl:96
+#: ../themes/default/templates/editpage.tmpl:101
 msgid "TextFormattingRules"
 msgstr "RéglesDeFormatageDesTextes"
 
 #: ../themes/Portland/templates/editpage.tmpl:83
-#: ../themes/default/templates/editpage.tmpl:96
+#: ../themes/default/templates/editpage.tmpl:101
 msgid "Synopsis"
 msgstr "Vue d'ensemble"
 
@@ -1265,26 +1273,36 @@ msgstr "ChercherPage"
 msgid "PhpWikiAdministration"
 msgstr ""
 
-#: ../themes/default/templates/nochanges.tmpl:4
+#: ../themes/default/templates/nochanges.tmpl:6
+#: ../themes/default/templates/savepage.tmpl:7
+msgid "Page now locked."
+msgstr "La page est maintenant verrouillée."
+
+#: ../themes/default/templates/nochanges.tmpl:7
+#: ../themes/default/templates/savepage.tmpl:8
+msgid "Page now unlocked."
+msgstr "La page est maintenant déverrouillée."
+
+#: ../themes/default/templates/nochanges.tmpl:11
 msgid "Edit aborted."
 msgstr "Éditer annulé."
 
-#: ../themes/default/templates/nochanges.tmpl:5
+#: ../themes/default/templates/nochanges.tmpl:12
 msgid "You have not made any changes so no new version has been saved."
 msgstr ""
 
 # lib/savepage.php:76
-#: ../themes/default/templates/savepage.tmpl:8
+#: ../themes/default/templates/savepage.tmpl:12
 #, c-format
 msgid "Thank you for editing %s."
 msgstr "Merci d'avoir édité %s."
 
 # lib/savepage.php:106
-#: ../themes/default/templates/savepage.tmpl:10
+#: ../themes/default/templates/savepage.tmpl:13
 msgid "Your careful attention to detail is much appreciated."
 msgstr "Ton souci particulière apporté à la rédaction est très apprécié."
 
-#: ../themes/default/templates/savepage.tmpl:14
+#: ../themes/default/templates/savepage.tmpl:16
 msgid "Warning!"
 msgstr "Avertissement!"
 
@@ -1389,6 +1407,9 @@ msgstr "C'est une modification minuscule"
 #: ../themes/Sidebar/themeinfo.php:30
 msgid "Sidebar"
 msgstr ""
+
+#~ msgid "day"
+#~ msgstr "d'une jour"
 
 #~ msgid "(version %s, saved on %s)"
 #~ msgstr "(version %s, enregistrée sur %s)"

@@ -116,6 +116,8 @@ $locale["Last Author"] =
    "Auteur Précédent";
 $locale["Last Modified"] =
    "Dernière Modification";
+$locale["Last edited %s."] =
+   "Dernière modification %s.";
 $locale["Last edited on %s."] =
    "Dernière modification le %s.";
 $locale["List the most popular pages"] =
@@ -166,6 +168,10 @@ $locale["Page names with prefix '%s'"] =
    "Noms de page avec le préfixe ' %s '";
 $locale["Page names with suffix '%s'"] =
    "Noms de page avec le suffixe ' %s '";
+$locale["Page now locked."] =
+   "La page est maintenant verrouillée.";
+$locale["Page now unlocked."] =
+   "La page est maintenant déverrouillée.";
 $locale["Password"] =
    "Mot de passe";
 $locale["Preview"] =
@@ -232,12 +238,16 @@ $locale["The %d most popular pages of this wiki:"] =
    "Les %s des pages les plus populaires de ce wiki :";
 $locale["The %d most recent %s are listed below."] =
    "Les %d %s les plus récents sont énumérés ci-dessous";
-$locale["The %d most recent %s during the past %s are listed below."] =
-   "Les %d %s les plus récentes pendant les derniers %s sont énumérées ci-dessous.";
+$locale["The %d most recent %s during the past %s days are listed below."] =
+   "Les %d %s les plus récentes pendant les derniers %s jours sont énumérées ci-dessous.";
+$locale["The %d most recent %s during the past day are listed below."] =
+   "Les %d %s les plus récentes pendant le dernier jour sont énumérées ci-dessous.";
 $locale["The PhpWiki programming team"] =
    "L'équipe de programmeurs de PhpWiki";
-$locale["The most recent %s during the past %s are listed below."] =
-   "Les %s les plus récentes pendant les derniers %s sont énumérées ci-dessous.";
+$locale["The most recent %s during the past %s days are listed below."] =
+   "Les %s les plus récentes pendant les derniers %s jours sont énumérées ci-dessous.";
+$locale["The most recent %s during the past day are listed below."] =
+   "Les %s les plus récentes pendant le dernier jour sont énumérées ci-dessous.";
 $locale["These pages share an initial or final title word with '%s'"] =
    "Ces pages partagent un premier ou final mot de titre avec ' %s '";
 $locale["This is a minor change."] =
@@ -304,8 +314,6 @@ $locale["compare revisions"] =
    "comparez les révisions";
 $locale["current version"] =
    "Version actuelle";
-$locale["day"] =
-   "d'une jour";
 $locale["diff"] =
    "diff";
 $locale["edits"] =
