@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.39 2004-06-21 16:22:28 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.40 2004-06-22 07:12:48 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -89,7 +89,6 @@ function IniConfig($file) {
     // List of all valid config options to be define()d which take booleans.
     $_IC_VALID_BOOL = array
         ('ENABLE_USER_NEW', 'ENABLE_PAGEPERM', 'ENABLE_EDIT_TOOLBAR', 'JS_SEARCHREPLACE',
-         'USE_TAGLINES',
          'ENABLE_REVERSE_DNS', 'ENCRYPTED_PASSWD', 'ZIPDUMP_AUTH', 
          'ENABLE_RAW_HTML', 'STRICT_MAILABLE_PAGEDUMPS', 'COMPRESS_OUTPUT',
          'WIKIDB_NOCACHE_MARKUP', 'ALLOW_ANON_USER', 'ALLOW_ANON_EDIT',
@@ -302,7 +301,7 @@ function IniConfig($file) {
     $InlineImages = constant("INLINE_IMAGES");*/
 
     global $PLUGIN_CACHED_IMGTYPES;
-    $PLUGIN_CACHED_IMGTYPES = preg_split('/\s*:\s*/', PLUGIN_CACHED_IMGTYPES);
+    $PLUGIN_CACHED_IMGTYPES = preg_split('/\s*[|:]\s*/', PLUGIN_CACHED_IMGTYPES);
     if (!defined('PLUGIN_CACHED_CACHE_DIR')) {
         if (!FindFile('/tmp/cache', 1)) {
             if (!FindFile('/tmp', 1)) {
@@ -310,8 +309,10 @@ function IniConfig($file) {
             }
             mkdir('/tmp/cache', 777);
         }
-        define('PLUGIN_CACHED_CACHE_DIR', FindFile('/tmp/cache',false,1)); // will throw an error
+        // will throw an error if not exists.
+        define('PLUGIN_CACHED_CACHE_DIR', FindFile('/tmp/cache',false,1)); 
     } else {
+        // will throw an error if not exists.
         FindFile(PLUGIN_CACHED_CACHE_DIR);
     }
 
@@ -591,6 +592,16 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.39  2004/06/21 16:22:28  rurban
+// add DEFAULT_DUMP_DIR and HTML_DUMP_DIR constants, for easier cmdline dumps,
+// fixed dumping buttons locally (images/buttons/),
+// support pages arg for dumphtml,
+// optional directory arg for dumpserial + dumphtml,
+// fix a AllPages warning,
+// show dump warnings/errors on DEBUG,
+// don't warn just ignore on wikilens pagelist columns, if not loaded.
+// RateIt pagelist column is called "rating", not "ratingwidget" (Dan?)
+//
 // Revision 1.38  2004/06/21 08:39:36  rurban
 // pear/Cache update from Cache-1.5.4 (added db and trifile container)
 // pear/DB update from DB-1.6.1 (mysql bugfixes, php5 compat, DB_PORTABILITY features)

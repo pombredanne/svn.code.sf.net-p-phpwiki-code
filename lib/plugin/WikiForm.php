@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiForm.php,v 1.14 2004-06-21 17:06:38 rurban Exp $');
+rcs_id('$Id: WikiForm.php,v 1.15 2004-06-22 07:12:49 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -34,7 +34,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.14 $");
+                            "\$Revision: 1.15 $");
     }
 
     function getDefaultArguments() {
@@ -42,6 +42,7 @@ extends WikiPlugin
                                            // 'dumpserial'
                      'default' => false,
                      'buttontext' => false,
+                     'overwrite' => false,
                      'size' => 50);
     }
 
@@ -120,6 +121,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2004/06/21 17:06:38  rurban
+// renamed constant
+//
 // Revision 1.13  2004/06/21 16:22:32  rurban
 // add DEFAULT_DUMP_DIR and HTML_DUMP_DIR constants, for easier cmdline dumps,
 // fixed dumping buttons locally (images/buttons/),
