@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: dbaBase.php,v 1.8 2004-04-27 16:03:05 rurban Exp $');
+<?php rcs_id('$Id: dbaBase.php,v 1.9 2004-04-29 22:50:53 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -213,7 +213,8 @@ extends WikiDB_backend
             }
             
             if (!$include_deleted) {
-                list($latestversion,$flags,) = explode(':', $pagedb->get($page), 3);
+            	if (!($data = $pagedb->get($page))) continue;
+                list($latestversion,$flags,) = explode(':', $data, 3);
                 if ($latestversion == 0 || $flags != 0)
                     continue;   // current content is empty 
             }
