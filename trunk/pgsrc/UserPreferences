@@ -4,7 +4,7 @@ Content-Type: application/x-phpwiki;
   flags=PAGE_LOCKED
 Content-Transfer-Encoding: binary
 
-You can now set some user preferences.  The values of these preferences are currently stored in a cookie (so you must have cookies enables to use this feature.)
+You can now set some user preferences.  The values of these preferences are currently stored in a cookie (so you must have cookies enabled to use this feature.)
 
 ! !EditArea Dimensions.
 
