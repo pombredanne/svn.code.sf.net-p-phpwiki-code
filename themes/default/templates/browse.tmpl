@@ -1,5 +1,6 @@
-<?php // -*-html-*- ?>
-<!-- $Id: browse.tmpl,v 1.23 2003-02-26 22:27:16 dairiki Exp $ -->
+<?php // -*-html-*-
+rcs_id('$Id: browse.tmpl,v 1.24 2003-03-05 21:38:15 dairiki Exp $');
+?>
 
 <?php if (! $revision->isCurrent()) { ?>
   <p><strong><?=_("Note:")?></strong>
@@ -10,6 +11,6 @@
 
 <?=$CONTENT?>
 
-<div id="footer"><!-- for top & bottom toolbars stylesheet -->
-<?=Template('browse-footer')?>
+<div id="footer"><?php // for top & bottom toolbars stylesheet ?>
+  <?=Template('browse-footer')?>
 </div>

@@ -1,8 +1,10 @@
-<?php // -*-html-*- ?>
-<!-- $Id: body.tmpl,v 1.31 2003-02-26 22:27:14 dairiki Exp $ -->
+<?php // -*-html-*-
+rcs_id('$Id: body.tmpl,v 1.32 2003-03-05 21:38:15 dairiki Exp $');
+?>
 <body>
-<div id="header"> <!-- for top&bottom toolbars style sheet -->
-<?= Template('top') ?>
+
+<div id="header"><?php // for top-and-bottom toolbars style sheet ?>
+  <?= Template('top') ?>
 </div>
 <?= $CONTENT ?>
 <?= Template('bottom') ?>

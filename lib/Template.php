@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.49 2003-02-26 22:27:18 dairiki Exp $');
+<?php rcs_id('$Id: Template.php,v 1.50 2003-03-05 21:38:14 dairiki Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -74,11 +74,14 @@ class Template
         // FIXME: big hack!        
         if (!$template->_request)
             $template->_request = &$this->_request;
-        if ($template->_name != 'head')
+        if (defined('DEBUG') and DEBUG) {
             echo "<!-- Begin $template->_name -->\n";
+        }
         // Expand sub-template with defaults from this template.
         $template->printExpansion($this->_vars);
-        echo "<!-- End $template->_name -->\n";
+        if (defined('DEBUG') and DEBUG) {
+            echo "<!-- End $template->_name -->\n";
+        }
     }
         
     /**
