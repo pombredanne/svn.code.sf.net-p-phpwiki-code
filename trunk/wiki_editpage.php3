@@ -7,17 +7,17 @@
 */
 
    if ($edit) {
-      $pagename = $edit;
+      $pagename = rawurldecode($edit);
       $banner = "$pagename";
    } elseif ($copy) {
-      $pagename = $copy;
+      $pagename = rawurldecode($copy);
       $banner = "Copy of $pagename";
    } else {
       echo "No page name passed into editpage!<br>\n";
       exit();
    }
 
-   WikiHeader($pagename); 
+   echo WikiHeader($pagename); 
 ?>
 
 <form method="POST" action="<? echo "$ScriptUrl"; ?>">
@@ -54,20 +54,22 @@ tips for editing.
 
 <br>
 
-<a href="<? echo "$ScriptUrl"; ?>?links=<? echo $pagename; ?>">EditLinks</a>
+<a href="<? echo "$ScriptUrl"; ?>?links=<? echo rawurlencode($pagename); ?>">EditLinks</a>
 to other web servers.
 
 <br>
 
 <?
    if ($lastcopy) {
-      echo "<a href='$ScriptUrl?copy=$lastcopy'>EditCopy</a>";
+      $enc_name = rawurlencode($lastcopy);
+      echo "<a href='$ScriptUrl?copy=$enc_copy'>EditCopy</a>";
       echo " from previous author";
    }
 
 ?>
-<input type="hidden" size=1 name="post" value="<? echo $pagename; ?>">
+<input type="hidden" size=1 name="post"
+value="<? echo rawurlencode($pagename); ?>">
 
 </form>
 
-<? WikiFooter(); ?>
+<? echo WikiFooter(); ?>

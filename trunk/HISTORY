@@ -1,3 +1,40 @@
+1.1.4 05/11/00: I added the new linking
+scheme, which largely follows the scheme of Wikic
+(http://wiki.cs.uiuc.edu/RefactoringBrowser/Wiki+Syntax). Both "classic
+Wiki" linking and the new linking are supported; you can now also link
+things by using square brackets, like this:
+
+[this is a page link]
+[this is an external link | http://wcsb.org/]
+[ftp://ftp.redhat.com/]
+
+Reference links are still supported.
+
+1.1.3 04/22/00: I rewrote UpdateRecentChanges completely; it's more
+efficient now because it only loops over the lines once, and entries are
+now newest-first instead of oldest-first.
+
+1.1.2 04/20/00: I finally solved the problem once and for all (I hope!)
+with loading pages into a brand new wiki. Vim allows you to change the
+file formats so I wrote a two line ex script to convert all the pages to
+dos format. (This gives them the CR/NL, unlike Un*x).
+
+1.1.1 04/15/00: I changed the way Wiki markup is converted and 
+displayed. Before pages were rendered line by line; now it accumulates
+all the HTML in a variable and does one "echo" to display the page. 
+While this might be a bit slower (it will use a little bit more memory)
+this means PhpWiki can be modified so the HTML can be written to a file.
+a whole PhpWiki site might either be served as static HTML, or
+periodically exported to disk after a period of activity. This is the
+secod beta (more or less) of the 1.1 release.
+
+1.1.0 04/10/00: Support for MySQL added. Thanks to Arno Hollosi for 
+his excellent work! He also provided patches to clean up the wiki_setup
+procedure and fix rendering bugs with italics and bold text, amongst
+others. Alister <alister@minotaur.nu> provided patches for arbitrary
+numbers of reference links, fixing a rotten logic error on my part.
+Removed "static" declarations to help the PHP4 porters.
+
 1.03 03/21/00: Refactored index.php3 and wiki_display.php3, which 
 had dbm function calls in them. Thanks to Christian Lindig
 <lindig@gaertner.de> for pointing this out. This should make it

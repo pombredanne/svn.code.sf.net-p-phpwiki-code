@@ -12,15 +12,9 @@
    while ($file = readdir($handle)) {
       if (strlen($file) < 4) { continue; }
 
-      $page["text"] = file("pgsrc/$file");
-/*
-      for ($x = 0; $page["text"][$x]; $x++) {
-         if (strlen($page["text"][$x]) > 1) {
-            $page["text"][$x] = chop($page["text"][$x]);
-         }
-      }
-      reset($page["text"]);
-*/
+      $text = implode("", file("pgsrc/$file"));
+      $page["text"] = explode("\n", $text);
+
       InsertPage($dbi, $file, $page);
    }
    closedir($handle); 

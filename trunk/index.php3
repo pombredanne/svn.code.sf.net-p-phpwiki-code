@@ -6,7 +6,6 @@
 
    include "wiki_config.php3";
    include "wiki_stdlib.php3";
-   include "wiki_dbmlib.php3";
 
    // All requests require the database
    if ($copy) {

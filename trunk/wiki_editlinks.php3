@@ -1,6 +1,15 @@
 <?
-   $pagename = $links;
+   // Thanks to Alister <alister@minotaur.nu> for this code.
+   // This allows an arbitrary number of reference links.
+
+   $pagename = rawurldecode($links);
+   $pagehash = array();
    $pagehash = RetrievePage($dbi, $pagename);
+   settype ($pagehash, 'array');
+   for ($i = 1; $i <= NUM_LINKS; $i++)
+   	  if (!isset($pagehash['r'.$i]))
+   	  		$pagehash['r'.$i] = '';
+   	  	
 ?>
 <html>
 <head>
@@ -13,21 +22,21 @@
 <h1><? echo $pagename; ?> Links
 <input type="submit" value=" Save ">
 <input type="reset" value=" Reset "></h1>
-[1] 
-<input type="text" size="55" name="r1" value="<? echo $pagehash["r1"]; ?>">
-<br>
-[2]
-<input type="text" size="55" name="r2" value="<? echo $pagehash["r2"]; ?>">
-<br>
-[3]
-<input type="text" size="55" name="r3" value="<? echo $pagehash["r3"]; ?>">
-<br>
-[4]
-<input type="text" size="55" name="r4" value="<? echo $pagehash["r4"]; ?>">
+
+<?
+   for ($i = 1; $i <= NUM_LINKS; $i++) {
+   	   echo "[$i] <input type='text' size='55' name='r$i' value='".
+                $pagehash["r$i"] ."'><br>\n";
+   }
+
+?>
 <p>
-Type the full URL (http:// ...) for each reference cited in the text.<p>
-<input type="hidden" size=1 name="post" value="<? echo $pagename; ?>">
+Type the full URL (http:// ...) for each reference cited in the
+text.<p>
+<input type="hidden" size=1 name="post"
+value="<? echo rawurlencode($pagename); ?>">
 
 </form>
 </body>
 </html>
+
