@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.5 2002-01-19 23:43:39 carstenklapp Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.6 2002-01-21 00:16:04 carstenklapp Exp $ -->
 
 <?php if (isset($PREVIEW_CONTENT)) { ?>
   <p><strong><?=_("Preview only!  Changes not saved.")?></strong></p>
@@ -58,6 +58,9 @@
   $SignIn = new WikiTemplate('signin');
   $SignIn->qreplace('FORMNAME', 'editpage');
 
+  $UserPrefsB = $ButtonFactory->makeLinkButton(_("UserPreferences"));
+  $GoodStyleB = $ButtonFactory->makeLinkButton(_("GoodStyle"));
+
   $s = $Theme->getButtonSeparator();
 ?>
 
@@ -80,14 +83,19 @@
   </td>
 </tr></table>
 
-<div name="#edit-tips"><?php
-  // FIXME: convert this to use the IncludePage plugin.
-  printf(_("You can change the size of the editing area in %s."),
-         LinkExistingWikiWord(_("UserPreferences")));
-  printf(" " . _("See %s tips for editing."),
-         LinkExistingWikiWord(_("GoodStyle")));
-?></div>
-
+<table summary="Toolbar: Edit tips." class="toolbar"
+       cellpadding="0" cellspacing="0" border="0"><tr valign="middle">
+  <?php /* FIXME: convert this to use the IncludePage plugin.
+         * A table is used for proper image to text alignment when
+         * a theme uses image buttons.
+         */ ?>
+  <td>
+    <?php printf(_("You can change the size of the editing area in %s."),
+                 "</td><td>&nbsp;".$UserPrefsB->asHTML()."</td><td>"); ?>&nbsp;</td>
+  <td>
+    <?php printf(_("See %s tips for editing."),
+                 "</td><td>&nbsp;".$GoodStyleB->asHTML()."&nbsp;</td><td>"); ?></td>
+</tr></table>
 
 <hr noshade="noshade" />
 
@@ -100,4 +108,3 @@
 <input type="hidden" name="editversion" value="<?=$FORMVARS['editversion']?>" />
 <input type="hidden" name="version" value="<?=$FORMVARS['version']?>" />
 </form>
-
