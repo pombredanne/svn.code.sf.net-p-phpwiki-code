@@ -1,5 +1,5 @@
 /*
-  $Id: MacOSX.css,v 1.21 2002-02-16 16:02:56 carstenklapp Exp $
+  $Id: MacOSX.css,v 1.22 2002-02-18 01:34:48 carstenklapp Exp $
 
   Classes:
 
@@ -265,34 +265,40 @@ div.wiki-message {
 }
 .printer { display: none; }
 
-/****************************************************************
- **
- ** Diff Output
- **
- *****************************************************************/
-.diff .block	{ padding: 0.5ex 0.5em; margin: 0.5ex 0; }
-.diff .block tt	{ font-weight: bold; }
-.diff del,
-.diff ins	{ font-weight: bold; text-decoration: none; }
 
-/* These screw up NS4 --- moved to phpwiki-heavy.css
-.diff .block div { position: relative; padding-left: 1.5em; } 
-.diff .prefix	{ position: absolute; left: 0.5em; top: 0; }
-*/
+/**
+ * Diff Output
+ */
+/* main box */
+.diff { background: white; }
+.diff .block { background: #ccc; }
 
-.diff .block	{ background: #ccc; }
-.diff .context	{ background: #fff; }
-.diff .original,
-.diff .deleted	{ background: #fcc; }
-.diff .final,
-.diff .added	{ background: #cfc; }
-/*
-.diff .original	{ background: #feb; }
-.diff .final	{ background: #efb; }
-*/
+/* individual blocks */
+.diff .context { background: white; }
+/* + - line prefix */
+.diff .block tt {
+  font-weight: normal;
+  font-family: monospace;
+  margin-left: -0.6em;
+  color: black;
+}
+/* changed words */
+.diff del, .diff ins {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* blocks containing deleted words */
+/* .diff .original, .diff .deleted { background: #fcc; } */
+/* blocks containing added words */
+/* .diff .final, .diff .added { background: #cfc; } */
+
 /* These don't work in NS4 -- it completely ignores <del> and <ins>. */
-.diff del	{ background: #f99; }
-.diff ins	{ background: #9f9; }
+/* deleted words */
+.diff del { background: #fcc; } /* f99 */
+/* added words */
+.diff ins { background: #cfc; } /* 9f9 */
+
 
 /* PageList output */
 .pagelist tr.evenrow { background: #eee; }
