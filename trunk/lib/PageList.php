@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.109 2004-09-17 14:22:10 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.110 2004-09-17 14:43:31 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -1302,8 +1302,8 @@ function flipAll(formObj) {
         
         // Ignore azhead if not sorted by pagename
         if (!empty($this->_options['azhead']) 
-             and substr("pagename", $this->sortby($this->_options['sortby'], 'init'))
-            ) 
+            and strstr($this->sortby($this->_options['sortby'], 'init'), "pagename")
+            )
         {
             $cur_h = substr($this->_pages[0]->getName(), 0, 1);
             $out->pushContent(HTML::h3($cur_h));
@@ -1430,6 +1430,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.109  2004/09/17 14:22:10  rurban
+// update comments
+//
 // Revision 1.108  2004/09/17 12:46:22  rurban
 // seperate pagingTokens()
 // support new default args: comma (1 and 2), commasep, ordered, cols,
