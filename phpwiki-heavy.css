@@ -1,10 +1,20 @@
 /**
- * $Id: phpwiki-heavy.css,v 1.16 2002-02-13 08:56:24 carstenklapp Exp $
+ * $Id: phpwiki-heavy.css,v 1.17 2002-02-14 00:54:29 carstenklapp Exp $
  *
- * phpwiki-heavy.css
+ * This is stuff which should be in phpwiki.css, but which breaks Netscape 4.
  *
- * This is stuff which should be in phpwiki.css, but which breaks NS4.
- * Margins and padding on in-line elements are generally bad for NS4.
+ * The use of these css functions are generally bad for NS4:
+ * <ol>
+ * <li> NS4 adds the equivalent of a <br> on inline elements with
+ *      margins, padding and borders.
+ * <li> Background colors are not applied properly to inline elements with
+ *      padding. The resulting effect is visually like an "internal margin"
+ *      rather than a padding.
+ * <li> Specifying a color or background as "inherit" produces unpredictable
+ *      results, often yielding a lime green color.
+ * <li> Image alignment and text-alignment in css gives seemingly random and
+ *      unpredictable positioning of the element on the page.
+ * </ol>
  */
 
 /* Hide the elements we put in just to get around NS4 bugs. */
@@ -13,24 +23,22 @@ div.br { display: none; }
 /* This makes spacings in NS4 too big. */
 .toolbar, div.toolbar { margin: 0.5ex 0ex; }
 
-/* This break NS4, but is necessary for IE4. */
+/* This breaks NS4, but is necessary for IE4. */
 div.wikitext { width: auto; }
+
 
 /**
  * General
  */
 /* for NS4 */
 img { vertical-align: baseline; }
-/* NS4 inserts a br after this */
 input { margin: 0.1em; }
-/* NS4 inserts a br after this */
 input.numeric { text-align: right; }
+
 
 /**
  * Links
  */
-
-/* NS4 inserts a br after these */
 .wikiaction, .wikiaction table, span.wikiaction, input.button { border: 1px outset; }
 .wikiadmin, .wikiadmin table { border: 1px outset; }
 .wikiunsafe { border: 1px outset; }
@@ -43,12 +51,11 @@ a.wikiaction, a.wikiadmin, input.button {
   padding-right: .5em;
 }
 
-/* Prevent buttons from overlapping when the toolbar is wrapped.
+/* Prevent buttons from overlapping when the toolbar is wrapped. */
 a.wikiaction, a.wikiadmin { line-height: 2.6ex; }
 
 /* QuestionMark */
-.wikiunknown a, .named-wikiunknown {
-  font-size: smaller;
+.wikiunknown a, .named-wikiunknown a {
   border: 1px outset black;
   padding-left:  1px;
   padding-right: 1px;
@@ -56,7 +63,7 @@ a.wikiaction, a.wikiadmin { line-height: 2.6ex; }
   margin-right: 1px;
 }
 
-/* Link icons - This screws up NS4 */
+/* Link icons */
 img.linkicon { vertical-align: middle; }
 
 
