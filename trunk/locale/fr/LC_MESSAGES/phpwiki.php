@@ -4,8 +4,6 @@ $locale["%s bytes written"] =
    "%s octets enregistrés";
 $locale["%s days"] =
    "%s jours";
-$locale["%s failed"] =
-   "%s a provoqué une erreur";
 $locale["%s(%d): no such revision"] =
    "%s(%d) : aucune une telle révision";
 $locale["%s: %s"] =
@@ -32,20 +30,14 @@ $locale["An unnamed PhpWiki"] =
    "Un PhpWiki sans le titre";
 $locale["Author will be logged as %s."] =
    "L'auteur sera enregistré comme %s.";
-$locale["Bad %s"] =
-   "Mauvais %s";
 $locale["Bad file type: %s"] =
    "Mauvais type de fichier : %s";
 $locale["Calendar"] =
    "Calendrier";
-$locale["Can't connect to database: %s"] =
-   "Impossible d'établir une connexion à la base de données : %s";
 $locale["Complete."] =
    "Complet.";
 $locale["Contents"] =
    "Table des Matières";
-$locale["Copied to [%s]"] =
-   "Copie de [%s]";
 $locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
    "Copie tes modifications dans un endroit temporaire (un éditeur de texte par exemple).";
 $locale["Deleted."] =
@@ -70,8 +62,6 @@ $locale["Edit: %s"] =
    "Editer : %s";
 $locale["Empty pagename!"] =
    "La page n'a aucun titre!";
-$locale["FAILED for [%s]"] =
-   "[%s] a provoqué une erreur";
 $locale["FindPage"] =
    "ChercherPage";
 $locale["First"] =
@@ -134,8 +124,6 @@ $locale["No pages link to %s."] =
    "Aucun lien de pages à %s.";
 $locale["None"] =
    "Aucune";
-$locale["Not Implemented"] =
-   "Non encore implémentée";
 $locale["Older page:"] =
    "La page plus ancienne :";
 $locale["Optimizing %s"] =
@@ -148,8 +136,6 @@ $locale["Page names with prefix '%s'"] =
    "Noms de page avec le préfixe ' %s '";
 $locale["Page names with suffix '%s'"] =
    "Noms de page avec le suffixe ' %s '";
-$locale["Page source for %s"] =
-   "Afficher la source de page %s";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
    "PhpWiki n'a pu enregistrer tes modifications, parce qu'un autre utilisateur a édité et sauvegardé la page pendant que tu faisais de même. Si j'avais continué, j'aurais perdu les modifications dues à l'auteur précédent.";
 $locale["Press <b>Save</b> again."] =
@@ -230,8 +216,6 @@ $locale["Title search results for '%s'"] =
    "Résultat de recherche sur les titres de pages pour ' %s '";
 $locale["TitleSearch"] =
    "RechercheParTitre";
-$locale["Unknown %s"] =
-   "Inconnu %s";
 $locale["Unlock Page"] =
    "Déverrouiller la Page";
 $locale["Uploading %s"] =
@@ -270,8 +254,6 @@ $locale["edits"] =
    "modifications";
 $locale["from %s"] =
    "de %s";
-$locale["is initial release"] =
-   "est la première version";
 $locale["last modified on %s"] =
    "dernière modification le %s";
 $locale["major edits"] =
@@ -280,8 +262,6 @@ $locale["minor edits"] =
    "petites modifications";
 $locale["new page"] =
    "nouvelle page";
-$locale["no message"] =
-   "aucun message";
 $locale["no page specified"] =
    "aucune page indiquée";
 $locale["previous major revision"] =

@@ -14,8 +14,6 @@ $locale["<b>Reload</b> the page. You should now see the most current version of 
    "<b>Reload</b> de pagina.  Je zou nu de meest recente versie van de pagina moeten zien.  Jouw veranderingen staan er nu niet meer.";
 $locale["Complete."] =
    "Klaar.";
-$locale["Copied to [%s]"] =
-   "Kopie van [%s]";
 $locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
    "Kopier je veranderingen naar het klipbord of een andere tijdelijke plaats (bijv. een tekst editor).";
 $locale["Describe %s here."] =
@@ -66,8 +64,6 @@ $locale["New page."] =
    "Nieuw pagina.";
 $locale["None"] =
    "Geen";
-$locale["Not Implemented"] =
-   "Functie nog niet gemplementeerd.";
 $locale["Page Name"] =
    "Pagina Naam";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =

@@ -4,8 +4,6 @@ $locale["(last edited %s)"] =
    "(editada por última vez %s)";
 $locale["<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."] =
    "<b>Vuelva a cargar</b> la página. Ahora podrá ver la versión mas actual de la página. Sus cambios no están ahí.";
-$locale["Copied to [%s]"] =
-   "Copia de [%s]";
 $locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
    "Copie sus cambios al portapapeles o a otro sitio temporal (p.ej. editor de textos).";
 $locale["Describe %s here."] =
@@ -38,8 +36,6 @@ $locale["Make changes to the file again. Paste your additions from the clipboard
    "Haga cambios a la página otra vez. Pegue sus modificaciones del portapapeles (o del editor de textos).";
 $locale["None"] =
    "Ninguno";
-$locale["Not Implemented"] =
-   "Función todaví no implementada";
 $locale["Page Name"] =
    "Nombre de la página";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =

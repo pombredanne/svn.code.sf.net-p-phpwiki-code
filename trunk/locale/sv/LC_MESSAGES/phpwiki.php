@@ -10,12 +10,8 @@ $locale["(version %s, saved on %s)"] =
    "(version %s, sparade %s)";
 $locale["<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."] =
    "<b>Ladda om</b> sidan. Du kommer nu se den senaste versionen av sidan. Dina ändringar är inte där.";
-$locale["Copied to [%s]"] =
-   "Kopia är [%s]";
 $locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
    "Kopiera dina ändringar till urklippet eller till ett annat temporärt ställe (t.ex. en texteditor).";
-$locale["Copying from [%s] to [%s]"] =
-   "Kopia från [%s] är [%s]";
 $locale["Describe %s here."] =
    "Beskriv %s här.";
 $locale["Diff"] =
@@ -62,8 +58,6 @@ $locale["MostPopular"] =
    "MestPopulär";
 $locale["None"] =
    "ingen";
-$locale["Not Implemented"] =
-   "Funktionen är ännu inte implementerad.";
 $locale["Page Name"] =
    "Namn på Sidan";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =

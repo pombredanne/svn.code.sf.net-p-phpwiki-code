@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.9\n"
-"POT-Creation-Date: 2002-01-23 20:00-0500\n"
+"POT-Creation-Date: 2002-01-24 01:54-0500\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -30,7 +30,6 @@ msgstr ""
 
 #: ../lib/ButtonFactory.php:244 ../lib/WikiUser.php:132
 #: ../themes/default/templates/login.tmpl:26
-#: ../themes/default/templates/signin.tmpl:44
 #: ../themes/default/templates/signin.tmpl:51
 msgid "Sign In"
 msgstr ""
@@ -46,330 +45,6 @@ msgstr "Lås upp Sida"
 #: ../lib/ButtonFactory.php:252
 msgid "Remove Page"
 msgstr "Ta bort sida"
-
-#: ../lib/DbaDatabase.php:46 ../lib/ziplib.php:36 ../lib/ziplib.php:39
-#: ../lib/ziplib.php:44 ../lib/ziplib.php:46 ../lib/ziplib.php:48
-#: ../lib/ziplib.php:57 ../lib/ziplib.php:60 ../lib/ziplib.php:63
-#: ../lib/ziplib.php:68
-#, c-format
-msgid "%s failed"
-msgstr ""
-
-#: ../lib/ErrorManager.php:167
-#, c-format
-msgid "%s: error while handling error:"
-msgstr ""
-
-#: ../lib/FileFinder.php:82
-#, c-format
-msgid "%s: file not found"
-msgstr ""
-
-#: ../lib/PageList.php:106
-msgid "Page Name"
-msgstr "Namn på Sidan"
-
-#: ../lib/PageList.php:121 ../lib/plugin/FullTextSearch.php:51
-msgid "<no matches>"
-msgstr ""
-
-#: ../lib/PageList.php:210
-#, fuzzy
-msgid "Last Modified"
-msgstr "senast ändrad %s"
-
-#: ../lib/PageList.php:212
-msgid "Hits"
-msgstr "antal träffar"
-
-#: ../lib/PageList.php:214
-msgid "Last Summary"
-msgstr ""
-
-#: ../lib/PageList.php:216
-#, fuzzy
-msgid "Last Author"
-msgstr "Göregående Författare"
-
-#: ../lib/PageList.php:218
-#, fuzzy
-msgid "Locked"
-msgstr "Lås Sida"
-
-#: ../lib/PageList.php:218
-#, fuzzy
-msgid "locked"
-msgstr "Sidan är låst"
-
-#: ../lib/PageList.php:221
-msgid "Minor Edit"
-msgstr ""
-
-#: ../lib/PageList.php:221
-msgid "minor"
-msgstr ""
-
-#: ../lib/RSSWriter091.php:115 ../lib/loadsave.php:583
-#: ../lib/plugin/RecentChanges.php:166 ../lib/plugin/RecentChanges.php:273
-#: ../lib/plugin/RecentChanges.php:318
-#: ../themes/Portland/templates/navbar.tmpl:40
-#: ../themes/default/templates/navbar.tmpl:13
-msgid "RecentChanges"
-msgstr "SenasteÄndringar"
-
-#: ../lib/Template.php:135
-#, c-format
-msgid "%4d  %s\n"
-msgstr ""
-
-#: ../lib/WikiDB.php:353
-#, c-format
-msgid "Attempt to delete most recent revision of '%s'"
-msgstr ""
-
-#: ../lib/WikiDB.php:401
-#, c-format
-msgid "Attempt to merge most recent revision of '%s'"
-msgstr ""
-
-#: ../lib/WikiDB.php:488
-#, c-format
-msgid "%s: Date of new revision is %s"
-msgstr ""
-
-#: ../lib/WikiDB.php:513
-#, c-format
-msgid "Optimizing %s"
-msgstr ""
-
-#: ../lib/WikiDB.php:853
-#, c-format
-msgid "Describe %s here."
-msgstr "Beskriv %s här."
-
-#: ../lib/WikiDB.php:888
-#, c-format
-msgid "Acck! Revision %s of %s seems to have been deleted!"
-msgstr ""
-
-#: ../lib/WikiDB/backend/PearDB.php:26
-#, fuzzy, c-format
-msgid "Can't connect to database: %s"
-msgstr "Ger upp, kan ej skapa anslutning till databasen: %s"
-
-#: ../lib/WikiDB/backend/PearDB.php:57
-msgid "WARNING: database still locked"
-msgstr ""
-
-#: ../lib/WikiDB/backend/PearDB.php:711
-msgid "fatal database error"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:93
-#, c-format
-msgid "Creating new repository [%s]"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:128
-#, c-format
-msgid "Found [%s] in [%s]"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:182
-#, c-format
-msgid "Argument %s was not array"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:190
-msgid "no meta data found"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:243
-#, c-format
-msgid "FAILED for [%s]"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:337 ../lib/WikiDB/backend/cvs.php:347
-#: ../lib/WikiDB/backend/cvs.php:353 ../lib/WikiDB/backend/cvs.php:450
-#: ../lib/WikiDB/backend/cvs.php:456
-msgid "Not Implemented"
-msgstr "Funktionen är ännu inte implementerad."
-
-#: ../lib/WikiDB/backend/cvs.php:520
-#, c-format
-msgid "Creating meta file for [%s]"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:614
-msgid "got revision information"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:619
-msgid "is initial release"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:622
-#, fuzzy
-msgid "returning old version"
-msgstr "Arkiverad version"
-
-#: ../lib/WikiDB/backend/cvs.php:689
-msgid "Unable to delete file, lock was not obtained."
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:699
-msgid "Unable to open file"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:709
-msgid "no message"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:749
-#, c-format
-msgid "unable to locate/open [%s], turning debug off"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:760
-#, c-format
-msgid "Preparing to execute [%s]"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:763
-#, c-format
-msgid "Command failed [%s], Output:"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:765
-#, c-format
-msgid "Command failed [%s], Return value: %s"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:768
-msgid "Done execution"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:782
-msgid "Unable to obtain read lock."
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:789
-#, c-format
-msgid "Unable to open file '%s' for reading"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:808
-msgid "Timeout while obtaining lock."
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:817
-#, c-format
-msgid "Could not open file '%s' for writing"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:827
-#, c-format
-msgid "Copying from [%s] to [%s]"
-msgstr "Kopia från [%s] är [%s]"
-
-#: ../lib/WikiDB/backend/cvs.php:830
-msgid "Copying"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:835
-#, c-format
-msgid "Copied to [%s]"
-msgstr "Kopia är [%s]"
-
-#: ../lib/WikiDB/backend/cvs.php:837
-#, c-format
-msgid "Failed to copy [%s]"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:843
-msgid "Not copying"
-msgstr ""
-
-#: ../lib/WikiDB/backend/dba.php:23 ../lib/WikiDB/backend/dba.php:25
-#, c-format
-msgid "%s: Can't open dba database"
-msgstr ""
-
-#: ../lib/WikiDB/backend/dbaBase.php:330
-#, c-format
-msgid "Bad key in linktable: %s"
-msgstr ""
-
-#: ../lib/WikiDB/backend/dbaBase.php:352
-#, c-format
-msgid "Bad key %s in table"
-msgstr ""
-
-#: ../lib/WikiDB/backend/dbaBase.php:360
-#, c-format
-msgid "backlink entry missing for link %s"
-msgstr ""
-
-#: ../lib/WikiDB/backend/dbaBase.php:368
-#, c-format
-msgid "link entry missing for backlink %s"
-msgstr ""
-
-#: ../lib/WikiDB/dba.php:17
-#, c-format
-msgid ""
-"DBA files are in the %s directory. Please read the INSTALL file and move the "
-"DB file to a permanent location or risk losing all the pages!"
-msgstr ""
-
-#: ../lib/WikiPlugin.php:64
-#, c-format
-msgid "argument '%s' not declared by plugin"
-msgstr ""
-
-#: ../lib/WikiPlugin.php:119
-#, c-format
-msgid "trailing cruft in plugin args: '%s'"
-msgstr ""
-
-#: ../lib/WikiPlugin.php:233 ../lib/ziplib.php:162 ../lib/ziplib.php:164
-#: ../lib/ziplib.php:166 ../lib/ziplib.php:580 ../lib/ziplib.php:677
-#, c-format
-msgid "Bad %s"
-msgstr ""
-
-#: ../lib/WikiPlugin.php:274
-#, c-format
-msgid "Include of '%s' failed"
-msgstr "Insättning för '%s' misslyckades"
-
-#: ../lib/WikiPlugin.php:275
-#, c-format
-msgid "%s: no such class"
-msgstr ""
-
-#: ../lib/WikiPlugin.php:281
-#, c-format
-msgid "%s: not a subclass of WikiPlugin"
-msgstr ""
-
-#: ../lib/WikiUser.php:109
-msgid "Invalid password or userid."
-msgstr ""
-
-#: ../lib/WikiUser.php:111
-msgid "Insufficient permissions."
-msgstr ""
-
-#: ../lib/XmlElement.php:199 ../lib/stdlib.php:548
-#, c-format
-msgid "Can't mix '%s' with '%s' type format strings"
-msgstr ""
-
-#: ../lib/XmlElement.php:207 ../lib/stdlib.php:557
-#, c-format
-msgid "%s: argument index out of range"
-msgstr ""
 
 #: ../lib/config.php:283
 msgid "An unnamed PhpWiki"
@@ -473,6 +148,16 @@ msgstr "Visa Källkoden: %s"
 msgid "Edit: %s"
 msgstr "Redigera: %s"
 
+#: ../lib/ErrorManager.php:167
+#, c-format
+msgid "%s: error while handling error:"
+msgstr ""
+
+#: ../lib/FileFinder.php:82
+#, c-format
+msgid "%s: file not found"
+msgstr ""
+
 #: ../lib/loadsave.php:19
 msgid "Complete."
 msgstr ""
@@ -548,89 +233,141 @@ msgstr "version %d"
 msgid "MIME file %s"
 msgstr ""
 
-#: ../lib/loadsave.php:338
+#: ../lib/loadsave.php:339
 #, c-format
 msgid "Serialized file %s"
 msgstr ""
 
-#: ../lib/loadsave.php:353
+#: ../lib/loadsave.php:354
 #, c-format
 msgid "plain file %s"
 msgstr ""
 
-#: ../lib/loadsave.php:367 ../lib/loadsave.php:387
+#: ../lib/loadsave.php:369 ../lib/loadsave.php:389
 msgid "Skipping"
 msgstr ""
 
-#: ../lib/loadsave.php:519
+#: ../lib/loadsave.php:437
 #, c-format
 msgid "Bad file type: %s"
 msgstr ""
 
-#: ../lib/loadsave.php:533
+#: ../lib/loadsave.php:451
 #, c-format
 msgid "Loading '%s'"
 msgstr ""
 
-#: ../lib/loadsave.php:554
+#: ../lib/loadsave.php:472
 msgid "The PhpWiki programming team"
 msgstr ""
 
-#: ../lib/loadsave.php:557
+#: ../lib/loadsave.php:475
 msgid "Loading up virgin wiki"
 msgstr ""
 
-#: ../lib/loadsave.php:575
+#: ../lib/loadsave.php:492
 msgid "No uploaded file to upload?"
 msgstr ""
 
-#: ../lib/loadsave.php:578
+#: ../lib/loadsave.php:496
 #, c-format
 msgid "Uploading %s"
 msgstr ""
 
-#: ../lib/main.php:217
+#: ../lib/RSSWriter091.php:115 ../lib/loadsave.php:501
+#: ../lib/plugin/RecentChanges.php:166 ../lib/plugin/RecentChanges.php:273
+#: ../lib/plugin/RecentChanges.php:318
+#: ../themes/Portland/templates/navbar.tmpl:40
+#: ../themes/default/templates/navbar.tmpl:13
+msgid "RecentChanges"
+msgstr "SenasteÄndringar"
+
+#: ../lib/main.php:221
 #, c-format
 msgid "Action %s is disallowed on this wiki"
 msgstr ""
 
-#: ../lib/main.php:220
+#: ../lib/main.php:224
 #, c-format
 msgid "You must sign in to %s this wiki"
 msgstr ""
 
-#: ../lib/main.php:222
+#: ../lib/main.php:226
 #, c-format
 msgid "You must log in to %s this wiki"
 msgstr ""
 
-#: ../lib/main.php:224
+#: ../lib/main.php:228
 #, c-format
 msgid "You must be an administrator to %s this wiki"
 msgstr ""
 
-#: ../lib/main.php:265 ../lib/main.php:335 ../lib/plugin/RecentChanges.php:256
+#: ../lib/main.php:269 ../lib/main.php:339 ../lib/plugin/RecentChanges.php:256
 msgid "HomePage"
 msgstr "Framsida"
 
-#: ../lib/main.php:282
+#: ../lib/main.php:286
 #, c-format
 msgid "%s: Bad action"
 msgstr ""
 
-#: ../lib/main.php:306
+#: ../lib/main.php:310
 #, fuzzy
 msgid "Fatal PhpWiki Error"
 msgstr "WikiFatalError"
 
-#: ../lib/main.php:367 ../lib/plugin/FullTextSearch.php:12
+#: ../lib/main.php:371 ../lib/plugin/FullTextSearch.php:12
 msgid "FullTextSearch"
 msgstr "Fulltextsökning"
 
-#: ../lib/main.php:370 ../lib/plugin/RecentChanges.php:264
+#: ../lib/main.php:374 ../lib/plugin/RecentChanges.php:264
 #: ../lib/plugin/TitleSearch.php:13
 msgid "TitleSearch"
 msgstr "Titelsökningen"
+
+#: ../lib/PageList.php:106
+msgid "Page Name"
+msgstr "Namn på Sidan"
+
+#: ../lib/PageList.php:121 ../lib/plugin/FullTextSearch.php:51
+msgid "<no matches>"
+msgstr ""
+
+#: ../lib/PageList.php:210
+#, fuzzy
+msgid "Last Modified"
+msgstr "senast ändrad %s"
+
+#: ../lib/PageList.php:212
+msgid "Hits"
+msgstr "antal träffar"
+
+#: ../lib/PageList.php:214
+msgid "Last Summary"
+msgstr ""
+
+#: ../lib/PageList.php:216
+#, fuzzy
+msgid "Last Author"
+msgstr "Göregående Författare"
+
+#: ../lib/PageList.php:218
+#, fuzzy
+msgid "Locked"
+msgstr "Lås Sida"
+
+#: ../lib/PageList.php:218
+#, fuzzy
+msgid "locked"
+msgstr "Sidan är låst"
+
+#: ../lib/PageList.php:221
+msgid "Minor Edit"
+msgstr ""
+
+#: ../lib/PageList.php:221
+msgid "minor"
+msgstr ""
 
 #: ../lib/plugin/AllPages.php:12
 msgid "AllPages"
@@ -643,6 +380,28 @@ msgstr ""
 #: ../lib/plugin/AllPages.php:38
 #, c-format
 msgid "Pages in this wiki (%d total):"
+msgstr ""
+
+#: ../lib/plugin/_BackendInfo.php:10
+#: ../themes/MacOSX/templates/actionbar.tmpl:18
+#: ../themes/Portland/templates/navbar.tmpl:12
+#: ../themes/default/templates/actionbar.tmpl:18
+msgid "DebugInfo"
+msgstr ""
+
+#: ../lib/plugin/_BackendInfo.php:14
+#, c-format
+msgid "Get debugging information for %s."
+msgstr ""
+
+#: ../lib/plugin/_BackendInfo.php:30
+#, c-format
+msgid "Querying backend directly for '%s'"
+msgstr ""
+
+#: ../lib/plugin/_BackendInfo.php:38
+#, c-format
+msgid "No pagedata for %s"
 msgstr ""
 
 #: ../lib/plugin/BackLinks.php:16
@@ -884,38 +643,6 @@ msgstr ""
 msgid "%s days"
 msgstr ""
 
-#: ../lib/plugin/TitleSearch.php:54
-#, c-format
-msgid "Title search results for '%s'"
-msgstr "Sökresultat för titelsökningen för '%s'"
-
-#: ../lib/plugin/UserPreferences.php:10
-#: ../themes/Portland/templates/editpage.tmpl:82
-msgid "UserPreferences"
-msgstr ""
-
-#: ../lib/plugin/_BackendInfo.php:10
-#: ../themes/MacOSX/templates/actionbar.tmpl:18
-#: ../themes/Portland/templates/navbar.tmpl:12
-#: ../themes/default/templates/actionbar.tmpl:18
-msgid "DebugInfo"
-msgstr ""
-
-#: ../lib/plugin/_BackendInfo.php:14
-#, c-format
-msgid "Get debugging information for %s."
-msgstr ""
-
-#: ../lib/plugin/_BackendInfo.php:30
-#, c-format
-msgid "Querying backend directly for '%s'"
-msgstr ""
-
-#: ../lib/plugin/_BackendInfo.php:38
-#, c-format
-msgid "No pagedata for %s"
-msgstr ""
-
 #: ../lib/plugin/text2png.php:37
 msgid "Sorry, this version of PHP cannot create PNG image files."
 msgstr ""
@@ -939,6 +666,16 @@ msgstr ""
 #: ../lib/plugin/text2png.php:145
 #, c-format
 msgid "Image loaded from cache file: %s"
+msgstr ""
+
+#: ../lib/plugin/TitleSearch.php:54
+#, c-format
+msgid "Title search results for '%s'"
+msgstr "Sökresultat för titelsökningen för '%s'"
+
+#: ../lib/plugin/UserPreferences.php:10
+#: ../themes/Portland/templates/editpage.tmpl:82
+msgid "UserPreferences"
 msgstr ""
 
 #: ../lib/plugin/walkabout.php:33
@@ -1123,84 +860,100 @@ msgstr "Ledsen.  Version %d för %s finns inte i databasen"
 msgid "Bad Version"
 msgstr "version %s"
 
+#: ../lib/XmlElement.php:199 ../lib/stdlib.php:548
+#, c-format
+msgid "Can't mix '%s' with '%s' type format strings"
+msgstr ""
+
+#: ../lib/stdlib.php:557
+#, c-format
+msgid "%s: argument index out of range"
+msgstr ""
+
+#: ../lib/Template.php:142
+#, c-format
+msgid "%4d  %s\n"
+msgstr ""
+
 #: ../lib/transform.php:107
 msgid "Lists nested too deep in SetHTMLOutputMode"
 msgstr "Stackgräns överskriden i SetHTMLOutputMode"
 
-#: ../lib/ziplib.php:186
+#: ../lib/WikiDB.php:501
+#, c-format
+msgid "%s: Date of new revision is %s"
+msgstr ""
+
+#: ../lib/WikiDB.php:528
+#, c-format
+msgid "Optimizing %s"
+msgstr ""
+
+#: ../lib/WikiDB.php:874
+#, c-format
+msgid "Describe %s here."
+msgstr "Beskriv %s här."
+
+#: ../lib/WikiDB.php:909
+#, c-format
+msgid "Acck! Revision %s of %s seems to have been deleted!"
+msgstr ""
+
+#: ../lib/WikiDB/backend/dba.php:23 ../lib/WikiDB/backend/dba.php:25
+#, c-format
+msgid "%s: Can't open dba database"
+msgstr ""
+
+#: ../lib/WikiDB/dba.php:17
+#, c-format
+msgid ""
+"DBA files are in the %s directory. Please read the INSTALL file and move the "
+"DB file to a permanent location or risk losing all the pages!"
+msgstr ""
+
+#: ../lib/WikiPlugin.php:64
+#, c-format
+msgid "argument '%s' not declared by plugin"
+msgstr ""
+
+#: ../lib/WikiPlugin.php:121
+#, c-format
+msgid "trailing cruft in plugin args: '%s'"
+msgstr ""
+
+#: ../lib/WikiPlugin.php:279
+#, c-format
+msgid "Include of '%s' failed"
+msgstr "Insättning för '%s' misslyckades"
+
+#: ../lib/WikiUser.php:109
+msgid "Invalid password or userid."
+msgstr ""
+
+#: ../lib/WikiUser.php:111
+msgid "Insufficient permissions."
+msgstr ""
+
+#: ../lib/ziplib.php:185
 msgid "Can't inflate data: zlib support not enabled in this PHP"
 msgstr ""
 
-#: ../lib/ziplib.php:369
+#: ../lib/ziplib.php:368
 #, c-format
 msgid "Can't open zip file '%s' for reading"
 msgstr ""
 
-#: ../lib/ziplib.php:376
+#: ../lib/ziplib.php:375
 msgid "Unexpected EOF in zip file"
 msgstr ""
 
-#: ../lib/ziplib.php:401
-#, c-format
-msgid "Bad header type: %s"
-msgstr ""
-
-#: ../lib/ziplib.php:405
-msgid "Encryption and/or zip patches not supported."
-msgstr ""
-
-#: ../lib/ziplib.php:408
-msgid "Postponed CRC not yet supported."
-msgstr ""
-
-#: ../lib/ziplib.php:427
-#, c-format
-msgid "Compression method %s unsupported"
-msgstr ""
-
-#: ../lib/ziplib.php:431
-msgid "Uncompressed size mismatch"
-msgstr ""
-
-#: ../lib/ziplib.php:638
+#: ../lib/ziplib.php:637
 #, c-format
 msgid "[%d] See [%s]"
 msgstr ""
 
-#: ../lib/ziplib.php:646
+#: ../lib/ziplib.php:645
 msgid "References"
-msgstr ""
-
-#: ../lib/ziplib.php:668
-#, c-format
-msgid "Can't parse %s: (%s)"
-msgstr ""
-
-#: ../lib/ziplib.php:725
-#, c-format
-msgid "Unknown %s"
-msgstr ""
-
-#: ../themes/Hawaiian/lib/random.php:20 ../themes/Hawaiian/lib/random.php:90
-#, c-format
-msgid "%s is empty."
-msgstr ""
-
-#: ../themes/Hawaiian/lib/random.php:97
-#, c-format
-msgid "Unable to open directory '%s' for reading"
-msgstr ""
-
-#: ../themes/Hawaiian/themeinfo.php:18 ../themes/MacOSX/themeinfo.php:89
-#: ../themes/Portland/themeinfo.php:35 ../themes/WikiTrek/themeinfo.php:37
-#: ../themes/default/themeinfo.php:17
-msgid "Printer"
-msgstr ""
-
-#: ../themes/Hawaiian/themeinfo.php:19 ../themes/MacOSX/themeinfo.php:90
-#: ../themes/Portland/themeinfo.php:36 ../themes/WikiTrek/themeinfo.php:38
-#: ../themes/default/themeinfo.php:18
-msgid "Modern"
 msgstr ""
 
 #: ../themes/MacOSX/templates/actionbar.tmpl:8
@@ -1215,37 +968,17 @@ msgstr ""
 msgid "View Source"
 msgstr "Visa Källkoden"
 
-#: ../themes/MacOSX/templates/actionbar.tmpl:58
-#: ../themes/default/templates/signin.tmpl:24
+#: ../themes/default/templates/browse.tmpl:7
+#: ../themes/default/templates/viewsource.tmpl:6
 #, c-format
-msgid "You are signed in as %s"
-msgstr ""
+msgid "Last edited on %s."
+msgstr "Senast ändrad %s."
 
-#: ../themes/MacOSX/themeinfo.php:121
-#, fuzzy
-msgid "Page Locked"
-msgstr "Sidan är låst"
-
-#: ../themes/Portland/templates/actionbar.tmpl:8
-msgid "EditText"
-msgstr "RedigeraText"
-
-#: ../themes/Portland/templates/actionbar.tmpl:11
+#: ../themes/default/templates/browse.tmpl:9
+#: ../themes/default/templates/viewsource.tmpl:8
 #, c-format
-msgid "%s of this page"
-msgstr "%s för den här sidan"
-
-#: ../themes/Portland/templates/actionbar.tmpl:17
-#: ../themes/Portland/templates/viewsource.tmpl:24
-#, c-format
-msgid "(last edited %s)"
-msgstr "(senast ändrad %s)"
-
-#: ../themes/Portland/templates/actionbar.tmpl:19
-#: ../themes/Portland/templates/viewsource.tmpl:26
-#, c-format
-msgid "(version %s, saved on %s)"
-msgstr "(version %s, sparade %s)"
+msgid "Version %s, saved on %s."
+msgstr "Version %s, sparade %s"
 
 #: ../themes/Portland/templates/browse.tmpl:9
 #: ../themes/Portland/templates/viewsource.tmpl:3
@@ -1278,6 +1011,20 @@ msgstr ""
 msgid "Save"
 msgstr "Spara"
 
+#: ../themes/default/templates/editpage.tmpl:35
+msgid "Adjust"
+msgstr ""
+
+#: ../themes/Portland/templates/editpage.tmpl:79
+#: ../themes/default/templates/editpage.tmpl:38
+msgid "GoodStyle"
+msgstr "BraStil"
+
+#: ../themes/Portland/templates/editpage.tmpl:51
+#: ../themes/default/templates/editpage.tmpl:44
+msgid "Preview only!  Changes not saved."
+msgstr ""
+
 #: ../themes/Portland/templates/editpage.tmpl:47
 #: ../themes/default/templates/editpage.tmpl:49
 msgid "Warning: You are editing an old revision."
@@ -1288,14 +1035,25 @@ msgstr ""
 msgid "Saving this page will overwrite the current version."
 msgstr ""
 
-#: ../themes/Portland/templates/editpage.tmpl:51
-#: ../themes/default/templates/editpage.tmpl:44
-msgid "Preview only!  Changes not saved."
+#: ../themes/default/templates/editpage.tmpl:71
+msgid "Edit Area Size:"
+msgstr ""
+
+#: ../themes/default/templates/editpage.tmpl:71
+msgid "H"
+msgstr ""
+
+#: ../themes/default/templates/editpage.tmpl:73
+msgid "W"
 msgstr ""
 
 #: ../themes/Portland/templates/editpage.tmpl:68
 #: ../themes/default/templates/editpage.tmpl:85
 msgid "Summary:"
+msgstr ""
+
+#: ../themes/default/templates/editpage.tmpl:91
+msgid "This is a minor change."
 msgstr ""
 
 #: ../themes/Portland/templates/editpage.tmpl:70
@@ -1304,27 +1062,11 @@ msgstr ""
 msgid "Author will be logged as %s."
 msgstr ""
 
-#: ../themes/Portland/templates/editpage.tmpl:73
-#, c-format
-msgid ""
-"I'm just doing minor edits. Please divert the usual logging to %s instead."
-msgstr ""
-
 #: ../themes/Portland/templates/editpage.tmpl:78
 #: ../themes/default/templates/editpage.tmpl:107
 #, c-format
 msgid "See %s tips for editing."
 msgstr "%s: Redigeringstips."
-
-#: ../themes/Portland/templates/editpage.tmpl:79
-#: ../themes/default/templates/editpage.tmpl:38
-msgid "GoodStyle"
-msgstr "BraStil"
-
-#: ../themes/Portland/templates/editpage.tmpl:81
-#, c-format
-msgid "You can change the size of the editing area in %s."
-msgstr ""
 
 #: ../themes/Portland/templates/editpage.tmpl:86
 #: ../themes/default/templates/editpage.tmpl:112
@@ -1344,43 +1086,6 @@ msgstr "SökEfterSida"
 #: ../themes/Portland/templates/navbar.tmpl:42
 #: ../themes/default/templates/navbar.tmpl:25
 msgid "PhpWikiAdministration"
-msgstr ""
-
-#: ../themes/Portland/templates/viewsource.tmpl:4
-#: ../themes/default/templates/viewsource.tmpl:14
-msgid "This page has been locked by the administrator and cannot be edited."
-msgstr "Den här sidan är låst av administratören och kan ej redigeras."
-
-#: ../themes/default/templates/browse.tmpl:7
-#: ../themes/default/templates/viewsource.tmpl:6
-#, c-format
-msgid "Last edited on %s."
-msgstr "Senast ändrad %s."
-
-#: ../themes/default/templates/browse.tmpl:9
-#: ../themes/default/templates/viewsource.tmpl:8
-#, c-format
-msgid "Version %s, saved on %s."
-msgstr "Version %s, sparade %s"
-
-#: ../themes/default/templates/editpage.tmpl:35
-msgid "Adjust"
-msgstr ""
-
-#: ../themes/default/templates/editpage.tmpl:71
-msgid "Edit Area Size:"
-msgstr ""
-
-#: ../themes/default/templates/editpage.tmpl:71
-msgid "H"
-msgstr ""
-
-#: ../themes/default/templates/editpage.tmpl:73
-msgid "W"
-msgstr ""
-
-#: ../themes/default/templates/editpage.tmpl:91
-msgid "This is a minor change."
 msgstr ""
 
 #: ../themes/default/templates/nochanges.tmpl:4
@@ -1405,6 +1110,16 @@ msgstr "Din omstänksamhet för detaljer är mycket uppskattad."
 msgid "Warning!"
 msgstr ""
 
+#: ../themes/MacOSX/templates/actionbar.tmpl:58
+#: ../themes/default/templates/signin.tmpl:24
+#, c-format
+msgid "You are signed in as %s"
+msgstr ""
+
+#: ../themes/default/templates/signin.tmpl:44
+msgid "Enter your UserId to sign in"
+msgstr ""
+
 #: ../themes/default/templates/userprefs.tmpl:9
 msgid "Height"
 msgstr ""
@@ -1416,6 +1131,87 @@ msgstr ""
 #: ../themes/default/templates/userprefs.tmpl:25
 msgid "Update Preferences"
 msgstr ""
+
+#: ../themes/Portland/templates/viewsource.tmpl:4
+#: ../themes/default/templates/viewsource.tmpl:14
+msgid "This page has been locked by the administrator and cannot be edited."
+msgstr "Den här sidan är låst av administratören och kan ej redigeras."
+
+#: ../themes/Hawaiian/themeinfo.php:18 ../themes/MacOSX/themeinfo.php:89
+#: ../themes/Portland/themeinfo.php:35 ../themes/WikiTrek/themeinfo.php:37
+#: ../themes/default/themeinfo.php:17
+msgid "Printer"
+msgstr ""
+
+#: ../themes/Hawaiian/themeinfo.php:19 ../themes/MacOSX/themeinfo.php:90
+#: ../themes/Portland/themeinfo.php:36 ../themes/WikiTrek/themeinfo.php:38
+#: ../themes/default/themeinfo.php:18
+msgid "Modern"
+msgstr ""
+
+#: ../themes/Hawaiian/lib/random.php:20 ../themes/Hawaiian/lib/random.php:90
+#, c-format
+msgid "%s is empty."
+msgstr ""
+
+#: ../themes/Hawaiian/lib/random.php:97
+#, c-format
+msgid "Unable to open directory '%s' for reading"
+msgstr ""
+
+#: ../themes/MacOSX/themeinfo.php:121
+#, fuzzy
+msgid "Page Locked"
+msgstr "Sidan är låst"
+
+#: ../themes/Portland/templates/actionbar.tmpl:8
+msgid "EditText"
+msgstr "RedigeraText"
+
+#: ../themes/Portland/templates/actionbar.tmpl:11
+#, c-format
+msgid "%s of this page"
+msgstr "%s för den här sidan"
+
+#: ../themes/Portland/templates/actionbar.tmpl:17
+#: ../themes/Portland/templates/viewsource.tmpl:24
+#, c-format
+msgid "(last edited %s)"
+msgstr "(senast ändrad %s)"
+
+#: ../themes/Portland/templates/actionbar.tmpl:19
+#: ../themes/Portland/templates/viewsource.tmpl:26
+#, c-format
+msgid "(version %s, saved on %s)"
+msgstr "(version %s, sparade %s)"
+
+#: ../themes/Portland/templates/editpage.tmpl:73
+#, c-format
+msgid ""
+"I'm just doing minor edits. Please divert the usual logging to %s instead."
+msgstr ""
+
+#: ../themes/Portland/templates/editpage.tmpl:81
+#, c-format
+msgid "You can change the size of the editing area in %s."
+msgstr ""
+
+#~ msgid "Not Implemented"
+#~ msgstr "Funktionen är ännu inte implementerad."
+
+#, fuzzy
+#~ msgid "returning old version"
+#~ msgstr "Arkiverad version"
+
+#~ msgid "Copying from [%s] to [%s]"
+#~ msgstr "Kopia från [%s] är [%s]"
+
+#~ msgid "Copied to [%s]"
+#~ msgstr "Kopia är [%s]"
+
+#, fuzzy
+#~ msgid "Can't connect to database: %s"
+#~ msgstr "Ger upp, kan ej skapa anslutning till databasen: %s"
 
 #~ msgid "Page source for %s"
 #~ msgstr "Visa källkoden för %s"
