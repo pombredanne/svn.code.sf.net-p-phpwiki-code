@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: GoTo.php,v 1.3 2004-04-18 01:11:52 rurban Exp $');
+rcs_id('$Id: GoTo.php,v 1.4 2004-07-08 20:30:07 rurban Exp $');
 
 /**
  *  Display a form with text entry box and 'Go' button.
@@ -26,7 +26,7 @@ extends WikiPlugin
         return array('size' => 32);
     }
 
-    function run($dbi, $argstr, $request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage) {
         $request->setArg('action',false);
         $args = $this->getArgs($argstr, $request);
         extract($args);
@@ -66,6 +66,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/04/18 01:11:52  rurban
+// more numeric pagename fixes.
+// fixed action=upload with merge conflict warnings.
+// charset changed from constant to global (dynamic utf-8 switching)
+//
 // Revision 1.2  2004/04/12 16:21:01  rurban
 // fix lib/plugin/RssFeed.php:81: Notice[8]: Undefined variable: th
 //

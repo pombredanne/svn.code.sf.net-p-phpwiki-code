@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.47 2004-06-17 11:50:19 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.48 2004-07-08 20:30:07 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,12 +87,13 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.47 $");
+        //                    "\$Revision: 1.48 $");
     }
 
     function getArgs($argstr, $request=false, $defaults = false) {
-        if ($defaults === false)
+        if ($defaults === false) {
             $defaults = $this->getDefaultArguments();
+        }
         //Fixme: on POST argstr is empty
         list ($argstr_args, $argstr_defaults) = $this->parseArgStr($argstr);
         $args = array();
@@ -106,9 +107,11 @@ class WikiPlugin
                 $args[$arg] = (string) $argstr_defaults[$arg];
             else
                 $args[$arg] = $default_val;
-
-            if ($request)
+                
+            // only expand given args
+            if ($request and !empty($argstr)) {
                 $args[$arg] = $this->expandArg($args[$arg], $request);
+            }
 
             unset($argstr_args[$arg]);
             unset($argstr_defaults[$arg]);
@@ -151,7 +154,8 @@ class WikiPlugin
 
         $args = array();
         $defaults = array();
-
+	    if (empty($argstr))
+            return array($args,$defaults);
         while (preg_match("/^$opt_ws $argspec_p $opt_ws/x", $argstr, $m)) {
             @ list(,$arg,$op,$qq_val,$q_val,$gt_val,$word_val) = $m;
             $argstr = substr($argstr, strlen($m[0]));

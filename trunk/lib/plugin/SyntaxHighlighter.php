@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SyntaxHighlighter.php,v 1.6 2004-06-29 18:47:40 rurban Exp $');
+rcs_id('$Id: SyntaxHighlighter.php,v 1.7 2004-07-08 20:30:07 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -75,7 +75,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
     function getDefaultArguments() {
         return array(
@@ -147,7 +147,7 @@ extends WikiPlugin
          return $output;
     }
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
         $source =& $this->source;
         if (empty($syntax)) return $this->error(_("Syntax language not specified."));
@@ -183,6 +183,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/06/29 18:47:40  rurban
+// use predefined constants, and added sf.net defaults
+//
 // Revision 1.5  2004/06/14 11:31:39  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList

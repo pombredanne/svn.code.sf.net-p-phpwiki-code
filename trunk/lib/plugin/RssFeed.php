@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RssFeed.php,v 1.7 2004-06-08 21:03:20 rurban Exp $');
+rcs_id('$Id: RssFeed.php,v 1.8 2004-07-08 20:30:07 rurban Exp $');
 /*
  Copyright 2003 Arnaud Fontaine
 
@@ -39,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     // Establish default values for each of this plugin's arguments.
@@ -52,7 +52,7 @@ extends WikiPlugin
                      );
    }
 
-    function run($dbi, $argstr, $request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
 
         $rss_parser = new RSSParser();
@@ -116,6 +116,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/06/08 21:03:20  rurban
+// updated RssParser for XmlParser quirks (store parser object params in globals)
+//
 // Revision 1.6  2004/05/24 17:36:06  rurban
 // new interface
 //

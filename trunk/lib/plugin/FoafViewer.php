@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: FoafViewer.php,v 1.3 2004-06-16 10:38:59 rurban Exp $');
+rcs_id('$Id: FoafViewer.php,v 1.4 2004-07-08 20:30:07 rurban Exp $');
 
 //ini_set('include_path','.;C:/php/pear');
 
@@ -58,7 +58,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -68,7 +68,7 @@ extends WikiPlugin
                       );
     }
                 
-    function run($dbi, $argstr, $request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage) {
 
         /* ignore fatal on loading */
         /*
@@ -218,6 +218,15 @@ extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/06/16 10:38:59  rurban
+// Disallow refernces in calls if the declaration is a reference
+// ("allow_call_time_pass_reference clean").
+//   PhpWiki is now allow_call_time_pass_reference = Off clean,
+//   but several external libraries may not.
+//   In detail these libs look to be affected (not tested):
+//   * Pear_DB odbc
+//   * adodb oracle
+//
 // Revision 1.2  2004/06/13 13:54:25  rurban
 // Catch fatals on the four dump calls (as file and zip, as html and mimified)
 // FoafViewer: Check against external requirements, instead of fatal.

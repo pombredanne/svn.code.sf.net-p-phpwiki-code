@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PhotoAlbum.php,v 1.8 2004-06-01 15:28:01 rurban Exp $');
+rcs_id('$Id: PhotoAlbum.php,v 1.9 2004-07-08 20:30:07 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
  
@@ -152,7 +152,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
@@ -178,7 +178,7 @@ extends WikiPlugin
     // 'sort' sorts alphabetically, 'nowrap' for cells, 'alt' to use
     // descriptions (instead of filenames) for image alt-tags
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
 
         $attributes = $attrib ? explode(",", $attrib) : array();
@@ -502,6 +502,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/06/01 15:28:01  rurban
+// AdminUser only ADMIN_USER not member of Administrators
+// some RateIt improvements by dfrankow
+// edit_toolbar buttons
+//
 // Revision 1.7  2004/05/03 20:44:55  rurban
 // fixed gettext strings
 // new SqlResult plugin
