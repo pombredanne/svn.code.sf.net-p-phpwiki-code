@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiUser.php,v 1.22 2002-09-09 08:38:19 rurban Exp $');
+<?php rcs_id('$Id: WikiUser.php,v 1.23 2002-09-12 17:05:27 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -313,9 +313,9 @@ class WikiUser {
     // how to store metadata in not existing pages? how about versions?
     function homePage() {
         if (!$this->_userid) return false;
-        if ($this->_homepage) 
+        if (!empty($this->_homepage)) {
             return $this->_homepage;
-        else {
+        } else {
             $this->_homepage = $this->_dbi->getPage($this->_userid);
             return $this->_homepage;
         }
