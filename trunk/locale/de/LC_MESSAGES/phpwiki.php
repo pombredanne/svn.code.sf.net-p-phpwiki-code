@@ -630,6 +630,8 @@ $locale["Sign In"] =
    "Anmelden";
 $locale["Sign Out"] =
    "Abmelden";
+$locale["Sign in:"] =
+   "Anmelden:";
 $locale["Simple Sample Plugin"] =
    "Einfaches Zusatzprogramm Beispiel";
 $locale["Since you started the deletion process, someone has saved a new version of %s.  Please check to make sure you still want to permanently remove the page from the database."] =
