@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiBlog.php,v 1.4 2003-01-11 22:23:00 carstenklapp Exp $');
+rcs_id('$Id: WikiBlog.php,v 1.5 2003-02-16 19:47:17 dairiki Exp $');
 /**
  * Author: MichaelVanDam
  */
@@ -54,7 +54,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     // Arguments:
@@ -196,6 +196,8 @@ extends WikiPlugin
                                      ExtractWikiPageLinks($body));
 
             // FIXME: Detect if !$pr ??  How to handle errors?
+
+            $dbi->touch();
 
             // Save was successful.  Unset all the arguments and
             // redirect to page that user was viewing before.
@@ -386,6 +388,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2003/01/11 22:23:00  carstenklapp
+// More refactoring to use templated output. Use page meta "summary" field.
+//
 // Revision 1.3  2003/01/06 02:29:02  carstenklapp
 // New: use blog.tmpl template to format output. Some cosmetic
 // issues, it mostly works but code still needs cleanup. Added

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.75 2003-02-15 03:04:30 dairiki Exp $');
+rcs_id('$Id: loadsave.php,v 1.76 2003-02-16 19:47:17 dairiki Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -459,7 +459,7 @@ function SavePage (&$request, $pageinfo, $source, $filename)
         $new = $page->createRevision(WIKIDB_FORCE_CREATE, $content,
                                      $versiondata,
                                      ExtractWikiPageLinks($content));
-
+        $dbi->touch();
         $mesg->pushContent(' ', fmt("- saved to database as version %d",
                                     $new->getVersion()));
     }
@@ -832,6 +832,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.75  2003/02/15 03:04:30  dairiki
+ Fix for WikiUser constructor API change.
+
  Revision 1.74  2003/02/15 02:18:04  dairiki
  When default language was English (at least), pgsrc was being
  loaded twice.

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.5 2003-01-18 22:14:28 carstenklapp Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.6 2003-02-16 19:47:17 dairiki Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -46,7 +46,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
@@ -109,6 +109,7 @@ extends WikiPlugin
                 $dbi->deletePage($name);
                 $ul->pushContent(HTML::li(fmt("Removed page '%s' succesfully.", $name)));
             }
+            $dbi->touch();
         } else {
             // List all pages to select from.
             $this->collectPages($this->_list, &$dbi);
@@ -147,6 +148,11 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2003/01/18 22:14:28  carstenklapp
+// Code cleanup:
+// Reformatting & tabs to spaces;
+// Added copyleft, getVersion, getDescription, rcs_id.
+//
 
 // Local Variables:
 // mode: php
