@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RatingsDb.php,v 1.6 2004-07-08 19:04:45 rurban Exp $');
+rcs_id('$Id: RatingsDb.php,v 1.7 2004-07-08 19:14:57 rurban Exp $');
 
 /*
  * @author:  Dan Frankowski (wikilens author), Reini Urban (as plugin)
@@ -537,8 +537,8 @@ class RatingsDb extends WikiDB {
     }
 
     function metadata_get_rating($userid, $pagename, $dimension) {
-    	if (!$pagename)
-            return false;
+    	if (!$pagename) return false;
+        $page = $this->_dbi->getPage($pagename);
         $data = $page->get('rating');
         if (!empty($data[$dimension][$userid]))
             return (float)$data[$dimension][$userid];
@@ -547,6 +547,7 @@ class RatingsDb extends WikiDB {
     }
 
     function metadata_set_rating($userid, $pagename, $dimension, $rating = -1) {
+    	if (!$pagename) return false;
     	$page = $this->_dbi->getPage($pagename);
         $data = $page->get('rating');
         if ($rating == -1)
@@ -687,6 +688,9 @@ extends WikiDB_backend_PearDB {
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/07/08 19:04:45  rurban
+// more unittest fixes (file backend, metadata RatingsDb)
+//
 // Revision 1.5  2004/07/08 13:50:33  rurban
 // various unit test fixes: print error backtrace on _DEBUG_TRACE; allusers fix; new PHPWIKI_NOMAIN constant for omitting the mainloop
 //
