@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.18 2004-02-08 06:42:58 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.19 2004-02-26 01:27:58 rurban Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -53,7 +53,7 @@ class ErrorManager
      *
      * The default value of the postpone mask is zero (no errors postponed.)
      *
-     * When you set this mask, any queue errors which do not match tne new
+     * When you set this mask, any queue errors which do not match the new
      * mask are reported.
      *
      * @access public
