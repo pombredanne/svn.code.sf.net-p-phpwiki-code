@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SqlResult.php,v 1.6 2005-02-27 12:24:25 rurban Exp $');
+rcs_id('$Id: SqlResult.php,v 1.7 2005-02-27 12:37:14 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
@@ -24,7 +24,7 @@ rcs_id('$Id: SqlResult.php,v 1.6 2005-02-27 12:24:25 rurban Exp $');
  * This plugin displays results of arbitrary SQL select statements 
  * in table form.
  * The database definition, the DSN, must be defined in the local file 
- * lib/plugin/SqlResult.ini
+ * config/SqlResult.ini
  *   A simple textfile with alias = dsn lines.
  *
  * Optional template file to format the result and handle some logic.
@@ -73,7 +73,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
@@ -139,13 +139,14 @@ extends WikiPlugin
                                         $alias));
         // adodb or pear? adodb as default, since we distribute per default it. 
         // for pear there may be overrides.
+        // TODO: native PDO support (for now we use ADODB)
         if ($DBParams['dbtype'] == 'SQL') {
             $dbh = DB::connect($inidsn);
             $all = $dbh->getAll($sql);
             if (DB::isError($all)) {
             	return $this->error($all->getMessage(). ' ' . $all->userinfo);
             }
-        } else {
+        } else { // unless PearDB use the included ADODB, regardless if dba, file or PDO, ...
             if ($DBParams['dbtype'] != 'ADODB') {
                 // require_once('lib/WikiDB/adodb/adodb-errorhandler.inc.php');
                 require_once('lib/WikiDB/adodb/adodb.inc.php');
@@ -220,6 +221,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2005/02/27 12:24:25  rurban
+// prevent SqlResult.ini from being imported
+//
 // Revision 1.5  2004/09/24 18:50:46  rurban
 // fix paging of SqlResult
 //
