@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Transclude.php,v 1.4 2003-01-18 22:08:01 carstenklapp Exp $');
+rcs_id('$Id: Transclude.php,v 1.5 2003-02-24 14:34:44 carstenklapp Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -57,7 +57,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -85,7 +85,8 @@ extends WikiPlugin
             return $this->error(_("Bad url in src: remove all of <, >, \""));
         }
 
-        $params = array('src' => $src,
+        $params = array('title' => _("Transcluded page"),
+                        'src' => $src,
                         'width' => "100%",
                         'height' => $height,
                         'marginwidth' => 0,
@@ -93,11 +94,7 @@ extends WikiPlugin
                         'class' => 'transclude',
                         "onload" => "adjust_iframe_height(this);");
 
-        $noframe_msg[]
-            = _("Cannot transclude document since your browser does not support <iframe>s.)");
-        $noframe_msg[] = '  ';
-        $noframe_msg[] = fmt("Click %s to view the transcluded page",
-                             HTML::a(array('href' => $src), _("here")));
+        $noframe_msg[] = HTML::a(array('href' => $src), $src);
 
         $noframe_msg = HTML::div(array('class' => 'transclusion'),
                                  HTML::p(array(), $noframe_msg));
@@ -156,6 +153,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2003/01/18 22:08:01  carstenklapp
+// Code cleanup:
+// Reformatting & tabs to spaces;
+// Added copyleft, getVersion, getDescription, rcs_id.
+//
 
 // (c-file-style: "gnu")
 // Local Variables:
