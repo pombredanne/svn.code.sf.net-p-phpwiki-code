@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.234 2005-02-03 05:09:25 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.235 2005-02-04 11:54:48 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -592,9 +592,9 @@ class WikiPageName
                 if (isset($map->_map[$moniker])) {
                     $url = $map->_map[$moniker];
                     if (strstr($url, '%s'))
-                        $url = sprintf($url, $name);
+                        $url = sprintf($url, $this->shortName);
                     else
-                        $url .= $name;
+                        $url .= $this->shortName;
                     // expand Talk or User, but not to absolute urls!
                     if (strstr($url, '//')) {
                         if ($moniker == 'Talk')
@@ -1942,6 +1942,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.234  2005/02/03 05:09:25  rurban
+// Talk: + User: fix
+//
 // Revision 1.233  2005/02/02 20:40:12  rurban
 // fix Talk: and User: names and links
 //
