@@ -1,9 +1,9 @@
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
-X-RCS_ID: $Id: DebugInfo,v 1.2 2002-01-09 05:30:59 carstenklapp Exp $
+X-RCS_ID: "$Id: DebugInfo,v 1.3 2002-01-25 21:44:11 carstenklapp Exp $"
 Content-Type: application/x-phpwiki;
   pagename=DebugInfo;
   flags=PAGE_LOCKED;
-  lastmodified=1010554068;
+  charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
 Detailed view of a page, which is probably more useful for debugging than anything else.

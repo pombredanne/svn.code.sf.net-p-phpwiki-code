@@ -1,9 +1,9 @@
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
-X-RCS_ID: $Id: RecentEdits,v 1.7 2002-01-23 06:50:58 carstenklapp Exp $
+X-RCS_ID: "$Id: RecentEdits,v 1.8 2002-01-25 21:44:11 carstenklapp Exp $"
 Content-Type: application/x-phpwiki;
   pagename=RecentEdits;
   flags=PAGE_LOCKED;
-  lastmodified=1010531065
+  charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
 Here's a list of recently edited pages on this wiki. All minor changes are shown, not just the most recent ones. (See RecentChanges for the most recent non-minor changes).
