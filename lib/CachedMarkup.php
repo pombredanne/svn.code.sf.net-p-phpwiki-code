@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: CachedMarkup.php,v 1.8 2004-02-19 21:54:17 rurban Exp $');
+<?php rcs_id('$Id: CachedMarkup.php,v 1.9 2004-02-27 02:22:21 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -25,7 +25,7 @@ class CacheableMarkup extends XmlContent {
 	$this->_buf = '';
 	$this->_content = array();
 	$this->_append($content);
-	if ($this->_buf)
+	if ($this->_buf != '')
 	    $this->_content[] = $this->_buf;
 	unset($this->_buf);
     }
