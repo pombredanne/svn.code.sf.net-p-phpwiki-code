@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.32 2002-01-25 08:36:09 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.33 2002-01-25 14:48:27 dairiki Exp $');
 /**
  */
 
@@ -54,12 +54,14 @@ class _RecentChanges_Formatter
         return WikiURL($page->getName(), $params, $this->_absurls);
     }
     
-    function authorURL($author) {
+    function authorHasPage ($author) {
         global $WikiNameRegexp, $request;
         $dbi = $request->getDbh();
-        if (preg_match("/^$WikiNameRegexp\$/", $author) && $dbi->isWikiPage($author))
-            return true;
-        return false;
+        return preg_match("/^$WikiNameRegexp\$/", $author) && $dbi->isWikiPage($author);
+    }
+
+    function authorURL ($author) {
+        return $this->authorHasPage() ? WikiURL($author) : false;
     }
 
 
@@ -108,7 +110,7 @@ extends _RecentChanges_Formatter
     
     function authorLink ($rev) {
         $author = $rev->get('author');
-        if ( ($url = $this->authorURL($author)) ) {
+        if ( $this->authorHasPage($author) ) {
             global $Theme;
             return $Theme->LinkExistingWikiWord($author);
         } else
