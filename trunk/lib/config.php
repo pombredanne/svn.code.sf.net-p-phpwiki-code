@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.75 2003-03-07 20:51:57 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.76 2003-03-17 23:59:19 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -287,6 +287,7 @@ if (!defined('USE_PATH_INFO'))
         define('USE_PATH_INFO', true);
         break;
     case 'cgi':
+    case 'apache2filter':
         define('USE_PATH_INFO', false);
         break;
     default:
