@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.18 2002-02-09 20:00:26 dairiki Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.19 2002-02-10 05:16:38 carstenklapp Exp $');
 
 class WikiPlugin
 {
@@ -119,7 +119,7 @@ class WikiPlugin
         
         if ($argstr) {
             trigger_error(sprintf(_("trailing cruft in plugin args: '%s'"),
-                                  $argstr), E_USER_WARNING);
+                                  $argstr), E_USER_NOTICE);
         }
 
         return array($args, $defaults);
