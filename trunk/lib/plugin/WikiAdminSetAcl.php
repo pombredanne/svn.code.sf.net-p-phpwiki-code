@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSetAcl.php,v 1.15 2004-06-08 10:05:12 rurban Exp $');
+rcs_id('$Id: WikiAdminSetAcl.php,v 1.16 2004-06-08 13:50:43 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -46,7 +46,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.15 $");
+                            "\$Revision: 1.16 $");
     }
 
     function getDefaultArguments() {
@@ -209,28 +209,31 @@ extends WikiPlugin_WikiAdminSelect
 
     function setaclForm(&$header, $post_args, $pagehash) {
         $acl = $post_args['acl'];
-        //$header->pushContent(HTML::p(HTML::em(_("This plugin is currently under development and does not work!"))));
-        //todo: find intersection of all page perms
+
+        //FIXME: find intersection of all pages perms, not just from the last pagename
         $pages = array();
         foreach ($pagehash as $name => $checked) {
 	   if ($checked) $pages[] = $name;
         }
         $perm_tree = pagePermissions($name);
-        $table = pagePermissionsAclFormat($perm_tree,!empty($pages));
-        $header->pushContent(HTML::p(fmt("Selected Pages: %s",join(', ',$pages))));
-        if (DEBUG) {
-            ;//$header->pushContent(HTML::pre("Permission tree for $name:\n",print_r($perm_tree,true)));
-        }
-        $type = $perm_tree[0];
+        $table = pagePermissionsAclFormat($perm_tree, !empty($pages));
+        $header->pushContent(HTML::strong(_("Selected Pages: ")), HTML::tt(join(', ',$pages)), HTML::br());
+        $first_page = $GLOBALS['request']->_dbi->getPage($name);
+        $owner = $first_page->getOwner();
+        list($type, $perm) = pagePermissionsAcl($perm_tree[0], $perm_tree);
+        //if (DEBUG) $header->pushContent(HTML::pre("Permission tree for $name:\n",print_r($perm_tree,true)));
         if ($type == 'inherited')
-            $type = sprintf(_("page permission inherited from %s"),$perm_tree[1][0]);
+            $type = sprintf(_("page permission inherited from %s"), $perm_tree[1][0]);
         elseif ($type == 'page')
             $type = _("invidual page permission");
         elseif ($type == 'default')
             $type = _("default page permission");
-        $header->pushContent(HTML::p(_("Type: "),$type));
-        $header->pushContent(HTML::p(
-                                     _("Description: Selected Grant checkboxes allow access, unselected checkboxes deny access."),
+        $header->pushContent(HTML::strong(_("Type: ")), HTML::tt($type),HTML::br());
+        $header->pushContent(HTML::strong(_("getfacl: ")), pagePermissionsSimpleFormat($perm_tree, $owner),HTML::br());
+        $header->pushContent(HTML::strong(_("ACL: ")), HTML::tt($perm->asAclLines()),HTML::br());
+        
+        $header->pushContent(HTML::p(HTML::strong(_("Description: ")),
+                                     _("Selected Grant checkboxes allow access, unselected checkboxes deny access."),
                                      _("To ignore delete the line."),
                                      _("To add check 'Add' near the dropdown list.")
                                      ));
@@ -255,7 +258,7 @@ extends WikiPlugin_WikiAdminSelect
           	  _("Propagate new permissions to all subpages?"),
         	  HTML::raw("&nbsp;&nbsp;"),
                   HTML::em(_("(disable individual page permissions, enable inheritance)?")),
-                  HTML::em(_("(Currently not working)"))
+                  HTML::br(),HTML::em(_("(Currently not working)"))
                                );
         }
         $header->pushContent(HTML::hr(),HTML::p());
@@ -294,6 +297,9 @@ class _PageList_Column_perm extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2004/06/08 10:05:12  rurban
+// simplified admin action shortcuts
+//
 // Revision 1.14  2004/06/07 22:28:06  rurban
 // add acl field to mimified dump
 //
