@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.47 2004-06-20 15:30:04 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.48 2004-06-21 06:30:16 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -239,7 +239,7 @@ class BlockParser_Input {
 class BlockParser_InputSubBlock extends BlockParser_Input
 {
     function BlockParser_InputSubBlock (&$input, $prefix_re, $initial_prefix = false) {
-        $this->_input = $input;
+        $this->_input = &$input;
         $this->_prefix_pat = "/$prefix_re|\\s*\$/Ax";
         $this->_atSpace = false;
 
@@ -528,6 +528,10 @@ class Block_list extends BlockMarkup
     
     function merge ($nextBlock) {
         if (isa($nextBlock, 'Block_list') and $this->_tag == $nextBlock->_tag) {
+            if ($nextBlock->_content === $this->_content) {
+            	trigger_error("Internal Error: no block advance", E_USER_NOTICE);
+            	return false;
+            }
             array_splice($this->_content, count($this->_content), 0,
                          $nextBlock->_content);
             return $this;
@@ -622,8 +626,8 @@ class Block_table_dl_defn extends XmlContent
     function setTightness($tight_top, $tight_bot) {
         $this->_tight_top = $tight_top;
 	$this->_tight_bot = $tight_bot;
-	$first =& $this->firstTR();
-	$last  =& $this->lastTR();
+	$first = &$this->firstTR();
+	$last  = &$this->lastTR();
 	$first->setInClass('top', $tight_top);
         if (!empty($last)) {
             $last->setInClass('bottom', $tight_bot);
@@ -866,8 +870,10 @@ class Block_oldlists extends Block_list
                         echo "_properties: "; var_dump ($c->_properties);
                     }
                     debug_print_backtrace();
-                    if (function_exists("xdebug_get_function_stack")) {
-                        var_dump (xdebug_get_function_stack());
+                    if (DEBUG & _DEBUG_APD) {
+                        if (function_exists("xdebug_get_function_stack")) {
+                            var_dump (xdebug_get_function_stack());
+                        }
                     }
                     echo "</pre>";
                 }
@@ -1006,7 +1012,7 @@ class Block_p extends BlockMarkup
 
     function merge ($nextBlock) {
         $class = get_class($nextBlock);
-        if (strtolower($class) == 'block_p' && $this->_tight_bot) {
+        if (strtolower($class) == 'block_p' and $this->_tight_bot) {
             $this->_text .= "\n" . $nextBlock->_text;
             $this->_tight_bot = $nextBlock->_tight_bot;
             return $this;
@@ -1059,6 +1065,9 @@ function TransformText ($text, $markup = 2.0, $basepage=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.47  2004/06/20 15:30:04  rurban
+// get_class case-sensitivity issues
+//
 // Revision 1.46  2004/06/20 14:42:53  rurban
 // various php5 fixes (still broken at blockparser)
 //
