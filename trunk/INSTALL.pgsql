@@ -1,4 +1,19 @@
-$Id: INSTALL.pgsql,v 1.6 2000-10-08 19:19:59 wainstead Exp $
+----------
+NOTE for the 1.2 release: You may see a few warnings when you first
+load the pages. They may look like this:
+
+
+***
+Warning: PostgresSQL query failed: ERROR: ExecAppend: Fail to add null
+value in not null attribute pagename in lib/pgsql.php on line 417
+
+Inserting page ConvertSpacesToTabs, version 1 from text file
+***
+
+This is not a problem since PhpWiki is trying to update a table that
+tracks hits and links.
+----------
+
 
 Installation instructions for PhpWiki with a Postgresql database
 
@@ -17,7 +32,7 @@ handled by mod_php:
 </IfModule>
 
 (This is from a stock 6.2 Red Hat distro, which ships with an rpm of
-PHP 3.0.12,but should give you an idea. I had to add the line for
+PHP 3.0.12, but should give you an idea. I had to add the line for
 .php).
 
 Also note that Postgresql by default has a hard limit of 8K per
@@ -32,9 +47,8 @@ the Wiki.
 Once that's done and you have the basic stuff done that's listed in 
 the INSTALL, the time comes to move to Postgresql.
 
-Edit lib/config.php and comment out the lines for DBM file usage; then
-uncomment the lines for Postgresql. The lines are clearly commented and 
-you should have no problem with this.
+Edit lib/config.php and edit $WhichDatabase for Postgresql. The lines
+are clearly commented and you should have no problem with this.
 
 Next you need to create a database called "wiki".
 
@@ -52,3 +66,6 @@ If you find something I missed, please let me know.
 Steve Wainstead
 swain@wcsb.org
 
+Report bugs to phpwiki-talk@lists.sourceforge.net
+
+$Id: INSTALL.pgsql,v 1.7 2001-02-02 02:55:31 wainstead Exp $
