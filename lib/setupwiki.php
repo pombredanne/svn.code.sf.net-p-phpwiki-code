@@ -1,4 +1,4 @@
-<!-- $Id: setupwiki.php,v 1.3 2000-10-22 19:33:35 ahollosi Exp $ -->
+<!-- $Id: setupwiki.php,v 1.4 2001-02-08 02:34:32 dairiki Exp $ -->
 <?php
 require "lib/ziplib.php";
 
@@ -37,7 +37,6 @@ function LoadFile ($dbi, $filename, $text, $mtime)
 		    'created' => $mtime,
 		    'flags' => 0,
 		    'lastmodified' => $mtime,
-		    'refs' => array(),
 		    'version' => 1);
   
   if (!($parts = ParseMimeifiedPages($text)))
