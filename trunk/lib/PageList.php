@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.19 2002-01-25 08:19:26 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.20 2002-01-25 08:30:58 carstenklapp Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -116,7 +116,7 @@ class _PageList_Column_author extends _PageList_Column {
     }
     // adapted from plugin/RecentChanges
     function _authorLink($author) {
-        if ( ($url = $this->authorURL($author)) ) {
+        if ( $this->authorURL($author) ) {
             global $Theme;
             return $Theme->linkExistingWikiWord($author);
         } else
@@ -126,7 +126,7 @@ class _PageList_Column_author extends _PageList_Column {
         global $WikiNameRegexp, $request;
         $dbi = $request->getDbh();
         if (preg_match("/^$WikiNameRegexp\$/", $author) && $dbi->isWikiPage($author))
-            return WikiURL($author);
+            return true;
         return false;
     }
 };
