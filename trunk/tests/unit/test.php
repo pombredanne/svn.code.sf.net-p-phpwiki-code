@@ -297,6 +297,7 @@ if (!empty($argv)) {
     if (!empty($runtests))
         $alltests = $runtests;
     if ($debug_level & 1) {
+        echo "\n";
         echo "PHP_SAPI=",php_sapi_name(), "\n";
         echo "PHP_OS=",PHP_OS, "\n";
         echo "PHP_VERSION=",PHP_VERSION, "\n";
