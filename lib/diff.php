@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: diff.php,v 1.49 2004-11-21 11:59:19 rurban Exp $');
+rcs_id('$Id: diff.php,v 1.50 2005-02-04 13:44:45 rurban Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -96,7 +96,7 @@ class WordLevelDiff extends MappedDiff
         return $orig->getLines();
     }
 
-    function final () {
+    function _final () {
         $final = new _HWLDF_WordAccumulator;
 
         foreach ($this->edits as $edit) {
@@ -173,7 +173,7 @@ class HtmlUnifiedDiffFormatter extends UnifiedDiffFormatter
     function _changed($orig, $final) {
         $diff = new WordLevelDiff($orig, $final);
         $this->_lines($diff->orig(), 'original', '-');
-        $this->_lines($diff->final(), 'final', '+');
+        $this->_lines($diff->_final(), 'final', '+');
     }
 }
 
@@ -393,6 +393,9 @@ function showDiff (&$request) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.49  2004/11/21 11:59:19  rurban
+// remove final \n to be ob_cache independent
+//
 // Revision 1.48  2004/06/14 11:31:36  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList
