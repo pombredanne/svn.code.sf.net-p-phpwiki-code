@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiBlog.php,v 1.12 2004-03-14 19:58:41 rurban Exp $');
+rcs_id('$Id: WikiBlog.php,v 1.13 2004-03-15 10:59:40 rurban Exp $');
 /*
  Copyright 2002, 2003 $ThePhpWikiProgrammingTeam
  
@@ -83,7 +83,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.12 $");
+                            "\$Revision: 1.13 $");
     }
 
     // Arguments:
@@ -278,11 +278,13 @@ extends WikiPlugin
         return $html;
     }
 
-    function _transformOldFormatBlog($rev,$type='wikiblog') {
+    function _transformOldFormatBlog($rev, $type='wikiblog') {
         $page = $rev->getPage();
-
+        $metadata = array();
         foreach (array('ctime', 'creator', 'creator_id') as $key)
             $metadata[$key] = $page->get($key);
+        if (empty($metadata) and $type != 'wikiblog')
+            $metadata[$key] = $page->get('wikiblog');
         $meta = $rev->getMetaData();
         $meta[$type] = $metadata;
         return new TransformedText($page, $rev->getPackedContent(), $meta, $type);
