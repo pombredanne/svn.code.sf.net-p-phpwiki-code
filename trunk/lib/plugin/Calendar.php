@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.18 2002-02-06 03:08:34 dairiki Exp $');
+rcs_id('$Id: Calendar.php,v 1.19 2002-02-08 22:38:21 dairiki Exp $');
 
 if (!defined('SECONDS_PER_DAY'))
     define('SECONDS_PER_DAY', 24 * 3600);
@@ -129,14 +129,13 @@ extends WikiPlugin
         $this->args = $this->getArgs($argstr, $request);
         $args       = &$this->args;
 
-        $now = localtime(time(), 1);
+        $now = localtime(time() + 3600 * $request->getPref('timeOffset'), 1);
         foreach ( array('month' => $now['tm_mon'] + 1,
                         'year'  => $now['tm_year'] + 1900)
                   as $param => $dflt ) {
 
             if (!($args[$param] = intval($args[$param])))
                 $args[$param]   = $dflt;
-
         }
 
         $time = mktime(12, 0, 0,                               // hh, mm, ss,
@@ -151,7 +150,6 @@ extends WikiPlugin
                            $this->__daynames($args['start_wday']));
 
         $t = localtime($time, 1);
-        $now = localtime(time(), 1);
 
         if ($now['tm_year'] == $t['tm_year'] && $now['tm_mon'] == $t['tm_mon'])
             $this->_today = $now['tm_mday'];
