@@ -1,4 +1,4 @@
-<!-- $Id: wiki_config.php3,v 1.8 2000-06-18 15:12:13 ahollosi Exp $ -->
+<!-- $Id: wiki_config.php3,v 1.9 2000-06-20 01:38:42 wainstead Exp $ -->
 <?
    /*
       Constants and settings. Edit the values below for
@@ -11,7 +11,7 @@
 
    // You should set the $ServerAddress as below, and comment out
    // the if/else below.
-   //$ServerAddress = "http://wcsb.org:8080/~swain/php/wiki/";
+   //$ServerAddress = "http://phpwiki.sourceforge.net/wiki/";
 
    if (preg_match("#(.*?)([^/]*$)#", $REQUEST_URI, $matches)) {
       $ServerAddress = "http://$SERVER_NAME:$SERVER_PORT" . $matches[1];
@@ -22,6 +22,10 @@
    // if you are using MySQL instead of a DBM to store your
    // Wiki pages, use wiki_mysql.php3 instead of wiki_dbmlib.php3
    // See INSTALL.mysql for details on using MySQL
+
+   // if you are using Postgressl instead of a DBM to store your
+   // Wiki pages, use wiki_pgsql.php3 instead of wiki_dbmlib.php3
+   // See INSTALL.pgsql for details on using Postgresql
 
    // DBM settings (default)
    include "wiki_dbmlib.php3";
@@ -44,6 +48,7 @@
    // PostgreSQL settings. 
    include "wiki_pgsql.php3";
    $WikiDataBase = "wiki";
+   $ArchiveDataBase = "archive";
    $pg_dbhost    = "localhost";
    $pg_dbport    = "5432";
 */
