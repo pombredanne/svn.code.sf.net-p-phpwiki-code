@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.73 2003-02-24 01:18:19 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.74 2003-03-07 02:44:29 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -255,7 +255,20 @@ if (!defined('SERVER_PROTOCOL')) {
         define('SERVER_PROTOCOL', 'https');
 }
 
-if (!defined('SCRIPT_NAME')) define('SCRIPT_NAME', $HTTP_SERVER_VARS['SCRIPT_NAME']);
+function deduce_script_name() {
+    $s = &$GLOBALS['HTTP_SERVER_VARS'];
+    $script = @$s['SCRIPT_NAME'];
+    if (empty($script) or $script[0] != '/') {
+        // Some places (e.g. Lycos) only supply a relative name in
+        // SCRIPT_NAME, but give what we really want in SCRIPT_URL.
+        if (!empty($s['SCRIPT_URL']))
+            $script = $s['SCRIPT_URL'];
+    }
+    return $script;
+}
+
+if (!defined('SCRIPT_NAME'))
+    define('SCRIPT_NAME', deduce_script_name());
 
 if (!defined('USE_PATH_INFO'))
 {
@@ -268,12 +281,19 @@ if (!defined('USE_PATH_INFO'))
      * is used to the the php interpreter where the
      * php script is...)
      */
-    if (php_sapi_name() == 'apache')
+    switch (php_sapi_name()) {
+    case 'apache':
         define('USE_PATH_INFO', true);
-    else
+        break;
+    case 'cgi':
+        define('USE_PATH_INFO', false);
+        break;
+    default:
         define('USE_PATH_INFO', ereg('\.(php3?|cgi)$', SCRIPT_NAME));
+        break;
+    }
 }
-
+     
 // If user has not defined DATA_PATH, we want to use relative URLs.
 if (!defined('DATA_PATH') && USE_PATH_INFO)
      define('DATA_PATH', '..');
@@ -342,7 +362,7 @@ else
     define('PATH_INFO_PREFIX', '/');
 
 
-define('BASE_URL',
+define('PHPWIKI_BASE_URL',
        SERVER_URL . (USE_PATH_INFO ? VIRTUAL_PATH . '/' : SCRIPT_NAME));
 
 //////////////////////////////////////////////////////////////////
