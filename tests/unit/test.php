@@ -47,24 +47,54 @@ $HTTP_SERVER_VARS['REMOTE_ADDR'] = '127.0.0.1';
 require_once $rootdir.'index.php';
 require_once $rootdir.'lib/stdlib.php';
 
+$user_theme = 'default';
+require_once("themes/$user_theme/themeinfo.php");  // Needed for $Theme
+
+function printSimpleTrace($bt) {
+    //print_r($bt);
+    foreach ($bt as $i => $elem) {
+        if (!array_key_exists('file', $elem)) {
+            continue;
+        }
+        print "  " . $elem['file'] . ':' . $elem['line'] . "\n";
+    }
+}
+
 # Show lots of detail when an assert() in the code fails
 function assert_callback( $script, $line, $message ) {
    echo "assert failed: script ", $script," line ", $line," :";
    echo "$message";
-   echo "Traceback:";
-   print_r(debug_backtrace());
+   echo "Traceback:\n";
+   printSimpleTrace(debug_backtrace());
    exit;
 }
 $foo = assert_options( ASSERT_CALLBACK, 'assert_callback');
 
+#
+# Get error reporting to call back, too
+#
+// set the error reporting level for this script
+error_reporting(E_ALL);
+function myErrorHandler($errno, $errstr, $errfile, $errline)
+{
+   echo "$errfile: $errline: error# $errno: $errstr\n";
+   // Back trace
+   echo "Traceback:\n";
+   printSimpleTrace(debug_backtrace());
+   exit;
+}
+
+// set to the user defined error handler
+$old_error_handler = set_error_handler("myErrorHandler");
+
 # This is the test DB backend
 #require_once( 'lib/WikiDB/backend/cvs.php' );
 $db_params                         = array();
-$db_params['directory']            = $cur_dir . '/.testbox';
+$db_params['directory']            = $cur_dir . '/testbox';
 $db_params['dbtype']               = 'file';
 
 # Mock objects to allow tests to run
-require_once($rootdir.'lib/Request.php');
+//require_once($rootdir.'lib/Request.php');
 require_once($rootdir.'lib/WikiDB.php');
 if (ENABLE_USER_NEW)
     require_once($rootdir."lib/WikiUserNew.php");
@@ -73,18 +103,36 @@ else
 require_once($rootdir."lib/WikiGroup.php");
 require_once($rootdir."lib/PagePerm.php");
 
-class MockRequest extends Request {
+class MockUser {
+    function MockUser($name, $isSignedIn) {
+        $this->_name = $name;
+        $this->_isSignedIn = $isSignedIn;
+    }
+    function getId() {
+        return $this->_name;
+    }
+    function isSignedIn() {
+        return true;
+    }
+}
+
+class MockRequest {
     function MockRequest(&$dbparams) {
     	global $WikiTheme, $request;
         $this->_dbi = WikiDB::open($dbparams);
+        $this->_user = new MockUser("a_user", true);
         $this->_args = array('pagename' => 'HomePage', 'action' => 'browse');
-        $this->Request();
+        //$this->Request();
     }
     function setArg($arg, $value) {
         $this->_args[$arg] = $value;
     }
     function getArg($arg) {
-        return $this->_args[$arg];
+        $result = null;
+        if (array_key_exists($arg, $this->_args)) {
+            $result = $this->_args[$arg];
+        }
+        return $result;
     }
     function getDbh() {
         return $this->_dbi;
@@ -109,10 +157,14 @@ class MockRequest extends Request {
         if (isset($this->_prefs))
             return $this->_prefs->get($key);
     }
+    function getGroup() {
+        return WikiGroup::getGroup();
+    }
 }
 
 $request = new MockRequest($db_params);
 
+/*
 if (ENABLE_USER_NEW)
     $request->_user = WikiUser('AnonUser');
 else {
@@ -120,6 +172,7 @@ else {
     $request->_prefs = $request->_user->getPreferences();
 }
 include_once("themes/" . THEME . "/themeinfo.php");
+*/
 
 ####################################################################
 #
@@ -139,7 +192,7 @@ require_once dirname(__FILE__).'/lib/plugin/OrphanedPagesTest.php';
 
 if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']))
     echo "<pre>\n";
-print "Run tests ..\n";
+print "Run tests .. ";
 
 $suite  = new PHPUnit_TestSuite("phpwiki");
 $suite->addTest( new PHPUnit_TestSuite("InlineParserTest") );
@@ -151,7 +204,12 @@ $suite->addTest( new PHPUnit_TestSuite("AllUsersTest") );
 $suite->addTest( new PHPUnit_TestSuite("OrphanedPagesTest") );
 $result = PHPUnit::run($suite); 
 
-echo $result->toString();
+echo "ran " . $result->runCount() . " tests, " . $result->failureCount() . " failures.\n";
+
+if ($result->failureCount() > 0) {
+    echo "More detail:\n";
+    echo $result->toString();
+}
 
 if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']))
     echo "</pre>\n";
