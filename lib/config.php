@@ -2,7 +2,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.11 2000-10-31 16:18:42 ahollosi Exp $');
+   rcs_id('$Id: config.php,v 1.12 2000-10-31 17:07:08 ahollosi Exp $');
 
    /*
       Constants and settings. Edit the values below for
@@ -187,6 +187,8 @@
    $dateformat = "F j, Y";	// must not contain time
 
    // allowed protocols for links - be careful not to allow "javascript:"
+   // within a named link [name|uri] one more protocol is defined: phpwiki
+   // that phpwiki protocol must not be used below
    $AllowedProtocols = "http|https|mailto|ftp|news|gopher";
 
    // URLs ending with the following extension should be inlined as images
