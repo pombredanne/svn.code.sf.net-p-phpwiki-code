@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.16 2001-12-26 10:38:11 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.17 2002-01-05 11:46:03 carstenklapp Exp $');
 /**
  */
 
@@ -114,11 +114,13 @@ extends _RecentChanges_Formatter
 
 
     function rss_icon () {
-        global $request;
+        global $request, $rssicon;
 
         $rss_url = $request->getURLtoSelf(array('format' => 'rss'));
+        if (empty($rssicon))
+            $rssicon = 'images/rss.png';
         return Element('a', array('href' => $rss_url),
-                       Element('img', array('src' => DataURL('images/rss.png'),
+                       Element('img', array('src' => DataURL($rssicon),
                                             'alt' => _("RSS available"),
                                             'class' => 'rssicon')));
     }

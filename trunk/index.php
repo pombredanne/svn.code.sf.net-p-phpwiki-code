@@ -63,7 +63,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.52 2002-01-03 23:04:19 wainstead Exp $');
+rcs_id('$Id: index.php,v 1.53 2002-01-05 11:46:03 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -319,6 +319,11 @@ $CSS_DEFAULT = "PhpWiki";
 
 // logo image (path relative to index.php)
 $logo = "images/wikibase.png";
+
+// RSS logo icon (path relative to index.php)
+// If this is left blank (or unset), the default "images/rss.png"
+// will be used.
+//$rssicon = "images/rss.png";
 
 // Signature image which is shown after saving an edited page
 // If this is left blank (or unset), the signature will be omitted.
