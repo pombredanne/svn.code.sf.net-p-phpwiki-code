@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AddComment.php,v 1.5 2004-03-15 09:52:59 rurban Exp $');
+rcs_id('$Id: AddComment.php,v 1.6 2004-03-16 15:44:34 rurban Exp $');
 /*
  Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  
@@ -45,7 +45,7 @@ extends WikiPlugin_WikiBlog
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     // Arguments:
@@ -66,7 +66,7 @@ extends WikiPlugin_WikiBlog
         return array('page'       => '[pagename]',
                      'order'      => 'normal',
                      'mode'       => 'add,show',
-                     'jshide'     => '1',
+                     'jshide'     => '0',
                      'noheader'   => false
                     );
     }
@@ -135,6 +135,9 @@ function togglecomments(a) {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/03/15 09:52:59  rurban
+// jshide button: dynamic titles
+//
 // Revision 1.4  2004/03/14 20:30:21  rurban
 // jshide button
 //
