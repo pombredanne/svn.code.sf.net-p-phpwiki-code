@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: diff.php,v 1.46 2004-05-01 15:59:29 rurban Exp $');
+rcs_id('$Id: diff.php,v 1.47 2004-06-08 13:51:57 rurban Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -385,8 +385,11 @@ function showDiff (&$request) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.46  2004/05/01 15:59:29  rurban
+// nothing changed
+//
 // Revision 1.45  2004/01/25 03:57:15  rurban
-// WikiUserNew support (temp. ENABLE_USER_NEW constant)
+// use isWikiWord()
 //
 // Revision 1.44  2003/02/17 02:17:31  dairiki
 // Fix so that action=diff will work when the most recent version
