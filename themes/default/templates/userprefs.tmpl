@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.40 2004-02-17 12:22:41 rurban Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.41 2004-03-12 23:21:35 rurban Exp $ -->
 <?php
 // Todo: Move the logic and code to the plugin
 // This is very experimental and the read-only part an ugly hack so far.
@@ -118,7 +118,7 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
 	      ) ?>
 <?php } ?>
 
-<?php if ($isForm and !$user->isAdmin()) { ?>
+<?php if ($isForm and $user->mayChangePass()) { ?>
   <h2><?=_("Change Password")?></h2>
     <table border="0">
       <tr><td align="right"><?=_("New password")?>:</td>
