@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.8 2001-02-20 13:44:03 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.9 2001-02-21 17:16:44 dairiki Exp $');
 include "lib/config.php";
 include "lib/stdlib.php";
 include "lib/userauth.php";
@@ -35,7 +35,7 @@ function DeducePagename ()
 	 return $m[1];
    }
 
-   if (isset($QUERY_STRING) && !preg_match('/[&=]/', $QUERY_STRING))
+   if (isset($QUERY_STRING) && preg_match('/^[^&=]+$/', $QUERY_STRING))
       return urldecode(fix_magic_quotes_gpc($QUERY_STRING));
    
    return gettext("FrontPage");
