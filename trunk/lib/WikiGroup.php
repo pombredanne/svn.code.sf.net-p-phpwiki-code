@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.33 2004-06-15 10:40:35 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.34 2004-06-16 11:51:35 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -905,7 +905,7 @@ class GroupLdap extends WikiGroup {
             trigger_error(_("LDAP_AUTH_HOST not defined"), E_USER_WARNING);
             return false;
         }
-        if (! function_exists('ldap_connect')) {
+        if (! function_exists('ldap_connect') and !isWindows()) {
             dl("ldap".DLL_EXT);
             if (! function_exists('ldap_connect')) {
                 trigger_error(_("No LDAP in this PHP version"), E_USER_WARNING);
@@ -1028,6 +1028,9 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.33  2004/06/15 10:40:35  rurban
+// minor WikiGroup cleanup: no request param, start of current user independency
+//
 // Revision 1.32  2004/06/15 09:15:52  rurban
 // IMPORTANT: fixed passwd handling for passwords stored in prefs:
 //   fix encrypted usage, actually store and retrieve them from db
