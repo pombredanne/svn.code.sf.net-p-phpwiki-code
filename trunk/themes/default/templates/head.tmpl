@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-/* $Id: head.tmpl,v 1.3 2002-10-12 19:11:44 lakka Exp $
+/* $Id: head.tmpl,v 1.4 2002-10-12 19:45:00 lakka Exp $
  *
  * This template is responsible mainly for the outer level <html> stuff and the <head>.
  */
@@ -9,7 +9,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: head.tmpl,v 1.3 2002-10-12 19:11:44 lakka Exp $ -->
+<!-- $Id: head.tmpl,v 1.4 2002-10-12 19:45:00 lakka Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
 <?php $ROBOTS_CONTENT = $ROBOTS_META ? $ROBOTS_META : "noindex,nofollow"; ?>
 <meta name="robots" content="<?= $ROBOTS_CONTENT ?>" />
@@ -64,7 +64,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
        * http://www.oreillynet.com/cs/weblog/view/wlg/1475
        */
 ?>
-<link rel="alternate" type="application/rss+xml" title="RSS" href="<?=WikiURL(RECENT_CHANGES, array('format' => 'rss')?>" />
+<link rel="alternate" type="application/rss+xml" title="RSS" href="<?=WikiURL(RECENT_CHANGES, array('format' => 'rss'))?>" />
 
 <?php /**
        * Add some user-specific links.
