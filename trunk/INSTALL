@@ -1,5 +1,8 @@
 0. INSTALLATION
 
+PhpWiki requires PHP version 3.0.9 or greater, since it uses the 
+preg_*() family of functions.
+
 Untar/gzip this file into the directory where you want it to live.
 That's it. To improve efficiency, edit wiki_config.php3 and set the
 $ServerAddress by hand; this will save a regexp call on every invocation.
