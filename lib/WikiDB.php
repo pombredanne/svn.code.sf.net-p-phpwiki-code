@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.6 2002-01-24 06:50:45 carstenklapp Exp $');
+rcs_id('$Id: WikiDB.php,v 1.7 2002-02-05 22:36:47 lakka Exp $');
 
 //FIXME: arg on get*Revision to hint that content is wanted.
 
@@ -1108,10 +1108,12 @@ class WikiDB_cache
         $this->_backend = &$backend;
 
         $this->_pagedata_cache = array();
+		$this->_versiondata_cache = array();
     }
     
     function close() {
         $this->_pagedata_cache = false;
+		$this->_versiondata_cache = false;
     }
 
     function get_pagedata($pagename) {
@@ -1155,8 +1157,21 @@ class WikiDB_cache
     }
     
     function get_versiondata($pagename, $version, $need_content = false) {
-        $vdata = $this->_backend->get_versiondata($pagename, $version,
-                                                  $need_content);
+		//  FIXME: Seriously ugly hackage
+if (true){
+        $cache = &$this->_versiondata_cache;
+
+        if (!isset($cache[$pagename][$version][$need_content]) ) {
+            $cache[$pagename][$version][$need_content] = $this->_backend->get_versiondata($pagename,
+																			$version, $need_content);
+			}
+		
+        $vdata = $cache[$pagename][$version][$need_content];
+}
+else
+{
+    $vdata = $this->_backend->get_versiondata($pagename, $version, $need_content);
+}
         // FIXME: ugly
         if ($vdata && !empty($vdata['%pagedata']))
             $this->_pagedata_cache[$pagename] = $vdata['%pagedata'];
@@ -1166,16 +1181,22 @@ class WikiDB_cache
     function set_versiondata($pagename, $version, $data) {
         $new = $this->_backend->
              set_versiondata($pagename, $version, $data);
+		// invalidate the cache.  Instead, we could updated it ...
+		$this->_versiondata_cache[$pagename][$version] = false;
+		
     }
 
     function update_versiondata($pagename, $version, $data) {
         $new = $this->_backend->
              update_versiondata($pagename, $version, $data);
+		// invalidate the cache.  Instead, we could updated it ...
+		$this->_versiondata_cache[$pagename][$version] = false;
     }
 
     function delete_versiondata($pagename, $version) {
         $new = $this->_backend->
              delete_versiondata($pagename, $version);
+	 	$this->_versiondata_cache[$pagename][$version] = false;
     }
 };
 
