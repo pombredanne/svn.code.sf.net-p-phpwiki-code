@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.43 2002-01-28 20:58:08 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.44 2002-01-28 21:22:40 carstenklapp Exp $');
 /**
  */
 
@@ -211,11 +211,10 @@ extends _RecentChanges_Formatter
         return HTML::li(array('class' => $class),
                         $this->diffLink($rev), ' ',
                         $this->pageLink($rev), ' ',
-                        $this->time($rev), ' ',
+                        $rev->get('is_minor_edit') ? $this->time($rev) : HTML::strong($this->time($rev)), ' ',
                         $this->summaryAsHTML($rev),
                         ' ... ',
-                        $this->authorLink($rev),
-                        $rev->get('is_minor_edit') ? " [" . _("minor edit") . "]" : '');
+                        $this->authorLink($rev));
     }
 }
 
