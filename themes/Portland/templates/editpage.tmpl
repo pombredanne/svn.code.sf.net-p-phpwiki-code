@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.10 2002-01-28 01:01:27 dairiki Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.11 2002-01-28 01:15:56 carstenklapp Exp $ -->
 <?php
 $SummaryInput = HTML::input(array('type' => 'text',
                                   'class' => 'wikitext',
@@ -38,16 +38,12 @@ $AdjustB = $Theme->makeButton(_("Adjust"), "submit:");
 $GoodStyleB = $Theme->makeLinkButton(_("GoodStyle"));
 
 
-$Markup['old'] = new HtmlElement('option', array('value' => 'old'),
-                                _("Old"));
-$Markup['new'] = new HtmlElement('option', array('value' => 'new'),
-                                 _("New"));
-$selected = $FORMVARS['markup'] == 'new' ? 'new' : 'old';
-$Markup[$selected]->setAttr('selected', true);
-$MarkupSelect = new HtmlElement('select', array('name' => 'markup'),
-                                $Markup);
+$NewMarkupCB = HTML::input(array('name' => 'markup',
+                                 'value' => 'new',
+                                 'type' => 'checkbox',
+                                 'checked' => $FORMVARS['markup'] == 'new'));
 
-  $s = $Theme->getButtonSeparator();
+$s = $Theme->getButtonSeparator();
 ?>
 
 <?php /*
@@ -105,7 +101,7 @@ $MarkupSelect = new HtmlElement('select', array('name' => 'markup'),
   <?=$WidthI?>
   <?=$AdjustB?>
   <br />
-  Markup Style: <?=$MarkupSelect?>
+  <?=$NewMarkupCB?>  <?=_("Use new markup")?>
 </p>
 <!-- FIXME: do we need this at all?  If so, it could probably be moved to TextFormattingRules -->
 <p><?= fmt("See %s tips for editing.", $GoodStyleB) ?></p>
