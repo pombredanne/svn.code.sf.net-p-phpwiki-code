@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.115 2004-11-05 20:53:35 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.116 2004-11-05 21:03:27 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1242,7 +1242,7 @@ extends _AnonUser
     }
 
     function _tryNextPass($submitted_password) {
-        if (DEBUG) {
+        if (DEBUG & _DEBUG_LOGIN) {
             $class = strtolower(get_class($this));
             if (substr($class,-10) == "dbpassuser") $class = "_dbpassuser";
             $GLOBALS['USER_AUTH_ERROR'][$class] = 'wrongpass';
@@ -1264,7 +1264,7 @@ extends _AnonUser
     }
 
     function _tryNextUser() {
-        if (DEBUG) {
+        if (DEBUG & _DEBUG_LOGIN) {
             $class = strtolower(get_class($this));
             if (substr($class,-10) == "dbpassuser") $class = "_dbpassuser";
             $GLOBALS['USER_AUTH_ERROR'][$class] = 'nosuchuser';
@@ -2022,6 +2022,13 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.115  2004/11/05 20:53:35  rurban
+// login cleanup: better debug msg on failing login,
+// checked password less immediate login (bogo or anon),
+// checked olduser pref session error,
+// better PersonalPage without password warning on minimal password length=0
+//   (which is default now)
+//
 // Revision 1.114  2004/11/05 16:15:57  rurban
 // forgot the BogoLogin inclusion with the latest rewrite
 //

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.122 2004-10-14 17:49:58 rurban Exp $');
+rcs_id('$Id: config.php,v 1.123 2004-11-05 21:03:27 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -17,12 +17,13 @@ if (!defined("LC_ALL")) {
     }
 }
 // debug flags: 
-define ('_DEBUG_VERBOSE',   1);
+define ('_DEBUG_VERBOSE',   1); // verbose msgs and add validator links on footer
 define ('_DEBUG_PAGELINKS', 2); // list the extraced pagelinks at the top of each pages
 define ('_DEBUG_PARSER',    4); // verbose parsing steps
 define ('_DEBUG_TRACE',     8); // test php memory usage, prints php debug backtraces
 define ('_DEBUG_INFO',     16);
 define ('_DEBUG_APD',      32);
+define ('_DEBUG_LOGIN',    64); // verbose login debug-msg (settings and reason for failure)
 
 function isCGI() {
     return (substr(php_sapi_name(),0,3) == 'cgi' and 
@@ -406,6 +407,9 @@ function getUploadDataPath() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.122  2004/10/14 17:49:58  rurban
+// fix warning in safe_wordwrap
+//
 // Revision 1.121  2004/10/14 17:48:19  rurban
 // typo in safe_wordwrap
 //
