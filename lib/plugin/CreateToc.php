@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.1 2004-03-01 18:10:28 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.2 2004-03-02 16:43:04 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -23,7 +23,7 @@ rcs_id('$Id: CreateToc.php,v 1.1 2004-03-01 18:10:28 rurban Exp $');
 /**
  * CreateToc:  Automatically link headers at the top
  *
- * Usage:   <?plugin CreateToc jsbutton||=1 ?>
+ * Usage:   <?plugin CreateToc headers=!!!,!! jshide||=1 align=left noheaders=0 ?>
  * @author:  Reini Urban
  */
 
@@ -40,17 +40,21 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
-        return array( 'page'    => '[pagename]',
-                      'level'   => 2,     // "!" + "!!" style headers
-                      'noheader'=> 0,
-                      'jsbutton'=> 0,     // if set, inclusion appears as normal content
+        return array( 'pagename'  => '[pagename]', // not sure yet. TOC of another page here?
+                      // or headers=1,2,3 is also possible.
+                      'headers'   => "!!!,!!,!",   // "!!!" => h1, "!!" => h2, "!" => h3
+                      'noheader'  => 0,            // omit <h1>Table of Contents</h1>
+                      'align'     => 'left',
+                      // not yet
+                      'jshide'    => 0,            // collapsed TOC as DHTML button 
                       );
     }
 
+    // Feature request: proper nesting
     function extractHeaders (&$content, $level=2) {
         $headers = array();
         if ($level < 1 or $level > 6) $level = 1;
@@ -68,34 +72,40 @@ extends WikiPlugin
                 
     function run($dbi, $argstr, $request, $basepage) {
         extract($this->getArgs($argstr, $request));
-        if ($page) {
+        if ($pagename) {
             // Expand relative page names.
-            $page = new WikiPageName($page, $basepage);
-            $page = $page->name;
+            $page = new WikiPageName($pagename, $basepage);
+            $pagename = $page->name;
         }
-        if (!$page) {
+        if (!$pagename) {
             return $this->error(_("no page specified"));
         }
-        $page = $dbi->getPage($page);
+        $page = $dbi->getPage($pagename);
         $current = $page->getCurrentRevision();
         $content = $current->getContent();
-        $html = HTML::div(array('class' => 'toc'));
+        $html = HTML::div(array('class' => 'toc','align' => $align));
         if (!$noheader)
             $html->pushContent(HTML::h1(_("Table Of Contents")));
         $list = HTML::ul(array('class' => 'toc'));
-        if ($headers = $this->extractHeaders(&$content, $level)) {
+        //Todo: replace !!! with level 1, ...
+        //Todo: proper indent of heading
+        if ($headers = $this->extractHeaders(&$content, 1)) {
             foreach ($headers as $h) {
-                $link = new Cached_WikiLink($page,$h,$h);
-                $list->pushContent(HTML::li($link));
+                $link = new WikiPageName($pagename,$page,$h);
+                $list->pushContent(HTML::li(WikiLink($link,'known',$h)));
             }
         }
-        //fixme: put new contents back to pagecache
+        //Fixme: Put new contents back to pagecache. 
+        // Will require yet another & arg to $plugin->run()
         $html->pushContent($list);
         return $html;
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/03/01 18:10:28  rurban
+// first version, without links, anchors and jscript folding
+//
 //
 
 // For emacs users
