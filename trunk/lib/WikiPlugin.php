@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.16 2002-01-30 23:41:54 dairiki Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.17 2002-02-06 23:02:45 dairiki Exp $');
 
 class WikiPlugin
 {
@@ -252,23 +252,15 @@ class WikiPluginLoader {
     }
     
     function getPlugin($plugin_name) {
-
+        global $ErrorManager;
+        
         // Note that there seems to be no way to trap parse errors
         // from this include.  (At least not via set_error_handler().)
         $plugin_source = "lib/plugin/$plugin_name.php";
-        
-        if (!include_once("lib/plugin/$plugin_name.php")) {
-            if (!empty($GLOBALS['php_errormsg']))
-                return $this->_error($GLOBALS['php_errormsg']);
-            // If the plugin source has already been included, the
-            // include_once() will fail, so we don't want to crap out
-            // just yet.
-            $include_failed = true;
-        } else {
-            // this avoids:
-            // lib/WikiPlugin.php:265: Notice[8]: Undefined variable: include_failed
-            $include_failed = false;
-        }
+
+        $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_plugin_error_filter'));
+        $include_failed = !include_once("lib/plugin/$plugin_name.php");
+        $ErrorManager->popErrorHandler();
         
         $plugin_class = "WikiPlugin_$plugin_name";
         if (!class_exists($plugin_class)) {
@@ -277,7 +269,6 @@ class WikiPluginLoader {
                                              $plugin_source));
             return $this->_error(sprintf("%s: no such class", $plugin_class));
         }
-        
     
         $plugin = new $plugin_class;
         if (!is_subclass_of($plugin, "WikiPlugin"))
@@ -287,6 +278,12 @@ class WikiPluginLoader {
         return $plugin;
     }
 
+    function _plugin_error_filter ($err) {
+        if (preg_match("/Failed opening '.*' for inclusion/", $err->errstr))
+            return true;        // Ignore this error --- it's expected.
+        return false;
+    }
+    
     function getErrorDetail() {
         return $this->_errors;
     }
