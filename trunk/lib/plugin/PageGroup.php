@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageGroup.php,v 1.6 2004-02-17 12:11:36 rurban Exp $');
+rcs_id('$Id: PageGroup.php,v 1.7 2004-05-03 15:53:20 rurban Exp $');
 /**
- Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+ Copyright 1999,2000,2001,2002,2004 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -50,7 +50,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
@@ -66,16 +66,27 @@ extends WikiPlugin
     // Stolen from IncludePage.php
     function extractSection ($section, $content, $page) {
         $qsection = preg_replace('/\s+/', '\s+', preg_quote($section, '/'));
-
         if (preg_match("/ ^(!{1,})\\s*$qsection" // section header
                        . "  \\s*$\\n?"           // possible blank lines
                        . "  ( (?: ^.*\\n? )*? )" // some lines
                        . "  (?= ^\\1 | \\Z)/xm", // sec header (same or higher level) (or EOF)
                        implode("\n", $content),
                        $match)) {
-            // Strip trailing blanks lines and ---- <hr>s
-            $text = preg_replace("/\\s*^-{4,}\\s*$/m", "", $match[2]);
-            return explode("\n", $text);
+            $result = array();           	
+            //FIXME: return list of Wiki_Pagename objects
+            foreach (explode("\n", $match[2]) as $line) {
+            	$text = trim($line);
+                // Strip trailing blanks lines and ---- <hr>s
+                $text = preg_replace("/\\s*^-{4,}\\s*$/", "", $text);
+                // Strip leading list chars: * or #
+                $text = preg_replace("/^[\*#]+\s*(\S.+)$/", "\\1", $text);
+                // Strip surrounding [] 
+                // FIXME: parse [ name | link ]
+                $text = preg_replace("/^\[\s*(\S.+)\s*\]$/", "\\1", $text);
+                if (!empty($text))
+                    $result[] = $text;
+            }
+            return $result;
         }
         return array(sprintf(_("<%s: no such section>"), $page ." ". $section));
     }
@@ -94,7 +105,6 @@ extends WikiPlugin
             $html = $error_text;
             return $html;
         }
-
         $directions = array ('next'     => _("Next"),
                              'previous' => _("Previous"),
                              'contents' => _("Contents"),
@@ -200,6 +210,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/02/17 12:11:36  rurban
+// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
+//
 // Revision 1.5  2003/01/18 21:49:00  carstenklapp
 // Code cleanup:
 // Reformatting & tabs to spaces;
