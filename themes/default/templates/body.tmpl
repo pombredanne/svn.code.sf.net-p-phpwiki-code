@@ -1,7 +1,7 @@
 <?php // -*-html-*-
-rcs_id('$Id: body.tmpl,v 1.32 2003-03-05 21:38:15 dairiki Exp $');
+rcs_id('$Id: body.tmpl,v 1.33 2004-02-17 12:19:49 rurban Exp $');
 ?>
-<body>
+<body<?= $Theme->getMoreAttr('body') ?>>
 
 <div id="header"><?php // for top-and-bottom toolbars style sheet ?>
   <?= Template('top') ?>

@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-  rcs_id('$Id: head.tmpl,v 1.13 2003-12-05 15:36:39 carstenklapp Exp $');
+  rcs_id('$Id: head.tmpl,v 1.14 2004-02-17 12:19:49 rurban Exp $');
 ?>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
@@ -105,12 +105,23 @@ _("UserPreferences"))?>" />
   else
       $pagetitle = " - ". AsString($TITLE);
 ?>
-<title><?=WIKI_NAME.$pagetitle?></title>
+<title><?= WIKI_NAME.$pagetitle ?></title>
+<?= $Theme->getMoreHeaders() ?>
 </head>
 
 <?php
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2003/12/05 15:36:39  carstenklapp
+// Improvements: to make it easier to run multiple wikis off of one set
+// of code, urls for link rel author and copyright now defined in
+// index.php.
+// Bugfix: updated language meta tag to use DEFAULT_LANGUAGE constant
+// instead of old LANG global.
+// Internal change: Eliminated RECENT_CHANGES constant from RSS link,
+// just use the easily localizable _("RecentChanges").
+// Typo fixed.
+//
 // Revision 1.12  2003/11/22 17:58:43  carstenklapp
 // Minor internal change: Removed redundant call to gettext within
 // fmt(). (locale make: head.tmpl:49: warning: keyword nested in keyword
