@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.90 2004-02-24 17:09:24 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.91 2004-02-24 17:19:37 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -141,7 +141,8 @@ function MakeWikiZip (&$request)
     $dbi = $request->getDbh();
     $pages = $dbi->getAllPages();
     while ($page = $pages->next()) {
-        @set_time_limit(30); // Reset watchdog
+    	if (! $request->getArg('start_debug'))
+            @set_time_limit(30); // Reset watchdog
 
         $current = $page->getCurrentRevision();
         if ($current->getVersion() == 0)
@@ -320,7 +321,8 @@ function MakeWikiZipHtml (&$request)
         $Theme->HTML_DUMP_SUFFIX = $HTML_DUMP_SUFFIX;
 
     while ($page = $pages->next()) {
-        @set_time_limit(30); // Reset watchdog.
+    	if (! $request->getArg('start_debug'))
+            @set_time_limit(30); // Reset watchdog.
 
         $current = $page->getCurrentRevision();
         if ($current->getVersion() == 0)
@@ -598,7 +600,8 @@ function LoadFile (&$request, $filename, $text = false, $mtime = false)
         $text  = implode("", file($filename));
     }
 
-    @set_time_limit(30); // Reset watchdog.
+    if (! $request->getArg('start_debug'))
+        @set_time_limit(30); // Reset watchdog.
 
     // FIXME: basename("filewithnoslashes") seems to return garbage sometimes.
     $basename = basename("/dummy/" . $filename);
@@ -844,6 +847,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.90  2004/02/24 17:09:24  rurban
+ fixed \r\r\n with dumping on windows
+
  Revision 1.88  2004/02/22 23:20:31  rurban
  fixed DumpHtmlToDir,
  enhanced sortby handling in PageList
