@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.22 2004-06-14 11:31:20 rurban Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.23 2004-06-19 12:33:25 rurban Exp $');
 
 require_once(dirname(__FILE__).'/stdlib.php');
 
@@ -182,7 +182,10 @@ class FileFinder
      * @return bool false.
      */
     function _not_found($file) {
-        trigger_error(sprintf(_("%s: file not found"),$file), E_USER_ERROR);
+        if (function_exists("_"))
+            trigger_error(sprintf(_("%s: file not found"), $file), E_USER_ERROR);
+        else
+            trigger_error(sprintf("%s: file not found", $file), E_USER_ERROR);
         return false;
     }
 
@@ -555,6 +558,14 @@ function isCygwin() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.22  2004/06/14 11:31:20  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.21  2004/06/02 18:01:45  rurban
 // init global FileFinder to add proper include paths at startup
 //   adds PHPWIKI_DIR if started from another dir, lib/pear also
