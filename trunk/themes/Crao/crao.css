@@ -616,12 +616,12 @@ th.gridbutton {
   font-weight: normal;
   /*font-style: menu;*/
   font-family: Tahoma, sans-serif, Arial, Helvetica;
-  max-height: 18px;
   height: 18px;
   margin: 5px 0px;
   float: none;
   white-space: nowrap;
-  padding-top: 5px;
+  max-height: 24px;
+  padding: 5px 0px 5px 0px;
   border-width: 1px;
   border-style: solid;
   border-color: threedhighlight threeddarkshadow threeddarkshadow threedhighlight;
