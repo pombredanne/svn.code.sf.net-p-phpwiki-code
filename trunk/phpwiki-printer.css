@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki-printer.css,v 1.6 2002-01-26 07:24:47 carstenklapp Exp $
+ * $Id: phpwiki-printer.css,v 1.7 2002-02-01 22:29:24 carstenklapp Exp $
  *
  * PhpWiki style sheet for the printed page:
  * Black on white only, with no toolbar commands and no link icons.
@@ -41,8 +41,14 @@ a {
  * on white in addition to hidden.
  */
 
-/* hide the toolbar */
+/* hide the toolbars */
 .toolbar {
+        visibility : hidden;
+        color :      white;
+        background : white;
+}
+
+#actionbar, #navbar {
         visibility : hidden;
         color :      white;
         background : white;
@@ -72,7 +78,7 @@ a {
 }
 
 /* Hide (diff) links and days buttons in RecentChanges */
-a.wiki-rc-action, div.wiki-rc-action {
+.wiki-rc-action {
         visibility : hidden;
         color :      white;
         /**
@@ -110,7 +116,7 @@ img {
 }
 
 /* Hide the w3.org link image from the printed page */
-div.xhtml-validator {
+#xhtml-validator {
         visibility : hidden;
         width :      0;
         height :     0;
