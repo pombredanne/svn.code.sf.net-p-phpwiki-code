@@ -30,6 +30,9 @@ class DumpHtml extends phpwiki_TestCase {
     function test03OldTextFormattingRules() {
         $this->_dumpPage('OldTextFormattingRules');
     }
+    function test04LinkDatabase() {
+        $this->_dumpPage('LinkDatabase');
+    }
 
     /* finally all. esp. with start_debug=1 this needs some time... */
     function test99DumpHtml() {
@@ -39,6 +42,7 @@ class DumpHtml extends phpwiki_TestCase {
         purge_dir($cur_dir."/.dumphtml");
         purge_dir($cur_dir."/.dumphtml/images");
         $request->setArg('pages','');
+        //FIXME: LinkDatabase doesn't work for DumpHtmlToDir
         //$request->setArg('exclude','LinkDatabase');  // this does not work with format=text => exit
         DumpHtmlToDir($request);
         $this->assertTrue(file_exists($cur_dir."/.dumphtml/HomePage.html")); 
