@@ -10,7 +10,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.27 2001-02-08 15:11:00 dairiki Exp $');
+   rcs_id('$Id: config.php,v 1.28 2001-02-08 18:19:16 dairiki Exp $');
    // end essential internal stuff
 
 
@@ -135,8 +135,10 @@
 
    // logo image (path relative to index.php)
    $logo = "images/wikibase.png";
-   // signature image which is shown after saving an edited page
-   $SignatureImg = "images/signature.png";
+
+   // Signature image which is shown after saving an edited page
+   // If this is left blank (or unset), the signature will be omitted.
+   //$SignatureImg = "images/signature.png";
 
    // date & time formats used to display modification times, etc.
    // formats are given as format strings to PHP date() function

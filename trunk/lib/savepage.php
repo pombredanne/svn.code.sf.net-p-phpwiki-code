@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.8 2001-02-07 22:14:35 dairiki Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.9 2001-02-08 18:19:16 dairiki Exp $');
 
 /*
    All page saving events take place here.
@@ -177,14 +177,17 @@
    $html .= "\n";
 
    // fixme: no test for flat file db system
-   if ($WikiPageStore == "/tmp/wikidb") {
-      $html .= "<P><B>Warning: the Wiki DBM file still lives in the " .
+   if (isset($DBMdir) && preg_match('@^/tmp\b@', $DBMdir)) {
+      $html .= "<P><B>Warning: the Wiki DB files still live in the " .
 		"/tmp directory. Please read the INSTALL file and move " .
 		"the DBM file to a permanent location or risk losing " .
 		"all the pages!</B>\n";
    }
 
-   $html .= "<P><img src=\"$SignatureImg\"></P><hr noshade><P>";
+   if (!empty($SignatureImg))
+      $html .= "<P><img src=\"$SignatureImg\"></P>\n";
+
+   $html .= "<hr noshade><P>";
    include('lib/transform.php');
 
    GeneratePage('BROWSE', $html, $pagename, $pagehash);
