@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.80 2002-01-19 03:23:45 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.81 2002-01-19 09:41:39 carstenklapp Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -187,11 +187,18 @@ function LinkUnknownWikiWord($wikiword, $linktext = '', $version = false) {
 
     //FIXME: do this without global
     global $Theme;
-    $qmark = QElement('a', array('href' => WikiURL($wikiword, $attr)),
+    // Note: $qmark uses Element instead of QElement to allow html in the WikiMark.
+    $qmark = Element('a', array('href' => WikiURL($wikiword, $attr)),
                       $Theme->getWikiMark());
 
-    $html = sprintf($qmark, QElement('u', $linktext));
-    
+    // FIXME: for some reason sprintf wants 4 arguments here!?
+    // lib/stdlib.php:196: Warning[2]: sprintf(): too few arguments
+    //$html = sprintf($qmark,$text,"","");
+
+    // FIXME: Sorry, this ugly hack is to prevent whole word from being inverted.
+    // For now this is necessary to use the new $Theme->setWikiMark("?%s")
+    $html = @ sprintf($qmark, "</span>".Element('u', $linktext)."<span>");
+
     return Element('span', array('class' => $class), $html);
 }
 
