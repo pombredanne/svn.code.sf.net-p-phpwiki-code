@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: cvs.php,v 1.8 2002-01-24 06:53:35 carstenklapp Exp $');
+rcs_id('$Id: cvs.php,v 1.9 2002-02-08 20:30:48 lakka Exp $');
 /**
  * Backend for handling CVS repository. 
  *
@@ -405,7 +405,12 @@ extends WikiDB_backend
     {
         // TODO: needs to be tested ...
         $mp = $this->_getMostPopular();
+        if($limit < 0){
+		asort ($mp, SORT_NUMERIC);
+		$limit = -$limit;
+		} else {
         arsort( $mp, SORT_NUMERIC );
+		}
         $returnVal = array();
 
         while ( (list($key, $val) = each($a)) && $limit > 0 ) {
