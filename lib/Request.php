@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Request.php,v 1.38 2004-01-25 10:26:02 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.39 2004-02-24 15:14:57 rurban Exp $');
 
 
 // backward compatibility for PHP < 4.2.0
@@ -91,15 +91,20 @@ class Request {
     
     // Well oh well. Do we really want to pass POST params back as GET?
     function getURLtoSelf($args = false, $exclude = array()) {
-
-        // Err... good point...
-        if ($this->isPost())
-            trigger_error("Request::getURLtoSelf() should probably not be from POST",
-                          E_USER_NOTICE);
-        
         $get_args = $this->args;
         if ($args)
             $get_args = array_merge($get_args, $args);
+
+        // Err... good point...
+        // sortby buttons
+        if ($this->isPost()) {
+            $exclude = array_merge($exclude, array('action','auth'));
+            //$get_args = $args; // or only the provided
+            /*
+            trigger_error("Request::getURLtoSelf() should probably not be from POST",
+                          E_USER_NOTICE);
+            */
+        }
 
         foreach ($exclude as $ex) {
             if (!empty($get_args[$ex])) unset($get_args[$ex]);
@@ -476,6 +481,13 @@ class Request_CookieVars {
     }
 }
 
+/* Win32 Note:
+   [\winnt\php.ini]
+   You must set "upload_tmp_dir" = "/tmp/" or "C:/tmp/"
+   Best on the same drive as apache, with foreard slashes 
+   and with ending slash!
+   Otherwise "\\" => "" and the uploaded file will not be found.
+*/
 class Request_UploadedFile {
     function getUploadedFile($postname) {
         global $HTTP_POST_FILES;
@@ -484,9 +496,22 @@ class Request_UploadedFile {
             return false;
         
         $fileinfo = &$HTTP_POST_FILES[$postname];
-        if (!is_uploaded_file($fileinfo['tmp_name']))
-            return false;       // possible malicious attack.
-
+        if ($fileinfo['error'])
+            return false;
+        // with windows/php 4.2.1 is_uploaded_file() always returns false.
+        if (!is_uploaded_file($fileinfo['tmp_name'])) {
+            if (isWindows()) {
+                if (!$tmp_file = get_cfg_var('upload_tmp_dir')) {
+                    $tmp_file = dirname(tempnam('', ''));
+                }
+                $tmp_file .= '/' . basename($fileinfo['tmp_name']);
+                /* but ending slash in php.ini upload_tmp_dir is required... */
+                if (ereg_replace('/+', '/', $tmp_file) != $fileinfo['tmp_name'])
+                    return false;
+            }
+        } else {
+            return false;
+        }
         return new Request_UploadedFile($fileinfo);
     }
     
@@ -866,6 +891,11 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.38  2004/01/25 10:26:02  rurban
+// fixed bug [ 541193 ] HTTP_SERVER_VARS are Apache specific
+// http://sourceforge.net/tracker/index.php?func=detail&aid=541193&group_id=6121&atid=106121
+// CGI and other servers than apache populate _ENV and not _SERVER
+//
 // Revision 1.37  2003/12/26 06:41:16  carstenklapp
 // Bugfix: Try to defer OS errors about session.save_path and ACCESS_LOG,
 // so they don't prevent IE from partially (or not at all) rendering the
