@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: PreferenceApp.php,v 1.1 2004-07-07 19:46:39 dfrankow Exp $');
+rcs_id('$Id: PreferenceApp.php,v 1.2 2004-07-07 21:00:53 dfrankow Exp $');
 
 /**
 * 
@@ -44,7 +44,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
