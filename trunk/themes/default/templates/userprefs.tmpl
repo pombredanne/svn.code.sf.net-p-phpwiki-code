@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.12 2002-02-03 19:03:43 carstenklapp Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.13 2002-02-07 03:51:33 carstenklapp Exp $ -->
 <?php
 
 /**
@@ -40,14 +40,14 @@ $TimeZoneSelect = HTML("GMT ", HTML::select(array('name' => "pref[timeOffset]"),
     </tr><tr>
       <td align="right"><?=_("Height")?></td>
       <td>
-        <input type="text" name="pref[editHeight]" size="4"
+        <input type="text" name="pref[editHeight]" size="4" maxlength="4"
                value="<?=$request->getPref('editHeight')?>" />
       </td>
     </tr>
     <tr>
       <td align="right"><?=_("Width")?></td>
       <td>
-        <input type="text" name="pref[editWidth]" size="4"
+        <input type="text" name="pref[editWidth]" size="4" maxlength="4"
                value="<?=$request->getPref('editWidth')?>" />
       </td>
     </tr>
