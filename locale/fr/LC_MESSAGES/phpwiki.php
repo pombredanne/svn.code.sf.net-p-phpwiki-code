@@ -301,7 +301,7 @@ $locale["PageGroup"] =
 $locale["PageGroup for %s"] =
    "GroupeDePage pour %s";
 $locale["PageHistory"] =
-   "PageHistory";
+   "Historique";
 $locale["PageHistory for %s"] =
    "Historique de %s";
 $locale["Pages in this wiki (%d total):"] =
