@@ -81,7 +81,7 @@ define ('DEBUG', 1);
 
 define ('PHPWIKI_VERSION', '1.3.5pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.101 2003-02-21 19:29:30 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.102 2003-02-22 18:53:38 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -149,6 +149,17 @@ define("MINOR_EDIT_TIMEOUT", 7 * 24 * 3600);
 // PhpWiki can generate an access_log (in "NCSA combined log" format)
 // for you. If you want one, define this to the name of the log file.
 //define('ACCESS_LOG', '/tmp/wiki_access_log');
+
+
+// By default PhpWiki will try to have PHP compress it's output
+// before sending it to the browser (if you have a recent enough
+// version of PHP and the browser supports it.)
+// Define COMPRESS_OUTPUT to false to prevent output compression.
+// Define COMPRESS_OUTPUT to true to force output compression,
+// even if we think your version of PHP does this in a buggy
+// fashion.
+// Leave it undefined to leave the choice up to PhpWiki.
+//define('COMPRESS_OUTPUT', false);
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -679,6 +690,9 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 // End:   
 
 // $Log: not supported by cvs2svn $
+// Revision 1.101  2003/02/21 19:29:30  dairiki
+// Update PHPWIKI_VERSION to 1.3.5pre.
+//
 // Revision 1.100  2003/01/04 03:36:58  wainstead
 // Added 'file' as a database type alongside 'dbm'; added cvs log tag
 //

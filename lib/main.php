@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.94 2003-02-21 04:07:31 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.95 2003-02-22 18:53:40 dairiki Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -576,7 +576,7 @@ class WikiRequest extends Request {
     }
 
     function action_browse () {
-        $this->compress_output();
+        $this->buffer_output();
         include_once("lib/display.php");
         displayPage($this);
     }
@@ -586,13 +586,13 @@ class WikiRequest extends Request {
     }
 
     function actionpage ($action) {
-        $this->compress_output();
+        $this->buffer_output();
         include_once("lib/display.php");
         actionPage($this, $action);
     }
 
     function action_diff () {
-        $this->compress_output();
+        $this->buffer_output();
         include_once "lib/diff.php";
         showDiff($this);
     }
@@ -612,14 +612,14 @@ class WikiRequest extends Request {
     }
 
     function action_edit () {
-        $this->compress_output();
+        $this->buffer_output();
         include "lib/editpage.php";
         $e = new PageEditor ($this);
         $e->editPage();
     }
 
     function action_viewsource () {
-        $this->compress_output();
+        $this->buffer_output();
         include "lib/editpage.php";
         $e = new PageEditor ($this);
         $e->viewSource();
