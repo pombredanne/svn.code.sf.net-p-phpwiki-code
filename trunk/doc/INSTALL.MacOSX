@@ -42,7 +42,7 @@ and PhpWiki. After you install and test mySQL follow the instructions
 given in INSTALL.mysql to prepare a new database for use with PhpWiki.
 
 
-Apache PHP Modulex
+Apache PHP Module
 -----------------
 The default PHP module for Apache as supplied by Apple does work with
 PhpWiki but is missing support for the zlib and GD libraries. Wiki
