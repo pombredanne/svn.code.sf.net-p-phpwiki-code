@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.190 2004-06-25 14:29:20 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.191 2004-06-25 14:31:56 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -637,7 +637,9 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
     // FIXME:
     // Trying to detect why the 2nd paragraph of OldTextFormattingRules or
     // AnciennesR%E8glesDeFormatage crashes.
-    if (DEBUG and DEBUG & _DEBUG_PARSER and preg_match("/CreateToc/",$text)) $debug_skip = true;
+    $debug_skip = false;
+    if (DEBUG and DEBUG & _DEBUG_PARSER and preg_match("/CreateToc/",$text)) 
+        $debug_skip = true;
 
     if (empty($subs)) {
         /*****************************************************************
@@ -1604,6 +1606,13 @@ function url_get_contents( $uri ) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.190  2004/06/25 14:29:20  rurban
+// WikiGroup refactoring:
+//   global group attached to user, code for not_current user.
+//   improved helpers for special groups (avoid double invocations)
+// new experimental config option ENABLE_XHTML_XML (fails with IE, and document.write())
+// fixed a XHTML validation error on userprefs.tmpl
+//
 // Revision 1.189  2004/06/20 09:45:35  rurban
 // php5 isa fix (wrong strtolower)
 //
