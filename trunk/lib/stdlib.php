@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.49 2001-12-02 03:33:50 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.50 2001-12-02 07:53:59 carstenklapp Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -139,6 +139,8 @@ function LinkWikiWord($wikiword, $linktext='') {
    function LinkExistingWikiWord($wikiword, $linktext='') {
       if (empty($linktext)) {
           $linktext = $wikiword;
+      if (defined("autosplit_wikiwords"))
+          $linktext=split_pagename($linktext);
           $class = 'wiki';
       }
       else
@@ -152,6 +154,8 @@ function LinkWikiWord($wikiword, $linktext='') {
    function LinkUnknownWikiWord($wikiword, $linktext='') {
       if (empty($linktext)) {
           $linktext = $wikiword;
+      if (defined("autosplit_wikiwords"))
+          $linktext=split_pagename($linktext);
           $class = 'wikiunknown';
       }
       else {
