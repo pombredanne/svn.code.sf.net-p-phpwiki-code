@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.119 2004-11-11 14:34:11 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.120 2004-11-20 11:28:49 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -969,8 +969,8 @@ class PageList {
                 $class_name = array_shift($params);
                 $params[3] =& $this;
                 $class = new $class_name($params);
+                $this->_types[$column] =& $class;
             }
-            $this->_types = array_merge($this->_types, $customPageListColumns);
         }
     }
 
@@ -1431,6 +1431,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.119  2004/11/11 14:34:11  rurban
+// minor clarifications
+//
 // Revision 1.118  2004/11/01 10:43:55  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session
