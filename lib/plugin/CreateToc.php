@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.19 2004-05-08 16:59:27 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.20 2004-05-11 13:57:46 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -29,6 +29,8 @@ rcs_id('$Id: CreateToc.php,v 1.19 2004-05-08 16:59:27 rurban Exp $');
  * @author:  Reini Urban
  */
 
+define('TOC_FULL_SYNTAX',1);
+
 class WikiPlugin_CreateToc
 extends WikiPlugin
 {
@@ -42,7 +44,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.19 $");
+                            "\$Revision: 1.20 $");
     }
 
     function getDefaultArguments() {
@@ -88,7 +90,7 @@ extends WikiPlugin
                     substr($content[$j-1],-4,4) == "<$h>" and
                     substr($content[$j+1],0,5) == "</$h>") {
     		    return $j; // single wikiword
-    		} else {
+    		} elseif (defined('TOC_FULL_SYNTAX') and TOC_FULL_SYNTAX) {
     	    	    //DONE: To allow "!! WikiWord link"
     	    	    // Split heading into WikiWords and check against 
     	    	    // joined content (after cached_plugininvocation).
@@ -96,7 +98,7 @@ extends WikiPlugin
                     $joined = '';
                     for ($k=max($j-1,$start_index); $k < count($content); $k++) {
                         $joined .= is_string($content[$k]) ? $content[$k] 
-                                                           : $content[$k]->asString();
+                        				   : $content[$k]->asString();
                     }
                     if (preg_match("/<$h>$qheading<\/$h>/",$joined))
                         return $j;
@@ -148,10 +150,9 @@ extends WikiPlugin
                         if ($j and isset($markup->_content[$j])) {
                             $x = $markup->_content[$j];
                             if (is_string($markup->_content[$j])) {
-                                $x = $markup->_content[$j];
                                 $heading = preg_quote($s);
                                 if ($x = preg_replace('/(<h\d>)('.$heading.')(<\/h\d>)/',
-                                                      "\$1<a name=\"$manchor\">\$2</a>\$3",$x,1)) {
+                                                      "\$1<a name=\"$manchor\"></a>\$2\$3",$x,1)) {
                                     if ($backlink) {
                                         $url = WikiURL(new WikiPageName($basepage,false,"TOC"));
                                         $x = preg_replace('/(<h\d>)('.$heading.')(<\/h\d>)/',
@@ -255,6 +256,10 @@ function toggletoc(a) {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.19  2004/05/08 16:59:27  rurban
+// requires optional TOC_FULL_SYNTAX constnat to enable full link and
+// wikiword syntax in headers.
+//
 // Revision 1.18  2004/04/29 21:55:15  rurban
 // fixed TOC backlinks with USE_PATH_INFO false
 //   with_toclink=1, sf.net bug #940682
