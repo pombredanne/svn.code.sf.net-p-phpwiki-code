@@ -39,7 +39,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.44 2001-12-27 01:34:38 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.45 2001-12-29 18:22:26 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -359,7 +359,7 @@ $GenericPages = array("ReleaseNotes", "SteveWainstead", "TestPage");
 // allowed protocols for links - be careful not to allow "javascript:"
 // URL of these types will be automatically linked.
 // within a named link [name|uri] one more protocol is defined: phpwiki
-$AllowedProtocols = "http|https|mailto|ftp|news|nntp|gopher";
+$AllowedProtocols = "http|https|mailto|ftp|news|nntp|ssh|gopher";
 
 // URLs ending with the following extension should be inlined as images
 $InlineImages = "png|jpg|gif|tiff|tif";
