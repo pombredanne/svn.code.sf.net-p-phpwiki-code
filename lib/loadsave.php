@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.8 2001-09-18 19:16:23 dairiki Exp $');
+rcs_id('$Id: loadsave.php,v 1.9 2001-09-19 02:58:00 dairiki Exp $');
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
 
@@ -423,19 +423,15 @@ function LoadPostFile ($dbi, $request)
     $upload = $request->getUploadedFile('file');
 
     if (!$upload)
-        ExitWiki('No uploade file to upload?');
-    
-    // Dump http headers.
-    $fd = fopen($tmp_name, "rb");
-    while ( ($header = fgets($fd, 4096)) )
-        if (trim($header) == '')
-            break;
+        ExitWiki('No uploaded file to upload?');
 
+    // Dump http headers.
     StartLoadDump("Uploading " . $upload->getName());
     echo "<dl>\n";
    
+    $fd = $upload->open();
     if (IsZipFile($fd))
-        LoadZip($dbi, $upload->open(), false, array(gettext('RecentChanges')));
+        LoadZip($dbi, $fd, false, array(gettext('RecentChanges')));
     else
         Loadfile($dbi, $upload->getName(), $upload->getContents());
 
