@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.42 2002-02-18 08:48:18 carstenklapp Exp $');
+rcs_id('$Id: editpage.php,v 1.43 2002-02-23 05:04:04 carstenklapp Exp $');
 
 require_once('lib/Template.php');
 
@@ -242,7 +242,7 @@ class PageEditor
 //        $re_edit_link = Button('edit', _("Edit the new version"), $this->page);
 
 		if ($unresolved )
-		        $message =  HTML::p(_("Some of the changes could not automatically be combined.  Please look for sections beginning with <<<<<<< Your version, and ending with >>>>>>> Other version.  You will need to edit those sections by hand, and the click Save"));
+		        $message =  HTML::p(_("Some of the changes could not automatically be combined.  Please look for sections beginning with '<<<<<<< Your version', and ending with '>>>>>>> Other version'.  You will need to edit those sections by hand, and then click Save."));
         else
 		        $message = HTML::p(_("Please check it through and click Save to save it."));
 				
