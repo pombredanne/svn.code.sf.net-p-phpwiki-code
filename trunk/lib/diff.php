@@ -1,5 +1,5 @@
-<!-- $Id: diff.php,v 1.7 2001-02-12 01:43:10 dairiki Exp $ -->
 <?php
+rcs_id('$Id: diff.php,v 1.8 2001-02-13 05:54:38 dairiki Exp $');
 // diff.php
 //
 // A PHP diff engine for phpwiki.
@@ -59,7 +59,9 @@ class _WikiDiffEngine
 
 	$xlines = array();
 	$ylines = array();
-
+	$this->xchanged = array();
+	$this->ychanged = array();
+	
 	// Ignore lines which do not exist in both files.
 	for ($x = 0; $x < $n_from; $x++)
 	    $xhash[$from_lines[$x + $skip]] = 1;
@@ -82,7 +84,7 @@ class _WikiDiffEngine
 	    $this->xv[] = $line;
 	    $this->xind[] = $x;
 	  }
-
+	
 	// Find the LCS.
 	$this->_compareseq(0, sizeof($this->xv), 0, sizeof($this->yv));
 
@@ -128,7 +130,7 @@ class _WikiDiffEngine
 		$this->edits[] = -($x - $x0);
 
 	    // Find adds.
-	    if ($this->ychanged[$y])
+	    if (!empty($this->ychanged[$y]))
 	      {
 		$adds = array();
 		while ($y < $n_to && $this->ychanged[$y])
@@ -525,7 +527,8 @@ class WikiDiff
 		while ($ndelete-- > 0)
 		    $edit[] = "" . $from_lines[$x++];
 	      }
-	    else die("assertion error");
+	    else
+		trigger_error("assertion error", E_USER_ERROR);
 
 	    $rev->edits[] = $edit;
 	  }
@@ -567,7 +570,7 @@ class WikiDiff
 		$right = next($that->edits);
 	      }
 	    else if (!$left || !$right)
-		die ("assertion error");
+		trigger_error("assertion error", E_USER_ERROR);
 	    else if (!is_array($left) && $left > 0)
 	      { // Left op is a copy.
 		if ($left <= abs($right))
@@ -587,7 +590,7 @@ class WikiDiff
 	      }
 	    else
 	      { // Left op is an add.
-		if (!is_array($left)) die('assertion error');
+		assert('is_array($left)');
 		$nleft = sizeof($left);
 		if ($nleft <= abs($right))
 		  {
@@ -670,7 +673,7 @@ class WikiDiff
 		echo "</ul>";
 	      }
 	    else
-		die("assertion error");
+		trigger_error("assertion error", E_USER_ERROR);
 	  }
 	echo "</ol>";
       }
@@ -924,10 +927,11 @@ class WikiDiffFormatter
   function _emit_lines($lines,  $prefix, $color)
       {
 	$html = '';
-	$prefix = Element('td', array('bgcolor' => '#cccccc'), $prefix);
+	$prefix = Element('td', array('bgcolor' => '#cccccc', 'width' => "1%"), $prefix);
 	reset($lines);
 	while (list ($junk, $line) = each($lines))
 	  {
+	    $line = rtrim($line);
 	    $line = empty($line) ? '&nbsp;' : htmlspecialchars($line);
 	    $html .= Element('tr', 
 			     $prefix . Element('td', array('bgcolor' => $color),

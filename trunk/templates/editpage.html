@@ -5,7 +5,7 @@
 ###RCS_IDS###
 -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<base href="###BASE_URL###">
+<!-- <base href="###BASE_URL###"> -->
 <title>###PAGE###</title>
 </head>
 
@@ -17,7 +17,10 @@
 Edit ###PAGE###
 <input type="submit" value=" Save "></h1>
 
-<textarea name="content" ROWS="22" COLS="80" wrap="virtual">###CONTENT###</textarea>
+<textarea name="content"
+          rows="###EDIT_AREA_HEIGHT###"
+          cols="###EDIT_AREA_WIDTH###"
+          wrap="virtual">###CONTENT###</textarea>
 <br>
 ###IF:MINOR_EDIT_CHECKBOX###
   ###MINOR_EDIT_CHECKBOX### This is a minor change, don't archive old version.

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id');
+<?php rcs_id('$Id: userauth.php,v 1.3 2001-02-13 05:54:38 dairiki Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -81,6 +81,32 @@ class WikiUser
 	 ExitWiki("You must be logged in as an administrator to $action.");
    }
 
+
+   // This is a bit of a hack:
+   function setPreferences ($prefs) {
+      global $WIKI_PREFS;
+      $WIKI_PREFS = serialize($prefs);
+      $expires = time() + 365 * 24 * 3600; // expire in a year
+      setcookie('WIKI_PREFS', $WIKI_PREFS, $expires, '/');
+   }
+
+   function getPreferences () {
+      $prefs = array('edit_area.width' => 80,
+		     'edit_area.height' => 22);
+
+      $prefcookie = unserialize(fix_magic_quotes_gpc($GLOBALS['WIKI_PREFS']));
+
+      while (list($k, $v) = each($prefs))
+	 if (!empty($prefcookie[$k]))
+	    $prefs[$k] = $prefcookie[$k];
+
+      // Some sanity checks. (FIXME: should move somewhere else)
+      if (!($prefs['edit_area.width'] >= 30 && $prefs['edit_area.width'] <= 150))
+	 $prefs['edit_area.width'] = 80;
+      if (!($prefs['edit_area.height'] >= 5 && $prefs['edit_area.height'] <= 80))
+	 $prefs['edit_area.height'] = 22;
+      return $prefs;
+   }
    
    function _get_authenticated_userid () {
       if ( ! ($user = $this->_get_http_authenticated_userid()) )
@@ -128,7 +154,7 @@ class WikiUser
       header('WWW-Authenticate: Basic realm="' . $this->realm . '"');
       header("HTTP/1.0 401 Unauthorized");
       echo gettext ("You entered an invalid login or password.");
-      exit;
+      ExitWiki();
    }
 }
 

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.28 2001-02-12 01:43:10 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.29 2001-02-13 05:54:38 dairiki Exp $');
 
 
    /*
@@ -56,7 +56,7 @@ function SearchPath ($file, $missing_ok = false, $path = false)
    }
    if ($missing_ok)
       return false;
-   die("$file: file not found");
+   ExitWiki("$file: file not found");
 }
 
 function arrays_equal ($a, $b) 
@@ -72,24 +72,6 @@ function arrays_equal ($a, $b)
    
    
 
-   function ExitWiki($errormsg)
-   {
-      static $exitwiki = 0;
-      global $dbi;
-
-      if($exitwiki)		// just in case CloseDataBase calls us
-         exit();
-      $exitwiki = 1;
-
-      CloseDataBase($dbi);
-
-      if($errormsg <> '') {
-         print "<P><hr noshade><h2>" . gettext("WikiFatalError") . "</h2>\n";
-         print $errormsg;
-         print "\n</BODY></HTML>";
-      }
-      exit;
-   }
 
    function DataURL($url) {
       if (preg_match('@^(\w+:|/)@', $url))
@@ -174,18 +156,22 @@ function arrays_equal ($a, $b)
       return QElement('a', array('href' => $url), ($linktext ? $linktext : $url));
    }
 
-   function LinkExistingWikiWord($wikiword, $linktext='') {
-      return LinkURL(WikiURL($wikiword),
+   function LinkExistingWikiWord($wikiword, $linktext='', $class = 'wikiword') {
+      return Element('a', array('href' => WikiURL($wikiword),
+				'class' => $class),
 		     $linktext ? $linktext : $wikiword);
    }
 
-   function LinkUnknownWikiWord($wikiword, $linktext='') {
+   function LinkUnknownWikiWord($wikiword, $linktext='', $class = 'unknownwikiword') {
       if (empty($linktext))
 	 $linktext = $wikiword;
 
-      return QElement('u', $linktext)
-	 . QElement('a', array('href' => WikiURL($wikiword, array('action' => 'edit'))),
-		    '?');
+      return Element('span', array('class' => 'unknownwikiword'),
+		     QElement('u', array('class' => 'unknownwikiword'), $linktext) .
+		     QElement('a',
+			      array('href' => WikiURL($wikiword, array('action' => 'edit')),
+				    'class' => 'unknownwikiword'),
+			      '?'));
    }
 
 
@@ -533,9 +519,13 @@ function arrays_equal ($a, $b)
       _dotoken('USERID', htmlspecialchars($user->id()), $page);
       _dotoken('PAGE', htmlspecialchars($name), $page);
       _dotoken('LOGO', htmlspecialchars(DataURL($logo)), $page);
-      global $RCS_IDS;
-      _dotoken('RCS_IDS', join("\n", $RCS_IDS), $page);
-      
+
+      _dotoken('RCS_IDS', $GLOBALS['RCS_IDS'], $page);
+
+      $prefs = $user->getPreferences();
+      _dotoken('EDIT_AREA_WIDTH', $prefs['edit_area.width'], $page);
+      _dotoken('EDIT_AREA_HEIGHT', $prefs['edit_area.height'], $page);
+
       // FIXME: Clean up this stuff
       $browse_page = WikiURL($name);
       _dotoken('BROWSE_PAGE', $browse_page, $page);
@@ -570,6 +560,76 @@ function arrays_equal ($a, $b)
       _dotoken('CONTENT', $content, $page);
       return $page;
    }
+
+function UpdateRecentChanges($dbi, $pagename, $isnewpage)
+{
+   global $user;
+   global $dateformat;
+   global $WikiPageStore;
+
+   $recentchanges = RetrievePage($dbi, gettext ("RecentChanges"), $WikiPageStore);
+
+   // this shouldn't be necessary, since PhpWiki loads 
+   // default pages if this is a new baby Wiki
+   if ($recentchanges == -1) {
+      $recentchanges = array(); 
+   }
+
+   $now = time();
+   $today = date($dateformat, $now);
+
+   if (date($dateformat, $recentchanges['lastmodified']) != $today) {
+      $isNewDay = TRUE;
+      $recentchanges['lastmodified'] = $now;
+   } else {
+      $isNewDay = FALSE;
+   }
+
+   $numlines = sizeof($recentchanges['content']);
+   $newpage = array();
+   $k = 0;
+
+   // scroll through the page to the first date and break
+   // dates are marked with "____" at the beginning of the line
+   for ($i = 0; $i < $numlines; $i++) {
+      if (preg_match("/^____/",
+		     $recentchanges['content'][$i])) {
+	 break;
+      } else {
+	 $newpage[$k++] = $recentchanges['content'][$i];
+      }
+   }
+
+   // if it's a new date, insert it
+   $newpage[$k++] = $isNewDay ? "____$today\r"
+			      : $recentchanges['content'][$i++];
+
+   $userid = $user->id();
+
+   // add the updated page's name to the array
+   if($isnewpage) {
+      $newpage[$k++] = "* [$pagename] (new) ..... $userid\r";
+   } else {
+      $diffurl = "phpwiki:" . rawurlencode($pagename) . "?action=diff";
+      $newpage[$k++] = "* [$pagename] ([diff|$diffurl]) ..... $userid\r";
+   }
+   if ($isNewDay)
+      $newpage[$k++] = "\r";
+
+   // copy the rest of the page into the new array
+   // and skip previous entry for $pagename
+   $pagename = preg_quote($pagename);
+   for (; $i < $numlines; $i++) {
+      if (!preg_match("|\[$pagename\]|", $recentchanges['content'][$i])) {
+	 $newpage[$k++] = $recentchanges['content'][$i];
+      }
+   }
+
+   $recentchanges['content'] = $newpage;
+
+   InsertPage($dbi, gettext ("RecentChanges"), $recentchanges);
+}
+
 // For emacs users
 // Local Variables:
 // mode: php

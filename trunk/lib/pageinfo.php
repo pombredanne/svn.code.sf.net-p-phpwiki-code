@@ -1,6 +1,6 @@
-<!-- $Id: pageinfo.php,v 1.7 2001-02-12 01:43:10 dairiki Exp $ -->
-<!-- Display the internal structure of a page. Steve Wainstead, June 2000 -->
 <?php
+rcs_id('$Id: pageinfo.php,v 1.8 2001-02-13 05:54:38 dairiki Exp $');
+// Display the internal structure of a page. Steve Wainstead, June 2000
 
 
 

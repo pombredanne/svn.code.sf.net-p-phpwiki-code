@@ -1,5 +1,5 @@
-<!-- $Id: editpage.php,v 1.11 2001-02-12 01:43:10 dairiki Exp $ -->
 <?php
+rcs_id('$Id: editpage.php,v 1.12 2001-02-13 05:54:38 dairiki Exp $');
 
    // editpage relies on $pagename, $version
 

@@ -1,5 +1,5 @@
-<!-- $Id: pgsql.php,v 1.5 2001-02-12 01:43:10 dairiki Exp $ -->
 <?php
+rcs_id('$Id: pgsql.php,v 1.6 2001-02-13 05:54:38 dairiki Exp $');
 
    /*
       Database functions:
@@ -48,8 +48,7 @@ $HitCountPageStore = $DBParams['prefix'] . "hitcount";
 	 $args[] = "password=$password";
 
       if (!($dbc = pg_pconnect(join(' ', $args)))) {
-         echo "Cannot establish connection to database, giving up.";
-         exit();
+         ExitWiki("Cannot establish connection to database, giving up.");
       }
 
       $dbi['dbc'] = $dbc;

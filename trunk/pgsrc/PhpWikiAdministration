@@ -63,7 +63,7 @@ the pages from the directory (or zip file) which you don't want to load.
 Here you can upload ZIP archives, or individual files from
 your (client) machine.
 
-[ Upload | phpwiki:?action=upload&file=()upload ]
+[ Upload | phpwiki:?action=upload&file=50()upload ]
 
 ! Load File
 
@@ -71,7 +71,7 @@ Here you can load ZIP archives, individual files or entire directories.
 The file or directory must be local to the http server.
 You can also use this form to load from an http: or ftp: URL.
 
-[ Load | phpwiki:?action=loadfile&source=(/tmp/wikidump) ]
+[ Load | phpwiki:?action=loadfile&source=50(/tmp/wikidump) ]
 
 -----------
 

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.11 2001-02-12 01:43:10 dairiki Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.12 2001-02-13 05:54:38 dairiki Exp $');
 
 /*
    All page saving events take place here.
@@ -6,75 +6,6 @@
    This is klugey. But it works. There's probably a slicker way of
    coding it.
 */
-
-   function UpdateRecentChanges($dbi, $pagename, $isnewpage)
-   {
-      global $user;
-      global $dateformat;
-      global $WikiPageStore;
-
-      $recentchanges = RetrievePage($dbi, gettext ("RecentChanges"), $WikiPageStore);
-
-      // this shouldn't be necessary, since PhpWiki loads 
-      // default pages if this is a new baby Wiki
-      if ($recentchanges == -1) {
-         $recentchanges = array(); 
-      }
-
-      $now = time();
-      $today = date($dateformat, $now);
-
-      if (date($dateformat, $recentchanges['lastmodified']) != $today) {
-         $isNewDay = TRUE;
-         $recentchanges['lastmodified'] = $now;
-      } else {
-         $isNewDay = FALSE;
-      }
-
-      $numlines = sizeof($recentchanges['content']);
-      $newpage = array();
-      $k = 0;
-
-      // scroll through the page to the first date and break
-      // dates are marked with "____" at the beginning of the line
-      for ($i = 0; $i < $numlines; $i++) {
-         if (preg_match("/^____/",
-                        $recentchanges['content'][$i])) {
-            break;
-         } else {
-            $newpage[$k++] = $recentchanges['content'][$i];
-         }
-      }
-
-      // if it's a new date, insert it
-      $newpage[$k++] = $isNewDay ? "____$today\r"
-				 : $recentchanges['content'][$i++];
-
-      $userid = $user->id();
-      
-      // add the updated page's name to the array
-      if($isnewpage) {
-         $newpage[$k++] = "* [$pagename] (new) ..... $userid\r";
-      } else {
-	 $diffurl = "phpwiki:" . rawurlencode($pagename) . "?action=diff";
-         $newpage[$k++] = "* [$pagename] ([diff|$diffurl]) ..... $userid\r";
-      }
-      if ($isNewDay)
-         $newpage[$k++] = "\r";
-
-      // copy the rest of the page into the new array
-      // and skip previous entry for $pagename
-      $pagename = preg_quote($pagename);
-      for (; $i < $numlines; $i++) {
-         if (!preg_match("|\[$pagename\]|", $recentchanges['content'][$i])) {
-            $newpage[$k++] = $recentchanges['content'][$i];
-         }
-      }
-
-      $recentchanges['content'] = $newpage;
-
-      InsertPage($dbi, gettext ("RecentChanges"), $recentchanges);
-   }
 
 
    function ConcurrentUpdates($pagename)
@@ -103,7 +34,7 @@
 
       echo GeneratePage('MESSAGE', $html,
 			sprintf (gettext ("Problem while updating %s"), $pagename), 0);
-      exit;
+      ExitWiki();
    }
 
 

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.30 2001-02-12 01:43:10 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.31 2001-02-13 05:54:38 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
  *
@@ -101,16 +101,16 @@ else
 //////////////////////////////////////////////////////////////////
 // Select database
 //
-if (!defined('DBTYPE'))
+if (empty($DBParams['dbtype']))
 {
    if ( floor(phpversion()) == 3) {
-      define('DBTYPE', 'dbm');
+      $DBParams['dbtype'] = 'dbm';
    } else {
-      define('DBTYPE', 'dba');
+      $DBParams['dbtype'] = 'dba';
    }
 }
 
-switch (DBTYPE) 
+switch ($DBParams['dbtype']) 
 {
    case 'dbm':
       include 'lib/dbmlib.php';
@@ -131,7 +131,7 @@ switch (DBTYPE)
       include "lib/db_filesystem.php";
       break;
    default:
-      die(DBTYPE . ": unknown DBTYPE");
+      ExitWiki($DBParams['dbtype'] . ": unknown DBTYPE");
 }
 
 // InterWiki linking -- wiki-style links to other wikis on the web
