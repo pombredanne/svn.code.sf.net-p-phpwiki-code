@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.196 2004-07-01 08:51:22 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.197 2004-07-02 09:55:58 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -259,7 +259,7 @@ function PossiblyGlueIconToText($proto_or_url, $text) {
  * @return boolean True if same, false else.
  */
 function IsSafeURL($url) {
-    return !ereg('[<>"]', $url);
+    return !preg_match('/[<>"]/', $url);
 }
 
 /**
@@ -326,9 +326,9 @@ function LinkImage($url, $alt = false) {
             }
         }
         // check width and height as spam countermeasure
-        if (($width = $link->getAttr('width')) and ($height = $link->getAttr('height'))) {
-            $width  = (integer) $width; // px or % or other suffix
-            $height = (integer) $height;
+        if (($width  = $link->getAttr('width')) and ($height = $link->getAttr('height'))) {
+            //$width  = (int) $width; // px or % or other suffix
+            //$height = (int) $height;
             if (($width < 3 and $height < 10) or 
                 ($height < 3 and $width < 20) or 
                 ($height < 7 and $width < 7))
@@ -336,15 +336,21 @@ function LinkImage($url, $alt = false) {
                 trigger_error(_("Invalid image size"), E_USER_NOTICE);
                 return '';
             }
-        } elseif ($size = @getimagesize($url)) {
-            $width = $size[0];
-            $height = $size[1];
-            if (($width < 3 and $height < 10) or 
-                ($height < 3 and $width < 20) or 
-                ($height < 7 and $width < 7))
-            {
-                trigger_error(_("Invalid image size"), E_USER_NOTICE);
-                return '';
+        } else {
+            // Older php versions crash here with certain png's: 
+            // confirmed for 4.1.2, 4.1.3., 4.2.3; 4.3.7 is ok
+            //   http://phpwiki.sourceforge.net/demo/themes/default/images/http.png
+            // See http://bugs.php.net/search.php?cmd=display&search_for=getimagesize
+            if (!DISABLE_GETIMAGESIZE and ($size = @getimagesize($url))) {
+                $width  = $size[0];
+                $height = $size[1];
+                if (($width < 3 and $height < 10) 
+                    or ($height < 3 and $width < 20)
+                    or ($height < 7 and $width < 7))
+                {
+                    trigger_error(_("Invalid image size"), E_USER_NOTICE);
+                    return '';
+                }
             }
         }
     }
@@ -1622,6 +1628,9 @@ function url_get_contents( $uri ) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.196  2004/07/01 08:51:22  rurban
+// dumphtml: added exclude, print pagename before processing
+//
 // Revision 1.195  2004/06/29 08:52:22  rurban
 // Use ...version() $need_content argument in WikiDB also:
 // To reduce the memory footprint for larger sets of pagelists,

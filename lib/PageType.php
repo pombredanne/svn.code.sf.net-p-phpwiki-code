@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.28 2004-04-26 20:44:34 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.29 2004-07-02 09:55:58 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004 $ThePhpWikiProgrammingTeam
 
@@ -34,9 +34,11 @@ class TransformedText extends CacheableMarkup {
      *        pagetype than that specified in its version meta-data.
      */
     function TransformedText($page, $text, $meta, $type_override=false) {
-        @$pagetype = $meta['pagetype'];
+    	$pagetype = false;
         if ($type_override)
             $pagetype = $type_override;
+        elseif (isset($meta['pagetype']))
+            $pagetype = $meta['pagetype'];
 	$this->_type = PageType::GetPageType($pagetype);
 	$this->CacheableMarkup($this->_type->transform($page, $text, $meta),
                                $page->getName());
@@ -74,13 +76,11 @@ class PageType {
     function GetPageType ($name=false) {
         if (!$name)
             $name = 'wikitext';
-        if ($name) {
-            $class = "PageType_" . (string)$name;
-            if (class_exists($class))
-                return new $class;
-            trigger_error(sprintf("PageType '%s' unknown", (string)$name),
-                          E_USER_WARNING);
-        }
+        $class = "PageType_" . (string)$name;
+        if (class_exists($class))
+            return new $class;
+        trigger_error(sprintf("PageType '%s' unknown", (string)$name),
+                      E_USER_WARNING);
         return new PageType_wikitext;
     }
 

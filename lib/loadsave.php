@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.116 2004-07-01 09:05:41 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.117 2004-07-02 09:55:58 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -588,7 +588,6 @@ function SavePage (&$request, $pageinfo, $source, $filename)
     $dbi = $request->getDbh();
     $page = $dbi->getPage($pagename);
 
-    $current = $page->getCurrentRevision();
     // Try to merge if updated pgsrc contents are different. This
     // whole thing is hackish
     //
@@ -606,6 +605,7 @@ function SavePage (&$request, $pageinfo, $source, $filename)
         $overwrite = true;
     }
 
+    $current = $page->getCurrentRevision();
     if ( (! $current->hasDefaultContents())
          && ($current->getPackedContent() != $content)
          && ($merging == true) ) {
@@ -631,7 +631,7 @@ function SavePage (&$request, $pageinfo, $source, $filename)
         $mesg->pushContent(' ', fmt("from %s", $source));
 
 
-    $current = $page->getCurrentRevision();
+    //$current = $page->getCurrentRevision();
     if ($current->getVersion() == 0) {
         $mesg->pushContent(' ', _("new page"));
         $isnew = true;
@@ -667,7 +667,9 @@ function SavePage (&$request, $pageinfo, $source, $filename)
         $isnew = false;
     }
 
-    if (! $skip) {
+    if (! $skip ) {
+    	// in case of failures print the culprit:
+    	PrintXML(HTML::dt(WikiLink($pagename))); flush();
         $new = $page->save($content, WIKIDB_FORCE_CREATE, $versiondata);
         $dbi->touch();
         $mesg->pushContent(' ', fmt("- saved to database as version %d",
@@ -703,7 +705,7 @@ function SavePage (&$request, $pageinfo, $source, $filename)
     if ($skip)
         PrintXML(HTML::dt(HTML::em(WikiLink($pagename))), $mesg);
     else
-        PrintXML(HTML::dt(WikiLink($pagename)), $mesg);
+        PrintXML($mesg);
     flush();
 }
 
@@ -900,6 +902,7 @@ function LoadZip (&$request, $zipfile, $files = false, $exclude = false) {
              || ($exclude && in_array($fn, $exclude)) ) {
             PrintXML(HTML::dt(WikiLink($fn)),
                      HTML::dd(_("Skipping")));
+            flush();
             continue;
         }
 
@@ -1129,6 +1132,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.116  2004/07/01 09:05:41  rurban
+ support pages and exclude arguments for all 4 dump methods
+
  Revision 1.115  2004/07/01 08:51:22  rurban
  dumphtml: added exclude, print pagename before processing
 

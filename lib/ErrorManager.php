@@ -1,8 +1,8 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.30 2004-06-25 14:29:12 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.31 2004-07-02 09:55:58 rurban Exp $');
 
-require_once(dirname(__FILE__).'/HtmlElement.php');
 if (isset($GLOBALS['ErrorManager'])) return;
 
+// TODO with php5: ignore E_STRICT (var warnings)
 define ('EM_FATAL_ERRORS',
 	E_ERROR | E_PARSE | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR);
 define ('EM_WARNING_ERRORS',
@@ -543,11 +543,20 @@ class PhpErrorOnce extends PhpError {
     }
 }
 
+require_once(dirname(__FILE__).'/HtmlElement.php');
+
 if (!isset($GLOBALS['ErrorManager'])) {
     $GLOBALS['ErrorManager'] = new ErrorManager;
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.30  2004/06/25 14:29:12  rurban
+// WikiGroup refactoring:
+//   global group attached to user, code for not_current user.
+//   improved helpers for special groups (avoid double invocations)
+// new experimental config option ENABLE_XHTML_XML (fails with IE, and document.write())
+// fixed a XHTML validation error on userprefs.tmpl
+//
 // Revision 1.29  2004/06/20 15:30:04  rurban
 // get_class case-sensitivity issues
 //
