@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.35 2002-01-26 01:51:13 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.36 2002-01-26 01:58:11 dairiki Exp $');
 
 
 include "lib/config.php";
@@ -95,11 +95,11 @@ class WikiRequest extends Request {
         $this->setArg('action', $this->_deduceAction());
 
         // Restore auth state
-        $this->_user = new WikiUser($this->getSessionVar('auth_state'));
+        $this->_user = new WikiUser($this->getSessionVar('wiki_user'));
 
         // Restore saved preferences
-        if (!($prefs = $this->getCookieVar('WIKI_PREFS')))
-            $prefs = $this->getSessionVar('user_prefs');
+        if (!($prefs = $this->getCookieVar('WIKI_PREFS2')))
+            $prefs = $this->getSessionVar('wiki_prefs');
         $this->_prefs = new UserPreferences($prefs);
 
         // Handle preference updates, an authentication requests, if any.
@@ -121,8 +121,8 @@ class WikiRequest extends Request {
         }
 
         // Save preferences
-        $this->setSessionVar('user_prefs', $this->_prefs);
-        $this->setCookieVar('WIKI_PREFS', $this->_prefs, 365);
+        $this->setSessionVar('wiki_prefs', $this->_prefs);
+        $this->setCookieVar('WIKI_PREFS2', $this->_prefs, 365);
 
         // Ensure user has permissions for action
         $require_level = $this->requiredAuthority($this->getArg('action'));
@@ -206,7 +206,7 @@ class WikiRequest extends Request {
 
     function _setUser ($user) {
         $this->_user = $user;
-        $this->setSessionVar('auth_state', $user);
+        $this->setSessionVar('wiki_user', $user);
 
         // Save userid to prefs..
         $this->_prefs->set('userid',
