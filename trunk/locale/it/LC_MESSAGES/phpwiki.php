@@ -18,8 +18,6 @@ $locale["Make changes to the file again. Paste your additions from the clipboard
    "Cambia ancora il file ed installa le tue modifiche dalla clipboard (o dall'editor di testo)";
 $locale["None"] =
    "Nessuno";
-$locale["Otherwise press the \"Back\" button of your browser."] =
-   "Altrimenti premi il bottone \"Precedente\" sul tuo browser";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
    "PhpWiki non &egrave; riuscito a salvare i tuoi cambiamenti perch&egrave; un altro utente ha cambiato la pagina mentre la stavi modificando. Se il salvataggio viene comunque fatto, i cambiamenti dell'altro utente verranno persi.";
 $locale["Press <b>Save</b> again."] =
@@ -28,6 +26,8 @@ $locale["Problem while editing %s"] =
    "Si sono verificati problemi durante la modifica %s";
 $locale["Problem while updating %s"] =
    "Problemi durante l'aggiornamento %s";
+$locale["RecentChanges"] =
+   "ModificheRecenti";
 $locale["Remove page"] =
    "Rimuovi la pagina";
 $locale["Removed page '%s' succesfully."] =
@@ -42,14 +42,6 @@ $locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
    "Usa il pulsante <b>Precedente</b> del tuo browser per tornarealla pagina di modifica";
 $locale["Versions are identical"] =
    "Le versioni sono identiche";
-$locale["WikiDiff Okay: LCS = %s"] =
-   "WikiDiff Ok: LCS = %s";
-$locale["WikiDiff::_check: edit sequence is non-optimal"] =
-   "WikiDiff::_check: la sequenza di editazione non e` ottimale";
-$locale["WikiDiff::_check: failed"] =
-   "WikiDiff::_check: fallito";
-$locale["WikiDiff::apply: line count mismatch: %s != %s"] =
-   "WikiDiff::applu: il numero delle linee &egrave; differente: %s != %s";
 $locale["WikiFatalError"] =
    "ErroreFataleDiWiki";
 $locale["You are about to remove '%s' permanently!"] =

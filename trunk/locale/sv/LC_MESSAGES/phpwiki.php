@@ -18,8 +18,6 @@ $locale["Make changes to the file again. Paste your additions from the clipboard
    "Ändra filen igen. Klistra in dina ändringar från urklippet (eller texteditorn).";
 $locale["None"] =
    "ingen";
-$locale["Otherwise press the \"Back\" button of your browser."] =
-   "Annars klicka på backaknappen i din webbläsare.";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
    "PhpWiki kan inte spara dina ändringar eftersom en annan användare ändrade och sparade sidan under tiden som du ändrade på sidan. Sparar du nu försvinner ändringarna gjorda av den förra användaren.";
 $locale["Press <b>Save</b> again."] =
@@ -28,8 +26,12 @@ $locale["Problem while editing %s"] =
    "Har problem med att redigera %s";
 $locale["Problem while updating %s"] =
    "Har problem med att uppdatera %s";
+$locale["RecentChanges"] =
+   "SenasteÄndringar";
 $locale["Remove page"] =
    "Ta bort sida";
+$locale["Search"] =
+   "Sök";
 $locale["Sorry for the inconvenience."] =
    "Ledsen för allt besvär.";
 $locale["Thank you for editing %s."] =
@@ -40,14 +42,6 @@ $locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
    "Använd webbläsarens <b>backaknapp</b> för att gå tillbaka till redigeringssidan.";
 $locale["Versions are identical"] =
    "Versionerna är identiska";
-$locale["WikiDiff Okay: LCS = %s"] =
-   "WikiDiff Ok: LCS = %s";
-$locale["WikiDiff::_check: edit sequence is non-optimal"] =
-   "WikiDiff::_check: ändringssekvensen är icke optimal";
-$locale["WikiDiff::_check: failed"] =
-   "WikiDiff::_check: misslyckades";
-$locale["WikiDiff::apply: line count mismatch: %s != %s"] =
-   "WikiDiff::apply: radantalet stämmer inte: %s != %s";
 $locale["WikiFatalError"] =
    "WikiFatalError";
 $locale["You are about to remove '%s' permanently!"] =
