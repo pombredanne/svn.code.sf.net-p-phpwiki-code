@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllUsers.php,v 1.6 2003-02-27 20:10:31 dairiki Exp $');
+rcs_id('$Id: AllUsers.php,v 1.7 2003-12-21 00:29:45 carstenklapp Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -20,8 +20,6 @@ rcs_id('$Id: AllUsers.php,v 1.6 2003-02-27 20:10:31 dairiki Exp $');
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-require_once('lib/PageList.php');
-
 /**
  * Based on AllPages.
  *
@@ -41,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
@@ -68,6 +66,7 @@ extends WikiPlugin
         if ($sortby)
             $request->setArg('sortby',$sortby);
 
+        include_once('lib/PageList.php');
         $pagelist = new PageList($info, $exclude);
         if (!$noheader)
             $pagelist->setCaption(_("Authenticated users on this wiki (%d total):"));
@@ -76,7 +75,11 @@ extends WikiPlugin
         if ($include_empty)
             $pagelist->_addColumn('version');
 
-        $timer = new DebugTimer;
+        if (defined('DEBUG') and DEBUG)
+            $debug = true;
+
+        if ($debug)
+            $timer = new DebugTimer;
 
         $page_iter = $dbi->getAllPages($include_empty);
         while ($page = $page_iter->next()) {
@@ -84,21 +87,22 @@ extends WikiPlugin
                 $pagelist->addPage($page);
         }
 
-        if (defined('DEBUG') and DEBUG) {
-            return HTML($pagelist,
-                        HTML::p(fmt("Elapsed time: %s s", $timer->getStats())));
-        } else {
-            return $pagelist;
+        if ($debug) {
+            // Not totally localization-friendly but it's only a
+            // DEBUGging message
+            trigger_error("DEBUG: " . get_class($this) . ": "
+                          . sprintf(_("Elapsed time: %s s"),
+                                    $timer->getStats()),
+                          E_USER_NOTICE);
         }
-    }
-
-    function getmicrotime(){
-        list($usec, $sec) = explode(" ", microtime());
-        return (float)$usec + (float)$sec;
+        return $pagelist;
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2003/02/27 20:10:31  dairiki
+// Disable profiling output when DEBUG is defined but false.
+//
 // Revision 1.5  2003/02/21 04:08:26  dairiki
 // New class DebugTimer in prepend.php to help report timing.
 //
