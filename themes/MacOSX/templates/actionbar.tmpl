@@ -1,0 +1,63 @@
+<?php // -*-html-*- ?>
+<!-- $Id: actionbar.tmpl,v 1.1 2002-01-18 20:02:00 dairiki Exp $ -->
+<?php
+  $BF = &$ButtonFactory;
+
+  if (!$page->get('locked') || $user->is_admin())
+      $EditB = $BF->makeActionButton("edit",
+                                     $IS_CURRENT ? _("Edit") : _("Edit Old Revision"));
+  else
+      $EditB = $BF->makeActionButton("edit", _("View Source"));
+
+  $LockPageB = $BF->makeActionButton($page->get('locked') ? 'unlock' : 'lock');
+  $RemovePageB = $BF->makeActionButton('remove');
+
+  //<?plugin-link PageHistory page="[pagename]" ?>
+  $PageHistoryB = $BF->makeActionPageButton(_("PageHistory"));
+  $DiffB = $BF->makeActionButton(array('action' => 'diff', 'previous' => 'major'));
+
+  $DebugInfoB = $BF->makeActionPageButton(_("DebugInfo"));
+
+  $SignInB = $BF->makeActionButton($user->is_authenticated() ? 'logout' : 'login');
+
+  $s = $Theme->buttonSep;
+?>
+
+<!-- I would like not to have to use these tables, and managed to
+     get this stuff to work more or less correctly using
+     CSSs float:left; and float:right;.  However float:right; seems
+     to cause MSIE4.01/NT to hang. 
+     So, we use tables...  -->
+<table summary="Toolbar 1: Page actions and login."
+       class="toolbar" width="100%"
+       cellpadding="0" cellspacing="0" border="0"
+       id="actionbar">
+<tr valign="middle">
+  <td>
+    <?= $EditB ?> 
+    <?php if ($user->is_admin()) { ?>
+     <?=$s?><?= $LockPageB ?><?=$s?><?= $RemovePageB ?>
+    <?php } ?>
+   <?=$s?><?= $PageHistoryB ?><?=$s?><?= $DiffB ?> 
+   <?=$s?><?= $DebugInfoB ?> <!-- For debugging only, really -->
+  </td>
+
+  <td align="right">
+    <?php if ($user->is_authenticated()) {
+      /* This extra table data is required to properly align an image
+       * button next to text. With text-only buttons, it would take up
+       * too much room on small screens to align text this way, so the
+       * default browse template is overridden for this theme.
+       */ ?>
+
+      <table cellspacing="0" cellpadding="0" border="0">
+      <tr valign="middle">
+        <td><?php printf(_("You are signed in as %s"), LinkWikiWord($USERID)); ?>&nbsp;</td>
+        <td><?=$s?><?= $SignInB ?></td>
+      </tr>
+      </table>
+    <?php } else { ?>
+      <?= $SignInB ?>
+    <?php } ?>
+  </td>
+</tr></table>
