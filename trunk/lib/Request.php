@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.65 2004-09-17 14:13:49 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.66 2004-09-25 16:24:52 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -330,6 +330,8 @@ class Request {
         elseif (!check_php_version(4,2,3))
             $compress = false;
         elseif (isCGI()) // necessary?
+            $compress = false;
+        elseif ($GLOBALS['request']->getArg('start_debug'))
             $compress = false;
 
         // Should we compress even when apache_note is not available?
@@ -1014,6 +1016,16 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.65  2004/09/17 14:13:49  rurban
+// We check for the client Accept-Encoding: "gzip" presence also
+// This should eliminate a lot or reported problems.
+//
+// Note that this doesn#t fix RSS ssues:
+// Most RSS clients are NOT(!) application/xml gzip compatible yet.
+// Even if they are sending the accept-encoding gzip header!
+// wget is, Mozilla, and MSIE no.
+// Of the RSS readers only MagpieRSS 0.5.2 is. http://www.rssgov.com/rssparsers.html
+//
 // Revision 1.64  2004/09/17 13:32:36  rurban
 // Disable server-side gzip encoding for RSS (RDF encoding), even if the client says it
 // supports it. Mozilla has this error, wget works fine. IE not checked.
