@@ -1,5 +1,5 @@
 /*
-  $Id: MacOSX.css,v 1.9 2002-01-18 00:03:31 carstenklapp Exp $
+  $Id: MacOSX.css,v 1.10 2002-01-18 01:25:32 dairiki Exp $
 
   Classes:
 
@@ -172,6 +172,8 @@ img.rssicon		{ vertical-align: middle; }
 /* This screws up NS4, moved to phpwiki-heavy.css 
 img.linkicon		{ vertical-align: middle; }
 */
+img.wiki-button		{ vertical-align: middle; }
+
 .wikiaction { border: 0; }
  
 /* backlinks */
