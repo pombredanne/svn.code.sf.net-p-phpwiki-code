@@ -1,4 +1,4 @@
--- $Id: mysql-test-initialize.sql,v 1.2 2004-11-15 16:53:01 rurban Exp $
+-- $Id: mysql-test-initialize.sql,v 1.3 2004-12-22 15:05:18 rurban Exp $
 -- for the regression suite
 
 drop table if exists test_page;
@@ -22,6 +22,7 @@ CREATE TABLE test_page (
         pagename        VARCHAR(100) BINARY NOT NULL,
 	hits            INT NOT NULL DEFAULT 0,
         pagedata        MEDIUMTEXT NOT NULL DEFAULT '',
+        cached_html     MEDIUMBLOB,
         PRIMARY KEY (id),
 	UNIQUE KEY (pagename)
 );
