@@ -1,9 +1,9 @@
 Date: Wed, 26 Nov 2003 18:34:06 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.7pre)
-X-Rcs-Id: $Id: PhpWikiAdministration,v 1.22 2003-11-26 17:38:18 carstenklapp Exp $
+X-Rcs-Id: $Id: PhpWikiAdministration,v 1.23 2003-11-26 17:46:18 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiAdministration;
-  pgsrc_version="2 $Revision: 1.22 $";
+  pgsrc_version="2 $Revision: 1.23 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
@@ -14,7 +14,7 @@ privileges. They won't work unless you have set an admin username and
 password in the PhpWiki config file._
 
 ----------
-!!! #[Contents|top]
+!!! #[Contents]
 * [Cleanup|#Cleanup]
 * [Making Snapshots or Backups|#Making Snapshots or Backups]
 * [Restoring|#Restoring]
@@ -23,7 +23,7 @@ password in the PhpWiki config file._
 * [PhpWiki Internals|#PhpWiki Internals]
 
 ----
-!!! #[Cleanup|#top]
+!!! #[|Cleanup][Cleanup|#Contents]
 
 A Wiki SandBox is very easy to clean. Here you can restore it to
 pristine condition by loading the default from pgsrc.
@@ -34,7 +34,7 @@ pristine condition by loading the default from pgsrc.
 
 ----------
 
-!!! #[Making Snapshots or Backups]
+!!! #[|Making Snapshots or Backups][Making Snapshots or Backups|#Contents]
 
 !! ZIP files of database
 
@@ -63,7 +63,7 @@ directory, one page per file. Your server must have write permissions
 to the directory!
 
 -----------
-!!! #[Restoring]
+!!! #[|Restoring][Restoring|#Contents]
 
 If you have dumped a set of pages from PhpWiki, you can reload them
 here. Note that pages in your database will be overwritten; thus, if
@@ -89,7 +89,7 @@ server. You can also use this form to load from an http: or ftp: URL.
 
 -----------
 
-!!! #[Format of the files]
+!!! #[|Format of the files][Format of the files|#Contents]
 
 Currently the pages are stored, one per file, as MIME (RFC:2045)
 e-mail (RFC:822) messages. The content-type ''application/x-phpwiki''
@@ -118,7 +118,7 @@ these three types of files, and handle them accordingly.
 
 ----
 
-!!! #[Dump pages as XHTML]
+!!! #[|Dump pages as XHTML][Dump pages as XHTML|#Contents]
 
   <?plugin WikiForm action=dumphtml?>
 
@@ -132,7 +132,7 @@ pages.
 
 ----
 
-!!! #[|PhpWiki Internals][PhpWiki Internals|#top]
+!!! #[|PhpWiki Internals][PhpWiki Internals|#Contents]
 
 These are here mostly for debugging purposes (at least, that's the
 hope.)
