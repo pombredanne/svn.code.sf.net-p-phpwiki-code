@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageListColumns.php,v 1.8 2004-11-06 17:13:17 rurban Exp $');
+rcs_id('$Id: PageListColumns.php,v 1.9 2004-12-26 17:08:36 rurban Exp $');
 
 /*
  Copyright 2004 Mike Cassano
@@ -303,7 +303,7 @@ class _PageList_Column_top3recs extends _PageList_Column_custom
         }
         // No, I don't know exactly why, but this needs to be a reference for
         // the memoization in pearson_similarity and mean_rating to work
-        $this->_active_ratings_user =& new RatingsUser($active_user->getId());
+        $this->_active_ratings_user = new RatingsUser($active_user->getId());
         $this->_PageList_Column($params[0], $params[1], $params[2]);
         
         if (!empty($params[3])) {
@@ -376,6 +376,9 @@ $WikiTheme->addPageListColumn
     ));
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/11/06 17:13:17  rurban
+// init is easier this way: no ->init(), pass params instead
+//
 // Revision 1.7  2004/11/01 10:43:59  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session

@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.28 2004-12-20 16:05:00 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.29 2004-12-26 17:08:35 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -138,10 +138,10 @@ class CacheableMarkup extends XmlContent {
 	    foreach ($item->getContent() as $item)
 		$this->_append($item);
 	}
-	elseif (method_exists($item, 'asxml')) {
+	elseif (method_exists($item, 'asXML')) {
 	    $this->_buf .= $item->asXML();
 	}
-	elseif (method_exists($item, 'asstring')) {
+	elseif (method_exists($item, 'asString')) {
 	    $this->_buf .= $this->_quote($item->asString());
 	}
 	else {
@@ -188,7 +188,7 @@ class CacheableMarkup extends XmlContent {
             if (is_string($item)) {
                 $xml .= $item;
             }
-            elseif (is_subclass_of($item, 'cached_dynamiccontent')) {
+            elseif (is_subclass_of($item, check_php_version(5) ? 'Cached_DynamicContent' : 'cached_dynamiccontent')) {
                 $val = $item->expand($basepage, $this);
                 $xml .= $val->asXML();
             }
@@ -207,7 +207,7 @@ class CacheableMarkup extends XmlContent {
             if (is_string($item)) {
                 print $item;
             }
-            elseif (is_subclass_of($item, 'cached_dynamiccontent')) {
+            elseif (is_subclass_of($item, check_php_version(5) ? 'Cached_DynamicContent' : 'cached_dynamiccontent')) {
             	// give the content the chance to know about itself or even 
             	// to change itself
                 $val = $item->expand($basepage, $this);

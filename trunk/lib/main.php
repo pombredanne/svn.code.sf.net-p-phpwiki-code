@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.199 2004-12-19 00:58:01 rurban Exp $');
+rcs_id('$Id: main.php,v 1.200 2004-12-26 17:08:36 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -30,7 +30,8 @@ class WikiRequest extends Request {
     // var $_dbi;
 
     function WikiRequest () {
-        $this->_dbi = WikiDB::open($GLOBALS['DBParams']); // first mysql request costs [958ms]! [670ms] is mysql_connect()
+        $this->_dbi = WikiDB::open($GLOBALS['DBParams']);
+         // first mysql request costs [958ms]! [670ms] is mysql_connect()
         
         if (in_array('File', $this->_dbi->getAuthParam('USER_AUTH_ORDER'))) {
             // force our local copy, until the pear version is fixed.
@@ -48,13 +49,13 @@ class WikiRequest extends Request {
             	    	case 'SQL' : include_once("lib/WikiUser/PearDb.php"); break;
             	    	case 'ADODB': include_once("lib/WikiUser/AdoDb.php"); break;
             	    }
-            	unset($method);
             }
+            unset($method);
         }
         if (USE_DB_SESSION) {
             include_once('lib/DbSession.php');
             $dbi =& $this->_dbi;
-            $this->_dbsession = & new DbSession($dbi, $dbi->getParam('prefix') . $dbi->getParam('db_session_table'));
+            $this->_dbsession = new DbSession($dbi, $dbi->getParam('prefix') . $dbi->getParam('db_session_table'));
         }
 // Fixme: Does pear reset the error mask to 1? We have to find the culprit
 //$x = error_reporting();
@@ -1175,7 +1176,7 @@ if (defined('WIKI_SOAP')   and WIKI_SOAP)   return;
    
     $request->handleAction();
 
-    if (DEBUG and DEBUG & _DEBUG_INFO) phpinfo(INFO_VARIABLES);
+    if (DEBUG and DEBUG & _DEBUG_INFO) phpinfo(INFO_VARIABLES | INFO_MODULES);
     $request->finish();
 }
 
@@ -1190,6 +1191,12 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.199  2004/12/19 00:58:01  rurban
+// Enforce PASSWORD_LENGTH_MINIMUM in almost all PassUser checks,
+// Provide an errormessage if so. Just PersonalPage and BogoLogin not.
+// Simplify httpauth logout handling and set sessions for all methods.
+// fix main.php unknown index "x" getLevelDescription() warning.
+//
 // Revision 1.198  2004/12/17 16:49:51  rurban
 // avoid Invalid username message on Sign In button click
 //
