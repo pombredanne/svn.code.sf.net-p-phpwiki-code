@@ -1,12 +1,13 @@
-<?php rcs_id('$Id: Request.php,v 1.1 2001-09-18 19:16:23 dairiki Exp $');
+<?php rcs_id('$Id: Request.php,v 1.2 2001-09-19 02:58:00 dairiki Exp $');
 
 // FIXME: write log entry.
 
 class Request {
         
     function Request() {
-        
+
         $this->_fix_magic_quotes_gpc();
+        $this->_fix_multipart_form_data();
 
         switch($this->get('REQUEST_METHOD')) {
         case 'GET':
@@ -115,6 +116,7 @@ class Request {
         }
     }
 
+
     function _stripslashes(&$var) {
         if (is_array($var)) {
             foreach ($var as $key => $val)
@@ -122,6 +124,20 @@ class Request {
         }
         elseif (is_string($var))
             $var = stripslashes($var);
+    }
+
+    function _fix_multipart_form_data () {
+        if (preg_match('|^multipart/form-data|', $this->get('CONTENT_TYPE')))
+            $this->_strip_leading_nl($GLOBALS['HTTP_POST_VARS']);
+    }
+    
+    function _strip_leading_nl(&$var) {
+        if (is_array($var)) {
+            foreach ($var as $key => $val)
+                $this->_strip_leading_nl($var[$key]);
+        }
+        elseif (is_string($var))
+            $var = preg_replace('|^\r?\n?|', '', $var);
     }
 }
 
@@ -198,7 +214,7 @@ class Request_UploadedFile {
             return false;
         
         $fileinfo = &$HTTP_POST_FILES[$postname];
-        if (!is_uploaded_file($fileinfo['temp_name']))
+        if (!is_uploaded_file($fileinfo['tmp_name']))
             return false;       // possible malicious attack.
 
         return new Request_UploadedFile($fileinfo);
