@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: VisualWiki.php,v 1.3 2002-08-19 11:32:30 rurban Exp $');
+<?php rcs_id('$Id: VisualWiki.php,v 1.4 2002-08-27 22:34:17 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -450,7 +450,7 @@ class WikiPlugin_VisualWiki extends WikiPluginCached {
 
             $url = rawurlencode($name);
 	    // patch to allow Page/SubPage
-	    $url = preg_replace('/' . urlencode(SUBPAGE_SEPERATOR) . '/',SUBPAGE_SEPERATOR,$url);
+	    $url = preg_replace('/' . urlencode(SUBPAGE_SEPARATOR) . '/',SUBPAGE_SEPARATOR,$url);
             $nodename = ($label!='name'?$nametonumber[$name]+1:$name);
 
             $dot .= "    \"$nodename\" [URL=\"$url\"";
