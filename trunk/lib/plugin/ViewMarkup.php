@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ViewMarkup.php,v 1.2 2001-12-28 09:55:12 carstenklapp Exp $');
+rcs_id('$Id: ViewMarkup.php,v 1.3 2001-12-31 08:30:36 carstenklapp Exp $');
 require_once('lib/Template.php');
 /**
  * A handy plugin for viewing the WikiMarkup of locked pages.
@@ -39,7 +39,7 @@ extends WikiPlugin
         $content = &$vdata['%content'];
 
         $html = QElement('h2',
-                 sprintf(_("Revealing WikiMarkup for page '%s':"), $page));
+                 sprintf(_("Revealing WikiMarkup for page '%s':"), urlencode($page)));
 
         /* only good for WikiMarkup with few newlines */
         //$html .= Element('pre', nl2br($content) );
