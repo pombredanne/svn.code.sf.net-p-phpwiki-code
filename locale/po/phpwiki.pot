@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2002-01-29 12:22-0500\n"
+"POT-Creation-Date: 2002-01-31 06:18-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,11 +14,11 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../lib/config.php:283
+#: ../lib/config.php:276
 msgid "An unnamed PhpWiki"
 msgstr ""
 
-#: ../lib/config.php:286
+#: ../lib/config.php:279
 msgid "HomePage"
 msgstr ""
 
@@ -51,56 +51,56 @@ msgid "current version"
 msgstr ""
 
 #: ../lib/diff.php:288
-msgid "previous major revision"
-msgstr ""
-
-#: ../lib/diff.php:297
 msgid "revision by previous author"
 msgstr ""
 
-#: ../lib/diff.php:304
+#: ../lib/diff.php:294
 msgid "previous revision"
 msgstr ""
 
-#: ../lib/diff.php:316
+#: ../lib/diff.php:304
+msgid "predecessor to the previous major change"
+msgstr ""
+
+#: ../lib/diff.php:314
 #, c-format
 msgid "Differences between %s and %s of %s."
 msgstr ""
 
-#: ../lib/diff.php:319
+#: ../lib/diff.php:317
 msgid "Other diffs:"
 msgstr ""
 
-#: ../lib/diff.php:320
+#: ../lib/diff.php:318
 msgid "Previous Major Revision"
 msgstr ""
 
-#: ../lib/diff.php:321
+#: ../lib/diff.php:319
 msgid "Previous Revision"
 msgstr ""
 
-#: ../lib/diff.php:322
+#: ../lib/diff.php:320
 msgid "Previous Author"
 msgstr ""
 
-#: ../lib/diff.php:341
+#: ../lib/diff.php:337
 msgid "Newer page:"
 msgstr ""
 
-#: ../lib/diff.php:342
+#: ../lib/diff.php:338
 msgid "Older page:"
 msgstr ""
 
-#: ../lib/diff.php:349
+#: ../lib/diff.php:345
 msgid "Versions are identical"
 msgstr ""
 
-#: ../lib/diff.php:362
+#: ../lib/diff.php:358
 #, c-format
 msgid "Diff: %s"
 msgstr ""
 
-#: ../lib/display.php:84 ../lib/plugin/BackLinks.php:12
+#: ../lib/display.php:85 ../lib/plugin/BackLinks.php:12
 #: ../themes/default/templates/navbar.tmpl:21
 msgid "BackLinks"
 msgstr ""
@@ -110,14 +110,89 @@ msgstr ""
 msgid "BackLinks for %s"
 msgstr ""
 
-#: ../lib/editpage.php:29
+#: ../lib/Theme.php:262 ../lib/editpage.php:63
+#, c-format
+msgid "Edit: %s"
+msgstr ""
+
+#: ../lib/editpage.php:94
 #, c-format
 msgid "View Source: %s"
 msgstr ""
 
-#: ../lib/editpage.php:34
+#: ../lib/editpage.php:150
 #, c-format
-msgid "Edit: %s"
+msgid "Saved: %s"
+msgstr ""
+
+#: ../lib/editpage.php:190 ../themes/MacOSX/themeinfo.php:121
+msgid "Page Locked"
+msgstr ""
+
+#: ../lib/editpage.php:191
+msgid ""
+"This page has been locked by the administrator so your changes can not be "
+"saved."
+msgstr ""
+
+#: ../lib/editpage.php:192
+msgid ""
+"(Copy your changes to the clipboard. You can try editing a different page or "
+"save your text in a text editor.)"
+msgstr ""
+
+#: ../lib/editpage.php:193 ../lib/editpage.php:215
+msgid "Sorry for the inconvenience."
+msgstr ""
+
+#: ../lib/editpage.php:203
+msgid "Edit the new version"
+msgstr ""
+
+#: ../lib/editpage.php:205
+msgid ""
+"Copy your changes to the clipboard or to another temporary place (e.g. text "
+"editor)."
+msgstr ""
+
+#: ../lib/editpage.php:206
+#, c-format
+msgid ""
+"%s of the page. You should now see the most current version of the page. "
+"Your changes are no longer there."
+msgstr ""
+
+#: ../lib/editpage.php:208
+msgid ""
+"Make changes to the file again. Paste your additions from the clipboard (or "
+"text editor)."
+msgstr ""
+
+#: ../lib/editpage.php:209
+msgid "Save your updated changes."
+msgstr ""
+
+#: ../lib/editpage.php:211
+msgid "Conflicting Edits!"
+msgstr ""
+
+#: ../lib/editpage.php:212
+msgid ""
+"In the time since you started editing this page, another user has saved a "
+"new version of it.  Your changes can not be saved, since doing so would "
+"overwrite the other author's changes."
+msgstr ""
+
+#: ../lib/editpage.php:213
+msgid "In order to recover from this situation, follow these steps:"
+msgstr ""
+
+#: ../lib/editpage.php:265
+msgid "Preview"
+msgstr ""
+
+#: ../lib/editpage.php:268
+msgid "Save"
 msgstr ""
 
 #: ../lib/ErrorManager.php:167
@@ -130,126 +205,130 @@ msgstr ""
 msgid "%s: file not found"
 msgstr ""
 
-#: ../lib/loadsave.php:21
+#: ../lib/interwiki.php:7
+msgid "InterWikiMap"
+msgstr ""
+
+#: ../lib/loadsave.php:20
 msgid "Complete."
 msgstr ""
 
-#: ../lib/loadsave.php:22
+#: ../lib/loadsave.php:21
 #, c-format
 msgid "Return to %s"
 msgstr ""
 
-#: ../lib/loadsave.php:150
+#: ../lib/loadsave.php:149
 msgid "You must specify a directory to dump to"
 msgstr ""
 
-#: ../lib/loadsave.php:155
+#: ../lib/loadsave.php:154
 #, c-format
 msgid "Cannot create directory '%s'"
 msgstr ""
 
-#: ../lib/loadsave.php:157
+#: ../lib/loadsave.php:156
 #, c-format
 msgid "Created directory '%s' for the page dump..."
 msgstr ""
 
-#: ../lib/loadsave.php:160
+#: ../lib/loadsave.php:159
 #, c-format
 msgid "Using directory '%s'"
 msgstr ""
 
-#: ../lib/loadsave.php:163
+#: ../lib/loadsave.php:162
 msgid "Dumping Pages"
 msgstr ""
 
-#: ../lib/loadsave.php:175
+#: ../lib/loadsave.php:174
 #, c-format
 msgid "saved as %s"
 msgstr ""
 
-#: ../lib/loadsave.php:185 ../lib/plugin/text2png.php:154
+#: ../lib/loadsave.php:184 ../lib/plugin/text2png.php:154
 #, c-format
 msgid "couldn't open file '%s' for writing"
 msgstr ""
 
-#: ../lib/loadsave.php:191
+#: ../lib/loadsave.php:190
 #, c-format
 msgid "%s bytes written"
 msgstr ""
 
-#: ../lib/loadsave.php:214
+#: ../lib/loadsave.php:213
 msgid "Empty pagename!"
 msgstr ""
 
-#: ../lib/loadsave.php:235
+#: ../lib/loadsave.php:234
 #, c-format
 msgid "from %s"
 msgstr ""
 
-#: ../lib/loadsave.php:240
+#: ../lib/loadsave.php:239
 msgid "new page"
 msgstr ""
 
-#: ../lib/loadsave.php:247
+#: ../lib/loadsave.php:246
 #, c-format
 msgid "is identical to current version %d - skipped"
 msgstr ""
 
-#: ../lib/loadsave.php:259
+#: ../lib/loadsave.php:258
 #, c-format
 msgid "- saved to database as version %d"
 msgstr ""
 
-#: ../lib/loadsave.php:350
+#: ../lib/loadsave.php:346
 #, c-format
 msgid "MIME file %s"
 msgstr ""
 
-#: ../lib/loadsave.php:355
+#: ../lib/loadsave.php:351
 #, c-format
 msgid "Serialized file %s"
 msgstr ""
 
-#: ../lib/loadsave.php:369
+#: ../lib/loadsave.php:365
 #, c-format
 msgid "plain file %s"
 msgstr ""
 
-#: ../lib/loadsave.php:384 ../lib/loadsave.php:396
+#: ../lib/loadsave.php:379 ../lib/loadsave.php:391
 msgid "Skipping"
 msgstr ""
 
-#: ../lib/loadsave.php:494
+#: ../lib/loadsave.php:488
 #, c-format
 msgid "Bad file type: %s"
 msgstr ""
 
-#: ../lib/loadsave.php:508
+#: ../lib/loadsave.php:502
 #, c-format
 msgid "Loading '%s'"
 msgstr ""
 
-#: ../lib/loadsave.php:529
+#: ../lib/loadsave.php:523
 msgid "The PhpWiki programming team"
 msgstr ""
 
-#: ../lib/loadsave.php:532
+#: ../lib/loadsave.php:526
 msgid "Loading up virgin wiki"
 msgstr ""
 
-#: ../lib/loadsave.php:549
+#: ../lib/loadsave.php:543
 msgid "No uploaded file to upload?"
 msgstr ""
 
-#: ../lib/loadsave.php:553
+#: ../lib/loadsave.php:547
 #, c-format
 msgid "Uploading %s"
 msgstr ""
 
-#: ../lib/RSSWriter091.php:115 ../lib/loadsave.php:558
-#: ../lib/plugin/RecentChanges.php:180 ../lib/plugin/RecentChanges.php:287
-#: ../lib/plugin/RecentChanges.php:364
-#: ../themes/Portland/templates/navbar.tmpl:38
+#: ../lib/RSSWriter091.php:115 ../lib/loadsave.php:552
+#: ../lib/plugin/RecentChanges.php:175 ../lib/plugin/RecentChanges.php:279
+#: ../lib/plugin/RecentChanges.php:356
+#: ../themes/Portland/templates/navbar.tmpl:30
 #: ../themes/default/templates/navbar.tmpl:12
 msgid "RecentChanges"
 msgstr ""
@@ -287,7 +366,7 @@ msgstr ""
 msgid "FullTextSearch"
 msgstr ""
 
-#: ../lib/main.php:409 ../lib/plugin/RecentChanges.php:278
+#: ../lib/main.php:409 ../lib/plugin/RecentChanges.php:270
 #: ../lib/plugin/TitleSearch.php:13
 msgid "TitleSearch"
 msgstr ""
@@ -296,7 +375,7 @@ msgstr ""
 msgid "Page Name"
 msgstr ""
 
-#: ../lib/PageList.php:140 ../lib/plugin/FullTextSearch.php:51
+#: ../lib/PageList.php:158 ../lib/plugin/FullTextSearch.php:51
 msgid "<no matches>"
 msgstr ""
 
@@ -344,15 +423,15 @@ msgstr ""
 msgid "All Pages"
 msgstr ""
 
-#: ../lib/plugin/AllPages.php:38
+#: ../lib/plugin/AllPages.php:34
 #, c-format
 msgid "Pages in this wiki (%d total):"
 msgstr ""
 
 #: ../lib/plugin/_BackendInfo.php:10
-#: ../themes/MacOSX/templates/actionbar.tmpl:16
-#: ../themes/Portland/templates/navbar.tmpl:10
-#: ../themes/default/templates/actionbar.tmpl:16
+#: ../themes/MacOSX/templates/actionbar.tmpl:31
+#: ../themes/Portland/templates/navbar.tmpl:17
+#: ../themes/default/templates/actionbar.tmpl:33
 msgid "DebugInfo"
 msgstr ""
 
@@ -376,14 +455,19 @@ msgstr ""
 msgid "Get BackLinks for %s"
 msgstr ""
 
-#: ../lib/plugin/BackLinks.php:59
+#: ../lib/plugin/BackLinks.php:49
 #, c-format
 msgid "No pages link to %s."
 msgstr ""
 
-#: ../lib/plugin/BackLinks.php:61
+#: ../lib/plugin/BackLinks.php:52
 #, c-format
-msgid "%d pages link to %s:"
+msgid "One page links to %s:"
+msgstr ""
+
+#: ../lib/plugin/BackLinks.php:55
+#, c-format
+msgid "%s pages link to %s:"
 msgstr ""
 
 #: ../lib/plugin/Calendar.php:24 ../lib/plugin/Calendar.php:28
@@ -424,7 +508,7 @@ msgstr ""
 msgid "IncludePage"
 msgstr ""
 
-#: ../lib/plugin/IncludePage.php:58 ../lib/plugin/walkabout.php:71
+#: ../lib/plugin/IncludePage.php:58 ../lib/plugin/PageGroup.php:51
 #, c-format
 msgid "<%s: no such section>"
 msgstr ""
@@ -438,17 +522,17 @@ msgstr ""
 msgid "recursive inclusion of page %s"
 msgstr ""
 
-#: ../lib/plugin/IncludePage.php:88 ../lib/plugin/walkabout.php:122
+#: ../lib/plugin/IncludePage.php:88 ../lib/plugin/PageGroup.php:93
 #, c-format
 msgid "%s(%d): no such revision"
 msgstr ""
 
-#: ../lib/plugin/IncludePage.php:122
+#: ../lib/plugin/IncludePage.php:121
 #, c-format
 msgid "Included from %s"
 msgstr ""
 
-#: ../lib/plugin/LikePages.php:13 ../themes/Portland/templates/navbar.tmpl:19
+#: ../lib/plugin/LikePages.php:13 ../themes/Portland/templates/navbar.tmpl:10
 #: ../themes/default/templates/navbar.tmpl:20
 msgid "LikePages"
 msgstr ""
@@ -468,7 +552,7 @@ msgstr ""
 msgid "Page names with suffix '%s'"
 msgstr ""
 
-#: ../lib/plugin/LikePages.php:55
+#: ../lib/plugin/LikePages.php:54
 #, c-format
 msgid "These pages share an initial or final title word with '%s'"
 msgstr ""
@@ -481,140 +565,180 @@ msgstr ""
 msgid "List the most popular pages"
 msgstr ""
 
-#: ../lib/plugin/MostPopular.php:49
+#: ../lib/plugin/MostPopular.php:50
 #, c-format
 msgid "The %d most popular pages of this wiki:"
 msgstr ""
 
-#: ../lib/plugin/MostPopular.php:51
+#: ../lib/plugin/MostPopular.php:52
 msgid "Visited pages on this wiki, ordered by popularity:"
 msgstr ""
 
-#: ../lib/plugin/PageHistory.php:72
+#: ../lib/plugin/PageGroup.php:20
+msgid "PageGroup"
+msgstr ""
+
+#: ../lib/plugin/PageGroup.php:24
+#, c-format
+msgid "PageGroup for %s"
+msgstr ""
+
+#: ../lib/plugin/PageGroup.php:31 ../lib/plugin/PageGroup.php:72
+msgid "Contents"
+msgstr ""
+
+#: ../lib/plugin/PageGroup.php:63
+#, c-format
+msgid "A required argument '%s' is missing."
+msgstr ""
+
+#: ../lib/plugin/PageGroup.php:70
+msgid "Next"
+msgstr ""
+
+#: ../lib/plugin/PageGroup.php:71
+msgid "Previous"
+msgstr ""
+
+#: ../lib/plugin/PageGroup.php:73
+msgid "First"
+msgstr ""
+
+#: ../lib/plugin/PageGroup.php:74
+msgid "Last"
+msgstr ""
+
+#: ../lib/plugin/PageGroup.php:128 ../lib/plugin/PageGroup.php:136
+#: ../lib/plugin/PageGroup.php:148 ../lib/plugin/PageGroup.php:154
+#, c-format
+msgid "%s: %s"
+msgstr ""
+
+#: ../lib/plugin/PageHistory.php:71
 #, c-format
 msgid "PageHistory for %s"
 msgstr ""
 
-#: ../lib/plugin/PageHistory.php:87
+#: ../lib/plugin/PageHistory.php:86
 msgid "compare revisions"
 msgstr ""
 
-#: ../lib/plugin/PageHistory.php:90
+#: ../lib/plugin/PageHistory.php:89
 msgid "Check any two boxes to compare revisions."
 msgstr ""
 
-#: ../lib/plugin/PageHistory.php:91
+#: ../lib/plugin/PageHistory.php:90
 #, c-format
 msgid "Check any two boxes then %s."
 msgstr ""
 
-#: ../lib/plugin/PageHistory.php:144 ../lib/plugin/PageHistory.php:204
+#: ../lib/plugin/PageHistory.php:143 ../lib/plugin/PageHistory.php:203
 #, c-format
 msgid "Version %d"
 msgstr ""
 
-#: ../lib/plugin/PageHistory.php:152 ../themes/MacOSX/lib/RecentChanges.php:34
+#: ../lib/plugin/PageHistory.php:151 ../themes/MacOSX/lib/RecentChanges.php:34
 #: ../themes/Portland/lib/RecentChanges.php:14
 #: ../themes/WikiTrek/lib/RecentChanges.php:34
 msgid "minor edit"
 msgstr ""
 
-#: ../lib/plugin/PageHistory.php:196
+#: ../lib/plugin/PageHistory.php:195
 msgid "History of changes."
 msgstr ""
 
-#: ../lib/plugin/PageHistory.php:222 ../lib/plugin/RecentChanges.php:43
-#: ../themes/MacOSX/templates/actionbar.tmpl:13
+#: ../lib/plugin/PageHistory.php:221 ../lib/plugin/RecentChanges.php:43
+#: ../themes/MacOSX/templates/actionbar.tmpl:29
 #: ../themes/Portland/templates/actionbar.tmpl:12
-#: ../themes/Portland/templates/viewsource.tmpl:21
-#: ../themes/default/templates/actionbar.tmpl:13
+#: ../themes/Portland/templates/viewsource.tmpl:25
+#: ../themes/default/templates/actionbar.tmpl:31
 msgid "PageHistory"
 msgstr ""
 
-#: ../lib/plugin/PageHistory.php:226
+#: ../lib/plugin/PageHistory.php:225
 #, c-format
 msgid "List PageHistory for %s"
 msgstr ""
 
 #: ../lib/plugin/RandomPage.php:12 ../lib/plugin/RandomPage.php:16
-#: ../lib/plugin/RandomPage.php:41
+#: ../lib/plugin/RandomPage.php:46
 msgid "RandomPage"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:87
+#: ../lib/plugin/RecentChanges.php:83
 msgid "Deleted."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:89
+#: ../lib/plugin/RecentChanges.php:85
 msgid "New page."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:101
+#: ../lib/plugin/RecentChanges.php:97
 msgid "(diff)"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:153
+#: ../lib/plugin/RecentChanges.php:148
 msgid "edits"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:155
+#: ../lib/plugin/RecentChanges.php:150
 msgid "major edits"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:157
+#: ../lib/plugin/RecentChanges.php:152
 msgid "minor edits"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:161
+#: ../lib/plugin/RecentChanges.php:156
 #, c-format
 msgid "The %d most recent %s during the past %.1f days are listed below."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:164
+#: ../lib/plugin/RecentChanges.php:159
 #, c-format
 msgid "The %d most recent %s are listed below."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:169
+#: ../lib/plugin/RecentChanges.php:164
 #, c-format
 msgid "The most recent %s during the past %.1f days are listed below."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:172
+#: ../lib/plugin/RecentChanges.php:167
 #, c-format
 msgid "All %s are listed below."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:180
-#: ../themes/Portland/templates/editpage.tmpl:95
+#: ../lib/plugin/RecentChanges.php:175
+#: ../themes/Portland/templates/editpage.tmpl:62
 msgid "RecentEdits"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:275
+#: ../lib/plugin/RecentChanges.php:267
 msgid "Search"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:276 ../lib/plugin/TitleSearch.php:17
+#: ../lib/plugin/RecentChanges.php:268 ../lib/plugin/TitleSearch.php:17
 msgid "Title Search"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:468
+#: ../lib/plugin/RecentChanges.php:460
 msgid "Show changes for:"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:471
+#: ../lib/plugin/RecentChanges.php:463
 msgid "Show all changes for:"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:473
+#: ../lib/plugin/RecentChanges.php:465
 msgid "Show minor edits for:"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:483
+#: ../lib/plugin/RecentChanges.php:475
 msgid "1 day"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:487
+#: ../lib/plugin/RecentChanges.php:479
 #, c-format
 msgid "%s days"
 msgstr ""
@@ -644,7 +768,7 @@ msgstr ""
 msgid "Image loaded from cache file: %s"
 msgstr ""
 
-#: ../lib/plugin/TitleSearch.php:54
+#: ../lib/plugin/TitleSearch.php:43
 #, c-format
 msgid "Title search results for '%s'"
 msgstr ""
@@ -653,74 +777,33 @@ msgstr ""
 msgid "UserPreferences"
 msgstr ""
 
-#: ../lib/plugin/walkabout.php:33
-msgid "walkabout"
-msgstr ""
-
-#: ../lib/plugin/walkabout.php:37
-#, c-format
-msgid "walkabout for %s"
-msgstr ""
-
-#: ../lib/plugin/walkabout.php:44 ../lib/plugin/walkabout.php:92
-msgid "Contents"
-msgstr ""
-
-#: ../lib/plugin/walkabout.php:83
-#, c-format
-msgid "A required argument '%s' is missing."
-msgstr ""
-
-#: ../lib/plugin/walkabout.php:90
-msgid "Next"
-msgstr ""
-
-#: ../lib/plugin/walkabout.php:91
-msgid "Previous"
-msgstr ""
-
-#: ../lib/plugin/walkabout.php:93
-msgid "First"
-msgstr ""
-
-#: ../lib/plugin/walkabout.php:94
-msgid "Last"
-msgstr ""
-
-#: ../lib/plugin/walkabout.php:112 ../lib/plugin/walkabout.php:159
-#: ../lib/plugin/walkabout.php:165 ../lib/plugin/walkabout.php:177
-#: ../lib/plugin/walkabout.php:183
-#, c-format
-msgid "%s: %s"
-msgstr ""
-
-#: ../lib/removepage.php:18
+#: ../lib/removepage.php:16
 msgid "Request Cancelled!"
 msgstr ""
 
-#: ../lib/removepage.php:19
+#: ../lib/removepage.php:17
 #, c-format
 msgid "Return to %s."
 msgstr ""
 
-#: ../lib/removepage.php:26
+#: ../lib/removepage.php:24
 msgid "Remove the page now"
 msgstr ""
 
-#: ../lib/removepage.php:27 ../themes/default/templates/login.tmpl:30
+#: ../lib/removepage.php:25 ../themes/default/templates/login.tmpl:30
 msgid "Cancel"
 msgstr ""
 
-#: ../lib/removepage.php:29
+#: ../lib/removepage.php:27
 #, c-format
 msgid "You are about to remove '%s' permanently!"
 msgstr ""
 
-#: ../lib/removepage.php:44
+#: ../lib/removepage.php:42
 msgid "Someone has edited the page!"
 msgstr ""
 
-#: ../lib/removepage.php:45
+#: ../lib/removepage.php:43
 #, c-format
 msgid ""
 "Since you started the deletion process, someone has saved a new version of %"
@@ -728,137 +811,56 @@ msgid ""
 "from the database."
 msgstr ""
 
-#: ../lib/removepage.php:51
+#: ../lib/removepage.php:50
 #, c-format
 msgid "Removed page '%s' succesfully."
 msgstr ""
 
-#: ../lib/removepage.php:54
+#: ../lib/removepage.php:53
 msgid "Remove page"
 msgstr ""
 
-#: ../lib/savepage.php:27 ../lib/savepage.php:55
-msgid "Use your browser's <b>Back</b> button to go back to the edit page."
-msgstr ""
-
-#: ../lib/savepage.php:28
-msgid ""
-"Copy your changes to the clipboard or to another temporary place (e.g. text "
-"editor)."
-msgstr ""
-
-#: ../lib/savepage.php:29
-msgid ""
-"<b>Reload</b> the page. You should now see the most current version of the "
-"page. Your changes are no longer there."
-msgstr ""
-
-#: ../lib/savepage.php:30
-msgid ""
-"Make changes to the file again. Paste your additions from the clipboard (or "
-"text editor)."
-msgstr ""
-
-#: ../lib/savepage.php:31
-msgid "Press <b>Save</b> again."
-msgstr ""
-
-#: ../lib/savepage.php:35
-msgid ""
-"PhpWiki is unable to save your changes, because another user edited and "
-"saved the page while you were editing the page too. If saving proceeded now "
-"changes from the previous author would be lost."
-msgstr ""
-
-#: ../lib/savepage.php:36
-msgid "In order to recover from this situation follow these steps:"
-msgstr ""
-
-#: ../lib/savepage.php:45 ../lib/savepage.php:58
-msgid "Sorry for the inconvenience."
-msgstr ""
-
-#: ../lib/savepage.php:49
-#, c-format
-msgid "Problem while updating %s"
-msgstr ""
-
-#: ../lib/savepage.php:54
-msgid ""
-"This page has been locked by the administrator so your changes could not be "
-"saved."
-msgstr ""
-
-#: ../lib/savepage.php:57
-msgid ""
-"Copy your changes to the clipboard. You can try editing a different page or "
-"save your text in a text editor."
-msgstr ""
-
-#: ../lib/savepage.php:62
-#, c-format
-msgid "Problem while editing %s"
-msgstr ""
-
-#: ../lib/savepage.php:67
-msgid "Bad form submission"
-msgstr ""
-
-#: ../lib/savepage.php:68
-msgid "Required form variables are missing."
-msgstr ""
-
-#: ../lib/savepage.php:72
-#, c-format
-msgid "Edit aborted: %s"
-msgstr ""
-
-#: ../lib/savepage.php:168
-#, c-format
-msgid "Saved: %s"
-msgstr ""
-
-#: ../lib/stdlib.php:91 ../lib/stdlib.php:116
+#: ../lib/stdlib.php:90 ../lib/stdlib.php:106
 msgid "BAD URL -- remove all of <, >, \""
 msgstr ""
 
-#: ../lib/stdlib.php:219
+#: ../lib/stdlib.php:209
 msgid "BAD phpwiki: URL"
 msgstr ""
 
-#: ../lib/stdlib.php:256
+#: ../lib/stdlib.php:246
 msgid "Lock page to enable link"
 msgstr ""
 
-#: ../lib/stdlib.php:393
+#: ../lib/stdlib.php:383
 msgid "Revision Not Found"
 msgstr ""
 
-#: ../lib/stdlib.php:394
+#: ../lib/stdlib.php:384
 #, c-format
 msgid "I'm sorry.  Version %d of %s is not in my database."
 msgstr ""
 
-#: ../lib/stdlib.php:397
+#: ../lib/stdlib.php:387
 msgid "Bad Version"
 msgstr ""
 
-#: ../lib/XmlElement.php:333 ../lib/stdlib.php:550
+#: ../lib/XmlElement.php:333 ../lib/stdlib.php:540
 #, c-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr ""
 
-#: ../lib/stdlib.php:559
+#: ../lib/stdlib.php:549
 #, c-format
 msgid "%s: argument index out of range"
 msgstr ""
 
-#: ../lib/stdlib.php:593 ../themes/Hawaiian/lib/random.php:20
+#: ../lib/stdlib.php:583 ../themes/Hawaiian/lib/random.php:20
 #, c-format
 msgid "%s is empty."
 msgstr ""
 
-#: ../lib/stdlib.php:600
+#: ../lib/stdlib.php:590
 #, c-format
 msgid "Unable to open directory '%s' for reading"
 msgstr ""
@@ -868,40 +870,40 @@ msgstr ""
 msgid "%4d  %s\n"
 msgstr ""
 
-#: ../lib/Theme.php:390 ../themes/MacOSX/templates/actionbar.tmpl:6
+#: ../lib/Theme.php:515 ../themes/MacOSX/templates/actionbar.tmpl:6
 #: ../themes/default/templates/actionbar.tmpl:6
 msgid "Edit"
 msgstr ""
 
-#: ../lib/Theme.php:391
+#: ../lib/Theme.php:516
 msgid "Diff"
 msgstr ""
 
-#: ../lib/Theme.php:392 ../themes/MacOSX/templates/actionbar.tmpl:60
+#: ../lib/Theme.php:517 ../themes/MacOSX/templates/actionbar.tmpl:50
 #: ../themes/default/templates/signin.tmpl:6
-#: ../themes/default/templates/signin.tmpl:35
+#: ../themes/default/templates/signin.tmpl:32
 msgid "Sign Out"
 msgstr ""
 
-#: ../lib/Theme.php:393 ../lib/WikiUser.php:132
+#: ../lib/Theme.php:518 ../lib/WikiUser.php:132
 #: ../themes/default/templates/login.tmpl:28
-#: ../themes/default/templates/signin.tmpl:51
+#: ../themes/default/templates/signin.tmpl:48
 msgid "Sign In"
 msgstr ""
 
-#: ../lib/Theme.php:394 ../themes/MacOSX/themeinfo.php:119
+#: ../lib/Theme.php:519 ../themes/MacOSX/themeinfo.php:119
 msgid "Lock Page"
 msgstr ""
 
-#: ../lib/Theme.php:395 ../themes/MacOSX/themeinfo.php:120
+#: ../lib/Theme.php:520 ../themes/MacOSX/themeinfo.php:120
 msgid "Unlock Page"
 msgstr ""
 
-#: ../lib/Theme.php:396
+#: ../lib/Theme.php:521
 msgid "Remove Page"
 msgstr ""
 
-#: ../lib/transform.php:107
+#: ../lib/transform.php:108
 msgid "Lists nested too deep in SetHTMLOutputMode"
 msgstr ""
 
@@ -947,7 +949,7 @@ msgstr ""
 msgid "trailing cruft in plugin args: '%s'"
 msgstr ""
 
-#: ../lib/WikiPlugin.php:279
+#: ../lib/WikiPlugin.php:276
 #, c-format
 msgid "Include of '%s' failed"
 msgstr ""
@@ -1007,109 +1009,99 @@ msgid "Version %s, saved on %s."
 msgstr ""
 
 #: ../themes/Portland/templates/browse.tmpl:9
-#: ../themes/Portland/templates/viewsource.tmpl:3
+#: ../themes/Portland/templates/viewsource.tmpl:5
 #: ../themes/default/templates/browse.tmpl:16
 #: ../themes/default/templates/viewsource.tmpl:13
 msgid "Note:"
 msgstr ""
 
 #: ../themes/Portland/templates/browse.tmpl:10
-#: ../themes/Portland/templates/viewsource.tmpl:6
+#: ../themes/Portland/templates/viewsource.tmpl:10
 #: ../themes/default/templates/browse.tmpl:17
 #: ../themes/default/templates/viewsource.tmpl:18
 msgid "You are viewing an old revision of this page."
 msgstr ""
 
-#: ../themes/Portland/templates/browse.tmpl:12
-#: ../themes/Portland/templates/viewsource.tmpl:7
+#: ../themes/Portland/templates/browse.tmpl:11
+#: ../themes/Portland/templates/viewsource.tmpl:11
 #: ../themes/default/templates/browse.tmpl:18
 #: ../themes/default/templates/viewsource.tmpl:19
 msgid "View the current version"
 msgstr ""
 
-#: ../themes/Portland/templates/editpage.tmpl:17
-#: ../themes/default/templates/editpage.tmpl:14
-msgid "Preview"
-msgstr ""
-
-#: ../themes/Portland/templates/editpage.tmpl:21
-#: ../themes/default/templates/editpage.tmpl:15
-msgid "Save"
-msgstr ""
-
-#: ../themes/Portland/templates/editpage.tmpl:35
-#: ../themes/default/templates/editpage.tmpl:29
-msgid "Adjust"
-msgstr ""
-
-#: ../themes/Portland/templates/editpage.tmpl:38
-#: ../themes/default/templates/editpage.tmpl:32
-msgid "GoodStyle"
-msgstr ""
-
-#: ../themes/Portland/templates/editpage.tmpl:72
-#: ../themes/default/templates/editpage.tmpl:44
+#: ../themes/Portland/templates/editpage.tmpl:76
+#: ../themes/default/templates/editpage.tmpl:21
 msgid "Preview only!  Changes not saved."
 msgstr ""
 
-#: ../themes/Portland/templates/editpage.tmpl:68
-#: ../themes/default/templates/editpage.tmpl:49
+#: ../themes/Portland/templates/editpage.tmpl:42
+#: ../themes/default/templates/editpage.tmpl:29
 msgid "Warning: You are editing an old revision."
 msgstr ""
 
-#: ../themes/Portland/templates/editpage.tmpl:69
-#: ../themes/default/templates/editpage.tmpl:50
+#: ../themes/Portland/templates/editpage.tmpl:43
+#: ../themes/default/templates/editpage.tmpl:30
 msgid "Saving this page will overwrite the current version."
 msgstr ""
 
-#: ../themes/Portland/templates/editpage.tmpl:98
-#: ../themes/default/templates/editpage.tmpl:71
+#: ../themes/Portland/templates/editpage.tmpl:65
+#: ../themes/default/templates/editpage.tmpl:51
 msgid "Edit Area Size:"
 msgstr ""
 
-#: ../themes/Portland/templates/editpage.tmpl:98
-#: ../themes/default/templates/editpage.tmpl:71
+#: ../themes/Portland/templates/editpage.tmpl:65
+#: ../themes/default/templates/editpage.tmpl:51
 msgid "H"
 msgstr ""
 
-#: ../themes/Portland/templates/editpage.tmpl:100
-#: ../themes/default/templates/editpage.tmpl:73
+#: ../themes/Portland/templates/editpage.tmpl:67
+#: ../themes/default/templates/editpage.tmpl:53
 msgid "W"
 msgstr ""
 
-#: ../themes/Portland/templates/editpage.tmpl:89
-#: ../themes/default/templates/editpage.tmpl:85
+#: ../themes/Portland/templates/editpage.tmpl:69
+#: ../themes/default/templates/editpage.tmpl:55
+msgid "Adjust"
+msgstr ""
+
+#: ../themes/Portland/templates/editpage.tmpl:56
+#: ../themes/default/templates/editpage.tmpl:62
 msgid "Summary:"
 msgstr ""
 
-#: ../themes/default/templates/editpage.tmpl:91
+#: ../themes/default/templates/editpage.tmpl:68
 msgid "This is a minor change."
 msgstr ""
 
-#: ../themes/Portland/templates/editpage.tmpl:104
-#: ../themes/default/templates/editpage.tmpl:92
+#: ../themes/Portland/templates/editpage.tmpl:71
+#: ../themes/default/templates/editpage.tmpl:69
 msgid "Use new markup"
 msgstr ""
 
-#: ../themes/Portland/templates/editpage.tmpl:91
-#: ../themes/default/templates/editpage.tmpl:101
+#: ../themes/Portland/templates/editpage.tmpl:58
+#: ../themes/default/templates/editpage.tmpl:80
 #, c-format
 msgid "Author will be logged as %s."
 msgstr ""
 
-#: ../themes/Portland/templates/editpage.tmpl:107
-#: ../themes/default/templates/editpage.tmpl:111
+#: ../themes/Portland/templates/editpage.tmpl:81
+#: ../themes/default/templates/editpage.tmpl:90
 #, c-format
 msgid "See %s tips for editing."
 msgstr ""
 
-#: ../themes/Portland/templates/editpage.tmpl:109
-#: ../themes/default/templates/editpage.tmpl:112
+#: ../themes/Portland/templates/editpage.tmpl:81
+#: ../themes/default/templates/editpage.tmpl:90
+msgid "GoodStyle"
+msgstr ""
+
+#: ../themes/Portland/templates/editpage.tmpl:83
+#: ../themes/default/templates/editpage.tmpl:91
 msgid "TextFormattingRules"
 msgstr ""
 
-#: ../themes/Portland/templates/editpage.tmpl:109
-#: ../themes/default/templates/editpage.tmpl:112
+#: ../themes/Portland/templates/editpage.tmpl:83
+#: ../themes/default/templates/editpage.tmpl:91
 msgid "Synopsis"
 msgstr ""
 
@@ -1125,12 +1117,12 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: ../themes/Portland/templates/navbar.tmpl:17
+#: ../themes/Portland/templates/navbar.tmpl:8
 #: ../themes/default/templates/navbar.tmpl:13
 msgid "FindPage"
 msgstr ""
 
-#: ../themes/Portland/templates/navbar.tmpl:40
+#: ../themes/Portland/templates/navbar.tmpl:32
 #: ../themes/default/templates/navbar.tmpl:24
 msgid "PhpWikiAdministration"
 msgstr ""
@@ -1148,21 +1140,21 @@ msgstr ""
 msgid "Thank you for editing %s."
 msgstr ""
 
-#: ../themes/default/templates/savepage.tmpl:11
+#: ../themes/default/templates/savepage.tmpl:10
 msgid "Your careful attention to detail is much appreciated."
 msgstr ""
 
-#: ../themes/default/templates/savepage.tmpl:15
+#: ../themes/default/templates/savepage.tmpl:14
 msgid "Warning!"
 msgstr ""
 
-#: ../themes/MacOSX/templates/actionbar.tmpl:56
-#: ../themes/default/templates/signin.tmpl:24
+#: ../themes/MacOSX/templates/actionbar.tmpl:46
+#: ../themes/default/templates/signin.tmpl:21
 #, c-format
 msgid "You are signed in as %s"
 msgstr ""
 
-#: ../themes/default/templates/signin.tmpl:44
+#: ../themes/default/templates/signin.tmpl:41
 msgid "Enter your UserId to sign in"
 msgstr ""
 
@@ -1178,7 +1170,7 @@ msgstr ""
 msgid "Update Preferences"
 msgstr ""
 
-#: ../themes/Portland/templates/viewsource.tmpl:4
+#: ../themes/Portland/templates/viewsource.tmpl:6
 #: ../themes/default/templates/viewsource.tmpl:14
 msgid "This page has been locked by the administrator and cannot be edited."
 msgstr ""
@@ -1195,10 +1187,6 @@ msgstr ""
 msgid "Modern"
 msgstr ""
 
-#: ../themes/MacOSX/themeinfo.php:121
-msgid "Page Locked"
-msgstr ""
-
 #: ../themes/Portland/templates/actionbar.tmpl:6
 msgid "EditText"
 msgstr ""
@@ -1209,18 +1197,18 @@ msgid "%s of this page"
 msgstr ""
 
 #: ../themes/Portland/templates/actionbar.tmpl:15
-#: ../themes/Portland/templates/viewsource.tmpl:24
+#: ../themes/Portland/templates/viewsource.tmpl:28
 #, c-format
 msgid "(last edited %s)"
 msgstr ""
 
 #: ../themes/Portland/templates/actionbar.tmpl:17
-#: ../themes/Portland/templates/viewsource.tmpl:26
+#: ../themes/Portland/templates/viewsource.tmpl:30
 #, c-format
 msgid "(version %s, saved on %s)"
 msgstr ""
 
-#: ../themes/Portland/templates/editpage.tmpl:94
+#: ../themes/Portland/templates/editpage.tmpl:61
 #, c-format
 msgid ""
 "I'm just doing minor edits. Please divert the usual logging to %s instead."

@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.18 2002-01-29 00:51:29 carstenklapp Exp $
+# $Id: Makefile,v 1.19 2002-01-31 11:33:35 carstenklapp Exp $
 #
 # locale/Makefile
 #
@@ -71,6 +71,7 @@ ${POT_FILE}: ../lib/editpage.php
 ${POT_FILE}: ../lib/ErrorManager.php
 ${POT_FILE}: ../lib/FileFinder.php
 ${POT_FILE}: ../lib/HtmlElement.php
+${POT_FILE}: ../lib/InlineParser.php
 ${POT_FILE}: ../lib/interwiki.php
 ${POT_FILE}: ../lib/loadsave.php
 ${POT_FILE}: ../lib/main.php
@@ -89,19 +90,18 @@ ${POT_FILE}: ../lib/plugin/HelloWorld.php
 ${POT_FILE}: ../lib/plugin/IncludePage.php
 ${POT_FILE}: ../lib/plugin/LikePages.php
 ${POT_FILE}: ../lib/plugin/MostPopular.php
+${POT_FILE}: ../lib/plugin/PageGroup.php
 ${POT_FILE}: ../lib/plugin/PageHistory.php
 ${POT_FILE}: ../lib/plugin/RandomPage.php
 ${POT_FILE}: ../lib/plugin/RecentChanges.php
 ${POT_FILE}: ../lib/plugin/text2png.php
 ${POT_FILE}: ../lib/plugin/TitleSearch.php
 ${POT_FILE}: ../lib/plugin/UserPreferences.php
-${POT_FILE}: ../lib/plugin/walkabout.php
 ${POT_FILE}: ../lib/prepend.php
 ${POT_FILE}: ../lib/removepage.php
 ${POT_FILE}: ../lib/Request.php
 ${POT_FILE}: ../lib/RssWriter.php
 ${POT_FILE}: ../lib/RSSWriter091.php
-${POT_FILE}: ../lib/savepage.php
 ${POT_FILE}: ../lib/stdlib.php
 ${POT_FILE}: ../lib/Template.php
 ${POT_FILE}: ../lib/TextSearchQuery.php
