@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.63 2002-02-26 06:33:11 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.64 2002-02-26 20:52:12 carstenklapp Exp $');
 /**
  */
 
@@ -89,6 +89,15 @@ class _RecentChanges_Formatter
                 return _("New page.");
             default:
                 return '';
+        }
+    }
+
+    function http_lastmodified_header($mtime) {
+        static $mostrecentlymodified = false;
+        if (! $mostrecentlymodified) {
+            // set http header to date of most recently modified page
+            $mostrecentlymodified = $mtime; //$rev->get('mtime');
+            header("Last-Modified: " . Rfc2822DateTime($mostrecentlymodified));
         }
     }
 }
@@ -244,6 +253,7 @@ extends _RecentChanges_Formatter
                 $lines = HTML::ul();
                 $last_date = $date;
             }
+            $this->http_lastmodified_header($rev->get('mtime'));
             $lines->pushContent($this->format_revision($rev));
         }
         if ($lines)
@@ -307,6 +317,7 @@ extends _RecentChanges_Formatter
         while ($rev = $changes->next()) {
             $rss->addItem($this->item_properties($rev),
                           $this->pageURI($rev));
+            $this->http_lastmodified_header($rev->get('mtime'));
         }
 
         $rss->finish();
@@ -399,7 +410,6 @@ class NonDeletedRevisionIterator extends WikiDB_PageRevisionIterator
     }
 
     function next () {
-        static $mostrecentlymodified = false;
         while (($rev = $this->_revisions->next())) {
             if ($this->_check_current_revision) {
                 $page = $rev->getPage();
@@ -407,11 +417,6 @@ class NonDeletedRevisionIterator extends WikiDB_PageRevisionIterator
             }
             else {
                 $check_rev = $rev;
-            }
-            if (! $mostrecentlymodified) {
-                // set http header to date of most recently modified page
-                $mostrecentlymodified = $check_rev->get('mtime');
-                header("Last-Modified: " . Rfc2822DateTime($mostrecentlymodified));
             }
             if (! $check_rev->hasDefaultContents())
                 return $rev;
