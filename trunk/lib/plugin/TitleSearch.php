@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TitleSearch.php,v 1.10 2002-01-27 04:23:26 carstenklapp Exp $');
+rcs_id('$Id: TitleSearch.php,v 1.11 2002-01-30 18:29:44 carstenklapp Exp $');
 
 require_once('lib/TextSearchQuery.php');
 require_once('lib/PageList.php');
@@ -21,10 +21,14 @@ extends WikiPlugin
         return array('s'		=> false,
                      'auto_redirect'	=> false,
                      'noheader'		=> false,
+                     'exclude'          => '',
+                     'include_self'     => 1,
+                     'pagename'         => '[pagename]', // hackish
                      'info'             => false
                      );
     }
     // info arg allows multiple columns info=mtime,hits,summary,version,author,locked,minor
+    // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
 
     function run($dbi, $argstr, $request) {
         $args = $this->getArgs($argstr, $request);
@@ -42,8 +46,15 @@ extends WikiPlugin
             foreach (explode(",", $info) as $col)
                 $pagelist->insertColumn($col);
 
+        if (!$include_self)
+            $pagelist->excludePageName($pagename); // hackish
+        if ($exclude)
+            foreach (explode(",", $exclude) as $excludepage)
+                $pagelist->excludePageName($excludepage);
+
         while ($page = $pages->next()) {
             $pagelist->addPage($page);
+            // if (!$pagelist->page_excluded($page->getName())); // not necessary
             $last_name = $page->getName();
         }
 
