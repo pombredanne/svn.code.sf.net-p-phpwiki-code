@@ -1,4 +1,5 @@
-<?php  // #! /usr/local/bin/php -Cq
+#! /usr/local/bin/php -Cq
+<?php  
 /* Copyright (C) 2004, Dan Frankowski <dfrankow@cs.umn.edu>
  * Copyright (C) 2004, Reini Urban <rurban@x-ray.at>
  *
@@ -42,6 +43,7 @@ ini_set('include_path', ini_get('include_path') . $ini_sep . $rootdir);
 
 # This quiets a warning in config.php
 $HTTP_SERVER_VARS['REMOTE_ADDR'] = '127.0.0.1';
+define('GROUP_METHOD', 'NONE');
 
 # Other needed files
 require_once $rootdir.'index.php';
@@ -121,6 +123,7 @@ class MockRequest {
     	global $WikiTheme, $request;
         $this->_dbi = WikiDB::open($dbparams);
         $this->_user = new MockUser("a_user", true);
+        $this->_group = WikiGroup::getGroup();
         $this->_args = array('pagename' => 'HomePage', 'action' => 'browse');
         //$this->Request();
     }
@@ -158,7 +161,7 @@ class MockRequest {
             return $this->_prefs->get($key);
     }
     function getGroup() {
-        return WikiGroup::getGroup();
+        return $this->_group;
     }
 }
 
@@ -184,7 +187,9 @@ include_once("themes/" . THEME . "/themeinfo.php");
 require_once 'PHPUnit.php';
 # lib/config.php might do a cwd()
 require_once dirname(__FILE__).'/lib/InlineParserTest.php';
+require_once dirname(__FILE__).'/lib/SetupWiki.php';
 require_once dirname(__FILE__).'/lib/PageListTest.php';
+require_once dirname(__FILE__).'/lib/DumpHtml.php';
 require_once dirname(__FILE__).'/lib/plugin/ListPagesTest.php';
 require_once dirname(__FILE__).'/lib/plugin/AllPagesTest.php';
 require_once dirname(__FILE__).'/lib/plugin/AllUsersTest.php';
@@ -199,6 +204,8 @@ $suite->addTest( new PHPUnit_TestSuite("InlineParserTest") );
 $suite->addTest( new PHPUnit_TestSuite("HtmlParserTest") );
 $suite->addTest( new PHPUnit_TestSuite("PageListTest") );
 $suite->addTest( new PHPUnit_TestSuite("ListPagesTest") );
+$suite->addTest( new PHPUnit_TestSuite("SetupWiki") );
+$suite->addTest( new PHPUnit_TestSuite("DumpHtml") );
 $suite->addTest( new PHPUnit_TestSuite("AllPagesTest") );
 $suite->addTest( new PHPUnit_TestSuite("AllUsersTest") );
 $suite->addTest( new PHPUnit_TestSuite("OrphanedPagesTest") );
