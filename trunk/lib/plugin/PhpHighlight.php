@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PhpHighlight.php,v 1.3 2002-11-04 19:29:40 carstenklapp Exp $');
+rcs_id('$Id: PhpHighlight.php,v 1.4 2002-11-08 12:32:30 carstenklapp Exp $');
 /**
  * A plugin that runs the highlight_string() function in PHP on it's
  * arguments to pretty-print PHP code.
@@ -61,7 +61,7 @@ extends WikiPlugin
         $this->sanify_colors($string, $comment, $keyword, $bg, $default, $html);
         $this->set_colors($string, $comment, $keyword, $bg, $default, $html);
 
-        if ($has_old_php) {
+        if (!empty($has_old_php)) {
             ob_start();
             highlight_string("<?php\n" . $source . "\n?>");
             $str = ob_get_contents();
