@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllUsers.php,v 1.3 2002-09-09 08:38:19 rurban Exp $');
+rcs_id('$Id: AllUsers.php,v 1.4 2003-01-18 21:19:25 carstenklapp Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -24,7 +24,9 @@ require_once('lib/PageList.php');
 
 /**
  * Based on AllPages.
- * We currently don't get externally authenticated users which didn't store their Preferences.
+ *
+ * We currently don't get externally authenticated users which didn't
+ * store their Preferences.
  */
 class WikiPlugin_AllUsers
 extends WikiPlugin
@@ -33,12 +35,17 @@ extends WikiPlugin
         return _("AllUsers");
     }
 
-    function getDescription () {
+    function getDescription() {
         return _("With external authentication all users which stored their Preferences. Without external authentication all once signed-in users (from version 1.3.4 on).");
     }
 
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.4 $");
+    }
+
     function getDefaultArguments() {
-        return array('noheader'	     => false,
+        return array('noheader'      => false,
                      'include_empty' => true,
                      'exclude'       => '',
                      'info'          => '',
@@ -46,15 +53,20 @@ extends WikiPlugin
                      'debug'         => false
                      );
     }
-    // info arg allows multiple columns info=mtime,hits,summary,version,author,locked,minor,markup or all
+    // info arg allows multiple columns
+    // info=mtime,hits,summary,version,author,locked,minor,markup or all
     // exclude arg allows multiple pagenames exclude=WikiAdmin,.SecretUser
-    // include_empty shows also users which stored their preferences, but never saved their homepage
+    //
+    // include_empty shows also users which stored their preferences,
+    // but never saved their homepage
+    //
     // sortby: [+|-] pagename|mtime|hits
 
     function run($dbi, $argstr, $request) {
         extract($this->getArgs($argstr, $request));
         // Todo: extend given _GET args
-        if ($sortby) $request->setArg('sortby',$sortby);
+        if ($sortby)
+            $request->setArg('sortby',$sortby);
 
         $pagelist = new PageList($info, $exclude);
         if (!$noheader)
@@ -67,14 +79,17 @@ extends WikiPlugin
         if (defined('DEBUG'))
             $debug = true;
 
-        if ($debug) $time_start = $this->getmicrotime();
+        if ($debug)
+            $time_start = $this->getmicrotime();
+
         $page_iter = $dbi->getAllPages($include_empty);
         while ($page = $page_iter->next()) {
             if ($page->isUserPage($include_empty))
                 $pagelist->addPage($page);
         }
 
-        if ($debug) $time_end = $this->getmicrotime();
+        if ($debug)
+            $time_end = $this->getmicrotime();
 
         if ($debug) {
             $time = round($time_end - $time_start, 3);
@@ -85,10 +100,12 @@ extends WikiPlugin
     }
 
     function getmicrotime(){
-        list($usec, $sec) = explode(" ",microtime());
+        list($usec, $sec) = explode(" ", microtime());
         return (float)$usec + (float)$sec;
     }
 };
+
+// $Log: not supported by cvs2svn $
 
 // Local Variables:
 // mode: php

@@ -1,15 +1,32 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.25 2002-10-31 03:28:30 carstenklapp Exp $');
+rcs_id('$Id: Calendar.php,v 1.26 2003-01-18 21:19:25 carstenklapp Exp $');
+/**
+ Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+
+ This file is part of PhpWiki.
+
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 if (!defined('SECONDS_PER_DAY'))
-define('SECONDS_PER_DAY', 24 * 3600);
+    define('SECONDS_PER_DAY', 24 * 3600);
 
 // FIXME: Still needs:
 //
 //   o Better way to navigate to distant months.
 //     (Maybe a form with selectors for month and year)?
-//
-//   o Docs.  Write a pgsrc/CalendarPlugin.
 //
 // It would be nice to have some way to get from the individual date
 // pages back to the calendar page. (Subpage support might make this
@@ -28,16 +45,21 @@ extends WikiPlugin
         return _("Calendar");
     }
 
-    function getDefaultArguments() {
-        return array('prefix'		=> '[pagename]' . SUBPAGE_SEPARATOR,
-                     'date_format'	=> '%Y-%m-%d',
-                     'year'		=> '',
-                     'month'		=> '',
-                     'month_offset'	=> 0,
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.26 $");
+    }
 
-                     'month_format'	=> '%B, %Y',
-                     'wday_format'	=> '%a',
-                     'start_wday'	=> '0');
+    function getDefaultArguments() {
+        return array('prefix'           => '[pagename]' . SUBPAGE_SEPARATOR,
+                     'date_format'      => '%Y-%m-%d',
+                     'year'             => '',
+                     'month'            => '',
+                     'month_offset'     => 0,
+
+                     'month_format'     => '%B, %Y',
+                     'wday_format'      => '%a',
+                     'start_wday'       => '0');
     }
 
     function __header($pagename, $time) {
@@ -64,13 +86,15 @@ extends WikiPlugin
         $row = HTML::tr(HTML::td(array('align' => 'left'), $prev),
                         HTML::td(array('align' => 'center'),
                                  HTML::strong(array('class' => 'cal-header'),
-                                              strftime($args['month_format'], $time))),
+                                              strftime($args['month_format'],
+                                                       $time))),
                         HTML::td(array('align' => 'right'), $next));
 
         return HTML::tr(HTML::td(array('colspan' => 7,
                                        'align'   => 'center'),
                                  HTML::table(array('width' => '100%',
-                                                   'class' => 'cal-header'), $row)));
+                                                   'class' => 'cal-header'),
+                                             $row)));
     }
 
 
@@ -122,7 +146,8 @@ extends WikiPlugin
             $date = HTML::a(array('class' => 'cal-hide',
                                   'href'  => WikiURL($page_for_date,
                                                      array('action' => 'edit')),
-                                  'title' => sprintf(_("Edit %s"), $page_for_date)),
+                                  'title' => sprintf(_("Edit %s"),
+                                                     $page_for_date)),
                             $mday);
         }
         $td->pushContent(HTML::raw('&nbsp;'), $date, HTML::raw('&nbsp;'));
@@ -151,7 +176,8 @@ extends WikiPlugin
                                  'cellpadding' => 2,
                                  'class'       => 'cal'),
                            HTML::thead(
-                                       $this->__header($request->getArg('pagename'), $time),
+                                       $this->__header($request->getArg('pagename'),
+                                                       $time),
                                        $this->__daynames($args['start_wday'])));
 
         $t = localtime($time, 1);
@@ -191,6 +217,8 @@ extends WikiPlugin
         return $cal;
     }
 };
+
+// $Log: not supported by cvs2svn $
 
 // For emacs users
 // Local Variables:
