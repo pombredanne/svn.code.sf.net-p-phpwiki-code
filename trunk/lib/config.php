@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.45 2001-11-09 16:22:43 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.46 2001-11-29 03:00:19 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -61,6 +61,11 @@ if (!function_exists ('gettext'))
         return $text;
     }
 
+    function _ ($text) {
+        return gettext($text);
+    }
+
+            
     if ( ($lcfile = FindLocalizedFile("LC_MESSAGES/phpwiki.php", 'missing_ok')) )
         {
             include($lcfile);
