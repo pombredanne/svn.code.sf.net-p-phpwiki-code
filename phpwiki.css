@@ -232,6 +232,8 @@ div.transclusion {
  *****************************************************************/
 .diff .block	{ padding: 0.5ex 0.5em; margin: 0.5ex 0; }
 .diff .block tt	{ font-weight: bold; }
+.diff del,
+.diff ins	{ font-weight: bold; text-decoration: none; }
 
 /* These screw up NS4 --- moved to phpwiki-heavy.css
 .diff .block div { position: relative; padding-left: 1.5em; } 
@@ -239,14 +241,20 @@ div.transclusion {
 */
 
 .diff .block	{ background: #ccc; }
-.diff .context	{ background: white; }
+.diff .context	{ background: #fff; }
+.diff .original,
 .diff .deleted	{ background: #fcc; }
+.diff .final,
 .diff .added	{ background: #cfc; }
-.diff .changed	{ background: #ff6; }
-
+/*
+.diff .original	{ background: #feb; }
+.diff .final	{ background: #efb; }
+*/
 /* These don't work in NS4 -- it completely ignores <del> and <ins>. */
-.diff del	{ background: #f99; font-weight: bold; text-decoration: none; }
-.diff ins	{ background: #9f9; font-weight: bold; text-decoration: none; }
+.diff del	{ background: #f99; }
+.diff ins	{ background: #9f9; }
+
+
 
 /* For emacs users
  *
