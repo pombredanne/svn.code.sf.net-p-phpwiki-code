@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: removepage.php,v 1.23 2004-11-21 11:59:21 rurban Exp $');
+rcs_id('$Id: removepage.php,v 1.24 2004-12-06 19:49:58 rurban Exp $');
 require_once('lib/Template.php');
 
 function RemovePage (&$request) {
@@ -13,9 +13,8 @@ function RemovePage (&$request) {
     }
 
     $current = $page->getCurrentRevision();
-    $version = $current->getVersion();
 
-    if (!$version) {
+    if (!$current or !($version = $current->getVersion())) {
         $html = HTML(HTML::h2(_("Already deleted")),
                      HTML::p(_("Sorry, this page is not in the database.")));
     }
@@ -23,7 +22,6 @@ function RemovePage (&$request) {
 
         $removeB = Button('submit:verify', _("Remove Page"), 'wikiadmin');
         $cancelB = Button('submit:cancel', _("Cancel"), 'button'); // use generic wiki button look
-        $sample = firstNWordsOfContent(100, $current->getPackedContent());
 
         $html = HTML(HTML::h2(fmt("You are about to remove '%s' permanently!", $pagelink)),
                      HTML::form(array('method' => 'post',
@@ -36,9 +34,15 @@ function RemovePage (&$request) {
                                           $removeB,
                                           $WikiTheme->getButtonSeparator(),
                                           $cancelB)),
-                     HTML::hr(),
-                     HTML::div(array('class' => 'transclusion'), $sample)
+                     HTML::hr()
                      );
+        $sample = HTML::div(array('class' => 'transclusion'));
+        // simple and fast preview expanding only newlines
+        foreach (explode("\n", firstNWordsOfContent(100, $current->getPackedContent())) as $s) {
+            $sample->pushContent($s, HTML::br());
+        }
+        $html->pushContent(HTML::div(array('class' => 'wikitext'), 
+                                     $sample));
     }
     elseif ($request->getArg('currentversion') != $version) {
         $html = HTML(HTML::h2(_("Someone has edited the page!")),

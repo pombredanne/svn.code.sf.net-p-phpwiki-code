@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.61 2004-11-30 17:45:53 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.62 2004-12-06 19:50:04 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -235,10 +235,13 @@ extends WikiDB_backend
         if ($dbh->Execute("UPDATE $page_tbl"
                           . " SET hits=?, pagedata=?"
                           . " WHERE pagename=?",
-                          array($hits, $this->_serialize($data),$pagename)))
+                          array($hits, $this->_serialize($data),$pagename))) {
             $dbh->CommitTrans( );
-        else
+            return true;
+        } else {
             $dbh->RollbackTrans( );
+            return false;
+        }
     }
 
     function _get_pageid($pagename, $create_if_missing = false) {
@@ -459,9 +462,52 @@ extends WikiDB_backend
     }
 
     /**
-     * Delete page from the database.
+     * Delete page from the database with backup possibility.
+     * 
+     * deletePage increments latestversion in recent to a non-existent version, 
+     * and removes the nonempty row,
+     * so that get_latest_version returns id+1 and get_previous_version returns prev id 
+     * and page->exists returns false.
      */
     function delete_page($pagename) {
+        $dbh = &$this->_dbh;
+        extract($this->_table_names);
+
+        $dbh->BeginTrans();
+        $dbh->CommitLock($recent_tbl);
+        if (($id = $this->_get_pageid($pagename, false)) === false) {
+            $dbh->RollbackTrans( );
+            return false;
+        }
+        $version = $this->get_latest_version($pagename);
+        $mtime = time();
+        $user =& $GLOBALS['request']->_user;
+        $meta = array('author' => $user->getId(),
+                      'author_id' => $user->getAuthenticatedId(),
+                      'mtime' => $mtime);
+        $this->lock(array('version','recent','nonempty','page','link'));
+        if ($dbh->Execute("UPDATE $recent_tbl SET latestversion=latestversion+1,latestmajor=latestversion+1,latestminor=NULL WHERE id=$id")
+            and $dbh->Execute("INSERT INTO $version_tbl"
+                                . " (id,version,mtime,minor_edit,content,versiondata)"
+                                . " VALUES(?,?,?,?,?,?)",
+                                  array($id, $version+1, $mtime, 0,
+                                        '', $this->_serialize($meta)))
+            and $dbh->Execute("DELETE FROM $nonempty_tbl WHERE id=$id")
+            and $this->set_links($pagename, false)
+            and $dbh->Execute("UPDATE $page_tbl SET pagedata='' WHERE id=$id") // keep hits but delete meta-data 
+           ) 
+        {
+            $this->unlock(array('version','recent','nonempty','page','link'));	
+            $dbh->CommitTrans( );
+            return true;
+        } else {
+            $this->unlock(array('version','recent','nonempty','page','link'));	
+            $dbh->RollbackTrans( );
+            return false;
+        }
+    }
+
+    function purge_page($pagename) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         
@@ -470,20 +516,23 @@ extends WikiDB_backend
             $dbh->Execute("DELETE FROM $version_tbl  WHERE id=$id");
             $dbh->Execute("DELETE FROM $recent_tbl   WHERE id=$id");
             $dbh->Execute("DELETE FROM $nonempty_tbl WHERE id=$id");
-            $dbh->Execute("DELETE FROM $link_tbl     WHERE linkfrom=$id");
+            $this->set_links($pagename, false);
             $row = $dbh->GetRow("SELECT COUNT(*) FROM $link_tbl WHERE linkto=$id");
             if ($row and $row[0]) {
                 // We're still in the link table (dangling link) so we can't delete this
                 // altogether.
                 $dbh->Execute("UPDATE $page_tbl SET hits=0, pagedata='' WHERE id=$id");
+                $result = 0;
             }
             else {
                 $dbh->Execute("DELETE FROM $page_tbl WHERE id=$id");
+                $result = 1;
             }
-            $this->_update_recent_table();
-            $this->_update_nonempty_table();
+        } else {
+            $result = -1; // already purged or not existing
         }
         $this->unlock(array('version','recent','nonempty','page','link'));
+        return $result;
     }
             
 
@@ -503,9 +552,8 @@ extends WikiDB_backend
         $this->lock(array('link'));
         $pageid = $this->_get_pageid($pagename, true);
 
-        $dbh->Execute("DELETE FROM $link_tbl WHERE linkfrom=$pageid");
-
         if ($links) {
+            $dbh->Execute("DELETE FROM $link_tbl WHERE linkfrom=$pageid");
             foreach($links as $link) {
                 if (isset($linkseen[$link]))
                     continue;
@@ -514,8 +562,22 @@ extends WikiDB_backend
                 $dbh->Execute("INSERT INTO $link_tbl (linkfrom, linkto)"
                             . " VALUES ($pageid, $linkid)");
             }
+        } elseif (DEBUG) {
+            // purge page table: delete all non-referenced pages
+            // for all previously linked pages...
+            foreach ($dbh->getRow("SELECT $link_tbl.linkto as id FROM $link_tbl WHERE linkfrom=$pageid") as $id) {
+            	// ...check if the page is empty and has no version
+                if ($dbh->getRow("SELECT $page_tbl.id FROM $page_tbl LEFT JOIN $nonempty_tbl USING (id) "
+                                  ." LEFT JOIN $version_tbl USING (id)"
+                                  ." WHERE ISNULL($nonempty_tbl.id) AND ISNULL($version_tbl.id) AND $page_tbl.id=$id")) {
+                    $dbh->Execute("DELETE FROM $page_tbl WHERE id=$id");   // this purges the link
+                    $dbh->Execute("DELETE FROM $recent_tbl WHERE id=$id"); // may fail
+                }
+            }
+            $dbh->Execute("DELETE FROM $link_tbl WHERE linkfrom=$pageid");
         }
         $this->unlock(array('link'));
+        return true;
     }
     
     /**
@@ -614,7 +676,7 @@ extends WikiDB_backend
                 $sql = "SELECT "
                     . $this->page_tbl_fields
                     . " FROM $page_tbl"
-                    . $exclude ? " WHERE $exclude" : ''
+                    . ($exclude ? " WHERE $exclude" : '')
                     . $orderby;
             } else {
                 $sql = "SELECT "
@@ -1128,13 +1190,13 @@ extends WikiDB_backend_search
         $this->_case_exact = $search->_case_exact;
     }
     function _pagename_match_clause($node) {
-        $word = $node->sql($word);
+        $word = $node->sql();
         return $this->_case_exact 
             ? "pagename LIKE '$word'"
             : "LOWER(pagename) LIKE '$word'";
     }
     function _fulltext_match_clause($node) { 
-        $word = $node->sql($word);
+        $word = $node->sql();
         return $this->_case_exact
             ? "pagename LIKE '$word' OR content LIKE '$word'"
             : "LOWER(pagename) LIKE '$word' OR content LIKE '$word'";
@@ -1301,6 +1363,9 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.61  2004/11/30 17:45:53  rurban
+// exists_links backend implementation
+//
 // Revision 1.60  2004/11/28 20:42:18  rurban
 // Optimize PearDB _extract_version_data and _extract_page_data.
 //

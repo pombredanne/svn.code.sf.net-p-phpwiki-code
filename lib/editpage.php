@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.84 2004-12-04 12:58:26 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.85 2004-12-06 19:49:56 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -9,7 +9,7 @@ require_once('lib/Template.php');
 // We might use a HTML PageType, which is contra wiki, but some people might prefer HTML markup.
 // TODO: Change from constant to user preference variable (checkbox setting),
 //       when HtmlParser is finished.
-if (!defined('USE_HTMLAREA')) define('USE_HTMLAREA',false);
+if (!defined('USE_HTMLAREA')) define('USE_HTMLAREA', false);
 if (USE_HTMLAREA) require_once('lib/htmlarea.php');
 
 class PageEditor
@@ -112,6 +112,11 @@ class PageEditor
             $this->version = $this->_currentVersion;
             $unresolved = $diff->ConflictingBlocks;
             $tokens['CONCURRENT_UPDATE_MESSAGE'] = $this->getConflictMessage($unresolved);
+        } elseif ($saveFailed) {
+            $tokens['CONCURRENT_UPDATE_MESSAGE'] = 
+                HTML(HTML::h2(_("Some internal editing error")),
+            	     HTML::p(_("Your are probably trying to edit/create an invalid version of this page.")),
+            	     HTML::p(HTML::em(_("&version=-1 might help."))));
         }
 
         if ($this->editaction == 'preview')
@@ -455,8 +460,10 @@ function undo_save() {
         
         // Save new revision
         $this->_content = $this->getContent();
-        $newrevision = $page->save($this->_content, $this->_currentVersion + 1, $meta);
-        if (!isa($newrevision, 'wikidb_pagerevision')) {
+        $newrevision = $page->save($this->_content, 
+        			   $this->version == -1 ? -1 : $this->_currentVersion + 1, // force new?
+        			   $meta);
+        if (!isa($newrevision, 'WikiDB_PageRevision')) {
             // Save failed.  (Concurrent updates).
             return false;
         }
@@ -524,22 +531,25 @@ function undo_save() {
 
     /** 
      * Handle AntiSpam here. How? http://wikiblacklist.blogspot.com/
-     * Need to check dynamically some blacklist content (plugin WikiAccessRestrictions)
+     * Need to check dynamically some blacklist wikipage settings (plugin WikiAccessRestrictions)
+     * and some static blacklist.
      * DONE: 
      *   More then 20 new external links
+     *   content patterns by babycart (only php >= 4.3 for now)
      * TODO:
      *   IP BlackList 
      *   domain blacklist
      *   url patterns
-     *   content patterns by babycart
      */
     function isSpam () {
         $current = &$this->current;
         $request = &$this->request;
+
         $oldtext = $current->getPackedContent();
         $newtext =& $this->_content;
         // 1. Not more then 20 new external links
         if ($this->numLinks($newtext) - $this->numLinks($oldtext) >= 20) {
+            // mail the admin?
             $this->tokens['PAGE_LOCKED_MESSAGE'] = 
                 HTML($this->getSpamMessage(),
                      HTML::p(HTML::em(_("Too many external links."))));
@@ -551,10 +561,11 @@ function undo_save() {
             $user = $request->getUser();
             include_once("lib/spam_babycart.php");
             if ($babycart = check_babycart($newtext, $request->get("REMOTE_ADDR"), $user->getId())) {
+                // mail the admin?
                 if (is_array($babycart))
                     $this->tokens['PAGE_LOCKED_MESSAGE'] = 
                         HTML($this->getSpamMessage(),
-                             HTML::p(HTML::em(_("SpamAssassin reports: ", join("\n",$babycart)))));
+                             HTML::p(HTML::em(_("SpamAssassin reports: ", join("\n", $babycart)))));
                 return true;
             }
         }
@@ -879,6 +890,10 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.84  2004/12/04 12:58:26  rurban
+ enable babycart Blog::SpamAssassin module on ENABLE_SPAMASSASSIN=true
+ (currently only for php >= 4.3.0)
+
  Revision 1.83  2004/12/04 11:55:39  rurban
  First simple AntiSpam prevention:
    No more than 20 new http:// links allowed

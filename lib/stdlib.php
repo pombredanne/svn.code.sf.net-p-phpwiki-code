@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.220 2004-11-30 17:47:41 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.221 2004-12-06 19:49:58 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -164,8 +164,8 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
     }
 
     if (USE_PATH_INFO or !empty($GLOBALS['WikiTheme']->HTML_DUMP_SUFFIX)) {
-        $url = $get_abs_url ? SERVER_URL . VIRTUAL_PATH . "/" : "";
-        $url .= preg_replace('/%2f/i', '/', rawurlencode($pagename));
+        $url = $get_abs_url ? (SERVER_URL . VIRTUAL_PATH . "/") : "";
+        $url = $url . preg_replace('/%2f/i', '/', rawurlencode($pagename));
         if (!empty($GLOBALS['WikiTheme']->HTML_DUMP_SUFFIX))
             $url .= $GLOBALS['WikiTheme']->HTML_DUMP_SUFFIX;
         if ($args)
@@ -1761,10 +1761,11 @@ function extractSection ($section, $content, $page, $quiet = false, $sectionhead
     return array(sprintf(_("<%s: no such section>"), $mesg));
 }
 
+// use this faster version: only load ExternalReferrer if we came from an external referrer
 function isExternalReferrer(&$request) {
     if ($referrer = $request->get('HTTP_REFERER')) {
-    	$home = SCRIPT_NAME; // was SERVER_URL, but we want to check sister wiki's also
-    	if (substr(strtolower($referrer),0,strlen($home)) == strtolower($home)) return false;
+    	$home = SERVER_URL; // SERVER_URL or SCRIPT_NAME, if we want to check sister wiki's also
+    	if (string_starts_with(strtolower($referrer), strtolower($home))) return false;
         require_once("lib/ExternalReferrer.php");
         $se = new SearchEngines();
         return $se->parseSearchQuery($referrer);
@@ -1814,6 +1815,9 @@ function printSimpleTrace($bt) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.220  2004/11/30 17:47:41  rurban
+// added mt_srand, check for native isa
+//
 // Revision 1.219  2004/11/26 18:39:02  rurban
 // new regex search parser and SQL backends (90% complete, glob and pcre backends missing)
 //

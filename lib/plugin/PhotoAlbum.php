@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PhotoAlbum.php,v 1.10 2004-12-01 19:34:13 rurban Exp $');
+rcs_id('$Id: PhotoAlbum.php,v 1.11 2004-12-06 19:50:05 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
  
@@ -28,7 +28,7 @@ rcs_id('$Id: PhotoAlbum.php,v 1.10 2004-12-01 19:34:13 rurban Exp $');
  *
  * Usage:
  * <?plugin PhotoAlbum
- *          src="http://server/textfile" or localfile or localdir or nothing
+ *          src="http://server/textfile" or localfile or localdir
  *          mode=[column|row]
  *          desc=true
  *          sort=false
@@ -75,7 +75,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
 // Avoid nameclash, so it's disabled. We allow any url.
@@ -441,6 +441,13 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/12/01 19:34:13  rurban
+// Cleanup of CONSTANT pollution.
+// renamed weblocation to url.
+// allow any url.
+// use fixed ";" CSV seperator
+// fix substr_replace usage bug.
+//
 // Revision 1.9  2004/07/08 20:30:07  rurban
 // plugin->run consistency: request as reference, added basepage.
 // encountered strange bug in AllPages (and the test) which destroys ->_dbi

@@ -2130,9 +2130,9 @@
 	/**
 	* Quotes a string, without prefixing nor appending quotes. 
 	*/
-	function addq($s,$magicq=false)
+	function addq($s, $magicq=false)
 	{
-		if (!$magic_quotes) {
+		if (!$magicq) {
 		
 			if ($this->replaceQuote[0] == '\\'){
 				// only since php 4.0.5

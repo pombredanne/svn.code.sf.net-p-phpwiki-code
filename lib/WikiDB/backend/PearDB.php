@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.76 2004-11-30 17:45:53 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.77 2004-12-06 19:50:04 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -410,10 +410,17 @@ extends WikiDB_backend
     }
 
     /**
+     * See ADODB for a better delete_page(), which can be undone and is seen in RecentChanges.
+     */
+    function delete_page($pagename) {
+        $this->purge_page($pagename);
+    }
+
+    /**
      * Delete page completely from the database.
      * I'm not sure if this is what we want. Maybe just delete the revisions
      */
-    function delete_page($pagename) {
+    function purge_page($pagename) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         
@@ -428,16 +435,20 @@ extends WikiDB_backend
                 // We're still in the link table (dangling link) so we can't delete this
                 // altogether.
                 $dbh->query("UPDATE $page_tbl SET hits=0, pagedata='' WHERE id=$id");
+                $result = 0;
             }
             else {
                 $dbh->query("DELETE FROM $page_tbl WHERE id=$id");
+                $result = 1;
             }
             $this->_update_recent_table();
             $this->_update_nonempty_table();
+        } else {
+            $result = -1; // already purged or not existing
         }
         $this->unlock();
+        return $result;
     }
-            
 
     // The only thing we might be interested in updating which we can
     // do fast in the flags (minor_edit).   I think the default
@@ -1171,6 +1182,9 @@ extends WikiDB_backend_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.76  2004/11/30 17:45:53  rurban
+// exists_links backend implementation
+//
 // Revision 1.75  2004/11/28 20:42:33  rurban
 // Optimize PearDB _extract_version_data and _extract_page_data.
 //

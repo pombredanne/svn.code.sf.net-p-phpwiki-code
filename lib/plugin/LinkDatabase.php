@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: LinkDatabase.php,v 1.3 2004-11-30 23:44:00 rurban Exp $');
+rcs_id('$Id: LinkDatabase.php,v 1.4 2004-12-06 19:50:05 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -25,14 +25,14 @@ require_once('lib/WikiPluginCached.php');
 
 /**
  * - To be used by WikiBrowser at http://touchgraph.sourceforge.net/
- * Only via a static text file yet. (format=text)
+ *   Only via a static text file yet. (format=text)
  * - Or the Hypergraph applet (format=xml)
- * http://hypergraph.sourceforge.net/
- * So far also only for a static xml file, but I'll fix the applet and test 
- * the RPC2 interface.
+ *   http://hypergraph.sourceforge.net/
+ *   So far also only for a static xml file, but I'll fix the applet and test 
+ *   the RPC2 interface.
  *
  * TODO: Currently the meta-head tags disturb the touchgraph java browser a bit. 
- * Maybe add a theme without much header tags.
+ * Maybe add a theme without that much header tags.
  */
 class WikiPlugin_LinkDatabase
 extends WikiPluginCached
@@ -48,7 +48,7 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
     function getExpire($dbi, $argarray, $request) {
         return '+900'; // 15 minutes
@@ -178,6 +178,9 @@ class _PageList_Column_LinkDatabase_links extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/11/30 23:44:00  rurban
+// some comments
+//
 // Revision 1.2  2004/11/30 23:02:45  rurban
 // format=xml for hypergraph.sf.net applet
 //

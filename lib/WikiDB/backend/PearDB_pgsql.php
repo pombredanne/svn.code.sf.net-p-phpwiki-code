@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_pgsql.php,v 1.13 2004-11-27 14:39:05 rurban Exp $');
+rcs_id('$Id: PearDB_pgsql.php,v 1.14 2004-12-06 19:50:04 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB.php');

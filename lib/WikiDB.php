@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.112 2004-11-30 17:45:53 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.113 2004-12-06 19:49:55 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -218,15 +218,21 @@ class WikiDB {
     /**
      * Delete page from the WikiDB. 
      *
-     * Deletes all revisions of the page from the WikiDB. Also resets
-     * all page meta-data to the default values.
+     * Deletes the page from the WikiDB with the possibility to revert and diff.
+     * //Also resets all page meta-data to the default values.
+     *
+     * Note: purgePage() effectively destroys all revisions of the page from the WikiDB. 
      *
      * @access public
      *
      * @param string $pagename Name of page to delete.
      */
     function deletePage($pagename) {
-        $this->_cache->delete_page($pagename);
+    	// don't create empty revisions of already purged pages.
+        if ($this->_backend->get_latest_version($pagename))
+            $result = $this->_cache->delete_page($pagename);
+        else 
+            $result = -1;
 
         /* Generate notification emails? */
         if (! $this->isWikiPage($pagename) ) {
@@ -235,13 +241,13 @@ class WikiDB {
                 //TODO: deferr it (quite a massive load if you remove some pages).
                 //TODO: notification class which catches all changes,
                 //  and decides at the end of the request what to mail. (type, page, who, what, users, emails)
-                // could be used for PageModeration also.
+                // could be used for PageModeration and RSS2 Cloud xml-rpc also.
                 $page = new WikiDB_Page($this, $pagename);
                 list($emails, $userids) = $page->getPageChangeEmails($notify);
                 if (!empty($emails)) {
                     $editedby = sprintf(_("Removed by: %s"), $GLOBALS['request']->_user->getId()); // Todo: host_id
                     $emails = join(',', $emails);
-                    $subject = sprintf(_("Page deleted %s"), urlencode($pagename));
+                    $subject = sprintf(_("Page removed %s"), urlencode($pagename));
                     if (mail($emails,"[".WIKI_NAME."] ".$subject, 
                              $subject."\n".
                              $editedby."\n\n".
@@ -264,8 +270,18 @@ class WikiDB {
         $meta['summary'] = _("removed");
         $page->save($current->getPackedContent(), $version + 1, $meta);
         */
+        return $result;
     }
 
+    /**
+     * Completely remove the page from the WikiDB, without undo possibility.
+     */
+    function purgePage($pagename) {
+        $result = $this->_cache->purge_page($pagename);
+        $this->deletePage($pagename); // just for the notification
+        return $result;
+    }
+    
     /**
      * Retrieve all pages.
      *
@@ -287,8 +303,8 @@ class WikiDB {
             $mem = ini_get("memory_limit");
             if ($mem and !$limit and !isWindows() and !check_php_version(4,3)) {
                 $limit = 450;
-                $GLOBALS['request']->setArg('limit',$limit);
-                $GLOBALS['request']->setArg('paging','auto');
+                $GLOBALS['request']->setArg('limit', $limit);
+                $GLOBALS['request']->setArg('paging', 'auto');
             }
         }
         $result = $this->_backend->get_all_pages($include_empty, $sortby, $limit, $exclude);
@@ -662,6 +678,7 @@ class WikiDB_Page
     function exists() {
         if (isset($this->_wikidb->_cache->_id_cache[$this->_pagename])) return true;
         $current = $this->getCurrentRevision(false);
+        if (!$current) return false;
         return ! $current->hasDefaultContents();
     }
 
@@ -822,7 +839,7 @@ class WikiDB_Page
         if (empty($data['mtime']))
             $data['mtime'] = time();
 
-        if ($latestversion) {
+        if ($latestversion and $version != WIKIDB_FORCE_CREATE) {
             // Ensure mtimes are monotonic.
             $pdata = $cache->get_versiondata($pagename, $latestversion);
             if ($data['mtime'] < $pdata['mtime']) {
@@ -900,9 +917,9 @@ class WikiDB_Page
                     $this->sendPageChangeNotification($wikitext, $version, $meta, $emails, $userids);
                 }
             }
+            $newrevision->_transformedContent = $formatted;
         }
 
-        $newrevision->_transformedContent = $formatted;
 	return $newrevision;
     }
 
@@ -1099,13 +1116,13 @@ class WikiDB_Page
         $cache = &$this->_wikidb->_cache;
         $pagename = &$this->_pagename;
         
-        if (! $version ) // 0 or false
+        if (! $version or $version == -1) // 0 or false
             return new WikiDB_PageRevision($this->_wikidb, $pagename, 0);
 
         assert($version > 0);
         $vdata = $cache->get_versiondata($pagename, $version, $need_content);
         if (!$vdata) {
-            return false;
+            return new WikiDB_PageRevision($this->_wikidb, $pagename, 0);
         }
         return new WikiDB_PageRevision($this->_wikidb, $pagename, $version,
                                        $vdata);
@@ -1982,11 +1999,18 @@ class WikiDB_cache
     }
     
     function delete_page($pagename) {
-        $this->_backend->delete_page($pagename);
+        $result = $this->_backend->delete_page($pagename);
         $this->invalidate_cache($pagename);
+        return $result;
     }
 
-    // FIXME: ugly and wrong. overwrites full cache with partial cache
+    function purge_page($pagename) {
+        $result = $this->_backend->purge_page($pagename);
+        $this->invalidate_cache($pagename);
+        return $result;
+    }
+
+    // FIXME: ugly and wrong. may overwrite full cache with partial cache
     function cache_data($data) {
     	;
         //if (isset($data['pagedata']))
@@ -2095,11 +2119,15 @@ function _sql_debuglog($msg, $newline=true, $shutdown=false) {
     if ($newline) fputs($fp, "[$i++] $msg");
     else fwrite($fp, $msg);
 }
+
 function _sql_debuglog_shutdown_function() {
     _sql_debuglog('',false,true);
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.112  2004/11/30 17:45:53  rurban
+// exists_links backend implementation
+//
 // Revision 1.111  2004/11/28 20:39:43  rurban
 // deactivate pagecache overwrite: it is wrong
 //

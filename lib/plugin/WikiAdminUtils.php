@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminUtils.php,v 1.13 2004-06-25 14:29:22 rurban Exp $');
+rcs_id('$Id: WikiAdminUtils.php,v 1.14 2004-12-06 19:50:05 rurban Exp $');
 /**
- Copyright 2003 $ThePhpWikiProgrammingTeam
+ Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -21,6 +21,12 @@ rcs_id('$Id: WikiAdminUtils.php,v 1.13 2004-06-25 14:29:22 rurban Exp $');
  */
 
 /**
+  valid actions: 
+        purge-cache
+        purge-bad-pagenames
+        purge-empty-pages
+        access-restrictions
+        email-verification
  */
 class WikiPlugin_WikiAdminUtils
 extends WikiPlugin
@@ -30,12 +36,12 @@ extends WikiPlugin
     }
 
     function getDescription () {
-        return _("Miscellaneous utility functions of use to the administrator.");
+        return _("Miscellaneous utility functions for the WIKIADMIN.");
     }
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.13 $");
+                            "\$Revision: 1.14 $");
     }
 
     function getDefaultArguments() {
@@ -57,9 +63,8 @@ extends WikiPlugin
             return $this->disabled("(action != 'browse')");
         
         $posted = $request->getArg('wikiadminutils');
-        $request->setArg('wikiadminutils', false);
 
-        if ($request->isPost()) {
+        if ($request->isPost() and $posted['action'] == $action) { // a different form. we might have multiple
             $user = $request->getUser();
             if (!$user->isAdmin()) {
                 $request->_notAuthorized(WIKIAUTH_ADMIN);
@@ -67,10 +72,9 @@ extends WikiPlugin
             }
             return $this->do_action($request, $posted);
         }
-
         if (empty($label))
             $label = $default_label;
-        
+
         return $this->_makeButton($request, $args, $label);
     }
 
@@ -101,7 +105,8 @@ extends WikiPlugin
 
     function _getLabel($action) {
         $labels = array('purge-cache' => _("Purge Markup Cache"),
-                        'purge-bad-pagenames' => _("Delete Pages With Invalid Names"));
+                        'purge-bad-pagenames' => _("Purge all Pages With Invalid Names"),
+                        'purge-empty-pages' => _("Purge all empty, unreferenced Pages"));
         return @$labels[$action];
     }
 
@@ -117,27 +122,58 @@ extends WikiPlugin
     function _do_purge_bad_pagenames(&$request, $args) {
         // FIXME: this should be moved into WikiDB::normalize() or something...
         $dbi = $request->getDbh();
+        $count = 0;
+        $list = HTML::ol(array('align'=>'left'));
         $pages = $dbi->getAllPages('include_empty'); // Do we really want the empty ones too?
-        $badpages = array();
         while (($page = $pages->next())) {
             $pagename = $page->getName();
             $wpn = new WikiPageName($pagename);
-            if (! $wpn->isValid())
-                $badpages[] = $pagename;
+            if (! $wpn->isValid()) {
+                $dbi->purgePage($pagename);
+                $list->pushContent(HTML::li($pagename));
+                $count++;
+            }
         }
-
-        if (!$badpages)
+        $pages->free();
+        if (!$count)
             return _("No pages with bad names were found.");
-        
-        $list = HTML::ul();
-        foreach ($badpages as $pagename) {
-            $dbi->deletePage($pagename);
-            $list->pushContent(HTML::li($pagename));
+        else {
+            return HTML(fmt("Deleted %s pages with invalid names:", $count),
+                        HTML::div(array('align'=>'left'), $list));
         }
-        
-        return HTML(fmt("Deleted %s pages with invalid names:",
-                        count($badpages)),
-                    $list);
+    }
+
+    /** 
+     * Purge all non-referenced empty pages. Mainly those created by bad link extraction.
+     */
+    function _do_purge_empty_pages(&$request, $args) {
+        $dbi = $request->getDbh();
+        $count = 0; $notpurgable = 0;
+        $list = HTML::ol(array('align'=>'left'));
+        $pages = $dbi->getAllPages('include_empty');
+        while (($page = $pages->next())) {
+            if (!$page->exists() and ($links = $page->getBackLinks('include_empty')) and !$links->next()) {
+                $pagename = $page->getName();
+                if ($pagename == 'global_data' or $pagename == '.') continue;
+                if ($dbi->purgePage($pagename))
+                    $list->pushContent(HTML::li($pagename.' '._("[purged]")));
+                else {
+                    $list->pushContent(HTML::li($pagename.' '._("[not purgable]")));
+                    $notpurgable++;
+                }
+                $count++;
+            }
+        }
+        $pages->free();
+        if (!$count)
+            return _("No empty, unreferenced pages were found.");
+        else
+            return HTML(fmt("Deleted %s unreferenced pages:", $count),
+                        HTML::div(array('align'=>'left'), $list),
+                        ($notpurgable ? 
+        fmt("The %d not-purgable pages/links are links in some page(s). You might want to edit them.", 
+            $notpurgable)
+                                      : ''));
     }
 
     //TODO: We need a seperate plugin for this.

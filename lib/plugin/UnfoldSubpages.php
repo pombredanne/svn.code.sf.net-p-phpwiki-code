@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UnfoldSubpages.php,v 1.17 2004-11-23 15:17:19 rurban Exp $');
+rcs_id('$Id: UnfoldSubpages.php,v 1.18 2004-12-06 19:50:05 rurban Exp $');
 /*
  Copyright 2002, 2004 $ThePhpWikiProgrammingTeam
 
@@ -23,11 +23,12 @@ rcs_id('$Id: UnfoldSubpages.php,v 1.17 2004-11-23 15:17:19 rurban Exp $');
 /**
  * UnfoldSubpages:  Lists the content of all SubPages of the current page.
  *   This is e.g. useful for the CalendarPlugin, to see all entries at once.
- *   Warning: Don't use it with non-existant sections!
+ *   Warning: Better don't use it with non-existant sections!
  *	      The section extractor is currently quite unstable.
  * Usage:   <?plugin UnfoldSubpages sortby=-mtime words=50 maxpages=5 ?>
  * Author:  Reini Urban <rurban@x-ray.at>
  */
+include_once("lib/PageList.php");
 class WikiPlugin_UnfoldSubpages
 extends WikiPlugin
 {
@@ -41,7 +42,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.17 $");
+                            "\$Revision: 1.18 $");
     }
 
     function getDefaultArguments() {
@@ -150,6 +151,14 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.17  2004/11/23 15:17:19  rurban
+// better support for case_exact search (not caseexact for consistency),
+// plugin args simplification:
+//   handle and explode exclude and pages argument in WikiPlugin::getArgs
+//     and exclude in advance (at the sql level if possible)
+//   handle sortby and limit from request override in WikiPlugin::getArgs
+// ListSubpages: renamed pages to maxpages
+//
 // Revision 1.16  2004/09/25 16:35:09  rurban
 // use stdlib firstNWordsOfContent, extractSection
 //

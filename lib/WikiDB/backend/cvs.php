@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: cvs.php,v 1.22 2004-11-25 17:20:51 rurban Exp $');
+rcs_id('$Id: cvs.php,v 1.23 2004-12-06 19:50:04 rurban Exp $');
 /**
  * Backend for handling CVS repository. 
  *
@@ -307,10 +307,17 @@ extends WikiDB_backend
     }
 
     /**
+     * See ADODB for a better delete_page(), which can be undone and is seen in RecentChanges.
+     */
+    function delete_page($pagename) {
+        $this->purge_page($pagename);
+    }
+
+    /**
      * This returns false if page was not deleted or could not be deleted
      * else return true.
      */
-    function delete_page($pagename) 
+    function purge_page($pagename) 
     {
         $this->_cvsDebug( "delete_page [$pagename]") ;
         $filename = $this->_docDir . "/" . $pagename;

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.36 2004-11-28 20:42:18 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.37 2004-12-06 19:49:55 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004 $ThePhpWikiProgrammingTeam
 
@@ -451,6 +451,7 @@ class PageFormatter_pdf extends PageFormatter
         return $pdf;
     }
 }
+// $Log: not supported by cvs2svn $
 
 // Local Variables:
 // mode: php
