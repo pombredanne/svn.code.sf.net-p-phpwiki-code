@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: file.php,v 1.15 2004-07-09 10:06:50 rurban Exp $');
+rcs_id('$Id: file.php,v 1.16 2004-07-09 12:47:45 rurban Exp $');
 
 /**
  Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
@@ -707,6 +707,10 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
         $pn = $e[1];
 
         $pagedata = $backend->get_pagedata($pn);
+        // don't pass _cached_html via iterators
+        if (isset($pagedata['_cached_html']))
+            unset($pagedata['_cached_html']);
+         unset($pagedata['pagename']);
         $rec = array('pagename' => $pn,
                      'pagedata' => $pagedata);
 
@@ -725,6 +729,15 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2004/07/09 10:06:50  rurban
+// Use backend specific sortby and sortable_columns method, to be able to
+// select between native (Db backend) and custom (PageList) sorting.
+// Fixed PageList::AddPageList (missed the first)
+// Added the author/creator.. name to AllPagesBy...
+//   display no pages if none matched.
+// Improved dba and file sortby().
+// Use &$request reference
+//
 // Revision 1.14  2004/07/08 17:31:43  rurban
 // improve numPages for file (fixing AllPagesTest)
 //
