@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: difflib.php,v 1.10 2004-04-08 01:22:53 rurban Exp $');
+rcs_id('$Id: difflib.php,v 1.11 2004-11-21 11:59:19 rurban Exp $');
 
 // difflib.php
 //
@@ -910,6 +910,9 @@ class BlockDiffFormatter extends DiffFormatter
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.10  2004/04/08 01:22:53  rurban
+ fixed PageChange Notification
+
  Revision 1.9  2003/11/30 18:43:18  carstenklapp
  Fixed careless mistakes in my last optimization commit.
 

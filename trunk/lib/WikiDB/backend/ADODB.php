@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.54 2004-11-20 17:49:39 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.55 2004-11-21 11:59:26 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -657,6 +657,19 @@ extends WikiDB_backend
         $page_tbl = $this->_table_names['page_tbl'];
         return "LOWER($page_tbl.pagename) LIKE $word OR content LIKE $word";
     }
+    /*
+     * TODO: efficiently handle wildcards exclusion: exclude=Php* => 'Php%', 
+     * not sets. See above, but the above methods find too much. 
+     * This is only for already resolved wildcards:
+     * " WHERE $page_tbl.pagename NOT IN ".$this->_sql_set(array('page1','page2'));
+     */
+    function _sql_set(&$pagenames) {
+        $s = '(';
+        foreach ($pagenames as $p) {
+            $s .= ($this->_dbh->qstr($p).",");
+        }
+        return substr($s,0,-1).")";
+    }
 
     /**
      * Find highest or lowest hit counts.
@@ -795,14 +808,6 @@ extends WikiDB_backend
             . $orderby;
         $result = $dbh->SelectLimit($sql, $limit);
         return new WikiDB_backend_ADODB_iter($this, $result, array('pagename','wantedfrom'));
-    }
-
-    function _sql_set(&$pagenames) {
-        $s = '(';
-        foreach ($pagenames as $p) {
-            $s .= ($this->_dbh->qstr($p).",");
-        }
-        return substr($s,0,-1).")";
     }
 
     /**
@@ -1240,6 +1245,9 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.54  2004/11/20 17:49:39  rurban
+// add fast exclude support to SQL get_all_pages
+//
 // Revision 1.53  2004/11/20 17:35:58  rurban
 // improved WantedPages SQL backends
 // PageList::sortby new 3rd arg valid_fields (override db fields)

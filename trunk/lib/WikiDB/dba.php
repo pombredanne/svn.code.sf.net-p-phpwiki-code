@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: dba.php,v 1.3 2001-12-19 12:07:59 carstenklapp Exp $');
+<?php rcs_id('$Id: dba.php,v 1.4 2004-11-21 11:59:25 rurban Exp $');
 
 require_once('lib/WikiDB.php');
 require_once('lib/WikiDB/backend/dba.php');

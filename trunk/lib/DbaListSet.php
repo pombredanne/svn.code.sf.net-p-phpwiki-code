@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbaListSet.php,v 1.2 2001-09-19 03:24:36 wainstead Exp $');
+<?php rcs_id('$Id: DbaListSet.php,v 1.3 2004-11-21 11:59:14 rurban Exp $');
 
 class DbaListSet
 {
@@ -144,5 +144,4 @@ class DbaListSet
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-
 ?>

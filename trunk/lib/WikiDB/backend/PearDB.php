@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.69 2004-11-20 17:49:39 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.70 2004-11-21 11:59:26 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -290,12 +290,14 @@ extends WikiDB_backend
         //trigger_error("GET_REVISION $pagename $version $want_content", E_USER_NOTICE);
         // FIXME: optimization: sometimes don't get page data?
         if ($want_content) {
-            $fields = $this->page_tbl_fields . ",$page_tbl.pagedata as pagedata," . $this->version_tbl_fields;
+            $fields = $this->page_tbl_fields 
+                . ",$page_tbl.pagedata as pagedata," 
+                . $this->version_tbl_fields;
         }
         else {
             $fields = $this->page_tbl_fields . ","
-                       . "mtime, minor_edit, versiondata,"
-                       . "$iscontent AS have_content";
+                . "mtime, minor_edit, versiondata,"
+                . "$iscontent AS have_content";
         }
 
         $result = $dbh->getRow(sprintf("SELECT $fields"
@@ -1079,6 +1081,9 @@ extends WikiDB_backend_PearDB_generic_iter
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.69  2004/11/20 17:49:39  rurban
+// add fast exclude support to SQL get_all_pages
+//
 // Revision 1.68  2004/11/20 17:35:58  rurban
 // improved WantedPages SQL backends
 // PageList::sortby new 3rd arg valid_fields (override db fields)

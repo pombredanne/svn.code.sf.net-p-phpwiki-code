@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.60 2004-11-19 19:22:03 rurban Exp $');
+rcs_id('$Id: display.php,v 1.61 2004-11-21 11:59:19 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -219,6 +219,9 @@ function displayPage(&$request, $template=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.60  2004/11/19 19:22:03  rurban
+// ModeratePage part1: change status
+//
 // Revision 1.59  2004/11/17 20:03:58  rurban
 // Typo: call SearchHighlight not SearchHighLight
 //

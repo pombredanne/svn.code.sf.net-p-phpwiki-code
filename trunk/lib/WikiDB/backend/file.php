@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: file.php,v 1.18 2004-11-09 17:11:17 rurban Exp $');
+rcs_id('$Id: file.php,v 1.19 2004-11-21 11:59:26 rurban Exp $');
 
 /**
  Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
@@ -436,7 +436,9 @@ extends WikiDB_backend
         if ($this->get_latest_version($pagename) == $version) {
             // try to delete the latest version!
             // so check if an older version exist:
-            if ($this->get_versiondata($pagename, $this->get_previous_version($pagename, $version), false) == false) {
+            if ($this->get_versiondata($pagename, 
+                                       $this->get_previous_version($pagename, $version), 
+                                       false) == false) {
               // there is no older version....
               // so the completely page will be removed:
               $this->delete_page($pagename);
@@ -560,13 +562,13 @@ extends WikiDB_backend
      *
      * @return object A WikiDB_backend_iterator.
      */
-    function get_all_pages($include_empty=false, $sortby=false, $limit=false) {
+    function get_all_pages($include_empty=false, $sortby=false, $limit=false, $exclude=false) {
     	require_once("lib/PageList.php");
         $this->_loadLatestVersions();
         $a = array_keys($this->_latest_versions);
         if (empty($a))
             return new WikiDB_backend_file_iter($this, $a);
-        $sortby = $this->sortby($sortby, 'db');
+        $sortby = $this->sortby($sortby, 'db', $this->sortable_columns());
         switch ($sortby) {
         case '': break;
         case 'pagename ASC':  sort($a); break;
@@ -714,16 +716,30 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
         //$rec['versiondata'] = $backend->get_versiondata($pn, $rec['version'], true);
         return $rec;
     }
-
+    function asArray() {
+        reset($this->_result);
+        return $this->_result;
+    }
     function count() {
     	return count($this->_result);
     }
-    
     function free () {
+        $this->_result = array();
     }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.18  2004/11/09 17:11:17  rurban
+// * revert to the wikidb ref passing. there's no memory abuse there.
+// * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively
+//   store page ids with getPageLinks (GleanDescription) of all existing pages, which
+//   are also needed at the rendering for linkExistingWikiWord().
+//   pass options to pageiterator.
+//   use this cache also for _get_pageid()
+//   This saves about 8 SELECT count per page (num all pagelinks).
+// * fix passing of all page fields to the pageiterator.
+// * fix overlarge session data which got broken with the latest ACCESS_LOG_SQL changes
+//
 // Revision 1.17  2004/07/09 13:05:34  rurban
 // just aesthetics
 //

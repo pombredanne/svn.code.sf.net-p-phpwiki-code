@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.79 2004-11-11 18:29:44 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.80 2004-11-21 11:59:16 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -1305,6 +1305,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.79  2004/11/11 18:29:44  rurban
+// (write_sql) isOpen really is useless in non-SQL, do more explicit check
+//
 // Revision 1.78  2004/11/10 15:29:20  rurban
 // * requires newer Pear_DB (as the internal one): quote() uses now escapeSimple for strings
 // * ACCESS_LOG_SQL: fix cause request not yet initialized

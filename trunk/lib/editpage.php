@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.78 2004-11-16 17:57:45 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.79 2004-11-21 11:59:20 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -803,6 +803,11 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.78  2004/11/16 17:57:45  rurban
+ fix search&replace button
+ use new addTagButton machinery
+ new showPulldown for categories, TODO: in a seperate request
+
  Revision 1.77  2004/11/15 15:52:35  rurban
  improve js stability
 
