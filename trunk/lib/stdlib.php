@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.134 2003-02-16 19:44:20 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.135 2003-02-18 19:17:04 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -790,27 +790,19 @@ function split_pagename ($page) {
         $RE[] = '/([[:lower:]])((?<!Mc|De|Di)[[:upper:]]|\d)/';
         // This the single-letter words 'I' and 'A' from any following
         // capitalized words.
-        $RE[] = '/(?: |^)([AI])([[:upper:]][[:lower:]])/';
+	$sep = preg_quote(SUBPAGE_SEPARATOR, '/');
+        $RE[] = "/(?<= |${sep}|^)([AI])([[:upper:]][[:lower:]])/";
         // Split numerals from following letters.
         $RE[] = '/(\d)([[:alpha:]])/';
         
         foreach ($RE as $key => $val)
             $RE[$key] = pcre_fix_posix_classes($val);
     }
-    if (isSubPage($page)) {
-        // FIXME: is this needed?
-        $pages = explode(SUBPAGE_SEPARATOR,$page);
-        $new_page = $pages[0] ? split_pagename($pages[0]) : '';
-        for ($i=1; $i < sizeof($pages); $i++) {
-            $new_page .=  (SUBPAGE_SEPARATOR . ($pages[$i] ? split_pagename($pages[$i]) : ''));
-        }
-        return $new_page;
-    } else {
-        foreach ($RE as $regexp) {
-            $page = preg_replace($regexp, '\\1 \\2', $page);
-        }
-        return $page;
+
+    foreach ($RE as $regexp) {
+	$page = preg_replace($regexp, '\\1 \\2', $page);
     }
+    return $page;
 }
 
 function NoSuchRevision (&$request, $page, $version) {
@@ -1269,6 +1261,10 @@ function subPageSlice($pagename, $pos) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.134  2003/02/16 19:44:20  dairiki
+// New function hash().  This is a helper, primarily for generating
+// HTTP ETags.
+//
 // Revision 1.133  2003/02/16 04:50:09  dairiki
 // New functions:
 // Rfc1123DateTime(), ParseRfc1123DateTime()
