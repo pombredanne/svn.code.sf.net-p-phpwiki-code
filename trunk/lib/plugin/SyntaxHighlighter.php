@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SyntaxHighlighter.php,v 1.2 2004-05-14 15:56:16 rurban Exp $');
+rcs_id('$Id: SyntaxHighlighter.php,v 1.3 2004-05-14 17:33:12 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -55,8 +55,8 @@ define('HIGHLIGHT_EXE','highlight');
 // doesn't have a $HOME
 if (isWindows())
     define('HIGHLIGHT_DATA_DIR','f:\cygnus\usr\local\share\highlight');
-else  
-    define('HIGHLIGHT_DATA_DIR','/usr/local/share/highlight');
+else
+    define('HIGHLIGHT_DATA_DIR','/usr/share/highlight');
 
 class WikiPlugin_SyntaxHighlighter
 extends WikiPlugin
@@ -72,7 +72,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
     function getDefaultArguments() {
         return array(
@@ -180,6 +180,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/05/14 15:56:16  rurban
+// protect color argument, more error handling, added default css
+//
 // Revision 1.1  2004/05/14 14:55:52  rurban
 // Alec Thomas original plugin, which comes with highlight http://www.andre-simon.de/,
 // plus some extensions by Reini Urban

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.92 2004-04-21 04:29:10 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.93 2004-05-14 17:33:07 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -190,6 +190,8 @@ extends _RecentChanges_Formatter
             $edits = _("major edits");
         else
             $edits = _("minor edits");
+        if ($caption == _("Recent Comments"))
+            $edits = _("comments");
 
         if ($timespan = $days > 0) {
             if (intval($days) != $days)
@@ -255,6 +257,9 @@ extends _RecentChanges_Formatter
 
     function title () {
         extract($this->_args);
+        if (isset($caption) and $caption == _("Recent Comments"))
+            return array(_("RecentComments"),' ',$this->rss_icon(),
+                         $this->sidebar_link());
         return array($show_minor ? _("RecentEdits") : _("RecentChanges"),
                      ' ',
                      $this->rss_icon(),
@@ -262,7 +267,10 @@ extends _RecentChanges_Formatter
     }
 
     function empty_message () {
-        return _("No changes found");
+        if (isset($this->_args['caption']) and $this->_args['caption'] == _("Recent Comments"))
+            return _("No comments found");
+        else 
+            return _("No changes found");
     }
         
     function sidebar_link() {
@@ -656,7 +664,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.92 $");
+                            "\$Revision: 1.93 $");
     }
 
     function managesValidators() {
@@ -839,6 +847,11 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.92  2004/04/21 04:29:10  rurban
+// Two convenient RecentChanges extensions
+//   RelatedChanges (only links from current page)
+//   RecentEdits (just change the default args)
+//
 // Revision 1.91  2004/04/19 18:27:46  rurban
 // Prevent from some PHP5 warnings (ref args, no :: object init)
 //   php5 runs now through, just one wrong XmlElement object init missing
