@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.114 2004-11-05 16:15:57 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.115 2004-11-05 20:53:35 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -99,9 +99,8 @@ define('WIKIAUTH_USER', 2);       // Bogo user with a password.
 define('WIKIAUTH_ADMIN', 10);     // UserName == ADMIN_USER.
 define('WIKIAUTH_UNOBTAINABLE', 100);  // Permissions that no user can achieve
 
-if (!defined('COOKIE_EXPIRATION_DAYS')) define('COOKIE_EXPIRATION_DAYS', 365);
-if (!defined('COOKIE_DOMAIN'))          define('COOKIE_DOMAIN', '/');
-
+//if (!defined('COOKIE_EXPIRATION_DAYS')) define('COOKIE_EXPIRATION_DAYS', 365);
+//if (!defined('COOKIE_DOMAIN'))          define('COOKIE_DOMAIN', '/');
 if (!defined('EDITWIDTH_MIN_COLS'))     define('EDITWIDTH_MIN_COLS',     30);
 if (!defined('EDITWIDTH_MAX_COLS'))     define('EDITWIDTH_MAX_COLS',    150);
 if (!defined('EDITWIDTH_DEFAULT_COLS')) define('EDITWIDTH_DEFAULT_COLS', 80);
@@ -122,7 +121,7 @@ if (!defined('TIMEOFFSET_DEFAULT_HOURS')) define('TIMEOFFSET_DEFAULT_HOURS', 0);
  * ALLOW_ANON_EDIT         default true
  * ALLOW_BOGO_LOGIN        default true
  * ALLOW_USER_PASSWORDS    default true
- * PASSWORD_LENGTH_MINIMUM default 6 ?
+ * PASSWORD_LENGTH_MINIMUM default 0
  *
  * To require user passwords for editing:
  * ALLOW_ANON_USER  = true
@@ -189,7 +188,7 @@ function _determineBogoUserOrPassUser($UserName) {
 
     // Check for password and possibly upgrade user object.
     // $_BogoUser = new _BogoUser($UserName);
-    if (_isBogoUserAllowed()) {
+    if (_isBogoUserAllowed() and isWikiWord($UserName)) {
         include_once("lib/WikiUser/BogoLogin.php");
         $_BogoUser = new _BogoLoginPassUser($UserName);
         if ($_BogoUser->userExists())
@@ -197,10 +196,12 @@ function _determineBogoUserOrPassUser($UserName) {
     }
     if (_isUserPasswordsAllowed()) {
     	// PassUsers override BogoUsers if a password is stored
-        if (isset($_BogoUser) and isset($_BogoUser->_prefs) and $_BogoUser->_prefs->get('passwd'))
+        if (isset($_BogoUser) and isset($_BogoUser->_prefs) 
+            and $_BogoUser->_prefs->get('passwd'))
             return new _PassUser($UserName,$_BogoUser->_prefs);
         else { 
-            $_PassUser = new _PassUser($UserName,isset($_BogoUser) ? $_BogoUser->_prefs : false);
+            $_PassUser = new _PassUser($UserName,
+                                       isset($_BogoUser) ? $_BogoUser->_prefs : false);
             if ($_PassUser->userExists())
                 return $_PassUser;
         }
@@ -367,7 +368,8 @@ class _WikiUser
     }
 
     function setPreferences($prefs, $id_only) {
-        trigger_error("DEBUG: Note: undefined _WikiUser class trying to save prefs." . " "
+        trigger_error("DEBUG: Note: undefined _WikiUser class trying to save prefs." 
+                      . " "
                       . "New subclasses of _WikiUser must override this function.");
         return false;
     }
@@ -378,7 +380,8 @@ class _WikiUser
 
     function checkPass($submitted_password) {
         // By definition, an undefined user class cannot sign in.
-        trigger_error("DEBUG: Warning: undefined _WikiUser class trying to sign in." . " "
+        trigger_error("DEBUG: Warning: undefined _WikiUser class trying to sign in." 
+                      . " "
                       . "New subclasses of _WikiUser must override this function.");
         return false;
     }
@@ -431,26 +434,16 @@ class _WikiUser
     }
 
     function AuthMethod($index = false) {
-        return $this->_auth_methods[ $index === false ? 0 : $index];
+        return $this->_auth_methods[ $index === false 
+                                     ? count($this->_auth_methods)-1 
+                                     : $index];
     }
 
     // upgrade the user object
     function nextClass() {
-        if (($next = $this->nextAuthMethodIndex()) !== false) {
-            $method = $this->AuthMethod($next);
-            include_once("lib/WikiUser/$method.php");
-            return "_".$method."PassUser";
-            /*
-            if ($user = new $class($this->_userid)) {
-                // prevent from endless recursion.
-                //$user->_current_method = $this->_current_method;
-                //$user->_current_index = $this->_current_index;
-                $user = UpgradeUser($user, $this);
-            }
-            return $user;
-            */
-        }
-        return "_ForbiddenPassUser";
+        $method = $this->AuthMethod($this->nextAuthMethodIndex());
+        include_once("lib/WikiUser/$method.php");
+        return "_".$method."PassUser";
     }
 
     //Fixme: for _HttpAuthPassUser
@@ -561,7 +554,7 @@ class _WikiUser
 
         $authlevel = $this->checkPass($passwd === false ? '' : $passwd);
         if ($authlevel <= 0) { // anon or forbidden
-            if ($passwd)	
+            if ($passwd)
                 return _("Invalid password.");
             else
                 return _("Invalid password or userid.");
@@ -791,17 +784,6 @@ extends _AnonUser
         return false;
     }
 }
-/** 
- * The PassUser name gets created automatically. 
- * That's why this class is empty, but must exist.
- */
-class _ForbiddenPassUser
-extends _ForbiddenUser
-{
-    function dummy() {
-        return;
-    }
-}
 
 /**
  * Do NOT extend _BogoUser to other classes, for checkPass()
@@ -901,7 +883,7 @@ extends _AnonUser
             // 3. strict:    upgrade the class after checking the user existance in userExists()
             // 4. stacked:   upgrade the class after the password verification in checkPass()
             // Methods: PersonalPage, HttpAuth, DB, Ldap, Imap, File
-            if (!defined('USER_AUTH_POLICY')) define('USER_AUTH_POLICY','old');
+            //if (!defined('USER_AUTH_POLICY')) define('USER_AUTH_POLICY','old');
             if (defined('USER_AUTH_POLICY')) {
                 // policy 1: only pre-define one method for all users
                 if (USER_AUTH_POLICY === 'first-only') {
@@ -1092,9 +1074,13 @@ extends _AnonUser
     function getPreferences() {
         if (!empty($this->_prefs->_method)) {
             if ($this->_prefs->_method == 'ADODB') {
+            	include_once("lib/WikiUser/Db.php");
+            	include_once("lib/WikiUser/AdoDb.php");
                 _AdoDbPassUser::_AdoDbPassUser($this->_userid,$this->_prefs);
                 return _AdoDbPassUser::getPreferences();
             } elseif ($this->_prefs->_method == 'SQL') {
+            	include_once("lib/WikiUser/Db.php");
+            	include_once("lib/WikiUser/PearDb.php");
                 _PearDbPassUser::_PearDbPassUser($this->_userid,$this->_prefs);
                 return _PearDbPassUser::getPreferences();
             }
@@ -1198,8 +1184,10 @@ extends _AnonUser
                 trigger_error(_("The length of the stored password is shorter than the system policy allows. Sorry, you cannot login.\n You have to ask the System Administrator to reset your password."));
                 return false;
             }
-            if (strlen($submitted_password) < PASSWORD_LENGTH_MINIMUM)
+            if (strlen($submitted_password) < PASSWORD_LENGTH_MINIMUM) {
+		trigger_error(_("The length of the password is shorter than the system policy allows."));
                 return false;
+            }
             if (ENCRYPTED_PASSWD) {
                 // Verify against encrypted password.
                 if (function_exists('crypt')) {
@@ -1254,8 +1242,13 @@ extends _AnonUser
     }
 
     function _tryNextPass($submitted_password) {
+        if (DEBUG) {
+            $class = strtolower(get_class($this));
+            if (substr($class,-10) == "dbpassuser") $class = "_dbpassuser";
+            $GLOBALS['USER_AUTH_ERROR'][$class] = 'wrongpass';
+        }
         if (USER_AUTH_POLICY === 'strict') {
-        	$class = $this->nextClass();
+            $class = $this->nextClass();
             if ($user = new $class($this->_userid,$this->_prefs)) {
                 if ($user->userExists()) {
                     return $user->checkPass($submitted_password);
@@ -1263,7 +1256,7 @@ extends _AnonUser
             }
         }
         if (USER_AUTH_POLICY === 'stacked' or USER_AUTH_POLICY === 'old') {
-        	$class = $this->nextClass();
+            $class = $this->nextClass();
             if ($user = new $class($this->_userid,$this->_prefs))
                 return $user->checkPass($submitted_password);
         }
@@ -1271,6 +1264,11 @@ extends _AnonUser
     }
 
     function _tryNextUser() {
+        if (DEBUG) {
+            $class = strtolower(get_class($this));
+            if (substr($class,-10) == "dbpassuser") $class = "_dbpassuser";
+            $GLOBALS['USER_AUTH_ERROR'][$class] = 'nosuchuser';
+        }
         if (USER_AUTH_POLICY === 'strict') {
             $class = $this->nextClass();
             while ($user = new $class($this->_userid,$this->_prefs)) {
@@ -2024,6 +2022,9 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.114  2004/11/05 16:15:57  rurban
+// forgot the BogoLogin inclusion with the latest rewrite
+//
 // Revision 1.113  2004/11/03 17:13:49  rurban
 // make it easier to disable EmailVerification
 //   Bug #1053681

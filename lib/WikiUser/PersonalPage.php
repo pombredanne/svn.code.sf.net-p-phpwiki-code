@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: PersonalPage.php,v 1.1 2004-11-01 10:43:58 rurban Exp $');
+rcs_id('$Id: PersonalPage.php,v 1.2 2004-11-05 20:53:36 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 
@@ -24,13 +24,23 @@ extends _PassUser
         if ($this->userExists()) {
             $stored_password = $this->_prefs->get('passwd');
             if (empty($stored_password)) {
-                trigger_error(sprintf(
-                _("PersonalPage login method:\n").
-                _("You stored an empty password in your '%s' page.\n").
-                _("Your access permissions are only for a BogoUser.\n").
-                _("Please set your password in UserPreferences."),
+            	if (PASSWORD_LENGTH_MINIMUM > 0) {
+                  trigger_error(sprintf(
+                    _("PersonalPage login method:\n").
+                    _("You stored an empty password in your '%s' page.\n").
+                    _("Your access permissions are only for a BogoUser.\n").
+                    _("Please set a password in UserPreferences."),
                                         $this->_userid), E_USER_WARNING);
-                $this->_level = WIKIAUTH_BOGO;
+                  $this->_level = WIKIAUTH_BOGO;
+            	} else {
+                  trigger_error(sprintf(
+                    _("PersonalPage login method:\n").
+                    _("You stored an empty password in your '%s' page.\n").
+                    _("Given password ignored.\n").
+                    _("Please set a password in UserPreferences."),
+                                        $this->_userid), E_USER_WARNING);
+                  $this->_level = WIKIAUTH_USER;
+            	}
                 return $this->_level;
             }
             if ($this->_checkPass($submitted_password, $stored_password))
@@ -42,6 +52,12 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/11/01 10:43:58  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 
 // Local Variables:
 // mode: php

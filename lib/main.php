@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.185 2004-11-01 13:55:05 rurban Exp $');
+rcs_id('$Id: main.php,v 1.186 2004-11-05 20:53:35 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -383,6 +383,7 @@ $this->version = phpwiki_version();
 		$this->finish();
 		return;
 	    }
+	    // Is the reason a missing ACL or just wrong user or password?
             if (class_exists('PagePermission')) {
                 $user =& $this->_user;
             	$status = $user->isAuthenticated() ? _("authenticated") : _("not authenticated");
@@ -1128,6 +1129,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.185  2004/11/01 13:55:05  rurban
+// fix against switching user new/old between sessions
+//
 // Revision 1.184  2004/11/01 10:43:57  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: BogoLogin.php,v 1.1 2004-11-01 10:43:58 rurban Exp $');
+rcs_id('$Id: BogoLogin.php,v 1.2 2004-11-05 20:53:36 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 
@@ -21,7 +21,7 @@ extends _PassUser
     }
 
     /** A BogoLoginUser requires no password at all
-     *  But if there's one stored, we should prefer PersonalPage instead
+     *  But if there's one stored, we override it with the PersonalPagePassUser instead
      */
     function checkPass($submitted_password) {
         if ($this->_prefs->get('passwd')) {
@@ -58,6 +58,12 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/11/01 10:43:58  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 
 // Local Variables:
 // mode: php
