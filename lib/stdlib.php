@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.20 2001-01-09 18:22:49 ahollosi Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.21 2001-01-15 12:32:57 ahollosi Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -292,6 +292,9 @@
 	 if(empty($linkname))
 	    $linkname = htmlspecialchars($URL);
 	 $link['link'] = "<a href=\"$ScriptUrl$match[1]\">$linkname</a>";
+      } elseif (preg_match("#^\d+$#", $URL)) {
+         $link['type'] = "reference-$linktype";
+	 $link['link'] = $URL;
       } else {
 	 $link['type'] = "wiki-unknown-$linktype";
          $link['link'] = LinkUnknownWikiWord($URL, $linkname);
