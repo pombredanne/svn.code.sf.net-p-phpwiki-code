@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _BackendInfo.php,v 1.21 2003-02-21 04:22:28 dairiki Exp $');
+rcs_id('$Id: _BackendInfo.php,v 1.22 2004-02-17 12:11:36 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -36,14 +36,14 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.21 $");
+                            "\$Revision: 1.22 $");
     }
 
     function getDefaultArguments() {
         return array('page' => '[pagename]');
     }
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         extract($args);
         if (empty($page))
@@ -154,6 +154,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.21  2003/02/21 04:22:28  dairiki
+// Make this work for array-valued data.  Make display of cached markup
+// readable.  Some code cleanups.  (This still needs more work.)
+//
 // Revision 1.20  2003/01/18 21:19:24  carstenklapp
 // Code cleanup:
 // Reformatting; added copyleft, getVersion, getDescription

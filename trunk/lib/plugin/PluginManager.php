@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PluginManager.php,v 1.13 2004-01-25 03:58:44 rurban Exp $');
+rcs_id('$Id: PluginManager.php,v 1.14 2004-02-17 12:11:36 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,14 +37,14 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.13 $");
+                            "\$Revision: 1.14 $");
     }
 
     function getDefaultArguments() {
         return array('info' => 'args');
     }
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
 
         $h = HTML();
@@ -253,6 +253,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2004/01/25 03:58:44  rurban
+// use stdlib:isWikiWord()
+//
 // Revision 1.12  2004/01/04 18:14:49  wainstead
 // Added "Description:" to the beginning of the description string, so
 // the plugin plays nice with surrounding text.

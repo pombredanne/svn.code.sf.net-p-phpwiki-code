@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: HelloWorld.php,v 1.12 2003-01-18 21:41:02 carstenklapp Exp $');
+rcs_id('$Id: HelloWorld.php,v 1.13 2004-02-17 12:11:36 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -53,7 +53,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.12 $");
+                            "\$Revision: 1.13 $");
     }
 
     // Establish default values for each of this plugin's arguments.
@@ -62,7 +62,7 @@ extends WikiPlugin
                      'name'       => "World");
     }
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
 
         // Any text that is returned will not be further transformed,
@@ -74,6 +74,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2003/01/18 21:41:02  carstenklapp
+// Code cleanup:
+// Reformatting & tabs to spaces;
+// Added copyleft, getVersion, getDescription, rcs_id.
+//
 
 // For emacs users
 // Local Variables:

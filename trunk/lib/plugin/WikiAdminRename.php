@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRename.php,v 1.5 2004-02-15 21:34:37 rurban Exp $');
+rcs_id('$Id: WikiAdminRename.php,v 1.6 2004-02-17 12:11:36 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -45,12 +45,12 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
         return array(
-                     /* Pages to exclude */
+                     /* Pages to exclude in listing */
                      'exclude'  => '',
                      /* Columns to include in listing */
                      'info'     => 'pagename,mtime',
@@ -87,7 +87,7 @@ extends WikiPlugin_WikiAdminSelect
         }
     }
     
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         if ($request->getArg('action') != 'browse')
             return $this->disabled("(action != 'browse')");
         
@@ -109,7 +109,8 @@ extends WikiPlugin_WikiAdminSelect
             // FIXME: error message if not admin.
             if ($post_args['action'] == 'verify') {
                 // Real action
-                return $this->renamePages($dbi, $request, $p, $post_args['from'], $post_args['to'], $post_args['updatelinks']);
+                return $this->renamePages($dbi, $request, $p, 
+                                          $post_args['from'], $post_args['to'], $post_args['updatelinks']);
             }
             if ($post_args['action'] == 'select') {
                 if (!empty($post_args['from']))
@@ -167,7 +168,7 @@ extends WikiPlugin_WikiAdminSelect
         $header->pushContent(HTML::input(array('name' => 'admin_rename[to]',
                                                'value' => $post_args['to'])));
         $header->pushContent(' '._("(no regex, case-sensitive)"));
-        if (0) {
+        if (0) { // not yet tested
             $header->pushContent(HTML::br());
             $header->pushContent(_("Change pagename in all linked pages also?"));
             $checkbox = HTML::input(array('type' => 'checkbox',
@@ -184,6 +185,15 @@ extends WikiPlugin_WikiAdminSelect
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/02/15 21:34:37  rurban
+// PageList enhanced and improved.
+// fixed new WikiAdmin... plugins
+// editpage, Theme with exp. htmlarea framework
+//   (htmlarea yet committed, this is really questionable)
+// WikiUser... code with better session handling for prefs
+// enhanced UserPreferences (again)
+// RecentChanges for show_deleted: how should pages be deleted then?
+//
 // Revision 1.4  2004/02/12 17:05:39  rurban
 // WikiAdminRename:
 //   added "Change pagename in all linked pages also"

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PhotoAlbum.php,v 1.1 2003-01-05 04:21:06 carstenklapp Exp $');
+rcs_id('$Id: PhotoAlbum.php,v 1.2 2004-02-17 12:11:36 rurban Exp $');
 
 /**
  * WikiPlugin which makes an 'album' of a set of photos with optional
@@ -59,7 +59,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -73,7 +73,7 @@ extends WikiPlugin
                      );
     }
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
 
         if (!$src) {
@@ -177,6 +177,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2003/01/05 04:21:06  carstenklapp
+// New plugin by Ted Vinke (sf tracker patch #661189)
+//
 
 // For emacs users
 // Local Variables:

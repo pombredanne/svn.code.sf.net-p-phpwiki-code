@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SystemInfo.php,v 1.8 2003-02-24 01:36:26 dairiki Exp $');
+rcs_id('$Id: SystemInfo.php,v 1.9 2004-02-17 12:11:36 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -58,7 +58,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getExpire($dbi, $argarray, $request) {
@@ -373,7 +373,7 @@ extends WikiPlugin
             return $this->error(sprintf(_("unknown argument '%s' to SystemInfo"), $arg));
     }
 
-    function run($dbi, $argstr, $request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage) {
         // don't parse argstr for name=value pairs. instead we use just 'name'
         //$args = $this->getArgs($argstr, $request);
         $args['seperator'] = ' ';
@@ -519,6 +519,10 @@ function stddev(&$hits, $total = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2003/02/24 01:36:26  dairiki
+// Don't use PHPWIKI_DIR unless it's defined.
+// (Also typo/bugfix in SystemInfo plugin.)
+//
 // Revision 1.7  2003/02/22 20:49:56  dairiki
 // Fixes for "Call-time pass by reference has been deprecated" errors.
 //

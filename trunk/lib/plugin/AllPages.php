@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllPages.php,v 1.18 2004-01-25 07:58:30 rurban Exp $');
+rcs_id('$Id: AllPages.php,v 1.19 2004-02-17 12:11:36 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.18 $");
+                            "\$Revision: 1.19 $");
     }
 
     function getDefaultArguments() {
@@ -54,7 +54,7 @@ extends WikiPlugin
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
     // sortby: [+|-] pagename|mtime|hits
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
         // Todo: extend given _GET args
         if ($sorted = $request->getArg('sortby'))
@@ -92,6 +92,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.18  2004/01/25 07:58:30  rurban
+// PageList sortby support in PearDB and ADODB backends
+//
 // Revision 1.17  2003/02/27 20:10:30  dairiki
 // Disable profiling output when DEBUG is defined but false.
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: OldStyleTable.php,v 1.8 2004-01-24 23:37:08 rurban Exp $');
+rcs_id('$Id: OldStyleTable.php,v 1.9 2004-02-17 12:11:36 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -55,7 +55,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
@@ -72,7 +72,7 @@ extends WikiPlugin
         return;
     }
 
-    function run($dbi, $argstr, $request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage) {
         global $Theme;
         include_once('lib/InlineParser.php');
 
@@ -148,6 +148,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/01/24 23:37:08  rurban
+// Support more options: caption (seperate tag), border, summary, cellpadding,
+// cellspacing
+// Fixes some errors from the version from the mailinglist.
+//
 // Revision 1.7  2003/02/21 23:00:35  dairiki
 // Fix SF bug #676309.
 //

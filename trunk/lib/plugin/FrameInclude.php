@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FrameInclude.php,v 1.8 2003-02-26 22:32:06 dairiki Exp $');
+rcs_id('$Id: FrameInclude.php,v 1.9 2004-02-17 12:11:36 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -58,7 +58,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
@@ -77,7 +77,7 @@ extends WikiPlugin
                     );
     }
 
-    function run($dbi, $argstr, &$request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         global $Theme;
 
         $args = ($this->getArgs($argstr, $request));
@@ -149,6 +149,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2003/02/26 22:32:06  dairiki
+// Wups.  Delete disused cruft.
+//
 // Revision 1.7  2003/02/26 22:27:19  dairiki
 // Fix and refactor FrameInclude plugin (more or less).
 //

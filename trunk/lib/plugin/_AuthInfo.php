@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _AuthInfo.php,v 1.6 2004-02-15 15:21:24 rurban Exp $');
+rcs_id('$Id: _AuthInfo.php,v 1.7 2004-02-17 12:11:36 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -40,14 +40,14 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
         return array('userid' => '');
     }
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         extract($args);
         if (empty($userid) or $userid == $request->_user->UserName()) {
@@ -180,6 +180,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/02/15 15:21:24  rurban
+// don't display the SQL dsn connection password
+//
 // Revision 1.5  2004/02/09 03:58:20  rurban
 // for now default DB_SESSION to false
 // PagePerm:

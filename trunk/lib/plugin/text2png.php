@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: text2png.php,v 1.12 2003-02-22 19:21:47 dairiki Exp $');
+rcs_id('$Id: text2png.php,v 1.13 2004-02-17 12:11:36 rurban Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -48,7 +48,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.12 $");
+                            "\$Revision: 1.13 $");
     }
 
     function getDefaultArguments() {
@@ -57,7 +57,7 @@ extends WikiPlugin
                      'l'    => $LANG );
         }
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         if (ImageTypes() & IMG_PNG) {
             // we have gd & png so go ahead.
             extract($this->getArgs($argstr, $request));
@@ -188,6 +188,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2003/02/22 19:21:47  dairiki
+// If DATA_PATH is not defined (by user in index.php), then use
+// relative URLs to data.
+//
 // Revision 1.11  2003/01/18 22:08:01  carstenklapp
 // Code cleanup:
 // Reformatting & tabs to spaces;

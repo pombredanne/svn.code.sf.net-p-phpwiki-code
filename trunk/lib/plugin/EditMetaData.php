@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: EditMetaData.php,v 1.8 2003-11-27 17:05:41 carstenklapp Exp $');
+rcs_id('$Id: EditMetaData.php,v 1.9 2004-02-17 12:11:36 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -51,7 +51,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     // Arguments:
@@ -65,7 +65,7 @@ extends WikiPlugin
     }
 
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         $this->_args = $this->getArgs($argstr, $request);
         extract($this->_args);
         if (!$page)
@@ -170,6 +170,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2003/11/27 17:05:41  carstenklapp
+// Update: Omit page cache object ('_cached_html') from metadata display.
+//
 // Revision 1.7  2003/11/22 17:41:42  carstenklapp
 // Minor internal change: Removed redundant call to gettext within
 // fmt(). (locale make: EditMetaData.php:113: warning: keyword nested in

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageDump.php,v 1.2 2003-12-12 01:08:30 carstenklapp Exp $');
+rcs_id('$Id: PageDump.php,v 1.3 2004-02-17 12:11:36 rurban Exp $');
 /**
  * PhpWikiPlugin for PhpWiki developers to generate single page dumps
  * for checking into cvs, or for users or the admin to produce a
@@ -39,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -52,7 +52,7 @@ extends WikiPlugin
                      'download' => false);
     }
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
         // allow plugin-form
         if (!empty($s))
@@ -251,6 +251,9 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2003/12/12 01:08:30  carstenklapp
+// QuickFix for invalid Message-Id header format.
+//
 // Revision 1.1  2003/12/12 00:52:55  carstenklapp
 // New feature: Plugin to download page dumps of individual pages. In the
 // future this could be used as a rudimentary way to sync pages between

@@ -65,7 +65,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
@@ -77,7 +77,7 @@ extends WikiPlugin
                      'units' => 'both_metric');
     }
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         // When 'phpweather/phpweather.php' is not installed then
         // PHPWEATHER_BASE_DIR will be undefined
         if (!defined('PHPWEATHER_BASE_DIR'))
@@ -195,6 +195,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2003/01/28 21:10:38  zorloc
+// Better error messages from PhpWeather Plugin -- Martin Geisler
+//
 // Revision 1.8  2003/01/18 22:01:43  carstenklapp
 // Code cleanup:
 // Reformatting & tabs to spaces;

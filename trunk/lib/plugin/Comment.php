@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Comment.php,v 1.1 2003-01-28 17:57:15 carstenklapp Exp $');
+rcs_id('$Id: Comment.php,v 1.2 2004-02-17 12:11:36 rurban Exp $');
 /**
  * A WikiPlugin for putting comments in WikiPages
  *
@@ -29,7 +29,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     // No arguments here.
@@ -37,7 +37,7 @@ extends WikiPlugin
         return array();
     }
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
     }
 
     // function handle_plugin_args_cruft(&$argstr, &$args) {
@@ -46,6 +46,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2003/01/28 17:57:15  carstenklapp
+// Martin Geisler's clever Comment plugin.
+//
 
 // For emacs users
 // Local Variables:

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Transclude.php,v 1.7 2003-02-27 22:47:27 dairiki Exp $');
+rcs_id('$Id: Transclude.php,v 1.8 2004-02-17 12:11:36 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -57,7 +57,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -66,7 +66,7 @@ extends WikiPlugin
                     );
     }
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         global $Theme;
 
         $args = ($this->getArgs($argstr, $request));
@@ -149,6 +149,17 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2003/02/27 22:47:27  dairiki
+// New functions in HtmlElement:
+//
+// JavaScript($js)
+//    Helper for generating javascript.
+//
+// IfJavaScript($if_content, $else_content)
+//    Helper for generating
+//       <script>document.write('...')</script><noscript>...</noscript>
+//    constructs.
+//
 // Revision 1.6  2003/02/25 05:45:34  carstenklapp
 // Added "See: " in front of url, so for browsers that do not support
 // <iframe> at least there is an indication to the user that this

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.26 2003-01-18 21:19:25 carstenklapp Exp $');
+rcs_id('$Id: Calendar.php,v 1.27 2004-02-17 12:11:36 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -47,7 +47,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.26 $");
+                            "\$Revision: 1.27 $");
     }
 
     function getDefaultArguments() {
@@ -154,7 +154,7 @@ extends WikiPlugin
         return $td;
     }
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         $this->args = $this->getArgs($argstr, $request);
         $args       = &$this->args;
 
@@ -219,6 +219,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.26  2003/01/18 21:19:25  carstenklapp
+// Code cleanup:
+// Reformatting; added copyleft, getVersion, getDescription
+//
 
 // For emacs users
 // Local Variables:

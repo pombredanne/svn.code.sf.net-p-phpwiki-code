@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RandomPage.php,v 1.9 2003-01-18 22:01:43 carstenklapp Exp $');
+rcs_id('$Id: RandomPage.php,v 1.10 2004-02-17 12:11:36 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -35,7 +35,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
@@ -46,7 +46,7 @@ extends WikiPlugin
                      'info'         => '');
     }
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
 
         $allpages = $dbi->getAllPages();
@@ -93,6 +93,11 @@ extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2003/01/18 22:01:43  carstenklapp
+// Code cleanup:
+// Reformatting & tabs to spaces;
+// Added copyleft, getVersion, getDescription, rcs_id.
+//
 // Revision 1.8  2003/01/04 02:25:41  carstenklapp
 // Added copyleft and plugin description & version, tweaked default
 // exclude list code to allow spaces (a cosmetic workaround for

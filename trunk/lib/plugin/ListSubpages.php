@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ListSubpages.php,v 1.2 2003-11-30 18:23:48 carstenklapp Exp $');
+rcs_id('$Id: ListSubpages.php,v 1.3 2004-02-17 12:11:36 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -56,7 +56,7 @@ extends WikiPlugin
     // info=mtime,hits,summary,version,author,locked,minor
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         $pagename = $request->getArg('pagename');
 
 
@@ -105,6 +105,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2003/11/30 18:23:48  carstenklapp
+// Code housekeeping: PEAR coding standards reformatting only.
+//
 // Revision 1.1  2003/11/23 16:33:02  carstenklapp
 // New plugin to list names of SubPages of the currrent
 // page. (Unfortunately this plugin reveals a bug in

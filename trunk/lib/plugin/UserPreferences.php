@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.16 2004-02-15 21:34:37 rurban Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.17 2004-02-17 12:11:36 rurban Exp $');
 /**
  Copyright 2001, 2002, 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -36,7 +36,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.16 $");
+                            "\$Revision: 1.17 $");
     }
 
     function getDefaultArguments() {
@@ -52,7 +52,7 @@ extends WikiPlugin
         return $prefs;
     }
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         $user = &$request->getUser();
         if (! $request->isActionPage($request->getArg('pagename'))) {
@@ -136,6 +136,15 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2004/02/15 21:34:37  rurban
+// PageList enhanced and improved.
+// fixed new WikiAdmin... plugins
+// editpage, Theme with exp. htmlarea framework
+//   (htmlarea yet committed, this is really questionable)
+// WikiUser... code with better session handling for prefs
+// enhanced UserPreferences (again)
+// RecentChanges for show_deleted: how should pages be deleted then?
+//
 // Revision 1.15  2004/01/27 22:37:50  rurban
 // fixed default args: no objects
 //

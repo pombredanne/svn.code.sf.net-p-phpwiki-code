@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SiteMap.php,v 1.9 2004-02-12 13:05:50 rurban Exp $');
+rcs_id('$Id: SiteMap.php,v 1.10 2004-02-17 12:11:36 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -45,18 +45,20 @@ require_once('lib/PageList.php');
 class WikiPlugin_SiteMap
 extends WikiPlugin
 {
+    var $_pagename;
+
     function getName () {
         return _("SiteMap");
     }
 
     function getDescription () {
         return sprintf(_("Recursively get BackLinks or links for %s"),
-                       '[pagename]');
+                       $this->_pagename);
     }
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
@@ -70,14 +72,16 @@ extends WikiPlugin
                      'direction'      => 'back',
                      'firstreversed'  => false,
                      'excludeunknown' => true,
-                     'includepages'   => ''    // this doesn't yet work as expected
+                     'includepages'   => '' // to be used only from the IncludeSiteMap plugin
                      );
     }
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor
     // exclude arg allows multiple pagenames
     // exclude=HomePage,RecentChanges
-
+    
+    // Fixme: overcome limitation if two SiteMap plugins are in the same page!
+    // static $VisitedPages still holds it
     function recursivelyGetBackLinks($startpage, $pagearr, $level = '*',
                                      $reclimit = '***') {
         static $VisitedPages = array();
@@ -135,14 +139,16 @@ extends WikiPlugin
     }
 
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         include_once('lib/BlockParser.php');
         
         $args = $this->getArgs($argstr, $request, false);
         extract($args);
         if (!$page)
             return '';
-        $out = '';
+        $this->_pagename = $page;
+        $out = ''; // get rid of this
+        $html = HTML();
         $exclude = $exclude ? explode(",", $exclude) : array();
         if (!$include_self)
             $exclude[] = $page;
@@ -157,9 +163,13 @@ extends WikiPlugin
         } else {
             $limit = '***';
         }
-        if (! $noheader)
-            $out .= $description ." ". sprintf(_("(max. recursion level: %d)"),
-                                               $reclimit) . ":\n\n";
+        //Fixme:  override given arg
+        $description = $this->getDescription();
+        if (! $noheader) {
+            $out = $this->getDescription() ." ". sprintf(_("(max. recursion level: %d)"),
+                                                         $reclimit) . ":\n\n";
+            $html->pushContent(TransformText($out, 1.0, $page));
+        }
         $pagelist = new PageList($info, $exclude);
         $p = $dbi->getPage($page);
 
@@ -177,24 +187,46 @@ extends WikiPlugin
         }
 
         reset($pagearr);
+        if (!empty($includepages)) { 
+            // disallow direct usage, only via child class IncludeSiteMap
+            if (!isa($this,"WikiPlugin_IncludeSiteMap"))
+                $includepages = '';
+            if (!is_string($includepages))
+                $includepages = ' '; // avoid plugin loader problems
+            $loader = new WikiPluginLoader();
+            $plugin = $loader->getPlugin('IncludePage',false);
+            $nothing = '';
+        }
+        
         while (list($key, $link) = each($pagearr)) {
-            if (!empty($includepages)) { // this doesn't work as expected
+            if (!empty($includepages)) {
                 $a = substr_count($key, '*');
                 $indenter = str_pad($nothing, $a);
-                $out .= $indenter  . '<?plugin IncludePage page=' . $link->getName();
-                if (is_string($includepages))
-                    $out .= " " . $includepages; // args
-                $out .= " ?>" . "\n";
+                //$request->setArg('IncludePage', 1);
+                $plugin_args = 'page=' . $link->getName() . ' ' . $includepages;
+                $pagehtml = $plugin->run($dbi, $plugin_args, $request, $basepage);
+                $html->pushContent($pagehtml); 
+                //$html->pushContent( HTML(TransformText($indenter, 1.0, $page), $pagehtml)); 
+                //$out .= $indenter . $pagehtml . "\n";
             }
             else {
                 $out .= $key . "\n";
             }
         }
-        return TransformText($out, 1.0, $page /*cached or not cached?...*/); 
+        if (empty($includepages)) {
+            return TransformText($out, 1.0, $page); 
+        } else {
+            return $html; 
+        }
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/02/12 13:05:50  rurban
+// Rename functional for PearDB backend
+// some other minor changes
+// SiteMap comes with a not yet functional feature request: includepages (tbd)
+//
 // Revision 1.8  2004/01/24 23:24:07  rurban
 // Patch by Alec Thomas, allows Perl regular expressions in SiteMap exclude lists.
 //   exclude=WikiWikiWeb,(?:Category|Topic).*
