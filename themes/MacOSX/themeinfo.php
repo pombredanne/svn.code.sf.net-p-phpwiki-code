@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.9 2002-01-05 16:12:19 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.10 2002-01-07 09:05:46 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -106,6 +106,16 @@ $URL_LINK_ICONS = array(
                         '*'         => "themes/$theme/icons/zapg.png"
                         );
 */
+
+$ToolbarImages = array(
+'RecentChanges' => array(
+'1 day'		=> "themes/$theme/locale/en/toolbars/RecentChanges/1day.png",
+'3 days'	=> "themes/$theme/locale/en/toolbars/RecentChanges/3days.png",
+'7 days'	=> "themes/$theme/locale/en/toolbars/RecentChanges/7days.png",
+'30 days'	=> "themes/$theme/locale/en/toolbars/RecentChanges/30days.png",
+'90 days'	=> "themes/$theme/locale/en/toolbars/RecentChanges/90days.png",
+'...'		=> "themes/$theme/locale/en/toolbars/RecentChanges/alltime.png")
+);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // (c-file-style: "gnu")

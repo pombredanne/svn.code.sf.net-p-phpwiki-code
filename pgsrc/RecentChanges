@@ -1,7 +1,7 @@
-From hostmaster@dairiki.org  Sun Jan 6 22:07:14 2002
+From hostmaster@dairiki.org  Sun Jan 6 22:07:15 2002
 Subject: RecentChanges
 From: hostmaster@dairiki.org (PhpWiki)
-Date: Sun, 6 Jan 2002 22:07:14 -0500
+Date: Sun, 6 Jan 2002 22:07:15 -0500
 Mime-Version: 1.0
 Content-Type: application/x-phpwiki;
   pagename=RecentChanges;
@@ -10,6 +10,6 @@ Content-Transfer-Encoding: binary
 
 Here's a list of recently changed pages on this wiki. (See RecentEdits for all recent minor edits and changes).
 
-<?plugin Toolbar label="Show changes for: %s" sep=| go="1 day|phpwiki:?days=1,3 days|phpwiki:?days=3,7 days|phpwiki:?days=7,30 days|phpwiki:?days=30,90 days|phpwiki:?days=90,...|phpwiki:?days=-1" ?>
+<?plugin Toolbar name="RecentChanges" label="Show changes for: %s" sep=| go="1 day|phpwiki:?days=1,3 days|phpwiki:?days=3,7 days|phpwiki:?days=7,30 days|phpwiki:?days=30,90 days|phpwiki:?days=90,...|phpwiki:?days=-1" ?>
 --------
 <?plugin RecentChanges days||=30?>

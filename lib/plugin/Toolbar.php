@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Toolbar.php,v 1.2 2002-01-07 08:07:44 carstenklapp Exp $');
+rcs_id('$Id: Toolbar.php,v 1.3 2002-01-07 09:04:41 carstenklapp Exp $');
 /**
  * Usage:
  *
@@ -38,7 +38,7 @@ extends WikiPlugin
                      'label'	=> false,
                      'go'	=> false,
                      'style'	=> 'text',
-                     'name'	=> false
+                     'name'	=> ''
                      // TODO: new 'image' style for use with themes
                      // which have graphic buttons
                      );
@@ -67,11 +67,11 @@ extends WikiPlugin
             }
             return $html;
         }
-        //begin oops: this is isn't supposed to work, but it does!
-        if ($name = "RecentChanges") {
-        //end oops
-//            global $ToolbarImages, $theme;
-            global $theme;
+        global $theme;
+//$name="RecentChanges";
+        if ($theme == "MacOSX" && $name=="RecentChanges") {
+            global $ToolbarImages;
+/*
                 $ToolbarImages = array(
                 'RecentChanges' => array(
                 '1 day'		=> "themes/$theme/locale/en/toolbars/RecentChanges/1day.png",
@@ -81,7 +81,7 @@ extends WikiPlugin
                 '90 days'	=> "themes/$theme/locale/en/toolbars/RecentChanges/90days.png",
                 '...'		=> "themes/$theme/locale/en/toolbars/RecentChanges/alltime.png")
                 );
-                
+*/                
                 $ToolbarURLs = array(
                 //'RecentChanges' => array(
                 '1 day'		=> "RecentChanges?days=1",
