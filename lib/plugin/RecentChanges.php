@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.29 2002-01-23 06:36:16 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.30 2002-01-23 07:52:53 carstenklapp Exp $');
 /**
  */
 
@@ -408,12 +408,12 @@ extends WikiPlugin
                 $label = $args['label'];
             else {
                 if ($show_minor)
-                    $label = _("Show changes for: %s");
+                    $label = _("Show changes for:");
                 else {
                     if ($show_all)
-                        $label = _("Show all changes for: %s");
+                        $label = _("Show all changes for:");
                     else
-                        $label = _("Show minor edits for: %s");
+                        $label = _("Show minor edits for:");
                 }
             }
 
@@ -438,7 +438,15 @@ extends WikiPlugin
                                           .$show_minor .$show_all,
                                           'wikiaction');
             }
-            return fmt($label, $b);
+            $buttons = HTML::p($label . " ");
+            // Avoid an extraneous ButtonSeparator
+            $buttons->pushContent(array_shift($b));
+
+            foreach ($b as $button) {
+                $buttons->pushContent($Theme->getButtonSeparator());
+                $buttons->pushContent($button);
+            }
+            return $buttons;
         }
     }
 };
