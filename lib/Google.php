@@ -31,6 +31,10 @@
 */
 
 /*
+ * @seealso: http://scripts.incutio.com/google/
+ */
+
+/*
  * Objectified, simplified, documented and added the two other queries 
  * by Reini Urban
  */

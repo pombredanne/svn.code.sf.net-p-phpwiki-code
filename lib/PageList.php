@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.74 2004-04-07 23:13:18 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.75 2004-04-09 17:49:03 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -699,7 +699,7 @@ class PageList {
             list ($column, $heading) = explode(':', $column, 2);
 
         if (!isset($this->_types[$column])) {
-            trigger_error(sprintf("%s: Bad column", $column), E_USER_NOTICE);
+            //trigger_error(sprintf("%s: Bad column", $column), E_USER_NOTICE);
             return false;
         }
         if ($column == 'rating' and !$GLOBALS['request']->_user->isSignedIn())

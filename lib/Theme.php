@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.82 2004-04-06 20:00:10 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.83 2004-04-09 17:49:03 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -1187,7 +1187,7 @@ class SidebarBox {
 
 /** 
  * A sidebar box for plugins.
- * Any plugin may provide a box($args=false, $request=false, $basepage=false) 
+ * Any plugin may provide a box($args=false, $request=false, $basepage=false)
  * method, with the help of WikiPlugin::makeBox()
  */
 class PluginSidebarBox extends SidebarBox {
@@ -1227,7 +1227,7 @@ class RelatedLinksBox extends SidebarBox {
         $sp = HTML::Raw('&middot; ');
         foreach ($page_content->getWikiPageLinks() as $link) {
             if (!$request->_dbi->isWikiPage($link)) continue;
-            $this->body->pushContent($sp,WikiLink($link), HTML::br());
+            $this->body->pushContent($sp, WikiLink($link), HTML::br());
             $counter++;
             if ($limit and $counter > $limit) continue;
         }
@@ -1256,6 +1256,15 @@ class RelatedExternalLinksBox extends SidebarBox {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.82  2004/04/06 20:00:10  rurban
+// Cleanup of special PageList column types
+// Added support of plugin and theme specific Pagelist Types
+// Added support for theme specific UserPreferences
+// Added session support for ip-based throttling
+//   sql table schema change: ALTER TABLE session ADD sess_ip CHAR(15);
+// Enhanced postgres schema
+// Added DB_Session_dba support
+//
 // Revision 1.81  2004/04/01 15:57:10  rurban
 // simplified Sidebar theme: table, not absolute css positioning
 // added the new box methods.

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.6 2004-02-27 01:36:51 rurban Exp $');
+rcs_id('$Id: UpLoad.php,v 1.7 2004-04-09 17:49:03 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,45 @@ extends WikiPlugin
     //var $url_prefix = DATA_PATH . "/img/";
     //what if the above are not set in index.php? seems to fail...
 
-    var $disallowed_extensions = array('.php', '.pl', '.sh', '.cgi', '.exe');
+    var $disallowed_extensions = explode("\n",
+"ad[ep]
+asd
+ba[st]
+chm
+cmd
+com
+cgi
+cpl
+crt
+dll
+eml
+exe
+hlp
+hta
+in[fs]
+isp
+jse?
+lnk
+md[betw]
+ms[cipt]
+nws
+ocx
+ops
+pcd
+p[ir]f
+php
+pl
+py
+reg
+sc[frt]
+sh[bsm]?
+swf
+url
+vb[esx]?
+vxd
+ws[cfh]
+\{[[:xdigit:]]{8}(?:-[[:xdigit:]]{4}){3}-[[:xdigit:]]{12}\}");
+
     // todo: use PagePerms instead
     var $only_authenticated = true; // allow only authenticated users upload.
 
@@ -106,9 +144,9 @@ extends WikiPlugin
                 }
             }
 
-            if (preg_match("/(" . join("|", $this->disallowed_extensions) . ")\$/",
-                           $userfile_name)) {
-
+            if (preg_match("/(\." . join("|\.", $this->disallowed_extensions) . ")\$/",
+                           $userfile_name))
+            {
                 $message->pushContent(fmt("Files with extension %s are not allowed",
                                           join(", ", $this->disallowed_extensions)),HTML::br(),HTML::br());
             }
@@ -121,7 +159,8 @@ extends WikiPlugin
             }
             elseif (move_uploaded_file($userfile_tmpname, $file_dir . $userfile_name) or
                     (IsWindows() and rename($userfile_tmpname, $file_dir . $userfile_name))
-                    ) {
+                    )
+            {
             	$interwiki = new PageType_interwikimap();
             	$link = $interwiki->link("Upload:$userfile_name");
                 $message->pushContent(_("File successfully uploaded."));
@@ -201,6 +240,9 @@ extends WikiPlugin
 // End:
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/02/27 01:36:51  rurban
+// autolink enabled
+//
 // Revision 1.5  2004/02/27 01:24:43  rurban
 // use IntwerWiki links for uploaded file.
 // autolink to page prepared, but not yet ready

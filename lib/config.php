@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.91 2004-03-25 22:33:38 rurban Exp $');
+rcs_id('$Id: config.php,v 1.92 2004-04-09 17:49:03 rurban Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -36,6 +36,54 @@ set_magic_quotes_runtime(0);
 // chars in iso-8859-*
 // $FieldSeparator = "\263"; //this is a superscript 3 in ISO-8859-1.
 $FieldSeparator = "\x81";
+
+/** 
+ * Browser Detection Functions
+ *
+ * Current Issues:
+ *  NS/IE < 4.0 doesn't accept < ? xml version="1.0" ? >
+ *  NS/IE < 4.0 cannot display PNG
+ *  NS/IE < 4.0 cannot display all XHTML tags
+ *  NS < 5.0 needs textarea wrap=virtual
+ *  IE55 has problems with transparent PNG's
+ * @author: ReiniUrban
+ */
+function browserAgent() {
+    static $HTTP_USER_AGENT = false;
+    if (!$HTTP_USER_AGENT)
+        $HTTP_USER_AGENT = @$GLOBALS['HTTP_SERVER_VARS']['HTTP_USER_AGENT'];
+    if (!$HTTP_USER_AGENT) // CGI
+        $HTTP_USER_AGENT = $GLOBALS['HTTP_ENV_VARS']['HTTP_USER_AGENT'];
+    return $HTTP_USER_AGENT;
+}
+function browserDetect($match) {
+    return strstr(browserAgent(), $match);
+}
+// returns a similar number for Netscape/Mozilla (gecko=5.0)/IE/Opera features.
+function browserVersion() {
+    if (strstr(browserAgent(),"Mozilla/4.0 (compatible; MSIE"))
+        return (float) substr(browserAgent(),30);
+    else
+        return (float) substr(browserAgent(),8);
+}
+function isBrowserIE() {
+    return (browserDetect('Mozilla/') and 
+            browserDetect('MSIE'));
+}
+// problem with transparent PNG's
+function isBrowserIE55() {
+    return (isBrowserIE() and 
+            browserVersion() > 5.1 and browserVersion() < 6.0);
+}
+function isBrowserNetscape() {
+    return (browserDetect('Mozilla/') and 
+            ! browserDetect('Gecko/') and
+            ! browserDetect('MSIE'));
+}
+// NS3 or less
+function isBrowserNS3() {
+    return (isBrowserNetscape() and browserVersion() < 4.0);
+}
 
 require_once('lib/FileFinder.php');
 // Search PHP's include_path to find file or directory.

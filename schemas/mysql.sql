@@ -1,4 +1,4 @@
--- $Id: mysql.sql,v 1.9 2004-04-06 20:00:11 rurban Exp $
+-- $Id: mysql.sql,v 1.10 2004-04-09 17:49:03 rurban Exp $
 
 drop table if exists page;
 CREATE TABLE page (
@@ -52,9 +52,12 @@ CREATE TABLE session (
     	sess_date 	INT UNSIGNED NOT NULL,
     	sess_ip 	CHAR(15) NOT NULL,
     	PRIMARY KEY (sess_id)
-	INDEX (sess_date),
-	INDEX (sess_ip)
-) TYPE=heap;
+	INDEX (sess_date)
+); -- TYPE=heap; -- if your Mysql supports it and you have enough RAM
+
+-- upgrade from 1.3.7:
+-- ALTER TABLE session ADD sess_ip CHAR(15) NOT NULL;
+-- CREATE INDEX sess_date on session (sess_date);
 
 -- Optional DB Auth and Prefs
 -- For these tables below the default table prefix must be used 
