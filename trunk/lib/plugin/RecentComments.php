@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentComments.php,v 1.1 2004-05-14 17:33:12 rurban Exp $');
+rcs_id('$Id: RecentComments.php,v 1.2 2004-05-14 17:40:56 rurban Exp $');
 
 /**
  * List of basepages with recently added comments
@@ -16,7 +16,7 @@ extends WikiPlugin_RecentChanges
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
     function getDefaultArguments() {
     	//php-4.0.4pl1 breaks at the parent:: line even if the 
@@ -24,7 +24,6 @@ extends WikiPlugin_RecentChanges
         //if (!check_php_version(4,0,6))
         $args = WikiPlugin_RecentChanges::getDefaultArguments();
         //else $args = parent::getDefaultArguments();
-        $args['type'] = 'RecentComments';
         $args['show_minor'] = false;
         $args['show_all'] = true;
         $args['caption'] = _("Recent Comments");
@@ -77,8 +76,7 @@ class RecentCommentsRevisionIterator extends WikiDB_PageRevisionIterator
     function next () {
     	if (!empty($this->comments) and $this->_current) {
             if (isset($this->comments[$this->_current])) {
-                $this->_current++;
-                return $this->comments[$this->_current];
+                return $this->comments[$this->_current++];
             } else {
             	$this->_current = 0;
             }
@@ -86,11 +84,12 @@ class RecentCommentsRevisionIterator extends WikiDB_PageRevisionIterator
         while (($rev = $this->_revisions->next())) {
             $this->comments = $this->_blog->findBlogs($this->_wikidb, $rev->getPageName(), 'comment');
             if ($this->comments) {
-                usort($this->comments, array("WikiPlugin_WikiBlog",
-                                         "cmp"));
+                if (count($this->comments) > 2)
+                    usort($this->comments, array("WikiPlugin_WikiBlog",
+                                                 "cmp"));
                 if (isset($this->comments[$this->_current])) {
                     $this->_current++;
-                    return $this->comments[$this->_current];
+                    return $rev;
                 }
             } else {
 		$this->_current = 0;
