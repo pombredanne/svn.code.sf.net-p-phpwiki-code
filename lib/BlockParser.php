@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.50 2004-09-08 13:38:00 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.51 2004-09-14 09:54:04 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -359,18 +359,28 @@ class ParsedBlock extends Block_HtmlElement {
         }
     }
 
-    // FIXME: hackish
+    // FIXME: hackish. This should only be called once.
     function _initBlockTypes () {
-        foreach (array('oldlists', 'list', 'dl', 'table_dl',
-                       'blockquote', 'heading', 'hr', 'pre', 'email_blockquote',
-                       'plugin', 'p')
-                 as $type) {
-            $class = "Block_$type";
-            $proto = new $class;
-            $this->_block_types[] = $proto;
-            $this->_regexps[] = $proto->_re;
+    	// better static or global?
+    	static $_regexpset, $_block_types;
+
+    	if (!is_object($_regexpset)) {
+            foreach (array('oldlists', 'list', 'dl', 'table_dl',
+                           'blockquote', 'heading', 'hr', 'pre', 'email_blockquote',
+                           'plugin', 'p')
+                     as $type) {
+                $class = "Block_$type";
+                $proto = new $class;
+                $this->_block_types[] = $proto;
+                $this->_regexps[] = $proto->_re;
+            }
+            $this->_regexpset = new AnchoredRegexpSet($this->_regexps);
+            $_regexpset = $this->_regexpset;
+            $_block_types = $this->_block_types;
+    	} else {
+             $this->_regexpset = $_regexpset;
+             $this->_block_types = $_block_types;
         }
-        $this->_regexpset = new AnchoredRegexpSet($this->_regexps);
     }
 
     function _getBlock (&$input) {
@@ -930,8 +940,11 @@ class Block_plugin extends Block_pre
     // FIXME:
     /* <?plugin Backlinks
      *       page=ThisPage ?>
+    /* <?plugin ListPages pages=<!plugin-list Backlinks!>
+     *                    exclude=<!plugin-list TitleSearch s=T*!> ?>
      *
-     * should work. */
+     * should all work.
+     */
     function _match (&$input, $m) {
         $pos = $input->getPos();
         $pi = $m->match . $m->postmatch;
@@ -1068,6 +1081,11 @@ function TransformText (&$text, $markup = 2.0, $basepage=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.50  2004/09/08 13:38:00  rurban
+// improve loadfile stability by using markup=2 as default for undefined markup-style.
+// use more refs for huge objects.
+// fix debug=static issue in WikiPluginCached
+//
 // Revision 1.49  2004/07/02 09:55:58  rurban
 // more stability fixes: new DISABLE_GETIMAGESIZE if your php crashes when loading LinkIcons: failing getimagesize in old phps; blockparser stabilized
 //
