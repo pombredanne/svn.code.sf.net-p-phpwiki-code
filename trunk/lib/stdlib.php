@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.139 2003-02-21 22:16:27 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.140 2003-02-21 23:33:29 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -148,7 +148,7 @@ function IconForLink($protocol_or_url) {
         list ($proto) = explode(':', $protocol_or_url, 2);
         $src = $Theme->getLinkIconURL($proto);
         if ($src)
-            return HTML::img(array('src' => $src, 'alt' => $proto, 'class' => 'linkicon', 'border' => 0));
+            return HTML::img(array('src' => $src, 'alt' => "", 'class' => 'linkicon', 'border' => 0));
         else
             return false;
     }
@@ -1172,6 +1172,10 @@ class Alert {
                       
         
 // $Log: not supported by cvs2svn $
+// Revision 1.139  2003/02/21 22:16:27  dairiki
+// Get rid of MakeWikiForm, and form-style MagicPhpWikiURLs.
+// These have been obsolete for quite awhile (I hope).
+//
 // Revision 1.138  2003/02/21 04:12:36  dairiki
 // WikiPageName: fixes for new cached links.
 //
