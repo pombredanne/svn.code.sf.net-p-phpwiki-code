@@ -1,4 +1,4 @@
-<!-- $Id: wiki_stdlib.php3,v 1.10 2000-06-06 06:17:38 ahollosi Exp $ -->
+<!-- $Id: wiki_stdlib.php3,v 1.11 2000-06-07 10:50:01 ahollosi Exp $ -->
 <?
    /*
       Standard functions for Wiki functionality
@@ -14,7 +14,7 @@
          CookSpaces($pagearray) 
          class Stack
          SetHTMLOutputMode($newmode, $depth)
-         UpdateRecentChanges($dbi, $pagename) 
+         UpdateRecentChanges($dbi, $pagename, $isnewpage) 
          SaveCopyToArchive($pagename, $pagehash) 
          ParseAndLink($bracketlink)
    */
@@ -220,7 +220,7 @@
 
 
    // The Recent Changes file is solely handled here
-   function UpdateRecentChanges($dbi, $pagename) {
+   function UpdateRecentChanges($dbi, $pagename, $isnewpage) {
 
       global $remoteuser; // this is set in the config
 
@@ -263,7 +263,11 @@
       } else {
          $newpage[$k++] = $recentchanges["text"][$i++];
       }
-      $newpage[$k++] = "\t* [$pagename] ..... $remoteuser\r";
+      if($isnewpage) {
+         $newpage[$k++] = "\t* [$pagename] (new) ..... $remoteuser\r";
+      } else {
+         $newpage[$k++] = "\t* [$pagename] ..... $remoteuser\r";
+      }
 
       // copy the rest of the page into the new array
       $pagename = preg_quote($pagename);
