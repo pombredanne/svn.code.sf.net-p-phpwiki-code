@@ -1,4 +1,4 @@
-<!-- $Id: wiki_setupwiki.php3,v 1.4 2000-06-09 03:10:19 wainstead Exp $ -->
+<!-- $Id: wiki_setupwiki.php3,v 1.5 2000-06-14 03:43:38 wainstead Exp $ -->
 <?
 
    /* Add the very first pages to a wiki */
@@ -14,8 +14,8 @@
    while ($file = readdir($handle)) {
       if (strlen($file) < 4) { continue; }
 
-      $text = implode("", file("pgsrc/$file"));
-      $page["text"] = explode("\n", $text);
+      $content = implode("", file("pgsrc/$file"));
+      $page["content"] = explode("\n", $content);
 
       InsertPage($dbi, $file, $page);
    }
