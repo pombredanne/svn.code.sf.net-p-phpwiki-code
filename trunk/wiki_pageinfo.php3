@@ -1,6 +1,10 @@
-<!-- $Id: wiki_pageinfo.php3,v 1.3 2000-06-26 20:10:05 ahollosi Exp $ -->
+<!-- $Id: wiki_pageinfo.php3,v 1.4 2000-07-15 21:00:38 ahollosi Exp $ -->
 <!-- Display the internal structure of a page. Steve Wainstead, June 2000 -->
 <?
+   if (get_magic_quotes_gpc()) {
+      $info = stripslashes($info);
+   }
+
    $encname = htmlspecialchars($info);
    $html = "<form action=\"$ScriptUrl\" METHOD=GET>\n" .
 	   "<input name=\"info\" value=\"$encname\">" .
