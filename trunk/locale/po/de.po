@@ -608,7 +608,7 @@ msgstr "MeistBesucht"
 
 #: ../lib/plugin/MostPopular.php:16
 msgid "List the most popular pages"
-msgstr "Die MeistBesuchten Seiten auflisten"
+msgstr "Die meistbesucht Seiten auflisten"
 
 #: ../lib/plugin/MostPopular.php:50
 #, c-format
@@ -1349,7 +1349,7 @@ msgid "diff"
 msgstr "Diff"
 
 #~ msgid "Loaded"
-#~ msgstr "Geladet"
+#~ msgstr "Geladen"
 
 #~ msgid "(version %s, saved on %s)"
 #~ msgstr "(Version %s. zuletzt am %s gespeichert)"
@@ -1382,10 +1382,10 @@ msgstr "Diff"
 #~ msgstr "Problem beim Editieren von %s"
 
 #~ msgid "Bad form submission"
-#~ msgstr "Ungültiges Formular eingesendet"
+#~ msgstr "Ungültiges Formular gesendet"
 
 #~ msgid "Required form variables are missing."
-#~ msgstr "Benötigen Form-Variablen sind Fehlend."
+#~ msgstr "Einige benötigte Form-Variablen fehlen."
 
 #~ msgid "Edit aborted: %s"
 #~ msgstr "Editieren abgebrochen: %s"
@@ -1409,7 +1409,7 @@ msgstr "Diff"
 #~ msgstr "[%s] in [%s] gefunden"
 
 #~ msgid "Argument %s was not array"
-#~ msgstr "Argument %s war kein Array"
+#~ msgstr "Argument %s war kein Feld"
 
 #~ msgid "no meta data found"
 #~ msgstr "Keine Meta-Daten gefunden"
@@ -1424,7 +1424,7 @@ msgstr "Diff"
 #~ msgstr "Meta-Datei für [%s] wird erzeugt"
 
 #~ msgid "got revision information"
-#~ msgstr "Revisions Informationen bekommen"
+#~ msgstr "Revisions Informationen geladen"
 
 #~ msgid "is initial release"
 #~ msgstr "ist die erste Version"
