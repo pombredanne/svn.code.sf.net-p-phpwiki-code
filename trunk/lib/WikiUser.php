@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.44 2003-12-06 04:56:23 carstenklapp Exp $');
+rcs_id('$Id: WikiUser.php,v 1.45 2003-12-09 20:00:43 carstenklapp Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -322,17 +322,29 @@ class WikiUser {
                 // already stored in index.php, and it might be
                 // plaintext! well oh well
                 if ($homepage = $this->homePage()) {
-                    if ((!$homepage->get('locked')) && !$this->isAdmin()) {
-                        $homepage->set('pref', serialize($prefs->_prefs));
-                        return sizeof($prefs->_prefs);
+                    // check for page revision 0
+                    if (! $this->_dbi->isWikiPage($this->_userid)) {
+                        trigger_error(_("Your home page has not been created yet so your preferences cannot not be saved."),
+                                      E_USER_WARNING);
                     }
                     else {
-                        // FIXME: This permission situation should
-                        // probably be handled by the DB backend, once
-                        // the new WikiUser code has been implemented.
-                        trigger_error(_("Your home page is locked so your preferences cannot not be saved.")
-                                      . " " . _("Please contact your PhpWiki administrator for assistance."),
-                                      E_USER_WARNING);
+                        if ($this->isAdmin() || !$homepage->get('locked')) {
+                            $homepage->set('pref', serialize($prefs->_prefs));
+                            return sizeof($prefs->_prefs);
+                        }
+                        else {
+                            // An "empty" page could still be
+                            // intentionally locked by admin to
+                            // prevent its creation.
+                            //                            
+                            // FIXME: This permission situation should
+                            // probably be handled by the DB backend,
+                            // once the new WikiUser code has been
+                            // implemented.
+                            trigger_error(_("Your home page is locked so your preferences cannot not be saved.")
+                                          . " " . _("Please contact your PhpWiki administrator for assistance."),
+                                          E_USER_WARNING);
+                        }
                     }
                 } else {
                     trigger_error("No homepage for user found. Creating one...",
@@ -666,6 +678,39 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.44  2003/12/06 04:56:23  carstenklapp
+// Security bugfix (minor): Prevent BogoUser~s from saving extraneous
+// _pref object meta-data within locked pages.
+//
+// Previously, BogoUser~s who signed in with a (valid) WikiWord such as
+// "HomePage" could actually save preferences into that page, even though
+// it was already locked by the administrator. Thus, any subsequent
+// WikiLink~s to that page would become prefixed with "that nice little"
+// UserIcon, as if that page represented a valid user.
+//
+// Note that the admin can lock (even) non-existant pages as desired or
+// necessary (i.e. any DB page whose revision==0), to prevent the
+// arbitrary BogoUser from saving preference metadata into such a page;
+// for example, the silly WikiName "@qmgi`Vcft_x|" (that is the
+// \$examplechars presented in login.tmpl, in case it is not visible here
+// in the CVS comments).
+//
+// http://phpwiki.sourceforge.net/phpwiki/
+// %C0%F1%ED%E7%E9%E0%D6%E3%E6%F4%DF%F8%FC?action=lock
+//
+// To remove the prefs metadata from a page, the admin can use the
+// EditMetaData plugin, enter pref as the key, leave the value box empty
+// and then submit the change. For example:
+//
+// http://phpwiki.sourceforge.net/phpwiki/
+// _EditMetaData?page=%C0%F1%ED%E7%E9%E0%D6%E3%E6%F4%DF%F8%FC
+//
+// (It seems a rethinking of WikiUserNew.php with its WikiUser and
+// UserPreferences classes is in order. Ideally the WikiDB would
+// transparently handle such a situation, perhaps BogoUser~s should
+// simply be restricted to saving preferences into a cookie until his/her
+// e-mail address has been verified.)
+//
 // Revision 1.43  2003/12/04 19:33:30  carstenklapp
 // Bugfix: Under certain PhpWiki installations (such as the PhpWiki at
 // SF), the user was unable to select a theme other than the server's
