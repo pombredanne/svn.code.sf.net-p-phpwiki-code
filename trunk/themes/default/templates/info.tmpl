@@ -1,13 +1,19 @@
 <?php // -*-html-*- ?>
-<!-- $Id: info.tmpl,v 1.2 2002-02-16 01:46:06 carstenklapp Exp $ -->
+<!-- $Id: info.tmpl,v 1.3 2002-02-16 02:20:32 carstenklapp Exp $ -->
 <?php
 
 $modifed = $Theme->formatDateTime($revision->get('mtime'));
 $author = $revision->get('author');
 $authorId = $revision->get('author_id');
 $version = $revision->getVersion();
-$is_minor = $revision->get('is_minor') ? _("(minor edit)") : "";
 $hits = $page->get('hits');
+
+$is_minor_edit = $revision->get('is_minor_edit') ? _("minor edit") : false;
+if ($minor_flag = $is_minor_edit) {
+    $minor_flag = HTML(" ",
+                       HTML::span(array('class' => 'pageinfo-minoredit'),
+                                  "(" . _("minor edit") . ")"));
+}
 
 /* better way to do this? */
 $data = &$revision->_data;
@@ -66,7 +72,7 @@ $tableSummary = fmt("Statistics about %s.", $page->getName());
 
   <tr>
     <td align="right" nowrap="nowrap" class="pageinfo"><?= $label['date'] ?></td>
-    <td><?= $modifed ?> <span class="pageinfo-minoredit"><?= $is_minor ?></span></td>
+    <td><?= $modifed ?><?= $minor_flag ?></td>
   </tr><tr>
     <td align="right" class="pageinfo"><?= $label['author'] ?></td>
     <td><?= $author ?> <span class="pageinfo-authorid">(<?= $authorId ?>)</span></td>
