@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.50 2001-12-02 07:53:59 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.51 2001-12-03 23:12:04 carstenklapp Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -122,9 +122,29 @@ function QElement($tag, $args = '', $content = '')
           $class = 'namedurl';
       }
 
-      return QElement('a',
-                      array('href' => $url, 'class' => $class),
-                      $linktext);
+      if (!defined('USE_LINK_ICONS')) {
+          return QElement('a',
+                     array('href' => $url, 'class' => $class),
+                     $linktext);
+      } else {
+            //ideally the link image would be specified by a map file
+            //similar to the interwiki.map
+            $linkproto = substr($url, 0, strrpos($url, ":"));
+            if ($linkproto == "mailto") {
+                $linkimg = "/images/mailto.png";
+            } elseif ($linkproto == "http") { 
+                $linkimg = "/images/http.png";
+            } elseif ($linkproto == "https") { 
+                $linkimg = "/images/https.png";
+            } elseif ($linkproto == "ftp") { 
+                $linkimg = "/images/ftp.png";
+            } else {
+                $linkimg = "/images/http.png";
+      }
+      return Element('a',
+                 array('href' => $url, 'class' => $class),
+                 Element('img', array('src' => DATA_PATH . $linkimg, 'alt' => $linkproto)) ." ". $linktext);
+    }
    }
 
 function LinkWikiWord($wikiword, $linktext='') {
@@ -139,9 +159,9 @@ function LinkWikiWord($wikiword, $linktext='') {
    function LinkExistingWikiWord($wikiword, $linktext='') {
       if (empty($linktext)) {
           $linktext = $wikiword;
-      if (defined("autosplit_wikiwords"))
-          $linktext=split_pagename($linktext);
-          $class = 'wiki';
+          if (defined("autosplit_wikiwords"))
+              $linktext=split_pagename($linktext);
+         $class = 'wiki';
       }
       else
           $class = 'named-wiki';
@@ -154,8 +174,8 @@ function LinkWikiWord($wikiword, $linktext='') {
    function LinkUnknownWikiWord($wikiword, $linktext='') {
       if (empty($linktext)) {
           $linktext = $wikiword;
-      if (defined("autosplit_wikiwords"))
-          $linktext=split_pagename($linktext);
+          if (defined("autosplit_wikiwords"))
+              $linktext=split_pagename($linktext);
           $class = 'wikiunknown';
       }
       else {
@@ -370,25 +390,9 @@ function LinkPhpwikiURL($url, $text = '') {
 	    $link['type'] = "url-$linktype";
             $link['link'] = LinkURL($URL, $linkname);
             
-        if (!defined("USE_LINK_ICONS")) {
+        
            $link['link'] = LinkURL($URL, $linkname);
-        } else {
-           //preg_split((.*?):(.*)$, $URL, $matches);
-           //preg_split("[:]", $URL, $matches);
-           //$protoc = $matches[0] . "-" . $matches[1];
-           $protoc = substr($URL, 0, strrpos($URL, ":"));
-           if ($protoc == "mailto") {
-               $link['link'] = "<img src=\"" . DATA_PATH . "/images/mailto.png\"> " . LinkURL($URL, $linkname);
-           } elseif ($protoc == "http") { 
-               $link['link'] = "<img src=\"" . DATA_PATH . "/images/http.png\"> " . LinkURL($URL, $linkname);
-           } elseif ($protoc == "https") { 
-               $link['link'] = "<img src=\"" . DATA_PATH . "/images/https.png\"> " . LinkURL($URL, $linkname);
-           } elseif ($protoc == "ftp") { 
-               $link['link'] = "<img src=\"" . DATA_PATH . "/images/ftp.png\"> " . LinkURL($URL, $linkname);
-            } else {
-               $link['link'] = LinkURL($URL, $linkname);
-           }
-        }
+        
 
 	 }
       } elseif (preg_match("#^phpwiki:(.*)#", $URL, $match)) {
