@@ -1,11 +1,14 @@
 <?php // -*-php-*-
-rcs_id('$Id: RssParser.php,v 1.6 2004-05-18 16:18:36 rurban Exp $');
+rcs_id('$Id: RssParser.php,v 1.7 2004-05-24 17:31:31 rurban Exp $');
 /**
- * RSSParser Class, requires the expat extension
+ * Simple RSSParser Class
  * Based on Duncan Gough RSSParser class
  * Copyleft Arnaud Fontaine
  * Licence : GPL
+ * See lib/plugin/RssFeed.php and lib/XmlParser.php
+ */
 
+/*
  This file is part of PhpWiki.
 
  PhpWiki is free software; you can redistribute it and/or modify
@@ -29,7 +32,11 @@ rcs_id('$Id: RssParser.php,v 1.6 2004-05-18 16:18:36 rurban Exp $');
  * 2004-04-12 20:04:12 rurban: 
  *   fixes for IMAGE element (sf.net)
  */
-class RSSParser {
+
+require_once('lib/XmlParser.php');
+
+class RSSParser 
+extends XmlParser {
 
     var $title = "";
     var $link  = "";
@@ -41,7 +48,7 @@ class RSSParser {
     var $divers = "";
     var $date = "";
 
-    function startElement($parser, $name, $attrs=''){
+    function tag_open($parser, $name, $attrs=''){
         global $current_tag;
 
         $current_tag = $name;
@@ -49,9 +56,9 @@ class RSSParser {
             $this->inside_item = true;
         elseif ($name == "IMAGE")
             $this->inside_item = true;
-    } // startElement
+    }
 
-    function endElement($parser, $tagName, $attrs=''){
+    function tag_close($parser, $tagName, $attrs=''){
         global $current_tag;
 
         if ($tagName == "ITEM") {
@@ -81,7 +88,7 @@ class RSSParser {
         }
     }
 
-    function characterData($parser, $data){
+    function cdata($parser, $data){
         global $current_tag;
 
         if ($this->inside_item) {
@@ -117,52 +124,13 @@ class RSSParser {
             }
         }
     } // characterData
-
-    function parse_results($xml_parser, $rss_parser, $file, $debug=false)   {
-        xml_set_object($xml_parser, &$rss_parser);
-        xml_set_element_handler($xml_parser, "startElement", "endElement");
-        xml_set_character_data_handler($xml_parser, "characterData");
-
-        if (ini_get('allow_url_fopen')) {
-            $fp = fopen("$file","r") or die("Error reading XML file, $file");
-            while ($data = fread($fp, 4096))  {
-                xml_parse($xml_parser, $data, feof($fp)) or 
-                    trigger_error(sprintf("XML error: %s at line %d", 
-                                          xml_error_string(xml_get_error_code($xml_parser)), 
-                                          xml_get_current_line_number($xml_parser)),
-                                  E_USER_WARNING);
-            }
-            fclose($fp);
-        } else {
-            // other url_fopen workarounds: curl, socket (http 80 only)
-            require_once("lib/HttpClient.php");
-            $bits = parse_url($file);
-            $host = $bits['host'];
-            $port = isset($bits['port']) ? $bits['port'] : 80;
-            $path = isset($bits['path']) ? $bits['path'] : '/';
-            if (isset($bits['query'])) {
-                $path .= '?'.$bits['query'];
-            }
-            $client = new HttpClient($host, $port);
-            $client->use_gzip = false;
-            if ($debug) $client->debug = true;
-            if (!$client->get($path)) {
-                $data = false;
-            } else {
-                $data = $client->getContent();
-            }
-            if (empty($data)) return;
-            xml_parse($xml_parser, $data, true) or 
-                trigger_error(sprintf("XML error: %s at line %d", 
-                                      xml_error_string(xml_get_error_code($xml_parser)), 
-                                      xml_get_current_line_number($xml_parser)),
-                              E_USER_WARNING);
-        }
-        xml_parser_free($xml_parser);
-    }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/05/18 16:18:36  rurban
+// AutoSplit at subpage seperators
+// RssFeed stability fix for empty feeds or broken connections
+//
 // Revision 1.5  2004/04/26 20:44:34  rurban
 // locking table specific for better databases
 //
