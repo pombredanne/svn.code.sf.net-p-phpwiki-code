@@ -1,4 +1,4 @@
-<!-- $Id: wiki_transform.php3,v 1.15 2000-09-04 05:12:12 wainstead Exp $ -->
+<!-- $Id: wiki_transform.php3,v 1.16 2000-09-20 19:28:46 ahollosi Exp $ -->
 <?php
    // expects $pagehash and $html to be set
 
@@ -263,7 +263,7 @@ your web server it is highly advised that you do not allow this.
       $tmpline = str_replace("%%Fullsearch%%", $full_search_box, $tmpline);
       $tmpline = str_replace("%%Mostpopular%%", $most_popular_list, $tmpline);
 
-      $html .= "$tmpline";
+      $html .= "$tmpline\n";
    }
 
 
