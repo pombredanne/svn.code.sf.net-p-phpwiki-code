@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.12 2002-09-16 22:12:48 dairiki Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.13 2002-09-17 15:23:33 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -451,13 +451,17 @@ class LinkTransformer extends InlineTransformer
     }
 }
 
-function TransformInline($text) {
+function TransformInline($text, $markup = 2.0) {
     static $trfm;
     
     if (empty($trfm)) {
         $trfm = new InlineTransformer;
     }
     
+    if ($markup < 2.0) {
+        $text = ConvertOldMarkup($text, 'inline');
+    }
+
     return $trfm->parse($text);
 }
 
@@ -468,8 +472,9 @@ function TransformLinks($text, $markup = 2.0) {
         $trfm = new LinkTransformer;
     }
 
-    if ($markup < 2.0)
+    if ($markup < 2.0) {
         $text = ConvertOldMarkup($text, 'links');
+    }
     
     return $trfm->parse($text);
 }

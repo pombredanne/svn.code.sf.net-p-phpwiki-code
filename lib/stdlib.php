@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.123 2002-09-17 02:35:31 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.124 2002-09-17 15:23:32 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -488,16 +488,20 @@ function ExtractLinks($content) {
 /**
  * Convert old page markup to new-style markup.
  *
- * @param $text string Old-style wiki markup.
+ * @param string $text Old-style wiki markup.
  *
- * @param $just_links bool Only convert old-style links.
- * (Really this only converts escaped old-style links.)
+ * @param string $markup_type
+ * One of: <dl>
+ * <dt><code>"block"</code>  <dd>Convert all markup.
+ * <dt><code>"inline"</code> <dd>Convert only inline markup.
+ * <dt><code>"links"</code>  <dd>Convert only link markup.
+ * </dl>
  *
  * @return string New-style wiki markup.
  *
  * @bugs FIXME: footnotes and old-style tables are known to be broken.
  */
-function ConvertOldMarkup ($text, $just_links = false) {
+function ConvertOldMarkup ($text, $markup_type = "block") {
 
     static $orig, $repl, $link_orig, $link_repl;
 
@@ -541,10 +545,12 @@ function ConvertOldMarkup ($text, $just_links = false) {
     }
     
 
-    if ($just_links)
-        return preg_replace($link_orig, $link_repl, $text);
-    else
+    if ($markup_type == "block") {
         return preg_replace($orig, $repl, $text);
+    }
+    else {
+        return preg_replace($link_orig, $link_repl, $text);
+    }
 }
 
 function _ConvertOldListMarkup ($indent, $bullet) {
