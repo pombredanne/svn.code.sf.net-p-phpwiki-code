@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.10 2002-01-28 19:56:23 dairiki Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.11 2002-01-28 21:48:44 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -410,7 +410,6 @@ class Block_list extends CompoundBlock
     }
 }
 
-
 class Block_dl extends Block_list
 {
     var $_tag = 'dl';
@@ -431,10 +430,11 @@ class Block_dl extends Block_list
     }
 }
 
+/*
 class Block_table_dl_row extends HtmlElement
 {
     function Block_table_dl_row ($defn) {
-        $this->HtmlElement('tr', /*array('valign' => 'top'), */
+        $this->HtmlElement('tr',
                            HTML::td(false, $defn));
         $this->_ncols = 2;
     }
@@ -453,7 +453,7 @@ class Block_table_dl_row extends HtmlElement
         if ($term->isEmpty())
             $term = NBSP;
         
-        $th = HTML::th(/*array('align' => 'right'),*/ $term);
+        $th = HTML::th($term);
         if ($rowspan > 1)
             $th->setAttr('rowspan', $rowspan);
         $this->unshiftContent($th);
@@ -528,6 +528,153 @@ class Block_table_dl extends Block_list
             $ncols = max($ncols, $tr->_ncols);
         foreach ($rows as $key => $tr)
             $rows[$key]->setWidth($ncols);
+
+        return parent::finish();
+    }
+}
+*/
+
+
+class Block_table_dl_defn extends XmlContent
+{
+    var $nrows;
+    var $ncols;
+    
+    function Block_table_dl_defn ($term, $defn) {
+        $this->XmlContent();
+        if (!is_array($defn))
+            $defn = $defn->getContent();
+
+        $this->_ncols = $this->_ComputeNcols($defn);
+        
+        $this->_nrows = 0;
+        foreach ($defn as $item) {
+            if ($this->_IsASubtable($item))
+                $this->_addSubtable($item);
+            else
+                $this->_addToRow($item);
+        }
+        $this->_flushRow();
+
+        $th = HTML::th($term);
+        if ($this->_nrows > 1)
+            $th->setAttr('rowspan', $this->_nrows);
+        $this->_setTerm($th);
+    }
+
+    function _addToRow ($item) {
+        if (empty($this->_accum)) {
+            $this->_accum = HTML::td();
+            if ($this->_ncols > 2)
+                $this->_accum->setAttr('colspan', $this->_ncols - 1);
+        }
+        $this->_accum->pushContent($item);
+    }
+
+    function _flushRow () {
+        if (!empty($this->_accum)) {
+            $this->pushContent(HTML::tr($this->_accum));
+            $this->_accum = false;
+            $this->_nrows++;
+        }
+    }
+
+    function _addSubtable ($table) {
+        $this->_flushRow();
+        foreach ($table->getContent() as $subdef) {
+            $this->pushContent($subdef);
+            $this->_nrows += $subdef->nrows();
+        }
+    }
+
+    function _setTerm ($th) {
+        $first_row = &$this->_content[0];
+        if (isa($first_row, 'Block_table_dl_defn'))
+            $first_row->_setTerm($th);
+        else
+            $first_row->unshiftContent($th);
+    }
+    
+    function _ComputeNcols ($defn) {
+        $ncols = 2;
+        foreach ($defn as $item) {
+            if ($this->_IsASubtable($item)) {
+                $row = $this->_FirstDefn($item);
+                $ncols = max($ncols, $row->ncols() + 1);
+            }
+        }
+        return $ncols;
+    }
+
+    function _IsASubtable ($item) {
+        return isa($item, 'HtmlElement')
+            && $item->getTag() == 'table'
+            && $item->getAttr('class') == 'wiki-dl-table';
+    }
+
+    function _FirstDefn ($subtable) {
+        $defs = $subtable->getContent();
+        return $defs[0];
+    }
+
+    function ncols () {
+        return $this->_ncols;
+    }
+
+    function nrows () {
+        return $this->_nrows;
+    }
+
+    function setWidth ($ncols) {
+        assert($ncols >= $this->_ncols);
+        if ($ncols <= $this->_ncols)
+            return;
+        $rows = &$this->_content;
+        for ($i = 0; $i < count($rows); $i++) {
+            $row = &$rows[$i];
+            if (isa($row, 'Block_table_dl_defn'))
+                $row->setWidth($ncols - 1);
+            else {
+                $n = count($row->_content);
+                $lastcol = &$row->_content[$n - 1];
+                $lastcol->setAttr('colspan', $ncols - 1);
+            }
+        }
+    }
+}
+
+class Block_table_dl extends Block_list
+{
+    var $_tag = 'table';
+    var $_attr = array('class' => 'wiki-dl-table',
+                       'border' => 2, // FIXME: CSS?
+                       'cellspacing' => 0,
+                       'cellpadding' => 6);
+    
+
+    var $_re = '(\ {0,4})((?![\s!]).*)?[|]\s*?\n(?=(?:\s*^)+(\1\ +)\S)';
+    //          1-------12-----------2                      3-----3
+
+    function _parse (&$input, $m) {
+        $term = TransformInline(rtrim($m->getMatch(2)));
+        $indent = $m->getMatch(3);
+
+        $input->accept($m);
+        $defn = BlockParser::parse($input->subBlock($indent),
+                                   BLOCK_NOTIGHTEN_AFTER);
+
+        $this->_pushContent(new Block_table_dl_defn($term, $defn));
+        return true;
+    }
+            
+    function finish () {
+        $defs = &$this->_content;
+
+        $ncols = 0;
+        foreach ($defs as $defn)
+            $ncols = max($ncols, $defn->ncols());
+        foreach ($defs as $key => $defn)
+            $defs[$key]->setWidth($ncols);
 
         return parent::finish();
     }
