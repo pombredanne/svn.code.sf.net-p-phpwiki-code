@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.33 2004-10-04 23:39:34 rurban Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.34 2004-10-05 00:10:49 rurban Exp $');
 /**
  Copyright (C) 2001, 2002, 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.33 $");
+                            "\$Revision: 1.34 $");
     }
 
     function getDefaultArguments() {
@@ -66,6 +66,8 @@ extends WikiPlugin
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         $user =& $request->_user;
+        if (isa($request,'MockRequest'))
+            return '';
         if ((!$request->isActionPage($request->getArg('pagename')) 
              and (!isset($user->_prefs->_method) 
                   or !in_array($user->_prefs->_method,array('ADODB','SQL'))))
@@ -167,6 +169,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.33  2004/10/04 23:39:34  rurban
+// just aesthetics
+//
 // Revision 1.32  2004/06/28 12:51:41  rurban
 // improved dumphtml and virgin setup
 //
