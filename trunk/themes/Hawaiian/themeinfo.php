@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.18 2002-01-23 11:32:18 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.19 2002-01-23 14:26:22 carstenklapp Exp $');
 
 /**
  * WikiWiki Hawaiian theme for PhpWiki.
@@ -41,7 +41,7 @@ $imgFile = "pictures/" . $imgSet->filename;
 $Theme->addImageAlias('signature', $imgFile);
 
 //To test out the randomization just use logo instead of signature
-$Theme->addImageAlias('logo', $imgFile);
+//$Theme->addImageAlias('logo', $imgFile);
 
 /*
  * Link Icons
@@ -55,7 +55,7 @@ $Theme->setLinkIcon('*', 'flower.png');
  * WikiWords can automatically be split by inserting spaces between
  * the words. The default is to leave WordsSmashedTogetherLikeSo.
  */
-//$Theme->setAutosplitWikiWords(false);
+$Theme->setAutosplitWikiWords(true);
 
 /*
  * You may adjust the formats used for formatting dates and times
