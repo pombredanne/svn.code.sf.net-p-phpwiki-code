@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.24 2002-01-27 02:57:42 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.25 2002-01-27 04:19:28 dairiki Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -103,9 +103,9 @@ class _PageList_Column_time extends _PageList_Column {
 
 class _PageList_Column_version extends _PageList_Column {
     function _getValue ($page_handle, &$revision_handle) {
-        //$version = $revision_handle->getVersion();//doesn't work(?)
-        $current = $page_handle->getCurrentRevision();
-        return $current->getVersion();
+        if (!$revision_handle)
+            $revision_handle = $page_handle->getCurrentRevision();
+        return $revision_handle->getVersion();
     }
 };
 
