@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.12 2002-01-03 19:28:24 carstenklapp Exp $');
+<?php rcs_id('$Id: Template.php,v 1.13 2002-01-05 09:25:37 carstenklapp Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -225,7 +225,7 @@ extends TemplateFile
         $this->qreplace('SPLIT_PAGE', split_pagename($pagename));
         $this->qreplace('BROWSE_PAGE', WikiURL($pagename));
 
-        $this->replace('EditTips', toolbar_Info_EditTips());
+        $this->replace('EDIT_TIPS', toolbar_Info_EditTips());
 
         // FIXME: this is a bit of dangerous hackage.
         $this->qreplace('ACTION', WikiURL($pagename, array('action' => '')));
@@ -242,11 +242,13 @@ extends TemplateFile
         $current = & $page->getCurrentRevision();
         $previous = & $page->getRevisionBefore($revision->getVersion());
 
-        $this->replace('NOT_VIEWING_CURRENT',
-                       toolbar_Warning_IsCurrent($current->getVersion() == $revision->getVersion(),$page->getName()));
+        $this->replace('VIEW_WARNINGS',
+                       toolbar_Warnings_View($current->getVersion() == $revision->getVersion(),$page->getName()));
         $this->replace('IS_CURRENT',
 		       $current->getVersion() == $revision->getVersion());
-
+        $this->replace('EDIT_WARNINGS',
+                       toolbar_Warnings_Edit(!empty($PREVIEW_CONTENT),
+                                             $current->getVersion() == $revision->getVersion()));
 	/*
         if ($previous && $previous->getVersion() != 0)
             $this->setConditional('COPY'); // FIXME: should rename HAVE_COPY?
