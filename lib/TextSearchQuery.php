@@ -97,21 +97,11 @@ class TextSearchQuery {
     /**
      * Make an SQL clause which matches the query.
      *
-     * @param $make_sql_clause_func string,function or array
+     * @param $make_sql_clause_cb WikiCallback
      * A callback which takes a single word as an argument and
      * returns an SQL clause which will match exactly those records
      * containing the word.  The word passed to the callback will always
      * be in all lower case.
-     *
-     * If $make_sql_clause_func is an array, it is interpreted as a method
-     * callback.  The first element of the array is the object, the second
-     * element (a string) is the name of the method.
-     *
-     * If $make_sql_clause_func is a string, it is taken to be the name
-     * of a global function to call.
-     *
-     * Otherwise, $make_sql_clause_func is assumed to be a function object
-     * (created by create_function()).
      *
      * Example usage:
      * <pre>
@@ -123,30 +113,23 @@ class TextSearchQuery {
      *     ...
      *
      *     $query = new TextSearchQuery("wiki -page");
-     *     $sql_clause = $query->makeSqlClause('sql_title_match');
+     *     $cb = new WikiFunctionCb('sql_title_match');
+     *     $sql_clause = $query->makeSqlClause($cb);
      * </pre>
      * This will result in $sql_clause containing something like
      * "(LOWER(title) like 'wiki') AND NOT (LOWER(title) like 'page')".
      *
      * @return string The PCRE regexp.
      */
-    function makeSqlClause($make_sql_clause_func) {
-        $this->_sql_clause_func = $make_sql_clause_func;
+    function makeSqlClause($make_sql_clause_cb) {
+        $this->_sql_clause_cb = $make_sql_clause_cb;
         return $this->_sql_clause($this->_tree);
     }
 
     function _sql_clause($node) {
         switch ($node->op) {
         case 'WORD':
-            $callback = $this->_sql_clause_func;
-            if (is_array($callback)) {
-                list($object, $method) = $callback;
-                return call_user_method($method, $object, $node->word);
-            }
-            elseif (is_string($callback))
-                return call_user_func($callback, $node->word);
-            else
-                return $callback($node->word);
+            return $this->_sql_clause_cb->call($node->word);
         case 'NOT':
             return "NOT (" . $this->_sql_clause($node->leaves[0]) . ")";
         case 'AND':
