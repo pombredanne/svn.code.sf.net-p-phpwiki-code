@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: walkabout.php,v 1.1 2002-01-10 05:04:45 carstenklapp Exp $');
+rcs_id('$Id: walkabout.php,v 1.2 2002-01-10 06:06:48 carstenklapp Exp $');
 /**
  * Usage:
  *
@@ -11,15 +11,6 @@ rcs_id('$Id: walkabout.php,v 1.1 2002-01-10 05:04:45 carstenklapp Exp $');
  *
  *
  */
-
-
-
-
-///////////////////////////////////////////////////////////////////////
-//                This doesn't work completely yet
-
-
-
 
 
 
@@ -47,6 +38,7 @@ extends WikiPlugin
     function getDefaultArguments() {
         return array(
                      'parent'  => '',
+                     'rev'     => false,
                      'section' => _("Contents"),
                      'sep'     => '|',
                      'label'   => '',
@@ -55,8 +47,26 @@ extends WikiPlugin
                      );
     }
 
+    // Stolen from Toolbar.php
     function mklinks($text, $action) {
         return do_transform("[$text|$action]", 'LinkTransform');
+    }
+
+    // Stolen from IncludePage.php
+    function extractSection ($section, $content) {
+        $qsection = preg_replace('/\s+/', '\s+', preg_quote($section, '/'));
+
+        if (preg_match("/ ^(!{1,})\\s*$qsection" // section header
+                       . "  \\s*$\\n?"           // possible blank lines
+                       . "  ( (?: ^.*\\n? )*? )" // some lines
+                       . "  (?= ^\\1 | \\Z)/xm", // sec header (same or higher level) (or EOF)
+                       implode("\n", $content),
+                       $match)) {
+            // Strip trailing blanks lines and ---- <hr>s
+            $text = preg_replace("/\\s*^-{4,}\\s*$/m", "", $match[2]);
+            return explode("\n", $text);
+        }
+        return array(sprintf(_("<%s: no such section>"), $section));
     }
 
     function run($dbi, $argstr, $request) {
@@ -100,23 +110,53 @@ extends WikiPlugin
             $label = sprintf(_("%s: %s"), $parent, '%s');
         }
 
-        // This is where the list extraction will occur from the named
-        // $section on the $parent page. The ordered list will
-        // determine the page ordering.
+        // This is where the list extraction occurs from the named
+        // $section on the $parent page.
 
+        $p = $dbi->getPage($parent);
+        if ($rev) {
+            $r = $p->getRevision($rev);
+            if (!$r) {
+                $this->error(sprintf(_("%s(%d): no such revision"), $parent,
+                                     $rev));
+                return '';
+            }
+        } else {
+            $r = $p->getCurrentRevision();
+        }
 
+        $c = $r->getContent();
+        $c = $this->extractSection($section, $c);
 
+        //debugging only
+        //foreach ( $c as $line ) {
+        //    echo $line ."<br>";
+        //}
 
+       $pagename = $request->getArg('pagename');
 
+        // The ordered list of page names determines the page
+        // ordering. Right now it doesn't work with a WikiList, only
+        // normal lines of text containing the page names.
 
+        $thispage = array_search($pagename, $c);
 
+        $go = array ('previous','next');
+        $links = array();
 
+        foreach ( $go as $go_item ) {
 
-
-        $links = array(
-                       $directions['previous'] => $previous,
-                       $directions['next']     => $next
-                       );
+            //these are temp placeholders to test the output
+            if ($go_item == 'previous') {
+                $text    = sprintf(_("%s: %s"), $directions[$go_item], '%s');
+                $action  = $c[$thispage - 1];
+            }
+            else if ($go_item == 'next') {
+                $text    = sprintf(_("%s: %s"), $directions[$go_item], '%s');
+                $action  = $c[$thispage + 1];
+            }
+            $links[] = sprintf($text, $this->mklinks($action, $action));
+        }
 
         //final assembly
         $links = join($sep, $links);
