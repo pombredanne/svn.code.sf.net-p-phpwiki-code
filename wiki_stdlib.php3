@@ -317,7 +317,7 @@
       if (isset($matches[3])) {
          $URL = trim($matches[3]);
          $linkname = htmlspecialchars(trim($matches[1]));
-         echo "$URL $linkname<br>";
+         // assert proper URL's
          if (preg_match("#^($AllowedProtocols):#", $URL)) {
             return "<a href=\"$URL\">$linkname</a>";
          } else {
