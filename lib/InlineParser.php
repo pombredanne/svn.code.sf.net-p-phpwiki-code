@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.38 2004-04-26 20:44:34 rurban Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.39 2004-04-29 19:39:44 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -204,7 +204,7 @@ class SimpleMarkup
 /**
  * A balanced markup rule.
  *
- * These are defined by a start regexp, and and end regexp.
+ * These are defined by a start regexp, and an end regexp.
  */ 
 class BalancedMarkup
 {
@@ -494,8 +494,6 @@ class Markup_html_emphasis extends BalancedMarkup
                                em|strong|
                                cite|code|dfn|kbd|samp|var|
                                sup|sub )>";
-    //rurban: abbr|acronym need an optional title tag.
-    //sf.net bug #728595
 
     function getEndRegexp ($match) {
         return "<\\/" . substr($match, 1);
@@ -535,6 +533,21 @@ class Markup_html_abbr extends BalancedMarkup
     }
 }
 
+// Special version for single-line plugins formatting, 
+//  like: '<small>< ? plugin PopularNearby ? ></small>'
+class Markup_plugin extends SimpleMarkup
+{
+    var $_match_regexp = '<\?plugin(?:-form)?\s.+?\?>';
+
+    function markup ($match) {
+	return new Cached_PluginInvocation($match);
+    }
+}
+
+
+// TODO: "..." => "&#133;"  browser specific display (not cached?)
+// TODO: "--" => "&emdash;" browser specific display (not cached?)
+
 // FIXME: Do away with magic phpwiki forms.  (Maybe phpwiki: links too?)
 // FIXME: Do away with plugin-links.  They seem not to be used.
 //Plugin link
@@ -550,7 +563,7 @@ class InlineTransformer
             $markup_types = array('escape', 'bracketlink', 'url',
                                   'interwiki', 'wikiword', 'linebreak',
                                   'old_emphasis', 'nestled_emphasis',
-                                  'html_emphasis', 'html_abbr');
+                                  'html_emphasis', 'html_abbr', 'plugin');
 
         foreach ($markup_types as $mtype) {
             $class = "Markup_$mtype";

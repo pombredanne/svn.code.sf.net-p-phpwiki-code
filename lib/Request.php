@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.49 2004-04-26 20:44:34 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.50 2004-04-29 19:39:44 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -532,7 +532,7 @@ class Request_CookieVars {
         setcookie($key,'',0);
         setcookie($key,'',0,defined('COOKIE_DOMAIN') ? COOKIE_DOMAIN : '/');
         unset($vars[$key]);
-        unset($_COOKIE[$key]);
+        unset($GLOBALS['HTTP_COOKIE_VARS'][$key]);
         $deleted[$key] = 1;
     }
 }
@@ -960,6 +960,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.49  2004/04/26 20:44:34  rurban
+// locking table specific for better databases
+//
 // Revision 1.48  2004/04/13 09:13:50  rurban
 // sf.net bug #933183 and http://bugs.php.net/17557
 // disable ob_gzhandler if apache_note cannot be used.

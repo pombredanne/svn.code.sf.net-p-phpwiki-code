@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.44 2004-04-19 18:27:45 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.45 2004-04-29 19:39:44 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -820,11 +820,9 @@ class Block_oldlists extends Block_list
             $li->setTightness($top, $bot);
         }
         else {
-            // this is where php5 breaks
-            if (0 and DEBUG and check_php_version(5)) {
-                if (function_exists("xdebug_get_function_stack")) {
-                    var_dump (xdebug_get_function_stack());
-                } elseif (count($this->_content) != 2) {
+            // This is where php5 broke
+            if (DEBUG and check_php_version(5)) {
+                if (count($this->_content) != 2) {
                     echo "<pre>";
                     /*
                     $class = new Reflection_Class('XmlElement');
@@ -857,6 +855,9 @@ class Block_oldlists extends Block_list
                         echo "_properties: "; var_dump ($c->_properties);
                     }
                     debug_print_backtrace();
+                    if (function_exists("xdebug_get_function_stack")) {
+                        var_dump (xdebug_get_function_stack());
+                    }
                     echo "</pre>";
                 }
             }

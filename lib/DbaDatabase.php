@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbaDatabase.php,v 1.10 2004-04-27 16:08:44 rurban Exp $');
+<?php rcs_id('$Id: DbaDatabase.php,v 1.11 2004-04-29 19:39:44 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 
@@ -55,7 +55,7 @@ class DbaDatabase
             if ($watchdog <= 0)
                 break;
             flush();
-            // conflict: wait some randon time to unlock (see ethernet)
+            // conflict: wait some random time to unlock (see ethernet)
             $secs = 0.5+rand(1.0);
             sleep($secs);
             $watchdog -= $secs;
