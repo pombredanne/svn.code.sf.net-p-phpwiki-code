@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.58 2004-05-15 19:48:33 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.59 2004-05-18 16:23:39 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -237,11 +237,11 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
 
     $content->_basepage = $title;
     $args['CONTENT'] = $content;
-    $args['TITLE'] = split_pagename($title);
+    $args['TITLE'] = SplitPagename($title);
     $args['revision'] = $page_revision;
     
     if (!isset($args['HEADER']))
-        $args['HEADER'] = split_pagename($title);
+        $args['HEADER'] = SplitPagename($title);
     
     global $HIDE_TOOLBARS, $NO_BASEHREF, $HTML_DUMP;
     $HIDE_TOOLBARS = true;
@@ -255,6 +255,12 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.58  2004/05/15 19:48:33  rurban
+// fix some too loose PagePerms for signed, but not authenticated users
+//  (admin, owner, creator)
+// no double login page header, better login msg.
+// moved action_pdf to lib/pdf.php
+//
 // Revision 1.57  2004/05/01 18:20:05  rurban
 // Add $charset to template locals (instead of constant CHARSET)
 //

@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.50 2004-05-04 22:34:25 rurban Exp $');
+rcs_id('$Id: display.php,v 1.51 2004-05-18 16:23:39 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -12,11 +12,11 @@ function GleanKeywords ($page) {
 
     $links = $page->getLinks(false);
 
-    $keywords[] = split_pagename($page->getName());
+    $keywords[] = SplitPagename($page->getName());
     
     while ($link = $links->next())
         if (preg_match("/${KeywordLinkRegexp}/x", $link->getName(), $m))
-            $keywords[] = split_pagename($m[0]);
+            $keywords[] = SplitPagename($m[0]);
 
     $keywords[] = WIKI_NAME;
     
@@ -49,7 +49,7 @@ function actionPage(&$request, $action) {
     $actionpage = $dbi->getPage($action);
     $actionrev = $actionpage->getCurrentRevision();
 
-    // $splitname = split_pagename($pagename);
+    // $splitname = SplitPagename($pagename);
 
     $pagetitle = HTML(fmt("%s: %s", $actionpage->getName(),
                           $Theme->linkExistingWikiWord($pagename, false, $version)));
@@ -84,26 +84,26 @@ function displayPage(&$request, $template=false) {
         $revision = $page->getCurrentRevision();
     }
 
-    $splitname = split_pagename($pagename);
+    $splitname = SplitPagename($pagename);
     if (isSubPage($pagename)) {
         $pages = explode(SUBPAGE_SEPARATOR,$pagename);
         $last_page = array_pop($pages); // deletes last element from array as side-effect
         $pagetitle = HTML::span(HTML::a(array('href' => WikiURL($pages[0]),
                                               'class' => 'pagetitle'
                                               ),
-                                        split_pagename($pages[0] . SUBPAGE_SEPARATOR)));
+                                        SplitPagename($pages[0] . SUBPAGE_SEPARATOR)));
         $first_pages = $pages[0] . SUBPAGE_SEPARATOR;
         array_shift($pages);
         foreach ($pages as $p)  {
             $pagetitle->pushContent(HTML::a(array('href' => WikiURL($first_pages . $p),
                                                   'class' => 'backlinks'),
-                                       split_pagename($p . SUBPAGE_SEPARATOR)));
+                                       SplitPagename($p . SUBPAGE_SEPARATOR)));
             $first_pages .= $p . SUBPAGE_SEPARATOR;
         }
         $backlink = HTML::a(array('href' => WikiURL($pagename,
                                                     array('action' => _("BackLinks"))),
                                   'class' => 'backlinks'),
-                            split_pagename($last_page));
+                            SplitPagename($last_page));
         $backlink->addTooltip(sprintf(_("BackLinks for %s"), $pagename));
         $pagetitle->pushContent($backlink);
     } else {
@@ -154,6 +154,9 @@ function displayPage(&$request, $template=false) {
     flush();
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.50  2004/05/04 22:34:25  rurban
+// more pdf support
+//
 // Revision 1.49  2004/04/18 01:11:52  rurban
 // more numeric pagename fixes.
 // fixed action=upload with merge conflict warnings.

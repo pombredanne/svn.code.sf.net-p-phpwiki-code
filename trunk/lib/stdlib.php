@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.179 2004-05-18 16:18:37 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.180 2004-05-18 16:23:39 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -13,7 +13,7 @@
     
     class Stack { push($item), pop(), cnt(), top() }
 
-    split_pagename ($page)
+    SplitPagename ($page)
     NoSuchRevision ($request, $page, $version)
     TimezoneOffset ($time, $no_colon)
     Iso8601DateTime ($time)
@@ -761,7 +761,7 @@ function expand_tabs($str, $tab_width = 8) {
  *
  * @return string The split name.
  */
-function split_pagename ($page) {
+function SplitPagename ($page) {
     
     if (preg_match("/\s/", $page))
         return $page;           // Already split --- don't split any more.
@@ -1420,6 +1420,10 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.179  2004/05/18 16:18:37  rurban
+// AutoSplit at subpage seperators
+// RssFeed stability fix for empty feeds or broken connections
+//
 // Revision 1.178  2004/05/12 10:49:55  rurban
 // require_once fix for those libs which are loaded before FileFinder and
 //   its automatic include_path fix, and where require_once doesn't grok
@@ -1639,7 +1643,7 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
 // Now the ~ escape for page names should work: [Page ~#1].
 //
 // Revision 1.135  2003/02/18 19:17:04  dairiki
-// split_pagename():
+// SplitPagename():
 //     Bug fix. 'ThisIsABug' was being split to 'This IsA Bug'.
 //     Cleanup up subpage splitting code.
 //
