@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.50 2004-05-12 10:49:54 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.51 2004-05-12 19:27:47 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004 Reini Urban
  *
@@ -89,6 +89,7 @@ class RegexpSet
     function RegexpSet ($regexps) {
         assert($regexps);
         $this->_regexps = array_unique($regexps);
+        if (!defined('_INLINE_OPTIMIZATION')) define('_INLINE_OPTIMIZATION',0);
     }
 
     /**
@@ -143,7 +144,7 @@ class RegexpSet
         // If one of the regexps is an empty string, php will crash here: 
         // sf.net: Fatal error: Allowed memory size of 8388608 bytes exhausted 
         //         (tried to allocate 634 bytes)
-
+        if (_INLINE_OPTIMIZATION) {
         // So we try to minize memory usage, by looping explicitly,
         // and storing only those regexp which actually match. 
         // There may be more than one, so we have to find the longest, 
@@ -165,6 +166,7 @@ class RegexpSet
         // To overcome ANCHORED:
         // We could sort by longest match and iterate over these.
         if (empty($matched)) return false;
+        }
         $match = new RegexpSet_match;
         
         // Optimization: if the matches are only "$" and another, then omit "$"
@@ -173,7 +175,7 @@ class RegexpSet
         //   s - DOTALL
         //   A - ANCHORED
         //   S - STUDY
-        if (count($matched) > 2) {
+        if (! _INLINE_OPTIMIZATION or count($matched) > 2) {
             // We could do much better, if we would know the matching markup for the 
             // longest regexp match:
             $hugepat= "/ ( . $repeat ) ( (" . join(')|(', $regexps) . ") ) /Asx";

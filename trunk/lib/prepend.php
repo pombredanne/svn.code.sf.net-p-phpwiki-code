@@ -5,9 +5,9 @@
  */
 $RCS_IDS = '';
 function rcs_id ($id) { $GLOBALS['RCS_IDS'] .= "$id\n"; }
-rcs_id('$Id: prepend.php,v 1.18 2004-04-26 12:22:56 rurban Exp $');
+rcs_id('$Id: prepend.php,v 1.19 2004-05-12 19:27:48 rurban Exp $');
 
-define ('PHPWIKI_VERSION', '1.3.10pre');
+define ('PHPWIKI_VERSION', '1.3.10');
 
 // If your php was compiled with --enable-trans-sid it tries to
 // add a PHPSESSID query argument to all URL strings when cookie
