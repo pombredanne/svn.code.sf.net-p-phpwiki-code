@@ -2,7 +2,7 @@
 /* Get the Compatibility info for phpwiki
    http://pear.php.net/package/PHP_CompatInfo
 
-   $Id: CompatInfo.php,v 1.1 2004-08-24 00:21:57 rurban Exp $
+   $Id: CompatInfo.php,v 1.2 2004-08-24 00:27:29 rurban Exp $
 */
 /*
  * Copyright (C) 2004 Reini Urban <rurban@x-ray.at>
@@ -50,7 +50,7 @@ $detail = !empty($_GET['detail']);
 // echo $dir;
 $options = array('file_ext' 	=> array('php'),
                  'ignore_files' => array(__FILE__),
-                 'recurse_dir'  => false,
+                 'recurse_dir'  => true,
                  'ignore_functions' => array(),
                  'debug' => $debug or $detail,
                  );
@@ -153,7 +153,12 @@ if ($debug) {
     echo "</pre>\n";
 }
 
-// $Log: not supported by cvs2svn $ 
+// $Log: not supported by cvs2svn $
+// Revision 1.1  2004/08/24 00:21:57  rurban
+// Print the PHP compatibility info for phpwiki.
+// per file and per project,
+// (which function is dependend on which php version?)
+// 
 
 // (c-file-style: "gnu")
 // Local Variables:
