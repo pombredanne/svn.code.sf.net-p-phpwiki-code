@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.8\n"
-"POT-Creation-Date: 2001-12-18 01:18-0500\n"
+"POT-Creation-Date: 2001-12-18 02:25-0500\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Arno Hollosi <ahollosi@mail.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -747,8 +747,9 @@ msgid "[%d] See [%s]"
 msgstr "[%d] Sehe [%s]"
 
 #: ../lib/ziplib.php:629
+#, fuzzy
 msgid "!References"
-msgstr ""
+msgstr "!Fuﬂnoten"
 
 #~ msgid "Current page:"
 #~ msgstr "Aktuelle Seite:"
