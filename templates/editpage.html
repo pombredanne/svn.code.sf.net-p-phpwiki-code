@@ -4,7 +4,7 @@
 <html>
 <head>
 <!-- phpwiki source:
-$Id: editpage.html,v 1.42 2002-01-10 22:45:50 carstenklapp Exp $
+$Id: editpage.html,v 1.43 2002-01-10 23:16:01 rurban Exp $
 ${RCS_IDS}
 -->
 <base href="${BASE_URL}" />
@@ -24,10 +24,11 @@ ${EDIT_WARNINGS}
 <?php } ?>
 <?php /*
  * FIXME: Hack! 
- * The URL used for the form action parameter is bogus.
+ * The ${BROWSE}EditPage URL used for the form action parameter is bogus.
  * This is needed, otherwise the redirect to the real browser
  * page won't work with some browsers (NS4).  (NS4 won't accept
  * a redirect from a page to itself.)
+ * I would rather prefer ${ACTION}edit --ReiniUrban
  */ ?>
 
 <form method="post" action="${BROWSE}EditPage" accept-charset="${CHARSET}">

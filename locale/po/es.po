@@ -826,8 +826,7 @@ msgstr "Diferencia de: %s"
 
 #: ../lib/editpage.php:29
 msgid "This page has been locked by the administrator and cannot be edited."
-msgstr ""
-"Esta página ha sido bloqueada por el administrador y no puede ser editada."
+msgstr "Esta página ha sido bloqueada por el administrador y no puede ser editada."
 
 #: ../lib/loadsave.php:17
 msgid "Complete."
@@ -995,10 +994,7 @@ msgid ""
 "PhpWiki is unable to save your changes, because another user edited and "
 "saved the page while you were editing the page too. If saving proceeded now "
 "changes from the previous author would be lost."
-msgstr ""
-"PhpWiki no es capaz de grabar sus cambios, debido a que otro usuariohá "
-"editado y guardado la página mientras usted estaba editando esta página. Si "
-"se guarda ahora los cambios del autor anterior se podrían perder."
+msgstr "PhpWiki no es capaz de grabar sus cambios, debido a que otro usuariohá editado y guardado la página mientras usted estaba editando esta página. Si se guarda ahora los cambios del autor anterior se podrían perder."
 
 #: ../lib/savepage.php:35
 msgid "In order to recover from this situation follow these steps:"
@@ -1020,17 +1016,13 @@ msgstr ""
 msgid ""
 "<b>Reload</b> the page. You should now see the most current version of the "
 "page. Your changes are no longer there."
-msgstr ""
-"<b>Vuelva a cargar</b> la página. Ahora podrá ver la versión mas actual de "
-"la página. Sus cambios no están ahí."
+msgstr "<b>Vuelva a cargar</b> la página. Ahora podrá ver la versión mas actual de la página. Sus cambios no están ahí."
 
 #: ../lib/savepage.php:43
 msgid ""
 "Make changes to the file again. Paste your additions from the clipboard (or "
 "text editor)."
-msgstr ""
-"Haga cambios a la página otra vez. Pegue sus modificaciones del portapapeles "
-"(o del editor de textos)."
+msgstr "Haga cambios a la página otra vez. Pegue sus modificaciones del portapapeles (o del editor de textos)."
 
 #: ../lib/savepage.php:45
 msgid "Press <b>Save</b> again."
@@ -1045,8 +1037,7 @@ msgstr "Disculpe la inconveniencia."
 msgid ""
 "This page has been locked by the administrator so your changes could not be "
 "saved."
-msgstr ""
-"Esta página ha sido bloqueada por el administrador y no puede ser editada."
+msgstr "Esta página ha sido bloqueada por el administrador y no puede ser editada."
 
 #: ../lib/savepage.php:56
 #, fuzzy
@@ -1193,8 +1184,7 @@ msgstr ""
 #: ../lib/WikiDB/backend/PearDB.php:26
 #, fuzzy, c-format
 msgid "Can't connect to database: %s"
-msgstr ""
-"No se puede establecer conexión con la base de datos %s, me doy por vencido."
+msgstr "No se puede establecer conexión con la base de datos %s, me doy por vencido."
 
 #: ../lib/WikiDB/backend/PearDB.php:57
 msgid "WARNING: database still locked"
@@ -1414,9 +1404,7 @@ msgstr ""
 #~ msgid ""
 #~ "JoinCapitalizedWords or use square brackets for a [page link] or URL "
 #~ "[http://cool.wiki.int/]."
-#~ msgstr ""
-#~ "UnirPalabrasEnMayúsculas o usar corchetes para una [enlace hacia una "
-#~ "página] o URL [http://cool.wiki.int/]."
+#~ msgstr "UnirPalabrasEnMayúsculas o usar corchetes para una [enlace hacia una página] o URL [http://cool.wiki.int/]."
 
 #~ msgid "Footnotes:"
 #~ msgstr "Anotaciones:"
