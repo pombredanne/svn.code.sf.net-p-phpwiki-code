@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.54 2004-05-12 10:49:55 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.55 2004-05-12 19:27:47 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -1694,7 +1694,7 @@ class WikiDB_cache
     
     function get_versiondata($pagename, $version, $need_content = false) {
         //  FIXME: Seriously ugly hackage
-	if (defined ('USECACHE')){   //temporary - for debugging
+	if (defined('USECACHE') and USECACHE) {   //temporary - for debugging
             assert(is_string($pagename) && $pagename != '');
             // there is a bug here somewhere which results in an assertion failure at line 105
             // of ArchiveCleaner.php  It goes away if we use the next line.
@@ -1765,6 +1765,13 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.54  2004/05/12 10:49:55  rurban
+// require_once fix for those libs which are loaded before FileFinder and
+//   its automatic include_path fix, and where require_once doesn't grok
+//   dirname(__FILE__) != './lib'
+// upgrade fix with PearDB
+// navbar.tmpl: remove spaces for IE &nbsp; button alignment
+//
 // Revision 1.53  2004/05/08 14:06:12  rurban
 // new support for inlined image attributes: [image.jpg size=50x30 align=right]
 // minor stability and portability fixes
