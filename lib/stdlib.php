@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.111 2002-02-27 04:41:12 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.112 2002-08-17 15:52:51 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -99,14 +99,14 @@ function LinkURL($url, $linktext = '') {
                                      _("BAD URL -- remove all of <, >, \"")));
     }
     else {
-        if (! $namedlink = $linktext)
+        if (!$linktext)
             $linktext = preg_replace("/mailto:/A", "", $url);
         
         $link = HTML::a(array('href' => $url),
                         IconForLink($url), $linktext);
         
     }
-    $link->setAttr('class', $namedlink ? 'namedurl' : 'rawurl');
+    $link->setAttr('class', $linktext ? 'namedurl' : 'rawurl');
     return $link;
 }
 
@@ -265,11 +265,29 @@ function LinkBracketLink($bracketlink) {
     }
 
     $dbi = $request->getDbh();
-    if ($dbi->isWikiPage($URL))
-        return WikiLink($URL, 'known', $linkname);
+    if (substr($URL,0,1) == '/') { // relative link to page below
+        if (!$linkname) $linkname = $URL;
+        $URL = $request->getArg('pagename') . $URL;
+    }
+    if ($dbi->isWikiPage($URL)) {
+        // if it's an image, it's an named image link [img|link]
+        if (preg_match("/($InlineImages)$/i", $linkname))
+            if (preg_match("#^($AllowedProtocols):#", $URL)) {
+                return WikiLink($URL, 'known', LinkImage($linkname,$URL));
+            } 
+            else {
+                // linkname like 'images/next.gif'.
+                global $Theme;
+                return WikiLink($URL, 'known', LinkImage($Theme->getImageURL($linkname),$URL));
+            }
+        else {
+            return WikiLink($URL, 'known', $linkname);
+        }
+    }
     elseif (preg_match("#^($AllowedProtocols):#", $URL)) {
         // if it's an image, embed it; otherwise, it's a regular link
         if (preg_match("/($InlineImages)$/i", $URL))
+            // no image link, just the src. see [img|link] above
             return LinkImage($URL, $linkname);
         else
             return LinkURL($URL, $linkname);
@@ -306,7 +324,12 @@ function ExtractWikiPageLinks($content) {
         for ($i = 0; $i < $numBracketLinks; $i++) {
             $link = LinkBracketLink($brktlinks[0][$i]);
             if (preg_match('/^(named-)?wiki(unknown)?$/', $link->getAttr('class')))
-                $wikilinks[$brktlinks[2][$i]] = 1;
+                if ($brktlinks[2][$i][0] == '/') {
+                    global $request;
+                    $wikilinks[$request->getArg('pagename') . $brktlinks[2][$i]] = 1;
+                } else {
+                    $wikilinks[$brktlinks[2][$i]] = 1;
+                }
             
             $brktlink = preg_quote($brktlinks[0][$i]);
             $line = preg_replace("|$brktlink|", '', $line);
@@ -315,8 +338,14 @@ function ExtractWikiPageLinks($content) {
         // BumpyText old-style wiki links
         if (preg_match_all("/!?$WikiNameRegexp/", $line, $link)) {
             for ($i = 0; isset($link[0][$i]); $i++) {
-                if($link[0][$i][0] <> '!')
-                    $wikilinks[$link[0][$i]] = 1;
+                if($link[0][$i][0] <> '!') {
+                    if ($link[0][$i][0] == '/') {
+                        global $request;
+                        $wikilinks[$request->getArg('pagename') . $link[0][$i]] = 1;
+                    } else {
+                        $wikilinks[$link[0][$i]] = 1;
+                    }
+                }
             }
         }
     }

@@ -408,7 +408,7 @@ msgstr "um Seiten dieses Wikis als Dateien zu speichern"
 
 #: ../lib/main.php:289
 msgid "edit pages in this wiki"
-msgstr "um Seiten dieses Wikis zu editieren"
+msgstr "um Seiten in diesem Wiki zu editieren"
 
 #: ../lib/main.php:290
 msgid "load files into this wiki"
@@ -416,19 +416,19 @@ msgstr "um Seiten in diesem Wiki zu laden"
 
 #: ../lib/main.php:291
 msgid "lock pages in this wiki"
-msgstr "um Seiten dieses Wikis zu sperren"
+msgstr "um Seiten in diesem Wiki zu sperren"
 
 #: ../lib/main.php:292
 msgid "remove pages from this wiki"
-msgstr "um Seiten dieses Wikis zu löschen"
+msgstr "um Seiten in diesem Wiki zu löschen"
 
 #: ../lib/main.php:293
 msgid "unlock pages in this wiki"
-msgstr "um Seiten dieses Wikis zu freigeben"
+msgstr "um Seiten in diesem Wiki freizugeben"
 
 #: ../lib/main.php:294
 msgid "upload a zip dump to this wiki"
-msgstr "um einen Zipspeicherauszug in diesem Wiki hochzuladen"
+msgstr "um ein Ziparchiv in dieses Wiki hochzuladen"
 
 #: ../lib/main.php:295
 msgid "view the source of pages in this wiki"
@@ -440,7 +440,7 @@ msgstr "um einen Zipspeicherauszug von diesem Wiki zu herunterladen"
 
 #: ../lib/main.php:297
 msgid "download an html zip dump from this wiki"
-msgstr "um einen HTML-Zipspeicherauszug von diesem Wiki zu herunterladen"
+msgstr "um eine HTML-Ziparchiv von diesem Wiki zu herunterladen"
 
 #: ../lib/main.php:309
 msgid "Browsing pages"

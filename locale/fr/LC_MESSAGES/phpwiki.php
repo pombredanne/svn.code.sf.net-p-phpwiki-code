@@ -54,12 +54,12 @@ $locale["<%s: no such section>"] =
    "<%s : pas de section de ce type>";
 $locale["<no matches>"] =
    "< aucun résultat >";
+$locale["<none>"] =
+   "< acune >";
 $locale["A required argument '%s' is missing."] =
    "Un argument requis '%s' est manquant.";
 $locale["Acck! Revision %s of %s seems to have been deleted!"] =
    "Ouille ! La révision %s de %s semble avoir été effacée !";
-$locale["Action %s is disallowed on this wiki"] =
-   "L'action %s est interdite sur ce wiki";
 $locale["Add %s hours to the server's local time when reporting times."] =
    "Ajouter %s heures à l'heure locale du serveur pour afficher les horodatages.";
 $locale["Adjust"] =
@@ -562,14 +562,6 @@ $locale["You are viewing an old revision of this page."] =
    "Vous lisez une ancienne version de cette page.";
 $locale["You have not made any changes so no new version has been saved."] =
    "Vous n'avez effectué aucun changement, aucune nouvelle version n'a donc été enregistrée.";
-$locale["You may sign in using any WikiWord as a UserId. (ÀÖØöøÿßö etc. may be used too). The UserId will be used as a link in RecentChanges to your UserId page, your HomePage. You do not need to enter a password."] =
-   "Vous pouvez vous inscrire en utilisant n'importe quel WikiMot comme identifiant utilisateur (ÀÖØöøÿßö peuvent être utilisés). L'identifiant sera utilisé comme lien vers votre PagePersonnelle dans DernièresModifs. Vous n'avez pas besoin d'entrer de mot de passe.";
-$locale["You must be an administrator to %s this wiki"] =
-   "Vous devez être un administrateur pour %s ce wiki";
-$locale["You must log in to %s this wiki"] =
-   "Vous devez vous connecter pour %s ce wiki";
-$locale["You must sign in to %s this wiki"] =
-   "Vous devez vous inscrire pour %s ce wiki";
 $locale["You must specify a directory to dump to"] =
    "Vous devez spécifier un répertoire de vidage";
 $locale["Your careful attention to detail is much appreciated."] =

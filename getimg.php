@@ -80,7 +80,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.3-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.85 2002-08-17 15:52:51 rurban Exp $');
+rcs_id('$Id: getimg.php,v 1.1 2002-08-17 15:52:51 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -423,7 +423,7 @@ $InlineImages = "png|jpg|gif";
 // (?<!..) & (?!...) used instead of '\b' because \b matches '_' as well
 $WikiNameRegexp = "(?<![[:alnum:]])(?:[[:upper:]][[:lower:]]+){2,}(?![[:alnum:]])";
 
-define('SUBPAGE_SEPARATOR','/');
+$SubpageSeparator = '/';
 
 // InterWiki linking -- wiki-style links to other wikis on the web
 //
@@ -523,7 +523,7 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
 // Okay... fire up the code:
 ////////////////////////////////////////////////////////////////
 
-include "lib/main.php";
+include "lib/imagecache.php"; // FIXME. This is awful.
 
 // (c-file-style: "gnu")
 // Local Variables:

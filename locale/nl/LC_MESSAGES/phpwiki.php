@@ -6,8 +6,6 @@ $locale["(diff)"] =
    "(diff)";
 $locale["- saved to database as version %d"] =
    "- bewaard in de data base als versie %d";
-$locale["Action %s is disallowed on this wiki"] =
-   "Actie %s is niet beschikbaar in deze wiki";
 $locale["Cancel"] =
    "Annuleer";
 $locale["Complete."] =
@@ -166,8 +164,6 @@ $locale["You are about to remove '%s' permanently!"] =
    "Je staat op het punt '%s' voorgoed te verwijderen!";
 $locale["You are signed in as %s"] =
    "Je bent ingelogd als %s";
-$locale["You must be an administrator to %s this wiki"] =
-   "Je moet ingelogd zijn als beheerder om te %s in deze wiki";
 $locale["You must specify a directory to dump to"] =
    "Je moet een directory specificeren om in te storten";
 $locale["Your careful attention to detail is much appreciated."] =

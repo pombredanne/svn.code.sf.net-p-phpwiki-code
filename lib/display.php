@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.30 2002-03-06 03:52:22 carstenklapp Exp $');
+rcs_id('$Id: display.php,v 1.31 2002-08-17 15:52:51 rurban Exp $');
 
 require_once('lib/Template.php');
 require_once('lib/BlockParser.php');
@@ -82,11 +82,36 @@ function displayPage(&$request, $tmpl = 'browse') {
     }
 
     $splitname = split_pagename($pagename);
-    $pagetitle = HTML::a(array('href' => WikiURL($pagename,
-                                                 array('action' => _("BackLinks"))),
-                               'class' => 'backlinks'),
-                         $splitname);
-    $pagetitle->addTooltip(sprintf(_("BackLinks for %s"), $pagename));
+    if (strchr($pagename, '/')) {
+        $pages = explode('/',$pagename);
+        $last_page = array_pop($pages); // deletes last element from array as side-effect
+        $pagetitle = HTML::span(HTML::a(array('href' => WikiURL($pages[0]),
+                                              //'class' => 'backlinks'
+                                              ),
+                                        split_pagename($pages[0] . '/')));
+        $first_pages = $pages[0] . '/';
+        array_shift($pages);
+        foreach ($pages as $p)  {
+            $pagetitle->pushContent(HTML::a(array('href' => WikiURL($first_pages . $p),
+                                             'class' => 'backlinks'),
+                                       split_pagename($p . '/')));
+            $first_pages .= $p . '/';
+        }
+        $backlink = HTML::a(array('href' => WikiURL($pagename,
+                                                    array('action' => _("BackLinks"))),
+                                  'class' => 'backlinks'),
+                            split_pagename($last_page));
+        $backlink->addTooltip(sprintf(_("BackLinks for %s"), $pagename));
+        $pagetitle->pushContent($backlink);
+    } else {
+        $pagetitle = HTML::a(array('href' => WikiURL($pagename,
+                                                     array('action' => _("BackLinks"))),
+                                   'class' => 'backlinks'),
+                             $splitname);
+        $pagetitle->addTooltip(sprintf(_("BackLinks for %s"), $pagename));
+    }
+
+    include_once('lib/BlockParser.php');
 
     require_once('lib/PageType.php');
     $transformedContent = PageType($revision);
