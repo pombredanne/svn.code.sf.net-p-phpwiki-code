@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PluginManager.php,v 1.4 2003-02-20 18:13:38 carstenklapp Exp $');
+rcs_id('$Id: PluginManager.php,v 1.5 2003-02-22 20:49:56 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -48,15 +48,15 @@ extends WikiPlugin
         extract($this->getArgs($argstr, $request));
 
         $h = HTML();
-        $this->_generatePageheader($info, &$h);
+        $this->_generatePageheader($info, $h);
 
         if (! REQUIRE_ADMIN || $request->_user->isadmin()) {
             $h->pushContent(HTML::h2(_("Plugins")));
 
             $table = HTML::table(array('class' => "pagelist"));
-            $this->_generateColgroups($info, &$table);
-            $this->_generateColheadings($info, &$table);
-            $this->_generateTableBody($info, &$dbi, &$request, &$table);
+            $this->_generateColgroups($info, $table);
+            $this->_generateColheadings($info, $table);
+            $this->_generateTableBody($info, $dbi, $request, $table);
             $h->pushContent($table);
 
             //$h->pushContent(HTML::h2(_("Disabled Plugins")));
@@ -178,6 +178,12 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2003/02/20 18:13:38  carstenklapp
+// Workaround for recent changes to WikiPlugin->getPlugin.
+// Made admin restriction for viewing this page optional.
+// Now defaults to any user may view this page (mainly for PhpWiki Demo site).
+// Minor code changes & reformatting.
+//
 // Revision 1.3  2003/01/04 02:30:12  carstenklapp
 // Added 'info' argument to show / hide plugin "Arguments"
 // column. Improved row highlighting and error message when viewed by

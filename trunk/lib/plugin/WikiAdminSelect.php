@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSelect.php,v 1.2 2003-01-18 22:14:29 carstenklapp Exp $');
+rcs_id('$Id: WikiAdminSelect.php,v 1.3 2003-02-22 20:49:56 dairiki Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -47,7 +47,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -137,7 +137,7 @@ extends WikiPlugin
             }
         } elseif (empty($args['s'])) {
             // List all pages to select from.
-            $this->collectPages($this->_list, &$dbi);
+            $this->collectPages($this->_list, $dbi);
         }
         $pagelist = new PageList_Selectable($info
                                             ? 'checkbox,' . $info
@@ -178,6 +178,11 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2003/01/18 22:14:29  carstenklapp
+// Code cleanup:
+// Reformatting & tabs to spaces;
+// Added copyleft, getVersion, getDescription, rcs_id.
+//
 
 // Local Variables:
 // mode: php

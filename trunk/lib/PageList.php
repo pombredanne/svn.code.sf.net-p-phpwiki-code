@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.42 2002-10-31 03:28:30 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.43 2003-02-22 20:49:55 dairiki Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -48,7 +48,7 @@ class _PageList_Column_base {
     function format ($pagelist, $page_handle, &$revision_handle) {
         return HTML::td($this->_tdattr,
                         HTML::raw('&nbsp;'),
-                        $this->_getValue($page_handle, &$revision_handle),
+                        $this->_getValue($page_handle, $revision_handle),
                         HTML::raw('&nbsp;'));
     }
 
@@ -133,7 +133,7 @@ class _PageList_Column_checkbox extends _PageList_Column {
     function format ($pagelist, $page_handle, &$revision_handle) {
         return HTML::td($this->_tdattr,
                         HTML::raw('&nbsp;'),
-                        $this->_getValue(&$pagelist, $page_handle, &$revision_handle),
+                        $this->_getValue($pagelist, $page_handle, $revision_handle),
                         HTML::raw('&nbsp;'));
     }
 };
@@ -278,7 +278,7 @@ class PageList {
         if (count($this->_columns) > 1) {
             $row = HTML::tr(array('class' => $class));
             foreach ($this->_columns as $col)
-                $row->pushContent($col->format(&$this, $page_handle, $revision_handle));
+                $row->pushContent($col->format($this, $page_handle, $revision_handle));
         }
         else {
             $col = $this->_columns[0];

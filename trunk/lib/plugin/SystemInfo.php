@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SystemInfo.php,v 1.6 2003-02-21 23:01:11 dairiki Exp $');
+rcs_id('$Id: SystemInfo.php,v 1.7 2003-02-22 20:49:56 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -58,7 +58,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getExpire($dbi, $argarray, $request) {
@@ -221,7 +221,7 @@ extends WikiPlugin
             $median = $hits[$median_i];
         else
             $median = $hits[$median_i];
-        $stddev = stddev(&$hits, $total);
+        $stddev = stddev($hits, $total);
 
         $s  = sprintf(_("total hits: %d"), $total);
         $s .= ", " . sprintf(_("max: %d"), $max);
@@ -418,13 +418,13 @@ extends WikiPlugin
                 if (!$desc)
                     $desc = _($arg);
                 $table->pushContent(HTML::tr(HTML::td(HTML::strong($desc . ':')),
-                                             HTML::td(HTML($this->call($arg, &$availableargs)))));
+                                             HTML::td(HTML($this->call($arg, $availableargs)))));
             }
             return $table;
         } else {
             $output = '';
             foreach ($allargs as $arg) {
-                $o = $this->call($arg, &$availableargs);
+                $o = $this->call($arg, $availableargs);
                 if (is_object($o))
                     return $o;
                 else
@@ -515,6 +515,9 @@ function stddev(&$hits, $total = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2003/02/21 23:01:11  dairiki
+// Fixes to support new $basepage argument of WikiPlugin::run().
+//
 // Revision 1.5  2003/01/18 22:08:01  carstenklapp
 // Code cleanup:
 // Reformatting & tabs to spaces;

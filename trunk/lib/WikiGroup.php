@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.4 2003-01-21 04:02:39 zorloc Exp $')
+rcs_id('$Id: WikiGroup.php,v 1.5 2003-02-22 20:49:55 dairiki Exp $')
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -47,7 +47,7 @@ class WikiGroup{
      * $group = &WikiGroup::getGroup($request);
      * @param object $request The global WikiRequest object -- ignored.
      */ 
-    function WikiGroup($request){    
+    function WikiGroup(&$request){    
         return;
     }
 
@@ -76,20 +76,20 @@ class WikiGroup{
     function getGroup($request){
         switch(GROUP_METHOD){
             case GROUP_NONE: 
-                return new GroupNone(&$request);
+                return new GroupNone($request);
                 break;
             case GROUP_WIKIPAGE: 
-                return new GroupWikiPage(&$request);
+                return new GroupWikiPage($request);
                 break;
 #            case GROUP_DB: 
-#                return new GroupDB(&$user, &$request);
+#                return new GroupDB($user, $request);
 #                break;
 #            case GROUP_LDAP: 
-#                return new GroupLDAP(&$user, &$request);
+#                return new GroupLDAP($user, $request);
 #                break;
             default:
                 trigger_error("No GROUP_METHOD defined", E_USER_WARNING);
-                return new WikiGroup(&$request);
+                return new WikiGroup($request);
         }
     }
 
@@ -180,7 +180,7 @@ class GroupNone extends WikiGroup{
      * Ignores the parameter provided.
      * @param object $request The global WikiRequest object - ignored.
      */ 
-    function GroupNone($request){
+    function GroupNone(&$request){
         return;
     }    
 
@@ -235,7 +235,7 @@ class GroupWikiPage extends WikiGroup{
      * Initiallizes the three superclass instance variables
      * @param object $request The global WikiRequest object.
      */ 
-    function GroupWikiPage($request){
+    function GroupWikiPage(&$request){
         $this->request = &$request;
         $this->username = null;
         $this->membership = array();
@@ -354,6 +354,9 @@ class GroupWikiPage extends WikiGroup{
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2003/01/21 04:02:39  zorloc
+// Added Log entry and page footer.
+//
 
 // Local Variables:
 // mode: php
