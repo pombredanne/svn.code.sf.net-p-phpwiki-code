@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.11 2001-12-16 18:33:25 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.12 2001-12-16 19:04:12 dairiki Exp $');
 /**
  */
 
@@ -26,8 +26,7 @@ class _RecentChanges_Formatter
     }
 
     function time ($rev) {
-        // FIXME: Make configurable.
-        return strftime("%l:%M %p", $rev->get('mtime'));
+        return strtolower(strftime("%l:%M %p", $rev->get('mtime')));
     }
 
     function diffURL ($rev) {
@@ -186,8 +185,8 @@ extends _RecentChanges_Formatter
     
     function format_revision ($rev) {
         if ( ($summary = $this->summary($rev)) )
-            $summary = "[" . QElement('b', array('class' => 'wiki:summary'), $summary) . "]";
-
+            $summary = QElement('b', array('class' => 'wiki:summary'), "[$summary]");
+        
         $class = 'rc-' . $this->importance($rev);
         
         return Element('li', array('class' => $class),
