@@ -23,7 +23,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.0-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.25 2001-11-09 16:25:02 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.26 2001-11-09 18:58:42 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -347,13 +347,13 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
 //define('SERVER_PORT', 80);
 
 /*
- * Absolute URL (from the server root) of the PhpWiki
+ * Relative URL (from the server root) of the PhpWiki
  * script.
  */
 //define('SCRIPT_NAME', '/some/where/index.php');
 
 /*
- * Absolute URL (from the server root) of the directory
+ * Relative URL (from the server root) of the directory
  * in which relative URL's for images and other support files
  * are interpreted.
  */
