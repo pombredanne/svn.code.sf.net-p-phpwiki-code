@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.133 2004-04-20 18:10:31 rurban Exp $');
+rcs_id('$Id: main.php,v 1.134 2004-04-23 06:46:37 zorloc Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -472,7 +472,7 @@ class WikiRequest extends Request {
             exit();        // just in case CloseDataBase calls us
         $in_exit = true;
 
-        if (!empty($this->_dbi))
+        if (!empty($this->_dbi) && !USE_DB_SESSION)
             $this->_dbi->close();
         unset($this->_dbi);
 
@@ -882,6 +882,14 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.133  2004/04/20 18:10:31  rurban
+// config refactoring:
+//   FileFinder is needed for WikiFarm scripts calling index.php
+//   config run-time calls moved to lib/IniConfig.php:fix_configs()
+//   added PHPWIKI_DIR smart-detection code (Theme finder)
+//   moved FileFind to lib/FileFinder.php
+//   cleaned lib/config.php
+//
 // Revision 1.132  2004/04/19 21:51:41  rurban
 // php5 compatibility: it works!
 //
