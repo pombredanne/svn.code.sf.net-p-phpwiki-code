@@ -1,0 +1,53 @@
+
+Installing phpwiki with mySQL 
+-----------------------------
+
+This assumes that you have a working mySQL server and client setup.
+Installing mySQL is beyond the scope of this document.
+For more information on mySQL go to http://www.mysql.org/
+
+1. If you do not have a suitable database already, create one.
+
+	mysqladmin -uuser -ppaswword create phpwiki
+
+2. If necessary create a user for that database which has the rights to
+   select, insert, update, delete. A mySQL grant statment for this user
+   would look like this:
+    
+	GRANT select, insert, update, delete
+	ON phpwiki.*
+	TO wikiuser@localhost
+	IDENTIFIED BY 'password';
+
+3. Create tables inside your database.
+
+	CREATE table wiki (
+		page varchar(100) primary key,
+		data mediumtext);
+
+	CREATE table archive (
+		page varchar(100) primary key,
+		data mediumtext);
+
+4. Edit wiki_config.php3 to reflect your settings.
+
+	a) comment out the DBM settings
+	b) uncomment the mySQL settings
+	c) set $mysql_user to "wikiuser" as used in step 2
+	d) set $mysql_pwd to "password" as used in step 2
+	e) set $mysql_db to "phpwiki" as used in step 1
+	f) set MAX_DBM_ATTEMPTS to a low number or to '1'.
+	   Retrying has not much sense when using mySQL.
+	   I use a value of 2.
+
+
+That's it. phpwiki should now work.
+
+If you run into problems then check that your mySQL-user has
+the necessary access rights for the phpwiki tables.
+
+
+/Arno
+ahollosi@iname.com
+
+Last modified: 2000-04-15
