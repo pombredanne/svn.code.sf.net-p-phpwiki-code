@@ -1,7 +1,7 @@
-From hostmaster@dairiki.org  Sat Feb 10 21:28:19 2001
+From hostmaster@dairiki.org  Sun Jan 6 22:07:14 2002
 Subject: PhpWikiAdministration
 From: hostmaster@dairiki.org (PhpWiki)
-Date: Sat, 10 Feb 2001 20:11:14 -0800
+Date: Sun, 6 Jan 2002 22:07:14 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.1.x)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiAdministration;
@@ -19,6 +19,12 @@ __[Log In | phpwiki:?action=login]__
 This allows you to login.
 While you are logged in you will be able to ''lock'', ''unlock'' and ''delete'' pages.
 You will also be able edit ''locked'' pages.
+
+----------
+!! Cleanup
+A Wiki SandBox is very easy to clean. Here you can restore it to pristine condition by loading the default from pgsrc:
+
+[ Rake the SandBox | phpwiki:?action=loadfile&source=pgsrc/SandBox ].
 
 ----------
 
