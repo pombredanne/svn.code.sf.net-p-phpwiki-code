@@ -1261,13 +1261,15 @@ msgstr "Eingetrage Benutzer in diesem Wiki (Gesamt: %d):"
 
 #: ../lib/plugin/AuthorHistory.php:70
 msgid "AuthorHistory"
-msgstr "AuthorHistory"
+msgstr "AutorenProtokoll"
 
 #: ../lib/plugin/AuthorHistory.php:74
 msgid ""
 "List all page revisions edited by one user with diff links, or show a "
 "PageHistory-like list of a single page for only one user."
 msgstr ""
+"Liste aller Versionen eines Autors mit Diff-Links, oder eine SeitenProtokoll"
+"-ähnliche Liste einer Seite nur für einen Autor."
 
 #: ../lib/plugin/AuthorHistory.php:124 ../lib/plugin/AuthorHistory.php:177
 msgid "Minor"
@@ -1289,25 +1291,25 @@ msgstr "Geändert"
 #: ../lib/plugin/AuthorHistory.php:156
 #, c-format
 msgid "History of all major and minor edits by %s to page %s."
-msgstr "Abfolge aller großen und kleinen Änderungen von %s der Seite %s."
+msgstr "Verlaufsprotokoll aller großen und kleinen Änderungen von %s der Seite %s."
 
 #: ../lib/plugin/AuthorHistory.php:156
 #, c-format
 msgid "History of all major edits by %s to page %s."
-msgstr "Abfolge aller großen Änderungen von %s der Seite %s."
+msgstr "Verlaufsprotokoll aller großen Änderungen von %s der Seite %s."
 
 #: ../lib/plugin/AuthorHistory.php:218
 #, c-format
 msgid "History of all major and minor modifications for any page edited by %s."
 msgstr ""
-"Abfolge aller großen und kleinen Änderungen aller Seiten, die von %s "
+"Verlaufsprotokoll aller großen und kleinen Änderungen aller Seiten, die von %s "
 "bearbeitet wurden."
 
 #: ../lib/plugin/AuthorHistory.php:218
 #, c-format
 msgid "History of major modifications for any page edited by %s."
 msgstr ""
-"Abfolge aller großen Änderungen aller Seiten, die von %s bearbeitet wurden."
+"Verlaufsprotokoll aller großen Änderungen aller Seiten, die von %s bearbeitet wurden."
 
 #: ../lib/plugin/BackLinks.php:35
 #, c-format
