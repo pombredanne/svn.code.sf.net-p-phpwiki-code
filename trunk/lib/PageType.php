@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageType.php,v 1.3 2002-02-18 09:27:09 carstenklapp Exp $');
+<?php rcs_id('$Id: PageType.php,v 1.4 2002-02-18 23:17:47 carstenklapp Exp $');
 /*
 Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -48,9 +48,6 @@ function PageType(&$rev, $pagename = false, $markup = false) {
         }
         $text = $rev;
     }
-    //echo $ContentTemplateName; //debugging
-    //echo $text; //debugging
-
 
     // PageType currently only works with InterWikiMap.
     // Once a contentType field has been implemented in the
@@ -80,10 +77,34 @@ class PageType {
     /**
      * This is a simple WikiPage
      */
-    //var $_content = "";
+    var $_content = "";
+    var $_markup = false;
+    var $_divs = array();
 
     function PageType (&$content, $markup) {
-        $this->_html = TransformText($content, $markup);
+        $this->_content = $content;
+        $this->_markup = $markup;
+        $this->_html = HTML();
+
+        $this->_defineSections();
+        $this->_populateSections();
+    }
+
+    function _defineSections() {
+        // section_id => ('css_class', $this->_section_function)
+        $this->_divs = array('wikitext' => array('wikitext', $this->_extractText()));
+    }
+
+    function _populateSections() {
+        foreach ($this->_divs as $section => $data) {
+            list($class, $function) = $data;
+            $this->_html->pushContent(HTML::div(array('class' => $class), $function));
+        }
+
+    }
+
+    function _extractText() {
+        return TransformText($this->_content, $this->_markup);
     }
 
     function getContent() {
@@ -93,28 +114,12 @@ class PageType {
 
 
 class interWikiMapPageType extends PageType {
-    var $_content = "";
 
-    function interWikiMapPageType($content, $markup) {
-        //echo $content; //debugging
-        $this->_content = $content;
-        $this->markup = $markup;
-        $this->_html = HTML();
-
-//        $this->_html->pushContent($this->_extractText());
-//        $this->_html->pushContent($this->_getMap());
-
-        $divs = array('interwikimap-header' => $this->_extractStartText(),
-                      'interwikimap'        => $this->_getMap(),
-                      'interwikimap-footer' => $this->_extractEndText());
-
-        foreach ($divs as $class => $function)
-            $this->_html->pushContent(HTML::div(array('class' => $class), $function));
-
-    }
-
-    function getContent() {
-        return $this->_html;
+    function _defineSections() {
+        // section_id => ('css_class', $this->_section_function)
+        $this->_divs = array('interwikimap-header' => array('wikitext', $this->_extractStartText()),
+                             'interwikimap'        => array('wikitext', $this->_getMap()),
+                             'interwikimap-footer' => array('wikitext', $this->_extractEndText()));
     }
 
     function _getMap() {
@@ -147,11 +152,10 @@ class interWikiMapPageType extends PageType {
         $v = strpos($this->_content, "<verbatim>");
         if ($v) {
             list($wikitext, $cruft) = explode("<verbatim>", $this->_content);
-            //echo $cruft; //debugging
         } else {
             $wikitext = $this->_content;
         }
-        return TransformText($wikitext, $this->markup);
+        return TransformText($wikitext, $this->_markup);
     }
 
     function _extractEndText() {
@@ -159,8 +163,7 @@ class interWikiMapPageType extends PageType {
         $v = strpos($this->_content, "</verbatim>");
         if ($v) {
             list($cruft, $endtext) = explode("</verbatim>", $this->_content);
-            //echo $cruft; //debugging
-            return TransformText($endtext, $this->markup);
+            return TransformText($endtext, $this->_markup);
         } else {
             return "";
         }
