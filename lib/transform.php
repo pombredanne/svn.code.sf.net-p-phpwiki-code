@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.17 2001-02-15 21:37:08 dairiki Exp $');
+<?php rcs_id('$Id: transform.php,v 1.18 2001-03-02 00:24:17 dairiki Exp $');
 
 define('WT_SIMPLE_MARKUP', 0);
 define('WT_TOKENIZER', 1);
@@ -32,19 +32,33 @@ class WikiTransform
 		  line matches the $regexp.
 	
    function SetHTMLMode($tag, $tagtype, $level)
-	Wiki HTML output can, at any given time, be in only one mode.
-	It will be something like Unordered List, Preformatted Text,
-	plain text etc. When we change modes we have to issue close tags
-	for one mode and start tags for another.
-	SetHTMLMode takes care of this.
+        This is a helper function used to keep track of what HTML
+	block-level element we are currently processing.
+	Block-level elements are things like paragraphs "<p>",
+	pre-formatted text "<pre>", and the various list elements:
+	"<ul>", "<ol>" and "<dl>".  Note that some of these elements
+	can be nested, while others can not.  (In particular, according to
+	the HTML 4.01 specification,  a paragraph "<p>" element is not
+	allowed to contain any other block-level elements.  Also <pre>,
+	<li>,  <dt>, <dd>, <h1> ... have this same restriction.)
 
-	$tag ... HTML tag to insert
-	         If $tag is an array, first element give tag, second element
-		 is a hash containing arguments for the tag.
-	$tagtype ... ZERO_LEVEL - close all open tags before inserting $tag
-		     NESTED_LEVEL - close tags until depths match
-	$level ... nesting level (depth) of $tag
-		   nesting is arbitrary limited to 10 levels
+	SetHTMLMode generates whatever HTML is necessary to get us into
+	the requested element type at the requested nesting level.
+
+	$tag ... type of HTML element to open.
+            If $tag is an array, $tag[0] gives the element type,
+	    and $tag[1] should be a hash containing attribute-value
+	    pairs for the element.
+
+	    If $tag is the empty string, all open elements (down to the
+	    level requested by $level) are closed.  Use
+	    SetHTMLMode('',0) to close all open block-level elements.
+                  
+	$level ... requested nesting level for current element.
+	    The nesting level for top level block is one (which is
+	    the default).
+
+ 	    Nesting is arbitrary limited to 10 levels
 
    function do_transform($html, $content)
 	contains main-loop and calls transformer functions
@@ -81,7 +95,7 @@ class WikiTransform
    
    // sets current mode like list, preformatted text, plain text, ...
    // takes care of closing (open) tags
-   function SetHTMLMode($tag, $tagtype, $level)
+   function SetHTMLMode($tag, $level = 1)
    {
       if (is_array($tag)) {
 	 $args = $tag[1];
@@ -95,60 +109,45 @@ class WikiTransform
 				// to be executed
       $retvar = '';
 	 
-      if ($tagtype == ZERO_LEVEL) {
-         // empty the stack until $level == 0;
-         if ($tag == $this->stack->top()) {
-            return; // same tag? -> nothing to do
-         }
-         while ($this->stack->cnt() > 0) {
-            $closetag = $this->stack->pop();
-            $retvar .= "</$closetag>\n";
-         }
+      if ($level <= $this->stack->cnt()) {
+	 // $tag has fewer nestings (old: tabs) than stack,
+	 // reduce stack to that tab count
+	 while ($this->stack->cnt() > $level) {
+	    $closetag = $this->stack->pop();
+	    assert('$closetag != false');
+	    $retvar .= "</$closetag>\n";
+	 }
+
+	 // if list type isn't the same,
+	 // back up one more and push new tag
+	 if ($tag && $tag != $this->stack->top()) {
+	    $closetag = $this->stack->pop();
+	    $retvar .= "</$closetag>" . StartTag($tag, $args) . "\n";
+	    $this->stack->push($tag);
+	 }
    
-         if ($tag) {
-            $retvar .= StartTag($tag, $args) . "\n";
-            $this->stack->push($tag);
-         }
-
-
-      } elseif ($tagtype == NESTED_LEVEL) {
-         if ($level <= $this->stack->cnt()) {
-            // $tag has fewer nestings (old: tabs) than stack,
-	    // reduce stack to that tab count
-            while ($this->stack->cnt() > $level) {
-               $closetag = $this->stack->pop();
-               if ($closetag == false) {
-                  //echo "bounds error in tag stack";
-                  break;
-               }
-               $retvar .= "</$closetag>\n";
-            }
-
-	    // if list type isn't the same,
-	    // back up one more and push new tag
-	    if ($tag != $this->stack->top()) {
-	       $closetag = $this->stack->pop();
-	       $retvar .= "</$closetag>" . StartTag($tag, $args) . "\n";
-	       $this->stack->push($tag);
+      } else {// $level > $this->stack->cnt()
+	 // Test for and close top level elements which are not allowed to contain
+	 // other block-level elements.
+	 if ($this->stack->cnt() == 1 and
+	     preg_match('/^(p|pre|h\d)$/i', $this->stack->top()))
+	 {
+	    $closetag = $this->stack->pop();
+	    $retvar .= "</$closetag>";
+	 }
+	       
+	 // we add the diff to the stack
+	 // stack might be zero
+	 while ($this->stack->cnt() < $level) {
+	    $retvar .= StartTag($tag, $args) . "\n";
+	    $this->stack->push($tag);
+	    if ($this->stack->cnt() > 10) {
+	       // arbitrarily limit tag nesting
+	       ExitWiki(gettext ("Stack bounds exceeded in SetHTMLOutputMode"));
 	    }
-   
-         } else { // $level > $this->stack->cnt()
-            // we add the diff to the stack
-            // stack might be zero
-            while ($this->stack->cnt() < $level) {
-               $retvar .= StartTag($tag, $args) . "\n";
-               $this->stack->push($tag);
-               if ($this->stack->cnt() > 10) {
-                  // arbitrarily limit tag nesting
-                  ExitWiki(gettext ("Stack bounds exceeded in SetHTMLOutputMode"));
-               }
-            }
          }
-
-      } else { // unknown $tagtype
-         ExitWiki ("Passed bad tag type value in SetHTMLOutputMode");
       }
-
+      
       return $this->token($retvar);
    }
    // end SetHTMLMode
@@ -172,9 +171,9 @@ class WikiTransform
 	 $this->linenumber = $lnum;
 	 $line = $this->content[$lnum];
 
-	 // blank lines clear the current mode
+	 // blank lines clear the current mode (to force new paragraph)
 	 if (!strlen($line) || $line == "\r") {
-            $html .= $this->SetHTMLMode('', ZERO_LEVEL, 0);
+            $html .= $this->SetHTMLMode('', 0);
             continue;
 	 }
 
@@ -205,7 +204,7 @@ class WikiTransform
 	 $html .= $line . "\n";
       }
       // close all tags
-      $html .= $this->SetHTMLMode('', ZERO_LEVEL, 0);
+      $html .= $this->SetHTMLMode('', 0);
 
       return $this->untokenize($html);
    }
@@ -485,10 +484,10 @@ function wtt_bumpylinks($match, &$trfrm)
    // unordered lists <UL>: "*"
    // has to be registereed before list OL
    function wtm_list_ul($line, &$trfrm) {
-      if (preg_match("/^([#*]*\*)[^#]/", $line, $matches)) {
+      if (preg_match("/^([#*;]*\*)[^#]/", $line, $matches)) {
          $numtabs = strlen($matches[1]);
          $line = preg_replace("/^([#*]*\*)/", '', $line);
-         $html = $trfrm->SetHTMLMode('ul', NESTED_LEVEL, $numtabs) . '<li>';
+         $html = $trfrm->SetHTMLMode('ul', $numtabs) . '<li>';
          $line = $html . $line;
       }
       return $line;
@@ -496,10 +495,10 @@ function wtt_bumpylinks($match, &$trfrm)
 
    // ordered lists <OL>: "#"
    function wtm_list_ol($line, &$trfrm) {
-      if (preg_match("/^([#*]*\#)/", $line, $matches)) {
+      if (preg_match("/^([#*;]*\#)/", $line, $matches)) {
          $numtabs = strlen($matches[1]);
          $line = preg_replace("/^([#*]*\#)/", "", $line);
-         $html = $trfrm->SetHTMLMode('ol', NESTED_LEVEL, $numtabs) . '<li>';
+         $html = $trfrm->SetHTMLMode('ol', $numtabs) . '<li>';
          $line = $html . $line;
       }
       return $line;
@@ -508,11 +507,11 @@ function wtt_bumpylinks($match, &$trfrm)
 
    // definition lists <DL>: ";text:text"
    function wtm_list_dl($line, &$trfrm) {
-      if (preg_match("/(^;+)(.*?):(.*$)/", $line, $matches)) {
+      if (preg_match("/^([#*;]*;)(.*?):(.*$)/", $line, $matches)) {
          $numtabs = strlen($matches[1]);
-         $line = $trfrm->SetHTMLMode('dl', NESTED_LEVEL, $numtabs);
+         $line = $trfrm->SetHTMLMode('dl', $numtabs);
 	 if(trim($matches[2]))
-            $line = '<dt>' . $matches[2];
+            $line .= '<dt>' . $matches[2];
 	 $line .= '<dd>' . $matches[3];
       }
       return $line;
@@ -521,7 +520,7 @@ function wtt_bumpylinks($match, &$trfrm)
    // mode: preformatted text, i.e. <pre>
    function wtm_preformatted($line, &$trfrm) {
       if (preg_match("/^\s+/", $line)) {
-         $line = $trfrm->SetHTMLMode('pre', ZERO_LEVEL, 0) . $line;
+         $line = $trfrm->SetHTMLMode('pre') . $line;
       }
       return $line;
    }
@@ -534,7 +533,7 @@ function wtt_bumpylinks($match, &$trfrm)
 	 elseif($whichheading[1] == '!!') $heading = 'h2';
 	 elseif($whichheading[1] == '!!!') $heading = 'h1';
 	 $line = preg_replace("/^!+/", '', $line);
-	 $line = $trfrm->SetHTMLMode($heading, ZERO_LEVEL, 0) . $line;
+	 $line = $trfrm->SetHTMLMode($heading) . $line;
       }
       return $line;
    }
@@ -571,8 +570,7 @@ function wtm_table($line, &$trfrm)
 				    array('align' => 'center',
 					  'cellpadding' => 1,
 					  'cellspacing' => 1,
-					  'border' => 1)),
-			      ZERO_LEVEL, 0) .
+					  'border' => 1))) .
       $row;
 }
 
@@ -581,16 +579,16 @@ function wtm_table($line, &$trfrm)
    // allowed within <p>'s. (e.g. "<p><hr></p>" is not valid HTML.)
    function wtm_hr($line, &$trfrm) {
       if (preg_match('/^-{4,}(.*)$/', $line, $m)) {
-	 $line = $trfrm->SetHTMLMode('', ZERO_LEVEL, 0) . '<hr>';
+	 $line = $trfrm->SetHTMLMode('', 0) . '<hr>';
 	 if ($m[1])
-	    $line .= $trfrm->SetHTMLMode('p', ZERO_LEVEL, 0) . $m[1];
+	    $line .= $trfrm->SetHTMLMode('p') . $m[1];
       }
       return $line;
    }
 
    // default mode: simple text paragraph
    function wtm_paragraph($line, &$trfrm) {
-      $line = $trfrm->SetHTMLMode('p', ZERO_LEVEL, 0) . $line;
+      $line = $trfrm->SetHTMLMode('p') . $line;
       return $line;
    }
 
