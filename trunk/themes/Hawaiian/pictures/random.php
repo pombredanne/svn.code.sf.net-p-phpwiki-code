@@ -1,34 +1,38 @@
 <?php
 
-rcs_id('$Id: random.php,v 1.1 2002-01-01 06:24:50 carstenklapp Exp $');
+rcs_id('$Id: random.php,v 1.2 2002-01-02 00:14:51 carstenklapp Exp $');
 
 // mt_srand ((double) microtime() * 1000000 / pi()); #not random enough
 // Hmm is this random enough?
 // see http://download.php.net/manual/en/function.srand.php
 
 
-$pictures = array(
-    "SwimmingPoolWater.jpg",
-    "LoihiSeamount.jpg",
-    "Coastline.jpg",
-    "LavaTwilight.jpg",
-    "SubmersiblePiscesV.jpg",
-    "HawaiiMauiFromSpace.jpg",
+$RandomPictures = array(
     "BeachPalmDusk.jpg",
-    "WhaleRainbow.jpg",
+    "Coastline.jpg",
+    "HawaiiMauiFromSpace.jpg",
+    "LavaTwilight.jpg",
+    "LoihiSeamount.jpg",
     "SteamVolcanoDusk.jpg",
-    "Waterfall.jpg"
+    "SubmersiblePiscesV.jpg",
+    "SwimmingPoolWater.jpg",
+    "Waterfall.jpg",
+    "WhaleRainbow.jpg",
 );
-function my_srand($seed = '') {
-    static $wascalled = FALSE;
-    if (!$wascalled){
-        $seed = $seed === '' ? (double) microtime() * 1000000 : $seed;
-        srand($seed);
-        $wascalled = TRUE;
+
+if isset($RandomPictures) {
+    function my_srand($seed = '') {
+        static $wascalled = FALSE;
+            if (!$wascalled) {
+                $seed = $seed === '' ? (double) microtime() * 1000000 : $seed;
+                srand($seed);
+                $wascalled = TRUE;
+            }
     }
+
+    my_srand();
+    $SignatureImg = "themes/$theme/pictures/".$pictures[mt_rand(0,count($RandomPictures)-1)];
 }
-my_srand();
-$SignatureImg = "themes/$theme/pictures/".$pictures[mt_rand(0,9)];
 
 // (c-file-style: "gnu")
 // Local Variables:
