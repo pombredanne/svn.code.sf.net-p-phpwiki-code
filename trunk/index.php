@@ -80,7 +80,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.70 2002-01-20 18:19:25 rurban Exp $');
+rcs_id('$Id: index.php,v 1.71 2002-01-20 19:02:00 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
