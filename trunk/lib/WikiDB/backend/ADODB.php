@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.63 2004-12-08 12:55:51 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.64 2004-12-10 02:45:27 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -35,6 +35,7 @@ rcs_id('$Id: ADODB.php,v 1.63 2004-12-08 12:55:51 rurban Exp $');
  *    The first Execute uses the global fetchMode (ASSOC), then it's resetted back to NUM 
  *    and the recordset fetchmode is set to ASSOC.
  * 5) Transaction support, and locking as fallback.
+ * 6) 2004-12-10 added extra page.cached_html
  *
  * phpwiki-1.3.11, by Philippe Vanhaesendonck
  * - pass column list to iterators so we can FETCH_NUM in all cases
@@ -128,7 +129,8 @@ extends WikiDB_backend
         if (!$this->_dbh)
             return;
         if ($this->_lock_count) {
-            trigger_error("WARNING: database still locked " . '(lock_count = $this->_lock_count)' . "\n<br />",
+            trigger_error("WARNING: database still locked " . 
+                          '(lock_count = $this->_lock_count)' . "\n<br />",
                           E_USER_WARNING);
         }
 //      $this->_dbh->setErrorHandling(PEAR_ERROR_PRINT);        // prevent recursive loops.
@@ -242,6 +244,23 @@ extends WikiDB_backend
             $dbh->RollbackTrans( );
             return false;
         }
+    }
+
+    function get_cached_html($pagename) {
+        $dbh = &$this->_dbh;
+        $page_tbl = $this->_table_names['page_tbl'];
+        $row = $dbh->GetRow(sprintf("SELECT cached_html FROM $page_tbl WHERE pagename=%s",
+                                    $dbh->qstr($pagename)));
+        return $row ? $row[0] : false;
+    }
+
+    function set_cached_html($pagename, $data) {
+        $dbh = &$this->_dbh;
+        $page_tbl = $this->_table_names['page_tbl'];
+        $rs = $dbh->Execute("UPDATE $page_tbl"
+                            . " SET cached_html=?"
+                            . " WHERE pagename=?",
+                            array($data, $pagename));
     }
 
     function _get_pageid($pagename, $create_if_missing = false) {
@@ -1366,6 +1385,9 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.63  2004/12/08 12:55:51  rurban
+// support new non-destructive delete_page via generic backend method
+//
 // Revision 1.62  2004/12/06 19:50:04  rurban
 // enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
 // renamed delete_page to purge_page.

@@ -1,10 +1,12 @@
--- $Id: mysql-initialize.sql,v 1.3 2004-11-07 16:04:54 rurban Exp $
+-- $Id: mysql-initialize.sql,v 1.4 2004-12-10 02:45:27 rurban Exp $
 
 CREATE TABLE page (
 	id              INT NOT NULL AUTO_INCREMENT,
         pagename        VARCHAR(100) BINARY NOT NULL,
 	hits            INT NOT NULL DEFAULT 0,
         pagedata        MEDIUMTEXT NOT NULL DEFAULT '',
+-- dont add that by hand, better let action=upgrade convert your data
+	cached_html 	MEDIUMBLOB,
         PRIMARY KEY (id),
 	UNIQUE KEY (pagename)
 );

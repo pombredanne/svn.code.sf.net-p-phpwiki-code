@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.30 2004-11-29 17:58:57 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.31 2004-12-10 02:45:26 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -342,8 +342,9 @@ CREATE TABLE $log_tbl (
 }
 
 /**
- * currently update only session, user, pref and member
- * jeffs-hacks database api (around 1.3.2) later
+ * update from ~1.3.4 to current.
+ * only session, user, pref and member
+ * jeffs-hacks database api (around 1.3.2) later:
  *   people should export/import their pages if using that old versions.
  */
 function CheckDatabaseUpdate(&$request) {
@@ -367,6 +368,7 @@ function CheckDatabaseUpdate(&$request) {
     } else {
         $dbh = &$request->_dbi;
     }
+
     $tables = $dbh->_backend->listOfTables();
     $backend_type = $dbh->_backend->backendType();
     $prefix = isset($DBParams['prefix']) ? $DBParams['prefix'] : '';
@@ -388,6 +390,7 @@ function CheckDatabaseUpdate(&$request) {
         }
     }
     $backend = &$dbh->_backend->_dbh;
+
     // 1.3.8 added session.sess_ip
     if (phpwiki_version() >= 1030.08 and USE_DB_SESSION and isset($request->_dbsession)) {
   	echo _("check for new session.sess_ip column")," ... ";
@@ -405,6 +408,7 @@ function CheckDatabaseUpdate(&$request) {
         }
         echo "<br />\n";
     }
+
     // 1.3.10 mysql requires page.id auto_increment
     // mysql, mysqli or mysqlt
     if (phpwiki_version() >= 1030.099 and substr($backend_type,0,5) == 'mysql') {
@@ -429,13 +433,14 @@ function CheckDatabaseUpdate(&$request) {
                     else     
                         echo _("OK"), "<br />\n";
             	} else {
-                    echo _("OK"), "<br />\n";            		
+                    echo _("OK"), "<br />\n";
             	}
             	break;
             }
         }
         mysql_free_result($fields);
     }
+
     // check for mysql 4.1.x/5.0.0a binary search problem.
     //   http://bugs.mysql.com/bug.php?id=4398
     // "select * from page where LOWER(pagename) like '%search%'" does not apply LOWER!
@@ -449,10 +454,47 @@ function CheckDatabaseUpdate(&$request) {
         $arr = explode('.', $mysql_version);
         $version = (string)(($arr[0] * 100) + $arr[1]) . "." . (integer)$arr[2];
         if ($version >= 401.0) {
-            $dbh->genericSqlQuery("ALTER TABLE $page_tbl CHANGE pagename pagename VARCHAR(100) NOT NULL;");
+            $dbh->genericSqlQuery("ALTER TABLE $page_tbl CHANGE pagename pagename VARCHAR(100) NOT NULL");
             echo sprintf(_("version <em>%s</em> <b>FIXED</b>"), $mysql_version),"<br />\n";	
         } else {
             echo sprintf(_("version <em>%s</em> not affected"), $mysql_version),"<br />\n";
+        }
+    }
+
+    // put _cached_html from pagedata into a new seperate blob, not huge serialized string.
+    // it is only rarelely needed: for current page only, if-not-modified
+    // but was extracetd for every simple page iteration.
+    if (phpwiki_version() >= 1030.10) {
+  	echo _("check for extra page.cached_html column")," ... ";
+  	$database = $dbh->_backend->database();
+        extract($dbh->_backend->_table_names);
+        $fields = $dbh->_backend->listOfFields($database, $page_tbl);
+        if (!strstr(strtolower(join(':', $fields)), "cached_html")) {
+            echo "<b>",_("ADDING"),"</b>"," ... ";
+            if (substr($backend_type,0,5) == 'mysql')
+                $dbh->genericSqlQuery("ALTER TABLE $page_tbl ADD cached_html MEDIUMBLOB");
+            else
+                $dbh->genericSqlQuery("ALTER TABLE $page_tbl ADD cached_html BLOB");
+            $pages = $dbh->getAllPages();
+            $cache =& $dbh->_cache;
+            echo "<b>",_("CONVERTING"),"</b>"," ... ";
+            while ($page = $pages->next()) {
+            	$pagename = $page->getName();
+                $data = $dbh->_backend->get_pagedata($pagename);
+                if (!empty($data['_cached_html'])) {
+                    $cached_html = $data['_cached_html'];
+                    $data['_cached_html'] = '';
+                    $cache->update_pagedata($pagename, $data);
+                    //$dbh->_backend->update_cachedhtml($pagename, $cached_html);
+                    // store as blob, not serialized
+                    $dbh->genericSqlQuery(sprintf("UPDATE $page_tbl SET cached_html=%s WHERE pagename=%s",
+                                                  $dbh->quote($cached_html),
+                                                  $dbh->quote($pagename)));
+                }
+            }
+            echo _("OK"), "<br />\n";
+        } else {
+            echo _("OK"), "<br />\n";
         }
     }
     return;
@@ -561,6 +603,9 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.30  2004/11/29 17:58:57  rurban
+ just aesthetics
+
  Revision 1.29  2004/11/29 16:08:31  rurban
  added missing nl
 
