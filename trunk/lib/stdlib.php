@@ -1,5 +1,5 @@
 <?php
-   rcs_id('$Id: stdlib.php,v 1.10 2000-11-08 16:52:00 ahollosi Exp $');
+   rcs_id('$Id: stdlib.php,v 1.11 2000-11-11 12:15:35 ahollosi Exp $');
    /*
       Standard functions for Wiki functionality
          LinkRelatedPages($dbi, $pagename)
@@ -531,7 +531,8 @@
 	 $numBracketLinks = preg_match_all("/\[\s*(.+?)\s*\]/", $line, $brktlinks);
 	 for ($i = 0; $i < $numBracketLinks; $i++) {
 	    $link = ParseAndLink($brktlinks[0][$i]);
-	    if($link['type'] == 'wiki' || $link['type'] == 'wiki-unknown')
+	    if ($link['type'] == 'wiki' || $link['type'] == 'wiki-unknown'
+		|| $link['type'] == 'wiki-named')
 	       $wikilinks[$brktlinks[1][$i]] = 1;
 
             $brktlink = preg_quote($brktlinks[0][$i]);
