@@ -1,4 +1,4 @@
-<?php  rcs_id('$Id: db_filesystem.php,v 1.4.2.3 2001-08-18 02:38:34 dairiki Exp $');
+<?php  rcs_id('$Id: db_filesystem.php,v 1.4.2.4 2001-08-18 05:09:09 dairiki Exp $');
    /*
       Database functions:
 
@@ -41,10 +41,22 @@
       return;
    }
 
-   
+   // Sort of urlencode() the pagename.
+   // We only encode a limited set of characters to minimize breakage
+   // of existing databases.  The encoded names can be decoded with
+   // urldecode.
+   function EncodePagename($pagename) {
+     $bad_chars = '%/\\:'; // '%' must be first!
+      for ($i = 0; $i < strlen($bad_chars); $i++) {
+	 $pagename = str_replace($bad_chars[$i],
+	                         rawurlencode($bad_chars[$i]), $pagename);
+      }
+      return $pagename;
+   }
+
    // Return hash of page + attributes or default
    function RetrievePage($dbi, $pagename, $pagestore) {
-      $filename = $dbi[$pagestore] . "/" . $pagename;
+      $filename = $dbi[$pagestore] . "/" . EncodePagename($pagename);
       if ($fd = @fopen($filename, "rb")) {
          $locked = flock($fd, 1); # Read lock
          if (!$locked) { 
@@ -54,7 +66,7 @@
             // unserialize $data into a hash
             $pagehash = unserialize($data);
 	    if (!is_array($pagehash))
-		ExitWiki(sprintf("'%s': corrupt file",
+		ExitWiki(sprintf(gettext("'%s': corrupt file"),
 				 htmlspecialchars($filename)));
 	 }	
 	 fclose($fd);
@@ -81,7 +93,7 @@
 		 }
 	  }
 
-      $filename = $dbi . "/" . $pagename;
+      $filename = $dbi . "/" . EncodePagename($pagename);
       if($fd = fopen($filename, 'a+b')) { 
          $locked = flock($fd,2); #Exclusive blocking lock 
          if (!$locked) { 
@@ -115,12 +127,12 @@
 
 
    function IsWikiPage($dbi, $pagename) {
-      return file_exists($dbi['wiki'] . "/" . $pagename);
+      return file_exists($dbi['wiki'] . "/" . EncodePagename($pagename));
    }
 
 
    function IsInArchive($dbi, $pagename) {
-      return file_exists($dbi['archive'] . "/" . $pagename);
+      return file_exists($dbi['archive'] . "/" . EncodePagename($pagename));
    }
 
 
@@ -199,6 +211,10 @@
       global $WikiPageStore;
       while (list($key, $page) = each($pos['data'])) {
          $pagedata = RetrievePage($dbi, $page, $WikiPageStore);
+	 if (!is_array($pagedata)) {
+	    printf(gettext("%s: bad data<br>\n"), htmlspecialchars($page));
+	    continue;
+	 }
 	 
 	 while (list($i, $line) = each($pagedata['content'])) {
 	    if (preg_match($pos['search'], $line))
@@ -284,8 +300,15 @@ return;
       $namelist = array();
       $d = opendir($dbi);
       while($entry = readdir($d)) {
-	 if ($entry != '.' && $entry != '..')
-	    $namelist[] = $entry;
+	 if ($entry == '.' || $entry == '..')
+	    continue;
+	 $pagename = rawurldecode($entry);
+	 if ($entry != EncodePagename($pagename)) {
+	    printf(gettext("%s: Bad filename in database<br>\n"),
+		   htmlspecialchars("$dbi/$entry"));
+	    continue;
+	 }
+	 $namelist[] = $pagename;
       }
 
       return $namelist;
