@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.46 2005-02-04 13:25:08 rurban Exp $
+ * $Id: phpwiki.css,v 1.47 2005-02-11 14:49:29 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -281,6 +281,41 @@ textarea.wikiedit {
 .search-term {
   background: yellow;
   font-weight: normal;
+}
+#LSResult {
+  position: absolute;
+  text-align: left;
+  display: none;
+  z-index: 100;
+  background-color: white;
+  border: 1px solid #d0d0d0; 
+  font-size: 9px;
+  overflow: hidden;
+}
+#LSHighlight {
+  background-color: #f08000;
+}
+#LSResult .evenrow {
+  background-color: #f0f0f0;
+} 
+#LSREsult .oddrow {
+} 
+.LSEnd {
+  text-align: right;
+}
+.LSRow:hover {
+  background-color: white;
+}
+.LSRow {
+  padding: 1px;
+} 
+ul.LSRes {
+  margin: 0px;
+  padding: 0px;
+}
+li.LSRow {
+  margin: 0px;
+  list-style-image: none;
 }
 
 /* IncludePage plugin */

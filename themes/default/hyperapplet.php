@@ -14,7 +14,7 @@ global $WikiTheme;
         width="160" height="360">
 <?php // the dynamic version: ?>
   <!--param name="file" value="<?= WikiURL("LinkDatabase", array('format'=>'xml')) ?>" /-->
-<?php // the faster static version: ?>
+<?php // The faster static version: dump it periodically ?>
   <param name="file" value="<?= $WikiTheme->_finddata("LinkDatabase.xml") ?>" />
   <!--param name="properties" value="<?= $WikiTheme->_finddata("hwiki.prop") ?>" /-->
   <param name="center" value="<?= $page->getName() ?>" />
