@@ -677,6 +677,11 @@ msgstr ""
 msgid "Describe %s here."
 msgstr "Describe %s aquí."
 
+#: ../lib/WikiDB.php:872
+#, c-format
+msgid "Acck! Revision %s of %s seems to have been deleted!"
+msgstr ""
+
 #: ../lib/WikiPlugin.php:64
 #, c-format
 msgid "argument '%s' not declared by plugin"
