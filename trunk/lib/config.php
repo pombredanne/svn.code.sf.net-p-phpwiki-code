@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.115 2004-06-20 14:42:54 rurban Exp $');
+rcs_id('$Id: config.php,v 1.116 2004-06-21 08:39:37 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -24,9 +24,10 @@ define ('_DEBUG_TRACE',     8);
 define ('_DEBUG_INFO',     16);
 define ('_DEBUG_APD',      32);
 
-//hmm, this is not true for apache2/php5! There CGI/1.1 is defined even with the php sapi module.
 function isCGI() {
-    return @preg_match('/CGI/',$GLOBALS['HTTP_ENV_VARS']['GATEWAY_INTERFACE']);
+    return (substr(php_sapi_name(),0,3) == 'cgi' and 
+            isset($GLOBALS['HTTP_ENV_VARS']['GATEWAY_INTERFACE']) and
+            @preg_match('/CGI/',$GLOBALS['HTTP_ENV_VARS']['GATEWAY_INTERFACE']));
 }
 
 /*
@@ -326,6 +327,9 @@ if (!function_exists('is_scalar')) { // lib/stdlib.php:hash()
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.115  2004/06/20 14:42:54  rurban
+// various php5 fixes (still broken at blockparser)
+//
 // Revision 1.114  2004/06/19 11:48:05  rurban
 // moved version check forwards: already needed in XmlElement::_quote
 //

@@ -18,7 +18,7 @@
 // |          Tomas V.V.Cox <cox@idecnet.com>                             |
 // +----------------------------------------------------------------------+
 //
-rcs_id('$Id: PEAR.php,v 1.3 2004-06-20 15:30:06 rurban Exp $');
+rcs_id('$Id: PEAR.php,v 1.4 2004-06-21 08:39:37 rurban Exp $');
 rcs_id('From Pear CVS: Id: PEAR.php,v 1.59 2003/04/03 23:10:10 ssb Exp');
 //
 
@@ -839,7 +839,7 @@ class PEAR_Error
      */
     function getType()
     {
-        return strtolower(get_class($this));
+        return get_class($this);
     }
 
     // }}}

@@ -13,24 +13,29 @@
 // | obtain it through the world-wide-web, please send a note to          |
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
-// | Author: Sterling Hughes <sterling@php.net>                           |
+// | Author: Tomas V.V.Cox <cox@idecnet.com>                              |
 // | Maintainer: Daniel Convissor <danielc@php.net>                       |
 // +----------------------------------------------------------------------+
 //
-// $Id: msql.php,v 1.3 2004-06-21 08:39:38 rurban Exp $
+// $Id: dbase.php,v 1.1 2004-06-21 08:39:38 rurban Exp $
+
+
+// XXX legend:
+//  You have to compile your PHP with the --enable-dbase option
+
 
 require_once 'DB/common.php';
 
 /**
- * Database independent query interface definition for PHP's Mini-SQL
+ * Database independent query interface definition for PHP's dbase
  * extension.
  *
  * @package  DB
- * @version  $Id: msql.php,v 1.3 2004-06-21 08:39:38 rurban Exp $
+ * @version  $Id: dbase.php,v 1.1 2004-06-21 08:39:38 rurban Exp $
  * @category Database
- * @author   Sterling Hughes <sterling@php.net>
+ * @author   Stig Bakken <ssb@php.net>
  */
-class DB_msql extends DB_common
+class DB_dbase extends DB_common
 {
     // {{{ properties
 
@@ -38,21 +43,29 @@ class DB_msql extends DB_common
     var $phptype, $dbsyntax;
     var $prepare_tokens = array();
     var $prepare_types = array();
+    var $res_row = array();
+    var $result = 0;
 
     // }}}
     // {{{ constructor
 
-    function DB_msql()
+    /**
+     * DB_mysql constructor.
+     *
+     * @access public
+     */
+    function DB_dbase()
     {
         $this->DB_common();
-        $this->phptype = 'msql';
-        $this->dbsyntax = 'msql';
+        $this->phptype = 'dbase';
+        $this->dbsyntax = 'dbase';
         $this->features = array(
-            'prepare' => false,
-            'pconnect' => true,
-            'transactions' => false,
-            'limit' => 'emulate'
+            'prepare'       => false,
+            'pconnect'      => false,
+            'transactions'  => false,
+            'limit'         => false
         );
+        $this->errorcode_map = array();
     }
 
     // }}}
@@ -60,28 +73,17 @@ class DB_msql extends DB_common
 
     function connect($dsninfo, $persistent = false)
     {
-        if (!DB::assertExtension('msql')) {
+        if (!DB::assertExtension('dbase')) {
             return $this->raiseError(DB_ERROR_EXTENSION_NOT_FOUND);
         }
-
         $this->dsn = $dsninfo;
-        $dbhost = $dsninfo['hostspec'] ? $dsninfo['hostspec'] : 'localhost';
-
-        $connect_function = $persistent ? 'msql_pconnect' : 'msql_connect';
-
-        if ($dbhost && $dsninfo['username'] && $dsninfo['password']) {
-            $conn = $connect_function($dbhost, $dsninfo['username'],
-                                      $dsninfo['password']);
-        } elseif ($dbhost && $dsninfo['username']) {
-            $conn = $connect_function($dbhost, $dsninfo['username']);
-        } else {
-            $conn = $connect_function($dbhost);
-        }
+        ob_start();
+        $conn  = @dbase_open($dsninfo['database'], 0);
+        $error = ob_get_contents();
+        ob_end_clean();
         if (!$conn) {
-            $this->raiseError(DB_ERROR_CONNECT_FAILED);
-        }
-        if (!@msql_select_db($dsninfo['database'], $conn)){
-            return $this->raiseError(DB_ERROR_NODBSELECTED);
+            return $this->raiseError(DB_ERROR_CONNECT_FAILED, null,
+                                     null, null, strip_tags($error));
         }
         $this->connection = $conn;
         return DB_OK;
@@ -92,43 +94,20 @@ class DB_msql extends DB_common
 
     function disconnect()
     {
-        $ret = @msql_close($this->connection);
+        $ret = @dbase_close($this->connection);
         $this->connection = null;
         return $ret;
     }
 
     // }}}
-    // {{{ simpleQuery()
+    // {{{ &query()
 
-    function simpleQuery($query)
+    function &query($query = null)
     {
-        $this->last_query = $query;
-        $query = $this->modifyQuery($query);
-        $result = @msql_query($query, $this->connection);
-        if (!$result) {
-            return $this->raiseError();
-        }
-        // Determine which queries that should return data, and which
-        // should return an error code only.
-        return DB::isManip($query) ? DB_OK : $result;
-    }
-
-
-    // }}}
-    // {{{ nextResult()
-
-    /**
-     * Move the internal msql result pointer to the next available result
-     *
-     * @param a valid fbsql result resource
-     *
-     * @access public
-     *
-     * @return true if a result is available otherwise return false
-     */
-    function nextResult($result)
-    {
-        return false;
+        // emulate result resources
+        $this->res_row[$this->result] = 0;
+        $tmp =& new DB_result($this, $this->result++);
+        return $tmp;
     }
 
     // }}}
@@ -154,25 +133,19 @@ class DB_msql extends DB_common
      */
     function fetchInto($result, &$arr, $fetchmode, $rownum=null)
     {
-        if ($rownum !== null) {
-            if (!@msql_data_seek($result, $rownum)) {
-                return null;
-            }
+        if ($rownum === null) {
+            $rownum = $this->res_row[$result]++;
         }
         if ($fetchmode & DB_FETCHMODE_ASSOC) {
-            $arr = @msql_fetch_array($result, MSQL_ASSOC);
+            $arr = @dbase_get_record_with_names($this->connection, $rownum);
             if ($this->options['portability'] & DB_PORTABILITY_LOWERCASE && $arr) {
                 $arr = array_change_key_case($arr, CASE_LOWER);
             }
         } else {
-            $arr = @msql_fetch_row($result);
+            $arr = @dbase_get_record($this->connection, $rownum);
         }
         if (!$arr) {
-            if ($error = @msql_error()) {
-                return $this->raiseError($error);
-            } else {
-                return null;
-            }
+            return null;
         }
         if ($this->options['portability'] & DB_PORTABILITY_RTRIM) {
             $this->_rtrimArrayValues($arr);
@@ -184,48 +157,53 @@ class DB_msql extends DB_common
     }
 
     // }}}
-    // {{{ freeResult()
-
-    function freeResult($result)
-    {
-        return @msql_free_result($result);
-    }
-
-    // }}}
     // {{{ numCols()
 
-    function numCols($result)
+    function numCols($foo)
     {
-        $cols = @msql_num_fields($result);
-        if (!$cols) {
-            return $this->raiseError();
-        }
-        return $cols;
+        return @dbase_numfields($this->connection);
     }
 
     // }}}
     // {{{ numRows()
 
-    function numRows($result)
+    function numRows($foo)
     {
-        $rows = @msql_num_rows($result);
-        if (!$rows) {
-            return $this->raiseError();
-        }
-        return $rows;
+        return @dbase_numrecords($this->connection);
     }
 
     // }}}
-    // {{{ affected()
+    // {{{ quoteSmart()
 
     /**
-     * Gets the number of rows affected by a query.
+     * Format input so it can be safely used in a query
      *
-     * @return number of rows affected by the last query
+     * @param mixed $in  data to be quoted
+     *
+     * @return mixed Submitted variable's type = returned value:
+     *               + null = the string <samp>NULL</samp>
+     *               + boolean = <samp>T</samp> if true or
+     *                 <samp>F</samp> if false.  Use the <kbd>Logical</kbd>
+     *                 data type.
+     *               + integer or double = the unquoted number
+     *               + other (including strings and numeric strings) =
+     *                 the data with single quotes escaped by preceeding
+     *                 single quotes then the whole string is encapsulated
+     *                 between single quotes
+     *
+     * @internal
      */
-    function affectedRows()
+    function quoteSmart($in)
     {
-        return @msql_affected_rows($this->connection);
+        if (is_int($in) || is_double($in)) {
+            return $in;
+        } elseif (is_bool($in)) {
+            return $in ? 'T' : 'F';
+        } elseif (is_null($in)) {
+            return 'NULL';
+        } else {
+            return "'" . $this->escapeSimple($in) . "'";
+        }
     }
 
     // }}}
