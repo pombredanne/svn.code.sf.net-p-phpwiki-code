@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: interwiki.php,v 1.19 2002-02-03 20:04:41 carstenklapp Exp $');
+<?php rcs_id('$Id: interwiki.php,v 1.20 2002-02-08 02:58:32 dairiki Exp $');
 
 class InterWikiMap {
     function InterWikiMap (&$request) {
@@ -44,19 +44,16 @@ class InterWikiMap {
         else
             $url .= $page_enc;
 
-        if ($moniker == "Category") {
-            $link = HTML::a(array('href' => $url, 'class' => 'wiki'), $link);
-        } else {
-            $link = HTML::a(array('href' => $url),
-                            IconForLink('interwiki'));
-            if (!$linktext) {
-                $link->pushContent("$moniker:",
-                                   HTML::span(array('class' => 'wikipage'), $page));
-                $link->setAttr('class', 'interwiki');
-            } else {
-                $link->pushContent($linktext);
-                $link->setAttr('class', 'named-interwiki');
-            }
+        $link = HTML::a(array('href' => $url),
+                        IconForLink('interwiki'));
+        if (!$linktext) {
+            $link->pushContent("$moniker:",
+                               HTML::span(array('class' => 'wikipage'), $page));
+            $link->setAttr('class', 'interwiki');
+        }
+        else {
+            $link->pushContent($linktext);
+            $link->setAttr('class', 'named-interwiki');
         }
         
         return $link;
@@ -65,15 +62,12 @@ class InterWikiMap {
 
     function _parseMap ($text) {
         global $AllowedProtocols;
-        if (!preg_match_all("/^\s*(\S+)\s+((?:$AllowedProtocols):[^\s<>\"']+)/m",
+        if (!preg_match_all("/^\s*(\S+)\s+(\S+)/m",
                             $text, $matches, PREG_SET_ORDER))
             return false;
         foreach ($matches as $m) {
-            if (substr($m[1], 0, 1) == "~")
-                $m[1] = substr($m[1], 1);
             $map[$m[1]] = $m[2];
         }
-        $map['Category'] = 'Category';
         return $map;
     }
 
@@ -83,7 +77,7 @@ class InterWikiMap {
         
         $current = $page->getCurrentRevision();
         
-        if (preg_match('|^<pre>\n(.*)^</pre>|ms',
+        if (preg_match('|^<verbatim>\n(.*)^</verbatim>|ms',
                        $current->getPackedContent(), $m)) {
             return $m[1];
         }
