@@ -1,4 +1,4 @@
-<? rcs_id('$Id: wiki_template.php3,v 1.1.2.1 2000-07-29 00:36:45 dairiki Exp $');
+<? rcs_id('$Id: wiki_template.php3,v 1.1.2.2 2000-07-31 18:52:28 dairiki Exp $');
 // wiki_template.php3
 //
 // A new template engine for phpwiki.
@@ -82,10 +82,10 @@ class TemplateTokens extends TokenProducer
     if (!is_string($val))
       {
 	if ($val >= 0)
-	    $this->_warning("Illegal reference to loop token {$what}");
+	    $this->_warning("Illegal reference to loop token \{$what}");
 	else
-	    $this->_warning("Reference to undefined token {$what}");
-	$val = "{$what}";
+	    $this->_warning("Reference to undefined token \{$what}");
+	$val = "\{$what}";
       }
     return $val;
   }
