@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: InlineParserTest.php,v 1.3 2004-07-01 15:40:59 dfrankow Exp $');
+rcs_id('$Id: InlineParserTest.php,v 1.4 2004-07-09 12:29:26 rurban Exp $');
 
 /* Copyright (C) 2004, Dan Frankowski <dfrankow@cs.umn.edu>
  * testLinks: Reini Urban
@@ -8,12 +8,7 @@ rcs_id('$Id: InlineParserTest.php,v 1.3 2004-07-01 15:40:59 dfrankow Exp $');
 require_once 'lib/InlineParser.php';
 require_once 'PHPUnit.php';
 
-class InlineParserTest extends PHPUnit_TestCase {
-
-    // constructor of the test suite
-    function InlineParserTest($name) {
-       $this->PHPUnit_TestCase($name);
-    }
+class InlineParserTest extends phpwiki_TestCase {
 
     function testNoWikiWords() {
         $str1 = 'This has no wiki words, and is all text.';

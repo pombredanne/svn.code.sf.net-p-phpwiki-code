@@ -4,11 +4,7 @@ require_once 'lib/WikiPlugin.php';
 require_once 'lib/plugin/ListPages.php';
 require_once 'PHPUnit.php';
 
-class ListPagesTest extends PHPUnit_TestCase {
-    // constructor of the test suite
-    function ListPagesTest($name) {
-       $this->PHPUnit_TestCase($name);
-    }
+class ListPagesTest extends phpwiki_TestCase {
 
     /**
      * Test that we can instantiate and run ListPages plugin without error.
