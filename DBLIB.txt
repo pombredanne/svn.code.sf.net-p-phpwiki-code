@@ -6,8 +6,8 @@ A few notes:
 
 * While most functions specify a "db reference" as the first value
   passed in, this can be any kind of data type that your functions
-  know about. For example, in the DBM implementation this is an
-  integer that refers to an open database handle, but in the MySQL
+  know about. For example, in the DBM implementation this is a hash of
+  integers that refer to open database files, but in the MySQL
   version it's an associative array that contains the DB information.
 
 * Functions that return the page data must return a hash (associative
@@ -45,8 +45,20 @@ The functions are:
                connections, this doesn't return anything.
 
 
-      RetrievePage($dbi, $pagename)
-      takes:   db reference, string which is the name of a page
+      MakeDBHash($pagename, $pagehash)
+      takes: page name, page array
+      returns: an encoded version of the $pagehash suitable for
+      insertion into the data store. This is an internal helper
+      function used mainly for the RDBMSs.
+
+      MakePageHash($dbhash)
+      takes: an array that came from the database
+      returns: the $pagehash data structure used by the
+      application. This function undoes what MakeDBHash does.
+
+      RetrievePage($dbi, $pagename, $pagestore)
+      takes:   db reference, string which is the name of a page, and a
+      string indicating which store to fetch the page from (live or archive).
       returns: a PHP associative array containing the page data
 	       (text, version, author, etc)
 
@@ -56,17 +68,30 @@ The functions are:
 	       of all page data
       returns: nothing (hmm. It should probably return true/false)
 
+      SaveCopyToArchive($dbi, $pagename, $pagehash)
+      Similar to InsertPage but for handling the archive store. The
+      goal here was to separate the two (live db and archive db) in
+      case there were different storage formats (for example, the
+      archive might only store diffs of the pages). However this is
+      not the case in the implementations.
 
       IsWikiPage($dbi, $pagename)
       takes:   db reference, string containing page name
-      returns: true or false, if the page already exists
+      returns: true or false, if the page already exists in the live db.
 
+      IsInArchive($dbi, $pagename)
+      takes:   db reference, string containing page name
+      returns: true or false, if the page already exists in the archive.
 
       InitTitleSearch($dbi, $search)
       takes:   db reference, search string
       returns: a handle to identify the query and the current position
                within the result set.
 
+      RemovePage($dbi, $pagename)
+      takes: db reference, name of the page
+      returns: nothing
+      This deletes a page from both the live and archive page stores.
 
       TitleSearchNextMatch($dbi, &$pos)
       takes:   db reference, reference to a hash created by
@@ -74,6 +99,9 @@ The functions are:
       returns: the next page name that contains a match to the search term
                (advances $pos to next result field as well)
 
+      MakeSQLSearchClause($search, $column)
+      takes: a search string, column name
+      returns: a SQL query string suitable for a database query
 
       InitFullSearch($dbi, $search)
       takes:   db reference, string containing search term
@@ -112,8 +140,21 @@ The functions are:
       returns: the next row from the result set, as a PHP array type
 
       GetAllWikiPageNames($dbi)
-      GetWikiPageLinks($dbi, $pagename)
-      SetWikiPageLinks($dbi, $pagename, $linklist)
+      takes: db reference
+      returns: an array containing all page names
 
-$Id: DBLIB.txt,v 1.7 2000-10-21 04:14:02 wainstead Exp $
+      GetWikiPageLinks($dbi, $pagename)
+      takes: db reference, page name
+      returns: a two-dimensional array containing outbound links
+      ordered by score desc ('out'); inbound links ordered by score
+      desc ('in'); inbound or outbound links ordered by most number of
+      page views ('popular').
+
+      SetWikiPageLinks($dbi, $pagename, $linklist)
+      takes: db reference, page name, list of pages linking to this
+      one
+      This deletes the existing list of linking pages and inserts all
+      the page names in $linklist.
+
+$Id: DBLIB.txt,v 1.8 2000-12-12 21:53:20 wainstead Exp $
 
