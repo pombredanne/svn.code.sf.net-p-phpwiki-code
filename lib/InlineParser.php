@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.44 2004-05-08 14:06:12 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.45 2004-05-08 19:20:27 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -143,17 +143,47 @@ class RegexpSet
     
 
     function _match ($text, $regexps, $repeat) {
-        $pat= "/ ( . $repeat ) ( (" . join(')|(', $regexps) . ") ) /Axs";
+        // certain php builds crash here: 
+        // sf.net: Fatal error: Allowed memory size of 8388608 bytes exhausted 
+        //         (tried to allocate 634 bytes)
 
-        if (! preg_match($pat, $text, $m)) {
-            return false;
+        // So we try to minize memory usage, by looping explicitly
+        // and storing only those regexp which actually match. 
+        // There may be more than one, so we have to find the longest, 
+        // and match inside until the shortest is empty.
+	$matched = array();
+        for ($i=0; $i<count($regexps); $i++) {
+            // Syntax: http://www.pcre.org/pcre.txt
+            //   x - EXTENDED, ignore whitespace
+            //   s - DOTALL
+            //   A - ANCHORED
+            //   S - STUDY
+            $pat= "/ ( . $repeat ) ( " . $regexps[$i] . " ) /x";
+            if (preg_match($pat, $text, $_m)) {
+            	$m = $_m;
+                $matched[$i] = $regexps[$i];
+                $regexp_ind = $i;
+            }
+        }
+        if (empty($matched)) return false;
+        $match = new RegexpSet_match;
+        
+        // Optimization: if the matches are only "$" and another, then omit "$"
+        if (count($matched) > 2) {
+            // we could do much better, if we would know the matching markup for the longest regexp match
+            $hugepat= "/ ( . $repeat ) ( (" . join(')|(', $regexps) . ") ) /Asx";
+            //$hugepat= "/ ( . $repeat ) ( (" . join(')|(', array_values($matched)) . ") ) /Asx";
+            if (! preg_match($hugepat, $text, $m)) {
+                return false;
+            }
+            $match->regexp_ind = count($m) - 4; // TODO: Optimisation with matched only
+        } else {
+            $match->regexp_ind = $regexp_ind;
         }
         
-        $match = new RegexpSet_match;
         $match->postmatch = substr($text, strlen($m[0]));
         $match->prematch = $m[1];
         $match->match = $m[2];
-        $match->regexp_ind = count($m) - 4;
 
         /* DEBUGGING
         PrintXML(HTML::dl(HTML::dt("input"),
@@ -505,10 +535,8 @@ class Markup_nestled_emphasis extends BalancedMarkup
 
 class Markup_html_emphasis extends BalancedMarkup
 {
-    var $_start_regexp = "<(?: b|big|i|small|tt|
-                               em|strong|
-                               cite|code|dfn|kbd|samp|var|
-                               sup|sub )>";
+    var $_start_regexp = 
+        "<(?: b|big|i|small|tt|em|strong|cite|code|dfn|kbd|samp|var|sup|sub )>";
 
     function getEndRegexp ($match) {
         return "<\\/" . substr($match, 1);
@@ -582,6 +610,9 @@ class InlineTransformer
 
         foreach ($markup_types as $mtype) {
             $class = "Markup_$mtype";
+            if ($GLOBALS['HTTP_SERVER_VARS']['SERVER_NAME'] == 'phpwiki.sourceforge.net' and 
+                in_array($mtype,array('interwiki','plugin')))
+                continue;
             $this->_addMarkup(new $class);
         }
     }
@@ -602,6 +633,7 @@ class InlineTransformer
 
         // $end_re takes precedence: "favor reduce over shift"
         array_unshift($regexps, $end_regexps[0]);
+        //array_push($regexps, $end_regexps[0]);
         $regexps = new RegexpSet($regexps);
         
         $input = $text;
@@ -644,9 +676,10 @@ class InlineTransformer
     function _parse_markup_body ($markup, $match, &$text, $end_regexps) {
         if (isa($markup, 'SimpleMarkup'))
             return true;        // Done. SimpleMarkup is simple.
-        array_unshift($end_regexps, $markup->getEndRegexp($match));
 
         if (!is_object($markup)) return false;
+        array_unshift($end_regexps, $markup->getEndRegexp($match));
+
         // Optimization: if no end pattern in text, we know the
         // parse will fail.  This is an important optimization,
         // e.g. when text is "*lots *of *start *delims *with
