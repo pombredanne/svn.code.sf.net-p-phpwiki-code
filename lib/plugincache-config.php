@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: plugincache-config.php,v 1.5 2004-04-26 20:44:34 rurban Exp $');
+<?php rcs_id('$Id: plugincache-config.php,v 1.6 2004-06-16 21:27:33 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -89,26 +89,25 @@ global $CacheParams;
  *                          completely determined by its parameters.
  *                          (As it is the case for a graphical site map.)
  */   
-$CacheParams = array(
-    // db settings (database='file' is the fastest)
-        'database'        => 'file',
-    // the webserver muist have write access to this dir!
-        'cache_dir'       => (substr(PHP_OS,0,3) == 'WIN') 
-	                       ? ($GLOBALS['HTTP_ENV_VARS']['TEMP'] . "\\cache\\")
-	                       : '/tmp/cache/',
-        'filename_prefix' => 'phpwiki',
+$CacheParams = array
+    (
+     // db settings (database='file' is the fastest)
+     'database'        => 'file',
+     // the webserver must have write access to this dir!
+     'cache_dir'       => '/tmp/cache/',
+     'filename_prefix' => 'phpwiki',
 
-    // When highwater is exceeded, a garbage collection will start. 
-    // It will collect garbage till lowwater is reached.
-        'highwater'       => 4 * Megabyte,
-        'lowwater'        => 3 * Megabyte,
+     // When highwater is exceeded, a garbage collection will start. 
+     // It will collect garbage till lowwater is reached.
+     'highwater'       => 4 * Megabyte,
+     'lowwater'        => 3 * Megabyte,
 
     // If an image has not been used for maxlifetime remove it from
     // the cache.
     // (Since there is also the highwater/lowwater mechanism
     //  and an image usually requires only 1kb you don't have to
     //  make it very small, I think.)
-        'maxlifetime'     => 30 * Day,
+     'maxlifetime'     => 30 * Day,
 
     // name of the imagecache start up file
     // This file should have been created by hand by copying
@@ -118,17 +117,17 @@ $CacheParams = array(
     //    include "lib/imagecache.php";
     //
     //'cacheurl'        => '../imagecache/',
-        'cacheurl'        => DATA_PATH . '/getimg.php?',
+     'cacheurl'        => DATA_PATH . '/getimg.php?',
 
     // usually send plugin arguments as URL, but when they become
     // longer than maxarglen store them in session variables    
     // setting it to 3000 worked fine for me, 30000 completely
     // crashed my linux, 1000 should be safe.
-        'maxarglen'       => 1000,
+     'maxarglen'       => 1000,
 
     // actually use the cache 
     // (should be always true unless you are debugging)
-        'usecache'        => true,
+     'usecache'        => true,
 
     //   This will prevent image creation for an image 
     // map 'on demand'. It is a good idea to set this
@@ -136,14 +135,20 @@ $CacheParams = array(
     // html part not to fit to the image of the map.
     //   If you don't use a cache, you have to set it
     // to 'false', maps will not work otherwise.
-        'force_syncmap'   => true,
+     'force_syncmap'   => true,
 
     // if ImageTypes() does not exist (PHP < 4.0.2) allow the
     // following image formats (IMG_PNG | IMG_GIF | IMG_JPG | IMG_WBMP)
-	// in principal all image types which are compiled into php: 
-	//   libgd, libpng, libjpeg, libungif, libtiff, libgd2, ...
-	'imgtypes'        =>  array('png','gif','gd','gd2','jpeg','wbmp','xbm','xpm')
-        // Todo: swf, pdf, ...
-
+     // in principal all image types which are compiled into php: 
+     //   libgd, libpng, libjpeg, libungif, libtiff, libgd2, ...
+     'imgtypes'        =>  array('png','gif','gd','gd2','jpeg','wbmp','xbm','xpm')
+     // Todo: swf, pdf, ...
 );
+
+if (!file_exists($CacheParams['cache_dir']) and substr(PHP_OS,0,3) == 'WIN') {
+   if (isset($GLOBALS['HTTP_ENV_VARS']['TEMP']))
+       $CacheParams['cache_dir'] = $GLOBALS['HTTP_ENV_VARS']['TEMP'] . "\\cache\\";
+   else
+       $CacheParams['cache_dir'] = "\\TEMP\\cache\\";
+}
 ?>
