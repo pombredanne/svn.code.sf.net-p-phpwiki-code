@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: viewsource.tmpl,v 1.10 2002-02-03 23:55:59 carstenklapp Exp $ -->
+<!-- $Id: viewsource.tmpl,v 1.11 2002-02-07 03:41:42 carstenklapp Exp $ -->
 
 <?php if ($page->get('locked') && !$user->isAdmin()) { ?>
   <p><strong><?=_("Note:")?></strong>
@@ -11,9 +11,9 @@
   <?= Button('viewsource', _("View the current version"), $page)?>.</p>
 <?php } ?>
 
-<!-- Dummy form else NS4 doesn't like the textarea -->
+<!-- Dummy form else NS4 does not like the textarea -->
 <form method="post" action="<?=BASE_URL?>" accept-charset="<?=CHARSET?>">
-<!-- wrap=virtual is not HTML4, but without it NS4 doesn't wrap long lines -->
+<!-- wrap=virtual is not HTML4, but without it NS4 does not wrap long lines -->
 <textarea class="wikiedit"
           name="content"
           rows="<?=$request->getPref('editHeight')?>"
