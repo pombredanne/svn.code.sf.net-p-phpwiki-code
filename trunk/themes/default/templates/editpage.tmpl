@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.26 2002-02-10 23:51:22 carstenklapp Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.27 2002-02-14 03:45:05 carstenklapp Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
@@ -61,7 +61,7 @@ $s = $Theme->getButtonSeparator();
     <?=_("Edit Area Size:")?>
     <b><?=_("H")?></b> <?=$HeightI?>
     <b><?=_("W")?></b> <?=$WidthI?>
-    <noscript><?=Button("submit:", _("Adjust"))?></noscript>
+    <noscript><?=Button("submit:", _("Adjust"), 'wikiaction')?></noscript>
   </div>
   <a name="editarea" id="editarea"><?=$EDIT_TEXTAREA?></a>
 

@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.20 2002-02-08 23:02:55 carstenklapp Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.21 2002-02-14 03:45:05 carstenklapp Exp $ -->
 <?php
 
 $time = time();
@@ -51,5 +51,5 @@ $RelativeDatesCB = HTML(HTML::input(array('type' => 'hidden',
   </p>
 
   <hr />
-  <p><?=Button("submit:", _("Update Preferences"))?></p>
+  <p><?=Button("submit:", _("Update Preferences"), 'wikiaction')?></p>
 </form>
