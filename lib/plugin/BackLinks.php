@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BackLinks.php,v 1.15 2002-01-30 18:27:13 carstenklapp Exp $');
+rcs_id('$Id: BackLinks.php,v 1.16 2002-01-30 22:46:35 carstenklapp Exp $');
 /**
  */
 
@@ -20,7 +20,7 @@ extends WikiPlugin
         return array('exclude'		=> '',
                      'include_self'	=> 0,
                      'noheader'		=> 0,
-                     'pagename'		=> '[pagename]',
+                     'page'		=> '[pagename]',
                      'info'		=> false
                      );
     }
@@ -30,30 +30,21 @@ extends WikiPlugin
     function run($dbi, $argstr, $request) {
         $this->_args = $this->getArgs($argstr, $request);
         extract($this->_args);
-        if (!$pagename)
+        if (!$page)
             return '';
 
-        $p = $dbi->getPage($pagename);
+        $pagelist = new PageList();
+        $this->_init($page, &$pagelist, $info, $exclude, $include_self);
+
+        $p = $dbi->getPage($page);
         $backlinks = $p->getLinks();
-
-        $pagelist = new PageList;
-
-        if ($info)
-            foreach (explode(",", $info) as $col)
-                $pagelist->insertColumn($col);
-
-        if ($exclude)
-            foreach (explode(",", $exclude) as $excludepage)
-                $pagelist->excludePageName($excludepage);
-        if (!$include_self)
-                $pagelist->excludePageName($pagename);
 
         while ($backlink = $backlinks->next()) {
             $pagelist->addPage($backlink);
         }
 
         if (!$noheader) {
-            $pagelink = LinkWikiWord($pagename);
+            $pagelink = LinkWikiWord($page);
 
             if ($pagelist->isEmpty())
                 return HTML::p(fmt("No pages link to %s.", $pagelink));
@@ -70,6 +61,19 @@ extends WikiPlugin
 
         return $pagelist;
     }
+
+    function _init(&$page, &$pagelist, $info = '', $exclude = '', $include_self = '') {
+	if ($info)
+            foreach (explode(",", $info) as $col)
+                $pagelist->insertColumn($col);
+
+	if ($exclude)
+            foreach (explode(",", $exclude) as $excludepage)
+                $pagelist->excludePageName($excludepage);
+	if (!$include_self)
+            $pagelist->excludePageName($page);
+   }
+
 };
 
 // For emacs users
