@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.184 2004-11-01 10:43:57 rurban Exp $');
+rcs_id('$Id: main.php,v 1.185 2004-11-01 13:55:05 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -750,9 +750,12 @@ TODO: check against these cases:
             return $HTTP_ENV_VARS['REMOTE_USER'];
             
         if ($user = $this->getSessionVar('wiki_user')) {
-            $this->_user = $user;
-            $this->_user->_authhow = 'session';
-            return ENABLE_USER_NEW ? $user->UserName() : $this->_user;
+            /// switched auth between sessions
+            if (isa($user, WikiUserClassname())) {
+                $this->_user = $user;
+                $this->_user->_authhow = 'session';
+                return ENABLE_USER_NEW ? $user->UserName() : $this->_user;
+            }
         }
         if ($userid = $this->getCookieVar('WIKI_ID')) {
             if (!empty($userid) and substr($userid,0,2) != 's:') {
@@ -1125,6 +1128,12 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.184  2004/11/01 10:43:57  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 // Revision 1.183  2004/10/14 19:23:58  rurban
 // remove debugging prints
 //
