@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.61 2004-11-21 11:59:19 rurban Exp $');
+rcs_id('$Id: display.php,v 1.62 2004-11-30 09:51:35 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -8,12 +8,14 @@ require_once('lib/Template.php');
  * Extract keywords from Category* links on page. 
  */
 function GleanKeywords ($page) {
-    global $KeywordLinkRegexp;
-
+    if (!defined('KEYWORDS')) return '';
+    include_once("lib/TextSearchQuery.php");
+    $search = new TextSearchQuery(KEYWORDS, true);
+    $KeywordLinkRegexp = $search->asRegexp();
     $links = $page->getPageLinks();
     $keywords[] = SplitPagename($page->getName());
     while ($link = $links->next()) {
-        if (preg_match("/${KeywordLinkRegexp}/x", $link->getName(), $m))
+        if (preg_match($KeywordLinkRegexp, $link->getName(), $m))
             $keywords[] = SplitPagename($m[0]);
     }
     $keywords[] = WIKI_NAME;
@@ -219,6 +221,9 @@ function displayPage(&$request, $template=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.61  2004/11/21 11:59:19  rurban
+// remove final \n to be ob_cache independent
+//
 // Revision 1.60  2004/11/19 19:22:03  rurban
 // ModeratePage part1: change status
 //

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.66 2004-11-17 17:23:12 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.67 2004-11-30 09:51:35 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -63,6 +63,13 @@ rcs_id('$Id: IniConfig.php,v 1.66 2004-11-17 17:23:12 rurban Exp $');
 include_once (dirname(__FILE__)."/config.php");
 include_once (dirname(__FILE__)."/FileFinder.php");
 
+/**
+ * Speed-up iniconfig loading.
+ *
+ * Dump the static parts of the parsed config/config.ini settings to a fast-loadable config.php file.
+ * The dynamic parts are then evaluated as before.
+ * Requires write-permissions to config/config.php
+ */
 function save_dump($file) {
     $vars =& $GLOBALS; // copy + unset not possible
     $ignore = array();
@@ -92,6 +99,7 @@ function save_dump($file) {
 }
 
 function IniConfig($file) {
+
     // check config/config.php dump for faster startup
     $dump = substr($file, 0, -3)."php";
     if (isWindows($dump)) $dump = str_replace("/","\\",$dump);
@@ -101,6 +109,14 @@ function IniConfig($file) {
             fixup_dynamic_configs();
             return;
         }
+    }
+
+    if (!file_exists($file)) {
+        // first-time installer detection here...
+        // similar to SetupWiki()
+        include(dirname(__FILE__)."/install.php");
+        trigger_error("Datasource file '$file' does not exist", E_USER_ERROR);
+        exit();
     }
 
     // List of all valid config options to be define()d which take "values" (not
@@ -115,7 +131,7 @@ function IniConfig($file) {
          'GROUP_METHOD',
          'EDITING_POLICY', 'THEME', 'CHARSET',
          'DEFAULT_LANGUAGE', 'WIKI_PGSRC', 'DEFAULT_WIKI_PGSRC',
-         'ALLOWED_PROTOCOLS', 'INLINE_IMAGES', 'SUBPAGE_SEPARATOR',
+         'ALLOWED_PROTOCOLS', 'INLINE_IMAGES', 'SUBPAGE_SEPARATOR', /*'KEYWORDS',*/
          // extra logic:
          //'DATABASE_PREFIX', 'DATABASE_DSN', 'DATABASE_TYPE', 'DATABASE_DBHANDLER',
          'INTERWIKI_MAP_FILE', 'COPYRIGHTPAGE_TITLE', 'COPYRIGHTPAGE_URL',
@@ -160,11 +176,6 @@ function IniConfig($file) {
          'PLUGIN_CACHED_USECACHE', 'PLUGIN_CACHED_FORCE_SYNCMAP',
          );
 
-    if(!file_exists($file)){
-        trigger_error("Datasource file '$file' does not exist", E_USER_ERROR);
-        exit();
-    }
-         
     $rs = @parse_ini_file($file);
     $rsdef = @parse_ini_file(dirname(__FILE__)."/../config/config-default.ini");
     foreach ($rsdef as $k => $v) {
@@ -390,19 +401,19 @@ function IniConfig($file) {
     if (!trim($WikiNameRegexp))
        $WikiNameRegexp = '(?<![[:alnum:]])(?:[[:upper:]][[:lower:]]+){2,}(?![[:alnum:]])';
 
-    // Another "too-tricky" redefine
-    global $KeywordLinkRegexp;
+    // got rid of global $KeywordLinkRegexp by using a TextSearchQuery instead of "Category:Topic"
     if (!isset($rs['KEYWORDS'])) $rs['KEYWORDS'] = @$rsdef['KEYWORDS'];
-    if (!isset($rs['KEYWORDS'])) $rs['KEYWORDS'] = "Category:Topic";
-    $keywords = preg_split('/\s*:\s*/', $rs['KEYWORDS']);
-    if (empty($keywords)) $keywords = array("Category","Topic");
-    $KeywordLinkRegexp = '(?<=' . implode('|^', $keywords) . ')[[:upper:]].*$';
+    if (!isset($rs['KEYWORDS'])) $rs['KEYWORDS'] = "Category* OR Topic*";
+    if ($rs['KEYWORDS'] == 'Category:Topic') $rs['KEYWORDS'] = "Category* OR Topic*";
+    if (!defined('KEYWORDS')) define('KEYWORDS', $rs['KEYWORDS']);
+    //if (empty($keywords)) $keywords = array("Category","Topic");
+    //$KeywordLinkRegexp = '(?<=' . implode('|^', $keywords) . ')[[:upper:]].*$';
 
     // TODO: can this be a constant?
     global $DisabledActions;
-    if (!array_key_exists('DISABLED_ACTIONS',$rs) and array_key_exists('DISABLED_ACTIONS',$rsdef))
+    if (!array_key_exists('DISABLED_ACTIONS', $rs) and array_key_exists('DISABLED_ACTIONS', $rsdef))
         $rs['DISABLED_ACTIONS'] = @$rsdef['DISABLED_ACTIONS'];
-    if (array_key_exists('DISABLED_ACTIONS',$rs))
+    if (array_key_exists('DISABLED_ACTIONS', $rs))
         $DisabledActions = preg_split('/\s*:\s*/', $rs['DISABLED_ACTIONS']);
 
     global $PLUGIN_CACHED_IMGTYPES;
@@ -520,18 +531,18 @@ function fixup_static_configs() {
 
     // check whether the crypt() function is needed and present
     if (defined('ENCRYPTED_PASSWD') && !function_exists('crypt')) {
-        $error = sprintf(_("Encrypted passwords cannot be used: %s."),
+        $error = sprintf("Encrypted passwords cannot be used: %s.",
                          "'function crypt()' not available in this version of php");
         trigger_error($error);
     }
 
     if (!defined('ADMIN_PASSWD') or ADMIN_PASSWD == '')
-        trigger_error(_("The admin password cannot be empty. Please update your config/config.ini"));
+        trigger_error("The admin password cannot be empty. Please update your config/config.ini");
 
     if (defined('USE_DB_SESSION') and USE_DB_SESSION) {
         if (! $DBParams['db_session_table'] ) {
             $DBParams['db_session_table'] = @$DBParams['prefix'] . 'session';
-            trigger_error(sprintf(_("DATABASE_SESSION_TABLE configuration set to %s."), 
+            trigger_error(sprintf("DATABASE_SESSION_TABLE configuration set to %s.", 
                                   $DBParams['db_session_table']),
                           E_USER_ERROR);
         }
@@ -750,6 +761,9 @@ function fixup_dynamic_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.66  2004/11/17 17:23:12  rurban
+// fixed chdir back from locale
+//
 // Revision 1.65  2004/11/11 10:31:26  rurban
 // Disable default options in config-dist.ini
 // Add new CATEGORY_GROUP_PAGE root page: Default: Translation of "CategoryGroup"
