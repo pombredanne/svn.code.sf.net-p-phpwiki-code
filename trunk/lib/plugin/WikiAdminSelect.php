@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSelect.php,v 1.11 2004-02-17 12:11:36 rurban Exp $');
+rcs_id('$Id: WikiAdminSelect.php,v 1.12 2004-02-19 22:05:57 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -47,7 +47,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     function getDefaultArguments() {
@@ -85,7 +85,7 @@ extends WikiPlugin
         $this->debug = $args['debug'];
         if (!empty($request->getArg['s']))
             $args['s'] = $request->getArg['s'];
-        if (($request->getArg('WikiAdminSelect') == _("Go")) and 
+        if (  //( $request->getArg('WikiAdminSelect') == _("Go")) and 
               !empty($args['s'])) {
             $s = $args['s'];
             $sl = explodePageList($args['s']);
@@ -224,6 +224,9 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/02/17 12:11:36  rurban
+// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
+//
 // Revision 1.10  2004/02/15 21:34:37  rurban
 // PageList enhanced and improved.
 // fixed new WikiAdmin... plugins
