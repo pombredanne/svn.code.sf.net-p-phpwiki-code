@@ -1,4 +1,4 @@
-<?php  rcs_id('$Id: wiki_db_filesystem.php3,v 1.1 2000-08-29 07:42:46 aredridel Exp $');
+<?php  rcs_id('$Id: wiki_db_filesystem.php3,v 1.2 2000-08-29 07:55:35 aredridel Exp $');
    /*
       Database functions:
 
@@ -38,18 +38,18 @@
       return;
    }
 
-
+   
    // Return hash of page + attributes or default
    function RetrievePage($dbi, $pagename, $pagestore) {
       $filename = $dbi[$pagestore] . "/" . $pagename;
-      if ($fd = fopen($filename, "r")) {
-         $locked = flock($fd, 2); #Exclusive blocking lock 
+      if ($fd = @fopen($filename, "r")) {
+         $locked = flock($fd, 1); # Read lock
          if (!$locked) { 
             print "Error: timeout obtaining lock. Please try again"; exit; 
          }
          if ($data = file($filename)) {
             // unserialize $data into a hash
-            $pagehash = unserialize($data);
+            $pagehash = unserialize(join("\n", $data));
 		 }	
 		 fclose($fd);
 		 if($data) {
@@ -63,8 +63,19 @@
 
    // Either insert or replace a key/value (a page)
    function Filesystem_WritePage($dbi, $pagename, $pagehash) {
+      global $WikiPageStore;
       $pagedata = serialize($pagehash);
-      $filename = $dbi['wiki'] . "/" . $pagename;
+
+      if (!is_dir($dbi)) {
+	     $d = split("/", $dbi);
+		 $dt = "";
+		 while(list($key, $val) = each($d)) {
+			$dt = $dt.$val."/";
+		    @mkdir($dt, 0755);
+		 }
+	  }
+
+      $filename = $dbi . "/" . $pagename;
       if($fd = fopen($filename, 'a')) { 
          $locked = flock($fd,2); #Exclusive blocking lock 
          if (!$locked) { 
@@ -87,7 +98,7 @@
    }
 
    // for archiving pages to a seperate dbm
-   function SaveCopyToArchive($dbi, $pagename, $pagehash) {a
+   function SaveCopyToArchive($dbi, $pagename, $pagehash) {
       global $ArchivePageStore;
       return Filesystem_WritePage($dbi[$ArchivePageStore], $pagename, $pagehash);
    }
