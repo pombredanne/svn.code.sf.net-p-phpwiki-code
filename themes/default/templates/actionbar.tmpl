@@ -1,5 +1,5 @@
 <?php // -*-html-*-
-  rcs_id('$Id: actionbar.tmpl,v 1.24 2004-03-14 16:40:45 rurban Exp $');
+  rcs_id('$Id: actionbar.tmpl,v 1.25 2004-03-24 19:40:34 rurban Exp $');
   if (!$page->get('locked') || $user->isAdmin())
       $EditB = Button("edit",
                       $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
@@ -36,7 +36,6 @@
      $PurgeCache->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed."));
 ?>
     <?=$Sep?><?= $PurgeCache ?>
-
     <!-- End debugging buttons -->
 <?php } ?>
   </div>

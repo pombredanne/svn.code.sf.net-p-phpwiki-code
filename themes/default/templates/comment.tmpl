@@ -1,4 +1,4 @@
-<!-- $Id: comment.tmpl,v 1.3 2004-03-14 20:08:24 rurban Exp $ -->
+<!-- $Id: comment.tmpl,v 1.4 2004-03-24 19:40:34 rurban Exp $ -->
 <?php
 $CDATE = $Theme->formatDateTime($COMMENT_CTIME);
 $buttons = $modified = '';
@@ -24,7 +24,8 @@ if ($rev->get('mtime') != $COMMENT_CTIME) {
 <div title="<?= fmt("Comments on %s by %s.", $COMMENT_PARENT, $COMMENT_CREATOR)?>"
      class="wikicomment wikitext">
   <div class="wikicomment-footer">
-    <strong class="floatright"><?= WikiLink($COMMENT_CREATOR, 'if_known') ?>  <?= WikiLink($page, 'known', $CDATE) ?></strong>
+    <span class="floatright">
+      <?= fmt("%s by %s", WikiLink($page, 'known', $CDATE), WikiLink($COMMENT_CREATOR, 'if_known')) ?></span>
     <br clear="all" class="clear-floats" />
   </div>
   <?php if ($buttons or $modified) { ?>
@@ -37,6 +38,5 @@ if ($rev->get('mtime') != $COMMENT_CTIME) {
   <div class="wikicomment-body">
     <?= $CONTENT ?>
   </div>
-
 </div>
 <hr class="no-css" />

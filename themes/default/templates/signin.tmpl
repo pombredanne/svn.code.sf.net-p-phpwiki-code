@@ -1,5 +1,5 @@
 <?php // -*-html-*-
-     rcs_id('$Id: signin.tmpl,v 1.25 2004-02-19 22:15:43 rurban Exp $');
+     rcs_id('$Id: signin.tmpl,v 1.26 2004-03-24 19:40:35 rurban Exp $');
 
      if (empty($FORMNAME))
          $FORMNAME = 'signin';
@@ -39,6 +39,7 @@
                                    'onchange' => "SignIn(this.form);"));
   $SignInInput->addTooltip(_("Enter your UserId to sign in")) 
 ?>
+
   <script type="text/javascript"> <!--
     function SignIn(form) {
       <?php if (defined('EDITING_POLICY') and EDITING_POLICY) { ?>
@@ -57,7 +58,7 @@
   </script>
   <?= $SignInInput ?>
   <noscript>
-    <?= Button("submit:auth[login]", _("Sign In"), 'wikiaction')?>
+    <?= Button("submit:auth[login]", _("Sign in as:"), 'wikiaction')?>
   </noscript>
 
 <?php } ?>
