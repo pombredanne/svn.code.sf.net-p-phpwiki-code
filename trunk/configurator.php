@@ -20,7 +20,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'iso-8859-1');
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.12 2003-03-04 20:01:03 dairiki Exp $ -->
+<!-- $Id: configurator.php,v 1.13 2003-03-07 02:48:23 dairiki Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki 1.3.x</title>
 <style type="text/css" media="screen">
@@ -270,7 +270,7 @@ $properties["Part Null Settings"] =
 new unchangeable_variable('_partnullsettings', "
 define ('PHPWIKI_VERSION', '1.3.5pre');
 require \"lib/prepend.php\";
-rcs_id('\$Id: configurator.php,v 1.12 2003-03-04 20:01:03 dairiki Exp $');", "");
+rcs_id('\$Id: configurator.php,v 1.13 2003-03-07 02:48:23 dairiki Exp $');", "");
 
 
 $properties["Part One"] =
@@ -1107,6 +1107,23 @@ $properties["Pagename of Recent Changes"] =
 new _define_optional('RECENT_CHANGES', 'RecentChanges', "
 Page name of RecentChanges page.  Used for RSS Auto-discovery.");
 
+$properties["Disable HTTP Redirects"] =
+new boolean_define_commented_optional
+('DISABLE_HTTP_REDIRECT',
+ array('false' => 'Enable HTTP Redirects',
+       'true' => 'Disable HTTP Redirects'),
+"
+(You probably don't need to touch this.)
+
+PhpWiki uses HTTP redirects for some of it's functionality.
+(e.g. after saving changes, PhpWiki redirects your browser to
+view the page you just saved.)
+
+Some web service providers (notably free European Lycos) don't seem to
+allow these redirects.  (On Lycos the result in an \"Internal Server Error\"
+report.)  In that case you can set DISABLE_HTTP_REDIRECT to true.
+(In which case, PhpWiki will revert to sneakier tricks to try to
+redirect the browser...)");
 
 $end = "
 
