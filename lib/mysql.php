@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: mysql.php,v 1.2 2000-10-19 22:25:45 ahollosi Exp $');
+<?php rcs_id('$Id: mysql.php,v 1.3 2000-10-20 11:42:52 ahollosi Exp $');
 
    /*
       Database functions:
@@ -30,14 +30,16 @@
       global $mysql_server, $mysql_user, $mysql_pwd, $mysql_db;
 
       if (!($dbc = mysql_pconnect($mysql_server, $mysql_user, $mysql_pwd))) {
-         $msg =  "Cannot establish connection to database, giving up.";
-	 $msg .= "<br>MySQL error: " . mysql_error();
-         ExitWiki($msg);
+         $msg = gettext ("Cannot establish connection to database, giving up.");
+	 $msg .= "<BR>";
+	 $msg .= sprintf(gettext ("MySQL error: %s"), mysql_error());
+	 ExitWiki($msg);
       }
       if (!mysql_select_db($mysql_db, $dbc)) {
-         $msg =  "Cannot open database, giving up.";
-	 $msg .= "<br>MySQL error: " . mysql_error();
-         ExitWiki($msg);
+         $msg =  sprintf(gettext ("Cannot open database %s, giving up."), $mysql_db);
+	 $msg .= "<BR>";
+	 $msg .= sprintf(gettext ("MySQL error: %s"), mysql_error());
+	 ExitWiki($msg);
       }
       $dbi['dbc'] = $dbc;
       $dbi['table'] = $dbname;
@@ -108,7 +110,9 @@
 
       if (!mysql_query("replace into $dbi[table] ($COLUMNS) values ($VALUES)",
       			$dbi['dbc'])) {
-	    $msg = "Error writing page '$pagename' " . mysql_error();
+            $msg = sprintf(gettext ("Error writing page '%s'"), $pagename);
+	    $msg .= "<BR>";
+	    $msg .= sprintf(gettext ("MySQL error: %s"), mysql_error());
             ExitWiki($msg);
       }
    }

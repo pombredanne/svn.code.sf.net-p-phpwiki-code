@@ -1,4 +1,4 @@
-<!-- $Id: diff.php,v 1.2 2000-10-19 21:36:50 ahollosi Exp $ -->
+<!-- $Id: diff.php,v 1.3 2000-10-20 11:42:52 ahollosi Exp $ -->
 <?php
 // diff.php
 //
@@ -672,7 +672,7 @@ class WikiDiff
 		$x += -$edit;
 	  }
 	if ($x != $xlim)
-	    die("WikiDiff::apply: line count mismatch: $x != $xlim");
+	    ExitWiki(sprintf(gettext ("WikiDiff::apply: line count mismatch: %s != %s"), $x, $xlim));
 	return $output;
       }
     
@@ -732,7 +732,7 @@ class WikiDiff
       {
 	$test = $this->apply($from_lines);
 	if (serialize($test) != serialize($to_lines))
-	    die("WikiDiff::_check: failed");
+	    ExitWiki(gettext ("WikiDiff::_check: failed"));
 
 	reset($this->edits);
 	$prev = current($this->edits);
@@ -742,11 +742,11 @@ class WikiDiff
 	  {
 	    $type = is_array($edit) ? 'a' : ($edit > 0 ? 'c' : 'd');
 	    if ( $prevtype == $type )
-		die("WikiDiff::_check: edit sequence is non-optimal");
+		ExitWiki(gettext ("WikiDiff::_check: edit sequence is non-optimal"));
 	    $prevtype = $type;
 	  }
 	$lcs = $this->lcs();
-	echo "<strong>WikiDiff Okay: LCS = $lcs</strong>\n";
+	printf ("<strong>" . gettext ("WikiDiff Okay: LCS = %s") . "</strong>\n", $lcs);
       }
 }
 
@@ -984,37 +984,56 @@ if ($diff)
 //  $dba = OpenDataBase($ArchivePageStore);
   $archive= RetrievePage($dbi, $pagename, $ArchivePageStore);
 
-  $html = '<table><tr><td align="right">Current page:</td>';
-  if (is_array($wiki))
-      $html .= "<td>version $wiki[version],</td><td>last modified on "
-	  . date($datetimeformat, $wiki['lastmodified'])
-	  . "</td><td>by $wiki[author]</td>";
-  else
-      $html .= "<td colspan=3><em>None</em></td>";
-  $html .= '</tr><tr><td align="right">Archived page:</td>';
-  if (is_array($archive))
-      $html .= "<td>version $archive[version],</td><td>last modified on "
-	  . date($datetimeformat, $archive['lastmodified'])
-	  . "</td><td>by $archive[author]</td>";
-  else
-      $html .= "<td colspan=3><em>None</em></td>";
+  $html = '<table><tr><td align="right">';
+  $html .= gettext ("Current page:");
+  $html .= '</td>';
+  if (is_array($wiki)) {
+      $html .= "<td>";
+      $html .= sprintf(gettext ("version %s"), $wiki[version]);
+      $html .= "</td><td>";
+      $html .= sprintf(gettext ("last modified on %s"),
+	date($datetimeformat, $wiki['lastmodified']));
+      $html .= "</td><td>";
+      $html .= sprintf (gettext ("by %s"), $wiki[author]);
+      $html .= "</td>";
+  } else {
+      $html .= "<td colspan=3><em>";
+      $html .= gettext ("None");
+      $html .= "</em></td>";
+  }
+  $html .= "</tr>\n";
+  $html .= '<tr><td align="right">';
+  $html .= gettext ("Archived page:");
+  $html .= '</td>';
+  if (is_array($archive)) {
+      $html .= "<td>";
+      $html .= sprintf(gettext ("version %s"), $archive[version]);
+      $html .= "</td><td>";
+      $html .= sprintf(gettext ("last modified on %s"),
+	date($datetimeformat, $archive['lastmodified']));
+      $html .= "</td><td>";
+      $html .= sprintf(gettext ("by %s"), $archive[author]);
+      $html .= "</td>";
+  } else {
+      $html .= "<td colspan=3><em>";
+      $html .= gettext ("None");
+      $html .= "</em></td>";
+  }
   $html .= "</tr></table><p>\n";
-
 
   if (is_array($wiki) && is_array($archive))
     {
       $diff = new WikiDiff($archive['content'], $wiki['content']);
-      if ($diff->isEmpty())
-	  $html .= '<hr>[Versions are identical]';
-      else
-	{
+      if ($diff->isEmpty()) {
+	  $html .= '<hr>[' . gettext ("Versions are identical") . ']';
+      } else {
 	  //$fmt = new WikiDiffFormatter;
 	  $fmt = new WikiUnifiedDiffFormatter;
 	  $html .= $fmt->format($diff, $archive['content']);
-	}
+      }
     }
 
-  GeneratePage('MESSAGE', $html, sprintf(gettext("Diff of %s."),
-		htmlspecialchars($pagename)), 0);
+  GeneratePage('MESSAGE', $html, sprintf(gettext ("Diff of %s."),
+	htmlspecialchars($pagename)), 0);
 }
 ?>

@@ -1,90 +1,115 @@
-'''Paragraphs'''
+'''Alinea's'''
 
-	* Don't Indent paragraphs
+	* Spring alinea's niet in (zoals engelstaligen dat doen).
 
-	* Words wrap and fill as needed
+	* Begin een nieuwe regel en vul uit waar nodig.
 
-	* Use blank lines as separators
+	* Gebruik lege regels als scheiding.
 
-	* Four or more minus signs make a horizontal rule
+	* Vier of meer mintekens maken een horizontale lijn.
 
-	* %%''''% makes a linebreak (in headings and lists too)
+	* %%''''% maakt een regelbreuk (ook in koppen en lijsten).
 
 
-'''Lists'''
+'''Lijsten'''
 
-	* tab-* for first level
+	* tab-* voor niveau een.
 
-		* tab-tab-* for second level, etc.
+		* tab-tab-* voor niveau twee, enz.
 
-	* Use * for bullet lists, 1. for numbered lists (mix at will)
+	* Gebuik * voor gepunteerde lijsten, 1. genummerde lijsten (meng
+maar wat raak).
 
-	* tab-Term:-tab Definition for definition lists
+	* tab-Term:-tab Term voor definitie lijsten.
 
-	* One line for each item
+	* Een regel voor elk punt.
 
 	* Other leading whitespace signals preformatted text, changes font.
 
-
-'''Headings'''
-
-	* '!' at the start of a line makes a small heading
-
-	* '!!' at the start of a line makes a medium heading 
-
-	* '!!!' at the start of a line makes a large heading
+	* Andere witruimte aan het begin betekent geformatteerde tekst en
+verandert het font.
 
 
-'''Fonts'''
-	* Indent with one or more spaces to use a monospace font:
+'''Koppen'''
 
- This is in monospace
-This is not
+	* '!' aan het begin van een regel maakt een kleine kop.
 
+	* '!!' aan het begin van een regel maakt een middelgrote kop.
 
-'''Indented Paragraphs'''
-''(Quotes)''
-
-	* tab-space-:-tab -- often used (with emphasis) for quotations.  (See SimulatingQuoteBlocks)
+	* '!!!' aan het begin van een regel maakt een grote kop.
 
 
-'''Emphasis'''
+'''Lettertypen'''
 
-	* Use doubled single-quotes ('') for emphasis (usually italics)
+	* Spring in met een of meer spaties voor een niet proportioneel font:
 
-	* Use tripled single-quotes (''') for strong emphasis (usually bold)
-
-	* Use five single-quotes ('''''), or triples within doubles, for some other kind of emphasis (BoldItalicInWiki), but be careful about the bugs in the Wiki emphasis logic...
-
-	* Emphasis can be used multiple times within a line, but cannot cross line boundaries
+ Dit is niet proportioneel
+En dit lekker wel.
 
 
-'''References'''
-	* Hyperlinks to other pages within the Wiki are made by placing the page name in square brackets: [this is a page link]
+'''Ingesprongen Alinea's'''
+''(Citaten)''
 
-	* Hyperlinks to external pages are done like this: [http://www.wcsb.org/]
-
-	* You can name the links to the external pages by providing a name, a bar (|) and then the hyperlink: [Steve's home page | http://wcsb.org/~swain/]  
-
-	* Old Wiki linking is still supported: JoinCapitalizedWords to make local references
-
-	* You can suppress linking to old-style references by preceeding the word with a '!', e.g. !NotLinkedAsWikiName
-
-	* [1], [2], [3], [4] refer to remote references. Click EditLinks on the edit form to enter URLs. These differ from the newer linking scheme; references are unique to a page.
-
-	* Also, the old way of linking URL's is still supported: precede URLs with "http:", "ftp:" or "mailto:" to create links automatically as in: http://c2.com/
-
-	* URLs ending with .png are inlined ''if inserted as a remote reference'' 
+	* tab-space-:-tab -- veel gebruikt (met nadruk) voor citaten.  (Zie
+BlokCitatenNadoen)
 
 
-'''Mark-Up Language'''
+'''Nadruk'''
 
-	* Don't bother
+	* Gebruik twee enkele aanhalingtekens ('') voor nadruk (meestal
+schuin).
 
-	* < and > are themselves
+	* Gebuik drie enkele aanhalingtekens (''') voor sterke nadruk (meestal
+vet).
 
-	* The & characters will not work
+	* Gebruik vijf enkele aanhalingstekens ('''''), of drie binnen dubbele,
+voor een ander soort van nadruk (VetSchuinInWiki), maar wees voorzichtig met
+luizen in de Wiki nadruk logica...
 
-	* If you really must use HTML, start each line with a bar (|). Note that this featured must be enabled by the system administrator.
+	* Nadruk kan meerdere malen in een regel worden gebruikt, maar kan
+regelbreuken niet oversteken.
 
+
+'''Verwijzingen'''
+
+	* Koppelingen naar andere pagina's binnen de Wiki worden gemaakt door
+de naam van de pagina in vierkante haken te zetten:
+[dit is een paginakoppeling].
+
+	* Koppelingen naar externe pagina's gaan zo: [http://www.lilypond.org].
+
+	* Je kunt de koppelingen naar externe pagina's een naam geven, door
+het tiepen van naam, een staaf (|) en dan de koppeling: [Jan's thuispagina |
+http://www.xs4all.nl/~jantien].
+
+	* Oude Wiki koppeling wordt nog steeds ondersteund:
+KapitaliseerEnSchrijfAanElkaar voor het maken van lokale verwijzingen.
+
+	* Je kunt koppelen naar oude stijl verwijzingen onderdrukken door
+een '!' voor de woorden te tiepen: !NietGekoppeldAlsWikiNaam.
+
+	* [1], [2], [3], [4] verwijzen naar externe verwijzingen.  Klik
+VeranderKoppelingen op het veranderformulier voor het intiepen van de URLs.
+Deze zijn anders dan de nieuwere manier van koppelen; verwijzingen zijn
+per pagina uniek.
+
+	* De oude manier van URL koppeling wordt nog steeds ondersteund:
+tiep voor de URLs "http:", "ftp:' of "mailto:" ome een automatische koppeling
+te maken, als in: http://c2.com/.
+
+	* URLs die eindigen op .png worden ingebed ''wanneer ingevoerd als
+een externe verwijzing''.
+
+
+'''Opmaak Taal'''
+
+	* Doe geen moeite.
+
+	* < en > zijn zichzelf.
+
+	* De & tekens werken toch niet.
+
+	* Als je nou echt zo nodig HTML moet gebruiken, begin elke regel met
+een staaf (|).  Noot dat dit kunstje mogelijk gemaakt moet worden door
+de systeembeheerder.
 

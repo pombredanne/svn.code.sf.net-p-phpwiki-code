@@ -1,4 +1,4 @@
-<!-- $Id: stdlib.php,v 1.3 2000-10-19 22:25:45 ahollosi Exp $ -->
+<!-- $Id: stdlib.php,v 1.4 2000-10-20 11:42:52 ahollosi Exp $ -->
 <?php
    /*
       Standard functions for Wiki functionality
@@ -17,7 +17,7 @@
          UpdateRecentChanges($dbi, $pagename, $isnewpage) 
          ParseAndLink($bracketlink)
          ExtractWikiPageLinks($content)
-	 ExitWiki($errormsg)
+         ExitWiki($errormsg)
    */
 
 
@@ -33,7 +33,7 @@
       CloseDataBase($dbi);
 
       if($errormsg <> '') {
-         print "<P><hr noshade><h2>WikiFatalError</h2>\n";
+         print "<P><hr noshade><h2>" . gettext("WikiFatalError") . "</h2>\n";
          print $errormsg;
          print "\n</BODY></HTML>";
       }
@@ -49,7 +49,9 @@
 
       $links = GetWikiPageLinks($dbi, $pagename);
 
-      $txt = "<b>" . NUM_RELATED_PAGES . " best incoming links:</b>\n";
+      $txt = "<b>";
+      $txt .= sprintf (gettext ("%d best incoming links:"), NUM_RELATED_PAGES);
+      $txt .= "</b>\n";
       for($i = 0; $i < NUM_RELATED_PAGES; $i++) {
          if(isset($links['in'][$i])) {
             list($name, $score) = $links['in'][$i];
@@ -57,7 +59,9 @@
          }
       }
 
-      $txt .= "\n<br><b>" . NUM_RELATED_PAGES . " best outgoing links:</b>\n";
+      $txt .= "\n<br><b>";
+      $txt .= sprintf (gettext ("%d best outgoing links:"), NUM_RELATED_PAGES);
+      $txt .= "</b>\n";
       for($i = 0; $i < NUM_RELATED_PAGES; $i++) {
          if(isset($links['out'][$i])) {
             list($name, $score) = $links['out'][$i];
@@ -66,7 +70,9 @@
          }
       }
 
-      $txt .= "\n<br><b>" . NUM_RELATED_PAGES . " most popular nearby:</b>\n";
+      $txt .= "\n<br><b>";
+      $txt .= sprintf (gettext ("%d most popular nearby:"), NUM_RELATED_PAGES);
+      $txt .= "</b>\n";
       for($i = 0; $i < NUM_RELATED_PAGES; $i++) {
          if(isset($links['popular'][$i])) {
             list($name, $score) = $links['popular'][$i];
@@ -279,7 +285,7 @@
                $stack->push($tag);
                if ($stack->cnt() > 10) {
                   // arbitrarily limit tag nesting
-                  ExitWiki("Stack bounds exceeded in SetHTMLOutputMode");
+                  ExitWiki(gettext ("Stack bounds exceeded in SetHTMLOutputMode"));
                }
             }
    
@@ -314,8 +320,9 @@
             $stack->push($tag);
          }
    
-      } else {    // error
-         ExitWiki("Passed bad tag depth value in SetHTMLOutputMode");
+      } else {
+         // error
+         ExitWiki ("Passed bad tag depth value in SetHTMLOutputMode");
       }
 
       return $retvar;
@@ -333,7 +340,8 @@
       global $ScriptUrl;
       global $WikiPageStore;
 
-      $recentchanges = RetrievePage($dbi, gettext("RecentChanges"), $WikiPageStore);
+      $recentchanges = RetrievePage($dbi, gettext ("RecentChanges"), 
+      	$WikiPageStore);
 
       // this shouldn't be necessary, since PhpWiki loads 
       // default pages if this is a new baby Wiki
@@ -395,7 +403,7 @@
 
       $recentchanges["content"] = $newpage;
 
-      InsertPage($dbi, gettext("RecentChanges"), $recentchanges);
+      InsertPage($dbi, gettext ("RecentChanges"), $recentchanges);
    }
 
 
@@ -506,5 +514,5 @@
       }
 
       return $wikilinks;
-   }
+   }      
 ?>

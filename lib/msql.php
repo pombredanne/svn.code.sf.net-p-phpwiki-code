@@ -1,4 +1,4 @@
-<!-- $Id: msql.php,v 1.2 2000-10-19 22:25:45 ahollosi Exp $ -->
+<!-- $Id: msql.php,v 1.3 2000-10-20 11:42:52 ahollosi Exp $ -->
 <?php
 
    /*
@@ -26,14 +26,16 @@
       global $msql_db;
 
       if (! ($dbc = msql_connect())) {
-         $msg =  "Cannot establish connection to database, giving up.";
-         $msg .= "<BR>Error message: " . msql_error();
-         ExitWiki($msg);
+         $msg = gettext ("Cannot establish connection to database, giving up.");
+	 $msg .= "<BR>";
+	 $msg .= sprintf(gettext ("Error message: %s"), msql_error());
+	 ExitWiki($msg);
       }
       if (!msql_select_db($msql_db, $dbc)) {
-         $msg =  "Cannot open database $msql_db, giving up.";
-         $msg .= "<BR>Error message: " . msql_error();
-         ExitWiki($msg);
+         $msg = gettext ("Cannot open database %s, giving up.");
+	 $msg .= "<BR>";
+	 $msg .= sprintf(gettext ("Error message: %s"), msql_error());
+	 ExitWiki($msg);
       }
 
       $dbi['dbc'] = $dbc;
@@ -194,8 +196,10 @@
 
       // first, insert the metadata
       $retval = msql_query($query, $dbi['dbc']);
-      if ($retval == false) 
-         echo "Insert/update failed: ", msql_error(), "<br>\n";
+      if ($retval == false) {
+         printf(gettext ("Insert/update failed: %s"), msql_error());
+         print "<br>\n";
+      }
 
 
       // second, insert the page data
@@ -203,8 +207,11 @@
       $query = "delete from $dbi[page_table] where pagename='$pagename'";
       // echo "Delete query: $query<br>\n";
       $retval = msql_query($query, $dbi['dbc']);
-      if ($retval == false) 
-         echo "Delete on $dbi[page_table] failed: ", msql_error(), "<br>\n";
+      if ($retval == false) {
+         printf(gettext ("Delete on %s failed: %s"), $dbi[page_table],
+            msql_error());
+         print "<br>\n";
+      }
 
       // insert the new lines
       reset($pagehash["content"]);
@@ -216,14 +223,13 @@
                   "VALUES('$pagename', $x, '$line')";
          // echo "Page line insert query: $query<br>\n";
          $retval = msql_query($query, $dbi['dbc']);
-         if ($retval == false) 
-            echo "Insert into $dbi[page_table] failed: ", 
-                  msql_error(), "<br>\n";
-         
+         if ($retval == false) { 
+            printf(gettext ("Insert into %s failed: %s"), $dbi[page_table],
+               msql_error());
+	    print "<br>\n";
+	 }
       }
-
    }
-
 
 
    // for archiving pages to a separate table
@@ -266,17 +272,21 @@
 
       // first, insert the metadata
       $retval = msql_query($query, $dbi['dbc']);
-      if ($retval == false) 
-         echo "Insert/update failed: ", msql_error(), "<br>\n";
-
+      if ($retval == false) {
+         printf(gettext ("Insert/update failed: %s"), msql_error());
+	 print "<br>\n";
+      }
 
       // second, insert the page data
       // remove old data from page_table
       $query = "delete from $ArchivePageStore[page_table] where pagename='$pagename'";
       // echo "Delete query: $query<br>\n";
       $retval = msql_query($query, $dbi['dbc']);
-      if ($retval == false) 
-         echo "Delete on $ArchivePageStore[page_table] failed: ", msql_error(), "<br>\n";
+      if ($retval == false) {
+         printf(gettext ("Delete on %s failed: %s"),
+          $ArchivePageStore[page_table], msql_error());
+         print "<br>\n";
+      }
 
       // insert the new lines
       reset($pagehash["content"]);
@@ -288,10 +298,11 @@
                   "VALUES('$pagename', $x, '$line')";
          // echo "Page line insert query: $query<br>\n";
          $retval = msql_query($query, $dbi['dbc']);
-         if ($retval == false) 
-            echo "Insert into $ArchivePageStore[page_table] failed: ", 
-                  msql_error(), "<br>\n";
-         
+         if ($retval == false) {
+            printf(gettext ("Insert into %s failed: %s"),
+              $ArchivePageStore[page_table], msql_error());
+            print "<br>\n";
+         }
       }
 
 

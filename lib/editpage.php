@@ -1,4 +1,4 @@
-<!-- $Id: editpage.php,v 1.3 2000-10-19 22:25:45 ahollosi Exp $ -->
+<!-- $Id: editpage.php,v 1.4 2000-10-20 11:42:52 ahollosi Exp $ -->
 <?php
 
    // editpage relies on $pagename and $ScriptUrl
@@ -16,21 +16,24 @@
       if (get_magic_quotes_gpc()) {
          $pagename = stripslashes($pagename);
       }
-      $banner = htmlspecialchars("Copy of $pagename");
+      $banner = htmlspecialchars (sprintf (gettext ("Copy of %s"), $pagename));
       $pagehash = RetrievePage($dbi, $pagename, $ArchivePageStore);
 
-   } else
-      ExitWiki("No page name passed into editpage!");
+   } else {
+      ExitWiki(gettext ("No page name passed into editpage!"));
+   }
 
 
    if (is_array($pagehash)) {
 
       if (($pagehash['flags'] & FLAG_PAGE_LOCKED) && !$admin_edit) {
-	 $html = "<p>This page has been locked by the administrator\n" .
-		 "and cannot be edited.\n" .
-		 "<p>Sorry for the inconvinience.\n";
-	 GeneratePage('MESSAGE', $html, "Problem while editing $pagename", 0);
-	 ExitWiki('');
+	 $html = "<p>";
+	 $html .= gettext ("This page has been locked by the administrator and cannot be edited.");
+	 $html .= "\n<p>";
+	 $html .= gettext ("Sorry for the inconvinience.");
+	 $html .= "\n";
+	 GeneratePage('MESSAGE', $html, sprintf (gettext ("Problem while editing %s"), $pagename), 0);
+	 ExitWiki ("");
       }
 
       $textarea = implode("\n", $pagehash["content"]);
@@ -44,8 +47,8 @@
            $pagehash["copy"] = 1;
       }
    } else {
-      $textarea = sprintf(gettext("Describe %s here."),
-			  htmlspecialchars($pagename));
+      $textarea = sprintf(gettext ("Describe %s here."),
+				htmlspecialchars($pagename));
       unset($pagehash);
       $pagehash["version"] = 0;
    }

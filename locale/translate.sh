@@ -1,6 +1,10 @@
 #!/bin/bash
 # translate.sh
 #
+# Usage:
+#
+#   ./locale/translate.sh
+#
 # This script should be run by
 #
 #    * PphWiki maintainers, before making a distribution
@@ -9,14 +13,15 @@
 
 ALL_LINGUAS=nl
 
-xgettext -L C++ -o po/phpwiki.pot ../lib/*php
+xgettext -L C++ -o locale/po/phpwiki.pot lib/*php
+podir=locale/po
 for i in $ALL_LINGUAS; do
-	po=po/$i.po
-	pot=po/phpwiki.pot
-	locale=$i/LC_MESSAGES
+	po=$podir/$i.po
+	pot=$podir/phpwiki.pot
+	locale=locale/$i/LC_MESSAGES
 
 	msgmerge -o $po $po $pot
-	mkdir -p $i/LC_MESSAGES
+	mkdir -p locale/$i/LC_MESSAGES
 	msgfmt -o $locale/phpwiki.mo $po
 
 	awk -- '

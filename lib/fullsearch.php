@@ -1,4 +1,4 @@
-<!-- $Id: fullsearch.php,v 1.1 2000-10-08 17:33:26 wainstead Exp $ -->
+<!-- $Id: fullsearch.php,v 1.2 2000-10-20 11:42:52 ahollosi Exp $ -->
 <?php
    /*
       Search the text of pages for a match.
@@ -11,8 +11,10 @@
    if(get_magic_quotes_gpc())
       $full = stripslashes($full);
 
-   $result = "<P><B>Searching for \"" . htmlspecialchars($full) .
-		"\" ....</B></P>\n<DL>\n";
+   $result = "<P><B>";
+   $result .= sprintf(gettext ("Searching for \"%s\" ....."),
+      htmlspecialchars($full));
+   $result .= "</B></P>\n<DL>\n";
 
    // quote regexp chars
    $full = preg_quote($full);
@@ -38,6 +40,9 @@
       }
    }
 
-   $result .= "</dl>\n<hr noshade>$found matches found in $count pages.\n";
-   GeneratePage('MESSAGE', $result, "Full Text Search Results", 0);
+   $result .= "</dl>\n<hr noshade>";
+   $result .= sprintf (gettext ("%d matches found in %d pages."),
+     $found, $count);
+   $result .= "\n";
+   GeneratePage('MESSAGE', $result, gettext ("Full Text Search Results"), 0);
 ?>

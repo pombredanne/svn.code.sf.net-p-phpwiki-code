@@ -1,11 +1,22 @@
-To add a new page to Wiki, all you have to do is come up with a meaningful title, capatalize all the words and StringThemTogetherLikeThis. Wiki automagically recognizes it as a hyperlink.
+Voor het toevoegen van een nieuwe pagina aan Wiki, hoef je alleen maar een
+zinvolle titel de bedenken, de woorden met een hoofdletter te beginnen, en
+ZeAanElkaarTeSchrijvenZoalsDit.  Wiki herkent dit automagisch als een
+koppeling.
 
-Then you can go ahead and ClickTheQuestionMark at the end of your new hyperlink, and the Wiki will give you a window for making the new page.
+Daarna kun je verder gaan en HetVraagtekenAanKlikken vlak na je nieuwe
+koppeling, dan geeft Wiki je een venster voor het maken van de nieuwe pagina.
 
 If you wish to add documents with complex markup to the Wiki, you might be better off providing a URL to it than trying to add the text of the document here, like so:
 
- PhpWiki project homepage: http://wcsb.org/~swain/php/wiki/
+Als je documenten met een gecompliceerde opmaak aan Wiki toe wilt voegen,
+kun je misschien beter een URL geven dan de tekst van het document hier 
+in proberen te tiepen, zoals:
 
-The Wiki does not support HTML tags (see TextFormattingRules).  <tags>They will just render like text.</tags> Wiki is meant to be as simple as possible to encourage use.
+ PhpWiki project pagina: http://wcsb.org/~swain/php/wiki/
 
-Note that there is a feature that your system administrator can enable to allow embedded HTML, but there are security risks involved.
+Wiki ondersteunt geen HTML tags (zie TekstFormmateringsRegels).  <tags>Die
+zien er gewoon uit als tekst.</tags>  De bedoeling van Wiki is zo eenvoudig 
+mogelijk zijn, om gebruik aan te moedigen.
+
+Noot dat er een kunstje is dat je systeembeheerder aan kan zetten om
+ingebedde HTML toe te staan, maar hier zijn beveiligingsrisiko's mee gemoeid.
