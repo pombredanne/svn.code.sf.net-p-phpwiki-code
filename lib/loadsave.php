@@ -1,8 +1,8 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.135 2004-12-26 17:17:25 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.136 2005-01-25 07:07:24 rurban Exp $');
 
 /*
- Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
+ Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -20,7 +20,6 @@ rcs_id('$Id: loadsave.php,v 1.135 2004-12-26 17:17:25 rurban Exp $');
  along with PhpWiki; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -303,7 +302,7 @@ function DumpToDir (&$request)
 
     $request_args = $request->args;
     $timeout = (! $request->getArg('start_debug')) ? 30 : 240;
-    
+
     while ($page = $pages->next()) {
 	$request->args = $request_args; // some plugins might change them (esp. on POST)
         longer_timeout($timeout); 	// Reset watchdog
@@ -315,7 +314,7 @@ function DumpToDir (&$request)
         }
 
         if (in_array($pagename, $excludeList)) {
-            if (!isa($request,'MockRequest')) {
+            if (!isa($request, 'MockRequest')) {
                 PrintXML(_("Skipped."));
                 flush();
             }
@@ -341,7 +340,7 @@ function DumpToDir (&$request)
 
         $num = fwrite($fd, $data, strlen($data));
         $msg->pushContent(HTML::small(fmt("%s bytes written", $num)));
-        if (!isa($request,'MockRequest')) {
+        if (!isa($request, 'MockRequest')) {
             PrintXML($msg);
             flush();
         }
@@ -350,6 +349,15 @@ function DumpToDir (&$request)
     }
 
     EndLoadDump($request);
+}
+
+function _copyMsg($page, $smallmsg) {
+    if (!isa($GLOBALS['request'], 'MockRequest')) {
+        if ($page) $msg = HTML(HTML::br(), HTML($page), HTML::small($smallmsg));
+        else $msg = HTML::small($smallmsg);
+        PrintXML($msg);
+        flush();
+    }
 }
 
 /**
@@ -404,6 +412,8 @@ function DumpHtmlToDir (&$request)
     if (defined('HTML_DUMP_SUFFIX'))
         $WikiTheme->HTML_DUMP_SUFFIX = HTML_DUMP_SUFFIX;
     $WikiTheme->DUMP_MODE = 'HTML';
+    $_bodyAttr = $WikiTheme->_MoreAttr['body'];
+    unset($WikiTheme->_MoreAttr['body']);
 
     // check if the dumped file will be accessible from outside
     $doc_root = $request->get("DOCUMENT_ROOT");
@@ -422,7 +432,7 @@ function DumpHtmlToDir (&$request)
     }
 
     $request_args = $request->args;
-    $timeout = (! $request->getArg('start_debug')) ? 30 : 240;
+    $timeout = (! $request->getArg('start_debug')) ? 20 : 240;
     
     while ($page = $pages->next()) {
 	$request->args = $request_args; // some plugins might change them (esp. on POST)
@@ -463,7 +473,7 @@ function DumpHtmlToDir (&$request)
             $msg->pushContent(HTML::small(_("saved as "), $link, " ... "));
         }
         $msg->pushContent(HTML::small(fmt("%s bytes written", $num), "\n"));
-        if (!isa($request,'MockRequest')) {
+        if (!isa($request, 'MockRequest')) {
             PrintXML($msg);
         }
         flush();
@@ -473,10 +483,10 @@ function DumpHtmlToDir (&$request)
         fclose($fd);
 
         if (USECACHE) {
-          $request->_dbi->_cache->invalidate_cache($pagename);
-          unset ($request->_dbi->_cache->_pagedata_cache);
-          unset ($request->_dbi->_cache->_versiondata_cache);
-          unset ($request->_dbi->_cache->_glv_cache);
+            $request->_dbi->_cache->invalidate_cache($pagename);
+            unset ($request->_dbi->_cache->_pagedata_cache);
+            unset ($request->_dbi->_cache->_versiondata_cache);
+            unset ($request->_dbi->_cache->_glv_cache);
         }
         unset ($request->_dbi->_cache->_backend->_page_data);
 
@@ -492,17 +502,15 @@ function DumpHtmlToDir (&$request)
     if (!empty($WikiTheme->dumped_images) and is_array($WikiTheme->dumped_images)) {
         @mkdir("$directory/images");
         foreach ($WikiTheme->dumped_images as $img_file) {
-            if (($from = $WikiTheme->_findFile($img_file, true)) and basename($from)) {
+            if ($img_file and ($from = $WikiTheme->_findFile($img_file, true)) and basename($from)) {
                 $target = "$directory/images/".basename($img_file);
                 if (copy($WikiTheme->_path . $from, $target)) {
-                    $msg = HTML(HTML::br(), HTML($from), HTML::small(fmt("... copied to %s", $target)));
-                    if (!isa($request,'MockRequest'))
-                        PrintXML($msg);
+                    _copyMsg($from, fmt("... copied to %s", $target));
+                } else {
+                    _copyMsg($from, fmt("... not copied to %s", $target));
                 }
             } else {
-                $msg = HTML(HTML::br(), HTML($img_file), HTML::small(fmt("... not found", $target)));
-                if (!isa($request,'MockRequest'))
-                    PrintXML($msg);
+                _copyMsg($from, _("... not found"));
             }
         }
     }
@@ -510,38 +518,35 @@ function DumpHtmlToDir (&$request)
     	// Buttons also
         @mkdir("$directory/images/buttons");
         foreach ($WikiTheme->dumped_buttons as $text => $img_file) {
-            if (($from = $WikiTheme->_findFile($img_file, true)) and basename($from)) {
+            if ($img_file and ($from = $WikiTheme->_findFile($img_file, true)) and basename($from)) {
                 $target = "$directory/images/buttons/".basename($img_file);
                 if (copy($WikiTheme->_path . $from, $target)) {
-                    $msg = HTML(HTML::br(), HTML($from), HTML::small(fmt("... copied to %s", $target)));
-                    if (!isa($request,'MockRequest'))
-                        PrintXML($msg);
+                    _copyMsg($from, fmt("... copied to %s", $target));
+                } else {
+                    _copyMsg($from, fmt("... not copied to %s", $target));
                 }
             } else {
-                $msg = HTML(HTML::br(), HTML($img_file), HTML::small(fmt("... not found", $target)));
-                if (!isa($request,'MockRequest'))
-                    PrintXML($msg);
+                _copyMsg($from, _("... not found"));
             }
         }
     }
     if (!empty($WikiTheme->dumped_css) and is_array($WikiTheme->dumped_css)) {
-      foreach ($WikiTheme->dumped_css as $css_file) {
-          if (($from = $WikiTheme->_findFile(basename($css_file), true)) and basename($from)) {
-              $target = "$directory/" . basename($css_file);
-              if (copy($WikiTheme->_path . $from, $target)) {
-                  $msg = HTML(HTML::br(), HTML($from), HTML::small(fmt("... copied to %s", $target)));
-                  if (!isa($request,'MockRequest'))
-                      PrintXML($msg);
-              }
-          } else {
-              $msg = HTML(HTML::br(), HTML($css_file), HTML::small(fmt("... not found", $target)));
-              if (!isa($request,'MockRequest'))
-                  PrintXML($msg);
-          }
-      }
+        foreach ($WikiTheme->dumped_css as $css_file) {
+            if ($css_file and ($from = $WikiTheme->_findFile(basename($css_file), true)) and basename($from)) {
+                $target = "$directory/" . basename($css_file);
+                if (copy($WikiTheme->_path . $from, $target)) {
+                    _copyMsg($from, fmt("... copied to %s", $target));
+                } else {
+                    _copyMsg($from, fmt("... not copied to %s", $target));
+                }
+            } else {
+                _copyMsg($from, _("... not found"));
+            }
+        }
     }
     $WikiTheme->HTML_DUMP_SUFFIX = '';
     $WikiTheme->DUMP_MODE = false;
+    $WikiTheme->_MoreAttr['body'] = $_bodyAttr;
 
     $request->setArg('pagename',$thispage); // Template::_basepage fix
     EndLoadDump($request);
@@ -581,6 +586,8 @@ function MakeWikiZipHtml (&$request)
     if (defined('HTML_DUMP_SUFFIX'))
         $WikiTheme->HTML_DUMP_SUFFIX = HTML_DUMP_SUFFIX;
     $WikiTheme->DUMP_MODE = 'ZIPHTML';
+    $_bodyAttr = $WikiTheme->_MoreAttr['body'];
+    unset($WikiTheme->_MoreAttr['body']);
 
     /* ignore fatals in plugins */
     if (check_php_version(4,1)) {
@@ -589,7 +596,7 @@ function MakeWikiZipHtml (&$request)
     }
 
     $request_args = $request->args;
-    $timeout = (! $request->getArg('start_debug')) ? 30 : 240;
+    $timeout = (! $request->getArg('start_debug')) ? 20 : 240;
     
     while ($page = $pages->next()) {
 	$request->args = $request_args; // some plugins might change them (esp. on POST)
@@ -620,13 +627,13 @@ function MakeWikiZipHtml (&$request)
 
         $data = GeneratePageasXML($template, $pagename);
 
-        $zip->addRegularFile( $filename, $data, $attrib);
+        $zip->addRegularFile( $filename, $data, $attrib );
         
         if (USECACHE) {
-          $request->_dbi->_cache->invalidate_cache($pagename);
-          unset ($request->_dbi->_cache->_pagedata_cache);
-          unset ($request->_dbi->_cache->_versiondata_cache);
-          unset ($request->_dbi->_cache->_glv_cache);
+            $request->_dbi->_cache->invalidate_cache($pagename);
+            unset ($request->_dbi->_cache->_pagedata_cache);
+            unset ($request->_dbi->_cache->_versiondata_cache);
+            unset ($request->_dbi->_cache->_glv_cache);
         }
         unset ($request->_dbi->_cache->_backend->_page_data);
 
@@ -637,15 +644,54 @@ function MakeWikiZipHtml (&$request)
         unset($data);
     }
     $pages->free();
-    
-    // FIXME: Deal with css and images here.
+
+    $attrib = false;
+    // Deal with css and images here.
+    if (!empty($WikiTheme->dumped_images) and is_array($WikiTheme->dumped_images)) {
+    	// dirs are created automatically
+        //if ($WikiTheme->dumped_images) $zip->addRegularFile("images", "", $attrib);
+        foreach ($WikiTheme->dumped_images as $img_file) {
+            if (($from = $WikiTheme->_findFile($img_file, true)) and basename($from)) {
+                $target = "images/".basename($img_file);
+                if (check_php_version(4,3))
+                    $zip->addRegularFile($target, file_get_contents($WikiTheme->_path . $from), $attrib);
+                else
+                    $zip->addRegularFile($target, join('', file($WikiTheme->_path . $from)), $attrib);
+            }
+        }
+    }
+    if (!empty($WikiTheme->dumped_buttons) and is_array($WikiTheme->dumped_buttons)) {
+        //if ($WikiTheme->dumped_buttons) $zip->addRegularFile("images/buttons", "", $attrib);
+        foreach ($WikiTheme->dumped_buttons as $text => $img_file) {
+            if (($from = $WikiTheme->_findFile($img_file, true)) and basename($from)) {
+                $target = "images/buttons/".basename($img_file);
+                if (check_php_version(4,3))
+                    $zip->addRegularFile($target, file_get_contents($WikiTheme->_path . $from), $attrib);
+                else
+                    $zip->addRegularFile($target, join('', file($WikiTheme->_path . $from)), $attrib);
+            }
+        }
+    }
+    if (!empty($WikiTheme->dumped_css) and is_array($WikiTheme->dumped_css)) {
+        foreach ($WikiTheme->dumped_css as $css_file) {
+            if (($from = $WikiTheme->_findFile(basename($css_file), true)) and basename($from)) {
+                $target = basename($css_file);
+                if (check_php_version(4,3))
+                    $zip->addRegularFile($target, file_get_contents($WikiTheme->_path . $from), $attrib);
+                else
+                    $zip->addRegularFile($target, join('', file($WikiTheme->_path . $from)), $attrib);
+            }
+        }
+    }
+
     $zip->finish();
     if (check_php_version(4,1)) {
         global $ErrorManager;
         $ErrorManager->popErrorHandler();
     }
-    $WikiTheme->$HTML_DUMP_SUFFIX = '';
+    $WikiTheme->HTML_DUMP_SUFFIX = '';
     $WikiTheme->DUMP_MODE = false;
+    $WikiTheme->_MoreAttr['body'] = $_bodyAttr;
 }
 
 
@@ -876,7 +922,7 @@ function _tryinsertInterWikiMap($content) {
         return $content;
 
     // if loading from virgin setup do echo, otherwise trigger_error E_USER_NOTICE
-    if (!isa($GLOBALS['request'],'MockRequest'))
+    if (!isa($GLOBALS['request'], 'MockRequest'))
         echo sprintf(_("Loading InterWikiMap from external file %s."), $mapfile),"<br />";
 
     $fd = fopen ($mapfile, "rb");
@@ -1259,6 +1305,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.135  2004/12/26 17:17:25  rurban
+ announce dumps - mult.requests to avoid request::finish, e.g. LinkDatabase, PdfOut, ...
+
  Revision 1.134  2004/12/20 16:05:01  rurban
  gettext msg unification
 
