@@ -317,11 +317,12 @@
       if (isset($matches[3])) {
          $URL = trim($matches[3]);
          $linkname = htmlspecialchars(trim($matches[1]));
-         if (preg_match("#^($AllowedProtocols):#", $linkname)) {
+         echo "$URL $linkname<br>";
+         if (preg_match("#^($AllowedProtocols):#", $URL)) {
             return "<a href=\"$URL\">$linkname</a>";
-	 } else {
-	    return "<b><u>BAD URL -- links have to start with one of " . 				   "$AllowedProtocols followed by ':'</u></b>";
-	 }
+         } else {
+            return "<b><u>BAD URL -- links have to start with one of " . 				                "$AllowedProtocols followed by ':'</u></b>";
+         }
       }
 
       if (isset($matches[1])) {
