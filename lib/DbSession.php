@@ -1,254 +1,207 @@
-<?php
-ini_set('session.save_handler','user'); 
-
-//----------------------------------------------------+
-// This class is based on PEAR (http://pear.php.net) -+
-//----------------------------------------------------+
-
-// {{{ includes
-
-include_once 'lib/pear/DB.php';
-require_once('lib/WikiDB/backend/PearDB.php');
-
-// }}} includes
-
-// {{{ classes
+<?php rcs_id('$Id: DbSession.php,v 1.3 2003-03-04 05:33:00 dairiki Exp $');
 
 /**
  * Store sessions data in Pear DB.
+ *
+ * History
+ *
+ * Originally by Stanislav Shramko <stanis@movingmail.com>
  * Minor rewrite by Reini Urban <rurban@x-ray.at> for Phpwiki.
- *
- * @package Session
- * @class   DB_Session
- * @author  Stanislav Shramko <stanis@movingmail.com>
- * @access  public
- * @version $Revision: 1.2 $
- *
+ * Quasi-major rewrite/decruft/fix by Jeff Dairiki <dairiki@dairiki.org>.
  */
-
-class DB_Session 
-extends WikiDB_backend_PearDB
-// extends DB
+class DB_Session
 {
-
     /**
-     * Constructor.
+     * Constructor
      *
-     * @param  string $table a name of the table
-     * @access public
+     * @param mixed $dbh
+     * Pear DB handle, or WikiDB object (from which the Pear DB handle will
+     * be extracted.
+     *
+     * @param string $table
+     * Name of SQL table containing session data.
      */
-    function DB_Session(& $dbh, $table = 'session_table') {
-	global $db_session_dbh, $db_session_dsn, $db_session_persistent, $session_table;
-	$session_table = $table;
-	// We always use persistent connections for now. See PearDB.
-	
-	if (!$dbh) { // Fixme. This should not happen.
-	    trigger_error(_("No DB_Session handler."), E_USER_WARNING);
-	    $db = new WikiDB_backend_PearDB ($GLOBALS['DBParams']);
-	    $db_session_dsn = $db->_dsn;
-	    $db_session_dbh = $db->_dbh;
-	    $db_session_persistent = $dbh->getOption('persistent');
-	    /*
-	    PEAR::PEAR();
-	    $db_session_dsn = $GLOBALS['DBParams']['dsn'];
-	    $db_session_dbh = DB::connect($db_session_dsn, 
-					  array('persistent' => $db_session_persistent, 
-					        'debug' => 2));
-	    */
-	    if (DB::isError($db_session_dbh)) {
-		die("DB_Session allocated the following problem: " . 
-		    $db_session_dbh->getMessage());
-	    }
-	}
-	else {
-	    $db_session_persistent = $dbh->getOption('persistent');
-	    $db_session_dbh = $dbh;
-	    $db_session_dsn = $GLOBALS['DBParams']['dsn'];
-	}
-	session_set_save_handler ("_db_session_open", 
-				  "_db_session_close", "_db_session_read", 
-				  "_db_session_write", "_db_session_destroy", 
-				  "_db_session_gc");
+    function DB_Session(&$dbh, $table = 'session') {
+
+        // Coerce WikiDB to Pear DB.
+        if (isa($dbh, 'WikiDB')) {
+            $backend = &$dbh->_backend;
+            if (!isa($backend, 'WikiDB_backend_PearDB')) {
+                trigger_error('Your WikiDB does not seem to be using a Pear DB backend',
+                              E_USER_ERROR);
+                return;
+            }
+            $dbh = &$backend->_dbh;
+        }
+    
+        $this->_dbh = &$dbh;
+        $this->_table = $table;
+
+        ini_set('session.save_handler','user');
+
+        session_set_save_handler(array(&$this, 'do_open'),
+                                 array(&$this, 'do_close'),
+                                 array(&$this, 'do_read'),
+                                 array(&$this, 'do_write'),
+                                 array(&$this, 'do_destroy'),
+                                 array(&$this, 'do_gc'));
     }
 
+    function _connect() {
+        $dbh = &$this->_dbh;
+        $this->_connected = (bool)$dbh->connection;
+        if (!$this->_connected) {
+            $res = $dbh->connect($dbh->dsn);
+            if (DB::isError($res)) {
+                error_log("PhpWiki::DB_Session::_connect: " . $res->getMessage());
+            }
+        }
+        return $dbh;
+    }
+
+    function _disconnect() {
+        if (!$this->_connected)
+            $this->_dbh->disconnect();
+    }
+    
     /**
-     * Destructor.
+     * Opens a session.
      *
-     * Used to remove a persistent connection if it's made.
-     *
+     * Actually this function is a fake for session_set_save_handle.
+     * @param  string $save_path a path to stored files
+     * @param  string $session_name a name of the concrete file
+     * @return boolean true just a variable to notify PHP that everything 
+     * is good.
      * @access private
      */
-    function _DB_Session() {
-	global $db_session_persistent, $db_session_dbh;
-	if ($db_session_persistent == true && isset($db_session_dbh) &&
-	    get_class($db_session_dbh) == 'db') {
-	    $db_session_dbh->disconnect();
-	}
+    function do_open ($save_path, $session_name) {
+        //$this->log("_do_open($save_path, $session_name)");
+        return true;
+    }
+
+    /**
+     * Closes a session.
+     *
+     * This function is called just after <i>do_write</i> call.
+     *
+     * @return boolean true just a variable to notify PHP that everything 
+     * is good.
+     * @access private
+     */
+    function do_close() {
+        //$this->log("_do_close()");
+        return true;
+    }
+
+    /**
+     * Reads the session data from DB.
+     *
+     * @param  string $id an id of current session
+     * @return string
+     * @access private
+     */
+    function do_read ($id) {
+        //$this->log("_do_read($id)");
+        $dbh = &$this->_connect();
+        $table = $this->_table;
+        $qid = $dbh->quote($id);
+    
+        $res = $dbh->getOne("SELECT sess_data FROM $table WHERE sess_id=$qid");
+
+        $this->_disconnect();
+        if (DB::isError($res) || empty($res))
+            return '';
+        if (preg_match('|^[a-zA-Z0-9/+=]+$|', $res))
+            $res = base64_decode($res);
+        return $res;
+    }
+  
+    /**
+     * Saves the session data into DB.
+     *
+     * Just  a  comment:       The  "write"  handler  is  not 
+     * executed until after the output stream is closed. Thus,
+     * output from debugging statements in the "write" handler
+     * will  never be seen in the browser. If debugging output
+     * is  necessary, it is suggested that the debug output be
+     * written to a file instead.
+     *
+     * @param  string $id
+     * @param  string $sess_data
+     * @return boolean true if data saved successfully  and false
+     * otherwise.
+     * @access private
+     */
+    function do_write ($id, $sess_data) {
+        
+        $dbh = &$this->_connect();
+        $table = $this->_table;
+        $qid = $dbh->quote($id);
+        $time = time();
+
+        // postgres can't handle binary data in a TEXT field.
+        if (isa($dbh, 'DB_pgsql'))
+            $sess_data = base64_encode($sess_data);
+        $qdata = $dbh->quote($sess_data);
+        
+        $res = $dbh->query("UPDATE $table"
+                           . " SET sess_data=$qdata, sess_date=$time"
+                           . " WHERE sess_id=$qid");
+
+        if ($dbh->affectedRows() == 0)
+            $res = $dbh->query("INSERT INTO $table"
+                               . " (sess_id, sess_data, sess_date)"
+                               . " VALUES ($qid, $qdata, $time)");
+
+        $this->_disconnect();
+        return ! DB::isError($res);
+    }
+
+    /**
+     * Destroys a session.
+     *
+     * Removes a session from the table.
+     *
+     * @param  string $id
+     * @return boolean true 
+     * @access private
+     */
+    function do_destroy ($id) {
+        $dbh = &$this->_connect();
+        $table = $this->_table;
+        $qid = $dbh->quote($id);
+
+        $dbh->query("DELETE FROM $table WHERE sess_id=$qid");
+
+        $this->_disconnect();
+        return true;     
+    }
+
+    /**
+     * Cleans out all expired sessions.
+     *
+     * @param  int $maxlifetime session's time to live.
+     * @return boolean true
+     * @access private
+     */
+    function do_gc ($maxlifetime) {
+        $dbh = &$this->_connect();
+        $table = $this->_table;
+        $threshold = time() - $maxlifetime;
+
+        $dbh->query("DELETE FROM $table WHERE sess_date < $threshold");
+
+        $this->_disconnect();
+        return true;
     }
 }
 
-// }}} classes
 
-// {{{ functions
-
-/**
- * Opens a session.
- *
- * Actually this function is a fake for session_set_save_handle.
- * @param  string $save_path a path to stored files
- * @param  string $session_name a name of the concrete file
- * @return boolean true just a variable to notify PHP that everything 
- * is good.
- * @access private
- */
-
-function _db_session_open ($save_path, $session_name) {
-    return(true);
-}
-
-/**
- * Closes a session.
- *
- * This function is called just after 
- * <i>_db_session_write</i> call.
- *
- * @return boolean true just a variable to notify PHP that everything 
- * is good.
- * @access private
- */
-function _db_session_close() {
-    return(true);
-}
-
-/*
- * Reads the session data from DB.
- *
- * @param  string $id an id of current session
- * @return string
- * @access private
- */
-function _db_session_read ($id) {
-    global $db_session_dbh, $db_session_dsn, $session_table, $db_session_persistent;
-
-    if ($db_session_persistent != true) {
-	$db_session_dbh = DB::connect($db_session_dsn);
-    }
-    if (!DB::isError($db_session_dbh)) {
-	$res = $db_session_dbh->getOne("SELECT sess_data 
-              FROM $session_table WHERE sess_id = " . $db_session_dbh->quote($id));
-	if (DB::isError($res)) {
-	    $res = "";
-	}
-    } else {
-	$res = "";
-    }
-    if ($db_session_persistent != true) {
-	$db_session_dbh->disconnect();
-    }
-    return $res;
-}
-
-/**
- * Saves the session data into DB.
- *
- * Just  a  comment:       The  "write"  handler  is  not 
- * executed until after the output stream is closed. Thus,
- * output from debugging statements in the "write" handler
- * will  never be seen in the browser. If debugging output
- * is  necessary, it is suggested that the debug output be
- * written to a file instead.
- *
- * @param  string $id
- * @param  string $sess_data
- * @return boolean true if data saved successfully  and false
- * otherwise.
- * @access private
- */
-function _db_session_write ($id, $sess_data) {
-    global $db_session_dbh, $db_session_dsn, $session_table, $db_session_persistent;
-    if ($db_session_persistent != true) {
-	$db_session_dbh = DB::connect($db_session_dsn);
-	// var_dump($db_session_dbh);
-    }
-    if (!DB::isError($db_session_dbh)) {
-	$count = $db_session_dbh->getOne("SELECT COUNT(*) FROM $session_table
-              WHERE sess_id = " . $db_session_dbh->quote($id));
-	if ($count == 0) {
-	    $sql = "INSERT INTO $session_table " . 
-		"(sess_id, sess_data, sess_date) VALUES " .
-		"(" . $db_session_dbh->quote($id) . ", " . 
-		$db_session_dbh->quote($sess_data) . ", " .
-		$db_session_dbh->quote(time()) . ")";
-	    $res = $db_session_dbh->query($sql);
-	    if (DB::isError($res)) {
-		echo $res->getMessage();
-	    }
-	} else {
-	    $sql = "UPDATE $session_table SET " .
-		"sess_data = " . $db_session_dbh->quote($sess_data) . ", " .
-		"sess_date = " . $db_session_dbh->quote(time()) . 
-		" WHERE sess_id = " . $db_session_dbh->quote($id);
-	    $res = $db_session_dbh->query($sql);
-	}
-	if (DB::isError($res)) {
-	    $res = false;
-	} 
-    } else {
-	echo $db_session_dbh->getMessage();
-	$res = false;
-    }
-    if ($db_session_persistent != true) {
-	$db_session_dbh->disconnect();
-    }
-    return $res;
-}
-
-/**
- * Destroys a session.
- *
- * Removes a session from the table.
- *
- * @param  string $id
- * @return boolean true 
- * @access private
- */
-function _db_session_destroy ($id) {
-    global $db_session_dbh, $db_session_dsn, $session_table, $db_session_persistent;
-    if ($db_session_persistent != true) {
-	$db_session_dbh = DB::connect($db_session_dsn);
-	var_dump($db_session_dbh);
-    }
-    if (!DB::isError($db_session_dbh)) {
-	$db_session_dbh->query("DELETE FROM $session_table ".
-			"WHERE sess_id = " . $db_session_dbh->quote($id));
-    }
-    if ($db_session_persistent != true) {
-	$db_session_dbh->disconnect();
-    }
-    return true;     
-}
-
-/**
- * Cleans out all expired sessions.
- *
- * @param  int $maxlifetime session's time to live.
- * @return boolean true
- * @access private
- */
-function _db_session_gc ($maxlifetime) {
-    global $db_session_dbh, $db_session_dsn, $session_table, $db_session_persistent;
-    if ($db_session_persistent != true) {
-	$db_session_dbh = DB::connect($db_session_dsn);
-    }
-    $db_session_dbh->query("DELETE FROM $session_table WHERE sess_date < " . 
-			   time() - $maxlifetime);
-    //$db_session_dbh->query("FLUSH TABLES");
-    if ($db_session_persistent != true) {
-	$db_session_dbh->disconnect();
-    }
-    return true;
-}
-
-// }}} functions
-
+// Local Variables:
+// mode: php
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
+// End:
 ?>
