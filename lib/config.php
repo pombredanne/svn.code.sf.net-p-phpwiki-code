@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.117 2004-06-21 17:29:17 rurban Exp $');
+rcs_id('$Id: config.php,v 1.118 2004-07-13 14:03:31 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -18,9 +18,9 @@ if (!defined("LC_ALL")) {
 }
 // debug flags: 
 define ('_DEBUG_VERBOSE',   1);
-define ('_DEBUG_PAGELINKS', 2);
-define ('_DEBUG_PARSER',    4);
-define ('_DEBUG_TRACE',     8);
+define ('_DEBUG_PAGELINKS', 2); // list the extraced pagelinks at the top of each pages
+define ('_DEBUG_PARSER',    4); // verbose parsing steps
+define ('_DEBUG_TRACE',     8); // test php memory usage, prints php debug backtraces
 define ('_DEBUG_INFO',     16);
 define ('_DEBUG_APD',      32);
 
@@ -335,6 +335,9 @@ if (!function_exists('is_a')) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.117  2004/06/21 17:29:17  rurban
+// pear DB introduced a is_a requirement. so pear lost support for php < 4.2.0
+//
 // Revision 1.116  2004/06/21 08:39:37  rurban
 // pear/Cache update from Cache-1.5.4 (added db and trifile container)
 // pear/DB update from DB-1.6.1 (mysql bugfixes, php5 compat, DB_PORTABILITY features)
