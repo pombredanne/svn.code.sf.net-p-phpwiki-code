@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: VisualWiki.php,v 1.4 2002-08-27 22:34:17 rurban Exp $');
+<?php rcs_id('$Id: VisualWiki.php,v 1.5 2002-09-01 16:33:19 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -533,6 +533,7 @@ class WikiPlugin_VisualWiki extends WikiPluginCached {
      * @param label     string  not used anymore
      */
     function invokeDot($argarray) {
+	global $dotbin;
         $cacheparams = $GLOBALS['CacheParams'];        
         $tempfiles = tempnam($cacheparams['cache_dir'],'VisualWiki');
 	$gif = $argarray['imgtype'];

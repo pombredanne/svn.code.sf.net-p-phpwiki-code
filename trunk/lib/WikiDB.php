@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.15 2002-08-31 11:27:19 lakka Exp $');
+rcs_id('$Id: WikiDB.php,v 1.16 2002-09-01 16:33:18 rurban Exp $');
 
 //FIXME: arg on get*Revision to hint that content is wanted.
 
@@ -311,6 +311,31 @@ class WikiDB {
     function mostRecent($params = false) {
         $result = $this->_backend->most_recent($params);
         return new WikiDB_PageRevisionIterator($this, $result);
+    }
+
+   /**
+     * Blog search. (experimental)
+     *
+     * Search for blog entries related to a certain page.
+     *
+     * FIXME: with pagetype support and perhaps a RegexpSearchQuery
+     * we can make sure we are returning *ONLY* blog pages to the
+     * main routine.  Currently, we just use titleSearch which requires
+     * some furher checking in lib/plugin/WikiBlog.php (BAD).
+     *
+     * @access public
+     *
+     * @param $order   string  'normal' (chronological) or 'reverse'
+     * @param $page    string  Find blog entries related to this page.
+     * @return object A WikiDB_PageIterator containing the relevant pages.
+     */
+    function blogSearch($page, $order) {
+      //FIXME: implement ordering
+
+      require_once('lib/TextSearchQuery.php');
+      $query = new TextSearchQuery ($page . SUBPAGE_SEPARATOR);
+
+      return $this->titleSearch($query);
     }
 
 };
@@ -1175,9 +1200,9 @@ class WikiDB_cache
         $this->_backend = &$backend;
 
         $this->_pagedata_cache = array();
-		$this->_versiondata_cache = array();
-		array_push ($this->_versiondata_cache, array());
-		$this->_glv_cache = array();
+        $this->_versiondata_cache = array();
+        array_push ($this->_versiondata_cache, array());
+        $this->_glv_cache = array();
     }
     
     function close() {
