@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- phpwiki source:
-$Id: browse.html,v 1.11 2002-01-12 03:14:04 carstenklapp Exp $
+$Id: browse.html,v 1.12 2002-01-12 03:33:23 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <meta http-equiv="Content-Type" content="text/html; charset=${CHARSET}" />
@@ -40,7 +40,7 @@ ${LASTMODIFIED}
        cellpadding="0" cellspacing="0" border="0"><tr valign="middle">
   <td>
     <?php if ($page->get('locked') && !$user->is_admin()) { ?>
-      <img border="0" alt="PageLocked" src="themes/MacOSX/locale/en/buttons/PageLocked.png" />
+      <img border="0" alt="PageLocked" src="themes/MacOSX/PageLocked.png" />
     <?php } else { ?>
       <?php if ($IS_CURRENT) { ?>
         <a class="wikiaction" href="${ACTION}edit"><img border="0" alt="Edit" src="themes/MacOSX/locale/en/buttons/Edit.png" /></a>
@@ -51,9 +51,9 @@ ${LASTMODIFIED}
     <?php } ?>
     <?php if ($user->is_admin()) { ?>
       <?php if ($page->get('locked')) { ?>
-        <a class="wikiadmin" href="${ACTION}unlock"><img border="0" alt="UnlockPage" src="themes/MacOSX/locale/en/buttons/UnlockPage.png" /></a>
+        <a class="wikiadmin" href="${ACTION}unlock"><img border="0" alt="UnlockPage" src="themes/MacOSX/UnlockPage.png" /></a>
       <?php } else { ?>
-       <a class="wikiadmin" href="${ACTION}lock"><img border="0" alt="LockPage" src="themes/MacOSX/locale/en/buttons/LockPage.png" /></a>
+       <a class="wikiadmin" href="${ACTION}lock"><img border="0" alt="LockPage" src="themes/MacOSX/LockPage.png" /></a>
       <?php } ?>
       <a class="wikiadmin" href="${ACTION}remove"><img border="0" alt="RemovePage" src="themes/MacOSX/locale/en/buttons/RemovePage.png" /></a>
     <?php } ?>
