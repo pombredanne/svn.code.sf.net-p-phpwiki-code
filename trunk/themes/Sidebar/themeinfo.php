@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.17 2004-12-14 21:32:46 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.18 2004-12-19 18:30:17 rurban Exp $');
 
 /*
  * This file defines the Sidebar appearance ("theme") of PhpWiki.
@@ -49,9 +49,14 @@ class Theme_Sidebar extends Theme {
 
     function calendarBase() {
         static $UserCalPageTitle = false;
+        global $request;
+
         if (!$UserCalPageTitle) 
-            $UserCalPageTitle = $GLOBALS['request']->_user->getId() . 
+            $UserCalPageTitle = $request->_user->getId() . 
                                 SUBPAGE_SEPARATOR . _("Calendar");
+        if (!$UserCalPageTitle)
+            $UserCalPageTitle = (BLOG_EMPTY_DEFAULT_PREFIX ? '' 
+                                 : ($request->_user->getId() . SUBPAGE_SEPARATOR)) . "Blog";
         return $UserCalPageTitle;
     }
 
