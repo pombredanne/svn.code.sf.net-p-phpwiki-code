@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.7 2003-02-22 20:49:56 dairiki Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.8 2003-02-24 01:36:26 dairiki Exp $');
 /**
  * Plugin to allow any user to adjust his own preferences.
  * This must be used in the page "UserPreferences" or in a subpage of a
@@ -66,7 +66,9 @@ extends WikiPlugin
                 $args['errmsg'] = HTML(HTML::h2($errmsg),HTML::hr());
             }
             $available_themes = array(); 
-            $dir_root = PHPWIKI_DIR . '/themes/'; 
+            $dir_root = 'themes/';
+            if (defined('PHPWIKI_DIR'))
+                $dir_root = PHPWIKI_DIR . "/$dir_root";
             $dir = dir($dir_root);
             if ($dir) {
                 while($entry = $dir->read()) {
@@ -80,7 +82,9 @@ extends WikiPlugin
             $args['available_themes'] = $available_themes;
 
             $available_languages = array('en');
-            $dir_root = PHPWIKI_DIR . '/locale/'; 
+            $dir_root = 'locale/';
+            if (defined('PHPWIKI_DIR'))
+                $dir_root = PHPWIKI_DIR . "/$dir_root";
             $dir = dir($dir_root);
             if ($dir) {
                 while($entry = $dir->read()) {

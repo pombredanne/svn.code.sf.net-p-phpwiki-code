@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSelect.php,v 1.3 2003-02-22 20:49:56 dairiki Exp $');
+rcs_id('$Id: WikiAdminSelect.php,v 1.4 2003-02-24 01:36:27 dairiki Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -47,7 +47,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -159,7 +159,10 @@ extends WikiPlugin
                                                  'value' => 'WikiAdminSelect'))
                                );
             // Add the Buttons for all registered WikiAdmin plugins
-            $fs = new fileSet(PHPWIKI_DIR . '/lib/plugin', 'WikiAdmin*.php');
+            $plugin_dir = 'lib/plugin';
+            if (defined('PHPWIKI_DIR'))
+                $plugin_dir = PHPWIKI_DIR . "/$plugin_dir";
+            $fs = new fileSet($plugin_dir, 'WikiAdmin*.php');
             $actions = $fs->getFiles();
             foreach ($actions as $f) {
                 $f = preg_replace('/.php$/','', $f);
@@ -178,6 +181,9 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2003/02/22 20:49:56  dairiki
+// Fixes for "Call-time pass by reference has been deprecated" errors.
+//
 // Revision 1.2  2003/01/18 22:14:29  carstenklapp
 // Code cleanup:
 // Reformatting & tabs to spaces;
