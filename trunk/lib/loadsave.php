@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.11 2001-11-14 17:43:50 dairiki Exp $');
+rcs_id('$Id: loadsave.php,v 1.12 2001-11-21 17:58:46 dairiki Exp $');
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
 
@@ -217,9 +217,11 @@ function SavePage ($dbi, $pageinfo, $source, $filename)
         $new = $page->createRevision(WIKIDB_FORCE_CREATE, $content,
                                      $versiondata,
                                      ExtractWikiPageLinks($content));
-        
-        $mesg[] = gettext("- saved");
-        $mesg[] = sprintf(gettext("- saved as version %d"), $new->getVersion());
+
+        if ($pageinfo['version'] == $new->getVersion())
+            $mesg[] = gettext("- saved");
+        else
+            $mesg[] = sprintf(gettext("- saved as version %d"), $new->getVersion());
     }
    
     print( Element('dt', LinkExistingWikiWord($pagename))
