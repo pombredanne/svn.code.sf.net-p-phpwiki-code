@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: imagecache.php,v 1.9 2004-09-06 10:22:15 rurban Exp $');
+<?php rcs_id('$Id: imagecache.php,v 1.10 2004-09-22 13:46:26 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -143,9 +143,10 @@ function mainImageCache() {
             return;
         }        
         
-        $request->setArg('id',$matches[2]);
+        $request->setArg('id', $matches[2]);
         if ($matches[4]) {
-           $request->setArg('args',rawurldecode($matches[4]));
+            // md5 args?
+           $request->setArg('args', rawurldecode($matches[4]));
         }
         $request->setStatus(200); // No, we do _not_ have an Error 404 :->
     }
