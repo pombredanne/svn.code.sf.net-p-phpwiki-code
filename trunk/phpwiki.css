@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.40 2002-02-10 21:46:50 carstenklapp Exp $
+ * $Id: phpwiki.css,v 1.41 2002-02-10 23:52:04 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up. It has not yet been tested against NS4.
@@ -55,7 +55,7 @@ body {
 }
 
 div.wikitext {
-  margin-top:    0.5ex;
+  margin-top:    1ex;
   margin-bottom: 0.5ex;
   background: white;
   border: thin black solid;
