@@ -28,13 +28,31 @@
  * These tests run from the command-line as well as from the browser.
  * Use the argv (from cli) or tests (from browser) params to run only certain tests.
  */
+/****************************************************************
+   User definable options
+*****************************************************************/
+// common cfg options are taken from config/config.ini
+
+// available database backends to test:
+$database_backends = array(
+                           'file',
+                           'dba',
+                           'SQL',
+                           'ADODB',
+                           );
+// "flatfile" testing occurs in "tests/unit/.testbox/"
+// "dba" needs the DATABASE_DBA_HANDLER, also in the .textbox directory
+$database_dba_handler = "db3";
+// "SQL" and "ADODB" need delete permissions to the test db
+//  You have to create that database beforehand with our schema
+$database_dsn = "mysql://wikiuser:@localhost/phpwiki_test";
+// For "cvs" see the seperate tests/unit_test_backend_cvs.php
 
 ####################################################################
 #
 # Preamble needed to get the tests to run.
 #
 ####################################################################
-
 
 $cur_dir = getcwd();
 # Add root dir to the path
@@ -105,11 +123,6 @@ function _ErrorHandler_CB(&$error) {
 //$ErrorManager->pushErrorHandler(new WikiFunctionCb('_ErrorHandler_CB'));
 */
 
-# This is the test DB backend
-$db_params                         = array();
-$db_params['directory']            = $cur_dir . '/.testbox';
-$db_params['dbtype']               = 'file';
-
 if (ENABLE_USER_NEW) {
     class MockUser extends _WikiUser {
         function MockUser($name, $isSignedIn) {
@@ -163,13 +176,28 @@ function purge_dir($dir) {
 
 function purge_testbox() {
     global $db_params;	
-    $dir = $db_params['directory'];
-    assert(!empty($dir));
-    foreach (array('latest_ver','links','page_data','ver_data') as $d) {
-    	purge_dir("$dir/$d");
-    }
     if (isset($GLOBALS['request'])) {
         $dbi = $GLOBALS['request']->getDbh();
+    }
+    $dir = $db_params['directory'];
+    switch ($db_params['dbtype']) {
+    case 'file':
+        assert(!empty($dir));
+        foreach (array('latest_ver','links','page_data','ver_data') as $d) {
+            purge_dir("$dir/$d");
+        }
+        break;
+    case 'SQL':
+    case 'ADODB':
+        foreach ($dbi->_backend->_table_names as $table) {
+            $dbi->genericQuery("DELETE FROM $table");
+        }
+        break;
+    case 'dba':
+        purge_dir($dir);
+        break;
+    }
+    if (isset($dbi)) {
         $dbi->_cache->close();
         $dbi->_backend->_latest_versions = array();
     }
@@ -177,7 +205,6 @@ function purge_testbox() {
 
 global $ErrorManager;
 $ErrorManager->setPostponedErrorMask(EM_FATAL_ERRORS|EM_WARNING_ERRORS|EM_NOTICE_ERRORS);
-$request = new MockRequest($db_params);
 
 /*
 if (ENABLE_USER_NEW)
@@ -203,10 +230,6 @@ if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']))
     echo "<pre>\n";
 // purge the testbox
     
-print "Run tests .. ";
-
-$suite  = new PHPUnit_TestSuite("phpwiki");
-
 // save and restore all args for each test.
 class phpwiki_TestCase extends PHPUnit_TestCase {
     function setUp() { 
@@ -253,21 +276,36 @@ if (!empty($argv)) {
     flush();
 }
 
-foreach ($alltests as $test) {
-    if (file_exists(dirname(__FILE__).'/lib/'.$test.'.php'))
-        require_once dirname(__FILE__).'/lib/'.$test.'.php';
-    else    
-        require_once dirname(__FILE__).'/lib/plugin/'.$test.'.php';
-    $suite->addTest( new PHPUnit_TestSuite($test) );
-}
-$result = PHPUnit::run($suite); 
+# Test all db backends.
+foreach ($database_backends as $dbtype) {
 
-echo "ran " . $result->runCount() . " tests, " . $result->failureCount() . " failures.\n";
-flush();
+    $suite  = new PHPUnit_TestSuite("phpwiki");
 
-if ($result->failureCount() > 0) {
-    echo "More detail:\n";
-    echo $result->toString();
+    $db_params                         = array();
+    $db_params['directory']            = $cur_dir . '/.testbox';
+    $db_params['dsn']                  = $database_dsn;
+    $db_params['dba_handler']          = $database_dba_handler;
+    $db_params['dbtype']               = $dbtype;
+
+    echo "Testing DB Backend \"$dbtype\" ...\n";
+    $request = new MockRequest($db_params);
+
+    foreach ($alltests as $test) {
+        if (file_exists(dirname(__FILE__).'/lib/'.$test.'.php'))
+            require_once dirname(__FILE__).'/lib/'.$test.'.php';
+        else    
+            require_once dirname(__FILE__).'/lib/plugin/'.$test.'.php';
+        $suite->addTest( new PHPUnit_TestSuite($test) );
+    }
+
+    $result = PHPUnit::run($suite); 
+    echo "ran " . $result->runCount() . " tests, " . $result->failureCount() . " failures.\n";
+    flush();
+
+    if ($result->failureCount() > 0) {
+        echo "More detail:\n";
+        echo $result->toString();
+    }
 }
 
 if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']))
