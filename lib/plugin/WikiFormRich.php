@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiFormRich.php,v 1.10 2004-11-24 15:07:49 rurban Exp $');
+rcs_id('$Id: WikiFormRich.php,v 1.11 2004-11-24 15:19:57 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -65,6 +65,12 @@ rcs_id('$Id: WikiFormRich.php,v 1.10 2004-11-24 15:07:49 rurban Exp $');
   <?plugin WikiFormRich action=FuzzyPages method=GET class=wikiadmin nobr=1
   	   editbox[] name=s text=""
   	   checkbox[] name=case_exact ?>
+  <?plugin WikiFormRich action=AppendText buttontext="AddPlugin"
+  	   pulldown[] name=text text="Plugins: " value=<!plugin-list BackLinks page=WikiPlugin !>
+  	   ?>
+  <?plugin WikiFormRich action=AppendText buttontext="AddCategory"
+  	   pulldown[] name=text text="Categories: " value=<!plugin-list TitleSearch s=Category !>
+  	   ?>
 */
 
 class WikiPlugin_WikiFormRich
@@ -78,7 +84,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
     function getDefaultArguments() {
         return array('action' => false,     // required argument
@@ -102,11 +108,12 @@ extends WikiPlugin
                 $this->inputbox[][$name] = array(); $j = count($this->inputbox) - 1;
                 $curargs = $m[2];
                 // must match name=NAME and also value=<!plugin-list name !>
-                while (preg_match("/^(\w+)=(\"\"|\"?\w+\"?|\"?<!plugin-list.+!>\"?)\s*/", $curargs, $m)) {
+                while (preg_match("/^(\w+)=((?:\".*\")|(?:\w+)|(?:\"?<!plugin-list.+!>\"?))\s*/", $curargs, $m)) {
                     $attr = $m[1]; $value = $m[2];
                     $curargs = substr($curargs, strlen($m[0]));
-                    if ($value == '""') $value='';
-                    elseif (in_array($name, array("pulldown","checkbox","radiobutton"))
+                    if (preg_match("/^\"(.*)\"$/", $value, $m))
+                        $value = $m[1];
+                    if (in_array($name, array("pulldown","checkbox","radiobutton"))
                             and preg_match('/^<!plugin-list.+!>$/', $value, $m))
             	    // like pulldown[] name=test value=<!plugin-list BackLinks page=HomePage!>
                     {
@@ -302,6 +309,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/11/24 15:07:49  rurban
+// added pulldown support, fixed plugin-list whitespace splitting
+//
 // Revision 1.9  2004/11/24 13:55:42  rurban
 // omit unneccessary pagename arg
 //
