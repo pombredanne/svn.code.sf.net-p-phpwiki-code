@@ -10,7 +10,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.21 2001-01-20 21:52:21 wainstead Exp $');
+   rcs_id('$Id: config.php,v 1.22 2001-01-21 11:00:00 ahollosi Exp $');
    // end essential internal stuff
 
 
@@ -47,7 +47,8 @@
 
 
    // DBM and DBA settings (default)
-   if ($WhichDatabase == 'dbm' or 'dba' or 'default') {
+   if ($WhichDatabase == 'dbm' or $WhichDatabase == 'dba' or
+       $WhichDatabase == 'default') {
       $DBMdir = "/tmp";
       $WikiPageStore = "wiki";
       $ArchivePageStore = "archive";
