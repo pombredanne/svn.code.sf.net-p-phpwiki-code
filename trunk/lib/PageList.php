@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.36 2002-02-13 03:08:44 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.37 2002-02-13 04:23:54 carstenklapp Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -11,14 +11,15 @@
  *
  * Column 'info=' arguments:
  *
- * 'mtime'   _("Last Modified")
- * 'hits'    _("Hits")
- * 'summary' _("Last Summary")
- * 'version' _("Version")),
- * 'author'  _("Last Author")),
- * 'locked'  _("Locked"), _("locked")
- * 'minor'   _("Minor Edit"), _("minor")
- * 'markup'  _("Markup")
+ * 'pagename' _("Page Name")
+ * 'mtime'    _("Last Modified")
+ * 'hits'     _("Hits")
+ * 'summary'  _("Last Summary")
+ * 'version'  _("Version")),
+ * 'author'   _("Last Author")),
+ * 'locked'   _("Locked"), _("locked")
+ * 'minor'    _("Minor Edit"), _("minor")
+ * 'markup'   _("Markup")
  *
  * 'all'     All columns will be displayed. This argument must appear alone.
  *
@@ -147,16 +148,16 @@ class PageList {
     function PageList ($columns = false, $exclude = false) {
         if ($columns == 'all') {
             $this->_initAvailableColumns();
-            foreach ($this->_types as $key => $_obj)
-                $this->_addColumn($key);
-        } else if ($columns) {
+            $columns = array_keys($this->_types);
+        }
+
+        if ($columns) {
             if (!is_array($columns))
                 $columns = explode(',', $columns);
             foreach ($columns as $col)
                 $this->_addColumn($col);
-            $this->_addColumn('pagename');
-        } else
-            $this->_addColumn('pagename');
+        }
+        $this->_addColumn('pagename');
 
         if ($exclude) {
             if (!is_array($exclude))
@@ -255,7 +256,7 @@ class PageList {
                   => new _PageList_Column_time('rev:mtime',
                                                _("Last Modified")),
                   'hits'
-                  => new _PageList_Column('hits',  _("Hits"), 'right'),
+                  => new _PageList_Column('hits', _("Hits"), 'right'),
 
                   'summary'
                   => new _PageList_Column('rev:summary', _("Last Summary")),
