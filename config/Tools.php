@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: Tools.php,v 1.3 2003-01-28 18:53:25 zorloc Exp $')
+rcs_id('$Id: Tools.php,v 1.4 2003-12-07 19:23:48 carstenklapp Exp $')
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -676,6 +676,10 @@ class ValidatorArrayStringList extends Validator {
 
 
 //$Log: not supported by cvs2svn $
+//Revision 1.3  2003/01/28 18:53:25  zorloc
+//Added some more Validator subclasses to handle arrays of for which the
+//validation criteria should be the same for all members.
+//
 //Revision 1.2  2003/01/28 06:31:00  zorloc
 //Mostly done but ConfigArray will probably need some more helper methods.
 //
