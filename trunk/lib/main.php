@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.6 2001-02-16 05:10:54 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.7 2001-02-17 21:52:08 dairiki Exp $');
 include "lib/config.php";
 include "lib/stdlib.php";
 include "lib/userauth.php";
@@ -13,7 +13,8 @@ if (ACCESS_LOG)
    register_shutdown_function('_write_log');
 }
 
-if (USE_PATH_INFO && !isset($PATH_INFO))
+if (USE_PATH_INFO && !isset($PATH_INFO)
+    && (!isset($REDIRECT_URL) || !preg_match(',/$,', $REDIRECT_URL)))
 {
    $LogEntry->status = 302;	// "302 Found"
    header("Location: " . SERVER_URL . $REQUEST_URI . '/');
