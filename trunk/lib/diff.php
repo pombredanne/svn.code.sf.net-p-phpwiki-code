@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.9 2001-02-14 22:02:05 dairiki Exp $');
+rcs_id('$Id: diff.php,v 1.10 2001-03-05 23:38:16 dairiki Exp $');
 // diff.php
 //
 // A PHP diff engine for phpwiki.
@@ -1071,7 +1071,6 @@ if (isset($pagename))
     }
 
   echo GeneratePage('MESSAGE', $html,
-		    sprintf(gettext ("Diff of %s."),
-			    htmlspecialchars($pagename)), 0);
+		    sprintf(gettext ("Diff of %s."), $pagename), 0);
 }
 ?>
