@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.57 2004-07-05 12:57:54 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.58 2004-07-08 16:56:16 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -710,7 +710,8 @@ extends WikiDB_backend
         $pageid = (int)$pageid;
 
         // optimize: mysql can do this with one REPLACE INTO.
-        if (substr($dbh->databaseType,0,5) == 'mysql') {
+        $backend_type = $this->backendType();
+        if (substr($backend_type,0,5) == 'mysql') {
             $dbh->query("REPLACE INTO $recent_tbl"
                         . " (id, latestversion, latestmajor, latestminor)"
                         . " SELECT id, $maxversion, $maxmajor, $maxminor"
@@ -740,7 +741,8 @@ extends WikiDB_backend
         // Optimize: mysql can do this with one REPLACE INTO.
         // FIXME: This treally should be moved into ADODB_mysql.php but 
         // then it must be duplicated for mysqli and mysqlt also.
-        if (substr($dbh->databaseType,0,5) == 'mysql') {
+        $backend_type = $this->backendType();
+        if (substr($backend_type,0,5) == 'mysql') {
             $dbh->query("REPLACE INTO $nonempty_tbl (id)"
                         . " SELECT $recent_tbl.id"
                         . " FROM $recent_tbl, $version_tbl"
@@ -1032,6 +1034,9 @@ extends WikiDB_backend_PearDB_generic_iter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.57  2004/07/05 12:57:54  rurban
+// add mysql timeout
+//
 // Revision 1.56  2004/07/04 10:24:43  rurban
 // forgot the expressions
 //
