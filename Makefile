@@ -15,7 +15,7 @@ all:  TAGS
 TAGS:  $(PHP_SRC)
 #	etags $(PHP_SRC)
 	if [ -f TAGS ]; then /usr/bin/mv -f TAGS TAGS~; fi
-	/usr/bin/find . . \( -type d -regex '\(^\./lib/pear\)\|\(^\./lib/WikiDB/adodb\)\|\(^\./lib/nusoap\)\|\(^\./locale/.*/LC_MESSAGES\)' \) -prune -o -name \*.php -exec etags -a '{}' \;
+	/usr/bin/find . . \( -type d -regex '\(^\./lib/pear\)\|\(^\./lib/WikiDB/adodb\)\|\(^\./lib/nusoap\)\|\(^\./lib/fpdf\)\|\(^\./locale/.*/LC_MESSAGES\)' \) -prune -o -name \*.php -exec etags -a '{}' \;
 
 locale: 
 	cd locale
