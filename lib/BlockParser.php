@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.51 2004-09-14 09:54:04 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.52 2004-10-21 19:52:10 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -1047,7 +1047,10 @@ class Block_p extends BlockMarkup
 ////////////////////////////////////////////////////////////////
 //
 
-function TransformText (&$text, $markup = 2.0, $basepage=false) {
+/**
+ * Transform the text of a page, and return a parse tree.
+ */
+function TransformTextPre ($text, $markup = 2.0, $basepage=false) {
     if (isa($text, 'WikiDB_PageRevision')) {
         $rev = $text;
         $text = $rev->getPackedContent();
@@ -1055,32 +1058,39 @@ function TransformText (&$text, $markup = 2.0, $basepage=false) {
     }
     // NEW: default markup is new, to increase stability
     if (!empty($markup) && $markup < 2.0) {
-        //include_once("lib/transform.php");
-        //return do_transform($text);
         $text = ConvertOldMarkup($text);
     }
     
     // Expand leading tabs.
     $text = expand_tabs($text);
-
     //set_time_limit(3);
-
     $output = new WikiText($text);
-    if (0 and DEBUG and DEBUG & _DEBUG_VERBOSE and check_php_version(5)) {
-        echo "<pre>"; var_dump($output); echo "</pre>"; 
-    }
 
+    /* if (0 and DEBUG and DEBUG & _DEBUG_VERBOSE and check_php_version(5)) {
+        echo "<pre>"; var_dump($output); echo "</pre>"; 
+    } */
+    return $output;
+}
+
+/**
+ * Transform the text of a page, and return an XmlContent,
+ * suitable for printXml()-ing.
+ */
+function TransformText ($text, $markup = 2.0, $basepage=false) {
+    $output = TransformTextPre($text, $markup, $basepage);
     if ($basepage) {
         // This is for immediate consumption.
         // We must bind the contents to a base pagename so that
         // relative page links can be properly linkified...
         return new CacheableMarkup($output->getContent(), $basepage);
     }
-    
     return new XmlContent($output->getContent());
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.51  2004/09/14 09:54:04  rurban
+// cache ParsedBlock::_initBlockTypes
+//
 // Revision 1.50  2004/09/08 13:38:00  rurban
 // improve loadfile stability by using markup=2 as default for undefined markup-style.
 // use more refs for huge objects.
