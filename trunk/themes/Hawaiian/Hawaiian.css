@@ -1,5 +1,5 @@
 /**
- * $Id: Hawaiian.css,v 1.25 2002-03-08 04:24:31 carstenklapp Exp $
+ * $Id: Hawaiian.css,v 1.26 2003-02-27 23:55:51 dairiki Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up. It has not yet been tested against NS4.
@@ -401,6 +401,9 @@ div.errors {
   border: medium solid #d8caae;
 }
 
+.clear-floats {
+  clear: both;
+}
 
 /* For emacs users
  *

@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.13 2003-02-24 22:04:45 dairiki Exp $
+ * $Id: phpwiki.css,v 1.14 2003-02-27 23:55:52 dairiki Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -709,7 +709,12 @@ table.interwiki-map {
 .dialog p.buttons {
   margin: 1em 0 0.5em 0;
 }
-  
+
+
+.clear-floats {
+  clear: both;
+}
+
 /* For emacs users
  *
  * Local Variables:

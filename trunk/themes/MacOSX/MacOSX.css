@@ -1,5 +1,5 @@
 /*
- $Id: MacOSX.css,v 1.30 2002-03-29 04:43:02 carstenklapp Exp $
+ $Id: MacOSX.css,v 1.31 2003-02-27 23:55:51 dairiki Exp $
 
  Classes:
 
@@ -409,6 +409,9 @@ div.wiki-message {
   font-weight: normal;
 }
 
+.clear-floats {
+  clear: both;
+}
 
 /* For emacs users
  *

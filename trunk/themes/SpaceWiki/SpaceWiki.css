@@ -1,5 +1,5 @@
 /**
- * $Id: SpaceWiki.css,v 1.5 2002-03-08 21:31:14 carstenklapp Exp $
+ * $Id: SpaceWiki.css,v 1.6 2003-02-27 23:55:52 dairiki Exp $
  *
  * This theme will probably be renamed something like "Space" to
  * avoid any potential copyright issues.
@@ -561,6 +561,9 @@ div.errors {
   display: table;
 }
 
+.clear-floats {
+  clear: both;
+}
 
 /* For emacs users
  *
