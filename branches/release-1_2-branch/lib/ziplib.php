@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: ziplib.php,v 1.2.2.2 2001-02-10 05:26:00 dairiki Exp $');
+rcs_id('$Id: ziplib.php,v 1.2.2.3 2001-11-07 20:32:24 dairiki Exp $');
 
 //FIXME: get rid of this.
 function warn ($msg)
@@ -618,7 +618,7 @@ function ParseMimeMultipart($data, $boundary)
 
   $boundary = preg_quote($boundary);
 
-  while (preg_match("/^(|.*?\n)--$boundary((?:--)?)[^\n]*\n/s",
+  while (preg_match("=^(|.*?\n)--$boundary((?:--)?)[^\n]*\n=s",
 		     $data, $match))
     {
       $data = substr($data, strlen($match[0]));
