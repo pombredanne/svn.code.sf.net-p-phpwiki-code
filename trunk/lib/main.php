@@ -1,5 +1,5 @@
-<?php
-rcs_id('$Id: main.php,v 1.99 2003-03-07 02:39:47 dairiki Exp $');
+<?php //-*-php-*-
+rcs_id('$Id: main.php,v 1.100 2003-11-18 16:54:18 carstenklapp Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -41,7 +41,7 @@ class WikiRequest extends Request {
     }
 
     function initializeTheme () {
-    	global $Theme;
+        global $Theme;
 
         // Load theme
         if ($user_theme = $this->getPref('theme'))
@@ -70,10 +70,10 @@ class WikiRequest extends Request {
                 return false;
             }
             foreach ($new_prefs as $key => $val) {
-            	if ($key == 'passwd') {
+                if ($key == 'passwd') {
                     // FIXME: enh?
                     $val = crypt('passwd');
-            	}
+                }
                 $this->_prefs->set($key, $val);
             }
         }
@@ -151,8 +151,8 @@ class WikiRequest extends Request {
     function getPage ($pagename = false) {
         if (!isset($this->_dbi))
             $this->getDbh();
-		if (!$pagename) 
-			$pagename = $this->getArg('pagename');
+        if (!$pagename) 
+            $pagename = $this->getArg('pagename');
         return $this->_dbi->getPage($pagename);
     }
 
@@ -264,7 +264,7 @@ class WikiRequest extends Request {
                     'dumphtml'   => _("dump html pages from this wiki"),
                     'dumpserial' => _("dump serial pages from this wiki"),
                     'edit'       => _("edit pages in this wiki"),
-                    'create'	 => _("create pages in this wiki"),
+                    'create'     => _("create pages in this wiki"),
                     'loadfile'   => _("load files into this wiki"),
                     'lock'       => _("lock pages in this wiki"),
                     'remove'     => _("remove pages from this wiki"),
@@ -272,7 +272,7 @@ class WikiRequest extends Request {
                     'upload'     => _("upload a zip dump to this wiki"),
                     'verify'     => _("verify the current action"),
                     'viewsource' => _("view the source of pages in this wiki"),
-                    'xmlrpc'	 => _("access this wiki via XML-RPC"),
+                    'xmlrpc'     => _("access this wiki via XML-RPC"),
                     'zip'        => _("download a zip dump from this wiki"),
                     'ziphtml'    => _("download an html zip dump from this wiki")
                     );
@@ -299,7 +299,7 @@ class WikiRequest extends Request {
                     'upload'     => _("Uploading zip dumps"),
                     'verify'     => _("Verify the current action"),
                     'viewsource' => _("Viewing the source of pages"),
-                    'xmlrpc'	 => _("XML-RPC access"),
+                    'xmlrpc'     => _("XML-RPC access"),
                     'zip'        => _("Downloading zip dumps"),
                     'ziphtml'    => _("Downloading html zip dumps")
                     );
@@ -745,8 +745,8 @@ function main () {
 if(defined('WIKI_XMLRPC')) return;
 
     $validators = array('wikiname' => WIKI_NAME,
-                        'args'	=> hash($request->getArgs()),
-                        'prefs'	=> hash($request->getPrefs()));
+                        'args'     => hash($request->getArgs()),
+                        'prefs'    => hash($request->getPrefs()));
     if (CACHE_CONTROL == 'STRICT') {
         $dbi = $request->getDbh();
         $timestamp = $dbi->getTimestamp();
@@ -772,6 +772,9 @@ if (defined('DEBUG') and DEBUG>1) phpinfo(INFO_VARIABLES);
 
 
 main();
+
+
+// $Log: not supported by cvs2svn $
 
 
 // Local Variables:
