@@ -1,7 +1,7 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.63 2005-02-07 15:38:25 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.64 2005-02-28 17:35:44 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
- * Copyright (C) 2004 Reini Urban
+ * Copyright (C) 2004,2005 Reini Urban
  *
  * This file is part of PhpWiki.
  * 
@@ -188,9 +188,6 @@ class RegexpSet
             $hugepat= "/ ( . $repeat ) ( (" . join(')|(', $regexps) . ") ) /Asx";
             // Proposed premature optimization 1:
             //$hugepat= "/ ( . $repeat ) ( (" . join(')|(', array_values($matched)) . ") ) /Asx";
-/* currently:
-  '/ ( . *? ) ( ($)|(~(?: [[:alnum:]]+ | .))|(&#\d{2,5};)|(\#? \[ .*? [^]\s] .*? \])|((?<![[:alnum:]]) (?:http|https|mailto|ftp|news|nntp|ssh|gopher) : [^\s<>"']+ (?<![ ,.?; \] \) ]))|((?<! [[:alnum:]])(?:AbbeNormal|AcadWiki|Acronym|Advogato|AIWiki|ALife|Annotation|AnnotationWiki|AwarenessWiki|BcWireless|BenefitsWiki|BridgesWiki|bsdWiki|C2find|Cache|Category|CLiki|CmWiki|CreationMatters|DejaNews|DeWikiPedia|Dict|Dictionary|DiveIntoOsx|DocBook|DolphinWiki|DseWiki|EfnetCeeWiki|EfnetCppWiki|EfnetPythonWiki|EfnetXmlWiki|EljWiki|EmacsWiki|FinalEmpire|Foldoc|FoxWiki|FreeBSDman|FreeNetworks|FreshMeat|Google|GoogleGroups|GreenCheese|HammondWiki|Haribeau|IAWiki|MRQE|IMDB|ISBN|JargonFile|JiniWiki|JspWiki|KmWiki|KnowHow|LanifexWiki|LegoWiki|LinuxWiki|LugKR|MathSongsWiki|MbTest|MeatBall|MetaWiki|MetaWikiPedia|MoinMoin|MuWeb|NetVillage|OpenWiki|OrgPatterns|PangalacticOrg|PersonalTelco|php-function|php-lookup|PhpWiki|PhpWikiCvs|PhpWikiDemo|Pikie|PolitizenWiki|PPR|PurlNet|PythonInfo|PythonWiki|PyWiki|RFC|SeaPig|SeattleWireless|SenseisLibrary|Shakti|SourceForge|Squeak|StrikiWiki|SVGWiki|Tavi|Thesaurus|Thinki|TmNet|TMwiki|TWiki|TwistedWiki|Unreal|UseMod|VisualWorks|WebDevWikiNL|WebSeitzWiki|Why|Wiki|WikiPedia|WikiWorld|YpsiEyeball|ZWiki|Upload): \S+ (?<![ ,.?;! \] \) " \' ]))|( (?<![[:alnum:]])(?:[[:upper:]][[:lower:]]+){2,}(?![[:alnum:]]))|((?: (?<! %) %%% (?! %) | <(?:br|BR)> ))|(''|__)|((?:(?<= \s|^|[-"'\/:]) (?: _ (?! _)|\* (?! \*)|= (?! =))|(?<= =) (?: _ (?! _)|\* (?! \*)) (?! =)|(?<= _) (?: \* (?! \*)|= (?! =)) (?! _)|(?<= \*) (?: _ (?! _)|= (?! =)) (?! \*)|(?<= { ) (?: _ (?! _)|\* (?! \*)|= (?! =)) (?! } )|(?<= < ) (?: _ (?! _)|\* (?! \*)|= (?! =)) (?! > )|(?<= \( ) (?: _ (?! _)|\* (?! \*)|= (?! =)) (?! \) ))(?= \S))|(<(?: b|big|i|small|tt|em|strong|cite|code|dfn|kbd|samp|var|sup|sub )>)|(<(?: abbr|acronym )(?: \stitle=[^>]*)?>)|(<\?plugin(?:-form)?\s[^\n]+?\?>) ) /Asx'
-*/
             if (! preg_match($hugepat, $text, $m)) {
                 return false;
             }
@@ -669,7 +666,6 @@ class Markup_isohexchars extends SimpleMarkup {
 // FIXME: Do away with plugin-links.  They seem not to be used.
 //Plugin link
 
-
 class InlineTransformer
 {
     var $_regexps = array();
@@ -681,7 +677,7 @@ class InlineTransformer
                                   'interwiki', 'wikiword', 'linebreak',
                                   'old_emphasis', 'nestled_emphasis',
                                   'html_emphasis', 'html_abbr', 'plugin',
-                                  'isonumchars', /*'isohexchars', 'html_entities',*/
+                                  'isonumchars', 'isohexchars', /*'html_entities',*/
                                   );
         foreach ($markup_types as $mtype) {
             $class = "Markup_$mtype";
