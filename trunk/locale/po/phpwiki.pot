@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2001-12-17 22:06-0500\n"
+"POT-Creation-Date: 2001-12-18 01:18-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -510,7 +510,7 @@ msgstr ""
 #: ../lib/diff.php:251
 #, c-format
 msgid "Differences between %s and %s of %s."
-msgstr ""
+msgstr "Differences between %1$s and %2$s of %3$s."
 
 #: ../lib/diff.php:255
 msgid "Previous Major Revision"
