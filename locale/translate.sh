@@ -11,6 +11,11 @@
 #    * Translators, after making a translation update
 #
 
+if [ ! -f index.php ]; then
+	echo Usage: ./locale/translate.sh
+	exit 2
+fi
+
 ALL_LINGUAS=nl
 
 xgettext -L C++ -o locale/po/phpwiki.pot lib/*php
@@ -21,7 +26,7 @@ for i in $ALL_LINGUAS; do
 	locale=locale/$i/LC_MESSAGES
 
 	msgmerge -o $po $po $pot
-	mkdir -p locale/$i/LC_MESSAGES
+	mkdir -p $locale
 	msgfmt -o $locale/phpwiki.mo $po
 
 	awk -- '
