@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.81 2004-11-29 17:57:27 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.82 2004-11-30 22:21:56 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -123,8 +123,8 @@ class PageEditor
         //FIXME: enable Undo button for all other buttons also, not only the search/replace button
         if (defined('JS_SEARCHREPLACE') and JS_SEARCHREPLACE) {
             $tokens['JS_SEARCHREPLACE'] = 1;
-            $undo_btn = $WikiTheme->getImageURL("ed_undo.gif"); 
-            $undo_d_btn = $WikiTheme->getImageURL("ed_undo_d.gif"); 
+            $undo_btn = $WikiTheme->getImageURL("ed_undo.png"); 
+            $undo_d_btn = $WikiTheme->getImageURL("ed_undo_d.png"); 
             // JS_SEARCHREPLACE from walterzorn.de
             $WikiTheme->addMoreHeaders(Javascript("
 var f, sr_undo, replacewin, undo_buffer=new Array(), undo_buffer_index=0;
@@ -230,47 +230,47 @@ function undo_save() {
         global $WikiTheme;
         $toolarray = array(
                            array(
-                                 "image"=>"ed_format_bold.gif",
+                                 "image"=>"ed_format_bold.png",
                                  "open"=>"*",
                                  "close"=>"*",
                                  "sample"=>_("Bold text"),
                                  "tip"=>_("Bold text")),
-                           array("image"=>"ed_format_italic.gif",
+                           array("image"=>"ed_format_italic.png",
                                  "open"=>"_",
                                  "close"=>"_",
                                  "sample"=>_("Italic text"),
                                  "tip"=>_("Italic text")),
-                           array("image"=>"ed_pagelink.gif",
+                           array("image"=>"ed_pagelink.png",
                                  "open"=>"[",
                                  "close"=>"]",
                                  "sample"=>_("optional label | PageName"),
                                  "tip"=>_("Link to page")),
-                           array("image"=>"ed_link.gif",
+                           array("image"=>"ed_link.png",
                                  "open"=>"[",
                                  "close"=>"]",
                                  "sample"=>_("optional label | http://www.example.com"),
                                  "tip"=>_("External link (remember http:// prefix)")),
-                           array("image"=>"ed_headline.gif",
+                           array("image"=>"ed_headline.png",
                                  "open"=>"\\n!!! ",
                                  "close"=>"\\n",
                                  "sample"=>_("Headline text"),
                                  "tip"=>_("Level 1 headline")),
-                           array("image"=>"ed_image.gif",
+                           array("image"=>"ed_image.png",
                                  "open"=>"[ ",
                                  "close"=>" ]",
                                  "sample"=>_("Example.jpg"),
                                  "tip"=>_("Embedded image")),
-                           array("image"=>"ed_nowiki.gif",
+                           array("image"=>"ed_nowiki.png",
                                  "open"=>"\\n\\<verbatim\\>\\n",
                                  "close"=>"\\n\\</verbatim\\>\\n",
                                  "sample"=>_("Insert non-formatted text here"),
                                  "tip"=>_("Ignore wiki formatting")),
-                           array("image"=>"ed_sig.gif",
+                           array("image"=>"ed_sig.png",
                                  "open" => " --" . $GLOBALS['request']->_user->UserName(),
                                  "close" => "",
                                  "sample"=>"",
                                  "tip"=>_("Your signature")),
-                           array("image"=>"ed_hr.gif",
+                           array("image"=>"ed_hr.png",
                                  "open"=>"\\n----\\n",
                                  "close"=>"",
                                  "sample"=>"",
@@ -278,10 +278,10 @@ function undo_save() {
                            );
         $toolbar = "document.writeln(\"<div class=\\\"edit-toolbar\\\" id=\\\"toolbar\\\">\");\n";
 
-        $btn = new SubmitImageButton(_("Save"), "edit[save]", 'toolbar', $WikiTheme->getImageURL("ed_save.gif"));
+        $btn = new SubmitImageButton(_("Save"), "edit[save]", 'toolbar', $WikiTheme->getImageURL("ed_save.png"));
         $btn->addTooltip(_("Save"));
         $toolbar.='document.writeln("'.addslashes($btn->asXml()).'");'."\n";
-        $btn = new SubmitImageButton(_("Preview"), "edit[preview]", 'toolbar', $WikiTheme->getImageURL("ed_preview.gif"));
+        $btn = new SubmitImageButton(_("Preview"), "edit[preview]", 'toolbar', $WikiTheme->getImageURL("ed_preview.png"));
         $btn->addTooltip(_("Preview"));
         $toolbar.='document.writeln("'.addslashes($btn->asXml()).'");'."\n";
 
@@ -300,9 +300,9 @@ function undo_save() {
         $toolbar.="addInfobox('" . addslashes( _("Click a button to get an example text") ) . "');\n";
 
         if (JS_SEARCHREPLACE) {
-            $undo_d_btn = $WikiTheme->getImageURL("ed_undo_d.gif"); 
-            //$redo_btn = $WikiTheme->getImageURL("ed_redo.gif");
-            $sr_btn   = $WikiTheme->getImageURL("ed_replace.gif");
+            $undo_d_btn = $WikiTheme->getImageURL("ed_undo_d.png"); 
+            //$redo_btn = $WikiTheme->getImageURL("ed_redo.png");
+            $sr_btn   = $WikiTheme->getImageURL("ed_replace.png");
             $sr_html = HTML(HTML::img(array('class'=>"toolbar",
                                             'id'   =>"sr_undo",
                                             'src'  =>$undo_d_btn,
@@ -337,7 +337,7 @@ function undo_save() {
                     $categories[] = $p->getName();
                 }
                 $more_buttons = HTML::img(array('class'=>"toolbar",
-                                                'src'  => $WikiTheme->getImageURL("ed_category.gif"),
+                                                'src'  => $WikiTheme->getImageURL("ed_category.png"),
                                                 'title'=>_("AddCategory"),
                                                 'onclick'=>"showPulldown('".
                                                 _("Insert Categories (double-click)")
@@ -808,6 +808,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.81  2004/11/29 17:57:27  rurban
+ translated pulldown buttons
+
  Revision 1.80  2004/11/25 17:20:51  rurban
  and again a couple of more native db args: backlinks
 
