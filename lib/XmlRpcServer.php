@@ -1,5 +1,5 @@
 <?php 
-// $Id: XmlRpcServer.php,v 1.3 2002-09-15 06:14:32 dairiki Exp $
+// $Id: XmlRpcServer.php,v 1.4 2002-09-17 23:26:09 dairiki Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  *
  * LICENCE
@@ -473,20 +473,16 @@ class XmlRpcServer extends xmlrpc_server
     function service () {
         global $ErrorManager;
 
-        $this->errbuf = '';
         $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_errorHandler'));
-
         xmlrpc_server::service();
-
         $ErrorManager->popErrorHandler();
-        print $this->errbuf;
     }
     
     function _errorHandler ($e) {
         $msg = htmlspecialchars($e->asString());
         // '--' not allowed within xml comment
         $msg = str_replace('--', '&#45;&#45;', $msg);
-        $this->errbuf .= sprintf("<!--\n%s\n-->", $msg);
+        xmlrpc_debugmsg($msg);
         return true;
     }
 }
