@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.117 2002-09-01 16:02:13 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.118 2002-09-01 16:18:52 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -718,7 +718,7 @@ class fileSet {
 class ListRegexExpand {
     var $match, $list, $index, $case_sensitive;
     function ListRegexExpand (&$list, $match, $case_sensitive = true) {
-    	$this->match = strtr('/','\/',$match);
+    	$this->match = str_replace('/','\/',$match);
     	$this->list = &$list;
     	$this->case_sensitive = $case_sensitive;	
     }
@@ -769,7 +769,6 @@ function explodeList($input, $allnames, $glob_style = true, $case_sensitive = tr
 // echo implode(":",explodeList("Test*",array("xx","Test1","Test2")));
 
 function explodePageList($input, $perm = false) {
-    $list = explode(',',$input);
     // expand wildcards from list of all pages
     if (preg_match('/[\?\*]/',$input)) {
         $dbi = $GLOBALS['request']->_dbi;
@@ -778,8 +777,9 @@ function explodePageList($input, $perm = false) {
             $allPages[] = $pagehandle->getName();
         }
         return explodeList($input, &$allPages);
+    } else {
+        return explode(',',$input);
     }
-    return $list;
 }
 
 // Class introspections
