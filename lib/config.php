@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.43 2001-09-19 19:16:27 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.44 2001-10-29 21:08:09 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -144,10 +144,18 @@ $WikiNameRegexp = pcre_fix_posix_classes($WikiNameRegexp);
 //
 if (!defined('SERVER_NAME')) define('SERVER_NAME', $HTTP_SERVER_VARS['SERVER_NAME']);
 if (!defined('SERVER_PORT')) define('SERVER_PORT', $HTTP_SERVER_VARS['SERVER_PORT']);
+if (!defined('SERVER_PROTOCOL')) {
+    if (empty($HTTP_SERVER_VARS['HTTPS']) || $HTTP_SERVER_VARS['HTTPS'] == 'off')
+        define('SERVER_PROTOCOL', 'http');
+    else
+        define('SERVER_PROTOCOL', 'https');
+}
+
 if (!defined('SCRIPT_NAME')) define('SCRIPT_NAME', $HTTP_SERVER_VARS['SCRIPT_NAME']);
-if (!defined('DATA_PATH'))
-     define('DATA_PATH', dirname(SCRIPT_NAME));
-     if (!defined('USE_PATH_INFO'))
+
+if (!defined('DATA_PATH'))   define('DATA_PATH', dirname(SCRIPT_NAME));
+
+if (!defined('USE_PATH_INFO'))
 {
     /*
      * If SCRIPT_NAME does not look like php source file,
@@ -217,12 +225,15 @@ if (!defined('VIRTUAL_PATH'))
         define('VIRTUAL_PATH', SCRIPT_NAME);
 }
 
-if (SERVER_PORT && SERVER_PORT != 80)
-     define('SERVER_URL',
-            "http://" . SERVER_NAME . ':' . SERVER_PORT);
-     else
-     define('SERVER_URL',
-            "http://" . SERVER_NAME);
+if (SERVER_PORT
+    && SERVER_PORT != (SERVER_PROTOCOL == 'https' ? 443 : 80)) {
+    define('SERVER_URL',
+           SERVER_PROTOCOL . "://" . SERVER_NAME . ':' . SERVER_PORT);
+}
+else {
+    define('SERVER_URL',
+           SERVER_PROTOCOL . "://" . SERVER_NAME);
+}
 
 if (VIRTUAL_PATH != SCRIPT_NAME)
 {
