@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.13 2001-12-17 16:13:00 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.14 2001-12-18 06:36:05 carstenklapp Exp $');
 /**
  */
 
@@ -155,7 +155,8 @@ extends _RecentChanges_Formatter
 
         
     function title () {
-        return htmlspecialchars(_("RecentChanges")) . "\n" . $this->rss_icon();
+        extract($this->_args);
+        return htmlspecialchars( $show_minor ? _("RecentEdits") : _("RecentChanges") ) . "\n" . $this->rss_icon();
     }
 
     function format ($changes) {
