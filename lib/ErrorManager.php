@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.25 2004-06-02 10:18:36 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.26 2004-06-02 18:01:45 rurban Exp $');
 
 require_once(dirname(__FILE__).'/HtmlElement.php');
 if (isset($GLOBALS['ErrorManager'])) return;
@@ -14,8 +14,10 @@ define ('EM_NOTICE_ERRORS', E_NOTICE | E_USER_NOTICE);
    Only where absolute speed is necessary you might want to turn 
    them off.
 */
-if (DEBUG) assert_options (ASSERT_ACTIVE, 1);
-else       assert_options (ASSERT_ACTIVE, 0);
+if (defined('DEBUG') and DEBUG)
+    assert_options (ASSERT_ACTIVE, 1);
+else
+    assert_options (ASSERT_ACTIVE, 0);
 assert_options (ASSERT_CALLBACK, 'wiki_assert_handler');
 
 function wiki_assert_handler ($file, $line, $code) {
@@ -521,6 +523,9 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.25  2004/06/02 10:18:36  rurban
+// assert only if DEBUG is non-false
+//
 // Revision 1.24  2004/05/27 17:49:05  rurban
 // renamed DB_Session to DbSession (in CVS also)
 // added WikiDB->getParam and WikiDB->getAuthParam method to get rid of globals

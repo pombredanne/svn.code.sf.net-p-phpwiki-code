@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.25 2004-05-27 17:49:05 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.26 2004-06-02 18:01:45 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -282,6 +282,10 @@ function fix_configs() {
     global $FieldSeparator, $charset, $WikiNameRegexp, $KeywordLinkRegexp, $AllActionPages;
     global $DisabledActions, $HTTP_SERVER_VARS, $DBParams, $LANG;
 
+    // init FileFinder to add proper include paths
+    require_once(dirname(__FILE__)."/FileFinder.php");
+    FindFile("lib/interwiki.map",true);
+    
     // "\x80"-"\x9f" (and "\x00" - "\x1f") are non-printing control
     // chars in iso-8859-*
     // $FieldSeparator = "\263"; // this is a superscript 3 in ISO-8859-1.
@@ -540,6 +544,15 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.25  2004/05/27 17:49:05  rurban
+// renamed DB_Session to DbSession (in CVS also)
+// added WikiDB->getParam and WikiDB->getAuthParam method to get rid of globals
+// remove leading slash in error message
+// added force_unlock parameter to File_Passwd (no return on stale locks)
+// fixed adodb session AffectedRows
+// added FileFinder helpers to unify local filenames and DATA_PATH names
+// editpage.php: new edit toolbar javascript on ENABLE_EDIT_TOOLBAR
+//
 // Revision 1.24  2004/05/18 13:33:13  rurban
 // we already have a CGI function
 //

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.153 2004-06-01 15:28:00 rurban Exp $');
+rcs_id('$Id: main.php,v 1.154 2004-06-02 18:01:46 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -885,7 +885,7 @@ function main () {
 
     global $request;
 
-    if ((DEBUG & 2) and extension_loaded("apd"))
+    if ((DEBUG & 4) and extension_loaded("apd"))
         apd_set_session_trace(9);
 
     // Postpone warnings
@@ -957,6 +957,11 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.153  2004/06/01 15:28:00  rurban
+// AdminUser only ADMIN_USER not member of Administrators
+// some RateIt improvements by dfrankow
+// edit_toolbar buttons
+//
 // Revision 1.152  2004/05/27 17:49:06  rurban
 // renamed DB_Session to DbSession (in CVS also)
 // added WikiDB->getParam and WikiDB->getAuthParam method to get rid of globals

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.80 2004-06-02 14:20:27 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.81 2004-06-02 18:01:45 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -862,12 +862,12 @@ extends _AnonUser
                     $class = $this->nextClass();
                     return new $class($UserName,$this->_prefs);
                 }
-                // use the default behaviour from the previous versions:
+                // Use the default behaviour from the previous versions:
                 elseif (USER_AUTH_POLICY === 'old') {
-                    // default: try to be smart
+                    // Default: try to be smart
                     // On php5 we can directly return and upgrade the Object,
                     // before we have to upgrade it manually.
-                    if (!empty($GLOBALS['PHP_AUTH_USER'])) {
+                    if (!empty($GLOBALS['PHP_AUTH_USER']) or !empty($_SERVER['REMOTE_USER'])) {
                         if (check_php_version(5))
                             return new _HttpAuthPassUser($UserName,$this->_prefs);
                         else {
@@ -876,7 +876,8 @@ extends _AnonUser
                             /*PHP5 patch*/$this = $user;
                             return $user;
                         }
-                    } elseif ($dbh->getAuthParam('auth_check') and 
+                    } elseif (in_array('Db', $dbh->getAuthParam('USER_AUTH_ORDER')) and
+                              $dbh->getAuthParam('auth_check') and
                               ($dbh->getAuthParam('auth_dsn') or $dbh->getParam('dsn'))) {
                         if (check_php_version(5))
                             return new _DbPassUser($UserName,$this->_prefs);
@@ -886,7 +887,8 @@ extends _AnonUser
                             /*PHP5 patch*/$this = $user;
                             return $user;
                         }
-                    } elseif (defined('LDAP_AUTH_HOST') and defined('LDAP_BASE_DN') and 
+                    } elseif (in_array('LDAP', $dbh->getAuthParam('USER_AUTH_ORDER')) and
+                              defined('LDAP_AUTH_HOST') and defined('LDAP_BASE_DN') and 
                               function_exists('ldap_open')) {
                         if (check_php_version(5))
                             return new _LDAPPassUser($UserName,$this->_prefs);
@@ -896,7 +898,8 @@ extends _AnonUser
                             /*PHP5 patch*/$this = $user;
                             return $user;
                         }
-                    } elseif (defined('IMAP_AUTH_HOST') and function_exists('imap_open')) {
+                    } elseif (in_array('IMAP', $dbh->getAuthParam('USER_AUTH_ORDER')) and
+                              defined('IMAP_AUTH_HOST') and function_exists('imap_open')) {
                         if (check_php_version(5))
                             return new _IMAPPassUser($UserName,$this->_prefs);
                         else {
@@ -905,7 +908,8 @@ extends _AnonUser
                             /*PHP5 patch*/$this = $user;
                             return $user;
                         }
-                    } elseif (defined('AUTH_USER_FILE') and file_exists(AUTH_USER_FILE)) {
+                    } elseif (in_array('File', $dbh->getAuthParam('USER_AUTH_ORDER')) and
+                              defined('AUTH_USER_FILE') and file_exists(AUTH_USER_FILE)) {
                         if (check_php_version(5))
                             return new _FilePassUser($UserName, $this->_prefs);
                         else {
@@ -2913,6 +2917,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.80  2004/06/02 14:20:27  rurban
+// fix adodb DbPassUser login
+//
 // Revision 1.79  2004/06/01 15:27:59  rurban
 // AdminUser only ADMIN_USER not member of Administrators
 // some RateIt improvements by dfrankow
