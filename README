@@ -76,7 +76,7 @@ lib/WikiDB.php
 lib/WikiPlugin.php
 lib/WikiUser.php
 lib/ziplib.php:        support for zip/unzip, used for page dumps
-
+ 
 lib/plugin/:
 plugin/_BackendInfo.php
 plugin/BackLinks.php
@@ -87,6 +87,7 @@ plugin/IncludePage.php
 plugin/LikePages.php
 plugin/MostPopular.php
 plugin/PageHistory.php
+plugin/RandomPages.php
 plugin/RecentChanges.php
 plugin/text2png.php
 plugin/TitleSearch.php
@@ -95,6 +96,7 @@ plugin/UserPage.php
 plugin/ViewSource.php
 
 lib/WikiDB/:
+
 
 *admin/: directory completely replaced by other files
 
@@ -121,4 +123,4 @@ Steve Wainstead
 swain@panix.com
 http://wcsb.org/~swain/
 
-$Id: README,v 1.15 2002-01-31 23:27:16 carstenklapp Exp $
+$Id: README,v 1.16 2002-02-04 21:59:53 carstenklapp Exp $
