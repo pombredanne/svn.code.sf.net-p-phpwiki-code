@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.136 2005-01-25 07:07:24 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.137 2005-01-30 23:14:38 rurban Exp $');
 
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
@@ -1219,6 +1219,8 @@ function LoadFileOrDir (&$request)
  * - import all pgsrc pages.
  * - Todo: installer interface to edit config/config.ini settings
  * - Todo: ask for existing old index.php to convert to config/config.ini
+ * - Todo: theme-specific pages: 
+ *   blog - HomePage, ADMIN_USER/Blogs
  */
 function SetupWiki (&$request)
 {
@@ -1246,11 +1248,11 @@ function SetupWiki (&$request)
     $pgsrc = FindLocalizedFile(WIKI_PGSRC);
     $default_pgsrc = FindFile(DEFAULT_WIKI_PGSRC);
 
-    $request->setArg('overwrite',true);
+    $request->setArg('overwrite', true);
     if ($default_pgsrc != $pgsrc) {
         LoadAny($request, $default_pgsrc, $GenericPages);
     }
-    $request->setArg('overwrite',false);
+    $request->setArg('overwrite', false);
     LoadAny($request, $pgsrc);
     $dbi =& $request->_dbi;
 
@@ -1258,20 +1260,20 @@ function SetupWiki (&$request)
     $finder = new FileFinder;
     foreach (array_merge(explode(':','OldTextFormattingRules:TextFormattingRules:PhpWikiAdministration'),
                          $GLOBALS['AllActionPages'],
-                         array(constant('HOME_PAGE'))) as $f) {
+                         array(constant('HOME_PAGE'))) as $f) 
+    {
         $page = gettext($f);
-        if (isSubPage($page))
-            $page = urlencode($page);
-        if (! $dbi->isWikiPage(urldecode($page)) ) {
+        $epage = urlencode($page);
+        if (! $dbi->isWikiPage($page) ) {
             // translated version provided?
-            if ($lf = FindLocalizedFile($pgsrc . $finder->_pathsep . $page, 1))
+            if ($lf = FindLocalizedFile($pgsrc . $finder->_pathsep . $epage, 1)) {
                 LoadAny($request, $lf);
-            else { // load english version of required action page
+            } else { // load english version of required action page
                 LoadAny($request, FindFile(DEFAULT_WIKI_PGSRC . $finder->_pathsep . urlencode($f)));
                 $page = $f;
             }
         }
-        if (! $dbi->isWikiPage(urldecode($page))) {
+        if (! $dbi->isWikiPage($page)) {
             trigger_error(sprintf("Mandatory file %s couldn't be loaded!", $page),
                           E_USER_WARNING);
         }
@@ -1305,6 +1307,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.136  2005/01/25 07:07:24  rurban
+ remove body tags in html dumps, add css and images to zipdumps, simplify printing
+
  Revision 1.135  2004/12/26 17:17:25  rurban
  announce dumps - mult.requests to avoid request::finish, e.g. LinkDatabase, PdfOut, ...
 
