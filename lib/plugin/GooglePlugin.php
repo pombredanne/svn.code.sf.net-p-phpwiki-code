@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: GooglePlugin.php,v 1.1 2004-02-29 01:37:59 rurban Exp $');
+rcs_id('$Id: GooglePlugin.php,v 1.2 2004-04-18 01:11:52 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -49,7 +49,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -98,7 +98,7 @@ extends WikiPlugin
         $form = HTML::form(array('action' => $request->getPostURL(),
                                  'method' => 'post',
                                  //'class'  => 'class', //fixme
-                                 'accept-charset' => CHARSET),
+                                 'accept-charset' => $GLOBALS['charset']),
                            HiddenInputs(array('pagename' => $basepage,
                                               'mode' => $mode)));
         $form->pushContent(HTML::input(array('type' => 'text',
@@ -114,6 +114,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/02/29 01:37:59  rurban
+// New experimental feature: use the Google API directly
+// Needs a free license key and the soap library nosoap,
+// Todo: templates for search and results, some proxy debugging
+//
 // Revision 1.7  2004/02/22 23:20:33  rurban
 // fixed DumpHtmlToDir,
 // enhanced sortby handling in PageList

@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.20 2004-02-28 21:14:08 rurban Exp $');
+rcs_id('$Id: FullTextSearch.php,v 1.21 2004-04-18 01:11:52 rurban Exp $');
 /*
-Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+Copyright 1999,2000,2001,2002,2004 $ThePhpWikiProgrammingTeam
 
 This file is part of PhpWiki.
 
@@ -24,6 +24,13 @@ require_once('lib/TextSearchQuery.php');
 require_once("lib/PageList.php");
 
 /**
+ * Simple case insensitive fulltext search
+ * TODO: case-sensitivity argument, regex argument
+ *
+ * See https://sourceforge.net/tracker/index.php?func=detail&aid=927395&group_id=6121&atid=106121
+ * Wordaround to let the dead locks occur somewhat later:
+ * increased the memory limit of PHP4 from 8 MB to 32 MB
+ * php.ini: memory_limit = 32 MB
  */
 class WikiPlugin_FullTextSearch
 extends WikiPlugin
@@ -38,11 +45,13 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.20 $");
+                            "\$Revision: 1.21 $");
     }
 
     function getDefaultArguments() {
         return array('s'        => false,
+                     'case_exact' => false,  //not yet supported
+                     'regex'    => false,    //not yet supported
                      'noheader' => false,
                      'exclude'  => false,  //comma-seperated list of glob
                      'limit'    => false,
@@ -57,7 +66,7 @@ extends WikiPlugin
 
         extract($args);
 
-        $query = new TextSearchQuery($s);
+        $query = new TextSearchQuery($s, $case_exact, $regex);
         $pages = $dbi->fullSearch($query);
         $lines = array();
         $hilight_re = $query->getHighlightRegexp();
@@ -74,6 +83,7 @@ extends WikiPlugin
 
         // Todo: we should better define a new PageListDL class for dl/dt/dd lists
         // But the new column types must have a callback then. (showhits)
+        // See e.g. WikiAdminSearchReplace for custom pagelist columns
         $list = HTML::dl();
         if (!$limit or !is_int($limit))
             $limit = 0;
@@ -86,6 +96,7 @@ extends WikiPlugin
             $list->pushContent(HTML::dt(WikiLink($name)));
             if ($hilight_re)
                 $list->pushContent($this->showhits($page, $hilight_re));
+            unset($page);
         }
         if ($limit and $count >= $limit) //todo: pager link to list of next matches
             $list->pushContent(HTML::dd(fmt("only %d pages displayed",$limit)));
@@ -122,6 +133,15 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2004/02/28 21:14:08  rurban
+// generally more PHPDOC docs
+//   see http://xarch.tu-graz.ac.at/home/rurban/phpwiki/xref/
+// fxied WikiUserNew pref handling: empty theme not stored, save only
+//   changed prefs, sql prefs improved, fixed password update,
+//   removed REPLACE sql (dangerous)
+// moved gettext init after the locale was guessed
+// + some minor changes
+//
 // Revision 1.19  2004/02/26 04:27:39  rurban
 // wrong limit notification
 //

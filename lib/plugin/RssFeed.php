@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RssFeed.php,v 1.3 2004-04-12 17:13:44 rurban Exp $');
+rcs_id('$Id: RssFeed.php,v 1.4 2004-04-18 01:11:52 rurban Exp $');
 /*
  Copyright 2003 Arnaud Fontaine
 
@@ -39,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     // Establish default values for each of this plugin's arguments.
@@ -113,6 +113,8 @@ extends WikiPlugin
     }
 
 };
+
+// $Log: not supported by cvs2svn $
 
 // For emacs users
 // Local Variables:

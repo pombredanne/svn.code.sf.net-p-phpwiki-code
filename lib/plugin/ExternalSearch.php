@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ExternalSearch.php,v 1.7 2004-02-22 23:20:33 rurban Exp $');
+rcs_id('$Id: ExternalSearch.php,v 1.8 2004-04-18 01:11:52 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -38,7 +38,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function _getInterWikiUrl(&$request) {
@@ -98,7 +98,7 @@ extends WikiPlugin
         $form = HTML::form(array('action' => $request->getPostURL(),
                                  'method' => 'post',
                                  //'class'  => 'class', //fixme
-                                 'accept-charset' => CHARSET),
+                                 'accept-charset' => $GLOBALS['charset']),
                            HiddenInputs(array('pagename' => $basepage)));
 
         $form->pushContent(HTML::input(array('type' => 'text',
@@ -118,6 +118,13 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/02/22 23:20:33  rurban
+// fixed DumpHtmlToDir,
+// enhanced sortby handling in PageList
+//   new button_heading th style (enabled),
+// added sortby and limit support to the db backends and plugins
+//   for paging support (<<prev, next>> links on long lists)
+//
 // Revision 1.6  2004/02/19 22:06:53  rurban
 // use new class, to be able to get rid of lib/interwiki.php
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.89 2004-04-10 02:30:49 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.90 2004-04-18 01:11:52 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -433,7 +433,7 @@ extends _RecentChanges_HtmlFormatter
         global $request;
         $request->discardOutput();
         
-        printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
+        printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", $GLOBALS['charset']);
         printf('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"');
         printf('  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">');
         printf('<html xmlns="http://www.w3.org/1999/xhtml">');
@@ -654,7 +654,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.89 $");
+                            "\$Revision: 1.90 $");
     }
 
     function managesValidators() {
@@ -839,6 +839,10 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.89  2004/04/10 02:30:49  rurban
+// Fixed gettext problem with VIRTUAL_PATH scripts (Windows only probably)
+// Fixed "cannot setlocale..." (sf.net problem)
+//
 // Revision 1.88  2004/04/01 15:57:10  rurban
 // simplified Sidebar theme: table, not absolute css positioning
 // added the new box methods.

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbSession.php,v 1.9 2004-04-06 20:00:09 rurban Exp $');
+<?php rcs_id('$Id: DbSession.php,v 1.10 2004-04-18 01:11:51 rurban Exp $');
 
 /**
  * Store sessions data in Pear DB / ADODB ....
@@ -349,12 +349,11 @@ extends DB_Session
         //$this->log("_read($id)");
         $dbh = &$this->_connect();
         $table = $this->_table;
-        $qid = $dbh->quote($id);
+        $qid = $dbh->qstr($id);
         $res = '';
-        $rs = $dbh->Execute("SELECT sess_data FROM $table WHERE sess_id=$qid");
-        if (!$rs->EOF) {
-            $res = $rs->fields["sess_data"];
-        }
+        $row = $dbh->GetRow("SELECT sess_data FROM $table WHERE sess_id=$qid");
+        if ($row)
+            $res = $row[0];
         $this->_disconnect();
         if (!empty($res) and preg_match('|^[a-zA-Z0-9/+=]+$|', $res))
             $res = base64_decode($res);
@@ -381,25 +380,25 @@ extends DB_Session
         
         $dbh = &$this->_connect();
         $table = $this->_table;
-        $qid = $dbh->quote($id);
-        $qip = $dbh->quote($GLOBALS['HTTP_SERVER_VARS']['REMOTE_ADDR']);
+        $qid = $dbh->qstr($id);
+        $qip = $dbh->qstr($GLOBALS['HTTP_SERVER_VARS']['REMOTE_ADDR']);
         $time = time();
 
         // postgres can't handle binary data in a TEXT field.
-        if (isa($dbh, 'DB_pgsql'))
+        if (isa($dbh, 'ADODB_postgres64'))
             $sess_data = base64_encode($sess_data);
-        $qdata = $dbh->quote($sess_data);
-        $res = $dbh->query("UPDATE $table"
+        $qdata = $dbh->qstr($sess_data);
+        $rs = $dbh->Execute("UPDATE $table"
                            . " SET sess_data=$qdata, sess_date=$time, sess_ip=$qip"
                            . " WHERE sess_id=$qid");
-        // Warning: This works only only adodb_mysql!
-        // The parent class adodb needs ->AffectedRows()
-        if (!$dbh->_AffectedRows()) 
-            $res = $dbh->query("INSERT INTO $table"
+        if (! $dbh->Affected_Rows() )
+            $rs = $dbh->Execute("INSERT INTO $table"
                                . " (sess_id, sess_data, sess_date, sess_ip)"
                                . " VALUES ($qid, $qdata, $time, $qip)");
+        $result = ! $rs->EOF;
+        if ($result) $rs->free();                        
         $this->_disconnect();
-        return ! $res->EOF;
+        return $result;
     }
 
     /**
@@ -414,9 +413,9 @@ extends DB_Session
     function destroy ($id) {
         $dbh = &$this->_connect();
         $table = $this->_table;
-        $qid = $dbh->quote($id);
+        $qid = $dbh->qstr($id);
 
-        $dbh->query("DELETE FROM $table WHERE sess_id=$qid");
+        $dbh->Execute("DELETE FROM $table WHERE sess_id=$qid");
 
         $this->_disconnect();
         return true;     
@@ -434,7 +433,7 @@ extends DB_Session
         $table = $this->_table;
         $threshold = time() - $maxlifetime;
 
-        $dbh->query("DELETE FROM $table WHERE sess_date < $threshold");
+        $dbh->Execute("DELETE FROM $table WHERE sess_date < $threshold");
 
         $this->_disconnect();
         return true;
@@ -446,14 +445,16 @@ extends DB_Session
         $sessions = array();
         $dbh = &$this->_connect();
         $table = $this->_table;
-        $rs = $this->query("SELECT sess_data,sess_date,sess_ip FROM $table ORDER BY sess_date DESC");
+        $rs = $this->Execute("SELECT sess_data,sess_date,sess_ip FROM $table ORDER BY sess_date DESC");
         if ($rs->EOF) {
+            $rs->free();
             return $sessions;
         }
-        while ($row = $rs->fetchRow()) {
-            $data = $row['sess_data'];
-            $date = $row['sess_date'];
-            $ip   = $row['sess_ip'];
+        while (!$rs->EOF) {
+            $row = $rs->fetchRow();
+            $data = $row[0];
+            $date = $row[1];
+            $ip   = $row[2];
             if (preg_match('|^[a-zA-Z0-9/+=]+$|', $data))
                 $data = base64_decode($data);
             // session_data contains the <variable name> + "|" + <packed string>
@@ -462,7 +463,9 @@ extends DB_Session
             $sessions[] = array('wiki_user' => substr($user,10), // from "O:" onwards
                                 'date' => $date,
                                 'ip' => $ip);
+            $rs->MoveNext();
         }
+        $rs->free();
         $this->_disconnect();
         return $sessions;
     }

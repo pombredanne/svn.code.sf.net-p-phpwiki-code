@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.44 2004-04-11 10:42:02 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.45 2004-04-18 01:11:52 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,7 +87,7 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.44 $");
+        //                    "\$Revision: 1.45 $");
     }
 
     function getArgs($argstr, $request=false, $defaults = false) {
@@ -243,7 +243,7 @@ class WikiPlugin
         $form = HTML::form(array('action' => WikiURL($args['targetpage']),
                                  'method' => $args['method'],
                                  'class'  => $args['class'],
-                                 'accept-charset' => CHARSET));
+                                 'accept-charset' => $GLOBALS['charset']));
         if (! USE_PATH_INFO ) {
             $pagename = $request->get('pagename');
             $form->pushContent(HTML::input(array('type' => 'hidden', 'name' => 'pagename', 
@@ -328,6 +328,18 @@ class WikiPlugin
         foreach ($array as $column => $obj) {
             $customPageListColumns[$column] = $obj;
         }
+    }
+    
+    // provide a sample usage text for automatic edit-toolbar insertion
+    function getUsage() {
+        $args = $this->getDefaultArguments();
+        $string = '<'.'?plugin '.$this->getName().' ';
+        if ($args) {
+            foreach ($args as $key => $value) {
+                $string .= ($key."||=".(string)$value." ");
+            }
+        }
+        return $string . '?'.'>';
     }
 }
 

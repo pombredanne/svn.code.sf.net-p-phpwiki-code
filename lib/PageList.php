@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.76 2004-04-16 14:09:13 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.77 2004-04-18 01:11:51 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -827,6 +827,8 @@ extends PageList {
     //Todo:
     //insert javascript when clicked on Selected Select/Deselect all
 }
+
+// $Log: not supported by cvs2svn $
 
 // (c-file-style: "gnu")
 // Local Variables:

@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.48 2003-11-04 18:20:20 carstenklapp Exp $');
+rcs_id('$Id: display.php,v 1.49 2004-04-18 01:11:52 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -65,7 +65,7 @@ function actionPage(&$request, $action) {
     $transformedContent = $actionrev->getTransformedContent();
     $template = Template('browse', array('CONTENT' => $transformedContent));
 
-    header("Content-Type: text/html; charset=" . CHARSET);
+    header("Content-Type: text/html; charset=" . $GLOBALS['charset']);
     GeneratePage($template, $pagetitle, $revision);
     $request->checkValidators();
     flush();
@@ -127,7 +127,7 @@ function displayPage(&$request, $template=false) {
                                      '%mtime' => $revision->get('mtime')));
 
     // FIXME: should probably be in a template...
-    header("Content-Type: text/html; charset=" . CHARSET); // FIXME: this gets done twice?
+    header("Content-Type: text/html; charset=" . $GLOBALS['charset']); // FIXME: this gets done twice?
 
     $page_content = $revision->getTransformedContent();
     
@@ -151,6 +151,7 @@ function displayPage(&$request, $template=false) {
     $request->checkValidators();
     flush();
 }
+// $Log: not supported by cvs2svn $
 
 // For emacs users
 // Local Variables:

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.42 2004-03-24 19:39:02 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.43 2004-04-18 01:11:51 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -324,7 +324,6 @@ class Block_HtmlElement extends HtmlElement
     function Block_HtmlElement($tag /*, ... */) {
         $this->_init(func_get_args());
     }
-
 
     function setTightness($top, $bottom) {
 	$this->setInClass('tightenable');
