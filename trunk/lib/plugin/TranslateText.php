@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TranslateText.php,v 1.2 2004-03-17 12:04:36 rurban Exp $');
+rcs_id('$Id: TranslateText.php,v 1.3 2004-03-17 15:38:03 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -50,7 +50,7 @@ extends WikiPlugin__WikiTranslation
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -64,8 +64,10 @@ extends WikiPlugin__WikiTranslation
     function run($dbi, $argstr, $request, $basepage) {
         extract($this->getArgs($argstr, $request));
         if (!$lang)
-            return $this->error("This internal action page cannot viewed. You can only use it via the _WikiTranslation plugin.");
-            
+            return $this->error(
+                _("This internal action page cannot viewed.")."\n".
+                _("You can only use it via the _WikiTranslation plugin."));
+           
         $this->lang = $lang;
         //action=save
         if (!empty($translate) and isset($translate['submit']) and $request->isPost()) {
@@ -90,12 +92,12 @@ extends WikiPlugin__WikiTranslation
                     $meta = array('markup' => 2.0,
                                   'author' => $user->getId());
                 }
-                $text = $text .
-                        $user->getId() . " " . Iso8601DateTime() . "\n" .
-                        "* " . sprintf(_("Translate %s to %s in %s"),$pagename,
-                                                                     $trans,$lang);
-                $meta['summary'] = sprintf(_("Translate %s to %s in %s"),substr($pagename,0,15),
-                                           substr($trans,0,15),$lang);
+                $text .= $user->getId() . " " . Iso8601DateTime() . "\n" .
+                         "* " . sprintf(_("Translate '%s' to '%s' in *%s*"),
+                                        $pagename, $trans, $lang);
+                $text .= "  <verbatim>locale/po/$lang.po:\n  msgid \"".$pagename."\"\n  msgstr \"".$trans."\"\n  </verbatim>";
+                $meta['summary'] = sprintf(_("Translate %s to %s in %s"),
+                                           substr($pagename,0,15),substr($trans,0,15),$lang);
                 $page->save($text, $version + 1, $meta);
                 // TODO: admin notification
                 return HTML(HTML::h2(_("Thanks for adding this translation!")),
@@ -135,6 +137,9 @@ extends WikiPlugin__WikiTranslation
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/03/17 12:04:36  rurban
+// more docs
+//
 //
 
 // For emacs users
