@@ -1,4 +1,4 @@
-<!-- $Id: pgsql.php,v 1.2 2000-10-28 17:44:00 ahollosi Exp $ -->
+<!-- $Id: pgsql.php,v 1.3 2000-11-02 03:05:20 wainstead Exp $ -->
 <?php
 
    /*
@@ -29,7 +29,7 @@
       global $WikiDataBase, $pg_dbhost, $pg_dbport;
 
       $connectstring = $pg_dbhost?"host=$pg_dbhost ":"";
-	 $connectstring .= $pg_dbport?"pport=$pg_dbport ":"";
+	 $connectstring .= $pg_dbport?"port=$pg_dbport ":"";
 	 $connectstring .= $WikiDataBase?"dbname=$WikiDataBase":"";
 
       if (!($dbc = pg_pconnect($connectstring))) {
