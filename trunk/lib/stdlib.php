@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.188 2004-06-16 10:38:58 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.189 2004-06-20 09:45:35 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1288,7 +1288,7 @@ function isa ($object, $class) {
     $lclass = strtolower($class);
 
     return is_object($object)
-        && ( get_class($object) == strtolower($lclass)
+        && ( strtolower(get_class($object)) == $lclass
              || is_subclass_of($object, $lclass) );
 }
 
@@ -1594,6 +1594,15 @@ function url_get_contents( $uri ) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.188  2004/06/16 10:38:58  rurban
+// Disallow refernces in calls if the declaration is a reference
+// ("allow_call_time_pass_reference clean").
+//   PhpWiki is now allow_call_time_pass_reference = Off clean,
+//   but several external libraries may not.
+//   In detail these libs look to be affected (not tested):
+//   * Pear_DB odbc
+//   * adodb oracle
+//
 // Revision 1.187  2004/06/14 11:31:37  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList
