@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.19 2004-06-19 12:19:09 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.20 2004-07-03 14:48:18 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -358,17 +358,17 @@ function CheckDatabaseUpdate(&$request) {
         }
         mysql_free_result($fields);
     }
-    // check for mysql 4.1.x binary search bug
+    // check for mysql 4.1.x binary search bug, fixed since 4.1.3.
     // http://bugs.mysql.com/bug.php?id=1491
     // not yet tested for 4.1.2alpha, but confirmed for 4.1.0alpha
     if (substr($backend_type,0,5) == 'mysql') {
-  	echo _("check for mysql 4.1.x binary search bug")," ...";
+  	echo _("check for mysql 4.1.0-2 binary search bug")," ...";
   	$result = mysql_query("SELECT VERSION()",$dbh->_backend->connection());
         $row = mysql_fetch_row($result);
         $mysql_version = $row[0];
         $arr = explode('.',$mysql_version);
-        $version = (string)(($arr[0] * 100) + $arr[1]) . "." . $arr[2];
-        if ($version > 410.0 and $version < 420.0) {
+        $version = (string)(($arr[0] * 100) + $arr[1]) . "." . (integer)$arr[2];
+        if ($version >= 401.0 and $version < 401.3) {
             $dbh->genericQuery("ALTER TABLE $page_tbl CHANGE pagename pagename VARCHAR(100) NOT NULL;");
             echo sprintf(_("version <em>%s</em> <b>FIXED</b>"), $mysql_version),"<br />\n";	
         } else {
@@ -472,6 +472,9 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.19  2004/06/19 12:19:09  rurban
+ slightly improved docs
+
  Revision 1.18  2004/06/19 11:47:17  rurban
  added CheckConfigUpdate: CACHE_CONTROL = NONE => NO_CACHE
 
