@@ -166,7 +166,7 @@ class Google {
             $this->license_key = GOOGLE_LICENSE_KEY;
         require_once("lib/nusoap/nusoap.php");
 
-        $this->soapclient = new soapclient(SERVER_URL . DATA_PATH."/"."GoogleSearch.wsdl", "wsdl");
+        $this->soapclient = new soapclient(SERVER_URL . NormalizeWebFileName("GoogleSearch.wsdl"), "wsdl");
         $this->proxy = $this->soapclient->getProxy();
         if ($maxResults > 10) $maxResults = 10;
         if ($maxResults < 1) $maxResults = 1;
@@ -220,10 +220,10 @@ class Google {
     function doGoogleSearch($query, $startIndex=1, $maxResults=10, $filter = "false",
                             $restrict='', $safeSearch='false', $lr='',
                             $inputencoding='UTF-8', $outputencoding='UTF-8') {
-        if (!defined("GOOGLE_LICENSE_KEY"))
+        if (!$this->license_key)
             return false;
         // doGoogleSearch() gets created automatically!! (some eval'ed code from the soap request)
-        $result = $this->doGoogleSearch(GOOGLE_LICENSE_KEY, // "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        $result = $this->proxy->doGoogleSearch($this->license_key, // "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
                                         $query,
                                         $startIndex,
                                         $maxResults,
@@ -252,8 +252,10 @@ class Google {
      *  @return string full text of the cached page
      */
     function doGetCachedPage($url) {
+        if (!$this->license_key)
+            return false;
         // This method gets created automatically!! (some eval'ed code from the soap request)
-        $result = $this->proxy->doGetCachedPage(GOOGLE_LICENSE_KEY,
+        $result = $this->proxy->doGetCachedPage($this->license_key,
                                                 $url);
         if (!empty($result)) return base64_decode($result);
     }
@@ -265,8 +267,10 @@ class Google {
      * @return string          text of any suggested replacement, or None
      */
     function doSpellingSuggestion($phrase) {
+        if (!$this->license_key)
+            return false;
         // This method gets created automatically!! (some eval'ed code from the soap request)
-        return $this->proxy->doSpellingSuggestion(GOOGLE_LICENSE_KEY,
+        return $this->proxy->doSpellingSuggestion($this->license_key,
                                                   $phrase);
     }
 }
