@@ -1,8 +1,8 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.20 2002-02-10 05:08:11 carstenklapp Exp $');
+rcs_id('$Id: Calendar.php,v 1.21 2002-02-11 01:20:48 carstenklapp Exp $');
 
 if (!defined('SECONDS_PER_DAY'))
-    define('SECONDS_PER_DAY', 24 * 3600);
+define('SECONDS_PER_DAY', 24 * 3600);
 
 // FIXME: Still needs:
 //
@@ -66,7 +66,7 @@ extends WikiPlugin
                                  HTML::strong(array('class' => 'cal-header'),
                                               strftime($args['month_format'], $time))),
                         HTML::td(array('align' => 'right'), $next));
-        
+
         return HTML::tr(HTML::td(array('colspan' => 7,
                                        'align'   => 'center'),
                                  HTML::table(array('width' => '100%',
@@ -147,8 +147,9 @@ extends WikiPlugin
         $cal = HTML::table(array('cellspacing' => 0,
                                  'cellpadding' => 2,
                                  'class'       => 'cal'),
-                           $this->__header($request->getArg('pagename'), $time),
-                           $this->__daynames($args['start_wday']));
+                           HTML::thead(
+                                       $this->__header($request->getArg('pagename'), $time),
+                                       $this->__daynames($args['start_wday'])));
 
         $t = localtime($time, 1);
 
@@ -156,10 +157,10 @@ extends WikiPlugin
             $this->_today = $now['tm_mday'];
         else
             $this->_today = false;
-        
-        
+
+        $tbody = HTML::tbody();
         $row = HTML::tr();
-        
+
         $col = (7 + $t['tm_wday'] - $args['start_wday']) % 7;
         if ($col > 0)
             $row->pushContent(HTML::td(array('colspan' => $col)));
@@ -169,7 +170,7 @@ extends WikiPlugin
             $row->pushContent($this->__date($dbi, $time));
 
             if (++$col % 7 == 0) {
-                $cal->pushContent($row);
+                $tbody->pushContent($row);
                 $col = 0;
                 $row = HTML::tr();
             }
@@ -181,8 +182,9 @@ extends WikiPlugin
 
         if ($row->getContent()) {
             $row->pushContent(HTML::td(array('colspan' => (42 - $col) % 7)));
-            $cal->pushContent($row);
+            $tbody->pushContent($row);
         }
+        $cal->pushContent($tbody);
         return $cal;
     }
 };
