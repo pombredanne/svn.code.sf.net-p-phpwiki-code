@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.38 2004-03-25 17:37:36 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.39 2004-03-25 22:33:38 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -883,12 +883,16 @@ extends _AnonUser
         if (empty($this->_auth_dbi)) {
             if ($DBParams['dbtype'] != 'SQL' and $DBParams['dbtype'] != 'ADODB')
                 return false;
+            if (empty($DBAuthParams))
+                return false;
             if (empty($DBAuthParams['auth_dsn'])) {
                 $dbh = $request->getDbh(); // use phpwiki database 
             } elseif ($DBAuthParams['auth_dsn'] == $DBParams['dsn']) {
                 $dbh = $request->getDbh(); // same phpwiki database 
             } else { // use another external database handle. needs PHP >= 4.1
-                $dbh = WikiDB::open($DBAuthParams);
+                $local_params = array_merge($DBParams,$DBAuthParams);
+                $local_params['dsn'] = $local_params['auth_dsn'];
+                $dbh = WikiDB::open($local_params);
             }       
             $this->_auth_dbi =& $dbh->_backend->_dbh;    
         }
@@ -2589,6 +2593,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.38  2004/03/25 17:37:36  rurban
+// helper to patch to and from php5 (workaround for stricter parser, no macros in php)
+//
 // Revision 1.37  2004/03/25 17:00:31  rurban
 // more code to convert old-style pref array to new hash
 //

@@ -1,5 +1,5 @@
 <?php 
-// $Id: XmlRpcServer.php,v 1.5 2003-02-21 04:12:05 dairiki Exp $
+// $Id: XmlRpcServer.php,v 1.6 2004-03-25 22:33:38 rurban Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  *
  * LICENCE
@@ -47,6 +47,7 @@
 */
 
 // ToDo:  
+//        Make use of the xmlrpc extension if found. Resolve namespace conflicts
 //        Remove all warnings from xmlrpc.inc 
 //        Return list of external links in listLinks
  
