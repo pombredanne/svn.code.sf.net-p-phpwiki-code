@@ -53,6 +53,9 @@
 
    $FieldSeparator = "\263";
 
+   // allowed protocols for links - be careful not to allow "javscript:"
+   $AllowedProtocols = "http|https|mailto|ftp|news|gopher";
+   
    // Apache won't show REMOTE_HOST unless the admin configured it
    // properly. We'll be nice and see if it's there.
    empty($REMOTE_HOST) ?
@@ -69,6 +72,5 @@
    // OL have a depth of one, PRE has a depth of 0.
    define("ZERO_DEPTH", 0);
    define("SINGLE_DEPTH", 1);
-
 
 ?>
