@@ -1,9 +1,10 @@
-Date: Sun, 27 Jan 2002 17:28:55 -0500
+Date: Sun, 10 Feb 2002 23:59:26 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: R%E8glesDeFormatageDesTextes,v 1.3 2002-01-28 00:47:52 carstenklapp Exp $
+X-Rcs-Id: $Id: R%E8glesDeFormatageDesTextes,v 1.4 2002-02-12 20:18:35 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=R%E8glesDeFormatageDesTextes;
   flags=PAGE_LOCKED;
+  pgsrc_version="2 $Revision: 1.4 $";
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
@@ -11,100 +12,99 @@ Content-Transfer-Encoding: binary
 RèglesDeFormatageDesTextes%%%
 __Emphase :__ '____' pour mettre en ''italique'', _''''_ pour mettre en __gras__, '____'_''''_ pour ''__les deux__''%%%
 __Listes :__ * pour les listes à puces, # pour les listes numérotées, "; term : definition" pour les listes définies par des titres%%%
-__Liens :__ !CollerLesMotsEnMajuscule ou utiliser des crochet pour un [[lien vers une autre page] ou une URL [!http://www.exemple.com].%%%
+__Liens :__ !CollerLesMotsEnMajuscule ou utiliser des crochet pour un [[lien vers une autre page] ou un URL [!http://www.exemple.com].%%%
 __Références :__ Utiliser [[1],[[2],[[3],...%%%
-__Pour empêcher des liens :__ Prefix with "!": !!DoNotHyperlink, name links like [[text | URL] (double up on the "[")%%%
-__Divers :__ "!", "!!", "!!!" make headings, "%%''''%" makes a linebreak, "-''''-''''-''''-" makes a horizontal rule
+__Pour empêcher des liens :__ Préfixer avec "!": !!NePasLier, nommer les liens comme [[texte | URL] (doubler le "[")%%%
+__Divers :__ "!", "!!", "!!!" crée des titres, "%%''''%" provoque un retour à la ligne, "-''''-''''-''''-" crée une règle horizontale
 
 ----
 ! Paragraphes
 
-* Don't indent paragraphs
-* Words wrap and fill as needed
-* Use blank lines as separators
-* Four or more minus signs make a horizontal rule
-* %%''''% makes a linebreak (in headings and lists too)
+* N'indentez pas les paragraphes
+* Les mots reviennent à la ligne et remplissent les blancs au besoin
+* Utilisez des lignes vides comme séparateurs
+* Quatre tirets ou plus créent une règle horizontale
+* %%''''% provoque un retour à la ligne (y compris dans les titres et les listes)
 
 
 ! Listes
 
-* asterisk for first level
-** asterisk-asterisk for second level, etc.
-* Use * for bullet lists, # for numbered lists (mix at will)
-* semicolon-term-colon-definition for definition lists:
-;term here:definition here, as in the <DL><DT><DD> list
-* One line for each item
-* Other leading whitespace signals preformatted text, changes font.
+* Un astérisque pour le premier niveau
+** Deux astérisques pour le deuxième niveau, etc.
+* Utilisez * pour les listes à puces, # pour les listes numérotées (mélangez à volonté)
+* point virgule-terme-deux points-définition pour les listes de définitions :
+;le terme ici:et la définition là, à la manière des listes <DL><DT><DD>
+* Une ligne pour chaque élément
+* L'indentation avec des espaces signale un texte préformaté et change la police.
 
-! Headings
+! Titres
 
-* '!' at the start of a line makes a small heading
-* '!!' at the start of a line makes a medium heading
-* '!!!' at the start of a line makes a large heading
+* '!' en début de ligne produit un petit titre
+* '!!' en début de ligne produit un titre moyen
+* '!!!' en début de ligne produit un gros titre
 
-! Fontes
+! Polices
 
-* Indent with one or more spaces to use a monospace font:
+* Indentez avec une ou plusieurs espaces pour utiliser une police à chasse fixe :
 
- This is in monospace
-This is not
+ Ceci est en chasse fixe
+Ceci ne l'est pas
 
-!Indented Paragraphs
+! Paragraphes indentés
 
-* semicolon-colon -- works like <BLOCKQUOTE>
+* point virgule-deux points -- fonctionne comme <BLOCKQUOTE>
 
-;: this is an indented block of text
+;: ceci est un bloc de texte indenté
 
 ! Emphase
 
-* Use doubled single-quotes ('____') for emphasis (usually ''italics'')
-* Use doubled underscores (_''''_) for strong emphasis (usually __bold__)
-* Mix them at will: __''bold italics''__
-* ''Emphasis'' can be used ''multiple'' times within a line, but ''cannot'' cross line boundaries:
+* Utilisez des apostrophes doubles ('____') pour l'emphase (habituellement en ''italique'')
+* Utilisez des soulignées doubles (_''''_) pour l'emphase forte (habituellement en __gras__)
+* Mélangez-les à volonté : __''gras italique''__
+* L'''emphase'' peut être utilisée ''plusieurs'' fois dans une ligne, mais ne peut ''pas'' passer à la ligne :
 
-''this
-will not work''
+''ceci
+ne marche pas''
 
 ! Liens
-* Hyperlinks to other pages within the Wiki are made by placing the page name in square brackets: [this is a page link] or UsingWikiWords (preferred)
-* Hyperlinks to external pages are done like this: [http://www.wcsb.org/]
-* You can name the links by providing a name, a bar (|) and then the hyperlink or pagename: [PhpWiki home page | http://phpwiki.sourceforge.net/]  - [the front page | HomePage]
-* You can suppress linking to old-style references and URIs by preceding the word with a '!', e.g. !NotLinkedAsWikiName, !http://not.linked.to/
-* You can create footnotes by using [[1], [[2], [[3], ... like this here [1]. See footnote for counterpart.  (If the [[ is in the first column, it is a footnote ''definition'' rather than a footnote ''reference'' [1].)
-* Also, the old way of linking URL's is still supported: precede URLs with "http:", "ftp:" or "mailto:" to create links automatically as in: http://c2.com/
-* URLs ending with .png, .gif, or .jpg are inlined if in square brackets, by themselves: [http://phpwiki.sourceforge.net/alpha/themes/default/images/png.png]
+* Les hyperliens vers d'autres pages au sein du Wiki sont créés en plaçant le nom de la page entre crochets : [ceci est un hyperlien] ou en UtilisantDesMotsWiki (de préférence)
+* Les hyperliens vers des pages externes sont créés de cette façon : [http://www.wcsb.org/]
+* Vous pouvez nommer les liens en leur donnant un nom, une barre verticale (|) puis l'hyperlien ou le nom de la page : [page d'accueil de PhpWiki | http://phpwiki.sourceforge.net/]  - [la page d'accueil | Accueil]
+* Vous pouvez supprimer les liens vers les références à l'ancienne ou vers les URI en précédant le mot d'un '!', e.g. !NonLiéEnModeWiki, !http://pas.de.lien.ici/
+* Vous pouvez créer des notes de bas de page en utilisant [[1], [[2], [[3], ... comme ici [1]. Voir la note pour la contre-partie (si le [[ est dans la première colonne, c'est une ''définition'' de note de bas de page, au lieu d'une ''référence'' à une note [1].)
+* L'ancienne manière de lier les URL est aussi toujours supportée : précédez les URL de "http:", "ftp:" ou "mailto:" pour créer automatiquement des liens comme dans : http://c2.com/
+* Les URL se terminant par .png, .gif, ou .jpg sont inclus s'ils sont isolés entre crochets : [http://phpwiki.sourceforge.net/alpha/themes/default/images/png.png]
 
 ! Tableaux
 
-* Simple tables are available.  A table row is introduced by a __|__ in the first column.  It is best described by example:
-      ||  _''''_Name_''''_               |v _''''_Cost_''''_   |v _''''_Notes_''''_
-      | _''''_First_''''_   | _''''_Last_''''_
-      |> Jeff       |< Dairiki   |^  Cheap     |< Not worth it
-      |> Marco      |< Polo      | Cheaper     |< Not available
-;: will generate
-||  __Name__               |v __Cost__   |v __Notes__
-| __First__   | __Last__
-|> Jeff       |< Dairiki   |^  Cheap     |< Not worth it
-|> Marco      |< Polo      | Cheaper     |< Not available
+* Les tables simples sont disponibles. Une rangée dans une table est introduite par une barre __|__ dans la première colonne. Cela est mieux décrit par un exemple :
+      ||  _''''_Nom_''''_               |v _''''_Coût_''''_   |v _''''_Notes_''''_
+      | _''''_Prénom_''''_   | _''''_Nom de famille_''''_
+      |> Jeff       |< Dairiki   |^  Pas cher     |< Pas valable
+      |> Marco      |< Polo      | Encore moins cher   |< Pas disponible
+;: produira
+||  __Nom__               |v __Coût__   |v __Notes__
+| __Prénom__   | __Nom de famille__
+|> Jeff       |< Dairiki   |^  Pas cher     |< Pas valable
+|> Marco      |< Polo      | Encore moins cher     |< Pas disponible
 
-;: Note that multiple __|__'s lead to spanned columns, and __v__'s can be used to span rows.  A __>__ generates a right justified column, __<__ a left justified column and __^__ a centered column (which is the default.)
+;: Notez que des barres __|__ multiples mènent à des colonnes imbriquées, et que des __v__ peuvent être utilisés pour imbriquer des rangées. Un __>__ produit une colonne cadrée à droite, __<__ une colonne cadrée à gauche et __^__ une colonne centrée (ce qui est le comportement par défaut).
 
+! Langage de Marquage HTML
 
-! HTML Mark-Up Language
+* Ne vous en souciez pas
+* < et > sont eux-mêmes
+* Les caractères & ne fonctionneront pas
+* Si vous devez vraiment utiliser du HTML, votre administrateur système peut valider cette fonctionnalité. Commencez chaque ligne par une barre verticale (|). Notez que cette fonctionnalité est désactivée par défaut.
 
-* Don't bother
-* < and > are themselves
-* The & characters will not work
-* If you really must use HTML, your system administrator can enable this feature. Start each line with a bar (|). Note that this feature is disabled by default.
+! Plus de détails que vous ne voulez en connaître
 
-! Plus de détail que vous veulent connaître
-
-See [MagicPhpWikiURLs] for gory details on how to write various kind of wiki maintainance links.
+Voir [URLMagiquesPhpWiki] pour obtenir des détails gores sur la façon d'écrire divers types de liens de maintenance du wiki.
 
 -----
 
 Références :
 
-[1] By using [[1] a second time (in the first column) the footnote itself is ''defined''.  You may refer to a footnote as many times as you want, but you may only define it once on the page.  Note the the [[1] in the footnote links back to the first reference, if there are multiple references there will be +'s after the [[1] which will link to the other references.  (References which come ''after'' the footnote ''definition'' will not be linked to.)
+[1] En utilisant [[1] une seconde fois (dans la première colonne) la note de bas de page elle-même est ''définie''. Vous pouvez vous référer à une note de bas de page autant de fois que vous le voulez, mais vous ne pouvez la définir qu'une seule fois dans la page. Notez que le [[1] dans la note renvoie à la première référence, s'il existe plusieurs références il y aura des '+' après le [[1] qui renverront aux autres références (il n'y aura pas de lien vers les références venant ''après'' la ''définition'' de la note).
 ----
 DocumentationDePhpWiki
