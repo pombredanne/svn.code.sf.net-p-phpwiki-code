@@ -248,7 +248,6 @@ msgid "PageHistory for %s"
 msgstr "Änderungsprotokoll für Seite %s"
 
 #: ../lib/plugin/PageHistory.php:86
-#, fuzzy
 msgid "Check any two boxes to compare revisions."
 msgstr "Wähle zwei Versionen zum Vergleich aus."
 
@@ -257,9 +256,9 @@ msgid "compare revisions"
 msgstr "Versionen vergleichen"
 
 #: ../lib/plugin/PageHistory.php:90
-#, fuzzy, c-format
+#, c-format
 msgid "Check any two boxes then %s."
-msgstr "Wähle zwei Versionen aus, dann %."
+msgstr "Wähle zwei Versionen aus, dann %s."
 
 #: ../lib/plugin/PageHistory.php:144 ../lib/plugin/PageHistory.php:182
 #, c-format
@@ -469,10 +468,10 @@ msgstr "Keine Seitendaten für %s"
 
 #: ../lib/plugin/text2png.php:37
 msgid "Sorry, this version of PHP cannot create PNG image files."
-msgstr "Leider. Diese PHP Version kenn keine PNG Bilder erzeugen."
+msgstr "Leider. Diese PHP Version kann keine PNG Bilder erzeugen."
 
 #: ../lib/plugin/text2png.php:42
-#, fuzzy, c-format
+#, c-format
 msgid "See %s"
 msgstr "Siehe %s"
 
