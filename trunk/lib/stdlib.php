@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.133 2003-02-16 04:50:09 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.134 2003-02-16 19:44:20 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1199,6 +1199,25 @@ function can ($object, $method)
     return is_object($object) && method_exists($object, strtolower($method));
 }
 
+/** Hash a value.
+ *
+ * This is used for generating ETags.
+ */
+function hash ($x) {
+    if (is_scalar($x)) {
+        return $x;
+    }
+    elseif (is_array($x)) {            
+        ksort($x);
+        return md5(serialize($x));
+    }
+    elseif (is_object($x)) {
+        return $x->hash();
+    }
+    trigger_error("Can't hash $x", E_USER_ERROR);
+}
+
+    
 /**
  * Seed the random number generator.
  *
@@ -1250,6 +1269,15 @@ function subPageSlice($pagename, $pos) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.133  2003/02/16 04:50:09  dairiki
+// New functions:
+// Rfc1123DateTime(), ParseRfc1123DateTime()
+// for converting unix timestamps to and from strings.
+//
+// These functions produce and grok the time strings
+// in the format specified by RFC 2616 for use in HTTP headers
+// (like Last-Modified).
+//
 // Revision 1.132  2003/01/04 22:19:43  carstenklapp
 // Bugfix UnfoldSubpages: "Undefined offset: 1" error when plugin invoked
 // on a page with no subpages (explodeList(): array 0-based, sizeof 1-based).
