@@ -12,7 +12,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.2.0\n"
-"POT-Creation-Date: 2001-12-28 06:12-0500\n"
+"POT-Creation-Date: 2001-12-31 00:53-0500\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -119,9 +119,9 @@ msgstr ""
 
 #: ../templates/editpage.html:16 ../templates/editpage.html:25
 #: ../templates/editpage.html:26
-#, fuzzy, c-format
+#, c-format
 msgid "Edit: %s"
-msgstr "Editar"
+msgstr "Editar: %s"
 
 #: ../lib/plugin/BackLinks.php:9 ../templates/editpage.html:25
 msgid "BackLinks"
@@ -177,7 +177,7 @@ msgstr ""
 #: ../templates/editpage.html:80
 #, fuzzy, c-format
 msgid "See %s tips for editing."
-msgstr "tips para editar."
+msgstr "%s tips para editar."
 
 #: ../templates/editpage.html:80
 msgid "GoodStyle"
@@ -219,26 +219,26 @@ msgid "Next Month"
 msgstr ""
 
 #: ../lib/plugin/Calendar.php:114
-#, fuzzy, c-format
+#, c-format
 msgid "Edit %s"
-msgstr "Editar"
+msgstr "Editar %s"
 
 # lib/fullsearch.php:48
 #: ../lib/main.php:120 ../lib/plugin/FullTextSearch.php:12
 #, fuzzy
 msgid "FullTextSearch"
-msgstr "Resultados de la búsqueda en el texto completo"
+msgstr "una búsqueda completa de texto"
 
 # lib/fullsearch.php:48
 #: ../lib/plugin/FullTextSearch.php:16
 #, fuzzy
 msgid "Full Text Search"
-msgstr "Resultados de la búsqueda en el texto completo"
+msgstr "una búsqueda completa de texto"
 
 #: ../lib/plugin/FullTextSearch.php:52
-#, c-format
+#, fuzzy, c-format
 msgid "Full text search results for '%s'"
-msgstr ""
+msgstr "Resultados de la búsqueda en el texto completo '%s'"
 
 #: ../lib/plugin/FullTextSearch.php:54 ../lib/plugin/TitleSearch.php:52
 msgid "<no matches>"
@@ -349,9 +349,9 @@ msgid "Check any two boxes then %s."
 msgstr ""
 
 #: ../lib/plugin/PageHistory.php:144 ../lib/plugin/PageHistory.php:182
-#, fuzzy, c-format
+#, c-format
 msgid "Version %d"
-msgstr "versión %d"
+msgstr "Versión %d"
 
 #: ../lib/plugin/PageHistory.php:174
 msgid "History of changes."
@@ -433,19 +433,19 @@ msgstr "Buscar"
 #: ../lib/plugin/RecentChanges.php:253 ../lib/plugin/TitleSearch.php:16
 #, fuzzy
 msgid "Title Search"
-msgstr "Resultados de la búsqueda en el texto completo"
+msgstr "una búsqueda de títulos"
 
 # lib/fullsearch.php:48
 #: ../lib/main.php:123 ../lib/plugin/RecentChanges.php:255
 #: ../lib/plugin/TitleSearch.php:12
 #, fuzzy
 msgid "TitleSearch"
-msgstr "Resultados de la búsqueda en el texto completo"
+msgstr "una búsqueda de títulos"
 
 #: ../lib/plugin/TitleSearch.php:48
-#, c-format
+#, fuzzy, c-format
 msgid "Title search results for '%s'"
-msgstr ""
+msgstr "Resultados de la búsqueda en el títulos '%s'"
 
 #: ../lib/plugin/UserPage.php:35
 #, c-format
@@ -566,9 +566,9 @@ msgid "Optimizing %s"
 msgstr ""
 
 #: ../lib/WikiDB.php:837
-#, fuzzy, c-format
+#, c-format
 msgid "Describe %s here."
-msgstr "Describe [%s] aquí."
+msgstr "Describe %s aquí."
 
 #: ../lib/WikiUser.php:97
 #, c-format
@@ -606,9 +606,9 @@ msgid "An unnamed PhpWiki"
 msgstr ""
 
 #: ../lib/diff.php:172
-#, fuzzy, c-format
+#, c-format
 msgid "version %s"
-msgstr "versión %d"
+msgstr "versión %s"
 
 #: ../lib/diff.php:175
 #, c-format
@@ -683,12 +683,11 @@ msgstr "Las versiones son idénticas"
 #: ../lib/diff.php:298
 #, fuzzy, c-format
 msgid "Diff: %s"
-msgstr "Diferencia de %s."
+msgstr "Diferencia de: %s"
 
 #: ../lib/editpage.php:26 ../lib/savepage.php:45
 msgid "This page has been locked by the administrator and cannot be edited."
-msgstr ""
-"Esta página ha sido bloqueada por el administrador y no puede ser editada."
+msgstr "Esta página ha sido bloqueada por el administrador y no puede ser editada."
 
 #: ../lib/editpage.php:28 ../lib/savepage.php:36 ../lib/savepage.php:47
 msgid "Sorry for the inconvenience."
@@ -745,7 +744,7 @@ msgstr ""
 #: ../lib/loadsave.php:178
 #, fuzzy
 msgid "Empty pagename!"
-msgstr "Escriba un nombre de página"
+msgstr "¡Escriba un nombre de página!"
 
 #: ../lib/loadsave.php:198
 #, c-format
@@ -860,10 +859,7 @@ msgid ""
 "PhpWiki is unable to save your changes, because another user edited and "
 "saved the page while you were editing the page too. If saving proceeded now "
 "changes from the previous author would be lost."
-msgstr ""
-"PhpWiki no es capaz de grabar sus cambios, debido a que otro usuariohá "
-"editado y guardado la página mientras usted estaba editando esta página. Si "
-"se guarda ahora los cambios del autor anterior se podrían perder."
+msgstr "PhpWiki no es capaz de grabar sus cambios, debido a que otro usuariohá editado y guardado la página mientras usted estaba editando esta página. Si se guarda ahora los cambios del autor anterior se podrían perder."
 
 #: ../lib/savepage.php:24
 msgid "In order to recover from this situation follow these steps:"
@@ -885,17 +881,13 @@ msgstr ""
 msgid ""
 "<b>Reload</b> the page. You should now see the most current version of the "
 "page. Your changes are no longer there."
-msgstr ""
-"<b>Vuelva a cargar</b> la página. Ahora podrá ver la versión mas actual de "
-"la página. Sus cambios no están ahí."
+msgstr "<b>Vuelva a cargar</b> la página. Ahora podrá ver la versión mas actual de la página. Sus cambios no están ahí."
 
 #: ../lib/savepage.php:32
 msgid ""
 "Make changes to the file again. Paste your additions from the clipboard (or "
 "text editor)."
-msgstr ""
-"Haga cambios a la página otra vez. Pegue sus modificaciones del portapapeles "
-"(o del editor de textos)."
+msgstr "Haga cambios a la página otra vez. Pegue sus modificaciones del portapapeles (o del editor de textos)."
 
 #: ../lib/savepage.php:34
 msgid "Press <b>Save</b> again."
@@ -991,7 +983,7 @@ msgstr "Límites de la pila excedidos en SetHTMLOutputMode"
 #: ../lib/ziplib.php:563 ../lib/ziplib.php:659
 #, fuzzy, c-format
 msgid "Bad %s"
-msgstr "Editar"
+msgstr ""
 
 #: ../lib/ziplib.php:183
 msgid "Can't inflate data: zlib support not enabled in this PHP"
@@ -1052,8 +1044,7 @@ msgstr ""
 #: ../lib/WikiDB/backend/PearDB.php:26
 #, fuzzy, c-format
 msgid "Can't connect to database: %s"
-msgstr ""
-"No se puede establecer conexión con la base de datos, me doy por vencido."
+msgstr "No se puede establecer conexión con la base de datos, me doy por vencido."
 
 #: ../lib/WikiDB/backend/PearDB.php:57
 msgid "WARNING: database still locked"
@@ -1273,9 +1264,7 @@ msgstr ""
 #~ msgid ""
 #~ "JoinCapitalizedWords or use square brackets for a [page link] or URL "
 #~ "[http://cool.wiki.int/]."
-#~ msgstr ""
-#~ "UnirPalabrasEnMayúsculas o usar corchetes para una [enlace hacia una página] "
-#~ "o URL [http://cool.wiki.int/]."
+#~ msgstr "UnirPalabrasEnMayúsculas o usar corchetes para una [enlace hacia una página] o URL [http://cool.wiki.int/]."
 
 #~ msgid "Footnotes:"
 #~ msgstr "Anotaciones:"
