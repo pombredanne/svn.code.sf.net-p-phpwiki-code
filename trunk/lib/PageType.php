@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageType.php,v 1.12 2002-08-20 11:17:08 rurban Exp $');
+<?php rcs_id('$Id: PageType.php,v 1.13 2002-09-04 20:39:47 dairiki Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ function PageType(&$rev, $pagename = false, $markup = false) {
 
     if (isa($rev, 'WikiDB_PageRevision')) {
         $text = $rev->getPackedContent();
-        $pagename = $rev->_pagename; //is this _ok?
+        $pagename = $rev->getPageName(); 
         $markup = $rev->get('markup');
 
     } else {
