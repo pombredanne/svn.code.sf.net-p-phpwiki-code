@@ -242,7 +242,7 @@ function html_option_form() {
 
     $form = HTML();
     $option = HTML::div(array('class' => 'option'), 
-                        HTML::span(array('onDblClick'=>'flipAll(\'test[\')'), 'test: '),
+                        HTML::span(array('style'=>'font-weight: bold','onDblClick'=>'flipAll(\'test[\')'), 'test: '),
                         HTML::br());
     foreach ($GLOBALS['alltests'] as $s) {
         $input = array('type' => 'checkbox', 'name' => 'test['.$s.']', 'value' => '1');
@@ -252,7 +252,7 @@ function html_option_form() {
     $form->pushContent(HTML::td($option));
 
     $option = HTML::div(array('class' => 'option'), 
-                        HTML::span(array('onDblClick'=>'flipAll(\'db[\')'), 'db: '),
+                        HTML::span(array('style'=>'font-weight: bold','onDblClick'=>'flipAll(\'db[\')'), 'db: '),
                         HTML::br());
     foreach ($GLOBALS['database_backends'] as $s) {
         $input = array('type' => 'checkbox', 'name' => 'db['.$s.']', 'value' => '1');
@@ -278,7 +278,7 @@ function updateDebugEdit(formObj) {
   val=0;
   for (var i=0; i < formObj.length; i++) {
       fldObj = formObj.elements[i];
-      if ((fldObj.type == 'checkbox') && (fldObj.name.substring(0,6) == 'debug[')) { 
+      if ((fldObj.type == 'checkbox') && (fldObj.name.substring(0,7) == '_debug[')) { 
          if (fldObj.checked) val = val + parseInt(fldObj.value);
        }
    }
@@ -287,7 +287,7 @@ function updateDebugEdit(formObj) {
 function updateLevelEdit(formObj) {
   for (var i=0; i < formObj.length; i++) {
       fldObj = formObj.elements[i];
-      if ((fldObj.type == 'radio') && (fldObj.name.substring(0,6) == 'level[')) {
+      if ((fldObj.type == 'radio') && (fldObj.name.substring(0,7) == '_level[')) {
          if (fldObj.checked) {
             formObj.level.value = fldObj.value;
             return;
@@ -296,7 +296,7 @@ function updateLevelEdit(formObj) {
    }
 }");
     $option = HTML::div(array('class' => 'option'),
-                        HTML::span(array('onDblClick'=>'flipAll(\'debug[\')'), 'debug: '),
+                        HTML::span(array('style'=>'font-weight: bold','onDblClick'=>'flipAll(\'_debug[\')'), 'debug: '),
                         HTML::input(array('name'=>'debug','id'=>'debug','value'=>$debug_level,'size'=>5)),
                         HTML::br());
     foreach (array('VERBOSE' 	=> 1,
@@ -308,7 +308,7 @@ function updateLevelEdit(formObj) {
                    'LOGIN' 	=> 64,
                    'SQL' 	=> 128,
                    ) as $s => $v) {
-        $input = array('type' => 'checkbox', 'name' => 'debug[]', 'value' => $v, 
+        $input = array('type' => 'checkbox', 'name' => '_debug[]', 'value' => $v, 
                        'onClick' => 'updateDebugEdit(this.form)');
         if ($debug_level & $v) $input['checked'] = 'checked';
         $option->pushContent(HTML::input($input), "_DEBUG_".$s, HTML::br());
@@ -316,7 +316,7 @@ function updateLevelEdit(formObj) {
     $form->pushContent(HTML::td($option));
 
     $option = HTML::div(array('class' => 'option'), 
-                        HTML::span(array('onDblClick'=>'flipAll(\'level[\')'), 'level: '),
+                        HTML::span(array('style'=>'font-weight: bold'), "level: "),
                         HTML::input(array('name'=>'level','id'=>'level','value'=>$user_level,'size'=>5)),
                         HTML::br());
     foreach (array('FORBIDDEN' 	=> -1,
@@ -326,7 +326,7 @@ function updateLevelEdit(formObj) {
                    'ADMIN' 	=> 10,
                    'UNOBTAINABLE'=> 100,
                    ) as $s => $v) {
-        $input = array('type' => 'radio', 'name' => 'level[]', 'value' => $v,
+        $input = array('type' => 'radio', 'name' => '_level[]', 'value' => $v,
                        'onClick' => 'updateLevelEdit(this.form)');
         if ($user_level & $v) $input['checked'] = 'checked';
         $option->pushContent(HTML::input($input), "WIKIAUTH_".$s, HTML::br());
@@ -387,7 +387,7 @@ if (isset($HTTP_SERVER_VARS['REQUEST_METHOD'])) {
     foreach ($HTTP_GET_VARS as $key => $val) {
     	if (is_array($val))
     	    foreach ($val as $k => $v) $argv[] = $key."=".$k;
-    	elseif (strstr($val,",") and in_array($key,array("test","db")))
+    	elseif (strstr($val,",") and in_array($key, array("test","db")))
     	    foreach (explode(",",$val) as $v) $argv[] = $key."=".$v;
     	else
             $argv[] = $key."=".$val;
