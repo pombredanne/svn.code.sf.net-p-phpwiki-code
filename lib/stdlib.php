@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.172 2004-04-26 20:44:34 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.173 2004-05-03 15:00:31 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1369,6 +1369,16 @@ function check_php_version ($a = '0', $b = '0', $c = '0') {
         $PHP_VERSION = substr( str_pad( preg_replace('/\D/','', PHP_VERSION), 3, '0'), 0, 3);
     return $PHP_VERSION >= ($a.$b.$c);
 }
+// 1.3.10pre => 1030.10
+// 1.3.8     => 1030.08
+function phpwiki_version() {
+    static $PHPWIKI_VERSION;
+    if(!isset($PHPWIKI_VERSION)) {
+        $arr = explode('.',preg_replace('/\D+$/','', PHPWIKI_VERSION));
+        $PHPWIKI_VERSION = $arr[0]*1000 + $arr[1]*10 + 0.01*$arr[2];
+    }
+    return $PHPWIKI_VERSION;
+}
 
 function isWikiWord($word) {
     global $WikiNameRegexp;
@@ -1390,6 +1400,9 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.172  2004/04/26 20:44:34  rurban
+// locking table specific for better databases
+//
 // Revision 1.171  2004/04/19 23:13:03  zorloc
 // Connect the rest of PhpWiki to the IniConfig system.  Also the keyword regular expression is not a config setting
 //
