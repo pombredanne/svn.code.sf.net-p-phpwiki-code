@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.61 2004-03-12 20:59:17 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.62 2004-03-17 18:41:05 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -48,8 +48,17 @@ class PageEditor
         else {
             $this->_initializeState();
             $this->_initialEdit = true;
-        }
 
+            // The edit request has specified some initial content from a template 
+            if (  ($template = $request->getArg('template')) and 
+                  $request->_dbi->isWikiPage($template)) {
+                $page = $request->_dbi->getPage($template);
+                $current = $page->getCurrentRevision();
+                $this->_content = $current->getPackedContent();
+            } elseif ($initial_content = $request->getArg('initial_content')) {
+                $this->_content = $initial_content;
+            }
+        }
         header("Content-Type: text/html; charset=" . CHARSET);
     }
 
@@ -612,6 +621,10 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.61  2004/03/12 20:59:17  rurban
+ important cookie fix by Konstantin Zadorozhny
+ new editpage feature: JS_SEARCHREPLACE
+
  Revision 1.60  2004/02/15 21:34:37  rurban
  PageList enhanced and improved.
  fixed new WikiAdmin... plugins
