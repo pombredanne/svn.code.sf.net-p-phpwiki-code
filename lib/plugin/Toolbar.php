@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Toolbar.php,v 1.7 2002-01-08 23:18:53 carstenklapp Exp $');
+rcs_id('$Id: Toolbar.php,v 1.8 2002-01-08 23:20:55 carstenklapp Exp $');
 /**
  * Usage:
  *
@@ -143,8 +143,7 @@ extends WikiPlugin
             // final assembly of label and the links
             if ($style == "image") {
                 $links = join("</td><td>", $links);
-                $html = sprintf("<table summary=\"". $name ."\" border=0
-cellspacing=0 cellpadding=0><tr valign=\"middle\"><td>" ._($label) ."</td>","<td>" .$links)."</tr></td>";
+                $html = sprintf("<table summary=\"". $name ."\" border=0 cellspacing=0 cellpadding=0><tr valign=\"middle\"><td>" ._($label) ."</td>","<td>" .$links)."</tr></td>";
             } else {
                 $links = join($sep, $links);
                 $html = sprintf(_($label),$links);
