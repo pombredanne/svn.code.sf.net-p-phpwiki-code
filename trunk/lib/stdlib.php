@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.70 2002-01-08 03:17:41 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.71 2002-01-11 04:06:56 carstenklapp Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -77,19 +77,20 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
 }
 
 function CSS_URL($CSS_URLS, $CSS_DEFAULT) {
-    // FIXME: This is a kludge to allow xgettext to localize the title
-    // of the printer stylesheet. Think up a more elegant way which
-    // will also work with n stylesheets...
-    $PrinterStylesheetTitle = _("Printer");
-    
     $html = "";
     foreach  ($CSS_URLS as $key => $val) {
-        $html .= QElement('link',
-                          array('rel'   => (($CSS_DEFAULT == $key) ?
-                                            'stylesheet' : 'alternate stylesheet'),
-                                'title' => htmlspecialchars(_($key)),
-                                'href'  => DataURL(htmlspecialchars($val)),
-                                'type'  => 'text/css'))."\n";
+    	$css = array('rel'     => (($CSS_DEFAULT == $key) ?
+                                   'stylesheet' : 'alternate stylesheet'),
+                     'title'   => htmlspecialchars(_($key)),
+                     'href'    => DataURL(htmlspecialchars($val)),
+                     'type'    => 'text/css',
+                     'charset' => CHARSET);
+        // The next line is also used by xgettext to localise the word
+        // "Printer" used in the stylesheet's 'title' (see above).
+        if ($key == _("Printer")) {
+            $css = array_merge($css, array('media' => 'print'));
+        }
+        $html .= QElement('link', $css) ."\n";
     }
     return $html;
 }
