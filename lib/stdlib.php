@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.25 2001-02-08 10:29:44 ahollosi Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.26 2001-02-08 18:18:10 dairiki Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -8,9 +8,6 @@
          LinkURL($url, $linktext)
          LinkImage($url, $alt)
          LinkInterWikiLink($link, $linktext)
-         RenderQuickSearch($value)
-         RenderFullSearch($value)
-         RenderMostPopular()
          CookSpaces($pagearray) 
          class Stack (push(), pop(), cnt(), top())
          SetHTMLOutputMode($newmode, $depth)
