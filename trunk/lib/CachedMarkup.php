@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.19 2004-06-15 09:15:52 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.20 2004-07-03 07:35:45 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -465,6 +465,8 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 
         $xml = $loader->expandPI($this->_pi, $GLOBALS['request'], $markup, $basepage);
         $div = HTML::div(array('class' => 'plugin'));
+        if (is_array($plugin_cmdline = $loader->parsePI($this->_pi)))
+            $div->setAttr('id', $plugin_cmdline[1]->getName());
         
 	if (isset($this->_tightenable)) {
 	    if ($this->_tightenable == 3)
