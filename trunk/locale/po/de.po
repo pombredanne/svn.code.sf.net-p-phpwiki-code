@@ -31,19 +31,16 @@ msgid "SignIn"
 msgstr "AnMelden"
 
 #: ../lib/ButtonFactory.php:228
-#, fuzzy
 msgid "Lock Page"
-msgstr "Seite sperren"
+msgstr "Seite Sperren"
 
 #: ../lib/ButtonFactory.php:230
-#, fuzzy
 msgid "Unlock Page"
-msgstr "Seite freigeben"
+msgstr "Seite Freigeben"
 
 #: ../lib/ButtonFactory.php:232
-#, fuzzy
 msgid "Remove Page"
-msgstr "Seite löschen"
+msgstr "Seite Löschen"
 
 #: ../lib/config.php:274
 msgid "An unnamed PhpWiki"
@@ -136,9 +133,9 @@ msgid "Diff: %s"
 msgstr "Vergleich: %s"
 
 #: ../lib/display.php:59
-#, fuzzy, c-format
+#, c-format
 msgid "BackLinks for %s"
-msgstr "Hole BackLinks für %s"
+msgstr "BackLinks für %s"
 
 #: ../lib/display.php:67 ../lib/plugin/BackLinks.php:9
 #: ../themes/default/templates/body.tmpl:25
@@ -151,9 +148,9 @@ msgid "Page source for %s"
 msgstr "Quelltext für die Seite »%s«"
 
 #: ../lib/editpage.php:32
-#, fuzzy, c-format
+#, c-format
 msgid "View Source: %s"
-msgstr "QuellText"
+msgstr "Quell Text: %s"
 
 #: ../lib/editpage.php:37 ../lib/editpage.php:38
 #, c-format
@@ -848,9 +845,9 @@ msgid "Edit aborted: %s"
 msgstr "Editieren abgebrochen: %s"
 
 #: ../lib/savepage.php:150 ../lib/savepage.php:151
-#, fuzzy, c-format
+#, c-format
 msgid "Saved: %s"
-msgstr "als %s gespeichert"
+msgstr "Gespeichert: %s"
 
 #: ../lib/stdlib.php:133 ../lib/stdlib.php:206
 msgid "BAD URL -- remove all of <, >, \""
@@ -1222,14 +1219,12 @@ msgid "FindPage"
 msgstr "SeiteFinden"
 
 #: ../themes/default/templates/browse.tmpl:8
-#, fuzzy
 msgid "Edit Old Revision"
-msgstr "Alte Version editieren"
+msgstr "Alte Version Editieren"
 
 #: ../themes/default/templates/browse.tmpl:10
-#, fuzzy
 msgid "View Source"
-msgstr "QuellText"
+msgstr "Quell Text"
 
 #: ../themes/default/templates/browse.tmpl:25
 #, c-format
@@ -1330,14 +1325,12 @@ msgid "Synopsis"
 msgstr "Übersicht"
 
 #: ../themes/default/templates/nochanges.tmpl:4
-#, fuzzy
 msgid "Edit aborted."
-msgstr "Editieren abgebrochen: %s"
+msgstr "Editieren abgebrochen."
 
 #: ../themes/default/templates/nochanges.tmpl:5
-#, fuzzy
 msgid "You have not made any changes so no new version has been saved."
-msgstr "Du hast keine Änderungen gemacht."
+msgstr "Du hast keine Änderungen gemacht also ist keine neue Version gespeichert worden."
 
 #: ../themes/default/templates/savepage.tmpl:7
 #, c-format
@@ -1353,9 +1346,8 @@ msgid "Warning!"
 msgstr "Warnung!"
 
 #: ../themes/default/templates/viewsource.tmpl:4
-#, fuzzy
 msgid "This page has been locked by the administrator and cannot be edited."
-msgstr "%s wurde vom Systemverwalter gesperrt und kann nicht editiert werden."
+msgstr "Diese Seite wurde vom Systemverwalter gesperrt und kann nicht editiert werden."
 
 #: ../themes/Hawaiian/themeinfo.php:18 ../themes/MacOSX/themeinfo.php:99
 #: ../themes/WikiTrek/themeinfo.php:37 ../themes/default/themeinfo.php:17
