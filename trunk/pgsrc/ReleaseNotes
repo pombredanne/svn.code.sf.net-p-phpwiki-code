@@ -5,7 +5,10 @@ agreed not to put references in a separate table, so it's not completely
 normalized. "Don't let the best be the enemy of the good.")
 
 Postgresql support has been added and the markup language is evolving, now allowing
-!<h1> !!<h2> !!!<h3> tags and __a new way to make text bold__, and of course the
+!<h1>
+!!<h2>
+!!!<h3>
+tags and __a new way to make text bold__, and of course the
 [new linking scheme].
 
 There is a new feature on all pages called ''more info'' that gives you a low level
