@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.25 2002-02-23 05:53:54 carstenklapp Exp $
+# $Id: Makefile,v 1.26 2002-03-01 03:25:09 carstenklapp Exp $
 #
 # locale/Makefile
 #
@@ -81,6 +81,7 @@ ${POT_FILE}: ../lib/plugin/AllPages.php
 ${POT_FILE}: ../lib/plugin/_BackendInfo.php
 ${POT_FILE}: ../lib/plugin/BackLinks.php
 ${POT_FILE}: ../lib/plugin/Calendar.php
+${POT_FILE}: ../lib/plugin/ExternalSearch.php
 ${POT_FILE}: ../lib/plugin/FullTextSearch.php
 ${POT_FILE}: ../lib/plugin/FuzzyPages.php
 ${POT_FILE}: ../lib/plugin/HelloWorld.php
@@ -97,6 +98,7 @@ ${POT_FILE}: ../lib/plugin/RecentChanges.php
 ${POT_FILE}: ../lib/plugin/text2png.php
 ${POT_FILE}: ../lib/plugin/TitleSearch.php
 ${POT_FILE}: ../lib/plugin/UserPreferences.php
+${POT_FILE}: ../lib/plugin/WantedPages.php
 ${POT_FILE}: ../lib/plugin/WikiForm.php
 ${POT_FILE}: ../lib/prepend.php
 ${POT_FILE}: ../lib/removepage.php
