@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.9\n"
-"POT-Creation-Date: 2001-12-28 06:12-0500\n"
+"POT-Creation-Date: 2001-12-31 00:53-0500\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -78,9 +78,8 @@ msgid "Remove page"
 msgstr "Ta bort sida"
 
 #: ../templates/browse.html:89 ../templates/browse.html:92
-#, fuzzy
 msgid "Diff"
-msgstr "Diff av %s."
+msgstr "Diff"
 
 #: ../templates/browse.html:97
 #, c-format
@@ -145,7 +144,7 @@ msgstr ""
 
 #: ../templates/editpage.html:66
 msgid "Save"
-msgstr ""
+msgstr "Spara"
 
 #: ../templates/editpage.html:70
 #, c-format
