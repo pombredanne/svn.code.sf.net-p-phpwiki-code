@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UnfoldSubpages.php,v 1.2 2002-09-09 08:38:19 rurban Exp $');
+rcs_id('$Id: UnfoldSubpages.php,v 1.3 2003-01-04 22:46:07 carstenklapp Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -22,8 +22,8 @@ rcs_id('$Id: UnfoldSubpages.php,v 1.2 2002-09-09 08:38:19 rurban Exp $');
 
 
 /**
- * UnfoldSubpages:  Lists the content of all SubPages of the current page. 
- *   This is e.g. useful for the CalendarPlugin, to see all entries at once. 
+ * UnfoldSubpages:  Lists the content of all SubPages of the current page.
+ *   This is e.g. useful for the CalendarPlugin, to see all entries at once.
  * Usage:   <?plugin UnfoldSubpages words=50 ?>
  * Author:  Reini Urban <rurban@x-ray.at>
  */
@@ -99,6 +99,8 @@ extends WikiPlugin
         include_once('lib/BlockParser.php');
         extract($this->getArgs($argstr, $request));
         $content = HTML();
+        //if ($sort == 'desc')
+        //    $subpages = array_reverse($subpages);
         foreach ($subpages as $page) {
             // A page cannot include itself. Avoid doublettes.
             static $included_pages = array();
@@ -106,33 +108,37 @@ extends WikiPlugin
                 $content->pushContent(HTML::p(sprintf(_("recursive inclusion of page %s ignored"), $page)));
                 continue;
             }
-            
-            $p = $dbi->getPage($page);
-            $r = $p->getCurrentRevision();
-            $c = $r->getContent();
+            // trap any remaining nonexistant subpages
+            if ($dbi->isWikiPage($page)) {
+                $p = $dbi->getPage($page);
+                $r = $p->getCurrentRevision();
+                $c = $r->getContent();
 
-            if ($section)
-                $c = $this->extractSection($section, $c, $page, $quiet, $sectionhead);
-            if ($lines)
-                $c = array_slice($c, 0, $lines) . sprintf(_(" ... first %d lines"), $bytes);
-            if ($words)
-                $c = $this->firstNWordsOfContent($words, $c);
-            if ($bytes) {
-                if (strlen($c) > $bytes)
-                    $c = substr($c,0,$bytes) . sprintf(_(" ... first %d bytes"), $bytes);
+                if ($section)
+                    $c = $this->extractSection($section, $c, $page, $quiet, $sectionhead);
+                if ($lines)
+                    $c = array_slice($c, 0, $lines) . sprintf(_(" ... first %d lines"), $bytes);
+                if ($words)
+                    $c = $this->firstNWordsOfContent($words, $c);
+                if ($bytes) {
+                    if (strlen($c) > $bytes)
+                        $c = substr($c,0,$bytes) . sprintf(_(" ... first %d bytes"), $bytes);
+                }
+
+                array_push($included_pages, $page);
+                $ct = TransformText(implode("\n", $c), $r->get('markup'));
+                array_pop($included_pages);
+                $content->pushContent(HTML(HTML::p(array('class' => $quiet ? '' : 'transclusion-title'),
+                                                fmt("Included from %s:",WikiLink($page))),
+                                        HTML::div(array('class' => $quiet ? '' : 'transclusion'),
+                                                    false, $ct)));
             }
-
-            array_push($included_pages, $page);
-            $ct = TransformText(implode("\n", $c), $r->get('markup'));
-            array_pop($included_pages);
-            $content->pushContent(HTML(HTML::p(array('class' => $quiet ? '' : 'transclusion-title'),
-                                               fmt("Included from %s:",WikiLink($page))),
-                                       HTML::div(array('class' => $quiet ? '' : 'transclusion'),
-                                                 false, $ct)));
         }
         return $content;
     }
 };
+
+// $Log: not supported by cvs2svn $
 
 // KNOWN ISSUES:
 // - line & word limit doesn't work if the included page itself
