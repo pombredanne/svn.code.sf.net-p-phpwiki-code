@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.119 2004-12-20 16:05:00 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.120 2004-12-23 14:12:31 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -235,7 +235,7 @@ class WikiDB {
             $result = -1;
 
         /* Generate notification emails? */
-        if (! $this->isWikiPage($pagename) ) {
+        if (! $this->isWikiPage($pagename) and !isa($GLOBALS['request'],'MockRequest')) {
             $notify = $this->get('notify');
             if (!empty($notify) and is_array($notify)) {
                 //TODO: deferr it (quite a massive load if you remove some pages).
@@ -483,7 +483,7 @@ class WikiDB {
                           E_USER_WARNING);
         }
         /* Generate notification emails? */
-        if ($result) {
+        if ($result and !isa($GLOBALS['request'],'MockRequest')) {
             $notify = $this->get('notify');
             if (!empty($notify) and is_array($notify)) {
                 list($emails, $userids) = $oldpage->getPageChangeEmails($notify);
@@ -911,7 +911,7 @@ class WikiDB_Page
         if (isa($newrevision, 'WikiDB_PageRevision')) {
             // Save didn't fail because of concurrent updates.
             $notify = $this->_wikidb->get('notify');
-            if (!empty($notify) and is_array($notify)) {
+            if (!empty($notify) and is_array($notify) and !isa($GLOBALS['request'],'MockRequest')) {
                 list($emails, $userids) = $this->getPageChangeEmails($notify);
                 if (!empty($emails)) {
                     $this->sendPageChangeNotification($wikitext, $version, $meta, $emails, $userids);
@@ -2144,6 +2144,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.119  2004/12/20 16:05:00  rurban
+// gettext msg unification
+//
 // Revision 1.118  2004/12/13 13:22:57  rurban
 // new BlogArchives plugin for the new blog theme. enable default box method
 // for all plugins. Minor search improvement.
