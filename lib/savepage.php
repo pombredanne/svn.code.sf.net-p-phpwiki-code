@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.7.2.2 2001-09-21 19:59:13 dairiki Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.7.2.3 2001-11-07 18:52:14 dairiki Exp $');
 
 /*
    All page saving events take place here.
@@ -117,7 +117,9 @@
    }
 
 
-
+   if (get_magic_quotes_gpc()) {
+      $post = stripslashes($post);
+   }
    $pagename = rawurldecode($post);
    $pagehash = RetrievePage($dbi, $pagename, $WikiPageStore);
 
