@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-rcs_id('$Id: htmldump.tmpl,v 1.3 2003-03-07 02:57:08 dairiki Exp $');
+rcs_id('$Id: htmldump.tmpl,v 1.4 2003-12-18 20:52:32 carstenklapp Exp $');
 /*
  * This template is used only for html file dumps, and is responsible
  * mainly for the outer level <html> stuff and the and <head>.
@@ -20,15 +20,18 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
        */ ?>
 <link rel="home" title="<?=HOME_PAGE?>" href="<?=WikiURL(HOME_PAGE)?>" />
 <link rel="help" title="<?=_("HowToUseWiki")?>" href="<?=WikiURL(_("HowToUseWiki"))?>" />
-<link rel="copyright" title="GNU General Public License" href="http://www.gnu.org/copyleft/gpl.html#SEC1" />
-<?php
-      $wikiadminName = _("The PhpWiki Programming Team");
-      $wikiadminUrl = "http://phpwiki.sourceforge.net/phpwiki/ThePhpWikiProgrammingTeam";
-      ?>
-<link rel="author" title="<?= $wikiadminName ?>" href="<?= $wikiadminUrl ?>" />
+<link rel="copyright" title="<?=COPYRIGHTPAGE_TITLE?>" href="<?=COPYRIGHTPAGE_URL?>" />
+<link rel="author" title="<?=AUTHORPAGE_TITLE?>" href="<?=AUTHORPAGE_URL?>" />
 
 <?= $Theme->getCSS() ?>
-<title><?=WIKI_NAME?> - <?=AsString($TITLE)?></title>
+<?php
+  // avoid redundant bookmark title for custom home page
+  if ($page->getName() == WIKI_NAME && HOME_PAGE == WIKI_NAME)
+      $pagetitle = "";
+  else
+      $pagetitle = " - ". AsString($TITLE);
+?>
+<title><?=WIKI_NAME.$pagetitle?></title>
 </head>
 <?= Template('body') ?>
 <?php
