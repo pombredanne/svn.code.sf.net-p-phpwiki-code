@@ -1,11 +1,11 @@
 <?php 
 /*
  * Todo: 
- *   * validate input (fix javascript, add POST checks)
- *   * start this automatically the first time
- *   * fix include_path
- *   * eval index-user.php or index.php to get the actual settings.
- *   * ask to store it in index.php or index-user.php
+ * validate input (fix javascript, add POST checks)
+ * start this automatically the first time
+ * fix include_path
+ * eval index-user.php or index.php to get the actual settings.
+ * ask to store it in index.php or index-user.php
  * 
  * The file index-user.php will be generated which you can use as your index.php.
  */
@@ -20,7 +20,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'iso-8859-1');
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.20 2004-02-16 00:20:30 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.21 2004-02-22 23:20:31 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki 1.3.x</title>
 <style type="text/css" media="screen">
@@ -245,7 +245,7 @@ $properties["Part Null Settings"] =
 new unchangeable_variable('_partnullsettings', "
 define ('PHPWIKI_VERSION', '1.3.8pre');
 require \"lib/prepend.php\";
-rcs_id('\$Id: configurator.php,v 1.20 2004-02-16 00:20:30 rurban Exp $');", "");
+rcs_id('\$Id: configurator.php,v 1.21 2004-02-22 23:20:31 rurban Exp $');", "");
 
 $properties["Part One"] =
 new part('_partone', $SEPARATOR."\n", "

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllPages.php,v 1.19 2004-02-17 12:11:36 rurban Exp $');
+rcs_id('$Id: AllPages.php,v 1.20 2004-02-22 23:20:33 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.19 $");
+                            "\$Revision: 1.20 $");
     }
 
     function getDefaultArguments() {
@@ -45,7 +45,8 @@ extends WikiPlugin
                      'include_empty' => false,
                      'exclude'       => '',
                      'info'          => '',
-                     'sortby'        => '',   // +mtime,-pagename
+                     'sortby'        => 'pagename',   // +mtime,-pagename
+                     'limit'         => 0,
                      'debug'         => false
                      );
     }
@@ -63,8 +64,7 @@ extends WikiPlugin
             $request->setArg('sortby',$sortby);
 
         $pagelist = new PageList($info, $exclude, $this->getArgs($argstr, $request));
-        if ($sortby) $sorted = $pagelist->sortby($sortby,'db');
-        else $sorted='pagename';
+        //if (!$sortby) $sorted='pagename';
         if (!$noheader)
             $pagelist->setCaption(_("Pages in this wiki (%d total):"));
 
@@ -72,12 +72,11 @@ extends WikiPlugin
         if ($include_empty)
             $pagelist->_addColumn('version');
 
-        if (defined('DEBUG') and DEBUG)
+        //if (defined('DEBUG') and DEBUG) $debug = true;
+        if ($debug)
             $timer = new DebugTimer;
-        //handle $sortby
-        $pagelist->addPages( $dbi->getAllPages($include_empty, $sorted) );
-
-        if (defined('DEBUG') and DEBUG) {
+        $pagelist->addPages( $dbi->getAllPages($include_empty, $sortby, $limit) );
+        if ($debug) {
             return HTML($pagelist,
                         HTML::p(fmt("Elapsed time: %s s", $timer->getStats())));
         } else {
@@ -92,6 +91,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.19  2004/02/17 12:11:36  rurban
+// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
+//
 // Revision 1.18  2004/01/25 07:58:30  rurban
 // PageList sortby support in PearDB and ADODB backends
 //

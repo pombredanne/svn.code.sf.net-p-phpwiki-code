@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UnfoldSubpages.php,v 1.11 2004-02-17 12:11:36 rurban Exp $');
+rcs_id('$Id: UnfoldSubpages.php,v 1.12 2004-02-22 23:20:33 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -42,7 +42,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     function getDefaultArguments() {
@@ -50,10 +50,11 @@ extends WikiPlugin
             'pagename' => '[pagename]', // default: current page
             //'header'  => '',  // expandable string
             'quiet'   => false, // print no header
-            'sort'    => 'asc', // deprecated: use sortby=+pagename or 
+            //'sort'    => 'asc', // deprecated: use sortby=+pagename or 
             			//   sortby=-mtime instead,
-            'sortby'  => 'pagename', // [+|-]pagename, [+|-]mtime, [+|-]hits
-            'pages'   => false,    // deprecated. use maxpages instead
+            'sortby'   => 'pagename', // [+|-]pagename, [+|-]mtime, [+|-]hits
+            'limit'    => 0,    
+            'pages'    => false,    // deprecated. use maxpages instead
             'maxpages' => false,   // maximum number of pages to include
             'sections' => false,// maximum number of sections per page to
             			//  include
@@ -123,12 +124,11 @@ extends WikiPlugin
         if (empty($args['pagename']))
             $pagename = $request->getArg('pagename');
         $sortby = 'pagename';
-        if ($request->getArg('sortby')) {
-            $sortby = PageList::sortby($request->getArg('sortby'),'db');
-        }
+        if ($request->getArg('sortby'))
+            $sortby = $request->getArg('sortby');
         extract($args);
         //TODO: explodePageList should be a PageList method.
-        $subpages = explodePageList($pagename . SUBPAGE_SEPARATOR . '*',$sortby);
+        $subpages = explodePageList($pagename . SUBPAGE_SEPARATOR . '*',$sortby,$limit);
         if (! $subpages ) {
             return $this->error(_("The current page has no subpages defined."));
         }           
@@ -198,6 +198,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/02/17 12:11:36  rurban
+// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
+//
 // Revision 1.10  2004/01/27 12:10:45  rurban
 // fixed UnfoldSubpages and added docs.
 // new arguments: pagename, maxpages

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.36 2004-02-17 12:15:24 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.37 2004-02-22 23:20:31 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,7 +87,7 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.36 $");
+        //                    "\$Revision: 1.37 $");
     }
 
     function getArgs($argstr, $request=false, $defaults = false) {
@@ -374,18 +374,19 @@ class WikiPluginLoader {
         $plugin_source = "lib/plugin/$plugin_name.php";
 
         $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_plugin_error_filter'));
-        // $include_failed = !@include_once("lib/plugin/$plugin_name.php");
-        $include_failed = !include_once("lib/plugin/$plugin_name.php");
-        $ErrorManager->popErrorHandler();
-
         $plugin_class = "WikiPlugin_$plugin_name";
         if (!class_exists($plugin_class)) {
-            if ($include_failed)
-                return $this->_error(sprintf(_("Include of '%s' failed"),
-                                             $plugin_source));
-            return $this->_error(sprintf("%s: no such class", $plugin_class));
+            // $include_failed = !@include_once("lib/plugin/$plugin_name.php");
+            $include_failed = !include_once("lib/plugin/$plugin_name.php");
+            $ErrorManager->popErrorHandler();
+            
+            if (!class_exists($plugin_class)) {
+                if ($include_failed)
+                    return $this->_error(sprintf(_("Include of '%s' failed"),
+                                                 $plugin_source));
+                return $this->_error(sprintf("%s: no such class", $plugin_class));
+            }
         }
-
         $plugin = new $plugin_class;
         if (!is_subclass_of($plugin, "WikiPlugin"))
             return $this->_error(sprintf("%s: not a subclass of WikiPlugin",

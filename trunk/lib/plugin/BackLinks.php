@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BackLinks.php,v 1.22 2004-02-17 12:11:36 rurban Exp $');
+rcs_id('$Id: BackLinks.php,v 1.23 2004-02-22 23:20:33 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
     
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.22 $");
+                            "\$Revision: 1.23 $");
     }
     
     function getDefaultArguments() {
@@ -62,7 +62,7 @@ extends WikiPlugin
         if (!$include_self)
             $exclude[] = $page;
         
-        $pagelist = new PageList($info, $exclude);
+        $pagelist = new PageList($info, $exclude, $this->_args);
         
         $p = $dbi->getPage($page);
         $pagelist->addPages($p->getLinks());
@@ -74,7 +74,7 @@ extends WikiPlugin
         // languages does not always end up with so subtle a
         // distinction as it does with English in this case. :)
         if (!$noheader) {
-            if ($page == $request->args['pagename']
+            if ($page == $request->getArg('pagename')
                 && !$dbi->isWikiPage($page))
                 {
                     // BackLinks plugin is more than likely being called
@@ -131,6 +131,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.22  2004/02/17 12:11:36  rurban
+// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
+//
 // Revision 1.21  2003/12/22 07:31:57  carstenklapp
 // Bugfix: commented out debugging code that snuck into the release.
 //

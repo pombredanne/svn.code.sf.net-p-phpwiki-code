@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ExternalSearch.php,v 1.6 2004-02-19 22:06:53 rurban Exp $');
+rcs_id('$Id: ExternalSearch.php,v 1.7 2004-02-22 23:20:33 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -20,7 +20,7 @@ rcs_id('$Id: ExternalSearch.php,v 1.6 2004-02-19 22:06:53 rurban Exp $');
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-require_once("lib/interwiki.php");
+//require_once("lib/interwiki.php");
 
 /**
  */
@@ -38,7 +38,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function _getInterWikiUrl(&$request) {
@@ -118,6 +118,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/02/19 22:06:53  rurban
+// use new class, to be able to get rid of lib/interwiki.php
+//
 // Revision 1.5  2003/02/26 01:56:52  dairiki
 // Tuning/fixing of POST action URLs and hidden inputs.
 //

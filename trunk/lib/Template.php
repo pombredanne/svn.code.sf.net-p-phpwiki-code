@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.52 2003-12-20 23:59:19 carstenklapp Exp $');
+rcs_id('$Id: Template.php,v 1.53 2004-02-22 23:20:31 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -225,6 +225,7 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
     if (!is_array($args))
         $args = array();
 
+    $content->_basepage = $title;
     $args['CONTENT'] = $content;
     $args['TITLE'] = split_pagename($title);
     $args['revision'] = $page_revision;
@@ -244,6 +245,10 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.52  2003/12/20 23:59:19  carstenklapp
+// Internal change: Added rcs Log tag & emacs php mode tag (sorry, forgot
+// this in the last commit).
+//
 
 // Local Variables:
 // mode: php

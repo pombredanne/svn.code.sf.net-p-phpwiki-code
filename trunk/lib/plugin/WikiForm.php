@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiForm.php,v 1.9 2003-02-26 01:56:52 dairiki Exp $');
+rcs_id('$Id: WikiForm.php,v 1.10 2004-02-22 23:20:33 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -34,7 +34,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
@@ -108,7 +108,10 @@ extends WikiPlugin
         $input = HTML::input($input);
         $input->addTooltip($buttontext);
         $button = Button('submit:', $buttontext, $class);
-
+        if ($request->getArg('start_debug'))
+            $form->pushContent(HTML::input(array('name' => 'start_debug',
+                                                 'value' =>  $request->getArg('start_debug'),
+                                                 'type'  => 'hidden')));
         $form->pushContent(HTML::span(array('class' => $class),
                                       $input, $button));
 
@@ -117,6 +120,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2003/02/26 01:56:52  dairiki
+// Tuning/fixing of POST action URLs and hidden inputs.
+//
 // Revision 1.8  2003/01/18 22:14:30  carstenklapp
 // Code cleanup:
 // Reformatting & tabs to spaces;

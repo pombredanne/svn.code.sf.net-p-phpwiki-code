@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.13 2004-02-17 12:11:36 rurban Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.14 2004-02-22 23:20:33 rurban Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.13 $");
+                            "\$Revision: 1.14 $");
     }
 
     function getDefaultArguments() {
@@ -74,16 +74,17 @@ extends WikiPlugin
                      'info'     => 'most',
 
                      /* How to sort */
-                     'sortby'   => 'pagename'
+                     'sortby'   => 'pagename',
+                     'limit'    => 0
                      );
     }
 
-    function collectPages(&$list, &$dbi, $sortby, $limit=0) {
+    function collectPages(&$list, &$dbi, $sortby, $limit) {
         extract($this->_args);
 
         $now = time();
         
-        $allPages = $dbi->getAllPages('include_deleted',$sortby);
+        $allPages = $dbi->getAllPages('include_deleted',$sortby,$limit);
         while ($pagehandle = $allPages->next()) {
             $pagename = $pagehandle->getName();
             $current = $pagehandle->getCurrentRevision();
@@ -212,6 +213,9 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2004/02/17 12:11:36  rurban
+// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
+//
 // Revision 1.12  2004/02/15 21:34:37  rurban
 // PageList enhanced and improved.
 // fixed new WikiAdmin... plugins
