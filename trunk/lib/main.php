@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.57 2002-02-16 02:08:26 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.58 2002-02-20 00:12:28 carstenklapp Exp $');
 
 
 include "lib/config.php";
@@ -299,6 +299,7 @@ WikiUser::PrintLoginForm($this, compact('require_level'), $msg);
 
             case 'upload':
             case 'dumpserial':
+            case 'dumphtml':
             case 'loadfile':
             case 'remove':
             case 'lock':
@@ -543,6 +544,11 @@ WikiUser::PrintLoginForm($this, compact('require_level'), $msg);
     function action_dumpserial () {
         include_once("lib/loadsave.php");
         DumpToDir($this);
+    }
+
+    function action_dumphtml () {
+        include_once("lib/loadsave.php");
+        DumpHtmlToDir($this);
     }
 
     function action_loadfile () {
