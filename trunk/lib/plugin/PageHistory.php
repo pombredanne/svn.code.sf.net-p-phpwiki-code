@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageHistory.php,v 1.19 2002-02-16 02:31:49 carstenklapp Exp $');
+rcs_id('$Id: PageHistory.php,v 1.20 2002-02-22 22:57:03 carstenklapp Exp $');
 /**
  */
 require_once('lib/plugin/RecentChanges.php');
@@ -277,7 +277,7 @@ extends WikiPlugin_RecentChanges
         if (empty($args['page']))
             return $this->makeForm("", $request);
         // Hack alert: format() is a NORETURN for rss formatters.
-        return $this->format($this->getChanges($dbi, $args), $args);
+        return HTML::div(array('class' => 'wikitext'), $this->format($this->getChanges($dbi, $args), $args));
     }
 };
 

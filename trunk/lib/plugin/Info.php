@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Info.php,v 1.3 2002-02-21 06:09:11 carstenklapp Exp $');
+rcs_id('$Id: Info.php,v 1.4 2002-02-22 22:59:18 carstenklapp Exp $');
 /**
  *
  */
@@ -36,7 +36,7 @@ extends WikiPlugin
 
         $t = new Template('info', $request,
                           array('revision' => $revision));
-        return $t;
+        return HTML::div(array('class' => 'wikitext'), $t);
     }
 };
 
