@@ -1,4 +1,4 @@
-<!-- $Id: wiki_pgsql.php3,v 1.8 2000-06-23 01:01:24 wainstead Exp $ -->
+<!-- $Id: wiki_pgsql.php3,v 1.9 2000-06-23 01:40:01 wainstead Exp $ -->
 <?
 
    /*
@@ -144,8 +144,9 @@
       global $search_counter;
       $search_counter = 0;
 
+      $search = strtolower($search);
       $search = addslashes($search);
-      $query = "select pagename from $dbi[table] where pagename " .
+      $query = "select pagename from $dbi[table] where lower(pagename) " .
                "like '%$search%' order by pagename";
 //      echo "search query: $query<br>\n";
       $res = pg_exec($dbi["dbc"], $query);
@@ -171,8 +172,9 @@
       global $search_counter;
       $search_counter = 0;
       $search = addslashes($search);
+      $search = addslashes($search);
       $query = "select pagename,content from $dbi[table] " .
-               "where content like '%$search%'";
+               "where lower(content) like '%$search%'";
 
       $res = pg_exec($dbi["dbc"], $query);
 
