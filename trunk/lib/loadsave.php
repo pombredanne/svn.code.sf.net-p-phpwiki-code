@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.35 2002-01-24 19:29:20 carstenklapp Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.36 2002-01-24 21:22:59 dairiki Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -6,8 +6,8 @@ require_once("lib/Template.php");
 function StartLoadDump(&$request, $title, $html = '')
 {
     // FIXME: This is a hack
-    $tmpl = Template('top', $request, array('TITLE' => $title));
-    echo ereg_replace('</body>.*', '', $tmpl->printExpansion($html));
+    $tmpl = Template('top', array('TITLE' => $title, 'HEADER' => $title));
+    echo ereg_replace('</body>.*', '', $tmpl->getExpansion($html));
 }
 
 function EndLoadDump(&$request)
