@@ -1,72 +1,353 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.31 2002-01-26 01:51:13 dairiki Exp $');
+rcs_id('$Id: editpage.php,v 1.32 2002-01-30 01:33:15 dairiki Exp $');
 
-require_once('lib/transform.php');
 require_once('lib/Template.php');
 
-function editPage(&$request, $do_preview = false) {
-    // editpage relies on $pagename, $version
-    $pagename = $request->getArg('pagename');
-    $version  = $request->getArg('version');
+class PageEditor
+{
+    function PageEditor (&$request) {
+        $this->request = &$request;
+        
+        $this->user = $request->getUser();
+        $this->page = $request->getPage();
+
+        $this->current = $this->page->getCurrentRevision();
+
+        $this->meta = array('author' => $this->user->getId(),
+                            'author_id' => $this->user->getAuthenticatedId());
+        
+        $version = $request->getArg('version');
+        if ($version !== false) {
+            $this->selected = $this->page->getRevision($version);
+            $this->version = $version;
+        }
+        else {
+            $this->selected = $this->current;
+            $this->version = $this->current->getVersion();
+        }
+        
+        if ($this->_restoreState()) {
+            $this->_initialEdit = false;
+        }
+        else {
+            $this->_initializeState();
+            $this->_initialEdit = true;
+        }
+    }
+
+    function editPage () {
+        $saveFailed = false;
+        $tokens = array();
+        
+        if ($this->isLocked()) {
+            if ($this->isInitialEdit())
+                return $this->viewSource();
+            $tokens['PAGE_LOCKED_MESSAGE'] = $this->getLockedMessage();
+        }
+        elseif ($this->editaction == 'save') {
+            if ($this->savePage())
+                return true;    // Page saved.
+            $saveFailed = true;
+        }
+
+        if ($saveFailed || $this->isConcurrentUpdate())
+            $tokens['CONCURRENT_UPDATE_MESSAGE'] = $this->getConflictMessage();
+
+        if ($this->editaction == 'preview')
+            $tokens['PREVIEW_CONTENT'] = $this->getPreview(); // FIXME: convert to _MESSAGE?
+
+        // FIXME: NOT_CURRENT_MESSAGE?
+        
+        $tokens = array_merge($tokens, $this->getFormElements());
+
+        return $this->output('editpage', _("Edit: %s"), $tokens);
+    }
+
+    function output ($template, $title_fs, $tokens) {
+        global $Theme;
+
+        $pagename = $this->page->getName();
+        $selected = &$this->selected;
+        $current = &$this->current;
+        
+        if ($selected && $selected->getVersion() != $current->getVersion()) {
+            $rev = $selected;
+            $pagelink = $Theme->LinkExistingWikiWord($pagename, '',
+                                                     $selected->getVersion());
+        }
+        else {
+            $rev = $current;
+            $pagelink = $Theme->LinkExistingWikiWord($pagename);
+        }
+        
+        
+        $title = new FormattedText ($title_fs, $pagelink);
+        $template = Template($template, $tokens);
+
+        GeneratePage($template, $title, $rev);
+        return true;
+    }
     
-    $page    = $request->getPage();
-    $current = $page->getCurrentRevision();
-
-    if ($version === false) {
-        $selected = $current;
-    }
-    else {
-        $selected = $page->getRevision($version);
-        if (!$selected)
-            NoSuchRevision($request, $page, $version); // noreturn
+    
+    function viewSource ($tokens = false) {
+        assert($this->isInitialEdit());
+        assert($this->selected);
+        
+        $tokens['PAGE_SOURCE'] = $this->_content;
+        
+        return $this->output('viewsource', _("View Source: %s"), $tokens);
     }
 
-    global $Theme;
-    $user = $request->getUser();
-    $pagelink = $Theme->LinkExistingWikiWord($pagename, '', $version);
+    function savePage () {
+        $request = &$this->request;
+        
+        if ($this->isUnchanged()) {
+            // Save failed. No changes made.
+            include_once('lib/display.php');
+            // force browse of current version:
+            $request->setArg('version', false);
+            displayPage($request, 'nochanges');
+            return true;
+        }
 
-    if ($page->get('locked') && !$user->isAdmin()) {
-        $title = fmt("View Source: %s", $pagelink);
-        $template = Template('viewsource');
-        $do_preview = false;
+        $page = &$this->page;
+
+        // Save new revision
+        $newrevision = $page->createRevision($this->_currentVersion + 1,
+                                             $this->_content,
+                                             $this->meta,
+                                             ExtractWikiPageLinks($this->_content));
+        if (!is_object($newrevision)) {
+            // Save failed.  (Concurrent updates).
+            return false;
+        }
+        
+        // New contents successfully saved...
+
+        // Clean out archived versions of this page.
+        include_once('lib/ArchiveCleaner.php');
+        $cleaner = new ArchiveCleaner($GLOBALS['ExpireParams']);
+        $cleaner->cleanPageRevisions($page);
+
+        $dbi = $request->getDbh();
+        $warnings = $dbi->GenericWarnings();
+        global $Theme;
+        
+        if (empty($warnings) && ! $Theme->getImageURL('signature')) {
+            // Do redirect to browse page if no signature has
+            // been defined.  In this case, the user will most
+            // likely not see the rest of the HTML we generate
+            // (below).
+            $request->redirect(WikiURL($page, false, 'absolute_url'));
+        }
+
+        // Force browse of current page version.
+        $request->setArg('version', false);
+        include_once('lib/BlockParser.php');
+        $template = Template('savepage',
+                             array('CONTENT' => TransformRevision($newrevision)));
+        if (!empty($warnings))
+            $template->replace('WARNINGS', $warnings);
+
+        $pagelink = $Theme->linkExistingWikiWord($page->getName());
+        
+        GeneratePage($template, fmt("Saved: %s", $pagelink), $newrevision);
+        return true;
     }
-    else {
-        $title = fmt("Edit: %s", $pagelink);
-        $template = Template('editpage');
+    
+    function isConcurrentUpdate () {
+        assert($this->current->getVersion() >= $this->_currentVersion);
+        return $this->current->getVersion() != $this->_currentVersion;
     }
 
-    if ($do_preview) {
-        foreach (array('minor_edit', 'convert') as $key)
-            $formvars[$key] = (bool) $request->getArg($key);
-        foreach (array('content', 'editversion', 'summary', 'pagename',
-                       'version', 'markup') as $key)
-            $formvars[$key] = (string) $request->getArg($key);
+    function isLocked () {
+        return $this->page->get('locked') && !$this->user->isAdmin();
+    }
 
-        if ($formvars['markup'] == 'new') {
+    function isInitialEdit () {
+        return $this->_initialEdit;
+    }
+
+    function isUnchanged () {
+        $current = &$this->current;
+        
+        if ($this->meta['markup'] !=  $current->get('markup'))
+            return false;
+
+        return $this->_content == $current->getPackedContent();
+    }
+
+    function getPreview () {
+        if ($this->meta['markup'] == 'new') {
             include_once('lib/BlockParser.php');
             $trfm = 'NewTransform';
         }
         else {
+            include_once('lib/transform.php');
             $trfm = 'do_transform';
         }
-        $template->replace('PREVIEW_CONTENT', $trfm($request->getArg('content')));
-    }
-    else {
-        $age = time() - $current->get('mtime');
-        $minor_edit = ( $age < MINOR_EDIT_TIMEOUT && $current->get('author') == $user->getId() );
-        
-        $formvars = array('content'     => $selected->getPackedContent(),
-                          'minor_edit'  => $minor_edit,
-                          'version'     => $selected->getVersion(),
-                          'editversion' => $current->getVersion(),
-                          'markup'	=> $current->get('markup'),
-                          'summary'     => '',
-                          'convert'     => '',
-                          'pagename'    => $pagename);
+        return $trfm($this->_content);
     }
 
-    $template->replace('FORMVARS', $formvars);
-    GeneratePage($template, $title, $selected);
+    function getLockedMessage () {
+        return
+            HTML(HTML::h2(_("Page Locked")),
+                 HTML::p(_("This page has been locked by the administrator so your changes can not be saved.")),
+                 HTML::p(_("(Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor.)")),
+                 HTML::p(_("Sorry for the inconvenience.")));
+    }
+    
+    function getConflictMessage () {
+        /*
+          xgettext only knows about c/c++ line-continuation strings
+          it does not know about php's dot operator.
+          We want to translate this entire paragraph as one string, of course.
+        */
+
+        $re_edit_url = WikiURL($this->page, array('action' => 'edit'));
+        $re_edit_link = HTML::a(array('href' => $re_edit_url),
+                                _("Edit the new version"));
+
+        $steps = HTML::ol(HTML::li(_("Copy your changes to the clipboard or to another temporary place (e.g. text editor).")),
+                          HTML::li(fmt("%s of the page. You should now see the most current version of the page. Your changes are no longer there.",
+                                       $re_edit_link)),
+                          HTML::li(_("Make changes to the file again. Paste your additions from the clipboard (or text editor).")),
+                          HTML::li(_("Save your updated changes.")));
+         
+        return HTML(HTML::h2(_("Conflicting Edits!")),
+                    HTML::p(_("In the time since you started editing this page, another user has saved a new version of it.  Your changes can not be saved, since doing so would overwrite the other author's changes.")),
+                    HTML::p(_("In order to recover from this situation, follow these steps:")),
+                    $steps,
+                    HTML::p(_("Sorry for the inconvenience.")));
+    }
+
+
+    function getTextArea () {
+        $request = &$this->request;
+
+        // wrap=virtual is not HTML4, but without it NS4 doesn't wrap long lines
+        $readonly = $this->isLocked() || $this->isConcurrentUpdate();
+        
+        return HTML::textarea(array('class' => 'wikiedit',
+                                    'name' => 'edit[content]',
+                                    'rows' => $request->getPref('editHeight'),
+                                    'cols' => $request->getPref('editWidth'),
+                                    'readonly' => (bool) $readonly,
+                                    'wrap' => 'virtual'),
+                              $this->_content);
+    }
+    
+    function getFormElements () {
+        $request = &$this->request;
+        $page = &$this->page;
+        
+        
+        $h = array('action' 		   => 'edit',
+                   'pagename'		   => $page->getName(),
+                   'version'		   => $this->version,
+                   'edit[current_version]' => $this->_currentVersion);
+
+        $el['HIDDEN_INPUTS'] = HiddenInputs($h);
+        
+
+        $el['EDIT_TEXTAREA'] = $this->getTextArea();
+
+        $el['SUMMARY_INPUT'] 
+            = HTML::input(array('type' => 'text',
+                                'class' => 'wikitext',
+                                'name' => 'edit[summary]',
+                                'size' => 50,
+                                'value' => $this->meta['summary']));
+        $el['MINOR_EDIT_CB']
+            = HTML::input(array('type' => 'checkbox',
+                                'name' => 'edit[minor_edit]',
+                                 'checked' => (bool) $this->meta['is_minor_edit']));
+        $el['NEW_MARKUP_CB']
+            = HTML::input(array('type' => 'checkbox',
+                                'name' => 'edit[markup]',
+                                'value' => 'new',
+                                'checked' => $this->meta['markup'] == 'new'));
+        global $Theme;
+        $el['PREVIEW_B']
+            = $Theme->makeSubmitButton(_("Preview"), 'edit[preview]', 'button');
+
+        if (!$this->isConcurrentUpdate() && !$this->isLocked())
+            $el['SAVE_B']
+                = $Theme->makeSubmitButton(_("Save"), 'edit[save]', 'button');
+
+        $el['IS_CURRENT']
+            = $this->version == $this->current->getVersion();
+
+        return $el;
+    }
+
+
+    function _restoreState () {
+        $request = &$this->request;
+        
+        $posted = $request->getArg('edit');
+        $request->setArg('edit', false);
+        
+        if (!$posted || !$request->isPost() || $request->getArg('action') != 'edit')
+            return false;
+
+        if (!isset($posted['content']) || !is_string($posted['content']))
+            return false;
+        $this->_content = preg_replace('/[ \t\r]+\n/', "\n",
+                                       rtrim($posted['content']));
+        
+        $this->_currentVersion = (int) $posted['current_version'];
+
+        if ($this->_currentVersion < 0)
+            return false;
+        if ($this->_currentVersion > $this->current->getVersion())
+            return false;       // FIXME: some kind of warning?
+
+        $is_new_markup = !empty($posted['markup']) && $posted['markup'] == 'new';
+        $meta['markup'] = $is_new_markup ? 'new' : false;
+        $meta['summary'] = trim($posted['summary']);
+        $meta['is_minor_edit'] = !empty($posted['minor_edit']);
+
+        $this->meta = array_merge($this->meta, $meta);
+        
+        if (!empty($posted['preview']))
+            $this->editaction = 'preview';
+        elseif (!empty($posted['save']))
+            $this->editaction = 'save';
+        else
+            $this->editaction = 'edit';
+
+        return true;
+    }
+    
+    function _initializeState () {
+        $request = &$this->request;
+        $current = &$this->current;
+        $selected = &$this->selected;
+        $user = &$this->user;
+
+        if (!$selected)
+            NoSuchRevision($request, $this->page, $this->version); // noreturn
+
+        $this->_currentVersion = $current->getVersion();
+        $this->_content = $selected->getPackedContent();
+        
+        $this->meta['summary'] = '';
+
+        // If author same as previous author, default minor_edit to on.
+        $age = time() - $current->get('mtime');
+        $this->meta['is_minor_edit'] = ( $age < MINOR_EDIT_TIMEOUT
+                                         && $current->get('author') == $user->getId()
+                                         );
+
+        // Default for new pages is new-style markup.
+        if ($selected->hasDefaultContents())
+            $this->meta['markup'] = 'new';
+        else
+            $this->meta['markup'] = $selected->get('markup');
+
+        $this->editaction = 'edit';
+    }
 }
 
 // Local Variables:

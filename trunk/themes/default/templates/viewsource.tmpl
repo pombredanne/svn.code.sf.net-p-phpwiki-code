@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: viewsource.tmpl,v 1.7 2002-01-28 01:01:27 dairiki Exp $ -->
+<!-- $Id: viewsource.tmpl,v 1.8 2002-01-30 01:33:20 dairiki Exp $ -->
 <?php
   $mtime = $Theme->formatDateTime($revision->get('mtime'));
   if ($revision->isCurrent())
@@ -29,12 +29,10 @@
           rows="<?=$request->getPref('editHeight')?>"
           cols="<?=$request->getPref('editWidth')?>"
 	  readonly="readonly"
-          wrap="virtual"><?= $FORMVARS['content'] ?></textarea>
+          wrap="virtual"><?= $PAGE_SOURCE ?></textarea>
 <p><?= $LastModifiedMsg ?></p>
+<?= HiddenInputs($request->getArgs()) ?>
+</form>
 <hr class="toolbar" noshade="noshade" />
 <?= Template('actionbar') ?>
 <!-- RELATEDPAGES were here. -->
-<input type="hidden" name="action" value="browse" />
-<input type="hidden" name="pagename" value="<?=$FORMVARS['pagename']?>" />
-<input type="hidden" name="version" value="<?=$FORMVARS['version']?>" />
-</form>

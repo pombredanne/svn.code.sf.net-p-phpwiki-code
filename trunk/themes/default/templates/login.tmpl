@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: login.tmpl,v 1.9 2002-01-29 18:29:09 carstenklapp Exp $ -->
+<!-- $Id: login.tmpl,v 1.10 2002-01-30 01:33:20 dairiki Exp $ -->
 <!-- The login form -->
 
 <?php if ($fail_message) { ?>
@@ -34,9 +34,7 @@ if (ALLOW_BOGO_LOGIN && $require_level <= WIKIAUTH_BOGO) {
 
 <input type="hidden" name="auth[require_level]" value="<?=$require_level?>" />
 <input type="hidden" name="auth[login]" value="1" />
-<?php foreach ($request->getArgs() as $key => $val) { ?>
-  <input type="hidden" name="<?=$key?>" value="<?=$val?>" />
-<?php } ?>
+<?= HiddenInputs($request->getArgs()) ?>
 </form>
 
 <script language="JavaScript" type="text/javascript">
