@@ -2,7 +2,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: wiki_config.php3,v 1.17 2000-07-11 02:50:04 wainstead Exp $');
+   rcs_id('$Id: wiki_config.php3,v 1.18 2000-07-16 06:46:36 wainstead Exp $');
 
    /*
       Constants and settings. Edit the values below for
@@ -41,8 +41,14 @@
 
    // DBM settings (default)
    include "wiki_dbmlib.php3";
-   $WikiDataBase = "/tmp/wikidb"; // must be server-writable!
-   $ArchiveDataBase = "/tmp/wikiarchive"; // see above!
+   $DBMdir = "/tmp";
+   $WikiDataBase = "wiki";
+   $ArchiveDataBase = "archive";
+   $WikiDB['wiki']      = "$DBMdir/wikipagesdb";
+   $WikiDB['archive']   = "$DBMdir/wikiarchivedb";
+   $WikiDB['wikilinks'] = "$DBMdir/wikilinksdb";
+   $WikiDB['hottopics'] = "$DBMdir/wikihottopicsdb";
+   $WikiDB['hitcount']  = "$DBMdir/wikihitcountdb";
 
 /*
    // MySQL settings (thanks Arno Hollosi! <ahollosi@iname.com>)
