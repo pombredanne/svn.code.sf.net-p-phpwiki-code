@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.7 2001-12-14 20:32:02 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.8 2001-12-14 23:01:55 dairiki Exp $');
 /**
  */
 
@@ -36,6 +36,13 @@ class _RecentChanges_Formatter
             $args['version'] = $rev->getVersion();
         $page = $rev->getPage();
         return WikiURL($page->getName(), $args, $this->_absurls);
+    }
+
+    function historyURL ($rev) {
+        $page = $rev->getPage();
+        return WikiURL(_("PageHistory"),
+                       array('page' => $page->getName()),
+                       $this->_absurls);
     }
 
     function pageURL ($rev) {
@@ -288,9 +295,7 @@ extends _RecentChanges_Formatter
                       'wiki:importance' => $this->importance($rev),
                       'wiki:status'	=> $this->status($rev),
                       'wiki:diff'	=> $this->diffURL($rev),
-                      'wiki:history'	=> WikiURL($pagename,
-                                                   array('action' => 'info'),
-                                                   'absurl')
+                      'wiki:history'	=> $this->historyURL($rev)
                       );
     }
 }
