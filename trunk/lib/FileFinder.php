@@ -1,4 +1,6 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.12 2003-01-28 21:06:05 zorloc Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.13 2003-03-07 02:51:31 dairiki Exp $');
+
+require_once('lib/stdlib.php');
 
 // FIXME: make this work with non-unix (e.g. DOS) filenames.
 
@@ -185,7 +187,7 @@ class FileFinder
      * @return array Include path.
      */
     function _get_include_path() {
-        $path = ini_get('include_path');
+        $path = @ini_get('include_path'); // FIXME: report warning
         if (empty($path))
             $path = '.';
         return explode($this->_get_ini_separator(), $this->slashifyPath($path));
@@ -400,7 +402,11 @@ function isWindows95() {
 function isWindowsNT() {
     static $winnt;
     if (isset($winnt)) return $winnt;
-    $winnt = preg_match('/^Windows NT/', php_uname());
+    // FIXME: Do this using PHP_OS instead of php_uname().
+    if (function_usable('php_uname'))
+        $winnt = preg_match('/^Windows NT/', php_uname());
+    else
+        $winnt = false;         // FIXME: punt.
     return $winnt;
 }
 
