@@ -14,7 +14,11 @@ Redigera ###PAGE###
 
 <textarea name="content" ROWS="22" COLS="80" wrap="virtual">###CONTENT###</textarea>
 <br>
-
+<input type="checkbox" name="minor_edit" value="yes" 
+###IF MINOR_EDIT### checked
+>
+This is a minor change, don't archive old version.
+<br>
 <input type="checkbox" name="convert" value="tabs" >
 Jag kan inte skriva tabbar.
 <a href="###SCRIPTURL###?KonverteraMellanslagTillTabbar">KonverteraMellanslagTillTabbar</a>
