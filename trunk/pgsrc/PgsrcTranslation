@@ -1,80 +1,383 @@
 Date: Sun, 10 Feb 2002 20:58:10 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: PgsrcTranslation,v 1.7 2002-02-13 22:47:43 carstenklapp Exp $
+X-Rcs-Id: $Id: PgsrcTranslation,v 1.8 2002-02-13 23:06:39 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=PgsrcTranslation;
   flags="";
+  pgsrc_version="2 $Revision: 1.8 $";
+  markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
 __Note:__ This page is much more impressive on the [alpha server|PhpWikiAlpha:en/PgsrcTranslation] where the page names actually link.
 
 !! Translated Page Name Matrix
+''Plugin Pages'' |
+ English (en) |
+  Deutsch (de) |
+   Español (es) |
+    Français (fr) |
+     Italiano (it) |
+      Nederlands (nl) |
+       Svenska (sv)
+ AllPages |
+  AlleSeiten |
+   TodasLasPaginas |
+    ToutesLesPages |
+     TutteLePagina |
+      _ |
+       _
+ BackLinks |
+  BackLinks |
+   _ |
+    RétroLiens |
+     _ |
+      _ |
+       _
+ CalendarPlugin |
+  _ |
+   _ |
+    PluginCalendrier |
+     _ |
+      _ |
+       _
+ DebugInfo |
+  DebugInfo |
+   _ |
+    DebugInfo |
+     _ |
+      _ |
+       _
+ FindPage |
+  SeiteFinden |
+   BuscarPágina |
+    ChercherUnePage |
+     TrovaPagina |
+      ZoekPagina |
+       SökEfterSida
+ FullRecentChanges |
+  _ |
+   _ |
+    DernièresModifsComplètes |
+     _ |
+      _ |
+       _
+ FullTextSearch |
+  VolltextSuche |
+   _ |
+    RechercheEnTexteIntégral |
+     _ |
+      _ |
+       _
+ LikePages |
+  GleicheSeiten |
+   _ |
+    PagesSemblables |
+     _ |
+      _ |
+       _
+ MostPopular |
+  MeistBesucht |
+   MasPopulares |
+    LesPlusVisitées |
+     PiuPopolari |
+      MeestBezocht |
+       MestPopulär
+ PageHistory |
+  SeitenProtokoll |
+   _ |
+    [Historique] |
+     _ |
+      _ |
+       _
+ PhpWikiDocumentation |
+  _ |
+   _ |
+    DocumentationDePhpWiki |
+     _ |
+      _ |
+       _
+ RecentChanges |
+  FrischeSeiten |
+   CambiosRecientes |
+    DernièresModifs |
+     CambiamentiRecenti |
+      RecenteVeranderingen |
+       SenasteÄndringar
+ RecentEdits |
+  GeringfügigeÄnderungen |
+   _ |
+    ÉditionsRécentes |
+     _ |
+      _ |
+       _
+ TitleSearch |
+  TitelSuche |
+   _ |
+    RechercheParTitre |
+     _ |
+      _ |
+       _
 
-| ''Plugin Pages''     | ''Deutsch (de)''       | ''Español (es)'' | ''Français (fr)''        | ''Italiano (it)''  | ''Nederlands (nl)''  | ''Svenska (sv)''
-| AllPages             | AlleSeiten             | TodasLasPaginas  | ToutesLesPages           | TutteLePagina      |                      |
-| BackLinks            | BackLinks              |                  | RétroLiens               |                    |                      |
-| CalendarPlugin       |                        |                  | PluginCalendrier         |                    |                      |
-| DebugInfo            | DebugInfo              |                  | DebugInfo                |                    |                      |
-| FindPage             | SeiteFinden            | BuscarPágina     | ChercherUnePage          | TrovaPagina        | ZoekPagina           | SökEfterSida
-| FullRecentChanges    |                        |                  | DernièresModifsComplètes |                    |                      |
-| FullTextSearch       | VolltextSuche          |                  | RechercheEnTexteIntégral |                    |                      |
-| LikePages            | GleicheSeiten          |                  | PagesSemblables          |                    |                      |
-| MostPopular          | MeistBesucht           | MasPopulares     | LesPlusVisitées          | PiuPopolari        | MeestBezocht         | MestPopulär
-| PageHistory          | SeitenProtokoll        |                  | [Historique]             |                    |                      |
-| PhpWikiDocumentation |                        |                  | DocumentationDePhpWiki   |                    |                      |
-| RecentChanges        | FrischeSeiten          | CambiosRecientes | DernièresModifs          | CambiamentiRecenti | RecenteVeranderingen | SenasteÄndringar
-| RecentEdits          | GeringfügigeÄnderungen |                  | ÉditionsRécentes         |                    |                      |
-| TitleSearch          | TitelSuche             |                  | RechercheParTitre        |                    |                      |
-%%%
-| ''Special Pages''     | ''Deutsch (de)''        | ''Español (es)''       | ''Français (fr)''          | ''Italiano (it)''             | ''Nederlands (nl)''      | ''Svenska (sv)''
-| HomePage              | StartSeite              | PáginaPrincipal        | [Accueil]                  | PaginaPrincipale              | ThuisPagina              | [Framsida]
-| InterWikiMap          |                         |                        | CarteInterWiki             |                               |                          |
-| [MagicPhpWikiURLs]    |                         |                        | [URLMagiquesPhpWiki]       | [MagiaPhpWikiURLs]?           | [ToverPhpWikiURLs]       |
-| PhpWikiAdministration | PhpWikiSystemverwalten  |                        | AdministrationDePhpWiki    | AmministrazioneDiPhpWiki      | PhpWikiBeheer            | PhpWikiAdministration?
-| TextFormattingRules   | TextFormatierungsRegeln | ReglasDeFormatoDeTexto | RèglesDeFormatageDesTextes | RegoleDiFormattazioneDelTesto | TekstFormatteringsRegels | [Textformateringsregler]
-| UserPreferences       | [Einstellungen]         |                        | PréférencesUtilisateurs    | UserPreferences?              | GebruikersVoorkeuren     |
-%%%
-| ''Normal pages''   | ''Deutsch (de)''  | ''Español (es)''      | ''Français (fr)''     | ''Italiano (it)''     | ''Nederlands (nl)'' | ''Svenska (sv)''
-| AddingPages        | SeitenErzeugen    | AgregarPaginas        | AjouterDesPages       | AggiungerePagine      | PaginasToevoegen    | LäggaTillSidor
-| EditText           | EditiereText      | EditarElTexto         | ÉditerLeContenu       | ModificaIlTesto       | VeranderTekst       | RedigeraText
-| GoodStyle          | GuterStil         | BuenEstilo            | StyleCorrect          | BuonStile             | GoedeStijl          | BraStil
-| HowToUseWiki       | WieManWikiBenutzt | ComoUsarWiki          | CommentUtiliserUnWiki | ComeUsareWiki         | HoeWikiTeGebruiken  | HurManAnvänderWiki
-| InterWiki          |                   |                       | InterWiki             |                       |                     |
-| LinkIcons          |                   |                       | IcônesDeLien          |                       |                     |
-| MoreAboutMechanics | WikiTechnik       | MasAcercadeLaMecanica | DétailsTechniques     | VarieSulFunzionamento | MeerOverTechnieken  | MerOmMekanismerna
-| PhpWiki            | PhpWiki           | PhpWiki               | PhpWiki               | PhpWiki               | PhpWiki             | PhpWiki
-| RecentVisitors     | GästeBuch         | VisitantesRecientes   | DerniersVisiteurs     | VisitatoriRecenti     | RecenteBezoekers    | [Gästboken]
-| ReleaseNotes       |                   |                       | NotesDeVersion        | NoteDiRilascio        | UitgaveNoten        |
-| SandBox            | SandKiste         | CajaDeArena           | [BacASable]           | ScatolaDiSabbia       | ZandBak             | [Sandlådan]
-| SteveWainstead     | SteveWainstead    | SteveWainstead        | SteveWainstead        | SteveWainstead        | SteveWainstead      | SteveWainstead
-| TestPage           |                   |                       | PageDeTests           | PaginaDiProva         |                     |
-| WabiSabi           | WabiSabi          | WabiSabi              | WabiSabi              | WabiSabi              |                     | WabiSabi
-| WikiPlugin         |                   |                       | PluginWiki            |                       |                     |
-| WikiWikiWeb        | WikiWikiWeb       | WikiWikiWeb           | WikiWikiWeb           | WikiWikiWeb           |                     | WikiWikiWeb
-%%%
-| ''Automatically generated pages'' | ''Deutsch (de)'' | ''Español (es)'' | ''Français (fr)''    | ''Italiano (it)'' | ''Nederlands (nl)'' | ''Svenska (sv)''
-| Diff:                             | Vergleich:       | Diferencia de:   | Diff :               | Differenza di:    | Diff van:           | Diff av:
-| Edit:                             | Editiere:        | Editar:          | Éditer :             | Modifica:         | Verander:           | Redigera:
-| Remove Page                       | Seite Löschen    | Borrar Página    | Supprimer la Page    | Rimuovi la Pagina | Verwijder Pagina    | Ta bort Sida
-| Sign In                           | Anmelden         |                  | S'inscrire           |                   |                     |
-| View Source:                      | Quell Text:      |                  | Afficher la Source : |                   | Bron Tekst:         | Visa Källkoden:
-%%%
-| ''Translator's page'' | ''Deutsch (de)'' | ''Español (es)'' | ''Français (fr)'' | ''Italiano (it)'' | ''Nederlands (nl)'' | ''Svenska (sv)''
-| n/a                   |                  | [KBrown]         | RolandTrique      |                   | JanNieuwenhuizen    |
-%%%
-| ''Obsolete Pages''  | ''Deutsch (de)''             | ''Español (es)''        | ''Français (fr)''     | ''Italiano (it)''     | ''Nederlands (nl)''    | ''Svenska (sv)''
-| ConvertTabsToSpaces | KonvertiereLeerzeichenZuTabs | ConvierteEspaciosEnTabs | ConvertirTabEnEspaces | ConvertiGliSpaziInTab | VertaalSpatiesNaarTabs | KonverteraMellanslagTillTabbar
+''Special Pages'' |
+ English (en) |
+  Deutsch (de) |
+   Español (es) |
+    Français (fr) |
+     Italiano (it) |
+      Nederlands (nl) |
+       Svenska (sv)
+ HomePage |
+  StartSeite |
+   PáginaPrincipal |
+    [Accueil] |
+     PaginaPrincipale |
+      ThuisPagina |
+       [Framsida]
+ InterWikiMap |
+  _ |
+   _ |
+    CarteInterWiki |
+     _ |
+      _ |
+       _
+ [MagicPhpWikiURLs] |
+  _ |
+   _ |
+    [URLMagiquesPhpWiki] |
+     [MagiaPhpWikiURLs]? |
+      [ToverPhpWikiURLs] |
+       _
+ PhpWikiAdministration |
+  PhpWikiSystemverwalten |
+   _ |
+    AdministrationDePhpWiki |
+     AmministrazioneDiPhpWiki |
+      PhpWikiBeheer |
+       PhpWikiAdministration?
+ TextFormattingRules |
+  TextFormatierungsRegeln |
+   ReglasDeFormatoDeTexto |
+    RèglesDeFormatageDesTextes |
+     RegoleDiFormattazioneDelTesto |
+      TekstFormatteringsRegels |
+       [Textformateringsregler]
+ UserPreferences |
+  [Einstellungen] |
+   _ |
+    PréférencesUtilisateurs |
+     UserPreferences? |
+      GebruikersVoorkeuren |
+       _
+
+Normal pages |
+ English (en) |
+  Deutsch (de) |
+   Español (es) |
+    Français (fr) |
+     Italiano (it) |
+      Nederlands (nl) |
+       Svenska (sv)
+ AddingPages |
+  SeitenErzeugen |
+   AgregarPaginas |
+    AjouterDesPages |
+     AggiungerePagine |
+      PaginasToevoegen |
+       LäggaTillSidor
+ EditText |
+  EditiereText |
+   EditarElTexto |
+    ÉditerLeContenu |
+     ModificaIlTesto |
+      VeranderTekst |
+       RedigeraText
+ GoodStyle |
+  GuterStil |
+   BuenEstilo |
+    StyleCorrect |
+     BuonStile |
+      GoedeStijl |
+       BraStil
+ HowToUseWiki |
+  WieManWikiBenutzt |
+   ComoUsarWiki |
+    CommentUtiliserUnWiki |
+     ComeUsareWiki |
+      HoeWikiTeGebruiken |
+       HurManAnvänderWiki
+ InterWiki |
+  _ |
+   _ |
+    InterWiki |
+     _ |
+      _ |
+       _
+ LinkIcons |
+  _ |
+   _ |
+    IcônesDeLien |
+     _ |
+      _ |
+       _
+ MoreAboutMechanics |
+  WikiTechnik |
+   MasAcercadeLaMecanica |
+    DétailsTechniques |
+     VarieSulFunzionamento |
+      MeerOverTechnieken |
+       MerOmMekanismerna
+ PhpWiki |
+  PhpWiki |
+   PhpWiki |
+    PhpWiki |
+     PhpWiki |
+      PhpWiki |
+       PhpWiki
+ RecentVisitors |
+  GästeBuch |
+   VisitantesRecientes |
+    DerniersVisiteurs |
+     VisitatoriRecenti |
+      RecenteBezoekers |
+       [Gästboken]
+ ReleaseNotes |
+  _ |
+   _ |
+    NotesDeVersion |
+     NoteDiRilascio |
+      UitgaveNoten |
+       _
+ SandBox |
+  SandKiste |
+   CajaDeArena |
+    [BacASable] |
+     ScatolaDiSabbia |
+      ZandBak |
+       [Sandlådan]
+ SteveWainstead |
+  SteveWainstead |
+   SteveWainstead |
+    SteveWainstead |
+     SteveWainstead |
+      SteveWainstead |
+       SteveWainstead
+ TestPage |
+  _ |
+   _ |
+    PageDeTests |
+     PaginaDiProva |
+      _ |
+       _
+ WabiSabi |
+  WabiSabi |
+   WabiSabi |
+    WabiSabi |
+     WabiSabi |
+      _ |
+       WabiSabi
+ WikiPlugin |
+  _ |
+   _ |
+    PluginWiki |
+     _ |
+      _ |
+       _
+ WikiWikiWeb |
+  WikiWikiWeb |
+   WikiWikiWeb |
+    WikiWikiWeb |
+     WikiWikiWeb |
+      _ |
+       WikiWikiWeb
+
+Automatically generated pages |
+ English (en) |
+  Deutsch (de) |
+   Español (es) |
+    Français (fr) |
+     Italiano (it) |
+      Nederlands (nl) |
+       Svenska (sv)
+ Diff: |
+  Vergleich: |
+   Diferencia de: |
+    Diff : |
+     Differenza di: |
+      Diff van: |
+       Diff av:
+ Edit: |
+  Editiere: |
+   Editar: |
+    Éditer : |
+     Modifica: |
+      Verander: |
+       Redigera:
+ Remove Page |
+  Seite Löschen |
+   Borrar Página |
+    Supprimer la Page |
+     Rimuovi la Pagina |
+      Verwijder Pagina |
+       Ta bort Sida
+ Sign In |
+  Anmelden |
+   _ |
+    S'inscrire |
+     _ |
+      _ |
+       _
+ View Source: |
+  Quell Text: |
+   _ |
+    Afficher la Source : |
+     _ |
+      Bron Tekst: |
+       Visa Källkoden:
+
+Translator's page |
+ English (en) |
+  Deutsch (de) |
+   Español (es) |
+    Français (fr) |
+     Italiano (it) |
+      Nederlands (nl) |
+       Svenska (sv)
+ n/a |
+  _ |
+   [KBrown] |
+    RolandTrique |
+     _ |
+      JanNieuwenhuizen |
+       _
+
+''Obsolete Pages'' |
+ English (en) |
+  Deutsch (de) |
+   Español (es) |
+    Français (fr) |
+     Italiano (it) |
+      Nederlands (nl) |
+       Svenska (sv)
+ ConvertTabsToSpaces |
+  KonvertiereLeerzeichenZuTabs |
+   ConvierteEspaciosEnTabs |
+    ConvertirTabEnEspaces |
+     ConvertiGliSpaziInTab |
+      VertaalSpatiesNaarTabs |
+       KonverteraMellanslagTillTabbar
 
 !! Notes
 These pages do not automatically link as !WikiWords:
-;:es:[KBrown] en,it:[MagicPhpWikiURLs] fr:[BacASable] nl:[ToverPhpWikiURLs].
+;es: [KBrown]
+;en,it: [MagicPhpWikiURLs]
+;fr: [BacASable]
+;nl: [ToverPhpWikiURLs]
 
 These pages have single word titles so [[square brackets] are required to link:
-;:fr:[Accueil], [Historique] de:[Einstellungen] sv:[Framsida], [Gästboken], [Sandlådan], [Textformateringsregler].
+;fr: [Accueil], [Historique]
+;de: [Einstellungen]
+;sv: [Framsida], [Gästboken], [Sandlådan], [Textformateringsregler]
 
- %%%
- %%%
-''To edit this table copy the source text into a text editor, or set your !EditArea width to 190 in UserPreferences.''
 ----
 See also: PhpWiki:MultiLingualWiki, PhpWiki:LanguageSelection, PhpWikiDocumentation.
