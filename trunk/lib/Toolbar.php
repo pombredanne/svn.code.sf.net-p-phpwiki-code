@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Toolbar.php,v 1.16 2002-01-11 23:37:09 carstenklapp Exp $');
+<?php rcs_id('$Id: Toolbar.php,v 1.17 2002-01-12 00:58:30 carstenklapp Exp $');
 
 //require_once("lib/ErrorManager.php");
 //require_once("lib/WikiPlugin.php");
@@ -183,7 +183,7 @@ function toolbar_action_PageActions($pagelocked, $userisadmin, $is_current, $ver
     $html .= separator() ."<a class=\"wikiaction\" href=\""
         . WikiURL(_("LikePages"), array('page' => $pagename)) ."\">"
         ._("LikePages") ."</a>";
-    $html .= separator() ."<a class=\"wikiaction\" href=\""
+    $html .= separator() ."<a class=\"backlinks\" href=\""
         . WikiURL(_("BackLinks"), array('page' => $pagename)) ."\">"
         ._("BackLinks") ."</a>";
 
