@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.7\n"
-"POT-Creation-Date: 2001-12-19 03:49-0500\n"
+"POT-Creation-Date: 2001-12-19 04:50-0500\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -591,9 +591,52 @@ msgstr "Probleem tijdens veranderen %s"
 msgid "Complete."
 msgstr "Klaar."
 
+#: ../lib/loadsave.php:18
+#, fuzzy, c-format
+msgid "Return to %s"
+msgstr "Terug naar "
+
 #: ../lib/loadsave.php:125
 msgid "You must specify a directory to dump to"
 msgstr "Je moet een directory specificeren om in te storten"
+
+#: ../lib/loadsave.php:130
+#, c-format
+msgid "Cannot create directory '%s'"
+msgstr ""
+
+#: ../lib/loadsave.php:132
+#, c-format
+msgid "Created directory '%s' for the page dump..."
+msgstr ""
+
+#: ../lib/loadsave.php:134
+#, c-format
+msgid "Using directory '%s'"
+msgstr ""
+
+#: ../lib/loadsave.php:137
+msgid "Dumping Pages"
+msgstr ""
+
+#: ../lib/loadsave.php:148
+#, fuzzy, c-format
+msgid "saved as %s"
+msgstr "als versie %d"
+
+#: ../lib/loadsave.php:153
+#, c-format
+msgid "couldn't open file '%s' for writing"
+msgstr ""
+
+#: ../lib/loadsave.php:156
+#, c-format
+msgid "%s bytes written"
+msgstr ""
+
+#: ../lib/loadsave.php:178
+msgid "Empty pagename!"
+msgstr ""
 
 #: ../lib/loadsave.php:198
 #, c-format
@@ -616,8 +659,54 @@ msgstr "- overgeslagen"
 
 #: ../lib/loadsave.php:221
 #, fuzzy, c-format
-msgid "- saved as version %d"
+msgid "- saved to database as version %d"
 msgstr "als versie %d"
+
+#: ../lib/loadsave.php:313
+#, fuzzy, c-format
+msgid "MIME file %s"
+msgstr "MIME bestand"
+
+#: ../lib/loadsave.php:316
+#, fuzzy, c-format
+msgid "Serialized file %s"
+msgstr "Geserialiseerd bestand"
+
+#: ../lib/loadsave.php:327
+#, fuzzy, c-format
+msgid "plain file %s"
+msgstr "plat bestand"
+
+#: ../lib/loadsave.php:341 ../lib/loadsave.php:360
+msgid "Skipping"
+msgstr ""
+
+#: ../lib/loadsave.php:399
+#, c-format
+msgid "Bad file type: %s"
+msgstr ""
+
+#: ../lib/loadsave.php:414
+#, c-format
+msgid "Loading '%s'"
+msgstr ""
+
+#: ../lib/loadsave.php:426
+msgid "The PhpWiki programming team"
+msgstr "Het PhpWiki programmeerteam"
+
+#: ../lib/loadsave.php:428
+msgid "Loading up virgin wiki"
+msgstr "Laden van maagdelijke wiki"
+
+#: ../lib/loadsave.php:444
+msgid "No uploaded file to upload?"
+msgstr ""
+
+#: ../lib/loadsave.php:447
+#, c-format
+msgid "Uploading %s"
+msgstr ""
 
 #: ../lib/main.php:99
 #, fuzzy, c-format
@@ -986,24 +1075,6 @@ msgstr ""
 
 #~ msgid "%d matches found in %d pages."
 #~ msgstr "%d keer gevonden in %d pagina's."
-
-#~ msgid "Return to "
-#~ msgstr "Terug naar "
-
-#~ msgid "MIME file"
-#~ msgstr "MIME bestand"
-
-#~ msgid "Serialized file"
-#~ msgstr "Geserialiseerd bestand"
-
-#~ msgid "plain file"
-#~ msgstr "plat bestand"
-
-#~ msgid "The PhpWiki programming team"
-#~ msgstr "Het PhpWiki programmeerteam"
-
-#~ msgid "Loading up virgin wiki"
-#~ msgstr "Laden van maagdelijke wiki"
 
 #~ msgid "You must specify a source to read from"
 #~ msgstr "Je moet een bron specificeren om van te lezen."

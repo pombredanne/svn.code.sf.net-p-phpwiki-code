@@ -24,6 +24,8 @@ $locale["In order to recover from this situation follow these steps:"] =
    "Om uit deze benarde situatie te geraken, volg je deze stappen:";
 $locale["Lists nested too deep in SetHTMLOutputMode"] =
    "Lijsten nesten te diep in SetHTMLOutputMode";
+$locale["Loading up virgin wiki"] =
+   "Laden van maagdelijke wiki";
 $locale["Make changes to the file again. Paste your additions from the clipboard (or text editor)."] =
    "Breng je veranderingen aan de pagina opnieuw aan.  Plak je toevoeginen van het klipbord (of tekst editor).";
 $locale["None"] =
@@ -48,6 +50,8 @@ $locale["Sorry for the inconvenience."] =
    "Excuses voor het ongemak.";
 $locale["Thank you for editing %s."] =
    "Bedankt voor het veranderen van %s.";
+$locale["The PhpWiki programming team"] =
+   "Het PhpWiki programmeerteam";
 $locale["This page has been locked by the administrator and cannot be edited."] =
    "Deze pagina is afgesloten door de beheerder en kan niet veranderd worden.";
 $locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
