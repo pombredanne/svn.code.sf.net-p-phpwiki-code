@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.29 2004-12-26 17:08:35 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.30 2005-01-20 10:13:45 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -390,7 +390,10 @@ class Cached_ExternalLink extends Cached_Link {
 
     function expand($basepage, &$markup) {
 	$label = isset($this->_label) ? $this->_label : false;
-	return LinkURL($this->_url, $label);
+	$link = LinkURL($this->_url, $label);
+        if (GOOGLE_LINKS_NOFOLLOW)
+            $link->setAttr('rel', 'nofollow');
+        return $link;
     }
 
     function asString() {
