@@ -1,4 +1,4 @@
-<!-- $Id: wiki_pgsql.php3,v 1.9 2000-06-23 01:40:01 wainstead Exp $ -->
+<!-- $Id: wiki_pgsql.php3,v 1.10 2000-06-28 02:06:46 wainstead Exp $ -->
 <?
 
    /*
@@ -191,6 +191,55 @@
          return $page;
       }
       else {
+         return 0;
+      }
+   }
+
+
+   ////////////////////////
+   // new database features
+
+
+   function IncreaseHitCount($dbi, $pagename) {
+      $query = "update hitcount set hits=hits+1 where pagename='$pagename'";
+      $res = mysql_query($query, $dbi['dbc']);
+
+      if (!mysql_affected_rows($dbi['dbc'])) {
+         $query = "insert into hitcount (pagename, hits) " .
+                  "values ('$pagename', 1)";
+	 $res = mysql_query($query, $dbi['dbc']);
+      }
+
+      return $res;
+   }
+
+   function GetHitCount($dbi, $pagename) {
+      $query = "select hits from hitcount where pagename='$pagename'";
+      $res = mysql_query($query, $dbi['dbc']);
+      if (mysql_num_rows($res)) {
+         $hits = mysql_result($res, 0);
+      } else {
+         $hits = "0";
+      }
+
+      return $hits;
+   }
+
+
+
+   function InitMostPopular($dbi, $limit) {
+      $query = "select * from hitcount " .
+               "order by hits desc, pagename limit $limit";
+
+      $res = mysql_query($query);
+      
+      return $res;
+   }
+
+   function MostPopularNextMatch($dbi, $res) {
+      if ($hits = mysql_fetch_array($res)) {
+	 return $hits;
+      } else {
          return 0;
       }
    }
