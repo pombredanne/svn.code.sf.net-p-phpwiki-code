@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.24 2002-08-23 21:54:30 rurban Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.25 2002-08-23 21:59:06 rurban Exp $ -->
 <?php
 foreach (explode(',',
     'appearance,changePass,email,notifyPages,editAreaSize,timeOffset,relativeDates,errmsg,isForm') as $var) {
@@ -91,7 +91,7 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
 	      sprintf("%12s: [% 10s]\n",_("Password"),$request->getPref('passwd')),
 	      sprintf("%12s: [% 10s]  %16s: [% 8s]\n",
 		      _("Auth Level"),$user->_level,_("Auth Method"),$user->_authmethod),
-	      sprintf("%12s: [% 10s]\n",_("Homepage"),$user->_homepage),
+	      sprintf("%12s: [% 10s]\n",_("Homepage"),$user->homePage() ? $user->_homepage->_pagename : ''),
 	      sprintf("%12s: [% 10s]\n",_("E-Mail"),$request->getPref('email')),
 	      sprintf("%12s: [% 10s]\n",_("Notify"),$request->getPref('notifyPages')),
 	      sprintf("%12s: [% 10s]\n",_("Theme"), $request->getPref('theme')),
