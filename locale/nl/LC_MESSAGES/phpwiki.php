@@ -1,11 +1,5 @@
 <?php
 
-$locale["%d best incoming links:"] =
-   "%d beste inkomende koppelingen:";
-$locale["%d best outgoing links:"] =
-   "%d beste uitgaande koppelingen:";
-$locale["%d most popular nearby:"] =
-   "%d meest gevraagde in de buurt:";
 $locale["%s: %s"] =
    "%s: %s";
 $locale["(diff)"] =
@@ -16,14 +10,8 @@ $locale["(version %s, saved on %s)"] =
    "(versie %s, bewaard op %s)";
 $locale["- saved to database as version %d"] =
    "- bewaard in de data base als versie %d";
-$locale["- skipped"] =
-   "- overgeslagen";
 $locale["<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."] =
    "<b>Reload</b> de pagina.  Je zou nu de meest recente versie van de pagina moeten zien.  Jouw veranderingen staan er nu niet meer.";
-$locale["Action %s is disabled in this wiki."] =
-   "Actie %s is niet beschikbaar in deze wiki.";
-$locale["Click here to <a href=\"%s\">remove the page now</a>."] =
-   "Klik hier om <a href=\"%s\">de pagina nu te verwijderen</a>.";
 $locale["Complete."] =
    "Klaar.";
 $locale["Copied to [%s]"] =
@@ -124,8 +112,6 @@ $locale["Thank you for editing %s."] =
    "Bedankt voor het veranderen van %s.";
 $locale["The %d most recent %s are listed below."] =
    "De %d meest recent %s staan hieronder.";
-$locale["The %s most popular pages of this wiki:"] =
-   "De %s meestbezochte pagina's van deze Wiki:";
 $locale["The PhpWiki programming team"] =
    "Het PhpWiki programmeerteam";
 $locale["This page has been locked by the administrator and cannot be edited."] =
@@ -154,10 +140,6 @@ $locale["View Source"] =
    "Bron Tekst";
 $locale["View Source: %s"] =
    "Bron tekst: %s";
-$locale["ViewSource"] =
-   "BronTekst";
-$locale["WikiFatalError"] =
-   "WikiFataleFout";
 $locale["You are about to remove '%s' permanently!"] =
    "Je staat op het punt '%s' voorgoed te verwijderen!";
 $locale["You are signed in as %s"] =
@@ -176,8 +158,6 @@ $locale["current version"] =
    "huidige versie";
 $locale["from %s"] =
    "van %s";
-$locale["is identical to current version %d"] =
-   "is gelijk aaan huidige versie %d";
 $locale["last modified on %s"] =
    "meest recente verandering op %s";
 $locale["new page"] =
@@ -188,8 +168,6 @@ $locale["saved as %s"] =
    "bewaard als %s";
 $locale["version %d"] =
    "versie %d";
-$locale["version %d of %s"] =
-   "versie %d van %s";
 $locale["version %s"] =
    "versie %s";
 
