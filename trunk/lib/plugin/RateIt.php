@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RateIt.php,v 1.11 2004-06-19 10:22:41 rurban Exp $');
+rcs_id('$Id: RateIt.php,v 1.12 2004-06-30 19:59:07 dfrankow Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -94,7 +94,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     function RatingWidgetJavascript() {
@@ -106,24 +106,17 @@ function displayRating(imgPrefix, ratingvalue, pred) {
   var cancel = imgPrefix + 'Cancel';
   for (i=1; i<=10; i++) {
     var imgName = imgPrefix + i;
-    var imgSrc = '".$img."';
-    if (pred)
-      document[imgName].title = '"._("Predicted rating ")."'+ratingvalue;
-    else    
+    var imgSrc = '".$img."';   
       document[imgName].title = '"._("Your rating ")."'+ratingvalue;
     if (i<=(ratingvalue*2)) {
-      if (pred)
-        document[imgName].src = imgSrc + ((i%2) ? 'Rk1' : 'Rk0') + '.png';
-      else
         document[imgName].src = imgSrc + ((i%2) ? 'Ok1' : 'Ok0') + '.png';
     } else {
       document[imgName].src = imgSrc + ((i%2) ? 'Nk1' : 'Nk0') + '.png';
     }
   }
-  if ((pred == 0) && (ratingvalue > 0))
-    document[cancel].src = imgSrc + 'Cancel.png';
-  else
-    document[cancel].src = imgSrc + 'CancelN.png';
+  
+  //document[cancel].src = imgSrc + 'Cancel.png';
+
 }
 function click(actionImg, pagename, version, imgPrefix, dimension, rating) {
   if (rating == 'X') {
@@ -159,6 +152,7 @@ function deleteRating(actionImg, page, dimension) {
      * Take a string and quote it sufficiently to be passed as a Javascript
      * string between ''s
      */
+     
     function _javascript_quote_string($s) {
         return str_replace("'", "\'", $s);
     }
@@ -205,7 +199,7 @@ function deleteRating(actionImg, page, dimension) {
         $this->pagename = $args['pagename'];
 
         if (RATING_STORAGE == 'SQL') {
-            $rdbi = new RatingsDb();
+            $rdbi = RatingsDb::getTheRatingsDb();
             $this->_rdbi =& $rdbi;
         }
 
@@ -214,7 +208,7 @@ function deleteRating(actionImg, page, dimension) {
                 return $this->error(_("You must sign in"));
             global $WikiTheme;
             $actionImg = $WikiTheme->_path . $this->actionImgPath();
-            $rdbi->addRating($request->getArg('rating'));
+            $rdbi->addRating($request->getArg('rating'), $user->getId(), $this->pagename, $this->dimension);
             ob_end_clean();  // discard any previous output
             // delete the cache
             $page = $request->getPage();
@@ -232,7 +226,7 @@ function deleteRating(actionImg, page, dimension) {
                 return $this->error(_("You must sign in"));
             global $WikiTheme;
             $actionImg = $WikiTheme->_path . $this->actionImgPath();
-            $rdbi->deleteRating();
+            $rdbi->deleteRating($user->getId(), $this->pagename, $this->dimension);
             ob_end_clean();  // discard any previous output
             // delete the cache
             $page = $request->getPage();
@@ -249,7 +243,6 @@ function deleteRating(actionImg, page, dimension) {
             // we must use the head method instead, because <body> is already printed.
             // $WikiTheme->addMoreHeaders($this->RatingWidgetJavascript()); 
             // or we change the header in the ob_buffer.
-
             //Todo: add a validator based on the users last rating mtime
             $rating = $rdbi->getRating();
             /*
@@ -262,7 +255,7 @@ function deleteRating(actionImg, page, dimension) {
             	}
             */
             $args['rating'] = $rating;
-            return $this->RatingWidgetHtml($args);
+            return $this->RatingWidgetHtml($args['pagename'], $args['version'], $args['imgPrefix'], $args['dimension'], $args['small']);
         } else {
             if (!$user->isSignedIn())
                 return $this->error(_("You must sign in"));
@@ -272,9 +265,10 @@ function deleteRating(actionImg, page, dimension) {
                                     $rdbi->getNumUsers($this->pagename, $this->dimension),
                                     $rdbi->getAvg($this->pagename, $this->dimension)),
                             HTML::br());
-            if ($rating !== false)
+            if ($rating !== false) {
                 $html->pushContent(sprintf(_("Your rating was %.1f"),
                                            $rating));
+            }
             else {
             	$pred = $rdbi->getPrediction($this->userid, $this->pagename, $this->dimension);
             	if (is_string($pred))
@@ -321,20 +315,23 @@ function deleteRating(actionImg, page, dimension) {
      * Limitations: Currently this can only print the current users ratings.
      *              And only the widget, but no value (for buddies) also.
      */
-    function RatingWidgetHtml($args) {
+    function RatingWidgetHtml($pagename, $version, $imgPrefix, $dimension, $small = false) {
         global $WikiTheme, $request;
-        extract($args);
-        if (!$request->_user->isSignedIn()) return;
+
+
         $imgPrefix = $pagename . $imgPrefix;
         $actionImgName = $imgPrefix . 'RateItAction';
         $dbi =& $GLOBALS['request']->getDbh();
         $version = $dbi->_backend->get_latest_version($pagename);
-        $rdbi =& $this->_rdbi;
-
+       
+        //$rdbi =& $this->_rdbi;
+        $rdbi = RatingsDb::getTheRatingsDb();
+        $id = 'rateit';
         // Protect against 's, though not \r or \n
-        $reImgPrefix     = $this->_javascript_quote_string($imgPrefix);
-        $reActionImgName = $this->_javascript_quote_string($actionImgName);
-        $rePagename      = $this->_javascript_quote_string($pagename);
+
+        $reImgPrefix     = WikiPlugin_RateIt::_javascript_quote_string($imgPrefix);
+        $reActionImgName = WikiPlugin_RateIt::_javascript_quote_string($actionImgName);
+        $rePagename      = WikiPlugin_RateIt::_javascript_quote_string($pagename);
         //$dimension = $args['pagename'] . "rat";
     
         $html = HTML::span(array("id" => $id));
@@ -342,11 +339,7 @@ function deleteRating(actionImg, page, dimension) {
             $nk[$i]   = $WikiTheme->_findData("images/RateItNk$i.png");
             $none[$i] = $WikiTheme->_findData("images/RateItRk$i.png");
         }
-        if (!$small) {
-            $html->pushContent(Button(_("RateIt"),_("RateIt"), $pagename));
-            $html->pushContent(HTML::raw('&nbsp;'));
-        }
-       
+      
 
         $user = $request->getUser();
         $userid = $user->getId();
@@ -359,33 +352,36 @@ function deleteRating(actionImg, page, dimension) {
             $a1 = HTML::a(array('href' => 'javascript:click(\'' . $reActionImgName . '\',\'' . $rePagename . '\',\'' . $version . '\',\'' . $reImgPrefix . '\',\'' . $dimension . '\',' . ($i/2) . ')'));
             $img_attr = array();
             $img_attr['src'] = $nk[$i%2];
-            if (!$rating and !$pred)
-                $img_attr['src'] = $none[$i%2];
+            //if (!$rating and !$pred)
+              //  $img_attr['src'] = $none[$i%2];
+            
             $img_attr['name'] = $imgPrefix . $i;
             $img_attr['border'] = 0;
             $a1->pushContent(HTML::img($img_attr));
             $a1->addToolTip(_("Rate the topic of this page"));
             $html->pushContent($a1);
+            
             //This adds a space between the rating smilies:
             // if (($i%2) == 0) $html->pushContent(' ');
         }
         $html->pushContent(HTML::Raw('&nbsp;'));
+       
         $a0 = HTML::a(array('href' => 'javascript:click(\'' . $reActionImgName . '\',\'' . $rePagename . '\',\'' . $version . '\',\'' . $reImgPrefix . '\',\'' . $dimension . '\',\'X\')'));
-        if ($rating) {
+
             $msg = _("Cancel rating");
             $a0->pushContent(HTML::img(array('src' => $WikiTheme->getImageUrl("RateItCancel"),
                                              'name'=> $imgPrefix.'Cancel',
                                              'alt' => $msg)));
             $a0->addToolTip($msg);
             $html->pushContent($a0);
-        } elseif ($pred) {
+        /*} elseif ($pred) {
             $msg = _("No opinion");
             $html->pushContent(HTML::img(array('src' => $WikiTheme->getImageUrl("RateItCancelN"),
                                                'name'=> $imgPrefix.'Cancel',
                                                'alt' => $msg)));
             //$a0->addToolTip($msg);
             //$html->pushContent($a0);
-        }
+        }*/
         $img_attr = array();
         $img_attr['src'] = $WikiTheme->_findData("images/RateItAction.png");
         $img_attr['name'] = $actionImgName;
@@ -406,6 +402,9 @@ function deleteRating(actionImg, page, dimension) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/06/19 10:22:41  rurban
+// outcomment the pear specific methods to let all pages load
+//
 // Revision 1.10  2004/06/18 14:42:17  rurban
 // added wikilens libs (not yet merged good enough, some work for DanFr)
 //
