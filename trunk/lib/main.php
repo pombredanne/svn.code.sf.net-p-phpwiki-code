@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.134 2004-04-23 06:46:37 zorloc Exp $');
+rcs_id('$Id: main.php,v 1.135 2004-04-26 12:15:01 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -23,7 +23,7 @@ class WikiRequest extends Request {
             include_once('lib/DB_Session.php');
             $prefix = isset($GLOBALS['DBParams']['prefix']) ? $GLOBALS['DBParams']['prefix'] : '';
             if (in_array('File',$GLOBALS['USER_AUTH_ORDER'])) {
-                include_once 'lib/pear/File_Passwd.php';
+                include_once('lib/pear/File_Passwd.php');
             }
             $this->_dbsession = & new DB_Session($this->getDbh(),
                                                  $prefix . $GLOBALS['DBParams']['db_session_table']);
@@ -476,7 +476,6 @@ class WikiRequest extends Request {
             $this->_dbi->close();
         unset($this->_dbi);
 
-
         global $ErrorManager;
         $ErrorManager->flushPostponedErrors();
 
@@ -490,6 +489,10 @@ class WikiRequest extends Request {
         }
 
         Request::finish();
+        if (!empty($this->_dbi))
+            $this->_dbi->close();
+        unset($this->_dbi);
+        
         exit;
     }
 
@@ -882,6 +885,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.134  2004/04/23 06:46:37  zorloc
+// Leave DB connection open when USE_DB_SESSION is true so that session info can be written to the DB.
+//
 // Revision 1.133  2004/04/20 18:10:31  rurban
 // config refactoring:
 //   FileFinder is needed for WikiFarm scripts calling index.php
