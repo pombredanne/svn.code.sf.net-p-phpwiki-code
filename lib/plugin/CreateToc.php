@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.3 2004-03-02 18:11:37 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.4 2004-03-02 18:21:29 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -79,7 +79,7 @@ extends WikiPlugin
     }
     
     // Feature request: proper nesting
-    function extractHeaders (&$content, &$markup, $backlink=0, $level=2) {
+    function extractHeaders (&$content, &$markup, $backlink=0, $level=2, $basepage='') {
         $headers = array();
         if ($level < 1 or $level > 6) $level = 1;
         $j = 0;
@@ -101,7 +101,9 @@ extends WikiPlugin
                     	if ($x = preg_replace('/(<h\d>)('.$heading.')(<\/h\d>)/',
                     	                      "\$1<a name=\"$anchor\">\$2</a>\$3",$x)) {
 			    if ($backlink)
-			        $x = preg_replace('/(<h\d>)('.$heading.')(<\/h\d>)/',"\$1<a ref=\"#TOC\" name=\"$anchor\">\$2</a>\$3",$markup->_content[$j]);
+			        $x = preg_replace('/(<h\d>)('.$heading.')(<\/h\d>)/',
+			                          "\$1<a href=\"$basepage#TOC\" name=\"$anchor\">\$2</a>\$3",
+			                          $markup->_content[$j]);
                     	    $markup->_content[$j] = $x;
                     	}
                     }
@@ -130,7 +132,7 @@ extends WikiPlugin
         $list = HTML::ul(array('class' => 'toc'));
         //Todo: replace !!! with level 1, ...
         //Todo: proper indent of heading
-        if ($headers = $this->extractHeaders(&$content, &$dbi->_markup, $with_toclink, 1)) {
+        if ($headers = $this->extractHeaders(&$content, &$dbi->_markup, $with_toclink, 1, $basepage)) {
             foreach ($headers as $h) {
                 $link = new WikiPageName($pagename,$page,$h);
                 $list->pushContent(HTML::li(WikiLink($link,'known',$h)));
