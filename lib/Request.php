@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.86 2005-01-04 20:26:34 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.87 2005-01-08 21:27:45 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -471,7 +471,7 @@ class Request {
             // avoid overlarge session data (max 4000 byte!)
             if (isset($val->_group)) {
                 unset($val->_group->_request);
-                unset($val->_group->_user);
+                unset($val->_group->user);
             }
             if (ENABLE_USER_NEW) {
                 unset($val->_HomePagehandle);
@@ -1320,6 +1320,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.86  2005/01/04 20:26:34  rurban
+// honor DISABLE_HTTP_REDIRECT, do not gzip the redirect template, flush it
+//
 // Revision 1.85  2004/12/26 17:08:36  rurban
 // php5 fixes: case-sensitivity, no & new
 //
