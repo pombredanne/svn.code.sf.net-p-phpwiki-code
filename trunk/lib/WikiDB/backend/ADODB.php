@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.39 2004-07-05 13:56:22 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.40 2004-07-08 16:56:16 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -396,9 +396,9 @@ extends WikiDB_backend
         $dbh->BeginTrans( );
         $dbh->CommitLock($version_tbl);
         $id = $this->_get_pageid($pagename, true);
-
+        $backend_type = $this->backendType();
         // optimize: mysql can do this with one REPLACE INTO.
-        if (substr($dbh->databaseType,0,5) == 'mysql') {
+        if (substr($backend_type,0,5) == 'mysql') {
             $rs = $dbh->Execute(sprintf("REPLACE INTO $version_tbl"
                                   . " (id,version,mtime,minor_edit,content,versiondata)"
                                   . " VALUES(%d,%d,%d,%d,%s,%s)",
@@ -769,7 +769,8 @@ extends WikiDB_backend
         $pageid = (int)$pageid;
 
         // optimize: mysql can do this with one REPLACE INTO.
-        if (substr($dbh->databaseType,0,5) == 'mysql') {
+        $backend_type = $this->backendType();
+        if (substr($backend_type,0,5) == 'mysql') {
             $dbh->Execute("REPLACE INTO $recent_tbl"
                           . " (id, latestversion, latestmajor, latestminor)"
                           . " SELECT id, $maxversion, $maxmajor, $maxminor"
@@ -799,7 +800,8 @@ extends WikiDB_backend
         // Optimize: mysql can do this with one REPLACE INTO.
         // FIXME: This treally should be moved into ADODB_mysql.php but 
         // then it must be duplicated for mysqli and mysqlt also.
-        if (substr($dbh->databaseType,0,5) == 'mysql') {
+        $backend_type = $this->backendType();
+        if (substr($backend_type,0,5) == 'mysql') {
             $dbh->Execute("REPLACE INTO $nonempty_tbl (id)"
                           . " SELECT $recent_tbl.id"
                           . " FROM $recent_tbl, $version_tbl"
@@ -1141,6 +1143,9 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.39  2004/07/05 13:56:22  rurban
+// sqlite autoincrement fix
+//
 // Revision 1.38  2004/07/05 12:57:54  rurban
 // add mysql timeout
 //
