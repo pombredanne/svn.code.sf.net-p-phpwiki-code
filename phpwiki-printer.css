@@ -1,15 +1,19 @@
 /**
- * $Id: phpwiki-printer.css,v 1.8 2002-02-03 21:32:41 carstenklapp Exp $
+ * $Id: phpwiki-printer.css,v 1.9 2002-02-07 19:49:42 carstenklapp Exp $
  *
  * PhpWiki style sheet for the printed page:
  * Black on white only, with no toolbar commands and no link icons.
  * Styles are kept to a minimum, so the printed page will otherwise
  * appear according to your browser's default font settings.
  */
+
+/**
+ * General
+ */
 body {
-        margin :     1em;
-        color :      black;
-        background : white; 
+  margin: 1em;
+  color:  black;
+  background: white;
 }
 
 /**
@@ -18,8 +22,8 @@ body {
  * difficult to read on older 300dpi lasers.)
  */
 a {
-        color :           black;
-        text-decoration : none;
+  color: black;
+  text-decoration: none;
 }
 
 /**
@@ -29,105 +33,117 @@ a {
  * any user-defined default style sheets.)
  */
 .wiki {
-        text-decoration : underline;
-        font-weight :     bold;
+  text-decoration: underline;
+  font-weight: bold;
 }
 
-p.editdate { font-size: smaller; margin-top: -1ex; }
+p.editdate {
+  font-size: smaller;
+  margin-top: -1ex;
+}
 
 .rawurl {
-        text-decoration : underline;
+  text-decoration: underline;
 }
 
 /* Some browsers don't understand visibility settings, so we use white text
  * on white in addition to hidden.
  */
-
-/* hide the toolbars */
+/**
+ * Toolbars
+ */
 .toolbar {
-        visibility : hidden;
-        color :      white;
-        background : white;
+  visibility: hidden;
+  color:      white;
+  background: white;
 }
 
 #actionbar, #navbar {
-        visibility : hidden;
-        color :      white;
-        background : white;
+  visibility: hidden;
+  color:      white;
+  background: white;
 }
 
 .toolbar hr {
-        visibility : hidden;
-        color :      white;
-        background : white;
+  visibility: hidden;
+  color:      white;
+  background: white;
 }
 
 /**
  * Hide wiki links in the toolbar for browsers which ignore visibility
- * and don't honour the inheritance of the above .toolbar style. 
+ * and don't honour the inheritance of the above .toolbar style.
  */
 .toolbar .wiki {
-        visibility : hidden;
-        color :      white;
-        background : white;
+  visibility: hidden;
+  color:      white;
+  background: white;
 }
 
 /* Hide wikiaction links in the toolbar */
 .toolbar .wikiaction {
-        visibility : hidden;
-        color :      white;
-        background : white;
+  visibility: hidden;
+  color:      white;
+  background: white;
 }
 
 /* Hide (diff) links and days buttons in RecentChanges */
 .wiki-rc-action {
-        visibility : hidden;
-        color :      white;
-        /**
-         * This hack works in Mozilla to reduce the extra white space
-         * which results from hiding (diff). Browsers which allow a minimum
-         * font size as a user preference will not honour it.
-         */
-        font-size :  1pt;
+  visibility: hidden;
+  color:      white;
+  /**
+   * This hack works in Mozilla to reduce the extra white space
+   * which results from hiding (diff). Browsers which allow a minimum
+   * font size as a user preference will not honour it.
+   */
+  font-size:  1pt;
 }
 
 /**
  * Hide image borders for older browsers--newer broswers default to a zero
  * border around images anyway.
  */
-img { vertical-align: baseline;
-      border : none;
+img {
+  vertical-align: baseline;
+  border: 0 none white;
 }
 
 /* Hide other non-essential page elements from the printer. */
 .linkicon {
-        /**
-         * Some browsers ignore this completely: OmniWeb 4.1
-         * also shrink down the image to nothing so the text flows around it.
-         */
-        visibility : hidden;
-        width :  0;
-        height : 0;
+  /**
+   * Some browsers ignore this completely: OmniWeb 4.1
+   * also shrink down the image to nothing so the text flows around it.
+   */
+  visibility: hidden;
+  width:  0;
+  height: 0;
 }
 
 /* Hide the rss icon from the printed page (perhaps this should be left in? */
 .rssicon {
-        visibility : none;
-        width :      0;
-        height :     0;
+  visibility: hidden;
+  width:  0;
+  height: 0;
 }
 
 /* Hide the w3.org link image from the printed page */
 #xhtml-validator {
-        visibility : hidden;
-        width :      0;
-        height :     0;
+  visibility: hidden;
+  width:  0;
+  height: 0;
+}
+
+/* Hide any debugging elements from the printed page */
+.debug {
+  visibility: hidden;
+  width:  0;
+  height: 0;
 }
 
 /**
  * One last-ditch effort to hide the search field, if the browser still won't
  * hide it then it's just going to have to show up on the printed page.
  */
-form {
-        visibility : hidden;
+form, input {
+  visibility: hidden;
 }
