@@ -1,7 +1,6 @@
 <?php // -*-php-*- ?>
-<!-- $Id: login.tmpl,v 1.31 2004-05-02 14:17:21 rurban Exp $ -->
+<!-- $Id: login.tmpl,v 1.32 2004-05-15 19:50:09 rurban Exp $ -->
 <!-- The login form -->
-
 <?php if ($fail_message) { ?>
   <p><strong><?=$fail_message?></strong></p>
   <hr noshade="noshade" />
@@ -54,9 +53,7 @@ if (ALLOW_BOGO_LOGIN && $require_level <= WIKIAUTH_BOGO) {
   if (empty($pass_required)) ?>
   <p><?= _("New users may use an empty password.") ?></p>
 <?php } ?>
-
 <form method="post" action="<?= $request->getPostURL() ?>" accept-charset="<?=CHARSET?>" name="login">
-
 <table cellspacing="4">
 <tr>
   <td align="right"><?= _("UserId:") ?></td>
