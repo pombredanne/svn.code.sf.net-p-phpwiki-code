@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.53 2005-01-29 20:36:44 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.54 2005-01-29 21:00:54 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -350,7 +350,10 @@ class ParsedBlock extends Block_HtmlElement {
     function _parse (&$input) {
         // php5 failed to advance the block. php5 copies objects by ref.
         // nextBlock == block, both are the same objects. So we have to clone it.
-        for ($block = $this->_getBlock($input); $block; $block = clone($nextBlock)) {
+        for ($block = $this->_getBlock($input); 
+             $block; 
+             $block = (is_object($nextBlock) ? clone($nextBlock) : $nextBlock))
+        {
             while ($nextBlock = $this->_getBlock($input)) {
                 // Attempt to merge current with following block.
                 if (! ($merged = $block->merge($nextBlock)) ) {
@@ -1089,6 +1092,9 @@ function TransformText ($text, $markup = 2.0, $basepage=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.53  2005/01/29 20:36:44  rurban
+// very important php5 fix! clone objects
+//
 // Revision 1.52  2004/10/21 19:52:10  rurban
 // Patch #994487: Allow callers to get the parse tree for a page (danfr)
 //
