@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.25 2001-11-14 21:05:38 dairiki Exp $');
+<?php rcs_id('$Id: transform.php,v 1.26 2001-11-16 21:02:58 dairiki Exp $');
 require_once('lib/WikiPlugin.php');
 
 define('WT_SIMPLE_MARKUP', 0);
@@ -295,7 +295,7 @@ $transform->register(WT_TOKENIZER, 'wtt_urls',
 if (function_exists('wtt_interwikilinks')) {
    $transform->register(WT_TOKENIZER, 'wtt_interwikilinks',
 			pcre_fix_posix_classes("!?(?<![[:alnum:]])") .
-			"$InterWikiLinkRegexp:\\S+");
+			"$InterWikiLinkRegexp:[^\\s.,;?]+");
 }
 $transform->register(WT_TOKENIZER, 'wtt_bumpylinks', "!?$WikiNameRegexp");
 
