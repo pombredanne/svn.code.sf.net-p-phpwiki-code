@@ -1,13 +1,13 @@
 #!/bin/sh
 #
-# $Id: update-makefile.sh,v 1.6 2002-08-23 18:29:30 rurban Exp $
+# $Id: update-makefile.sh,v 1.7 2004-02-26 21:20:09 rurban Exp $
 #
 # This shell script is used to update the list of .po files and the
 # dependencies for phpwiki.pot in the Makefile.
 #
 # Do not invoke this script directly, rather run:
 #
-#    make dep
+#    make depend
 #
 # to update the Makefile.
 #
@@ -20,7 +20,7 @@ makefile_head () {
 #
 # The remainder of this file is auto-generated
 #
-# (Run 'make dep' to regenerate this section.)
+# (Run 'make dependo regenerate this section.)
 #
 EOF
 }
