@@ -1,10 +1,10 @@
-!Synopsis
+! Synopsis
 TextFormateringsregler%%%
 __Markering:__ '____' för lutande, _''''_ för fet, '____'_''''_ för både och.%%%
-__Listor:__ * för punktlistor, # för numrerade listor, ''; term : definition'' för definitionslistor.%%%
-__Referenser:__ BindIhopOrdMedStoraBokstäver eller använd hakar för en [[länk] eller URL [[!http://cool.wiki.int/].%%%
+__Listor:__ * för punktlistor, # för numrerade listor, ''__;__ term __:__ definition'' för definitionslistor.%%%
+__Referenser:__ !BindIhopOrdMedStoraBokstäver eller använd hakar för en [[länk] eller URL [[!http://cool.wiki.int/].%%%
 __''Footnotes'':__ Använd [[1],[[2],[[3],...%%%
-__''Preventing Linking'':__ och RedigeraLänkar. Undvik länkning med "!": !!SkapaEjHyperlänk, namnge länkar med [[[text | URL].%%%
+__''Preventing Linking'':__ och RedigeraLänkar. Undvik länkning med "!": !!SkapaEjHyperlänk, namnge länkar med [[[[text | URL].%%%
 __Blandat:__ "!", "!!", "!!!" skapar rubriker, "%''''%%" skapar radbrytning, "-''''---" skapar en horisontell linj.e%%%
 
 
