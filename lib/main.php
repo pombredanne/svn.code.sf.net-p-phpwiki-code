@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.33 2002-01-24 21:23:40 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.34 2002-01-25 00:32:39 dairiki Exp $');
 
 
 include "lib/config.php";
@@ -89,7 +89,7 @@ class WikiRequest extends Request {
 
     function WikiRequest () {
         $this->Request();
-
+        
         // Normalize args...
         $this->setArg('pagename', $this->_deducePagename());
         $this->setArg('action', $this->_deduceAction());
@@ -227,7 +227,7 @@ class WikiRequest extends Request {
         else
             $msg = fmt("You must be an administrator to %s this wiki", $what);
         
-        WikiUser::PrintLoginForm(compact('require_level'), $msg);
+        WikiUser::PrintLoginForm($this, compact('require_level'), $msg);
         $this->finish();    // NORETURN
     }
     
