@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.2 2002-01-29 05:33:29 dairiki Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.3 2002-01-29 19:28:16 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -22,196 +22,208 @@ require_once('lib/HtmlElement.php');
 //FIXME: intubate ESCAPE_CHAR into BlockParser.php.
 define('ESCAPE_CHAR', '~');
 
-class PatternSet
-{
-    var $_user_data = array();
-    var $_regexps = array();
-
-    function PatternSet ($pattern_hash = false) {
-        if (is_array($pattern_hash))
-            $this->addPattern($pattern_hash);
-    }
-
-    function addPattern ($regexp, $user_data = false) {
-        if (is_array($regexp)) {
-            foreach ($regexp as $key => $val)
-                $this->addPattern($key, $val);
-        }
-        
-        $this->_user_data[] = $user_data;
-        $re = pcre_fix_posix_classes($regexp);
-        $this->_regexps[] = "($re)";
-        $this->_re = '(?<!' . ESCAPE_CHAR . ')(?:' . join('|', $this->_regexps) . ')';
-
-        if (preg_match('/(?<!\\\\) \\( (?!\\?)/x', $re))
-            trigger_error("Warning: no () groups allowed in PatternSet regexps!: $re",
-                          E_USER_WARNING);
-    }
-    
-    function nextMatch ($text, $limit, $prevMatch = false) {
-        if ($prevMatch) {
-            if ( ($m = $this->nextMatchAtSamePosition($prevMatch)) )
-                return $m;
-            $skip = strlen($prevMatch->prematch) + 1;
-        }
-        else
-            $skip = 0;
-        
-        if ($limit < $skip)
-            return false;
-
-        $pat = sprintf('/(.{%d,%d}?)%s/Asx', $skip, $limit, $this->_re);
-        if (!preg_match($pat, $text, $m))
-            return false;
-        
-        $match = new PatternSet_match;
-        $match->postmatch = substr($text, strlen(array_shift($m)));
-        $match->prematch = array_shift($m);
-        $match->match_ind = 0;
-        
-        foreach ($this->_user_data as $user_data) {
-            if ( ($match->match = array_shift($m)) ) {
-                $match->user_data = $user_data;
-                return $match;
-            }
-            $match->match_ind++;
-        }
-
-        assert(false);
-        return false;
-    }
-
-    function nextMatchAtSamePosition ($match) {
-        $text = $match->match . $match->postmatch;
-        while (++$match->match_ind < count($this->_regexps)) {
-            $re = $this->_regexps[$match->match_ind];
-            if (preg_match("/$re/Ax", $text, $m)) {
-                $match->match = $m[0];
-                $match->postmatch = substr($text, strlen($m[0]));
-                $match->user_data = $this->_user_data[$match->match_ind];
-                return $match;
-            }
-        }
-        return false;
-    }
-}
-
-class PatternSet_match {
+/**
+ * Return type from RegexpSet::match and RegexpSet::nextMatch.
+ *
+ * @see RegexpSet
+ */
+class RegexpSet_match {
+    /**
+     * The text leading up the the next match.
+     */
     var $prematch;
+
+    /**
+     * The matched text.
+     */
     var $match;
+
+    /**
+     * The text following the matched text.
+     */
     var $postmatch;
-    var $user_data;
-    var $match_ind;
+
+    /**
+     * Index of the regular expression which matched.
+     */
+    var $regexp_ind;
 }
 
-
-class InlineTransformer
+/**
+ * A set of regular expressions.
+ *
+ * This class is probably only useful for InlineTransformer.
+ */
+class RegexpSet
 {
-    function InlineTransformer () {
-        $this->_start_regexps = new PatternSet;
+    /** Constructor
+     *
+     * @param $regexps array A list of regular expressions.  The
+     * regular expressions should not include any sub-pattern groups
+     * "(...)".  (Anonymous groups, like "(?:...)", as well as
+     * look-ahead and look-behind assertions are fine.)
+     */
+    function RegexpSet ($regexps) {
+        $this->_regexps = $regexps;
+    }
 
-        foreach (array('escaped_escape', 'bracketlink', 'url',
-                       'interwiki', 'wikiword', 'linebreak') as $mtype) {
-            $class = "Markup_$mtype";
-            $markup = new $class;
-            $this->_start_regexps->addPattern($markup->getMatchRegexp(), $markup);
-        }
+    /**
+     * Search text for the next matching regexp from the Regexp Set.
+     *
+     * @param $text string The text to search.
+     *
+     * @return object  A RegexpSet_match object, or false if no match.
+     */
+    function match ($text) {
+        return $this->_match($text, $this->_regexps, '*?');
+    }
 
-        foreach (array('old_emphasis', 'nestled_emphasis', 'html_emphasis') as $mtype) {
-            $class = "Markup_$mtype";
-            $markup = new $class;
-            $this->_start_regexps->addPattern($markup->getStartRegexp(), $markup);
+    /**
+     * Search for next matching regexp.
+     *
+     * Here, 'next' has two meanings:
+     *
+     * Match the next regexp(s) in the set, at the same position as the last match.
+     *
+     * If that fails, match the whole RegexpSet, starting after the position of the
+     * previous match.
+     *
+     * @param $text string Text to search.
+     *
+     * @param $prevMatch A RegexpSet_match object
+     *
+     * $prevMatch should be a match object obtained by a previous
+     * match upon the same value of $text.
+     *
+     * @return object  A RegexpSet_match object, or false if no match.
+     */
+    function nextMatch ($text, $prevMatch) {
+        // Try to find match at same position.
+        $pos = strlen($prevMatch->prematch);
+        $regexps = array_slice($this->_regexps, $prevMatch->regexp_ind + 1);
+        if ($regexps) {
+            $repeat = sprintf('{%d}', $pos);
+            if ( ($match = $this->_match($text, $regexps, $repeat)) )
+                return $match;
         }
+        
+        // Failed.  Look for match after current position.
+        $repeat = sprintf('{%d,}?', $pos + 1);
+        return $this->_match($text, $this->_regexps, $repeat);
     }
     
-    function parse (&$text, $end_re = '$') {
-        //static $depth;
-        $start_regexps = $this->_start_regexps;
+
+    function _match ($text, $regexps, $repeat) {
+    
+        $pat= "/ ( . $repeat ) ( (" . join(')|(', $regexps) . ") ) /Axs";
+
+        if (! preg_match($pat, $text, $m))
+            return false;
         
-        $input = $text;
-        $output = new XmlContent;
+        $match = new RegexpSet_match;
+        $match->postmatch = substr($text, strlen($m[0]));
+        $match->prematch = $m[1];
+        $match->match = $m[2];
+        $match->regexp_ind = count($m) - 4;
+
+        /* DEBUGGING
+        PrintXML(HTML::dl(HTML::dt("input"),
+                          HTML::dd(HTML::pre($text)),
+                          HTML::dt("match"),
+                          HTML::dd(HTML::pre($match->match)),
+                          HTML::dt("regexp"),
+                          HTML::dd(HTML::pre($regexps[$match->regexp_ind])),
+                          HTML::dt("prematch"),
+                          HTML::dd(HTML::pre($match->prematch))));
+        */
         
-        if (!preg_match("/(.*?)$end_re/Axs", $input, $end_m))
-            return false;       // end pattern not found. parse fails.
-        $endpos = strlen($end_m[1]);
-
-        $prevMatch = false;
-        while ( ($m = $start_regexps->nextMatch($input, $endpos - 1, $prevMatch)) ) {
-
-            $markup = $m->user_data;
-
-            // FIXME: refactor if this nextMatch stuff works.
-            if (!isa($markup, 'BalancedMarkup')) {
-                // Succesfully matched markup.
-                $body = true;
-            }
-            else {
-                $prevMatch = $m;
-                $end_regexp = $markup->getEndRegexp($m->match);
-                if ( !($body = $this->parse($m->postmatch, $end_regexp)) ) {
-                    // Couldn't match balanced expression.
-                    // Ignore and look for next matching start regexp.
-                    continue;
-                }
-            }
-
-            // Matched entire pattern. Eat input...
-            $output->pushContent(str_replace(ESCAPE_CHAR, '', $m->prematch),
-                                 $markup->markup($m->match, $body));
-            $input = $m->postmatch;
-            $prevMatch = false;
-
-            // Recompute end position.
-            if (!preg_match("/(.*?)$end_re/Axs", $input, $end_m))
-                return false;       // end pattern not found. parse fails.
-            $endpos = strlen($end_m[1]);
-        }
-        
-        // Done.  No start pattern found before endpattern.
-        $output->pushContent(str_replace(ESCAPE_CHAR, '', $end_m[1]));
-        $text = substr($input, strlen($end_m[0]));
-        return $output;
+        return $match;
     }
 }
 
+
+
+/**
+ * A simple markup rule (i.e. terminal token).
+ *
+ * These are defined by a regexp.
+ *
+ * When a match is found for the regexp, the matching text is replaced.
+ * The replacement content is obtained by calling the SimpleMarkup::markup method.
+ */ 
 class SimpleMarkup
 {
     var $_match_regexp;
 
+    /** Get regexp.
+     *
+     * @return string Regexp which matches this token.
+     */
     function getMatchRegexp () {
         return $this->_match_regexp;
     }
-    
+
+    /** Markup matching text.
+     *
+     * @param $match string The text which matched the regexp
+     * (obtained from getMatchRegexp).
+     *
+     * @return mixed The expansion of the matched text.
+     */
     function markup ($match /*, $body */) {
         trigger_error("pure virtual", E_USER_ERROR);
     }
 }
 
+/**
+ * A balanced markup rule.
+ *
+ * These are defined by a start regexp, and and end regexp.
+ */ 
 class BalancedMarkup
 {
     var $_start_regexp;
 
+    /** Get the starting regexp for this rule.
+     *
+     * @return string The starting regexp.
+     */
     function getStartRegexp () {
         return $this->_start_regexp;
     }
     
+    /** Get the ending regexp for this rule.
+     *
+     * @param $match string  The text which matched the starting regexp.
+     *
+     * @return string The ending regexp.
+     */
     function getEndRegexp ($match) {
         return $this->_end_regexp;
     }
-    
+
+    /** Get expansion for matching input.
+     *
+     * @param $match string  The text which matched the starting regexp.
+     *
+     * @param $body mixed Transformed text found between the starting
+     * and ending regexps.
+     *
+     * @return mixed The expansion of the matched text.
+     */
     function markup ($match, $body) {
         trigger_error("pure virtual", E_USER_ERROR);
     }
 }
 
-class Markup_escaped_escape  extends SimpleMarkup
+class Markup_escape  extends SimpleMarkup
 {
     function getMatchRegexp () {
-        return ESCAPE_CHAR . ESCAPE_CHAR;
+        return ESCAPE_CHAR . ".";
     }
     
-    function markup () {
-        return ESCAPE_CHAR;
+    function markup ($match) {
+        return $match[1];
     }
 }
 
@@ -228,9 +240,6 @@ class Markup_bracketlink  extends SimpleMarkup
 
 class Markup_url extends SimpleMarkup
 {
-    // FIXME: why no brackets?
-    //var $_start_re = "(?<![~[:alnum:]]) (?:$AllowedProtocols) : [^\s<>\[\]\"'()]+ (?<![,.?])";
-
     function getMatchRegexp () {
         global $AllowedProtocols;
         return "(?<![[:alnum:]]) (?:$AllowedProtocols) : [^\s<>\"']+ (?<![ ,.?; \] \) ])";
@@ -298,14 +307,11 @@ class Markup_nestled_emphasis extends BalancedMarkup
     }
     
     function markup ($match, $body) {
-        if ($match == '*')
-            $tag = 'b';
-        elseif ($match == '_')
-            $tag = 'i';
-        else
-            $tag = 'tt';
-
-        return new HtmlElement($tag, $body);
+        switch ($match) {
+        case '*': return new HtmlElement('b', $body);
+        case '=': return new HtmlElement('tt', $body);
+        default:  return new HtmlElement('i', $body);
+        }
     }
 }
 
@@ -329,6 +335,86 @@ class Markup_html_emphasis extends BalancedMarkup
 // FIXME: Do away with plugin-links.  They seem not to be used.
 //Plugin link
 
+
+class InlineTransformer
+{
+    var $_regexps = array();
+    var $_markup = array();
+    
+    function InlineTransformer () {
+        foreach (array('escape', 'bracketlink', 'url',
+                       'interwiki', 'wikiword', 'linebreak',
+                       'old_emphasis', 'nestled_emphasis',
+                       'html_emphasis') as $mtype) {
+            $class = "Markup_$mtype";
+            $this->_addMarkup(new $class);
+        }
+    }
+
+    function _addMarkup ($markup) {
+        if (isa($markup, 'SimpleMarkup'))
+            $regexp = $markup->getMatchRegexp();
+        else
+            $regexp = $markup->getStartRegexp();
+
+        assert(!isset($this->_markup[$regexp]));
+        $this->_regexps[] = $regexp;
+        $this->_markup[] = $markup;
+    }
+        
+    function parse (&$text, $end_re = '$') {
+        //static $depth;
+        $regexps = $this->_regexps;
+
+        // $end_re takes precedence: "favor reduce over shift"
+        array_unshift($regexps, $end_re);
+        $regexps = new RegexpSet($regexps);
+        
+        $input = $text;
+        $output = new XmlContent;
+
+        $match = $regexps->match($input);
+        
+        while ($match) {
+            if ($match->regexp_ind == 0) {
+                // No start pattern found before end pattern.
+                // We're all done!
+                $output->pushContent($match->prematch);
+                $text = $match->postmatch;
+                return $output;
+            }
+
+            $markup = $this->_markup[$match->regexp_ind - 1];
+            $body = $this->_parse_markup_body($markup, $match->match, $match->postmatch);
+            if (!$body) {
+                // Couldn't match balanced expression.
+                // Ignore and look for next matching start regexp.
+                $match = $regexps->nextMatch($input, $match);
+                continue;
+            }
+
+            // Matched markup.  Eat input, push output.
+            // FIXME: combine adjacent strings.
+            $input = $match->postmatch;
+            $output->pushContent($match->prematch,
+                                 $markup->markup($match->match, $body));
+
+            $match = $regexps->match($input);
+        }
+
+        // No pattern matched, not even the end pattern.
+        // Parse fails.
+        return false;
+    }
+
+    function _parse_markup_body ($markup, $match, &$text) {
+        if (isa($markup, 'SimpleMarkup'))
+            return true;        // Done. SimpleMarkup is simple.
+
+        $end_regexp = $markup->getEndRegexp($match);
+        return $this->parse($text, $end_regexp);
+    }
+}
 
 function TransformInline($text) {
     static $trfm;
