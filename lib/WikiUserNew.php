@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.101 2004-06-25 14:29:19 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.102 2004-06-27 10:23:48 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -638,7 +638,8 @@ extends _WikiUser
                     $UserName = false;    
             }
             // v1.3.8 policy: don't set PhpWiki cookies, only plaintext WIKI_ID cookies
-            $request->deleteCookieVar(WIKI_NAME);
+            if (!headers_sent())
+                $request->deleteCookieVar(WIKI_NAME);
         }
         // Try to read deprecated 1.3.4 style cookies
         if (! $UserName and ($cookie = $request->cookies->get_old("WIKI_PREF2"))) {
@@ -652,7 +653,8 @@ extends _WikiUser
                     else 
                         $UserName = false;    
                 }
-                $request->deleteCookieVar("WIKI_PREF2");
+                if (!headers_sent())
+                    $request->deleteCookieVar("WIKI_PREF2");
             }
         }
         if (! $UserName ) {
@@ -663,7 +665,7 @@ extends _WikiUser
                 elseif (is_array($cookie) and !empty($cookie['userid']))
                     $UserName = $cookie['userid'];
             }
-            if (! $UserName )
+            if (! $UserName and !headers_sent())
                 $request->deleteCookieVar("WIKI_ID");
             else
                 $this->_userid = $UserName;
@@ -704,7 +706,7 @@ extends _WikiUser
                 $updated = $this->_prefs->isChanged($prefs);
         }
         if ($updated) {
-            if ($id_only) {
+            if ($id_only and !headers_sent()) {
                 global $request;
                 // new 1.3.8 policy: no array cookies, only plain userid string as in 
                 // the pre 1.3.x versions.
@@ -1051,7 +1053,7 @@ extends _AnonUser
                               E_USER_WARNING);
                 $stmt = str_replace(array(" user "," pref "," member "),
                                     array(" ".$prefix."user ",
-                                          " ".$prefix."prefs ",
+                                          " ".$prefix."pref ",
                                           " ".$prefix."member "),$stmt);
             }
         }
@@ -3032,6 +3034,13 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.101  2004/06/25 14:29:19  rurban
+// WikiGroup refactoring:
+//   global group attached to user, code for not_current user.
+//   improved helpers for special groups (avoid double invocations)
+// new experimental config option ENABLE_XHTML_XML (fails with IE, and document.write())
+// fixed a XHTML validation error on userprefs.tmpl
+//
 // Revision 1.100  2004/06/21 06:29:35  rurban
 // formatting: linewrap only
 //
