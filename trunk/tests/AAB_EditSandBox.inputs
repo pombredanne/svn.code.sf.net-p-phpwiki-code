@@ -1,0 +1,27 @@
+# This test is to follow an existing deal from the active_deals 
+# page, and verify form fields.
+# $Id: AAB_EditSandBox.inputs,v 1.1 2001-09-20 20:55:20 wainstead Exp $
+
+type: starting_page
+start_url: http://127.0.0.1:8080/~swain/phpwiki/index.php
+go
+
+# follow the SandBox link
+type: follow_link
+follow_link: "SandBox"
+assert_title: Sand Box
+go
+
+# get the edit page for SandBox
+type: follow_link
+follow_link: "Edit"
+assert_url: SandBox
+go
+
+# insert some text, yay
+type: fill_and_submit_form
+form_num: 0
+submitbutton_num: 1
+setparam: "content", "who are you? NewPageName!"
+#assert_url: action
+go

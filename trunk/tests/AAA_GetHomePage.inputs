@@ -1,0 +1,13 @@
+# Ensure the home page comes up.
+# $Id: AAA_GetHomePage.inputs,v 1.1 2001-09-20 20:55:20 wainstead Exp $
+
+type: starting_page
+start_url: http://127.0.0.1:8080/~swain/phpwiki/index.php
+go
+
+# follow the edit text link
+type: follow_link
+follow_link: "Edit"
+assert_url: HomePage
+go
+
