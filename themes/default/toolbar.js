@@ -1,5 +1,5 @@
 // Toolbar JavaScript support functions. Taken from mediawiki 
-// $Id: toolbar.js,v 1.6 2004-11-16 18:01:28 rurban Exp $ 
+// $Id: toolbar.js,v 1.7 2004-11-25 17:05:47 rurban Exp $ 
 
 // Un-trap us from framesets
 if( window.top != window ) window.top.location = window.location;
@@ -32,10 +32,10 @@ function addTagButton(imageFile, speedTip, tagOpen, tagClose, sampleText) {
 //  return;
 //}
 function showPulldown(title, pages) {
-   pullwin = window.open('','','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,copyhistory=no,height=370,width=250');
-   pullwin.window.document.write('<html><head><title>'+escapeQuotes(title)+'</title><style type=\"text/css\"><'+'!'+'-- body, input {font-family:Tahoma,Arial,Helvetica,sans-serif;font-size:10pt;font-weight:bold;} option {font-size:9pt}  --'+'></style></head><body bgcolor=\"#dddddd\"><form><select name=\"select\" size=\"'+((pages.length>20)?'20':new String(pages.length))+'\" ondblclick=\"if(self.opener)self.opener.do_pulldown(document.forms[0].select.value); return false;\">');
+   pullwin = window.open('','','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,copyhistory=no,height=270,width=180');
+   pullwin.window.document.write('<html><head><title>'+escapeQuotes(title)+'</title><style type=\"text/css\"><'+'!'+'-- body {font-family:Tahoma,Arial,Helvetica,sans-serif;font-size:10pt;} input {font-weight:bold} option {font-size:9pt}  --'+'></style></head><body bgcolor=\"#dddddd\"><form><select name=\"select\" size=\"'+((pages.length>20)?'20':new String(pages.length))+'\" ondblclick=\"if(self.opener)self.opener.do_pulldown(document.forms[0].select.value); return false;\">');
    for (i=0; i<pages.length; i++){
-     pullwin.window.document.write('<option value="'+pages[i]+'">'+escapeQuotes(pages[i])+'<option>\n');
+     pullwin.window.document.write('<option value="'+pages[i]+'">'+escapeQuotes(pages[i])+'</option>\n');
    }
    pullwin.window.document.write('</select><br /><input type=\"button\" value=\"Ok\" onclick=\"if(self.opener)self.opener.do_pulldown(document.forms[0].select.value); return false;\"><input type=\"button\" value=\"Close\" onclick=\"self.close(); return false;\"></form></body></html>');
    pullwin.window.document.close();
