@@ -1,9 +1,18 @@
 <?php // -*-php-*-
-rcs_id('$Id: ViewMarkup.php,v 1.4 2002-01-07 23:26:25 dairiki Exp $');
+rcs_id('$Id: ViewMarkup.php,v 1.5 2002-01-07 23:28:19 dairiki Exp $');
 require_once('lib/Template.php');
 /**
- * A handy plugin for viewing the WikiMarkup of locked pages.
- * based on _BackendInfo.php, v 1.4
+ * A handy plugin for viewing the WikiMarkup of locked (and unlocked) pages.
+ *
+ * Comments/Discussion:
+ *
+ *  I don't like the name ViewMarkup.  I'd prefer ViewSource.
+ *  No big deal though. --JeffDairiki
+ *
+ *  In the long run, it may be cleaner to include this functionality
+ *  in with the EditPage code.  (I.e. if you try to edit locked pages,
+ *  you get a slightly modified version of the normal page editing
+ *  form.  Mostly: no save button.)  --JeffDairiki
  */
 class WikiPlugin_ViewMarkup
 extends WikiPlugin
