@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.39 2005-01-25 06:59:35 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.40 2005-01-31 12:15:08 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004 $ThePhpWikiProgrammingTeam
 
@@ -138,6 +138,8 @@ class PageType_interwikimap extends PageType
                 trigger_error(_("WARNING: InterWikiMap page is unlocked, so not using those links."));
                 $intermap = false;
             }
+            else 
+                $intermap = false;
         } else {
             $intermap = $this->_getMapFromWikiText($pagetext);
         }
@@ -454,6 +456,9 @@ class PageFormatter_pdf extends PageFormatter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.39  2005/01/25 06:59:35  rurban
+// fix bogus InterWikiMap warning
+//
 // Revision 1.38  2004/12/26 17:10:44  rurban
 // just docs or whitespace
 //
