@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SiteMap.php,v 1.12 2004-11-01 09:14:25 rurban Exp $');
+rcs_id('$Id: SiteMap.php,v 1.13 2004-12-14 21:36:06 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -57,7 +57,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.12 $");
+                            "\$Revision: 1.13 $");
     }
 
     function getDefaultArguments() {
@@ -148,7 +148,7 @@ extends WikiPlugin
         $this->_pagename = $page;
         $out = ''; // get rid of this
         $html = HTML();
-        $exclude = $exclude ? explode(",", $exclude) : array();
+        if (empty($exclude)) $exclude = array();
         if (!$include_self)
             $exclude[] = $page;
         $this->ExcludedPages = "^(?:" . join("|", $exclude) . ")";
@@ -221,6 +221,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2004/11/01 09:14:25  rurban
+// avoid ConvertOldMarkup step, using markup=2 (memory problems)
+//
 // Revision 1.11  2004/03/24 19:39:03  rurban
 // php5 workaround code (plus some interim debugging code in XmlElement)
 //   php5 doesn't work yet with the current XmlElement class constructors,
