@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbSession.php,v 1.4 2004-02-26 01:38:16 rurban Exp $');
+<?php rcs_id('$Id: DbSession.php,v 1.5 2004-02-26 19:15:23 rurban Exp $');
 
 /**
  * Store sessions data in Pear DB / ADODB ....
@@ -11,6 +11,7 @@
  */
 class DB_Session
 {
+    var $_backend;
     /**
      * Constructor
      *
@@ -30,17 +31,28 @@ class DB_Session
             $db_type = substr(get_class($dbh),7);
             $class = "DB_Session_".$db_type;
             if (class_exists($class)) {
-                return new $class(&$backend->_dbh, $table);
-                //return new DB_Session_SQL(&$dbh, $table);
-                //return new DB_Session_ADODB(&$dbh, $table);
+                $this->_backend = new $class(&$backend->_dbh, $table);
+                return $this->_backend;
             }
         }
+        return false;
+        
         //Fixme: E_USER_WARNING ignored!
         trigger_error(sprintf(
 _("Your WikiDB DB backend '%s' cannot be used for DB_Session. Set USE_DB_SESSION to false."),
                              $db_type), E_USER_WARNING);
-        return;
-     }
+    }
+    
+    function currentSessions() {
+        return $this->_backend->currentSessions();
+    }
+    function query($sql) {
+        return $this->_backend->query($sql);
+    }
+    function quote($string) {
+        return $this->_backend->quote($string);
+    }
+
 }
 
 class DB_Session_SQL
@@ -55,12 +67,13 @@ extends DB_Session
 
         ini_set('session.save_handler','user');
         session_module_name('user'); // new style
-        session_set_save_handler(array(&$this, 'do_open'),
-                                 array(&$this, 'do_close'),
-                                 array(&$this, 'do_read'),
-                                 array(&$this, 'do_write'),
-                                 array(&$this, 'do_destroy'),
-                                 array(&$this, 'do_gc'));
+        session_set_save_handler(array(&$this, 'open'),
+                                 array(&$this, 'close'),
+                                 array(&$this, 'read'),
+                                 array(&$this, 'write'),
+                                 array(&$this, 'destroy'),
+                                 array(&$this, 'gc'));
+        return $this;
     }
 
     function _connect() {
@@ -73,6 +86,14 @@ extends DB_Session
             }
         }
         return $dbh;
+    }
+    
+    function query($sql) {
+        return $this->_dbh->query($sql);
+    }
+
+    function quote($string) {
+        return $this->_dbh->quote($string);
     }
 
     function _disconnect() {
@@ -90,22 +111,22 @@ extends DB_Session
      * is good.
      * @access private
      */
-    function do_open ($save_path, $session_name) {
-        //$this->log("_do_open($save_path, $session_name)");
+    function open ($save_path, $session_name) {
+        //$this->log("_open($save_path, $session_name)");
         return true;
     }
 
     /**
      * Closes a session.
      *
-     * This function is called just after <i>do_write</i> call.
+     * This function is called just after <i>write</i> call.
      *
      * @return boolean true just a variable to notify PHP that everything 
      * is good.
      * @access private
      */
-    function do_close() {
-        //$this->log("_do_close()");
+    function close() {
+        //$this->log("_close()");
         return true;
     }
 
@@ -116,8 +137,8 @@ extends DB_Session
      * @return string
      * @access private
      */
-    function do_read ($id) {
-        //$this->log("_do_read($id)");
+    function read ($id) {
+        //$this->log("_read($id)");
         $dbh = &$this->_connect();
         $table = $this->_table;
         $qid = $dbh->quote($id);
@@ -148,7 +169,7 @@ extends DB_Session
      * otherwise.
      * @access private
      */
-    function do_write ($id, $sess_data) {
+    function write ($id, $sess_data) {
         
         $dbh = &$this->_connect();
         $table = $this->_table;
@@ -182,7 +203,7 @@ extends DB_Session
      * @return boolean true 
      * @access private
      */
-    function do_destroy ($id) {
+    function destroy ($id) {
         $dbh = &$this->_connect();
         $table = $this->_table;
         $qid = $dbh->quote($id);
@@ -200,7 +221,7 @@ extends DB_Session
      * @return boolean true
      * @access private
      */
-    function do_gc ($maxlifetime) {
+    function gc ($maxlifetime) {
         $dbh = &$this->_connect();
         $table = $this->_table;
         $threshold = time() - $maxlifetime;
@@ -210,16 +231,39 @@ extends DB_Session
         $this->_disconnect();
         return true;
     }
+
+    // WhoIsOnline support
+    function currentSessions() {
+        $sessions = array();
+        $dbh = &$this->_connect();
+        $table = $this->_table;
+        $res = $this->query("SELECT sess_data,sess_date FROM $table");
+        if (DB::isError($res) || empty($res))
+            return $sessions;
+        while ($row = $res->fetchRow()) {
+            $data = $row['sess_data'];
+            $date = $row['sess_date'];
+            if (preg_match('|^[a-zA-Z0-9/+=]+$|', $data))
+                $data = base64_decode($data);
+            // session_data contains the <variable name> + "|" + <packed string>
+            // we need just the wiki_user object (might be array as well)
+            $user = strstr($data,"wiki_user|");
+            $sessions[] = array('wiki_user' => substr($user,10), // from "O:" onwards
+                                'date' => $date);
+        }
+        $this->_disconnect();
+        return $sessions;
+    }
 }
 
 
-// adodb-session wrapper: warning! uses different db layout
-class DB_Session_ADODB_test
+// adodb-session wrapper: warning! adodb-session uses different db layout
+class DB_Session_ADODB_notyet
 extends DB_Session
 {
     var $_backend_type = "ADODB";
 
-    function DB_Session_ADODB_test ($dbh, $table) {
+    function DB_Session_ADODB_notyet ($dbh, $table) {
     }
 }
 
