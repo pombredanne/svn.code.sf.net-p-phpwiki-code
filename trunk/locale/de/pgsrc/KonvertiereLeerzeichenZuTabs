@@ -1,12 +1,38 @@
-MancheWebbrowser haben Probleme mit dem Tabulator, der in den TextFormatierungsRegeln verwendet wird. Falls du keinen Tab eingeben kannst oder eine Seite bearbeitest, die jemand geschrieben hat, der keine Tabs verwendet hat, kann das Wiki-System Folgen von Leerzeichen für dich in Tabs umwandeln.
+From [no address given]  Sun Dec 16 02:19:06 2001
+Subject: KonvertiereLeerzeichenZuTabs
+From: [no address given] (PhpWiki)
+Date: Sat, 15 Dec 2001 23:28:41 -0500
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.0-jeffs-hacks)
+Content-Type: application/x-phpwiki;
+  pagename=KonvertiereLeerzeichenZuTabs;
+  flags="";
+Content-Transfer-Encoding: quoted-printable
 
-Du aktivierst die Umwandlung, indem du das Kontrollfeld unten auf der Seite EditiereText markierst. Das Kontrollfeld sieht etwa so aus:
+Manche Webbrowser haben Probleme mit dem Tabulator, der in den =
+TextFormatierungsRegeln verwendet wird. Falls du keinen Tab eingeben =
+kannst oder eine Seite bearbeitest, die jemand geschrieben hat, der keine =
+Tabs verwendet hat, kann das Wiki-System Folgen von Leerzeichen f=FCr dich =
+in Tabs umwandeln.
 
- [[o] Ich kann keine Tabulatoren verwenden. Bitte für mich, wenn ich speichere.
+Du aktivierst die Umwandlung, indem du das Kontrollfeld unten auf der =
+Seite EditiereText markierst. Das Kontrollfeld sieht etwa so aus:
 
-Eine Folge von Leerzeichen muß mindestens __drei__ Leerzeichen lang sein, um als Tab erkannt zu werden. Verwende Vielfache von __acht__ Leerzeichen, um mehrere Tabs einzugeben. Jeweils acht Leerzeichen werden in einen Tab umgewandelt. Die letzte Folge darf auch etwas kürzer sein, so lange mindestens drei Leerzeichen in der letzten (oder einzigen) Folge sind.
+ [[o] Ich kann keine Tabulatoren verwenden. Bitte f=FCr mich, wenn ich =
+speichere.
 
-__Bitte überprüfe die so erstellten Seiten!__ Diese Art der Tabulatorerkennung kann manchmal zu unerwarteten Ergebnissen führen.
- 
+Eine Folge von Leerzeichen mu=DF mindestens __drei__ Leerzeichen lang =
+sein, um als Tab erkannt zu werden. Verwende Vielfache von __acht__ =
+Leerzeichen, um mehrere Tabs einzugeben. Jeweils acht Leerzeichen werden =
+in einen Tab umgewandelt. Die letzte Folge darf auch etwas k=FCrzer sein, =
+so lange mindestens drei Leerzeichen in der letzten (oder einzigen) Folge =
+sind.
+
+__Bitte =FCberpr=FCfe die so erstellten Seiten!__ Diese Art der =
+Tabulatorerkennung kann manchmal zu unerwarteten Ergebnissen f=FChren.
+
 -----
-[Hinweis zu dieser Seite: diese Seite wird angezeigt, wenn der Benutzer den Link "Konvertiere LeerzeichenZuTabs" auf irgendeiner Bearbeiten-Seite anzeigt. Sie erklärt, was diese Funktion bewirkt, warum man sie verwendet, und Möglichkeiten zum Vermeiden des Problems der Leerzeichen statt Tabs.]
+''Hinweis zu dieser Seite: diese Seite wird angezeigt, wenn der Benutzer =
+den Link =ABKonvertiereLeerzeichenZuTabs=BB auf irgendeiner =
+Bearbeiten-Seite anzeigt. Sie erkl=E4rt, was diese Funktion bewirkt, warum =
+man sie verwendet, und M=F6glichkeiten zum Vermeiden des Problems der =
+Leerzeichen statt Tabs.''
