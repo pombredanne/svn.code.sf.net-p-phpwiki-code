@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-  rcs_id('$Id: head.tmpl,v 1.10 2003-03-07 20:51:59 dairiki Exp $');
+  rcs_id('$Id: head.tmpl,v 1.11 2003-11-21 23:06:12 carstenklapp Exp $');
 ?>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
@@ -25,15 +25,18 @@
        * See http://www.w3.org/TR/html401/struct/links.html#edef-LINK
        *     http://www.euronet.nl/~tekelenb/WWW/LINK/index.html
        */ ?>
+<?php /* The next few lines are wrapped in an odd manner to allow gettext string extraction: cd locale;make */ ?>
 <link rel="home" title="<?=HOME_PAGE?>" href="<?=WikiURL(HOME_PAGE)?>" />
-<link rel="help" title="<?=_("HowToUseWiki")?>" href="<?=WikiURL(_("HowToUseWiki"))?>" />
+<link rel="help" title="<?=_("HowToUseWiki")?>" href="<?=WikiURL(
+_("HowToUseWiki"))?>" />
 <link rel="copyright" title="GNU General Public License" href="http://www.gnu.org/copyleft/gpl.html#SEC1" />
 <?php
       $wikiadminName = _("The PhpWiki Programming Team");
       $wikiadminUrl = "http://phpwiki.sourceforge.net/phpwiki/ThePhpWikiProgrammingTeam";
       ?>
 <link rel="author" title="<?= $wikiadminName ?>" href="<?= $wikiadminUrl ?>" />
-<link rel="search" title="<?=_("FindPage")?>" href="<?=WikiURL(_("FindPage"))?>" />
+<link rel="search" title="<?=_("FindPage")?>" href="<?=WikiURL(
+_("FindPage"))?>" />
 <?php /**
        * Provide alternate variations of the page content:
        * 'viewsource' and 'browse'.
@@ -65,18 +68,22 @@
        */ ?>
 <?php if (!$user->isSignedIn()) {
       /* For users not signed in */ ?>
-<link rel="bookmark" title="<?=_("SandBox")?>" href="<?=WikiURL(_("SandBox"))?>" />
-<link rel="bookmark" title="<?=_("WikiWikiWeb")?>" href="<?=WikiURL(_("WikiWikiWeb"))?>" />
+<link rel="bookmark" title="<?=_("SandBox")?>" href="<?=WikiURL(
+_("SandBox"))?>" />
+<link rel="bookmark" title="<?=_("WikiWikiWeb")?>" href="<?=WikiURL(
+_("WikiWikiWeb"))?>" />
 <?php } ?>
 
 <?php if ($user->isadmin()) {
       /* Only for the Administrator */ ?>
-<link rel="bookmark" title="<?=_("PhpWikiAdministration")?>" href="<?=WikiURL(_("PhpWikiAdministration"))?>" />
+<link rel="bookmark" title="<?=_("PhpWikiAdministration")?>" href="<?=WikiURL(
+_("PhpWikiAdministration"))?>" />
 <?php } ?>
 
 <?php if ($user->isSignedIn()) {
       /* For signed-in users */ ?>
-<link rel="bookmark" title="<?=_("UserPreferences")?>" href="<?=WikiURL(_("UserPreferences"))?>" />
+<link rel="bookmark" title="<?=_("UserPreferences")?>" href="<?=WikiURL(
+_("UserPreferences"))?>" />
 <?php /* User's calendar page
        */
       $UserCalPageTitle = $user->getId() . SUBPAGE_SEPARATOR ._("Calendar");
@@ -108,6 +115,10 @@
 <?php
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2003/03/07 20:51:59  dairiki
+// New feature: Automatic extraction of keywords (for the meta keywords tag)
+// from Category* and Topic* links on each page.
+//
 // Revision 1.9  2003/03/07 02:45:51  dairiki
 // Rename BASE_URL to PHPWIKI_BASE_URL.  Lycos pre-defines BASE_URL (to
 // the wrong thing).
