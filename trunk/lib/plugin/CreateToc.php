@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.22 2004-06-15 14:56:37 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.23 2004-06-28 13:13:58 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -30,6 +30,7 @@ rcs_id('$Id: CreateToc.php,v 1.22 2004-06-15 14:56:37 rurban Exp $');
  *
  * Known problems: 
  * - MacIE will not work with jshide.
+ * - it will crash with old markup!
  * - Certain corner-edges will not work with TOC_FULL_SYNTAX. 
  *   I believe I fixed all of them now, but who knows?
  * - bug #969495 "existing labels not honored" seems to be fixed.
@@ -50,7 +51,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.22 $");
+                            "\$Revision: 1.23 $");
     }
 
     function getDefaultArguments() {
@@ -196,6 +197,10 @@ extends WikiPlugin
         }
         $page = $dbi->getPage($pagename);
         $current = $page->getCurrentRevision();
+        if (!$current->get('markup') or $current->get('markup') < 2) {
+            trigger_error(_("CreateToc disabled for old markup"), E_USER_WARNING);
+            return '';
+        }
         $content = $current->getContent();
         $html = HTML::div(array('class' => 'toc','align' => $align));
         if ($liststyle == 'dl')
@@ -268,6 +273,9 @@ function toggletoc(a) {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.22  2004/06/15 14:56:37  rurban
+// more allow_call_time_pass_reference false fixes
+//
 // Revision 1.21  2004/06/13 09:45:23  rurban
 // display bug workaround for MacIE browsers, jshide: 0
 //
