@@ -583,6 +583,8 @@ msgid ""
 "PHP was unable to create a new GD image stream. Read "
 "'lib/plugin/text2png.php' for details."
 msgstr ""
+"PHP konnten keinen neues GD Bild erzeugen. Lese"
+"'lib/plugin/text2png.php' für Details."
 
 #: ../lib/plugin/text2png.php:141
 #, c-format
@@ -695,7 +697,7 @@ msgstr ""
 #: ../lib/plugin/walkabout.php:37
 #, c-format
 msgid "walkabout for %s"
-msgstr ""
+msgstr "walkabout für %s"
 
 #: ../lib/plugin/walkabout.php:44 ../lib/plugin/walkabout.php:92
 msgid "Contents"
@@ -879,7 +881,7 @@ msgstr "Keine Version"
 #: ../lib/stdlib.php:700
 #, c-format
 msgid "Can't mix '%s' with '%s' type format strings"
-msgstr ""
+msgstr "Kann '%s' Typ-Formatzeichenketten nicht mit '%s' mischen."
 
 #: ../lib/stdlib.php:709
 #, c-format
@@ -1032,7 +1034,7 @@ msgstr "Es fehlt ein BackLink Datenfeld zu Link %s"
 #: ../lib/WikiDB/backend/dbaBase.php:368
 #, c-format
 msgid "link entry missing for backlink %s"
-msgstr "Es fehlt eine Link Datenfeld für den BackLink %s"
+msgstr "Es fehlt ein Link Datenfeld für den BackLink %s"
 
 #: ../lib/WikiDB/backend/dba.php:23
 #, c-format
@@ -1176,24 +1178,25 @@ msgstr "Unerwartetes Dateiende in zip Datei"
 #: ../lib/ziplib.php:398
 #, c-format
 msgid "Bad header type: %s"
-msgstr "Ungültiger Dateikopf form: %s "
+msgstr "Ungültiger Dateiheader: %s "
 
 #: ../lib/ziplib.php:403
 msgid "Encryption and/or zip patches not supported."
-msgstr ""
+msgstr "zip Verschlüsselung und/oder Patches noch nicht unterstützt."
 
 #: ../lib/ziplib.php:406
 msgid "Postponed CRC not yet supported."
-msgstr ""
+msgstr "Nachträgliches CRC noch nicht unterstützt."
 
 #: ../lib/ziplib.php:425
 #, c-format
 msgid "Compression method %s unsupported"
-msgstr ""
+msgstr "Kompressionsmethode %s wird nicht unterstützt"
 
 #: ../lib/ziplib.php:429
+#, fuzzy
 msgid "Uncompressed size mismatch"
-msgstr "Größe des Dekomprimierte Datei stimmt nicht"
+msgstr "Größe der dekomprimierten Datei stimmt nicht"
 
 #: ../lib/ziplib.php:636
 #, c-format
