@@ -1,0 +1,13 @@
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
+X-RCS_ID: $Id: TitelSuche,v 1.1 2002-01-11 05:53:26 carstenklapp Exp $
+Content-Type: application/x-phpwiki;
+  pagename=TitelSuche;
+  flags=PAGE_LOCKED;
+  lastmodified=1009931536;
+Content-Transfer-Encoding: binary
+
+<?plugin TitleSearch?>
+----
+Wieder Suchen:
+<?plugin-form TitleSearch auto_redirect=0?>
+<?plugin-form FullTextSearch?>
