@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.32 2004-12-10 22:15:00 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.33 2004-12-10 22:33:39 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -452,7 +452,7 @@ function CheckDatabaseUpdate(&$request) {
 }
 
 function _upgrade_db_init (&$dbh) {
-    global $DBParams, $DBAuthParams;
+    global $request, $DBParams, $DBAuthParams;
     if (!in_array($DBParams['dbtype'], array('SQL','ADODB'))) return;
     if (defined('DBADMIN_USER') and DBADMIN_USER) {
         // if need to connect as the root user, for alter permissions
@@ -490,6 +490,7 @@ function _upgrade_cached_html (&$dbh) {
         $fields = $dbh->_backend->listOfFields($database, $page_tbl);
         if (!strstr(strtolower(join(':', $fields)), "cached_html")) {
             echo "<b>",_("ADDING"),"</b>"," ... ";
+            $backend_type = $dbh->_backend->backendType();
             if (substr($backend_type,0,5) == 'mysql')
                 $dbh->genericSqlQuery("ALTER TABLE $page_tbl ADD cached_html MEDIUMBLOB");
             else
@@ -513,6 +514,8 @@ function _convert_cached_html (&$dbh) {
 
     $pages = $dbh->getAllPages();
     $cache =& $dbh->_cache;
+    $count = 0;
+    extract($dbh->_backend->_table_names);
     while ($page = $pages->next()) {
         $pagename = $page->getName();
         $data = $dbh->_backend->get_pagedata($pagename);
@@ -523,8 +526,10 @@ function _convert_cached_html (&$dbh) {
             // store as blob, not serialized
             $dbh->genericSqlQuery("UPDATE $page_tbl SET cached_html=? WHERE pagename=?",
                                   array($cached_html, $pagename));
+            $count++;
         }
     }
+    return $count;
 }
 
 function fixConfigIni($match, $new) {
@@ -630,6 +635,11 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.32  2004/12/10 22:15:00  rurban
+ fix $page->get('_cached_html)
+ refactor upgrade db helper _convert_cached_html() to be able to call them from WikiAdminUtils also.
+ support 2nd genericSqlQuery param (bind huge arg)
+
  Revision 1.31  2004/12/10 02:45:26  rurban
  SQL optimization:
    put _cached_html from pagedata into a new seperate blob, not huge serialized string.

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminUtils.php,v 1.14 2004-12-06 19:50:05 rurban Exp $');
+rcs_id('$Id: WikiAdminUtils.php,v 1.15 2004-12-10 22:33:40 rurban Exp $');
 /**
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -27,6 +27,7 @@ rcs_id('$Id: WikiAdminUtils.php,v 1.14 2004-12-06 19:50:05 rurban Exp $');
         purge-empty-pages
         access-restrictions
         email-verification
+        convert-cached-html
  */
 class WikiPlugin_WikiAdminUtils
 extends WikiPlugin
@@ -41,7 +42,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.14 $");
+                            "\$Revision: 1.15 $");
     }
 
     function getDefaultArguments() {
@@ -175,6 +176,34 @@ extends WikiPlugin
             $notpurgable)
                                       : ''));
     }
+
+
+    function _do_convert_cached_html(&$request, $args) {
+
+        require_once("lib/upgrade.php");
+        _upgrade_db_init($dbh);
+
+  	$database = $dbh->_backend->database();
+        extract($dbh->_backend->_table_names);
+        $fields = $dbh->_backend->listOfFields($database, $page_tbl);
+        if (!strstr(strtolower(join(':', $fields)), "cached_html")) {
+            $backend_type = $dbh->_backend->backendType();
+            if (substr($backend_type,0,5) == 'mysql')
+                $dbh->genericSqlQuery("ALTER TABLE $page_tbl ADD cached_html MEDIUMBLOB");
+            else
+                $dbh->genericSqlQuery("ALTER TABLE $page_tbl ADD cached_html BLOB");
+        }
+
+        $count = _convert_cached_html($dbh);
+
+        if (!$count)
+            return _("No old _cached_html pagedata found.");
+        else {
+            return HTML(fmt("Converted successfully %d pages", $count),
+                        HTML::div(array('align'=>'left'), $list));
+        }
+    }
+
 
     //TODO: We need a seperate plugin for this.
     //      Too many options.
