@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.32 2001-02-14 22:02:05 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.33 2001-02-15 05:57:18 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
  *
@@ -120,9 +120,49 @@ if (!defined('USE_PATH_INFO'))
    else
       define('USE_PATH_INFO', ereg('\.(php3?|cgi)$', $SCRIPT_NAME));
 }
+
+
+function IsProbablyRedirectToIndex () 
+{
+   // This might be a redirect to the DirectoryIndex,
+   // e.g. REQUEST_URI = /dir/  got redirected
+   // to SCRIPT_NAME = /dir/index.php
+   
+   // In this case, the proper virtual path is still
+   // $SCRIPT_NAME, since pages appear at
+   // e.g. /dir/index.php/FrontPage.
+   
+   global $REQUEST_URI, $SCRIPT_NAME;
+   
+   $requri = preg_quote($REQUEST_URI, '%');
+   return preg_match("%^${requri}[^/]*$%", $SCRIPT_NAME);
+}
+
+   
 if (!defined('VIRTUAL_PATH'))
 {
-   if (USE_PATH_INFO and isset($REDIRECT_URL))
+   // We'd like to auto-detect when the cases where apaches
+   // 'Action' directive (or similar means) is used to
+   // redirect page requests to a cgi-handler.
+   //
+   // In cases like this, requests for e.g. /wiki/FrontPage
+   // get redirected to a cgi-script called, say,
+   // /path/to/wiki/index.php.  The script gets all
+   // of /wiki/FrontPage as it's PATH_INFO.
+   //
+   // The problem is:
+   //   How to detect when this has happened reliably?
+   //   How to pick out the "virtual path" (in this case '/wiki')?
+   //
+   // (Another time an redirect might occur is to a DirectoryIndex
+   // -- the requested URI is '/wikidir/', the request gets
+   // passed to '/wikidir/index.php'.  In this case, the
+   // proper VIRTUAL_PATH is '/wikidir/index.php', since the
+   // pages will appear at e.g. '/wikidir/index.php/FrontPage'.
+   //
+
+   if (USE_PATH_INFO and isset($REDIRECT_URL)
+       and ! IsProbablyRedirectToIndex())
    {
       // FIXME: This is a hack, and won't work if the requested
       // pagename has a slash in it.
