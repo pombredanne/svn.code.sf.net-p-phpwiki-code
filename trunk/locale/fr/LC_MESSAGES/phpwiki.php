@@ -162,8 +162,6 @@ $locale["(max. recursion level: %d)"] =
    "(niveau maximum de récursivité: %d)";
 $locale["(no regex, case-sensitive)"] =
    "(insensible à la casse)";
-$locale["(to pages linked from \"%s\")"] =
-   "(aux pages liées à \"%s\")";
 $locale["(ugo : rwx)"] =
    "(ugo : rwx)";
 $locale["- saved to database as version %d"] =
@@ -340,8 +338,6 @@ $locale["BAD phpwiki: URL"] =
    "MAUVAIS URL phpwiki :";
 $locale["BOGO"] =
    "BOGO";
-$locale["Back Links"] =
-   "Rétro Liens";
 $locale["BackLinks"] =
    "RétroLiens";
 $locale["BackLinks for %s"] =
@@ -1976,8 +1972,6 @@ $locale["Your UserPreferences have been successfully deleted."] =
    "Vos PréférencesUtilisateurs ont été effacées avec succès.";
 $locale["Your WikiDB DB backend '%s' cannot be used for DbSession."] =
    "Votre choix '%s' de WikiDB DB ne peut pas être utilisé pour DbSession.";
-$locale["Your access permissions are only for a BogoUser.\n"] =
-   "Vos permissions d'acces sont celles d'un utilisateur Bogo\n";
 $locale["Your browser should have redirected you to %s."] =
    "Votre navigateur aurait du vous redirigé vers %s.";
 $locale["Your careful attention to detail is much appreciated."] =
@@ -2034,8 +2028,6 @@ $locale["check for necessary pgsrc updates"] =
    "recherche les mises à jour nécessaire des pages sources";
 $locale["check for new session.sess_ip column"] =
    "recherche une nouvelle colonne session.sess_ip";
-$locale["check for page.id auto_increment flag"] =
-   "vérifie le marqueur auto_increment pour page.id";
 $locale["check for table %s"] =
    "vérifie la table %s";
 $locale["chmod page '%s' to '%s'."] =
@@ -2212,8 +2204,6 @@ $locale["version %d"] =
    "version %d";
 $locale["version %s"] =
    "version %s";
-$locale["version <em>%s</em> <b>FIXED</b>"] =
-   "version <em>%s</em> <b>RÉSOLU</b>";
 $locale["version <em>%s</em> not affected"] =
    "version <em>%s</em> non affectée";
 $locale["view the source of this page"] =

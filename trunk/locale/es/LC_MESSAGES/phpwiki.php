@@ -36,8 +36,16 @@ $locale["%s: not defined"] =
    "%s: fichero no encontrado";
 $locale["(Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor.)"] =
    "Copie sus cambios al portapapeles o a otro sitio temporal (p.ej. editor de textos).";
+$locale["... copied to %s"] =
+   "... copia de [%s]";
+$locale["... not copied to %s"] =
+   "... non copia de [%s]";
+$locale["... not found"] =
+   "... no encontrado";
 $locale["1 day"] =
    "1 día";
+$locale["<empty>"] =
+   "<vacío>";
 $locale["<none>"] =
    "<Ninguna>";
 $locale["<unknown>"] =
@@ -46,6 +54,10 @@ $locale["Add Comment"] =
    "Agregue El Comentario";
 $locale["Add a Comment"] =
    "Agregue un comentario";
+$locale["AddCategory"] =
+   "AgregueCategoría";
+$locale["AddPlugin"] =
+   "AgreguePlugin";
 $locale["AllPages"] =
    "TodasLasPáginas";
 $locale["AllUsers"] =
@@ -64,6 +76,8 @@ $locale["Cancel"] =
    "Cancelar";
 $locale["Cancel rating"] =
    "Cancelar";
+$locale["Category"] =
+   "Categoría";
 $locale["CategoryCategory"] =
    "CategoriaCategoria";
 $locale["CategoryGroup"] =
@@ -74,12 +88,16 @@ $locale["Click to reverse sort order"] =
    "Tecleo para invertir orden de la clase";
 $locale["Click to sort by %s"] =
    "Clase por %s";
+$locale["Close"] =
+   "Cierre";
 $locale["Comment"] =
    "Commentario";
 $locale["Complete."] =
    "Acabado.";
 $locale["Content"] =
    "Contenido";
+$locale["Convert"] =
+   "Convertido";
 $locale["Create: %s"] =
    "Cree: %s";
 $locale["CreatePage"] =
@@ -120,6 +138,8 @@ $locale["Full text search results for '%s'"] =
    "Resultados de la búsqueda en el texto completo para '%s'";
 $locale["FullTextSearch"] =
    "BúsquedaDelTexto";
+$locale["Given password ignored."] =
+   "Contraseña no hecho caso.";
 $locale["Go"] =
    "Aceptar";
 $locale["GoodStyle"] =
@@ -148,6 +168,12 @@ $locale["Included from %s:"] =
    "Inserción de '%s':";
 $locale["Info"] =
    "Informacion";
+$locale["Insert"] =
+   "Relleno";
+$locale["Insert Categories (double-click)"] =
+   "Relleno Categorías (doble-tecleo)";
+$locale["Insert Plugin (double-click)"] =
+   "Relleno Plugin (doble-tecleo)";
 $locale["Insufficient permissions."] =
    "Permisos escasos";
 $locale["InterWiki"] =
@@ -174,6 +200,8 @@ $locale["List the most popular pages."] =
    "Las páginas más populares.";
 $locale["ListPages"] =
    "ListaPáginas";
+$locale["Lock"] =
+   "Bloqueada";
 $locale["Lock Page"] =
    "Bloquear Página";
 $locale["Locked"] =
@@ -184,6 +212,8 @@ $locale["Merge Edit"] =
    "Fusión Editar";
 $locale["Merge and Edit: %s"] =
    "Fusión y Editar: %s";
+$locale["ModeratedPage"] =
+   "PáginaModerada";
 $locale["Modern"] =
    "Moderno";
 $locale["Modified"] =
@@ -192,6 +222,8 @@ $locale["MostPopular"] =
    "MasPopulares";
 $locale["Name"] =
    "Nombre de la Página";
+$locale["New page"] =
+   "Página nueva";
 $locale["New password"] =
    "Nueva Contraseña";
 $locale["Newer page:"] =
@@ -224,6 +256,8 @@ $locale["Page now locked."] =
    "Página bloqueada.";
 $locale["Page now unlocked."] =
    "Página desbloquear.";
+$locale["Page removed %s"] =
+   "Página borrar %s";
 $locale["PageInfo"] =
    "InformacionDeLaPagina";
 $locale["Password cannot be changed."] =
@@ -236,6 +270,8 @@ $locale["Password:"] =
    "Contraseña:";
 $locale["Plugin %s failed."] =
    "Inserción de '%s' falló";
+$locale["Plugin %s: undefined"] =
+   "Plugin %s: indefinido";
 $locale["Preferences"] =
    "Preferencias";
 $locale["Preview"] =
@@ -266,6 +302,8 @@ $locale["Remove Page"] =
    "Borrar Página";
 $locale["Remove this page"] =
    "Quite esta página";
+$locale["Removed by: %s"] =
+   "Borrar par: %s";
 $locale["Removed page '%s' successfully."] =
    "Página '%s' borrada satisfactoriamente.";
 $locale["Removing pages"] =
@@ -298,6 +336,8 @@ $locale["Sorry for the inconvenience."] =
    "Disculpe la inconveniencia.";
 $locale["Sort by %s"] =
    "Clase por %s";
+$locale["String \"%s\" not found."] =
+   "Secuencia \"%s\" no encontrado.";
 $locale["Summary"] =
    "Comentarios";
 $locale["Synopsis"] =
@@ -326,6 +366,10 @@ $locale["TitleSearch"] =
    "BúsquedaDeTítulos";
 $locale["Today"] =
    "Hoy";
+$locale["Topic"] =
+   "Asunto";
+$locale["Unlock"] =
+   "Desbloquear";
 $locale["Unlock Page"] =
    "Desbloquear Página";
 $locale["Unlocking pages"] =
@@ -374,8 +418,12 @@ $locale["current version"] =
    "versión actual";
 $locale["days"] =
    "dias";
+$locale["hours"] =
+   "horas";
 $locale["locked"] =
    "bloqueada";
+$locale["minutes"] =
+   "minutas";
 $locale["previous revision"] =
    "versión archivada";
 $locale["the file '%s'"] =
@@ -384,6 +432,8 @@ $locale["today"] =
    "hoy";
 $locale["unlock this page"] =
    "Desbloquear Página";
+$locale["users"] =
+   "usuarios";
 $locale["version %d"] =
    "versión %d";
 $locale["version %s"] =
