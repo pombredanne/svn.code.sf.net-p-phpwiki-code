@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: InterWikiSearch.php,v 1.2 2003-02-22 20:49:56 dairiki Exp $');
+rcs_id('$Id: InterWikiSearch.php,v 1.3 2003-02-23 20:10:48 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -48,6 +48,8 @@ extends WikiPlugin
         $args = $this->getArgs($argstr, $request);
         extract($args);
 
+        return $this->disabled("Sorry, this plugin is currently out of order.");
+        
         return PageType($pagerevisionhandle,
                         $pagename = _('InterWikiMap'),
                         $markup = 2,
@@ -59,6 +61,7 @@ extends WikiPlugin
 /**
  * @desc
  */
+if (0) {
 class searcableInterWikiMapPageType
 extends interWikiMapPageType
 {
@@ -94,8 +97,13 @@ extends interWikiMapPageType
         return $table;
     }
 };
+}
+
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2003/02/22 20:49:56  dairiki
+// Fixes for "Call-time pass by reference has been deprecated" errors.
+//
 // Revision 1.1  2003/01/31 22:56:21  carstenklapp
 // New plugin which provides entry forms to search any site listed in the InterWikiMap.
 //
