@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.25 2002-01-26 07:33:45 carstenklapp Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.26 2002-02-17 05:56:08 carstenklapp Exp $');
 
 /**
  * GZIP stuff.
@@ -540,6 +540,10 @@ function MimeifyPageRevision ($revision) {
         $params['author_id'] = $revision->get('author_id');
     if ($revision->get('markup'))
         $params['markup'] = $revision->get('markup');
+    if ($revision->get('summary'))
+        $params['summary'] = $revision->get('summary');
+    if ($page->get('hits'))
+        $params['hits'] = $page->get('hits');
 
     $params['charset'] = CHARSET;
 
@@ -735,6 +739,12 @@ function ParseMimeifiedPages ($data)
             break;
         case 'author':
         case 'author_id':
+        case 'summary':
+            $versiondata[$key] = $value;
+            break;
+        case 'hits':
+            $pagedata[$key] = $value;
+            break;
         case 'markup':
             $versiondata[$key] = $value;
             break;
