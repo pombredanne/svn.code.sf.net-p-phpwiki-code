@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.90 2004-03-17 19:36:31 rurban Exp $');
+rcs_id('$Id: config.php,v 1.91 2004-03-25 22:33:38 rurban Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -435,7 +435,7 @@ if (!defined('ALLOW_ANON_EDIT')) define('ALLOW_ANON_EDIT', false);
 if (!defined('REQUIRE_SIGNIN_BEFORE_EDIT')) define('REQUIRE_SIGNIN_BEFORE_EDIT', ! ALLOW_ANON_EDIT);
 if (!defined('ALLOW_BOGO_LOGIN')) define('ALLOW_BOGO_LOGIN', true);
 
-if (ALLOW_USER_LOGIN and empty($DBAuthParams['auth_dsn'])) {
+if (ALLOW_USER_LOGIN and !empty($DBAuthParams) and empty($DBAuthParams['auth_dsn'])) {
     if (isset($DBParams['dsn']))
         $DBAuthParams['auth_dsn'] = $DBParams['dsn'];
 }
