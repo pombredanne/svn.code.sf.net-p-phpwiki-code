@@ -35,6 +35,12 @@ Please report bugs to mailto:phpwiki-talk@lists.sourceforge.net
 
 ! Patches
 
+;[Joel Uckelman | uckelman@iastate.edu ] :
+;: ported the dbmlib.php to the new dba_* interface, which is the default in PHP 4.0.4 and later.
+
+;[ Pablo Roca Rozas | proca@clavo.net ] :
+;: contributed a new logo image file and updated the Spanish translation
+
 ;[Scott R. Anderson | sra@diem.net ] :
 ;: contributed a patch to allow authorized users' names to appear in RecentChanges.
 
