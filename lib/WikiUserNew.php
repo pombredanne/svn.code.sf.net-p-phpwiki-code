@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.61 2004-04-29 17:18:19 zorloc Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.62 2004-04-29 18:31:24 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1494,7 +1494,7 @@ extends _DbPassUser
             $db_result = $dbh->query(sprintf($this->_prefs->_select,$dbh->quote($this->_userid)));
             // patched by frederik@pandora.be
             $prefs = $db_result->fetchRow();
-            $prefs_blob = $prefs["prefs"]; 
+            $prefs_blob = @$prefs["prefs"]; 
             if ($restored_from_db = $this->_prefs->retrieve($prefs_blob)) {
                 $updated = $this->_prefs->updatePrefs($restored_from_db);
                 //$this->_prefs = new UserPreferences($restored_from_db);
@@ -1687,7 +1687,7 @@ extends _DbPassUser
             if ($rs->EOF) {
                 $rs->Close();
             } else {
-                $prefs_blob = $rs->fields['prefs'];
+                $prefs_blob = @$rs->fields['prefs'];
                 $rs->Close();
                 if ($restored_from_db = $this->_prefs->retrieve($prefs_blob)) {
                     $updated = $this->_prefs->updatePrefs($restored_from_db);
@@ -2803,6 +2803,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.61  2004/04/29 17:18:19  zorloc
+// Fixes permission failure issues.  With PagePermissions and Disabled Actions when user did not have permission WIKIAUTH_FORBIDDEN was returned.  In WikiUser this was ok because WIKIAUTH_FORBIDDEN had a value of 11 -- thus no user could perform that action.  But WikiUserNew has a WIKIAUTH_FORBIDDEN value of -1 -- thus a user without sufficent permission to do anything.  The solution is a new high value permission level (WIKIAUTH_UNOBTAINABLE) to be the default level for access failure.
+//
 // Revision 1.60  2004/04/27 18:20:54  rurban
 // sf.net patch #940359 by rassie
 //
