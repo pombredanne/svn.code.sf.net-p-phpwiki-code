@@ -10,7 +10,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.24.2.7 2001-11-09 03:13:00 dairiki Exp $'); 
+   rcs_id('$Id: config.php,v 1.24.2.8 2001-11-09 15:36:03 dairiki Exp $'); 
    // end essential internal stuff
 
 
@@ -220,14 +220,16 @@
          return $text;
       }
    } else {
-      putenv ("LANG=$LANG");
+      // This putenv() fails when safe_mode is on.
+      // I think it is unnecessary. 
+      //putenv ("LANG=$LANG");
       bindtextdomain ("phpwiki", "./locale");
       textdomain ("phpwiki");
       if (!defined("LC_ALL")) {
          // Backwards compatibility (for PHP < 4.0.5)
          define("LC_ALL", "LC_ALL");
       }   
-      setlocale(LC_ALL, "");
+      setlocale(LC_ALL, "$LANG");
    }
    // end of localization function
 
