@@ -3,12 +3,29 @@
 #  Write out a Makefile and a build.xml file based on the *.inputs files
 #  in the current directory. Steve Wainstead, April 2001.
 
-# $Id: makemakebuild.pl,v 1.1 2001-09-20 20:52:22 wainstead Exp $
+# $Id: makemakebuild.pl,v 1.2 2001-12-22 03:56:29 rurban Exp $
 
 # read in all the input files, loop over each one and build up 
 # text blocks that we will subsitute into the skeletons for Makefile
 # and build.xml.
 
+# reqirements: 
+#  sun's java sdk, http://java.sun.com/j2se/
+#  httpunit,       http://httpunit.sf.net
+#  ant,            http://jakarta.apache.org/builds/jakarta-ant/release/
+
+# usage:
+#  copy the httpunit jars to this path or add them to your CLASSPATH
+#  fix the url below for your server
+#  run makemakebuild.pl, this creates Makefile (gnu make) and build.xml (ant)
+#  run make, this compiles the classes and runs ant. 
+#  if your classpath is wrong run ant seperately to test.
+#  run ant for each test. both ant and make can run independently.
+
+#my $my_wikiurl = 'http://reini/phpwiki/';  # this will replace steve's url below if defined
+#-----------------------------------------
+
+my $ori_wikiurl = 'http://127.0.0.1:8080/~swain/phpwiki/';
 my @files = <*.inputs>;
 chomp(@files); # prolly unnecessary, but oh well.
 
@@ -18,6 +35,12 @@ foreach $inputfile (@files) {
   $inputfile =~ m/\.inputs$/;
   $javafile = "$`.java";
   $classname = $`;
+  if ($my_wikiurl and ($my_wikiurl ne $ori_wikiurl)) {
+    local $/;
+    open IN, "< $inputfile";
+    $contents = <IN>;
+    `perl -i.orig -pe 's|$ori_wikiurl|$my_wikiurl|' $inputfile` if $contents =~ m|$ori_wikiurl|;
+  }
 
   $test_make_target_names .= "$javafile ";
   $test_make_targets .=<<"EOLN";
@@ -61,15 +84,39 @@ $makefile = <<MAKEFILE_SKEL;
 # This makefile is called from an Ant build.xml though you can run
 # it by hand.
 
+.SUFFIXES: .inputs .java .class .zip 
+.PHONY: all clean buildtests dotest
+
 tests = $test_make_target_names
 
-all: \$(tests)
+# ANT_HOME=P:\\ant # path style os dependent!
+CLASSPATH="httpunit.jar:Tidy.jar:classes.zip"
 
-$test_make_targets
+testsrc = \$(wildcard *.inputs)
+javas   = \$(testsrc:.inputs=.java)
+classes = \$(javas:.java=.class)
+tests   = \$(javas:.java=)
 
-.PHONY: clean
+all: buildtests classes.zip dotest
+
+dotest: \$(classes)
+\texport CLASSPATH=\$(CLASSPATH)
+\tant 
+#\tjava -classpath "httpunit.jar:classes.zip:\${ANT_HOME}\\lib\\ant.jar" -Dant.home="\${ANT_HOME}" org.apache.tools.ant.Main \$(<:.class=)
+
+classes.zip: \$(classes)
+\tzip \$@ \$?
+
+buildtests: \$(javas)
+
 clean:
-\t-rm -f *.java
+\t-rm -f \$(javas) \$(classes) classes.zip
+
+%.java : %.inputs
+\tmaketest.pl \$<
+
+%.class : %.java
+\tjavac -classpath httpunit.jar \$<
 
 MAKEFILE_SKEL
 
@@ -89,6 +136,7 @@ $buildxml = <<"BUILDXML_SKEL";
 
    <target name="generate" depends="init">
       <exec executable="make">
+         <arg line="buildtests"/>
       </exec>
    </target>
 
