@@ -84,6 +84,8 @@ $locale["Bad action: '%s'"] =
    "Ungültige Aktion: »%s«";
 $locale["Bad file type: %s"] =
    "Ungültiger Dateityp: %s";
+$locale["Bad form submission"] =
+   "Ungültiges Formular eingesendet";
 $locale["Bad header type: %s"] =
    "Ungültiger Dateiheader: %s ";
 $locale["Bad key %s in table"] =
@@ -220,6 +222,10 @@ $locale["IncludePage"] =
    "SeiteEinfügen";
 $locale["Included from %s"] =
    "Eingefügter Text von %s";
+$locale["Insufficient permissions."] =
+   "Erlaubnisse nicht ausreichend.";
+$locale["Invalid password or userid."] =
+   "Ungültiges Passwort oder Benutzername.";
 $locale["Last"] =
    "Letzte";
 $locale["Last edited on %s."] =
@@ -298,6 +304,8 @@ $locale["PhpWiki is unable to save your changes, because another user edited and
    "PhpWiki kann deine Veränderungen nicht speichern, da ein anderer Benützer die Seite verändert und gespeichert hat, während du diese Seite editiert hast. Wenn die Seite jetzt gespeichert werden würde, dann würden die Veränderungen des anderen Benützers verlorengehen.";
 $locale["PhpWikiAdministration"] =
    "PhpWikiSystemverwalten";
+$locale["Please Sign In"] =
+   "Bitte melde dich an:";
 $locale["Please enter your name as WordsStrungTogether (e.g. John Smith as JohnSmith)."] =
    "Gib bitte deinen Namen als ZusammenGesetztesHauptWort ein. (z.B. Hans Müller als HansMüller).";
 $locale["Please re-enter your name in this form."] =
@@ -365,7 +373,7 @@ $locale["Show changes for: %s"] =
 $locale["Show minor edits for: %s"] =
    "Zeige geringfügige Änderungen innerhalb von: %s";
 $locale["Sign In"] =
-   "AnMelden";
+   "Anmelden";
 $locale["Sign in:"] =
    "Melde dich an:";
 $locale["SignIn"] =
@@ -466,6 +474,8 @@ $locale["View the current version"] =
    "Siehe die aktuellste Version";
 $locale["ViewSource"] =
    "QuellText";
+$locale["Visited pages on this wiki, ordered by popularity:"] =
+   "Die besuchten Seiten dieses Wikis, nach Popularität geordnet:";
 $locale["WARNING: database still locked"] =
    "WARNUNG: Datenbank ist gesperrt";
 $locale["Warning!"] =
@@ -562,6 +572,8 @@ $locale["version %d of %s"] =
    "Version %d. von %s";
 $locale["version %s"] =
    "Version %s.";
+$locale["walkabout"] =
+   "walkabout";
 $locale["walkabout for %s"] =
    "walkabout für %s";
 
