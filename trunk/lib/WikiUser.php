@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiUser.php,v 1.15 2002-08-22 23:28:31 rurban Exp $');
+<?php rcs_id('$Id: WikiUser.php,v 1.16 2002-08-22 23:42:51 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -42,7 +42,8 @@ class WikiUser {
         if (isa($userid, 'WikiUser')) {
             $this->_userid   = $userid->_userid;
             $this->_level    = $userid->_level;
-            $this->_authmethod = $userid->_authmethod;
+            if (isset($userid->_authmethod))
+                $this->_authmethod = $userid->_authmethod;
         }
         else {
             $this->_userid = $userid;
