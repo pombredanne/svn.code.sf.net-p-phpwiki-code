@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.12 2001-02-08 10:29:44 ahollosi Exp $');
+<?php rcs_id('$Id: transform.php,v 1.13 2001-02-09 04:00:25 dairiki Exp $');
 
 define('WT_TOKENIZER', 1);
 define('WT_SIMPLE_MARKUP', 2);
@@ -414,7 +414,7 @@ of tokenized strings is done by do_transform().
       if (strpos($line, '%%Search%%') !== false) {
          $html = "<form action=\"$ScriptUrl\">\n" .
 	     "<input type=text size=30 name=search>\n" .
-	     "<input type=submit value=\"". gettext("Search") .
+	     "<input type=submit value=\"". htmlspecialchars(gettext("Search")) .
 	     "\"></form>\n";
 	 $line = str_replace('%%Search%%', $html, $line);
       }
@@ -426,8 +426,8 @@ of tokenized strings is done by do_transform().
       global $ScriptUrl;
       if (strpos($line, '%%Fullsearch%%') !== false) {
          $html = "<form action=\"$ScriptUrl\">\n" .
-	     "<input type=text size=30 name=full\n" .
-	     "<input type=submit value=\"". gettext("Search") .
+	     "<input type=text size=30 name=full>\n" .
+	     "<input type=submit value=\"". htmlspecialchars(gettext("Search")) .
 	     "\"></form>\n";
 	 $line = str_replace('%%Fullsearch%%', $html, $line);
       }
