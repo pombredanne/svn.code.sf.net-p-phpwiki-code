@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Toolbar.php,v 1.11 2002-01-09 16:34:35 carstenklapp Exp $');
+<?php rcs_id('$Id: Toolbar.php,v 1.12 2002-01-09 18:58:10 carstenklapp Exp $');
 
 //require_once("lib/ErrorManager.php");
 //require_once("lib/WikiPlugin.php");
@@ -122,7 +122,9 @@ function toolbar_Info_LastModified($is_current, $lastmodified, $version) {
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Template token: ${PAGE_ACTIONS} not working yet
+// Template token: ${PAGE_ACTIONS}
+
+// not working yet
 
 // Requires:
 // $pagelocked  = $page->get('locked');
@@ -179,6 +181,9 @@ function toolbar_action_PageActions($pagelocked, $userisadmin, $is_current, $ver
     }
     //$html .= separator() ."<plugin-link BackLinks page=\"" .$pagename ."\"";
     $html .= separator() ."<a class=\"wikiaction\" href=\""
+        . WikiURL(_("LikePages"), array('page' => $pagename)) ."\">"
+        ._("LikePages") ."</a>";
+    $html .= separator() ."<a class=\"wikiaction\" href=\""
         . WikiURL(_("BackLinks"), array('page' => $pagename)) ."\">"
         ._("BackLinks") ."</a>";
 
@@ -216,6 +221,9 @@ function toolbar_action_SearchActions($pagename, $charset) {
     $html .= separator() ."<a class=\"wikiaction\" href=\""
         . WikiURL(_("LikePages"), array('page' => $pagename)) ."\">"
         ._("LikePages") ."</a>";
+    $html .= separator() ."<a class=\"wikiaction\" href=\""
+        . WikiURL(_("BackLinks"), array('page' => $pagename)) ."\">"
+        ._("BackLinks") ."</a>";
 
     //$html .= "</form>";
     return $html;
