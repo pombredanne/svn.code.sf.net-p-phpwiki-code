@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: EditMetaData.php,v 1.7 2003-11-22 17:41:42 carstenklapp Exp $');
+rcs_id('$Id: EditMetaData.php,v 1.8 2003-11-27 17:05:41 carstenklapp Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -51,7 +51,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     // Arguments:
@@ -71,7 +71,7 @@ extends WikiPlugin
         if (!$page)
             return '';
 
-        $hidden_pagemeta = array ();
+        $hidden_pagemeta = array ('_cached_html');
         $readonly_pagemeta = array ('hits');
         $dbi = $request->getDbh();
         $p = $dbi->getPage($page);
@@ -170,6 +170,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2003/11/22 17:41:42  carstenklapp
+// Minor internal change: Removed redundant call to gettext within
+// fmt(). (locale make: EditMetaData.php:113: warning: keyword nested in
+// keyword arg)
+//
 // Revision 1.6  2003/02/26 01:56:52  dairiki
 // Tuning/fixing of POST action URLs and hidden inputs.
 //
