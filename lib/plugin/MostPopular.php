@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopular.php,v 1.24 2004-03-01 13:48:46 rurban Exp $');
+rcs_id('$Id: MostPopular.php,v 1.25 2004-03-30 02:38:06 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -38,7 +38,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.24 $");
+                            "\$Revision: 1.25 $");
     }
 
     function getDefaultArguments() {
@@ -50,12 +50,13 @@ extends WikiPlugin
                      'info'     => false
                     );
     }
+    
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
 
     function run($dbi, $argstr, &$request, $basepage) {
-    	$request->setArg('nocache','1');
+    	//$request->setArg('nocache','1');
         extract($this->getArgs($argstr, $request));
 
         $columns = $info ? explode(",", $info) : array();
@@ -64,7 +65,6 @@ extends WikiPlugin
         $pagelist = new PageList($columns, $exclude);
 
         $pages = $dbi->mostPopular($limit,$sortby);
-
         while ($page = $pages->next()) {
             $hits = $page->get('hits');
             // don't show pages with no hits if most popular pages
@@ -91,6 +91,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2004/03/01 13:48:46  rurban
+// rename fix
+// p[] consistency fix
+//
 // Revision 1.23  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //
