@@ -35,7 +35,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.0-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.35 2001-12-06 21:13:30 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.36 2001-12-06 22:11:23 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -268,7 +268,7 @@ $logo = "images/wikibase.png";
 // this turns on url indicator icons, inserted before embedded links
 // FIXME: need a special icon (question mark?) for unknown protocols.
 /*
-$LINK_ICONS = array(
+$URL_LINK_ICONS = array(
                     'http'	=> 'images/http.png',
                     'https'	=> 'images/https.png',
                     'ftp'	=> 'images/ftp.png',
