@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ListSubpages.php,v 1.5 2004-09-13 14:59:56 rurban Exp $');
+rcs_id('$Id: ListSubpages.php,v 1.6 2004-11-23 15:17:19 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -40,18 +40,20 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
-        return array('noheader' => false, // no header
+        return array_merge
+            (
+             PageList::supportedArgs(),
+               array('noheader' => false, // no header
                      'basepage' => false, // subpages of which page, default: current
-                     'pages'    => '',    // maximum number of pages
-                                          //  to include
-                     'exclude'  => '',
-                   /*'relative' => false, */
+                     'maxpages' => '',    // maximum number of pages to include, change that to limit
+                     //'exclude'  => '',
+                     /*'relative' => false, */
                      'info'     => ''
-                     );
+                     ));
     }
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor,count
@@ -75,8 +77,8 @@ extends WikiPlugin
 
         $content = HTML();
         $subpages = array_reverse($subpages);
-        if ($pages) {
-            $subpages = array_slice ($subpages, 0, $pages);        
+        if ($maxpages) {
+            $subpages = array_slice ($subpages, 0, $maxpages);
         }
 
         $descrip = fmt("SubPages of %s:",
@@ -121,6 +123,9 @@ class _PageList_Column_ListSubpages_count extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/09/13 14:59:56  rurban
+// info=count: number of backlinks for this subpage
+//
 // Revision 1.4  2004/08/18 11:15:11  rurban
 // added basepage argument. Default current
 //

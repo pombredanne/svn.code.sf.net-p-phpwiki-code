@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.29 2004-11-09 17:11:17 rurban Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.30 2004-11-23 15:17:19 rurban Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -46,7 +46,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.29 $");
+                            "\$Revision: 1.30 $");
     }
 
     function getDefaultArguments() {
@@ -133,11 +133,10 @@ extends WikiPlugin_WikiAdminSelect
         if (!is_numeric($args['min_age']))
             $args['min_age'] = -1;
         $this->_args =& $args;
-        
-        if (!empty($args['exclude']))
+        /*if (!empty($args['exclude']))
             $exclude = explodePageList($args['exclude']);
         else
-            $exclude = false;
+        $exclude = false;*/
         $this->preSelectS($args, $request);
 
         $p = $request->getArg('p');
@@ -176,9 +175,9 @@ extends WikiPlugin_WikiAdminSelect
         }
         if ($next_action == 'select') {
             // List all pages to select from.
-            $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit']);
+            $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit'], $args['exclude']);
         }
-        $pagelist = new PageList_Selectable($args['info'], $exclude, 
+        $pagelist = new PageList_Selectable($args['info'], $args['exclude'], 
                                             array('types' => 
                                                   array('remove'
                                                         => new _PageList_Column_remove('remove', _("Remove")))));
@@ -237,6 +236,17 @@ class _PageList_Column_remove extends _PageList_Column {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.29  2004/11/09 17:11:17  rurban
+// * revert to the wikidb ref passing. there's no memory abuse there.
+// * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively
+//   store page ids with getPageLinks (GleanDescription) of all existing pages, which
+//   are also needed at the rendering for linkExistingWikiWord().
+//   pass options to pageiterator.
+//   use this cache also for _get_pageid()
+//   This saves about 8 SELECT count per page (num all pagelinks).
+// * fix passing of all page fields to the pageiterator.
+// * fix overlarge session data which got broken with the latest ACCESS_LOG_SQL changes
+//
 // Revision 1.28  2004/11/01 10:43:59  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session

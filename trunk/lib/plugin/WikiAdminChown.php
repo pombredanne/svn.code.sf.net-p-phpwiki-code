@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminChown.php,v 1.6 2004-06-16 10:38:59 rurban Exp $');
+rcs_id('$Id: WikiAdminChown.php,v 1.7 2004-11-23 15:17:19 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -43,7 +43,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
@@ -99,10 +99,10 @@ extends WikiPlugin_WikiAdminSelect
         $this->_args = $args;
         if (empty($args['user']))
             $args['user'] = $request->_user->UserName();
-        if (!empty($args['exclude']))
+        /*if (!empty($args['exclude']))
             $exclude = explodePageList($args['exclude']);
         else
-            $exclude = false;
+        $exclude = false;*/
         $this->preSelectS($args, $request);
 
         $p = $request->getArg('p');
@@ -137,14 +137,14 @@ extends WikiPlugin_WikiAdminSelect
         }
         if ($next_action == 'select' and empty($pages)) {
             // List all pages to select from.
-            $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit']);
+            $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit'], $args['exclude']);
         }
         /* // let the user decide which info
          if ($next_action == 'verify') {
             $args['info'] = "checkbox,pagename,owner,mtime";
         }
         */
-        $pagelist = new PageList_Selectable($args['info'], $exclude, $args);
+        $pagelist = new PageList_Selectable($args['info'], $args['exclude'], $args);
         $pagelist->addPageList($pages);
 
         $header = HTML::p();
@@ -189,6 +189,15 @@ extends WikiPlugin_WikiAdminSelect
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/06/16 10:38:59  rurban
+// Disallow refernces in calls if the declaration is a reference
+// ("allow_call_time_pass_reference clean").
+//   PhpWiki is now allow_call_time_pass_reference = Off clean,
+//   but several external libraries may not.
+//   In detail these libs look to be affected (not tested):
+//   * Pear_DB odbc
+//   * adodb oracle
+//
 // Revision 1.5  2004/06/14 11:31:39  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList

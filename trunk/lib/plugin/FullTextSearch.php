@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.22 2004-05-28 11:01:58 rurban Exp $');
+rcs_id('$Id: FullTextSearch.php,v 1.23 2004-11-23 15:17:19 rurban Exp $');
 /*
 Copyright 1999,2000,2001,2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -45,18 +45,21 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.22 $");
+                            "\$Revision: 1.23 $");
     }
 
     function getDefaultArguments() {
-        return array('s'        => false,
-                     'hilight'  => true,
-                     'case_exact' => false,  //not yet supported
-                     'regex'    => false,    //not yet supported
-                     'noheader' => false,
-                     'exclude'  => false,  //comma-seperated list of glob
-                     'limit'    => false,
-                     'quiet'    => false); // be less verbose
+        return array_merge
+            (
+             PageList::supportedArgs(), // paging and more.
+             array('s'        => false,
+                   'hilight'  => true,
+                   'case_exact' => false, //not yet supported
+                   'regex'    => false,   //not yet supported
+                   'noheader' => false,
+                   'exclude'  => false,   //comma-seperated list of glob
+                   'limit'    => false,
+                   'quiet'    => false));  // be less verbose
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
@@ -64,7 +67,6 @@ extends WikiPlugin
         $args = $this->getArgs($argstr, $request);
         if (empty($args['s']))
             return '';
-
         extract($args);
 
         $query = new TextSearchQuery($s, $case_exact, $regex);
@@ -134,6 +136,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.22  2004/05/28 11:01:58  rurban
+// support to disable highlighting
+// example: s=ReiniUrban&hilight=0&noheader=1
+//
 // Revision 1.21  2004/04/18 01:11:52  rurban
 // more numeric pagename fixes.
 // fixed action=upload with merge conflict warnings.

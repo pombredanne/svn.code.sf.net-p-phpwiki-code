@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PopularNearby.php,v 1.4 2004-05-01 18:02:41 rurban Exp $');
+rcs_id('$Id: PopularNearby.php,v 1.5 2004-11-23 15:17:19 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -50,13 +50,13 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
         return array('pagename' => '[pagename]',
                      'mode'     => 'nearby', // or 'incoming' or 'outgoing'
-                     'exclude'  => '',
+                     //'exclude'  => false,  // not yet
                      'limit'    => 5,
                      'noheader' => 0,
                     );
@@ -157,6 +157,9 @@ function cmp_by_hits($a, $b) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/05/01 18:02:41  rurban
+// 4.0.6 obviously cannot use methods as cmp function. so it must be a global func
+//
 // Revision 1.2  2004/04/29 23:25:12  rurban
 // re-ordered locale init (as in 1.3.9)
 // fixed loadfile with subpages, and merge/restore anyway

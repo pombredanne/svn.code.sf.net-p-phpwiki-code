@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllUsers.php,v 1.17 2004-11-19 13:25:31 rurban Exp $');
+rcs_id('$Id: AllUsers.php,v 1.18 2004-11-23 15:17:19 rurban Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -43,7 +43,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.17 $");
+                            "\$Revision: 1.18 $");
     }
 
     function getDefaultArguments() {
@@ -67,12 +67,6 @@ extends WikiPlugin
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         extract($args);
-        if ($sorted = $request->getArg('sortby'))
-            $sortby = $sorted;
-        elseif ($sortby)
-            $request->setArg('sortby',$sortby);
-
-        //if (defined('DEBUG') and DEBUG) $debug = true;
         if ($debug)
             $timer = new DebugTimer;
 
@@ -89,7 +83,7 @@ extends WikiPlugin
             $pagelist->setCaption(_("Authenticated users on this wiki (%d total):"));
         if ($include_empty and empty($info))
             $pagelist->_addColumn('version');
-        list($offset,$pagesize) = $pagelist->limit($args['limit']);
+        list($offset, $pagesize) = $pagelist->limit($args['limit']);
         if (!$pagesize) {
             $pagelist->addPageList($allusers);
         } else {
@@ -116,6 +110,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.17  2004/11/19 13:25:31  rurban
+// clarify docs
+//
 // Revision 1.16  2004/09/25 16:37:18  rurban
 // add support for all PageList options
 //

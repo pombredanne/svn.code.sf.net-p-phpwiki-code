@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UnfoldSubpages.php,v 1.16 2004-09-25 16:35:09 rurban Exp $');
+rcs_id('$Id: UnfoldSubpages.php,v 1.17 2004-11-23 15:17:19 rurban Exp $');
 /*
  Copyright 2002, 2004 $ThePhpWikiProgrammingTeam
 
@@ -41,35 +41,33 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.16 $");
+                            "\$Revision: 1.17 $");
     }
 
     function getDefaultArguments() {
-        return array(
-            'pagename' => '[pagename]', // default: current page
-            //'header'  => '',  // expandable string
-            'quiet'   => false, // print no header
-            //'sort'    => 'asc', // deprecated: use sortby=+pagename or 
-            			//   sortby=-mtime instead,
-            'sortby'   => 'pagename', // [+|-]pagename, [+|-]mtime, [+|-]hits
-            'limit'    => 0,    
-            'pages'    => false,    // deprecated. use maxpages instead
-            'maxpages' => false,   // maximum number of pages to include
-            'sections' => false,// maximum number of sections per page to
-            			//  include
-            'smalltitle' => false, // if set, hide transclusion-title,
-                                //  just have a small link at the start of 
-            			//  the page.
-            'words'   => false, // maximum number of words
-                                //  per page to include
-            'lines'   => false, // maximum number of lines
-                                //  per page to include
-            'bytes'   => false, // maximum number of bytes
-                                //  per page to include
-            'section' => false, // this named section per page only
-            'sectionhead' => false // when including a named
-                                //  section show the heading
-            );
+        return array_merge
+            (
+             PageList::supportedArgs(),
+             array(
+                   'pagename' => '[pagename]', // default: current page
+                   //'header'  => '',  // expandable string
+                   'quiet'   => false, // print no header
+                   'sortby'   => 'pagename', // [+|-]pagename, [+|-]mtime, [+|-]hits
+                   'maxpages' => false, // maximum number of pages to include
+                   'sections' => false, // maximum number of sections per page to include
+                   'smalltitle' => false, // if set, hide transclusion-title,
+                   			//  just have a small link at the start of 
+            				//  the page.
+                   'words'   => false, 	// maximum number of words
+                                	//  per page to include
+                   'lines'   => false, 	// maximum number of lines
+                                	//  per page to include
+                   'bytes'   => false, 	// maximum number of bytes
+                                	//  per page to include
+                   'section' => false, 	// this named section per page only
+                   'sectionhead' => false // when including a named
+                   			//  section show the heading
+                   ));
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
@@ -78,7 +76,7 @@ extends WikiPlugin
         
         $args = $this->getArgs($argstr, $request);
         extract($args);
-        $subpages = explodePageList($pagename . SUBPAGE_SEPARATOR . '*',false,$sortby,$limit);
+        $subpages = explodePageList($pagename . SUBPAGE_SEPARATOR . '*', false, $sortby, $limit, $exclude);
         if (! $subpages ) {
             return $this->error(_("The current page has no subpages defined."));
         }           
@@ -152,6 +150,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2004/09/25 16:35:09  rurban
+// use stdlib firstNWordsOfContent, extractSection
+//
 // Revision 1.15  2004/07/03 14:48:18  rurban
 // Tested new mysql 4.1.3-beta: binary search bug as fixed.
 // => fixed action=upgrade,

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.53 2004-11-19 19:22:03 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.54 2004-11-23 15:17:16 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,10 +87,10 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.53 $");
+        //                    "\$Revision: 1.54 $");
     }
 
-    function getArgs($argstr, $request=false, $defaults = false) {
+    function getArgs($argstr, $request=false, $defaults=false) {
         if ($defaults === false) {
             $defaults = $this->getDefaultArguments();
         }
@@ -124,6 +124,26 @@ class WikiPlugin
             else
                 trigger_error(sprintf(_("argument '%s' not declared by plugin"),
                                       $arg), E_USER_NOTICE);
+        }
+
+        // add special handling of pages and exclude args to accept <! plugin-list !>
+        // and split explodePageList($args['exclude']) => array()
+        // TODO : handle p[] pagehash
+        foreach (array('pages', 'exclude') as $key) {
+            if (!empty($args[$key]) and array_key_exists($key, $defaults))
+                $args[$key] = is_string($args[$key])
+                    ? explodePageList($args[$key])
+                    : $args[$key]; // <! plugin-list !>
+        }
+
+        // always override sortby,limit from the REQUEST. ignore defaults if defined as such.
+        foreach (array('sortby', 'limit') as $key) {
+            if (array_key_exists($key, $defaults)) {
+                if ($val = $request->getArg($key))
+                    $args[$key] = $val;
+                elseif (!empty($args[$key]))
+                    $GLOBALS['request']->setArg($val, $args[$val]);
+            }
         }
         return $args;
     }
@@ -272,7 +292,7 @@ class WikiPlugin
     function makeForm($argstr, $request) {
         $form_defaults = $this->getDefaultFormArguments();
         $defaults = array_merge($form_defaults, 
-                                array('start_debug' => false),
+                                array('start_debug' => $request->getArg('start_debug')),
         			$this->getDefaultArguments());
     
         $args = $this->getArgs($argstr, $request, $defaults);
@@ -286,7 +306,8 @@ class WikiPlugin
                                  'accept-charset' => $GLOBALS['charset']));
         if (! USE_PATH_INFO ) {
             $pagename = $request->get('pagename');
-            $form->pushContent(HTML::input(array('type' => 'hidden', 'name' => 'pagename', 
+            $form->pushContent(HTML::input(array('type' => 'hidden', 
+                                                 'name' => 'pagename', 
                                                  'value' => $args['targetpage'])));
         }
         if ($args['targetpage'] != $this->getName()) {

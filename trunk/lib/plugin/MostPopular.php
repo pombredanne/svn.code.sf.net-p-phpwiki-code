@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopular.php,v 1.30 2004-10-14 19:19:34 rurban Exp $');
+rcs_id('$Id: MostPopular.php,v 1.31 2004-11-23 15:17:19 rurban Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -38,7 +38,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.30 $");
+                            "\$Revision: 1.31 $");
     }
 
     function getDefaultArguments() {
@@ -46,12 +46,12 @@ extends WikiPlugin
             (
              PageList::supportedArgs(),
              array('pagename' => '[pagename]', // hackish
-                   'exclude'  => '',
+                   //'exclude'  => '',
                    'limit'    => 20, // limit <0 returns least popular pages
                    'noheader' => 0,
                    'sortby'   => 'hits',
                    'info'     => false,
-                   'paging'   => 'auto'
+                   //'paging'   => 'auto'
                    ));
     }
     
@@ -107,6 +107,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.30  2004/10/14 19:19:34  rurban
+// loadsave: check if the dumped file will be accessible from outside.
+// and some other minor fixes. (cvsclient native not yet ready)
+//
 // Revision 1.29  2004/09/25 16:33:52  rurban
 // add support for all PageList options
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FuzzyPages.php,v 1.11 2004-02-17 12:11:36 rurban Exp $');
+rcs_id('$Id: FuzzyPages.php,v 1.12 2004-11-23 15:17:19 rurban Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -47,7 +47,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     function getDefaultArguments() {
@@ -157,9 +157,7 @@ extends WikiPlugin
         $this->_list = array();
 
         $this->collectSimilarPages($this->_list, $dbi);
-
         $this->sortCollectedPages($this->_list);
-
         return $this->formatTable($this->_list, $dbi);
     }
 
@@ -186,6 +184,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/02/17 12:11:36  rurban
+// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
+//
 // Revision 1.10  2003/02/22 20:49:55  dairiki
 // Fixes for "Call-time pass by reference has been deprecated" errors.
 //
