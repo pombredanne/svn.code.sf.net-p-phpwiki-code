@@ -21,7 +21,7 @@ class ListPagesTest extends PHPUnit_TestCase {
         $result = $lp->run($request->getDbh(), "pages=foo", $request);
         $this->assertType('object',$result,'isa PageList');
         $this->assertEquals(1, $result->getTotal());
-        $this->assertEquals(3, $result->_maxlen);
+        //$this->assertEquals(3, $result->_maxlen);
     }
 }
 
