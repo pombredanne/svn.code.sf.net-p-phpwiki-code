@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BlogArchives.php,v 1.2 2004-12-14 21:35:15 rurban Exp $');
+rcs_id('$Id: BlogArchives.php,v 1.3 2004-12-15 17:45:08 rurban Exp $');
 /*
  * Copyright 2004 $ThePhpWikiProgrammingTeam
  */
@@ -30,7 +30,7 @@ extends WikiPlugin_WikiBlog
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -71,10 +71,12 @@ extends WikiPlugin_WikiBlog
     }
     
     function run($dbi, $argstr, &$request, $basepage) {
-        if (is_array($argstr)) // can do with array also.
+        if (is_array($argstr)) { // can do with array also.
             $args =& $argstr;
-        else
+            if (!isset($args['order'])) $args['order'] = 'reverse';
+        } else {
             $args = $this->getArgs($argstr, $request);
+        }
         if (empty($args['user'])) {
             $user = $request->getUser();
             if ($user->isAuthenticated()) {
@@ -96,6 +98,7 @@ extends WikiPlugin_WikiBlog
         //if (!is_array('pagename'), explode(',', $info))
         //    unset($pagelist->_columns['pagename']);
         
+        $sp = HTML::Raw('&middot; ');
         if (!empty($args['month'])) {
             $prefix = $parent . $this->_blogPrefix('wikiblog') . SUBPAGE_SEPARATOR . $args['month'];
             $pages = $dbi->titleSearch(new TextSearchQuery("^".$prefix, true, 'posix'));
@@ -104,7 +107,7 @@ extends WikiPlugin_WikiBlog
             	$rev = $page->getCurrentRevision(false);
             	if ($rev->get('pagetype') != 'wikiblog') continue;
                 $blog = $this->_blog($rev);
-                $html->pushContent(WikiLink($page, 'known', $rev->get('summary')));
+                $html->pushContent(HTML::li(WikiLink($page, 'known', $rev->get('summary'))));
             }
             if (!$args['noheader'])
                 return HTML(HTML::h3(sprintf(_("Blog Entries for %s:"), $this->_monthTitle($args['month']))),
@@ -136,9 +139,9 @@ extends WikiPlugin_WikiBlog
                     $months[$mon]['num']++;
             }
             foreach ($months as $m) {
-                $html->pushContent(HTML::a(array('href'=>$m['link'],
-                                                 'class' => 'named-wiki'),
-                                           $m['title'] . " (".$m['num'].")"));
+                $html->pushContent(HTML::li(HTML::a(array('href'=>$m['link'],
+                                                          'class' => 'named-wiki'),
+                                                    $m['title'] . " (".$m['num'].")")));
             }
             if (!$args['noheader'])
                 return HTML(HTML::h3(_("Blog Archives:")), $html);
@@ -158,6 +161,9 @@ extends WikiPlugin_WikiBlog
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/12/14 21:35:15  rurban
+// support new BLOG_EMPTY_DEFAULT_PREFIX
+//
 // Revision 1.1  2004/12/13 13:22:57  rurban
 // new BlogArchives plugin for the new blog theme. enable default box method
 // for all plugins. Minor search improvement.
