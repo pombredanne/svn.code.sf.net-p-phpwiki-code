@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AppendText.php,v 1.2 2004-11-25 08:29:43 rurban Exp $');
+rcs_id('$Id: AppendText.php,v 1.3 2004-11-25 13:56:23 rurban Exp $');
 /*
 Copyright 2004 Pascal Giard <evilynux@gmail.com>
 
@@ -22,6 +22,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 /**
  * Append text to an existing page.
+ *
+ * See http://sourceforge.net/mailarchive/forum.php?thread_id=6028698&forum_id=4517 
+ * why not to use "text" as parameter. Nasty mozilla bug with mult. radio rows.
  */
 class WikiPlugin_AppendText
 extends WikiPlugin
@@ -36,12 +39,12 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
         return array('page'     => '[pagename]',
-                     'text'     => '',  // Text to append
+                     's'        => '',  // Text to append.
                      'before'   => '',  // Add before (ignores after if defined)
                      'after'    => '',  // Add after line beginning with this
                      );
@@ -57,7 +60,7 @@ extends WikiPlugin
         $args = $this->getArgs($argstr, $request);
         $pagename = $args['page'];
 
-        if (empty($args['text']))
+        if (empty($args['s']))
             if ($request->isPost() and $pagename != _("AppendText"))
                 return HTML($request->redirect(WikiURL($pagename, false, 'absurl'), false));
             else    
@@ -74,7 +77,7 @@ extends WikiPlugin
             
         $current = $page->getCurrentRevision();
         $oldtext = $current->getPackedContent();
-        $text = $args['text'];
+        $text = $args['s'];
 
         // If a "before" or "after" is specified but not found, we simply append text to the end.
         if (!empty($args['before'])) {
@@ -117,6 +120,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/11/25 08:29:43  rurban
+// update from Pascal
+//
 // Revision 1.2  2004/11/24 11:22:30  Pascal Giard <evilynux@gmail.com>
 // * Integrated rurban's modifications.
 //
