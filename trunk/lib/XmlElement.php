@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.8 2002-01-24 19:10:40 rurban Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.9 2002-01-24 20:08:55 carstenklapp Exp $');
 /*
  * Code for writing XML.
  */
@@ -91,15 +91,16 @@ class XmlElement
                     continue;
                 $val = $attr;
             }
-            $start .= " $attr=\"" . $this->_quoteAttr($val) . '"';
+            $start .= " $attr=\"" . $this->_quoteAttr($val) . "\"";
         }
         $start .= ">";
         return $start;
     }
-    /*
+
     function _emptyTag() {
-        return substr($this->_startTag(), 0, -1) . "/>";
-    }*/
+        return substr($this->_startTag(), 0, -1) . " />";
+    }
+
     function _endTag() {
         return substr($this->_startTag(), 0, -1) . "/>";
     }
@@ -123,7 +124,7 @@ class XmlElement
 
     function asXML () {
         if ($this->isEmpty())
-            return $this->_emptyTag();
+            return $this->_emptyTag()."\n";
 
         $sep = $this->hasInlineContent() ? "" : "\n";
         $xml =  $this->_startTag() . $sep;
