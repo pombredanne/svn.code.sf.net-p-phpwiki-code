@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.86 2005-01-29 19:51:02 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.87 2005-02-10 19:04:24 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -1091,6 +1091,9 @@ extends WikiDB_backend
     function connection() {
         return $this->_dbh->connection;
     }
+    function getRow($query) {
+        return $this->_dbh->getRow($query);
+    }
 
     function listOfTables() {
         return $this->_dbh->getListOf('tables');
@@ -1227,6 +1230,10 @@ extends WikiDB_backend_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.86  2005/01/29 19:51:02  rurban
+// Bugs item #1077769 fixed by frugal.
+// Deleted the wrong page. Fix all other tables also.
+//
 // Revision 1.85  2005/01/25 08:03:35  rurban
 // support DATABASE_PERSISTENT besides dsn database?persistent=false; move lock_count up (per Charles Corrigan)
 //
