@@ -17,11 +17,11 @@
 // |          Stig Bakken <ssb@fast.no>                                   |
 // +----------------------------------------------------------------------+
 //
-// Based on code from the PHP CVS repository.  The only modifications made
-// have been modification of the include paths.
+// Based on DB 1.3 from the pear.php.net repository. 
+// The only modifications made have been modification of the include paths. 
 //
-rcs_id('$Id: pgsql.php,v 1.1 2002-01-28 04:01:57 dairiki Exp $');
-rcs_id('From Pear CVS: Id: pgsql.php,v 1.63 2002/01/17 11:31:12 cox Exp');
+rcs_id('$Id: pgsql.php,v 1.2 2002-09-12 11:45:33 rurban Exp $');
+rcs_id('From Pear CVS: Id: pgsql.php,v 1.5 2002/05/09 12:29:53 ssb Exp');
 //
 // Database independent query interface definition for PHP's PostgreSQL
 // extension.
@@ -93,7 +93,7 @@ class DB_pgsql extends DB_common
 
         if ($protocol == 'tcp') {
             $connstr = 'host=' . $dsninfo['hostspec'];
-            if ($dsninfo['port']) {
+            if (!empty($dsninfo['port'])) {
                 $connstr .= ' port=' . $dsninfo['port'];
             }
         }
@@ -179,8 +179,8 @@ class DB_pgsql extends DB_common
         if ($ismanip) {
             $this->affected = @pg_cmdtuples($result);
             return DB_OK;
-        } elseif (preg_match('/^\s*(SELECT)\s/i', $query) &&
-                  !preg_match('/^\s*(SELECT\s+INTO)\s/i', $query)) {
+        } elseif (preg_match('/^\s*\(?\s*SELECT\s+/si', $query) &&
+                  !preg_match('/^\s*\(?\s*SELECT\s+INTO\s/si', $query)) {
             /* PostgreSQL commands:
                ABORT, ALTER, BEGIN, CLOSE, CLUSTER, COMMIT, COPY,
                CREATE, DECLARE, DELETE, DROP TABLE, EXPLAIN, FETCH,
@@ -239,11 +239,11 @@ class DB_pgsql extends DB_common
         static $error_regexps;
         if (empty($error_regexps)) {
             $error_regexps = array(
-                '/(Table does not exist\.|Relation \'.*\' does not exist|sequence does not exist|class ".+" not found)$/' => DB_ERROR_NOSUCHTABLE,
-                '/Relation \'.*\' already exists|Cannot insert a duplicate key into (a )?unique index.*/'      => DB_ERROR_ALREADY_EXISTS,
+                '/(Table does not exist\.|Relation [\"\'].*[\"\'] does not exist|sequence does not exist|class ".+" not found)$/' => DB_ERROR_NOSUCHTABLE,
+                '/Relation [\"\'].*[\"\'] already exists|Cannot insert a duplicate key into (a )?unique index.*/'      => DB_ERROR_ALREADY_EXISTS,
                 '/divide by zero$/'                     => DB_ERROR_DIVZERO,
                 '/pg_atoi: error in .*: can\'t parse /' => DB_ERROR_INVALID_NUMBER,
-                '/ttribute \'.*\' not found$|Relation \'.*\' does not have attribute \'.*\'/' => DB_ERROR_NOSUCHFIELD,
+                '/ttribute [\"\'].*[\"\'] not found$|Relation [\"\'].*[\"\'] does not have attribute [\"\'].*[\"\']/' => DB_ERROR_NOSUCHFIELD,
                 '/parser: parse error at or near \"/'   => DB_ERROR_SYNTAX,
                 '/referential integrity violation/'     => DB_ERROR_CONSTRAINT
             );
@@ -495,11 +495,11 @@ class DB_pgsql extends DB_common
      */
     function nextId($seq_name, $ondemand = true)
     {
-        $sqn = preg_replace('/[^a-z0-9_]/i', '_', $seq_name);
+        $seqname = $this->getSequenceName($seq_name);
         $repeat = 0;
         do {
             $this->pushErrorHandling(PEAR_ERROR_RETURN);
-            $result = $this->query("SELECT NEXTVAL('${sqn}_seq')");
+            $result = $this->query("SELECT NEXTVAL('${seqname}')");
             $this->popErrorHandling();
             if ($ondemand && DB::isError($result) &&
                 $result->getCode() == DB_ERROR_NOSUCHTABLE) {
@@ -532,9 +532,9 @@ class DB_pgsql extends DB_common
      */
     function createSequence($seq_name)
     {
-        $sqn = preg_replace('/[^a-z0-9_]/i', '_', $seq_name);
+        $seqname = $this->getSequenceName($seq_name);
         $this->pushErrorHandling(PEAR_ERROR_RETURN);
-        $result = $this->query("CREATE SEQUENCE ${sqn}_seq");
+        $result = $this->query("CREATE SEQUENCE ${seqname}");
         $this->popErrorHandling();
         return $result;
     }
@@ -551,8 +551,8 @@ class DB_pgsql extends DB_common
      */
     function dropSequence($seq_name)
     {
-        $sqn = preg_replace('/[^a-z0-9_]/i', '_', $seq_name);
-        return $this->query("DROP SEQUENCE ${sqn}_seq");
+        $seqname = $this->getSequenceName($seq_name);
+        return $this->query("DROP SEQUENCE ${seqname}");
     }
 
     // }}}

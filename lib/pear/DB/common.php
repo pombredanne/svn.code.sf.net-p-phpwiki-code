@@ -13,15 +13,14 @@
 // | obtain it through the world-wide-web, please send a note to          |
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
-// | Authors: Stig Bakken <ssb@fast.no>                                   |
-// |                                                                      |
+// | Author: Stig Bakken <ssb@fast.no>                                    |
 // +----------------------------------------------------------------------+
 //
-// Based on code from the PHP CVS repository.  The only modifications made
-// have been modification of the include paths.
+// Based on DB 1.3 from the pear.php.net repository. 
+// The only modifications made have been modification of the include paths.
 //
-rcs_id('$Id: common.php,v 1.1 2002-01-28 04:01:57 dairiki Exp $');
-rcs_id('From Pear CVS: Id: common.php,v 1.78 2002/01/19 07:46:24 cox Exp');
+rcs_id('$Id: common.php,v 1.2 2002-09-12 11:45:33 rurban Exp $');
+rcs_id('From Pear CVS: Id: common.php,v 1.8 2002/06/12 15:03:16 fab Exp');
 //
 // Base class for DB implementations.
 //
@@ -99,7 +98,9 @@ class DB_common extends PEAR
     var $options = array(
         'persistent' => false,
         'optimize' => 'performance',
-        'debug' => 0
+        'debug' => 0,
+        'seqname_format' => '%s_seq',
+        'autofree' => false
     );
 
     /**
@@ -217,10 +218,7 @@ class DB_common extends PEAR
         if (isset($this->errorcode_map[$nativecode])) {
             return $this->errorcode_map[$nativecode];
         }
-
-        //php_error(E_WARNING, get_class($this)."::errorCode: no mapping for $nativecode");
         // Fall back to DB_ERROR if there was no mapping.
-
         return DB_ERROR;
     }
 
@@ -281,7 +279,13 @@ class DB_common extends PEAR
     {
         // The error is yet a DB error object
         if (is_object($code)) {
-            return PEAR::raiseError($code, null, null, null, null, null, true);
+            // because we the static PEAR::raiseError, our global
+            // handler should be used if it is set
+            if ($mode === null && !empty($this->_default_error_mode)) {
+                $mode    = $this->_default_error_mode;
+                $options = $this->_default_error_options;
+            }
+            return PEAR::raiseError($code, null, $mode, $options, null, null, true);
         }
 
         if ($userinfo === null) {
@@ -426,6 +430,110 @@ class DB_common extends PEAR
         $this->prepared_queries[$k] = &$query;
 
         return $k;
+    }
+
+    // }}}
+    // {{{ autoPrepare()
+
+    /**
+    * Make automaticaly an insert or update query and call prepare() with it
+    *
+    * @param string $table name of the table
+    * @param array $table_fields ordered array containing the fields names
+    * @param int $mode type of query to make (DB_AUTOQUERY_INSERT or DB_AUTOQUERY_UPDATE)
+    * @param string $where in case of update queries, this string will be put after the sql WHERE statement
+    * @return resource handle for the query
+    * @see buildManipSQL
+    * @access public
+    */
+    function autoPrepare($table, $table_fields, $mode = DB_AUTOQUERY_INSERT, $where = false)
+    {
+        $query = $this->buildManipSQL($table, $table_fields, $mode, $where);
+        return $this->prepare($query);
+    }
+
+    // {{{
+    // }}} autoExecute()
+
+    /**
+    * Make automaticaly an insert or update query and call prepare() and execute() with it
+    *
+    * @param string $table name of the table
+    * @param array $fields_values assoc ($key=>$value) where $key is a field name and $value its value
+    * @param int $mode type of query to make (DB_AUTOQUERY_INSERT or DB_AUTOQUERY_UPDATE)
+    * @param string $where in case of update queries, this string will be put after the sql WHERE statement
+    * @return mixed  a new DB_Result or a DB_Error when fail
+    * @see buildManipSQL
+    * @see autoPrepare
+    * @access public
+    */
+    function autoExecute($table, $fields_values, $mode = DB_AUTOQUERY_INSERT, $where = false)
+    {
+        $sth = $this->autoPrepare($table, array_keys($fields_values), $mode, $where);
+        return $this->execute($sth, array_values($fields_values));
+
+    }
+
+    // {{{
+    // }}} buildManipSQL()
+
+    /**
+    * Make automaticaly an sql query for prepare()
+    *
+    * Example : buildManipSQL('table_sql', array('field1', 'field2', 'field3'), DB_AUTOQUERY_INSERT)
+    *           will return the string : INSERT INTO table_sql (field1,field2,field3) VALUES (?,?,?)
+    * NB : - This belongs more to a SQL Builder class, but this is a simple facility
+    *      - Be carefull ! If you don't give a $where param with an UPDATE query, all
+    *        the records of the table will be updated !
+    *
+    * @param string $table name of the table
+    * @param array $table_fields ordered array containing the fields names
+    * @param int $mode type of query to make (DB_AUTOQUERY_INSERT or DB_AUTOQUERY_UPDATE)
+    * @param string $where in case of update queries, this string will be put after the sql WHERE statement
+    * @return string sql query for prepare()
+    * @access public
+    */
+    function buildManipSQL($table, $table_fields, $mode, $where = false)
+    {
+        if (count($table_fields)==0) {
+            $this->raiseError(DB_ERROR_NEED_MORE_DATA);
+        }
+        $first = true;
+        switch($mode) {
+        case DB_AUTOQUERY_INSERT:
+            $values = '';
+            $names = '';
+            while (list(, $value) = each($table_fields)) {
+                if ($first) {
+                    $first = false;
+                } else {
+                    $names .= ',';
+                    $values .= ',';
+                }
+                $names .= $value;
+                $values .= '?';
+            }
+            return "INSERT INTO $table ($names) VALUES ($values)";
+            break;
+        case DB_AUTOQUERY_UPDATE:
+            $set = '';
+            while (list(, $value) = each($table_fields)) {
+                if ($first) {
+                    $first = false;
+                } else {
+                    $set .= ',';
+                }
+                $set .= "$value = ?";
+            }
+            $sql = "UPDATE $table SET $set";
+            if ($where) {
+                $sql .= " WHERE $sql";
+            }
+            return $sql;
+            break;
+        default:
+            $this->raiseError(DB_ERROR_SYNTAX);
+        }
     }
 
     // }}}
@@ -649,17 +757,16 @@ class DB_common extends PEAR
     *
     * @access public
     */
-    function limitQuery($query, $from, $count)
+    function &limitQuery($query, $from, $count)
     {
         $query  = $this->modifyLimitQuery($query, $from, $count);
         $result = $this->simpleQuery($query);
         if (DB::isError($result) || $result === DB_OK) {
             return $result;
         } else {
-            $res_obj =& new DB_result($this, $result);
-            $res_obj->limit_from  = $from;
-            $res_obj->limit_count = $count;
-            return $res_obj;
+            $options['limit_from']  = $from;
+            $options['limit_count'] = $count;
+            return new DB_result($this, $result, $options);
         }
     }
 
@@ -874,7 +981,7 @@ class DB_common extends PEAR
      * overwrite like this.  Example:
      *
      * getAssoc('SELECT category,id,name FROM mytable', false, null,
-                DB_FETCHMODE_ASSOC, true) returns:
+     *          DB_FETCHMODE_ASSOC, true) returns:
      *   array(
      *     '1' => array(array('id' => '4', 'name' => 'number four'),
      *                  array('id' => '6', 'name' => 'number six')
@@ -1252,6 +1359,29 @@ class DB_common extends PEAR
         return $this->getCol($sql);                         // Launch this query
     }
     // }}}
+    // {{{ getSequenceName()
+
+    function getSequenceName($sqn)
+    {
+        return sprintf($this->getOption("seqname_format"),
+                       preg_replace('/[^a-z0-9_]/i', '_', $sqn));
+    }
+
+    // }}}
+}
+
+// Used by many drivers
+if (!function_exists('array_change_key_case')) {
+    define('CASE_UPPER', 1);
+    define('CASE_LOWER', 0);
+    function &array_change_key_case(&$array, $case) {
+        $casefunc = ($case == CASE_LOWER) ? 'strtolower' : 'strtoupper';
+        $ret = array();
+        foreach ($array as $key => $value) {
+            $ret[$casefunc($key)] = $value;
+        }
+        return $ret;
+    }
 }
 
 ?>

@@ -34,8 +34,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
   configuration options, and at the end of the file it includes() the
   file lib/main.php, where the real action begins.
 
-  This file is divided into six parts: Parts Zero, One, Two, Three,
-  Four and Five. Each one has different configuration settings you can
+  This file is divided into seven parts: Parts Zero, One, Two, Three,
+  Four, Five and Six. Each one has different configuration settings you can
   change; in all cases the default should work on your system,
   however, we recommend you tailor things to your particular setting.
 */
@@ -74,13 +74,14 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //     ;
 // }
 if (!empty($include_path)) ini_set('include_path', $include_path);
+define ('DEBUG', 1);
 
 /////////////////////////////////////////////////////////////////////
 // Part Null: Don't touch this!
 
 define ('PHPWIKI_VERSION', '1.3.4pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.95 2002-09-09 15:26:08 rurban Exp $');
+rcs_id('$Id: index.php,v 1.96 2002-09-12 11:45:33 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -102,7 +103,7 @@ define('ENABLE_REVERSE_DNS', true);
 
 // Username and password of administrator.
 // Set these to your preferences. For heaven's sake
-// pick a good password!
+// pick a good password or use our passwordencrypt.php tool.
 if (!defined('ADMIN_USER')) define('ADMIN_USER', "");
 if (!defined('ADMIN_PASSWD')) define('ADMIN_PASSWD', "");
 // If you used the passencrypt.php utility to encode the password
@@ -200,15 +201,16 @@ $DBParams = array(
    // Used only by 'dba'
    'directory'     => "/tmp",
    'dba_handler'   => 'gdbm',   // Either of 'gdbm' or 'db2' work great for me.
-   //'dba_handler'   => 'db2',
-   //'dba_handler'   => 'db3',    // Works fine on Windows, but not on every linux.
-   //'dba_handler'     => 'dbm',    // dbm suffers from limits on size of data items?
-   // On sf.net redhat there's dbm and gdbm
+   //'dba_handler' => 'db2',
+   //'dba_handler' => 'db3',    // Works fine on Windows, but not on every linux.
+   //'dba_handler' => 'dbm',    // On sf.net redhat there's dbm and gdbm.
+                                // dbm suffers from limits on size of data items?
 
    'timeout'   => 20,
    //'timeout' => 5
 );
 
+// Only for 'dbtype' => 'SQL'. See schemas/mysql.sql or schemas/psql.sql
 //define('USE_DB_SESSION',true);
 
 /////////////////////////////////////////////////////////////////////
@@ -335,7 +337,7 @@ if (!defined('REQUIRE_SIGNIN_BEFORE_EDIT')) define('REQUIRE_SIGNIN_BEFORE_EDIT',
 // LDAP auth
 if (!defined('ALLOW_LDAP_LOGIN')) define('ALLOW_LDAP_LOGIN', true and function_exists('ldap_connect'));
 if (!defined('LDAP_AUTH_HOST'))   define('LDAP_AUTH_HOST', 'localhost');
-// Give the right LDAP root search information in next statement. 
+// Give the right LDAP root search information in the next statement. 
 if (!defined('LDAP_AUTH_SEARCH')) define('LDAP_AUTH_SEARCH', "ou=mycompany.com,o=My Company");
 
 // IMAP auth: check userid/passwords from a imap server, defaults to localhost
@@ -376,32 +378,40 @@ CREATE TABLE user (
 // Seperate DB User Authentification. 
 //   Can be external, like radius, phpnuke, courier authmysql,
 //   apache auth_mysql or something else.
-// We default to store them as metadata in WikiPages.
-// The most likely option is the same dsn as the wikipages.
+// The default is to store the data as metadata in WikiPages.
+// The most likely dsn option is the same dsn as the wikipages.
 $DBAuthParams = array(
    //'auth_dsn'         => 'mysql://localhost/phpwiki',
-   //'auth_user_file'  => '/etc/shadow', // '/etc/httpd/.htpasswd'
-   //'auth_group_file' => '/etc/groups', // '/etc/httpd/.htgroup'
 
    // USER => PASSWORD
    'auth_check'  => 'SELECT passwd FROM user WHERE username="$userid"',
+   // Alternatively we accept files also. (not yet)
+   //'auth_user_file'  => '/etc/shadow', // '/etc/httpd/.htpasswd'
 
    'auth_crypt_method'  => 'crypt',     // 'crypt' (unix) or 'md5' (mysql) or just 'plain'
    // 'auth_crypt_method'  => 'md5',    // for 'mysql://localhost/mysql' users
    // 'auth_crypt_method'  => 'plain',
-   'auth_update'  => 'UPDATE user SET passwd="$crypt_passwd" WHERE username="$userid"',
-   //'auth_update'  => 'UPDATE user SET passwd="$md5_passwd" WHERE username="$userid"',
-   //'auth_update'  => 'UPDATE user SET passwd="$plain_passwd" WHERE username="$userid"',
+
+   // If 'auth_update' is not defined but 'auth_check' is defined, the user cannot 
+   // change his password.
+   // $password is processed  by the 'auth_crypt_method'.
+   'auth_update'  => 'UPDATE user SET password="$password" WHERE username="$userid"',
 
    // USER => PREFERENCES
+   //   This can be optionally defined in an external DB. 
+   //   The default is the users homepage.
    //'pref_select' => 'SELECT pref from user WHERE username="$userid"',
    //'pref_update' => 'UPDATE user SET prefs="$pref_blob" WHERE username="$userid"',
 
    // USERS <=> GROUPS
-   // all members of the group
+   //   This can be optionally defined in an external DB. The default is a 
+   //   special locked wikipage for groupmembers .(which?)
+   // All members of the group:
    'group_members' => 'SELECT username FROM grouptable WHERE groupname="$group"',
-   // all groups this user belongs to
+   // All groups this user belongs to:
    'user_groups' => 'SELECT groupname FROM grouptable WHERE username="$userid"',
+   // Alternatively we accept files also. (not yet)
+   //'auth_group_file' => '/etc/groups', // '/etc/httpd/.htgroup'
 
    'dummy' => false,
 );
@@ -448,9 +458,9 @@ define('THEME', 'default');
 // area in the future).
 define("CHARSET", "iso-8859-1");
 
-// Select your language/locale - default language is "C" for English.
+// Select your language/locale - default language is "en" for English.
 // Other languages available:
-// English "C"  (English    - HomePage)
+// English "en"  (English    - HomePage)
 // Dutch   "nl" (Nederlands - ThuisPagina)
 // Spanish "es" (Español    - PáginaPrincipal)
 // French  "fr" (Français   - Accueil)
@@ -462,13 +472,8 @@ define("CHARSET", "iso-8859-1");
 // (as determined by the applicable environment variables) will be
 // used.
 //
-// Note that on some systems, apprently using these short forms for
-// the locale won't work. On my home system 'LANG=de' won't result in
-// german pages. Somehow the system must recognize the locale as a
-// valid locale before gettext() will work, i.e., use 'de_DE',
-// 'nl_NL'.
 if (empty($LANG)) $LANG='en';
-//$LANG='nl_NL';
+//$LANG='nl';
 
 // Setting the LANG environment variable (accomplished above) may or
 // may not be sufficient to cause PhpWiki to produce dates in your
@@ -488,6 +493,8 @@ if (empty($LANG)) $LANG='en';
 // gettext() fix: With setlocale() we must use the long form, 
 // like 'de_DE','nl_NL', 'es_MX', 'es_AR', 'fr_FR'. 
 // For Windows maybe even 'german'. You might fix this accordingly.
+// At least on windows the best locale is found automatically, dependent 
+// on the system locale.
 $language_locales = array(
                           'en' => 'C',
                           'de' => 'de_DE',
@@ -498,10 +505,10 @@ $language_locales = array(
                           'sv' => 'sv_SV'
                           );
 if (empty($LC_ALL)) {
-  if (empty($language_locales['LANG'])) 
+  if (empty($language_locales[$LANG])) 
      $LC_ALL = $LANG;
   else
-     $LC_ALL = $language_locales['LANG'];
+     $LC_ALL = $language_locales[$LANG];
 }
 putenv("LC_TIME=$LC_ALL");
 
@@ -657,13 +664,13 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
 
 
 ////////////////////////////////////////////////////////////////
-// Check if we were included by some other wiki version (getimg, en, ...) 
-// or not. 
+// Check if we were included by some other wiki version 
+// (getimg.php, en, de, wiki, ...) or not. 
 // If the server requested this index.php fire up the code by loading lib/main.php.
 // Parallel wiki scripts can now simply include /index.php for the 
 // main configuration, extend or redefine some settings and 
-// load lib/main.php by themselves. 
-// This overcomes the index as config problem.
+// load lib/main.php by themselves. See the file 'wiki'.
+// This overcomes the IndexAsConfigProblem.
 ////////////////////////////////////////////////////////////////
 
 // Tested: Works with CGI also.
