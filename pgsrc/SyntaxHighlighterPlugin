@@ -1,9 +1,9 @@
 Date: Tue, 29 Jun 2004 10:03:50 +0200
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.11pre)
-X-Rcs-Id: $Id: SyntaxHighlighterPlugin,v 1.1 2004-07-04 08:34:35 rurban Exp $
+X-Rcs-Id: $Id: SyntaxHighlighterPlugin,v 1.2 2004-07-04 08:41:39 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=SyntaxHighlighterPlugin;
-  pgsrc_version="2 $Revision: 1.1 $";
+  pgsrc_version="2 $Revision: 1.2 $";
   flags="";
   markup=2;
   charset=iso-8859-1
@@ -57,3 +57,5 @@ Fixes by Reini Urban:
 * support options: syntax, style, color.
 * php version switch
 * HIGHLIGHT_DATA_DIR, HIGHLIGHT_EXE constants
+----
+PhpWikiDocumentation WikiPlugin 
