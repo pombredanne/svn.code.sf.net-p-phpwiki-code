@@ -1,23 +1,25 @@
-<!-- -*-html-*- -->
-<!-- $Id: savepage.tmpl,v 1.5 2002-01-30 23:41:55 dairiki Exp $ -->
+<?php // -*-html-*- ?>
+<!-- $Id: savepage.tmpl,v 1.6 2002-02-04 20:38:01 carstenklapp Exp $ -->
 <?php
-  $signatureURL = $Theme->getImageURL('signature');
+    $signatureURL = $Theme->getImageURL('signature');
+    if ($request->getArg('lockchanged'))
+        $LockChangedMsg = ($page->get('locked'))
+                           ? _("Page now locked.")
+                           : _("Page now unlocked.");
+    else
+        $LockChangedMsg = "";
 ?>
-
-<p>
-  <?=fmt("Thank you for editing %s.", WikiLink($page))?>
-  <br />
-  <?=_("Your careful attention to detail is much appreciated.")?>
-</p>
+<p><?=fmt("Thank you for editing %s.", WikiLink($page))?><br />
+<?=_("Your careful attention to detail is much appreciated.")?></p>
 
 <?php if (!empty($WARNINGS)) { ?>
   <p><strong><?=_("Warning!")?></strong> <?= $WARNINGS ?></p>
 <?php } ?>
 
 <?php if ($signatureURL) { ?>
-   <p><img src="<?=$signatureURL?>" /></p>
+  <p><img src="<?=$signatureURL?>" /></p>
 <?php } ?>
-    
-<hr noshade />
 
+<?=$LockChangedMsg?>
+<hr noshade="noshade" />
 <?= Template('browse') ?>
