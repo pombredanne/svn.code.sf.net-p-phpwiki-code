@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.92 2004-06-21 17:01:39 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.93 2004-06-25 14:29:17 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -46,16 +46,22 @@
  * that some older revisions (include revision 1) have been cleaned (deleted).
  *
  * DONE: 
+ *   paging support: limit, offset args
  *   check PagePerm "list" access-type,
  *   all columns are sortable (Thanks to the wikilens team).
  *
  * TODO: 
- *   limit, offset, rows arguments for multiple pages/multiple rows.
+ *   rows arguments for multiple pages/multiple rows.
  *
  *   ->supportedArgs() which arguments are supported, so that the plugin 
- *                     doesn't explictly need to declare it
+ *                     doesn't explictly need to declare it 
+ *   Status: already merged in some plugins calls
+ *
  *   new method:
  *     list not as <ul> or table, but as simple comma-seperated list
+ *
+ *   fix memory exhaustion on large pagelists. 
+ *   Status: fixed 2004-06-25 16:19:36 rurban but needs further testing.
  */
 class _PageList_Column_base {
     var $_tdattr = array();
@@ -456,6 +462,7 @@ class _PageList_Column_pagename extends _PageList_Column_base {
  * This is a hack necessitated by the interface to usort()-- comparators
  * can't get information upon construction; you get a comparator by class
  * name, not by instance.
+ * @author: Dan Frankowski
  */
 class _PageList_Page {
     var $_pagelist;
@@ -1238,6 +1245,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.92  2004/06/21 17:01:39  rurban
+// fix typo and rating method call
+//
 // Revision 1.91  2004/06/21 16:22:29  rurban
 // add DEFAULT_DUMP_DIR and HTML_DUMP_DIR constants, for easier cmdline dumps,
 // fixed dumping buttons locally (images/buttons/),

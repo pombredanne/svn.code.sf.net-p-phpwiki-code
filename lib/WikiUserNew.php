@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.100 2004-06-21 06:29:35 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.101 2004-06-25 14:29:19 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -498,7 +498,7 @@ class _WikiUser
         static $group; 
         if ($this->_level == WIKIAUTH_ADMIN) return true;
 
-        if (!$group) $group = &WikiGroup::getGroup();
+        if (!$group) $group = &$GLOBALS['request']->getGroup();
         return ($this->_level > WIKIAUTH_BOGO and $group->isMember(GROUP_ADMIN));
     }
 
@@ -584,7 +584,7 @@ class _WikiUser
             $class = "_" . $this->_current_method . "PassUser";
             $user = new $class($userid,$this->_prefs);
             /*PHP5 patch*/$this = $user;
-            $this->_level = $authlevel;
+            $user->_level = $authlevel;
             return $user;
         }
         $this->_userid = $userid;
@@ -1344,7 +1344,8 @@ extends _PassUser
             $stored_password = $this->_prefs->get('passwd');
             if (empty($stored_password)) {
                 trigger_error(sprintf(
-                _("\nYou stored an empty password in your '%s' page.\n").
+                _("PersonalPage login method:\n").
+                _("You stored an empty password in your '%s' page.\n").
                 _("Your access permissions are only for a BogoUser.\n").
                 _("Please set your password in UserPreferences."),
                                         $this->_userid), E_USER_WARNING);
@@ -2012,8 +2013,45 @@ extends _PassUser
  * Preferences are handled in _PassUser
  */
 {
+	
+    function _init() {
+        if ($this->_ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
+            global $LDAP_SET_OPTION;
+            if (!empty($LDAP_SET_OPTION)) {
+                foreach ($LDAP_SET_OPTION as $key => $value) {
+                    //if (is_string($key) and defined($key))
+                    //    $key = constant($key);
+                    ldap_set_option($this->_ldap, $key, $value);
+                }
+            }
+            if (LDAP_AUTH_USER)
+                if (LDAP_AUTH_PASSWORD)
+                    // Windows Active Directory Server is strict
+                    $r = ldap_bind($this->_ldap, LDAP_AUTH_USER, LDAP_AUTH_PASSWORD); 
+                else
+                    $r = ldap_bind($this->_ldap, LDAP_AUTH_USER); 
+            else
+                $r = true; // anonymous bind allowed
+            if (!$r) {    
+                $this->_free();
+                trigger_error(sprintf("Unable to bind LDAP server %s", LDAP_AUTH_HOST), 
+                              E_USER_WARNING);
+                return false;
+            }
+            return $this->_ldap;
+        } else {
+            return false;
+        }
+    }
+    
+    function _free() {
+        if (is_resource($this->_sr))   ldap_free_result($this->_sr);
+        if (is_resource($this->_ldap)) ldap_close($this->_ldap);
+        unset($this->_sr);
+        unset($this->_ldap);
+    }
+    
     function checkPass($submitted_password) {
-        global $LDAP_SET_OPTION;
 
         $this->_authmethod = 'LDAP';
         $userid = $this->_userid;
@@ -2026,36 +2064,15 @@ extends _PassUser
             return WIKIAUTH_FORBIDDEN;
         }
 
-        if ($ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
-            if (!empty($LDAP_SET_OPTION)) {
-                foreach ($LDAP_SET_OPTION as $key => $value) {
-                    if (is_string($key) and defined($key))
-                        $key = constant($key);
-                    ldap_set_option($ldap, $key, $value);
-                }
-            }
-            if (defined('LDAP_AUTH_USER'))
-                if (defined('LDAP_AUTH_PASSWORD'))
-                    // Windows Active Directory Server is strict
-                    $r = @ldap_bind($ldap, LDAP_AUTH_USER, LDAP_AUTH_PASSWORD); 
-                else
-                    $r = @ldap_bind($ldap, LDAP_AUTH_USER); 
-            else
-                $r = @ldap_bind($ldap); // this is an anonymous bind
-            if (!$r) {    
-                ldap_close($ldap);
-                trigger_error(fmt("Unable to bind LDAP server %s", LDAP_AUTH_HOST), 
-                              E_USER_WARNING);
-                return $this->_tryNextPass($submitted_password);
-            }
+        if ($ldap = $this->_init()) {
             // Need to set the right root search information. See config/config.ini
-            $st_search = defined('LDAP_SEARCH_FIELD') 
+            $st_search = LDAP_SEARCH_FIELD
                 ? LDAP_SEARCH_FIELD."=$userid"
                 : "uid=$userid";
-            $sr = ldap_search($ldap, LDAP_BASE_DN, $st_search);
-            $info = ldap_get_entries($ldap, $sr); 
+            $this->_sr = ldap_search($ldap, LDAP_BASE_DN, $st_search);
+            $info = ldap_get_entries($ldap, $this->_sr); 
             if (empty($info["count"])) {
-                ldap_close($ldap);
+            	$this->_free();
                 return $this->_tryNextPass($submitted_password);
             }
             // there may be more hits with this userid.
@@ -2063,70 +2080,40 @@ extends _PassUser
             for ($i = 0; $i < $info["count"]; $i++) {
                 $dn = $info[$i]["dn"];
                 // The password is still plain text.
-                if ($r = @ldap_bind($ldap, $dn, $submitted_password)) {
+                if ($r = ldap_bind($ldap, $dn, $submitted_password)) {
                     // ldap_bind will return TRUE if everything matches
-                    ldap_close($ldap);
+            	    $this->_free();
                     $this->_level = WIKIAUTH_USER;
                     return $this->_level;
                 }
             }
-        } else {
-            trigger_error(fmt("Unable to connect to LDAP server %s", LDAP_AUTH_HOST), 
-                          E_USER_WARNING);
-            //return false;
+            $this->_free();
         }
 
         return $this->_tryNextPass($submitted_password);
     }
 
     function userExists() {
-        global $LDAP_SET_OPTION;
-
         $userid = $this->_userid;
         if (strstr($userid,'*')) {
             trigger_error(fmt("Invalid username '%s' for LDAP Auth", $userid),
                           E_USER_WARNING);
             return false;
         }
-        if ($ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
-            if (!empty($LDAP_SET_OPTION)) {
-                foreach ($LDAP_SET_OPTION as $key => $value) {
-                    if (is_string($key) and defined($key))
-                        $key = constant($key);
-                    ldap_set_option($ldap, $key, $value);
-                }
-            }
-            if (defined('LDAP_AUTH_USER'))
-                if (defined('LDAP_AUTH_PASSWORD'))
-                    // Windows Active Directory Server is strict
-                    $r = @ldap_bind($ldap, LDAP_AUTH_USER, LDAP_AUTH_PASSWORD); 
-                else
-                    $r = @ldap_bind($ldap,LDAP_AUTH_USER); 
-            else
-                $r = @ldap_bind($ldap); // this is an anonymous bind
-            if (!$r) {    
-                ldap_close($ldap);
-                trigger_error(fmt("Unable to bind LDAP server %s", LDAP_AUTH_HOST), 
-                              E_USER_WARNING);
-                return $this->_tryNextPass($submitted_password);
-            }
-
+        if ($ldap = $this->_init()) {
             // Need to set the right root search information. see ../index.php
-            $st_search = defined('LDAP_SEARCH_FIELD') 
+            $st_search = LDAP_SEARCH_FIELD
                 ? LDAP_SEARCH_FIELD."=$userid"
                 : "uid=$userid";
-            $sr = ldap_search($ldap, LDAP_BASE_DN, $st_search);
-            $info = ldap_get_entries($ldap, $sr); 
+            $this->_sr = ldap_search($ldap, LDAP_BASE_DN, $st_search);
+            $info = ldap_get_entries($ldap, $this->_sr); 
 
             if ($info["count"] > 0) {
-                ldap_close($ldap);
+         	$this->_free();
                 return true;
             }
-        } else {
-            trigger_error(_("Unable to connect to LDAP server "). LDAP_AUTH_HOST, 
-                          E_USER_WARNING);
         }
-
+ 	$this->_free();
         return $this->_tryNextUser();
     }
 
@@ -3045,6 +3032,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.100  2004/06/21 06:29:35  rurban
+// formatting: linewrap only
+//
 // Revision 1.99  2004/06/20 15:30:05  rurban
 // get_class case-sensitivity issues
 //

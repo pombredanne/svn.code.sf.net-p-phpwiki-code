@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.40 2004-06-22 07:12:48 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.41 2004-06-25 14:29:17 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -33,19 +33,31 @@ rcs_id('$Id: IniConfig.php,v 1.40 2004-06-22 07:12:48 rurban Exp $');
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/** TODO
+/**
+ * DONE:
  * - Convert the value lists to provide defaults, so that every "if
  *      (defined())" and "if (!defined())" can fuck off to the dismal hole
  *      it belongs in.
+ * TODO:
+ * - Old-style index.php => config/config.ini converter.
+ *
+ * - config.ini => config.php dumper for faster startup.
+ *
+ * - Don't use too much globals for easier integration into other projects
+ *   (namespace pollution). (gforge, phpnuke, postnuke, phpBB2, carolina, ...)
+ *   Use one global $phpwiki object instead which holds the cfg vars, constants 
+ *   and all other globals.
+ *     (global $FieldSeparator, $charset, $WikiNameRegexp, $KeywordLinkRegexp;
+ *      global $DisabledActions, $DBParams, $LANG, $AllActionPages)
  *
  * - Resurrect the larger "config object" code (in config/) so it'll aid the
- *      GUI config writers, and allow us to do proper validation and default
- *      value handling.
+ *   GUI config writers, and allow us to do proper validation and default
+ *   value handling.
  *
  * - Get rid of WikiNameRegexp and KeywordLinkRegexp as globals by finding
- *      everywhere that uses them as variables and modify the code to use
- *      them as constants.  Will involve hacking around
- *      pcre_fix_posix_classes (probably with redefines()).
+ *   everywhere that uses them as variables and modify the code to use
+ *   them as constants. Will involve hacking around
+ *   pcre_fix_posix_classes (probably with redefines()).
  */
 
 include_once (dirname(__FILE__)."/config.php");
@@ -97,7 +109,8 @@ function IniConfig($file) {
          'ALLOW_USER_LOGIN', 'ALLOW_LDAP_LOGIN', 'ALLOW_IMAP_LOGIN',
          'WARN_NONPUBLIC_INTERWIKIMAP', 'USE_PATH_INFO',
          'DISABLE_HTTP_REDIRECT',
-         'PLUGIN_CACHED_USECACHE', 'PLUGIN_CACHED_FORCE_SYNCMAP'
+         'PLUGIN_CACHED_USECACHE', 'PLUGIN_CACHED_FORCE_SYNCMAP',
+         'ENABLE_XHTML_XML'
          );
 
     if(!file_exists($file)){
@@ -121,9 +134,10 @@ function IniConfig($file) {
         //} elseif (array_key_exists($item, $rsdef)) {
         //    define($item, $rsdef[$item]);
         // calculate them later or not at all:
-        } elseif (in_array($item,array('DATABASE_PREFIX', 'SERVER_NAME', 'SERVER_PORT',
-                                       'SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH',
-                                       'LDAP_AUTH_HOST','IMAP_AUTH_HOST','POP3_AUTH_HOST'))) 
+        } elseif (in_array($item,
+                           array('DATABASE_PREFIX', 'SERVER_NAME', 'SERVER_PORT',
+                                 'SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH',
+                                 'LDAP_AUTH_HOST','IMAP_AUTH_HOST','POP3_AUTH_HOST'))) 
         {
             ;
         } else {
@@ -196,42 +210,37 @@ function IniConfig($file) {
 
     // Expiry stuff
     global $ExpireParams;
-    $ExpireParams['major'] = array(
-                                   'max_age'  => @$rs['MAJOR_MAX_AGE'],
-                                   'min_age'  => @$rs['MAJOR_MIN_AGE'],
-                                   'min_keep' => @$rs['MAJOR_MIN_KEEP'],
-                                   'keep'     => @$rs['MAJOR_KEEP'],
-                                   'max_keep' => @$rs['MAJOR_MAX_KEEP']
-                                   );
-    $ExpireParams['minor'] = array(
-                                   'max_age'  => @$rs['MINOR_MAX_AGE'],
-                                   'min_age'  => @$rs['MINOR_MIN_AGE'],
-                                   'min_keep' => @$rs['MINOR_MIN_KEEP'],
-                                   'keep'     => @$rs['MINOR_KEEP'],
-                                   'max_keep' => @$rs['MINOR_MAX_KEEP']
-                                   );
-    $ExpireParams['author'] = array(
-                                    'max_age'  => @$rs['AUTHOR_MAX_AGE'],
-                                    'min_age'  => @$rs['AUTHOR_MIN_AGE'],
-                                    'min_keep' => @$rs['AUTHOR_MIN_KEEP'],
-                                    'keep'     => @$rs['AUTHOR_KEEP'],
-                                    'max_keep' => @$rs['AUTHOR_MAX_KEEP']
-                                    );
+    foreach (array('major','minor','author') as $major) {
+    	foreach (array('max_age','min_age','min_keep','keep','max_keep') as $max) {
+    	    $item = strtoupper($major) . '_'. strtoupper($max);
+            if (defined($item)) $val = constant($item);
+            elseif (array_key_exists($item, $rs))
+                $val = $rs[$item];
+            elseif (array_key_exists($item, $rsdef))
+                $val = $rsdef[$item];
+            if (!isset($ExpireParams[$major]))
+                $ExpireParams[$major] = array();
+            $ExpireParams[$major][$max] = $val;
+    	}
+    }
 
     // User authentication
     if (!isset($GLOBALS['USER_AUTH_ORDER']))
         if (isset($rs['USER_AUTH_ORDER']))
-            $GLOBALS['USER_AUTH_ORDER'] = preg_split('/\s*:\s*/', $rs['USER_AUTH_ORDER']);
+            $GLOBALS['USER_AUTH_ORDER'] = preg_split('/\s*:\s*/', 
+                                                     $rs['USER_AUTH_ORDER']);
         else 
             $GLOBALS['USER_AUTH_ORDER'] = array("PersonalPage");
 
     // LDAP bind options
     global $LDAP_SET_OPTION;
-    if (isset($rs['LDAP_SET_OPTION'])) {
-        $optlist = preg_split('/\s*:\s*/', @$rs['LDAP_SET_OPTION']);
+    if (defined('LDAP_SET_OPTION') and LDAP_SET_OPTION) {
+        $optlist = preg_split('/\s*:\s*/', LDAP_SET_OPTION);
         foreach ($optlist as $opt) {
             $bits = preg_split('/\s*=\s*/', $opt, 2);
             if (count($bits) == 2) {
+                if (is_string($bits[0]) and defined($bits[0]))
+                    $bits[0] = constant($bits[0]);
                 $LDAP_SET_OPTION[$bits[0]] = $bits[1];
             }
             else {
@@ -294,7 +303,10 @@ function IniConfig($file) {
     $KeywordLinkRegexp = '(?<=' . implode('|^', $keywords) . ')[[:upper:]].*$';
         
     global $DisabledActions;
-    $DisabledActions = preg_split('/\s*:\s*/', @$rs['DISABLED_ACTIONS']);
+    if (!array_key_exists('DISABLED_ACTIONS',$rs) and array_key_exists('DISABLED_ACTIONS',$rsdef))
+        $rs['DISABLED_ACTIONS'] = @$rsdef['DISABLED_ACTIONS'];
+    if (array_key_exists('DISABLED_ACTIONS',$rs))
+        $DisabledActions = preg_split('/\s*:\s*/', $rs['DISABLED_ACTIONS']);
     
     /*global $AllowedProtocols, $InlineImages;
     $AllowedProtocols = constant("ALLOWED_PROTOCOLS");
@@ -322,7 +334,7 @@ function IniConfig($file) {
 // moved from lib/config.php
 function fix_configs() {
     global $FieldSeparator, $charset, $WikiNameRegexp, $KeywordLinkRegexp, $AllActionPages;
-    global $DisabledActions, $HTTP_SERVER_VARS, $DBParams, $LANG;
+    global $HTTP_SERVER_VARS, $DBParams, $LANG;
 
     // init FileFinder to add proper include paths
     require_once(dirname(__FILE__)."/FileFinder.php");
@@ -334,8 +346,9 @@ function fix_configs() {
     // $FieldSeparator = "\xFF"; // this byte should never appear in utf-8
     // FIXME: get rid of constant. pref is dynamic and language specific
     $charset = CHARSET;
-    if (isset($LANG) and in_array($LANG,array('ja','zh')))
-        $charset = 'utf-8';
+    // Disabled: Let the admin decide which charset.
+    //if (isset($LANG) and in_array($LANG,array('zh')))
+    //    $charset = 'utf-8';
     if (strtolower($charset) == 'utf-8')
         $FieldSeparator = "\xFF";
     else
@@ -385,12 +398,14 @@ function fix_configs() {
     $WikiNameRegexp = pcre_fix_posix_classes($WikiNameRegexp);
     $KeywordLinkRegexp = pcre_fix_posix_classes($KeywordLinkRegexp);
 
-    $AllActionPages = explode(':','AllPages:BackLinks:DebugInfo:EditMetaData:FindPage:FullRecentChanges:'
-                              .'FullTextSearch:FuzzyPages:InterWikiSearch:LikePages:MostPopular:'
+    $AllActionPages = explode(':',
+                              'AllPages:BackLinks:CreatePage:DebugInfo:EditMetaData:FindPage:'
+                              .'FullRecentChanges:FullTextSearch:FuzzyPages:InterWikiSearch:'
+                              .'LikePages:MostPopular:'
                               .'OrphanedPages:PageDump:PageHistory:PageInfo:RandomPage:RateIt:'
-                              .'RecentChanges:RecentEdits:RelatedChanges:TitleSearch:TranslateText:'
-                              .'UpLoad:UserPreferences:WantedPages:WhoIsOnline:'
-                              .'PhpWikiAdministration/Remove:'
+                              .'RecentChanges:RecentEdits:RecentComments:RelatedChanges:TitleSearch:'
+                              .'TranslateText:UpLoad:UserPreferences:WantedPages:WhoIsOnline:'
+                              .'PhpWikiAdministration/Remove:PhpWikiAdministration/Chmod:'
                               .'PhpWikiAdministration/Rename:PhpWikiAdministration/Replace:'
                               .'PhpWikiAdministration/SetAcl:PhpWikiAdministration/Chown'
                               );
@@ -592,6 +607,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.40  2004/06/22 07:12:48  rurban
+// removed USE_TAGLINES constant
+//
 // Revision 1.39  2004/06/21 16:22:28  rurban
 // add DEFAULT_DUMP_DIR and HTML_DUMP_DIR constants, for easier cmdline dumps,
 // fixed dumping buttons locally (images/buttons/),

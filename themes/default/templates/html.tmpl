@@ -1,15 +1,12 @@
 <?php  // -*-html-*-
-rcs_id('$Id: html.tmpl,v 1.6 2004-06-23 10:33:11 rurban Exp $');
+rcs_id('$Id: html.tmpl,v 1.7 2004-06-25 14:29:22 rurban Exp $');
 /*
  * This template is responsible mainly for the outer level <html> stuff.
  *
  * NS/MO/IE/Op Browsers before 4.0 don't like that.
- * Better is IMHO:
- if (strstr($request->get('HTTP_ACCEPT'),'application/xhtml+xml') or
-    (strstr($request->get('HTTP_ACCEPT'),'text/xml')))
  */
 if (browserVersion() >= 4.0)
-  printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
+  printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", $charset);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

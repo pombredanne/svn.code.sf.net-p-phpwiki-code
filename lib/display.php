@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.52 2004-06-14 11:31:37 rurban Exp $');
+rcs_id('$Id: display.php,v 1.53 2004-06-25 14:29:20 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -65,7 +65,16 @@ function actionPage(&$request, $action) {
     $transformedContent = $actionrev->getTransformedContent();
     $template = Template('browse', array('CONTENT' => $transformedContent));
 
-    header("Content-Type: text/html; charset=" . $GLOBALS['charset']);
+    if (!headers_sent()) {
+        //FIXME: does not work yet. document.write not supported (signout button)
+        // http://www.w3.org/People/mimasa/test/xhtml/media-types/results
+        if (ENABLE_XHTML_XML 
+            and (!isBrowserIE() and
+                 strstr($request->get('HTTP_ACCEPT'),'application/xhtml+xml')))
+            header("Content-Type: application/xhtml+xml; charset=" . $GLOBALS['charset']);
+        else
+            header("Content-Type: text/html; charset=" . $GLOBALS['charset']);
+    }
     GeneratePage($template, $pagetitle, $revision);
     $request->checkValidators();
     flush();
@@ -126,9 +135,16 @@ function displayPage(&$request, $template=false) {
     $request->appendValidators(array('pagerev' => $revision->getVersion(),
                                      '%mtime' => $revision->get('mtime')));
 
-    // FIXME: should probably be in a template...
-    if ($request->getArg('action') != 'pdf')
-        header("Content-Type: text/html; charset=" . $GLOBALS['charset']); // FIXME: this gets done twice?
+    // FIXME: This is also in the template...
+    if ($request->getArg('action') != 'pdf' and !headers_sent()) {
+      // FIXME: enable MathML/SVG/... support
+      if (ENABLE_XHTML_XML
+             and (!isBrowserIE()
+                  and strstr($request->get('HTTP_ACCEPT'),'application/xhtml+xml')))
+            header("Content-Type: application/xhtml+xml; charset=" . $GLOBALS['charset']);
+        else
+            header("Content-Type: text/html; charset=" . $GLOBALS['charset']);
+    }
 
     $page_content = $revision->getTransformedContent();
     
@@ -154,6 +170,14 @@ function displayPage(&$request, $template=false) {
     flush();
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.52  2004/06/14 11:31:37  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.51  2004/05/18 16:23:39  rurban
 // rename split_pagename to SplitPagename
 //

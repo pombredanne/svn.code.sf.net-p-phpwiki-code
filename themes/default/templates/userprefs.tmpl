@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.54 2004-06-15 09:34:38 rurban Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.55 2004-06-25 14:29:22 rurban Exp $ -->
 <?php
 // Todo: Move the logic and code to the plugin
 // This is very experimental and the read-only part an ugly hack so far.
@@ -180,10 +180,10 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
 	  <td><span class="hint"><?=_("System default:")?> <?= DEFAULT_LANGUAGE ?></span></td></tr>
       <tr><td align="right"><?=fmt("Hide %s:", WikiLink("LinkIcons"))?></td>
           <td><?=$NoLinkIconsCB?></td>
-          <td><p class="hint"><?=_("Hide or show LinkIcons (if supported by the current theme). Useful for text-only browsers or slow connections.")?></p></tr>
+          <td><p class="hint"><?=_("Hide or show LinkIcons (if supported by the current theme). Useful for text-only browsers or slow connections.")?></p></td></tr>
       <tr><td align="right"><?=fmt("Add %s:", WikiLink("GoogleLink"))?></td>
           <td><?=$GoogleLinkCB?></td>
-          <td><p class="hint"><?=fmt("Add Google links to unknown pages behind the '?', and the create action behind the pagename instead. See %s.",WikiLink("MeatBall:GooglePrompt"))?></p></tr>
+          <td><p class="hint"><?=fmt("Add Google links to unknown pages behind the '?', and the create action behind the pagename instead. See %s.",WikiLink("MeatBall:GooglePrompt"))?></p></td></tr>
 
 
   <tr><td colspan="3"><h2><?=_("Edit Area Size")?></h2></td></tr>

@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.189 2004-06-20 09:45:35 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.190 2004-06-25 14:29:20 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -634,6 +634,11 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
     static $subs;
     static $block_re;
     
+    // FIXME:
+    // Trying to detect why the 2nd paragraph of OldTextFormattingRules or
+    // AnciennesR%E8glesDeFormatage crashes.
+    if (DEBUG and DEBUG & _DEBUG_PARSER and preg_match("/CreateToc/",$text)) $debug_skip = true;
+
     if (empty($subs)) {
         /*****************************************************************
          * Conversions for inline markup:
@@ -649,7 +654,6 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
 
         // change ! escapes to ~'s.
         global $WikiNameRegexp, $request;
-        //include_once('lib/interwiki.php');
         $map = getInterwikiMap();
         $bang_esc[] = "(?:" . ALLOWED_PROTOCOLS . "):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]";
         $bang_esc[] = $map->getRegexp() . ":[^\\s.,;?()]+"; // FIXME: is this really needed?
@@ -688,9 +692,9 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
          * special handling...
          */
 
+        if (!$debug_skip) {
         // Indented blocks
         $blockpats[] = '[ \t]+\S(?:.*\s*\n[ \t]+\S)*';
-
         // Tables
         $blockpats[] = '\|(?:.*\n\|)*';
 
@@ -702,6 +706,7 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
 
         // Plugins
         $blockpats[] = '<\?plugin(?:-form)?\b.*\?>\s*$';
+        }
 
         // Section Title
         $blockpats[] = '!{1,3}[^!]';
@@ -719,7 +724,10 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
     else {
         list ($orig, $repl) = $subs['inline'];
         $out = '';
-        while (preg_match($block_re, $text, $m)) {
+	//FIXME:
+	// php crashes here in the 2nd paragraph of OldTextFormattingRules, 
+	// AnciennesR%E8glesDeFormatage and more 
+	 while (preg_match($block_re, $text, $m)) {
             $text = substr($text, strlen($m[0]));
             list (,$leading_text, $block) = $m;
             $suffix = "\n";
@@ -772,11 +780,12 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
                 // AAck!
                 assert(0);
             }
-
-            $out .= ( preg_replace($orig, $repl, $leading_text)
-                      . $prefix
-                      . preg_replace($orig, $repl, $block)
-                      . $suffix );
+            if ($leading_text) $leading_text = preg_replace($orig, $repl, $leading_text);
+            if ($block) $leading_text = preg_replace($orig, $repl, $block);
+            $out .= $leading_text;
+            $out .= $prefix;
+            $out .= $block;
+            $out .= $suffix;
         }
         return $out . preg_replace($orig, $repl, $text);
     }
@@ -1532,16 +1541,17 @@ function fixTitleEncoding( $s ) {
                                     '[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xf7][\x80-\xbf]{3})+$/', $s ) : true );
     */
     $isutf = ($ishigh ? isUtf8String($s) : true);
+    $locharset = strtolower($charset);
 
-    if( (strtolower($charset) != "utf-8") and $ishigh and $isutf )
+    if( $locharset != "utf-8" and $ishigh and $isutf )
         // if charset == 'iso-8859-1' then simply use utf8_decode()
-        if (strtolower($charset) == 'iso-8859-1')
+        if ($locharset == 'iso-8859-1')
             return utf8_decode( $s );
         else
             // TODO: check for iconv support
             return iconv( "UTF-8", $charset, $s );
 
-    if( (strtolower($charset) == "utf-8") and $ishigh and !$isutf )
+    if ($locharset == "utf-8" and $ishigh and !$isutf )
         return utf8_encode( $s );
 
     // Other languages can safely leave this function, or replace
@@ -1594,6 +1604,9 @@ function url_get_contents( $uri ) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.189  2004/06/20 09:45:35  rurban
+// php5 isa fix (wrong strtolower)
+//
 // Revision 1.188  2004/06/16 10:38:58  rurban
 // Disallow refernces in calls if the declaration is a reference
 // ("allow_call_time_pass_reference clean").

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.111 2004-06-21 16:38:55 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.112 2004-06-25 14:29:20 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -55,7 +55,7 @@ function StartLoadDump(&$request, $title, $html = '')
     /* Ignore fatals or warnings in any pagedumps (failing plugins). 
      * WikiFunctionCb() fails with 4.0.6, works ok with 4.1.1 
      */
-    if (!check_php_version(4,1) or DEBUG) return;
+    if (!check_php_version(4,1) or (DEBUG & _DEBUG_VERBOSE)) return;
     global $ErrorManager;
     $ErrorManager->pushErrorHandler(new WikiFunctionCb('_dump_error_handler'));
 }
@@ -1041,6 +1041,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.111  2004/06/21 16:38:55  rurban
+ fixed the StartLoadDump html argument hack.
+
  Revision 1.110  2004/06/21 16:22:30  rurban
  add DEFAULT_DUMP_DIR and HTML_DUMP_DIR constants, for easier cmdline dumps,
  fixed dumping buttons locally (images/buttons/),

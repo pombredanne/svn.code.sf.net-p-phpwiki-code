@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminUtils.php,v 1.12 2004-06-16 10:38:59 rurban Exp $');
+rcs_id('$Id: WikiAdminUtils.php,v 1.13 2004-06-25 14:29:22 rurban Exp $');
 /**
  Copyright 2003 $ThePhpWikiProgrammingTeam
 
@@ -35,7 +35,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.12 $");
+                            "\$Revision: 1.13 $");
     }
 
     function getDefaultArguments() {
@@ -159,7 +159,7 @@ extends WikiPlugin
         //This is the best method to find all users (Db and PersonalPage)
         $current_user = $request->_user;
 	if (empty($args['verify'])) {
-            $group = WikiGroup::getGroup();
+            $group = $request->getGroup();
 	    $allusers = $group->_allUsers();
 	} else {
 	    $allusers = array_keys($args['user']);

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: signin.tmpl,v 1.32 2004-06-15 09:34:38 rurban Exp $');
+rcs_id('$Id: signin.tmpl,v 1.33 2004-06-25 14:29:22 rurban Exp $');
 
 if (empty($FORMNAME))
     $FORMNAME = 'signin';
@@ -14,18 +14,17 @@ else
 if ($user->isAuthenticated()) {
     $Sep = $WikiTheme->getButtonSeparator();
     $SignOutB = $WikiTheme->makeButton(_("Sign Out"), "javascript:SignOut();", 'wikiaction');
-?>
-  <?= fmt("Authenticated as %s", WikiLink($user->getAuthenticatedId(), 'auto')) ?>
-  <?=$Sep?>
-  <script language="JavaScript" type="text/javascript"><!--
-    document.write('<input type="hidden" name="auth[logout]" value="0" />');
+    $SignOutJS = JavaScript('
+    document.write(\'<input type="hidden" name="auth[logout]" value="0" />\');
     function SignOut() { 
-      var form = document.forms["<?=$FORMNAME?>"];
+      var form = document.forms["'.$FORMNAME.'"];
       form.elements["auth[logout]"].value = 1;
       form.submit();
     }
-    document.write('<?=$SignOutB?>'); // -->
-  </script>
+    document.write(\''.AsXML($SignOutB).'\');');
+?>
+  <?= fmt("Authenticated as %s", WikiLink($user->getAuthenticatedId(), 'auto')) ?>
+  <?=$Sep?><?=$SignOutJS?>
   <noscript>
     <?= Button("submit:auth[logout]", _("Sign Out"), 'wikiaction') ?>
   </noscript>
@@ -45,23 +44,21 @@ if ($user->isAuthenticated()) {
 				       'onclick'=>'SignIn(document.forms["'.$FORMNAME.'"],"'.$userid.'");'),
 				 $userid)));
     }
-?>
-  <script type="text/javascript"> <!--
-     function SignIn(form,userid) {
-      <?php if (defined('EDITING_POLICY') and $request->_dbi->isWikiPage(EDITING_POLICY)) { ?>
+    $editing_policy = (defined('EDITING_POLICY') and $request->_dbi->isWikiPage(EDITING_POLICY));
+    $SignInJS = JavaScript('
+     function SignIn(form,userid) {'.($editing_policy ? '
       if (window.focus) {
-        window.open('<?= WikiUrl(EDITING_POLICY) ?>',<!-- url -->
-                    'PleaseReadThisFirst',<!-- window name -->
-                    'width=600,height=430,scrollbars=yes,resizable=yes,toolbar=yes');
-      }
-      <?php } ?>
+        window.open("' . WikiUrl(EDITING_POLICY) . '",<!-- url -->
+                    "PleaseReadThisFirst",<!-- window name -->
+                    "width=600,height=430,scrollbars=yes,resizable=yes,toolbar=yes");
+      }':'').'
       if (userid) {
         form.elements["auth[userid]"].value = userid;
       }
       form.submit();
-    }
-    //-->
-  </script>
+    }');
+?>
+  <?= $SignInJS ?>
   <?= Button("submit:auth[login]", _("Sign in as:"), 'wikiaction')?>
   <?= $SignInInput ?>
 <?php /* // sf.net bug #950841 "Sign In:" button appears twice
