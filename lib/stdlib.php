@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.136 2003-02-18 21:52:07 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.137 2003-02-18 23:13:40 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -397,7 +397,7 @@ class WikiPagename
 	    $anchor = '';
 
 	$this->name = $this->unescape($name);
-	$this->anchor = $this->unescape($name);
+	$this->anchor = $this->unescape($anchor);
     }
 
     function escape($page) {
@@ -1281,6 +1281,13 @@ function subPageSlice($pagename, $pos) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.136  2003/02/18 21:52:07  dairiki
+// Fix so that one can still link to wiki pages with # in their names.
+// (This was made difficult by the introduction of named tags, since
+// '[Page #1]' is now a link to anchor '1' in page 'Page'.
+//
+// Now the ~ escape for page names should work: [Page ~#1].
+//
 // Revision 1.135  2003/02/18 19:17:04  dairiki
 // split_pagename():
 //     Bug fix. 'ThisIsABug' was being split to 'This IsA Bug'.
