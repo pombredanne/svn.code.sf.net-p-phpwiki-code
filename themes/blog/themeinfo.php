@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.3 2005-02-02 19:14:13 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.4 2005-02-03 05:11:40 rurban Exp $');
 
 /**
  * This file defines a blog theme for PhpWiki, 
@@ -24,6 +24,12 @@ rcs_id('$Id: themeinfo.php,v 1.3 2005-02-02 19:14:13 rurban Exp $');
  * PageTrail: > .. > ..
  * Right sidebar boxes: Archives, Syndication, Links, GoogleAds
  *
+ * For the livesearch feature (autodropdown of the results while you tip) 
+ * you'll have to copy livesearch.js from http://blog.bitflux.ch/wiki/LiveSearch
+ * to themes/default/ and define ENABLE_LIVESEARCH in config.ini to true.
+ * Better autodropdown's are in consideration:
+ *   http://momche.net/publish/article.php?page=acdropdown)
+ *
  * Happy blogging.
  */
 
@@ -31,7 +37,7 @@ require_once('lib/Theme.php');
 require_once('themes/Sidebar/themeinfo.php');
 
 class Theme_blog extends Theme_Sidebar {
-   function _findFile ($file, $missing_okay=false) {
+    function _findFile ($file, $missing_okay=false) {
         if (file_exists($this->_path . "themes/".$this->_name."/$file"))
             return "themes/".$this->_name."/$file";
         if (file_exists($this->_path . "themes/Sidebar/$file"))
@@ -99,6 +105,7 @@ class Theme_blog extends Theme_Sidebar {
 }
 
 $WikiTheme = new Theme_blog('blog');
+define("PAGETRAIL_ARROW", " » ");
 
 // CSS file defines fonts, colors and background images for this
 // style.

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.20 2005-02-02 19:22:46 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.21 2005-02-03 05:11:40 rurban Exp $');
 
 /*
  * This file defines the Sidebar appearance ("theme") of PhpWiki.
@@ -11,7 +11,7 @@ require_once('lib/WikiPlugin.php');
 
 class Theme_Sidebar extends Theme {
 
-    function Theme ($theme_name='Sidebar') {
+    function Theme_Sidebar ($theme_name='Sidebar') {
         $this->_name = $theme_name;
         $this->_themes_dir = NormalizeLocalFileName("themes");
         $this->_path  = defined('PHPWIKI_DIR') ? NormalizeLocalFileName("") : "";
@@ -24,6 +24,10 @@ class Theme_Sidebar extends Theme {
         $this->_css = array();
 
         $this->calendarInit();
+
+        if (defined("ENABLE_LIVESEARCH") and ENABLE_LIVESEARCH) { // by bitflux.ch. not yet enabled
+            $this->initLiveSearch();
+        }
     }
 
     function findTemplate ($name) {
