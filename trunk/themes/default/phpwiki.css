@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.44 2004-07-10 13:22:34 rurban Exp $
+ * $Id: phpwiki.css,v 1.45 2005-02-02 18:55:42 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -678,7 +678,7 @@ blockquote.mail-style-quote {
 .floatright { float: right; }
 
 div.wikiblog {
-  border: thin black solid;
+  /* border: thin black solid; */
   margin: 1ex 2em;
   padding: 0 0;
 }
@@ -687,10 +687,10 @@ div.wikiblog > div {
   padding: 0.5ex 0.5em;
 }
 div.wikiblog-header {
-  background-color: #ccf;
+  /* background-color: #ccf; */
 }
 div.wikiblog > div.wikiblog-footer {
-  background-color: #eee;
+  /* background-color: #eee; */
   padding: 0.2ex 0.5em;
 }
 h3.wikiblog-summary {
@@ -700,7 +700,7 @@ h3.wikiblog-summary {
 }
 
 div.wikiblog.wikiblog-form {
-  background-color: #eee;
+  /* background-color: #eee; */
 }
 
 table.wikiblog-form {
@@ -709,7 +709,7 @@ table.wikiblog-form {
   margin: 0.25em 0;
 }
 .wikiblog-form caption {
-  background-color: #ccf;
+  /* background-color: #ccf; */
   caption-side: top;
   font-weight: bold;
   text-align: left;
