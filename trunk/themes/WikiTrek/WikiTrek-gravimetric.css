@@ -1,14 +1,15 @@
-/* 
- * $Id: WikiTrek-gravimetric.css,v 1.4 2002-01-05 06:17:01 carstenklapp Exp $
+/**
+ * $Id: WikiTrek-gravimetric.css,v 1.5 2002-01-11 05:34:10 carstenklapp Exp $
  *
  * WikiTrek-gravimetric.css
  *
  * This is stuff which should be in WikiTrek.css, but which breaks NS4.
  */
 
-/*
+/**
  * These colors are here to prevent OmniWeb from rendering black text
- * on black.
+ * on black. Unfortunately OmniWeb now understands @import but still
+ * usually does not render background colour changes.
  */
 
 .toolbar .wiki {
@@ -24,6 +25,10 @@
 }
 
 .wikiaction:hover {
+        color : #000;
+}
+
+.wikiadmin {
         color : #000;
 }
 
