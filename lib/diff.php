@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.35 2002-02-03 23:55:59 carstenklapp Exp $');
+rcs_id('$Id: diff.php,v 1.36 2002-02-04 01:13:59 carstenklapp Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -230,12 +230,18 @@ class TableUnifiedDiffFormatter extends HtmlUnifiedDiffFormatter
     
 /////////////////////////////////////////////////////////////////
 
-function PageInfoRow ($label, $rev)
+function PageInfoRow ($label, $rev, &$request)
 {
-    global $Theme;
-    
+    global $Theme, $WikiNameRegexp;
+
     $row = HTML::tr(HTML::td(array('align' => 'right'), $label));
     if ($rev) {
+        $author = $rev->get('author');
+        $dbi = $request->getDbh();
+
+        $iswikipage = (preg_match("/^$WikiNameRegexp\$/", $author) && $dbi->isWikiPage($author));
+        $authorlink = $iswikipage ? WikiLink($author) : $author;
+
         $mtime = $rev->get('mtime');
         if (istoday($mtime) || isyesterday($mtime))
             $lastmodifiedmessage = _("last modified %s");
@@ -245,7 +251,7 @@ function PageInfoRow ($label, $rev)
         $row->pushContent(HTML::td(fmt("version %s", $linked_version)),
                           HTML::td(fmt($lastmodifiedmessage,
                                        $Theme->formatDateTime($mtime))),
-                          HTML::td(fmt("by %s", $rev->get('author'))));
+                          HTML::td(fmt("by %s", $authorlink)));
     } else {
         $row->pushContent(HTML::td(array('colspan' => '3'), _("None")));
     }
@@ -339,8 +345,8 @@ function showDiff (&$request) {
     if ($old and $old->getVersion() == 0)
         $old = false;
     
-    $html->pushContent(HTML::Table(PageInfoRow(_("Newer page:"), $new),
-                                   PageInfoRow(_("Older page:"), $old)));
+    $html->pushContent(HTML::Table(PageInfoRow(_("Newer page:"), $new, &$request),
+                                   PageInfoRow(_("Older page:"), $old, &$request)));
     
     if ($new && $old) {
         $diff = new Diff($old->getContent(), $new->getContent());
