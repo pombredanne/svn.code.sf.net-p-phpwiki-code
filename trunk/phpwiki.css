@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.51 2002-02-14 21:54:48 carstenklapp Exp $
+ * $Id: phpwiki.css,v 1.52 2002-02-15 05:43:14 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up. It has not yet been tested against NS4.
@@ -73,6 +73,13 @@ div.wikitext pre { font-family: monospace; }
 
 
 /**
+ * Wiki Forms
+ */
+div.wikiaction, span.wikiaction { background-color: #ddd; }
+form.wikiadmin { background-color: #eee; }
+
+
+/**
  * Link styles
  */
 .wiki {
@@ -81,16 +88,16 @@ div.wikitext pre { font-family: monospace; }
 }
 
 /* Action buttons */
-.wikiaction, .wikiadmin, .wiki-rc-action, .wikiunsafe {
+a.wikiaction, a.wikiadmin, a.wiki-rc-action, a.wikiunsafe {
   text-decoration: none;
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.wikiaction, span.wikiaction, input.button { background-color: #ddd; }
+a.wikiaction, input.wikiaction, input.button { background-color: #ddd; }
+
 .wikiunsafe { background-color: #fcc; }
 
-.wikiadmin  { background-color: #fdd; }
-form.wikiadmin { background-color: #eee; }
+a.wikiadmin, input.wikiadmin  { background-color: #fdd; }
 
 /* Unknown links */
 .wikiunknown, .named-wikiunknown {
@@ -127,9 +134,11 @@ h1, h2, h3, h4, h5, h6 { font-family: Arial, Helvetica, sans-serif; }
 
 h1 { margin: 0; }
 
+
 /**
- * tables
+ * Tables
  */
+table, td { font-family: Arial, Helvetica, sans-serif; }
 caption { font-family: Arial, Helvetica, sans-serif; }
 .pagelist {
 }
