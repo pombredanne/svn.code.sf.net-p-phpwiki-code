@@ -23,7 +23,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.0-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.24 2001-09-19 19:12:16 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.25 2001-11-09 16:25:02 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -204,6 +204,10 @@ $ExpireParams['author'] = array('max_age'  => 365,
 // Select your language/locale - default language "C": English
 // other languages available: Dutch "nl", Spanish "es", German "de",
 // Swedish "sv", and Italian, "it".
+//
+// If you set $LANG to the empty string, your systems default
+// language (as determined by the applicable environment variables)
+// will be used.
 //
 // Note that on some systems, apprently using these short forms for
 // the locale won't work.  On my home system 'LANG=de' won't result
