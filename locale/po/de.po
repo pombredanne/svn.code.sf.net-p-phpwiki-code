@@ -5,10 +5,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.8\n"
-"POT-Creation-Date: 2002-01-10 16:25-0500\n"
+"POT-Creation-Date: 2002-01-11 00:45-0500\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
-"Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp <carstenklapp@mac.com>, Arno Hollosi "
-"<ahollosi@mail.com>\n"
+"Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
+"<carstenklapp@mac.com>, Arno Hollosi <ahollosi@mail.com>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -270,7 +270,7 @@ msgid "History of changes."
 msgstr "Änderungsprotokoll."
 
 #: ../lib/Toolbar.php:168 ../lib/Toolbar.php:169
-#: ../lib/plugin/PageHistory.php:200 ../lib/plugin/RecentChanges.php:42
+#: ../lib/plugin/PageHistory.php:200 ../lib/plugin/RecentChanges.php:44
 msgid "PageHistory"
 msgstr "SeitenProtokoll"
 
@@ -279,83 +279,83 @@ msgstr "SeitenProtokoll"
 msgid "List PageHistory for %s"
 msgstr "Das Änderungsprotokoll für %s auslisten"
 
-#: ../lib/plugin/RecentChanges.php:84
+#: ../lib/plugin/RecentChanges.php:86
 msgid "Deleted."
 msgstr "Gelöscht."
 
-#: ../lib/plugin/RecentChanges.php:86
+#: ../lib/plugin/RecentChanges.php:88
 msgid "New page."
 msgstr "Neue Seite."
 
-#: ../lib/plugin/RecentChanges.php:98
+#: ../lib/plugin/RecentChanges.php:100
 msgid "(diff)"
 msgstr "(Diff)"
 
-#: ../lib/plugin/RecentChanges.php:124
+#: ../lib/plugin/RecentChanges.php:126
 msgid "RSS available"
 msgstr "RSS verfügbar"
 
-#: ../lib/plugin/RecentChanges.php:134
+#: ../lib/plugin/RecentChanges.php:136
 msgid "edits"
 msgstr "Änderungen"
 
-#: ../lib/plugin/RecentChanges.php:136
+#: ../lib/plugin/RecentChanges.php:138
 msgid "major edits"
 msgstr "Hauptänderungen"
 
-#: ../lib/plugin/RecentChanges.php:138
+#: ../lib/plugin/RecentChanges.php:140
 msgid "minor edits"
 msgstr "Geringfügige Änderungen"
 
-#: ../lib/plugin/RecentChanges.php:142
+#: ../lib/plugin/RecentChanges.php:144
 #, c-format
 msgid "The %d most recent %s during the past %.1f days are listed below."
 msgstr "Die %d jüngste %s innerhalb von %.1f Tagen sind unten aufgelistet."
 
-#: ../lib/plugin/RecentChanges.php:145
+#: ../lib/plugin/RecentChanges.php:147
 #, c-format
 msgid "The %d most recent %s are listed below."
 msgstr "Die %d jüngste %s sind unten aufgelistet."
 
-#: ../lib/plugin/RecentChanges.php:150
+#: ../lib/plugin/RecentChanges.php:152
 #, c-format
 msgid "The most recent %s during the past %.1f days are listed below."
 msgstr "Die jüngste %s innerhalb von %.1f Tagen sind unten aufgelistet."
 
-#: ../lib/plugin/RecentChanges.php:153
+#: ../lib/plugin/RecentChanges.php:155
 #, c-format
 msgid "All %s are listed below."
 msgstr "Alle %s sind unten aufgelistet."
 
-#: ../lib/plugin/RecentChanges.php:161 ../lib/plugin/Toolbar.php:87
+#: ../lib/plugin/RecentChanges.php:163 ../lib/plugin/Toolbar.php:87
 #: ../lib/plugin/Toolbar.php:107 ../lib/plugin/Toolbar.php:112
 msgid "RecentEdits"
 msgstr "GeringfügigeÄnderungen"
 
 #: ../lib/Toolbar.php:272 ../lib/loadsave.php:476
-#: ../lib/plugin/RecentChanges.php:161 ../lib/plugin/RecentChanges.php:270
-#: ../lib/plugin/RecentChanges.php:315 ../lib/plugin/Toolbar.php:87
+#: ../lib/plugin/RecentChanges.php:163 ../lib/plugin/RecentChanges.php:272
+#: ../lib/plugin/RecentChanges.php:317 ../lib/plugin/Toolbar.php:87
 #: ../lib/plugin/Toolbar.php:105 ../lib/plugin/Toolbar.php:112
 msgid "RecentChanges"
 msgstr "FrischeSeiten"
 
 #: ../lib/Toolbar.php:69 ../lib/main.php:26 ../lib/main.php:85
-#: ../lib/main.php:87 ../lib/plugin/RecentChanges.php:253
+#: ../lib/main.php:87 ../lib/plugin/RecentChanges.php:255
 msgid "HomePage"
 msgstr "StartSeite"
 
-#: ../lib/plugin/RecentChanges.php:258
+#: ../lib/plugin/RecentChanges.php:260
 msgid "Search"
 msgstr "Suche"
 
-#: ../lib/plugin/RecentChanges.php:259 ../lib/plugin/TitleSearch.php:16
+#: ../lib/plugin/RecentChanges.php:261 ../lib/plugin/TitleSearch.php:16
 msgid "Title Search"
-msgstr "Titelsuche"
+msgstr "TitelSuche"
 
 #: ../lib/Toolbar.php:208 ../lib/main.php:123
-#: ../lib/plugin/RecentChanges.php:261 ../lib/plugin/TitleSearch.php:12
+#: ../lib/plugin/RecentChanges.php:263 ../lib/plugin/TitleSearch.php:12
 msgid "TitleSearch"
-msgstr "Titelsuche"
+msgstr "TitelSuche"
 
 #: ../lib/plugin/TitleSearch.php:48
 #, c-format
@@ -425,7 +425,8 @@ msgstr "Gib bitte deinen Namen noch einmal ein."
 msgid ""
 "Please enter your name as WordsStrungTogether (e.g. John Smith as JohnSmith)."
 msgstr ""
-"Gib bitte deinen Namen als ZusammenGesetztesHauptWort ein. (z.B. Hans Müller als HansMüller)."
+"Gib bitte deinen Namen als ZusammenGesetztesHauptWort ein. (z.B. Hans Müller "
+"als HansMüller)."
 
 #: ../lib/plugin/UserPage.php:73
 msgid "Sign in:"
@@ -436,7 +437,7 @@ msgstr "Melde dich an:"
 msgid "View WikiMarkup for page '%s'."
 msgstr "Quelltext für die Seite »%s«."
 
-#: ../lib/plugin/ViewMarkup.php:56 ../lib/stdlib.php:568
+#: ../lib/plugin/ViewMarkup.php:56 ../lib/stdlib.php:569
 #, c-format
 msgid "I'm sorry.  Version %d of %s is not in my database."
 msgstr "Es tut mir leid.  Version %d. von %s ist nicht in der Datenbank."
@@ -711,8 +712,8 @@ msgstr "Du mußt dich als Systemverwalter anmelden %s"
 msgid ""
 "You must set the administrator account and password before you can log in."
 msgstr ""
-"Du mußt zuerst den Systemverwalter-Account mit einem Passwort schützen,"
-"bevor du dich anmelden kannst."
+"Du mußt zuerst den Systemverwalter-Account mit einem Passwort schützen,bevor "
+"du dich anmelden kannst."
 
 #: ../lib/WikiUser.php:191
 msgid "You entered an invalid login or password."
@@ -720,11 +721,13 @@ msgstr "Du hast ein ungültiges Login oder Passwort eingegeben."
 
 #: ../lib/WikiUser.php:194
 msgid "You can log in using any valid WikiWord as a user ID."
-msgstr "Du kannst dich mit irgendeinem gültigen WikiWort als Benutzername anmelden."
+msgstr ""
+"Du kannst dich mit irgendeinem gültigen WikiWort als Benutzername anmelden."
 
 #: ../lib/WikiUser.php:195
 msgid "(Any password will work, except, of course for the admin user.)"
-msgstr "(Jedes Wort wird als Passwort akzeptiert, außer für den Systemverwalter.)"
+msgstr ""
+"(Jedes Wort wird als Passwort akzeptiert, außer für den Systemverwalter.)"
 
 #: ../lib/config.php:271
 msgid "An unnamed PhpWiki"
@@ -807,11 +810,6 @@ msgstr "Versionen sind identisch"
 #, c-format
 msgid "Diff: %s"
 msgstr "Vergleich: %s"
-
-#: ../lib/editpage.php:25 ../lib/savepage.php:62
-#, c-format
-msgid "Problem while editing %s"
-msgstr "Problem beim Editieren von %s"
 
 #: ../lib/editpage.php:29
 msgid "This page has been locked by the administrator and cannot be edited."
@@ -989,7 +987,8 @@ msgstr ""
 
 #: ../lib/savepage.php:35
 msgid "In order to recover from this situation follow these steps:"
-msgstr "Um diese Situation zu korrigieren, folge bitte den folgenden Schritten:"
+msgstr ""
+"Um diese Situation zu korrigieren, folge bitte den folgenden Schritten:"
 
 #: ../lib/savepage.php:37 ../lib/savepage.php:55
 msgid "Use your browser's <b>Back</b> button to go back to the edit page."
@@ -1002,8 +1001,8 @@ msgid ""
 "Copy your changes to the clipboard or to another temporary place (e.g. text "
 "editor)."
 msgstr ""
-"Kopiere deine Veränderungen in die Zwischenablage oder an einen "
-"anderen temporären Platz (z.B. einen Texteditor)"
+"Kopiere deine Veränderungen in die Zwischenablage oder an einen anderen "
+"temporären Platz (z.B. einen Texteditor)"
 
 #: ../lib/savepage.php:41
 msgid ""
@@ -1034,8 +1033,8 @@ msgid ""
 "This page has been locked by the administrator so your changes could not be "
 "saved."
 msgstr ""
-"Diese Seite wurde vom Systemverwalter gesperrt und deine Veränderungen können "
-"nicht gespeichert werden."
+"Diese Seite wurde vom Systemverwalter gesperrt und deine Veränderungen "
+"können nicht gespeichert werden."
 
 #: ../lib/savepage.php:56
 msgid ""
@@ -1044,6 +1043,11 @@ msgid ""
 msgstr ""
 "Kopiere deine Veränderungen in die Zwischenablage. Du kannst versuchen eine "
 "andere Seite zu editieren oder dein Text in einem Texteditor speichern."
+
+#: ../lib/savepage.php:62
+#, c-format
+msgid "Problem while editing %s"
+msgstr "Problem beim Editieren von %s"
 
 #: ../lib/savepage.php:68
 #, c-format
@@ -1071,43 +1075,43 @@ msgstr "Benötigen Form-Variablen sind Fehlend."
 msgid "Edit aborted: %s"
 msgstr "Editieren abgebrochen: %s"
 
-#: ../lib/stdlib.php:83
+#: ../lib/stdlib.php:90
 msgid "Printer"
 msgstr "Drucker"
 
-#: ../lib/stdlib.php:172 ../lib/stdlib.php:231
+#: ../lib/stdlib.php:173 ../lib/stdlib.php:232
 msgid "BAD URL -- remove all of <, >, \""
 msgstr "URL Formfehler -- keine Zeichen <, >, \" verwenden"
 
-#: ../lib/stdlib.php:375
+#: ../lib/stdlib.php:376
 msgid "Lock page to enable link"
 msgstr "Seite sperren, um den Link zu aktivieren"
 
-#: ../lib/stdlib.php:494
+#: ../lib/stdlib.php:495
 #, c-format
 msgid "%d best incoming links:"
 msgstr "Die %d besten hereinkommenden Links:"
 
-#: ../lib/stdlib.php:504
+#: ../lib/stdlib.php:505
 #, c-format
 msgid "%d best outgoing links:"
 msgstr "Die %d besten hinausgehenden Links:"
 
-#: ../lib/stdlib.php:515
+#: ../lib/stdlib.php:516
 #, c-format
 msgid "%d most popular nearby:"
 msgstr "Die %d meistbesuchten Seiten in der Nähe:"
 
-#: ../lib/stdlib.php:566 ../lib/stdlib.php:572
+#: ../lib/stdlib.php:567 ../lib/stdlib.php:573
 msgid "Bad Version"
 msgstr "Keine Version"
 
-#: ../lib/stdlib.php:725
+#: ../lib/stdlib.php:726
 #, c-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr ""
 
-#: ../lib/stdlib.php:734
+#: ../lib/stdlib.php:735
 #, c-format
 msgid "%s: argument index out of range"
 msgstr "%s: Index des Arguments außer Reichweite"
@@ -1338,9 +1342,9 @@ msgid ""
 "DBA files are in the %s directory. Please read the INSTALL file and move the "
 "DB file to a permanent location or risk losing all the pages!"
 msgstr ""
-"DBA Dateien befinden sich im Verzeichnis %s. Bitte erst lies die INSTALL Datei und "
-"verschiebe die DB Datei in das richtige Verzeichnis, oder sonst läufst du Gefahr dein "
-"ganzes Wiki zu verlieren!"
+"DBA Dateien befinden sich im Verzeichnis %s. Bitte erst lies die INSTALL "
+"Datei und verschiebe die DB Datei in das richtige Verzeichnis, oder sonst "
+"läufst du Gefahr dein ganzes Wiki zu verlieren!"
 
 #~ msgid "version"
 #~ msgstr "Version"
