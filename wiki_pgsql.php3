@@ -1,4 +1,4 @@
-<!-- $Id: wiki_pgsql.php3,v 1.18 2000-09-05 03:33:18 wainstead Exp $ -->
+<!-- $Id: wiki_pgsql.php3,v 1.19 2000-09-08 02:55:00 wainstead Exp $ -->
 <?php
 
    /*
@@ -84,7 +84,7 @@
 //      echo "<p>dbi in InsertPage: '$dbi' '$dbi[table]' '$dbi[dbc]'<p>";
 
       // update the wikilinks table
-      UpdateWikiLinks($dbi, $pagename, implode(" ",$pagehash['content']));
+//      UpdateWikiLinks($dbi, $pagename, implode(" ",$pagehash['content']));
 
       // prepare the content for storage
       if (!isset($pagehash["pagename"]))
@@ -196,28 +196,39 @@
 
    function UpdateWikiLinks($dbi, $pagename, $pagetext) {
 
-echo "strlen: ", strlen($pagetext), "<br>\n";
+      global $AllowedProtocols;
       // extract all links from the page, both [] and OldStyle
 
       // this is [bracketlinks]
-//      $numBracketLinks = preg_match_all("/\[.+?\]/s", $pagetext, $brktlinks);
+      $numBracketLinks = preg_match_all("/\[.+?\]/s", $pagetext, $brktlinks);
 
       // this is OldSchoolLinking
       $numWikiLinks = preg_match_all("#!?\b(([A-Z][a-z]+){2,})\b#",
                          $pagetext, $wikilinks);
 
-echo "num wiki links matched: '$numWikiLinks'<br>\n";      
-
       for ($x = 0; $x < $numWikiLinks; $x++) {
+         if (preg_match("/^!/", $wikilinks[0][$x]))
+            continue;
          $alllinks[$wikilinks[0][$x]]++;
-echo "MATCH: ", $wikilinks[0][$x], "<P>\n";
-echo "assigned ", $alllinks[$wikilinks[0][$x]], " ", $wikilinks[0][$x], " <br>\n";
+//echo "MATCH: ", $wikilinks[0][$x], "<P>\n";
+//echo "assigned ", $alllinks[$wikilinks[0][$x]], " ", $wikilinks[0][$x], " <br>\n";
       }
-/*
-      for (; $x < $numWikiLinks + $numBracketLinks; $x++) {
-         $alllinks[$x] = $brktlinks[0][$x - $numBracketLinks];
+
+      for ($x = 0; $x < $numBracketLinks; $x++) {
+         // skip escaped bracket sets [[like this]
+         if (preg_match("/^\[\[/", $brktlinks[0][$x]))
+            continue;
+         // skip anything with an allowed protocol
+         if (preg_match("/$AllowedProtocols/", $brktlinks[0][$x]))
+            continue;
+
+
+         $alllinks[$brktlinks[0][$x]]++;
+
+//echo "MATCH: ", $brktlinks[0][$x], "<P>\n";
+//echo "assigned ", $alllinks[$brktlinks[0][$x]], " ", $brktlinks[0][$x], " <br>\n";
       }
-*/
+
       // call the right function to update the table
       SetWikiPageLinks($dbi, $pagename, $alllinks);
 
@@ -361,7 +372,7 @@ echo "assigned ", $alllinks[$wikilinks[0][$x]], " ", $wikilinks[0][$x], " <br>\n
       $res = pg_exec($dbi['dbc'], "select pagename from wiki");
       $rows = pg_numrows($res);
       for ($i = 0; $i < $rows; $i++) {
-	 $pages[$i] = mysql_result($res, $i, "pagename");
+	 $pages[$i] = pg_result($res, $i, "pagename");
       }
       return $pages;
    }
@@ -373,11 +384,11 @@ echo "assigned ", $alllinks[$wikilinks[0][$x]], " ", $wikilinks[0][$x], " <br>\n
 
    function GetWikiPageLinks($dbi, $pagename) {
 
-      $query = "select * from wikilinks where frompage='$pagename'";
+      $query = "select frompage from wikilinks where topage='$pagename'";
       $res = pg_exec($dbi['dbc'], $query);
       $rows = pg_numrows($res);
       for ($i = 0; $i < $rows; $i++) {
-	 $pages[$i] = mysql_result($res, $i, "topage");
+	 $pages[$i] = pg_result($res, $i, "frompage");
       }
       return $pages;
       
@@ -393,8 +404,12 @@ echo "assigned ", $alllinks[$wikilinks[0][$x]], " ", $wikilinks[0][$x], " <br>\n
 
       // first delete the old list of links
       $query = "delete from wikilinks where frompage='$frompage'";
-      echo "$query<br>\n";
+//      echo "$query<br>\n";
       $res = pg_exec($dbi['dbc'], $query);
+
+      // the page may not have links, return if not
+      if (! count($linklist))
+         return;
 
       // now insert the new list of links
       reset($linklist);
@@ -402,7 +417,7 @@ echo "assigned ", $alllinks[$wikilinks[0][$x]], " ", $wikilinks[0][$x], " <br>\n
          $topage = addslashes($topage);
          $query = "insert into wikilinks (frompage, topage) " .
                   "values ('$frompage', '$topage')";
-         echo "$query<br>\n";
+//         echo "$query<br>\n";
          $res = pg_exec($dbi['dbc'], $query);
       }
    }
