@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageDump.php,v 1.14 2004-06-29 10:07:40 rurban Exp $');
+rcs_id('$Id: PageDump.php,v 1.15 2004-06-29 10:09:06 rurban Exp $');
 /**
  * PhpWikiPlugin for PhpWiki developers to generate single page dumps
  * for checking into cvs, or for users or the admin to produce a
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.14 $");
+                            "\$Revision: 1.15 $");
     }
 
     function getDefaultArguments() {
@@ -151,7 +151,7 @@ extends WikiPlugin
                                              $page));
         }
         elseif ($format == 'backup') {
-            $desc = _("(formatted for backing up)"); // all revisions
+            $desc = _("(formatted for backing up: all revisions)"); // all revisions
             $altpreviewbuttons = HTML(
                                       Button(array('action' => $this->getName(),
                                                    'format'=> 'forcvs'),
@@ -164,7 +164,7 @@ extends WikiPlugin
                                              _("Preview as normal format"),
                                              $page));
         } else {
-            $desc = _("(normal formatting)");
+            $desc = _("(normal formatting: latest revision only)");
             $altpreviewbuttons = HTML(
                                       Button(array('action' => $this->getName(),
                                                    'format'=> 'forcvs'),
@@ -283,6 +283,9 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2004/06/29 10:07:40  rurban
+// added dump of all revisions by format=backup (screen and download)
+//
 // Revision 1.13  2004/06/17 10:39:18  rurban
 // fix reverse translation of possible actionpage
 //
