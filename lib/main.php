@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.175 2004-07-13 13:08:25 rurban Exp $');
+rcs_id('$Id: main.php,v 1.176 2004-08-05 17:33:22 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -117,7 +117,7 @@ $this->version = phpwiki_version();
         }
         if (empty($WikiTheme) and isset($user_theme)) {
             if (strcspn($user_theme,"./\x00]") != strlen($user_theme)) {
-            	trigger_error(sprintf("invalid theme '%s': Invalid characetsr detected", $user_theme),
+            	trigger_error(sprintf("invalid theme '%s': Invalid characters detected", $user_theme),
             	              E_USER_WARNING);
                 $user_theme = "default";
             }
@@ -1080,6 +1080,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.175  2004/07/13 13:08:25  rurban
+// fix PEAR memory waste issues
+//
 // Revision 1.174  2004/07/08 13:50:32  rurban
 // various unit test fixes: print error backtrace on _DEBUG_TRACE; allusers fix; new PHPWIKI_NOMAIN constant for omitting the mainloop
 //
