@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.27 2003-02-26 00:39:30 dairiki Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.28 2003-03-18 16:47:32 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -245,12 +245,12 @@ class BalancedMarkup
 class Markup_escape  extends SimpleMarkup
 {
     function getMatchRegexp () {
-        return ESCAPE_CHAR . ".";
+        return ESCAPE_CHAR . '(?: [[:alnum:]]+ | .)';
     }
     
     function markup ($match) {
-        assert(strlen($match) == 2);
-        return $match[1];
+        assert(strlen($match) >= 2);
+        return substr($match, 1);
     }
 }
 
