@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.36 2004-02-12 13:05:49 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.37 2004-02-17 12:17:34 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -335,7 +335,8 @@ extends WikiDB_backend
     }
 
     /**
-     * Delete page from the database.
+     * Delete page completely from the database.
+     * I'm not sure if this is what we want. Maybe just delete the revisions
      */
     function delete_page($pagename) {
         $dbh = &$this->_dbh;
@@ -486,15 +487,23 @@ extends WikiDB_backend
         return new WikiDB_backend_PearDB_iter($this, $result);
     }
 
+    //Todo: check if the better Mysql MATCH operator is supported,
+    // (ranked search) and also google like expressions.
     function _sql_match_clause($word) {
         $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
         $word = $this->_dbh->quoteString($word);
+        //$page_tbl = $this->_table_names['page_tbl'];
+        //Note: Mysql 4.1.0 has a bug which fails with binary fields.
+        //      e.g. if word is lowercased.
+        // http://bugs.mysql.com/bug.php?id=1491
         return "LOWER(pagename) LIKE '%$word%'";
     }
 
     function _fullsearch_sql_match_clause($word) {
         $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
         $word = $this->_dbh->quoteString($word);
+        //$page_tbl = $this->_table_names['page_tbl'];
+        //Mysql 4.1.1 has a bug which fails here if word is lowercased.
         return "LOWER(pagename) LIKE '%$word%' OR content LIKE '%$word%'";
     }
 

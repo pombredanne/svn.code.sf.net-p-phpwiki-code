@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiPluginCached.php,v 1.6 2004-01-26 09:17:48 rurban Exp $');
+<?php rcs_id('$Id: WikiPluginCached.php,v 1.7 2004-02-17 12:17:34 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -124,7 +124,7 @@ class WikiPluginCached extends WikiPlugin
      * @see #getImage
      * @see #getMap
      */
-    function run($dbi, $argstr, $request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage) {
         $cache = WikiPluginCached::newCache();
         $cacheparams = $GLOBALS['CacheParams'];
 
