@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.118 2004-07-08 13:50:32 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.119 2004-07-08 15:23:59 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -793,7 +793,8 @@ function _tryinsertInterWikiMap($content) {
         return $content;
 
     // if loading from virgin setup do echo, otherwise trigger_error E_USER_NOTICE
-    echo sprintf(_("Loading InterWikiMap from external file %s."), $mapfile),"<br />";
+    if (!isa($GLOBALS['request'],'MockRequest'))
+        echo sprintf(_("Loading InterWikiMap from external file %s."), $mapfile),"<br />";
 
     $fd = fopen ($mapfile, "rb");
     $data = fread ($fd, filesize($mapfile));
@@ -1156,6 +1157,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.118  2004/07/08 13:50:32  rurban
+ various unit test fixes: print error backtrace on _DEBUG_TRACE; allusers fix; new PHPWIKI_NOMAIN constant for omitting the mainloop
+
  Revision 1.117  2004/07/02 09:55:58  rurban
  more stability fixes: new DISABLE_GETIMAGESIZE if your php crashes when loading LinkIcons: failing getimagesize in old phps; blockparser stabilized
 
