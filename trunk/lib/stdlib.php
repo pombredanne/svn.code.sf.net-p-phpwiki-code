@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.204 2004-09-17 13:19:15 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.205 2004-09-23 13:59:35 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1645,7 +1645,31 @@ function GenerateId($name) {
     }
 }
 
+// from IncludePage. To be of general use.
+// content: string or array of strings
+function firstNWordsOfContent( $n, $content ) {
+    if ($content and $n > 0) {
+    	if (is_array($content))
+    	    // fixme: return a list of lines then?
+    	    $content = join("\n", $content);
+        // fixme: use better whitespace/word seperators
+        $words = explode(' ', $content);
+        if (count($words) > $n) {
+            return join(' ', array_slice($words, 0, $n))
+                   . sprintf(_("... (first %s words)"), $n);
+        } else {
+            return $content;
+        }
+    } else return '';
+}
+ 
+
+
 // $Log: not supported by cvs2svn $
+// Revision 1.204  2004/09/17 13:19:15  rurban
+// fix LinkPhpwikiURL bug reported in http://phpwiki.sourceforge.net/phpwiki/KnownBugs
+// by SteveBennett.
+//
 // Revision 1.203  2004/09/16 08:00:52  rurban
 // just some comments
 //
