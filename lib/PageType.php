@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.37 2004-12-06 19:49:55 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.38 2004-12-26 17:10:44 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004 $ThePhpWikiProgrammingTeam
 
@@ -344,7 +344,8 @@ class FakePageRevision {
         return $this->_meta[$key];
     }
 }
-        
+
+// abstract base class
 class PageFormatter_attach extends PageFormatter
 {
     var $type, $prefix;
@@ -384,8 +385,9 @@ class PageFormatter_wikiforum extends PageFormatter_attach {
  *
  * Warning! Once a page is edited with a htmlarea like control it is
  * stored in HTML and cannot be converted back to WikiText as long as
- * we have no HTML => WikiText or any other interim format (WikiExchangeFormat e.g. Xml) 
- * converter. So it has a viral effect and certain plugins will not work anymore.
+ * we have no HTML => WikiText or any other interim format (WikiExchangeFormat e.g. XML) 
+ * converter. See lib/HtmlParser.php for ongoing work on that. 
+ * So it has a viral effect and certain plugins will not work anymore.
  * But a lot of wikiusers seem to like it.
  */
 class PageFormatter_html extends PageFormatter
@@ -452,6 +454,14 @@ class PageFormatter_pdf extends PageFormatter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.37  2004/12/06 19:49:55  rurban
+// enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
+// renamed delete_page to purge_page.
+// enable action=edit&version=-1 to force creation of a new version.
+// added BABYCART_PATH config
+// fixed magiqc in adodb.inc.php
+// and some more docs
+//
 
 // Local Variables:
 // mode: php

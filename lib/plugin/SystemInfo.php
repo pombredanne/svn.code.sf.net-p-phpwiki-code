@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SystemInfo.php,v 1.21 2004-11-26 18:39:02 rurban Exp $');
+rcs_id('$Id: SystemInfo.php,v 1.22 2004-12-26 17:10:44 rurban Exp $');
 /**
  Copyright (C) 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -58,7 +58,7 @@ extends WikiPluginCached
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.21 $");
+                            "\$Revision: 1.22 $");
     }
 
     function getExpire($dbi, $argarray, $request) {
@@ -175,6 +175,7 @@ extends WikiPluginCached
         // $s  .= ", " . sprintf(_("%d externally authenticated users"), $extauth); // query AuthDB?
         return $s;
     }
+
     //only from logging info possible. = hitstats per time.
     // total hits per day/month/year
     // view/edit rate
@@ -183,6 +184,7 @@ extends WikiPluginCached
         $s  = _("not yet");
         return $s;
     }
+
     // only absolute numbers, not for any time interval. see accessstats
     //  some useful number derived from the curve of the hit stats.
     //  total, max, mean, median, stddev;
@@ -444,6 +446,9 @@ function stddev(&$hits, $total = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.21  2004/11/26 18:39:02  rurban
+// new regex search parser and SQL backends (90% complete, glob and pcre backends missing)
+//
 // Revision 1.20  2004/11/20 11:28:49  rurban
 // fix a yet unused PageList customPageListColumns bug (merge class not decl to _types)
 // change WantedPages to use PageList
