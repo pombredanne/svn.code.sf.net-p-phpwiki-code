@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ExternalSearch.php,v 1.4 2003-01-30 02:46:46 carstenklapp Exp $');
+rcs_id('$Id: ExternalSearch.php,v 1.5 2003-02-26 01:56:52 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -38,7 +38,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function _getInterWikiUrl(&$request) {
@@ -63,7 +63,7 @@ extends WikiPlugin
                      );
     }
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         if (empty($args['url']))
             return '';
@@ -95,12 +95,11 @@ extends WikiPlugin
 
         $this->_getInterWikiUrl($request);
 
-        $form = HTML::form(array('action' => USE_PATH_INFO
-                                             ? WikiURL($request->getPage())
-                                             : SCRIPT_NAME,
+        $form = HTML::form(array('action' => $request->getPostURL(),
                                  'method' => 'post',
                                  //'class'  => 'class', //fixme
-                                 'accept-charset' => CHARSET));
+                                 'accept-charset' => CHARSET),
+                           HiddenInputs(array('pagename' => $basepage)));
 
         $form->pushContent(HTML::input(array('type' => 'text',
                                              'value' => $this->_s,
@@ -119,6 +118,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2003/01/30 02:46:46  carstenklapp
+// Bugfix: Plugin was redirecting to nonexistant local wiki page named
+// "ExternalSearch" instead of the invoked url. Reported by Arthur Chereau.
+//
 // Revision 1.3  2003/01/18 21:41:01  carstenklapp
 // Code cleanup:
 // Reformatting & tabs to spaces;
