@@ -296,7 +296,7 @@ msgid "%s bytes written"
 msgstr "%s Bytes geschrieben"
 
 #: ../lib/loadsave.php:283
-#, fuzzy, c-format
+#, c-format
 msgid "%s bytes written\n"
 msgstr "%s Bytes geschrieben"
 
@@ -665,9 +665,8 @@ msgid "ExternalSearch"
 msgstr "FremdSuche"
 
 #: ../lib/plugin/ExternalSearch.php:16
-#, fuzzy
 msgid "Redirects to an external web site based on form input"
-msgstr "Umlenkung einer Suche zu einem externen Web"
+msgstr "Umlenkung der Suche zu einer externen Webseite"
 
 #: ../lib/plugin/FullTextSearch.php:35
 msgid "Full Text Search"
@@ -685,7 +684,7 @@ msgstr "FuzzySuche"
 #: ../lib/plugin/FuzzyPages.php:45
 #, c-format
 msgid "List FuzzyPages for %s"
-msgstr "Ausliste FuzzySuche nach %s"
+msgstr "Ergebnis FuzzySuche nach %s"
 
 #: ../lib/plugin/FuzzyPages.php:102
 #, c-format
@@ -1542,7 +1541,6 @@ msgid "Hits:"
 msgstr "Treffer:"
 
 #: ../themes/default/templates/login.tmpl:12
-#, fuzzy
 msgid ""
 "You may sign in using any WikiWord as a UserId. ( etc. may be used too). The "
 "UserId will be used as a link in RecentChanges to your UserId page, your "
