@@ -1,6 +1,6 @@
 
 
- New lists: asterisks and hash marks
+ New lists: asterisks, hash marks, and ";text:def"
 * bullet
 * l1
 ** l2
@@ -9,8 +9,23 @@
 # one
 #two
 #three
-*****l5
-***l3
+;Term1:definition1.1
+;: defintion1.2
+;Term2 :defintion2
+;; Term3:defintion3
+;;;Term4: definition4
+;;; : defintion4.2
+;;; Term5 : defintion5
+
+Mixed:
+*ul1
+*#ul1-ol1
+*#ul1-ol2
+*#*ul1-ol2-ul1
+*#*ul1-ol2-ul2
+*#**ul1-ol2-ul2-ul1
+*#**ul1-ol2-ul2-ul1
+
 *l1
  preformatted text
 **    l2
