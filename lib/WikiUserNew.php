@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.28 2004-03-08 18:17:09 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.29 2004-03-11 13:30:47 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -1809,13 +1809,13 @@ extends _PassUser
             _PassUser::_PassUser($UserName);
 
         // read the .htaccess style file. We use our own copy of the standard pear class.
-        require 'lib/pear/File_Passwd.php';
+        include_once 'lib/pear/File_Passwd.php';
         // if passwords may be changed we have to lock them:
         $this->_may_change = defined('AUTH_USER_FILE_STORABLE') && AUTH_USER_FILE_STORABLE;
         if (empty($file) and defined('AUTH_USER_FILE'))
-            $this->_file = File_Passwd(AUTH_USER_FILE, !empty($this->_may_change));
+            $this->_file = new File_Passwd(AUTH_USER_FILE, !empty($this->_may_change));
         elseif (!empty($file))
-            $this->_file = File_Passwd($file, !empty($this->_may_change));
+            $this->_file = new File_Passwd($file, !empty($this->_may_change));
         else
             return false;
         return $this;
@@ -2272,6 +2272,11 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.28  2004/03/08 18:17:09  rurban
+// added more WikiGroup::getMembersOf methods, esp. for special groups
+// fixed $LDAP_SET_OPTIONS
+// fixed _AuthInfo group methods
+//
 // Revision 1.27  2004/03/01 09:35:13  rurban
 // fixed DbPassuser pref init; lost userid
 //

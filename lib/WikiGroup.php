@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.17 2004-03-10 15:38:48 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.18 2004-03-11 13:30:47 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -654,8 +654,8 @@ class GroupFile extends WikiGroup {
             trigger_error(sprintf(_("Cannot open AUTH_GROUP_FILE %s"), AUTH_GROUP_FILE), E_USER_WARNING);
             return false;
         }
-        require 'lib/pear/File_Passwd.php';
-        $this->_file = File_Passwd($file);
+        require_once('lib/pear/File_Passwd.php');
+        $this->_file = new File_Passwd(AUTH_GROUP_FILE,true);
     }
 
     /**
@@ -678,12 +678,14 @@ class GroupFile extends WikiGroup {
             return $this->membership[$group];
         }
 
-        foreach ($this->_file->users[] as $g => $u) {
+        if (is_array($this->_file->users)) {
+          foreach ($this->_file->users as $g => $u) {
             $users = explode(' ',$u);
             if (in_array($username,$users)) {
                 $this->membership[$group] = true;
                 return true;
             }
+          }
         }
         $this->membership[$group] = false;
         return false;
@@ -707,12 +709,14 @@ class GroupFile extends WikiGroup {
                 $membership[] = $group;
             }
         }
-        foreach ($this->_file->users[] as $group => $u) {
+        if (is_array($this->_file->users)) {
+          foreach ($this->_file->users as $group => $u) {
             $users = explode(' ',$u);
             if (in_array($username,$users)) {
                 $this->membership[$group] = true;
                 $membership[] = $group;
             }
+          }
         }
         $this->membership = $membership;
         return $membership;
@@ -860,6 +864,11 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.17  2004/03/10 15:38:48  rurban
+// store current user->page and ->action in session for WhoIsOnline
+// better WhoIsOnline icon
+// fixed WhoIsOnline warnings
+//
 // Revision 1.15  2004/03/09 12:11:57  rurban
 // prevent from undefined DBAuthParams warning
 //
