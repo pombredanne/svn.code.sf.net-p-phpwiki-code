@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.6 2002-01-09 17:15:31 carstenklapp Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.7 2002-01-22 03:12:59 carstenklapp Exp $');
 
 // FIXME: make this work with non-unix (e.g. DOS) filenames.
 
@@ -252,6 +252,72 @@ class LocalizedFileFinder
         }
 
         return "C";
+    }
+
+}
+
+/**
+ * Find PhpWiki localized theme buttons.
+ *
+ * This is a subclass of FileFinder which searches PHP's include_path
+ * for files. It looks first for "buttons/$LANG/$file", then for
+ * "$file".
+ *
+ * If $LANG is something like "de_DE.iso8859-1@euro", this class will
+ * also search under various less specific variations like
+ * "de_DE.iso8859-1", "de_DE" and "de".
+ */
+class LocalizedButtonFinder
+    extends FileFinder
+{
+    /**
+     * Constructor.
+     */
+    function LocalizedButtonFinder () {
+        $include_path = $this->_get_include_path();
+        $path = array();
+
+        $lang = $this->_get_lang();
+        assert(!empty($lang));
+
+        // A locale can be, e.g. de_DE.iso8859-1@euro.
+        // Try less specific versions of the locale: 
+        $langs[] = $lang;
+        foreach (array('@', '.', '_') as $sep) {
+            if ( ($tail = strchr($lang, $sep)) )
+                $langs[] = substr($lang, 0, -strlen($tail));
+        }
+
+        foreach ($langs as $lang) {
+            foreach ($include_path as $dir) {
+                // FIXME: sorry I know this is ugly but don't know yet what else to do
+                if ($lang=='C')
+                    $lang='en';
+                $path[] = "$dir/themes/".THEME."/buttons/$lang";
+
+            }
+        }
+
+        $this->FileFinder(array_merge($path, $include_path));
+    }
+
+    /**
+     * Try to figure out the appropriate value for $LANG.
+     *
+     *@access private
+     *@return string The value of $LANG.
+     */
+    function _get_lang() {
+        if (!empty($GLOBALS['LANG']))
+            return $GLOBALS['LANG'];
+
+        foreach (array('LC_ALL', 'LC_MESSAGES', 'LC_RESPONSES', 'LANG') as $var) {
+            $lang = getenv($var);
+            if (!empty($lang))
+                return $lang;
+        }
+
+        return "en";
     }
 
 }

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.52 2002-01-17 23:14:21 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.53 2002-01-22 03:12:58 carstenklapp Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -42,6 +42,15 @@ function FindLocalizedFile ($file, $missing_okay = false)
         $finder = new LocalizedFileFinder;
     return $finder->findFile($file, $missing_okay);
 }
+
+function FindLocalizedButtonFile ($file, $missing_okay = false)
+{
+    static $buttonfinder;
+    if (!isset($buttonfinder))
+        $buttonfinder = new LocalizedButtonFinder;
+    return $buttonfinder->findFile($file, $missing_okay);
+}
+
 
 // Setup localisation
 setlocale(LC_ALL, "$LANG");
