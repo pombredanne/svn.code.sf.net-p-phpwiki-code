@@ -1,5 +1,5 @@
 /**
- * $Id: portland.css,v 1.7 2002-02-08 15:50:21 carstenklapp Exp $
+ * $Id: portland.css,v 1.8 2002-02-08 18:56:22 dairiki Exp $
  *
  * PhpWiki's Portland style sheet based on the original Wiki
  *
@@ -13,11 +13,6 @@ body {
 
 img {
   border : 0 none;
-}y
-.linkicon {
-  visibility : hidden;
-  width :  0;
-  height : 0;
 }
 
 .wiki-edithelp {
