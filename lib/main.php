@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.197 2004-12-17 16:39:55 rurban Exp $');
+rcs_id('$Id: main.php,v 1.198 2004-12-17 16:49:51 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -302,6 +302,9 @@ $this->version = phpwiki_version();
             // Login attempt failed.
             $fail_message = $user;
             $auth_args['pass_required'] = true;
+            // if clicked just on to the "sign in as:" button dont print invalid username.
+            if (!empty($auth_args['login']) and empty($auth_args['userid']))
+                $fail_message = '';
             // If no password was submitted, it's not really
             // a failure --- just need to prompt for password...
             if (!ALLOW_USER_PASSWORDS 
@@ -1185,6 +1188,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.197  2004/12/17 16:39:55  rurban
+// enable sessions for HttpAuth
+//
 // Revision 1.196  2004/12/10 02:36:43  rurban
 // More help with the new native xmlrpc lib. no warnings, no user cookie on xmlrpc.
 //

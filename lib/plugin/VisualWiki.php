@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: VisualWiki.php,v 1.17 2004-10-14 19:19:34 rurban Exp $');
+rcs_id('$Id: VisualWiki.php,v 1.18 2004-12-17 16:49:52 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Groﬂe (Johannes Gro&szlig;e)
 
@@ -26,46 +26,16 @@ rcs_id('$Id: VisualWiki.php,v 1.17 2004-10-14 19:19:34 rurban Exp $');
  * sitemap of PhpWiki by calling the <code>dot</code> commandline tool
  * from graphviz (http://www.graphviz.org).
  * @author Johannes Groﬂe
- * @version 0.8
+ * @version 0.9
  */
 define('VISUALWIKI_ALLOWOPTIONS', true);
-global $dotbin;
-if (PHP_OS == "Darwin") { // Mac OS X
-    $dotbin = '/sw/bin/dot'; // graphviz via Fink
-    //$dotbin = '/usr/local/bin/dot';
-
-    // Name of the Truetypefont - at least LucidaSansRegular.ttf is always present on OS X
-    define('VISUALWIKIFONT', 'LucidaSansRegular');
-
-    // The default font paths do not find your fonts, set the path here:
-    $fontpath = "/System/Library/Frameworks/JavaVM.framework/Versions/1.3.1/Home/lib/fonts/";
-    //$fontpath = "/usr/X11R6/lib/X11/fonts/TTF/";
-}
-elseif (isWindows()) {
-  $dotbin = 'dot';
-  define('VISUALWIKIFONT', 'Arial');
-} elseif ($_SERVER["SERVER_NAME"] == 'phpwiki.sourceforge.net') { // sf.net hack
-    $dotbin = '/home/groups/p/ph/phpwiki/bin/dot';
-    define('VISUALWIKIFONT', 'luximr'); 
-} else { // other os
-    $dotbin = '/usr/local/bin/dot';
-    // Name of the Truetypefont - Helvetica is probably easier to read
-    define('VISUALWIKIFONT', 'Helvetica');
-    //define('VISUALWIKIFONT', 'Times');
-    //define('VISUALWIKIFONT', 'Arial');
-
-    // The default font paths do not find your fonts, set the path here:
-    //$fontpath = "/usr/X11R6/lib/X11/fonts/TTF/";
-    //$fontpath = "/usr/share/fonts/default/TrueType/";
-}
-
 if (!defined('VISUALWIKI_ALLOWOPTIONS'))
     define('VISUALWIKI_ALLOWOPTIONS', false);
 
-require_once "lib/WikiPluginCached.php";
+require_once "lib/plugin/GraphViz.php";
 
 class WikiPlugin_VisualWiki
-extends WikiPluginCached
+extends WikiPlugin_GraphViz
 {
     /**
      * Sets plugin type to map production
@@ -85,7 +55,7 @@ extends WikiPluginCached
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.17 $");
+                            "\$Revision: 1.18 $");
     }
 
     /**
@@ -126,7 +96,7 @@ extends WikiPluginCached
      * for each different set of parameters, there can be a lot of
      * these (large) graphs if you allow different parameters.
      * Set <code>VISUALWIKI_ALLOWOPTIONS</code> to <code>false</code>
-     * to allow no options to be set and use only the default paramters.
+     * to allow no options to be set and use only the default parameters.
      * This will need an disk space of about 20 Kbyte all the time.
      */
     function getDefaultArguments() {
@@ -143,41 +113,30 @@ extends WikiPluginCached
     function checkArguments(&$arg) {
         extract($arg);
         $def = $this->defaultarguments();
-
         if (($width < 3) || ($width > 15))
             $arg['width'] = $def['width'];
-
         if (($height < 3) || ($height > 20))
             $arg['height'] = $def['height'];
-
         if (($fontsize < 8) || ($fontsize > 24))
             $arg['fontsize'] = $def['fontsize'];
-
         if (!in_array($label, array('name', 'number')))
             $arg['label'] = $def['label'];
 
         if (!in_array($shape, array('ellipse', 'box', 'point', 'circle',
                                     'plaintext')))
             $arg['shape'] = $def['shape'];
-
         if (!in_array($colorby, array('age', 'revtime')))
             $arg['colorby'] = $def['colorby'];
-
         if (!in_array($fillnodes, array('on', 'off')))
             $arg['fillnodes'] = $def['fillnodes'];
-
         if (($large_nb < 0) || ($large_nb > 50))
             $arg['large_nb'] = $def['large_nb'];
-
         if (($recent_nb < 0)  || ($recent_nb > 50))
             $arg['recent_nb'] = $def['recent_nb'];
-
         if (($refined_nb < 0 ) || ( $refined_nb > 50))
             $arg['refined_nb'] = $def['refined_nb'];
-
         if (($backlink_nb < 0) || ($backlink_nb > 50))
             $arg['backlink_nb'] = $def['backlink_nb'];
-
         // ToDo: check if "ImageCreateFrom$imgtype"() exists.
         if (!in_array($imgtype, $GLOBALS['PLUGIN_CACHED_IMGTYPES']))
             $arg['imgtype'] = $def['imgtype'];
@@ -204,42 +163,6 @@ extends WikiPluginCached
             $neighbour, $excludelist, $includelist, $color); */
         return $this->invokeDot($argarray);
         /* ($width, $height, $color, $shape, $text); */
-    }
-
-    /**
-     * Sets the expire time to one day (so the image producing
-     * functions are called seldomly) or to about two minutes
-     * if a help screen is created.
-     */
-    function getExpire($dbi, $argarray, $request) {
-        if ($argarray['help'])
-            return '+120'; // 2 minutes
-        return sprintf('+%d', 3*86000); // approx 3 days
-    }
-
-    /**
-     * Sets the imagetype according to user wishes and
-     * relies on WikiPluginCached to catch illegal image
-     * formats.
-     * (I feel unsure whether this option is reasonable in
-     *  this case, because png will definitely have the
-     *  best results.)
-     *
-     * @return string 'png', 'gif', 'jpeg'
-     */
-    function getImageType($dbi, $argarray, $request) {
-        return $argarray['imgtype'];
-    }
-
-    /**
-     * This gives an alternative text description of
-     * the image map. I do not know whether it interferes
-     * with the <code>title</code> attributes in &lt;area&gt;
-     * tags of the image map. Perhaps this will be removed.
-     * @return string
-     */
-    function getAlt($dbi, $argstr, $request) {
-        return $this->getDescription();
     }
 
     // ------------------------------------------------------------------------------------------
@@ -396,14 +319,14 @@ extends WikiPluginCached
             unset($backlinks);
 
             // include all neighbours of pages listed in $NEIGHBOUR
-            if (in_array($name,$neighbour_list)) {
-                $l = $page->getLinks(false);
+            if (in_array($name, $neighbour_list)) {
+                $ln = $page->getLinks(false);
                 $con = array();
-                while ($link = $l->next()) {
+                while ($link = $ln->next()) {
                     array_push($con, $link->getName());
                 }
                 $include_list = array_merge($include_list, $bconnection, $con);
-                $l->free();
+                $ln->free();
                 unset($l);
                 unset($con);
             }
@@ -412,7 +335,7 @@ extends WikiPluginCached
             $currev = $page->getCurrentRevision();
 
             $pages[$name] = array(
-                'age'         => $now-$currev->get('mtime'),
+                'age'         => $now - $currev->get('mtime'),
                 'revnr'       => $currev->getVersion(),
                 'links'       => array(),
                 'backlink_nb' => count($bconnection),
@@ -472,7 +395,7 @@ extends WikiPluginCached
         $this->oldest = $pages[$oldestname][$colorby];
         foreach($this->names as $name)
             $pages[$name]['color'] = $this->getColor($pages[$name][$colorby] / $this->oldest);
-    } // extract_wikipages
+    }
 
     /**
      * Creates the text file description of the graph needed to invoke
@@ -526,8 +449,7 @@ extends WikiPluginCached
 
             $url = rawurlencode($name);
             // patch to allow Page/SubPage
-            $url = preg_replace('/' . urlencode(SUBPAGE_SEPARATOR) . '/',
-                                SUBPAGE_SEPARATOR, $url);
+            $url = str_replace(urlencode(SUBPAGE_SEPARATOR), SUBPAGE_SEPARATOR, $url);
             $nodename = ($label != 'name' ? $nametonumber[$name] + 1 : $name);
 
             $dot .= "    \"$nodename\" [URL=\"$url\"";
@@ -589,137 +511,6 @@ extends WikiPluginCached
         return $ok;
     }
 
-    /**
-     * Execute system command.
-     *
-     * @param  cmd string   command to be invoked
-     * @return     boolean  error status; true=ok; false=error
-     */
-    function execute($cmd, $until = false) {
-        // cmd must redirect stderr to stdout though!
-        $errstr = exec($cmd); //, $outarr, $returnval); // normally 127
-        //$errstr = join('',$outarr);
-        $ok = empty($errstr);
-        if (!$ok) {
-            trigger_error("\n".$cmd." failed: $errstr", E_USER_WARNING);
-        } elseif ($GLOBALS['request']->getArg('debug'))
-            trigger_error("\n".$cmd.": success\n", E_USER_NOTICE);
-        if (!isWindows()) {
-            if ($until) {
-                $loop = 100000;
-                while (!file_exists($until) and $loop > 0) {
-                    $loop -= 100;
-                    usleep(100);
-                }
-            } else {
-                usleep(5000);
-            }
-        }
-        if ($until)
-            return file_exists($until);
-        return $ok;
-    }
-
-    /**
-     * Produces a dot file, calls dot twice to obtain an image and a
-     * text description of active areas for hyperlinking and returns
-     * an image and an html map.
-     *
-     * @param width     float   width of the output graph in inches
-     * @param height    float   height of the graph in inches
-     * @param colorby   string  color sceme beeing used ('age', 'revtime',
-     *                                                   'none')
-     * @param shape     string  node shape; 'ellipse', 'box', 'circle', 'point'
-     * @param label     string  not used anymore
-     */
-    function invokeDot($argarray) {
-        global $dotbin;
-        $tempfiles = $this->tempnam('VisualWiki');
-        $gif = $argarray['imgtype'];
-        $ImageCreateFromFunc = "ImageCreateFrom$gif";
-        $outfile = $tempfiles.".".$gif;
-        $debug = $GLOBALS['request']->getArg('debug');
-        if ($debug) {
-            $tempdir = dirname($tempfiles);
-            $tempout = $tempdir . "/.debug";
-        }
-        $ok = $tempfiles
-            && $this->createDotFile($tempfiles.'.dot',$argarray)
-            // && $this->filterThroughCmd('',"$dotbin -T$gif $tempfiles.dot -o $outfile")
-            // && $this->filterThroughCmd('',"$dotbin -Timap $tempfiles.dot -o ".$tempfiles.".map")
-            && $this->execute("$dotbin -T$gif $tempfiles.dot -o $outfile" . 
-                              ($debug ? " > $tempout 2>&1" : " 2>&1"), $outfile)
-            && $this->execute("$dotbin -Timap $tempfiles.dot -o ".$tempfiles.".map" . 
-                              ($debug ? " > $tempout 2>&1" : " 2>&1"), $tempfiles.".map")
-            && file_exists( $outfile )
-            && file_exists( $tempfiles.'.map' )
-            && ($img = $ImageCreateFromFunc($outfile))
-            && ($fp = fopen($tempfiles.'.map', 'r'));
-
-        $map = HTML();
-        if ($debug == 'static') {
-            // workaround for misconfigured WikiPluginCached (sf.net) or dot.
-            // present a static png and map file.
-            if (file_exists($outfile) and filesize($outfile) > 900)
-                $img = $outfile;
-            else
-                $img = $tempdir . "/VisualWiki.".$gif;
-            if (file_exists( $tempfiles.".map") and filesize($tempfiles.".map") > 20)
-                $map = $tempfiles.".map";
-            else
-                $map = $tempdir . "/VisualWiki.map";
-            $img = $ImageCreateFromFunc($img);
-            $fp = fopen($map, 'r');
-            $map = HTML();	
-            $ok = true;
-        }
-        if ($ok and $fp) {
-            while (!feof($fp)) {
-                $line = fgets($fp, 1000);
-                if (substr($line, 0, 1) == '#')
-                    continue;
-                list($shape, $url, $e1, $e2, $e3, $e4) = sscanf($line,
-                                                                "%s %s %d,%d %d,%d");
-                if ($shape != 'rect')
-                    continue;
-
-                // dot sometimes gives not allways the right order so
-                // so we have to sort a bit
-                $x1 = min($e1, $e3);
-                $x2 = max($e1, $e3);
-                $y1 = min($e2, $e4);
-                $y2 = max($e2, $e4);
-                $map->pushContent(HTML::area(array(
-                            'shape'  => 'rect',
-                            'coords' => "$x1,$y1,$x2,$y2",
-                            'href'   => $url,
-                            'title'  => rawurldecode($url),
-                            'alt' => $url)));
-            }
-            fclose($fp);
-            //trigger_error("url=".$url);
-        } else {
-            $this->_errortext = 
-                ("$outfile: ".(file_exists($outfile) ? filesize($outfile):'missing')."\n".
-                 "$tempfiles.map: ".(file_exists("$tempfiles.map") ? filesize("$tempfiles.map"):'missing'));
-            $this->_errortext .= ("\ncmd-line: $dotbin -T$gif $tempfiles.dot -o $outfile");
-            trigger_error($this->_errortext, E_USER_WARNING);
-            return array(false, false);
-        }
-
-        // clean up tempfiles
-        if ($ok and !$argarray['debug'])
-            foreach (array('',".$gif",'.map','.dot') as $ext) {
-                if (file_exists($tempfiles.$ext))
-                    unlink($tempfiles.$ext);
-            }
-
-        if ($ok)
-            return array($img, $map);
-        else
-            return array(false, false);
-    } // invokeDot
-
 
     /** 
      * static workaround on broken Cache or broken dot executable, 
@@ -753,9 +544,9 @@ extends WikiPluginCached
         $tmpfile = tempnam($file_dir,"VisualWiki").".".$argarray['imgtype'];
         WikiPluginCached::writeImage($argarray['imgtype'], $imagehandle, $tmpfile);             
         ImageDestroy($imagehandle);
-        return WikiPluginCached::embedMap(1,$upload_dir.basename($tmpfile),$content['html'],$dbi,$argarray,$request);
+        return WikiPluginCached::embedMap(1,$upload_dir.basename($tmpfile),$content['html'],
+                                          $dbi,$argarray,$request);
     }
-
 
     /**
      * Prepares some rainbow colors for the nodes of the graph
@@ -807,20 +598,23 @@ extends WikiPluginCached
         }
         $lastcol = end($this->ColorTab);
         return $lastcol;
-    } // getColor
-} // WikiPlugin_VisualWiki
+    }
+}
 
 /**
  * Linear interpolates a value between two point a and b
  * at a value pos.
  * @return float  interpolated value
  */
-
 function interpolate($a, $b, $pos) {
     return $a + ($b - $a) * $pos;
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.17  2004/10/14 19:19:34  rurban
+// loadsave: check if the dumped file will be accessible from outside.
+// and some other minor fixes. (cvsclient native not yet ready)
+//
 // Revision 1.16  2004/10/12 15:34:47  rurban
 // redirect stderr to display the failing msg
 //
