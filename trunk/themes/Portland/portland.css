@@ -1,5 +1,5 @@
 /**
- * $Id: portland.css,v 1.1 2002-01-19 22:48:42 carstenklapp Exp $
+ * $Id: portland.css,v 1.2 2002-01-20 00:54:10 carstenklapp Exp $
  *
  * PhpWiki style sheet for the printed page:
  * Black on white only, with no toolbar commands and no link icons.
@@ -53,3 +53,4 @@ img {
         width :  0;
         height : 0;
 }
+.wiki-edithelp { font-size: smaller; }
