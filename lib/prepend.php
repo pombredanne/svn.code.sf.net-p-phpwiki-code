@@ -5,9 +5,9 @@
  */
 $RCS_IDS = '';
 function rcs_id ($id) { $GLOBALS['RCS_IDS'] .= "$id\n"; }
-rcs_id('$Id: prepend.php,v 1.31 2005-01-08 23:15:24 rurban Exp $');
+rcs_id('$Id: prepend.php,v 1.32 2005-01-25 07:09:16 rurban Exp $');
 
-define('PHPWIKI_VERSION', '1.3.11pre-20050108');
+define('PHPWIKI_VERSION', '1.3.11pre-20050125');
 
 /** 
  * Returns true if current php version is at mimimum a.b.c 
@@ -32,7 +32,7 @@ function check_php_version ($a = '0', $b = '0', $c = '0') {
 @ini_set('session.use_trans_sid', 0);
 
 if (defined('DEBUG') and (DEBUG & 8) and extension_loaded("xdebug")) {
-    xdebug_start_trace();
+    xdebug_start_trace("trace"); // on Dbgp protocol add 2
     xdebug_enable();
 }
 
