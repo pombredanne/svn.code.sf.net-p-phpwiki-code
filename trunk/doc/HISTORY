@@ -1,3 +1,50 @@
+1.3.8 Jan-Feb 2004, Reini Urban:
+
+* new WikiUserNew class (after a kick in the ass by Carsten Klapp), (recursive) 
+  with new Preferences (finally from DB)
+* PagePermissions (not yet enforced)
+* fixed WikiAdminSelect, WikiAdminRemove
+* new WikiAdminRename, WikiAdminSearchReplace, WikiAdminSetAcl
+* several other new plugins: WikiPoll, WhoIsOnline, UpLoad (contributed), 
+  RichTable (contributed), 
+* pear DB update
+* InterWiki image buttons
+* fixed XHTML dumps (css, images, unlinked pages)
+
+1.3.4 until 1.3.7, 2002-2003 Jeff and Steve Wainstead:
+
+* several stable releases with better documentation (most plugins) and various bugfixes.
+* EditMetaData (by MichaelVanDam) for example. (forgot what else was new)
+* Jochen Kalmbach's new UserFileManagement and UserRegistration didn't went upstream. 
+  (personal uploads, ...)
+
+1.3.3 early 2002, Jeff strikes back, with the help of Carsten Klapp:
+
+* major feature enhancements:
+* Cache all output and use a clever page cache. Get rid of plugin-head.
+* new PageType class. Formatter and Search engine rewrite.
+* Validator
+* broke several older plugins: InterWikiSearch, WikiAdminSelect. broke image buttons
+* Carsten Klapp's beloved MACOSX theme, button factory and CSS wizardry in general.
+* XHTML dumps, WikiBlog as page type.
+* PluginManager and several more plugins.
+
+1.3.2 early 2002, Reini Urban strikes:
+
+* Start of external authorisation in the config, but not in code.
+* Store Preferences in the users PersonalPage (Jeff)
+* Sessions in DB, pear DB update
+* concept of Subpages, UnfoldSubpages, SiteMap, AllPages, AllUsers, ...
+* PageList (Jeff and Reini)
+* Several new plugins: RedirectTo, plugin-head architecture. 
+  Normalize template names. WikiAdminSelect architecture: WikiAdminRemove
+* VisualWiki, TexToPng, text2png + several cached plugins (by Johannes Groﬂe)
+* PhpWeather (?), PrevNext, image buttons, 
+* IncludePage (Joe Edelman), FrameInclude (Reini), Transclude (Jeff)
+* Calendar (contributed by ?), CalendarList, WikiBlog, ...
+
+.... a small hole here .... (three years no detailed HISTORY. see the outline above)
+
 02/12/01 More Jeff's hacks:
 
 * More CSS stuff.  I think it's neat.
@@ -6,7 +53,6 @@
 * Fixed bugs: including (I hope the two which
   Reini Urban <rurban@x-ray.at> just reported.)  Also added
   Reini's patches to the README.  Thanks!
-
 
 02/11/01 Jeff's hacks continue:
 
@@ -325,4 +371,4 @@ URL's.
 Prior to 0.02, there were no numbered releases, and in fact there
 was only one release, so I guess that would be 0.01 :-)
 
-$Id: HISTORY,v 1.2 2001-12-27 18:11:17 carstenklapp Exp $
+$Id: HISTORY,v 1.3 2004-02-26 22:33:29 rurban Exp $
