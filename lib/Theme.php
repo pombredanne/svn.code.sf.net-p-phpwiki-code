@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.31 2002-02-03 22:12:34 carstenklapp Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.32 2002-02-06 04:10:45 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -21,7 +21,6 @@ require_once('lib/HtmlElement.php');
  * <dt>'known'</dt><dd>Make link appropriate for an existing page.</dd>
  * <dt>'auto'</dt><dd>Either 'unknown' or 'known' as appropriate.</dd>
  * <dt>'button'</dt><dd>Make a button-style link.</dd>
- * <dt>false (default)</dt><dd>Equivalent to 'known'.</dd>
  * </dl>
  * Unless $type of of the latter form, the link will be of class 'wiki', 'wikiunknown',
  * 'named-wiki', or 'named-wikiunknown', as appropriate.
@@ -30,7 +29,7 @@ require_once('lib/HtmlElement.php');
  * Label for the link.  If not given, defaults to the page name.
  * (Label is ignored for $type == 'button'.)
  */
-function WikiLink ($page_or_rev, $type = false, $label = false) {
+function WikiLink ($page_or_rev, $type = 'known', $label = false) {
     global $Theme;
 
     if ($type == 'button') {
@@ -53,7 +52,7 @@ function WikiLink ($page_or_rev, $type = false, $label = false) {
         $pagename = $page_or_rev;
     }
 
-    if ($type === false || $type == 'auto') {
+    if ($type == 'auto') {
         if (isset($page)) {
             $current = $page->getCurrentRevision();
             $exists = ! $current->hasDefaultContents();
