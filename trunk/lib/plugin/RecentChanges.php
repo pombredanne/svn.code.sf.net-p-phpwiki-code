@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.80 2003-11-27 15:17:01 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.81 2003-11-28 21:06:31 carstenklapp Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -353,9 +353,6 @@ extends _RecentChanges_Formatter
 class _RecentChanges_SideBarFormatter
 extends _RecentChanges_HtmlFormatter
 {
-    function description () {
-        //omit description
-    }
     function rss_icon () {
         //omit rssicon
     }
@@ -372,7 +369,7 @@ extends _RecentChanges_HtmlFormatter
         $img = HTML::img(array('src' => $Theme->getImageURL('logo'),
                                'border' => 0,
                                'align' => 'right',
-                               'width' => 32
+                               'style' => 'height:2.5ex'
                                ));
         $linkurl = WikiLink(HOME_PAGE, false, $img);
         $linkurl->setAttr('target', '_content');
@@ -388,14 +385,19 @@ extends _RecentChanges_HtmlFormatter
         } else
             return $author;
     }
+
     function diffLink ($rev) {
         $linkurl = parent::diffLink($rev);
         $linkurl->setAttr('target', '_content');
+        // FIXME: Smelly hack to get smaller diff buttons in sidebar
+        $linkurl = new RawXML(str_replace('<img ', '<img style="height:2ex" ', asXML($linkurl)));
         return $linkurl;
     }
     function historyLink ($rev) {
         $linkurl = parent::historyLink($rev);
         $linkurl->setAttr('target', '_content');
+        // FIXME: Smelly hack to get smaller history buttons in sidebar
+        $linkurl = new RawXML(str_replace('<img ', '<img style="height:2ex" ', asXML($linkurl)));
         return $linkurl;
     }
     function pageLink ($rev) {
@@ -420,7 +422,7 @@ extends _RecentChanges_HtmlFormatter
 
 
     function format ($changes) {
-        $this->_args['daylist'] = false; //only 1 day for Mozilla sidebar
+        $this->_args['daylist'] = false; //don't show day buttons in Mozilla sidebar
         $html = _RecentChanges_HtmlFormatter::format ($changes);
         $html = HTML::div(array('class' => 'wikitext'), $html);
         global $request;
@@ -605,7 +607,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.80 $");
+                            "\$Revision: 1.81 $");
     }
 
     function managesValidators() {
@@ -652,7 +654,7 @@ extends WikiPlugin
             $args['limit'] = 15; // Fix default value for RSS.
 
         if ($args['format'] == 'sidebar' && empty($args['limit']))
-            $args['limit'] = 1; // Fix default value for sidebar.
+            $args['limit'] = 10; // Fix default value for sidebar.
 
         return $args;
     }
@@ -772,6 +774,11 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.80  2003/11/27 15:17:01  carstenklapp
+// Theme & appearance tweaks: Converted Mozilla sidebar link into a Theme
+// button, to allow an image button for it to be added to Themes. Output
+// RSS button in small text size when theme has no button image.
+//
 // Revision 1.79  2003/04/29 14:34:20  dairiki
 // Bug fix: "add sidebar" link didn't work when USE_PATH_INFO was false.
 //
