@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.42 2002-01-26 01:35:28 dairiki Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.43 2002-01-26 07:01:42 carstenklapp Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -59,7 +59,7 @@ function MailifyPage ($page, $nversions = 1)
     // This should just be entered by hand (or by script?)
     // in the actual pgsrc files, since only they should have
     // RCS ids.
-    //$head .= "X-Rcs-Id: \$Id\$\r\n";
+    //$head .= "X-Rcs-Id: \"\$Id\$\"\r\n";
     
     $iter = $page->getAllRevisions();
     $parts = array();
@@ -386,25 +386,47 @@ function LoadZip (&$request, $zipfile, $files = false, $exclude = false) {
     }
 }
 
-function LoadDir (&$request, $dirname, $files = false, $exclude = false)
-{
-    $handle = opendir($dir = $dirname);
-    global $Theme;
-    while ($fn = readdir($handle)) {
-        if ($fn[0] == '.' || filetype("$dir/$fn") != 'file')
-            continue;
-            
-        if ( ($files && !in_array($fn, $files)) || ($exclude && in_array($fn, $exclude)) ) {
+function LoadDir (&$request, $dirname, $files = false, $exclude = false) {
+    $skiplist = array();
+    $loadfileset = new loadFileSet($dirname, $files, $exclude, $skiplist);
 
-            PrintXML(array(HTML::dt($Theme->LinkExistingWikiWord($fn)),
-                           HTML::dd(_("Skipping"))));
-            continue;
-        }
-            
-        LoadFile($request, "$dir/$fn");
+    if ($skiplist) {
+        // FIXME: use PageList?
+        PrintXML(HTML::h2(_("Skipping")));
+        $list = HTML::ul();
+        global $Theme;
+        foreach ($skiplist as $line)
+            $list->pushContent(HTML::li($Theme->LinkExistingWikiWord($line)));
+        $list->PrintXML();
     }
-    closedir($handle);
+
+    PrintXML(HTML::h2(_("Loading")));
+    $candidate_files = $loadfileset->getFiles();
+    foreach ($candidate_files as $file) {
+        // TODO: pass PageLists to LoadFile for output
+        LoadFile($request, "$dirname/$file");
+    }
 }
+
+class loadFileSet extends fileSet {
+    function loadFileSet($dirname, &$files, &$exclude, &$skiplist) {
+        $this->_files = &$files;
+        $this->_exclude = &$exclude;
+        $this->_skiplist = &$skiplist;
+        parent::fileSet($dirname);
+    }
+    function _filenameSelector($filename) {
+        if (($this->_files && !in_array($fn, $this->_files)) || ($this->_exclude && in_array($fn, $this->_exclude)))
+        {
+            global $Theme;
+            $this->_skiplist[] = $filename;
+            return false;
+        } else {
+            return true;
+        }
+    }
+}
+
 
 function IsZipFile ($filename_or_fd)
 {
