@@ -1,4 +1,4 @@
--- $Id: psql.sql,v 1.6 2004-04-06 20:00:11 rurban Exp $
+-- $Id: psql.sql,v 1.7 2004-04-15 16:42:07 rurban Exp $
 
 \set QUIET
 
@@ -72,10 +72,8 @@ CREATE TABLE :page_tbl (
 	hits		INT NOT NULL DEFAULT 0,
         pagedata	TEXT NOT NULL DEFAULT ''
 );
-CREATE UNIQUE INDEX :page_id
-	ON :page_tbl (id);
-CREATE UNIQUE INDEX :page_nm
-	ON :page_tbl (pagename);
+CREATE UNIQUE INDEX :page_id ON :page_tbl (id);
+CREATE UNIQUE INDEX :page_nm ON :page_tbl (pagename);
 
 \echo Dropping :version_tbl
 DROP TABLE :version_tbl;
@@ -89,10 +87,8 @@ CREATE TABLE :version_tbl (
         content		TEXT NOT NULL DEFAULT '',
         versiondata	TEXT NOT NULL DEFAULT ''
 );
-CREATE UNIQUE INDEX :vers_id 
-	ON :version_tbl (id,version);
-CREATE INDEX :vers_mtime
-	ON :version_tbl (mtime);
+CREATE UNIQUE INDEX :vers_id ON :version_tbl (id,version);
+CREATE INDEX :vers_mtime ON :version_tbl (mtime);
 
 \echo Dropping :recent_tbl
 DROP TABLE :recent_tbl;
@@ -103,8 +99,7 @@ CREATE TABLE :recent_tbl (
 	latestmajor	INT,
 	latestminor	INT
 );
-CREATE UNIQUE INDEX :recent_id
-	ON :recent_tbl (id);
+CREATE UNIQUE INDEX :recent_id ON :recent_tbl (id);
 
 
 \echo Dropping :nonempty_tbl
@@ -132,11 +127,10 @@ DROP TABLE :session_tbl;
 CREATE TABLE :session_tbl (
 	sess_id 	CHAR(32) NOT NULL DEFAULT '',
     	sess_data 	TEXT NOT NULL,
-    	sess_date 	INT
-    	sess_ip 	CHAR(15) NOT NULL,
+    	sess_date 	INT,
+    	sess_ip 	CHAR(15) NOT NULL
 );
-CREATE UNIQUE INDEX :sess_id
-	ON :session_tbl (sess_id);
+CREATE UNIQUE INDEX :sess_id ON :session_tbl (sess_id);
 CREATE INDEX :sess_date ON :session_tbl (sess_date);
 CREATE INDEX :sess_ip   ON :session_tbl (sess_ip);
 
@@ -149,10 +143,9 @@ DROP TABLE :pref_tbl;
 \echo Creating :pref_tbl
 CREATE TABLE :pref_tbl (
   	userid 	CHAR(48) NOT NULL,
-  	prefs  	TEXT NULL DEFAULT '',
+  	prefs  	TEXT NULL DEFAULT ''
 );
-CREATE UNIQUE INDEX :pref_id
-	ON :pref_tbl (userid);
+CREATE UNIQUE INDEX :pref_id ON :pref_tbl (userid);
 
 GRANT ALL ON :page_tbl		TO :httpd_user;
 GRANT ALL ON :version_tbl	TO :httpd_user;
