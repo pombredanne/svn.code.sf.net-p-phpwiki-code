@@ -77,7 +77,7 @@ $locale["'%s': corrupt file"] =
 $locale["(Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor.)"] =
    "(Kopieren Sie Ihre Veränderungen in die Zwischenablage. Sie können versuchen eine andere Seite zu edieren oder Ihr Text in einem Texteditor speichern.)";
 $locale["(Redirected from %s)"] =
-   "(Weitersandet von %s)";
+   "(Weitergeleitet von %s)";
 $locale["(hist)"] =
    "(protok.)";
 $locale["- saved to database as version %d"] =
@@ -174,8 +174,6 @@ $locale["Cancel"] =
    "Abbrechen";
 $locale["Cannot create directory '%s'"] =
    "Das Verzeichnis »%s« kann nicht erzeugt werden";
-$locale["Change Password"] =
-   "Ändere Passwort";
 $locale["Change country"] =
    "Land ändern";
 $locale["Check any two boxes then %s."] =
@@ -472,8 +470,6 @@ $locale["New comment."] =
    "Neue Kommentare.";
 $locale["New page."] =
    "Neue Seite.";
-$locale["New password"] =
-   "Neues Passwort";
 $locale["New users may use an empty password."] =
    "Neue Benutzer können ein beliebiges freies Passwort als Eintrittskarte ins Wike verwenden.";
 $locale["Newer page:"] =
@@ -639,7 +635,7 @@ $locale["Redirects to another url or page."] =
 $locale["References"] =
    "Fußnoten";
 $locale["Remove Page"] =
-   "Seite löschen";
+   "Seite Löschen";
 $locale["Remove page"] =
    "Seite löschen";
 $locale["Remove selected pages"] =
@@ -828,8 +824,6 @@ $locale["Total of %d languages: "] =
    "%d Sprache gesammt: ";
 $locale["Total of %d themes: "] =
    "%d Benutzeroberfläche gesamt: ";
-$locale["Type it again"] =
-   "Bitte hier wiederholen";
 $locale["Unable to load: %s"] =
    "Konnte %s nicht laden";
 $locale["Unable to open directory '%s' for reading"] =
