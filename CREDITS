@@ -35,6 +35,9 @@ Please report bugs to mailto:phpwiki-talk@lists.sourceforge.net
 
 ! Patches
 
+;[Scott R. Anderson | sra@diem.net ] :
+;: contributed a patch to allow authorized users' names to appear in RecentChanges.
+
 ;[Neil Brown | mailto:neilb@cse.unsw.edu.au ] :
 ;: has contributed numerous useful patches e.g. nested definition lists
 
