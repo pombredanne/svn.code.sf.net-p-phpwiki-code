@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.106 2004-11-20 17:35:56 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.107 2004-11-21 11:59:16 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -567,6 +567,8 @@ class WikiDB {
         $gd->set('__global', $data);
     }
 
+    /* TODO: these are really backend methods */
+
     // SQL result: for simple select or create/update queries
     // returns the database specific resource type
     function genericSqlQuery($sql) {
@@ -587,7 +589,7 @@ class WikiDB {
         return false;
     }
     
-    // see upstream methods:
+    // see backend upstream methods
     // ADODB adds surrounding quotes, SQL not yet!
     function quote ($s) {
         return $s;
@@ -2090,6 +2092,13 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.106  2004/11/20 17:35:56  rurban
+// improved WantedPages SQL backends
+// PageList::sortby new 3rd arg valid_fields (override db fields)
+// WantedPages sql pager inexact for performance reasons:
+//   assume 3 wantedfrom per page, to be correct, no getTotal()
+// support exclude argument for get_all_pages, new _sql_set()
+//
 // Revision 1.105  2004/11/20 09:16:27  rurban
 // Fix bad-style Cut&Paste programming errors, detected by Charles Corrigan.
 //

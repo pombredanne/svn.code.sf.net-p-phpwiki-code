@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: JabberPresence.php,v 1.2 2004-11-20 17:42:57 rurban Exp $');
+rcs_id('$Id: JabberPresence.php,v 1.3 2004-11-21 11:59:26 rurban Exp $');
 /**
  * A simple Jabber presence WikiPlugin.
  * http://wiki.crao.net/index.php/JabberPr%E9sence/Source
@@ -13,7 +13,7 @@ rcs_id('$Id: JabberPresence.php,v 1.2 2004-11-20 17:42:57 rurban Exp $');
  */
 
 if (!defined('MY_JABBER_ID'))
-    define('MY_JABBER_ID', $request->UserName()."@jabber.com");
+    define('MY_JABBER_ID', $GLOBALS['request']->_user->UserName()."@jabber.com"); // or "@netflint.net"
 
 class WikiPlugin_JabberPresence
 extends WikiPlugin
@@ -30,7 +30,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     // Establish default values for each of this plugin's arguments.

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.124 2004-11-09 17:11:16 rurban Exp $');
+rcs_id('$Id: config.php,v 1.125 2004-11-21 11:59:18 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -410,6 +410,17 @@ function getUploadDataPath() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.124  2004/11/09 17:11:16  rurban
+// * revert to the wikidb ref passing. there's no memory abuse there.
+// * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively
+//   store page ids with getPageLinks (GleanDescription) of all existing pages, which
+//   are also needed at the rendering for linkExistingWikiWord().
+//   pass options to pageiterator.
+//   use this cache also for _get_pageid()
+//   This saves about 8 SELECT count per page (num all pagelinks).
+// * fix passing of all page fields to the pageiterator.
+// * fix overlarge session data which got broken with the latest ACCESS_LOG_SQL changes
+//
 // Revision 1.123  2004/11/05 21:03:27  rurban
 // new DEBUG flag: _DEBUG_LOGIN (64)
 //   verbose login debug-msg (settings and reason for failure)

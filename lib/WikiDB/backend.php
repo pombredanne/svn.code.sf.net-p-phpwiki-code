@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.11 2004-11-20 17:35:57 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.12 2004-11-21 11:59:22 rurban Exp $');
 
 /*
   Pagedata
@@ -520,6 +520,12 @@ class WikiDB_backend
         return array('pagename'/*,'mtime','author_id','author'*/);
     }
 
+    // quote only strings or do smartquote? add ' or not? (NULL)
+    // ADODB adds surrounding quotes, SQL not yet!
+    function quote ($s) {
+        return $s;
+    }
+
 };
 
 /**
@@ -570,5 +576,4 @@ class WikiDB_backend_iterator
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-
 ?>

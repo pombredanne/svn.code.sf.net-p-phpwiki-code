@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: imagecache.php,v 1.11 2004-10-12 15:06:01 rurban Exp $');
+<?php rcs_id('$Id: imagecache.php,v 1.12 2004-11-21 11:59:20 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 

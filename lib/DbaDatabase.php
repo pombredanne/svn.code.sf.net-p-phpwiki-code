@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbaDatabase.php,v 1.15 2004-11-11 18:28:12 rurban Exp $');
+<?php rcs_id('$Id: DbaDatabase.php,v 1.16 2004-11-21 11:59:14 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.191 2004-11-19 19:22:03 rurban Exp $');
+rcs_id('$Id: main.php,v 1.192 2004-11-21 11:59:20 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -1148,6 +1148,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.191  2004/11/19 19:22:03  rurban
+// ModeratePage part1: change status
+//
 // Revision 1.190  2004/11/15 15:56:40  rurban
 // don't load PagePerm on ENABLE_PAGEPERM = false to save memory. Move mayAccessPage() to main.php
 //

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.118 2004-11-19 19:22:03 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.119 2004-11-21 11:59:17 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -2022,6 +2022,9 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.118  2004/11/19 19:22:03  rurban
+// ModeratePage part1: change status
+//
 // Revision 1.117  2004/11/10 15:29:21  rurban
 // * requires newer Pear_DB (as the internal one): quote() uses now escapeSimple for strings
 // * ACCESS_LOG_SQL: fix cause request not yet initialized

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.42 2004-09-26 17:09:23 rurban Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.43 2004-11-21 11:59:14 rurban Exp $');
 /**
  * Code for writing the HTML subset of XML.
  * @author: Jeff Dairiki
@@ -529,6 +529,10 @@ function IfJavaScript($if_content = false, $else_content = false) {
     
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.42  2004/09/26 17:09:23  rurban
+ add SVG support for Ploticus (and hopefully all WikiPluginCached types)
+ SWF not yet.
+
  Revision 1.41  2004/08/05 17:31:50  rurban
  more xhtml conformance fixes
 

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.61 2004-10-21 21:02:04 rurban Exp $');
+rcs_id('$Id: WikiUser.php,v 1.62 2004-11-21 11:59:16 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -741,6 +741,9 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.61  2004/10/21 21:02:04  rurban
+// fix seperate page login
+//
 // Revision 1.60  2004/06/15 09:15:52  rurban
 // IMPORTANT: fixed passwd handling for passwords stored in prefs:
 //   fix encrypted usage, actually store and retrieve them from db

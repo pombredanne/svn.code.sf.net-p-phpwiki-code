@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.115 2004-11-17 17:24:02 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.116 2004-11-21 11:59:16 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1389,6 +1389,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.115  2004/11/17 17:24:02  rurban
+// more verbose on fatal template not found
+//
 // Revision 1.114  2004/11/11 18:31:26  rurban
 // add simple backtrace on such general failures to get at least an idea where
 //

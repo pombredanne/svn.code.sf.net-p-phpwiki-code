@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.34 2004-10-12 13:13:19 rurban Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.35 2004-11-21 11:59:18 rurban Exp $');
 /**
  * Code for writing XML.
  * @package Markup
@@ -603,6 +603,9 @@ function fmt ($fs /* , ... */) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.34  2004/10/12 13:13:19  rurban
+// php5 compatibility (5.0.1 ok)
+//
 // Revision 1.33  2004/07/02 09:55:58  rurban
 // more stability fixes: new DISABLE_GETIMAGESIZE if your php crashes when loading LinkIcons: failing getimagesize in old phps; blockparser stabilized
 //

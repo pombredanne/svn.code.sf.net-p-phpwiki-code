@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Buddy.php,v 1.2 2004-11-15 16:00:02 rurban Exp $');
+rcs_id('$Id: Buddy.php,v 1.3 2004-11-21 11:59:26 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -141,6 +141,11 @@ function AverageRating($dbi, $page, $users, $active_userid){
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/11/15 16:00:02  rurban
+// enable RateIt imgPrefix: '' or 'Star' or 'BStar',
+// enable blue prediction icons,
+// enable buddy predictions.
+//
 // Revision 1.1  2004/06/18 14:42:17  rurban
 // added wikilens libs (not yet merged good enough, some work for DanFr)
 // 
@@ -152,3 +157,4 @@ function AverageRating($dbi, $page, $users, $active_userid){
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

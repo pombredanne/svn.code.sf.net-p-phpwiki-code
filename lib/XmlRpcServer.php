@@ -1,5 +1,5 @@
 <?php 
-// $Id: XmlRpcServer.php,v 1.6 2004-03-25 22:33:38 rurban Exp $
+// $Id: XmlRpcServer.php,v 1.7 2004-11-21 11:59:18 rurban Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  *
  * LICENCE

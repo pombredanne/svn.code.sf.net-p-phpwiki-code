@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.121 2004-11-20 17:35:47 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.122 2004-11-21 11:59:15 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -1433,6 +1433,13 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.121  2004/11/20 17:35:47  rurban
+// improved WantedPages SQL backends
+// PageList::sortby new 3rd arg valid_fields (override db fields)
+// WantedPages sql pager inexact for performance reasons:
+//   assume 3 wantedfrom per page, to be correct, no getTotal()
+// support exclude argument for get_all_pages, new _sql_set()
+//
 // Revision 1.120  2004/11/20 11:28:49  rurban
 // fix a yet unused PageList customPageListColumns bug (merge class not decl to _types)
 // change WantedPages to use PageList

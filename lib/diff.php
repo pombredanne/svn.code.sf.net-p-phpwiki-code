@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: diff.php,v 1.48 2004-06-14 11:31:36 rurban Exp $');
+rcs_id('$Id: diff.php,v 1.49 2004-11-21 11:59:19 rurban Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -393,6 +393,14 @@ function showDiff (&$request) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.48  2004/06/14 11:31:36  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.47  2004/06/08 13:51:57  rurban
 // some comments only
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.33 2004-11-09 17:11:03 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.34 2004-11-21 11:59:16 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004 $ThePhpWikiProgrammingTeam
 
