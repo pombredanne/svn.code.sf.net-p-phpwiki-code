@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.237 2005-02-12 17:22:18 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.238 2005-03-04 16:29:14 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -1336,16 +1336,21 @@ class fileSet {
     }
 
     function _filenameSelector($filename) {
-        if (! $this->_pattern)
+        if (! $this->_pattern )
             return true;
         else {
-            return glob_match ($this->_pattern, $filename, $this->_case);
+            if (! $this->_pcre_pattern )
+                $this->_pcre_pattern = glob_to_pcre($this->_pattern);
+            return preg_match('/' . $this->_pcre_pattern . ($this->_case ? '/' : '/i'), 
+                              $filename);
         }
     }
 
     function fileSet($directory, $filepattern = false) {
         $this->_fileList = array();
         $this->_pattern = $filepattern;
+        if ($filepattern)
+            $this->_pcre_pattern = glob_to_pcre($this->_pattern);
         $this->_case = !isWindows();
         $this->_pathsep = '/';
 
@@ -1387,7 +1392,8 @@ class ListRegexExpand {
         //$this->index = false;
     }
     function listMatchCallback ($item, $key) {
-    	if (preg_match('/' . $this->match . ($this->case_sensitive ? '/' : '/i'), $item)) {
+    	if (preg_match('/' . $this->match . ($this->case_sensitive ? '/' : '/i'), 
+                       $item)) {
 	    unset($this->list[$this->index]);
             $this->list[] = $item;
         }
@@ -1399,36 +1405,41 @@ class ListRegexExpand {
     }
 }
 
-// convert fileglob to regex style:
-// convert some wildcards to pcre style, escape the rest
-// escape . \\ + * ? [ ^ ] $ ( ) { } = ! < > | : 
+// Convert fileglob to regex style:
+// Convert some wildcards to pcre style, escape the rest
+// Escape . \\ + * ? [ ^ ] $ ( ) { } = ! < > | : /
+// Fixed bug #994994: "/" in $glob.
 function glob_to_pcre ($glob) {
     // check simple case: no need to escape
-    if (strcspn($glob, ".\\+*?[^]$(){}=!<>|:") == strlen($glob))
+    $escape = '\[](){}=!<>|:/';
+    if (strcspn($glob, $escape . ".+*?^$") == strlen($glob))
         return $glob;
     // preg_replace cannot handle "\\\\\\2" so convert \\ to \xff
     $glob = strtr($glob, "\\", "\xff");
+    $glob = str_replace("/", '\/', $glob);
     // first convert some unescaped expressions to pcre style: . => \.
-    $escape = ".^$";
-    $re = preg_replace('/([^\xff])?(['.preg_quote($escape).'])/', "\\1\xff\\2", $glob);
+    $special = ".^$";
+    $re = preg_replace('/([^\xff])?(['.preg_quote($special).'])/', 
+                       "\\1\xff\\2", $glob);
 
     // * => .*, ? => .
     $re = preg_replace('/([^\xff])?\*/', '$1.*', $re);
     $re = preg_replace('/([^\xff])?\?/', '$1.', $re);
-    if (!preg_match('/^[\?\*]/',$glob))
+    if (!preg_match('/^[\?\*]/', $glob))
         $re = '^' . $re;
-    if (!preg_match('/[\?\*]$/',$glob))
+    if (!preg_match('/[\?\*]$/', $glob))
         $re = $re . '$';
 
     // .*? handled above, now escape the rest
-    $escape = '\[](){}=!<>|:';
-    while (strcspn($re, $escape) != strlen($re)) // loop strangely needed
-        $re = preg_replace('/([^\xff])(['.preg_quote($escape).'])/', "\\1\xff\\2", $re);
+    //while (strcspn($re, $escape) != strlen($re)) // loop strangely needed
+    $re = preg_replace('/([^\xff])(['.preg_quote($escape, "/").'])/', 
+                       "\\1\xff\\2", $re);
     return strtr($re, "\xff", "\\");
 }
 
 function glob_match ($glob, $against, $case_sensitive = true) {
-    return preg_match('/' . glob_to_pcre($glob) . ($case_sensitive ? '/' : '/i'), $against);
+    return preg_match('/' . glob_to_pcre($glob) . ($case_sensitive ? '/' : '/i'), 
+                      $against);
 }
 
 function explodeList($input, $allnames, $glob_style = true, $case_sensitive = true) {
@@ -1441,7 +1452,8 @@ function explodeList($input, $allnames, $glob_style = true, $case_sensitive = tr
             $f = $list[$i];
             if (preg_match('/[\?\*]/',$f)) {
             	reset($allnames);
-            	$expand = new ListRegexExpand($list, $glob_style ? glob_to_pcre($f) : $f, $case_sensitive);
+            	$expand = new ListRegexExpand($list, 
+                    $glob_style ? glob_to_pcre($f) : $f, $case_sensitive);
             	$expand->expandRegex($i, $allnames);
             }
         }
@@ -1450,7 +1462,8 @@ function explodeList($input, $allnames, $glob_style = true, $case_sensitive = tr
 }
 
 // echo implode(":",explodeList("Test*",array("xx","Test1","Test2")));
-function explodePageList($input, $include_empty=false, $sortby='pagename', $limit=false, $exclude=false) {
+function explodePageList($input, $include_empty=false, $sortby='pagename', 
+			 $limit=false, $exclude=false) {
     include_once("lib/PageList.php");
     return PageList::explodePageList($input, $include_empty, $sortby, $limit, $exclude);
 }
@@ -1956,6 +1969,10 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.237  2005/02/12 17:22:18  rurban
+// locale update: missing . : fixed. unified strings
+// proper linebreaks
+//
 // Revision 1.236  2005/02/08 13:41:32  rurban
 // add rand_ascii
 //
