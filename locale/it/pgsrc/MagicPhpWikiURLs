@@ -1,7 +1,10 @@
-Mime-Version: 1.0 (Produced by PhpWiki 1.1.x)
+Date: Sun, 27 Jan 2002 17:28:55 -0500
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
+X-Rcs-Id: $Id: MagicPhpWikiURLs,v 1.2 2002-01-27 23:48:42 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=MagicPhpWikiURLs;
-  flags=PAGE_LOCKED
+  flags=PAGE_LOCKED;
+  charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
 !!! About phpwiki: URLs
@@ -41,15 +44,14 @@ A magic link looks like:
 
   __[[__ ''text'' __|__ ''phpwiki-url'' __]__
 
-The "''text'' __|__" is optional but usually recommended. 
+The "''text'' __|__" is optional but usually recommended.
 If given it will provide the label for the link.
 
-The ''pagename'' part is optional, too.  If omitted, the link will
-refer to the current wiki-page.
+The ''phpwiki-url'' is a __phpwiki:__ URL as described above.
 
 !Some examples
 
-  [[ Edit the !SandBox | phpwiki:!SandBox?action=edit ] 
+  [[ Edit the !SandBox | phpwiki:!SandBox?action=edit ]
 will generate a link which will take you directly to editing the SandBox, like so:
 [ Edit the SandBox | phpwiki:SandBox?action=edit ].
 
@@ -57,9 +59,11 @@ Other possibilites:
 * [ Diff the SandBox | phpwiki:SandBox?action=diff ],
 * [ Lock the HomePage | phpwiki:HomePage?action=lock ],
 * [ Get a Full Zip Dump | phpwiki:?action=zip&include=all ],
-* [ Page titles containing 'wiki' | phpwiki:?action=search&searchterm=wiki ],
+* [ Page titles containing 'wiki' | phpwiki:TitleSearch?s=wiki ],
 
 !! Writing Magic Forms in Wiki Pages
+
+''__Note__: Magic forms are on their way out, I think.  They are being superceded by <''''?plugin-form>s.''
 
 If one of the ''query-args'' has a value like
   ''arg''__=__''opt-width''__(__''opt-dflt-val''__)__
@@ -73,15 +77,16 @@ will be omitted.
 
 Examples:
 
-  [[ Full Search | phpwiki:?action=search&searchtype=full&searchterm=() ] 
+  [[ Full Search | phpwiki:FullTextSearch?s=() ]
 gives
-[ Full Search | phpwiki:?action=search&searchtype=full&searchterm=() ] 
+[ Full Search | phpwiki:FullTextSearch?s=() ]
 
 While
-  [[ phpwiki:?action=search&searchterm=12() ]
+  [[ phpwiki:TitleSearch?s=12() ]
 yields
-[ phpwiki:?action=search&searchterm=12() ]
+[ phpwiki:TitleSearch?s=12() ]
 
 Other examples:
 [ Browse Page | phpwiki:?action=browse&pagename=() ]
-
+----
+PhpWikiDocumentation
