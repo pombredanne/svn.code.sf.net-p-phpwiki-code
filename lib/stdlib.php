@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.32 2001-02-15 19:32:55 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.33 2001-02-15 21:35:03 dairiki Exp $');
 
 
    /*
@@ -563,6 +563,15 @@ function StartTag($tag, $args = '')
 		  SERVER_URL . VIRTUAL_PATH . "/" . WikiURL($pagename), $page);
       else
 	 _dotoken('BASE_URL', SERVER_URL . SCRIPT_NAME, $page);
+
+      if ($GLOBALS['action'] != 'browse')
+	 _dotoken('ROBOTS_META',
+		  Element('meta', array('name' => 'robots',
+					'content' => 'noindex, nofollow')),
+		  $page);
+      else
+	 _dotoken('ROBOTS_META', '', $page);
+      
       
       // invalid for messages (search results, error messages)
       if ($template != 'MESSAGE') {
