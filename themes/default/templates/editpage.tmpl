@@ -1,5 +1,5 @@
-<!-- -*-php-*- -->
-<!-- $Id: editpage.tmpl,v 1.54 2005-01-22 12:46:12 rurban Exp $ -->
+<!-- -*-html-*- -->
+<!-- $Id: editpage.tmpl,v 1.55 2005-01-25 07:12:25 rurban Exp $ -->
 <?php if (isset($PREVIEW_CONTENT)) { ?>
   <p><strong><?=_("Preview only!  Changes not saved.")?></strong>
 <!-- FIXME: it would be nice to put a link to the #editarea anchor below,
@@ -36,7 +36,9 @@
   <table width="100%">
     <tr><td><?= $EDIT_TOOLBAR ?></td>
         <td align="right"><div id="editarea-size">
-        <?=_("Size").':'?> <label for="pref[editHeight]"><b><?=_("H")?></b></label> <?=$HEIGHT_PREF?> <label for="pref[editWidth]"><b><?=_("W")?></b></label> <?=$WIDTH_PREF?>
+    <?=_("Size").':'?>
+    <label for="pref[editHeight]"><b><?=_("H")?></b></label> <?=$HEIGHT_PREF?> 
+    <label for="pref[editWidth]"><b><?=_("W")?></b></label> <?=$WIDTH_PREF?>
     <noscript><?=Button("submit:", _("Adjust"), 'wikiaction')?></noscript>
   </div></td></tr></table>
   <a name="editarea"></a><?=$EDIT_TEXTAREA?>
@@ -57,21 +59,20 @@
       <?=$SEP?><?= $SAVE_B ?>
     <?php } ?>
   </td>
+  <td>&nbsp; <?=$AUTHOR_MESSAGE?></td>
+</tr>
+<tr>
   <td>
-    <?= $user->isSignedIn()
-        ? ''
-        : fmt("Author will be logged as %s.", HTML::em($user->getId())) ?>
-    <?php if (0 and !$user->isAuthenticated()) { // disabled ?>
+    <?php if ($user->isAdmin()) { ?> 
+    <?= $LOCKED_CB ?> <label for="edit[lock]"><?=_("Locked")?></label>
+    <?php } ?>
+  </td>
+  <td colspan="2" align="right">
+    <?php if (!$user->isAuthenticated()) { ?>
     <?= Template('signin', array('FORMNAME' => 'editpage')) ?>
     <?php } ?>
   </td>
 </tr>
-<?php if ($user->isAdmin()) { ?>
-<tr>
-  <td><?= $LOCKED_CB ?> <?=_("Locked")?></td>
-  <td colspan="2"></td>
-</tr>
-<?php } ?>
 <?php if (0) {
 // Not yet supported within the same request. 
 // Better use a button to the external UpLoad page. 
