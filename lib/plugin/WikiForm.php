@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiForm.php,v 1.10 2004-02-22 23:20:33 rurban Exp $');
+rcs_id('$Id: WikiForm.php,v 1.11 2004-02-24 15:20:07 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -34,7 +34,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     function getDefaultArguments() {
@@ -54,7 +54,7 @@ extends WikiPlugin
                                  'accept-charset' => CHARSET),
                            HiddenInputs(array('action' => $action,
                                               'pagename' => $basepage)));
-                $input = array('type' => 'text',
+        $input = array('type' => 'text',
                        'value' => $default,
                        'size' => $size);
 
@@ -120,6 +120,13 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/02/22 23:20:33  rurban
+// fixed DumpHtmlToDir,
+// enhanced sortby handling in PageList
+//   new button_heading th style (enabled),
+// added sortby and limit support to the db backends and plugins
+//   for paging support (<<prev, next>> links on long lists)
+//
 // Revision 1.9  2003/02/26 01:56:52  dairiki
 // Tuning/fixing of POST action URLs and hidden inputs.
 //
