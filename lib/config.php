@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.118 2004-07-13 14:03:31 rurban Exp $');
+rcs_id('$Id: config.php,v 1.119 2004-09-16 07:50:37 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -333,8 +333,75 @@ if (!function_exists('is_a')) {
     }
 }
 
+/** 
+ * wordwrap() might crash between 4.1.2 and php-4.3.0RC2, fixed in 4.3.0
+ * See http://bugs.php.net/bug.php?id=20927 and 
+ * http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2002-1396
+ * Improved version of wordwrap2() in the comments at http://www.php.net/wordwrap
+ */
+function safe_wordwrap($str, $width=80, $break="\n", $cut=false) {
+    if (check_php_version(4,3))
+        return wordwrap($str, $width, $break, $cut);
+    elseif (!check_php_version(4,1,2))
+        return wordwrap($str, $width, $break, $cut);
+    else {
+        $len = strlen($str);
+        $tag = 0; $result = '';
+        for ($i = 0; $i < $len; $i++) {
+            $chr = $str[$i];
+            // don't break inside xml tags
+            if ($chr == '<') {
+                $tag++;
+            } elseif ($chr == '>') {
+                $tag--;
+            } elseif (!$tag) {
+                if (!function_exists('ctype_space')) {
+                    if (preg_match('/^\s$/', $chr))
+                        $wordlen = 0;
+                    else
+                        $wordlen++;
+                }
+                elseif (ctype_space($chr)) {
+                    $wordlen = 0;
+                } else {
+                    $wordlen++;
+                }
+            }
+            if ((!$tag) && ($wordlen) && (!($wordlen % $cols))) {
+                $chr .= $break;
+            }
+            $result .= $chr;
+        }
+        return $result;
+        /*
+        if (isset($str) && isset($width)) {
+            $ex = explode(" ", $str); // wrong: must use preg_split \s+
+            $rp = array();
+            for ($i=0; $i<count($ex); $i++) {
+                // $word_array = preg_split('//', $ex[$i], -1, PREG_SPLIT_NO_EMPTY);
+                // delete #&& !is_numeric($ex[$i])# if you want force it anyway
+                if (strlen($ex[$i]) > $width && !is_numeric($ex[$i])) {
+                    $where = 0;
+                    $rp[$i] = "";
+                    for($b=0; $b < (ceil(strlen($ex[$i]) / $width)); $b++) {
+                        $rp[$i] .= substr($ex[$i], $where, $width).$break;
+                        $where += $width;
+                    }
+                } else {
+                    $rp[$i] = $ex[$i];
+                }
+            }
+            return implode(" ",$rp);
+        }
+        return $text;
+        */
+    }
+}
 
 // $Log: not supported by cvs2svn $
+// Revision 1.118  2004/07/13 14:03:31  rurban
+// just some comments
+//
 // Revision 1.117  2004/06/21 17:29:17  rurban
 // pear DB introduced a is_a requirement. so pear lost support for php < 4.2.0
 //
