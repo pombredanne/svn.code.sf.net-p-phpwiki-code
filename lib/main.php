@@ -1,9 +1,9 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.132 2004-04-19 21:51:41 rurban Exp $');
+rcs_id('$Id: main.php,v 1.133 2004-04-20 18:10:31 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
-include "lib/config.php";
+//include "lib/config.php";
 require_once("lib/stdlib.php");
 require_once('lib/Request.php');
 require_once('lib/WikiDB.php');
@@ -882,6 +882,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.132  2004/04/19 21:51:41  rurban
+// php5 compatibility: it works!
+//
 // Revision 1.131  2004/04/19 18:27:45  rurban
 // Prevent from some PHP5 warnings (ref args, no :: object init)
 //   php5 runs now through, just one wrong XmlElement object init missing

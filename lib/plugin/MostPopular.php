@@ -1,6 +1,6 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopular.php,v 1.27 2004-04-20 00:06:53 rurban Exp $');
-/**
+rcs_id('$Id: MostPopular.php,v 1.28 2004-04-20 18:10:55 rurban Exp $');
+/*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
@@ -38,7 +38,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.27 $");
+                            "\$Revision: 1.28 $");
     }
 
     function getDefaultArguments() {
@@ -104,6 +104,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.27  2004/04/20 00:06:53  rurban
+// paging support
+//
 // Revision 1.26  2004/04/18 01:34:21  rurban
 // protect most_popular from sortby=mtime
 //

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.15 2004-04-10 02:30:49 rurban Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.16 2004-04-20 18:10:26 rurban Exp $');
 
 require_once('lib/stdlib.php');
 
@@ -381,7 +381,36 @@ class LocalizedButtonFinder
 
         $this->FileFinder(array_merge($path, $include_path));
     }
+}
 
+// Search PHP's include_path to find file or directory.
+function FindFile ($file, $missing_okay = false, $slashify = false)
+{
+    static $finder;
+    if (!isset($finder))
+        $finder = new FileFinder;
+    $s = $finder->findFile($file, $missing_okay);
+    if ($slashify)
+      $s = $finder->slashifyPath($s);
+    return $s;
+}
+
+// Search PHP's include_path to find file or directory.
+// Searches for "locale/$LANG/$file", then for "$file".
+function FindLocalizedFile ($file, $missing_okay = false, $re_init = false)
+{
+    static $finder;
+    if ($re_init or !isset($finder))
+        $finder = new LocalizedFileFinder;
+    return $finder->findFile($file, $missing_okay);
+}
+
+function FindLocalizedButtonFile ($file, $missing_okay = false, $re_init = false)
+{
+    static $buttonfinder;
+    if ($re_init or !isset($buttonfinder))
+        $buttonfinder = new LocalizedButtonFinder;
+    return $buttonfinder->findFile($file, $missing_okay);
 }
 
 function isWindows() {
