@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.49 2002-12-17 18:32:48 dairiki Exp $');
+rcs_id('$Id: editpage.php,v 1.50 2002-12-29 02:51:31 carstenklapp Exp $');
 
 require_once('lib/Template.php');
 
@@ -352,8 +352,8 @@ class PageEditor
         if ($this->_currentVersion > $this->current->getVersion())
             return false;       // FIXME: some kind of warning?
 
-        $is_new_markup = !empty($posted['markup']) && $posted['markup'] == 'new';
-        $meta['markup'] = $is_new_markup ? 2.0: false;
+        $is_old_markup = !empty($posted['markup']) && $posted['markup'] == 'old';
+        $meta['markup'] = $is_old_markup ? false : 2.0;
         $meta['summary'] = trim(substr($posted['summary'], 0, 256));
         $meta['locked'] = !empty($posted['locked']);
         $meta['is_minor_edit'] = !empty($posted['minor_edit']);
