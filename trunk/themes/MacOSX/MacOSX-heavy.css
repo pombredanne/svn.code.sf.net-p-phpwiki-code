@@ -1,10 +1,36 @@
 /* 
- * $Id: MacOSX-heavy.css,v 1.8 2002-02-19 03:40:10 carstenklapp Exp $
+ * $Id: MacOSX-heavy.css,v 1.9 2002-02-19 21:36:19 carstenklapp Exp $
  *
  * phpwiki-heavy.css
  *
  * This is stuff which should be in phpwiki.css, but which breaks NS4.
  */
+
+/**
+ * Wiki
+ */
+/* this completely prevents NS4 from editing pages. */
+textarea.wikiedit, input.wikitext, textarea.summary {
+  background: white;
+  /* for older browsers */
+  border: 1px solid black;
+
+  border-top:    1px solid #7c7c7c;
+  border-left:   1px solid #c3c3c3;
+  border-bottom: 1px solid #dddddd;
+  border-right:  1px solid #c3c3c3;
+  padding-left: 0.8em; 
+  padding-right: 0.8em; 
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  margin: 0.5ex 0px;
+ /* This breaks Netscape 4: (display does not go full width).
+    width: auto;
+ */
+ clear: both;
+}
+
+
 
 /* This makes spacings in NS4 too big. */
 .toolbar , div.toolbar  {
@@ -38,13 +64,14 @@ img.linkicon  {
 .diff {
   margin:  0.5ex 0;
   padding: 1px;
-  border-top:    solid 1px #7c7c7c;
-  border-left:   solid 1px #c3c3c3;
-  border-bottom: solid 1px #dddddd;
-  border-right:  solid 1px #c3c3c3;
 }
 .diff .block {
   padding: 0.5ex 0.5em;
+}
+/* blocks containing deleted or added words */
+.diff .original, .diff .deleted,
+.diff .final, .diff .added {
+  padding: 1px;
 }
 
 .diff .block div {
@@ -57,20 +84,6 @@ img.linkicon  {
   top:  0;
 }
 
-/* blocks containing deleted or added words */
-.diff .original, .diff .deleted,
-.diff .final, .diff .added {
-  background: white;
-  padding: 1px;
-}
-/* blocks containing deleted words */
-.diff .original, .diff .deleted {
-  border: 2px solid #f99; /* fcc */
-}
-/* blocks containing added words */
-.diff .final, .diff .added {
-  border: 2px solid #9f9; /* cfc */
-}
 /* These don't work in NS4 -- it completely ignores <del> and <ins>. */
 /* deleted & added words */
 .diff del, .diff ins {
