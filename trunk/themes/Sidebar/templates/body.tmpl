@@ -1,5 +1,5 @@
 <?php // -*-html-*-
-rcs_id('$Id: body.tmpl,v 1.7 2004-12-10 03:05:57 rurban Exp $');
+rcs_id('$Id: body.tmpl,v 1.8 2004-12-17 16:12:07 rurban Exp $');
 ?>
 <body<?= $WikiTheme->getMoreAttr('body') ?>>
 <table class="sidebar" width="100%">
@@ -29,12 +29,12 @@ if (!$HIDE_TOOLBARS) {
 <div class="box-data">
     <?= Template('calendar') ?>
 </div></div>
-<?php } else { ?>
+<?php } ?>
 <div id="clock">
-<? include($WikiTheme->_findFile("hyperapplet.php")); ?>
+<? // include($WikiTheme->_findFile("hyperapplet.php")); ?>
+<? include($WikiTheme->_findFile("hyperwiki.php")); ?>
 <? // include($WikiTheme->_findFile("clock.php")); ?>
 </div>
-<?php } ?>
 <?php 
 $box = new RelatedLinksBox();
 $body = $box->body;

@@ -1,5 +1,5 @@
 <?php 
-// $Id: XmlRpcServer.php,v 1.10 2004-12-10 02:36:43 rurban Exp $
+// $Id: XmlRpcServer.php,v 1.11 2004-12-17 16:12:08 rurban Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  *
  * LICENCE
@@ -180,10 +180,10 @@ function short_string_decode ($str) {
 /**
  * Get an xmlrpc "No such page" error message
  */
-function NoSuchPage () 
+function NoSuchPage ($pagename='') 
 {
     global $xmlrpcerruser;
-    return new xmlrpcresp(0, $xmlrpcerruser + 1, "No such page");
+    return new xmlrpcresp(0, $xmlrpcerruser + 1, "No such page ".$pagename);
 }
 
 
@@ -265,8 +265,11 @@ function getPage($params)
 {
     $revision = _getPageRevision($params);
 
-    if (! $revision)
-        return NoSuchPage();
+    if (! $revision ) {
+        $ParamPageName = $params->getParam(0);
+        $pagename = short_string_decode($ParamPageName->scalarval());
+        return NoSuchPage($pagename);
+    }
 
     return new xmlrpcresp(long_string($revision->getPackedContent()));
 }
@@ -413,7 +416,7 @@ function listLinks($params)
     $pagename = short_string_decode($ParamPageName->scalarval());
     $dbh = $request->getDbh();
     if (! $dbh->isWikiPage($pagename))
-        return NoSuchPage();
+        return NoSuchPage($pagename);
 
     $page = $dbh->getPage($pagename);
     /*
@@ -439,7 +442,7 @@ function listLinks($params)
         $use_abspath = USE_PATH_INFO && ! preg_match('/RPC2.php$/', VIRTUAL_PATH);
         $href = new xmlrpcval(WikiURL($currentname, $args, $use_abspath));
             
-        $linkstruct[] = new xmlrpcval(array('name'=> $name,
+        $linkstruct[] = new xmlrpcval(array('page'=> $name,
                                             'type'=> $type,
                                             'href' => $href),
                                       "struct");
@@ -454,9 +457,12 @@ function listLinks($params)
         // We used to give an href for unknown pages that
         // included action=edit.  I think that's probably the
         // wrong thing to do.
-        $linkstruct[] = new xmlrpcval(array('name'=> short_string($link->page),
-                                            'type'=> new xmlrpcval($link->type),
-                                            'href' => short_string($link->href)),
+        $linkstruct[] = new xmlrpcval(array(/*'name'=> short_string($link->page),*/ // wrong!
+                                            'page'=> short_string($link->page),
+                                            'type'=> new xmlrpcval($link->type, 'string'),
+                                            'href' => short_string($link->href),
+                                            //'pageref' => short_string($link->pageref),
+                                            ),
                                       "struct");
     }
         
