@@ -27,6 +27,8 @@ don't rely on PB's text colors too much, it doesn't always properly
 handle coloring for \"escaped quotes\" which are frequently called for
 in PHP when generating HTML code.
 
+Instructions for using Project Builder with PhpWiki can be found at
+the bottom of this document.
 
 Database
 --------
@@ -178,6 +180,38 @@ will not touch the Wiki log file--even if it is in the same directory
 as the httpd logs--it will be up to you to Trash it once in a while or
 write your own /etc/daily.local file to include it as part of a server
 log rotation.
+
+
+Using Apple's Project Builder with PhpWiki
+------------------------------------------
+A PB project file is available on the SourceForge CVS server to allow
+you to easily edit PhpWiki's source code using Apple's Project
+Builder. If you have not yet updated to PB 1.1.1 (Dec 2001 DevTools)
+it is highly recommended you do so because the PhpWiki source are
+written in ISO-8859-1, and some of the bug fixes are pertinent to file
+encoding.
+
+PB has some bugs which makes it impossible (in PB 1.1) or difficult
+(in PB 1.1.1) to select the correct character encoding in the GUI for
+any pre-existing source code files. By using this project file you
+will find the PhpWiki source files are already preset to use the
+correct ISO-8859-1 (Western Latin-1) encoding.
+
+The Build target settings have also been preconfigured to
+automatically build a "legacy Makefile", by invoking
+'/usr/bin/gnumake' in the folder'./phpwiki/locale'. When you update
+and save one of the language translation files found in
+'./phpwiki/locale/po/', you can simply click the build button in the
+toolbar to run make, which in turn calls another script and xgettext.
+
+To download the phpwiki.pbxproj bundle, use CVS to checkout the module
+named "phpwiki.pbxproj" then place it into the same folder which
+contains your "phpwiki" folder.
+
+Note that as of this writing (PB 1.1.1), you can only use Project
+Builder's CVS facilities in Anonymous mode with the SourceForge CVS
+server. (Technical explanation: PB tries to use rsh instead of ssh as
+is required for SourceForge).
 
 
 If you have problems after all of this, try contacting the
