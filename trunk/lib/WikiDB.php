@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.40 2004-04-08 01:22:53 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.41 2004-04-15 21:39:46 rurban Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -164,7 +164,7 @@ class WikiDB {
      * @return WikiDB_Page The requested WikiDB_Page.
      */
     function getPage($pagename) {
-        assert(is_string($pagename) && $pagename);
+        assert(is_string($pagename) and $pagename != '');
         return new WikiDB_Page($this, $pagename);
     }
 
@@ -515,7 +515,7 @@ class WikiDB_Page
     function WikiDB_Page(&$wikidb, $pagename) {
         $this->_wikidb = &$wikidb;
         $this->_pagename = $pagename;
-        assert(!empty($this->_pagename));
+        assert(is_string($this->_pagename) and $this->_pagename != '');
     }
 
     /**
@@ -858,11 +858,16 @@ class WikiDB_Page
         $backend = &$this->_wikidb->_backend;
         $cache = &$this->_wikidb->_cache;
         $pagename = &$this->_pagename;
-
-        $backend->lock();
+        
+        // Prevent deadlock in case of memory exhausted errors
+        // Pure selection doesn't really need locking here.
+        //   sf.net bug#927395
+        // I know it would be better, but with lots of pages this deadlock is more 
+        // severe than occasionally get not the latest revision.
+        //$backend->lock();
         $version = $cache->get_latest_version($pagename);
         $revision = $this->getRevision($version);
-        $backend->unlock();
+        //$backend->unlock();
         assert($revision);
         return $revision;
     }
@@ -917,10 +922,10 @@ class WikiDB_Page
 
         if ($version == 0)
             return false;
-        $backend->lock();
+        //$backend->lock();
         $previous = $backend->get_previous_version($pagename, $version);
         $revision = $this->getRevision($previous);
-        $backend->unlock();
+        //$backend->unlock();
         assert($revision);
         return $revision;
     }
@@ -1238,7 +1243,7 @@ class WikiDB_PageRevision
             $possibly_cache_results = false;
         }
         elseif (!$this->_transformedContent) {
-            $backend->lock();
+            //$backend->lock();
             if ($this->isCurrent()) {
                 $page = $this->getPage();
                 $this->_transformedContent = TransformedText::unpack($page->get('_cached_html'));
@@ -1246,7 +1251,7 @@ class WikiDB_PageRevision
             else {
                 $possibly_cache_results = false;
             }
-            $backend->unlock();
+            //$backend->unlock();
 	}
         
         if (!$this->_transformedContent) {
@@ -1257,11 +1262,11 @@ class WikiDB_PageRevision
             
             if ($possibly_cache_results) {
                 // If we're still the current version, cache the transfomed page.
-                $backend->lock();
+                //$backend->lock();
                 if ($this->isCurrent()) {
                     $page->set('_cached_html', $this->_transformedContent->pack());
                 }
-                $backend->unlock();
+                //$backend->unlock();
             }
         }
 
@@ -1572,7 +1577,7 @@ class WikiDB_cache
     }
 
     function get_pagedata($pagename) {
-        assert(is_string($pagename) && $pagename);
+        assert(is_string($pagename) && $pagename != '');
         $cache = &$this->_pagedata_cache;
 
         if (!isset($cache[$pagename]) || !is_array($cache[$pagename])) {
@@ -1628,7 +1633,7 @@ class WikiDB_cache
                 $cache[$pagename][$version][$nc] = 
                     $this->_backend->get_versiondata($pagename,$version, $need_content);
                 // If we have retrieved all data, we may as well set the cache for $need_content = false
-                if($need_content){
+                if ($need_content){
                     $cache[$pagename][$version]['0'] = $cache[$pagename][$version]['1'];
                 }
             }
@@ -1671,7 +1676,7 @@ class WikiDB_cache
 	
     function get_latest_version($pagename)  {
 	if (defined('USECACHE')){
-            assert (is_string($pagename) && $pagename);
+            assert (is_string($pagename) && $pagename != '');
             $cache = &$this->_glv_cache;	
             if (!isset($cache[$pagename])) {
                 $cache[$pagename] = $this->_backend->get_latest_version($pagename);
