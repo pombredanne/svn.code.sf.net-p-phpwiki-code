@@ -1,4 +1,4 @@
-<!-- $Id: wiki_transform.php3,v 1.9 2000-06-21 22:57:48 ahollosi Exp $ -->
+<!-- $Id: wiki_transform.php3,v 1.10 2000-06-26 21:26:45 ahollosi Exp $ -->
 <?
    // expects $pagehash and $html to be set
 
@@ -220,6 +220,10 @@ your web server it is highly advised that you do not allow this.
          // it's ordinary output if nothing else
          $html .= SetHTMLOutputMode("", ZERO_DEPTH, 0);
       }
+
+      $tmpline = str_replace("%%Search%%", RenderQuickSearch(), $tmpline);
+      $tmpline = str_replace("%%Fullsearch%%", RenderFullSearch(), $tmpline);
+      $tmpline = str_replace("%%Mostpopular%%", RenderMostPopular(), $tmpline);
 
       $html .= "$tmpline"; // at last, emit the code
    }

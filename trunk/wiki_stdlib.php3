@@ -1,4 +1,4 @@
-<!-- $Id: wiki_stdlib.php3,v 1.16 2000-06-26 20:05:22 ahollosi Exp $ -->
+<!-- $Id: wiki_stdlib.php3,v 1.17 2000-06-26 21:26:45 ahollosi Exp $ -->
 <?
    /*
       Standard functions for Wiki functionality
@@ -20,7 +20,7 @@
    function GeneratePage($template, $content, $name, $hash)
    {
       global $ScriptUrl, $AllowedProtocols, $templates;
-      global $datetimeformat;
+      global $datetimeformat, $dbi;
 
       if (!is_array($hash))
          unset($hash);
@@ -46,6 +46,10 @@
 			$hash['author'], $page);
          $page = str_replace("#$FieldSeparator#VERSION#$FieldSeparator#",
 			$hash['version'], $page);
+	 if (strstr($page, "#$FieldSeparator#HITS#$FieldSeparator#")) {
+            $page = str_replace("#$FieldSeparator#HITS#$FieldSeparator#",
+			GetHitCount($dbi, $name), $page);
+	 }
       }
 
       // valid only for EditLinks
@@ -103,6 +107,19 @@
       global $value, $ScriptUrl;
       $formtext = "<form action='$ScriptUrl'>\n<input type='text' size='40' name='full' value='$value'>\n</form>\n";
       return $formtext;
+   }
+
+   function RenderMostPopular() {
+      global $ScriptUrl, $dbi;
+      
+      $query = InitMostPopular($dbi, 20);
+      $result = "<DL>\n";
+      while ($qhash = MostPopularNextMatch($dbi, $query)) {
+	 $result .= "<DD>$qhash[hits] ... " . LinkExistingWikiWord($qhash['pagename']) . "\n";
+      }
+      $result .= "</DL>\n";
+      
+      return $result;
    }
 
    // converts spaces to tabs
@@ -355,10 +372,6 @@
             return LinkExistingWikiWord($linkname);
          } elseif (preg_match("#^($AllowedProtocols):#", $linkname)) {
             return LinkURL($linkname);
-         } elseif ($linkname == 'Search') {
-	    return RenderQuickSearch();
-	 } elseif ($linkname == 'Fullsearch') {
-	    return RenderFullSearch();
 	 } else {
             return LinkUnknownWikiWord($linkname);
          }
