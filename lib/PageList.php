@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.79 2004-04-20 00:34:16 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.80 2004-04-20 00:56:00 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -751,9 +751,14 @@ class PageList {
             // if there are more pages than the limit, show a table-header, -footer
             list($offset,$pagesize) = $this->limit($this->_options['limit']);
             $numrows = $this->getTotal();
-            if (!$pagesize or $numrows <= $pagesize or ($offset + $pagesize < 0))
+            if (!$pagesize or
+                (!$offset and $numrows <= $pagesize) or
+                ($offset + $pagesize < 0)) 
+            {
+                $table->pushContent(HTML::thead($row),
+                                    HTML::tbody(false, $this->_rows));
                 return $table;
-
+            }
             global $request;
             include_once('lib/Template.php');
 
@@ -886,6 +891,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.79  2004/04/20 00:34:16  rurban
+// more paging support
+//
 // Revision 1.78  2004/04/20 00:06:03  rurban
 // themable paging support
 //

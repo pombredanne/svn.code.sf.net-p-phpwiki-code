@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WantedPages.php,v 1.10 2004-04-18 01:44:02 rurban Exp $');
+rcs_id('$Id: WantedPages.php,v 1.11 2004-04-20 00:56:00 rurban Exp $');
 /*
  This file is part of PhpWiki.
 
@@ -39,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     function getDefaultArguments() {
@@ -47,7 +47,8 @@ extends WikiPlugin
                      'exclude'  => _("PgsrcTranslation"),
                      'page'     => '[pagename]',
                      'sortby'   => false,
-                     'limit'    => false);
+                     'limit'    => 50,
+                     'paging'   => 'auto');
     }
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor,markup or all
@@ -84,6 +85,11 @@ extends WikiPlugin
             //only get WantedPages links for one page
             $page_handle = $dbi->getPage($page);
             $this->_iterateLinks($page_handle, $dbi);
+            if (! $request->getArg('count')) {
+                $args['count'] = count($this->pagelist);
+            } else {
+                $args['count'] = $request->getArg('count');
+            }
         }
         ksort($this->pagelist);
         arsort($this->pagelist);
@@ -211,6 +217,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/04/18 01:44:02  rurban
+// more sortby+limit support
+//
 // Revision 1.9  2004/04/10 04:15:06  rurban
 // sf.net 927122 Suggestion
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllUsers.php,v 1.11 2004-03-10 13:54:54 rurban Exp $');
+rcs_id('$Id: AllUsers.php,v 1.12 2004-04-20 00:56:00 rurban Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -42,7 +42,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     function getDefaultArguments() {
@@ -51,7 +51,8 @@ extends WikiPlugin
                      'exclude'       => '',
                      'info'          => '',   // which columns? default: list of pagenames only
                      'sortby'        => '',   // +mtime,-pagename
-                     'limit'         => 0,
+                     'limit'         => 50,
+                     'paging'        => 'auto',
                      'debug'         => false
                      );
     }
@@ -65,27 +66,33 @@ extends WikiPlugin
     // sortby: [+|-] pagename|mtime|hits
 
     function run($dbi, $argstr, &$request, $basepage) {
-        extract($this->getArgs($argstr, $request));
+        $args = $this->getArgs($argstr, $request);
+        extract($args);
         if ($sorted = $request->getArg('sortby'))
             $sortby = $sorted;
         elseif ($sortby)
             $request->setArg('sortby',$sortby);
-
-        $pagelist = new PageList($info, $exclude, $this->getArgs($argstr, $request));
-        if (!$noheader)
-            $pagelist->setCaption(_("Authenticated users on this wiki (%d total):"));
-
-        // deleted pages show up as version 0.
-        if ($include_empty and empty($info))
-            $pagelist->_addColumn('version');
 
         //if (defined('DEBUG') and DEBUG) $debug = true;
         if ($debug)
             $timer = new DebugTimer;
 
         $group = WikiGroup::getGroup($request);
-        foreach ($group->_allUsers() as $user) {
-            $pagelist->addPage($user);
+        $allusers = $group->_allUsers();
+        $args['count'] = count($allusers);
+        // deleted pages show up as version 0.
+        $pagelist = new PageList($info, $exclude, $args);
+        if (!$noheader)
+            $pagelist->setCaption(_("Authenticated users on this wiki (%d total):"));
+        if ($include_empty and empty($info))
+            $pagelist->_addColumn('version');
+        list($offset,$pagesize) = $pagelist->limit($args['limit']);
+        if (!$pagesize) $pagelist->addPageList($pages);
+        else {
+            for ($i=$offset; $i < $offset + $pagesize - 1; $i++) {
+            	if ($i >= $args['count']) break;
+                $pagelist->addPage($allusers[$i]);
+            }
         }
         /*
         $page_iter = $dbi->getAllPages($include_empty, $sortby, $limit);
@@ -105,6 +112,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/03/10 13:54:54  rurban
+// adodb WikiGroup fix
+//
 // Revision 1.10  2004/03/08 19:30:01  rurban
 // fixed Theme->getButtonURL
 // AllUsers uses now WikiGroup (also DB User and DB Pref users)
