@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.65 2002-01-05 12:27:01 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.66 2002-01-05 15:14:11 carstenklapp Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -26,7 +26,7 @@
    }
 
    function BaseURL() {
-      return SERVER_URL . VIRTUAL_PATH . "/";
+      return SERVER_URL . "/";
    }
 	  
 function WikiURL($pagename, $args = '', $get_abs_url = false) {
@@ -39,7 +39,7 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
     }
 
     if (USE_PATH_INFO) {
-        $url = $get_abs_url ? SERVER_URL . VIRTUAL_PATH . "/" : '';
+        $url = $get_abs_url ? SERVER_URL . VIRTUAL_PATH . "/" : VIRTUAL_PATH . "/";
         $url .= rawurlencode($pagename);
         if ($args)
             $url .= "?$args";
