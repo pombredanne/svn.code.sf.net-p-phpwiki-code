@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.146 2003-03-07 02:46:24 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.147 2003-03-13 20:17:05 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -402,9 +402,6 @@ class WikiPagename
         if (is_string($name)) {
             $this->shortName = $name;
         
-            if ($anchor === false and preg_match('/\A(.*)#(.*?)?\Z/', $name, $m))
-                list(, $name, $anchor) = $m;
-            
             if (empty($name) or $name[0] == SUBPAGE_SEPARATOR) {
                 if ($basename)
                     $name = $this->_pagename($basename) . $name;
@@ -1293,6 +1290,9 @@ class Alert {
                       
         
 // $Log: not supported by cvs2svn $
+// Revision 1.146  2003/03/07 02:46:24  dairiki
+// function_usable(): New function.
+//
 // Revision 1.145  2003/03/04 01:55:05  dairiki
 // Fix to ensure absolute URL for logo in RSS recent changes.
 //
