@@ -1,0 +1,36 @@
+<?php // -*-html-*- ?>
+<!-- $Id: navbar.tmpl,v 1.1 2002-01-19 22:48:42 carstenklapp Exp $ -->
+<?php
+
+$BF = &$ButtonFactory;
+$s = $Theme->getButtonSeparator();
+
+/* TODO: Cleanup for localization. */
+?>
+<!-- The bottom navigation/search bar -->
+
+    <?= $BF->makeLinkButton(_("FindPage")) ?> by searching
+    <?php if (!empty($PAGE)) { ?>
+      (or browse <?= $ButtonFactory->makeActionPageButton(_("LikePages")) ?>)
+    <?php } ?>
+   <hr />
+<!-- I would like not to have to use these tables, and managed to
+     get this stuff to work more or less correctly using
+     CSSs float:left; and float:right;.  However float:right; seems
+     to cause MSIE4.01/NT to hang. 
+     So, we use tables...  -->
+<table summary="Toolbar 1: Navigation and user login."
+       class="toolbar" width="100%"
+       cellpadding="0" cellspacing="0" border="0"
+       id="actionbar">
+<tr valign="baseline">
+  <td>
+   <?= $BF->makeLinkButton(_("RecentChanges")) ?>
+    <?php if (!empty($user) && $user->isAdmin()) { ?>
+     <?=$s?><?= $ButtonFactory->makeLinkButton(_("PhpWikiAdministration")) ?>
+    <?php } ?>
+  <td align="right">
+    <?= new WikiTemplate('signin') ?>
+  </td>
+</tr></table>
+</form>
