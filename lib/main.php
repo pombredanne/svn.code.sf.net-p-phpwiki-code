@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.86 2002-10-15 18:42:21 zorloc Exp $');
+rcs_id('$Id: main.php,v 1.87 2002-10-19 16:40:29 dairiki Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -401,7 +401,28 @@ class WikiRequest extends Request {
                 return $tail;
             }
         }
+        elseif ($this->isPost()) {
+            /*
+             * In general, for security reasons, HTTP_GET_VARS should be ignored
+             * on POST requests, but we make an exception here (only for pagename).
+             *
+             * The justifcation for this hack is the following
+             * asymmetry: When POSTing with USE_PATH_INFO set, the
+             * pagename can (and should) be communicated through the
+             * request URL via PATH_INFO.  When POSTing with
+             * USE_PATH_INFO off, this cannot be done --- the only way
+             * to communicate the pagename through the URL is via
+             * QUERY_ARGS (HTTP_GET_VARS).
+             */
+            global $HTTP_GET_VARS;
+            if (isset($HTTP_GET_VARS['pagename'])) { 
+                return $HTTP_GET_VARS['pagename'];
+            }
+        }
 
+        /*
+         * Support for PhpWiki 1.2 style requests.
+         */
         $query_string = $this->get('QUERY_STRING');
         if (preg_match('/^[^&=]+$/', $query_string)) {
             return urldecode($query_string);
