@@ -4,17 +4,13 @@ fixed magic_quotes_gpc=1 bug for $pagename
 fixed raw-HTML exploit for $pagename
 fixed javascript: links exploit
 Concurrent editing of pages is detected now - fixes LostUpdateProblem
-(EditLinks is *not* treated this way yet)
-fixed $magic_quotes_gpc=1 bug
+(note: EditLinks is *not* treated this way yet)
 search term is now preg_quote()'ed instead of chars removed
-Updated the header of the file; UpdateRecentChanges was still listed
-Small bug with the new check on named URL's; it was checking $linkname
-instead of $URL.
 bugfix: UpdateRecentChanges didn't link names of new-style pages.
 Fixed FindPage and search boxes
-adjusted to new rules: [ ] -> [[o]
-fix: UpdateRecentChanges wouldn't delete old entries
 Added headings (!,!!,!!!), suppression of wiki linking (!WikiName), and linebreaks (%%%)
+changed mySQL schema: column 'data' renamed 'hash' because 'dada' is a
+reserved word. (update your tables!)
 
 This release should work fine with the new linking scheme, but then
 again, hey, it's beta!
