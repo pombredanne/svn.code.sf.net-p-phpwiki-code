@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki-heavy.css,v 1.13 2002-02-11 14:46:32 carstenklapp Exp $
+ * $Id: phpwiki-heavy.css,v 1.14 2002-02-11 16:42:53 carstenklapp Exp $
  *
  * phpwiki-heavy.css
  *
@@ -24,10 +24,15 @@ div.wikitext { width: auto; }
 /* Make wikiaction links look like buttons */ 
 a.wikiaction, a.wikiadmin, input.button {
   border: 1px outset #006;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: .5em;
+  padding-top:    0.2ex;
+  padding-bottom: 0.1ex;
+  padding-left:  .5em;
   padding-right: .5em;
+}
+/* Prevent buttons from overlapping when the toolbar is wrapped.
+ * This screws up input.button in Mozilla */ 
+a.wikiaction, a.wikiadmin {
+  line-height: 2.6ex;
 }
 /* QuestionMark */
 .wikiunknown a, .named-wikiunknown {
