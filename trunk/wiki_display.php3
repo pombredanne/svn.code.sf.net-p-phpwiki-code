@@ -1,4 +1,4 @@
-<!-- $Id: wiki_display.php3,v 1.6 2000-06-26 21:26:45 ahollosi Exp $ -->
+<!-- $Id: wiki_display.php3,v 1.7 2000-08-15 02:59:20 wainstead Exp $ -->
 <?
    /*
       display.php3: render a page. This has all the display 
@@ -21,7 +21,7 @@
 
    $html = "";
    $enc_name = rawurlencode($pagename);
-   $pagehash = RetrievePage($dbi, $pagename);
+   $pagehash = RetrievePage($dbi, $pagename, $WikiPageStore);
 
    if (is_array($pagehash)) {
       // we render the page if it's a hash, else ask the user to write one.

@@ -1,4 +1,4 @@
-<!-- $Id: wiki_editpage.php3,v 1.11 2000-08-07 22:47:40 wainstead Exp $ -->
+<!-- $Id: wiki_editpage.php3,v 1.12 2000-08-15 02:59:20 wainstead Exp $ -->
 <?
 
    // editpage relies on $pagename and $ScriptUrl
@@ -9,18 +9,21 @@
          $pagename = stripslashes($pagename);
       }
       $banner = htmlspecialchars($pagename);
+      $pagehash = RetrievePage($dbi, $pagename, $WikiPageStore);
+
    } elseif ($copy) {
       $pagename = rawurldecode($copy);
       if (get_magic_quotes_gpc()) {
          $pagename = stripslashes($pagename);
       }
       $banner = htmlspecialchars("Copy of $pagename");
+      $pagehash = RetrievePage($dbi, $pagename, $ArchivePageStore);
+
    } else {
       echo "No page name passed into editpage!<br>\n";
       exit();
    }
 
-   $pagehash = RetrievePage($dbi, $pagename);
 
    if (is_array($pagehash)) {
 
@@ -33,14 +36,13 @@
       }
 
       $textarea = implode("\n", $pagehash["content"]);
-      if($copy) {
-	 $cdbi = OpenDataBase($WikiPageStore);
-	 $currentpage = RetrievePage($cdbi, $pagename);
+      if ($copy) {
+	 // $cdbi = OpenDataBase($WikiPageStore);
+	 $currentpage = RetrievePage($dbi, $pagename, $WikiPageStore);
          $pagehash["version"] = $currentpage["version"];
       }
       elseif ($pagehash["version"] > 1) {
-	 $adbi = OpenDataBase($ArchivePageStore);
-	 if(IsWikiPage($adbi, $pagename))
+	 if(IsInArchive($dbi, $pagename))
            $pagehash["copy"] = 1;
       }
    } else {
