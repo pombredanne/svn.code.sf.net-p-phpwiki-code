@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.18 2002-02-01 06:00:28 dairiki Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.19 2002-02-01 06:13:48 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -703,22 +703,24 @@ class Block_plugin extends Block_pre
 {
     var $_tag = 'div';
     var $_attr = array('class' => 'plugin');
-    var $_re = '<\?plugin(?:-form)?\s';
-    
+    var $_re = '<\?plugin(?:-form)?(?!\S)';
+
+    // FIXME:
+    /* <?plugin Backlinks
+     *       page=ThisPage ?>
+     *
+     * should work. */
     function _match (&$input, $m) {
-        if (preg_match('/( .*? (?<!~) \?> ) (.*)/x', $m->postmatch, $mm)) {
-            if (ltrim($mm[2]))
+        $pos = $input->getPos();
+        $pi = $m->match . $m->postmatch;
+        while (!preg_match('/(?<!~)\?>\s*$/', $pi)) {
+            if (($line = $input->nextLine()) === false) {
+                $input->setPos($pos);
                 return false;
-            $pi = $m->match . $m->postmatch;
-            $input->advance();
-            printXML(HTML::p("PI:", $pi));
-            
+            }
+            $pi .= "\n$line";
         }
-        else {
-            if (($text = $this->_getBlock($input, '?>')) === false)
-                return false;
-            $pi = $m->match . $m->postmatch . "\n" . join("\n", $text) . "\n?>";
-        }
+        $input->advance();
             
         global $request;
         $loader = new WikiPluginLoader;
