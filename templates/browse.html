@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- phpwiki source:
-$Id: browse.html,v 1.35 2002-01-02 03:50:33 carstenklapp Exp $
+$Id: browse.html,v 1.36 2002-01-02 06:35:01 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <meta name="keywords" content="${SPLIT_PAGE}, ${WIKI_NAME}" />
@@ -37,12 +37,13 @@ ${RCS_IDS}
 <?php } ?>
 <div class="wikitext">${CONTENT}</div>
 <hr class="ignore" noshade="noshade" />
-<form action='<?php echo WikiURL(_("TitleSearch")); ?>' method="get" accept-charset="${CHARSET}">
+
     <?php if ($IS_CURRENT) { ?>
        <?php printf(_("Last edited on %s."),"${LASTMODIFIED}"); ?>
     <?php } else { ?>
        <?php printf(_("Version %s, saved on %s."),"${VERSION}","${LASTMODIFIED}"); ?>
     <?php } ?>
+<form action='<?php echo WikiURL(_("TitleSearch")); ?>' method="get" accept-charset="${CHARSET}">
 <hr color="black" class="toolbar" />
 <!-- I would like not to have to use these tables, and managed to
      get this stuff to work more or less correctly using
