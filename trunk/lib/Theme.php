@@ -1,9 +1,11 @@
-<?php rcs_id('$Id: Theme.php,v 1.1 2002-01-17 20:32:31 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.2 2002-01-17 22:52:03 dairiki Exp $');
 
 class Theme {
     function Theme ($theme_name) {
         $this->_name = $theme_name;
-        $this->_path = array("themes/$theme_name", "themes/default");
+        $themes_dir = defined('PHPWIKI_DIR') ? PHPWIKI_DIR . "/themes" : "themes";
+        $this->_path = array("$themes_dir/$theme_name",
+                             "$themes_dir/default");
     }
 
     function _findFile ($file, $missing_okay = false) {
@@ -24,9 +26,12 @@ class Theme {
     
     function _findData ($file, $missing_okay = false) {
         $path = $this->_findFile($file, $missing_okay);
-        if ($path)
-            return DataURL($path); // FIXME: can eliminate DataURL()?
-        return false;
+        if (!$path)
+            return false;
+        
+        if (defined('DATA_PATH'))
+            return DATA_PATH . "/$path";
+        return $path;
     }
     
     ////////////////////////////////////////////////////////////////

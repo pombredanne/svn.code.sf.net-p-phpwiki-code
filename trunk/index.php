@@ -68,7 +68,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.65 2002-01-17 20:58:40 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.66 2002-01-17 22:52:03 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -417,11 +417,23 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
 //define('SCRIPT_NAME', '/some/where/index.php');
 
 /*
- * Relative URL (from the server root) of the directory from which
- * other relative URL's for images and other support files are
- * interpreted.
+ * URL of the PhpWiki install directory.  (You only need to set this
+ * if you've moved index.php out of the install directory.)  This can
+ * be either a relative URL (from the directory where the top-level
+ * PhpWiki script is) or an absolute one.
  */
-//define('DATA_PATH', '/some/where');
+//define('DATA_PATH', '/some/where/phpwiki');
+
+/*
+ * Path to the PhpWiki install directory.  This is the local
+ * filesystem counterpart to DATA_PATH.  (If you have to set
+ * DATA_PATH, your probably have to set this as well.)  This can be
+ * either an absolute path, or a relative path interpreted from the
+ * directory where the top-level PhpWiki script (normally index.php)
+ * resides.
+ */
+//define('PHPWIKI_DIR', '/htdocs/some/where/phpwiki');
+
 
 /*
  * Define to 'true' to use PATH_INFO to pass the pagename's.

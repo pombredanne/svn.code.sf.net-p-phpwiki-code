@@ -1,8 +1,7 @@
-<?php rcs_id('$Id: stdlib.php,v 1.77 2002-01-17 20:36:39 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.78 2002-01-17 22:52:03 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
-    DataURL($url)
     BaseURL()
     WikiURL($pagename, $args, $get_abs_url)
     StartTag($tag, $args)
@@ -39,12 +38,6 @@
 
 */
 
-
-function DataURL($url) {
-    if (preg_match('@^(\w+:|/)@', $url))
-        return $url;
-    return DATA_PATH . "/$url";
-}
 
 function BaseURL() {
     return SERVER_URL . DATA_PATH . "/";
