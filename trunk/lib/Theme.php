@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.126 2005-02-04 11:43:18 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.127 2005-02-11 14:45:44 rurban Exp $');
 /* Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -203,7 +203,7 @@ class Theme {
         if ($theme_name != 'default')
             $this->_default_theme = new Theme;
 
-        if (defined("ENABLE_LIVESEARCH") and ENABLE_LIVESEARCH) { // by bitflux.ch
+        if (ENABLE_LIVESEARCH) { // by bitflux.ch
             $this->initLiveSearch();
         }
         $this->_css = array();
@@ -1162,7 +1162,7 @@ class Theme {
     }
 
     // Immediate title search results via XMLHttpRequest
-    // by Bitflux GmbH, bitflux.ch
+    // by Bitflux GmbH, bitflux.ch. You need to install the livesearch.js seperately
     // Google's or acdropdown is better.
     function initLiveSearch() {
         if (!$this->HTML_DUMP_SUFFIX) {
@@ -1424,6 +1424,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.126  2005/02/04 11:43:18  rurban
+// update comments
+//
 // Revision 1.125  2005/02/03 05:09:56  rurban
 // livesearch.js support
 //

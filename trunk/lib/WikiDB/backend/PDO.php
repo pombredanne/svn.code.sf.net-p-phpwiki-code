@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PDO.php,v 1.1 2005-02-10 19:01:22 rurban Exp $');
+rcs_id('$Id: PDO.php,v 1.2 2005-02-11 14:45:45 rurban Exp $');
 
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
@@ -80,10 +80,21 @@ extends WikiDB_backend
                 : $this->_parsedDSN['dbname'];
         }
         if (empty($this->_parsedDSN['password'])) $this->_parsedDSN['password'] = '';
+
         try {
+            // try to load it dynamically (unix only)
+            if (!loadPhpExtension("pdo_$driver")) {
+                echo $GLOBALS['php_errormsg'], "<br>\n";
+                trigger_error(sprintf("dl() problem: Required extension '%s' could not be loaded!", 
+                                      "pdo_$driver"),
+                              E_USER_WARNING);
+            }
+
             // persistent is defined as DSN option, or with a config value.
             //   phptype://username:password@hostspec/database?persistent=false
-            $this->_dbh = new PDO($dbparams['dsn'], $this->_parsedDSN['username'], $this->_parsedDSN['password'],
+            $this->_dbh = new PDO($dbparams['dsn'], 
+                                  $this->_parsedDSN['username'], 
+                                  $this->_parsedDSN['password'],
                                   array(PDO_ATTR_AUTOCOMMIT => true,
                                         PDO_ATTR_TIMEOUT    => DATABASE_TIMEOUT,
                                         PDO_ATTR_PERSISTENT => !empty($parsed['persistent'])
@@ -92,12 +103,14 @@ extends WikiDB_backend
         }
         catch (PDOException $e) {
             echo "<br>\nDB Connection failed: " . $e->getMessage();
-            echo "<br>\nDSN: '", $dbparams['dsn'], "'";
-            echo "<br>\n_parsedDSN: '", print_r($this->_parsedDSN), "'";
-            echo "<br>\nparsed: '", print_r($parsed), "'";
+            if (DEBUG & _DEBUG_VERBOSE or DEBUG & _DEBUG_SQL) {
+                echo "<br>\nDSN: '", $dbparams['dsn'], "'";
+                echo "<br>\n_parsedDSN: '", print_r($this->_parsedDSN), "'";
+                echo "<br>\nparsed: '", print_r($parsed), "'";
+            }
             exit();
         }
-        if (DEBUG & _DEBUG_SQL) {
+        if (DEBUG & _DEBUG_SQL) { // not yet implemented
             $this->_dbh->debug = true;
         }
         $this->_dsn = $dbparams['dsn'];
@@ -1437,6 +1450,9 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2005/02/10 19:01:22  rurban
+// add PDO support
+//
 
 // (c-file-style: "gnu")
 // Local Variables:

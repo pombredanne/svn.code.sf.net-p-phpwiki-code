@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.22 2004-12-22 15:47:40 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.23 2005-02-11 14:45:44 rurban Exp $');
 
 /*
   Pagedata
@@ -552,8 +552,11 @@ class WikiDB_backend
     // adds surrounding quotes 
     function quote ($s) { return "'".$s."'"; }
     // no surrounding quotes because we know it's a string
-    function qstr ($s) {  return $s; }
+    function qstr ($s)  { return $s; }
 
+    function isSQL () {
+        return in_array(DATABASE_TYPE, array('SQL','ADODB','PDO'));
+    }
 };
 
 /**
@@ -620,7 +623,6 @@ class WikiDB_backend_search
         $word = $this->$method($node->word);
         return "preg_match(\"/\".$word.\"/\"".($this->_case_exact ? "i":"").")";
     }
-
 }
 
 // For emacs users

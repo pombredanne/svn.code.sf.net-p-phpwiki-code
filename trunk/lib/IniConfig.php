@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.78 2005-02-10 19:01:19 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.79 2005-02-11 14:45:44 rurban Exp $');
 
 /**
  * A configurator intended to read its config from a PHP-style INI file,
@@ -162,7 +162,7 @@ function IniConfig($file) {
     // List of all valid config options to be define()d which take booleans.
     $_IC_VALID_BOOL = array
         ('ENABLE_USER_NEW', 'ENABLE_PAGEPERM', 'ENABLE_EDIT_TOOLBAR', 'JS_SEARCHREPLACE',
-         'ENABLE_XHTML_XML', 'ENABLE_DOUBLECLICKEDIT',
+         'ENABLE_XHTML_XML', 'ENABLE_DOUBLECLICKEDIT', 'ENABLE_LIVESEARCH',
          'USECACHE', 'WIKIDB_NOCACHE_MARKUP',
          'ENABLE_REVERSE_DNS', 'ENCRYPTED_PASSWD', 'ZIPDUMP_AUTH', 
          'ENABLE_RAW_HTML', 'ENABLE_RAW_HTML_LOCKEDONLY', 'ENABLE_RAW_HTML_SAFE', 
@@ -281,15 +281,28 @@ function IniConfig($file) {
         }
     }
     if (!in_array(DATABASE_TYPE, array('SQL','ADODB','PDO','dba','file','cvs','cvsclient')))
-        trigger_error(sprintf(_("Invalid DATABASE_TYPE=%s. Choose one of %s"), 
-                              DATABASE_TYPE, "SQL,ADODB,PDO,dba,file,cvs,clsclient"));
+        trigger_error(sprintf("Invalid DATABASE_TYPE=%s. Choose one of %s", 
+                              DATABASE_TYPE, "SQL,ADODB,PDO,dba,file,cvs,clsclient"), 
+                      E_USER_ERROR);
+    if (DATABASE_TYPE == 'PDO') {
+        if (!check_php_version(5))
+            trigger_error("Invalid DATABASE_TYPE=PDO. PDO requires at least php-5.0!", 
+                          E_USER_ERROR);
+        // try to load it dynamically (unix only)
+        if (!loadPhpExtension("pdo")) {
+            echo $GLOBALS['php_errormsg'], "<br>\n";
+            trigger_error(sprintf("dl() problem: Required extension '%s' could not be loaded!", "pdo"),
+                          E_USER_ERROR);
+        }
+    }
+        
     // USE_DB_SESSION default logic:
     if (!defined('USE_DB_SESSION')) {
         if ($DBParams['db_session_table']
-            and in_array($DBParams['dbtype'], array('SQL','ADODB'))) {
+            and in_array($DBParams['dbtype'], array('SQL','ADODB','PDO'))) {
             define('USE_DB_SESSION', true);
         } elseif ($DBParams['dbtype'] == 'dba' and check_php_version(4,1,2)) {
-            define('USE_DB_SESSION', true);
+            define('USE_DB_SESSION', true); // Depends on db handler as well. berkeley has problems.
         } else {
             define('USE_DB_SESSION', false);
         }
@@ -774,6 +787,9 @@ function fixup_dynamic_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.78  2005/02/10 19:01:19  rurban
+// add PDO support
+//
 // Revision 1.77  2005/01/31 12:14:15  rurban
 // correct spelling
 //
