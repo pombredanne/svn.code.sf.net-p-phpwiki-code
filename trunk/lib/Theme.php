@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.3 2002-01-18 00:28:43 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.4 2002-01-18 06:11:39 carstenklapp Exp $');
 
 class Theme {
     function Theme ($theme_name) {
@@ -86,7 +86,14 @@ class Theme {
             return call_user_method($method, $this, $format);
         return false;
     }
-    
+
+    function setButtonSep($separator=false) {
+        if (!$separator)
+            $separator = " | ";
+        
+        $this->buttonSep = $separator;
+    }
+
     ////////////////////////////////////////////////////////////////
     //
     // Images and Icons

@@ -1,6 +1,6 @@
 <?php // -*-php-*-
 
-rcs_id('$Id: themeinfo.php,v 1.9 2002-01-17 20:34:02 dairiki Exp $');
+rcs_id('$Id: themeinfo.php,v 1.10 2002-01-18 06:11:39 carstenklapp Exp $');
 
 /**
  * This PhpWiki theme is experimental and will likely not appear as
@@ -47,6 +47,7 @@ $Theme->addImageAlias('logo', 'Ufp-logo.jpg');
 // you for editing..." screen will be omitted.
 $Theme->addImageAlias('signature', 'lights.gif');
 
+$Theme->setButtonSep(' | ');
 
 // The gettext() function does not work here because we are included
 // from 'index.php'. Normally themes shouldn't override date & time
