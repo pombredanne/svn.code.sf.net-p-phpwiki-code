@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.36 2004-12-06 19:49:56 rurban Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.37 2005-01-25 07:04:27 rurban Exp $');
 /**
  * Code for writing XML.
  * @package Markup
@@ -6,8 +6,8 @@
  *          Reini Urban (php5 tricks)
  *
  * FIXME: This module is very php5 sensitive: It was fixed for 1.3.9, 
- *        but is again broken with the 1.3.11 
- *        allow_call_time_pass_reference clean fixes
+ *          but is again broken with the 1.3.11.
+ *        With allow_call_time_pass_reference clean fixes
  */
 
 /**
@@ -84,11 +84,11 @@ class XmlContent
     function printXML () {
         foreach ($this->_content as $item) {
             if (is_object($item)) {
-                if (method_exists($item, 'printxml'))
+                if (method_exists($item, 'printXML'))
                     $item->printXML();
-                elseif (method_exists($item, 'asxml'))
+                elseif (method_exists($item, 'asXML'))
                     echo $item->asXML();
-                elseif (method_exists($item, 'asstring'))
+                elseif (method_exists($item, 'asString'))
                     echo $this->_quote($item->asString());
                 else
                     printf("==Object(%s)==", get_class($item));
@@ -102,9 +102,9 @@ class XmlContent
         $xml = '';
         foreach ($this->_content as $item) {
             if (is_object($item)) {
-                if (method_exists($item, 'asxml'))
+                if (method_exists($item, 'asXML'))
                     $xml .= $item->asXML();
-                elseif (method_exists($item, 'asstring'))
+                elseif (method_exists($item, 'asString'))
                     $xml .= $this->_quote($item->asString());
                 else
                     $xml .= sprintf("==Object(%s)==", get_class($item));
@@ -119,9 +119,9 @@ class XmlContent
         $pdf = '';
         foreach ($this->_content as $item) {
             if (is_object($item)) {
-                if (method_exists($item, 'aspdf'))
+                if (method_exists($item, 'asPDF'))
                     $pdf .= $item->asPDF();
-                elseif (method_exists($item, 'asstring'))
+                elseif (method_exists($item, 'asString'))
                     $pdf .= $this->_quote($item->asString());
                 else
                     $pdf .= sprintf("==Object(%s)==", get_class($item));
@@ -136,7 +136,7 @@ class XmlContent
         $val = '';
         foreach ($this->_content as $item) {
             if (is_object($item)) {
-                if (method_exists($item, 'asstring'))
+                if (method_exists($item, 'asString'))
                     $val .= $item->asString();
                 else
                     $val .= sprintf("==Object(%s)==", get_class($item));
@@ -510,12 +510,12 @@ function PrintXML ($val /* , ... */ ) {
             PrintXML($arg);
     }
     elseif (is_object($val)) {
-        if (method_exists($val, 'printxml'))
+        if (method_exists($val, 'printXML'))
             $val->printXML();
-        elseif (method_exists($val, 'asxml')) {
+        elseif (method_exists($val, 'asXML')) {
             echo $val->asXML();
         }
-        elseif (method_exists($val, 'asstring'))
+        elseif (method_exists($val, 'asString'))
             echo XmlContent_quote($val->asString());
         else
             printf("==Object(%s)==", get_class($val));
@@ -542,9 +542,9 @@ function AsXML ($val /* , ... */) {
         return $xml;
     }
     elseif (is_object($val)) {
-        if (method_exists($val, 'asxml'))
+        if (method_exists($val, 'asXML'))
             return $val->asXML();
-        elseif (method_exists($val, 'asstring'))
+        elseif (method_exists($val, 'asString'))
             return XmlContent_quote($val->asString());
         else
             return sprintf("==Object(%s)==", get_class($val));
@@ -575,7 +575,7 @@ function AsString ($val) {
         return $str;
     }
     elseif (is_object($val)) {
-        if (method_exists($val, 'asstring'))
+        if (method_exists($val, 'asString'))
             return $val->asString();
         else
             return sprintf("==Object(%s)==", get_class($val));
@@ -604,6 +604,14 @@ function fmt ($fs /* , ... */) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.36  2004/12/06 19:49:56  rurban
+// enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
+// renamed delete_page to purge_page.
+// enable action=edit&version=-1 to force creation of a new version.
+// added BABYCART_PATH config
+// fixed magiqc in adodb.inc.php
+// and some more docs
+//
 // Revision 1.35  2004/11/21 11:59:18  rurban
 // remove final \n to be ob_cache independent
 //
