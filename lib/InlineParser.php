@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.51 2004-05-12 19:27:47 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.52 2004-05-13 13:48:34 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004 Reini Urban
  *
@@ -138,13 +138,17 @@ class RegexpSet
         $repeat = sprintf('{%d,}?', $pos + 1);
         return $this->_match($text, $this->_regexps, $repeat);
     }
-    
 
+    // Syntax: http://www.pcre.org/pcre.txt
+    //   x - EXTENDED, ignore whitespace
+    //   s - DOTALL
+    //   A - ANCHORED
+    //   S - STUDY
     function _match ($text, $regexps, $repeat) {
         // If one of the regexps is an empty string, php will crash here: 
         // sf.net: Fatal error: Allowed memory size of 8388608 bytes exhausted 
         //         (tried to allocate 634 bytes)
-        if (_INLINE_OPTIMIZATION) {
+        if (_INLINE_OPTIMIZATION) { // disabled, wrong
         // So we try to minize memory usage, by looping explicitly,
         // and storing only those regexp which actually match. 
         // There may be more than one, so we have to find the longest, 
@@ -157,7 +161,7 @@ class RegexpSet
             }
             $pat= "/ ( . $repeat ) ( " . $regexps[$i] . " ) /x";
             if (preg_match($pat, $text, $_m)) {
-            	$m = $_m;
+            	$m = $_m; // FIXME: prematch, postmatch is wrong
                 $matched[] = $regexps[$i];
                 $matched_ind[] = $i;
                 $regexp_ind = $i;
@@ -170,11 +174,6 @@ class RegexpSet
         $match = new RegexpSet_match;
         
         // Optimization: if the matches are only "$" and another, then omit "$"
-        // Syntax: http://www.pcre.org/pcre.txt
-        //   x - EXTENDED, ignore whitespace
-        //   s - DOTALL
-        //   A - ANCHORED
-        //   S - STUDY
         if (! _INLINE_OPTIMIZATION or count($matched) > 2) {
             // We could do much better, if we would know the matching markup for the 
             // longest regexp match:

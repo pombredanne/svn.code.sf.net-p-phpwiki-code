@@ -1,14 +1,23 @@
+UPGRADING from 1.3.9
+
+At first you have to manually create a config/config.ini based on 
+config-dist.ini and your previous index.php. We don't have a script yet,
+to do that automatically.
+
+mysql:
+  ALTER TABLE page CHANGE id id INT NOT NULL AUTO_INCREMENT;
+NOTE: ?action=upgrade does this also, if your mysql user has the 
+      ALTER permissions.
+
 UPGRADING from 1.3.7
 
 mysql + postgres:
-
-ALTER TABLE session ADD sess_ip CHAR(15) NOT NULL;
-CREATE INDEX sess_date ON session (sess_date); 
+  ALTER TABLE session ADD sess_ip CHAR(15) NOT NULL;
+  CREATE INDEX sess_date ON session (sess_date); 
 
 postgres:
-
-New pref and session tables have been added for more 
-efficiency.
+  New pref and session tables have been added for more 
+  efficiency.
 
 user and themes:
 
@@ -114,4 +123,4 @@ that's what you gotta do.
 An older note of mine on the same subject can be found at:
  http://sourceforge.net/forum/message.php?msg_id=107858
 
-$Id: UPGRADING,v 1.7 2004-04-12 14:07:10 rurban Exp $
+$Id: UPGRADING,v 1.8 2004-05-13 13:48:33 rurban Exp $
