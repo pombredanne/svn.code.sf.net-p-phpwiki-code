@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.121 2004-12-19 00:58:01 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.122 2005-01-08 22:51:56 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -732,21 +732,6 @@ extends _WikiUser
             	    $prefs->{$param} = $this->_prefs->{$param};
             }
             $this->_prefs = $prefs;
-            //FIXME! The following must be done in $request->_setUser(), not here,
-            // to be able to iterate over multiple users, without tampering the current user.
-            if (0) {
-                global $request;
-                $request->_prefs =& $this->_prefs; 
-                $request->_user->_prefs =& $this->_prefs;
-                if (isset($request->_user->_auth_dbi)) {
-                    $user = $request->_user;
-                    unset($user->_auth_dbi);
-                    $request->setSessionVar('wiki_user', $user);
-                } else {
-                    //$request->setSessionVar('wiki_prefs', $this->_prefs);
-                    $request->setSessionVar('wiki_user', $request->_user);
-                }
-            }
         }
         return $updated;
     }
@@ -2037,6 +2022,12 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.121  2004/12/19 00:58:01  rurban
+// Enforce PASSWORD_LENGTH_MINIMUM in almost all PassUser checks,
+// Provide an errormessage if so. Just PersonalPage and BogoLogin not.
+// Simplify httpauth logout handling and set sessions for all methods.
+// fix main.php unknown index "x" getLevelDescription() warning.
+//
 // Revision 1.120  2004/12/17 12:31:57  rurban
 // better logout, fake httpauth not yet
 //
