@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.8 2002-01-19 19:29:49 carstenklapp Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.9 2002-01-19 20:37:22 carstenklapp Exp $');
 
 class Theme {
     function Theme ($theme_name) {
@@ -87,10 +87,47 @@ class Theme {
         return false;
     }
 
+
+    ////////////////////////////////////////////////////////////////
+    //
+    // Links
+    //
+    ////////////////////////////////////////////////////////////////
+
+    function setAutosplitWikiWords($autosplit=false) {
+        $this->_autosplitWikiWords = $autosplit ? true : false;
+    }
+
+    function getAutoSplitWikiWords() {
+        if (! @$this->_autosplitWikiWords)
+            $this->setAutosplitWikiWords();
+        
+        return $this->_autosplitWikiWords;
+    }
+
+    function LinkExistingWikiWord($wikiword, $linktext = '', $version = false) {
+        if (empty($linktext)) {
+            $linktext = $wikiword;
+            if ($this->getAutoSplitWikiWords())
+                $linktext = split_pagename($linktext);
+            $class = 'wiki';
+        }
+        else
+            $class = 'named-wiki';
+
+        $attr = array();
+        if ($version !== false)
+            $attr['version'] = $version;
+
+        return QElement('a', array('href'  => WikiURL($wikiword, $attr),
+                                   'class' => $class),
+                        $linktext);
+    }
+
     function LinkUnknownWikiWord($wikiword, $linktext = '') {
         if (empty($linktext)) {
             $linktext = $wikiword;
-            if (defined("autosplit_wikiwords"))
+            if ($this->getAutoSplitWikiWords())
                 $linktext=split_pagename($linktext);
             $class = 'wikiunknown';
         } else
@@ -177,12 +214,12 @@ class Theme {
     }
 
     function setButtonSeparator($separator=false) {
-        $this->_buttonSeparator = $separator ? $separator : " ";
+        $this->_buttonSeparator = $separator ? $separator : " | ";
     }
 
     function getButtonSeparator() {
         if (! @$this->_buttonSeparator)
-            $this->setButtonSeparator(" | ");
+            $this->setButtonSeparator();
         
         return $this->_buttonSeparator;
     }
