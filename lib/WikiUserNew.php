@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.18 2004-02-24 15:20:05 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.19 2004-02-25 17:15:17 rurban Exp $');
 
 // This is a complete OOP rewrite of the old WikiUser code with various
 // configurable external authentification methods.
@@ -335,13 +335,14 @@ class _WikiUser
     }
 
     function nextAuthMethod() {
-        if (! $this->_current_method) {
+        if (empty($this->_current_method)) {
             if (get_class($this) != '_passuser') {
             	$this->_current_method = substr(get_class($this),1,-8);
             }
             $this->_auth_methods = $GLOBALS['USER_AUTH_ORDER'];
             $this->_current_index = -1;
         }
+        if (empty($this->_current_index)) $this->_current_index = -1;
         $this->_current_index++;
         if ($this->_current_index >= count($this->_auth_methods))
             return false;
@@ -746,12 +747,14 @@ extends _AnonUser
     }
 
     function getPreferences() {
-        if ($this->_prefmethod == 'ADODB') {
-            _AdoDbPassUser::_AdoDbPassUser();
-            return _AdoDbPassUser::getPreferences();
-        } elseif ($this->_prefmethod == 'SQL') {
-            _PearDbPassUser::_PearDbPassUser();
-            return _PearDbPassUser::getPreferences();
+        if (!empty($this->_prefmethod)) {
+            if ($this->_prefmethod == 'ADODB') {
+                _AdoDbPassUser::_AdoDbPassUser();
+                return _AdoDbPassUser::getPreferences();
+            } elseif ($this->_prefmethod == 'SQL') {
+                _PearDbPassUser::_PearDbPassUser();
+                return _PearDbPassUser::getPreferences();
+            }
         }
 
         // We don't necessarily have to read the cookie first. Since
@@ -770,13 +773,15 @@ extends _AnonUser
     }
 
     function setPreferences($prefs, $id_only=false) {
-        if ($this->_prefmethod == 'ADODB') {
-            _AdoDbPassUser::_AdoDbPassUser();
-            return _AdoDbPassUser::setPreferences($prefs, $id_only);
-        }
-        elseif ($this->_prefmethod == 'SQL') {
-            _PearDbPassUser::_PearDbPassUser();
-            return _PearDbPassUser::setPreferences($prefs, $id_only);
+        if (!empty($this->_prefmethod)) {
+            if ($this->_prefmethod == 'ADODB') {
+                _AdoDbPassUser::_AdoDbPassUser();
+                return _AdoDbPassUser::setPreferences($prefs, $id_only);
+            }
+            elseif ($this->_prefmethod == 'SQL') {
+                _PearDbPassUser::_PearDbPassUser();
+                return _PearDbPassUser::setPreferences($prefs, $id_only);
+            }
         }
 
         _AnonUser::setPreferences($prefs, $id_only);
@@ -1907,6 +1912,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.18  2004/02/24 15:20:05  rurban
+// fixed minor warnings: unchecked args, POST => Get urls for sortby e.g.
+//
 // Revision 1.17  2004/02/17 12:16:42  rurban
 // started with changePass support. not yet used.
 //
