@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.10 2002-01-14 00:44:08 dairiki Exp $
+# $Id: Makefile,v 1.11 2002-01-14 02:31:00 carstenklapp Exp $
 #
 # locale/Makefile
 #
@@ -68,7 +68,6 @@ ${POT_FILE}: ../lib/diff.php
 ${POT_FILE}: ../lib/display.php
 ${POT_FILE}: ../lib/editpage.php
 ${POT_FILE}: ../lib/ErrorManager.php
-${POT_FILE}: ../lib/FileCache.php
 ${POT_FILE}: ../lib/FileFinder.php
 ${POT_FILE}: ../lib/interwiki.php
 ${POT_FILE}: ../lib/loadsave.php
