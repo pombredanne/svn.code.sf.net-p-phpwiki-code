@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.8 2002-02-07 19:27:41 dairiki Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.9 2002-02-08 03:01:11 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -349,11 +349,14 @@ class InlineTransformer
     var $_regexps = array();
     var $_markup = array();
     
-    function InlineTransformer () {
-        foreach (array('escape', 'bracketlink', 'url',
-                       'interwiki', 'wikiword', 'linebreak',
-                       'old_emphasis', 'nestled_emphasis',
-                       'html_emphasis') as $mtype) {
+    function InlineTransformer ($markup_types = false) {
+        if (!$markup_types)
+            $markup_types = array('escape', 'bracketlink', 'url',
+                                  'interwiki', 'wikiword', 'linebreak',
+                                  'old_emphasis', 'nestled_emphasis',
+                                  'html_emphasis');
+
+        foreach ($markup_types as $mtype) {
             $class = "Markup_$mtype";
             $this->_addMarkup(new $class);
         }
@@ -431,10 +434,34 @@ class InlineTransformer
     }
 }
 
+class LinkTransformer extends InlineTransformer
+{
+    function LinkTransformer () {
+        $this->InlineTransformer(array('escape', 'bracketlink', 'url',
+                                       'interwiki', 'wikiword'));
+    }
+}
+
 function TransformInline($text) {
     static $trfm;
-    if (empty($trfm))
+    
+    if (empty($trfm)) {
         $trfm = new InlineTransformer;
+    }
+    
+    return $trfm->parse($text);
+}
+
+function TransformLinks($text, $markup = 2.0) {
+    static $trfm;
+    
+    if (empty($trfm)) {
+        $trfm = new LinkTransformer;
+    }
+
+    if ($markup < 2.0)
+        $text = ConvertOldMarkup($text, 'links');
+    
     return $trfm->parse($text);
 }
 

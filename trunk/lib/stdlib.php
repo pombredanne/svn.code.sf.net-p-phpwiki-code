@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.101 2002-02-07 23:23:26 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.102 2002-02-08 03:01:11 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -309,11 +309,14 @@ function ExtractWikiPageLinks($content) {
  *
  * @param $text string Old-style wiki markup.
  *
+ * @param $just_links bool Only convert old-style links.
+ * (Really this only converts escaped old-style links.)
+ *
  * @return string New-style wiki markup.
  *
  * @bugs FIXME: footnotes and old-style tables are known to be broken.
  */
-function ConvertOldMarkup ($text) {
+function ConvertOldMarkup ($text, $just_links = false) {
     // PHPism: defining this function here, doesn't really make
     // it function local, but it should.
     function _ConvertOldListMarkup ($indent, $bullet) {
@@ -325,42 +328,54 @@ function ConvertOldMarkup ($text) {
         else
             return $indent . $bullet . ' ';
     }
+
+
+    static $orig, $repl, $link_orig, $link_repl;
+
+    if (empty($orig)) {
+        /*****************************************************************
+         * Conversions for inline markup:
+         */
+
+        // escape tilde's
+        $orig[] = '/~/';
+        $repl[] = '~~';
+
+        // escape escaped brackets
+        $orig[] = '/\[\[/';
+        $repl[] = '~[';
+
+        // change ! escapes to ~'s.
+        global $AllowedProtocols, $WikiNameRegexp, $request;
+        include_once('lib/interwiki.php');
+        $map = InterWikiMap::GetMap($request);
+        $bang_esc[] = "(?:$AllowedProtocols):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]";
+        $bang_esc[] = $map->getRegexp() . ":[^\\s.,;?()]+"; // FIXME: is this really needed?
+        $bang_esc[] = $WikiNameRegexp;
+        $orig[] = '/!((?:' . join(')|(', $bang_esc) . '))/';
+        $repl[] = '~\\1';
+
+
+        $link_orig = $orig;
+        $link_repl = $repl;
+        
+        /*****************************************************************
+         * Conversions for block markup
+         */
+        // convert indented blocks to <pre></pre>.
+        $orig[] = '/^[ \t]+\S.*\n(?:(?:\s*\n)?^[ \t]+\S.*\n)*/m';
+        $repl[] = "<pre>\n\\0</pre>\n";
+
+        // convert lists
+        $orig[] = '/^([#*;]*)([*#]|;.*?:) */me';
+        $repl[] = "_ConvertOldListMarkup('\\1', '\\2')";
+    }
     
-    /*****************************************************************
-     * Conversions for inline markup:
-     */
 
-    // escape tilde's
-    $orig[] = '/~/';
-    $repl[] = '~~';
-
-    // escape escaped brackets
-    $orig[] = '/\[\[/';
-    $repl[] = '~[';
-
-    // change ! escapes to ~'s.
-    global $AllowedProtocols, $WikiNameRegexp, $request;
-    include_once('lib/interwiki.php');
-    $map = InterWikiMap::GetMap($request);
-    $bang_esc[] = "(?:$AllowedProtocols):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]";
-    $bang_esc[] = $map->getRegexp() . ":[^\\s.,;?()]+"; // FIXME: is this really needed?
-    $bang_esc[] = $WikiNameRegexp;
-    $orig[] = '/!((?:' . join(')|(', $bang_esc) . '))/';
-    $repl[] = '~\\1';
-
-    
-    /*****************************************************************
-     * Conversions for block markup
-     */
-    // convert indented blocks to <pre></pre>.
-    $orig[] = '/^[ \t]+\S.*\n(?:(?:\s*\n)?^[ \t]+\S.*\n)*/m';
-    $repl[] = "<pre>\n\\0</pre>\n";
-
-    // convert lists
-    $orig[] = '/^([#*;]*)([*#]|;.*?:) */me';
-    $repl[] = "_ConvertOldListMarkup('\\1', '\\2')";
-    
-    return preg_replace($orig, $repl, $text);
+    if ($just_links)
+        return preg_replace($link_orig, $link_repl, $text);
+    else
+        return preg_replace($orig, $repl, $text);
 }
 
 
