@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.34 2002-01-26 01:57:47 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.35 2002-01-26 07:06:44 carstenklapp Exp $');
 /**
  */
 
@@ -99,7 +99,7 @@ extends _RecentChanges_Formatter
 {
     function diffLink ($rev) {
         global $Theme;
-        return $Theme->makeButton(_("(diff)"), $this->diffURL($rev), 'wikiaction');
+        return $Theme->makeButton(_("(diff)"), $this->diffURL($rev), 'wiki-rc-action');
     }
 
     function pageLink ($rev) {
@@ -438,9 +438,9 @@ extends WikiPlugin
                 // Build the button's url
                 $b->addButton($label, "RecentChanges?days=" .$daynum
                                       .$url_show_minor .$url_show_all,
-                              'wikiaction');
+                              'wiki-rc-action');
             }
-            return $b->getContent();
+            return HTML::div(array('class'=>'wiki-rc-action'), $b->getContent());
         }
     }
 };
