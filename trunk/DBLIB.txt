@@ -1,4 +1,4 @@
-$Id: DBLIB.txt,v 1.2 2000-06-09 10:17:42 ahollosi Exp $
+$Id: DBLIB.txt,v 1.3 2000-06-20 02:29:18 wainstead Exp $
 
 This is a description of the database interface for PhpWiki. Regardless
 of what kind of data store is used (RDBMS, DBM files, flat text files)
@@ -18,6 +18,21 @@ A few notes:
   the IP address or host name of the previous author and so on. See
   the source code for the full listing.
 
+* The data structure. This is commonly named $pagehash in the source
+  code; it's an associative array with values that are integers,
+  strings and arrays (i.e. a heterogenous data structure). Here's a
+  current description:
+
+  $pagehash = {
+     author       => string,
+     content      => array (where each element is a line of the page),
+     created      => integer (a number in Unix time since the Epoch),
+     flags        => string,
+     lastmodified => integer (Unix time),
+     pagename     => string,
+     version      => integer,
+     refs         => array (where each element is a reference)
+  };
 
       OpenDataBase($dbname)
       takes:   a string, the name of the database
