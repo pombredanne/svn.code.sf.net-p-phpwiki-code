@@ -1,4 +1,4 @@
-<!-- $Id: wiki_display.php3,v 1.5 2000-06-18 15:12:13 ahollosi Exp $ -->
+<!-- $Id: wiki_display.php3,v 1.6 2000-06-26 21:26:45 ahollosi Exp $ -->
 <?
    /*
       display.php3: render a page. This has all the display 
@@ -32,4 +32,7 @@
    }
 
    GeneratePage('BROWSE', $html, $pagename, $pagehash);
+   flush();
+
+   IncreaseHitCount($dbi, $pagename);
 ?>

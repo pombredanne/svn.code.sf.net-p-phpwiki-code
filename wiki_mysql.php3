@@ -1,4 +1,4 @@
-<!-- $Id: wiki_mysql.php3,v 1.6 2000-06-21 22:59:18 ahollosi Exp $ -->
+<!-- $Id: wiki_mysql.php3,v 1.7 2000-06-26 21:26:45 ahollosi Exp $ -->
 <?
 
    /*
@@ -108,6 +108,29 @@
    }
 
 
+   function IncreaseHitCount($dbi, $pagename)
+   {
+      $res = mysql_query("update hitcount set hits=hits+1 where pagename='$pagename'", $dbi['dbc']);
+
+      if (!mysql_affected_rows($dbi['dbc'])) {
+	 $res = mysql_query("insert into hitcount (pagename, hits) values ('$pagename', 1)", $dbi['dbc']);
+      }
+
+      return $res;
+   }
+
+   function GetHitCount($dbi, $pagename)
+   {
+      $res = mysql_query("select hits from hitcount where pagename='$pagename'", $dbi['dbc']);
+      if (mysql_num_rows($res))
+         $hits = mysql_result($res, 0);
+      else
+         $hits = "0";
+
+      return $hits;
+   }
+
+
    // setup for title-search
    function InitTitleSearch($dbi, $search) {
       $search = addslashes($search);
@@ -146,5 +169,16 @@
       }
    }
 
+   function InitMostPopular($dbi, $limit) {
+      $res = mysql_query("select * from hitcount order by hits desc, pagename limit $limit");
+      
+      return $res;
+   }
 
+   function MostPopularNextMatch($dbi, $res) {
+      if ($hits = mysql_fetch_array($res))
+	 return $hits;
+      else
+         return 0;
+   }
 ?>
