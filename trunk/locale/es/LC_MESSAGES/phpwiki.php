@@ -10,14 +10,20 @@ $locale["<b>Reload</b> the page. You should now see the most current version of 
    "<b>Vuelva a cargar</b> la página. Ahora podrá ver la versión mas actual de la página. Sus cambios no están ahí.";
 $locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
    "Copie sus cambios al portapapeles o a otro sitio temporal (p.ej. editor de textos).";
-$locale["Describe [%s] here."] =
-   "Describe [%s] aquí.";
+$locale["Describe %s here."] =
+   "Describe %s aquí.";
 $locale["Edit"] =
    "Editar";
+$locale["Edit %s"] =
+   "Editar %s";
+$locale["Edit: %s"] =
+   "Editar: %s";
 $locale["FindPage"] =
    "BuscarPágina";
 $locale["GoodStyle"] =
    "BuenEstilo";
+$locale["Hits"] =
+   "Número de hits";
 $locale["HomePage"] =
    "PáginaPrincipal";
 $locale["In order to recover from this situation follow these steps:"] =
@@ -28,6 +34,8 @@ $locale["Make changes to the file again. Paste your additions from the clipboard
    "Haga cambios a la página otra vez. Pegue sus modificaciones del portapapeles (o del editor de textos).";
 $locale["None"] =
    "Ninguno";
+$locale["Page Name"] =
+   "Nombre de la página";
 $locale["Page locked"] =
    "Página bloqueada";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
@@ -52,6 +60,8 @@ $locale["TextFormattingRules"] =
    "ReglasDeFormatoDeTexto";
 $locale["Thank you for editing %s."] =
    "Gracias por editar %s.";
+$locale["The %s most popular pages of this wiki:"] =
+   "Las %s páginas más populares de este wiki:";
 $locale["This is a minor change."] =
    "Esto es un cambio pequeño.";
 $locale["This page has been locked by the administrator and cannot be edited."] =
@@ -60,6 +70,8 @@ $locale["Unlock page"] =
    "Desbloquear página";
 $locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
    "Use el botón <b>Atrás<b> para retornar a la página editada";
+$locale["Version %d"] =
+   "Versión %d";
 $locale["Versions are identical"] =
    "Las versiones son idénticas";
 $locale["WikiFatalError"] =
@@ -76,5 +88,7 @@ $locale["last modified on %s"] =
    "modificado por última vez el %s";
 $locale["version %d"] =
    "versión %d";
+$locale["version %s"] =
+   "versión %s";
 
 ;?>
