@@ -1,5 +1,5 @@
 /*
-  $Id: MacOSX.css,v 1.11 2002-01-19 01:04:22 carstenklapp Exp $
+  $Id: MacOSX.css,v 1.12 2002-01-19 09:52:31 carstenklapp Exp $
 
   Classes:
 
@@ -33,15 +33,15 @@ TODO: Get rid of tables in wikiaction forms.
 body { background: #fafafa url("image/bgpaper8.png"); }
 body.edit { background: #fafafa url("images/bggranular.png"); }
 
-body { font-family: arial, helvetica, sans-serif; }
+body { }
 
 /*
  * NS4, defaults from body don't always propagate correctly.
  * So we need this:
  */ 
-.wikitext, .toolbar, p, td { font-family: arial, helvetica, sans-serif; }
+h1, h2, h3, .toolbar, td { font-family: "Lucida Grande", Helvetica, Arial, sans-serif; }
 
-input.button { font-family: arial, helvetica, sans-serif; }
+input.button { font-family: "Lucida Grande", Helvetica, Arial, sans-serif; }
 
 .wikitext pre { font-family: monospace; }
 
