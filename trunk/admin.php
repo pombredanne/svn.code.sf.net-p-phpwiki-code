@@ -1,4 +1,4 @@
-<?php // $Id: admin.php,v 1.3 2000-11-08 16:48:34 ahollosi Exp $
+<?php // $Id: admin.php,v 1.4 2000-11-09 16:29:10 ahollosi Exp $
 
    function rcs_id($id) {}   // otherwise this gets in the way
 
@@ -41,17 +41,26 @@
    } elseif (isset($loadserial)) {
       include ('admin/loadserial.php');
    } elseif (isset($remove)) {
+      if (get_magic_quotes_gpc())
+         $remove = stripslashes($remove);
       if (function_exists('RemovePage')) {
-	 if (get_magic_quotes_gpc())
-	    $remove = stripslashes($remove);
-	 RemovePage($dbi, $remove);
-	 $html = "Removed page '" . htmlspecialchars($remove)
-		."' successfully.'";
+         $html .= "You are about to remove '" . htmlspecialchars($remove)
+	       . "' permanently!<P>Click <A HREF=\"$ScriptUrl?removeok="
+	       . rawurlencode($remove) . "\">here</A> to remove the page now."
+	       . "<P>Otherwise press the \"Back\" button of your browser.";
       } else {
          $html = "Function not yet implemented.";
       }
       GeneratePage('MESSAGE', $html, 'Remove page', 0);
       ExitWiki('');
+   } elseif (isset($removeok)) {
+      if (get_magic_quotes_gpc())
+	 $removeok = stripslashes($removeok);
+      RemovePage($dbi, $removeok);
+      $html = "Removed page '".htmlspecialchars($removeok)."' successfully.'";
+      GeneratePage('MESSAGE', $html, 'Removed page', 0);
+      ExitWiki('');
    }
+
    include('index.php');
 ?>
