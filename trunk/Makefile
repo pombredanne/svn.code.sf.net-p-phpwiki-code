@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.5 2004-07-01 08:15:10 rurban Exp $
+# $Id: Makefile,v 1.6 2004-09-06 08:21:35 rurban Exp $
 # user-definable settings:
 # for mysqladmin
 DBADMIN_USER=root
@@ -31,7 +31,7 @@ ifeq (${PROCESS_DSN},1)
   DB_USER := $(word 3,${DATABASE_DSN})
   #DB_PASS=
   DB_PASS := $(word 4,${DATABASE_DSN})
-
+  #Todo: read optional DBADMIN_USER and DBADMIN_PASS settings from config.ini
   DBADMIN_OPTS=-u$(DBADMIN_USER) -p$(DBADMIN_PASS)
 else
   DB_DBTYPE=${DATABASE_TYPE}
@@ -47,11 +47,13 @@ all:  TAGS
 TAGS:  $(PHP_SRC)
 #	etags $(PHP_SRC)
 	if [ -f $@ ]; then /usr/bin/mv -f $@ $@~; fi
-	/usr/bin/find . \( -type d -regex '\(^\./lib/pear\)\|\(^\./lib/WikiDB/adodb\)\|\(^\./lib/nusoap\)\|\(^\./lib/fpdf\)\|\(^\./locale/.*/LC_MESSAGES\)' \) -prune -o -name \*.php | etags -L -
+	/usr/bin/find . \( -type d -regex '\(^\./lib/pear\)\|\(^\./lib/WikiDB/adodb\)\|\(^\./lib/nusoap\)\|\(^\./lib/fpdf\)\|\(^\./locale/.*/LC_MESSAGES\)' \) -prune -o -name \*.php | etags -
 
 TAGS.full:  $(PHP_SRC)
 	if [ -f $@ ]; then /usr/bin/mv -f $@ $@~; fi
-	/usr/bin/find . -name \*.php -o -name \*.tmpl | etags -L - --langmap="HTML:.tmpl" -f $@;
+# 	better etags
+#	/usr/bin/find . -name \*.php -o -name \*.tmpl | etags -L - --langmap="HTML:.tmpl" -f $@
+	/usr/bin/find . -name \*.php -o -name \*.tmpl | etags - -o $@
 
 locale: 
 	cd locale
@@ -85,7 +87,7 @@ mysql:
 	mysqladmin $(DB_OPTS) create $(DB_DB)
 	mysql $(DB_OPTS) -e "GRANT select,insert,update,delete,lock tables ON $(DB_DB).* \
 TO $(DB_USER)@localhost IDENTIFIED BY '$(DB_PASS)';"
-	mysql $(DB_OPTS) $(DB_DB) < schemas/mysql.sql
+	mysql $(DB_OPTS) $(DB_DB) < schemas/mysql-initialize.sql
 
 # initialize the database
 pqsql:
@@ -96,12 +98,12 @@ pqsql:
 	else
 	  createuser -D -A $(DB_USER)
 	endif
-	psql $(DB_DB) -f schemas/psql.sql
+	psql $(DB_DB) -f schemas/psql-initialize.sql
 	logout
 
 # initialize the database
 sqlite:	$(DB_SQLITE_DBFILE)
-	sqlite $(DB_SQLITE_DBFILE) < schemas/sqlite.sql
+	sqlite $(DB_SQLITE_DBFILE) < schemas/sqlite-initialize.sql
 
 # update the database
 ${DB_SQLITE_DBFILE}: schemas/sqlite.sql
