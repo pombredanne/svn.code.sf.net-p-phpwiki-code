@@ -1,13 +1,13 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_pgsql.php,v 1.9 2004-06-11 09:07:30 rurban Exp $');
+rcs_id('$Id: PearDB_pgsql.php,v 1.10 2004-07-08 15:35:17 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB.php');
 
-class WikiDB_backend_pgsql
+class WikiDB_backend_PearDB_pgsql
 extends WikiDB_backend_PearDB
 {
-    function WikiDB_backend_pgsql($dbparams) {
+    function WikiDB_backend_PearDB_pgsql($dbparams) {
         // The pgsql handler of (at least my version of) the PEAR::DB
         // library generates three warnings when a database is opened:
         //

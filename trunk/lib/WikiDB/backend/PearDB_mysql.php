@@ -1,15 +1,15 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_mysql.php,v 1.6 2004-07-05 12:57:54 rurban Exp $');
+rcs_id('$Id: PearDB_mysql.php,v 1.7 2004-07-08 15:35:17 rurban Exp $');
 
 require_once('lib/WikiDB/backend/PearDB.php');
 
-class WikiDB_backend_mysql
+class WikiDB_backend_PearDB_mysql
 extends WikiDB_backend_PearDB
 {
     /**
      * Constructor.
      */
-    function WikiDB_backend_mysql($dbparams) {
+    function WikiDB_backend_PearDB_mysql($dbparams) {
         $this->WikiDB_backend_PearDB($dbparams);
         //$this->_serverinfo = $this->_dbh->ServerInfo();
         $row = $this->_dbh->GetOne("SELECT version()");

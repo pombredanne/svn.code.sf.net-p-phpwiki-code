@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_oci8.php,v 1.1 2004-06-27 10:26:03 rurban Exp $');
+rcs_id('$Id: PearDB_oci8.php,v 1.2 2004-07-08 15:35:17 rurban Exp $');
 
 /**
  * Oracle extensions for the Pear DB backend.
@@ -9,13 +9,13 @@ rcs_id('$Id: PearDB_oci8.php,v 1.1 2004-06-27 10:26:03 rurban Exp $');
 require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB.php');
 
-class WikiDB_backend_oci8
+class WikiDB_backend_PearDB_oci8
 extends WikiDB_backend_PearDB
 {
     /**
      * Constructor
      */
-    function WikiDB_backend_oci8($dbparams) {
+    function WikiDB_backend_PearDB_oci8($dbparams) {
         // Backend constructor
         $this->WikiDB_backend_PearDB($dbparams);
         
