@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.44 2005-01-08 20:58:19 rurban Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.45 2005-01-10 18:05:56 rurban Exp $');
 /**
  * Code for writing the HTML subset of XML.
  * @author: Jeff Dairiki
@@ -97,7 +97,7 @@ function HTML (/* $content, ... */) {
 
 class HTML extends HtmlElement {
     function raw ($html_text) {
-        return new RawXML($html_text);
+        return new RawXml($html_text);
     }
     
     function getTagProperties($tag) {
@@ -110,10 +110,12 @@ class HTML extends HtmlElement {
         if (is_string($tags))
             $tags = preg_split('/\s+/', $tags);
         foreach ($tags as $tag) {
-            if (isset($props[$tag]))
-                $props[$tag] |= $prop_flag;
-            else
-                $props[$tag] = $prop_flag;
+            $tag = trim($tag);
+            if ($tag)
+                if (isset($props[$tag]))
+                    $props[$tag] |= $prop_flag;
+                else
+                    $props[$tag] = $prop_flag;
         }
     }
 
@@ -529,6 +531,9 @@ function IfJavaScript($if_content = false, $else_content = false) {
     
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.44  2005/01/08 20:58:19  rurban
+ ending space after colgroup breaks _setTagProperty
+
  Revision 1.43  2004/11/21 11:59:14  rurban
  remove final \n to be ob_cache independent
 
