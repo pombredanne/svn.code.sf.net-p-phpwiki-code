@@ -1,4 +1,4 @@
-<!-- $Id: wiki_savepage.php3,v 1.8 2000-06-18 15:12:13 ahollosi Exp $ -->
+<!-- $Id: wiki_savepage.php3,v 1.9 2000-06-21 22:57:17 ahollosi Exp $ -->
 <?
 
 /*
@@ -49,7 +49,7 @@
       $newpage = 0;
    }
 
-   $pagehash["date"] = GetCurrentDate();
+   $pagehash["lastmodified"] = time();
    $pagehash["version"]++;
    $pagehash["author"] = $remoteuser;
 
@@ -75,7 +75,7 @@
    for ($i = 1; $i <= NUM_LINKS; $i++) {
         if (! empty(${'r'.$i})) {
 	   if (preg_match("#^($AllowedProtocols):#", ${'r'.$i}))
-              $pagehash['r'.$i] = ${'r'.$i};
+              $pagehash['refs'][$i] = ${'r'.$i};
 	   else
 	      $html .= "<P>Link [$i]: <B>unknown protocol</B>" .
 	           " - use one of $AllowedProtocols - link discarded.</P>\n";
