@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BackLinks.php,v 1.19 2003-01-18 21:19:25 carstenklapp Exp $');
+rcs_id('$Id: BackLinks.php,v 1.20 2003-12-14 05:36:31 carstenklapp Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -30,20 +30,20 @@ extends WikiPlugin
     function getName() {
         return _("BackLinks");
     }
-
+    
     function getDescription() {
         return sprintf(_("List all pages which link to %s."), '[pagename]');
     }
-
+    
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.19 $");
+                            "\$Revision: 1.20 $");
     }
-
+    
     function getDefaultArguments() {
         return array('exclude'      => '',
-                     'include_self' => 0,
-                     'noheader'     => 0,
+                     'include_self' => false,
+                     'noheader'     => false,
                      'page'         => '[pagename]',
                      'info'         => false
                      );
@@ -51,42 +51,90 @@ extends WikiPlugin
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
-
+    
     function run($dbi, $argstr, $request) {
         $this->_args = $this->getArgs($argstr, $request);
         extract($this->_args);
         if (!$page)
             return '';
-
+        
         $exclude = $exclude ? explode(",", $exclude) : array();
         if (!$include_self)
             $exclude[] = $page;
-
+        
         $pagelist = new PageList($info, $exclude);
-
+        
         $p = $dbi->getPage($page);
         $pagelist->addPages($p->getLinks());
-
+        
+        // Localization note: In English, the differences between the
+        // various phrases spit out here may seem subtle or negligible
+        // enough to tempt you to combine/normalize some of these
+        // strings together, but the grammar employed most by other
+        // languages does not always end up with so subtle a
+        // distinction as it does with English in this case. :)
         if (!$noheader) {
-            $pagelink = WikiLink($page, 'auto');
-
-            if ($pagelist->isEmpty())
-                return HTML::p(fmt("No pages link to %s.", $pagelink));
-
-            if ($pagelist->getTotal() == 1)
-                $pagelist->setCaption(fmt("One page links to %s:",
-                                          $pagelink));
-            else
-                $pagelist->setCaption(fmt("%s pages link to %s:",
-                                          $pagelist->getTotal(), $pagelink));
+            if ($page == $request->args['pagename']
+                && !$dbi->isWikiPage($page))
+                {
+                    // BackLinks plugin is more than likely being called
+                    // upon for an empty page on said page, while either
+                    // 'browse'ing, 'create'ing or 'edit'ing.
+                    //
+                    // Don't bother displaying a WikiLink 'unknown', just
+                    // the Un~WikiLink~ified (plain) name of the uncreated
+                    // page currently being viewed.
+                    $pagelink = $page;
+                    
+                    if ($pagelist->isEmpty())
+                        return HTML::p(fmt("No other page links to %s yet.", $pagelink));
+                    
+                    if ($pagelist->getTotal() == 1)
+                        $pagelist->setCaption(fmt("One page would link to %s:",
+                                                  $pagelink));
+                    // Some future localizations will actually require
+                    // this... (BelieveItOrNot, English-only-speakers!(:)
+                    //
+                    // else if ($pagelist->getTotal() == 2)
+                    //     $pagelist->setCaption(fmt("Two pages would link to %s:",
+                    //                               $pagelink));
+                    else
+                        $pagelist->setCaption(fmt("%s pages would link to %s:",
+                                                  $pagelist->getTotal(), $pagelink));
+                }
+            else {
+                // BackLinks plugin is being displayed on a normal page.
+                $pagelink = WikiLink($page, 'auto');
+                
+                if ($pagelist->isEmpty())
+                    return HTML::p(fmt("No page links to %s.", $pagelink));
+                
+                trigger_error($pagelist->getTotal());
+                
+                if ($pagelist->getTotal() == 1)
+                    $pagelist->setCaption(fmt("One page links to %s:",
+                                              $pagelink));
+                // Some future localizations will actually require
+                // this... (BelieveItOrNot, English-only-speakers!(:)
+                //
+                // else if ($pagelist->getTotal() == 2)
+                //     $pagelist->setCaption(fmt("Two pages link to %s:",
+                //                               $pagelink));
+                else
+                    $pagelist->setCaption(fmt("%s pages link to %s:",
+                                              $pagelist->getTotal(), $pagelink));
+            }
         }
-
         return $pagelist;
     }
-
+    
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.19  2003/01/18 21:19:25  carstenklapp
+// Code cleanup:
+// Reformatting; added copyleft, getVersion, getDescription
+//
 
 // For emacs users
 // Local Variables:
