@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageType.php,v 1.5 2002-02-18 23:50:55 carstenklapp Exp $');
+<?php rcs_id('$Id: PageType.php,v 1.6 2002-02-19 00:04:52 carstenklapp Exp $');
 /*
 Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -31,6 +31,10 @@ include_once('lib/BlockParser.php');
  * require_once('lib/PageType.php');
  * $transformedContent = PageType($pagerevisionhandle, $pagename, $markup);
  *
+ * The pagename and markup args are only required when displaying the content
+ * for an edit preview, otherwise they will be extracted from the page $revision
+ * instance.
+ *
  * See http://phpwiki.sourceforge.net/phpwiki/PageType
  */
 function PageType(&$rev, $pagename = false, $markup = false) {
@@ -42,7 +46,7 @@ function PageType(&$rev, $pagename = false, $markup = false) {
 
     } else {
         // Hopefully only an edit preview gets us here, else we might be screwed.
-        if ($pagename == false || $markup = false) {
+        if ($pagename == false) {
             $error_text = "DEBUG: \$rev was not a 'WikiDB_PageRevision'. (Are you not previewing a page edit?)"; //debugging message only
             trigger_error($error_text, E_USER_NOTICE);
         }
@@ -104,6 +108,13 @@ class PageType {
     }
 
     function _extractText() {
+        /**
+         * Custom text extractions might want to check if the section
+         * contains any text using trim() before returning any
+         * transformed text, to avoid displaying blank boxes.
+         * See interWikiMapPageType->_extractStartText()
+         * and interWikiMapPageType->_extractEndText() for examples.
+         */
         return TransformText($this->_content, $this->_markup);
     }
 
@@ -142,7 +153,7 @@ class interWikiMapPageType extends PageType {
             if ($dbi->isWikiPage($moniker)) {
                 $moniker = WikiLink($moniker);
             }
-            $table->pushContent(HTML::tr(HTML::td($moniker), HTML::td(HTML::pre($url))));
+            $table->pushContent(HTML::tr(HTML::td($moniker), HTML::td(HTML::tt($url))));
         }
         return $table;
     }
@@ -150,13 +161,15 @@ class interWikiMapPageType extends PageType {
     function _extractStartText() {
         // cut the map out of the text
         $v = strpos($this->_content, "<verbatim>");
-        if ($v) {
+        if ($v)
             list($wikitext, $cruft) = explode("<verbatim>", $this->_content);
-        } else {
+        else
             $wikitext = $this->_content;
-        }
+
         if (trim($wikitext))
             return TransformText($wikitext, $this->_markup);
+
+        return "";
     }
 
     function _extractEndText() {
@@ -166,9 +179,8 @@ class interWikiMapPageType extends PageType {
             list($cruft, $endtext) = explode("</verbatim>", $this->_content);
         if (trim($endtext))
             return TransformText($endtext, $this->_markup);
-        } else {
-            return "";
-        }
+
+        return "";
     }
 
     /*
