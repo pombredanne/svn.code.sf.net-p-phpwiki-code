@@ -1,4 +1,4 @@
-<!-- $Id: msql.php,v 1.5 2000-11-07 05:13:22 wainstead Exp $ -->
+<!-- $Id: msql.php,v 1.6 2001-02-01 04:24:26 wainstead Exp $ -->
 <?php
 
    /*
@@ -455,6 +455,9 @@
    // functionality for the wikilinks table
 
    // takes a page name, returns array of scored incoming and outgoing links
+
+/* Not implemented yet. The code below was copied from mysql.php...
+
    function GetWikiPageLinks($dbi, $pagename) {
       $links = array();
       $pagename = addslashes($pagename);
@@ -505,10 +508,9 @@
 	 }
       }
 
-      // update pagescore. rotsa ruck.
       msql_query("delete from wikiscore", $dbi["dbc"]);
       msql_query("insert into wikiscore select w1.topage, count(*) from wikilinks as w1, wikilinks as w2 where w2.topage=w1.frompage group by w1.topage", $dbi["dbc"]);
    }
-
+*/
 
 ?>
