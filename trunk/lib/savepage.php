@@ -1,5 +1,4 @@
-<!-- $Id: savepage.php,v 1.6 2000-11-08 15:40:00 ahollosi Exp $ -->
-<?php
+<?php rcs_id('$Id: savepage.php,v 1.7 2001-01-04 18:30:32 ahollosi Exp $');
 
 /*
    All page saving events take place here.
@@ -7,6 +6,74 @@
    This is klugey. But it works. There's probably a slicker way of
    coding it.
 */
+
+   function UpdateRecentChanges($dbi, $pagename, $isnewpage)
+   {
+      global $remoteuser; // this is set in the config
+      global $dateformat;
+      global $WikiPageStore;
+
+      $recentchanges = RetrievePage($dbi, gettext ("RecentChanges"), $WikiPageStore);
+
+      // this shouldn't be necessary, since PhpWiki loads 
+      // default pages if this is a new baby Wiki
+      if ($recentchanges == -1) {
+         $recentchanges = array(); 
+      }
+
+      $now = time();
+      $today = date($dateformat, $now);
+
+      if (date($dateformat, $recentchanges['lastmodified']) != $today) {
+         $isNewDay = TRUE;
+         $recentchanges['lastmodified'] = $now;
+      } else {
+         $isNewDay = FALSE;
+      }
+
+      $numlines = sizeof($recentchanges['content']);
+      $newpage = array();
+      $k = 0;
+
+      // scroll through the page to the first date and break
+      // dates are marked with "____" at the beginning of the line
+      for ($i = 0; $i < $numlines; $i++) {
+         if (preg_match("/^____/",
+                        $recentchanges['content'][$i])) {
+            break;
+         } else {
+            $newpage[$k++] = $recentchanges['content'][$i];
+         }
+      }
+
+      // if it's a new date, insert it
+      $newpage[$k++] = $isNewDay ? "____$today\r"
+				 : $recentchanges['content'][$i++];
+
+      // add the updated page's name to the array
+      if($isnewpage) {
+         $newpage[$k++] = "* [$pagename] (new) ..... $remoteuser\r";
+      } else {
+	 $diffurl = "phpwiki:?diff=" . rawurlencode($pagename);
+         $newpage[$k++] = "* [$pagename] ([diff|$diffurl]) ..... $remoteuser\r";
+      }
+      if ($isNewDay)
+         $newpage[$k++] = "\r";
+
+      // copy the rest of the page into the new array
+      // and skip previous entry for $pagename
+      $pagename = preg_quote($pagename);
+      for (; $i < $numlines; $i++) {
+         if (!preg_match("|\[$pagename\]|", $recentchanges['content'][$i])) {
+            $newpage[$k++] = $recentchanges['content'][$i];
+         }
+      }
+
+      $recentchanges['content'] = $newpage;
+
+      InsertPage($dbi, gettext ("RecentChanges"), $recentchanges);
+   }
+
 
    function ConcurrentUpdates($pagename)
    {
@@ -37,15 +104,17 @@
       exit;
    }
 
+
+
    $pagename = rawurldecode($post);
    $pagehash = RetrievePage($dbi, $pagename, $WikiPageStore);
 
    // if this page doesn't exist yet, now's the time!
    if (! is_array($pagehash)) {
       $pagehash = array();
-      $pagehash["version"] = 0;
-      $pagehash["created"] = time();
-      $pagehash["flags"] = 0;
+      $pagehash['version'] = 0;
+      $pagehash['created'] = time();
+      $pagehash['flags'] = 0;
       $newpage = 1;
    } else {
       if (($pagehash['flags'] & FLAG_PAGE_LOCKED) && !defined('WIKI_ADMIN')) {
@@ -55,20 +124,21 @@
 	 ExitWiki ("");
       }
 
-      if(isset($editversion) && ($editversion != $pagehash["version"])) {
+      if(isset($editversion) && ($editversion != $pagehash['version'])) {
          ConcurrentUpdates($pagename);
       }
 
       // archive it if it's a new author
-      if ($pagehash["author"] != $remoteuser) {
+      if ($pagehash['author'] != $remoteuser) {
          SaveCopyToArchive($dbi, $pagename, $pagehash);
       }
       $newpage = 0;
    }
 
-   $pagehash["lastmodified"] = time();
-   $pagehash["version"]++;
-   $pagehash["author"] = $remoteuser;
+   // set new pageinfo
+   $pagehash['lastmodified'] = time();
+   $pagehash['version']++;
+   $pagehash['author'] = $remoteuser;
 
    // create page header
    $enc_url = rawurlencode($pagename);
@@ -82,11 +152,11 @@
       if (get_magic_quotes_gpc())
          $content = stripslashes($content);
 
-      $pagehash["content"] = preg_split('/[ \t\r]*\n/', chop($content));
+      $pagehash['content'] = preg_split('/[ \t\r]*\n/', chop($content));
 
       // convert spaces to tabs at user request
       if (isset($convert)) {
-         $pagehash["content"] = CookSpaces($pagehash["content"]);      
+         $pagehash['content'] = CookSpaces($pagehash['content']);
       }
    }
 
@@ -106,6 +176,7 @@
    $html .= gettext ("Your careful attention to detail is much appreciated.");
    $html .= "\n";
 
+   // fixme: no test for flat file db system
    if ($WikiPageStore == "/tmp/wikidb") {
       $html .= "<P><B>Warning: the Wiki DBM file still lives in the " .
 		"/tmp directory. Please read the INSTALL file and move " .
@@ -114,7 +185,7 @@
    }
 
    $html .= "<P><img src=\"$SignatureImg\"></P><hr noshade><P>";
-   include("lib/transform.php");
+   include('lib/transform.php');
 
    GeneratePage('BROWSE', $html, $pagename, $pagehash);
 ?>
