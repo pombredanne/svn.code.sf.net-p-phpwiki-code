@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.28 2004-01-25 07:58:30 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.29 2004-01-26 09:17:48 rurban Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -1585,7 +1585,7 @@ class WikiDB_cache
 //      */
 
 //      function exists() {
-//          return $this->_authdb->exists($this->_userid);
+//          return $this->_authdb->exists($this->UserName());
 //      }
 
 //      // create user and default user homepage

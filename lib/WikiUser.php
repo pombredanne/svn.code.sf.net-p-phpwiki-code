@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.45 2003-12-09 20:00:43 carstenklapp Exp $');
+rcs_id('$Id: WikiUser.php,v 1.46 2004-01-26 09:17:48 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -36,6 +36,23 @@ $UserPreferences = array(
                          'timeOffset'    => new _UserPreference_numeric(0, -26, 26),
                          'relativeDates' => new _UserPreference_bool()
                          );
+
+function WikiUserClassname() {
+    return 'WikiUser';
+}
+
+function UpgradeUser ($olduser, $user) {
+    if (isa($user,'WikiUser') and isa($olduser,'WikiUser')) {
+        // populate the upgraded class with the values from the old object
+        foreach (get_object_vars($olduser) as $k => $v) {
+            $user->$k = $v;	
+        }
+        $GLOBALS['request']->_user = $user;
+        return $user;
+    } else {
+        return false;
+    }
+}
 
 /**
 * 
@@ -105,6 +122,10 @@ class WikiUser {
             return true;
         }
         return false;
+    }
+
+    function UserName() {
+        return $this->_userid;
     }
 
     function getId () {
@@ -261,7 +282,7 @@ class WikiUser {
                 }
                 // imap authentication. added by limako
                 if (ALLOW_IMAP_LOGIN && !empty($passwd)) {
-                    $mbox = @imap_open( "{" . IMAP_AUTH_HOST . ":143}",
+                    $mbox = @imap_open( "{" . IMAP_AUTH_HOST . "}",
                                         $userid, $passwd, OP_HALFOPEN );
                     if($mbox) {
                         imap_close($mbox);
@@ -294,6 +315,7 @@ class WikiUser {
 
         // before we get his prefs we should check if he is signed in
         if (USE_PREFS_IN_PAGE && $this->homePage()) { // in page metadata
+            // old array
             if ($pref = $this->_homepage->get('pref')) {
                 //trigger_error("pref=".$pref);//debugging
                 $prefs = unserialize($pref);
@@ -672,12 +694,34 @@ class UserPreferences {
             $this->_prefs[$name] = $newvalue;
     }
 
+    function pack ($nonpacked) {
+        return serialize($nonpacked);
+    }
+    function unpack ($packed) {
+        if (!$packed)
+            return false;
+        if (substr($packed,0,2) == "O:") {
+            // Looks like a serialized object
+            return unserialize($packed);
+        }
+        //trigger_error("DEBUG: Can't unpack bad UserPreferences",
+        //E_USER_WARNING);
+        return false;
+    }
+
     function hash () {
         return hash($this->_prefs);
     }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.45  2003/12/09 20:00:43  carstenklapp
+// Bugfix: The last BogoUserPrefs-bugfix prevented the admin from saving
+// prefs into his own homepage, fixed broken logic. Tightened up BogoUser
+// prefs saving ability by checking for true existance of homepage
+// (previously a page revision of 0 also counted as valid, again due to
+// somewhat flawed logic).
+//
 // Revision 1.44  2003/12/06 04:56:23  carstenklapp
 // Security bugfix (minor): Prevent BogoUser~s from saving extraneous
 // _pref object meta-data within locked pages.

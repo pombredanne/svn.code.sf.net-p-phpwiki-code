@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.33 2003-09-13 22:20:55 carstenklapp Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.34 2004-01-26 09:17:48 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,7 +87,7 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.33 $");
+        //                    "\$Revision: 1.34 $");
     }
 
     function getArgs($argstr, $request=false, $defaults = false) {
@@ -96,7 +96,8 @@ class WikiPlugin
 
         list ($argstr_args, $argstr_defaults) = $this->parseArgStr($argstr);
         $args = array();
-        foreach ($defaults as $arg => $default_val) {
+        if (!empty($defaults))
+          foreach ($defaults as $arg => $default_val) {
             if (isset($argstr_args[$arg]))
                 $args[$arg] = $argstr_args[$arg];
             elseif ( $request and ($argval = $request->getArg($arg)) !== false )

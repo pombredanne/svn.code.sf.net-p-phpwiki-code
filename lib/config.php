@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.77 2004-01-25 03:57:15 rurban Exp $');
+rcs_id('$Id: config.php,v 1.78 2004-01-26 09:17:49 rurban Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -420,7 +420,7 @@ if (defined('USE_DB_SESSION') and USE_DB_SESSION) {
         define('USE_DB_SESSION',false);
 }
 // legacy:
-if (!defined('ENABLE_USER_NEW')) defined('ENABLE_USER_NEW',false);
+if (!defined('ENABLE_USER_NEW')) define('ENABLE_USER_NEW',false);
 if (!defined('ALLOW_USER_LOGIN') and defined('ALLOW_USER_PASSWORDS'))
     define('ALLOW_USER_LOGIN', ALLOW_USER_PASSWORDS);
 

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.105 2004-01-25 03:57:15 rurban Exp $');
+rcs_id('$Id: main.php,v 1.106 2004-01-26 09:17:49 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -32,7 +32,11 @@ class WikiRequest extends Request {
 
         // Restore auth state. This doesn't check for proper authorization!
         if (ENABLE_USER_NEW) {
-            $this->_user = WikiUser($this->_deduceUsername());
+            $userid = $this->_deduceUsername();	
+            $user = WikiUser($userid);
+            if (isset($this->_user)) 
+                $user = UpgradeUser($this->_user,$user);
+            $this->_user = $user;
             $this->_prefs = $this->_user->_prefs;
         } else {
             $this->_user = new WikiUser($this, $this->_deduceUsername());
@@ -201,7 +205,7 @@ class WikiRequest extends Request {
         $olduser = $this->_user;
         $user = $this->_user->AuthCheck($auth_args);
 
-        if (isa($user,(ENABLE_USER_NEW ? '_' : '') . 'WikiUser') and $user->isSignedIn()) {
+        if (isa($user,WikiUserClassname()) and $user->isSignedIn()) {
             // Successful login (or logout.)
             $this->_setUser($user);
         }
@@ -239,7 +243,7 @@ class WikiRequest extends Request {
                 $this->_user = new _PassUser($userid);
         }
         $user = $this->_user->AuthCheck(array('userid' => $userid));
-        if (isa($user, (ENABLE_USER_NEW ? '_' : '') . 'WikiUser')) {
+        if (isa($user,WikiUserClassname())) {
             $this->_setUser($user); // success!
         }
     }
@@ -537,17 +541,29 @@ class WikiRequest extends Request {
         return 'browse';
     }
 
-    function _deduceUsername () {
+    function _deduceUsername() {
         if (!empty($this->args['auth']) and !empty($this->args['auth']['userid']))
             return $this->args['auth']['userid'];
             
-        if ($userid = $this->getSessionVar('wiki_user')) {
-            if (!empty($this->_user))
-                $this->_user->_authhow = 'session';
+        if ($user = $this->getSessionVar('wiki_user')) {
             // users might switch in a session between the two objects
-            $s = ENABLE_USER_NEW ? "UserName" : "_userid";
-            if (isa($userid,(ENABLE_USER_NEW ? '_' : '') .'WikiUser'))
-                return $userid->{$s};
+            // restore old auth level?
+            if (isa($user,WikiUserClassname()) and !empty($user->_level)) {
+                if (empty($this->_user)) {
+                    $c = get_class($user);
+                    $userid = $user->UserName();
+                    if (ENABLE_USER_NEW)
+                        $this->_user = new $c($userid);
+                    else
+                        $this->_user = new $c($this,$userid,$user->_level);
+                }
+                if ($user = UpgradeUser($this->_user,$user))
+                    $this->_user = $user;
+                $this->_user->_authhow = 'session';
+                
+            }
+            if (isa($user,WikiUserClassname()))
+                return $user->UserName();
         }
         if ($userid = $this->getCookieVar('WIKI_ID')) {
             if (!empty($this->_user))
@@ -850,6 +866,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.105  2004/01/25 03:57:15  rurban
+// WikiUserNew support (temp. ENABLE_USER_NEW constant)
+//
 // Revision 1.104  2003/12/26 06:41:16  carstenklapp
 // Bugfix: Try to defer OS errors about session.save_path and ACCESS_LOG,
 // so they don't prevent IE from partially (or not at all) rendering the

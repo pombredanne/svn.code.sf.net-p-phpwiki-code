@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.13 2003-12-04 20:27:00 carstenklapp Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.14 2004-01-26 09:18:00 rurban Exp $');
 /**
- Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+ Copyright 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -36,7 +36,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.13 $");
+                            "\$Revision: 1.14 $");
     }
 
     function getDefaultArguments() {
@@ -44,7 +44,7 @@ extends WikiPlugin
         $pagename = $request->getArg('pagename');
         // take current userid from request
         $user = $request->getUser();
-        $userid = $user->_userid;
+        $userid = $user->UserName();
         $prefs = $user->getPreferences();
         // return defaults established by the UserPreferences class
         return $prefs;
@@ -63,9 +63,10 @@ extends WikiPlugin
             $no_args['isForm'] = false;
             return Template('userprefs', $no_args);
         }
+        $userid = $user->UserName();
         if (((defined('ALLOW_BOGO_LOGIN') && ALLOW_BOGO_LOGIN && $user->isSignedIn())
              || $user->isAuthenticated())
-            && !empty($user->_userid)) {
+            && !empty($userid)) {
             $pref = $user->getPreferences();
             //trigger_error("DEBUG: reading prefs from getPreferences".print_r($pref));
  
@@ -130,6 +131,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2003/12/04 20:27:00  carstenklapp
+// Use the API.
+//
 // Revision 1.12  2003/12/01 22:21:33  carstenklapp
 // Bugfix: UserPreferences are no longer clobbered when signing in after
 // the previous session has ended (i.e. user closed browser then signed

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.69 2003-12-05 01:32:28 carstenklapp Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.70 2004-01-26 09:17:48 rurban Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -370,7 +370,11 @@ class Theme {
     
     function _relativeDay ($time_t) {
         global $request;
-        $offset = 3600 * $request->getPref('timeOffset');
+        
+        if (is_numeric($request->getPref('timeOffset')))
+          $offset = 3600 * $request->getPref('timeOffset');
+        else 
+          $offset = 0;  	
 
         $now = time() + $offset;
         $today = localtime($now, true);
@@ -1026,6 +1030,14 @@ class SubmitImageButton extends SubmitButton {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.69  2003/12/05 01:32:28  carstenklapp
+// New feature: Easier to run multiple wiks off of one set of code. Name
+// your logo and signature image files "YourWikiNameLogo.png" and
+// "YourWikiNameSignature.png" and put them all into
+// themes/default/images. YourWikiName should match what is defined as
+// WIKI_NAME in index.php. In case the image is not found, the default
+// shipped with PhpWiki will be used.
+//
 // Revision 1.68  2003/03/04 01:53:30  dairiki
 // Inconsequential decrufting.
 //

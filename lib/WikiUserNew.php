@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.5 2004-01-25 03:05:00 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.6 2004-01-26 09:17:49 rurban Exp $');
 
 // This is a complete OOP rewrite of the old WikiUser code with various 
 // configurable external authentification methods.
@@ -198,6 +198,23 @@ function WikiUser ($UserName = '') {
     */
 }
 
+function WikiUserClassname() {
+    return '_WikiUser';
+}
+
+function UpgradeUser ($olduser, $user) {
+    if (isa($user,'_WikiUser') and isa($olduser,'_WikiUser')) {
+        // populate the upgraded class with the values from the old object
+        foreach (get_object_vars($user) as $k => $v) {
+            if (!empty($v)) $olduser->$k = $v;	
+        }
+        $GLOBALS['request']->_user = $olduser;
+        return $olduser;
+    } else {
+        return false;
+    }
+}
+
 function UserExists ($UserName) {
     global $request;
     if (!($user = $request->getUser()))
@@ -241,7 +258,7 @@ class _WikiUser
     var $_level = WIKIAUTH_FORBIDDEN;
     var $_prefs = false;
     var $_HomePagehandle = false;
-    var $_request, $_dbi, $_current_method, $_current_index;
+    var $_current_method, $_current_index;
 
     // constructor
     function _WikiUser($UserName = '') {
@@ -251,6 +268,10 @@ class _WikiUser
             $this->_HomePagehandle = $this->hasHomePage();
         }
         $this->getPreferences();
+    }
+
+    function UserName() {
+        return $this->UserName;
     }
 
     function getPreferences() {
@@ -311,20 +332,11 @@ class _WikiUser
         if ($method = $this->nextAuthMethod()) {
             $class = "_".$method."PassUser";
             if ($user = new $class($this->UserName)) {
-                // populate the upgraded class with the values 
-                // from the old class, to prevent from endless recursion.
-            	foreach (get_object_vars($this) as $k => $v) {
-            	    $user->$k = $v;		
-            	}
-                $GLOBALS['request']->_user = $user;
+                // prevent from endless recursion.
+                UpgradeUser($this, $user);
             }
             return $user;
         }
-    }
-
-    // lib/main.php:198 on succesfull login
-    function _setUser($UserName) {
-        $this->UserName = $UserName;
     }
 
     function PrintLoginForm (&$request, $args, $fail_message = false,
@@ -353,9 +365,9 @@ class _WikiUser
         }
     }
 
-    //Legacy: same as isAuthenticated(), 
+    // signed in but probably not password checked
     function isSignedIn() {
-        return $this->_level >= WIKIAUTH_ANON;
+        return (isa($this,'_BogoUser') or isa($this,'_PassUser'));
     }
 
     function isAuthenticated () {
@@ -365,8 +377,7 @@ class _WikiUser
     }
 
     function isAdmin () {
-        return isa($this,'_AdminUser');
-        //return $this->_level == WIKIAUTH_ADMIN;
+        return $this->_level == WIKIAUTH_ADMIN;
     }
 
     function getId () {
@@ -426,8 +437,12 @@ extends _WikiUser
     // Anon only gets to load and save prefs in a cookie, that's it.
     function getPreferences() {
         global $request;
+
+        if (empty($this->_prefs))
+            $this->_prefs = new UserPreferences;
+        $UserName = $this->UserName();
         if ($cookie = $request->getCookieVar(WIKI_NAME)) {
-            if (! $unboxedcookie = $this->_prefs->unpack($cookie)) {
+            if (! $unboxedcookie = $this->_prefs->retrieve($cookie)) {
                 trigger_error(_("Format of UserPreferences cookie not recognised.") . " "
                               . _("Default preferences will be used."),
                               E_USER_WARNING);
@@ -446,24 +461,25 @@ extends _WikiUser
              * username). (Remember, _BogoUser and higher inherit this
              * function too!).
              */
-            if (! $this->UserName || $this->UserName == $unboxedcookie['userid']) {
+            if (! $this->UserName() || $this->UserName() == $unboxedcookie['userid']) {
                 $this->_prefs = new UserPreferences($unboxedcookie);
                 $this->UserName = $unboxedcookie['userid'];
             }
         }
         // initializeTheme() needs at least an empty object
-        if (!$this->_prefs)
-            $this->_prefs = new UserPreferences();
-
+        if (! $this->_prefs )
+            $this->_prefs = new UserPreferences;
+        return $this->_prefs;
     }
-    function setPreferences($prefs, $id_only) {
+
+    function setPreferences($prefs, $id_only=false) {
         // Allow for multiple wikis in same domain. Encode only the
         // _prefs array of the UserPreference object. Ideally the
         // prefs array should just be imploded into a single string or
         // something so it is completely human readable by the end
         // user. In that case stricter error checking will be needed
         // when loading the cookie.
-        setcookie(WIKI_NAME, $this->_prefs->pack($this->_prefs->getAll()),
+        setcookie(WIKI_NAME, $this->_prefs->store(),
                   COOKIE_EXPIRATION_DAYS, COOKIE_DOMAIN);
     }
 
@@ -515,7 +531,8 @@ extends _AnonUser
 
     function checkPass($submitted_password) {
         // By definition, BogoUser has an empty password.
-        return $this->userExists();
+        $this->userExists();
+        return $this->_level;
     }
 }
 
@@ -653,7 +670,7 @@ extends _AnonUser
                 $db_result = $this->_auth_dbi->_backend->execute($this->_prefselect,$this->UserName);
                 list($prefs_blob) = $db_result->fetchRow();
             }
-            if ($restored_from_db = $this->_prefs->unpack($prefs_blob)) {
+            if ($restored_from_db = $this->_prefs->retrieve($prefs_blob)) {
                 $this->_prefs = new UserPreferences($restored_from_db);
                 return $this->_prefs;
             }
@@ -662,17 +679,18 @@ extends _AnonUser
         // User may have deleted cookie, retrieve from his
         // PersonalPage if there is one.
         if ((! $this->_prefs) && $this->_HomePagehandle) {
-            if ($restored_from_page = $this->_prefs->unpack($this->_HomePagehandle->get('_prefs'))) {
+            if ($restored_from_page = $this->_prefs->retrieve($this->_HomePagehandle->get('pref'))) {
                 $this->_prefs = new UserPreferences($restored_from_page);
                 return $this->_prefs;
             }
         }
+        return $this->_prefs;
     }
 
-    function setPreferences($prefs, $id_only) {
+    function setPreferences($prefs, $id_only=false) {
         _AnonUser::setPreferences($prefs, $id_only);
         // Encode only the _prefs array of the UserPreference object
-        $serialized = $this->_prefs->pack($this->_prefs->getAll());
+        $serialized = $this->_prefs->store();
 
         // database prefs
         if ((! $this->_prefs) && $this->_prefupdate) {
@@ -686,7 +704,7 @@ extends _AnonUser
             }
         }
         else
-            $this->_HomePagehandle->set('_prefs', $serialized);
+            $this->_HomePagehandle->set('pref', $serialized);
     }
 
     function mayChangePassword() {
@@ -724,7 +742,7 @@ extends _AnonUser
                     return $user->checkPass($submitted_password);
             }
         }
-        return $result;
+        return $this->_level;
     }
 
     //TODO: remove crypt() function check from config.php:396 ??
@@ -852,26 +870,27 @@ extends _DbPassUser
         if ((! $this->_prefs) && $this->_prefselect) {
             $db_result = $this->_auth_dbi->_backend->execute($this->_prefselect,$this->UserName);
             list($prefs_blob) = $db_result->fetchRow();
-            if ($restored_from_db = $this->_prefs->unpack($prefs_blob)) {
+            if ($restored_from_db = $this->_prefs->retrieve($prefs_blob)) {
                 $this->_prefs = new UserPreferences($restored_from_db);
                 return $this->_prefs;
             }
         }
         if ((! $this->_prefs) && $this->_HomePagehandle) {
-            if ($restored_from_page = $this->_prefs->unpack($this->_HomePagehandle->get('_prefs'))) {
+            if ($restored_from_page = $this->_prefs->retrieve($this->_HomePagehandle->get('pref'))) {
                 $this->_prefs = new UserPreferences($restored_from_page);
                 return $this->_prefs;
             }
         }
+        return $this->_prefs;
     }
 
-    function setPreferences($prefs, $id_only) {
-        $serialized = $this->_prefs->pack($this->_prefs->getAll());
+    function setPreferences($prefs, $id_only=false) {
+        $serialized = $this->_prefs->store();
         if ($this->_prefupdate) {
             $db_result = $this->_auth_dbi->_backend->execute($this->_prefupdate,$serialized,$this->UserName);
         } else {
             _AnonUser::setPreferences($prefs, $id_only);
-            $this->_HomePagehandle->set('_prefs', $serialized);
+            $this->_HomePagehandle->set('pref', $serialized);
         }
     }
 
@@ -935,7 +954,7 @@ extends _DbPassUser
                     return $user->checkPass($submitted_password);
             }
         }
-        return $result;
+        return $this->_level;
     }
 
     function storePass($submitted_password) {
@@ -990,29 +1009,30 @@ extends _DbPassUser
             } else {
                 $prefs_blob = $rs->fields['pref_blob'];
                 $rs->Close();
-                if ($restored_from_db = $this->_prefs->unpack($prefs_blob)) {
+                if ($restored_from_db = $this->_prefs->retrieve($prefs_blob)) {
                     $this->_prefs = new UserPreferences($restored_from_db);
                     return $this->_prefs;
                 }
             }
         }
         if ((! $this->_prefs) && $this->_HomePagehandle) {
-            if ($restored_from_page = $this->_prefs->unpack($this->_HomePagehandle->get('_prefs'))) {
+            if ($restored_from_page = $this->_prefs->retrieve($this->_HomePagehandle->get('pref'))) {
                 $this->_prefs = new UserPreferences($restored_from_page);
                 return $this->_prefs;
             }
         }
+        return $this->_prefs;
     }
 
-    function setPreferences($prefs, $id_only) {
-        $serialized = $this->_prefs->pack($this->_prefs->getAll());
+    function setPreferences($prefs, $id_only=false) {
+        $serialized = $this->_prefs->store();
         if ($this->_prefupdate) {
             $dbh = & $this->_auth_dbi;
             $db_result = $dbh->_backend->Execute($this->_prefupdate,$dbh->qstr($serialized),$dbh->qstr($this->UserName));
             $db_result->Close();
         } else {
             _AnonUser::setPreferences($prefs, $id_only);
-            $this->_HomePagehandle->set('_prefs', $serialized);
+            $this->_HomePagehandle->set('pref', $serialized);
         }
     }
  
@@ -1094,7 +1114,7 @@ extends _DbPassUser
                     return $user->checkPass($submitted_password);
             }
         }
-        return $result;
+        return $this->_level;
     }
 
     function storePass($submitted_password) {
@@ -1143,7 +1163,7 @@ extends _PassUser
                     // ldap_bind will return TRUE if everything matches
                     ldap_close($ldap);
                     $this->_level = WIKIAUTH_USER;
-                    return true;
+                    return $this->_level;
                 }
             }
         } else {
@@ -1209,7 +1229,7 @@ extends _PassUser
             imap_close($mbox);
             $this->_authmethod = 'IMAP';
             $this->_level = WIKIAUTH_USER;
-            return true;
+            return $this->_level;
         } else {
             trigger_error(_("Unable to connect to IMAP server "). IMAP_AUTH_HOST, E_USER_WARNING);
         }
@@ -1295,7 +1315,7 @@ extends _PassUser
         if ($this->_file->verifyPassword($this->UserName,$submitted_password)) {
             $this->_authmethod = 'File';
             $this->_level = WIKIAUTH_USER;
-            return true;
+            return $this->_level;
         }
         
         if (USER_AUTH_POLICY === 'strict') {
@@ -1339,23 +1359,27 @@ extends _PassUser
         $stored_password = ADMIN_PASSWD;
         if ($this->_checkPass($submitted_password, $stored_password)) {
             $this->_level = WIKIAUTH_ADMIN;
-            return true;
+            return $this->_level;
         } else {
             $this->_level = WIKIAUTH_ANON;
             return false;
         }
     }
 
-    function isAdmin () {
-        return $this->_level == WIKIAUTH_ADMIN;
-    }
-
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/**
+ * Various data classes for the preference types, 
+ * to support get, set, sanify (range checking, ...)
+ * update() will do the neccessary side-effects if a 
+ * setting gets changed (theme, language, ...)
+*/
 
 class _UserPreference
 {
+    var $default_value;
+
     function _UserPreference ($default_value) {
         $this->default_value = $default_value;
     }
@@ -1366,11 +1390,25 @@ class _UserPreference
 
     function get ($name) {
     	if (isset($this->$name))
-	    return $this->$name;
+	    return $this->{$name};
     	else 
             return $this->default_value;
     }
 
+    function getraw ($name) {
+    	if (!empty($this->{$name}))
+	    return $this->{$name};
+    }
+
+    // stores the value as $this->$name, and not as $this->value (clever?)
+    function set ($name, $value) {
+        if ($value != $this->default_value)
+	    $this->$name = $value;
+        else 
+            unset($this->$name);
+    }
+
+    // default: no side-effects 
     function update ($value) {
     }
 }
@@ -1481,7 +1519,16 @@ extends _UserPreference
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// don't save default preferences for efficiency.
+/**
+ * UserPreferences
+ * 
+ * This object holds the $request->_prefs subobjects.
+ * A simple packed array of non-default values get's stored as cookie,
+ * homepage, and database, which are converted to the array of 
+ * ->_prefs objects.
+ * We don't store the objects, because otherwise we will
+ * not be able to upgrade any subobject. And it's a waste of space also.
+ */
 class UserPreferences
 {
     function UserPreferences ($saved_prefs = false) {
@@ -1525,13 +1572,14 @@ class UserPreferences
         }
         return $this->_prefs[$name];
     }
-
+    
+    // get the value or default_value of the subobject
     function get ($name) {
     	if ($_pref = $this->_getPref($name))
     	  return $_pref->get($name);
     	else 
     	  return false;  
-    	
+        /*	
         if (is_object($this->_prefs[$name]))
             return $this->_prefs[$name]->get($name);
         elseif (($value = $this->_getPref($name)) === false)
@@ -1539,8 +1587,10 @@ class UserPreferences
         elseif (!isset($value))
             return $this->_prefs[$name]->default_value;
         else return $value;
+        */
     }
 
+    // check and set the new value in the subobject
     function set ($name, $value) {
         $pref = $this->_getPref($name);
         if ($pref === false)
@@ -1549,26 +1599,61 @@ class UserPreferences
         /* do it here or outside? */
         if ($name == 'passwd' and 
             defined('PASSWORD_LENGTH_MINIMUM') and 
-            $strlen($value) <= PASSWORD_LENGTH_MINIMUM ) {
+            strlen($value) <= PASSWORD_LENGTH_MINIMUM ) {
             //TODO: How to notify the user?
             return false;
         }
 
         $newvalue = $pref->sanify($value);
-        $oldvalue = $this->get($name);
+        $oldvalue = $pref->get($name);
 
         // update on changes
         if ($newvalue != $oldvalue)
             $pref->update($newvalue);
+        return true;
 
         // don't set default values to save space (in cookies, db and
         // sesssion)
+        /*
         if ($value == $pref->default_value)
             unset($this->_prefs[$name]);
         else
-            $this->_prefs[$name] = $newvalue;
+            $this->_prefs[$name] = $pref;
+        */
     }
 
+    // array of objects => array of values
+    function store() {
+        $prefs = array();
+        foreach ($this->_prefs as $name => $object) {
+            if ($value = $object->getraw($name))
+                $prefs[] = array($name => $value);
+        }
+        return $this->pack($prefs);
+    }
+
+    // packed string or array of values => array of values
+    function retrieve($packed) {
+        if (is_string($packed) and (substr($packed, 0, 2) == "a:"))
+            $packed = unserialize($packed);
+        if (!is_array($packed)) return false;
+        $prefs = array();
+        foreach ($packed as $name => $packed_pref) {
+            if (substr($packed_pref, 0, 2) == "O:") {
+                //legacy: check if it's an old array of objects
+                // Looks like a serialized object. 
+                // This might fail if the object definition does not exist anymore.
+                // object with ->$name and ->default_value vars.
+                $pref = unserialize($packed_pref);
+                $prefs[$name] = $pref->get($name);
+            } else {
+                $prefs[$name] = unserialize($packed_pref);
+            }
+        }
+        return $prefs;
+    }
+    
+    // array of objects
     function getAll() {
         return $this->_prefs;
     }
@@ -1576,6 +1661,7 @@ class UserPreferences
     function pack($nonpacked) {
         return serialize($nonpacked);
     }
+
     function unpack($packed) {
         if (!$packed)
             return false;
@@ -1595,6 +1681,17 @@ class UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/01/25 03:05:00  rurban
+// First working version, but has some problems with the current main loop.
+// Implemented new auth method dispatcher and policies, all the external
+// _PassUser classes (also for ADODB and Pear DB).
+// The two global funcs UserExists() and CheckPass() are probably not needed,
+// since the auth loop is done recursively inside the class code, upgrading
+// the user class within itself.
+// Note: When a higher user class is returned, this doesn't mean that the user
+// is authorized, $user->_level is still low, and only upgraded on successful
+// login.
+//
 // Revision 1.4  2003/12/07 19:29:48  carstenklapp
 // Code Housecleaning: fixed syntax errors. (php -l *.php)
 //

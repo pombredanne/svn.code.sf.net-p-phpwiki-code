@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: file.php,v 1.5 2004-01-25 08:17:29 rurban Exp $');
+rcs_id('$Id: file.php,v 1.6 2004-01-26 09:17:51 rurban Exp $');
 
 /**
  Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
@@ -54,9 +54,9 @@ extends WikiDB_backend
     var $data_dir;
     var $_dir_names;
 
-    var $_page_data;  // temorarily stores the pagedata (via _loadPageData)
-    var $_page_version_data;  // temorarily stores the versiondata (via _loadVersionData)
-    var $_latest_versions;  // temorarily stores the latest version-numbers (for every pagename)  (via _loadLatestVersions)
+    var $_page_data;  // temporarily stores the pagedata (via _loadPageData)
+    var $_page_version_data;  // temporarily stores the versiondata (via _loadVersionData)
+    var $_latest_versions;  // temporarily stores the latest version-numbers (for every pagename)  (via _loadLatestVersions)
     
 
     function WikiDB_backend_file( $dbparam )
@@ -748,6 +748,10 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/01/25 08:17:29  rurban
+// ORDER BY support for all other backends,
+// all non-SQL simply ignoring it, using plain old dumb_iter instead
+//
 // Revision 1.4  2003/02/24 01:53:28  dairiki
 // Bug fix.  Don't need to urldecode pagenames in WikiDB_backend_file_iter.
 //

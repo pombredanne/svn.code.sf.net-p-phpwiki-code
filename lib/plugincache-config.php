@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: plugincache-config.php,v 1.2 2002-08-18 12:34:14 rurban Exp $');
+<?php rcs_id('$Id: plugincache-config.php,v 1.3 2004-01-26 09:17:49 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -118,7 +118,7 @@ $CacheParams = array(
     //    include "lib/imagecache.php";
     //
     //'cacheurl'        => '../imagecache/',
-    'cacheurl'        => '/phpwiki/getimg.php?',
+    'cacheurl'        => '/phpwiki-dev-data/getimg.php?',
 
     // usually send plugin arguments as URL, but when they become
     // longer than maxarglen store them in session variables    
