@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.174 2004-05-06 12:02:05 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.175 2004-05-06 17:30:38 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1369,13 +1369,17 @@ function check_php_version ($a = '0', $b = '0', $c = '0') {
         $PHP_VERSION = substr( str_pad( preg_replace('/\D/','', PHP_VERSION), 3, '0'), 0, 3);
     return $PHP_VERSION >= ($a.$b.$c);
 }
-// 1.3.10pre => 1030.10
 // 1.3.8     => 1030.08
+// 1.3.9-p1  => 1030.091
+// 1.3.10pre => 1030.099
 function phpwiki_version() {
     static $PHPWIKI_VERSION;
-    if(!isset($PHPWIKI_VERSION)) {
-        $arr = explode('.',preg_replace('/\D+$/','', PHPWIKI_VERSION));
+    if (!isset($PHPWIKI_VERSION)) {
+        $arr = explode('.',preg_replace('/\D+$/','', PHPWIKI_VERSION)); // remove the pre
+        $arr[2] = preg_replace('/\.+/','.',preg_replace('/\D/','.',$arr[2]));
         $PHPWIKI_VERSION = $arr[0]*1000 + $arr[1]*10 + 0.01*$arr[2];
+        if (substr(PHPWIKI_VERSION,-3,3) == 'pre')
+            $PHPWIKI_VERSION -= 0.001;
     }
     return $PHPWIKI_VERSION;
 }
@@ -1400,6 +1404,9 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.174  2004/05/06 12:02:05  rurban
+// fix sf.net bug#949002: [ Link | ] assertion
+//
 // Revision 1.173  2004/05/03 15:00:31  rurban
 // added more database upgrading: session.sess_ip, page.id autp_increment
 //

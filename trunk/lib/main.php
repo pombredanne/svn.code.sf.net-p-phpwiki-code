@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.142 2004-05-04 22:34:25 rurban Exp $');
+rcs_id('$Id: main.php,v 1.143 2004-05-06 17:30:38 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -30,7 +30,7 @@ class WikiRequest extends Request {
         }
         // Fixme: Does pear reset the error mask to 1? We have to find the culprit
         $x = error_reporting();
-        
+$this->version = phpwiki_version();
         $this->Request();
 
         // Normalize args...
@@ -937,6 +937,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.142  2004/05/04 22:34:25  rurban
+// more pdf support
+//
 // Revision 1.141  2004/05/03 13:16:47  rurban
 // fixed UserPreferences update, esp for boolean and int
 //

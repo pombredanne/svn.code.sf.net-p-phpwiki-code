@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.49 2004-05-03 21:35:30 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.50 2004-05-06 17:30:39 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -169,7 +169,6 @@ extends WikiDB_backend
                             $hits,
                             $dbh->quoteString($this->_serialize($data)),
                             $dbh->quoteString($pagename)));
-
         $this->unlock();
     }
 
@@ -845,6 +844,34 @@ extends WikiDB_backend
                  && $err->errline == 126
                  && preg_match('/Undefined offset: +0\b/', $err->errstr) );
     }
+
+    /* some variables and functions for DB backend abstraction (action=upgrade) */
+    function database () {
+        return $this->_dbh->dsn['database'];
+    }
+    function backendType() {
+        return $this->_dbh->phptype;
+    }
+
+    function listOfTables() {
+        return $this->_dbh->getListOf('tables');
+    }
+    function listOfFields($database,$table) {
+        if ($this->backendType() == 'mysql') {
+            $fields = array();
+  	    $result = mysql_list_fields($database,$session_tbl);
+  	    $columns = mysql_num_fields($result);
+            for ($i = 0; $i < $columns; $i++) {
+                $fields[] = mysql_field_name($result, $i);
+            }
+            mysql_free_result($result);
+            return $fields;
+        } else {
+            // TODO: try ADODB version?
+            trigger_error("Unsupported dbtype and backend. Either switch to ADODB or check it manually.");
+        }
+    }
+
 };
 
 /**
@@ -928,6 +955,9 @@ extends WikiDB_backend_PearDB_generic_iter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.49  2004/05/03 21:35:30  rurban
+// don't use persistent connections with postgres
+//
 // Revision 1.48  2004/04/26 20:44:35  rurban
 // locking table specific for better databases
 //
