@@ -1,5 +1,5 @@
-<?php rcs_id('$Id: Request.php,v 1.36 2003-11-14 16:35:31 carstenklapp Exp $');
-// FIXME: write log entry.
+<?php //-*-php-*-
+rcs_id('$Id: Request.php,v 1.37 2003-12-26 06:41:16 carstenklapp Exp $');
 
 
 // backward compatibility for PHP < 4.2.0
@@ -33,9 +33,20 @@ class Request {
         $this->session = new Request_SessionVars; 
         $this->cookies = new Request_CookieVars;
         
-        if (ACCESS_LOG)
-            $this->_log_entry = & new Request_AccessLogEntry($this,
-                                                             ACCESS_LOG);
+        if (ACCESS_LOG) {
+            if (! is_writeable(ACCESS_LOG)) {
+                trigger_error
+                    (sprintf(_("%s is not writable."), _("The PhpWiki access log file"))
+                    . "\n"
+                    . sprintf(_("Please ensure that %s is writable, or redefine %s in index.php."),
+                            sprintf(_("the file '%s'"), ACCESS_LOG),
+                            'ACCESS_LOG')
+                    , E_USER_NOTICE);
+            }
+            else
+                $this->_log_entry = & new Request_AccessLogEntry($this,
+                                                                ACCESS_LOG);
+        }
         
         $GLOBALS['request'] = $this;
     }
@@ -648,7 +659,7 @@ class Request_AccessLogEntry
         //Error log doesn't provide locking.
         //error_log("$entry\n", 3, $this->logfile);
 
-        // Alternate method 
+        // Alternate method
         if (($fp = fopen($this->logfile, "a"))) {
             flock($fp, LOCK_EX);
             fputs($fp, "$entry\n");
@@ -850,7 +861,8 @@ class HTTP_ValidatorSet {
     }
 }
 
-    
+
+// $Log: not supported by cvs2svn $
 
 // Local Variables:
 // mode: php
