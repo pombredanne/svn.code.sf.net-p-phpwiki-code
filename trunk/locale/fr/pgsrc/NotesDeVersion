@@ -1,17 +1,17 @@
-Date: Mon, 11 Feb 2002 00:27:53 +0100
+Date: Wed, 13 Feb 2002 20:50:00 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: NotesDeVersion,v 1.1 2002-02-12 20:18:34 carstenklapp Exp $
+X-Rcs-Id: $Id: NotesDeVersion,v 1.2 2002-02-14 01:49:53 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=NotesDeVersion;
   flags=PAGE_LOCKED;
-  pgsrc_version="2 $Revision: 1.1 $";
+  pgsrc_version="2 $Revision: 1.2 $";
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
 Hacks de Jeff.
 
-* Nouvelle API de base de données. Voir lib/WikiDB.php et lib/WikiDB/backend.php pour le gros de la documentation à ce sujet. La nouvelle base de données peut enregistrer plusieurs versions archivées de chaque page. Un mécanisme de purge des révisions archivées est aussi en place désormais. Voir le réglage $!ExpireParams dans index.php, et lib/!ArchiveCleaner.php pour plus de détails. A ce point, les backends DBA, MySQL et Postgres sont fonctionnels. Le backend DBA pourrait profiter d'une optimisation de ses performances. Toute l'API est encore sujette à des changements au fur et à mesure que je trouve des façons propres de fournir toute une variété de méthodes (pas toujours prévues) d'indexation et d'exploitation du wiki.
+* Nouvelle API de base de données. Voir lib/WikiDB.php et lib/WikiDB/backend.php pour le gros de la documentation à ce sujet. La nouvelle base de données peut enregistrer plusieurs versions archivées de chaque page. Un mécanisme de purge des révisions archivées est aussi en place désormais. Voir le réglage $~ExpireParams dans index.php, et lib/~ArchiveCleaner.php pour plus de détails. A ce point, les backends DBA, MySQL et Postgres sont fonctionnels. Le backend DBA pourrait profiter d'une optimisation de ses performances. Toute l'API est encore sujette à des changements au fur et à mesure que je trouve des façons propres de fournir toute une variété de méthodes (pas toujours prévues) d'indexation et d'exploitation du wiki.
 * Nouvelle architecture PluginWiki.
 * Nouveau moteur de modèles (templates, NDT). Ceci a besoin d'être mieux documenté, mais pour le moment, voyez lib/Template.php. En y repensant, ne le faites pas (lib/Template.php a encore désespérément besoin d'être réécrit). L'avancée principale est que les fonctions ob_*() de PHP4 peuvent être utilisées pour capturer la sortie du code PHP eval()ué. Ceci permet aux modèles d'être constitués de code PHP...
 * Bouton d'édition de la prévisualisation sur la page d'édition. Vous pouvez désormais voir de quoi ont l'air vos modifications avant qu'elles ne soient réalisées.
@@ -23,14 +23,14 @@ Branche de développement 1.3.x de PhpWiki.
 
 * Noms de page dans PATH_INFO.
 * Téléchargement de fichiers : voir PhpWikiAdministration.
-* PréférencesUtilisateur.
+* PréférencesUtilisateurs.
 * Affreux [URLMagiquesPhpWiki] pour les liens administratifs.
 
 PhpWiki 1.2 est une énorme avancée sur la version 1.0 :
 
 * Le support des bases de données MySQL, Postgresql, mSQL, des fichiers plats et de la nouvelle dba_ library de PHP4 est inclus.
 * Internationalisation : le support de plusieurs langues, jusqu'au niveau du code source, est inclus. L'allemand, l'espagnol, le suédois et le hollandais sont actuellement fournis avec PhpWiki. Une architecture est en place pour  ajouter facilement d'autres langues.
-* Nouveaux modèles de liens utilisant des crochets en plus de l'ancien style !BumpyText.
+* Nouveaux modèles de liens utilisant des crochets en plus de l'ancien style ~BumpyText.
 * Les fonctions d'administration incluent le verrouillage des pages, le vidage du Wiki dans un fichier Zip, et l'effacement des pages.
 * Une page LesPlusVisitées montrant les pages les plus fréquemment vues.
 * Conformité totale à HTML.
@@ -56,9 +56,9 @@ pour ne pas mettre les références dans une table séparée, ce n'est donc pas comp
 "Ne laissez pas le mieux être l'ennemi du bien").
 
 Le support de Postgresql a été ajouté et le langage de marquage évolue, autorisant désormais les tags
-!!!<h2>
-!!<h3>
-!<h4>
+!!! <h2>
+!! <h3>
+! <h4>
 et __une nouvelle façon de créer du texte en gras__, et bien sûr le [nouveau modèle de création de lien].
 
 Il existe une nouvelle caractéristique sur toutes les pages appelée ''plus d'infos'' qui vous donne une

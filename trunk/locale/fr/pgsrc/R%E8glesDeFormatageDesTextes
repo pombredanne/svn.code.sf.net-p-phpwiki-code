@@ -1,10 +1,10 @@
-Date: Sun, 10 Feb 2002 23:59:26 +0100
+Date: Wed, 13 Feb 2002 20:50:00 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: R%E8glesDeFormatageDesTextes,v 1.4 2002-02-12 20:18:35 carstenklapp Exp $
+X-Rcs-Id: $Id: R%E8glesDeFormatageDesTextes,v 1.5 2002-02-14 01:49:53 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=R%E8glesDeFormatageDesTextes;
   flags=PAGE_LOCKED;
-  pgsrc_version="2 $Revision: 1.4 $";
+  pgsrc_version="2 $Revision: 1.5 $";
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
@@ -12,7 +12,7 @@ Content-Transfer-Encoding: binary
 RèglesDeFormatageDesTextes%%%
 __Emphase :__ '____' pour mettre en ''italique'', _''''_ pour mettre en __gras__, '____'_''''_ pour ''__les deux__''%%%
 __Listes :__ * pour les listes à puces, # pour les listes numérotées, "; term : definition" pour les listes définies par des titres%%%
-__Liens :__ !CollerLesMotsEnMajuscule ou utiliser des crochet pour un [[lien vers une autre page] ou un URL [!http://www.exemple.com].%%%
+__Liens :__ !CollerLesMotsEnMajuscule ou utiliser des crochet pour un [[lien vers une autre page] ou un URL [[!http://www.exemple.com].%%%
 __Références :__ Utiliser [[1],[[2],[[3],...%%%
 __Pour empêcher des liens :__ Préfixer avec "!": !!NePasLier, nommer les liens comme [[texte | URL] (doubler le "[")%%%
 __Divers :__ "!", "!!", "!!!" crée des titres, "%%''''%" provoque un retour à la ligne, "-''''-''''-''''-" crée une règle horizontale
@@ -78,10 +78,10 @@ ne marche pas''
 ! Tableaux
 
 * Les tables simples sont disponibles. Une rangée dans une table est introduite par une barre __|__ dans la première colonne. Cela est mieux décrit par un exemple :
-      ||  _''''_Nom_''''_               |v _''''_Coût_''''_   |v _''''_Notes_''''_
-      | _''''_Prénom_''''_   | _''''_Nom de famille_''''_
-      |> Jeff       |< Dairiki   |^  Pas cher     |< Pas valable
-      |> Marco      |< Polo      | Encore moins cher   |< Pas disponible
+      ||  _''''_Nom_''''_                       |v _''''_Coût_''''_           |v _''''_Notes_''''_
+      | _''''_Prénom_''''_ | _''''_Nom de famille_''''_
+      |> Jeff      |< Dairiki           |^  Pas cher          |< Pas valable
+      |> Marco     |< Polo              | Encore moins cher   |< Pas disponible
 ;: produira
 ||  __Nom__               |v __Coût__   |v __Notes__
 | __Prénom__   | __Nom de famille__
