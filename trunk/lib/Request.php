@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.69 2004-10-21 19:00:37 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.70 2004-10-21 19:59:18 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -507,7 +507,10 @@ class Request_SessionVars {
         // Prevent cacheing problems with IE 5
         session_cache_limiter('none');
                                         
-        session_start();
+        // Avoid to get a notice if session is already started,
+        // for example if session.auto_start is activated
+        if (!session_id())
+            session_start();
     }
     
     function get($key) {
@@ -1073,6 +1076,12 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.69  2004/10/21 19:00:37  rurban
+// upload errmsgs by Shilad Sen.
+// chunkOutput support: flush the buffer piecewise (dumphtml, large pagelists)
+//   doesn't gain much because ob_end_clean() doesn't release its
+//   memory properly yet.
+//
 // Revision 1.68  2004/10/12 13:13:19  rurban
 // php5 compatibility (5.0.1 ok)
 //
