@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.69 2002-08-23 18:29:30 rurban Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.70 2002-09-18 18:34:13 dairiki Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -723,7 +723,7 @@ function SetupWiki (&$request)
     echo "<dl>\n";
 
     LoadAny($request, FindLocalizedFile(WIKI_PGSRC));
-    if ($LANG != "C")
+    if ($LANG != "C" and $LANG != "en")
         LoadAny($request, FindFile(DEFAULT_WIKI_PGSRC),
                 $GenericPages);
 

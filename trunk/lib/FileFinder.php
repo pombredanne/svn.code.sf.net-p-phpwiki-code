@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.10 2002-09-12 11:45:33 rurban Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.11 2002-09-18 18:34:13 dairiki Exp $');
 
 // FIXME: make this work with non-unix (e.g. DOS) filenames.
 
@@ -244,6 +244,12 @@ class FileFinder
         if (!empty($GLOBALS['LANG']))
             return $GLOBALS['LANG'];
 
+        foreach (array('LC_ALL', 'LC_MESSAGES', 'LC_RESPONSES') as $var) {
+            $lang = setlocale($var, 0);
+            if (!empty($lang))
+                return $lang;
+        }
+            
         foreach (array('LC_ALL', 'LC_MESSAGES', 'LC_RESPONSES', 'LANG') as $var) {
             $lang = getenv($var);
             if (!empty($lang))
