@@ -1,6 +1,6 @@
 VariousBrowsers have trouble with the tab character used in the TextFormattingRules.  If you can't type a tab, or, if you are fixing up a page written by someone who didn't type tabs, then you should have us convert spans of spaces to tabs for you.  You request space to tab conversion with the checkbox that appears near the bottom of EditText and EditCopy pages.  It looks something like this...
 
- [ ] I can't type tabs.  Please ConvertSpacesToTabs for me when I save.
+ [[o] I can't type tabs.  Please ConvertSpacesToTabs for me when I save.
 
 A span of spaces must be at least '''three''' spaces long to be recognized 
 as a tab.  Use multiples of '''eight''' spaces to make multiple tabs. 
