@@ -29,6 +29,7 @@ I am a paragraph too. We're just very small paragraphs.
 ----
 	* To create hyperlinks you just capitalize the words and string them together. Let's say you want to create a page about how Steve Wainstead eats worms. All you have to do is capitalize each word and string them together like this: SteveWainsteadEatsWorms. If the page does not exist yet a question mark appears after the link, inviting you to create the page: ThisPageShouldNotExist. (And please don't ruin the example by creating one.) 
 	* To link to pages outside the Wiki, you can just type in the URL and Wiki will link it for you: http://www.nytimes.com/
+* To put images in, just provide the hyperlink in brackets like this: [[http://www.yourhost.yourdomain/images/picture.png]. Image URLs not in brackets will just appear as hyperlinks to the image.
 	* Now you are ready to begin AddingPages.
 
 ----
