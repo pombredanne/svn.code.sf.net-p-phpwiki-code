@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: signin.tmpl,v 1.14 2002-02-07 03:50:19 carstenklapp Exp $ -->
+<!-- $Id: signin.tmpl,v 1.15 2002-02-14 03:29:55 carstenklapp Exp $ -->
 <?php
 
      $Sep = $Theme->getButtonSeparator();
@@ -29,7 +29,7 @@
     document.write('<?=$SignOutB?>'); // -->
   </script>
   <noscript>
-    <?= Button("submit:auth[logout]", _("Sign Out")) ?>
+    <?= Button("submit:auth[logout]", _("Sign Out"), 'wikiaction') ?>
   </noscript>
 
 <?php } else { ?>
@@ -46,7 +46,7 @@
   // --></script>
   <?= $SignInInput ?>
   <noscript>
-    <?=Button("submit:auth[login]", _("Sign In"))?>
+    <?=Button("submit:auth[login]", _("Sign In"), 'wikiaction')?>
   </noscript>
 
 <?php } ?>

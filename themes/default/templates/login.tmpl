@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: login.tmpl,v 1.12 2002-02-07 03:49:15 carstenklapp Exp $ -->
+<!-- $Id: login.tmpl,v 1.13 2002-02-14 03:29:55 carstenklapp Exp $ -->
 <!-- The login form -->
 
 <?php if ($fail_message) { ?>
@@ -25,9 +25,9 @@ if (ALLOW_BOGO_LOGIN && $require_level <= WIKIAUTH_BOGO) {
   <td><input type="password" name="auth[password]" size="12" maxlength="256" /></td>
 </tr>
 <tr><td align="center" colspan="2">
-  <?=Button("submit:", _("Sign In"))?>
+  <?=Button("submit:", _("Sign In"), 'wikiaction')?>
   <?php if (!$require_level) { ?>
-    <?=Button("submit:auth[cancel]", _("Cancel"))?>
+    <?=Button("submit:auth[cancel]", _("Cancel"), 'button')?>
   <?php } ?>
 </td></tr>
 </table>
