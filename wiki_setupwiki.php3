@@ -1,20 +1,21 @@
-<!-- $Id: wiki_setupwiki.php3,v 1.13 2000-08-03 19:41:18 dairiki Exp $ -->
+<!-- $Id: wiki_setupwiki.php3,v 1.14 2000-08-15 02:59:20 wainstead Exp $ -->
 <?
 require 'wiki_ziplib.php3';
 
 function SavePage ($dbi, $page, $source)
 {
+  global $WikiPageStore;
   $pagename = $page['pagename'];
   $version = $page['version'];
   
-  if (is_array($current = RetrievePage($dbi, $pagename)))
+  if (is_array($current = RetrievePage($dbi, $pagename, $WikiPageStore)))
     {
       if ($version <= $current['version'])
 	{
 	  $page['version'] = $current['version'] + 1;
 	  $version = $page['version'] . " [was $version]";
 	}
-      SaveCopyToArchive($pagename, $current);
+      SaveCopyToArchive($dbi, $pagename, $current);
     }
 
   printf("Inserting page <b>%s</b>, version %s from %s<br>\n",

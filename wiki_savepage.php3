@@ -1,4 +1,4 @@
-<!-- $Id: wiki_savepage.php3,v 1.14 2000-08-07 22:47:40 wainstead Exp $ -->
+<!-- $Id: wiki_savepage.php3,v 1.15 2000-08-15 02:59:20 wainstead Exp $ -->
 <?
 
 /*
@@ -30,7 +30,7 @@
    }
 
    $pagename = rawurldecode($post);
-   $pagehash = RetrievePage($dbi, $pagename);
+   $pagehash = RetrievePage($dbi, $pagename, $WikiPageStore);
 
    // if this page doesn't exist yet, now's the time!
    if (! is_array($pagehash)) {
@@ -45,7 +45,7 @@
       }
       // archive it if it's a new author
       if ($pagehash["author"] != $remoteuser) {
-         SaveCopyToArchive($pagename, $pagehash);
+         SaveCopyToArchive($dbi, $pagename, $pagehash);
       }
       $newpage = 0;
    }

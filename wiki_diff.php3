@@ -1,4 +1,4 @@
-<!-- $Id: wiki_diff.php3,v 1.8 2000-08-07 22:47:40 wainstead Exp $ -->
+<!-- $Id: wiki_diff.php3,v 1.9 2000-08-15 02:59:20 wainstead Exp $ -->
 <?php
 // wiki_diff.php3
 //
@@ -980,9 +980,9 @@ if ($diff)
 
   $pagename = $diff;
 
-  $wiki = RetrievePage($dbi, $pagename);
-  $dba = OpenDataBase($ArchivePageStore);
-  $archive= RetrievePage($dba, $pagename);
+  $wiki = RetrievePage($dbi, $pagename, $WikiPageStore);
+//  $dba = OpenDataBase($ArchivePageStore);
+  $archive= RetrievePage($dbi, $pagename, $ArchivePageStore);
 
   $html = '<table><tr><td align="right">Current page:</td>';
   if (is_array($wiki))

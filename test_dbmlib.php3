@@ -1,4 +1,4 @@
-<!-- $Id: test_dbmlib.php3,v 1.5 2000-08-07 22:47:40 wainstead Exp $ -->
+<!-- $Id: test_dbmlib.php3,v 1.6 2000-08-15 02:59:20 wainstead Exp $ -->
 <html>
 <head>
 <title>Test bed for database library</title>
@@ -74,7 +74,7 @@
 
    $pagename = "TestPage";
    echo "Retrieving page '$pagename'<br>\n";
-   $pagehash = RetrievePage($dbi, $pagename);
+   $pagehash = RetrievePage($dbi, $pagename, $WikiPageStore);
    $type = gettype($pagehash);
    if ($type == "array") {
       echo "<DD>SUCCESS: ";
@@ -86,7 +86,7 @@
 
    $pagename = "thisIsAPageThatIsNotThere";
    echo "Retrieving page '$pagename'<br>\n";
-   $pagehash = RetrievePage($dbi, $pagename);
+   $pagehash = RetrievePage($dbi, $pagename, $WikiPageStore);
    if ($pagehash == -1) {
       echo "<DD>SUCCESS: ";
       echo "RetrievePage($pagename) returned -1<p>\n";

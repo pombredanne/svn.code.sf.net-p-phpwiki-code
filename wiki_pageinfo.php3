@@ -1,4 +1,4 @@
-<!-- $Id: wiki_pageinfo.php3,v 1.5 2000-08-07 22:47:40 wainstead Exp $ -->
+<!-- $Id: wiki_pageinfo.php3,v 1.6 2000-08-15 02:59:20 wainstead Exp $ -->
 <!-- Display the internal structure of a page. Steve Wainstead, June 2000 -->
 <?
    if (get_magic_quotes_gpc()) {
@@ -23,11 +23,11 @@
       exit;
    }
 
-   function ViewpageProps($name)
+   function ViewpageProps($name, $pagestore)
    {
       global $dbi, $showpagesource, $datetimeformat;
 
-      $pagehash = RetrievePage($dbi, $name);
+      $pagehash = RetrievePage($dbi, $name, $pagestore);
       if ($pagehash == -1) {
          $table = "Page name '$name' is not in the database<br>\n";
       }
@@ -57,11 +57,11 @@
 
    $html .= "<P><B>Current version</B></p>";
    // $dbi = OpenDataBase($WikiPageStore);   --- done by index.php3
-   $html .= ViewPageProps($info);
+   $html .= ViewPageProps($info, $WikiPageStore);
 
    $html .= "<P><B>Archived version</B></p>";
-   $dbi = OpenDataBase($ArchivePageStore);
-   $html .= ViewPageProps($info);
+   // $dbi = OpenDataBase($ArchivePageStore);
+   $html .= ViewPageProps($info, $ArchivePageStore);
 
    GeneratePage('MESSAGE', $html, "PageInfo: '$info'", 0);
 ?>
