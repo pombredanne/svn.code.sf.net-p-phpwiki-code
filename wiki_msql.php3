@@ -1,4 +1,4 @@
-<!-- $Id: wiki_msql.php3,v 1.3 2000-06-25 19:38:55 wainstead Exp $ -->
+<!-- $Id: wiki_msql.php3,v 1.4 2000-06-26 03:55:27 wainstead Exp $ -->
 <?
 
    /*
@@ -37,7 +37,6 @@
       $dbi['dbc'] = $dbc;
       $dbi['table'] = $dbinfo['table'];           // page metadata
       $dbi['page_table'] = $dbinfo['page_table']; // page content
-//      echo "dbi[page_table]: $dbi[page_table], dbinfo[page_table]: $dbinfo[page_table]<br>\n";
       return $dbi;
    }
 
@@ -55,6 +54,8 @@
       $pagehash["pagename"] = addslashes($pagename);
       if (!isset($pagehash["flags"]))
          $pagehash["flags"] = 0;
+      if (!isset($pagehash["content"]))
+         $pagehash["content"] = array();
       $pagehash["author"] = addslashes($pagehash["author"]);
       $pagehash["refs"] = serialize($pagehash["refs"]);
 
@@ -67,9 +68,6 @@
    {
       // unserialize/explode content
       $dbhash['refs'] = unserialize($dbhash['refs']);
-
-      // retrieve page lines from other table
-//      $dbhash['content'] = explode("\n", $dbhash['content']);
       return $dbhash;
    }
 
@@ -77,12 +75,16 @@
    // Return hash of page + attributes or default
    function RetrievePage($dbi, $pagename) {
       $pagename = addslashes($pagename);
+
       $query = "select * from $dbi[table] where pagename='$pagename'";
+
       if ($res = msql_query($query, $dbi['dbc'])) {
          $dbhash = msql_fetch_array($res);
+
          $query = "select lineno,line from $dbi[page_table] " .
                   "where pagename='$pagename' " .
                   "order by lineno";
+
          if ($res = msql_query($query, $dbi[dbc])) {
             $dbhash["content"] = array();
             while ($row = msql_fetch_array($res)) {
@@ -140,10 +142,11 @@
       if ($retval == false) 
          echo "Insert/update failed: ", msql_error(), "<br>\n";
 
+
       // second, insert the page data
       // remove old data from page_table
       $query = "delete from $dbi[page_table] where pagename='$pagename'";
-      //echo "Delete query: $query<br>\n";
+      echo "Delete query: $query<br>\n";
       $retval = msql_query($query, $dbi['dbc']);
       if ($retval == false) 
          echo "Delete on $dbi[page_table] failed: ", msql_error(), "<br>\n";
@@ -151,17 +154,40 @@
       // insert the new lines
       reset($pagehash["content"]);
 
+      $tmparray = array();
+      $y = 0;
+
       for ($x = 0; $x < count($pagehash["content"]); $x++) {
-         $line = addslashes($pagehash["content"][$x]);
+
+         // manage line length here, lines should not exceed the
+         // length MSQL_MAX_LINE_LENGTH or something
+
+         if (strlen($pagehash["content"][$x]) > MSQL_MAX_LINE_LENGTH) {
+            $length = strlen($pagehash["content"][$x]);
+            echo "Must break up line ($length): " . $pagehash["content"][$x] ."<br>\n";
+            // can I cheat and use preg_split to break the line up?
+            // match this line with: /(.{1,127})+/
+            // in fact, split it on a zero-width metachar every 127th position
+            // take the returned array and add elements to $tmparray
+         } else {
+            $tmparray[$y] = $pagehash["content"][$x];
+            $y++;
+         }
+      }
+
+      reset($tmparray);
+      for ($x = 0; $x < count($tmparray); $x ++) {
+         $line = addslashes($tmparray[$x]);
          $query = "INSERT INTO $dbi[page_table] " .
                   "(pagename, lineno, line) " .
                   "VALUES('$pagename', $x, '$line')";
-         //echo "Page line insert query: $query<br>\n";
+         echo "Page line insert query: $query<br>\n";
          $retval = msql_query($query, $dbi['dbc']);
          if ($retval == false) 
             echo "Insert into $dbi[page_table] failed: ", msql_error(), "<br>\n";;
          
       }
+      //echo "<H1>inserted $x lines for $pagename</H1>\n";
 
    }
 
