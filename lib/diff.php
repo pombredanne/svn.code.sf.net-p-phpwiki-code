@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.14 2001-11-14 21:05:38 dairiki Exp $');
+rcs_id('$Id: diff.php,v 1.15 2001-12-07 17:39:45 dairiki Exp $');
 // diff.php
 //
 // A PHP diff engine for phpwiki.
@@ -185,19 +185,18 @@ class _WikiDiffEngine
     
 	$numer = $xlim - $xoff + $nchunks - 1;
 	$x = $xoff;
-	for ($chunk = 0; $chunk < $nchunks; $chunk++)
-	  {
+	for ($chunk = 0; $chunk < $nchunks; $chunk++) {
 	    if ($chunk > 0)
 		for ($i = 0; $i <= $this->lcs; $i++)
 		    $ymids[$i][$chunk-1] = $this->seq[$i];
 
 	    $x1 = $xoff + (int)(($numer + ($xlim-$xoff)*$chunk) / $nchunks);
-	    for ( ; $x < $x1; $x++)
-	      {
-		$matches = $ymatches[$flip ? $this->yv[$x] : $this->xv[$x]];
-		if (!$matches)
+	    for ( ; $x < $x1; $x++) {
+                $line = $flip ? $this->yv[$x] : $this->xv[$x];
+                if (empty($ymatches[$line]))
 		    continue;
-		reset($matches);
+		$matches = $ymatches[$line];
+                reset($matches);
 		while (list ($junk, $y) = each($matches))
 		    if (empty($this->in_seq[$y]))
 		      {
@@ -224,8 +223,8 @@ class _WikiDiffEngine
 			$ymids[$k] = $ymids[$k-1];
 		      }
 		  }
-	      }
-	  }
+            }
+        }
 
 	$seps[] = $flip ? array($yoff, $xoff) : array($xoff, $yoff);
 	$ymid = $ymids[$this->lcs];
