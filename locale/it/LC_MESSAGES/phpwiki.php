@@ -104,13 +104,19 @@ $locale["Page Name"] =
    "Nome Della Pagina";
 $locale["Page now unlocked."] =
    "Pagina sbloccata.";
+$locale["PhpWikiAdministration/Remove"] =
+   "AmministrazioneDiPhpWiki/Rimuovi";
 $locale["Previous"] =
    "Precedente";
 $locale["Printer"] =
    "Stampante";
+$locale["Remove"] =
+   "Rimuovi";
 $locale["Remove Page"] =
    "Rimuovi la Pagina";
 $locale["Remove page"] =
+   "Rimuovi la pagina";
+$locale["Remove this page"] =
    "Rimuovi la pagina";
 $locale["Removed page '%s' successfully."] =
    "La pagina '%s' è stata rimossa correttamente.";

@@ -1,9 +1,10 @@
-Date: Sun, 27 Jan 2002 17:28:55 -0500
+Date: Mon, 28 Jun 2004 14:28:30 +0200
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: NoteDiRilascio,v 1.4 2002-01-27 23:48:42 carstenklapp Exp $
+X-Rcs-Id: $Id: NoteDiRilascio,v 1.5 2004-06-28 18:41:10 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=NoteDiRilascio;
   flags=PAGE_LOCKED;
+  markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
@@ -44,11 +45,11 @@ marcatura si sta evolvendo, ora permette di usare i tag
 !!!<h1>
 !!<h2>
 !<h3>
-e __un nuovo modo per rendere il testo in grassetto__, ed ovviamente un
+e *un nuovo modo per rendere il testo in grassetto*, ed ovviamente un
 [nuovo sistema di linking]
 
-C'è una nuova funzione su tutte le pagine chiamata ''more info'' che
-permette una visione a ''basso livello'' della pagina, molto utile per
+C'è una nuova funzione su tutte le pagine chiamata _more info_ che
+permette una visione a _basso livello_ della pagina, molto utile per
 questioni di debugging
 
 Dalla release 1.2 abbiamo aggiunto il logging, le 10 pagine più attive
