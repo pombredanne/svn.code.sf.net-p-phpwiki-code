@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.8 2004-05-12 10:49:55 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.9 2004-05-14 11:33:03 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -252,7 +252,8 @@ function CheckDatabaseUpdate($request) {
   	assert(!empty($DBParams['db_session_table']));
         $session_tbl = $prefix . $DBParams['db_session_table'];
         $sess_fields = $dbh->_backend->listOfFields($database,$session_tbl);
-        if (!in_array("sess_ip",$sess_fields)) {
+        //FIXME: adodb seem to uppercase the fields
+        if (!strstr(strtolower(join(':',$sess_fields)),"sess_ip")) {
             echo "<b>",_("ADDING"),"</b>"," ... ";		
             $dbh->simpleQuery("ALTER TABLE $session_tbl ADD sess_ip CHAR(15) NOT NULL");
         } else {
@@ -271,13 +272,14 @@ function CheckDatabaseUpdate($request) {
         for ($i = 0; $i < $columns; $i++) {
             if (mysql_field_name($fields, $i) == 'id') {
             	$flags = mysql_field_flags($fields, $i);
-            	if (!strstr($flags,"auto_increment")) {
+                //FIXME: something wrong with ADODB here!
+            	if (!strstr(strtolower($flags),"auto_increment")) {
                     echo "<b>",_("ADDING"),"</b>"," ... ";		
                     // MODIFY col_def valid since mysql 3.22.16,
                     // older mysql's need CHANGE old_col col_def
                     $dbh->simpleQuery("ALTER TABLE $page_tbl CHANGE id id INT NOT NULL AUTO_INCREMENT");
                     $fields = mysql_list_fields($database,$page_tbl);
-                    if (!strstr(mysql_field_flags($fields, $i),"auto_increment"))
+                    if (!strstr(strtolower(mysql_field_flags($fields, $i)),"auto_increment"))
                         echo " <b><font color=\"red\">",_("FAILED"),"</font></b><br />\n";		
                     else     
                         echo _("OK"),"<br />\n";            		
@@ -330,6 +332,13 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.8  2004/05/12 10:49:55  rurban
+ require_once fix for those libs which are loaded before FileFinder and
+   its automatic include_path fix, and where require_once doesn't grok
+   dirname(__FILE__) != './lib'
+ upgrade fix with PearDB
+ navbar.tmpl: remove spaces for IE &nbsp; button alignment
+
  Revision 1.7  2004/05/06 17:30:38  rurban
  CategoryGroup: oops, dos2unix eol
  improved phpwiki_version:

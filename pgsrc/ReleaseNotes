@@ -1,9 +1,9 @@
 Date: Fri, 29 Apr 2004 17:28:55 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.29 2004-05-13 13:48:34 rurban Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.30 2004-05-14 11:33:03 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.29 $";
+  pgsrc_version="2 $Revision: 1.30 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
@@ -53,7 +53,7 @@ changes:
   and overwrites ReleaseNotes
 * PageChangeNotification changed subject to "[WikiName] Page change %s",
   update your filters accordingly
-* action=upgrade now linked in PhpWikiAdministration, 
+* action=upgrade now linked in PhpWikiAdministration,
   db: fix page.id auto_increment and ADD session.sess_ip
 * some internal InlineParser optimization
 * DBAuthParam statement syntax change: variables now like '$userid'
@@ -68,6 +68,7 @@ new:
 * added chinese language support, by Yan-ren Tsai (druryl)
 * added missing MacOSX buttons, by Carsten Klapp.
 * new Crao theme from http://wiki.crao.net, by Arnaud Fontaine and Laurent Lunati
+* extended PhpWiki:InlineImages markup (size, border, ...)
 
 1.3.9-p1 May,5 2004, Reini Urban:
 
