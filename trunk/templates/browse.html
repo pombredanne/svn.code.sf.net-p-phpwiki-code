@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- phpwiki source:
-$Id: browse.html,v 1.25 2001-12-11 22:41:40 dairiki Exp $
+$Id: browse.html,v 1.26 2001-12-12 16:58:57 dairiki Exp $
 ${RCS_IDS}
 -->
 <meta name="keywords" content="${SPLIT_PAGE}, ${WIKI_NAME}" />
@@ -54,7 +54,8 @@ ${RCS_IDS}
     <?php } ?>
   </td>
   <td align="right">
-  <?php echo LinkExistingWikiWord(_("FindPage")) ?> 
+  <?php echo LinkExistingWikiWord(_("RecentChanges")) ?> 
+  | <?php echo LinkExistingWikiWord(_("FindPage")) ?> 
   | <span><input type="hidden" name="auto_redirect" value="1" />
     <input type="text"  name="s" size="12"
            title=_("Quick Search")
