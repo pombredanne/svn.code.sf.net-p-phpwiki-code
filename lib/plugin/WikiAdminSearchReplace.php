@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSearchReplace.php,v 1.12 2004-06-08 10:05:12 rurban Exp $');
+rcs_id('$Id: WikiAdminSearchReplace.php,v 1.13 2004-06-13 14:30:26 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.12 $");
+                            "\$Revision: 1.13 $");
     }
 
     function getDefaultArguments() {
@@ -93,11 +93,13 @@ extends WikiPlugin_WikiAdminSelect
         $post_args = $request->getArg('admin_replace');
         $caseexact = !empty($post_args['caseexact']);
         foreach ($pages as $pagename) {
-            if (($result = $this->replaceHelper(&$dbi,$pagename,$from,$to,$caseexact))) {
+            if (!mayAccessPage('edit',$pagename)) {
+		$ul->pushContent(HTML::li(fmt("Access denied to change page '%s'.",$pagename)));
+            } elseif (($result = $this->replaceHelper(&$dbi,$pagename,$from,$to,$caseexact))) {
                 $ul->pushContent(HTML::li(fmt("Replaced '%s' with '%s' in page '%s'.", $from, $to, WikiLink($pagename))));
                 $count++;
             } else {
-                $ul->pushContent(HTML::li(fmt("Search string '%s' not found in page '%s'.", $from, $to, WikiLink($pagename))));
+                $ul->pushContent(HTML::li(fmt("Search string '%s' not found in content of page '%s'.", $from, WikiLink($pagename))));
             }
         }
         if ($count) {
@@ -152,6 +154,7 @@ extends WikiPlugin_WikiAdminSelect
         }
         if ($next_action == 'select' and empty($pages)) {
             // List all pages to select from.
+            //TODO: check for permissions and list only the allowed
             $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit']);
         }
 
@@ -247,6 +250,9 @@ function stri_replace($find,$replace,$string) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2004/06/08 10:05:12  rurban
+// simplified admin action shortcuts
+//
 // Revision 1.11  2004/06/04 20:32:54  rurban
 // Several locale related improvements suggested by Pierrick Meignen
 // LDAP fix by John Cole
