@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: update-makefile.sh,v 1.7 2004-02-26 21:20:09 rurban Exp $
+# $Id: update-makefile.sh,v 1.8 2004-12-20 12:44:41 rurban Exp $
 #
 # This shell script is used to update the list of .po files and the
 # dependencies for phpwiki.pot in the Makefile.
@@ -20,7 +20,7 @@ makefile_head () {
 #
 # The remainder of this file is auto-generated
 #
-# (Run 'make dependo regenerate this section.)
+# (Run 'make depend' regenerate this section.)
 #
 EOF
 }
@@ -37,8 +37,11 @@ po_files () {
 # Find all php and html source code which should be scanned
 # by xgettext() for localizeable strings.
 # find ../lib fails on cygwin
+# TODO: autogenerate .exclude list from CVS/Entries?
 pot_file_deps () {
-    (cd ..; find lib themes \( -name "*.php" -o -name "*.tmpl" \)) |
+    (cd ..; find lib themes \( -type d -regex '\(^lib/pear\)\|\(^lib/WikiDB/adodb\)\|\(^lib/nusoap\)\|\(^lib/fpdf\)' \) -prune -o \( -type f -a -name \*.php -o -name \*.tmpl \)) |
+        egrep -v '(^lib/pear)|(^lib/WikiDB/adodb)|(^lib/nusoap)|(^lib/fpdf)' |
+        grep -v -f .exclude |
 	sed 's|^|${POT_FILE}: ../|;' |
 	sort
 }
