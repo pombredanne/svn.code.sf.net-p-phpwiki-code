@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.92 2002-01-27 04:38:38 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.93 2002-01-28 15:52:40 carstenklapp Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -25,6 +25,7 @@
     __printf ($fmt)
     __sprintf ($fmt)
     __vsprintf ($fmt, $args)
+    better_srand($seed = '')
 
   function: LinkInterWikiLink($link, $linktext)
   moved to: lib/interwiki.php
@@ -641,6 +642,25 @@ function isa ($object, $class)
 function can ($object, $method) 
 {
     return is_object($object) && method_exists($object, strtolower($method));
+}
+
+/**
+ * Seed the random number generator.
+ *
+ * better_srand() ensures the randomizer is seeded only once.
+ * 
+ * How random do you want it? See:
+ * http://www.php.net/manual/en/function.srand.php
+ * http://www.php.net/manual/en/function.mt-srand.php
+ */
+function better_srand($seed = '') {
+    static $wascalled = FALSE;
+    if (!$wascalled) {
+        $seed = $seed === '' ? (double) microtime() * 1000000 : $seed;
+        srand($seed);
+        $wascalled = TRUE;
+        //trigger_error("new random seed", E_USER_NOTICE); //debugging
+    }
 }
 
 // (c-file-style: "gnu")
