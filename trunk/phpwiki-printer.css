@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki-printer.css,v 1.4 2002-01-16 20:04:04 carstenklapp Exp $
+ * $Id: phpwiki-printer.css,v 1.5 2002-01-26 07:09:33 carstenklapp Exp $
  *
  * PhpWiki style sheet for the printed page:
  * Black on white only, with no toolbar commands and no link icons.
@@ -71,8 +71,8 @@ a {
         background : white;
 }
 
-/* Hide (diff) links on recent changes */
-a.wikiaction {
+/* Hide (diff) links and days buttons in RecentChanges */
+a.wiki-rc-action, div.wiki-rc-action {
         visibility : hidden;
         color :      white;
         /**
