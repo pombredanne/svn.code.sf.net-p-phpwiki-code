@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.72 2002-01-11 19:43:15 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.73 2002-01-13 19:18:18 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -530,7 +530,7 @@ function split_pagename ($page) {
         $RE[] = '/([[:lower:]])((?<!Mc|De|Di)[[:upper:]]|\d)/';
         // This the single-letter words 'I' and 'A' from any following
         // capitalized words.
-        $RE[] = '/(?: |^)([AI])([[:upper:]])/';
+        $RE[] = '/(?: |^)([AI])([[:upper:]][[:lower:]])/';
         // Split numerals from following letters.
         $RE[] = '/(\d)([[:alpha:]])/';
         
