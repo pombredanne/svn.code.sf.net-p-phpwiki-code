@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.99 2004-06-20 15:30:05 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.100 2004-06-21 06:29:35 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1089,7 +1089,8 @@ extends _AnonUser
         // User may have deleted cookie, retrieve from his
         // PersonalPage if there is one.
         if ($this->_HomePagehandle) {
-            if ($restored_from_page = $this->_prefs->retrieve($this->_HomePagehandle->get('pref'))) {
+            if ($restored_from_page = $this->_prefs->retrieve
+                ($this->_HomePagehandle->get('pref'))) {
                 $updated = $this->_prefs->updatePrefs($restored_from_page,'init');
                 //$this->_prefs = new UserPreferences($restored_from_page);
                 return $this->_prefs;
@@ -1603,7 +1604,8 @@ extends _DbPassUser
             }
         }
         if ($this->_HomePagehandle) {
-            if ($restored_from_page = $this->_prefs->retrieve($this->_HomePagehandle->get('pref'))) {
+            if ($restored_from_page = $this->_prefs->retrieve
+                ($this->_HomePagehandle->get('pref'))) {
                 $updated = $this->_prefs->updatePrefs($restored_from_page);
                 //$this->_prefs = new UserPreferences($restored_from_page);
                 return $this->_prefs;
@@ -1712,7 +1714,8 @@ extends _DbPassUser
         //NOTE: for auth_crypt_method='crypt'  defined('ENCRYPTED_PASSWD',true) must be set
         $dbh = &$this->_auth_dbi;
         if ($this->_auth_crypt_method == 'crypt') {
-            $stored_password = $dbh->getOne(sprintf($this->_authselect, $dbh->quote($this->_userid)));
+            $stored_password = $dbh->getOne(sprintf($this->_authselect, 
+                                                    $dbh->quote($this->_userid)));
             $result = $this->_checkPass($submitted_password, $stored_password);
         } else {
             $okay = $dbh->getOne(sprintf($this->_authselect,
@@ -1815,7 +1818,8 @@ extends _DbPassUser
             }
         }
         if ($this->_HomePagehandle) {
-            if ($restored_from_page = $this->_prefs->retrieve($this->_HomePagehandle->get('pref'))) {
+            if ($restored_from_page = $this->_prefs->retrieve
+                ($this->_HomePagehandle->get('pref'))) {
                 $updated = $this->_prefs->updatePrefs($restored_from_page);
                 //$this->_prefs = new UserPreferences($restored_from_page);
                 return $this->_prefs;
@@ -1883,7 +1887,8 @@ extends _DbPassUser
             if (! $dbi->getAuthParam('auth_user_exists'))
                 trigger_error(fmt("%s is missing", 'DBAUTH_AUTH_USER_EXISTS'),
                               E_USER_WARNING);
-            $this->_authcheck = $this->prepare($dbi->getAuthParam('auth_user_exists'), 'userid');
+            $this->_authcheck = $this->prepare($dbi->getAuthParam('auth_user_exists'), 
+                                               'userid');
             $rs = $dbh->Execute(sprintf($this->_authcheck, $dbh->qstr($this->_userid)));
             if (!$rs->EOF) {
                 $rs->Close();
@@ -2016,7 +2021,8 @@ extends _PassUser
             return $this->_tryNextPass($submitted_password);
         }
         if (strstr($userid,'*')) {
-            trigger_error(fmt("Invalid username '%s' for LDAP Auth",$userid),E_USER_WARNING);
+            trigger_error(fmt("Invalid username '%s' for LDAP Auth",$userid), 
+                          E_USER_WARNING);
             return WIKIAUTH_FORBIDDEN;
         }
 
@@ -2117,7 +2123,8 @@ extends _PassUser
                 return true;
             }
         } else {
-            trigger_error(_("Unable to connect to LDAP server "). LDAP_AUTH_HOST, E_USER_WARNING);
+            trigger_error(_("Unable to connect to LDAP server "). LDAP_AUTH_HOST, 
+                          E_USER_WARNING);
         }
 
         return $this->_tryNextUser();
@@ -2150,7 +2157,8 @@ extends _PassUser
             $this->_level = WIKIAUTH_USER;
             return $this->_level;
         } else {
-            trigger_error(_("Unable to connect to IMAP server "). IMAP_AUTH_HOST, E_USER_WARNING);
+            trigger_error(_("Unable to connect to IMAP server "). IMAP_AUTH_HOST, 
+                          E_USER_WARNING);
         }
 
         return $this->_tryNextPass($submitted_password);
@@ -2298,7 +2306,8 @@ extends _PassUser
             return false;
         }
         if ($this->_may_change) {
-            $this->_file = new File_Passwd($this->_file->_filename, true, $this->_file->_filename.'.lock');
+            $this->_file = new File_Passwd($this->_file->_filename, true, 
+                                           $this->_file->_filename.'.lock');
             $result = $this->_file->modUser($this->_userid,$submitted_password);
             $this->_file->close();
             $this->_file = new File_Passwd($this->_file->_filename, false);
@@ -2824,8 +2833,10 @@ class UserPreferences
                 $obj->_init = $init;
                 if ($prefs->get($type) !== $obj->get($type)) {
                     // special systemdefault prefs: (probably not needed)
-                    if ($type == 'theme' and $prefs->get($type) == '' and $obj->get($type) == THEME) continue;
-                    if ($type == 'lang' and $prefs->get($type) == '' and $obj->get($type) == DEFAULT_LANGUAGE) continue;
+                    if ($type == 'theme' and $prefs->get($type) == '' and 
+                        $obj->get($type) == THEME) continue;
+                    if ($type == 'lang' and $prefs->get($type) == '' and 
+                        $obj->get($type) == DEFAULT_LANGUAGE) continue;
                     if ($this->_prefs[$type]->set($type,$prefs->get($type)))
                         $count++;
                 }
@@ -2854,8 +2865,10 @@ class UserPreferences
                     $prefs[$type] = (int) $prefs[$type];
                 if (isset($prefs[$type]) and $obj->get($type) != $prefs[$type]) {
                     // special systemdefault prefs:
-                    if ($type == 'theme' and $prefs[$type] == '' and $obj->get($type) == THEME) continue;
-                    if ($type == 'lang' and $prefs[$type] == '' and $obj->get($type) == DEFAULT_LANGUAGE) continue;
+                    if ($type == 'theme' and $prefs[$type] == '' and 
+                        $obj->get($type) == THEME) continue;
+                    if ($type == 'lang' and $prefs[$type] == '' and 
+                        $obj->get($type) == DEFAULT_LANGUAGE) continue;
                     if ($obj->set($type,$prefs[$type]))
                         $count++;
                 }
@@ -3019,7 +3032,8 @@ extends UserPreferences
             }
         }
         if (empty($this->_prefs->_prefs) and $this->_HomePagehandle) {
-            if ($restored_from_page = $this->_prefs->retrieve($this->_HomePagehandle->get('pref'))) {
+            if ($restored_from_page = $this->_prefs->retrieve
+                ($this->_HomePagehandle->get('pref'))) {
                 $updated = $this->_prefs->updatePrefs($restored_from_page);
                 //$this->_prefs = new UserPreferences($restored_from_page);
                 return $this->_prefs;
@@ -3031,6 +3045,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.99  2004/06/20 15:30:05  rurban
+// get_class case-sensitivity issues
+//
 // Revision 1.98  2004/06/16 21:24:31  rurban
 // do not display no-connect warning: #2662
 //
