@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: ziplib.php,v 1.2.2.5.2.2 2005-01-07 13:59:59 rurban Exp $');
+rcs_id('$Id: ziplib.php,v 1.2.2.5.2.3 2005-01-07 14:02:29 rurban Exp $');
 
 //FIXME: get rid of this.
 function warn ($msg)
