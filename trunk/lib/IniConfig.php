@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.80 2005-02-26 17:47:57 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.81 2005-02-27 13:20:28 rurban Exp $');
 
 /**
  * A configurator intended to read its config from a PHP-style INI file,
@@ -289,7 +289,7 @@ function IniConfig($file) {
     }
     if (!in_array(DATABASE_TYPE, array('SQL','ADODB','PDO','dba','file','cvs','cvsclient')))
         trigger_error(sprintf("Invalid DATABASE_TYPE=%s. Choose one of %s", 
-                              DATABASE_TYPE, "SQL,ADODB,PDO,dba,file,cvs,clsclient"), 
+                              DATABASE_TYPE, "SQL,ADODB,PDO,dba,file,cvs"), 
                       E_USER_ERROR);
     if (DATABASE_TYPE == 'PDO') {
         if (!check_php_version(5))
@@ -819,6 +819,12 @@ function fixup_dynamic_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.80  2005/02/26 17:47:57  rurban
+// configurator: add (c), support show=_part1 initial expand, enable
+//   ENABLE_FILE_OUTPUT, use part.id not name
+// install.php: fixed for multiple invocations (on various missing vars)
+// IniConfig: call install.php on more errors with expanded part.
+//
 // Revision 1.79  2005/02/11 14:45:44  rurban
 // support ENABLE_LIVESEARCH, enable PDO sessions
 //
