@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.162 2004-06-08 10:05:11 rurban Exp $');
+rcs_id('$Id: main.php,v 1.163 2004-06-13 11:35:32 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -156,7 +156,17 @@ $this->version = phpwiki_version();
         }
 
         // Ensure user has permissions for action
-        $require_level = $this->requiredAuthority($this->getArg('action'));
+        // HACK ALERT: We may not set the request arg to create, 
+        // since the pageeditor has an ugly logic for action == create.
+        $action = $this->getArg('action');
+  	if ($action == 'edit' or $action == 'create') {
+            $page = $this->getPage();
+            if (! $page->exists() )
+                $action = 'create';
+            else
+                $action = 'edit';
+  	}
+        $require_level = $this->requiredAuthority($action);
         if (! $this->_user->hasAuthority($require_level))
             $this->_notAuthorized($require_level); // NORETURN
     }
@@ -439,7 +449,7 @@ $this->version = phpwiki_version();
         
     function requiredAuthorityForAction ($action) {
     	if (ENABLE_PAGEPERM and class_exists("PagePermission")) {
-    	    return requiredAuthorityForPage($action);
+    	   return requiredAuthorityForPage($action);
     	} else {
           // FIXME: clean up. 
           switch ($action) {
@@ -1030,6 +1040,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.162  2004/06/08 10:05:11  rurban
+// simplified admin action shortcuts
+//
 // Revision 1.161  2004/06/07 22:58:40  rurban
 // simplified chown, setacl, dump actions
 //
