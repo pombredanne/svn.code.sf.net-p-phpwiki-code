@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff3.php,v 1.1 2001-12-16 16:47:17 dairiki Exp $');
+//rcs_id('$Id: diff3.php,v 1.2 2002-02-14 23:12:31 lakka Exp $');
 // diff3.php
 //
 // A class for computing three way diffs
@@ -107,7 +107,7 @@ class Diff3 {
         $eng = new _DiffEngine;
 
         $this->blocks = $this->__diff3($eng->diff($orig, $final1),
-                                       $eng->diff($orig, $final1));
+                                       $eng->diff($orig, $final2));
     }
 
     function __diff3($edits1, $edits2) {
@@ -117,11 +117,11 @@ class Diff3 {
         $e1 = current($edits1);
         $e2 = current($edits2);
         while ($e1 || $e2) {
-            echo "====\n";
+/*            echo "====\n";
             print_r($e1);
             print_r($e2);
             echo "====\n";
-            
+  */          
             if ($e1 && $e2 && $e1->type == 'copy' && $e2->type == 'copy') {
                 // We have copy blocks from both diffs.  This is the (only)
                 // time we want to emit a diff3 copy block.
