@@ -1,5 +1,5 @@
 /**
- * $Id: WikiTrek.css,v 1.22 2002-02-08 07:38:22 carstenklapp Exp $
+ * $Id: WikiTrek.css,v 1.23 2002-02-08 22:56:37 carstenklapp Exp $
  *
  * This theme will probably be renamed something like "Space" to
  * avoid any potential copyright issues.
@@ -67,6 +67,10 @@ img.linkicon, img.rssicon {
 textarea, input {
   color:      white;
   background: black;
+}
+
+input.numeric {
+  text-align: right;
 }
 
 textarea {

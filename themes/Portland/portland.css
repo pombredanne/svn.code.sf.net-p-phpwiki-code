@@ -1,5 +1,5 @@
 /**
- * $Id: portland.css,v 1.8 2002-02-08 18:56:22 dairiki Exp $
+ * $Id: portland.css,v 1.9 2002-02-08 22:56:37 carstenklapp Exp $
  *
  * PhpWiki's Portland style sheet based on the original Wiki
  *
@@ -19,3 +19,6 @@ img {
   font-size : smaller;
 }
 
+input.numeric {
+  text-align: right;
+}
