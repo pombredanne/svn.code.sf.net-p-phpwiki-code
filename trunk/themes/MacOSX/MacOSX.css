@@ -1,5 +1,5 @@
 /*
-  $Id: MacOSX.css,v 1.14 2002-01-22 09:23:09 carstenklapp Exp $
+  $Id: MacOSX.css,v 1.15 2002-01-22 15:36:42 dairiki Exp $
 
   Classes:
 
@@ -256,8 +256,8 @@ div.wiki-message {
 .diff ins	{ background: #9f9; }
 
 /* PageList output */
-tr.pagelistcolor { background: #eeeeee; }
-tr.pagelistnocolor { background: white; }
+tr.pagelist .evenrow { background: #eeeeee; }
+tr.pagelist .oddrow  { background: white; }
 
 /* For emacs users
  *
