@@ -1,4 +1,4 @@
-<!-- $Id: stdlib.php,v 1.6 2000-10-26 11:34:36 ahollosi Exp $ -->
+<!-- $Id: stdlib.php,v 1.7 2000-10-31 19:23:03 ahollosi Exp $ -->
 <?php
    /*
       Standard functions for Wiki functionality
@@ -341,7 +341,6 @@
 
       global $remoteuser; // this is set in the config
       global $dateformat;
-      global $ScriptUrl;
       global $WikiPageStore;
 
       $recentchanges = RetrievePage($dbi, gettext ("RecentChanges"), 
@@ -390,7 +389,7 @@
       if($isnewpage) {
          $newpage[$k++] = "* [$pagename] (new) ..... $remoteuser\r";
       } else {
-	 $diffurl = "$ScriptUrl?diff=" . rawurlencode($pagename);
+	 $diffurl = "phpwiki:?diff=" . rawurlencode($pagename);
          $newpage[$k++] = "* [$pagename] ([diff|$diffurl]) ..... $remoteuser\r";
       }
 
@@ -413,7 +412,7 @@
 
 
    function ParseAndLink($bracketlink) {
-      global $dbi, $AllowedProtocols, $InlineImages;
+      global $dbi, $ScriptUrl, $AllowedProtocols, $InlineImages;
 
       // $bracketlink will start and end with brackets; in between
       // will be either a page name, a URL or both separated by a pipe.
@@ -422,7 +421,6 @@
       preg_match("/(\[\s*)(.+?)(\s*\])/", $bracketlink, $match);
       // match the contents 
       preg_match("/([^|]+)(\|)?([^|]+)?/", $match[2], $matches);
-
 
       // if $matches[3] is set, this is a link in the form of:
       // [some link name | http://blippy.com/]
@@ -439,7 +437,10 @@
 	       $link['type'] = 'url-named';
                $link['link'] = "<a href=\"$URL\">$linkname</a>";
 	    }
-         } else {
+         } elseif (preg_match("#^phpwiki:(.*)#", $URL, $match)) {
+	    $link['type'] = 'url-wiki-named';
+	    $link['link'] = "<a href=\"$ScriptUrl$match[1]\">$linkname</a>";
+	 } else {
             $link['type'] = 'url-bad';
             $link['link'] = "<b><u>BAD URL -- links have to start with one" . 
                    "of $AllowedProtocols followed by ':'</u></b>";
@@ -469,10 +470,8 @@
 	    $link['type'] = 'wiki-unknown';
             $link['link'] = LinkUnknownWikiWord($linkname);
          }
-
 	 return $link;
       }
-
 
       $link['type'] = 'unknown';
       $link['link'] = $bracketlink;
