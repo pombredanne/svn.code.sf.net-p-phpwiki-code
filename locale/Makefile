@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.17 2002-01-24 01:04:57 carstenklapp Exp $
+# $Id: Makefile,v 1.18 2002-01-29 00:51:29 carstenklapp Exp $
 #
 # locale/Makefile
 #
@@ -58,7 +58,7 @@ po: po/sv.po
 mo: sv/LC_MESSAGES/phpwiki.mo sv/LC_MESSAGES/phpwiki.php
 #
 ${POT_FILE}: ../lib/ArchiveCleaner.php
-${POT_FILE}: ../lib/ButtonFactory.php
+${POT_FILE}: ../lib/BlockParser.php
 ${POT_FILE}: ../lib/config.php
 ${POT_FILE}: ../lib/DbaDatabase.php
 ${POT_FILE}: ../lib/DbaListSet.php
@@ -75,6 +75,11 @@ ${POT_FILE}: ../lib/interwiki.php
 ${POT_FILE}: ../lib/loadsave.php
 ${POT_FILE}: ../lib/main.php
 ${POT_FILE}: ../lib/PageList.php
+${POT_FILE}: ../lib/pear/DB.php
+${POT_FILE}: ../lib/pear/DB/common.php
+${POT_FILE}: ../lib/pear/DB/mysql.php
+${POT_FILE}: ../lib/pear/DB/pgsql.php
+${POT_FILE}: ../lib/pear/PEAR.php
 ${POT_FILE}: ../lib/plugin/AllPages.php
 ${POT_FILE}: ../lib/plugin/_BackendInfo.php
 ${POT_FILE}: ../lib/plugin/BackLinks.php
@@ -85,6 +90,7 @@ ${POT_FILE}: ../lib/plugin/IncludePage.php
 ${POT_FILE}: ../lib/plugin/LikePages.php
 ${POT_FILE}: ../lib/plugin/MostPopular.php
 ${POT_FILE}: ../lib/plugin/PageHistory.php
+${POT_FILE}: ../lib/plugin/RandomPage.php
 ${POT_FILE}: ../lib/plugin/RecentChanges.php
 ${POT_FILE}: ../lib/plugin/text2png.php
 ${POT_FILE}: ../lib/plugin/TitleSearch.php
@@ -140,6 +146,7 @@ ${POT_FILE}: ../themes/Hawaiian/themeinfo.php
 ${POT_FILE}: ../themes/MacOSX/lib/RecentChanges.php
 ${POT_FILE}: ../themes/MacOSX/templates/actionbar.tmpl
 ${POT_FILE}: ../themes/MacOSX/themeinfo.php
+${POT_FILE}: ../themes/Portland/lib/RecentChanges.php
 ${POT_FILE}: ../themes/Portland/templates/actionbar.tmpl
 ${POT_FILE}: ../themes/Portland/templates/body.tmpl
 ${POT_FILE}: ../themes/Portland/templates/browse.tmpl
@@ -147,4 +154,5 @@ ${POT_FILE}: ../themes/Portland/templates/editpage.tmpl
 ${POT_FILE}: ../themes/Portland/templates/navbar.tmpl
 ${POT_FILE}: ../themes/Portland/templates/viewsource.tmpl
 ${POT_FILE}: ../themes/Portland/themeinfo.php
+${POT_FILE}: ../themes/WikiTrek/lib/RecentChanges.php
 ${POT_FILE}: ../themes/WikiTrek/themeinfo.php
