@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RedirectTo.php,v 1.3 2002-09-14 18:28:54 dairiki Exp $');
+rcs_id('$Id: RedirectTo.php,v 1.4 2002-09-27 10:55:45 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -21,16 +21,13 @@ rcs_id('$Id: RedirectTo.php,v 1.3 2002-09-14 18:28:54 dairiki Exp $');
  */
 
 /**
- * RedirectTo:
- * Usage:   <?plugin-head RedirectTo href=http://www.internet-technology.de/fourwins_de.htm ?>
+ * Redirect to another page or external uri. Kind of PageAlias.
+ * Usage:   <?plugin-head RedirectTo href="http://www.internet-technology.de/fourwins_de.htm" ?>
  *      or  <?plugin-head RedirectTo page=AnotherPage ?>
  *          at the VERY FIRST LINE in the content! Otherwise it will be ignored.
  * Author:  Reini Urban <rurban@x-ray.at>
  *
  * BUGS/COMMENTS:
- *
- * Actually, it seems that this plugin can be invoked from anywhere on a page.
- * (Not just the first line.)
  *
  * This plugin could probably result in a lot of confusion, especially when
  * redirecting to external sites.  (Perhaps it can even be used for dastardly
@@ -53,7 +50,7 @@ extends WikiPlugin
 
     function getDefaultArguments() {
         return array( 'href' => '',
-                      // 'type' => 'Temp' // or 'Permanent' // s far ignored
+                      // 'type' => 'Temp' // or 'Permanent' // so far ignored
                       'page' => false,
                       'args' => false,  // pass more args to the page. TestMe!
                       );
@@ -67,20 +64,17 @@ extends WikiPlugin
             return $this->error(sprintf(_("%s or %s parameter missing"), 'href', 'page'));
         if ($href) {
             /*
-             * I don't think this hack is needed. 
-             * Just use quotes on the href argument value, like:
-             *
+             * Use quotes on the href argument value, like:
              *   <?plugin RedirectTo href="http://funky.com/a b \" c.htm" ?>
+             *
+             * Do we want some checking on href to avoid malicious
+             * uses of the plugin? Like stripping tags or hexcode.
              */
-            // // FIXME: unmunged url hack
-            // $url = preg_replace('/href=(.*)\Z/','$1',$argstr);
-            $url = $href;
-            //
-            // FIXME: may want some checking on href to avoid malicious
-            // uses of the plugin?
+            $url = preg_replace('/%\d\d/','',strip_tags($href));
         }
         else {
-            $url = $request->getURLtoSelf(array_merge(array('pagename' => $page), 
+            $url = $request->getURLtoSelf(array_merge(array('pagename' => $page,
+                                                            'redirectfrom' => $request->getArg('pagename')),
                                                       SplitQueryArgs($args['args'])));
         }
         if ($page == $request->getArg('pagename')) {
