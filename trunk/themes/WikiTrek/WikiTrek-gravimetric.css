@@ -1,5 +1,5 @@
 /**
- * $Id: WikiTrek-gravimetric.css,v 1.8 2002-02-17 01:13:07 carstenklapp Exp $
+ * $Id: WikiTrek-gravimetric.css,v 1.9 2002-02-17 01:27:26 carstenklapp Exp $
  *
  * WikiTrek-gravimetric.css
  *
@@ -32,8 +32,7 @@ div.wikiaction, form.wikiadmin div {
 }
 
 /* Add space between the input field and following buttons, but not after the last button. */
-div.wikiaction input, div.wikiadmin input { margin-right: 0.5em; }
-div.wikiaction input:last-child, div.wikiadmin input:last-child { margin-right: 0; }
+div.wikiaction input[type=text], div.wikiadmin input[type=text], form.wikiadmin input[type=file] { margin-right: 0.5em; }
 
 
 /**
