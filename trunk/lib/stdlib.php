@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.219 2004-11-26 18:39:02 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.220 2004-11-30 17:47:41 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1376,8 +1376,10 @@ function explodePageList($input, $include_empty=false, $sortby='pagename', $limi
  * or a sub-type of $class. 
  */
 function isa ($object, $class) {
-    $lclass = strtolower($class);
+    if (check_php_version(4,2)) 
+        return is_a($object, $class);
 
+    $lclass = strtolower($class);
     return is_object($object)
         && ( strtolower(get_class($object)) == $lclass
              || is_subclass_of($object, $lclass) );
@@ -1455,7 +1457,7 @@ function better_srand($seed = '') {
     static $wascalled = FALSE;
     if (!$wascalled) {
         $seed = $seed === '' ? (double) microtime() * 1000000 : $seed;
-        srand($seed);
+        function_exists('mt_srand') ? mt_srand($seed) : srand($seed);
         $wascalled = TRUE;
         //trigger_error("new random seed", E_USER_NOTICE); //debugging
     }
@@ -1812,6 +1814,9 @@ function printSimpleTrace($bt) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.219  2004/11/26 18:39:02  rurban
+// new regex search parser and SQL backends (90% complete, glob and pcre backends missing)
+//
 // Revision 1.218  2004/11/25 08:28:48  rurban
 // support exclude
 //
