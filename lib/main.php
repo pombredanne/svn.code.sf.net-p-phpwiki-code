@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.124 2004-03-12 15:48:07 rurban Exp $');
+rcs_id('$Id: main.php,v 1.125 2004-03-14 16:30:52 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -41,6 +41,9 @@ class WikiRequest extends Request {
                 // users might switch in a session between the two objects.
                 // restore old auth level here or in updateAuthAndPrefs?
                 $user = $this->getSessionVar('wiki_user');
+                // revive db handle, because these don't survive sessions
+	        unset($this->_user->_HomePagehandle);
+	        $this->_user->hasHomePage();
                 if (!isa($user,WikiUserClassname()) or empty($user->_level)) {
                     $user = UpgradeUser($this->_user,$user);
                 }
@@ -63,6 +66,7 @@ class WikiRequest extends Request {
         if ($user_lang = $this->getPref('lang')) {
             //trigger_error("DEBUG: initializeLang() ". $user_lang ." calling update_locale()...");
             update_locale($user_lang);
+            FindLocalizedButtonFile(".",'missing_ok','reinit');
         }
     }
 
@@ -845,6 +849,10 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.124  2004/03/12 15:48:07  rurban
+// fixed explodePageList: wrong sortby argument order in UnfoldSubpages
+// simplified lib/stdlib.php:explodePageList
+//
 // Revision 1.123  2004/03/10 15:41:27  rurban
 // use default pref mysql table
 //
