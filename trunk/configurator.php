@@ -1,11 +1,13 @@
 <?php 
-// $Id: configurator.php,v 1.26 2005-02-16 15:11:00 rurban Exp $
+// $Id: configurator.php,v 1.27 2005-02-16 15:53:15 rurban Exp $
 /**
  * Starts automatically the first time by IniConfig("config/config.ini") 
  * if it doesn't exist.
  *
  * 1.3.11 TODO:
  * fix SQL quotes, AUTH_ORDER quotes and file forward slashes
+ * commented / optional: non-default values should not be commented!
+ *                       default values if optional can be omitted.
  * read config-default.ini
  * read config-dist.ini into sections, comments, and optional/required settings
  *
@@ -26,7 +28,7 @@
 
 if (!defined('ENABLE_FILE_OUTPUT')) define('ENABLE_FILE_OUTPUT', true);
 
-global $HTTP_SERVER_VARS;
+global $HTTP_SERVER_VARS, $HTTP_POST_VARS;
 if (empty($configurator))
     $configurator = "configurator.php";
 if (!strstr($HTTP_SERVER_VARS["SCRIPT_NAME"], $configurator) and defined('DATA_PATH'))
@@ -43,7 +45,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'iso-8859-1');
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.26 2005-02-16 15:11:00 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.27 2005-02-16 15:53:15 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
@@ -222,7 +224,7 @@ as the path separator.");
 
 // TODO: convert this a checkbox row as in tests/unit/test.pgp
 $properties["DEBUG"] =
-new _define_optional('DEBUG', '0', "
+new numeric_define_optional('DEBUG', '0', "
 Set DEBUG to 1 to view the XHTML and CSS validator icons, page
 processing timer, and possibly other debugging messages at the
 bottom of each page. 65 for a more verbose level with AUTH hints. 
@@ -334,12 +336,12 @@ new part('_part1', $SEPARATOR."\n", "
 Part One: Authentication and security settings. See Part Three for more.");
 
 $properties["Admin Username"] =
-new _define_optional_notempty('ADMIN_USER', "", "
+new _define_notempty('ADMIN_USER', "", "
 You must set this! Username and password of the administrator.",
 "onchange=\"validate_ereg('Sorry, ADMIN_USER cannot be empty.', '^.+$', 'ADMIN_USER', this);\"");
 
 $properties["Admin Password"] =
-new _define_password_optional('ADMIN_PASSWD', "", "
+new _define_password('ADMIN_PASSWD', "", "
 For heaven's sake pick a good password.
 If your version of PHP supports encrypted passwords, your password will be
 automatically encrypted within the generated config file. 
@@ -419,12 +421,10 @@ If this is set, all unsafe html code is stripped automatically (experimental!)
 See <a href=\"http://chxo.com/scripts/safe_html-test.php\" target=\"_new\">chxo.com/scripts/safe_html-test.php</a>
 ");
 
-//FIXME: should be numeric_define_optional
 $properties["Maximum Upload Size"] =
 new numeric_define_optional('MAX_UPLOAD_SIZE', "16 * 1024 * 1024", "
 The maximum file upload size.");
 
-//FIXME: should be numeric_define_optional
 $properties["Minor Edit Timeout"] =
 new numeric_define_optional('MINOR_EDIT_TIMEOUT', "7 * 24 * 3600", "
 If the last edit is older than MINOR_EDIT_TIMEOUT seconds, the
@@ -432,7 +432,7 @@ default state for the \"minor edit\" checkbox on the edit page form
 will be off.");
 
 $properties["Disabled Actions"] =
-new array_define('DisabledActions', array(), "
+new array_define('DISABLED_ACTIONS', array(), "
 Actions listed in this array will not be allowed. Actions are:
 browse, create, diff, dumphtml, dumpserial, edit, loadfile, lock, remove, 
 unlock, upload, viewsource, zip, ziphtml");
@@ -971,13 +971,13 @@ $properties["DBAUTH_AUTH_DSN"] =
 A database DSN to connect to.  Defaults to the DSN specified for the Wiki as a whole.");
 
 $properties["User Exists Query"] =
-  new _define('DBAUTH_AUTH_USER_EXISTS', "\"SELECT userid FROM user WHERE userid='\$userid'\"", "
+  new _define('DBAUTH_AUTH_USER_EXISTS', "SELECT userid FROM user WHERE userid='\$userid'", "
 USER/PASSWORD queries:
 
 For USER_AUTH_POLICY=strict and the Db method is required");
 
 $properties["Check Query"] =
-  new _define_optional('DBAUTH_AUTH_CHECK', "\"SELECT IF(passwd='\$password',1,0) AS ok FROM user WHERE userid='\$userid'\"", "
+  new _define_optional('DBAUTH_AUTH_CHECK', "SELECT IF(passwd='\$password',1,0) AS ok FROM user WHERE userid='\$userid'", "
 
 Check to see if the supplied username/password pair is OK
 
@@ -1000,7 +1000,7 @@ specify DBAUTH_AUTH_USER_EXISTS and DBAUTH_AUTH_CRYPT_METHOD:
 ; DBAUTH_AUTH_CRYPT_METHOD = crypt");
 
 $properties["Update the user's authentication credential"] =
-    new _define('DBAUTH_AUTH_UPDATE', "\"UPDATE user SET passwd='\$password' WHERE userid='\$userid'\"", "
+    new _define('DBAUTH_AUTH_UPDATE', "UPDATE user SET passwd='\$password' WHERE userid='\$userid'", "
 If this is not defined but DBAUTH_AUTH_CHECK is, then the user will be unable to update their
 password.
 
@@ -1010,11 +1010,11 @@ Database-hashed passwords:<br>
   DBAUTH_AUTH_UPDATE = \"UPDATE user SET passwd=PASSWORD('\$password') WHERE userid='\$userid'\"");
 
 $properties["Allow the user to create their own account"] =
-    new _define_optional('DBAUTH_AUTH_CREATE', "\"INSERT INTO user SET passwd=PASSWORD('\$password'),userid='\$userid'\"", "
+    new _define_optional('DBAUTH_AUTH_CREATE', "INSERT INTO user SET passwd=PASSWORD('\$password'),userid='\$userid'", "
 If this is empty, Db users cannot subscribe by their own.");
 
 $properties["USER/PREFERENCE queries"] =
-    new _define_optional('DBAUTH_PREF_SELECT', "\"SELECT prefs FROM user WHERE userid='\$userid'\"", "
+    new _define_optional('DBAUTH_PREF_SELECT', "SELECT prefs FROM user WHERE userid='\$userid'", "
 If you choose to store your preferences in an external database, enable
 the following queries.  Note that if you choose to store user preferences
 in the 'user' table, only registered users get their prefs from the database,
@@ -1028,13 +1028,13 @@ to ease the complication of storage.
 </pre>");
 
 $properties["Update the user's preferences"] =
-    new _define_optional('DBAUTH_PREF_UPDATE', "\"UPDATE user SET prefs='\$pref_blob' WHERE userid='\$userid'\"", "
+    new _define_optional('DBAUTH_PREF_UPDATE', "UPDATE user SET prefs='\$pref_blob' WHERE userid='\$userid'", "
 Note that REPLACE works only with mysql and destroy all other columns!
 
 Mysql: DBAUTH_PREF_UPDATE = \"REPLACE INTO pref SET prefs='\$pref_blob',userid='\$userid'\"");
 
 $properties["USERS/GROUPS queries"] =
-    new _define_optional('DBAUTH_IS_MEMBER', "\"SELECT user FROM user WHERE user='\$userid' AND group='\$groupname'\"", "
+    new _define_optional('DBAUTH_IS_MEMBER', "SELECT user FROM user WHERE user='\$userid' AND group='\$groupname'", "
 You can define 1:n or n:m user<=>group relations, as you wish.
 
 Sample configurations:
@@ -1048,9 +1048,9 @@ multiple groups per user (n:m):<br>
    DBAUTH_GROUP_MEMBERS = \"SELECT DISTINCT userid FROM member WHERE groupname='\$groupname'\"<br>
    DBAUTH_USER_GROUPS = \"SELECT groupname FROM member WHERE userid='\$userid'\"<br>");
 $properties["DBAUTH_GROUP_MEMBERS"] =
-    new _define_optional('DBAUTH_GROUP_MEMBERS', "\"SELECT user FROM user WHERE group='\$groupname'\"", "");
+    new _define_optional('DBAUTH_GROUP_MEMBERS', "SELECT user FROM user WHERE group='\$groupname'", "");
 $properties["DBAUTH_USER_GROUPS"] =
-    new _define_optional('DBAUTH_USER_GROUPS', "\"SELECT group FROM user WHERE user='\$userid'\"", "");
+    new _define_optional('DBAUTH_USER_GROUPS', "SELECT group FROM user WHERE user='\$userid'", "");
 
 if (function_exists('ldap_connect')) {
 
@@ -1623,18 +1623,41 @@ Part Seven A:
 Cached Plugin Settings. (pear Cache)
 ");
 
-/*
-PLUGIN_CACHED_DATABASE = file
-; PLUGIN_CACHED_CACHE_DIR = /tmp/cache
-PLUGIN_CACHED_FILENAME_PREFIX = phpwiki
-PLUGIN_CACHED_HIGHWATER = 4194304
-PLUGIN_CACHED_LOWWATER  = 3145728
-PLUGIN_CACHED_MAXLIFETIME = 2592000
-PLUGIN_CACHED_MAXARGLEN = 1000
-PLUGIN_CACHED_USECACHE = true
-PLUGIN_CACHED_FORCE_SYNCMAP = true
-PLUGIN_CACHED_IMGTYPES = "png|gif|gd|gd2|jpeg|wbmp|xbm|xpm"
-*/
+$properties["pear Cache USECACHE"] =
+new boolean_define_optional('PLUGIN_CACHED_USECACHE', 
+                    array('true'  => 'Enabled',
+			  'false' => 'Disabled'), "
+Enable or disable pear caching of plugins.");
+$properties["pear Cache Database Container"] =
+new _define_selection_optional('PLUGIN_CACHED_DATABASE', 
+                               array('file' => 'file'), "
+Curently only file is supported. 
+db, trifile and imgfile might be supported, but you must hack that by yourself.");
+
+$properties["pear Cache cache directory"] =
+new _define_commented_optional('PLUGIN_CACHED_CACHE_DIR', "/tmp/cache", "
+Should be writable to the webserver.");
+$properties["pear Cache Filename Prefix"] =
+new _define_optional('PLUGIN_CACHED_FILENAME_PREFIX', "phpwiki", "");
+$properties["pear Cache HIGHWATER"] =
+new numeric_define_optional('PLUGIN_CACHED_HIGHWATER', "4194304", "
+Garbage collection parameter.");
+$properties["pear Cache LOWWATER"] =
+new numeric_define_optional('PLUGIN_CACHED_LOWWATER', "3145728", "
+Garbage collection parameter.");
+$properties["pear Cache MAXLIFETIME"] =
+new numeric_define_optional('PLUGIN_CACHED_MAXLIFETIME', "2592000", "
+Garbage collection parameter.");
+$properties["pear Cache MAXARGLEN"] =
+new numeric_define_optional('PLUGIN_CACHED_MAXARGLEN', "1000", "
+max. generated url length.");
+$properties["pear Cache FORCE_SYNCMAP"] =
+new boolean_define_optional('PLUGIN_CACHED_FORCE_SYNCMAP', 
+                    array('true'  => 'Enabled',
+			  'false' => 'Disabled'), "");
+$properties["pear Cache IMGTYPES"] =
+new list_define('PLUGIN_CACHED_IMGTYPES', "png|gif|gd|gd2|jpeg|wbmp|xbm|xpm", "
+Handle those image types via GD handles. Check your GD supported image types.");
 
 $end = "\n".$SEPARATOR."\n";
 
@@ -1688,7 +1711,7 @@ class _variable {
         }
         if (preg_match("/[\"']/", $value))
             $value = '"' . $value . '"';
-        return sprintf("%s = %s", $v, $value);
+        return sprintf("%s = \"%s\"", $v, $value);
     }
 
     function get_config_item_name() {
@@ -1803,7 +1826,7 @@ extends _variable {
 class _define
 extends _variable {
     function _config_format($value) {
-        return sprintf("%s = %s", $this->get_config_item_name(), $value);
+        return sprintf("%s = \"%s\"", $this->get_config_item_name(), $value);
     }
     function _get_config_line($posted_value) {
         if ($this->description)
@@ -1847,8 +1870,8 @@ extends _define_commented { }
 class _define_optional
 extends _define { }
 
-class _define_optional_notempty
-extends _define_optional {
+class _define_notempty
+extends _define {
     function get_html() {
 	$s = $this->get_config_item_header() 
             . "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name() 
@@ -2277,7 +2300,11 @@ if (!function_exists('is_a')) {
 
 
 if (!empty($HTTP_POST_VARS['action']) 
-    and $HTTP_POST_VARS['action'] == 'make_config') {
+    and $HTTP_POST_VARS['action'] == 'make_config'
+    and !empty($HTTP_POST_VARS['ADMIN_USER'])
+    and !empty($HTTP_POST_VARS['ADMIN_PASSWD'])
+    )
+{
 
     $timestamp = date ('dS of F, Y H:i:s');
 
@@ -2295,7 +2322,7 @@ if (!empty($HTTP_POST_VARS['action'])
         printArray($GLOBALS['HTTP_POST_VARS']);
 
     foreach($properties as $option_name => $a) {
-        $posted_value = $posted[$a->config_item_name];
+        $posted_value = stripslashes($posted[$a->config_item_name]);
         $config .= $properties[$option_name]->get_config($posted_value);
     }
 
@@ -2312,8 +2339,7 @@ if (!empty($HTTP_POST_VARS['action'])
       // We first check if the config-file exists.
       if (file_exists($fs_config_file)) {
         // We make a backup copy of the file
-        // $config_file = 'index-user.php';
-        $new_filename = preg_replace('/\.ini$/', time() . '.ini', $fs_config_file);
+        $new_filename = preg_replace('/\.ini$/', '-' . time() . '.ini', $fs_config_file);
         if (@copy($fs_config_file, $new_filename)) {
             $fp = @fopen($fs_config_file, 'w');
         }
@@ -2331,10 +2357,11 @@ if (!empty($HTTP_POST_VARS['action'])
         echo "<p>The configuration was written to <code><b>$config_file</b></code>.</p>\n";
         if ($new_filename) {
             echo "<p>A backup was made to <code><b>$new_filename</b></code>.</p>\n";
+        } else {
+            ; //echo "<p><strong>You must rename or copy this</strong> <code><b>$config_file</b></code> <strong>file to</strong> <code><b>config/config.ini</b></code>.</p>\n";
         }
-        echo "<p><strong>You must rename or copy this</strong> <code><b>$config_file</b></code> <strong>file to</strong> <code><b>index.php</b></code>.</p>\n";
     } else {
-        echo "<p>A configuration file could <b>not</b> be written. You should copy the above configuration to a file, and manually save it as <code><b>config/config.ini</b></code>.</p>\n";
+        echo "<p>The configuration file could <b>not</b> be written. You should copy the above configuration to a file, and manually save it as <code><b>config/config.ini</b></code>.</p>\n";
     }
 
     echo "<hr />\n<p>Here's the configuration file based on your answers:</p>\n";
