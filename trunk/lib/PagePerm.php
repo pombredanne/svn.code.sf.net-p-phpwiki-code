@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.4 2004-02-12 13:05:36 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.5 2004-02-23 21:30:25 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -80,7 +80,7 @@ function pagePermissions($pagename) {
     // Page not found (new page); returned inherited permissions, to be displayed in gray
     if (! $page->exists() ) {
         if ($pagename == '.') // stop recursion
-            return array('default',new PagePermissions());
+            return array('default',new PagePermission());
         else {
             return array('inherited',pagePermissions(getParentPage($pagename)));
         }
@@ -91,6 +91,51 @@ function pagePermissions($pagename) {
         return array('inherited',pagePermissions(getParentPage($pagename)));
     }
 }
+
+function pagePermissionsSimpleFormat($perm_tree,$owner,$group=false) {
+    list($type,$perm) = pagePermissionsAcl($perm_tree[0], $perm_tree);
+    /*
+    $type = $perm_tree[0];
+    $perm = pagePermissionsAcl($perm_tree);
+    if (is_object($perm_tree[1]))
+        $perm = $perm_tree[1];
+    elseif (is_array($perm_tree[1])) {
+        $perm_tree = pagePermissionsSimpleFormat($perm_tree[1],$owner,$group);
+	if (isa($perm_tree[1],'pagepermission'))
+	    $perm = $perm_tree[1];
+	elseif (isa($perm_tree,'htmlelement'))
+            return $perm_tree;
+    }
+    */
+    if ($type == 'page')
+        return HTML::tt(HTML::bold($perm->asRwxString($owner,$group).'+'));
+    elseif ($type == 'default')
+        return HTML::tt($perm->asRwxString($owner,$group));
+    elseif ($type == 'inherited') {
+        return HTML::tt(array('class'=>'inherited','style'=>'color:#aaa;'),
+                        $perm->asRwxString($owner,$group));
+    }
+}
+
+function pagePermissionsAcl($type,$perm_tree) {
+    $perm = $perm_tree[1];
+    while (!is_object($perm)) {
+        $perm_tree = pagePermissionsAcl($type, $perm);
+        $perm = $perm_tree[1];
+    }
+    return array($type,$perm);
+}
+
+// view => who
+// edit => who
+function pagePermissionsAclFormat($perm_tree,$editable=false) {
+    list($type,$perm) = pagePermissionsAcl($perm_tree[0], $perm_tree);
+    if ($editable)
+        return $perm->asEditableTable($type);
+    else
+        return $perm->asTable($type);
+}
+
 
 // Check the permissions for the current action.
 // Walk down the inheritance tree. Collect all permissions until 
@@ -212,7 +257,7 @@ function getAccessDescription($access) {
                                     'remove'   => _("Remove this page"),
                                     );
     }
-    if (in_array($action, array_keys($accessDescriptions)))
+    if (in_array($access, array_keys($accessDescriptions)))
         return $accessDescriptions[$access];
     else
         return $access;
@@ -375,9 +420,125 @@ class PagePermission {
         // object => hash
         return $page->set('perm',serialize(obj2hash($this->perm)));
     }
+
+    /* type: page, default, inherited */
+    function asTable($type) {
+        $table = HTML::table();
+        foreach ($this->perm as $access => $perms) {
+            $td = HTML::table(array('class' => 'cal','valign' => 'top'));
+            foreach ($perms as $group => $bool) {
+                $td->pushContent(HTML::tr(HTML::td(array('align'=>'right'),$group),
+                                                   HTML::td($bool ? '[X]' : '[ ]')));
+            }
+            $table->pushContent(HTML::tr(array('valign' => 'top'),
+                                         HTML::td($access),HTML::td($td)));
+        }
+        if ($type == 'default')
+            $table->setAttr('style','border: dotted thin black; background-color:#eee;');
+        elseif ($type == 'inherited')
+            $table->setAttr('style','border: dotted thin black; background-color:#ddd;');
+        elseif ($type == 'page')
+            $table->setAttr('style','border: solid thin black; font-weight: bold;');
+        return $table;
+    }
+
+    /* type: page, default, inherited */
+    function asEditableTable($type) {
+        $table = HTML::table();
+        $table->pushContent(HTML::tr(array('valign' => 'top'),
+                                     HTML::th(array('align' => 'left'),'access'),
+                                     HTML::th(array('align'=>'right'),
+                                              'Group/User'),
+                                     HTML::th(),
+                                     HTML::th('Description')));
+        foreach ($this->perm as $access => $perms) {
+            //$permlist = HTML::table(array('class' => 'cal','valign' => 'top'));
+            $first_only = true;
+            foreach ($perms as $group => $bool) {
+                $checkbox = HTML::input(array('type' => 'checkbox',
+                                              'name' => "acl[$access][$group]",
+                                              'value' => true));
+                if ($bool) $checkbox->setAttr('checked','checked');
+                if ($first_only) {
+                    $table->pushContent(HTML::tr(array('valign' => 'top'),
+                                                 HTML::td(HTML::strong($access.":")),
+                                                 HTML::td(array('class' => 'cal-today','align'=>'right'),
+                                                          constant("GROUP".$group)),
+                                                 HTML::td($checkbox),
+                                                 HTML::td(HTML::em(getAccessDescription($access)))));
+                    $first_only = false;
+                } else {
+                    $table->pushContent(HTML::tr(array('valign' => 'top'),
+                                                 HTML::td(),
+                                                 HTML::td(array('class' => 'cal-today','align'=>'right'),
+                                                          constant("GROUP".$group)),
+                                                 HTML::td($checkbox),
+                                                 HTML::td()));
+                }
+            }
+            /*
+            $table->pushContent(HTML::tr(array('valign' => 'top'),
+                                         HTML::td(HTML::strong($access)),
+                                         HTML::td($permlist),
+                                         HTML::td(HTML::em(getAccessDescription($access)))));
+            */
+        }
+        if ($type == 'default')
+            $table->setAttr('style','border: dotted thin black; background-color:#eee;');
+        elseif ($type == 'inherited')
+            $table->setAttr('style','border: dotted thin black; background-color:#ddd;');
+        elseif ($type == 'page')
+            $table->setAttr('style','border: solid thin black; font-weight: bold;');
+        return $table;
+    }
+
+    // this is just a bad hack for testing
+    // simplify the ACL to a unix-like "rwx------" string
+    function asRwxString($owner,$group=false) {
+        global $request;
+        // simplify object => rwxrw---x+ string as in cygwin (+ denotes additional ACLs)
+        $perm =& $this->perm;
+        // get effective user and group
+        $s = '---------';
+        if (isset($perm['view'][$owner]) or 
+            (isset($perm['view'][ACL_AUTHENTICATED]) and $request->_user->isAuthenticated()))
+            $s[0] = 'r';
+        if (isset($perm['edit'][$owner]) or 
+            (isset($perm['edit'][ACL_AUTHENTICATED]) and $request->_user->isAuthenticated()))
+            $s[1] = 'w';
+        if (isset($perm['change'][$owner]) or 
+            (isset($perm['change'][ACL_AUTHENTICATED]) and $request->_user->isAuthenticated()))
+            $s[2] = 'x';
+        if (!empty($group)) {
+            if (isset($perm['view'][$group]) or 
+                (isset($perm['view'][ACL_AUTHENTICATED]) and $request->_user->isAuthenticated()))
+                $s[3] = 'r';
+            if (isset($perm['edit'][$group]) or 
+                (isset($perm['edit'][ACL_AUTHENTICATED]) and $request->_user->isAuthenticated()))
+                $s[4] = 'w';
+            if (isset($perm['change'][$group]) or 
+                (isset($perm['change'][ACL_AUTHENTICATED]) and $request->_user->isAuthenticated()))
+                $s[5] = 'x';
+        }
+        if (isset($perm['view'][ACL_EVERY]) or 
+            (isset($perm['view'][ACL_AUTHENTICATED]) and $request->_user->isAuthenticated()))
+            $s[6] = 'r';
+        if (isset($perm['edit'][ACL_EVERY]) or 
+            (isset($perm['edit'][ACL_AUTHENTICATED]) and $request->_user->isAuthenticated()))
+            $s[7] = 'w';
+        if (isset($perm['change'][ACL_EVERY]) or 
+            (isset($perm['change'][ACL_AUTHENTICATED]) and $request->_user->isAuthenticated()))
+            $s[8] = 'x';
+        return $s;
+    }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/02/12 13:05:36  rurban
+// Rename functional for PearDB backend
+// some other minor changes
+// SiteMap comes with a not yet functional feature request: includepages (tbd)
+//
 // Revision 1.3  2004/02/09 03:58:12  rurban
 // for now default DB_SESSION to false
 // PagePerm:

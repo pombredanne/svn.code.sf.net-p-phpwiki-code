@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.56 2004-02-22 23:20:31 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.57 2004-02-23 21:30:25 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -21,9 +21,18 @@
  * 'minor'    _("Minor Edit"), _("minor")
  * 'markup'   _("Markup")
  * 'size'     _("Size")
- * 'remove'   _("Remove") //todo: move this admin action away, not really an info column
- *
+ * 'owner'    _("Owner"),  //todo: implement this again for PagePerm
+ * 'group'    _("Group"),  //todo: implement this for PagePerm
+
+ * More columns for special plugins:
+ *    Todo: move this admin action away, not really an info column
  * 'checkbox'  A selectable checkbox appears at the left.
+ * 'remove'   _("Remove")     
+ * 'perm'     _("Permission Mask")
+ * 'acl'      _("ACL")
+ * 'renamed_pagename'   _("Rename to")
+ *
+ * Symbolic 'info=' arguments:
  * 'all'       All columns except remove, content and renamed_pagename
  * 'most'      pagename, mtime, author, size, hits, ...
  * 'some'      pagename, mtime, author
@@ -84,7 +93,7 @@ class _PageList_Column_base {
         return HTML::th(array('align' => 'center'),$s);
     }
 
-    // grid-style
+    // new grid-style
     function button_heading () {
         global $Theme, $request;
         // allow sorting?
@@ -320,6 +329,35 @@ class _PageList_Column_author extends _PageList_Column {
     }
 };
 
+class _PageList_Column_perm extends _PageList_Column {
+    function _getValue ($page_handle, &$revision_handle) {
+        $perm_array = pagePermissions($page_handle->_pagename);
+        return pagePermissionsSimpleFormat($perm_array,
+                                           $page_handle->get('author'),$page_handle->get('group'));
+        if (0) {
+            ob_start();
+            var_dump($perm_array);
+            $xml = ob_get_contents();
+            ob_end_clean();
+            return $xml;
+        }
+    }
+};
+
+class _PageList_Column_acl extends _PageList_Column {
+    function _getValue ($page_handle, &$revision_handle) {
+        $perm_tree = pagePermissions($page_handle->_pagename);
+        return pagePermissionsAclFormat($perm_tree);
+        if (0) {
+            ob_start();
+            var_dump($perm_array);
+            $xml = ob_get_contents();
+            ob_end_clean();
+            return $xml;
+        }
+    }
+};
+
 class _PageList_Column_pagename extends _PageList_Column_base {
     var $_field = 'pagename';
 
@@ -355,8 +393,9 @@ class PageList {
         $this->_initAvailableColumns();
         $symbolic_columns = 
             array(
-                  'all' =>  array_diff(array_keys($this->_types),
-                                       array('checkbox','remove','renamed_pagename','content')),
+                  'all' =>  array_diff(array_keys($this->_types), // all but...
+                                       array('checkbox','remove','renamed_pagename',
+                                             'content','hi_content','perm','acl')),
                   'most' => array('pagename','mtime','author','size','hits'),
                   'some' => array('pagename','mtime','author')
                   );
@@ -580,42 +619,39 @@ class PageList {
         $this->_types =
             array(
                   'content'
-                  => new _PageList_Column_content('content', _("Content")),
-
-                  'hi_content'
-                  => new _PageList_Column_content('hi_content', _("Content")),
-                  
+                  => new _PageList_Column_content('rev:content', _("Content")),
+                  'hi_content' // with highlighted search for SearchReplace
+                  => new _PageList_Column_content('rev:hi_content', _("Content")),
                   'remove'
                   => new _PageList_Column_remove('remove', _("Remove")),
-
                   'renamed_pagename'
                   => new _PageList_Column_renamed_pagename('rename', _("Rename to")),
-
+                  'perm'
+                  => new _PageList_Column_perm('perm', _("Permission")),
+                  'acl'
+                  => new _PageList_Column_acl('acl', _("ACL")),
                   'checkbox'
                   => new _PageList_Column_checkbox('p', _("Select")),
-
                   'pagename'
                   => new _PageList_Column_pagename,
-
                   'mtime'
-                  => new _PageList_Column_time('rev:mtime',
-                                               _("Last Modified")),
+                  => new _PageList_Column_time('rev:mtime', _("Last Modified")),
                   'hits'
                   => new _PageList_Column('hits', _("Hits"), 'right'),
-
                   'size'
-                  => new _PageList_Column_size('size', _("Size"), 'right'),
-                                               /*array('align' => 'char', 'char' => ' ')*/
-
+                  => new _PageList_Column_size('rev:size', _("Size"), 'right'),
+                                              /*array('align' => 'char', 'char' => ' ')*/
                   'summary'
                   => new _PageList_Column('rev:summary', _("Last Summary")),
-
                   'version'
                   => new _PageList_Column_version('rev:version', _("Version"),
-                                                  'right'),
+                                                 'right'),
                   'author'
-                  => new _PageList_Column_author('rev:author',
-                                                 _("Last Author")),
+                  => new _PageList_Column_author('rev:author', _("Last Author")),
+                  'owner'
+                  => new _PageList_Column_author('owner', _("Owner")),
+                  'group'
+                  => new _PageList_Column_author('group', _("Group")),
                   'locked'
                   => new _PageList_Column_bool('locked', _("Locked"),
                                                _("locked")),

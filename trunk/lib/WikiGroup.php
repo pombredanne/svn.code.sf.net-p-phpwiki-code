@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.11 2004-02-07 10:41:25 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.12 2004-02-23 21:30:25 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -32,9 +32,12 @@ if (!defined('GROUP_METHOD') or
 define('GROUP_EVERY',		_("Every"));
 define('GROUP_ANONYMOUS',	_("Anonymous Users"));
 define('GROUP_BOGOUSERS',	_("Bogo Users"));
+define('GROUP_HASHOMEPAGE',     _("HasHomePage"));
 define('GROUP_SIGNED',		_("Signed Users"));
 define('GROUP_AUTHENTICATED',	_("Authenticated Users"));
 define('GROUP_ADMIN',		_("Administrators"));
+define('GROUP_OWNER',		_("Owner"));
+define('GROUP_CREATOR',	   	_("Creator"));
 
 /**
  * WikiGroup is an abstract class to provide the base functions for determining
@@ -737,6 +740,12 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/02/07 10:41:25  rurban
+// fixed auth from session (still double code but works)
+// fixed GroupDB
+// fixed DbPassUser upgrade and policy=old
+// added GroupLdap
+//
 // Revision 1.10  2004/02/03 09:45:39  rurban
 // LDAP cleanup, start of new Pref classes
 //
