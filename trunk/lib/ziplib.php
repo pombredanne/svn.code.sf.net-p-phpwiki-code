@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.39 2004-06-08 10:54:47 rurban Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.40 2004-06-19 12:32:37 rurban Exp $');
 
 /**
  * GZIP stuff.
@@ -22,7 +22,10 @@ function gzip_tempnam () {
     
     if (!$gzip_tmpfile) {
         //FIXME: does this work on non-unix machines?
-        $gzip_tmpfile = tempnam("/tmp", "wkzip");
+        if (is_writable("/tmp"))
+            $gzip_tmpfile = tempnam("/tmp", "wkzip");
+        else
+            $gzip_tmpfile = tempnam(TEMP_DIR, "wkzip");
         register_shutdown_function("gzip_cleanup");
     }
     return $gzip_tmpfile;
@@ -825,6 +828,9 @@ function ParseMimeifiedPages ($data)
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.39  2004/06/08 10:54:47  rurban
+// better acl dump representation, read back acl and owner
+//
 // Revision 1.38  2004/06/08 10:05:11  rurban
 // simplified admin action shortcuts
 //

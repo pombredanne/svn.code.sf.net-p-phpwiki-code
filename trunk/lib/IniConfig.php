@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.36 2004-06-19 10:06:37 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.37 2004-06-19 12:32:37 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -80,7 +80,7 @@ function IniConfig($file) {
     // These are not defined in config-default.ini and empty if not defined.
     $_IC_OPTIONAL_VALUE = array
         ( 
-         'DEBUG', 
+         'DEBUG', 'TEMP_DIR',
          'LDAP_AUTH_HOST','LDAP_SET_OPTION','LDAP_BASE_DN', 'LDAP_AUTH_USER',
          'LDAP_AUTH_PASSWORD','LDAP_SEARCH_FIELD','AUTH_USER_FILE','DBAUTH_AUTH_DSN',
          'IMAP_AUTH_HOST', 'POP3_AUTH_HOST',
@@ -306,8 +306,12 @@ function IniConfig($file) {
     global $PLUGIN_CACHED_IMGTYPES;
     $PLUGIN_CACHED_IMGTYPES = preg_split('/\s*:\s*/', PLUGIN_CACHED_IMGTYPES);
     if (!defined('PLUGIN_CACHED_CACHE_DIR')) {
-        if (!FindFile('/tmp/cache', 1))
+        if (!FindFile('/tmp/cache', 1)) {
+            if (!FindFile('/tmp', 1)) {
+                mkdir('/tmp', 777);
+            }
             mkdir('/tmp/cache', 777);
+        }
         define('PLUGIN_CACHED_CACHE_DIR', FindFile('/tmp/cache',false,1)); // will throw an error
     } else {
         FindFile(PLUGIN_CACHED_CACHE_DIR);
@@ -589,6 +593,10 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.36  2004/06/19 10:06:37  rurban
+// Moved lib/plugincache-config.php to config/*.ini
+// use PLUGIN_CACHED_* constants instead of global $CacheParams
+//
 // Revision 1.35  2004/06/15 09:15:52  rurban
 // IMPORTANT: fixed passwd handling for passwords stored in prefs:
 //   fix encrypted usage, actually store and retrieve them from db
