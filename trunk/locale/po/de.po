@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.4pre\n"
-"POT-Creation-Date: 2002-12-14 21:32-0500\n"
+"POT-Creation-Date: 2002-12-17 10:29-0800\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Carsten Klapp <carstenklapp@mac.com>, Reini Urban <rurban@x-"
 "ray.at>, Arno Hollosi <ahollosi@mail.com>\n"
@@ -156,39 +156,39 @@ msgstr "gestern"
 msgid "Edit: %s"
 msgstr "Editiere: %s"
 
-#: ../lib/Theme.php:739 ../themes/default/templates/actionbar.tmpl:6
+#: ../lib/Theme.php:738 ../themes/default/templates/actionbar.tmpl:6
 msgid "Edit"
 msgstr "Editieren"
 
-#: ../lib/Theme.php:740
+#: ../lib/Theme.php:739
 msgid "Diff"
 msgstr "Diff"
 
-#: ../lib/Theme.php:741 ../themes/default/templates/signin.tmpl:6
+#: ../lib/Theme.php:740 ../themes/default/templates/signin.tmpl:6
 #: ../themes/default/templates/signin.tmpl:30
 msgid "Sign Out"
 msgstr "Abmelden"
 
-#: ../lib/Theme.php:742 ../lib/WikiUser.php:163
+#: ../lib/Theme.php:741 ../lib/WikiUser.php:163
 #: ../themes/default/templates/login.tmpl:44
 #: ../themes/default/templates/signin.tmpl:52
 #: ../themes/default/templates/signin.tmpl:55
 msgid "Sign In"
 msgstr "Anmelden"
 
-#: ../lib/Theme.php:743 ../themes/MacOSX/themeinfo.php:112
+#: ../lib/Theme.php:742 ../themes/MacOSX/themeinfo.php:111
 msgid "Lock Page"
 msgstr "Seite Sperren"
 
-#: ../lib/Theme.php:744 ../themes/MacOSX/themeinfo.php:113
+#: ../lib/Theme.php:743 ../themes/MacOSX/themeinfo.php:112
 msgid "Unlock Page"
 msgstr "Seite Freigeben"
 
-#: ../lib/Theme.php:745
+#: ../lib/Theme.php:744
 msgid "Remove Page"
 msgstr "Seite Löschen"
 
-#: ../lib/Theme.php:788
+#: ../lib/Theme.php:787
 #, c-format
 msgid "Redefinition of %s: %s"
 msgstr "Datenbestimmung %s neu definiert: %s"
@@ -443,7 +443,7 @@ msgstr "Quell Text: %s"
 msgid "Saved: %s"
 msgstr "Gespeichert: %s"
 
-#: ../lib/editpage.php:231 ../themes/MacOSX/themeinfo.php:114
+#: ../lib/editpage.php:231 ../themes/MacOSX/themeinfo.php:113
 msgid "Page Locked"
 msgstr "Seite Gesperrt"
 
@@ -505,11 +505,11 @@ msgstr ""
 "und die des anderen Autors kombiniert worden. Das Resultat wird unten "
 "angezeigt."
 
-#: ../lib/editpage.php:321
+#: ../lib/editpage.php:323
 msgid "Preview"
 msgstr "Vorschau"
 
-#: ../lib/editpage.php:324
+#: ../lib/editpage.php:326
 msgid "Save"
 msgstr "Speichern"
 
@@ -1700,7 +1700,7 @@ msgstr "Eingefügter Text von %s"
 msgid "UserPreferences"
 msgstr "BenutzerEinstellungen"
 
-#: ../lib/plugin/UserPreferences.php:50
+#: ../lib/plugin/UserPreferences.php:48
 msgid ""
 "Error: The page with the UserPreferences plugin must be valid WikiWord or a "
 "Preferences subpage of the users HomePage. Sorry, UserPreferences cannot be "
@@ -1710,11 +1710,11 @@ msgstr ""
 "gültiges WikiWord sein, oder eine /Einstellungen Subpage der "
 "Benutzerhomepage. Leider, die Einstellungen können nicht gespeichert werden."
 
-#: ../lib/plugin/UserPreferences.php:64
+#: ../lib/plugin/UserPreferences.php:62
 msgid "No changes."
 msgstr "Keine Änderungen."
 
-#: ../lib/plugin/UserPreferences.php:66
+#: ../lib/plugin/UserPreferences.php:64
 #, fuzzy, c-format
 msgid "%d UserPreferences fields successfully updated."
 msgstr "%d Einstellungsfelden erfolgreich gesichert."
@@ -2122,34 +2122,47 @@ msgstr "Justiere"
 
 #: ../themes/Portland/templates/editpage.tmpl:75
 #: ../themes/default/templates/editpage.tmpl:78
-msgid "Use new markup"
-msgstr "Verwende neues Wiki Quelltextformat"
+#, fuzzy
+msgid "Use old markup"
+msgstr "Verwende alten Wiki Quelltextformat"
 
 #: ../themes/Portland/templates/editpage.tmpl:80
 #: ../themes/default/templates/editpage.tmpl:25
 msgid "Preview only!  Changes not saved."
 msgstr "Nur die Vorschau! Änderungen nicht gespeichert."
 
-#: ../themes/Portland/templates/editpage.tmpl:85
-#: ../themes/default/templates/editpage.tmpl:104
+#: ../themes/Portland/templates/editpage.tmpl:103
+#: ../themes/Portland/templates/editpage.tmpl:108
+#: ../themes/default/templates/editpage.tmpl:120
+#: ../themes/default/templates/editpage.tmpl:125
 #, c-format
 msgid "See %s tips for editing."
 msgstr "Siehe %s Tips fürs Editieren."
 
-#: ../themes/Portland/templates/editpage.tmpl:85
-#: ../themes/default/templates/editpage.tmpl:104
+#: ../themes/Portland/templates/editpage.tmpl:103
+#: ../themes/Portland/templates/editpage.tmpl:108
+#: ../themes/default/templates/editpage.tmpl:120
+#: ../themes/default/templates/editpage.tmpl:125
 msgid "GoodStyle"
 msgstr "GuterStil"
 
-#: ../themes/Portland/templates/editpage.tmpl:87
-#: ../themes/default/templates/editpage.tmpl:105
-msgid "TextFormattingRules"
+#: ../themes/Portland/templates/editpage.tmpl:104
+#: ../themes/default/templates/editpage.tmpl:121
+#, fuzzy
+msgid "OldTextFormattingRules"
 msgstr "TextFormatierungsRegeln"
 
-#: ../themes/Portland/templates/editpage.tmpl:87
-#: ../themes/default/templates/editpage.tmpl:105
+#: ../themes/Portland/templates/editpage.tmpl:104
+#: ../themes/Portland/templates/editpage.tmpl:109
+#: ../themes/default/templates/editpage.tmpl:121
+#: ../themes/default/templates/editpage.tmpl:126
 msgid "Synopsis"
 msgstr "Übersicht"
+
+#: ../themes/Portland/templates/editpage.tmpl:109
+#: ../themes/default/templates/editpage.tmpl:126
+msgid "TextFormattingRules"
+msgstr "TextFormatierungsRegeln"
 
 #: ../themes/Portland/templates/navbar.tmpl:8
 #: ../themes/default/templates/navbar.tmpl:13

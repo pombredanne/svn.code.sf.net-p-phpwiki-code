@@ -634,8 +634,6 @@ $locale["Uploading %s"] =
    "%s wird hochgeladen";
 $locale["Uploading zip dumps"] =
    "Das Hochladen der ZIP-Speicherauszüge zu diesem Wiki";
-$locale["Use new markup"] =
-   "Verwende neues Wiki Quelltextformat";
 $locale["User statistics"] =
    "Benutzer Statistiken";
 $locale["UserId"] =
