@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiPoll.php,v 1.5 2004-03-01 16:11:13 rurban Exp $');
+rcs_id('$Id: WikiPoll.php,v 1.6 2004-03-01 18:08:53 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
@@ -65,7 +65,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
@@ -153,7 +153,7 @@ extends WikiPlugin
         $poll = $page->get("poll");
         $ip = $_SERVER['REMOTE_ADDR'];
         $disable_submit = false;
-        if (0 and isset($poll['ip'][$ip]) and ((time() - $poll['ip'][$ip]) < 20*60)) {
+        if (isset($poll['ip'][$ip]) and ((time() - $poll['ip'][$ip]) < 20*60)) {
             //view at least the result or disable the Go button
             $html = HTML(HTML::strong(
                         _("Sorry! You must wait at least 20 minutes until you can vote again!")));
@@ -328,6 +328,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/03/01 16:11:13  rurban
+// graphical enhancement
+//
 // Revision 1.4  2004/02/26 01:42:27  rurban
 // don't cache this at all
 //
