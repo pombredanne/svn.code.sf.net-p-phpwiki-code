@@ -75,8 +75,8 @@ require_once($rootdir."lib/PagePerm.php");
 
 class MockRequest extends Request {
     function MockRequest(&$dbparams) {
-    	global $Theme, $request;
-        $this->_dbi = WikiDB::open(&$dbparams);
+    	global $WikiTheme, $request;
+        $this->_dbi = WikiDB::open($dbparams);
         $this->_args = array('pagename' => 'HomePage', 'action' => 'browse');
         $this->Request();
     }

@@ -89,7 +89,7 @@ foreach ($actions as $action) {
 // requiredAuthorityForPage($action);
 // require 'edit' access
 function doSavePage($pagename,$content,$credentials=false) {
-    checkCredentials(&$server,&$credentials,'edit',$pagename);
+    checkCredentials($server,$credentials,'edit',$pagename);
     $dbi = WikiDB::open($GLOBALS['DBParams']);
     $page = $dbi->getPage($pagename);
     $current = $page->getCurrentRevision();
@@ -101,7 +101,7 @@ function doSavePage($pagename,$content,$credentials=false) {
 
 // require 'view' access
 function getPageContent($pagename,$credentials=false) {
-    checkCredentials(&$server,&$credentials,'view',$pagename);
+    checkCredentials($server,$credentials,'view',$pagename);
     $dbi = WikiDB::open($GLOBALS['DBParams']);
     $page = $dbi->getPage($pagename);
     $rev = $page->getCurrentRevision();
@@ -110,7 +110,7 @@ function getPageContent($pagename,$credentials=false) {
 }
 // require 'view' access
 function getPageRevision($pagename,$revision,$credentials=false) {
-    checkCredentials(&$server,&$credentials,'view',$pagename);
+    checkCredentials($server,$credentials,'view',$pagename);
     $dbi = WikiDB::open($GLOBALS['DBParams']);
     $page = $dbi->getPage($pagename);
     $rev = $page->getCurrentRevision();
@@ -119,7 +119,7 @@ function getPageRevision($pagename,$revision,$credentials=false) {
 }
 // require 'view' access
 function getCurrentRevision($pagename,$credentials=false) {
-    checkCredentials(&$server,&$credentials,'view',$pagename);
+    checkCredentials($server,$credentials,'view',$pagename);
     if (!mayAccessPage ('view',$pagename))
         $server->fault(401,'',"no permission");
     $dbi = WikiDB::open($GLOBALS['DBParams']);
@@ -130,7 +130,7 @@ function getCurrentRevision($pagename,$credentials=false) {
 }
 // require 'change' or 'view' access ?
 function getPageMeta($pagename,$credentials=false) {
-    checkCredentials(&$server,&$credentials,'view',$pagename);
+    checkCredentials($server,$credentials,'view',$pagename);
     $dbi = WikiDB::open($GLOBALS['DBParams']);
     $page = $dbi->getPage($pagename);
     $rev = $page->getCurrentRevision();
@@ -140,7 +140,7 @@ function getPageMeta($pagename,$credentials=false) {
 }
 // require 'view' access to AllPages
 function getAllPagenames($credentials=false) {
-    checkCredentials(&$server,&$credentials,'view',_("AllPages"));
+    checkCredentials($server,$credentials,'view',_("AllPages"));
     $dbi = WikiDB::open($GLOBALS['DBParams']);
     $page_iter = $dbi->getAllPages();
     $pages = array();
@@ -151,7 +151,7 @@ function getAllPagenames($credentials=false) {
 }
 // require 'view' access
 function getBacklinks($pagename,$credentials=false) {
-    checkCredentials(&$server,&$credentials,'view',$pagename);
+    checkCredentials($server,$credentials,'view',$pagename);
     $dbi = WikiDB::open($GLOBALS['DBParams']);
     $backend = &$dbi->_backend;
     $result =  $backend->get_links($pagename);
@@ -164,7 +164,7 @@ function getBacklinks($pagename,$credentials=false) {
 }
 // require 'view' access to TitleSearch
 function doTitleSearch($query,$credentials=false) {
-    checkCredentials(&$server,&$credentials,'view',_("TitleSearch"));
+    checkCredentials($server,$credentials,'view',_("TitleSearch"));
     $dbi = WikiDB::open($GLOBALS['DBParams']);
     $page_iter = $dbi->titleSearch($query);
     $pages = array();
@@ -175,7 +175,7 @@ function doTitleSearch($query,$credentials=false) {
 }
 // require 'view' access to FullTextSearch
 function doFullTextSearch($query,$credentials=false) {
-    checkCredentials(&$server,&$credentials,'view',_("FullTextSearch"));
+    checkCredentials($server,$credentials,'view',_("FullTextSearch"));
     $dbi = WikiDB::open($GLOBALS['DBParams']);
     $page_iter = $dbi->fullSearch($query);
     $pages = array();
