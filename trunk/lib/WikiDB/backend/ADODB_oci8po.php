@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_oci8po.php,v 1.2 2004-12-08 12:55:04 rurban Exp $');
+rcs_id('$Id: ADODB_oci8po.php,v 1.3 2005-01-18 20:55:47 rurban Exp $');
 
 /**
  * Oracle extensions for the ADODB DB backend.
@@ -132,9 +132,9 @@ extends WikiDB_backend_ADODB_search
     function _fulltext_match_clause($node) { 
         $page = $node->sql($word);
         $exactword = $node->_sql_quote();
-        return $this->_case_exact
-            ? "pagename LIKE '$page' OR DBMS_LOB.INSTR(content, '$exactword') > 0"
-            : "LOWER(pagename) LIKE '$page' OR DBMS_LOB.INSTR(content, '$exactword') > 0";
+        return ($this->_case_exact
+                ? "pagename LIKE '$page' OR DBMS_LOB.INSTR(content, '$exactword') > 0"
+                : "LOWER(pagename) LIKE '$page' OR DBMS_LOB.INSTR(content, '$exactword') > 0");
     }
 }
 

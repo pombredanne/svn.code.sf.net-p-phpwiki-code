@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_oci8.php,v 1.7 2004-12-08 12:55:51 rurban Exp $');
+rcs_id('$Id: PearDB_oci8.php,v 1.8 2005-01-18 20:55:48 rurban Exp $');
 
 /**
  * Oracle extensions for the Pear DB backend.
@@ -75,9 +75,9 @@ extends WikiDB_backend_PearDB_search
     function _fulltext_match_clause($node) { 
         $page = $node->sql($word);
         $exactword = $node->_sql_quote();
-        return $this->_case_exact
-            ? "pagename LIKE '$page' OR DBMS_LOB.INSTR(content, '$exactword') > 0"
-            : "LOWER(pagename) LIKE '$page' OR DBMS_LOB.INSTR(content, '$exactword') > 0";
+        return ($this->_case_exact
+                ? "pagename LIKE '$page' OR DBMS_LOB.INSTR(content, '$exactword') > 0"
+                : "LOWER(pagename) LIKE '$page' OR DBMS_LOB.INSTR(content, '$exactword') > 0");
     }
 }
 

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.69 2004-12-26 17:14:03 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.70 2005-01-18 20:55:43 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -513,7 +513,8 @@ extends WikiDB_backend
                       'mtime' => $mtime);
         $this->lock(array('version','recent','nonempty','page','link'));
         $version = $this->get_latest_version($pagename);
-        if ($dbh->Execute("UPDATE $recent_tbl SET latestversion=latestversion+1,latestmajor=latestversion+1,latestminor=NULL WHERE id=$id")
+        if ($dbh->Execute("UPDATE $recent_tbl SET latestversion=latestversion+1,"
+                          . "latestmajor=latestversion+1,latestminor=NULL WHERE id=$id")
             and $dbh->Execute("INSERT INTO $version_tbl"
                                 . " (id,version,mtime,minor_edit,content,versiondata)"
                                 . " VALUES(?,?,?,?,?,?)",
@@ -523,7 +524,8 @@ extends WikiDB_backend
             and $this->set_links($pagename, false)
             // need to keep perms and LOCKED, otherwise you can reset the perm 
             // by action=remove and re-create it with default perms
-            //and $dbh->Execute("UPDATE $page_tbl SET pagedata='' WHERE id=$id") // keep hits but delete meta-data 
+            // keep hits but delete meta-data 
+            //and $dbh->Execute("UPDATE $page_tbl SET pagedata='' WHERE id=$id") 
            )
         {
             $this->unlock(array('version','recent','nonempty','page','link'));	
@@ -595,11 +597,14 @@ extends WikiDB_backend
         } elseif (DEBUG) {
             // purge page table: delete all non-referenced pages
             // for all previously linked pages...
-            foreach ($dbh->getRow("SELECT $link_tbl.linkto as id FROM $link_tbl WHERE linkfrom=$pageid") as $id) {
+            foreach ($dbh->getRow("SELECT $link_tbl.linkto as id FROM $link_tbl".
+                                  " WHERE linkfrom=$pageid") as $id) {
             	// ...check if the page is empty and has no version
-                if ($dbh->getRow("SELECT $page_tbl.id FROM $page_tbl LEFT JOIN $nonempty_tbl USING (id) "
-                                  ." LEFT JOIN $version_tbl USING (id)"
-                                  ." WHERE ISNULL($nonempty_tbl.id) AND ISNULL($version_tbl.id) AND $page_tbl.id=$id")) {
+                if ($dbh->getRow("SELECT $page_tbl.id FROM $page_tbl"
+                                 . " LEFT JOIN $nonempty_tbl USING (id) "
+                                 . " LEFT JOIN $version_tbl USING (id)"
+                                 . " WHERE ISNULL($nonempty_tbl.id) AND"
+                                 . " ISNULL($version_tbl.id) AND $page_tbl.id=$id")) {
                     $dbh->Execute("DELETE FROM $page_tbl WHERE id=$id");   // this purges the link
                     $dbh->Execute("DELETE FROM $recent_tbl WHERE id=$id"); // may fail
                 }
@@ -1217,15 +1222,15 @@ extends WikiDB_backend_search
     }
     function _pagename_match_clause($node) {
         $word = $node->sql();
-        return $this->_case_exact 
-            ? "pagename LIKE '$word'"
-            : "LOWER(pagename) LIKE '$word'";
+        return ($this->_case_exact 
+                ? "pagename LIKE '$word'"
+                : "LOWER(pagename) LIKE '$word'");
     }
     function _fulltext_match_clause($node) { 
         $word = $node->sql();
-        return $this->_case_exact
-            ? "pagename LIKE '$word' OR content LIKE '$word'"
-            : "LOWER(pagename) LIKE '$word' OR content LIKE '$word'";
+        return ($this->_case_exact
+                ? "pagename LIKE '$word' OR content LIKE '$word'"
+                : "LOWER(pagename) LIKE '$word' OR content LIKE '$word'");
     }
 }
 
@@ -1389,6 +1394,9 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.69  2004/12/26 17:14:03  rurban
+// fix ADODB MostPopular, avoid limit -1, pass hits on empty data
+//
 // Revision 1.68  2004/12/22 18:33:25  rurban
 // fix page _id_cache logic for _get_pageid create_if_missing
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_pgsql.php,v 1.14 2004-12-06 19:50:04 rurban Exp $');
+rcs_id('$Id: PearDB_pgsql.php,v 1.15 2005-01-18 20:55:48 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB.php');
@@ -87,19 +87,21 @@ extends WikiDB_backend_PearDB_search
     function _pagename_match_clause($node) {
         $word = $node->sql();
         if ($node->op == 'REGEX') { // posix regex extensions
-            return $this->_case_exact ? "pagename ~* '$word'"
-                		      : "pagename ~ '$word'";
+            return ($this->_case_exact 
+                    ? "pagename ~* '$word'"
+                    : "pagename ~ '$word'");
         } else {
-            return $this->_case_exact ? "pagename LIKE '$word'" 
-                                      : "pagename ILIKE '$word'";
+            return ($this->_case_exact 
+                    ? "pagename LIKE '$word'" 
+                    : "pagename ILIKE '$word'");
         }
     }
     function _fulltext_match_clause($node) { 
         $word = $node->sql();
         return $this->_pagename_match_clause($node) 
-            . $this->_case_exact
-              ? " OR content LIKE '$word'"
-              : " OR content ILIKE '$word'";
+            . ($this->_case_exact
+               ? " OR content LIKE '$word'"
+               : " OR content ILIKE '$word'");
     }
 }
 

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_mysql.php,v 1.15 2004-12-22 15:47:41 rurban Exp $');
+rcs_id('$Id: PearDB_mysql.php,v 1.16 2005-01-18 20:55:48 rurban Exp $');
 
 require_once('lib/WikiDB/backend/PearDB.php');
 
@@ -171,8 +171,9 @@ extends WikiDB_backend_PearDB_search
         if ($node->op == 'REGEX') { // posix regex extensions
             return "pagename REGEXP '$word'";
         } else {
-            return $this->_case_exact ? "pagename LIKE '$word'" 
-                                      : "LOWER(pagename) LIKE '$word'";
+            return ($this->_case_exact 
+                    ? "pagename LIKE '$word'" 
+                    : "LOWER(pagename) LIKE '$word'");
         }
     }
 }
