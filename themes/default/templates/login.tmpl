@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: login.tmpl,v 1.24 2003-11-25 16:36:53 carstenklapp Exp $ -->
+<!-- $Id: login.tmpl,v 1.25 2004-02-03 09:45:39 rurban Exp $ -->
 <!-- The login form -->
 
 <?php if ($fail_message) { ?>
@@ -18,9 +18,25 @@
     $examplechars = $examplechars . "&#22825;&#36947;&#12354;&#12363;&#12397;";
   }*/ ?>
   <?php require_once("lib/BlockParser.php");
+  if (DEBUG) {
+    printf(asXML(TransformText("  DEBUG: ALLOW_ANON_EDIT = %s, ALLOW_BOGO_LOGIN = %s, ALLOW_USER_PASSWORDS = %s")), 
+    	ALLOW_ANON_EDIT ? "true" : "false",
+    	ALLOW_BOGO_LOGIN ? "true" : "false",
+    	ALLOW_USER_PASSWORDS ? "true" : "false");
+    if (ALLOW_USER_PASSWORDS) {
+      printf(asXML(TransformText("  USER_AUTH_ORDER: %s")),join(" / ",$GLOBALS['USER_AUTH_ORDER']));
+      printf(asXML(TransformText("  USER_AUTH_POLICY: %s")),USER_AUTH_POLICY);
+    }
+    echo ("<br />\n");
+  }
   $t = TransformText(_("You may sign in using any [WikiWord|AddingPages] as a user id. (%s etc. may be used too). The user id will be used as a link in RecentChanges to your home page."),
                      2.0, true);
-  printf(asXML($t), $examplechars); ?>
+  printf(asXML($t), $examplechars);
+  /* On disabled DbPrefs (PagePrefs only) note the user to create his PersonalPage. */
+  if (!(!empty($GLOBALS['DBAuthParams']['pref_update']) and $GLOBALS['DBParams']['dbtype'] == 'SQL')) {
+    printf(TransformText(_("Note: If you create your personal HomePage with same the pagename as your UserId, you will be able to store your UserPreferences also. Otherwise not."))); 
+  }
+  ?>
   <?php if (empty($pass_required)) ?>
   <p><?= _("New users may use an empty password.") ?></p>
 <?php } ?>
@@ -37,7 +53,7 @@
   <td><input type="password" name="auth[passwd]" size="12" maxlength="256" /></td>
 </tr>
 <?php
-/* Related code for this doesn't seem to function yet.
+/* Related code for this doesn't seem to work yet.
    Commented out for now until it is fixed or removed.
    (I personally don't see the need for this feature. --CarstenKlapp)
   $dbi = $request->getDbh();

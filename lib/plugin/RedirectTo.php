@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RedirectTo.php,v 1.11 2003-11-22 17:54:50 carstenklapp Exp $');
+rcs_id('$Id: RedirectTo.php,v 1.12 2004-02-03 09:45:39 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -30,6 +30,7 @@ rcs_id('$Id: RedirectTo.php,v 1.11 2003-11-22 17:54:50 carstenklapp Exp $');
  * Author:  Reini Urban <rurban@x-ray.at>
  *
  * BUGS/COMMENTS:
+ * Todo: fix with USE_PATH_INFO = false
  *
  * This plugin could probably result in a lot of confusion, especially when
  * redirecting to external sites.  (Perhaps it can even be used for dastardly
@@ -52,7 +53,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     function getDefaultArguments() {
@@ -115,6 +116,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2003/11/22 17:54:50  carstenklapp
+// Minor internal change: Removed redundant call to gettext within
+// fmt(). (locale make: RedirectTo.php:81: warning: keyword nested in
+// keyword arg)
+//
 // Revision 1.10  2003/02/24 00:40:09  carstenklapp
 // PHP's closing tag \?\> within // cvs log comments caused the trailing comments to display as literal text on the PluginManager page.
 //

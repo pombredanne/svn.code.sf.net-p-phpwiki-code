@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.10 2004-02-01 09:14:11 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.11 2004-02-03 09:45:39 rurban Exp $');
 
 // This is a complete OOP rewrite of the old WikiUser code with various
 // configurable external authentification methods.
@@ -1178,10 +1178,8 @@ extends _PassUser
         $userid = $this->_userid;
         if ($ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
             $r = @ldap_bind($ldap); // this is an anonymous bind
-            $st_search = "uid=$userid";
             // Need to set the right root search information. see ../index.php
-            $sr = ldap_search($ldap, LDAP_BASE_DN,
-                              "$st_search");
+            $sr = ldap_search($ldap, LDAP_BASE_DN, "uid=$userid");
             $info = ldap_get_entries($ldap, $sr); // there may be more hits with this userid. try every
             for ($i = 0; $i < $info["count"]; $i++) {
                 $dn = $info[$i]["dn"];
@@ -1213,13 +1211,10 @@ extends _PassUser
     function userExists() {
         $userid = $this->_userid;
         if ($ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
-            $r = @ldap_bind($ldap); // this is an anonymous bind
-            $st_search = "uid=$userid";
-            // Need to set the right root search information. see ../index.php
-            $sr = ldap_search($ldap, LDAP_BASE_DN,
-                              "$st_search");
-            $info = ldap_get_entries($ldap, $sr); // there may be more hits with this userid. try every
-            if ($info["count"]) {
+            $r = @ldap_bind($ldap);                 // this is an anonymous bind
+            $sr = ldap_search($ldap, LDAP_BASE_DN, "uid=$userid");
+            $info = ldap_get_entries($ldap, $sr);
+            if ($info["count"] > 0) {
                 ldap_close($ldap);
                 return true;
             }
@@ -1551,7 +1546,7 @@ extends _UserPreference
  * 
  * This object holds the $request->_prefs subobjects.
  * A simple packed array of non-default values get's stored as cookie,
- * homepage, and database, which are converted to the array of 
+ * homepage, or database, which are converted to the array of 
  * ->_prefs objects.
  * We don't store the objects, because otherwise we will
  * not be able to upgrade any subobject. And it's a waste of space also.
@@ -1706,8 +1701,48 @@ class UserPreferences
     }
 }
 
+class CookieUserPreferences
+extends UserPreferences
+{
+    function CookieUserPreferences ($saved_prefs = false) {
+        UserPreferences::UserPreferences($saved_prefs);
+    }
+}
+
+class PageUserPreferences
+extends UserPreferences
+{
+    function PageUserPreferences ($saved_prefs = false) {
+        UserPreferences::UserPreferences($saved_prefs);
+    }
+}
+
+class DbUserPreferences
+extends UserPreferences
+{
+    function DbUserPreferences ($saved_prefs = false) {
+        UserPreferences::UserPreferences($saved_prefs);
+    }
+}
+
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/02/01 09:14:11  rurban
+// Started with Group_Ldap (not yet ready)
+// added new _AuthInfo plugin to help in auth problems (warning: may display passwords)
+// fixed some configurator vars
+// renamed LDAP_AUTH_SEARCH to LDAP_BASE_DN
+// changed PHPWIKI_VERSION from 1.3.8a to 1.3.8pre
+// USE_DB_SESSION defaults to true on SQL
+// changed GROUP_METHOD definition to string, not constants
+// changed sample user DBAuthParams from UPDATE to REPLACE to be able to
+//   create users. (Not to be used with external databases generally, but
+//   with the default internal user table)
+//
+// fixed the IndexAsConfigProblem logic. this was flawed:
+//   scripts which are the same virtual path defined their own lib/main call
+//   (hmm, have to test this better, phpwiki.sf.net/demo works again)
+//
 // Revision 1.9  2004/01/30 19:57:58  rurban
 // fixed DBAuthParams['pref_select']: wrong _auth_dbi object used.
 //

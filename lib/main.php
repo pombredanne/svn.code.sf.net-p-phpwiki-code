@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.109 2004-01-30 19:57:58 rurban Exp $');
+rcs_id('$Id: main.php,v 1.110 2004-02-03 09:45:39 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -36,6 +36,7 @@ class WikiRequest extends Request {
         if (ENABLE_USER_NEW) {
             $userid = $this->_deduceUsername();	
             $user = WikiUser($userid);
+            // todo: upgrade later at updateAuthAndPrefs()
             if (isset($this->_user)) 
                 $user = UpgradeUser($this->_user,$user);
             $this->_user = $user;
@@ -535,7 +536,7 @@ class WikiRequest extends Request {
             
         if ($user = $this->getSessionVar('wiki_user')) {
             // users might switch in a session between the two objects
-            // restore old auth level?
+            // restore old auth level here or in updateAuthAndPrefs()?
             if (isa($user,WikiUserClassname()) and !empty($user->_level)) {
                 if (empty($this->_user)) {
                     $c = get_class($user);
@@ -545,10 +546,9 @@ class WikiRequest extends Request {
                     else
                         $this->_user = new $c($this,$userid,$user->_level);
                 }
-                if ($user = UpgradeUser($this->_user,$user))
-                    $this->_user = $user;
+                //if ($user = UpgradeUser($this->_user,$user))
+                //    $this->_user = $user;
                 $this->_user->_authhow = 'session';
-                
             }
             if (isa($user,WikiUserClassname()))
                 return $user->UserName();
@@ -854,6 +854,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.109  2004/01/30 19:57:58  rurban
+// fixed DBAuthParams['pref_select']: wrong _auth_dbi object used.
+//
 // Revision 1.108  2004/01/28 14:34:14  rurban
 // session table takes the common prefix
 // + various minor stuff

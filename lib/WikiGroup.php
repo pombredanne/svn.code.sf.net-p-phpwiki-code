@@ -1,7 +1,7 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.9 2004-02-01 09:14:11 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.10 2004-02-03 09:45:39 rurban Exp $');
 /*
- Copyright 2002 $ThePhpWikiProgrammingTeam
+ Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -20,9 +20,11 @@ rcs_id('$Id: WikiGroup.php,v 1.9 2004-02-01 09:14:11 rurban Exp $');
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+// for now we provide no default memberhsip method. this might change.
+// (!defined('GROUP_METHOD')) define('GROUP_METHOD', "WIKIPAGE");
+
 if (!defined('GROUP_METHOD') or !in_array(GROUP_METHOD,array('NONE','WIKIPAGE','DB','FILE','LDAP')))
     trigger_error(_("No or unsupported GROUP_METHOD defined"), E_USER_WARNING);
-//define('GROUP_METHOD', "WIKIPAGE");
 
 /**
  * WikiGroup is an abstract class to provide the base functions for determining
@@ -97,7 +99,7 @@ class WikiGroup{
                 break;
             */
             default:
-                trigger_error(_("No GROUP_METHOD defined"), E_USER_WARNING);
+                trigger_error(_("No or unsupported GROUP_METHOD defined"), E_USER_WARNING);
                 return new WikiGroup($request);
         }
     }
@@ -379,8 +381,10 @@ class GroupDb extends WikiGroup {
         $this->username = null;
         $this->membership = array();
 
-        if (empty($DBAuthParams['group_members']) or empty($DBAuthParams['user_groups'])) {
-            trigger_error(_("No GROUP_DB statements defined"), E_USER_WARNING);
+        if (empty($DBAuthParams['group_members']) or 
+            empty($DBAuthParams['user_groups']) or
+            empty($DBAuthParams['is_member'])) {
+            trigger_error(_("No GROUP_DB SQL statements defined"), E_USER_WARNING);
             return false;
         }
         $dbh = _PassUser::getAuthDbh();
@@ -678,6 +682,22 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/02/01 09:14:11  rurban
+// Started with Group_Ldap (not yet ready)
+// added new _AuthInfo plugin to help in auth problems (warning: may display passwords)
+// fixed some configurator vars
+// renamed LDAP_AUTH_SEARCH to LDAP_BASE_DN
+// changed PHPWIKI_VERSION from 1.3.8a to 1.3.8pre
+// USE_DB_SESSION defaults to true on SQL
+// changed GROUP_METHOD definition to string, not constants
+// changed sample user DBAuthParams from UPDATE to REPLACE to be able to
+//   create users. (Not to be used with external databases generally, but
+//   with the default internal user table)
+//
+// fixed the IndexAsConfigProblem logic. this was flawed:
+//   scripts which are the same virtual path defined their own lib/main call
+//   (hmm, have to test this better, phpwiki.sf.net/demo works again)
+//
 // Revision 1.8  2004/01/27 23:23:39  rurban
 // renamed ->Username => _userid for consistency
 // renamed mayCheckPassword => mayCheckPass

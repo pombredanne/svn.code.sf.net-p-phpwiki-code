@@ -333,7 +333,7 @@ if (!defined('REQUIRE_SIGNIN_BEFORE_EDIT')) define('REQUIRE_SIGNIN_BEFORE_EDIT',
 //if (!defined('ALLOW_LDAP_LOGIN')) define('ALLOW_LDAP_LOGIN', true and function_exists('ldap_connect'));
 //if (!defined('LDAP_AUTH_HOST'))   define('LDAP_AUTH_HOST', 'localhost:443');
 // Give the right LDAP root search information in the next statement. 
-//if (!defined('LDAP_AUTH_SEARCH')) define('LDAP_AUTH_SEARCH', "ou=mycompany.com,o=My Company");
+//if (!defined('LDAP_BASE_DN')) define('LDAP_BASE_DN', "ou=mycompany.com,o=My Company");
 
 // IMAP auth: check userid/passwords from a imap server, defaults to localhost
 //if (!defined('ALLOW_IMAP_LOGIN')) define('ALLOW_IMAP_LOGIN', true and function_exists('imap_open'));
