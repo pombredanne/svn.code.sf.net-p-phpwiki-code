@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.79 2003-02-26 01:56:05 dairiki Exp $');
+rcs_id('$Id: loadsave.php,v 1.80 2003-03-07 02:46:57 dairiki Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -141,8 +141,7 @@ function MakeWikiZip (&$request)
     $dbi = $request->getDbh();
     $pages = $dbi->getAllPages();
     while ($page = $pages->next()) {
-        if (! ini_get('safe_mode'))
-            set_time_limit(30); // Reset watchdog.
+        @set_time_limit(30); // Reset watchdog
 
         $current = $page->getCurrentRevision();
         if ($current->getVersion() == 0)
@@ -191,8 +190,7 @@ function DumpToDir (&$request)
     $pages = $dbi->getAllPages();
 
     while ($page = $pages->next()) {
-        if (! ini_get('safe_mode'))
-            set_time_limit(30); // Reset watchdog.
+        @set_time_limit(30); // Reset watchdog.
 
         $filename = FilenameForPage($page->getName());
 
@@ -254,8 +252,7 @@ function DumpHtmlToDir (&$request)
         $Theme->HTML_DUMP_SUFFIX = $HTML_DUMP_SUFFIX;
 
     while ($page = $pages->next()) {
-        if (! ini_get('safe_mode'))
-            set_time_limit(30); // Reset watchdog.
+        @set_time_limit(30); // Reset watchdog.
 
         $pagename = $page->getName();
         $filename = FilenameForPage($pagename) . $Theme->HTML_DUMP_SUFFIX;
@@ -320,8 +317,7 @@ function MakeWikiZipHtml (&$request)
         $Theme->HTML_DUMP_SUFFIX = $HTML_DUMP_SUFFIX;
 
     while ($page = $pages->next()) {
-        if (! ini_get('safe_mode'))
-            set_time_limit(30); // Reset watchdog.
+        @set_time_limit(30); // Reset watchdog.
 
         $current = $page->getCurrentRevision();
         if ($current->getVersion() == 0)
@@ -591,8 +587,7 @@ function LoadFile (&$request, $filename, $text = false, $mtime = false)
         $text  = implode("", file($filename));
     }
 
-    if (! ini_get('safe_mode'))
-        set_time_limit(30); // Reset watchdog.
+    @set_time_limit(30); // Reset watchdog.
 
     // FIXME: basename("filewithnoslashes") seems to return garbage sometimes.
     $basename = basename("/dummy/" . $filename);
@@ -831,6 +826,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.79  2003/02/26 01:56:05  dairiki
+ Only zip pages with legal pagenames.
+
  Revision 1.78  2003/02/24 02:05:43  dairiki
  Fix "n bytes written" message when dumping HTML.
 
