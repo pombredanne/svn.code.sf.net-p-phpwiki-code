@@ -1,12 +1,12 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.6 2004-01-26 09:17:49 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.7 2004-01-27 23:23:39 rurban Exp $');
 
-// This is a complete OOP rewrite of the old WikiUser code with various 
+// This is a complete OOP rewrite of the old WikiUser code with various
 // configurable external authentification methods.
 //
 // There's only one entry point, the function WikiUser which returns 
 // a WikiUser object, which contains the user's preferences.
-// This object might get upgraded during the login step.
+// This object might get upgraded during the login step and later also.
 // There exist three preferences storage methods: cookie, homepage and db,
 // and multiple password checking methods.
 // See index.php for $USER_AUTH_ORDER[] and USER_AUTH_POLICY if 
@@ -17,28 +17,31 @@ rcs_id('$Id: WikiUserNew.php,v 1.6 2004-01-26 09:17:49 rurban Exp $');
 // and the following 1-3 auth methods: 
 //  checkPass()  must be defined by all classes,
 //  userExists() only if USER_AUTH_POLICY'=='strict' 
+//  mayChangePass()  only if the password is storable.
 //  storePass()  only if the password is storable.
 //
-// Given no name, returns an _AnonUser (anonymous user) object, who
-// may or may not have a cookie. Given a user name, returns a
-// _BogoUser object, who may or may not have a cookie and/or
-// NamesakePage, a _PassUser object or an _AdminUser object.
+// WikiUser() given no name, returns an _AnonUser (anonymous user)
+// object, who may or may not have a cookie. Given a user name,
+// returns a _BogoUser object, who may or may not have a cookie and/or
+// PersonalPage, a _PassUser object or an _AdminUser object.
 //
 // Takes care of passwords, all preference loading/storing in the
 // user's page and any cookies. main.php will query the user object to
 // verify the password as appropriate.
 //
 // Notes by 2004-01-25 03:43:45 rurban
-// Currently this library doesn't work yet good enough with 
-// the current configuration options. 
+// Currently this library doesn't look good enough with 
+// the current configuration options.
 // Test it by defining ENABLE_USER_NEW in index.php
 // The problem is that the previous code was written to do auth checks 
 // only on action != browse, and this code requires a good enough 
 // user object even for browse. I don't think that this is a good idea.
-// e.g. previously ALLOW_ANON_USER = false meant that anon users cannot edit, 
-// but may browse. Here with ALLOW_ANON_USER = false he may not browse, 
+// 1) Now a ForbideenUser is returned instead of false.
+// 2) Previously ALLOW_ANON_USER = false meant that anon users cannot edit, 
+// but may browse. Now with ALLOW_ANON_USER = false he may not browse, 
 // which is needed to disable browse PagePermissions. Hmm...
-// 
+// I added now ALLOW_ANON_EDIT = true to makes things clear. 
+// (which replaces REQUIRE_SIGNIN_BEFORE_EDIT)
 
 define('WIKIAUTH_FORBIDDEN', -1); // Completely not allowed.
 define('WIKIAUTH_ANON', 0);       // Not signed in.
@@ -62,31 +65,34 @@ define('TIMEOFFSET_MAX_HOURS',  26);
 if (!defined('TIMEOFFSET_DEFAULT_HOURS')) define('TIMEOFFSET_DEFAULT_HOURS', 0);
 
 /**
- * There are/will be four constants in index.php to establish login
- * parameters:
+ * There are be the following constants in index.php to 
+ * establish login parameters:
  *
  * ALLOW_ANON_USER         default true
+ * ALLOW_ANON_EDIT         default true
  * ALLOW_BOGO_LOGIN        default true
  * ALLOW_USER_PASSWORDS    default true
  * PASSWORD_LENGTH_MINIMUM default 6?
  *
- *
  * To require user passwords for editing:
- * ALLOW_BOGO_LOGIN = false,
- * ALLOW_USER_PASSWORDS = true.
- * REQUIRE_SIGNIN_BEFORE_EDIT = true
+ * ALLOW_ANON_USER  = true
+ * ALLOW_ANON_EDIT  = false   (before named REQUIRE_SIGNIN_BEFORE_EDIT)
+ * ALLOW_BOGO_LOGIN = false
+ * ALLOW_USER_PASSWORDS = true
  *
  * To establish a COMPLETELY private wiki, such as an internal
  * corporate one:
- * ALLOW_ANON_USER = false,
+ * ALLOW_ANON_USER = false
  * (and probably require user passwords as described above). In this
  * case the user will be prompted to login immediately upon accessing
  * any page.
  *
  * There are other possible combinations, but the typical wiki (such
- * as PhpWiki.sf.net) would usually just leave all three enabled.
+ * as PhpWiki.sf.net) would usually just leave all four enabled.
+ *
  */
 
+// The last object in the row is the bad guy...
 if (!is_array($USER_AUTH_ORDER))
     $USER_AUTH_ORDER = array("Forbidden");
 else
@@ -178,7 +184,7 @@ function WikiUser ($UserName = '') {
         // Check for autologin pref in cookie and possibly upgrade
         // user object to another type.
         $_AnonUser = new _AnonUser();
-        if ($UserName = $_AnonUser->UserName && $_AnonUser->_prefs->get('autologin')) {
+        if ($UserName = $_AnonUser->_userid && $_AnonUser->_prefs->get('autologin')) {
             // Found a user name.
             $ForbiddenUser = new _ForbiddenUser($UserName);
             return _determineAdminUserOrOtherUser($UserName);
@@ -253,25 +259,25 @@ function CheckPass ($UserName, $Password) {
 // Base WikiUser class.
 class _WikiUser
 {
-    var $UserName = '';
+    var $_userid = '';
 
     var $_level = WIKIAUTH_FORBIDDEN;
     var $_prefs = false;
     var $_HomePagehandle = false;
-    var $_current_method, $_current_index;
 
     // constructor
     function _WikiUser($UserName = '') {
 
+        $this->_userid = $UserName;
         if ($UserName) {
-            $this->UserName = $UserName;
             $this->_HomePagehandle = $this->hasHomePage();
         }
         $this->getPreferences();
     }
 
     function UserName() {
-        return $this->UserName;
+        if (!empty($this->_userid))
+            return $this->_userid;
     }
 
     function getPreferences() {
@@ -299,7 +305,7 @@ class _WikiUser
 
     // returns page_handle to user's home page or false if none
     function hasHomePage() {
-        if ($this->UserName) {
+        if ($this->_userid) {
             if ($this->_HomePagehandle) {
                 return $this->_HomePagehandle;
             }
@@ -307,7 +313,7 @@ class _WikiUser
                 // check db again (maybe someone else created it since
                 // we logged in.)
                 global $request;
-                $this->_HomePagehandle = $request->getPage($this->UserName);
+                $this->_HomePagehandle = $request->getPage($this->_userid);
                 return $this->_HomePagehandle;
             }
         }
@@ -321,7 +327,7 @@ class _WikiUser
             $this->_current_index = -1;
         }
         $this->_current_index++;
-        if ($this->_current_index > count($this->_auth_methods))
+        if ($this->_current_index >= count($this->_auth_methods))
             return false;
         $this->_current_method = $this->_auth_methods[$this->_current_index];
         return $this->_current_method;
@@ -331,7 +337,7 @@ class _WikiUser
     function nextClass() {
         if ($method = $this->nextAuthMethod()) {
             $class = "_".$method."PassUser";
-            if ($user = new $class($this->UserName)) {
+            if ($user = new $class($this->_userid)) {
                 // prevent from endless recursion.
                 UpgradeUser($this, $user);
             }
@@ -345,7 +351,7 @@ class _WikiUser
         // Call update_locale in case the system's default language is not 'en'.
         // (We have no user pref for lang at this point yet, no one is logged in.)
         update_locale(DEFAULT_LANGUAGE);
-        $userid = $this->UserName;
+        $userid = $this->_userid;
         $require_level = 0;
         extract($args); // fixme
 
@@ -373,7 +379,7 @@ class _WikiUser
     function isAuthenticated () {
         //return isa($this,'_PassUser');
         //return isa($this,'_BogoUser') || isa($this,'_PassUser');
-        return $this->_level >= WIKIAUTH_USER;
+        return $this->_level >= WIKIAUTH_BOGO;
     }
 
     function isAdmin () {
@@ -381,14 +387,14 @@ class _WikiUser
     }
 
     function getId () {
-        return ( $this->UserName
-                 ? $this->UserName
+        return ( $this->UserName()
+                 ? $this->UserName()
                  : $GLOBALS['request']->get('REMOTE_ADDR') ); // FIXME: globals
     }
 
     function getAuthenticatedId() {
         return ( $this->isAuthenticated()
-                 ? $this->UserName
+                 ? $this->_userid
                  : ''); //$GLOBALS['request']->get('REMOTE_ADDR') ); // FIXME: globals
     }
 
@@ -413,7 +419,6 @@ class _WikiUser
         elseif (!$login && !$userid)
             return false;       // Nothing to do?
 
-        $this->UserName = $userid;
         $authlevel = $this->checkPass($passwd);
         if (!$authlevel)
             return _("Invalid password or userid.");
@@ -461,9 +466,9 @@ extends _WikiUser
              * username). (Remember, _BogoUser and higher inherit this
              * function too!).
              */
-            if (! $this->UserName() || $this->UserName() == $unboxedcookie['userid']) {
+            if (! $UserName || $UserName == $unboxedcookie['userid']) {
                 $this->_prefs = new UserPreferences($unboxedcookie);
-                $this->UserName = $unboxedcookie['userid'];
+                $this->_userid = $unboxedcookie['userid'];
             }
         }
         // initializeTheme() needs at least an empty object
@@ -520,7 +525,7 @@ class _BogoUser
 extends _AnonUser
 {
     function userExists() {
-        if (isWikiWord($this->UserName)) {
+        if (isWikiWord($this->_userid)) {
             $this->_level = WIKIAUTH_BOGO;
             return true;
         } else {
@@ -553,13 +558,14 @@ extends _AnonUser
  */
 {
     var $_auth_dbi, $_prefmethod, $_prefselect, $_prefupdate;
+    var $_current_method, $_current_index;
 
     // check and prepare the auth and pref methods only once
     function _PassUser($UserName = '') {
         global $DBAuthParams;
 
         if ($UserName) {
-            $this->UserName = $UserName;
+            $this->_userid = $UserName;
             $this->_HomePagehandle = $this->hasHomePage();
         }
         // Check the configured Prefs methods
@@ -634,14 +640,13 @@ extends _AnonUser
     }
 
     function getAuthDbh () {
-        global $DBParams, $DBAuthParams;
-        if (!isset($this->_auth_dbi)) {
+        global $request, $DBParams, $DBAuthParams;
+        if (empty($this->_auth_dbi)) {
             if ($DBParams['dbtype'] == 'dba' or empty($DBAuthParams['auth_dsn']))
-                $this->_auth_dbi = $this->getDbh(); // use phpwiki database 
+                $this->_auth_dbi = $request->getDbh(); // use phpwiki database 
             elseif ($DBAuthParams['auth_dsn'] == $DBParams['dsn'])
-                $this->_auth_dbi = $this->getDbh(); // same phpwiki database 
-            else // use another external database handle
-                // needs PHP 4.1. better use $this->_user->...
+                $this->_auth_dbi = $request->getDbh(); // same phpwiki database 
+            else // use another external database handle. needs PHP 4.1
                 $this->_auth_dbi = WikiDB::open($DBAuthParams);
         }
         return $this->_auth_dbi;
@@ -661,13 +666,13 @@ extends _AnonUser
         if ((! $this->_prefs) && $this->_prefselect) {
             if ($this->_prefmethod == 'ADODB') {
                 $dbh = & $this->_auth_dbi;
-                $db_result = $dbh->_backend->Execute($this->_prefselect,$dbh->qstr($this->UserName));
+                $db_result = $dbh->_backend->Execute($this->_prefselect,$dbh->qstr($this->_userid));
                 if (!$rs->EOF)
                     $prefs_blob = $db_result->fields['pref_blob'];
                 $db_result->Close();
             }
             else { // pear db methods
-                $db_result = $this->_auth_dbi->_backend->execute($this->_prefselect,$this->UserName);
+                $db_result = $this->_auth_dbi->_backend->execute($this->_prefselect,$this->_userid);
                 list($prefs_blob) = $db_result->fetchRow();
             }
             if ($restored_from_db = $this->_prefs->retrieve($prefs_blob)) {
@@ -696,25 +701,25 @@ extends _AnonUser
         if ((! $this->_prefs) && $this->_prefupdate) {
             if ($this->_prefmethod == 'ADODB') {
                 $dbh =& $this->_auth_dbi;
-                $db_result = $dbh->_backend->Execute($this->_prefupdate,$dbh->qstr($serialized),$dbh->qstr($this->UserName));
+                $db_result = $dbh->_backend->Execute($this->_prefupdate,$dbh->qstr($serialized),$dbh->qstr($this->_userid));
                 $db_result->Close();
             }
             else { // pear db methods
-                $db_result = $this->_auth_dbi->_backend->execute($this->_prefupdate,$serialized,$this->UserName);
+                $db_result = $this->_auth_dbi->_backend->execute($this->_prefupdate,$serialized,$this->_userid);
             }
         }
         else
             $this->_HomePagehandle->set('pref', $serialized);
     }
 
-    function mayChangePassword() {
+    function mayChangePass() {
         return true;
     }
 
     //The default method is getting the password from prefs. 
     // child methods obtain $stored_password from external auth.
     function userExists() {
-        if ($this->_HomePagehandle) return true;
+        //if ($this->_HomePagehandle) return true;
 
         if (USER_AUTH_POLICY === 'strict') {
             if ($user = $this->nextClass())
@@ -783,6 +788,27 @@ extends _AnonUser
     }
 }
 
+class _BogoLoginUser
+extends _PassUser
+{
+    function userExists() {
+        if (isWikiWord($this->_userid)) {
+            $this->_level = WIKIAUTH_BOGO;
+            return true;
+        } else {
+            $this->_level = WIKIAUTH_ANON;
+            return false;
+        }
+    }
+
+    function checkPass($submitted_password) {
+        // A BogoLoginUser requires PASSWORD_LENGTH_MINIMUM.
+        if ($this->userExists())
+        return $this->_level;
+    }
+}
+
+
 class _PersonalPagePassUser
 extends _PassUser
 /**
@@ -830,7 +856,7 @@ extends _PassUser
             return new _PearDbPassUser();
     }
 
-    function mayChangePassword() {
+    function mayChangePass() {
         return !empty($this->_authupdate);
     }
 
@@ -868,7 +894,7 @@ extends _DbPassUser
         // clutter the homepage metadata with prefs.
         _AnonUser::getPreferences();
         if ((! $this->_prefs) && $this->_prefselect) {
-            $db_result = $this->_auth_dbi->_backend->execute($this->_prefselect,$this->UserName);
+            $db_result = $this->_auth_dbi->_backend->execute($this->_prefselect,$this->_userid);
             list($prefs_blob) = $db_result->fetchRow();
             if ($restored_from_db = $this->_prefs->retrieve($prefs_blob)) {
                 $this->_prefs = new UserPreferences($restored_from_db);
@@ -887,7 +913,7 @@ extends _DbPassUser
     function setPreferences($prefs, $id_only=false) {
         $serialized = $this->_prefs->store();
         if ($this->_prefupdate) {
-            $db_result = $this->_auth_dbi->_backend->execute($this->_prefupdate,$serialized,$this->UserName);
+            $db_result = $this->_auth_dbi->_backend->execute($this->_prefupdate,$serialized,$this->_userid);
         } else {
             _AnonUser::setPreferences($prefs, $id_only);
             $this->_HomePagehandle->set('pref', $serialized);
@@ -901,7 +927,7 @@ extends _DbPassUser
         $dbh = &$this->_auth_dbi;
         //NOTE: for auth_crypt_method='crypt' no special auth_user_exists is needed
         if ($this->_auth_crypt_method == 'crypt') {
-            $rs = $dbh->_backend->Execute($this->_authselect,$this->UserName) ;
+            $rs = $dbh->_backend->Execute($this->_authselect,$this->_userid) ;
             if ($rs->numRows())
                 return true;
         }
@@ -912,7 +938,7 @@ extends _DbPassUser
             $this->_authcheck = preg_replace('/"$userid"/','? ',
                                              $GLOBALS['DBAuthParams']['auth_user_exists']);
             $rs = $dbh->_backend->Execute($this->_authcheck,
-                                          $this->UserName) ;
+                                          $this->_userid) ;
             if ($rs->numRows())
                 return true;
         }
@@ -931,11 +957,11 @@ extends _DbPassUser
 
         //NOTE: for auth_crypt_method='crypt'  defined('ENCRYPTED_PASSWD',true) must be set
         if ($this->_auth_crypt_method == 'crypt') {
-            $db_result = $this->_auth_dbi->_backend->execute($this->_authselect,$this->UserName);
+            $db_result = $this->_auth_dbi->_backend->execute($this->_authselect,$this->_userid);
             list($stored_password) = $db_result->fetchRow();
             $result = $this->_checkPass($submitted_password, $stored_password);
         } else {
-            $db_result = $this->_auth_dbi->_backend->execute($this->_authselect,$submitted_password,$this->UserName);
+            $db_result = $this->_auth_dbi->_backend->execute($this->_authselect,$submitted_password,$this->_userid);
             list($okay) = $db_result->fetchRow();
             $result = !empty($okay);
         }
@@ -969,7 +995,7 @@ extends _DbPassUser
             if (function_exists('crypt'))
                 $submitted_password = crypt($submitted_password);
         }
-        $db_result = $this->_auth_dbi->_backend->execute($this->_authupdate,$submitted_password,$this->UserName);
+        $db_result = $this->_auth_dbi->_backend->execute($this->_authupdate,$submitted_password,$this->_userid);
     }
 
 }
@@ -1003,7 +1029,7 @@ extends _DbPassUser
         _AnonUser::getPreferences();
         if ((! $this->_prefs) && $this->_prefselect) {
             $dbh = & $this->_auth_dbi;
-            $rs = $dbh->_backend->Execute($this->_prefselect,$dbh->qstr($this->UserName));
+            $rs = $dbh->_backend->Execute($this->_prefselect,$dbh->qstr($this->_userid));
             if ($rs->EOF) {
                 $rs->Close();
             } else {
@@ -1028,7 +1054,7 @@ extends _DbPassUser
         $serialized = $this->_prefs->store();
         if ($this->_prefupdate) {
             $dbh = & $this->_auth_dbi;
-            $db_result = $dbh->_backend->Execute($this->_prefupdate,$dbh->qstr($serialized),$dbh->qstr($this->UserName));
+            $db_result = $dbh->_backend->Execute($this->_prefupdate,$dbh->qstr($serialized),$dbh->qstr($this->_userid));
             $db_result->Close();
         } else {
             _AnonUser::setPreferences($prefs, $id_only);
@@ -1043,7 +1069,7 @@ extends _DbPassUser
         $dbh = &$this->_auth_dbi;
         //NOTE: for auth_crypt_method='crypt' no special auth_user_exists is needed
         if ($this->_auth_crypt_method == 'crypt') {
-            $rs = $dbh->_backend->Execute($this->_authselect,$dbh->qstr($this->UserName));
+            $rs = $dbh->_backend->Execute($this->_authselect,$dbh->qstr($this->_userid));
             if (!$rs->EOF) {
                 $rs->Close();
                 return true;
@@ -1058,7 +1084,7 @@ extends _DbPassUser
             $this->_authcheck = preg_replace('/"$userid"/','%s',
                                              $GLOBALS['DBAuthParams']['auth_user_exists']);
             $rs = $dbh->_backend->Execute($this->_authcheck,
-                                          $dbh->qstr($this->UserName));
+                                          $dbh->qstr($this->_userid));
             if (!$rs->EOF) {
                 $rs->Close();
                 return true;
@@ -1081,7 +1107,7 @@ extends _DbPassUser
         $dbh = &$this->_auth_dbi;
         //NOTE: for auth_crypt_method='crypt'  defined('ENCRYPTED_PASSWD',true) must be set
         if ($this->_auth_crypt_method == 'crypt') {
-            $rs = $dbh->_backend->Execute($this->_authselect,$dbh->qstr($this->UserName));
+            $rs = $dbh->_backend->Execute($this->_authselect,$dbh->qstr($this->_userid));
             if (!$rs->EOF) {
                 $stored_password = $rs->fields['password'];
                 $rs->Close();
@@ -1094,7 +1120,7 @@ extends _DbPassUser
         else {
             $rs = $dbh->_backend->Execute($this->_authselect,
                                           $dbh->qstr($submitted_password),
-                                          $dbh->qstr($this->UserName));
+                                          $dbh->qstr($this->_userid));
             $okay = $rs->fields['ok'];
             $rs->Close();
             $result = !empty($okay);
@@ -1132,7 +1158,7 @@ extends _DbPassUser
         $dbh = &$this->_auth_dbi;
         $rs = $dbh->_backend->Execute($this->_authupdate,
                                       $dbh->qstr($submitted_password),
-                                      $dbh->qstr($this->UserName));
+                                      $dbh->qstr($this->_userid));
         $rs->Close();
     }
 
@@ -1148,7 +1174,7 @@ extends _PassUser
 {
     function checkPass($submitted_password) {
         $this->_authmethod = 'LDAP';
-        $userid = $this->UserName;
+        $userid = $this->_userid;
         if ($ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
             $r = @ldap_bind($ldap); // this is an anonymous bind
             $st_search = "uid=$userid";
@@ -1184,7 +1210,7 @@ extends _PassUser
     }
 
     function userExists() {
-        $userid = $this->UserName;
+        $userid = $this->_userid;
         if ($ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
             $r = @ldap_bind($ldap); // this is an anonymous bind
             $st_search = "uid=$userid";
@@ -1207,7 +1233,7 @@ extends _PassUser
         return false;
     }
 
-    function mayChangePassword() {
+    function mayChangePass() {
         return false;
     }
 
@@ -1222,7 +1248,7 @@ extends _PassUser
  */
 {
     function checkPass($submitted_password) {
-        $userid = $this->UserName;
+        $userid = $this->_userid;
         $mbox = @imap_open( "{" . IMAP_AUTH_HOST . "}",
                             $userid, $submitted_password, OP_HALFOPEN );
         if ($mbox) {
@@ -1257,7 +1283,7 @@ extends _PassUser
         }
     }
 
-    function mayChangePassword() {
+    function mayChangePass() {
         return false;
     }
 
@@ -1297,12 +1323,12 @@ extends _PassUser
         return $this;
     }
  
-    function mayChangePassword() {
+    function mayChangePass() {
         return $this->_may_change;
     }
 
     function userExists() {
-        if (isset($this->_file->users[$this->UserName]))
+        if (isset($this->_file->users[$this->_userid]))
             return true;
             
         if (USER_AUTH_POLICY === 'strict') {
@@ -1312,7 +1338,7 @@ extends _PassUser
     }
 
     function checkPass($submitted_password) {
-        if ($this->_file->verifyPassword($this->UserName,$submitted_password)) {
+        if ($this->_file->verifyPassword($this->_userid,$submitted_password)) {
             $this->_authmethod = 'File';
             $this->_level = WIKIAUTH_USER;
             return $this->_level;
@@ -1333,7 +1359,7 @@ extends _PassUser
 
     function storePass($submitted_password) {
         if ($this->_may_change)
-            return $this->_file->modUser($this->UserName,$submitted_password);
+            return $this->_file->modUser($this->_userid,$submitted_password);
         else 
             return false;
     }
@@ -1681,6 +1707,26 @@ class UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/01/26 09:17:49  rurban
+// * changed stored pref representation as before.
+//   the array of objects is 1) bigger and 2)
+//   less portable. If we would import packed pref
+//   objects and the object definition was changed, PHP would fail.
+//   This doesn't happen with an simple array of non-default values.
+// * use $prefs->retrieve and $prefs->store methods, where retrieve
+//   understands the interim format of array of objects also.
+// * simplified $prefs->get() and fixed $prefs->set()
+// * added $user->_userid and class '_WikiUser' portability functions
+// * fixed $user object ->_level upgrading, mostly using sessions.
+//   this fixes yesterdays problems with loosing authorization level.
+// * fixed WikiUserNew::checkPass to return the _level
+// * fixed WikiUserNew::isSignedIn
+// * added explodePageList to class PageList, support sortby arg
+// * fixed UserPreferences for WikiUserNew
+// * fixed WikiPlugin for empty defaults array
+// * UnfoldSubpages: added pagename arg, renamed pages arg,
+//   removed sort arg, support sortby arg
+//
 // Revision 1.5  2004/01/25 03:05:00  rurban
 // First working version, but has some problems with the current main loop.
 // Implemented new auth method dispatcher and policies, all the external

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.106 2004-01-26 09:17:49 rurban Exp $');
+rcs_id('$Id: main.php,v 1.107 2004-01-27 23:23:39 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -10,6 +10,7 @@ if (ENABLE_USER_NEW)
   require_once("lib/WikiUserNew.php");
 else
   require_once("lib/WikiUser.php");
+require_once("lib/WikiGroup.php");
 require_once('lib/WikiDB.php');
 
 class WikiRequest extends Request {
@@ -204,8 +205,7 @@ class WikiRequest extends Request {
 
         $olduser = $this->_user;
         $user = $this->_user->AuthCheck($auth_args);
-
-        if (isa($user,WikiUserClassname()) and $user->isSignedIn()) {
+        if (isa($user,WikiUserClassname())) {
             // Successful login (or logout.)
             $this->_setUser($user);
         }
@@ -248,6 +248,7 @@ class WikiRequest extends Request {
         }
     }
 
+    // login or logout or restore state
     function _setUser ($user) {
         $this->_user = $user;
         $this->setCookieVar('WIKI_ID', $user->getAuthenticatedId(), 365);
@@ -259,7 +260,7 @@ class WikiRequest extends Request {
         if (!($this->_prefs = $this->_user->getPreferences()))
             $this->_prefs = $this->_user->_prefs;
         $this->_prefs->set('userid',
-                             $user->isSignedIn() ? $user->getId() : '');
+                           $user->isSignedIn() ? $user->getId() : '');
     }
 
     function _notAuthorized ($require_level) {
@@ -866,6 +867,26 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.106  2004/01/26 09:17:49  rurban
+// * changed stored pref representation as before.
+//   the array of objects is 1) bigger and 2)
+//   less portable. If we would import packed pref
+//   objects and the object definition was changed, PHP would fail.
+//   This doesn't happen with an simple array of non-default values.
+// * use $prefs->retrieve and $prefs->store methods, where retrieve
+//   understands the interim format of array of objects also.
+// * simplified $prefs->get() and fixed $prefs->set()
+// * added $user->_userid and class '_WikiUser' portability functions
+// * fixed $user object ->_level upgrading, mostly using sessions.
+//   this fixes yesterdays problems with loosing authorization level.
+// * fixed WikiUserNew::checkPass to return the _level
+// * fixed WikiUserNew::isSignedIn
+// * added explodePageList to class PageList, support sortby arg
+// * fixed UserPreferences for WikiUserNew
+// * fixed WikiPlugin for empty defaults array
+// * UnfoldSubpages: added pagename arg, renamed pages arg,
+//   removed sort arg, support sortby arg
+//
 // Revision 1.105  2004/01/25 03:57:15  rurban
 // WikiUserNew support (temp. ENABLE_USER_NEW constant)
 //

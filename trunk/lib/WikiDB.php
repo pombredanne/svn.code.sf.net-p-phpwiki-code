@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.29 2004-01-26 09:17:48 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.30 2004-01-27 23:23:39 rurban Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -1603,7 +1603,7 @@ class WikiDB_cache
 //      }
 
 //      function changePassword($passwd) {
-//          if (! $this->mayChangePassword() ) {
+//          if (! $this->mayChangePass() ) {
 //              trigger_error(sprintf("Attempt to change an external password for '%s'",
 //                                    $this->_userid), E_USER_ERROR);
 //              return;
@@ -1611,7 +1611,7 @@ class WikiDB_cache
 //          return $this->_authdb->changePass($this->userid, $passwd);
 //      }
 
-//      function mayChangePassword() {
+//      function mayChangePass() {
 //          return $this->_authdb->auth_update;
 //      }
 //  }
