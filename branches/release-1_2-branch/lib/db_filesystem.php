@@ -1,4 +1,4 @@
-<?php  rcs_id('$Id: db_filesystem.php,v 1.4.2.1 2001-08-18 00:35:10 dairiki Exp $');
+<?php  rcs_id('$Id: db_filesystem.php,v 1.4.2.2 2001-08-18 02:05:28 dairiki Exp $');
    /*
       Database functions:
 
@@ -191,9 +191,6 @@
       global $WikiPageStore;
       while (list($key, $page) = each($pos['data'])) {
          $pagedata = RetrievePage($dbi, $page, $WikiPageStore);
-	 printf("Page: '%s' => '%s'<br>\n",
-		htmlspecialchars($page),
-		htmlspecialchars($pagedata));
 	 
 	 while (list($i, $line) = each($pagedata['content'])) {
 	    if (preg_match($pos['search'], $line))
