@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.43 2004-03-27 19:40:09 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.44 2004-03-27 22:01:03 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -797,8 +797,8 @@ extends _AnonUser
             if (defined('USER_AUTH_POLICY')) {
                 // policy 1: only pre-define one method for all users
                 if (USER_AUTH_POLICY === 'first-only') {
-                    $class = $user->nextClass();
-                    return new $class($UserName,$user->_prefs);
+                    $class = $this->nextClass();
+                    return new $class($UserName,$this->_prefs);
                 }
                 // use the default behaviour from the previous versions:
                 elseif (USER_AUTH_POLICY === 'old') {
@@ -967,8 +967,9 @@ extends _AnonUser
         }
         if (_AnonUser::setPreferences($prefs, $id_only)) {
             // Encode only the _prefs array of the UserPreference object
-            if ($this->_HomePagehandle and !$id_only)
-                $this->_HomePagehandle->set('pref', $prefs->store());
+            if ($this->_HomePagehandle and !$id_only) {
+                $this->_HomePagehandle->set('pref', $this->store());
+            }
         }
         return;
     }
@@ -2637,6 +2638,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.43  2004/03/27 19:40:09  rurban
+// init fix and validator reset
+//
 // Revision 1.40  2004/03/25 22:54:31  rurban
 // fixed HttpAuth
 //
