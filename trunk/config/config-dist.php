@@ -278,7 +278,7 @@ if (!isset($ExpireParams['author']['max_keep'])) $ExpireParams['author']['max_ke
 /////////////////////////////////////////////////////////////////////
 //
 // Part Three: (optional)
-// User Authentification
+// User Authentication
 //
 /////////////////////////////////////////////////////////////////////
 
@@ -287,7 +287,7 @@ if (!isset($ExpireParams['author']['max_keep'])) $ExpireParams['author']['max_ke
 if (!defined('ALLOW_HTTP_AUTH_LOGIN')) define('ALLOW_HTTP_AUTH_LOGIN', false);
 
 // If ALLOW_USER_LOGIN is true, any defined internal and external
-// authentification method is tried. 
+// authentication method is tried. 
 // If not, we don't care about passwords, but listen to the next 
 // two constants.
 if (!defined('ALLOW_USER_LOGIN')) define('ALLOW_USER_LOGIN', true); 
@@ -370,7 +370,7 @@ CREATE TABLE user (
 */
 /*
 // 
-// Seperate DB User Authentification. 
+// Seperate DB User Authentication. 
 //   Can be external, like radius, phpnuke, courier authmysql,
 //   apache auth_mysql or something else.
 // The default is to store the data as metadata in WikiPages.

@@ -20,7 +20,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'iso-8859-1');
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.10 2003-01-02 20:14:53 carstenklapp Exp $ -->
+<!-- $Id: configurator.php,v 1.11 2003-01-15 05:45:47 carstenklapp Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki 1.3.x</title>
 <style type="text/css" media="screen">
@@ -240,7 +240,7 @@ $properties["Part Null Settings"] =
 new unchangeable_variable('_partnullsettings', "
 define ('PHPWIKI_VERSION', '1.3.4pre');
 require \"lib/prepend.php\";
-rcs_id('\$Id: configurator.php,v 1.10 2003-01-02 20:14:53 carstenklapp Exp $');", "");
+rcs_id('\$Id: configurator.php,v 1.11 2003-01-15 05:45:47 carstenklapp Exp $');", "");
 
 
 $properties["Part One"] =
@@ -586,7 +586,7 @@ $properties["Part Three"] =
 new part('_partthree', $SEPARATOR."\n", "
 
 Part Three: (optional)
-User Authentification
+User Authentication
 ");
 
 $properties["User Authentication"] =
