@@ -1,9 +1,9 @@
 Date: Sun, 27 Jan 2002 17:28:55 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.18 2004-04-08 01:22:54 rurban Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.19 2004-04-10 03:56:41 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.18 $";
+  pgsrc_version="2 $Revision: 1.19 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
@@ -11,21 +11,24 @@ Content-Transfer-Encoding: binary
 
 1.3.8 Jan-Apr 2004, Reini Urban:
 
-External pluggable authentification, DB prefs and sessions, 
+External plugable authentification, DB prefs and sessions, 
 some more fixes, docs, themes and plugins.
 
-* new WikiUserNew class (after a kick in the ass by Carsten Klapp), 
-* new Preferences (finally from DB, no cookies anymore)
-* improved DB_Session (with added ADODB + dba support)
+* new WikiUserNew class (started by Carsten Klapp), 
+* new Preferences (optionally from DB, no cookies anymore)
+* improved DB_Session (added ADODB + dba support,
+  WhoIsOnline support)
 * enabled WikiGroup (Joby Walker and Reini Urban)
 * new individual PagePermissions (enabled, but not yet enforced)
 * new WikiAdminRename, WikiAdminSearchReplace, WikiAdminSetAcl
-* several other new plugins: WikiPoll, WhoIsOnline, CreateToc, AddComment, 
-  _WikiTranslation => TranslateText, NoCache,
+* several other new plugins: WikiPoll, WhoIsOnline, 
+  CreateToc (experimental), AddComment, 
+  _WikiTranslation and TranslateText, NoCache,
   UpLoad (by NathanGass, qubit and Reini Urban), 
   IncludeSiteMap (by cuthbertcat and Reini Urban),
   RichTable (by Sameer D. Sahasrabuddhe), 
-  CreatePage and RateIt (by Dan Frankowski)
+  CreatePage and RateIt (by Dan Frankowski),
+  RssFeed (by Arnaud Fontaine)
 * added InterWiki image button support
 * added Japanese language support (by Tadashi Jokagi)
 * added sqlite support (thanks to Matthew Palmer)
@@ -40,7 +43,9 @@ some more fixes, docs, themes and plugins.
 * more OldStyleTable arguments, PhotoAlbum local fs support
 * preliminary action=upgrade (To import new pgsrc pages only yet. not for DB)
 * preliminary SOAP support
-* experimental javascript Search&Replace edit buttons.
+* added PdfOutput libraries
+* experimental javascript Search&Replace edit buttons
+* experimental old-browser compatibility code.
 
 * fixed WikiAdminSelect, WikiAdminRemove
 * fixed and improved XHTML dumps (css, images, unlinked pages, \r\r\n issue)
@@ -48,6 +53,7 @@ some more fixes, docs, themes and plugins.
 * fixed BlockParser problem with "0" as text
 * fixed UnfoldSubpages sortby
 * fixes for PHP5 compatibility started
+* fixed gettext, setlocale and update_locale problems
 
 1.3.4 until 1.3.7, 2002-2003 Jeff, Carsten and Steve Wainstead:
 
