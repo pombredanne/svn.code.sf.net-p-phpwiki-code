@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.31 2002-01-21 06:55:47 dairiki Exp $');
+rcs_id('$Id: themeinfo.php,v 1.32 2002-01-22 03:17:47 dairiki Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -78,7 +78,9 @@ class Theme_MacOSX extends Theme {
 
     function linkUnknownWikiWord($wikiword, $linktext = '') {
         $url = WikiURL($wikiword, array('action' => 'edit'));
-        $link = HTML::span(HTML::a(array('href' => $url), '?'));
+        //$link = HTML::span(HTML::a(array('href' => $url), '?'));
+        $link = HTML::span($this->makeButton('?', $url,));
+        
 
         if (!empty($linktext)) {
             $link->unshiftContent(HTML::u($linktext));

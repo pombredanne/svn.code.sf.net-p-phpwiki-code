@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageHistory.php,v 1.8 2002-01-21 06:55:47 dairiki Exp $');
+rcs_id('$Id: PageHistory.php,v 1.9 2002-01-22 03:17:47 dairiki Exp $');
 /**
  */
 require_once('lib/plugin/RecentChanges.php');
@@ -68,10 +68,8 @@ extends _RecentChanges_HtmlFormatter
     }
 
     function title() {
-        global $Theme;
-        
         return array(fmt("PageHistory for %s",
-                         $Theme->linkExistingWikiWord($this->_args['page'])),
+                         LinkExistingWikiWord($this->_args['page'])),
                      "\n",
                      $this->rss_icon());
     }

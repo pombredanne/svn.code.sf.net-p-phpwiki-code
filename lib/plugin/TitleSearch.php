@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TitleSearch.php,v 1.6 2002-01-21 19:14:30 carstenklapp Exp $');
+rcs_id('$Id: TitleSearch.php,v 1.7 2002-01-22 03:17:47 dairiki Exp $');
 
 require_once('lib/TextSearchQuery.php');
 require_once('lib/PageList.php');
@@ -24,8 +24,6 @@ extends WikiPlugin
     }
 
     function run($dbi, $argstr, $request) {
-        global $Theme;
-        
         $args = $this->getArgs($argstr, $request);
         if (empty($args['s']))
             return '';
@@ -46,13 +44,11 @@ extends WikiPlugin
 
         if ($auto_redirect && ($pagelist->getTotal() == 1))
             $request->redirect(WikiURL($last_name));
-        if ($pagelist->getTotal() == 0)
-            $list = HTML::blockquote(_("<no matches>"));
-        if ($noheader)
-            return $pagelist->getContent();
-        
-        return array(HTML::p(fmt("Title search results for '%s'", $s)),
-                     $pagelist->getContent());
+
+        if (!$noheader)
+            $pagelist->setCaption(fmt("Title search results for '%s'", $s));
+
+        return $pagelist;
     }
 };
         

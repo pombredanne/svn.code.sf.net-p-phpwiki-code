@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.6 2002-01-21 06:55:47 dairiki Exp $');
+rcs_id('$Id: FullTextSearch.php,v 1.7 2002-01-22 03:17:47 dairiki Exp $');
 
 require_once('lib/TextSearchQuery.php');
 
@@ -38,12 +38,11 @@ extends WikiPlugin
         $found = 0;
 
         $list = HTML::dl();
-        global $Theme;
         
         while ($page = $pages->next()) {
             $count++;
             $name = $page->getName();
-            $list->pushContent(HTML::dt($Theme->linkExistingWikiWord($name)));
+            $list->pushContent(HTML::dt(LinkExistingWikiWord($name)));
             if ($hilight_re)
                 $list->pushContent($this->showhits($page, $hilight_re));
         }
@@ -58,18 +57,23 @@ extends WikiPlugin
     }
 
     function showhits($page, $hilight_re) {
-        $FS = &$GLOBALS['FieldSeparator'];
         $current = $page->getCurrentRevision();
         $matches = preg_grep("/$hilight_re/i", $current->getContent());
         $html = array();
         foreach ($matches as $line) {
-            $line = str_replace($FS, '', $line);
-            $line = preg_replace("/$hilight_re/i", "${FS}OT\\0${FS}CT", $line);
-            $line = htmlspecialchars($line);
-            $line = str_replace("${FS}OT", '<strong>', $line);
-            $line = str_replace("${FS}CT", '</strong>', $line);
-            $html[] = HTML::dd(HTML::small(new RawXml($line)));
+            $line = $this->highlight_line($line, $hilight_re);
+            $html[] = HTML::dd(HTML::small(false, $line));
         }
+        return $html;
+    }
+
+    function highlight_line ($line, $hilight_re) {
+        while (preg_match("/^(.*?)($hilight_re)/i", $line, $m)) {
+            $line = substr($line, strlen($m[0]));
+            $html[] = $m[1];    // prematch
+            $html[] = HTML::strong($m[2]); // match
+        }
+        $html[] = $line;        // postmatch
         return $html;
     }
 };

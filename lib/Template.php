@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.24 2002-01-21 06:55:47 dairiki Exp $');
+<?php rcs_id('$Id: Template.php,v 1.25 2002-01-22 03:17:47 dairiki Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -18,8 +18,6 @@ class Template
     function _munge_input($template) {
 	// Expand "< ?plugin-* ...? >"
 	preg_match_all('/<\?plugin.*?\?>/s', $template, $m);
-	global $dbi, $request;	// FIXME: no globals?
-	$pluginLoader = new WikiPluginLoader;
 	foreach (array_unique($m[0]) as $plugin_pi) {
 	    $orig[] = '/' . preg_quote($plugin_pi, '/') . '/s';
             // Plugin args like 'description=_("Get backlinks")' get
@@ -28,61 +26,35 @@ class Template
             $translated_pi = preg_replace('/(\s\w+=)_\("((?:[^"\\\\]|\\.)*)"\)/xse',
                                           '"\1\"" . gettext("\2") . "\""',
                                           $plugin_pi);
-	    $repl[] = $pluginLoader->expandPI($translated_pi, $dbi, $request);
+            $repl[] = sprintf('<?php $this->_printPluginPI("%s");?>',
+                              addslashes($translated_pi));
 	}
 
         // Convert < ?= expr ? > to < ?php $this->_print(expr); ? >
         $orig[] = '/<\?=(.*?)\?>/s';
         $repl[] = '<?php $this->_print(\1);?>';
         
-        // Convert tag attributes like foo=_("String") to foo="String" (with gettext mapping).
-        $orig[] = '/( < \w [^>]* \w=)_\("((?:[^"\\\\]|\\.)*)"\)/xse';
-        $repl[] = '"\1\"" . htmlspecialchars(gettext("\2")) . "\""';
-        
         return preg_replace($orig, $repl, $template);
-
-        //$ret = preg_replace($orig, $repl, $template);
-        //echo QElement('pre', $ret);
-        //return $ret;
     }
 
-    function _getReplacement($varname, $index = false) {
-	// FIXME: report missing vars.
+    
+    function _printPluginPI ($pi) {
+	global $dbi, $request;	// FIXME: no globals?
+	static $loader;
 
-        echo "GET: $varname<br>\n";
+        if (empty($loader))
+            $loader = new WikiPluginLoader;
         
-	$vars = &$this->_vars;
-	if (!isset($vars[$varname]))
-            return false;
-
-        $value = $vars[$varname];
-        if ($index !== false)
-            @$value = $value[$index];
-
-        if (!is_string($value))
-            $value = $this->_toString($value);
-
-        // Quote '?' to avoid inadvertently inserting "<? php", "? >", or similar...
-        return str_replace('?', '&#63;', $value);
+        $this->_print($loader->expandPI($pi, $dbi, $request));
     }
     
     function _print ($val) {
-        $string_val = '';
-
-        if (is_array($val)) {
-            $n = 0;
-            foreach ($val as $item) {
-                if ($n++)
-                    echo "\n";
-                $this->_print($item);
-            }
-        }
-        elseif (isa($val, 'Template')) {
+        if (isa($val, 'Template')) {
             // Expand sub-template with defaults from this template.
             $val->printExpansion($this->_vars);
         }
         else
-            printXML($val);
+            PrintXML($val);
     }
     
     /**
@@ -174,11 +146,11 @@ class Template
     // Debugging:
     function _dump_template () {
         $lines = explode("\n", $this->_munge_input($this->_tmpl));
-        echo "<pre>\n";
+        $pre = HTML::pre();
         $n = 1;
         foreach ($lines as $line)
-            printf("%4d  %s\n", $n++, htmlspecialchars($line));
-        echo "</pre>\n";
+            $pre->pushContent(fmt("%4d  %s\n", $n++, $line));
+        $pre->printXML();
     }
 
     function _errorHandler($error) {

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: cvs.php,v 1.6 2001-12-19 12:07:43 carstenklapp Exp $');
+rcs_id('$Id: cvs.php,v 1.7 2002-01-22 03:17:47 dairiki Exp $');
 /**
  * Backend for handling CVS repository. 
  *
@@ -713,7 +713,7 @@ extends WikiDB_backend
     {
         $err = new PhpError( $errno, "[CVS(be)]: " . $msg, $errfile, $errline);
         // send error to the debug routine
-        $this->_cvsDebug( $err->getDetail() );
+        $this->_cvsDebug( $err->asXML() );
         // send the error to the error manager
         $GLOBALS['ErrorManager']->handleError( $err );
     }

@@ -1,6 +1,8 @@
-<?php rcs_id('$Id: Theme.php,v 1.13 2002-01-22 03:12:59 carstenklapp Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.14 2002-01-22 03:17:47 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
+require_once('lib/ButtonFactory.php');
+
 
 class Theme {
     function Theme ($theme_name) {
@@ -132,8 +134,9 @@ class Theme {
 
     function linkUnknownWikiWord($wikiword, $linktext = '') {
         $url = WikiURL($wikiword, array('action' => 'edit'));
-        $link = HTML::span(HTML::a(array('href' => $url), '?'));
-
+        //$link = HTML::span(HTML::a(array('href' => $url), '?'));
+        $link = HTML::span($this->makeButton('?', $url));
+        
         if (!empty($linktext)) {
             $link->pushContent(HTML::u($linktext));
             $link->setAttr('class', 'named-wikiunknown');

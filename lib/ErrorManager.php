@@ -1,5 +1,6 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.11 2002-01-21 06:55:47 dairiki Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.12 2002-01-22 03:17:47 dairiki Exp $');
 
+require_once('lib/HtmlElement.php');
 
 define ('EM_FATAL_ERRORS',
 	E_ERROR | E_PARSE | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR);
@@ -55,7 +56,7 @@ class ErrorManager
      */
     function setPostponedErrorMask($newmask) {
         $this->_postpone_mask = $newmask;
-        $this->_flush_errors($newmask);
+        PrintXML($this->_flush_errors($newmask));
     }
 
     /**
@@ -63,7 +64,7 @@ class ErrorManager
      * @access public
      */
     function flushPostponedErrors() {
-        $this->_flush_errors();
+        PrintXML($this->_flush_errors());
     }
 
     /**
@@ -71,20 +72,16 @@ class ErrorManager
      *
      * This also flushes the postponed error queue.
      *
-     * @return string HTML describing any queued errors. 
+     * @return object HTML describing any queued errors (or false, if none). 
      */
     function getPostponedErrorsAsHTML() {
-        ob_start();
-        $this->flushPostponedErrors();
-        $html = ob_get_contents();
-        ob_end_clean();
-
-        if (!$html)
+        $flushed = $this->_flush_errors();
+        if (!$flushed)
             return false;
-        
-        return HTML::div(array('class' => 'errors'),
-                         HTML::h4("PHP Warnings"),
-                         new RawXml($html));
+        $html = HTML::div(array('class' => 'errors'),
+                          HTML::h4("PHP Warnings"));
+        $html->pushContent($flushed);
+        return $html;
     }
     
     /**
@@ -166,8 +163,10 @@ class ErrorManager
         static $in_handler;
 
         if (!empty($in_handler)) {
-            echo "<p>ErrorManager: "._("error while handling error:")."</p>\n";
-            echo $error->printError();
+            $msg = $error->_getDetail();
+            $msg->unshiftContent(HTML::h2(fmt("%s: error while handling error:",
+                                              "ErrorManager")));
+            $msg->printXML();
             return;
         }
         $in_handler = true;
@@ -206,7 +205,7 @@ class ErrorManager
                 $this->_postponed_errors[] = $error;
             }
             else {
-                $error->printError();
+                $error->printXML();
             }
         }
         $in_handler = false;
@@ -216,8 +215,8 @@ class ErrorManager
      * @access private
      */
     function _die($error) {
-        $error->printError();
-        $this->_flush_errors();
+        $error->printXML();
+        PrintXML($this->_flush_errors());
         if ($this->_fatal_handler)
             $this->_fatal_handler->call($error);
         exit -1;
@@ -228,12 +227,14 @@ class ErrorManager
      */
     function _flush_errors($keep_mask = 0) {
         $errors = &$this->_postponed_errors;
+        $flushed = array();
         foreach ($errors as $key => $error) {
             if (($error->errno & $keep_mask) != 0)
                 continue;
             unset($errors[$key]);
-            $error->printError();
+            $flushed[] = $error;
         }
+        return $flushed;
     }
 }
 
@@ -320,9 +321,9 @@ class PhpError {
 
     /**
      * Get a printable, HTML, message detailing this error.
-     * @return string The detailed error message.
+     * @return object The detailed error message.
      */
-    function getDetail() {
+    function _getDetail() {
         if ($this->isNotice())
             $what = 'Notice';
         else if ($this->isWarning())
@@ -331,32 +332,45 @@ class PhpError {
             $what = 'Fatal';
 
         $errfile = ereg_replace('^' . getcwd() . '/', '', $this->errfile);
-
         $lines = explode("\n", $this->errstr);
-        $errstr = htmlspecialchars(array_shift($lines));
-        foreach ($lines as $key => $line)
-            $lines[$key] = "<li>" . htmlspecialchars($line) . "</li>";
-        if ($lines)
-            $errstr .= "<ul>\n" . join("\n", $lines) . "\n</ul>";
+
+        $msg = sprintf("%s:%d: %s[%d]: %s",
+                       $errfile, $this->errline,
+                       $what, $this->errno,
+                       array_shift($lines));
         
-        return sprintf("<p class='error'>%s:%d: %s[%d]: %s</p>\n",
-                       htmlspecialchars($errfile),
-                       $this->errline, $what, $this->errno,
-                       $errstr);
+        $html = HTML::div(array('class' => 'error'), HTML::p($msg));
+        
+        if ($lines) {
+            $list = HTML::ul();
+            foreach ($lines as $line)
+                $list->pushContent(HTML::li($line));
+            $html->pushContent($list);
+        }
+        
+        return $html;
     }
 
     /**
      * Print an HTMLified version of this error.
-     * @see getDetail
+     * @see asXML()
      */
-    function printError() {
-        echo $this->getDetail();
+    function printXML() {
+        PrintXML($this->_getDetail());
+    }
+
+    /**
+     * Print an HTMLified version of this error.
+     */
+    function asXML() {
+        return AsXML($this->_getDetail());
     }
 }
 
 if (!isset($GLOBALS['ErrorManager'])) {
     $GLOBALS['ErrorManager'] = new ErrorManager;
 }
+
 
 // (c-file-style: "gnu")
 // Local Variables:

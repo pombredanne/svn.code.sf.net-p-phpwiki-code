@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.10 2002-01-21 06:55:47 dairiki Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.11 2002-01-22 03:17:47 dairiki Exp $');
 
 class WikiPlugin
 {
@@ -138,17 +138,15 @@ class WikiPlugin
             if ($val != $defaults[$arg])
                 $query_args[$arg] = $val;
         }
-        
-        $attr = array('href' => WikiURL($args['targetpage'], $query_args),
-                      'class' => $args['class']);
 
-        if ($args['description']) {
-            $attr['title'] = $args['description'];
-            $attr['onmouseover'] = sprintf("window.status='%s';return true;",
-                                           str_replace("'", "\\'", $args['description']));
-            $attr['onmouseout'] = "window.status='';return true;";
-        }
-        return QElement('a', $attr, $args['linktext']);
+        global $Theme;
+        $link = $Theme->makeButton($args['linktext'],
+                                   WikiURL($args['targetpage'], $query_args),
+                                   $args['class']);
+        if (!empty($args['description']))
+            $link->addTooltip($args['description']);
+
+        return $link;
     }
 
     function getDefaultFormArguments() {
@@ -171,60 +169,52 @@ class WikiPlugin
         $textinput = $args['textinput'];
         assert(!empty($textinput) && isset($args['textinput']));
 
-        $formattr = array('action' => WikiURL($args['targetpage']),
-                          'method' => $args['method'],
-                          'class' => $args['class']);
-        $contents = '';
+        $form = HTML::form(array('action' => WikiURL($args['targetpage']),
+                                 'method' => $args['method'],
+                                 'class' => $args['class'],
+                                 'accept-charset' => CHARSET));
+        $contents = HTML::td();
+        
         foreach ($args as $arg => $val) {
             if (isset($form_defaults[$arg]))
                 continue;
             if ($arg != $textinput && $val == $defaults[$arg])
                 continue;
-            
-            $attr = array('name' => $arg, 'value' => $val);
+
+            $i = HTML::input(array('name' => $arg, 'value' => $val));
             
             if ($arg == $textinput) {
                 //if ($inputs[$arg] == 'file')
                 //    $attr['type'] = 'file';
                 //else
-                $attr['type'] = 'text';
-                $attr['size'] = $args['formsize'];
-                if ($args['description']) {
-                    $attr['title'] = $args['description'];
-                    $attr['onmouseover'] = sprintf("window.status='%s';return true;",
-                                                   str_replace("'", "\\'", $args['description']));
-                    $attr['onmouseout'] = "window.status='';return true;";
-                }
+                $i->setAttr('type', 'text');
+                $i->setAttr('size', $args['formsize']);
+                if ($args['description'])
+                    $i->addTooltip($args['description']);
             }
             else {
-                $attr['type'] = 'hidden';
+                $i->setAttr('type', 'hidden');
             }
-            
-            $contents .= Element('input', $attr);
+            $contents->pushContent($i);
 
             // FIXME: hackage
-            if ($attr['type'] == 'file') {
-                $formattr['enctype'] = 'multipart/form-data';
-                $formattr['method'] = 'post';
-                $contents .= Element('input',
-                                     array('name' => 'MAX_FILE_SIZE',
-                                           'value' => MAX_UPLOAD_SIZE,
-                                           'type' => 'hidden'));
+            if ($i->getAttr('type') == 'file') {
+                $form->setAttr('enctype', 'multipart/form-data');
+                $form->setAttr('method', 'post');
+                $contents->pushContent(HTML::input(array('name' => 'MAX_FILE_SIZE',
+                                                         'value' => MAX_UPLOAD_SIZE,
+                                                         'type' => 'hidden')));
             }
         }
 
-        if (!empty($args['buttontext'])) {
-            $contents .= Element('input',
-                                 array('type' => 'submit',
-                                       'class' => 'button',
-                                       'value' => $args['buttontext']));
-        }
+        if (!empty($args['buttontext']))
+            $contents->pushContent(HTML::input(array('type' => 'submit',
+                                                     'class' => 'button',
+                                                     'value' => $args['buttontext'])));
 
         //FIXME: can we do without this table?
-        return Element('form', $formattr,
-                       Element('table',
-                               Element('tr',
-                                       Element('td', $contents))));
+        $form->pushContent(HTML::table(HTML::tr($contents)));
+        return $form;
     }
 }
 
@@ -238,13 +228,13 @@ class WikiPluginLoader {
         list(, $pi_name, $plugin_name, $plugin_args) = $m;
         $plugin = $this->getPlugin($plugin_name);
         if (!is_object($plugin)) {
-            return QElement($pi_name == 'plugin-link' ? 'span' : 'p',
-                            array('class' => 'plugin-error'),
-                            $this->getErrorDetail());
+            return new HtmlElement($pi_name == 'plugin-link' ? 'span' : 'p',
+                                   array('class' => 'plugin-error'),
+                                   $this->getErrorDetail());
         }
         switch ($pi_name) {
         case 'plugin':
-            return AsXml($plugin->run($dbi, $plugin_args, $request));
+            return $plugin->run($dbi, $plugin_args, $request);
         case 'plugin-link':
             return $plugin->makeLink($plugin_args, $request);
         case 'plugin-form':
@@ -285,7 +275,7 @@ class WikiPluginLoader {
     }
 
     function getErrorDetail() {
-        return htmlspecialchars($this->_errors);
+        return $this->_errors;
     }
     
     function _error($message) {

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: ziplib.php,v 1.17 2002-01-19 21:58:38 dairiki Exp $');
+rcs_id('$Id: ziplib.php,v 1.18 2002-01-22 03:17:47 dairiki Exp $');
 
 /**
  * GZIP stuff.
@@ -395,8 +395,7 @@ class ZipReader
           {
               if ($magic != ZIP_CENTHEAD_MAGIC)
                   // FIXME: better message?
-                  ExitWiki(sprintf(_("Bad header type: %s"),
-                                   htmlspecialchars($magic)));
+                  ExitWiki(fmt("Bad header type: %s", $magic));
               return $this->done();
           }
       if (($flags & 0x21) != 0)
@@ -663,8 +662,8 @@ function ParseMimeifiedPages ($data)
     $typeheader = $headers['content-type'];
     
     if (!(list ($type, $subtype, $params) = ParseMimeContentType($typeheader))) {
-        trigger_error( sprintf(_("Can't parse %s"),'content-type:')
-                       . " (" . htmlspecialchars($typeheader) . ")",
+        trigger_error( sprintf(_("Can't parse %s: (%s)"),
+                               'content-type', $typeheader),
                        E_USER_WARNING );
         return false;
     }

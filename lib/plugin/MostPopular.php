@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopular.php,v 1.12 2002-01-21 17:58:43 carstenklapp Exp $');
+rcs_id('$Id: MostPopular.php,v 1.13 2002-01-22 03:17:47 dairiki Exp $');
 /**
  */
 
@@ -45,8 +45,8 @@ extends WikiPlugin
                 $pagelist->setCaption(_("Visited pages on this wiki, ordered by popularity:"));
             }
         }
-        return $pagelist->getContent();
-        
+
+        return $pagelist;
     }
 };
 

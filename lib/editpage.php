@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.26 2002-01-21 06:55:47 dairiki Exp $');
+rcs_id('$Id: editpage.php,v 1.27 2002-01-22 03:17:47 dairiki Exp $');
 
 require_once('lib/transform.php');
 require_once('lib/Template.php');
@@ -21,8 +21,8 @@ function editPage($dbi, $request, $do_preview = false) {
             NoSuchRevision($page, $version); // noreturn
     }
 
-    global $user, $Theme;               // FIXME: make this non-global.
-    $pagelink = $Theme->linkExistingWikiWord($pagename, '', $version);
+    global $user;               // FIXME: make this non-global.
+    $pagelink = LinkExistingWikiWord($pagename, '', $version);
 
     $wrapper = new WikiTemplate('top');
     $wrapper->setPageRevisionTokens($selected);
@@ -44,7 +44,7 @@ function editPage($dbi, $request, $do_preview = false) {
             $formvars[$key] = (bool) $request->getArg($key);
         foreach (array('content', 'editversion', 'summary', 'pagename',
                        'version') as $key)
-            @$formvars[$key] = htmlspecialchars($request->getArg($key));
+            $formvars[$key] = (string) $request->getArg($key);
 
         $template->replace('PREVIEW_CONTENT',
                            do_transform($request->getArg('content')));

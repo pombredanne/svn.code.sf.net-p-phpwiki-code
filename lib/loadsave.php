@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.28 2002-01-19 21:58:38 dairiki Exp $');
+rcs_id('$Id: loadsave.php,v 1.29 2002-01-22 03:17:47 dairiki Exp $');
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
 
@@ -13,10 +13,11 @@ function StartLoadDump($title, $html = '')
 function EndLoadDump()
 {
     // FIXME: This is a hack
+    global $request;
+    $pagelink = LinkExistingWikiWord($request->getArg('pagename'));
     
-    echo Element('p', QElement('strong', _("Complete.")));
-    echo Element('p', sprintf( _("Return to %s"), 
-                               LinkExistingWikiWord($GLOBALS['pagename']) ) );
+    PrintXML(array(HTML::p(HTML::strong(_("Complete."))),
+                   HTML::p(fmt("Return to %s", $pagelink))));
     echo "</body></html>\n";
 }
 
@@ -152,24 +153,28 @@ function DumpToDir ($dbi, $request)
     
     while ($page = $pages->next()) {
         
-        $enc_name = htmlspecialchars($page->getName());
         $filename = FilenameForPage($page->getName());
         
-        echo "<br />$enc_name ... ";
-        if($page->getName() != $filename)
-            echo "<small>" . sprintf(_("saved as %s"),$filename)
-                . "</small> ... ";
+        $msg = array(HTML::br(), $page->getName(), ' ... ');
+        
+        if($page->getName() != $filename) {
+            $msg[] = HTTP::small(fmt("saved as %s", $filename));
+            $msg[] = " ... ";
+        }
         
         $data = MailifyPage($page);
         
-        if ( !($fd = fopen("$directory/$filename", "w")) )
-            ExitWiki("<strong>" . sprintf(_("couldn't open file '%s' for writing"),
-                                     "$directory/$filename") . "</strong>\n");
+        if ( !($fd = fopen("$directory/$filename", "w")) ) {
+            $msg[] = HTML::strong(fmt("couldn't open file '%s' for writing",
+                                      "$directory/$filename"));
+            ExitWiki($msg);
+        }
         
         $num = fwrite($fd, $data, strlen($data));
-        echo "<small>" . sprintf(_("%s bytes written"),$num) . "</small>\n";
-        flush();
+        $msg[] = HTML::small(fmt("%s bytes written", $num));
+        PrintXML($msg);
         
+        flush();
         assert($num == strlen($data));
         fclose($fd);
     }
@@ -189,8 +194,7 @@ function SavePage ($dbi, $pageinfo, $source, $filename)
     $versiondata = $pageinfo['versiondata']; // Revision level meta-data.
     
     if (empty($pageinfo['pagename'])) {
-        echo Element('dd'). Element('dt', QElement('strong',
-                                                   _("Empty pagename!") ));
+        PrintXML(HTML::dt(HTML::strong(_("Empty pagename!"))));
         return;
     }
     
@@ -207,22 +211,23 @@ function SavePage ($dbi, $pageinfo, $source, $filename)
             $page->set($key, $value);
     }
     
-    $mesg = array();
+    $mesg = HTML::dd();
     $skip = false;
     if ($source)
-        $mesg[] = sprintf(_("from %s"), $source);
+        $mesg->pushContent(' ', fmt("from %s", $source));
+    
 
     $current = $page->getCurrentRevision();
     if ($current->getVersion() == 0) {
-        $mesg[] = _("new page");
+        $mesg->pushContent(' ', _("new page"));
         $isnew = true;
     }
     else {
         if ($current->getPackedContent() == $content
             && $current->get('author') == $versiondata['author']) {
-            $mesg[] = sprintf(_("is identical to current version %d"),
-                              $current->getVersion());
-            $mesg[] = _("- skipped");
+            $mesg->pushContent(' ',
+                               fmt("is identical to current version %d - skipped",
+                                   $current->getVersion()));
             $skip = true;
         }
         $isnew = false;
@@ -233,13 +238,13 @@ function SavePage ($dbi, $pageinfo, $source, $filename)
                                      $versiondata,
                                      ExtractWikiPageLinks($content));
         
-        $mesg[] = sprintf(_("- saved to database as version %d"),
-                          $new->getVersion());
+        $mesg->pushContent(' ', fmt("- saved to database as version %d",
+                                    $new->getVersion()));
     }
+
+    $pagelink = LinkExistingWikiWord($pagename);
     
-    print( Element('dt', LinkExistingWikiWord($pagename))
-           . QElement('dd', join(" ", $mesg))
-           . "\n" );
+    PrintXML(array(HTML::dt($pagelink), $mesg));
     flush();
 }
 
@@ -344,43 +349,39 @@ function LoadFile ($dbi, $filename, $text = false, $mtime = false)
     }
 }
 
-function LoadZip ($dbi, $zipfile, $files = false, $exclude = false)
-{
-   $zip = new ZipReader($zipfile);
-   while (list ($fn, $data, $attrib) = $zip->readFile())
-       {
-           // FIXME: basename("filewithnoslashes") seems to return garbage sometimes.
-           $fn = basename("/dummy/" . $fn);
-           if ( ($files && !in_array($fn, $files))
-                || ($exclude && in_array($fn, $exclude)) )
-               {
-                   print Element('dt', LinkExistingWikiWord($fn))
-                       . QElement('dd', _("Skipping"));
-                   continue;
-               }
+function LoadZip ($dbi, $zipfile, $files = false, $exclude = false) {
+    $zip = new ZipReader($zipfile);
+    while (list ($fn, $data, $attrib) = $zip->readFile()) {
+        // FIXME: basename("filewithnoslashes") seems to return garbage sometimes.
+        $fn = basename("/dummy/" . $fn);
+        if ( ($files && !in_array($fn, $files)) || ($exclude && in_array($fn, $exclude)) ) {
+
+            PrintXML(array(HTML::dt(LinkExistingWikiWord($fn)),
+                           HTML::dd(_("Skipping"))));
            
-           LoadFile($dbi, $fn, $data, $attrib['mtime']);
-   }
+            continue;
+        }
+       
+        LoadFile($dbi, $fn, $data, $attrib['mtime']);
+    }
 }
 
 function LoadDir ($dbi, $dirname, $files = false, $exclude = false)
 {
     $handle = opendir($dir = $dirname);
-    while ($fn = readdir($handle))
-        {
-            if ($fn[0] == '.' || filetype("$dir/$fn") != 'file')
-                continue;
+    while ($fn = readdir($handle)) {
+        if ($fn[0] == '.' || filetype("$dir/$fn") != 'file')
+            continue;
             
-            if ( ($files && !in_array($fn, $files))
-                 || ($exclude && in_array($fn, $exclude)) )
-                {
-                    print Element('dt', LinkExistingWikiWord($fn))
-                        . QElement('dd', _("Skipping"));
-                    continue;
-                }
-            
-            LoadFile($dbi, "$dir/$fn");
+        if ( ($files && !in_array($fn, $files)) || ($exclude && in_array($fn, $exclude)) ) {
+
+            PrintXML(array(HTML::dt(LinkExistingWikiWord($fn)),
+                           HTML::dd(_("Skipping"))));
+            continue;
         }
+            
+        LoadFile($dbi, "$dir/$fn");
+    }
     closedir($handle);
 }
 
