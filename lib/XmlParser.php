@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: XmlParser.php,v 1.2 2004-06-01 15:28:00 rurban Exp $');
+rcs_id('$Id: XmlParser.php,v 1.3 2004-06-03 18:06:29 rurban Exp $');
 /**
  * Base XmlParser Class.
  * Requires the expat.so/.dll, usually enabled by default.
@@ -56,7 +56,7 @@ class XmlParser {
             $this->_parser = xml_parser_create($encoding);
         else
             $this->_parser = xml_parser_create(); 
-	xml_parser_set_option($xml_parser, XML_OPTION_TARGET_ENCODING, $GLOBALS[$charset]);
+	xml_parser_set_option($this->_parser, XML_OPTION_TARGET_ENCODING, $GLOBALS['charset']);
         //xml_set_object($this->_parser, &$this);
         xml_set_element_handler($this->_parser,
                                 array(&$this, 'tag_open'),
@@ -163,6 +163,11 @@ class XmlParser {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/06/01 15:28:00  rurban
+// AdminUser only ADMIN_USER not member of Administrators
+// some RateIt improvements by dfrankow
+// edit_toolbar buttons
+//
 // Revision 1.1  2004/05/24 17:31:31  rurban
 // new XmlParser and HtmlParser, RssParser based on that.
 //
