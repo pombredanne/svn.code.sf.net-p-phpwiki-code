@@ -185,6 +185,15 @@ A.backlinks { color: #006; }
 /* Make the textarea on the edit page full width */
 TEXTAREA.wikiedit { width: 100%; margin-top: 1ex; }
 
+
+/* Calendar plugin */
+
+a.cal-hide, a.cal-arrow { text-decoration: none; }
+.cal-arrow { font-weight: bold; }
+.cal-header { font-size: larger; }
+.cal-dayname { font-size: smaller; text-decoration: underline; }
+table.cal { border: thin solid black; } 
+
 /* For emacs users
  *
  * Local Variables:
