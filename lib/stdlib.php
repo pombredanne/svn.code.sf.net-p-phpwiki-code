@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.130 2002-10-19 21:04:58 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.131 2002-11-22 21:41:09 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -419,7 +419,7 @@ function LinkBracketLink($bracketlink) {
     list (, $hash, $label, $bar, $link) = $matches;
 
     // if label looks like a url to an image, we want an image link.
-    if (preg_match("/($InlineImages)$/i", $label)) {
+    if (preg_match("/\\.($InlineImages)$/i", $label)) {
         $imgurl = $label;
         if (! preg_match("#^($AllowedProtocols):#", $imgurl)) {
             // linkname like 'images/next.gif'.
@@ -442,7 +442,7 @@ function LinkBracketLink($bracketlink) {
     }
     elseif (preg_match("#^($AllowedProtocols):#", $link)) {
         // if it's an image, embed it; otherwise, it's a regular link
-        if (preg_match("/($InlineImages)$/i", $link))
+        if (preg_match("/\\.($InlineImages)$/i", $link))
             // no image link, just the src. see [img|link] above
             return LinkImage($link, $label);
         else
