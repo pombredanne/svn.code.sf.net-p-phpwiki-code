@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.84 2005-03-27 18:23:40 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.85 2005-03-27 20:36:16 rurban Exp $');
 
 /**
  * A configurator intended to read its config from a PHP-style INI file,
@@ -577,7 +577,7 @@ function fixup_static_configs($file) {
     if (!defined('ADMIN_USER') or ADMIN_USER == '') {
     	$error = sprintf("%s may not be empty. Please update your configuration.", 
        			 "ADMIN_USER");
-        if (!preg_match("/config\-dist\.ini$/", $file)) { // protect against recursion
+        if (!preg_match("/config\-(dist|default)\.ini$/", $file)) { // protect against recursion
             include_once(dirname(__FILE__)."/install.php");
             run_install("_part1");
             trigger_error($error, E_USER_ERROR);
@@ -588,7 +588,7 @@ function fixup_static_configs($file) {
     }
     if (!defined('ADMIN_PASSWD') or ADMIN_PASSWD == '') {
         $error = "The ADMIN_USER password cannot be empty. Please update your configuration.";
-        if (!preg_match("/config\-dist\.ini$/", $file)) { // protect against recursion
+        if (!preg_match("/config\-(dist|default)\.ini$/", $file)) { // protect against recursion
             include_once(dirname(__FILE__)."/install.php");
             run_install("_part1");
             trigger_error($error, E_USER_ERROR);
@@ -830,6 +830,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.84  2005/03/27 18:23:40  rurban
+// compute locale only for setlocale and LC_ALL
+//
 // Revision 1.83  2005/02/28 21:24:32  rurban
 // ignore forbidden ini_set warnings. Bug #1117254 by Xavier Roche
 //

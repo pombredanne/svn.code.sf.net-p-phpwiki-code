@@ -1,4 +1,4 @@
-<?php // $Id: configurator.php,v 1.32 2005-03-06 11:05:45 rurban Exp $
+<?php // $Id: configurator.php,v 1.33 2005-03-27 20:36:16 rurban Exp $
 /*
  * Copyright 2002,2003,2005 $ThePhpWikiProgrammingTeam
  * Copyright 2002 Martin Geisler <gimpster@gimpster.com> 
@@ -36,6 +36,9 @@
  * o fix include_path
  *
  * 1.3.11 TODO: (or 1.3.12?)
+ * o parse_ini_file("config-default.ini") for the commented vars
+ * o check automatically for commented and optional vars
+ * o mixin class for commented 
  * o fix SQL quotes, AUTH_ORDER quotes and file forward slashes
  * o posted values validation, extend js validation for sane DB values
  * o read config-dist.ini into sections, comments, and optional/required settings
@@ -61,7 +64,7 @@ $scriptname = str_replace('configurator.php', 'index.php', $HTTP_SERVER_VARS["SC
 $tdwidth = 700;
 $config_file = (substr(PHP_OS,0,3) == 'WIN') ? 'config\\config.ini' : 'config/config.ini';
 $fs_config_file = dirname(__FILE__) . (substr(PHP_OS,0,3) == 'WIN' ? '\\' : '/') . $config_file;
-if (isset($HTTP_POST_VARS['create']))  header('Location: '.$configurator.'?create=1#create');
+if (isset($HTTP_POST_VARS['create']))  header('Location: '.$configurator.'?show=_part1&create=1#create');
 
 // helpers from lib/WikiUser/HttpAuth.php
     function _http_user() {
@@ -149,7 +152,7 @@ echo "<","?xml version=\"1.0\" encoding=\"'iso-8859-1'\"?",">\n";
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.32 2005-03-06 11:05:45 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.33 2005-03-27 20:36:16 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
@@ -1829,6 +1832,7 @@ class _variable {
     }
 
     function _config_format($value) {
+	return '';
         $v = $this->get_config_item_name();
         // handle arrays: a|b --> a['b']
         if (strpos($v, '|')) {
@@ -2109,7 +2113,8 @@ extends _define {
     function _define_password($config_item_name, $default_value, $description, $jscheck = '') {
         $this->_define($config_item_name, $default_value, $description, $jscheck);
         if (!$jscheck)
-            $this->jscheck = "onchange=\"validate_ereg('Sorry, \'%s\' cannot be empty.', '^.+$', '" . $this->get_config_item_name() . "', this);\"";
+            $this->jscheck = "onchange=\"validate_ereg('Sorry, \'%s\' cannot be empty.', '^.+$', '" 
+		. $this->get_config_item_name() . "', this);\"";
     }
     function _get_config_line($posted_value) {
         if ($this->description)
