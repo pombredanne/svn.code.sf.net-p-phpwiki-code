@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.78 2004-04-20 00:06:03 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.79 2004-04-20 00:34:16 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -712,6 +712,13 @@ class PageList {
         return true;
     }
 
+    function limit($limit) {
+        if (strstr($limit,','))
+            return split(',',$limit);
+        else
+            return array(0,$limit);
+    }
+    
     // make a table given the caption
     function _generateTable($caption) {
         $table = HTML::table(array('cellpadding' => 0,
@@ -742,14 +749,9 @@ class PageList {
              $this->_options['paging'] != 'none')
         {
             // if there are more pages than the limit, show a table-header, -footer
-            if (strstr($this->_options['limit'],','))
-                list($offset,$pagesize) = split(',',$this->_options['limit']);
-            else {    
-                $offset = 0; 
-                $pagesize = $this->_options['limit'];
-            }
+            list($offset,$pagesize) = $this->limit($this->_options['limit']);
             $numrows = $this->getTotal();
-            if ($numrows <= $pagesize or ($offset + $pagesize < 0))
+            if (!$pagesize or $numrows <= $pagesize or ($offset + $pagesize < 0))
                 return $table;
 
             global $request;
@@ -768,8 +770,8 @@ class PageList {
             $tokens['SIZE'] = $pagesize;
             $tokens['NUMPAGES'] = (int)($numrows / $pagesize)+1;
             $tokens['ACTPAGE'] = (int) (($offset+1) / $pagesize)+1;
-            if ($offset >= $pagesize) {
-            	$prev['limit'] = $offset - $pagesize . ',' . $pagesize;
+            if ($offset > 0) {
+            	$prev['limit'] = min(0,$offset - $pagesize) . ",$pagesize";
             	$prev['count'] = $numrows;
             	$tokens['LIMIT'] = $prev['limit'];
                 $tokens['PREV'] = true;
@@ -780,7 +782,7 @@ class PageList {
             $next = $defargs;
             $tokens['NEXT'] = false; $tokens['NEXT_LINK'] = "";
             if ($offset + $pagesize < $numrows) {
-                $next['limit'] = $offset + $pagesize . ',' . $pagesize;
+                $next['limit'] = min($offset + $pagesize,$numrows - $pagesize) . ",$pagesize";
             	$next['count'] = $numrows;
             	$tokens['LIMIT'] = $next['limit'];
                 $tokens['NEXT'] = true;
@@ -884,6 +886,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.78  2004/04/20 00:06:03  rurban
+// themable paging support
+//
 // Revision 1.77  2004/04/18 01:11:51  rurban
 // more numeric pagename fixes.
 // fixed action=upload with merge conflict warnings.
