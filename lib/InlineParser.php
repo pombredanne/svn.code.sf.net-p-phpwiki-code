@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.31 2004-02-19 21:54:17 rurban Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.32 2004-02-27 02:30:32 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -269,7 +269,16 @@ function LinkBracketLink($bracketlink) {
     list (, $hash, $label, $bar, $rawlink) = $matches;
 
     $label = UnWikiEscape($label);
-    $link  = UnWikiEscape($rawlink);
+    /*
+     * Check if the user has typed a explicit URL. This solves the
+     * problem where the URLs have a ~ character, which would be stripped away.
+     *   "[http:/server/~name/]" will work as expected
+     *   "http:/server/~name/"   will NOT work as expected, will remove the ~
+     */
+    if (strstr($rawlink, "http://") or strstr($rawlink, "https://"))
+        $link = $rawlink;
+    else
+        $link  = UnWikiEscape($rawlink);
 
     // [label|link]
     // if label looks like a url to an image, we want an image link.
