@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.98 2004-07-01 08:51:22 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.99 2004-07-02 18:49:02 dfrankow Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -688,6 +688,7 @@ class PageList {
     }
 
     function addPageList (&$list) {
+        if (!isset($list)) return;  // Protect reset from a null arg
         reset ($list);
         while ($page = next($list))
             $this->addPage((string)$page);
@@ -1270,6 +1271,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.98  2004/07/01 08:51:22  rurban
+// dumphtml: added exclude, print pagename before processing
+//
 // Revision 1.97  2004/06/29 09:11:10  rurban
 // More memory optimization:
 //   don't cache unneeded _cached_html and %content for content and size columns
