@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.39 2002-01-25 06:53:33 dairiki Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.40 2002-01-25 07:33:59 carstenklapp Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -30,10 +30,9 @@ function EndLoadDump(&$request)
 
 /**
  * For reference see:
- * http://www.oac.uci.edu/indiv/ehood/MIME/1521/rfc1521ToC.html
- *
- * Actually, RFC 1521 has been superceeded by RFC 2045 (& others).
- * See: http://www.faqs.org/rfcs/rfc2045.html
+ * http://www.nacs.uci.edu/indiv/ehood/MIME/2045/rfc2045.html
+ * http://www.faqs.org/rfcs/rfc2045.html
+ * (RFC 1521 has been superceeded by RFC 2045 & others).
  */
 function MailifyPage ($page, $nversions = 1)
 {
@@ -66,7 +65,7 @@ function MailifyPage ($page, $nversions = 1)
 
     // This might be better for actually emailing wiki pages--gateways
     // are allowed to arbitrarily discard any X-* headers.
-    // The $Id: loadsave.php,v 1.39 2002-01-25 06:53:33 dairiki Exp $ also contains : so the line must be quoted.
+    // The $Id\$ also contains : so the line must be quoted.
     $head .= "Content-ID: \"rcs_id('$" ."Id" ."$" ."')\"\r\n";
 
     $iter = $page->getAllRevisions();
@@ -438,6 +437,20 @@ function IsZipFile ($filename_or_fd)
 
 function LoadAny (&$request, $file_or_dir, $files = false, $exclude = false)
 {
+    // Try urlencoded filename for accented characters.
+    if (!file_exists($file_or_dir)) {
+        // Make sure there are slashes first to avoid confusing phps
+        // with broken dirname or basename functions.
+        // FIXME: windows uses \ and :
+        if (is_integer(strpos($file_or_dir, "/"))) {
+            $file_or_dir = dirname($file_or_dir) ."/".
+                           urlencode(basename($file_or_dir));
+        } else {
+            // This is probably just a file.
+            $file_or_dir = urlencode($file_or_dir);
+        }
+    }
+
     $type = filetype($file_or_dir);
     if ($type == 'link') {
         // For symbolic links, use stat() to determine
