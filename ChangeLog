@@ -1,5 +1,13 @@
 2000-07-31  Geoffrey T. Dairiki  <dairiki@dairiki.org>
 
+	* index.php3: Added total page generation time to {DebugInfo}.
+	(PHP4 is really quite a speed improvement over PHP3!)
+
+	* wiki_diff.php3: PHP4 fixes. If $t is an array, under PHP3
+	'$t > 0' is false while under PHP4 it is true.  Also '0 + $t'
+	generates a run-time error ("unsupported operand types") under
+	PHP4, but not under PHP3.
+	
 	* wiki_renderlib.php3: Move initialization of a number of class
 	variables into class constructors.  (This is for PHP4, which
 	doesn't seem to like anything but simple literals as initializers

@@ -1,4 +1,4 @@
-<? rcs_id('$Id: wiki_diff.php3,v 1.6.2.3 2000-07-31 21:10:00 dairiki Exp $');
+<? rcs_id('$Id: wiki_diff.php3,v 1.6.2.4 2000-07-31 22:08:43 dairiki Exp $');
 // wiki_diff.php3
 //
 // A PHP diff engine for phpwiki.
@@ -470,7 +470,13 @@ class WikiDiff
 	      $edit = current($this->edits);
 	      next($this->edits) )
 	  {
-	    if ($edit > 0)
+	    if (is_array($edit))
+	      { // Was an add, turn it into a delete.
+		$nadd = sizeof($edit);
+		if ($nadd == 0) die("assertion error");
+		$edit = -$nadd;
+	      }
+	    else if ($edit > 0)
 	      {
 		// Was a copy --- just pass it through.	      }
 		$x += $edit;
@@ -481,12 +487,6 @@ class WikiDiff
 		$edit = array();
 		while ($ndelete-- > 0)
 		    $edit[] = "" . $from_lines[$x++];
-	      }
-	    else if (is_array($edit))
-	      { // Was an add, turn it into a delete.
-		$nadd = sizeof($edit);
-		if ($nadd == 0) die("assertion error");
-		$edit = -$nadd;
 	      }
 	    else die("assertion error");
 
@@ -519,7 +519,7 @@ class WikiDiff
       
 	while ($left || $right)
 	  {
-	    if ($left < 0)
+	    if (!is_array($left) && $left < 0)
 	      { // Left op is a delete.
 		$newop = $left;
 		$left = next($this->edits);
@@ -531,7 +531,7 @@ class WikiDiff
 	      }
 	    else if (!$left || !$right)
 		die ("assertion error");
-	    else if ($left > 0)
+	    else if (!is_array($left) && $left > 0)
 	      { // Left op is a copy.
 		if ($left <= abs($right))
 		  {
@@ -658,17 +658,17 @@ class WikiDiff
 	      $edit = current($this->edits);
 	      next($this->edits) )
 	  {
-	    if ($edit > 0)
-		while ($edit--)
-		    $output[] = $from_lines[$x++];
-	    else if ($edit < 0)
-		$x += -$edit;
-	    else
+	    if (is_array($edit))
 	      {
 		reset($edit);
 		while (list ($junk, $line) = each($edit))
 		    $output[] = $line;
 	      }
+	    else if ($edit > 0)
+		while ($edit--)
+		    $output[] = $from_lines[$x++];
+	    else
+		$x += -$edit;
 	  }
 	if ($x != $xlim)
 	    die("WikiDiff::apply: line count mismatch: $x != $xlim");
@@ -711,7 +711,7 @@ class WikiDiff
 	     $edit = current($this->edits);
 	     next($this->edits))
 	  {
-	    if ($edit > 0)
+	    if (!is_array($edit) && $edit > 0)
 		$lcs += $edit;
 	  }
 	return $lcs;
@@ -727,14 +727,14 @@ class WikiDiff
 	$test = $this->apply($from_lines);
 	if (serialize($test) != serialize($to_lines))
 	    die("WikiDiff::_check: failed");
-
+	
 	reset($this->edits);
 	$prev = current($this->edits);
-	$prevtype = $prev > 0 ? 'c' : ($prev < 0 ? 'd' : 'a');
+	$prevtype = is_array($prev) ? 'a' : ($prev > 0 ? 'c' : 'd');
 
 	while ($edit = next($this->edits))
 	  {
-	    $type = $edit > 0 ? 'c' : ($edit < 0 ? 'd' : 'a');
+	    $type = is_array($edit) ? 'a' : ($edit > 0 ? 'c' : 'd');
 	    if ( $prevtype == $type )
 		die("WikiDiff::_check: edit sequence is non-optimal");
 	    $prevtype = $type;
@@ -793,7 +793,7 @@ class WikiDiffFormatter
 	reset($edits);
 	while ($edit = current($edits))
 	  {
-	    if ($edit > 0)
+	    if (!is_array($edit) && $edit >= 0)
 	      { // Edit op is a copy.
 		$ncopy = $edit;
 	      }
@@ -814,18 +814,17 @@ class WikiDiffFormatter
 			$hunk['c'] = $context;
 		      }
 		  }
-		if ($edit < 0)
+		if (is_array($edit))
+		  { // Edit op is an add.
+		    $y += sizeof($edit);
+		    $hunk[$this->do_reverse_diff ? 'd' : 'a'] = $edit;
+		  }
+		else
 		  { // Edit op is a delete
 		    $deletes = array();
 		    while ($edit++ < 0)
 			$deletes[] = $from_lines[$x++];
 		    $hunk[$this->do_reverse_diff ? 'a' : 'd'] = $deletes;
-		  }
-		else
-		  { // Edit op is an add.
-		    if (!is_array($edit)) die("assertion error");
-		    $y += sizeof($edit);
-		    $hunk[$this->do_reverse_diff ? 'd' : 'a'] = $edit;
 		  }
 	      }
 
