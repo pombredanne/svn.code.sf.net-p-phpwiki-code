@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.8 2002-01-23 05:13:38 carstenklapp Exp $');
+rcs_id('$Id: FullTextSearch.php,v 1.9 2002-01-30 18:31:20 carstenklapp Exp $');
 
 require_once('lib/TextSearchQuery.php');
 
@@ -19,6 +19,7 @@ extends WikiPlugin
     function getDefaultArguments() {
         return array('s'	=> false,
                      'noheader' => false);
+        // TODO: multiple page exclude
     }
 
         
