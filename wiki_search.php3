@@ -18,9 +18,11 @@
 
    $found = 0;
 
-   // from classic wiki: $pat =~ s/[+?.*()[\]{}|\\]/\\$&/g;
-   // disallow _'_ and _%_ too, _\_ have to be doubled
-   $search = preg_replace("/[+?.*()'%[\\]{}|\\\\]/", "", $search);
+   if(get_magic_quotes_gpc())
+      $full = stripslashes($full);
+
+   // quote regexp chars
+   $search = preg_quote($search);
 
    // search matching pages
    $query = InitTitleSearch($dbi, $search);
