@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- phpwiki source:
-$Id: browse.html,v 1.34 2001-12-30 06:10:50 carstenklapp Exp $
+$Id: browse.html,v 1.35 2002-01-02 03:50:33 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <meta name="keywords" content="${SPLIT_PAGE}, ${WIKI_NAME}" />
@@ -38,32 +38,18 @@ ${RCS_IDS}
 <div class="wikitext">${CONTENT}</div>
 <hr class="ignore" noshade="noshade" />
 <form action='<?php echo WikiURL(_("TitleSearch")); ?>' method="get" accept-charset="${CHARSET}">
-<!-- I would like not to have to use these tables, and managed to
-     get this stuff to work more or less correctly using
-     CSSs float:left; and float:right;.  However float:right; seems
-     to cause MSIE4.01/NT to hang. 
-     So, we use tables...  -->
-<table summary="Toolbar 1: Page date and page search options." class="toolbar" width="100%"
-       cellpadding="0" cellspacing="0" border="0"><tr valign="baseline">
-  <td>
     <?php if ($IS_CURRENT) { ?>
        <?php printf(_("Last edited on %s."),"${LASTMODIFIED}"); ?>
     <?php } else { ?>
        <?php printf(_("Version %s, saved on %s."),"${VERSION}","${LASTMODIFIED}"); ?>
     <?php } ?>
-  </td>
-  <td align="right">
-  <?php echo LinkExistingWikiWord(_("RecentChanges")) ?> 
-  | <?php echo LinkExistingWikiWord(_("FindPage")) ?> 
-  | <span><input type="hidden" name="auto_redirect" value="1" />
-    <input type="text"  name="s" size="12"
-           title=_("Quick Search")
-           onmouseover="window.status='$_("Quick Search")'; return true;"
-           onmouseout="window.status=''; return true;" /></span>
-  | <?plugin-link LikePages page="[pagename]" ?>
-  </td>
-</tr></table>
-<table summary="Toolbar 2: Page actions and sign in." class="toolbar" width="100%"
+<hr color="black" class="toolbar" />
+<!-- I would like not to have to use these tables, and managed to
+     get this stuff to work more or less correctly using
+     CSSs float:left; and float:right;.  However float:right; seems
+     to cause MSIE4.01/NT to hang. 
+     So, we use tables...  -->
+<table summary="Toolbar 1: Page actions and search for pages." class="toolbar" width="100%"
        cellpadding="0" cellspacing="0" border="0"><tr valign="baseline">
   <td>
     <?php if ($page->get('locked') && !$user->is_admin()) { ?>
@@ -93,12 +79,28 @@ ${RCS_IDS}
     <?php } ?>
   </td>
   <td align="right">
+  <?php echo LinkExistingWikiWord(_("RecentChanges")) ?> 
+  | <?php echo LinkExistingWikiWord(_("FindPage")) ?> 
+  | <span><input type="hidden" name="auto_redirect" value="1" />
+    <input type="text"  name="s" size="12"
+           title=_("Quick Search")
+           onmouseover="window.status='$_("Quick Search")'; return true;"
+           onmouseout="window.status=''; return true;" /></span>
+  | <?plugin-link LikePages page="[pagename]" ?>
+  </td>
+</tr></table>
+<table summary="Toolbar 2: Sign in." class="toolbar" width="100%"
+       cellpadding="0" cellspacing="0" border="0"><tr valign="baseline">
+  <td>
     <?php if ($user->is_authenticated()) { ?>
       <?php printf(_("You are signed in as %s"), LinkWikiWord($USERID)); ?>
       | <a class="wikiaction" href="${ACTION}logout">$_("SignOut")</a>
     <?php } else { ?>
       <a class="wikiaction" href="${ACTION}login">$_("SignIn")</a>
     <?php } ?>
+  </td>
+
+  <td align="right">
   </td>
 </tr></table>
 
@@ -117,8 +119,8 @@ if ($errmsgs)
                  QElement('h4', _("PHP Warnings"))
 		 . $errmsgs);
 ?>
-<div class="toolbar">
-  <!-- For debugging only, really: -->
+<table summary="For debugging only, really." class="toolbar" width="100%"
+       cellpadding="0" cellspacing="0" border="0"><tr><td>
   <?plugin-link _BackendInfo 
                 linktext=_("DebugInfo")
                 targetpage=_("DebugInfo")
@@ -128,7 +130,7 @@ if ($errmsgs)
                 linktext=_("ViewMarkup")
                 targetpage=_("ViewMarkup")
                 page=[pagename] ?>
-</div>
+</td><tr></table>
 </form>
 </body>
 </html>
