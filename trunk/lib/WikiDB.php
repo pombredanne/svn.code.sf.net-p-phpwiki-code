@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.102 2004-11-11 18:31:26 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.103 2004-11-16 17:29:04 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -236,10 +236,10 @@ class WikiDB {
                 //TODO: notification class which catches all changes,
                 //  and decides at the end of the request what to mail. (type, page, who, what, users, emails)
                 // could be used for PageModeration also.
-                $page = new WikiDB_Page($pagename);
+                $page = new WikiDB_Page($this, $pagename);
                 list($emails, $userids) = $page->getPageChangeEmails($notify);
                 if (!empty($emails)) {
-                    $editedby = sprintf(_("Edited by: %s"), $GLOBALS['request']->_user->getId()); // Todo: host_id
+                    $editedby = sprintf(_("Removed by: %s"), $GLOBALS['request']->_user->getId()); // Todo: host_id
                     $emails = join(',', $emails);
                     $subject = sprintf(_("Page deleted %s"), urlencode($pagename));
                     if (mail($emails,"[".WIKI_NAME."] ".$subject, 
@@ -619,7 +619,8 @@ class WikiDB_Page
             if (!(is_string($pagename) and $pagename != '')) {
                 if (function_exists("xdebug_get_function_stack")) {
                     echo "xdebug_get_function_stack(): "; var_dump(xdebug_get_function_stack());
-
+                } elseif (function_exists("debug_backtrace")) { // >= 4.3.0
+                    printSimpleTrace(debug_backtrace());
                 }
                 trigger_error("empty pagename", E_USER_WARNING);
                 return false;
@@ -778,14 +779,15 @@ class WikiDB_Page
         $backend = &$this->_wikidb->_backend;
         $cache = &$this->_wikidb->_cache;
         $pagename = &$this->_pagename;
-                
+        $cache->invalidate_cache($pagename);
+        
         $backend->lock(array('version','page','recent','link','nonempty'));
 
         $latestversion = $backend->get_latest_version($pagename);
-        $newversion = $latestversion + 1;
+        $newversion = ($latestversion ? $latestversion : 0) + 1;
         assert($newversion >= 1);
 
-        if ($version != WIKIDB_FORCE_CREATE && $version != $newversion) {
+        if ($version != WIKIDB_FORCE_CREATE and $version != $newversion) {
             $backend->unlock(array('version','page','recent','link','nonempty'));
             return false;
         }
@@ -1034,8 +1036,9 @@ class WikiDB_Page
         // Prevent deadlock in case of memory exhausted errors
         // Pure selection doesn't really need locking here.
         //   sf.net bug#927395
-        // I know it would be better, but with lots of pages this deadlock is more 
+        // I know it would be better to lock, but with lots of pages this deadlock is more 
         // severe than occasionally get not the latest revision.
+        // In spirit to wikiwiki: read fast, edit slower.
         //$backend->lock();
         $version = $cache->get_latest_version($pagename);
         // getRevision gets the content also!
@@ -1903,10 +1906,11 @@ class WikiDB_cache
     
     function update_pagedata($pagename, $newdata) {
         assert(is_string($pagename) && $pagename != '');
-
+        unset ($this->_pagedata_cache[$pagename]);
+        
         $this->_backend->update_pagedata($pagename, $newdata);
 
-        if (USECACHE and is_array($this->_pagedata_cache[$pagename])) {
+        if (USECACHE and !empty($this->_pagedata_cache[$pagename]) and is_array($this->_pagedata_cache[$pagename])) {
             $cachedata = &$this->_pagedata_cache[$pagename];
             foreach($newdata as $key => $val)
                 $cachedata[$key] = $val;
@@ -1973,6 +1977,8 @@ class WikiDB_cache
     }
 
     function set_versiondata($pagename, $version, $data) {
+        //unset($this->_versiondata_cache[$pagename][$version]);
+        
         $new = $this->_backend->set_versiondata($pagename, $version, $data);
         // Update the cache
         $this->_versiondata_cache[$pagename][$version]['1'] = $data;
@@ -2037,6 +2043,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.102  2004/11/11 18:31:26  rurban
+// add simple backtrace on such general failures to get at least an idea where
+//
 // Revision 1.101  2004/11/10 19:32:22  rurban
 // * optimize increaseHitCount, esp. for mysql.
 // * prepend dirs to the include_path (phpwiki_dir for faster searches)
