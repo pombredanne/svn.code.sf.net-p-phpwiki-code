@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: browse.tmpl,v 1.5 2002-01-19 23:43:22 carstenklapp Exp $ -->
+<!-- $Id: browse.tmpl,v 1.6 2002-01-20 02:50:04 carstenklapp Exp $ -->
 <?php
   $mtime = $Theme->formatDateTime($revision->get('mtime'));
   if ($IS_CURRENT)
@@ -14,8 +14,8 @@
 <?php if (! $IS_CURRENT) { ?>
   <p><strong><?=_("Note:")?></strong>
      <?=_("You are viewing an old revision of this page.")?>
-     <a href="<?= WikiURL($page->getName()) ?>"
-        ><?=_("View the current version")?></a>.</p>
+  <?= $ButtonFactory->makeActionButton('edit', _("View the current version"), $page->getCurrentRevision())?>.
+  </p>
   <hr class="ignore" noshade="noshade" />
 <?php } ?>
 
