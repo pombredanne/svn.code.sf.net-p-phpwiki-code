@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Ploticus.php,v 1.9 2004-09-26 17:09:23 rurban Exp $');
+rcs_id('$Id: Ploticus.php,v 1.10 2004-10-04 23:43:35 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -53,6 +53,7 @@ if (!defined("PLOTICUS_EXE"))
     define('PLOTICUS_EXE','pl.exe');
   else
     define('PLOTICUS_EXE','/usr/local/bin/pl');
+//TODO: check $_ENV['PLOTICUS_PREFABS'] and default directory
 
 require_once "lib/WikiPluginCached.php"; 
 
@@ -99,7 +100,7 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
     function getDefaultArguments() {
         return array(
@@ -221,7 +222,12 @@ extends WikiPluginCached
             	$this->_mapfile = "$tempfile.map";
             }
             if (!empty($argarray['-prefab'])) {
-            	//TODO: check $_ENV['PLOTICUS_PREFABS'] and default directory
+            	//check $_ENV['PLOTICUS_PREFABS'] and default directory
+                global $HTTP_ENV_VARS;
+                if (empty($HTTP_ENV_VARS['PLOTICUS_PREFABS'])) {
+                    if (file_exists("/usr/share/ploticus"))
+                        $HTTP_ENV_VARS['PLOTICUS_PREFABS'] = "/usr/share/ploticus";
+                }
             	$args .= (" -prefab " . $argarray['-prefab']);
             }
             $code = $this->filterThroughCmd($source, PLOTICUS_EXE . "$args");
@@ -253,6 +259,10 @@ extends WikiPluginCached
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/09/26 17:09:23  rurban
+// add SVG support for Ploticus (and hopefully all WikiPluginCached types)
+// SWF not yet.
+//
 // Revision 1.8  2004/09/22 15:23:56  rurban
 // support <!plugin-list !> pagelist data
 // add -prefab arg support
