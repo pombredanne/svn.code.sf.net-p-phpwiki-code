@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.22 2002-01-07 21:09:11 carstenklapp Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.23 2002-01-08 00:12:26 carstenklapp Exp $');
 require_once('lib/Template.php');
 require_once('lib/transform.php');
 require_once('lib/ArchiveCleaner.php');
@@ -10,8 +10,17 @@ require_once('lib/ArchiveCleaner.php');
    coding it.
 */
 
-// FIXME: some links so that it's easy to get back to someplace useful from these
-// error pages.
+
+// Changed ConcurrentUpdates--it works ok, but not sure if I like this
+// though. Please try it out, is it too confusing?
+//
+// Moved the Thank You... message into lib/Toolbar.php. I'm thinking
+// these kind of static (non-clickable) messages should be moved out
+// of lib/Toolbar.php into a page all their own. --Carsten
+
+
+// FIXME: some links so that it's easy to get back to someplace useful
+// from these error pages.
 
 function ConcurrentUpdates($pagename) {
    /* xgettext only knows about c/c++ line-continuation strings
@@ -19,6 +28,7 @@ function ConcurrentUpdates($pagename) {
      We want to translate this entire paragraph as one string, of course.
    */
     $html = "<p>";
+    $html .= "<h1>" .sprintf (_("Problem while updating %s"), $pagename) ."</h1>";
     $html .= _("PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost.");
     $html .= "</p>\n<p>";
     $html .= _("In order to recover from this situation follow these steps:");
@@ -35,9 +45,7 @@ function ConcurrentUpdates($pagename) {
     $html .= "</li></ol></p>\n";
     $html .= QElement('p', _("Sorry for the inconvenience."));
 
-    echo GeneratePage('MESSAGE', $html,
-                      sprintf (_("Problem while updating %s"), $pagename));
-    ExitWiki();
+    return $html;
 }
 
 function PageIsLocked($pagename) {
@@ -78,7 +86,8 @@ function savePreview($dbi, $request) {
     // FIXME: check for simultaneous edits.
     foreach (array('minor_edit', 'convert') as $key)
         $formvars[$key] = $request->getArg($key) ? 'checked' : '';
-    foreach (array('content', 'editversion', 'summary', 'pagename', 'version') as $key)
+    foreach (array('content', 'editversion', 'summary', 'pagename',
+                   'version') as $key)
         @$formvars[$key] = htmlspecialchars($request->getArg($key));
 
     $template = new WikiTemplate('EDITPAGE');
@@ -138,48 +147,41 @@ function savePage ($dbi, $request) {
     $newrevision = $page->createRevision($editversion + 1,
                                          $content, $meta,
                                          ExtractWikiPageLinks($content));
+
+    // This should be refactored to avoid a global, for now it allows
+    // the actual messages to be moved away from this page. $thankyou is
+    // required in the GeneratePage() function.
+    global $thankyou;
+
     if (!is_object($newrevision)) {
         // Save failed.
-        ConcurrentUpdates($pagename);
-    }
+        $thankyou = ConcurrentUpdates($pagename);
+        $thankyou .= "<hr noshade=\"noshade\" />";
+        $html = do_transform($current->getContent());
+        echo GeneratePage('BROWSE', $html, $pagename, $current);
 
-    // Clean out archived versions of this page.
-    $cleaner = new ArchiveCleaner($GLOBALS['ExpireParams']);
-    $cleaner->cleanPageRevisions($page);
+    } else {
     
-    $warnings = $dbi->GenericWarnings();
-    global $SignatureImg;
-    if (empty($warnings)) {
-        if (empty($SignatureImg)){
-            // Do redirect to browse page if no signature has been defined.
-            // In this case, the user will most likely not see the rest of
-            // the HTML we generate (below).
-            $request->redirect(WikiURL($pagename, false, 'absolute_url'));
+        // Clean out archived versions of this page.
+        $cleaner = new ArchiveCleaner($GLOBALS['ExpireParams']);
+        $cleaner->cleanPageRevisions($page);
+        
+        $warnings = $dbi->GenericWarnings();
+        global $SignatureImg;
+        if (empty($warnings)) {
+            if (empty($SignatureImg)){
+                // Do redirect to browse page if no signature has been defined.
+                // In this case, the user will most likely not see the rest of
+                // the HTML we generate (below).
+                $request->redirect(WikiURL($pagename, false, 'absolute_url'));
+            }
         }
+        $thankyou = toolbar_Info_ThankYou($pagename, $warnings);
+        $html = do_transform($newrevision->getContent());
+        echo GeneratePage('BROWSE', $html, $pagename, $newrevision);
     }
 
-    $html = sprintf(_("Thank you for editing %s."),
-                    LinkExistingWikiWord($pagename));
-    $html .= "<br>\n";
-    $html .= _("Your careful attention to detail is much appreciated.");
-    $html .= "\n";
 
-    if ($warnings) {
-        $html .= Element('p', QElement('strong',_("Warning!")) ." "
-                         . htmlspecialchars($warnings)
-                         . QElement('br') ."\n");
-    }
-
-    if (!empty($SignatureImg)) {
-        $html .= Element('p', 
-                         QElement('img', array('alt' => $SignatureImg,
-                                               'src' => DataURL($SignatureImg))));
-    }
-
-    
-    $html .= QElement('hr', array('noshade' => 'noshade'));
-    $html .= do_transform($newrevision->getContent());
-    echo GeneratePage('BROWSE', $html, $pagename, $newrevision);
 }
 
     
