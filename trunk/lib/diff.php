@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.23 2001-12-19 05:07:14 dairiki Exp $');
+rcs_id('$Id: diff.php,v 1.24 2001-12-21 08:05:17 carstenklapp Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -169,7 +169,7 @@ function PageInfoRow ($pagename, $label, $rev)
        $url = WikiURL($pagename, array('version' => $rev->getVersion()));
        $linked_version = QElement('a', array('href' => $url), $rev->getVersion());
        $cols .= Element('td',
-                        _("version") . " " . $linked_version);
+                        sprintf(_("version %d"),$linked_version));
 
        $cols .= QElement('td',
                          sprintf(_("last modified on %s"),
