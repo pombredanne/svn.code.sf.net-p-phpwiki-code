@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.36 2002-02-21 21:09:50 carstenklapp Exp $');
+<?php rcs_id('$Id: Template.php,v 1.37 2002-03-25 20:21:57 carstenklapp Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -213,7 +213,7 @@ function GeneratePage($content, $title, $page_revision = false, $args = false) {
  * For dumping pages as html to a file.
  */
 function GeneratePageasXML($content, $title, $page_revision = false, $args = false) {
-    global $request;
+    global $request, $HIDE_TOOLBARS, $NO_BASEHREF, $HTML_DUMP;
     
     if (!is_array($args))
         $args = array();
@@ -225,7 +225,6 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
     if (!isset($args['HEADER']))
         $args['HEADER'] = split_pagename($title);
     
-    global $HIDE_TOOLBARS, $NO_BASEHREF, $HTML_DUMP;
     $HIDE_TOOLBARS = true;
     $HTML_DUMP = true;
 

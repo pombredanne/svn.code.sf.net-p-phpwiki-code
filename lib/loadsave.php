@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.64 2002-03-02 22:45:30 carstenklapp Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.65 2002-03-25 20:21:57 carstenklapp Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -224,11 +224,15 @@ function DumpHtmlToDir (&$request)
     $dbi = $request->getDbh();
     $pages = $dbi->getAllPages();
 
+    global $HTML_DUMP_SUFFIX, $Theme;
+    if ($HTML_DUMP_SUFFIX)
+        $Theme->HTML_DUMP_SUFFIX = $HTML_DUMP_SUFFIX;
+
     while ($page = $pages->next()) {
         if (! get_cfg_var('safe_mode'))
             set_time_limit(30);	// Reset watchdog.
 
-        $filename = FilenameForPage($page->getName()); /* . ".html";*/
+        $filename = FilenameForPage($page->getName()) . $Theme->HTML_DUMP_SUFFIX;
 
         $msg = HTML(HTML::br(), $page->getName(), ' ... ');
 
@@ -254,7 +258,7 @@ function DumpHtmlToDir (&$request)
         }
 
         $num = fwrite($fd, $data, strlen($data));
-        $msg->pushContent(HTML::small(fmt("%s bytes written", $num)));
+        $msg->pushContent(HTML::small(fmt("%s bytes written\n", $num)));
         PrintXML($msg);
 
         flush();
@@ -263,6 +267,7 @@ function DumpHtmlToDir (&$request)
     }
 
     //CopyImageFiles() will go here;
+    $Theme->$HTML_DUMP_SUFFIX = '';
 
     EndLoadDump($request);
 }

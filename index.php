@@ -80,7 +80,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.3-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.83 2002-03-06 02:35:42 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.84 2002-03-25 20:21:56 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -127,6 +127,10 @@ define('ZIPDUMP_AUTH', false);
 // Probably, you can just leave this set to false, in which case you get
 // raw ('binary' content-encoding) page dumps.
 define('STRICT_MAILABLE_PAGEDUMPS', false);
+
+// Here you can change the filename suffix used for XHTML page dumps.
+// If you don't want any suffix just comment this out.
+$HTML_DUMP_SUFFIX = '.html';
 
 // The maximum file upload size.
 define('MAX_UPLOAD_SIZE', 16 * 1024 * 1024);
