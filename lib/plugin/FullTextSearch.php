@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.16 2004-02-17 12:11:36 rurban Exp $');
+rcs_id('$Id: FullTextSearch.php,v 1.17 2004-02-26 04:03:39 rurban Exp $');
 /*
 Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,15 +37,16 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.16 $");
+                            "\$Revision: 1.17 $");
     }
 
     function getDefaultArguments() {
         return array('s'        => false,
-                     'noheader' => false);
-        // TODO: multiple page exclude
+                     'noheader' => false,
+                     'exclude'  => false,  //comma-seperated list of glob
+                     'limit'    => false,
+                     'quiet'    => false); // be less verbose
     }
-
 
     function run($dbi, $argstr, &$request, $basepage) {
 
@@ -62,17 +63,30 @@ extends WikiPlugin
         $count = 0;
         $found = 0;
 
-        $list = HTML::dl();
+        $list = $quiet ? HTML::ul() : HTML::dl();
 
-        while ($page = $pages->next()) {
-            $count++;
+        if (!$limit or !is_int($limit))
+            $limit = 0;
+        // expand all page wildcards to a list of pages which should be ignored
+        if ($exclude) $exclude = explodePageList($exclude); 
+        while ($page = $pages->next() and (!$limit or ($count < $limit))) {
             $name = $page->getName();
-            $list->pushContent(HTML::dt(WikiLink($name)));
-            if ($hilight_re)
-                $list->pushContent($this->showhits($page, $hilight_re));
+            if ($exclude and in_array($name,$exclude)) continue;
+            $count++;
+            if ($quiet)
+                $list->pushContent(HTML::li(WikiLink($name)));
+            else {
+                $list->pushContent(HTML::dt(WikiLink($name)));
+                if ($hilight_re)
+                    $list->pushContent($this->showhits($page, $hilight_re));
+            }
         }
-        if (!$list->getContent())
-            $list->pushContent(HTML::dd(_("<no matches>")));
+        if (!$quiet) {
+            if ($count >= $limit)
+                $list->pushContent(HTML::dd(fmt("only %d pages displayed",$limit)));
+            if (!$list->getContent())
+                $list->pushContent(HTML::dd(_("<no matches>")));
+        }
 
         if ($noheader)
             return $list;
@@ -105,6 +119,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2004/02/17 12:11:36  rurban
+// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
+//
 // Revision 1.15  2003/01/18 21:41:01  carstenklapp
 // Code cleanup:
 // Reformatting & tabs to spaces;
