@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.123 2005-01-25 06:58:21 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.124 2005-01-30 23:11:00 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -191,18 +191,18 @@ function _determineBogoUserOrPassUser($UserName) {
     if (_isBogoUserAllowed() and isWikiWord($UserName)) {
         include_once("lib/WikiUser/BogoLogin.php");
         $_BogoUser = new _BogoLoginPassUser($UserName);
-        if ($_BogoUser->userExists())
+        if ($_BogoUser->userExists() or $GLOBALS['request']->getArg('auth'))
             return $_BogoUser;
     }
     if (_isUserPasswordsAllowed()) {
     	// PassUsers override BogoUsers if a password is stored
         if (isset($_BogoUser) and isset($_BogoUser->_prefs) 
             and $_BogoUser->_prefs->get('passwd'))
-            return new _PassUser($UserName,$_BogoUser->_prefs);
+            return new _PassUser($UserName, $_BogoUser->_prefs);
         else { 
             $_PassUser = new _PassUser($UserName,
                                        isset($_BogoUser) ? $_BogoUser->_prefs : false);
-            if ($_PassUser->userExists())
+            if ($_PassUser->userExists() or $GLOBALS['request']->getArg('auth'))
                 return $_PassUser;
         }
     }
@@ -2022,6 +2022,9 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.123  2005/01/25 06:58:21  rurban
+// reformatting
+//
 // Revision 1.122  2005/01/08 22:51:56  rurban
 // remove deprecated workaround
 //
