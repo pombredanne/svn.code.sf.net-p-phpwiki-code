@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminUtils.php,v 1.6 2004-03-12 13:31:43 rurban Exp $');
+rcs_id('$Id: WikiAdminUtils.php,v 1.7 2004-04-01 08:05:52 rurban Exp $');
 /**
  Copyright 2003 $ThePhpWikiProgrammingTeam
 
@@ -35,7 +35,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
@@ -86,16 +86,16 @@ extends WikiPlugin
     }
     
     function do_action(&$request, $args) {
-        $method = '_do_' . str_replace('-', '_', $args['action']);
+        $method = strtolower('_do_' . str_replace('-', '_', $args['action']));
         if (!method_exists($this, $method))
             return $this->error("Bad action");
 
         $message = call_user_func(array(&$this, $method), $request, $args);
 
+        // display as seperate page or as alert?
         $alert = new Alert(_("WikiAdminUtils says:"),
                            $message,
                            array(_("Okay") => $args['return_url']));
-
         $alert->show();         // noreturn
     }
 
@@ -139,7 +139,82 @@ extends WikiPlugin
                         count($badpages)),
                     $list);
     }
+
+    //TODO
+    function _do_access_restrictions(&$request, &$args) {
+    	return _("Sorry. Access Restrictions not yet implemented");
+    }
+    
+    // pagelist with enable/disable button
+    function _do_email_verification(&$request, &$args) {
+        $dbi = $request->getDbh();
+        $pagelist = new PageList('pagename',0,$args);
+        //$args['return_url'] = 'action=email-verification-verified';
+        $email = new _PageList_Column_email('email',_("E-Mail"),'left');
+        $emailVerified = new _PageList_Column_emailVerified('emailVerified',_("Verification Status"),'center');
+        $pagelist->_columns[] = $email;
+        $pagelist->_columns[] = $emailVerified;
+        $group = WikiGroup::getGroup($request);
+        foreach ($group->_allUsers() as $username) {
+            if (ENABLE_USER_NEW)
+                $user = WikiUser($username);
+            else 
+                $user = new WikiUser(&$request,$username);
+            $prefs = $user->getPreferences();
+            if ($prefs->get('email')) {
+                $group = (int)(count($pagelist->_rows) / $pagelist->_group_rows);
+                $class = ($group % 2) ? 'oddrow' : 'evenrow';
+                $row = HTML::tr(array('class' => $class));
+                $page_handle = $dbi->getPage($username);
+                $row->pushContent($pagelist->_columns[0]->format($pagelist, $page_handle, $page_handle));
+                $row->pushContent($email->format($pagelist, &$prefs, $page_handle));
+		if (!empty($args['verified'])) {
+		    $prefs->set('emailVerified',empty($args['user'][$username]) ? 0 : 2);
+		}
+                $row->pushContent($emailVerified->format($pagelist, &$prefs, $args['verified']));
+                $pagelist->_rows[] = $row;
+            }
+        }
+        if (!empty($args['verified'])) {
+            return HTML($pagelist->_generateTable(false));
+        } else {
+            $args['verified'] = 1;
+	    $args['return_url'] = $request->getURLtoSelf();
+            return HTML::form(array('action' => $request->getPostURL(),
+                                    'method' => 'post'),
+                          HiddenInputs($args, 'wikiadminutils'),
+                          HiddenInputs(array('require_authority_for_post' =>
+                                             WIKIAUTH_ADMIN)),
+                          HiddenInputs($request->getArgs()),
+                          $pagelist->_generateTable(false),                   
+                          HTML::p(Button('submit:', _("Change Verification Status"), 'wikiadmin'))
+                          );
+        }
+    }
 };
+
+class _PageList_Column_email 
+extends _PageList_Column {
+    function _getValue ($prefs, $dummy) {
+        return $prefs->get('email');
+    }
+}
+
+class _PageList_Column_emailVerified
+extends _PageList_Column {
+    function _getValue ($prefs, $status) {
+    	$name = $prefs->get('userid');
+    	$input = HTML::input(array('type' => 'checkbox',
+    	                           'name' => 'wikiadminutils[user]['.$name.']',
+    	                           'value' => 1));
+    	if ($prefs->get('emailVerified'))
+    	    $input->setAttr('checked','1');
+	if ($status)
+    	    $input->setAttr('disabled','1');
+    	return $input;
+    }
+}
+
 
 // For emacs users
 // Local Variables:
