@@ -1,4 +1,4 @@
-<!-- $Id: wiki_mysql.php3,v 1.8 2000-06-30 00:24:29 wainstead Exp $ -->
+<!-- $Id: wiki_mysql.php3,v 1.9 2000-07-02 22:12:05 wainstead Exp $ -->
 <?
 
    /*
@@ -29,10 +29,12 @@
 
       if (!($dbc = mysql_pconnect($mysql_server, $mysql_user, $mysql_pwd))) {
          echo "Cannot establish connection to database, giving up.";
+	 echo "MySQL error: ", mysql_error(), "<br>\n";
          exit();
       }
       if (!mysql_select_db($mysql_db, $dbc)) {
          echo "Cannot open database, giving up.";
+	 echo "MySQL error: ", mysql_error(), "<br>\n";
          exit();
       }
 
