@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.73 2002-01-13 19:18:18 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.74 2002-01-15 22:20:53 carstenklapp Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -196,11 +196,18 @@ function LinkUnknownWikiWord($wikiword, $linktext = '') {
     } else
         $class = 'named-wikiunknown';
     
-    return Element('span', array('class' => $class),
-                   QElement('a',
-                            array('href' => WikiURL($wikiword,
-                                                    array('action' => 'edit'))),
-                            '?') . Element('u', $linktext));
+    $a = QElement('a',
+                  array('href' => WikiURL($wikiword,
+                                          array('action' => 'edit'))),
+                  '?');
+
+    if (defined('WIKIMARK_AFTER') && WIKIMARK_AFTER) {
+        return Element('span', array('class' => $class),
+                       Element('u', $linktext) . $a);
+    } else {
+        return Element('span', array('class' => $class),
+                       $a . Element('u', $linktext));
+    }
 }
 
 function LinkImage($url, $alt = '[External Image]') {

@@ -68,7 +68,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.61 2002-01-13 04:46:43 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.62 2002-01-15 22:20:53 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -377,6 +377,10 @@ define("NUM_RELATED_PAGES", 5);
 // If undefined, defaults to '' (nothing) and '...' (three periods).
 //define("RC_SEPARATOR_A", '. . . ');
 //define("RC_SEPARATOR_B", '. . . . . ');
+
+// Controls whether the '?' appears before or after UnknownWikiWords.
+// The PhpWiki default is for the '?' to appear before.
+//define('WIKIMARK_AFTER', true);
 
 // Template files (filenames are relative to script position)
 // However, if a LANG is set, they we be searched for in a locale
