@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.51 2001-12-03 23:12:04 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.52 2001-12-03 23:37:25 carstenklapp Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -143,7 +143,7 @@ function QElement($tag, $args = '', $content = '')
       }
       return Element('a',
                  array('href' => $url, 'class' => $class),
-                 Element('img', array('src' => DATA_PATH . $linkimg, 'alt' => $linkproto)) ." ". $linktext);
+                 Element('img', array('src' => DATA_PATH . $linkimg, 'alt' => $linkproto)) . $linktext);
     }
    }
 
