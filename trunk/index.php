@@ -79,9 +79,9 @@ define ('DEBUG', 1);
 /////////////////////////////////////////////////////////////////////
 // Part Null: Don't touch this!
 
-define ('PHPWIKI_VERSION', '1.3.4pre');
+define ('PHPWIKI_VERSION', '1.3.4');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.98 2002-10-12 19:11:42 lakka Exp $');
+rcs_id('$Id: index.php,v 1.99 2002-12-31 01:13:14 wainstead Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
