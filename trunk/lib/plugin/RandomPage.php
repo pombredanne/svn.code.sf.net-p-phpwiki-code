@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RandomPage.php,v 1.4 2002-01-30 22:45:33 carstenklapp Exp $');
+rcs_id('$Id: RandomPage.php,v 1.5 2002-01-30 23:41:54 dairiki Exp $');
 
 require_once('lib/PageList.php');
 
@@ -35,21 +35,21 @@ extends WikiPlugin
 
         better_srand(); // Start with a good seed.
 
-        global $Theme;
         if ($pages < 2) {
             $page = $pagearray[array_rand($pagearray)];
-            if (($showname == 'true') || ($showname == 1))
-                return $Theme->linkExistingWikiWord($page->getName());
+            if ($showname)
+                return WikiLink($page);
             else
-                return $Theme->linkExistingWikiWord($page->getName(), _("RandomPage"));
+                $request->redirect(WikiURL($page, false, 'absurl'));
         } else {
-            if ($pages > 20)
-                $pages = 20;
+            $pages = min($pages, 20, count($pagearray));
+
             $PageList = new PageList();
             $this->_init($pagename, &$PageList, $info, $exclude, $include_self);
 
-            while ($PageList->getTotal() < $pages) {
-                $PageList->addPage($pagearray[array_rand($pagearray)]);
+            $shuffle = array_rand($pagearray, $pages);
+            foreach ($shuffle as $i) {
+                $PageList->addPage($pagearray[$i]);
             }
             return $PageList->getContent();
         }

@@ -1,6 +1,125 @@
-<?php rcs_id('$Id: Theme.php,v 1.25 2002-01-28 18:49:08 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.26 2002-01-30 23:41:54 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
+
+
+/**
+ * Make a link to a wiki page (in this wiki).
+ *
+ * This is a convenience function.
+ *
+ * @param $page_or_rev mixed
+ * Can be:<dl>
+ * <dt>A string</dt><dd>The page to link to.</dd>
+ * <dt>A WikiDB_Page object</dt><dd>The page to link to.</dd>
+ * <dt>A WikiDB_PageRevision object</dt><dd>A specific version of the page to link to.</dd>
+ * </dl>
+ *
+ * @param $type string
+ * One of:<dl>
+ * <dt>'unknown'</dt><dd>Make link appropriate for a non-existant page.</dd>
+ * <dt>'known'</dt><dd>Make link appropriate for an existing page.</dd>
+ * <dt>'auto'</dt><dd>Either 'unknown' or 'known' as appropriate.</dd>
+ * <dt>'button'</dt><dd>Make a button-style link.</dd>
+ * <dt>false (default)</dt><dd>Equivalent to 'known'.</dd>
+ * </dl>
+ * Unless $type of of the latter form, the link will be of class 'wiki', 'wikiunknown',
+ * 'named-wiki', or 'named-wikiunknown', as appropriate.
+ *
+ * @param $label mixed (string or XmlContent object)
+ * Label for the link.  If not given, defaults to the page name.
+ * (Label is ignored for $type == 'button'.)
+ */
+function WikiLink ($page_or_rev, $type = false, $label = false) {
+    global $Theme;
+
+    if ($type == 'button') {
+        return $Theme->makeLinkButton($page_or_rev);
+    }
+
+    $version = false;
+    
+    if (isa($page_or_rev, 'WikiDB_PageRevision')) {
+        $version = $page_or_rev->getVersion();
+        $page = $page_or_rev->getPage();
+        $pagename = $page->getName();
+        $exists = true;
+    }
+    elseif (isa($page_or_rev, 'WikiDB_Page')) {
+        $page = $page_or_rev;
+        $pagename = $page->getName();
+    }
+    else {
+        $pagename = $page_or_rev;
+    }
+
+    if ($type === false || $type == 'auto') {
+        if (isset($page)) {
+            $current = $page->getCurrentRevision();
+            $exists = ! $current->hasDefaultContents();
+        }
+        else {
+            global $request;
+            $dbi = $request->getDbh();
+            $exists = $dbi->isWikiPage($pagename);
+        }
+    }
+    elseif ($type == 'unknown') {
+        $exists = false;
+    }
+    else {
+        $exists = true;
+    }
+    
+
+    if ($exists)
+        return $Theme->linkExistingWikiWord($pagename, $label, $version);
+    else
+        return $Theme->linkUnknownWikiWord($pagename, $label);
+}
+
+     
+
+/**
+ * Make a button.
+ *
+ * This is a convenience function.
+ *
+ * @param $action string
+ * One of <dl>
+ * <dt>[action]</dt><dd>Perform action (e.g. 'edit') on the selected page.</dd>
+ * <dt>[ActionPage]</dt><dd>Run the actionpage (e.g. 'BackLinks') on the selected page.</dd>
+ * <dt>'submit:'[name]</dt><dd>Make a form submission button with the given name.
+ *      ([name] can be blank for a nameless submit button.)</dd>
+ * <dt>a hash</dt><dd>Query args for the action. E.g.<pre>
+ *      array('action' => 'diff', 'previous' => 'major')
+ * </pre></dd>
+ * </dl>
+ *
+ * @param $label string
+ * A label for the button.  If ommited, a suitable default (based on the valued of $action
+ * will be picked.
+ *
+ * @param $page_or_rev mixed
+ * Which page (& version) to perform the action on.
+ * Can be one of:<dl>
+ * <dt>A string</dt><dd>The pagename.</dd>
+ * <dt>A WikiDB_Page object</dt><dd>The page.</dd>
+ * <dt>A WikiDB_PageRevision object</dt><dd>A specific version of the page.</dd>
+ * </dl>
+ * ($Page_or_rev is ignored for submit buttons.)
+ */
+function Button ($action, $label = false, $page_or_rev = false) {
+    global $Theme;
+
+    if (preg_match('/submit:(.*)/A', $action, $m))
+        return $Theme->makeSubmitButton($label, $m[1]);
+    else
+        return $Theme->makeActionButton($action, $label, $page_or_rev);
+}
+
+
+
 
 class Theme {
     function Theme ($theme_name = 'default') {
@@ -127,6 +246,7 @@ class Theme {
         if (!empty($linktext)) {
             $link->pushContent($linktext);
             $link->setAttr('class', 'named-wiki');
+            $link->setAttr('title', $this->maybeSplitWikiWord($wikiword));
         }
         else {
             $link->pushContent($this->maybeSplitWikiWord($wikiword));
@@ -138,7 +258,10 @@ class Theme {
     function linkUnknownWikiWord($wikiword, $linktext = '') {
         $url = WikiURL($wikiword, array('action' => 'edit'));
         //$link = HTML::span(HTML::a(array('href' => $url), '?'));
-        $link = HTML::span($this->makeButton('?', $url));
+        $button = $this->makeButton('?', $url);
+        $button->addTooltip(sprintf(_("Edit: %s"), $wikiword));
+        $link = HTML::span($button);
+        
         
         if (!empty($linktext)) {
             $link->pushContent(HTML::u($linktext));
@@ -296,6 +419,8 @@ class Theme {
      *
      * @param $action string The action to perform (e.g. 'edit', 'lock').
      * This can also be the name of an "action page" like 'LikePages'.
+     * Alternatively you can give a hash of query args to be applied
+     * to the page.
      *
      * @param $label string Textual label for the button.  If left empty,
      * a suitable name will be guessed.

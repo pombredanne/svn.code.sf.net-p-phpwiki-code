@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.32 2002-01-30 01:33:15 dairiki Exp $');
+rcs_id('$Id: editpage.php,v 1.33 2002-01-30 23:41:54 dairiki Exp $');
 
 require_once('lib/Template.php');
 
@@ -64,20 +64,16 @@ class PageEditor
     }
 
     function output ($template, $title_fs, $tokens) {
-        global $Theme;
-
-        $pagename = $this->page->getName();
         $selected = &$this->selected;
         $current = &$this->current;
         
         if ($selected && $selected->getVersion() != $current->getVersion()) {
             $rev = $selected;
-            $pagelink = $Theme->LinkExistingWikiWord($pagename, '',
-                                                     $selected->getVersion());
+            $pagelink = WikiLink($selected);
         }
         else {
             $rev = $current;
-            $pagelink = $Theme->LinkExistingWikiWord($pagename);
+            $pagelink = WikiLink($this->page);
         }
         
         
@@ -131,8 +127,8 @@ class PageEditor
 
         $dbi = $request->getDbh();
         $warnings = $dbi->GenericWarnings();
+
         global $Theme;
-        
         if (empty($warnings) && ! $Theme->getImageURL('signature')) {
             // Do redirect to browse page if no signature has
             // been defined.  In this case, the user will most
@@ -149,7 +145,7 @@ class PageEditor
         if (!empty($warnings))
             $template->replace('WARNINGS', $warnings);
 
-        $pagelink = $Theme->linkExistingWikiWord($page->getName());
+        $pagelink = WikiLink($page);
         
         GeneratePage($template, fmt("Saved: %s", $pagelink), $newrevision);
         return true;
@@ -204,9 +200,7 @@ class PageEditor
           We want to translate this entire paragraph as one string, of course.
         */
 
-        $re_edit_url = WikiURL($this->page, array('action' => 'edit'));
-        $re_edit_link = HTML::a(array('href' => $re_edit_url),
-                                _("Edit the new version"));
+        $re_edit_link = Button('edit', _("Edit the new version"), $this->page);
 
         $steps = HTML::ol(HTML::li(_("Copy your changes to the clipboard or to another temporary place (e.g. text editor).")),
                           HTML::li(fmt("%s of the page. You should now see the most current version of the page. Your changes are no longer there.",
@@ -267,16 +261,13 @@ class PageEditor
                                 'name' => 'edit[markup]',
                                 'value' => 'new',
                                 'checked' => $this->meta['markup'] == 'new'));
-        global $Theme;
-        $el['PREVIEW_B']
-            = $Theme->makeSubmitButton(_("Preview"), 'edit[preview]', 'button');
+
+        $el['PREVIEW_B'] = Button('submit:edit[preview]', _("Preview"));
 
         if (!$this->isConcurrentUpdate() && !$this->isLocked())
-            $el['SAVE_B']
-                = $Theme->makeSubmitButton(_("Save"), 'edit[save]', 'button');
+            $el['SAVE_B'] = Button('submit:edit[save]', _("Save"));
 
-        $el['IS_CURRENT']
-            = $this->version == $this->current->getVersion();
+        $el['IS_CURRENT'] = $this->version == $this->current->getVersion();
 
         return $el;
     }

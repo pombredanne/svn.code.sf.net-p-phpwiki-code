@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.15 2002-01-24 06:50:45 carstenklapp Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.16 2002-01-30 23:41:54 dairiki Exp $');
 
 class WikiPlugin
 {
@@ -149,10 +149,7 @@ class WikiPlugin
                 $query_args[$arg] = $val;
         }
 
-        global $Theme;
-        $link = $Theme->makeButton($args['linktext'],
-                                   WikiURL($args['targetpage'], $query_args),
-                                   $args['class']);
+        $link = Button($query_args, $args['linktext'], $args['targetpage']);
         if (!empty($args['description']))
             $link->addTooltip($args['description']);
 

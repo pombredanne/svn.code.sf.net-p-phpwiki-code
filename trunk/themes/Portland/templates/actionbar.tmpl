@@ -1,15 +1,15 @@
 <?php // -*-html-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.9 2002-01-30 01:33:20 dairiki Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.10 2002-01-30 23:41:54 dairiki Exp $ -->
 <?php
   if (!$page->get('locked') || $user->isAdmin())
-      $EditB = $Theme->makeActionButton("edit",
-                                        $revision->isCurrent() ? _("EditText") : _("Edit Old Revision"));
+      $EditB = Button("edit",
+                      $revision->isCurrent() ? _("EditText") : _("Edit Old Revision"));
   else
-      $EditB = $Theme->makeActionButton("viewsource", _("View Source"));
+      $EditB = Button("viewsource", _("View Source"));
   $EditB = fmt("%s of this page", $EditB);
 
   $mtime = $Theme->formatDateTime($revision->get('mtime'));
-  $PageHistoryB = $Theme->makeActionButton(_("PageHistory"), $mtime);
+  $PageHistoryB = Button(_("PageHistory"), $mtime);
 
   if ($revision->isCurrent())
       $LastModifiedMsg = fmt("(last edited %s)", $PageHistoryB);

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.29 2002-01-30 18:25:18 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.30 2002-01-30 23:41:54 dairiki Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -109,12 +109,12 @@ class _PageList_Column_version extends _PageList_Column {
 
 class _PageList_Column_author extends _PageList_Column {
     function _getValue ($page_handle, &$revision_handle) {
-        global $WikiNameRegexp, $request, $Theme;
+        global $WikiNameRegexp, $request;
         $dbi = $request->getDbh();
 
         $author = _PageList_Column::_getValue($page_handle, $revision_handle);
         if (preg_match("/^$WikiNameRegexp\$/", $author) && $dbi->isWikiPage($author))
-            return $Theme->linkExistingWikiWord($author);
+            return WikiLink($author);
         else
             return $author;
     }
@@ -126,8 +126,7 @@ class _PageList_Column_pagename extends _PageList_Column_base {
     }
     
     function _getValue ($page_handle, &$revision_handle) {
-        global $Theme;
-        return $Theme->LinkExistingWikiWord($page_handle->getName());
+        return WikiLink($page_handle);
     }
 };
 
@@ -340,7 +339,7 @@ class PageList {
             $class = ($group % 2) ? 'oddrow' : 'evenrow';
 
             $list->pushContent(HTML::li(array('class' => $class),
-                                        LinkWikiWord($page_handle->getName())));
+                                        WikiLink($page_handle)));
         }
 
         return $caption ? HTML(HTML::p($caption), $list) : $list;

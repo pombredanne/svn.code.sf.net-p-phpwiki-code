@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: LikePages.php,v 1.15 2002-01-30 22:47:08 carstenklapp Exp $');
+rcs_id('$Id: LikePages.php,v 1.16 2002-01-30 23:41:54 dairiki Exp $');
 
 require_once('lib/TextSearchQuery.php');
 require_once('lib/PageList.php');
@@ -52,7 +52,7 @@ extends WikiPlugin
             $suffix = end($words);
 
             $descrip = fmt("These pages share an initial or final title word with '%s'",
-                           LinkWikiWord($page));
+                           WikiLink($page, 'auto'));
         }
 
         // Search for pages containing either the suffix or the prefix.

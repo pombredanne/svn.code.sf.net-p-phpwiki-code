@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BackLinks.php,v 1.16 2002-01-30 22:46:35 carstenklapp Exp $');
+rcs_id('$Id: BackLinks.php,v 1.17 2002-01-30 23:41:54 dairiki Exp $');
 /**
  */
 
@@ -44,7 +44,7 @@ extends WikiPlugin
         }
 
         if (!$noheader) {
-            $pagelink = LinkWikiWord($page);
+            $pagelink = WikiLink($page, 'auto');
 
             if ($pagelist->isEmpty())
                 return HTML::p(fmt("No pages link to %s.", $pagelink));

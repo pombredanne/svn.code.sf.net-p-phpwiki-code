@@ -1,28 +1,20 @@
 <?php // -*-html-*- ?>
-<!-- $Id: navbar.tmpl,v 1.6 2002-01-28 01:01:27 dairiki Exp $ -->
+<!-- $Id: navbar.tmpl,v 1.7 2002-01-30 23:41:55 dairiki Exp $ -->
 <?php
-
-  $LockPageB = $Theme->makeActionButton($page->get('locked') ? 'unlock' : 'lock');
-  $RemovePageB = $Theme->makeActionButton('remove');
-
-  $DiffB = $Theme->makeActionButton(array('action' => 'diff', 'previous' => 'major'));
-
-  $DebugInfoB = $Theme->makeActionButton(_("DebugInfo"));
-
   $Sep = $Theme->getButtonSeparator();
-
 ?>
 <!-- The bottom navigation/search bar -->
 
-    <?= $Theme->makeLinkButton(_("FindPage")) ?> by searching
+    <?= WikiLink(_("FindPage"), "button") ?> by searching
     <?php if (!empty($revision)) { ?>
-      (or browse <?= $Theme->makeActionButton(_("LikePages")) ?>)
+      (or browse <?= Button(_("LikePages")) ?>)
     <?php } ?>
     <?php if ($user->isAdmin()) { ?>
-     <?=$Sep?><?= $LockPageB ?><?=$Sep?><?= $RemovePageB ?>
+     <?=$Sep?><?= Button($page->get('locked') ? 'unlock' : 'lock')?>
+     <?=$Sep?><?= Button('remove') ?>
     <?php } ?>
     <!-- For debugging only, really -->
-    <?=$Sep?><?= $DebugInfoB ?><br />
+    <?=$Sep?><?= Button(_("DebugInfo")) ?><br />
    <hr />
 <!-- I would like not to have to use these tables, and managed to
      get this stuff to work more or less correctly using
@@ -35,9 +27,9 @@
        id="actionbar">
 <tr valign="baseline">
   <td>
-   <?= $Theme->makeLinkButton(_("RecentChanges")) ?>
+   <?= WikiLink(_("RecentChanges"), "button") ?>
     <?php if (!empty($user) && $user->isAdmin()) { ?>
-     <?=$Sep?><?= $Theme->makeLinkButton(_("PhpWikiAdministration")) ?>
+     <?=$Sep?><?= WikiLink(_("PhpWikiAdministration"), "button") ?>
     <?php } ?>
   </td>
   <td align="right">

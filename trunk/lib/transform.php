@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.38 2002-01-28 18:49:08 dairiki Exp $');
+<?php rcs_id('$Id: transform.php,v 1.39 2002-01-30 23:41:54 dairiki Exp $');
 require_once('lib/WikiPlugin.php');
 require_once('lib/HtmlElement.php');
 
@@ -493,7 +493,7 @@ function wtt_urls($match, &$trfrm) {
 // Link Wiki words (BumpyText)
 // Wikiwords preceeded by a '!' are not linked
 function wtt_bumpylinks($match, &$trfrm) {
-    return $match[0] == "!" ? substr($match,1) : LinkWikiWord($match);
+    return $match[0] == "!" ? substr($match,1) : WikiLink($match, 'auto');
 }
 
 

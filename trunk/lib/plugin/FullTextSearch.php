@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.9 2002-01-30 18:31:20 carstenklapp Exp $');
+rcs_id('$Id: FullTextSearch.php,v 1.10 2002-01-30 23:41:54 dairiki Exp $');
 
 require_once('lib/TextSearchQuery.php');
 
@@ -40,11 +40,10 @@ extends WikiPlugin
 
         $list = HTML::dl();
 
-        global $Theme;
         while ($page = $pages->next()) {
             $count++;
             $name = $page->getName();
-            $list->pushContent(HTML::dt($Theme->LinkExistingWikiWord($name)));
+            $list->pushContent(HTML::dt(WikiLink($name)));
             if ($hilight_re)
                 $list->pushContent($this->showhits($page, $hilight_re));
         }
