@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.190 2004-11-15 15:56:40 rurban Exp $');
+rcs_id('$Id: main.php,v 1.191 2004-11-19 19:22:03 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -39,7 +39,7 @@ class WikiRequest extends Request {
         }
         if (ENABLE_USER_NEW) {
             // load all necessary userclasses (otherwise session => __PHP_Incomplete_Class_Name)
-            // There's no way to demandload it later. (This way its slower but needs less memory than loading all)
+            // There's no way to demandload it later. (This way it's much slower but needs less memory than loading all)
             if (ALLOW_BOGO_LOGIN)
                 include_once("lib/WikiUser/BogoLogin.php");
             foreach ($GLOBALS['USER_AUTH_ORDER'] as $method) {
@@ -924,12 +924,24 @@ TODO: check against these cases:
         $page = $this->getPage();
         $page->set('locked', true);
         $this->_dbi->touch();
+        // check ModeratedPage hook
+        if ($moderated = $page->get('moderated')) {
+            require_once("lib/WikiPlugin.php");
+            $plugin = WikiPluginLoader::getPlugin("ModeratedPage");
+            if ($retval = $plugin->lock_check($this, $page, $moderated))
+                $this->setArg('errormsg', $retval);
+        } 
+        // check if a link to ModeratedPage exists
+        elseif ($action_page = $page->existLink(_("ModeratedPage"))) {
+            require_once("lib/WikiPlugin.php");
+            $plugin = WikiPluginLoader::getPlugin("ModeratedPage");
+            if ($retval = $plugin->lock_add($this, $page, $action_page))
+                $this->setArg('errormsg', $retval);
+        }
         $this->action_browse();
     }
 
     function action_unlock () {
-        // FIXME: This check is redundant.
-        //$user->requireAuth(WIKIAUTH_ADMIN);
         $page = $this->getPage();
         $page->set('locked', false);
         $this->_dbi->touch();
@@ -1136,6 +1148,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.190  2004/11/15 15:56:40  rurban
+// don't load PagePerm on ENABLE_PAGEPERM = false to save memory. Move mayAccessPage() to main.php
+//
 // Revision 1.189  2004/11/09 17:11:16  rurban
 // * revert to the wikidb ref passing. there's no memory abuse there.
 // * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively
