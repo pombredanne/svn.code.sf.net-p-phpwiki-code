@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.57 2002-09-18 19:29:43 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.58 2002-10-12 08:55:03 carstenklapp Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -51,7 +51,7 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
         $pagename = $page->getName();
         $wikipage = $pagename;
     }
-    elseif (isa($page_or_rev, 'WikiPagename')) {
+    elseif (isa($page_or_rev, 'WikiPageName')) {
         $wikipage = $page_or_rev;
         $pagename = $wikipage->fullPagename;
     }
@@ -105,7 +105,7 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
         return $Theme->linkExistingWikiWord($wikipage, $label, $version);
     }
     else {
-        return $Theme->linkUnknownWikiWord($wikipage, $label);
+        return $Theme->linkUnknownWikiWord($pagename, $label);
     }
 }
 
