@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.45 2004-04-05 13:03:26 rurban Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.46 2004-04-10 02:55:49 rurban Exp $ -->
 <?php
 // Todo: Move the logic and code to the plugin
 // This is very experimental and the read-only part an ugly hack so far.
@@ -15,7 +15,7 @@ if ($request->isActionPage($request->getArg('pagename')) and
 
 $time = time();
 $user = &$request->getUser();
-$pref = $user->_prefs; //getPreferences();
+$pref = &$request->_prefs;
 
 $offset = $pref->get('timeOffset');
 $serverTime = $time - $offset * 3600;
@@ -132,6 +132,7 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
         <td></td></tr>
 <?php } ?>
 
+<?php if (ENABLE_USER_NEW) { ?>
   <tr><td colspan="3"><h2><?=_("E-mail")?></h2></td></tr>
 
   <tr><td><?=_("Your E-Mail:")?></td>
@@ -161,6 +162,7 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
      <td><?=$pref->get('notifyPages')?></td><td></td>
     <?php } ?>
    </tr>
+<?php } ?>
 
   <tr><td colspan="3"><h2><?=_("Appearance")?></h2></td></tr>
 

@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.25 2004-04-09 17:49:11 rurban Exp $
+ * $Id: phpwiki.css,v 1.26 2004-04-10 02:55:48 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -758,20 +758,27 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
 .gensmall{font-size:10px}
 .genmed{font-size:11px}
 td.cat{font-weight:bold;letter-spacing:1px;color:#000000;background: url(./images/cellpic1.png);height:27px}
-/*
 /* Main table cell colours and backgrounds */
 td.row1{background:#eaedf4;color:#000000}
 td.row2{background:#d9e2ec;color:#000000}
 td.row3{background:#cad9ea;color:#000000}
 td.spacerow{background:#cad9ea;color:#000000}
+
 /* This is the outline round the main forum tables */
 .forumline{background:#ffffff;color:#000000;border:1px solid #006699}
 
+/* Sidebar */
 .box { background:#ffffff; border: 1px solid #888888 }
 .box-title { font-weight: bold; font-size: 11pt; background-color: #cdcdcd; color: black; font-style: menu; }
 .box-data { width: 160px; font-size: 9pt; font-weight: normal; }
 .box-data .wiki { font-weight: normal; }
 table.sidebar { border-spacing: 0px; margin: 0ex;}
+
+/* RssFeed */
+div.rss { margin: 1em; padding: 1em; font-size: 0.7em; background-color: #eeeeee; border: thin dashed #aaa; }
+div.feed { color: #333; margin: -0.5em; margin-bottom: 0em; padding: 0.3em; font-weight: bold; background-color: #f2f2f2; font-size: 2em; }
+div.itemdesc {  padding-left: 1em; }
+div.rssitem { border-top: thin dashed #aaa; }
 
 /* For emacs users
  *
