@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.1 2001-09-18 19:16:23 dairiki Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.2 2001-11-06 17:13:22 dairiki Exp $');
 
 
 define ('EM_FATAL_ERRORS',
@@ -323,7 +323,7 @@ class PhpError {
         $lines = explode("\n", $this->errstr);
         $errstr = htmlspecialchars(array_shift($lines));
         foreach ($lines as $key => $line)
-            $lines[$key] = "<li>" . htmlspecialchars($line) . "<\li>";
+            $lines[$key] = "<li>" . htmlspecialchars($line) . "</li>";
         if ($lines)
             $errstr .= "<ul>\n" . join("\n", $lines) . "\n</ul>";
         
