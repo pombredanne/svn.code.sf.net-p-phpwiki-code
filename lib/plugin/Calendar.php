@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.6 2002-01-10 19:54:09 rurban Exp $');
+rcs_id('$Id: Calendar.php,v 1.7 2002-01-10 23:55:53 carstenklapp Exp $');
 
 if (!defined('SECONDS_PER_DAY'))
     define('SECONDS_PER_DAY', 24 * 3600);
@@ -64,7 +64,7 @@ extends WikiPlugin
 
         $row =  Element('td', array('align' => 'left'), $prev);
         $row .= Element('td', array('align' => 'center'),
-                        QElement('b', array('class' => 'cal-header'),
+                        QElement('strong', array('class' => 'cal-header'),
                                  strftime($args['month_format'], $time)));
         $row .= Element('td', array('align' => 'right'), $next);
 
@@ -106,7 +106,7 @@ extends WikiPlugin
             $date = Element('a', array('class' => 'cal-day',
                                        'href'  => WikiURL($page_for_date),
                                        'title' => $page_for_date),
-                            QElement('b', $t['tm_mday']));
+                            QElement('strong', $t['tm_mday']));
         }
         else {
             $date = QElement('a',

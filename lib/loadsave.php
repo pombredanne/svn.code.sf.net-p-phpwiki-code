@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.24 2002-01-10 23:22:49 carstenklapp Exp $');
+rcs_id('$Id: loadsave.php,v 1.25 2002-01-10 23:55:52 carstenklapp Exp $');
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
 
@@ -14,7 +14,7 @@ function EndLoadDump()
 {
     // FIXME: This is a hack
     
-    echo Element('p', QElement('b', _("Complete.")));
+    echo Element('p', QElement('strong', _("Complete.")));
     echo Element('p', sprintf( _("Return to %s"), 
                                LinkExistingWikiWord($GLOBALS['pagename']) ) );
     echo "</body></html>\n";
@@ -187,7 +187,7 @@ function SavePage ($dbi, $pageinfo, $source, $filename)
     $versiondata = $pageinfo['versiondata']; // Revision level meta-data.
     
     if (empty($pageinfo['pagename'])) {
-        echo Element('dd'). Element('dt', QElement('b',
+        echo Element('dd'). Element('dt', QElement('strong',
                                                    _("Empty pagename!") ));
         return;
     }

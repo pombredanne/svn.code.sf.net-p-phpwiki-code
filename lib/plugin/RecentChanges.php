@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.18 2002-01-05 18:33:51 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.19 2002-01-10 23:55:53 carstenklapp Exp $');
 /**
  */
 
@@ -192,7 +192,7 @@ extends _RecentChanges_Formatter
 
         if ( ($summary = $this->summary($rev)) ) {
             $summary = do_transform($summary, 'LinkTransform');
-            $summary = Element('b', array('class' => 'wiki-summary'), "[$summary]");
+            $summary = Element('strong', array('class' => 'wiki-summary'), "[$summary]");
         }
         
         $class = 'rc-' . $this->importance($rev);
