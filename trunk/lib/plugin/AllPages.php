@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllPages.php,v 1.9 2002-02-02 02:32:45 carstenklapp Exp $');
+rcs_id('$Id: AllPages.php,v 1.10 2002-02-06 17:01:07 carstenklapp Exp $');
 
 require_once('lib/PageList.php');
 
@@ -33,6 +33,9 @@ extends WikiPlugin
         $pagelist = new PageList($info, $exclude);
         if (!$noheader)
             $pagelist->setCaption(_("Pages in this wiki (%d total):"));
+
+        if (defined('DEBUG'))
+            $debug = true;
 
         if ($debug) $time_start = $this->getmicrotime();
 
