@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiUser.php,v 1.1 2001-09-18 19:16:23 dairiki Exp $');
+<?php rcs_id('$Id: WikiUser.php,v 1.2 2001-11-26 22:37:29 dairiki Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -100,8 +100,8 @@ class WikiUser
         $saved = $req->getCookieVar('WIKI_PREFS');
         
         if (is_array($saved)) {
-            foreach ($saved as $key => $vval) {
-                if (isset($pref[$key]) && !empty($val))
+            foreach ($saved as $key => $val) {
+                if (isset($prefs[$key]) && !empty($val))
                     $prefs[$key] = $val;
             }
         }
