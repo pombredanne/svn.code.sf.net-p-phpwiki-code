@@ -1,5 +1,5 @@
 <?php
-   rcs_id('$Id: stdlib.php,v 1.15 2000-12-06 23:12:02 ahollosi Exp $');
+   rcs_id('$Id: stdlib.php,v 1.16 2000-12-30 21:42:50 ahollosi Exp $');
    /*
       Standard functions for Wiki functionality
          LinkRelatedPages($dbi, $pagename)
@@ -181,13 +181,15 @@
       return "<u>$linktext</u><a href=\"$ScriptUrl?edit=$enc_word\">?</a>";
    }
 
-   function LinkURL($url) {
+   function LinkURL($url, $linktext='') {
       global $ScriptUrl;
       if(ereg("[<>\"]", $url)) {
          return "<b><u>BAD URL -- remove all of &lt;, &gt;, &quot;</u></b>";
       }
-      $enc_url = htmlspecialchars($url);
-      return "<a href=\"$url\">$enc_url</a>";
+
+      if(empty($linktext))
+         $linktext = htmlspecialchars($url);
+      return "<a href=\"$url\">$linktext</a>";
    }
 
 
@@ -458,61 +460,38 @@
       // match the contents 
       preg_match("/([^|]+)(\|)?([^|]+)?/", $match[2], $matches);
 
-      // if $matches[3] is set, this is a link in the form of:
-      // [some link name | http://blippy.com/]
-
       if (isset($matches[3])) {
+         // named link of the form  "[some link name | http://blippy.com/]"
          $URL = trim($matches[3]);
          $linkname = htmlspecialchars(trim($matches[1]));
-         // assert proper URL's
-         if (IsWikiPage($dbi, $URL)) {
-            $link['type'] = 'wiki-named';
-            $link['link'] = LinkExistingWikiWord($URL, $linkname);
-         } elseif (preg_match("#^($AllowedProtocols):#", $URL)) {
-            if (preg_match("/($InlineImages)$/i", $URL)) {
-	       $link['type'] = 'image-named';
-               $link['link'] = LinkImage($URL, $linkname);
-            } else {
-	       $link['type'] = 'url-named';
-               $link['link'] = "<a href=\"$URL\">$linkname</a>";
-	    }
-         } elseif (preg_match("#^phpwiki:(.*)#", $URL, $match)) {
-	    $link['type'] = 'url-wiki-named';
-	    $link['link'] = "<a href=\"$ScriptUrl$match[1]\">$linkname</a>";
-	 } else {
-	    $link['type'] = 'wiki-unknown-named';
-            $link['link'] = LinkUnknownWikiWord($URL, $linkname);
-         }
-	 return $link;
+	 $linktype = 'named';
+      } else {
+         // unnamed link of the form "[http://blippy.com/] or [wiki page]"
+         $URL = trim($matches[1]);
+	 $linkname = '';
+	 $linktype = 'simple';
       }
 
-
-      // otherwise this is just a Wiki page like this: [page name]
-      // or a URL in brackets: [http://foo.com/]
-
-      if (isset($matches[1])) {
-         $linkname = trim($matches[1]);
-         if (IsWikiPage($dbi, $linkname)) {
-            $link['type'] = 'wiki';
-            $link['link'] = LinkExistingWikiWord($linkname);
-         } elseif (preg_match("#^($AllowedProtocols):#", $linkname)) {
-            // if it's an image, embed it; otherwise, it's a regular link
-            if (preg_match("/($InlineImages)$/i", $linkname)) {
-	       $link['type'] = 'image-simple';
-               $link['link'] = LinkImage($linkname);
-            } else {
-	       $link['type'] = 'url-simple';
-               $link['link'] = LinkURL($linkname);
-            }
-	 } else {
-	    $link['type'] = 'wiki-unknown';
-            $link['link'] = LinkUnknownWikiWord($linkname);
-         }
-	 return $link;
+      if (IsWikiPage($dbi, $URL)) {
+         $link['type'] = "wiki-$linktype";
+         $link['link'] = LinkExistingWikiWord($URL, $linkname);
+      } elseif (preg_match("#^($AllowedProtocols):#", $URL)) {
+        // if it's an image, embed it; otherwise, it's a regular link
+         if (preg_match("/($InlineImages)$/i", $URL)) {
+	    $link['type'] = "image-$linktype";
+            $link['link'] = LinkImage($URL, $linkname);
+         } else {
+	    $link['type'] = "url-$linktype";
+            $link['link'] = LinkURL($URL, $linkname);
+	 }
+      } elseif (preg_match("#^phpwiki:(.*)#", $URL, $match)) {
+	 $link['type'] = "url-wiki-$linktype";
+	 $link['link'] = "<a href=\"$ScriptUrl$match[1]\">$linkname</a>";
+      } else {
+	 $link['type'] = "wiki-unknown-$linktype";
+         $link['link'] = LinkUnknownWikiWord($URL, $linkname);
       }
 
-      $link['type'] = 'unknown';
-      $link['link'] = $bracketlink;
       return $link;
    }
 
