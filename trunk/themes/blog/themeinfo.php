@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.4 2005-02-03 05:11:40 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.5 2005-02-03 05:19:48 rurban Exp $');
 
 /**
  * This file defines a blog theme for PhpWiki, 
@@ -26,7 +26,10 @@ rcs_id('$Id: themeinfo.php,v 1.4 2005-02-03 05:11:40 rurban Exp $');
  *
  * For the livesearch feature (autodropdown of the results while you tip) 
  * you'll have to copy livesearch.js from http://blog.bitflux.ch/wiki/LiveSearch
- * to themes/default/ and define ENABLE_LIVESEARCH in config.ini to true.
+ * to themes/default/, change the liveSearchReq.open line to:
+liveSearchReq.open("GET", liveSearchURI + "?format=livesearch&paging=none&limit=25&s=" + document.forms.searchform.s.value);
+ * and define ENABLE_LIVESEARCH in config.ini to true.
+ * 
  * Better autodropdown's are in consideration:
  *   http://momche.net/publish/article.php?page=acdropdown)
  *
