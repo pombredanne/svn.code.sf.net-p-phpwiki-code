@@ -1,0 +1,12 @@
+From [no address given]  Tue Dec 18 02:37:25 2001
+Subject: DebugInfo
+From: [no address given] (PhpWiki)
+Date: Sun, 16 Dec 2001 12:06:05 -0500
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.0-jeffs-hacks)
+Content-Type: application/x-phpwiki;
+  pagename=DebugInfo;
+  flags=PAGE_LOCKED;
+  lastmodified=1008522365;
+Content-Transfer-Encoding: quoted-printable
+
+<?plugin _BackendInfo page||=3D'' ?>
