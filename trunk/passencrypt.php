@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<!-- $Id: passencrypt.php,v 1.4 2003-09-20 00:33:04 carstenklapp Exp $ -->
+<!-- $Id: passencrypt.php,v 1.5 2004-04-21 04:45:35 rurban Exp $ -->
 <title>Password Encryption Tool</title>
 <!--
 Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -106,6 +106,7 @@ if (!empty($posted['create'])) {
     echo "<p>The newly created random password is:<br />\n<br />&nbsp;&nbsp;&nbsp;\n<strong>",
          htmlentities($new_password),"</strong></p>\n";
     $posted['password'] = $new_password;
+    $posted['password2'] = $new_password;
 }
 
 if (($posted['password'] != "")
@@ -148,7 +149,7 @@ Enter a password twice to encrypt it:<br />
 or:<br />
 <br />
 <fieldset><legend accesskey="C">Generate </legend>
-Create a new random password: <button name="create" value="1" />Create</button>
+Create a new random password: <input type="submit" name="create" value="Create" />
 </fieldset>
 </form>
 </body>
