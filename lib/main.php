@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.65 2002-08-19 11:32:30 rurban Exp $');
+rcs_id('$Id: main.php,v 1.66 2002-08-20 21:55:05 rurban Exp $');
 
 
 include "lib/config.php";
@@ -328,7 +328,8 @@ class WikiRequest extends Request {
     }
 
     function requiredAuthority ($action) {
-        // FIXME: clean up.
+        // FIXME: clean up. 
+        // Todo: Check individual page permissions.
         switch ($action) {
             case 'browse':
             case 'viewsource':
@@ -463,6 +464,11 @@ class WikiRequest extends Request {
         if ($this->isActionPage($action))
             return $action;
 
+        // Check for _('PhpWikiAdministration').'/'._('Remove') actions
+        $pagename = $this->getArg('pagename');
+        if (strstr($pagename,_('PhpWikiAdministration')))
+            return $action;
+
         trigger_error("$action: Unknown action", E_USER_NOTICE);
         return 'browse';
     }
@@ -490,6 +496,10 @@ class WikiRequest extends Request {
         $this->compress_output();
         include_once("lib/display.php");
         displayPage($this);
+    }
+
+    function action_verify () {
+        $this->action_browse();
     }
 
     function actionpage ($action) {
@@ -549,8 +559,13 @@ class WikiRequest extends Request {
     function action_remove () {
         // FIXME: This check is redundant.
         //$user->requireAuth(WIKIAUTH_ADMIN);
-        include('lib/removepage.php');
-        RemovePage($this);
+        $pagename = $this->getArg('pagename');
+        if (strstr($pagename,_('PhpWikiAdministration'))) {
+            $this->action_browse();
+        } else {
+            include('lib/removepage.php');
+            RemovePage($this);
+        }
     }
 
 
@@ -629,6 +644,7 @@ function main () {
     $request->possiblyDeflowerVirginWiki();
 
     $request->handleAction();
+if (defined('DEBUG') and DEBUG>1) phpinfo(INFO_VARIABLES);
     $request->finish();
 }
 
@@ -637,7 +653,7 @@ function getmicrotime(){
     list($usec, $sec) = explode(" ", microtime());
     return ((float)$usec + (float)$sec);
 }
-if (defined ('DEBUG')) $GLOBALS['debugclock'] = getmicrotime();
+if (defined('DEBUG')) $GLOBALS['debugclock'] = getmicrotime();
 
 main();
 
