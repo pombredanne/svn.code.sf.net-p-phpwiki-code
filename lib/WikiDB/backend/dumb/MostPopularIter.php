@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopularIter.php,v 1.2 2001-09-19 03:24:36 wainstead Exp $');
+rcs_id('$Id: MostPopularIter.php,v 1.3 2002-01-20 16:51:40 dairiki Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -40,8 +40,11 @@ extends WikiDB_backend_iterator
 }
 
 function WikiDB_backend_dumb_MostPopularIter_sortf($a,$b) {
-    @$ahits = (int)$a['pagedata']['hits'];
-    @$bhits = (int)$b['pagedata']['hits'];
+    $ahits = $bhits = 0; 
+    if (isset($a['pagedata']['hits']))
+        $ahits = (int)$a['pagedata']['hits'];
+    if (isset($b['pagedata']['hits']))
+        $bhits = (int)$b['pagedata']['hits'];
     return $bhits - $ahits;
 }
 
