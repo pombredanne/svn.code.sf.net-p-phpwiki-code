@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SqlResult.php,v 1.5 2004-09-24 18:50:46 rurban Exp $');
+rcs_id('$Id: SqlResult.php,v 1.6 2005-02-27 12:24:25 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
@@ -73,7 +73,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
@@ -88,7 +88,7 @@ extends WikiPlugin
     }
 
     function getDsn($alias) {
-        $ini = parse_ini_file(FindFile("lib/plugin/SqlResult.ini"));
+        $ini = parse_ini_file(FindFile("config/SqlResult.ini"));
         return $ini[$alias];
     }
 
@@ -220,6 +220,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/09/24 18:50:46  rurban
+// fix paging of SqlResult
+//
 // Revision 1.4  2004/09/17 14:23:21  rurban
 // support paging, force limit 50
 //
