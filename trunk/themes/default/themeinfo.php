@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.19 2002-01-24 01:01:58 dairiki Exp $');
+rcs_id('$Id: themeinfo.php,v 1.20 2002-02-03 19:06:05 carstenklapp Exp $');
 
 /*
  * This file defines the default appearance ("theme") of PhpWiki.
@@ -55,6 +55,8 @@ $Theme->setLinkIcon('*', 'url');
  * below.  (These examples give the default formats.)
  * Formats are given as format strings to PHP strftime() function See
  * http://www.php.net/manual/en/function.strftime.php for details.
+ * Do not include the server's zone (%Z), times are converted to the
+ * user's time zone.
  */
 //$Theme->setDateTimeFormat("%B %e, %Y");   // may contain time of day
 //$Theme->setDateFormat("%B %e, %Y");	    // must not contain time
