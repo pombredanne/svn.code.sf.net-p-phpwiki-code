@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRename.php,v 1.10 2004-04-06 20:00:11 rurban Exp $');
+rcs_id('$Id: WikiAdminRename.php,v 1.11 2004-05-24 17:34:53 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -24,10 +24,12 @@ rcs_id('$Id: WikiAdminRename.php,v 1.10 2004-04-06 20:00:11 rurban Exp $');
  * Usage:   <?plugin WikiAdminRename ?> or called via WikiAdminSelect
  * @author:  Reini Urban <rurban@x-ray.at>
  *
+ * TODO: support case-insensitive checkbox
+ *       support regex checkbox and renaming
+ *
  * KNOWN ISSUES:
- * Currently we must be Admin.
- * Future versions will support PagePermissions.
- * requires PHP 4.2 so far.
+ * Enabled now PagePermissions.
+ * Requires PHP 4.2 so far.
  */
 require_once('lib/PageList.php');
 require_once('lib/plugin/WikiAdminSelect.php');
@@ -45,7 +47,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     function getDefaultArguments() {
@@ -61,6 +63,7 @@ extends WikiPlugin_WikiAdminSelect
                      );
     }
 
+    //TODO: regex option
     function renameHelper($name, $from, $to) {
         return str_replace($from,$to,$name);
     }
@@ -70,22 +73,27 @@ extends WikiPlugin_WikiAdminSelect
         $count = 0;
         foreach ($pages as $name) {
             if ( ($newname = $this->renameHelper($name,$from,$to)) and 
-                  $newname != $name and
-                 $dbi->renamePage($name,$newname,$updatelinks) ) {
-                /* not yet implemented for all backends */
-                $ul->pushContent(HTML::li(fmt("Renamed page '%s' to '%s'.",$name,WikiLink($newname))));
-                $count++;
+                 $newname != $name ) {
+                if ($dbi->isWikiPage($newname))
+                    $ul->pushContent(HTML::li(fmt("Page %s already exists. Ignored.",WikiLink($newname))));
+                elseif (!mayAccessPage('change',$name))
+                    $ul->pushContent(HTML::li(fmt("Access denied to change page '%s'.",WikiLink($name))));
+                elseif ( $dbi->renamePage($name,$newname,$updatelinks)) {
+                    /* not yet implemented for all backends */
+                    $ul->pushContent(HTML::li(fmt("Renamed page '%s' to '%s'.",$name,WikiLink($newname))));
+                    $count++;
+                } else {
+                    $ul->pushContent(HTML::li(fmt("Couldn't rename page '%s' to '%s'.", $name, $newname)));
+                }
             } else {
                 $ul->pushContent(HTML::li(fmt("Couldn't rename page '%s' to '%s'.", $name, $newname)));
             }
         }
         if ($count) {
             $dbi->touch();
-            return HTML($ul,
-                        HTML::p(fmt("%s pages have been permanently renamed.",$count)));
+            return HTML($ul, HTML::p(fmt("%s pages have been permanently renamed.",$count)));
         } else {
-            return HTML($ul,
-                        HTML::p(fmt("No pages renamed.")));
+            return HTML($ul, HTML::p(fmt("No pages renamed.")));
         }
     }
     
@@ -110,10 +118,12 @@ extends WikiPlugin_WikiAdminSelect
             !empty($post_args['rename']) && empty($post_args['cancel'])) {
 
             // FIXME: check individual PagePermissions
+            /*
             if (!$request->_user->isAdmin()) {
                 $request->_notAuthorized(WIKIAUTH_ADMIN);
                 $this->disabled("! user->isAdmin");
             }
+            */
 
             // FIXME: error message if not admin.
             if ($post_args['action'] == 'verify') {
@@ -171,7 +181,7 @@ extends WikiPlugin_WikiAdminSelect
                                         false,
                                         array('admin_rename')),
                           HiddenInputs(array('admin_rename[action]' => $next_action,
-                                             'require_authority_for_post' => WIKIAUTH_ADMIN)),
+                                             /*'require_authority_for_post' => WIKIAUTH_ADMIN */)),
                           $buttons);
     }
 
@@ -183,9 +193,10 @@ extends WikiPlugin_WikiAdminSelect
         $header->pushContent(HTML::input(array('name' => 'admin_rename[to]',
                                                'value' => $post_args['to'])));
         $header->pushContent(' '._("(no regex, case-sensitive)"));
-        if (1) { // not yet tested
+        if (DEBUG) { // not yet tested
             $header->pushContent(HTML::br());
             $header->pushContent(_("Change pagename in all linked pages also?"));
+            $header->pushContent(HTML::em(_("Currently not working)")));
             $checkbox = HTML::input(array('type' => 'checkbox',
                                           'name' => 'admin_rename[updatelinks]',
                                           'value' => 1));
@@ -216,6 +227,15 @@ class _PageList_Column_renamed_pagename extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/04/06 20:00:11  rurban
+// Cleanup of special PageList column types
+// Added support of plugin and theme specific Pagelist Types
+// Added support for theme specific UserPreferences
+// Added session support for ip-based throttling
+//   sql table schema change: ALTER TABLE session ADD sess_ip CHAR(15);
+// Enhanced postgres schema
+// Added DB_Session_dba support
+//
 // Revision 1.9  2004/03/12 13:31:43  rurban
 // enforce PagePermissions, errormsg if not Admin
 //

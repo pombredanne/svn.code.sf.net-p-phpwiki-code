@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSetAcl.php,v 1.8 2004-05-16 22:32:54 rurban Exp $');
+rcs_id('$Id: WikiAdminSetAcl.php,v 1.9 2004-05-24 17:34:53 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -48,7 +48,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
@@ -239,7 +239,7 @@ extends WikiPlugin_WikiAdminSelect
         //$header->pushContent(HTML::input(array('name' => 'admin_setacl[acl]',
         //                                       'value' => $post_args['acl'])));
         $header->pushContent(HTML::br());
-        if (!empty($pages)) {
+        if (!empty($pages) and DEBUG) {
           $checkbox = HTML::input(array('type' => 'checkbox',
                                         'name' => 'admin_setacl[updatechildren]',
                                         'value' => 1));
@@ -247,7 +247,9 @@ extends WikiPlugin_WikiAdminSelect
           $header->pushContent($checkbox,
           	  _("Propagate new permissions to all subpages?"),
         	  HTML::raw("&nbsp;&nbsp;"),
-        	  HTML::em(_("(disable individual page permissions, enable inheritance)?")));
+                  HTML::em(_("(disable individual page permissions, enable inheritance)?")),
+                  HTML::em(_("(Currently not working)"))
+                               );
         }
         $header->pushContent(HTML::hr(),HTML::p());
         return $header;
@@ -285,6 +287,9 @@ class _PageList_Column_perm extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/05/16 22:32:54  rurban
+// setacl icons
+//
 // Revision 1.7  2004/05/16 22:07:35  rurban
 // check more config-default and predefined constants
 // various PagePerm fixes:
