@@ -1,56 +1,50 @@
-From [no address given]  Fri Dec 21 02:02:03 2001
-Subject: PhpWikiSystemverwalten
-From: [no address given] (PhpWiki)
-Date: Fri, 21 Dec 2001 02:00:31 -0500
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.0-jeffs-hacks)
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
+X-RCS_ID: $Id: PhpWikiSystemverwalten,v 1.4 2002-01-09 05:14:50 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiSystemverwalten;
   flags=PAGE_LOCKED;
   lastmodified=1008918031;
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: binary
 
 
-__Beachtung__: Du mu=DFt der Systemverwalter-Account mit Passwort zuerst =
-sch=FCtzen, sonnst werden ziemlich viel von diesen Administrationsbefehlen =
-nicht funkionieren.
+__Beachtung__: Du mußt der Systemverwalter-Account mit Passwort zuerst schützen, sonnst werden ziemlich viel von diesen Administrationsbefehlen nicht funkionieren.
 
 -----------
 ! Anmelden
 
-__[ Melde mich an | phpwiki:?action=3Dlogin]__
+__[ Melde mich an | phpwiki:?action=login]__
 
 This allows you to login.
-While you are logged in you will be able to ''lock'', ''unlock'' and =
-''delete'' pages.
+While you are logged in you will be able to ''lock'', ''unlock'' and ''delete'' pages.
 You will also be able edit ''locked'' pages.
 
 ----------
+!! Cleanup
+A Wiki SandBox is very easy to clean. Here you can restore it to pristine condition by loading the default from pgsrc:
 
+[ Rake the SandBox | phpwiki:?action=loadfile&source=pgsrc/SandBox ].
+
+----------
 !! Speicherauszug und Archiv-Datenversicherung
 
 ! ZIP Dateien vom Datenbank
 
 These links lead to zip files, generated on the fly, which contain all
-the  pages in your Wiki.  The zip file will be downloaded to your local =
-computer.
+the  pages in your Wiki.  The zip file will be downloaded to your local computer.
 
-Dieser __[ ZIP Speicherauszug | phpwiki:?action=3Dzip]__ enth=E4lt nur die =
-Aktuellste Versionen die Seiten, und dieser __[ ZIP Speicherauszug | =
-phpwiki:?action=3Dzip&include=3Dall]__ enth=E4lt alle
+Dieser __[ ZIP Speicherauszug | phpwiki:?action=zip]__ enthält nur die Aktuellste Versionen die Seiten, und dieser __[ ZIP Speicherauszug | phpwiki:?action=zip&include=all]__ enthält alle
 archivierte Versionen.
 
 (If the PhpWiki is configured to allow it,) anyone can download a zip file.
 
-If your php has ''zlib'' support, the files in the archive will be =
-compressed,
+If your php has ''zlib'' support, the files in the archive will be compressed,
 otherwise they will just be stored.
 
 ! Seiten als Dateien im Verzeichnis Ablegen
 
 Here you can dump pages of your Wiki into a directory of your choice.
 
-[ Schreibe Seiten aus | =
-phpwiki:?action=3Ddumpserial&directory=3D(/tmp/wikidump) ]
+[ Schreibe Seiten aus | phpwiki:?action=dumpserial&directory=(/tmp/wikidump) ]
 
 The most recent version of each page will written out to the
 directory, one page per file.
@@ -71,7 +65,7 @@ the pages from the directory (or zip file) which you don't want to load.
 Here you can upload ZIP archives, or individual files from
 your (client) machine.
 
-[ Hinauflade | phpwiki:?action=3Dupload&file=3D50()upload ]
+[ Hinauflade | phpwiki:?action=upload&file=50()upload ]
 
 ! Dateien Einspeichern
 
@@ -79,8 +73,7 @@ Here you can load ZIP archives, individual files or entire directories.
 The file or directory must be local to the http server.
 You can also use this form to load from an http: or ftp: URL.
 
-[ Seiten einspeichern | =
-phpwiki:?action=3Dloadfile&source=3D50(/tmp/wikidump) ]
+[ Seiten einspeichern | phpwiki:?action=loadfile&source=50(/tmp/wikidump) ]
 
 -----------
 
