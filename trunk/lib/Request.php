@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.33 2003-03-04 01:54:17 dairiki Exp $');
+<?php rcs_id('$Id: Request.php,v 1.34 2003-03-07 02:41:44 dairiki Exp $');
 // FIXME: write log entry.
 
 
@@ -115,36 +115,52 @@ class Request {
     }
     
     function redirect($url, $noreturn=true) {
-        header("Location: $url");
-        /*
-         *"302 Found" is not really meant to be sent in response
-         * to a POST.  Worse still, according to (both HTTP 1.0 and 1.1) spec,
-         * the user, if it is sent, the user agent is supposed to use the same
-         * method to fetch the redirected URI as the original.
-         *
-         * That means if we redirect from a POST, the user-agent supposed to
-         * generate another POST.  Not what we want.  (We do this after
-         * a page save after all.)
-         *
-         * Fortunately, most/all browsers don't do that.
-         *
-         * "303 See Other" is what we really want.  But it only exists in HTTP/1.1
-         *
-         * FIXME: this is still not spec compliant for HTTP version < 1.1.
-         */
-        $status = $this->httpVersion() >= 1.1 ? 303 : 302;
+        $bogus = defined('DISABLE_HTTP_REDIRECT') and DISABLE_HTTP_REDIRECT;
+        
+        if (!$bogus) {
+            header("Location: $url");
+            /*
+             * "302 Found" is not really meant to be sent in response
+             * to a POST.  Worse still, according to (both HTTP 1.0
+             * and 1.1) spec, the user, if it is sent, the user agent
+             * is supposed to use the same method to fetch the
+             * redirected URI as the original.
+             *
+             * That means if we redirect from a POST, the user-agent
+             * supposed to generate another POST.  Not what we want.
+             * (We do this after a page save after all.)
+             *
+             * Fortunately, most/all browsers don't do that.
+             *
+             * "303 See Other" is what we really want.  But it only
+             * exists in HTTP/1.1
+             *
+             * FIXME: this is still not spec compliant for HTTP
+             * version < 1.1.
+             */
+            $status = $this->httpVersion() >= 1.1 ? 303 : 302;
 
-        $this->setStatus($status);
+            $this->setStatus($status);
+        }
 
         if ($noreturn) {
+            include_once('lib/Template.php');
             $this->discardOutput();
-
-            print "<html><head><title>Redirect</title></head><body>\n";
-            print "<h1>Redirect</h1>\n<p>";
-            printf('Your browser should have redirected you to <a href="%s">%s</a>.',
-                   htmlspecialchars($url), htmlspecialchars($url));
-            print "</p></body></html>\n";
+            $tmpl = new Template('redirect', $this, array('REDIRECT_URL' => $url));
+            $tmpl->printXML();
             $this->finish();
+        }
+        else if ($bogus) {
+            return JavaScript("
+              function redirect(url) {
+                if (typeof location.replace == 'function')
+                  location.replace(url);
+                else if (typeof location.assign == 'function')
+                  location.assign(url);
+                else
+                  window.location = url;
+              }
+              redirect('" . addslashes($url) . "')");
         }
     }
 
@@ -304,12 +320,12 @@ class Request {
         if (!empty($this->_is_buffering_output))
             ob_clean();
         else
-            trigger_error("Not buffering output", E_USER_WARNING);
+            trigger_error("Not buffering output", E_USER_NOTICE);
     }
     
     function finish() {
         if (!empty($this->_is_buffering_output)) {
-            header(sprintf("Content-Length: %d", ob_get_length()));
+            //header(sprintf("Content-Length: %d", ob_get_length()));
             ob_end_flush();
         }
         exit;
@@ -395,7 +411,7 @@ class Request_SessionVars {
     
     function set($key, $val) {
         $vars = &$GLOBALS['HTTP_SESSION_VARS'];
-        if (ini_get('register_globals')) {
+        if (!function_usable('ini_get') or ini_get('register_globals')) {
             // This is funky but necessary, at least in some PHP's
             $GLOBALS[$key] = $val;
         }
@@ -405,7 +421,7 @@ class Request_SessionVars {
     
     function delete($key) {
         $vars = &$GLOBALS['HTTP_SESSION_VARS'];
-        if (ini_get('register_globals'))
+        if (!function_usable('ini_get') or ini_get('register_globals'))
             unset($GLOBALS[$key]);
         unset($vars[$key]);
         session_unregister($key);
