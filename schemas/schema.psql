@@ -1,4 +1,4 @@
--- $Id: schema.psql,v 1.6 2001-07-12 03:24:18 wainstead Exp $
+-- $Id: schema.psql,v 1.7 2001-07-12 03:25:11 wainstead Exp $
 
 drop table phpwiki_pages;
 drop table phpwiki_archive;
@@ -7,7 +7,7 @@ drop table phpwiki_hottopics;
 drop table phpwiki_hitcount;
 drop table phpwiki_score;
 
-CREATE TABLE wiki (
+CREATE TABLE phpwiki_pages (
         pagename VARCHAR(100) NOT NULL,
         version INT NOT NULL DEFAULT 1,
         flags INT NOT NULL DEFAULT 0,
