@@ -1,3 +1,16 @@
+1.1.9 11/05/00: 
+* Spanish language support added, thanks to Sandino Araico 
+  Sánchez <sandino@sandino.net>
+* German language support thanks to Arno Hollosi
+* Postgresql version brought up to date (plus fixes from Sandino)
+* Neil Brown contributed a patch Arno worked in to heavily modify
+  lib/transform.php, much cleaner structure now
+* Various page updates to English pages
+* Schema update for mSQL
+* Assorted E_NOTICE warnings fixed throughout (though still not done)
+* URL no longer stored in page source of RecentChanges
+* various bugs squashed
+
 1.1.8 10/25/00: 
 * Internationalization, with support for Dutch, and an architecture
   to add more languages easily
