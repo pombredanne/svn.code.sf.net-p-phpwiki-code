@@ -3,9 +3,10 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.2 2002-02-25 18:14:11 carstenklapp Exp $ -->
+<!-- $Id: configurator.php,v 1.3 2002-02-26 01:05:10 carstenklapp Exp $ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Configuration tool for PhpWiki 1.3.x</title>
 </head>
 <body>
 
@@ -19,8 +20,10 @@
  * Parts of this file are based on PHPWeather's configurator.php file.
  * http://sourceforge.net/projects/phpweather/
  *
+ *
  * TO CHANGE THE CONFIGURATION OF YOUR PHPWIKI, DO *NOT* MODIFY THIS FILE!
  * more instructions go here
+ *
  * 
  * An index.php will be generated for you which you can also modify later if you wish.
  */
@@ -30,6 +33,29 @@
 // begin configuration options
 
 
+/**
+ * Notes for the description parameter of $property:
+ *
+ * - Descriptive text will be changed into comments (preceeded by //)
+ *   for the final output to index.php.
+ *
+ * - Only a limited set of html is allowed: pre, dl dt dd; it will be
+ *   stripped from the final output.
+ *
+ * - Line breaks and spacing will be preserved for the final output.
+ *
+ * - Double line breaks are automatically converted to paragraphs
+ *   for the html version of the descriptive text.
+ *
+ * - Double-quotes and dollar signs in the descriptive text must be
+ *   escaped: \" and \$. Instead of escaping double-quotes you can use 
+ *   single (') quotes for the enclosing quotes. 
+ *
+ * - Special characters like < and > must use html entities,
+ *   they will be converted back to characters for the final output.
+ */
+
+$SEPARATOR = "///////////////////////////////////////////////////////////////////";
 
 $copyright = '
 Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam = array(
@@ -60,7 +86,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 
 
-$preamble = '
+$preamble = "
   This is the starting file for PhpWiki. All this file does is set
   configuration options, and at the end of the file it includes() the
   file lib/main.php, where the real action begins.
@@ -69,19 +95,19 @@ $preamble = '
   Four and Five. Each one has different configuration settings you can
   change; in all cases the default should work on your system,
   however, we recommend you tailor things to your particular setting.
-';
+";
 
 
 
 $properties['Part Zero'] =
-new part('part0', false, '
+new part('part0', false, "
 Part Zero: If PHP needs help in finding where you installed the
-rest of the PhpWiki code, you can set the include_path here.');
+rest of the PhpWiki code, you can set the include_path here.");
 
 
 
 $properties['PHP include_path'] =
-new iniset('include_path', "\$include_path", "
+new _ini_set('include_path', "\$include_path", "
 NOTE: phpwiki uses the PEAR library of php code for SQL database
 access. Your PHP is probably already configured to set
 include_path so that PHP can find the pear code. If not (or if you
@@ -123,16 +149,15 @@ Part Null: Don't touch this!");
 
 
 $properties['Part Null Settings'] =
-new unchangeable_property('partnullsettings', "
+new unchangeable_variable('partnullsettings', "
 define ('PHPWIKI_VERSION', '1.3.3-jeffs-hacks');
 require \"lib/prepend.php\";
-rcs_id('\$Id: configurator.php,v 1.2 2002-02-25 18:14:11 carstenklapp Exp $');", "");
+rcs_id('\$Id: configurator.php,v 1.3 2002-02-26 01:05:10 carstenklapp Exp $');", "");
 
 
 
 $properties['Part One'] =
-new part('partone', "///////////////////////////////////////////////////////////////////
-", "
+new part('partone', $SEPARATOR."\n", "
 
 Part One:
 Authentication and security settings:
@@ -141,7 +166,7 @@ Authentication and security settings:
 
 
 $properties['Wiki Name'] =
-new defines('WIKI_NAME', ''/*'PhpWiki'*/, "
+new _define('WIKI_NAME', ''/*'PhpWiki'*/, "
 The name of your wiki.
 This is used to generate a keywords meta tag in the HTML templates,
 in bookmark titles for any bookmarks made to pages in your wiki,
@@ -150,7 +175,7 @@ and during RSS generation for the title of the RSS channel.");
 
 
 $properties['Reverse DNS'] =
-new defines_boolean('ENABLE_REVERSE_DNS',
+new boolean_define('ENABLE_REVERSE_DNS',
                     array('true'  => 'perform additional reverse dns lookups',
                           'false' => 'just record the address as given by the httpd server'), "
 If set, we will perform reverse dns lookups to try to convert the
@@ -160,17 +185,17 @@ it for us.");
 
 
 $properties['Admin Username'] =
-new defines('ADMIN_USER', "", "
+new _define('ADMIN_USER', "", "
 Username and password of administrator.
 Set these to your preferences. For heaven's sake
 pick a good password!");
 $properties['Admin Password'] =
-new defines_password('ADMIN_PASSWD', "", "");
+new _define_password('ADMIN_PASSWD', "", "");
 
 
 
 $properties['ZIPdump Authentication'] =
-new defines_boolean('ZIPDUMP_AUTH', 
+new boolean_define('ZIPDUMP_AUTH', 
                     array('false' => 'everyone may download zip dumps',
                           'true'  => 'only admin may download zip dumps'), "
 If true, only the admin user can make zip dumps, else zip dumps
@@ -179,7 +204,7 @@ require no authentication.");
 
 
 $properties['Strict Mailable Pagedumps'] =
-new defines_boolean('STRICT_MAILABLE_PAGEDUMPS', 
+new boolean_define('STRICT_MAILABLE_PAGEDUMPS', 
                     array('false' => 'binary',
                           'true'  => 'quoted-printable'), "
 If you define this to true, (MIME-type) page-dumps (either zip dumps,
@@ -198,46 +223,47 @@ raw ('binary' content-encoding) page dumps.");
 
 
 $properties['Maximum Upload Size'] =
-new defines_numeric('MAX_UPLOAD_SIZE', "16 * 1024 * 1024", "
+new numeric_define('MAX_UPLOAD_SIZE', "16 * 1024 * 1024", "
 The maximum file upload size.");
 
 
 
 $properties['Minor Edit Timeout'] =
-new defines_numeric('MINOR_EDIT_TIMEOUT', "7 * 24 * 3600", "
+new numeric_define('MINOR_EDIT_TIMEOUT', "7 * 24 * 3600", "
 If the last edit is older than MINOR_EDIT_TIMEOUT seconds, the
 default state for the \"minor edit\" checkbox on the edit page form
 will be off.");
 
 
 
-//fixme: new property subclass
 $properties['Disabled Actions'] =
-new property('DisabledActions', "array('dumpserial', 'loadfile')", "
-Actions listed in this array will not be allowed.");
+new array_variable('DisabledActions', array(), "
+Actions listed in this array will not be allowed. Actions are:
+browse, diff, dumphtml, dumpserial, edit, loadfile, lock, remove, 
+unlock, upload, viewsource, zip, ziphtml");
 
 
 
-//fixme: commented out by default
 $properties['Access Log'] =
-new defines('ACCESS_LOG', "/tmp/wiki_access_log", "
+new _define('ACCESS_LOG', "", "
 PhpWiki can generate an access_log (in \"NCSA combined log\" format)
-for you. If you want one, define this to the name of the log file.");
+for you. If you want one, define this to the name of the log file,
+such as /tmp/wiki_access_log.");
 
 
 
 $properties['Strict Login'] =
-new defines_boolean('ALLOW_BOGO_LOGIN',
+new boolean_define('ALLOW_BOGO_LOGIN',
                     array('true'  => 'Users may Sign In with any WikiWord',
                           'false' => 'Only admin may Sign In'), "
 If ALLOW_BOGO_LOGIN is true, users are allowed to login (with
 any/no password) using any userid which: 1) is not the ADMIN_USER,
-2) is a valid WikiWord (matches $WikiNameRegexp.)");
+2) is a valid WikiWord (matches \$WikiNameRegexp.)");
 
 
 
 $properties['Require Sign In Before Editing'] =
-new defines_boolean('REQUIRE_SIGNIN_BEFORE_EDIT',
+new boolean_define('REQUIRE_SIGNIN_BEFORE_EDIT',
                     array('false' => 'Do not require Sign In',
                           'true'  => 'Require Sign In'), "
 If set, then if an anonymous user attempts to edit a page he will
@@ -248,7 +274,7 @@ some sort of BogoUserId.)");
 
 
 $properties['Path for PHP Session Support'] =
-new iniset('session.save_path', 'some_other_directory', "
+new _ini_set('session.save_path', 'some_other_directory', "
 The login code now uses PHP's session support. Usually, the default
 configuration of PHP is to store the session state information in
 /tmp. That probably will work fine, but fails e.g. on clustered
@@ -261,7 +287,7 @@ in this directory):");
 
 
 $properties['Disable PHP Transparent Session ID'] =
-new unchangeable_property('session.use_trans_sid', "@ini_set('session.use_trans_sid', 0);", "
+new unchangeable_variable('session.use_trans_sid', "@ini_set('session.use_trans_sid', 0);", "
 If your php was compiled with --enable-trans-sid it tries to
 add a PHPSESSID query argument to all URL strings when cookie
 support isn't detected in the client browser.  For reasons
@@ -275,8 +301,7 @@ or set any user preferences, unless your browser supports cookies.)");
 
 
 $properties['Part Two'] =
-new part('parttwo', "///////////////////////////////////////////////////////////////////
-", "
+new part('parttwo', $SEPARATOR."\n", "
 
 Part Two:
 Database Selection
@@ -309,26 +334,26 @@ can be adjusted seperately. For each class there are five
 parameters (usually, only two or three of the five are actually
 set) which control how long those revisions are kept in the
 database.
-<pre>
-   max_keep: If set, this specifies an absolute maximum for the
+<dl>
+   <dt>max_keep:</dt> <dd>If set, this specifies an absolute maximum for the
             number of archived revisions of that class. This is
             meant to be used as a safety cap when a non-zero
             min_age is specified. It should be set relatively high,
             and it's purpose is to prevent malicious or accidental
             database overflow due to someone causing an
-            unreasonable number of edits in a short period of time.
+            unreasonable number of edits in a short period of time.</dd>
 
-  min_age:  Revisions younger than this (based upon the supplanted
+  <dt>min_age:</dt>  <dd>Revisions younger than this (based upon the supplanted
             date) will be kept unless max_keep is exceeded. The age
             should be specified in days. It should be a
-            non-negative, real number,
+            non-negative, real number,</dd>
 
-  min_keep: At least this many revisions will be kept.
+  <dt>min_keep:</dt> <dd>At least this many revisions will be kept.</dd>
 
-  keep:     No more than this many revisions will be kept.
+  <dt>keep:</dt>     <dd>No more than this many revisions will be kept.</dd>
 
-  max_age:  No revision older than this age will be kept.
-</pre>
+  <dt>max_age:</dt>  <dd>No revision older than this age will be kept.</dd>
+</dl>
 Supplanted date: Revisions are timestamped at the instant that they
 cease being the current revision. Revision age is computed using
 this timestamp, not the edit time of the page.
@@ -349,8 +374,7 @@ is not changed.
 
 
 $properties['Part Three'] =
-new part('partthree', "///////////////////////////////////////////////////////////////////
-", "
+new part('partthree', $SEPARATOR."\n", "
 
 Part Three:
 Page appearance and layout
@@ -359,7 +383,7 @@ Page appearance and layout
 
 
 $properties['Theme'] =
-new defines_selection('THEME',
+new _define_selection('THEME',
               array('default'  => 'default',
                     'Hawaiian' => 'Hawaiian',
                     'MacOSX'   => 'MacOSX',
@@ -388,7 +412,7 @@ define('THEME', 'SpaceWiki');</pre>");
 
 
 $properties['Character Set'] =
-new defines('CHARSET', 'iso-8859-1', "
+new _define('CHARSET', 'iso-8859-1', "
 Select a valid charset name to be inserted into the xml/html pages, 
 and to reference links to the stylesheets (css). For more info see: 
 http://www.iana.org/assignments/character-sets. Note that PhpWiki 
@@ -406,14 +430,15 @@ area in the future).");
 
 
 $properties['Language'] =
-new selection('LANG',
+new _variable_selection('LANG',
               array('C'  => 'English',
                     'nl' => 'Nederlands',
                     'es' => 'Español',
                     'fr' => 'Français',
                     'de' => 'Deutsch',
                     'sv' => 'Svenska',
-                    'it' => 'Italiano'), "
+                    'it' => 'Italiano',
+                    ''   => 'none'), "
 Select your language/locale - default language is \"C\" for English.
 Other languages available:<pre>
 English \"C\"  (English    - HomePage)
@@ -440,8 +465,7 @@ valid locale before gettext() will work, i.e., use 'de_DE', 'nl_NL'.");
 
 
 $properties['Part Four'] =
-new part('partfour', "///////////////////////////////////////////////////////////////////
-", "
+new part('partfour', $SEPARATOR."\n", "
 
 Part Four:
 Mark-up options.
@@ -449,31 +473,29 @@ Mark-up options.
 
 
 
-//fixme: new property subclass
 $properties['Allowed Protocols'] =
-new property('AllowedProtocols', "http|https|mailto|ftp|news|nntp|ssh|gopher", "
+new list_variable('AllowedProtocols', "http|https|mailto|ftp|news|nntp|ssh|gopher", "
 allowed protocols for links - be careful not to allow \"javascript:\"
 URL of these types will be automatically linked.
 within a named link [name|uri] one more protocol is defined: phpwiki");
 
 
 
-//fixme: new property subclass
 $properties['Inline Images'] =
-new property('InlineImages', "png|jpg|gif", "
+new list_variable('InlineImages', "png|jpg|gif", "
 URLs ending with the following extension should be inlined as images");
 
 
 
 $properties['WikiName Regexp'] =
-new property('WikiNameRegexp', "(?<![[:alnum:]])(?:[[:upper:]][[:lower:]]+){2,}(?![[:alnum:]])", "
+new _variable('WikiNameRegexp', "(?<![[:alnum:]])(?:[[:upper:]][[:lower:]]+){2,}(?![[:alnum:]])", "
 Perl regexp for WikiNames (\"bumpy words\")
-(?<!..) & (?!...) used instead of '\b' because \b matches '_' as well");
+(?&lt;!..) & (?!...) used instead of '\b' because \b matches '_' as well");
 
 
 
 $properties['InterWiki Map File'] =
-new defines('INTERWIKI_MAP_FILE', "lib/interwiki.map", "
+new _define('INTERWIKI_MAP_FILE', "lib/interwiki.map", "
 InterWiki linking -- wiki-style links to other wikis on the web
 
 The map will be taken from a page name InterWikiMap.
@@ -484,8 +506,7 @@ by INTERWIKI_MAP_FILE (if any) will be used.");
 
 
 $properties['Part Five'] =
-new part('partfive', "///////////////////////////////////////////////////////////////////
-", "
+new part('partfive', $SEPARATOR."\n", "
 
 Part Five:
 URL options -- you can probably skip this section.
@@ -497,15 +518,15 @@ URL options -- you can probably skip this section.
 
 
 
-$end = '
+$end = "
 
-////////////////////////////////////////////////////////////////
+$SEPARATOR
 // Okay... fire up the code:
-////////////////////////////////////////////////////////////////
+$SEPARATOR
 
-include "lib/main.php";
+include \"lib/main.php\";
 
-// (c-file-style: "gnu")
+// (c-file-style: \"gnu\")
 // Local Variables:
 // mode: php
 // tab-width: 8
@@ -514,7 +535,7 @@ include "lib/main.php";
 // indent-tabs-mode: nil
 // End:   
 ?>
-';
+";
 
 
 
@@ -523,19 +544,19 @@ include "lib/main.php";
 // begin class definitions
 
 /**
- * A basic property.
+ * A basic index.php configuration line in the form of a variable.
  *
  * Produces a string in the form "$name = value;"
  * e.g.:
- * $InlineImages = "png|jpg|gif";
+ * $WikiNameRegexp = "value";
  */
-class property {
+class _variable {
 
     var $config_item_name;
     var $default_value;
     var $description;
 
-    function property($config_item_name, $default_value, $description) {
+    function _variable($config_item_name, $default_value, $description) {
         $this->config_item_name = $config_item_name;
         $this->description = $description;
         $this->default_value = $default_value;
@@ -553,23 +574,22 @@ class property {
         return "\n\$" . $this->get_config_item_name() . " = \"" . $posted_value . "\";";
     }
     function get_config($posted_value) {
-        $d = str_replace("<pre>", "", $this->get_description());
-        $d = str_replace("</pre>", "", $d);
+        $d = stripHtml($this->get_description());
         $d = str_replace("\n", "\n// ", $d) . $this->get_config_line($posted_value) ."\n";
         return $d;
     }
 
     function get_instructions($title) {
-        $i = "<p><b><h3>" . $title . "</h3></b></p>\n    <p>" . str_replace("\n\n", "</p><p>", $this->get_description()) . "</p>\n";
+        $i = "<p><b><h3>" . $title . "</h3></b></p>\n    " . nl2p($this->get_description()) . "\n";
         return "<tr>\n<td>\n" . $i . "</td>\n";
     }
 
     function get_html() {
-        return "<input type=\"text\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\">";
+        return get_class($this)."<br />\n"."<input type=\"text\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\">";
     }
 }
 
-class unchangeable_property extends property {
+class unchangeable_variable extends _variable {
     function get_html() {
         return "";
     }
@@ -579,14 +599,14 @@ class unchangeable_property extends property {
         return "${n}".$this->default_value;
     }
     function get_instructions($title) {
-        $i = "<p><b><h3>" . $title . "</h3></b></p>\n    <p>" . str_replace("\n\n", "</p><p>", $this->get_description()) . "</p>\n";
+        $i = "<p><b><h3>" . $title . "</h3></b></p>\n    " . nl2p($this->get_description()) . "\n";
         $i = $i ."<em>Not editable.</em><br />\n<pre>" . $this->default_value."</pre>";
         return "<tr>\n<td colspan=\"2\">\n" .$i ."</td></tr>\n";
     }
 
 }
 
-class selection extends property {
+class _variable_selection extends _variable {
     function get_html() {
         $output = '<select name="' . $this->get_config_item_name() . "\">\n";
         /* The first option is the default */
@@ -594,12 +614,12 @@ class selection extends property {
             $output .= "  <option value=\"$option\">$label</option>\n";
         }
         $output .= "    </select>\n  </td>\n";
-        return $output;
+        return get_class($this)."<br />\n".$output;
     }
 }
 
 
-class defines extends property {
+class _define extends _variable {
     function get_config_line($posted_value) {
         if ($this->description)
             $n = "\n";
@@ -610,15 +630,168 @@ class defines extends property {
     }
 }
 
-class defines_selection extends property {
+class _define_selection extends _variable_selection {
     function get_config_line($posted_value) {
-        return defines::get_config_line($posted_value);
+        return _define::get_config_line($posted_value);
     }
     function get_html() {
-        return selection::get_html();
+        return get_class($this)."<br />\n"._variable_selection::get_html();
     }
 }
 
+class _define_password extends _define {
+    function get_config_line($posted_value) {
+        if ($this->description)
+            $n = "\n";
+        if ($posted_value == '') {
+            $p = "${n}//define('".$this->get_config_item_name()."', \"\");";
+            $p = $p . "\n// If you used the passencrypt.php utility to encode the password";
+            $p = $p . "\n// then uncomment this line:";
+            $p = $p . "\n//define('ENCRYPTED_PASSWD', true);";
+            return $p;
+        } else {
+            if (function_exists('crypt')) {
+                $salt_length = max(CRYPT_SALT_LENGTH,
+                                    2 * CRYPT_STD_DES,
+                                    9 * CRYPT_EXT_DES,
+                                    12 * CRYPT_MD5,
+                                    16 * CRYPT_BLOWFISH);
+                // generate an encrypted password
+                $crypt_pass = crypt($posted_value, rand_ascii($salt_length));
+                $p = "${n}define('".$this->get_config_item_name()."', '$crypt_pass');";
+                $p = $p . "\n// If you used the passencrypt.php utility to encode the password";
+                $p = $p . "\n// then uncomment this line:";
+                return $p . "\ndefine('ENCRYPTED_PASSWD', true);";
+            } else {
+                $p = "${n}define('".$this->get_config_item_name()."', '$posted_value');";
+                $p = $p . "\n// If you used the passencrypt.php utility to encode the password";
+                $p = $p . "\n// then uncomment this line:";
+                $p = $p . "\n//define('ENCRYPTED_PASSWD', true);";
+                $p = $p . "\n// Encrypted passwords cannot be used:";
+                $p = $p . "\n// 'function crypt()' not available in this version of php";
+                return $p;
+            }
+        }
+    }
+    function get_html() {
+        return get_class($this)."<br />\n"."<input type=\"password\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\">";
+    }
+}
+
+
+class numeric_define extends _define {
+    function get_config_line($posted_value) {
+        if ($this->description)
+            $n = "\n";
+        if ($posted_value == '')
+            return "${n}//define('".$this->get_config_item_name()."', 0);";
+        else
+            return "${n}define('".$this->get_config_item_name()."', $posted_value);";
+    }
+}
+
+class list_variable extends _variable {
+    function get_config_line($posted_value) {
+        // split the phrase by any number of commas or space characters,
+        // which include " ", \r, \t, \n and \f
+        $list_values = preg_split("/[\s,]+/", $posted_value, -1, PREG_SPLIT_NO_EMPTY);
+        $list_values = join("|", $list_values);
+        return _variable::get_config_line($list_values);
+    }
+    function get_html() {
+        $list_values = explode("|", $this->default_value);
+        $cols = max(3, count($this->default_value) +1);
+        $list_values = join("\n", $list_values);
+        $ta = "<textarea cols=\"10\" rows=\"". $cols ."\" name=\"".$this->get_config_item_name()."\">";
+        $ta .= $list_values . "</textarea>";
+        return get_class($this)."<br />\n".$ta;
+    }
+}
+
+class array_variable extends _variable {
+    function get_config_line($posted_value) {
+        // split the phrase by any number of commas or space characters,
+        // which include " ", \r, \t, \n and \f
+        $list_values = preg_split("/[\s,]+/", $posted_value, -1, PREG_SPLIT_NO_EMPTY);
+        if (!empty($list_values)) {
+            $list_values = "'".join("', '", $list_values)."'";
+            $list_values = "array(".$list_values.")";
+            return "\n\$" . $this->get_config_item_name() . " = " . $list_values . ";";
+        } else
+            return "\n//\$" . $this->get_config_item_name() . " = array();";
+    }
+    function get_html() {
+        $list_values = join("\n", $this->default_value);
+        $cols = max(3, count($this->default_value) +1);
+        $ta = "<textarea cols=\"10\" rows=\"". $cols ."\" name=\"".$this->get_config_item_name()."\">";
+        $ta .= $list_values . "</textarea>";
+        return get_class($this)."<br />\n".$ta;
+    }
+
+}
+
+class _ini_set extends _variable {
+    function get_config_line($posted_value) {
+        if ($posted_value && ! $posted_value == $this->default_value)
+            return "\nini_set('".$this->get_config_item_name()."', '$posted_value');";
+        else
+            return "\n//ini_set('".$this->get_config_item_name()."', '".$this->default_value."');";
+    }
+}
+
+class boolean_define extends _define {
+    function get_config_line($posted_value) {
+        if ($this->description)
+            $n = "\n";
+        return "${n}define('".$this->get_config_item_name()."', $posted_value);";
+    }
+    function get_html() {
+        $output = '<select name="' . $this->get_config_item_name() . "\">\n";
+        /* The first option is the default */
+        list($option, $label) = each($this->default_value);
+        $output .= "  <option value=\"$option\" selected>$label</option>\n";
+        /* There can only be two options */
+        list($option, $label) = each($this->default_value);
+        $output .= "  <option value=\"$option\">$label</option>\n";
+        $output .= "</select>\n  </td>\n";
+        return get_class($this)."<br />\n".$output;
+    }
+}
+
+class part extends _variable {
+    function get_config($posted_value) {
+        $d = stripHtml($this->get_description());
+        global $SEPARATOR;
+        return "\n".$SEPARATOR . str_replace("\n", "\n// ", $d) ."\n$this->default_value";
+    }
+    function get_instructions($title) {
+        $i = "<p><b><h2>" . $title . "</h2></b></p>\n    " . nl2p($this->get_description()) ."\n";
+        return "<tr>\n<td colspan=\"2\" bgcolor=\"#eee\">\n" .$i ."</td></tr>\n";
+    }
+    function get_html() {
+        return "";
+    }
+}
+function nl2p($text) {
+    return "<p>" . str_replace("\n\n", "</p>\n<p>", $text) . "</p>";
+}
+
+function stripHtml($text) {
+        $d = str_replace("<pre>", "", $text);
+        $d = str_replace("</pre>", "", $d);
+        $d = str_replace("<dl>", "", $d);
+        $d = str_replace("</dl>", "", $d);
+        $d = str_replace("<dt>", "", $d);
+        $d = str_replace("</dt>", "", $d);
+        $d = str_replace("<dd>", "", $d);
+        $d = str_replace("</dd>", "", $d);
+        //restore html entities into characters
+        // http://www.php.net/manual/en/function.htmlentities.php
+        $trans = get_html_translation_table (HTML_ENTITIES);
+        $trans = array_flip ($trans);
+        $d = strtr($d, $trans);
+        return $d;
+}
 
 /**
  * Seed the random number generator.
@@ -648,95 +821,11 @@ function rand_ascii($length = 1) {
    }
    return $s;
 }
-class defines_password extends defines {
-    function get_config_line($posted_value) {
-        if ($this->description)
-            $n = "\n";
-        if ($posted_value == '')
-            return "${n}//define('".$this->get_config_item_name()."', \"\");";
-        else {
-            if (function_exists('crypt')) {
-                $salt_length = max(CRYPT_SALT_LENGTH,
-                                    2 * CRYPT_STD_DES,
-                                    9 * CRYPT_EXT_DES,
-                                    12 * CRYPT_MD5,
-                                    16 * CRYPT_BLOWFISH);
-                // generate an encrypted password
-                $crypt_pass = crypt($posted_value, rand_ascii($salt_length));
-                $p = "${n}define('".$this->get_config_item_name()."', '$crypt_pass');";
-                $p = $p . "\n// If you used the passencrypt.php utility to encode the password";
-                $p = $p . "\n// then uncomment this line:";
-                return $p . "\ndefine('ENCRYPTED_PASSWD', true);";
-            } else {
-                $p = "${n}define('".$this->get_config_item_name()."', '$posted_value');";
-                $p = $p . "\n// If you used the passencrypt.php utility to encode the password";
-                $p = $p . "\n// then uncomment this line:";
-                $p = $p . "\n//define('ENCRYPTED_PASSWD', true);";
-                $p = $p . "\n// Encrypted passwords cannot be used:";
-                $p = $p . "\n// 'function crypt()' not available in this version of php";
-                return $p;
-            }
-        }
-    }
-    function get_html() {
-        return "<input type=\"password\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\">";
-    }
-}
 
-
-class defines_numeric extends property {
-    function get_config_line($posted_value) {
-        if ($this->description)
-            $n = "\n";
-        if ($posted_value == '')
-            return "${n}//define('".$this->get_config_item_name()."', 0);";
-        else
-            return "${n}define('".$this->get_config_item_name()."', $posted_value);";
-    }
-}
-
-class iniset extends property {
-    function get_config_line($posted_value) {
-        if ($posted_value)
-            return "\nini_set('".$this->get_config_item_name()."', '$posted_value');";
-        else
-            return "\n//ini_set('".$this->get_config_item_name()."', '".$this->default_value."');";
-    }
-}
-
-class defines_boolean extends property {
-    function get_config_line($posted_value) {
-        if ($this->description)
-            $n = "\n";
-        return "${n}define('".$this->get_config_item_name()."', $posted_value);";
-    }
-    function get_html() {
-        $output = '<select name="' . $this->get_config_item_name() . "\">\n";
-        /* The first option is the default */
-        list($option, $label) = each($this->default_value);
-        $output .= "  <option value=\"$option\" selected>$label</option>\n";
-        /* There can only be two options */
-        list($option, $label) = each($this->default_value);
-        $output .= "  <option value=\"$option\">$label</option>\n";
-        $output .= "</select>\n  </td>\n";
-        return $output;
-    }
-}
-
-class part extends property {
-    function get_config($posted_value) {
-        $d = str_replace("<pre>", "", $this->get_description());
-        $d = str_replace("</pre>", "", $d);
-        $separator = "\n/////////////////////////////////////////////////////////////////////";
-        return $separator . str_replace("\n", "\n// ", $d) ."\n$this->default_value";
-    }
-    function get_instructions($title) {
-        $i = "<p><b><h2>" . $title . "</h2></b></p>\n    <p>" . str_replace("\n\n", "</p><p>", $this->get_description()) . "</p>\n";
-        return "<tr>\n<td colspan=\"2\" bgcolor=\"#eee\">\n" .$i ."</td></tr>\n";
-    }
-    function get_html() {
-        return "";
-    }
+function printArray($a) {
+    echo "<hr />\n<pre>\n";
+    print_r($a);
+    echo "\n</pre>\n<hr />\n";
 }
 
 // end of class definitions
@@ -761,13 +850,10 @@ if ($action == 'make_config') {
 
     $posted = $GLOBALS['HTTP_POST_VARS'];
 
-    echo "<hr /><pre>\n";
-    print_r($GLOBALS['HTTP_POST_VARS']);
-    echo "</pre><hr />\n";
+printArray($GLOBALS['HTTP_POST_VARS']);
+/*
 
-    /*
-
-    */
+*/
 
     foreach($properties as $option_name => $a) {
         $posted_value = $posted[$a->config_item_name];
