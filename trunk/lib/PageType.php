@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.23 2004-03-24 19:39:02 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.24 2004-03-26 00:22:37 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004 $ThePhpWikiProgrammingTeam
 
@@ -112,6 +112,7 @@ class PageType {
 
 class PageType_wikitext extends PageType {}
 class PageType_html extends PageType {}
+class PageType_pdf extends PageType {}
 
 class PageType_wikiblog extends PageType {}
 class PageType_comment extends PageType {}
@@ -366,8 +367,13 @@ class PageFormatter_wikiforum extends PageFormatter_attach {
     var $type = 'wikiforum', $prefix = "FORUM";
 }
 
-/**
- * wikiabuse for htmlarea editing. not yet used.
+/** wikiabuse for htmlarea editing. not yet used.  
+ *
+ * Warning! Once a page is edited with a htmlarea like control it is
+ * stored in HTML and cannot be converted back to WikiText as long as
+ * we have no HTML => WikiText or any other interim format (WikiExchangeFormat e.g. Xml) 
+ * converter. So it has a viral effect and certain plugins will not work anymore.
+ * But a lot of wikiusers seem to like it.
  */
 class PageFormatter_html extends PageFormatter
 {
@@ -378,6 +384,7 @@ class PageFormatter_html extends PageFormatter
     	return $text;
     }
 }
+
 /**
  *  FIXME. not yet used
  */
@@ -394,27 +401,40 @@ class PageFormatter_pdf extends PageFormatter
     function format($text) {
         include_once('lib/Template.php');
         global $request;
-        $tokens['page'] = $this->_page;
+        $tokens['page']    = $this->_page;
         $tokens['CONTENT'] = $this->_transform($text);
-        // this is a XmlElement tree, which must be converted to PDF
+        $pagename = $this->_page->getName();
+
+        // This is a XmlElement tree, which must be converted to PDF
 
         // We can make use of several pdf extensions. This one - fpdf
         // - is pure php and very easy, but looks quite ugly and has a
-        // terrible interface, as terrible as most of the othes. The
-        // closest to HTML is htmldoc which needs an external cgi
+        // terrible interface, as terrible as most of the othes. 
+        // The closest to HTML is htmldoc which needs an external cgi
         // binary.
+        // We use a custom HTML->PDF class converter from PHPWebthings
+        // to be able to use templates for PDF.
         require_once('lib/fpdf.php');
-        $pdf = new FPDF();
-        $pdf->AddPage();
-        //$pdf->SetFont('Arial','B',16);
-        //$pdf->Cell(40,10,'Hello World!');
-        //$pdf->Output();
-        //$tokens['rev'] = new FakePageRevision($this->_meta);
-        //$name = new WikiPageName($this->_page->getName());
+        require_once('lib/pdf.php');
 
-        //TODO: define fonts, pagelayout
+        $pdf = new PDF();
+        $pdf->SetTitle($pagename);
+        $pdf->SetAuthor($this->_page->get('author'));
+        $pdf->SetCreator(WikiUrl($pagename,false,1));
+        $pdf->AliasNbPages();
+        $pdf->AddPage();
+        //TODO: define fonts
+        $pdf->SetFont('Times','',12);
+        //$pdf->SetFont('Arial','B',16);
+
+        // PDF pagelayout from a special template
         $template = new Template('pdf', $request, $tokens);
-        // catch $pdf->Output()
+        $pdf->ConvertFromHTML($template);
+
+        // specify a filename and bool for download. 
+        // if empty it must be the first template used, no headers already sent.
+        $pdf->Output($pagename.".pdf",/*download*/ true);
+
         // Output([string name [, string dest]])
         return $pdf;
     }
