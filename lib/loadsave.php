@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.10 2001-11-09 16:23:37 dairiki Exp $');
+rcs_id('$Id: loadsave.php,v 1.11 2001-11-14 17:43:50 dairiki Exp $');
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
 
@@ -352,7 +352,7 @@ function LoadDir ($dbi, $dirname, $files = false, $exclude = false)
    $handle = opendir($dir = $dirname);
    while ($fn = readdir($handle))
    {
-      if (filetype("$dir/$fn") != 'file')
+      if ($fn[0] == '.' || filetype("$dir/$fn") != 'file')
 	 continue;
 
       if ( ($files && !in_array($fn, $files))
