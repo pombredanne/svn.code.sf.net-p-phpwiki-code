@@ -15,13 +15,13 @@ rcs_id('$Id PhpWeather.php 2002-08-26 15:30:13 rurban$');
  * Usage:
  * <?plugin PhpWeather?>
  * <?plugin PhpWeather icao=KJFK ?>
- * <?plugin PhpWeather icao=LOWG lang=en version=1.61 location=Graz-Thalerhof-Flughafen ?>
+ * <?plugin PhpWeather icao=LOWG language=en version=1.61 location=Graz-Thalerhof-Flughafen ?>
  */
 
 // Name the PHPWeather folder 'phpweather' and put it anywhere inside
 // phpwiki, such as the plugin folder
 if (!defined('PHPWEATHER_FOLDER')) {
-    if (ereg('/sourceforge\.net/', SERVER_NAME)) {
+    if (preg_match('/sourceforge\.net/', SERVER_NAME)) {
         define('PHPWEATHER_FOLDER', '/home/groups/p/ph/phpwiki/htdocs/demo/lib/plugin/phpweather');
         define('PHPWEATHER_VERSION', 1.92);
     } elseif (isWindows()) {
