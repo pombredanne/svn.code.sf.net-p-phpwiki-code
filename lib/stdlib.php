@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.145 2003-03-04 01:55:05 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.146 2003-03-07 02:46:24 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1131,6 +1131,37 @@ function can ($object, $method)
     return is_object($object) && method_exists($object, strtolower($method));
 }
 
+/** Determine whether a function is okay to use.
+ *
+ * Some providers (e.g. Lycos) disable some of PHP functions for
+ * "security reasons."  This makes those functions, of course,
+ * unusable, despite the fact the function_exists() says they
+ * exist.
+ *
+ * This function test to see if a function exists and is not
+ * disallowed by PHP's disable_functions config setting.
+ *
+ * @param string $function_name  Function name
+ * @return bool  True iff function can be used.
+ */
+function function_usable($function_name)
+{
+    static $disabled;
+    if (!is_array($disabled)) {
+        $disabled = array();
+        // Use get_cfg_var since ini_get() is one of the disabled functions
+        // (on Lycos, at least.)
+        $split = preg_split('/\s*,\s*/', trim(get_cfg_var('disable_functions')));
+        foreach ($split as $f)
+            $disabled[strtolower($f)] = true;
+    }
+
+    return ( function_exists($function_name)
+             and ! isset($disabled[strtolower($function_name)])
+             );
+}
+    
+    
 /** Hash a value.
  *
  * This is used for generating ETags.
@@ -1262,6 +1293,9 @@ class Alert {
                       
         
 // $Log: not supported by cvs2svn $
+// Revision 1.145  2003/03/04 01:55:05  dairiki
+// Fix to ensure absolute URL for logo in RSS recent changes.
+//
 // Revision 1.144  2003/02/26 00:39:30  dairiki
 // Bug fix: for magic PhpWiki URLs, "lock page to enable link" message was
 // being displayed at incorrect times.
