@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageType.php,v 1.6 2002-02-19 00:04:52 carstenklapp Exp $');
+<?php rcs_id('$Id: PageType.php,v 1.7 2002-02-19 00:08:24 carstenklapp Exp $');
 /*
 Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -177,9 +177,9 @@ class interWikiMapPageType extends PageType {
         $v = strpos($this->_content, "</verbatim>");
         if ($v) {
             list($cruft, $endtext) = explode("</verbatim>", $this->_content);
-        if (trim($endtext))
-            return TransformText($endtext, $this->_markup);
-
+            if (trim($endtext))
+                return TransformText($endtext, $this->_markup);
+        }
         return "";
     }
 
