@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.78 2004-07-08 21:32:35 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.79 2004-07-09 10:06:49 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -61,27 +61,34 @@ class WikiDB {
      * <dd> The back-end type.  Current supported types are:
      *   <dl>
      *   <dt> SQL
-     *   <dd> Generic SQL backend based on the PEAR/DB database abstraction
-     *       library.
+     *     <dd> Generic SQL backend based on the PEAR/DB database abstraction
+     *       library. (More stable and conservative)
+     *   <dt> ADODB
+     *     <dd> Another generic SQL backend. (More current features are tested here. Much faster)
      *   <dt> dba
-     *   <dd> Dba based backend.
+     *     <dd> Dba based backend. The default and by far the fastest.
+     *   <dt> cvs
+     *     <dd> 
+     *   <dt> file
+     *     <dd> flat files
      *   </dl>
      *
      * <dt> dsn
-     * <dd> (Used by the SQL backend.)
+     * <dd> (Used by the SQL and ADODB backends.)
      *      The DSN specifying which database to connect to.
      *
      * <dt> prefix
-     * <dd> Prefix to be prepended to database table (and file names).
+     * <dd> Prefix to be prepended to database tables (and file names).
      *
      * <dt> directory
      * <dd> (Used by the dba backend.)
      *      Which directory db files reside in.
      *
      * <dt> timeout
-     * <dd> (Used only by the dba backend so far. FIXME!)
-     *      Timeout in seconds for opening (and obtaining lock) on the
-     *      db files.
+     * <dd> Used only by the dba backend so far. 
+     *      And: When optimizing mysql it closes timed out mysql processes.
+     *      otherwise only used for dba: Timeout in seconds for opening (and 
+     *      obtaining lock) on the dbm file.
      *
      * <dt> dba_handler
      * <dd> (Used by the dba backend.)
@@ -239,9 +246,6 @@ class WikiDB {
      *
      * Gets the set of all pages with non-default contents.
      *
-     * FIXME: do we need this?  I think so.  The simple searches
-     *        need this stuff.
-     *
      * @access public
      *
      * @param boolean $include_defaulted Normally pages whose most
@@ -252,8 +256,8 @@ class WikiDB {
      * @return WikiDB_PageIterator A WikiDB_PageIterator which contains all pages
      *     in the WikiDB which have non-default contents.
      */
-    function getAllPages($include_defaulted=false, $sortby=false, $limit=false) {
-        $result = $this->_backend->get_all_pages($include_defaulted,$sortby,$limit);
+    function getAllPages($include_empty=false, $sortby=false, $limit=false) {
+        $result = $this->_backend->get_all_pages($include_empty, $sortby, $limit);
         return new WikiDB_PageIterator($this, $result);
     }
 
@@ -328,11 +332,8 @@ class WikiDB {
      * @return WikiDB_PageIterator A WikiDB_PageIterator containing the matching
      * pages.
      */
-    function mostPopular($limit = 20, $sortby = '') {
-        // we don't support sortby=mtime here
-        if (strstr($sortby,'mtime'))
-            $sortby = '';
-        $result = $this->_backend->most_popular($limit, $sortby);
+    function mostPopular($limit = 20) {
+        $result = $this->_backend->most_popular($limit);
         return new WikiDB_PageIterator($this, $result);
     }
 
@@ -1601,36 +1602,7 @@ class WikiDB_PageIterator
         $this->free();
         return $result;
     }
-    
-    // Not yet used and problematic. Order should be set in the query, not afterwards.
-    // See PageList::sortby
-    function setSortby ($arg = false) {
-        if (!$arg) {
-            $arg = @$_GET['sortby'];
-            if ($arg) {
-                $sortby = substr($arg,1);
-                $order  = substr($arg,0,1)=='+' ? 'ASC' : 'DESC';
-            }
-        }
-        if (is_array($arg)) { // array('mtime' => 'desc')
-            $sortby = $arg[0];
-            $order = $arg[1];
-        } else {
-            $sortby = $arg;
-            $order  = 'ASC';
-        }
-        // available column types to sort by:
-        // todo: we must provide access methods for the generic dumb/iterator
-        $this->_types = explode(',','pagename,mtime,hits,version,author,locked,minor,markup');
-        if (in_array($sortby,$this->_types))
-            $this->_options['sortby'] = $sortby;
-        else
-            trigger_error(sprintf("Argument %s '%s' ignored",'sortby',$sortby), E_USER_WARNING);
-        if (in_array(strtoupper($order),'ASC','DESC')) 
-            $this->_options['order'] = strtoupper($order);
-        else
-            trigger_error(sprintf("Argument %s '%s' ignored",'order',$order), E_USER_WARNING);
-    }
+  
 
 };
 
@@ -1892,6 +1864,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.78  2004/07/08 21:32:35  rurban
+// Prevent from more warnings, minor db and sort optimizations
+//
 // Revision 1.77  2004/07/08 19:04:42  rurban
 // more unittest fixes (file backend, metadata RatingsDb)
 //

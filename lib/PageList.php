@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.102 2004-07-08 21:32:35 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.103 2004-07-09 10:06:49 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -96,7 +96,7 @@ class _PageList_Column_base {
     // old-style heading
     function heading () {
         // allow sorting?
-        if (1 or in_array($this->_field, PageList::sortable_columns())) {
+        if (1 /* or in_array($this->_field, PageList::sortable_columns())*/) {
             // multiple comma-delimited sortby args: "+hits,+pagename"
             // asc or desc: +pagename, -pagename
             $sortby = PageList::sortby($this->_field, 'flip_order');
@@ -119,7 +119,7 @@ class _PageList_Column_base {
     function button_heading ($pagelist, $colNum) {
         global $WikiTheme, $request;
         // allow sorting?
-        if (1 or in_array($this->_field, PageList::sortable_columns())) {
+        if (1 /* or in_array($this->_field, PageList::sortable_columns()) */) {
             // multiple comma-delimited sortby args: "+hits,+pagename"
             $src = false; 
             $noimg_src = $WikiTheme->getButtonURL('no_order');
@@ -660,7 +660,7 @@ class PageList {
             return;
         }
         // enforce view permission
-        if (!mayAccessPage('view',$page_handle->getName()))
+        if (!mayAccessPage('view', $page_handle->getName()))
             return;
 
         $group = (int)($i / $this->_group_rows);
@@ -683,15 +683,16 @@ class PageList {
 
     function addPages ($page_iter) {
         //Todo: if limit check max(strlen(pagename))
-        while ($page = $page_iter->next())
+        while ($page = $page_iter->next()) {
             $this->addPage($page);
+        }
     }
 
     function addPageList (&$list) {
-        if (!isset($list)) return;  // Protect reset from a null arg
-        reset ($list);
-        while ($page = next($list))
+        if (empty($list)) return;  // Protect reset from a null arg
+        foreach ($list as $page) {
             $this->addPage((string)$page);
+        }
     }
 
     function maxLen() {
@@ -731,11 +732,12 @@ class PageList {
     }
     
     /** Now all columns are sortable. 
-     *  These are the colums which have native WikiDB backend methods. 
+     *  These are the colums which have native WikiDB backend methods.
+     *  FIXME: use this method at the db backends
      */
-    function sortable_columns() {
-        return array('pagename','mtime','hits');
-    }
+    //function sortable_columns() {
+    //    return array('pagename','mtime','hits');
+    //}
 
     /** 
      * Handle sortby requests for the DB iterator and table header links.
@@ -775,8 +777,15 @@ class PageList {
                     ($GLOBALS['request']->getArg('sortby') and 
                      strstr($GLOBALS['request']->getArg('sortby'),$column)));
         } elseif ($action == 'db') {
-        	// native sort possible?
-            if (in_array($column, PageList::sortable_columns()))
+            // native sort possible?
+            $sortable_columns = $GLOBALS['request']->_dbi->_backend->sortable_columns();
+            /*
+            if (method_exists($this,'sortable_columns'))
+                $sortable_columns = $this->sortable_columns();
+            else
+                $sortable_columns = PageList::sortable_columns();
+            */
+            if (in_array($column, $sortable_columns))
                 // asc or desc: +pagename, -pagename
                 return $column . ($order == '+' ? ' ASC' : ' DESC');
             else 
@@ -786,11 +795,11 @@ class PageList {
     }
 
     // echo implode(":",explodeList("Test*",array("xx","Test1","Test2")));
-    function explodePageList($input, $perm = false, $sortby=false, $limit=false) {
+    function explodePageList($input, $include_empty = false, $sortby=false, $limit=false) {
         // expand wildcards from list of all pages
         if (preg_match('/[\?\*]/',$input)) {
             $dbi = $GLOBALS['request']->getDbh();
-            $allPagehandles = $dbi->getAllPages($perm,$sortby,$limit);
+            $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit);
             while ($pagehandle = $allPagehandles->next()) {
                 $allPages[] = $pagehandle->getName();
             }
@@ -801,9 +810,9 @@ class PageList {
         }
     }
 
-    function allPagesByAuthor($wildcard, $perm=false, $sortby=false, $limit=false) {
+    function allPagesByAuthor(&$wildcard, $include_empty=false, $sortby=false, $limit=false) {
         $dbi = $GLOBALS['request']->getDbh();
-        $allPagehandles = $dbi->getAllPages($perm, $sortby, $limit);
+        $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit);
         $allPages = array();
         if ($wildcard === '[]') {
             $wildcard = $GLOBALS['request']->_user->getAuthenticatedId();
@@ -821,13 +830,14 @@ class PageList {
                       $allPages[] = $name;
                 }
             }
+            // TODO: purge versiondata_cache
         }
         return $allPages;
     }
 
-    function allPagesByOwner($wildcard, $perm=false, $sortby=false, $limit=false) {
+    function allPagesByOwner(&$wildcard, $include_empty=false, $sortby=false, $limit=false) {
         $dbi = $GLOBALS['request']->getDbh();
-        $allPagehandles = $dbi->getAllPages($perm, $sortby, $limit);
+        $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit);
         $allPages = array();
         if ($wildcard === '[]') {
             $wildcard = $GLOBALS['request']->_user->getAuthenticatedId();
@@ -849,9 +859,9 @@ class PageList {
         return $allPages;
     }
 
-    function allPagesByCreator($wildcard, $perm=false, $sortby=false, $limit=false) {
+    function allPagesByCreator(&$wildcard, $include_empty=false, $sortby=false, $limit=false) {
         $dbi = $GLOBALS['request']->getDbh();
-        $allPagehandles = $dbi->getAllPages($perm, $sortby, $limit);
+        $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit);
         $allPages = array();
         if ($wildcard === '[]') {
             $wildcard = $GLOBALS['request']->_user->getAuthenticatedId();
@@ -1080,7 +1090,7 @@ class PageList {
         if (count($this->_sortby) > 0) {
             $need_sort = 0;
             foreach ($this->_sortby as $col) {
-                if (!$this->sortby($col,'db'))
+                if (!$this->sortby($col, 'db'))
                     $need_sort = 1;
             }
             if ($need_sort) {
@@ -1091,10 +1101,10 @@ class PageList {
     }
 
     function limit($limit) {
-        if (strstr($limit,','))
-            return split(',',$limit);
+        if (strstr($limit, ','))
+            return split(',', $limit);
         else
-            return array(0,$limit);
+            return array(0, $limit);
     }
     
     // make a table given the caption
@@ -1282,6 +1292,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.102  2004/07/08 21:32:35  rurban
+// Prevent from more warnings, minor db and sort optimizations
+//
 // Revision 1.101  2004/07/08 19:04:41  rurban
 // more unittest fixes (file backend, metadata RatingsDb)
 //

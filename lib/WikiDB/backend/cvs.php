@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: cvs.php,v 1.18 2004-04-29 20:37:14 rurban Exp $');
+rcs_id('$Id: cvs.php,v 1.19 2004-07-09 10:06:50 rurban Exp $');
 /**
  * Backend for handling CVS repository. 
  *
@@ -392,17 +392,15 @@ extends WikiDB_backend
         $megaHash = get_pagedata( $pagename );
         return $megaHash[CMD_LINK_ATT];
     }
-
-    function get_all_revisions($pagename) 
-    {
+    /* function get_all_revisions($pagename) {
         // TODO: should replace this with something more efficient
         include_once('lib/WikiDB/backend/dumb/AllRevisionsIter.php');
         return new WikiDB_backend_dumb_AllRevisionsIter($this, $pagename);
-    }
+    } */
 
-    function get_all_pages($include_defaulted=false, $orderby='pagename') 
+    function get_all_pages($include_empty=false, $sortby=false, $limit=false) 
     {
-        // FIXME: this ignores the include_defaulted parameter.
+        // FIXME: this ignores the parameters.
         return new Cvs_Backend_Array_Iterator(
                               $this->_getAllFileNamesInDir( $this->_docDir ));
     }
@@ -421,7 +419,7 @@ extends WikiDB_backend
         }
     }
 
-    function most_popular($limit,$sortby = '') {
+    function most_popular($limit) {
         // TODO: needs to be tested ...
         $mp = $this->_getMostPopular();
         if ($limit < 0){
