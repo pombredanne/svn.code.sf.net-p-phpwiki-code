@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_oci8.php,v 1.4 2004-11-26 18:39:02 rurban Exp $');
+rcs_id('$Id: PearDB_oci8.php,v 1.5 2004-11-27 14:39:05 rurban Exp $');
 
 /**
  * Oracle extensions for the Pear DB backend.
@@ -73,10 +73,9 @@ extends WikiDB_backend_PearDB_search
     // Intermedia Text option, so let's stick to the 'simple' thing
     // Note that this does only an exact fulltext search, not using MATCH or LIKE.
     function _fulltext_match_clause($node) { 
-        $method = $node->op;
-        $page = $this->$method($node->word);
-        $exactword = $this->_quote($node->word);
-        return $this->_case_exact 
+        $page = $node->sql($word);
+        $exactword = $node->_sql_quote();
+        return $this->_case_exact
             ? "pagename LIKE '$page' OR DBMS_LOB.INSTR(content, '$exactword') > 0"
             : "LOWER(pagename) LIKE '$page' OR DBMS_LOB.INSTR(content, '$exactword') > 0";
     }

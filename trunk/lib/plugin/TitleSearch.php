@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: TitleSearch.php,v 1.25 2004-11-26 18:39:02 rurban Exp $');
+rcs_id('$Id: TitleSearch.php,v 1.26 2004-11-27 14:39:05 rurban Exp $');
 /**
- Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+ Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -22,7 +22,19 @@ rcs_id('$Id: TitleSearch.php,v 1.25 2004-11-26 18:39:02 rurban Exp $');
 
 require_once('lib/TextSearchQuery.php');
 require_once('lib/PageList.php');
+
 /**
+ * Display results of pagename search. 
+ * Provides no own input box, just <?plugin-form TitleSearch ?> is enough.
+ * Fancier Inputforms can be made using WikiForm Rich, to support regex and case_exact args.
+ *
+ * If only one pages is found and auto_redirect is true, this page is displayed immediatly, 
+ * otherwise the found pagelist is displayed.
+ * The workhorse TextSearchQuery converts the query string from google-style words 
+ * to the required DB backend expression.
+ *   (word and word) OR word, -word, "two words"
+ * regex=auto tries to detect simple glob-style wildcards and expressions, 
+ * like xx*, *xx, ^xx, xx$, ^word$.
  */
 class WikiPlugin_TitleSearch
 extends WikiPlugin
@@ -37,7 +49,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.25 $");
+                            "\$Revision: 1.26 $");
     }
 
     function getDefaultArguments() {
@@ -55,13 +67,12 @@ extends WikiPlugin
     }
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor
-    // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
+    // exclude arg allows multiple pagenames exclude=Php*,RecentChanges
 
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         if (empty($args['s']))
             return '';
-        //extract($args);
 
         $query = new TextSearchQuery($args['s'], $args['case_exact'], $args['regex']);
         $pages = $dbi->titleSearch($query);
@@ -73,10 +84,12 @@ extends WikiPlugin
         }
         // Provide an unknown WikiWord link to allow for page creation
         // when a search returns no results
-        if (!$args['noheader'])
-            $pagelist->setCaption(fmt("Title search results for '%s'",
-                                      $pagelist->getTotal() == 0
-                                      ? WikiLink($args['s'], 'auto') : $args['s']));
+        if (!$args['noheader']) {
+            $s = $args['s'];
+            if (!$pagelist->getTotal() and !$query->_regex)
+                $s = WikiLink($args['s'], 'auto');
+            $pagelist->setCaption(fmt("Title search results for '%s'", $s));
+        }
 
         if ($args['auto_redirect'] && ($pagelist->getTotal() == 1)) {
             return HTML($request->redirect(WikiURL($last_name, false, 'absurl'), false),
@@ -88,6 +101,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.25  2004/11/26 18:39:02  rurban
+// new regex search parser and SQL backends (90% complete, glob and pcre backends missing)
+//
 // Revision 1.24  2004/11/25 08:30:58  rurban
 // dont extract args
 //

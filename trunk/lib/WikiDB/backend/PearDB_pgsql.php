@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_pgsql.php,v 1.12 2004-11-26 18:39:02 rurban Exp $');
+rcs_id('$Id: PearDB_pgsql.php,v 1.13 2004-11-27 14:39:05 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB.php');
@@ -84,19 +84,22 @@ extends WikiDB_backend_PearDB
 class WikiDB_backend_PearDB_pgsql_search
 extends WikiDB_backend_PearDB_search
 {
-    function _pagename_match_clause($node) { 
-        $method = $node->op;
-        $word = $this->$method($node->word);
-        return $this->_case_exact 
-            ? "pagename LIKE '$word'"
-            : "pagename ILIKE '$word'";
+    function _pagename_match_clause($node) {
+        $word = $node->sql();
+        if ($node->op == 'REGEX') { // posix regex extensions
+            return $this->_case_exact ? "pagename ~* '$word'"
+                		      : "pagename ~ '$word'";
+        } else {
+            return $this->_case_exact ? "pagename LIKE '$word'" 
+                                      : "pagename ILIKE '$word'";
+        }
     }
     function _fulltext_match_clause($node) { 
-        $method = $node->op;
-        $word = $this->$method($node->word);
-        return $this->_case_exact 
-            ? "pagename LIKE '$word' OR content LIKE '$word'"
-            : "pagename ILIKE '$word' OR content ILIKE '$word'";
+        $word = $node->sql();
+        return $this->_pagename_match_clause($node) 
+            . $this->_case_exact
+              ? " OR content LIKE '$word'"
+              : " OR content ILIKE '$word'";
     }
 }
 

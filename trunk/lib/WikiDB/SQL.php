@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: SQL.php,v 1.10 2004-11-10 15:29:21 rurban Exp $');
+<?php rcs_id('$Id: SQL.php,v 1.11 2004-11-27 14:39:05 rurban Exp $');
 
 require_once('lib/WikiDB.php');
 //require_once('lib/WikiDB/backend/PearDB.php');
@@ -51,11 +51,11 @@ class WikiDB_SQL extends WikiDB
         return $this->_cache->_id_cache[$pagename];
     }
 
-    // return with surrounding quotes as ADODB!
-    function quote ($s) {
-        return $this->_backend->_dbh->quoteSmart($s);
-    }
-    
+    // adds surrounding quotes 
+    function quote ($s) { return $this->_backend->_dbh->quoteSmart($s); }
+    // no surrounding quotes because we know it's a string
+    function qstr ($s) {  return $this->_backend->_dbh->escapeSimple($s); }
+
     function isOpen () {
         global $request;
         if (!$request->_dbi) return false;

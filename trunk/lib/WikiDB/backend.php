@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.16 2004-11-26 18:39:02 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.17 2004-11-27 14:39:05 rurban Exp $');
 
 /*
   Pagedata
@@ -521,11 +521,10 @@ class WikiDB_backend
         return array('pagename'/*,'mtime','author_id','author'*/);
     }
 
-    // quote only strings or do smartquote? add ' or not? (NULL)
-    // ADODB adds surrounding quotes, SQL not yet!
-    function quote ($s) {
-        return $s;
-    }
+    // adds surrounding quotes 
+    function quote ($s) { return "'".$s."'"; }
+    // no surrounding quotes because we know it's a string
+    function qstr ($s) {  return $s; }
 
 };
 
