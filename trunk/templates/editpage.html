@@ -4,7 +4,7 @@
 <html>
 <head>
 <!-- phpwiki source:
-$Id: editpage.html,v 1.31 2001-12-19 15:54:34 carstenklapp Exp $
+$Id: editpage.html,v 1.32 2001-12-21 03:15:34 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <base href="${BASE_URL}" />
@@ -12,19 +12,17 @@ ${RCS_IDS}
 <meta name="robots" content="noindex,nofollow" />
 <link rel="stylesheet" title="phpwiki" href="${CSS_URL}" type="text/css" />
 
-<title>$_("Edit:") ${SPLIT_PAGE}</title>
+<title>${WIKI_NAME} - <?php printf(_("Edit: %s"),"${SPLIT_PAGE}"); ?></title>
 </head>
-
 <body>
-<div><a class="wikilink"
+<div><a class="wikilink" 
         href="${BROWSE}$_("HomePage")"
-        ><img src="${LOGO}" border="0" align="right"
-	     alt="[phpwiki]" width="50" height="50" /></a></div>
-<h1>
-$_("Edit") <a href="${BROWSE}${PAGEURL}"  
-        class="wikilink"><span class="wikiword">${PAGE}</span></a>
-</h1>
-
+        ><img src="${LOGO}"
+              border="0" alt="${WIKI_NAME}: $_("HomePage")" 
+              align="right" /></a></div>
+<!--This hack allows the h1 to be localised. FIXME: move out of html template into php-->
+<h1><?php printf(_("Edit: %s"),"<a class=\"wikilink\" href=\"${BROWSE}"._("BackLinks")."?page=${PAGE}\">${PAGE}</a>"); ?></h1>
+<!--=this line=<?php $bl='<plugin-link BackLinks page="[pagename]" class="backlinks" linktext="${SPLIT_PAGE}" ?>';printf(_("Edit: %s"),"$bl"); ?>=doesn't work=-->
 <?php if (!empty($PREVIEW_CONTENT)) { ?>
   <p><strong>$_("Preview only!  Changes not saved.")</strong></p>
   <div class="wikitext">${PREVIEW_CONTENT}</div>

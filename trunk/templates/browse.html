@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- phpwiki source:
-$Id: browse.html,v 1.30 2001-12-19 15:54:29 carstenklapp Exp $
+$Id: browse.html,v 1.31 2001-12-21 03:15:27 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <meta name="keywords" content="${SPLIT_PAGE}, ${WIKI_NAME}" />
@@ -14,7 +14,8 @@ ${RCS_IDS}
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <!-- <meta name="robots" content="index,follow" /> -->
 <base href="${BASE_URL}" />
-<title>${SPLIT_PAGE}</title>
+<title>${WIKI_NAME}: ${SPLIT_PAGE}</title>
+
 <!--
 -->
 <link rel="stylesheet" title="phpwiki" href="${CSS_URL}" type="text/css" />
@@ -23,12 +24,9 @@ ${RCS_IDS}
 <div><a class="wikilink" 
         href="${BROWSE}$_("HomePage")"
         ><img src="${LOGO}"
-              border="0" alt="${WIKI_NAME}" 
-              align="right" width="50" height="50" /></a></div>
-<h1>
-<?plugin-link BackLinks page="[pagename]" class="backlinks"
-                        linktext="${SPLIT_PAGE}" ?>
-</h1>
+              border="0" alt="${WIKI_NAME}: $_("HomePage")" 
+              align="right" /></a></div>
+<h1><?plugin-link BackLinks page="[pagename]" class="backlinks" linktext="${SPLIT_PAGE}" ?></h1>
 <div class="br"><br clear="all" class="ignore" /></div>
 <?php if (! $IS_CURRENT) { ?>
   <p><strong>$_("Note:")</strong> $_("You are viewing an old revision of this page.")
