@@ -68,6 +68,8 @@ $locale["BAD URL -- remove all of <, >, \""] =
    "URL Formfehler -- keine Zeichen <, >, \" verwenden";
 $locale["BackLinks"] =
    "BackLinks";
+$locale["BackLinks for %s"] =
+   "BackLinks für %s";
 $locale["Bad %s"] =
    "Ungültige %s";
 $locale["Bad Version"] =
@@ -150,6 +152,10 @@ $locale["Edit"] =
    "Editieren";
 $locale["Edit %s"] =
    "Editiere %s";
+$locale["Edit Old Revision"] =
+   "Alte Version Editieren";
+$locale["Edit aborted."] =
+   "Editieren abgebrochen.";
 $locale["Edit aborted: %s"] =
    "Editieren abgebrochen: %s";
 $locale["Edit: %s"] =
@@ -218,6 +224,8 @@ $locale["Loading '%s'"] =
    "»%s« wird geladen";
 $locale["Loading up virgin wiki"] =
    "Erstes Laden des noch leeren Wiki";
+$locale["Lock Page"] =
+   "Seite Sperren";
 $locale["Lock page to enable link"] =
    "Seite sperren, um den Link zu aktivieren";
 $locale["MIME file %s"] =
@@ -306,6 +314,8 @@ $locale["RecentEdits"] =
    "GeringfügigeÄnderungen";
 $locale["References"] =
    "Fußnoten";
+$locale["Remove Page"] =
+   "Seite Löschen";
 $locale["Remove page"] =
    "Seite löschen";
 $locale["Removed page '%s' succesfully."] =
@@ -316,6 +326,8 @@ $locale["Return to %s"] =
    "Zurück zu %s";
 $locale["Save"] =
    "Speichern";
+$locale["Saved: %s"] =
+   "Gespeichert: %s";
 $locale["Saving this page will overwrite the current version."] =
    "Wenn die Seite jetzt gespeichert werden würde, dann würde die aktuellste Version überschrieben.";
 $locale["Search"] =
@@ -370,6 +382,8 @@ $locale["These pages share an initial or final title word with '%s'"] =
    "Diese Seiten teilen sich einen Wordteil am Anfang oder Ende mit »%s«";
 $locale["This is a minor change."] =
    "Geringfügige Änderung";
+$locale["This page has been locked by the administrator and cannot be edited."] =
+   "Diese Seite wurde vom Systemverwalter gesperrt und kann nicht editiert werden.";
 $locale["This page has been locked by the administrator so your changes could not be saved."] =
    "Diese Seite wurde vom Systemverwalter gesperrt und deine Veränderungen können nicht gespeichert werden.";
 $locale["Timeout while obtaining lock."] =
@@ -400,6 +414,8 @@ $locale["Unexpected EOF in zip file"] =
    "Unerwartetes Dateiende in zip Datei";
 $locale["Unknown %s"] =
    "Unbekannte %s";
+$locale["Unlock Page"] =
+   "Seite Freigeben";
 $locale["Uploading %s"] =
    "%s wird hochgeladen";
 $locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
@@ -414,6 +430,10 @@ $locale["Version %s, saved on %s."] =
    "Version %s. zuletzt am %s gespeichert.";
 $locale["Versions are identical"] =
    "Versionen sind identisch";
+$locale["View Source"] =
+   "Quell Text";
+$locale["View Source: %s"] =
+   "Quell Text: %s";
 $locale["View Wiki code for page '%s'."] =
    "Quelltext für die Seite »%s«.";
 $locale["View the current version"] =
@@ -442,6 +462,8 @@ $locale["You can log in using any valid WikiWord as a user ID."] =
    "Du kannst dich mit irgendeinem gültigen WikiWort als Benutzername anmelden.";
 $locale["You entered an invalid login or password."] =
    "Du hast ein ungültiges Login oder Passwort eingegeben.";
+$locale["You have not made any changes so no new version has been saved."] =
+   "Du hast keine Änderungen gemacht also ist keine neue Version gespeichert worden.";
 $locale["You must be logged in as an administrator %s"] =
    "Du mußt dich als Systemverwalter anmelden %s";
 $locale["You must set the administrator account and password before you can log in."] =
