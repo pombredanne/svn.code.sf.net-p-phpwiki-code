@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.50 2004-11-10 19:32:23 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.51 2004-11-15 15:57:37 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -246,7 +246,7 @@ extends WikiDB_backend
         // check id_cache
         global $request;
         $cache =& $request->_dbi->_cache->_id_cache;
-        if ($cache[$pagename]) return $cache[$pagename];
+        if (isset($cache[$pagename])) return $cache[$pagename];
         
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
@@ -1190,6 +1190,13 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.50  2004/11/10 19:32:23  rurban
+// * optimize increaseHitCount, esp. for mysql.
+// * prepend dirs to the include_path (phpwiki_dir for faster searches)
+// * Pear_DB version logic (awful but needed)
+// * fix broken ADODB quote
+// * _extract_page_data simplification
+//
 // Revision 1.49  2004/11/10 15:29:21  rurban
 // * requires newer Pear_DB (as the internal one): quote() uses now escapeSimple for strings
 // * ACCESS_LOG_SQL: fix cause request not yet initialized
