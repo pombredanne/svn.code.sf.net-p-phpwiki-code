@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.19 2002-11-25 22:51:37 dairiki Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.20 2003-01-28 21:07:16 zorloc Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -281,7 +281,7 @@ class Markup_interwiki extends SimpleMarkup
     function getMatchRegexp () {
         global $request;
         $map = InterWikiMap::GetMap($request);
-        return "(?<! [[:alnum:]])" . $map->getRegexp(). ": \S+ (?<![ ,.?; \] \) \" \' ])";
+        return "(?<! [[:alnum:]])" . $map->getRegexp(). ": \S+ (?<![ ,.?;! \] \) \" \' ])";
     }
 
     function _markup ($match) {
