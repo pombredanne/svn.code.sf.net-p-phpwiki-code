@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.29 2003-12-05 01:31:51 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.30 2004-02-28 22:25:06 rurban Exp $');
 
 /*
  * This file defines the default appearance ("theme") of PhpWiki.
@@ -24,7 +24,6 @@ $Theme->setDefaultCSS('PhpWiki',
 $Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
 $Theme->addAlternateCSS(_("Top & bottom toolbars"), 'phpwiki-topbottombars.css');
 $Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
-
 
 /**
  * The logo image appears on every page and links to the HomePage.
@@ -59,6 +58,15 @@ $Theme->setButtonSeparator("\n | ");
  * the words. The default is to leave WordsSmashedTogetherLikeSo.
  */
 //$Theme->setAutosplitWikiWords(false);
+
+/**
+ * Layout improvement with dangling links for mostly closed wiki's:
+ * If false, only users with edit permissions will be presented the 
+ * special wikiunknown class with "?" and Tooltip.
+ * If true (default), any user will see the ?, but will be presented 
+ * the PrintLoginForm on a click.
+ */
+//$Theme->setAnonEditUnknownLinks(false);
 
 /*
  * You may adjust the formats used for formatting dates and times
