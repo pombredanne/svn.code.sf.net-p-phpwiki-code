@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.41 2004-06-25 14:29:17 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.42 2004-06-28 15:01:07 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -232,23 +232,6 @@ function IniConfig($file) {
         else 
             $GLOBALS['USER_AUTH_ORDER'] = array("PersonalPage");
 
-    // LDAP bind options
-    global $LDAP_SET_OPTION;
-    if (defined('LDAP_SET_OPTION') and LDAP_SET_OPTION) {
-        $optlist = preg_split('/\s*:\s*/', LDAP_SET_OPTION);
-        foreach ($optlist as $opt) {
-            $bits = preg_split('/\s*=\s*/', $opt, 2);
-            if (count($bits) == 2) {
-                if (is_string($bits[0]) and defined($bits[0]))
-                    $bits[0] = constant($bits[0]);
-                $LDAP_SET_OPTION[$bits[0]] = $bits[1];
-            }
-            else {
-                // Possibly throw some sort of error?
-            }
-        }
-    }
-
     // Now it's the external DB authentication stuff's turn
     if (in_array('Db', $GLOBALS['USER_AUTH_ORDER']) && empty($rs['DBAUTH_AUTH_DSN'])) {
         $rs['DBAUTH_AUTH_DSN'] = $DBParams['dsn'];
@@ -268,7 +251,9 @@ function IniConfig($file) {
                       'DBAUTH_USER_GROUPS' => 'user_groups'
                       );
     foreach ($DBAP_MAP as $rskey => $apkey) {
-        if (isset($rs[$rskey])) {
+        if (defined($rskey)) {
+            $DBAuthParams[$apkey] = constant($rskey);
+        } elseif (isset($rs[$rskey])) {
             $DBAuthParams[$apkey] = $rs[$rskey];
         } elseif (isset($rsdef[$rskey])) {
             $DBAuthParams[$apkey] = $rsdef[$rskey];
@@ -282,6 +267,23 @@ function IniConfig($file) {
             define($item, $rs[$item]);
         } else 
             define($item, '');
+    }
+
+    // LDAP bind options
+    global $LDAP_SET_OPTION;
+    if (defined('LDAP_SET_OPTION') and LDAP_SET_OPTION) {
+        $optlist = preg_split('/\s*:\s*/', LDAP_SET_OPTION);
+        foreach ($optlist as $opt) {
+            $bits = preg_split('/\s*=\s*/', $opt, 2);
+            if (count($bits) == 2) {
+                if (is_string($bits[0]) and defined($bits[0]))
+                    $bits[0] = constant($bits[0]);
+                $LDAP_SET_OPTION[$bits[0]] = $bits[1];
+            }
+            else {
+                // Possibly throw some sort of error?
+            }
+        }
     }
 
     // Default Wiki pages to force loading from pgsrc
@@ -607,6 +609,13 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.41  2004/06/25 14:29:17  rurban
+// WikiGroup refactoring:
+//   global group attached to user, code for not_current user.
+//   improved helpers for special groups (avoid double invocations)
+// new experimental config option ENABLE_XHTML_XML (fails with IE, and document.write())
+// fixed a XHTML validation error on userprefs.tmpl
+//
 // Revision 1.40  2004/06/22 07:12:48  rurban
 // removed USE_TAGLINES constant
 //

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.102 2004-06-27 10:23:48 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.103 2004-06-28 15:01:07 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -2071,7 +2071,10 @@ extends _PassUser
             $st_search = LDAP_SEARCH_FIELD
                 ? LDAP_SEARCH_FIELD."=$userid"
                 : "uid=$userid";
-            $this->_sr = ldap_search($ldap, LDAP_BASE_DN, $st_search);
+            if (!$this->_sr = ldap_search($ldap, LDAP_BASE_DN, $st_search)) {
+ 		$this->_free();
+                return $this->_tryNextPass($submitted_password);
+            }
             $info = ldap_get_entries($ldap, $this->_sr); 
             if (empty($info["count"])) {
             	$this->_free();
@@ -2107,7 +2110,10 @@ extends _PassUser
             $st_search = LDAP_SEARCH_FIELD
                 ? LDAP_SEARCH_FIELD."=$userid"
                 : "uid=$userid";
-            $this->_sr = ldap_search($ldap, LDAP_BASE_DN, $st_search);
+            if (!$this->_sr = ldap_search($ldap, LDAP_BASE_DN, $st_search)) {
+ 		$this->_free();
+        	return $this->_tryNextUser();
+            }
             $info = ldap_get_entries($ldap, $this->_sr); 
 
             if ($info["count"] > 0) {
@@ -3034,6 +3040,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.102  2004/06/27 10:23:48  rurban
+// typo detected by Philippe Vanhaesendonck
+//
 // Revision 1.101  2004/06/25 14:29:19  rurban
 // WikiGroup refactoring:
 //   global group attached to user, code for not_current user.
