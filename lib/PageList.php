@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.64 2004-03-10 15:32:53 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.65 2004-03-12 11:58:21 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -725,7 +725,7 @@ class PageList {
 
         //Warning: This is quite fragile. It depends solely on a private variable
         //         in ->_addColumn()
-        if (in_array('checkbox',$this->_columns_seen)) {
+        if (!empty($this->_columns_seen['checkbox'])) {
             $table->pushContent($this->_jsFlipAll());
         }
         $row = HTML::tr();
@@ -765,7 +765,7 @@ function flipAll(formObj) {
         //Warning: This is quite fragile. It depends solely on a private variable
         //         in ->_addColumn()
         // questionable if its of use here anyway. this is a one-col list only.
-        if (in_array('checkbox',$this->_columns_seen)) {
+        if (!empty($this->_columns_seen['checkbox'])) {
             $out->pushContent($this->_jsFlipAll());
         }
         if ($caption)
