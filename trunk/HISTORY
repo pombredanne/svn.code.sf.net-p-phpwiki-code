@@ -1,3 +1,21 @@
+1.1.7 07/15/00: A lot was added since the 1.1.6b release. Diffs are
+    the handiwork of Jeff Dairiki, though Arno wrote the second
+    revision. Features and changes include:
+
+* Page diffs, with color
+* "MostPopular" page added which dynamically tracks most viewed pages
+  (MySQL only so far)
+* Admin functions: page dumps, page loads, Zip dumps, page locking
+* MySQL, DBM, mSQL and Postgresql support all functional and appear stable
+* Full HTML compliance in page output
+* Tabless markup language introduced for <UL> and <OL>
+* Fixed raw HTML exploit in [info] page
+* Perl script included to reduce the size of a DBM file
+* documentation updates
+* page source updates
+* gazillion feature enhancements and bug fixes, no doubt necessitating
+  another gazillion feature enhancements and bug fixes ;-)
+
 1.1.6b 06/27/00: The wrong wiki_config.php3 file was included in 1.1.6, 
 and this release corrects that; also in my hurry, I included all the CVS
 directories and files, and a test file. That stuff was left out.

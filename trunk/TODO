@@ -1,6 +1,3 @@
-Security fix needed: the info page allows the user to enter arbitrary 
-HTML.
-
 Full text search will return all pages when searching for "eat" 
 because it matches "created." (In a DBM-based installation). This
 should be corrected.
@@ -8,14 +5,7 @@ should be corrected.
 Edit copy: A user who makes edits and saves them can no longer access
 the copy in the archive. They should be at least allowed to retrieve it.
 
-Wiki porting: it should be easy to write a function that serializes all
-pages to files, and allows the user to reload them in another database.
-This way it would be easy to move from DBM to a RDBMS.
-
 Write/proofread pages on wiki markup
-
-Add a TestPage which tests all markup features: wikinames, external
-links, lists, and other markup
 
 Add lastmodified and created features to DBM version
 
@@ -32,3 +22,6 @@ Also, it might be time to start a FAQ.
 
 Search tells you how many matches it found in how many pages, but it
 doesn't say how many pages it searched anymore.
+
+The History list in the browser no longer tells you where an edit page
+is; this happened when we switched to templating.

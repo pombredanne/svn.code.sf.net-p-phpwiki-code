@@ -6,6 +6,7 @@ can be found at http://www.gnu.org/copyleft/gpl.txt.
 See INSTALL for installation notes.
 See INSTALL.mysql for using PhpWiki with MySQL.
 See INSTALL.pgsql for using PhpWiki with PostgreSQL
+See INSTALL.mSQL  for using PhpWiki with mSQL.
 
 The out-of-the-box version uses a dbm file in the /tmp directory; you may
 wish a more permanent place for yours, but make sure it's read/writable
@@ -27,8 +28,30 @@ wiki_setupwiki.php3:   load a set of pages from ./pgsrc/ directory
 wiki_stdlib.php3:      standard library of functions (non-db related)
 wiki_transform.php3:   convert wiki markup into HTML
 
+admin/:
+index.php3:            entry point for administration forms
+shrinkdbm.pl:          Perl script to reduce size of DBM files
+wiki_adminforms.php:   the HTML forms for administration
+wiki_auth.php3:        authorization code for admin features
+wiki_dumpHTML.php:     dump the Wiki out as HTML pages
+wiki_dumpserial.php:   dump the Wiki out as serialize() pages
+wiki_loadserial.php:   load Wiki pages that were dumped with dumpserial
+wiki_lockpage.php:     lock a page so it cannot be edited
+wiki_port1_0.php:      import a 1.0 PhpWiki database
+wiki_rebuilddbms.php:  rebuild DBM files to reclaim disk space
+wiki_zip.php3:         create a Zip archive of all Wiki pages
+
+templates/:
+browse.html:           for rendering most pages
+editlinks.html:        template for editing references
+editpage.html:         template for form for editing pages
+message.html:          error/system message template
+
+schemas/:              SQL schemas for the RDBMSs
+
+
 Steve Wainstead
 swain@wcsb.org
 http://wcsb.org/~swain/
 
-$Id: README,v 1.4 2000-06-23 02:57:47 wainstead Exp $
+$Id: README,v 1.5 2000-07-15 20:56:45 wainstead Exp $
