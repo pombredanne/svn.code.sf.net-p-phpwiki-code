@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.7 2004-04-27 16:03:05 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.8 2004-06-21 16:22:32 rurban Exp $');
 
 /*
   Pagedata
@@ -455,7 +455,7 @@ class WikiDB_backend
 class WikiDB_backend_iterator
 {
     /**
-     * Get the next record in the interator set.
+     * Get the next record in the iterator set.
      *
      * This returns a hash.  The has may contain the following keys:
      * <dl>

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.109 2004-06-17 11:31:05 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.110 2004-06-21 16:22:30 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -28,16 +28,18 @@ require_once("lib/Template.php");
 /**
  * ignore fatal errors during dump
  */
-function _ignore_fatal_plugin(&$error) {
+function _dump_error_handler(&$error) {
     if ($error->isFatal()) {
         $error->errno = E_USER_WARNING;
         return true;
     }
-    return false; // let the message come through: call the remaining handlers:
+    return true;         // Ignore error
     /*
-    if (preg_match('/Plugin/',$error->errstr))
-        return true;        // Ignore error
+    if (preg_match('/Plugin/', $error->errstr))
+        return true;
     */
+    // let the message come through: call the remaining handlers:
+    // return false; 
 }
 
 function StartLoadDump(&$request, $title, $html = '')
@@ -48,10 +50,12 @@ function StartLoadDump(&$request, $title, $html = '')
                                    'CONTENT' => '%BODY%'));
     echo ereg_replace('%BODY%.*', '', $tmpl->getExpansion($html));
 
-    /* ignore fatals in plugins. Fails with 4.0.6, works ok with 4.1.1 */
-    if (!check_php_version(4,1)) return;
+    /* Ignore fatals or warnings in any pagedumps (failing plugins). 
+     * WikiFunctionCb() fails with 4.0.6, works ok with 4.1.1 
+     */
+    if (!check_php_version(4,1) or DEBUG) return;
     global $ErrorManager;
-    $ErrorManager->pushErrorHandler(new WikiFunctionCb('_ignore_fatal_plugin'));
+    $ErrorManager->pushErrorHandler(new WikiFunctionCb('_dump_error_handler'));
 }
 
 function EndLoadDump(&$request)
@@ -175,7 +179,7 @@ function MakeWikiZip (&$request)
     /* ignore fatals in plugins */
     if (check_php_version(4,1)) {
         global $ErrorManager;
-        $ErrorManager->pushErrorHandler(new WikiFunctionCb('_ignore_fatal_plugin'));
+        $ErrorManager->pushErrorHandler(new WikiFunctionCb('_dump_error_handler'));
     }
 
     $dbi = $request->getDbh();
@@ -214,6 +218,8 @@ function MakeWikiZip (&$request)
 function DumpToDir (&$request)
 {
     $directory = $request->getArg('directory');
+    if (empty($directory))
+        $directory = DEFAULT_DUMP_DIR; // See lib/plugin/WikiForm.php:87
     if (empty($directory))
         $request->finish(_("You must specify a directory to dump to"));
 
@@ -274,6 +280,8 @@ function DumpHtmlToDir (&$request)
 {
     $directory = $request->getArg('directory');
     if (empty($directory))
+        $directory = HTML_DUMP_DIR; // See lib/plugin/WikiForm.php:87
+    if (empty($directory))
         $request->finish(_("You must specify a directory to dump to"));
 
     // see if we can access the directory the user wants us to use
@@ -291,7 +299,13 @@ function DumpHtmlToDir (&$request)
     $thispage = $request->getArg('pagename'); // for "Return to ..."
 
     $dbi = $request->getDbh();
-    $pages = $dbi->getAllPages();
+    if ($whichpages = $request->getArg('pages')) {  // which pagenames
+        if ($whichpages == '[]') // current page
+            $whichpages = $thispage;
+        $pages = new WikiDB_Array_PageIterator(explodePageList($whichpages));
+    } else {
+        $pages = $dbi->getAllPages();
+    }
 
     global $WikiTheme;
     if (defined('HTML_DUMP_SUFFIX'))
@@ -355,6 +369,22 @@ function DumpHtmlToDir (&$request)
             }
         }
     }
+    if (is_array($WikiTheme->dumped_buttons)) {
+    	// Buttons also
+        @mkdir("$directory/images/buttons");
+        foreach ($WikiTheme->dumped_buttons as $text => $img_file) {
+            if (($from = $WikiTheme->_findFile($img_file)) and basename($from)) {
+                $target = "$directory/images/buttons/".basename($img_file);
+                if (copy($WikiTheme->_path . $from, $target)) {
+                    $msg = HTML(HTML::br(), HTML($from), HTML::small(fmt("... copied to %s", $target)));
+                    PrintXML($msg);
+                }
+            } else {
+                $msg = HTML(HTML::br(), HTML($from), HTML::small(fmt("... not found", $target)));
+                PrintXML($msg);
+            }
+        }
+    }
     if (is_array($WikiTheme->dumped_css)) {
       foreach ($WikiTheme->dumped_css as $css_file) {
           if (($from = $WikiTheme->_findFile(basename($css_file))) and basename($from)) {
@@ -400,7 +430,7 @@ function MakeWikiZipHtml (&$request)
     /* ignore fatals in plugins */
     if (check_php_version(4,1)) {
         global $ErrorManager;
-        $ErrorManager->pushErrorHandler(new WikiFunctionCb('_ignore_fatal_plugin'));
+        $ErrorManager->pushErrorHandler(new WikiFunctionCb('_dump_error_handler'));
     }
 
     while ($page = $pages->next()) {
@@ -1009,6 +1039,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.109  2004/06/17 11:31:05  rurban
+ jump back to label after dump/upgrade
+
  Revision 1.108  2004/06/16 12:43:01  rurban
  4.0.6 cannot use this errorhandler (not found)
 

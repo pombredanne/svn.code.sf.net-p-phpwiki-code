@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.38 2004-06-21 08:39:36 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.39 2004-06-21 16:22:28 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -57,6 +57,7 @@ function IniConfig($file) {
     // booleans). Needs to be categorised, and generally made a lot tidier. 
     $_IC_VALID_VALUE = array
         ('WIKI_NAME', 'ADMIN_USER', 'ADMIN_PASSWD',
+         'DEFAULT_DUMP_DIR', 'HTML_DUMP_DIR',
          'HTML_DUMP_SUFFIX', 'MAX_UPLOAD_SIZE', 'MINOR_EDIT_TIMEOUT',
          'ACCESS_LOG', 'CACHE_CONTROL', 'CACHE_CONTROL_MAX_AGE',
          'PASSWORD_LENGTH_MINIMUM', 'USER_AUTH_POLICY', 
@@ -590,6 +591,10 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.38  2004/06/21 08:39:36  rurban
+// pear/Cache update from Cache-1.5.4 (added db and trifile container)
+// pear/DB update from DB-1.6.1 (mysql bugfixes, php5 compat, DB_PORTABILITY features)
+//
 // Revision 1.37  2004/06/19 12:32:37  rurban
 // new TEMP_DIR for ziplib
 //

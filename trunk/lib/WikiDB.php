@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.70 2004-06-18 14:39:31 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.71 2004-06-21 16:22:30 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -1705,6 +1705,30 @@ class WikiDB_PageRevisionIterator
     }
 };
 
+/** pseudo iterator
+ */
+class WikiDB_Array_PageIterator
+{
+    function WikiDB_Array_PageIterator(&$pagenames) {
+        global $request;
+        $this->_dbi = $request->getDbh();
+        $this->_pages = $pagenames;
+        reset($this->_pages);
+    }
+    function next() {
+        $c =& current($this->_pages);
+        next($this->_pages);
+        return $c !== false ? $this->_dbi->getPage($c) : false;
+    }
+    function count() {
+        return count($this->_pages);
+    }
+    function free() {}
+    function asArray() {
+        reset($this->_pages);
+        return $this->_pages;
+    }
+}
 
 /**
  * Data cache used by WikiDB.
@@ -1848,6 +1872,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.70  2004/06/18 14:39:31  rurban
+// actually check USECACHE
+//
 // Revision 1.69  2004/06/13 15:33:20  rurban
 // new support for arguments owner, author, creator in most relevant
 // PageList plugins. in WikiAdmin* via preSelectS()

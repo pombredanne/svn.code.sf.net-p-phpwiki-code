@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.90 2004-06-18 14:38:21 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.91 2004-06-21 16:22:29 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -956,7 +956,10 @@ class PageList {
             list ($column, $heading) = explode(':', $column, 2);
 
         if (!isset($this->_types[$column])) {
-            trigger_error(sprintf("%s: Bad column", $column), E_USER_NOTICE);
+            $silently_ignore = array('numbacklinks','rating','coagreement','minmisery',
+                                     'averagerating','top3recs');
+            if (!in_array($column,$silently_ignore))
+                trigger_error(sprintf("%s: Bad column", $column), E_USER_NOTICE);
             return false;
         }
         if ($column == 'ratingwidget' and !$GLOBALS['request']->_user->isSignedIn())
@@ -1000,6 +1003,7 @@ class PageList {
         }
         else {
             foreach ($pagelist->_sortby as $colNum => $direction) {
+            	if (!isset($pagelist->_columns_seen[$colNum])) return 0;
                 $colkey = $colNum;
                 if (!is_int($colkey)) { // or column fieldname
                     $colkey = $pagelist->_columnsMap[$colNum];
@@ -1234,6 +1238,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.90  2004/06/18 14:38:21  rurban
+// adopt new PageList style
+//
 // Revision 1.89  2004/06/17 13:16:08  rurban
 // apply wikilens work to PageList: all columns are sortable (slightly fixed)
 //

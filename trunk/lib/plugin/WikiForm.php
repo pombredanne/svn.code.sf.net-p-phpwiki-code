@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiForm.php,v 1.12 2004-04-18 01:11:52 rurban Exp $');
+rcs_id('$Id: WikiForm.php,v 1.13 2004-06-21 16:22:32 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -34,7 +34,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.12 $");
+                            "\$Revision: 1.13 $");
     }
 
     function getDefaultArguments() {
@@ -62,7 +62,7 @@ extends WikiPlugin
         case 'loadfile':
             $input['name'] = 'source';
             if (!$default)
-                $input['value'] = '/tmp/wikidump';
+                $input['value'] = DEFAULT_DUMP_DIR;
             if (!$buttontext)
                 $buttontext = _("Load File");
             $class = false;
@@ -76,7 +76,7 @@ extends WikiPlugin
         case 'dumpserial':
             $input['name'] = 'directory';
             if (!$default)
-                $input['value'] = '/tmp/wikidump';
+                $input['value'] = DUMP_DIR;
             if (!$buttontext)
                 $buttontext = _("Dump Pages");
             $class = 'wikiadmin';
@@ -84,7 +84,7 @@ extends WikiPlugin
         case 'dumphtml':
             $input['name'] = 'directory';
             if (!$default)
-                $input['value'] = '/tmp/wikidumphtml';
+                $input['value'] = HTML_DUMP_DIR;
             if (!$buttontext)
                 $buttontext = _("Dump Pages as XHTML");
             $class = 'wikiadmin';
@@ -120,6 +120,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2004/04/18 01:11:52  rurban
+// more numeric pagename fixes.
+// fixed action=upload with merge conflict warnings.
+// charset changed from constant to global (dynamic utf-8 switching)
+//
 // Revision 1.11  2004/02/24 15:20:07  rurban
 // fixed minor warnings: unchecked args, POST => Get urls for sortby e.g.
 //
