@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminUtils.php,v 1.2 2003-02-21 20:56:12 carstenklapp Exp $');
+rcs_id('$Id: WikiAdminUtils.php,v 1.3 2003-02-22 00:26:14 dairiki Exp $');
 /**
  Copyright 2003 $ThePhpWikiProgrammingTeam
 
@@ -35,7 +35,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -116,17 +116,25 @@ extends WikiPlugin
         // FIXME: this should be moved into WikiDB::normalize() or something...
         $dbi = $request->getDbh();
         $pages = $dbi->getAllPages('include_empty'); // Do we really want the empty ones too?
-        $count = 0;
-        $list = HTML::ul();
+        $badpages = array();
         while (($page = $pages->next())) {
             $pagename = $page->getName();
-            if ($pagename[0] == SUBPAGE_SEPARATOR) {
-                $dbi->deletePage($pagename);
-                $list->pushContent(HTML::li($pagename));
-                $count++;
-            }
+            if ($pagename[0] == SUBPAGE_SEPARATOR)
+                $badpages[] = $pagename;
         }
-        return HTML(fmt("Deleted %s pages with invalid names:", $count), $list);
+
+        if (!$badpages)
+            return _("No pages with bad names were found.");
+        
+        $list = HTML::ul();
+        foreach ($badpages as $pagename) {
+            $dbi->deletePage($pagename);
+            $list->pushContent(HTML::li($pagename));
+        }
+        
+        return HTML(fmt("Deleted %s pages with invalid names:",
+                        count($badpages)),
+                    $list);
     }
 };
 
