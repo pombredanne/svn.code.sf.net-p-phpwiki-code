@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.13 2001-02-14 05:22:49 dairiki Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.14 2001-03-14 19:45:42 dairiki Exp $');
 
 /*
    All page saving events take place here.
@@ -108,7 +108,7 @@
    if (!empty($SignatureImg))
       $html .= sprintf("<P><img src=\"%s\"></P>\n", DataURL($SignatureImg));
       
-   $html .= "<hr noshade><P>";
+   $html .= "<hr noshade>\n";
    include('lib/transform.php');
 
    echo GeneratePage('BROWSE', $html, $pagename, $pagehash);
