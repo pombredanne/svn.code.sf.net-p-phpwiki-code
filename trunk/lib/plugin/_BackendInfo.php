@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _BackendInfo.php,v 1.20 2003-01-18 21:19:24 carstenklapp Exp $');
+rcs_id('$Id: _BackendInfo.php,v 1.21 2003-02-21 04:22:28 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -36,7 +36,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.20 $");
+                            "\$Revision: 1.21 $");
     }
 
     function getDefaultArguments() {
@@ -59,11 +59,13 @@ extends WikiPlugin
                                    'cellpadding' => 2,
                                    'cellspacing' => 0));
         $pagedata = $backend->get_pagedata($page);
-        if (!$pagedata)
+        if (!$pagedata) {
+            // FIXME: invalid HTML
             $html->pushContent(HTML::p(fmt("No pagedata for %s", $page)));
+        }
         else {
-            $table->pushContent($this->_showhash("get_pagedata('$page')",
-                                                 $pagedata, $page));
+            $this->_fixupData($pagedata);
+            $table->pushContent($this->_showhash("get_pagedata('$page')", $pagedata));
         }
 
         for ($version = $backend->get_latest_version($page);
@@ -71,13 +73,7 @@ extends WikiPlugin
              $version = $backend->get_previous_version($page, $version))
             {
                 $vdata = $backend->get_versiondata($page, $version, true);
-
-                $content = &$vdata['%content'];
-                if ($content === true)
-                    $content = '<true>';
-                elseif (strlen($content) > 40)
-                    $content = substr($content,0,40) . " ...";
-                unset($vdata['%pagedata']); // problem in backend
+                $this->_fixupData($vdata);
                 $table->pushContent(HTML::tr(HTML::td(array('colspan' => 2))));
                 $table->pushContent($this->_showhash("get_versiondata('$page',$version)",
                                                      $vdata));
@@ -87,39 +83,81 @@ extends WikiPlugin
         return $html;
     }
 
-    function _showhash ($heading, $hash, $pagename = '') {
-        $rows[] = HTML::tr(array('bgcolor' => '#ffcccc',
-                                 'style' => 'color:#000000'),
-                           HTML::td(array('colspan' => 2,
-                                          'style' => 'color:#000000'),
-                                    $heading));
-        ksort($hash);
-        foreach ($hash as $key => $val) {
-            if (is_string($val) && (substr($val, 0, 2) == 'a:')) {
+    /**
+     * Really should have a _fixupPagedata and _fixupVersiondata, but this works.
+     */
+    function _fixupData(&$data) {
+        global $request;
+        $user = $request->getUser();
+
+        foreach ($data as $key => $val) {
+            if ($key == 'passwd' and !$user->isAdmin())
+                $data[$key] = $val ? _("<not displayed>") : _("<empty>");
+            elseif ($key == '_cached_html') {
+                $val = TransformedText::unpack($val);
+                ob_start();
+                print_r($val);
+                $data[$key] = HTML::pre(ob_get_contents());
+                ob_end_clean();
+            }
+            elseif (is_string($val) && (substr($val, 0, 2) == 'a:')) {
                 // how to indent this table?
                 $val = unserialize($val);
-                $rows[] = HTML(HTML::raw('&nbsp;'), HTML::raw('&nbsp;'),
-                               $this->_showhash("get_pagedata('$pagename')['$key']",
-                                                 $val));
-            } else {
-                if ($key == 'passwd' && ! $request->_user->isAdmin())
-                    $val = $val ? _("<not displayed>") : _("<empty>");
-                $rows[] = HTML::tr(HTML::td(array('align' => 'right',
-                                                  'bgcolor' => '#cccccc',
-                                                  'style' => 'color:#000000'),
-                                            HTML(HTML::raw('&nbsp;'), $key,
-                                                 HTML::raw('&nbsp;'))),
-                                   HTML::td(array('bgcolor' => '#ffffff',
-                                                  'style' => 'color:#000000'),
-                                            $val ? $val : HTML::raw('&nbsp;'))
-                                   );
+                $this->_fixupData($val);
+                $data[$key] = HTML::table(array('border' => 1,
+                                                'cellpadding' => 2,
+                                                'cellspacing' => 0),
+                                          $this->_showhash(false, $val));
             }
+            elseif (is_array($val)) {
+                // how to indent this table?
+                $this->_fixupData($val);
+                $data[$key] = HTML::table(array('border' => 1,
+                                                'cellpadding' => 2,
+                                                'cellspacing' => 0),
+                                          $this->_showhash(false, $val));
+            }
+            elseif ($key == '%content') {
+                if ($val === true)
+                    $val = '<true>';
+                elseif (strlen($val) > 40)
+                    $val = substr($val,0,40) . " ...";
+                $data[$key] = $val;
+            }
+        }
+        unset($data['%pagedata']); // problem in backend
+    }
+
+            
+    function _showhash ($heading, $hash, $pagename = '') {
+        $rows = array();
+        if ($heading)
+            $rows[] = HTML::tr(array('bgcolor' => '#ffcccc',
+                                     'style' => 'color:#000000'),
+                               HTML::td(array('colspan' => 2,
+                                              'style' => 'color:#000000'),
+                                        $heading));
+        ksort($hash);
+        foreach ($hash as $key => $val) {
+            $rows[] = HTML::tr(HTML::td(array('align' => 'right',
+                                              'bgcolor' => '#cccccc',
+                                              'style' => 'color:#000000'),
+                                        HTML(HTML::raw('&nbsp;'), $key,
+                                             HTML::raw('&nbsp;'))),
+                               HTML::td(array('bgcolor' => '#ffffff',
+                                              'style' => 'color:#000000'),
+                                        $val ? $val : HTML::raw('&nbsp;'))
+                               );
         }
         return $rows;
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2003/01/18 21:19:24  carstenklapp
+// Code cleanup:
+// Reformatting; added copyleft, getVersion, getDescription
+//
 
 // (c-file-style: "gnu")
 // Local Variables:
