@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RateIt.php,v 1.3 2004-04-01 06:29:51 rurban Exp $');
+rcs_id('$Id: RateIt.php,v 1.4 2004-04-06 20:00:11 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -59,6 +59,16 @@ define('RATING_STORAGE','SQL');
  * For a simple rating system one can also store the rating in the page 
  * metadata (default).
  *
+ * Recommender Engines:
+ * Recommendation/Prediction is a special field of "Data Mining"
+ * For a list of (also free) software see 
+ *  http://www.the-data-mine.com/bin/view/Software/WebIndex
+ * - movielens: (Java Server) will be gpl'd in summer 2004 (weighted)
+ * - suggest: is free for non-commercial use, available as compiled library
+ *     (non-weighted)
+ * - Autoclass: simple public domain C library
+ * - MLC++: C++ library http://www.sgi.com/tech/mlc/
+ *
  * Usage:    <?plugin RateIt ?>              to enable rating on this page
  *   Note: The wikilens theme must be enabled, to enable this plugin!
  *   Or use a sidebar based theme with the box method.
@@ -99,7 +109,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function RatingWidgetJavascript() {
@@ -736,6 +746,10 @@ function deleteRating(actionImg, page, dimension) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/04/01 06:29:51  rurban
+// better wording
+// RateIt also for ADODB
+//
 // Revision 1.2  2004/03/31 06:22:22  rurban
 // shorter javascript,
 // added prediction buttons and display logic,

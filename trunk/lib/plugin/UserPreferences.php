@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.23 2004-04-02 15:06:56 rurban Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.24 2004-04-06 20:00:11 rurban Exp $');
 /**
  Copyright (C) 2001, 2002, 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -24,6 +24,9 @@ rcs_id('$Id: UserPreferences.php,v 1.23 2004-04-02 15:06:56 rurban Exp $');
  * Plugin to allow any user to adjust his own preferences.
  * This must be used in the page "UserPreferences".
  * Prefs are stored in metadata within the user's home page or in a cookie.
+ *
+ * TODO:
+ * Certain themes should be able to extend the predefined list of preferences.
  */
 class WikiPlugin_UserPreferences
 extends WikiPlugin
@@ -36,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.23 $");
+                            "\$Revision: 1.24 $");
     }
 
     function getDefaultArguments() {
@@ -73,7 +76,7 @@ extends WikiPlugin
         }
         $userid = $user->UserName();
         if (// ((defined('ALLOW_BOGO_LOGIN') && ALLOW_BOGO_LOGIN && $user->isSignedIn()) ||
-             $user->isAuthenticated() and !empty($userid)) 
+             $user->isAuthenticated() and !empty($userid))
         {
             $pref = $user->getPreferences();
             //trigger_error("DEBUG: reading prefs from getPreferences".print_r($pref));
@@ -113,6 +116,7 @@ extends WikiPlugin
                         if (!$num) {
                             $errmsg .= " " ._("No changes.");
                         } else {
+                            $request->_setUser($user);
                             $pref = $user->_prefs;	
                             $errmsg .= sprintf(_("%d UserPreferences fields successfully updated."), $num);
                         }
@@ -166,6 +170,13 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.23  2004/04/02 15:06:56  rurban
+// fixed a nasty ADODB_mysql session update bug
+// improved UserPreferences layout (tabled hints)
+// fixed UserPreferences auth handling
+// improved auth stability
+// improved old cookie handling: fixed deletion of old cookies with paths
+//
 // Revision 1.22  2004/03/24 19:39:03  rurban
 // php5 workaround code (plus some interim debugging code in XmlElement)
 //   php5 doesn't work yet with the current XmlElement class constructors,

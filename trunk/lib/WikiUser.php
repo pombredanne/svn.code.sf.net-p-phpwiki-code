@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.50 2004-02-26 01:32:03 rurban Exp $');
+rcs_id('$Id: WikiUser.php,v 1.51 2004-04-06 20:00:10 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -404,6 +404,10 @@ class WikiUser {
         }
     }
 
+    function hasHomePage() {
+        return !empty($this->homepage());
+    }
+
     // create user by checking his homepage
     function createUser ($pref, $createDefaultHomepage = true) {
         if ($this->exists())
@@ -717,6 +721,9 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.50  2004/02/26 01:32:03  rurban
+// fixed session login with old WikiUser object. strangely, the errormask gets corruoted to 1, Pear???
+//
 // Revision 1.49  2004/02/15 21:34:37  rurban
 // PageList enhanced and improved.
 // fixed new WikiAdmin... plugins

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRename.php,v 1.9 2004-03-12 13:31:43 rurban Exp $');
+rcs_id('$Id: WikiAdminRename.php,v 1.10 2004-04-06 20:00:11 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -22,7 +22,7 @@ rcs_id('$Id: WikiAdminRename.php,v 1.9 2004-03-12 13:31:43 rurban Exp $');
 
 /**
  * Usage:   <?plugin WikiAdminRename ?> or called via WikiAdminSelect
- * Author:  Reini Urban <rurban@x-ray.at>
+ * @author:  Reini Urban <rurban@x-ray.at>
  *
  * KNOWN ISSUES:
  * Currently we must be Admin.
@@ -45,7 +45,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
@@ -136,7 +136,13 @@ extends WikiPlugin_WikiAdminSelect
         if ($next_action == 'verify') {
             $args['info'] = "checkbox,pagename,renamed_pagename";
         }
-        $pagelist = new PageList_Selectable($args['info'], $exclude);
+        $pagelist = new PageList_Selectable
+            (
+             $args['info'], $exclude, 
+             array('types' => 
+                   array('renamed_pagename'
+                         => new _PageList_Column_renamed_pagename('rename', _("Rename to")),
+                         )));
         $pagelist->addPageList($pages);
 
         $header = HTML::p();
@@ -190,10 +196,29 @@ extends WikiPlugin_WikiAdminSelect
         $header->pushContent(HTML::p());
         return $header;
     }
-
 }
 
+// moved from lib/PageList.php
+class _PageList_Column_renamed_pagename extends _PageList_Column {
+    function _getValue ($page_handle, &$revision_handle) {
+        $post_args = $GLOBALS['request']->getArg('admin_rename');
+        $value = str_replace($post_args['from'], $post_args['to'],$page_handle->getName());
+        $div = HTML::div(" => ",HTML::input(array('type' => 'text',
+                                                  'name' => 'rename[]',
+                                                  'value' => $value)));
+        $new_page = $GLOBALS['request']->getPage($value);
+        if ($new_page->exists()) {
+            $div->setAttr('class','error');
+            $div->setAttr('title',_("This page already exists"));
+        }
+        return $div;
+    }
+};
+
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/03/12 13:31:43  rurban
+// enforce PagePermissions, errormsg if not Admin
+//
 // Revision 1.8  2004/03/01 13:48:46  rurban
 // rename fix
 // p[] consistency fix

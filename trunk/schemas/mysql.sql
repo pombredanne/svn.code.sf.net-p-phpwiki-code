@@ -1,4 +1,4 @@
--- $Id: mysql.sql,v 1.8 2004-03-10 15:41:27 rurban Exp $
+-- $Id: mysql.sql,v 1.9 2004-04-06 20:00:11 rurban Exp $
 
 drop table if exists page;
 CREATE TABLE page (
@@ -47,11 +47,14 @@ CREATE TABLE link (
 
 drop table if exists session;
 CREATE TABLE session (
-    	sess_id 	VARCHAR(32) NOT NULL DEFAULT '',
+    	sess_id 	CHAR(32) NOT NULL DEFAULT '',
     	sess_data 	BLOB NOT NULL,
     	sess_date 	INT UNSIGNED NOT NULL,
+    	sess_ip 	CHAR(15) NOT NULL,
     	PRIMARY KEY (sess_id)
-);
+	INDEX (sess_date),
+	INDEX (sess_ip)
+) TYPE=heap;
 
 -- Optional DB Auth and Prefs
 -- For these tables below the default table prefix must be used 

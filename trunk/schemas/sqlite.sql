@@ -1,6 +1,6 @@
 -- http://www.hezmatt.org/~mpalmer/sqlite-phpwiki/sqlite.sql
 
--- $Id: sqlite.sql,v 1.1 2004-03-24 01:02:11 rurban Exp $
+-- $Id: sqlite.sql,v 1.2 2004-04-06 20:00:11 rurban Exp $
 
 CREATE TABLE page (
 	id              INT NOT NULL,
@@ -46,8 +46,22 @@ CREATE INDEX linkfrom_index ON link (linkfrom);
 CREATE INDEX linkto_index ON link (linkto);
 
 CREATE TABLE session (
-	sess_id varchar(32) not null default '',
+	sess_id   char(32) not null default '',
 	sess_data blob not null,
 	sess_date INT UNSIGNED NOT NULL,
+	sess_ip   char(15) not null,
 	PRIMARY KEY (sess_id)
+);
+
+CREATE INDEX sessdate_index ON session (sess_date);
+CREATE INDEX sessip_index ON session (sess_ip);
+
+-- Optional DB Auth and Prefs
+-- For these tables below the default table prefix must be used 
+-- in the DBAuthParam SQL statements also.
+
+CREATE TABLE pref (
+  	userid 	CHAR(48) BINARY NOT NULL UNIQUE,
+  	prefs  	TEXT NULL DEFAULT '',
+  	PRIMARY KEY (userid)
 );

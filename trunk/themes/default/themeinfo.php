@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.30 2004-02-28 22:25:06 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.31 2004-04-06 20:00:11 rurban Exp $');
 
 /*
  * This file defines the default appearance ("theme") of PhpWiki.
@@ -85,6 +85,27 @@ $Theme->setButtonSeparator("\n | ");
  */
 //$Theme->setDateFormat("%B %d, %Y", false); 
 
+
+/**
+ * Custom UserPreferences:
+ * A list of name => _UserPreference class pairs.
+ * Rationale: Certain themes should be able to extend the predefined list 
+ * of preferences. Display/editing is done in the theme specific userprefs.tmpl
+ * but storage/sanification/update/... must be extended to the Get/SetPreferences methods.
+ * See themes/wikilens/themeinfo.php
+ */
+//$Theme->customUserPreference(); 
+
+/**
+ * Register custom PageList type and define custom PageList classes.
+ * Rationale: Certain themes should be able to extend the predefined list 
+ * of pagelist types. E.g. certain plugins, like MostPopular might use 
+ * info=pagename,hits,rating
+ * which displays the rating column whenever the wikilens theme is active.
+ * See themes/wikilens/themeinfo.php
+ */
+// 
+//$Theme->addPageListColumn(); 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // (c-file-style: "gnu")

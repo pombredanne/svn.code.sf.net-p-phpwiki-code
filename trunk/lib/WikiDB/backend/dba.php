@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: dba.php,v 1.4 2002-01-24 06:53:35 carstenklapp Exp $');
+<?php rcs_id('$Id: dba.php,v 1.5 2004-04-06 20:00:11 rurban Exp $');
 
 require_once('lib/WikiDB/backend/dbaBase.php');
 
@@ -13,8 +13,8 @@ extends WikiDB_backend_dbaBase
         $dba_handler = 'gdbm';
         $timeout = 20;
         extract($dbparams);
-        
-        $dbfile = "$directory/$prefix" . 'pagedb' . '.' . $dba_handler;
+        if ($directory) $directory .= "/";
+        $dbfile = $directory . $prefix . 'pagedb' . '.' . $dba_handler;
 
         // FIXME: error checking.
         $db = new DbaDatabase($dbfile, false, $dba_handler);
