@@ -1,6 +1,6 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.16 2004-04-20 18:10:26 rurban Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.17 2004-04-26 12:22:56 rurban Exp $');
 
-require_once('lib/stdlib.php');
+require_once(dirname(__FILE__).'/stdlib.php');
 
 // FIXME: make this work with non-unix (e.g. DOS) filenames.
 
@@ -24,7 +24,7 @@ class FileFinder
      */
     function FileFinder ($path = false) {
         $this->_pathsep = $this->_get_syspath_separator();
-        if ($path === false)
+        if (!$this->_path and $path === false)
             $path = $this->_get_include_path();
         $this->_path = $path;
     }
@@ -47,10 +47,16 @@ class FileFinder
     }
 
     function slashifyPath ($path) {
-        if ($this->_isOtherPathsep())
-            return strtr($path,$this->_use_path_separator($path),'/');
-        else 
-            return $path;
+    	if (is_array($path)) {
+    	    $result = array();
+    	    foreach ($path as $dir) { $result[] = $this->slashifyPath($dir); }
+    	    return $result;
+    	} else {
+            if ($this->_isOtherPathsep())
+                return strtr($path,$this->_use_path_separator($path),'/');
+            else 
+                return $path;
+    	}
     }
 
     /**
@@ -187,7 +193,10 @@ class FileFinder
      * @return array Include path.
      */
     function _get_include_path() {
-        $path = @ini_get('include_path'); // FIXME: report warning
+        if (defined("INCLUDE_PATH"))
+            $path = INCLUDE_PATH;
+        else
+            $path = @get_cfg_var('include_path'); // FIXME: report warning
         if (empty($path))
             $path = '.';
         return explode($this->_get_ini_separator(), $this->slashifyPath($path));
@@ -203,9 +212,9 @@ class FileFinder
      * @param $dir string Directory to add.
      */
     function _append_to_include_path ($dir) {
-        $path = $this->_get_include_path();
-        if (!in_array($dir, $path)) {
-            $path[] = $dir;
+        $dir = $this->slashifyPath($dir);
+        if (!in_array($dir, $this->_path)) {
+            $this->_path[] = $dir;
             //ini_set('include_path', implode(':', $path));
         }
         /*
@@ -219,7 +228,7 @@ class FileFinder
          * This following line should be in the above if-block, but we
          * put it here, as it seems to work-around the bug.
          */
-        ini_set('include_path', implode($this->_get_ini_separator(), $this->slashifyPath($path)));
+        ini_set('include_path', implode($this->_get_ini_separator(), $this->_path));
     }
 
     // Return all the possible shortened locale specifiers for the given locale.
@@ -387,8 +396,14 @@ class LocalizedButtonFinder
 function FindFile ($file, $missing_okay = false, $slashify = false)
 {
     static $finder;
-    if (!isset($finder))
+    if (!isset($finder)) {
         $finder = new FileFinder;
+    	// remove "/lib" from dirname(__FILE__)
+    	$wikidir = preg_replace('/.lib$/','',dirname(__FILE__));
+    	$finder->_append_to_include_path($wikidir);
+    	$finder->_append_to_include_path(dirname(__FILE__)."/pear");
+ 	define("INCLUDE_PATH",implode($finder->_get_ini_separator(), $finder->_path));
+    }
     $s = $finder->findFile($file, $missing_okay);
     if ($slashify)
       $s = $finder->slashifyPath($s);
