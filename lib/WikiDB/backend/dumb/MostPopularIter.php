@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopularIter.php,v 1.6 2002-02-09 23:07:01 lakka Exp $');
+rcs_id('$Id: MostPopularIter.php,v 1.7 2004-01-25 08:17:29 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -24,11 +24,11 @@ extends WikiDB_backend_iterator
             $pages[] = $page;
         }
 
-		if($limit < 0){  //sort pages in reverse order - ie least popular first.
-	        usort($pages, 'WikiDB_backend_dumb_MostPopularIter_sortf_rev');
-			$limit = -$limit;
-			}
-		else usort($pages, 'WikiDB_backend_dumb_MostPopularIter_sortf');
+        if($limit < 0){  //sort pages in reverse order - ie least popular first.
+            usort($pages, 'WikiDB_backend_dumb_MostPopularIter_sortf_rev');
+            $limit = -$limit;
+        }
+        else usort($pages, 'WikiDB_backend_dumb_MostPopularIter_sortf');
 
         if ($limit < 0) {
             $pages = array_reverse($pages);

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.33 2004-01-25 08:00:46 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.34 2004-01-25 08:17:29 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -419,7 +419,7 @@ extends WikiDB_backend
         return new WikiDB_backend_PearDB_iter($this, $result);
     }
 
-    function get_all_pages($include_deleted,$orderby) {
+    function get_all_pages($include_deleted=false,$orderby='pagename') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
 

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: dbaBase.php,v 1.5 2003-02-22 00:28:34 dairiki Exp $');
+<?php rcs_id('$Id: dbaBase.php,v 1.6 2004-01-25 08:17:29 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -192,7 +192,7 @@ extends WikiDB_backend
         $pagedb->set($pagename, (int)$latest . ':' . (int)$flags . ":$pagedata");
     }
 
-    function get_all_pages($include_deleted = false) {
+    function get_all_pages($include_deleted = false, $orderby='pagename') {
         $pagedb = &$this->_pagedb;
 
         $pages = array();
