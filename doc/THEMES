@@ -25,8 +25,8 @@ of your theme to index.php.
 
 ! Template Structure
 
-Only one template is called, the "html.tmpl" template, which includes 
-all other templates then.
+Only one template is called, ususally the "html.tmpl" template, 
+which includes all other templates then.
 
 Theme templates are regular xhtml, but the php parts within "<?" and "?>" 
 are treated especially by phpwiki. HTML entities within the php parts 
@@ -35,5 +35,19 @@ HTML objects.
 Pure HTML entities, e.g. <? echo "<br>" ?> will be escaped to &lt;br&gt;.
 
 You can easily embed other templates by your own, e.g. <?= Template('body') ?>
+
+Templates are used
+* by the master action (html and htmldump), which include most other 
+  plugins in a hierarchical manner, 
+* by certain actions (editpage) or plugins (e.g. info, userprefs, 
+  addcomment, ...) or 
+* by certain pagetypes (e.g. wikiblog, comment, wikiforum)
+
+Warning!
+When you write your own templates or change existing ones, you might 
+easily destroy XHTML validity of the generated pages. By using 
+the various HTML() methods within a plugin's php code it is guaranteed 
+to produce validating XHTML, by using custom templates not.
+
 ----
 PhpWikiDocumentation
