@@ -76,7 +76,7 @@ your web server it is highly advised that you do not allow this.
          // This used to follow the HTML escaping and dashes code 
          // that follows.
 
-         $hasURLs = preg_match_all("/\b((http)|(ftp)|(mailto)|(news)|(file)|(gopher)):[^\s\<\>\[\]\"'\(\)]*[^\s\<\>\[\]\"'\(\)\,\.\?]/", $tmpline, $urls);
+         $hasURLs = preg_match_all("/\b($AllowedProtocols):[^\s\<\>\[\]\"'\(\)]*[^\s\<\>\[\]\"'\(\)\,\.\?]/", $tmpline, $urls);
 
          // workaround: php can only do global search and replace which
          // renders wrong when the domain appears in two consecutive URL's 
