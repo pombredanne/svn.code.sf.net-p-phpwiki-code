@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.29 2004-05-06 13:26:01 rurban Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.30 2004-06-15 09:15:52 rurban Exp $');
 /**
  Copyright (C) 2001, 2002, 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.29 $");
+                            "\$Revision: 1.30 $");
     }
 
     function getDefaultArguments() {
@@ -132,7 +132,7 @@ extends WikiPlugin
                                 if ($passchanged) {
                                     $errmsg = _("Password updated.");
                                 } else {
-                                    $errmsg = _("Password cannot be changed.");
+                                    $errmsg = _("Password was not changed.");
                                 }
                             } else {
                                 $errmsg = _("Password cannot be changed.");
@@ -163,6 +163,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.29  2004/05/06 13:26:01  rurban
+// omit "Okay", this is default
+//
 // Revision 1.28  2004/05/05 13:38:09  rurban
 // Support to remove all UserPreferences
 //

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.165 2004-06-14 11:31:37 rurban Exp $');
+rcs_id('$Id: main.php,v 1.166 2004-06-15 09:15:52 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -54,8 +54,11 @@ $this->version = phpwiki_version();
                 {
                     $this->_user = WikiUser($userid,$this->_user->_prefs);
                 }
-	        unset($this->_user->_HomePagehandle);
-	        $this->_user->hasHomePage();
+	        // revive other db handle
+	        if (isset($this->_user->_prefs->_method) and 
+	                 ($this->_user->_prefs->_method == 'SQL' or 
+	                 $this->_user->_prefs->_method == 'ADODB'))
+	            $this->_user->_HomePagehandle = $this->getPage($userid);
 	        // update the lockfile filehandle
 	        if (  isa($this->_user,'_FilePassUser') and 
 	              $this->_user->_file->lockfile and 
@@ -63,11 +66,6 @@ $this->version = phpwiki_version();
 	        {
 		    $this->_user = new _FilePassUser($userid, $this->_user->_prefs, $this->_user->_file->filename);
 	        }
-	        /*
-                if (!isa($user,WikiUserClassname()) or empty($this->_user->_level)) {
-                    $user = UpgradeUser($this->_user,$user);
-                }
-                */
             	$this->_prefs = & $this->_user->_prefs;
             } else {
                 $user = WikiUser($userid);
@@ -292,6 +290,7 @@ $this->version = phpwiki_version();
     // login or logout or restore state
     function _setUser ($user) {
         $this->_user = $user;
+        if (defined('MAIN_setUser')) return;
         define('MAIN_setUser',true);
         $this->setCookieVar('WIKI_ID', $user->getAuthenticatedId(),
                             COOKIE_EXPIRATION_DAYS, COOKIE_DOMAIN);
@@ -1049,6 +1048,14 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.165  2004/06/14 11:31:37  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.164  2004/06/13 13:54:25  rurban
 // Catch fatals on the four dump calls (as file and zip, as html and mimified)
 // FoafViewer: Check against external requirements, instead of fatal.

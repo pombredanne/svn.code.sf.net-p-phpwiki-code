@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.34 2004-06-13 13:54:25 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.35 2004-06-15 09:15:52 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -58,22 +58,32 @@ function IniConfig($file) {
  
     // List of all valid config options to be define()d which take "values" (not
     // booleans). Needs to be categorised, and generally made a lot tidier. 
-   $_IC_VALID_VALUE = array
-        ('DEBUG', 'WIKI_NAME', 'ADMIN_USER', 'ADMIN_PASSWD',
+    $_IC_VALID_VALUE = array
+        ('WIKI_NAME', 'ADMIN_USER', 'ADMIN_PASSWD',
          'HTML_DUMP_SUFFIX', 'MAX_UPLOAD_SIZE', 'MINOR_EDIT_TIMEOUT',
          'ACCESS_LOG', 'CACHE_CONTROL', 'CACHE_CONTROL_MAX_AGE',
-         'PASSWORD_LENGTH_MINIMUM', 'USER_AUTH_POLICY', 'LDAP_AUTH_HOST',
-         'LDAP_BASE_DN', 'LDAP_AUTH_USER', 'LDAP_AUTH_PASSWORD',
-         'LDAP_SEARCH_FIELD', 'IMAP_AUTH_HOST', 'POP3_AUTH_HOST',
-         'AUTH_USER_FILE', 'AUTH_SESS_USER', 'AUTH_SESS_LEVEL', 'GROUP_METHOD',
-         'AUTH_GROUP_FILE', 'EDITING_POLICY', 'THEME', 'CHARSET',
+         'PASSWORD_LENGTH_MINIMUM', 'USER_AUTH_POLICY', 
+         'GROUP_METHOD',
+         'EDITING_POLICY', 'THEME', 'CHARSET',
          'DEFAULT_LANGUAGE', 'WIKI_PGSRC', 'DEFAULT_WIKI_PGSRC',
          'ALLOWED_PROTOCOLS', 'INLINE_IMAGES', 'SUBPAGE_SEPARATOR',
          'INTERWIKI_MAP_FILE', 'COPYRIGHTPAGE_TITLE', 'COPYRIGHTPAGE_URL',
          'AUTHORPAGE_TITLE', 'AUTHORPAGE_URL', 'SERVER_NAME', 'SERVER_PORT',
          'SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH',
          'WIKI_NAME_REGEXP',
-         'GOOGLE_LICENSE_KEY','FORTUNE_DIR'
+         );
+
+    // Optional values which need to be defined.
+    // These are not defined in config-default.ini and empty if not defined.
+    $_IC_OPTIONAL_VALUE = array
+        ( 
+         'DEBUG', 
+         'LDAP_AUTH_HOST','LDAP_SET_OPTION','LDAP_BASE_DN', 'LDAP_AUTH_USER',
+         'LDAP_AUTH_PASSWORD','LDAP_SEARCH_FIELD','AUTH_USER_FILE','DBAUTH_AUTH_DSN',
+         'IMAP_AUTH_HOST', 'POP3_AUTH_HOST',
+         'AUTH_USER_FILE', 'AUTH_GROUP_FILE', 'AUTH_SESS_USER', 'AUTH_SESS_LEVEL',
+         //'','','','','',
+         'GOOGLE_LICENSE_KEY','FORTUNE_DIR',
          );
 
     // List of all valid config options to be define()d which take booleans.
@@ -136,9 +146,9 @@ function IniConfig($file) {
         
         // calculate them later: old or dynamic constants
         if (!array_key_exists($item, $rs) and
-            in_array($item,array('USE_PATH_INFO','USE_DB_SESSION',
-                                 'ALLOW_HTTP_AUTH_LOGIN','ALLOW_LDAP_LOGIN',
-                                 'ALLOW_IMAP_LOGIN','ALLOW_USER_LOGIN',
+            in_array($item,array('USE_PATH_INFO', 'USE_DB_SESSION',
+                                 'ALLOW_HTTP_AUTH_LOGIN', 'ALLOW_LDAP_LOGIN',
+                                 'ALLOW_IMAP_LOGIN', 'ALLOW_USER_LOGIN',
                                  'REQUIRE_SIGNIN_BEFORE_EDIT',
                                  'WIKIDB_NOCACHE_MARKUP')))
         {
@@ -253,6 +263,15 @@ function IniConfig($file) {
         } elseif (isset($rsdef[$rskey])) {
             $DBAuthParams[$apkey] = $rsdef[$rskey];
         }
+    }
+
+    // optional values will be set to '' to simplify the logic.
+    foreach ($_IC_OPTIONAL_VALUE as $item) {
+        if (defined($item)) continue;
+        if (array_key_exists($item, $rs)) {
+            define($item, $rs[$item]);
+        } else 
+            define($item, '');
     }
 
     // Default Wiki pages to force loading from pgsrc
@@ -556,6 +575,13 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.34  2004/06/13 13:54:25  rurban
+// Catch fatals on the four dump calls (as file and zip, as html and mimified)
+// FoafViewer: Check against external requirements, instead of fatal.
+// Change output for xhtmldumps: using file:// urls to the local fs.
+// Catch SOAP fatal by checking for GOOGLE_LICENSE_KEY
+// Import GOOGLE_LICENSE_KEY and FORTUNE_DIR from config.ini.
+//
 // Revision 1.33  2004/06/08 19:48:16  rurban
 // fixed foreign setup: no ugly skipped msg for the GenericPages, load english actionpages if translated not found
 //

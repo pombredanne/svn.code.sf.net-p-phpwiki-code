@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.18 2004-05-13 13:48:34 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.19 2004-06-15 09:15:52 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -188,7 +188,7 @@ class CacheableMarkup extends XmlContent {
                 $xml .= $item;
             }
             elseif (is_subclass_of($item, 'cached_dynamiccontent')) {
-                $val = $item->expand($basepage, &$this);
+                $val = $item->expand($basepage, $this);
                 $xml .= $val->asXML();
             }
             else {
@@ -209,7 +209,7 @@ class CacheableMarkup extends XmlContent {
             elseif (is_subclass_of($item, 'cached_dynamiccontent')) {
             	// give the content the chance to know about itself or even 
             	// to change itself itself
-                $val = $item->expand($basepage, &$this);
+                $val = $item->expand($basepage, $this);
                 $val->printXML();
             }
             else {
@@ -231,7 +231,7 @@ class Cached_DynamicContent {
 	$cache[] = $this;
     }
 
-    function expand($basepage, $obj) {
+    function expand($basepage, &$obj) {
         trigger_error("Pure virtual", E_USER_ERROR);
     }
 
@@ -411,7 +411,7 @@ class Cached_InterwikiLink extends Cached_ExternalLink {
     }
     
     function _getURL($basepage) {
-	$link = $this->expand($basepage, &$this);
+	$link = $this->expand($basepage, $this);
 	return $link->getAttr('href');
     }
 
@@ -463,7 +463,7 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
     function expand($basepage, &$markup) {
         $loader = &$this->_getLoader();
 
-        $xml = $loader->expandPI($this->_pi, $GLOBALS['request'], &$markup, $basepage);
+        $xml = $loader->expandPI($this->_pi, $GLOBALS['request'], $markup, $basepage);
         $div = HTML::div(array('class' => 'plugin'));
         
 	if (isset($this->_tightenable)) {

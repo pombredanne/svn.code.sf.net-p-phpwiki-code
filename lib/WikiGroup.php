@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.31 2004-06-03 18:06:29 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.32 2004-06-15 09:15:52 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -570,7 +570,7 @@ class GroupDb extends WikiGroup {
             empty($DBAuthParams['user_groups']) or
             empty($DBAuthParams['is_member'])) {
             trigger_error(_("No or not enough GROUP_DB SQL statements defined"), E_USER_WARNING);
-            return new GroupNone(&$request);
+            return new GroupNone($request);
         }
         // use _PassUser::prepare instead
         if (isa($request->_user,'_PassUser'))
@@ -1014,6 +1014,11 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.31  2004/06/03 18:06:29  rurban
+// fix file locking issues (only needed on write)
+// fixed immediate LANG and THEME in-session updates if not stored in prefs
+// advanced editpage toolbars (search & replace broken)
+//
 // Revision 1.30  2004/06/03 09:39:51  rurban
 // fix LDAP injection (wildcard in username) detected by Steve Christey, MITRE
 //

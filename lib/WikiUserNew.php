@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.92 2004-06-14 11:31:36 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.93 2004-06-15 09:15:52 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -850,15 +850,15 @@ extends _AnonUser
         }
         $this->_authmethod = substr(get_class($this),1,-8);
         if ($this->_authmethod == 'a') $this->_authmethod = 'admin';
-        if (! $this->_prefs) {
-            if ($prefs) $this->_prefs = $prefs;
-            else $this->getPreferences();
-        }
 
         // Check the configured Prefs methods
         $dbi = $this->getAuthDbh();
         $dbh = $GLOBALS['request']->getDbh();
         if ( $dbi and !isset($this->_prefs->_select) and $dbh->getAuthParam('pref_select')) {
+            if (!$this->_prefs) {
+            	$this->_prefs = new UserPreferences();
+            	$need_pref = true;
+            }
             $this->_prefs->_method = $dbh->getParam('dbtype');
             $this->_prefs->_select = $this->prepare($dbh->getAuthParam('pref_select'), "userid");
             // read-only prefs?
@@ -868,6 +868,11 @@ extends _AnonUser
             }
         } else {
             $this->_prefs->_method = 'HomePage';
+        }
+        
+        if (! $this->_prefs or isset($need_pref) ) {
+            if ($prefs) $this->_prefs = $prefs;
+            else $this->getPreferences();
         }
         
         // Upgrade to the next parent _PassUser class. Avoid recursion.
@@ -1170,7 +1175,7 @@ extends _AnonUser
             }
             if (strlen($submitted_password) < PASSWORD_LENGTH_MINIMUM)
                 return false;
-            if (defined('ENCRYPTED_PASSWD') && ENCRYPTED_PASSWD) {
+            if (ENCRYPTED_PASSWD) {
                 // Verify against encrypted password.
                 if (function_exists('crypt')) {
                     if (crypt($submitted_password, $stored_password) == $stored_password )
@@ -1280,16 +1285,26 @@ extends _PassUser
      */
     function checkPass($submitted_password) {
         if ($this->_prefs->get('passwd')) {
-            $user = new _PersonalPagePassUser($this->_userid);
-            if ($user->checkPass($submitted_password)) {
-                //todo: with php5 comment the following line:
-                /*PHP5 patch*/$this = $user;
-                $user = UpgradeUser($this, $user);
-                $this->_level = WIKIAUTH_USER;
-                return $this->_level;
+            if (isset($this->_prefs->_method) and $this->_prefs->_method == 'HomePage') {
+                $user = new _PersonalPagePassUser($this->_userid, $this->_prefs);
+                if ($user->checkPass($submitted_password)) {
+                    //todo: with php5 comment the following line:
+                    /*PHP5 patch*/$this = $user;
+                    $user = UpgradeUser($this, $user);
+                    $this->_level = WIKIAUTH_USER;
+                    return $this->_level;
+                } else {
+                    $this->_level = WIKIAUTH_ANON;
+                    return $this->_level;
+                }
             } else {
-                $this->_level = WIKIAUTH_ANON;
-                return $this->_level;
+                $stored_password = $this->_prefs->get('passwd');
+                if ($this->_checkPass($submitted_password, $stored_password)) {
+                    $this->_level = WIKIAUTH_USER;
+                    return $this->_level;
+                } else {
+                    return $this->_tryNextPass($submitted_password);
+                }
             }
         }
         if (isWikiWord($this->_userid)) {
@@ -1739,6 +1754,7 @@ extends _DbPassUser
                                   $dbh->quote($submitted_password),
         			  $dbh->quote($this->_userid)
                                   ));
+        return true;
     }
 }
 
@@ -2709,12 +2725,12 @@ class UserPreferences
         // We will silently ignore this.
         if (!empty($customUserPreferenceColumns))
             $this->_prefs = array_merge($this->_prefs,$customUserPreferenceColumns);
-
+/*
         if (isset($this->_method) and $this->_method == 'SQL') {
             //unset($this->_prefs['userid']);
             unset($this->_prefs['passwd']);
         }
-
+*/
         if (is_array($saved_prefs)) {
             foreach ($saved_prefs as $name => $value)
                 $this->set($name, $value);
@@ -2795,10 +2811,12 @@ class UserPreferences
             }
         } elseif (is_array($prefs)) {
             //unset($this->_prefs['userid']);
+            /*
 	    if (isset($this->_method) and 
 	         ($this->_method == 'SQL' or $this->_method == 'ADODB')) {
                 unset($this->_prefs['passwd']);
 	    }
+	    */
 	    // emailVerified at first, the rest later
             $type = 'emailVerified'; $obj =& $this->_prefs['email'];
             $obj->_init = $init;
@@ -2825,7 +2843,7 @@ class UserPreferences
         return $count;
     }
 
-    // for now convert just array of objects => array of values
+    // For now convert just array of objects => array of values
     // Todo: the specialized subobjects must override this.
     function store() {
         $prefs = array();
@@ -2834,6 +2852,9 @@ class UserPreferences
                 $prefs[$name] = $value;
             if ($name == 'email' and ($value = $object->getraw('emailVerified')))
                 $prefs['emailVerified'] = $value;
+            if ($name == 'passwd' and $value and ENCRYPTED_PASSWD) {
+            	$prefs['passwd'] = crypt($value);
+            }
         }
         return $this->pack($prefs);
     }
@@ -2989,6 +3010,14 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.92  2004/06/14 11:31:36  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.91  2004/06/08 14:57:43  rurban
 // stupid ldap bug detected by John Cole
 //
