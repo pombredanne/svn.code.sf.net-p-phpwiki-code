@@ -1,5 +1,5 @@
 /**
- * $Id: sidebar.css,v 1.19 2004-03-26 03:13:23 rurban Exp $
+ * $Id: sidebar.css,v 1.20 2004-03-26 03:45:43 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -44,9 +44,8 @@ div.wikitext {
 div#logo img {
   position: fixed;
   left: 1ex;
-  top:  1.5ex;
+  top:  1.2ex;
 }
-
 div#clock {
   position: fixed;
   left: 0.7ex;
@@ -134,7 +133,7 @@ div#navbuttons:before {
   content: "PhpWiki Navigation"; /* localise with dynamic css? */
   border-bottom: 2px solid black;
 }
-#navbuttons { top: 9ex; }
+#navbuttons { top: 5.5ex; }
 
 /**
  * Action links
