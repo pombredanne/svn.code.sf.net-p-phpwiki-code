@@ -1,24 +1,6 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.11 2002-02-03 17:50:23 carstenklapp Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.12 2002-02-03 19:03:43 carstenklapp Exp $ -->
 <?php
-
-/**
- * Variation of stdlib/TimezoneOffset.
- */
-function hTimezoneOffset ($h, $use_colon = true) {
-    $secs = $h*60*60;
-    if ($secs < 0) {
-        $sign = '-';
-        $secs = -$secs;
-    }
-    else {
-        $sign = '+';
-    }
-    $colon = $use_colon ? ':' : '';
-    $mins = intval(($secs + 30) / 60);
-    return sprintf("%s%02d%s%02d",
-                   $sign, $mins / 60, $colon, $mins % 60);
-}
 
 /**
  * Default to server's timezone if user's pref not chosen yet.
@@ -35,8 +17,8 @@ $yourTime = date('D, j M Y H:i:s ', time() + PrefTimezoneOffset()) . $defaultOff
  */
 $select = HTML();
 for ($z = -14; $z < 12; $z++) {
-    $tz_val = hTimezoneOffset($z, false);
-    $tz_string = hTimezoneOffset($z);
+    $tz_val = seconds2zoneOffset($z*60*60, true);
+    $tz_string = seconds2zoneOffset($z*60*60);
 
     $selected = $defaultOffset == $tz_val ? array('selected' => 'selected') : array();
     $select->pushContent(HTML::option(array_merge(array('value' => $tz_val),
