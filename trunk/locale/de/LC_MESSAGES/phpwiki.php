@@ -104,6 +104,8 @@ $locale["Created directory '%s' for the page dump..."] =
    "Verzeichnis »%s« erzeugt, um die Dateien abzulegen...";
 $locale["DBA files are in the %s directory. Please read the INSTALL file and move the DB file to a permanent location or risk losing all the pages!"] =
    "DBA Dateien befinden sich im Verzeichnis %s. Bitte erst lies die INSTALL Datei und verschiebe die DB Datei in das richtige Verzeichnis, oder sonst läufst du Gefahr dein ganzes Wiki zu verlieren!";
+$locale["Date Format"] =
+   "Datumformat";
 $locale["DebugInfo"] =
    "DebugInfo";
 $locale["Deleted."] =
@@ -358,6 +360,8 @@ $locale["Show changes for:"] =
    "Zeige Änderungen innerhalb von:";
 $locale["Show minor edits for:"] =
    "Zeige geringfügige Änderungen innerhalb von: %s";
+$locale["Show relative dates using 'Today' and 'Yesterday'."] =
+   "Daten mit relativen Bezeichnungen versehen wie »Heute« und »Gestern«.";
 $locale["Sidebar"] =
    "Sidebar";
 $locale["Sign In"] =
