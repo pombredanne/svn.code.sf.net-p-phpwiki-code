@@ -1,24 +1,28 @@
 <?php  
 
-   rcs_id('$Id: dbmlib.php,v 1.5 2000-12-15 03:11:41 wainstead Exp $');
+   rcs_id('$Id: dbmlib.php,v 1.6 2001-01-09 19:02:52 wainstead Exp $');
 
    /*
       Database functions:
 
-      OpenDataBase($table)
-      CloseDataBase($dbi)
-      RetrievePage($dbi, $pagename, $pagestore)
-      InsertPage($dbi, $pagename, $pagehash)
+      OpenDataBase($dbname) 
+      CloseDataBase($dbi) 
+      PadSerializedData($data) 
+      UnPadSerializedData($data) 
+      RetrievePage($dbi, $pagename, $pagestore) 
+      InsertPage($dbi, $pagename, $pagehash) 
       SaveCopyToArchive($dbi, $pagename, $pagehash) 
-      IsWikiPage($dbi, $pagename)
-      InitTitleSearch($dbi, $search)
-      TitleSearchNextMatch($dbi, $res)
-      InitFullSearch($dbi, $search)
-      FullSearchNextMatch($dbi, $res)
-      IncreaseHitCount($dbi, $pagename)
-      GetHitCount($dbi, $pagename)
-      InitMostPopular($dbi, $limit)
-      MostPopularNextMatch($dbi, $res)
+      IsWikiPage($dbi, $pagename) 
+      IsInArchive($dbi, $pagename) 
+      InitTitleSearch($dbi, $search) 
+      TitleSearchNextMatch($dbi, &$pos) 
+      InitFullSearch($dbi, $search) 
+      FullSearchNextMatch($dbi, &$pos) 
+      IncreaseHitCount($dbi, $pagename) 
+      GetHitCount($dbi, $pagename) 
+      InitMostPopular($dbi, $limit) 
+      MostPopularNextMatch($dbi, &$res) 
+      GetAllWikiPagenames($dbi) 
    */
 
 
@@ -87,16 +91,10 @@
 
    // Either insert or replace a key/value (a page)
    function InsertPage($dbi, $pagename, $pagehash) {
-
-      global $WikiPageStore;
-
-      $linklist = ExtractWikiPageLinks($pagehash['content']);
-      $SetWikiPageLinks($dbi, $pagename, $linklist);
-
       $pagedata = PadSerializedData(serialize($pagehash));
 
-      if (dbminsert($dbi[$WikiPageStore], $pagename, $pagedata)) {
-         if (dbmreplace($dbi[$WikiPageStore], $pagename, $pagedata)) {
+      if (dbminsert($dbi['wiki'], $pagename, $pagedata)) {
+         if (dbmreplace($dbi['wiki'], $pagename, $pagedata)) {
             ExitWiki("Error inserting page '$pagename'");
          }
       } 
@@ -127,38 +125,6 @@
    }
 
 
-   function RemovePage($dbi, $pagename) {
-
-      dbmdelete($dbi['wiki'], $pagename);	// report error if this fails? 
-      dbmdelete($dbi['archive'], $pagename);	// no error if this fails
-      dbmdelete($dbi['hitcount'], $pagename);	// no error if this fails
-
-      $linkinfo = RetrievePage($dbi, $pagename, 'wikilinks');
-      
-      // remove page from fromlinks of pages it had links to
-      if (is_array($linkinfo)) {	// page exists?
-	 $tolinks = $linkinfo['tolinks'];	
-	 reset($tolinks);			
-	 while (list($tolink, $dummy) = each($tolinks)) {
-	    $tolinkinfo = RetrievePage($dbi, $tolink, 'wikilinks');
-	    if (is_array($tolinkinfo)) {		// page found?
-	       $oldFromlinks = $tolinkinfo['fromlinks'];
-	       $tolinkinfo['fromlinks'] = array(); 	// erase fromlinks
-	       reset($oldFromlinks);
-	       while (list($fromlink, $dummy) = each($oldFromlinks)) {
-		  if ($fromlink != $pagename)		// not to be erased? 
-		     $tolinkinfo['fromlinks'][$fromlink] = 1; // put link back
-	       }			// put link info back in DBM file
-	       InsertPage($dbi, $tolink, $tolinkinfo, 'wikilinks');
-	    }
-	 }
-
-	 // remove page itself     
-	 dbmdelete($dbi['wikilinks'], $pagename);      
-      }
-   }
-
-
    // setup for title-search
    function InitTitleSearch($dbi, $search) {
       $pos['search'] = $search;
@@ -166,7 +132,6 @@
 
       return $pos;
    }
-
 
    // iterating through database
    function TitleSearchNextMatch($dbi, &$pos) {
@@ -181,12 +146,10 @@
       return 0;
    }
 
-
    // setup for full-text search
    function InitFullSearch($dbi, $search) {
       return InitTitleSearch($dbi, $search);
    }
-
 
    //iterating through database
    function FullSearchNextMatch($dbi, &$pos) {
@@ -206,9 +169,9 @@
       return 0;
    }
 
-
    ////////////////////////
    // new database features
+
 
    function IncreaseHitCount($dbi, $pagename) {
 
@@ -220,11 +183,11 @@
          dbmreplace($dbi['hitcount'], $pagename, $count);
       } else {
          // add it, set the hit count to one
+         // echo "adding $pagename to hitcount...<br>\n";
          $count = 1;
          dbminsert($dbi['hitcount'], $pagename, $count);
       }
    }
-
 
    function GetHitCount($dbi, $pagename) {
 
@@ -243,65 +206,39 @@
       // sort the results highest to lowest, and return 
       // n..$limit results
 
-      // Because sorting all the pages may be a lot of work
-      // we only get the top $limit. A page is only added if it's score is
-      // higher than the lowest score in the list. If the list is full then
-      // one of the pages with the lowest scores is removed.
-
       $pagename = dbmfirstkey($dbi['hitcount']);
-      $score = dbmfetch($dbi['hitcount'], $pagename);
-      $res = array($pagename => (int) $score);
-      $lowest = $score;
+      $res[$pagename] = dbmfetch($dbi['hitcount'], $pagename);
 
       while ($pagename = dbmnextkey($dbi['hitcount'], $pagename)) {
-	 $score = dbmfetch($dbi['hitcount'], $pagename);      
-         if (count($res) < $limit) {	// room left in $res?
-	    if ($score < $lowest)
-	       $lowest = $score;
-	    $res[$pagename] = (int) $score;	// add page to $res
-	 } elseif ($score > $lowest) {
-	    $oldres = $res;		// save old result
-	    $res = array();
-	    $removed = 0;		// nothing removed yet
-	    $newlowest = $score;	// new lowest score
-	    $res[$pagename] = (int) $score;	// add page to $res	    
-	    reset($oldres);
-	    while(list($pname, $pscore) = each($oldres)) {
-	       if (!$removed and ($pscore = $lowest))
-	          $removed = 1;		// don't copy this entry
-	       else {
-	          $res[$pname] = (int) $pscore;
-		  if ($pscore < $newlowest)
-		     $newlowest = $pscore;
-	       }
-	    }
-	    $lowest = $newlowest;
-	 }
+         $res[$pagename] = dbmfetch($dbi['hitcount'], $pagename);
+         //echo "got $pagename with value " . $res[$pagename] . "<br>\n";
       }
-       
-      arsort($res);		// sort
-      reset($res);
-       
+
+      arsort($res);
       return($res);
    }
-
 
    function MostPopularNextMatch($dbi, &$res) {
 
       // the return result is a two element array with 'hits'
       // and 'pagename' as the keys
 
+      if (count($res) == 0)
+         return 0;
+
       if (list($pagename, $hits) = each($res)) {
+         //echo "most popular next match called<br>\n";
+         //echo "got $pagename, $hits back<br>\n";
          $nextpage = array(
             "hits" => $hits,
             "pagename" => $pagename
          );
+         // $dbm_mostpopular_cntr++;
          return $nextpage;
       } else {
          return 0;
       }
    } 
-
 
    function GetAllWikiPagenames($dbi) {
       $namelist = array();
@@ -315,169 +252,6 @@
       }
 
       return $namelist;
-   }
-
-
-   ////////////////////////////////////////////
-   // functionality for the wikilinks DBM file
-
-   // format of the 'wikilinks' DBM file :
-   // pagename =>
-   //    { tolinks => ( pagename => 1}, fromlinks => { pagename => 1 } }
-
-   // takes a page name, returns array of scored incoming and outgoing links
-   function GetWikiPageLinks($dbi, $pagename) {
-
-      $linkinfo = RetrievePage($dbi, $pagename, 'wikilinks');
-      if (is_array($linkinfo))	{		// page exists?
-         $tolinks = $linkinfo['tolinks'];	// outgoing links
-         $fromlinks = $linkinfo['fromlinks'];	// incoming links
-      } else {		// new page, but pages may already point to it
-      	 // create info for page
-         $tolinks = array();
-	 $fromlinks = array();
-         // look up pages that link to $pagename
-	 $pname = dbmfirstkey($dbi['wikilinks']);
-	 while ($pname) {
-	    $linkinfo = RetrievePage($dbi, $pname, 'wikilinks');
-	    if ($linkinfo['tolinks'][$pagename]) // $pname links to $pagename?
-	       $fromlinks[$pname] = 1;
-	    $pname = dbmnextkey($dbi['wikilinks'], $pname);
-	 }
-      }
-
-      // get and sort the outgoing links
-      $outlinks = array();      
-      reset($tolinks);			// look up scores for tolinks
-      while(list($tolink, $dummy) = each($tolinks)) {
-         $toPage = RetrievePage($dbi, $tolink, 'wikilinks');
-	 if (is_array($toPage))		// link to internal page?
-	    $outlinks[$tolink] = count($toPage['fromlinks']);
-      }
-      arsort($outlinks);		// sort on score
-      $links['out'] = array();
-      reset($outlinks);			// convert to right format
-      while(list($link, $score) = each($outlinks))
-         $links['out'][] = array($link, $score);
-
-      // get and sort the incoming links
-      $inlinks = array();
-      reset($fromlinks);		// look up scores for fromlinks
-      while(list($fromlink, $dummy) = each($fromlinks)) {
-         $fromPage = RetrievePage($dbi, $fromlink, 'wikilinks');
-	 $inlinks[$fromlink] = count($fromPage['fromlinks']);
-      }	
-      arsort($inlinks);			// sort on score
-      $links['in'] = array();
-      reset($inlinks);			// convert to right format
-      while(list($link, $score) = each($inlinks))
-         $links['in'][] = array($link, $score);
-
-      // sort all the incoming and outgoing links
-      $allLinks = $outlinks;		// copy the outlinks
-      reset($inlinks);			// add the inlinks
-      while(list($key, $value) = each($inlinks))
-         $allLinks[$key] = $value;
-      reset($allLinks);			// lookup hits
-      while(list($key, $value) = each($allLinks))
-         $allLinks[$key] = (int) dbmfetch($dbi['hitcount'], $key);
-      arsort($allLinks);		// sort on hits
-      $links['popular'] = array();
-      reset($allLinks);			// convert to right format
-      while(list($link, $hits) = each($allLinks))
-         $links['popular'][] = array($link, $hits);
-
-      return $links;
-   }
-
-
-   // takes page name, list of links it contains
-   // the $linklist is an array where the keys are the page names
-   function SetWikiPageLinks($dbi, $pagename, $linklist) {
-
-      $cache = array();
-
-      // Phase 1: fetch the relevant pairs from 'wikilinks' into $cache
-      // ---------------------------------------------------------------
-
-      // first the info for $pagename
-      $linkinfo = RetrievePage($dbi, $pagename, 'wikilinks');
-      if (is_array($linkinfo))		// page exists?
-         $cache[$pagename] = $linkinfo;
-      else {
-      	 // create info for page
-         $cache[$pagename] = array( 'fromlinks' => array(),
-				    'tolinks' => array()
-			     );
-         // look up pages that link to $pagename
-	 $pname = dbmfirstkey($dbi['wikilinks']);
-	 while ($pname) {
-	    $linkinfo = RetrievePage($dbi, $pname, 'wikilinks');
-	    if ($linkinfo['tolinks'][$pagename])
-	       $cache[$pagename]['fromlinks'][$pname] = 1;
-	    $pname = dbmnextkey($dbi['wikilinks'], $pname);
-	 }
-      }
-			     
-      // then the info for the pages that $pagename used to point to 
-      $oldTolinks = $cache[$pagename]['tolinks'];
-      reset($oldTolinks);
-      while (list($link, $dummy) = each($oldTolinks)) {
-         $linkinfo = RetrievePage($dbi, $link, 'wikilinks');
-         if (is_array($linkinfo))
-	    $cache[$link] = $linkinfo;
-      }
-
-      // finally the info for the pages that $pagename will point to
-      reset($linklist);
-      while (list($link, $dummy) = each($linklist)) {
-         $linkinfo = RetrievePage($dbi, $link, 'wikilinks');
-         if (is_array($linkinfo))
-	    $cache[$link] = $linkinfo;
-      }
-	      
-      // Phase 2: delete the old links
-      // ---------------------------------------------------------------
-
-      // delete the old tolinks for $pagename
-      // $cache[$pagename]['tolinks'] = array();
-      // (overwritten anyway in Phase 3)
-
-      // remove $pagename from the fromlinks of pages in $oldTolinks
-
-      reset($oldTolinks);
-      while (list($oldTolink, $dummy) = each($oldTolinks)) {
-         if ($cache[$oldTolink]) {	// links to existing page?
-	    $oldFromlinks = $cache[$oldTolink]['fromlinks'];
-	    $cache[$oldTolink]['fromlinks'] = array(); 	// erase fromlinks
-	    reset($oldFromlinks);			// comp. new fr.links
-	    while (list($fromlink, $dummy) = each($oldFromlinks)) {
-	       if ($fromlink != $pagename)
-		  $cache[$oldTolink]['fromlinks'][$fromlink] = 1;
-	    }
-	 }
-      }
-
-      // Phase 3: add the new links
-      // ---------------------------------------------------------------
-
-      // set the new tolinks for $pagename
-      $cache[$pagename]['tolinks'] = $linklist;
-
-      // add $pagename to the fromlinks of pages in $linklist
-      reset($linklist);
-      while (list($link, $dummy) = each($linklist)) {
-         if ($cache[$link])	// existing page?
-            $cache[$link]['fromlinks'][$pagename] = 1;
-      }
-
-      // Phase 4: write $cache back to 'wikilinks'
-      // ---------------------------------------------------------------
-
-      reset($cache);
-      while (list($link,$fromAndTolinks) = each($cache))
-	 InsertPage($dbi, $link, $fromAndTolinks, 'wikilinks');
-
    }
 
 ?>
