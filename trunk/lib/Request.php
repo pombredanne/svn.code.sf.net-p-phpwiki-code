@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.12 2002-02-07 11:32:04 lakka Exp $');
+<?php rcs_id('$Id: Request.php,v 1.13 2002-02-08 08:01:32 lakka Exp $');
 
 // FIXME: write log entry.
 
@@ -190,10 +190,8 @@ class Request {
 
 class Request_SessionVars {
     function Request_SessionVars() {
-        // HACK: this allows one to use the back button to get back
-        // to a edit page without losing one's changes.
-		//  Actually, it causes oterh problems, so disabled at present
-//      session_cache_limiter('private');
+        // Prevent cacheing problems with IE 5
+        session_cache_limiter('none');
                                         
         session_start();
     }
