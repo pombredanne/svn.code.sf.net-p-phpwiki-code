@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff3.php,v 1.4 2002-02-15 14:05:44 lakka Exp $');
+rcs_id('$Id: diff3.php,v 1.5 2002-08-20 16:51:46 rurban Exp $');
 // diff3.php
 //
 // A class for computing three way diffs
@@ -149,10 +149,12 @@ class Diff3 {
             }
             else {
                 if ($e1 && $e2) {
-                    $norig = min($e1->norig(), $e2->norig());
-                    $orig = array_splice($e1->orig, 0, $norig);
-                    array_splice($e2->orig, 0, $norig);
-                    $bb->input($orig);
+                    if ($e1->orig && $e2->orig) {
+                        $norig = min($e1->norig(), $e2->norig());
+                        $orig = array_splice($e1->orig, 0, $norig);
+                        array_splice($e2->orig, 0, $norig);
+                        $bb->input($orig);
+                    }
                     
                     if ($e1->type == 'copy')
                         $bb->out1(array_splice($e1->final, 0, $norig));
