@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: HtmlParser.php,v 1.1 2004-05-24 17:31:31 rurban Exp $');
+rcs_id('$Id: HtmlParser.php,v 1.2 2004-10-19 13:23:06 rurban Exp $');
 /**
  * HtmlParser Class: Conversion HTML => wikimarkup
  * Requires XmlParser, XmlElement and the expat library
@@ -106,7 +106,7 @@ extends XmlParser
         } else {
             $output = $node;
             if ($parent and $parent->_tag != 'pre')
-                preg_replace("/ {2,}/g"," ",$output);
+                preg_replace("/ {2,}/"," ",$output);
             if (trim($output) == '')
                 $output = '';
         }
@@ -410,6 +410,9 @@ extends HtmlParser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/05/24 17:31:31  rurban
+// new XmlParser and HtmlParser, RssParser based on that.
+//
 //
 
 // For emacs users
