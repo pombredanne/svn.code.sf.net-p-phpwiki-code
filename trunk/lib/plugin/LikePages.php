@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: LikePages.php,v 1.14 2002-01-30 18:28:37 carstenklapp Exp $');
+rcs_id('$Id: LikePages.php,v 1.15 2002-01-30 22:47:08 carstenklapp Exp $');
 
 require_once('lib/TextSearchQuery.php');
 require_once('lib/PageList.php');
@@ -18,7 +18,7 @@ extends WikiPlugin
     }
     
     function getDefaultArguments() {
-        return array('pagename'	=> '[pagename]',
+        return array('page'	=> '[pagename]',
                      'prefix'	=> false,
                      'suffix'	=> false,
                      'exclude'	=> '',
@@ -32,7 +32,7 @@ extends WikiPlugin
     function run($dbi, $argstr, $request) {
         $args = $this->getArgs($argstr, $request);
         extract($args);
-        if (empty($pagename) && empty($prefix) && empty($suffix))
+        if (empty($page) && empty($prefix) && empty($suffix))
             return '';
 
         
@@ -43,16 +43,16 @@ extends WikiPlugin
         elseif ($suffix) {
             $descrip = fmt("Page names with suffix '%s'", $suffix);
         }
-        elseif ($pagename) {
+        elseif ($page) {
             $words = preg_split('/[\s:-;.,]+/',
-                                split_pagename($pagename));
+                                split_pagename($page));
             $words = preg_grep('/\S/', $words);
             
             $prefix = reset($words);
             $suffix = end($words);
 
             $descrip = fmt("These pages share an initial or final title word with '%s'",
-                           LinkWikiWord($pagename));
+                           LinkWikiWord($page));
         }
 
         // Search for pages containing either the suffix or the prefix.
@@ -74,15 +74,7 @@ extends WikiPlugin
         $match_re = '/' . join('|', $match) . '/';
 
         $pagelist = new PageList;
-
-        if ($info)
-            foreach (explode(",", $info) as $col)
-                $pagelist->insertColumn($col);
-
-        $pagelist->excludePageName($pagename);
-        if ($exclude)
-            foreach (explode(",", $exclude) as $excludepage)
-                $pagelist->excludePageName($excludepage);
+        $this->_init($page, &$pagelist, $info, $exclude);
 
         $pages = $dbi->titleSearch($query);
 
@@ -99,6 +91,18 @@ extends WikiPlugin
 
         return $pagelist;
     }
+
+    function _init(&$page, &$pagelist, $info = '', $exclude = '', $include_self = '') {
+	if ($info)
+            foreach (explode(",", $info) as $col)
+                $pagelist->insertColumn($col);
+
+	if ($exclude)
+            foreach (explode(",", $exclude) as $excludepage)
+                $pagelist->excludePageName($excludepage);
+	if (!$include_self)
+            $pagelist->excludePageName($page);
+   }
 
     function _quote($str) {
         return "'" . str_replace("'", "''", $str) . "'";
