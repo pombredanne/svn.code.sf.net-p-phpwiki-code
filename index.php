@@ -81,7 +81,7 @@ define ('DEBUG', 1);
 
 define ('PHPWIKI_VERSION', '1.3.5pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.104 2003-02-26 02:55:52 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.105 2003-03-04 02:08:08 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -162,7 +162,7 @@ define("MINOR_EDIT_TIMEOUT", 7 * 24 * 3600);
 //define('COMPRESS_OUTPUT', false);
 
 
-// CACHE_CONTROL
+// HTTP CACHE_CONTROL
 //
 // This controls how PhpWiki sets the HTTP cache control
 // headers (Expires: and Cache-Control:) 
@@ -206,6 +206,26 @@ if (!defined('CACHE_CONTROL')) define('CACHE_CONTROL', 'LOOSE');
 //
 // This only has effect if CACHE_CONTROL is set to ALLOW_STALE.
 if (!defined('CACHE_CONTROL_MAX_AGE')) define('CACHE_CONTROL_MAX_AGE', 600);
+
+
+// MARKUP CACHING
+//
+// PhpWiki normally caches a preparsed version (i.e. mostly
+// converted to HTML) of the most recent version of each page.
+// (Parsing the wiki-markup takes a fair amount of CPU.)
+//
+// Define WIKIDB_NOCACHE_MARKUP to true to disable the
+// caching of marked-up page content.
+//
+// Note that you can also disable markup caching on a per-page
+// temporary basis by addinging a query arg of '?nocache=1'
+// to the URL to the page.  (Use '?nocache=purge' to completely
+// discard the cached version of the page.)
+//
+// You can also purge the cached markup globally by using the
+// "Purge Markup Cache" button on the PhpWikiAdministration page.
+//if (!defined('WIKIDB_NOCACHE_MARKUP')) define ('WIKIDB_NOCACHE_MARKUP', true);
+
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -738,6 +758,9 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 // End:   
 
 // $Log: not supported by cvs2svn $
+// Revision 1.104  2003/02/26 02:55:52  dairiki
+// New config settings in index.php to control cache control strictness.
+//
 // Revision 1.103  2003/02/22 19:43:50  dairiki
 // Fix comment regarding connecting to SQL server over a unix socket.
 //
