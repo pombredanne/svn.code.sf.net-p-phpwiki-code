@@ -1,5 +1,5 @@
 <?php // -*-php-*- ?>
-<!-- $Id: login.tmpl,v 1.27 2004-02-04 17:30:28 rurban Exp $ -->
+<!-- $Id: login.tmpl,v 1.28 2004-02-07 10:41:25 rurban Exp $ -->
 <!-- The login form -->
 
 <?php if ($fail_message) { ?>
@@ -9,36 +9,36 @@
 <?php /* br past the logo */ ?>
 <br class="clear-floats" />
 
-<?php if (ALLOW_BOGO_LOGIN && $require_level <= WIKIAUTH_BOGO) {
+<?php 
+if (DEBUG) {
+  $t = sprintf("  DEBUG: ALLOW_ANON_EDIT = %s, ALLOW_BOGO_LOGIN = %s, ALLOW_USER_PASSWORDS = %s", 
+	       ALLOW_ANON_EDIT ? "true" : "false",
+	       ALLOW_BOGO_LOGIN ? "true" : "false",
+	       ALLOW_USER_PASSWORDS ? "true" : "false");
+  if (ALLOW_USER_PASSWORDS) {
+    $t .= sprintf("  USER_AUTH_ORDER: %s",join(" => ",$GLOBALS['USER_AUTH_ORDER'])) .
+      sprintf(",  USER_AUTH_POLICY: %s",USER_AUTH_POLICY) .
+      sprintf(",  PASSWORD_LENGTH_MINIMUM: %s",PASSWORD_LENGTH_MINIMUM);
+  }
+  echo asXML(HTML::div(array('class' => 'debug'),$t));
+  echo "<br />\n";
+}
+if (ALLOW_BOGO_LOGIN && $require_level <= WIKIAUTH_BOGO) {
+  require_once("lib/BlockParser.php");
   // This iso-8859-1 sample covers French, Spanish, Italian, German, and probably others
   $examplechars = htmlentities("ÀñíçéàÖãæôßøü", ENT_QUOTES, 'iso-8859-1');
   // Japanese login requires utf-8 and ALLOW_NONWIKIWORD_LOGINS
   /*if ((CHARSET == 'utf-8') && defined('ALLOW_NONWIKIWORD_LOGINS') && ALLOW_NONWIKIWORD_LOGINS) {
     //sample Japanese login name in unicode
     $examplechars = $examplechars . "&#22825;&#36947;&#12354;&#12363;&#12397;";
-  }*/ ?>
-  <?php require_once("lib/BlockParser.php");
-  if (DEBUG) {
-    $t = sprintf("  DEBUG: ALLOW_ANON_EDIT = %s, ALLOW_BOGO_LOGIN = %s, ALLOW_USER_PASSWORDS = %s", 
-		     ALLOW_ANON_EDIT ? "true" : "false",
-		     ALLOW_BOGO_LOGIN ? "true" : "false",
-		     ALLOW_USER_PASSWORDS ? "true" : "false");
-    if (ALLOW_USER_PASSWORDS) {
-      $t .= sprintf("  USER_AUTH_ORDER: %s",join(" => ",$GLOBALS['USER_AUTH_ORDER'])) .
-	    sprintf(",  USER_AUTH_POLICY: %s",USER_AUTH_POLICY) .
-	    sprintf(",  PASSWORD_LENGTH_MINIMUM: %s",PASSWORD_LENGTH_MINIMUM);
-    }
-    echo asXML(HTML::div(array('class' => 'debug'),$t));
-    echo "<br />\n";
-  }
+  }*/
   $t = TransformText(_("You may sign in using any [WikiWord|AddingPages] as a user id. (Any characters in %s etc. may be used too). The user id will be used as a link in RecentChanges to your home page."), 2.0, true);
   printf(asXML($t), $examplechars);
   /* On disabled DbPrefs (PagePrefs only) note the user to create his PersonalPage. */
   if (!(!empty($GLOBALS['DBAuthParams']['pref_update']) and $GLOBALS['DBParams']['dbtype'] == 'SQL')) {
-    echo TransformText(_("Note: If you create your personal HomePage with same the pagename as your user id, you will be able to store your UserPreferences also. Otherwise not.")); 
+    echo asXML(TransformText(_("Note: If you create your personal HomePage with same the pagename as your user id, you will be able to store your UserPreferences also. Otherwise not."))); 
   }
-  ?>
-  <?php if (empty($pass_required)) ?>
+  if (empty($pass_required)) ?>
   <p><?= _("New users may use an empty password.") ?></p>
 <?php } ?>
 

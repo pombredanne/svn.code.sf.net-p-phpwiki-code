@@ -73,7 +73,7 @@ define('ENABLE_USER_NEW',true);
 
 define ('PHPWIKI_VERSION', '1.3.8pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.120 2004-02-03 09:45:39 rurban Exp $');
+rcs_id('$Id: index.php,v 1.121 2004-02-07 10:41:25 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -481,7 +481,7 @@ if (defined('ALLOW_USER_PASSWORDS')) {
 //                "File"   // define AUTH_USER_FILE and opt. AUTH_USER_FILE_STORABLE
                   ) ;
 
-    if (!defined('PASSWORD_LENGTH_MINIMUM')) define('PASSWORD_LENGTH_MINIMUM', 6);
+    if (!defined('PASSWORD_LENGTH_MINIMUM')) define('PASSWORD_LENGTH_MINIMUM', 2);
     
     if (!defined('USER_AUTH_POLICY'))
         //We support the following auth policies:
@@ -503,7 +503,8 @@ if (defined('ALLOW_USER_PASSWORDS')) {
 // LDAP auth:
 if (!defined('LDAP_AUTH_HOST'))   define('LDAP_AUTH_HOST', 'localhost');
 // The organizational or domain BASE DN: e.g. "dc=mydomain,dc=com" to restrict the search
-if (!defined('LDAP_BASE_DN')) define('LDAP_BASE_DN', "ou=mycompany.com,o=My Company");
+// Note: ou=Users and ou=Groups are used for GroupLdap Membership
+if (!defined('LDAP_BASE_DN')) define('LDAP_BASE_DN', "ou=Users,o=Development,dc=mycompany.com");
 
 // IMAP auth: 
 //   check userid/passwords from a imap server, defaults to localhost
@@ -526,7 +527,6 @@ if (!defined('GROUP_METHOD')) define('GROUP_METHOD', "WIKIPAGE");
 //if (!defined('GROUP_METHOD')) define('GROUP_METHOD', "LDAP");
 //if (!defined('AUTH_GROUP_FILE')) define('AUTH_GROUP_FILE', '/etc/groups'); // or '/etc/httpd/.htgroup'
 // not yet!
-//if (!defined('GROUP_LDAP_QUERY')) define('GROUP_LDAP_QUERY', 'ou=Groups');
 
 // Seperate DB User Authentication.
 //   Can be external, like radius, phpnuke, courier authmysql,
@@ -567,7 +567,7 @@ $DBAuthParams = array (
    //users must be predefined:
    //'pref_update' => 'UPDATE user SET prefs="$pref_blob" WHERE userid="$userid"',
    //or users can create themselves:
-   'pref_update' => 'REPLACE INTO user SET userid="$userid", prefs="$pref_blob"',
+   'pref_update' => 'REPLACE INTO user SET prefs="$pref_blob", username="$userid"',
 
    // USERS <=> GROUPS
    //   DB methods for lib/WikiGroup.php, see also AUTH_GROUP_FILE above.
@@ -579,7 +579,7 @@ $DBAuthParams = array (
    //'user_groups' => 'SELECT group FROM user WHERE user="$userid"',
    // or
    //   multiple groups per user (n:m):
-   'is_member' => 'SELECT 1 FROM member WHERE userid=$userid"" AND groupname="$groupname"',
+   'is_member' => 'SELECT userid FROM member WHERE userid="$userid" AND groupname="$groupname"',
    'group_members' => 'SELECT DISTINCT userid FROM member WHERE groupname="$groupname"',
    'user_groups' => 'SELECT groupname FROM member WHERE userid="$userid"',
 
@@ -887,16 +887,16 @@ if (!defined('AUTHORPAGE_URL')) define('AUTHORPAGE_URL',
 /*
 // Tested: Works with CGI also.
 if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
-    if ($HTTP_SERVER_VARS['SCRIPT_NAME'] != VIRTUAL_PATH) {
+    if ($HTTP_SERVER_VARS['SCRIPT_NAME'] == VIRTUAL_PATH) {
         include "lib/main.php";
     }
     elseif (defined('SCRIPT_NAME') and 
-            ($HTTP_SERVER_VARS['SCRIPT_NAME'] != SCRIPT_NAME)) {
+            ($HTTP_SERVER_VARS['SCRIPT_NAME'] == SCRIPT_NAME)) {
         include "lib/main.php";
     }
 } else {
     if (defined('SCRIPT_NAME') and 
-        ($HTTP_SERVER_VARS['SCRIPT_NAME'] != SCRIPT_NAME)) {
+        ($HTTP_SERVER_VARS['SCRIPT_NAME'] == SCRIPT_NAME)) {
         include "lib/main.php";
     } elseif (strstr($HTTP_SERVER_VARS['PHP_SELF'],'index.php')) {
         include "lib/main.php";
@@ -906,6 +906,9 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 include "lib/main.php";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.120  2004/02/03 09:45:39  rurban
+// LDAP cleanup, start of new Pref classes
+//
 // Revision 1.119  2004/02/01 09:14:10  rurban
 // Started with Group_Ldap (not yet ready)
 // added new _AuthInfo plugin to help in auth problems (warning: may display passwords)

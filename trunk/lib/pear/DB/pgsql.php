@@ -1,9 +1,9 @@
 <?php
-//
+/* vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2002 The PHP Group                                |
+// | Copyright (c) 1997-2003 The PHP Group                                |
 // +----------------------------------------------------------------------+
 // | This source file is subject to version 2.02 of the PHP license,      |
 // | that is bundled with this package in the file LICENSE, and is        |
@@ -14,14 +14,14 @@
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
 // | Authors: Rui Hirokawa <rui_hirokawa@ybb.ne.jp>                       |
-// |          Stig Bakken <ssb@fast.no>                                   |
+// |          Stig Bakken <ssb@php.net>                                   |
 // +----------------------------------------------------------------------+
 //
 // Based on DB 1.3 from the pear.php.net repository. 
 // The only modifications made have been modification of the include paths. 
 //
-rcs_id('$Id: pgsql.php,v 1.2 2002-09-12 11:45:33 rurban Exp $');
-rcs_id('From Pear CVS: Id: pgsql.php,v 1.5 2002/05/09 12:29:53 ssb Exp');
+rcs_id('$Id: pgsql.php,v 1.3 2004-02-07 10:41:25 rurban Exp $');
+rcs_id('From Pear CVS: Id: pgsql.php,v 1.22 2003/05/07 16:58:28 mj Exp');
 //
 // Database independent query interface definition for PHP's PostgreSQL
 // extension.
@@ -92,20 +92,22 @@ class DB_pgsql extends DB_common
         $connstr = '';
 
         if ($protocol == 'tcp') {
-            $connstr = 'host=' . $dsninfo['hostspec'];
+            if (!empty($dsninfo['hostspec'])) {
+                $connstr = 'host=' . $dsninfo['hostspec'];
+            }
             if (!empty($dsninfo['port'])) {
                 $connstr .= ' port=' . $dsninfo['port'];
             }
         }
 
         if (isset($dsninfo['database'])) {
-            $connstr .= ' dbname=' . $dsninfo['database'];
+            $connstr .= ' dbname=\'' . addslashes($dsninfo['database']) . '\'';
         }
         if (!empty($dsninfo['username'])) {
-            $connstr .= ' user=' . $dsninfo['username'];
+            $connstr .= ' user=\'' . addslashes($dsninfo['username']) . '\'';
         }
         if (!empty($dsninfo['password'])) {
-            $connstr .= ' password=' . $dsninfo['password'];
+            $connstr .= ' password=\'' . addslashes($dsninfo['password']) . '\'';
         }
         if (!empty($dsninfo['options'])) {
             $connstr .= ' options=' . $dsninfo['options'];
@@ -138,7 +140,7 @@ class DB_pgsql extends DB_common
      */
     function disconnect()
     {
-        $ret = @pg_close($this->connection); // XXX ERRORMSG
+        $ret = @pg_close($this->connection);
         $this->connection = null;
         return $ret;
     }
@@ -258,6 +260,8 @@ class DB_pgsql extends DB_common
     }
 
     // }}}
+    // {{{ fetchRow()
+
     /**
      * Fetch and return a row of data (it uses fetchInto for that)
      * @param $result PostgreSQL result identifier
@@ -278,6 +282,7 @@ class DB_pgsql extends DB_common
         return $arr;
     }
 
+    // }}}
     // {{{ fetchInto()
 
     /**
@@ -354,6 +359,8 @@ class DB_pgsql extends DB_common
             case 'integer':
             case 'double' :
                 return $str;
+            case 'boolean':
+                return $str ? 'TRUE' : 'FALSE';
             case 'string':
             default:
                 $str = str_replace("'", "''", $str);
@@ -496,20 +503,20 @@ class DB_pgsql extends DB_common
     function nextId($seq_name, $ondemand = true)
     {
         $seqname = $this->getSequenceName($seq_name);
-        $repeat = 0;
+        $repeat = false;
         do {
             $this->pushErrorHandling(PEAR_ERROR_RETURN);
             $result = $this->query("SELECT NEXTVAL('${seqname}')");
             $this->popErrorHandling();
             if ($ondemand && DB::isError($result) &&
                 $result->getCode() == DB_ERROR_NOSUCHTABLE) {
-                $repeat = 1;
+                $repeat = true;
                 $result = $this->createSequence($seq_name);
                 if (DB::isError($result)) {
                     return $this->raiseError($result);
                 }
             } else {
-                $repeat = 0;
+                $repeat = false;
             }
         } while ($repeat);
         if (DB::isError($result)) {
@@ -560,7 +567,7 @@ class DB_pgsql extends DB_common
 
     function modifyLimitQuery($query, $from, $count)
     {
-        $query = $query . " LIMIT $count, $from";
+        $query = $query . " LIMIT $count OFFSET $from";
         return $query;
     }
 
@@ -595,39 +602,39 @@ class DB_pgsql extends DB_common
     {
         $field_name = @pg_fieldname($resource, $num_field);
 
-        $result = pg_exec($this->connection, "SELECT f.attnotnull, f.atthasdef
+        $result = @pg_exec($this->connection, "SELECT f.attnotnull, f.atthasdef
                                 FROM pg_attribute f, pg_class tab, pg_type typ
                                 WHERE tab.relname = typ.typname
                                 AND typ.typrelid = f.attrelid
                                 AND f.attname = '$field_name'
                                 AND tab.relname = '$table_name'");
-        if (pg_numrows($result) > 0) {
-            $row = pg_fetch_row($result, 0);
+        if (@pg_numrows($result) > 0) {
+            $row = @pg_fetch_row($result, 0);
             $flags  = ($row[0] == 't') ? 'not_null ' : '';
 
             if ($row[1] == 't') {
-                $result = pg_exec($this->connection, "SELECT a.adsrc
+                $result = @pg_exec($this->connection, "SELECT a.adsrc
                                     FROM pg_attribute f, pg_class tab, pg_type typ, pg_attrdef a
                                     WHERE tab.relname = typ.typname AND typ.typrelid = f.attrelid
                                     AND f.attrelid = a.adrelid AND f.attname = '$field_name'
-                                    AND tab.relname = '$table_name'");
-                $row = pg_fetch_row($result, 0);
+                                    AND tab.relname = '$table_name' AND f.attnum = a.adnum");
+                $row = @pg_fetch_row($result, 0);
                 $num = str_replace('\'', '', $row[0]);
 
                 $flags .= "default_$num ";
             }
         }
-        $result = pg_exec($this->connection, "SELECT i.indisunique, i.indisprimary, i.indkey
+        $result = @pg_exec($this->connection, "SELECT i.indisunique, i.indisprimary, i.indkey
                                 FROM pg_attribute f, pg_class tab, pg_type typ, pg_index i
                                 WHERE tab.relname = typ.typname
                                 AND typ.typrelid = f.attrelid
                                 AND f.attrelid = i.indrelid
                                 AND f.attname = '$field_name'
                                 AND tab.relname = '$table_name'");
-        $count = pg_numrows($result);
+        $count = @pg_numrows($result);
 
         for ($i = 0; $i < $count ; $i++) {
-            $row = pg_fetch_row($result, $i);
+            $row = @pg_fetch_row($result, $i);
             $keys = explode(" ", $row[2]);
 
             if (in_array($num_field + 1, $keys)) {
@@ -702,7 +709,7 @@ class DB_pgsql extends DB_common
         // table without a resultset
 
         if (is_string($result)) {
-            $id = pg_exec($this->connection,"SELECT * FROM $result");
+            $id = @pg_exec($this->connection,"SELECT * FROM $result LIMIT 0");
             if (empty($id)) {
                 return $this->pgsqlRaiseError();
             }
@@ -745,7 +752,7 @@ class DB_pgsql extends DB_common
         }
 
         // free the result only if we were called on a table
-        if (is_resource($id)) {
+        if (is_string($result) && is_resource($id)) {
             @pg_freeresult($id);
         }
         return $res;

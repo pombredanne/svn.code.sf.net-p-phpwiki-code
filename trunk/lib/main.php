@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.110 2004-02-03 09:45:39 rurban Exp $');
+rcs_id('$Id: main.php,v 1.111 2004-02-07 10:41:25 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -35,12 +35,18 @@ class WikiRequest extends Request {
         // Restore auth state. This doesn't check for proper authorization!
         if (ENABLE_USER_NEW) {
             $userid = $this->_deduceUsername();	
-            $user = WikiUser($userid);
-            // todo: upgrade later at updateAuthAndPrefs()
-            if (isset($this->_user)) 
-                $user = UpgradeUser($this->_user,$user);
-            $this->_user = $user;
-            $this->_prefs = $this->_user->_prefs;
+            if (isset($this->_user) and $this->_user->_authhow == 'session') {
+            	$user = $this->_user;
+            	$this->_prefs = $this->_user->_prefs;
+            } else {
+                $user = WikiUser($userid);
+                // todo: upgrade later at updateAuthAndPrefs()
+                // fixme:  already done in _deduceUsername()
+                if (isset($this->_user)) 
+                  $user = UpgradeUser($this->_user,$user);
+                $this->_user = $user;
+                $this->_prefs = $this->_user->_prefs;
+            }
         } else {
             $this->_user = new WikiUser($this, $this->_deduceUsername());
             $this->_prefs = $this->_user->getPreferences();
@@ -546,8 +552,8 @@ class WikiRequest extends Request {
                     else
                         $this->_user = new $c($this,$userid,$user->_level);
                 }
-                //if ($user = UpgradeUser($this->_user,$user))
-                //    $this->_user = $user;
+                if ($user = UpgradeUser($this->_user,$user))
+                    $this->_user = $user;
                 $this->_user->_authhow = 'session';
             }
             if (isa($user,WikiUserClassname()))
@@ -854,6 +860,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.110  2004/02/03 09:45:39  rurban
+// LDAP cleanup, start of new Pref classes
+//
 // Revision 1.109  2004/01/30 19:57:58  rurban
 // fixed DBAuthParams['pref_select']: wrong _auth_dbi object used.
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _AuthInfo.php,v 1.3 2004-02-02 05:36:29 rurban Exp $');
+rcs_id('$Id: _AuthInfo.php,v 1.4 2004-02-07 10:41:25 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -38,7 +38,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -91,9 +91,18 @@ extends WikiPlugin
             $table = HTML::table(array('border' => 1,
                                        'cellpadding' => 2,
                                        'cellspacing' => 0));
-            $table->pushContent(HTML::tr(HTML::td(array('colspan' => 2))));
+            //$table->pushContent(HTML::tr(HTML::td(array('colspan' => 2))));
             $userdata = $this->_obj2hash($user);
-            $table->pushContent($this->_showhash("Object of ".get_class($user), $userdata));
+            $table->pushContent($this->_showhash("User: Object of ".get_class($user), $userdata));
+            $group = &WikiGroup::getGroup($request);
+            $table->pushContent($this->_showhash("Group: Object of ".get_class($group), $group));
+            $groups = $group->getAllGroupsIn();
+            $groupdata = array('getAllGroupsIn' => $groups);
+            foreach ($groups as $g) {
+                $groupdata["getMembersOf($g)"] = $group->getMembersOf($g);
+                $groupdata["isMember($g)"] = $group->isMember($g);
+            }
+            $table->pushContent($this->_showhash("Group Methods: ", $groupdata));
             $html->pushContent($table);
         }
         return $html;
@@ -175,6 +184,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/02/02 05:36:29  rurban
+// Simplification and more options, but no passwd or admin protection yet.
+//
 // Revision 1.2  2004/02/01 09:14:11  rurban
 // Started with Group_Ldap (not yet ready)
 // added new _AuthInfo plugin to help in auth problems (warning: may display passwords)
