@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: imagecache.php,v 1.7 2004-06-03 09:40:57 rurban Exp $');
+<?php rcs_id('$Id: imagecache.php,v 1.8 2004-06-19 10:06:37 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -137,8 +137,8 @@ function mainImageCache() {
                 . ' obtained.)' ); 
             return;
         }    
-        $cacheparams = $GLOBALS['CacheParams'];
-        if (!preg_match(':^(.*/)?'.$cacheparams['filename_prefix'].'([^\?/]+)\.img(\?args=([^\?&]*))?$:', $uri, $matches)) {
+        //$cacheparams = $GLOBALS['CacheParams'];
+        if (!preg_match(':^(.*/)?'.PLUGIN_CACHED_FILENAME_PREFIX.'([^\?/]+)\.img(\?args=([^\?&]*))?$:', $uri, $matches)) {
             WikiPluginCached::printError('png', "I do not understand this URL: $uri");
             return;
         }        

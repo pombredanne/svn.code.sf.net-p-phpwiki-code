@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.35 2004-06-15 09:15:52 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.36 2004-06-19 10:06:37 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -71,6 +71,9 @@ function IniConfig($file) {
          'AUTHORPAGE_TITLE', 'AUTHORPAGE_URL', 'SERVER_NAME', 'SERVER_PORT',
          'SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH',
          'WIKI_NAME_REGEXP',
+         'PLUGIN_CACHED_DATABASE', 'PLUGIN_CACHED_FILENAME_PREFIX',
+         'PLUGIN_CACHED_HIGHWATER', 'PLUGIN_CACHED_LOWWATER', 'PLUGIN_CACHED_MAXLIFETIME',
+         'PLUGIN_CACHED_MAXARGLEN', 'PLUGIN_CACHED_IMGTYPES'
          );
 
     // Optional values which need to be defined.
@@ -82,7 +85,6 @@ function IniConfig($file) {
          'LDAP_AUTH_PASSWORD','LDAP_SEARCH_FIELD','AUTH_USER_FILE','DBAUTH_AUTH_DSN',
          'IMAP_AUTH_HOST', 'POP3_AUTH_HOST',
          'AUTH_USER_FILE', 'AUTH_GROUP_FILE', 'AUTH_SESS_USER', 'AUTH_SESS_LEVEL',
-         //'','','','','',
          'GOOGLE_LICENSE_KEY','FORTUNE_DIR',
          );
 
@@ -97,7 +99,9 @@ function IniConfig($file) {
          'AUTH_USER_FILE_STORABLE', 'ALLOW_HTTP_AUTH_LOGIN',
          'ALLOW_USER_LOGIN', 'ALLOW_LDAP_LOGIN', 'ALLOW_IMAP_LOGIN',
          'WARN_NONPUBLIC_INTERWIKIMAP', 'USE_PATH_INFO',
-         'DISABLE_HTTP_REDIRECT');
+         'DISABLE_HTTP_REDIRECT',
+         'PLUGIN_CACHED_USECACHE', 'PLUGIN_CACHED_FORCE_SYNCMAP'
+         );
 
     if(!file_exists($file)){
         trigger_error("Datasource file '$file' does not exist", E_USER_ERROR);
@@ -298,6 +302,16 @@ function IniConfig($file) {
     /*global $AllowedProtocols, $InlineImages;
     $AllowedProtocols = constant("ALLOWED_PROTOCOLS");
     $InlineImages = constant("INLINE_IMAGES");*/
+
+    global $PLUGIN_CACHED_IMGTYPES;
+    $PLUGIN_CACHED_IMGTYPES = preg_split('/\s*:\s*/', PLUGIN_CACHED_IMGTYPES);
+    if (!defined('PLUGIN_CACHED_CACHE_DIR')) {
+        if (!FindFile('/tmp/cache', 1))
+            mkdir('/tmp/cache', 777);
+        define('PLUGIN_CACHED_CACHE_DIR', FindFile('/tmp/cache',false,1)); // will throw an error
+    } else {
+        FindFile(PLUGIN_CACHED_CACHE_DIR);
+    }
 
     fix_configs();
 }
@@ -575,6 +589,14 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.35  2004/06/15 09:15:52  rurban
+// IMPORTANT: fixed passwd handling for passwords stored in prefs:
+//   fix encrypted usage, actually store and retrieve them from db
+//   fix bogologin with passwd set.
+// fix php crashes with call-time pass-by-reference (references wrongly used
+//   in declaration AND call). This affected mainly Apache2 and IIS.
+//   (Thanks to John Cole to detect this!)
+//
 // Revision 1.34  2004/06/13 13:54:25  rurban
 // Catch fatals on the four dump calls (as file and zip, as html and mimified)
 // FoafViewer: Check against external requirements, instead of fatal.
