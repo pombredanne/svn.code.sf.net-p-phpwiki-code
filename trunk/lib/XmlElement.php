@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.26 2004-03-24 19:39:02 rurban Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.27 2004-04-19 18:27:45 rurban Exp $');
 /**
  * Code for writing XML.
  * @author: Jeff Dairiki
@@ -408,7 +408,7 @@ class FormattedText {
 
         // PHP's sprintf doesn't support variable width specifiers,
         // like sprintf("%*s", 10, "x"); --- so we won't either.
-
+        $m = array();
         if (! preg_match_all('/(?<!%)%(\d+)\$/x', $this->_fs, $m)) {
             $this->_args  = $args;
         }

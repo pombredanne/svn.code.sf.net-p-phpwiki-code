@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.90 2004-04-18 01:11:52 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.91 2004-04-19 18:27:46 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -136,11 +136,13 @@ extends _RecentChanges_Formatter
     function pageLink ($rev, $link_text=false) {
 
         return WikiLink($rev,'auto',$link_text);
-
+        /*
         $page = $rev->getPage();
         global $Theme;
         if ($this->include_versions_in_URLs()) {
             $version = $rev->getVersion();
+            if ($rev->isCurrent())
+                $version = false;
             $exists = !$rev->hasDefaultContents();
         }
         else {
@@ -152,6 +154,7 @@ extends _RecentChanges_Formatter
             return $Theme->linkExistingWikiWord($page->getName(), $link_text, $version);
         else
             return $Theme->linkUnknownWikiWord($page->getName(), $link_text);
+        */
     }
 
     function authorLink ($rev) {
@@ -654,7 +657,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.90 $");
+                            "\$Revision: 1.91 $");
     }
 
     function managesValidators() {
@@ -839,6 +842,11 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.90  2004/04/18 01:11:52  rurban
+// more numeric pagename fixes.
+// fixed action=upload with merge conflict warnings.
+// charset changed from constant to global (dynamic utf-8 switching)
+//
 // Revision 1.89  2004/04/10 02:30:49  rurban
 // Fixed gettext problem with VIRTUAL_PATH scripts (Windows only probably)
 // Fixed "cannot setlocale..." (sf.net problem)

@@ -19,7 +19,7 @@
 // Based on DB 1.3 from the pear.php.net repository. 
 // The only modifications made have been modification of the include paths. 
 //
-rcs_id('$Id: mysql.php,v 1.3 2004-02-07 10:41:25 rurban Exp $');
+rcs_id('$Id: mysql.php,v 1.4 2004-04-19 18:27:46 rurban Exp $');
 rcs_id('From Pear CVS: Id: mysql.php,v 1.15 2003/05/07 16:58:28 mj Exp');
 //
 // Database independent query interface definition for PHP's MySQL
@@ -666,7 +666,7 @@ class DB_mysql extends DB_common
                 return $str;
             case 'string':
             default:
-                if(function_exists('mysql_real_escape_string')) {
+                if (function_exists('mysql_real_escape_string')) {
                     return "'".mysql_real_escape_string($str, $this->connection)."'";
                 } else {
                     return "'".mysql_escape_string($str)."'";

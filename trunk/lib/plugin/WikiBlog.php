@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiBlog.php,v 1.15 2004-04-18 05:42:17 rurban Exp $');
+rcs_id('$Id: WikiBlog.php,v 1.16 2004-04-19 18:27:46 rurban Exp $');
 /*
  Copyright 2002, 2003 $ThePhpWikiProgrammingTeam
  
@@ -83,7 +83,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.15 $");
+                            "\$Revision: 1.16 $");
     }
 
     // Arguments:
@@ -326,17 +326,11 @@ extends WikiPlugin
 
         $blogs = array();
         while ($page = $pages->next()) {
-            // FIXME:
-            // Verify that it is a blog page.  If not, go to next page.
-            // When we proper blogSearch implementation this will not
-            // be necessary. 
             $name = $page->getName();
             if (substr($name, 0, $pfxlen) != $prefix)
                 continue;
             $current = $page->getCurrentRevision();
-//use only pagetype
-            if (/*preg_match("/^Blog-([[:digit:]]{14})$/", substr($name, $pfxlen))
-                or */$current->get('pagetype') == $type) {
+            if ($current->get('pagetype') == $type) {
                 $blogs[] = $current;
             }
         }
@@ -356,6 +350,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2004/04/18 05:42:17  rurban
+// more fixes for page="0"
+// better WikiForum support
+//
 // Revision 1.14  2004/03/29 21:33:32  rurban
 // possible fix for problem reported by Whit Blauvelt
 //   Message-ID: <20040327211707.GA22374@free.transpect.com>

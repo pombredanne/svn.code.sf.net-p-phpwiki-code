@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiForum.php,v 1.1 2004-04-18 05:43:12 rurban Exp $');
+rcs_id('$Id: WikiForum.php,v 1.2 2004-04-19 18:27:46 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
@@ -58,7 +58,7 @@ extends WikiPlugin_WikiBlog
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -125,7 +125,7 @@ extends WikiPlugin_WikiBlog
             //TODO: get numposts, number of replies
             $meta = $rev->get('wikiforum');
             // format as list, not as wikiforum content
-            $page = new WikiPageName(SUBPAGE_SEPARATOR.$rev->get('summary'),$args['pagename']);
+            $page = new WikiPageName($rev,$args['pagename']);
             $row = HTML::tr(HTML::td(WikiLink($page,'if_known',$rev->get('summary'))),
                             HTML::td($Theme->formatDateTime($meta['ctime'])),
                             HTML::td(WikiLink($meta['creator'],'if_known')));
@@ -136,6 +136,9 @@ extends WikiPlugin_WikiBlog
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/04/18 05:43:12  rurban
+// .
+//
 //
 
 // For emacs users

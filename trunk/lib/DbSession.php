@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbSession.php,v 1.10 2004-04-18 01:11:51 rurban Exp $');
+<?php rcs_id('$Id: DbSession.php,v 1.11 2004-04-19 18:27:45 rurban Exp $');
 
 /**
  * Store sessions data in Pear DB / ADODB ....
@@ -31,16 +31,15 @@ class DB_Session
             $db_type = substr(get_class($dbh),7);
             $class = "DB_Session_".$db_type;
             if (class_exists($class)) {
-                $this->_backend = new $class(&$backend->_dbh, $table);
+                $this->_backend = new $class($backend->_dbh, $table);
                 return $this->_backend;
             }
         }
-        return false;
-        
         //Fixme: E_USER_WARNING ignored!
         trigger_error(sprintf(
 _("Your WikiDB DB backend '%s' cannot be used for DB_Session. Set USE_DB_SESSION to false."),
                              $db_type), E_USER_WARNING);
+        return false;
     }
     
     function currentSessions() {
@@ -60,9 +59,9 @@ extends DB_Session
 {
     var $_backend_type = "SQL";
 
-    function DB_Session_SQL ($dbh, $table) {
+    function DB_Session_SQL (&$dbh, $table) {
 
-        $this->_dbh = &$dbh;
+        $this->_dbh = $dbh;
         $this->_table = $table;
 
         ini_set('session.save_handler','user');
@@ -78,7 +77,7 @@ extends DB_Session
 
     function _connect() {
         $dbh = &$this->_dbh;
-        $this->_connected = (bool)$dbh->connection;
+        $this->_connected = is_resource($dbh->connection);
         if (!$this->_connected) {
             $res = $dbh->connect($dbh->dsn);
             if (DB::isError($res)) {
@@ -239,7 +238,7 @@ extends DB_Session
         $sessions = array();
         $dbh = &$this->_connect();
         $table = $this->_table;
-        $res = $this->query("SELECT sess_data,sess_date,sess_ip FROM $table ORDER BY sess_date DESC");
+        $res = $dbh->query("SELECT sess_data,sess_date,sess_ip FROM $table ORDER BY sess_date DESC");
         if (DB::isError($res) || empty($res))
             return $sessions;
         while ($row = $res->fetchRow()) {
@@ -268,7 +267,7 @@ extends DB_Session
 
     function DB_Session_ADODB ($dbh, $table) {
 
-        $this->_dbh = &$dbh;
+        $this->_dbh = $dbh;
         $this->_table = $table;
 
         ini_set('session.save_handler','user');
@@ -289,8 +288,8 @@ extends DB_Session
         if (!$dbh) {
             if (!$parsed) $parsed = parseDSN($DBParams['dsn']);
             $this->_dbh = &ADONewConnection($parsed['phptype']); // Probably only MySql works just now
-            $conn = $this->_dbh->Connect($parsed['hostspec'],$parsed['username'], 
-                                         $parsed['password'], $parsed['database']);
+            $this->_dbh->Connect($parsed['hostspec'],$parsed['username'], 
+                                 $parsed['password'], $parsed['database']);
             $dbh = &$this->_dbh;                             
         }
         return $dbh;
@@ -481,8 +480,8 @@ extends DB_Session
 {
     var $_backend_type = "dba";
 
-    function DB_Session_dba ($dbh, $table) {
-        $this->_dbh = &$dbh;
+    function DB_Session_dba (&$dbh, $table) {
+        $this->_dbh = $dbh;
         ini_set('session.save_handler','user');
         session_module_name('user'); // new style
         session_set_save_handler(array(&$this, 'open'),

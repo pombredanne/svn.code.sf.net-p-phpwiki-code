@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.35 2004-04-18 01:11:51 rurban Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.36 2004-04-19 18:27:45 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -255,10 +255,10 @@ class Markup_escape  extends SimpleMarkup
 }
 
 function LinkBracketLink($bracketlink) {
-    global $request, $AllowedProtocols, $InlineImages;
+    global $AllowedProtocols, $InlineImages;
 
     //include_once("lib/interwiki.php");
-    $intermap = PageType_interwikimap::GetMap($request);
+    $intermap = getInterwikiMap();
     
     // $bracketlink will start and end with brackets; in between will
     // be either a page name, a URL or both separated by a pipe.
@@ -370,13 +370,12 @@ class Markup_interwiki extends SimpleMarkup
 {
     function getMatchRegexp () {
         global $request;
-        $map = PageType_interwikimap::GetMap($request);
+        $map = getInterwikiMap();
         return "(?<! [[:alnum:]])" . $map->getRegexp(). ": \S+ (?<![ ,.?;! \] \) \" \' ])";
     }
 
     function markup ($match) {
-        global $request;
-        $map = PageType_interwikimap::GetMap($request);
+        //$map = getInterwikiMap();
         return new Cached_InterwikiLink(UnWikiEscape($match));
     }
 }
