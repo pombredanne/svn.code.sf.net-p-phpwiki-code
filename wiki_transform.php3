@@ -1,17 +1,16 @@
-<!-- $Id: wiki_transform.php3,v 1.8 2000-06-19 20:21:31 ahollosi Exp $ -->
+<!-- $Id: wiki_transform.php3,v 1.9 2000-06-21 22:57:48 ahollosi Exp $ -->
 <?
    // expects $pagehash and $html to be set
 
    // Set up inline links and images
    for ($i = 1; $i < (NUM_LINKS + 1); $i++) {
-      $thiskey = "r" . $i;
-      if (! empty($pagehash[$thiskey])) {
-         if (preg_match("/png$/i", $pagehash[$thiskey])) {
+      if (! empty($pagehash['refs'][$i])) {
+         if (preg_match("/png$/i", $pagehash['refs'][$i])) {
             // embed PNG images
-            $embedded[$i] = "<img src='" . $pagehash[$thiskey] . "'>";
+            $embedded[$i] = "<img src='" . $pagehash['refs'][$i] . "'>";
          } else {
             // ordinary embedded link
-            $embedded[$i] = "<a href='" . $pagehash[$thiskey] . "'>[$i]</a>";
+            $embedded[$i] = "<a href='" . $pagehash['refs'][$i] . "'>[$i]</a>";
          }
       }
    }
@@ -99,6 +98,11 @@ your web server it is highly advised that you do not allow this.
 
       // bold
       $tmpline = preg_replace("|(''')(.*?)(''')|",
+                              "<strong>\\2</strong>",
+                              $tmpline);
+
+      // bold
+      $tmpline = preg_replace("|(__)(.*?)(__)|",
                               "<strong>\\2</strong>",
                               $tmpline);
 
