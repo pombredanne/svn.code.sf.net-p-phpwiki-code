@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.97 2004-06-16 13:21:16 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.98 2004-06-16 21:24:31 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -2652,14 +2652,14 @@ function ValidateMail($email, $noconnect=false) {
     if ($noconnect)
       return array(true,sprintf(_("E-Mail address '%s' is properly formatted"), $email));
 
-    list ( $Username, $Domain ) = split ("@",$email);
+    list ( $Username, $Domain ) = split ("@", $email);
     //Todo: getmxrr workaround on windows or manual input field to verify it manually
     if (!isWindows() and getmxrr($Domain, $MXHost)) { // avoid warning on Windows. 
         $ConnectAddress = $MXHost[0];
     } else {
         $ConnectAddress = $Domain;
     }
-    $Connect = fsockopen ( $ConnectAddress, 25 );
+    $Connect = @fsockopen ( $ConnectAddress, 25 );
     if ($Connect) {
         if (ereg("^220", $Out = fgets($Connect, 1024))) {
             fputs ($Connect, "HELO $HTTP_HOST\r\n");
@@ -3031,6 +3031,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.97  2004/06/16 13:21:16  rurban
+// stabilize on failing ldap queries or bind
+//
 // Revision 1.96  2004/06/16 12:42:06  rurban
 // fix homepage prefs
 //
