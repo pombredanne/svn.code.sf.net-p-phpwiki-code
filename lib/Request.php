@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.56 2004-05-17 17:43:29 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.57 2004-06-03 18:54:25 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -461,9 +461,9 @@ class Request_SessionVars {
         if ($key == 'wiki_user') {
             if (DEBUG) {
 	      if (!$val) {
-	        trigger_error("delete user session",E_USER_WARNING);
-	      } elseif (!$val->_level) {
-	        trigger_error("lost level in session",E_USER_WARNING);
+	        trigger_error("delete user session", E_USER_WARNING);
+	      } elseif (!isset($val->_level)) {
+                  trigger_error("lost level in session", E_USER_WARNING);
 	      }
             }
 	    if (is_object($val)) {
@@ -982,6 +982,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.56  2004/05/17 17:43:29  rurban
+// CGI: no PATH_INFO fix
+//
 // Revision 1.55  2004/05/15 18:31:00  rurban
 // some action=pdf Request fixes: With MSIE it works now. Now the work with the page formatting begins.
 //
