@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: cvs.php,v 1.17 2004-04-27 16:03:05 rurban Exp $');
+rcs_id('$Id: cvs.php,v 1.18 2004-04-29 20:37:14 rurban Exp $');
 /**
  * Backend for handling CVS repository. 
  *
@@ -85,10 +85,10 @@ extends WikiDB_backend
         }
         $this->_debug_file = $dbparam{CVS_DEBUG_FILE};
 
-        if ( !($dbparam{CVS_CHECK_FOR_REPOSITORY}
-                && is_dir( $this->_repository )
-                && is_dir( $this->_repository . "/CVSROOT" )
-                && is_dir( $this->_repository . "/" . $this->_module_name ))) {
+        if ( $dbparam{CVS_CHECK_FOR_REPOSITORY}
+             && !( is_dir( $this->_repository )
+                   && is_dir( $this->_repository . "/CVSROOT" )
+                   && is_dir( $this->_repository . "/" . $this->_module_name ))) {
 
             $this->_cvsDebug( sprintf("Creating new repository [%s]", $this->_repository) );
 
