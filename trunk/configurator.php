@@ -20,7 +20,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'iso-8859-1');
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.9 2002-09-15 17:28:27 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.10 2003-01-02 20:14:53 carstenklapp Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki 1.3.x</title>
 <style type="text/css" media="screen">
@@ -240,7 +240,7 @@ $properties["Part Null Settings"] =
 new unchangeable_variable('_partnullsettings', "
 define ('PHPWIKI_VERSION', '1.3.4pre');
 require \"lib/prepend.php\";
-rcs_id('\$Id: configurator.php,v 1.9 2002-09-15 17:28:27 rurban Exp $');", "");
+rcs_id('\$Id: configurator.php,v 1.10 2003-01-02 20:14:53 carstenklapp Exp $');", "");
 
 
 $properties["Part One"] =
@@ -633,8 +633,8 @@ LDAP Authentication
 $properties["LDAP Host"] =
   new _define_optional('LDAP_AUTH_HOST', "localhost", "");
 $properties["LDAP Root Search"] =
-  new _define_optional('LDAP_AUTH_SEARCH', "ou=mycompany.com,o=My Company", 
-  "Give the right LDAP root search information in the next statement.");
+  new _define_optional('LDAP_AUTH_SEARCH', "ou=mycompany.com,o=My Company", "
+Give the right LDAP root search information in the next statement.");
 
 } else {
 
