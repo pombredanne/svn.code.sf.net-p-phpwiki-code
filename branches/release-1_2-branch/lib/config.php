@@ -10,7 +10,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.24.2.1 2001-02-08 18:28:31 dairiki Exp $');
+   rcs_id('$Id: config.php,v 1.24.2.2 2001-05-21 16:06:50 dairiki Exp $'); 
    // end essential internal stuff
 
 
@@ -189,6 +189,7 @@
       putenv ("LANG=$LANG");
       bindtextdomain ("phpwiki", "./locale");
       textdomain ("phpwiki");
+      setlocale("LC_ALL", "");
    }
    // end of localization function
 
