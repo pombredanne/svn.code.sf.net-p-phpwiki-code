@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.17 2003-02-26 00:10:26 dairiki Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.18 2004-02-08 06:42:58 rurban Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -11,7 +11,7 @@ define ('EM_NOTICE_ERRORS', E_NOTICE | E_USER_NOTICE);
 assert_options (ASSERT_CALLBACK, 'wiki_assert_handler');
 
 function wiki_assert_handler ($file, $line, $code) {
-	ErrorManager_errorHandler( $code, sprintf("<br />%s:$line: $code: Assertion failed <br />", $file, $line, $code), $file, $line);
+    ErrorManager_errorHandler( $code, sprintf("<br />%s:%s: %s: Assertion failed <br />", $file, $line, $code), $file, $line);
 }
 
 /**
