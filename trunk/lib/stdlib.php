@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.58 2001-12-11 18:16:12 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.59 2001-12-12 23:51:25 dairiki Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -421,7 +421,7 @@ function ExtractWikiPageLinks($content)
         $line = str_replace('[[', ' ', $line);
 
   // bracket links (only type wiki-* is of interest)
-  $numBracketLinks = preg_match_all("/\[\s*([^\]|]+\|)?\s*(.+?)\s*\]/", $line, $brktlinks);
+  $numBracketLinks = preg_match_all("/\[\s*([^\]|]+\|)?\s*(\S.*?)\s*\]/", $line, $brktlinks);
   for ($i = 0; $i < $numBracketLinks; $i++) {
      $link = ParseAndLink($brktlinks[0][$i]);
      if (preg_match("#^wiki#", $link['type']))

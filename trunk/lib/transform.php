@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.29 2001-12-12 23:38:53 dairiki Exp $');
+<?php rcs_id('$Id: transform.php,v 1.30 2001-12-12 23:51:25 dairiki Exp $');
 require_once('lib/WikiPlugin.php');
 
 define('WT_SIMPLE_MARKUP', 0);
@@ -436,12 +436,16 @@ function wtt_footnoterefs($match, &$trfrm)
 
 function wtt_bracketlinks($match, &$trfrm)
 {
-   $link = ParseAndLink($match);
-   if (strstr($link['link'], "</form>")) {
-       // FIXME: BIG HACK: see note in wtm_plugin.
-       return "</p>" . $link['link'] . "<p>";
-   }
-   return $link["link"];
+    if (preg_match('/^\[\s*\]$/', $match)) {
+        return htmlspecialchars($match);
+    }
+    
+    $link = ParseAndLink($match);
+    if (strstr($link['link'], "</form>")) {
+        // FIXME: BIG HACK: see note in wtm_plugin.
+        return "</p>" . $link['link'] . "<p>";
+    }
+    return $link["link"];
 }
 
 
