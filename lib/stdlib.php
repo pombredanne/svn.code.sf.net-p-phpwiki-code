@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.116 2002-08-27 21:51:31 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.117 2002-09-01 16:02:13 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -718,7 +718,7 @@ class fileSet {
 class ListRegexExpand {
     var $match, $list, $index, $case_sensitive;
     function ListRegexExpand (&$list, $match, $case_sensitive = true) {
-    	$this->match = $match;
+    	$this->match = strtr('/','\/',$match);
     	$this->list = &$list;
     	$this->case_sensitive = $case_sensitive;	
     }
