@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.62 2005-02-05 15:35:37 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.63 2005-02-07 15:38:25 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004 Reini Urban
  *
@@ -633,24 +633,35 @@ class Markup_plugin extends SimpleMarkup
 
 // TODO: "..." => "&#133;"  browser specific display (not cached?)
 // TODO: "--" => "&emdash;" browser specific display (not cached?)
+// TODO: Support more HTML::Entities: (C) for copy, --- for mdash, -- for ndash
 
-// FIXME: escape '&' somehow.
-class Markup_isonumchars  extends SimpleMarkup {
-    // var $_match_regexp = '<\?plugin(?:-form)?\s[^\n]+?\? >';
-    // no hexnums yet, like &#x00A4; <=> &curren;
-    var $_match_regexp = '\&\#\d{2,5};';
-    
+class Markup_html_entities  extends SimpleMarkup {
+    var $_match_regexp = '(: \.\.\.|\-\-|\-\-\-|\(C\) )';
+   
     function markup ($match) {
-        return $match;
+        static $entities = array('...'  => '&#133;',
+                                 '--'   => '&ndash;',
+                                 '---'  => '&mdash;',
+                                 '(C)'  => '&copy;',
+                                 );
+        return HTML::Raw($entities[$match]);
     }
 }
 
-// FIXME: escape '&' somehow.
+class Markup_isonumchars  extends SimpleMarkup {
+    var $_match_regexp = '\&\#\d{2,5};';
+    
+    function markup ($match) {
+        return HTML::Raw($match);
+    }
+}
+
 class Markup_isohexchars extends SimpleMarkup {
+    // hexnums, like &#x00A4; <=> &curren;
     var $_match_regexp = '\&\#x[0-9a-fA-F]{2,4};';
     
     function markup ($match) {
-        return $match;
+        return HTML::Raw($match);
     }
 }
 
@@ -666,11 +677,12 @@ class InlineTransformer
     
     function InlineTransformer ($markup_types = false) {
         if (!$markup_types)
-            $markup_types = array('escape', /*'isonumchars', 'isohexchars',*/
-                                  'bracketlink', 'url',
+            $markup_types = array('escape', 'bracketlink', 'url',
                                   'interwiki', 'wikiword', 'linebreak',
                                   'old_emphasis', 'nestled_emphasis',
-                                  'html_emphasis', 'html_abbr', 'plugin');
+                                  'html_emphasis', 'html_abbr', 'plugin',
+                                  'isonumchars', /*'isohexchars', 'html_entities',*/
+                                  );
         foreach ($markup_types as $mtype) {
             $class = "Markup_$mtype";
             $this->_addMarkup(new $class);
