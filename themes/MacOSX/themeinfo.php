@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.20 2002-01-18 00:28:44 dairiki Exp $');
+rcs_id('$Id: themeinfo.php,v 1.21 2002-01-18 01:25:03 dairiki Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -96,6 +96,7 @@ $Theme = new Theme_MacOSX('MacOSX');
 // style.  The companion '*-heavy.css' file isn't defined, it's just
 // expected to be in the same directory that the base style is in.
 $Theme->setDefaultCSS("MacOSX", "MacOSX.css");
+$Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
 
 /*
  * Link icons.
