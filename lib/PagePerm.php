@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.7 2004-02-28 22:25:07 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.8 2004-03-14 16:24:35 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -29,7 +29,7 @@ rcs_id('$Id: PagePerm.php,v 1.7 2004-02-28 22:25:07 rurban Exp $');
    Permissions maybe inherited its parent pages, and ultimativly the 
    optional master page (".")
    Pagenames starting with "." have special default permissions.
-   For Authentification see WikiUserNew.php, WikiGroup.php and main.php
+   For Authentication see WikiUserNew.php, WikiGroup.php and main.php
    Page Permssions are in PhpWiki since v1.3.9 and enabled since v1.4.0
 
    This file might replace the following functions from main.php:
@@ -408,7 +408,7 @@ class PagePermission {
         $def = array(ACL_ADMIN => true,
                      ACL_OWNER => true);
         $perm = array();
-        foreach ($this->accessTypes as $access) {
+        foreach ($this->accessTypes() as $access) {
             $perm[$access] = $def;
         }
         return $perm;
@@ -543,6 +543,17 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/02/28 22:25:07  rurban
+// First PagePerm implementation:
+//
+// $Theme->setAnonEditUnknownLinks(false);
+//
+// Layout improvement with dangling links for mostly closed wiki's:
+// If false, only users with edit permissions will be presented the
+// special wikiunknown class with "?" and Tooltip.
+// If true (default), any user will see the ?, but will be presented
+// the PrintLoginForm on a click.
+//
 // Revision 1.6  2004/02/24 15:20:05  rurban
 // fixed minor warnings: unchecked args, POST => Get urls for sortby e.g.
 //

@@ -16,7 +16,7 @@
 // |          Sebastian Bergmann <sb@sebastian-bergmann.de>               |
 // +----------------------------------------------------------------------+
 //
-// $Id: imgfile.php,v 1.1 2002-08-19 06:41:28 rurban Exp $
+// $Id: imgfile.php,v 1.2 2004-03-14 16:24:36 rurban Exp $
 
 require_once('lib/pear/Cache/Container.php');
 
@@ -24,7 +24,7 @@ require_once('lib/pear/Cache/Container.php');
 * Stores cache contents in a file.
 *
 * @author   Ulf Wendel  <ulf.wendel@phpdoc.de>
-* @version  $Id: imgfile.php,v 1.1 2002-08-19 06:41:28 rurban Exp $
+* @version  $Id: imgfile.php,v 1.2 2004-03-14 16:24:36 rurban Exp $
 */
 class Cache_Container_file extends Cache_Container {
 
@@ -40,7 +40,7 @@ class Cache_Container_file extends Cache_Container {
     *
     * You can use the filename prefix to implement a "domain" based cache or just
     * to give the files a more descriptive name. The word "domain" is borroed from
-    * a user authentification system. One user id (cached dataset with the ID x)
+    * a user authentication system. One user id (cached dataset with the ID x)
     * may exists in different domains (different filename prefix). You might want
     * to use this to have different cache values for a production, development and
     * quality assurance system. If you want the production cache not to be influenced
