@@ -1,11 +1,11 @@
--- $Id: schema.psql,v 1.5 2000-11-02 04:34:41 wainstead Exp $
+-- $Id: schema.psql,v 1.6 2001-07-12 03:24:18 wainstead Exp $
 
-drop table wiki;
-drop table archive;
-drop table wikilinks;
-drop table hottopics;
-drop table hitcount;
-drop table wikiscore;
+drop table phpwiki_pages;
+drop table phpwiki_archive;
+drop table phpwiki_links;
+drop table phpwiki_hottopics;
+drop table phpwiki_hitcount;
+drop table phpwiki_score;
 
 CREATE TABLE wiki (
         pagename VARCHAR(100) NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE wiki (
         PRIMARY KEY (pagename)
         );
 
-CREATE TABLE archive (
+CREATE TABLE phpwiki_archive (
         pagename VARCHAR(100) NOT NULL,
         version INT NOT NULL DEFAULT 1,
         flags INT NOT NULL DEFAULT 0,
@@ -31,35 +31,35 @@ CREATE TABLE archive (
         PRIMARY KEY (pagename)
         );
 
-CREATE TABLE wikilinks (
+CREATE TABLE phpwiki_links (
         frompage VARCHAR(100) NOT NULL,
         topage VARCHAR(100) NOT NULL,
         PRIMARY KEY (frompage, topage)
         );
 
-CREATE TABLE hottopics (                
+CREATE TABLE phpwiki_hottopics (                
         pagename VARCHAR(100) NOT NULL,
         lastmodified INT NOT NULL,
         PRIMARY KEY (pagename, lastmodified)
         );
 
-CREATE TABLE hitcount (                 
+CREATE TABLE phpwiki_hitcount (                 
         pagename VARCHAR(100) NOT NULL, 
         hits INT NOT NULL DEFAULT 0,    
         PRIMARY KEY (pagename)          
         );
 
-CREATE TABLE wikiscore (
+CREATE TABLE phpwiki_score (
         pagename VARCHAR(100) NOT NULL,
         score INT NOT NULL DEFAULT 0,
         PRIMARY KEY (pagename)
         );
 
 
-GRANT ALL ON wiki TO nobody;
-GRANT ALL ON archive TO nobody;
-GRANT ALL ON wikilinks TO nobody;
-GRANT ALL ON hottopics TO nobody;
-GRANT ALL ON hitcount TO nobody;
-GRANT ALL ON wikiscore TO nobody;
+GRANT ALL ON phpwiki_pages TO nobody;
+GRANT ALL ON phpwiki_archive TO nobody;
+GRANT ALL ON phpwiki_links TO nobody;
+GRANT ALL ON phpwiki_hottopics TO nobody;
+GRANT ALL ON phpwiki_hitcount TO nobody;
+GRANT ALL ON phpwiki_score TO nobody;
 
