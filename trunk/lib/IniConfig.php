@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.72 2005-01-13 07:29:27 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.73 2005-01-25 06:51:37 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -156,7 +156,7 @@ function IniConfig($file) {
          'AUTH_USER_FILE', 'AUTH_GROUP_FILE', 'AUTH_SESS_USER', 'AUTH_SESS_LEVEL',
          'GOOGLE_LICENSE_KEY','FORTUNE_DIR',
          'DISABLE_GETIMAGESIZE','DBADMIN_USER','DBADMIN_PASSWD',
-         'SESSION_SAVE_PATH'
+         'SESSION_SAVE_PATH', 'TOOLBAR_PAGELINK_PULLDOWN'
          );
 
     // List of all valid config options to be define()d which take booleans.
@@ -174,7 +174,7 @@ function IniConfig($file) {
          'WARN_NONPUBLIC_INTERWIKIMAP', 'USE_PATH_INFO',
          'DISABLE_HTTP_REDIRECT',
          'PLUGIN_CACHED_USECACHE', 'PLUGIN_CACHED_FORCE_SYNCMAP',
-         'BLOG_EMPTY_DEFAULT_PREFIX',
+         'BLOG_EMPTY_DEFAULT_PREFIX', 'DATABASE_PERSISTENT'
          );
 
     $rs = @parse_ini_file($file);
@@ -231,11 +231,11 @@ function IniConfig($file) {
         
         // calculate them later: old or dynamic constants
         if (!array_key_exists($item, $rs) and
-            in_array($item,array('USE_PATH_INFO', 'USE_DB_SESSION',
-                                 'ALLOW_HTTP_AUTH_LOGIN', 'ALLOW_LDAP_LOGIN',
-                                 'ALLOW_IMAP_LOGIN', 'ALLOW_USER_LOGIN',
-                                 'REQUIRE_SIGNIN_BEFORE_EDIT',
-                                 'WIKIDB_NOCACHE_MARKUP')))
+            in_array($item, array('USE_PATH_INFO', 'USE_DB_SESSION',
+                                  'ALLOW_HTTP_AUTH_LOGIN', 'ALLOW_LDAP_LOGIN',
+                                  'ALLOW_IMAP_LOGIN', 'ALLOW_USER_LOGIN',
+                                  'REQUIRE_SIGNIN_BEFORE_EDIT',
+                                  'WIKIDB_NOCACHE_MARKUP')))
         {
             ;
         }
@@ -767,6 +767,9 @@ function fixup_dynamic_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.72  2005/01/13 07:29:27  rurban
+// Default ACCESS_LOG_SQL = 2 on SQL/ADODB
+//
 // Revision 1.71  2005/01/10 18:06:40  rurban
 // $LANG from DEFAULT_LANGUAGE
 //
