@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-# $Id: maketest.pl,v 1.2 2001-09-21 01:04:54 wainstead Exp $
+# $Id: maketest.pl,v 1.3 2002-01-29 22:10:24 wainstead Exp $
 
 # read in a file, generate Java code to run a test.
 # Steve Wainstead, March 2001.
@@ -10,6 +10,7 @@
 # files. It was the shortest route to the answer for now, though certainly not
 # the best one.
 
+use constant BASEURL => 'http://127.0.0.1/~swain/projects/phpwiki-1.3.x/';
 
 die <<"EOLN" unless $ARGV[0];
 
@@ -110,7 +111,7 @@ EOLN
 sub starting_page {
     my $block = shift;
     $block =~ m/start_url:\s*(http.*?)$/m;
-    my $start_url = $1;
+    my $start_url = BASEURL . $1;
     my $assertions = &get_assertions($block);
 
     print OUTFILE <<"EOLN"
