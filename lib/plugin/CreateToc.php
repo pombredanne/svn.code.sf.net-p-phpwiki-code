@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.17 2004-04-26 19:43:03 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.18 2004-04-29 21:55:15 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -42,7 +42,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.17 $");
+                            "\$Revision: 1.18 $");
     }
 
     function getDefaultArguments() {
@@ -150,8 +150,9 @@ extends WikiPlugin
                                 if ($x = preg_replace('/(<h\d>)('.$heading.')(<\/h\d>)/',
                                                       "\$1<a name=\"$manchor\">\$2</a>\$3",$x,1)) {
                                     if ($backlink) {
+                                        $url = WikiURL(new WikiPageName($basepage,false,"TOC"));
                                         $x = preg_replace('/(<h\d>)('.$heading.')(<\/h\d>)/',
-                                                          "\$1<a href=\"$basepage#TOC\" name=\"$manchor\">\$2</a>\$3",
+                                                          "\$1<a href=\"$url\" name=\"$manchor\">\$2</a>\$3",
                                                           $markup->_content[$j],1);
                                     }
                                     $markup->_content[$j] = $x;
@@ -250,6 +251,9 @@ function toggletoc(a) {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.17  2004/04/26 19:43:03  rurban
+// support most cases of header markup. fixed duplicate MangleXmlIdentifier name
+//
 // Revision 1.16  2004/04/26 14:46:14  rurban
 // better comments
 //
