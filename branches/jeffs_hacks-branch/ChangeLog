@@ -1,3 +1,8 @@
+2000-07-31  Geoffrey T. Dairiki  <dairiki@dairiki.org>
+
+	* wiki_template.php3: Change "{$what}" to "\{$what}" in an effort
+	to make code PHP4 compatible.
+
 2000-07-30  Geoffrey T. Dairiki  <dairiki@dairiki.org>
 
 	* wiki_config.php3: set_magic_quotes_runtime(0).
