@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.16 2002-02-14 04:09:36 carstenklapp Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.17 2002-02-19 01:32:38 carstenklapp Exp $ -->
 <?php
 
 $WidthI = HTML::input(array('type' => 'text',
@@ -78,7 +78,7 @@ $s = $Theme->getButtonSeparator();
 <?php if (isset($PREVIEW_CONTENT)) { ?>
   <hr />
   <p><strong><?=_("Preview only!  Changes not saved.")?></strong></p>
-  <div class="wikitext"><?= $PREVIEW_CONTENT ?></div>
+  <?= $PREVIEW_CONTENT ?>
   <hr />
 <?php } ?>
 <!-- FIXME: do we need this at all?  If so, it could probably be moved to TextFormattingRules -->
