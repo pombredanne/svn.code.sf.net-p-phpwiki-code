@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.37 2004-02-17 12:17:34 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.38 2004-02-22 23:20:32 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -420,17 +420,19 @@ extends WikiDB_backend
         return new WikiDB_backend_PearDB_iter($this, $result);
     }
 
-    function get_all_pages($include_deleted=false,$orderby='pagename') {
+    function get_all_pages($include_deleted=false,$sortby=false,$limit=false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-
-        if (substr($orderby,0,5) == 'mtime') {
-            //$orderby = $version_tbl . '.' . $orderby;
+        if ($limit)  $limit = "LIMIT $limit";
+        else         $limit = '';
+        if ($sortby) $orderby = 'ORDER BY ' . PageList::sortby($sortby,'db');
+        else         $orderby = '';
+        if (strstr($orderby,' mtime')) {
             if ($include_deleted) {
                 $result = $dbh->query("SELECT * FROM $page_tbl, $recent_tbl, $version_tbl"
                                       . " WHERE $page_tbl.id=$recent_tbl.id"
                                       . " AND $page_tbl.id=$version_tbl.id AND latestversion=version"
-                                      . " ORDER BY $orderby");
+                                      . " $orderby $limit");
             }
             else {
                 $result = $dbh->query("SELECT $page_tbl.*"
@@ -438,17 +440,17 @@ extends WikiDB_backend
                                       . " WHERE $nonempty_tbl.id=$page_tbl.id"
                                       . " AND $page_tbl.id=$recent_tbl.id"
                                       . " AND $page_tbl.id=$version_tbl.id AND latestversion=version"
-                                      . " ORDER BY $orderby");
+                                      . " $orderby $limit");
             }
         } else {
             if ($include_deleted) {
-                $result = $dbh->query("SELECT * FROM $page_tbl ORDER BY $orderby");
+                $result = $dbh->query("SELECT * FROM $page_tbl $orderby $limit");
             }
             else {
                 $result = $dbh->query("SELECT $page_tbl.*"
                                       . " FROM $nonempty_tbl, $page_tbl"
                                       . " WHERE $nonempty_tbl.id=$page_tbl.id"
-                                      . " ORDER BY $orderby");
+                                      . " $orderby $limit");
             }
         }
         return new WikiDB_backend_PearDB_iter($this, $result);

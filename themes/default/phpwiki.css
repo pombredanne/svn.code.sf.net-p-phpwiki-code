@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.14 2003-02-27 23:55:52 dairiki Exp $
+ * $Id: phpwiki.css,v 1.15 2004-02-22 23:20:33 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -46,6 +46,7 @@ body {
   /* ivory #ffe #fffff0*/
   background: #fffff0;
   font-family: Arial, Helvetica, sans-serif;
+  font-size: 80%;
   margin: 1.5ex 1em;
 }
 
@@ -714,6 +715,24 @@ table.interwiki-map {
 .clear-floats {
   clear: both;
 }
+
+th.gridbutton {
+  background-color: threedlightshadow;
+  color: black;
+  font-weight: normal;
+  font-style: menu;
+  margin: 5px 0px;
+  padding-top: 5px;
+  border: thin black solid;
+}
+a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
+  text-decoration: none;
+  font-weight: normal;
+  font-style: menu;
+  background-color: threedlightshadow;
+  color: black;
+}
+
 
 /* For emacs users
  *

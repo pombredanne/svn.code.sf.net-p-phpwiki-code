@@ -12,8 +12,9 @@
 // </Files> 
 
 // Several VARIABLES or CONSTANTS as default wiki overrides before index.php
-define('WIKI_NAME', "WikiDemo:$LANG:" . THEME);
 $LANG='de'; $LC_ALL='de_DE';
+//$LANG='ja'; $LC_ALL='ja_JP'; 
+define('WIKI_NAME', "WikiDemo:$LANG:" . THEME);
 // define('THEME', 'Portland');
 
 // Load the default configuration.

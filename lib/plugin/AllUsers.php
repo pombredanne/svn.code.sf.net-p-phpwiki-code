@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllUsers.php,v 1.8 2004-02-17 12:11:36 rurban Exp $');
+rcs_id('$Id: AllUsers.php,v 1.9 2004-02-22 23:20:33 rurban Exp $');
 /*
- Copyright 2002 $ThePhpWikiProgrammingTeam
+ Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -19,6 +19,8 @@ rcs_id('$Id: AllUsers.php,v 1.8 2004-02-17 12:11:36 rurban Exp $');
  along with PhpWiki; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+require_once('lib/PageList.php');
 
 /**
  * Based on AllPages.
@@ -39,15 +41,16 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
         return array('noheader'      => false,
                      'include_empty' => true,
                      'exclude'       => '',
-                     'info'          => '',
+                     'info'          => '',   // which columns? default: list of pagenames only
                      'sortby'        => '',   // +mtime,-pagename
+                     'limit'         => 0,
                      'debug'         => false
                      );
     }
@@ -62,44 +65,42 @@ extends WikiPlugin
 
     function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
-        // Todo: extend given _GET args
-        if ($sortby)
+        if ($sorted = $request->getArg('sortby'))
+            $sortby = $sorted;
+        elseif ($sortby)
             $request->setArg('sortby',$sortby);
 
-        include_once('lib/PageList.php');
-        $pagelist = new PageList($info, $exclude);
+        $pagelist = new PageList($info, $exclude, $this->getArgs($argstr, $request));
         if (!$noheader)
             $pagelist->setCaption(_("Authenticated users on this wiki (%d total):"));
 
         // deleted pages show up as version 0.
-        if ($include_empty)
+        if ($include_empty and empty($info))
             $pagelist->_addColumn('version');
 
-        if (defined('DEBUG') and DEBUG)
-            $debug = true;
-
+        //if (defined('DEBUG') and DEBUG) $debug = true;
         if ($debug)
             $timer = new DebugTimer;
 
-        $page_iter = $dbi->getAllPages($include_empty);
+        $page_iter = $dbi->getAllPages($include_empty, $sortby, $limit);
         while ($page = $page_iter->next()) {
             if ($page->isUserPage($include_empty))
                 $pagelist->addPage($page);
         }
 
         if ($debug) {
-            // Not totally localization-friendly but it's only a
-            // DEBUGging message
-            trigger_error("DEBUG: " . get_class($this) . ": "
-                          . sprintf(_("Elapsed time: %s s"),
-                                    $timer->getStats()),
-                          E_USER_NOTICE);
+            return HTML($pagelist,
+                        HTML::p(fmt("Elapsed time: %s s", $timer->getStats())));
+        } else {
+            return $pagelist;
         }
-        return $pagelist;
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/02/17 12:11:36  rurban
+// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
+//
 // Revision 1.7  2003/12/21 00:29:45  carstenklapp
 // Minor bugfix: Fixed broken debug argument.
 //

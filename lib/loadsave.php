@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.87 2004-01-26 09:17:49 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.88 2004-02-22 23:20:31 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -243,6 +243,7 @@ function DumpHtmlToDir (&$request)
     }
 
     StartLoadDump($request, _("Dumping Pages"), $html);
+    $thispage = $request->getArg('pagename'); // for "Return to ..."
 
     $dbi = $request->getDbh();
     $pages = $dbi->getAllPages();
@@ -252,9 +253,11 @@ function DumpHtmlToDir (&$request)
         $Theme->HTML_DUMP_SUFFIX = $HTML_DUMP_SUFFIX;
 
     while ($page = $pages->next()) {
-        @set_time_limit(30); // Reset watchdog.
+    	if (! $request->getArg('start_debug'))
+          @set_time_limit(30); // Reset watchdog.
 
         $pagename = $page->getName();
+        $request->setArg('pagename',$pagename); // Template::_basepage fix
         $filename = FilenameForPage($pagename) . $Theme->HTML_DUMP_SUFFIX;
 
         $msg = HTML(HTML::br(), $pagename, ' ... ');
@@ -265,9 +268,7 @@ function DumpHtmlToDir (&$request)
         }
 
         $revision = $page->getCurrentRevision();
-
         $transformedContent = $revision->getTransformedContent();
-
         $template = new Template('browse', $request,
                                  array('revision' => $revision,
                                        'CONTENT' => $transformedContent));
@@ -292,6 +293,7 @@ function DumpHtmlToDir (&$request)
     //CopyImageFiles() will go here;
     $Theme->$HTML_DUMP_SUFFIX = '';
 
+    $request->setArg('pagename',$thispage); // Template::_basepage fix
     EndLoadDump($request);
 }
 
@@ -329,6 +331,7 @@ function MakeWikiZipHtml (&$request)
             $attrib['write_protected'] = 1;
 
         $pagename = $page->getName();
+        $request->setArg('pagename',$pagename); // Template::_basepage fix
         $filename = FilenameForPage($pagename) . $Theme->HTML_DUMP_SUFFIX;
         $revision = $page->getCurrentRevision();
 
@@ -839,6 +842,26 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.87  2004/01/26 09:17:49  rurban
+ * changed stored pref representation as before.
+   the array of objects is 1) bigger and 2)
+   less portable. If we would import packed pref
+   objects and the object definition was changed, PHP would fail.
+   This doesn't happen with an simple array of non-default values.
+ * use $prefs->retrieve and $prefs->store methods, where retrieve
+   understands the interim format of array of objects also.
+ * simplified $prefs->get() and fixed $prefs->set()
+ * added $user->_userid and class '_WikiUser' portability functions
+ * fixed $user object ->_level upgrading, mostly using sessions.
+   this fixes yesterdays problems with loosing authorization level.
+ * fixed WikiUserNew::checkPass to return the _level
+ * fixed WikiUserNew::isSignedIn
+ * added explodePageList to class PageList, support sortby arg
+ * fixed UserPreferences for WikiUserNew
+ * fixed WikiPlugin for empty defaults array
+ * UnfoldSubpages: added pagename arg, renamed pages arg,
+   removed sort arg, support sortby arg
+
  Revision 1.86  2003/12/02 16:18:26  carstenklapp
  Minor enhancement: Provide more meaningful filenames for WikiDB zip
  dumps & snapshots.

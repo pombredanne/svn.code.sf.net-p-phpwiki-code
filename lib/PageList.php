@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.55 2004-02-17 12:14:07 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.56 2004-02-22 23:20:31 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -69,15 +69,57 @@ class _PageList_Column_base {
     }
 
     function heading () {
-        if (in_array($this->_field,array('pagename','mtime','hits'))) {
+        // allow sorting?
+        if (in_array($this->_field,PageList::sortable_columns())) {
             // multiple comma-delimited sortby args: "+hits,+pagename"
             // asc or desc: +pagename, -pagename
             $sortby = PageList::sortby($this->_field,'flip_order');
-            $s = HTML::a(array('href' => $GLOBALS['request']->GetURLtoSelf(array('sortby' => $sortby)),'class' => 'pagetitle', 'title' => sprintf(_("Sort by %s"),$this->_field)), HTML::raw('&nbsp;'), HTML::u($this->_heading), HTML::raw('&nbsp;'));
+            $s = HTML::a(array('href' => $GLOBALS['request']->GetURLtoSelf(array('sortby' => $sortby)),
+                               'class' => 'pagetitle', 
+                               'title' => sprintf(_("Sort by %s"),$this->_field)), 
+                         HTML::raw('&nbsp;'), HTML::u($this->_heading), HTML::raw('&nbsp;'));
         } else {
             $s = HTML(HTML::raw('&nbsp;'), HTML::u($this->_heading), HTML::raw('&nbsp;'));
         }
-        return HTML::td(array('align' => 'center'),$s);
+        return HTML::th(array('align' => 'center'),$s);
+    }
+
+    // grid-style
+    function button_heading () {
+        global $Theme, $request;
+        // allow sorting?
+        if (in_array($this->_field,PageList::sortable_columns())) {
+            // multiple comma-delimited sortby args: "+hits,+pagename"
+            $src = false; 
+            if ($request->getArg('sortby')) {
+                if (PageList::sortby($this->_field,'check')) { // show icon?
+                    $sortby = PageList::sortby($request->getArg('sortby'),'flip_order');
+                    $request->setArg('sortby',$sortby);
+                    $desc = (substr($sortby,0,1) == '-');      // asc or desc? (+pagename, -pagename)
+                    $src = $Theme->getButtonURL($desc ? 'asc_order' : 'desc_order');
+                } else {
+                    $sortby = PageList::sortby($this->_field,'init');
+                }
+            } else {
+                $sortby = PageList::sortby($this->_field,'init');
+            }
+            $s = HTML::a(array('href' => 
+                               $request->GetURLtoSelf(array('sortby' => $sortby,
+                                                            'nopurge' => 'cache')),
+                               'class' => 'gridbutton', 
+                               'title' => sprintf(_("Sort by %s"),$this->_field)), 
+                         $this->_heading, 
+                         $src ? HTML(HTML::raw('&nbsp;'),
+                                     HTML::img(array('src' => $src, 
+                                                     'width' => '', 
+                                                     'height' => '', 
+                                                     'alt' => _("Click to reverse sort order")))) 
+                              : HTML::raw(''));
+        } else {
+            $s = $this->_heading;
+        }
+        return HTML::th(array('align' => 'center', 'class' => 'gridbutton'), 
+                        HTML::raw('&nbsp;'), $s, HTML::raw('&nbsp;'));
     }
 };
 
@@ -136,6 +178,7 @@ class _PageList_Column_checkbox extends _PageList_Column {
         $this->_name = $name;
         $heading = HTML::input(array('type'  => 'button',
                                      'title' => _("Click to de-/select all pages"),
+                                     //'width' => '100%',
                                      'name'  => $default_heading,
                                      'value' => $default_heading,
                                      'onclick' => "flipAll(this.form)"
@@ -306,6 +349,7 @@ class PageList {
     var $_types = array();
     var $_options = array();
     var $_selected = array();
+    var $_sortby = array();
 
     function PageList ($columns = false, $exclude = false, $options = false) {
         $this->_initAvailableColumns();
@@ -325,6 +369,8 @@ class PageList {
                     $columns = array_diff(array_merge($columns,$cols),array($symbol));
                 }
             }
+            if (!in_array('pagename',$columns))
+                $this->_addColumn('pagename');
             foreach ($columns as $col) {
                 $this->_addColumn($col);
             }
@@ -338,6 +384,12 @@ class PageList {
         }
 
         $this->_options = $options;
+        if (!empty($options) and !empty($options['sortby'])) {
+            $this->sortby($options['sortby'],'init');
+        } else {
+            $this->sortby($GLOBALS['request']->getArg('sortby'),'init');
+        }
+            
         $this->_messageIfEmpty = _("<no matches>");
     }
 
@@ -450,28 +502,48 @@ class PageList {
         return AsXML($this->getContent());
     }
 
+    function sortable_columns() {
+        return array('pagename','mtime','hits');
+    }
+
     /** 
-     * handles sortby requests for the DB iterator and table header links
-     * prefix the column with + or - like "+pagename","-mtime", ...
-     * supported column: 'pagename','mtime','hits'
-     * supported action: 'flip_order', 'db'
+     * Handles sortby requests for the DB iterator and table header links
+     * Prefix the column with + or - like "+pagename","-mtime", ...
+     * supported columns: 'pagename','mtime','hits'
+     * supported actions: 'flip_order' "mtime" => "+mtime" => "-mtime" ...
+     *                    'db'         "-pagename" => "pagename DESC"
      */
     function sortby ($column, $action) {
+        if (empty($column)) return;
+        //support multiple comma-delimited sortby args: "+hits,+pagename"
+        if (strstr($column,',')) {
+            $result = array();
+            foreach (explode(',',$column) as $col) {
+                $result[] = $this->sortby($col,$action);
+            }
+            return join(",",$result);
+        }
         if (substr($column,0,1) == '+') {
             $order = '+'; $column = substr($column,1);
         } elseif (substr($column,0,1) == '-') {
             $order = '-'; $column = substr($column,1);
         }
-        if (in_array($column,array('pagename','mtime','hits'))) {
+        if (in_array($column,PageList::sortable_columns())) {
             // default order: +pagename, -mtime, -hits
             if (empty($order))
                 if (in_array($column,array('mtime','hits')))
                     $order = '-';
                 else
                     $order = '+';
-            //TODO: multiple comma-delimited sortby args: "+hits,+pagename"
             if ($action == 'flip_order') {
                 return ($order == '+' ? '-' : '+') . $column;
+            } elseif ($action == 'init') {
+                $this->_sortby[$column] = $order;
+                return $order . $column;
+            } elseif ($action == 'check') {
+                return (!empty($this->_sortby[$column]) or 
+                        ($GLOBALS['request']->getArg('sortby') and 
+                         strstr($GLOBALS['request']->getArg('sortby'),$column)));
             } elseif ($action == 'db') {
                 // asc or desc: +pagename, -pagename
                 return $column . ($order == '+' ? ' ASC' : ' DESC');
@@ -481,11 +553,11 @@ class PageList {
     }
 
     // echo implode(":",explodeList("Test*",array("xx","Test1","Test2")));
-    function explodePageList($input, $perm = false, $sortby = '') {
+    function explodePageList($input, $perm = false, $sortby=false, $limit=false) {
         // expand wildcards from list of all pages
         if (preg_match('/[\?\*]/',$input)) {
             $dbi = $GLOBALS['request']->getDbh();
-            $allPagehandles = $dbi->getAllPages($perm,$sortby);
+            $allPagehandles = $dbi->getAllPages($perm,$sortby,$limit);
             while ($pagehandle = $allPagehandles->next()) {
                 $allPages[] = $pagehandle->getName();
             }
@@ -597,7 +669,7 @@ class PageList {
         $row = HTML::tr();
         $table_summary = array();
         foreach ($this->_columns as $col) {
-            $row->pushContent($col->heading());
+            $row->pushContent($col->button_heading());
             if (is_string($col->_heading))
                 $table_summary[] = $col->_heading;
         }
