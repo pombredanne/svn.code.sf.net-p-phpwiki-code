@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.90 2002-11-19 07:07:37 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.91 2003-02-15 02:21:54 dairiki Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -30,7 +30,7 @@ class WikiRequest extends Request {
         $this->setArg('action', $this->_deduceAction());
 
         // Restore auth state
-        $this->_user = new WikiUser($this->_deduceUsername());
+        $this->_user = new WikiUser($this, $this->_deduceUsername());
         // $this->_user = new WikiDB_User($this->_user->getId(), $this->getAuthDbh());
         $this->_prefs = $this->_user->getPreferences();
     }
