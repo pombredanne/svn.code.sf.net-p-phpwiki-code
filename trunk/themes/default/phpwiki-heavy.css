@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki-heavy.css,v 1.1 2002-03-06 02:21:16 carstenklapp Exp $
+ * $Id: phpwiki-heavy.css,v 1.2 2002-12-31 20:01:15 carstenklapp Exp $
  *
  * This is stuff which should be in phpwiki.css, but which breaks Netscape 4.
  *
@@ -77,14 +77,15 @@ input.wikiaction, input.wikiadmin, input.wikiunsafe, input.button {
   border-left: 1px solid #c6d2de;
   border-bottom: 1px solid #494f5d;
   border-right:  1px solid #494f5d;
-  padding-top:    0.2ex;
-  padding-bottom: 0.1ex;
+  padding-top:    0.15ex;
+  padding-bottom: 0.25ex;
   padding-left:  .5em;
   padding-right: .5em;
 }
 
 /* Prevent buttons from overlapping when the toolbar is wrapped. */
 a.wikiaction, a.wikiadmin { line-height: 2.6ex; }
+div#navbuttons, div#signin, div#actionbuttons { line-height: 3.0ex; }
 
 /* QuestionMark */
 .wikiunknown a, .named-wikiunknown a {
