@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: mysql.php,v 1.10.2.2 2001-08-18 03:57:27 dairiki Exp $');
+<?php rcs_id('$Id: mysql.php,v 1.10.2.3 2001-11-07 18:54:07 dairiki Exp $');
 
    /*
       Database functions:
@@ -185,10 +185,15 @@
    {
       global $HitCountStore;
 
-      $res = mysql_query("update $HitCountStore set hits=hits+1 where pagename='$pagename'", $dbi['dbc']);
+      $qpagename = addslashes($pagename);
+      $res = mysql_query("update $HitCountStore set hits=hits+1"
+                         . " where pagename='$qpagename'",
+                         $dbi['dbc']);
 
       if (!mysql_affected_rows($dbi['dbc'])) {
-	 $res = mysql_query("insert into $HitCountStore (pagename, hits) values ('$pagename', 1)", $dbi['dbc']);
+	 $res = mysql_query("insert into $HitCountStore (pagename, hits)"
+                            . " values ('$qpagename', 1)",
+                            $dbi['dbc']);
       }
 
       return $res;
@@ -198,7 +203,10 @@
    {
       global $HitCountStore;
 
-      $res = mysql_query("select hits from $HitCountStore where pagename='$pagename'", $dbi['dbc']);
+      $qpagename = addslashes($pagename);
+      $res = mysql_query("select hits from $HitCountStore"
+                         . " where pagename='$qpagename'",
+                         $dbi['dbc']);
       if (mysql_num_rows($res))
          $hits = mysql_result($res, 0);
       else
