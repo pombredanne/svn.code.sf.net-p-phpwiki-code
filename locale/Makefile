@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.12 2002-01-17 06:52:26 carstenklapp Exp $
+# $Id: Makefile,v 1.13 2002-01-18 01:32:52 dairiki Exp $
 #
 # locale/Makefile
 #
@@ -97,6 +97,7 @@ ${POT_FILE}: ../lib/savepage.php
 ${POT_FILE}: ../lib/stdlib.php
 ${POT_FILE}: ../lib/Template.php
 ${POT_FILE}: ../lib/TextSearchQuery.php
+${POT_FILE}: ../lib/Theme.php
 ${POT_FILE}: ../lib/transform.php
 ${POT_FILE}: ../lib/WikiCallback.php
 ${POT_FILE}: ../lib/WikiDB/backend/cvs.php
@@ -118,14 +119,16 @@ ${POT_FILE}: ../lib/WikiDB/SQL.php
 ${POT_FILE}: ../lib/WikiPlugin.php
 ${POT_FILE}: ../lib/WikiUser.php
 ${POT_FILE}: ../lib/ziplib.php
-${POT_FILE}: ../templates/browse.html
-${POT_FILE}: ../templates/editpage.html
-${POT_FILE}: ../templates/message.html
+${POT_FILE}: ../themes/default/templates/body.tmpl
+${POT_FILE}: ../themes/default/templates/browse.tmpl
+${POT_FILE}: ../themes/default/templates/editpage.tmpl
+${POT_FILE}: ../themes/default/templates/nochanges.tmpl
+${POT_FILE}: ../themes/default/templates/savepage.tmpl
+${POT_FILE}: ../themes/default/templates/top.tmpl
+${POT_FILE}: ../themes/default/templates/viewsource.tmpl
 ${POT_FILE}: ../themes/default/themeinfo.php
-${POT_FILE}: ../themes/Hawaiian/pictures/random.php
+${POT_FILE}: ../themes/Hawaiian/images/pictures/random.php
 ${POT_FILE}: ../themes/Hawaiian/themeinfo.php
-${POT_FILE}: ../themes/MacOSX/templates/browse.html
-${POT_FILE}: ../themes/MacOSX/templates/editpage.html
-${POT_FILE}: ../themes/MacOSX/templates/message.html
+${POT_FILE}: ../themes/MacOSX/lib/RecentChanges.php
 ${POT_FILE}: ../themes/MacOSX/themeinfo.php
 ${POT_FILE}: ../themes/WikiTrek/themeinfo.php

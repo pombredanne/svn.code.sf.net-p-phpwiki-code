@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: update-makefile.sh,v 1.4 2002-01-14 14:15:02 rurban Exp $
+# $Id: update-makefile.sh,v 1.5 2002-01-18 01:32:52 dairiki Exp $
 #
 # This shell script is used to update the list of .po files and the
 # dependencies for phpwiki.pot in the Makefile.
@@ -38,7 +38,7 @@ po_files () {
 # by xgettext() for localizeable strings.
 # find ../lib fails on cygwin
 pot_file_deps () {
-    (cd ..; find lib templates themes \( -name "*.php" -o -name "*.html" \)) |
+    (cd ..; find lib templates themes \( -name "*.php" -o -name "*.tmpl" \)) |
 	sed 's|^|${POT_FILE}: ../|;' |
 	sort
 }
