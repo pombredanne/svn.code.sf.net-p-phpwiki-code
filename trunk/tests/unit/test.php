@@ -39,6 +39,17 @@ define('GROUP_METHOD', 'NONE');
 define('USE_DB_SESSION', false);
 define('RATING_STORAGE', 'WIKIPAGE');
 
+// memory usage: (8MB limit on certain servers)
+// setupwiki
+// cli:  Mem16712 => Mem16928
+// web:  Mem21216 => Mem26332 (5MB)
+
+// dumphtml:
+// cli: Mem20696 => Mem31240  (with USECACHE)    (10MB)
+// cli: Mem20240 => Mem30212  (without USECACHE) (10MB)
+// web: Mem29424 => Mem35400  (without USECACHE) (6MB)
+//define('USECACHE', false);
+
 // available database backends to test:
 $database_backends = array(
                            'file',
@@ -72,6 +83,30 @@ ini_set('include_path', ini_get('include_path') . $ini_sep . $rootdir);
 $HTTP_SERVER_VARS['REMOTE_ADDR'] = '127.0.0.1';
 $HTTP_SERVER_VARS['HTTP_USER_AGENT'] = "PHPUnit";
 
+function printMemoryUsage($msg = '') {
+    if ($msg) echo $msg,"\n";
+    if ((defined('DEBUG') and (DEBUG & 8)) or !defined('DEBUG')) {
+        echo "-- MEMORY USAGE: ";
+        if (function_exists('memory_get_usage')) {
+            echo memory_get_usage(),"\n";
+        } elseif (function_exists('getrusage')) {
+            $u = getrusage();
+            echo $u['ru_maxrss'],"\n";
+        } elseif (substr(PHP_OS,0,3)=='WIN') { // requires a newer cygwin
+            // what we want is the process memory only: apache or php
+            $pid = getmypid();
+            // this works only if it's a cygwin process (apache or php)
+            //echo `cat /proc/$pid/statm |cut -f1`,"\n";
+            // if it's native windows use something like this: 
+            // (requires pslist from systinternals.com)
+            echo `pslist $pid|grep -A1 Mem|perl -ane"print \$F[5]"`,"\n";
+        } else {
+            $pid = getmypid();
+            echo `ps -eo%mem,rss,pid | grep $pid`,"\n";
+        }
+        flush();
+    }
+}
 function printSimpleTrace($bt) {
     //print_r($bt);
     echo "Traceback:\n";
@@ -82,7 +117,6 @@ function printSimpleTrace($bt) {
         print "  " . $elem['file'] . ':' . $elem['line'] . "\n";
     }
 }
-
 # Show lots of detail when an assert() in the code fails
 function assert_callback( $script, $line, $message ) {
    echo "assert failed: script ", $script," line ", $line," :";
@@ -101,6 +135,7 @@ if (defined('E_STRICT') and (E_ALL & E_STRICT)) // strict php5?
     error_reporting(E_ALL & ~E_STRICT); 	// exclude E_STRICT
 else
     error_reporting(E_ALL); // php4
+
 // This is too strict, fails on every notice and warning. 
 /*
 function myErrorHandler$errno, $errstr, $errfile, $errline) {
@@ -171,8 +206,6 @@ function purge_testbox() {
 #
 ####################################################################
 
-# Test files
-require_once 'PHPUnit.php';
 # lib/config.php might do a cwd()
 
 if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']))
@@ -188,7 +221,12 @@ $alltests = array('InlineParserTest','HtmlParserTest','PageListTest','ListPagesT
 if (isset($HTTP_SERVER_VARS['REQUEST_METHOD'])) {
     $argv = array();
     foreach ($HTTP_GET_VARS as $key => $val) {
-        $argv[] = $key."=".$val;
+    	if (is_array($val)) 
+    	    foreach ($val as $v) $argv[] = $key."=".$v;
+    	elseif (strstr($val,",") and in_array($key,array("test","db")))
+    	    foreach (explode(",",$val) as $v) $argv[] = $key."=".$v;
+    	else
+            $argv[] = $key."=".$val;
     }
 } elseif (!empty($argv) and preg_match("/test\.php$/", $argv[0]))
     array_shift($argv);
@@ -225,6 +263,16 @@ if (!empty($argv)) {
     flush();
 }
 define('DEBUG', $debug_level); 
+
+
+if (DEBUG & 8)
+    printMemoryUsage("before PEAR");
+
+# Test files
+require_once 'PHPUnit.php';
+
+if (DEBUG & 8)
+    printMemoryUsage("after PEAR, before PhpWiki");
 
 define('PHPWIKI_NOMAIN', true);
 # Other needed files
@@ -284,33 +332,25 @@ else {
 */
 include_once("themes/" . THEME . "/themeinfo.php");
 
+if (DEBUG & _DEBUG_TRACE)
+    printMemoryUsage("after PhpWiki, before tests");
+
 // save and restore all args for each test.
 class phpwiki_TestCase extends PHPUnit_TestCase {
     function setUp() { 
         global $request;
         $this->_savedargs = $request->_args;
         $request->_args = array();
+        if (DEBUG & 1) {
+            echo $this->_name,"\n";
+            flush();
+        }
     }
     function tearDown() {
         global $request;
         $request->_args = $this->_savedargs;
-        if (DEBUG & _DEBUG_TRACE) {
-            echo "-- MEMORY USAGE: ";
-            if (isWindows()) { // requires a newer cygwin
-                // what we want is the process memory only: apache or php
-	        $pid = getmypid();
-	        echo `cat /proc/$pid/statm |cut -f1`,"\n";
-            } elseif (function_exists('memory_get_usage')) {
-                echo memory_get_usage(),"\n";
-            } elseif (function_exists('getrusage')) {
-                $u = getrusage();
-                echo $u['ru_maxrss'],"\n";
-            } elseif (!isWindows()) { // only on unix, not on cygwin:
-	        $pid = getmypid();
-	        echo `ps -eo%mem,rss,pid | grep $pid`,"\n";
-            }
-            flush();
-        }
+        if (DEBUG & _DEBUG_TRACE)
+            printMemoryUsage();
     }
 }
 
