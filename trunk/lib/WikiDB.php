@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.51 2004-05-06 17:30:37 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.52 2004-05-06 19:26:16 rurban Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -164,7 +164,16 @@ class WikiDB {
      * @return WikiDB_Page The requested WikiDB_Page.
      */
     function getPage($pagename) {
-        assert(is_string($pagename) and $pagename != '');
+        static $error_displayed = false;
+        if (DEBUG) {
+            if (!(is_string($pagename) and $pagename != '')) {
+                if ($error_displayed) return false;
+                $error_displayed = true;
+                trigger_error("empty pagename",E_USER_WARNING);
+                return false;
+            }
+        } else 
+            assert(is_string($pagename) and $pagename != '');
         return new WikiDB_Page($this, $pagename);
     }
 
@@ -526,7 +535,12 @@ class WikiDB_Page
     function WikiDB_Page(&$wikidb, $pagename) {
         $this->_wikidb = &$wikidb;
         $this->_pagename = $pagename;
-        assert(is_string($pagename) and $pagename != '');
+        if (DEBUG) {
+            if (!(is_string($pagename) and $pagename != '')) {
+                trigger_error("empty pagename",E_USER_WARNING);
+                return false;
+            }
+        } else assert(is_string($pagename) and $pagename != '');
     }
 
     /**
@@ -1557,9 +1571,24 @@ class WikiDB_PageRevisionIterator
         $pagename = $next['pagename'];
         $version = $next['version'];
         $versiondata = $next['versiondata'];
-        assert(is_string($pagename) and $pagename != '');
-        assert(is_array($versiondata));
-        assert($version > 0);
+        if (DEBUG) {
+            if (!(is_string($pagename) and $pagename != '')) {
+                trigger_error("empty pagename",E_USER_WARNING);
+                return false;
+            }
+        } else assert(is_string($pagename) and $pagename != '');
+        if (DEBUG) {
+            if (!is_array($versiondata)) {
+                trigger_error("empty versiondata",E_USER_WARNING);
+                return false;
+            }
+        } else assert(is_array($versiondata));
+        if (DEBUG) {
+            if (!($version > 0)) {
+                trigger_error("invalid version",E_USER_WARNING);
+                return false;
+            }
+        } else assert($version > 0);
 
         return new WikiDB_PageRevision($this->_wikidb, $pagename, $version,
                                        $versiondata);
@@ -1725,6 +1754,17 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.51  2004/05/06 17:30:37  rurban
+// CategoryGroup: oops, dos2unix eol
+// improved phpwiki_version:
+//   pre -= .0001 (1.3.10pre: 1030.099)
+//   -p1 += .001 (1.3.9-p1: 1030.091)
+// improved InstallTable for mysql and generic SQL versions and all newer tables so far.
+// abstracted more ADODB/PearDB methods for action=upgrade stuff:
+//   backend->backendType(), backend->database(),
+//   backend->listOfFields(),
+//   backend->listOfTables(),
+//
 // Revision 1.50  2004/05/04 22:34:25  rurban
 // more pdf support
 //

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.143 2004-05-06 17:30:38 rurban Exp $');
+rcs_id('$Id: main.php,v 1.144 2004-05-06 19:26:16 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -751,8 +751,8 @@ $this->version = phpwiki_version();
         include_once("lib/loadsave.php");
         MakeWikiZip($this);
         // I don't think it hurts to add cruft at the end of the zip file.
-        echo "\n========================================================\n";
-        echo "PhpWiki " . PHPWIKI_VERSION . " source:\n$GLOBALS[RCS_IDS]\n";
+        //echo "\n========================================================\n";
+        //echo "PhpWiki " . PHPWIKI_VERSION . " source:\n$GLOBALS[RCS_IDS]\n";
     }
 
     function action_ziphtml () {
@@ -937,6 +937,17 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.143  2004/05/06 17:30:38  rurban
+// CategoryGroup: oops, dos2unix eol
+// improved phpwiki_version:
+//   pre -= .0001 (1.3.10pre: 1030.099)
+//   -p1 += .001 (1.3.9-p1: 1030.091)
+// improved InstallTable for mysql and generic SQL versions and all newer tables so far.
+// abstracted more ADODB/PearDB methods for action=upgrade stuff:
+//   backend->backendType(), backend->database(),
+//   backend->listOfFields(),
+//   backend->listOfTables(),
+//
 // Revision 1.142  2004/05/04 22:34:25  rurban
 // more pdf support
 //
