@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RssParser.php,v 1.5 2004-04-26 20:44:34 rurban Exp $');
+rcs_id('$Id: RssParser.php,v 1.6 2004-05-18 16:18:36 rurban Exp $');
 /**
  * RSSParser Class, requires the expat extension
  * Based on Duncan Gough RSSParser class
@@ -151,6 +151,7 @@ class RSSParser {
             } else {
                 $data = $client->getContent();
             }
+            if (empty($data)) return;
             xml_parse($xml_parser, $data, true) or 
                 trigger_error(sprintf("XML error: %s at line %d", 
                                       xml_error_string(xml_get_error_code($xml_parser)), 
@@ -162,6 +163,9 @@ class RSSParser {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/04/26 20:44:34  rurban
+// locking table specific for better databases
+//
 // Revision 1.4  2004/04/18 01:11:51  rurban
 // more numeric pagename fixes.
 // fixed action=upload with merge conflict warnings.
