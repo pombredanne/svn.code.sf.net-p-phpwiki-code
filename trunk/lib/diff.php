@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: diff.php,v 1.41 2003-01-08 02:23:02 carstenklapp Exp $');
+rcs_id('$Id: diff.php,v 1.42 2003-01-11 23:05:04 carstenklapp Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -147,15 +147,16 @@ class HtmlUnifiedDiffFormatter extends UnifiedDiffFormatter
     function _lines($lines, $class, $prefix = false, $elem = false) {
         if (!$prefix)
             $prefix = HTML::raw('&nbsp;');
+        $div = HTML::div(array('class' => 'difftext'));
         foreach ($lines as $line) {
             if ($elem)
                 $line = new HtmlElement($elem, $line);
-
-            $this->_block->pushContent(HTML::div(array('class' => $class),
-                                                 HTML::tt(array('class' => 'prefix'),
-                                                          $prefix),
-                                                 $line, HTML::raw('&nbsp;')));
+            $div->pushContent(HTML::div(array('class' => $class),
+                                        HTML::tt(array('class' => 'prefix'),
+                                                 $prefix),
+                                        $line, HTML::raw('&nbsp;')));
         }
+        $this->_block->pushContent($div);
     }
 
     function _context($lines) {
@@ -276,7 +277,7 @@ function showDiff (&$request) {
     $dbi = $request->getDbh();
     if (! $dbi->isWikiPage($pagename)) {
         $html = HTML(HTML::p(fmt("I'm sorry, there is no such page as %s.",
-                                WikiLink($pagename, 'unknown'))));
+                                 WikiLink($pagename, 'unknown'))));
         include_once('lib/Template.php');
         GeneratePage($html, sprintf(_("Diff: %s"), $pagename), false);
         return; //early return
@@ -385,6 +386,10 @@ function showDiff (&$request) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.41  2003/01/08 02:23:02  carstenklapp
+// Don't perform a diff when the page doesn't exist (such as a
+// nonexistant calendar day/sub-page)
+//
 
 // Local Variables:
 // mode: php
