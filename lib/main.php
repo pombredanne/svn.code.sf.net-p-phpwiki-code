@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.155 2004-06-03 10:18:19 rurban Exp $');
+rcs_id('$Id: main.php,v 1.156 2004-06-03 17:58:16 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -81,7 +81,18 @@ $this->version = phpwiki_version();
     }
 
     function initializeLang () {
-        if ($user_lang = $this->getPref('lang')) {
+        $user_lang = $this->getPref('lang');
+        $_lang = $this->_prefs->_prefs['lang'];
+        //check changed LANG and THEME inside a session. 
+        // (e.g. by using another baseurl)
+        if (isset($this->_user->_authhow) and 
+            $this->_user->_authhow == 'session' and 
+            !isset($_lang->lang) and 
+            $user_lang != $GLOBALS['LANG'])
+        {
+            $user_lang = $GLOBALS['LANG'];
+        }
+        if (isset($user_lang)) {
             //trigger_error("DEBUG: initializeLang() ". $user_lang ." calling update_locale()...");
             update_locale($user_lang);
             FindLocalizedButtonFile(".",'missing_ok','reinit');
@@ -92,7 +103,19 @@ $this->version = phpwiki_version();
         global $Theme;
 
         // Load theme
-        if ($user_theme = $this->getPref('theme'))
+        $user_theme = $this->getPref('theme');
+        $_theme = $this->_prefs->_prefs['theme'];
+        //check changed LANG and THEME inside a session. 
+        // (e.g. by using another baseurl)
+        if (isset($this->_user->_authhow) and 
+            $this->_user->_authhow == 'session' and 
+            !isset($_theme->theme) and
+            defined('THEME') and 
+            $user_theme != THEME)
+        {
+            include_once("themes/" . THEME . "/themeinfo.php");
+        }
+        if (empty($Theme) and isset($user_theme))
             include_once("themes/$user_theme/themeinfo.php");
         if (empty($Theme) and defined('THEME'))
             include_once("themes/" . THEME . "/themeinfo.php");
@@ -966,6 +989,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.155  2004/06/03 10:18:19  rurban
+// fix FileUser locking issues, new config ENABLE_PAGEPERM
+//
 // Revision 1.154  2004/06/02 18:01:46  rurban
 // init global FileFinder to add proper include paths at startup
 //   adds PHPWIKI_DIR if started from another dir, lib/pear also
