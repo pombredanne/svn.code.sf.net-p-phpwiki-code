@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: RecentChanges.php,v 1.2 2002-03-03 03:54:56 carstenklapp Exp $');
+<?php rcs_id('$Id: RecentChanges.php,v 1.3 2003-03-01 22:27:22 carstenklapp Exp $');
 /*
  * Extensions/modifications to the stock RecentChanges (and PageHistory) format.
  */
@@ -46,7 +46,7 @@ extends _RecentChanges_HtmlFormatter
             return '';
         return  HTML::strong( array('class' => 'wiki-summary'),
                               " ",
-                              do_transform($summary, 'LinkTransform'),
+                              TransformLinks($summary, $rev->get('markup'), $rev->getPageName()),
                               " ");
     }
 
@@ -68,7 +68,7 @@ extends _PageHistory_HtmlFormatter
             return '';
         return  HTML::strong( array('class' => 'wiki-summary'),
                               " ",
-                              do_transform($summary, 'LinkTransform'),
+                              TransformLinks($summary, $rev->get('markup'), $rev->getPageName()),
                               " ");
     }
 }
