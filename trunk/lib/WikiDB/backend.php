@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.3 2002-01-10 23:32:04 carstenklapp Exp $');
+rcs_id('$Id: backend.php,v 1.4 2003-02-22 00:28:33 dairiki Exp $');
 
 /*
   Pagedata
@@ -156,6 +156,9 @@ class WikiDB_backend
      * Delete page from the database.
      *
      * Delete page (and all it's revisions) from the database.
+     *
+     * This should remove all links (from the named page) from
+     * the link database.
      *
      * @param $pagename string Page name.
      */

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: dbaBase.php,v 1.4 2002-01-24 06:53:36 carstenklapp Exp $');
+<?php rcs_id('$Id: dbaBase.php,v 1.5 2003-02-22 00:28:34 dairiki Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -140,6 +140,8 @@ extends WikiDB_backend
             $versdb->set($version-- . ":$pagename", false);
         }
         $pagedb->set($pagename, false);
+
+        $this->set_links($pagename, false);
     }
             
     /**
