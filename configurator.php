@@ -20,7 +20,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'iso-8859-1');
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.13 2003-03-07 02:48:23 dairiki Exp $ -->
+<!-- $Id: configurator.php,v 1.14 2003-03-07 06:31:16 dairiki Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki 1.3.x</title>
 <style type="text/css" media="screen">
@@ -270,7 +270,7 @@ $properties["Part Null Settings"] =
 new unchangeable_variable('_partnullsettings', "
 define ('PHPWIKI_VERSION', '1.3.5pre');
 require \"lib/prepend.php\";
-rcs_id('\$Id: configurator.php,v 1.13 2003-03-07 02:48:23 dairiki Exp $');", "");
+rcs_id('\$Id: configurator.php,v 1.14 2003-03-07 06:31:16 dairiki Exp $');", "");
 
 
 $properties["Part One"] =
@@ -1849,17 +1849,30 @@ You can't use this file with your PhpWiki server yet!!";
     }
     $config .= $end;
 
-    /* We first check if the config-file exists. */
-    if (file_exists($fs_config_file)) {
+    // I think writing this config file is a big security hole.
+    // If this is installed in such a way that it can write an index-user.php,
+    // then anyone can create a working index-user.php with, e.g. any
+    // admin user and pw of their choosing...
+    //
+    // So I'm disabling it...
+
+    if (defined(ENABLE_FILE_OUTPUT) and ENABLE_FILE_OUPUT) {
+      /* We first check if the config-file exists. */
+      if (file_exists($fs_config_file)) {
         /* We make a backup copy of the file */
-	// $config_file = 'index-user.php';
+        // $config_file = 'index-user.php';
         $new_filename = preg_replace('/\.php$/', time() . '.php', $fs_config_file);
         if (@copy($fs_config_file, $new_filename)) {
             $fp = @fopen($fs_config_file, 'w');
         }
-    } else {
+      } else {
         $fp = @fopen($fs_config_file, 'w');
+      }
     }
+    else {
+      $fp = false;
+    }
+    
 
     if ($fp) {
         fputs($fp, $config);
