@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.54 2004-06-29 08:52:24 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.55 2004-07-03 16:51:06 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -704,47 +704,65 @@ extends WikiDB_backend
     function _update_recent_table($pageid = false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-        extract($this->_expressions);
 
         $pageid = (int)$pageid;
 
-        $this->lock();
-
-        $dbh->query("DELETE FROM $recent_tbl"
-                    . ( $pageid ? " WHERE id=$pageid" : ""));
-        
-        $dbh->query( "INSERT INTO $recent_tbl"
-                     . " (id, latestversion, latestmajor, latestminor)"
-                     . " SELECT id, $maxversion, $maxmajor, $maxminor"
-                     . " FROM $version_tbl"
-                     . ( $pageid ? " WHERE id=$pageid" : "")
-                     . " GROUP BY id" );
-        $this->unlock();
+        // optimize: mysql can do this with one REPLACE INTO.
+        if (substr($dbh->databaseType,0,5) == 'mysql') {
+            $dbh->query("REPLACE INTO $recent_tbl"
+                        . " (id, latestversion, latestmajor, latestminor)"
+                        . " SELECT id, $maxversion, $maxmajor, $maxminor"
+                        . " FROM $version_tbl"
+                        . ( $pageid ? " WHERE id=$pageid" : "")
+                        . " GROUP BY id" );
+        } else {
+            $this->lock();
+            $dbh->query("DELETE FROM $recent_tbl"
+                        . ( $pageid ? " WHERE id=$pageid" : ""));
+            $dbh->query( "INSERT INTO $recent_tbl"
+                         . " (id, latestversion, latestmajor, latestminor)"
+                         . " SELECT id, $maxversion, $maxmajor, $maxminor"
+                         . " FROM $version_tbl"
+                         . ( $pageid ? " WHERE id=$pageid" : "")
+                         . " GROUP BY id" );
+            $this->unlock();
+        }
     }
 
     function _update_nonempty_table($pageid = false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-        extract($this->_expressions);
 
         $pageid = (int)$pageid;
 
-        $this->lock();
+        // Optimize: mysql can do this with one REPLACE INTO.
+        // FIXME: This treally should be moved into ADODB_mysql.php but 
+        // then it must be duplicated for mysqli and mysqlt also.
+        if (substr($dbh->databaseType,0,5) == 'mysql') {
+            $dbh->query("REPLACE INTO $nonempty_tbl (id)"
+                        . " SELECT $recent_tbl.id"
+                        . " FROM $recent_tbl, $version_tbl"
+                        . " WHERE $recent_tbl.id=$version_tbl.id"
+                        . "       AND version=latestversion"
+                        . "  AND content<>''"
+                        . ( $pageid ? " AND $recent_tbl.id=$pageid" : ""));
+        } else {
+            extract($this->_expressions);
+            $this->lock();
+            $dbh->query("DELETE FROM $nonempty_tbl"
+                        . ( $pageid ? " WHERE id=$pageid" : ""));
+            $dbh->query("INSERT INTO $nonempty_tbl (id)"
+                        . " SELECT $recent_tbl.id"
+                        . " FROM $recent_tbl, $version_tbl"
+                        . " WHERE $recent_tbl.id=$version_tbl.id"
+                        . "       AND version=latestversion"
+                        // We have some specifics here (Oracle)
+                        //. "  AND content<>''"
+                        . "  AND content $notempty"
+                        . ( $pageid ? " AND $recent_tbl.id=$pageid" : ""));
 
-        $dbh->query("DELETE FROM $nonempty_tbl"
-                    . ( $pageid ? " WHERE id=$pageid" : ""));
-
-        $dbh->query("INSERT INTO $nonempty_tbl (id)"
-                    . " SELECT $recent_tbl.id"
-                    . " FROM $recent_tbl, $version_tbl"
-                    . " WHERE $recent_tbl.id=$version_tbl.id"
-                    . "       AND version=latestversion"
-                    // We have some specifics here (Oracle)
-                    //. "  AND content<>''"
-                    . "  AND content $notempty"
-                    . ( $pageid ? " AND $recent_tbl.id=$pageid" : ""));
-
-        $this->unlock();
+            $this->unlock();
+        }
     }
 
 
@@ -1012,6 +1030,16 @@ extends WikiDB_backend_PearDB_generic_iter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.54  2004/06/29 08:52:24  rurban
+// Use ...version() $need_content argument in WikiDB also:
+// To reduce the memory footprint for larger sets of pagelists,
+// we don't cache the content (only true or false) and
+// we purge the pagedata (_cached_html) also.
+// _cached_html is only cached for the current pagename.
+// => Vastly improved page existance check, ACL check, ...
+//
+// Now only PagedList info=content or size needs the whole content, esp. if sortable.
+//
 // Revision 1.53  2004/06/27 10:26:03  rurban
 // oci8 patch by Philippe Vanhaesendonck + some ADODB notes+fixes
 //

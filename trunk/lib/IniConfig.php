@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.46 2004-07-02 09:55:58 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.47 2004-07-03 16:51:05 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -97,7 +97,7 @@ function IniConfig($file) {
          'IMAP_AUTH_HOST', 'POP3_AUTH_HOST',
          'AUTH_USER_FILE', 'AUTH_GROUP_FILE', 'AUTH_SESS_USER', 'AUTH_SESS_LEVEL',
          'GOOGLE_LICENSE_KEY','FORTUNE_DIR',
-         'DISABLE_GETIMAGESIZE',
+         'DISABLE_GETIMAGESIZE','DBADMIN_USER','DBADMIN_PASSWD'
          );
 
     // List of all valid config options to be define()d which take booleans.
@@ -612,6 +612,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.46  2004/07/02 09:55:58  rurban
+// more stability fixes: new DISABLE_GETIMAGESIZE if your php crashes when loading LinkIcons: failing getimagesize in old phps; blockparser stabilized
+//
 // Revision 1.45  2004/07/01 08:51:21  rurban
 // dumphtml: added exclude, print pagename before processing
 //

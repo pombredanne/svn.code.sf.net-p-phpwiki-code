@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.35 2004-06-28 14:45:12 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.36 2004-07-03 16:51:06 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -316,9 +316,9 @@ extends WikiDB_backend
             $fields = $this->page_tbl_fields . ", $page_tbl.pagedata AS pagedata"
                 . ', ' . $this->version_tbl_fields;
         } else {
-            $fields = $this->page_tbl_fields
+            $fields = $this->page_tbl_fields . ", ''"
                 . ", $version_tbl.version AS version, $version_tbl.mtime AS mtime, "
-                . "$version_tbl.minor_edit AS minor_edit, $version_tbl.content<>'' as have_content, "
+                . "$version_tbl.minor_edit AS minor_edit, ". $this->_expressions['iscontent']. " as have_content, "
                 . "$version_tbl.versiondata as versiondata";
         }
         $row = $dbh->GetRow(sprintf("SELECT $fields"
@@ -617,7 +617,7 @@ extends WikiDB_backend
         //  for the LIKE operator, and we need to quote them if we're searching
         //  for literal '%'s or '_'s.  --- I'm not sure about \, but it seems to
         //  work as is.
-        $word = $this->_dbh->qstr("%$word%");
+        $word = $this->_dbh->qstr("%".strtolower($word)."%");
         $page_tbl = $this->_table_names['page_tbl'];
         return "LOWER($page_tbl.pagename) LIKE $word";
     }
@@ -625,7 +625,7 @@ extends WikiDB_backend
     function _fullsearch_sql_match_clause($word) {
         $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);  //not sure if we need this
         // (see above)
-        $word = $this->_dbh->qstr("%$word%");
+        $word = $this->_dbh->qstr("%".strtolower($word)."%");
         $page_tbl = $this->_table_names['page_tbl'];
         return "LOWER($page_tbl.pagename) LIKE $word OR content LIKE $word";
     }
@@ -760,7 +760,6 @@ extends WikiDB_backend
     function _update_recent_table($pageid = false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-        extract($this->_expressions);
 
         $pageid = (int)$pageid;
 
@@ -792,7 +791,9 @@ extends WikiDB_backend
 
         $pageid = (int)$pageid;
 
-        // optimize: mysql can do this with one REPLACE INTO.
+        // Optimize: mysql can do this with one REPLACE INTO.
+        // FIXME: This treally should be moved into ADODB_mysql.php but 
+        // then it must be duplicated for mysqli and mysqlt also.
         if (substr($dbh->databaseType,0,5) == 'mysql') {
             $dbh->Execute("REPLACE INTO $nonempty_tbl (id)"
                           . " SELECT $recent_tbl.id"
@@ -802,6 +803,7 @@ extends WikiDB_backend
                           . "  AND content<>''"
                           . ( $pageid ? " AND $recent_tbl.id=$pageid" : ""));
         } else {
+            extract($this->_expressions);
             $this->lock(array('nonempty'));
             $dbh->Execute("DELETE FROM $nonempty_tbl"
                           . ( $pageid ? " WHERE id=$pageid" : ""));
@@ -810,7 +812,9 @@ extends WikiDB_backend
                           . " FROM $recent_tbl, $version_tbl"
                           . " WHERE $recent_tbl.id=$version_tbl.id"
                           . "       AND version=latestversion"
-                          . "  AND content<>''"
+                          // We have some specifics here (Oracle)
+                          //. "  AND content<>''"
+                          . "  AND content $notempty"
                           . ( $pageid ? " AND $recent_tbl.id=$pageid" : ""));
             $this->unlock(array('nonempty'));
         }
@@ -1132,6 +1136,9 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.35  2004/06/28 14:45:12  rurban
+// fix adodb_sqlite to have the same dsn syntax as pear, use pconnect if requested
+//
 // Revision 1.34  2004/06/28 14:17:38  rurban
 // updated DSN parser from Pear. esp. for sqlite
 //

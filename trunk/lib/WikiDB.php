@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.73 2004-06-29 08:52:22 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.74 2004-07-03 16:51:05 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -79,7 +79,7 @@ class WikiDB {
      *      Which directory db files reside in.
      *
      * <dt> timeout
-     * <dd> (Used by the dba backend.)
+     * <dd> (Used only by the dba backend so far. FIXME!)
      *      Timeout in seconds for opening (and obtaining lock) on the
      *      db files.
      *
@@ -723,14 +723,14 @@ class WikiDB_Page
         $cache = &$this->_wikidb->_cache;
         $pagename = &$this->_pagename;
                 
-        $backend->lock(array('version','page','recent','links','nonempty'));
+        $backend->lock(array('version','page','recent','link','nonempty'));
 
         $latestversion = $backend->get_latest_version($pagename);
         $newversion = $latestversion + 1;
         assert($newversion >= 1);
 
         if ($version != WIKIDB_FORCE_CREATE && $version != $newversion) {
-            $backend->unlock(array('version','page','recent','links','nonempty'));
+            $backend->unlock(array('version','page','recent','link','nonempty'));
             return false;
         }
 
@@ -774,7 +774,7 @@ class WikiDB_Page
         
         $backend->set_links($pagename, $links);
 
-        $backend->unlock(array('version','page','recent','links','nonempty'));
+        $backend->unlock(array('version','page','recent','link','nonempty'));
 
         return new WikiDB_PageRevision($this->_wikidb, $pagename, $newversion,
                                        $data);
@@ -1891,6 +1891,16 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.73  2004/06/29 08:52:22  rurban
+// Use ...version() $need_content argument in WikiDB also:
+// To reduce the memory footprint for larger sets of pagelists,
+// we don't cache the content (only true or false) and
+// we purge the pagedata (_cached_html) also.
+// _cached_html is only cached for the current pagename.
+// => Vastly improved page existance check, ACL check, ...
+//
+// Now only PagedList info=content or size needs the whole content, esp. if sortable.
+//
 // Revision 1.72  2004/06/25 14:15:08  rurban
 // reduce memory footprint by caching only requested pagedate content (improving most page iterators)
 //
