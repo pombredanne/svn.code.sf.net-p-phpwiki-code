@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.75 2002-01-15 23:40:25 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.76 2002-01-16 02:45:04 carstenklapp Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -43,7 +43,7 @@
 function DataURL($url) {
     if (preg_match('@^(\w+:|/)@', $url))
         return $url;
-    return SERVER_URL . DATA_PATH . "/$url";
+    return DATA_PATH . "/$url";
 }
 
 function BaseURL() {
