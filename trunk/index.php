@@ -56,14 +56,14 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 // You shouldn't have to change this unless you see a WikiFatalError:
 //   lib/FileFinder.php:82: Fatal[256]: DB.php: file not found
 //
-#ini_set('include_path', '.:/where/you/installed/phpwiki');
+//ini_set('include_path', '.:/where/you/installed/phpwiki');
 
 /////////////////////////////////////////////////////////////////////
 // Part Null: Don't touch this!
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.51 2002-01-03 22:55:56 wainstead Exp $');
+rcs_id('$Id: index.php,v 1.52 2002-01-03 23:04:19 wainstead Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -103,7 +103,7 @@ define("MINOR_EDIT_TIMEOUT", 7 * 24 * 3600);
 
 // PhpWiki can generate an access_log (in "NCSA combined log" format)
 // for you.  If you want one, define this to the name of the log file.
-define('ACCESS_LOG', '/tmp/wiki_access_log');
+//define('ACCESS_LOG', '/tmp/wiki_access_log');
 
 
 // If ALLOW_BOGO_LOGIN is true, users are allowed to login
@@ -120,7 +120,7 @@ define('ALLOW_BOGO_LOGIN', true);
 // (whatever user your httpd runs as must have read/write permission
 // in this directory):
 
-#ini_set('session.save_path', 'some_other_directory');
+//ini_set('session.save_path', 'some_other_directory');
 
 
 /////////////////////////////////////////////////////////////////////
@@ -137,7 +137,7 @@ define('ALLOW_BOGO_LOGIN', true);
 //
 $DBParams = array(
    // Select the database type:
-   #'dbtype' => 'SQL',
+   //'dbtype' => 'SQL',
    'dbtype' => 'dba',
    
    // For SQL based backends, specify the database as a DSN
@@ -151,9 +151,9 @@ $DBParams = array(
    //
    // FIXME: My version Pear::DB seems to be broken enough that there is
    //    no way to connect to a mysql server over a socket right now.
-   #'dsn' => 'mysql://guest@:/var/lib/mysql/mysql.sock/test',
-   #'dsn' => 'mysql://guest@localhost/test',
-   'dsn' => 'pgsql://localhost/test',
+   //'dsn' => 'mysql://guest@:/var/lib/mysql/mysql.sock/test',
+   //'dsn' => 'mysql://guest@localhost/test',
+   //'dsn' => 'pgsql://localhost/test',
    
    // Used by all DB types:
 
@@ -163,15 +163,15 @@ $DBParams = array(
     * because we aren't doing on the fly sql generation during the
     * installation.
    */
-   #'prefix' => 'phpwiki_',
+   //'prefix' => 'phpwiki_',
    
    // Used by 'dba'
    'directory' => "/tmp",
    'dba_handler' => 'gdbm',   // Either of 'gdbm' or 'db2' work great for me.
-   #'dba_handler' => 'db2',
-   #'dba_handler' => 'db3',    // doesn't work at all for me....
+   //'dba_handler' => 'db2',
+   //'dba_handler' => 'db3',    // doesn't work at all for me....
    'timeout' => 20,
-   #'timeout' => 5
+   //'timeout' => 5
 );
 
 /////////////////////////////////////////////////////////////////////
@@ -278,7 +278,7 @@ define("CHARSET", "iso-8859-1");
 // as a valid locale before gettext() will work, i.e., use 'de_DE',
 // 'nl_NL'.
 $LANG='C';
-#$LANG='nl_NL';
+//$LANG='nl_NL';
 
 // Setting the LANG environment variable (accomplished above) may or
 // may not be sufficient to cause PhpWiki to produce dates in your
@@ -322,7 +322,7 @@ $logo = "images/wikibase.png";
 
 // Signature image which is shown after saving an edited page
 // If this is left blank (or unset), the signature will be omitted.
-#$SignatureImg = "images/signature.png";
+//$SignatureImg = "images/signature.png";
 
 // this turns on url indicator icons, inserted before embedded links
 // '*' icon is shown when the link type has no icon listed here,
@@ -366,10 +366,10 @@ $templates = array("BROWSE" =>    "templates/browse.html",
 // (i.e. templates, logo, signature etc.)
 // comment out the $theme= lines to revert to the standard interface
 // which defaults to /templates and /images
-#$theme="default";
-#$theme="Hawaiian";
-#$theme="MacOSX";
-#$theme="WikiTrek";
+//$theme="default";
+//$theme="Hawaiian";
+//$theme="MacOSX";
+//$theme="WikiTrek";
 if (!empty($theme)) {
     if (file_exists("themes/$theme/themeinfo.php")) {
         include "themes/$theme/themeinfo.php";
@@ -417,7 +417,7 @@ $InlineImages = "png|jpg|gif|tiff|tif";
 
 // Uncomment this to automatically split WikiWords by inserting spaces.
 // The default is to leave WordsSmashedTogetherLikeSo in the body text.
-#define("autosplit_wikiwords", 1);
+//define("autosplit_wikiwords", 1);
 
 // Perl regexp for WikiNames ("bumpy words")
 // (?<!..) & (?!...) used instead of '\b' because \b matches '_' as well
@@ -453,8 +453,8 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
  * Canonical name and httpd port of the server on which this
  * PhpWiki resides.
  */
-#define('SERVER_NAME', 'some.host.com');
-#define('SERVER_PORT', 80);
+//define('SERVER_NAME', 'some.host.com');
+//define('SERVER_PORT', 80);
 
 /*
  * Relative URL (from the server root) of the PhpWiki
@@ -470,7 +470,7 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
  * in which relative URL's for images and other support files
  * are interpreted.
  */
-#define('DATA_PATH', '/some/where');
+//define('DATA_PATH', '/some/where');
 
 /*
  * Define to 'true' to use PATH_INFO to pass the pagename's.
@@ -478,7 +478,7 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
  * of http://www.some.where/index.php?pagename=HomePage
  * FIXME: more docs (maybe in README).
  */
-#define('USE_PATH_INFO', false);
+//define('USE_PATH_INFO', false);
 
 /*
  * VIRTUAL_PATH is the canonical URL path under which your
@@ -503,7 +503,7 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
  *
  * (VIRTUAL_PATH is only used if USE_PATH_INFO is true.)
  */
-#define('VIRTUAL_PATH', '/SomeWiki');
+//define('VIRTUAL_PATH', '/SomeWiki');
 
 
 ////////////////////////////////////////////////////////////////
