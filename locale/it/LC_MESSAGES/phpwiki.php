@@ -24,8 +24,6 @@ $locale["1 day"] =
    "1 giorno";
 $locale["<no matches>"] =
    "<nessun risultati>";
-$locale["Author:"] =
-   "Autore:";
 $locale["Calendar"] =
    "Calendario";
 $locale["Cancel"] =
@@ -60,6 +58,8 @@ $locale["Full text search results for '%s'"] =
    "Risultati della ricerca su tutto il testo per '%s'";
 $locale["FullTextSearch"] =
    "RicercaDelTesto";
+$locale["Go"] =
+   "Vai";
 $locale["GoodStyle"] =
    "BuonStile";
 $locale["H"] =
@@ -118,8 +118,6 @@ $locale["Removed page '%s' succesfully."] =
    "La pagina '%s' è stata rimossa correttamente.";
 $locale["Save"] =
    "Registra";
-$locale["Saved on:"] =
-   "Salvata su: %s";
 $locale["Saved: %s"] =
    "Salvata: %s";
 $locale["Search"] =
@@ -128,8 +126,6 @@ $locale["See %s tips for editing."] =
    "Vedere %s consigli per le modifiche.";
 $locale["Show minor edits for:"] =
    "Mostrare le modifiche secondarie per:";
-$locale["Size:"] =
-   "Dimensione:";
 $locale["Someone has edited the page!"] =
    "Qualcuno ha modificato la pagina!";
 $locale["Sorry for the inconvenience."] =

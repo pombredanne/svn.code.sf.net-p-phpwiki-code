@@ -16,8 +16,6 @@ $locale["1 day"] =
    "1 dag";
 $locale["Adjust"] =
    "Justera";
-$locale["Author:"] =
-   "Författare:";
 $locale["Calendar"] =
    "Kalender";
 $locale["Cancel"] =
@@ -50,6 +48,8 @@ $locale["Full text search results for '%s'"] =
    "Sökresultat för fulltextsökning för '%s'";
 $locale["FullTextSearch"] =
    "Fulltextsökning";
+$locale["Go"] =
+   "\"Gå till sidan\"";
 $locale["GoodStyle"] =
    "BraStil";
 $locale["H"] =
@@ -62,8 +62,6 @@ $locale["Hits:"] =
    "Träffar:";
 $locale["HomePage"] =
    "Framsida";
-$locale["I'm sorry.  Version %d of %s is not in my database."] =
-   "Ledsen.  Version %d för %s finns inte i databasen";
 $locale["Include of '%s' failed"] =
    "Insättning för '%s' misslyckades";
 $locale["Included from %s"] =
@@ -80,6 +78,8 @@ $locale["Last Modified:"] =
    "Ändringsdatum:";
 $locale["Last Summary"] =
    "Senaste Kommentar";
+$locale["Last Summary:"] =
+   "Senaste Kommentar:";
 $locale["Last edited %s."] =
    "Senast ändrad %s.";
 $locale["Last edited on %s."] =
