@@ -80,7 +80,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.72 2002-01-23 20:18:21 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.73 2002-01-25 06:03:52 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -153,6 +153,15 @@ define('REQUIRE_SIGNIN_BEFORE_EDIT', false);
 
 //ini_set('session.save_path', 'some_other_directory');
 
+// If your php was compiled with --enable-trans-sid and you want to
+// prevent PHPSESSID parameters from automatically being added to all
+// URL strings when cookies are not available (such is the case when
+// using http://validator.w3.org/check/referer to check your xhtml or
+// html), you can disable transparent sid support in the php.ini
+// configuration file. If you don't have access to php.ini on the
+// server you can disable it here.
+
+//ini_set('session.use_trans_sid', 0);
 
 /////////////////////////////////////////////////////////////////////
 //
