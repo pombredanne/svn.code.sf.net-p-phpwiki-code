@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.29 2002-11-25 22:25:49 dairiki Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.30 2003-02-17 19:13:16 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -683,6 +683,8 @@ class Block_table_dl_defn extends XmlContent
 
 class Block_table_dl extends Block_dl
 {
+    var $_tag = 'dl-table';     // phony.
+
     var $_re = '\ {0,4} (?:\S.*)? (?<! ~) \| \s* $';
 
     function _match (&$input, $m) {
@@ -701,6 +703,7 @@ class Block_table_dl extends Block_dl
         $ncols = 0;
         foreach ($defs as $defn)
             $ncols = max($ncols, $defn->ncols());
+        
         foreach ($defs as $key => $defn)
             $defs[$key]->setWidth($ncols);
 
