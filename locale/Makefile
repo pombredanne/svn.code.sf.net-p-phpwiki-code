@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.29 2002-12-14 23:15:54 carstenklapp Exp $
+# $Id: Makefile,v 1.30 2002-12-17 18:33:24 dairiki Exp $
 #
 # locale/Makefile
 #
@@ -146,7 +146,6 @@ ${POT_FILE}: ../lib/plugin/CacheTest.php
 ${POT_FILE}: ../lib/plugin/Calendar.php
 ${POT_FILE}: ../lib/plugin/EditMetaData.php
 ${POT_FILE}: ../lib/plugin/ExternalSearch.php
-${POT_FILE}: ../lib/plugin/Fortune.php
 ${POT_FILE}: ../lib/plugin/FrameInclude.php
 ${POT_FILE}: ../lib/plugin/FullTextSearch.php
 ${POT_FILE}: ../lib/plugin/FuzzyPages.php
