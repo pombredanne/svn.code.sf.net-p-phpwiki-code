@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ExternalSearch.php,v 1.1 2002-02-28 00:11:17 carstenklapp Exp $');
+rcs_id('$Id: ExternalSearch.php,v 1.2 2002-02-28 01:01:14 carstenklapp Exp $');
 
 require_once("lib/interwiki.php");
 
@@ -31,7 +31,7 @@ extends WikiPlugin
 
     function getDefaultArguments() {
         return array('s'        => false,
-                     'size'     => false,
+                     'formsize' => 30,
                      'url'      => false,
                      'name'     => '',
                      'debug'    => false
@@ -64,8 +64,8 @@ extends WikiPlugin
         $this->_name = $name;
 
         $this->_s = $s;
-        if ($size < 1)
-            $size = 30;
+        if ($formsize < 1)
+            $formsize = 30;
         $this->_url = $url;
 
         $this->_getInterWikiUrl($request);
@@ -78,7 +78,7 @@ extends WikiPlugin
         $form->pushContent(HTML::input(array('type' => 'text',
                                             'value' => $this->_s,
                                             'name'  => 's',
-                                            'size'  => $size)));
+                                            'size'  => $formsize)));
 
         $form->pushContent(HTML::input(array('type' => 'hidden',
                                             'name'  => 'url',
