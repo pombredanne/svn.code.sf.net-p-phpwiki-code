@@ -1,10 +1,11 @@
-Date: Sun, 27 Jan 2002 17:28:55 -0500
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: PhpWikiAdministration,v 1.17 2002-02-21 07:39:57 carstenklapp Exp $
+Date: Mon, 25 Feb 2002 11:04:00 -0500
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.3-jeffs-hacks)
+X-Rcs-Id: $Id: PhpWikiAdministration,v 1.18 2002-02-25 16:07:36 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiAdministration;
   flags=PAGE_LOCKED;
-  pgsrc_version="2 $Revision: 1.17 $";
+  pgsrc_version="2 $Revision: 1.18 $";
+  markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
@@ -100,6 +101,8 @@ three types of files, and handle them accordingly.
 !! Dump pages as XHTML
 <?plugin WikiForm action=dumphtml?>
 
-This will generate a directory of static pages suitable for distribution on disk where no web server is available.
+This will generate a directory of static pages suitable for distribution on disk where no web server is available. The various links for page editing functions and navigation are removed from the pages.
+
+The XHTML file collection can also be downloaded as an __[XHTML ZIP Snapshot | phpwiki:?action=ziphtml]__.
 ----
 PhpWikiDocumentation
