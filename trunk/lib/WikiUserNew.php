@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.112 2004-11-01 10:43:57 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.113 2004-11-03 17:13:49 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1618,9 +1618,16 @@ extends _UserPreference
 
 /** Check for valid email address
     fixed version from http://www.zend.com/zend/spotlight/ev12apr.php
+    Note: too strict, Bug #1053681
  */
 function ValidateMail($email, $noconnect=false) {
     $HTTP_HOST = $GLOBALS['request']->get('HTTP_HOST');
+
+    // if this check is too strict (like invalid mail addresses in a local network only)
+    // uncomment the following line:
+    // return array(true,"not validated");
+    // see http://sourceforge.net/tracker/index.php?func=detail&aid=1053681&group_id=6121&atid=106121
+
     $result = array();
     // well, technically ".a.a.@host.com" is also valid
     if (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $email)) {
@@ -2016,6 +2023,12 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.112  2004/11/01 10:43:57  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 // Revision 1.111  2004/10/21 21:03:50  rurban
 // isAdmin must be signed and authenticated
 // comment out unused sections (memory)
