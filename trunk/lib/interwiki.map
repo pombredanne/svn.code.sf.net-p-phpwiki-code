@@ -67,7 +67,7 @@ OpenWiki http://openwiki.com/?
 OrgPatterns http://www.bell-labs.com/cgi-user/OrgPatterns/OrgPatterns?
 PangalacticOrg http://www.pangalactic.org/Wiki/
 PersonalTelco http://www.personaltelco.net/index.cgi/
-php-function http://www.php.net/manual/en/function.%s.php
+php-function http://www.php.net/%s
 php-lookup http://www.php.net/manual-lookup.php?pattern=
 PhpWiki http://phpwiki.sourceforge.net/phpwiki/index.php?
 PhpWikiCvs http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/phpwiki/phpwiki/
