@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RateIt.php,v 1.17 2004-08-05 17:31:52 rurban Exp $');
+rcs_id('$Id: RateIt.php,v 1.18 2004-11-01 10:43:59 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -94,11 +94,12 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.17 $");
+                            "\$Revision: 1.18 $");
     }
 
     function RatingWidgetJavascript() {
         global $WikiTheme;
+        // FIXME: use prefix
         $img   = substr($WikiTheme->_findData("images/RateItNk0.png"),0,-7);
         $urlprefix = WikiURL("",0,1);
         $js = "
@@ -152,7 +153,6 @@ function deleteRating(actionImg, page, dimension) {
      * Take a string and quote it sufficiently to be passed as a Javascript
      * string between ''s
      */
-     
     function _javascript_quote_string($s) {
         return str_replace("'", "\'", $s);
     }
@@ -209,7 +209,9 @@ function deleteRating(actionImg, page, dimension) {
             global $WikiTheme;
             $actionImg = $WikiTheme->_path . $this->actionImgPath();
             $rdbi->addRating($request->getArg('rating'), $user->getId(), $this->pagename, $this->dimension);
-            ob_end_clean();  // discard any previous output
+
+            if (!empty($request->_is_buffering_output))
+                ob_end_clean();  // discard any previous output
             // delete the cache
             $page = $request->getPage();
             $page->set('_cached_html', false);
@@ -227,7 +229,8 @@ function deleteRating(actionImg, page, dimension) {
             global $WikiTheme;
             $actionImg = $WikiTheme->_path . $this->actionImgPath();
             $rdbi->deleteRating($user->getId(), $this->pagename, $this->dimension);
-            ob_end_clean();  // discard any previous output
+            if (!empty($request->_is_buffering_output))
+                ob_end_clean();  // discard any previous output
             // delete the cache
             $page = $request->getPage();
             $page->set('_cached_html', false);
@@ -255,13 +258,15 @@ function deleteRating(actionImg, page, dimension) {
             	}
             */
             //$args['rating'] = $rating;
-            return $this->RatingWidgetHtml($args['pagename'], $args['version'], $args['imgPrefix'], $args['dimension'], $args['small']);
+            return $this->RatingWidgetHtml($args['pagename'], $args['version'], $args['imgPrefix'], 
+                                           $args['dimension'], $args['small']);
         } else {
             if (!$user->isSignedIn())
                 return $this->error(_("You must sign in"));
             extract($args);
             $rating = $rdbi->getRating();
-            $html = HTML::p(sprintf(_("Rated by %d users | Average rating %.1f stars"),
+            $html = HTML::p($this->pagename.": ".
+                            sprintf(_("Rated by %d users | Average rating %.1f stars"),
                                     $rdbi->getNumUsers($this->pagename, $this->dimension),
                                     $rdbi->getAvg($this->pagename, $this->dimension)),
                             HTML::br());
@@ -278,7 +283,7 @@ function deleteRating(actionImg, page, dimension) {
                                                WIKI_NAME, $pred));
             }
             $html->pushContent(HTML::p());
-            $html->pushContent(HTML::em("(Experimental: This is entirely bogus data)"));
+            $html->pushContent(HTML::em("(Experimental: This might be entirely bogus data)"));
             return $html;
         }
     }
@@ -318,8 +323,9 @@ function deleteRating(actionImg, page, dimension) {
         global $WikiTheme, $request;
 
         $imgPrefix = MangleXmlIdentifier($pagename) . $imgPrefix;
+        // FIXME: use prefix
         $actionImgName = $imgPrefix . 'RateItAction';
-        $dbi =& $GLOBALS['request']->getDbh();
+        $dbi =& $GLOBALS['request']->_dbi;
         $version = $dbi->_backend->get_latest_version($pagename);
        
         //$rdbi =& $this->_rdbi;
@@ -327,13 +333,14 @@ function deleteRating(actionImg, page, dimension) {
         $id = 'rateit';
         // Protect against 's, though not \r or \n
 
-        $reImgPrefix     = WikiPlugin_RateIt::_javascript_quote_string($imgPrefix);
-        $reActionImgName = WikiPlugin_RateIt::_javascript_quote_string($actionImgName);
-        $rePagename      = WikiPlugin_RateIt::_javascript_quote_string($pagename);
+        $reImgPrefix     = $this->_javascript_quote_string($imgPrefix);
+        $reActionImgName = $this->_javascript_quote_string($actionImgName);
+        $rePagename      = $this->_javascript_quote_string($pagename);
         //$dimension = $args['pagename'] . "rat";
     
         $html = HTML::span(array("id" => $id));
         for ($i=0; $i < 2; $i++) {
+            // FIXME: use prefix
             $nk[$i]   = $WikiTheme->_findData("images/RateItNk$i.png");
             $none[$i] = $WikiTheme->_findData("images/RateItRk$i.png");
         }
@@ -347,7 +354,9 @@ function deleteRating(actionImg, page, dimension) {
             $pred = $rdbi->getPrediction($userid,$pagename,$dimension);
         }
         for ($i = 1; $i <= 10; $i++) {
-            $a1 = HTML::a(array('href' => 'javascript:click(\'' . $reActionImgName . '\',\'' . $rePagename . '\',\'' . $version . '\',\'' . $reImgPrefix . '\',\'' . $dimension . '\',' . ($i/2) . ')'));
+            $a1 = HTML::a(array('href' => 'javascript:click(\'' . $reActionImgName . '\',\'' . 
+                                $rePagename . '\',\'' . $version . '\',\'' . 
+                                $reImgPrefix . '\',\'' . $dimension . '\',' . ($i/2) . ')'));
             $img_attr = array();
             $img_attr['src'] = $nk[$i%2];
             //if (!$rating and !$pred)
@@ -365,12 +374,14 @@ function deleteRating(actionImg, page, dimension) {
         }
         $html->pushContent(HTML::Raw('&nbsp;'));
        
-        $a0 = HTML::a(array('href' => 'javascript:click(\'' . $reActionImgName . '\',\'' . $rePagename . '\',\'' . $version . '\',\'' . $reImgPrefix . '\',\'' . $dimension . '\',\'X\')'));
+        $a0 = HTML::a(array('href' => 'javascript:click(\'' . $reActionImgName . '\',\'' . 
+                            $rePagename . '\',\'' . $version . '\',\'' . $reImgPrefix . 
+                            '\',\'' . $dimension . '\',\'X\')'));
 
         $msg = _("Cancel rating");
         $a0->pushContent(HTML::img(array('src' => $WikiTheme->getImageUrl("RateItCancel"),
-                                             'name'=> $imgPrefix.'Cancel',
-                                             'alt' => $msg)));
+                                         'name'=> $imgPrefix.'Cancel',
+                                         'alt' => $msg)));
         $a0->addToolTip($msg);
         $html->pushContent($a0);
         /*} elseif ($pred) {
@@ -402,6 +413,9 @@ function deleteRating(actionImg, page, dimension) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.17  2004/08/05 17:31:52  rurban
+// more xhtml conformance fixes
+//
 // Revision 1.16  2004/08/05 17:23:54  rurban
 // add alt tag for xhtml conformance
 //

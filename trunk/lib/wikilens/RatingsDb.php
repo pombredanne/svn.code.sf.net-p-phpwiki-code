@@ -1,14 +1,14 @@
 <?php // -*-php-*-
-rcs_id('$Id: RatingsDb.php,v 1.10 2004-10-05 17:00:04 rurban Exp $');
+rcs_id('$Id: RatingsDb.php,v 1.11 2004-11-01 10:44:00 rurban Exp $');
 
 /*
- * @author:  Dan Frankowski (wikilens author), Reini Urban (as plugin)
+ * @author:  Dan Frankowski (wikilens group manager), Reini Urban (as plugin)
  *
  * TODO: 
  * - fix RATING_STORAGE = WIKIPAGE
  * - fix smart caching
  * - finish mysuggest.c (external engine with data from mysql)
- * - add php_prediction
+ * - add php_prediction from wikilens
  * - add the various show modes (esp. TopN queries in PHP)
  */
 /*
@@ -25,15 +25,18 @@ rcs_id('$Id: RatingsDb.php,v 1.10 2004-10-05 17:00:04 rurban Exp $');
 */
 
 //FIXME! for other than SQL backends
-//define('RATING_STORAGE','WIKIPAGE');   // not fully supported yet
-define('RATING_STORAGE','SQL');          // only for mysql yet.
+if (!defined('RATING_STORAGE'))
+    define('RATING_STORAGE', 'SQL');
+    //define('RATING_STORAGE','WIKIPAGE');   // not fully supported yet
 // leave undefined for internal, slow php engine.
-//define('RATING_EXTERNAL',PHPWIKI_DIR . 'suggest.exe');
+//if (!defined('RATING_EXTERNAL'))
+//    define('RATING_EXTERNAL',PHPWIKI_DIR . 'suggest.exe');
 
 // Dimensions
-define('EXPLICIT_RATINGS_DIMENSION', 0);
+if (!defined('EXPLICIT_RATINGS_DIMENSION'))
+    define('EXPLICIT_RATINGS_DIMENSION', 0);
 
-//TODO: split into SQL and metadata backends
+//TODO: split class into SQL and metadata backends
 class RatingsDb extends WikiDB {
 
     function RatingsDb() {
@@ -697,6 +700,11 @@ extends WikiDB_backend_PearDB {
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/10/05 17:00:04  rurban
+// support paging for simple lists
+// fix RatingDb sql backend.
+// remove pages from AllPages (this is ListPages then)
+//
 // Revision 1.9  2004/10/05 00:33:44  rurban
 // intermediate fix for non-sql WikiDB and SQL rating
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.62 2004-10-14 19:19:34 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.63 2004-11-01 10:43:58 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -35,7 +35,7 @@ extends WikiDB_backend
                           E_USER_ERROR);
         }
         $dbh->setErrorHandling(PEAR_ERROR_CALLBACK,
-                               array(&$this, '_pear_error_callback'));
+                               array($this, '_pear_error_callback'));
         $dbh->setFetchMode(DB_FETCHMODE_ASSOC);
 
         $prefix = isset($dbparams['prefix']) ? $dbparams['prefix'] : '';
@@ -75,6 +75,9 @@ extends WikiDB_backend
         $this->unlock('force');
 
         $this->_dbh->disconnect();
+
+        global $ErrorManager;
+        $ErrorManager->popErrorHandler();
     }
 
 
@@ -125,7 +128,7 @@ extends WikiDB_backend
         return $this->_extract_page_data($result);
     }
 
-    function  _extract_page_data(&$query_result) {
+    function  _extract_page_data($query_result) {
         extract($query_result);
         if (isset($query_result['pagedata'])) {
             $data = $this->_unserialize($query_result['pagedata']);
@@ -279,7 +282,7 @@ extends WikiDB_backend
         return $this->_extract_version_data($result);
     }
 
-    function _extract_version_data(&$query_result) {
+    function _extract_version_data($query_result) {
         if (!$query_result)
             return false;
 
@@ -969,7 +972,7 @@ extends WikiDB_backend
 class WikiDB_backend_PearDB_generic_iter
 extends WikiDB_backend_iterator
 {
-    function WikiDB_backend_PearDB_generic_iter(&$backend, &$query_result) {
+    function WikiDB_backend_PearDB_generic_iter($backend, $query_result) {
         if (DB::isError($query_result)) {
             // This shouldn't happen, I thought.
             $backend->_pear_error_callback($query_result);
@@ -1035,6 +1038,10 @@ extends WikiDB_backend_PearDB_generic_iter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.62  2004/10/14 19:19:34  rurban
+// loadsave: check if the dumped file will be accessible from outside.
+// and some other minor fixes. (cvsclient native not yet ready)
+//
 // Revision 1.61  2004/10/14 17:19:17  rurban
 // allow most_popular sortby arguments
 //

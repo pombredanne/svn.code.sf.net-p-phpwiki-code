@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRename.php,v 1.20 2004-06-16 10:38:59 rurban Exp $');
+rcs_id('$Id: WikiAdminRename.php,v 1.21 2004-11-01 10:43:59 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -48,7 +48,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.20 $");
+                            "\$Revision: 1.21 $");
     }
 
     function getDefaultArguments() {
@@ -72,7 +72,7 @@ extends WikiPlugin_WikiAdminSelect
         $ul = HTML::ul();
         $count = 0;
         foreach ($pages as $name) {
-            if ($updatelinks) {
+            if (0 and $updatelinks) { // do it in the backend
                 $oldpage = $dbi->getPage($from);
                 require_once('lib/plugin/WikiAdminSearchReplace.php');
                 //$newpage = $dbi->getPage($to);
@@ -89,12 +89,13 @@ extends WikiPlugin_WikiAdminSelect
                                                   WikiLink($linked_page->getName()))));
                 }
             }
-            if ( ($newname = $this->renameHelper($name, $from, $to)) and 
-                 $newname != $name ) {
+            if ( ($newname = $this->renameHelper($name, $from, $to)) 
+                 and $newname != $name )
+            {
                 if ($dbi->isWikiPage($newname))
                     $ul->pushContent(HTML::li(fmt("Page %s already exists. Ignored.",
                                                   WikiLink($newname))));
-                elseif (!mayAccessPage('change', $name))
+                elseif (! mayAccessPage('change', $name))
                     $ul->pushContent(HTML::li(fmt("Access denied to change page '%s'.",
                                                   WikiLink($name))));
                 elseif ( $dbi->renamePage($name, $newname, $updatelinks)) {
@@ -209,6 +210,18 @@ extends WikiPlugin_WikiAdminSelect
                           $buttons);
     }
 
+    function checkBox (&$post_args, $name, $msg) {
+        //$html = HTML();
+        $checkbox = HTML::input(array('type' => 'checkbox',
+                                      'name' => 'admin_rename['.$name.']',
+                                      'value' => 1));
+        if (!empty($post_args[$name]))
+            $checkbox->setAttr('checked', 'checked');
+        //$html->pushContent($checkbox);
+        //$html->pushContent($msg);
+        return HTML::div($checkbox, HTML::span($msg));
+    }
+
     function renameForm(&$header, $post_args) {
         $header->pushContent(_("Rename")." "._("from").': ');
         $header->pushContent(HTML::input(array('name' => 'admin_rename[from]',
@@ -216,16 +229,24 @@ extends WikiPlugin_WikiAdminSelect
         $header->pushContent(' '._("to").': ');
         $header->pushContent(HTML::input(array('name' => 'admin_rename[to]',
                                                'value' => trim($post_args['to']))));
-        $header->pushContent(' '._("(no regex, case-sensitive)"));
-        //if (DEBUG) { // not yet tested
-        $header->pushContent(HTML::br());
-        $checkbox = HTML::input(array('type' => 'checkbox',
+        if (DEBUG) {
+            $header->pushContent($this->checkBox($post_args, 'regex', _("Regex?")));
+            $header->pushContent($this->checkBox($post_args, 'case-sensitive', _("Case sensitive?")));
+        } else {
+            $header->pushContent(' '._("(no regex, case-sensitive)"));
+        }
+        if (DEBUG) { // not yet tested
+            $header->pushContent($this->checkBox($post_args, 'updatelinks', _("Change pagename in all linked pages also?")));
+        } else {
+            $header->pushContent(HTML::br());
+            $checkbox = HTML::input(array('type' => 'checkbox',
                                           'name' => 'admin_rename[updatelinks]',
                                           'value' => 1));
-        if (!empty($post_args['updatelinks']))
-            $checkbox->setAttr('checked','checked');
-        $header->pushContent($checkbox);
-        $header->pushContent(_("Change pagename in all linked pages also?"));
+            if (!empty($post_args['updatelinks']))
+                $checkbox->setAttr('checked','checked');
+            $header->pushContent($checkbox);
+            $header->pushContent(_("Change pagename in all linked pages also?"));
+        }
         //$header->pushContent(HTML::em(_("(Currently not working)")));
         //}
         $header->pushContent(HTML::p());
@@ -233,15 +254,21 @@ extends WikiPlugin_WikiAdminSelect
     }
 }
 
+// TODO: grey out unrenamable pages, even in the initial list also?
+// TODO: autoselect by matching name javascript in admin_rename[from]
+// TODO: update rename[] fields when case-sensitive and regex is changed
+
 // moved from lib/PageList.php
 class _PageList_Column_renamed_pagename extends _PageList_Column {
     function _getValue ($page_handle, &$revision_handle) {
-        $post_args = $GLOBALS['request']->getArg('admin_rename');
-        $value = str_replace($post_args['from'], $post_args['to'], $page_handle->getName());
+        global $request;
+        $post_args = $request->getArg('admin_rename');
+        $value = WikiPlugin_WikiAdminRename::renameHelper($page_handle->getName(), $post_args['from'], $post_args['to']);
+
         $div = HTML::div(" => ",HTML::input(array('type' => 'text',
                                                   'name' => 'rename[]',
                                                   'value' => $value)));
-        $new_page = $GLOBALS['request']->getPage($value);
+        $new_page = $request->getPage($value);
         if ($new_page->exists()) {
             $div->setAttr('class','error');
             $div->setAttr('title',_("This page already exists"));
@@ -251,6 +278,15 @@ class _PageList_Column_renamed_pagename extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2004/06/16 10:38:59  rurban
+// Disallow refernces in calls if the declaration is a reference
+// ("allow_call_time_pass_reference clean").
+//   PhpWiki is now allow_call_time_pass_reference = Off clean,
+//   but several external libraries may not.
+//   In detail these libs look to be affected (not tested):
+//   * Pear_DB odbc
+//   * adodb oracle
+//
 // Revision 1.19  2004/06/14 11:31:39  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList

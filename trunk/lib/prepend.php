@@ -5,7 +5,7 @@
  */
 $RCS_IDS = '';
 function rcs_id ($id) { $GLOBALS['RCS_IDS'] .= "$id\n"; }
-rcs_id('$Id: prepend.php,v 1.22 2004-10-12 13:13:20 rurban Exp $');
+rcs_id('$Id: prepend.php,v 1.23 2004-11-01 10:43:57 rurban Exp $');
 
 define ('PHPWIKI_VERSION', '1.3.11pre');
 
@@ -31,6 +31,10 @@ function check_php_version ($a = '0', $b = '0', $c = '0') {
 // unless your browser supports cookies.)
 @ini_set('session.use_trans_sid', 0);
 
+if (defined('DEBUG') and (DEBUG & 8) and extension_loaded("xdebug")) {
+    xdebug_start_trace();
+    xdebug_enable();
+}
 
 // Used for debugging purposes
 class DebugTimer {

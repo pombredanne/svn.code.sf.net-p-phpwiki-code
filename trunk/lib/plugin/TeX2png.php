@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TeX2png.php,v 1.2 2004-06-21 10:50:36 pmeignen Exp $');
+rcs_id('$Id: TeX2png.php,v 1.3 2004-11-01 10:43:59 rurban Exp $');
 /*
  Copyright 2004 Pierrick Meignen
 */
@@ -35,7 +35,7 @@ extends WikiPlugin
     }
     
     function getVersion() {
-        return preg_replace("/[Revision: $]/", '',"\$Revision: 1.2 $");
+        return preg_replace("/[Revision: $]/", '',"\$Revision: 1.3 $");
     }
     
     function getDefaultArguments() {
@@ -203,7 +203,9 @@ extends WikiPlugin
     
     function run($dbi, $argstr, &$request, $basepage) {
         // from text2png.php
-        if (ImageTypes() & IMG_PNG) {
+        if ((function_exists('ImageTypes') and (ImageTypes() & IMG_PNG)) 
+            or function_exists("ImagePNG"))
+        {
             // we have gd & png so go ahead.
             extract($this->getArgs($argstr, $request));
             return $this->tex2png($text);
@@ -217,4 +219,15 @@ extends WikiPlugin
         }
     }
 };
+
+// $Log: not supported by cvs2svn $
+
+// For emacs users
+// Local Variables:
+// mode: php
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
+// End:
 ?>

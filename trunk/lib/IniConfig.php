@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.56 2004-10-21 20:20:53 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.57 2004-11-01 10:43:55 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -374,6 +374,8 @@ function IniConfig($file) {
         }
     }
 
+    unset($rs); 
+    unset($rsdef);
     fix_configs();
 }
 
@@ -641,8 +643,12 @@ function fix_configs() {
     if (!defined('ALLOW_ANON_EDIT')) define('ALLOW_ANON_EDIT', false); 
     if (!defined('REQUIRE_SIGNIN_BEFORE_EDIT')) define('REQUIRE_SIGNIN_BEFORE_EDIT', ! ALLOW_ANON_EDIT);
     if (!defined('ALLOW_BOGO_LOGIN')) define('ALLOW_BOGO_LOGIN', true);
-    if (!defined('ALLOW_LDAP_LOGIN')) define('ALLOW_LDAP_LOGIN', defined('LDAP_AUTH_HOST'));
-    if (!defined('ALLOW_IMAP_LOGIN')) define('ALLOW_IMAP_LOGIN', defined('IMAP_AUTH_HOST'));
+    if (!ENABLE_USER_NEW) {
+      if (!defined('ALLOW_LDAP_LOGIN')) 
+          define('ALLOW_LDAP_LOGIN', function_exists('ldap_connect') and defined('LDAP_AUTH_HOST'));
+      if (!defined('ALLOW_IMAP_LOGIN')) 
+          define('ALLOW_IMAP_LOGIN', function_exists('imap_open') and defined('IMAP_AUTH_HOST'));
+    }
 
     if (ALLOW_USER_LOGIN and !empty($DBAuthParams) and empty($DBAuthParams['auth_dsn'])) {
         if (isset($DBParams['dsn']))
@@ -651,6 +657,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.56  2004/10/21 20:20:53  rurban
+// From patch #970004 "Double clic to edit" by pixels.
+//
 // Revision 1.55  2004/10/14 19:23:58  rurban
 // remove debugging prints
 //

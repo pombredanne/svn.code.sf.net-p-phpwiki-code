@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.27 2004-06-16 10:38:59 rurban Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.28 2004-11-01 10:43:59 rurban Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -46,7 +46,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.27 $");
+                            "\$Revision: 1.28 $");
     }
 
     function getDefaultArguments() {
@@ -214,17 +214,14 @@ extends WikiPlugin_WikiAdminSelect
         $buttons = HTML::p(Button('submit:admin_remove[remove]', $button_label, 'wikiadmin'),
                            Button('submit:admin_remove[cancel]', _("Cancel"), 'button'));
 
+        // TODO: quick select by regex javascript?
         return HTML::form(array('action' => $request->getPostURL(),
                                 'method' => 'post'),
-
                           $header,
-                          
                           $pagelist->getContent(),
-
                           HiddenInputs($request->getArgs(),
                                         false,
                                         array('admin_remove')),
-
                           HiddenInputs(array('admin_remove[action]' => $next_action,
                                              'require_authority_for_post' => WIKIAUTH_ADMIN)),
                           $buttons);
@@ -240,6 +237,15 @@ class _PageList_Column_remove extends _PageList_Column {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.27  2004/06/16 10:38:59  rurban
+// Disallow refernces in calls if the declaration is a reference
+// ("allow_call_time_pass_reference clean").
+//   PhpWiki is now allow_call_time_pass_reference = Off clean,
+//   but several external libraries may not.
+//   In detail these libs look to be affected (not tested):
+//   * Pear_DB odbc
+//   * adodb oracle
+//
 // Revision 1.26  2004/06/14 11:31:39  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList

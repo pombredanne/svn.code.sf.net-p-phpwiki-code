@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.93 2004-10-14 17:17:57 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.94 2004-11-01 10:43:56 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -12,6 +12,7 @@ require_once('lib/PageType.php');
  *
  * @package WikiDB
  * @author Geoffrey T. Dairiki <dairiki@dairiki.org>
+ *         Reini Urban
  */
 
 /**
@@ -24,6 +25,10 @@ define('WIKIDB_FORCE_CREATE', -1);
 // or RAM is too low.
 if (!defined('USECACHE'))
     define('USECACHE', 1);
+// low memory setup (sf.net):
+// no page cache, no output buffering.
+if (!USECACHE and !defined('WIKIDB_NOCACHE_MARKUP'))
+    define('WIKIDB_NOCACHE_MARKUP', 1);
 
 /** 
  * Abstract base class for the database used by PhpWiki.
@@ -241,9 +246,10 @@ class WikiDB {
                 //TODO: notification class which catches all changes,
                 //  and decides at the end of the request what to mail. (type, page, who, what, users, emails)
                 // could be used for PageModeration also.
-                list($emails, $userids) = WikiDB_Page::getPageChangeEmails($notify);
+                $page = new WikiDB_Page($pagename);
+                list($emails, $userids) = $page->getPageChangeEmails($notify);
                 if (!empty($emails)) {
-                    $editedby = sprintf(_("Edited by: %s"), $GLOBALS['request']->UserName()); // Todo: host_id
+                    $editedby = sprintf(_("Edited by: %s"), $GLOBALS['request']->_user->getId()); // Todo: host_id
                     $emails = join(',', $emails);
                     $subject = sprintf(_("Page deleted %s"), $pagename);
                     if (mail($emails,"[".WIKI_NAME."] ".$subject, 
@@ -251,10 +257,10 @@ class WikiDB {
                              $editedby."\n\n".
                              "Deleted $pagename"))
                         trigger_error(sprintf(_("PageChange Notification of %s sent to %s"),
-                                              $this->_pagename, join(',',$userids)), E_USER_NOTICE);
+                                              $pagename, join(',',$userids)), E_USER_NOTICE);
                     else
                         trigger_error(sprintf(_("PageChange Notification Error: Couldn't send %s to %s"),
-                                              $this->_pagename, join(',',$userids)), E_USER_WARNING);
+                                              $pagename, join(',',$userids)), E_USER_WARNING);
                 }
             }
         }
@@ -294,7 +300,7 @@ class WikiDB {
             $GLOBALS['request']->setArg('paging','auto');
     	}
         $result = $this->_backend->get_all_pages($include_empty, $sortby, $limit);
-        return new WikiDB_PageIterator($this, $result);
+        return new WikiDB_PageIterator(/*$this,*/ $result);
     }
 
     // Do we need this?
@@ -337,7 +343,7 @@ class WikiDB {
      */
     function titleSearch($search) {
         $result = $this->_backend->text_search($search);
-        return new WikiDB_PageIterator($this, $result);
+        return new WikiDB_PageIterator(/*$this,*/ $result);
     }
 
     /**
@@ -358,7 +364,7 @@ class WikiDB {
      */
     function fullSearch($search) {
         $result = $this->_backend->text_search($search, 'full_text');
-        return new WikiDB_PageIterator($this, $result);
+        return new WikiDB_PageIterator(/*$this,*/ $result);
     }
 
     /**
@@ -377,7 +383,7 @@ class WikiDB {
      */
     function mostPopular($limit = 20, $sortby = '-hits') {
         $result = $this->_backend->most_popular($limit, $sortby);
-        return new WikiDB_PageIterator($this, $result);
+        return new WikiDB_PageIterator(/*$this,*/ $result);
     }
 
     /**
@@ -410,7 +416,7 @@ class WikiDB {
      */
     function mostRecent($params = false) {
         $result = $this->_backend->most_recent($params);
-        return new WikiDB_PageRevisionIterator($this, $result);
+        return new WikiDB_PageRevisionIterator(/*$this,*/ $result);
     }
 
     /**
@@ -426,7 +432,7 @@ class WikiDB {
         assert(is_string($from) && $from != '');
         assert(is_string($to) && $to != '');
         $result = false;
-        if (method_exists($this->_backend,'rename_page')) {
+        if (method_exists($this->_backend, 'rename_page')) {
             $oldpage = $this->getPage($from);
             $newpage = $this->getPage($to);
             //update all WikiLinks in existing pages
@@ -464,22 +470,9 @@ class WikiDB {
         if ($result) {
             $notify = $this->get('notify');
             if (!empty($notify) and is_array($notify)) {
-                list($emails, $userids) = WikiDB_Page::getPageChangeEmails($notify);
+                list($emails, $userids) = $oldpage->getPageChangeEmails($notify);
                 if (!empty($emails)) {
-                    $editedby = sprintf(_("Edited by: %s"), $meta['author']) . ' ' . $meta['author_id'];
-                    $emails = join(',',$emails);
-                    $subject = sprintf(_("Page rename %s to %s"),$from,$to);
-                    $link = WikiURL($to, true);
-                    if (mail($emails,"[".WIKI_NAME."] ".$subject, 
-                             $subject."\n".
-                             $editedby."\n".
-                             $link."\n\n".
-                             "Renamed $from to $to"))
-                        trigger_error(sprintf(_("PageChange Notification of %s sent to %s"),
-                                              $this->_pagename, join(',',$userids)), E_USER_NOTICE);
-                    else
-                        trigger_error(sprintf(_("PageChange Notification Error: Couldn't send %s to %s"),
-                                              $this->_pagename, join(',',$userids)), E_USER_WARNING);
+                    $oldpage->sendPageRenameNotification($to, &$meta, $emails, $userids);
                 }
             }
         }
@@ -800,7 +793,7 @@ class WikiDB_Page
      * @return WikiDB_PageRevision  Returns the new WikiDB_PageRevision object. If
      * $version was incorrect, returns false
      */
-    function createRevision($version, &$content, $metadata, $links) {
+    function createRevision($version, $content, $metadata, $links) {
         $backend = &$GLOBALS['request']->_dbi->_backend;
         $cache = &$GLOBALS['request']->_dbi->_cache;
         $pagename = &$this->_pagename;
@@ -858,8 +851,8 @@ class WikiDB_Page
 
         $backend->unlock(array('version','page','recent','link','nonempty'));
 
-        return new WikiDB_PageRevision($GLOBALS['request']->_dbi, $pagename, $newversion,
-                                       $data);
+        return new WikiDB_PageRevision(/*$GLOBALS['request']->_dbi,*/ 
+                                       $pagename, $newversion, $data);
     }
 
     /** A higher-level interface to createRevision.
@@ -877,7 +870,7 @@ class WikiDB_Page
      *
      * @param hash $meta  Meta-data for new revision.
      */
-    function save(&$wikitext, $version, $meta) {
+    function save($wikitext, $version, $meta) {
 	$formatted = new TransformedText($this, $wikitext, $meta);
         $type = $formatted->getType();
 	$meta['pagetype'] = $type->getName();
@@ -900,17 +893,13 @@ class WikiDB_Page
         }
 
         /* Generate notification emails? */
-        if (isa($newrevision, 'wikidb_pagerevision')) {
+        if (isa($newrevision, 'WikiDB_PageRevision')) {
             // Save didn't fail because of concurrent updates.
             $notify = $GLOBALS['request']->_dbi->get('notify');
             if (!empty($notify) and is_array($notify)) {
                 list($emails, $userids) = $this->getPageChangeEmails($notify);
                 if (!empty($emails)) {
-                    if (@is_array($GLOBALS['deferredPageChangeNotification'])) {
-                        $GLOBALS['deferredPageChangeNotification'][] = array($this->_pagename, $emails, $userids);
-                    } else {
-                        $this->sendPageChangeNotification($wikitext, $version, $meta, $emails, $userids);
-                    }
+                    $this->sendPageChangeNotification($wikitext, $version, $meta, $emails, $userids);
                 }
             }
         }
@@ -964,14 +953,25 @@ class WikiDB_Page
         return array($emails,$userids);
     }
 
-    function sendPageChangeNotification(&$wikitext, $version, $meta, $emails, $userids) {
-        $backend = &$GLOBALS['request']->_dbi->_backend;
+    /**
+     * Send udiff for a changed page to multiple users.
+     * TODO: for remove, rename also
+     */
+    function sendPageChangeNotification($wikitext, $version, $meta, $emails, $userids) {
+        global $request;
+        if (@is_array($request->_deferredPageChangeNotification)) {
+            // collapse multiple changes (loaddir) into one email
+            $request->_deferredPageChangeNotification[] = array($this->_pagename, $emails, $userids);
+            return;
+        }
+
+        $backend = &$request->_dbi->_backend;
         $subject = _("Page change").' '.$this->_pagename;
         $previous = $backend->get_previous_version($this->_pagename, $version);
         if (!isset($meta['mtime'])) $meta['mtime'] = time();
         if ($previous) {
             $difflink = WikiURL($this->_pagename, array('action'=>'diff'),true);
-            $cache = &$GLOBALS['request']->_dbi->_cache;
+            $cache = &$request->_dbi->_cache;
             $this_content = explode("\n", $wikitext);
             $prevdata = $cache->get_versiondata($this->_pagename, $previous, true);
             if (empty($prevdata['%content']))
@@ -1004,6 +1004,31 @@ class WikiDB_Page
         else
             trigger_error(sprintf(_("PageChange Notification Error: Couldn't send %s to %s"),
                                   $this->_pagename, join(',',$userids)), E_USER_WARNING);
+    }
+
+    /** support mass rename / remove (not yet)
+     */
+    function sendPageRenameNotification($to, &$meta, $emails, $userids) {
+        global $request;
+        if (@is_array($request->_deferredPageRenameNotification)) {
+            $request->_deferredPageRenameNotification[] = array($this->_pagename, $to, $meta, $emails, $userids);
+        } else {
+            $from = $this->_pagename;
+            $editedby = sprintf(_("Edited by: %s"), $meta['author']) . ' ' . $meta['author_id'];
+            $emails = join(',',$emails);
+            $subject = sprintf(_("Page rename %s to %s"), $from, $to);
+            $link = WikiURL($to, true);
+            if (mail($emails,"[".WIKI_NAME."] ".$subject, 
+                     $subject."\n".
+                     $editedby."\n".
+                     $link."\n\n".
+                     "Renamed $from to $to"))
+                trigger_error(sprintf(_("PageChange Notification of %s sent to %s"),
+                                      $from, join(',',$userids)), E_USER_NOTICE);
+            else
+                trigger_error(sprintf(_("PageChange Notification Error: Couldn't send %s to %s"),
+                                      $from, join(',',$userids)), E_USER_WARNING);
+        }
     }
 
     /**
@@ -1048,13 +1073,13 @@ class WikiDB_Page
         $pagename = &$this->_pagename;
         
         if (! $version ) // 0 or false
-            return new WikiDB_PageRevision($GLOBALS['request']->_dbi, $pagename, 0);
+            return new WikiDB_PageRevision(/*$GLOBALS['request']->_dbi,*/ $pagename, 0);
 
         assert($version > 0);
         $vdata = $cache->get_versiondata($pagename, $version, $need_content);
         if (!$vdata)
             return false;
-        return new WikiDB_PageRevision($GLOBALS['request']->_dbi, $pagename, $version,
+        return new WikiDB_PageRevision(/*$GLOBALS['request']->_dbi,*/ $pagename, $version,
                                        $vdata);
     }
 
@@ -1097,13 +1122,13 @@ class WikiDB_Page
      * returned revision set.
      *
      * @return WikiDB_PageRevisionIterator A
-     * WikiDB_PageRevisionIterator containing all revisions of this
-     * WikiDB_Page in reverse order by version number.
+     *   WikiDB_PageRevisionIterator containing all revisions of this
+     *   WikiDB_Page in reverse order by version number.
      */
     function getAllRevisions() {
         $backend = &$GLOBALS['request']->_dbi->_backend;
         $revs = $backend->get_all_revisions($this->_pagename);
-        return new WikiDB_PageRevisionIterator($GLOBALS['request']->_dbi, $revs);
+        return new WikiDB_PageRevisionIterator(/*$GLOBALS['request']->_dbi,*/ $revs);
     }
     
     /**
@@ -1119,7 +1144,7 @@ class WikiDB_Page
     function getLinks($reversed = true) {
         $backend = &$GLOBALS['request']->_dbi->_backend;
         $result =  $backend->get_links($this->_pagename, $reversed);
-        return new WikiDB_PageIterator($GLOBALS['request']->_dbi, $result);
+        return new WikiDB_PageIterator(/*$GLOBALS['request']->_dbi,*/ $result);
     }
 
     /**
@@ -1317,15 +1342,16 @@ class WikiDB_Page
  */
 class WikiDB_PageRevision
 {
-    var $_transformedContent = false; // set by WikiDB_Page::save()
+    //var $_transformedContent = false; // set by WikiDB_Page::save()
     
-    function WikiDB_PageRevision(&$wikidb, $pagename, $version,
+    function WikiDB_PageRevision(/*$wikidb,*/ $pagename, $version,
                                  $versiondata = false)
         {
-            $GLOBALS['request']->_dbi = &$wikidb;
+            //$GLOBALS['request']->_dbi = &$wikidb;
             $this->_pagename = $pagename;
             $this->_version = $version;
             $this->_data = $versiondata ? $versiondata : array();
+            $this->_transformedContent = false; // set by WikiDB_Page::save()
         }
     
     /**
@@ -1336,7 +1362,7 @@ class WikiDB_PageRevision
      * @return WikiDB_Page The WikiDB_Page which this revision belongs to.
      */
     function getPage() {
-        return new WikiDB_Page(/*$GLOBALS['request']->_dbi, */$this->_pagename);
+        return new WikiDB_Page(/*$GLOBALS['request']->_dbi,*/ $this->_pagename);
     }
 
     /**
@@ -1636,9 +1662,8 @@ class WikiDB_PageRevision
  */
 class WikiDB_PageIterator
 {
-    function WikiDB_PageIterator(&$wikidb, &$pages) {
+    function WikiDB_PageIterator(/*&$wikidb,*/ &$pages) {
         $this->_pages = $pages;
-        $GLOBALS['request']->_dbi = &$wikidb;
     }
     
     function count () {
@@ -1704,9 +1729,9 @@ class WikiDB_PageIterator
  */
 class WikiDB_PageRevisionIterator
 {
-    function WikiDB_PageRevisionIterator(&$wikidb, &$revisions) {
+    function WikiDB_PageRevisionIterator(/*&$wikidb,*/ $revisions) {
         $this->_revisions = $revisions;
-        $GLOBALS['request']->_dbi = &$wikidb;
+        //$GLOBALS['request']->_dbi = &$wikidb;
     }
     
     function count () {
@@ -1749,7 +1774,7 @@ class WikiDB_PageRevisionIterator
             }
         } else assert($version > 0);
 
-        return new WikiDB_PageRevision($GLOBALS['request']->_dbi, $pagename, $version,
+        return new WikiDB_PageRevision(/*$GLOBALS['request']->_dbi,*/ $pagename, $version,
                                        $versiondata);
     }
 
@@ -1856,9 +1881,9 @@ class WikiDB_cache
     }
     
     function close() {
-        $this->_pagedata_cache = false;
-        $this->_versiondata_cache = false;
-        $this->_glv_cache = false;
+        $this->_pagedata_cache = array();
+        $this->_versiondata_cache = array();
+        $this->_glv_cache = array();
     }
 
     function get_pagedata($pagename) {
@@ -1899,6 +1924,7 @@ class WikiDB_cache
         unset ($this->_pagedata_cache[$pagename]);
         unset ($this->_versiondata_cache[$pagename]);
         unset ($this->_glv_cache[$pagename]);
+        unset ($this->_backend->_page_data);
     }
     
     function delete_page($pagename) {
@@ -1938,7 +1964,7 @@ class WikiDB_cache
         // FIXME: ugly. 
         // Rationale: never keep ['%pagedata']['_cached_html'] in cache.
         if ($vdata && !empty($vdata['%pagedata'])) {
-            $this->_pagedata_cache[$pagename] = $vdata['%pagedata'];
+            $this->_pagedata_cache[$pagename] =& $vdata['%pagedata'];
             // only store _cached_html for the requested page
             if (defined('USECACHE') and USECACHE 
                 and isset($vdata['%pagedata']['_cached_html'])
@@ -2001,6 +2027,10 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.93  2004/10/14 17:17:57  rurban
+// remove dbi WikiDB_Page param: use global request object instead. (memory)
+// allow most_popular sortby arguments
+//
 // Revision 1.92  2004/10/05 17:00:04  rurban
 // support paging for simple lists
 // fix RatingDb sql backend.

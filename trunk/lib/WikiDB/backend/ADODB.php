@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.45 2004-10-14 17:19:17 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.46 2004-11-01 10:43:58 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -184,7 +184,7 @@ extends WikiDB_backend
         return $row ? $this->_extract_page_data($row[1],$row[0]) : false;
     }
 
-    function  _extract_page_data(&$data, $hits) {
+    function  _extract_page_data($data, $hits) {
         $pagedata = empty($data) ? array() : $this->_unserialize($data);
         $pagedata['hits'] = $hits;
         return $pagedata;
@@ -338,7 +338,7 @@ extends WikiDB_backend
         return $row ? $this->_extract_version_data_num($row, $want_content) : false;
     }
 
-    function _extract_version_data_num(&$row, $want_content) {
+    function _extract_version_data_num($row, $want_content) {
         if (!$row)
             return false;
 
@@ -358,7 +358,7 @@ extends WikiDB_backend
         return $data;
     }
 
-    function _extract_version_data_assoc(&$row) {
+    function _extract_version_data_assoc($row) {
         if (!$row)
             return false;
 
@@ -926,7 +926,7 @@ extends WikiDB_backend
 class WikiDB_backend_ADODB_generic_iter
 extends WikiDB_backend_iterator
 {
-    function WikiDB_backend_ADODB_generic_iter(&$backend, &$query_result, $field_list = NULL) {
+    function WikiDB_backend_ADODB_generic_iter($backend, $query_result, $field_list = NULL) {
         $this->_backend = &$backend;
         $this->_result = $query_result;
 
@@ -1172,6 +1172,9 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.45  2004/10/14 17:19:17  rurban
+// allow most_popular sortby arguments
+//
 // Revision 1.44  2004/09/06 08:33:09  rurban
 // force explicit mysql auto-incrementing, atomic version
 //

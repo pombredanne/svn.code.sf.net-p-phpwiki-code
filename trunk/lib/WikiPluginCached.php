@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiPluginCached.php,v 1.17 2004-10-12 15:06:02 rurban Exp $');
+<?php rcs_id('$Id: WikiPluginCached.php,v 1.18 2004-11-01 10:43:57 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
  Copyright (C) 2004 Reini Urban
@@ -540,12 +540,16 @@ class WikiPluginCached extends WikiPlugin
             'xbm'   => IMG_XBM,
             */
             );
-
-        $presenttypes = ImageTypes();
-        foreach($imagetypes as $imgtype => $bitmask)
-            if ( $presenttypes && $bitmask )
-                array_push($supportedtypes, $imgtype);        
-
+        if (function_exists('ImageTypes')) {
+            $presenttypes = ImageTypes();
+            foreach ($imagetypes as $imgtype => $bitmask)
+                if ( $presenttypes && $bitmask )
+                    array_push($supportedtypes, $imgtype);        
+        } else {
+            foreach ($imagetypes as $imgtype => $bitmask)
+                if (function_exists("Image".$imgtype))
+                    array_push($supportedtypes, $imgtype);
+        }
         if (in_array($wish, $supportedtypes)) 
             return $wish;
         elseif (!empty($supportedtypes))
@@ -570,7 +574,7 @@ class WikiPluginCached extends WikiPlugin
      */
     function writeImage($imgtype, $imghandle, $imgfile=false) {
         if ($imgtype != 'html') {
-            $func = "Image" . strtoupper($imgtype);    
+            $func = "Image" . strtoupper($imgtype);
             if ($imgfile) {
                 $func($imghandle,$imgfile);
             } else {
@@ -1090,6 +1094,9 @@ class WikiPluginCached extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.17  2004/10/12 15:06:02  rurban
+// fixes for older php, removed warnings
+//
 // Revision 1.16  2004/10/12 14:56:57  rurban
 // lib/WikiPluginCached.php:731: Notice[8]: Undefined property: _static
 //
