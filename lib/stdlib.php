@@ -1,5 +1,5 @@
 <?php
-   rcs_id('$Id: stdlib.php,v 1.12 2000-11-16 08:52:51 ahollosi Exp $');
+   rcs_id('$Id: stdlib.php,v 1.13 2000-11-22 22:17:06 ahollosi Exp $');
    /*
       Standard functions for Wiki functionality
          LinkRelatedPages($dbi, $pagename)
@@ -406,7 +406,7 @@
 
       // scroll through the page to the first date and break
       // dates are marked with "____" at the beginning of the line
-      for ($i = 0; $i < ($numlines + 1); $i++) {
+      for ($i = 0; $i < $numlines; $i++) {
          if (preg_match("/^____/",
                         $recentchanges["content"][$i])) {
             break;
@@ -418,18 +418,16 @@
       // if it's a new date, insert it, else add the updated page's
       // name to the array
 
-      if ($isNewDay) {
-         $newpage[$k++] = "____$today\r";
-         $newpage[$k++] = "\r";
-      } else {
-         $newpage[$k++] = $recentchanges["content"][$i++];
-      }
+      $newpage[$k++] = $isNewDay ? "____$today\r"
+				 : $recentchanges["content"][$i++];
       if($isnewpage) {
          $newpage[$k++] = "* [$pagename] (new) ..... $remoteuser\r";
       } else {
 	 $diffurl = "phpwiki:?diff=" . rawurlencode($pagename);
          $newpage[$k++] = "* [$pagename] ([diff|$diffurl]) ..... $remoteuser\r";
       }
+      if ($isNewDay)
+         $newpage[$k++] = "\r";
 
       // copy the rest of the page into the new array
       $pagename = preg_quote($pagename);
