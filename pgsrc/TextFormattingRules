@@ -1,4 +1,4 @@
-'''Paragraphs'''
+! Paragraphs
 
 * Don't indent paragraphs
 * Words wrap and fill as needed
@@ -7,7 +7,7 @@
 * %%''''% makes a linebreak (in headings and lists too)
 
 
-'''Lists'''
+! Lists
 
 * asterick for first level
 ** asterick-asterick for second level, etc.
@@ -17,36 +17,37 @@
 * One line for each item
 * Other leading whitespace signals preformatted text, changes font.
 
-'''Headings'''
+! Headings
 
 * '!' at the start of a line makes a small heading
 * '!!' at the start of a line makes a medium heading 
 * '!!!' at the start of a line makes a large heading
 
-'''Fonts'''
+! Fonts
+
 * Indent with one or more spaces to use a monospace font:
 
  This is in monospace
 This is not
 
-'''Indented Paragraphs'''
+!Indented Paragraphs
 ''(Quotes)''
 
 * semicolon-colon -- works like <BLOCKQUOTE>
 
 ;: this is an indented block of text
 
-'''Emphasis'''
+! Emphasis
 
 * Use doubled single-quotes ('') for emphasis (usually ''italics'')
 * Use doubled underscores (__) for strong emphasis (usually __bold__)
-* Mix them at will: ''__bold italics__''
+* Mix them at will: __''bold italics''__
 * ''Emphasis'' can be used ''multiple'' times within a line, but ''cannot'' cross line boundaries:
 
 ''this
 will not work''
 
-'''References'''
+! References
 * Hyperlinks to other pages within the Wiki are made by placing the page name in square brackets: [this is a page link] or UsingWikiWords (preferred)
 * Hyperlinks to external pages are done like this: [http://www.wcsb.org/]
 * You can name the links to the external pages by providing a name, a bar (|) and then the hyperlink: [PhpWiki home page | http://phpwiki.sourceforge.net/]  
@@ -56,11 +57,9 @@ will not work''
 * URLs ending with .png, .gif, or .jpg are inlined if in square brackets, by themselves: [http://phpwiki.sourceforge.net/phpwiki/images/png.png]
 
 
-'''HTML Mark-Up Language'''
+! HTML Mark-Up Language
 
 * Don't bother
 * < and > are themselves
 * The & characters will not work
 * If you really must use HTML, your system administrator can enable this feature. Start each line with a bar (|). Note that this feature is disabled by default.
-
-
