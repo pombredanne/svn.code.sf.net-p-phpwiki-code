@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.8 2004-01-30 18:46:15 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.9 2004-01-30 19:57:58 rurban Exp $');
 
 // This is a complete OOP rewrite of the old WikiUser code with various
 // configurable external authentification methods.
@@ -571,30 +571,30 @@ extends _AnonUser
         // Check the configured Prefs methods
         if (!empty($DBAuthParams['pref_select']) and $DBParams['dbtype'] == 'SQL') {
             $this->_prefmethod = 'SQL'; // really pear db
-            $dbh = $this->getAuthDbh();
+            $this->getAuthDbh();
             // preparate the SELECT statement
-            $this->_prefselect = $dbh->_backend->prepare(
-		preg_replace('"$userid"','?',$DBAuthParams['pref_select'])
+            $this->_prefselect = $this->_auth_dbi->prepare(
+		str_replace('"$userid"','?',$DBAuthParams['pref_select'])
 	    );
         }
         if (!empty($DBAuthParams['pref_select']) and $DBParams['dbtype'] == 'ADODB') {
             $this->_prefmethod = 'ADODB'; // uses a simplier execute syntax
-            $dbh = $this->getAuthDbh();
+            $this->getAuthDbh();
             // preparate the SELECT statement
-            $this->_prefselect = preg_replace('"$userid"','%s',$DBAuthParams['pref_select']);
+            $this->_prefselect = str_replace('"$userid"','%s',$DBAuthParams['pref_select']);
         }
         if (!empty($DBAuthParams['pref_update']) and $DBParams['dbtype'] == 'SQL') {
             $this->_prefmethod = 'SQL';
-            $dbh = $this->getAuthDbh();
-            $this->_prefupdate = $dbh->_backend->prepare(
-                preg_replace(array('"$userid"','"$pref_blob"'),array('?','?'),$DBAuthParams['pref_update'])
+            $this->getAuthDbh();
+            $this->_prefupdate = $this->_auth_dbi->prepare(
+                str_replace(array('"$userid"','"$pref_blob"'),array('?','?'),$DBAuthParams['pref_update'])
 	    );
         }
         if (!empty($DBAuthParams['pref_update']) and $DBParams['dbtype'] == 'ADODB') {
             $this->_prefmethod = 'ADODB'; // uses a simplier execute syntax
-            $dbh = $this->getAuthDbh();
+            $this->getAuthDbh();
             // preparate the SELECT statement
-            $this->_prefupdate = preg_replace(array('"$userid"','"$pref_blob"'),array('%s','%s'),$DBAuthParams['pref_update']);
+            $this->_prefupdate = str_replace(array('"$userid"','"$pref_blob"'),array('%s','%s'),$DBAuthParams['pref_update']);
         }
         $this->getPreferences();
 
@@ -642,12 +642,13 @@ extends _AnonUser
     function getAuthDbh () {
         global $request, $DBParams, $DBAuthParams;
         if (empty($this->_auth_dbi)) {
-            if ($DBParams['dbtype'] == 'dba' or empty($DBAuthParams['auth_dsn']))
-                $this->_auth_dbi = $request->getDbh(); // use phpwiki database 
+            if ($DBParams['dbtype'] == 'SQL' and empty($DBAuthParams['auth_dsn']))
+                $dbh = $request->getDbh(); // use phpwiki database 
             elseif ($DBAuthParams['auth_dsn'] == $DBParams['dsn'])
-                $this->_auth_dbi = $request->getDbh(); // same phpwiki database 
-            else // use another external database handle. needs PHP 4.1
-                $this->_auth_dbi = WikiDB::open($DBAuthParams);
+                $dbh = $request->getDbh(); // same phpwiki database 
+            else // use another external database handle. needs PHP >= 4.1
+                $dbh = WikiDB::open($DBAuthParams);
+            $this->_auth_dbi = & $dbh->_backend->_dbh;    
         }
         return $this->_auth_dbi;
     }
@@ -666,13 +667,13 @@ extends _AnonUser
         if ((! $this->_prefs) && $this->_prefselect) {
             if ($this->_prefmethod == 'ADODB') {
                 $dbh = & $this->_auth_dbi;
-                $db_result = $dbh->_backend->Execute($this->_prefselect,$dbh->qstr($this->_userid));
+                $db_result = $dbh->Execute($this->_prefselect,$dbh->qstr($this->_userid));
                 if (!$rs->EOF)
                     $prefs_blob = $db_result->fields['pref_blob'];
                 $db_result->Close();
             }
             else { // pear db methods
-                $db_result = $this->_auth_dbi->_backend->execute($this->_prefselect,$this->_userid);
+                $db_result = $this->_auth_dbi->execute($this->_prefselect,$this->_userid);
                 list($prefs_blob) = $db_result->fetchRow();
             }
             if ($restored_from_db = $this->_prefs->retrieve($prefs_blob)) {
@@ -701,11 +702,11 @@ extends _AnonUser
         if ((! $this->_prefs) && $this->_prefupdate) {
             if ($this->_prefmethod == 'ADODB') {
                 $dbh =& $this->_auth_dbi;
-                $db_result = $dbh->_backend->Execute($this->_prefupdate,$dbh->qstr($serialized),$dbh->qstr($this->_userid));
+                $db_result = $dbh->Execute($this->_prefupdate,$dbh->qstr($serialized),$dbh->qstr($this->_userid));
                 $db_result->Close();
             }
             else { // pear db methods
-                $db_result = $this->_auth_dbi->_backend->execute($this->_prefupdate,$serialized,$this->_userid);
+                $db_result = $this->_auth_dbi->execute($this->_prefupdate,$serialized,$this->_userid);
             }
         }
         else
@@ -877,14 +878,14 @@ extends _DbPassUser
         }
         // Prepare the configured auth statements
         if (!empty($DBAuthParams['auth_check'])) {
-            $this->_authselect = $this->_auth_dbi->_backend->prepare (
-                     preg_replace(array('"$userid"','"$password"'),array('?','?'),
+            $this->_authselect = $this->_auth_dbi->prepare (
+                     str_replace(array('"$userid"','"$password"'),array('?','?'),
                                   $DBAuthParams['auth_check'])
                      );
         }
         if (!empty($DBAuthParams['auth_update'])) {
-            $this->_authupdate = $this->_auth_dbi->_backend->prepare(
-                    preg_replace(array('"$userid"','"$password"'),array('?','?'),$DBAuthParams['auth_update'])
+            $this->_authupdate = $this->_auth_dbi->prepare(
+                    str_replace(array('"$userid"','"$password"'),array('?','?'),$DBAuthParams['auth_update'])
                     );
         }
     }
@@ -894,7 +895,7 @@ extends _DbPassUser
         // clutter the homepage metadata with prefs.
         _AnonUser::getPreferences();
         if ((! $this->_prefs) && $this->_prefselect) {
-            $db_result = $this->_auth_dbi->_backend->execute($this->_prefselect,$this->_userid);
+            $db_result = $this->_auth_dbi->execute($this->_prefselect,$this->_userid);
             list($prefs_blob) = $db_result->fetchRow();
             if ($restored_from_db = $this->_prefs->retrieve($prefs_blob)) {
                 $this->_prefs = new UserPreferences($restored_from_db);
@@ -913,7 +914,7 @@ extends _DbPassUser
     function setPreferences($prefs, $id_only=false) {
         $serialized = $this->_prefs->store();
         if ($this->_prefupdate) {
-            $db_result = $this->_auth_dbi->_backend->execute($this->_prefupdate,$serialized,$this->_userid);
+            $db_result = $this->_auth_dbi->execute($this->_prefupdate,$serialized,$this->_userid);
         } else {
             _AnonUser::setPreferences($prefs, $id_only);
             $this->_HomePagehandle->set('pref', $serialized);
@@ -927,7 +928,7 @@ extends _DbPassUser
         $dbh = &$this->_auth_dbi;
         //NOTE: for auth_crypt_method='crypt' no special auth_user_exists is needed
         if ($this->_auth_crypt_method == 'crypt') {
-            $rs = $dbh->_backend->Execute($this->_authselect,$this->_userid) ;
+            $rs = $dbh->Execute($this->_authselect,$this->_userid) ;
             if ($rs->numRows())
                 return true;
         }
@@ -935,9 +936,9 @@ extends _DbPassUser
             if (! $GLOBALS['DBAuthParams']['auth_user_exists'])
                 trigger_error("\$DBAuthParams['auth_user_exists'] is missing",
                               E_USER_WARNING);
-            $this->_authcheck = preg_replace('/"$userid"/','? ',
+            $this->_authcheck = str_replace('"$userid"','?',
                                              $GLOBALS['DBAuthParams']['auth_user_exists']);
-            $rs = $dbh->_backend->Execute($this->_authcheck,
+            $rs = $dbh->Execute($this->_authcheck,
                                           $this->_userid) ;
             if ($rs->numRows())
                 return true;
@@ -957,11 +958,11 @@ extends _DbPassUser
 
         //NOTE: for auth_crypt_method='crypt'  defined('ENCRYPTED_PASSWD',true) must be set
         if ($this->_auth_crypt_method == 'crypt') {
-            $db_result = $this->_auth_dbi->_backend->execute($this->_authselect,$this->_userid);
+            $db_result = $this->_auth_dbi->execute($this->_authselect,$this->_userid);
             list($stored_password) = $db_result->fetchRow();
             $result = $this->_checkPass($submitted_password, $stored_password);
         } else {
-            $db_result = $this->_auth_dbi->_backend->execute($this->_authselect,$submitted_password,$this->_userid);
+            $db_result = $this->_auth_dbi->execute($this->_authselect,$submitted_password,$this->_userid);
             list($okay) = $db_result->fetchRow();
             $result = !empty($okay);
         }
@@ -995,7 +996,7 @@ extends _DbPassUser
             if (function_exists('crypt'))
                 $submitted_password = crypt($submitted_password);
         }
-        $db_result = $this->_auth_dbi->_backend->execute($this->_authupdate,$submitted_password,$this->_userid);
+        $db_result = $this->_auth_dbi->execute($this->_authupdate,$submitted_password,$this->_userid);
     }
 
 }
@@ -1015,11 +1016,11 @@ extends _DbPassUser
         }
         // Prepare the configured auth statements
         if (!empty($DBAuthParams['auth_check'])) {
-            $this->_authselect = preg_replace(array('"$userid"','"$password"'),array('%s','%s'),
+            $this->_authselect = str_replace(array('"$userid"','"$password"'),array('%s','%s'),
                                               $DBAuthParams['auth_check']);
         }
         if (!empty($DBAuthParams['auth_update'])) {
-            $this->_authupdate = preg_replace(array('"$userid"','"$password"'),array('%s','%s'),
+            $this->_authupdate = str_replace(array('"$userid"','"$password"'),array('%s','%s'),
                                               $DBAuthParams['auth_update']);
         }
     }
@@ -1029,7 +1030,7 @@ extends _DbPassUser
         _AnonUser::getPreferences();
         if ((! $this->_prefs) && $this->_prefselect) {
             $dbh = & $this->_auth_dbi;
-            $rs = $dbh->_backend->Execute($this->_prefselect,$dbh->qstr($this->_userid));
+            $rs = $dbh->Execute($this->_prefselect,$dbh->qstr($this->_userid));
             if ($rs->EOF) {
                 $rs->Close();
             } else {
@@ -1054,7 +1055,7 @@ extends _DbPassUser
         $serialized = $this->_prefs->store();
         if ($this->_prefupdate) {
             $dbh = & $this->_auth_dbi;
-            $db_result = $dbh->_backend->Execute($this->_prefupdate,$dbh->qstr($serialized),$dbh->qstr($this->_userid));
+            $db_result = $dbh->Execute($this->_prefupdate,$dbh->qstr($serialized),$dbh->qstr($this->_userid));
             $db_result->Close();
         } else {
             _AnonUser::setPreferences($prefs, $id_only);
@@ -1069,7 +1070,7 @@ extends _DbPassUser
         $dbh = &$this->_auth_dbi;
         //NOTE: for auth_crypt_method='crypt' no special auth_user_exists is needed
         if ($this->_auth_crypt_method == 'crypt') {
-            $rs = $dbh->_backend->Execute($this->_authselect,$dbh->qstr($this->_userid));
+            $rs = $dbh->Execute($this->_authselect,$dbh->qstr($this->_userid));
             if (!$rs->EOF) {
                 $rs->Close();
                 return true;
@@ -1081,9 +1082,9 @@ extends _DbPassUser
             if (! $GLOBALS['DBAuthParams']['auth_user_exists'])
                 trigger_error("\$DBAuthParams['auth_user_exists'] is missing",
                               E_USER_WARNING);
-            $this->_authcheck = preg_replace('/"$userid"/','%s',
+            $this->_authcheck = str_replace('"$userid"','%s',
                                              $GLOBALS['DBAuthParams']['auth_user_exists']);
-            $rs = $dbh->_backend->Execute($this->_authcheck,
+            $rs = $dbh->Execute($this->_authcheck,
                                           $dbh->qstr($this->_userid));
             if (!$rs->EOF) {
                 $rs->Close();
@@ -1107,7 +1108,7 @@ extends _DbPassUser
         $dbh = &$this->_auth_dbi;
         //NOTE: for auth_crypt_method='crypt'  defined('ENCRYPTED_PASSWD',true) must be set
         if ($this->_auth_crypt_method == 'crypt') {
-            $rs = $dbh->_backend->Execute($this->_authselect,$dbh->qstr($this->_userid));
+            $rs = $dbh->Execute($this->_authselect,$dbh->qstr($this->_userid));
             if (!$rs->EOF) {
                 $stored_password = $rs->fields['password'];
                 $rs->Close();
@@ -1118,7 +1119,7 @@ extends _DbPassUser
             }
         }
         else {
-            $rs = $dbh->_backend->Execute($this->_authselect,
+            $rs = $dbh->Execute($this->_authselect,
                                           $dbh->qstr($submitted_password),
                                           $dbh->qstr($this->_userid));
             $okay = $rs->fields['ok'];
@@ -1156,7 +1157,7 @@ extends _DbPassUser
                 $submitted_password = crypt($submitted_password);
         }
         $dbh = &$this->_auth_dbi;
-        $rs = $dbh->_backend->Execute($this->_authupdate,
+        $rs = $dbh->Execute($this->_authupdate,
                                       $dbh->qstr($submitted_password),
                                       $dbh->qstr($this->_userid));
         $rs->Close();
@@ -1707,6 +1708,9 @@ class UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/01/30 18:46:15  rurban
+// fix "lib/WikiUserNew.php:572: Notice[8]: Undefined variable: DBParams"
+//
 // Revision 1.7  2004/01/27 23:23:39  rurban
 // renamed ->Username => _userid for consistency
 // renamed mayCheckPassword => mayCheckPass
