@@ -39,6 +39,3 @@ done
 #pl -png -o compare.png -prefab compare data=$prefix_combined.data catfields=1 y=3 y2=4 y3=5 y4=6 ylbl="memory (kb)" title="$title" ygrid=yes ylbldet="adjust=-0.1,0" barwidth=0.01 stubvert=yes header=yes name=file name2=dba name3=SQL name4=ADODB
 
 #pl -png -o lines.png -prefab lines data=$prefix_combined.data x=2 y=3 y2=4 y3=5 y4=6 ylbl="memory (kb)" title="$title" ygrid=yes ylbldet="adjust=-0.1,0" stubvert=yes header=yes name=file name2=dba name3=SQL name4=ADODB
-
-
-

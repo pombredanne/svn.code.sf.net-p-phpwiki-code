@@ -471,7 +471,7 @@ ob_end_flush();
 
 if ($debug_level & 1) {
     //echo "\n";
-    echo "PHPWIKI_VERSION=",PHPWIKI_VERSION, strstr(PHPWIKI_VERSION,"pre") ? strftime("-%Y%m%d") : "","\n";
+    echo "PHPWIKI_VERSION=",PHPWIKI_VERSION, strstr(PHPWIKI_VERSION,"pre") ? strftime(" / %Y%m%d") : "","\n";
     if ($debug_level & 9) {
         // which constants affect memory?
         foreach (explode(",","USECACHE,WIKIDB_NOCACHE_MARKUP,ENABLE_USER_NEW,ENABLE_PAGEPERM") as $v) {
