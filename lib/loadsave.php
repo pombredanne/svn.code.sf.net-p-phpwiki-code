@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.53 2002-02-09 04:01:52 dairiki Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.54 2002-02-17 06:39:54 carstenklapp Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -16,7 +16,7 @@ function EndLoadDump(&$request)
 {
     // FIXME: This is a hack
     $pagelink = WikiLink($request->getPage());
-    
+
     PrintXML(HTML::p(HTML::strong(_("Complete."))),
              HTML::p(fmt("Return to %s", $pagelink)));
     echo "</body></html>\n";
@@ -61,7 +61,7 @@ function MailifyPage ($page, $nversions = 1)
     // in the actual pgsrc files, since only they should have
     // RCS ids.
     //$head .= "X-Rcs-Id: \$Id\$\r\n";
-    
+
     $iter = $page->getAllRevisions();
     $parts = array();
     while ($revision = $iter->next()) {
@@ -111,8 +111,8 @@ function MakeWikiZip (&$request)
         $zipname         = "wiki.zip";
         $include_archive = false;
     }
-    
-    
+
+
 
     $zip = new ZipWriter("Created by PhpWiki", $zipname);
 
@@ -120,34 +120,34 @@ function MakeWikiZip (&$request)
     $pages = $dbi->getAllPages();
     while ($page = $pages->next()) {
         set_time_limit(30);	// Reset watchdog.
-        
+
         $current = $page->getCurrentRevision();
         if ($current->getVersion() == 0)
             continue;
-        
-        
+
+
         $attrib = array('mtime'    => $current->get('mtime'),
                         'is_ascii' => 1);
         if ($page->get('locked'))
             $attrib['write_protected'] = 1;
-        
+
         if ($include_archive)
             $content = MailifyPage($page, 0);
         else
             $content = MailifyPage($page);
-        
+
         $zip->addRegularFile( FilenameForPage($page->getName()),
                               $content, $attrib);
     }
     $zip->finish();
 }
 
-function DumpToDir (&$request) 
+function DumpToDir (&$request)
 {
     $directory = $request->getArg('directory');
     if (empty($directory))
         $request->finish(_("You must specify a directory to dump to"));
-    
+
     // see if we can access the directory the user wants us to use
     if (! file_exists($directory)) {
         if (! mkdir($directory, 0755))
@@ -163,18 +163,18 @@ function DumpToDir (&$request)
 
     $dbi = $request->getDbh();
     $pages = $dbi->getAllPages();
-    
+
     while ($page = $pages->next()) {
-        
+
         $filename = FilenameForPage($page->getName());
-        
+
         $msg = HTML(HTML::br(), $page->getName(), ' ... ');
-        
+
         if($page->getName() != $filename) {
             $msg->pushContent(HTML::small(fmt("saved as %s", $filename)),
                               " ... ");
         }
-        
+
         if ($request->getArg('include') == 'all')
             $data = MailifyPage($page, 0);
         else
@@ -185,16 +185,16 @@ function DumpToDir (&$request)
                                                "$directory/$filename")));
             $request->finish($msg);
         }
-        
+
         $num = fwrite($fd, $data, strlen($data));
         $msg->pushContent(HTML::small(fmt("%s bytes written", $num)));
         PrintXML($msg);
-        
+
         flush();
         assert($num == strlen($data));
         fclose($fd);
     }
-    
+
     EndLoadDump($request);
 }
 
@@ -208,31 +208,31 @@ function SavePage (&$request, $pageinfo, $source, $filename)
 {
     $pagedata    = $pageinfo['pagedata'];    // Page level meta-data.
     $versiondata = $pageinfo['versiondata']; // Revision level meta-data.
-    
+
     if (empty($pageinfo['pagename'])) {
         PrintXML(HTML::dt(HTML::strong(_("Empty pagename!"))));
         return;
     }
-    
+
     if (empty($versiondata['author_id']))
         $versiondata['author_id'] = $versiondata['author'];
-    
+
     $pagename = $pageinfo['pagename'];
     $content  = $pageinfo['content'];
 
     $dbi = $request->getDbh();
     $page = $dbi->getPage($pagename);
-    
+
     foreach ($pagedata as $key => $value) {
         if (!empty($value))
             $page->set($key, $value);
     }
-    
+
     $mesg = HTML::dd();
     $skip = false;
     if ($source)
         $mesg->pushContent(' ', fmt("from %s", $source));
-    
+
 
     $current = $page->getCurrentRevision();
     if ($current->getVersion() == 0) {
@@ -249,12 +249,12 @@ function SavePage (&$request, $pageinfo, $source, $filename)
         }
         $isnew = false;
     }
-    
+
     if (! $skip) {
         $new = $page->createRevision(WIKIDB_FORCE_CREATE, $content,
                                      $versiondata,
                                      ExtractWikiPageLinks($content));
-        
+
         $mesg->pushContent(' ', fmt("- saved to database as version %d",
                                     $new->getVersion()));
     }
@@ -267,7 +267,7 @@ function ParseSerializedPage($text, $default_pagename, $user)
 {
     if (!preg_match('/^a:\d+:{[si]:\d+/', $text))
         return false;
-    
+
     $pagehash = unserialize($text);
     
     // Split up pagehash into four parts:
@@ -290,34 +290,35 @@ function ParseSerializedPage($text, $default_pagename, $user)
     if (empty($pagehash['author'])) {
         $pagehash['author'] = $user->getId();
     }
-
+    
     foreach ($pagehash as $key => $value) {
         switch($key) {
-        case 'pagename':
-        case 'version':
-            $pageinfo[$key] = $value;
-            break;
-        case 'content':
-            $pageinfo[$key] = join("\n", $value);
-            break;
-        case 'flags':
-            if (($value & FLAG_PAGE_LOCKED) != 0)
-                $pagedata['locked'] = 'yes';
-            break;
-        case 'created':
-            $pagedata[$key] = $value;
-            break;
-        case 'lastmodified':
-            $versiondata['mtime'] = $value;
-            break;
-        case 'author':
-            $versiondata[$key] = $value;
-            break;
+            case 'pagename':
+            case 'version':
+                $pageinfo[$key] = $value;
+                break;
+            case 'content':
+                $pageinfo[$key] = join("\n", $value);
+                break;
+            case 'flags':
+                if (($value & FLAG_PAGE_LOCKED) != 0)
+                    $pagedata['locked'] = 'yes';
+                break;
+            case 'created':
+                $pagedata[$key] = $value;
+                break;
+            case 'lastmodified':
+                $versiondata['mtime'] = $value;
+                break;
+            case 'author':
+            case 'author_id':
+            case 'summary':
+            case 'hits':
         }
     }
     return $pageinfo;
 }
- 
+
 function SortByPageVersion ($a, $b) {
     return $a['version'] - $b['version'];
 }
@@ -330,31 +331,31 @@ function LoadFile (&$request, $filename, $text = false, $mtime = false)
         $mtime = $stat[9];
         $text  = implode("", file($filename));
     }
-   
+
     set_time_limit(30);	// Reset watchdog.
-    
+
     // FIXME: basename("filewithnoslashes") seems to return garbage sometimes.
     $basename = basename("/dummy/" . $filename);
-   
+
     if (!$mtime)
         $mtime = time();	// Last resort.
-    
+
     $default_pagename = rawurldecode($basename);
-    
+
     if ( ($parts = ParseMimeifiedPages($text)) ) {
         usort($parts, 'SortByPageVersion');
         foreach ($parts as $pageinfo)
-            SavePage($request, $pageinfo, sprintf(_("MIME file %s"), 
+            SavePage($request, $pageinfo, sprintf(_("MIME file %s"),
                                                   $filename), $basename);
     }
     else if ( ($pageinfo = ParseSerializedPage($text, $default_pagename,
                                                $request->getUser())) ) {
-        SavePage($request, $pageinfo, sprintf(_("Serialized file %s"), 
+        SavePage($request, $pageinfo, sprintf(_("Serialized file %s"),
                                               $filename), $basename);
     }
     else {
         $user = $request->getUser();
-        
+
         // Assume plain text file.
         $pageinfo = array('pagename' => $default_pagename,
                           'pagedata' => array(),
@@ -380,7 +381,7 @@ function LoadZip (&$request, $zipfile, $files = false, $exclude = false) {
                      HTML::dd(_("Skipping")));
             continue;
         }
-       
+
         LoadFile($request, $fn, $data, $attrib['mtime']);
     }
 }
@@ -437,18 +438,18 @@ function IsZipFile ($filename_or_fd)
 {
     // See if it looks like zip file
     if (is_string($filename_or_fd))
-        {
-            $fd    = fopen($filename_or_fd, "rb");
-            $magic = fread($fd, 4);
-            fclose($fd);
-        }
+    {
+        $fd    = fopen($filename_or_fd, "rb");
+        $magic = fread($fd, 4);
+        fclose($fd);
+    }
     else
-        {
-            $fpos  = ftell($filename_or_fd);
-            $magic = fread($filename_or_fd, 4);
-            fseek($filename_or_fd, $fpos);
-        }
-    
+    {
+        $fpos  = ftell($filename_or_fd);
+        $magic = fread($filename_or_fd, 4);
+        fseek($filename_or_fd, $fpos);
+    }
+
     return $magic == ZIP_LOCHEAD_MAGIC || $magic == ZIP_CENTHEAD_MAGIC;
 }
 
@@ -462,7 +463,7 @@ function LoadAny (&$request, $file_or_dir, $files = false, $exclude = false)
         // FIXME: windows uses \ and :
         if (is_integer(strpos($file_or_dir, "/"))) {
             $file_or_dir = dirname($file_or_dir) ."/".
-                           urlencode(basename($file_or_dir));
+            urlencode(basename($file_or_dir));
         } else {
             // This is probably just a file.
             $file_or_dir = urlencode($file_or_dir);
@@ -480,7 +481,7 @@ function LoadAny (&$request, $file_or_dir, $files = false, $exclude = false)
         elseif ($type == 004)
             $type = 'dir';
     }
-    
+
     if ($type == 'dir') {
         LoadDir($request, $file_or_dir, $files, $exclude);
     }
@@ -510,8 +511,8 @@ function LoadFileOrDir (&$request)
 function SetupWiki (&$request)
 {
     global $GenericPages, $LANG;
-    
-    
+
+
     //FIXME: This is a hack (err, "interim solution")
     // This is a bogo-bogo-login:  Login without
     // saving login information in session state.
@@ -523,15 +524,15 @@ function SetupWiki (&$request)
     $real_user = $request->_user;
     $request->_user = new WikiUser(_("The PhpWiki programming team"),
                                    WIKIAUTH_BOGO);
-    
+
     StartLoadDump($request, _("Loading up virgin wiki"));
     echo "<dl>\n";
-    
+
     LoadAny($request, FindLocalizedFile(WIKI_PGSRC));
     if ($LANG != "C")
         LoadAny($request, FindFile(DEFAULT_WIKI_PGSRC),
                 $GenericPages);
-    
+
     echo "</dl>\n";
     EndLoadDump($request);
 }
@@ -539,21 +540,21 @@ function SetupWiki (&$request)
 function LoadPostFile (&$request)
 {
     $upload = $request->getUploadedFile('file');
-    
+
     if (!$upload)
         $request->finish(_("No uploaded file to upload?")); // FIXME: more concise message
 
-    
+
     // Dump http headers.
     StartLoadDump($request, sprintf(_("Uploading %s"), $upload->getName()));
     echo "<dl>\n";
-    
+
     $fd = $upload->open();
     if (IsZipFile($fd))
         LoadZip($request, $fd, false, array(_("RecentChanges")));
     else
         LoadFile($request, $upload->getName(), $upload->getContents());
-    
+
     echo "</dl>\n";
     EndLoadDump($request);
 }
@@ -565,5 +566,5 @@ function LoadPostFile (&$request)
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End:
 ?>
