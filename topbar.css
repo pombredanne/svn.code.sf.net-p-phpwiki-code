@@ -1,0 +1,68 @@
+/**
+ * $Id: topbar.css,v 1.1 2002-02-09 05:54:46 carstenklapp Exp $
+ *
+ * The html really needs to be tweaked a bit to get this stuff to
+ * work properly.
+ *
+ * The actionbar disappears in Opera. Opera ignores the bg colors.
+ *
+ * Mac IE 5.1 doesn't do proper positioning of the editdate, and 
+ * furthermore doesn't flow other objects properly around it.
+ *
+ * There is also a limit how far Mac IE 5.1 will allow the <h1> to
+ * overlap with the #navbar, apparently dependant on somewhat random
+ * interactions with other (unrelated) css elements on the page.
+ * However, the position seems stable with this particular combination.
+ */
+@import url("phpwiki.css");
+
+#navbar  {
+  background: ivory;
+  position: fixed;
+  padding-bottom: 3em;
+  margin-top: -1ex;
+  padding-top: 2ex;
+  width: 100%;
+  top: 0;
+  z-index: 1;
+}
+#logo  {
+  position: fixed;
+  top: 1ex;
+  right: 1em;
+  z-index: 2;
+}
+p.editdate  {
+  position: fixed;
+  text-align: right;
+  top: 3ex;
+/* this a workaround for p.editdate also being
+   in phpwiki.css (a possible css bug in Mozilla?) */
+  right: 5em;
+  z-index: 3;
+}
+h1 {
+  position: fixed;
+  top: 0.75ex;
+  left: auto;
+  z-index: 4;
+}
+.toolbar {
+  background: ivory;
+}
+#actionbar  {
+  background: ivory;
+  position: fixed;
+  bottom: 0;
+}
+.wikitext  {
+  margin-top: 7ex;
+}
+
+/* For emacs users
+ *
+ * Local Variables:
+ * mode: c
+ * c-file-style: cc-mode
+ * End:
+ */
