@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WantedPages.php,v 1.14 2004-11-20 17:35:58 rurban Exp $');
+rcs_id('$Id: WantedPages.php,v 1.15 2004-11-23 13:35:49 rurban Exp $');
 /*
  Copyright (C) 2002, 2004 $ThePhpWikiProgrammingTeam
  
@@ -43,7 +43,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.14 $");
+                            "\$Revision: 1.15 $");
     }
     function getDefaultArguments() {
         return array_merge
@@ -140,6 +140,13 @@ class _PageList_Column_WantedPages_wanted extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2004/11/20 17:35:58  rurban
+// improved WantedPages SQL backends
+// PageList::sortby new 3rd arg valid_fields (override db fields)
+// WantedPages sql pager inexact for performance reasons:
+//   assume 3 wantedfrom per page, to be correct, no getTotal()
+// support exclude argument for get_all_pages, new _sql_set()
+//
 // Revision 1.13  2004/11/20 11:28:49  rurban
 // fix a yet unused PageList customPageListColumns bug (merge class not decl to _types)
 // change WantedPages to use PageList

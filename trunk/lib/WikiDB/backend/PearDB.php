@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.70 2004-11-21 11:59:26 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.71 2004-11-23 13:35:48 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -547,16 +547,15 @@ extends WikiDB_backend
     /**
      * Title search.
      */
-    function text_search($search = '', $fullsearch = false) {
+    function text_search($search='', $fulltext=false, $case_exact=false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         
         $table = "$nonempty_tbl, $page_tbl";
         $join_clause = "$nonempty_tbl.id=$page_tbl.id";
         $fields = $this->page_tbl_fields;
-        $callback = new WikiMethodCb($this, '_sql_match_clause');
-        
-        if ($fullsearch) {
+
+        if ($fulltext) {
             $table .= ", $recent_tbl";
             $join_clause .= " AND $page_tbl.id=$recent_tbl.id";
 
@@ -564,9 +563,14 @@ extends WikiDB_backend
             $join_clause .= " AND $page_tbl.id=$version_tbl.id AND latestversion=version";
 
             $fields .= ", $page_tbl.pagedata as pagedata, " . $this->version_tbl_fields;
-            $callback = new WikiMethodCb($this, '_fullsearch_sql_match_clause');
+            $callback = new WikiMethodCb($this, $case_exact 
+                                         ? '_fullsearch_sql_casematch_clause'
+                                         : '_fullsearch_sql_match_clause');
+        } else {
+            $callback = new WikiMethodCb($this, $case_exact
+                                         ? '_sql_casematch_clause'
+                                         : '_sql_match_clause');
         }
-        
         $search_clause = $search->makeSqlClause($callback);
         
         $result = $dbh->query("SELECT $fields FROM $table"
@@ -588,13 +592,22 @@ extends WikiDB_backend
         // http://bugs.mysql.com/bug.php?id=1491
         return "LOWER(pagename) LIKE '%$word%'";
     }
-
+    function _sql_casematch_clause($word) {
+        $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
+        $word = $this->_dbh->escapeSimple($word);
+        return "pagename LIKE '%$word%'";
+    }
     function _fullsearch_sql_match_clause($word) {
         $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
         $word = $this->_dbh->escapeSimple($word);
         //$page_tbl = $this->_table_names['page_tbl'];
         //Mysql 4.1.1 has a bug which fails here if word is lowercased.
         return "LOWER(pagename) LIKE '%$word%' OR content LIKE '%$word%'";
+    }
+    function _fullsearch_sql_casematch_clause($word) {
+        $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
+        $word = $this->_dbh->escapeSimple($word);
+        return "pagename LIKE '%$word%' OR content LIKE '%$word%'";
     }
 
     /**
@@ -1081,6 +1094,9 @@ extends WikiDB_backend_PearDB_generic_iter
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.70  2004/11/21 11:59:26  rurban
+// remove final \n to be ob_cache independent
+//
 // Revision 1.69  2004/11/20 17:49:39  rurban
 // add fast exclude support to SQL get_all_pages
 //

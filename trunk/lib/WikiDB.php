@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.107 2004-11-21 11:59:16 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.108 2004-11-23 13:35:31 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -298,16 +298,16 @@ class WikiDB {
     }
 
     /**
-     * filter = true: include also empty pages
-     * exclude: comma-seperated list pagenames
+     * $include_empty = true: include also empty pages
+     * exclude: comma-seperated list pagenames: TBD: array of pagenames
      */
-    function numPages($filter=false, $exclude='') {
+    function numPages($include_empty=false, $exclude='') {
     	if (method_exists($this->_backend, 'numPages'))
             // FIXME: currently are all args ignored.
-            $count = $this->_backend->numPages($filter, $exclude);
+            $count = $this->_backend->numPages($include_empty, $exclude);
         else {
             // FIXME: exclude ignored.
-            $iter = $this->getAllPages($filter, false, false, $exclude);
+            $iter = $this->getAllPages($include_empty, false, false, $exclude);
             $count = $iter->count();
             $iter->free();
         }
@@ -323,15 +323,15 @@ class WikiDB {
      * Pages are returned in alphabetical order whenever it is
      * practical to do so.
      *
-     * FIXME: should titleSearch and fullSearch be combined?  I think so.
+     * FIXME: clarify $search syntax. provide glob=>TextSearchQuery converters
      *
      * @access public
      * @param TextSearchQuery $search A TextSearchQuery object
      * @return WikiDB_PageIterator A WikiDB_PageIterator containing the matching pages.
      * @see TextSearchQuery
      */
-    function titleSearch($search) {
-        $result = $this->_backend->text_search($search);
+    function titleSearch($search, $case_exact=false) {
+        $result = $this->_backend->text_search($search, false, $case_exact);
         return new WikiDB_PageIterator($this, $result);
     }
 
@@ -351,8 +351,8 @@ class WikiDB {
      * @return WikiDB_PageIterator A WikiDB_PageIterator containing the matching pages.
      * @see TextSearchQuery
      */
-    function fullSearch($search) {
-        $result = $this->_backend->text_search($search, 'full_text');
+    function fullSearch($search, $case_exact=false) {
+        $result = $this->_backend->text_search($search, 'full_text', $case_exact);
         return new WikiDB_PageIterator($this, $result);
     }
 
@@ -2092,6 +2092,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.107  2004/11/21 11:59:16  rurban
+// remove final \n to be ob_cache independent
+//
 // Revision 1.106  2004/11/20 17:35:56  rurban
 // improved WantedPages SQL backends
 // PageList::sortby new 3rd arg valid_fields (override db fields)

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.122 2004-11-21 11:59:15 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.123 2004-11-23 13:35:31 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -804,12 +804,13 @@ class PageList {
     }
 
     // echo implode(":",explodeList("Test*",array("xx","Test1","Test2")));
-    function explodePageList($input, $include_empty = false, $sortby=false, $limit=false) {
+    function explodePageList($input, $include_empty = false, $sortby=false, $limit=false, $exclude=false) {
     	//TODO: need an SQL optimization here
         // expand wildcards from list of all pages
-        if (preg_match('/[\?\*]/',$input)) {
+        if (preg_match('/[\?\*]/', $input)) {
             $dbi = $GLOBALS['request']->getDbh();
-            $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit);
+            // $dbi->titleSearch($input);
+            $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit, $exclude);
             while ($pagehandle = $allPagehandles->next()) {
                 $allPages[] = $pagehandle->getName();
             }
@@ -820,7 +821,7 @@ class PageList {
         }
     }
 
-    function allPagesByAuthor(&$wildcard, $include_empty=false, $sortby=false, $limit=false) {
+    function allPagesByAuthor($wildcard, $include_empty=false, $sortby=false, $limit=false) {
         $dbi = $GLOBALS['request']->getDbh();
         $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit);
         $allPages = array();
@@ -845,7 +846,7 @@ class PageList {
         return $allPages;
     }
 
-    function allPagesByOwner(&$wildcard, $include_empty=false, $sortby=false, $limit=false) {
+    function allPagesByOwner($wildcard, $include_empty=false, $sortby=false, $limit=false) {
         $dbi = $GLOBALS['request']->getDbh();
         $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit);
         $allPages = array();
@@ -869,7 +870,7 @@ class PageList {
         return $allPages;
     }
 
-    function allPagesByCreator(&$wildcard, $include_empty=false, $sortby=false, $limit=false) {
+    function allPagesByCreator($wildcard, $include_empty=false, $sortby=false, $limit=false) {
         $dbi = $GLOBALS['request']->getDbh();
         $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit);
         $allPages = array();
@@ -1433,6 +1434,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.122  2004/11/21 11:59:15  rurban
+// remove final \n to be ob_cache independent
+//
 // Revision 1.121  2004/11/20 17:35:47  rurban
 // improved WantedPages SQL backends
 // PageList::sortby new 3rd arg valid_fields (override db fields)

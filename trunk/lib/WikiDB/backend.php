@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.12 2004-11-21 11:59:22 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.13 2004-11-23 13:35:32 rurban Exp $');
 
 /*
   Pagedata
@@ -302,7 +302,7 @@ class WikiDB_backend
      *
      * @see WikiDB::titleSearch
      */
-    function text_search($search = '', $fullsearch = false) {
+    function text_search($search='', $fullsearch=false, $case_exact=false) {
         // This is method implements a simple linear search
         // through all the pages in the database.
         //
@@ -323,7 +323,7 @@ class WikiDB_backend
      * @param $limit integer  No more than this many pages
      * @return object A WikiDB_backend_iterator.
      */
-    function most_popular($limit, $orderby='hits DESC') {
+    function most_popular($limit, $sortby='-hits') {
         // This is method fetches all pages, then
         // sorts them by hit count.
         // (Not very efficient.)
@@ -331,7 +331,7 @@ class WikiDB_backend
         // It is expected that most backends will overload
         // method with something more efficient.
         include_once('lib/WikiDB/backend/dumb/MostPopularIter.php');
-        $pages = $this->get_all_pages(false, $orderby, $limit);
+        $pages = $this->get_all_pages(false, $sortby, $limit);
         
         return new WikiDB_backend_dumb_MostPopularIter($this, $pages, $limit);
     }
@@ -352,7 +352,7 @@ class WikiDB_backend
         // It is expected that most backends will overload
         // method with something more efficient.
         include_once('lib/WikiDB/backend/dumb/MostRecentIter.php');
-        $pages = $this->get_all_pages(true,'mtime DESC');
+        $pages = $this->get_all_pages(true, '-mtime');
         return new WikiDB_backend_dumb_MostRecentIter($this, $pages, $params);
     }
 

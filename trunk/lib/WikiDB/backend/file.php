@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: file.php,v 1.19 2004-11-21 11:59:26 rurban Exp $');
+rcs_id('$Id: file.php,v 1.20 2004-11-23 13:35:49 rurban Exp $');
 
 /**
  Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
@@ -729,6 +729,9 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.19  2004/11/21 11:59:26  rurban
+// remove final \n to be ob_cache independent
+//
 // Revision 1.18  2004/11/09 17:11:17  rurban
 // * revert to the wikidb ref passing. there's no memory abuse there.
 // * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively
