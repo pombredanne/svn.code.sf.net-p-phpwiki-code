@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.7 2002-01-10 23:55:53 carstenklapp Exp $');
+rcs_id('$Id: Calendar.php,v 1.8 2002-01-11 20:57:08 dairiki Exp $');
 
 if (!defined('SECONDS_PER_DAY'))
     define('SECONDS_PER_DAY', 24 * 3600);
@@ -29,8 +29,7 @@ extends WikiPlugin
     }
 
     function getDefaultArguments() {
-        // FIXME: how to exclude multiple pages?
-        return array('prefix'		=> (USE_PATH_INFO) ? '[pagename].' : '[pagename]:',
+        return array('prefix'		=> '[pagename].',
                      'date_format'	=> '%Y-%m-%d',
                      'year'		=> '',
                      'month'		=> '',
