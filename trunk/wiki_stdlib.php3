@@ -1,4 +1,4 @@
-<!-- $Id: wiki_stdlib.php3,v 1.20 2000-06-30 01:40:40 wainstead Exp $ -->
+<!-- $Id: wiki_stdlib.php3,v 1.21 2000-07-04 21:26:43 ahollosi Exp $ -->
 <?
    /*
       Standard functions for Wiki functionality
@@ -312,7 +312,7 @@
       $pagename = preg_quote($pagename);
       for (; $i < ($numlines + 1); $i++) {
          // skip previous entry for $pagename
-         if (preg_match("/\[$pagename\]/", $recentchanges["content"][$i])) {
+         if (preg_match("|\[$pagename\]|", $recentchanges["content"][$i])) {
             continue;
          } else {
             $newpage[$k++] = $recentchanges["content"][$i];
