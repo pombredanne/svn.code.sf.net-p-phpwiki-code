@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RatingsDb.php,v 1.4 2004-07-07 19:47:36 dfrankow Exp $');
+rcs_id('$Id: RatingsDb.php,v 1.5 2004-07-08 13:50:33 rurban Exp $');
 
 /*
  * @author:  Dan Frankowski (wikilens author), Reini Urban (as plugin)
@@ -266,16 +266,18 @@ class RatingsDb extends WikiDB {
         if (is_null($dimension)) $dimension = $this->dimension;
         if (is_null($userid))    $userid   = $this->userid; 
         if (is_null($pagename))  $pagename = $this->pagename;
-        $dbi = &$this->_dbi->_backend;
-        if (isset($pagename))
-            $page = $dbi->_get_pageid($pagename);
-        else return 0;
-        if (isset($userid))
-            $user = $dbi->_get_pageid($userid);
-        else return 0;
-        
-        return 0;
-        
+
+        if (RATING_STORAGE == 'SQL') {
+            $dbi = &$this->_dbi->_backend;
+            if (isset($pagename))
+                $page = $dbi->_get_pageid($pagename);
+            else 
+                return 0;
+            if (isset($userid))
+                $user = $dbi->_get_pageid($userid);
+            else 
+                return 0;
+        }
         if (defined('RATING_EXTERNAL') and RATING_EXTERNAL) {
             // how call suggest.exe? as CGI or natively
             //$rating = HTML::Raw("<!--#include virtual=".RATING_ENGINE." -->");
@@ -673,6 +675,9 @@ extends WikiDB_backend_PearDB {
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/07/07 19:47:36  dfrankow
+// Fixes to get PreferencesApp to work-- thanks syilek
+//
 // Revision 1.3  2004/06/30 20:05:36  dfrankow
 // + Add getTheRatingsDb() singleton.
 // + Remove defaulting of dimension, userid, pagename in getRating--

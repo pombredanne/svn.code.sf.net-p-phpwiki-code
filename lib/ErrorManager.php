@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.31 2004-07-02 09:55:58 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.32 2004-07-08 13:50:32 rurban Exp $');
 
 if (isset($GLOBALS['ErrorManager'])) return;
 
@@ -225,6 +225,8 @@ class ErrorManager
         // Error was either fatal, or was not handled by a handler.
         // Handle it ourself.
         if ($error->isFatal()) {
+            if (DEBUG & _DEBUG_TRACE)
+                $error->printSimpleTrace(debug_backtrace());
             $this->_die($error);
         }
         else if (($error->errno & error_reporting()) != 0) {
@@ -243,6 +245,8 @@ class ErrorManager
                 }
             }
             else {
+                if (DEBUG & _DEBUG_TRACE)
+                    $error->printSimpleTrace(debug_backtrace());
                 $error->printXML();
             }
         }
@@ -396,7 +400,7 @@ class PhpError {
         else
             $what = 'Fatal';
 
-	$dir = defined('PHPWIKI_DIR') ? PHPWIKI_DIR : substr(dirname(__FILE__),0,-4);
+        $dir = defined('PHPWIKI_DIR') ? PHPWIKI_DIR : substr(dirname(__FILE__),0,-4);
         if (substr(PHP_OS,0,3) == 'WIN') {
            $dir = str_replace('/','\\',$dir);
            $this->errfile = str_replace('/','\\',$this->errfile);
@@ -443,6 +447,18 @@ class PhpError {
      */
     function asString() {
         return AsString($this->_getDetail());
+    }
+
+    function printSimpleTrace($bt) {
+        $nl = isset($HTTP_SERVER_VARS['REQUEST_METHOD']) ? "<br />" : "\n";
+        echo "Traceback:".$nl;
+        foreach ($bt as $i => $elem) {
+            if (!array_key_exists('file', $elem)) {
+                continue;
+            }
+            print "  " . $elem['file'] . ':' . $elem['line'] . $nl;
+        }
+        flush();
     }
 }
 
@@ -550,6 +566,9 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.31  2004/07/02 09:55:58  rurban
+// more stability fixes: new DISABLE_GETIMAGESIZE if your php crashes when loading LinkIcons: failing getimagesize in old phps; blockparser stabilized
+//
 // Revision 1.30  2004/06/25 14:29:12  rurban
 // WikiGroup refactoring:
 //   global group attached to user, code for not_current user.

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.117 2004-07-02 09:55:58 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.118 2004-07-08 13:50:32 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -44,6 +44,8 @@ function _dump_error_handler(&$error) {
 
 function StartLoadDump(&$request, $title, $html = '')
 {
+    if (isa($request,'MockRequest'))
+        return;
     // FIXME: This is a hack
     if ($html)
         $html->pushContent('%BODY%');
@@ -62,6 +64,8 @@ function StartLoadDump(&$request, $title, $html = '')
 
 function EndLoadDump(&$request)
 {
+    if (isa($request,'MockRequest'))
+        return;
     if (check_php_version(4,1)) {
         global $ErrorManager;
         $ErrorManager->popErrorHandler();
@@ -205,8 +209,8 @@ function MakeWikiZip (&$request)
     
     while ($page = $pages->next()) {
 	$request->args = $request_args; // some plugins might change them (esp. on POST)
-    	if (! $request->getArg('start_debug'))
-            @set_time_limit(30); // Reset watchdog
+    	//if (! $request->getArg('start_debug'))
+        @set_time_limit(30); // Reset watchdog
 
         $current = $page->getCurrentRevision();
         if ($current->getVersion() == 0)
@@ -279,16 +283,20 @@ function DumpToDir (&$request)
     
     while ($page = $pages->next()) {
 	$request->args = $request_args; // some plugins might change them (esp. on POST)
-    	if (! $request->getArg('start_debug'))
-          @set_time_limit(30); // Reset watchdog.
+    	//if (! $request->getArg('start_debug'))
+        @set_time_limit(30); // Reset watchdog.
 
         $pagename = $page->getName();
-        PrintXML(HTML::br(), $pagename, ' ... ');
-        flush();
+        if (!isa($request,'MockRequest')) {
+            PrintXML(HTML::br(), $pagename, ' ... ');
+            flush();
+        }
 
         if (in_array($pagename, $excludeList)) {
-            PrintXML(_("Skipped."));
-            flush();
+            if (!isa($request,'MockRequest')) {
+                PrintXML(_("Skipped."));
+                flush();
+            }
             continue;
         }
         $filename = FilenameForPage($pagename);
@@ -311,9 +319,10 @@ function DumpToDir (&$request)
 
         $num = fwrite($fd, $data, strlen($data));
         $msg->pushContent(HTML::small(fmt("%s bytes written", $num)));
-        PrintXML($msg);
-
-        flush();
+        if (!isa($request,'MockRequest')) {
+            PrintXML($msg);
+            flush();
+        }
         assert($num == strlen($data));
         fclose($fd);
     }
@@ -377,16 +386,19 @@ function DumpHtmlToDir (&$request)
     
     while ($page = $pages->next()) {
 	$request->args = $request_args; // some plugins might change them (esp. on POST)
-    	if (!$request->getArg('start_debug'))
-          @set_time_limit(30); // Reset watchdog.
+    	//if (!$request->getArg('start_debug'))
+        @set_time_limit(30); // Reset watchdog.
           
         $pagename = $page->getName();
-        PrintXML(HTML::br(), $pagename, ' ... ');
-        flush();
-
-        if (in_array($pagename, $excludeList)) {
-            PrintXML(_("Skipped."));
+        if (!isa($request,'MockRequest')) {
+            PrintXML(HTML::br(), $pagename, ' ... ');
             flush();
+        }
+        if (in_array($pagename, $excludeList)) {
+            if (!isa($request,'MockRequest')) {
+                PrintXML(_("Skipped."));
+                flush();
+            }
             continue;
         }
 
@@ -419,8 +431,10 @@ function DumpHtmlToDir (&$request)
             $msg->pushContent(HTML::small(_("saved as "), $link, " ... "));
         }
         $msg->pushContent(HTML::small(fmt("%s bytes written", $num), "\n"));
-        PrintXML($msg);
-        flush();
+        if (!isa($request,'MockRequest')) {
+            PrintXML($msg);
+            flush();
+        }
 
         assert($num == strlen($data));
         fclose($fd);
@@ -433,11 +447,13 @@ function DumpHtmlToDir (&$request)
                 $target = "$directory/images/".basename($img_file);
                 if (copy($WikiTheme->_path . $from, $target)) {
                     $msg = HTML(HTML::br(), HTML($from), HTML::small(fmt("... copied to %s", $target)));
-                    PrintXML($msg);
+                    if (!isa($request,'MockRequest'))
+                        PrintXML($msg);
                 }
             } else {
                 $msg = HTML(HTML::br(), HTML($from), HTML::small(fmt("... not found", $target)));
-                PrintXML($msg);
+                if (!isa($request,'MockRequest'))
+                    PrintXML($msg);
             }
         }
     }
@@ -449,11 +465,13 @@ function DumpHtmlToDir (&$request)
                 $target = "$directory/images/buttons/".basename($img_file);
                 if (copy($WikiTheme->_path . $from, $target)) {
                     $msg = HTML(HTML::br(), HTML($from), HTML::small(fmt("... copied to %s", $target)));
-                    PrintXML($msg);
+                    if (!isa($request,'MockRequest'))
+                        PrintXML($msg);
                 }
             } else {
                 $msg = HTML(HTML::br(), HTML($from), HTML::small(fmt("... not found", $target)));
-                PrintXML($msg);
+                if (!isa($request,'MockRequest'))
+                    PrintXML($msg);
             }
         }
     }
@@ -463,11 +481,13 @@ function DumpHtmlToDir (&$request)
               $target = "$directory/" . basename($css_file);
               if (copy($WikiTheme->_path . $from, $target)) {
                   $msg = HTML(HTML::br(), HTML($from), HTML::small(fmt("... copied to %s", $target)));
-                  PrintXML($msg);
+                  if (!isa($request,'MockRequest'))
+                      PrintXML($msg);
               }
           } else {
               $msg = HTML(HTML::br(), HTML($from), HTML::small(fmt("... not found", $target)));
-              PrintXML($msg);
+              if (!isa($request,'MockRequest'))
+                  PrintXML($msg);
           }
       }
     }
@@ -521,8 +541,8 @@ function MakeWikiZipHtml (&$request)
     
     while ($page = $pages->next()) {
 	$request->args = $request_args; // some plugins might change them (esp. on POST)
-    	if (! $request->getArg('start_debug'))
-            @set_time_limit(30); // Reset watchdog.
+    	//if (! $request->getArg('start_debug'))
+        @set_time_limit(30); // Reset watchdog.
 
         $current = $page->getCurrentRevision();
         if ($current->getVersion() == 0)
@@ -633,7 +653,7 @@ function SavePage (&$request, $pageinfo, $source, $filename)
 
     //$current = $page->getCurrentRevision();
     if ($current->getVersion() == 0) {
-        $mesg->pushContent(' ', _("new page"));
+        $mesg->pushContent(' - ', _("new page"));
         $isnew = true;
     }
     else {
@@ -669,7 +689,9 @@ function SavePage (&$request, $pageinfo, $source, $filename)
 
     if (! $skip ) {
     	// in case of failures print the culprit:
-    	PrintXML(HTML::dt(WikiLink($pagename))); flush();
+        if (!isa($request,'MockRequest')) {
+    	    PrintXML(HTML::dt(WikiLink($pagename))); flush();
+        }
         $new = $page->save($content, WIKIDB_FORCE_CREATE, $versiondata);
         $dbi->touch();
         $mesg->pushContent(' ', fmt("- saved to database as version %d",
@@ -698,15 +720,17 @@ function SavePage (&$request, $pageinfo, $source, $filename)
                           'wikiunsafe');
             $mesg->pushContent(' ', $meb, " ", $owb);
         } else {
-            $mesg->pushContent(HTML::em(_(" Sorry, cannot merge uploaded files.")));
+            $mesg->pushContent(HTML::em(_(" Sorry, cannot merge.")));
         }
     }
 
-    if ($skip)
+    if (!isa($request,'MockRequest')) {
+      if ($skip)
         PrintXML(HTML::dt(HTML::em(WikiLink($pagename))), $mesg);
-    else
+      else
         PrintXML($mesg);
-    flush();
+      flush();
+    }
 }
 
 // action=revert (by diff)
@@ -854,8 +878,8 @@ function LoadFile (&$request, $filename, $text = false, $mtime = false)
         $text  = implode("", file($filename));
     }
 
-    if (! $request->getArg('start_debug'))
-        @set_time_limit(30); // Reset watchdog.
+    //if (! $request->getArg('start_debug'))
+    @set_time_limit(30); // Reset watchdog.
 
     // FIXME: basename("filewithnoslashes") seems to return garbage sometimes.
     $basename = basename("/dummy/" . $filename);
@@ -1132,6 +1156,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.117  2004/07/02 09:55:58  rurban
+ more stability fixes: new DISABLE_GETIMAGESIZE if your php crashes when loading LinkIcons: failing getimagesize in old phps; blockparser stabilized
+
  Revision 1.116  2004/07/01 09:05:41  rurban
  support pages and exclude arguments for all 4 dump methods
 

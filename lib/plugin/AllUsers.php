@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllUsers.php,v 1.14 2004-06-25 14:29:22 rurban Exp $');
+rcs_id('$Id: AllUsers.php,v 1.15 2004-07-08 13:50:33 rurban Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -42,7 +42,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.14 $");
+                            "\$Revision: 1.15 $");
     }
 
     function getDefaultArguments() {
@@ -78,7 +78,11 @@ extends WikiPlugin
             $timer = new DebugTimer;
 
         $group = $request->getGroup();
-        $allusers = $group->_allUsers();
+        if (method_exists($group,'_allUsers')) {
+            $allusers = $group->_allUsers();
+        } else {
+        	$allusers = array();
+        }
         $args['count'] = count($allusers);
         // deleted pages show up as version 0.
         $pagelist = new PageList($info, $exclude, $args);
@@ -87,8 +91,9 @@ extends WikiPlugin
         if ($include_empty and empty($info))
             $pagelist->_addColumn('version');
         list($offset,$pagesize) = $pagelist->limit($args['limit']);
-        if (!$pagesize) $pagelist->addPageList($pages);
-        else {
+        if (!$pagesize) {
+            $pagelist->addPageList($allusers);
+        } else {
             for ($i=$offset; $i < $offset + $pagesize - 1; $i++) {
             	if ($i >= $args['count']) break;
                 $pagelist->addPage($allusers[$i]);
@@ -112,6 +117,13 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2004/06/25 14:29:22  rurban
+// WikiGroup refactoring:
+//   global group attached to user, code for not_current user.
+//   improved helpers for special groups (avoid double invocations)
+// new experimental config option ENABLE_XHTML_XML (fails with IE, and document.write())
+// fixed a XHTML validation error on userprefs.tmpl
+//
 // Revision 1.13  2004/06/16 10:38:59  rurban
 // Disallow refernces in calls if the declaration is a reference
 // ("allow_call_time_pass_reference clean").
