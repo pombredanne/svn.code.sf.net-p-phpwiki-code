@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiBlog.php,v 1.11 2004-03-12 20:59:31 rurban Exp $');
+rcs_id('$Id: WikiBlog.php,v 1.12 2004-03-14 19:58:41 rurban Exp $');
 /*
  Copyright 2002, 2003 $ThePhpWikiProgrammingTeam
  
@@ -83,7 +83,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     // Arguments:
@@ -172,8 +172,8 @@ extends WikiPlugin
          *    updates are atomic with the version creation.
          */
 
-        $blog_meta = array('ctime' => $now,
-                           'creator' => $user->getId(),
+        $blog_meta = array('ctime'      => $now,
+                           'creator'    => $user->getId(),
                            'creator_id' => $user->getAuthenticatedId(),
                            );
         
@@ -186,7 +186,7 @@ extends WikiPlugin
                               'summary'   => $summary ? $summary : _("New comment."),
                               'mtime'     => $now,
                               'pagetype'  => $type,
-                              'wikiblog'  => $blog_meta,
+                              $type       => $blog_meta,
                               );
         if ($type == 'comment')
             unset($version_meta['summary']);
@@ -197,7 +197,7 @@ extends WikiPlugin
         $saved = false;
         while (!$saved) {
             // Generate the page name.  For now, we use the format:
-            //   Rootname/Blog/2003-01-11/24:03:02
+            //   Rootname/Blog/2003-01-11/14:03:02+00:00
             // This gives us natural chronological order when sorted
             // alphabetically.
 
@@ -251,7 +251,7 @@ extends WikiPlugin
         $dbi = $request->getDbh();
 
         $parent = $args['page'];
-        $blogs = $this->findBlogs($dbi, $parent);
+        $blogs = $this->findBlogs($dbi, $parent, $type);
         $html = HTML();
         if ($blogs) {
             // First reorder
@@ -268,8 +268,9 @@ extends WikiPlugin
                     // Ack! this is an old-style blog with data ctime in page meta-data.
                     $content = $this->_transformOldFormatBlog($rev,$type);
                 }
-                else
+                else {
                     $content = $rev->getTransformedContent($type);
+                }
                 $html->pushContent($content);
             }
             
@@ -287,7 +288,7 @@ extends WikiPlugin
         return new TransformedText($page, $rev->getPackedContent(), $meta, $type);
     }
 
-    function findBlogs (&$dbi, $parent) {
+    function findBlogs (&$dbi, $parent, $type='wikiblog') {
         $prefix = $parent . SUBPAGE_SEPARATOR;
         $pfxlen = strlen($prefix);
             require_once('lib/TextSearchQuery.php');
@@ -305,7 +306,7 @@ extends WikiPlugin
             $current = $page->getCurrentRevision();
 //use only pagetype
             if (/*preg_match("/^Blog-([[:digit:]]{14})$/", substr($name, $pfxlen))
-                or */$current->get('pagetype') == 'wikiblog') {
+                or */$current->get('pagetype') == $type) {
                 $blogs[] = $current;
             }
         }
@@ -325,6 +326,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/03/12 20:59:31  rurban
+// important cookie fix by Konstantin Zadorozhny
+// new editpage feature: JS_SEARCHREPLACE
+//
 // Revision 1.10  2004/03/12 17:32:41  rurban
 // new base class PageType_attach as base class for WikiBlog, Comment, and WikiForum.
 // new plugin AddComment, which is a WikiBlog with different pagetype and template,
