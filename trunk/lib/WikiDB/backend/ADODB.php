@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.38 2004-07-05 12:57:54 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.39 2004-07-05 13:56:22 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -242,8 +242,9 @@ extends WikiDB_backend
         }
         $row = $dbh->GetRow($query);
         if (! $row ) {
-            if ((substr($dbh->databaseType,0,5) == 'mysql') or isa($dbh,'ADODB_sqlite')) {
-                // have auto-incrementing and atomic version
+            //mysql, mysqli or mysqlt
+            if (substr($dbh->databaseType,0,5) == 'mysql') {
+                // have auto-incrementing, atomic version
                 $rs = $dbh->Execute(sprintf("INSERT INTO $page_tbl"
                                             . " (pagename,hits)"
                 			    . " VALUES(%s,0)",
@@ -252,6 +253,7 @@ extends WikiDB_backend
             } else {
                 //$id = $dbh->GenID($page_tbl . 'seq');
                 // Better generic version than with adodob::genID
+                //TODO: Does the DBM has subselects? Then we can do it with select max(id)+1
                 $this->lock(array('page'));
                 $dbh->BeginTrans( );
                 $dbh->CommitLock($page_tbl);
@@ -1139,6 +1141,9 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.38  2004/07/05 12:57:54  rurban
+// add mysql timeout
+//
 // Revision 1.37  2004/07/04 10:24:43  rurban
 // forgot the expressions
 //
