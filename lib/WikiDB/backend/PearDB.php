@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.30 2003-02-25 20:13:57 dairiki Exp $');
+rcs_id('$Id: PearDB.php,v 1.31 2003-03-04 01:49:27 dairiki Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -110,7 +110,7 @@ extends WikiDB_backend
 
     function  _extract_page_data(&$query_result) {
         extract($query_result);
-        $data = empty($pagedata) ? array() : unserialize($pagedata);
+        $data = $this->_unserialize($pagedata);
         $data['hits'] = $hits;
         return $data;
     }
@@ -152,7 +152,7 @@ extends WikiDB_backend
                             . " SET hits=%d, pagedata='%s'"
                             . " WHERE pagename='%s'",
                             $hits,
-                            $dbh->quoteString(serialize($data)),
+                            $dbh->quoteString($this->_serialize($data)),
                             $dbh->quoteString($pagename)));
 
         $this->unlock();
@@ -253,8 +253,8 @@ extends WikiDB_backend
             return false;
 
         extract($query_result);
-        $data = empty($versiondata) ? array() : unserialize($versiondata);
-
+        $data = $this->_unserialize($versiondata);
+        
         $data['mtime'] = $mtime;
         $data['is_minor_edit'] = !empty($minor_edit);
         
@@ -308,7 +308,7 @@ extends WikiDB_backend
                             . " VALUES(%d,%d,%d,%d,'%s','%s')",
                             $id, $version, $mtime, $minor_edit,
                             $dbh->quoteString($content),
-                            $dbh->quoteString(serialize($data))));
+                            $dbh->quoteString($this->_serialize($data))));
 
         $this->_update_recent_table($id);
         $this->_update_nonempty_table($id);
@@ -663,6 +663,24 @@ extends WikiDB_backend
      */
     function _unlock_tables($write_lock) {
         trigger_error("virtual", E_USER_ERROR);
+    }
+
+
+    /**
+     * Serialize data
+     */
+    function _serialize($data) {
+        if (empty($data))
+            return '';
+        assert(is_array($data));
+        return serialize($data);
+    }
+
+    /**
+     * Unserialize data
+     */
+    function _unserialize($data) {
+        return empty($data) ? array() : unserialize($data);
     }
     
     /**
