@@ -8,7 +8,7 @@ Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam = array(
 "Antti Kaihola", "Jeremie Kass", "Carsten Klapp", "Marco Milanesi",
 "Grant Morgan", "Jan Nieuwenhuizen", "Aredridel Niothke", 
 "Pablo Roca Rozas", "Sandino Araico Sánchez", "Joel Uckelman", 
-"Reini Urban", "Tim Voght");
+"Reini Urban", "Tim Voght", "Jochen Kalmbach");
 
 This file is part of PhpWiki.
 
@@ -81,7 +81,7 @@ define ('DEBUG', 1);
 
 define ('PHPWIKI_VERSION', '1.3.4');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.99 2002-12-31 01:13:14 wainstead Exp $');
+rcs_id('$Id: index.php,v 1.100 2003-01-04 03:36:58 wainstead Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -166,9 +166,11 @@ $DBParams = array(
    // Select the database type:
    // Choose ADODB or SQL to use an SQL database with ADODB or PEAR.
    // Choose dba to use one of the standard UNIX dbm libraries.
+   // Choose file to use a flat file database.
    //'dbtype' => 'ADODB',
    //'dbtype' => 'SQL',
    'dbtype'   => 'dba',
+   //'dbtype' => 'file',
    
    // For SQL based backends, specify the database as a DSN
    // The most general form of a DSN looks like:
@@ -198,8 +200,12 @@ $DBParams = array(
    */
    //'prefix' => 'phpwiki_',
    
-   // Used only by 'dba'
+   // Used by either 'dba' or 'file' and must be writable by the web
+   // server If you leave this as '/tmp' you will probably lose all
+   // your files eventually
    'directory'     => "/tmp",
+
+   // choose the type of DB database file to use; most GNU systems have gdbm
    'dba_handler'   => 'gdbm',   // Either of 'gdbm' or 'db2' work great for me.
    //'dba_handler' => 'db2',
    //'dba_handler' => 'db3',    // Works fine on Windows, but not on every linux.
@@ -671,4 +677,7 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:   
+
+// $Log: not supported by cvs2svn $
+
 ?>
