@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.28 2003-01-04 02:32:30 carstenklapp Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.29 2003-02-15 01:54:19 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -111,7 +111,7 @@ class HTML extends HtmlElement {
     // }
     // d='
     //     /****************************************/'
-    // mkfuncs link style script noscript
+    // mkfuncs link meta style script noscript
     // echo "$d"
     // mkfuncs a img br span
     // echo "$d"
@@ -133,6 +133,10 @@ class HTML extends HtmlElement {
 
     function link (/*...*/) {
         $el = new HtmlElement('link');
+        return $el->_init2(func_get_args());
+    }
+    function meta (/*...*/) {
+        $el = new HtmlElement('meta');
         return $el->_init2(func_get_args());
     }
     function style (/*...*/) {
@@ -448,6 +452,9 @@ function HiddenPosts ($exclude = array()) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.28  2003/01/04 02:32:30  carstenklapp
+ Added 'col' and 'colgroup' table elements used by PluginManager.
+
  */
 
 // (c-file-style: "gnu")
