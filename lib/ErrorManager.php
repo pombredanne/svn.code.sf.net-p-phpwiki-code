@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.12 2002-01-22 03:17:47 dairiki Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.13 2002-01-28 18:49:08 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -76,7 +76,7 @@ class ErrorManager
      */
     function getPostponedErrorsAsHTML() {
         $flushed = $this->_flush_errors();
-        if (!$flushed)
+        if ($flushed->isEmpty())
             return false;
         $html = HTML::div(array('class' => 'errors'),
                           HTML::h4("PHP Warnings"));
@@ -227,12 +227,12 @@ class ErrorManager
      */
     function _flush_errors($keep_mask = 0) {
         $errors = &$this->_postponed_errors;
-        $flushed = array();
+        $flushed = HTML();
         foreach ($errors as $key => $error) {
             if (($error->errno & $keep_mask) != 0)
                 continue;
             unset($errors[$key]);
-            $flushed[] = $error;
+            $flushed->pushContent($error);
         }
         return $flushed;
     }

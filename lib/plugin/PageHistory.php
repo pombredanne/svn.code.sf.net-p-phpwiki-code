@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageHistory.php,v 1.12 2002-01-28 18:40:07 carstenklapp Exp $');
+rcs_id('$Id: PageHistory.php,v 1.13 2002-01-28 18:49:08 dairiki Exp $');
 /**
  */
 require_once('lib/plugin/RecentChanges.php');
@@ -97,7 +97,7 @@ extends _RecentChanges_HtmlFormatter
 
         $pagename = $this->_args['page'];
 
-        $html = _RecentChanges_HtmlFormatter::format($changes);
+        $html[] = _RecentChanges_HtmlFormatter::format($changes);
 
         $html[] = HTML::input(array('type'  => 'hidden',
                                     'name'  => 'action',
@@ -112,12 +112,12 @@ extends _RecentChanges_HtmlFormatter
                                         'value' => $pagename));
         }
 
-        return array(HTML::form(array('method' => 'get',
-                                      'action' => $action,
-                                      'name'   => 'diff-select'),
-                                $html),
-                     "\n",
-                     $this->_javascript('
+        return HTML(HTML::form(array('method' => 'get',
+                                     'action' => $action,
+                                     'name'   => 'diff-select'),
+                               $html),
+                    "\n",
+                    $this->_javascript('
         var diffCkBoxes = document.forms["diff-select"].elements["versions[]"];
 
         function diffCkBox_onclick() {

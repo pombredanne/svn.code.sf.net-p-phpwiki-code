@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.93 2002-01-28 15:52:40 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.94 2002-01-28 18:49:08 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -390,8 +390,9 @@ function split_pagename ($page) {
 }
 
 function NoSuchRevision (&$request, $page, $version) {
-    $html[] = HTML::p(fmt("I'm sorry.  Version %d of %s is not in my database.",
-                          $version, LinkWikiWord($page->getName())));
+    $html = HTML(HTML::h2(_("Revision Not Found")),
+                 HTML::p(fmt("I'm sorry.  Version %d of %s is not in my database.",
+                             $version, LinkWikiWord($page->getName()))));
     include_once('lib/Template.php');
     GeneratePage($html, _("Bad Version"), $page->getCurrentRevision());
     $request->finish();

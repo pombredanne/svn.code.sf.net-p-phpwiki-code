@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _BackendInfo.php,v 1.11 2002-01-28 01:01:27 dairiki Exp $');
+rcs_id('$Id: _BackendInfo.php,v 1.12 2002-01-28 18:49:08 dairiki Exp $');
 require_once('lib/Template.php');
 /**
  */
@@ -26,7 +26,7 @@ extends WikiPlugin
         
         $backend = &$dbi->_backend;
 
-        $html[] = HTML::h3(fmt("Querying backend directly for '%s'", $page));
+        $html = HTML(HTML::h3(fmt("Querying backend directly for '%s'", $page)));
 
         
         $table = HTML::table(array('border' => 1,
@@ -34,7 +34,7 @@ extends WikiPlugin
                                    'cellspacing' => 0));
         $pagedata = $backend->get_pagedata($page);
         if (!$pagedata)
-            $html[] = HTML::p(fmt("No pagedata for %s", $page));
+            $html->pushContent(HTML::p(fmt("No pagedata for %s", $page)));
         else {
             $table->pushContent($this->_showhash("get_pagedata('$page')",
                                                  $pagedata));
@@ -57,7 +57,7 @@ extends WikiPlugin
                                                  $vdata));
         }
 
-        $html[] = $table;
+        $html->pushContent($table);
         return $html;
     }
 

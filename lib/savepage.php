@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.36 2002-01-26 01:51:13 dairiki Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.37 2002-01-28 18:49:08 dairiki Exp $');
 require_once('lib/Template.php');
 require_once('lib/transform.php');
 require_once('lib/ArchiveCleaner.php');
@@ -32,9 +32,8 @@ function ConcurrentUpdates(&$request) {
 
     
         
-    $html[] = HTML::p(_("PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."));
-
-    $html[] = HTML::p(_("In order to recover from this situation follow these steps:"));
+    $html = HTML(HTML::p(_("PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost.")),
+                 HTML::p(_("In order to recover from this situation follow these steps:")));
 
     $list = HTML::ol();
     foreach ($steps as $step) {
@@ -42,9 +41,8 @@ function ConcurrentUpdates(&$request) {
         // is soon to be refactored anyway.
         $list->pushContent(HTML::li(HTML::raw($step)));
     }
-    $html[] = $list;
-
-    $html[] = HTML::p(_("Sorry for the inconvenience."));
+    $html->pushContent($list,
+                       HTML::p(_("Sorry for the inconvenience.")));
 
     $page = $request->getPage();
     $pagelink = LinkWikiWord($page->getName());
@@ -53,11 +51,11 @@ function ConcurrentUpdates(&$request) {
 }
 
 function PageIsLocked (&$request) {
-    $html[] = HTML::p(_("This page has been locked by the administrator so your changes could not be saved."));
-    $html[] = HTML::p(_("Use your browser's <b>Back</b> button to go back to the edit page."),
-                      ' ',
-                      _("Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor."));
-    $html[] = HTML::p(_("Sorry for the inconvenience."));
+    $html = HTML(HTML::p(_("This page has been locked by the administrator so your changes could not be saved.")),
+                 HTML::p(_("Use your browser's <b>Back</b> button to go back to the edit page."),
+                         ' ',
+                         _("Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor.")),
+                 HTML::p(_("Sorry for the inconvenience.")));
     
     $page = $request->getPage();
     $pagelink = LinkWikiWord($page->getName());
@@ -66,8 +64,8 @@ function PageIsLocked (&$request) {
 }
 
 function BadFormVars (&$request) {
-    $html[] = HTML::p(_("Bad form submission"));
-    $html[] = HTML::p(_("Required form variables are missing."));
+    $html = HTML(HTML::p(_("Bad form submission")),
+                 HTML::p(_("Required form variables are missing.")));
 
     $page = $request->getPage();
     $pagelink = LinkWikiWord($page->getName());

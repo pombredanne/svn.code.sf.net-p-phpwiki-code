@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.40 2002-01-28 03:06:55 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.41 2002-01-28 18:49:08 dairiki Exp $');
 
 
 include "lib/config.php";
@@ -314,10 +314,10 @@ class WikiRequest extends Request {
         $ErrorManager->flushPostponedErrors();
    
         if (!empty($errormsg)) {
-            PrintXML(array(HTML::br(),
-                           HTML::hr(),
-                           HTML::h2(_("Fatal PhpWiki Error")),
-                           $errormsg));
+            PrintXML(HTML::br(),
+                     HTML::hr(),
+                     HTML::h2(_("Fatal PhpWiki Error")),
+                     $errormsg);
             // HACK:
             echo "\n</body></html>";
         }

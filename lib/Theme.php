@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.24 2002-01-28 01:01:26 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.25 2002-01-28 18:49:08 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -446,10 +446,9 @@ class Theme {
      * @return string HTML for CSS.
      */
     function getCSS () {
-        $css[] = $this->_defaultCSS;
+        $css = HTML($this->_defaultCSS);
         if (!empty($this->_alternateCSS))
-            foreach ($this->_alternateCSS as $link)
-                $css[] = $link;
+            $css->pushContent($this->_alternateCSS);
         return $css;
     }
 

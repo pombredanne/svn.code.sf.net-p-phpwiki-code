@@ -1,20 +1,162 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.14 2002-01-27 22:06:38 dairiki Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.15 2002-01-28 18:49:08 dairiki Exp $');
 /*
  * Code for writing XML.
  */
 
 /**
+ * A sequence of (zero or more) XmlElements (possibly interspersed with
+ * plain strings (CDATA).
+ */
+class XmlContent
+{
+    function XmlContent (/* ... */) {
+        $this->_content = array();
+        $this->_pushContent_array(func_get_args());
+    }
+
+    function pushContent ($arg /*, ...*/) {
+        if (func_num_args() > 1)
+            $this->_pushContent_array(func_get_args());
+        elseif (is_array($arg))
+            $this->_pushContent_array($arg);
+        else
+            $this->_pushContent($arg);
+    }
+
+    function _pushContent_array ($array) {
+        foreach ($array as $item) {
+            if (is_array($item))
+                $this->_pushContent_array($item);
+            else
+                $this->_pushContent($item);
+        }
+    }
+
+    function _pushContent ($item) {
+        if (get_class($item) == 'xmlcontent')
+            array_splice($this->_content, count($this->_content), 0,
+                         $item->_content);
+        else
+            $this->_content[] = $item;
+    }
+
+    function unshiftContent ($arg /*, ...*/) {
+        if (func_num_args() > 1)
+            $this->_unshiftContent_array(func_get_args());
+        elseif (is_array($arg))
+            $this->_unshiftContent_array($arg);
+        else
+            $this->_unshiftContent($arg);
+    }
+
+    function _unshiftContent_array ($array) {
+        foreach (array_reverse($array) as $item) {
+            if (is_array($item))
+                $this->_unshiftContent_array($item);
+            else
+                $this->_unshiftContent($item);
+        }
+    }
+
+    function _unshiftContent ($item) {
+        if (get_class($item) == 'xmlcontent')
+            array_splice($this->_content, 0, 0, $item->_content);
+        else
+            array_unshift($this->_content, $item);
+    }
+    
+    function getContent () {
+        return $this->_content;
+    }
+
+    function setContent ($arg /* , ... */) {
+        $this->_content = array();
+        $this->_pushContent_array(func_get_args());
+    }
+
+    function printXML () {
+        foreach ($this->_content as $item) {
+            if (is_object($item)) {
+                if (method_exists($item, 'printxml'))
+                    $item->printXML();
+                elseif (method_exists($item, 'asxml'))
+                    echo $item->asXML();
+                elseif (method_exists($item, 'asstring'))
+                    echo $this->_quote($item->asString());
+                else
+                    printf("==Object(%s)==", get_class($item));
+            }
+            else
+                echo $this->_quote((string) $item);
+        }
+    }
+
+
+    function asXML () {
+        $xml = '';
+        foreach ($this->_content as $item) {
+            if (is_object($item)) {
+                if (method_exists($item, 'asxml'))
+                    $xml .= $item->asXML();
+                elseif (method_exists($item, 'asstring'))
+                    $xml .= $this->_quote($item->asString());
+                else
+                    $xml .= sprintf("==Object(%s)==", get_class($item));
+            }
+            else
+                $xml .= $this->_quote((string) $item);
+        }
+        return $xml;
+    }
+
+    function asString () {
+        $val = '';
+        foreach ($this->_content as $item) {
+            if (is_object($item)) {
+                if (method_exists($item, 'asstring'))
+                    $val .= $item->asString();
+                else
+                    $val .= sprintf("==Object(%s)==", get_class($item));
+            }
+            else
+                $val .= (string) $item;
+        }
+        return trim($val);
+    }
+
+
+    /**
+     * See if element is empty.
+     *
+     * Empty means it has no content.
+     * @return bool True if empty.
+     */
+    function isEmpty () {
+        if (empty($this->_content))
+            return true;
+        foreach ($this->_content as $x) {
+            if (!empty($x))
+                return false;
+        }
+        return true;
+    }
+    
+    function _quote ($string) {
+        return str_replace('<', '&lt;',
+                           str_replace('>', '&gt;',
+                                       str_replace('&', '&amp;', $string)));
+    }
+};
+
+/**
  * An XML element.
  *
  * @param $tagname string Tag of html element.
- *
- * If $tagname is set to <code>false</code> you get a fake element with no start
- * or end tag, (just content, if any).  This is useful for creating a single
- * quasi-element object, which contains a number of other elements.
  */
-class XmlElement
+class XmlElement extends XmlContent
 {
     function XmlElement ($tagname /* , $attr_or_content , ...*/) {
+        $this->XmlContent();
         $this->_init(func_get_args());
     }
 
@@ -34,9 +176,7 @@ class XmlElement
                 array_shift($args);
         }
 
-        if (count($args) == 1 && is_array($args[0]))
-            $args = $args[0];
-        $this->_content = $args;
+        $this->setContent($args);
     }
 
     function getTag () {
@@ -67,28 +207,7 @@ class XmlElement
 	    return false;
     }
     
-    function pushContent ($args /*, ...*/) {
-        $c = &$this->_content;
-        if (func_num_args() != 1 || ! is_array($args))
-            $args = func_get_args();
-        array_splice($c, count($c), 0, $args);
-    }
-
-    function unshiftContent ($args /*, ...*/) {
-        $c = &$this->_content;
-        if (func_num_args() != 1 || ! is_array($args))
-            $args = func_get_args();
-        array_splice($c, 0, 0, $args);
-    }
-
-    function getContent () {
-        return $this->_content;
-    }
-
-    /**
-     * @access private
-     */
-    function _startTag() {
+    function startTag() {
         $start = "<" . $this->_tag;
         foreach ($this->_attr as $attr => $val) {
             if (is_bool($val)) {
@@ -96,108 +215,79 @@ class XmlElement
                     continue;
                 $val = $attr;
             }
-            $start .= " $attr=\"" . $this->_quoteAttr($val) . "\"";
+            $qval = str_replace("\"", '&quot;', $this->_quote($val));
+            $start .= " $attr=\"$qval\"";
         }
         $start .= ">";
         return $start;
     }
 
-    /**
-     * @access private
-     */
-    function _emptyTag() {
-        return substr($this->_startTag(), 0, -1) . "/>";
+    function emptyTag() {
+        return substr($this->startTag(), 0, -1) . "/>";
     }
 
-    function startTag() {
-        return $this->_tag ? $this->_startTag() : '';
-    }
     
     function endTag() {
-        return $this->_tag ? "</$this->_tag>" : '';
+        return "</$this->_tag>";
     }
     
         
     function printXML () {
-        
-        if (! $this->_content) {
-            if ($this->_tag)
-                echo $this->_emptyTag();
-        }
+        if ($this->isEmpty())
+            echo $this->emptyTag();
         else {
-            $sep = $this->hasInlineContent() ? "" : "\n";
-            if ($this->_tag)
-                echo $this->_startTag() . $sep;
-            foreach ($this->_content as $c) {
-                PrintXML($c);
-                echo $sep;
-            }
-            if ($this->_tag)
-                echo "</$this->_tag>";
+            echo $this->startTag();
+            // FIXME: The next two lines could be removed for efficiency
+            if (!$this->hasInlineContent())
+                echo "\n";
+            XmlContent::printXML();
+            echo "</$this->_tag>";
+            if (!$this->isInlineElement())
+                echo "\n";
         }
     }
 
     function asXML () {
-        if (! $this->_content)
-            return $this->_tag ? $this->_emptyTag() : '';
-
-        $sep = $this->hasInlineContent() ? "" : "\n";
-        $xml = '';
-        if ($this->_tag)
-            $xml .= $this->_startTag() . $sep;
-        foreach ($this->_content as $c)
-            $xml .= AsXML($c) . $sep;
-        if ($this->_tag)
+        if ($this->isEmpty())
+            return $this->emptyTag();
+        else {
+            $xml = $this->startTag();
+            // FIXME: The next two lines could be removed for efficiency
+            if (!$this->hasInlineContent())
+                $xml .= "\n";
+            $xml .= XmlContent::asXML();
             $xml .= "</$this->_tag>";
-        return $xml;
-    }
-
-    function asString () {
-        $str = '';
-        foreach ($this->_content as $c)
-            $str .= AsString($c);
-        return trim($str);
+            if (!$this->isInlineElement())
+                $xml .= "\n";
+            return $xml;
+        }
     }
 
     /**
-     * See if element is empty.
+     * Can this element have inline content?
      *
-     * Empty means it has no content.
-     * @return bool True if empty.
-     *
-     * Bugs: This fails if any of the content is itself an empty array.
-     * We might want to fix things so that content gets flattend by
-     * {push,unshift}Content, rather than by {print,as}XML.
+     * This is a hack, but is probably the best one can do without
+     * knowledge of the DTD...
      */
-    function isEmpty () {
+    function hasInlineContent () {
+        // This is a hack.
         if (empty($this->_content))
             return true;
-        foreach ($this->_content as $x) {
-            if (!empty($x))
-                return false;
-        }
-        return true;
-    }
-
-    function hasInlineContent () {
-        // FIXME: This is a hack.
-        if (empty($this->_content))
-            return false;
         if (is_object($this->_content[0]))
             return false;
         return true;
     }
     
-    function _quote ($string) {
-        return str_replace('<', '&lt;',
-                           str_replace('>', '&gt;',
-                                       str_replace('&', '&amp;', $string)));
+    /**
+     * Is this element part of inline content?
+     *
+     * This is a hack, but is probably the best one can do without
+     * knowledge of the DTD...
+     */
+    function isInlineElement () {
+        return false;
     }
-
-    function _quoteAttr ($value) {
-        return str_replace('"', '&quot;', XmlElement::_quote($value));
-        //"<--kludge for brain-dead syntax coloring
-    }
+    
 };
 
 class RawXml {
@@ -279,47 +369,86 @@ class FormattedText {
     }
 }
 
-function PrintXML ($val) {
-    if (is_object($val)) {
+function PrintXML ($val /* , ... */ ) {
+    if (func_num_args() > 1) {
+        foreach (func_get_args() as $arg)
+            PrintXML($arg);
+    }
+    elseif (is_object($val)) {
         if (method_exists($val, 'printxml'))
-            return $val->printXML();
+            $val->printXML();
         elseif (method_exists($val, 'asxml')) {
             echo $val->asXML();
-            return;
         }
         elseif (method_exists($val, 'asstring'))
-            $val = $val->asString();
+            echo XmlContent::_quote($val->asString());
+        else
+            printf("==Object(%s)==", get_class($val));
     }
     elseif (is_array($val)) {
+        // DEPRECATED:
+        // Use XmlContent objects instead of arrays for collections of XmlElements.
+        trigger_error("Passing arrays to PrintXML() is deprecated: (" . AsXML($val, true) . ")",
+                      E_USER_NOTICE);
         foreach ($val as $x)
             PrintXML($x);
-        return;
     }
-        
-    echo (string)XmlElement::_quote($val);
+    else
+        echo (string)XmlContent::_quote($val);
 }
 
-function AsXML ($val) {
-    if (is_object($val)) {
+function AsXML ($val /* , ... */) {
+    static $nowarn;
+
+    if (func_num_args() > 1) {
+        $xml = '';
+        foreach (func_get_args() as $arg)
+            $xml .= AsXML($arg);
+        return $xml;
+    }
+    elseif (is_object($val)) {
         if (method_exists($val, 'asxml'))
             return $val->asXML();
         elseif (method_exists($val, 'asstring'))
-            $val = $val->asString();
+            return XmlContent::_quote($val->asString());
+        else
+            return sprintf("==Object(%s)==", get_class($val));
     }
     elseif (is_array($val)) {
+        // DEPRECATED:
+        // Use XmlContent objects instead of arrays for collections of XmlElements.
+        if (empty($nowarn)) {
+            $nowarn = true;
+            trigger_error("Passing arrays to AsXML() is deprecated: (" . AsXML($val) . ")",
+                          E_USER_NOTICE);
+            unset($nowarn);
+        }
         $xml = '';
         foreach ($val as $x)
             $xml .= AsXML($x);
         return $xml;
     }
-    
-    return XmlElement::_quote((string)$val);
+    else
+        return XmlContent::_quote((string)$val);
 }
 
 function AsString ($val) {
-    if (can($val, 'asString'))
-        return $val->asString();
+    if (func_num_args() > 1) {
+        $str = '';
+        foreach (func_get_args() as $arg)
+            $str .= AsString($arg);
+        return $str;
+    }
+    elseif (is_object($val)) {
+        if (method_exists($val, 'asstring'))
+            return $val->asString();
+        else
+            return sprintf("==Object(%s)==", get_class($val));
+    }
     elseif (is_array($val)) {
+        // DEPRECATED:
+        // Use XmlContent objects instead of arrays for collections of XmlElements.
+        trigger_error("Passing arrays to AsString() is deprecated", E_USER_NOTICE);
         $str = '';
         foreach ($val as $x)
             $str .= AsString($x);
@@ -330,7 +459,6 @@ function AsString ($val) {
 }
 
 
-    
 function fmt ($fs /* , ... */) {
     $s = new FormattedText(false);
 

@@ -5,7 +5,7 @@
  */
 $RCS_IDS = '';
 function rcs_id ($id) { $GLOBALS['RCS_IDS'] .= "$id\n"; }
-rcs_id('$Id: prepend.php,v 1.10 2002-01-23 05:10:22 dairiki Exp $');
+rcs_id('$Id: prepend.php,v 1.11 2002-01-28 18:49:08 dairiki Exp $');
 
 error_reporting(E_ALL);
 require_once('lib/ErrorManager.php');
@@ -29,7 +29,7 @@ function ExitWiki($errormsg = false)
     $ErrorManager->flushPostponedErrors();
    
     if(!empty($errormsg)) {
-        PrintXML(array(HTML::br(), $errormsg));
+        PrintXML(HTML::br(), $errormsg);
         print "\n</body></html>";
     }
     exit;

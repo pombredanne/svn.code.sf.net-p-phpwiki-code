@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.8 2002-01-28 03:59:30 dairiki Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.9 2002-01-28 18:49:08 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -92,7 +92,7 @@ define("BLOCK_NOTIGHTEN_EITHER", 3);
 
 class BlockParser {
     function parse (&$input, $tighten_mode = BLOCK_NEVER_TIGHTEN) {
-        $content = array();
+        $content = HTML();
         
         for ($block = BlockParser::_nextBlock($input); $block; $block = $nextBlock) {
             while ($nextBlock = BlockParser::_nextBlock($input)) {
@@ -101,13 +101,7 @@ class BlockParser {
                     break;      // can't merge
             }
 
-            $output = $block->finish($tighten_mode);
-
-            if (is_array($output))
-                foreach ($output as $x)
-                    $content[] = $x;
-            else
-                $content[] = $output;
+            $content->pushContent($block->finish($tighten_mode));
         }
         return $content;
     }
