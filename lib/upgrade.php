@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.27 2004-11-07 16:02:52 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.28 2004-11-16 16:25:14 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -45,7 +45,7 @@ rcs_id('$Id: upgrade.php,v 1.27 2004-11-07 16:02:52 rurban Exp $');
  *  6. Convert the automatic update to a class-based multi-page 
  *     version. (hard)
 
- * TODO: overwrite=1 link on edit conflicts at end of page to overwrite all.
+ * Done: overwrite=1 link on edit conflicts at first occurence "Overwrite all".
  *
  * @author: Reini Urban
  */
@@ -207,6 +207,7 @@ CREATE TABLE $session_tbl (
             $dbh->genericSqlQuery("CREATE UNIQUE INDEX sess_id ON $session_tbl (sess_id)");
         }
         $dbh->genericSqlQuery("CREATE INDEX sess_date on session (sess_date)");
+        echo "  ",_("CREATED");
         break;
     case 'user':
         $user_tbl = $prefix.'user';
@@ -225,6 +226,7 @@ CREATE TABLE $user_tbl (
 )");
             $dbh->genericSqlQuery("CREATE UNIQUE INDEX userid ON $user_tbl (userid)");
         }
+        echo "  ",_("CREATED");
         break;
     case 'pref':
         $pref_tbl = $prefix.'pref';
@@ -243,6 +245,7 @@ CREATE TABLE $pref_tbl (
 )");
             $dbh->genericSqlQuery("CREATE UNIQUE INDEX userid ON $pref_tbl (userid)");
         }
+        echo "  ",_("CREATED");
         break;
     case 'member':
         $member_tbl = $prefix.'member';
@@ -263,6 +266,7 @@ CREATE TABLE $member_tbl (
             $dbh->genericSqlQuery("CREATE INDEX userid ON $member_tbl (userid)");
             $dbh->genericSqlQuery("CREATE INDEX groupname ON $member_tbl (groupname)");
         }
+        echo "  ",_("CREATED");
         break;
     case 'rating':
         $rating_tbl = $prefix.'rating';
@@ -289,6 +293,7 @@ CREATE TABLE $rating_tbl (
 )");
             $dbh->genericSqlQuery("CREATE UNIQUE INDEX rating ON $rating_tbl (dimension, raterpage, rateepage)");
         }
+        echo "  ",_("CREATED");
         break;
     case 'accesslog':
         $log_tbl = $prefix.'accesslog';
@@ -334,8 +339,10 @@ CREATE TABLE $log_tbl (
 )");
         $dbh->genericSqlQuery("CREATE INDEX log_time ON $log_tbl (time_stamp)");
         $dbh->genericSqlQuery("CREATE INDEX log_host ON $log_tbl (remote_host)");
+        echo "  ",_("CREATED");
+        break;
     }
-    echo "  ",_("CREATED"),"<br />\n";
+    echo "<br />\n";
 }
 
 /**
@@ -376,7 +383,7 @@ function CheckDatabaseUpdate(&$request) {
         }
     }
     if (ACCESS_LOG_SQL) {
-        $table = "log";
+        $table = "accesslog";
         echo sprintf(_("check for table %s"), $table)," ...";
     	if (!in_array($prefix.$table, $tables)) {
             installTable($dbh, $table, $backend_type);
@@ -556,6 +563,11 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.27  2004/11/07 16:02:52  rurban
+ new sql access log (for spam prevention), and restructured access log class
+ dbh->quote (generic)
+ pear_db: mysql specific parts seperated (using replace)
+
  Revision 1.26  2004/10/14 19:19:34  rurban
  loadsave: check if the dumped file will be accessible from outside.
  and some other minor fixes. (cvsclient native not yet ready)
