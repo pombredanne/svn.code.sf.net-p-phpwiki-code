@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: mysql.php,v 1.13 2001-06-26 18:01:01 uckelman Exp $');
+<?php rcs_id('$Id: mysql.php,v 1.14 2001-07-15 15:47:59 wainstead Exp $');
 
    /*
       Database functions:
@@ -32,11 +32,11 @@
       SetWikiPageLinks($dbi, $pagename, $linklist)
    */
 
-$WikiPageStore = $DBParams['prefix'] . "wiki";
-$ArchivePageStore = $DBParams['prefix'] . "archive";
-$WikiLinksStore = $DBParams['prefix'] . "wikilinks";
-$WikiScoreStore = $DBParams['prefix'] . "wikiscore";
-$HitCountStore = $DBParams['prefix'] . "hitcount";
+$WikiPageStore = $DBParams['prefix']     . "pages";
+$ArchivePageStore = $DBParams['prefix']  . "archive";
+$WikiLinksStore = $DBParams['prefix']    . "links";
+$WikiScoreStore = $DBParams['prefix']    . "score";
+$HitCountStore = $DBParams['prefix']     . "hitcount";
 
    // open a database and return the handle
    // ignores MAX_DBM_ATTEMPTS
