@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ListPages.php,v 1.3 2004-06-28 18:58:18 rurban Exp $');
+rcs_id('$Id: ListPages.php,v 1.4 2004-07-08 20:30:07 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -43,7 +43,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -56,8 +56,7 @@ extends WikiPlugin
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor
 
-    function run($dbi, $argstr, $request) {
-        
+    function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         extract($args);
 
@@ -124,6 +123,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/06/28 18:58:18  rurban
+// fixed another pass-by-reference
+//
 // Revision 1.2  2004/06/18 14:42:17  rurban
 // added wikilens libs (not yet merged good enough, some work for DanFr)
 //

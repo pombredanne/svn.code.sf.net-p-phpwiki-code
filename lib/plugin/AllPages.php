@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllPages.php,v 1.27 2004-07-08 17:31:43 rurban Exp $');
+rcs_id('$Id: AllPages.php,v 1.28 2004-07-08 20:30:07 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.27 $");
+                            "\$Revision: 1.28 $");
     }
 
     function getDefaultArguments() {
@@ -54,53 +54,61 @@ extends WikiPlugin
                    'debug'         => false
                    ));
     }
+    
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor,markup or all
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
     // sortby: [+|-] pagename|mtime|hits
 
+    // 2004-07-08 22:05:35 rurban: turned off &$request to prevent from strange bug below
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
-        extract($args);
+        // very strange php reference bug: dbi gets destroyed at array_merge with defaults
+        if (!is_object($dbi)) $dbi = $request->getDbh();
+        if (!is_object($request->_dbi)) {
+        	trigger_error("strange php reference bug destroyed request->_dbi", E_USER_WARNING);
+        	return HTML();
+        }
+        //extract($args);
         // Todo: extend given _GET args
         if ($sorted = $request->getArg('sortby'))
-            $sortby = $sorted;
-        elseif ($sortby)
-            $request->setArg('sortby',$sortby);
+            $args['sortby'] = $sorted;
+        elseif (!empty($args['sortby']))
+            $request->setArg('sortby',$args['sortby']);
 
-        if ($debug)
+        if ($args['debug'])
             $timer = new DebugTimer;
         if ( !empty($args['owner']) )
-            $pages = PageList::allPagesByOwner($args['owner'],$include_empty,$args['sortby'],$args['limit']);
+            $pages = PageList::allPagesByOwner($args['owner'],$args['include_empty'],$args['sortby'],$args['limit']);
         elseif ( !empty($args['author']) )
-            $pages = PageList::allPagesByAuthor($args['author'],$include_empty,$args['sortby'],$args['limit']);
+            $pages = PageList::allPagesByAuthor($args['author'],$args['include_empty'],$args['sortby'],$args['limit']);
         elseif ( !empty($args['creator']) ) {
-            $pages = PageList::allPagesByCreator($args['creator'],$include_empty,$args['sortby'],$args['limit']);
+            $pages = PageList::allPagesByCreator($args['creator'],$args['include_empty'],$args['sortby'],$args['limit']);
         } else {
-            if (! $request->getArg('count'))  $args['count'] = $dbi->numPages(false,$exclude);
+            if (! $request->getArg('count'))  $args['count'] = $dbi->numPages(false,$args['exclude']);
             else $args['count'] = $request->getArg('count');
-            $pages = false;
+            $args['pages'] = false;
         }
-        if (empty($args['count']) and is_array($pages))
-            $args['count'] = count($pages);
-        $pagelist = new PageList($info, $exclude, $args);
+        if (empty($args['count']) and is_array($args['pages']))
+            $args['count'] = count($args['pages']);
+        $pagelist = new PageList($args['info'], $args['exclude'], $args);
         //if (!$sortby) $sorted='pagename';
-        if (!$noheader) {
-            if (!is_array($pages))
+        if (!$args['noheader']) {
+            if (!is_array($args['pages']))
                 $pagelist->setCaption(_("All pages in this wiki (%d total):"));
             else
                 $pagelist->setCaption(_("List of pages (%d total):"));
         }
 
         // deleted pages show up as version 0.
-        if ($include_empty)
+        if ($args['include_empty'])
             $pagelist->_addColumn('version');
 
-        if (is_array($pages))
-            $pagelist->addPageList($pages);
+        if (is_array($args['pages']))
+            $pagelist->addPageList($args['pages']);
         else
-            $pagelist->addPages( $dbi->getAllPages($include_empty, $sortby, $limit) );
-        if ($debug) {
+            $pagelist->addPages( $dbi->getAllPages($args['include_empty'], $args['sortby'], $args['limit']) );
+        if ($args['debug']) {
             return HTML($pagelist,
                         HTML::p(fmt("Elapsed time: %s s", $timer->getStats())));
         } else {
@@ -115,6 +123,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.27  2004/07/08 17:31:43  rurban
+// improve numPages for file (fixing AllPagesTest)
+//
 // Revision 1.26  2004/06/21 16:22:32  rurban
 // add DEFAULT_DUMP_DIR and HTML_DUMP_DIR constants, for easier cmdline dumps,
 // fixed dumping buttons locally (images/buttons/),

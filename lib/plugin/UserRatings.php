@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserRatings.php,v 1.1 2004-06-30 19:54:17 dfrankow Exp $');
+rcs_id('$Id: UserRatings.php,v 1.2 2004-07-08 20:30:07 rurban Exp $');
 /**
  Copyright 2004 Dan Frankowski
 
@@ -53,7 +53,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -82,7 +82,7 @@ extends WikiPlugin
     // info=mtime,hits,summary,version,author,locked,minor
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
 
         // XXX: fix to reflect multi-user ratings?

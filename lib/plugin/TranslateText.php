@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TranslateText.php,v 1.4 2004-05-18 13:58:39 rurban Exp $');
+rcs_id('$Id: TranslateText.php,v 1.5 2004-07-08 20:30:07 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -50,7 +50,7 @@ extends WikiPlugin__WikiTranslation
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -61,7 +61,7 @@ extends WikiPlugin__WikiTranslation
                  );
     }
 
-    function run($dbi, $argstr, $request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
         if (!$lang)
             return $this->error(
@@ -137,6 +137,9 @@ extends WikiPlugin__WikiTranslation
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/05/18 13:58:39  rurban
+// verbatim needs a linebreak
+//
 // Revision 1.3  2004/03/17 15:38:03  rurban
 // more translations
 //

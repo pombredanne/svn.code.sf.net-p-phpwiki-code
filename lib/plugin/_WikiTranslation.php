@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _WikiTranslation.php,v 1.13 2004-06-18 14:38:22 rurban Exp $');
+rcs_id('$Id: _WikiTranslation.php,v 1.14 2004-07-08 20:30:07 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -127,7 +127,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.13 $");
+                            "\$Revision: 1.14 $");
     }
 
     function getDefaultArguments() {
@@ -219,7 +219,7 @@ extends WikiPlugin
         return $result;
     }
                 
-    function run($dbi, $argstr, $request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage) {
         $this->args = $this->getArgs($argstr, $request);
         extract($this->args);
         $this->request = &$request;
@@ -401,6 +401,9 @@ class _PageList_Column_customlang extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2004/06/18 14:38:22  rurban
+// adopt new PageList style
+//
 // Revision 1.12  2004/06/17 10:39:18  rurban
 // fix reverse translation of possible actionpage
 //

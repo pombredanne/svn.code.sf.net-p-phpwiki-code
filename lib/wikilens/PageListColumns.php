@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageListColumns.php,v 1.5 2004-07-07 15:01:44 dfrankow Exp $');
+rcs_id('$Id: PageListColumns.php,v 1.6 2004-07-08 20:30:07 rurban Exp $');
 
 /*
  Copyright 2004 Mike Cassano
@@ -297,6 +297,11 @@ class _PageList_Column_top3recs extends _PageList_Column_custom
     function _PageList_Column_top3recs ($params) {
         global $request;
         $active_user = $request->getUser();
+        if (is_string($active_user)) {
+        	//FIXME: try to find the bug at test.php which sets request->_user and ->_group
+        	trigger_error("request->getUser => string: $active_user", E_USER_WARNING);
+        	$active_user = new MockUser($active_user,true);
+        }
         // No, I don't know exactly why, but this needs to be a reference for
         // the memoization in pearson_similarity and mean_rating to work
         $this->_active_ratings_user =& new RatingsUser($active_user->getId());
@@ -372,6 +377,9 @@ $WikiTheme->addPageListColumn
     ));
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/07/07 15:01:44  dfrankow
+// Allow ratingvalue, ratingwidget, prediction, numbacklinks columns to be sortable
+//
 // Revision 1.4  2004/06/30 20:12:09  dfrankow
 // + Change numbacklinks function to use existing core functions.
 //   It's slower, but it'll work.

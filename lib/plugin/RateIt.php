@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RateIt.php,v 1.13 2004-07-08 19:04:44 rurban Exp $');
+rcs_id('$Id: RateIt.php,v 1.14 2004-07-08 20:30:07 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -94,7 +94,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.13 $");
+                            "\$Revision: 1.14 $");
     }
 
     function RatingWidgetJavascript() {
@@ -176,11 +176,12 @@ function deleteRating(actionImg, page, dimension) {
 
     // todo: only for signed users
     // todo: set rating dbi for external rating database
-    function run($dbi, $argstr, $request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage) {
         global $WikiTheme;
-        $this->_request = & $request;
-        $this->_dbi = & $dbi;
+        //$this->_request = & $request;
+        //$this->_dbi = & $dbi;
         $user = & $request->getUser();
+        //FIXME: fails on test with DumpHtml:RateIt
         if (!is_object($user)) return HTML();
         $this->userid = $user->UserName();
         $args = $this->getArgs($argstr, $request);
