@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- phpwiki source:
-$Id: browse.html,v 1.10 2002-01-12 00:58:30 carstenklapp Exp $
+$Id: browse.html,v 1.11 2002-01-12 03:14:04 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <meta http-equiv="Content-Type" content="text/html; charset=${CHARSET}" />
@@ -109,9 +109,11 @@ if ($errmsgs)
        cellpadding="0" cellspacing="0" border="0"><tr><td>
 
 <a class="wikiaction" href="${BROWSE}DebugInfo?page=${PAGE}"><img border="0" alt="DebugInfo" src="themes/MacOSX/locale/en/buttons/DebugInfo.png" /></a>
-
-<a class="wikiaction" href="${BROWSE}ViewMarkup?page=${PAGE}"><img border="0" alt="ViewMarkup" src="themes/MacOSX/locale/en/buttons/ViewMarkup.png" /></a>
-
+<?php if ($IS_CURRENT) { ?>
+	<a class="wikiaction" href="${BROWSE}ViewSource?page=${PAGE}"><img border="0" alt="ViewMarkup" src="themes/MacOSX/locale/en/buttons/ViewSource.png" /></a>
+<?php } else { ?>
+	<a class="wikiaction" href="${BROWSE}ViewSource?page=${PAGE}&rev=${VERSION}"><img border="0" alt="ViewMarkup" src="themes/MacOSX/locale/en/buttons/ViewSource.png" /></a>
+<?php } ?>
 </td></tr></table>
 </form>
 </body>
