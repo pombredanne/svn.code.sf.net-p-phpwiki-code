@@ -1,5 +1,5 @@
 /* 
- * $Id: Hawaiian-heavy.css,v 1.7 2002-02-08 08:36:10 carstenklapp Exp $
+ * $Id: Hawaiian-heavy.css,v 1.8 2002-02-08 16:19:03 carstenklapp Exp $
  *
  * Hawaiian-heavy.css
  *
@@ -9,8 +9,12 @@
 /* This makes spacings in NS4 too big. */
 .toolbar, div.toolbar { margin: 0.5ex 0ex; }
 
-/* This break NS4, but is necessary for IE4. */
-div.wikitext { width: auto; }
+/* This break NS4 (display does not go full width), but is necessary for IE4. */
+div.wikitext {
+  width: auto;
+  /* NS4 doesn't know about png with transparency so it renders the whole image solid black */
+  background: url("images/tchecker-white.png");
+}
 
 /* Link icons */
 img.linkicon { vertical-align: middle; }
@@ -22,5 +26,4 @@ img.linkicon { vertical-align: middle; }
  *****************************************************************/
 .diff .block div { position: relative; padding-left: 1.5em; } 
 .diff .prefix    { position: absolute; left: 0.5em; top: 0; }
-
 
