@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.226 2004-12-26 17:12:06 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.227 2005-01-14 18:32:08 uckelman Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -752,6 +752,11 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
 
         $subs["links"] = array($orig, $repl);
 
+        // Temporarily URL-encode pairs of underscores in links to hide
+        // them from the re for bold markup.
+        $orig[] = '/\[[^\[\]]*?__[^\[\]]*?\]/e';
+        $repl[] = 'str_replace(\'__\', \'%5F%5F\', \'\\0\')';
+
         // Escape '<'s
         //$orig[] = '/<(?!\?plugin)|(?<!^)</m';
         //$repl[] = '~<';
@@ -773,6 +778,11 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
         // in old markup headings only allowed at beginning of line
         $orig[] = '/!/';
         $repl[] = '~!';
+
+        // Convert URL-encoded pairs of underscores in links back to
+        // real underscores after bold markup has been converted.
+        $orig = '/\[[^\[\]]*?%5F%5F[^\[\]]*?\]/e';
+        $repl = 'str_replace(\'%5F%5F\', \'__\', \'\\0\')';
 
         $subs["inline"] = array($orig, $repl);
 
@@ -1847,6 +1857,9 @@ function printSimpleTrace($bt) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.226  2004/12/26 17:12:06  rurban
+// avoid stdargs in url, php5 fixes
+//
 // Revision 1.225  2004/12/22 19:02:29  rurban
 // fix glob for starting * or ?
 //
