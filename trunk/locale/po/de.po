@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.8\n"
-"POT-Creation-Date: 2001-12-18 16:46-0500\n"
+"POT-Creation-Date: 2001-12-18 21:32-0500\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Arno Hollosi <ahollosi@mail.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -33,7 +33,7 @@ msgstr "hier"
 msgid "to view the current version."
 msgstr "um die aktuellste Version zu schauen."
 
-#: ../templates/browse.html:50
+#: ../lib/stdlib.php:629 ../templates/browse.html:50
 msgid "Last edited on"
 msgstr "Zuletzt verändert am"
 
@@ -46,7 +46,7 @@ msgid ", saved on"
 msgstr ", seite zuletzt verändert am"
 
 #: ../lib/loadsave.php:452 ../lib/plugin/RecentChanges.php:159
-#: ../lib/plugin/RecentChanges.php:264 ../lib/plugin/RecentChanges.php:309
+#: ../lib/plugin/RecentChanges.php:262 ../lib/plugin/RecentChanges.php:307
 #: ../templates/browse.html:56
 msgid "RecentChanges"
 msgstr "FrischeSeiten"
@@ -95,7 +95,8 @@ msgstr "Du bist eingemeldet als"
 msgid "SignOut"
 msgstr "Ausmelden"
 
-#: ../templates/browse.html:100 ../templates/editpage.html:74
+#: ../lib/stdlib.php:614 ../lib/stdlib.php:621 ../templates/browse.html:100
+#: ../templates/browse.html:129 ../templates/editpage.html:74
 msgid "SignIn"
 msgstr "Anmelden"
 
@@ -103,8 +104,9 @@ msgstr "Anmelden"
 msgid "PHP Warnings"
 msgstr "PHP Warnungen"
 
-#: ../lib/plugin/_BackendInfo.php:10 ../templates/browse.html:123
-#: ../templates/browse.html:124
+#: ../lib/plugin/_BackendInfo.php:10 ../lib/stdlib.php:624
+#: ../lib/stdlib.php:625 ../lib/stdlib.php:628 ../templates/browse.html:123
+#: ../templates/browse.html:124 ../templates/browse.html:130
 msgid "DebugInfo"
 msgstr "DebugInfo"
 
@@ -329,7 +331,7 @@ msgstr ""
 #: ../lib/plugin/PageHistory.php:144 ../lib/plugin/PageHistory.php:182
 #, c-format
 msgid "Version %d"
-msgstr "Version %d"
+msgstr "Version %d."
 
 #: ../lib/plugin/PageHistory.php:174
 msgid "History of changes."
@@ -396,19 +398,19 @@ msgid "RecentEdits"
 msgstr "GeringeÄnderungen"
 
 #: ../lib/main.php:26 ../lib/main.php:85 ../lib/main.php:87
-#: ../lib/plugin/RecentChanges.php:247
+#: ../lib/plugin/RecentChanges.php:245
 msgid "HomePage"
 msgstr "StartSeite"
 
-#: ../lib/plugin/RecentChanges.php:252
+#: ../lib/plugin/RecentChanges.php:250
 msgid "Search"
 msgstr "Suche"
 
-#: ../lib/plugin/RecentChanges.php:253 ../lib/plugin/TitleSearch.php:16
+#: ../lib/plugin/RecentChanges.php:251 ../lib/plugin/TitleSearch.php:16
 msgid "Title Search"
 msgstr "Volltextsuch"
 
-#: ../lib/main.php:123 ../lib/plugin/RecentChanges.php:255
+#: ../lib/main.php:123 ../lib/plugin/RecentChanges.php:253
 #: ../lib/plugin/TitleSearch.php:12
 msgid "TitleSearch"
 msgstr "Volltextsuch"
@@ -448,12 +450,14 @@ msgstr "um daß zu tun"
 
 #: ../lib/WikiUser.php:100
 msgid "You must be logged in as an administrator"
-msgstr "Du mußt dich als eine Administrator anmelden"
+msgstr "Du mußt dich als eine Systemverwalter anmelden"
 
 #: ../lib/WikiUser.php:181
 msgid ""
 "You must set the administrator account and password before you can log in."
-msgstr "Du mußt der Administrator-Account mit Passwort zuerst schützen bevor du dich anmelden kannst."
+msgstr ""
+"Du mußt der Systemverwalter-Account mit Passwort zuerst schützen bevor du "
+"dich anmelden kannst."
 
 #: ../lib/WikiUser.php:193
 msgid "You entered an invalid login or password."
@@ -465,7 +469,9 @@ msgstr "Du kannst mit jedes gultiges WikiWort als Benutzername anmelden."
 
 #: ../lib/WikiUser.php:197
 msgid "(Any password will work, except, of course for the admin user.)"
-msgstr "(Irgende Wörter können als Passwort angenommen werden sowieso, aber natürlich nicht fur die Admin-Benuzer.)"
+msgstr ""
+"(Irgende Wörter können als Passwort angenommen werden sowieso, aber "
+"natürlich nicht für der Systemverwalter.)"
 
 #: ../lib/diff.php:172
 msgid "version"
@@ -488,7 +494,7 @@ msgstr "Keine"
 #: ../lib/diff.php:201 ../lib/diff.php:211
 #, c-format
 msgid "version %d"
-msgstr "Version %d"
+msgstr "Version %d."
 
 #: ../lib/diff.php:205
 msgid "current version"
@@ -547,7 +553,8 @@ msgstr "Vergleich: %s"
 #: ../lib/editpage.php:26 ../lib/savepage.php:45
 msgid "This page has been locked by the administrator and cannot be edited."
 msgstr ""
-"Diese Seite wurde vom Administrator gesperrt und kann nicht editiert werden."
+"Diese Seite wurde vom Systemverwalter gesperrt und kann nicht editiert "
+"werden."
 
 #: ../lib/editpage.php:28 ../lib/savepage.php:36 ../lib/savepage.php:47
 msgid "Sorry for the inconvenience."
@@ -587,12 +594,12 @@ msgstr "- ausgelassen"
 #: ../lib/loadsave.php:221
 #, c-format
 msgid "- saved as version %d"
-msgstr "- als Version %d gespeichert"
+msgstr "- als Version %d. gespeichert"
 
 #: ../lib/main.php:99
 #, c-format
 msgid "Action %s is disabled in this wiki."
-msgstr "In dieses Wikis ist die Tatigkeit »%s« nicht erlauben."
+msgstr "In dieses Wikis wurde die Tatigkeit »%s« nicht erlauben."
 
 #: ../lib/prepend.php:31
 msgid "WikiFatalError"
@@ -610,7 +617,7 @@ msgstr "Klicke hier um <a href=\"%s\">die Seite jetzt zu löschen</a>."
 
 #: ../lib/removepage.php:12
 msgid "To cancel press the \"Back\" button of your browser."
-msgstr "Anderenfalls benütze die \"Zurück\" Funktion deines Browsers."
+msgstr "Anderenfalls benütze die »Zurück« Funktion deines Browsers."
 
 #: ../lib/removepage.php:16
 #, c-format
@@ -622,7 +629,11 @@ msgid ""
 "PhpWiki is unable to save your changes, because another user edited and "
 "saved the page while you were editing the page too. If saving proceeded now "
 "changes from the previous author would be lost."
-msgstr "PhpWiki kann deine Veränderungen nicht speichern, da ein andererBenützer die Seite verändert und gespeichert hat, während du diese Seiteeditiert hast. Wenn die Seite jetzt gespeichert werden würde, dann würdendie Veränderungen des anderen Benützers verloren gehen."
+msgstr ""
+"PhpWiki kann deine Veränderungen nicht speichern, da ein andererBenützer die "
+"Seite verändert und gespeichert hat, während du diese Seiteeditiert hast. "
+"Wenn die Seite jetzt gespeichert werden würde, dann würdendie Veränderungen "
+"des anderen Benützers verloren gehen."
 
 #: ../lib/savepage.php:24
 msgid "In order to recover from this situation follow these steps:"
@@ -630,25 +641,33 @@ msgstr "Um diese Situation zu korrigieren folge bitte den folgenden Schritten:"
 
 #: ../lib/savepage.php:26
 msgid "Use your browser's <b>Back</b> button to go back to the edit page."
-msgstr "Benütze die <b>Zurück</b> Funktion deines Browsers um zur Editierseitezu gelangen."
+msgstr ""
+"Benütze die <b>Zurück</b> Funktion deines Browsers um zur Editierseitezu "
+"gelangen."
 
 #: ../lib/savepage.php:28
 msgid ""
 "Copy your changes to the clipboard or to another temporary place (e.g. text "
 "editor)."
-msgstr "Kopiere deine Veränderungen in die Zwischenablage oder an einen anderentemporären Platz (z.B. einen Texteditor)"
+msgstr ""
+"Kopiere deine Veränderungen in die Zwischenablage oder an einen "
+"anderentemporären Platz (z.B. einen Texteditor)"
 
 #: ../lib/savepage.php:30
 msgid ""
 "<b>Reload</b> the page. You should now see the most current version of the "
 "page. Your changes are no longer there."
-msgstr "<b>Aktualisiere</b> die Seite. Du solltest jetzt die neueste Versionder Seite sehen. Deine Veränderungen sind verschwunden."
+msgstr ""
+"<b>Aktualisiere</b> die Seite. Du solltest jetzt die neueste Versionder "
+"Seite sehen. Deine Veränderungen sind verschwunden."
 
 #: ../lib/savepage.php:32
 msgid ""
 "Make changes to the file again. Paste your additions from the clipboard (or "
 "text editor)."
-msgstr "Editiere die Seite erneut. Kopiere deine Veränderungen aus derZwischenablage (oder aus dem Texteditor)"
+msgstr ""
+"Editiere die Seite erneut. Kopiere deine Veränderungen aus derZwischenablage "
+"(oder aus dem Texteditor)"
 
 #: ../lib/savepage.php:34
 msgid "Press <b>Save</b> again."
@@ -678,7 +697,7 @@ msgstr ""
 
 #: ../lib/savepage.php:64
 msgid "Required form variables are missing."
-msgstr ""
+msgstr "Benötigen Form-Variablen sind Fehlend."
 
 #: ../lib/savepage.php:152
 #, c-format
@@ -719,7 +738,7 @@ msgstr "Version nicht vorliegend"
 #: ../lib/stdlib.php:528
 #, c-format
 msgid "I'm sorry.  Version %d of %s is not in my database."
-msgstr "Es tut mir leid.  Version %d von %s war nicht in meine Datenbank."
+msgstr "Es tut mir leid.  Version %d. von %s war nicht in meine Datenbank."
 
 #: ../lib/transform.php:108
 msgid "Lists nested too deep in SetHTMLOutputMode"
@@ -816,4 +835,4 @@ msgstr "!Fußnoten"
 #~ msgstr "Los"
 
 #~ msgid "Inserting page %s, version %s from %s"
-#~ msgstr "Füge Seite %s ein, Version %s vom %s"
+#~ msgstr "Füge Seite %s ein, Version %s. vom %s"
