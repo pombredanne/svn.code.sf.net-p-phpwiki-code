@@ -1,10 +1,10 @@
 Date: Tue, 17 Sep 2002 12:48:59 -0700
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.4pre)
-X-Rcs-Id: $Id: OldStyleTablePlugin,v 1.3 2002-12-29 00:32:34 carstenklapp Exp $
+X-Rcs-Id: $Id: OldStyleTablePlugin,v 1.4 2004-01-27 12:13:49 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=OldStyleTablePlugin;
   flags="";
-  pgsrc_version="2 $Revision: 1.3 $";
+  pgsrc_version="2 $Revision: 1.4 $";
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
@@ -12,8 +12,10 @@ Content-Transfer-Encoding: binary
 The OldStyleTablePlugin can be used to include tables within a wiki
 page using the old-style markup syntax for tables.
 
+!!Usage:
+
 <verbatim>
-<?plugin OldStyleTable
+<?plugin OldStyleTable caption="OldStyleTable" border||=2
 ||^  *Name*                |v *Cost*   |v *Notes*
 | *First*     | *Last*
 |> Jeff       |< Dairiki   |^  Cheap   |< Not worth it
@@ -23,7 +25,7 @@ page using the old-style markup syntax for tables.
 
 will get you
 
-<?plugin OldStyleTable
+<?plugin OldStyleTable caption="OldStyleTable" border||=2
 ||^  *Name*                |v *Cost*   |v *Notes*
 | *First*     | *Last*
 |> Jeff       |< Dairiki   |^  Cheap   |< Not worth it
@@ -34,6 +36,28 @@ Note that multiple __|__s lead to spanned columns, and __v__s can be
 used to span rows.  A __>__ generates a right justified column, __<__
 a left justified column and __^__ a centered column (which is the
 default.)
+
+!! Plugin Arguments
+
+__caption__:
+
+  Any string. Default: ""
+
+__border__:
+
+  Any number. Default: 1
+
+__cellspacing__:
+
+  Any number. Default: 1
+
+__cellpadding__:
+
+  Any number. Default: 1
+
+__summary__:
+
+  Any string. Default: ""
 
 ----
 
