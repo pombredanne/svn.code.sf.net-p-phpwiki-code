@@ -32,6 +32,8 @@ $locale["(Copy your changes to the clipboard. You can try editing a different pa
    "(Kopiere deine Veränderungen in die Zwischenablage. Du kannst versuchen eine andere Seite zu editieren oder dein Text in einem Texteditor speichern.)";
 $locale["(diff)"] =
    "(Diff)";
+$locale["(hist)"] =
+   "(protok.)";
 $locale["(last edited %s)"] =
    "(letzte Änderung %s)";
 $locale["(version %s, saved on %s)"] =
@@ -90,6 +92,8 @@ $locale["Check any two boxes then %s."] =
    "Wähle zwei Versionen aus, dann %s.";
 $locale["Check any two boxes to compare revisions."] =
    "Wähle zwei Versionen zum Vergleich aus.";
+$locale["Columns: %s."] =
+   "Spalten: %s.";
 $locale["Complete."] =
    "Fertig.";
 $locale["Conflicting Edits!"] =
@@ -120,6 +124,8 @@ $locale["Edit"] =
    "Editieren";
 $locale["Edit %s"] =
    "Editiere %s";
+$locale["Edit Area Size"] =
+   "Texteingabefenstergröße";
 $locale["Edit Area Size:"] =
    "Texteingabefenstergröße:";
 $locale["Edit Old Revision"] =
@@ -148,6 +154,8 @@ $locale["Full text search results for '%s'"] =
    "Volltext-Suchresultate nach »%s«";
 $locale["FullTextSearch"] =
    "VolltextSuche";
+$locale["FuzzyPages"] =
+   "FuzzySuche";
 $locale["Get BackLinks for %s"] =
    "Hole BackLinks für %s";
 $locale["Get debugging information for %s."] =
@@ -184,6 +192,8 @@ $locale["Included from %s"] =
    "Eingefügter Text von %s";
 $locale["Insufficient permissions."] =
    "Erlaubnisse nicht ausreichend.";
+$locale["InterWikiMap"] =
+   "InterWikiMap";
 $locale["Invalid password or userid."] =
    "Ungültiges Passwort oder Benutzername.";
 $locale["Last"] =
@@ -194,10 +204,14 @@ $locale["Last Modified"] =
    "Geändert";
 $locale["Last Summary"] =
    "Letzter Kommentar";
+$locale["Last edited %s."] =
+   "Letzte Änderung %s.";
 $locale["Last edited on %s."] =
    "Letzte Änderung am %s.";
 $locale["LikePages"] =
    "GleicheSeiten";
+$locale["List FuzzyPages for %s"] =
+   "Ausliste FuzzySuche nach %s";
 $locale["List LikePages for %s"] =
    "GleicheSeite wie %s";
 $locale["List PageHistory for %s"] =
@@ -206,6 +220,8 @@ $locale["List the most popular pages"] =
    "Die MeistBesuchten Seiten auflisten";
 $locale["Lists nested too deep in SetHTMLOutputMode"] =
    "Interner Fehler: Stackgrenze in SetHTMLOutputMode überschritten.";
+$locale["Loaded"] =
+   "Geladet";
 $locale["Loading '%s'"] =
    "»%s« wird geladen";
 $locale["Loading up virgin wiki"] =
@@ -334,12 +350,16 @@ $locale["See %s tips for editing."] =
    "Siehe %s Tips fürs Editieren.";
 $locale["Serialized file %s"] =
    "Serialisierte Datei %s";
+$locale["Server time:"] =
+   "Die Zeit des Servers:";
 $locale["Show all changes for:"] =
    "Zeige alle Änderungen innerhalb von:";
 $locale["Show changes for:"] =
    "Zeige Änderungen innerhalb von:";
 $locale["Show minor edits for:"] =
    "Zeige geringfügige Änderungen innerhalb von: %s";
+$locale["Sidebar"] =
+   "Sidebar";
 $locale["Sign In"] =
    "Anmelden";
 $locale["Sign Out"] =
@@ -368,12 +388,14 @@ $locale["The %d most popular pages of this wiki:"] =
    "Die %d meistbesuchten Seiten dieses Wikis:";
 $locale["The %d most recent %s are listed below."] =
    "Die %d jüngste %s sind unten aufgelistet.";
-$locale["The %d most recent %s during the past %.1f days are listed below."] =
-   "Die %d jüngste %s innerhalb von %.1f Tagen sind unten aufgelistet.";
+$locale["The %d most recent %s during the past %s are listed below."] =
+   "Die %d jüngste %s innerhalb von %s sind unten aufgelistet.";
 $locale["The PhpWiki programming team"] =
    "Das PhpWiki Programmierer-Team";
-$locale["The most recent %s during the past %.1f days are listed below."] =
-   "Die jüngste %s innerhalb von %.1f Tagen sind unten aufgelistet.";
+$locale["The most recent %s during the past %s are listed below."] =
+   "Die jüngste %s innerhalb von %s sind unten aufgelistet.";
+$locale["These page titles match fuzzy with '%s'"] =
+   "Diese Seite Namen sehen sich ungefähr ähnlich aus wie »%s«.";
 $locale["These pages share an initial or final title word with '%s'"] =
    "Diese Seiten teilen sich einen Wordteil am Anfang oder Ende mit »%s«";
 $locale["This is a minor change."] =
@@ -382,12 +404,18 @@ $locale["This page has been locked by the administrator and cannot be edited."] 
    "Diese Seite wurde vom Systemverwalter gesperrt und kann nicht editiert werden.";
 $locale["This page has been locked by the administrator so your changes can not be saved."] =
    "Diese Seite wurde vom Systemverwalter gesperrt und deine Veränderungen können nicht gespeichert werden.";
+$locale["Time Zone"] =
+   "Zeitzone";
 $locale["Title Search"] =
    "TitelSuche";
 $locale["Title search results for '%s'"] =
    "Titel-Suchresultate nach »%s«";
 $locale["TitleSearch"] =
    "TitelSuche";
+$locale["Today"] =
+   "Heute";
+$locale["Today at %s"] =
+   "Heute um %s";
 $locale["Unable to open directory '%s' for reading"] =
    "Konnte Verzeichnis »%s« nicht zum Lesen öffnen";
 $locale["Unexpected EOF in zip file"] =
@@ -410,8 +438,10 @@ $locale["Version"] =
    "Version";
 $locale["Version %d"] =
    "Version %d.";
+$locale["Version %s, saved %s."] =
+   "Version %s. %s gespeichert.";
 $locale["Version %s, saved on %s."] =
-   "Version %s. zuletzt am %s gespeichert.";
+   "Version %s. am %s gespeichert.";
 $locale["Versions are identical"] =
    "Versionen sind identisch";
 $locale["View Source"] =
@@ -430,6 +460,10 @@ $locale["Warning: You are editing an old revision."] =
    "Warnung: Du editierst eine alte Version.";
 $locale["Width"] =
    "Breite";
+$locale["Yesterday"] =
+   "Gestern";
+$locale["Yesterday at %s"] =
+   "Gestern um %s";
 $locale["You are about to remove '%s' permanently!"] =
    "Du bist im Begriff »%s« permanent zu löschen!";
 $locale["You are signed in as %s"] =
@@ -450,6 +484,8 @@ $locale["You must specify a directory to dump to"] =
    "Du mußt ein Sicherungsverzeichnis angeben.";
 $locale["Your careful attention to detail is much appreciated."] =
    "Deine besondere Aufmerksamkeit für Details wird sehr geschätzt.";
+$locale["Your time:"] =
+   "Ihre Zeit:";
 $locale["[%d] See [%s]"] =
    "[%d] Siehe [%s]";
 $locale["argument '%s' not declared by plugin"] =
@@ -462,10 +498,14 @@ $locale["couldn't open file '%s' for writing"] =
    "Datei »%s« konnte nicht zum Schreiben geöffnet werden";
 $locale["current version"] =
    "aktuelle Version";
+$locale["day"] =
+   "einem Tag";
 $locale["diff"] =
    "Diff";
 $locale["edits"] =
    "Änderungen";
+$locale["elapsed time: %s s"] =
+   "Ablaufzeit: %s s";
 $locale["from %s"] =
    "von %s";
 $locale["is identical to current version %d - skipped"] =
