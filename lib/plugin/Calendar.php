@@ -1,8 +1,8 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.16 2002-02-03 09:49:06 carstenklapp Exp $');
+rcs_id('$Id: Calendar.php,v 1.17 2002-02-06 02:41:25 carstenklapp Exp $');
 
 if (!defined('SECONDS_PER_DAY'))
-    define('SECONDS_PER_DAY', 24 * 3600);
+define('SECONDS_PER_DAY', 24 * 3600);
 
 // FIXME: Still needs:
 //
@@ -34,16 +34,15 @@ class DayButton extends HtmlElement {
         else {
             $class = 'cal-hide';
             $title = sprintf(_("Edit %s"), $page_for_date);
-            $url = WikiURL($page_for_date, array('action' => 'edit'));
         }
         if ($istoday) {
             $mday = HTML::strong($mday);
             $this->setAttr('class', 'cal-today');
         }
-
-        $this->pushContent(HTML::a(array('href' => $url,
-                                      'class' => $class,
-                                      'title' => $title), $mday));
+        $url = WikiURL($page_for_date, array('action' => 'edit'));
+        $this->pushContent(HTML::a(array('href'  => $url,
+                                         'class' => $class,
+                                         'title' => $title), $mday));
     }
 
 };
@@ -62,15 +61,15 @@ extends WikiPlugin
     }
 
     function getDefaultArguments() {
-        return array('prefix'		=> '[pagename].',
-                     'date_format'	=> '%Y-%m-%d',
-                     'year'		=> '',
-                     'month'		=> '',
-                     'month_offset'	=> 0,
+        return array('prefix'       => '[pagename].',
+                     'date_format'  => '%Y-%m-%d',
+                     'year'         => '',
+                     'month'        => '',
+                     'month_offset' => 0,
 
-                     'month_format'	=> '%B, %Y',
-                     'wday_format'	=> '%a',
-                     'start_wday'	=> '0');
+                     'month_format' => '%B, %Y',
+                     'wday_format'  => '%a',
+                     'start_wday'   => '0');
     }
 
     function __header($pagename, $time) {
@@ -99,7 +98,7 @@ extends WikiPlugin
                                  HTML::strong(array('class' => 'cal-header'),
                                               strftime($args['month_format'], $time))),
                         HTML::td(array('align' => 'right'), $next));
-        
+
         return HTML::tr(HTML::td(array('colspan' => 7,
                                        'align'   => 'center'),
                                  HTML::table(array('width' => '100%',
@@ -172,10 +171,10 @@ extends WikiPlugin
             $this->_today = $now['tm_mday'];
         else
             $this->_today = false;
-        
-        
+
+
         $row = HTML::tr();
-        
+
         $col = (7 + $t['tm_wday'] - $args['start_wday']) % 7;
         if ($col > 0)
             $row->pushContent(HTML::td(array('colspan' => $col)));
