@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.28 2003-02-21 04:16:20 dairiki Exp $');
+<?php rcs_id('$Id: Request.php,v 1.29 2003-02-22 18:53:39 dairiki Exp $');
 // FIXME: write log entry.
 
 /*
@@ -283,12 +283,29 @@ class Request {
             $this->_log_entry->setStatus($status);
     }
 
-    function compress_output() {
-        if ( function_exists('ob_gzhandler')
-             && function_exists('version_compare') /* (only in php >= 4.1.0) */
-             && version_compare(phpversion(), '4.2.3', ">=")
-             ){
+    function buffer_output($compress = true) {
+        if (defined('COMPRESS_OUTPUT')) {
+            if (!COMPRESS_OUTPUT)
+                $compress = false;
+        }
+        elseif (!function_exists('version_compare')
+                || version_compare(phpversion(), '4.2.3', "<")) {
+            $compress = false;
+        }
+
+        if (!function_exists('ob_gzhandler'))
+            $compress = false;
+        
+        if ($compress) {
             ob_start('ob_gzhandler');
+            /*
+             * Attempt to prevent Apache from doing the dreaded double-gzip.
+             *
+             * It would be better if we could detect when apache was going
+             * to zip for us, and then let it ... but I have yet to figure
+             * out how to do that.
+             */
+            @apache_note('no-gzip', 1);
         }
         else {
             // Now we alway buffer output.
@@ -297,16 +314,18 @@ class Request {
             // FIXME: change the name of this method.
             ob_start();
         }
-        $this->_is_compressing_output = true;
+        $this->_is_buffering_output = true;
     }
 
     function discardOutput() {
-        if (!empty($this->_is_compressing_output))
+        if (!empty($this->_is_buffering_output))
             ob_clean();
+        else
+            trigger_error("Not buffering output", E_USER_WARNING);
     }
     
     function finish() {
-        if (!empty($this->_is_compressing_output))
+        if (!empty($this->_is_buffering_output))
             ob_end_flush();
         exit;
     }
