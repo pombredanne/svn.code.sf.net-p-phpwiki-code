@@ -1,6 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PluginManager.php,v 1.3 2003-01-04 02:30:12 carstenklapp Exp $');
-
+rcs_id('$Id: PluginManager.php,v 1.4 2003-02-20 18:13:38 carstenklapp Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -21,6 +20,10 @@ rcs_id('$Id: PluginManager.php,v 1.3 2003-01-04 02:30:12 carstenklapp Exp $');
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+// Set this to true if you don't want regular users to view this page.
+// So far there are no known security issues.
+define('REQUIRE_ADMIN', false);
+
 class WikiPlugin_PluginManager
 extends WikiPlugin
 {
@@ -34,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -47,7 +50,7 @@ extends WikiPlugin
         $h = HTML();
         $this->_generatePageheader($info, &$h);
 
-        if ($request->_user->isadmin()) {
+        if (! REQUIRE_ADMIN || $request->_user->isadmin()) {
             $h->pushContent(HTML::h2(_("Plugins")));
 
             $table = HTML::table(array('class' => "pagelist"));
@@ -106,7 +109,7 @@ extends WikiPlugin
             $temppluginclass = "<? plugin $pname ?>"; // hackish
             $w = new WikiPluginLoader;
             // obtain plugin name & description
-            $p = $w->getPlugin($pname);
+            $p = $w->getPlugin($pname, false); // second arg?
             $desc = $p->getDescription();
             // obtain plugin version
             if (method_exists($p, 'getVersion')) {
@@ -118,6 +121,7 @@ extends WikiPlugin
             // obtain plugin's default arguments
             $arguments = HTML();
             $args = $p->getDefaultArguments();
+
             foreach ($args as $arg => $default) {
                 if (stristr($default, ' '))
                     $default = "'$default'";
@@ -138,7 +142,8 @@ extends WikiPlugin
                 // don't link to actionpages and plugins starting with
                 // an _ from page list
                 if ( !preg_match("/^_/", $pname)
-                     && !(@$request->isActionPage($pname)) ) //FIXME
+                     //&& !(@$request->isActionPage($pname)) //FIXME
+                    )
                     $plink = WikiLink($ppname, 'unknown');
                 else
                     $plink = false;
@@ -172,9 +177,11 @@ extends WikiPlugin
     }
 };
 
-/**
- $Log: not supported by cvs2svn $
- */
+// $Log: not supported by cvs2svn $
+// Revision 1.3  2003/01/04 02:30:12  carstenklapp
+// Added 'info' argument to show / hide plugin "Arguments"
+// column. Improved row highlighting and error message when viewed by
+// non-admin user. Code refactored. Added copyleft.
 
 // Local Variables:
 // mode: php
