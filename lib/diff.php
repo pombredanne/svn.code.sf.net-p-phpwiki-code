@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: diff.php,v 1.42 2003-01-11 23:05:04 carstenklapp Exp $');
+rcs_id('$Id: diff.php,v 1.43 2003-01-29 19:17:37 carstenklapp Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -48,7 +48,7 @@ class _HWLDF_WordAccumulator {
             if (!$word)
                 continue;
             if ($word[0] == "\n") {
-                $this->_group .= "&nbsp;"; // FIXME to use HTML::raw('&nbsp;')
+                $this->_group .= PrintXML(HTML::raw('&nbsp;'));
                 $this->_flushLine($tag);
                 $word = substr($word, 1);
             }
@@ -386,6 +386,9 @@ function showDiff (&$request) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.42  2003/01/11 23:05:04  carstenklapp
+// Tweaked diff formatting.
+//
 // Revision 1.41  2003/01/08 02:23:02  carstenklapp
 // Don't perform a diff when the page doesn't exist (such as a
 // nonexistant calendar day/sub-page)
