@@ -1,4 +1,4 @@
-<!-- $Id: diff.php,v 1.4 2000-11-01 11:31:41 ahollosi Exp $ -->
+<!-- $Id: diff.php,v 1.5 2001-02-07 18:35:09 dairiki Exp $ -->
 <?php
 // diff.php
 //
@@ -8,6 +8,12 @@
 // You may copy this code freely under the conditions of the GPL.
 //
 
+// FIXME: possibly remove assert()'s for production version?
+
+// PHP3 does not have assert()
+define('USE_ASSERTS', function_exists('assert'));
+
+      
 /**
  * Class used internally by WikiDiff to actually compute the diffs.
  *
@@ -34,6 +40,7 @@ class _WikiDiffEngine
       {
 	$n_from = sizeof($from_lines);
 	$n_to = sizeof($to_lines);
+	$endskip = 0;
 
 	// Ignore trailing and leading matching lines.
 	while ($n_from > 0 && $n_to > 0)
@@ -71,12 +78,10 @@ class _WikiDiffEngine
 	    $line = $from_lines[$x + $skip];
 	    $xlines[] = $line;
 	    if ( ($this->xchanged[$x] = empty($yhash[$line])) )
-		continue;	// fixme? what happens to yhash/xhash when
-				// there are two identical lines??
+		continue;
 	    $this->xv[] = $line;
 	    $this->xind[] = $x;
 	  }
-
 
 	// Find the LCS.
 	$this->_compareseq(0, sizeof($this->xv), 0, sizeof($this->yv));
@@ -94,15 +99,13 @@ class _WikiDiffEngine
 	$y = 0;
 	while ($x < $n_from || $y < $n_to)
 	  {
-	    /*
-	    if ( ($y == $n_to && !$this->xchanged[$x])
-		 || ($x == $n_from && !$this->ychanged[$y]) )
-		die("assertion error");
-	    */
+	    USE_ASSERTS && assert($y < $n_to || $this->xchanged[$x]);
+	    USE_ASSERTS && assert($x < $n_from || $this->ychanged[$y]);
 
 	    // Skip matching "snake".
 	    $x0 = $x;
 	    $ncopy = 0;
+
 	    while ( $x < $n_from && $y < $n_to
 	            && !$this->xchanged[$x] && !$this->ychanged[$y])
 	      {
@@ -133,7 +136,7 @@ class _WikiDiffEngine
 		$this->edits[] = $adds;
 	      }
 	  }
-	if (!empty($endskip))
+	if ($endskip != 0)
 	    $this->edits[] = $endskip;
       }
 
@@ -195,7 +198,7 @@ class _WikiDiffEngine
 		    if (! $this->in_seq[$y])
 		      {
 			$k = $this->_lcs_pos($y);
-			//if (!$k) die('assertion "!$k" failed');
+			USE_ASSERTS && assert($k > 0);
 			$ymids[$k] = $ymids[$k-1];
 			break;
 		      }
@@ -203,7 +206,7 @@ class _WikiDiffEngine
 		  {
 		    if ($y > $this->seq[$k-1])
 		      {
-			//if ($y >= $this->seq[$k]) die('assertion failed');
+			USE_ASSERTS && assert($y < $this->seq[$k]);
 			// Optimization: this is a common case:
 			//  next match is just replacing previous match.
 			$this->in_seq[$this->seq[$k]] = false;
@@ -213,7 +216,7 @@ class _WikiDiffEngine
 		    else if (! $this->in_seq[$y])
 		      {
 			$k = $this->_lcs_pos($y);
-			//if (!$k) die('assertion "!$k" failed');
+			USE_ASSERTS && assert($k > 0);
 			$ymids[$k] = $ymids[$k-1];
 		      }
 		  }
@@ -253,7 +256,7 @@ class _WikiDiffEngine
 		$end = $mid;
 	  }
 
-	//if ($ypos == $this->seq[$end]) die("assertion failure");
+	USE_ASSERTS && assert($ypos != $this->seq[$end]);
 
 	$this->in_seq[$this->seq[$end]] = false;
 	$this->seq[$end] = $ypos;
@@ -328,7 +331,7 @@ class _WikiDiffEngine
    * as much as possible.
    *
    * We do something when a run of changed lines include a
-   * line at one end and have an excluded, identical line at the other.
+   * line at one end and has an excluded, identical line at the other.
    * We are free to choose which identical line is included.
    * `compareseq' usually chooses the one at the beginning,
    * but usually it is cleaner to consider the following identical line
@@ -340,18 +343,33 @@ class _WikiDiffEngine
       {
 	$i = 0;
 	$j = 0;
+
+	USE_ASSERTS && assert('sizeof($lines) == sizeof($changed)');
 	$len = sizeof($lines);
+	$other_len = sizeof($other_changed);
+
 	while (1)
 	  {
 	    /*
 	     * Scan forwards to find beginning of another run of changes.
 	     * Also keep track of the corresponding point in the other file.
+	     *
+	     * Throughout this code, $i and $j are adjusted together so that
+	     * the first $i elements of $changed and the first $j elements
+	     * of $other_changed both contain the same number of zeros
+	     * (unchanged lines).
+	     * Furthermore, $j is always kept so that $j == $other_len or
+	     * $other_changed[$j] == false.
 	     */
-	    while ($i < $len && $changed[$i] == 0)
+	    while ($j < $other_len && $other_changed[$j])
+		$j++;
+	    
+	    while ($i < $len && ! $changed[$i])
 	      {
-		while ($other_changed[$j++])
-		    continue;
-		$i++;
+		USE_ASSERTS && assert('$j < $other_len && ! $other_changed[$j]');
+		$i++; $j++;
+		while ($j < $other_len && $other_changed[$j])
+		    $j++;
 	      }
 
 	    if ($i == $len)
@@ -360,10 +378,8 @@ class _WikiDiffEngine
 	    $start = $i;
 
 	    // Find the end of this run of changes.
-	    while (isset($changed[++$i]))
+	    while (++$i < $len && $changed[$i])
 		continue;
-	    while ($other_changed[$j])
-		$j++;
 
 	    do
 	      {
@@ -378,14 +394,16 @@ class _WikiDiffEngine
 		 * previous unchanged line matches the last changed one.
 		 * This merges with previous changed regions.
 		 */
-		while ($start && $lines[$start - 1] == $lines[$i - 1])
+		while ($start > 0 && $lines[$start - 1] == $lines[$i - 1])
 		  {
 		    $changed[--$start] = 1;
 		    $changed[--$i] = false;
-		    while ($changed[$start - 1])
+		    while ($start > 0 && $changed[$start - 1])
 			$start--;
+		    USE_ASSERTS && assert('$j > 0');
 		    while ($other_changed[--$j])
 			continue;
+		    USE_ASSERTS && assert('$j >= 0 && !$other_changed[$j]');
 		  }
 
 		/*
@@ -393,7 +411,7 @@ class _WikiDiffEngine
 		 * point where it corresponds to a changed run in the other file.
 		 * CORRESPONDING == LEN means no such point has been found.
 		 */
-		$corresponding = empty($other_changed[$j - 1]) ? $len : $i;
+		$corresponding = $j < $other_len ? $i : $len;
 
 		/*
 		 * Move the changed region forward, so long as the
@@ -402,14 +420,21 @@ class _WikiDiffEngine
 		 * Do this second, so that if there are no merges,
 		 * the changed region is moved forward as far as possible.
 		 */
-		while ($i != $len && $lines[$start] == $lines[$i])
+		while ($i < $len && $lines[$start] == $lines[$i])
 		  {
 		    $changed[$start++] = false;
 		    $changed[$i++] = 1;
-		    while ($changed[$i])
+		    while ($i < $len && $changed[$i])
 			$i++;
-		    while ($other_changed[++$j])
+
+		    USE_ASSERTS && assert('$j < $other_len && ! $other_changed[$j]');
+		    $j++;
+		    if ($j < $other_len && $other_changed[$j])
+		      {
 			$corresponding = $i;
+			while ($j < $other_len && $other_changed[$j])
+			    $j++;
+		      }
 		  }
 	      }
 	    while ($runlength != $i - $start);
@@ -422,8 +447,10 @@ class _WikiDiffEngine
 	      {
 		$changed[--$start] = 1;
 		$changed[--$i] = 0;
+		USE_ASSERTS && assert('$j > 0');
 		while ($other_changed[--$j])
 		    continue;
+		USE_ASSERTS && assert('$j >= 0 && !$other_changed[$j]');
 	      }
 	  }
       }
@@ -481,7 +508,7 @@ class WikiDiff
 	    if (is_array($edit))
 	      { // Was an add, turn it into a delete.
 		$nadd = sizeof($edit);
-		if ($nadd == 0) die("assertion error");
+		USE_ASSERTS && assert ($nadd > 0);
 		$edit = -$nadd;
 	      }
 	    else if ($edit > 0)
