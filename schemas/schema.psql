@@ -1,3 +1,5 @@
+-- $Id: schema.psql,v 1.2 2000-06-12 04:19:17 wainstead Exp $
+
 drop table wiki;
 drop table archive;
 drop table wikilinks;
