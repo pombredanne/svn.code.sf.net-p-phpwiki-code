@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: login.tmpl,v 1.2 2002-01-22 03:17:47 dairiki Exp $ -->
+<!-- $Id: login.tmpl,v 1.3 2002-01-22 22:37:15 dairiki Exp $ -->
 <!-- The login form -->
 
 <?php if ($FAILURE_MESSAGE) { ?>
@@ -33,9 +33,9 @@
   <td><input type="password" name="login[password]" size="12" /></td>
 </tr>
 <tr><td align="center" colspan="2">
-  <input type="submit" name="login[submit]" value=" <?=_("Sign In")?> " />
+  <?=$Theme->makeButton(_("Sign In"), "submit:", "wikiaction")?>
   <?php if (!$REQUIRE) { ?>
-    <input type="submit" name="login[cancel]" value=" <?=_("Cancel")?> " />
+    <?=$Theme->makeButton(_("Cancel"), "submit:login[cancel]", "wikiaction")?>
   <?php } ?>
 </td></tr>
 </table>

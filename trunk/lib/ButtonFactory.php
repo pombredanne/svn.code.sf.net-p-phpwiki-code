@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ButtonFactory.php,v 1.10 2002-01-22 06:55:39 dairiki Exp $');
+<?php rcs_id('$Id: ButtonFactory.php,v 1.11 2002-01-22 22:37:14 dairiki Exp $');
 
 require_once("lib/HtmlElement.php");
 
@@ -50,6 +50,52 @@ class ImageButton extends Button {
         $img_attr['border'] = 0;
         $this->pushContent(HTML::img($img_attr));
     }
+};
+
+/**
+ * A class representing a form <samp>submit</samp> button.
+ */
+class SubmitButton extends HtmlElement {
+    /** Constructor
+     *
+     * @param $text string The text for the button.
+     * @param $name string The name of the form field.
+     * @param $class string The CSS class for the button.
+     */
+    function SubmitButton ($text, $name = false, $class = false) {
+        $this->HtmlElement('input', array('type' => 'submit',
+                                          'value' => $text));
+        if ($name)
+            $this->setAttr('name', $name);
+        if ($class)
+            $this->setAttr('class', $class);
+    }
+
+};
+
+/**
+ * A class representing an image form <samp>submit</samp> button.
+ */
+class SubmitImageButton extends SubmitButton {
+    /** Constructor
+     *
+     * @param $text string The text for the button.
+     * @param $name string The name of the form field.
+     * @param $class string The CSS class for the button.
+     * @param $img_url string URL for button's image.
+     * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
+     */
+    function SubmitImageButton ($text, $name = false, $class = false, $img_url) {
+        $this->HtmlElement('input', array('type' => 'image',
+                                          'src' => $img_url,
+                                          'value' => $text,
+                                          'alt' => $text));
+        if ($name)
+            $this->setAttr('name', $name);
+        if ($class)
+            $this->setAttr('class', $class);
+    }
+
 };
 
 /**
