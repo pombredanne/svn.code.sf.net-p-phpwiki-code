@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.20 2002-01-15 23:40:25 dairiki Exp $');
+<?php rcs_id('$Id: Template.php,v 1.21 2002-01-17 20:41:13 dairiki Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -31,23 +31,9 @@ class Template
 	    $repl[] = $pluginLoader->expandPI($translated_pi, $dbi, $request);
 	}
 
-         // Convert ${VAR} to < ?php echo "$VAR"; ? >
-        //$orig[] = '/\${(\w[\w\d]*)}/';
-        //$repl[] = '< ?php echo "$\1"; ? >';
-        //$orig[] = '/\${(\w[\w\d]*)}/e';
-        //$repl[] = '$this->_getReplacement("\1")';
-        $orig[] = '/\${(\w[\w\d]*)}/';
-        $repl[] = '<?php echo $this->_toString($\1); ?>';
-
-	// Convert $VAR[ind] to < ?php echo "$VAR[ind]"; ? >
-        $orig[] = '/\$(\w[\w\d]*)\[([\w\d]+)\]/';
-        $repl[] = '<?php echo $this->_toString($\1["\2"]); ?>';
-        //$orig[] = '/\$(\w[\w\d]*)\[([\w\d]+)\]/e';
-        //$repl[] = '$this->_getReplacement("\1", "\2")';
-
-        // Convert $_("String") to < ?php echo htmlspecialchars(gettext("String")); ? >
-        $orig[] = '/\$_\(("(?:[^"\\\\]|\\.)*")\)/xs';
-        $repl[] = "<?php echo htmlspecialchars(gettext(\\1)); ?>";
+        // Convert < ?= expr ? > to < ?php $this->_print(expr); ? >
+        $orig[] = '/<\?=(.*?)\?>/s';
+        $repl[] = '<?php $this->_print(\1);?>';
         
         // Convert tag attributes like foo=_("String") to foo="String" (with gettext mapping).
         $orig[] = '/( < \w [^>]* \w=)_\("((?:[^"\\\\]|\\.)*)"\)/xse';
@@ -55,9 +41,9 @@ class Template
         
         return preg_replace($orig, $repl, $template);
 
-        $ret = preg_replace($orig, $repl, $template);
-        echo QElement('pre', $ret);
-        return $ret;
+        //$ret = preg_replace($orig, $repl, $template);
+        //echo QElement('pre', $ret);
+        //return $ret;
     }
 
     function _getReplacement($varname, $index = false) {
@@ -80,27 +66,35 @@ class Template
         return str_replace('?', '&#63;', $value);
     }
     
-    function _toString ($val) {
+    function _print ($val) {
         $string_val = '';
 
         if (is_array($val)) {
-            foreach ($val as $key => $item) {
-                $val[$key] = $this->_toString($item);
+            $n = 0;
+            foreach ($val as $item) {
+                if ($n++)
+                    echo "\n";
+                $this->_print($item);
             }
-            return join("\n", $val);
         }
         elseif (is_object($val)) {
-            if (method_exists($val, 'ashtml'))
-                return $val->asHTML();
-            elseif (method_exists($val, 'asstring'))
+            if (isa($val, 'Template')) {
+                // Expand sub-template with defaults from this template.
+                $val->printExpansion($this->_vars);
+            }
+            elseif (method_exists($val, 'printhtml')) {
+                $val->printHTML();
+            }
+            elseif (method_exists($val, 'ashtml')) {
+                echo $val->asHTML();
+            }
+            elseif (method_exists($val, 'asstring')) {
                 return htmlspecialchars($val->asString());
+            }
         }
-        /*
-        elseif (is_object($val) && method_exists($val, 'asString')) {
-            return $val->asString();
+        else {
+            echo (string) $val;
         }
-        */
-        return (string) $val;
     }
     
     /**
@@ -150,33 +144,41 @@ class Template
     }
     */
     
-    function getExpansion($varhash = false) {
-	$savevars = $this->_vars;
-        if (is_array($varhash)) {
-	    foreach ($varhash as $key => $val)
-		$this->_vars[$key] = $val;
-	}
-        extract($this->_vars);
-        if (isset($this->_iftoken))
-            $_iftoken = $this->_iftoken;
+    function printExpansion ($defaults = false) {
+        $vars = &$this->_vars;
+        if ($defaults !== false) {
+            $save_vars = $vars;
+            if (!is_array($defaults)) {
+                if (!isset($vars['CONTENT']))
+                    $vars['CONTENT'] = $defaults;
+            }
+            else {
+                foreach ($defaults as $key => $val)
+                    if (!isset($vars[$key]))
+                        $vars[$key] = $val;
+            }
+        }
+        extract($vars);
         
-        ob_start();
-
         //$this->_dump_template();
 
         global $ErrorManager;
         $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_errorHandler'));
+
         eval('?>' . $this->_munge_input($this->_tmpl));
+
         $ErrorManager->popErrorHandler();
 
-        $html = ob_get_contents();
-        ob_end_clean();
-
-        return $html;
+        if (isset($save_vars))
+            $vars = $save_vars;
     }
 
-    function printExpansion($args = false) {
-        echo $this->getExpansion($args);
+    function getExpansion ($defaults = false) {
+        ob_start();
+        $this->printExpansion($defaults);
+        $html = ob_get_contents();
+        ob_end_clean();
+        return $html;
     }
 
     // Debugging:
@@ -216,6 +218,7 @@ extends Template
         fclose($fp);
         $this->Template($data);
     }
+
 }
 
 class WikiTemplate
@@ -231,18 +234,15 @@ extends TemplateFile
      * @param $template string Which template.
      */
     function WikiTemplate($template, $page_revision = false) {
-        global $templates;
-
-        $this->TemplateFile(FindFile($templates[$template]));
-
+        global $Theme;
+        $this->TemplateFile($Theme->findTemplate($template));
         $this->_template_name = $template;
-
         $this->setGlobalTokens();
         if ($page_revision)
             $this->setPageRevisionTokens($page_revision);
     }
-    
 
+    
     function setPageTokens(&$page) {
 	/*
         if ($page->get('locked'))
@@ -255,7 +255,6 @@ extends TemplateFile
         $pagename = $page->getName();
 
         $this->replace('page', $page);
-        $this->qreplace('CHARSET', CHARSET);
         $this->qreplace('PAGE', $pagename);
         $this->qreplace('PAGEURL', rawurlencode($pagename));
         $this->qreplace('SPLIT_PAGE', split_pagename($pagename));
@@ -281,8 +280,8 @@ extends TemplateFile
 	
         global $datetimeformat;
         
-        $this->qreplace('LASTMODIFIED',
-                        strftime($datetimeformat, $revision->get('mtime')));
+        //$this->qreplace('LASTMODIFIED',
+        //              strftime($datetimeformat, $revision->get('mtime')));
 
         $this->qreplace('LASTAUTHOR', $revision->get('author'));
         $this->qreplace('VERSION', $revision->getVersion());
@@ -311,16 +310,15 @@ extends TemplateFile
     }
 
     function setGlobalTokens () {
-        global $user, $logo, $RCS_IDS;
+        global $user, $RCS_IDS, $Theme;
         
         // FIXME: This a a bit of dangerous hackage.
+        $this->replace('Theme', $Theme);
         $this->qreplace('BROWSE', WikiURL(''));
-        $this->replace('CSS', WikiTemplate::__css_links());
         $this->qreplace('WIKI_NAME', WIKI_NAME);
 
         if (isset($user))
             $this->setWikiUserTokens($user);
-        $this->qreplace('LOGO', DataURL($logo));
         if (isset($RCS_IDS))
             $this->qreplace('RCS_IDS', $RCS_IDS);
 
@@ -332,41 +330,6 @@ extends TemplateFile
 
         require_once('lib/ButtonFactory.php');
         $this->replace('ButtonFactory', new ButtonFactory);
-    }
-
-    
-    function __css_links () {
-        global $CSS_URLS, $CSS_DEFAULT;
-        
-        $html = array();
-        foreach  ($CSS_URLS as $key => $val) {
-            $link = array('rel'     => 'stylesheet',
-                          'title'   => _($key),
-                          'href'    => DataURL($val),
-                          'type'    => 'text/css',
-                          'charset' => CHARSET);
-            // FIXME: why the charset?  Is a style-sheet really ever going to
-            // be other than US-ASCII?
-
-            // The next line is also used by xgettext to localise the word
-            // "Printer" used in the stylesheet's 'title' (see above).
-            if ($key == _("Printer")) {
-                $link['media'] = 'print, screen';
-            }
-
-            if ($key != $CSS_DEFAULT) {
-                $link['rel'] = 'alternate stylesheet';
-                $html[] = Element('link', $link);
-            }
-            else {
-                // Default CSS should be listed first, otherwise some
-                // browsers (incl. Galeon) don't seem to treat it as
-                // default (regardless of whether rel="stylesheet" or
-                // rel="alternate stylesheet".)
-                array_unshift($html, Element('link', $link));
-            }
-        }
-        return join("\n", $html);
     }
 };
 
@@ -389,11 +352,14 @@ extends TemplateFile
  */
 function GeneratePage($template, $content, $title, $page_revision = false) {
     // require_once("lib/template.php");
-    $t = new WikiTemplate($template);
+    // FIXME: More hackage.  Really GeneratePage should go away, at some point.
+    assert($template == 'MESSAGE');
+    $t = new WikiTemplate('top');
+    $t->qreplace('TITLE', $title);
+    $t->qreplace('HEADER', $title);
     if ($page_revision)
         $t->setPageRevisionTokens($page_revision);
     $t->replace('CONTENT', $content);
-    $t->replace('TITLE', $title);
     return $t->getExpansion();
 }
 

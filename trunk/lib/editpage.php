@@ -1,10 +1,10 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.23 2002-01-16 04:38:42 carstenklapp Exp $');
+rcs_id('$Id: editpage.php,v 1.24 2002-01-17 20:41:13 dairiki Exp $');
 
 require_once('lib/transform.php');
 require_once('lib/Template.php');
 
-function editPage($dbi, $request) {
+function editPage($dbi, $request, $do_preview = false) {
     // editpage relies on $pagename, $version
     $pagename = $request->getArg('pagename');
     $version  = $request->getArg('version');
@@ -22,66 +22,48 @@ function editPage($dbi, $request) {
     }
 
     global $user;               // FIXME: make this non-global.
+    $pagelink = LinkExistingWikiWord($pagename, '', $version);
+
+    $wrapper = new WikiTemplate('top');
+    $wrapper->setPageRevisionTokens($selected);
+
     if ($page->get('locked') && !$user->is_admin()) {
-        // Perhaps this can be worked into editpage.html. It would be nice if:
-        // 'Note: You are viewing an old revision of this page. "View the current version".'
-        // would link to "View source of the current version".
-        // Also the <h1> is hard-coded in browse.html / editpage.html
-        // so we can't get a nice title like "Page source for %s".
-        if ($version) {
-            $link = QElement('a',
-                             array('href' =>
-                                   WikiURL($pagename,
-                                           array('version' => $version))),$pagename);
-        } else {
-            $link = LinkExistingWikiWord($pagename);
-        }
-        $html = QElement('p');
-        $html .= QElement('strong', _("Note:")) . " ";
-        $html .= sprintf(_("%s has been locked by the administrator and cannot be edited."), $link);
-        $html .= "\n";
-        $html .= Element('h2', sprintf(_("Page source for %s"), LinkExistingWikiWord($pagename)));
-
-        $template = new WikiTemplate('BROWSE');
-        // FIXME: TITLE doesn't work in BROWSE
-        $template->replace('TITLE', sprintf(_("Page source for %s"), $pagename));
-
-        $template->replace('SAVEPAGE_MESSAGES', $html . "\n");
-        $prefs = $user->getPreferences();
-        $template->replace('CONTENT', 
-                           Element('p',
-                                   QElement('textarea',
-                                            array('class'  => 'wikiedit',
-                                                  'rows'   => $prefs['edit_area.height'],
-                                                  'cols'   => $prefs['edit_area.width'],
-                                                  'wrap'   => 'virtual',
-                                                  'readonly' => true),
-                                            $selected->getPackedContent())));
-        $template->setPageRevisionTokens($selected);
-
-        require_once("lib/display.php");
-        $template->qreplace('PAGE_DESCRIPTION', GleanDescription($selected));
-        echo $template->getExpansion();
-        flush();
-        ExitWiki ("");
+        $wrapper->qreplace('TITLE', sprintf(_("Page source for %s"), $pagename));
+        $wrapper->replace('HEADER', sprintf(_("View Source: %s"), $pagelink));
+        $template = new WikiTemplate('viewsource');
+        $do_preview = false;
+    }
+    else {
+        $wrapper->qreplace('TITLE', sprintf(_("Edit: %s"), split_pagename($pagename)));
+        $wrapper->replace('HEADER', sprintf(_("Edit: %s"), $pagelink));
+        $template = new WikiTemplate('editpage');
     }
 
+    if ($do_preview) {
+        foreach (array('minor_edit', 'convert') as $key)
+            $formvars[$key] = (bool) $request->getArg($key);
+        foreach (array('content', 'editversion', 'summary', 'pagename',
+                       'version') as $key)
+            @$formvars[$key] = htmlspecialchars($request->getArg($key));
 
-    $age = time() - $current->get('mtime');
-    $minor_edit = ( $age < MINOR_EDIT_TIMEOUT && $current->get('author') == $user->id() );
+        $template->replace('PREVIEW_CONTENT',
+                           do_transform($request->getArg('content')));
+    }
+    else {
+        $age = time() - $current->get('mtime');
+        $minor_edit = ( $age < MINOR_EDIT_TIMEOUT && $current->get('author') == $user->id() );
 
-    $formvars = array('content'     => htmlspecialchars($selected->getPackedContent()),
-                      'minor_edit'  => $minor_edit,
-                      'version'     => $selected->getVersion(),
-                      'editversion' => $current->getVersion(),
-                      'summary'     => '',
-                      'convert'     => '',
-                      'pagename'    => htmlspecialchars($pagename));
+        $formvars = array('content'     => htmlspecialchars($selected->getPackedContent()),
+                          'minor_edit'  => $minor_edit,
+                          'version'     => $selected->getVersion(),
+                          'editversion' => $current->getVersion(),
+                          'summary'     => '',
+                          'convert'     => '',
+                          'pagename'    => htmlspecialchars($pagename));
+    }
 
-    $template = new WikiTemplate('EDITPAGE');
-    $template->setPageRevisionTokens($selected);
     $template->replace('FORMVARS', $formvars);
-    echo $template->getExpansion();
+    $wrapper->printExpansion($template);
 }
 
 // Local Variables:

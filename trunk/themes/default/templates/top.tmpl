@@ -1,0 +1,35 @@
+<?php  // -*-html-*-
+/* $Id: top.tmpl,v 1.1 2002-01-17 20:41:13 dairiki Exp $
+ *
+ * This template is responsible mainly for the outer level <html> stuff and the and <head>.
+ */
+  printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!-- phpwiki source:
+$Id: top.tmpl,v 1.1 2002-01-17 20:41:13 dairiki Exp $
+<?=$RCS_IDS?>
+-->
+<meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
+<?php if ($ROBOTS_META) { ?>
+  <meta name="robots" content="<?= $ROBOTS_META ?>" />
+<?php } else { ?>
+  <meta name="robots" content="noindex,nofollow" />
+<?php } ?>
+<meta name="keywords" content="<?=$SPLIT_PAGE?>, <?=$WIKI_NAME?>" />
+<?php if (!empty($PAGE_DESCRIPTION)) { ?>
+  <meta name="description" content="<?=$PAGE_DESCRIPTION?>" />
+<?php } ?>
+<base href="<?=$BASE_URL?>" />
+<link rel="shortcut icon" href="<?=DataURL('favicon.ico')?>" />
+<?= $Theme->getCSS() ?>
+<title><?=$WIKI_NAME?> - <?=$TITLE?></title>
+</head>
+
+<?= /* not the greatest syntax, but this sucks in 'body.tmpl' */
+    new WikiTemplate('body') ?>
+
+</html>
