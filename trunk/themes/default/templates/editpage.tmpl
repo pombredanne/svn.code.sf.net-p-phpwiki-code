@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.17 2002-01-30 23:41:55 dairiki Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.18 2002-02-01 20:45:04 dairiki Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
@@ -18,7 +18,12 @@ $s = $Theme->getButtonSeparator();
 ?>
 
 <?php if (isset($PREVIEW_CONTENT)) { ?>
-  <p><strong><?=_("Preview only!  Changes not saved.")?></strong></p>
+  <p><strong><?=_("Preview only!  Changes not saved.")?></strong>
+<!-- FIXME: it would be nice to put a link to the #editarea anchor below,
+     but it doesn't work currently with the <base> declared in top.tmpl.
+     I think we need to do away with using <base> altogether... -->
+     Please continue editing.  (You'll find your edit area at the bottom of the page.)
+  </p>
   <div class="wikitext"><?= $PREVIEW_CONTENT ?></div>
 <?php } ?>
 
@@ -55,7 +60,7 @@ $s = $Theme->getButtonSeparator();
     <noscript><?=Button("submit:", _("Adjust"))?></noscript>
   </div>
 
-  <?=$EDIT_TEXTAREA?>
+  <a name="editarea" id="editarea"><?=$EDIT_TEXTAREA?></a>
 
 <!-- FIXME: fix layout, move CSS to CSS -->
 <div class="toolbar" style="text-align: center;">
