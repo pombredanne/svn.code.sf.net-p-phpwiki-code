@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.32 2003-03-13 18:57:54 dairiki Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.33 2003-09-13 22:20:55 carstenklapp Exp $');
 
 class WikiPlugin
 {
@@ -82,7 +82,13 @@ class WikiPlugin
     function getDescription() {
         return $this->getName();
     }
-
+    
+    // plugins should override this with the commented-out code
+    function getVersion() {
+        return _("n/a");
+        //return preg_replace("/[Revision: $]/", '',
+        //                    "\$Revision: 1.33 $");
+    }
 
     function getArgs($argstr, $request=false, $defaults = false) {
         if ($defaults === false)
@@ -367,6 +373,7 @@ class WikiPluginLoader {
         $plugin_source = "lib/plugin/$plugin_name.php";
 
         $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_plugin_error_filter'));
+        // $include_failed = !@include_once("lib/plugin/$plugin_name.php");
         $include_failed = !include_once("lib/plugin/$plugin_name.php");
         $ErrorManager->popErrorHandler();
 
