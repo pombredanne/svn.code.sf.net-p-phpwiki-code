@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: random.php,v 1.7 2002-01-25 23:00:57 carstenklapp Exp $');
+<?php rcs_id('$Id: random.php,v 1.8 2002-01-26 06:58:27 carstenklapp Exp $');
 /**
  */
 class randomImage {
@@ -64,52 +64,6 @@ class imageSet extends fileSet {
         global $InlineImages;
         return preg_match("/($InlineImages)$/i", $filename);
     }
-};
-
-class fileSet {
-    /**
-     * Build an array in $this->_fileList of files from $dirname.
-     * Subdirectories are not traversed.
-     *
-     * (This is a variation of function LoadDir in lib/loadsave.php)
-     * See also http://www.php.net/manual/en/function.readdir.php
-     */
-    function getFiles() {
-        return $this->_fileList;
-    }
-
-    function _fileSelector($filename) {
-        // Default selects all filenames, override as needed.
-        return true;
-    }
-
-    function fileSet($directory) {
-        $this->_fileList = array();
-
-        if (empty($directory)) {
-            trigger_error(sprintf(_("%s is empty."), 'directoryname'),
-                          E_USER_NOTICE);
-            return; // early return
-        }
-
-        @ $dir_handle = opendir($dir=$directory);
-        if (empty($dir_handle)) {
-            trigger_error(sprintf(_("Unable to open directory '%s' for reading"),
-                                  $dir), E_USER_NOTICE);
-            return; // early return
-        }
-
-        while ($filename = readdir($dir_handle)) {
-            if ($filename[0] == '.' || filetype("$dir/$filename") != 'file')
-                continue;
-            if ($this->_filenameSelector($filename)) {
-                array_push($this->_fileList, "$filename");
-            //trigger_error(sprintf(_("found file %s"), $filename),
-            //                      E_USER_NOTICE); //debugging
-            }
-        }
-        closedir($dir_handle);
-   }
 };
 
 
