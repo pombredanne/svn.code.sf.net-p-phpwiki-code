@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.68 2004-11-09 17:11:04 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.69 2004-11-17 20:07:17 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -21,7 +21,7 @@ class Template
         
         $file = $WikiTheme->findTemplate($name);
         if (!$file) {
-            trigger_error("no template for $name found", E_USER_WARNING);
+            trigger_error("no template for $name found.", E_USER_WARNING);
             return;
         }
         $fp = fopen($file, "rb");
@@ -270,6 +270,17 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.68  2004/11/09 17:11:04  rurban
+// * revert to the wikidb ref passing. there's no memory abuse there.
+// * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively
+//   store page ids with getPageLinks (GleanDescription) of all existing pages, which
+//   are also needed at the rendering for linkExistingWikiWord().
+//   pass options to pageiterator.
+//   use this cache also for _get_pageid()
+//   This saves about 8 SELECT count per page (num all pagelinks).
+// * fix passing of all page fields to the pageiterator.
+// * fix overlarge session data which got broken with the latest ACCESS_LOG_SQL changes
+//
 // Revision 1.67  2004/11/05 18:03:35  rurban
 // shorten the template chain in errmsg
 //

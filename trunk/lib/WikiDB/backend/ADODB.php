@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.51 2004-11-15 15:57:37 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.52 2004-11-17 20:07:17 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -128,7 +128,7 @@ extends WikiDB_backend
         if (!$this->_dbh)
             return;
         if ($this->_lock_count) {
-            trigger_error( "WARNING: database still locked " . '(lock_count = $this->_lock_count)' . "\n<br />",
+            trigger_error("WARNING: database still locked " . '(lock_count = $this->_lock_count)' . "\n<br />",
                           E_USER_WARNING);
         }
 //      $this->_dbh->setErrorHandling(PEAR_ERROR_PRINT);        // prevent recursive loops.
@@ -1190,6 +1190,9 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.51  2004/11/15 15:57:37  rurban
+// silent cache warning
+//
 // Revision 1.50  2004/11/10 19:32:23  rurban
 // * optimize increaseHitCount, esp. for mysql.
 // * prepend dirs to the include_path (phpwiki_dir for faster searches)

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: IncludePage.php,v 1.26 2004-09-25 16:35:09 rurban Exp $');
+rcs_id('$Id: IncludePage.php,v 1.27 2004-11-17 20:07:18 rurban Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.26 $");
+                            "\$Revision: 1.27 $");
     }
 
     function getDefaultArguments() {
@@ -86,7 +86,6 @@ extends WikiPlugin
         }
 
         $p = $dbi->getPage($page);
-
         if ($rev) {
             $r = $p->getRevision($rev);
             if (!$r) {
@@ -149,6 +148,9 @@ extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.26  2004/09/25 16:35:09  rurban
+// use stdlib firstNWordsOfContent, extractSection
+//
 // Revision 1.25  2004/07/08 20:30:07  rurban
 // plugin->run consistency: request as reference, added basepage.
 // encountered strange bug in AllPages (and the test) which destroys ->_dbi
