@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.8\n"
-"POT-Creation-Date: 2002-01-23 20:59-0500\n"
+"POT-Creation-Date: 2002-01-24 01:54-0500\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@mac.com>, Arno Hollosi <ahollosi@mail.com>\n"
@@ -50,14 +50,6 @@ msgstr "Seite Löschen"
 #: ../lib/config.php:283
 msgid "An unnamed PhpWiki"
 msgstr "Ein noch unbenanntes PhpWiki"
-
-#: ../lib/DbaDatabase.php:46 ../lib/ziplib.php:36 ../lib/ziplib.php:39
-#: ../lib/ziplib.php:44 ../lib/ziplib.php:46 ../lib/ziplib.php:48
-#: ../lib/ziplib.php:57 ../lib/ziplib.php:60 ../lib/ziplib.php:63
-#: ../lib/ziplib.php:68
-#, c-format
-msgid "%s failed"
-msgstr "Fehler bei %s"
 
 #: ../lib/diff.php:238
 #, c-format
@@ -242,48 +234,48 @@ msgstr "- in der Datenbank gespeichert als Version %d."
 msgid "MIME file %s"
 msgstr "MIME-Datei %s"
 
-#: ../lib/loadsave.php:338
+#: ../lib/loadsave.php:339
 #, c-format
 msgid "Serialized file %s"
 msgstr "Serialisierte Datei %s"
 
-#: ../lib/loadsave.php:353
+#: ../lib/loadsave.php:354
 #, c-format
 msgid "plain file %s"
 msgstr "Textdatei %s"
 
-#: ../lib/loadsave.php:367 ../lib/loadsave.php:387
+#: ../lib/loadsave.php:369 ../lib/loadsave.php:389
 msgid "Skipping"
 msgstr "Wird ausgelassen"
 
-#: ../lib/loadsave.php:519
+#: ../lib/loadsave.php:437
 #, c-format
 msgid "Bad file type: %s"
 msgstr "Ungültiger Dateityp: %s"
 
-#: ../lib/loadsave.php:533
+#: ../lib/loadsave.php:451
 #, c-format
 msgid "Loading '%s'"
 msgstr "»%s« wird geladen"
 
-#: ../lib/loadsave.php:554
+#: ../lib/loadsave.php:472
 msgid "The PhpWiki programming team"
 msgstr "Das PhpWiki Programmierer-Team"
 
-#: ../lib/loadsave.php:557
+#: ../lib/loadsave.php:475
 msgid "Loading up virgin wiki"
 msgstr "Erstes Laden des noch leeren Wiki"
 
-#: ../lib/loadsave.php:575
+#: ../lib/loadsave.php:492
 msgid "No uploaded file to upload?"
 msgstr "Keine Datei zum Hochladen?"
 
-#: ../lib/loadsave.php:578
+#: ../lib/loadsave.php:496
 #, c-format
 msgid "Uploading %s"
 msgstr "%s wird hochgeladen"
 
-#: ../lib/RSSWriter091.php:115 ../lib/loadsave.php:583
+#: ../lib/RSSWriter091.php:115 ../lib/loadsave.php:501
 #: ../lib/plugin/RecentChanges.php:166 ../lib/plugin/RecentChanges.php:273
 #: ../lib/plugin/RecentChanges.php:318
 #: ../themes/Portland/templates/navbar.tmpl:40
@@ -869,7 +861,7 @@ msgstr "Keine Version"
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr "Kann '%s' Typ-Formatzeichenketten nicht mit '%s' mischen."
 
-#: ../lib/XmlElement.php:207 ../lib/stdlib.php:557
+#: ../lib/stdlib.php:557
 #, c-format
 msgid "%s: argument index out of range"
 msgstr "%s: Ungültiger Index in Array"
@@ -883,197 +875,30 @@ msgstr ""
 msgid "Lists nested too deep in SetHTMLOutputMode"
 msgstr "Interner Fehler: Stackgrenze in SetHTMLOutputMode überschritten."
 
-#: ../lib/WikiDB.php:353
-#, c-format
-msgid "Attempt to delete most recent revision of '%s'"
-msgstr "Versuch die neueste Version von '%s' zu löschen"
-
-#: ../lib/WikiDB.php:401
-#, c-format
-msgid "Attempt to merge most recent revision of '%s'"
-msgstr "Versuch die neueste Version von '%s' zu kombinieren"
-
-#: ../lib/WikiDB.php:488
+#: ../lib/WikiDB.php:501
 #, c-format
 msgid "%s: Date of new revision is %s"
 msgstr "%s: Datum der letzten Änderung %s"
 
-#: ../lib/WikiDB.php:513
+#: ../lib/WikiDB.php:528
 #, c-format
 msgid "Optimizing %s"
 msgstr "%s wird optimiert"
 
-#: ../lib/WikiDB.php:853
+#: ../lib/WikiDB.php:874
 #, c-format
 msgid "Describe %s here."
 msgstr "Beschreibe %s hier."
 
-#: ../lib/WikiDB.php:888
+#: ../lib/WikiDB.php:909
 #, c-format
 msgid "Acck! Revision %s of %s seems to have been deleted!"
 msgstr "Aua! Version %s von %s ist gelöscht!"
-
-#: ../lib/WikiDB/backend/cvs.php:93
-#, c-format
-msgid "Creating new repository [%s]"
-msgstr "Das CVS Verzeichnis [%s] wird erzeugt"
-
-#: ../lib/WikiDB/backend/cvs.php:128
-#, c-format
-msgid "Found [%s] in [%s]"
-msgstr "[%s] in [%s] gefunden"
-
-#: ../lib/WikiDB/backend/cvs.php:182
-#, c-format
-msgid "Argument %s was not array"
-msgstr "Argument %s war kein Array"
-
-#: ../lib/WikiDB/backend/cvs.php:190
-msgid "no meta data found"
-msgstr "Keine Meta-Daten gefunden"
-
-#: ../lib/WikiDB/backend/cvs.php:243
-#, c-format
-msgid "FAILED for [%s]"
-msgstr "FEHLER für [%s]"
-
-#: ../lib/WikiDB/backend/cvs.php:337 ../lib/WikiDB/backend/cvs.php:347
-#: ../lib/WikiDB/backend/cvs.php:353 ../lib/WikiDB/backend/cvs.php:450
-#: ../lib/WikiDB/backend/cvs.php:456
-msgid "Not Implemented"
-msgstr "Nicht implementiert."
-
-#: ../lib/WikiDB/backend/cvs.php:520
-#, c-format
-msgid "Creating meta file for [%s]"
-msgstr "Meta-Datei für [%s] wird erzeugt"
-
-#: ../lib/WikiDB/backend/cvs.php:614
-msgid "got revision information"
-msgstr "Revisions Informationen bekommen"
-
-#: ../lib/WikiDB/backend/cvs.php:619
-msgid "is initial release"
-msgstr "ist die erste Version"
-
-#: ../lib/WikiDB/backend/cvs.php:622
-msgid "returning old version"
-msgstr "alte Version wird zurückgegeben"
-
-#: ../lib/WikiDB/backend/cvs.php:689
-msgid "Unable to delete file, lock was not obtained."
-msgstr "Konnte Datei nicht löschen. Datei ist anderweitig gesperrt."
-
-#: ../lib/WikiDB/backend/cvs.php:699
-msgid "Unable to open file"
-msgstr "Datei könnte nicht geöffnet werden."
-
-#: ../lib/WikiDB/backend/cvs.php:709
-msgid "no message"
-msgstr "keine Meldung"
-
-#: ../lib/WikiDB/backend/cvs.php:749
-#, c-format
-msgid "unable to locate/open [%s], turning debug off"
-msgstr "könnte [%s] nicht auffinden/öffnen, Debug wird abgeschaltet."
-
-#: ../lib/WikiDB/backend/cvs.php:760
-#, c-format
-msgid "Preparing to execute [%s]"
-msgstr "Ausfuhrung von [%s] vorbereitend"
-
-#: ../lib/WikiDB/backend/cvs.php:763
-#, c-format
-msgid "Command failed [%s], Output:"
-msgstr "Fehler bei Befehl: [%s], Ergebnis:"
-
-#: ../lib/WikiDB/backend/cvs.php:765
-#, c-format
-msgid "Command failed [%s], Return value: %s"
-msgstr "Fehler beim Befehl: [%s], Rückgabewert: %s"
-
-#: ../lib/WikiDB/backend/cvs.php:768
-msgid "Done execution"
-msgstr "Ausgeführt."
-
-#: ../lib/WikiDB/backend/cvs.php:782
-msgid "Unable to obtain read lock."
-msgstr "Konnte Lesesperre nicht anfordern."
-
-#: ../lib/WikiDB/backend/cvs.php:789
-#, c-format
-msgid "Unable to open file '%s' for reading"
-msgstr "Konnte Datei »%s« nicht zum Lesen öffnen"
-
-#: ../lib/WikiDB/backend/cvs.php:808
-msgid "Timeout while obtaining lock."
-msgstr "Zeitüberschreitung beim Warten auf Aufhebung der Lesesperre."
-
-#: ../lib/WikiDB/backend/cvs.php:817
-#, c-format
-msgid "Could not open file '%s' for writing"
-msgstr "Konnte Datei »%s« nicht zum Schreiben öffnen"
-
-#: ../lib/WikiDB/backend/cvs.php:827
-#, c-format
-msgid "Copying from [%s] to [%s]"
-msgstr "Kopieren von [%s] nach [%s]"
-
-#: ../lib/WikiDB/backend/cvs.php:830
-msgid "Copying"
-msgstr "kopieren"
-
-#: ../lib/WikiDB/backend/cvs.php:835
-#, c-format
-msgid "Copied to [%s]"
-msgstr "Kopiert nach %s"
-
-#: ../lib/WikiDB/backend/cvs.php:837
-#, c-format
-msgid "Failed to copy [%s]"
-msgstr "Konnte [%s] nicht kopieren"
-
-#: ../lib/WikiDB/backend/cvs.php:843
-msgid "Not copying"
-msgstr "Nicht kopieren"
 
 #: ../lib/WikiDB/backend/dba.php:23 ../lib/WikiDB/backend/dba.php:25
 #, c-format
 msgid "%s: Can't open dba database"
 msgstr "%s: Konnte DBA Datenbank nicht öffnen."
-
-#: ../lib/WikiDB/backend/dbaBase.php:330
-#, c-format
-msgid "Bad key in linktable: %s"
-msgstr "Ungültiges Datenfeld in Links-Tabelle: %s"
-
-#: ../lib/WikiDB/backend/dbaBase.php:352
-#, c-format
-msgid "Bad key %s in table"
-msgstr "Ungültiges Datenfeld %s in Tabelle"
-
-#: ../lib/WikiDB/backend/dbaBase.php:360
-#, c-format
-msgid "backlink entry missing for link %s"
-msgstr "Es fehlt ein BackLink Datenfeld zu Link %s"
-
-#: ../lib/WikiDB/backend/dbaBase.php:368
-#, c-format
-msgid "link entry missing for backlink %s"
-msgstr "Es fehlt ein Link Datenfeld für den BackLink %s"
-
-#: ../lib/WikiDB/backend/PearDB.php:26
-#, c-format
-msgid "Can't connect to database: %s"
-msgstr "Kann Verbindung zu Datenbank nicht aufbauen: %s"
-
-#: ../lib/WikiDB/backend/PearDB.php:57
-msgid "WARNING: database still locked"
-msgstr "WARNUNG: Datenbank ist gesperrt"
-
-#: ../lib/WikiDB/backend/PearDB.php:711
-msgid "fatal database error"
-msgstr "Fataler Datenbank Fehler"
 
 #: ../lib/WikiDB/dba.php:17
 #, c-format
@@ -1090,31 +915,15 @@ msgstr ""
 msgid "argument '%s' not declared by plugin"
 msgstr "Argument »%s« ist nicht deklariert im Zusatzprogramm"
 
-#: ../lib/WikiPlugin.php:119
+#: ../lib/WikiPlugin.php:121
 #, c-format
 msgid "trailing cruft in plugin args: '%s'"
 msgstr "Unbekannte Zusatzprogramm Argumente: »%s«"
 
-#: ../lib/WikiPlugin.php:233 ../lib/ziplib.php:162 ../lib/ziplib.php:164
-#: ../lib/ziplib.php:166 ../lib/ziplib.php:580 ../lib/ziplib.php:677
-#, c-format
-msgid "Bad %s"
-msgstr "Ungültige %s"
-
-#: ../lib/WikiPlugin.php:274
+#: ../lib/WikiPlugin.php:279
 #, c-format
 msgid "Include of '%s' failed"
 msgstr "Einfügen von »%s« fehlgeschlagen"
-
-#: ../lib/WikiPlugin.php:275
-#, c-format
-msgid "%s: no such class"
-msgstr "Unbekannte Klasse: »%s«"
-
-#: ../lib/WikiPlugin.php:281
-#, c-format
-msgid "%s: not a subclass of WikiPlugin"
-msgstr "»%s«: keine Unterklasse von WikiPlugin"
 
 #: ../lib/WikiUser.php:109
 msgid "Invalid password or userid."
@@ -1124,61 +933,29 @@ msgstr "Ungültiges Passwort oder Benutzername."
 msgid "Insufficient permissions."
 msgstr "Erlaubnisse nicht ausreichend."
 
-#: ../lib/ziplib.php:186
+#: ../lib/ziplib.php:185
 msgid "Can't inflate data: zlib support not enabled in this PHP"
 msgstr ""
 "Kann Daten nicht dekomprimieren: Die zlib Bibiliothek wurde in PHP nicht "
 "installiert/aktiviert."
 
-#: ../lib/ziplib.php:369
+#: ../lib/ziplib.php:368
 #, c-format
 msgid "Can't open zip file '%s' for reading"
 msgstr "Konnte zip Datei »%s« nich öffnen zum lesen"
 
-#: ../lib/ziplib.php:376
+#: ../lib/ziplib.php:375
 msgid "Unexpected EOF in zip file"
 msgstr "Unerwartetes Dateiende in zip Datei"
 
-#: ../lib/ziplib.php:401
-#, c-format
-msgid "Bad header type: %s"
-msgstr "Ungültiger Dateiheader: %s "
-
-#: ../lib/ziplib.php:405
-msgid "Encryption and/or zip patches not supported."
-msgstr "zip Verschlüsselung und/oder Patches noch nicht unterstützt."
-
-#: ../lib/ziplib.php:408
-msgid "Postponed CRC not yet supported."
-msgstr "Nachträgliches CRC noch nicht unterstützt."
-
-#: ../lib/ziplib.php:427
-#, c-format
-msgid "Compression method %s unsupported"
-msgstr "Kompressionsmethode %s wird nicht unterstützt"
-
-#: ../lib/ziplib.php:431
-msgid "Uncompressed size mismatch"
-msgstr "Größe der dekomprimierten Datei stimmt nicht"
-
-#: ../lib/ziplib.php:638
+#: ../lib/ziplib.php:637
 #, c-format
 msgid "[%d] See [%s]"
 msgstr "[%d] Siehe [%s]"
 
-#: ../lib/ziplib.php:646
+#: ../lib/ziplib.php:645
 msgid "References"
 msgstr "Fußnoten"
-
-#: ../lib/ziplib.php:668
-#, c-format
-msgid "Can't parse %s: (%s)"
-msgstr "Konnte %s nicht analysieren: (%s)"
-
-#: ../lib/ziplib.php:725
-#, c-format
-msgid "Unknown %s"
-msgstr "Unbekannte %s"
 
 #: ../themes/MacOSX/templates/actionbar.tmpl:8
 #: ../themes/Portland/templates/actionbar.tmpl:8
@@ -1426,6 +1203,147 @@ msgstr ""
 msgid "You can change the size of the editing area in %s."
 msgstr "Du kannst die Größe des Texteingabefensters in %s ändern."
 
+#~ msgid "%s failed"
+#~ msgstr "Fehler bei %s"
+
+#~ msgid "Attempt to delete most recent revision of '%s'"
+#~ msgstr "Versuch die neueste Version von '%s' zu löschen"
+
+#~ msgid "Attempt to merge most recent revision of '%s'"
+#~ msgstr "Versuch die neueste Version von '%s' zu kombinieren"
+
+#~ msgid "Creating new repository [%s]"
+#~ msgstr "Das CVS Verzeichnis [%s] wird erzeugt"
+
+#~ msgid "Found [%s] in [%s]"
+#~ msgstr "[%s] in [%s] gefunden"
+
+#~ msgid "Argument %s was not array"
+#~ msgstr "Argument %s war kein Array"
+
+#~ msgid "no meta data found"
+#~ msgstr "Keine Meta-Daten gefunden"
+
+#~ msgid "FAILED for [%s]"
+#~ msgstr "FEHLER für [%s]"
+
+#~ msgid "Not Implemented"
+#~ msgstr "Nicht implementiert."
+
+#~ msgid "Creating meta file for [%s]"
+#~ msgstr "Meta-Datei für [%s] wird erzeugt"
+
+#~ msgid "got revision information"
+#~ msgstr "Revisions Informationen bekommen"
+
+#~ msgid "is initial release"
+#~ msgstr "ist die erste Version"
+
+#~ msgid "returning old version"
+#~ msgstr "alte Version wird zurückgegeben"
+
+#~ msgid "Unable to delete file, lock was not obtained."
+#~ msgstr "Konnte Datei nicht löschen. Datei ist anderweitig gesperrt."
+
+#~ msgid "Unable to open file"
+#~ msgstr "Datei könnte nicht geöffnet werden."
+
+#~ msgid "no message"
+#~ msgstr "keine Meldung"
+
+#~ msgid "unable to locate/open [%s], turning debug off"
+#~ msgstr "könnte [%s] nicht auffinden/öffnen, Debug wird abgeschaltet."
+
+#~ msgid "Preparing to execute [%s]"
+#~ msgstr "Ausfuhrung von [%s] vorbereitend"
+
+#~ msgid "Command failed [%s], Output:"
+#~ msgstr "Fehler bei Befehl: [%s], Ergebnis:"
+
+#~ msgid "Command failed [%s], Return value: %s"
+#~ msgstr "Fehler beim Befehl: [%s], Rückgabewert: %s"
+
+#~ msgid "Done execution"
+#~ msgstr "Ausgeführt."
+
+#~ msgid "Unable to obtain read lock."
+#~ msgstr "Konnte Lesesperre nicht anfordern."
+
+#~ msgid "Unable to open file '%s' for reading"
+#~ msgstr "Konnte Datei »%s« nicht zum Lesen öffnen"
+
+#~ msgid "Timeout while obtaining lock."
+#~ msgstr "Zeitüberschreitung beim Warten auf Aufhebung der Lesesperre."
+
+#~ msgid "Could not open file '%s' for writing"
+#~ msgstr "Konnte Datei »%s« nicht zum Schreiben öffnen"
+
+#~ msgid "Copying from [%s] to [%s]"
+#~ msgstr "Kopieren von [%s] nach [%s]"
+
+#~ msgid "Copying"
+#~ msgstr "kopieren"
+
+#~ msgid "Copied to [%s]"
+#~ msgstr "Kopiert nach %s"
+
+#~ msgid "Failed to copy [%s]"
+#~ msgstr "Konnte [%s] nicht kopieren"
+
+#~ msgid "Not copying"
+#~ msgstr "Nicht kopieren"
+
+#~ msgid "Bad key in linktable: %s"
+#~ msgstr "Ungültiges Datenfeld in Links-Tabelle: %s"
+
+#~ msgid "Bad key %s in table"
+#~ msgstr "Ungültiges Datenfeld %s in Tabelle"
+
+#~ msgid "backlink entry missing for link %s"
+#~ msgstr "Es fehlt ein BackLink Datenfeld zu Link %s"
+
+#~ msgid "link entry missing for backlink %s"
+#~ msgstr "Es fehlt ein Link Datenfeld für den BackLink %s"
+
+#~ msgid "Can't connect to database: %s"
+#~ msgstr "Kann Verbindung zu Datenbank nicht aufbauen: %s"
+
+#~ msgid "WARNING: database still locked"
+#~ msgstr "WARNUNG: Datenbank ist gesperrt"
+
+#~ msgid "fatal database error"
+#~ msgstr "Fataler Datenbank Fehler"
+
+#~ msgid "Bad %s"
+#~ msgstr "Ungültige %s"
+
+#~ msgid "%s: no such class"
+#~ msgstr "Unbekannte Klasse: »%s«"
+
+#~ msgid "%s: not a subclass of WikiPlugin"
+#~ msgstr "»%s«: keine Unterklasse von WikiPlugin"
+
+#~ msgid "Bad header type: %s"
+#~ msgstr "Ungültiger Dateiheader: %s "
+
+#~ msgid "Encryption and/or zip patches not supported."
+#~ msgstr "zip Verschlüsselung und/oder Patches noch nicht unterstützt."
+
+#~ msgid "Postponed CRC not yet supported."
+#~ msgstr "Nachträgliches CRC noch nicht unterstützt."
+
+#~ msgid "Compression method %s unsupported"
+#~ msgstr "Kompressionsmethode %s wird nicht unterstützt"
+
+#~ msgid "Uncompressed size mismatch"
+#~ msgstr "Größe der dekomprimierten Datei stimmt nicht"
+
+#~ msgid "Can't parse %s: (%s)"
+#~ msgstr "Konnte %s nicht analysieren: (%s)"
+
+#~ msgid "Unknown %s"
+#~ msgstr "Unbekannte %s"
+
 #~ msgid "Please Sign In"
 #~ msgstr "Bitte melde dich an:"
 
@@ -1622,21 +1540,6 @@ msgstr "Du kannst die Größe des Texteingabefensters in %s ändern."
 
 #~ msgid "(first day for this Wiki)"
 #~ msgstr "(Erster Tag dieses Wikis)"
-
-#~ msgid "templates/browse.html"
-#~ msgstr "locale/de/templates/browse.html"
-
-#~ msgid "templates/editpage.html"
-#~ msgstr "locale/de/templates/editpage.html"
-
-#~ msgid "templates/editlinks.html"
-#~ msgstr "locale/de/templates/editlinks.html"
-
-#~ msgid "templates/message.html"
-#~ msgstr "locale/de/templates/message.html"
-
-#~ msgid "./pgsrc"
-#~ msgstr "locale/de/pgsrc"
 
 #~ msgid "No page name passed into editpage!"
 #~ msgstr "Kein Seitenname an EditierSeite übergeben!"

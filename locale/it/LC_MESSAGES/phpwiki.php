@@ -66,14 +66,10 @@ $locale["Next"] =
    "Seguente";
 $locale["None"] =
    "Nessuno";
-$locale["Not Implemented"] =
-   "Funzione non implementata.";
 $locale["Note:"] =
    "Nota:";
 $locale["Page Name"] =
    "Nome Della Pagina";
-$locale["Page source for %s"] =
-   "Il sorgente della %s";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
    "PhpWiki non è riuscito a salvare i tuoi cambiamenti perchè un altro utente ha cambiato la pagina mentre la stavi modificando. Se il salvataggio viene comunque fatto, i cambiamenti dell'altro utente verranno persi.";
 $locale["Press <b>Save</b> again."] =
