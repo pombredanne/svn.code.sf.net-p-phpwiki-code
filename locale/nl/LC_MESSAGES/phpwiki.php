@@ -1,5 +1,19 @@
 <?php
 
+$locale["You entered an invalid login or password."] =
+   "Je hebt een ongeldige gebruikersnaam of wachtwoord ingevoerd.";
+$locale["You are about to remove '%s' permanently!"] =
+   "Je staat op het punt '%s' voorgoed te verwijderen!";
+$locale["Click %shere%s to remove the page now."] =
+   "Klik %shier%s om de pagina nu te verwijderen.";
+$locale["Otherwise press the \"Back\" button of your browser."] =
+   "Druk anders op de \"Terug\" knop van je bladeraar.";
+$locale["Function not yet implemented."] =
+   "Functie nog niet geïmplementeerd.";
+$locale["Remove page"] =
+   "Verwijder pagina";
+$locale["Removed page '%s' succesfully."] =
+   "Pagina '%s' verwijderd.";
 $locale["templates/browse.html"] =
    "locale/nl/templates/browse.html";
 $locale["templates/editpage.html"] =
@@ -62,6 +76,8 @@ $locale["MySQL error: %s"] =
    "MySQL fout: %s";
 $locale["Error writing page '%s'"] =
    "Fout bij schrijven pagina `%s'";
+$locale["Cannot delete '%s' from table '%s'"] =
+   "Kan '%s' niet verwijderen uit tabel '%s'";
 $locale["Enter a page name"] =
    "Geef de naam van een pagina";
 $locale["Go"] =
@@ -106,6 +122,10 @@ $locale["%d best outgoing links:"] =
    "%d beste uitgaande koppelingen:";
 $locale["%d most popular nearby:"] =
    "%d meest gevraagde in de buurt:";
+$locale["Search"] =
+   "Zoek";
+$locale["Stack bounds exceeded in SetHTMLOutputMode"] =
+   "Stack grenzen overschreden in SetHTMLOutputMode";
 $locale["RecentChanges"] =
    "RecenteVeranderingen";
 

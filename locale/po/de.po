@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.8\n"
-"POT-Creation-Date: 2000-11-13 12:30+0100\n"
+"POT-Creation-Date: 2000-12-22 21:16+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Arno Hollosi <ahollosi@mail.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -45,23 +45,23 @@ msgstr "Seite löschen"
 msgid "Removed page '%s' succesfully."
 msgstr "Seite '%s' erfolgreich gelöscht."
 
-#: lib/config.php:159
+#: lib/config.php:162
 msgid "templates/browse.html"
 msgstr "locale/de/templates/browse.html"
 
-#: lib/config.php:160
+#: lib/config.php:163
 msgid "templates/editpage.html"
 msgstr "locale/de/templates/editpage.html"
 
-#: lib/config.php:161
+#: lib/config.php:164
 msgid "templates/editlinks.html"
 msgstr "locale/de/templates/editlinks.html"
 
-#: lib/config.php:162
+#: lib/config.php:165
 msgid "templates/message.html"
 msgstr "locale/de/templates/message.html"
 
-#: lib/config.php:178
+#: lib/config.php:181
 msgid "./pgsrc"
 msgstr "locale/de/pgsrc"
 
@@ -157,16 +157,16 @@ msgstr "Problem während dem Editieren von %s"
 msgid "Searching for \"%s\" ....."
 msgstr "Suche nach \"%s\" ....."
 
-#: lib/fullsearch.php:44
+#: lib/fullsearch.php:45
 #, c-format
 msgid "%d matches found in %d pages."
 msgstr "%d Treffer in %d Seiten."
 
-#: lib/fullsearch.php:47
+#: lib/fullsearch.php:48
 msgid "Full Text Search Results"
 msgstr "Volltext-Suchresultate"
 
-#: lib/msql.php:29 lib/mysql.php:35
+#: lib/msql.php:29 lib/mysql.php:36
 msgid "Cannot establish connection to database, giving up."
 msgstr "Kann Verbindung zu Datenbank nicht aufbauen - Abbruch."
 
@@ -175,7 +175,7 @@ msgstr "Kann Verbindung zu Datenbank nicht aufbauen - Abbruch."
 msgid "Error message: %s"
 msgstr "Fehlermeldung: %s"
 
-#: lib/msql.php:35 lib/mysql.php:41
+#: lib/msql.php:35 lib/mysql.php:42
 #, c-format
 msgid "Cannot open database %s, giving up."
 msgstr "Kann Datenbank %s nicht öffnen - Abbruch."
@@ -195,17 +195,17 @@ msgstr "Löschen in %s fehlgeschlagen: %s"
 msgid "Insert into %s failed: %s"
 msgstr "Einfügen in %s fehlgeschlagen: %s"
 
-#: lib/mysql.php:37 lib/mysql.php:43 lib/mysql.php:117 lib/mysql.php:156
+#: lib/mysql.php:38 lib/mysql.php:44 lib/mysql.php:118 lib/mysql.php:158
 #, c-format
 msgid "MySQL error: %s"
 msgstr "MySQL Fehler: %s"
 
-#: lib/mysql.php:115
+#: lib/mysql.php:116
 #, c-format
 msgid "Error writing page '%s'"
 msgstr "Fehler beim Schreiben der Seite '%s'"
 
-#: lib/mysql.php:154
+#: lib/mysql.php:156
 #, c-format
 msgid "Cannot delete '%s' from table '%s'"
 msgstr "Kann nicht '%s' aus Tabelle '%s' löschen"
@@ -336,6 +336,6 @@ msgstr "Suche"
 msgid "Stack bounds exceeded in SetHTMLOutputMode"
 msgstr "Interner Fehler: Stackgrenze in SetHTMLOutputMode überschritten."
 
-#: lib/stdlib.php:384 lib/stdlib.php:447
+#: lib/stdlib.php:384 lib/stdlib.php:445
 msgid "RecentChanges"
 msgstr "FrischeSeiten"

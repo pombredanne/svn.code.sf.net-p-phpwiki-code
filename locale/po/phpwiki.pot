@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2000-11-13 12:30+0100\n"
+"POT-Creation-Date: 2000-12-22 21:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,23 +45,23 @@ msgstr ""
 msgid "Removed page '%s' succesfully."
 msgstr ""
 
-#: lib/config.php:159
+#: lib/config.php:162
 msgid "templates/browse.html"
 msgstr ""
 
-#: lib/config.php:160
+#: lib/config.php:163
 msgid "templates/editpage.html"
 msgstr ""
 
-#: lib/config.php:161
+#: lib/config.php:164
 msgid "templates/editlinks.html"
 msgstr ""
 
-#: lib/config.php:162
+#: lib/config.php:165
 msgid "templates/message.html"
 msgstr ""
 
-#: lib/config.php:178
+#: lib/config.php:181
 msgid "./pgsrc"
 msgstr ""
 
@@ -155,16 +155,16 @@ msgstr ""
 msgid "Searching for \"%s\" ....."
 msgstr ""
 
-#: lib/fullsearch.php:44
+#: lib/fullsearch.php:45
 #, c-format
 msgid "%d matches found in %d pages."
 msgstr ""
 
-#: lib/fullsearch.php:47
+#: lib/fullsearch.php:48
 msgid "Full Text Search Results"
 msgstr ""
 
-#: lib/msql.php:29 lib/mysql.php:35
+#: lib/msql.php:29 lib/mysql.php:36
 msgid "Cannot establish connection to database, giving up."
 msgstr ""
 
@@ -173,7 +173,7 @@ msgstr ""
 msgid "Error message: %s"
 msgstr ""
 
-#: lib/msql.php:35 lib/mysql.php:41
+#: lib/msql.php:35 lib/mysql.php:42
 #, c-format
 msgid "Cannot open database %s, giving up."
 msgstr ""
@@ -193,17 +193,17 @@ msgstr ""
 msgid "Insert into %s failed: %s"
 msgstr ""
 
-#: lib/mysql.php:37 lib/mysql.php:43 lib/mysql.php:117 lib/mysql.php:156
+#: lib/mysql.php:38 lib/mysql.php:44 lib/mysql.php:118 lib/mysql.php:158
 #, c-format
 msgid "MySQL error: %s"
 msgstr ""
 
-#: lib/mysql.php:115
+#: lib/mysql.php:116
 #, c-format
 msgid "Error writing page '%s'"
 msgstr ""
 
-#: lib/mysql.php:154
+#: lib/mysql.php:156
 #, c-format
 msgid "Cannot delete '%s' from table '%s'"
 msgstr ""
@@ -320,6 +320,6 @@ msgstr ""
 msgid "Stack bounds exceeded in SetHTMLOutputMode"
 msgstr ""
 
-#: lib/stdlib.php:384 lib/stdlib.php:447
+#: lib/stdlib.php:384 lib/stdlib.php:445
 msgid "RecentChanges"
 msgstr ""
