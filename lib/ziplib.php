@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.21 2002-01-24 20:16:49 carstenklapp Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.22 2002-01-25 05:04:49 carstenklapp Exp $');
 
 /**
  * GZIP stuff.
@@ -511,6 +511,16 @@ function MimeifyPageRevision ($revision) {
                     'version'      => $revision->getVersion(),
                     'flags'        => "",
                     'lastmodified' => $revision->get('mtime'));
+
+    if ($pagedump_format == 'quoted-printable') {
+        $params = array_merge(array('charset' => 'US-ASCII',
+                                    'format'  => 'flowed'), $params);
+    } else if ($pagedump_format == 'binary') {
+        $params = array_merge(array('charset' => 'ISO-8859-1'), $params);
+    } else { // This is a little risky
+        $params = array_merge(array('charset' => CHARSET), $params);
+    }
+
     if ($page->get('mtime'))
         $params['created'] = $page->get('mtime');
     if ($page->get('locked'))
@@ -520,7 +530,7 @@ function MimeifyPageRevision ($revision) {
     
     
     $out = MimeContentTypeHeader('application', 'x-phpwiki', $params);
-    $out .= "Content-Transfer-Encoding: " .$pagedump_format ."\r\n";
+
     $out .= "\r\n";
     
     foreach ($revision->getContent() as $line) {
