@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.24 2003-02-25 20:13:56 dairiki Exp $');
+rcs_id('$Id: WikiDB.php,v 1.25 2003-03-04 01:52:40 dairiki Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -663,13 +663,6 @@ class WikiDB_Page
 
         $backend->unlock();
 
-	// FIXME: probably should have some global state information
-	// in the backend to control when to optimize.
-        if (time() % 50 == 0) {
-            trigger_error(sprintf(_("Optimizing %s"),'backend'), E_USER_NOTICE);
-            $backend->optimize();
-        }
-
         return new WikiDB_PageRevision($this->_wikidb, $pagename, $newversion,
                                        $data);
     }
@@ -701,6 +694,17 @@ class WikiDB_Page
 	if ($newrevision)
 	    $this->set('_cached_html', $formatted->pack());
 	$backend->unlock();
+
+	// FIXME: probably should have some global state information
+	// in the backend to control when to optimize.
+        //
+        // We're doing this here rather than in createRevision because
+        // postgres can't optimize while locked.
+        if (time() % 50 == 0) {
+            trigger_error(sprintf(_("Optimizing %s"),'backend'), E_USER_NOTICE);
+            $backend->optimize();
+        }
+
         $newrevision->_transformedContent = $formatted;
 	return $newrevision;
     }
