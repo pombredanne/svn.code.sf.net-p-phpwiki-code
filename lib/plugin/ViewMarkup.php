@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ViewMarkup.php,v 1.3 2001-12-31 08:30:36 carstenklapp Exp $');
+rcs_id('$Id: ViewMarkup.php,v 1.4 2002-01-07 23:26:25 dairiki Exp $');
 require_once('lib/Template.php');
 /**
  * A handy plugin for viewing the WikiMarkup of locked pages.
@@ -20,43 +20,63 @@ extends WikiPlugin
     }
 
     function getDefaultArguments() {
-        return array('page'	=> false);
+        return array('page' => false,
+                     'rev'  => false);
         
     }
     
     function run($dbi, $argstr, $request) {
         $args = $this->getArgs($argstr, $request);
-        extract($args);
-        if (empty($page))
+        if (empty($args['page']))
             return '';
         
         //fetch the latest version of the page. Should this be made to
         //work when viewing an old revision of a page too?
-        $backend = &$dbi->_backend;
-        $version = $backend->get_latest_version($page);
-        $vdata = $backend->get_versiondata($page, $version, true);
+        $page = $dbi->getPage($args['page']);
+        if (empty($args['rev'])) {
+            $rev = $page->getCurrentRevision();
+            $link = QElement('a',
+                             array('href' => WikiURL($args['page'])),
+                             $args['page']);
+        }
+        else {
+            $rev = $page->getRevision($args['rev']);
+            
+            if (!$rev) {
+                return QElement('p', array('class' => 'error'),
+                                __sprintf("I'm sorry.  Version %d of %s is not in my database.",
+                                          $args['rev'], $args['page']));
+            }
+            $link = QElement('a',
+                             array('href' =>
+                                   WikiURL($args['page'],
+                                           array('version' => $args['rev']))),
+                             __sprintf("version %d of %s",
+                                       $args['rev'], $args['page']));
+        }
 
-        $content = &$vdata['%content'];
-
-        $html = QElement('h2',
-                 sprintf(_("Revealing WikiMarkup for page '%s':"), urlencode($page)));
-
-        /* only good for WikiMarkup with few newlines */
-        //$html .= Element('pre', nl2br($content) );
-
-        /* only good for WikiMarkup with lots of newlines */
-        //$html .= Element('pre', $content );
-
-        /* good for any WikiMarkup
-           but probably will not appear monospaced */
-        //$html .= nl2br($content);
+        $html = Element('h2', __sprintf("Page source for %s", $link));
 
         /* <tt> seems to be a good compromise in IE and OmniWeb
            it doesn't combine newlines and <br>, and renders monospaced */
-        $html .= Element('tt', nl2br($content));
+        //$html .= Element('tt', nl2br(htmlspecialchars($rev->getPackedContent())));
+
+        /* Display page source in a <textarea>:
+         *  o Same appearance as when editing page.
+         *  o Easiest to cut and paste from.
+         */
+        global $user;
+        $prefs = $user->getPreferences();
+        $html .= Element('p',
+                         QElement('textarea',
+                                  array('class' => 'wikiedit',
+                                        'rows' => $prefs['edit_area.height'],
+                                        'cols' => $prefs['edit_area.width'],
+                                        'wrap' => 'virtual',
+                                        'readonly' => true),
+                                  $rev->getPackedContent()));
 
         return $html;
-
     }
 };
         
