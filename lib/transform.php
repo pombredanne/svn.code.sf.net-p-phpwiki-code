@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.34 2002-01-23 05:10:22 dairiki Exp $');
+<?php rcs_id('$Id: transform.php,v 1.35 2002-01-23 05:15:09 dairiki Exp $');
 require_once('lib/WikiPlugin.php');
 require_once('lib/HtmlElement.php');
 
@@ -553,13 +553,10 @@ function wtm_plugin_link($line, &$transformer) {
 function wtm_plugin($line, &$transformer) {
     // FIXME: is this good syntax?
     global $request;      // FIXME: make these non-global?
-
-    echo nl2br(htmlspecialchars("wtm_plugin: '$line'\n"));
     
     if (preg_match('/^<\?plugin(-form)?\s.*\?>\s*$/', $line)) {
         $loader = new WikiPluginLoader;
         $html = $loader->expandPI($line, $request);
-    echo nl2br(htmlspecialchars("wtm_plugin: OUT '$html'\n"));
         $line = $transformer->SetHTMLMode('', 0) . $transformer->token($html);
     }
     return $line;
