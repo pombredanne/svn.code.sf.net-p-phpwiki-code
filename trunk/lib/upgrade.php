@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.39 2005-01-30 23:09:17 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.40 2005-01-30 23:22:17 rurban Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -412,7 +412,7 @@ function CheckDatabaseUpdate(&$request) {
         if (substr($backend_type,0,5) == 'mysql') {
             // upgrade to 4.1.8 destroyed my session table: 
             // sess_id => varchar(10), sess_data => varchar(5). For others obviously also.
-  	    echo _("check for new session.sess_id sanity")," ... ";
+  	    echo _("check for mysql session.sess_id sanity")," ... ";
             $result = $dbh->genericSqlQuery("DESCRIBE $session_tbl");
             if ($DBParams['dbtype'] == 'SQL') {
             	$iter = new WikiDB_backend_PearDB_generic_iter($backend, $result);
@@ -483,7 +483,7 @@ function CheckDatabaseUpdate(&$request) {
     // 1.3.10 mysql requires page.id auto_increment
     // mysql, mysqli or mysqlt
     if (phpwiki_version() >= 1030.099 and substr($backend_type,0,5) == 'mysql') {
-  	echo _("check for page.id auto_increment flag")," ...";
+  	echo _("check for mysql page.id auto_increment flag")," ...";
         extract($dbh->_backend->_table_names);
         assert(!empty($page_tbl));
   	$database = $dbh->_backend->database();
@@ -833,6 +833,9 @@ function DoUpgrade($request) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.39  2005/01/30 23:09:17  rurban
+ sanify session fields
+
  Revision 1.38  2005/01/25 07:57:02  rurban
  add dbadmin form, add mysql LOCK TABLES check, add plugin args updater (not yet activated)
 
