@@ -1,7 +1,7 @@
 <?php
-rcs_id('$Id: Tools.php,v 1.6 2004-04-16 23:30:41 zorloc Exp $');
+rcs_id('$Id: Tools.php,v 1.7 2004-06-03 10:18:40 rurban Exp $');
 /*
- Copyright 2002 $ThePhpWikiProgrammingTeam
+ Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -19,7 +19,6 @@ rcs_id('$Id: Tools.php,v 1.6 2004-04-16 23:30:41 zorloc Exp $');
  along with PhpWiki; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
 
 /**
  * Class for Configuration properties
@@ -609,9 +608,17 @@ class ValidatorArrayStringList extends Validator {
 
 }
 
-
+/**
+ * Convert old-style index.php configuration to config/config.ini
+ */
+function ConvertToIni ($index) {
+    $config = "config/config.ini";
+}
 
 //$Log: not supported by cvs2svn $
+//Revision 1.6  2004/04/16 23:30:41  zorloc
+//More work for new ini config system.  Tools has array type removed and first implimentations of config-dist.ini and IniConfig.php.  Will update config-dist.ini again soon.
+//
 //Revision 1.5  2003/12/07 19:25:41  carstenklapp
 //Code Housecleaning: fixed syntax errors. (php -l *.php)
 //
