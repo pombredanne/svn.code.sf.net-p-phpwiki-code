@@ -1,44 +1,44 @@
-<!-- -*-html-*- -->
-<!-- $Id: viewsource.tmpl,v 1.12 2002-02-03 22:12:33 carstenklapp Exp $ -->
+<?php // -*-html-*- ?>
+<!-- $Id: viewsource.tmpl,v 1.13 2002-02-04 21:31:52 carstenklapp Exp $ -->
 <?php
-  $mtime = $revision->get('mtime');
-  $fmtime = $Theme->formatDateTime($mtime);
+$mtime = $revision->get('mtime');
+$fmtime = $Theme->formatDateTime($mtime);
 
-  if ($revision->isCurrent()) {
-    if (istoday($mtime) || isyesterday($mtime))
-      $LastModifiedMsg = fmt("Last edited %s.", $fmtime);
-    else
-      $LastModifiedMsg = fmt("Last edited on %s.", $fmtime);
-  } else {
-    if (istoday($mtime) || isyesterday($mtime))
-      $LastModifiedMsg = fmt("Version %s, saved %s.",
-                             $revision->getVersion(), $fmtime);
-    else
-      $LastModifiedMsg = fmt("Version %s, saved on %s.",
-                             $revision->getVersion(), $fmtime);
-  }
+if ($revision->isCurrent()) {
+  if (istoday($mtime) || isyesterday($mtime))
+    $LastModifiedMsg = fmt("Last edited %s.", $fmtime);
+  else
+    $LastModifiedMsg = fmt("Last edited on %s.", $fmtime);
+} else {
+  if (istoday($mtime) || isyesterday($mtime))
+    $LastModifiedMsg = fmt("Version %s, saved %s.",
+                           $revision->getVersion(), $fmtime);
+  else
+    $LastModifiedMsg = fmt("Version %s, saved on %s.",
+                           $revision->getVersion(), $fmtime);
+}
 ?>
 
 <?php if ($page->get('locked') && !$user->isAdmin()) { ?>
   <p><strong><?=_("Note:")?></strong>
-    <?=_("This page has been locked by the administrator and cannot be edited.")?>
+  <?=_("This page has been locked by the administrator and cannot be edited.")?>
   </p>
-<?php } ?>
+  <?php } ?>
 <?php if (! $revision->isCurrent()) { ?>
   <p><?=_("You are viewing an old revision of this page.")?>
-    <?= Button('edit', _("View the current version"), $page) ?>.
+  <?= Button('edit', _("View the current version"), $page) ?>.
   </p>
   <hr class="ignore" noshade="noshade" />
-<?php } ?>
-<!-- Dummy form else NS4 doesn't like the textarea -->
+  <?php } ?>
+<!-- Dummy form else NS4 does not like the textarea -->
 <form method="post" action="<?=BASE_URL?>" accept-charset="<?=CHARSET?>">
-<!-- wrap=virtual is not HTML4, but without it NS4 doesn't wrap long lines -->
+<!-- wrap=virtual is not HTML4, but without it NS4 does not wrap long lines -->
 <textarea class="wikiedit"
-          name="content"
-          rows="<?=$request->getPref('editHeight')?>"
-          cols="<?=$request->getPref('editWidth')?>"
-	  readonly="readonly"
-          wrap="virtual"><?= $PAGE_SOURCE ?></textarea>
+name="content"
+rows="<?=$request->getPref('editHeight')?>"
+cols="<?=$request->getPref('editWidth')?>"
+readonly="readonly"
+wrap="virtual"><?= $PAGE_SOURCE ?></textarea>
 
 <p class="editdate"><?= $LastModifiedMsg ?></p>
 <div id="actionbar">
