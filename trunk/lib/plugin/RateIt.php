@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RateIt.php,v 1.4 2004-04-06 20:00:11 rurban Exp $');
+rcs_id('$Id: RateIt.php,v 1.5 2004-04-11 10:42:02 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -105,11 +105,11 @@ extends WikiPlugin
         return _("RateIt");
     }
     function getDescription() {
-        return _("Recommendation system. Store user ratings per page");
+        return _("Rating system. Store user ratings per page");
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function RatingWidgetJavascript() {
@@ -389,7 +389,7 @@ function deleteRating(actionImg, page, dimension) {
             $user = $dbi->_get_pageid($userid);
         else return 0;
         
-        return 2.5;
+        return 0;
         
         if (defined('RATING_EXTERNAL')) {
             // how call suggest.exe? as CGI or natively
@@ -413,9 +413,9 @@ function deleteRating(actionImg, page, dimension) {
         if (is_null($userid))    $userid   = $this->userid; 
         if (is_null($pagename))  $pagename = $this->pagename;
         if (RATING_STORAGE == 'SQL') {
-            $rating = 2.5;
+            $rating = 0;
         } else {
-            $rating = 2.5;
+            $rating = 0;
         }
         return $rating;
     }
@@ -746,6 +746,15 @@ function deleteRating(actionImg, page, dimension) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/04/06 20:00:11  rurban
+// Cleanup of special PageList column types
+// Added support of plugin and theme specific Pagelist Types
+// Added support for theme specific UserPreferences
+// Added session support for ip-based throttling
+//   sql table schema change: ALTER TABLE session ADD sess_ip CHAR(15);
+// Enhanced postgres schema
+// Added DB_Session_dba support
+//
 // Revision 1.3  2004/04/01 06:29:51  rurban
 // better wording
 // RateIt also for ADODB

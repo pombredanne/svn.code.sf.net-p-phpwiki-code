@@ -1,8 +1,9 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.2 2004-04-10 08:16:14 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.3 2004-04-11 10:42:03 rurban Exp $');
 
 /*
- * This file defines an appearance ("theme") of PhpWiki similar to the Wordpress Pattern Repository.
+ * This file defines an appearance ("theme") of PhpWiki similar to the 
+ * Wordpress Pattern Repository.
  * @author: Mike Pickering
  */
 

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.43 2004-04-09 17:49:03 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.44 2004-04-11 10:42:02 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,7 +87,7 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.43 $");
+        //                    "\$Revision: 1.44 $");
     }
 
     function getArgs($argstr, $request=false, $defaults = false) {
@@ -191,10 +191,10 @@ class WikiPlugin
     }
 
     function getDefaultLinkArguments() {
-        return array('targetpage' => $this->getName(),
-                     'linktext' => $this->getName(),
+        return array('targetpage'  => $this->getName(),
+                     'linktext'    => $this->getName(),
                      'description' => $this->getDescription(),
-                     'class' => 'wikiaction');
+                     'class'       => 'wikiaction');
     }
 
     function makeLink($argstr, $request) {
@@ -226,7 +226,7 @@ class WikiPlugin
                      'class'      => 'wikiaction',
                      'method'     => 'get',
                      'textinput'  => 's',
-                     'description' => $this->getDescription(),
+                     'description'=> $this->getDescription(),
                      'formsize'   => 30);
     }
     
