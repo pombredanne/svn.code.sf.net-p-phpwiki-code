@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.31 2003-02-17 23:50:10 dairiki Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.32 2003-02-18 02:49:20 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -152,6 +152,8 @@ class BlockParser_Input {
     }
 
     function skipSpace () {
+        // For top-level input, the end of file looks like a space.
+        // (The last block is not of class tight-bottom.)
         $nlines = count($this->_lines);
         while (1) {
             if ($this->_pos >= $nlines) {
@@ -223,28 +225,34 @@ class BlockParser_InputSubBlock extends BlockParser_Input
     function BlockParser_InputSubBlock (&$input, $prefix_re, $initial_prefix = false) {
         $this->_input = &$input;
         $this->_prefix_pat = "/$prefix_re|\\s*\$/Ax";
-        $this->_atSpace = $input->_atSpace;
-        //$this->_atSpace = false;
+        $this->_atSpace = false;
 
         if (($line = $input->currentLine()) === false)
             $this->_line = false;
         elseif ($initial_prefix) {
             assert(substr($line, 0, strlen($initial_prefix)) == $initial_prefix);
             $this->_line = (string) substr($line, strlen($initial_prefix));
+            $this->_atBlank = ! ltrim($line);
         }
-        elseif (preg_match($this->_prefix_pat, $line, $m))
+        elseif (preg_match($this->_prefix_pat, $line, $m)) {
             $this->_line = (string) substr($line, strlen($m[0]));
+            $this->_atBlank = ! ltrim($line);
+        }
         else
             $this->_line = false;
     }
 
     function skipSpace () {
-        while (! $this->_line) {
-            if ($this->_line === false)
-                return false;
+        // In contrast to the case for top-level blocks,
+        // for sub-blocks, there never appears to be any trailing space.
+        // (The last block in the sub-block should always be of class tight-bottom.)
+        while ($this->_line === '')
             $this->advance();
-        }
-        return $this->_atSpace;
+
+        if ($this->_line === false)
+            return $this->_atSpace == 'strong_space';
+        else
+            return $this->_atSpace;
     }
         
     function currentLine () {
@@ -252,22 +260,24 @@ class BlockParser_InputSubBlock extends BlockParser_Input
     }
 
     function nextLine () {
-        $this->_atSpace = $this->_line === '';
+        if ($this->_line === '')
+            $this->_atSpace = $this->_atBlank ? 'weak_space' : 'strong_space';
+        else
+            $this->_atSpace = false;
+
         $line = $this->_input->nextLine();
-        if ($line !== false && preg_match($this->_prefix_pat, $line, $m))
+        if ($line !== false && preg_match($this->_prefix_pat, $line, $m)) {
             $this->_line = (string) substr($line, strlen($m[0]));
+            $this->_atBlank = ! ltrim($line);
+        }
         else
             $this->_line = false;
+
         return $this->_line;
     }
 
     function advance () {
-        $this->_atSpace = $this->_line === '';
-        $line = $this->_input->nextLine();
-        if ($line !== false && preg_match($this->_prefix_pat, $line, $m))
-            $this->_line = (string) substr($line, strlen($m[0]));
-        else
-            $this->_line = false;
+        $this->nextLine();
     }
         
     function getPos () {
@@ -297,9 +307,9 @@ class BlockParser_InputSubBlock extends BlockParser_Input
 }
     
 
-class BlockParser_HtmlElement extends HtmlElement
+class Block_HtmlElement extends HtmlElement
 {
-    function BlockHtmlElement($tag /*, ... */) {
+    function Block_HtmlElement($tag /*, ... */) {
         $this->_init(func_get_args());
     }
 
@@ -315,88 +325,20 @@ class BlockParser_HtmlElement extends HtmlElement
             $this->setAttr('class', $class);
     }
 }
-    
-class Tightenable extends BlockParser_HtmlElement {
-    var $_isTight = false;
 
-    function Tightenable ($tag /*, ...*/) {
-        $this->_init(func_get_args());
-    }
-    
-    function tighten () {
-        if (! $this->_isTight) {
-            $content = &$this->_content;
-            for ($i = 0; $i < count($content); $i++) {
-                if (!isa($content[$i], 'Tightenable'))
-                    continue;
-                $content[$i]->tighten();
-            }
-            $this->_isTight = true;
-        }
-    }
-
-    function canTighten () {
-        $content = &$this->_content;
-        for ($i = 0; $i < count($content); $i++) {
-            if (!isa($content[$i], 'Tightenable'))
-                continue;
-            if (!$content[$i]->canTighten())
-                return false;
-        }
-        return true;
-    }
-}
-
-class TightenableParagraph extends Tightenable {
-    function TightenableParagraph (/*...*/) {
-        $this->_init('p');
-        $this->pushContent(func_get_args());
-    }
-
-    function tighten () {
-        $this->_isTight = true;
-    }
-
-    function canTighten () {
-        return true;
-    }
-
-
-    function printXML () {
-        if ($this->_isTight)
-            return XmlContent::printXML();
-        else
-            return parent::printXML();
-    }
-
-    function asXML () {
-        if ($this->_isTight)
-            return XmlContent::asXML();
-        else
-            return parent::asXML();
-    }
-}
-
-class ParsedBlock extends Tightenable {
-    var $_isLoose = false;
+class ParsedBlock extends Block_HtmlElement {
     
     function ParsedBlock (&$input, $tag = 'div', $attr = false) {
-        $this->Tightenable($tag, $attr);
+        $this->Block_HtmlElement($tag, $attr);
         $this->_initBlockTypes();
         $this->_parse($input);
     }
 
-    function canTighten () {
-        if ($this->_isLoose)
-            return false;
-        return parent::canTighten();
-    }
-    
     function _parse (&$input) {
         for ($block = $this->_getBlock($input); $block; $block = $nextBlock) {
             while ($nextBlock = $this->_getBlock($input)) {
                 // Attempt to merge current with following block.
-                if (! ($merged = $block->merge($nextBlock, $this->_atSpace)) ) {
+                if (! ($merged = $block->merge($nextBlock)) ) {
                     break;      // can't merge
                 }
                 $block = $merged;
@@ -424,9 +366,6 @@ class ParsedBlock extends Tightenable {
 
         if (! ($line = $input->currentLine()) )
             return false;
-
-        if ($this->_atSpace)
-            $this->_isLoose = true;
 
         $tight_top = !$this->_atSpace;
         $re_set = &$this->_regexpset;
@@ -463,6 +402,32 @@ class SubBlock extends ParsedBlock {
     }
 }
 
+/**
+ * TightSubBlock is for use in parsing lists item bodies.
+ *
+ * If the sub-block consists of a single paragraph, it omits
+ * the paragraph element.
+ *
+ * We go to this trouble so that "tight" lists look somewhat reasonable
+ * in older (non-CSS) browsers.  (If you don't do this, then, without
+ * CSS, you only get "loose" lists.
+ */
+class TightSubBlock extends SubBlock {
+    function TightSubBlock (&$input, $indent_re, $initial_indent = false,
+                            $tag = 'div', $attr = false) {
+        $this->SubBlock($input, $indent_re, $initial_indent, $tag, $attr);
+
+        // If content is a single paragraph, eliminate the paragraph...
+        if (count($this->_content) == 1) {
+            $elem = $this->_content[0];
+            if ($elem->getTag() == 'p') {
+                assert($elem->getAttr('class') == 'tight-top tight-bottom');
+                $this->setContent($elem->getContent());
+            }
+        }
+    }
+}
+
 class BlockMarkup {
     var $_re;
     
@@ -475,12 +440,12 @@ class BlockMarkup {
         $this->_tight_bot = $bot;
     }
 
-    function merge ($followingBlock, $followsSpace) {
+    function merge ($followingBlock) {
         return false;
     }
 
     function finish () {
-        $this->_element->setTightness($this->_top_tight, $this->_bot_tight);
+        $this->_element->setTightness($this->_tight_top, $this->_tight_bot);
         return $this->_element;
     }
 }
@@ -491,8 +456,6 @@ class Block_blockquote extends BlockMarkup
 
     var $_re = '\ +(?=\S)';
 
-    // FIXME: tight top/bottom.
-    
     function _match (&$input, $m) {
         $this->_depth = strlen($m->match);
         $indent = sprintf("\\ {%d}", $this->_depth);
@@ -501,7 +464,7 @@ class Block_blockquote extends BlockMarkup
         return true;
     }
     
-    function merge ($nextBlock, $followsSpace) {
+    function merge ($nextBlock) {
         if (get_class($nextBlock) == get_class($this)) {
             assert ($nextBlock->_depth < $this->_depth);
             $nextBlock->_element->unshiftContent($this->_element);
@@ -523,7 +486,6 @@ class Block_list extends BlockMarkup
                   | [*] (?! \S[^*]*(?<=\S)[*](?!\S) )
                 )\ *(?=\S)';
 
-    var $_isLoose = false;
     var $_content = array();
 
     function _match (&$input, $m) {
@@ -542,7 +504,7 @@ class Block_list extends BlockMarkup
 
         $bullet = trim($m->match);
         $this->_tag = $bullet == '#' ? 'ol' : 'ul';
-        $this->_content[] = new SubBlock($input, $indent, $m->match, 'li');
+        $this->_content[] = new TightSubBlock($input, $indent, $m->match, 'li');
         return true;
     }
 
@@ -551,22 +513,17 @@ class Block_list extends BlockMarkup
         $li->setTightness($top, $bot);
     }
     
-    function merge ($nextBlock, $followsSpace) {
+    function merge ($nextBlock) {
         if (isa($nextBlock, 'Block_list') && $this->_tag == $nextBlock->_tag) {
             array_splice($this->_content, count($this->_content), 0,
                          $nextBlock->_content);
-            if ($followsSpace)
-                $this->_isLoose = true;
             return $this;
         }
         return false;
     }
 
     function finish () {
-        $list = new Tightenable($this->_tag, false, $this->_content);
-        if (!$this->_isLoose && $list->canTighten())
-            $list->tighten();
-        return $list;
+        return new Block_HtmlElement($this->_tag, false, $this->_content);
     }
 }
 
@@ -580,7 +537,7 @@ class Block_dl extends Block_list
             return false;
         list ($term, $defn) = $p;
         
-        $this->_content[] = new BlockParser_HtmlElement('dt', false, $term);
+        $this->_content[] = new Block_HtmlElement('dt', false, $term);
         $this->_content[] = $defn;
         return true;
     }
@@ -610,7 +567,7 @@ class Block_dl extends Block_list
 
         $indent = strlen($mm[0]);
         $term = TransformInline(rtrim(substr(trim($m->match),0,-1)));
-        $defn = new SubBlock($input, sprintf("\\ {%d}", $indent), false, 'dd');
+        $defn = new TightSubBlock($input, sprintf("\\ {%d}", $indent), false, 'dd');
         return array($term, $defn);
     }
 }
@@ -629,6 +586,9 @@ class Block_table_dl_defn extends XmlContent
 
         $this->_ncols = $this->_ComputeNcols($defn);
         
+        $this->_tight_top = false;
+        $this->_tight_bot = false;
+        $this->_atSpace = true;
         $this->_nrows = 0;
         foreach ($defn as $item) {
             if ($this->_IsASubtable($item))
@@ -644,6 +604,13 @@ class Block_table_dl_defn extends XmlContent
         $this->_setTerm($th);
     }
 
+    function setTightness($top, $bot) {
+        $this->_content[0]->setTightness($top, false);
+        $this->_content[$this->_nrows-1]->setTightness(false, $bot);
+        $this->_tight_top = $top;
+        $this->_tight_bot = $bot;
+    }
+    
     function _addToRow ($item) {
         if (empty($this->_accum)) {
             $this->_accum = HTML::td();
@@ -653,19 +620,29 @@ class Block_table_dl_defn extends XmlContent
         $this->_accum->pushContent($item);
     }
 
-    function _flushRow () {
+    function _flushRow ($tight_bottom=false) {
         if (!empty($this->_accum)) {
-            $this->pushContent(HTML::tr($this->_accum));
+            $row = new Block_HtmlElement('tr', false, $this->_accum);
+
+            $row->setTightness(!$this->_atSpace, $tight_bottom);
+            $this->_atSpace = !$tight_bottom;
+            
+            $this->pushContent($row);
             $this->_accum = false;
             $this->_nrows++;
         }
     }
 
     function _addSubtable ($table) {
-        $this->_flushRow();
-        foreach ($table->getContent() as $subdef) {
+        if (!($table_rows = $table->getContent()))
+            return;
+
+        $this->_flushRow($table_rows[0]->_tight_top);
+            
+        foreach ($table_rows as $subdef) {
             $this->pushContent($subdef);
             $this->_nrows += $subdef->nrows();
+            $this->_atSpace = ! $subdef->_tight_bot;
         }
     }
 
@@ -741,7 +718,7 @@ class Block_table_dl extends Block_dl
     }
 
     function _setTightness($top, $bot) {
-        // FIXME:  what to do?
+        $this->_content[0]->setTightness($top, $bot);
     }
     
     function finish () {
@@ -756,7 +733,7 @@ class Block_table_dl extends Block_dl
             $defs[$key]->setWidth($ncols);
 
         return HTML::table(array('class' => 'wiki-dl-table',
-                                 'border' => 2, // FIXME: CSS?
+                                 'border' => 1,
                                  'cellspacing' => 0,
                                  'cellpadding' => 6),
                            $defs);
@@ -797,12 +774,12 @@ class Block_oldlists extends Block_list
             list ($term,) = explode(':', substr($prefix, 1), 2);
             $term = trim($term);
             if ($term)
-                $this->_content[] = new BlockParser_HtmlElement('dt', false,
-                                                                TransformInline($term));
+                $this->_content[] = new Block_HtmlElement('dt', false,
+                                                          TransformInline($term));
             $itemtag = 'dd';
         }
 
-        $this->_content[] = new SubBlock($input, $indent, $m->match, $itemtag);
+        $this->_content[] = new TightSubBlock($input, $indent, $m->match, $itemtag);
         return true;
     }
 
@@ -847,7 +824,7 @@ class Block_pre extends BlockMarkup
         if ($m->match == '<pre>')
             $text = TransformInline($text);
 
-        $this->_element = new BlockParser_HtmlElement('pref', false, $text);
+        $this->_element = new Block_HtmlElement('pre', false, $text);
         return true;
     }
 }
@@ -877,21 +854,20 @@ class Block_plugin extends Block_pre
         global $request;
         $loader = new WikiPluginLoader;
         $expansion = $loader->expandPI($pi, $request);
-        $this->_element = new BlockParser_HtmlElement('div', array('class' => 'plugin'),
-                                                      $expansion);
+        $this->_element = new Block_HtmlElement('div', array('class' => 'plugin'),
+                                                $expansion);
         return true;
     }
 }
 
 class Block_email_blockquote extends BlockMarkup
 {
-    // FIXME: move CSS to CSS.
-    var $_attr = array('style' => 'border-left-width: medium; border-left-color: #0f0; border-left-style: ridge; padding-left: 1em; margin-left: 0em; margin-right: 0em;');
-
+    var $_attr = array('class' => 'mail-style-quote');
     var $_re = '>\ ?';
     
     function _match (&$input, $m) {
-        $indent = str_replace(' ', '\\ ', $m->match) . '|>$';
+        //$indent = str_replace(' ', '\\ ', $m->match) . '|>$';
+        $indent = $this->_re;
         $this->_element = new SubBlock($input, $indent, $m->match,
                                        'blockquote', $this->_attr);
         return true;
@@ -904,7 +880,7 @@ class Block_hr extends BlockMarkup
 
     function _match (&$input, $m) {
         $input->advance();
-        $this->_element = new BlockParser_HtmlElement('hr');
+        $this->_element = new Block_HtmlElement('hr');
         return true;
     }
 }
@@ -918,7 +894,7 @@ class Block_heading extends BlockMarkup
         $text = TransformInline(trim($m->postmatch));
         $input->advance();
 
-        $this->_element = new BlockParser_HtmlElement($tag, false, $text);
+        $this->_element = new Block_HtmlElement($tag, false, $text);
         
         return true;
     }
@@ -935,9 +911,9 @@ class Block_p extends BlockMarkup
         return true;
     }
     
-    function merge ($nextBlock, $followsSpace) {
+    function merge ($nextBlock) {
         $class = get_class($nextBlock);
-        if ($class == 'block_p' && !$followsSpace) {
+        if ($class == 'block_p' && $this->_tight_bot) {
             $this->_text .= "\n" . $nextBlock->_text;
             $this->_tight_bot = $nextBlock->_tight_bot;
             return $this;
@@ -947,7 +923,7 @@ class Block_p extends BlockMarkup
             
     function finish () {
         $content = TransformInline(trim($this->_text));
-        $p = new TightenableParagraph($content);
+        $p = new Block_HtmlElement('p', false, $content);
         $p->setTightness($this->_tight_top, $this->_tight_bot);
         return $p;
     }
