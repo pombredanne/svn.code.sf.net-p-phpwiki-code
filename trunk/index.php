@@ -23,7 +23,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.0pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.14 2001-03-11 17:51:54 wainstead Exp $');
+rcs_id('$Id: index.php,v 1.15 2001-04-06 18:21:36 wainstead Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -238,8 +238,8 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
 
 /*
  * Define to 'true' to use PATH_INFO to pass the pagename's.
- * e.g. http://www.some.where/index.php/FrontPage instead
- * of http://www.some.where/index.php?pagename=FrontPage
+ * e.g. http://www.some.where/index.php/HomePage instead
+ * of http://www.some.where/index.php?pagename=HomePage
  * FIXME: more docs (maybe in README).
  */
 //define('USE_PATH_INFO', false);
@@ -253,7 +253,7 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
  * If you do this, you should set VIRTUAL_PATH here.
  *
  * E.g. your phpwiki might be installed at at /scripts/phpwiki/index.php,
- * but  * you've made it accessible through eg. /wiki/FrontPage.
+ * but  * you've made it accessible through eg. /wiki/HomePage.
  *
  * One way to do this is to create a directory named 'wiki' in your
  * server root.  The directory contains only one file: an .htaccess

@@ -55,7 +55,7 @@ will generate a link which will take you directly to editing the SandBox, like s
 
 Other possibilites:
 * [ Diff the SandBox | phpwiki:SandBox?action=diff ],
-* [ Lock the FrontPage | phpwiki:FrontPage?action=lock ],
+* [ Lock the HomePage | phpwiki:HomePage?action=lock ],
 * [ Get a Full Zip Dump | phpwiki:?action=zip&include=all ],
 * [ Page titles containing 'wiki' | phpwiki:?action=search&searchterm=wiki ],
 

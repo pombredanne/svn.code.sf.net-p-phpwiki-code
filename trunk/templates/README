@@ -1,4 +1,4 @@
-$Id: README,v 1.5 2001-03-02 00:42:50 wainstead Exp $
+$Id: README,v 1.6 2001-04-06 18:21:37 wainstead Exp $
 
 PhpWiki distinguishes between three different templates:
 
@@ -131,7 +131,7 @@ The following placeholders are not available for the 'MESSAGE' template:
 
 Examples:
 
-<A HREF="###BROWSE###FrontPage">the entry (default) page</A>
+<A HREF="###BROWSE###HomePage">the entry (default) page</A>
 <A HREF="###BROWSE_PAGE###">the current page</A>
 <A HREF="###BROWSE###FindPage">the FindPage page</A>
 <head><title>PhpWiki Page: ###PAGE###</title></head>
