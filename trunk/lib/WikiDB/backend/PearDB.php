@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.85 2005-01-25 08:03:35 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.86 2005-01-29 19:51:02 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -871,12 +871,18 @@ extends WikiDB_backend
         extract($this->_table_names);
         
         $this->lock();
-        if ( ($id = $this->_get_pageid($pagename, false)) ) {
+        if (($id = $this->_get_pageid($pagename, false)) ) {
             if ($new = $this->_get_pageid($to, false)) {
-                //cludge alert!
-                //this page does not exist (already verified before), but exists in the page table.
-                //so we delete this page.
-                $dbh->query("DELETE FROM $page_tbl WHERE id=$id");
+                // Cludge Alert!
+                // This page does not exist (already verified before), but exists in the page table.
+                // So we delete this page.
+                $dbh->query("DELETE FROM $page_tbl WHERE id=$new");
+                $dbh->query("DELETE FROM $version_tbl WHERE id=$new");
+                $dbh->query("DELETE FROM $recent_tbl WHERE id=$new");
+                $dbh->query("DELETE FROM $nonempty_tbl WHERE id=$new");
+                // We have to fix all referring tables to the old id
+                $dbh->query("UPDATE $link_tbl SET linkfrom=$id WHERE linkfrom=$new");
+                $dbh->query("UPDATE $link_tbl SET linkto=$id WHERE linkto=$new");
             }
             $dbh->query(sprintf("UPDATE $page_tbl SET pagename='%s' WHERE id=$id",
                                 $dbh->escapeSimple($to)));
@@ -1221,6 +1227,9 @@ extends WikiDB_backend_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.85  2005/01/25 08:03:35  rurban
+// support DATABASE_PERSISTENT besides dsn database?persistent=false; move lock_count up (per Charles Corrigan)
+//
 // Revision 1.84  2005/01/18 20:55:47  rurban
 // reformatting and two bug fixes: adding missing parens
 //

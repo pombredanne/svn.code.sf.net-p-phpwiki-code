@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.71 2005-01-25 08:01:00 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.72 2005-01-29 19:51:03 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -965,14 +965,19 @@ extends WikiDB_backend
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         
-        $this->lock(array('page'));
+        $this->lock(array('page','version','recent','nonempty','link'));
         if ( ($id = $this->_get_pageid($pagename, false)) ) {
             if ($new = $this->_get_pageid($to, false)) {
-                //cludge alert!
-                //this page does not exist (already verified before), but exists in the page table.
-                //so we delete this page.
-                $dbh->query(sprintf("DELETE FROM $page_tbl WHERE id=$id",
-                                    $dbh->qstr($to)));
+                // Cludge Alert!
+                // This page does not exist (already verified before), but exists in the page table.
+                // So we delete this page.
+                $dbh->query("DELETE FROM $page_tbl WHERE id=$new");
+                $dbh->query("DELETE FROM $version_tbl WHERE id=$new");
+                $dbh->query("DELETE FROM $recent_tbl WHERE id=$new");
+                $dbh->query("DELETE FROM $nonempty_tbl WHERE id=$new");
+                // We have to fix all referring tables to the old id
+                $dbh->query("UPDATE $link_tbl SET linkfrom=$id WHERE linkfrom=$new");
+                $dbh->query("UPDATE $link_tbl SET linkto=$id WHERE linkto=$new");
             }
             $dbh->query(sprintf("UPDATE $page_tbl SET pagename=%s WHERE id=$id",
                                 $dbh->qstr($to)));
@@ -1413,6 +1418,9 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.71  2005/01/25 08:01:00  rurban
+// fix listOfFields with different database
+//
 // Revision 1.70  2005/01/18 20:55:43  rurban
 // reformatting and two bug fixes: adding missing parens
 //
