@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.53 2004-06-27 10:26:03 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.54 2004-06-29 08:52:24 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -127,8 +127,12 @@ extends WikiDB_backend
 
     function  _extract_page_data(&$query_result) {
         extract($query_result);
-        if (isset($query_result['pagedata']))
+        if (isset($query_result['pagedata'])) {
             $data = $this->_unserialize($query_result['pagedata']);
+            // Memory optimization:
+            // Only store the cached_html for the current pagename
+            // Do it here or unset it in the Cache?
+        }
         $data['hits'] = $query_result['hits'];
         return $data;
     }
@@ -1008,6 +1012,9 @@ extends WikiDB_backend_PearDB_generic_iter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.53  2004/06/27 10:26:03  rurban
+// oci8 patch by Philippe Vanhaesendonck + some ADODB notes+fixes
+//
 // Revision 1.52  2004/06/25 14:15:08  rurban
 // reduce memory footprint by caching only requested pagedate content (improving most page iterators)
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSelect.php,v 1.18 2004-06-16 10:38:59 rurban Exp $');
+rcs_id('$Id: WikiAdminSelect.php,v 1.19 2004-06-29 08:52:24 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -46,7 +46,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.18 $");
+                            "\$Revision: 1.19 $");
     }
 
     function getDefaultArguments() {
@@ -122,6 +122,7 @@ extends WikiPlugin
         //    return $this->disabled("(action != 'browse')");
         $args = $this->getArgs($argstr, $request);
         $this->_args = $args;
+        extract($args);
         $this->preSelectS($args, $request);
 
         $info = $args['info'];
@@ -141,7 +142,7 @@ extends WikiPlugin
         $form->pushContent(HTML::p(array('class' => 'wikitext'), _("Select: "),
                                    HTML::input(array('type' => 'text',
                                                      'name' => 's',
-                                                     'value' => $s)),
+                                                     'value' => $args['s'])),
                                    HTML::input(array('type' => 'submit',
                                                      'name' => 'WikiAdminSelect',
                                                      'value' => _("Go")))));
@@ -197,7 +198,7 @@ extends WikiPlugin
             // List all pages to select from.
             $this->_list = $this->collectPages($this->_list, $dbi, $args['sortby'], $args['limit']);
         }
-        $pagelist = new PageList_Selectable($info, $exclude);
+        $pagelist = new PageList_Selectable($info, $exclude, $args);
         $pagelist->addPageList($this->_list);
         $form->pushContent($pagelist->getContent());
         foreach ($args as $k => $v) {
@@ -248,6 +249,15 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.18  2004/06/16 10:38:59  rurban
+// Disallow refernces in calls if the declaration is a reference
+// ("allow_call_time_pass_reference clean").
+//   PhpWiki is now allow_call_time_pass_reference = Off clean,
+//   but several external libraries may not.
+//   In detail these libs look to be affected (not tested):
+//   * Pear_DB odbc
+//   * adodb oracle
+//
 // Revision 1.17  2004/06/14 11:31:39  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList

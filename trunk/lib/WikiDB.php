@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.72 2004-06-25 14:15:08 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.73 2004-06-29 08:52:22 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -207,8 +207,7 @@ class WikiDB {
      */
     function isWikiPage ($pagename) {
         $page = $this->getPage($pagename);
-        $current = $page->getCurrentRevision();
-        return ! $current->hasDefaultContents();
+        return $page->exists();
     }
 
     /**
@@ -408,7 +407,7 @@ class WikiDB {
                     $meta['summary'] = sprintf(_("renamed from %s"),$from);
                     $page->save($current->getPackedContent(), $version + 1, $meta);
                 }
-            } elseif (!$oldpage->getCurrentRevision() and !$newpage->exists()) {
+            } elseif (!$oldpage->getCurrentRevision(false) and !$newpage->exists()) {
                 // if a version 0 exists try it also.
                 $result = $this->_backend->rename_page($from, $to);
             }
@@ -581,10 +580,16 @@ class WikiDB_Page
     function getName() {
         return $this->_pagename;
     }
-
+    
+    // To reduce the memory footprint for larger sets of pagelists,
+    // we don't cache the content (only true or false) and 
+    // we purge the pagedata (_cached_html) also
     function exists() {
-        $current = $this->getCurrentRevision();
-        return ! $current->hasDefaultContents();
+        $current = $this->getCurrentRevision(false);
+        unset($current->_wikidb->_cache->_pagedata_cache[$this->_pagename]);
+        $exists = ! $current->hasDefaultContents();
+        unset($current->_data->{'%pagedata'});
+        return $exists;
     }
 
     /**
@@ -921,7 +926,7 @@ class WikiDB_Page
      *
      * @return WikiDB_PageRevision The current WikiDB_PageRevision object. 
      */
-    function getCurrentRevision() {
+    function getCurrentRevision($need_content = true) {
         $backend = &$this->_wikidb->_backend;
         $cache = &$this->_wikidb->_cache;
         $pagename = &$this->_pagename;
@@ -933,7 +938,8 @@ class WikiDB_Page
         // severe than occasionally get not the latest revision.
         //$backend->lock();
         $version = $cache->get_latest_version($pagename);
-        $revision = $this->getRevision($version);
+        // getRevision gets the content also!
+        $revision = $this->getRevision($version, $need_content);
         //$backend->unlock();
         assert($revision);
         return $revision;
@@ -950,7 +956,7 @@ class WikiDB_Page
      * false if the requested revision does not exist in the {@link WikiDB}.
      * Note that version zero of any page always exists.
      */
-    function getRevision($version) {
+    function getRevision($version, $need_content=true) {
         $cache = &$this->_wikidb->_cache;
         $pagename = &$this->_pagename;
         
@@ -958,7 +964,7 @@ class WikiDB_Page
             return new WikiDB_PageRevision($this->_wikidb, $pagename, 0);
 
         assert($version > 0);
-        $vdata = $cache->get_versiondata($pagename, $version);
+        $vdata = $cache->get_versiondata($pagename, $version, $need_content);
         if (!$vdata)
             return false;
         return new WikiDB_PageRevision($this->_wikidb, $pagename, $version,
@@ -981,7 +987,7 @@ class WikiDB_Page
      * unless $version is greater than zero, a revision (perhaps version zero,
      * the default revision) will always be found.
      */
-    function getRevisionBefore($version) {
+    function getRevisionBefore($version, $need_content=true) {
         $backend = &$this->_wikidb->_backend;
         $pagename = &$this->_pagename;
 
@@ -991,7 +997,7 @@ class WikiDB_Page
             return false;
         //$backend->lock();
         $previous = $backend->get_previous_version($pagename, $version);
-        $revision = $this->getRevision($previous);
+        $revision = $this->getRevision($previous, $need_content);
         //$backend->unlock();
         assert($revision);
         return $revision;
@@ -1175,7 +1181,7 @@ class WikiDB_Page
 
     function isUserPage ($include_empty = true) {
         if ($include_empty) {
-            $current = $this->getCurrentRevision();
+            $current = $this->getCurrentRevision(false);
             if ($current->hasDefaultContents()) {
                 return false;
             }
@@ -1208,7 +1214,7 @@ class WikiDB_Page
 
     // The authenticated author of the current revision.
     function getAuthor() {
-        if ($current = $this->getCurrentRevision()) return $current->get('author_id');
+        if ($current = $this->getCurrentRevision(false)) return $current->get('author_id');
         else return '';
     }
 
@@ -1309,7 +1315,7 @@ class WikiDB_PageRevision
     function isCurrent() {
         if (!isset($this->_iscurrent)) {
             $page = $this->getPage();
-            $current = $page->getCurrentRevision();
+            $current = $page->getCurrentRevision(false);
             $this->_iscurrent = $this->getVersion() == $current->getVersion();
         }
         return $this->_iscurrent;
@@ -1807,7 +1813,7 @@ class WikiDB_cache
             assert(is_string($pagename) && $pagename != '');
             // there is a bug here somewhere which results in an assertion failure at line 105
             // of ArchiveCleaner.php  It goes away if we use the next line.
-            $need_content = true;
+            //$need_content = true;
             $nc = $need_content ? '1':'0';
             $cache = &$this->_versiondata_cache;
             if (!isset($cache[$pagename][$version][$nc])||
@@ -1816,7 +1822,7 @@ class WikiDB_cache
                     $this->_backend->get_versiondata($pagename,$version, $need_content);
                 // If we have retrieved all data, we may as well set the cache for $need_content = false
                 if ($need_content){
-                    $cache[$pagename][$version]['0'] = $cache[$pagename][$version]['1'];
+                    $cache[$pagename][$version]['0'] =& $cache[$pagename][$version]['1'];
                 }
             }
             $vdata = $cache[$pagename][$version][$nc];
@@ -1824,8 +1830,19 @@ class WikiDB_cache
             $vdata = $this->_backend->get_versiondata($pagename, $version, $need_content);
 	}
         // FIXME: ugly
-        if ($vdata && !empty($vdata['%pagedata']))
+        if ($vdata && !empty($vdata['%pagedata'])) {
             $this->_pagedata_cache[$pagename] = $vdata['%pagedata'];
+            // only store _cached_html for the requested page
+            if (defined('USECACHE') and USECACHE 
+                and isset($vdata['%pagedata']['_cached_html'])
+                and $pagename != $GLOBALS['request']->getArg('pagename')) 
+            {
+                unset($this->_pagedata_cache[$pagename]['_cached_html']);
+                unset($cache[$pagename][$version][$nc]['%pagedata']['_cached_html']);
+                if ($need_content)
+                    unset($cache[$pagename][$version][0]['%pagedata']['_cached_html']);
+            }
+        }
         return $vdata;
     }
 
@@ -1874,6 +1891,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.72  2004/06/25 14:15:08  rurban
+// reduce memory footprint by caching only requested pagedate content (improving most page iterators)
+//
 // Revision 1.71  2004/06/21 16:22:30  rurban
 // add DEFAULT_DUMP_DIR and HTML_DUMP_DIR constants, for easier cmdline dumps,
 // fixed dumping buttons locally (images/buttons/),

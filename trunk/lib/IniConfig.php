@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.43 2004-06-29 06:48:02 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.44 2004-06-29 08:52:22 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -300,6 +300,7 @@ function IniConfig($file) {
 
     // Another "too-tricky" redefine
     global $KeywordLinkRegexp;
+    if (!isset($rs['KEYWORDS'])) $rs['KEYWORDS'] = @$rsdef['KEYWORDS'];
     if (!isset($rs['KEYWORDS'])) $rs['KEYWORDS'] = "Category:Topic";
     $keywords = preg_split('/\s*:\s*/', $rs['KEYWORDS']);
     if (empty($keywords)) $keywords = array("Category","Topic");
@@ -610,6 +611,13 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.43  2004/06/29 06:48:02  rurban
+// Improve LDAP auth and GROUP_LDAP membership:
+//   no error message on false password,
+//   added two new config vars: LDAP_OU_USERS and LDAP_OU_GROUP with GROUP_METHOD=LDAP
+//   fixed two group queries (this -> user)
+// stdlib: ConvertOldMarkup still flawed
+//
 // Revision 1.42  2004/06/28 15:01:07  rurban
 // fixed LDAP_SET_OPTION handling, LDAP error on connection problem
 //
