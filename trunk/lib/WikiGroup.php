@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.6 2003-12-07 19:29:11 carstenklapp Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.7 2004-01-26 16:52:40 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -19,6 +19,16 @@ rcs_id('$Id: WikiGroup.php,v 1.6 2003-12-07 19:29:11 carstenklapp Exp $');
  along with PhpWiki; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+if (!defined('GROUP_NONE')) {
+    $group_method = 0; 
+    define('GROUP_NONE',	$group_method++);
+    define('GROUP_WIKIPAGE',	$group_method++); 
+    define('GROUP_DB',		$group_method++);
+    define('GROUP_FILE',	$group_method++);
+    define('GROUP_LDAP',	$group_method++);
+}
+if (!defined('GROUP_METHOD')) define('GROUP_METHOD', GROUP_WIKIPAGE);
 
 /**
  * WikiGroup is an abstract class to provide the base functions for determining
@@ -74,21 +84,24 @@ class WikiGroup{
      * @return object Subclass of WikiGroup selected via GROUP_METHOD.
      */ 
     function getGroup($request){
-        switch(GROUP_METHOD){
+        switch (GROUP_METHOD){
             case GROUP_NONE: 
                 return new GroupNone($request);
                 break;
             case GROUP_WIKIPAGE: 
                 return new GroupWikiPage($request);
                 break;
-#            case GROUP_DB: 
-#                return new GroupDB($user, $request);
-#                break;
+            case GROUP_DB:
+                return new GroupDB($request);
+                break;
+            case GROUP_FILE: 
+                return new GroupFile($request);
+                break;
 #            case GROUP_LDAP: 
-#                return new GroupLDAP($user, $request);
+#                return new GroupLDAP($request);
 #                break;
             default:
-                trigger_error("No GROUP_METHOD defined", E_USER_WARNING);
+                trigger_error(_("No GROUP_METHOD defined"), E_USER_WARNING);
                 return new WikiGroup($request);
         }
     }
@@ -277,7 +290,7 @@ class GroupWikiPage extends WikiGroup{
         $group_revision = $group_page->getCurrentRevision();
         if ($group_revision->hasDefaultContents()) {
             $group = $group_page->getName();
-            trigger_error("Group $group does not exist", E_USER_WARNING);
+            trigger_error(sprintf(_("Group %s does not exist"),$group), E_USER_WARNING);
             return false;
         }
         $contents = $group_revision->getContent();
@@ -303,7 +316,7 @@ class GroupWikiPage extends WikiGroup{
         $username = $this->_getUserName();
         $membership = array();
         $dbh = &$request->getDbh();
-        $master_page = $request->getPage('CategeoryGroups');
+        $master_page = $request->getPage('CategoryGroups');
         $master_list = $master_page->getLinks(true);
         while($group_page = $master_list->next()){
             if ($this->_inGroupPage($group_page)) {
@@ -353,7 +366,211 @@ class GroupWikiPage extends WikiGroup{
     }
 }
 
+/**
+ * GroupDb is configured by $DbAuthParams[] statements
+ * 
+ * @author ReiniUrban
+ */ 
+class GroupDb extends WikiGroup {
+    
+    /**
+     * Constructor
+     * 
+     * @param object $request The global WikiRequest object.
+     */ 
+    function GroupDb(&$request){
+        $this->request = &$request;
+        $this->username = null;
+        $this->membership = array();
+
+        if (empty($DBAuthParams['group_members']) or empty($DBAuthParams['user_groups'])) {
+            trigger_error(_("No GROUP_DB statements defined"), E_USER_WARNING);
+            return false;
+        }
+        $dbh = _PassUser::getAuthDbh();
+        $this->_is_member = $dbh->_backend->prepare(preg_replace(array('"$userid"','"$groupname"'),array('?','?'),$DBAuthParams['is_member']));
+        $this->_group_members = $dbh->_backend->prepare(preg_replace('"$groupname"','?',$DBAuthParams['group_members']));
+        $this->_user_groups = $dbh->_backend->prepare(preg_replace('"$userid"','?',$DBAuthParams['user_groups']));
+    }
+
+    /**
+     * Determines if the current user is a member of a group.
+     * 
+     * To determine membership in a particular group, this method checks the 
+     * superclass instance variable $membership to see if membership has 
+     * already been determined.  If not, then the group page is parsed to 
+     * determine membership.
+     * @param string $group Name of the group to check for membership.
+     * @return boolean True if user is a member, else false.
+     */ 
+    function isMember($group) {
+        $request = $this->request;
+        $username = $this->_getUserName();
+        if (isset($this->membership[$group])) {
+            return $this->membership[$group];
+        }
+        $dbh = _PassUser::getAuthDbh();
+        $db_result = $dbh->_backend->execute($this->_is_member,$username,$group);
+        if ($db_result->numRows() > 0) {
+            $this->membership[$group] = true;
+            return true;
+        }
+        $this->membership[$group] = false;
+        return false;
+    }
+    
+    /**
+     * Determines all of the groups of which the current user is a member.
+     * 
+     * then checks each group to see if the current user is a member.
+     * @param string $group Name of the group to check for membership.
+     * @return array Array of groups to which the user belongs.
+     */ 
+    function getAllGroupsIn(){
+        $request = &$this->request;
+        $username = $this->_getUserName();
+        $membership = array();
+
+        $dbh = _PassUser::getAuthDbh();
+        $db_result = $dbh->_backend->execute($this->_user_groups,$username);
+        if ($db_result->numRows() > 0) {
+            while (list($group) = $db_result->fetchRow()) {
+                $membership[] = $group;
+            }
+        }
+        $this->membership = $membership;
+        return $membership;
+    }
+
+    /**
+     * Determines all of the members of a particular group.
+     * 
+     * Checks a group's page to return all the current members.  Currently this
+     * method is disabled and triggers an error and returns an empty array.
+     * @param string $group Name of the group to get the full membership list of.
+     * @return array Array of usernames that have joined the group.
+     */ 
+    function getMembersOf($group){
+        $request = &$this->request;
+        $username = $this->_getUserName();
+        $members = array();
+
+        $dbh = _PassUser::getAuthDbh();
+        $db_result = $dbh->_backend->execute($this->_group_members,$group);
+        if ($db_result->numRows() > 0) {
+            while (list($userid) = $db_result->fetchRow()) {
+                $members[] = $userid;
+            }
+        }
+        return $members;
+    }
+}
+
+/**
+ * GroupFile is configured by AUTH_GROUP_FILE
+ * groupname: user1 user2 ...
+ * 
+ * @author ReiniUrban
+ */ 
+class GroupFile extends WikiGroup {
+    
+    /**
+     * Constructor
+     * 
+     * @param object $request The global WikiRequest object.
+     */ 
+    function GroupFile(&$request){
+        $this->request = &$request;
+        $this->username = null;
+        $this->membership = array();
+
+        if (!defined('AUTH_GROUP_FILE')) {
+            trigger_error(_("AUTH_GROUP_FILE not defined"), E_USER_WARNING);
+            return false;
+        }
+        if (!file_exists(AUTH_GROUP_FILE)) {
+            trigger_error(sprintf(_("Cannot open AUTH_GROUP_FILE %s"), AUTH_GROUP_FILE), E_USER_WARNING);
+            return false;
+        }
+        require 'lib/pear/File_Passwd.php';
+        $this->_file = File_Passwd($file);
+    }
+
+    /**
+     * Determines if the current user is a member of a group.
+     * 
+     * To determine membership in a particular group, this method checks the 
+     * superclass instance variable $membership to see if membership has 
+     * already been determined.  If not, then the group file is parsed to 
+     * determine membership.
+     * @param string $group Name of the group to check for membership.
+     * @return boolean True if user is a member, else false.
+     */ 
+    function isMember($group) {
+        $request = $this->request;
+        $username = $this->_getUserName();
+        if (isset($this->membership[$group])) {
+            return $this->membership[$group];
+        }
+
+        foreach ($this->_file->users[] as $g => $u) {
+            $users = explode(' ',$u);
+            if (in_array($username,$users)) {
+                $this->membership[$group] = true;
+                return true;
+            }
+        }
+        $this->membership[$group] = false;
+        return false;
+    }
+    
+    /**
+     * Determines all of the groups of which the current user is a member.
+     * 
+     * then checks each group to see if the current user is a member.
+     * @param string $group Name of the group to check for membership.
+     * @return array Array of groups to which the user belongs.
+     */ 
+    function getAllGroupsIn(){
+        $request = &$this->request;
+        $username = $this->_getUserName();
+        $membership = array();
+
+        foreach ($this->_file->users[] as $group => $u) {
+            $users = explode(' ',$u);
+            if (in_array($username,$users)) {
+                $this->membership[$group] = true;
+                $membership[] = $group;
+            }
+        }
+        $this->membership = $membership;
+        return $membership;
+    }
+
+    /**
+     * Determines all of the members of a particular group.
+     * 
+     * Checks a group's page to return all the current members.  Currently this
+     * method is disabled and triggers an error and returns an empty array.
+     * @param string $group Name of the group to get the full membership list of.
+     * @return array Array of usernames that have joined the group.
+     */ 
+    function getMembersOf($group){
+        $request = &$this->request;
+        $username = $this->_getUserName();
+        $members = array();
+
+        if (!empty($this->_file->users[$group])) {
+            return explode(' ',$this->_file->users[$group]);
+        }
+        return $members;
+    }
+}
+
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2003/12/07 19:29:11  carstenklapp
+// Code Housecleaning: fixed syntax errors. (php -l *.php)
+//
 // Revision 1.5  2003/02/22 20:49:55  dairiki
 // Fixes for "Call-time pass by reference has been deprecated" errors.
 //
