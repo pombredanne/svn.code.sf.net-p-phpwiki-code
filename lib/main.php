@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.72 2002-08-30 21:36:37 lakka Exp $');
+rcs_id('$Id: main.php,v 1.73 2002-09-09 13:41:30 rurban Exp $');
 
 define ('DEBUG', 1);
 define ('USE_PREFS_IN_PAGE', true);
@@ -420,7 +420,7 @@ class WikiRequest extends Request {
     function _deduceUsername () {
         if ($userid = $this->getSessionVar('wiki_user')) {
             if (!empty($this->_user))
-                $this->_user->authhow = 'session';
+                $this->_user->_authhow = 'session';
             return $userid;
         }
         if ($userid = $this->getCookieVar('WIKI_ID')) {

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.17 2002-09-09 12:14:37 rurban Exp $');
+<?php rcs_id('$Id: Request.php,v 1.18 2002-09-09 13:41:29 rurban Exp $');
 
 // FIXME: write log entry.
 
@@ -215,7 +215,14 @@ class Request {
         // see http://www.cert.org/advisories/CA-2000-02.html, http://www.perl.com/pub/a/2002/02/20/css.html
         // <script> tags, ...
         // /wiki/?pagename=<script>alert(document.cookie)</script>
-        return htmlentities(strip_tags($var));
+        if (is_string($var)) {
+            return htmlentities(strip_tags($var));
+        } elseif (is_array($var)) {
+            $this->sanify_input_array($var);
+            return $var;
+        } else {
+            return $var;
+        }
     }
 }
 
