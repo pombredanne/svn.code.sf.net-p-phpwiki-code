@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: browse.tmpl,v 1.19 2002-02-10 21:42:23 carstenklapp Exp $ -->
+<!-- $Id: browse.tmpl,v 1.20 2002-02-12 07:13:34 carstenklapp Exp $ -->
 
 <?php if (! $revision->isCurrent()) { ?>
   <p><strong><?=_("Note:")?></strong>
@@ -10,7 +10,7 @@
 
 <div class="wikitext"><?=$CONTENT?></div>
 
-<div id="actionbar">
+<div id="actionbar" class="toolbar">
 <hr class="printer" noshade="noshade" />
 <p class="editdate"><?= $Theme->getLastModifiedMessage($revision) ?></p>
 <hr class="toolbar" noshade="noshade" />
