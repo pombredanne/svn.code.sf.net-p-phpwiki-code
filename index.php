@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
 require_once (dirname(__FILE__).'/lib/prepend.php');
-rcs_id('$Id: index.php,v 1.145 2004-11-06 16:37:58 rurban Exp $');
+rcs_id('$Id: index.php,v 1.146 2005-01-13 05:32:51 uckelman Exp $');
 
 require_once(dirname(__FILE__).'/lib/IniConfig.php');
 IniConfig(dirname(__FILE__)."/config/config.ini");
@@ -52,7 +52,7 @@ IniConfig(dirname(__FILE__)."/config/config.ini");
 // If any page is empty, comment the if ... line out,
 // to force include "lib/main.php".
 // Without the dir check it might fail for index.php via DirectoyIndex 
-if (@is_dir(SCRIPT_FILENAME) or SCRIPT_FILENAME == __FILE__)
+if (@is_dir(SCRIPT_FILENAME) or realpath(SCRIPT_FILENAME) == __FILE__)
     include(dirname(__FILE__)."/lib/main.php");
 
 // (c-file-style: "gnu")
