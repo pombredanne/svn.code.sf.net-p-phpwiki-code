@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.18 2004-04-26 20:01:21 rurban Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.19 2004-05-24 17:37:22 rurban Exp $');
 
 require_once(dirname(__FILE__).'/stdlib.php');
 
@@ -195,8 +195,10 @@ class FileFinder
     function _get_include_path() {
         if (defined("INCLUDE_PATH"))
             $path = INCLUDE_PATH;
-        else
+        else {
             $path = @get_cfg_var('include_path'); // FIXME: report warning
+            if (empty($path)) $path = @ini_get('include_path');
+        }
         if (empty($path))
             $path = '.';
         return explode($this->_get_ini_separator(), $this->slashifyPath($path));
