@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.45 2003-11-30 18:18:13 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.46 2003-12-11 00:57:29 carstenklapp Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -114,8 +114,7 @@ class _PageList_Column_size extends _PageList_Column {
     }
 
     function _getSize($revision_handle) {
-        $data = &$revision_handle->_data;
-        $bytes = strlen(&$data['%content']);
+        $bytes = strlen($revision_handle->_data['%content']);
         return ByteFormatter($bytes);
     }
 }
