@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.125 2004-03-14 16:30:52 rurban Exp $');
+rcs_id('$Id: main.php,v 1.126 2004-03-24 19:39:03 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -40,21 +40,23 @@ class WikiRequest extends Request {
             if (isset($this->_user) and $this->_user->_authhow == 'session') {
                 // users might switch in a session between the two objects.
                 // restore old auth level here or in updateAuthAndPrefs?
-                $user = $this->getSessionVar('wiki_user');
+                //$user = $this->getSessionVar('wiki_user');
                 // revive db handle, because these don't survive sessions
 	        unset($this->_user->_HomePagehandle);
 	        $this->_user->hasHomePage();
-                if (!isa($user,WikiUserClassname()) or empty($user->_level)) {
+	        /*
+                if (!isa($user,WikiUserClassname()) or empty($this->_user->_level)) {
                     $user = UpgradeUser($this->_user,$user);
                 }
-            	$this->_prefs = $this->_user->_prefs;
+                */
+            	$this->_prefs = & $this->_user->_prefs;
             } else {
                 $user = WikiUser($userid);
                 //Todo: upgrade later at updateAuthAndPrefs()
                 if (isset($this->_user)) 
                   $user = UpgradeUser($this->_user,$user);
                 $this->_user = $user;
-                $this->_prefs = $this->_user->_prefs;
+                $this->_prefs = & $this->_user->_prefs;
             }
         } else {
             $this->_user = new WikiUser($this, $this->_deduceUsername());
@@ -255,7 +257,8 @@ class WikiRequest extends Request {
         // check the user's language prefs too at this point; this
         // would be a situation which is not really handled with the
         // current code.
-        update_locale(DEFAULT_LANGUAGE);
+        if (empty($GLOBALS['LANG']))
+            update_locale(DEFAULT_LANGUAGE);
 
         // User does not have required authority.  Prompt for login.
         $what = $this->getActionDescription($this->getArg('action'));
@@ -537,6 +540,8 @@ class WikiRequest extends Request {
             return $this->args['auth']['userid'];
         if (!empty($_SERVER['PHP_AUTH_USER']))
             return $_SERVER['PHP_AUTH_USER'];
+        if (!empty($_ENV['REMOTE_USER']))
+            return $_ENV['REMOTE_USER'];
             
         if ($user = $this->getSessionVar('wiki_user')) {
             $this->_user = $user;
@@ -849,6 +854,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.125  2004/03/14 16:30:52  rurban
+// db-handle session revivification, dba fixes
+//
 // Revision 1.124  2004/03/12 15:48:07  rurban
 // fixed explodePageList: wrong sortby argument order in UnfoldSubpages
 // simplified lib/stdlib.php:explodePageList

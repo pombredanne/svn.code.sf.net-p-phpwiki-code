@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.21 2004-03-14 16:26:21 rurban Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.22 2004-03-24 19:39:03 rurban Exp $');
 /**
  Copyright (C) 2001, 2002, 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -36,16 +36,22 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.21 $");
+                            "\$Revision: 1.22 $");
     }
 
     function getDefaultArguments() {
         global $request;
         $pagename = $request->getArg('pagename');
         $user = $request->getUser();
-        //we need a hash of pref => default_value
-        $pref = $user->getPreferences();
+        if ( isset($user->_prefs) and 
+             isset($user->_prefs->_prefs) and 
+             isset($user->_prefs->_method) ) {
+            $pref =& $user->_prefs;
+        } else {
+            $pref = $user->getPreferences();
+        }
         $prefs = array();
+        //we need a hash of pref => default_value
         foreach ($pref->_prefs as $name => $obj) {
             $prefs[$name] = $obj->default_value;
         }
@@ -81,8 +87,10 @@ extends WikiPlugin
                     } else {
                         //trigger_error("DEBUG: reading prefs from request".print_r($rp));
                         //trigger_error("DEBUG: writing prefs with setPreferences".print_r($pref));
-                        if (empty($rp['passwd']))
-                            unset($rp['passwd']);
+                        if (empty($rp['passwd'])) unset($rp['passwd']);
+                        // fix to set system pulldown's. empty values don't get posted
+                        if (empty($rp['theme'])) $rp['theme'] = '';
+                        if (empty($rp['lang']))  $rp['lang']  = '';
                         $num = $user->setPreferences($rp);
                         if (!empty($rp['passwd'])) {
                             $passchanged = false;
@@ -157,6 +165,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.21  2004/03/14 16:26:21  rurban
+// copyright line
+//
 // Revision 1.20  2004/03/12 23:20:58  rurban
 // pref fixes (base64)
 //

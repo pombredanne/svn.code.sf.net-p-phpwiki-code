@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.164 2004-03-18 21:41:09 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.165 2004-03-24 19:39:03 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -266,7 +266,8 @@ function LinkImage($url, $alt = false) {
 class Stack {
     var $items = array();
     var $size = 0;
-    
+    // var in php5.0.0.rc1 deprecated
+
     function push($item) {
         $this->items[$this->size] = $item;
         $this->size++;
@@ -1104,6 +1105,7 @@ class ListRegexExpand {
     	$this->match = str_replace('/','\/',$match);
     	$this->list = &$list;
     	$this->case_sensitive = $case_sensitive;	
+        //$this->index = false;
     }
     function listMatchCallback ($item, $key) {
     	if (preg_match('/' . $this->match . ($this->case_sensitive ? '/' : '/i'), $item)) {
@@ -1373,6 +1375,10 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.164  2004/03/18 21:41:09  rurban
+// fixed sqlite support
+// WikiUserNew: PHP5 fixes: don't assign $this (untested)
+//
 // Revision 1.163  2004/03/17 18:41:49  rurban
 // just reformatting
 //

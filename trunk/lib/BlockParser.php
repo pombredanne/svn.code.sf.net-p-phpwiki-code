@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.41 2004-03-17 17:42:54 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.42 2004-03-24 19:39:02 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -821,6 +821,46 @@ class Block_oldlists extends Block_list
             $li->setTightness($top, $bot);
         }
         else {
+            // this is where php5 breaks
+            if (DEBUG && check_php_version(5)) {
+                if (function_exists("xdebug_get_function_stack")) {
+                    var_dump (xdebug_get_function_stack());
+                } elseif (count($this->_content) != 2) {
+                    echo "<pre>";
+                    /*
+                    $class = new Reflection_Class('XmlElement');
+                    // Print out basic information
+                    printf(
+                           "===> The %s%s%s %s '%s' [extends %s]\n".
+                           "     declared in %s\n".
+                           "     lines %d to %d\n".
+                           "     having the modifiers %d [%s]\n",
+                           $class->isInternal() ? 'internal' : 'user-defined',
+                           $class->isAbstract() ? ' abstract' : '',
+                           $class->isFinal() ? ' final' : '',
+                           $class->isInterface() ? 'interface' : 'class',
+                           $class->getName(),
+                           var_export($class->getParentClass(), 1),
+                           $class->getFileName(),
+                           $class->getStartLine(),
+                           $class->getEndline(),
+                           $class->getModifiers(),
+                           implode(' ', Reflection::getModifierNames($class->getModifiers()))
+                           );
+                    // Print class properties
+                    printf("---> Properties: %s\n", var_export($class->getProperties(), 1));
+                    */
+                    echo 'count($this->_content): ', count($this->_content),"\n";
+                    echo "\$this->_content[0]: "; var_dump ($this->_content[0]);
+                    foreach ($this->_content as $c) {
+                        echo "_tag: "; var_dump ($c->_tag);
+                        echo "_content: "; var_dump ($c->_content);
+                        echo "_properties: "; var_dump ($c->_properties);
+                    }
+                    debug_print_backtrace();
+                    echo "</pre>";
+                }
+            }
             assert(count($this->_content) == 2);
             $dt = &$this->_content[0];
             $dd = &$this->_content[1];
@@ -992,6 +1032,9 @@ function TransformText ($text, $markup = 2.0, $basepage=false) {
     //set_time_limit(3);
 
     $output = new WikiText($text);
+    if (0 && DEBUG && check_php_version(5)) {
+        echo "<pre>"; var_dump($output); echo "</pre>"; 
+    }
 
     if ($basepage) {
         // This is for immediate consumption.

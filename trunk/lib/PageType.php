@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.22 2004-03-12 17:32:43 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.23 2004-03-24 19:39:02 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004 $ThePhpWikiProgrammingTeam
 
@@ -390,7 +390,7 @@ class PageFormatter_pdf extends PageFormatter
     }
 
     // one page or set of pages?
-    // here we format only a single page
+    // here we try to format only a single page
     function format($text) {
         include_once('lib/Template.php');
         global $request;
@@ -398,6 +398,11 @@ class PageFormatter_pdf extends PageFormatter
         $tokens['CONTENT'] = $this->_transform($text);
         // this is a XmlElement tree, which must be converted to PDF
 
+        // We can make use of several pdf extensions. This one - fpdf
+        // - is pure php and very easy, but looks quite ugly and has a
+        // terrible interface, as terrible as most of the othes. The
+        // closest to HTML is htmldoc which needs an external cgi
+        // binary.
         require_once('lib/fpdf.php');
         $pdf = new FPDF();
         $pdf->AddPage();

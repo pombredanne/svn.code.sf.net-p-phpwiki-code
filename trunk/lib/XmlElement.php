@@ -1,8 +1,9 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.25 2004-03-18 22:32:33 rurban Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.26 2004-03-24 19:39:02 rurban Exp $');
 /**
  * Code for writing XML.
+ * @author: Jeff Dairiki
  *
- * FIXME: This code is not php5 compatible.
+ * FIXME: This code is not (yet) php5 compatible.
  */
 
 /**
@@ -173,11 +174,7 @@ class XmlElement extends XmlContent
 {
     function XmlElement ($tagname /* , $attr_or_content , ...*/) {
         //FIXME: php5 incompatible
-        if (check_php_version(5)) {
-            $this->_content = array();
-            $this->_pushContent_array(func_get_args());
-        } else
-            $this->XmlContent();
+        $this->XmlContent();
         $this->_init(func_get_args());
     }
 
