@@ -1,4 +1,4 @@
-<!-- $Id: wiki_stdlib.php3,v 1.23.2.1 2000-07-21 18:29:07 dairiki Exp $ -->
+<!-- $Id: wiki_stdlib.php3,v 1.23.2.2 2000-07-22 22:25:29 dairiki Exp $ -->
 <?
    /*
       Standard functions for Wiki functionality
@@ -103,7 +103,7 @@
    }
 
    function RenderMostPopular() {
-      global $ScriptUrl, $dbi;
+      global $dbi;
       
       $query = InitMostPopular($dbi, 20);
       $result = "<DL>\n";
@@ -126,7 +126,6 @@
 
       global $remoteuser; // this is set in the config
       global $dateformat;
-      global $ScriptUrl;
 
       $recentchanges = RetrievePage($dbi, "RecentChanges");
 
@@ -173,7 +172,7 @@
       if($isnewpage) {
          $newpage[$k++] = "\t* [$pagename] (new) ..... $remoteuser\r";
       } else {
-	 $diffurl = "$ScriptUrl?diff=" . rawurlencode($pagename);
+	 $diffurl = WikiURL($pagename, 'diff');
          $newpage[$k++] = "\t* [$pagename] ([diff|$diffurl]) ..... $remoteuser\r";
       }
 

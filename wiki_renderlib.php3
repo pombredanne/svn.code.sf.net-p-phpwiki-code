@@ -1,4 +1,4 @@
-<? rcs_id('$Id: wiki_renderlib.php3,v 1.1.2.1 2000-07-21 18:29:07 dairiki Exp $');
+<? rcs_id('$Id: wiki_renderlib.php3,v 1.1.2.2 2000-07-22 22:25:29 dairiki Exp $');
 
   function utime() {
     $mtime = microtime();
@@ -107,7 +107,7 @@ class WikiRenderer
   function render_lines ($lines) {
     $n = sizeof($lines);
     for ($this->line = 0; $this->line < $n; $this->line++)
-	$html .= $this->render_line($lines[$this->line]);
+	$html .= $this->render_line($lines[$this->line]) . "\n";
     return $html;
   }
 }
@@ -388,7 +388,7 @@ class WikiLinkTransformer extends WikiTransform
     $this->rep = $link;
   }
   function transform ($match, &$r) {
-    $r->wikilinks[$match][] = $r->line;
+    $r->wikilinks[$match] = $match;
     return LinkWikiWord($match);
   }
 }
@@ -501,7 +501,7 @@ $page_transform['60Quotes'] = new QuoteTransformer(
 
 // Definition Lists:
 $page_transform['^80DefnLists'] = new ListTransformer(
-    '/^\t(\t*)(.*):\t/', 'dl', '\\1', '<dt>\\2</dt><dd>');
+    '/^\t(\t*)(.*):\t/', '<dl>', '\\1', '<dt>\\2</dt><dd>');
 // Ordered and unordered lists:
 $page_transform['^80Lists'] = new ListTransformer(
     '/^\t(\t*)([*#]|\d+)/', '\\2', '\\1', '<li>');
@@ -538,7 +538,7 @@ $page_transform['11BracketedWikiLink'] = new WikiLinkTransformer(
 
 // Quoted !WikiWords
 $page_transform['29QuotedWikiWord']
-    = new WikiTransform('/\b!((?:[A-Z][a-z]+){2,})\b/', '\\1');
+    = new WikiTransform('/!((?:[A-Z][a-z]+){2,})\b/', '\\1');
 
 // Line breaks
 $page_transform['50MetaChar']->add('%%%', '<br>');
