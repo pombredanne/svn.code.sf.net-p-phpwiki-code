@@ -1,2 +1,2 @@
 #!/bin/sh
-php -Cq test.php level=10
+php -Cq -d register_argc_argv=1 test.php level=10
