@@ -1,508 +1,836 @@
 <?php
 
+$locale["%d UserPreferences fields successfully updated."] =
+   "%d ユーザー設定フィールドの更新に成功しました。";
 $locale["%s Kb (%s bytes)"] =
-   "%s �����Х���(%s �Х���)";
+   "%s キロバイト(%s バイト)";
 $locale["%s bytes"] =
-   "%s �Х���";
+   "%s バイト";
 $locale["%s bytes written"] =
-   "%s  �Х��Ƚ񤭹��ߤޤ�����";
+   "%s バイト書き込みました。";
+$locale["%s days"] =
+   "%s 日";
+$locale["%s does not exist"] =
+   "%s は存在しません";
 $locale["%s is empty."] =
-   "%s �����Ǥ���";
+   "%s が空です。";
+$locale["%s is not writable."] =
+   "%s は書き込みできません。";
+$locale["%s not found"] =
+   "%s: 見つかりません。";
+$locale["%s words"] =
+   "%s 単語";
+$locale["%s: %s"] =
+   "%s: %s";
 $locale["%s: Bad action"] =
-   "%s: �������ʤ����Ǥ���";
+   "%s: 正しくない操作です。";
 $locale["%s: Can't open dba database"] =
-   "%s: dba �ǡ����١����򥪡��ץ����ޤ���";
+   "%s: dba データベースをオープン出来ません。";
 $locale["%s: file not found"] =
-   "%s: �ե����뤬���Ĥ���ޤ���";
+   "%s: ファイルが見つかりません。";
 $locale["%s: not defined"] =
-   "%s: ̤����Ǥ�����";
+   "%s: 未定義でした。";
 $locale["'%s': Bad page name"] =
-   "'%s': �ڡ���̾������������ޤ���";
+   "'%s': ページ名が正しくありません";
 $locale["(diff)"] =
-   "(��ʬ)";
+   "(差分)";
 $locale["(hist)"] =
-   "(����)";
+   "(履歴)";
+$locale["... not found"] =
+   "... 見つかりません。";
+$locale["1 day"] =
+   "1 日";
+$locale["1 word"] =
+   "1 単語";
+$locale["<%s: no such section>"] =
+   "<%s: セクションがありません>";
 $locale["<no matches>"] =
-   "<���פ��ޤ���>";
+   "<一致しません>";
 $locale["<none>"] =
-   "<�ʤ�>";
+   "<なし>";
 $locale["<system language>"] =
-   "<�����ƥ����>";
+   "<システム言語>";
 $locale["<system theme>"] =
-   "<�����ƥ�ơ���>";
+   "<システムテーマ>";
+$locale["ACL"] =
+   "ACL";
+$locale["Access"] =
+   "アクセス";
 $locale["Action page"] =
-   "���ڡ���";
+   "操作ページ";
 $locale["Add a Comment"] =
-   "�������ɲ�";
+   "コメント追加";
+$locale["Add this ACL"] =
+   "この ACL を追加";
 $locale["Adjust"] =
-   "Ĵ��";
+   "調整";
 $locale["Admin"] =
-   "����";
+   "管理";
+$locale["Administrators"] =
+   "管理者";
+$locale["All pages in this wiki (%d total):"] =
+   "この wiki の総ページ数 (合計 %d):";
 $locale["AllPages"] =
-   "���ڡ���";
+   "全ページ";
 $locale["AllUsers"] =
-   "���桼����";
+   "全ユーザー";
 $locale["Allowed protocols"] =
-   "���Ĥ���ץ��ȥ������";
+   "許可するプロトコル一覧";
+$locale["Already deleted"] =
+   "既に削除済みです。";
+$locale["Anonymous Users"] =
+   "匿名ユーザー一覧";
 $locale["Appearance"] =
-   "����";
+   "外観";
 $locale["Application name"] =
-   "���ץꥱ�������̾";
+   "アプリケーション名";
 $locale["Application size: %d Kb"] =
-   "���ץꥱ������󥵥���: %d �����Х���";
+   "アプリケーションサイズ: %d キロバイト";
 $locale["Arguments"] =
-   "��������";
+   "引数一覧";
 $locale["Auth Level"] =
-   "ǧ�ڥ�٥�";
+   "認証レベル";
 $locale["Auth Method"] =
-   "ǧ����ˡ";
+   "認証方法";
+$locale["Authenticated Users"] =
+   "認証済みユーザー一覧";
 $locale["Available plugins"] =
-   "ͭ���ʥץ饰�������";
+   "有効なプラグイン一覧";
 $locale["Bad Version"] =
-   "�С����������������ޤ���";
+   "バージョンが正しくありません。";
 $locale["Blog page"] =
-   "Blog�ڡ���";
+   "Blogページ";
+$locale["Bold text"] =
+   "強調テキスト";
 $locale["Browsing pages"] =
-   "�ڡ����������Ǥ���";
+   "ページを閲覧中です。";
 $locale["Cache statistics"] =
-   "����å�������";
+   "キャッシュ統計";
 $locale["Calendar"] =
-   "��������";
+   "カレンダー";
+$locale["Cancel"] =
+   "取り消し";
+$locale["Cancel rating"] =
+   "評価取り消し";
 $locale["Cannot create directory '%s'"] =
-   "�ǥ��쥯�ȥ� '%s' ���������ޤ���";
+   "ディレクトリ '%s' を作成出来ません。";
+$locale["Category"] =
+   "カテゴリ";
+$locale["CategoryGroup"] =
+   "カテゴリグループ";
 $locale["Change Password"] =
-   "�ѥ�����ѹ�";
+   "パスワード変更";
 $locale["Change country"] =
-   "��̾�ѹ�";
+   "国名変更";
+$locale["Change page attributes"] =
+   "ページ属性の変更";
+$locale["Click to de-/select all pages"] =
+   "クリックで全てのページを選択/選択解除)";
+$locale["Click to reverse sort order"] =
+   "クリックで逆順ソート";
+$locale["Close"] =
+   "閉じる";
 $locale["Comment"] =
-   "������";
+   "コメント";
 $locale["Complete."] =
-   "��λ���ޤ�����";
+   "完了しました。";
+$locale["Conflicting Edits!"] =
+   "編集の衝突!";
 $locale["Contents"] =
-   "����ƥ��";
+   "コンテンツ";
+$locale["Couldn't connect to %s"] =
+   "%s に接続できません。";
+$locale["Couldn't rename page '%s' to '%s'."] =
+   "'%s' から '%s' にページ名変更できませんでした。";
 $locale["Count"] =
-   "�������";
+   "カウント";
 $locale["Create: %s"] =
-   "����: %s";
+   "作成: %s";
 $locale["Creating pages"] =
-   "�ڡ�����������Ƥ��ޤ���";
+   "ページを作成しています。";
+$locale["Creator"] =
+   "作成者";
 $locale["Current Language"] =
-   "���ߤθ���";
+   "現在の言語";
+$locale["Current Theme"] =
+   "現在のテーマ";
 $locale["Current language: '%s'"] =
-   "���ߤθ���: %s";
+   "現在の言語: %s";
 $locale["Current theme: '%s'"] =
-   "���ߤΥơ���: %s";
+   "現在のテーマ: %s";
 $locale["Date Format"] =
-   "�ǡ����ե����ޥå�";
+   "データフォーマット";
 $locale["DebugInfo"] =
-   "�ǥХ�����";
+   "デバグ情報";
 $locale["Default theme: '%s'"] =
-   "�ǥե���ȥơ���: %s";
-$locale["Deleted."] =
-   "������ޤ�����";
+   "デフォルトテーマ: %s";
+$locale["Delete this ACL"] =
+   "この ACL を削除";
 $locale["Describe %s here."] =
-   "������%s�򵭽Ҥ��ޤ���";
+   "ここに %s を記述します。";
 $locale["Description"] =
-   "����";
+   "説明";
+$locale["Description: "] =
+   "説明: ";
 $locale["Dialog"] =
-   "����������";
+   "ダイアログ";
 $locale["Diff"] =
-   "��ʬ";
+   "差分";
 $locale["Diff: %s"] =
-   "��ʬ: %s";
+   "差分: %s";
 $locale["Diffing pages"] =
-   "�ڡ����κ�ʬ����Ϥ��Ƥ��ޤ���";
+   "ページの差分を出力しています。";
+$locale["Do you really want to delete all your UserPreferences?"] =
+   "本当にあなたのユーザー設定を削除しますか?";
+$locale["Don't cache this page."] =
+   "このページはキャッシュしません。";
+$locale["Download for CVS"] =
+   "CVS からダウンロード";
+$locale["Download for backup"] =
+   "バックアップからダウンロード";
+$locale["Download the page contents"] =
+   "ページの内容をダウンロード";
 $locale["Dump Pages as XHTML"] =
-   "XHTML�ǽ���";
+   "XHTMLで出力";
+$locale["Dump to directory"] =
+   "ディレクトリにダンプ";
 $locale["Dumping html pages"] =
-   "HTML�ڡ�������Ϥ��Ƥ��ޤ���";
+   "HTMLページを出力しています。";
 $locale["Dumping serial pages"] =
-   "���ꥢ�饤���ڡ�������Ϥ��Ƥ��ޤ���";
+   "シリアライズページを出力しています。";
 $locale["E-Mail"] =
-   "�᡼��";
+   "メール";
+$locale["E-mail"] =
+   "電子メール";
 $locale["Edit"] =
-   "�Խ�";
+   "編集";
 $locale["Edit %s"] =
-   "%s ���Խ�";
+   "%s を編集";
 $locale["Edit Area Size"] =
-   "�Խ����ꥢ�Υ�����";
+   "編集エリアのサイズ";
 $locale["Edit Old Revision"] =
-   "�Ť���ӥ������Խ�����";
+   "古いリビジョンを編集する";
 $locale["Edit aborted."] =
-   "�Խ������Ǥ��ޤ�����";
+   "編集を中断しました。";
 $locale["Edit metadata for %s"] =
-   "%s ��META�ǡ������Խ�";
+   "%s のMETAデータの編集";
+$locale["Edit old revision"] =
+   "古いリビジョンを編集する";
+$locale["Edit this page"] =
+   "このページを編集する";
 $locale["Edit: %s"] =
-   "�Խ�: %s";
+   "編集: %s";
 $locale["EditMetaData"] =
-   "META�ǡ������Խ�";
+   "METAデータの編集";
+$locale["Edited by: %s"] =
+   "編集者: %s";
 $locale["Editing pages"] =
-   "�ڡ������Խ����Ƥ��ޤ���";
+   "ページを編集しています。";
+$locale["Elapsed time: %s s"] =
+   "経過時間: %s 秒";
 $locale["Email not yet verified."] =
-   "�᡼�륢�ɥ쥹���ǧ����ޤ���Ǥ�����";
+   "メールアドレスを確認出来ませんでした。";
 $locale["Email verified."] =
-   "�᡼�륢�ɥ쥹���ǧ����ޤ�����";
+   "メールアドレスを確認出来ました。";
+$locale["Embedded image"] =
+   "組み込み画像";
 $locale["Empty pagename!"] =
-   "�ڡ���̾��̤����Ǥ�!";
+   "ページ名が未指定です!";
 $locale["Enter your UserId to sign in"] =
-   "�桼����ID�����Ϥ��ƥ����󥤥󤷤Ƥ���������";
+   "ユーザーIDを入力してサインインしてください。";
+$locale["Error: can't open the upload logfile"] =
+   "アップロードログファイルをオープンできませんでした。";
+$locale["Error: the upload log is not writable"] =
+   "アップロードログに書き込めませんでした。";
+$locale["External Links"] =
+   "外部リンク";
 $locale["Fatal PhpWiki Error"] =
-   "��̿Ū��PhpWiki�Υ��顼�Ǥ���";
+   "致命的なPhpWikiのエラーです。";
+$locale["File successfully uploaded."] =
+   "ファイルアップロードに成功しました。";
 $locale["FindPage"] =
-   "�ڡ�������";
+   "ページ検索";
 $locale["First"] =
-   "�ǽ��";
+   "最初へ";
+$locale["FullDump"] =
+   "フルダンプ";
 $locale["FullTextSearch"] =
-   "��ʸ����";
+   "全文検索";
+$locale["Group/User"] =
+   "グループ/ユーザー";
+$locale["Guest"] =
+   "ゲスト";
 $locale["H"] =
-   "�⤵";
+   "高さ";
+$locale["Headline text"] =
+   "ヘッドラインテキスト";
 $locale["Height"] =
-   "�⤵";
+   "高さ";
+$locale["Here are $userPage"] =
+   "これは %s";
 $locale["History of changes."] =
-   "�ѹ�����";
+   "変更履歴";
 $locale["Hit statistics"] =
-   "�ҥå�����";
+   "ヒット統計";
 $locale["Hits"] =
-   "�ҥå�";
+   "ヒット";
 $locale["Hits:"] =
-   "�ҥåȿ�:";
+   "ヒット数:";
 $locale["HomePage"] =
-   "�ۡ���ڡ���";
+   "ホームページ";
+$locale["Horizontal line"] =
+   "水平線";
+$locale["Image saved to cache file: %s"] =
+   "キャッシュファイルに画像を保存しました: %s";
 $locale["Include of '%s' failed"] =
-   "%s �Υ��󥯥롼�ɤ˼��Ԥ��ޤ�����";
+   "%s のインクルードに失敗しました。";
+$locale["Include text from another wiki page."] =
+   "別の wiki ページのテキストを含む";
 $locale["Included from %s"] =
-   "%s �����ɹ��ޤ�ޤ�����";
+   "%s から読込まれました。";
 $locale["Index"] =
-   "����ǥå���";
+   "インデックス";
+$locale["Info"] =
+   "情報:";
 $locale["Inline images"] =
-   "����饤���������";
+   "インライン画像一覧";
 $locale["InterWiki Address"] =
-   "InterWiki���ɥ쥹";
+   "InterWikiアドレス";
 $locale["InterWikiSearch"] =
-   "InterWiki����";
+   "InterWiki検索";
+$locale["Invalid ACL"] =
+   "無効な ACL";
+$locale["Invalid color: %s"] =
+   "無効の色: %s";
 $locale["Invalid password or userid."] =
-   "�桼����ID���ѥ���ɤ�̵���Ǥ���";
+   "ユーザーIDかパスワードが無効です。";
+$locale["Invalid password."] =
+   "パスワードが無効です。";
+$locale["Invalid username '%s' for LDAP Auth"] =
+   "LDAP 認証で ユーザー名 '%s' は不正です。";
+$locale["Italic text"] =
+   "斜体テキスト";
+$locale["LDAP_AUTH_HOST not defined"] =
+   "LDAP_AUTH_HOST が未定義です。";
 $locale["Language"] =
-   "����";
+   "言語";
 $locale["Last"] =
-   "�Ǹ��";
+   "最後へ";
 $locale["Last Author"] =
-   "�ǽ��Խ���";
+   "最終編集者";
 $locale["Last Modified"] =
-   "�ǽ���������";
+   "最終更新日時";
 $locale["Last Summary"] =
-   "�ǽ�����";
+   "最終要約";
+$locale["Last edited %s"] =
+   "最終編集: %s";
+$locale["Last edited on %s"] =
+   "最終編集日時: %s";
+$locale["Legend"] =
+   "凡例";
+$locale["Level 1 headline"] =
+   "レベル 1 ヘッドライン";
 $locale["List PageHistory for %s"] =
-   "%s �Υڡ����������";
+   "%s のページ履歴一覧";
+$locale["List the user's ratings."] =
+   "ユーザーの評価一覧";
+$locale["ListPages"] =
+   "ページ一覧";
+$locale["ListSubpages"] =
+   "サブページ一覧";
 $locale["Load File"] =
-   "�ե������ɹ���";
+   "ファイル読込み";
 $locale["Loading '%s'"] =
-   "'%s' ���ɹ�����Ǥ���";
+   "'%s' を読込み中です。";
 $locale["Loading files"] =
-   "�ե�������ɹ�����Ǥ���";
+   "ファイルを読込み中です。";
 $locale["Lock Page"] =
-   "�ڡ������å�";
+   "ページロック";
 $locale["Locked"] =
-   "���å����ޤ���";
+   "ロックしました";
 $locale["Locking pages"] =
-   "�ڡ�������å���Ǥ���";
+   "ページをロック中です。";
 $locale["Login"] =
-   "��������";
+   "ログイン";
 $locale["MIME file %s"] =
-   "MIME�ե����� %s";
+   "MIMEファイル %s";
 $locale["Markup"] =
-   "�ޡ������å�";
+   "マークアップ";
 $locale["Markup cache purged!"] =
-   "�ޡ������åץ���å�����˴����ޤ���!";
+   "マークアップキャッシュを破棄しました!";
 $locale["Markup:"] =
-   "�ޡ������å�:";
+   "マークアップ:";
+$locale["Merge Edit"] =
+   "結合編集";
+$locale["Merge and Edit: %s"] =
+   "結合と編集: %s";
+$locale["Message"] =
+   "メッセージ";
 $locale["Name"] =
-   "̾��";
+   "名称";
+$locale["New Page"] =
+   "新規ページ";
 $locale["New comment."] =
-   "����������";
-$locale["New page."] =
-   "�����ڡ���";
+   "新規コメント";
 $locale["New password"] =
-   "�����ѥ����";
+   "新規パスワード";
+$locale["Newer page:"] =
+   "新しいページ";
 $locale["Next"] =
-   "����";
+   "次へ";
 $locale["Next Month"] =
-   "���η�";
+   "次の月";
+$locale["No LDAP in this PHP version"] =
+   "この PHP のバージョンは LDAP をサポートしません。";
 $locale["No changes found"] =
-   "�ѹ��������Ĥ���ޤ���Ǥ�����";
+   "変更点が見つかりませんでした。";
 $locale["No changes."] =
-   "�ѹ����ޤ���Ǥ�����";
+   "変更しませんでした。";
+$locale["No page links to %s."] =
+   "%s へのリンクのページはありません。";
+$locale["No pages renamed."] =
+   "ページ名変更はありません。";
 $locale["No revisions found"] =
-   "��ӥ���󤬸��Ĥ���ޤ���";
+   "リビジョンが見つかりません。";
+$locale["No userid"] =
+   "ユーザー ID なし";
 $locale["None"] =
-   "�ʤ�";
+   "なし";
 $locale["Note:"] =
-   "�Ρ���:";
+   "ノート:";
+$locale["OK"] =
+   "OK";
+$locale["Ok"] =
+   "おっけー";
 $locale["Okay"] =
-   "���ä���";
+   "おっけー";
 $locale["OldStyleTable"] =
-   "�쥹������Υơ��֥�";
-$locale["Optimizing %s"] =
-   "%s ���Ŭ����Ǥ�";
+   "旧スタイルのテーブル";
+$locale["Older page:"] =
+   "古いページ";
+$locale["Original URL (Redirect)"] =
+   "オリジナル URL (リダイレクト)";
+$locale["Other diffs:"] =
+   "その他の差分";
+$locale["Other version"] =
+   "その他のバージョン";
+$locale["Overwrite All"] =
+   "全て上書き";
+$locale["Owner"] =
+   "所有者";
+$locale["Owner: %s"] =
+   "所有者: %s";
 $locale["PHP syntax highlighting"] =
-   "PHP��ʸ�ϥ��饤��";
+   "PHP構文ハイライト";
+$locale["Page %s already exists. Ignored."] =
+   "ページ %s は既に存在します。無視しました。";
 $locale["Page Locked"] =
-   "�ڡ�������å����ޤ�����";
+   "ページをロックしました。";
 $locale["Page Name"] =
-   "�ڡ���̾";
+   "ページ名";
 $locale["Page Type:"] =
-   "�ڡ����μ���<:";
+   "ページの種類<:";
 $locale["Page Version:"] =
-   "�ڡ����С������:";
+   "ページバージョン:";
+$locale["Page change"] =
+   "ページ変更";
 $locale["Page now locked."] =
-   "�ڡ����ϥ��å���Ǥ���";
+   "ページはロック中です。";
 $locale["Page now unlocked."] =
-   "�ڡ����ϥ��å������Ǥ���";
+   "ページはロック解除中です。";
 $locale["Page statistics"] =
-   "�ڡ�������";
+   "ページ統計";
 $locale["PageGroup"] =
-   "�ڡ������롼��";
+   "ページグループ";
 $locale["PageHistory"] =
-   "�ڡ�������";
+   "ページ履歴";
 $locale["PageHistory for %s"] =
-   "%s �Υڡ�������";
+   "%s のページ履歴";
 $locale["PageInfo"] =
-   "�ڡ�������";
+   "ページ情報";
 $locale["Pagedata size: %d Kb"] =
-   "�ڡ����ǡ�����������: %s �����Х���";
+   "ページデーターサイズ: %s キロバイト";
+$locale["Parse FOAF"] =
+   "FOAF 解析";
+$locale["Password cannot be changed."] =
+   "パスワードを変更できませんでした。";
+$locale["Password updated."] =
+   "パスワードを更新しました。";
+$locale["Password was not changed."] =
+   "パスワードを変更しませんでした。";
 $locale["Password:"] =
-   "�ѥ����:";
+   "パスワード:";
+$locale["Permission"] =
+   "バージョン";
 $locale["Personal language:"] =
-   "�Ŀ͸���";
+   "個人言語";
 $locale["Personal theme:"] =
-   "�Ŀͥơ���";
+   "個人テーマ";
 $locale["PhotoAlbum"] =
-   "�ե��ȥ���Х�";
+   "フォトアルバム";
 $locale["PhpHighlight"] =
-   "PHP�ϥ��饤��";
+   "PHPハイライト";
+$locale["PhpWikiAdministration"] =
+   "PhpWiki管理";
 $locale["Please continue editing.  (You'll find your %s at the bottom of the page.)"] =
-   "�Խ���³���Ʋ������� (%s �Υڡ����β����⸫�Ƥ�������)";
+   "編集を続けて下さい。 (%s のページの下部も見てください)";
 $locale["Plugin"] =
-   "�ץ饰����";
+   "プラグイン";
 $locale["Plugin %s disabled."] =
-   "�ץ饰���� %s ��̵���ˤʤäƤ��ޤ���";
+   "プラグイン %s は無効になっています。";
 $locale["Plugin %s failed."] =
-   "�ץ饰���� %s �����Ԥ��ޤ�����";
+   "プラグイン %s が失敗しました。";
 $locale["PluginManager"] =
-   "�ץ饰�������";
+   "プラグイン管理";
 $locale["Plugins"] =
-   "�ץ饰�������";
+   "プラグイン一覧";
+$locale["PopUp"] =
+   "ポップアップ";
 $locale["PrevNext"] =
-   "����";
+   "前後";
 $locale["Preview"] =
-   "�ץ�ӥ塼����";
+   "プレビューする";
 $locale["Preview only!  Changes not saved."] =
-   "�ץ�ӥ塼���Ƥ�������Ǥ�! �ޤ���¸�Ϥ���Ƥ��ޤ���";
+   "プレビューしているだけです! まだ保存はされていません。";
 $locale["Previous"] =
-   "����";
+   "前へ";
 $locale["Previous Author"] =
-   "�����Խ���";
+   "前の編集者";
 $locale["Previous Month"] =
-   "���η�";
+   "前の月";
 $locale["Previous Revision"] =
-   "���Υ�ӥ����";
+   "前のリビジョン";
 $locale["Printer"] =
-   "�ץ�󥿡�";
+   "プリンター";
 $locale["Purge Markup Cache"] =
-   "�ޡ������åץ���å�����˴�";
+   "マークアップキャッシュの破棄";
 $locale["RandomPage"] =
-   "������ڡ���";
+   "ランダムページ";
+$locale["Rate It"] =
+   "評価する";
+$locale["Rate the topic of this page"] =
+   "このページのトピックを評価する";
 $locale["Raw HTML"] =
-   "����HTML";
+   "生のHTML";
+$locale["Raw HTML is disabled in this wiki."] =
+   "生 HTML はこの wiki では禁止されています。";
+$locale["Recent Comments"] =
+   "最近のコメント";
+$locale["Recent Edits"] =
+   "最近の編集";
 $locale["RecentChanges"] =
-   "�ѹ�����";
+   "変更履歴";
+$locale["RecentComments"] =
+   "最近のコメント";
+$locale["RecentReferrers"] =
+   "最近のリファラー";
 $locale["Redirect"] =
-   "ž��";
+   "転送";
 $locale["References"] =
-   "���Ȱ���";
+   "参照一覧";
+$locale["Related Links"] =
+   "関連リンク";
+$locale["Remove"] =
+   "削除";
 $locale["Remove Page"] =
-   "�ڡ������";
-$locale["Remove page"] =
-   "�ڡ������";
+   "ページ削除";
 $locale["Remove selected pages"] =
-   "����ڡ��������ƺ��";
+   "選択ページを全て削除";
+$locale["Remove this page"] =
+   "このページを削除";
 $locale["Removing pages"] =
-   "�ڡ���������Ǥ���";
+   "ページを削除中です。";
+$locale["Rename selected pages"] =
+   "選択ページを全て名称変更";
+$locale["Reply"] =
+   "返信";
 $locale["Return to %s"] =
-   "%s �����";
+   "%s に戻る";
+$locale["Revert"] =
+   "戻す";
 $locale["Revision Not Found"] =
-   "��ӥ���󤬸��Ĥ���ޤ���";
+   "リビジョンが見つかりません";
 $locale["Save"] =
-   "��¸����";
+   "保存する";
 $locale["Saved: %s"] =
-   "��¸���ޤ���: 5s";
+   "保存しました: 5s";
 $locale["Score"] =
-   "������";
+   "スコア";
 $locale["Search"] =
-   "����";
+   "検索";
+$locale["Search & Replace"] =
+   "検索と置換";
+$locale["Search an LDAP directory"] =
+   "LDAP ディレクトリ検索";
 $locale["See %s"] =
-   "%s �򻲾�";
+   "%s を参照";
 $locale["See: %s"] =
-   "����: %s";
+   "参照: %s";
+$locale["Select"] =
+   "選択";
+$locale["Select pages"] =
+   "選択ページ";
 $locale["Select: "] =
-   "����:";
+   "選択:";
 $locale["Serialized file %s"] =
-   "���ꥢ�饤���ե����� %s";
+   "シリアライズファイル %s";
+$locale["Set Password"] =
+   "パスワード設定";
+$locale["Set USE_DB_SESSION to false."] =
+   "USE_DB_SESSION の設定に失敗しました。";
 $locale["Sidebar"] =
-   "���饤�ɥС�";
+   "スライドバー";
 $locale["Sign In"] =
-   "�����󥤥�";
+   "サインイン";
 $locale["Sign Out"] =
-   "�����󥵥���";
+   "サインサウト";
+$locale["Signed Users"] =
+   "サイン済みユーザー一覧";
 $locale["SiteMap"] =
-   "�����ȥޥå�";
+   "サイトマップ";
 $locale["Size:"] =
-   "������:";
+   "サイズ:";
+$locale["Sorry but this file is too big"] =
+   "このファイルは大きすぎます";
 $locale["Sort by %s"] =
-   "%s�ǥ����Ȥ��ޤ���";
+   "%sでソートします。";
 $locale["Sound Score"] =
-   "������ɥ�����";
+   "サウンドスコア";
+$locale["SqlResult"] =
+   "SQL 結果";
 $locale["Status:"] =
-   "����:";
+   "状況:";
+$locale["SubPages of %s:"] =
+   "%s のページ履歴";
 $locale["Submit"] =
-   "����";
+   "送信";
 $locale["Submit country"] =
-   "��̾����";
+   "国名送信";
 $locale["Submit location"] =
-   "������ѹ�";
+   "所在地変更";
 $locale["Subpage"] =
-   "���֥ڡ���";
+   "サブページ";
 $locale["Summary"] =
-   "����";
+   "要約";
 $locale["Supported languages"] =
-   "���ݡ��ȸ������";
+   "サポート言語一覧";
 $locale["Supported themes"] =
-   "���ݡ��ȥơ��ް���";
+   "サポートテーマ一覧";
 $locale["Synopsis"] =
-   "����";
+   "要約";
+$locale["System default:"] =
+   "システムデフォルト:";
 $locale["SystemInfo"] =
-   "�����ƥ����";
+   "システム情報";
+$locale["The DBA handler %s is unsupported!"] =
+   "DBA ハンドラー %s はサポートしていません!";
+$locale["The PhpWiki access log file"] =
+   "PhpWiki アクセスログファイル";
+$locale["The PhpWiki programming team"] =
+   "PhpWiki プログラミングチーム";
 $locale["Theme"] =
-   "�ơ���";
+   "テーマ";
 $locale["Time Zone"] =
-   "�����ॾ����";
+   "タイムゾーン";
+$locale["Title"] =
+   "タイトル";
 $locale["Title Search"] =
-   "�����ȥ븡��";
+   "タイトル検索";
+$locale["Title:"] =
+   "タイトル:";
 $locale["TitleSearch"] =
-   "�����ȥ븡��";
+   "タイトル検索";
 $locale["Today"] =
-   "����";
+   "今日";
 $locale["Top & bottom toolbars"] =
-   "�����Ȳ����Υġ���С�";
+   "上部と下部のツールバー";
+$locale["Topic"] =
+   "トピック";
 $locale["Total %d plugins: "] =
-   "��� %d �ץ饰����";
+   "合計 %d プラグイン";
 $locale["Total of %d themes: "] =
-   "���ơ��޿�: %d";
+   "総テーマ数: %d";
 $locale["Type it again"] =
-   "�⤦��������";
+   "もう一度入力";
+$locale["Unable to connect to IMAP server "] =
+   "IMAP サーバーに接続できません。";
+$locale["Undo"] =
+   "取り消し";
+$locale["Undo Search & Replace"] =
+   "検索と置換の取り消し";
 $locale["Unlock Page"] =
-   "�ڡ������å����";
+   "ページロック解除";
 $locale["Unlocking pages"] =
-   "�ڡ����Υ��å�������Ǥ���";
+   "ページのロックを解除中です。";
+$locale["Unsupported ACL access type %s ignored."] =
+   "未サポート ACL アクセスタイプ %s は無視しました。";
+$locale["UpLoad"] =
+   "アップロード";
+$locale["UpLoadPlugin"] =
+   "アップロードプラグイン";
 $locale["Update Preferences"] =
-   "����򹹿����ޤ���";
+   "設定を更新しました";
+$locale["Upgrade"] =
+   "アップグレード";
 $locale["Upload"] =
-   "���åץ�����";
+   "アップロード";
+$locale["Upload File"] =
+   "アップロードファイル";
+$locale["Upload error: file too big"] =
+   "アップロードエラー: ファイルが大きすぎます。";
+$locale["Upload error: no file selected"] =
+   "アップロードエラー: ファイルを選択していません";
+$locale["Upload error: unknown error #"] =
+   "アップロードエラー: 未知のエラー #";
 $locale["Uploading %s"] =
-   "%s �򥢥åץ�������Ǥ���";
+   "%s をアップロード中です。";
 $locale["Use old markup"] =
-   "�Ť��ޡ������åפ����";
+   "古いマークアップを使用";
 $locale["User page"] =
-   "�桼�����ڡ���";
+   "ユーザーページ";
 $locale["User statistics"] =
-   "�桼��������";
+   "ユーザー統計";
 $locale["UserId"] =
-   "�桼����ID";
+   "ユーザー ID";
 $locale["UserId:"] =
-   "�桼����ID:";
+   "ユーザーID:";
 $locale["UserPreferences"] =
-   "�桼��������";
+   "ユーザー設定";
 $locale["Using directory '%s'"] =
-   "�ǥ��쥯�ȥ� '%s' ����Ѥ��Ƥ��ޤ���";
+   "ディレクトリ '%s' を使用しています。";
 $locale["Version"] =
-   "�С������";
+   "バージョン";
 $locale["Version %d"] =
-   "�С������ %d";
+   "バージョン %d";
 $locale["Version %s"] =
-   "�С������ %s";
+   "バージョン %s";
+$locale["Version %s, saved %s"] =
+   "バージョン %s 保存日時 %s";
+$locale["Version %s, saved on %s"] =
+   "バージョン %s 保存日時 %s";
 $locale["View Source"] =
-   "�������򸫤�";
+   "ソースを見る";
 $locale["View Source: %s"] =
-   "�������򸫤�: %s";
+   "ソースを見る: %s";
 $locale["View the current version"] =
-   "���ߤΥС�������ɽ������";
+   "現在のバージョンを表示する";
 $locale["W"] =
-   "��";
+   "幅";
 $locale["Warning!"] =
-   "�ٹ�!";
+   "警告!";
 $locale["Warning: You are editing an old revision."] =
-   "�ٹ�: ���ʤ��ϸŤ���ӥ������Խ����Ƥ��ޤ���";
+   "警告: あなたは古いリビジョンを編集しています。";
+$locale["Who is online"] =
+   "オンラインユーザー";
 $locale["Width"] =
-   "��";
+   "幅";
 $locale["Wiki Name"] =
-   "Wiki̾";
+   "Wiki 名";
 $locale["WikiForm: %s: unknown action"] =
-   "WikiForm: '%s' ��̤�Τ����Ǥ���";
+   "WikiForm: '%s' は未知の操作です。";
+$locale["WikiPlugin"] =
+   "Wiki プラグイン";
+$locale["Wikiname regexp"] =
+   "Wikiname 正規表現";
+$locale["World"] =
+   "世界";
+$locale["Wrong password. Try again."] =
+   "パスワードが違うようです。もう一度試してください。";
+$locale["XML-RPC access"] =
+   "XML-RPC アクセス";
+$locale["Yes"] =
+   "はい";
 $locale["Your E-Mail:"] =
-   "���ʤ��Υ᡼�륢�ɥ쥹:";
+   "あなたの電子メールアドレス:";
+$locale["Your UserPreferences have been successfully deleted."] =
+   "あなたのユーザー設定の削除に成功しました。";
+$locale["Your rating was %.1f"] =
+   "あなたの評価は %.1f でした";
+$locale["Your signature"] =
+   "あなたの署名";
+$locale["Your version"] =
+   "あなたのバージョン";
+$locale["ZIP files of database"] =
+   "データベースの ZIP ファイル一覧";
+$locale["add "] =
+   "追加";
 $locale["cached pagedata:"] =
-   "�ڡ����ǡ����򥭥�å���:";
+   "ページデータをキャッシュ:";
 $locale["cached versiondata:"] =
-   "�С������ǡ����򥭥�å���:";
+   "バージョンデータをキャッシュ:";
 $locale["compare revisions"] =
-   "��ӥ�������";
+   "リビジョン比較";
+$locale["create this page"] =
+   "このページを作成する";
 $locale["current version"] =
-   "���ߤΥС������";
+   "現在のバージョン";
 $locale["db backend:"] =
-   "�ǡ����١����Хå������";
+   "データベースバックエンド";
 $locale["db type:"] =
-   "�ǡ����١���������";
+   "データベースタイプ:";
 $locale["dba handler:"] =
-   "dba�ϥ�ɥ顼";
+   "dbaハンドラー";
 $locale["diff"] =
-   "��ʬ";
+   "差分";
+$locale["diff this page"] =
+   "このページの差分をとる";
+$locale["dump html pages"] =
+   "HTML ページでダンプする";
+$locale["dump serial pages"] =
+   "シリアライズページでダンプする";
 $locale["edit area"] =
-   "�Խ����ꥢ";
+   "編集エリア";
+$locale["edit this page"] =
+   "ページを編集する";
 $locale["from %s"] =
-   "%s ����";
+   "%s から";
 $locale["home page"] =
-   "�ۡ���ڡ���";
-$locale["illegal pagename"] =
-   "�ڡ���̾������������ޤ���";
+   "ホームページ";
 $locale["locked"] =
-   "���å����ޤ���";
+   "ロックしました";
 $locale["max: %d"] =
-   "����: %d";
+   "最大: %d";
 $locale["new page"] =
-   "�����ڡ���";
+   "新規ページ";
 $locale["no cache used"] =
-   "����å����Ȥ��ޤ���";
+   "キャッシュを使いません";
+$locale["no page content"] =
+   "ページの内容がありません。";
 $locale["plain file %s"] =
-   "�ץ쥤��ե����� %s";
+   "プレインファイル %s";
 $locale["previous revision"] =
-   "���Υ�ӥ����";
+   "前のリビジョン";
+$locale["remove this page"] =
+   "このページを削除する";
+$locale["renamed from %s"] =
+   "%s から名称変更しました。";
+$locale["revert to a previous version of this page"] =
+   "このページの前のバージョンに戻す";
+$locale["revert to version %d"] =
+   "バージョン %d に戻す";
+$locale["same version page"] =
+   "同一バージョンのページ";
 $locale["saved as %s"] =
-   "%s ����¸���ޤ�����";
+   "%s を保存しました。";
 $locale["timeout:"] =
-   "�����ॢ����";
+   "タイムアウト";
 $locale["today"] =
-   "����";
+   "今日";
 $locale["too long"] =
-   "Ĺ�����ޤ���";
+   "長すぎます。";
 $locale["total hits: %d"] =
-   "���ҥåȿ�: %s";
+   "総ヒット数: %s";
+$locale["upload a zip dump"] =
+   "zip 形式のダンプをアップロード";
 $locale["use this plugin"] =
-   "���Υץ饰�����Ȥ�";
+   "このプラグインを使う";
 $locale["version %d"] =
-   "�С������ %d";
+   "バージョン %d";
 $locale["version %s"] =
-   "�С������ %s";
+   "バージョン %s";
+$locale["view this page"] =
+   "このページを閲覧する";
 $locale["yesterday"] =
-   "����";
+   "昨日";
 
 ?>
