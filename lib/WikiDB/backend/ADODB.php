@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.73 2005-02-04 13:43:30 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.74 2005-02-10 19:04:22 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -641,6 +641,12 @@ extends WikiDB_backend
             $exclude = " AND $want.pagename NOT IN ".$this->_sql_set($exclude);
         else 
             $exclude='';
+        if ($limit) {
+            list($offset, $count) = $this->limit($limit);
+            // TODO: check pqsql LIMIT count OFFSET offset 
+            $limit = " LIMIT $offset, $count";
+        } else 
+            $limit = '';
 
         $qpagename = $dbh->qstr($pagename);
         // removed ref to FETCH_MODE in next line
@@ -653,7 +659,8 @@ extends WikiDB_backend
                                 . (!$include_empty ? " AND $nonempty_tbl.id=$want.id" : "")
                                 //. " GROUP BY $want.id"
                                 . $exclude
-                                . $orderby);
+                                . $orderby
+                                . $limit);
         return new WikiDB_backend_ADODB_iter($this, $result, $this->page_tbl_field_list);
     }
 
@@ -1121,6 +1128,9 @@ extends WikiDB_backend
     function connection() {
         return $this->_dbh->_connectionID;
     }
+    function getRow($query) {
+        return $this->_dbh->getRow($query);
+    }
 
     function listOfTables() {
         return $this->_dbh->MetaTables();
@@ -1419,6 +1429,9 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.73  2005/02/04 13:43:30  rurban
+// fix purge cache error
+//
 // Revision 1.72  2005/01/29 19:51:03  rurban
 // Bugs item #1077769 fixed by frugal.
 // Deleted the wrong page. Fix all other tables also.
