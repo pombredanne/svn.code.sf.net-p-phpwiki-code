@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.51 2004-06-01 15:23:10 rurban Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.52 2004-06-13 12:51:47 rurban Exp $ -->
 <?php
 // Todo: Move the logic and code to the plugin
 // This is very experimental and the read-only part an ugly hack so far.
@@ -41,12 +41,13 @@ $GoogleLinkCB = HTML::input(array('type' => 'checkbox',
                                   'name' => 'pref[googleLink]',
                                   'value' => '1',
                                   'checked' => (bool) $pref->get('googleLink')));
-
-function selectedOption ($value, $label = false) {
+if (!function_exists('selectedOption')) {
+  function selectedOption ($value, $label = false) {
     return HTML::option(array('value' => $value,'selected'=>"selected"), ($label ? $label : $value) . "\n");
-}
-function unselectedOption ($value, $label = false) {
+  }
+  function unselectedOption ($value, $label = false) {
     return HTML::option(array('value' => $value), ($label ? $label : $value) . "\n");
+  }
 }
 
 $SelectThemes = ''; $SelectLanguages = '';
