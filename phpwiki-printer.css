@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki-printer.css,v 1.5 2002-01-26 07:09:33 carstenklapp Exp $
+ * $Id: phpwiki-printer.css,v 1.6 2002-01-26 07:24:47 carstenklapp Exp $
  *
  * PhpWiki style sheet for the printed page:
  * Black on white only, with no toolbar commands and no link icons.
@@ -104,6 +104,13 @@ img {
 
 /* Hide the rss icon from the printed page (perhaps this should be left in? */
 .rssicon {
+        visibility : none;
+        width :      0;
+        height :     0;
+}
+
+/* Hide the w3.org link image from the printed page */
+div.xhtml-validator {
         visibility : hidden;
         width :      0;
         height :     0;
