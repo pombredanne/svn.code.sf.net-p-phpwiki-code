@@ -56,6 +56,8 @@ $locale["Search"] =
    "Buscar";
 $locale["Sorry for the inconvenience."] =
    "Disculpe la inconveniencia.";
+$locale["Synopsis"] =
+   "Sinopsis";
 $locale["TextFormattingRules"] =
    "ReglasDeFormatoDeTexto";
 $locale["Thank you for editing %s."] =

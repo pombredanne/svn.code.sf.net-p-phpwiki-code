@@ -56,6 +56,8 @@ $locale["See %s tips for editing."] =
    "%s consigli per le modifiche.";
 $locale["Sorry for the inconvenience."] =
    "Scusa per l'inconveniente.";
+$locale["Synopsis"] =
+   "Sinossi";
 $locale["TextFormattingRules"] =
    "RegoleDiFormattazioneDelTesto";
 $locale["Thank you for editing %s."] =
