@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.80 2004-11-25 17:20:51 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.81 2004-11-29 17:57:27 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -340,8 +340,11 @@ function undo_save() {
                                                 'src'  => $WikiTheme->getImageURL("ed_category.gif"),
                                                 'title'=>_("AddCategory"),
                                                 'onclick'=>"showPulldown('".
-                                                _("Insert Categories double-click")
-                                                ."',['".join("','",$categories)."'])"));
+                                                _("Insert Categories (double-click)")
+                                                ."',['".join("','",$categories)."'],'"
+                                                ._("Insert")."','"
+                                                ._("Close")
+                                                ."')"));
                 if ($sr_html) $sr_html = HTML($sr_html, $more_buttons);
                 else $sr_html = $more_buttons;
             }
@@ -805,6 +808,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.80  2004/11/25 17:20:51  rurban
+ and again a couple of more native db args: backlinks
+
  Revision 1.79  2004/11/21 11:59:20  rurban
  remove final \n to be ob_cache independent
 
