@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.9\n"
-"POT-Creation-Date: 2001-04-07 09:03-0700\n"
+"POT-Creation-Date: 2001-05-21 09:36-0700\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -109,7 +109,7 @@ msgstr "Sökresultat för fulltextsökning"
 msgid "Complete."
 msgstr ""
 
-#: ../lib/loadsave.php:99 ../lib/main.php:157
+#: ../lib/loadsave.php:99 ../lib/main.php:158
 msgid "You must specify a directory to dump to"
 msgstr ""
 
@@ -136,15 +136,15 @@ msgstr ""
 msgid "as version %d"
 msgstr "version %s"
 
-#: ../lib/main.php:41 ../lib/main.php:100
+#: ../lib/main.php:41 ../lib/main.php:99 ../lib/main.php:101
 msgid "HomePage"
 msgstr "Framsida"
 
-#: ../lib/main.php:111
+#: ../lib/main.php:112
 msgid "Action $action is disabled in this wiki."
 msgstr ""
 
-#: ../lib/main.php:165
+#: ../lib/main.php:166
 msgid "You must specify a source to read from"
 msgstr ""
 
