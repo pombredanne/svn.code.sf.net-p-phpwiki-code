@@ -10,7 +10,7 @@ Als je documenten met een ingewikkelde opmaak aan de Wiki toe wilt voegen,
 kun je misschien beter een URL geven dan de tekst van het document hier 
 in proberen te tiepen, zoals:
 
- PhpWiki project pagina: http://wcsb.org/~swain/php/wiki/
+ PhpWiki project pagina: http://phpwiki.sourceforge.net/
 
 Wiki ondersteunt geen HTML tags (zie TekstFormmateringsRegels).  <tags>Die
 zien er gewoon uit als tekst.</tags>  De bedoeling van Wiki is zo eenvoudig 
