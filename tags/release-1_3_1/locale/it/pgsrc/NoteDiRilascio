@@ -1,0 +1,77 @@
+PhpWiki 1.2 &egrave avanzato di molto rispetto alla versione 1.0:
+
+* Supporto per MySQL, Postgresql, mSQL, flat file e sono incluse le nuove librerie dba_ di PHP4
+* Internazionalizzazione: supporto per differenti linguaggi. Tedesco, Spagnolo, Svedese e Olandese sono inclusi in PhpWiki. &Egrave possibile aggiungere facilmente nuovi linguaggi 
+* Nuovo sistema per i link usando le parentesi quadre in aggiunta al !BumpyText  vecchio stile
+* Le caratteristiche di amministrazione includono blocco delle pagina, compattare il Wiki in un file zip e cancellare pagine.
+* La pagina PiuPopolari mostra le pagine pi&ugrave frequentemente viste.
+* Pienamente compatibile HTML.
+* I link in basso alle pagine descrivono le relazioni tra i link in entrata dalle altre pagine ed i link in uscita, e le pagine piu` popolari
+* Le differenze di colore tra la versione corrente e quella precedente
+* Una pagina informativa per visualizzare metadati
+* Piu` facilita` di personalizzazione da parte dell'amministratore
+* Un sistema di template per separare la pagina HTML generata dal codice stesso
+* Nuovi marcatori per <B>, <I>, <DD>, <BR>  ed altri 
+* Il marcaggio senza tab rimpiazza il vecchio stile di markup (in ogni caso entrambi sono supportati
+
+
+----
+
+PhpWiki 1.1.9 include pagine in lingua spagnola e molte altre, una piena
+implementazione di Postgresql e numerosi bug fix. Guarda il file
+HISTORY per maggiori informazioni su: http://phpwiki.sourceforge.net/phpwiki/HISTORY
+
+----
+
+PhpWiki 1.1.6 e` una versione notevolmente migliorata di PhpWiki. Ha la
+possibilita` di avere temi tramite un sistema facilmente modificabile;
+Questo schema per MySQL e` stato completamente riscritto, spezzando i dettagli
+delle pagine in colonne (per efficenza ci siamo accordati di non mettere
+references in tabelle separate, cosi` da non completamente normalizzare
+il db. "Non lasciare che il meglio sia il nemico del buono.");
+
+Il supporto per Postgresql e` stato aggiunto e il linguaggio di
+marcatura si sta evolvendo, ora permette di usare i tag
+!!!<h1>
+!!<h2>
+!<h3>
+e __un nuovo modo per rendere il testo in grassetto__, ed ovviamente un
+[nuovo sistema di linking]
+
+C'e` una nuova funzione su tutte le pagine chiamata ''more info'' che
+permette una visione a 'basso livello' della pagina, molto utile per
+questioni di debugging
+
+Dalla release 1.2 abbiamo aggiunto il logging, le 10 pagine piu` attive
+and altre funzionalita` con il nuovo schema del database (e si, queste
+funzionalita` funzionano anche con la versione DBM). Vorrei anche
+aggiungere il supporto per mSQL a testarlo con Zend, il nuovo PHP4
+
+Da qui in poi si trovano le note di rilascio della versione 1.03,
+l'ultimo rilascio della serie 1.0 di PhpWiki.
+--Steve Wainstead, mailto:swain@panix.com
+----
+
+PhpWiki e` stato scritto perche` ero cosi` interessato ai WikiWikiWebs,
+e non avevo usato il php dalla versione 2.0. Volevo vedere come era
+progredito
+
+La versione 1.0 e` un clone quasi perfetto del Portland Pattern Repository http://c2.com/cgi-bin/wiki?WikiWikiWeb. In verita`, stavo usando lo script Wiki che e` scaricabile come modello di partenza. Wiki manca di un numero di funzionalita` che PPR ha, come EditCopy. Cosi` in verita` PhpWiki ha un e` un ibrido tra PPR e il wiki generico che puoi ottenere li (che e` stato scritto in perl)
+
+Una particolarita` di PhpWiki e` quello di permettere l'uso dell'HTML se
+la linea e` preceduta da una | pipe. E` stato molto semplice da
+aggiungere a l'idea e` scaturita da un posting sul PPR a proposito dic
+ome la AT&T e il loro clone Wiki interno era usato con la stessa
+tecnica. La abilita` di includere l'HTML e` disabilitata per default per
+ragioni di sicurezza.                       
+
+La versione 1.01 include una patch che corregge un piccolo errore nel
+rendering delle linee orizzontali <hr>. I ringraziamenti vanno a Gerry
+Barksdale.
+
+Guarda il file HISTORY per una descrizione di tutto il processo di
+sviluppo se tutta la storia ti interessa! :-)
+
+--SteveWainstead
+
+

@@ -1,0 +1,15 @@
+From hostmaster@dairiki.org  Sat Feb 10 21:28:19 2001
+Subject: TitleSearch
+From: hostmaster@dairiki.org (PhpWiki)
+Date: Wed, 12 Sep 2001 13:47:25 -0700
+Mime-Version: 1.0 (Produced by PhpWiki 1.1.x)
+Content-Type: application/x-phpwiki;
+  pagename=TitleSearch;
+  flags=PAGE_LOCKED
+Content-Transfer-Encoding: binary
+
+<?plugin TitleSearch?>
+----
+Search Again:
+<?plugin-form TitleSearch auto_redirect=0?>
+<?plugin-form FullTextSearch?>

@@ -1,0 +1,20 @@
+Here are some good starting points for browsing.
+
+* HowToUseWiki gives you the quick lowdown on Wiki markup.
+* RecentChanges recorded automatically.
+* MoreAboutMechanics of browsing and editing on this server.
+
+Here's a title search.   Try something like ''wiki'' 
+or ''sandwich''.
+
+<?plugin-form TitleSearch?>
+
+Use the following for a full text search. This takes a few seconds. The results will show all lines on a given page that contain a match.
+
+<?plugin-form FullTextSearch?>
+
+------
+Separate words with a space. All words have to match.
+%%%To exclude words prepend a '-'.
+%%%Example: 'wiki text -php' looks for all pages containing the words 'wiki'
+__and__ 'text', but __not__ containing the word 'php'.

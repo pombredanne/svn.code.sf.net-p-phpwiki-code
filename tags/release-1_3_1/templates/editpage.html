@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html>
+<head>
+<!-- phpwiki source:
+${RCS_IDS}
+-->
+<base href="${BASE_URL}">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" title="phpwiki" href="${CSS_URL}" type="text/css">
+
+<title>Edit: ${SPLIT_PAGE}</title>
+</head>
+
+<body>
+<h1>
+<div><a class="wikilink"
+        href="${BROWSE}HomePage"
+        ><img src="${LOGO}" border=0 align="right"
+	     alt="[phpwiki]" width=50 height=50></a></div>
+Edit <a href="${BROWSE}${PAGEURL}"  
+        class="wikilink"><span class="wikiword">${PAGE}</span></a>
+</h1>
+
+<?php if (!empty($PREVIEW_CONTENT)) { ?>
+  <p><b>Preview only!  Changes not saved.</b></p>
+  <div class="wikitext">${PREVIEW_CONTENT}</div>
+  <hr class="ignore" noshade>
+<?php } ?>
+
+<?php if (!$IS_CURRENT) { ?>
+  <p><b>Warning: You are editing an old revision.
+        Saving this page will overwrite the current version.</b></p>
+  <hr class="ignore" noshade>
+<?php } ?>
+
+<?php /*
+ * FIXME: Hack! 
+ * The URL used for the form action parameter is bogus.
+ * This is needed, otherwise the redirect to the real browser
+ * page won't work with some browsers (NS4).  (NS4 won't accept
+ * a redirect from a page to itself.)
+ */ ?>
+
+<form method="POST" action="${BROWSE}EditPage">
+<textarea class="wikiedit"
+          name="content"
+          rows="${EDIT_AREA_HEIGHT}"
+          cols="${EDIT_AREA_WIDTH}"
+          wrap="virtual">$FORMVARS[content]</textarea>
+
+<div class="toolbar" style="text-align: center;">
+  Summary:<input type="text" class="wikitext"
+                 name="summary" value="$FORMVARS[summary]" size=50>
+</div>
+<table class="toolbar" width="100%"
+       cellpadding=0 cellspacing=0 border=0><tr valign="baseline">
+  <td>
+    <input type="checkbox" name="minor_edit" value="checked" $FORMVARS[minor_edit]>
+    This is a minor change.
+  </td>
+  <td align="center">
+    <input type="submit" class="button" name="preview" value="Preview">
+    | <input type="submit" class="button" value="Save">
+  </td>
+  <td align="right">
+    <?php if ($user->is_authenticated()) { ?>
+      You are signed in as <?php echo LinkWikiWord($USERID); ?>
+    <?php } else { ?>
+      Author will be logged as <i>${USERID}</i>.
+    <?php } ?>
+  </td>
+</tr></table>
+<p style="clear: both; padding: 2ex 0ex 0ex;">
+  You can change the size of the editing area.
+  See <?php echo LinkExistingWikiWord('UserPreferences'); ?>.
+  Also see <?php echo LinkExistingWikiWord('GoodStyle') ?> tips for editing.
+</p>
+<hr noshade>
+<small>
+<b>Emphasis:</b>
+  '' for italics,
+  __ for bold,
+  ''__ for both
+<br><b>Lists:</b>
+  * for bullet lists,
+  # for numbered lists,
+  ''; term : definition'' for definition lists
+<br><b>References:</b>
+  JoinCapitalizedWords or use square brackets for a [page link]
+  or URL [http://cool.wiki.int/].
+<br><b>Footnotes:</b>
+   Use [1],[2],[3],... 
+<br><b>Preventing linking:</b>
+   Avoid linking with "!": !DoNotHyperlink,
+   name links like [[text | URL] (double up on the "[")
+<br><b>Misc:</b>
+   "!", "!!", "!!!" make headings,
+   "%%%" makes a linebreak,
+   "- - - -" makes a horizontal rule
+<br>
+more on <?php echo LinkExistingWikiWord('TextFormattingRules') ?>
+</small>
+
+<input type="hidden" name="action" value="save">
+<input type="hidden" name="pagename" value="$FORMVARS[pagename]">
+<input type="hidden" name="editversion" value="$FORMVARS[editversion]">
+<input type="hidden" name="version" value="$FORMVARS[version]">
+</form>
+</body>
+</html>
