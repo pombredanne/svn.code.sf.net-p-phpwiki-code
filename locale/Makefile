@@ -1,4 +1,4 @@
- # $Id: Makefile,v 1.44 2005-01-08 22:41:42 rurban Exp $
+ # $Id: Makefile,v 1.45 2005-02-12 10:36:09 rurban Exp $
 #
 # locale/Makefile
 #
@@ -50,6 +50,10 @@ depend :
 dep :
 	@echo "Please use make depend"
 
+# requires gettext-lint
+check: 
+	POFileChecker po/*.po | xsltproc /usr/local/share/gettext-lint/report.xsl - | \
+		sed 's,<table>,<table border="1">,' > po/POFileChecker.html
 
 # DO NOT DELETE THIS LINE
 #
@@ -65,10 +69,10 @@ po: po/fr.po
 mo: fr/LC_MESSAGES/phpwiki.mo fr/LC_MESSAGES/phpwiki.php
 po: po/it.po
 mo: it/LC_MESSAGES/phpwiki.mo it/LC_MESSAGES/phpwiki.php
-po: po/ja.utf-8.po
-mo: ja.utf-8/LC_MESSAGES/phpwiki.mo ja.utf-8/LC_MESSAGES/phpwiki.php
 po: po/ja.euc-jp.po
 mo: ja.euc-jp/LC_MESSAGES/phpwiki.mo ja.euc-jp/LC_MESSAGES/phpwiki.php
+po: po/ja.utf-8.po
+mo: ja.utf-8/LC_MESSAGES/phpwiki.mo ja.utf-8/LC_MESSAGES/phpwiki.php
 po: po/nl.po
 mo: nl/LC_MESSAGES/phpwiki.mo nl/LC_MESSAGES/phpwiki.php
 po: po/sv.po
@@ -80,9 +84,14 @@ ${POT_FILE}: ../lib/ArchiveCleaner.php
 ${POT_FILE}: ../lib/BlockParser.php
 ${POT_FILE}: ../lib/CachedMarkup.php
 ${POT_FILE}: ../lib/DbSession.php
+${POT_FILE}: ../lib/DbSession/ADODB.php
+${POT_FILE}: ../lib/DbSession/PDO.php
+${POT_FILE}: ../lib/DbSession/SQL.php
+${POT_FILE}: ../lib/DbSession/dba.php
 ${POT_FILE}: ../lib/DbaDatabase.php
 ${POT_FILE}: ../lib/DbaListSet.php
 ${POT_FILE}: ../lib/DbaPartition.php
+${POT_FILE}: ../lib/EditToolbar.php
 ${POT_FILE}: ../lib/ErrorManager.php
 ${POT_FILE}: ../lib/ExternalReferrer.php
 ${POT_FILE}: ../lib/FileFinder.php
@@ -106,6 +115,7 @@ ${POT_FILE}: ../lib/Theme.php
 ${POT_FILE}: ../lib/WikiCallback.php
 ${POT_FILE}: ../lib/WikiDB.php
 ${POT_FILE}: ../lib/WikiDB/ADODB.php
+${POT_FILE}: ../lib/WikiDB/PDO.php
 ${POT_FILE}: ../lib/WikiDB/SQL.php
 ${POT_FILE}: ../lib/WikiDB/backend.php
 ${POT_FILE}: ../lib/WikiDB/backend/ADODB.php
@@ -113,6 +123,8 @@ ${POT_FILE}: ../lib/WikiDB/backend/ADODB_mssql.php
 ${POT_FILE}: ../lib/WikiDB/backend/ADODB_mysql.php
 ${POT_FILE}: ../lib/WikiDB/backend/ADODB_oci8po.php
 ${POT_FILE}: ../lib/WikiDB/backend/ADODB_sqlite.php
+${POT_FILE}: ../lib/WikiDB/backend/PDO.php
+${POT_FILE}: ../lib/WikiDB/backend/PDO_mysql.php
 ${POT_FILE}: ../lib/WikiDB/backend/PearDB.php
 ${POT_FILE}: ../lib/WikiDB/backend/PearDB_mysql.php
 ${POT_FILE}: ../lib/WikiDB/backend/PearDB_oci8.php
@@ -167,10 +179,13 @@ ${POT_FILE}: ../lib/pdf.php
 ${POT_FILE}: ../lib/plugin/AddComment.php
 ${POT_FILE}: ../lib/plugin/AllPages.php
 ${POT_FILE}: ../lib/plugin/AllUsers.php
+${POT_FILE}: ../lib/plugin/AnalyseAccessLogSql.php
 ${POT_FILE}: ../lib/plugin/AppendText.php
+${POT_FILE}: ../lib/plugin/AsciiMath.php
 ${POT_FILE}: ../lib/plugin/AuthorHistory.php
 ${POT_FILE}: ../lib/plugin/BackLinks.php
 ${POT_FILE}: ../lib/plugin/BlogArchives.php
+${POT_FILE}: ../lib/plugin/BlogJournal.php
 ${POT_FILE}: ../lib/plugin/CacheTest.php
 ${POT_FILE}: ../lib/plugin/Calendar.php
 ${POT_FILE}: ../lib/plugin/CalendarList.php
@@ -217,7 +232,6 @@ ${POT_FILE}: ../lib/plugin/Ploticus.php
 ${POT_FILE}: ../lib/plugin/PluginManager.php
 ${POT_FILE}: ../lib/plugin/PopUp.php
 ${POT_FILE}: ../lib/plugin/PopularNearby.php
-${POT_FILE}: ../lib/plugin/PreferenceApp.php
 ${POT_FILE}: ../lib/plugin/PrevNext.php
 ${POT_FILE}: ../lib/plugin/RandomPage.php
 ${POT_FILE}: ../lib/plugin/RateIt.php
@@ -287,7 +301,6 @@ ${POT_FILE}: ../themes/Crao/templates/bottom.tmpl
 ${POT_FILE}: ../themes/Crao/templates/browse.tmpl
 ${POT_FILE}: ../themes/Crao/templates/editpage.tmpl
 ${POT_FILE}: ../themes/Crao/templates/head.tmpl
-${POT_FILE}: ../themes/Crao/templates/html.tmpl
 ${POT_FILE}: ../themes/Crao/templates/htmldump.tmpl
 ${POT_FILE}: ../themes/Crao/templates/navbar.tmpl
 ${POT_FILE}: ../themes/Crao/templates/signin.tmpl
@@ -328,7 +341,6 @@ ${POT_FILE}: ../themes/Sidebar/templates/frame-footer.tmpl
 ${POT_FILE}: ../themes/Sidebar/templates/frame-header.tmpl
 ${POT_FILE}: ../themes/Sidebar/templates/frame-left.tmpl
 ${POT_FILE}: ../themes/Sidebar/templates/frameset.tmpl
-${POT_FILE}: ../themes/Sidebar/templates/html.tmpl
 ${POT_FILE}: ../themes/Sidebar/templates/navbar.tmpl
 ${POT_FILE}: ../themes/Sidebar/templates/signin.tmpl
 ${POT_FILE}: ../themes/Sidebar/templates/top.tmpl
@@ -344,6 +356,7 @@ ${POT_FILE}: ../themes/Wordpress/templates/navbar.tmpl
 ${POT_FILE}: ../themes/Wordpress/templates/signin.tmpl
 ${POT_FILE}: ../themes/Wordpress/templates/viewsource.tmpl
 ${POT_FILE}: ../themes/Wordpress/themeinfo.php
+${POT_FILE}: ../themes/alphatest.php
 ${POT_FILE}: ../themes/blog/lib/RecentChanges.php
 ${POT_FILE}: ../themes/blog/templates/actionbar.tmpl
 ${POT_FILE}: ../themes/blog/templates/blogform.tmpl
@@ -351,11 +364,11 @@ ${POT_FILE}: ../themes/blog/templates/body.tmpl
 ${POT_FILE}: ../themes/blog/templates/bottom.tmpl
 ${POT_FILE}: ../themes/blog/templates/browse-footer.tmpl
 ${POT_FILE}: ../themes/blog/templates/browse.tmpl
-${POT_FILE}: ../themes/blog/templates/calendar.tmpl
 ${POT_FILE}: ../themes/blog/templates/debug.tmpl
+${POT_FILE}: ../themes/blog/templates/info.tmpl
 ${POT_FILE}: ../themes/blog/templates/navbar.tmpl
+${POT_FILE}: ../themes/blog/templates/search.tmpl
 ${POT_FILE}: ../themes/blog/templates/sidebar.tmpl
-${POT_FILE}: ../themes/blog/templates/signin.tmpl
 ${POT_FILE}: ../themes/blog/templates/top.tmpl
 ${POT_FILE}: ../themes/blog/templates/wikiblog.tmpl
 ${POT_FILE}: ../themes/blog/themeinfo.php
@@ -389,6 +402,7 @@ ${POT_FILE}: ../themes/default/templates/online.tmpl
 ${POT_FILE}: ../themes/default/templates/pagelink.tmpl
 ${POT_FILE}: ../themes/default/templates/redirect.tmpl
 ${POT_FILE}: ../themes/default/templates/savepage.tmpl
+${POT_FILE}: ../themes/default/templates/search.tmpl
 ${POT_FILE}: ../themes/default/templates/signin.tmpl
 ${POT_FILE}: ../themes/default/templates/toc.tmpl
 ${POT_FILE}: ../themes/default/templates/top.tmpl
@@ -408,6 +422,7 @@ ${POT_FILE}: ../themes/shamino_com/themeinfo.php
 ${POT_FILE}: ../themes/smaller/templates/actionbar.tmpl
 ${POT_FILE}: ../themes/smaller/templates/info.tmpl
 ${POT_FILE}: ../themes/smaller/templates/navbar.tmpl
+${POT_FILE}: ../themes/smaller/templates/signin.tmpl
 ${POT_FILE}: ../themes/smaller/themeinfo.php
 ${POT_FILE}: ../themes/wikilens/templates/head.tmpl
 ${POT_FILE}: ../themes/wikilens/templates/navbar.tmpl
