@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.41 2005-01-31 12:15:29 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.42 2005-02-02 19:38:13 rurban Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -516,7 +516,7 @@ function CheckDatabaseUpdate(&$request) {
     //   http://bugs.mysql.com/bug.php?id=4398
     // "select * from page where LOWER(pagename) like '%search%'" does not apply LOWER!
     // Confirmed for 4.1.0alpha,4.1.3-beta,5.0.0a; not yet tested for 4.1.2alpha,
-    // On windows only.
+    // On windows only, though utf8 would be useful elsewhere also.
     if (isWindows() and substr($backend_type,0,5) == 'mysql') {
   	echo _("check for mysql 4.1.x/5.0.0 binary search on windows problem")," ...";
         $mysql_version = $dbh->_backend->_serverinfo['version'];
@@ -531,7 +531,7 @@ function CheckDatabaseUpdate(&$request) {
                 echo _("OK"), "<br />\n";
             } else {
                 $dbh->genericSqlQuery("ALTER TABLE $page_tbl CHANGE pagename "
-                                     ."pagename VARCHAR(100) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL");
+                                     ."pagename VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL");
                 echo sprintf(_("version <em>%s</em> <b>FIXED</b>"), $mysql_version),"<br />\n";
             }
         } else {
@@ -833,6 +833,9 @@ function DoUpgrade($request) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.41  2005/01/31 12:15:29  rurban
+ print OK
+
  Revision 1.40  2005/01/30 23:22:17  rurban
  clarify messages
 
