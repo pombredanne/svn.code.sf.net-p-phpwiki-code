@@ -18,6 +18,8 @@ $locale["%s of this page"] =
    "%s de cette page";
 $locale["%s pages link to %s:"] =
    "%s pages pointent vers %s :";
+$locale["%s words"] =
+   "%s mots";
 $locale["%s(%d): no such revision"] =
    "%s(%d) : révision inexistante";
 $locale["%s: %s"] =
@@ -46,6 +48,8 @@ $locale["- saved to database as version %d"] =
    "- sauvé dans la base de données sous la version %d";
 $locale["1 day"] =
    "1 jour";
+$locale["1 word"] =
+   "1 mot";
 $locale["<%s: no such section>"] =
    "<%s : pas de section de ce type>";
 $locale["<no matches>"] =
@@ -196,8 +200,8 @@ $locale["Image loaded from cache file: %s"] =
    "Image chargée depuis le fichier cache : %s";
 $locale["Image saved to cache file: %s"] =
    "Image sauvée dans le fichier cache : %s";
-$locale["In the time since you started editing this page, another user has saved a new version of it.  Your changes can not be saved as they are, since doing so would overwrite the other author's changes."] =
-   "Depuis que vous avez commencé à éditer cette page, un autre utilisateur en a enregistré une nouvelle version. Vos modifications ne peuvent être enegistrées, puisqu'elles écraseraient celles de l'autre utilisateur.";
+$locale["In the time since you started editing this page, another user has saved a new version of it."] =
+   "Depuis que vous avez commencé à éditer cette page, un autre utilisateur en a enregistré une nouvelle version.";
 $locale["Include of '%s' failed"] =
    "L'insertion de ' %s ' a échoué";
 $locale["IncludePage"] =
@@ -340,8 +344,8 @@ $locale["Password"] =
    "Mot de passe";
 $locale["PhpWikiAdministration"] =
    "AdministrationDePhpWiki";
-$locale["Please check it through and click Save to save it."] =
-   "Veuillez la vérifier et cliquer sur Enregistrer pour la sauver.";
+$locale["Please check it through before saving."] =
+   "Veuillez la vérifier avant la sauver.";
 $locale["Plugin %s failed."] =
    "Plugin %s a échoué.";
 $locale["Preview"] =
@@ -430,8 +434,8 @@ $locale["Size:"] =
    "Taille :";
 $locale["Skipping"] =
    "Ignoré";
-$locale["So, your changes and those of the other author have been combined.  The result is shown below"] =
-   "Ainsi donc, vos modifications et celles de l'autre auteur ont été combinées. Le résultat est affiché ci-dessous";
+$locale["Some of the changes could not automatically be combined.  Please look for sections beginning with '%s', and ending with '%s'.  You will need to edit those sections by hand before you click Save."] =
+   "Certaines modifications n'ont pas pu être combinées automatiquement. Veuillez regarder les sections commençant par '%s', et se terminant par '%s'. Vous devrez éditer ces sections à la main avant cliquer sur Enregistrer.";
 $locale["Someone has edited the page!"] =
    "Quelqu'un a édité la page !";
 $locale["Sorry for the inconvenience."] =
@@ -570,6 +574,8 @@ $locale["You must specify a directory to dump to"] =
    "Vous devez spécifier un répertoire de vidage";
 $locale["Your careful attention to detail is much appreciated."] =
    "Votre souci particulier du détail est très apprécié.";
+$locale["Your changes can not be saved as they are, since doing so would overwrite the other author's changes. So, your changes and those of the other author have been combined. The result is shown below."] =
+   "Vos modifications ne peuvent être enegistrées, puisqu'elles écraseraient celles de l'autre utilisateur. Ainsi donc, vos modifications et celles de l'autre auteur ont été combinées. Le résultat est affiché ci-dessous.";
 $locale["Your version"] =
    "Votre version";
 $locale["[%d] See [%s]"] =
