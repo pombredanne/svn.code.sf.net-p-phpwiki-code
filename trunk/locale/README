@@ -228,18 +228,34 @@ important translation tasks:
    '.po' files, for each of the locale subdirectories.
 
 When a new language module is added to PhpWiki, the 'Makefile' in the
-'locale' folder also needs to be updated. Add the two-letter gettext
-language code to the list of all languages known to PhpWiki, by
-changing the variable ALL_LINGUAS. In this example 'is' was added for
-Icelandic:
+'locale' folder also needs to be updated.  The process
 
-	ALL_LINGUAS="nl es de sv it is"
+ 0. Change into the locale directory (if you're not already there.)
 
-To start the 'Makefile' process, change to the 'locale' directory
-before invoking the 'make' command:
+ 1. If there isn't one alreayd, Create a new .po (in the po/ subdirectory)
+    for your translations:
 
-    cd locale
-    make
+      cp po/phpwiki.pot po/xx.po
+
+    where 'xx' should be the two letter character code for the language
+    you are translating to.
+
+ 2. If you've created a new .po file (or if there are new .php source files
+    containing translatable strings,) update the Makefile:
+ 
+      make dep
+
+ 3. To make sure the list of translatable strings in the .po is in sync
+    with the actual php source code:
+ 
+      make po
+
+ 4. Edit the translations in the .po file.  If you have emacs available,
+    emacs' po-mode is very helpful when doing this.
+
+ 5. To update the compiled translation (.mo) files:
+
+      make
 
 Make will then automatically generate and update all the necessary
 files. If this step fails because you don't have the necessary
@@ -295,4 +311,4 @@ Jan Nieuwenhuizen <janneke@gnu.org>
 Arno Hollosi <ahollosi@mail.com>
 Carsten Klapp <carstenklapp@mac.com>
 
-$Id: README,v 1.5 2002-01-12 17:30:54 dairiki Exp $
+$Id: README,v 1.6 2002-01-13 22:43:08 dairiki Exp $
