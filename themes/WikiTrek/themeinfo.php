@@ -1,6 +1,6 @@
 <?php // -*-php-*-
 
-rcs_id('$Id: themeinfo.php,v 1.21 2002-02-08 19:02:25 dairiki Exp $');
+rcs_id('$Id: themeinfo.php,v 1.22 2002-02-08 22:03:03 dairiki Exp $');
 
 /**
  * This PhpWiki theme is experimental and will likely not appear as
@@ -78,23 +78,12 @@ $Theme->setButtonSeparator(" ");
  */
 //$Theme->setAutosplitWikiWords(false);
 
-/*
- * You may adjust the formats used for formatting dates and times
- * below.  (These examples give the default formats.) Formats are
- * given as format strings to PHP strftime() function See
- * http://www.php.net/manual/en/function.strftime.php for details.
- * Do not include the server's zone (%Z), times are converted to the
- * user's time zone.
- */
-//$Theme->setDateTimeFormat("%B %e, %Y");   // may contain time of day
-//$Theme->setDateFormat("%B %e, %Y");	    // must not contain time
-
 /**
  * The "stardate" format here is really just metricdate.24hourtime. A
  * "real" date2startdate conversion function might be fun but not very
  * useful on a wiki.
  */
-$Theme->setDateTimeFormat("%Y%m%d.%H%M%S"); // may contain time of day
+$Theme->setTimeFormat("%H%M%S");
 $Theme->setDateFormat("%Y%m%d"); // must not contain time
 
 

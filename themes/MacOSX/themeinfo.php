@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.44 2002-02-03 19:06:07 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.45 2002-02-08 22:03:03 dairiki Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -127,11 +127,8 @@ $Theme->addButtonAlias("...", "alltime");
  * Do not include the server's zone (%Z), times are converted to the
  * user's time zone.
  */
-//$Theme->setDateTimeFormat("%B %e, %Y");   // may contain time of day
-//$Theme->setDateFormat("%B %e, %Y");	    // must not contain time
-$Theme->setDateTimeFormat("%A, %B %e, %Y %l:%M:%S %p"); // may contain time of day
 $Theme->setDateFormat("%A, %B %e, %Y"); // must not contain time
-
+$Theme->setTimeFormat("%l:%M:%S %p");
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // (c-file-style: "gnu")

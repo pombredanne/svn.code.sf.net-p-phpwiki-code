@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.107 2002-02-08 17:49:37 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.108 2002-02-08 22:03:00 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -99,11 +99,12 @@ function LinkURL($url, $linktext = '') {
                                      _("BAD URL -- remove all of <, >, \"")));
     }
     else {
-        $link = HTML::a(array('href' => $url/*, 'type' => 'application/x-gzip'*/),
-                                            // do any browsers support use of <a href= type=?/?
-                                            // (instead of wiki creating an IconForLink for the doc type?)
-                        IconForLink($url),
-                        $linktext ? $linktext : str_replace("mailto:", "", $url));
+        if (!$linktext)
+            $linktext = preg_replace("/mailto:/A", "", $url);
+        
+        $link = HTML::a(array('href' => $url),
+                        IconForLink($url), $linktext);
+        
     }
     $link->setAttr('class', $linktext ? 'namedurl' : 'rawurl');
     return $link;
@@ -453,13 +454,7 @@ function TimezoneOffset ($time = false, $no_colon = false) {
     if ($time === false)
         $time = time();
     $secs = date('Z', $time);
-    return seconds2zoneOffset($secs, $no_colon);
-}
 
-/**
- * Format a timezone offset from seconds to ±HH:MM format.
- */
-function seconds2zoneOffset ($secs, $no_colon = false) {
     if ($secs < 0) {
         $sign = '-';
         $secs = -$secs;
@@ -473,22 +468,6 @@ function seconds2zoneOffset ($secs, $no_colon = false) {
                    $sign, $mins / 60, $colon, $mins % 60);
 }
 
-/**
- * Returns the user's offset time in seconds.
- */
-function PrefTimezoneOffset () {
-    global $request;
-    $userOffset = $request->getPref('timeOffset');
-    $offset_secs = 60 * (floor($userOffset/100)*60 + substr($userOffset,-2));
-    return $offset_secs;
-}
-
-function istoday($time_secs) {
-    return date("Ymd", time()) == date("Ymd", $time_secs);
-}
-function isyesterday($time_secs) {
-    return date("Ymd", time()-60*60*24) == date("Ymd", $time_secs);
-}
 
 /**
  * Format time in ISO-8601 format.

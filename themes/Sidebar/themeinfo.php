@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.6 2002-02-03 19:06:07 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.7 2002-02-08 22:03:03 dairiki Exp $');
 
 /*
  * This file defines the Sidebar appearance ("theme") of PhpWiki.
@@ -73,8 +73,7 @@ $Theme->setLinkIcon('*', 'url');
  * Do not include the server's zone (%Z), times are converted to the
  * user's time zone.
  */
-//$Theme->setDateTimeFormat("%B %e, %Y");   // may contain time of day
-//$Theme->setDateFormat("%B %e, %Y");	    // must not contain time
+//$Theme->setDateFormat("%B %e, %Y");
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

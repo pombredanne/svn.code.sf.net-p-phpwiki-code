@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.56 2002-02-08 03:01:12 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.57 2002-02-08 22:03:01 dairiki Exp $');
 /**
  */
 
@@ -26,7 +26,7 @@ class _RecentChanges_Formatter
     
     function date ($rev) {
         global $Theme;
-        return $Theme->formatDate($rev->get('mtime'));
+        return $Theme->getDay($rev->get('mtime'));
     }
 
     function time ($rev) {

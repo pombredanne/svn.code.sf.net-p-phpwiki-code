@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.36 2002-02-04 01:13:59 carstenklapp Exp $');
+rcs_id('$Id: diff.php,v 1.37 2002-02-08 22:02:59 dairiki Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -242,15 +242,9 @@ function PageInfoRow ($label, $rev, &$request)
         $iswikipage = (preg_match("/^$WikiNameRegexp\$/", $author) && $dbi->isWikiPage($author));
         $authorlink = $iswikipage ? WikiLink($author) : $author;
 
-        $mtime = $rev->get('mtime');
-        if (istoday($mtime) || isyesterday($mtime))
-            $lastmodifiedmessage = _("last modified %s");
-        else
-            $lastmodifiedmessage = _("last modified on %s");
         $linked_version = WikiLink($rev, 'existing', $rev->getVersion());
         $row->pushContent(HTML::td(fmt("version %s", $linked_version)),
-                          HTML::td(fmt($lastmodifiedmessage,
-                                       $Theme->formatDateTime($mtime))),
+                          HTML::td($Theme->getLastModifiedMessage($rev, false)),
                           HTML::td(fmt("by %s", $authorlink)));
     } else {
         $row->pushContent(HTML::td(array('colspan' => '3'), _("None")));

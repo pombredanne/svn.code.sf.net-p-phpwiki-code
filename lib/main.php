@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.52 2002-02-08 15:37:04 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.53 2002-02-08 22:03:00 dairiki Exp $');
 
 
 include "lib/config.php";
@@ -28,21 +28,32 @@ class _UserPreference
     }
 }
 
-class _UserPreference_int extends _UserPreference
+class _UserPreference_numeric extends _UserPreference
 {
-    function _UserPreference_int ($default, $minval = false, $maxval = false) {
-        $this->_UserPreference((int) $default);
-        $this->_minval = (int) $minval;
-        $this->_maxval = (int) $maxval;
+    function _UserPreference_numeric ($default, $minval = false, $maxval = false) {
+        $this->_UserPreference((double) $default);
+        $this->_minval = (double) $minval;
+        $this->_maxval = (double) $maxval;
     }
 
     function sanify ($value) {
-        $value = (int) $value;
+        $value = (double) $value;
         if ($this->_minval !== false && $value < $this->_minval)
             $value = $this->_minval;
         if ($this->_maxval !== false && $value > $this->_maxval)
             $value = $this->_maxval;
         return $value;
+    }
+}
+
+class _UserPreference_int extends _UserPreference_numeric
+{
+    function _UserPreference_int ($default, $minval = false, $maxval = false) {
+        $this->_UserPreference_numeric((int) $default, (int)$minval, (int)$maxval);
+    }
+
+    function sanify ($value) {
+        return (int) parent::sanify((int)$value);
     }
 }
 
@@ -74,7 +85,7 @@ class _UserPreference_bool extends _UserPreference
 
 $UserPreferences = array('editWidth' => new _UserPreference_int(80, 30, 150),
                          'editHeight' => new _UserPreference_int(22, 5, 80),
-                         'timeOffset' => new _UserPreference('+0000'),
+                         'timeOffset' => new _UserPreference_numeric(0, -26, 26),
                          'relativeDates' => new _UserPreference_bool(),
                          'userid' => new _UserPreference(''));
 
