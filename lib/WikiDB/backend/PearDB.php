@@ -1,18 +1,19 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.18 2002-01-24 20:16:48 carstenklapp Exp $');
+rcs_id('$Id: PearDB.php,v 1.19 2002-01-28 04:01:56 dairiki Exp $');
 
 //require_once('DB.php');
 require_once('lib/WikiDB/backend.php');
-require_once('lib/FileFinder.php');
+//require_once('lib/FileFinder.php');
 require_once('lib/ErrorManager.php');
+require_once('lib/pear/DB.php');
 
 class WikiDB_backend_PearDB
 extends WikiDB_backend
 {
     function WikiDB_backend_PearDB ($dbparams) {
         // Find and include PEAR's DB.php.
-        $pearFinder = new PearFileFinder;
-        $pearFinder->includeOnce('DB.php');
+        //$pearFinder = new PearFileFinder;
+        //$pearFinder->includeOnce('DB.php');
 
         // Install filter to handle bogus error notices from buggy DB.php's.
         global $ErrorManager;
@@ -20,7 +21,9 @@ extends WikiDB_backend
         
         // Open connection to database
         $dsn = $dbparams['dsn'];
-        $this->_dbh = DB::connect($dsn, true); //FIXME: true -> persistent connection
+        $dboptions = array('persistent' => true,
+                           'debug' => 2);
+        $this->_dbh = DB::connect($dsn, $dboptions);
         $dbh = &$this->_dbh;
         if (DB::isError($dbh)) {
             trigger_error(sprintf("Can't connect to database: %s", $this->_pear_error_message($dbh)),
