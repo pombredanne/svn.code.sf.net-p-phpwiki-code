@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.122 2005-01-20 10:18:17 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.123 2005-01-25 06:58:21 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -297,7 +297,9 @@ class WikiDB {
      * @return WikiDB_PageIterator A WikiDB_PageIterator which contains all pages
      *     in the WikiDB which have non-default contents.
      */
-    function getAllPages($include_empty=false, $sortby=false, $limit=false, $exclude=false) {
+    function getAllPages($include_empty=false, $sortby=false, $limit=false, 
+                         $exclude=false) 
+    {
         // HACK: memory_limit=8M will fail on too large pagesets. old php on unix only!
         if (USECACHE) {
             $mem = ini_get("memory_limit");
@@ -307,10 +309,12 @@ class WikiDB {
                 $GLOBALS['request']->setArg('paging', 'auto');
             }
         }
-        $result = $this->_backend->get_all_pages($include_empty, $sortby, $limit, $exclude);
-        return new WikiDB_PageIterator($this, $result, array('include_empty' => $include_empty, 
-                                                             'exclude' => $exclude,
-                                                             'limit' => $limit));
+        $result = $this->_backend->get_all_pages($include_empty, $sortby, $limit, 
+                                                 $exclude);
+        return new WikiDB_PageIterator($this, $result, 
+                                       array('include_empty' => $include_empty, 
+                                             'exclude' => $exclude,
+                                             'limit' => $limit));
     }
 
     /**
@@ -2135,6 +2139,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.122  2005/01/20 10:18:17  rurban
+// reformatting
+//
 // Revision 1.121  2005/01/04 20:25:01  rurban
 // remove old [%pagedata][_cached_html] code
 //

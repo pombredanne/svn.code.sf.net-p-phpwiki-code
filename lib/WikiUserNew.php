@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.122 2005-01-08 22:51:56 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.123 2005-01-25 06:58:21 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1786,7 +1786,7 @@ class UserPreferences
         if (!isset($pref->{$value}) or $pref->{$value} != $pref->default_value) {
             if ($name == 'emailVerified') $newvalue = $value;
             else $newvalue = $pref->sanify($value);
-	    $pref->set($name,$newvalue);
+	    $pref->set($name, $newvalue);
         }
         $this->_prefs[$name] =& $pref;
         return true;
@@ -2022,6 +2022,9 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.122  2005/01/08 22:51:56  rurban
+// remove deprecated workaround
+//
 // Revision 1.121  2004/12/19 00:58:01  rurban
 // Enforce PASSWORD_LENGTH_MINIMUM in almost all PassUser checks,
 // Provide an errormessage if so. Just PersonalPage and BogoLogin not.

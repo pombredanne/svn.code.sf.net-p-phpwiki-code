@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.128 2004-12-26 17:31:35 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.129 2005-01-25 06:58:21 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -571,7 +571,8 @@ class PageList {
                      'creator'  => false, // current user by []
 
                      /* for the sort buttons in <th> */
-                     'sortby'   => '', // same as for WikiDB::getAllPages (unsorted is faster)
+                     'sortby'   => '', // same as for WikiDB::getAllPages 
+                     		       // (unsorted is faster)
 
                      /* PageList pager options:
                       * These options may also be given to _generate(List|Table) later
@@ -804,14 +805,17 @@ class PageList {
     }
 
     // echo implode(":",explodeList("Test*",array("xx","Test1","Test2")));
-    function explodePageList($input, $include_empty=false, $sortby=false, $limit=false, $exclude=false) {
+    function explodePageList($input, $include_empty=false, $sortby=false, 
+                             $limit=false, $exclude=false) 
+    {
         if (empty($input)) return array();
         // expand wildcards from list of all pages
         if (preg_match('/[\?\*]/', $input)) {
             $dbi = $GLOBALS['request']->getDbh();
             // $dbi->titleSearch($input);
             //TODO: need an SQL optimization here
-            $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit, $exclude);
+            $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit, 
+                                                $exclude);
             while ($pagehandle = $allPagehandles->next()) {
                 $allPages[] = $pagehandle->getName();
             }
@@ -1442,6 +1446,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.128  2004/12/26 17:31:35  rurban
+// fixed prev link logic
+//
 // Revision 1.127  2004/12/26 17:19:28  rurban
 // dont break sideeffecting sortby flips on paging urls (MostPopular)
 //
