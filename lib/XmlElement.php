@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.15 2002-01-28 18:49:08 dairiki Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.16 2002-02-07 00:26:08 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -167,12 +167,12 @@ class XmlElement extends XmlContent
         assert(count($args) >= 1);
         //assert(is_string($args[0]));
         $this->_tag = array_shift($args);
-
+        
         if ($args && is_array($args[0]))
             $this->_attr = array_shift($args);
         else {
             $this->_attr = array();
-            if (count($args) > 1 && ! $args[0])
+            if ($args && $args[0] === false)
                 array_shift($args);
         }
 
