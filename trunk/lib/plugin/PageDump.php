@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageDump.php,v 1.13 2004-06-17 10:39:18 rurban Exp $');
+rcs_id('$Id: PageDump.php,v 1.14 2004-06-29 10:07:40 rurban Exp $');
 /**
  * PhpWikiPlugin for PhpWiki developers to generate single page dumps
  * for checking into cvs, or for users or the admin to produce a
@@ -9,9 +9,10 @@ rcs_id('$Id: PageDump.php,v 1.13 2004-06-17 10:39:18 rurban Exp $');
  * directly between two wikis. First the LoadFile function of
  * PhpWikiAdministration needs to be updated to handle URLs again, and
  * add loading capability from InterWiki addresses.
+
+ * multiple revisions in one file handled by format=backup
  *
- * TODO: What about multiple revisions in one file? comments/summary
- * field? quoted-printable?
+ * TODO: What about comments/summary field? quoted-printable?
  *
  * Usage:
  *  Direct URL access:
@@ -40,14 +41,14 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.13 $");
+                            "\$Revision: 1.14 $");
     }
 
     function getDefaultArguments() {
         return array('s'    => false,
                      'page' => '[pagename]',
                      //'encoding' => 'binary', // 'binary', 'quoted-printable'
-                     'format' => false, // 'normal', 'forcvs'
+                     'format' => false, // 'normal', 'forcvs', 'backup'
                      // display within WikiPage or give a downloadable
                      // raw pgsrc?
                      'download' => false);
@@ -60,13 +61,13 @@ extends WikiPlugin
             $page = $s;
         if (!$page)
             return '';
-        if (! $dbi->isWikiPage($page))
+        if (! $dbi->isWikiPage($page) )
             return fmt("Page %s not found.",
                        WikiLink($page, 'unknown'));
 
         $p = $dbi->getPage($page);
         include_once("lib/loadsave.php");
-        $mailified = MailifyPage($p);
+        $mailified = MailifyPage($p, ($format == 'backup') ? 99 : 1);
 
         // fixup_headers massages the page dump headers depending on
         // the 'format' argument, 'normal'(default) or 'forcvs'.
@@ -82,7 +83,7 @@ extends WikiPlugin
         $this->generateMessageId($mailified);
         if ($format == 'forcvs')
             $this->fixup_headers_forcvs($mailified);
-        else
+        else // backup or normal
             $this->fixup_headers($mailified);
 
         if ($download) {
@@ -112,7 +113,6 @@ extends WikiPlugin
         // text if it is too long--unless quoted-printable (TODO).
         $mailified = wordwrap($mailified, 70);
 
-        // fixme: what about when not using VIRTUAL_PATH?
         $dlcvs = Button(array(//'page' => $page,
                               'action' => $this->getName(),
                               'format'=> 'forcvs',
@@ -124,23 +124,58 @@ extends WikiPlugin
                            'download'=> true),
                      _("Download for backup"),
                      $page);
+        $dlall = Button(array(//'page' => $page,
+                           'action' => $this->getName(),
+                           'format'=> 'backup',
+                           'download'=> true),
+                     _("Download all revisions for backup"),
+                     $page);
 
         $h2 = HTML::h2(fmt("Preview: Page dump of %s",
                            WikiLink($page, 'auto')));
+        global $WikiTheme;
+        if (!$Sep = $WikiTheme->getButtonSeparator())
+            $Sep = " ";
+
         if ($format == 'forcvs') {
-            $desc = _("(formatted for PhpWiki developers, not for backing up)");
-            $altpreviewbutton = Button(array(//'page' => $page, 
-                                             'action' => $this->getName()),
-                                       _("Preview as backup format"),
-                                       $page);
+            $desc = _("(formatted for PhpWiki developers as pgsrc template, not for backing up)");
+            $altpreviewbuttons = HTML(
+                                      Button(array('action' => $this->getName()),
+                                             _("Preview as normal format"),
+                                             $page),
+                                      $Sep,
+                                      Button(array(
+                                                   'action' => $this->getName(),
+                                                   'format'=> 'backup'),
+                                             _("Preview as backup format"),
+                                             $page));
         }
-        else {
-            $desc = _("(formatted for backing up)");
-            $altpreviewbutton = Button(array(//'page' => $page,
-                                             'action' => $this->getName(),
-                                             'format'=> 'forcvs'),
-                                       _("Preview as developer format"),
-                                       $page);
+        elseif ($format == 'backup') {
+            $desc = _("(formatted for backing up)"); // all revisions
+            $altpreviewbuttons = HTML(
+                                      Button(array('action' => $this->getName(),
+                                                   'format'=> 'forcvs'),
+                                             _("Preview as developer format"),
+                                             $page),
+                                      $Sep,
+                                      Button(array(
+                                                   'action' => $this->getName(),
+                                                   'format'=> ''),
+                                             _("Preview as normal format"),
+                                             $page));
+        } else {
+            $desc = _("(normal formatting)");
+            $altpreviewbuttons = HTML(
+                                      Button(array('action' => $this->getName(),
+                                                   'format'=> 'forcvs'),
+                                             _("Preview as developer format"),
+                                             $page),
+                                      $Sep,
+                                      Button(array(
+                                                   'action' => $this->getName(),
+                                                   'format'=> 'backup'),
+                                             _("Preview as backup format"),
+                                             $page));
         }
         $warning = HTML(
 _("Please use one of the downloadable versions rather than copying and pasting from the above preview.")
@@ -152,17 +187,13 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
          )
                         );
 
-        global $WikiTheme;
-        if (!$Sep = $WikiTheme->getButtonSeparator())
-            $Sep = " ";
-
         return HTML($h2, HTML::em($desc),
                     HTML::pre($mailified),
-                    $altpreviewbutton,
+                    $altpreviewbuttons,
                     HTML::div(array('class' => 'errors'),
                               HTML::strong(_("Warning:")),
                               " ", $warning),
-                    $dl, $Sep, $dlcvs
+                    $dl, $Sep, $dlall, $Sep, $dlcvs
                     );
     }
 
@@ -252,6 +283,9 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2004/06/17 10:39:18  rurban
+// fix reverse translation of possible actionpage
+//
 // Revision 1.12  2004/06/16 13:32:43  rurban
 // fix urlencoding of pagename in PageDump buttons
 //
