@@ -1,7 +1,9 @@
 <?php // -*-php-*-
-rcs_id('$Id: Info.php,v 1.4 2002-02-22 22:59:18 carstenklapp Exp $');
+rcs_id('$Id: Info.php,v 1.5 2002-02-25 03:33:10 carstenklapp Exp $');
 /**
- *
+ * ActionPage plugin returns extra information about a page.
+ * The plugin just passes a page revision handle to the Template
+ * info.tmpl, which does all the real work.
  */
 class WikiPlugin_Info
 extends WikiPlugin
@@ -25,7 +27,7 @@ extends WikiPlugin
         $pagename = $page;
 
         $page = $request->getPage();
-    
+
         if (!empty($version)) {
             if (!($revision = $page->getRevision($version)))
                 NoSuchRevision($request, $page, $version);
@@ -34,12 +36,11 @@ extends WikiPlugin
             $revision = $page->getCurrentRevision();
         }
 
-        $t = new Template('info', $request,
-                          array('revision' => $revision));
-        return HTML::div(array('class' => 'wikitext'), $t);
+        $template = new Template('info', $request,
+                                 array('revision' => $revision));
+        return $template;
     }
 };
-
 
 // (c-file-style: "gnu")
 // Local Variables:
