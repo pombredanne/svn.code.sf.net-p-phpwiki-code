@@ -1,19 +1,17 @@
-VariousBrowsers have trouble with the tab character used in the TextFormattingRules.  If you can't type a tab, or, if you are fixing up a page written by someone who didn't type tabs, then you should have us convert spans of spaces to tabs for you.  You request space to tab conversion with the checkbox that appears near the bottom of EditText and EditCopy pages.  It looks something like this...
+DiversosNavegadores tienen problemas al usar en caractaer TAB en las ReglasDeFormatoDeTexto.  Si no puede escribir un TAB, o si está arreglando una página escrita por alguien que no halla puesto los TABs, entonces debería de permitir a Wiki convertir varios espacios en tabs.  Usted solicita una conversion de espacios a tabs en el cuadro que aparece al final de las páginas EditarElTexto and EditarCopia.  Tal y como...
 
- [[o] I can't type tabs.  Please ConvertSpacesToTabs for me when I save.
+ [[o] No puedo escribir tabs. Por favor ConvierteEspaciosEnTabs por mi cuando salve.
 
-A span of spaces must be at least '''three''' spaces long to be recognized 
-as a tab.  Use multiples of '''eight''' spaces to make multiple tabs. 
-Each span of eight spaces will convert to one tab.  If the  
-last span comes up a little short, that's ok, as long as  
-there are at least three spaces in the last (only) span.
+Un grupo de espacios debe ser al menos '''tres''' espacios para ser reconocidos 
+como un tab.  Use multiplos of '''ocho''' espacios para hacer multiples tabulaciones. 
+Cada grupo de ocho espacios será convertido a una tabulación.  Aunque el último  
+grupo sea un poco mas pequeño no hay problema, si tiene al menos tres espacios.
 
-'''Check your work.'''  This sort of heuristic can lead to  
-unexpected results. 
+'''Compruebe su trabajo.'''  Sino puede obtener resultados inesperados. 
 -----
-[Maintenance note:  This page is seen when the user clicks on the 
-"ConvertSpacesToTabs" link on any edit screen.  It describes what happens  
-when you ask the system to do this, why you would want it to, and ways to 
-avoid the spaces-instead-of-tabs problem.]
+[Nota:  Esta página es vista cuando el usuario hace click sobre el
+enlave "ConvierteEspaciosEnTabs" en cualquier pantalla de edición.  
+Describe lo que sucede cuando se le pide al sistema hacer esto, y es
+el camino para evitar el problema de "espacios en vez de tabs".]
 
 

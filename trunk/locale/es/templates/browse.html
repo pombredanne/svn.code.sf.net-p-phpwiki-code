@@ -8,28 +8,23 @@
 <h1><a href="###SCRIPTURL###"><img src="###LOGO###" border=0 alt="[phpwiki]" align=middle width=50 height=50></a>
 <a href="###SCRIPTURL###?full=###PAGEURL###">###PAGE###</a></h1>
 ###IF:ADMIN###<FORM ACTION="###SCRIPTURL###" METHOD=POST>
-###IF LOCK###[<a href="###SCRIPTURL###?unlock=###PAGEURL###">Unlock page</a>]
-###IF !LOCK###[<a href="###SCRIPTURL###?lock=###PAGEURL###">Lock page</a>]
-- - 
-[<a href="###SCRIPTURL###?remove=###PAGEURL###">Remove page</A>]
-<hr noshade>
+  ###IF LOCK###[<a href="###SCRIPTURL###?unlock=###PAGEURL###">Desbloquear p&aacute;gina</a>] 
+  ###IF !LOCK###[<a href="###SCRIPTURL###?lock=###PAGEURL###">Bloquear p&aacute;gina</a>] 
+  - - [<a href="###SCRIPTURL###?remove=###PAGEURL###">Borrar p&aacute;gina</A>] 
+  <hr noshade>
 ###ENDIF:ADMIN###
 <P>
 ###CONTENT###
-
 <hr noshade>
-###IF ADMIN###<a href="###SCRIPTURL###?edit=###PAGEURL###">EditarElTexto</a>
-###IF:!ADMIN###
-###IF LOCK###Page locked
-###IF !LOCK###<a href="###SCRIPTURL###?edit=###PAGEURL###">EditarElTexto</a>
-###ENDIF:!ADMIN###
-de esta página (editada por última vez ###LASTMODIFIED###
-[<a href="###SCRIPTURL###?info=###PAGEURL###">info</a>]
-[<a href="###SCRIPTURL###?diff=###PAGEURL###">diff</a>])
-<br>
-<a href="###SCRIPTURL###?BuscarPagina">BuscarP&aacute;gina</a> 
-<hr noshade>
+  ###IF ADMIN###<a href="###SCRIPTURL###?edit=###PAGEURL###">EditarElTexto</a> 
+  de esta p&aacute;gina ###IF:!ADMIN### ###IF LOCK###P&aacute;gina bloqueada ###IF 
+  !LOCK###<a href="###SCRIPTURL###?edit=###PAGEURL###">EditarElTexto</a> de esta 
+  p&aacute;gina ###ENDIF:!ADMIN### (editada por &uacute;ltima vez ###LASTMODIFIED###) 
+  [<a href="###SCRIPTURL###?info=###PAGEURL###">info</a>] [<a href="###SCRIPTURL###?diff=###PAGEURL###">diff</a>]) 
+  <br>
+  <a href="###SCRIPTURL###?FindPage">BuscarP&aacute;gina</a> navegando o buscando 
+  <hr noshade>
 <small>###RELATEDPAGES###</small>
 
-</body>
+</form></body>
 </html>

@@ -1,64 +1,64 @@
-'''Paragraphs'''
+'''Parrafos'''
 
-* Don't indent paragraphs
-* Words wrap and fill as needed
-* Use blank lines as separators
-* Four or more minus signs make a horizontal rule
-* %%''''% makes a linebreak (in headings and lists too)
-
-
-'''Lists'''
-
-* asterick for first level
-** asterick-asterick for second level, etc.
-* Use * for bullet lists, # for numbered lists (mix at will)
-* tab-Term:-tab Definition for definition lists
-* One line for each item
-* Other leading whitespace signals preformatted text, changes font.
-
-'''Headings'''
-
-* '!' at the start of a line makes a small heading
-* '!!' at the start of a line makes a medium heading 
-* '!!!' at the start of a line makes a large heading
-
-'''Fonts'''
-* Indent with one or more spaces to use a monospace font:
-
- This is in monospace
-This is not
-
-'''Indented Paragraphs'''
-''(Quotes)''
-
-* tab-space-:-tab -- often used (with emphasis) for quotations.
+* No indente los parrafos
+* Las palabras se acomodan automaticamente
+* Use lines en blanco como seperarodes de pararrafos
+* Cuatro o mas guiones hacen una linea horizontal
+* %%''''% hace una ruptura de linea (tambien en cabeceras y listas)
 
 
-'''Emphasis'''
+'''Listas'''
 
-* Use doubled single-quotes ('') for emphasis (usually italics)
-* Use doubled underscores (__) for strong emphasis (usually bold)
-* Mix them at will: ''__bold italics__''
-* ''Emphasis'' can be used ''multiple'' times within a line, but ''cannot'' cross line boundaries:
+* asterisco para primer nivel
+** asterico-asterico para segundo nivel, etc.
+* Use * para listas, # para listas numeradas (se pueden mezclar)
+* tab-Term:-tab Definición para definicíon de listas
+* Una linea por cada item
+* cualquier otro espacio en blanco señala texto preformateado, acmbia el tipo de letra.
 
-''this
-will not work''
+'''Cabeceras'''
 
-'''References'''
-* Hyperlinks to other pages within the Wiki are made by placing the page name in square brackets: [this is a page link] or UsingWikiWords (preferred)
-* Hyperlinks to external pages are done like this: [http://www.wcsb.org/]
-* You can name the links to the external pages by providing a name, a bar (|) and then the hyperlink: [Steve's home page | http://wcsb.org/~swain/]  
-* You can suppress linking to old-style references by preceeding the word with a '!', e.g. !NotLinkedAsWikiName
-* [1], [2], [3], [4] refer to remote references. Click EditLinks on the edit form to enter URLs. These differ from the newer linking scheme; references are unique to a page.
-* Also, the old way of linking URL's is still supported: precede URLs with "http:", "ftp:" or "mailto:" to create links automatically as in: http://c2.com/
-* URLs ending with .png, or .jpg are inlined if in square brackets, by themselves: [http://phpwiki.sourceforge.net/phpwiki/png.png]
+* '!' al principio hace una pequeña cabecera
+* '!!' al principio hace una cabecera mediana
+* '!!!' al principio hace una cabecera grande
+
+'''Tipos de Letra'''
+* Indente con uno o mas espacios para usar tipo de letra monoespaciado:
+
+ Esto es monoespaciado
+Esto no
+
+'''Parrafos indentados'''
+''(Citas)''
+
+* tab-epacio-:-tab -- a menudo usado (con énfasis) para citas.
 
 
-'''HTML Mark-Up Language'''
+'''Enfasis'''
 
-* Don't bother
-* < and > are themselves
-* The & characters will not work
-* If you really must use HTML, your system administrator can enable this feature. Start each line with a bar (|). Note that this feature is disabled by default.
+* Use dobles comillas simples ('') para énfasis (normalmente cursiva)
+* Use doble subrayado (__) para un énfasis fuerte (normalmente negrita)
+* Mezclelos y seran: ''__negrita cursiva__''
+* ''Enfasis'' puede ser usado ''multiples'' veces en una linea, pero no puede ir a traves de mas de una linea:
+
+''esto
+no funcionará''
+
+'''Referencias'''
+* Los enlaces a otras páginas dentro de Wiki son realizadas poniendo el nombre entre corchetes: [esto es un vinculo de página] o UsandoPalabarasWiki (preferido)
+* Los enlaces a páginas externas son realizados como este: [http://www.wcsb.org/]
+* Puede nombrar los enlaces a páginas externas poniendo un nombre, una barra (|) y el enlace: [página web de Steve | http://wcsb.org/~swain/]  
+* Puede suprimir enlace a viejas referencias, precediendo la palabra con un '!', e.j. !NotLinkedAsWikiName
+* [1], [2], [3], [4] se refieren a referencias remotas. Haga clik en EditarEnlaces en el formulario de edición para poner las URLs. Esto difiere de nuevo esquema de enlaces; las referencias son únicas para una página.
+* También, el sistema antiguo de enlazar los URL's sigue siendo soportado: preceda los URLs con "http:", "ftp:" o "mailto:" para crear enlaces automáticamante como en: http://c2.com/
+* Las URLs que finalizan en .png, o .jpg son visualizadas si están entre corchetes: [http://phpwiki.sourceforge.net/phpwiki/png.png]
+
+
+'''Lenguaje HTML'''
+
+* No se preocupe de el
+* < y > son si mismos
+* Los caracters & no funcionarán
+* Si realmente desea usar HTML, su administrador del sistema debe activar esta característica. Empiece cada líneas con una barra vertical (|). Tenga en cuenta que esta característica está desactivada por defecto.
 
 
