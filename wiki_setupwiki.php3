@@ -1,4 +1,4 @@
-<!-- $Id: wiki_setupwiki.php3,v 1.6 2000-06-14 04:09:20 wainstead Exp $ -->
+<!-- $Id: wiki_setupwiki.php3,v 1.7 2000-06-19 20:21:31 ahollosi Exp $ -->
 <?
 
    /* Add the very first pages to a wiki */
@@ -6,7 +6,7 @@
    $page = array();
    $page["version"] = 1;
    $page["flags"] = 0;
-   $page["author"] = "The PhpWiki prgramming team";
+   $page["author"] = "The PhpWiki programming team";
    $page["lastmodified"] = GetCurrentDate();
    $page["created"] = GetCurrentDate();
 

@@ -1,6 +1,6 @@
-<!-- $Id: wiki_transform.php3,v 1.7 2000-06-14 03:23:44 wainstead Exp $ -->
+<!-- $Id: wiki_transform.php3,v 1.8 2000-06-19 20:21:31 ahollosi Exp $ -->
 <?
-   // expects $pagename, $pagehash, and $html (optional) to be set
+   // expects $pagehash and $html to be set
 
    // Set up inline links and images
    for ($i = 1; $i < (NUM_LINKS + 1); $i++) {
