@@ -18,7 +18,9 @@ class AllUsersTest extends PHPUnit_TestCase {
 
         $lp = new WikiPlugin_AllUsers();
         $this->assertEquals("AllUsers", $lp->getName());
-        $result = $lp->run($request->getDbh(), "pages=foo", $request, $basepage);
+        $basepage = "";
+        $args = "";
+        $result = $lp->run($request->getDbh(), $args, $request, $basepage);
         $this->assertType('object',$result,'isa PageList');
     }
 }
