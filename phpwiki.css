@@ -69,9 +69,15 @@ SMALL .wikiword
 .footnote A,    
 .footnote-rev    
 {
-    text-decoration: none;
-    color: #600;
+  text-decoration: none;
+  /* color: #600; */
 }
+.wikiunknown,
+.wikiunknown U
+{
+   color: #600;
+}
+
 
 /*
  * Different backgrounds depening on link type.
@@ -101,11 +107,11 @@ SMALL .wikiword
 
 .wikilink:link
 {
-    color: #c00;
+  /* color: #c00; */
 }
 .wikilink:visited,
 {
-    color: #600;
+  /* color: #600; */
 }
 
 
