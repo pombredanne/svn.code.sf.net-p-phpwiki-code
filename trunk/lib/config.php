@@ -10,7 +10,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.23 2001-01-31 02:18:26 wainstead Exp $');
+   rcs_id('$Id: config.php,v 1.24 2001-01-31 07:38:10 ahollosi Exp $');
    // end essential internal stuff
 
 
@@ -28,8 +28,9 @@
    // if you fill in $ScriptUrl you *MUST* fill in $AdminUrl as well!
    $AdminUrl = "";
 
-   //  Select your language - default language "C": English
-   // other languages available: Dutch "nl", Spanish "es", German "de"
+   // Select your language - default language "C": English
+   // other languages available: Dutch "nl", Spanish "es", German "de",
+   // and Swedish "sv"
    $LANG="C";
 
    /////////////////////////////////////////////////////////////////////
