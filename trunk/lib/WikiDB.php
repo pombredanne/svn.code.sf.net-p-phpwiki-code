@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.3 2001-12-28 09:53:29 carstenklapp Exp $');
+rcs_id('$Id: WikiDB.php,v 1.4 2002-01-10 23:28:54 carstenklapp Exp $');
 
 //FIXME: arg on get*Revision to hint that content is wanted.
 
@@ -869,7 +869,8 @@ class WikiDB_PageRevision
         }
         else {
             // else revision has been deleted... What to do?
-            return "Acck! Revision $version of $pagename seems to have been deleted!";
+            return __sprintf("Acck! Revision %s of %s seems to have been deleted!",
+                             $version, $pagename);
         }
     }
 
@@ -894,7 +895,7 @@ class WikiDB_PageRevision
      *       to be equal to that of the preceeding revision.  In that case,
      *       the originally requested mtime is preserved in 'orig_mtime'.
      * <dt> '_supplanted' <dd> Time this revision ceased to be the most recent.
-     *        This meta-value is <i>always</i> automatically maintained by the database
+     *        This meta-value is <em>always</em> automatically maintained by the database
      *        backend.  (It is set from the 'mtime' meta-value of the superceding
      *        revision.)  '_supplanted' has a value of 'false' for the current revision.
      *
