@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.79 2004-07-09 10:06:49 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.80 2004-07-09 13:05:34 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -1571,7 +1571,8 @@ class WikiDB_PageIterator
             var_dump($next);
             return false;
         }
-        // there's always hits, but we cache only if more
+        // there's always hits, but we cache only if more 
+        // (well not with file, cvs and dba)
         if (isset($next['pagedata']) and count($next['pagedata']) > 1) {
             $this->_wikidb->_cache->cache_data($next);
         }
@@ -1864,6 +1865,15 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.79  2004/07/09 10:06:49  rurban
+// Use backend specific sortby and sortable_columns method, to be able to
+// select between native (Db backend) and custom (PageList) sorting.
+// Fixed PageList::AddPageList (missed the first)
+// Added the author/creator.. name to AllPagesBy...
+//   display no pages if none matched.
+// Improved dba and file sortby().
+// Use &$request reference
+//
 // Revision 1.78  2004/07/08 21:32:35  rurban
 // Prevent from more warnings, minor db and sort optimizations
 //

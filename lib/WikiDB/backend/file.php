@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: file.php,v 1.16 2004-07-09 12:47:45 rurban Exp $');
+rcs_id('$Id: file.php,v 1.17 2004-07-09 13:05:34 rurban Exp $');
 
 /**
  Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
@@ -692,31 +692,26 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
     }
     
     function next() {
-        $backend = &$this->_backend;
-
         if (!$this->_result)
             return false;
-
         if (count($this->_result) <= 0)
             return false;
 
         $e = each($this->_result);
-        if ($e == false)
+        if ($e == false) {
             return false;
-
+        }
+        
         $pn = $e[1];
-
-        $pagedata = $backend->get_pagedata($pn);
+        $pagedata = $this->_backend->get_pagedata($pn);
         // don't pass _cached_html via iterators
         if (isset($pagedata['_cached_html']))
             unset($pagedata['_cached_html']);
-         unset($pagedata['pagename']);
+        unset($pagedata['pagename']);
         $rec = array('pagename' => $pn,
                      'pagedata' => $pagedata);
-
         //$rec['version'] = $backend->get_latest_version($pn);
         //$rec['versiondata'] = $backend->get_versiondata($pn, $rec['version'], true);
-
         return $rec;
     }
 
@@ -729,6 +724,9 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2004/07/09 12:47:45  rurban
+// dont cache _ cached_html and pagename in flatfile page iterators
+//
 // Revision 1.15  2004/07/09 10:06:50  rurban
 // Use backend specific sortby and sortable_columns method, to be able to
 // select between native (Db backend) and custom (PageList) sorting.
