@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.63 2004-03-09 08:29:56 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.64 2004-03-10 15:32:53 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -136,15 +136,18 @@ class _PageList_Column_base {
                                                             'nopurge' => '1')),
                                'class' => 'gridbutton', 
                                'title' => sprintf(_("Click to sort by %s"),$this->_field)),
+                         HTML::raw('&nbsp;'),
                          $noimg,
                          HTML::raw('&nbsp;'),
                          $this->_heading,
                          HTML::raw('&nbsp;'),
-                         $img);
+                         $img,
+                         HTML::raw('&nbsp;'));
         } else {
             $s = HTML(HTML::raw('&nbsp;'), $this->_heading, HTML::raw('&nbsp;'));
         }
-        return HTML::th(array('align' => 'center', 'class' => 'gridbutton'), $s);
+        return HTML::th(array('align' => 'center', 'valign' => 'middle', 
+                              'class' => 'gridbutton'), $s);
     }
 };
 
@@ -390,7 +393,7 @@ class _PageList_Column_pagename extends _PageList_Column_base {
     }
 
     function _getValue ($page_handle, &$revision_handle) {
-        if ($this->dbi->isWikiPage($pagename = $page_handle->getName()))
+        if ($this->dbi->isWikiPage($page_handle->getName()))
             return WikiLink($page_handle);
         else
             return WikiLink($page_handle, 'unknown');
