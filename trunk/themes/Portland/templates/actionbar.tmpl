@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.1 2002-01-19 22:48:42 carstenklapp Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.2 2002-01-19 23:56:51 carstenklapp Exp $ -->
 <?php
   $BF = &$ButtonFactory;
 
@@ -13,6 +13,7 @@
 
   $mtime = $Theme->formatDateTime($revision->get('mtime'));
   //<?plugin-link PageHistory page="[pagename]" ?>
+  //$Theme->addButtonAlias($mtime,_("PageHistory"));
   $PageHistoryB = $BF->makeLabelActionPageButton($mtime, _("PageHistory"));
 
   /* FIXME: This doesn't work yet. */
@@ -32,7 +33,7 @@
   $Sep = $Theme->getButtonSeparator();
 ?>
 
-    <?= $EditB ?> of this page <?= $LastModifiedMsg ?>
+    <?= $EditB ?> of this page <?= $LastModifiedMsg ?><?= $PageHistoryB ?>
     <?php if ($user->isAdmin()) { ?>
      <?=$Sep?><?= $LockPageB ?><?=$Sep?><?= $RemovePageB ?>
     <?php } ?>
