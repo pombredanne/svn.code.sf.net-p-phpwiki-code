@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageHistory.php,v 1.21 2002-02-25 03:33:10 carstenklapp Exp $');
+rcs_id('$Id: PageHistory.php,v 1.22 2002-12-15 01:55:30 carstenklapp Exp $');
 /**
  */
 require_once('lib/plugin/RecentChanges.php');
@@ -190,7 +190,7 @@ extends _RecentChanges_RssFormatter
 
         $rc_url = WikiURL($request->getArg('pagename'), false, 'absurl');
 
-        $title = sprintf("%s: %s",
+        $title = sprintf(_("%s: %s"),
                          WIKI_NAME,
                          split_pagename($this->_args['page']));
 
