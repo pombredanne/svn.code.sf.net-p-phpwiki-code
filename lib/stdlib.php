@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.52 2001-12-03 23:37:25 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.53 2001-12-06 06:24:44 carstenklapp Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -22,11 +22,6 @@
       if (preg_match('@^(\w+:|/)@', $url))
 	 return $url;
       return SERVER_URL . DATA_PATH . "/$url";
-      // Beginnings of theme support by Carsten Klapp:
-      /*
-      global $theme;
-      return SERVER_URL . DATA_PATH . "/templates/$theme/$url";
-      */
    }
 	  
 function WikiURL($pagename, $args = '', $get_abs_url = false) {
@@ -111,7 +106,7 @@ function QElement($tag, $args = '', $content = '')
       if(ereg("[<>\"]", $url)) {
           return Element('strong',
                          QElement('u', array('class' => 'baduri'),
-                                  'BAD URL -- remove all of <, >, "'));
+                                  'BAD URL -- remove all of <, >, "')); //"
       }
 
       if (empty($linktext)) {
@@ -130,17 +125,18 @@ function QElement($tag, $args = '', $content = '')
             //ideally the link image would be specified by a map file
             //similar to the interwiki.map
             $linkproto = substr($url, 0, strrpos($url, ":"));
-            if ($linkproto == "mailto") {
+			switch($linkproto) {
+            case "mailto":
                 $linkimg = "/images/mailto.png";
-            } elseif ($linkproto == "http") { 
+            case "http":
                 $linkimg = "/images/http.png";
-            } elseif ($linkproto == "https") { 
+            case "https":
                 $linkimg = "/images/https.png";
-            } elseif ($linkproto == "ftp") { 
+            case "ftp":
                 $linkimg = "/images/ftp.png";
-            } else {
+            else
                 $linkimg = "/images/http.png";
-      }
+            }
       return Element('a',
                  array('href' => $url, 'class' => $class),
                  Element('img', array('src' => DATA_PATH . $linkimg, 'alt' => $linkproto)) . $linktext);
