@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.207 2005-02-10 19:03:37 rurban Exp $');
+rcs_id('$Id: main.php,v 1.208 2005-02-28 21:24:32 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -1142,7 +1142,7 @@ function validateSessionPath() {
                  , E_USER_NOTICE);
         }
         else
-            ini_set('session.save_path', $tmpdir);
+            @ini_set('session.save_path', $tmpdir);
     }
 }
 
@@ -1237,6 +1237,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.207  2005/02/10 19:03:37  rurban
+// try to avoid duoplicate lang/theme init
+//
 // Revision 1.206  2005/02/04 11:30:10  rurban
 // remove old comments
 //

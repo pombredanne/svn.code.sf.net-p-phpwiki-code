@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageTrail.php,v 1.6 2005-02-27 21:34:10 rurban Exp $');
+rcs_id('$Id: PageTrail.php,v 1.7 2005-02-28 21:24:34 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2005 $ThePhpWikiProgrammingTeam
 
@@ -52,7 +52,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     // default values
@@ -95,6 +95,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2005/02/27 21:34:10  rurban
+// Fix error with : in pagenames. Thanks to Dan Frankowski. bug #1115479
+//
 // Revision 1.5  2005/02/02 19:38:42  rurban
 // shorter default trail
 //

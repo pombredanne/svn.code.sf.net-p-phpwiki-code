@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.82 2005-02-28 20:14:19 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.83 2005-02-28 21:24:32 rurban Exp $');
 
 /**
  * A configurator intended to read its config from a PHP-style INI file,
@@ -454,7 +454,7 @@ function IniConfig($file) {
         $rs['PLUGIN_CACHED_CACHE_DIR'] = $rsdef['PLUGIN_CACHED_CACHE_DIR'];
     if (empty($rs['PLUGIN_CACHED_CACHE_DIR'])) {
         if (!empty($rs['INCLUDE_PATH'])) {
-            ini_set('include_path', $rs['INCLUDE_PATH']);
+            @ini_set('include_path', $rs['INCLUDE_PATH']);
         }
         if (!FindFile('/tmp/cache', 1)) { // [29ms]
             if (!FindFile('/tmp', 1)) {
@@ -639,9 +639,9 @@ function fixup_dynamic_configs($file) {
     global $HTTP_SERVER_VARS, $DBParams, $LANG;
 
     if (defined('INCLUDE_PATH'))
-        ini_set('include_path', INCLUDE_PATH);
+        @ini_set('include_path', INCLUDE_PATH);
     if (defined('SESSION_SAVE_PATH'))
-        ini_set('session.save_path', SESSION_SAVE_PATH);
+        @ini_set('session.save_path', SESSION_SAVE_PATH);
     if (!defined('DEFAULT_LANGUAGE'))   // not needed anymore
         define('DEFAULT_LANGUAGE', ''); // detect from client
 
@@ -830,6 +830,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.82  2005/02/28 20:14:19  rurban
+// prevent from recursion (configurator.php)
+//
 // Revision 1.81  2005/02/27 13:20:28  rurban
 // remove clsclient (typo and still exp)
 //
