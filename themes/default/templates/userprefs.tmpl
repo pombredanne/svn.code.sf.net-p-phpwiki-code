@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.41 2004-03-12 23:21:35 rurban Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.42 2004-03-14 16:40:45 rurban Exp $ -->
 <?php
 // Todo: Move the logic and code to the plugin
 // This is very experimental and the read-only part an ugly hack so far.
@@ -51,9 +51,9 @@ if ( $isForm ) {
     $SelectOptions = HTML(); 
     if (!empty($available_themes) and is_array($available_themes)) {
 	if (!$pref->get('theme') or $pref->get('theme') == THEME)
-	    $SelectOptions->pushContent(selectedOption('',_("<system theme>")));
+	    $SelectOptions->pushContent(selectedOption(THEME,_("<system theme>")));
 	else
-	    $SelectOptions->pushContent(unselectedOption('',_("<system theme>")));
+	    $SelectOptions->pushContent(unselectedOption(THEME,_("<system theme>")));
 	foreach ($available_themes as $theme) {
 	    if ($theme == $pref->get('theme') and $theme != THEME)
 		$SelectOptions->pushContent(selectedOption($theme));
@@ -68,9 +68,9 @@ if ( $isForm ) {
     $SelectOptions = HTML();
     if (!empty($available_languages) and is_array($available_languages)) {
 	if (!$pref->get('lang') or $pref->get('lang') == DEFAULT_LANGUAGE)
-	    $SelectOptions->pushContent(selectedOption('',_("<system language>")));
+	    $SelectOptions->pushContent(selectedOption(DEFAULT_LANGUAGE,_("<system language>")));
 	else
-	    $SelectOptions->pushContent(unselectedOption('',_("<system language>")));
+	    $SelectOptions->pushContent(unselectedOption(DEFAULT_LANGUAGE,_("<system language>")));
 	foreach ($available_languages as $lang) {
 	    if ($lang == $pref->get('lang') and $lang != DEFAULT_LANGUAGE)
 		$SelectOptions->pushContent(selectedOption($lang));
