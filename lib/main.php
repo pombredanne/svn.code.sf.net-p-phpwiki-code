@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.137 2004-04-29 19:39:44 rurban Exp $');
+rcs_id('$Id: main.php,v 1.138 2004-05-01 15:59:29 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -564,12 +564,13 @@ class WikiRequest extends Request {
     }
 
     function _deduceUsername() {
+        global $HTTP_SERVER_VARS, $HTTP_ENV_VARS;
         if (!empty($this->args['auth']) and !empty($this->args['auth']['userid']))
             return $this->args['auth']['userid'];
-        if (!empty($_SERVER['PHP_AUTH_USER']))
-            return $_SERVER['PHP_AUTH_USER'];
-        if (!empty($_ENV['REMOTE_USER']))
-            return $_ENV['REMOTE_USER'];
+        if (!empty($HTTP_SERVER_VARS['PHP_AUTH_USER']))
+            return $HTTP_SERVER_VARS['PHP_AUTH_USER'];
+        if (!empty($HTTP_ENV_VARS['REMOTE_USER']))
+            return $HTTP_ENV_VARS['REMOTE_USER'];
             
         if ($user = $this->getSessionVar('wiki_user')) {
             $this->_user = $user;
@@ -885,6 +886,12 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.137  2004/04/29 19:39:44  rurban
+// special support for formatted plugins (one-liners)
+//   like <small><plugin BlaBla ></small>
+// iter->asArray() helper for PopularNearby
+// db_session for older php's (no &func() allowed)
+//
 // Revision 1.136  2004/04/29 17:18:19  zorloc
 // Fixes permission failure issues.  With PagePermissions and Disabled Actions when user did not have permission WIKIAUTH_FORBIDDEN was returned.  In WikiUser this was ok because WIKIAUTH_FORBIDDEN had a value of 11 -- thus no user could perform that action.  But WikiUserNew has a WIKIAUTH_FORBIDDEN value of -1 -- thus a user without sufficent permission to do anything.  The solution is a new high value permission level (WIKIAUTH_UNOBTAINABLE) to be the default level for access failure.
 //

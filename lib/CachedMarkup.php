@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: CachedMarkup.php,v 1.13 2004-04-19 18:27:45 rurban Exp $');
+<?php rcs_id('$Id: CachedMarkup.php,v 1.14 2004-05-01 15:59:29 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -55,7 +55,7 @@ class CacheableMarkup extends XmlContent {
             // Looks like a serialized object
             return unserialize($packed);
         }
-        trigger_error("Can't unpack bad cached markup", E_USER_WARNING);
+        trigger_error("Can't unpack bad cached markup. Probably php_zlib extension not loaded.", E_USER_WARNING);
         return false;
     }
     
