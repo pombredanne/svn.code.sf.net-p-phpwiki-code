@@ -32,17 +32,17 @@
 </table></td></tr>
 </table>
 <hr noshade>
-###IF ADMIN###<a class="wikiaction" href="###ACTION###edit">EditText</a> of this page
+###IF ADMIN###<a class="wikiaction" href="###ACTION###edit&version=###VERSION###">Edit</a> Revision ###VERSION###
 ###IF:!ADMIN###
-###IF LOCK###Page locked
-###IF !LOCK###<a class="wikiaction" href="###ACTION###edit">EditText</a> of this page
+###IF LOCK###Page locked, revision ###VERSION###
+###IF !LOCK###<a class="wikiaction" href="###ACTION###edit&version=###VERSION###">Edit</a> Revision ###VERSION###
 ###ENDIF:!ADMIN###
-(last edited ###LASTMODIFIED###
-[<a class="wikiaction" href="###ACTION###info">info</a>]
-[<a class="wikiaction" href="###ACTION###diff">diff</a>])
-<br>
-<a class="wikilink" href="###BROWSE###FindPage"><span class="wikiword">FindPage</span></a>
+| Created ###LASTMODIFIED###
+| <a href="###ACTION###info">Info</a>
+| <a href="###ACTION###diff&ver2=###VERSION###">Diff</a>
+<br><a class="wikilink" href="###BROWSE###FindPage"><span class="wikiword">FindPage</span></a>
 by browsing or searching
+
 <hr noshade>
 <small>###RELATEDPAGES###</small>
 
