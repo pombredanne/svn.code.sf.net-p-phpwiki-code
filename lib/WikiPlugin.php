@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.7 2002-01-07 01:12:34 carstenklapp Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.8 2002-01-07 04:19:05 carstenklapp Exp $');
 
 class WikiPlugin
 {
@@ -61,7 +61,7 @@ class WikiPlugin
         }
 
         foreach (array_merge($argstr_args, $argstr_defaults) as $arg => $val) {
-            trigger_error("$arg: argument not declared by plugin",
+            trigger_error(sprintf(_("argument '%s' not declared by plugin"),$arg),
                           E_USER_NOTICE);
         }
         
@@ -97,13 +97,16 @@ class WikiPlugin
                 $args[$arg] = $val;
             }
             else {
+                // FIXME: doesn't work for multiple args
+                // e.g. <plugin RecentChanges days||=1 show_all||=0 show_minor||=0>
+                //      url: RecentChanges?days=1+show_all=1+show_minor=0
                 assert($op == '||=');
                 $defaults[$arg] = $val;
             }
         }
         
         if ($argstr) {
-            trigger_error("trailing cruft in plugin args: '$argstr'", E_USER_WARNING);
+            trigger_error(sprintf(_("trailing cruft in plugin args: '%s'"),$argstr), E_USER_WARNING);
         }
 
         return array($args, $defaults);
@@ -227,7 +230,7 @@ class WikiPluginLoader {
     
     function expandPI($pi, $dbi, $request) {
         if (!preg_match('/^\s*<\?(plugin(?:-form|-link)?)\s+(\w+)\s*(.*?)\s*\?>\s*$/s', $pi, $m))
-            return $this->_error("Bad PI");
+            return $this->_error(sprintf(_("Bad %s"),'PI'));
 
         list(, $pi_name, $plugin_name, $plugin_args) = $m;
         $plugin = $this->getPlugin($plugin_name);
@@ -266,14 +269,14 @@ class WikiPluginLoader {
         $plugin_class = "WikiPlugin_$plugin_name";
         if (!class_exists($plugin_class)) {
             if ($include_failed)
-                return $this->_error("Include of '$plugin_source' failed");
-            return $this->_error("$plugin_class: no such class");
+                return $this->_error(sprintf(_("Include of '%s' failed"),$plugin_source));
+            return $this->_error(sprintf(_("%s: no such class"),$plugin_class));
         }
         
     
         $plugin = new $plugin_class;
         if (!is_subclass_of($plugin, "WikiPlugin"))
-            return $this->_error("$plugin_class: not a subclass of WikiPlugin");
+            return $this->_error(sprintf(_("%s: not a subclass of WikiPlugin"),$plugin_class));
 
         return $plugin;
     }
