@@ -1,4 +1,4 @@
-<!-- $Id: diff.php,v 1.4.2.1 2001-02-08 18:28:31 dairiki Exp $ -->
+<!-- $Id: diff.php,v 1.4.2.2 2001-02-10 05:26:00 dairiki Exp $ -->
 <?php
 // diff.php
 //
@@ -158,6 +158,8 @@ class _WikiDiffEngine
    */
   function _diag ($xoff, $xlim, $yoff, $ylim, $nchunks)
       {
+	$flip = false;
+	
 	if ($xlim - $xoff > $ylim - $yoff)
 	  {
 	    // Things seems faster (I'm not sure I understand why)
@@ -195,7 +197,7 @@ class _WikiDiffEngine
 		    continue;
 		reset($matches);
 		while (list ($junk, $y) = each($matches))
-		    if (! $this->in_seq[$y])
+		    if (empty($this->in_seq[$y]))
 		      {
 			$k = $this->_lcs_pos($y);
 			USE_ASSERTS && assert($k > 0);
@@ -213,7 +215,7 @@ class _WikiDiffEngine
 			$this->seq[$k] = $y;
 			$this->in_seq[$y] = 1;
 		      }
-		    else if (! $this->in_seq[$y])
+		    else if (empty($this->in_seq[$y]))
 		      {
 			$k = $this->_lcs_pos($y);
 			USE_ASSERTS && assert($k > 0);
