@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.22 2002-01-17 20:35:44 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.23 2002-01-17 22:52:03 dairiki Exp $');
 /**
  */
 
@@ -247,9 +247,15 @@ extends _RecentChanges_Formatter
     }
     
     function image_properties () {
+        global $Theme;
+
+        $img_url = $Theme->getImageURL('logo');
+        if (!$img_url)
+            return false;
+        
         return array('title' => WIKI_NAME,
                      'link' => WikiURL(_("HomePage"), false, 'absurl'),
-                     'url' => DataURL($GLOBALS['logo']));
+                     'url' => $img_url);
     }
 
     function textinput_properties () {
