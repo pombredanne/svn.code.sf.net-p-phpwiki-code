@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Ploticus.php,v 1.4 2004-06-19 10:06:38 rurban Exp $');
+rcs_id('$Id: Ploticus.php,v 1.5 2004-06-28 16:35:12 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -80,7 +80,7 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
     function getDefaultArguments() {
         return array(
@@ -217,11 +217,23 @@ extends WikiPluginCached
          return $output;
     }
 
+    function withShellCommand($script) {
+        $findme  = 'shell';
+        $pos = strpos($script, $findme);
+        if ($pos === false) 
+            return 0;
+        return 1;
+    }
+
     function getImage($dbi, $argarray, $request) {
         //extract($this->getArgs($argstr, $request));
         //extract($argarray);
         $source =& $this->source;
         if (!empty($source)) {
+            if ($this->withShellCommand($source)) {
+                $this->_errortext .= _("shell commands not allowed in Ploticus");
+                return false;
+            }
             $html = HTML();
             //$cacheparams = $GLOBALS['CacheParams'];
             $tempfiles = $this->tempnam('Ploticus');
@@ -238,8 +250,10 @@ extends WikiPluginCached
                 $code = $this->oldFilterThroughCmd($source, $commandLine);
             //if (empty($code))
             //    return $this->error(fmt("Couldn't start commandline '%s'", $commandLine));
-            if (! file_exists("$tempfiles.$gif") )
-                return $this->error(fmt("Ploticus error: Outputfile '%s' not created", $tempfiles.$gif));
+            if (! file_exists("$tempfiles.$gif") ) {
+                $this->_errortext .= fmt("Ploticus error: Outputfile '%s' not created", $tempfiles.$gif);
+                return false;
+            }
             $ImageCreateFromFunc = "ImageCreateFrom$gif";
             $img = $ImageCreateFromFunc( "$tempfiles.$gif" );
             return $img;
@@ -255,6 +269,10 @@ extends WikiPluginCached
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/06/19 10:06:38  rurban
+// Moved lib/plugincache-config.php to config/*.ini
+// use PLUGIN_CACHED_* constants instead of global $CacheParams
+//
 // Revision 1.3  2004/06/03 09:40:57  rurban
 // WikiPluginCache improvements
 //

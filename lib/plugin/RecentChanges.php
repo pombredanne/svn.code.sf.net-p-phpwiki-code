@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.99 2004-06-20 14:42:54 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.100 2004-06-28 16:35:12 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -524,7 +524,6 @@ extends _RecentChanges_Formatter
         include_once('lib/RssWriter.php');
         $rss = new RssWriter;
 
-
         $rss->channel($this->channel_properties());
 
         if (($props = $this->image_properties()))
@@ -658,7 +657,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.99 $");
+                            "\$Revision: 1.100 $");
     }
 
     function managesValidators() {
@@ -841,6 +840,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.99  2004/06/20 14:42:54  rurban
+// various php5 fixes (still broken at blockparser)
+//
 // Revision 1.98  2004/06/14 11:31:39  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList
