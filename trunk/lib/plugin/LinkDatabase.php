@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: LinkDatabase.php,v 1.1 2004-11-30 21:02:16 rurban Exp $');
+rcs_id('$Id: LinkDatabase.php,v 1.2 2004-11-30 23:02:45 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -25,9 +25,12 @@ require_once('lib/WikiPluginCached.php');
 
 /**
  * To be used by WikiBrowser at http://touchgraph.sourceforge.net/
- * (only via a static text file by ?format=text) or the 
- * Hypergraph applet without intermediate text file
- * http://hypergraph.sourceforge.net/ (not yet tested)
+ *   (only via a static text file by ?format=text) or the 
+ * Hypergraph applet should use format=xml
+ *   http://hypergraph.sourceforge.net/
+ *
+ * Currently the meta-head tags disturb the java browser a bit. 
+ * Maybe add theme without much header tags.
  */
 class WikiPlugin_LinkDatabase
 extends WikiPluginCached
@@ -43,7 +46,7 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
     function getExpire($dbi, $argarray, $request) {
         return '+900'; // 15 minutes
@@ -54,7 +57,7 @@ extends WikiPluginCached
             (
              PageList::supportedArgs(),
              array(
-                   'format'        => 'text', // or 'html'
+                   'format'        => 'text', // or 'html', 'xml'
                    'noheader'      => false,
                    'include_empty' => false,
                    'exclude_from'  => false,
@@ -115,6 +118,39 @@ extends WikiPluginCached
             }
             flush();
             $request->finish();
+        } elseif ($args['format'] == 'xml') {
+            // for hypergraph.jar. best dump it to a sitemap.xml
+            global $WikiTheme, $charset;
+            $currpage = $request->getArg('pagename');
+            $request->discardOutput();
+            $request->buffer_output(false);
+            if (!headers_sent())
+                header("Content-Type: text/xml");
+            $request->checkValidators();
+            echo "<?xml version=\"1.0\" encoding=\"$charset\"?>\n";
+            $dtd = SERVER_URL . $WikiTheme->_findData("GraphXML.dtd");
+	    echo "<!DOCTYPE GraphXML SYSTEM \"$dtd\">\n";
+	    echo "<GraphXML xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n";
+	    echo "<graph id=\"",WIKI_NAME,"\">\n";
+            echo '<style><line tag="node" class="main" colour="#ffffff"/><line tag="node" class="child" colour="blue"/><line tag="node" class="relation" colour="green"/></style>',"\n";
+            while ($page = $pages->next()) {
+            	$pageid = MangleXmlIdentifier($page->getName());
+            	$pagename = $page->getName();
+                echo "<node name=\"$pageid\"";
+                if ($pagename == $currpage) echo " class=\"main\"";
+                echo "><label>$pagename</label>";
+                echo "<dataref><ref xlink:href=\"",WikiURL($pagename,'',true),"\"/></dataref></node>\n";
+                $links = $page->getPageLinks(false, $args['sortby'], $args['limit'], $args['exclude']);
+                while ($link = $links->next()) {
+                    $edge = MangleXmlIdentifier($link->getName());
+                    echo "<edge source=\"$pageid\" target=\"$edge\" />\n";
+                }
+                echo "\n";
+            }
+	    echo "</graph>\n";
+	    echo "</GraphXML>\n\n";
+            unset($GLOBALS['ErrorManager']->_postponed_errors);
+            $request->finish();
         } else {
             return $this->error(fmt("Unsupported format argument %s", $args['format']));
         }
@@ -133,6 +169,11 @@ class _PageList_Column_LinkDatabase_links extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/11/30 21:02:16  rurban
+// A simple plugin for WikiBrowser at http://touchgraph.sourceforge.net/
+// List all pages with all links as text file (with some caching tricks).
+//   format=html currently unstable.
+//
 
 // Local Variables:
 // mode: php
