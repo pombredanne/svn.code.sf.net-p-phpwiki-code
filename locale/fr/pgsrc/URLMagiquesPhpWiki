@@ -1,26 +1,27 @@
-Date: Sun, 10 Feb 2002 19:47:46 +0100
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: URLMagiquesPhpWiki,v 1.1 2002-02-12 20:18:36 carstenklapp Exp $
+Date: Sat, 5 Jun 2004 16:49:58 +0200
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
+X-Rcs-Id: $Id: URLMagiquesPhpWiki,v 1.2 2004-06-08 14:19:04 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=URLMagiquesPhpWiki;
+  pgsrc_version="2 $Revision: 1.2 $";
   flags=PAGE_LOCKED;
-  pgsrc_version="2 $Revision: 1.1 $";
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-!!! À propos des URL phpwiki:
+!!À propos des URL de PhpWiki
 
 Un type spécial d'URL est disponible pour créer des liens permettant de réaliser
 des tâches administratives ou particulières dans PhpWiki. Voici une brève description de leur
 fonctionnement.
 
-La syntaxe de base d'un URL phpwiki: est
-  __phpwiki:__''nomdelapage''__?__''arguments''
+La syntaxe de base d'un URL phpwiki est :
 
-Si ''nomdelapage'' est omis, sa valeur par défaut est la page courante.
+<pre>
+__phpwiki:__''nomdelapage''__?__''arguments''
+</pre>
 
-''arguments'' doit être un ensemble de paramètres au format standard
-HTTP GET.
+* si ''nomdelapage'' est omis, sa valeur par défaut est la page courante.
+* ''arguments'' doit être un ensemble de paramètres au format standard HTTP GET.
 
 Le paramètre "action=''x''" doit presque toujours être donné. Il peut valoir
 __browse__, __info__, __diff__, __search__, __edit__,
@@ -29,43 +30,102 @@ __remove__, __lock__, __unlock__,
 __login__, __logout__, __setprefs__ ou __save__.
 L'action par défaut est __browse__.
 
-Certaines actions acceptent d'autres paramètres.
+Certaines actions acceptent d'autres paramètres :
 
-;__info__: accepte __showpagesource__.
-;__search__: accepte __searchterm__, et __searchtype__.
-;__edit__: accepte __version__.
-;__remove__: accepte __verify__.
-;__save__: accepte __editversion__, __minor_edit__, et  __content__.
-;__setprefs__: accepte __edit_area_width__, __edit_area_height__.
+__!FullTextSearch__, __!TitleSearch__:
+
+  accepte __s__=terme à rechercher, et __size__=taille de l'entrée.
+
+__edit__: 
+
+  accepte __version__.
+
+__remove__: 
+
+  accepte __verify__.
+
+__save__: 
+
+  accepte __editversion__, __minor_edit__, et  __content__.
+
+__setprefs__: 
+
+  accepte __edit_area_width__, __edit_area_height__.
 
 
 !! Rédiger des liens Magiques dans les pages du Wiki
 
 Un lien magique a cette allure :
 
-  __[[__ ''texte'' __|__ ''url-phpwiki'' __]__
+<verbatim>
+[ texte | url-phpwiki ]
+</verbatim>
 
-Le "''texte'' __|__" est optionnel mais est habituellement recommandé.
-S'il est donné, il fournira le label du lien.
+La partie ''texte'' est optionnelle mais est habituellement recommandée.
+S'il est donné, il fournira le label du lien. L' ''url-phpwiki'' est 
+un URL __phpwiki:__ comme décrit plus haut.
 
-L' ''url-phpwiki'' est un URL __phpwiki:__ tel que décrit plus haut.
+!!Exemples
 
-!Quelques exemples
-
-  [[ Éditer le !BacASable | phpwiki:!BacASable?action=edit ]
-générera un lien qui vous emmènera directement à l'édition du [BacASable], comme ceci :
-[ Éditer le BacASable | phpwiki:BacASable?action=edit ].
+<verbatim>
+[ Éditer le BacÀSable | phpwiki:BacÀSable?action=edit ]
+</verbatim>
+générera un lien qui vous emmènera directement à l'édition du [BacÀSable], comme ceci :
+[ Éditer le BacÀSable | phpwiki:BacÀSable?action=edit ].
 
 Autres possibilités :
-* [ Diff du BacASable | phpwiki:BacASable?action=diff ],
-* [ Verrouiller l'Accueil | phpwiki:Accueil?action=lock ],
+* [ Diff du BacÀSable | phpwiki:BacÀSable?action=diff ],
+* [ Verrouiller la page d'accueil | phpwiki:PageAccueil?action=lock ],
 * [ Obtenir un vidage Zip complet | phpwiki:?action=zip&include=all ],
-* [ Titres de page contenant 'wiki' | phpwiki:RechercheParTitre?s=wiki ],
+* Recherche pour [ Titres de page contenant 'wiki' | phpwiki:RechercheParTitre?s=wiki ],
 
 !! Insertion de Formulaires Magiques dans les Pages du Wiki
 
-Les formulaires magiques ne sont plus supportés. Ils ont été remplacés
-par <''''?plugin-form?>s (pour les recherches de texte) et par le WikiFormPlugin
-(pour le téléchargement de fichiers, etc.)
+''__Note__: L'ancienne syntaxe des formulaires magiques n'est plus supportée. 
+Ils ont été remplacés par =<?plugin-form>=.''
+
+Si le plugin est appelé en utilisant *<?plugin-form* au lieu de *<?plugin* et
+que le plugin supporte les recherches alors sera rendu comme un formulaire.
+
+''size'':
+
+  Si c'est donné, spécifie la taille de la zone de saisie.
+
+''s'':
+
+  Spécifie la valeur par défaut de l'entrée.
+
+!Exemples:
+
+Un plugin de recherche appelé avec *<?plugin* au lieu de *<?plugin-form*
+insère simplement le résultat de la recherche du plugin :
+
+<verbatim>
+<?plugin TitleSearch s=wiki noheader=true ?>
+</verbatim>
+
+Résultats de recherche pour les pages dont le titre contient 'wiki' :
+
+<?plugin TitleSearch s=wiki noheader=true ?>
+
+<verbatim>
+<?plugin-form FullTextSearch ?>
+</verbatim>
+
+donne
+
+<?plugin-form FullTextSearch ?>
+
+Tandis que
+
+<verbatim>
+<?plugin-form TitleSearch formsize=12 ?>
+</verbatim>
+
+donne
+
+<?plugin-form TitleSearch formsize=12 ?>
+
 ----
+
 DocumentationDePhpWiki

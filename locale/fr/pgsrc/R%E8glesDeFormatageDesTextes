@@ -1,24 +1,40 @@
-Date: Thu, 28 Mar 2002 14:57:00 -0500
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: R%E8glesDeFormatageDesTextes,v 1.6 2002-03-28 20:32:23 carstenklapp Exp $
+Date: Sat, 5 Jun 2004 16:49:57 +0200
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
+X-Rcs-Id: $Id: R%E8glesDeFormatageDesTextes,v 1.7 2004-06-08 14:19:04 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=R%E8glesDeFormatageDesTextes;
+  pgsrc_version="2 $Revision: 1.7 $";
   flags=PAGE_LOCKED;
-  pgsrc_version="2 $Revision: 1.6 $";
+  markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
+----
 ! Vue d'ensemble
 RèglesDeFormatageDesTextes%%%
-__Emphase :__ '____' pour mettre en ''italique'', _''''_ pour mettre en __gras__, '____'_''''_ pour ''__les deux__''.%%%
-__Listes :__ * pour les listes à puces, # pour les listes numérotées, ''__;__ term __:__ definition'' pour les listes définies par des titres.%%%
-__Liens :__ !CollerLesMotsEnMajuscule ou utiliser des crochet pour un [[lien vers une autre page] ou un URL [[!http://www.exemple.com].%%%
-__Références :__ Utiliser [[1],[[2],[[3],...%%%
-__Pour empêcher des liens :__ Préfixer avec "!": !!NePasLier, nommer les liens comme [[[[texte | URL] (doubler le "[").%%%
-__Divers :__ "!", "!!", "!!!" crée des titres, "%%''''%" provoque un retour à la ligne, "-''''---" crée une règle horizontale.
+*Emphase :* <tt>~_</tt> pour _italique_, <tt>~*</tt> pour *bold*,
+<tt>~_~*</tt> pour _*les deux*_, <tt>~=</tt> pour =chasse fixe=.%%%
+*Listes :* <tt>~*</tt> pour listes pointées, <tt>#</tt> pour listes numérotées,
+_Terme<b>:</b>~<nouvelle ligne> définition_ pour les listes de définitions.%%%
+*Texte pré-formaté :* enfermer le texte dans <tt>~<pre>~</pre></tt> ou
+<tt>~<verbatim>~</verbatim></tt>.%%%
+*Texte décalé :* décaler le paragraphe avec des espaces.%%%
+*Liens :* ~JoindreMotsAvecMajuscules ou utiliser des crochets pour une 
+<tt>~[page]</tt> ou une URL <tt>~[~http://cool.wiki.int/]</tt>.%%%
+*Désactiver les liens :* Préfixer avec "<tt>~~</tt>":
+<tt>~~~NePasLier</tt>, nommer les liens comme <tt>~[texte | URL]</tt>.%%%
+*Divers :* "<tt>!</tt>", "<tt>!!</tt>", "<tt>!!!</tt>" pour les titres et sous-titres,
+"<tt>~%%%</tt>" ou "<tt>~<br></tt>" pour aller à la ligne,
+"<tt>~----</tt>" fait un trait horizontal.%%%
+*Balises HTML utilisables :* <b>b</b> <big>big</big> <i>i</i>
+<small>small</small> <tt>tt</tt> <em>em</em> <strong>strong</strong>
+<abbr>abbr</abbr> <acronym>acronym</acronym> <cite>cite</cite>
+<code>code</code> <dfn>dfn</dfn> <kbd>kbd</kbd> <samp>samp</samp>
+<var>var</var> <sup>sup</sup> <sub>sub</sub>
 
 ----
-! Paragraphes
+
+!!! Paragraphes
 
 * N'indentez pas les paragraphes
 * Les mots reviennent à la ligne et remplissent les blancs au besoin
@@ -27,84 +43,168 @@ __Divers :__ "!", "!!", "!!!" crée des titres, "%%''''%" provoque un retour à la
 * %%''''% provoque un retour à la ligne (y compris dans les titres et les listes)
 
 
-! Listes
+!!! Listes
 
 * Un astérisque pour le premier niveau
-** Deux astérisques pour le deuxième niveau, etc.
-* Utilisez * pour les listes à puces, # pour les listes numérotées (mélangez à volonté)
-* point virgule-terme-deux points-définition pour les listes de définitions :
-;le terme ici:et la définition là, à la manière des listes <DL><DT><DD>
-* Une ligne pour chaque élément
-* L'indentation avec des espaces signale un texte préformaté et change la police.
+  * astérisque décalé pour le deuxième niveau, etc.
+* Utilisez <tt>~*</tt>, <tt>-</tt>, <tt>+</tt> ou <tt>o</tt> pour les listes à puces, <tt>#</tt> pour les listes numérotées (mélangez à volonté)
+* listes de définitions :
+  <pre>
+  Terme :
+    définition
+  </pre>
+  donne 
+  Terme :
+    définition
+  comme pour la liste =<DL><DT><DD>=
+* un item peut contenir plusieurs paragraphes et autre contenu multi-lignes, il faut juste décalé les items
 
-! Titres
 
-* '!' en début de ligne produit un petit titre
-* '!!' en début de ligne produit un titre moyen
-* '!!!' en début de ligne produit un gros titre
+!!! Titres
 
-! Polices
+* '=!=' en début de ligne produit un petit titre
+* '=!!=' en début de ligne produit un titre moyen
+* '=!!!=' en début de ligne produit un gros titre
 
-* Indentez avec une ou plusieurs espaces pour utiliser une police à chasse fixe :
 
- Ceci est en chasse fixe
-Ceci ne l'est pas
+!!! Texte pré-formaté
 
-! Paragraphes indentés
+* placer des lignes pré-formatées à l'intérieur de =~<pre>=:
+  <verbatim>
+  <pre>
+  Texte pré-formaté. Les LiensWiki marchent encore
+  </pre>
+  </verbatim>
+  donne
+  <pre>
+  Texte pré-formaté. Les LiensWiki marchent encore
+  </pre>
+* pour désactiver le lien, utiliser la marque =~<verbatim>= :
+  <pre>
+  <verbatim>
+  Texte pré-formaté. Plus de ~LienWiki
+  </verbatim>
+  </pre>
+  donne
+  <verbatim>
+  Texte pré-formaté. Plus de LienWiki
+  </verbatim>
 
-* point virgule-deux points -- fonctionne comme <BLOCKQUOTE>
 
-;: ceci est un bloc de texte indenté
+!!! Paragraphes indentés
 
-! Emphase
+* deux (ou plus) espaces pour signaler un paragraphe décalé. Les décalages peuvent s'imbriquer 
 
-* Utilisez des apostrophes doubles ('____') pour l'emphase (habituellement en ''italique'')
-* Utilisez des soulignées doubles (_''''_) pour l'emphase forte (habituellement en __gras__)
-* Mélangez-les à volonté : __''gras italique''__
-* L'''emphase'' peut être utilisée ''plusieurs'' fois dans une ligne, mais ne peut ''pas'' passer à la ligne :
+    Texte décalé
 
-''ceci
-ne marche pas''
+      Texte encore plus décalé
 
-! Liens
-* Les hyperliens vers d'autres pages au sein du Wiki sont créés en plaçant le nom de la page entre crochets : [ceci est un hyperlien] ou en UtilisantDesMotsWiki (de préférence)
+* le style email commenté est disponible :
+  <pre>
+  > texte commenté
+  </pre>
+  donne
+
+  > texte commenté.
+
+
+!!! Emphase
+
+* Utilisez un underscore (<tt>~_</tt>) pour l'emphase (habituellement en _italique_)
+* Utilisez un astérisque (<tt>~*</tt>) pour l'emphase forte (habituellement en *gras*)
+* Mélangez-les à volonté : *_gras italique_*
+* L'_emphase_ peut être utilisée _plusieurs_ fois dans une ligne, mais ne peut _pas_ passer 
+  à la ligne :
+
+  _ceci
+
+  ne marche pas_
+
+!!! Liens
+
+* Les hyperliens vers d'autres pages au sein du Wiki sont créés en plaçant le nom de la 
+  page entre crochets : [ceci est un hyperlien] ou en UtilisantDesMotsWiki (de préférence)
 * Les hyperliens vers des pages externes sont créés de cette façon : [http://www.wcsb.org/]
-* Vous pouvez nommer les liens en leur donnant un nom, une barre verticale (|) puis l'hyperlien ou le nom de la page : [page d'accueil de PhpWiki | http://phpwiki.sourceforge.net/]  - [la page d'accueil | Accueil]
-* Vous pouvez supprimer les liens vers les références à l'ancienne ou vers les URI en précédant le mot d'un '!', e.g. !NonLiéEnModeWiki, !http://pas.de.lien.ici/
-* Vous pouvez créer des notes de bas de page en utilisant [[1], [[2], [[3], ... comme ici [1]. Voir la note pour la contre-partie (si le [[ est dans la première colonne, c'est une ''définition'' de note de bas de page, au lieu d'une ''référence'' à une note [1].)
-* L'ancienne manière de lier les URL est aussi toujours supportée : précédez les URL de "http:", "ftp:" ou "mailto:" pour créer automatiquement des liens comme dans : http://c2.com/
-* Les URL se terminant par .png, .gif, ou .jpg sont inclus s'ils sont isolés entre crochets : [http://phpwiki.sourceforge.net/demo/themes/default/images/png.png]
+* Vous pouvez nommer les liens en leur donnant un nom, une barre verticale (|) puis 
+  l'hyperlien ou le nom de la page : 
+  [page d'accueil de PhpWiki | http://phpwiki.sourceforge.net/] --- 
+  [la page d'accueil | PageAccueil]
+* Vous pouvez supprimer les liens vers les références à l'ancienne ou vers les URI en 
+  précédant le mot d'un '<tt>~~</tt>', e.g. ~NonLiéEnModeWiki, ~http://pas.de.lien.ici/
+* L'ancienne manière de lier les URL est aussi toujours supportée : précédez les URL de 
+  "<tt>http:</tt>", "<tt>ftp:</tt>" ou "<tt>mailto:</tt>" pour créer automatiquement 
+  des liens comme dans : http://c2.com/
+* Les URL se terminant par .png, .gif, ou .jpg sont inclus s'ils sont isolés entre 
+  crochets : [http://phpwiki.sourceforge.net/demo/themes/default/images/png.png]
+* les #[hyperliens] dans la page sont réalisés en plaçant le nom d'une ancre
+  et en se référant à l'andre par un lien :
+  * ancres nommés :
+    * <tt>~#~[foo]</tt> : une ancre pour le texte "foo" avec l'identifiant "foo"
+    * <tt>~#~[|foo]</tt> : une ancre vide avec l'identifiant "foo"
+    * <tt>~#~[howdy|foo]</tt> : une ancre pour le texte "howdy" avec l'identifiant "foo"
+  * les références aux ancres nommées sont fait de cette manière :%%%
+    <tt>~[~#[#hyperliens]]</tt>, <tt>~[~AutrePage#foo]</tt>,
+    <tt>~[nommé|~AutrePage#foo]</tt>.
 
-! Tableaux
 
-* Les tables simples sont disponibles. Une rangée dans une table est introduite par une barre __|__ dans la première colonne. Cela est mieux décrit par un exemple :
-      ||  _''''_Nom_''''_                       |v _''''_Coût_''''_           |v _''''_Notes_''''_
-      | _''''_Prénom_''''_ | _''''_Nom de famille_''''_
-      |> Jeff      |< Dairiki           |^  Pas cher          |< Pas valable
-      |> Marco     |< Polo              | Encore moins cher   |< Pas disponible
-;: produira
-||  __Nom__               |v __Coût__   |v __Notes__
-| __Prénom__   | __Nom de famille__
-|> Jeff       |< Dairiki   |^  Pas cher     |< Pas valable
-|> Marco      |< Polo      | Encore moins cher     |< Pas disponible
+!!! Tableaux
 
-;: Notez que des barres __|__ multiples mènent à des colonnes imbriquées, et que des __v__ peuvent être utilisés pour imbriquer des rangées. Un __>__ produit une colonne cadrée à droite, __<__ une colonne cadrée à gauche et __^__ une colonne centrée (ce qui est le comportement par défaut).
+* les tableaux sont des listes de définitions utilisant le tuyau (<tt>|</tt>) à la place
+  de des deux points (<tt>:</tt>)
 
-! Langage de Marquage HTML
+  <pre>
+  Terme 1 |
+     Définition 1 commence ici.
+     Terme 1.1 |
+        Définition 1.1
+     Terme 1.2 |
+        Définition 1.2
+     C'est une partie de la définition 1.
+  Terme 2 |
+     C'est le définition 2.
+  </pre>
 
-* Ne vous en souciez pas
+  Terme 1 |
+     Définition 1 commence ici.
+     Terme 1.1 |
+        Définition 1.1
+     Terme 1.2 |
+        Définition 1.2
+     C'est une partie de la définition 1.
+  Terme 2 |
+     C'est le définition 2.
+
+* les anciens styles de tableau sont possible avec le plugin OldStyleTablePlugin:
+
+
+!!! Langage HTML
+
+* certaines balises sont autorisées :
+  <b>b</b>, <big>big</big>, <i>i</i>, <small>small</small>,
+  <tt>tt</tt>, <em>em</em>, <strong>strong</strong>,
+  <abbr>abbr</abbr>, <acronym>acronym</acronym>, <cite>cite</cite>,
+  <code>code</code>, <dfn>dfn</dfn>, <kbd>kbd</kbd>,
+  <samp>samp</samp>, <var>var</var>, <sup>sup</sup> and <sub>sub</sub>
 * < et > sont eux-mêmes
-* Les caractères & ne fonctionneront pas
-* Si vous devez vraiment utiliser du HTML, votre administrateur système peut valider cette fonctionnalité. Commencez chaque ligne par une barre verticale (|). Notez que cette fonctionnalité est désactivée par défaut.
+* les caractères & ne fonctionneront pas
 
-! Plus de détails que vous ne voulez en connaître
+!!! Créer toute sorte de liens spéciaux
 
-Voir [URLMagiquesPhpWiki] pour obtenir des détails gores sur la façon d'écrire divers types de liens de maintenance du wiki.
+* Voir [URLMagiquesPhpWiki] pour obtenir des détails gores sur la façon d'écrire 
+  divers types de liens de maintenance du wiki.
 
------
+!!! Insérer des plugins
 
-Références :
+* quelques plugins embarqués dans les pages ajoutent des possibilités au Wiki. Par exemple,
+  <verbatim>
+  <?plugin BackLinks page=PageAccueil info=hits ?>
+  </verbatim>
+  donne
+  <?plugin BackLinks page=PageAccueil info=hits ?>
 
-[1] En utilisant [[1] une seconde fois (dans la première colonne) la note de bas de page elle-même est ''définie''. Vous pouvez vous référer à une note de bas de page autant de fois que vous le voulez, mais vous ne pouvez la définir qu'une seule fois dans la page. Notez que le [[1] dans la note renvoie à la première référence, s'il existe plusieurs références il y aura des '+' après le [[1] qui renverront aux autres références (il n'y aura pas de lien vers les références venant ''après'' la ''définition'' de la note).
+* pour plus d'informations sur les plugins, voir PluginWiki, et GestionPlugin pour 
+  la liste des plugins.
+
 ----
+
 DocumentationDePhpWiki
