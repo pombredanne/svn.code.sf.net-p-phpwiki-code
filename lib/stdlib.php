@@ -1,4 +1,4 @@
-<!-- $Id: stdlib.php,v 1.5 2000-10-25 14:48:29 ahollosi Exp $ -->
+<!-- $Id: stdlib.php,v 1.6 2000-10-26 11:34:36 ahollosi Exp $ -->
 <?php
    /*
       Standard functions for Wiki functionality
@@ -482,8 +482,9 @@
 
    function ExtractWikiPageLinks($content)
    {
-      $wikilinks = array();
+      global $WikiNameRegexp;
 
+      $wikilinks = array();
       $numlines = count($content);
       for($l = 0; $l < $numlines; $l++)
       {
