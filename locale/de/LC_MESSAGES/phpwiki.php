@@ -24,6 +24,8 @@ $locale["FindPage"] =
    "SeiteFinden";
 $locale["GoodStyle"] =
    "GuterStil";
+$locale["Hits"] =
+   "Zähler";
 $locale["HomePage"] =
    "StartSeite";
 $locale["In order to recover from this situation follow these steps:"] =
@@ -35,13 +37,15 @@ $locale["Lock page"] =
 $locale["major edits"] =
    "Hauptänderungen";
 $locale["Make changes to the file again. Paste your additions from the clipboard (or text editor)."] =
-   "Editiere die Seite erneut. Kopiere deine Veränderungen aus derZwischenablage (oder aus dem Texteditor)";
+   "Editiere die Seite erneut. Kopiere deine Veränderungen aus der Zwischenablage (oder aus dem Texteditor)";
 $locale["minor edits"] =
    "geringe Änderungen";
 $locale["None"] =
    "Keine";
 $locale["Otherwise press the \"Back\" button of your browser."] =
    "Anderenfalls benütze die \"Zurück\" Funktion deines Browsers.";
+$locale["Page Name"] =
+   "Seitenname";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
    "PhpWiki kann deine Veränderungen nicht speichern, da ein andererBenützer die Seite verändert und gespeichert hat, während du diese Seiteeditiert hast. Wenn die Seite jetzt gespeichert werden würde, dann würdendie Veränderungen des anderen Benützers verloren gehen.";
 $locale["Press <b>Save</b> again."] =
@@ -56,6 +60,8 @@ $locale["Removed page '%s' succesfully."] =
    "Seite '%s' erfolgreich gelöscht.";
 $locale["Thank you for editing %s."] =
    "Danke für das Editieren von %s.";
+$locale["The %s most popular pages of this wiki:"] =
+   "Eine Liste der %s meistbesuchten Seiten dieses Wikis:";
 $locale["The %d most recent %s are listed below."] =
    "Eine Liste der %d neuesten %s.";
 $locale["The %d most recent %s during the past %.1f days are listed below."] =
