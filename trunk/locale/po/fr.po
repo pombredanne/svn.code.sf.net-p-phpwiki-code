@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.3.2-jeffs-hacks\n"
-"POT-Creation-Date: 2002-02-22 23:51-0500\n"
+"POT-Creation-Date: 2002-02-23 00:37-0500\n"
 "PO-Revision-Date: 2002-02-22 18:34+01:00\n"
 "Last-Translator: Roland Trique <roland.trique@free.fr>, Stéphane Gourichon "
 "<stephane.gourichon@lip6.fr>, Pascal <pascal@phpfrance.com>\n"
@@ -124,7 +124,7 @@ msgid "BackLinks for %s"
 msgstr "RétroLiens pour %s"
 
 # lib/pageinfo.php:64
-#: ../lib/editpage.php:65
+#: ../lib/editpage.php:65 ../lib/editpage.php:246
 msgid "Your version"
 msgstr "Votre version"
 
@@ -176,48 +176,48 @@ msgid "Sorry for the inconvenience."
 msgstr "Désolé pour la gène occasionnée."
 
 #: ../lib/editpage.php:245
+#, c-format
 msgid ""
 "Some of the changes could not automatically be combined.  Please look for "
-"sections beginning with '<<<<<<< Your version', and ending with '>>>>>>> "
-"Other version'.  You will need to edit those sections by hand, and then "
-"click Save."
+"sections beginning with '%s', and ending with '%s'.  You will need to edit "
+"those sections by hand before you click Save."
 msgstr ""
 "Certaines modifications n'ont pas pu être combinées automatiquement. "
-"Veuillez regarder les sections commençant par '<<<<<<< Votre version', et se "
-"terminant par '>>>>>>> L'autre version'. Vous devrez éditer ces sections à la "
-"main, puis cliquer sur Enregistrer."
+"Veuillez regarder les sections commençant par '%s', et se terminant par "
+"'%s'. Vous devrez éditer ces sections à la main avant cliquer sur "
+"Enregistrer."
 
-#: ../lib/editpage.php:247
-msgid "Please check it through and click Save to save it."
-msgstr "Veuillez la vérifier et cliquer sur Enregistrer pour la sauver."
+#: ../lib/editpage.php:249
+msgid "Please check it through before saving."
+msgstr "Veuillez la vérifier avant la sauver."
 
-#: ../lib/editpage.php:257
+#: ../lib/editpage.php:259
 msgid "Conflicting Edits!"
 msgstr "Conflit d'Éditions !"
 
-#: ../lib/editpage.php:258
+#: ../lib/editpage.php:260
 msgid ""
 "In the time since you started editing this page, another user has saved a "
-"new version of it.  Your changes can not be saved as they are, since doing "
-"so would overwrite the other author's changes."
+"new version of it."
 msgstr ""
 "Depuis que vous avez commencé à éditer cette page, un autre utilisateur en a "
-"enregistré une nouvelle version. Vos modifications ne peuvent être "
-"enegistrées, puisqu'elles écraseraient celles de l'autre utilisateur."
+"enregistré une nouvelle version."
 
-#: ../lib/editpage.php:259
+#: ../lib/editpage.php:261
 msgid ""
-"So, your changes and those of the other author have been combined.  The "
-"result is shown below"
+"Your changes can not be saved as they are, since doing so would overwrite "
+"the other author's changes. So, your changes and those of the other author "
+"have been combined. The result is shown below."
 msgstr ""
-"Ainsi donc, vos modifications et celles de l'autre auteur ont été combinées. "
-"Le résultat est affiché ci-dessous"
+"Vos modifications ne peuvent être enegistrées, puisqu'elles écraseraient "
+"celles de l'autre utilisateur. Ainsi donc, vos modifications et celles de "
+"l'autre auteur ont été combinées. Le résultat est affiché ci-dessous."
 
-#: ../lib/editpage.php:317
+#: ../lib/editpage.php:319
 msgid "Preview"
 msgstr "Prévisualiser"
 
-#: ../lib/editpage.php:320
+#: ../lib/editpage.php:322
 msgid "Save"
 msgstr "Enregistrer"
 
@@ -1690,16 +1690,6 @@ msgstr "diff"
 # lib/savepage.php:30
 #~ msgid "Press <b>Save</b> again."
 #~ msgstr "<b>Enregistrer</b> à nouveau."
-
-# lib/savepage.php:18
-#~ msgid ""
-#~ "PhpWiki is unable to save your changes, because another user edited and "
-#~ "saved the page while you were editing the page too. If saving proceeded now "
-#~ "changes from the previous author would be lost."
-#~ msgstr ""
-#~ "PhpWiki n'a pu enregistrer tes modifications, parce qu'un autre utilisateur "
-#~ "a édité et sauvegardé la page pendant que tu faisais de même. Si j'avais "
-#~ "continué, j'aurais perdu les modifications dues à l'auteur précédent."
 
 # lib/savepage.php:36
 #~ msgid "Problem while updating %s"
