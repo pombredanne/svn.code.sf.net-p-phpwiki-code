@@ -1,0 +1,65 @@
+<?php // -*-html-*- ?>
+<!-- $Id: info.tmpl,v 1.1 2002-02-16 00:08:28 carstenklapp Exp $ -->
+<?php
+
+  $lastModifed =  $Theme->formatDateTime($revision->get('mtime'));
+  $lastAuthor =   $revision->get('author');
+  $lastAuthorId = $revision->get('author_id');
+  $version =      $revision->getVersion();
+  $is_minor =     $revision->get('is_minor') ? _("(minor edit)") : "";
+
+  $markupVersion = $revision->get('markup');
+  $markupVersion = $markupVersion ? fmt("Version %s", $markupVersion) : _("Original (1.2 or 1.0)");
+
+  $summary = HTML::textarea(array('name' => 'summary',
+                                  'class' => 'summary',
+                                  'rows' => $request->getPref('editHeight')/4, /* use fixed dimensions? */
+                                  'cols' => $request->getPref('editWidth')/2,
+                                  'readonly' => 'readonly',
+                                  'wrap' => 'virtual'), /* for netscape */
+                            $revision->get('summary'));
+
+  $is_current = $revision->isCurrent();
+
+  $LOCKED_CB = HTML::input(array('type' => 'checkbox',
+                                 'name' => 'edit[locked]',
+                                 'disabled' => !$user->isadmin() || !$is_current,
+                                 'checked'  => $page->get('locked')));
+
+  if ($is_current) {
+    $label['date'] = _("Last Modified:");
+    $label['author'] = _("Last Author:");
+    $label['summary'] = _("Last Summary:");
+  } else {
+    $label['date'] = _("Saved on:");
+    $label['author'] = _("Author:");
+    $label['summary'] = _("Summary:");
+  }
+
+?>
+
+<!-- FIXME: move table formatting to css -->
+<table summary="FIXME" class="pageinfo"
+       border="0" cellspacing="0" cellpadding="3">
+
+<?php if (!$is_current) { ?>
+  <tr>
+    <td align="right"><b><?=_("Supplanted on:")?></b></td><td><?= $Theme->formatDateTime($revision->get('_supplanted')) ?></td>
+  </tr>
+<?php } ?>
+
+  <tr>
+    <td align="right" nowrap="nowrap"><b><?= $label['date'] ?></b></td><td><?= $lastModifed ?> <em><?=$is_minor?></em> </td>
+  </tr><tr>
+    <td align="right"><b><?= $label['author'] ?></b></td><td><?= $lastAuthor ?> (<?= $lastAuthorId ?>)</td>
+  </tr><tr>
+    <td align="right"><b><?=_("Page Version:")?></b></td><td><?= $version ?></td>
+  </tr><tr>
+    <td align="right"><b><?=_("Markup:")?></b></td><td><?= $markupVersion ?></td>
+  </tr><tr>
+    <td align="right" valign="top"><b><?= $label['summary'] ?></b></td><td><?= $summary ?></td>
+  </tr><tr>
+    <td align="right"><?= $LOCKED_CB ?></td><td><b><?=_("Locked")?></b></td>
+  </tr>
+</table>
+
