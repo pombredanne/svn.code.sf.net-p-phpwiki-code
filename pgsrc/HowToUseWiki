@@ -1,3 +1,11 @@
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
+X-RCS_ID: $Id: HowToUseWiki,v 1.7 2002-01-12 17:46:02 carstenklapp Exp $
+Content-Type: application/x-phpwiki;
+  pagename=HowToUseWiki;
+  flags="";
+  lastmodified=1010854186;
+Content-Transfer-Encoding: binary
+
 ''"Wiki wiki"'' means "quick" in Hawai'ian.
 
 __All you really need to know is:__
@@ -6,13 +14,13 @@ __All you really need to know is:__
 * You get italics by surrounding words with two single quotes on either side ''like this''.
 * You get __bold text__ by using two underscores on either side.
 * And, __''bold italics''__ by using both.
-* You get bullets by using an asterisk * at the start of the line
+* You get bullets by using an asterisk * at the start of the line.
 * To have plain monospaced font, indent with a space:
 
- this is a poem 
+ this is a poem for sure
  about monospacing
- nothing rhymes with poem
- nothing rhymes with monospacing
+ i wrote in purple velour
+ but couldn't find a rhyme for monospacing
 
 * You can separate paragraphs with an extra blank line. Example:
 
@@ -23,7 +31,7 @@ I am a paragraph too. We're just very small paragraphs.
 
 * You can get horizontal rules with four or more dashes like this:
 ---------
-* To create hyperlinks you just capitalize the words and string them together. Let's say you want to create a page about how Steve Wainstead eats worms. All you have to do is capitalize each word and string them together like this: SteveWainsteadEatsWorms. If the page does not exist yet a question mark appears after the link, inviting you to create the page: ThisPageShouldNotExist. (And please don't ruin the example by creating one.) 
+* To create hyperlinks you just capitalize the words and string them together. Let's say you want to create a page about how Steve Wainstead eats worms. All you have to do is capitalize each word and string them together like this: SteveWainsteadEatsLiveWorms. If the page does not exist yet a question mark appears after the link, inviting you to create the page: ThisPageShouldNotExist. (And please don't ruin the example by creating one.)
 * To link to pages outside the Wiki, you can just type in the URL and Wiki will link it for you: http://www.nytimes.com/
 * To put images in, just provide the hyperlink in brackets like this: [[http://www.yourhost.yourdomain/images/picture.png]. Image URLs not in brackets will just appear as hyperlinks to the image.
 * Now you are ready to begin AddingPages.
@@ -33,3 +41,5 @@ A WikiWikiWeb is meant to be fast and easy to edit. It has very simple markup th
 ----
 If you don't like the size of the text editing window you get, you can change it.
 See UserPreferences.
+----
+PhpWikiDocumentation

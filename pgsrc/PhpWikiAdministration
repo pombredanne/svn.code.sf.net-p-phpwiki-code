@@ -1,9 +1,9 @@
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
-X-RCS_ID: $Id: PhpWikiAdministration,v 1.11 2002-01-09 06:35:17 carstenklapp Exp $
+X-RCS_ID: $Id: PhpWikiAdministration,v 1.12 2002-01-12 17:46:02 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiAdministration;
   flags=PAGE_LOCKED;
-  lastmodified=1010379143;
+  lastmodified=1010856393;
 Content-Transfer-Encoding: binary
 
 __Note__: Most of the actions on this page require administrative privileges.
@@ -98,10 +98,11 @@ to read, and nearly impossible to edit.
 
 __Plain Files__
 
-Before that the page text was just dumped to a file --- this means
-that all page meta-data was lost.
+Before that the page text was just dumped to a file--this means
+that all page meta-data was lost. Note that when loading
+''plain files'', the page name is deduced from the file name.
 
 The upload and load functions will automatically recognize each of these
 three types of files, and handle them accordingly.
-Note that when loading ''plain files'', the page name is deduced from the
-file name.
+----
+PhpWikiDocumentation
