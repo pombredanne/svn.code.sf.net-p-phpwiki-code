@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.229 2005-01-21 11:51:22 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.230 2005-01-25 07:10:51 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -1881,7 +1881,41 @@ function printSimpleTrace($bt) {
     }
 }
 
+/**
+ * Return the used process memory (in byte?)
+ * Enable the section which will work for you. (They are very slow)
+ * Special quirks for Windows: Requires cygwin.
+ */
+function getMemoryUsage() {
+    if (function_exists('memory_get_usage') and memory_get_usage()) {
+        return memory_get_usage();
+//  } elseif (function_exists('getrusage') and ($u = getrusage()) and !empty($u['ru_maxrss'])) {
+//      $mem = $u['ru_maxrss'];
+    } elseif (1 and substr(PHP_OS,0,3) == 'WIN') { // requires a newer cygwin
+        // what we want is the process memory only: apache or php
+        $pid = getmypid();
+        // This works only if it's a cygwin process (apache or php)
+        //$mem = (integer) trim(exec("cat /proc/$pid/statm |cut -f1"));
+        // if it's native windows use something like this: 
+        //   (requires pslist from sysinternals.com)
+        $memstr = exec("pslist $pid|grep -A1 Mem|sed 1d|perl -ane\"print \$"."F[5]\"");
+        return (integer) trim($memstr);
+    } elseif (0) {
+        $pid = getmypid();
+        //%MEM: Percentage of total memory in use by this process
+        //VSZ: Total virtual memory size, in 1K blocks.
+        //RSS: Real Set Size, the actual amount of physical memory allocated to this process.
+        //CPU time used by process since it started.
+        //echo "%",`ps -o%mem,vsz,rss,time -p $pid|sed 1d`,"\n";
+        $memstr = exec("ps -orss -p $pid|sed 1d");
+        return (integer) trim($memstr);
+    }
+}
+
 // $Log: not supported by cvs2svn $
+// Revision 1.229  2005/01/21 11:51:22  rurban
+// changed (c)
+//
 // Revision 1.228  2005/01/17 20:28:30  rurban
 // Allow more pagename chars: Limit only on certain backends.
 // Re-Allow : and ; and control chars on non-file backends.

@@ -101,32 +101,11 @@ function printMemoryUsage($msg = '') {
     if ((defined('DEBUG') and (DEBUG & 8)) or !defined('DEBUG')) {
         echo "-- MEMORY USAGE: ";
         $oldmem = $mem;
-        if (function_exists('memory_get_usage') and memory_get_usage()) {
-            $mem = memory_get_usage();
-            //        } elseif (function_exists('getrusage') and ($u = getrusage()) and !empty($u['ru_maxrss'])) {
-            //            $mem = $u['ru_maxrss'];
-        } elseif (substr(PHP_OS,0,3)=='WIN') { // requires a newer cygwin
-            // what we want is the process memory only: apache or php
-            $pid = getmypid();
-            // This works only if it's a cygwin process (apache or php)
-            //$mem = (integer) trim(system("cat /proc/$pid/statm |cut -f1"));
-            // if it's native windows use something like this: 
-            //   (requires pslist from sysinternals.com)
-            $memstr = system("pslist $pid|grep -A1 Mem|sed 1d|perl -ane\"print \$"."F[5]\"");
-            $mem = (integer) trim($memstr);
-        } else {
-            $pid = getmypid();
-            //%MEM: Percentage of total memory in use by this process
-            //VSZ: Total virtual memory size, in 1K blocks.
-            //RSS: Real Set Size, the actual amount of physical memory allocated to this process.
-            //CPU time used by process since it started.
-            //echo "%",`ps -o%mem,vsz,rss,time -p $pid|sed 1d`,"\n";
-            $memstr = system("ps -orss -p $pid|sed 1d");
-            $mem = (integer) trim($memstr);
-        }
+        $mem = getMemoryUsage();
         if (!$initmem) $initmem = $mem;
         // old libc on sf.net server doesn't understand "%+4d"
-        echo sprintf("%8d\t[%s%4d]\t[+%4d]\n", $mem, $mem > $oldmem ? "+" : ($mem == $oldmem ? " " : ""), $mem - $oldmem, $mem - $initmem);
+        echo sprintf("%8d\t[%s%4d]\t[+%4d]\n", $mem, $mem > $oldmem ? "+" : ($mem == $oldmem ? " " : ""), 
+                     $mem - $oldmem, $mem - $initmem);
         // TODO: print time
         flush();
     }

@@ -1,5 +1,5 @@
 <?php // -*-html-*-
-  rcs_id('$Id: debug.tmpl,v 1.14 2004-06-14 11:26:52 rurban Exp $');
+  rcs_id('$Id: debug.tmpl,v 1.15 2005-01-25 07:10:52 rurban Exp $');
 ?>
 <?php global $RUNTIMER; ?>
 <table width="%100" border="0" cellpadding="0" cellspacing="0">
@@ -15,7 +15,9 @@
         alt="Valid CSS!" height="31" width="88" /></a>
 </div>
 </td><td>
-<span class="debug"><?=fmt("Page Execution took %s seconds", $RUNTIMER->getStats())?></span>
+<span class="debug"><?=fmt("Page Execution took %s seconds", $RUNTIMER->getStats())?>
+<?= fmt(", Memory: %s", getMemoryUsage()) ?>
+</span>
 </td></tr></table>
 <?php // This keeps the valid XHTML! icons from "hanging off the bottom of the screen" ?>
 <br clear="all" class="clear-floats" />
