@@ -328,7 +328,7 @@ msgstr "Nombre de la página"
 #: ../lib/plugin/MostPopular.php:42
 #, c-format
 msgid "The %s most popular pages of this wiki:"
-msgstr ""
+msgstr "Las %s páginas más populares de este wiki:"
 
 #: ../lib/plugin/PageHistory.php:71
 #, c-format
