@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.126 2005-02-04 17:58:06 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.127 2005-02-18 20:43:40 uckelman Exp $');
 
 require_once('lib/PageType.php');
 
@@ -126,24 +126,6 @@ class WikiDB {
         //$this->_backend->check();
     }
     
-    /**
-     * Get any user-level warnings about this WikiDB.
-     *
-     * Some back-ends, e.g. by default create there data files in the
-     * global /tmp directory. We would like to warn the user when this
-     * happens (since /tmp files tend to get wiped periodically.)
-     * Warnings such as these may be communicated from specific
-     * back-ends through this method.
-     *
-     * @access public
-     *
-     * @return string A warning message (or <tt>false</tt> if there is
-     * none.)
-     */
-    function genericWarnings() {
-        return false;
-    }
-     
     /**
      * Close database connection.
      *
@@ -2145,6 +2127,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.126  2005/02/04 17:58:06  rurban
+// minor versioncache improvement. part 2/3 of Charles Corrigan cache patch. not sure about the 0/1 issue
+//
 // Revision 1.125  2005/02/03 05:08:39  rurban
 // ref fix by Charles Corrigan
 //
