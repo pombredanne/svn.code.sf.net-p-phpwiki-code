@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: viewsource.tmpl,v 1.11 2002-02-07 03:41:42 carstenklapp Exp $ -->
+<!-- $Id: viewsource.tmpl,v 1.12 2002-02-08 16:07:21 carstenklapp Exp $ -->
 
 <?php if ($page->get('locked') && !$user->isAdmin()) { ?>
   <p><strong><?=_("Note:")?></strong>
@@ -22,10 +22,10 @@
           wrap="virtual"><?= $PAGE_SOURCE ?></textarea>
 <?php
   $mtime = $revision->get('mtime');
-  $fmtime = $Theme->formatDateTime($fmtime);
+  $fmtime = $Theme->formatDateTime($mtime);
   // Suppress object to string conversion error.
   // Once the temporary asterisk denoting timezone conversion is removed, the @ can be removed.
-  $PageHistoryB = @Button(_("PageHistory"), $mtime);
+  $PageHistoryB = @Button(_("PageHistory"), $fmtime);
 
   if ($revision->isCurrent())
       $LastModifiedMsg = fmt("(last edited %s)", $PageHistoryB);
