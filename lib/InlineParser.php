@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.48 2004-05-08 22:55:12 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.49 2004-05-10 11:19:15 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004 Reini Urban
  *
@@ -144,7 +144,7 @@ class RegexpSet
     
 
     function _match ($text, $regexps, $repeat) {
-        // certain php builds crash here: 
+        // If one of the regexps is an empty string, php will crash here: 
         // sf.net: Fatal error: Allowed memory size of 8388608 bytes exhausted 
         //         (tried to allocate 634 bytes)
 
@@ -178,12 +178,15 @@ class RegexpSet
         if (count($matched) > 2) {
             // We could do much better, if we would know the matching markup for the 
             // longest regexp match:
-            //$hugepat= "/ ( . $repeat ) ( (" . join(')|(', $regexps) . ") ) /Asx";
-            $hugepat= "/ ( . $repeat ) ( (" . join(')|(', array_values($matched)) . ") ) /Asx";
+            $hugepat= "/ ( . $repeat ) ( (" . join(')|(', $regexps) . ") ) /Asx";
+            // Proposed premature optimization 1:
+            //$hugepat= "/ ( . $repeat ) ( (" . join(')|(', array_values($matched)) . ") ) /Asx";
             if (! preg_match($hugepat, $text, $m)) {
                 return false;
             }
-            $match->regexp_ind = $matched_ind[count($m) - 4];
+            // Proposed premature optimization 1:
+            //$match->regexp_ind = $matched_ind[count($m) - 4];
+            $match->regexp_ind = count($m) - 4;
         } else {
             $match->regexp_ind = $regexp_ind;
         }
