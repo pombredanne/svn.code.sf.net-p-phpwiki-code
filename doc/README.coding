@@ -53,6 +53,9 @@ Since xgettext (part of the "GNU gettext utilities") is used to find
 strings for translation, It is important that the argument of
 ''gettext()'' be a constant string literal, in double quotes (").
 
+Remember that xgettext only knows about c/c++ line-continuation
+strings, it does not know about php's dot operator.
+
 You can now use _("foo") as an alias for gettext("foo").
 
  OKAY:  gettext("This is a message.");
@@ -78,4 +81,4 @@ file, add the following to your .emacs file:
 See INSTALL.MacOSX for instructions on using Project Builder with
 PhpWiki and SourceForge.
 
-$Id: README.coding,v 1.4 2002-01-03 07:24:01 carstenklapp Exp $
+$Id: README.coding,v 1.5 2002-01-05 10:32:16 carstenklapp Exp $
