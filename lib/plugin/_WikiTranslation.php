@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _WikiTranslation.php,v 1.3 2004-03-16 20:22:32 rurban Exp $');
+rcs_id('$Id: _WikiTranslation.php,v 1.4 2004-03-17 13:20:31 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -42,6 +42,65 @@ rcs_id('$Id: _WikiTranslation.php,v 1.3 2004-03-16 20:22:32 rurban Exp $');
  * @author:  Reini Urban
  */
 
+/* Container for untranslated pagenames: */
+$pgsrc_container = 
+    _("AddingPages")  .','.
+    _("AuthorHistoryPlugin") .','.
+    _("BackLinks") .','.
+    _("CalendarListPlugin") .','.
+    _("CalendarPlugin") .','.
+    _("CategoryCategory")  .','.
+    _("CategoryHomePages")  .','.
+    _("CommentPlugin")  .','.
+    _("DebugInfo") .','.
+    _("EditMetaDataPlugin") .','.
+    _("ExternalSearchPlugin") .','.
+    _("FindPage") .','.
+    _("FrameIncludePlugin") .','.
+    _("FullRecentChanges") .','.
+    _("HelloWorldPlugin") .','.
+    _("HomePageAlias") .','.
+    _("IncludePagePlugin") .','.
+    _("InterWiki") .','.
+    _("LinkIcons") .','.
+    _("MagicPhpWikiURLs") .','.
+    _("MoreAboutMechanics") .','.
+    _("NewMarkupTestPage") .','.
+    _("OldMarkupTestPage") .','.
+    _("OldStyleTablePlugin") .','.
+    _("PageDump") .','.
+    _("PageGroupTest") .','.
+    _("PageGroupTestFour") .','.
+    _("PageGroupTestOne") .','.
+    _("PageGroupTestThree") .','.
+    _("PageGroupTestTwo") .','.
+    _("PgsrcTranslation") .','.
+    _("PhotoAlbumPlugin") .','.
+    _("PhpHighlightPlugin") .','.
+    _("PhpWeatherPlugin") .','.
+    _("PhpWiki") .','.
+    _("PhpWikiAdministration/Chmod") .','.
+    _("PhpWikiAdministration/Remove") .','.
+    _("PhpWikiAdministration/Rename") .','.
+    _("PhpWikiAdministration/Replace") .','.
+    _("PhpWikiDocumentation") .','.
+    _("PhpWikiPoll") .','.
+    _("RawHtmlPlugin") .','.
+    _("RecentVisitors") .','.
+    _("RedirectToPlugin") .','.
+    _("ReleaseNotes") .','.
+    _("RichTablePlugin") .','.
+    _("SteveWainstead") .','.
+    _("SystemInfoPlugin") .','.
+    _("TranscludePlugin") .','.
+    _("TranslateText") .','.
+    _("UnfoldSubpagesPlugin") .','.
+    _("UpLoad") .','.
+    _("WabiSabi") .','.
+    _("WikiBlogPlugin") .','.
+    _("WikiPlugin") .','.
+    _("WikiWikiWeb");
+
 require_once('lib/PageList.php');
 
 class WikiPlugin__WikiTranslation
@@ -57,7 +116,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -315,6 +374,9 @@ class _PageList_Column_custom extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/03/16 20:22:32  rurban
+// added link to TranslateText action
+//
 // Revision 1.2  2004/03/16 15:47:27  rurban
 // added match, fixed reverse translation, added page=, what=allpages, what=wikiwords, fixed what=pages, simplified _PageList_Column_custom
 //
