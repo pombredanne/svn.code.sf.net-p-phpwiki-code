@@ -1,7 +1,7 @@
 <?php
 // display.php: fetch page or get default content
 // calls transform.php for actual transformation of wiki markup to HTML
-rcs_id('$Id: display.php,v 1.13 2002-01-09 17:30:39 carstenklapp Exp $');
+rcs_id('$Id: display.php,v 1.14 2002-01-17 20:41:13 dairiki Exp $');
 
 require_once('lib/Template.php');
 require_once('lib/transform.php');
@@ -41,7 +41,7 @@ function GleanDescription ($rev) {
     return '';
 }
 
-function displayPage($dbi, $request) {
+function displayPage($dbi, $request, $tmpl = 'browse') {
     $pagename = $request->getArg('pagename');
     $version = $request->getArg('version');
    
@@ -55,11 +55,27 @@ function displayPage($dbi, $request) {
         $revision = $page->getCurrentRevision();
     }
 
-    $template = new WikiTemplate('BROWSE');
-    $template->setPageRevisionTokens($revision);
+    $splitname = split_pagename($pagename);
+    $title_tooltip = sprintf(_("BackLinks for %s"), $pagename);
+
+    
+    $wrapper = new WikiTemplate('top');
+    $wrapper->setPageRevisionTokens($revision);
+    $wrapper->qreplace('TITLE', $splitname);
+    $wrapper->replace('HEADER',
+                      QElement('a',
+                               array('href' => WikiURL(_("BackLinks"),
+                                                       array('page' => $pagename)),
+                                     'class' => 'backlinks',
+                                     'title' => $title_tooltip),
+                               $splitname));
+    $wrapper->qreplace('ROBOTS_META', 'index,follow');
+
+    $template = new WikiTemplate($tmpl);
     $template->replace('CONTENT', do_transform($revision->getContent()));
     $template->qreplace('PAGE_DESCRIPTION', GleanDescription($revision));
-    echo $template->getExpansion();
+
+    $wrapper->printExpansion($template);
     flush();
     $page->increaseHitCount();
 }
