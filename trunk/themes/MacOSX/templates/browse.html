@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- phpwiki source:
-$Id: browse.html,v 1.1 2002-01-04 01:56:09 carstenklapp Exp $
+$Id: browse.html,v 1.2 2002-01-04 04:03:18 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <meta name="keywords" content="${SPLIT_PAGE}, ${WIKI_NAME}" />
@@ -24,11 +24,7 @@ ${CSS}
 <div>${LOGO}</div>
 <h1><?plugin-link BackLinks page="[pagename]" class="backlinks" linktext="${SPLIT_PAGE}" ?></h1>
 <div class="br"><br clear="all" class="ignore" /></div>
-<?php if (! $IS_CURRENT) { ?>
-  <p><strong>$_("Note:")</strong> $_("You are viewing an old revision of this page.")
-     <a href="${BROWSE}${PAGEURL}">$_("View the current version")</a>.</p>
-  <hr class="ignore" noshade="noshade" />
-<?php } ?>
+${NOT_VIEWING_CURRENT}
 <div class="wikitext">${CONTENT}</div>
 <hr class="ignore" noshade="noshade" />
 ${LASTMODIFIED}
