@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.14 2001-12-11 18:21:38 dairiki Exp $');
+rcs_id('$Id: loadsave.php,v 1.15 2001-12-14 22:17:24 dairiki Exp $');
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
 
@@ -144,7 +144,7 @@ function DumpToDir ($dbi, $request)
         $filename = FilenameForPage($page->getName());
 
         echo "<br>$enc_name ... ";
-        if($pagename != $filename)
+        if($page->getName() != $filename)
             echo "<small>saved as $filename</small> ... ";
 
         $data = MailifyPage($page);
