@@ -1,13 +1,12 @@
 -- http://www.hezmatt.org/~mpalmer/sqlite-phpwiki/sqlite.sql
 
--- $Id: sqlite.sql,v 1.3 2004-06-23 07:59:50 rurban Exp $
+-- $Id: sqlite.sql,v 1.4 2004-07-05 13:57:03 rurban Exp $
 
 CREATE TABLE page (
-	id              INT NOT NULL,
+	id              INTEGER PRIMARY KEY,
 	pagename        VARCHAR(100) NOT NULL,
 	hits            INT NOT NULL DEFAULT 0,
 	pagedata        MEDIUMTEXT NOT NULL DEFAULT '',
-	PRIMARY KEY (id)
 );
 
 CREATE UNIQUE INDEX page_index ON page (pagename);

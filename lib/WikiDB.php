@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.74 2004-07-03 16:51:05 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.75 2004-07-05 13:56:22 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -812,9 +812,9 @@ class WikiDB_Page
         //
         // We're doing this here rather than in createRevision because
         // postgres can't optimize while locked.
-        if (time() % 50 == 0) {
+        if (DEBUG or (time() % 50 == 0)) {
             if ($backend->optimize())
-                trigger_error(sprintf(_("Optimizing %s"),'backend'), E_USER_NOTICE);
+                trigger_error(_("Optimizing database"), E_USER_NOTICE);
         }
 
         /* Generate notification emails? */
@@ -1891,6 +1891,12 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.74  2004/07/03 16:51:05  rurban
+// optional DBADMIN_USER:DBADMIN_PASSWD for action=upgrade (if no ALTER permission)
+// added atomic mysql REPLACE for PearDB as in ADODB
+// fixed _lock_tables typo links => link
+// fixes unserialize ADODB bug in line 180
+//
 // Revision 1.73  2004/06/29 08:52:22  rurban
 // Use ...version() $need_content argument in WikiDB also:
 // To reduce the memory footprint for larger sets of pagelists,

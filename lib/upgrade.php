@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.23 2004-07-04 10:28:06 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.24 2004-07-05 13:56:22 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -44,6 +44,8 @@ rcs_id('$Id: upgrade.php,v 1.23 2004-07-04 10:28:06 rurban Exp $');
  *  5. Check for changed theme variables. (hard)
  *  6. Convert the automatic update to a class-based multi-page 
  *     version. (hard)
+
+ * TODO: overwrite=1 link on edit conflicts at end of page to overwrite all.
  *
  * @author: Reini Urban
  */
@@ -52,7 +54,7 @@ require_once("lib/loadsave.php");
 //define('DBADMIN_PASSWD','');
 
 /**
- * TODO: check for the pgsrc_version number, not the revision
+ * TODO: check for the pgsrc_version number, not the revision mtime only
  */
 function doPgsrcUpdate(&$request,$pagename,$path,$filename) {
     $dbi = $request->getDbh(); 
@@ -491,6 +493,9 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.23  2004/07/04 10:28:06  rurban
+ DBADMIN_USER fix
+
  Revision 1.22  2004/07/03 17:21:28  rurban
  updated docs: submitted new mysql bugreport (#1491 did not fix it)
 
