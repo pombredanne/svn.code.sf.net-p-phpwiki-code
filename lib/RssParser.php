@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RssParser.php,v 1.7 2004-05-24 17:31:31 rurban Exp $');
+rcs_id('$Id: RssParser.php,v 1.8 2004-06-08 21:03:20 rurban Exp $');
 /**
  * Simple RSSParser Class
  * Based on Duncan Gough RSSParser class
@@ -43,8 +43,8 @@ extends XmlParser {
     var $description = "";
     var $inside_item = false;
     var $item  = array();
-    var $items = array();
-    var $channel = array();
+    var $items;
+    var $channel;
     var $divers = "";
     var $date = "";
 
@@ -62,6 +62,10 @@ extends XmlParser {
         global $current_tag;
 
         if ($tagName == "ITEM") {
+            if (empty($this->items)) {
+                $this->items = array();	
+                $GLOBALS['rss_parser_items'] =& $this->items;
+            }
             $this->items[] = array("title"       => $this->item['TITLE'],
                                    "description" => $this->item['DESCRIPTION'],
                                    "link"        => $this->item['LINK']);
@@ -80,6 +84,7 @@ extends XmlParser {
                                    "link" => $this->link,
                                    "date" => $this->date,
                                    "divers" => $this->divers);
+            $GLOBALS['rss_parser_channel'] =& $this->channel;
             $this->title       = "";
             $this->description = "";
             $this->link        = "";
@@ -124,9 +129,27 @@ extends XmlParser {
             }
         }
     } // characterData
+    
+    function parse($content, $is_final = true) {
+        xml_parse($this->_parser, $content, $is_final) or 
+            trigger_error(sprintf("XML error: %s at line %d", 
+                                  xml_error_string(xml_get_error_code($this->_parser)), 
+                                  xml_get_current_line_number($this->_parser)),
+                          E_USER_WARNING);
+        //OO workaround: parser object looses its params. we have to store them in globals
+    	if (empty($this->items)) {
+            $this->items = $GLOBALS['rss_parser_items'];
+            $this->channel = $GLOBALS['rss_parser_channel'];
+    	}
+    	unset($GLOBALS['rss_parser_items']);
+    	unset($GLOBALS['rss_parser_channel']);
+    }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/05/24 17:31:31  rurban
+// new XmlParser and HtmlParser, RssParser based on that.
+//
 // Revision 1.6  2004/05/18 16:18:36  rurban
 // AutoSplit at subpage seperators
 // RssFeed stability fix for empty feeds or broken connections

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: XmlParser.php,v 1.3 2004-06-03 18:06:29 rurban Exp $');
+rcs_id('$Id: XmlParser.php,v 1.4 2004-06-08 21:03:20 rurban Exp $');
 /**
  * Base XmlParser Class.
  * Requires the expat.so/.dll, usually enabled by default.
@@ -143,14 +143,10 @@ class XmlParser {
     }
 
     function parse_url($file, $debug=false)   {
-        if (ini_get('allow_url_fopen')) { //FIXME: get_cfg_var
+        if (get_cfg_var('allow_url_fopen')) {
             $fp = fopen("$file","r") or die("Error reading XML file, $file");
             while ($data = fread($fp, 4096))  {
-                xml_parse($this->_parser, $data, feof($fp)) or 
-                    trigger_error(sprintf("XML error: %s at line %d", 
-                                          xml_error_string(xml_get_error_code($this->_parser)), 
-                                          xml_get_current_line_number($this->_parser)),
-                                  E_USER_WARNING);
+            	$this->parse($data, feof($fp));
             }
             fclose($fp);
         } else {
@@ -163,6 +159,11 @@ class XmlParser {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/06/03 18:06:29  rurban
+// fix file locking issues (only needed on write)
+// fixed immediate LANG and THEME in-session updates if not stored in prefs
+// advanced editpage toolbars (search & replace broken)
+//
 // Revision 1.2  2004/06/01 15:28:00  rurban
 // AdminUser only ADMIN_USER not member of Administrators
 // some RateIt improvements by dfrankow
