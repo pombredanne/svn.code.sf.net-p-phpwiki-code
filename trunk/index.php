@@ -11,7 +11,7 @@
 /////////////////////////////////////////////////////////////////////
 define ('PHPWIKI_VERSION', '1.3.0pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.12 2001-02-17 18:05:47 wainstead Exp $');
+rcs_id('$Id: index.php,v 1.13 2001-03-07 16:45:19 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -176,7 +176,7 @@ $InlineImages = "png|jpg|gif";
 
 // Perl regexp for WikiNames ("bumpy words")
 // (?<!..) & (?!...) used instead of '\b' because \b matches '_' as well
-$WikiNameRegexp = "(?<![A-Za-z0-9])([A-Z][a-z]+){2,}(?![A-Za-z0-9])";
+$WikiNameRegexp = "(?<![[:alnum:]])([[:upper:]][[:lower:]]+){2,}(?![[:alnum:]])";
 
 // InterWiki linking -- wiki-style links to other wikis on the web
 //

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.34 2001-02-16 04:43:07 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.35 2001-03-07 16:45:20 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
  *
@@ -94,6 +94,28 @@ else
    bindtextdomain ("phpwiki", "./locale");
    textdomain ("phpwiki");
 }
+
+// To get the POSIX character classes in the PCRE's (e.g.
+// [[:upper:]]) to match extended characters (e.g. GrüßGott), we have
+// to set the locale, using setlocale().
+//
+// The problem is which locale to set?  We would like to recognize all
+// upper-case characters in the iso-8859-1 character set as upper-case
+// characters --- not just the one's which are in the current $LANG.
+//
+// As it turns out, at least on my system (Linux/glibc-2.2) as long as
+// you setlocale() to anything but "C" it works fine.  (I'm not sure
+// whether this is how it's supposed to be, or whether this is a bug
+// in the libc...)
+//
+// We don't currently use the locale setting for anything else, so for
+// now, just set the locale to US English.
+//
+// FIXME: Not all environments may support en_US?  We should probably
+// have a list of locales to try.
+
+if (setlocale('LC_CTYPE', 0) == 'C')
+   setlocale('LC_CTYPE', 'en_US.iso-8859-1');
 
 //////////////////////////////////////////////////////////////////
 // Autodetect URL settings:
