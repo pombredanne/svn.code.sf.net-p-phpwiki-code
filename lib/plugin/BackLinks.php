@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BackLinks.php,v 1.11 2002-01-22 05:06:50 dairiki Exp $');
+rcs_id('$Id: BackLinks.php,v 1.12 2002-01-22 06:15:52 carstenklapp Exp $');
 /**
  */
 
@@ -22,8 +22,10 @@ extends WikiPlugin
                      'include_self'	=> 0,
                      'noheader'		=> 0,
                      'page'		=> false,
-                     'info'		=> false);
+                     'info'		=> false
+                     );
     }
+    // info arg now allows multiple columns info=mtime,hits,summary,author,locked,minor
 
     function run($dbi, $argstr, $request) {
         $this->_args = $this->getArgs($argstr, $request);
@@ -36,12 +38,9 @@ extends WikiPlugin
 
         $pagelist = new PageList;
 
-
-        // Currently only info="Last Modified" or info=hits works (I
-        // don't think anything else would be useful anyway).
-
         if ($info)
-            $pagelist->insertColumn(_($info));
+            foreach (explode(",", $info) as $col)
+                $pagelist->insertColumn($col);
 
         while ($backlink = $backlinks->next()) {
             $name = $backlink->getName();
