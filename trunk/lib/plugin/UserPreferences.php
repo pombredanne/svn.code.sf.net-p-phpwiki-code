@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.32 2004-06-28 12:51:41 rurban Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.33 2004-10-04 23:39:34 rurban Exp $');
 /**
  Copyright (C) 2001, 2002, 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.32 $");
+                            "\$Revision: 1.33 $");
     }
 
     function getDefaultArguments() {
@@ -70,7 +70,8 @@ extends WikiPlugin
              and (!isset($user->_prefs->_method) 
                   or !in_array($user->_prefs->_method,array('ADODB','SQL'))))
             or (in_array($request->getArg('action'),array('zip','ziphtml','dumphtml')))
-            or (isa($user,'_ForbiddenUser'))) {
+            or (isa($user,'_ForbiddenUser'))) 
+        {
             $no_args = $this->getDefaultArguments();
 // ?
 //            foreach ($no_args as $key => $value) {
@@ -166,6 +167,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.32  2004/06/28 12:51:41  rurban
+// improved dumphtml and virgin setup
+//
 // Revision 1.31  2004/06/27 10:26:03  rurban
 // oci8 patch by Philippe Vanhaesendonck + some ADODB notes+fixes
 //

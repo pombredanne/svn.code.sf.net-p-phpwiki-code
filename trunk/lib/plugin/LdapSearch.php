@@ -1,4 +1,4 @@
-<?php // -*-php-*-
+<?php // -*-php-*- rcs_id('$Id: LdapSearch.php,v 1.2 2004-10-04 23:39:34 rurban Exp $');
 /**
  Copyright 2004 John Lines
 
@@ -62,7 +62,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
     function getDefaultArguments() {
         return array('host' 	=> "localhost", // change to LDAP_AUTH_HOST
@@ -160,6 +160,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/09/23 12:28:12  rurban
+// initial checkin from http://phpwiki.org/LdapSearchPlugin
+//   by John Lines
+//
 
 // For emacs users
 // Local Variables:

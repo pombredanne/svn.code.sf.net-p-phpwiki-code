@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSelect.php,v 1.19 2004-06-29 08:52:24 rurban Exp $');
+rcs_id('$Id: WikiAdminSelect.php,v 1.20 2004-10-04 23:39:34 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -46,7 +46,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.19 $");
+                            "\$Revision: 1.20 $");
     }
 
     function getDefaultArguments() {
@@ -168,7 +168,7 @@ extends WikiPlugin
             $a = array_keys($request->getArg('wikiadmin'));
             $plugin_action = $a[0];
             $single_arg_plugins = array("Remove");
-            if (in_array($plugin_action,$single_arg_plugins)) {
+            if (in_array($plugin_action, $single_arg_plugins)) {
                 $plugin = $loader->getPlugin($plugin_action);
                 $ul = HTML::ul();
                 foreach ($p as $page => $name) {
@@ -249,6 +249,16 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.19  2004/06/29 08:52:24  rurban
+// Use ...version() $need_content argument in WikiDB also:
+// To reduce the memory footprint for larger sets of pagelists,
+// we don't cache the content (only true or false) and
+// we purge the pagedata (_cached_html) also.
+// _cached_html is only cached for the current pagename.
+// => Vastly improved page existance check, ACL check, ...
+//
+// Now only PagedList info=content or size needs the whole content, esp. if sortable.
+//
 // Revision 1.18  2004/06/16 10:38:59  rurban
 // Disallow refernces in calls if the declaration is a reference
 // ("allow_call_time_pass_reference clean").
