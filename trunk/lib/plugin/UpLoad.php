@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.9 2004-04-12 10:18:22 rurban Exp $');
+rcs_id('$Id: UpLoad.php,v 1.10 2004-04-12 10:19:18 rurban Exp $');
 /*
- Copyright 2002 $ThePhpWikiProgrammingTeam
+ Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -241,6 +241,9 @@ ws[cfh]");
 // End:
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/04/12 10:18:22  rurban
+// removed the hairy regex line
+//
 // Revision 1.8  2004/04/12 09:12:22  rurban
 // fix syntax errors
 //
