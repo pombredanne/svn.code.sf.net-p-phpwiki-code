@@ -1,10 +1,10 @@
-<!-- $Id: wiki_editpage.php3,v 1.6 2000-06-09 10:19:40 ahollosi Exp $ -->
+<!-- $Id: wiki_editpage.php3,v 1.7 2000-06-14 03:31:50 wainstead Exp $ -->
 <?
 
 /*
    This page is for editing a Wiki page.
    It relies on $pagename and $ScriptUrl;
-   it will set $pagehash["text"]. 
+   it will set $pagehash["content"]. 
 */
 
    if ($edit) {
@@ -27,7 +27,7 @@
    $pagehash = RetrievePage($dbi, $pagename);
 
    if (is_array($pagehash)) {
-      $textarea = implode($pagehash["text"], "\n");
+      $textarea = implode($pagehash["content"], "\n");
       $version = $copy ? $pagehash["version"]+1 : $pagehash["version"];
       if (($pagehash["version"] > 1) &&
           ($pagehash["author"] != $remoteuser)) {
@@ -49,7 +49,7 @@
 <input type="submit" value=" Save ">
 </h1>
 
-<textarea name="text" ROWS="22" COLS="80" wrap="virtual"><?
+<textarea name="content" ROWS="22" COLS="80" wrap="virtual"><?
 echo $textarea ?></textarea>
 <br>
 
