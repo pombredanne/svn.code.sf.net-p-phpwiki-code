@@ -37,6 +37,8 @@
 
 $cur_dir = getcwd();
 # Add root dir to the path
+if (substr(PHP_OS,0,3) == 'WIN')
+    $cur_dir = str_replace("\\","/",$cur_dir);
 $rootdir = $cur_dir . '/../../';
 $ini_sep = substr(PHP_OS,0,3) == 'WIN' ? ';' : ':';
 ini_set('include_path', ini_get('include_path') . $ini_sep . $rootdir);
@@ -45,16 +47,18 @@ ini_set('include_path', ini_get('include_path') . $ini_sep . $rootdir);
 $HTTP_SERVER_VARS['REMOTE_ADDR'] = '127.0.0.1';
 $HTTP_SERVER_VARS['HTTP_USER_AGENT'] = "PHPUnit";
 define('GROUP_METHOD', 'NONE');
+define('RATING_STORAGE','WIKIPAGE');
+define('PHPWIKI_NOMAIN',true);
 
 # Other needed files
 require_once $rootdir.'index.php';
-require_once $rootdir.'lib/stdlib.php';
+require_once $rootdir.'lib/main.php';
 
-$user_theme = 'default';
-require_once("themes/$user_theme/themeinfo.php");  // Needed for $Theme
+define('DEBUG', _DEBUG_TRACE);
 
 function printSimpleTrace($bt) {
     //print_r($bt);
+    echo "Traceback:\n";
     foreach ($bt as $i => $elem) {
         if (!array_key_exists('file', $elem)) {
             continue;
@@ -78,6 +82,9 @@ $foo = assert_options( ASSERT_CALLBACK, 'assert_callback');
 #
 // set the error reporting level for this script
 error_reporting(E_ALL);
+/*
+// This is too strict, fails on every notice and warning. 
+// TODO: push an errorhandler with printSimpleTrace
 function myErrorHandler($errno, $errstr, $errfile, $errline)
 {
    echo "$errfile: $errline: error# $errno: $errstr\n";
@@ -86,86 +93,76 @@ function myErrorHandler($errno, $errstr, $errfile, $errline)
    printSimpleTrace(debug_backtrace());
    exit;
 }
-
 // set to the user defined error handler
 $old_error_handler = set_error_handler("myErrorHandler");
+*/
 
 # This is the test DB backend
-#require_once( 'lib/WikiDB/backend/cvs.php' );
 $db_params                         = array();
-$db_params['directory']            = $cur_dir . '/testbox';
+$db_params['directory']            = $cur_dir . '/.testbox';
 $db_params['dbtype']               = 'file';
 
-# Mock objects to allow tests to run
-//require_once($rootdir.'lib/Request.php');
-require_once($rootdir.'lib/WikiDB.php');
-if (ENABLE_USER_NEW)
-    require_once($rootdir."lib/WikiUserNew.php");
-else
-    require_once($rootdir."lib/WikiUser.php"); 
-require_once($rootdir."lib/WikiGroup.php");
-require_once($rootdir."lib/PagePerm.php");
-
-class MockUser {
-    function MockUser($name, $isSignedIn) {
-        $this->_name = $name;
-        $this->_isSignedIn = $isSignedIn;
+if (ENABLE_USER_NEW) {
+    class MockUser extends _WikiUser {
+        function MockUser($name, $isSignedIn) {
+            $this->_userid = $name;
+            $this->_isSignedIn = $isSignedIn;
+        }
+        function isSignedIn() {
+            return $this->_isSignedIn;
+        }
     }
-    function getId() {
-        return $this->_name;
-    }
-    function isSignedIn() {
-        return true;
+} else {
+    class MockUser extends WikiUser {
+        function MockUser($name, $isSignedIn) {
+            $this->_userid = $name;
+            $this->_isSignedIn = $isSignedIn;
+        }
+        function isSignedIn() {
+            return $this->_isSignedIn;
+        }
     }
 }
 
-class MockRequest {
+class MockRequest extends WikiRequest {
     function MockRequest(&$dbparams) {
-    	global $WikiTheme, $request;
         $this->_dbi = WikiDB::open($dbparams);
         $this->_user = new MockUser("a_user", true);
         $this->_group = WikiGroup::getGroup();
         $this->_args = array('pagename' => 'HomePage', 'action' => 'browse');
-        //$this->Request();
-    }
-    function setArg($arg, $value) {
-        $this->_args[$arg] = $value;
-    }
-    function getArg($arg) {
-        $result = null;
-        if (array_key_exists($arg, $this->_args)) {
-            $result = $this->_args[$arg];
-        }
-        return $result;
-    }
-    function getDbh() {
-        return $this->_dbi;
-    }
-    function getUser () {
-        if (isset($this->_user))
-            return $this->_user;
-        else
-            return $GLOBALS['ForbiddenUser'];
-    }
-    function getPage ($pagename = false) {
-        if (!isset($this->_dbi))
-            $this->getDbh();
-        if (!$pagename) 
-            $pagename = $this->getArg('pagename');
-        return $this->_dbi->getPage($pagename);
-    }
-    function getPrefs () {
-        return $this->_prefs;
-    }
-    function getPref ($key) {
-        if (isset($this->_prefs))
-            return $this->_prefs->get($key);
+        $this->Request();
     }
     function getGroup() {
-        return $this->_group;
+    	if (is_object($this->_group))
+            return $this->_group;
+        else     
+            return WikiGroup::getGroup();
     }
 }
 
+function purge_dir($dir) {
+    static $finder;
+    if (!isset($finder)) {
+        $finder = new FileFinder;
+    }
+	$fileSet = new fileSet($dir);
+	assert($dir);
+    foreach ($fileSet->getFiles() as $f) {
+    	unlink("$dir/$f");
+    }
+}
+
+function purge_testbox() {
+    global $db_params;	
+    $dir = $db_params['directory'];
+    assert($dir);
+    foreach (array('latest_ver','links','page_data', 'ver_data') as $d) {
+    	purge_dir("$dir/$d");
+    }
+}
+
+global $ErrorManager;
+$ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE|E_USER_WARNING|E_WARNING);
 $request = new MockRequest($db_params);
 
 /*
@@ -175,8 +172,8 @@ else {
     $request->_user = new WikiUser($request, 'AnonUser');
     $request->_prefs = $request->_user->getPreferences();
 }
-include_once("themes/" . THEME . "/themeinfo.php");
 */
+include_once("themes/" . THEME . "/themeinfo.php");
 
 ####################################################################
 #
@@ -198,7 +195,11 @@ require_once dirname(__FILE__).'/lib/plugin/OrphanedPagesTest.php';
 
 if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']))
     echo "<pre>\n";
+// purge the testbox
+    
 print "Run tests .. ";
+print "Purge the testbox .. ";
+purge_testbox();
 
 $suite  = new PHPUnit_TestSuite("phpwiki");
 $suite->addTest( new PHPUnit_TestSuite("InlineParserTest") );
