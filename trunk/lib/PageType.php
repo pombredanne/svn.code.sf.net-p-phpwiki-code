@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageType.php,v 1.9 2002-02-21 08:52:56 carstenklapp Exp $');
+<?php rcs_id('$Id: PageType.php,v 1.10 2002-03-06 01:02:59 carstenklapp Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -60,16 +60,14 @@ function PageType(&$rev, $pagename = false, $markup = false) {
     switch($pagename) {
         case $i:
             $ContentTemplateName = 'interwikimap';
+            $content_template = new interWikiMapPageType($text, $markup);
             break;
         default:
             $ContentTemplateName = 'wikitext';
+            $content_template = new PageType($text, $markup);
     }
 
-    $_ContentTemplates = array('wikitext' => new PageType($text, $markup),
-                               'interwikimap' => new interWikiMapPageType($text, $markup));
-
     // Start making the actual content
-    $content_template = $_ContentTemplates[$ContentTemplateName];
     return $content_template->getContent();
 }
 

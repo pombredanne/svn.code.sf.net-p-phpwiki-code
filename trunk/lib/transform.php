@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.42 2002-03-02 22:55:44 carstenklapp Exp $');
+<?php rcs_id('$Id: transform.php,v 1.43 2002-03-06 01:02:59 carstenklapp Exp $');
 require_once('lib/WikiPlugin.php');
 require_once('lib/HtmlElement.php');
 require_once('lib/interwiki.php');
@@ -360,15 +360,6 @@ extends WikiTransform {
 function do_transform ($lines, $class = 'WikiPageTransform') {
     if (is_string($lines))
         $lines = preg_split('/[ \t\r]*\n/', trim($lines));
-
-    // workaround to prevent transform from being called twice 
-    if (! defined('debug_WPT_AlreadyDone')) {
-        define('debug_WPT_AlreadyDone', 1);
-    } else {
-        //if (defined('DEBUG'))
-        //    trigger_error("DEBUG: Stopped second call to {$class}->do_transform().");
-        return;
-    } // end workaround
 
     $trfm = new $class;
     return $trfm->do_transform('', $lines);
