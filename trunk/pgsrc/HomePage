@@ -1,6 +1,6 @@
 Date: Sun, 27 Jan 2002 17:28:55 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: HomePage,v 1.7 2002-01-27 22:37:24 carstenklapp Exp $
+X-Rcs-Id: $Id: HomePage,v 1.8 2002-02-23 22:02:45 wainstead Exp $
 Content-Type: application/x-phpwiki;
   pagename=HomePage;
   flags="";
@@ -15,3 +15,4 @@ Content-Transfer-Encoding: binary
 * Find out which pages are MostPopular.
 * Read the ReleaseNotes.
 * Administer this wiki via PhpWikiAdministration.
+* See more PhpWikiDocumentation.
