@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.20 2002-01-11 01:46:47 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.21 2002-01-17 05:54:16 carstenklapp Exp $');
 /**
  */
 
@@ -120,7 +120,7 @@ extends _RecentChanges_Formatter
 
         $rss_url = $request->getURLtoSelf(array('format' => 'rss'));
         if (empty($rssicon))
-            $rssicon = 'images/rss.png';
+            $rssicon = 'themes/default/images/RSS.png';
         return Element('a', array('href' => $rss_url),
                        Element('img', array('src' => DataURL($rssicon),
                                             'alt' => _("RSS available"),
