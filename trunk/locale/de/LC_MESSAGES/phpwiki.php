@@ -250,6 +250,8 @@ $locale["Previous Month"] =
    "Vorige Monat";
 $locale["Previous Revision"] =
    "Vorige Version";
+$locale["Printer"] =
+   "Drucker";
 $locale["Problem while editing %s"] =
    "Problem während dem Editieren von %s";
 $locale["Problem while updating %s"] =
