@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreatePage.php,v 1.2 2004-03-17 15:37:41 rurban Exp $');
+rcs_id('$Id: CreatePage.php,v 1.3 2004-03-24 19:41:04 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -29,7 +29,7 @@ rcs_id('$Id: CreatePage.php,v 1.2 2004-03-17 15:37:41 rurban Exp $');
  * enter the name of the page to create, then click the button.
  *
  * Usage: <?plugin-form CreatePage ?>
- * @author: Dan Frankow
+ * @author: Dan Frankowski
  */
 class WikiPlugin_CreatePage
 extends WikiPlugin
@@ -44,7 +44,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -98,6 +98,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/03/17 15:37:41  rurban
+// properly support initial_content and template with URI length overflow workaround
+//
 // Revision 1.3  2004/03/16 16:25:05  dfrankow
 // Support initial_content parameter
 //
