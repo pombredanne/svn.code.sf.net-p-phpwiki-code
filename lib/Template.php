@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.47 2003-02-21 04:22:54 dairiki Exp $');
+<?php rcs_id('$Id: Template.php,v 1.48 2003-02-21 22:58:58 dairiki Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -15,7 +15,8 @@ class Template
 
         $this->_request = &$request;
         $this->_name = $name;
-
+        $this->_basepage = $request->getArg('pagename');
+        
         $file = $Theme->findTemplate($name);
         $fp = fopen($file, "rb");
         $this->_tmpl = fread($fp, filesize($file));
@@ -59,7 +60,7 @@ class Template
         if (empty($loader))
             $loader = new WikiPluginLoader;
         
-        $this->_print($loader->expandPI($pi, $this->_request));
+        $this->_print($loader->expandPI($pi, $this->_request, $this->_basepage));
     }
     
     function _print ($val) {
@@ -212,23 +213,10 @@ function GeneratePage($content, $title, $page_revision = false, $args = false) {
         printXML(new Template('head', $request, $args));
         printXML(new Template($frame, $request, $args));
         $request->setArg('framesrc',false);
-    } else {
-        // Early plugin-head check:
-        // head plugins must consist of a single line at the VERY FIRST LINE in the content.
-        // This is a hack, but it works fast enough.
-        $len = strlen('<?plugin-head');
-        if (($request->getArg('action') == 'browse') and
-            $page_revision and 
-            ($text = &$page_revision->getPackedContent()) and 
-            substr($text,0,$len) == '<?plugin-head')
-        {
-	    include_once("lib/WikiPlugin.php");
-            $loader = new WikiPluginLoader();
-            return $loader->expandPI_head($text,$request);
-        } else {
-            printXML(new Template('html', $request, $args));
-        }
+        return;
     }
+
+    printXML(new Template('html', $request, $args));
 }
 
 

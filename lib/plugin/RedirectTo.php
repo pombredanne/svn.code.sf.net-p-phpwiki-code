@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RedirectTo.php,v 1.8 2003-02-16 19:49:18 dairiki Exp $');
+rcs_id('$Id: RedirectTo.php,v 1.9 2003-02-21 22:59:00 dairiki Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -23,8 +23,8 @@ rcs_id('$Id: RedirectTo.php,v 1.8 2003-02-16 19:49:18 dairiki Exp $');
 /**
  * Redirect to another page or external uri. Kind of PageAlias.
  * Usage:
- * <?plugin-head RedirectTo href="http://www.internet-technology.de/fourwins_de.htm" ?>
- *      or  <?plugin-head RedirectTo page=AnotherPage ?>
+ * <?plugin RedirectTo href="http://www.internet-technology.de/fourwins_de.htm" ?>
+ *      or  <?plugin RedirectTo page=AnotherPage ?>
  * at the VERY FIRST LINE in the content! Otherwise it will be ignored.
  *
  * Author:  Reini Urban <rurban@x-ray.at>
@@ -52,7 +52,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
@@ -115,6 +115,12 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2003/02/16 19:49:18  dairiki
+// When redirecting to a page, use an absolute URL.
+// This fixes a bug when redirecting from a sub-page (since,
+// in that case the redirect happens before the <base> element gets
+// sent.)
+//
 // Revision 1.7  2003/02/15 23:32:56  dairiki
 // Usability improvements for the RedirectTo plugin.
 //

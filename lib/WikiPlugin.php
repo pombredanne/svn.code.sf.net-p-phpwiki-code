@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.30 2003-02-16 20:04:46 dairiki Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.31 2003-02-21 22:58:57 dairiki Exp $');
 
 class WikiPlugin
 {
@@ -30,7 +30,7 @@ class WikiPlugin
     }
     
     // FIXME: args?
-    function run ($dbi, $argstr, &$request) {
+    function run ($dbi, $argstr, &$request, $basepage) {
         trigger_error("WikiPlugin::run: pure virtual function",
                       E_USER_ERROR);
     }
@@ -272,7 +272,7 @@ class WikiPlugin
 class WikiPluginLoader {
     var $_errors;
 
-    function expandPI($pi, &$request) {
+    function expandPI($pi, &$request, $basepage=false) {
         if (!preg_match('/^\s*<\?(plugin(?:-form|-link)?)\s+(\w+)\s*(.*?)\s*\?>\s*$/s', $pi, $m))
             return $this->_error(sprintf("Bad %s", 'PI'));
 
@@ -306,27 +306,12 @@ class WikiPluginLoader {
                                                      '%mtime' => (int)$timestamp,
                                                      '%weak' => true));
                 }
-                return $plugin->run($dbi, $plugin_args, $request);
+                return $plugin->run($dbi, $plugin_args, $request, $basepage);
             case 'plugin-link':
                 return $plugin->makeLink($plugin_args, $request);
             case 'plugin-form':
                 return $plugin->makeForm($plugin_args, $request);
         }
-    }
-
-    // Special treatment. Only called by Template.php:GeneratePage
-    function expandPI_head($pi, $request) {
-        if (!preg_match('/^\s*<\?plugin-head\s+(\w+)\s*(.*?)\s*\?>\s*$/s', $pi, $m))
-            return $this->_error(sprintf("Bad %s", 'PI'));
-
-        list(, $plugin_name, $plugin_args) = $m;
-        $plugin = $this->getPlugin($plugin_name);
-        if (!is_object($plugin)) {
-            return new HtmlElement('p', array('class' => 'plugin-error'),
-                                   $this->getErrorDetail());
-        }
-        $dbi = $request->getDbh();
-        return $plugin->run($dbi, $plugin_args, $request);
     }
 
     function getPlugin($plugin_name, $pi) {
