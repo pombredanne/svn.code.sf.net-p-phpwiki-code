@@ -1,4 +1,4 @@
-<!-- $Id: wiki_msql.php3,v 1.13 2000-08-16 03:30:58 wainstead Exp $ -->
+<!-- $Id: wiki_msql.php3,v 1.14 2000-08-16 03:55:31 wainstead Exp $ -->
 <?
 
    /*
@@ -368,25 +368,30 @@
 
 
    function IncreaseHitCount($dbi, $pagename) {
-      return;
-      $query = "update hitcount set hits=hits+1 where pagename='$pagename'";
-      $res = mysql_query($query, $dbi['dbc']);
 
-      if (!mysql_affected_rows($dbi['dbc'])) {
+      $query = "select hits from hitcount where pagename='$pagename'";
+      $res = msql_query($query, $dbi['dbc']);
+      if (msql_num_rows($res)) {
+         $hits = msql_result($res, 0, 'hits');
+         $hits++;
+         $query = "update hitcount set hits=$hits where pagename='$pagename'";
+         $res = msql_query($query, $dbi['dbc']);
+
+      } else {
          $query = "insert into hitcount (pagename, hits) " .
                   "values ('$pagename', 1)";
-	 $res = mysql_query($query, $dbi['dbc']);
+	 $res = msql_query($query, $dbi['dbc']);
       }
 
       return $res;
    }
 
    function GetHitCount($dbi, $pagename) {
-      return;
+
       $query = "select hits from hitcount where pagename='$pagename'";
-      $res = mysql_query($query, $dbi['dbc']);
-      if (mysql_num_rows($res)) {
-         $hits = mysql_result($res, 0);
+      $res = msql_query($query, $dbi['dbc']);
+      if (msql_num_rows($res)) {
+         $hits = msql_result($res, 0, 'hits');
       } else {
          $hits = "0";
       }
@@ -397,18 +402,18 @@
 
 
    function InitMostPopular($dbi, $limit) {
-      return;
+
       $query = "select * from hitcount " .
                "order by hits desc, pagename limit $limit";
 
-      $res = mysql_query($query);
+      $res = msql_query($query);
       
       return $res;
    }
 
    function MostPopularNextMatch($dbi, $res) {
-      return;
-      if ($hits = mysql_fetch_array($res)) {
+
+      if ($hits = msql_fetch_array($res)) {
 	 return $hits;
       } else {
          return 0;
