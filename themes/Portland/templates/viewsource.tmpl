@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: viewsource.tmpl,v 1.7 2002-01-30 01:33:20 dairiki Exp $ -->
+<!-- $Id: viewsource.tmpl,v 1.8 2002-01-30 23:41:55 dairiki Exp $ -->
 
 <?php if ($page->get('locked') && !$user->isAdmin()) { ?>
   <p><strong><?=_("Note:")?></strong>
@@ -8,7 +8,7 @@
 
 <?php if (! $revision->isCurrent()) { ?>
   <p><?=_("You are viewing an old revision of this page.")?>
-  <?= $Theme->makeActionButton('edit', _("View the current version"), $page->getName())?>.</p>
+  <?= Button('viewsource', _("View the current version"), $page)?>.</p>
 <?php } ?>
 
 <!-- Dummy form else NS4 doesn't like the textarea -->
@@ -22,7 +22,7 @@
           wrap="virtual"><?= $PAGE_SOURCE ?></textarea>
 <?php
   $mtime = $Theme->formatDateTime($revision->get('mtime'));
-  $PageHistoryB = $Theme->makeActionButton(_("PageHistory"), $mtime);
+  $PageHistoryB = Button(_("PageHistory"), $mtime);
 
   if ($revision->isCurrent())
       $LastModifiedMsg = fmt("(last edited %s)", $PageHistoryB);

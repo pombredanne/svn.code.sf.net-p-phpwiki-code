@@ -1,19 +1,11 @@
 <?php // -*-html-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.8 2002-01-30 01:33:20 dairiki Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.9 2002-01-30 23:41:55 dairiki Exp $ -->
 <?php
   if (!$page->get('locked') || $user->isAdmin())
-      $EditB = $Theme->makeActionButton("edit",
-                                     $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
+      $EditB = Button("edit",
+                      $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
   else
-      $EditB = $Theme->makeActionButton("viewsource", _("View Source"));
-
-  $LockPageB = $Theme->makeActionButton($page->get('locked') ? 'unlock' : 'lock');
-  $RemovePageB = $Theme->makeActionButton('remove');
-
-  $PageHistoryB = $Theme->makeActionButton(_("PageHistory"));
-  $DiffB = $Theme->makeActionButton(array('action' => 'diff', 'previous' => 'major'));
-
-  $DebugInfoB = $Theme->makeActionButton(_("DebugInfo"));
+      $EditB = Button("viewsource", _("View Source"));
 
   $Sep = $Theme->getButtonSeparator();
 ?>
@@ -33,11 +25,12 @@
   <td>
     <?= $EditB ?> 
     <?php if ($user->isAdmin()) { ?>
-     <?=$Sep?><?= $LockPageB ?><?=$Sep?><?= $RemovePageB ?>
+     <?=$Sep?><?= Button($page->get('locked') ? 'unlock' : 'lock') ?>
+     <?=$Sep?><?= Button('remove') ?>
     <?php } ?>
-   <?=$Sep?><?= $PageHistoryB ?>
-   <?=$Sep?><?= $DiffB ?> 
-   <?=$Sep?><?= $DebugInfoB ?> <!-- For debugging only, really -->
+   <?=$Sep?><?= Button(_("PageHistory")) ?>
+   <?=$Sep?><?= Button("diff") ?> 
+   <?=$Sep?><?= Button(_("DebugInfo")) ?> <!-- For debugging only, really -->
   </td>
   <td align="right">
     <?= Template('signin') ?>

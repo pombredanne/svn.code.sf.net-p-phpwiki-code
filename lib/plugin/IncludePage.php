@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: IncludePage.php,v 1.14 2002-01-28 18:49:08 dairiki Exp $');
+rcs_id('$Id: IncludePage.php,v 1.15 2002-01-30 23:41:54 dairiki Exp $');
 /**
  * IncludePage:  include text from another wiki page in this one
  * usage:   <?plugin IncludePage page=OtherPage rev=6 quiet=1 words=50 lines=6?>
@@ -117,10 +117,9 @@ extends WikiPlugin
 
         if ($quiet) return $content;
 
-        global $Theme;
         return HTML(HTML::p(array('class' => 'transclusion-title'),
                             fmt("Included from %s",
-                                $Theme->LinkExistingWikiWord($page))),
+                                WikiLink($page))),
                     
                     HTML::div(array('class' => 'transclusion'),
                               false, $content));

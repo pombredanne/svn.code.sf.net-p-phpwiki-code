@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.3 2002-01-29 19:28:16 dairiki Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.4 2002-01-30 23:41:54 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -271,7 +271,7 @@ class Markup_wikiword extends SimpleMarkup
     }
         
     function markup ($match) {
-        return LinkWikiWord($match);
+        return WikiLink($match, 'auto');
     }
 }
 

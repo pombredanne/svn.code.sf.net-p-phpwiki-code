@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.51 2002-01-28 18:49:08 dairiki Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.52 2002-01-30 23:41:54 dairiki Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -15,8 +15,7 @@ function StartLoadDump(&$request, $title, $html = '')
 function EndLoadDump(&$request)
 {
     // FIXME: This is a hack
-    global $Theme;
-    $pagelink = $Theme->LinkExistingWikiWord($request->getArg('pagename'));
+    $pagelink = WikiLink($request->getPage());
     
     PrintXML(HTML::p(HTML::strong(_("Complete."))),
              HTML::p(fmt("Return to %s", $pagelink)));
@@ -260,10 +259,7 @@ function SavePage (&$request, $pageinfo, $source, $filename)
                                     $new->getVersion()));
     }
 
-    global $Theme;
-    $pagelink = $Theme->LinkExistingWikiWord($pagename);
-    
-    PrintXML(HTML::dt($pagelink), $mesg);
+    PrintXML(HTML::dt(WikiLink($pagename)), $mesg);
     flush();
 }
 
@@ -373,14 +369,13 @@ function LoadFile (&$request, $filename, $text = false, $mtime = false)
 
 function LoadZip (&$request, $zipfile, $files = false, $exclude = false) {
     $zip = new ZipReader($zipfile);
-    global $Theme;
     while (list ($fn, $data, $attrib) = $zip->readFile()) {
         // FIXME: basename("filewithnoslashes") seems to return
         // garbage sometimes.
         $fn = basename("/dummy/" . $fn);
         if ( ($files && !in_array($fn, $files)) || ($exclude && in_array($fn, $exclude)) ) {
 
-            PrintXML(HTML::dt($Theme->LinkExistingWikiWord($fn)),
+            PrintXML(HTML::dt(WikiLink($fn)),
                      HTML::dd(_("Skipping")));
             continue;
         }
@@ -395,9 +390,8 @@ function LoadDir (&$request, $dirname, $files = false, $exclude = false) {
     if (($skiplist = $fileset->getSkippedFiles())) {
         PrintXML(HTML::dt(HTML::strong(_("Skipping"))));
         $list = HTML::ul();
-        global $Theme;
         foreach ($skiplist as $file)
-            $list->pushContent(HTML::li($Theme->LinkExistingWikiWord($file)));
+            $list->pushContent(HTML::li(WikiLink($file)));
         PrintXML(HTML::dd($list));
     }
 

@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: signin.tmpl,v 1.12 2002-01-30 01:33:20 dairiki Exp $ -->
+<!-- $Id: signin.tmpl,v 1.13 2002-01-30 23:41:55 dairiki Exp $ -->
 <?php
 
      $Sep = $Theme->getButtonSeparator();
@@ -18,7 +18,7 @@
 
 <?php if ($user->isSignedIn()) {  ?>
 
-  <?= fmt("You are signed in as %s", LinkWikiWord($user->getId())) ?>
+  <?= fmt("You are signed in as %s", WikiLink($user->getId(), 'auto')) ?>
   <?=$Sep?>
   <script language="JavaScript" type="text/javascript"><!--
     document.write('<input type="hidden" name="auth[logout]" value="0" />');
@@ -29,7 +29,7 @@
     document.write('<?=$SignOutB?>'); // -->
   </script>
   <noscript>
-    <?=$Theme->makeButton(_("Sign Out"), "submit:auth[logout]", "wikiaction")?>
+    <?= Button("submit:auth[logout]", _("Sign Out")) ?>
   </noscript>
 
 <?php } else { ?>
@@ -45,7 +45,7 @@
   // --></script>
   <?= $SignInInput ?>
   <noscript>
-    <?=$Theme->makeButton(_("Sign In"), "submit:auth[login]", "wikiaction")?>
+    <?=Button("submit:auth[login]", _("Sign In"))?>
   </noscript>
 
 <?php } ?>

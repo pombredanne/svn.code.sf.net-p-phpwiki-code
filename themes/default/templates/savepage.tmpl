@@ -1,12 +1,11 @@
 <!-- -*-html-*- -->
-<!-- $Id: savepage.tmpl,v 1.4 2002-01-24 00:45:28 dairiki Exp $ -->
+<!-- $Id: savepage.tmpl,v 1.5 2002-01-30 23:41:55 dairiki Exp $ -->
 <?php
   $signatureURL = $Theme->getImageURL('signature');
 ?>
 
 <p>
-  <?=fmt("Thank you for editing %s.",
-         $Theme->LinkExistingWikiWord($page->getName()))?>
+  <?=fmt("Thank you for editing %s.", WikiLink($page))?>
   <br />
   <?=_("Your careful attention to detail is much appreciated.")?>
 </p>

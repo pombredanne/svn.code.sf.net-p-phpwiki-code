@@ -1,11 +1,10 @@
-<?php rcs_id('$Id: stdlib.php,v 1.94 2002-01-28 18:49:08 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.95 2002-01-30 23:41:54 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
     WikiURL($pagename, $args, $get_abs_url)
     IconForLink($protocol_or_url)
     LinkURL($url, $linktext)
-    LinkWikiWord($wikiword, $linktext)
     LinkImage($url, $alt)
 
     MakeWikiForm ($pagename, $args, $class, $button_text)
@@ -99,15 +98,6 @@ function LinkURL($url, $linktext = '') {
     return $link;
 }
 
-function LinkWikiWord($wikiword, $linktext = '', $version = false) {
-    global $request, $Theme;
-    $dbi = $request->getDbh();
-    if ($dbi->isWikiPage($wikiword))
-        $link = $Theme->linkExistingWikiWord($wikiword, $linktext, $version);
-    else
-        $link = $Theme->linkUnknownWikiWord($wikiword, $linktext);
-    return $link;
-}
 
 function LinkImage($url, $alt = '[External Image]') {
     // FIXME: Is this needed (or sufficient?)
@@ -270,7 +260,7 @@ function LinkPhpwikiURL($url, $text = '') {
 
 function LinkBracketLink($bracketlink) {
     global $request, $AllowedProtocols, $InlineImages;
-    global $InterWikiLinkRegexp, $Theme;
+    global $InterWikiLinkRegexp;
 
     
     // $bracketlink will start and end with brackets; in between will
@@ -293,7 +283,7 @@ function LinkBracketLink($bracketlink) {
 
     $dbi = $request->getDbh();
     if ($dbi->isWikiPage($URL))
-        return $Theme->linkExistingWikiWord($URL, $linkname);
+        return WikiLink($URL, 'known', $linkname);
     elseif (preg_match("#^($AllowedProtocols):#", $URL)) {
         // if it's an image, embed it; otherwise, it's a regular link
         if (preg_match("/($InlineImages)$/i", $URL))
@@ -307,7 +297,7 @@ function LinkBracketLink($bracketlink) {
             && preg_match("/^$InterWikiLinkRegexp:/", $URL))
         return LinkInterWikiLink($URL, $linkname);
     else {
-        return $Theme->linkUnknownWikiWord($URL, $linkname);
+        return WikiLink($URL, 'unknown', $linkname);
     }
     
 }
@@ -392,7 +382,7 @@ function split_pagename ($page) {
 function NoSuchRevision (&$request, $page, $version) {
     $html = HTML(HTML::h2(_("Revision Not Found")),
                  HTML::p(fmt("I'm sorry.  Version %d of %s is not in my database.",
-                             $version, LinkWikiWord($page->getName()))));
+                             $version, WikiLink($page, 'auto'))));
     include_once('lib/Template.php');
     GeneratePage($html, _("Bad Version"), $page->getCurrentRevision());
     $request->finish();

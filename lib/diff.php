@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.32 2002-01-28 18:49:08 dairiki Exp $');
+rcs_id('$Id: diff.php,v 1.33 2002-01-30 23:41:54 dairiki Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -236,7 +236,7 @@ function PageInfoRow ($label, $rev)
     
    $row = HTML::tr(HTML::td(array('align' => 'right'), $label));
    if ($rev) {
-       $linked_version = HTML::a(array('href' => WikiURL($rev)), $rev->getVersion());
+       $linked_version = WikiLink($rev, 'existing', $rev->getVersion());
        $row->pushContent(HTML::td(fmt("version %s", $linked_version)),
                          HTML::td(fmt("last modified on %s",
                                       $Theme->formatDateTime($rev->get('mtime')))),
@@ -307,11 +307,9 @@ function showDiff (&$request) {
         }
     }
 
-    global $Theme;
-    $new_link = HTML::a(array('href' => WikiURL($new)), $new_version);
-    $old_link = HTML::a(array('href' => WikiURL($old ? $old : $page)),
-                        $old_version);
-    $page_link = $Theme->LinkExistingWikiWord($page->getName());
+    $new_link = WikiLink($new, '', $new_version);
+    $old_link = $old ? WikiLink($old, '', $old_version) : $old_version;
+    $page_link = WikiLink($page);
 
     $html = HTML(HTML::p(fmt("Differences between %s and %s of %s.",
                              $new_link, $old_link, $page_link)));
@@ -328,9 +326,7 @@ function showDiff (&$request) {
             $otherdiffs->pushContent(", ");
         else
             $otherdiffs->pushContent(" ");
-        $otherdiffs->pushContent(HTML::a(array('href' => WikiURL($page, $args),
-                                               'class' => 'wikiaction'),
-                                         $label[$other]));
+        $otherdiffs->pushContent(Button($args, $label[$other]));
     }
     $html->pushContent($otherdiffs);
         

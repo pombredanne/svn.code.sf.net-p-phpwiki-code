@@ -1,19 +1,17 @@
 <?php
-rcs_id('$Id: removepage.php,v 1.9 2002-01-29 01:17:50 carstenklapp Exp $');
+rcs_id('$Id: removepage.php,v 1.10 2002-01-30 23:41:54 dairiki Exp $');
 require_once('lib/Template.php');
 
 function RemovePage (&$request) {
     global $Theme;
 
-    $pagename = $request->getArg('pagename');
-
-    $pagelink = $Theme->linkExistingWikiWord($pagename);
     $page = $request->getPage();
+    $pagelink = WikiLink($page);
     $rev = $page->getCurrentRevision();
     $version = $rev->getVersion();
 
     if ($request->getArg('cancel')) {
-        $request->redirect(WikiURL($pagename));
+        $request->redirect(WikiURL($page));
         // The user probably doesn't see the rest of this.
         $html = HTML(HTML::h2(_("Request Cancelled!")),
                      HTML::p(fmt("Return to %s.", $pagelink)));
@@ -21,14 +19,14 @@ function RemovePage (&$request) {
 
     
     if (!$request->isPost() || !$request->getArg('verify')) {
-        $url = WikiURL($pagename, array('action' => 'remove', 'verify' => 'okay'));
 
-        $removeB = $Theme->makeSubmitButton(_("Remove the page now"), 'verify', 'wikiadmin');
-        $cancelB = $Theme->makeSubmitButton(_("Cancel"), 'cancel', 'wikiaction');
+        // FIXME: button should be class wikiadmin
+        $removeB = Button('submit:verify', _("Remove the page now"));
+        $cancelB = Button('submit:cancel', _("Cancel"));
         
         $html = HTML(HTML::h2(fmt("You are about to remove '%s' permanently!", $pagelink)),
                      HTML::form(array('method' => 'post',
-                                      'action' => WikiURL($pagename)),
+                                      'action' => WikiURL($page)),
                                 HTML::input(array('type' => 'hidden',
                                                   'name' => 'currentversion',
                                                   'value' => $version)),
@@ -46,6 +44,7 @@ function RemovePage (&$request) {
     }
     else {
         // Real delete.
+        $pagename = $page->getName();
         $dbi = $request->getDbh();
         $dbi->deletePage($pagename);
         $html = HTML(HTML::h2(fmt("Removed page '%s' succesfully.", $pagename)));

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.46 2002-01-30 18:34:22 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.47 2002-01-30 23:41:54 dairiki Exp $');
 /**
  */
 
@@ -40,17 +40,13 @@ class _RecentChanges_Formatter
 
     function historyURL ($rev) {
         $page = $rev->getPage();
-        return WikiURL(_("PageHistory"),
-                       array('page' => $page->getName()),
+        return WikiURL($page, array('action' => _("PageHistory")),
                        $this->_absurls);
     }
 
     function pageURL ($rev) {
-        $params = array();
-        if ($this->include_versions_in_URLs())
-            $params['version'] = $rev->getVersion();
-        $page = $rev->getPage();
-        return WikiURL($page->getName(), $params, $this->_absurls);
+        return WikiURL($this->include_versions_in_URLs() ? $rev : $page,
+                       '', $this->_absurls);
     }
     
     function authorHasPage ($author) {
@@ -122,8 +118,7 @@ extends _RecentChanges_Formatter
     function authorLink ($rev) {
         $author = $rev->get('author');
         if ( $this->authorHasPage($author) ) {
-            global $Theme;
-            return $Theme->LinkExistingWikiWord($author);
+            return WikiLink($author);
         } else
             return $author;
     }
@@ -229,10 +224,7 @@ extends _RecentChanges_Formatter
     }
 
     function pageURI ($rev) {
-        $page = $rev->getPage();
-        return WikiURL($page->getName(),
-                       array('version' => $rev->getVersion()),
-                       'absurl');
+        return WikiURL($rev, '', 'absurl');
     }
     
     function format ($changes) {

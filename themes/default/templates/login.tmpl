@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: login.tmpl,v 1.10 2002-01-30 01:33:20 dairiki Exp $ -->
+<!-- $Id: login.tmpl,v 1.11 2002-01-30 23:41:55 dairiki Exp $ -->
 <!-- The login form -->
 
 <?php if ($fail_message) { ?>
@@ -25,9 +25,9 @@ if (ALLOW_BOGO_LOGIN && $require_level <= WIKIAUTH_BOGO) {
   <td><input type="password" name="auth[password]" size="12" /></td>
 </tr>
 <tr><td align="center" colspan="2">
-  <?=$Theme->makeButton(_("Sign In"), "submit:", "wikiaction")?>
+  <?=Button("submit:", _("Sign In"))?>
   <?php if (!$require_level) { ?>
-    <?=$Theme->makeButton(_("Cancel"), "submit:auth[cancel]", "wikiaction")?>
+    <?=Button("submit:auth[cancel]", _("Cancel"))?>
   <?php } ?>
 </td></tr>
 </table>

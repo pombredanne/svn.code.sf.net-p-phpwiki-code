@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: viewsource.tmpl,v 1.8 2002-01-30 01:33:20 dairiki Exp $ -->
+<!-- $Id: viewsource.tmpl,v 1.9 2002-01-30 23:41:55 dairiki Exp $ -->
 <?php
   $mtime = $Theme->formatDateTime($revision->get('mtime'));
   if ($revision->isCurrent())
@@ -16,8 +16,7 @@
 <?php } ?>
 <?php if (! $revision->isCurrent()) { ?>
   <p><?=_("You are viewing an old revision of this page.")?>
-    <?= $Theme->makeActionButton('edit', _("View the current version"),
-                                         $page->getName()) ?>.
+    <?= Button('edit', _("View the current version"), $page) ?>.
   </p>
   <hr class="ignore" noshade="noshade" />
 <?php } ?>

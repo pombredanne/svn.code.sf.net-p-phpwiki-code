@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.3 2002-01-28 19:24:34 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.4 2002-01-30 23:41:54 dairiki Exp $');
 
 /*
  * This file defines an appearance ("theme") of PhpWiki similar to the Portland Pattern Repository.
@@ -8,7 +8,7 @@ rcs_id('$Id: themeinfo.php,v 1.3 2002-01-28 19:24:34 carstenklapp Exp $');
 require_once('lib/Theme.php');
 
 class Theme_Portland extends Theme {
-    function LinkUnknownWikiWord($wikiword, $linktext = '') {
+    function linkUnknownWikiWord($wikiword, $linktext = '') {
         $url = WikiURL($wikiword, array('action' => 'edit'));
         $link = HTML::span(HTML::a(array('href' => $url), '?'));
 

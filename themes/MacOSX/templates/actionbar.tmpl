@@ -1,21 +1,11 @@
 <?php // -*-html-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.15 2002-01-30 01:33:20 dairiki Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.16 2002-01-30 23:41:54 dairiki Exp $ -->
 <?php
   if (!$page->get('locked') || $user->isAdmin())
-      $EditB = $Theme->makeActionButton("edit",
-                                     $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
+      $EditB = Button("edit",
+                      $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
   else
-      $EditB = $Theme->makeActionButton("viewsource", _("View Source"));
-
-  $LockPageB = $Theme->makeActionButton($page->get('locked') ? 'unlock' : 'lock');
-  $RemovePageB = $Theme->makeActionButton('remove');
-
-  $PageHistoryB = $Theme->makeActionButton(_("PageHistory"));
-  $DiffB = $Theme->makeActionButton(array('action' => 'diff', 'previous' => 'major'));
-
-  $DebugInfoB = $Theme->makeActionButton(_("DebugInfo"));
-
-  $SignInB = $Theme->makeActionButton($user->isSignedIn() ? 'logout' : 'login');
+      $EditB = Button("viewsource", _("View Source"));
 
   $s = $Theme->getButtonSeparator();
 ?>
@@ -33,12 +23,12 @@
   <td>
     <?= $EditB ?> 
     <?php if ($user->isAdmin()) { ?>
-     <?=$s?><?= $LockPageB ?>
-     <?=$s?><?= $RemovePageB ?>
+     <?=$s?><?= Button($page->get('locked') ? 'unlock' : 'lock') ?>
+     <?=$s?><?= Button('remove') ?>
     <?php } ?>
-   <?=$s?><?= $PageHistoryB ?>
-   <?=$s?><?= $DiffB ?> 
-   <?=$s?><?= $DebugInfoB ?> <!-- For debugging only, really -->
+   <?=$s?><?= Button(_("PageHistory")) ?>
+   <?=$s?><?= Button('diff') ?> 
+   <?=$s?><?= Button(_("DebugInfo")) ?> <!-- For debugging only, really -->
   </td>
 
   <td align="right">
@@ -53,11 +43,11 @@
           -->
 	<table cellspacing="0" cellpadding="0" border="0"><tr>
         <td>
-          <?=fmt("You are signed in as %s", LinkWikiWord($user->getId()))?>&nbsp;
+          <?=fmt("You are signed in as %s", WikiLink($user->getId(), 'auto'))?>&nbsp;
         </td>
         <td>
           <?=$s?>
-	  <?=$Theme->makeButton(_("Sign Out"), "submit:auth[logout]", "wikiaction")?>
+	  <?=Button("submit:auth[logout]", _("Sign Out"))?>
         </td>
         </tr></table>
       </form>
