@@ -1,4 +1,4 @@
-<!-- $Id: wiki_msql.php3,v 1.11 2000-08-15 02:54:04 wainstead Exp $ -->
+<!-- $Id: wiki_msql.php3,v 1.12 2000-08-15 04:22:46 wainstead Exp $ -->
 <?
 
    /*
@@ -44,7 +44,7 @@
 
    function CloseDataBase($dbi) {
       // I found msql_pconnect unstable so we go the slow route.
-      return msql_close($dbi);
+      return msql_close($dbi['dbc']);
    }
 
 
@@ -124,13 +124,16 @@
    // Return hash of page + attributes or default
    function RetrievePage($dbi, $pagename, $pagestore) {
       $pagename = addslashes($pagename);
+      $table = $pagestore['table'];
+      $pagetable = $pagestore['page_table'];
 
-      $query = "select * from $dbi[$pagestore] where pagename='$pagename'";
-
-      if ($res = msql_query($query, $dbi['dbc'])) {
+      $query = "select * from $table where pagename='$pagename'";
+      // echo "<p>query: $query<p>";
+      $res = msql_query($query, $dbi['dbc']);
+      if (msql_num_rows($res)) {
          $dbhash = msql_fetch_array($res);
 
-         $query = "select lineno,line from $dbi[page_table] " .
+         $query = "select lineno,line from $pagetable " .
                   "where pagename='$pagename' " .
                   "order by lineno";
 
@@ -222,24 +225,97 @@
 
 
 
-   // for archiving pages to a seperate dbm
+   // for archiving pages to a separate table
    function SaveCopyToArchive($dbi, $pagename, $pagehash) {
       global $ArchivePageStore;
 
-      $adbi = OpenDataBase($ArchivePageStore);
-      $newpagename = $pagename; // what the hell does this do?
-      InsertPage($adbi, $newpagename, $pagehash);
+      $pagehash = MakeDBHash($pagename, $pagehash);
+      // $pagehash["content"] is now an array of strings 
+      // of MSQL_MAX_LINE_LENGTH
+
+      if (IsInArchive($dbi, $pagename)) {
+
+         $PAIRS = "author='$pagehash[author]'," .
+                  "created=$pagehash[created]," .
+                  "flags=$pagehash[flags]," .
+                  "lastmodified=$pagehash[lastmodified]," .
+                  "pagename='$pagehash[pagename]'," .
+                  "refs='$pagehash[refs]'," .
+                  "version=$pagehash[version]";
+
+         $query  = "UPDATE $dbi[table] SET $PAIRS WHERE pagename='$pagename'";
+
+      } else {
+         // do an insert
+         // build up the column names and values for the query
+
+         $COLUMNS = "author, created, flags, lastmodified, " .
+                    "pagename, refs, version";
+
+         $VALUES =  "'$pagehash[author]', " .
+                    "$pagehash[created], $pagehash[flags], " .
+                    "$pagehash[lastmodified], '$pagehash[pagename]', " .
+                    "'$pagehash[refs]', $pagehash[version]";
+
+
+         $query = "INSERT INTO archive ($COLUMNS) VALUES($VALUES)";
+      }
+
+      // echo "<p>Query: $query<p>\n";
+
+      // first, insert the metadata
+      $retval = msql_query($query, $dbi['dbc']);
+      if ($retval == false) 
+         echo "Insert/update failed: ", msql_error(), "<br>\n";
+
+
+      // second, insert the page data
+      // remove old data from page_table
+      $query = "delete from $dbi[page_table] where pagename='$pagename'";
+      // echo "Delete query: $query<br>\n";
+      $retval = msql_query($query, $dbi['dbc']);
+      if ($retval == false) 
+         echo "Delete on $dbi[page_table] failed: ", msql_error(), "<br>\n";
+
+      // insert the new lines
+      reset($pagehash["content"]);
+
+      for ($x = 0; $x < count($pagehash["content"]); $x++) {
+         $line = addslashes($pagehash["content"][$x]);
+         $query = "INSERT INTO $dbi[page_table] " .
+                  "(pagename, lineno, line) " .
+                  "VALUES('$pagename', $x, '$line')";
+         // echo "Page line insert query: $query<br>\n";
+         $retval = msql_query($query, $dbi['dbc']);
+         if ($retval == false) 
+            echo "Insert into $dbi[page_table] failed: ", 
+                  msql_error(), "<br>\n";
+         
+      }
+
+
    }
 
 
    function IsWikiPage($dbi, $pagename) {
       $pagename = addslashes($pagename);
-      $query = "select pagename from $dbi[table] where pagename='$pagename'";
+      $query = "select pagename from wiki where pagename='$pagename'";
       // echo "Query: $query<br>\n";
       if ($res = msql_query($query, $dbi['dbc'])) {
          return(msql_affected_rows($res));
       }
    }
+
+
+   function IsInArchive($dbi, $pagename) {
+      $pagename = addslashes($pagename);
+      $query = "select pagename from archive where pagename='$pagename'";
+      // echo "Query: $query<br>\n";
+      if ($res = msql_query($query, $dbi['dbc'])) {
+         return(msql_affected_rows($res));
+      }
+   }
+
 
 
    // setup for title-search
