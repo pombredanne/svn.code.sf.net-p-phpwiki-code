@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.221 2004-12-06 19:49:58 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.222 2004-12-17 16:40:45 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -75,7 +75,6 @@ if (defined('_PHPWIKI_STDLIB_LOADED')) return;
 else define('_PHPWIKI_STDLIB_LOADED', true);
 
 define('MAX_PAGENAME_LENGTH', 100);
-
             
 /**
  * Convert string to a valid XML identifier.
@@ -205,6 +204,12 @@ function AbsoluteURL ($url) {
     }
     return SERVER_URL . $url;
 }
+
+/*function DataURL ($url) {
+    if (preg_match('/^https?:/', $url))
+        return $url;
+    return AbsoluteURL(NormalizeWebFileName($url));
+}*/
 
 /**
  * Generates icon in front of links.
@@ -1815,6 +1820,14 @@ function printSimpleTrace($bt) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.221  2004/12/06 19:49:58  rurban
+// enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
+// renamed delete_page to purge_page.
+// enable action=edit&version=-1 to force creation of a new version.
+// added BABYCART_PATH config
+// fixed magiqc in adodb.inc.php
+// and some more docs
+//
 // Revision 1.220  2004/11/30 17:47:41  rurban
 // added mt_srand, check for native isa
 //
