@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.42 2002-02-18 16:59:49 lakka Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.43 2002-02-22 20:03:50 carstenklapp Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -693,7 +693,7 @@ class Theme {
         if (isset($this->_defaultCSS)) {
             $oldtitle = $this->_defaultCSS->_attr['title'];
             $error = sprintf("'%s' -> '%s'", $oldtitle, $title);
-            trigger_error(sprintf(_("Redefinition of default CSS: %s"), $error),
+            trigger_error(sprintf(_("Redefinition of %s: %s"), "'default CSS'", $error),
                           E_USER_NOTICE);
         }
         if (isset($this->_alternateCSS))
