@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.168 2004-04-10 02:30:49 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.169 2004-04-15 21:29:48 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -411,7 +411,7 @@ class WikiPagename
         if (is_string($name)) {
             $this->shortName = $name;
         
-            if (empty($name) or $name[0] == SUBPAGE_SEPARATOR) {
+            if ($name == '' or $name[0] == SUBPAGE_SEPARATOR) {
                 if ($basename)
                     $name = $this->_pagename($basename) . $name;
                 else
@@ -1377,6 +1377,10 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.168  2004/04/10 02:30:49  rurban
+// Fixed gettext problem with VIRTUAL_PATH scripts (Windows only probably)
+// Fixed "cannot setlocale..." (sf.net problem)
+//
 // Revision 1.167  2004/04/02 15:06:55  rurban
 // fixed a nasty ADODB_mysql session update bug
 // improved UserPreferences layout (tabled hints)
