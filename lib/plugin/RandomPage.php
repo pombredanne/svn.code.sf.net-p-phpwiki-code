@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RandomPage.php,v 1.10 2004-02-17 12:11:36 rurban Exp $');
+rcs_id('$Id: RandomPage.php,v 1.11 2004-10-04 23:42:42 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -35,7 +35,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     function getDefaultArguments() {
@@ -76,8 +76,13 @@ extends WikiPlugin
         $pages = min( max(1, (int)$pages), 20, count($pagearray));
         $pagelist = new PageList($info);
         $shuffle = array_rand($pagearray, $pages);
-        foreach ($shuffle as $i)
-            $pagelist->addPage($pagearray[$i]);
+        if (is_array($pages)) {
+            foreach ($shuffle as $i)
+                if (isset($pagearray[$i])) $pagelist->addPage($pagearray[$i]);
+        } else { // if $pages = 1
+             if (isset($pagearray[$shuffle]))
+	         $pagelist->addPage($pagearray[$shuffle]);
+        }
         return $pagelist;
     }
 
@@ -93,6 +98,9 @@ extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/02/17 12:11:36  rurban
+// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
+//
 // Revision 1.9  2003/01/18 22:01:43  carstenklapp
 // Code cleanup:
 // Reformatting & tabs to spaces;
