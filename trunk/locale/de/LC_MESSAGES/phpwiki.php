@@ -12,16 +12,24 @@ $locale["<b>Reload</b> the page. You should now see the most current version of 
    "<b>Aktualisiere</b> die Seite. Du solltest jetzt die neueste Versionder Seite sehen. Deine Veränderungen sind verschwunden.";
 $locale["Click"] =
    "Klicke";
+$locale["Compare page revisions."] =
+   "Den Unterschiedsbetrag vergleichen.";
 $locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
    "Kopiere deine Veränderungen in die Zwischenablage oder an einen anderentemporären Platz (z.B. einen Texteditor)";
 $locale["Describe [%s] here."] =
    "Beschreibe [%s] hier.";
+$locale["DebugInfo"] =
+   "DebugInfo";
+$locale["Diff"] =
+   "Vergleichen";
 $locale["Edit"] =
    "TextEditieren";
 $locale["Edit:"] =
    "TextEditieren:";
 $locale["FindPage"] =
    "SeiteFinden";
+$locale["FullTextSearch"] =
+   "Volltextsuche";
 $locale["GoodStyle"] =
    "GuterStil";
 $locale["Hits"] =
@@ -32,6 +40,8 @@ $locale["In order to recover from this situation follow these steps:"] =
    "Um diese Situation zu korrigieren folge bitte den folgenden Schritten:";
 $locale["Last edited on"] =
    "Zuletzt verändert am";
+$locale["LikePages"] =
+   "GleicheSeiten";
 $locale["Lock page"] =
    "Seite sperren";
 $locale["major edits"] =
@@ -44,6 +54,8 @@ $locale["None"] =
    "Keine";
 $locale["Otherwise press the \"Back\" button of your browser."] =
    "Anderenfalls benütze die \"Zurück\" Funktion deines Browsers.";
+$locale["PageHistory"] =
+   "Protokoll";
 $locale["Page Name"] =
    "Seitenname";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
@@ -58,6 +70,8 @@ $locale["Remove page"] =
    "Seite löschen";
 $locale["Removed page '%s' succesfully."] =
    "Seite '%s' erfolgreich gelöscht.";
+$locale["SignIn"] =
+   "Anmelden";
 $locale["Thank you for editing %s."] =
    "Danke für das Editieren von %s.";
 $locale["The %s most popular pages of this wiki:"] =
@@ -72,6 +86,8 @@ $locale["This is a minor change."] =
    "Geringfügige Änderung";
 $locale["This page has been locked by the administrator and cannot be edited."] =
    "Diese Seite wurde vom Administrator gesperrt und kann nicht editiert werden.";
+$locale["TitleSearch"] =
+   "Titelsuche";
 $locale["Unlock page"] =
    "Seite freigeben";
 $locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
@@ -91,7 +107,7 @@ $locale["by %s"] =
 $locale["here"] =
    "hier";
 $locale["last modified on %s"] =
-   "zuletzt verändert am %s";
+   "zuletzt am %s verändert";
 $locale["tips for editing."] =
    "tips fürs Editieren.";
 
