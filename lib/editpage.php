@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.40 2002-02-14 23:15:54 lakka Exp $');
+rcs_id('$Id: editpage.php,v 1.41 2002-02-15 14:05:44 lakka Exp $');
 
 require_once('lib/Template.php');
 
@@ -53,17 +53,23 @@ class PageEditor
 
         if ($saveFailed || $this->isConcurrentUpdate())
             {
-                $tokens['CONCURRENT_UPDATE_MESSAGE'] = $this->getConflictMessage();
-/*              $orig = $this->page->getRevision($this->_currentVersion);
+                // Get the text of the original page, and the two conflicting edits
+                // The diff3 class takes arrays as input.  So retrieve content as
+				// an array, or convert it as necesary.
+				$orig = $this->page->getRevision($this->_currentVersion);
                 $orig_content = $orig->getContent();
                 $this_content = explode("\n", $this->_content); 
                 $other_content = $this->current->getContent();             
                 include_once("lib/diff3.php");
                 $diff = new diff3($orig_content, $this_content, $other_content);
-                $output = $diff->merged_output("Your version", "Other version");
+                $output = $diff->merged_output(_("Your version"), _("Other version"));
+                // Set the content of the textarea to the merged diff output, and update the version
                 $this->_content = implode ("\n", $output);
-  */              
-            }
+				$this->_currentVersion = $this->current->getVersion();
+				$this->version = $this->_currentVersion;
+				$unresolved = $diff->ConflictingBlocks;
+                $tokens['CONCURRENT_UPDATE_MESSAGE'] = $this->getConflictMessage($unresolved);
+             }
 
         if ($this->editaction == 'preview')
             $tokens['PREVIEW_CONTENT'] = $this->getPreview(); // FIXME: convert to _MESSAGE?
@@ -218,26 +224,32 @@ class PageEditor
              HTML::p(_("Sorry for the inconvenience.")));
     }
 
-    function getConflictMessage () {
+    function getConflictMessage ($unresolved = false) {
         /*
          xgettext only knows about c/c++ line-continuation strings
          it does not know about php's dot operator.
          We want to translate this entire paragraph as one string, of course.
          */
 
-        $re_edit_link = Button('edit', _("Edit the new version"), $this->page);
+//        $re_edit_link = Button('edit', _("Edit the new version"), $this->page);
 
-        $steps = HTML::ol(HTML::li(_("Copy your changes to the clipboard or to another temporary place (e.g. text editor).")),
+		if ($unresolved )
+		        $message =  HTML::p(_("Some of the changes could not automatically be combined.  Please look for sections beginning with <<<<<<< Your version, and ending with >>>>>>> Other version.  You will need to edit those sections by hand, and the click Save"));
+        else
+		        $message = HTML::p(_("Please check it through and click Save to save it."));
+				
+					   
+
+/*		$steps = HTML::ol(HTML::li(_("Copy your changes to the clipboard or to another temporary place (e.g. text editor).")),
                           HTML::li(fmt("%s of the page. You should now see the most current version of the page. Your changes are no longer there.",
                                        $re_edit_link)),
                           HTML::li(_("Make changes to the file again. Paste your additions from the clipboard (or text editor).")),
                           HTML::li(_("Save your updated changes.")));
-
+*/
         return HTML(HTML::h2(_("Conflicting Edits!")),
-                    HTML::p(_("In the time since you started editing this page, another user has saved a new version of it.  Your changes can not be saved, since doing so would overwrite the other author's changes.")),
-                    HTML::p(_("In order to recover from this situation, follow these steps:")),
-                    $steps,
-                    HTML::p(_("Sorry for the inconvenience.")));
+                    HTML::p(_("In the time since you started editing this page, another user has saved a new version of it.  Your changes can not be saved as they are, since doing so would overwrite the other author's changes.")),
+                    HTML::p(_("So, your changes and those of the other author have been combined.  The result is shown below")),
+					$message);
     }
 
 
@@ -245,7 +257,7 @@ class PageEditor
         $request = &$this->request;
 
         // wrap=virtual is not HTML4, but without it NS4 doesn't wrap long lines
-        $readonly = $this->canEdit() || $this->isConcurrentUpdate();
+        $readonly = $this->canEdit(); // || $this->isConcurrentUpdate();
 
         return HTML::textarea(array('class'    => 'wikiedit',
                                     'name'     => 'edit[content]',
@@ -296,7 +308,7 @@ class PageEditor
 
         $el['PREVIEW_B'] = Button('submit:edit[preview]', _("Preview"), 'wikiaction');
 
-        if (!$this->isConcurrentUpdate() && !$this->canEdit())
+//        if (!$this->isConcurrentUpdate() && !$this->canEdit())
             $el['SAVE_B'] = Button('submit:edit[save]', _("Save"), 'wikiaction');
 
         $el['IS_CURRENT'] = $this->version == $this->current->getVersion();
