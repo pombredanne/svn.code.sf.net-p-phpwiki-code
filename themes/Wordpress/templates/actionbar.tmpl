@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.1 2004-04-10 08:02:22 rurban Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.2 2004-05-27 17:55:38 rurban Exp $ -->
 <div id="actionbar">
 
 <?php
@@ -35,10 +35,9 @@
         $dbi = $request->getDbh();
         if ($dbi->isWikiPage($UserCalPageTitle)) {
           $UserCalPageTodayTitle = $UserCalPageTitle . SUBPAGE_SEPARATOR . strftime("%Y-%m-%d", time());
-          $UserCalPageTodayUrl = WikiURL($UserCalPageTodayTitle);
          ?>
          <li>
-         <?=$Sep?><?= WikiLink($UserCalPageTodayUrl, "button", _("Today")) ?>
+         <?=$Sep?><?= WikiLink($UserCalPageTodayTitle, "button", _("Today")) ?>
          </li>
        <?php } ?>
       <?php } ?>

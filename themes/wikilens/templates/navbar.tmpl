@@ -1,5 +1,5 @@
 <?php // -*-html-*-
-    rcs_id('$Id: navbar.tmpl,v 1.1 2004-03-30 02:40:07 rurban Exp $');
+    rcs_id('$Id: navbar.tmpl,v 1.2 2004-05-27 17:55:39 rurban Exp $');
 
     $s = $Theme->getButtonSeparator();
 ?>
@@ -26,7 +26,7 @@
      <?=$s?>
 <?php 
 $loader = new WikiPluginLoader();
-printXML($loader->expandPI("<"."?plugin RateIt ?".">",$request,$dbi->_markup));
+printXML($loader->expandPI("<"."?plugin RateIt ?".">", $request, $dbi->_markup));
 ?>
     <?php
       /* Today's calendar page for the user, if the Calender subpage is defined. */
@@ -34,9 +34,8 @@ printXML($loader->expandPI("<"."?plugin RateIt ?".">",$request,$dbi->_markup));
       $dbi = $request->getDbh();
       if ($dbi->isWikiPage($UserCalPageTitle)) {
         $UserCalPageTodayTitle = $UserCalPageTitle . SUBPAGE_SEPARATOR . strftime("%Y-%m-%d", time());
-        $UserCalPageTodayUrl = WikiURL($UserCalPageTodayTitle);
         ?>
-     <?=$s?><?= WikiLink($UserCalPageTodayUrl, "button", _("Today")) ?>
+     <?=$s?><?= WikiLink($UserCalPageTodayTitle, "button", _("Today")) ?>
       <?php } ?>
       <?php if (!empty($user) && $user->isAdmin()) { ?>
      <?=$s?><?= WikiLink(_("PhpWikiAdministration"), "button", _("Admin")) ?>
