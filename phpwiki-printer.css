@@ -1,0 +1,110 @@
+/**
+ * PhpWiki style sheet for the printed page:
+ * Black on white only, with no toolbar commands and no link icons.
+ * Styles are kept to a minimum, so the printed page will otherwise
+ * appear according to your browser's default font settings.
+ */
+body {
+        margin :     .5in;
+        color :      black;
+        background : white; 
+}
+
+/**
+ * Render links with black text and no underlines for readability on b&w
+ * printers which try to render colors as greys. (Greyscale text is often
+ * difficult to read on older 300dpi lasers.)
+ */
+A {
+        color :           black;
+        text-decoration : none;
+}
+
+/**
+ * Override the above to keep underlines for WikiLinks and generic urls,
+ * they are useful indicators on the printed page.
+ * (most browsers underline links by default anyway but this overrides
+ * any user-defined default style sheets.)
+ */
+.wiki {
+        text-decoration : underline;
+        font-weight :     bold;
+}
+
+.rawurl {
+        text-decoration : underline;
+}
+
+/* Some browsers don't understand visibility settings, so we use white text
+ * on white in addition to hidden.
+ */
+
+/* hide the toolbar */
+.toolbar {
+        visibility : hidden;
+        color :      white;
+        background : white;
+}
+
+/**
+ * Hide wiki links in the toolbar for browsers which ignore visibility
+ * and don't honour the inheritance of the above .toolbar style. 
+ */
+.toolbar .wiki {
+        visibility : hidden;
+        color :      white;
+        background : white;
+}
+
+/* Hide wikiaction links in the toolbar */
+.toolbar .wikiaction {
+        visibility : hidden;
+        color :      white;
+        background : white;
+}
+
+/* Hide (diff) links on recent changes */
+A.wikiaction {
+        visibility : hidden;
+        color :      white;
+        /**
+         * This hack works in Mozilla to reduce the extra white space
+         * which results from hiding (diff). Browsers which allow a minimum
+         * font size as a user preference will not honour it.
+         */
+        font-size :  1pt;
+}
+
+/**
+ * Hide image borders for older browsers--newer broswers default to a zero
+ * border around images anyway.
+ */
+img {
+        border : none;
+}
+
+/* Hide other non-essential page elements from the printer. */
+.linkicon {
+        /**
+         * Some browsers ignore this completely: OmniWeb 4.1
+         * also shrink down the image to nothing so the text flows around it.
+         */
+        visibility : hidden;
+        width :  0;
+        height : 0;
+}
+
+/* Hide the rss icon from the printed page (perhaps this should be left in? */
+.rssicon {
+        visibility : hidden;
+        width :      0;
+        height :     0;
+}
+
+/**
+ * One last-ditch effort to hide the search field, if the browser still won't
+ * hide it then it's just going to have to show up on the printed page.
+ */
+form {
+        visibility : hidden;
+}
