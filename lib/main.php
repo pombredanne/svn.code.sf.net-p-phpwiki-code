@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.117 2004-02-24 17:19:37 rurban Exp $');
+rcs_id('$Id: main.php,v 1.118 2004-02-26 01:32:03 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -8,9 +8,9 @@ require_once("lib/stdlib.php");
 require_once('lib/Request.php');
 require_once('lib/WikiDB.php');
 if (ENABLE_USER_NEW)
-  require_once("lib/WikiUserNew.php");
+    require_once("lib/WikiUserNew.php");
 else
-  require_once("lib/WikiUser.php");
+    require_once("lib/WikiUser.php");
 require_once("lib/WikiGroup.php");
 require_once("lib/PagePerm.php");
 
@@ -19,13 +19,14 @@ class WikiRequest extends Request {
 
     function WikiRequest () {
         $this->_dbi = WikiDB::open($GLOBALS['DBParams']);
-
+        // does pear reset the error mask to 1?
         if (USE_DB_SESSION) {
             include_once('lib/DB_Session.php');
             $prefix = isset($GLOBALS['DBParams']['prefix']) ? $GLOBALS['DBParams']['prefix'] : '';
             $this->_dbsession = & new DB_Session($this->getDbh(),
                                                  $prefix . $GLOBALS['DBParams']['db_session_table']);
         }
+        $x = error_reporting();
         
         $this->Request();
 
@@ -53,7 +54,6 @@ class WikiRequest extends Request {
                 $this->_prefs = $this->_user->_prefs;
             }
         } else {
-            // no upgrade from session
             $this->_user = new WikiUser($this, $this->_deduceUsername());
             $this->_prefs = $this->_user->getPreferences();
         }
@@ -206,15 +206,7 @@ class WikiRequest extends Request {
         // Ignore password unless POST'ed.
         if (!$this->isPost())
             unset($auth_args['passwd']);
-/*
-        if (!empty($auth_args['logout'])) {
-            if (ENABLE_USER_NEW)
-                $this->_setUser();
-            else
-                $this->_setUser(new WikiUser($this->request()));
-            return;
-        }
-*/
+
         $olduser = $this->_user;
         $user = $this->_user->AuthCheck($auth_args);
         if (isa($user,WikiUserClassname())) {
@@ -569,7 +561,7 @@ class WikiRequest extends Request {
         if ($user = $this->getSessionVar('wiki_user')) {
             $this->_user = $user;
             $this->_user->_authhow = 'session';
-            return $user->UserName();
+            return ENABLE_USER_NEW ? $user->UserName() : $this->_user;
         }
         if ($userid = $this->getCookieVar('WIKI_ID')) {
             if (!empty($this->_user))
@@ -800,7 +792,7 @@ function validateSessionPath() {
 
 function main () {
     if (!USE_DB_SESSION)
-      validateSessionPath();
+        validateSessionPath();
 
     global $request;
 
@@ -862,15 +854,19 @@ if(defined('WIKI_XMLRPC')) return;
    
     $request->handleAction();
 
-if (defined('DEBUG') and DEBUG>1) phpinfo(INFO_VARIABLES);
+if (defined('DEBUG') and DEBUG & 4) phpinfo(INFO_VARIABLES);
     $request->finish();
 }
 
-
+$x = error_reporting(); // why is it 1 here? should be E_ALL
+error_reporting(E_ALL);
 main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.117  2004/02/24 17:19:37  rurban
+// debugging helpers only
+//
 // Revision 1.116  2004/02/24 15:17:14  rurban
 // improved auth errors with individual pages. the fact that you may not browse a certain admin page does not conclude that you may not browse the whole wiki. renamed browse => view
 //

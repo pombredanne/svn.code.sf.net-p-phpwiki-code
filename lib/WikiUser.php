@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.49 2004-02-15 21:34:37 rurban Exp $');
+rcs_id('$Id: WikiUser.php,v 1.50 2004-02-26 01:32:03 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -179,9 +179,7 @@ class WikiUser {
             return _("Insufficient permissions.");
 
         // Successful login.
-        $user = new WikiUser($this->_request);
-        $user->_userid = $userid;
-        $user->_level = $authlevel;
+        $user = new WikiUser($this->_request,$userid,$authlevel);
         return $user;
     }
 
@@ -719,6 +717,15 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.49  2004/02/15 21:34:37  rurban
+// PageList enhanced and improved.
+// fixed new WikiAdmin... plugins
+// editpage, Theme with exp. htmlarea framework
+//   (htmlarea yet committed, this is really questionable)
+// WikiUser... code with better session handling for prefs
+// enhanced UserPreferences (again)
+// RecentChanges for show_deleted: how should pages be deleted then?
+//
 // Revision 1.48  2004/02/01 09:14:11  rurban
 // Started with Group_Ldap (not yet ready)
 // added new _AuthInfo plugin to help in auth problems (warning: may display passwords)
