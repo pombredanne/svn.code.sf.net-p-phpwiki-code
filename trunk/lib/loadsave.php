@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.110 2004-06-21 16:22:30 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.111 2004-06-21 16:38:55 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -45,9 +45,11 @@ function _dump_error_handler(&$error) {
 function StartLoadDump(&$request, $title, $html = '')
 {
     // FIXME: This is a hack
+    if ($html)
+        $html->pushContent('%BODY%');
     $tmpl = Template('html', array('TITLE' => $title,
                                    'HEADER' => $title,
-                                   'CONTENT' => '%BODY%'));
+                                   'CONTENT' => $html ? $html : '%BODY%'));
     echo ereg_replace('%BODY%.*', '', $tmpl->getExpansion($html));
 
     /* Ignore fatals or warnings in any pagedumps (failing plugins). 
@@ -1039,6 +1041,16 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.110  2004/06/21 16:22:30  rurban
+ add DEFAULT_DUMP_DIR and HTML_DUMP_DIR constants, for easier cmdline dumps,
+ fixed dumping buttons locally (images/buttons/),
+ support pages arg for dumphtml,
+ optional directory arg for dumpserial + dumphtml,
+ fix a AllPages warning,
+ show dump warnings/errors on DEBUG,
+ don't warn just ignore on wikilens pagelist columns, if not loaded.
+ RateIt pagelist column is called "rating", not "ratingwidget" (Dan?)
+
  Revision 1.109  2004/06/17 11:31:05  rurban
  jump back to label after dump/upgrade
 
