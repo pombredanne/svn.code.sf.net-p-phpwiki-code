@@ -1,0 +1,49 @@
+* bullet
+* l1
+** l2
+** l2
+*** l3
+# one
+#two
+#three
+*****l5
+***l3
+*l1
+ preformatted text
+**    l2
+
+
+	* level 1
+	* l1
+		*l2
+		*l2
+			*l3
+			*l3
+				*l4
+			*l3
+					*l5
+			*l3
+	#one
+	#two
+		#one
+		#two
+	*l1
+		#three
+		#four
+	*l1
+		*l2
+		# one
+		# two
+
+ preformatted text
+ some more text
+
+	*l1
+				*l4
+	# number
+	# number
+this is a plain paragraph
+	* bullet
+this is a plain paragraph again
+	# number
+
