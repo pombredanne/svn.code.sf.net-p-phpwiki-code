@@ -56,9 +56,11 @@ Other possibilites:
 * [ Diff the SandBox | phpwiki:SandBox?action=diff ],
 * [ Lock the HomePage | phpwiki:HomePage?action=lock ],
 * [ Get a Full Zip Dump | phpwiki:?action=zip&include=all ],
-* [ Page titles containing 'wiki' | phpwiki:?action=search&searchterm=wiki ],
+* [ Page titles containing 'wiki' | phpwiki:TitleSearch?s=wiki ],
 
 !! Writing Magic Forms in Wiki Pages
+
+''__Note__: Magic forms are on their way out, I think.  They are being superceded by <''''?plugin-form>s.''
 
 If one of the ''query-args'' has a value like
   ''arg''__=__''opt-width''__(__''opt-dflt-val''__)__
@@ -72,15 +74,14 @@ will be omitted.
 
 Examples:
 
-  [[ Full Search | phpwiki:?action=search&searchtype=full&searchterm=() ] 
+  [[ Full Search | phpwiki:FullTextSearch?s=() ] 
 gives
-[ Full Search | phpwiki:?action=search&searchtype=full&searchterm=() ] 
+[ Full Search | phpwiki:FullTextSearch?s=() ] 
 
 While
-  [[ phpwiki:?action=search&searchterm=12() ]
+  [[ phpwiki:TitleSearch?s=12() ]
 yields
-[ phpwiki:?action=search&searchterm=12() ]
+[ phpwiki:TitleSearch?s=12() ]
 
 Other examples:
 [ Browse Page | phpwiki:?action=browse&pagename=() ]
-
