@@ -10,7 +10,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.25 2001-02-07 22:14:35 dairiki Exp $');
+   rcs_id('$Id: config.php,v 1.26 2001-02-08 10:29:44 ahollosi Exp $');
    // end essential internal stuff
 
 
@@ -171,6 +171,18 @@
    // (?<!..) & (?!...) used instead of '\b' because \b matches '_' as well
    $WikiNameRegexp = "(?<![A-Za-z0-9])([A-Z][a-z]+){2,}(?![A-Za-z0-9])";
 
+
+   // InterWiki linking -- wiki-style links to other wikis on the web
+   // Set InterWikiLinking to 1 if you would like to enable this feature
+   $InterWikiLinking = 0;
+
+   if ($InterWikiLinking) {
+      // Intermap file for InterWikiLinks -- define other wikis there
+      $interwikimap_file = "lib/interwiki.map";
+
+      include ('lib/interwiki.php');
+      // sets also $InterWikiLinkRegexp
+   }
 
 
    /////////////////////////////////////////////////////////////////////

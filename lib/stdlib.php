@@ -1,12 +1,13 @@
-<?php rcs_id('$Id: stdlib.php,v 1.24 2001-02-07 22:14:35 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.25 2001-02-08 10:29:44 ahollosi Exp $');
 
    /*
       Standard functions for Wiki functionality
          ExitWiki($errormsg)
-         LinkExistingWikiWord($wikiword) 
-         LinkUnknownWikiWord($wikiword) 
+         LinkExistingWikiWord($wikiword, $linktext) 
+         LinkUnknownWikiWord($wikiword, $linktext) 
          LinkURL($url, $linktext)
          LinkImage($url, $alt)
+         LinkInterWikiLink($link, $linktext)
          RenderQuickSearch($value)
          RenderFullSearch($value)
          RenderMostPopular()
@@ -75,6 +76,17 @@
       return "<img src=\"$url\" ALT=\"$alt\">";
    }
 
+   function LinkInterWikiLink($link, $linktext='') {
+      global $interwikimap;
+
+      list( $wiki, $page ) = split( ":", $link );
+      if(empty($linktext))
+         $linktext = htmlspecialchars($link);
+      $page = urlencode($page);
+      return "<a href=\"$interwikimap[$wiki]$page\">$linktext</a>";
+   }
+
+
    function ParseAdminTokens($line) {
       global $ScriptUrl;
       
@@ -130,6 +142,7 @@
 
    function ParseAndLink($bracketlink) {
       global $dbi, $ScriptUrl, $AllowedProtocols, $InlineImages;
+      global $InterWikiLinking, $InterWikiLinkRegexp;
 
       // $bracketlink will start and end with brackets; in between
       // will be either a page name, a URL or both separated by a pipe.
@@ -171,6 +184,10 @@
       } elseif (preg_match("#^\d+$#", $URL)) {
          $link['type'] = "footnote-$linktype";
 	 $link['link'] = $URL;
+      } elseif ($InterWikiLinking &&
+		preg_match("#^$InterWikiLinkRegexp:#", $URL)) {
+	 $link['type'] = "interwiki-$linktype";
+	 $link['link'] = LinkInterWikiLink($URL, $linkname);
       } else {
 	 $link['type'] = "wiki-unknown-$linktype";
          $link['link'] = LinkUnknownWikiWord($URL, $linkname);
