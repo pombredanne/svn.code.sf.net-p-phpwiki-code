@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.238 2005-03-04 16:29:14 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.239 2005-04-01 16:11:42 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -1701,7 +1701,7 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
     if (! $fields ) $fields = get_object_vars($obj);
     foreach ($fields as $key => $val) {
         if (is_array($exclude)) {
-            if (in_array($key,$exclude)) continue;
+            if (in_array($key, $exclude)) continue;
         }
         $a[$key] = $val;
     }
@@ -1969,6 +1969,10 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.238  2005/03/04 16:29:14  rurban
+// Fixed bug #994994 (escape / in glob)
+// Optimized glob_to_pcre within fileSet() matching.
+//
 // Revision 1.237  2005/02/12 17:22:18  rurban
 // locale update: missing . : fixed. unified strings
 // proper linebreaks
