@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-16 16:06+0100\n"
+"POT-Creation-Date: 2004-06-16 16:26+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -3488,11 +3488,11 @@ msgstr ""
 
 #: ../lib/plugin/WikiAdminChmod.php:194 ../lib/plugin/WikiAdminSetAcl.php:255
 msgid "Propagate new permissions to all subpages?"
-msgstr ""
+msgstr "Aktiviere Vererbung dieser Zugriffsrechte auf alle Unterseiten?"
 
 #: ../lib/plugin/WikiAdminChmod.php:196 ../lib/plugin/WikiAdminSetAcl.php:257
 msgid "(disable individual page permissions, enable inheritance)?"
-msgstr ""
+msgstr "(deaktiviere individuelle Zugriffsrechte, aktiviere Vererbung)"
 
 #: ../lib/plugin/WikiAdminRemove.php:40
 msgid "WikiAdminRemove"
@@ -3793,7 +3793,7 @@ msgstr "Vorgabe Zugriffsrecht"
 
 #: ../lib/plugin/WikiAdminSetAcl.php:228
 msgid "Type: "
-msgstr "Typ:"
+msgstr "Typ: "
 
 #: ../lib/plugin/WikiAdminSetAcl.php:229
 msgid "getfacl: "
@@ -3810,7 +3810,9 @@ msgstr "Beschreibung: "
 #: ../lib/plugin/WikiAdminSetAcl.php:233
 msgid ""
 "Selected Grant checkboxes allow access, unselected checkboxes deny access."
-msgstr "Gesetzte Erlaube Kästchen erlauben Zugriff, ungesetzte Kästchen sperren Zugriff."
+msgstr ""
+"Gesetzte Erlaube Kästchen erlauben Zugriff, ungesetzte Kästchen sperren "
+"Zugriff."
 
 #: ../lib/plugin/WikiAdminSetAcl.php:234
 msgid "To ignore delete the line."
@@ -4126,9 +4128,8 @@ msgid "FindPage"
 msgstr "SeiteFinden"
 
 #: ../lib/plugin/_WikiTranslation.php:65
-#, fuzzy
 msgid "FoafViewerPlugin"
-msgstr "KalenderPlugin"
+msgstr "FoafViewerPlugin"
 
 # (??? Frame=Rahmen; FrameInclude=InnenRahmenSeite; Seite mit
 # eingeschlossenem Rahmen)
@@ -4225,18 +4226,15 @@ msgstr ""
 msgid "PhpWikiAdministration/Chmod"
 msgstr "PhpWikiSystemverwalten/Chmod"
 
-# Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
-# must also be renamed to match what is here.
 #: ../lib/plugin/_WikiTranslation.php:90
-#, fuzzy
 msgid "PhpWikiAdministration/Chown"
-msgstr "PhpWikiSystemverwalten/Chmod"
+msgstr "PhpWikiSystemverwalten/Chown"
 
 # Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
 # must also be renamed to match what is here.
 #: ../lib/plugin/_WikiTranslation.php:93
 msgid "PhpWikiAdministration/Replace"
-msgstr "PhpWikiSystemverwalten/Ersetzen"
+msgstr "PhpWikiSystemverwalten/SuchenErsetzen"
 
 # Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
 # must also be renamed to match what is here.
