@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiUser.php,v 1.24 2002-09-12 20:56:29 rurban Exp $');
+<?php rcs_id('$Id: WikiUser.php,v 1.25 2002-09-18 18:35:24 dairiki Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -28,8 +28,8 @@ $UserPreferences = array(
                          'email'         => new _UserPreference(''),
                          'emailVerified' => new _UserPreference_bool(),
                          'notifyPages'   => new _UserPreference(''),
-                         'theme'         => new _UserPreference(THEME),
-                         'lang'          => new _UserPreference($LANG),
+                         'theme'         => new _UserPreference_theme(THEME),
+                         'lang'          => new _UserPreference_language(DEFAULT_LANGUAGE),
                          'editWidth'     => new _UserPreference_int(80, 30, 150),
                          'editHeight'    => new _UserPreference_int(22, 5, 80),
                          'timeOffset'    => new _UserPreference_numeric(0, -26, 26),
@@ -119,7 +119,6 @@ class WikiUser {
         return $this->_level >= $require_level;
     }
 
-    
     function AuthCheck ($postargs) {
         // Normalize args, and extract.
         $keys = array('userid', 'passwd', 'require_level', 'login', 'logout', 'cancel');
@@ -445,6 +444,9 @@ class _UserPreference
     function sanify ($value) {
         return (string) $value;
     }
+
+    function update ($value) {
+    }
 }
 
 class _UserPreference_numeric extends _UserPreference
@@ -502,6 +504,43 @@ class _UserPreference_bool extends _UserPreference
     }
 }
 
+
+class _UserPreference_language extends _UserPreference
+{
+    function _UserPreference_language ($default = 'en') {
+        $this->_UserPreference($default);
+    }
+
+    function sanify ($value) {
+        // FIXME: check for valid locale
+    }
+
+    function update ($newvalue) {
+        update_locale ($newvalue);
+    }
+}
+
+class _UserPreference_theme extends _UserPreference
+{
+    function _UserPreference_theme ($default = 'default') {
+        $this->_UserPreference($default);
+    }
+
+    function sanify ($value) {
+        if (file_exists($this->_themefile($value)))
+            return $value;
+        return $this->default;
+    }
+
+    function update ($newvalue) {
+        include($this->_themefile($value));
+    }
+
+    function _themefile ($theme) {
+        return "themes/$theme/themeinfo.php"; 
+    }
+}
+
 // don't save default preferences for efficiency.
 class UserPreferences {
     function UserPreferences ($saved_prefs = false) {
@@ -537,25 +576,19 @@ class UserPreferences {
     function set ($name, $value) {
         if (!($pref = $this->_getPref($name)))
             return false;
+
+        $newvalue = $pref->sanify($value);
+        $oldvalue = $this->get($name);
+
+        // update on changes
+        if ($newvalue != $oldvalue)
+            $pref->update($newvalue);
+        
 	// don't set default values to save space (in cookies, db and sesssion)
 	if ($value == $pref->default_value)
 	    unset($this->_prefs[$name]);
-	else {
-            // update on changes
-            $newvalue = $pref->sanify($value);
-            if (!empty($this->_prefs[$name]) and $this->_prefs[$name] != $newvalue) {
-                // check updates (theme, lang, ...)
-                switch ($name) {
-                case 'theme': 
-                    include_once("themes/$newvalue/themeinfo.php"); 
-                    break;
-                case 'lang':
-                    update_locale ($newvalue);
-                    break;
-                }
-            }
-            $this->_prefs[$name] = $pref->sanify($value);
-        }
+	else
+            $this->_prefs[$name] = $newvalue;
     }
 }
 
