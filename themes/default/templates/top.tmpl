@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: top.tmpl,v 1.22 2003-02-15 02:50:12 dairiki Exp $ -->
+<!-- $Id: top.tmpl,v 1.23 2003-02-15 23:32:57 dairiki Exp $ -->
 <div id="navbar" class="toolbar">
 <?php
 global $HIDE_TOOLBARS;
@@ -16,7 +16,11 @@ if (!$HIDE_TOOLBARS) {
 <?= Template('navbar') ?>
 <?php } ?>
 <!-- Page title -->
-<h1><?= $HEADER ?></h1>
+<h1><?= $HEADER ?>
+  <?php if ($REDIRECT_FROM) { ?>
+    <span class="redirectfrom">(<?=$REDIRECT_FROM?>)</span>
+  <?php } ?>
+</h1>
 </div>
 <?php if ($request->getArg('frame')) { ?>
 <!-- The included frame url for safety -->
