@@ -1,4 +1,4 @@
-<!-- $Id: wiki_pgsql.php3,v 1.14 2000-08-10 04:49:59 wainstead Exp $ -->
+<!-- $Id: wiki_pgsql.php3,v 1.15 2000-08-15 02:54:04 wainstead Exp $ -->
 <?
 
    /*
@@ -6,8 +6,9 @@
 
       OpenDataBase($table)
       CloseDataBase($dbi)
-      RetrievePage($dbi, $pagename)
+      RetrievePage($dbi, $pagename, $pagestore)
       InsertPage($dbi, $pagename, $pagehash)
+      SaveCopyToArchive($dbi, $pagename, $pagehash) 
       IsWikiPage($dbi, $pagename)
       InitTitleSearch($dbi, $search)
       TitleSearchNextMatch($dbi, $res)
@@ -23,9 +24,9 @@
    // open a database and return a hash
 
    function OpenDataBase($table) {
-      global $WikiPageStore, $pg_dbhost, $pg_dbport;
+      global $WikiDataBase, $pg_dbhost, $pg_dbport;
 
-      $connectstring = "host=$pg_dbhost port=$pg_dbport dbname=$WikiPageStore";
+      $connectstring = "host=$pg_dbhost port=$pg_dbport dbname=$WikiDataBase";
 
       if (!($dbc = pg_pconnect($connectstring))) {
          echo "Cannot establish connection to database, giving up.";
@@ -34,7 +35,7 @@
 
       $dbi['dbc'] = $dbc;
       $dbi['table'] = $table;
-//      echo "<p>dbi after open: '$dbi' '$dbi[table]' '$dbi[dbc]'<p>\n";
+      // echo "<p>dbi after open: '$dbi' '$dbi[table]' '$dbi[dbc]'<p>\n";
       return $dbi;
    }
 
@@ -45,10 +46,10 @@
 
 
    // Return hash of page + attributes or default
-   function RetrievePage($dbi, $pagename) {
+   function RetrievePage($dbi, $pagename, $pagestore) {
       $pagename = addslashes($pagename);
-      $query = "select * from $dbi[table] where pagename='$pagename'";
-
+      $query = "select * from $pagestore where pagename='$pagename'";
+      // echo "<p>$query<p>";
       $res = pg_exec($dbi['dbc'], $query);
 
       if (pg_numrows($res)) {
@@ -123,7 +124,7 @@
          $query = "INSERT INTO $dbi[table] ($COLUMNS) VALUES($VALUES)";
       }
 
-//      echo "<p>Query: $query<p>\n";
+      // echo "<p>Query: $query<p>\n";
       $retval = pg_exec($dbi['dbc'], $query);
       if ($retval == false) 
          echo "Insert/update failed: " . pg_errormessage($dbi['dbc']);
@@ -131,10 +132,74 @@
    }
 
 
+   function SaveCopyToArchive($dbi, $pagename, $pagehash) {
+      global $ArchivePageStore;
+      // echo "<p>save copy called<p>";
+
+      $pagename = addslashes($pagename);
+      // echo "<p>dbi in SaveCopyToArchive: '$dbi' '$ArchivePageStore' '$dbi[dbc]'<p>";
+
+      // prepare the content for storage
+      if (!isset($pagehash["pagename"]))
+         $pagehash["pagename"] = $pagename;
+      if (!isset($pagehash["flags"]))
+         $pagehash["flags"] = 0;
+      $pagehash["author"] = addslashes($pagehash["author"]);
+      $pagehash["content"] = implode("\n", $pagehash["content"]);
+      $pagehash["content"] = addslashes($pagehash["content"]);
+      $pagehash["pagename"] = addslashes($pagehash["pagename"]);
+      $pagehash["refs"] = serialize($pagehash["refs"]);
+
+      if (IsInArchive($dbi, $pagename)) {
+
+         $PAIRS = "author='$pagehash[author]'," .
+                  "content='$pagehash[content]'," .
+                  "created=$pagehash[created]," .
+                  "flags=$pagehash[flags]," .
+                  "lastmodified=$pagehash[lastmodified]," .
+                  "pagename='$pagehash[pagename]'," .
+                  "refs='$pagehash[refs]'," .
+                  "version=$pagehash[version]";
+
+         $query = "UPDATE $ArchivePageStore SET $PAIRS WHERE pagename='$pagename'";
+
+      } else {
+         // do an insert
+         // build up the column names and values for the query
+
+         $COLUMNS = "author, content, created, flags, " .
+                    "lastmodified, pagename, refs, version";
+
+         $VALUES =  "'$pagehash[author]', '$pagehash[content]', " .
+                    "$pagehash[created], $pagehash[flags], " .
+                    "$pagehash[lastmodified], '$pagehash[pagename]', " .
+                    "'$pagehash[refs]', $pagehash[version]";
+
+
+         $query = "INSERT INTO $ArchivePageStore ($COLUMNS) VALUES($VALUES)";
+      }
+
+      // echo "<p>Query: $query<p>\n";
+      $retval = pg_exec($dbi['dbc'], $query);
+      if ($retval == false) 
+         echo "Insert/update failed: " . pg_errormessage($dbi['dbc']);
+
+
+   }
+
 
    function IsWikiPage($dbi, $pagename) {
       $pagename = addslashes($pagename);
-      $query = "select count(*) from $dbi[table] where pagename='$pagename'";
+      $query = "select count(*) from wiki where pagename='$pagename'";
+      $res = pg_exec($query);
+      $array = pg_fetch_array($res, 0);
+      return $array[0];
+   }
+
+
+   function IsInArchive($dbi, $pagename) {
+      $pagename = addslashes($pagename);
+      $query = "select count(*) from archive where pagename='$pagename'";
       $res = pg_exec($query);
       $array = pg_fetch_array($res, 0);
       return $array[0];
