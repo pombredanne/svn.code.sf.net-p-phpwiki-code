@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: LinkDatabase.php,v 1.2 2004-11-30 23:02:45 rurban Exp $');
+rcs_id('$Id: LinkDatabase.php,v 1.3 2004-11-30 23:44:00 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -24,13 +24,15 @@ require_once('lib/PageList.php');
 require_once('lib/WikiPluginCached.php');
 
 /**
- * To be used by WikiBrowser at http://touchgraph.sourceforge.net/
- *   (only via a static text file by ?format=text) or the 
- * Hypergraph applet should use format=xml
- *   http://hypergraph.sourceforge.net/
+ * - To be used by WikiBrowser at http://touchgraph.sourceforge.net/
+ * Only via a static text file yet. (format=text)
+ * - Or the Hypergraph applet (format=xml)
+ * http://hypergraph.sourceforge.net/
+ * So far also only for a static xml file, but I'll fix the applet and test 
+ * the RPC2 interface.
  *
- * Currently the meta-head tags disturb the java browser a bit. 
- * Maybe add theme without much header tags.
+ * TODO: Currently the meta-head tags disturb the touchgraph java browser a bit. 
+ * Maybe add a theme without much header tags.
  */
 class WikiPlugin_LinkDatabase
 extends WikiPluginCached
@@ -42,11 +44,11 @@ extends WikiPluginCached
         return PLUGIN_CACHED_HTML;
     }
     function getDescription () {
-        return _("List all pages with all links in text-format for some Java Visualization tools");
+        return _("List all pages with all links in various formats for some Java Visualization tools");
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
     function getExpire($dbi, $argarray, $request) {
         return '+900'; // 15 minutes
@@ -74,27 +76,32 @@ extends WikiPluginCached
         $caption = _("All pages with all links in this wiki (%d total):");
         
         if ( !empty($args['owner']) ) {
-            $pages = PageList::allPagesByOwner($args['owner'],$args['include_empty'],$args['sortby'],$args['limit']);
+            $pages = PageList::allPagesByOwner($args['owner'],$args['include_empty'],
+                                               $args['sortby'],$args['limit']);
             if ($args['owner'])
                 $caption = fmt("List of pages owned by [%s] (%d total):", 
                                WikiLink($args['owner'], 'if_known'),
                                count($pages));
         } elseif ( !empty($args['author']) ) {
-            $pages = PageList::allPagesByAuthor($args['author'],$args['include_empty'],$args['sortby'],$args['limit']);
+            $pages = PageList::allPagesByAuthor($args['author'],$args['include_empty'],
+                                                $args['sortby'],$args['limit']);
             if ($args['author'])
                 $caption = fmt("List of pages last edited by [%s] (%d total):", 
                                WikiLink($args['author'], 'if_known'), 
                                count($pages));
         } elseif ( !empty($args['creator']) ) {
-            $pages = PageList::allPagesByCreator($args['creator'],$args['include_empty'],$args['sortby'],$args['limit']);
+            $pages = PageList::allPagesByCreator($args['creator'],$args['include_empty'],
+                                                 $args['sortby'],$args['limit']);
             if ($args['creator'])
                 $caption = fmt("List of pages created by [%s] (%d total):", 
                                WikiLink($args['creator'], 'if_known'), 
                                count($pages));
         } else {
-            if (! $request->getArg('count'))  $args['count'] = $dbi->numPages($args['include_empty'], $args['exclude_from']);
+            if (! $request->getArg('count'))  
+                $args['count'] = $dbi->numPages($args['include_empty'], $args['exclude_from']);
             else $args['count'] = $request->getArg('count');
-            $pages = $dbi->getAllPages($args['include_empty'], $args['sortby'], $args['limit'], $args['exclude_from']);
+            $pages = $dbi->getAllPages($args['include_empty'], $args['sortby'], 
+                                       $args['limit'], $args['exclude_from']);
         }
         if ($args['format'] == 'html') {
             $args['types']['links'] = 
@@ -110,7 +117,8 @@ extends WikiPluginCached
             $request->checkValidators();
             while ($page = $pages->next()) {
                 echo $page->getName();
-                $links = $page->getPageLinks(false, $args['sortby'], $args['limit'], $args['exclude']);
+                $links = $page->getPageLinks(false, $args['sortby'], $args['limit'], 
+                                             $args['exclude']);
                 while ($link = $links->next()) {
                     echo " ", $link->getName();
                 }
@@ -119,7 +127,7 @@ extends WikiPluginCached
             flush();
             $request->finish();
         } elseif ($args['format'] == 'xml') {
-            // for hypergraph.jar. best dump it to a sitemap.xml
+            // For hypergraph.jar. Best dump it to a local sitemap.xml periodically
             global $WikiTheme, $charset;
             $currpage = $request->getArg('pagename');
             $request->discardOutput();
@@ -128,6 +136,7 @@ extends WikiPluginCached
                 header("Content-Type: text/xml");
             $request->checkValidators();
             echo "<?xml version=\"1.0\" encoding=\"$charset\"?>\n";
+            // As applet it prefers only "GraphXML.dtd", but then we must copy it to the webroot.
             $dtd = SERVER_URL . $WikiTheme->_findData("GraphXML.dtd");
 	    echo "<!DOCTYPE GraphXML SYSTEM \"$dtd\">\n";
 	    echo "<GraphXML xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n";
@@ -169,6 +178,9 @@ class _PageList_Column_LinkDatabase_links extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/11/30 23:02:45  rurban
+// format=xml for hypergraph.sf.net applet
+//
 // Revision 1.1  2004/11/30 21:02:16  rurban
 // A simple plugin for WikiBrowser at http://touchgraph.sourceforge.net/
 // List all pages with all links as text file (with some caching tricks).
