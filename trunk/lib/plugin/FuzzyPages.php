@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FuzzyPages.php,v 1.8 2002-08-20 18:26:12 rurban Exp $');
+rcs_id('$Id: FuzzyPages.php,v 1.9 2003-01-18 21:41:02 carstenklapp Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -19,7 +19,6 @@ rcs_id('$Id: FuzzyPages.php,v 1.8 2002-08-20 18:26:12 rurban Exp $');
  along with PhpWiki; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
 
 //require_once('lib/PageList.php');
 
@@ -42,7 +41,13 @@ extends WikiPlugin
     }
 
     function getDescription() {
-        return sprintf(_("List FuzzyPages for %s"), '[pagename]');
+        return sprintf(_("Search for page titles similar to %s."),
+                       '[pagename]');
+    }
+
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
@@ -89,8 +94,6 @@ extends WikiPlugin
     function sortCollectedPages(&$list) {
         array_multisort(&$list, SORT_NUMERIC, SORT_DESC);
     }
-
-
 
     function addTableCaption(&$table, &$dbi) {
         if ($dbi->isWikiPage($this->_searchterm))
@@ -182,6 +185,8 @@ extends WikiPlugin
                           HTML::td($debug_metaphone));
     }
 };
+
+// $Log: not supported by cvs2svn $
 
 // Local Variables:
 // mode: php
