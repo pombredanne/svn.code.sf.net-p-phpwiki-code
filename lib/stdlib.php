@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.98 2002-02-03 19:03:44 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.99 2002-02-03 22:12:34 carstenklapp Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -434,6 +434,13 @@ function PrefTimezoneOffset () {
     $offset_secs = $user_secs - $server_secs;
 
     return $offset_secs;
+}
+
+function istoday($time_secs) {
+    return date("Ymd", time()) == date("Ymd", $time_secs);
+}
+function isyesterday($time_secs) {
+    return date("Ymd", time()-60*60*24) == date("Ymd", $time_secs);
 }
 
 /**
