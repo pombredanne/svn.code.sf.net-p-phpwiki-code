@@ -1,0 +1,250 @@
+<?php // -*-php-*-
+rcs_id('$Id: PageHistory.php,v 1.1 2001-12-14 20:28:02 dairiki Exp $');
+/**
+ */
+require_once('lib/plugin/RecentChanges.php');
+
+class _PageHistory_PageRevisionIter
+    extends WikiDB_PageRevisionIterator
+{
+    function _PageHistory_PageRevisionIter($rev_iter, $params) {
+
+        $this->_iter = $rev_iter;
+
+        extract($params);
+
+        if (isset($since))
+            $this->_since = $since;
+
+        $this->_include_major = empty($exclude_major_revisions);
+        if (! $this->_include_major)
+            $this->_include_minor = true;
+        else
+            $this->_include_minor = !empty($include_minor_revisions);
+        
+        if (empty($include_all_revisions))
+            $this->_limit = 1;
+        else if (isset($limit))
+            $this->_limit = $limit;
+    }
+
+    function next() {
+        if (!$this->_iter)
+            return false;
+        
+        if (isset($this->_limit)) {
+            if ($this->_limit <= 0) {
+                $this->free();
+                return false;
+            }
+            $this->_limit--;
+        }
+        
+        while ( ($rev = $this->_iter->next()) ) {
+            if (isset($this->_since) && $rev->get('mtime') < $this->_since) {
+                $this->free();
+                return false;
+            }
+            if ($rev->get('is_minor_edit') ? $this->_include_minor : $this->_include_major)
+                return $rev;
+        }
+        return false;
+    }
+
+    
+    function free() {
+        if ($this->_iter)
+            $this->_iter->free();
+        $this->_iter = false;
+    }
+}
+
+
+class _PageHistory_HtmlFormatter
+extends _RecentChanges_HtmlFormatter
+{
+    function include_versions_in_URLs() {
+        return true;
+    }
+
+    function title() {
+        return sprintf(_("PageHistory for %s"),
+                       LinkExistingWikiWord($this->_args['page']))
+            . "\n" . $this->rss_icon();
+    }
+
+    function _javascript($script) {
+        return Element('script', array('language' => 'JavaScript'),
+                       "<!-- //\n$script\n// -->");
+    }
+    
+    function description() {
+        // Doesn't work (PHP bug?): $desc = parent::description() . "\n";
+        $desc = _RecentChanges_HtmlFormatter::description() . "\n";
+
+        $desc .= $this->_javascript(sprintf('document.write("%s");',
+                                            _("Check any two boxes to compare revisions.")));
+        $button = Element('input', array('type' => 'submit',
+                                         'value' => _("compare revisions")));
+        $desc .= Element('noscript',
+                         sprintf(_("Check any two boxes then %s."), $button));
+
+        return $desc;
+    }
+    
+                         
+    function format ($changes) {
+        $this->_itemcount = 0;
+        
+        $pagename = $this->_args['page'];
+        
+        $html[] = _RecentChanges_HtmlFormatter::format($changes);
+
+        $html[] = Element('input', array('type' => 'hidden',
+                                         'name' => 'action',
+                                         'value' => 'diff'));
+        $html[] = Element('input', array('type' => 'hidden',
+                                         'name' => 'pagename',
+                                         'value' => $pagename));
+
+        $action = USE_PATH_INFO ? WikiURL($pagename) : SCRIPT_NAME;
+        return Element('form', array('method' => 'post',
+                                     'action' => $action,
+                                     'name' => 'diff-select'),
+                       join("\n", $html))
+            . "\n"
+            . $this->_javascript('
+        var diffCkBoxes = document.forms["diff-select"].elements["versions[]"];
+
+        function diffCkBox_onclick() {
+          // If two checkboxes are checked, submit form
+          var nchecked = 0;
+          for (i = 0; i < diffCkBoxes.length; i++)
+            if (diffCkBoxes[i].checked && ++nchecked >= 2)
+              this.form.submit();
+        }
+
+        for (i = 0; i < diffCkBoxes.length; i++)
+          diffCkBoxes[i].onclick = diffCkBox_onclick;');
+    }
+    
+    function diffLink ($rev) {
+        return Element('input', array('type' => 'checkbox',
+                                      'name' => 'versions[]',
+                                      'value' => $rev->getVersion()));
+    }
+
+    function pageLink ($rev) {
+        return QElement('a', array('href' => $this->pageURL($rev), 'class' => 'wiki'),
+                        sprintf(_("Version %d"), $rev->getVersion()));
+    }
+}
+
+
+class _PageHistory_RssFormatter
+extends _RecentChanges_RssFormatter
+{
+    function include_versions_in_URLs() {
+        return true;
+    }
+
+    function image_properties () {
+        return false;
+    }
+
+    function textinput_properties () {
+        return false;
+    }
+    
+    function channel_properties () {
+        global $request;
+
+        $rc_url = WikiURL($request->getArg('pagename'), false, 'absurl');
+
+        $title = sprintf("%s: %s",
+                         WIKI_NAME,
+                         split_pagename($this->_args['page']));
+        
+        return array('title' => $title,
+                     'dc:description' => _("History of changes."),
+                     'link' => $rc_url,
+                     'dc:date' => Iso8601DateTime(time()));
+    }
+    
+
+    function item_properties ($rev) {
+        if (!($title = $this->summary($rev)))
+            $title = sprintf(_("Version %d"), $rev->getVersion());
+        
+        return array( 'title'		=> $title,
+                      'link'		=> $this->pageURL($rev),
+                      'dc:date'		=> $this->time($rev),
+                      'dc:contributor'	=> $rev->get('author'),
+                      'wiki:version'	=> $rev->getVersion(),
+                      'wiki:importance' => $this->importance($rev),
+                      'wiki:status'	=> $this->status($rev),
+                      'wiki:diff'	=> $this->diffURL($rev),
+                      );
+    }
+}
+
+class WikiPlugin_PageHistory
+extends WikiPlugin_RecentChanges
+{
+    var $name = 'PageHistory';
+    
+    function getDefaultArguments() {
+        return array('days'		=> false,
+                     'show_minor'	=> true,
+                     'show_major'	=> true,
+                     'limit'		=> false,
+                     'page'		=> false,
+                     'format'		=> false);
+    }
+
+    function getDefaultFormArguments() {
+        $dflts = WikiPlugin_RecentChanges::getDefaultFormArguments();
+        $dflts['textinput'] = 'page';
+        return $dflts;
+    }
+
+    function getMostRecentParams ($args) {
+        $params = WikiPlugin_RecentChanges::getMostRecentParams($args);
+        $params['include_all_revisions'] = true;
+        return $params;
+    }
+
+    function getChanges ($dbi, $args) {
+        $page = $dbi->getPage($args['page']);
+        $iter = $page->getAllRevisions();
+        $params = $this->getMostRecentParams($args);
+        return new _PageHistory_PageRevisionIter($iter, $params);
+    }
+
+    function format ($changes, $args) {
+        if ($args['format'] == 'rss')
+            $fmt = new _PageHistory_RssFormatter($args);
+        else
+            $fmt = new _PageHistory_HtmlFormatter($args);
+        return $fmt->format($changes);
+    }
+
+    function run ($dbi, $argstr, $request) {
+        $args = $this->getArgs($argstr, $request);
+        if (empty($args['page']))
+            return $this->makeForm("", $request);
+        // Hack alert: format() is a NORETURN for rss formatters.
+        return $this->format($this->getChanges($dbi, $args), $args);
+    }
+};
+
+
+// (c-file-style: "gnu")
+// Local Variables:
+// mode: php
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
+// End:   
+?>

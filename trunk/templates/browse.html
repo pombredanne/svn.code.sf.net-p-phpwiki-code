@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- phpwiki source:
-$Id: browse.html,v 1.26 2001-12-12 16:58:57 dairiki Exp $
+$Id: browse.html,v 1.27 2001-12-14 20:28:02 dairiki Exp $
 ${RCS_IDS}
 -->
 <meta name="keywords" content="${SPLIT_PAGE}, ${WIKI_NAME}" />
@@ -85,7 +85,7 @@ ${RCS_IDS}
       <?php } ?>
       | <a class="wikiadmin" href="${ACTION}remove">$_("Remove page")</a>
     <?php } ?>
-    | <a class="wikiaction" href="${ACTION}info">$_("History")</a>
+    | <?plugin-link PageHistory page="[pagename]" description=_("List PageHistory for [pagename]")?>
     <?php if ($IS_CURRENT) { ?>
       | <a class="wikiaction" href="${ACTION}diff&amp;previous=major">$_("Diff")</a>
     <?php } else { ?>

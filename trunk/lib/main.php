@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.19 2001-12-07 22:13:51 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.20 2001-12-14 20:28:02 dairiki Exp $');
 
 include "lib/config.php";
 include "lib/stdlib.php";
@@ -131,10 +131,6 @@ function main ($request) {
         $request->compress_output();
         include "lib/savepage.php";
         savePage($dbi, $request);
-        break;
-    case 'info':
-        $request->compress_output();
-        include "lib/pageinfo.php";
         break;
     case 'diff':
         $request->compress_output();
