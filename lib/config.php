@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.127 2004-12-26 17:15:32 rurban Exp $');
+rcs_id('$Id: config.php,v 1.128 2005-01-04 20:22:46 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -112,6 +112,74 @@ function isBrowserSafari($version = false) {
     return browserDetect('Safari/');
 }
 
+
+/**
+ * If $LANG is undefined:
+ * Smart client language detection, based on our supported languages
+ * HTTP_ACCEPT_LANGUAGE="de-at,en;q=0.5"
+ *   => "de"
+ * We should really check additionally if the i18n HomePage version is defined.
+ * So must defer this to the request loop.
+ */
+function guessing_lang ($languages=false) {
+    if (!$languages) {
+        // ignore possible "_territory" and codeset "ja.utf8"
+        require_once("lib/Theme.php");
+        $languages = listAvailableLanguages();
+        if (defined('DEFAULT_LANGUAGE') and in_array(DEFAULT_LANGUAGE, $languages))
+        {
+            // remove duplicates
+            if ($i = array_search(DEFAULT_LANGUAGE, $languages) !== false) {
+                array_splice($languages, $i, 1);
+            }
+            array_unshift($languages, DEFAULT_LANGUAGE);
+            $languages = locale_versions($languages);
+        }
+    }
+
+    if (isset($GLOBALS['request'])) // in fixup-dynamic-config there's no request yet
+        $accept = $GLOBALS['request']->get('HTTP_ACCEPT_LANGUAGE');
+
+    if ($accept) {
+        $lang_list = array();
+        $list = explode(",", $accept);
+        for ($i=0; $i<count($list); $i++) {
+            $pos = strchr($list[$i], ";") ;
+            if ($pos === false) {
+                // No Q it is only a locale...
+                $lang_list[] = array($list[$i] => 100);
+            } else {
+                // Has a Q rating        
+                $q = explode(";",$list[$i]) ;
+                $loc = $q[0] ;
+                $q = explode("=",$q[1]) ;
+                $lang_list[] = array($loc => ($q[1]*100)) ;
+            }
+        }
+
+        // sort by q desc
+        arsort($lang_list);
+
+        // compare with languages, ignoring sublang and charset
+        foreach ($lang_list as $lang => $q) {
+            if (in_array($lang, $languages))
+                return $lang;
+            // de_DE.iso8859-1@euro => de_DE.iso8859-1, de_DE, de
+            // de-DE => de-DE, de
+            foreach (array('@', '.', '_') as $sep) {
+                if ( ($tail = strchr($lang, $sep)) ) {
+                    $lang_short = substr($lang, 0, -strlen($tail));
+                    if (in_array($lang_short, $languages))
+                        return $lang_short;
+                }
+            }
+            if ($pos = strchr($lang, "-") and in_array(substr($lang, 0, $pos), $languages))
+                return substr($lang, 0, $pos);
+        }
+    }
+    return $languages[0];
+}
+
 /**
  * Smart setlocale().
  *
@@ -175,13 +243,13 @@ function guessing_setlocale ($category, $locale) {
         }
     }
     return false;
-
     // A standard locale name is typically of  the  form
     // language[_territory][.codeset][@modifier],  where  language is
     // an ISO 639 language code, territory is an ISO 3166 country code,
     // and codeset  is  a  character  set or encoding identifier like
     // ISO-8859-1 or UTF-8.
 }
+
 // [99ms]
 function update_locale($loc) {
     if (!$loc) {
@@ -200,7 +268,7 @@ function update_locale($loc) {
         $loc = $newlocale;
     }
     //if (substr($newlocale,0,2) == $loc) // don't update with C or failing setlocale
-    if (!isset($GLOBALS['LANG'])) $GLOBALS['LANG'] = $loc;
+    //if (!isset($GLOBALS['LANG'])) $GLOBALS['LANG'] = $loc;
     // Try to put new locale into environment (so any
     // programs we run will get the right locale.)
     //
@@ -438,6 +506,9 @@ function getUploadDataPath() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.127  2004/12/26 17:15:32  rurban
+// new reverse locale detection on DEFAULT_LANGUAGE="", ja default euc-jp again
+//
 // Revision 1.126  2004/12/20 16:05:00  rurban
 // gettext msg unification
 //
