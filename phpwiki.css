@@ -168,6 +168,16 @@ A.wikiadmin, .wikiadmin TABLE   { background-color: #fdd; }
 .wikiunsafe                     { background-color: #ccc; }
 
 /*
+ * No border on external link icons.
+ */
+img.linkicon {
+  border: none;
+  margin-right: 0.5ex;
+  margin-left: 0.25ex;
+  vertical-align: bottom;
+}
+   
+/*
  * Put a border around wikiaction forms:
  * This doesn't work for NS4.
  */

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.54 2001-12-06 18:29:15 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.55 2001-12-06 19:15:05 dairiki Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -101,54 +101,38 @@ function QElement($tag, $args = '', $content = '')
     }
 }
    
-   function LinkURL($url, $linktext='') {
-      // FIXME: Is this needed (or sufficient?)
-      if(ereg("[<>\"]", $url)) {
-          return Element('strong',
-                         QElement('u', array('class' => 'baduri'),
-                                  'BAD URL -- remove all of <, >, "')); //"
-      }
+function LinkURL($url, $linktext = '') {
+    // FIXME: Is this needed (or sufficient?)
+    if(ereg("[<>\"]", $url)) {
+        return Element('strong',
+                       QElement('u', array('class' => 'baduri'),
+                                _('BAD URL -- remove all of <, >, "'))); //"
+    }
 
-      if (empty($linktext)) {
-          $linktext = $url;
-          $class = 'rawurl';
-      }
-      else {
-          $class = 'namedurl';
-      }
+    $attr['href'] = $url;
 
-      if (!defined('USE_LINK_ICONS')) {
-          return QElement('a',
-                     array('href' => $url, 'class' => $class),
-                     $linktext);
-      } else {
-          //ideally the link image would be specified by a map file
-          //similar to the interwiki.map
-          $linkproto = substr($url, 0, strrpos($url, ":"));
-          switch($linkproto) {
-          case "mailto":
-              $linkimg = "/images/mailto.png";
-              break;
-          case "http":
-              $linkimg = "/images/http.png";
-              break;
-          case "https":
-              $linkimg = "/images/https.png";
-              break;
-          case "ftp":
-              $linkimg = "/images/ftp.png";
-              break;
-          default:
-              $linkimg = "/images/http.png";
-              break;
-          }
-      return Element('a',
-                     array('href' => $url, 'class' => $class),
-                     Element('img', array('src' => DATA_PATH . $linkimg,
-                                          'alt' => $linkproto))
-                     . $linktext);
-      }
-   }
+    if (empty($linktext)) {
+        $linktext = $url;
+        $attr['class'] = 'rawurl';
+    }
+    else {
+        $attr['class'] = 'namedurl';
+    }
+    $linktext = htmlspecialchars($linktext);
+      
+    $linkproto = substr($url, 0, strpos($url, ":"));
+    $ICONS = &$GLOBALS['URL_LINK_ICONS'];
+      
+    $linkimg = isset($ICONS[$linkproto]) ? $ICONS[$linkproto] : $ICONS['*'];
+    if (!empty($linkimg)) {
+        $imgtag = Element('img', array('src' => DataURL($linkimg),
+                                       'alt' => $linkproto,
+                                       'class' => 'linkicon'));
+        $linktext = $imgtag . $linktext;
+    }
+
+    return Element('a', $attr, $linktext);
+}
 
 function LinkWikiWord($wikiword, $linktext='') {
     global $dbi;
