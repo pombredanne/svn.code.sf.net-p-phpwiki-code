@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.68 2004-05-05 13:37:54 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.69 2004-05-06 13:56:40 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -166,7 +166,8 @@ function _determineAdminUserOrOtherUser($UserName) {
     if (!$UserName)
         return $GLOBALS['ForbiddenUser'];
 
-    if ($UserName == ADMIN_USER)
+    $group = &WikiGroup::getGroup($GLOBALS['request']);
+    if ($UserName == ADMIN_USER or $group->isMember(GROUP_ADMIN))
         return new _AdminUser($UserName);
     else
         return _determineBogoUserOrPassUser($UserName);
@@ -2570,6 +2571,7 @@ class UserPreferences
     	    $name = 'email';
         if (!isset($this->_prefs[$name])) {
             if ($name == 'passwd2') return false;
+            if ($name == 'passwd') return false;
             trigger_error("$name: unknown preference", E_USER_NOTICE);
             return false;
         }
@@ -2832,6 +2834,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.68  2004/05/05 13:37:54  rurban
+// Support to remove all UserPreferences
+//
 // Revision 1.66  2004/05/03 21:44:24  rurban
 // fixed sf,net bug #947264: LDAP options are constants, not strings!
 //
