@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: VisualWiki.php,v 1.11 2004-09-06 10:10:27 rurban Exp $');
+rcs_id('$Id: VisualWiki.php,v 1.12 2004-09-06 12:08:50 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -85,7 +85,7 @@ extends WikiPluginCached
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     /**
@@ -102,8 +102,8 @@ extends WikiPluginCached
      */
     function defaultarguments() {
         return array('imgtype'        => 'png',
-                     'width'          => 5,
-                     'height'         => 7,
+                     'width'          => false, // was 5, scale it automatically
+                     'height'         => false, // was 7, scale it automatically
                      'colorby'        => 'age', // sort by 'age' or 'revtime'
                      'fillnodes'      => 'off',
                      'label'          => 'name',
@@ -115,7 +115,7 @@ extends WikiPluginCached
                      'neighbour_list' => '',
                      'exclude_list'   => '',
                      'include_list'   => '',
-                     'fontsize'       => 10,
+                     'fontsize'       => 9,
                      'debug'          => false,
                      'help'           => false );
     }
@@ -378,7 +378,10 @@ extends WikiPluginCached
             $name = $page->getName();
 
             // skip exluded pages
-            if (in_array($name, $exclude_list)) continue;
+            if (in_array($name, $exclude_list)) {
+            	$page->free();	
+                continue;
+            }
 
             // false = get links from actual page
             // true  = get links to actual page ("backlinks")
@@ -388,6 +391,7 @@ extends WikiPluginCached
             while ($blink = $backlinks->next()) {
                 array_push($bconnection, $blink->getName());
             }
+            $backlinks->free();
             unset($backlinks);
 
             // include all neighbours of pages listed in $NEIGHBOUR
@@ -398,6 +402,7 @@ extends WikiPluginCached
                     array_push($con, $link->getName());
                 }
                 $include_list = array_merge($include_list, $bconnection, $con);
+                $l->free();
                 unset($l);
                 unset($con);
             }
@@ -417,6 +422,7 @@ extends WikiPluginCached
 
             unset($page);
         }
+        $allpages->free();
         unset($allpages);
         $this->names = array_keys($pages);
 
@@ -495,8 +501,9 @@ extends WikiPluginCached
         $nametonumber = array_flip($names);
 
         $dot = "digraph VisualWiki {\n" // }
-             . (!empty($fontpath) ? "    fontpath=\"$fontpath\"\n" : "")
-             . "    size=\"$width,$height\";\n    ";
+            . (!empty($fontpath) ? "    fontpath=\"$fontpath\"\n" : "");
+        if ($width and $height)
+            $dot .= "    size=\"$width,$height\";\n    ";
 
         switch ($shape) {
         case 'point':
@@ -657,7 +664,7 @@ $tempfiles.map: ".(file_exists("$tempfiles.map") ? filesize("$tempfiles.map"):'m
         }
 
         // clean up tempfiles
-        if ($ok or !$argarray['debug'])
+        if ($ok and !$argarray['debug'])
         foreach (array('',".$gif",".map",".dot") as $ext) {
             if (file_exists($tempfiles.$ext))
                 unlink($tempfiles.$ext);
@@ -733,6 +740,9 @@ function interpolate($a, $b, $pos) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/09/06 10:10:27  rurban
+// fixed syntax error
+//
 // Revision 1.10  2004/06/19 10:06:38  rurban
 // Moved lib/plugincache-config.php to config/*.ini
 // use PLUGIN_CACHED_* constants instead of global $CacheParams

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.81 2004-09-06 08:28:00 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.82 2004-09-06 12:08:49 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -257,6 +257,11 @@ class WikiDB {
      *     in the WikiDB which have non-default contents.
      */
     function getAllPages($include_empty=false, $sortby=false, $limit=false) {
+        // HACK: memory_limit=8M will fail on too large pagesets. unix only!
+    	$mem = ini_get("memory_limit");
+    	if (ini_get("memory_limit") and !$limit and !isWindows()) {
+    	    $limit = 450;
+    	}
         $result = $this->_backend->get_all_pages($include_empty, $sortby, $limit);
         return new WikiDB_PageIterator($this, $result);
     }
@@ -1909,6 +1914,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.81  2004/09/06 08:28:00  rurban
+// rename genericQuery to genericSqlQuery
+//
 // Revision 1.80  2004/07/09 13:05:34  rurban
 // just aesthetics
 //
