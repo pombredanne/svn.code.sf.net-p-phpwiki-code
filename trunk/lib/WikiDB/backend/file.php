@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: file.php,v 1.1 2003-01-04 03:21:00 wainstead Exp $');
+rcs_id('$Id: file.php,v 1.2 2003-01-04 03:30:34 wainstead Exp $');
 
 /**
  * Backend for handling file storage. 
@@ -725,6 +725,7 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
     }
 }
 
+// $Log: not supported by cvs2svn $
 
 // For emacs users
 // Local Variables:
