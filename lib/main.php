@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.74 2002-09-09 15:26:12 rurban Exp $');
+rcs_id('$Id: main.php,v 1.75 2002-09-09 15:35:32 rurban Exp $');
 
 define ('DEBUG', 1);
 define ('USE_PREFS_IN_PAGE', true);
@@ -10,7 +10,8 @@ require_once('lib/Request.php');
 require_once("lib/WikiUser.php");
 require_once('lib/WikiDB.php');
 
-if (defined('USE_DB_SESSION') and $DBParams['dbtype']=='SQL' and $DBParams['db_session_table']) {
+if (defined('USE_DB_SESSION') and USE_DB_SESSION and 
+    $DBParams['dbtype']=='SQL' and $DBParams['db_session_table']) {
     require_once('lib/DB_Session.php');
 } else {
     define('USE_DB_SESSION','false');
