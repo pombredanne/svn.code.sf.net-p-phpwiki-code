@@ -1,0 +1,75 @@
+'''Paragraphs'''
+
+	* Don't Indent paragraphs
+
+	* Words wrap and fill as needed
+
+	* Use blank lines as separators
+
+	* Four or more minus signs make a horizontal rule
+
+
+
+'''Lists'''
+
+	* tab-* for first level
+
+		* tab-tab-* for second level, etc.
+
+	* Use * for bullet lists, 1. for numbered lists (mix at will)
+
+	* tab-Term:-tab Definition for definition lists
+
+	* One line for each item
+
+	* Other leading whitespace signals preformatted text, changes font.
+
+'''Fonts'''
+	* Indent with one or more spaces to use a monospace font:
+
+ This is in monospace
+This is not
+
+
+
+'''Indented Paragraphs'''
+''(Quotes)''
+
+	* tab-space-:-tab -- often used (with emphasis) for quotations.  (See SimulatingQuoteBlocks)
+
+
+
+'''Emphasis'''
+
+	* Use doubled single-quotes ('') for emphasis (usually italics)
+
+	* Use tripled single-quotes (''') for strong emphasis (usually bold)
+
+	* Use five single-quotes ('''''), or triples within doubles, for some other kind of emphasis (BoldItalicInWiki), but be careful about the bugs in the Wiki emphasis logic...
+
+	* Emphasis can be used multiple times within a line, but cannot cross line boundaries
+
+
+
+'''References'''
+
+	* JoinCapitalizedWords to make local references
+
+	* [1], [2], [3], [4] refer to remote references. Click EditLinks on the edit form to enter URLs
+
+	* Or precede URLs with "http:", "ftp:" or "mailto:" to create links automatically as in: http://c2.com/
+
+	* URLs ending with .gif are inlined ''if inserted as a remote reference'' 
+
+
+'''Mark-Up Language'''
+
+	* Don't bother
+
+	* < and > are themselves
+
+	* The & characters will not work
+
+	* If you really must use HTML, start each line with a bar (|). Note that this featured must be enabled by the system administrator.
+
+
