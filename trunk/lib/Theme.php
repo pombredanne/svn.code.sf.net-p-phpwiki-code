@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.122 2005-01-21 11:51:22 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.123 2005-01-25 07:03:02 rurban Exp $');
 /* Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1093,27 +1093,29 @@ class Theme {
     }
 
     var $_MoreAttr = array();
-    function addMoreAttr ($id, $element) {
+    // new arg: named elements to be able to remove them. such as DoubleClickEdit for htmldumps
+    function addMoreAttr ($tag, $name, $element) {
         // protect from duplicate attr (body jscript: themes, prefs, ...)
         static $_attr_cache = array();
-        $hash = md5($id."/".$element);
+        $hash = md5($tag."/".$element);
         if (!empty($_attr_cache[$hash])) return;
         $_attr_cache[$hash] = 1;
 
-        if (empty($this->_MoreAttr) or !is_array($this->_MoreAttr[$id]))
-            $this->_MoreAttr[$id] = array($element);
+        if (empty($this->_MoreAttr) or !is_array($this->_MoreAttr[$tag]))
+            $this->_MoreAttr[$tag] = array($name => $element);
         else
-            array_push($this->_MoreAttr[$id],$element);
+            $this->_MoreAttr[$tag][$name] = $element;
     }
-    function getMoreAttr ($id) {
-        if (empty($this->_MoreAttr[$id]))
+
+    function getMoreAttr ($tag) {
+        if (empty($this->_MoreAttr[$tag]))
             return '';
         $out = '';
-        foreach ($this->_MoreAttr[$id] as $h) {
-            if (is_object($h))
-                $out .= printXML($h);
+        foreach ($this->_MoreAttr[$tag] as $name => $element) {
+            if (is_object($element))
+                $out .= printXML($element);
             else
-                $out .= "$h";
+                $out .= "$element";
         }
         return $out;
     }
@@ -1151,7 +1153,8 @@ class Theme {
     // Usage: call $WikiTheme->initDoubleClickEdit() from theme init or 
     // define ENABLE_DOUBLECLICKEDIT
     function initDoubleClickEdit() {
-        $this->addMoreAttr('body', HTML::Raw(" ondblclick=\"url = document.URL; url2 = url; if (url.indexOf('?') != -1) url2 = url.slice(0, url.indexOf('?')); if ((url.indexOf('action') == -1) || (url.indexOf('action=browse') != -1)) document.location = url2 + '?action=edit';\""));
+        if (!$this->HTML_DUMP_SUFFIX)
+            $this->addMoreAttr('body', 'DoubleClickEdit', HTML::Raw(" ondblclick=\"url = document.URL; url2 = url; if (url.indexOf('?') != -1) url2 = url.slice(0, url.indexOf('?')); if ((url.indexOf('action') == -1) || (url.indexOf('action=browse') != -1)) document.location = url2 + '?action=edit';\""));
     }
 };
 
@@ -1398,6 +1401,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.122  2005/01/21 11:51:22  rurban
+// changed (c)
+//
 // Revision 1.121  2005/01/20 10:14:37  rurban
 // rel=nofollow on edit/create page links
 //
