@@ -1,22 +1,27 @@
-<?php echo "<?xml version='1.0' encoding='${CHARSET}'?>\n"; ?>
+<?php echo "<?xml version='1.0' encoding='$CHARSET'?>\n"; ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- phpwiki source:
-$Id: message.html,v 1.5 2002-01-12 06:46:44 carstenklapp Exp $
+$Id: message.html,v 1.6 2002-01-16 03:30:14 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <meta http-equiv="Content-Type" content="text/html; charset=${CHARSET}" />
 <meta name="robots" content="noindex,nofollow" />
 <base href="${BASE_URL}" />
-${CSS}
 <link rel="shortcut icon" href="favicon.ico" />
+${CSS}
 <title>${WIKI_NAME}: ${TITLE}</title>
 </head>
 <body background="themes/MacOSX/bgpaper8.png">
-<div>${LOGO}</div>
-<h1><?plugin-link BackLinks page="[pagename]" class="backlinks" linktext="${SPLIT_PAGE}" ?></h1>
+<div><a class="wikilink" 
+        href="${BROWSE}$_("HomePage")"
+        ><img src="${LOGO}"
+              border="0" alt="${WIKI_NAME}: $_("HomePage")" 
+              align="right" /></a></div>
+<h1>${TITLE}</h1>
 ${CONTENT}
+<?php echo $GLOBALS['ErrorManager']->getPostponedErrorsAsHTML(); ?>
 </body>
 </html>
