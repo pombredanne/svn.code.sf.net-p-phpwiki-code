@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.52 2002-02-15 05:43:14 carstenklapp Exp $
+ * $Id: phpwiki.css,v 1.53 2002-02-15 05:52:32 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up. It has not yet been tested against NS4.
@@ -75,8 +75,8 @@ div.wikitext pre { font-family: monospace; }
 /**
  * Wiki Forms
  */
-div.wikiaction, span.wikiaction { background-color: #ddd; }
-form.wikiadmin { background-color: #eee; }
+div.wikiaction, span.wikiaction { background-color: #eee; }
+form.wikiadmin { background-color: #fee; }
 
 
 /**
