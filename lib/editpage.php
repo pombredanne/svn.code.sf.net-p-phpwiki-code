@@ -1,4 +1,4 @@
-<!-- $Id: editpage.php,v 1.4 2000-10-20 11:42:52 ahollosi Exp $ -->
+<!-- $Id: editpage.php,v 1.5 2000-10-26 15:38:38 ahollosi Exp $ -->
 <?php
 
    // editpage relies on $pagename and $ScriptUrl
@@ -30,7 +30,7 @@
 	 $html = "<p>";
 	 $html .= gettext ("This page has been locked by the administrator and cannot be edited.");
 	 $html .= "\n<p>";
-	 $html .= gettext ("Sorry for the inconvinience.");
+	 $html .= gettext ("Sorry for the inconvenience.");
 	 $html .= "\n";
 	 GeneratePage('MESSAGE', $html, sprintf (gettext ("Problem while editing %s"), $pagename), 0);
 	 ExitWiki ("");

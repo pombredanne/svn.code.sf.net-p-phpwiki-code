@@ -30,9 +30,41 @@ for i in $ALL_LINGUAS; do
 	msgfmt -o $locale/phpwiki.mo $po
 
 	awk -- '
-	    BEGIN { print ("<?php") }
-	    /^msgid ""/ { getline; next }
-	    /^msgid "/  { msgid = substr ($0, 7); print ("$locale[" msgid "] ="); next }
-	    /^msgstr "/ { msgstr = substr ($0, 8); print ("   " msgstr ";"); next }
-	    END { print ("?>") }' $po > $locale/phpwiki.php
+BEGIN {
+  msgid=""; msgstr="";
+  print ("<?php\n");
+}
+/^msgid ""/ {
+  if (msgid && str)
+    print ("$locale[\"" msgid "\"] =\n   \"" str "\";");
+  str="";
+  next;
+}
+/^msgid "/ { #"{
+  if (msgid && str)
+    print ("$locale[\"" msgid "\"] =\n   \"" str "\";");
+  str = substr ($0, 8, length ($0) - 8);
+  msgstr="";
+}
+/^msgstr ""/ {
+  msgid=str;
+  str="";
+  next;
+}
+/^msgstr "/ { #"{
+  msgid=str;
+  str = substr ($0, 9, length ($0) - 9);
+  next;
+}
+/^"/ { #"{
+  str = (str substr ($0, 2, length ($0) - 2));
+  next;
+}
+END {
+  if (mgsid && str)
+    print ("$locale[\"" msgid "\"] =\n   \"" str "\";");
+  print ("\n;?>");
+}
+
+' $po > $locale/phpwiki.php
 done
