@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.17 2004-04-26 12:22:56 rurban Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.18 2004-04-26 20:01:21 rurban Exp $');
 
 require_once(dirname(__FILE__).'/stdlib.php');
 
@@ -24,7 +24,7 @@ class FileFinder
      */
     function FileFinder ($path = false) {
         $this->_pathsep = $this->_get_syspath_separator();
-        if (!$this->_path and $path === false)
+        if (!isset($this->_path) and $path === false)
             $path = $this->_get_include_path();
         $this->_path = $path;
     }
