@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.47 2001-12-02 01:59:23 joe_edelman Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.48 2001-12-02 02:52:37 joe_edelman Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -173,7 +173,7 @@ function LinkWikiWord($wikiword, $linktext='') {
                         QElement('u', array('class' => 'baduri'),
                                  'BAD URL -- remove all of <, >, "'));
       }
-      return Element('img', array('src' => $url, 'alt' => $alt, 'class' => 'wikiimage'));
+      return Element('img', array('src' => $url, 'alt' => $alt));
    }
 
    // converts spaces to tabs
