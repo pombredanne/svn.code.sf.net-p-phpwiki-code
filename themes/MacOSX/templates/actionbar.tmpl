@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.6 2002-01-22 03:17:47 dairiki Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.7 2002-01-22 17:21:12 dairiki Exp $ -->
 <?php
   $BF = &$ButtonFactory;
 
@@ -41,25 +41,30 @@
    <?=$s?><?= $DebugInfoB ?> <!-- For debugging only, really -->
   </td>
 
-  <form method="post" action="<?=$ACTION?>" accept-charset="<?=CHARSET?>" name="signin">
-      <input type="hidden" name="action" value="logout" />
-      <input type="hidden" name="pagename" value="HomePage" />
-
   <td align="right">
-   <?php if ($user->isSignedIn()) {
-      /* This extra table data is required to properly align an image
-       * button next to text. With text-only buttons, it would take up
-       * too much room on small screens to align text this way, so the
-       * default browse template is overridden for this theme.
-       */ ?>
-      <?=fmt("You are signed in as %s", LinkWikiWord($user->getId()))?>&nbsp;</td>
-      <td><?=$s?>
-      <!--input type="image" border="0" name="submit" src="themes/theme/MacOSX/buttons/en/SignOut.png" value="SignOut" /-->
-      <input type="submit" name="login[logout]" value="SignOut" />
-  </td>
+    <?php if ($user->isSignedIn()) { ?>
+      <form method="post" action="<?=$ACTION?>" accept-charset="<?=CHARSET?>" name="signin">
+        <input type="hidden" name="action" value="logout" />
+        <input type="hidden" name="pagename" value="HomePage" />
+        <!-- This extra table data is required to properly align an image
+          -- button next to text. With text-only buttons, it would take up
+          -- too much room on small screens to align text this way, so the
+          -- default browse template is overridden for this theme.
+          -->
+	<table cellspacing="0" cellpadding="0" border="0"><tr>
+        <td>
+          <?=fmt("You are signed in as %s", LinkWikiWord($user->getId()))?>&nbsp;
+        </td>
+        <td>
+          <?=$s?>
+          <!--input type="image" border="0" name="submit" 
+                    src="<?=$Theme->getButtonURL('SignOut')?>" value="SignOut" /-->
+          <input type="submit" name="login[logout]" value="SignOut" />
+        </td>
+        </tr></table>
+      </form>
     <?php } else { ?>
       <?= new WikiTemplate('signin') ?>
     <?php } ?>
   </td>
 </tr></table>
-</form>
