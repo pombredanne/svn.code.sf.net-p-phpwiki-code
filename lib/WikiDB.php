@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.26 2003-03-04 02:08:08 dairiki Exp $');
+rcs_id('$Id: WikiDB.php,v 1.27 2003-09-13 22:43:00 carstenklapp Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -859,7 +859,7 @@ class WikiDB_Page
         $data = $cache->get_pagedata($this->_pagename);
         $meta = array();
         foreach ($data as $key => $val) {
-            if (!empty($val) && $key[0] != '%')
+            if (/*!empty($val) &&*/ $key[0] != '%')
                 $meta[$key] = $val;
         }
         return $meta;
@@ -952,11 +952,13 @@ class WikiDB_Page
     }
 
     function isUserPage ($include_empty = true) {
+        if ($include_empty) {
+            $current = $this->getCurrentRevision();
+            if ($current->hasDefaultContents()) {
+                return false;
+            }
+        }
         return $this->get('pref') ? true : false;
-        if ($include_empty)
-            return true;
-        $current = $this->getCurrentRevision();
-        return ! $current->hasDefaultContents();
     }
 
 };

@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.149 2003-03-26 19:37:08 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.150 2003-09-13 22:43:00 carstenklapp Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -189,21 +189,24 @@ function IconForLink($protocol_or_url) {
  * @return XmlContent.
  */
 function PossiblyGlueIconToText($proto_or_url, $text) {
-    $icon = IconForLink($proto_or_url);
-    if ($icon) {
-        if (!is_object($text)) {
-            preg_match('/^\s*(\S*)(.*?)\s*$/', $text, $m);
-            list (, $first_word, $tail) = $m;
+    global $request;
+    if (! $request->getPref('noLinkIcons')) {
+        $icon = IconForLink($proto_or_url);
+        if ($icon) {
+            if (!is_object($text)) {
+                preg_match('/^\s*(\S*)(.*?)\s*$/', $text, $m);
+                list (, $first_word, $tail) = $m;
+            }
+            else {
+                $first_word = $text;
+                $tail = false;
+            }
+            
+            $text = HTML::span(array('style' => 'white-space: nowrap'),
+                               $icon, $first_word);
+            if ($tail)
+                $text = HTML($text, $tail);
         }
-        else {
-            $first_word = $text;
-            $tail = false;
-        }
-        
-        $text = HTML::span(array('style' => 'white-space: nowrap'),
-                           $icon, $first_word);
-        if ($tail)
-            $text = HTML($text, $tail);
     }
     return $text;
 }
@@ -1299,6 +1302,9 @@ class Alert {
                       
         
 // $Log: not supported by cvs2svn $
+// Revision 1.149  2003/03/26 19:37:08  dairiki
+// Fix "object to string conversion" bug with external image links.
+//
 // Revision 1.148  2003/03/25 21:03:02  dairiki
 // Cleanup debugging output.
 //
