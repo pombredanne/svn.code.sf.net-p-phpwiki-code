@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SystemInfo.php,v 1.7 2003-02-22 20:49:56 dairiki Exp $');
+rcs_id('$Id: SystemInfo.php,v 1.8 2003-02-24 01:36:26 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -58,7 +58,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getExpire($dbi, $argarray, $request) {
@@ -205,7 +205,7 @@ extends WikiPlugin
         $hits = array();
         $page_iter = $dbi->getAllPages(true);
         while ($page = $page_iter->next()) {
-            if ($current = $page->getCurrentRevision()
+            if (($current = $page->getCurrentRevision())
                 && (! $current->hasDefaultContents())) {
                 $h = $page->get('hits');
                 $hits[] = $h;
@@ -266,7 +266,7 @@ extends WikiPlugin
     // Todo: cache this costly operation!
     function discspace() {
         global $DBParams;
-        $dir = PHPWIKI_DIR;
+        $dir = defined('PHPWIKI_DIR') ? PHPWIKI_DIR : '.';
         $appsize = `du -s $dir | cut -f1`;
 
         if (in_array($DBParams['dbtype'], array('SQL', 'ADODB'))) {
@@ -310,7 +310,9 @@ extends WikiPlugin
     }
     function supported_languages () {
         $available_languages = array('en');
-        $dir_root = PHPWIKI_DIR . '/locale/';
+        $dir_root = 'locale/';
+        if (defined('PHPWIKI_DIR'))
+            $dir_root = PHPWIKI_DIR . '/$dir_root';
         $dir = dir($dir_root);
         if ($dir) {
             while($entry = $dir->read()) {
@@ -337,7 +339,9 @@ extends WikiPlugin
     function supported_themes () {
         global $Theme;
         $available_themes = array();
-        $dir_root = PHPWIKI_DIR . '/themes/';
+        $dir_root = 'themes/';
+        if (defined('PHPWIKI_DIR'))
+            $dir_root = PHPWIKI_DIR . '/$dir_root';
         $dir = dir($dir_root);
         if ($dir) {
             while($entry = $dir->read()) {
@@ -515,6 +519,9 @@ function stddev(&$hits, $total = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2003/02/22 20:49:56  dairiki
+// Fixes for "Call-time pass by reference has been deprecated" errors.
+//
 // Revision 1.6  2003/02/21 23:01:11  dairiki
 // Fixes to support new $basepage argument of WikiPlugin::run().
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PluginManager.php,v 1.6 2003-02-24 00:56:53 carstenklapp Exp $');
+rcs_id('$Id: PluginManager.php,v 1.7 2003-02-24 01:36:25 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
@@ -98,7 +98,10 @@ extends WikiPlugin
 
     function _generateTableBody(&$info, &$dbi, &$request, &$table) {
         $row_no = 0;
-        $pd = new fileSet(PHPWIKI_DIR . '/lib/plugin', '*.php');
+        $plugin_dir = 'lib/plugin';
+        if (defined('PHPWIKI_DIR'))
+            $plugin_dir = PHPWIKI_DIR . "/$plugin_dir";
+        $pd = new fileSet($plugin_dir, '*.php');
         $plugins = $pd->getFiles();
         // table body
         $tbody = HTML::tbody();
@@ -181,6 +184,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2003/02/24 00:56:53  carstenklapp
+// Updated to work with recent changes to WikiLink function (fix "==Object(wikipagename)==" for unknown wiki links).
+//
 // Revision 1.5  2003/02/22 20:49:56  dairiki
 // Fixes for "Call-time pass by reference has been deprecated" errors.
 //
