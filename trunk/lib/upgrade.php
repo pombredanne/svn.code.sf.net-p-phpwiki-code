@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.31 2004-12-10 02:45:26 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.32 2004-12-10 22:15:00 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -351,23 +351,8 @@ function CheckDatabaseUpdate(&$request) {
     global $DBParams, $DBAuthParams;
     if (!in_array($DBParams['dbtype'], array('SQL','ADODB'))) return;
     echo "<h3>",_("check for necessary database updates"),"</h3>\n";
-    if (defined('DBADMIN_USER') and DBADMIN_USER) {
-        // if need to connect as the root user, for alter permissions
-        $AdminParams = $DBParams;
-        if ($DBParams['dbtype'] == 'SQL')
-            $dsn = DB::parseDSN($AdminParams['dsn']);
-        else
-            $dsn = parseDSN($AdminParams['dsn']);
-        $AdminParams['dsn'] = sprintf("%s://%s:%s@%s/%s",
-                                      $dsn['phptype'],
-                                      DBADMIN_USER,
-                                      DBADMIN_PASSWD,
-                                      $dsn['hostspec'],
-                                      $dsn['database']);
-        $dbh = WikiDB::open($AdminParams);
-    } else {
-        $dbh = &$request->_dbi;
-    }
+
+    _upgrade_db_init($dbh);
 
     $tables = $dbh->_backend->listOfTables();
     $backend_type = $dbh->_backend->backendType();
@@ -461,9 +446,43 @@ function CheckDatabaseUpdate(&$request) {
         }
     }
 
-    // put _cached_html from pagedata into a new seperate blob, not huge serialized string.
-    // it is only rarelely needed: for current page only, if-not-modified
-    // but was extracetd for every simple page iteration.
+    _upgrade_cached_html($dbh);
+
+    return;
+}
+
+function _upgrade_db_init (&$dbh) {
+    global $DBParams, $DBAuthParams;
+    if (!in_array($DBParams['dbtype'], array('SQL','ADODB'))) return;
+    if (defined('DBADMIN_USER') and DBADMIN_USER) {
+        // if need to connect as the root user, for alter permissions
+        $AdminParams = $DBParams;
+        if ($DBParams['dbtype'] == 'SQL')
+            $dsn = DB::parseDSN($AdminParams['dsn']);
+        else
+            $dsn = parseDSN($AdminParams['dsn']);
+        $AdminParams['dsn'] = sprintf("%s://%s:%s@%s/%s",
+                                      $dsn['phptype'],
+                                      DBADMIN_USER,
+                                      DBADMIN_PASSWD,
+                                      $dsn['hostspec'],
+                                      $dsn['database']);
+        $dbh = WikiDB::open($AdminParams);
+    } else {
+        $dbh = &$request->_dbi;
+    }
+}
+
+/**
+ * if page.cached_html does not exists:
+ *   put _cached_html from pagedata into a new seperate blob, not huge serialized string.
+ *
+ * it is only rarelely needed: for current page only, if-not-modified
+ * but was extracetd for every simple page iteration.
+ */
+function _upgrade_cached_html (&$dbh) {
+    global $DBParams;
+    if (!in_array($DBParams['dbtype'], array('SQL','ADODB'))) return;
     if (phpwiki_version() >= 1030.10) {
   	echo _("check for extra page.cached_html column")," ... ";
   	$database = $dbh->_backend->database();
@@ -475,29 +494,37 @@ function CheckDatabaseUpdate(&$request) {
                 $dbh->genericSqlQuery("ALTER TABLE $page_tbl ADD cached_html MEDIUMBLOB");
             else
                 $dbh->genericSqlQuery("ALTER TABLE $page_tbl ADD cached_html BLOB");
-            $pages = $dbh->getAllPages();
-            $cache =& $dbh->_cache;
             echo "<b>",_("CONVERTING"),"</b>"," ... ";
-            while ($page = $pages->next()) {
-            	$pagename = $page->getName();
-                $data = $dbh->_backend->get_pagedata($pagename);
-                if (!empty($data['_cached_html'])) {
-                    $cached_html = $data['_cached_html'];
-                    $data['_cached_html'] = '';
-                    $cache->update_pagedata($pagename, $data);
-                    //$dbh->_backend->update_cachedhtml($pagename, $cached_html);
-                    // store as blob, not serialized
-                    $dbh->genericSqlQuery(sprintf("UPDATE $page_tbl SET cached_html=%s WHERE pagename=%s",
-                                                  $dbh->quote($cached_html),
-                                                  $dbh->quote($pagename)));
-                }
-            }
+            _convert_cached_html($dbh);
             echo _("OK"), "<br />\n";
         } else {
             echo _("OK"), "<br />\n";
         }
     }
-    return;
+}
+
+/** 
+ * move _cached_html for all pages from pagedata into a new seperate blob.
+ * decoupled from action=upgrade, so that it can be used by a WikiAdminUtils button also.
+ */
+function _convert_cached_html (&$dbh) {
+    global $DBParams;
+    if (!in_array($DBParams['dbtype'], array('SQL','ADODB'))) return;
+
+    $pages = $dbh->getAllPages();
+    $cache =& $dbh->_cache;
+    while ($page = $pages->next()) {
+        $pagename = $page->getName();
+        $data = $dbh->_backend->get_pagedata($pagename);
+        if (!empty($data['_cached_html'])) {
+            $cached_html = $data['_cached_html'];
+            $data['_cached_html'] = '';
+            $cache->update_pagedata($pagename, $data);
+            // store as blob, not serialized
+            $dbh->genericSqlQuery("UPDATE $page_tbl SET cached_html=? WHERE pagename=?",
+                                  array($cached_html, $pagename));
+        }
+    }
 }
 
 function fixConfigIni($match, $new) {
@@ -603,6 +630,12 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.31  2004/12/10 02:45:26  rurban
+ SQL optimization:
+   put _cached_html from pagedata into a new seperate blob, not huge serialized string.
+   it is only rarelely needed: for current page only, if-not-modified
+   but was extracted for every simple page iteration.
+
  Revision 1.30  2004/11/29 17:58:57  rurban
  just aesthetics
 

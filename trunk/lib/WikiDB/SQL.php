@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: SQL.php,v 1.12 2004-12-06 19:50:03 rurban Exp $');
+<?php rcs_id('$Id: SQL.php,v 1.13 2004-12-10 22:15:00 rurban Exp $');
 
 require_once('lib/WikiDB.php');
 //require_once('lib/WikiDB/backend/PearDB.php');
@@ -64,8 +64,11 @@ class WikiDB_SQL extends WikiDB
 
     // SQL result: for simple select or create/update queries
     // returns the database specific resource type
-    function genericSqlQuery($sql) {
-        $result = $this->_backend->_dbh->query($sql);
+    function genericSqlQuery($sql, $args=false) {
+        if ($args)
+            $result = $this->_backend->_dbh->query($sql, $args);
+        else
+            $result = $this->_backend->_dbh->query($sql);
         if (DB::isError($result)) {
             $msg = $result->getMessage();
             trigger_error("SQL Error: ".DB::errorMessage($result), E_USER_WARNING);

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.115 2004-12-10 02:45:27 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.116 2004-12-10 22:15:00 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -587,7 +587,7 @@ class WikiDB {
 
     // SQL result: for simple select or create/update queries
     // returns the database specific resource type
-    function genericSqlQuery($sql) {
+    function genericSqlQuery($sql, $args=false) {
         if (function_exists('debug_backtrace')) { // >= 4.3.0
             echo "<pre>", printSimpleTrace(debug_backtrace()), "</pre>\n";
         }
@@ -1255,7 +1255,7 @@ class WikiDB_Page
             return false;
         // several new SQL backends optimize this.
         if ($key == '_cached_html' and method_exists($backend, 'get_cached_html')) {
-            return $backend->get_cached_html($pagename);
+            return $backend->get_cached_html($this->_pagename);
         }
         $data = $cache->get_pagedata($this->_pagename);
         return isset($data[$key]) ? $data[$key] : false;
@@ -2141,6 +2141,12 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.115  2004/12/10 02:45:27  rurban
+// SQL optimization:
+//   put _cached_html from pagedata into a new seperate blob, not huge serialized string.
+//   it is only rarelely needed: for current page only, if-not-modified
+//   but was extracted for every simple page iteration.
+//
 // Revision 1.114  2004/12/09 22:24:44  rurban
 // optimize on _DEBUG_SQL only. but now again on every 50th request, not just save.
 //

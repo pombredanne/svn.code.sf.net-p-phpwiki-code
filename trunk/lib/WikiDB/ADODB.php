@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.10 2004-12-06 19:50:03 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.11 2004-12-10 22:15:00 rurban Exp $');
 
 require_once('lib/WikiDB.php');
 
@@ -70,8 +70,12 @@ class WikiDB_ADODB extends WikiDB
 
     // SQL result: for simple select or create/update queries
     // returns the database specific resource type
-    function genericSqlQuery($sql) {
-        if (!($result = $this->_backend->_dbh->Execute($sql))) {
+    function genericSqlQuery($sql, $args=false) {
+        if ($args)
+            $result = $this->_backend->_dbh->Execute($sql, $args);
+        else
+            $result = $this->_backend->_dbh->Execute($sql);
+        if (!$result) {
             trigger_error("SQL Error: ".$this->_backend->_dbh->ErrorMsg(), E_USER_WARNING);
             return false;
         } else {
