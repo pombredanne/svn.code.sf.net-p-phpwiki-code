@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.89 2005-01-21 14:07:49 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.90 2005-01-22 12:46:15 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -71,6 +71,14 @@ class PageEditor
         global $WikiTheme;
         $saveFailed = false;
         $tokens = &$this->tokens;
+        if (isset($this->request->args['pref']['editWidth'])
+            and ($this->request->getPref('editWidth') != $this->request->args['pref']['editWidth'])) {
+            $this->request->_prefs->set('editWidth', $this->request->args['pref']['editWidth']);
+        }
+        if (isset($this->request->args['pref']['editHeight'])
+            and ($this->request->getPref('editHeight') != $this->request->args['pref']['editHeight'])) {
+            $this->request->_prefs->set('editHeight', $this->request->args['pref']['editHeight']);
+        }
 
         if (! $this->canEdit()) {
             if ($this->isInitialEdit())
@@ -463,7 +471,9 @@ function undo_save() {
         // Save new revision
         $this->_content = $this->getContent();
         $newrevision = $page->save($this->_content, 
-        			   $this->version == -1 ? -1 : $this->_currentVersion + 1, 
+        			   $this->version == -1 
+                                     ? -1 
+                                     : $this->_currentVersion + 1, 
                                    // force new?
         			   $meta);
         if (!isa($newrevision, 'WikiDB_PageRevision')) {
@@ -534,13 +544,13 @@ function undo_save() {
 
     /** 
      * Handle AntiSpam here. How? http://wikiblacklist.blogspot.com/
-     * Need to check dynamically some blacklist wikipage settings (plugin WikiAccessRestrictions)
-     * and some static blacklist.
+     * Need to check dynamically some blacklist wikipage settings 
+     * (plugin WikiAccessRestrictions) and some static blacklist.
      * DONE: 
      *   More then 20 new external links
      *   content patterns by babycart (only php >= 4.3 for now)
      * TODO:
-     *   IP BlackList 
+     *   IP blacklist 
      *   domain blacklist
      *   url patterns
      */
@@ -563,12 +573,14 @@ function undo_save() {
         if (ENABLE_SPAMASSASSIN) {
             $user = $request->getUser();
             include_once("lib/spam_babycart.php");
-            if ($babycart = check_babycart($newtext, $request->get("REMOTE_ADDR"), $user->getId())) {
+            if ($babycart = check_babycart($newtext, $request->get("REMOTE_ADDR"), 
+                                           $user->getId())) {
                 // mail the admin?
                 if (is_array($babycart))
                     $this->tokens['PAGE_LOCKED_MESSAGE'] = 
                         HTML($this->getSpamMessage(),
-                             HTML::p(HTML::em(_("SpamAssassin reports: ", join("\n", $babycart)))));
+                             HTML::p(HTML::em(_("SpamAssassin reports: ", 
+                                                join("\n", $babycart)))));
                 return true;
             }
         }
@@ -687,10 +699,8 @@ function undo_save() {
             return $textarea;
     }
 
-    /**
-     * TODO: maybe support an uploadfile button.
-     */
     function getFormElements () {
+        global $WikiTheme;
         $request = &$this->request;
         $page = &$this->page;
 
@@ -705,6 +715,7 @@ function undo_save() {
         $el['SUMMARY_INPUT']
             = HTML::input(array('type'  => 'text',
                                 'class' => 'wikitext',
+                                'id' => 'edit[summary]',
                                 'name'  => 'edit[summary]',
                                 'size'  => 50,
                                 'maxlength' => 256,
@@ -712,6 +723,7 @@ function undo_save() {
         $el['MINOR_EDIT_CB']
             = HTML::input(array('type' => 'checkbox',
                                 'name'  => 'edit[minor_edit]',
+                                'id' => 'edit[minor_edit]',
                                 'checked' => (bool) $this->meta['is_minor_edit']));
         $el['OLD_MARKUP_CB']
             = HTML::input(array('type' => 'checkbox',
@@ -720,10 +732,12 @@ function undo_save() {
                                 'checked' => $this->meta['markup'] < 2.0,
                                 'id' => 'useOldMarkup',
                                 'onclick' => 'showOldMarkupRules(this.checked)'));
-        $el['OLD_MARKUP_CONVERT'] = ($this->meta['markup'] < 2.0) ? Button('submit:edit[edit_convert]', _("Convert"), 'wikiaction') : '';
+        $el['OLD_MARKUP_CONVERT'] = ($this->meta['markup'] < 2.0) 
+            ? Button('submit:edit[edit_convert]', _("Convert"), 'wikiaction') : '';
         $el['LOCKED_CB']
             = HTML::input(array('type' => 'checkbox',
                                 'name' => 'edit[locked]',
+                                'id'   => 'edit[locked]',
                                 'disabled' => (bool) !$this->user->isadmin(),
                                 'checked'  => (bool) $this->locked));
 
@@ -735,6 +749,23 @@ function undo_save() {
 
         $el['IS_CURRENT'] = $this->version == $this->current->getVersion();
 
+        $el['WIDTH_PREF'] = HTML::input(array('type' => 'text',
+                                    'size' => 3,
+                                    'maxlength' => 4,
+                                    'class' => "numeric",
+                                    'name' => 'pref[editWidth]',
+                                    'id'   => 'pref[editWidth]',
+                                    'value' => $request->getPref('editWidth'),
+                                    'onchange' => 'this.form.submit();'));
+        $el['HEIGHT_PREF'] = HTML::input(array('type' => 'text',
+                                     'size' => 3,
+                                     'maxlength' => 4,
+                                     'class' => "numeric",
+                                     'name' => 'pref[editHeight]',
+                                     'id'   => 'pref[editHeight]',
+                                     'value' => $request->getPref('editHeight'),
+                                     'onchange' => 'this.form.submit();'));
+        $el['SEP'] = $WikiTheme->getButtonSeparator();
         return $el;
     }
 
@@ -908,6 +939,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.89  2005/01/21 14:07:49  rurban
+ reformatting
+
  Revision 1.88  2004/12/17 16:39:03  rurban
  minor reformatting
 
