@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.63 2004-06-04 11:58:38 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.64 2004-06-04 16:50:00 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -1379,31 +1379,19 @@ class WikiDB_PageRevision
 
         
         if (empty($data['%content'])) {
-            if (USE_TAGLINES) // a feature from http://www.wlug.org.nz/
-                $taglines = 
-                    array(
-                          "Your file was so big.%%%\nIt might be very useful.%%%\nBut now it is gone.",
-                          "The website you seek%%%\nCannot be located,%%%\nbut Countless more exist.",
-                          "Chaos reigns within.%%%\nReflect, repent and reboot.%%%\nOrder shall return.",
-                          "Aborted effort.%%%\nClose all that you have worked on.%%%\nYou ask far too much.",
-                          "Windows NT crashed.%%%\nI am the Blue Screen of Death.%%%\nNo-one hears your screams.",
-                          "Yesterday it worked.%%%\nToday it is not working.%%%\nWindows is like that.",
-                          "Stay the patient course.%%%\nOf little worth is your ire.%%%\nThe network is down.",
-                          "A crash reduces%%%\nYour expensive computer%%%\nTo a simple stone.",
-                          "Three things are certain:%%%\nDeath, taxes and lost data.%%%\nGuess which has occurred.",
-                          "You step in the stream,%%%\nBut the water has moved on.%%%\nThis page is not here.",
-                          "Out of memory.%%%\nWe wish to hold the whole sky,%%%\nBut we never will.",
-                          "Having been erased,%%%\nThe document you're seeking%%%\nMust now be retyped.",
-                          "No more web twinkies,%%%\nMust leave basement to get more,%%%My World is ending.",
-                          "I ate your Web page.%%%\nForgive me; it was tasty%%%\nAnd tart on my tongue");
             include_once('lib/InlineParser.php');
+            // A feature similar to taglines at http://www.wlug.org.nz/
+            // Lib from http://www.aasted.org/quote/
+            if (defined('FORTUNE_DIR') and is_dir(FORTUNE_DIR)) {
+                include_once("lib/fortune.php");
+                $fortune = new Fortune();
+                $quote = str_replace("\n<br>","\n", $fortune->quoteFromDir(FORTUNE_DIR));
+                return sprintf("<verbatim>\n%s</verbatim>\n\n"._("Describe %s here."), 
+                               $quote, "[" . WikiEscape($this->_pagename) . "]");
+            }
             // Replace empty content with default value.
-            if (USE_TAGLINES)
-                return sprintf("''%s''\n\n"._("Describe %s here."), 
-                               $taglines[array_rand($taglines)],"[" . WikiEscape($this->_pagename) . "]");
-            else
-                return sprintf(_("Describe %s here."), 
-                               "[" . WikiEscape($this->_pagename) . "]");
+            return sprintf(_("Describe %s here."), 
+                           "[" . WikiEscape($this->_pagename) . "]");
         }
 
         // There is (non-default) content.
@@ -1844,6 +1832,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.63  2004/06/04 11:58:38  rurban
+// added USE_TAGLINES
+//
 // Revision 1.62  2004/06/03 22:24:41  rurban
 // reenable admin check on !ENABLE_PAGEPERM, honor s=Wildcard arg, fix warning after Remove
 //
