@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.42 2001-09-19 02:27:50 wainstead Exp $');
+rcs_id('$Id: config.php,v 1.43 2001-09-19 19:16:27 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -23,66 +23,24 @@ set_magic_quotes_runtime(0);
 // $FieldSeparator = "\263"; //this is a superscript 3 in ISO-8859-1.
 $FieldSeparator = "\x81";
 
+require_once('lib/FileFinder.php');
 // Search PHP's include_path to find file or directory.
 function FindFile ($file, $missing_okay = false)
 {
-    // FIXME: This wont work for DOS filenames.
-    if (ereg('^/', $file))
-        {
-            // absolute path.
-            if (file_exists($file))
-                return $file;
-        }
-    else
-        {
-            $include_path = ini_get('include_path');
-            if (empty($include_path))
-                $include_path = '.';
-            // FIXME: This wont work for DOS filenames.
-            $path = explode(':', $include_path);
-            while (list($i, $dir) = each ($path))
-                if (file_exists("$dir/$file"))
-                    return "$dir/$file";
-        }
-
-    if (!$missing_okay)
-        ExitWiki("$file: file not found");
-    return false;
+    static $finder;
+    if (!isset($finder))
+        $finder = new FileFinder;
+    return $finder->findFile($file, $missing_okay);
 }
 
 // Search PHP's include_path to find file or directory.
 // Searches for "locale/$LANG/$file", then for "$file".
 function FindLocalizedFile ($file, $missing_okay = false)
 {
-    $language = $GLOBALS['LANG'];
-
-    if (empty($language))
-        $language = getenv("LC_ALL");
-    if (empty($language))
-        $language = getenv("LC_MESSAGES");
-    if (empty($language))
-        $language = getenv("LC_RESPONSES"); // deprecated
-    if (empty($language))
-        $language = getenv("LANG");
-    if (empty($language))
-        $language = "C";
-
-    // FIXME: This wont work for DOS filenames.
-    if (!ereg('^/', $file))
-        {
-            if ( ($path = FindFile("locale/$language/$file", 'missing_is_okay')) )
-                return $path;
-            // A locale can be, e.g. de_DE.iso8859-1@euro.
-            // Try less specific versions of the locale: 
-            $seps = array('@', '.', '_');
-            for ($i = 0; $i < count($seps); $i++)
-                if ( ($tail = strchr($language, $seps[$i])) ) {
-                    $head = substr($language, 0, -strlen($tail));
-                    if ( ($path = FindFile("locale/$head/$file", 'missing_is_okay')) )
-                        return $path;
-                }
-        }
-    return FindFile($file, $missing_okay);
+    static $finder;
+    if (!isset($finder))
+        $finder = new LocalizedFileFinder;
+    return $finder->findFile($file, $missing_okay);
 }
 
 // Setup localisation
