@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: ziplib.php,v 1.13 2001-12-28 09:53:34 carstenklapp Exp $');
+rcs_id('$Id: ziplib.php,v 1.14 2002-01-09 02:50:14 carstenklapp Exp $');
 
 /**
  * GZIP stuff.
@@ -491,6 +491,9 @@ function MimeMultipart ($parts)
 }
   
 function MimeifyPageRevision ($revision) {
+    // This is a dirty hack to allow saving binary text files. See below.
+    $cte = "quoted-printable";
+    //$cte = "binary";
     $page = $revision->getPage();
     // FIXME: add 'hits' to $params 
     $params = array('pagename' => rawurlencode($page->getName()),
@@ -507,11 +510,13 @@ function MimeifyPageRevision ($revision) {
       
 
     $out = MimeContentTypeHeader('application', 'x-phpwiki', $params);
-    $out .= "Content-Transfer-Encoding: quoted-printable\r\n";
+    $out .= "Content-Transfer-Encoding: " .$cte ."\r\n";
     $out .= "\r\n";
   
     foreach ($revision->getContent() as $line) {
-        $out .= QuotedPrintableEncode(chop($line)) . "\r\n";
+        // This is a dirty hack to allow saving binary text files. See above.
+        $out .= ($cte == "quoted-printable") ? QuotedPrintableEncode(chop($line)) : chop($line);
+        $out .= "\r\n";
     }
     return $out;
 }
