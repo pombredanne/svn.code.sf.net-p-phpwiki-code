@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiPluginCached.php,v 1.13 2004-09-22 13:46:25 rurban Exp $');
+<?php rcs_id('$Id: WikiPluginCached.php,v 1.14 2004-09-25 16:26:08 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
  Copyright (C) 2004 Reini Urban
@@ -821,10 +821,14 @@ class WikiPluginCached extends WikiPlugin
 
        $talkedallready = ob_get_contents() || headers_sent();
        if (($imgtype=='html') || $talkedallready) {
+           if (is_object($errortext))
+               $errortext = $errortext->asXml();
            trigger_error($errortext, E_USER_WARNING);
        } else {
            $red = array(255,0,0);
            $grey = array(221,221,221);
+           if (is_object($errortext))
+               $errortext = $errortext->asString();
            $im = $this->text2img($errortext, 2, $red, $grey);
            if (!$im) { 
                trigger_error($errortext, E_USER_WARNING);
@@ -1001,6 +1005,12 @@ class WikiPluginCached extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2004/09/22 13:46:25  rurban
+// centralize upload paths.
+// major WikiPluginCached feature enhancement:
+//   support _STATIC pages in uploads/ instead of dynamic getimg.php? subrequests.
+//   mainly for debugging, cache problems and action=pdf
+//
 // Revision 1.12  2004/09/07 13:26:31  rurban
 // new WikiPluginCached option debug=static and some more sf.net defaults for VisualWiki
 //
