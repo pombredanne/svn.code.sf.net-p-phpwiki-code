@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.113 2004-11-09 17:11:04 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.114 2004-11-11 18:31:26 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -222,6 +222,9 @@ class Theme {
             return $this->_default_theme->_findFile($file, $missing_okay);
         }
         else if (!$missing_okay) {
+            if (DEBUG & function_exists('debug_backtrace')) { // >= 4.3.0
+                echo "<pre>", printSimpleTrace(debug_backtrace()), "</pre>\n";
+            }
             trigger_error("$file: not found", E_USER_NOTICE);
         }
         return false;
@@ -1376,6 +1379,17 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.113  2004/11/09 17:11:04  rurban
+// * revert to the wikidb ref passing. there's no memory abuse there.
+// * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively
+//   store page ids with getPageLinks (GleanDescription) of all existing pages, which
+//   are also needed at the rendering for linkExistingWikiWord().
+//   pass options to pageiterator.
+//   use this cache also for _get_pageid()
+//   This saves about 8 SELECT count per page (num all pagelinks).
+// * fix passing of all page fields to the pageiterator.
+// * fix overlarge session data which got broken with the latest ACCESS_LOG_SQL changes
+//
 // Revision 1.112  2004/11/03 16:50:31  rurban
 // some new defaults and constants, renamed USE_DOUBLECLICKEDIT to ENABLE_DOUBLECLICKEDIT
 //

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.101 2004-11-10 19:32:22 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.102 2004-11-11 18:31:26 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -556,6 +556,9 @@ class WikiDB {
     // SQL result: for simple select or create/update queries
     // returns the database specific resource type
     function genericSqlQuery($sql) {
+        if (function_exists('debug_backtrace')) { // >= 4.3.0
+            echo "<pre>", printSimpleTrace(debug_backtrace()), "</pre>\n";
+        }
         trigger_error("no SQL database", E_USER_ERROR);
         return false;
     }
@@ -563,6 +566,9 @@ class WikiDB {
     // SQL iter: for simple select or create/update queries
     // returns the generic iterator object (count,next)
     function genericSqlIter($sql, $field_list = NULL) {
+        if (function_exists('debug_backtrace')) { // >= 4.3.0
+            echo "<pre>", printSimpleTrace(debug_backtrace()), "</pre>\n";
+        }
         trigger_error("no SQL database", E_USER_ERROR);
         return false;
     }
@@ -576,7 +582,8 @@ class WikiDB {
     function isOpen () {
         global $request;
         if (!$request->_dbi) return false;
-        else return true;
+        else return false; /* so far only needed for sql so false it. 
+                            later we have to check dba also */
     }
 
     function getParam($param) {
@@ -2030,6 +2037,13 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.101  2004/11/10 19:32:22  rurban
+// * optimize increaseHitCount, esp. for mysql.
+// * prepend dirs to the include_path (phpwiki_dir for faster searches)
+// * Pear_DB version logic (awful but needed)
+// * fix broken ADODB quote
+// * _extract_page_data simplification
+//
 // Revision 1.100  2004/11/10 15:29:20  rurban
 // * requires newer Pear_DB (as the internal one): quote() uses now escapeSimple for strings
 // * ACCESS_LOG_SQL: fix cause request not yet initialized
