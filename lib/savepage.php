@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.33 2002-01-24 00:45:28 dairiki Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.34 2002-01-25 17:39:15 dairiki Exp $');
 require_once('lib/Template.php');
 require_once('lib/transform.php');
 require_once('lib/ArchiveCleaner.php');
@@ -43,7 +43,8 @@ function ConcurrentUpdates(&$request) {
 
     $html[] = HTML::p(_("Sorry for the inconvenience."));
 
-    $pagelink = LinkWikiWord($request->getPage());
+    $page = $request->getPage();
+    $pagelink = LinkWikiWord($page->getName());
     GeneratePage($html, fmt("Problem while updating %s", $pagelink));
     $request->finish();
 }
@@ -55,7 +56,8 @@ function PageIsLocked (&$request) {
                       _("Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor."));
     $html[] = HTML::p(_("Sorry for the inconvenience."));
     
-    $pagelink = LinkWikiWord($request->getPage());
+    $page = $request->getPage();
+    $pagelink = LinkWikiWord($page->getName());
     GeneratePage($html, fmt("Problem while editing %s", $pagelink));
     $request->finish();
 }
@@ -63,7 +65,9 @@ function PageIsLocked (&$request) {
 function BadFormVars (&$request) {
     $html[] = HTML::p(_("Bad form submission"));
     $html[] = HTML::p(_("Required form variables are missing."));
-    $pagelink = LinkWikiWord($request->getPage());
+
+    $page = $request->getPage();
+    $pagelink = LinkWikiWord($page->getName());
     GeneratePage($html, fmt("Edit aborted: %s", $pagelink));
     $request->finish();
 }
