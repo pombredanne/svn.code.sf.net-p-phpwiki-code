@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.19 2004-11-29 17:46:06 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.20 2004-11-29 17:58:57 rurban Exp $');
 
 /*
   Pagedata
@@ -293,8 +293,8 @@ class WikiDB_backend
      *
      * @access protected
      *
-     * @param $search object A TextSearchQuery object describing what pages
-     * are to be searched for.
+     * @param $search object A TextSearchQuery object describing the parsed query string, 
+     *                       with efficient methods for SQL and PCRE match.
      *
      * @param $fullsearch boolean If true, a full text search is performed,
      *  otherwise a title search is performed.
@@ -303,12 +303,12 @@ class WikiDB_backend
      *
      * @see WikiDB::titleSearch
      */
-    function text_search($search='', $fulltext=false) {
+    function text_search($search, $fulltext=false) {
         // This is method implements a simple linear search
         // through all the pages in the database.
         //
         // It is expected that most backends will overload
-        // method with something more efficient.
+        // this method with something more efficient.
         include_once('lib/WikiDB/backend/dumb/TextSearchIter.php');
         $pages = $this->get_all_pages(false);
         return new WikiDB_backend_dumb_TextSearchIter($this, $pages, $search, $fulltext);
@@ -333,7 +333,6 @@ class WikiDB_backend
         // method with something more efficient.
         include_once('lib/WikiDB/backend/dumb/MostPopularIter.php');
         $pages = $this->get_all_pages(false, $sortby, $limit);
-        
         return new WikiDB_backend_dumb_MostPopularIter($this, $pages, $limit);
     }
 
