@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: AppendText.php,v 1.3 2004-11-25 13:56:23 rurban Exp $');
+rcs_id('$Id: AppendText.php,v 1.4 2004-11-25 17:20:52 rurban Exp $');
 /*
-Copyright 2004 Pascal Giard <evilynux@gmail.com>
+ Copyright 2004 $ThePhpWikiProgrammingTeam
 
 This file is part of PhpWiki.
 
@@ -23,7 +23,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 /**
  * Append text to an existing page.
  *
- * See http://sourceforge.net/mailarchive/forum.php?thread_id=6028698&forum_id=4517 
+ * @Author: Pascal Giard <evilynux@gmail.com>
+ *
+ * See http://sourceforge.net/mailarchive/message.php?msg_id=10141823
  * why not to use "text" as parameter. Nasty mozilla bug with mult. radio rows.
  */
 class WikiPlugin_AppendText
@@ -39,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -60,11 +62,13 @@ extends WikiPlugin
         $args = $this->getArgs($argstr, $request);
         $pagename = $args['page'];
 
-        if (empty($args['s']))
-            if ($request->isPost() and $pagename != _("AppendText"))
-                return HTML($request->redirect(WikiURL($pagename, false, 'absurl'), false));
-            else    
-                return '';
+        if (empty($args['s'])) {
+            if ($request->isPost()) {
+                if ($pagename != _("AppendText"))
+                    return HTML($request->redirect(WikiURL($pagename, false, 'absurl'), false));
+            }
+            return '';
+        }
 
         $page = $dbi->getPage($pagename);
         $message = HTML();
@@ -83,23 +87,19 @@ extends WikiPlugin
         if (!empty($args['before'])) {
             $before = preg_quote($args['before'], "/");
             // Insert before
-            $newtext =
-                ( preg_match("/\n${before}/", $oldtext) ) ?
-                preg_replace("/(\n${before})/",
-                             "\n" .  preg_quote($text, "/") . "\\1",
-                             $oldtext) :
-                $this->_fallback($text, $oldtext, $args['before'], &$message);
-
+            $newtext = preg_match("/\n${before}/", $oldtext) 
+                ? preg_replace("/(\n${before})/",
+                               "\n" .  preg_quote($text, "/") . "\\1",
+                               $oldtext) 
+                : $this->_fallback($text, $oldtext, $args['before'], &$message);
         } elseif (!empty($args['after'])) {
             // Insert after
             $after = preg_quote($args['after'], "/");
-            $newtext = 
-                ( preg_match("/\n${after}/", $oldtext) ) ?
-                preg_replace("/(\n${after})/",
-                             "\\1\n" .  preg_quote($text, "/"),
-                             $oldtext) :
-                $this->_fallback($text, $oldtext, $args['after'], &$message);
-
+            $newtext = preg_match("/\n${after}/", $oldtext) 
+                ? preg_replace("/(\n${after})/",
+                               "\\1\n" .  preg_quote($text, "/"),
+                               $oldtext)
+                : $this->_fallback($text, $oldtext, $args['after'], &$message);
         } else {
             // Append at the end
             $newtext = $oldtext .
@@ -110,6 +110,7 @@ extends WikiPlugin
         $meta = $current->_data;
         $meta['summary'] = sprintf(_("AppendText to %s"), $pagename);
         if ($page->save($newtext, $current->getVersion() + 1, $meta)) {
+            // if ($basepage == pagename) $errmsg = _("AppendText");
             $message->pushContent(_("Page successfully updated."), HTML::br());
             $message->pushContent(_("Go to "));
             $message->pushContent(HTML::em(WikiLink($pagename)));
@@ -120,6 +121,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/11/25 13:56:23  rurban
+// renamed text to s because of nasty mozilla radio button bug
+//
 // Revision 1.2  2004/11/25 08:29:43  rurban
 // update from Pascal
 //

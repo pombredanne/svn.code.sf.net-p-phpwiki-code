@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.124 2004-11-23 15:17:14 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.125 2004-11-25 17:20:49 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -1342,6 +1342,10 @@ function flipAll(formObj) {
 	else    
             $list = HTML::ul(array('class' => 'pagelist'));
         $i = 0;
+        //TODO: currently we ignore limit here and hope tha the backend didn't ignore it. (BackLinks)
+        if (!empty($this->_options['limit']))
+            list($offset, $pagesize) = $this->limit($this->_options['limit']);
+        else $pagesize=0;
         foreach ($this->_pages as $pagenum => $page) {
             $pagehtml = $this->_renderPageRow($page);
             $group = ($i++ / $this->_group_rows);
@@ -1349,6 +1353,7 @@ function flipAll(formObj) {
             //      unification or parametrized?
             $class = ($group % 2) ? 'oddrow' : 'evenrow';
             $list->pushContent(HTML::li(array('class' => $class), $pagehtml));
+            if ($pagesize and $i > $pagesize) break;
         }
         $out->pushContent($list);
         if ( $do_paging and $tokens ) {
@@ -1435,6 +1440,14 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.124  2004/11/23 15:17:14  rurban
+// better support for case_exact search (not caseexact for consistency),
+// plugin args simplification:
+//   handle and explode exclude and pages argument in WikiPlugin::getArgs
+//     and exclude in advance (at the sql level if possible)
+//   handle sortby and limit from request override in WikiPlugin::getArgs
+// ListSubpages: renamed pages to maxpages
+//
 // Revision 1.123  2004/11/23 13:35:31  rurban
 // add case_exact search
 //

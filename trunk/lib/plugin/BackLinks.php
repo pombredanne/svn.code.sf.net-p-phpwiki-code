@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BackLinks.php,v 1.29 2004-11-23 15:17:19 rurban Exp $');
+rcs_id('$Id: BackLinks.php,v 1.30 2004-11-25 17:20:52 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
     
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.29 $");
+                            "\$Revision: 1.30 $");
     }
     
     function getDefaultArguments() {
@@ -55,25 +55,25 @@ extends WikiPlugin
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
     // NEW: info=count : number of links
     function run($dbi, $argstr, &$request, $basepage) {
-        $this->_args = $this->getArgs($argstr, $request);
-        extract($this->_args);
+        $args = $this->getArgs($argstr, $request);
+        extract($args);
         if (empty($page) and $page != '0')
             return '';
         // exclude is already expanded in WikiPlugin::getArgs()
-        //$exclude = is_string($exclude) ? explodePageList($exclude) : (is_array($exclude) ? $exclude : array());
         if (empty($exclude)) $exclude = array();
         if (!$include_self)
             $exclude[] = $page;
         if ($info) {
             $info = explode(",", $info);
             if (in_array('count',$info))
-                $this->_args['types']['count'] = new _PageList_Column_BackLinks_count('count', _("#"), 'center');
+                $args['types']['count'] = 
+                    new _PageList_Column_BackLinks_count('count', _("#"), 'center');
         }
-        $this->_args['dosort'] = !empty($this->_args['sortby']); // override DB sort
-        $pagelist = new PageList($info, $exclude, $this->_args);
+        $args['dosort'] = !empty($args['sortby']); // override DB sort
+        $pagelist = new PageList($info, $exclude, $args);
         $p = $dbi->getPage($page);
-        $pagelist->addPages($p->getLinks());
-        
+        $pagelist->addPages($p->getBackLinks(false, $sortby, $limit, $exclude));
+
         // Localization note: In English, the differences between the
         // various phrases spit out here may seem subtle or negligible
         // enough to tempt you to combine/normalize some of these
@@ -147,6 +147,14 @@ class _PageList_Column_BackLinks_count extends _PageList_Column {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.29  2004/11/23 15:17:19  rurban
+// better support for case_exact search (not caseexact for consistency),
+// plugin args simplification:
+//   handle and explode exclude and pages argument in WikiPlugin::getArgs
+//     and exclude in advance (at the sql level if possible)
+//   handle sortby and limit from request override in WikiPlugin::getArgs
+// ListSubpages: renamed pages to maxpages
+//
 // Revision 1.28  2004/10/14 17:16:22  rurban
 // override DB sort: not applicable
 //

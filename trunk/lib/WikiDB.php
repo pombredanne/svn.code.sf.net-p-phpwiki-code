@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.108 2004-11-23 13:35:31 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.109 2004-11-25 17:20:50 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -1169,23 +1169,27 @@ class WikiDB_Page
      * @return WikiDB_PageIterator A WikiDB_PageIterator containing
      * all matching pages.
      */
-    function getLinks($reversed = true, $include_empty=false) {
+    function getLinks($reversed = true, $include_empty=false, $sortby=false, $limit=false, $exclude=false) {
         $backend = &$this->_wikidb->_backend;
-        $result =  $backend->get_links($this->_pagename, $reversed, $include_empty);
-        return new WikiDB_PageIterator($this->_wikidb, $result, array('include_empty' => $include_empty));
+        $result =  $backend->get_links($this->_pagename, $reversed, $include_empty, $sortby, $limit, $exclude);
+        return new WikiDB_PageIterator($this->_wikidb, $result, 
+                                       array('include_empty' => $include_empty,
+                                             'sortby' => $sortby, 
+                                             'limit' => $limit, 
+                                             'exclude' => $exclude));
     }
 
     /**
      * All Links from other pages to this page.
      */
-    function getBackLinks($include_empty=false) {
-        return $this->getLinks(true, $include_empty);
+    function getBackLinks($include_empty=false, $sortby=false, $limit=false, $exclude=false) {
+        return $this->getLinks(true, $include_empty, $sortby, $limit, $exclude);
     }
     /**
      * Forward Links: All Links from this page to other pages.
      */
-    function getPageLinks($include_empty=false) {
-        return $this->getLinks(false, $include_empty);
+    function getPageLinks($include_empty=false, $sortby=false, $limit=false, $exclude=false) {
+        return $this->getLinks(false, $include_empty, $sortby, $limit, $exclude);
     }
     
     /**
@@ -2092,6 +2096,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.108  2004/11/23 13:35:31  rurban
+// add case_exact search
+//
 // Revision 1.107  2004/11/21 11:59:16  rurban
 // remove final \n to be ob_cache independent
 //

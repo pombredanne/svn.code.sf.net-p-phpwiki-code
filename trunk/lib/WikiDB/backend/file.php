@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: file.php,v 1.20 2004-11-23 13:35:49 rurban Exp $');
+rcs_id('$Id: file.php,v 1.21 2004-11-25 17:20:52 rurban Exp $');
 
 /**
  Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
@@ -511,7 +511,8 @@ extends WikiDB_backend
      * FIXME: array or iterator?
      * @return object A WikiDB_backend_iterator.
      */
-    function get_links($pagename, $reversed) {
+    function get_links($pagename, $reversed=true, $include_empty=false,
+                       $sortby=false, $limit=false, $exclude=false) {
         if ($reversed == false)
             return new WikiDB_backend_file_iter($this, $this->_loadPageLinks($pagename));
 
@@ -729,6 +730,9 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2004/11/23 13:35:49  rurban
+// add case_exact search
+//
 // Revision 1.19  2004/11/21 11:59:26  rurban
 // remove final \n to be ob_cache independent
 //

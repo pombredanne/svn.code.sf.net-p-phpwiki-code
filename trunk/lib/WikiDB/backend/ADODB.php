@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.56 2004-11-23 13:35:48 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.57 2004-11-25 17:20:51 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -525,7 +525,8 @@ extends WikiDB_backend
      * (linkExistingWikiWord or linkUnknownWikiWord)
      * This is called on every page header GleanDescription, so we can store all the existing links.
      */
-    function get_links($pagename, $reversed=true, $include_empty=false) {
+    function get_links($pagename, $reversed=true, $include_empty=false,
+                       $sortby=false, $limit=false, $exclude='') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
 
@@ -533,6 +534,12 @@ extends WikiDB_backend
             list($have,$want) = array('linkee', 'linker');
         else
             list($have,$want) = array('linker', 'linkee');
+        $orderby = $this->sortby($sortby, 'db', array('pagename'));
+        if ($orderby) $orderby = ' ORDER BY $want.' . $orderby;
+        if ($exclude) // array of pagenames
+            $exclude = " AND $want.pagename NOT IN ".$this->_sql_set($exclude);
+        else 
+            $exclude='';
 
         $qpagename = $dbh->qstr($pagename);
         // removed ref to FETCH_MODE in next line
@@ -544,17 +551,21 @@ extends WikiDB_backend
                                 . " AND $have.pagename=$qpagename"
                                 . (!$include_empty ? " AND $nonempty_tbl.id=$want.id" : "")
                                 //. " GROUP BY $want.id"
-                                . " ORDER BY $want.pagename");
+                                . $exclude
+                                . $orderby);
         return new WikiDB_backend_ADODB_iter($this, $result, $this->page_tbl_field_list);
     }
 
-    function get_all_pages($include_empty=false, $sortby=false, $limit=false, $exclude=false) {
+    function get_all_pages($include_empty=false, $sortby=false, $limit=false, $exclude='') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $orderby = $this->sortby($sortby, 'db');
-        if ($orderby) $orderby = 'ORDER BY ' . $orderby;
+        if ($orderby) $orderby = ' ORDER BY ' . $orderby;
         if ($exclude) // array of pagenames
             $exclude = " AND $page_tbl.pagename NOT IN ".$this->_sql_set($exclude);
+        else 
+            $exclude='';
+
         //$dbh->SetFetchMode(ADODB_FETCH_ASSOC);
         if (strstr($orderby, 'mtime ')) { // was ' mtime'
             if ($include_empty) {
@@ -564,7 +575,7 @@ extends WikiDB_backend
                     . " WHERE $page_tbl.id=$recent_tbl.id"
                     . " AND $page_tbl.id=$version_tbl.id AND latestversion=version"
                     . $exclude
-                    . " $orderby";
+                    . $orderby;
             }
             else {
                 $sql = "SELECT "
@@ -574,7 +585,7 @@ extends WikiDB_backend
                     . " AND $page_tbl.id=$recent_tbl.id"
                     . " AND $page_tbl.id=$version_tbl.id AND latestversion=version"
                     . $exclude
-                    . " $orderby";
+                    . $orderby;
             }
         } else {
             if ($include_empty) {
@@ -582,14 +593,14 @@ extends WikiDB_backend
                     . $this->page_tbl_fields
                     . " FROM $page_tbl"
                     . $exclude ? " WHERE $exclude" : ''
-                    . " $orderby";
+                    . $orderby;
             } else {
                 $sql = "SELECT "
                     . $this->page_tbl_fields
                     . " FROM $nonempty_tbl, $page_tbl"
                     . " WHERE $nonempty_tbl.id=$page_tbl.id"
                     . $exclude
-                    . " $orderby";
+                    . $orderby;
             }
         }
         if ($limit) {
@@ -1245,6 +1256,9 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.56  2004/11/23 13:35:48  rurban
+// add case_exact search
+//
 // Revision 1.55  2004/11/21 11:59:26  rurban
 // remove final \n to be ob_cache independent
 //
