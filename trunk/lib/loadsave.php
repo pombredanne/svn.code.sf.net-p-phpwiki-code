@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.60 2002-02-21 08:27:24 carstenklapp Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.61 2002-02-23 20:27:03 rurban Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -119,7 +119,8 @@ function MakeWikiZip (&$request)
     $dbi = $request->getDbh();
     $pages = $dbi->getAllPages();
     while ($page = $pages->next()) {
-        set_time_limit(30);	// Reset watchdog.
+        if (! get_cfg_var('safe_mode'))
+            set_time_limit(30);	// Reset watchdog.
 
         $current = $page->getCurrentRevision();
         if ($current->getVersion() == 0)
@@ -435,7 +436,8 @@ function LoadFile (&$request, $filename, $text = false, $mtime = false)
         $text  = implode("", file($filename));
     }
 
-    set_time_limit(30);	// Reset watchdog.
+    if (! get_cfg_var('safe_mode'))
+        set_time_limit(30);	// Reset watchdog.
 
     // FIXME: basename("filewithnoslashes") seems to return garbage sometimes.
     $basename = basename("/dummy/" . $filename);
