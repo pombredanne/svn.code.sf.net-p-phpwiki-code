@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.120 2004-09-22 13:46:26 rurban Exp $');
+rcs_id('$Id: config.php,v 1.121 2004-10-14 17:48:19 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -367,7 +367,7 @@ function safe_wordwrap($str, $width=80, $break="\n", $cut=false) {
                     $wordlen++;
                 }
             }
-            if ((!$tag) && ($wordlen) && (!($wordlen % $cols))) {
+            if ((!$tag) && ($wordlen) && (!($wordlen % $width))) {
                 $chr .= $break;
             }
             $result .= $chr;
@@ -406,6 +406,12 @@ function getUploadDataPath() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.120  2004/09/22 13:46:26  rurban
+// centralize upload paths.
+// major WikiPluginCached feature enhancement:
+//   support _STATIC pages in uploads/ instead of dynamic getimg.php? subrequests.
+//   mainly for debugging, cache problems and action=pdf
+//
 // Revision 1.119  2004/09/16 07:50:37  rurban
 // wordwrap() might crash between 4.1.2 and php-4.3.0RC2, fixed in 4.3.0
 // See http://bugs.php.net/bug.php?id=20927 and
