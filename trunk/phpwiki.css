@@ -225,6 +225,19 @@ div.transclusion {
   margin: 0.5ex 0px;
 }
  
+.diff-added { 
+  background: #cfc;
+}
+.diff-deleted { 
+  background: #fcc;
+}
+.diff-unchanged { 
+  background: white;
+}
+.diff-notation { 
+  background: #ccc;
+}
+ 
 /* For emacs users
  *
  * Local Variables:
