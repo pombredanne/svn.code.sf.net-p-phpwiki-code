@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.34 2001-02-16 04:43:08 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.35 2001-02-17 00:47:08 dairiki Exp $');
 
 
    /*
@@ -609,13 +609,9 @@ function UpdateRecentChanges($dbi, $pagename, $isnewpage)
 		  '[phpwiki:?action=search&searchterm=()]',
 		  '----');
    }
-   $recentchanges['lastmodified'] = $now;
 
-   if (date($dateformat, $recentchanges['lastmodified']) != $today) {
-      $isNewDay = TRUE;
-   } else {
-      $isNewDay = FALSE;
-   }
+   $isNewDay = date($dateformat, $recentchanges['lastmodified']) != $today;
+   $recentchanges['lastmodified'] = $now;
 
    $numlines = sizeof($recentchanges['content']);
    $newpage = array();
