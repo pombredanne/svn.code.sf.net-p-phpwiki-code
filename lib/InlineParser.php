@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.25 2003-02-21 22:04:43 dairiki Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.26 2003-02-23 22:43:35 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -264,7 +264,7 @@ function LinkBracketLink($bracketlink) {
     // be either a page name, a URL or both separated by a pipe.
     
     // strip brackets and leading space
-    preg_match('/(\#?) \[\s* (?: (.+?) \s* (?<!' . ESCAPE_CHAR . ')(\|) )? \s* (.+?) \s*\]/x',
+    preg_match('/(\#?) \[\s* (?: (.*?) \s* (?<!' . ESCAPE_CHAR . ')(\|) )? \s* (.+?) \s*\]/x',
 	       $bracketlink, $matches);
     list (, $hash, $label, $bar, $rawlink) = $matches;
 
