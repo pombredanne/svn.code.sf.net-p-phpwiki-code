@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.51 2004-02-12 17:05:38 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.52 2004-02-15 15:25:23 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -529,17 +529,22 @@ class PageList {
                                    'class'       => 'pagelist'));
         if ($caption)
             $table->pushContent(HTML::caption(array('align'=>'top'), $caption));
+
+        //Warning: This is quite fragile. It depends solely on a private variable
+        //         in ->_addColumn()
         if (in_array('checkbox',$this->_columns_seen)) {
             $table->pushContent($this->_jsFlipAll());
         }
         $row = HTML::tr();
+        $table_summary = array();
         foreach ($this->_columns as $col) {
-            //TODO: add links to resort the table
             $row->pushContent($col->heading());
-            $table_summary[] = $col->_heading;
+            if (is_string($col->_heading))
+                $table_summary[] = $col->_heading;
         }
         // Table summary for non-visual browsers.
-        $table->setAttr('summary', sprintf(_("Columns: %s."), implode(", ", $table_summary)));
+        $table->setAttr('summary', sprintf(_("Columns: %s."), 
+                                           implode(", ", $table_summary)));
 
         $table->pushContent(HTML::thead($row),
                             HTML::tbody(false, $this->_rows));
@@ -564,7 +569,9 @@ function flipAll(formObj) {
     function _generateList($caption) {
         $list = HTML::ul(array('class' => 'pagelist'), $this->_rows);
         $out = HTML();
-        if (in_array('checkbox',$this->_columns)) {
+        //Warning: This is quite fragile. It depends solely on a private variable
+        //         in ->_addColumn()
+        if (in_array('checkbox',$this->_columns_seen)) {
             $out->pushContent($this->_jsFlipAll());
         }
         if ($caption)
@@ -591,6 +598,14 @@ class PageList_Selectable
 extends PageList {
 
     function PageList_Selectable ($columns=false, $exclude=false) {
+        if ($columns) {
+            if (!is_array($columns))
+                $columns = explode(',', $columns);
+            if (!in_array('checkbox',$columns))
+                array_unshift($columns,'checkbox');
+        } else {
+            $columns = array('checkbox','pagename');
+        }
         PageList::PageList($columns,$exclude);
     }
 
