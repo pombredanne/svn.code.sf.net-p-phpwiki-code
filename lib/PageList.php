@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.120 2004-11-20 11:28:49 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.121 2004-11-20 17:35:47 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -742,7 +742,7 @@ class PageList {
      * Now all columns are sortable. (patch by DanFr)
      * Some columns have native DB backend methods, some not.
      */
-    function sortby ($column, $action) {
+    function sortby ($column, $action, $valid_fields=false) {
         global $request;
 
         if (empty($column)) return '';
@@ -757,9 +757,9 @@ class PageList {
             $result = ($action == 'check') ? true : array();
             foreach (explode(',', $column) as $col) {
                 if ($action == 'check')
-                    $result = $result && $this->sortby($col, $action);
+                    $result = $result && $this->sortby($col, $action, $valid_fields);
                 else
-                    $result[] = $this->sortby($col, $action);
+                    $result[] = $this->sortby($col, $action, $valid_fields);
             }
             // 'check' returns true/false for every col. return true if all are true. 
             // i.e. the unsupported 'every' operator in functional languages.
@@ -790,8 +790,9 @@ class PageList {
                         and strstr($request->getArg('sortby'),$column)));
         } elseif ($action == 'db') {
             // Performance enhancement: use native DB sort if possible.
-            if (method_exists($request->_dbi->_backend, 'sortable_columns')
-                and (in_array($column, $request->_dbi->_backend->sortable_columns()))) {
+            if (($valid_fields and in_array($column, $valid_fields))
+                or (method_exists($request->_dbi->_backend, 'sortable_columns')
+                    and (in_array($column, $request->_dbi->_backend->sortable_columns())))) {
                 // omit this sort method from the _sortPages call at rendering
                 // asc or desc: +pagename, -pagename
                 return $column . ($order == '+' ? ' ASC' : ' DESC');
@@ -804,6 +805,7 @@ class PageList {
 
     // echo implode(":",explodeList("Test*",array("xx","Test1","Test2")));
     function explodePageList($input, $include_empty = false, $sortby=false, $limit=false) {
+    	//TODO: need an SQL optimization here
         // expand wildcards from list of all pages
         if (preg_match('/[\?\*]/',$input)) {
             $dbi = $GLOBALS['request']->getDbh();
@@ -1431,6 +1433,14 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.120  2004/11/20 11:28:49  rurban
+// fix a yet unused PageList customPageListColumns bug (merge class not decl to _types)
+// change WantedPages to use PageList
+// change WantedPages to print the list of referenced pages, not just the count.
+//   the old version was renamed to WantedPagesOld
+//   fix and add handling of most standard PageList arguments (limit, exclude, ...)
+// TODO: pagename sorting, dumb/WantedPagesIter and SQL optimization
+//
 // Revision 1.119  2004/11/11 14:34:11  rurban
 // minor clarifications
 //
