@@ -1,4 +1,5 @@
-<!-- $Id: index.php3,v 1.5 2000-06-29 16:12:00 ahollosi Exp $ -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- $Id: index.php3,v 1.6 2000-06-30 17:51:53 ahollosi Exp $ -->
 <?
    /*
       The main page, i.e. the main loop.
