@@ -184,33 +184,35 @@ include_once("themes/" . THEME . "/themeinfo.php");
 # Test files
 require_once 'PHPUnit.php';
 # lib/config.php might do a cwd()
-require_once dirname(__FILE__).'/lib/InlineParserTest.php';
-require_once dirname(__FILE__).'/lib/SetupWiki.php';
-require_once dirname(__FILE__).'/lib/PageListTest.php';
-require_once dirname(__FILE__).'/lib/DumpHtml.php';
-require_once dirname(__FILE__).'/lib/plugin/ListPagesTest.php';
-require_once dirname(__FILE__).'/lib/plugin/AllPagesTest.php';
-require_once dirname(__FILE__).'/lib/plugin/AllUsersTest.php';
-require_once dirname(__FILE__).'/lib/plugin/OrphanedPagesTest.php'; 
 
 if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']))
     echo "<pre>\n";
 // purge the testbox
     
 print "Run tests .. ";
-print "Purge the testbox .. ";
-purge_testbox();
 
 $suite  = new PHPUnit_TestSuite("phpwiki");
-$suite->addTest( new PHPUnit_TestSuite("InlineParserTest") );
-$suite->addTest( new PHPUnit_TestSuite("HtmlParserTest") );
-$suite->addTest( new PHPUnit_TestSuite("PageListTest") );
-$suite->addTest( new PHPUnit_TestSuite("ListPagesTest") );
-$suite->addTest( new PHPUnit_TestSuite("SetupWiki") );
-$suite->addTest( new PHPUnit_TestSuite("DumpHtml") );
-$suite->addTest( new PHPUnit_TestSuite("AllPagesTest") );
-$suite->addTest( new PHPUnit_TestSuite("AllUsersTest") );
-$suite->addTest( new PHPUnit_TestSuite("OrphanedPagesTest") );
+// use argv (from cli) or tests (from browser) params to run only certain tests
+$alltests = array('InlineParserTest','HtmlParserTest','PageListTest','ListPagesTest',
+			      'SetupWiki','DumpHtml','AllPagesTest','AllUsersTest','OrphanedPagesTest');
+if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']) and !empty($HTTP_GET_VARS['tests']))
+    $argv = explode(',',$HTTP_GET_VARS['tests']);
+if (!empty($argv)) {
+	$runtests = array();
+	foreach ($argv as $test) {
+	    if (in_array($test,$alltests))
+            $runtests[] = $test;
+	}        
+	$alltests = $runtests;
+}
+
+foreach ($alltests as $test) {
+	if (file_exists(dirname(__FILE__).'/lib/'.$test.'.php'))
+	    require_once dirname(__FILE__).'/lib/'.$test.'.php';
+	else    
+	    require_once dirname(__FILE__).'/lib/plugin/'.$test.'.php';
+    $suite->addTest( new PHPUnit_TestSuite($test) );
+}
 $result = PHPUnit::run($suite); 
 
 echo "ran " . $result->runCount() . " tests, " . $result->failureCount() . " failures.\n";
