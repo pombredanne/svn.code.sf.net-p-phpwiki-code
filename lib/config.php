@@ -10,7 +10,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.24.2.11 2001-12-11 15:47:02 dairiki Exp $'); 
+   rcs_id('$Id: config.php,v 1.24.2.12 2001-12-27 01:36:35 carstenklapp Exp $'); 
    // end essential internal stuff
 
 
@@ -195,10 +195,10 @@
 
    // allowed protocols for links - be careful not to allow "javascript:"
    // within a named link [name|uri] one more protocol is defined: phpwiki
-   $AllowedProtocols = "http|https|mailto|ftp|news|gopher";
+   $AllowedProtocols = "http|https|mailto|ftp|news|nntp|gopher";
 
    // URLs ending with the following extension should be inlined as images
-   $InlineImages = "png|jpg|gif";
+   $InlineImages = "png|jpg|gif|tiff|tif";
 
    // Uncomment this to automatically split WikiWords by inserting spaces.
    // The default is to leave WordsSmashedTogetherLikeSo in the body text.
