@@ -1,12 +1,12 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.8 2002-02-07 17:07:58 lakka Exp $');
+rcs_id('$Id: WikiDB.php,v 1.9 2002-02-07 23:40:41 lakka Exp $');
 
 //FIXME: arg on get*Revision to hint that content is wanted.
 
 define('WIKIDB_FORCE_CREATE', -1);
 
-//FIXME:  Use this to use new cache.  Remove refs to it before release
-//define('USECACHE', 1);
+// FIXME:  used for debugging only.  Comment out if cache does not work
+define('USECACHE', 1);
 
 /** 
  * Abstract base class for the database used by PhpWiki.
@@ -80,6 +80,7 @@ class WikiDB {
     function open ($dbparams) {
         $dbtype = $dbparams{'dbtype'};
         include_once("lib/WikiDB/$dbtype.php");
+				
         $class = 'WikiDB_' . $dbtype;
         return new $class ($dbparams);
     }
@@ -1149,15 +1150,15 @@ class WikiDB_cache
     }
 
     function invalidate_cache($pagename) {
-        $this->_pagedata_cache[$pagename] = false;
-		$this->_versiondata_cache[$pagename] = false;
-		$this->_glv_cache[$pagename] = false;
+        unset ($this->_pagedata_cache[$pagename]);
+		unset ($this->_versiondata_cache[$pagename]);
+		unset ($this->_glv_cache[$pagename]);
     }
     
     function delete_page($pagename) {
         $this->_backend->delete_page($pagename);
-        $this->_pagedata_cache[$pagename] = false;
-		$this->_glv_cache[$pagename] = false;
+        unset ($this->_pagedata_cache[$pagename]);
+		unset ($this->_glv_cache[$pagename]);
     }
 
     // FIXME: ugly
@@ -1170,14 +1171,20 @@ class WikiDB_cache
 		//  FIXME: Seriously ugly hackage
 	if (defined ('USECACHE')){   //temporary - for debugging
         assert(is_string($pagename) && $pagename);
+		// there is a bug here somewhere which results in an assertion failure at line 105
+		// of ArchiveCleaner.php  It goes away if we use the next line.
+		$need_content = true;
 		$nc = $need_content ? '1':'0';
         $cache = &$this->_versiondata_cache;
         if (!isset($cache[$pagename][$version][$nc])||
-				!(is_array ($cache[$pagename])) && is_array ($cache[$pagename][$version])) {
+				!(is_array ($cache[$pagename])) || !(is_array ($cache[$pagename][$version]))) {
             $cache[$pagename][$version][$nc] = 
 				$this->_backend->get_versiondata($pagename,$version, $need_content);
+			// If we have retrieved all data, we may as well set the cache for $need_content = false
+			if($need_content){
+				$cache[$pagename][$version]['0'] = $cache[$pagename][$version]['1'];
 			}
-		
+		}
         $vdata = $cache[$pagename][$version][$nc];
 	}
 	else
@@ -1195,6 +1202,10 @@ class WikiDB_cache
              set_versiondata($pagename, $version, $data);
 		// Update the cache
 		$this->_versiondata_cache[$pagename][$version]['1'] = $data;
+		// FIXME: hack
+		$this->_versiondata_cache[$pagename][$version]['0'] = $data;
+		// Is this necessary?
+		unset($this->_glv_cache[$pagename]);
 		
     }
 
@@ -1203,25 +1214,30 @@ class WikiDB_cache
              update_versiondata($pagename, $version, $data);
 		// Update the cache
 		$this->_versiondata_cache[$pagename][$version]['1'] = $data;
+		// FIXME: hack
+		$this->_versiondata_cache[$pagename][$version]['0'] = $data;
+		// Is this necessary?
+		unset($this->_glv_cache[$pagename]);
+
     }
 
     function delete_versiondata($pagename, $version) {
         $new = $this->_backend->
              delete_versiondata($pagename, $version);
-	 	$this->_versiondata_cache[$pagename][(string)$version] = false;
-		// No need to delete entry from _glv_cache because most recent version is not deleted
+	 	unset ($this->_versiondata_cache[$pagename][$version]['1']);
+	 	unset ($this->_versiondata_cache[$pagename][$version]['0']);
+		unset ($this->_glv_cache[$pagename]);
     }
 	
 	function get_latest_version($pagename)  {
 	if(defined('USECACHE')){
 		assert (is_string($pagename) && $pagename);
         $cache = &$this->_glv_cache;	
-        if (!isset($cache[$pagename]) || !is_array($cache[$pagename])) {
+        if (!isset($cache[$pagename])) {
             $cache[$pagename] = $this->_backend->get_latest_version($pagename);
             if (empty($cache[$pagename]))
                 $cache[$pagename] = 0;
-        }
-
+        } 
         return $cache[$pagename];}
 	else {
 		return $this->_backend->get_latest_version($pagename); 
