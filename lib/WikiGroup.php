@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.15 2004-03-09 12:11:57 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.16 2004-03-10 13:54:54 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -193,22 +193,33 @@ class WikiGroup{
         $dbi = _PassUser::getAuthDbh();
         if ($dbi and !empty($GLOBALS['DBAuthParams']['pref_select'])) {
             //get prefs table
-            $sql = str_replace(' prefs ',' userid ',$GLOBALS['DBAuthParams']['pref_select']);
-            $sql = preg_replace('/WHERE.*/i','',$sql);
+            $sql = preg_replace('/SELECT .+ FROM/i','SELECT userid FROM',$GLOBALS['DBAuthParams']['pref_select']);
+            //don't strip WHERE, only the userid stuff.
+            $sql = preg_replace('/(WHERE.*?)\s+\w+\s*=\s*"\$userid"/i','\\1 AND 1',$sql);
+            $sql = str_replace('WHERE AND 1','',$sql);
             if ($GLOBALS['DBParams']['dbtype'] == 'ADODB') {
                 $db_result = $dbi->Execute($sql);
-                $users = array_merge($users,$db_result->GetArray());
+                foreach ($db_result->GetArray() as $u) {
+                   $users = array_merge($users,array_values($u));
+                }
+                //$users = array_merge($users,array_values($db_result->GetArray()));
             } elseif ($GLOBALS['DBParams']['dbtype'] == 'SQL') {
                 $users = array_merge($users,$dbi->getCol($sql));
             }
         }
 
         /* WikiDB users from users: */
+        // Fixme: don't strip WHERE, only the userid stuff.
         if ($dbi and !empty($GLOBALS['DBAuthParams']['auth_user_exists'])) {
-            $sql = preg_replace('/WHERE.*/i','',$GLOBALS['DBAuthParams']['auth_user_exists']);
+            //don't strip WHERE, only the userid stuff.
+            $sql = preg_replace('/(WHERE.*?)\s+\w+\s*=\s*"\$userid"/i','\\1 AND 1',$GLOBALS['DBAuthParams']['auth_user_exists']);
+            $sql = str_replace('WHERE AND 1','',$sql);
+            //$sql = preg_replace('/WHERE.*/i','',$GLOBALS['DBAuthParams']['auth_user_exists']);
             if ($GLOBALS['DBParams']['dbtype'] == 'ADODB') {
                 $db_result = $dbi->Execute($sql);
-                $users = array_merge($users,$db_result->GetArray());
+                foreach ($db_result->GetArray() as $u) {
+                   $users = array_merge($users,array_values($u));
+                }
             } elseif ($GLOBALS['DBParams']['dbtype'] == 'SQL') {
                 $users = array_merge($users,$dbi->getCol($sql));
             }
@@ -581,7 +592,7 @@ class GroupDb extends WikiGroup {
             }
         }
         $dbh = _PassUser::getAuthDbh();
-        $db_result = $dbh->execute($this->_user_groups,$username);
+        $db_result = $dbh->execute($this->_user_groups,array($username));
         if ($db_result->numRows() > 0) {
             while (list($group) = $db_result->fetchRow()) {
                 $membership[] = $group;
@@ -605,7 +616,7 @@ class GroupDb extends WikiGroup {
         $members = array();
 
         $dbh = _PassUser::getAuthDbh();
-        $db_result = $dbh->execute($this->_group_members,$group);
+        $db_result = $dbh->execute($this->_group_members,array($group));
         if ($db_result->numRows() > 0) {
             while (list($userid) = $db_result->fetchRow()) {
                 $members[] = $userid;
@@ -847,6 +858,9 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2004/03/09 12:11:57  rurban
+// prevent from undefined DBAuthParams warning
+//
 // Revision 1.14  2004/03/08 19:30:01  rurban
 // fixed Theme->getButtonURL
 // AllUsers uses now WikiGroup (also DB User and DB Pref users)

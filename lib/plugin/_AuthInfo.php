@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _AuthInfo.php,v 1.9 2004-03-08 18:17:10 rurban Exp $');
+rcs_id('$Id: _AuthInfo.php,v 1.10 2004-03-10 13:54:53 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -31,7 +31,7 @@ class WikiPlugin__AuthInfo
 extends WikiPlugin
 {
     function getName () {
-        return _("AuthInfo");
+        return _("_AuthInfo");
     }
 
     function getDescription () {
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
@@ -184,6 +184,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/03/08 18:17:10  rurban
+// added more WikiGroup::getMembersOf methods, esp. for special groups
+// fixed $LDAP_SET_OPTIONS
+// fixed _AuthInfo group methods
+//
 // Revision 1.8  2004/03/08 16:35:23  rurban
 // fixed "Undefined index: auth_dsn" warning
 //

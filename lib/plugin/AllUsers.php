@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllUsers.php,v 1.10 2004-03-08 19:30:01 rurban Exp $');
+rcs_id('$Id: AllUsers.php,v 1.11 2004-03-10 13:54:54 rurban Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -23,10 +23,11 @@ rcs_id('$Id: AllUsers.php,v 1.10 2004-03-08 19:30:01 rurban Exp $');
 require_once('lib/PageList.php');
 
 /**
- * Based on AllPages.
+ * Based on AllPages and WikiGroup.
  *
- * We currently don't get externally authenticated users which didn't
- * store their Preferences.
+ * We query homepage users (prefs stored in a page), 
+ * users with db prefs and externally authenticated users with a db users table,
+ * if auth_user_exists is defined.
  */
 class WikiPlugin_AllUsers
 extends WikiPlugin
@@ -41,7 +42,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     function getDefaultArguments() {
@@ -104,6 +105,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/03/08 19:30:01  rurban
+// fixed Theme->getButtonURL
+// AllUsers uses now WikiGroup (also DB User and DB Pref users)
+// PageList fix for empty pagenames
+//
 // Revision 1.9  2004/02/22 23:20:33  rurban
 // fixed DumpHtmlToDir,
 // enhanced sortby handling in PageList
