@@ -1,7 +1,7 @@
-<?php rcs_id('$Id: DbSession.php,v 1.3 2003-03-04 05:33:00 dairiki Exp $');
+<?php rcs_id('$Id: DbSession.php,v 1.4 2004-02-26 01:38:16 rurban Exp $');
 
 /**
- * Store sessions data in Pear DB.
+ * Store sessions data in Pear DB / ADODB ....
  *
  * History
  *
@@ -22,23 +22,39 @@ class DB_Session
      * Name of SQL table containing session data.
      */
     function DB_Session(&$dbh, $table = 'session') {
-
-        // Coerce WikiDB to Pear DB.
+        // Coerce WikiDB to PearDB or ADODB.
+        // Todo: adodb/dba handlers
+        $db_type = $GLOBALS['DBParams']['dbtype'];
         if (isa($dbh, 'WikiDB')) {
             $backend = &$dbh->_backend;
-            if (!isa($backend, 'WikiDB_backend_PearDB')) {
-                trigger_error('Your WikiDB does not seem to be using a Pear DB backend',
-                              E_USER_ERROR);
-                return;
+            $db_type = substr(get_class($dbh),7);
+            $class = "DB_Session_".$db_type;
+            if (class_exists($class)) {
+                return new $class(&$backend->_dbh, $table);
+                //return new DB_Session_SQL(&$dbh, $table);
+                //return new DB_Session_ADODB(&$dbh, $table);
             }
-            $dbh = &$backend->_dbh;
         }
-    
+        //Fixme: E_USER_WARNING ignored!
+        trigger_error(sprintf(
+_("Your WikiDB DB backend '%s' cannot be used for DB_Session. Set USE_DB_SESSION to false."),
+                             $db_type), E_USER_WARNING);
+        return;
+     }
+}
+
+class DB_Session_SQL
+extends DB_Session
+{
+    var $_backend_type = "SQL";
+
+    function DB_Session_SQL ($dbh, $table) {
+
         $this->_dbh = &$dbh;
         $this->_table = $table;
 
         ini_set('session.save_handler','user');
-
+        session_module_name('user'); // new style
         session_set_save_handler(array(&$this, 'do_open'),
                                  array(&$this, 'do_close'),
                                  array(&$this, 'do_read'),
@@ -63,7 +79,7 @@ class DB_Session
         if (!$this->_connected)
             $this->_dbh->disconnect();
     }
-    
+
     /**
      * Opens a session.
      *
@@ -196,6 +212,16 @@ class DB_Session
     }
 }
 
+
+// adodb-session wrapper: warning! uses different db layout
+class DB_Session_ADODB_test
+extends DB_Session
+{
+    var $_backend_type = "ADODB";
+
+    function DB_Session_ADODB_test ($dbh, $table) {
+    }
+}
 
 // Local Variables:
 // mode: php
