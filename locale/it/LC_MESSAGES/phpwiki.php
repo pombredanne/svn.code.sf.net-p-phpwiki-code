@@ -68,8 +68,12 @@ $locale["Height"] =
    "Altezza";
 $locale["HomePage"] =
    "PaginaPrincipale";
+$locale["HomePageAlias"] =
+   "PaginaPrincipaleAlias";
 $locale["Include of '%s' failed"] =
    "Inserimento di '%s' fallito";
+$locale["IncludePagePlugin"] =
+   "InserireLaPaginaPlugin";
 $locale["Last"] =
    "Ultima";
 $locale["Last Modified"] =

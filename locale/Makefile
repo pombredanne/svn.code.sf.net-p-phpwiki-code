@@ -1,4 +1,4 @@
- # $Id: Makefile,v 1.41 2004-06-04 20:35:24 rurban Exp $
+ # $Id: Makefile,v 1.42 2004-06-28 17:53:53 rurban Exp $
 #
 # locale/Makefile
 #
@@ -66,7 +66,6 @@ mo: sv/LC_MESSAGES/phpwiki.mo sv/LC_MESSAGES/phpwiki.php
 po: po/zh.po
 mo: zh/LC_MESSAGES/phpwiki.mo zh/LC_MESSAGES/phpwiki.php
 #
-${POT_FILE}: ../lib/Amazon.php
 ${POT_FILE}: ../lib/ArchiveCleaner.php
 ${POT_FILE}: ../lib/BlockParser.php
 ${POT_FILE}: ../lib/CachedMarkup.php
@@ -158,6 +157,7 @@ ${POT_FILE}: ../lib/WikiDB/backend/dumb/MostRecentIter.php
 ${POT_FILE}: ../lib/WikiDB/backend/dumb/TextSearchIter.php
 ${POT_FILE}: ../lib/WikiDB/backend/file.php
 ${POT_FILE}: ../lib/WikiDB/backend/mysql.php
+${POT_FILE}: ../lib/WikiDB/backend/oci8.php
 ${POT_FILE}: ../lib/WikiDB/backend/pgsql.php
 ${POT_FILE}: ../lib/WikiDB/backend/sqlite.php
 ${POT_FILE}: ../lib/WikiDB/cvs.php
@@ -169,6 +169,7 @@ ${POT_FILE}: ../lib/WikiPluginCached.php
 ${POT_FILE}: ../lib/WikiUser.php
 ${POT_FILE}: ../lib/WikiUserNew.php
 ${POT_FILE}: ../lib/XmlElement.php
+${POT_FILE}: ../lib/XmlParser.php
 ${POT_FILE}: ../lib/XmlRpcServer.php
 ${POT_FILE}: ../lib/config.php
 ${POT_FILE}: ../lib/diff.php
@@ -176,6 +177,7 @@ ${POT_FILE}: ../lib/diff3.php
 ${POT_FILE}: ../lib/difflib.php
 ${POT_FILE}: ../lib/display.php
 ${POT_FILE}: ../lib/editpage.php
+${POT_FILE}: ../lib/fortune.php
 ${POT_FILE}: ../lib/fpdf.php
 ${POT_FILE}: ../lib/fpdf/chinese.php
 ${POT_FILE}: ../lib/fpdf/courier.php
@@ -191,8 +193,6 @@ ${POT_FILE}: ../lib/fpdf/timesbi.php
 ${POT_FILE}: ../lib/fpdf/timesi.php
 ${POT_FILE}: ../lib/fpdf/zapfdingbats.php
 ${POT_FILE}: ../lib/gif.php
-${POT_FILE}: ../lib/htmlarea.php
-${POT_FILE}: ../lib/htmlarea3/popups/insert_pagelink.php
 ${POT_FILE}: ../lib/imagecache.php
 ${POT_FILE}: ../lib/loadsave.php
 ${POT_FILE}: ../lib/main.php
@@ -200,20 +200,16 @@ ${POT_FILE}: ../lib/nusoap/nusoap.php
 ${POT_FILE}: ../lib/pdf.php
 ${POT_FILE}: ../lib/pear/Cache.php
 ${POT_FILE}: ../lib/pear/Cache/Container.php
+${POT_FILE}: ../lib/pear/Cache/Container/db.php
 ${POT_FILE}: ../lib/pear/Cache/Container/file.php
 ${POT_FILE}: ../lib/pear/Cache/Container/imgfile.php
+${POT_FILE}: ../lib/pear/Cache/Container/trifile.php
 ${POT_FILE}: ../lib/pear/Cache/Error.php
-${POT_FILE}: ../lib/pear/Config.php
-${POT_FILE}: ../lib/pear/Config/Container.php
-${POT_FILE}: ../lib/pear/Config/Container/Apache.php
-${POT_FILE}: ../lib/pear/Config/Container/GenericConf.php
-${POT_FILE}: ../lib/pear/Config/Container/IniCommented.php
-${POT_FILE}: ../lib/pear/Config/Container/IniFile.php
-${POT_FILE}: ../lib/pear/Config/Container/PHPArray.php
-${POT_FILE}: ../lib/pear/Config/Container/XML.php
+${POT_FILE}: ../lib/pear/Cache/Graphics.php
 ${POT_FILE}: ../lib/pear/DB.php
 ${POT_FILE}: ../lib/pear/DB/Pager.php
 ${POT_FILE}: ../lib/pear/DB/common.php
+${POT_FILE}: ../lib/pear/DB/dbase.php
 ${POT_FILE}: ../lib/pear/DB/fbsql.php
 ${POT_FILE}: ../lib/pear/DB/ibase.php
 ${POT_FILE}: ../lib/pear/DB/ifx.php
@@ -221,6 +217,7 @@ ${POT_FILE}: ../lib/pear/DB/ldap.php
 ${POT_FILE}: ../lib/pear/DB/msql.php
 ${POT_FILE}: ../lib/pear/DB/mssql.php
 ${POT_FILE}: ../lib/pear/DB/mysql.php
+${POT_FILE}: ../lib/pear/DB/mysqli.php
 ${POT_FILE}: ../lib/pear/DB/oci8.php
 ${POT_FILE}: ../lib/pear/DB/odbc.php
 ${POT_FILE}: ../lib/pear/DB/pgsql.php
@@ -240,9 +237,11 @@ ${POT_FILE}: ../lib/plugin/CalendarList.php
 ${POT_FILE}: ../lib/plugin/Comment.php
 ${POT_FILE}: ../lib/plugin/CreatePage.php
 ${POT_FILE}: ../lib/plugin/CreateToc.php
+${POT_FILE}: ../lib/plugin/DeadEndPages.php
 ${POT_FILE}: ../lib/plugin/Diff.php
 ${POT_FILE}: ../lib/plugin/EditMetaData.php
 ${POT_FILE}: ../lib/plugin/ExternalSearch.php
+${POT_FILE}: ../lib/plugin/FoafViewer.php
 ${POT_FILE}: ../lib/plugin/FrameInclude.php
 ${POT_FILE}: ../lib/plugin/FullTextSearch.php
 ${POT_FILE}: ../lib/plugin/FuzzyPages.php
@@ -253,6 +252,7 @@ ${POT_FILE}: ../lib/plugin/IncludePage.php
 ${POT_FILE}: ../lib/plugin/IncludeSiteMap.php
 ${POT_FILE}: ../lib/plugin/InterWikiSearch.php
 ${POT_FILE}: ../lib/plugin/LikePages.php
+${POT_FILE}: ../lib/plugin/ListPages.php
 ${POT_FILE}: ../lib/plugin/ListSubpages.php
 ${POT_FILE}: ../lib/plugin/MostPopular.php
 ${POT_FILE}: ../lib/plugin/NoCache.php
@@ -266,6 +266,7 @@ ${POT_FILE}: ../lib/plugin/PageTrail.php
 ${POT_FILE}: ../lib/plugin/PhotoAlbum.php
 ${POT_FILE}: ../lib/plugin/PhpHighlight.php
 ${POT_FILE}: ../lib/plugin/PhpWeather.php
+${POT_FILE}: ../lib/plugin/Ploticus.php
 ${POT_FILE}: ../lib/plugin/PluginManager.php
 ${POT_FILE}: ../lib/plugin/PopularNearby.php
 ${POT_FILE}: ../lib/plugin/PrevNext.php
@@ -284,6 +285,7 @@ ${POT_FILE}: ../lib/plugin/SiteMap.php
 ${POT_FILE}: ../lib/plugin/SqlResult.php
 ${POT_FILE}: ../lib/plugin/SyntaxHighlighter.php
 ${POT_FILE}: ../lib/plugin/SystemInfo.php
+${POT_FILE}: ../lib/plugin/TeX2png.php
 ${POT_FILE}: ../lib/plugin/TexToPng.php
 ${POT_FILE}: ../lib/plugin/TitleSearch.php
 ${POT_FILE}: ../lib/plugin/Transclude.php
@@ -295,6 +297,7 @@ ${POT_FILE}: ../lib/plugin/VisualWiki.php
 ${POT_FILE}: ../lib/plugin/WantedPages.php
 ${POT_FILE}: ../lib/plugin/WhoIsOnline.php
 ${POT_FILE}: ../lib/plugin/WikiAdminChmod.php
+${POT_FILE}: ../lib/plugin/WikiAdminChown.php
 ${POT_FILE}: ../lib/plugin/WikiAdminRemove.php
 ${POT_FILE}: ../lib/plugin/WikiAdminRename.php
 ${POT_FILE}: ../lib/plugin/WikiAdminSearchReplace.php
@@ -310,11 +313,16 @@ ${POT_FILE}: ../lib/plugin/_BackendInfo.php
 ${POT_FILE}: ../lib/plugin/_PreferencesInfo.php
 ${POT_FILE}: ../lib/plugin/_WikiTranslation.php
 ${POT_FILE}: ../lib/plugin/text2png.php
-${POT_FILE}: ../lib/plugincache-config.php
 ${POT_FILE}: ../lib/prepend.php
 ${POT_FILE}: ../lib/removepage.php
 ${POT_FILE}: ../lib/stdlib.php
 ${POT_FILE}: ../lib/upgrade.php
+${POT_FILE}: ../lib/wikilens/Buddy.php
+${POT_FILE}: ../lib/wikilens/CustomPrefs.php
+${POT_FILE}: ../lib/wikilens/PageListColumns.php
+${POT_FILE}: ../lib/wikilens/RatingsDb.php
+${POT_FILE}: ../lib/wikilens/RatingsUser.php
+${POT_FILE}: ../lib/wikilens/Utils.php
 ${POT_FILE}: ../lib/ziplib.php
 ${POT_FILE}: ../themes/Crao/templates/actionbar.tmpl
 ${POT_FILE}: ../themes/Crao/templates/blogform.tmpl
@@ -338,6 +346,15 @@ ${POT_FILE}: ../themes/MacOSX/buttons/index.php
 ${POT_FILE}: ../themes/MacOSX/images/index.php
 ${POT_FILE}: ../themes/MacOSX/lib/RecentChanges.php
 ${POT_FILE}: ../themes/MacOSX/themeinfo.php
+${POT_FILE}: ../themes/MonoBook/templates/actionbar.tmpl
+${POT_FILE}: ../themes/MonoBook/templates/body.tmpl
+${POT_FILE}: ../themes/MonoBook/templates/browse-footer.tmpl
+${POT_FILE}: ../themes/MonoBook/templates/info.tmpl
+${POT_FILE}: ../themes/MonoBook/templates/logo.tmpl
+${POT_FILE}: ../themes/MonoBook/templates/navbar.tmpl
+${POT_FILE}: ../themes/MonoBook/templates/signin.tmpl
+${POT_FILE}: ../themes/MonoBook/templates/top.tmpl
+${POT_FILE}: ../themes/MonoBook/themeinfo.php
 ${POT_FILE}: ../themes/Portland/lib/RecentChanges.php
 ${POT_FILE}: ../themes/Portland/templates/actionbar.tmpl
 ${POT_FILE}: ../themes/Portland/templates/body.tmpl
