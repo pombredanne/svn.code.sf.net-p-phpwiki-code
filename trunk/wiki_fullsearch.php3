@@ -9,9 +9,11 @@
 
    $found = $count = 0;
 
-   // from classic wiki: $pat =~ s/[+?.*()[\]{}|\\]/\\$&/g;
-   // disallow _'_ and _%_ too, _\_ have to be doubled
-   $full = preg_replace("/[+?.*()'%[\\]{}|\\\\]/", "", $full);
+   if(get_magic_quotes_gpc())
+      $full = stripslashes($full);
+
+   // quote regexp chars
+   $full = preg_quote($full);
 
    // search matching pages
    $query = InitFullSearch($dbi, $full);
