@@ -1,47 +1,53 @@
 <?php // -*-html-*-
-     rcs_id('$Id: signin.tmpl,v 1.26 2004-03-24 19:40:35 rurban Exp $');
+rcs_id('$Id: signin.tmpl,v 1.27 2004-03-29 21:37:42 rurban Exp $');
 
-     if (empty($FORMNAME))
-         $FORMNAME = 'signin';
-     else
-         $NOFORM = true;
+if (empty($FORMNAME))
+    $FORMNAME = 'signin';
+else
+    $NOFORM = true;
 ?>
 <?php if (empty($NOFORM)) { ?>
-  <form method="post" action="<?= $request->getPostURL() ?>" accept-charset="<?=CHARSET?>" name="<?=$FORMNAME?>">
+  <form method="post" action="<?=$request->getURLtoSelf()?>" accept-charset="<?=CHARSET?>" name="<?=$FORMNAME?>">
   <?= HiddenInputs($request->getArgs(), false, array('auth')) ?>
 <?php } ?>
-<?php // Check for status SignedIn but not Authenticated ?>
-<?php if ($user->isAuthenticated()) {
-  $Sep = $Theme->getButtonSeparator();
-  $SignOutB = $Theme->makeButton(_("Sign Out"), "javascript:SignOut();", 'wikiaction');
+<?php 
+if ($user->isAuthenticated()) {
+    $Sep = $Theme->getButtonSeparator();
+    $SignOutB = $Theme->makeButton(_("Sign Out"), "javascript:SignOut();", 'wikiaction');
 ?>
-<span>
-  <?= fmt("You are signed in as %s", WikiLink($user->getId(), 'auto')) ?>
+  <?= fmt("Authenticated as %s", WikiLink($user->getAuthenticatedId(), 'auto')) ?>
   <?=$Sep?>
-</span>
   <script language="JavaScript" type="text/javascript"><!--
     document.write('<input type="hidden" name="auth[logout]" value="0" />');
-    function SignOut(form) { 
-      var form = document.forms["<?=$FORMNAME?>"];
-      form.elements["auth[logout]"].value = 1;
-      form.submit();
+    function SignOut() { 
+      document.forms["<?=$FORMNAME?>"].elements["auth[logout]"].value = 1;
+      document.forms["<?=$FORMNAME?>"].submit();
     }
     document.write('<?=$SignOutB?>'); // -->
   </script>
   <noscript>
     <?= Button("submit:auth[logout]", _("Sign Out"), 'wikiaction') ?>
   </noscript>
-<?php } else {
-  $SignInInput = HTML::input(array('type' => 'text',
-                                   'name' => "auth[userid]",
-                                   'size' => 12,
-                                   'maxlength' => 256,
-                                   'onchange' => "SignIn(this.form);"));
-  $SignInInput->addTooltip(_("Enter your UserId to sign in")) 
+<?php } else { ?>
+    <?php
+    $SignInInput = HTML::input(array('type' => 'text',
+				     'name' => "auth[userid]",
+				     'size' => 12,
+				     'maxlength' => 256,
+				     'onchange' => "SignIn(this.form,false);"));
+    $SignInInput->addTooltip(_("Enter your UserId to sign in"));
+    $userid = $user->getId();
+    if ($user->isSignedIn()) 
+      echo sprintf(_("You are signed but not authenticated as %s. "), 
+		   asXml(HTML::a(array(
+				       'href'=>'#',
+				       'title' => sprintf(_("Click to authenticate as %s"),$userid),
+				       'onclick'=>'SignIn(document.forms["'.$FORMNAME.'"],"'.$userid.'");'),
+				 $userid)));
 ?>
 
   <script type="text/javascript"> <!--
-    function SignIn(form) {
+     function SignIn(form,userid) {
       <?php if (defined('EDITING_POLICY') and EDITING_POLICY) { ?>
       if (window.focus) {
         window.open('<?= WikiUrl(EDITING_POLICY) ?>',<!-- url -->
@@ -49,13 +55,14 @@
                     'width=600,height=430,scrollbars=yes,resizable=yes,toolbar=yes');
       }
       <?php } ?>
+      if (userid) {
+        form.elements["auth[userid]"].value = userid;
+      }
       form.submit();
     }
     //-->
-    document.write('&nbsp;<?=
-    _("Sign in as:")
-    ?>');
   </script>
+  <?= Button("submit:auth[login]", _("Sign in as:"), 'wikiaction')?>
   <?= $SignInInput ?>
   <noscript>
     <?= Button("submit:auth[login]", _("Sign in as:"), 'wikiaction')?>
