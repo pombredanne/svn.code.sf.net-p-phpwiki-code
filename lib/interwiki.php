@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: interwiki.php,v 1.16 2002-02-03 05:21:59 carstenklapp Exp $');
+<?php rcs_id('$Id: interwiki.php,v 1.17 2002-02-03 05:29:34 carstenklapp Exp $');
 
 class InterWikiMap {
     function InterWikiMap (&$request) {
@@ -44,8 +44,8 @@ class InterWikiMap {
         else
             $url .= $page_enc;
 
-        if ($moniker . $page == "CategoryCategory") {
-            $link = HTML::a(array('href' => $url, 'class' => 'wiki'), $moniker .":". $page);
+        if ($moniker == "Category") {
+            $link = HTML::a(array('href' => $url, 'class' => 'wiki'), $link);
         } else {
             $link = HTML::a(array('href' => $url),
                             IconForLink('interwiki'));
