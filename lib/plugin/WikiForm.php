@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiForm.php,v 1.8 2003-01-18 22:14:30 carstenklapp Exp $');
+rcs_id('$Id: WikiForm.php,v 1.9 2003-02-26 01:56:52 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -34,7 +34,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
@@ -46,23 +46,15 @@ extends WikiPlugin
     }
 
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
-        $form = HTML::form(array('action' => USE_PATH_INFO
-                                             ? WikiURL($request->getPage())
-                                             : SCRIPT_NAME,
+        $form = HTML::form(array('action' => $request->getPostURL(),
                                  'method' => 'post',
                                  'class'  => 'wikiadmin',
                                  'accept-charset' => CHARSET),
-                           HTML::input(array('type' => 'hidden',
-                                             'name' => 'action',
-                                             'value' => $action)),
-                           USE_PATH_INFO
-                           ? false
-                           : HTML::input(array('type' => 'hidden',
-                                               'name' => 'pagename',
-                                               'value' => $targetpage)));
-        $input = array('type' => 'text',
+                           HiddenInputs(array('action' => $action,
+                                              'pagename' => $basepage)));
+                $input = array('type' => 'text',
                        'value' => $default,
                        'size' => $size);
 
@@ -125,6 +117,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2003/01/18 22:14:30  carstenklapp
+// Code cleanup:
+// Reformatting & tabs to spaces;
+// Added copyleft, getVersion, getDescription, rcs_id.
+//
 
 // For emacs users
 // Local Variables:

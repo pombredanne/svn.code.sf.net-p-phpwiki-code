@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: EditMetaData.php,v 1.5 2003-02-21 04:17:13 dairiki Exp $');
+rcs_id('$Id: EditMetaData.php,v 1.6 2003-02-26 01:56:52 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -51,7 +51,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     // Arguments:
@@ -146,14 +146,15 @@ extends WikiPlugin
         $html->pushContent($dl);
 
         if ($request->_user->isAdmin()) {
-            $action = $request->getURLtoSelf();
+            $action = $request->getPostURL();
             $hiddenfield = HiddenInputs($request->getArgs());
             $instructions = _("Add or change a page-level metadata 'key=>value' pair. Note that you can remove a key by leaving value-box empty.");
             $keyfield = HTML::input(array('name' => 'metafield'), '');
             $valfield = HTML::input(array('name' => 'metavalue'), '');
             $button = Button('submit:metaedit', _("Submit"), false);
             $form = HTML::form(array('action' => $action,
-                                     'method' => 'post'),
+                                     'method' => 'post',
+                                     'accept-charset' => CHARSET),
                                $hiddenfield,
                                $instructions, HTML::br(),
                                $keyfield, ' => ', $valfield,
@@ -169,6 +170,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2003/02/21 04:17:13  dairiki
+// Delete now irrelevant comment.
+//
 // Revision 1.4  2003/01/18 21:41:01  carstenklapp
 // Code cleanup:
 // Reformatting & tabs to spaces;
