@@ -2,7 +2,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.6 2000-10-19 21:36:50 ahollosi Exp $');
+   rcs_id('$Id: config.php,v 1.7 2000-10-22 19:33:35 ahollosi Exp $');
 
    /*
       Constants and settings. Edit the values below for
@@ -157,6 +157,12 @@
     */
    define('WIKI_PGSRC', gettext("./pgsrc")); // Default (old) behavior.
    //define('WIKI_PGSRC', './wiki.zip'); // New style.
+
+   // DEFAULT_WIKI_PGSRC is only used when the language is *not*
+   // the default (English) and when reading from a directory:
+   // in that case some English pages are inserted into the wiki as well
+   // DEFAULT_WIKI_PGSRC defines where the English pages reside 
+   define('DEFAULT_WIKI_PGSRC', "./pgsrc");
   
    $ScriptName = "index.php";
 

@@ -1,4 +1,4 @@
-<!-- $Id: setupwiki.php,v 1.2 2000-10-20 11:42:52 ahollosi Exp $ -->
+<!-- $Id: setupwiki.php,v 1.3 2000-10-22 19:33:35 ahollosi Exp $ -->
 <?php
 require "lib/ziplib.php";
 
@@ -73,6 +73,8 @@ function LoadFile ($dbi, $filename, $text, $mtime)
 
 function LoadZipOrDir ($dbi, $zip_or_dir)
 {
+  global $LANG, $genericpages;
+
   $type = filetype($zip_or_dir);
   
   if ($type == 'file')
@@ -94,9 +96,23 @@ function LoadZipOrDir ($dbi, $zip_or_dir)
 	  $mtime = $stat[9];
 	  LoadFile($dbi, $fn, implode("", file("$dir/$fn")), $mtime);
 	}
-      closedir($handle); 
+      closedir($handle);
+
+      if ($LANG != "C") {   // if language is not default, then insert
+			   // generic pages from the English ./pgsrc
+	 reset($genericpages);
+	 $dir = DEFAULT_WIKI_PGSRC;
+	 while (list(, $fn) = each($genericpages))
+	    LoadFile($dbi, $fn, implode("", file("$dir/$fn")), $mtime);
+	}
     }
 }
+
+$genericpages = array(
+	"ReleaseNotes",
+	"SteveWainstead",
+	"TestPage"
+	);
 
 LoadZipOrDir($dbi, WIKI_PGSRC);
 ?>
