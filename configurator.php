@@ -3,8 +3,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.3 2002-02-26 01:05:10 carstenklapp Exp $ -->
-<head>
+<!-- $Id: configurator.php,v 1.4 2002-03-25 00:41:23 carstenklapp Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki 1.3.x</title>
 </head>
@@ -15,6 +14,7 @@
 <p>This tool is provided for testing purposes only. It's not finished so don't try to use it to configure your server yet.</p>
 
 <?php
+define('DEBUG', 1);
 /**
  * The Configurator is a php script to aid in the configuration of PhpWiki.
  * Parts of this file are based on PHPWeather's configurator.php file.
@@ -152,7 +152,7 @@ $properties['Part Null Settings'] =
 new unchangeable_variable('partnullsettings', "
 define ('PHPWIKI_VERSION', '1.3.3-jeffs-hacks');
 require \"lib/prepend.php\";
-rcs_id('\$Id: configurator.php,v 1.3 2002-02-26 01:05:10 carstenklapp Exp $');", "");
+rcs_id('\$Id: configurator.php,v 1.4 2002-03-25 00:41:23 carstenklapp Exp $');", "");
 
 
 
@@ -300,6 +300,10 @@ or set any user preferences, unless your browser supports cookies.)");
 
 
 
+///////// database selection
+
+
+
 $properties['Part Two'] =
 new part('parttwo', $SEPARATOR."\n", "
 
@@ -308,8 +312,113 @@ Database Selection
 ");
 
 
+//FIXME
+$properties['Database Type'] =
+new _variable_selection("DBParams['dbtype']",
+              array('dba'   => 'dba DBM',
+                    'SQL'   => 'SQL PEAR',
+                    'ADODB' => 'SQL ADODB'), "
+Select the database type:");
 
-// MORE CONFIG OPTIONS GO IN HERE
+
+//FIXME
+$properties['Filename / Table name Prefix'] =
+new _variable("DBParams['prefix']", "phpwiki_", "
+Used by all DB types:
+
+prefix for filenames or table names
+
+currently you MUST EDIT THE SQL file too (in the schemas/
+directory because we aren't doing on the fly sql generation
+during the installation.:");
+
+
+
+$properties['SQL dsn Setup'] =
+new part("sqldsnstuff", "
+", "
+For SQL based backends, specify the database as a DSN
+The most general form of a DSN looks like:
+<pre>
+  phptype(dbsyntax)://username:password@protocol+hostspec/database
+</pre>
+For a MySQL database, the following should work:
+<pre>
+   mysql://user:password@host/databasename
+</pre>
+<dl><dd>FIXME:</dd> <dt>My version Pear::DB seems to be broken enough that there
+        is no way to connect to a mysql server over a socket right now.</dt></dl>
+<pre>'dsn' => 'mysql://guest@:/var/lib/mysql/mysql.sock/test',
+'dsn' => 'mysql://guest@localhost/test',
+'dsn' => 'pgsql://localhost/test'</pre>,");
+
+
+
+$properties['SQL Type'] =
+new _variable_selection('dsn_sqltype',
+              array('mysql' => 'MySQL',
+                    'pgsql' => 'PostgreSQL'), "
+SQL DB types");
+
+
+
+$properties['SQL User'] =
+new _variable('dsn_sqluser', "wikiuser", "
+SQL User Id:");
+
+
+
+$properties['SQL Password'] =
+new _variable('dsn_sqlpass', "", "
+SQL Password:");
+
+
+
+$properties['SQL Database Host'] =
+new _variable('dsn_sqlhostorsock', "localhost", "
+SQL Database Hostname:");
+
+
+
+$properties['SQL Database Name'] =
+new _variable('dsn_sqldbname', "phpwiki", "
+SQL Database Name:");
+
+
+$properties['SQL dsn'] =
+new unchangeable_variable("DBParams['dsn']", "\$DBParams['dsn'] = \"\$dsn_sqltype://\$dsn_sqluser:\$dsn_sqlpass@\$dsn_sqlhostorsock/\$dsn_sqldbname\";", "
+");
+
+
+
+/////// dba
+
+
+//FIXME
+$properties['dba directory'] =
+new _variable("DBParams['directory']", "/tmp", "
+dba directory:");
+
+
+//FIXME
+$properties['dba handler'] =
+new _variable("DBParams['dba_handler']", "gdbm", "
+Use 'gdbm', 'db2', or db3 depending on your database:");
+
+
+//FIXME
+$properties['dba handler'] =
+new _variable("DBParams['dba_handler']", "gdbm", "
+Use 'gdbm', 'db2', or db3 depending on your database:");
+
+//FIXME
+$properties['dba timeout'] =
+new _variable("DBParams['timeout']", "20", "
+Recommended values are 20 or 5.");
+
+
+
+///////////////////
 
 
 
@@ -368,8 +477,38 @@ is not changed.
 ");
 
 
+// For now the expiration parameters are statically inserted as
+// an unchangeable property. You'll have to edit the resulting
+// config file if you really want to change these from the default.
 
-// MORE CONFIG OPTIONS GO IN HERE
+$properties['Expiration Parameters for Major Edits'] =
+new unchangeable_variable('Expiration_Parameters_for_Major_Edits',
+"\$ExpireParams['major'] = array('max_age' => 32,
+                               'keep'    => 8);", "
+Keep up to 8 major edits, but keep them no longer than a month.");
+
+
+
+$properties['Expiration Parameters for Minor Edits'] =
+new unchangeable_variable('Expiration_Parameters_for_Minor_Edits',
+"\$ExpireParams['minor'] = array('max_age' => 7,
+                               'keep'    => 4);", "
+Keep up to 4 minor edits, but keep them no longer than a week.");
+
+
+
+$properties['Expiration Parameters by Author'] =
+new unchangeable_variable('Expiration_Parameters_by_Author',
+"\$ExpireParams['author'] = array('max_age'  => 365,
+                                'keep'     => 8,
+                                'min_age'  => 7,
+                                'max_keep' => 20);", "
+Keep the latest contributions of the last 8 authors up to a year.
+Additionally, (in the case of a particularly active page) try to
+keep the latest contributions of all authors in the last week (even
+if there are more than eight of them,) but in no case keep more
+than twenty unique author revisions.");
+
 
 
 
@@ -460,7 +599,51 @@ valid locale before gettext() will work, i.e., use 'de_DE', 'nl_NL'.");
 
 
 
-// MORE CONFIG OPTIONS GO IN HERE
+$properties['Wiki Page Source'] =
+new _define('WIKI_PGSRC', "pgsrc", "
+WIKI_PGSRC -- specifies the source for the initial page contents of
+the Wiki. The setting of WIKI_PGSRC only has effect when the wiki is
+accessed for the first time (or after clearing the database.)
+WIKI_PGSRC can either name a directory or a zip file. In either case
+WIKI_PGSRC is scanned for files -- one file per page.
+<pre>
+define('WIKI_PGSRC', 'pgsrc'); // Default (old) behavior.
+define('WIKI_PGSRC', 'wiki.zip'); // New style.
+define('WIKI_PGSRC', '../../../Logs/Hamwiki/hamwiki-20010830.zip'); // New style.
+</pre>");
+
+
+
+$properties['Default Wiki Page Source'] =
+new _define('DEFAULT_WIKI_PGSRC', "pgsrc", "
+DEFAULT_WIKI_PGSRC is only used when the language is *not* the
+default (English) and when reading from a directory: in that case
+some English pages are inserted into the wiki as well.
+DEFAULT_WIKI_PGSRC defines where the English pages reside.
+");
+
+
+
+$properties['Default Wiki Page Source'] =
+new _define('DEFAULT_WIKI_PGSRC', "pgsrc", "
+DEFAULT_WIKI_PGSRC is only used when the language is *not* the
+default (English) and when reading from a directory: in that case
+some English pages are inserted into the wiki as well.
+DEFAULT_WIKI_PGSRC defines where the English pages reside.
+
+FIXME: is this really needed?
+");
+
+
+
+$properties['Generic Pages'] =
+new array_variable('GenericPages', array("ReleaseNotes", "SteveWainstead", "TestPage"), "
+These are the pages which will get loaded from DEFAULT_WIKI_PGSRC.	
+
+FIXME: is this really needed?  Can't we just copy these pages into
+the localized pgsrc?
+");
+
 
 
 
@@ -514,7 +697,78 @@ URL options -- you can probably skip this section.
 
 
 
-// MORE CONFIG OPTIONS GO IN HERE
+$properties['Server Name'] =
+new _define_commented('SERVER_NAME', "some.host.com", "
+Canonical name and httpd port of the server on which this PhpWiki
+resides.");
+
+
+
+$properties['Server Port'] =
+new numeric_define_commented('SERVER_PORT', 80, "");
+
+
+$properties['Script Name'] =
+new _define_commented('SCRIPT_NAME', '/some/where/index.php', "
+Relative URL (from the server root) of the PhpWiki script.");
+
+
+
+$properties['Data Path'] =
+new _define_commented('DATA_PATH', '/some/where/phpwiki', "
+URL of the PhpWiki install directory.  (You only need to set this
+if you've moved index.php out of the install directory.)  This can
+be either a relative URL (from the directory where the top-level
+PhpWiki script is) or an absolute one.");
+
+
+
+$properties['PhpWiki Install Directory'] =
+new _define_commented('PHPWIKI_DIR', '/htdocs/some/where/phpwiki', "
+Path to the PhpWiki install directory.  This is the local
+filesystem counterpart to DATA_PATH.  (If you have to set
+DATA_PATH, your probably have to set this as well.)  This can be
+either an absolute path, or a relative path interpreted from the
+directory where the top-level PhpWiki script (normally index.php)
+resides.");
+
+
+
+$properties['Use PATH_INFO'] =
+new boolean_define_commented('USE_PATH_INFO', 
+                    array('false' => 'do not use PATH_INFO',
+                          'true'  => 'use PATH_INFO'), "
+Define to 'true' to use PATH_INFO to pass the pagenames.
+e.g. http://www.some.where/index.php/HomePage instead
+of http://www.some.where/index.php?pagename=HomePage
+FIXME: more docs (maybe in README).");
+
+
+
+$properties['Virtual Path'] =
+new _define_commented('VIRTUAL_PATH', '/SomeWiki', "
+VIRTUAL_PATH is the canonical URL path under which your your wiki
+appears. Normally this is the same as dirname(SCRIPT_NAME), however
+using, e.g. apaches mod_actions (or mod_rewrite), you can make it
+something different.
+
+If you do this, you should set VIRTUAL_PATH here.
+
+E.g. your phpwiki might be installed at at /scripts/phpwiki/index.php,
+but you've made it accessible through eg. /wiki/HomePage.
+
+One way to do this is to create a directory named 'wiki' in your
+server root. The directory contains only one file: an .htaccess
+file which reads something like:
+<pre>
+    Action x-phpwiki-page /scripts/phpwiki/index.php
+    SetHandler x-phpwiki-page
+    DirectoryIndex /scripts/phpwiki/index.php
+</pre>
+In that case you should set VIRTUAL_PATH to '/wiki'.
+
+(VIRTUAL_PATH is only used if USE_PATH_INFO is true.)
+");
 
 
 
@@ -571,7 +825,7 @@ class _variable {
     }
 
     function get_config_line($posted_value) {
-        return "\n\$" . $this->get_config_item_name() . " = \"" . $posted_value . "\";";
+        return "\n\$" . $this->get_config_item_name() . " = \"$posted_value\";";
     }
     function get_config($posted_value) {
         $d = stripHtml($this->get_description());
@@ -585,11 +839,12 @@ class _variable {
     }
 
     function get_html() {
-        return get_class($this)."<br />\n"."<input type=\"text\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\">";
+        return "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\">";
     }
 }
 
-class unchangeable_variable extends _variable {
+class unchangeable_variable
+extends _variable {
     function get_html() {
         return "";
     }
@@ -606,7 +861,8 @@ class unchangeable_variable extends _variable {
 
 }
 
-class _variable_selection extends _variable {
+class _variable_selection
+extends _variable {
     function get_html() {
         $output = '<select name="' . $this->get_config_item_name() . "\">\n";
         /* The first option is the default */
@@ -614,12 +870,13 @@ class _variable_selection extends _variable {
             $output .= "  <option value=\"$option\">$label</option>\n";
         }
         $output .= "    </select>\n  </td>\n";
-        return get_class($this)."<br />\n".$output;
+        return $output;
     }
 }
 
 
-class _define extends _variable {
+class _define
+extends _variable {
     function get_config_line($posted_value) {
         if ($this->description)
             $n = "\n";
@@ -630,16 +887,46 @@ class _define extends _variable {
     }
 }
 
-class _define_selection extends _variable_selection {
+class _define_commented
+extends _define {
+    function get_config_line($posted_value) {
+        if ($this->description)
+            $n = "\n";
+        if ($posted_value == $this->default_value)
+            return "${n}//define('".$this->get_config_item_name()."', '$posted_value');";
+        else if ($posted_value == '')
+            return "${n}//define('".$this->get_config_item_name()."', \"\");";
+        else
+            return "${n}define('".$this->get_config_item_name()."', '$posted_value');";
+    }
+}
+
+class numeric_define_commented
+extends _define {
+    function get_config_line($posted_value) {
+        if ($this->description)
+            $n = "\n";
+        if ($posted_value == $this->default_value)
+            return "${n}//define('".$this->get_config_item_name()."', $posted_value);";
+        else if ($posted_value == '')
+            return "${n}//define('".$this->get_config_item_name()."', 0);";
+        else
+            return "${n}define('".$this->get_config_item_name()."', $posted_value);";
+    }
+}
+
+class _define_selection
+extends _variable_selection {
     function get_config_line($posted_value) {
         return _define::get_config_line($posted_value);
     }
     function get_html() {
-        return get_class($this)."<br />\n"._variable_selection::get_html();
+        return _variable_selection::get_html();
     }
 }
 
-class _define_password extends _define {
+class _define_password
+extends _define {
     function get_config_line($posted_value) {
         if ($this->description)
             $n = "\n";
@@ -674,12 +961,19 @@ class _define_password extends _define {
         }
     }
     function get_html() {
-        return get_class($this)."<br />\n"."<input type=\"password\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\">";
+        return _variable_password::get_html();
     }
 }
 
+class _variable_password
+extends _variable {
+    function get_html() {
+        return "<input type=\"password\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\">";
+    }
+}
 
-class numeric_define extends _define {
+class numeric_define
+extends _define {
     function get_config_line($posted_value) {
         if ($this->description)
             $n = "\n";
@@ -690,7 +984,8 @@ class numeric_define extends _define {
     }
 }
 
-class list_variable extends _variable {
+class list_variable
+extends _variable {
     function get_config_line($posted_value) {
         // split the phrase by any number of commas or space characters,
         // which include " ", \r, \t, \n and \f
@@ -700,15 +995,16 @@ class list_variable extends _variable {
     }
     function get_html() {
         $list_values = explode("|", $this->default_value);
-        $cols = max(3, count($this->default_value) +1);
+        $rows = max(3, count($list_values) +1);
         $list_values = join("\n", $list_values);
-        $ta = "<textarea cols=\"10\" rows=\"". $cols ."\" name=\"".$this->get_config_item_name()."\">";
+        $ta = "<textarea cols=\"18\" rows=\"". $rows ."\" name=\"".$this->get_config_item_name()."\">";
         $ta .= $list_values . "</textarea>";
-        return get_class($this)."<br />\n".$ta;
+        return $ta;
     }
 }
 
-class array_variable extends _variable {
+class array_variable
+extends _variable {
     function get_config_line($posted_value) {
         // split the phrase by any number of commas or space characters,
         // which include " ", \r, \t, \n and \f
@@ -722,15 +1018,16 @@ class array_variable extends _variable {
     }
     function get_html() {
         $list_values = join("\n", $this->default_value);
-        $cols = max(3, count($this->default_value) +1);
-        $ta = "<textarea cols=\"10\" rows=\"". $cols ."\" name=\"".$this->get_config_item_name()."\">";
+        $rows = max(3, count($this->default_value) +1);
+        $ta = "<textarea cols=\"18\" rows=\"". $rows ."\" name=\"".$this->get_config_item_name()."\">";
         $ta .= $list_values . "</textarea>";
-        return get_class($this)."<br />\n".$ta;
+        return $ta;
     }
 
 }
 
-class _ini_set extends _variable {
+class _ini_set
+extends _variable {
     function get_config_line($posted_value) {
         if ($posted_value && ! $posted_value == $this->default_value)
             return "\nini_set('".$this->get_config_item_name()."', '$posted_value');";
@@ -739,7 +1036,8 @@ class _ini_set extends _variable {
     }
 }
 
-class boolean_define extends _define {
+class boolean_define
+extends _define {
     function get_config_line($posted_value) {
         if ($this->description)
             $n = "\n";
@@ -754,11 +1052,28 @@ class boolean_define extends _define {
         list($option, $label) = each($this->default_value);
         $output .= "  <option value=\"$option\">$label</option>\n";
         $output .= "</select>\n  </td>\n";
-        return get_class($this)."<br />\n".$output;
+        return $output;
     }
 }
 
-class part extends _variable {
+class boolean_define_commented
+extends boolean_define {
+    function get_config_line($posted_value) {
+        if ($this->description)
+            $n = "\n";
+        list($default_value, $label) = each($this->default_value);
+        if ($posted_value == $default_value)
+            return "${n}//define('".$this->get_config_item_name()."', $posted_value);";
+        else if ($posted_value == '')
+            return "${n}//define('".$this->get_config_item_name()."', false);";
+        else
+            return "${n}define('".$this->get_config_item_name()."', $posted_value);";
+    }
+}
+
+
+class part
+extends _variable {
     function get_config($posted_value) {
         $d = stripHtml($this->get_description());
         global $SEPARATOR;
@@ -772,6 +1087,8 @@ class part extends _variable {
         return "";
     }
 }
+
+// html utility functions
 function nl2p($text) {
     return "<p>" . str_replace("\n\n", "</p>\n<p>", $text) . "</p>";
 }
@@ -822,6 +1139,7 @@ function rand_ascii($length = 1) {
    return $s;
 }
 
+// debugging
 function printArray($a) {
     echo "<hr />\n<pre>\n";
     print_r($a);
@@ -834,7 +1152,7 @@ function printArray($a) {
 
 if ($action == 'make_config') {
 
-  $timestamp = date ('dS of F, Y H:i:s');
+    $timestamp = date ('dS of F, Y H:i:s');
 
     $config = "<?php
 /* This is a local configuration file for PhpWiki.
@@ -850,10 +1168,8 @@ if ($action == 'make_config') {
 
     $posted = $GLOBALS['HTTP_POST_VARS'];
 
-printArray($GLOBALS['HTTP_POST_VARS']);
-/*
-
-*/
+    if (defined('DEBUG'))
+        printArray($GLOBALS['HTTP_POST_VARS']);
 
     foreach($properties as $option_name => $a) {
         $posted_value = $posted[$a->config_item_name];
@@ -890,28 +1206,31 @@ printArray($GLOBALS['HTTP_POST_VARS']);
     echo "<!--If she can stand it, I can. Play it!-->\n";
     echo "<p>Would you like to <a href=\"configurator.php\">play again</a>?</p>\n";
 
-    } else {
-        /* No action has been specified - we make a form. */
+} else {
+    /* No action has been specified - we make a form. */
 
-        echo '
-        <form action="configurator.php" method="post">
-        <table border="1" cellpadding="4" cellspacing="0">
-        <input type="hidden" name="action" value="make_config">
+    echo '
+    <form action="configurator.php" method="post">
+    <table border="1" cellpadding="4" cellspacing="0">
+    <input type="hidden" name="action" value="make_config">
+    ';
+
+    while(list($property, $obj) = each($properties)) {
+        echo $obj->get_instructions($property);
+        if ($h = $obj->get_html()) {
+            if (defined('DEBUG'))
+                $h = get_class($obj) . "<br />\n" . $h;
+            echo "<td>".$h."</td>\n";
+        }
+    }
+
+    echo '
+        </table>
+        <p><input type="submit" value="Make config-file"> <input type="reset" value="Clear"></p>
+        </form>
         ';
 
-        while(list($property, $obj) = each($properties)) {
-            echo $obj->get_instructions($property);
-            if ($h = $obj->get_html())
-                echo "<td>".$h."</td>\n";
-        }
-
-        echo '
-            </table>
-            <p><input type="submit" value="Make config-file"> <input type="reset" value="Clear"></p>
-            </form>
-            ';
-
-    }
+}
 ?>
 </body>
 </html>
