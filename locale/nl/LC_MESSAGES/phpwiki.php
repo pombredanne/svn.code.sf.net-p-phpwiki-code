@@ -28,8 +28,6 @@ $locale["Fatal PhpWiki Error"] =
    "PhpWiki Fatale Fout";
 $locale["FindPage"] =
    "ZoekPagina";
-$locale["Full Text Search"] =
-   "Volledige tekst zoek";
 $locale["Full text search results for '%s'"] =
    "Volledige tekst zoek resultaten naar '%s'";
 $locale["FullTextSearch"] =
@@ -52,10 +50,6 @@ $locale["Last Author"] =
    "Vorige Auteur";
 $locale["Last edited on %s."] =
    "Meest recente verandering op %s.";
-$locale["List the most popular pages"] =
-   "Lijst de meestbezochte pagina's";
-$locale["Lists nested too deep in SetHTMLOutputMode"] =
-   "Lijsten nesten te diep in SetHTMLOutputMode";
 $locale["Loading up virgin wiki"] =
    "Laden van maagdelijke wiki";
 $locale["Lock Page"] =
@@ -98,8 +92,6 @@ $locale["Removed page '%s' succesfully."] =
    "Pagina '%s' verwijderd.";
 $locale["Return to %s"] =
    "Terug naar %s";
-$locale["Return to %s."] =
-   "Terug naar %s.";
 $locale["Save"] =
    "Bewaar";
 $locale["Saved: %s"] =

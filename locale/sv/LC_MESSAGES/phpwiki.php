@@ -42,8 +42,6 @@ $locale["Fatal PhpWiki Error"] =
    "PhpWiki Fatal Error";
 $locale["FindPage"] =
    "SökEfterSida";
-$locale["Full Text Search"] =
-   "Fulltextsökning";
 $locale["Full text search results for '%s'"] =
    "Sökresultat för fulltextsökning för '%s'";
 $locale["FullTextSearch"] =
@@ -84,8 +82,6 @@ $locale["Last edited %s."] =
    "Senast ändrad %s.";
 $locale["Last edited on %s."] =
    "Senast ändrad %s.";
-$locale["Lists nested too deep in SetHTMLOutputMode"] =
-   "Stackgräns överskriden i SetHTMLOutputMode";
 $locale["Lock Page"] =
    "Lås Sida";
 $locale["Locked"] =
@@ -128,8 +124,6 @@ $locale["Removed page '%s' succesfully."] =
    "Tog bort sidan '%s'.";
 $locale["Return to %s"] =
    "Tillbaka till %s";
-$locale["Return to %s."] =
-   "Tillbaka till %s.";
 $locale["Save"] =
    "Spara";
 $locale["Saved: %s"] =
