@@ -1,5 +1,25 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopular.php,v 1.21 2002-08-27 21:51:31 rurban Exp $');
+rcs_id('$Id: MostPopular.php,v 1.22 2003-01-18 21:48:56 carstenklapp Exp $');
+/**
+ Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+
+ This file is part of PhpWiki.
+
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
 /**
  */
 
@@ -13,18 +33,24 @@ extends WikiPlugin
     }
 
     function getDescription () {
-        return _("List the most popular pages");
+        return _("List the most popular pages.");
+    }
+
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.22 $");
     }
 
     function getDefaultArguments() {
-        return array('pagename'	    => '[pagename]', // hackish
-                     'exclude'      => '',
-                     'limit'        => 20, // limit <0 returns least popular pages
-                     'noheader'	    => 0,
-                     'info'         => false
+        return array('pagename' => '[pagename]', // hackish
+                     'exclude'  => '',
+                     'limit'    => 20, // limit <0 returns least popular pages
+                     'noheader' => 0,
+                     'info'     => false
                     );
     }
-    // info arg allows multiple columns info=mtime,hits,summary,version,author,locked,minor
+    // info arg allows multiple columns
+    // info=mtime,hits,summary,version,author,locked,minor
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
 
     function run($dbi, $argstr, $request) {
@@ -32,19 +58,21 @@ extends WikiPlugin
 
         $columns = $info ? explode(",", $info) : array();
         array_unshift($columns, 'hits');
-        
+
         $pagelist = new PageList($columns, $exclude);
 
         $pages = $dbi->mostPopular($limit);
 
         while ($page = $pages->next()) {
             $hits = $page->get('hits');
-            if ($hits == 0 && $limit > 0)  // don't show pages with no hits if most
-                break;			   // popular pages wanted
+            // don't show pages with no hits if most popular pages
+            // wanted
+            if ($hits == 0 && $limit > 0)
+                break;
             $pagelist->addPage($page);
         }
         $pages->free();
-        
+
         if (! $noheader) {
             if ($limit > 0) {
                 $pagelist->setCaption(_("The %d most popular pages of this wiki:"));
@@ -55,10 +83,12 @@ extends WikiPlugin
                     $pagelist->setCaption(_("Visited pages on this wiki, ordered by popularity:"));
                 }}
         }
-        
+
         return $pagelist;
     }
 };
+
+// $Log: not supported by cvs2svn $
 
 // Local Variables:
 // mode: php
