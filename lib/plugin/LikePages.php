@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: LikePages.php,v 1.5 2001-12-19 12:07:38 carstenklapp Exp $');
+rcs_id('$Id: LikePages.php,v 1.6 2002-01-09 18:06:49 carstenklapp Exp $');
 
 require_once('lib/TextSearchQuery.php');
 
@@ -13,16 +13,16 @@ extends WikiPlugin
     }
     
     function getDescription() {
-        return sprintf(_("List LikePages for %s"),'[pagename]');
+        return sprintf(_("List LikePages for %s"), '[pagename]');
     }
     
     function getDefaultArguments() {
         // FIXME: how to exclude multiple pages?
-        return array('page'		=> false,
-                     'prefix'		=> false,
-                     'suffix'		=> false,
-                     'exclude'		=> false,
-                     'noheader'		=> false
+        return array('page'	=> false,
+                     'prefix'	=> false,
+                     'suffix'	=> false,
+                     'exclude'	=> false,
+                     'noheader'	=> false
                      );
     }
 
@@ -36,12 +36,14 @@ extends WikiPlugin
         if ($prefix) {
             $suffix = false;
             if (!$noheader)
-                $html .= QElement('p', sprintf(_("Page names with prefix '%s'"),
+                $html .= QElement('p',
+                                  sprintf(_("Page names with prefix '%s'"),
                                                $prefix));
         }
         elseif ($suffix) {
             if (!$noheader)
-                $html .= QElement('p', sprintf(_("Page names with suffix '%s'"),
+                $html .= QElement('p',
+                                  sprintf(_("Page names with suffix '%s'"),
                                                $suffix));
         }
         elseif ($page) {
@@ -55,7 +57,8 @@ extends WikiPlugin
             
             if (!$noheader) {
                 $fs = _("These pages share an initial or final title word with '%s'");
-                $html .= Element('p', sprintf(htmlspecialchars($fs), LinkWikiWord($page)));
+                $html .= Element('p', sprintf(htmlspecialchars($fs),
+                                              LinkWikiWord($page)));
             }
         }
 
@@ -63,11 +66,11 @@ extends WikiPlugin
         $search = $match = array();
         if (!empty($prefix)) {
             $search[] = $this->_quote($prefix);
-            $match[] = '^' . preg_quote($prefix, '/');
+            $match[]  = '^' . preg_quote($prefix, '/');
         }
         if (!empty($suffix)) {
             $search[] = $this->_quote($suffix);
-            $match[] = preg_quote($suffix, '/') . '$';
+            $match[]  = preg_quote($suffix, '/') . '$';
         }
 
         if ($search)

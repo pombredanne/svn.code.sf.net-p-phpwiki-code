@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopular.php,v 1.4 2001-12-16 18:33:25 dairiki Exp $');
+rcs_id('$Id: MostPopular.php,v 1.5 2002-01-09 18:06:49 carstenklapp Exp $');
 /**
  */
 class WikiPlugin_MostPopular
@@ -9,24 +9,24 @@ extends WikiPlugin
         return _("MostPopular");
     }
 
-    function getDescription () {    
+    function getDescription () {
         return _("List the most popular pages");
     }
-    
+
     function getDefaultArguments() {
         // FIXME: how to exclude multiple pages?
-        return array('limit'		=> 20,
-                     'noheader'		=> 0);
+        return array('limit'	=> 20,
+                     'noheader'	=> 0);
     }
 
     function run($dbi, $argstr, $request) {
         extract($this->getArgs($argstr, $request));
-        
+
         $pages = $dbi->mostPopular($limit);
 
         $lines[] = $this->_tr(QElement('u', _("Hits")),
                               QElement('u', _("Page Name")));
-        
+
         while ($page = $pages->next()) {
             $hits = $page->get('hits');
             if ($hits == 0)
@@ -42,7 +42,7 @@ extends WikiPlugin
                              sprintf(_("The %s most popular pages of this wiki:"),
                                      $limit ? $limit : ''));
         }
-        
+
 
         $html .= Element('blockquote',
                          Element('table', array('cellpadding' => 0,
@@ -57,12 +57,12 @@ extends WikiPlugin
             . "<td>&nbsp;&nbsp;$col2</td></tr>\n";
     }
 };
-        
+
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End:
 ?>

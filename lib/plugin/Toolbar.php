@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Toolbar.php,v 1.8 2002-01-08 23:20:55 carstenklapp Exp $');
+rcs_id('$Id: Toolbar.php,v 1.9 2002-01-09 18:06:50 carstenklapp Exp $');
 /**
  * Usage:
  *
@@ -37,8 +37,8 @@ extends WikiPlugin
     
     function getDefaultArguments() {
         return array('sep'	=> ',',
-                     'label'	=> false,
-                     'go'	=> false,
+                     'label'	=> '',
+                     'go'	=> '',
                      'style'	=> 'text',
                      'name'	=> '',
                      'days'	=> ''
@@ -132,27 +132,27 @@ extends WikiPlugin
                     $text = sprintf($ndays, $val);
 
                 if ($style == "image") {
-                    $action = $name ."?days=" .$val;
-                    $imgurl = $rcimages[$text];
+                    $action  = $name ."?days=" .$val;
+                    $imgurl  = $rcimages[$text];
                     $links[] = $this->mkimglinks($text, $action, $imgurl);
                 } else {
-                    $action = 'phpwiki:' .$name ."?days=" .$val;
+                    $action  = 'phpwiki:' .$name ."?days=" .$val;
                     $links[] = $this->mklinks($text, $action);
                 }
             }
             // final assembly of label and the links
             if ($style == "image") {
                 $links = join("</td><td>", $links);
-                $html = sprintf("<table summary=\"". $name ."\" border=0 cellspacing=0 cellpadding=0><tr valign=\"middle\"><td>" ._($label) ."</td>","<td>" .$links)."</tr></td>";
+                $html  = sprintf("<table summary=\"". $name ."\" border=0 cellspacing=0 cellpadding=0><tr valign=\"middle\"><td>" ._($label) ."</td>","<td>" .$links)."</tr></td>";
             } else {
                 $links = join($sep, $links);
-                $html = sprintf(_($label),$links);
+                $html  = sprintf(_($label),$links);
             }
 
         } else {
             $links = "[" .str_replace(",", ("]" .$sep ."["), $go) ."]";
             $links = do_transform($links, 'LinkTransform');
-            $html = sprintf(_($label),$links);
+            $html  = sprintf(_($label),$links);
 
         }
         // TODO: (maybe) localise individual item labels (the
