@@ -1,12 +1,9 @@
-A WikiWikiWeb is a site where everyone can collaborate on the content. The most well-known and widely used Wiki is the Portland Pattern Repository at http://c2.com/cgi-bin/wiki?WikiWikiWeb.
+Ein WikiWikiWeb ist eine Website, bei der jeder am Inhalt mitarbeiten kann. Jeder, der das Wiki liest, kann auch Seiten bearbeiten und neue Seiten erstellen. Das bekannteste und meistverwendete Wiki ist das Portland Pattern Repository unter http://c2.com/cgi-bin/wiki?WikiWikiWeb.
 
-I found these statements there particularly relevant:
+Einige Zitate:
 
-''The point is to make the EditText form simple and the SeiteFinden search fast.''
+''Die Idee ist, die Funktion EditiereText einfach und die Suchfunktion (SeiteFinden) schnell zu machen.''
 
-''In addition to being quick, this site also aspires to Zen ideals generally labeled WabiSabi. Zen finds beauty in the imperfect and ephemeral. When it comes down to it, that's all you need.''
+''Abgesehen von der Geschwindigkeit orientiert sich diese Site auch an Zen-Idealen die als WabiSabi bezeichnet werden. Nach Zen liegt Schönheit im Unvollständigen, Kurzlebigen. Letzendlich benötigt man nichts weiter.''
 
-You can say hello on GaesteBuch, or read about WieManWikiBenutzt and SeitenErzeugen. Currently this Wiki has no "theme" for discussion, so go ahead and play with it and have fun!
-
---SteveWainstead
-
+Du kannst dich im GaesteBuch eintragen oder lernen, WieManWikiBenutzt und wie man SeitenErzeugen kann.

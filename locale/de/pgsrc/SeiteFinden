@@ -1,19 +1,15 @@
-Here are some good starting points for browsing.
+Als Startpunkt zum Herumstöbern im Wiki eignen sich am besten die folgenden Seiten:
 
-	* WieManWikiBenutzt gives you the quick lowdown on Wiki markup.
-	* FrischeSeiten recorded automatically
-	* WikiTechnik of browsing and editing on this server
+	* WieManWikiBenutzt erklärt dir die Textformatierungen in einem Wiki.
+	* FrischeSeiten ist eine automatisch erstellte Liste neuer Seiten.
+	* WikiTechnik erkärt die Technik, mit der PhpWiki arbeitet.
 
 
 
-Here's a title search.   Try something like ''wiki'' 
-or ''sandwich''.
+Hier ist eine Suche nach Seitentiteln. Suche zum Beispiel nach ''wiki'' oder ''sandwich''.
 
 %%Search%%
 
-Use the following for a full text search. This takes a few seconds. The results will show all lines on a given page that contain a match.
+Und hier ist eine Volltextsuche. Die Suche dauert ein paar Sekunden. Im Suchergebnis werden die Zeilen aus den gefundenen Seiten angezeigt, in denen ein Suchbegriff gefunden wurde.
 
 %%Fullsearch%%
-
-
-
