@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.59 2004-02-26 04:23:19 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.60 2004-03-01 09:36:02 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -86,7 +86,7 @@ class _PageList_Column_base {
             //Fixme: pass all also other GET args along. (limit, p[])
             $s = HTML::a(array('href' => 
                                $GLOBALS['request']->GetURLtoSelf(array('sortby' => $sortby,
-                                                                       'nopurge' => 'cache')),
+                                                                       'nopurge' => '1')),
                                'class' => 'pagetitle',
                                'title' => sprintf(_("Sort by %s"),$this->_field)), 
                          HTML::raw('&nbsp;'), HTML::u($this->_heading), HTML::raw('&nbsp;'));
@@ -97,6 +97,7 @@ class _PageList_Column_base {
     }
 
     // new grid-style
+    // see activeui.js 
     function button_heading () {
         global $Theme, $request;
         // allow sorting?
@@ -117,17 +118,23 @@ class _PageList_Column_base {
             }
             $s = HTML::a(array('href' => 
                                //Fixme: pass all also other GET args along. (limit, p[])
+                               //Fixme: convert to POST submit[sortby]
                                $request->GetURLtoSelf(array('sortby' => $sortby,
-                                                            'nopurge' => 'cache')),
+                                                            'nopurge' => '1')),
                                'class' => 'gridbutton', 
-                               'title' => sprintf(_("Sort by %s"),$this->_field)), 
-                         $this->_heading, 
-                         $src ? HTML(HTML::raw('&nbsp;'),
-                                     HTML::img(array('src' => $src, 
-                                                     'width' => '', 
-                                                     'height' => '', 
-                                                     'alt' => _("Click to reverse sort order")))) 
-                              : HTML::raw(''));
+                               'title' => sprintf(_("Click to sort by %s"),$this->_field)),
+                         HTML::span(array('align'=>'left'), 
+                                    $this->_heading),
+                         HTML::raw('&nbsp;'),
+                         HTML::span(array('align'=>'right'), 
+                                    $src ? HTML::img(array('src' => $src, 
+                                                           'width' => '7', 
+                                                           'height' => '7', 
+                                                           'alt' => _("Click to reverse sort order")))
+                                         : HTML::img(array('src' => $Theme->getButtonURL('no_order'),
+                                                           'width' => '7', 
+                                                           'height' => '7', 
+                                                           'alt' => _("Click to sort")))));
         } else {
             $s = $this->_heading;
         }
@@ -742,6 +749,7 @@ function flipAll(formObj) {
         $out = HTML();
         //Warning: This is quite fragile. It depends solely on a private variable
         //         in ->_addColumn()
+        // questionable if its of use here anyway. this is a one-col list only.
         if (in_array('checkbox',$this->_columns_seen)) {
             $out->pushContent($this->_jsFlipAll());
         }
