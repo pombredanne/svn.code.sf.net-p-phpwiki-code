@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.72 2003-02-23 20:06:58 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.73 2003-02-24 01:18:19 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -142,7 +142,7 @@ function guessing_setlocale ($category, $locale) {
 function update_locale ($loc) {
     $newlocale = guessing_setlocale(LC_ALL, $loc);
     if (!$newlocale) {
-        trigger_error(fmt("Can't set locale: '%s'", $loc), E_USER_NOTICE);
+        trigger_error(sprintf(_("Can't set locale: '%s'"), $loc), E_USER_NOTICE);
         $loc = setlocale(LC_ALL, '');  // pull locale from environment.
         list ($loc,) = split('_', $loc, 2);
         $GLOBALS['LANG'] = $loc;

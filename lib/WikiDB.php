@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.22 2003-02-22 00:28:32 dairiki Exp $');
+rcs_id('$Id: WikiDB.php,v 1.23 2003-02-24 01:18:19 dairiki Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -1330,11 +1330,11 @@ class WikiDB_PageIterator
         if (in_array($sortby,$this->_types))
             $this->_options['sortby'] = $sortby;
         else
-            trigger_error(fmt("Argument %s '%s' ignored",'sortby',$sortby), E_USER_WARNING);
+            trigger_error(sprintf("Argument %s '%s' ignored",'sortby',$sortby), E_USER_WARNING);
         if (in_array(strtoupper($order),'ASC','DESC')) 
             $this->_options['order'] = strtoupper($order);
         else
-            trigger_error(fmt("Argument %s '%s' ignored",'order',$order), E_USER_WARNING);
+            trigger_error(sprintf("Argument %s '%s' ignored",'order',$order), E_USER_WARNING);
     }
 
 };
