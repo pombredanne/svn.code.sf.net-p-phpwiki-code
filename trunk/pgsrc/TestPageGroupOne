@@ -1,0 +1,17 @@
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
+X-RCS_ID: $Id: TestPageGroupOne,v 1.1 2002-01-12 05:39:53 carstenklapp Exp $
+Content-Type: application/x-phpwiki;
+  pagename=TestPageGroupOne;
+  author=CarstenKlapp;
+  flags="";
+  lastmodified=1010813438;
+  author_id=CarstenKlapp
+Content-Transfer-Encoding: binary
+
+Ok, this is page one in this page group.
+
+There is a bug. When looping is true (and it is, but only for this first page--another possible flaw) and if the Contents title is not the first item on the Table of Contents page, and if there are other things on the TOC page after the actual list, then things get screwed up. Note that the __Previous:__ link below should point to the last page. Click Next.
+
+<?plugin walkabout label="Other pages in this group: %s" loop=1 parent=TestPageGroup section="Table of Contents" ?>
+----
+TestPageGroup
