@@ -1,99 +1,88 @@
 <?php
 
-rcs_id('$Id: random.php,v 1.2 2002-01-17 23:51:47 carstenklapp Exp $');
+rcs_id('$Id: random.php,v 1.3 2002-01-18 10:04:49 carstenklapp Exp $');
 
-// FIXME: This whole file could be refactored and turned in a
-//        RandomImage plugin.
-//
-//        Performace issues? $SignatureImg does not appear on
-//        every page but index.php is loaded every time:
-//        index.php -> themeinfo.php -> random.php
-//
+class RandomImage {
 
-/*
-$RandomPictures = array(
-                        "BeachPalmDusk.jpg",
-                        "Coastline.jpg",
-                        "HawaiiMauiFromSpace.jpg",
-                        "LavaTwilight.jpg",
-                        "LoihiSeamount.jpg",
-                        "SteamVolcanoDusk.jpg",
-                        "SubmersiblePiscesV.jpg",
-                        "SwimmingPoolWater.jpg",
-                        "Waterfall.jpg",
-                        "WhaleRainbow.jpg"
-                        );
-*/
+    /**
+     * Constructor
+     */
+    function RandomImage ($dirname) {
+        if (empty($dirname)) {
+            trigger_error(sprintf(_("%s is empty."), 'dirname'),
+                          E_USER_NOTICE);
+            return ""; // early return
+        }
 
-// Mac users take note:
-//
-// This function relies on all the image files having filename
-// suffixes, even if the web server uses a "MAGIC files" capability
-// (to automatically assign a mime-type based on the the first few
-// bytes of the file).
-//
-// This code is a variation of function LoadDir in lib/loadsave.php
-// See http://www.php.net/manual/en/function.readdir.php
+        $this->readAvailableImages($dirname);
+        //echo "count is " . count($this->imageList) ."<br>\n";//tempdebugcode
 
-function imagelist($dirname) {
-    if (empty($dirname)) {
-        // ignore quietly
-        //trigger_error(("dirname is empty"),
-        //E_USER_NOTICE); $imagelist = "";
-    } else {
-        $handle = opendir($dir = $dirname);
-        if (empty($handle)) {
-            // FIXME: gettext doesn't work in index.php or
-            // themeinfo.php
-            trigger_error(sprintf(("Unable to open directory '%s' for reading"),
-                                  $dir), E_USER_NOTICE);
-            //$imagelist = "";
-        } else {
-            $imagelist = array();
-            while ($fn = readdir($handle)) {
+        if (empty($this->imageList)) {
+            trigger_error(sprintf(_("%s is empty."), 'imageList'),
+                          E_USER_NOTICE);
+            return ""; // early return
+        }
+        $this->_srand(); // Start with a good seed.
 
-                if ($fn[0] == '.' || filetype("$dir/$fn") != 'file')
-                    continue;
-                global $InlineImages;
-                // Add any files with image suffixes as defined in index.php
-                if (preg_match("/($InlineImages)$/i", $fn)) 
-                    array_push($imagelist, "$fn");
+        $random_num = mt_rand(0,count($this->imageList)-1);
+        //echo "random_num is " . $random_num;
 
-            }
-            closedir($handle);
+//FIXME: Help! This is where it all craps out.
+trigger_error("The random image class doesn't quite work yet. Help!", E_USER_NOTICE);
+
+        $imgname = $this->imageList[$random_num];
+
+        return "$dirname/" . $imgname;
+    }
+
+
+    /**
+     * Prepare a random seed.
+     * 
+     * How random do you want it? See
+     * http://download.php.net/manual/en/function.srand.php
+     * mt_srand ((double) microtime() * 1000000 / pi())
+     */
+    function _srand($seed = '') {
+        static $wascalled = FALSE;
+        if (!$wascalled) {
+            $seed = $seed === '' ? (double) microtime() * 1000000 : $seed;
+            srand($seed);
+            $wascalled = TRUE;
         }
     }
-    return $imagelist;
-}
 
-// FIXME: Will this need to be changed to work on WindowsOS?
-$RandomPictures = imagelist( getcwd() ."/" ."themes/$theme/images/pictures/" );
 
-if (!empty($RandomPictures)) {
+    /**
+     * Build an array in $this->imageList of image files from
+     * $dirname. Files are considered images when it's suffix matches
+     * one from $InlineImages.
+     *
+     * (This is a variation of function LoadDir in lib/loadsave.php)
+     * See also http://www.php.net/manual/en/function.readdir.php
+     */
+    function readAvailableImages($dirname) {
+        @ $handle = opendir($dir = $dirname);
+        if (empty($handle)) {
+            trigger_error(sprintf(_("Unable to open directory '%s' for reading"),
+                                  $dir), E_USER_NOTICE);
+            return; // early return
+        }
+        $this->imageList = array();
+        while ($fn = readdir($handle)) {
 
-    // mt_srand ((double) microtime() * 1000000 / pi())
-    //
-    // Not random enough... Hmm is this random enough? See
-    // http://download.php.net/manual/en/function.srand.php
-
-    function my_srand($seed = '') {
-        static $wascalled = FALSE;
-            if (!$wascalled) {
-                $seed = $seed === '' ? (double) microtime() * 1000000 : $seed;
-                srand($seed);
-                $wascalled = TRUE;
+            if ($fn[0] == '.' || filetype("$dir/$fn") != 'file')
+                continue;
+            global $InlineImages;
+            if (preg_match("/($InlineImages)$/i", $fn)) {
+                array_push($this->imageList, "$fn");
+            //echo $fn."<br>\n"; //debug
             }
+        }
+        closedir($handle);
     }
 
-    my_srand();
-
-    // For testing the randomization out, just use $logo instead of
-    // #Signature
-
-    // $logo = "themes/$theme/images/pictures/"
-    $SignatureImg = "themes/$theme/images/pictures/"
-        .$RandomPictures[mt_rand(0,count($RandomPictures)-1)];
-}
+};
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // (c-file-style: "gnu")
