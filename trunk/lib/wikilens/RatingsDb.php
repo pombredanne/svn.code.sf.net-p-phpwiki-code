@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RatingsDb.php,v 1.7 2004-07-08 19:14:57 rurban Exp $');
+rcs_id('$Id: RatingsDb.php,v 1.8 2004-07-20 18:00:50 dfrankow Exp $');
 
 /*
  * @author:  Dan Frankowski (wikilens author), Reini Urban (as plugin)
@@ -29,6 +29,8 @@ define('RATING_STORAGE','SQL');          // only for mysql yet.
 // leave undefined for internal, slow php engine.
 //define('RATING_EXTERNAL',PHPWIKI_DIR . 'suggest.exe');
 
+// Dimensions
+define('EXPLICIT_RATINGS_DIMENSION', 0);
 
 //TODO: split into SQL and metadata backends
 class RatingsDb extends WikiDB {
@@ -221,9 +223,9 @@ class RatingsDb extends WikiDB {
      */
     function delete_rating($rater, $ratee, $dimension) {
         if (RATING_STORAGE == 'SQL') {
-            $this->sql_delete_rating($userid, $pagename, $dimension);
+            $this->sql_delete_rating($rater, $ratee, $dimension);
         } else {
-            $this->metadata_set_rating($userid, $pagename, $dimension, -1);
+            $this->metadata_set_rating($rater, $ratee, $dimension, -1);
         }
         /*
         return $this->_backend->delete_rating($rater, $ratee, $dimension);
@@ -688,6 +690,9 @@ extends WikiDB_backend_PearDB {
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/07/08 19:14:57  rurban
+// more metadata fixes
+//
 // Revision 1.6  2004/07/08 19:04:45  rurban
 // more unittest fixes (file backend, metadata RatingsDb)
 //
