@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.3 2004-02-09 03:58:12 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.4 2004-02-12 13:05:36 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -63,13 +63,14 @@ rcs_id('$Id: PagePerm.php,v 1.3 2004-02-09 03:58:12 rurban Exp $');
 define('ACL_EVERY',	   '_EVERY');
 define('ACL_ANONYMOUS',	   '_ANONYMOUS');
 define('ACL_BOGOUSERS',	   '_BOGOUSERS');
+define('ACL_HASHOMEPAGE',  '_HASHOMEPAGE');
 define('ACL_SIGNED',	   '_SIGNED');
 define('ACL_AUTHENTICATED','_AUTHENTICATED');
 define('ACL_ADMIN',	   '_ADMIN');
 define('ACL_OWNER',	   '_OWNER');
 define('ACL_CREATOR',	   '_CREATOR');
 
-// Return the page permissions object for this page.
+// Return an page permissions array for this page.
 // To provide ui helpers to view and change page permissions:
 //   <tr><th>Group</th><th>Access</th><th>Allow or Forbid</th></tr>
 //   <tr><td>$group</td><td>_($access)</td><td> [ ] </td></tr>
@@ -77,16 +78,17 @@ function pagePermissions($pagename) {
     global $request;
     $page = $request->getPage($pagename);
     // Page not found (new page); returned inherited permissions, to be displayed in gray
-    if (! $page ) {
+    if (! $page->exists() ) {
         if ($pagename == '.') // stop recursion
-            return array('default' => new PagePermissions());
-        else
-            return array('inherited' => pagePermissions(getParentPage($pagename)));
+            return array('default',new PagePermissions());
+        else {
+            return array('inherited',pagePermissions(getParentPage($pagename)));
+        }
     } elseif ($perm = getPagePermissions($page)) {
-        return array('ok' => $perm);
+        return array('page',$perm);
     // or no permissions defined; returned inherited permissions, to be displayed in gray
     } else {
-        return array('inherited' => pagePermissions(getParentPage($pagename)));
+        return array('inherited',pagePermissions(getParentPage($pagename)));
     }
 }
 
@@ -96,8 +98,11 @@ function pagePermissions($pagename) {
 // overruled by more specific forbid rules.
 // Todo: cache result per access and page in session?
 function requiredAuthorityForPage ($action) {
-    return _requiredAuthorityForPagename(action2access($action),
-                                         $GLOBALS['request']->getArg('pagename'));
+    if (_requiredAuthorityForPagename(action2access($action),
+                                      $GLOBALS['request']->getArg('pagename')))
+        return $GLOBALS['request']->_user->_level;
+    else
+        return WIKIAUTH_FORBIDDEN;
 }
 
 // Translate action or plugin to the simplier access types:
@@ -147,7 +152,7 @@ function _requiredAuthorityForPagename($access, $pagename) {
     global $request;
     $page = $request->getPage($pagename);
     // Page not found; check against default permissions
-    if (! $page ) {
+    if (! $page->exists() ) {
         $perm = new PagePermission();
         return ($perm->isAuthorized($access,$request->_user) === true);
     }
@@ -159,10 +164,10 @@ function _requiredAuthorityForPagename($access, $pagename) {
         }
         return _requiredAuthorityForPagename($access,getParentPage($pagename));
     }
-    // ACL defined; check if isAuthorized returns true or false
+    // ACL defined; check if isAuthorized returns true or false or undecided
     $authorized = $perm->isAuthorized($access,$request->_user);
     if ($authorized != -1) // -1 for undecided
-        return $authorized ? $request->_user->_level : WIKIAUTH_FORBIDDEN;
+        return $authorized;
     else
         return _requiredAuthorityForPagename($access,getParentPage($pagename));
 }
@@ -172,8 +177,7 @@ function _requiredAuthorityForPagename($access, $pagename) {
  * @return string parent      pagename or the (possibly pseudo) dot-pagename.
  */
 function getParentPage($pagename) {
-    global $request;
-    if (ifSubPage($pagename)) {
+    if (isSubPage($pagename)) {
         return subPageSlice($pagename,0);
     } else {
         return '.';
@@ -232,7 +236,7 @@ class PagePermission {
             $accessTypes = $this->accessTypes();
             foreach ($hash as $access => $requires) {
                 if (in_array($access,$accessTypes))
-                    $this->perm->{$access} = $requires;
+                    $this->perm[$access] = $requires;
                 else
                     trigger_error(sprintf(_("Unsupported ACL access type %s ignored."),$access),
                                   E_USER_WARNING);
@@ -251,7 +255,7 @@ class PagePermission {
      */
     function isAuthorized($access,$user) {
         if (!empty($this->perm{$access})) {
-            foreach ($this->perm{$access} as $group => $bool) {
+            foreach ($this->perm[$access] as $group => $bool) {
                 if ($this->isMember($user,$group))
                     return $bool;
             }
@@ -263,21 +267,23 @@ class PagePermission {
      * Translate the various special groups to the actual users settings 
      * (userid, group membership).
      */
-    function isMember($group) {
+    function isMember($user,$group) {
         global $request;
         if ($group === ACL_EVERY) return true;
         $member = &WikiGroup::getGroup($request);
-        $user = & $request->_user;
+        //$user = & $request->_user;
         if ($group === ACL_ADMIN)   // WIKI_ADMIN or member of _("Administrators")
             return $user->isAdmin() or
                    $member->isMember(GROUP_ADMIN);
         if ($group === ACL_ANONYMOUS) 
-            return ! $user->isSigned();
+            return ! $user->isSignedIn();
         if ($group === ACL_BOGOUSERS)
             if (ENABLE_USER_NEW) return isa($user,'_BogoUser');
             else return isWikiWord($user->UserName());
+        if ($group === ACL_HASHOMEPAGE)
+            return $user->hasHomePage();
         if ($group === ACL_SIGNED)
-            return $user->isSigned();
+            return $user->isSignedIn();
         if ($group === ACL_AUTHENTICATED)
             return $user->isAuthenticated();
         if ($group === ACL_OWNER) {
@@ -289,7 +295,9 @@ class PagePermission {
             $rev = $page->getRevision(1);
             return $rev->get('author') === $user->UserName();
         }
-        /* or named groups or usernames */
+        /* Or named groups or usernames.
+         Note: We don't seperate groups and users here. 
+         Users overrides groups with the same name. */
         return $user->UserName() === $group or
                $member->isMember($group);
     }
@@ -315,7 +323,7 @@ class PagePermission {
         else
             $perm['dump'] = array(ACL_EVERY => true);
         if (defined('REQUIRE_SIGNIN_BEFORE_EDIT') && REQUIRE_SIGNIN_BEFORE_EDIT)
-            $perm['edit'] = array(ACL_SIGNIN => true);
+            $perm['edit'] = array(ACL_SIGNED => true);
         if (defined('ALLOW_ANON_USER') && ! ALLOW_ANON_USER) {
             if (defined('ALLOW_BOGO_USER') && ALLOW_BOGO_USER) {
                 $perm['view'] = array(ACL_BOGOUSER => true);
@@ -324,10 +332,11 @@ class PagePermission {
                 $perm['view'] = array(ACL_AUTHENTICATED => true);
                 $perm['edit'] = array(ACL_AUTHENTICATED => true);
             } else {
-                $perm['view'] = array(ACL_SIGNIN => true);
-                $perm['edit'] = array(ACL_SIGNIN => true);
+                $perm['view'] = array(ACL_SIGNED => true);
+                $perm['edit'] = array(ACL_SIGNED => true);
             }
         }
+        return $perm;
     }
 
     /**
@@ -369,6 +378,21 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/02/09 03:58:12  rurban
+// for now default DB_SESSION to false
+// PagePerm:
+//   * not existing perms will now query the parent, and not
+//     return the default perm
+//   * added pagePermissions func which returns the object per page
+//   * added getAccessDescription
+// WikiUserNew:
+//   * added global ->prepare (not yet used) with smart user/pref/member table prefixing.
+//   * force init of authdbh in the 2 db classes
+// main:
+//   * fixed session handling (not triple auth request anymore)
+//   * don't store cookie prefs with sessions
+// stdlib: global obj2hash helper from _AuthInfo, also needed for PagePerm
+//
 // Revision 1.2  2004/02/08 13:17:48  rurban
 // This should be the functionality. Needs testing and some minor todos.
 //

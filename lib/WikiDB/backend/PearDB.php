@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.35 2004-01-26 09:17:51 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.36 2004-02-12 13:05:49 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -589,6 +589,22 @@ extends WikiDB_backend
                               . $limitclause);
 
         return new WikiDB_backend_PearDB_iter($this, $result);
+    }
+
+    /**
+     * Rename page in the database.
+     */
+    function rename_page($pagename, $to) {
+        $dbh = &$this->_dbh;
+        extract($this->_table_names);
+        
+        $this->lock();
+        if ( ($id = $this->_get_pageid($pagename, false)) ) {
+            $dbh->query(sprintf("UPDATE $page_tbl SET pagename='%s' WHERE id=$id",
+                                $dbh->quoteString($to)));
+        }
+        $this->unlock();
+        return $id;
     }
 
     function _update_recent_table($pageid = false) {

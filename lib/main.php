@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.112 2004-02-09 03:58:12 rurban Exp $');
+rcs_id('$Id: main.php,v 1.113 2004-02-12 13:05:49 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -388,9 +388,11 @@ class WikiRequest extends Request {
     }
         
     function requiredAuthorityForAction ($action) {
-        // FIXME: clean up. 
-        // Todo: Check individual page permissions instead.
-        switch ($action) {
+    	if (class_exists("PagePermission")) {
+    	    return requiredAuthorityForPage($action);
+    	} else {
+          // FIXME: clean up. 
+          switch ($action) {
             case 'browse':
             case 'viewsource':
             case 'diff':
@@ -432,6 +434,7 @@ class WikiRequest extends Request {
                     return WIKIAUTH_ANON; // ActionPage.
                 else
                     return WIKIAUTH_ADMIN;
+          }
         }
     }
     /* End of Permission system */
@@ -871,6 +874,21 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.112  2004/02/09 03:58:12  rurban
+// for now default DB_SESSION to false
+// PagePerm:
+//   * not existing perms will now query the parent, and not
+//     return the default perm
+//   * added pagePermissions func which returns the object per page
+//   * added getAccessDescription
+// WikiUserNew:
+//   * added global ->prepare (not yet used) with smart user/pref/member table prefixing.
+//   * force init of authdbh in the 2 db classes
+// main:
+//   * fixed session handling (not triple auth request anymore)
+//   * don't store cookie prefs with sessions
+// stdlib: global obj2hash helper from _AuthInfo, also needed for PagePerm
+//
 // Revision 1.111  2004/02/07 10:41:25  rurban
 // fixed auth from session (still double code but works)
 // fixed GroupDB

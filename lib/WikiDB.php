@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.32 2004-02-12 11:25:53 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.33 2004-02-12 13:05:49 rurban Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -341,7 +341,7 @@ class WikiDB {
      * FIXME: with pagetype support and perhaps a RegexpSearchQuery
      * we can make sure we are returning *ONLY* blog pages to the
      * main routine.  Currently, we just use titleSearch which requires
-     * some furher checking in lib/plugin/WikiBlog.php (BAD).
+     * some further checking in lib/plugin/WikiBlog.php (BAD).
      *
      * @access public
      *
@@ -359,6 +359,45 @@ class WikiDB {
     //
     //  return $this->titleSearch($query);
     //}
+
+    /**
+     * Call the appropriate backend method
+     *
+     * A {@link WikiDB} consists of the (infinite) set of all possible pages,
+     * therefore this method never fails.
+     *
+     * @access public
+     * @param string $from Page to rename
+     * @param string $to   New name
+     * @param boolean $updateWikiLinks If the text in all pages should be replaced.
+     * @return boolean     true or false
+     */
+    function renamePage($from, $to, $updateWikiLinks = false) {
+        assert(is_string($from) && $from);
+        assert(is_string($to) && $to);
+        $result = false;
+        if (method_exists($this->_backend,'rename_page')) {
+            $oldpage = $this->getPage($from);
+            if ($oldpage->exists()) {
+                if ($result = $this->_backend->rename_page($from, $to)) {
+                    //TODO: update all WikiLinks in existing pages
+                    if ($updateWikiLinks) {
+                        trigger_error(_("WikiDB::renamePage(..,..,updateWikiLinks) not yet implemented"),E_USER_WARNING);
+                    }
+                    //create a RecentChanges entry with explaining summary
+                    $page = $this->getPage($to);
+                    $current = $page->getCurrentRevision();
+                    $meta = $current->_data;
+                    $version = $current->getVersion();
+                    $meta['summary'] = sprintf(_("WikiAdminRename'd from %s"),$from);
+                    $page->save($current->getPackedContent(), $version + 1, $meta);
+                }
+            }
+        } else {
+            trigger_error(_("WikiDB::renamePage() not yet implemented for this backend"),E_USER_WARNING);
+        }
+        return $result;
+    }
 
     /** Get timestamp when database was last modified.
      *

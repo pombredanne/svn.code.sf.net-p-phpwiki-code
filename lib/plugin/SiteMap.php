@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SiteMap.php,v 1.8 2004-01-24 23:24:07 rurban Exp $');
+rcs_id('$Id: SiteMap.php,v 1.9 2004-02-12 13:05:50 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -56,7 +56,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
@@ -69,7 +69,8 @@ extends WikiPlugin
                      'info'           => false,
                      'direction'      => 'back',
                      'firstreversed'  => false,
-                     'excludeunknown' => true
+                     'excludeunknown' => true,
+                     'includepages'   => ''    // this doesn't yet work as expected
                      );
     }
     // info arg allows multiple columns
@@ -177,13 +178,29 @@ extends WikiPlugin
 
         reset($pagearr);
         while (list($key, $link) = each($pagearr)) {
-            $out .= $key . "\n";
+            if (!empty($includepages)) { // this doesn't work as expected
+                $a = substr_count($key, '*');
+                $indenter = str_pad($nothing, $a);
+                $out .= $indenter  . '<?plugin IncludePage page=' . $link->getName();
+                if (is_string($includepages))
+                    $out .= " " . $includepages; // args
+                $out .= " ?>" . "\n";
+            }
+            else {
+                $out .= $key . "\n";
+            }
         }
-        return TransformText($out, 1, $page /*dunno if this last arg is right...*/); 
+        return TransformText($out, 1.0, $page /*cached or not cached?...*/); 
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/01/24 23:24:07  rurban
+// Patch by Alec Thomas, allows Perl regular expressions in SiteMap exclude lists.
+//   exclude=WikiWikiWeb,(?:Category|Topic).*
+// It is backwards compatible unless old exclude lists, and therefore Wiki
+// page names, contain regular expression characters.
+//
 // Revision 1.7  2003/02/21 04:12:06  dairiki
 // Minor fixes for new cached markup.
 //
