@@ -39,7 +39,7 @@ for ($z = -14; $z < 12; $z++) {
 $TimeZoneSelect = HTML("GMT ", HTML::select(array('name' => "pref[timeOffset]"), $select));
 
 ?>
-<!-- $Id: userprefs.tmpl,v 1.9 2002-02-02 23:23:18 carstenklapp Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.10 2002-02-03 01:40:55 carstenklapp Exp $ -->
 <form action="<?=WikiURL($page)?>" method="post">
   <input type="hidden" name="pagename" value="<?=$request->getArg('pagename')?>" />
   <blockquote>
@@ -69,8 +69,11 @@ $TimeZoneSelect = HTML("GMT ", HTML::select(array('name' => "pref[timeOffset]"),
     </tr><tr>
       <td align="right"><?=_("Your time:")?></td>
       <td>
-        <?= $TimeZoneSelect ?> (unimplemented)
+        <?= $TimeZoneSelect ?>
       </td>
+    </tr><tr>
+      <!--until timezone functions have been fully debugged-->
+      <td></td><td><small>Times converted to your zone will be marked with an asterisk&nbsp;(*).</small></td>
     </tr>
   </table>
   </blockquote>
