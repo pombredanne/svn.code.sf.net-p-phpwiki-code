@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.34 2004-04-18 01:11:52 rurban Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.35 2004-05-02 21:26:38 rurban Exp $');
 
 /**
  * GZIP stuff.
@@ -731,6 +731,7 @@ function ParseMimeifiedPages ($data)
     $page        = array();
     $pagedata    = array();
     $versiondata = array();
+    $pagedata['date'] = strtotime($headers['date']);
     
     foreach ($params as $key => $value) {
         if (empty($value))
@@ -786,6 +787,11 @@ function ParseMimeifiedPages ($data)
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.34  2004/04/18 01:11:52  rurban
+// more numeric pagename fixes.
+// fixed action=upload with merge conflict warnings.
+// charset changed from constant to global (dynamic utf-8 switching)
+//
 // Revision 1.33  2004/04/12 13:04:50  rurban
 // added auth_create: self-registering Db users
 // fixed IMAP auth

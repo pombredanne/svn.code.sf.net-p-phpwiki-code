@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.10 2004-04-29 22:32:56 zorloc Exp $');
+rcs_id('$Id: PagePerm.php,v 1.11 2004-05-02 21:26:38 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -155,7 +155,7 @@ function requiredAuthorityForPage ($action) {
                                       $GLOBALS['request']->getArg('pagename')))
         return $GLOBALS['request']->_user->_level;
     else
-        return $GLOBALS['request']->_user->_level + 1;
+        return WIKIAUTH_UNOBTAINABLE;
 }
 
 // Translate action or plugin to the simplier access types:
@@ -190,6 +190,7 @@ function action2access ($action) {
     case 'remove':
     case 'lock':
     case 'unlock':
+    case 'upgrade':
             return 'change';
     default:
         //Todo: Plugins should be able to override its access type
@@ -310,8 +311,9 @@ class PagePermission {
     function isAuthorized($access,$user) {
         if (!empty($this->perm{$access})) {
             foreach ($this->perm[$access] as $group => $bool) {
-                if ($this->isMember($user,$group))
+                if ($this->isMember($user,$group)) {
                     return $bool;
+                }
             }
         }
         return -1; // undecided
@@ -543,6 +545,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/04/29 22:32:56  zorloc
+// Slightly more elegant fix.  Instead of WIKIAUTH_FORBIDDEN, the current user's level + 1 is returned on a false.
+//
 // Revision 1.9  2004/04/29 17:18:19  zorloc
 // Fixes permission failure issues.  With PagePermissions and Disabled Actions when user did not have permission WIKIAUTH_FORBIDDEN was returned.  In WikiUser this was ok because WIKIAUTH_FORBIDDEN had a value of 11 -- thus no user could perform that action.  But WikiUserNew has a WIKIAUTH_FORBIDDEN value of -1 -- thus a user without sufficent permission to do anything.  The solution is a new high value permission level (WIKIAUTH_UNOBTAINABLE) to be the default level for access failure.
 //

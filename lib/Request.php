@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.50 2004-04-29 19:39:44 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.51 2004-05-02 21:26:38 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -455,8 +455,21 @@ class Request_SessionVars {
     function set($key, $val) {
         $vars = &$GLOBALS['HTTP_SESSION_VARS'];
         if ($key == 'wiki_user') {
-            $val->page   = $GLOBALS['request']->getArg('pagename');
-            $val->action = $GLOBALS['request']->getArg('action');
+            if (DEBUG) {
+	      if (!$val) {
+	        trigger_error("delete user session",E_USER_WARNING);
+	      } elseif (!$val->_level) {
+	        trigger_error("lost level in session",E_USER_WARNING);
+	      }
+            }
+	    if (is_object($val)) {
+                $val->page   = $GLOBALS['request']->getArg('pagename');
+                $val->action = $GLOBALS['request']->getArg('action');
+                // sessiondata may not exceed a certain size!
+                // otherwise it will get lost.
+                unset($val->_HomePagehandle);
+                unset($val->_auth_dbi);
+	    }
         }
         if (!function_usable('get_cfg_var') or get_cfg_var('register_globals')) {
             // This is funky but necessary, at least in some PHP's
@@ -470,6 +483,7 @@ class Request_SessionVars {
         $vars = &$GLOBALS['HTTP_SESSION_VARS'];
         if (!function_usable('ini_get') or ini_get('register_globals'))
             unset($GLOBALS[$key]);
+        if (DEBUG) trigger_error("delete session $key",E_USER_WARNING);
         unset($vars[$key]);
         session_unregister($key);
     }
@@ -960,6 +974,12 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.50  2004/04/29 19:39:44  rurban
+// special support for formatted plugins (one-liners)
+//   like <small><plugin BlaBla ></small>
+// iter->asArray() helper for PopularNearby
+// db_session for older php's (no &func() allowed)
+//
 // Revision 1.49  2004/04/26 20:44:34  rurban
 // locking table specific for better databases
 //

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbSession.php,v 1.13 2004-04-29 22:29:03 rurban Exp $');
+<?php rcs_id('$Id: DbSession.php,v 1.14 2004-05-02 21:26:38 rurban Exp $');
 
 /**
  * Store sessions data in Pear DB / ADODB ....
@@ -147,7 +147,8 @@ extends DB_Session
         $this->_disconnect();
         if (DB::isError($res) || empty($res))
             return '';
-        if (preg_match('|^[a-zA-Z0-9/+=]+$|', $res))
+        if (isa($dbh, 'DB_pgsql'))
+            //if (preg_match('|^[a-zA-Z0-9/+=]+$|', $res))
             $res = base64_decode($res);
         return $res;
     }
@@ -176,7 +177,13 @@ extends DB_Session
         $qid = $dbh->quote($id);
         $qip = $dbh->quote($GLOBALS['HTTP_SERVER_VARS']['REMOTE_ADDR']);
         $time = time();
-
+	if (DEBUG and $sess_data == 'wiki_user|N;') {
+	    trigger_error("delete session $qid",E_USER_WARNING);
+	    /*echo "<pre>";
+	    print_r($GLOBALS['request']->_user);
+	    echo "</pre>";
+	    */
+	}
         // postgres can't handle binary data in a TEXT field.
         if (isa($dbh, 'DB_pgsql'))
             $sess_data = base64_encode($sess_data);
@@ -185,7 +192,6 @@ extends DB_Session
         $res = $dbh->query("UPDATE $table"
                            . " SET sess_data=$qdata, sess_date=$time, sess_ip=$qip"
                            . " WHERE sess_id=$qid");
-
         if ($dbh->affectedRows() == 0)
             $res = $dbh->query("INSERT INTO $table"
                                . " (sess_id, sess_data, sess_date, sess_ip)"

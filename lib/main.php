@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.139 2004-05-02 15:10:07 rurban Exp $');
+rcs_id('$Id: main.php,v 1.140 2004-05-02 21:26:38 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -289,8 +289,13 @@ class WikiRequest extends Request {
         $what = $this->getActionDescription($this->getArg('action'));
 
         if ($require_level == WIKIAUTH_UNOBTAINABLE) {
-            $this->finish(fmt("%s is disallowed on this wiki.",
-                              $this->getDisallowedActionDescription($this->getArg('action'))));
+            if (class_exists('PagePermission'))
+                $this->finish(fmt("%s is disallowed on this wiki for user %s (level: %d).",
+                                  $this->getDisallowedActionDescription($this->getArg('action')),
+                                  $this->_user->UserName(),$this->_user->_level));
+            else
+                $this->finish(fmt("%s is disallowed on this wiki.",
+                                  $this->getDisallowedActionDescription($this->getArg('action'))));
         }
         elseif ($require_level == WIKIAUTH_BOGO)
             $msg = fmt("You must sign in to %s.", $what);
@@ -490,7 +495,12 @@ class WikiRequest extends Request {
             // HACK:
             echo "\n</body></html>";
         }
-
+        if (is_object($this->_user)) {
+            $this->_user->page   = $this->getArg('pagename');
+            $this->_user->action = $this->getArg('action');
+            unset($this->_user->_HomePagehandle);
+            unset($this->_user->_auth_dbi);
+	}
         Request::finish();
         if (!empty($this->_dbi))
             $this->_dbi->close();
@@ -889,6 +899,16 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.139  2004/05/02 15:10:07  rurban
+// new finally reliable way to detect if /index.php is called directly
+//   and if to include lib/main.php
+// new global AllActionPages
+// SetupWiki now loads all mandatory pages: HOME_PAGE, action pages, and warns if not.
+// WikiTranslation what=buttons for Carsten to create the missing MacOSX buttons
+// PageGroupTestOne => subpages
+// renamed PhpWikiRss to PhpWikiRecentChanges
+// more docs, default configs, ...
+//
 // Revision 1.138  2004/05/01 15:59:29  rurban
 // more php-4.0.6 compatibility: superglobals
 //

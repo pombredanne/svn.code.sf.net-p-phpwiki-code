@@ -1,10 +1,10 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.3 2004-04-29 22:33:30 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.4 2004-05-02 21:26:38 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
- This file is (not yet) part of PhpWiki.
+ This file is part of PhpWiki.
 
  PhpWiki is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -47,16 +47,41 @@ require_once("lib/loadsave.php");
 
 // see loadsave.php for saving new pages.
 function CheckPgsrcUpdate(&$request) {
-    $dbh = $request->getDbh(); 
+    $dbi = $request->getDbh(); 
     $path = FindLocalizedFile(WIKI_PGSRC);
     $pgsrc = new fileSet($path);
     // fixme: verification, ...
     foreach ($pgsrc->getFiles() as $filename) {
         if (substr($filename,-1,1) == '~') continue;
         $pagename = urldecode($filename);
-        if ($dbh->isWikiPage($pagename)) {
+        $page = $dbi->getPage($pagename);
+        if ($page->exists()) {
             // check mtime
-            ; //echo "$pagename exists<br />\n";
+            $rev = $page->getCurrentRevision();
+            $page_mtime = $rev->get('mtime');
+            $data  = implode("", file($path."/".$filename));
+            if (($parts = ParseMimeifiedPages($data))) {
+                usort($parts, 'SortByPageVersion');
+                reset($parts);
+                $pageinfo = $parts[0];
+                $stat  = stat($path."/".$filename);
+                $new_mtime = @$pageinfo['versiondata']['mtime'];
+                if (!$new_mtime)
+                    $new_mtime = @$pageinfo['versiondata']['lastmodified'];
+                if (!$new_mtime)
+                    $new_mtime = @$pageinfo['pagedata']['date'];
+                if (!$new_mtime)
+                    $new_mtime = $stat[9];
+                if ($new_mtime > $page_mtime) {
+                    echo "$path/$pagename: newer than the existing page. replace ($new_mtime &gt; $page_mtime)<br />\n";
+                    LoadAny($request,$path."/".$filename);
+                    echo "<br />\n";
+                } else {
+                    echo "$path/$pagename: older than the existing page. skipped.<br />\n";
+                }
+            } else {
+                echo "$path/$pagename: unknown format, skipped.<br />\n";
+            }
         } else {
             echo "$pagename does not exist<br />\n";
             LoadAny($request,$path."/".$filename);
@@ -144,6 +169,10 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.3  2004/04/29 22:33:30  rurban
+ fixed sf.net bug #943366 (Kai Krakow)
+   couldn't load localized url-undecoded pagenames
+
  Revision 1.2  2004/03/12 15:48:07  rurban
  fixed explodePageList: wrong sortby argument order in UnfoldSubpages
  simplified lib/stdlib.php:explodePageList
