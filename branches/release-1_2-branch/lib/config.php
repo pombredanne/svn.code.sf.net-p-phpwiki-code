@@ -10,7 +10,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.24.2.9 2001-12-02 07:39:03 carstenklapp Exp $'); 
+   rcs_id('$Id: config.php,v 1.24.2.10 2001-12-02 21:36:43 carstenklapp Exp $'); 
    // end essential internal stuff
 
 
@@ -176,6 +176,7 @@
 
    // this turns on url indicator icons, inserted before embedded links
    //define("USE_LINK_ICONS", 1);
+   //define("DATA_PATH", "/wiki");
 
    // date & time formats used to display modification times, etc.
    // formats are given as format strings to PHP date() function
