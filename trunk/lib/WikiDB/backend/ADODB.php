@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.9 2003-02-22 00:28:34 dairiki Exp $');
+rcs_id('$Id: ADODB.php,v 1.10 2004-01-25 04:00:16 rurban Exp $');
 
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
@@ -96,7 +96,7 @@ extends WikiDB_backend
 
 //  The next line should speed up queries if enabled, but:
 //  1)  It only works with PHP >= 4.0.6; and
-//  2)  At the moment, I haven't figured out why thw wrong results are returned'
+//  2)  At the moment, I haven't figured out why the wrong results are returned'
 //	$GLOBALS['ADODB_COUNTRECS'] = false;
 
         $prefix = isset($dbparams['prefix']) ? $dbparams['prefix'] : '';
@@ -575,11 +575,11 @@ extends WikiDB_backend
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $order = "DESC";
-		if ($limit < 0){ 
-		    $order = "ASC"; 
-			$limit = -$limit;
-			}
-		$limit = $limit ? $limit : -1;
+        if ($limit < 0){ 
+            $order = "ASC"; 
+            $limit = -$limit;
+        }
+        $limit = $limit ? $limit : 1;
         $result = $dbh->SelectLimit("SELECT $page_tbl.*"
                               . " FROM $nonempty_tbl, $page_tbl"
                               . " WHERE $nonempty_tbl.id=$page_tbl.id"
@@ -646,7 +646,7 @@ extends WikiDB_backend
             $order = "ASC";
             $limit = -$limit;
         }
-        $limit = $limit ? $limit : -1;
+        $limit = $limit ? $limit : 1;
         $where_clause = $join_clause;
         if ($pick)
             $where_clause .= " AND " . join(" AND ", $pick);
