@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.101 2004-06-03 12:59:40 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.102 2004-06-07 18:59:28 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -429,6 +429,10 @@ class Theme {
     	$dbi =& $GLOBALS['request']->_dbi;
         $owner = $page->getOwner();
         if ($owner) {
+            if ( mayAccessPage('change',$page->getName()) )
+                return fmt("Owner: %s", $this->makeActionButton(array('action'=>_("PhpWikiAdministration/Chown"),
+                                                                      's' => $page->getName()),
+                                                                $owner, $page));
             if ( $dbi->isWikiPage($owner) )
                 return fmt("Owner: %s", WikiLink($owner));
             else
@@ -1346,6 +1350,10 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.101  2004/06/03 12:59:40  rurban
+// simplify translation
+// NS4 wrap=virtual only
+//
 // Revision 1.100  2004/06/03 10:18:19  rurban
 // fix FileUser locking issues, new config ENABLE_PAGEPERM
 //

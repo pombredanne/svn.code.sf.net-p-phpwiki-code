@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminChown.php,v 1.1 2004-06-07 17:58:58 rurban Exp $');
+rcs_id('$Id: WikiAdminChown.php,v 1.2 2004-06-07 18:59:42 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -43,7 +43,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -94,7 +94,8 @@ extends WikiPlugin_WikiAdminSelect
     
     function run($dbi, $argstr, &$request, $basepage) {
         if ($request->getArg('action') != 'browse')
-            return $this->disabled("(action != 'browse')");
+            if (!$request->getArg('action') == _("PhpWikiAdministration%2FChown"))
+                return $this->disabled("(action != 'browse')");
         
         $args = $this->getArgs($argstr, $request);
         $this->_args = $args;
@@ -190,6 +191,9 @@ extends WikiPlugin_WikiAdminSelect
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/06/07 17:58:58  rurban
+// new chown plugin
+//
 //
 
 // Local Variables:
