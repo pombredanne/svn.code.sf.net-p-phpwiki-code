@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki-heavy.css,v 1.14 2002-02-11 16:42:53 carstenklapp Exp $
+ * $Id: phpwiki-heavy.css,v 1.15 2002-02-13 08:45:08 carstenklapp Exp $
  *
  * phpwiki-heavy.css
  *
@@ -16,11 +16,24 @@ div.br { display: none; }
 /* This break NS4, but is necessary for IE4. */
 div.wikitext { width: auto; }
 
+/**
+ * General
+ */
+/* for NS4 */
+img { vertical-align: baseline; }
+/* NS4 inserts a br after this */
+input { margin: 0.1em; }
+/* NS4 inserts a br after this */
+input.numeric { /*text-align: right;*/ }
 
 /**
  * Links
  */
 
+/* NS4 inserts a br after these */
+.wikiaction, .wikiaction table, span.wikiaction, input.button { border: 1px outset; }
+.wikiadmin, .wikiadmin table { border: 1px outset; }
+.wikiunsafe { border: 1px outset; }
 /* Make wikiaction links look like buttons */ 
 a.wikiaction, a.wikiadmin, input.button {
   border: 1px outset #006;
@@ -29,11 +42,10 @@ a.wikiaction, a.wikiadmin, input.button {
   padding-left:  .5em;
   padding-right: .5em;
 }
+
 /* Prevent buttons from overlapping when the toolbar is wrapped.
- * This screws up input.button in Mozilla */ 
-a.wikiaction, a.wikiadmin {
-  line-height: 2.6ex;
-}
+a.wikiaction, a.wikiadmin { line-height: 2.6ex; }
+
 /* QuestionMark */
 .wikiunknown a, .named-wikiunknown {
   font-size: smaller;
@@ -43,9 +55,15 @@ a.wikiaction, a.wikiadmin {
   padding-top: 1px;
   margin-right: 1px;
 }
+
 /* Link icons - This screws up NS4 */
 img.linkicon { vertical-align: middle; }
 
+
+/**
+ * Edit Page & View Source
+ */
+/* color: inherit; and background: inherit; display as lime in NS4 */
 
 /**
  * Diff Output
