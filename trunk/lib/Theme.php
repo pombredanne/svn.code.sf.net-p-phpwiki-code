@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.35 2002-02-07 21:21:06 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.36 2002-02-08 05:29:08 carstenklapp Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -171,7 +171,7 @@ class Theme {
     //
     ////////////////////////////////////////////////////////////////
 
-    var $_dateTimeFormat = "%B %e, %Y";
+    var $_dateTimeFormat = "%B %e, %Y %l:%M %p";
     var $_dateFormat = "%B %e, %Y";
     var $_timeFormat = "%l:%M %p";
     //var $_timeFormat = "%l:%M:%S %p";
@@ -179,56 +179,77 @@ class Theme {
     function setDateFormat ($fs) {
         $this->_dateFormat = $fs;
     }
-
-    function formatDate ($time_t) {
-        $offset_time = $time_t + PrefTimezoneOffset();
-        global $request;
-        if ($request->getPref('relativeDates')) {
-            if (istoday($offset_time))
-                $date = _("Today");
-            else if (isyesterday($offset_time))
-                $date = _("Yesterday");
-            else
-                $date = strftime($this->_dateFormat, $offset_time);
-        } else {
-            $date = strftime($this->_dateFormat, $offset_time);
-        }
-        return HTML($date, HTML::small("*"));
-        // The asterisk is temporary, for debugging it indicates a
-        // time has been converted to the user's local time.
-    }
-
     function setDateTimeFormat ($fs) {
         $this->_dateTimeFormat = $fs;
     }
 
-    function formatDateTime ($time_t) {
-        $offset_time = $time_t + PrefTimezoneOffset();
+    function formatDate ($time_t, $norelative = false) {
         global $request;
-        if ($request->getPref('relativeDates')) {
-            if (istoday($offset_time))
-                $date = sprintf(_("Today at %s"), strtolower(strftime($this->_timeFormat, $offset_time)));
-            else if (isyesterday($offset_time))
-                $date = sprintf(_("Yesterday at %s"), strtolower(strftime($this->_timeFormat, $offset_time)));
-            else
-                $date = strftime($this->_dateTimeFormat, $offset_time);
-        } else {
-            $date = strftime($this->_dateTimeFormat, $offset_time);
-        }
-        return HTML($date, HTML::small("*"));
+        if (!$norelative && $request->getPref('relativeDates'))
+            return $this->relativeDate($time_t); //noreturn
+
+        $offset_time = $time_t + PrefTimezoneOffset();
+        $date = strftime($this->_dateFormat, $offset_time);
+        if (DEBUG)
+            $date = HTML($date, HTML::small("*"));
         // The asterisk is temporary, for debugging it indicates a
         // time has been converted to the user's local time.
+        return $date;
     }
+    function formatDateTime ($time_t, $norelative = false) {
+        global $request;
+        if (!$norelative && $request->getPref('relativeDates'))
+            return $this->relativeDateTime($time_t); //noreturn
 
-
+        $offset_time = $time_t + PrefTimezoneOffset();
+        $date = strftime($this->_dateTimeFormat, $offset_time);
+        if (DEBUG)
+            $date = HTML($date, HTML::small("*"));
+        // The asterisk is temporary, for debugging it indicates a
+        // time has been converted to the user's local time.
+        return $date;
+    }
     function formatTime ($time_t) {
         //FIXME: make 24-hour mode configurable?
         $offset_time = $time_t + PrefTimezoneOffset();
-        return HTML(preg_replace('/^0/', ' ',
-                                 strtolower(strftime("%I:%M %p", $offset_time))),
-                    HTML::small("*"));
+        $date = preg_replace('/^0/', ' ',
+                            strtolower(strftime("%I:%M %p", $offset_time)));
+        if (DEBUG)
+            $date = HTML($date, HTML::small("*"));
         // The asterisk is temporary, for debugging it indicates a
         // time has been converted to the user's local time.
+        return $date;
+    }
+
+    function relativeDate ($time_t) {
+        $offset_time = $time_t + PrefTimezoneOffset();
+        if (istoday($offset_time))
+            $date = _("Today");
+        else if (isyesterday($offset_time))
+            $date = _("Yesterday");
+        else
+            $date = strftime($this->_dateFormat, $offset_time);
+        if (DEBUG)
+            $date = HTML($date, HTML::small("*"));
+        // The asterisk is temporary, for debugging it indicates a
+        // time has been converted to the user's local time.
+        return $date;
+    }
+    function relativeDateTime ($time_t) {
+        $offset_time = $time_t + PrefTimezoneOffset();
+        if (istoday($offset_time))
+            $date = sprintf(_("Today at %s"),
+                            strtolower(strftime($this->_timeFormat, $offset_time)));
+        else if (isyesterday($offset_time))
+            $date = sprintf(_("Yesterday at %s"),
+                            strtolower(strftime($this->_timeFormat, $offset_time)));
+        else
+            $date = strftime($this->_dateTimeFormat, $offset_time);
+        if (DEBUG)
+            $date = HTML($date, HTML::small("*"));
+        // The asterisk is temporary, for debugging it indicates a
+        // time has been converted to the user's local time.
+        return $date;
     }
 
 
