@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.207 2004-09-26 12:21:40 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.208 2004-10-12 13:13:20 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -404,10 +404,12 @@ function LinkImage($url, $alt = false) {
 
 
 class Stack {
-    var $items = array();
-    var $size = 0;
-    // var in php5.0.0.rc1 deprecated
 
+    // var in php5 deprecated
+    function Stack() {
+        $this->items = array();
+        $this->size = 0;
+    }
     function push($item) {
         $this->items[$this->size] = $item;
         $this->size++;
@@ -521,19 +523,19 @@ class WikiPageName
      * This is the value of $name passed to the constructor.
      * (For use, e.g. as a default label for links to the page.)
      */
-    var $shortName;
+    //var $shortName;
 
     /** The full page name.
      *
      * This is the full name of the page (without anchor).
      */
-    var $name;
+    //var $name;
     
     /** The anchor.
      *
      * This is the referenced anchor within the page, or the empty string.
      */
-    var $anchor;
+    //var $anchor;
     
     /** Constructor
      *
@@ -1294,7 +1296,7 @@ class fileSet {
 
 // expands a list containing regex's to its matching entries
 class ListRegexExpand {
-    var $match, $list, $index, $case_sensitive;
+    //var $match, $list, $index, $case_sensitive;
     function ListRegexExpand (&$list, $match, $case_sensitive = true) {
     	$this->match = str_replace('/','\/',$match);
     	$this->list = &$list;
@@ -1759,6 +1761,11 @@ function isExternalReferrer(&$request) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.207  2004/09/26 12:21:40  rurban
+// removed old log entries.
+// added persistent start_debug on internal links and DEBUG
+// added isExternalReferrer (not yet used)
+//
 // Revision 1.206  2004/09/25 16:28:36  rurban
 // added to TOC, firstNWordsOfContent is now plugin compatible, added extractSection
 //

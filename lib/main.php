@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.181 2004-10-07 16:08:58 rurban Exp $');
+rcs_id('$Id: main.php,v 1.182 2004-10-12 13:13:19 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -32,6 +32,7 @@ class WikiRequest extends Request {
         }
 // Fixme: Does pear reset the error mask to 1? We have to find the culprit
 $x = error_reporting();
+//echo "main: ", error_reporting();
 $this->version = phpwiki_version();
         $this->Request();
 
@@ -1028,19 +1029,21 @@ function main () {
         validateSessionPath();
 
     global $request;
-
     if ((DEBUG & _DEBUG_APD) and extension_loaded("apd"))
         apd_set_session_trace(9);
 
     // Postpone warnings
     global $ErrorManager;
-    $ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE|E_USER_WARNING|E_WARNING);
+    if (defined('E_STRICT')) // and (E_ALL & E_STRICT)) // strict php5?
+        $ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE|E_USER_WARNING|E_WARNING|E_STRICT);
+    else
+        $ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE|E_USER_WARNING|E_WARNING);
     $request = new WikiRequest();
 
     $action = $request->getArg('action');
     if (substr($action, 0, 3) != 'zip') {
     	if ($action == 'pdf')
-    	    $ErrorManager->setPostponedErrorMask(-1);
+    	    $ErrorManager->setPostponedErrorMask(-1); // everything
     	//else // reject postponing of warnings
         //    $ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE);
     }
@@ -1112,6 +1115,11 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.181  2004/10/07 16:08:58  rurban
+// fixed broken FileUser session handling.
+//   thanks to Arnaud Fontaine for detecting this.
+// enable file user Administrator membership.
+//
 // Revision 1.180  2004/10/04 23:39:34  rurban
 // just aesthetics
 //

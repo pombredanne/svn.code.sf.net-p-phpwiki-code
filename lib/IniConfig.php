@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.52 2004-10-04 23:38:07 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.53 2004-10-12 13:13:19 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -61,6 +61,7 @@ rcs_id('$Id: IniConfig.php,v 1.52 2004-10-04 23:38:07 rurban Exp $');
  */
 
 include_once (dirname(__FILE__)."/config.php");
+//echo " load filefinder: ", error_reporting();
 include_once (dirname(__FILE__)."/FileFinder.php");
 
 function IniConfig($file) {
@@ -648,6 +649,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.52  2004/10/04 23:38:07  rurban
+// unittest fix
+//
 // Revision 1.51  2004/09/20 13:40:19  rurban
 // define all config.ini settings, only the supported will be taken from -default.
 // support USE_EXTERNAL_HTML2PDF renderer (htmldoc tested)

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.33 2004-07-02 09:55:58 rurban Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.34 2004-10-12 13:13:19 rurban Exp $');
 /**
  * Code for writing XML.
  * @package Markup
@@ -491,6 +491,18 @@ class FormattedText {
     }
 }
 
+/**
+ * PHP5 compatibility
+ * Error[2048]: Non-static method XmlContent::_quote() should not be called statically
+ */
+function XmlContent_quote ($string) {
+    if (!$string) return $string;
+    if (check_php_version(4,1) and isset($GLOBALS['charset']))
+        return htmlspecialchars($string, ENT_COMPAT, $GLOBALS['charset']);
+    else
+        return htmlspecialchars($string);
+}
+
 function PrintXML ($val /* , ... */ ) {
     if (func_num_args() > 1) {
         foreach (func_get_args() as $arg)
@@ -503,7 +515,7 @@ function PrintXML ($val /* , ... */ ) {
             echo $val->asXML();
         }
         elseif (method_exists($val, 'asstring'))
-            echo XmlContent::_quote($val->asString());
+            echo XmlContent_quote($val->asString());
         else
             printf("==Object(%s)==", get_class($val));
     }
@@ -516,7 +528,7 @@ function PrintXML ($val /* , ... */ ) {
             PrintXML($x);
     }
     else
-        echo (string)XmlContent::_quote((string)$val);
+        echo (string)XmlContent_quote((string)$val);
 }
 
 function AsXML ($val /* , ... */) {
@@ -532,7 +544,7 @@ function AsXML ($val /* , ... */) {
         if (method_exists($val, 'asxml'))
             return $val->asXML();
         elseif (method_exists($val, 'asstring'))
-            return XmlContent::_quote($val->asString());
+            return XmlContent_quote($val->asString());
         else
             return sprintf("==Object(%s)==", get_class($val));
     }
@@ -551,7 +563,7 @@ function AsXML ($val /* , ... */) {
         return $xml;
     }
     else
-        return XmlContent::_quote((string)$val);
+        return XmlContent_quote((string)$val);
 }
 
 function AsString ($val) {
@@ -591,6 +603,9 @@ function fmt ($fs /* , ... */) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.33  2004/07/02 09:55:58  rurban
+// more stability fixes: new DISABLE_GETIMAGESIZE if your php crashes when loading LinkIcons: failing getimagesize in old phps; blockparser stabilized
+//
 // Revision 1.32  2004/06/20 15:30:05  rurban
 // get_class case-sensitivity issues
 //

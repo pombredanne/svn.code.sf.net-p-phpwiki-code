@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.67 2004-09-25 18:56:54 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.68 2004-10-12 13:13:19 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -935,8 +935,10 @@ class HTTP_ValidatorSet {
         // If either is weak, we're weak
         if (!empty($that->_weak))
             $this->_weak = true;
-
-        $this->_tag = array_merge($this->_tag, $that->_tag);
+        if (is_array($this->_tag))
+            $this->_tag = array_merge($this->_tag, $that->_tag);
+        else
+            $this->_tag = $that->_tag;
     }
 
     function getETag() {
@@ -1016,6 +1018,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.67  2004/09/25 18:56:54  rurban
+// make start_debug logic work
+//
 // Revision 1.66  2004/09/25 16:24:52  rurban
 // dont compress on debugging
 //
