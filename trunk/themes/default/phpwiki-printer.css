@@ -1,5 +1,6 @@
+/*@charset "iso-8859-1";*/
 /**
- * $Id: phpwiki-printer.css,v 1.1 2002-03-06 02:21:16 carstenklapp Exp $
+ * $Id: phpwiki-printer.css,v 1.2 2003-12-01 18:58:56 carstenklapp Exp $
  *
  * PhpWiki style sheet for the printed page:
  * Black on white only, with no toolbar commands and no link icons.
@@ -9,10 +10,27 @@
 
 /**
  * General
- */ 
+ */
+ 
+/**
+ * required for Mozilla with MacOSX theme, because of
+ * body {background-image: url(/finkwiki/themes/MacOSX/images/bgpaper8.png);}
+ * within the html itself. It still does not suppress
+ * the bg image of a small strip near the top and bottom. :/
+ */
+html { background: white; }
+
 body {
   margin: 1em;
+  padding: 0;
   color:  black;
+  background: white;
+}
+div.wikitext {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  margin-top: 1ex;
   background: white;
 }
 img {
@@ -66,25 +84,40 @@ a {
   font-style: normal;
 }
 
-
-p.editdate {
-  font-size: smaller;
-  margin-top: 0;
-}
-
 .rawurl {
   text-decoration: underline;
 }
 
+.wikiblog-form { display: none }
+
 /**
  * Toolbars
  */
-#navbuttons, #actionbar table {
+#header, #logo, #footer {
+  background: white;
+}
+/**
+ * Get rid of extra space at bottom (which may contain a bg image)
+ * this br was used to clear past the xhtml validator
+ * buttons which are not visible here.
+ */
+table + br.clear-floats { display: none; }
+#navbuttons, #actionbuttons, #signin {
   display: none;
+}
+p.editdate {
+  font-size: smaller;
+  margin-top: 0;
+  background: white;
 }
 
 hr.toolbar {
   display: none;
+}
+
+hr.printer {
+  display: block;
+  background: white;
 }
 
 /* Hide (diff) links and days buttons in RecentChanges */
@@ -246,11 +279,9 @@ div.errors {
 
 /* Debug */
 .debug {
-  font-family: monospace;
-  margin: 1ex 0;
-/*
+  /* font-family: monospace;
+  margin: 1ex 0;*/
   display: none;
-*/
 }
 
 
