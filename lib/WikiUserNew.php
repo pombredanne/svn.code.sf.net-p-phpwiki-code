@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.69 2004-05-06 13:56:40 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.70 2004-05-06 19:26:16 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -961,8 +961,10 @@ extends _AnonUser
         }
         // probably prefix table names if in same database
         if (!empty($DBParams['prefix']) and 
-            isset($this->_auth_dbi) and isset($request->_dbi->_backend->_dbh) and 
-            $DBParams['dsn'] == $GLOBALS['DBAuthParams']['auth_dsn'])
+            isset($this->_auth_dbi) and 
+            isset($request->_dbi->_backend->_dbh) and 
+            (!empty($GLOBALS['DBAuthParams']['auth_dsn']) and
+             $DBParams['dsn'] == $GLOBALS['DBAuthParams']['auth_dsn']))
         {
             $prefix = $DBParams['prefix'];
             if (!stristr($stmt, $prefix)) {
@@ -1765,7 +1767,7 @@ extends _DbPassUser
         // maybe the user is allowed to create himself. Generally not wanted in 
         // external databases, but maybe wanted for the wiki database, for performance 
         // reasons
-        if (!$this->_authcreate and !empty($DBAuthParams['auth_create'])) {
+        if (empty($this->_authcreate) and !empty($DBAuthParams['auth_create'])) {
             $this->_authcreate = str_replace(array("'\$userid'","'\$password'"),
                                              array('%s','%s'),
                                              $DBAuthParams['auth_create']);
@@ -2834,6 +2836,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.69  2004/05/06 13:56:40  rurban
+// Enable the Administrators group, and add the WIKIPAGE group default root page.
+//
 // Revision 1.68  2004/05/05 13:37:54  rurban
 // Support to remove all UserPreferences
 //

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.40 2004-05-02 15:10:05 rurban Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.41 2004-05-06 19:26:15 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -89,6 +89,7 @@ class RegexpSet
      * look-ahead and look-behind assertions are okay.)
      */
     function RegexpSet ($regexps) {
+        assert($regexps);
         $this->_regexps = array_unique($regexps);
     }
 
@@ -385,6 +386,7 @@ class Markup_wikiword extends SimpleMarkup
     }
 
     function markup ($match) {
+        if (!$match) return false;
         if ($this->_isWikiUserPage($match))
             return new Cached_UserLink($match); //$this->_UserLink($match);
         else
@@ -396,7 +398,7 @@ class Markup_wikiword extends SimpleMarkup
         global $request;
         $dbi = $request->getDbh();
         $page_handle = $dbi->getPage($page);
-        if ($page_handle->get('pref'))
+        if ($page_handle and $page_handle->get('pref'))
             return true;
         else
             return false;
@@ -537,7 +539,7 @@ class Markup_html_abbr extends BalancedMarkup
 //  like: '<small>< ? plugin PopularNearby ? ></small>'
 class Markup_plugin extends SimpleMarkup
 {
-    var $_match_regexp = '<\?plugin(?:-form)?\s.+?\?>';
+    var $_match_regexp = '(?: <\?plugin(?:-form)?\s[^\n]+?\?> )';
 
     function markup ($match) {
 	return new Cached_PluginInvocation($match);
@@ -604,7 +606,7 @@ class InlineTransformer
             }
 
             $markup = $this->_markup[$match->regexp_ind - 1];
-            //if (!$markup) return false;
+            if (!$markup) return $output;
             $body = $this->_parse_markup_body($markup, $match->match, $match->postmatch, $end_regexps);
             if (!$body) {
                 // Couldn't match balanced expression.

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.27 2004-05-06 17:30:38 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.28 2004-05-06 19:26:16 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -388,7 +388,7 @@ extends WikiDB_backend
 
         // optimize: mysql can do this with one REPLACE INTO.
         if (substr($dbh->databaseType,0,5) == 'mysql') {
-            $dbh->Execute(sprintf("REPLACE INTO $version_tbl"
+            $rs = $dbh->Execute(sprintf("REPLACE INTO $version_tbl"
                                   . " (id,version,mtime,minor_edit,content,versiondata)"
                                   . " VALUES(%d,%d,%d,%d,%s,%s)",
                                   $id, $version, $mtime, $minor_edit,
@@ -398,7 +398,7 @@ extends WikiDB_backend
             $dbh->Execute(sprintf("DELETE FROM $version_tbl"
                                   . " WHERE id=%d AND version=%d",
                                   $id, $version));
-            $dbh->Execute(sprintf("INSERT INTO $version_tbl"
+            $rs = $dbh->Execute(sprintf("INSERT INTO $version_tbl"
                                   . " (id,version,mtime,minor_edit,content,versiondata)"
                                   . " VALUES(%d,%d,%d,%d,%s,%s)",
                                   $id, $version, $mtime, $minor_edit,
@@ -1064,6 +1064,17 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.27  2004/05/06 17:30:38  rurban
+// CategoryGroup: oops, dos2unix eol
+// improved phpwiki_version:
+//   pre -= .0001 (1.3.10pre: 1030.099)
+//   -p1 += .001 (1.3.9-p1: 1030.091)
+// improved InstallTable for mysql and generic SQL versions and all newer tables so far.
+// abstracted more ADODB/PearDB methods for action=upgrade stuff:
+//   backend->backendType(), backend->database(),
+//   backend->listOfFields(),
+//   backend->listOfTables(),
+//
 // Revision 1.26  2004/04/26 20:44:35  rurban
 // locking table specific for better databases
 //

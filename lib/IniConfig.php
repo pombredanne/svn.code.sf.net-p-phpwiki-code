@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.16 2004-05-02 15:10:05 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.17 2004-05-06 19:26:15 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -251,6 +251,8 @@ function IniConfig($file) {
     if (!isset($rs['KEYWORDS']))
         $rs['KEYWORDS'] = "Category:Topic";
     $keywords = preg_split('/\s*:\s*/', $rs['KEYWORDS']);
+    if (empty($keywords))
+        $keywords = array("Category","Topic");
     $KeywordLinkRegexp = '(?<=' . implode('|^', $keywords) . ')[[:upper:]].*$';
         
     global $DisabledActions;
@@ -518,6 +520,16 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2004/05/02 15:10:05  rurban
+// new finally reliable way to detect if /index.php is called directly
+//   and if to include lib/main.php
+// new global AllActionPages
+// SetupWiki now loads all mandatory pages: HOME_PAGE, action pages, and warns if not.
+// WikiTranslation what=buttons for Carsten to create the missing MacOSX buttons
+// PageGroupTestOne => subpages
+// renamed PhpWikiRss to PhpWikiRecentChanges
+// more docs, default configs, ...
+//
 // Revision 1.15  2004/05/01 15:59:29  rurban
 // more php-4.0.6 compatibility: superglobals
 //
