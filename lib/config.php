@@ -2,7 +2,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.4 2000-10-08 20:05:59 wainstead Exp $');
+   rcs_id('$Id: config.php,v 1.5 2000-10-10 02:59:08 wainstead Exp $');
 
    /*
       Constants and settings. Edit the values below for
@@ -13,25 +13,25 @@
       can just give the URL without the script name.
    */
 
-   // An empty server address:
+   // If you need to access your Wiki from assorted locations and
+   // you use DHCP, this setting might work for you:
 
-   $ServerAddress = "";
+   //$ServerAddress = "http:";
 
-   // works quite well thanks to relative URIs.  If find that you 
-   // want an explicit address, you can set one yourself by changing 
-   // and uncommenting:
-   //$ServerAddress = "http://127.0.0.1:8080/phpwiki/";
+   // It works quite well thanks to relative URIs. (Yes, that's just
+   // 'http:'). If find that you want an explicit address (recommended), 
+   // you can set one yourself by changing and uncommenting:
 
+   //$ServerAddress = "http://your.hostname.org/phpwiki/";
 
    // Or you could use the if/else statement below to deduce
-   // the $ServerAddress dynamically.
+   // the $ServerAddress dynamically. (Default)
 
-
-   //if (preg_match("#(.*?)([^/]*$)#", $REQUEST_URI, $matches)) {
-   //   $ServerAddress = "http://$SERVER_NAME:$SERVER_PORT" . $matches[1];
-   //} else {
-   //   $ServerAddress = "http://$SERVER_NAME:$SERVER_PORT$REQUEST_URI";
-   //}
+   if (preg_match("#(.*?)([^/]*$)#", $REQUEST_URI, $matches)) {
+      $ServerAddress = "http://$SERVER_NAME:$SERVER_PORT" . $matches[1];
+   } else {
+      $ServerAddress = "http://$SERVER_NAME:$SERVER_PORT$REQUEST_URI";
+   }
 
 
 
