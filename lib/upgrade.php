@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.22 2004-07-03 17:21:28 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.23 2004-07-04 10:28:06 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -301,7 +301,7 @@ function CheckDatabaseUpdate(&$request) {
     global $DBParams, $DBAuthParams;
     if (!in_array($DBParams['dbtype'], array('SQL','ADODB'))) return;
     echo "<h3>",_("check for necessary database updates"),"</h3>\n";
-    if (defined('DBADMIN_USER')) {
+    if (defined('DBADMIN_USER') and DBADMIN_USER) {
         // if need to connect as the root user, for alter permissions
         $AdminParams = $DBParams;
         if ($DBParams['dbtype'] == 'SQL')
@@ -491,6 +491,9 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.22  2004/07/03 17:21:28  rurban
+ updated docs: submitted new mysql bugreport (#1491 did not fix it)
+
  Revision 1.21  2004/07/03 16:51:05  rurban
  optional DBADMIN_USER:DBADMIN_PASSWD for action=upgrade (if no ALTER permission)
  added atomic mysql REPLACE for PearDB as in ADODB
