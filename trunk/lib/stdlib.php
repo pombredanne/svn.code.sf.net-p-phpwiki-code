@@ -1,8 +1,9 @@
-<?php rcs_id('$Id: stdlib.php,v 1.64 2002-01-03 00:09:18 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.65 2002-01-05 12:27:01 carstenklapp Exp $');
 
    /*
       Standard functions for Wiki functionality
          WikiURL($pagename, $args, $abs)
+         CSS_URL($CSS_URLS, $CSS_DEFAULT)
          LinkWikiWord($wikiword, $linktext) 
          LinkExistingWikiWord($wikiword, $linktext) 
          LinkUnknownWikiWord($wikiword, $linktext) 
@@ -54,13 +55,19 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
 }
 
 function CSS_URL($CSS_URLS, $CSS_DEFAULT) {
+    // FIXME: This is a kludge to allow xgettext to localize the title
+    // of the printer stylesheet. Think up a more elegant way which
+    // will also work with n stylesheets...
+    $PrinterStylesheetTitle = _("Printer");
+
     $html = "";
     foreach  ($CSS_URLS as $key => $val) {
-        if ($CSS_DEFAULT == $key) {
-            $html .= "<link rel=\"stylesheet\" title=\"".htmlspecialchars($key)."\" href=\"". DataURL(htmlspecialchars($val))."\" type=\"text/css\" />\n";
-        } else {
-            $html .= "<link rel=\"alternate stylesheet\" title=\"".htmlspecialchars($key)."\" href=\"". DataURL(htmlspecialchars($val))."\" type=\"text/css\" />\n";
-        }
+        $html .= QElement('link',
+                          array('rel'   => (($CSS_DEFAULT == $key) ?
+                                            'stylesheet' : 'alternate stylesheet'),
+                                'title' => _(htmlspecialchars($key)),
+                                'href'  => DataURL(htmlspecialchars($val)),
+                                'type'  => 'text/css'))."\n";
     }
     return $html;
 }
