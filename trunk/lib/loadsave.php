@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.125 2004-10-14 19:19:33 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.126 2004-10-16 15:13:39 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -635,6 +635,7 @@ function MakeWikiZipHtml (&$request)
 
 function SavePage (&$request, &$pageinfo, $source, $filename)
 {
+    static $overwite_all = false;
     $pagedata    = $pageinfo['pagedata'];    // Page level meta-data.
     $versiondata = $pageinfo['versiondata']; // Revision level meta-data.
 
@@ -769,6 +770,16 @@ function SavePage (&$request, &$pageinfo, $source, $filename)
                           _("PhpWikiAdministration"),
                           'wikiunsafe');
             $mesg->pushContent(' ', $meb, " ", $owb);
+            if (!$overwite_all) {
+              $owb = Button(array('action' => 'loadfile',
+                                'overwrite'=> true,
+                                'source'=> $request->getArg('source')),
+                          _("Overwrite All"),
+                          _("PhpWikiAdministration"),
+                          'wikiunsafe');
+              $mesg->pushContent(HTML::div(array('class' => 'hint'), $owb));
+              $overwite_all = true;
+            }
         } else {
             $mesg->pushContent(HTML::em(_(" Sorry, cannot merge.")));
         }
@@ -1209,6 +1220,10 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.125  2004/10/14 19:19:33  rurban
+ loadsave: check if the dumped file will be accessible from outside.
+ and some other minor fixes. (cvsclient native not yet ready)
+
  Revision 1.124  2004/10/04 23:44:28  rurban
  for older or CGI phps
 
