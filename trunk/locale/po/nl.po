@@ -304,7 +304,6 @@ msgid "<none>"
 msgstr ""
 
 #: ../lib/plugin/MostPopular.php:9
-#, fuzzy
 msgid "MostPopular"
 msgstr "Meestbezochte"
 
@@ -323,7 +322,7 @@ msgstr "Pagina"
 #: ../lib/plugin/MostPopular.php:42
 #, c-format
 msgid "The %s most popular pages of this wiki:"
-msgstr ""
+msgstr "De %s meestbezochte pagina's van deze Wiki:"
 
 #: ../lib/plugin/PageHistory.php:71
 #, c-format
