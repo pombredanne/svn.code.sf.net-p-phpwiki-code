@@ -1,8 +1,10 @@
 <?php //-*-php-*-
-rcs_id('$Id: POP3.php,v 1.4 2004-12-26 17:11:17 rurban Exp $');
+rcs_id('$Id: POP3.php,v 1.5 2005-03-19 07:30:52 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
+
+require_once("lib/WikiUser/IMAP.php");
 
 class _POP3PassUser
 extends _IMAPPassUser {
@@ -12,7 +14,7 @@ extends _IMAPPassUser {
  */
     function checkPass($submitted_password) {
         if (!$this->isValidName()) {
-            trigger_error(_("Invalid username."),E_USER_WARNING);
+            trigger_error(_("Invalid username."), E_USER_WARNING);
             return $this->_tryNextPass($submitted_password);
         }
         if (!$this->_checkPassLength($submitted_password)) {
@@ -68,6 +70,9 @@ extends _IMAPPassUser {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/12/26 17:11:17  rurban
+// just copyright
+//
 // Revision 1.3  2004/12/20 16:05:01  rurban
 // gettext msg unification
 //
