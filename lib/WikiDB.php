@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.124 2005-01-29 20:43:32 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.125 2005-02-03 05:08:39 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -496,7 +496,7 @@ class WikiDB {
             if (!empty($notify) and is_array($notify)) {
                 list($emails, $userids) = $oldpage->getPageChangeEmails($notify);
                 if (!empty($emails)) {
-                    $oldpage->sendPageRenameNotification($to, &$meta, $emails, $userids);
+                    $oldpage->sendPageRenameNotification($to, $meta, $emails, $userids);
                 }
             }
         }
@@ -2139,6 +2139,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.124  2005/01/29 20:43:32  rurban
+// protect against empty request: on some occasion this happens
+//
 // Revision 1.123  2005/01/25 06:58:21  rurban
 // reformatting
 //
