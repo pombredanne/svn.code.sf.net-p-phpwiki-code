@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.46 2002-03-28 07:20:48 carstenklapp Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.47 2002-08-17 15:52:51 rurban Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -50,6 +50,21 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
     }
     else {
         $pagename = $page_or_rev;
+        if (substr($pagename,0,1) == '/') { // relative link to page below
+            global $request;
+            $page = $request->getArg('pagename');
+            $label = substr($page_or_rev,1);
+            $pagename = $page . $pagename;
+            /*
+            $pages = explode('/',$page);
+            if (!empty($pages)) {
+                array_pop($pages);// delete last element from array, the current subpage
+                $subpage = implode('/',$pages);
+                $label = substr($page_or_rev,1);
+                $pagename = $subpage . $pagename;
+            }
+            */
+        }
     }
 
     if ($type == 'auto') {
@@ -69,12 +84,36 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
     else {
         $exists = true;
     }
-
-
-    if ($exists)
+    // Todo: fix ImageLinks images/next.gif semantics
+    //       support "/SubPage" relative link
+    if (is_string($page_or_rev) 
+        and !$label 
+        and strchr(substr($page_or_rev,1), '/')) {
+        $pages = explode('/',$pagename);
+        $last_page = array_pop($pages); // deletes last element from array as side-effect
+        $link = HTML::span($Theme->linkExistingWikiWord($pages[0], $pages[0] . '/'));
+        $first_pages = $pages[0] . '/';
+        array_shift($pages);
+        foreach ($pages as $page)  {
+            $link->pushContent($Theme->linkExistingWikiWord($first_pages . $page, $page . '/'));
+            $first_pages .= $page . '/';
+        }
+        $label = $last_page;
+        if ($exists) {
+            $link->pushContent($Theme->linkExistingWikiWord($pagename, $label, $version));
+            return $link;
+        }
+        else {
+            $link->pushContent($Theme->linkUnknownWikiWord($pagename, $label));
+            return $link;	
+        }
+    }
+    elseif ($exists) {
         return $Theme->linkExistingWikiWord($pagename, $label, $version);
-    else
+    }
+    else {
         return $Theme->linkUnknownWikiWord($pagename, $label);
+    }
 }
 
 
@@ -431,9 +470,9 @@ class Theme {
     ////////////////////////////////////////////////////////////////
 
     /**
-        *
+     *
      * (To disable an image, alias the image to <code>false</code>.
-        */
+     */
     function addImageAlias ($alias, $image_name) {
         $this->_imageAliases[$alias] = $image_name;
     }
@@ -455,7 +494,11 @@ class Theme {
         //        automatically to .gif, .jpg.
         //        Also try .gif before .png if browser doesn't like png.
 
-        return $this->_findData("images/$image", 'missing okay');
+        $path = $this->_findData("images/$image", 'missing okay');
+        if (!$path) // search explicit images/ or button/ links also
+            return $this->_findData("$image", 'missing okay');
+       	else 
+            return $path;	
     }
 
     function setLinkIcon($proto, $image = false) {

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.16 2002-02-07 00:26:08 dairiki Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.17 2002-08-17 15:52:51 rurban Exp $');
 /*
  * Code for writing XML.
  */
@@ -327,7 +327,7 @@ class FormattedText {
         else {
             // Format string has '%2$s' style argument reordering.
             // PHP doesn't support this.
-            if (preg_match('/(?<!%)%[- ]?\d*[^- \d$]/x', $fmt))
+            if (preg_match('/(?<!%)%[- ]?\d*[^- \d$]/x', $this->_fs)) // $fmt
                 // literal variable name substitution only to keep locale
                 // strings uncluttered
                 trigger_error(sprintf(_("Can't mix '%s' with '%s' type format strings"),

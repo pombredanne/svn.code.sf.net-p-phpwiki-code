@@ -1,11 +1,13 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.26 2002-02-20 17:40:32 dairiki Exp $');
+rcs_id('$Id: PearDB.php,v 1.27 2002-08-17 15:52:51 rurban Exp $');
 
-//require_once('DB.php');
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
 require_once('lib/ErrorManager.php');
-require_once('lib/pear/DB.php');
+// Try the installed pear class first. It might be newer.
+@require_once('DB.php');
+if (!class_exists('DB')) // >= 4.0.0
+     require_once('lib/pear/DB.php'); // Okay. our local copy
 
 class WikiDB_backend_PearDB
 extends WikiDB_backend

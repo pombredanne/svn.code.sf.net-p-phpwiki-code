@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.19 2002-02-07 00:26:08 dairiki Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.20 2002-08-17 15:52:51 rurban Exp $');
 /*
  * Code for writing XML.
  */
@@ -129,7 +129,7 @@ class HTML extends HtmlElement {
     // echo "$d"
     // mkfuncs table caption thead tbody tfoot tr td th
     // echo "$d"
-    // mkfuncs form input option select textarea
+    // mkfuncs form input option select textarea area map
 
     function link (/*...*/) {
         $el = new HtmlElement('link');
@@ -325,6 +325,14 @@ class HTML extends HtmlElement {
     }
     function textarea (/*...*/) {
         $el = new HtmlElement('textarea');
+        return $el->_init2(func_get_args());
+    }
+    function area (/*...*/) {
+        $el = new HtmlElement('area');
+        return $el->_init2(func_get_args());
+    }
+    function map (/*...*/) {
+        $el = new HtmlElement('map');
         return $el->_init2(func_get_args());
     }
 }

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.22 2002-02-11 02:25:16 carstenklapp Exp $');
+rcs_id('$Id: Calendar.php,v 1.23 2002-08-17 15:52:51 rurban Exp $');
 
 if (!defined('SECONDS_PER_DAY'))
 define('SECONDS_PER_DAY', 24 * 3600);
@@ -29,7 +29,7 @@ extends WikiPlugin
     }
 
     function getDefaultArguments() {
-        return array('prefix'		=> '[pagename].',
+        return array('prefix'		=> '[pagename]' . SUBPAGE_SEPARATOR,
                      'date_format'	=> '%Y-%m-%d',
                      'year'		=> '',
                      'month'		=> '',

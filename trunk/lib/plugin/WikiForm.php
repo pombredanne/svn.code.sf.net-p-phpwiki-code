@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiForm.php,v 1.4 2002-02-20 00:16:11 carstenklapp Exp $');
+rcs_id('$Id: WikiForm.php,v 1.5 2002-08-17 15:52:51 rurban Exp $');
 /**
  * This is a replacement for MagicPhpWikiURL forms.
  *
@@ -15,7 +15,8 @@ extends WikiPlugin
     function getDefaultArguments() {
         return array('action' => 'upload', // 'upload', 'loadfile', or 'dumpserial'
                      'default' => false,
-                     'buttontext' => false);
+                     'buttontext' => false,
+                     'size' => 50);
     }
 
 
@@ -32,7 +33,7 @@ extends WikiPlugin
 
         $input = array('type' => 'text',
                        'value' => $default,
-                       'size' => 50);
+                       'size' => $size);
 
         switch ($action) {
             case 'loadfile':
@@ -41,6 +42,12 @@ extends WikiPlugin
                 $input['value'] = '/tmp/wikidump';
                 if (!$buttontext)
                     $buttontext = _("Load File");
+                $class = false;
+                break;
+            case 'login':
+                $input['name'] = 'source';
+                if (!$buttontext)
+                    $buttontext = _("Login");
                 $class = 'wikiadmin';
                 break;
             case 'dumpserial':
@@ -68,7 +75,7 @@ extends WikiPlugin
                 $input['type'] = 'file';
                 if (!$buttontext)
                     $buttontext = _("Upload");
-                $class = false; // local OS function, so use natve OS button
+                $class = false; // local OS function, so use native OS button
                 break;
             default:
                 return HTML::p(fmt("WikiForm: %s: unknown action", $action));
@@ -79,7 +86,7 @@ extends WikiPlugin
         $input->addTooltip($buttontext);
         $button = Button('submit:', $buttontext, $class);
 
-        $form->pushContent(HTML::div(array('class' => $class),
+        $form->pushContent(HTML::span(array('class' => $class),
                                      $input, $button));
 
         return $form;

@@ -598,8 +598,6 @@ $locale["You are viewing an old revision of this page."] =
    "Du siehst eine alte Version dieser Seite.";
 $locale["You have not made any changes so no new version has been saved."] =
    "Du hast keine Änderungen gemacht, also ist keine neue Version gespeichert worden.";
-$locale["You may sign in using any WikiWord as a UserId. (ÀÖØöøÿßö etc. may be used too). The UserId will be used as a link in RecentChanges to your UserId page, your HomePage. You do not need to enter a password."] =
-   "Du darfst dich mit jedem WikiWort als Benutzernamen eintragen. (Auch deutsche Umlaute erlaubt). Der Benutzername wird als Link in FrischeSeiten zu deinem Benutzernamen verwendet, deine Homepage. Das Passwort ist optional.";
 $locale["You must be an administrator to %s."] =
    "Du mußt ein Systemverwalter sein %s.";
 $locale["You must log in to %s."] =
@@ -635,13 +633,13 @@ $locale["diff pages in this wiki"] =
 $locale["download a zip dump from this wiki"] =
    "um einen Zipspeicherauszug von diesem Wiki zu herunterladen";
 $locale["download an html zip dump from this wiki"] =
-   "um einen HTML-Zipspeicherauszug von diesem Wiki zu herunterladen";
+   "um eine HTML-Ziparchiv von diesem Wiki zu herunterladen";
 $locale["dump html pages from this wiki"] =
    "um einer HTML-Speicherauszug dieses Wikis auszuziehen";
 $locale["dump serial pages from this wiki"] =
    "um Seiten dieses Wikis als Dateien zu speichern";
 $locale["edit pages in this wiki"] =
-   "um Seiten dieses Wikis zu editieren";
+   "um Seiten in diesem Wiki zu editieren";
 $locale["edits"] =
    "Änderungen";
 $locale["elapsed time: %s s"] =
@@ -653,7 +651,7 @@ $locale["is identical to current version %d - skipped"] =
 $locale["load files into this wiki"] =
    "um Seiten in diesem Wiki zu laden";
 $locale["lock pages in this wiki"] =
-   "um Seiten dieses Wikis zu sperren";
+   "um Seiten in diesem Wiki zu sperren";
 $locale["locked"] =
    "gesperrt";
 $locale["major edits"] =
@@ -677,7 +675,7 @@ $locale["previous revision"] =
 $locale["recursive inclusion of page %s"] =
    "Fehler beim Einfügen der Seite %s: Rekursion (sich selbst aufrufend)";
 $locale["remove pages from this wiki"] =
-   "um Seiten dieses Wikis zu löschen";
+   "um Seiten in diesem Wiki zu löschen";
 $locale["revision by previous author"] =
    "Revision von vorigem Autor";
 $locale["saved as %s"] =
@@ -687,9 +685,9 @@ $locale["today"] =
 $locale["trailing cruft in plugin args: '%s'"] =
    "Unbekannte Zusatzprogramm Argumente: »%s«";
 $locale["unlock pages in this wiki"] =
-   "um Seiten dieses Wikis zu freigeben";
+   "um Seiten in diesem Wiki freizugeben";
 $locale["upload a zip dump to this wiki"] =
-   "um einen Zipspeicherauszug in diesem Wiki hochzuladen";
+   "um ein Ziparchiv in dieses Wiki hochzuladen";
 $locale["version %d"] =
    "Version %d.";
 $locale["version %s"] =
