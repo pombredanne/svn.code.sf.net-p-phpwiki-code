@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.57 2003-02-26 03:40:22 dairiki Exp $');
+rcs_id('$Id: editpage.php,v 1.58 2003-03-10 18:25:22 dairiki Exp $');
 
 require_once('lib/Template.php');
 
@@ -133,7 +133,7 @@ class PageEditor
             return false;         // not allowed.
         }
 
-        $page->set('locked', (bool)$this->locked);
+        $this->page->set('locked', (bool)$this->locked);
         $this->tokens['LOCK_CHANGED_MSG']
             = $this->locked ? _("Page now locked.") : _("Page now unlocked.");
 
@@ -510,6 +510,15 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.57  2003/02/26 03:40:22  dairiki
+ New action=create.  Essentially the same as action=edit, except that if the
+ page already exists, it falls back to action=browse.
+
+ This is for use in the "question mark" links for unknown wiki words
+ to avoid problems and confusion when following links from stale pages.
+ (If the "unknown page" has been created in the interim, the user probably
+ wants to view the page before editing it.)
+
  Revision 1.56  2003/02/21 18:07:14  dairiki
  Minor, nitpicky, currently inconsequential changes.
 
