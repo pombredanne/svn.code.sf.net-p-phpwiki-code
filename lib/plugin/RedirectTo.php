@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RedirectTo.php,v 1.5 2002-10-14 16:28:13 carstenklapp Exp $');
+rcs_id('$Id: RedirectTo.php,v 1.6 2003-01-18 22:01:44 carstenklapp Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -22,9 +22,11 @@ rcs_id('$Id: RedirectTo.php,v 1.5 2002-10-14 16:28:13 carstenklapp Exp $');
 
 /**
  * Redirect to another page or external uri. Kind of PageAlias.
- * Usage:   <?plugin-head RedirectTo href="http://www.internet-technology.de/fourwins_de.htm" ?>
+ * Usage:
+ * <?plugin-head RedirectTo href="http://www.internet-technology.de/fourwins_de.htm" ?>
  *      or  <?plugin-head RedirectTo page=AnotherPage ?>
- *          at the VERY FIRST LINE in the content! Otherwise it will be ignored.
+ * at the VERY FIRST LINE in the content! Otherwise it will be ignored.
+ *
  * Author:  Reini Urban <rurban@x-ray.at>
  *
  * BUGS/COMMENTS:
@@ -46,6 +48,11 @@ extends WikiPlugin
 
     function getDescription() {
         return _("Redirects to another url or page.");
+    }
+
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
@@ -83,14 +90,18 @@ extends WikiPlugin
                                                       SplitQueryArgs($args['args'])));
         }
         else
-            return $this->error(sprintf(_("%s or %s parameter missing"), "'href'", "'page'"));
+            return $this->error(sprintf(_("%s or %s parameter missing"),
+                                        "'href'", "'page'"));
 
         if ($page == $request->getArg('pagename')) {
-            return $this->error(sprintf(_("Recursive redirect to self: '%s'"), $url));
+            return $this->error(sprintf(_("Recursive redirect to self: '%s'"),
+                                        $url));
         }
         return $request->redirect($url);
     }
 };
+
+// $Log: not supported by cvs2svn $
 
 // For emacs users
 // Local Variables:

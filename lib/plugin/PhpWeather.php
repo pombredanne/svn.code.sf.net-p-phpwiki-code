@@ -1,6 +1,26 @@
 <?php // -*-php-*-
 rcs_id('$Id PhpWeather.php 2002-08-26 15:30:13 rurban$');
 /**
+ Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+
+ This file is part of PhpWiki.
+
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+/**
  * This plugin requires a separate program called PhpWeather. For more
  * information and to download PhpWeather, see:
  *
@@ -45,6 +65,12 @@ extends WikiPlugin
     function getDescription () {
         return _("The PhpWeather plugin provides weather reports from the Internet.");
     }
+
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.8 $");
+    }
+
     function getDefaultArguments() {
         global $LANG;
         return array('icao'  => 'EKAH',
@@ -86,7 +112,8 @@ extends WikiPlugin
             //if (!in_array($language, array_keys($w->get_languages('text')))) {
             if (!in_array($language, array_keys(get_languages('text')))) {
                 trigger_error(sprintf(_("%s does not know about the language '%s', using 'en' instead."),
-                                      $this->getName(), $language), E_USER_NOTICE);
+                                      $this->getName(), $language),
+                              E_USER_NOTICE);
                 $language = 'en';
             }
 
@@ -170,9 +197,10 @@ extends WikiPlugin
     }
 };
 
-/**
- $Log: not supported by cvs2svn $
- */
+// $Log: not supported by cvs2svn $
+// Revision 1.7  2002/12/31 20:53:40  carstenklapp
+// Bugfixes: Fixed menu language selection (incorrect parameters to
+// $w->get_languages_select() & form input 'language' instead of 'lang').
 
 // For emacs users
 // Local Variables:
