@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_pgsql.php,v 1.4 2003-03-04 01:49:27 dairiki Exp $');
+rcs_id('$Id: PearDB_pgsql.php,v 1.5 2003-06-20 16:44:25 zorloc Exp $');
 
 require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB.php');
@@ -102,7 +102,35 @@ extends WikiDB_backend_PearDB
             return unserialize($data);
         return unserialize(base64_decode($data));
     }
-    
+
+    /**
+    * Create Title Search Match Clause
+    * 
+    * To Use Pgsql's non-standard ILIKE which will return more results.
+    * 
+    * @param $word string String to create the search clause for
+    * @return string Match Clause for SQL query.
+    */
+    function _sql_match_clause($word) {
+        $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
+        $word = $this->_dbh->quoteString($word);
+        return "LOWER(pagename) ILIKE '%$word%'";
+    }
+
+    /**
+    * Create Full Text Search Match Clause
+    * 
+    * To Use Pgsql's non standard ILIKE which will return more results.
+    * 
+    * @param $word string String to create the search clause for
+    * @return string Match Clause for SQL query.
+    */
+    function _fullsearch_sql_match_clause($word) {
+        $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
+        $word = $this->_dbh->quoteString($word);
+        return "LOWER(pagename) ILIKE '%$word%' OR content ILIKE '%$word%'";
+    }
+
 };
 
 // (c-file-style: "gnu")
