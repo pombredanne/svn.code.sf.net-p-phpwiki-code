@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.15 2001-12-07 17:39:45 dairiki Exp $');
+rcs_id('$Id: diff.php,v 1.16 2001-12-11 05:51:10 carstenklapp Exp $');
 // diff.php
 //
 // A PHP diff engine for phpwiki.
@@ -926,14 +926,14 @@ class WikiDiffFormatter
   function _emit_lines($lines,  $prefix, $color)
       {
 	$html = '';
-	$prefix = Element('td', array('bgcolor' => '#cccccc', 'width' => "1%"), $prefix);
+	$prefix = Element('td', array('class' => 'diff-notation', 'width' => "1%"), $prefix);
 	reset($lines);
 	while (list ($junk, $line) = each($lines))
 	  {
 	    $line = rtrim($line);
 	    $line = empty($line) ? '&nbsp;' : htmlspecialchars($line);
 	    $html .= Element('tr', array('valign' => 'top'), 
-			     $prefix . Element('td', array('bgcolor' => $color),
+			     $prefix . Element('td', array('class' => $color),
 					       Element('tt', $line)));
 	  }
 	return $html;
@@ -949,22 +949,22 @@ class WikiDiffFormatter
 	$prefix = array('c' => $this->context_prefix,
 			'a' => $this->adds_prefix,
 			'd' => $this->deletes_prefix);
-	$color = array('c' => '#ffffff',
-		       'a' => '#ffcccc',
-		       'd' => '#ccffcc');
+	$color = array('c' => 'diff-unchanged',
+		       'a' => 'diff-added',
+		       'd' => 'diff-deleted');
 
 	$diff = '';
 	for (reset($hunks); $hunk = current($hunks); next($hunks))
 	  {
 	    if (!empty($hunk['c']))
 		$diff .= $this->_emit_lines($hunk['c'],
-		                            $this->context_prefix, '#ffffff');
+		                            $this->context_prefix, 'diff-unchanged');
 	    if (!empty($hunk['d']))
 		$diff .= $this->_emit_lines($hunk['d'],
-		                            $this->deletes_prefix, '#ccffcc');
+		                            $this->deletes_prefix, 'diff-deleted');
 	    if (!empty($hunk['a']))
 		$diff .= $this->_emit_lines($hunk['a'],
-		                            $this->adds_prefix, '#ffcccc');
+		                            $this->adds_prefix, 'diff-added');
 	  }
 
 
