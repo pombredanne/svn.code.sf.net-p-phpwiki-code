@@ -1,6 +1,6 @@
 <?php  
 
-   rcs_id('$Id: dbalib.php,v 1.2.2.1 2001-08-18 00:35:10 dairiki Exp $');
+   rcs_id('$Id: dbalib.php,v 1.2.2.2 2001-11-06 20:43:11 dairiki Exp $');
 
    /*
       Database functions:
@@ -85,6 +85,7 @@
       if ($data = dba_fetch($pagename, $dbi[$pagestore])) {
          // unserialize $data into a hash
          $pagehash = unserialize(UnPadSerializedData($data));
+         $pagehash['pagename'] = $pagename;
          return $pagehash;
       } else {
          return -1;
