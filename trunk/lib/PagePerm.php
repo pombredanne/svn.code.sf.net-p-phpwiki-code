@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.19 2004-06-06 17:12:28 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.20 2004-06-07 18:39:03 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -31,7 +31,7 @@ rcs_id('$Id: PagePerm.php,v 1.19 2004-06-06 17:12:28 rurban Exp $');
    is not defined.
    Pagenames starting with "." have special default permissions.
    For Authentication see WikiUserNew.php, WikiGroup.php and main.php
-   Page Permssions are in PhpWiki since v1.3.9 and enabled since v1.4.0
+   Page Permissions are in PhpWiki since v1.3.9 and enabled since v1.4.0
 
    This file might replace the following functions from main.php:
      Request::_notAuthorized($require_level)
@@ -148,7 +148,8 @@ function mayAccessPage ($access, $pagename) {
         return true;
 }
 
-/** Check the permissions for the current action.
+/** 
+ * Check the permissions for the current action.
  * Walk down the inheritance tree. Collect all permissions until 
  * the minimum required level is gained, which is not 
  * overruled by more specific forbid rules.
@@ -625,14 +626,34 @@ class PagePermission {
         return $table;
     }
 
-    // this is just a bad hack for testing
-    // simplify the ACL to a unix-like "rwx------" string
+    // Print ACL as lines of [+-]user[,group,...]:access[,access...]
+    // Seperate acl's by whitespace (here "\n", but " " is also acceptable on reading)
+    // See http://opag.ca/wiki/HelpOnAccessControlLists
+    // As used by WikiAdminSetAclSimple
+    function asAclLines($owner,$group=false) {
+        $s = '';
+        foreach ($this->perm as $access => $groups) {
+            // TODO: unify groups for same access+bool
+            //    +CREATOR,OWNER:view
+            // TODO: unify access for same groups+bool
+            //    +OWNER:view,edit
+            foreach ($groups as $group => $bool) {
+                $s .= ($bool?'+':'-').$this->groupName($group).':'.$access."\n";
+            }
+        }
+        return $s;
+    }
+
+
+    // This is just a bad hack for testing.
+    // Simplify the ACL to a unix-like "rwx------+" string
+    // See getfacl(8)
     function asRwxString($owner,$group=false) {
         global $request;
         // simplify object => rwxrw---x+ string as in cygwin (+ denotes additional ACLs)
         $perm =& $this->perm;
         // get effective user and group
-        $s = '---------';
+        $s = '---------+';
         if (isset($perm['view'][$owner]) or 
             (isset($perm['view'][ACL_AUTHENTICATED]) and $request->_user->isAuthenticated()))
             $s[0] = 'r';
@@ -667,6 +688,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.19  2004/06/06 17:12:28  rurban
+// fixed PagePerm non-object problem (mayAccessPage), also bug #967150
+//
 // Revision 1.18  2004/05/27 17:49:05  rurban
 // renamed DB_Session to DbSession (in CVS also)
 // added WikiDB->getParam and WikiDB->getAuthParam method to get rid of globals
