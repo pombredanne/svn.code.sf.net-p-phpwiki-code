@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BackLinks.php,v 1.21 2003-12-22 07:31:57 carstenklapp Exp $');
+rcs_id('$Id: BackLinks.php,v 1.22 2004-02-17 12:11:36 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
     
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.21 $");
+                            "\$Revision: 1.22 $");
     }
     
     function getDefaultArguments() {
@@ -52,7 +52,7 @@ extends WikiPlugin
     // info=mtime,hits,summary,version,author,locked,minor
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
     
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         $this->_args = $this->getArgs($argstr, $request);
         extract($this->_args);
         if (!$page)
@@ -131,6 +131,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.21  2003/12/22 07:31:57  carstenklapp
+// Bugfix: commented out debugging code that snuck into the release.
+//
 // Revision 1.20  2003/12/14 05:36:31  carstenklapp
 // Internal changes to prepare for an upcoming feature: Added some
 // conditions and alternate phrases (alternate wording of text srings

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiBlog.php,v 1.7 2003-11-17 16:23:55 carstenklapp Exp $');
+rcs_id('$Id: WikiBlog.php,v 1.8 2004-02-17 12:11:36 rurban Exp $');
 /*
  Copyright 2002, 2003 $ThePhpWikiProgrammingTeam
  
@@ -80,7 +80,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     // Arguments:
@@ -113,7 +113,7 @@ extends WikiPlugin
                     );
     }
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         if (!$args['page'])
             return $this->error("No page specified");
@@ -313,6 +313,16 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2003/11/17 16:23:55  carstenklapp
+// Switched to Iso8601DateTime and more use of SUBPAGE_SEPARATOR. This
+// allows plugin UnfoldSubpages (for example) to be added to page
+// XxYy/Blog/ where desired, for a view of all Blogs in one day. This
+// change should not break existing BLOGs, we are only checking for
+// pagetype == 'wikiblog' now instead of relying on the subpage name to
+// collect blog subpages. (** WARNING: Do not add UnfoldSubpages to both
+// XxYy/Blog/ and XxYy/Blog/2003-11/16/ pages, due to recursion bug in
+// UnfoldSubpages plugin.)
+//
 // Revision 1.6  2003/02/21 04:20:09  dairiki
 // Big refactor. Formatting now done by the stuff in PageType.php.
 // Split the template into two separate ones: one for the add comment form,

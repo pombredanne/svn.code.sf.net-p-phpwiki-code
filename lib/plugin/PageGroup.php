@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageGroup.php,v 1.5 2003-01-18 21:49:00 carstenklapp Exp $');
+rcs_id('$Id: PageGroup.php,v 1.6 2004-02-17 12:11:36 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -50,7 +50,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
@@ -80,7 +80,7 @@ extends WikiPlugin
         return array(sprintf(_("<%s: no such section>"), $page ." ". $section));
     }
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
 
         $args = $this->getArgs($argstr, $request);
         extract($args);
@@ -200,6 +200,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2003/01/18 21:49:00  carstenklapp
+// Code cleanup:
+// Reformatting & tabs to spaces;
+// Added copyleft, getVersion, getDescription, rcs_id.
+//
 
 // Local Variables:
 // mode: php

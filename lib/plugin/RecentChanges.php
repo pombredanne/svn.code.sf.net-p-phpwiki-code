@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.84 2004-02-15 22:29:42 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.85 2004-02-17 12:11:36 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -607,7 +607,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.84 $");
+                            "\$Revision: 1.85 $");
     }
 
     function managesValidators() {
@@ -713,7 +713,7 @@ extends WikiPlugin
         return $fmt->format($changes);
     }
 
-    function run ($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
 
         // HACKish: fix for SF bug #622784  (1000 years of RecentChanges ought
@@ -774,6 +774,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.84  2004/02/15 22:29:42  rurban
+// revert premature performance fix
+//
 // Revision 1.83  2004/02/15 21:34:37  rurban
 // PageList enhanced and improved.
 // fixed new WikiAdmin... plugins

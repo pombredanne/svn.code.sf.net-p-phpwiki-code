@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.12 2004-02-15 21:34:37 rurban Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.13 2004-02-17 12:11:36 rurban Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.12 $");
+                            "\$Revision: 1.13 $");
     }
 
     function getDefaultArguments() {
@@ -78,7 +78,7 @@ extends WikiPlugin
                      );
     }
 
-    function collectPages(&$list, &$dbi, $sortby) {
+    function collectPages(&$list, &$dbi, $sortby, $limit=0) {
         extract($this->_args);
 
         $now = time();
@@ -120,7 +120,7 @@ extends WikiPlugin
                     HTML::p(_('All selected pages have been permanently removed.')));
     }
     
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         if ($request->getArg('action') != 'browse')
             return $this->disabled("(action != 'browse')");
         
@@ -212,6 +212,15 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2004/02/15 21:34:37  rurban
+// PageList enhanced and improved.
+// fixed new WikiAdmin... plugins
+// editpage, Theme with exp. htmlarea framework
+//   (htmlarea yet committed, this is really questionable)
+// WikiUser... code with better session handling for prefs
+// enhanced UserPreferences (again)
+// RecentChanges for show_deleted: how should pages be deleted then?
+//
 // Revision 1.11  2004/02/11 20:00:16  rurban
 // WikiAdmin... series overhaul. Rename misses the db backend methods yet. Chmod + Chwon still missing.
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RedirectTo.php,v 1.12 2004-02-03 09:45:39 rurban Exp $');
+rcs_id('$Id: RedirectTo.php,v 1.13 2004-02-17 12:11:36 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -53,7 +53,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.12 $");
+                            "\$Revision: 1.13 $");
     }
 
     function getDefaultArguments() {
@@ -63,7 +63,7 @@ extends WikiPlugin
                       );
     }
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         $args = ($this->getArgs($argstr, $request));
 
         $href = $args['href'];
@@ -116,6 +116,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2004/02/03 09:45:39  rurban
+// LDAP cleanup, start of new Pref classes
+//
 // Revision 1.11  2003/11/22 17:54:50  carstenklapp
 // Minor internal change: Removed redundant call to gettext within
 // fmt(). (locale make: RedirectTo.php:81: warning: keyword nested in

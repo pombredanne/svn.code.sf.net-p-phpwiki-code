@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.2 2004-01-26 09:18:00 rurban Exp $');
+rcs_id('$Id: UpLoad.php,v 1.3 2004-02-17 12:11:36 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -56,7 +56,7 @@ extends WikiPlugin
         return array();
     }
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         $file_dir = defined('PHPWIKI_DIR') ? 
             PHPWIKI_DIR . "/uploads" : "uploads";
         $url_prefix = SERVER_NAME.DATA_PATH; 
@@ -188,6 +188,26 @@ extends WikiPlugin
 // End:
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/01/26 09:18:00  rurban
+// * changed stored pref representation as before.
+//   the array of objects is 1) bigger and 2)
+//   less portable. If we would import packed pref
+//   objects and the object definition was changed, PHP would fail.
+//   This doesn't happen with an simple array of non-default values.
+// * use $prefs->retrieve and $prefs->store methods, where retrieve
+//   understands the interim format of array of objects also.
+// * simplified $prefs->get() and fixed $prefs->set()
+// * added $user->_userid and class '_WikiUser' portability functions
+// * fixed $user object ->_level upgrading, mostly using sessions.
+//   this fixes yesterdays problems with loosing authorization level.
+// * fixed WikiUserNew::checkPass to return the _level
+// * fixed WikiUserNew::isSignedIn
+// * added explodePageList to class PageList, support sortby arg
+// * fixed UserPreferences for WikiUserNew
+// * fixed WikiPlugin for empty defaults array
+// * UnfoldSubpages: added pagename arg, renamed pages arg,
+//   removed sort arg, support sortby arg
+//
 // Revision 1.1  2003/11/04 18:41:41  carstenklapp
 // New plugin which was submitted to the mailing list some time
 // ago. (This is the best UpLoad function I have seen for PhpWiki so

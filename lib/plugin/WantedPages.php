@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WantedPages.php,v 1.7 2003-12-19 06:57:49 carstenklapp Exp $');
+rcs_id('$Id: WantedPages.php,v 1.8 2004-02-17 12:11:36 rurban Exp $');
 /*
  This file is part of PhpWiki.
 
@@ -39,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -51,7 +51,7 @@ extends WikiPlugin
     // info=mtime,hits,summary,version,author,locked,minor,markup or all
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
 
         if ($exclude) {
@@ -207,6 +207,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2003/12/19 06:57:49  carstenklapp
+// Bugfix: Enclose FullTextSearch query with quotes when the [Wiki Word]
+// contains spaces.
+//
 // Revision 1.6  2003/11/19 17:08:23  carstenklapp
 // New feature: Clicking on the number of citations in the links column
 // now does a FullTextSearch for the WantedPage link!

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllUsers.php,v 1.7 2003-12-21 00:29:45 carstenklapp Exp $');
+rcs_id('$Id: AllUsers.php,v 1.8 2004-02-17 12:11:36 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -39,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -60,7 +60,7 @@ extends WikiPlugin
     //
     // sortby: [+|-] pagename|mtime|hits
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
         // Todo: extend given _GET args
         if ($sortby)
@@ -100,6 +100,16 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2003/12/21 00:29:45  carstenklapp
+// Minor bugfix: Fixed broken debug argument.
+//
+// Internal changes: Only create a DebugTimer when actually called for;
+// moved debug message out of page content and into deferred page error
+// notification via trigger_error. Memory management: Only include_once
+// lib/PageList when absolutely necessary (at this time, this will
+// probably only benefit the PluginManager as an incremental speedup &
+// slightly reduced memory).
+//
 // Revision 1.6  2003/02/27 20:10:31  dairiki
 // Disable profiling output when DEBUG is defined but false.
 //

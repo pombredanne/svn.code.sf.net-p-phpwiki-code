@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: OrphanedPages.php,v 1.4 2003-01-18 21:49:00 carstenklapp Exp $');
+rcs_id('$Id: OrphanedPages.php,v 1.5 2004-02-17 12:11:36 rurban Exp $');
 /**
  This file is part of PhpWiki.
 
@@ -42,7 +42,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -56,7 +56,7 @@ extends WikiPlugin
     // info=mtime,hits,summary,version,author,locked,minor,markup or all
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
 
         $pagelist = new PageList($info, $exclude);
@@ -89,6 +89,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2003/01/18 21:49:00  carstenklapp
+// Code cleanup:
+// Reformatting & tabs to spaces;
+// Added copyleft, getVersion, getDescription, rcs_id.
+//
 
 // Local Variables:
 // mode: php

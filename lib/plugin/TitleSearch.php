@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TitleSearch.php,v 1.20 2003-11-02 20:42:35 carstenklapp Exp $');
+rcs_id('$Id: TitleSearch.php,v 1.21 2004-02-17 12:11:36 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.20 $");
+                            "\$Revision: 1.21 $");
     }
 
     function getDefaultArguments() {
@@ -52,7 +52,7 @@ extends WikiPlugin
     // info=mtime,hits,summary,version,author,locked,minor
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         if (empty($args['s']))
             return '';
@@ -85,6 +85,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2003/11/02 20:42:35  carstenklapp
+// Allow for easy page creation when search returns no matches.
+// Based on cuthbertcat's patch, SF#655090 2002-12-17.
+//
 // Revision 1.19  2003/03/07 02:50:16  dairiki
 // Fixes for new javascript redirect.
 //

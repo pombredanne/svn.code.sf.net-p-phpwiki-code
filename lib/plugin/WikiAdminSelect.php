@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSelect.php,v 1.10 2004-02-15 21:34:37 rurban Exp $');
+rcs_id('$Id: WikiAdminSelect.php,v 1.11 2004-02-17 12:11:36 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -47,7 +47,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     function getDefaultArguments() {
@@ -69,7 +69,7 @@ extends WikiPlugin
         return $list;
     }
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         //if ($request->getArg('action') != 'browse')
         //    return $this->disabled("(action != 'browse')");
         $args = $this->getArgs($argstr, $request);
@@ -139,12 +139,12 @@ extends WikiPlugin
                )
         {
             // handle external plugin
-            $l = new WikiPluginLoader();
+            $loader = new WikiPluginLoader();
             $a = array_keys($request->getArg('wikiadmin'));
             $plugin_action = $a[0];
             $single_arg_plugins = array("Remove");
             if (in_array($plugin_action,$single_arg_plugins)) {
-                $plugin = $l->getPlugin($plugin_action);
+                $plugin = $loader->getPlugin($plugin_action);
                 $ul = HTML::ul();
                 foreach ($p as $page => $name) {
                     $plugin_args = "run_page=$name";
@@ -152,7 +152,7 @@ extends WikiPlugin
                     $request->setArg('p', array($page => $name));
                     // if the plugin requires more args than the pagename,
                     // then this plugin will not return. (Rename, SearchReplace, ...)
-                    $action_result = $plugin->run($dbi, $plugin_args, $request);
+                    $action_result = $plugin->run($dbi, $plugin_args, $request, $basepage);
                     $ul->pushContent(HTML::li(fmt("Selected page '%s' passed to '%s'.",
                                                   $name, $select)));
                     $ul->pushContent(HTML::ul(HTML::li($action_result)));
@@ -224,6 +224,15 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/02/15 21:34:37  rurban
+// PageList enhanced and improved.
+// fixed new WikiAdmin... plugins
+// editpage, Theme with exp. htmlarea framework
+//   (htmlarea yet committed, this is really questionable)
+// WikiUser... code with better session handling for prefs
+// enhanced UserPreferences (again)
+// RecentChanges for show_deleted: how should pages be deleted then?
+//
 // Revision 1.9  2004/02/12 13:05:50  rurban
 // Rename functional for PearDB backend
 // some other minor changes
