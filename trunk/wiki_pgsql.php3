@@ -1,4 +1,4 @@
-<!-- $Id: wiki_pgsql.php3,v 1.2 2000-06-14 01:04:56 wainstead Exp $ -->
+<!-- $Id: wiki_pgsql.php3,v 1.3 2000-06-14 03:28:01 wainstead Exp $ -->
 <?
 
    /*
@@ -15,13 +15,13 @@
       FullSearchNextMatch($dbi, &$pos)
    */
 
-////////////////
+/////////////////
 // remove after testing
 ///////////////
    $pg_database = "wiki";
    $pg_dbhost   = "localhost";
    $pg_dbport   = "5432";
-////////////////
+/////////////////
 // remove after testing
 ///////////////
 
@@ -33,7 +33,7 @@
 
       $connectstring = "host=$pg_dbhost port=$pg_dbport dbname=$pg_database";
 
-      if (!($dbc = pg_connect($connectstring))) {
+      if (!($dbc = pg_pconnect($connectstring))) {
          echo "Cannot establish connection to database, giving up.";
          exit();
       }
@@ -45,21 +45,28 @@
 
 
    function CloseDataBase($dbi) {
-      return pg_close($dbi['dbc']);
+      // NOOP: we use persistent database connections
    }
 
 
    // Return hash of page + attributes or default
    function RetrievePage($dbi, $pagename) {
       $pagename = addslashes($pagename);
-      if ($res = mysql_query("select hash from $dbi[table] where page='$pagename'", $dbi['dbc'])) {
-         if ($o = mysql_fetch_object($res)) {
-            // unserialize data into a hash
-            $pagehash = unserialize($o->hash);
+      $query = "select * from $dbi[table] where pagename='$pagename'";
+
+      $res = pg_exec($dbi['dbc'], $query);
+
+      if (pg_numrows($res)) {
+         if ($pagehash = pg_fetch_array($res, 0)) {
+            // don't forget to unserialize the references
+            if ($pagehash['refs']) {
+               $pagehash['refs'] = unserialize($pagehash['refs']);
+            }
             return $pagehash;
          }
       }
 
+      // if we reach this the query failed
       return -1;
    }
 
@@ -79,11 +86,8 @@
 
    function IsWikiPage($dbi, $pagename) {
       $pagename = addslashes($pagename);
-      echo "<P>Trying $pagename</P>\n";
-      $query = "select count(*) from " . $dbi['table'] . " where pagename='$pagename'";
-      echo "<P>query: '$query'</p>\n";
+      $query = "select count(*) from $dbi[table] where pagename='$pagename'";
       $res = pg_exec($query);
-      echo "<P>Result: '$res'</P>\n";
       //return(pg_numrows($res));
       $array = pg_fetch_array($res, 0);
       return $array[0];
