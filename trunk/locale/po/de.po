@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.8\n"
-"POT-Creation-Date: 2001-12-27 00:19-0500\n"
+"POT-Creation-Date: 2001-12-27 15:32-0500\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Carsten Klapp <carstenklapp@mac.com>, Arno Hollosi "
 "<ahollosi@mail.com>\n"
@@ -76,7 +76,7 @@ msgstr "Seite löschen"
 
 #: ../templates/browse.html:89 ../templates/browse.html:92
 msgid "Diff"
-msgstr "Vergleichen"
+msgstr "Diff"
 
 #: ../templates/browse.html:97
 #, c-format
@@ -108,7 +108,7 @@ msgstr "Editiere: %s"
 
 #: ../lib/plugin/BackLinks.php:9 ../templates/editpage.html:25
 msgid "BackLinks"
-msgstr "Querverbindungen"
+msgstr "BackLinks"
 
 #: ../templates/editpage.html:28
 msgid "Preview only!  Changes not saved."
@@ -179,7 +179,7 @@ msgstr "Übersicht"
 #: ../lib/plugin/BackLinks.php:13
 #, c-format
 msgid "Get BackLinks for %s"
-msgstr "Hole Querverbindungen für %s"
+msgstr "Hole BackLinks für %s"
 
 #: ../lib/plugin/BackLinks.php:44
 #, c-format
@@ -356,7 +356,7 @@ msgstr "Neue Seite."
 
 #: ../lib/plugin/RecentChanges.php:98
 msgid "(diff)"
-msgstr "(vgl.)"
+msgstr "(Diff)"
 
 #: ../lib/plugin/RecentChanges.php:122
 msgid "RSS available"
@@ -555,7 +555,7 @@ msgstr "Vorherige Author"
 
 #: ../lib/diff.php:267
 msgid "Other diffs:"
-msgstr "Nachträgliche vergleichen:"
+msgstr "Andere Differenzen:"
 
 #: ../lib/diff.php:275
 msgid "Newer page:"
@@ -572,7 +572,7 @@ msgstr "Versionen sind identisch"
 #: ../lib/diff.php:298
 #, c-format
 msgid "Diff: %s"
-msgstr "Vergleich: %s"
+msgstr "Diff: %s"
 
 #: ../lib/editpage.php:26 ../lib/savepage.php:45
 msgid "This page has been locked by the administrator and cannot be edited."
@@ -1031,12 +1031,12 @@ msgstr "Datenschlüssel %s in Tabelle ist Ungültig"
 #: ../lib/WikiDB/backend/dbaBase.php:360
 #, c-format
 msgid "backlink entry missing for link %s"
-msgstr "Es fehlt einer Querverbindung Datensatz für Link %s"
+msgstr "Es fehlt ein BackLink Datensatz für Link %s"
 
 #: ../lib/WikiDB/backend/dbaBase.php:368
 #, c-format
 msgid "link entry missing for backlink %s"
-msgstr "Es fehlt einer Link Datensatz für die Querverbindung %s"
+msgstr "Es fehlt einer Link Datensatz für das BackLink %s"
 
 #: ../lib/WikiDB/dba.php:17
 #, c-format

@@ -1,0 +1,18 @@
+From [no address given]  Thu Dec 27 15:28:06 2001
+Subject: BackLinks
+From: [no address given] (PhpWiki)
+Date: Thu, 27 Dec 2001 15:27:28 -0500
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
+X-RCS: $ID$
+Content-Type: application/x-phpwiki;
+  pagename=BackLinks;
+  flags=PAGE_LOCKED;
+  lastmodified=1009484848;
+Content-Transfer-Encoding: quoted-printable
+
+Der Titel der aktuellen Seite ist mit einem Suchbefehl nach allen Seiten =
+verbunden, die einen Link auf die aktuelle Seite enthalten. Die BackLinks =
+Funktion beantwortet also die Frage: =BBWo wird der Name dieser Seite =
+verwendet?=AB.
+----
+<?plugin BackLinks include_self=3D1 page||=3D'' ?>
