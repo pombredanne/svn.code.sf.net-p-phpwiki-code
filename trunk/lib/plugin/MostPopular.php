@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopular.php,v 1.11 2002-01-21 16:31:53 carstenklapp Exp $');
+rcs_id('$Id: MostPopular.php,v 1.12 2002-01-21 17:58:43 carstenklapp Exp $');
 /**
  */
 
@@ -26,26 +26,26 @@ extends WikiPlugin
 
         $pages = $dbi->mostPopular($limit);
 
-        $list = new PageList();
-        $list->insertColumn(_("Hits"));
-        //$list->addcolumn(_("Last Modified"));
+        $pagelist = new PageList();
+        $pagelist->insertColumn(_("Hits"));
+        //$pagelist->addcolumn(_("Last Modified"));
 
         while ($page = $pages->next()) {
             $hits = $page->get('hits');
             if ($hits == 0)
                 break;
-            $list->addPage($page);
+            $pagelist->addPage($page);
         }
         $pages->free();
         
         if (! $noheader) {
             if ($limit > 0) {
-                $list->setCaption(_("The %d most popular pages of this wiki:"));
+                $pagelist->setCaption(_("The %d most popular pages of this wiki:"));
             } else {
-                $list->setCaption(_("Visited pages on this wiki, ordered by popularity:"));
+                $pagelist->setCaption(_("Visited pages on this wiki, ordered by popularity:"));
             }
         }
-        return $list->getHTML();
+        return $pagelist->getContent();
         
     }
 };
