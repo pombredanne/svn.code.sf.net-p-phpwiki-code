@@ -1,9 +1,11 @@
 <?php 
 /**
+ * Started automatically the first time by IniConfig(config/config.ini) if it doesn't exist
+ *
  * 1.3.11 TODO:
- * started automatically the first time by IniConfig("config/config.ini")
- * read config-defaul.ini
+ * read config-default.ini
  * read config-dist.ini into sections, comments, and optional/required settings
+ * convert DATABASE and AUTH arrays.
  *
  * 1.3.9 Todo: 
  * validate input (fix javascript, add POST checks)
@@ -12,12 +14,12 @@
  * eval index-user.php or index.php to get the actual settings.
  * ask to store it in index.php or index-user.php
  * 
- * The file index-user.php will be generated which you can use as your index.php.
+ * A file config/config.ini will be generated.
  */
 
 $tdwidth = 700;
 $config_file = 'config/config.ini';
-$fs_config_file = dirname(__FILE__) . (substr(PHP_OS,0,3) == 'WIN' ? '\\' : "/") . $config_file;
+$fs_config_file = dirname(__FILE__) . (substr(PHP_OS,0,3) == 'WIN' ? '\\' : '/') . $config_file;
 if (isset($HTTP_POST_VARS['create']))  header('Location: configurator.php?create=1#create');
 printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'iso-8859-1'); 
 ?>
@@ -25,9 +27,9 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'iso-8859-1');
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.22 2004-11-30 10:11:04 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.23 2004-11-30 12:07:10 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Configuration tool for PhpWiki 1.3.x</title>
+<title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
 <!--
 /* TABLE { border: thin solid black } */
@@ -36,7 +38,7 @@ pre { font-size: 120%; }
 td { border: thin solid black }
 tr { border: none }
 tr.hidden { border: none; display: none; }
-td.part { background-color: #eeaaaa; color: inherit; }
+td.part { background-color: #eeeeee; color: inherit; }
 td.instructions { background-color: #ffffee; width: <?php echo $tdwidth ?>px; color: inherit; }
 td.unchangeable-variable-top   { border-bottom: none; background-color: #eeeeee; color:inherit; }
 td.unchangeable-variable-left  { border-top: none; background-color: #eeeeee; color:inherit; }
@@ -178,7 +180,7 @@ $preamble = "
 ";
 
 $properties["Part Zero"] =
-new part('_part0', false, "
+new part('_part0', $SEPARATOR."\n", "
 Part Zero: Latest Development and Tricky Options");
 
 if (substr(PHP_OS,0,3) == 'WIN') {
@@ -194,7 +196,7 @@ $properties["PHP include_path"] =
 If PHP needs help in finding where you installed the rest of the PhpWiki
 code, you can set the include_path here.
 
-Override PHP's include path so that it can find some needed additional libraries.
+Override the PHP include path so that it can find some needed additional libraries.
 You shouldn't need to do this unless your system include_path esp. your 
 system pear libs are broken or oudated. The PHPWIKI_DIR is automatically 
 put to the front and the local lib/pear path is automatically added to the end.
@@ -204,7 +206,7 @@ Note that on Windows-based servers, you should use ; rather than :
 as the path separator.");
 
 $properties["DEBUG"] =
-new _define_optional('DEBUG', 'PhpWiki', '0', "
+new _define_optional('DEBUG', '0', "
 Set DEBUG to 1 to view the XHTML and CSS validator icons, page
 processing timer, and possibly other debugging messages at the
 bottom of each page. 65 for a more verbose level. 
@@ -213,29 +215,6 @@ See lib/config.php for all supported values.");
 $properties["Part One"] =
 new part('_partone', $SEPARATOR."\n", "
 Part One: Authentication and security settings. See Part Three for more.");
-
-$properties["Wiki Name"] =
-new _define_optional('WIKI_NAME', 'PhpWiki', "
-The name of your wiki.
-
-This is used to generate a keywords meta tag in the HTML templates,
-in bookmark titles for any bookmarks made to pages in your wiki,
-and during RSS generation for the title of the RSS channel.
-
-It is recommended this be a relatively short WikiWord like the
-InterWiki monikers found in the InterWikiMap. (For examples, see
-lib/interwiki.map).
-");
-
-
-$properties["Reverse DNS"] =
-new boolean_define_optional
-('ENABLE_REVERSE_DNS',
- array('true'  => "true. perform additional reverse dns lookups",
-       'false' => "false. just record the address as given by the httpd server"),
-" 
-If set, we will perform reverse dns lookups to try to convert the
-users IP number to a host name, even if the http server didn't do it for us.");
 
 $properties["Admin Username"] =
 new _define_optional_notempty('ADMIN_USER', "", "
@@ -251,22 +230,34 @@ Use the \"Create Random Password\" button to create a good (random) password.",
 "onchange=\"validate_ereg('Sorry, ADMIN_PASSWD must be at least 4 chars long.', '^....+$', 'ADMIN_PASSWD', this);\"");
 
 
+$properties["Wiki Name"] =
+new _define_optional('WIKI_NAME', 'PhpWiki', "
+The name of your wiki.
+
+This is used to generate a keywords meta tag in the HTML templates,
+in bookmark titles for any bookmarks made to pages in your wiki,
+and during RSS generation for the title of the RSS channel.
+
+It is recommended this be a relatively short WikiWord like the
+InterWiki monikers found in the InterWikiMap. (For examples, see
+lib/interwiki.map).
+");
+
+$properties["Reverse DNS"] =
+new boolean_define_optional
+('ENABLE_REVERSE_DNS',
+ array('true'  => "true. perform additional reverse dns lookups",
+       'false' => "false. just record the address as given by the httpd server"),
+" 
+If set, we will perform reverse dns lookups to try to convert the
+users IP number to a host name, even if the http server didn't do it for us.");
+
 $properties["ZIPdump Authentication"] =
 new boolean_define_optional('ZIPDUMP_AUTH', 
                     array('false' => "false. Everyone may download zip dumps",
                           'true'  => "true. Only admin may download zip dumps"), "
 If true, only the admin user can make zip dumps, else zip dumps
 require no authentication.");
-
-$properties["Enable RawHtml Plugin"] =
-new boolean_define_commented_optional
-('ENABLE_RAW_HTML', 
- array('true'  => "Enabled",
-       'false' => "Disabled."), "
-The RawHtml plugin allows page authors to embed real, raw HTML into Wiki
-pages.  This is a possible security threat, as much HTML (or, rather,
-JavaScript) can be very risky.  If you are in a controlled environment,
-however, it could be of use.");
 
 $properties["Enable RawHtml Plugin"] =
 new boolean_define_commented_optional
@@ -291,7 +282,7 @@ new boolean_define_commented_optional
  array('true'  => "Enabled",
        'false' => "Disabled."), "
 If this is set, all unsafe html code is stripped automatically (experimental!)
-See <a href=\"http://chxo.com/scripts/safe_html-test.php\">chxo.com/scripts/safe_html-test.php</a>
+See <a href=\"http://chxo.com/scripts/safe_html-test.php\" target=\"_new\">chxo.com/scripts/safe_html-test.php</a>
 ");
 
 $properties["Strict Mailable Pagedumps"] =
@@ -320,14 +311,10 @@ new _variable('HTML_DUMP_SUFFIX', ".html", "
 Here you can change the filename suffix used for XHTML page dumps.
 If you don't want any suffix just comment this out.");
 
-
-
 //FIXME: should be numeric_define_optional
 $properties["Maximum Upload Size"] =
 new numeric_define('MAX_UPLOAD_SIZE', "16 * 1024 * 1024", "
 The maximum file upload size.");
-
-
 
 //FIXME: should be numeric_define_optional
 $properties["Minor Edit Timeout"] =
@@ -335,8 +322,6 @@ new numeric_define('MINOR_EDIT_TIMEOUT', "7 * 24 * 3600", "
 If the last edit is older than MINOR_EDIT_TIMEOUT seconds, the
 default state for the \"minor edit\" checkbox on the edit page form
 will be off.");
-
-
 
 $properties["Disabled Actions"] =
 new array_variable('DisabledActions', array(), "
@@ -353,7 +338,7 @@ such as /tmp/wiki_access_log.");
 $properties["Compress Output"] =
 new boolean_define_commented_optional
 ( 'COMPRESS_OUTPUT', 
-  array(''  => 'Compress when PhpWiki thinks approriate.',
+  array(''  => 'Compress when PhpWiki thinks appropriate.',
         'false' => 'Never compress output.',
         'true' => 'Always try to compress output.'),
   "
@@ -374,7 +359,7 @@ new _define_selection_optional
 ('CACHE_CONTROL',
  array('LOOSE' => 'LOOSE',
        'STRICT' => 'STRICT',
-       'NONE' => 'NONE',
+       'NO_CACHE' => 'NO_CACHE',
        'ALLOW_STALE' => 'ALLOW_STALE'),
  "
 HTTP CACHE_CONTROL
@@ -385,8 +370,8 @@ headers (Expires: and Cache-Control:)
 Choose one of:
 
 <dl>
-<dt>NONE</dt>
-<dd>This is roughly the old (pre 1.3.4) behavior.  PhpWiki will
+<dt>NO_CACHE</dt>
+<dd>This is roughly the old (pre 1.3.4) behaviour.  PhpWiki will
     instruct proxies and browsers never to cache PhpWiki output.</dd>
 
 <dt>STRICT</dt>
@@ -450,34 +435,20 @@ discard the cached version of the page.)
 You can also purge the cached markup globally by using the
 \"Purge Markup Cache\" button on the PhpWikiAdministration page.");
 
-
 $properties["Path for PHP Session Support"] =
     new _define_optional('SESSION_SAVE_PATH', ini_get('session.save_path'), "
-The login code now uses PHP's session support. Usually, the default
+The login code now uses PHP session support. Usually, the default
 configuration of PHP is to store the session state information in
 /tmp. That probably will work fine, but fails e.g. on clustered
 servers where each server has their own distinct /tmp (this is the
 case on SourceForge's project web server.) You can specify an
 alternate directory in which to store state information like so
 (whatever user your httpd runs as must have read/write permission
-in this directory):");
-
-$properties["Disable PHP Transparent Session ID"] =
-new unchangeable_ini_set('session.use_trans_sid', "@ini_set('session.use_trans_sid', 0);", "
-If your php was compiled with --enable-trans-sid it tries to
-add a PHPSESSID query argument to all URL strings when cookie
-support isn't detected in the client browser.  For reasons
-which aren't entirely clear (PHP bug) this screws up the URLs
-generated by PhpWiki.  Therefore, transparent session ids
-should be disabled.  This next line does that.
-
-(At the present time, you will not be able to log-in to PhpWiki,
-or set any user preferences, unless your browser supports cookies.)");
-
-
+in this directory).
+on USE_DB_SESSION = true you can ignore this.
+");
 
 ///////// database selection
-
 
 $properties["Part Two"] =
 new part('_parttwo', $SEPARATOR."\n", "
@@ -486,29 +457,19 @@ Part Two:
 Database Selection
 ");
 
-
 $properties["Database Type"] =
-new _variable_selection("DBParams|dbtype",
-              array('dba'   => "dba DBM",
+new _define_selection("DATABASE_TYPE",
+              array('dba'   => "dba handler",
                     'SQL'   => "SQL PEAR",
                     'ADODB' => "SQL ADODB",
+                    'file'   => "flatfile",
                     'cvs'   => "CVS File handler"), "
 Select the database backend type:
+Choose dba (default) to use one of the standard UNIX dba libraries. This is the fastest.
 Choose ADODB or SQL to use an SQL database with ADODB or PEAR.
-Choose dba to use one of the standard UNIX dbm libraries.
-CVS is not yet tested nor supported.
-Recommended is SQL PEAR.");
-
-$properties["Filename / Table name Prefix"] =
-new _variable_commented("DBParams|prefix", "phpwiki_", "
-Used by all DB types:
-
-Prefix for filenames or table names
-
-Currently you MUST EDIT THE SQL file too (in the schemas/
-directory because we aren't doing on the fly sql generation
-during the installation.");
-
+flatfile is simple and slow.
+CVS is highly experimental.
+Recommended is dba or SQL PEAR.");
 
 $properties["SQL dsn Setup"] =
 new unchangeable_variable('_sqldsnstuff', "", "
@@ -535,10 +496,14 @@ To connect over a unix socket, use something like
 $properties["SQL Type"] =
 new _variable_selection('_dsn_sqltype',
               array('mysql' => "MySQL",
-                    'pgsql' => "PostgreSQL"), "
-SQL DB types");
-
-
+                    'pgsql' => "PostgreSQL",
+                    'mssql' => "Microsoft SQL Server",
+                    'oci8'  => "Oracle 8",
+                    'mysqli' => "mysqli",
+                    'mysqlt' => "mysqlt",
+                    'ODBC' => "ODBC (only ADODB)",
+), "
+SQL DB types. The DSN hosttype.");
 
 $properties["SQL User"] =
 new _variable('_dsn_sqluser', "wikiuser", "
@@ -575,16 +540,34 @@ $dsn_sqlhostorsock = $properties["SQL Database Host"]->value();
 $dsn_sqldbname = $properties["SQL Database Name"]->value();
 
 $properties["SQL dsn"] =
-new unchangeable_variable("DBParams['dsn']", 
-  "\$DBParams['dsn'] = \"\$_dsn_sqltype://{$dsn_sqluser}:{$dsn_sqlpass}@{$dsn_sqlhostorsock}/{$dsn_sqldbname}\";", "");
+new unchangeable_variable("DATABASE_DSN", 
+"DATABASE_DSN = \"\$dsn_sqltype://{$dsn_sqluser}:{$dsn_sqlpass}@{$dsn_sqlhostorsock}/{$dsn_sqldbname}\"");
 
+$properties["Filename / Table name Prefix"] =
+new _define_commented("DATABASE_PREFIX", "", "
+Used by all DB types:
+
+Prefix for filenames or table names, e.g. \"phpwiki_\"
+
+Currently <b>you MUST EDIT THE SQL file too!</b> (in the schemas/
+directory because we aren't doing on the fly sql generation
+during the installation.");
+
+$properties["DB Session table"] =
+new _define_optional("DATABASE_SESSION_TABLE", "session", "
+Tablename to store session information. Only supported by SQL backends.
+
+A word of warning - any prefix defined above will be prepended to whatever is given here.
+");
+
+//TODO: $TEMP
 $properties["dba directory"] =
-new _variable("DBParams|directory", "/tmp", "
+new _define("DATABASE_DIRECTORY", "/tmp", "
 dba directory:");
 
-
+// TODO: list the available methods
 $properties["dba handler"] =
-new _variable_selection('DBParams|dba_handler',
+new _define_selection('DATABASE_DBA_HANDLER',
               array('gdbm' => "Gdbm - GNU database manager",
                     'dbm'  => "DBM - Redhat default. On sf.net there's dbm and gdbm",
                     'db2'  => "DB2 - Sleepycat Software's DB2",
@@ -592,14 +575,11 @@ new _variable_selection('DBParams|dba_handler',
 Use 'gdbm', 'dbm', 'db2' or 'db3' depending on your DBA handler methods supported:");
 
 $properties["dba timeout"] =
-new _variable("DBParams|timeout", "20", "
+new _define("DATABASE_TIMEOUT", "20", "
 Recommended values are 20 or 5.");
 
-
-
+/*
 ///////////////////
-
-
 
 $properties["Page Revisions"] =
 new unchangeable_variable('_parttworevisions', "", "
@@ -653,7 +633,6 @@ revision with the content after the merged minor edit, the rest of
 the page metadata for the preceding version (summary, mtime, ...)
 is not changed.
 ");
-
 
 // For now the expiration parameters are statically inserted as
 // an unchangeable property. You'll have to edit the resulting
@@ -742,7 +721,8 @@ Give the right LDAP root search information in the next statement.");
 
 } else {
 
-$properties["LDAP Authentication"] =
+*/
+/*$properties["LDAP Authentication"] =
 new unchangeable_define('ALLOW_LDAP_LOGIN', "
 if (!defined('ALLOW_LDAP_LOGIN')) define('ALLOW_LDAP_LOGIN', true and function_exists('ldap_connect'));
 if (!defined('LDAP_AUTH_HOST'))   define('LDAP_AUTH_HOST', 'localhost');
@@ -751,7 +731,6 @@ if (!defined('LDAP_BASE_DN')) define('LDAP_BASE_DN', 'ou=mycompany.com,o=My Comp
 ", "
 Ignored. No LDAP support in this php. configure --with-ldap");
 }
-
 if (function_exists('imap_open')) {
 $properties["IMAP Authentication"] =
   new boolean_define_optional('ALLOW_IMAP_LOGIN',
@@ -769,7 +748,7 @@ if (!defined('ALLOW_IMAP_LOGIN')) define('ALLOW_IMAP_LOGIN', true and function_e
 if (!defined('IMAP_AUTH_HOST'))   define('IMAP_AUTH_HOST', 'localhost');
 ", "Ignored. No IMAP support in this php. configure --with-imap");
 }
-
+*/
 
 /////////////////////////////////////////////////////////////////////
 
@@ -780,16 +759,19 @@ Part Four:
 Page appearance and layout
 ");
 
-
-
 $properties["Theme"] =
 new _define_selection_optional('THEME',
               array('default'  => "default",
-                    'Hawaiian' => "Hawaiian",
                     'MacOSX'   => "MacOSX",
+                    'smaller'  => 'smaller',
+                    'Wordpress'=> 'Wordpress',
                     'Portland' => "Portland",
+                    'Hawaiian' => "Hawaiian",
                     'Sidebar'  => "Sidebar",
-                    'SpaceWiki' => "SpaceWiki"), "
+                    'Crao'     => 'Crao',
+                    'wikilens' => 'wikilens',
+                    'SpaceWiki' => "SpaceWiki"
+                    ), "
 THEME
 
 Most of the page appearance is controlled by files in the theme
@@ -801,12 +783,16 @@ stock themes.)
 
 Pick one.
 <pre>
-define('THEME', 'default');
-define('THEME', 'Hawaiian');
-define('THEME', 'MacOSX');
-define('THEME', 'Portland');
-define('THEME', 'Sidebar');
-define('THEME', 'SpaceWiki');</pre>");
+THEME = default
+; THEME = MacOSX
+; THEME = smaller
+; THEME = Wordpress
+; THEME = Portland
+; THEME = Hawaiian
+; THEME = Sidebar
+; THEME = Crao
+; THEME = wikilens
+</pre>");
 
 
 
@@ -838,17 +824,19 @@ new _define_selection_optional('DEFAULT_LANGUAGE',
                     'sv' => "Svenska",
                     'it' => "Italiano",
                     'ja' => "Japanese",
+                    'zh' => "Chinese",
                     ''   => "none"), "
 Select your language/locale - default language is \"en\" for English.
 Other languages available:<pre>
 English \"en\"  (English    - HomePage)
+German  \"de\" (Deutsch    - StartSeite)
+French  \"fr\" (Français   - Accueil)
 Dutch   \"nl\" (Nederlands - ThuisPagina)
 Spanish \"es\" (Español    - PáginaPrincipal)
-French  \"fr\" (Français   - Accueil)
-German  \"de\" (Deutsch    - StartSeite)
 Swedish \"sv\" (Svenska    - Framsida)
 Italian \"it\" (Italiano   - PaginaPrincipale)
 Japanese \"ja\" (Japanese   - ¥Û¡¼¥à¥Ú¡¼¥¸)
+Chinese  \"zh\" (Chinese)
 </pre>
 If you set DEFAULT_LANGUAGE to the empty string, your systems default language
 (as determined by the applicable environment variables) will be
@@ -1080,11 +1068,7 @@ report.)  In that case you can set DISABLE_HTTP_REDIRECT to true.
 (In which case, PhpWiki will revert to sneakier tricks to try to
 redirect the browser...)");
 
-$end = "
-$SEPARATOR
-";
-
-
+$end = "\n".$SEPARATOR."\n";
 
 // end of configuration options
 ///////////////////////////////
@@ -1133,7 +1117,9 @@ class _variable {
             list($a, $b) = explode('|', $v);
             $v = sprintf("%s['%s']", $a, $b);
         }
-        return sprintf("%s = \"%s\";", $v, $value);
+        if (preg_match("/[\"']/", $value))
+            $value = '"' . $value . '"';
+        return sprintf("%s = %s", $v, $value);
     }
 
     function get_config_item_name() {
@@ -1201,9 +1187,9 @@ extends _variable {
     function get_instructions($title) {
 	global $tdwidth;
         $i = "<h3>" . $title . "</h3>\n    " . nl2p($this->_get_description()) . "\n";
-        // $i = $i ."<em>Not editable.</em><br />\n<pre>" . $this->default_value."</pre>";
-        return "<tr><td width=\"100%\" class=\"unchangeable-variable-top\" colspan=\"2\">\n".$i ."</td></tr>\n".
-	"<tr style=\"border-top: none;\"><td class=\"unchangeable-variable-left\" width=\"$tdwidth\" bgcolor=\"#eeeeee\">&nbsp;</td>";
+        // $i .= "<em>Not editable.</em><br />\n<pre>" . $this->default_value."</pre>";
+        return '<tr><td width="100%" class="unchangeable-variable-top" colspan="2">'."\n".$i."</td></tr>\n" 
+	. '<tr style="border-top: none;"><td class="unchangeable-variable-left" width="'.$tdwidth.'" bgcolor="#eeeeee">&nbsp;</td>';
     }
 }
 
@@ -1259,9 +1245,10 @@ extends _variable {
             return "${n}" . $this->_config_format($posted_value);
     }
     function get_html() {
-	return $this->get_config_item_header() . 
-	    "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\" {$this->jscheck} />" .
-	    "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: green\">Input accepted.</p>";
+	return $this->get_config_item_header() 
+            . "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name() 
+            . "\" value=\"" . $this->default_value . "\" {$this->jscheck} />" 
+            . "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: green\">Input accepted.</p>";
     }
 }
 
@@ -1272,7 +1259,7 @@ extends _define {
             $n = "\n";
         if ($posted_value == $this->default_value)
             return "${n};" . $this->_config_format($posted_value);
-        else if ($posted_value == '')
+        elseif ($posted_value == '')
             return "${n};" . $this->_config_format("");
         else
             return "${n}" . $this->_config_format($posted_value);
@@ -1298,8 +1285,9 @@ extends _define {
 class _define_optional_notempty
 extends _define_optional {
     function get_html() {
-	$s = $this->get_config_item_header() . 
-	    "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\" {$this->jscheck} />";
+	$s = $this->get_config_item_header() 
+            . "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name() 
+            . "\" value=\"" . $this->default_value . "\" {$this->jscheck} />";
         if (empty($this->default_value))
 	    return $s . "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: red\">Cannot be empty.</p>";
 	else
@@ -1314,7 +1302,7 @@ extends _variable {
             $n = "\n";
         if ($posted_value == $this->default_value)
             return "${n};" . $this->_config_format($posted_value);
-        else if ($posted_value == '')
+        elseif ($posted_value == '')
             return "${n};" . $this->_config_format("");
         else
             return "${n}" . $this->_config_format($posted_value);
@@ -1333,7 +1321,7 @@ extends _define {
             $n = "\n";
         if ($posted_value == $this->default_value)
             return "${n};" . $this->_config_format($posted_value);
-        else if ($posted_value == '')
+        elseif ($posted_value == '')
             return "${n};" . $this->_config_format('0');
         else
             return "${n}" . $this->_config_format($posted_value);
@@ -1384,9 +1372,9 @@ extends _define {
             $n = "\n";
         if ($posted_value == '') {
             $p = "${n};" . $this->_config_format("");
-            $p = $p . "\n; If you used the passencrypt.php utility to encode the password";
-            $p = $p . "\n; then uncomment this line:";
-            $p = $p . "\n;ENCRYPTED_PASSWD = true";
+            $p .= "\n; If you used the passencrypt.php utility to encode the password";
+            $p .= "\n; then uncomment this line:";
+            $p .= "\n;ENCRYPTED_PASSWD = true";
             return $p;
         } else {
             if (function_exists('crypt')) {
@@ -1401,9 +1389,9 @@ extends _define {
                 return $p . "\nENCRYPTED_PASSWD = true";
             } else {
                 $p = "${n}" . $this->_config_format($posted_value);
-                $p = $p . "\n; Encrypted passwords cannot be used:";
-                $p = $p . "\n; 'function crypt()' not available in this version of php";
-                $p = $p . "\nENCRYPTED_PASSWD = false";
+                $p .= "\n; Encrypted passwords cannot be used:";
+                $p .= "\n; 'function crypt()' not available in this version of php";
+                $p .= "\nENCRYPTED_PASSWD = false";
                 return $p;
             }
         }
@@ -1415,13 +1403,7 @@ extends _define {
 
 class _define_password_optional
 extends _define_password {
-    /*    function _config_format($value) {
-	$name = $this->get_config_item_name();
-        return sprintf("if (!defined('%s')) define('%s', '%s');", $name, $name, $value);
-    }
-    */
 }
-
 
 class _variable_password
 extends _variable {
@@ -1435,8 +1417,10 @@ extends _variable {
 	    $this->default_value = $new_password;
 	    $s .= "Created password: <strong>$new_password</strong><br />&nbsp;<br />";
 	}
-        $s .= "<input type=\"password\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\" {$this->jscheck} />" . 
-"&nbsp;&nbsp;<input type=\"submit\" name=\"create\" value=\"Create Password\" />";
+        $s .= "<input type=\"password\" name=\"" . $this->get_config_item_name()
+           . "\" value=\"" . $this->default_value 
+           . "\" {$this->jscheck} />" 
+           . "&nbsp;&nbsp;<input type=\"submit\" name=\"create\" value=\"Create Random Password\" />";
 	if (empty($this->default_value))
 	    $s .= "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: red\">Cannot be empty.</p>";
 	elseif (strlen($this->default_value) < 4)
@@ -1510,8 +1494,8 @@ extends _variable {
 	$ta .= "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: green\">Input accepted.</p>";
         return $ta;
     }
-
 }
+
 /*
 class _ini_set
 extends _variable {
@@ -1564,12 +1548,7 @@ extends _define {
 }
 
 class boolean_define_optional
-extends boolean_define {
-    /* function _config_format($value) {
-	$name = $this->get_config_item_name();
-        return "if (!defined('$name')) " . boolean_define::_config_format($value);
-    } */
-}
+extends boolean_define {}
 
 class boolean_define_commented
 extends boolean_define {
@@ -1579,7 +1558,7 @@ extends boolean_define {
         list($default_value, $label) = each($this->default_value);
         if ($posted_value == $default_value)
             return "${n};" . $this->_config_format($posted_value);
-        else if ($posted_value == '')
+        elseif ($posted_value == '')
             return "${n};" . $this->_config_format('false');
         else
             return "${n}" . $this->_config_format($posted_value);
@@ -1587,12 +1566,7 @@ extends boolean_define {
 }
 
 class boolean_define_commented_optional
-extends boolean_define_commented {
-    /*function _config_format($value) {
-	$name = $this->get_config_item_name();
-        return "if (!defined('$name')) " . boolean_define_commented::_config_format($value);
-    }*/
-}
+extends boolean_define_commented {}
 
 class part
 extends _variable {
@@ -1600,11 +1574,11 @@ extends _variable {
     function get_config($posted_value) {
         $d = stripHtml($this->_get_description());
         global $SEPARATOR;
-        return "\n".$SEPARATOR . str_replace("\n", "\n; ", $d) ."\n$this->default_value";
+        return "\n".$SEPARATOR . str_replace("\n", "\n; ", $d) ."\n".$this->default_value;
     }
     function get_instructions($title) {
 	$group_name = preg_replace("/\W/","",$title);
-	$i = "<tr class='header' id='$group_name'>\n<td class=\"part\" width=\"100%\" colspan=\"2\" bgcolor=\"#eeaaaa\">\n";
+	$i = "<tr class='header' id='$group_name'>\n<td class=\"part\" width=\"100%\" colspan=\"2\" bgcolor=\"#eeeeee\">\n";
         $i .= "<h2>" . $title . "</h2>\n    " . nl2p($this->_get_description()) ."\n";
 	$i .= "<p><a href=\"javascript:toggle_group('$group_name')\" id=\"{$group_name}_text\">Hide options.</a></p>";
         return  $i ."</td>\n";
@@ -1687,7 +1661,7 @@ function random_good_password ($minlength = 5, $maxlength = 8) {
       else
 	  $newchar = rand($start, $end);
       if (! strrpos($valid_chars,$newchar) ) continue; // skip holes
-      $newpass .= sprintf("%c",$newchar);
+      $newpass .= sprintf("%c", $newchar);
       $length--;
   }
   return($newpass);
@@ -1704,10 +1678,8 @@ function printArray($a) {
 /////////////////////////////
 // begin auto generation code
 
-if (!function_exists('is_a'))
-{
-  function is_a($object, $class)
-  {
+if (!function_exists('is_a')) {
+  function is_a($object, $class) {
     $class = strtolower($class);
     return (get_class($object) == $class) or is_subclass_of($object, $class);
   }
@@ -1736,11 +1708,6 @@ if (@$HTTP_POST_VARS['action'] == 'make_config') {
         $config .= $properties[$option_name]->get_config($posted_value);
     }
 
-    if (defined('DEBUG')) {
-        $diemsg = "The configurator.php is provided for testing purposes only.
-You can't use this file with your PhpWiki server yet!!";
-        $config .= "\ndie(\"$diemsg\");\n";
-    }
     $config .= $end;
 
     // I think writing this config file is a big security hole.
@@ -1751,9 +1718,9 @@ You can't use this file with your PhpWiki server yet!!";
     // So I'm disabling it...
 
     if (defined(ENABLE_FILE_OUTPUT) and ENABLE_FILE_OUPUT) {
-      /* We first check if the config-file exists. */
+      // We first check if the config-file exists.
       if (file_exists($fs_config_file)) {
-        /* We make a backup copy of the file */
+        // We make a backup copy of the file
         // $config_file = 'index-user.php';
         $new_filename = preg_replace('/\.ini$/', time() . '.ini', $fs_config_file);
         if (@copy($fs_config_file, $new_filename)) {
@@ -1767,7 +1734,6 @@ You can't use this file with your PhpWiki server yet!!";
       $fp = false;
     }
     
-
     if ($fp) {
         fputs($fp, $config);
         fclose($fp);
@@ -1781,7 +1747,7 @@ You can't use this file with your PhpWiki server yet!!";
     }
 
     echo "<hr />\n<p>Here's the configuration file based on your answers:</p>\n";
-    echo "<form method='get' action='$PHP_SELF'>\n";
+    echo "<form method=\"get\" action=\"configurator.php\">\n";
     echo "<textarea id='config-output' readonly='readonly' style='width:100%;' rows='30' cols='100'>\n";
     echo htmlentities($config);
     echo "</textarea></form>\n";
@@ -1791,7 +1757,7 @@ You can't use this file with your PhpWiki server yet!!";
 
 } else { // first time or create password
     $posted = $GLOBALS['HTTP_POST_VARS'];
-    /* No action has been specified - we make a form. */
+    // No action has been specified - we make a form.
 
     echo '
 <form action="configurator.php" method="post">
