@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.197 2004-07-02 09:55:58 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.198 2004-07-02 10:30:36 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -338,10 +338,12 @@ function LinkImage($url, $alt = false) {
             }
         } else {
             // Older php versions crash here with certain png's: 
-            // confirmed for 4.1.2, 4.1.3., 4.2.3; 4.3.7 is ok
+            // confirmed for 4.1.2, 4.1.3, 4.2.3; 4.3.2 and 4.3.7 are ok
             //   http://phpwiki.sourceforge.net/demo/themes/default/images/http.png
             // See http://bugs.php.net/search.php?cmd=display&search_for=getimagesize
-            if (!DISABLE_GETIMAGESIZE and ($size = @getimagesize($url))) {
+            if (!check_php_version(4,3) and preg_match("/^http.+\.png$/i",$url))
+                ; // it's safe to assume that this will fail.
+            elseif (!DISABLE_GETIMAGESIZE and ($size = @getimagesize($url))) {
                 $width  = $size[0];
                 $height = $size[1];
                 if (($width < 3 and $height < 10) 
@@ -1628,6 +1630,9 @@ function url_get_contents( $uri ) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.197  2004/07/02 09:55:58  rurban
+// more stability fixes: new DISABLE_GETIMAGESIZE if your php crashes when loading LinkIcons: failing getimagesize in old phps; blockparser stabilized
+//
 // Revision 1.196  2004/07/01 08:51:22  rurban
 // dumphtml: added exclude, print pagename before processing
 //
