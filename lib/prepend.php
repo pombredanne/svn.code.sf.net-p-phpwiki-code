@@ -5,13 +5,14 @@
  */
 $RCS_IDS = '';
 function rcs_id ($id) { $GLOBALS['RCS_IDS'] .= "$id\n"; }
-rcs_id('$Id: prepend.php,v 1.14 2003-02-21 04:08:25 dairiki Exp $');
+rcs_id('$Id: prepend.php,v 1.15 2003-03-07 02:47:32 dairiki Exp $');
 
 // Used for debugging purposes
 class DebugTimer {
     function DebugTimer() {
         $this->_start = $this->microtime();
-        $this->_times = posix_times();
+        if (function_exists('posix_times'))
+            $this->_times = posix_times();
     }
 
     /**
@@ -21,16 +22,24 @@ class DebugTimer {
     function getTime($which='real', $now=false) {
         if ($which == 'real')
             return $this->microtime() - $this->_start;
-        
-        if (!$now) $now = posix_times();
-        $ticks = $now[$which] - $this->_times[$which];
-        return $ticks / $this->_CLK_TCK();
+
+        if (isset($this->_times)) {
+            if (!$now) $now = posix_times();
+            $ticks = $now[$which] - $this->_times[$which];
+            return $ticks / $this->_CLK_TCK();
+        }
+
+        return 0.0;           // Not available.
     }
 
     function getStats() {
+        if (!isset($this->_times)) {
+            // posix_times() not available.
+            return sprintf("real: %.3f", $this->getTime('real'));
+        }
         $now = posix_times();
         return sprintf("real: %.3f, user: %.3f, sys: %.3f",
-                       $this->getTime('real', $now),
+                       $this->getTime('real'),
                        $this->getTime('utime', $now),
                        $this->getTime('stime', $now));
     }
