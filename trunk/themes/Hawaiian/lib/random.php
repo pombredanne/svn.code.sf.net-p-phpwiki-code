@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: random.php,v 1.3 2002-01-18 10:04:49 carstenklapp Exp $');
+rcs_id('$Id: random.php,v 1.1 2002-01-18 20:08:30 carstenklapp Exp $');
 
 class RandomImage {
 
