@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.50 2003-03-05 21:38:14 dairiki Exp $');
+<?php rcs_id('$Id: Template.php,v 1.51 2003-12-20 23:54:15 carstenklapp Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -157,7 +157,6 @@ class Template
         //if (!preg_match('/: eval\(\)\'d code$/', $error->errfile))
 	//    return false;
 
-        
         if (preg_match('/: eval\(\)\'d code$/', $error->errfile)) {
             $error->errfile = "In template '$this->_name'";
             // Hack alert: Ignore 'undefined variable' messages for variables
@@ -166,10 +165,9 @@ class Template
                 return true;
         }
         else
-            $error->errfile .= "(In template '$this->_name'?)";
+            $error->errfile .= " (In template '$this->_name')";
         
 	$lines = explode("\n", $this->_tmpl);
-        
 	if (isset($lines[$error->errline - 1]))
 	    $error->errstr .= ":\n\t" . $lines[$error->errline - 1];
 	return $error;
