@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.19 2003-02-17 20:32:36 dairiki Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.20 2003-02-18 19:00:47 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -201,17 +201,83 @@ class XmlElement extends XmlContent
                 $value = $attr;
             $this->_attr[$attr] = (string) $value;
         }
+
+	if ($attr == 'class')
+	    unset($this->_classes);
     }
 
     function getAttr ($attr) {
+	if ($attr == 'class')
+	    $this->_setClasses();
+
 	if (isset($this->_attr[$attr]))
 	    return $this->_attr[$attr];
 	else
 	    return false;
     }
-    
+
+    function _getClasses() {
+	if (!isset($this->_classes)) {
+	    $this->_classes = array();
+	    if (isset($this->_attr['class'])) {
+		$classes = explode(' ', (string) $this->_attr['class']);
+		foreach ($classes as $class) {
+		    $class = trim($class);
+		    if ($class)
+			$this->_classes[$class] = $class;
+		}
+	    }
+	}
+	return $this->_classes;
+    }
+
+    function _setClasses() {
+	if (isset($this->_classes)) {
+	    if ($this->_classes)
+		$this->_attr['class'] = join(' ', $this->_classes);
+	    else
+		unset($this->_attr['class']);
+	}
+    }
+
+    /**
+     * Manipulate the elements CSS class membership.
+     *
+     * This adds or remove an elements membership
+     * in a give CSS class.
+     *
+     * @param $class string
+     *
+     * @param $in_class bool
+     *   If true (the default) the element is added to class $class.
+     *   If false, the element is removed from the class.
+     */
+    function setInClass($class, $in_class=true) {
+	$this->_getClasses();
+	$class = trim($class);
+	if ($in_class)
+	    $this->_classes[$class] = $class;
+	else 
+	    unset($this->_classes[$class]);
+    }
+
+    /**
+     * Is element in a given (CSS) class?
+     *
+     * This checks for the presence of a particular class in the
+     * elements 'class' attribute.
+     *
+     * @param $class string  The class to check for.
+     * @return bool True if the element is a member of $class.
+     */
+    function inClass($class) {
+	$this->_parseClasses();
+	return isset($this->_classes[trim($class)]);
+    }
+
     function startTag() {
         $start = "<" . $this->_tag;
+	$this->_setClasses();
         foreach ($this->_attr as $attr => $val) {
             if (is_bool($val)) {
                 if (!$val)
