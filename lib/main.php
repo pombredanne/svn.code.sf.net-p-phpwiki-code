@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.150 2004-05-25 10:18:44 rurban Exp $');
+rcs_id('$Id: main.php,v 1.151 2004-05-25 12:40:48 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -527,9 +527,17 @@ $this->version = phpwiki_version();
         exit;
     }
 
+    /**
+     * Generally pagename is rawurlencoded for older browsers or mozilla.
+     * Typing a pagename into the IE bar will utf-8 encode it, so we have to 
+     * fix that with fixTitleEncoding().
+     * If USE_PATH_INFO = true, the pagename is stripped from the "/DATA_PATH/PageName&arg=value" line.
+     * If false, we support either "/index.php?pagename=PageName&arg=value",
+     * or the first arg (1.2.x style): "/index.php?PageName&arg=value"
+     */
     function _deducePagename () {
-        if ($this->getArg('pagename'))
-            return fixTitleEncoding($this->getArg('pagename'));
+        if (trim(rawurldecode($this->getArg('pagename'))))
+            return fixTitleEncoding(rawurldecode($this->getArg('pagename')));
 
         if (USE_PATH_INFO) {
             $pathinfo = $this->get('PATH_INFO');
@@ -541,7 +549,7 @@ $this->version = phpwiki_version();
             }
             $tail = substr($pathinfo, strlen(PATH_INFO_PREFIX));
 
-            if ($tail != '' and $pathinfo == PATH_INFO_PREFIX . $tail) {
+            if (trim($tail) != '' and $pathinfo == PATH_INFO_PREFIX . $tail) {
                 return fixTitleEncoding($tail);
             }
         }
@@ -559,17 +567,18 @@ $this->version = phpwiki_version();
              * QUERY_ARGS (HTTP_GET_VARS).
              */
             global $HTTP_GET_VARS;
-            if (isset($HTTP_GET_VARS['pagename'])) { 
-                return fixTitleEncoding(urldecode($HTTP_GET_VARS['pagename']));
+            if (isset($HTTP_GET_VARS['pagename']) and trim($HTTP_GET_VARS['pagename'])) { 
+                return fixTitleEncoding(rawurldecode($HTTP_GET_VARS['pagename']));
             }
         }
 
         /*
          * Support for PhpWiki 1.2 style requests.
+         * Strip off "&" args (?PageName&action=...&start_debug,...)
          */
         $query_string = $this->get('QUERY_STRING');
-        if (preg_match('/^[^&=]+$/', $query_string)) {
-            return fixTitleEncoding(urldecode($query_string));
+        if (trim(rawurldecode($query_string)) and preg_match('/^([^&=]+)(&.+)?$/', $query_string, $m)) {
+            return fixTitleEncoding(rawurldecode($m[1]));
         }
 
         return fixTitleEncoding(HOME_PAGE);
@@ -934,6 +943,12 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.150  2004/05/25 10:18:44  rurban
+// Check for UTF-8 URLs; Internet Explorer produces these if you
+// type non-ASCII chars in the URL bar or follow unescaped links.
+// Fixes sf.net bug #953949
+// src: languages/Language.php:checkTitleEncoding() from mediawiki
+//
 // Revision 1.149  2004/05/18 13:31:19  rurban
 // hold warnings until headers are sent. new Error-style with collapsed output of repeated messages
 //
