@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllPages.php,v 1.25 2004-06-14 11:31:38 rurban Exp $');
+rcs_id('$Id: AllPages.php,v 1.26 2004-06-21 16:22:32 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.25 $");
+                            "\$Revision: 1.26 $");
     }
 
     function getDefaultArguments() {
@@ -79,6 +79,7 @@ extends WikiPlugin
         } else {
             if (! $request->getArg('count'))  $args['count'] = $dbi->numPages(false,$exclude);
             else $args['count'] = $request->getArg('count');
+            $pages = false;
         }
         if (empty($args['count']) and is_array($pages))
             $args['count'] = count($pages);
@@ -114,6 +115,14 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.25  2004/06/14 11:31:38  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.24  2004/06/13 16:02:12  rurban
 // empty list of pages if user=[] and not authenticated.
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageListColumns.php,v 1.1 2004-06-18 14:42:17 rurban Exp $');
+rcs_id('$Id: PageListColumns.php,v 1.2 2004-06-21 16:22:32 rurban Exp $');
 
 /*
  Copyright 2004 Mike Cassano
@@ -286,7 +286,6 @@ class _PageList_Column_top3recs extends _PageList_Column_custom
 
     function _getValue ($page_handle, &$revision_handle) 
     {
-
         $ratings = $this->_active_ratings_user->get_ratings();
         
         $iter = $page_handle->getLinks();
@@ -333,16 +332,24 @@ class _PageList_Column_top3recs extends _PageList_Column_custom
 $WikiTheme->addPageListColumn
   (array
    (
-    'numbacklinks' => array('_PageList_Column_numbacklinks','custom:numbacklinks', _("# things"), false),
-    'ratingwidget' => array('_PageList_Column_ratingwidget','custom:rating', _("Rate"), false),
-    'coagreement'  => array('_PageList_Column_coagreement','custom:coagreement', _("Go?"), 'center'),
-    'minmisery'    => array('_PageList_Column_minmisery','custom:minmisery', _("MinMisery"), 'center'),
-    'averagerating' => array('_PageList_Column_averagerating','custom:averagerating', _("Avg. Rating"), 'left'),
-    'top3recs'     => array('_PageList_Column_top3recs','custom:top3recs', _("Top Recommendations"), 'left'),
-
+    'numbacklinks' 
+    => array('_PageList_Column_numbacklinks','custom:numbacklinks', _("# things"), false),
+    'rating' 	   
+    => array('_PageList_Column_ratingwidget','custom:rating', _("Rate"), false),
+    'coagreement'  
+    => array('_PageList_Column_coagreement','custom:coagreement', _("Go?"), 'center'),
+    'minmisery'    
+    => array('_PageList_Column_minmisery','custom:minmisery', _("MinMisery"), 'center'),
+    'averagerating' 
+    => array('_PageList_Column_averagerating','custom:averagerating', _("Avg. Rating"), 'left'),
+    'top3recs'
+    => array('_PageList_Column_top3recs','custom:top3recs', _("Top Recommendations"), 'left'),
     ));
 
-// $Log: not supported by cvs2svn $ 
+// $Log: not supported by cvs2svn $
+// Revision 1.1  2004/06/18 14:42:17  rurban
+// added wikilens libs (not yet merged good enough, some work for DanFr)
+// 
 
 // Local Variables:
 // mode: php

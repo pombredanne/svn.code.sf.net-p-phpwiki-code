@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.106 2004-06-20 14:42:54 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.107 2004-06-21 16:22:29 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -720,6 +720,15 @@ class Theme {
                 $url = preg_replace('|([^/]+)$|e', 'urlencode("\\1")', $url);
             }
         }
+        if ($url and $this->DUMP_MODE) {
+            if (empty($this->dumped_buttons)) $this->dumped_buttons = array();
+            $file = $url;
+            if (defined('DATA_PATH'))
+                $file = substr($url,strlen(DATA_PATH)+1);
+            $url = "images/buttons/".basename($file);
+            if (!array_key_exists($text, $this->dumped_buttons))
+                $this->dumped_buttons[$text] = $file;
+        }
         return $url;
     }
 
@@ -1363,6 +1372,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.106  2004/06/20 14:42:54  rurban
+// various php5 fixes (still broken at blockparser)
+//
 // Revision 1.105  2004/06/14 11:31:36  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList
