@@ -1,5 +1,5 @@
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
-X-RCS_ID: $Id: WikiPlugin,v 1.2 2002-01-12 17:46:02 carstenklapp Exp $
+X-RCS_ID: $Id: WikiPlugin,v 1.3 2002-01-13 15:55:23 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=WikiPlugin;
   flags="";
@@ -8,12 +8,8 @@ Content-Transfer-Encoding: binary
 
 The latest hacks include support for !WikiPlugins.
 
-!WikiPlugins allow one to easily add new types of dynamic content (as well as other functionality)
-to wiki pages within PhpWiki.  In this very wiki, the RecentChanges,  BackLinks,
-LikePages and DebugInfo pages are all implemented using plugins.
-I expect that the search result pages, as well as much PhpWikiAdministration will
-soon be implemented via plugins as well.  (I think the oh-so-ugly
-[MagicPhpWikiURLs] can be replaced by plugins, too.)
+!WikiPlugins allow one to easily add new types of dynamic content (as well as other functionality) to wiki pages within PhpWiki.  In this very wiki, the RecentChanges,  BackLinks, LikePages and DebugInfo pages are all implemented using plugins.
+I expect that the search result pages, as well as much PhpWikiAdministration will soon be implemented via plugins as well.  (I think the oh-so-ugly [MagicPhpWikiURLs] can be replaced by plugins, too.)
 
 !Example
 
@@ -45,6 +41,21 @@ In order of precedence:
 # The plugin must supply default values for each argument it uses.  (The BackLinks plugin uses
 the current page as the default value for the ''page'' argument.
 
+!Existing Plugins
+* BackLinks
+* CalendarPlugin
+* DebugInfo
+* FullTextSearch
+* IncludePage
+* LikePages
+* MostPopular
+* PageHistory
+* RecentChanges
+* text2png
+* TitleSearch
+* UserPage
+* ViewSource
+* walkabout
 
 !More Ideas for Plugins
 * Integrate Search form with individual InterWiki map entries%%%
@@ -52,7 +63,7 @@ the current page as the default value for the ''page'' argument.
 * WantedPages, OrphanedPages, other various indexing schemes.
 * Diff, PageHistory
 * Redirect plugin -- <?''''plugin Redirect target=!OtherPage ?>
-*Insert XML/RSS/RDF news content from location=xxx where location is a parm to the pluggin, maybe include some formatting control of the output generated.
+* Insert XML/RSS/RDF news content from location=xxx where location is a parameter to the plugin, maybe include some formatting control of the output generated.
 -----
 Pages in this category:
 <?plugin BackLinks page=[pagename] noheader=1?>
