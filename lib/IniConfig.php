@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.59 2004-11-05 20:53:35 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.60 2004-11-06 03:06:58 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -38,10 +38,10 @@ rcs_id('$Id: IniConfig.php,v 1.59 2004-11-05 20:53:35 rurban Exp $');
  * - Convert the value lists to provide defaults, so that every "if
  *      (defined())" and "if (!defined())" can fuck off to the dismal hole
  *      it belongs in.
+ * - config.ini => config.php dumper for faster startup. (really faster? to time)
+ *
  * TODO:
  * - Old-style index.php => config/config.ini converter.
- *
- * - config.ini => config.php dumper for faster startup.
  *
  * - Don't use too much globals for easier integration into other projects
  *   (namespace pollution). (gforge, phpnuke, postnuke, phpBB2, carolina, ...)
@@ -63,8 +63,46 @@ rcs_id('$Id: IniConfig.php,v 1.59 2004-11-05 20:53:35 rurban Exp $');
 include_once (dirname(__FILE__)."/config.php");
 include_once (dirname(__FILE__)."/FileFinder.php");
 
+function save_dump($file) {
+    $vars =& $GLOBALS; // copy + unset not possible
+    $ignore = array();
+    foreach (array("SERVER","ENV","GET","POST","REQUEST","COOKIE","FILES") as $key) {
+        $ignore["HTTP_".$key."_VARS"]++;
+        $ignore["_".$key]++;
+    }
+    foreach (array("HTTP_POST_FILES","GLOBALS","RUNTIMER","ErrorManager",'RCS_IDS','LANG',
+    		   'HOME_PAGE','request','SCRIPT_NAME','VIRTUAL_PATH','SCRIPT_FILENAME') as $key)
+    	$ignore[$key]++;
+    $fp = fopen($file, "wb");
+    fwrite($fp,"<?php\n");
+    fwrite($fp,"function wiki_configrestore(){\n");
+    //TODO: optimize this by removing ignore, big serialized array and merge into existing GLOBALS
+    foreach ($vars as $var => $val) {
+    	if (!$ignore[$var])
+            fwrite($fp, "\$GLOBALS['".$var."']=unserialize(\"".addslashes(serialize($val))."\");\n");
+    }
+    // cannot be optimized, maybe leave away predefined consts somehow
+    foreach (get_defined_constants() as $var => $val) {
+    	if (substr($var,0,4) != "PHP_" and substr($var,0,2) != "E_" and substr($var,0,2) != "T_"  and substr($var,0,2) != "M_")
+            fwrite($fp, "if(!defined('".$var."')) define('".$var."',unserialize(\"".addslashes(serialize($val))."\"));\n");
+    }
+    fwrite($fp, "return 'noerr';}");
+    fwrite($fp,"?>");
+    fclose($fp);
+}
+
 function IniConfig($file) {
-    
+    // check config/config.php dump for faster startup
+    $dump = substr($file, 0, -3)."php";
+    if (isWindows($dump)) $dump = str_replace("/","\\",$dump);
+    if (file_exists($dump) and is_readable($dump) and sort_file_mtime($dump, $file) < 0) {
+        @include($dump);
+        if (function_exists('wiki_configrestore') and (wiki_configrestore() === 'noerr')) {
+            fixup_dynamic_configs();
+            return;
+        }
+    }
+
     // List of all valid config options to be define()d which take "values" (not
     // booleans). Needs to be categorised, and generally made a lot tidier. 
     $_IC_VALID_VALUE = array
@@ -85,7 +123,7 @@ function IniConfig($file) {
          'WIKI_NAME_REGEXP',
          'PLUGIN_CACHED_DATABASE', 'PLUGIN_CACHED_FILENAME_PREFIX',
          'PLUGIN_CACHED_HIGHWATER', 'PLUGIN_CACHED_LOWWATER', 'PLUGIN_CACHED_MAXLIFETIME',
-         'PLUGIN_CACHED_MAXARGLEN', 'PLUGIN_CACHED_IMGTYPES'
+         'PLUGIN_CACHED_MAXARGLEN', 'PLUGIN_CACHED_IMGTYPES',
          );
 
     // Optional values which need to be defined.
@@ -99,7 +137,8 @@ function IniConfig($file) {
          'IMAP_AUTH_HOST', 'POP3_AUTH_HOST',
          'AUTH_USER_FILE', 'AUTH_GROUP_FILE', 'AUTH_SESS_USER', 'AUTH_SESS_LEVEL',
          'GOOGLE_LICENSE_KEY','FORTUNE_DIR',
-         'DISABLE_GETIMAGESIZE','DBADMIN_USER','DBADMIN_PASSWD'
+         'DISABLE_GETIMAGESIZE','DBADMIN_USER','DBADMIN_PASSWD',
+         'SESSION_SAVE_PATH'
          );
 
     // List of all valid config options to be define()d which take booleans.
@@ -197,14 +236,6 @@ function IniConfig($file) {
             define($item, true);
         }
         unset($rs[$item]);
-    }
-
-    // Special handling for some config options
-    if (!empty($rs['INCLUDE_PATH'])) {
-        ini_set('include_path', $rs['INCLUDE_PATH']);
-    }
-    if (!empty($rs['SESSION_SAVE_PATH'])) {
-        ini_set('session.save_path', $rs['SESSION_SAVE_PATH']);
     }
 
     // Database
@@ -335,22 +366,22 @@ function IniConfig($file) {
     $keywords = preg_split('/\s*:\s*/', $rs['KEYWORDS']);
     if (empty($keywords)) $keywords = array("Category","Topic");
     $KeywordLinkRegexp = '(?<=' . implode('|^', $keywords) . ')[[:upper:]].*$';
-        
+
+    // TODO: can this be a constant?
     global $DisabledActions;
     if (!array_key_exists('DISABLED_ACTIONS',$rs) and array_key_exists('DISABLED_ACTIONS',$rsdef))
         $rs['DISABLED_ACTIONS'] = @$rsdef['DISABLED_ACTIONS'];
     if (array_key_exists('DISABLED_ACTIONS',$rs))
         $DisabledActions = preg_split('/\s*:\s*/', $rs['DISABLED_ACTIONS']);
-    
-    /*global $AllowedProtocols, $InlineImages;
-    $AllowedProtocols = constant("ALLOWED_PROTOCOLS");
-    $InlineImages = constant("INLINE_IMAGES");*/
 
     global $PLUGIN_CACHED_IMGTYPES;
     $PLUGIN_CACHED_IMGTYPES = preg_split('/\s*[|:]\s*/', PLUGIN_CACHED_IMGTYPES);
     if (empty($rs['PLUGIN_CACHED_CACHE_DIR']) and !empty($rsdef['PLUGIN_CACHED_CACHE_DIR']))
         $rs['PLUGIN_CACHED_CACHE_DIR'] = $rsdef['PLUGIN_CACHED_CACHE_DIR'];
     if (empty($rs['PLUGIN_CACHED_CACHE_DIR'])) {
+        if (!empty($rs['INCLUDE_PATH'])) {
+            ini_set('include_path', $rs['INCLUDE_PATH']);
+        }
         if (!FindFile('/tmp/cache', 1)) {
             if (!FindFile('/tmp', 1)) {
                 mkdir('/tmp', 777);
@@ -376,16 +407,23 @@ function IniConfig($file) {
 
     unset($rs); 
     unset($rsdef);
-    fix_configs();
+    unset($apkey);
+    
+    fixup_static_configs();
+    // Dump all globals and constants
+    // The question is if reading this is faster then doing IniConfig() + fixup_static_configs()
+    if (is_writable($dump)) {
+        save_dump($dump);
+    }
+    fixup_dynamic_configs(); // store locale[] in config.php? This is too problematic.
 }
 
 // moved from lib/config.php
-function fix_configs() {
+function fixup_static_configs() {
     global $FieldSeparator, $charset, $WikiNameRegexp, $KeywordLinkRegexp, $AllActionPages;
     global $HTTP_SERVER_VARS, $DBParams, $LANG;
 
     // init FileFinder to add proper include paths
-    require_once(dirname(__FILE__)."/FileFinder.php");
     FindFile("lib/interwiki.map",true);
     
     // "\x80"-"\x9f" (and "\x00" - "\x1f") are non-printing control
@@ -404,10 +442,106 @@ function fix_configs() {
 
     if (!defined('DEFAULT_LANGUAGE')) // not needed anymore
         define('DEFAULT_LANGUAGE', 'en');
-    update_locale(isset($LANG) ? $LANG : DEFAULT_LANGUAGE);
 
-    // Set up (possibly fake) gettext()
+    $AllActionPages = explode(':',
+                              'AllPages:BackLinks:CreatePage:DebugInfo:EditMetaData:FindPage:'
+                              .'FullRecentChanges:FullTextSearch:FuzzyPages:InterWikiSearch:'
+                              .'LikePages:MostPopular:'
+                              .'OrphanedPages:PageDump:PageHistory:PageInfo:RandomPage:RateIt:'
+                              .'RecentChanges:RecentEdits:RecentComments:RelatedChanges:TitleSearch:'
+                              .'TranslateText:UpLoad:UserPreferences:WantedPages:WhoIsOnline:'
+                              .'PhpWikiAdministration/Remove:PhpWikiAdministration/Chmod:'
+                              .'PhpWikiAdministration/Rename:PhpWikiAdministration/Replace:'
+                              .'PhpWikiAdministration/SetAcl:PhpWikiAdministration/Chown'
+                              );
+
+    // If user has not defined PHPWIKI_DIR, and we need it
+    if (!defined('PHPWIKI_DIR') and !file_exists("themes/default")) {
+    	$themes_dir = FindFile("themes");
+        define('PHPWIKI_DIR', dirname($themes_dir));
+    }
+        
+    // If user has not defined DATA_PATH, we want to use relative URLs.
+    if (!defined('DATA_PATH')) {
+        // fix similar to the one suggested by jkalmbach for 
+        // installations in the webrootdir, like "http://phpwiki.org/HomePage"
+        if (!defined('SCRIPT_NAME'))
+            define('SCRIPT_NAME', deduce_script_name());
+        $temp = dirname(SCRIPT_NAME);
+        if ( ($temp == '/') || ($temp == '\\') )
+            $temp = '';
+        define('DATA_PATH', $temp);
+        /*
+        if (USE_PATH_INFO)
+            define('DATA_PATH', '..');
+        */
+    }
+
+    //////////////////////////////////////////////////////////////////
+    // Select database
     //
+    if (empty($DBParams['dbtype']))
+        $DBParams['dbtype'] = 'dba';
+
+    if (!defined('THEME'))
+        define('THEME', 'default');
+
+    // check whether the crypt() function is needed and present
+    if (defined('ENCRYPTED_PASSWD') && !function_exists('crypt')) {
+        $error = sprintf(_("Encrypted passwords cannot be used: %s."),
+                         "'function crypt()' not available in this version of php");
+        trigger_error($error);
+    }
+
+    if (!defined('ADMIN_PASSWD') or ADMIN_PASSWD == '')
+        trigger_error(_("The admin password cannot be empty. Please update your config/config.ini"));
+
+    if (defined('USE_DB_SESSION') and USE_DB_SESSION) {
+        if (! $DBParams['db_session_table'] ) {
+            $DBParams['db_session_table'] = @$DBParams['prefix'] . 'session';
+            trigger_error(sprintf(_("DATABASE_SESSION_TABLE configuration set to %s."), 
+                                  $DBParams['db_session_table']),
+                          E_USER_ERROR);
+        }
+    }
+    // legacy:
+    if (!defined('ENABLE_USER_NEW')) define('ENABLE_USER_NEW',true);
+    if (!defined('ALLOW_USER_LOGIN'))
+        define('ALLOW_USER_LOGIN', defined('ALLOW_USER_PASSWORDS') && ALLOW_USER_PASSWORDS);
+    if (!defined('ALLOW_ANON_USER')) define('ALLOW_ANON_USER', true); 
+    if (!defined('ALLOW_ANON_EDIT')) define('ALLOW_ANON_EDIT', false); 
+    if (!defined('REQUIRE_SIGNIN_BEFORE_EDIT')) define('REQUIRE_SIGNIN_BEFORE_EDIT', ! ALLOW_ANON_EDIT);
+    if (!defined('ALLOW_BOGO_LOGIN')) define('ALLOW_BOGO_LOGIN', true);
+    if (!ENABLE_USER_NEW) {
+      if (!defined('ALLOW_HTTP_AUTH_LOGIN'))
+          define('ALLOW_HTTP_AUTH_LOGIN', false);
+      if (!defined('ALLOW_LDAP_LOGIN')) 
+          define('ALLOW_LDAP_LOGIN', function_exists('ldap_connect') and defined('LDAP_AUTH_HOST'));
+      if (!defined('ALLOW_IMAP_LOGIN')) 
+          define('ALLOW_IMAP_LOGIN', function_exists('imap_open') and defined('IMAP_AUTH_HOST'));
+    }
+
+    if (ALLOW_USER_LOGIN and !empty($DBAuthParams) and empty($DBAuthParams['auth_dsn'])) {
+        if (isset($DBParams['dsn']))
+            $DBAuthParams['auth_dsn'] = $DBParams['dsn'];
+    }
+}
+
+function fixup_dynamic_configs() {
+    global $WikiNameRegexp, $KeywordLinkRegexp;
+    global $HTTP_SERVER_VARS, $DBParams, $LANG;
+
+    if (defined('INCLUDE_PATH'))
+        ini_set('include_path', INCLUDE_PATH);
+    if (defined('SESSION_SAVE_PATH'))
+        ini_set('session.save_path', SESSION_SAVE_PATH);
+    if (!defined('DEFAULT_LANGUAGE')) // not needed anymore
+        define('DEFAULT_LANGUAGE', 'en');
+
+    update_locale(isset($LANG) ? $LANG : DEFAULT_LANGUAGE);
+ 
+    // Set up (possibly fake) gettext()
+    // Todo: this could be moved to fixup_static_configs()
     if (!function_exists ('bindtextdomain')) {
         $locale = array();
 
@@ -442,21 +576,9 @@ function fix_configs() {
             chdir($bindtextdomain_real . (isWindows() ? "\\.." : "/.."));
         }
     }
-
+    // language dependent updates
     $WikiNameRegexp = pcre_fix_posix_classes($WikiNameRegexp);
     $KeywordLinkRegexp = pcre_fix_posix_classes($KeywordLinkRegexp);
-
-    $AllActionPages = explode(':',
-                              'AllPages:BackLinks:CreatePage:DebugInfo:EditMetaData:FindPage:'
-                              .'FullRecentChanges:FullTextSearch:FuzzyPages:InterWikiSearch:'
-                              .'LikePages:MostPopular:'
-                              .'OrphanedPages:PageDump:PageHistory:PageInfo:RandomPage:RateIt:'
-                              .'RecentChanges:RecentEdits:RecentComments:RelatedChanges:TitleSearch:'
-                              .'TranslateText:UpLoad:UserPreferences:WantedPages:WhoIsOnline:'
-                              .'PhpWikiAdministration/Remove:PhpWikiAdministration/Chmod:'
-                              .'PhpWikiAdministration/Rename:PhpWikiAdministration/Replace:'
-                              .'PhpWikiAdministration/SetAcl:PhpWikiAdministration/Chown'
-                              );
 
     //////////////////////////////////////////////////////////////////
     // Autodetect URL settings:
@@ -505,12 +627,26 @@ function fix_configs() {
         }
     }
      
-    // If user has not defined PHPWIKI_DIR, and we need it
-    if (!defined('PHPWIKI_DIR') and !file_exists("themes/default")) {
-    	$themes_dir = FindFile("themes");
-        define('PHPWIKI_DIR', dirname($themes_dir));
+    if (SERVER_PORT
+        && SERVER_PORT != (SERVER_PROTOCOL == 'https' ? 443 : 80)) {
+        define('SERVER_URL',
+               SERVER_PROTOCOL . '://' . SERVER_NAME . ':' . SERVER_PORT);
     }
-        
+    else {
+        define('SERVER_URL',
+               SERVER_PROTOCOL . '://' . SERVER_NAME);
+    }
+
+    if (VIRTUAL_PATH != SCRIPT_NAME) {
+        // Apache action handlers are used.
+        define('PATH_INFO_PREFIX', VIRTUAL_PATH . '/');
+    }
+    else
+        define('PATH_INFO_PREFIX', '/');
+
+    define('PHPWIKI_BASE_URL',
+           SERVER_URL . (USE_PATH_INFO ? VIRTUAL_PATH . '/' : SCRIPT_NAME));
+
     if (!defined('VIRTUAL_PATH')) {
         // We'd like to auto-detect when the cases where apaches
         // 'Action' directive (or similar means) is used to
@@ -546,40 +682,6 @@ function fix_configs() {
         }
     }
 
-    // If user has not defined DATA_PATH, we want to use relative URLs.
-    if (!defined('DATA_PATH')) {
-        // fix similar to the one suggested by jkalmbach for 
-        // installations in the webrootdir, like "http://phpwiki.org/HomePage"
-        $temp = dirname(SCRIPT_NAME);
-        if ( ($temp == '/') || ($temp == '\\') )
-            $temp = '';
-        define('DATA_PATH', $temp);
-        /*
-        if (USE_PATH_INFO)
-            define('DATA_PATH', '..');
-        */
-    }
-
-    if (SERVER_PORT
-        && SERVER_PORT != (SERVER_PROTOCOL == 'https' ? 443 : 80)) {
-        define('SERVER_URL',
-               SERVER_PROTOCOL . '://' . SERVER_NAME . ':' . SERVER_PORT);
-    }
-    else {
-        define('SERVER_URL',
-               SERVER_PROTOCOL . '://' . SERVER_NAME);
-    }
-
-    if (VIRTUAL_PATH != SCRIPT_NAME) {
-        // Apache action handlers are used.
-        define('PATH_INFO_PREFIX', VIRTUAL_PATH . '/');
-    }
-    else
-        define('PATH_INFO_PREFIX', '/');
-
-    define('PHPWIKI_BASE_URL',
-           SERVER_URL . (USE_PATH_INFO ? VIRTUAL_PATH . '/' : SCRIPT_NAME));
-
     // Detect PrettyWiki setup (not loading index.php directly)
     // $SCRIPT_FILENAME should be the same as __FILE__ in index.php
     if (!isset($SCRIPT_FILENAME))
@@ -592,15 +694,6 @@ function fix_configs() {
         $SCRIPT_FILENAME = strtr($SCRIPT_FILENAME, '/', '\\');
     define('SCRIPT_FILENAME', $SCRIPT_FILENAME);
 
-    //////////////////////////////////////////////////////////////////
-    // Select database
-    //
-    if (empty($DBParams['dbtype']))
-        $DBParams['dbtype'] = 'dba';
-
-    if (!defined('THEME'))
-        define('THEME', 'default');
-
     if (!defined('WIKI_NAME'))
         define('WIKI_NAME', _("An unnamed PhpWiki"));
 
@@ -608,57 +701,20 @@ function fix_configs() {
         define('HOME_PAGE', _("HomePage"));
 
     // FIXME: delete
-    // Access log
-    if (!defined('ACCESS_LOG'))
-        define('ACCESS_LOG', '');
-
-    // FIXME: delete
     // Get remote host name, if apache hasn't done it for us
     if (empty($HTTP_SERVER_VARS['REMOTE_HOST']) && ENABLE_REVERSE_DNS)
         $HTTP_SERVER_VARS['REMOTE_HOST'] = gethostbyaddr($HTTP_SERVER_VARS['REMOTE_ADDR']);
 
-    // check whether the crypt() function is needed and present
-    if (defined('ENCRYPTED_PASSWD') && !function_exists('crypt')) {
-        $error = sprintf(_("Encrypted passwords cannot be used: %s."),
-                         "'function crypt()' not available in this version of php");
-        trigger_error($error);
-    }
-
-    if (!defined('ADMIN_PASSWD') or ADMIN_PASSWD == '')
-        trigger_error(_("The admin password cannot be empty. Please update your config/config.ini"));
-
-    if (defined('USE_DB_SESSION') and USE_DB_SESSION) {
-        if (! $DBParams['db_session_table'] ) {
-            $DBParams['db_session_table'] = @$DBParams['prefix'] . 'session';
-            trigger_error(sprintf(_("DATABASE_SESSION_TABLE configuration set to %s."), 
-                                  $DBParams['db_session_table']),
-                          E_USER_ERROR);
-        }
-    }
-    // legacy:
-    if (!defined('ENABLE_USER_NEW')) define('ENABLE_USER_NEW',true);
-    if (!defined('ALLOW_USER_LOGIN'))
-        define('ALLOW_USER_LOGIN', defined('ALLOW_USER_PASSWORDS') && ALLOW_USER_PASSWORDS);
-    if (!defined('ALLOW_ANON_USER')) define('ALLOW_ANON_USER', true); 
-    if (!defined('ALLOW_ANON_EDIT')) define('ALLOW_ANON_EDIT', false); 
-    if (!defined('REQUIRE_SIGNIN_BEFORE_EDIT')) define('REQUIRE_SIGNIN_BEFORE_EDIT', ! ALLOW_ANON_EDIT);
-    if (!defined('ALLOW_BOGO_LOGIN')) define('ALLOW_BOGO_LOGIN', true);
-    if (!ENABLE_USER_NEW) {
-      if (!defined('ALLOW_HTTP_AUTH_LOGIN'))
-          define('ALLOW_HTTP_AUTH_LOGIN', false);
-      if (!defined('ALLOW_LDAP_LOGIN')) 
-          define('ALLOW_LDAP_LOGIN', function_exists('ldap_connect') and defined('LDAP_AUTH_HOST'));
-      if (!defined('ALLOW_IMAP_LOGIN')) 
-          define('ALLOW_IMAP_LOGIN', function_exists('imap_open') and defined('IMAP_AUTH_HOST'));
-    }
-
-    if (ALLOW_USER_LOGIN and !empty($DBAuthParams) and empty($DBAuthParams['auth_dsn'])) {
-        if (isset($DBParams['dsn']))
-            $DBAuthParams['auth_dsn'] = $DBParams['dsn'];
-    }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.59  2004/11/05 20:53:35  rurban
+// login cleanup: better debug msg on failing login,
+// checked password less immediate login (bogo or anon),
+// checked olduser pref session error,
+// better PersonalPage without password warning on minimal password length=0
+//   (which is default now)
+//
 // Revision 1.58  2004/11/03 16:50:31  rurban
 // some new defaults and constants, renamed USE_DOUBLECLICKEDIT to ENABLE_DOUBLECLICKEDIT
 //
