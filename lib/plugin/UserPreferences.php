@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.20 2004-03-12 23:20:58 rurban Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.21 2004-03-14 16:26:21 rurban Exp $');
 /**
- Copyright 2001, 2002, 2003, 2004 $ThePhpWikiProgrammingTeam
+ Copyright (C) 2001, 2002, 2003, 2004 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -36,7 +36,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.20 $");
+                            "\$Revision: 1.21 $");
     }
 
     function getDefaultArguments() {
@@ -157,6 +157,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2004/03/12 23:20:58  rurban
+// pref fixes (base64)
+//
 // Revision 1.19  2004/02/27 13:21:17  rurban
 // several performance improvements, esp. with peardb
 // simplified loops

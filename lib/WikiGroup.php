@@ -1,7 +1,7 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.23 2004-03-12 23:20:58 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.24 2004-03-14 16:26:22 rurban Exp $');
 /*
- Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
+ Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -999,6 +999,9 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.23  2004/03/12 23:20:58  rurban
+// pref fixes (base64)
+//
 // Revision 1.22  2004/03/12 15:48:07  rurban
 // fixed explodePageList: wrong sortby argument order in UnfoldSubpages
 // simplified lib/stdlib.php:explodePageList
