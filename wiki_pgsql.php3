@@ -1,4 +1,4 @@
-<!-- $Id: wiki_pgsql.php3,v 1.6 2000-06-20 04:50:57 wainstead Exp $ -->
+<!-- $Id: wiki_pgsql.php3,v 1.7 2000-06-21 04:53:11 wainstead Exp $ -->
 <?
 
    /*
@@ -77,6 +77,10 @@
 //      echo "<p>dbi in InsertPage: '$dbi' '$dbi[table]' '$dbi[dbc]'<p>";
 
       // prepare the content for storage
+      if (!isset($pagehash["pagename"]))
+         $pagehash["pagename"] = $pagename;
+      if (!isset($pagehash["flags"]))
+         $pagehash["flags"] = 0;
       $pagehash["author"] = addslashes($pagehash["author"]);
       $pagehash["content"] = implode("\n", $pagehash["content"]);
       $pagehash["content"] = addslashes($pagehash["content"]);
@@ -136,8 +140,15 @@
 
    // setup for title-search
    function InitTitleSearch($dbi, $search) {
+
+      global $search_counter;
+      $search_counter = 0;
+
       $search = addslashes($search);
-      $res = mysql_query("select page from $dbi[table] where page like '%$search%' order by page", $dbi["dbc"]);
+      $query = "select pagename from $dbi[table] where pagename " .
+               "like '%$search%' order by pagename";
+//      echo "search query: $query<br>\n";
+      $res = pg_exec($dbi["dbc"], $query);
 
       return $res;
    }
@@ -145,10 +156,11 @@
 
    // iterating through database
    function TitleSearchNextMatch($dbi, $res) {
-      if($o = mysql_fetch_object($res)) {
-         return $o->page;
-      }
-      else {
+      global $search_counter;
+      if($o = @pg_fetch_object($res, $search_counter)) {
+         $search_counter++;
+         return $o->pagename;
+      } else {
          return 0;
       }
    }
@@ -156,17 +168,24 @@
 
    // setup for full-text search
    function InitFullSearch($dbi, $search) {
+      global $search_counter;
+      $search_counter = 0;
       $search = addslashes($search);
-      $res = mysql_query("select page,hash from $dbi[table] where hash like '%$search%'", $dbi["dbc"]);
+      $query = "select pagename,content from $dbi[table] " .
+               "where content like '%$search%'";
+
+      $res = pg_exec($dbi["dbc"], $query);
 
       return $res;
    }
 
    // iterating through database
    function FullSearchNextMatch($dbi, $res) {
-      if($o = mysql_fetch_object($res)) {
-	 $page['name'] = $o->page;
-	 $page['hash'] = unserialize($o->hash);
+      global $search_counter;
+      if ($hash = @pg_fetch_array($res, $search_counter)) {
+         $search_counter++;
+	 $page['name'] = $hash["pagename"];
+	 $page['hash']['content'] = explode("\n", $hash["content"]);
          return $page;
       }
       else {
