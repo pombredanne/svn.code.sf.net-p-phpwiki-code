@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: removepage.php,v 1.24 2004-12-06 19:49:58 rurban Exp $');
+rcs_id('$Id: removepage.php,v 1.25 2004-12-09 22:10:54 rurban Exp $');
 require_once('lib/Template.php');
 
 function RemovePage (&$request) {
@@ -23,7 +23,7 @@ function RemovePage (&$request) {
         $removeB = Button('submit:verify', _("Remove Page"), 'wikiadmin');
         $cancelB = Button('submit:cancel', _("Cancel"), 'button'); // use generic wiki button look
 
-        $html = HTML(HTML::h2(fmt("You are about to remove '%s' permanently!", $pagelink)),
+        $html = HTML(HTML::h2(fmt("You are about to remove '%s'!", $pagelink)),
                      HTML::form(array('method' => 'post',
                                       'action' => $request->getPostURL()),
                                 HiddenInputs(array('currentversion' => $version,
