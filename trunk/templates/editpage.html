@@ -4,7 +4,7 @@
 <html>
 <head>
 <!-- phpwiki source:
-$Id: editpage.html,v 1.26 2001-12-16 11:54:31 carstenklapp Exp $
+$Id: editpage.html,v 1.27 2001-12-16 16:52:58 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <base href="${BASE_URL}" />
@@ -81,26 +81,8 @@ $_("Edit") <a href="${BROWSE}${PAGEURL}"
 </p>
 <hr noshade="noshade" />
 <small>
-<?php echo LinkExistingWikiWord(_("TextFormattingRules")) ?><br>
-<b>$_("Emphasis:")</b>
-  '' $_("for italics"),
-  __ $_("for bold"),
-  ''__ $_("for both")
-<br /><b>$_("Lists:")</b>
-  * $_("for bullet lists"), #
-              $_("for numbered lists"),
-  ''; $_("term") : $_("definition")'' $_("for definition lists")
-<br /><b>$_("References:")</b>
-  $_("JoinCapitalizedWords or use square brackets for a [page link] or URL [http://cool.wiki.int/].")
-<br /><b>$_("Footnotes:")</b>
-   $_("Use [1],[2],[3],...")
-<br /><b>$_("Preventing linking:")</b>
-   $_("Prefix with '!': !DoNotHyperlink,")
-   $_("name links like [[text | URL] (double up on the '[')")
-<br /><b>$_("Misc:")</b>
-   "!", "!!", "!!!" $_("make headings"),
-   "%%%" $_("makes a linebreak"),
-   "- - - -" $_("makes a horizontal rule")
+<?php echo LinkExistingWikiWord(_("TextFormattingRules")) ?>
+<?plugin IncludePage page=_("TextFormattingRules") lines=6 quiet=true ?>
 </small>
 
 <input type="hidden" name="action" value="save" />
