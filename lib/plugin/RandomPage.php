@@ -1,10 +1,28 @@
 <?php // -*-php-*-
-rcs_id('$Id: RandomPage.php,v 1.7 2002-01-31 01:34:02 carstenklapp Exp $');
+rcs_id('$Id: RandomPage.php,v 1.8 2003-01-04 02:25:41 carstenklapp Exp $');
+
+/**
+ Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+
+ This file is part of PhpWiki.
+
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 require_once('lib/PageList.php');
 
-/**
- */
 class WikiPlugin_RandomPage
 extends WikiPlugin
 {
@@ -13,7 +31,12 @@ extends WikiPlugin
     }
 
     function getDescription () {
-        return _("RandomPage");
+        return _("Displays a list of randomly chosen pages or redirects to a random page.");
+    }
+
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -30,9 +53,12 @@ extends WikiPlugin
         $allpages = $dbi->getAllPages();
 
         $exclude = $exclude ? explode(",", $exclude) : array();
+        foreach ($exclude as $e) {
+            $_exclude []= trim($e);
+        }
 
         while ($page = $allpages->next()) {
-            if (!in_array($page->getName(), $exclude))
+            if (!in_array($page->getName(), $_exclude))
                 $pagearray[] = $page;
         }
 
@@ -58,14 +84,17 @@ extends WikiPlugin
 
     function default_exclude() {
         // Some useful default pages to exclude.
-        $default_exclude = 'RandomPage,HomePage,AllPages,RecentChanges,RecentEdits,FullRecentChanges';
+        $default_exclude = 'RandomPage, HomePage, AllPages, RecentChanges, RecentEdits, FullRecentChanges';
         foreach (explode(",", $default_exclude) as $e) {
-            $_exclude[] = gettext($e);
+            $_exclude[] = gettext(trim($e));
         }
-        return implode(",", $_exclude);
+        return implode(", ", $_exclude);
     }
 };
 
+/**
+ $Log: not supported by cvs2svn $
+ */
 
 // Local Variables:
 // mode: php
@@ -73,5 +102,5 @@ extends WikiPlugin
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End:
 ?>
