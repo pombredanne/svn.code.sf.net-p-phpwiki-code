@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.26 2002-01-19 09:43:28 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.27 2002-01-19 19:38:27 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -33,24 +33,19 @@ rcs_id('$Id: themeinfo.php,v 1.26 2002-01-19 09:43:28 carstenklapp Exp $');
  *
  * Send me some feedback, do you like the icons used in the buttons?
  *
- * Automatic button generation for localized buttons
- * isn't going to happen for this theme--there is a gradient across
- * the glass surface of the button that only Mac OS X Aqua can
- * generate. Chopping a button up and stamping it with localized words
- * means a lot of tweaking to the blank button pieces to get the seams
- * invisible, so a more authentic Mac OS X user experience is achived by
- * producing the buttons by hand.
+ * Automatic button generation for localized buttons isn't going to
+ * happen for this theme--there is a gradient across the glass surface
+ * of the button that only Mac OS X Aqua can generate. Chopping a
+ * button up and stamping it with localized words means a lot of
+ * tweaking to the blank button pieces to get the seams invisible, so
+ * a more authentic Mac OS X user experience is achived by producing
+ * the buttons by hand.
  *
  * The defaut link icons I want to move into this theme, and come up
- * with some new linkicons for the default look. (Any ideas, feedback?)
+ * with some new linkicons for the default look. (Any ideas,
+ * feedback?)
  *
  * */
-
-// To activate this theme, specify this setting in index.php:
-//$theme="MacOSX";
-// To deactivate themes, comment out all the $theme=lines in index.php.
-require_once('lib/Theme.php');
-
 
 class Theme_MacOSX extends Theme {
     function getCSS() {
@@ -78,6 +73,22 @@ class Theme_MacOSX extends Theme {
             return false;       // use default
         return '_MacOSX_PageHistory_Formatter';
     }
+
+    function LinkUnknownWikiWord($wikiword, $linktext = '') {
+        if (empty($linktext)) {
+            $linktext = $wikiword;
+            if (defined("autosplit_wikiwords"))
+                $linktext=split_pagename($linktext);
+            $class = 'wikiunknown';
+        } else
+            $class = 'named-wikiunknown';
+
+        return Element('span', array('class' => $class),
+                       Element('u', $linktext)
+                       . Element('a', array('href' => WikiURL($wikiword, array('action' => 'edit'))),
+                                 '<img src="themes/MacOSX/buttons/uww.png" border="0" align="top">'));
+    }
+
 }
 
 $Theme = new Theme_MacOSX('MacOSX');
@@ -104,11 +115,6 @@ $Theme->setButtonSeparator(' ');
 
 $Theme->setDateTimeFormat("%A, %B %e, %Y. %l:%M:%S %p %Z"); // may contain time of day
 $Theme->setDateFormat("%A, %B %e, %Y"); // must not contain time
-
-// Controls whether the '?' appears before or after UnknownWikiWords.
-// The PhpWiki default is for the '?' to appear before.
-//$Theme->setWikiMark('%s?');
-$Theme->setWikiMark('%s<img src="themes/MacOSX/buttons/uww.png" border="0" align="top">');
 
 /*
 $ToolbarImages = array(
