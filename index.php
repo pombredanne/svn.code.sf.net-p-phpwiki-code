@@ -73,7 +73,7 @@ define('ENABLE_USER_NEW',true); // this will disappear with 1.4.0
 
 define ('PHPWIKI_VERSION', '1.3.8');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.128 2004-02-29 02:06:05 rurban Exp $');
+rcs_id('$Id: index.php,v 1.129 2004-02-29 04:10:55 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -468,6 +468,7 @@ if (!defined('ALLOW_USER_PASSWORDS')) define('ALLOW_USER_PASSWORDS', true);
 //		    ADODB only.
 //   LDAP:          Authenticate against LDAP_AUTH_HOST with LDAP_BASE_DN
 //   IMAP:          Authenticate against IMAP_AUTH_HOST (email account)
+//   POP3:          Authenticate against POP3_AUTH_HOST (email account)
 //   File:          Store username:crypted-passwords in .htaccess like files. 
 //                  Use Apache's htpasswd to manage this file.
 //   HttpAuth:      Use the protection by the webserver (.htaccess) or 
@@ -482,9 +483,10 @@ if (defined('ALLOW_USER_PASSWORDS')) {
 //                "BogoLogin",
                   "PersonalPage",
                   "Db",
-//		  "LDAP",  // define LDAP_AUTH_HOST and LDAP_BASE_DN
-//                "IMAP",  // define IMAP_AUTH_HOST
-//                "File",   // define AUTH_USER_FILE and opt. AUTH_USER_FILE_STORABLE
+//		  "LDAP",    // define LDAP_AUTH_HOST and LDAP_BASE_DN
+//                "IMAP",    // define IMAP_AUTH_HOST
+//                "POP3",    // define POP3_AUTH_HOST
+//                "File",    // define AUTH_USER_FILE and opt. AUTH_USER_FILE_STORABLE
 //                "HttpAuth",
                   ) ;
 
@@ -523,13 +525,15 @@ if (!defined('LDAP_BASE_DN')) define('LDAP_BASE_DN', "ou=Users,o=Development,dc=
 // define(LDAP_SEARCH_FIELD, 'sAMAccountName'); // might be different from uid, 
 //                                                 here's its a Windows/Samba account
 
-
 // IMAP auth: 
 //   check userid/passwords from a imap server, defaults to localhost
 if (!defined('IMAP_AUTH_HOST'))   define('IMAP_AUTH_HOST', 'localhost:143/imap/notls');
 // Some IMAP_AUTH_HOST samples:
 //   "localhost", "localhost:143/imap/notls", 
 //   "localhost:993/imap/ssl/novalidate-cert" (SuSE refuses non-SSL conections)
+// POP3 auth: 
+//if (!defined('POP3_AUTH_HOST'))   define('POP3_AUTH_HOST', 'localhost');
+//if (!defined('POP3_AUTH_PORT'))   define('POP3_AUTH_HOST', '110');
 
 // File auth:
 //if (!defined('AUTH_USER_FILE')) define('AUTH_USER_FILE', '/etc/shadow'); // or '/etc/httpd/.htpasswd'
@@ -896,7 +900,7 @@ if (!defined('AUTHORPAGE_URL')) define('AUTHORPAGE_URL',
  */
 //if (!defined('DISABLE_HTTP_REDIRECT')) define ('DISABLE_HTTP_REDIRECT', true);
 
-if (defined('WIKI_SOAP')) and WIKI_SOAP) return;
+if (defined('WIKI_SOAP') and WIKI_SOAP) return;
 
 ////////////////////////////////////////////////////////////////
 // PrettyWiki
@@ -933,6 +937,13 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 //include "lib/main.php";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.128  2004/02/29 02:06:05  rurban
+// And this is the SOAP server. Just a view methods for now. (page content)
+// I would like to see common-wiki soap wdsl.
+//
+// "SOAP is a bloated, over engineered mess of a perfectly trivial concept. Sigh."
+//   -- http://www.wlug.org.nz/SOAP
+//
 // Revision 1.127  2004/02/28 21:18:29  rurban
 // new SQL auth_create, don't ever use REPLACE sql calls!
 // moved HttpAuth to the end of the chain

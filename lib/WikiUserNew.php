@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.25 2004-02-28 22:25:07 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.26 2004-02-29 04:10:56 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -1701,7 +1701,7 @@ extends _PassUser
 class _IMAPPassUser
 extends _PassUser
 /**
- * Define the var IMAP_HOST in index.php
+ * Define the var IMAP_AUTH_HOST in index.php (with port probably)
  *
  * Preferences are handled in _PassUser
  */
@@ -1724,6 +1724,7 @@ extends _PassUser
 
     //CHECKME: this will not be okay for the auth policy strict
     function userExists() {
+        return true;
         if (checkPass($this->_prefs->get('passwd')))
             return true;
             
@@ -1733,7 +1734,54 @@ extends _PassUser
     function mayChangePass() {
         return false;
     }
+}
 
+
+class _POP3PassUser
+extends _IMAPPassUser {
+/**
+ * Define the var POP3_AUTH_HOST in index.php
+ * Preferences are handled in _PassUser
+ */
+    function checkPass($submitted_password) {
+        $userid = $this->_userid;
+        $pass = $submitted_password;
+        $host = defined('POP3_AUTH_HOST') ? POP3_AUTH_HOST : 'localhost';
+        $port = defined('POP3_AUTH_PORT') ? POP3_AUTH_PORT : 110;
+        $retval = false;
+        $fp = fsockopen($host, $port, $errno, $errstr, 10);
+        if ($fp) {
+            // Get welcome string
+            $line = fgets($fp, 1024);
+            if (! strncmp("+OK ", $line, 4)) {
+                // Send user name
+                fputs($fp, "user $user\n");
+                // Get response
+                $line = fgets($fp, 1024);
+                if (! strncmp("+OK ", $line, 4)) {
+                    // Send password
+                    fputs($fp, "pass $pass\n");
+                    // Get response
+                    $line = fgets($fp, 1024);
+                    if (! strncmp("+OK ", $line, 4)) {
+                        $retval = true;
+                    }
+                }
+            }
+            // quit the connection
+            fputs($fp, "quit\n");
+            // Get the sayonara message
+            $line = fgets($fp, 1024);
+            fclose($fp);
+        }
+        $this->_authmethod = 'POP3';
+        if ($retval) {
+            $this->_level = WIKIAUTH_USER;
+        } else {
+            $this->_level = WIKIAUTH_ANON;
+        }
+        return $this->_level;
+    }
 }
 
 class _FilePassUser
@@ -1991,6 +2039,7 @@ extends _UserPreference
  * ->_prefs objects.
  * We don't store the objects, because otherwise we will
  * not be able to upgrade any subobject. And it's a waste of space also.
+ *
  */
 class UserPreferences
 {
@@ -2217,6 +2266,17 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.25  2004/02/28 22:25:07  rurban
+// First PagePerm implementation:
+//
+// $Theme->setAnonEditUnknownLinks(false);
+//
+// Layout improvement with dangling links for mostly closed wiki's:
+// If false, only users with edit permissions will be presented the
+// special wikiunknown class with "?" and Tooltip.
+// If true (default), any user will see the ?, but will be presented
+// the PrintLoginForm on a click.
+//
 // Revision 1.24  2004/02/28 21:14:08  rurban
 // generally more PHPDOC docs
 //   see http://xarch.tu-graz.ac.at/home/rurban/phpwiki/xref/
