@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.19 2002-01-23 09:04:27 carstenklapp Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.20 2002-01-23 16:09:40 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 require_once('lib/ButtonFactory.php');
@@ -235,13 +235,13 @@ class Theme {
     }
 
     function _getButtonPath () {
+        $button_dir = $this->file("buttons");
+        if (!is_dir($button_dir))
+            return array();
+
         $path = array('buttons');
 
-        $button_dir = $this->file("buttons");
-        if (!($dir = dir($button_dir))) // Error only in Hawaiian theme, which has no button dir
-            return array();
-                                        //lib/Theme.php:241: Warning[2]: OpenDir: No such file or directory (errno 2)
-
+        $dir = dir($button_dir);
         while (($subdir = $dir->read()) !== false) {
             if ($subdir[0] == '.')
                 continue;
