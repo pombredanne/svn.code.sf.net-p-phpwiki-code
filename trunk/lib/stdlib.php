@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.132 2003-01-04 22:19:43 carstenklapp Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.133 2003-02-16 04:50:09 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -877,6 +877,59 @@ function Rfc2822DateTime ($time = false) {
 }
 
 /**
+ * Format time in RFC-1123 format.
+ *
+ * @param $time time_t Time.  Default: now.
+ * @return string Date and time in RFC-1123 format.
+ */
+function Rfc1123DateTime ($time = false) {
+    if ($time === false)
+        $time = time();
+    return gmdate('D, d M Y H:i:s \G\M\T', $time);
+}
+
+/** Parse date in RFC-1123 format.
+ *
+ * According to RFC 1123 we must accept dates in the following
+ * formats:
+ *
+ *   Sun, 06 Nov 1994 08:49:37 GMT  ; RFC 822, updated by RFC 1123
+ *   Sunday, 06-Nov-94 08:49:37 GMT ; RFC 850, obsoleted by RFC 1036
+ *   Sun Nov  6 08:49:37 1994       ; ANSI C's asctime() format
+ *
+ * (Though we're only allowed to generate dates in the first format.)
+ */
+function ParseRfc1123DateTime ($timestr) {
+    $timestr = trim($timestr);
+    if (preg_match('/^ \w{3},\s* (\d{1,2}) \s* (\w{3}) \s* (\d{4}) \s*'
+                   .'(\d\d):(\d\d):(\d\d) \s* GMT $/ix',
+                   $timestr, $m)) {
+        list(, $mday, $mon, $year, $hh, $mm, $ss) = $m;
+    }
+    elseif (preg_match('/^ \w+,\s* (\d{1,2})-(\w{3})-(\d{2}|\d{4}) \s*'
+                       .'(\d\d):(\d\d):(\d\d) \s* GMT $/ix',
+                       $timestr, $m)) {
+        list(, $mday, $mon, $year, $hh, $mm, $ss) = $m;
+        if ($year < 70) $year += 2000;
+        elseif ($year < 100) $year += 1900;
+    }
+    elseif (preg_match('/^\w+\s* (\w{3}) \s* (\d{1,2}) \s*'
+                       .'(\d\d):(\d\d):(\d\d) \s* (\d{4})$/ix',
+                       $timestr, $m)) {
+        list(, $mon, $mday, $hh, $mm, $ss, $year) = $m;
+    }
+    else {
+        // Parse failed.
+        return false;
+    }
+
+    $time = strtotime("$mday $mon $year ${hh}:${mm}:${ss} GMT");
+    if ($time == -1)
+        return false;           // failed
+    return $time;
+}
+
+/**
  * Format time to standard 'ctime' format.
  *
  * @param $time time_t Time.  Default: now.
@@ -1197,6 +1250,10 @@ function subPageSlice($pagename, $pos) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.132  2003/01/04 22:19:43  carstenklapp
+// Bugfix UnfoldSubpages: "Undefined offset: 1" error when plugin invoked
+// on a page with no subpages (explodeList(): array 0-based, sizeof 1-based).
+//
 
 // (c-file-style: "gnu")
 // Local Variables:
