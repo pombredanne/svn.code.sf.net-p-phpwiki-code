@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RateIt.php,v 1.15 2004-07-09 12:50:50 rurban Exp $');
+rcs_id('$Id: RateIt.php,v 1.16 2004-08-05 17:23:54 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -94,7 +94,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.15 $");
+                            "\$Revision: 1.16 $");
     }
 
     function RatingWidgetJavascript() {
@@ -355,6 +355,7 @@ function deleteRating(actionImg, page, dimension) {
               //  $img_attr['src'] = $none[$i%2];
             
             $img_attr['name'] = $imgPrefix . $i;
+            $img_attr['alt'] = $img_attr['name'];
             $img_attr['border'] = 0;
             $a1->pushContent(HTML::img($img_attr));
             $a1->addToolTip(_("Rate the topic of this page"));
@@ -384,6 +385,7 @@ function deleteRating(actionImg, page, dimension) {
         $img_attr = array();
         $img_attr['src'] = $WikiTheme->_findData("images/RateItAction.png");
         $img_attr['name'] = $actionImgName;
+        $img_attr['alt'] = $img_attr['name'];
         //$img_attr['class'] = 'k' . $i;
         $img_attr['border'] = 0;
         $html->pushContent(HTML::img($img_attr));
@@ -401,6 +403,9 @@ function deleteRating(actionImg, page, dimension) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2004/07/09 12:50:50  rurban
+// references are declared, not enforced
+//
 // Revision 1.14  2004/07/08 20:30:07  rurban
 // plugin->run consistency: request as reference, added basepage.
 // encountered strange bug in AllPages (and the test) which destroys ->_dbi
