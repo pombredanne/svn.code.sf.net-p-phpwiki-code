@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.12 2002-02-03 23:55:59 carstenklapp Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.13 2002-02-04 00:35:51 carstenklapp Exp $ -->
 <?php
   if (!$page->get('locked') || $user->isAdmin())
       $EditB = Button("edit",
@@ -12,7 +12,7 @@
   $fmtime = $Theme->formatDateTime($mtime);
   // Suppress object to string conversion error.
   // Once the temporary asterisk denoting timezone conversion is removed, the @ can be removed.
-  $PageHistoryB = @Button(_("Diff"), $fmtime);
+  $PageHistoryB = @Button(_("diff"), $fmtime);
 
   if ($revision->isCurrent())
       $LastModifiedMsg = fmt("(last edited %s)", $PageHistoryB);
