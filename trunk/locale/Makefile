@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.21 2002-02-08 00:55:14 carstenklapp Exp $
+# $Id: Makefile,v 1.22 2002-02-12 22:12:01 carstenklapp Exp $
 #
 # locale/Makefile
 #
@@ -89,6 +89,7 @@ ${POT_FILE}: ../lib/plugin/MostPopular.php
 ${POT_FILE}: ../lib/plugin/PageGroup.php
 ${POT_FILE}: ../lib/plugin/PageHistory.php
 ${POT_FILE}: ../lib/plugin/RandomPage.php
+${POT_FILE}: ../lib/plugin/RawHtml.php
 ${POT_FILE}: ../lib/plugin/RecentChanges.php
 ${POT_FILE}: ../lib/plugin/text2png.php
 ${POT_FILE}: ../lib/plugin/TitleSearch.php
@@ -159,7 +160,6 @@ ${POT_FILE}: ../themes/Portland/templates/editpage.tmpl
 ${POT_FILE}: ../themes/Portland/templates/navbar.tmpl
 ${POT_FILE}: ../themes/Portland/templates/viewsource.tmpl
 ${POT_FILE}: ../themes/Portland/themeinfo.php
-${POT_FILE}: ../themes/Sidebar/templates/actionbar.tmpl
 ${POT_FILE}: ../themes/Sidebar/themeinfo.php
 ${POT_FILE}: ../themes/WikiTrek/lib/RecentChanges.php
 ${POT_FILE}: ../themes/WikiTrek/themeinfo.php
