@@ -1,15 +1,9 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.17 2002-02-08 05:26:00 carstenklapp Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.18 2002-02-08 15:37:03 carstenklapp Exp $ -->
 <?php
 
-/**
- * Default to server's timezone if user's pref not chosen yet.
- */
-if ($PreftimeOffset = $request->getPref('timeOffset'))
-    $defaultOffset = $PreftimeOffset;
-else
-    $defaultOffset = TimezoneOffset(false, true);
-
+if (!$defaultOffset = $request->getPref('timeOffset'))
+    $defaultOffset = '+0000'; // Default to 0 time offset.
 $yourTime = $Theme->formatDateTime(time(), true);
 
 /**
