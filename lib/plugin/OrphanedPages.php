@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: OrphanedPages.php,v 1.6 2004-04-18 01:44:02 rurban Exp $');
+rcs_id('$Id: OrphanedPages.php,v 1.7 2004-04-20 00:34:15 rurban Exp $');
 /**
  This file is part of PhpWiki.
 
@@ -42,7 +42,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
@@ -51,7 +51,8 @@ extends WikiPlugin
                      'exclude'       => '',
                      'info'          => '',
                      'sortby'        => false,
-                     'limit'         => false,
+                     'limit'         => 50,
+                     'paging'        => 'auto',
                      );
     }
     // info arg allows multiple columns
@@ -59,22 +60,14 @@ extends WikiPlugin
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
 
     function run($dbi, $argstr, &$request, $basepage) {
-        extract($this->getArgs($argstr, $request));
-
-        $pagelist = new PageList($info, $exclude, $this->getArgs($argstr, $request));
-
-        if (!$noheader)
-            $pagelist->setCaption(_("Orphaned Pages in this wiki (%d total):"));
-
-        // deleted pages show up as version 0.
-        if ($include_empty)
-            $pagelist->_addColumn('version');
+        $args = $this->getArgs($argstr, $request);
+        extract($args);
 
         // There's probably a more efficient way to do this (eg a
         // tailored SQL query via the backend, but this does the job
 
-        $allpages_iter = $dbi->getAllPages($include_empty,$sortby,$limit);
-
+        $allpages_iter = $dbi->getAllPages($include_empty,$sortby,0);
+	$pages = array();
         while ($page = $allpages_iter->next()) {
             $links_iter = $page->getLinks();
             // test for absence of backlinks. If a page is linked to
@@ -84,13 +77,32 @@ extends WikiPlugin
                 (($parent->getName() == $page->getName())
                  && !$links_iter->next()) // page has only itself as a parent
                 )
-                $pagelist->addPage($page);
+                $pages[] = $page;
+        }
+        $args['count'] = count($pages);
+        $pagelist = new PageList($info, $exclude, $args);
+        if (!$noheader)
+            $pagelist->setCaption(_("Orphaned Pages in this wiki (%d total):"));
+        // deleted pages show up as version 0.
+        if ($include_empty)
+            $pagelist->_addColumn('version');
+        list($offset,$pagesize) = $pagelist->limit($args['limit']);
+        if (!$pagesize) 
+            $pagelist->addPages($pages);
+        else {
+            for ($i=$offset; $i < $offset + $pagesize - 1; $i++) {
+            	if ($i >= $args['count']) break;
+                $pagelist->addPage($pages[$i]);
+            }
         }
         return $pagelist;
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/04/18 01:44:02  rurban
+// more sortby+limit support
+//
 // Revision 1.5  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //
