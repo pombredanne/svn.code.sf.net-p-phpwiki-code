@@ -4,6 +4,8 @@ PhpWiki works quite well and retains almost complete functionality when used wit
 
 If you intend to compile the required database software or PHP module yourself you should download and install the Developer tools from Apple, which includes the necessary cc compiler, and at least temporarily activate the superuser (root) account. The steps necessary to do this are relatively more complicated and are beyond the scope of this document.
 
+In any case you may find Project Builder to be an attractive alternative to TextEdit, especially if you are intent on heavily customizing PhpWiki, working with PHP or doing any other code development. Among other niceties it provides line numbering and syntax coloring, but don't rely on PB's text colors too much, it doesn't yet properly deal with escaped (\") quotes which are frequently called for in PHP when generating HTML code.
+
 
 Database
 --------
@@ -16,11 +18,11 @@ Apache PHP Module
 -----------------
 The default PHP module for Apache as supplied by Apple does work with PhpWiki but is missing support for the zlib and GD libraries. Wiki will still produce a valid ZIP file when an administrator saves a ZIP dump of the database but it will not use any compression.
 
-If you want compressed ZIP dumps you will have to install a version of PHP that does support the zlib library, or compile PHP yourself.
+If you want compressed ZIP dumps you will have to install a version of PHP which does support the zlib library, or compile PHP yourself and replace the default /usr/libexec/httpd/libphp4.so (part of the Apple-supplied Apache installation).
 
 
-Obtaining and Installing mySQL and PHP.so
------------------------------------------
+Obtaining and Installing mySQL and libphp4.so
+---------------------------------------------
 Mark Liyanage has graciously provided precompiled Mac OS X versions of mySQL, an updated PHP module for Apache and some installation instructions on his web site. He has also written some tips if you want to compile these programs for yourself.
 
     http://www.entropy.ch/software/macosx/
@@ -78,6 +80,17 @@ To save your changes and exit, press 'control-x', then 'y' and the 'return' key.
 Restart the Web Sharing server from the System Preferences "Sharing" control panel or from the terminal:
 
 sudo apachectl graceful
+
+3. To retain your PHPwiki logs between system restarts you should specify a non-temporary directory. I recommend you use the same folder where the web-server stores it's logs. Change the following (line 73) in index.php from
+
+define('ACCESS_LOG', '/tmp/wiki_access_log');
+
+to something like:
+
+define('ACCESS_LOG', '/private/var/log/httpd/wiki_access.log');
+
+Note that the automatic /etc/daily and weekly cron cleanup routines will not touch the Wiki log even if it is in the same directory as the httpd logs--it will be up to you to Trash it once in a while or write your own /etc/daily.local file to include it as part of a server log rotation.
+
 
 If you have problems after all of this, try contacting the
 phpwiki-talk list at phpwiki-talk@lists.sourceforge.net.
