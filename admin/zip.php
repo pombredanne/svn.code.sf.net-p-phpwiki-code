@@ -1,4 +1,4 @@
-<?php // $Id: zip.php,v 1.1.2.1.2.1 2005-01-07 13:48:42 rurban Exp $
+<?php // $Id: zip.php,v 1.1.2.1.2.2 2005-01-07 13:59:57 rurban Exp $
 
 function encode_pagename_for_wikizip ($pagename) {
   $enc = rawurlencode($pagename);

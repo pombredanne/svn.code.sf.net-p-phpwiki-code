@@ -1,9 +1,16 @@
-PhpWiki 1.2.4 improves possible deadlocks in DBA, and fixes problems
-  with DBA open failures.
+PhpWiki 1.2.5 supports now register_globals=off, 
+* adds user/password to pgsql, 
+* fix zip and dumpserial on dba, dbm, msql and file,
+* and fixes a minor (un)lock issue, displaying the (un)locked page afterwards and not the FrontPage.
+
+PhpWiki 1.2.4 improves possible deadlocks in DBA, 
+* and fixes problems with DBA open failures.
 
 PhpWiki 1.2.3 just adds the RELATEDPAGES footer support to dba, 
-  adds remove to dba,
-  and fixes one minor aesthetic error on info w/o "Show the page source"
+* adds remove to dba,
+* and fixes one minor aesthetic error on info w/o "Show the page source" 
+
+--[ReiniUrban|http://phpwiki.org/ReiniUrban]
 
 PhpWiki 1.2 is a huge advance over version 1.0:
 

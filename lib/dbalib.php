@@ -1,6 +1,6 @@
 <?php  
 
-   rcs_id('$Id: dbalib.php,v 1.2.2.5.2.1 2005-01-07 13:48:42 rurban Exp $');
+   rcs_id('$Id: dbalib.php,v 1.2.2.5.2.2 2005-01-07 13:59:58 rurban Exp $');
 
    /*
       Database functions:
@@ -388,11 +388,11 @@
       $namelist = array();
       $ctr = 0;
 
-      $namelist[$ctr] = $key = dba_firstkey($dbi);
+      $namelist[$ctr] = $key = dba_firstkey($dbi['wiki']);
 
-      while ($key = dba_nextkey($dbi)) {
-         $ctr++;
-         $namelist[$ctr] = $key;
+      while ($key = dba_nextkey($dbi['wiki'])) {
+          $ctr++;
+          $namelist[$ctr] = $key;
       }
 
       return $namelist;
