@@ -8,6 +8,8 @@ $locale["%s bytes"] =
    "%s Bytes";
 $locale["%s bytes written"] =
    "%s Bytes geschrieben";
+$locale["%s bytes written\n"] =
+   "%s Bytes geschrieben\n";
 $locale["%s days"] =
    "%s Tagen";
 $locale["%s is disallowed on this wiki."] =
@@ -259,7 +261,7 @@ $locale["Last edited on %s."] =
 $locale["LikePages"] =
    "GleicheSeiten";
 $locale["List FuzzyPages for %s"] =
-   "Ausliste FuzzySuche nach %s";
+   "Ergebnis FuzzySuche nach %s";
 $locale["List LikePages for %s"] =
    "GleicheSeite wie %s";
 $locale["List PageHistory for %s"] =
@@ -398,6 +400,8 @@ $locale["RecentEdits"] =
    "GeringfügigeÄnderungen";
 $locale["Redefinition of %s: %s"] =
    "Datenbestimmung %s neu definiert: %s";
+$locale["Redirects to an external web site based on form input"] =
+   "Umlenkung der Suche zu einer externen Webseite";
 $locale["References"] =
    "Fußnoten";
 $locale["Remove Page"] =
@@ -426,6 +430,8 @@ $locale["Saved: %s"] =
    "Gespeichert: %s";
 $locale["Saving this page will overwrite the current version."] =
    "Wenn die Seite jetzt gespeichert werden würde, dann würde die aktuellste Version überschrieben.";
+$locale["Score"] =
+   "Güte";
 $locale["Search"] =
    "Suche";
 $locale["See %s"] =
@@ -505,7 +511,7 @@ $locale["The most recent %s during the past %s days are listed below."] =
 $locale["The most recent %s during the past day are listed below."] =
    "Die jüngste %s innerhalb des letzten Tages sind unten aufgelistet.";
 $locale["These page titles match fuzzy with '%s'"] =
-   "Diese Seite Namen sehen sich ungefähr ähnlich aus wie »%s«.";
+   "Diese Seiten sind das Ergebnis der ungenauen Suche nach »%s«.";
 $locale["These pages share an initial or final title word with '%s'"] =
    "Diese Seiten teilen sich einen Wordteil am Anfang oder Ende mit »%s«";
 $locale["This is a minor change."] =
@@ -600,6 +606,8 @@ $locale["You are viewing an old revision of this page."] =
    "Du siehst eine alte Version dieser Seite.";
 $locale["You have not made any changes so no new version has been saved."] =
    "Du hast keine Änderungen gemacht, also ist keine neue Version gespeichert worden.";
+$locale["You may sign in using any WikiWord as a UserId. ( etc. may be used too). The UserId will be used as a link in RecentChanges to your UserId page, your HomePage. You do not need to enter a password."] =
+   "Du darfst dich mit jedem WikiWort als Benutzernamen eintragen. (Auch deutsche Umlaute erlaubt). Der Benutzername wird als Link in FrischeSeiten zu deinem Benutzernamen verwendet, deine Homepage. Das Passwort ist optional.";
 $locale["You must be an administrator to %s."] =
    "Du mußt ein Systemverwalter sein %s.";
 $locale["You must log in to %s."] =
