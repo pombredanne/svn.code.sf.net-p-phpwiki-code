@@ -8,7 +8,7 @@ Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam = array(
 "Antti Kaihola", "Jeremie Kass", "Carsten Klapp", "Marco Milanesi",
 "Grant Morgan", "Jan Nieuwenhuizen", "Aredridel Niothke", 
 "Pablo Roca Rozas", "Sandino Araico Sánchez", "Joel Uckelman", 
-"Joseph (Joby) Walker", "Reini Urban", "Tim Voght");
+"Reini Urban", "Tim Voght", "Joseph (Joby) Walker");
 
 This file is part of PhpWiki.
 
@@ -33,7 +33,7 @@ define ('DEBUG', 1);
 
 define ('PHPWIKI_VERSION', '1.3.4pre');
 require "lib/prepend.php";
-rcs_id('$Id: index2.php,v 1.1 2002-10-16 16:37:05 zorloc Exp $');
+rcs_id('$Id: index2.php,v 1.2 2002-10-16 18:09:14 zorloc Exp $');
 
 require "config/config-user.php";
 require "config/config-dist.php";
