@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.41 2004-05-06 19:26:15 rurban Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.42 2004-05-06 19:51:05 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -606,7 +606,6 @@ class InlineTransformer
             }
 
             $markup = $this->_markup[$match->regexp_ind - 1];
-            if (!$markup) return $output;
             $body = $this->_parse_markup_body($markup, $match->match, $match->postmatch, $end_regexps);
             if (!$body) {
                 // Couldn't match balanced expression.
@@ -630,6 +629,7 @@ class InlineTransformer
     }
 
     function _parse_markup_body ($markup, $match, &$text, $end_regexps) {
+        if (!$markup) return false;
         if (isa($markup, 'SimpleMarkup'))
             return true;        // Done. SimpleMarkup is simple.
 
