@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.43 2003-02-22 20:49:55 dairiki Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.44 2003-11-29 20:06:43 carstenklapp Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -19,6 +19,8 @@
  * 'locked'   _("Locked"), _("locked")
  * 'minor'    _("Minor Edit"), _("minor")
  * 'markup'   _("Markup")
+ * 'size'     _("Size")
+ * 'remove'   _("Remove") //admin action, not really an info column
  *
  * 'all'       All columns will be displayed. This argument must appear alone.
  * 'checkbox'  A selectable checkbox appears at the left.
@@ -36,13 +38,18 @@
  * TODO: order, sortby, limit, offset, rows arguments for multiple pages/multiple rows.
  */
 class _PageList_Column_base {
+    var $_tdattr = array();
 
     function _PageList_Column_base ($default_heading, $align = false) {
         $this->_heading = $default_heading;
 
-        $this->_tdattr = array();
-        if ($align)
+        if ($align) {
+            // align="char" isn't supported by any browsers yet :(
+            //if (is_array($align))
+            //    $this->_tdattr = $align;
+            //else
             $this->_tdattr['align'] = $align;
+        }
     }
 
     function format ($pagelist, $page_handle, &$revision_handle) {
@@ -99,11 +106,26 @@ class _PageList_Column extends _PageList_Column_base {
     }
 };
 
+class _PageList_Column_size extends _PageList_Column {
+    function _getValue ($page_handle, &$revision_handle) {
+        if (!$revision_handle)
+            $revision_handle = $page_handle->getCurrentRevision();
+        return $this->_getSize($revision_handle);
+    }
+
+    function _getSize($revision_handle) {
+        $data = &$revision_handle->_data;
+        $bytes = strlen(&$data['%content']);
+        return ByteFormatter($bytes);
+    }
+}
+
+
 class _PageList_Column_bool extends _PageList_Column {
     function _PageList_Column_bool ($field, $default_heading, $text = 'yes') {
         $this->_PageList_Column($field, $default_heading, 'center');
         $this->_textIfTrue = $text;
-        $this->_textIfFalse = new RawXml('&#8212;');
+        $this->_textIfFalse = new RawXml('&#8212;'); //mdash
     }
 
     function _getValue ($page_handle, &$revision_handle) {
@@ -159,6 +181,45 @@ class _PageList_Column_version extends _PageList_Column {
     }
 };
 
+// If needed this could eventually become a subclass
+// of a new _PageList_Column_action class for other actions.
+class _PageList_Column_remove extends _PageList_Column {
+    function _getValue ($page_handle, &$revision_handle) {
+        return Button(array('action' => 'remove'), _("Remove"),
+                      $page_handle->getName());
+    }
+};
+
+// Output is hardcoded to limit of first 50 bytes. Otherwise
+// on very large Wikis this will fail if used with AllPages
+// (PHP memory limit exceeded)
+class _PageList_Column_content extends _PageList_Column {
+    function _PageList_Column_content ($field, $default_heading, $align = false) {
+        _PageList_Column::_PageList_Column($field, $default_heading, $align);
+        $this->bytes = 50;
+        $this->_heading .= sprintf(_(" ... first %d bytes"),
+                                   $this->bytes);
+    }
+    function _getValue ($page_handle, &$revision_handle) {
+        if (!$revision_handle)
+            $revision_handle = $page_handle->getCurrentRevision();
+        // Not sure why implode is needed here, I thought
+        // getContent() already did this, but it seems necessary.
+        $c = implode("\n", $revision_handle->getContent());
+        if (($len = strlen($c)) > $this->bytes) {
+            $c = substr($c, 0, $this->bytes);
+        }
+        require_once('lib/BlockParser.php');
+        // false --> don't bother processing hrefs for embedded WikiLinks
+        $ct = TransformText($c, $revision_handle->get('markup'), false);
+        return HTML::div(array('style' => 'font-size:xx-small'),
+                         HTML::div(array('class' => 'transclusion'), $ct),
+                         // TODO: Don't show bytes here if size column present too
+                         /* Howto??? $this->parent->_columns['size'] ? "" :*/
+                         ByteFormatter($len, /*$longformat = */true));
+    }
+};
+
 class _PageList_Column_author extends _PageList_Column {
     function _PageList_Column_author ($field, $default_heading, $align = false) {
         _PageList_Column::_PageList_Column($field, $default_heading, $align);
@@ -210,6 +271,9 @@ class PageList {
         if ($columns == 'all') {
             $this->_initAvailableColumns();
             $columns = array_keys($this->_types);
+            // FIXME: Probably a good idea to NOT include the
+            // columns 'content' and 'remove' when 'all' is
+            // specified.
         }
 
         if ($columns) {
@@ -330,8 +394,15 @@ class PageList {
 
         $this->_types =
             array(
+                  'content'
+                  => new _PageList_Column_content('content', _("Content")),
+
+                  'remove'
+                  => new _PageList_Column_remove('remove', _("Remove")),
+
                   'checkbox'
                   => new _PageList_Column_checkbox('p', _("Selected")),
+
                   'pagename'
                   => new _PageList_Column_pagename,
 
@@ -340,6 +411,10 @@ class PageList {
                                                _("Last Modified")),
                   'hits'
                   => new _PageList_Column('hits', _("Hits"), 'right'),
+
+                  'size'
+                  => new _PageList_Column_size('size', _("Size"), 'right'),
+                                               /*array('align' => 'char', 'char' => ' ')*/
 
                   'summary'
                   => new _PageList_Column('rev:summary', _("Last Summary")),
