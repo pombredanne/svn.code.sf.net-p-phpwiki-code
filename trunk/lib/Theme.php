@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.55 2002-09-16 18:49:51 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.56 2002-09-16 22:12:48 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -38,26 +38,28 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
     }
 
     $version = false;
-
+    
     if (isa($page_or_rev, 'WikiDB_PageRevision')) {
         $version = $page_or_rev->getVersion();
         $page = $page_or_rev->getPage();
         $pagename = $page->getName();
+        $wikipage = $pagename;
         $exists = true;
     }
     elseif (isa($page_or_rev, 'WikiDB_Page')) {
         $page = $page_or_rev;
         $pagename = $page->getName();
+        $wikipage = $pagename;
+    }
+    elseif (isa($page_or_rev, 'WikiPagename')) {
+        $wikipage = $page_or_rev;
+        $pagename = $wikipage->fullPagename;
     }
     else {
-        // Convert "/SubPage"  to "FullPath/ThroughParentsTo/SubPage"
-        $pagename = $request->fullPagename($page_or_rev);
-        if ($pagename != $page_or_rev and !$label) {
-            // strip leading / from subpage link
-            // FIXME: is this really a good idea?
-            $label = substr($pagename, 1);
-        }
+        $wikipage = new WikiPageName($request, $page_or_rev);
+        $pagename = $wikipage->fullPagename;
     }
+    
 
     if ($type == 'auto') {
         if (isset($page)) {
@@ -65,9 +67,7 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
             $exists = ! $current->hasDefaultContents();
         }
         else {
-            global $request;
-            $dbi = $request->getDbh();
-            $exists = $dbi->isWikiPage($pagename);
+            $exists = $wikipage->exists();
         }
     }
     elseif ($type == 'unknown') {
@@ -76,36 +76,36 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
     else {
         $exists = true;
     }
+
     // FIXME: this should be somewhere else, if really needed.
     // WikiLink makes A link, not a string of fancy ones.
+    // (I think that the fancy split links are just confusing.)
     // Todo: test external ImageLinks http://some/images/next.gif
-    if (is_string($page_or_rev) 
-        and !$label 
-        and strchr(substr($page_or_rev,1), SUBPAGE_SEPARATOR)) {
-        $pages = explode(SUBPAGE_SEPARATOR,$pagename);
-        $last_page = array_pop($pages); // deletes last element from array as side-effect
-        $link = HTML::span($Theme->linkExistingWikiWord($pages[0], $pages[0] . SUBPAGE_SEPARATOR));
-        $first_pages = $pages[0] . SUBPAGE_SEPARATOR;
-        array_shift($pages);
-        foreach ($pages as $page)  {
-            $link->pushContent($Theme->linkExistingWikiWord($first_pages . $page, $page . SUBPAGE_SEPARATOR));
-            $first_pages .= $page . SUBPAGE_SEPARATOR;
+    if (isa($wikipage, 'WikiPageName') and !$label 
+        and strchr(substr($wikipage->shortName,1), SUBPAGE_SEPARATOR)) {
+        $parts = explode(SUBPAGE_SEPARATOR, $wikipage->shortName);
+        $last_part = array_pop($parts);
+        $sep = '';
+        $link = HTML::span();
+        foreach ($parts as $part) {
+            $path[] = $part;
+            $parent = join(SUBPAGE_SEPARATOR, $path);
+            if ($part)
+                $link->pushContent($Theme->linkExistingWikiWord($parent, $sep . $part));
+            $sep = SUBPAGE_SEPARATOR;
         }
-        $label = $last_page;
-        if ($exists) {
-            $link->pushContent($Theme->linkExistingWikiWord($pagename, $label, $version));
-            return $link;
-        }
-        else {
-            $link->pushContent($Theme->linkUnknownWikiWord($pagename, $label));
-            return $link;	
-        }
+        if ($exists)
+            $link->pushContent($Theme->linkExistingWikiWord($wikipage, $sep . $last_part, $version));
+        else
+            $link->pushContent($Theme->linkUnknownWikiWord($wikipage, $last_part));
+        return $link;
     }
-    elseif ($exists) {
-        return $Theme->linkExistingWikiWord($pagename, $label, $version);
+
+    if ($exists) {
+        return $Theme->linkExistingWikiWord($wikipage, $label, $version);
     }
     else {
-        return $Theme->linkUnknownWikiWord($pagename, $label);
+        return $Theme->linkUnknownWikiWord($wikipage, $label);
     }
 }
 
@@ -409,27 +409,35 @@ class Theme {
 
     function linkExistingWikiWord($wikiword, $linktext = '', $version = false) {
         global $request;
+
         if ($version !== false)
             $url = WikiURL($wikiword, array('version' => $version));
         else
             $url = WikiURL($wikiword);
 
         // Extra steps for dumping page to an html file.
+        // FIXME: shouldn't this be in WikiURL?
         if ($this->HTML_DUMP_SUFFIX) {
             // urlencode for pagenames with accented letters
             $url = rawurlencode($url);
             $url = preg_replace('/^\./', '%2e', $url);
             $url .= $this->HTML_DUMP_SUFFIX;
         }
+
         $link = HTML::a(array('href' => $url));
 
+        if (isa($wikiword, 'WikiPageName'))
+            $default_text = $wikiword->shortName;
+        else
+            $default_text = $wikiword;
+        
         if (!empty($linktext)) {
             $link->pushContent($linktext);
             $link->setAttr('class', 'named-wiki');
-            $link->setAttr('title', $this->maybeSplitWikiWord($wikiword));
+            $link->setAttr('title', $this->maybeSplitWikiWord($default_text));
         }
         else {
-            $link->pushContent($this->maybeSplitWikiWord($wikiword));
+            $link->pushContent($this->maybeSplitWikiWord($default_text));
             $link->setAttr('class', 'wiki');
         }
         if ($request->getArg('frame'))
@@ -439,6 +447,16 @@ class Theme {
 
     function linkUnknownWikiWord($wikiword, $linktext = '') {
         global $request;
+
+        // Get rid of anchors on unknown wikiwords
+        if (isa($wikiword, 'WikiPageName')) {
+            $default_text = $wikiword->shortName;
+            $wikiword = $wikiword->fullPagename;
+        }
+        else {
+            $default_text = $wikiword;
+        }
+        
         $url = WikiURL($wikiword, array('action' => 'edit'));
         //$link = HTML::span(HTML::a(array('href' => $url), '?'));
         $button = $this->makeButton('?', $url);
@@ -451,7 +469,7 @@ class Theme {
             $link->setAttr('class', 'named-wikiunknown');
         }
         else {
-            $link->pushContent(HTML::u($this->maybeSplitWikiWord($wikiword)));
+            $link->pushContent(HTML::u($this->maybeSplitWikiWord($default_text)));
             $link->setAttr('class', 'wikiunknown');
         }
         if ($request->getArg('frame'))

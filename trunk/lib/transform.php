@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.45 2002-08-22 23:28:31 rurban Exp $');
+<?php rcs_id('$Id: transform.php,v 1.46 2002-09-16 22:12:48 dairiki Exp $');
 require_once('lib/WikiPlugin.php');
 require_once('lib/HtmlElement.php');
 require_once('lib/interwiki.php');
@@ -329,7 +329,7 @@ extends WikiTransform {
         $this->register(WT_TOKENIZER, 'wtt_doublebrackets', '\[\[');
         $this->register(WT_TOKENIZER, 'wtt_footnotes', '^\[\d+\]');
         $this->register(WT_TOKENIZER, 'wtt_footnoterefs', '\[\d+\]');
-        $this->register(WT_TOKENIZER, 'wtt_bracketlinks', '\[.+?\]');
+        $this->register(WT_TOKENIZER, 'wtt_bracketlinks', '\#?\[.+?\]');
         $this->register(WT_TOKENIZER, 'wtt_urls',
                         "!?\b($AllowedProtocols):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]");
         // Todo: get the map only when a interwikilink occurs.
@@ -473,7 +473,7 @@ function wtt_footnoterefs($match, &$trfrm) {
 
 function wtt_bracketlinks($match, &$trfrm) {
     
-    if (preg_match('/^\[\s*\]$/', $match))
+    if (preg_match('/^\#?\[\s*\]$/', $match))
         return $match;
 
     $link = LinkBracketLink($match);
@@ -481,7 +481,7 @@ function wtt_bracketlinks($match, &$trfrm) {
     if ($link->isInlineElement())
         return $link;
 
-    // FIXME: BIG HACK:
+    // FIXME: BIG HACK: not sure we ever get here any more
     return new RawXml("</p>" . $link->asXML() . "<p>");
 }
 

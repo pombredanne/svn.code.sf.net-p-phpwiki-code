@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.121 2002-09-16 18:44:51 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.122 2002-09-16 22:12:48 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -43,6 +43,8 @@
 
 
 function WikiURL($pagename, $args = '', $get_abs_url = false) {
+    $anchor = false;
+    
     if (is_object($pagename)) {
         if (isa($pagename, 'WikiDB_Page')) {
             $pagename = $pagename->getName();
@@ -51,6 +53,10 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
             $page = $pagename->getPage();
             $args['version'] = $pagename->getVersion();
             $pagename = $page->getName();
+        }
+        elseif (isa($pagename, 'WikiPageName')) {
+            $anchor = $pagename->anchor;
+            $pagename = $pagename->fullPagename;
         }
     }
     
@@ -75,6 +81,8 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
         if ($args)
             $url .= "&$args";
     }
+    if ($anchor)
+        $url .= "#$anchor";
     return $url;
 }
 
@@ -245,6 +253,68 @@ function LinkPhpwikiURL($url, $text = '') {
                    $text);
 }
 
+/**
+ * A class to assist in parsing wiki pagenames.
+ *
+ * Now with subpages and anchors, parsing and passing around
+ * pagenames is more complicated.  This should help.
+ */
+class WikiPagename
+{
+    /** Short name for page.
+     *
+     * This is the value of $name passed to the constructor.
+     */
+    var $shortName;
+
+    /** The full page name.
+     *
+     * This is the full name of the page (without anchor).
+     */
+    var $fullPagename;
+    
+    /** The anchor.
+     *
+     * This is the referenced anchor within the page, or the empty string.
+     */
+    var $anchor;
+    
+    /** Constructor
+     *
+     * @param WikiRequest $request
+     * @param string $name Page name.
+     * This can be a relative subpage name (like '/SubPage'), and can also
+     * include an anchor (e.g. 'SandBox#anchorname' or just '#anchor').
+     */
+    function WikiPageName($request, $name) {
+        $this->shortName = $name;
+
+        if ($name[0] == SUBPAGE_SEPARATOR or $name[0] == '#')
+            $name = $request->getArg('pagename') . $name;
+
+        if (strstr($name, '#')) {
+            list($this->fullPagename, $this->anchor) = split('#', $name, 2);
+        }
+        else {
+            $this->fullPagename = $name;
+            $this->anchor = '';
+        }
+        
+
+        $dbi = $request->getDbh();
+        $this->_exists = $dbi->isWikiPage($this->fullPagename);
+    }
+
+    /**
+     * Determine whether page 'exists'.
+     *
+     * @return boolean True if page exists with non-default content.
+     */
+    function exists() {
+        return $this->_exists;
+    }
+}
+
 function LinkBracketLink($bracketlink) {
     global $request, $AllowedProtocols, $InlineImages;
 
@@ -255,53 +325,44 @@ function LinkBracketLink($bracketlink) {
     // be either a page name, a URL or both separated by a pipe.
     
     // strip brackets and leading space
-    preg_match("/(\[\s*)(.+?)(\s*\])/", $bracketlink, $match);
-    // match the contents 
-    preg_match("/([^|]+)(\|)?([^|]+)?/", $match[2], $matches);
-    
-    if (isset($matches[3])) {
-        // named link of the form  "[some link name | http://blippy.com/]"
-        $URL = trim($matches[3]);
-        $linkname = trim($matches[1]);
-    } else {
-        // unnamed link of the form "[http://blippy.com/] or [wiki page]"
-        $URL = trim($matches[1]);
-        $linkname = false;
-    }
+    preg_match('/(\#?) \[\s* (?: ([^|]*?) \s* (\|) )? \s* (.+?) \s*\]/x', $bracketlink, $matches);
+    list (, $hash, $label, $bar, $link) = $matches;
 
-    $dbi = $request->getDbh();
-    if (substr($URL,0,1) == SUBPAGE_SEPARATOR) { // relative link to page below
-        if (!$linkname) $linkname = $URL;
-        $URL = $request->getArg('pagename') . $URL;
-    }
-    if ($dbi->isWikiPage($URL)) {
-        // if it's an image, it's an named image link [img|link]
-        if (preg_match("/($InlineImages)$/i", $linkname)) {
-            $imgurl = $linkname;
-            if (! preg_match("#^($AllowedProtocols):#", $imgurl)) {
-                // linkname like 'images/next.gif'.
-                global $Theme;
-                $imgurl = $Theme->getImageURL($linkname);
-            }
-            $linkname = LinkImage($imgurl, $URL);
+    // if label looks like a url to an image, we want an image link.
+    if (preg_match("/($InlineImages)$/i", $label)) {
+        $imgurl = $label;
+        if (! preg_match("#^($AllowedProtocols):#", $imgurl)) {
+            // linkname like 'images/next.gif'.
+            global $Theme;
+            $imgurl = $Theme->getImageURL($linkname);
         }
+        $label = LinkImage($imgurl, $link);
+    }
 
-        return WikiLink($URL, 'known', $linkname);
+    if ($hash) {
+        // It's an anchor, not a link...
+        return HTML::a(array('name' => $link, 'id' => $link),
+                       $bar ? $label : $link);
     }
-    elseif (preg_match("#^($AllowedProtocols):#", $URL)) {
+
+    $wikipage = new WikiPageName($request, $link);
+    if ($wikipage->exists()) {
+        return WikiLink($wikipage, 'known', $label);
+    }
+    elseif (preg_match("#^($AllowedProtocols):#", $link)) {
         // if it's an image, embed it; otherwise, it's a regular link
-        if (preg_match("/($InlineImages)$/i", $URL))
+        if (preg_match("/($InlineImages)$/i", $link))
             // no image link, just the src. see [img|link] above
-            return LinkImage($URL, $linkname);
+            return LinkImage($link, $label);
         else
-            return LinkURL($URL, $linkname);
+            return LinkURL($link, $label);
     }
-    elseif (preg_match("/^phpwiki:/", $URL))
-        return LinkPhpwikiURL($URL, $linkname);
-    elseif (preg_match("/^" . $intermap->getRegexp() . ":/", $URL))
-        return $intermap->link($URL, $linkname);
+    elseif (preg_match("/^phpwiki:/", $link))
+        return LinkPhpwikiURL($link, $label);
+    elseif (preg_match("/^" . $intermap->getRegexp() . ":/", $link))
+        return $intermap->link($link, $label);
     else {
-        return WikiLink($URL, 'unknown', $linkname);
+        return WikiLink($wikipage, 'unknown', $label);
     }
 }
 
