@@ -61,7 +61,7 @@ if (!defined('DEBUG')) define ('DEBUG', 1);
 
 define ('PHPWIKI_VERSION', '1.3.5pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.109 2003-03-17 21:24:50 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.110 2003-03-18 20:51:10 lakka Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -664,12 +664,19 @@ $KeywordLinkRegexp = '(?<=^Category|^Topic)[[:upper:]].*$';
 //if (!defined('PHPWIKI_DIR')) define('PHPWIKI_DIR', '/home/user/public_html/phpwiki');
 
 /*
- * Define to false to NOT use PATH_INFO to pass the pagename's.
- * e.g. the old http://www.some.where/index.php?pagename=HomePage
- * instead of http://www.some.where/index.php/HomePage
- * or even better http://www.some.where/wiki/HomePage
+ * PhpWiki will try to use short urls to pages, eg 
+ * http://www.example.com/index.php/HomePage
+ * If you want to use urls like 
+ * http://www.example.com/index.php?pagename=HomePage
+ * then define 'USE_PATH_INFO' as false by uncommenting the line below.
+ * NB:  If you are using Apache >= 2.0.30, then you may need to to use
+ * the directive "AcceptPathInfo On" in your Apache configuration file
+ * (or in an appropriate <.htaccess> file) for the short urls to work:  
+ * See http://httpd.apache.org/docs-2.0/mod/core.html#acceptpathinfo
+ * 
+ * See also http://phpwiki.sourceforge.net/phpwiki/PrettyWiki for more ideas
+ * on prettifying your urls.
  *
- * FIXME: more docs (maybe in README).
  * Default: true
  */
 //if (!defined('USE_PATH_INFO')) define('USE_PATH_INFO', false);
@@ -763,6 +770,13 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 // End:   
 
 // $Log: not supported by cvs2svn $
+// Revision 1.109  2003/03/17 21:24:50  dairiki
+// Fix security bugs in the RawHtml plugin.
+//
+// Change the default configuration to allow use of plugin, since
+// I believe the plugin is now safe for general use. (Raw HTML will only
+// work on locked pages.)
+//
 // Revision 1.108  2003/03/07 22:47:01  dairiki
 // A few more if(!defined(...))'s
 //
