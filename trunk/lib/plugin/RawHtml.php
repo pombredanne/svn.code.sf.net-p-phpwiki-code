@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RawHtml.php,v 1.5 2003-01-18 22:01:43 carstenklapp Exp $');
+rcs_id('$Id: RawHtml.php,v 1.6 2003-03-17 21:24:53 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -20,16 +20,10 @@ rcs_id('$Id: RawHtml.php,v 1.5 2003-01-18 22:01:43 carstenklapp Exp $');
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// Define ENABLE_RAW_HTML to true to enable the RawHtml plugin.
-//
-// IMPORTANT!!!: This plugin is currently insecure, as it's method of
-// determining whether it was invoked from a locked page is flawed.
-// (See the FIXME: comment below.)
-//
-// ENABLE AT YOUR OWN RISK!!!
+// Define ENABLE_RAW_HTML to false (in index.php) to disable the RawHtml plugin.
 //
 if (!defined('ENABLE_RAW_HTML'))
-    define('ENABLE_RAW_HTML', false);
+    define('ENABLE_RAW_HTML', true);
 
 /**
  * A plugin to provide for raw HTML within wiki pages.
@@ -47,23 +41,22 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, &$request, $basepage) {
         if (!defined('ENABLE_RAW_HTML') || ! ENABLE_RAW_HTML) {
-            return $this->error(_("Raw HTML is disabled in this wiki."));
+            return $this->disabled(_("Raw HTML is disabled in this wiki."));
         }
+        if (!$basepage) {
+            return $this->error("$basepage unset?");
+        }
+        
+        $page = $request->getPage($basepage);
 
-        // FIXME: this test for lockedness is badly flawed.  It checks
-        // the requested pages locked state, not the page the plugin
-        // invocation came from.  (These could be different in the
-        // case of ActionPages, or where the IncludePage plugin is
-        // used.)
-        $page = $request->getPage();
         if (! $page->get('locked')) {
-            return $this->error(fmt(_("%s is only allowed in locked pages."),
-                                    _("Raw HTML")));
+            return $this->disabled(fmt(_("%s is only allowed in locked pages."),
+                                       _("Raw HTML")));
         }
 
         return HTML::raw($argstr);
@@ -71,6 +64,11 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2003/01/18 22:01:43  carstenklapp
+// Code cleanup:
+// Reformatting & tabs to spaces;
+// Added copyleft, getVersion, getDescription, rcs_id.
+//
 
 // For emacs users
 // Local Variables:
