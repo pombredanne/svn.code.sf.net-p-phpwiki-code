@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.10 2002-01-22 03:17:47 dairiki Exp $');
+rcs_id('$Id: Calendar.php,v 1.11 2002-01-24 06:52:12 carstenklapp Exp $');
 
 if (!defined('SECONDS_PER_DAY'))
     define('SECONDS_PER_DAY', 24 * 3600);
@@ -53,11 +53,11 @@ extends WikiPlugin
 
         $prev = HTML::a(array('href'  => $prev_url,
                               'class' => 'cal-arrow',
-                              'title' => gettext("Previous Month")),
+                              'title' => _("Previous Month")),
                         '<');
         $next = HTML::a(array('href'  => $next_url,
                               'class' => 'cal-arrow',
-                              'title' => gettext("Next Month")),
+                              'title' => _("Next Month")),
                         '>');
 
 
