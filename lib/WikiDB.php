@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.14 2002-08-27 21:51:31 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.15 2002-08-31 11:27:19 lakka Exp $');
 
 //FIXME: arg on get*Revision to hint that content is wanted.
 
@@ -865,6 +865,17 @@ class WikiDB_PageRevision
      */
     function getContent() {
         return explode("\n", $this->getPackedContent());
+    }
+	
+	/**
+     * Get the pagename of the revision.
+     *
+     * @access public
+     *
+     * @return string pagename.
+     */
+    function getPageName() {
+        return $this->_pagename;
     }
 
     /**
