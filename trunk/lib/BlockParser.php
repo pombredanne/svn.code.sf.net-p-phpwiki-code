@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.19 2002-02-01 06:13:48 dairiki Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.20 2002-02-06 23:45:34 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -150,8 +150,6 @@ class BlockParser_Input {
 
         $this->_lines = preg_split('/[^\S\n]*\n/', $text);
         $this->_pos = 0;
-
-        $this->_initBlockTypes();
     }
 
     function currentLine () {
@@ -194,57 +192,6 @@ class BlockParser_Input {
             return "<EOF>";
     }
 
-    // FIXME: hackish
-    function _initBlockTypes () {
-        foreach (array('oldlists', 'list', 'dl', 'table_dl',
-                       'blockquote', 'heading', 'hr', 'pre', 'email_blockquote',
-                       'plugin', 'p')
-                 as $type) {
-            $class = "Block_$type";
-            $proto = new $class;
-            $this->_block_types[] = $proto;
-            $this->_regexps[] = $proto->_re;
-        }
-        $this->_regexpset = new AnchoredRegexpSet($this->_regexps);
-    }
-    
-    function getBlock() {
-        $atSpace = false;
-        
-        $line = $this->currentLine();
-        if ($line === '') {
-            $atSpace = $this->getPos();
-            while ( ($line = $this->nextLine()) === '' )
-                ;
-        }
-        if ($line === false) {
-            if ($atSpace)
-                $this->setPos($atSpace);
-            return false;
-        }
-
-        $re_set = &$this->_regexpset;
-        for ($m = $re_set->match($line); $m; $m = $re_set->nextMatch($line, $m)) {
-            $block = $this->_block_types[$m->regexp_ind];
-            //$this->_debug('>', get_class($block));
-            
-            if ($block->_match($this, $m)) {
-                //$this->_debug('<', get_class($block));
-                $block->_follows_space = (bool) $atSpace;
-                return $block;
-            }
-            //$this->_debug('[', "_match failed");
-        }
-
-
-        //if ($input->getDepth() == 0) {
-        // We should never get here.
-        //preg_match('/.*/A', substr($this->_text, $this->_pos), $m);// get first line
-        trigger_error("Couldn't match block: '$line'", E_USER_NOTICE);
-        //}
-        
-        return false;
-    }
 
     
     function _debug ($tab, $msg) {
@@ -322,37 +269,87 @@ class BlockParser_InputSubBlock extends BlockParser_Input
 }
     
 
-class BlockMarkup extends XmlContent {
-    var $_tag;
-    var $_attr = false;
-    var $_re;
 
-        
-    function _match (&$input, $match) {
-        trigger_error('pure virtual', E_USER_ERROR);
+class Tightenable extends HtmlElement {
+    var $_isTight = false;
+
+    function Tightenable ($tag /*, ...*/) {
+        $this->_init(func_get_args());
+    }
+    
+    function tighten () {
+        if (! $this->_isTight) {
+            $content = &$this->_content;
+            for ($i = 0; $i < count($content); $i++) {
+                if (!isa($content[$i], 'Tightenable'))
+                    continue;
+                $content[$i]->tighten();
+            }
+            $this->_isTight = true;
+        }
     }
 
-    function merge ($followingBlock) {
-        return false;
-    }
-
-    function finish (/*$tighten*/) {
-        return new HtmlElement($this->_tag, $this->_attr, $this->getContent());
+    function canTighten () {
+        $content = &$this->_content;
+        for ($i = 0; $i < count($content); $i++) {
+            if (!isa($content[$i], 'Tightenable'))
+                continue;
+            if (!$content[$i]->canTighten())
+                return false;
+        }
+        return true;
     }
 }
 
-class Block extends BlockMarkup {
-    function Block ($text = false) {
-        $this->XmlContent();
-        if ($text)
-            $this->_parse(new BlockParser_Input($text));
+class TightenableParagraph extends Tightenable {
+    function TightenableParagraph (/*...*/) {
+        $this->_init('p');
+        $this->pushContent(func_get_args());
+    }
+
+    function tighten () {
+        $this->_isTight = true;
+    }
+
+    function canTighten () {
+        return true;
+    }
+
+    function printXML () {
+        if ($this->_isTight)
+            return XmlContent::printXML();
+        else
+            return parent::printXML();
+    }
+
+    function asXML () {
+        if ($this->_isTight)
+            return XmlContent::asXML();
+        else
+            return parent::asXML();
+    }
+}
+
+class ParsedBlock extends Tightenable {
+    var $_isLoose = false;
+    
+    function ParsedBlock (&$input, $tag = 'div', $attr = false) {
+        $this->Tightenable($tag, $attr);
+        $this->_initBlockTypes();
+        $this->_parse($input);
+    }
+
+    function canTighten () {
+        if ($this->_isLoose)
+            return false;
+        return parent::canTighten();
     }
     
     function _parse (&$input) {
-        for ($block = $input->getBlock(); $block; $block = $nextBlock) {
-            while ($nextBlock = $input->getBlock()) {
+        for ($block = $this->_getBlock($input); $block; $block = $nextBlock) {
+            while ($nextBlock = $this->_getBlock($input)) {
                 // Attempt to merge current with following block.
-                if (! ($merged = $block->merge($nextBlock)) ) {
+                if (! ($merged = $block->merge($nextBlock, $this->_atSpace)) ) {
                     break;      // can't merge
                 }
                 $block = $merged;
@@ -360,21 +357,103 @@ class Block extends BlockMarkup {
             $this->pushContent($block->finish());
         }
     }
-}
 
-class SubBlock extends Block {
-    function SubBlock (&$input, $indent_re, $initial_indent = false) {
-        $this->Block();
-        $this->_parse(new BlockParser_InputSubBlock($input,
-                                                    $indent_re,
-                                                    $initial_indent));
+    // FIXME: hackish
+    function _initBlockTypes () {
+        foreach (array('oldlists', 'list', 'dl', 'table_dl',
+                       'blockquote', 'heading', 'hr', 'pre', 'email_blockquote',
+                       'plugin', 'p')
+                 as $type) {
+            $class = "Block_$type";
+            $proto = new $class;
+            $this->_block_types[] = $proto;
+            $this->_regexps[] = $proto->_re;
+        }
+        $this->_regexpset = new AnchoredRegexpSet($this->_regexps);
+    }
+
+    function _getLine (&$input) {
+        $line = $input->currentLine();
+        if ( $line || $line === false) {
+            $this->_atSpace = false;
+            return $line;
+        }
+        
+        $pos = $input->getPos();
+        while ( ($line = $input->nextLine()) !== false ) {
+            if ($line) {
+                $this->_atSpace = true;
+                $this->_isLoose = true;
+                return $line;
+            }
+        }
+        // EOF.
+        $input->setPos($pos);
+        return false;
+    }
+        
+    function _getBlock (&$input) {
+        if (! ($line = $this->_getLine($input)) )
+            return false;
+
+        $re_set = &$this->_regexpset;
+        for ($m = $re_set->match($line); $m; $m = $re_set->nextMatch($line, $m)) {
+            $block = $this->_block_types[$m->regexp_ind];
+            //$this->_debug('>', get_class($block));
+            
+            if ($block->_match($input, $m)) {
+                //$this->_debug('<', get_class($block));
+                //$block->_follows_space = $this->_atSpace;
+                return $block;
+            }
+            //$this->_debug('[', "_match failed");
+        }
+
+
+        //if ($input->getDepth() == 0) {
+        // We should never get here.
+        //preg_match('/.*/A', substr($this->_text, $this->_pos), $m);// get first line
+        trigger_error("Couldn't match block: '$line'", E_USER_NOTICE);
+        //}
+        
+        return false;
     }
 }
 
-    
-class Block_blockquote extends Block
+class WikiText extends ParsedBlock {
+    function WikiText ($text) {
+        $input = new BlockParser_Input($text);
+        $this->ParsedBlock($input);
+    }
+}
+
+class SubBlock extends ParsedBlock {
+    function SubBlock (&$input, $indent_re, $initial_indent = false,
+                       $tag = 'div', $attr = false) {
+        $subinput = new BlockParser_InputSubBlock($input, $indent_re, $initial_indent);
+        $this->ParsedBlock($subinput, $tag, $attr);
+    }
+}
+
+class BlockMarkup {
+    var $_re;
+
+        
+    function _match (&$input, $match) {
+        trigger_error('pure virtual', E_USER_ERROR);
+    }
+
+    function merge ($followingBlock, $followsSpace) {
+        return false;
+    }
+
+    function finish () {
+        trigger_error('pure virtual', E_USER_ERROR);
+    }
+}
+
+class Block_blockquote extends BlockMarkup
 {
-    var $_tag ='blockquote';
     var $_depth;
 
     var $_re = '\ +(?=\S)';
@@ -382,27 +461,35 @@ class Block_blockquote extends Block
     function _match (&$input, $m) {
         $this->_depth = strlen($m->match);
         $indent = sprintf("\\ {%d}", $this->_depth);
-        $this->pushContent(new SubBlock($input, $indent, $m->match));
+        $this->_block = new SubBlock($input, $indent, $m->match,
+                                     'blockquote');
         return true;
     }
 
-    function merge ($nextBlock) {
-        if (get_class($nextBlock) == 'block_blockquote') {
+    function merge ($nextBlock, $followsSpace) {
+        if (get_class($nextBlock) == get_class($this)) {
             assert ($nextBlock->_depth < $this->_depth);
-            $nextBlock->unshiftContent($this->finish());
+            $nextBlock->_block->unshiftContent($this->_block);
             return $nextBlock;
         }
         return false;
     }
+
+    function finish () {
+        return $this->_block;
+    }
 }
 
-class Block_list extends Block
+class Block_list extends BlockMarkup
 {
     //var $_tag = 'ol' or 'ul';
     var $_re = '\ {0,4}
                 (?: [+#] | -(?!-) | [o](?=\ )
                   | [*] (?! \S[^*]*(?<=\S)[*](?!\S) )
                 )\ *(?=\S)';
+
+    var $_isLoose = false;
+    var $_content = array();
 
     function _match (&$input, $m) {
         // A list as the first content in a list is not allowed.
@@ -420,17 +507,27 @@ class Block_list extends Block
 
         $bullet = trim($m->match);
         $this->_tag = $bullet == '#' ? 'ol' : 'ul';
-        
-        $this->pushContent(HTML::li(new SubBlock($input, $indent, $m->match)));
+
+        $this->_content[] = new SubBlock($input, $indent, $m->match, 'li');
         return true;
     }
     
-    function merge ($nextBlock) {
+    function merge ($nextBlock, $followsSpace) {
         if (isa($nextBlock, 'Block_list') && $this->_tag == $nextBlock->_tag) {
-            $this->pushContent($nextBlock->getContent());
+            array_splice($this->_content, count($this->_content), 0,
+                         $nextBlock->_content);
+            if ($followsSpace)
+                $this->_isLoose = true;
             return $this;
         }
         return false;
+    }
+
+    function finish () {
+        $list = new Tightenable($this->_tag, false, $this->_content);
+        if (!$this->_isLoose && $list->canTighten())
+            $list->tighten();
+        return $list;
     }
 }
 
@@ -444,7 +541,8 @@ class Block_dl extends Block_list
             return false;
         list ($term, $defn) = $p;
         
-        $this->pushContent(HTML::dt($term), HTML::dd($defn));
+        $this->_content[] = HTML::dt($term);
+        $this->_content[] = $defn;
         return true;
     }
 
@@ -465,7 +563,7 @@ class Block_dl extends Block_list
         $input->advance();      // Skip the first line.
 
         $term = TransformInline(rtrim(substr(trim($m->match),0,-1)));
-        $defn = new SubBlock($input, sprintf("\\ {%d}", $indent));
+        $defn = new SubBlock($input, sprintf("\\ {%d}", $indent), false, 'dd');
         return array($term, $defn);
     }
 }
@@ -596,11 +694,12 @@ class Block_table_dl extends Block_dl
             return false;
         list ($term, $defn) = $p;
 
-        $this->pushContent(new Block_table_dl_defn($term, $defn));
+        $this->_content[] = new Block_table_dl_defn($term, $defn);
         return true;
     }
             
     function finish () {
+
         $defs = &$this->_content;
 
         $ncols = 0;
@@ -609,7 +708,11 @@ class Block_table_dl extends Block_dl
         foreach ($defs as $key => $defn)
             $defs[$key]->setWidth($ncols);
 
-        return parent::finish();
+        return HTML::table(array('class' => 'wiki-dl-table',
+                                 'border' => 2, // FIXME: CSS?
+                                 'cellspacing' => 0,
+                                 'cellpadding' => 6),
+                           $defs);
     }
 }
 
@@ -621,7 +724,6 @@ class Block_oldlists extends Block_list
                   | ; .* :
                 ) .*? (?=\S)';
 
-    
     function _match (&$input, $m) {
         // FIXME:
         if (!preg_match('/[*#;]*$/A', $input->getPrefix())) {
@@ -637,30 +739,28 @@ class Block_oldlists extends Block_list
         $bullet = $prefix[0];
         if ($bullet == '*') {
             $this->_tag = 'ul';
-            $item = HTML::li();
+            $itemtag = 'li';
         }
         elseif ($bullet == '#') {
             $this->_tag = 'ol';
-            $item = HTML::li();
+            $itemtag = 'li';
         }
         else {
             $this->_tag = 'dl';
             list ($term,) = explode(':', substr($prefix, 1), 2);
             $term = trim($term);
             if ($term)
-                $this->pushContent(HTML::dt(false, TransformInline($term)));
-            $item = HTML::dd();
+                $this->_content[] = HTML::dt(false, TransformInline($term));
+            $itemtag = 'dd';
         }
 
-        $item->pushContent(new SubBlock($input, $indent, $m->match));
-        $this->pushContent($item);
+        $this->_content[] = new SubBlock($input, $indent, $m->match, $itemtag);
         return true;
     }
 }
 
 class Block_pre extends BlockMarkup
 {
-    var $_tag = 'pre';
     var $_re = '<(?:pre|verbatim)>';
 
     function _match (&$input, $m) {
@@ -678,7 +778,7 @@ class Block_pre extends BlockMarkup
         if ($m->match == '<pre>')
             $text = TransformInline($text);
 
-        $this->pushContent($text);
+        $this->_html = HTML::pre(false, $text);
         return true;
     }
 
@@ -696,13 +796,15 @@ class Block_pre extends BlockMarkup
         $input->setPos($pos);
         return false;
     }
+
+    function finish () {
+        return $this->_html;
+    }
 }
 
 
 class Block_plugin extends Block_pre
 {
-    var $_tag = 'div';
-    var $_attr = array('class' => 'plugin');
     var $_re = '<\?plugin(?:-form)?(?!\S)';
 
     // FIXME:
@@ -721,37 +823,46 @@ class Block_plugin extends Block_pre
             $pi .= "\n$line";
         }
         $input->advance();
-            
+
+        $this->_plugin_pi = $pi;
+        return true;
+    }
+
+    function finish() {
         global $request;
         $loader = new WikiPluginLoader;
-        $this->pushContent($loader->expandPI($pi, $request));
-        return true;
+
+        return HTML::div(array('class' => 'plugin'),
+                         $loader->expandPI($this->_plugin_pi, $request));
     }
 }
 
-class Block_email_blockquote extends Block
+class Block_email_blockquote extends Block_blockquote
 {
     // FIXME: move CSS to CSS.
-    var $_tag ='blockquote';
     var $_attr = array('style' => 'border-left-width: medium; border-left-color: #0f0; border-left-style: ridge; padding-left: 1em; margin-left: 0em; margin-right: 0em;');
     var $_depth;
     var $_re = '>\ ?';
     
     function _match (&$input, $m) {
         $indent = str_replace(' ', '\\ ', $m->match);
-        $this->pushContent(new SubBlock($input, $indent, $m->match));
+        $this->_block = new SubBlock($input, $indent, $m->match,
+                                     'blockquote', $this->_attr);
         return true;
     }
 }
 
 class Block_hr extends BlockMarkup
 {
-    var $_tag = 'hr';
     var $_re = '-{4,}\s*$';
 
     function _match (&$input, $m) {
         $input->advance();
         return true;
+    }
+
+    function finish () {
+        return HTML::hr();
     }
 }
 
@@ -761,9 +872,13 @@ class Block_heading extends BlockMarkup
     
     function _match (&$input, $m) {
         $this->_tag = "h" . (5 - strlen($m->match));
-        $this->pushContent(TransformInline(trim($m->postmatch)));
+        $this->_text = TransformInline(trim($m->postmatch));
         $input->advance();
         return true;
+    }
+
+    function finish () {
+        return new HtmlElement($this->_tag, false, $this->_text);
     }
 }
 
@@ -778,18 +893,18 @@ class Block_p extends BlockMarkup
         return true;
     }
     
-    function merge ($nextBlock) {
+    function merge ($nextBlock, $followsSpace) {
         $class = get_class($nextBlock);
-        if ($class == 'block_p' && !$nextBlock->_follows_space) {
-            $this->_text .= $nextBlock->_text;
+        if ($class == 'block_p' && !$followsSpace) {
+            $this->_text .= "\n" . $nextBlock->_text;
             return $this;
         }
         return false;
     }
             
     function finish () {
-        $this->pushContent(TransformInline(trim($this->_text)));
-        return parent::finish();
+        $content = TransformInline(trim($this->_text));
+        return new TightenableParagraph($content);
     }
 }
 
@@ -809,7 +924,7 @@ function NewTransform ($text) {
     $text = preg_replace('/^\ *[^\ \S\n][^\S\n]*/me', "str_repeat(' ', strlen('\\0'))", $text);
     assert(!preg_match('/^\ *\t/', $text));
 
-    $output = new Block($text);
+    $output = new WikiText($text);
     return $output;
 }
 
