@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.108 2002-02-08 22:03:00 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.109 2002-02-09 03:46:03 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -111,13 +111,15 @@ function LinkURL($url, $linktext = '') {
 }
 
 
-function LinkImage($url, $alt = '[External Image]') {
+function LinkImage($url, $alt = false) {
     // FIXME: Is this needed (or sufficient?)
     if(ereg("[<>\"]", $url)) {
         $link = HTML::strong(HTML::u(array('class' => 'baduri'),
                                      _("BAD URL -- remove all of <, >, \"")));
     }
     else {
+        if (empty($alt))
+            $alt = $url;
         $link = HTML::img(array('src' => $url, 'alt' => $alt));
     }
     $link->setAttr('class', 'inlineimage');
