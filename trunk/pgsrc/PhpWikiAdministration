@@ -1,6 +1,6 @@
 Date: Sun, 27 Jan 2002 17:28:55 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: PhpWikiAdministration,v 1.15 2002-02-07 21:17:26 dairiki Exp $
+X-Rcs-Id: $Id: PhpWikiAdministration,v 1.16 2002-02-20 00:19:22 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiAdministration;
   flags=PAGE_LOCKED;
@@ -95,5 +95,10 @@ that all page meta-data was lost. Note that when loading
 
 The upload and load functions will automatically recognize each of these
 three types of files, and handle them accordingly.
+----
+!! Dump pages as XHTML
+<?plugin WikiForm action=dumphtml?>
+
+This will generate a directory of static pages suitable for distibution on disk where no web server is available.
 ----
 PhpWikiDocumentation
