@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.77 2003-02-21 04:12:05 dairiki Exp $');
+rcs_id('$Id: loadsave.php,v 1.78 2003-02-24 02:05:43 dairiki Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -281,7 +281,7 @@ function DumpHtmlToDir (&$request)
         }
 
         $num = fwrite($fd, $data, strlen($data));
-        $msg->pushContent(HTML::small(fmt("%s bytes written", $num) . "\n"));
+        $msg->pushContent(HTML::small(fmt("%s bytes written", $num), "\n"));
         PrintXML($msg);
 
         flush();
@@ -828,6 +828,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.77  2003/02/21 04:12:05  dairiki
+ Minor fixes for new cached markup.
+
  Revision 1.76  2003/02/16 19:47:17  dairiki
  Update WikiDB timestamp when editing or deleting pages.
 
