@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.21.2.1 2001-02-08 18:28:31 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.21.2.2 2001-03-02 03:48:47 dairiki Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -218,9 +218,18 @@
 	    }
    
          } elseif ($level > $stack->cnt()) {
-            // we add the diff to the stack
-            // stack might be zero
-            while ($stack->cnt() < $level) {
+	    // Test for and close top level elements which are not allowed to contain
+	    // other block-level elements.
+	    if ($stack->cnt() == 1 and
+	        preg_match('/^(p|pre|h\d)$/i', $stack->top()))
+	    {
+	       $closetag = $stack->pop();
+	       $retvar .= "</$closetag>";
+	    }
+
+	    // we add the diff to the stack
+	    // stack might be zero
+	    while ($stack->cnt() < $level) {
                $retvar .= "<$tag>\n";
                $stack->push($tag);
                if ($stack->cnt() > 10) {

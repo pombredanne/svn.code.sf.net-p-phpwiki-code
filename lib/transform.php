@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.8 2001-01-04 18:34:15 ahollosi Exp $');
+<?php rcs_id('$Id: transform.php,v 1.8.2.1 2001-03-02 03:48:47 dairiki Exp $');
    // expects $pagehash and $html to be set
 
    function tokenize($str, $pattern, &$orig, &$ntokens) {
@@ -136,8 +136,6 @@ your web server it is highly advised that you do not allow this.
       $tmpline = str_replace('>', '&gt;', $tmpline);
       $tmpline = str_replace('<', '&lt;', $tmpline);
 
-      // four or more dashes to <hr>
-      $tmpline = ereg_replace("^-{4,}", '<hr>', $tmpline);
 
       // %%% are linebreaks
       $tmpline = str_replace('%%%', '<br>', $tmpline);
@@ -232,11 +230,21 @@ your web server it is highly advised that you do not allow this.
 	 $tmpline = preg_replace("/^!+/", '', $tmpline);
 	 $html .= SetHTMLOutputMode($heading, ZERO_LEVEL, 0);
 
+      } elseif (preg_match('/^-{4,}\s*(.*?)\s*$/', $tmpline, $matches)) {
+	 // four or more dashes to <hr>
+	 // <hr> can not be contained in a
+	 $html .= SetHTMLOutputMode('', ZERO_LEVEL, 0) . "<hr>\n";
+	 if ( ($tmpline = $matches[1]) != '' ) {
+	    $html .= SetHTMLOutputMode('p', ZERO_LEVEL, 0);
+	 }
       } else {
          // it's ordinary output if nothing else
          $html .= SetHTMLOutputMode('p', ZERO_LEVEL, 0);
       }
 
+      // These are still problems as far as generating correct HTML is
+      // concerned.  Paragraph (<p>) elements are not allowed to contain
+      // other block-level elements (like <form>s). 
       $tmpline = str_replace('%%Search%%', $quick_search_box, $tmpline);
       $tmpline = str_replace('%%Fullsearch%%', $full_search_box, $tmpline);
       $tmpline = str_replace('%%Mostpopular%%', $most_popular_list, $tmpline);
