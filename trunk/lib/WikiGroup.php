@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.22 2004-03-12 15:48:07 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.23 2004-03-12 23:20:58 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -195,6 +195,7 @@ class WikiGroup{
         /* WikiPage users: */
         $dbh = $this->request->getDbh();
         $page_iter = $dbh->getAllPages();
+        $users = array();
         while ($page = $page_iter->next()) {
             if ($page->isUserPage())
                 $users[] = $page->_pagename;
@@ -998,6 +999,10 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.22  2004/03/12 15:48:07  rurban
+// fixed explodePageList: wrong sortby argument order in UnfoldSubpages
+// simplified lib/stdlib.php:explodePageList
+//
 // Revision 1.21  2004/03/12 11:18:24  rurban
 // fixed ->membership chache
 //

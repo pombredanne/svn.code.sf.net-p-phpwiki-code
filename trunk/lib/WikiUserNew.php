@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.30 2004-03-12 20:59:17 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.31 2004-03-12 23:20:58 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -1374,6 +1374,11 @@ extends _DbPassUser
         }
     }
 
+    function mayChangePass() {
+        global $DBAuthParams;
+        return !empty($DBAuthParams['auth_update']);
+    }
+
     function storePass($submitted_password) {
         global $DBAuthParams;
         $dbh = &$this->_auth_dbi;
@@ -1383,8 +1388,7 @@ extends _DbPassUser
                                              $DBAuthParams['auth_update']);
         }
         if (!$this->_authupdate) {
-            //CHECKME
-            trigger_warning("Either \$DBAuthParams['auth_update'] not defined or \$DBParams['dbtype'] != 'SQL'",
+            trigger_error("Either \$DBAuthParams['auth_update'] not defined or \$DBParams['dbtype'] != 'SQL'",
                           E_USER_WARNING);
             return false;
         }
@@ -1583,6 +1587,11 @@ extends _DbPassUser
         }
     }
 
+    function mayChangePass() {
+        global $DBAuthParams;
+        return !empty($DBAuthParams['auth_update']);
+    }
+
     function storePass($submitted_password) {
     	global $DBAuthParams;
         if (!isset($this->_authupdate) and !empty($DBAuthParams['auth_update'])) {
@@ -1606,6 +1615,7 @@ extends _DbPassUser
                                     $dbh->qstr($this->_userid)
                                     ));
         $rs->Close();
+        return $rs;
     }
 
 }
@@ -1867,6 +1877,9 @@ extends _PassUser
 class _AdminUser
 extends _PassUser
 {
+    function mayChangePass() {
+        return false;
+    }
     function checkPass($submitted_password) {
         $stored_password = ADMIN_PASSWD;
         if ($this->_checkPass($submitted_password, $stored_password)) {
@@ -1877,7 +1890,9 @@ extends _PassUser
             return $this->_level;
         }
     }
-
+    function storePass($submitted_password) {
+        return false;
+    }
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -2163,10 +2178,14 @@ class UserPreferences
                 // Looks like a serialized object. 
                 // This might fail if the object definition does not exist anymore.
                 // object with ->$name and ->default_value vars.
-                $pref = unserialize($packed_pref);
+                $pref =  @unserialize($packed_pref);
+                if (empty($pref))
+                    $pref = @unserialize(base64_decode($packed_pref));
                 $prefs[$name] = $pref->get($name);
             } else {
-                $prefs[$name] = unserialize($packed_pref);
+                $prefs[$name] = @unserialize($packed_pref);
+                if (empty($prefs[$name]))
+                    $prefs[$name] = @unserialize(base64_decode($packed_pref));
             }
         }
         return $prefs;
@@ -2274,6 +2293,10 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.30  2004/03/12 20:59:17  rurban
+// important cookie fix by Konstantin Zadorozhny
+// new editpage feature: JS_SEARCHREPLACE
+//
 // Revision 1.29  2004/03/11 13:30:47  rurban
 // fixed File Auth for user and group
 // missing only getMembersOf(Authenticated Users),getMembersOf(Every),getMembersOf(Signed Users)

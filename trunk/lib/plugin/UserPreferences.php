@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.19 2004-02-27 13:21:17 rurban Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.20 2004-03-12 23:20:58 rurban Exp $');
 /**
  Copyright 2001, 2002, 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -36,7 +36,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.19 $");
+                            "\$Revision: 1.20 $");
     }
 
     function getDefaultArguments() {
@@ -85,9 +85,19 @@ extends WikiPlugin
                             unset($rp['passwd']);
                         $num = $user->setPreferences($rp);
                         if (!empty($rp['passwd'])) {
+                            $passchanged = false;
                             if ($user->mayChangePass()) {
-                                $user->storePass($rp['passwd']);
-                                $errmsg = _("Password updated.");
+                                if (method_exists($user, 'storePass')) {
+                                    $passchanged = $user->storePass($rp['passwd']);
+                                }
+                                if (method_exists($user, 'changePass')) {
+                                    $passchanged = $user->changePass($rp['passwd']);
+                                }
+                                if ($passchanged) {
+                                    $errmsg = _("Password updated.");
+                                } else {
+                                    $errmsg = _("Password cannot be changed.");
+                                }
                             } else {
                                 $errmsg = _("Password cannot be changed.");
                             }
@@ -147,6 +157,12 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.19  2004/02/27 13:21:17  rurban
+// several performance improvements, esp. with peardb
+// simplified loops
+// storepass seperated from prefs if defined so
+// stacked and strict still not working
+//
 // Revision 1.18  2004/02/24 15:20:06  rurban
 // fixed minor warnings: unchecked args, POST => Get urls for sortby e.g.
 //
