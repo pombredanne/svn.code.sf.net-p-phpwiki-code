@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.42 2003-11-30 18:18:13 carstenklapp Exp $');
+rcs_id('$Id: WikiUser.php,v 1.43 2003-12-04 19:33:30 carstenklapp Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -582,7 +582,7 @@ extends _UserPreference
     }
 
     function sanify ($value) {
-        if (file_exists($this->_themefile($value)))
+        if (findFile($this->_themefile($value), true))
             return $value;
         return $this->default_value;
     }
@@ -656,6 +656,10 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.42  2003/11/30 18:18:13  carstenklapp
+// Minor code optimization: use include_once instead of require_once
+// inside functions that might not always called.
+//
 // Revision 1.41  2003/11/21 21:32:39  carstenklapp
 // Bugfix: When DEFAULT_LANGUAGE was not 'en', a user's language prefs
 // would revert to 'en' when the default <system language> was selected
