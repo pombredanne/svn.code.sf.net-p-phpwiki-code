@@ -1,5 +1,6 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.54 2005-01-29 21:00:54 rurban Exp $');
-/* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
+<?php rcs_id('$Id: BlockParser.php,v 1.55 2005-01-29 21:08:41 rurban Exp $');
+/* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
+ * Copyright (C) 2004,2005 Reini Urban
  *
  * This file is part of PhpWiki.
  * 
@@ -938,7 +939,6 @@ class Block_pre extends BlockMarkup
     }
 }
 
-
 class Block_plugin extends Block_pre
 {
     var $_re = '<\?plugin(?:-form)?(?!\S)';
@@ -1092,6 +1092,9 @@ function TransformText ($text, $markup = 2.0, $basepage=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.54  2005/01/29 21:00:54  rurban
+// do not warn on empty nextBlock
+//
 // Revision 1.53  2005/01/29 20:36:44  rurban
 // very important php5 fix! clone objects
 //
