@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: LinkDatabase.php,v 1.5 2004-12-17 16:39:03 rurban Exp $');
+rcs_id('$Id: LinkDatabase.php,v 1.6 2004-12-22 18:48:10 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -48,7 +48,7 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
     function getExpire($dbi, $argarray, $request) {
         return '+900'; // 15 minutes
@@ -59,7 +59,7 @@ extends WikiPluginCached
             (
              PageList::supportedArgs(),
              array(
-                   'format'        => 'text', // or 'html', 'xml'
+                   'format'        => 'html', // 'html', 'text', 'xml'
                    'noheader'      => false,
                    'include_empty' => false,
                    'exclude_from'  => false,
@@ -72,6 +72,7 @@ extends WikiPluginCached
     }
     
     function run($dbi, $argstr, $request, $basepage) {
+        global $WikiTheme;
         $args = $this->getArgs($argstr, $request);
         $caption = _("All pages with all links in this wiki (%d total):");
         
@@ -111,7 +112,7 @@ extends WikiPluginCached
             return $pagelist;
         } elseif ($args['format'] == 'text') {
             $request->discardOutput();
-            $request->buffer_output(COMPRESS_OUTPUT);
+            $request->buffer_output(false);
             if (!headers_sent())
                 header("Content-Type: text/plain");
             $request->checkValidators();
@@ -125,7 +126,8 @@ extends WikiPluginCached
                 echo "\n";
             }
             flush();
-            $request->finish();
+            if (empty($WikiTheme->DUMP_MODE) or $WikiTheme->DUMP_MODE != 'HTML')
+                $request->finish();
         } elseif ($args['format'] == 'xml') {
             // For hypergraph.jar. Best dump it to a local sitemap.xml periodically
             global $WikiTheme, $charset;
@@ -158,8 +160,10 @@ extends WikiPluginCached
             }
 	    echo "</graph>\n";
 	    echo "</GraphXML>\n";
-            unset($GLOBALS['ErrorManager']->_postponed_errors);
-            $request->finish();
+            if (empty($WikiTheme->DUMP_MODE) or $WikiTheme->DUMP_MODE != 'HTML') {
+                unset($GLOBALS['ErrorManager']->_postponed_errors);
+                $request->finish();
+            }
         } else {
             return $this->error(fmt("Unsupported format argument %s", $args['format']));
         }
@@ -178,6 +182,9 @@ class _PageList_Column_LinkDatabase_links extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/12/17 16:39:03  rurban
+// minor reformatting
+//
 // Revision 1.4  2004/12/06 19:50:05  rurban
 // enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
 // renamed delete_page to purge_page.
