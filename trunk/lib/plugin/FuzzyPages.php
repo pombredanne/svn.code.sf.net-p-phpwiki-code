@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FuzzyPages.php,v 1.1 2002-02-01 22:13:02 carstenklapp Exp $');
+rcs_id('$Id: FuzzyPages.php,v 1.2 2002-02-02 05:00:04 carstenklapp Exp $');
 
 //require_once('lib/TextSearchQuery.php');
 //require_once('lib/PageList.php');
@@ -17,11 +17,11 @@ extends WikiPlugin
     function getName() {
         return _("FuzzyPages");
     }
-    
+
     function getDescription() {
         return sprintf(_("List FuzzyPages for %s"), '[pagename]');
     }
-    
+
     function getDefaultArguments() {
         return array('page'	=> '[pagename]',
                      );
@@ -33,47 +33,54 @@ extends WikiPlugin
         if (empty($page))
             return '';
 
-            $descrip = fmt("These page titles match fuzzy with '%s'",
-                           WikiLink($page, 'auto'));
-
         $thispage = $page;
-
         $list = array();
-
         $pages = $dbi->getAllPages();
+
         while ($page = $pages->next()) {
             $name = $page->getName();
+
+            // name length comparison
+            $lengthdiff = abs(strlen($name) - strlen($thispage));
+
+            // english soundex comparison, higher = similar
             $metaphone_similar = similar_text(metaphone($thispage), metaphone($name));
-            $levenshtein = levenshtein(metaphone($thispage), metaphone($name));
-            if ($metaphone_similar < 3 || $levenshtein > 0 + abs(strlen($name) - strlen($thispage)))
+
+            // spelling similarity comparison, 0 = identical
+            $levenshtein = levenshtein($thispage, $name);
+
+            // fudge factors
+            $metamin = 2;
+            $lengthdiffweight = 0.5;
+            $metaphone_priority_factor = 2.5;
+            $levenmax = 5 + $lengthdiffweight * $lengthdiff;
+
+            $similarity_score = $metaphone_priority_factor * $metaphone_similar - $levenshtein;
+
+            if ($similarity_score < -20 || $levenshtein > $levenmax || $metaphone_similar < $metamin)
                 continue;
-            $similar = strlen($name) - strlen($thispage) - similar_text($thispage, $name);
-            $list = array_merge($list, array($name => $similar - $levenshtein));
+            $offset = +8; // more fudge
+            $list = array_merge($list, array($name => $similarity_score + $offset));
         }
 
-        array_multisort($list, SORT_NUMERIC, SORT_ASC);
-//        array_multisort($list, SORT_NUMERIC, SORT_DESC);
+        array_multisort($list, SORT_NUMERIC, SORT_DESC);
 
         $table = HTML::table(array('cellpadding' => 2,
                                    'cellspacing' => 1,
                                    'border'      => 0,
                                    'class'	 => 'pagelist'));
-        $table->setAttr('summary', "FIXME: add brief summary and column names");
+        $descrip = fmt("These page titles match fuzzy with '%s'",
+                        WikiLink($thispage, 'auto'));
         $table->pushContent(HTML::caption(array('align'=>'top'), $descrip));
-
         foreach ($list as $key => $val) {
-            //$val = (strlen($val) == 0) ? "0" : $val;
             $row = HTML::tr(HTML::td(WikiLink($key)),
                             HTML::td(array('align' => 'right'), $val));
             $table->pushContent($row);
         }
-
         return $table;
-
     }
-
 };
-        
+
 // Local Variables:
 // mode: php
 // tab-width: 8
