@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Transclude.php,v 1.1 2002-09-17 02:26:20 dairiki Exp $');
+rcs_id('$Id: Transclude.php,v 1.2 2002-09-17 02:34:18 dairiki Exp $');
 /**
  * Transclude:  Include an external web page within the body of a wiki page.
  * 
@@ -18,6 +18,9 @@ rcs_id('$Id: Transclude.php,v 1.1 2002-09-17 02:26:20 dairiki Exp $');
  *  page comes from the PhpWiki server.  Otherwise (due to "tainting"
  *  security checks in JavaScript) I can't figure out how to deduce the
  *  height of the transcluded page via JavaScript... :-/
+ *
+ *  Sometimes the auto-vertical resize code doesn't seem to make the iframe
+ *  quite big enough --- the scroll bars remain.  Not sure why.
  */
 
 class WikiPlugin_Transclude
@@ -61,7 +64,6 @@ extends WikiPlugin
                         'height' => $height,
                         'marginwidth' => 0,
                         'marginheight' => 0,
-                        'scrolling' => 'no',
                         'class' => 'transclude',
                         "onload" => "adjust_iframe_height(this);");
 
@@ -112,7 +114,6 @@ extends WikiPlugin
               // is from the same server...
               return;
             }
-            frame.scrolling = "no"; // This does nothing in Galeon
           }';
 
         return  HTML::script(array('language' => 'JavaScript',
