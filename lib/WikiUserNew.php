@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.90 2004-06-08 09:31:15 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.91 2004-06-08 14:57:43 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -913,7 +913,7 @@ extends _AnonUser
                         }
                     } elseif (in_array('LDAP', $dbh->getAuthParam('USER_AUTH_ORDER')) and
                               defined('LDAP_AUTH_HOST') and defined('LDAP_BASE_DN') and 
-                              function_exists('ldap_open')) {
+                              function_exists('ldap_connect')) {
                         if (check_php_version(5))
                             return new _LDAPPassUser($UserName,$this->_prefs);
                         else {
@@ -2989,6 +2989,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.90  2004/06/08 09:31:15  rurban
+// fixed typo detected by lucidcarbon (line 1663 assertion)
+//
 // Revision 1.89  2004/06/06 16:58:51  rurban
 // added more required ActionPages for foreign languages
 // install now english ActionPages if no localized are found. (again)
