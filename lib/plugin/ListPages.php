@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ListPages.php,v 1.7 2004-09-25 16:33:52 rurban Exp $');
+rcs_id('$Id: ListPages.php,v 1.8 2004-10-14 19:19:34 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -44,7 +44,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -72,7 +72,8 @@ extends WikiPlugin
             $info = split(',', $info);
         else
             $info = array();
-
+        // Fixme: if the ratings table does not exist it will break. 
+        // check if Theme isa 'wikilens'?
         if (in_array('top3recs', $info)) {
             require_once('lib/wikilens/Buddy.php');
             require_once('lib/wikilens/PageListColumns.php');
@@ -121,19 +122,6 @@ extends WikiPlugin
         $pagelist = new PageList($info, $exclude, $args);
         $pages_array = is_string($pages) ? explodePageList($pages) : (is_array($pages) ? $pages : array());
         $pagelist->addPageList($pages_array);
-        /*
-        if (is_string($exclude) and !empty($exclude)) {
-            $exclude = explodePageList($exclude);
-            // $argstr = preg_replace("/exclude=\S*\s/", "", $argstr);
-        }
-        $pages_array = is_string($pages) ? explodePageList($pages) : (is_array($pages) ? $pages : array());
-        foreach ($pages_array as $pagename) {
-            if (empty($exclude) or !in_array($pagename, $exclude)) {
-                $page = $dbi->getPage($pagename); 
-                $pagelist->addPage($page);
-            }
-        }
-        */
         return $pagelist;
     }
 };
@@ -152,6 +140,9 @@ class _PageList_Column_ListPages_count extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/09/25 16:33:52  rurban
+// add support for all PageList options
+//
 // Revision 1.6  2004/09/14 10:33:39  rurban
 // simplify exclude, add numbacklinks+numpagelinks
 //

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.25 2004-09-06 08:28:00 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.26 2004-10-14 19:19:34 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -323,7 +323,6 @@ function CheckDatabaseUpdate(&$request) {
     $tables = $dbh->_backend->listOfTables();
     $backend_type = $dbh->_backend->backendType();
     $prefix = isset($DBParams['prefix']) ? $DBParams['prefix'] : '';
-    extract($dbh->_backend->_table_names);
     foreach (explode(':','session:user:pref:member') as $table) {
         echo sprintf(_("check for table %s"), $table)," ...";
     	if (!in_array($prefix.$table, $tables)) {
@@ -354,6 +353,7 @@ function CheckDatabaseUpdate(&$request) {
     // mysql, mysqli or mysqlt
     if (phpwiki_version() >= 1030.099 and substr($backend_type,0,5) == 'mysql') {
   	echo _("check for page.id auto_increment flag")," ...";
+        extract($dbh->_backend->_table_names);
         assert(!empty($page_tbl));
   	$database = $dbh->_backend->database();
   	$fields = mysql_list_fields($database, $page_tbl, $dbh->_backend->connection());
@@ -496,6 +496,9 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.25  2004/09/06 08:28:00  rurban
+ rename genericQuery to genericSqlQuery
+
  Revision 1.24  2004/07/05 13:56:22  rurban
  sqlite autoincrement fix
 

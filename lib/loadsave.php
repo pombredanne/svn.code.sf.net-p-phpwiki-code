@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.124 2004-10-04 23:44:28 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.125 2004-10-14 19:19:33 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -416,6 +416,22 @@ function DumpHtmlToDir (&$request)
         $WikiTheme->HTML_DUMP_SUFFIX = HTML_DUMP_SUFFIX;
     $WikiTheme->DUMP_MODE = 'HTML';
     $request_args = $request->args;
+
+    // check if the dumped file will be accessible from outside
+    $doc_root = $request->get("DOCUMENT_ROOT");
+    $ldir = NormalizeLocalFileName($directory);
+    $wikiroot = NormalizeLocalFileName('');
+    if (string_starts_with($ldir, $doc_root)) {
+        $link_prefix = substr($directory, strlen($doc_root))."/";
+    } elseif (string_starts_with($ldir, $wikiroot)) {
+        $link_prefix = NormalizeWebFileName(substr($directory, strlen($wikiroot)))."/";
+    } else {
+        $prefix = '';
+        if (isWindows()) {
+            $prefix = '/' . substr($doc_root,0,2); // add drive where apache is installed
+        }
+        $link_prefix = "file://".$prefix.$directory."/";
+    }
     
     while ($page = $pages->next()) {
 	$request->args = $request_args; // some plugins might change them (esp. on POST)
@@ -455,14 +471,8 @@ function DumpHtmlToDir (&$request)
             $request->finish($msg);
         }
         $num = fwrite($fd, $data, strlen($data));
-        if($page->getName() != $filename) {
-            $prefix = '';
-            if (isWindows()) {	
-            	// drive where apache is installed
-                $prefix = '/' . substr($request->get("DOCUMENT_ROOT"),0,2);
-            }
-            $link = LinkURL("file://".$prefix.$directory."/".$filename, 
-                            $filename);
+        if ($page->getName() != $filename) {
+            $link = LinkURL($link_prefix.$filename, $filename);
             $msg->pushContent(HTML::small(_("saved as "), $link, " ... "));
         }
         $msg->pushContent(HTML::small(fmt("%s bytes written", $num), "\n"));
@@ -1199,6 +1209,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.124  2004/10/04 23:44:28  rurban
+ for older or CGI phps
+
  Revision 1.123  2004/09/25 16:26:54  rurban
  deferr notifies (to be improved)
 

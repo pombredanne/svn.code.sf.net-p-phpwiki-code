@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.61 2004-10-14 17:19:17 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.62 2004-10-14 19:19:34 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -570,18 +570,21 @@ extends WikiDB_backend
     function most_popular($limit=0, $sortby='-hits') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-        $order = "DESC";
         if ($limit < 0){ 
-            $order = "ASC";
+            $order = "hits ASC";
             $limit = -$limit;
             $where = ""; 
         } else {
+            $order = "hits DESC";
             $where = " AND hits > 0";
         }
-        if ($sortby != '-hits') 
-            $orderby = " ORDER BY " . $this->sortby($sortby, 'db');
-        else         
-            $orderby = " ORDER BY hits $order";
+        $orderby = '';
+        if ($sortby != '-hits') {
+            if ($order = $this->sortby($sortby, 'db'))
+                $orderby = " ORDER BY " . $order;
+        } else {
+            $orderby = " ORDER BY $order";
+        }
         //$limitclause = $limit ? " LIMIT $limit" : '';
         $sql = "SELECT "
             . $this->page_tbl_fields
@@ -1032,6 +1035,9 @@ extends WikiDB_backend_PearDB_generic_iter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.61  2004/10/14 17:19:17  rurban
+// allow most_popular sortby arguments
+//
 // Revision 1.60  2004/07/09 10:06:50  rurban
 // Use backend specific sortby and sortable_columns method, to be able to
 // select between native (Db backend) and custom (PageList) sorting.

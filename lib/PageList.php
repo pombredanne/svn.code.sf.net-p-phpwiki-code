@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.115 2004-10-14 17:15:05 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.116 2004-10-14 19:19:33 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -620,7 +620,7 @@ class PageList {
         return empty($this->_pages);
     }
 
-    function addPage($page_handle) {
+    function addPage(&$page_handle) {
     	if (!empty($this->_excluded_pages)) {
             if (!in_array((is_string($page_handle) ? $page_handle : $page_handle->getName()),
                           $this->_excluded_pages))
@@ -630,7 +630,7 @@ class PageList {
         }
     }
 
-    function _getPageFromHandle($page_handle) {
+    function _getPageFromHandle(&$page_handle) {
         if (is_string($page_handle)) {
             if (empty($page_handle)) return $page_handle;
             //$dbi = $GLOBALS['request']->getDbh(); // memory!
@@ -643,7 +643,7 @@ class PageList {
      * Take a PageList_Page object, and return an HTML object to display
      * it in a table or list row.
      */
-    function _renderPageRow ($page_handle, $i = 0) {
+    function _renderPageRow (&$page_handle, $i = 0) {
         $page_handle = $this->_getPageFromHandle($page_handle);
         if (!isset($page_handle) || empty($page_handle)
             || in_array($page_handle->getName(), $this->_excluded_pages))
@@ -1424,6 +1424,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.115  2004/10/14 17:15:05  rurban
+// remove class _PageList_Page, fix sortby=0 (start with 1, use strings), fix _PageList_Column_content for old phps, hits as int
+//
 // Revision 1.114  2004/10/12 13:13:19  rurban
 // php5 compatibility (5.0.1 ok)
 //

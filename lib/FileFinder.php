@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.25 2004-10-12 13:13:19 rurban Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.26 2004-10-14 19:19:33 rurban Exp $');
 
 //echo " filefinder: ", error_reporting();
 require_once(dirname(__FILE__).'/stdlib.php');
@@ -490,12 +490,16 @@ function NormalizeLocalFileName($file) {
         $finder = new FileFinder;
     }
     // remove "/lib" from dirname(__FILE__)
-    if (defined("PHPWIKI_DIR")) $wikidir = PHPWIKI_DIR;
-    else $wikidir = preg_replace('/.lib$/','',dirname(__FILE__));
-    $wikidir = $finder->_strip_last_pathchar($wikidir);
-    $pathsep = $finder->_use_path_separator($wikidir);
-    // return PHPWIKI_DIR . "/" . $file;
-    return $finder->slashifyPath($wikidir . $pathsep . $file);
+    if ($finder->_is_abs($file))
+        return $finder->slashifyPath($file);
+    else {
+        if (defined("PHPWIKI_DIR")) $wikidir = PHPWIKI_DIR;
+        else $wikidir = preg_replace('/.lib$/','',dirname(__FILE__));
+        $wikidir = $finder->_strip_last_pathchar($wikidir);
+        $pathsep = $finder->_use_path_separator($wikidir);
+        return $finder->slashifyPath($wikidir . $pathsep . $file);
+        // return PHPWIKI_DIR . "/" . $file;
+    }
 }
 
 /** 
@@ -561,6 +565,9 @@ function isCygwin() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.25  2004/10/12 13:13:19  rurban
+// php5 compatibility (5.0.1 ok)
+//
 // Revision 1.24  2004/08/05 17:33:51  rurban
 // strange problem with WikiTheme
 //

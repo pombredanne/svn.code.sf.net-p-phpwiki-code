@@ -1,9 +1,9 @@
 <?php // -*-php-*-
-rcs_id('$Id: VisualWiki.php,v 1.16 2004-10-12 15:34:47 rurban Exp $');
+rcs_id('$Id: VisualWiki.php,v 1.17 2004-10-14 19:19:34 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
- This file is (not yet) part of PhpWiki.
+ This file is part of PhpWiki.
 
  PhpWiki is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -44,18 +44,16 @@ if (PHP_OS == "Darwin") { // Mac OS X
 elseif (isWindows()) {
   $dotbin = 'dot';
   define('VISUALWIKIFONT', 'Arial');
+} elseif ($_SERVER["SERVER_NAME"] == 'phpwiki.sourceforge.net') { // sf.net hack
+    $dotbin = '/home/groups/p/ph/phpwiki/bin/dot';
+    define('VISUALWIKIFONT', 'luximr'); 
 } else { // other os
     $dotbin = '/usr/local/bin/dot';
-    // sf.net specials
-    if ($_SERVER["SERVER_NAME"] == 'phpwiki.sourceforge.net') {
-        $dotbin = '/home/groups/p/ph/phpwiki/bin/dot';
-        define('VISUALWIKIFONT', 'luximr'); 
-    } else {
-        // Name of the Truetypefont - Helvetica is probably easier to read
-        define('VISUALWIKIFONT', 'Helvetica');
-        //define('VISUALWIKIFONT', 'Times');
-        //define('VISUALWIKIFONT', 'Arial');
-    }
+    // Name of the Truetypefont - Helvetica is probably easier to read
+    define('VISUALWIKIFONT', 'Helvetica');
+    //define('VISUALWIKIFONT', 'Times');
+    //define('VISUALWIKIFONT', 'Arial');
+
     // The default font paths do not find your fonts, set the path here:
     //$fontpath = "/usr/X11R6/lib/X11/fonts/TTF/";
     //$fontpath = "/usr/share/fonts/default/TrueType/";
@@ -87,7 +85,7 @@ extends WikiPluginCached
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.16 $");
+                            "\$Revision: 1.17 $");
     }
 
     /**
@@ -436,7 +434,7 @@ extends WikiPluginCached
             $this->findbest($recent_nb,   'age',         true),
             $this->findbest($refined_nb,  'revtime',     true),
             $x = $this->findbest($backlink_nb, 'backlink_nb', false),
-//            $this->findbest($large_nb,    'size',        false),
+//          $this->findbest($large_nb,    'size',        false),
             $include_list));
 
         foreach($all_selected as $name)
@@ -598,6 +596,7 @@ extends WikiPluginCached
      * @return     boolean  error status; true=ok; false=error
      */
     function execute($cmd, $until = false) {
+        // cmd must redirect stderr to stdout though!
         $errstr = exec($cmd); //, $outarr, $returnval); // normally 127
         //$errstr = join('',$outarr);
         $ok = empty($errstr);
@@ -635,7 +634,6 @@ extends WikiPluginCached
      */
     function invokeDot($argarray) {
         global $dotbin;
-        //$cacheparams = $GLOBALS['CacheParams'];
         $tempfiles = $this->tempnam('VisualWiki');
         $gif = $argarray['imgtype'];
         $ImageCreateFromFunc = "ImageCreateFrom$gif";
@@ -823,6 +821,9 @@ function interpolate($a, $b, $pos) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2004/10/12 15:34:47  rurban
+// redirect stderr to display the failing msg
+//
 // Revision 1.15  2004/09/08 13:38:00  rurban
 // improve loadfile stability by using markup=2 as default for undefined markup-style.
 // use more refs for huge objects.
