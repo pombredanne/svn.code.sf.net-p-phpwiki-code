@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: IncludePage.php,v 1.15 2002-01-30 23:41:54 dairiki Exp $');
+rcs_id('$Id: IncludePage.php,v 1.16 2002-02-01 04:02:13 carstenklapp Exp $');
 /**
  * IncludePage:  include text from another wiki page in this one
  * usage:   <?plugin IncludePage page=OtherPage rev=6 quiet=1 words=50 lines=6?>
@@ -42,7 +42,7 @@ extends WikiPlugin
         return $new;
     }
 
-    function extractSection ($section, $content) {
+    function extractSection ($section, $content, $page, $quiet) {
         $qsection = preg_replace('/\s+/', '\s+', preg_quote($section, '/'));
 
         if (preg_match("/ ^(!{1,})\\s*$qsection" // section header
@@ -55,7 +55,11 @@ extends WikiPlugin
             $text = preg_replace("/\\s*^-{4,}\\s*$/m", "", $match[2]);
             return explode("\n", $text);
         }
-        return array(sprintf(_("<%s: no such section>"), $section));
+        if ($quiet)
+            $mesg = $page ." ". $section;
+        else
+            $mesg = $section;
+        return array(sprintf(_("<%s: no such section>"), $mesg));
     }
 
     function error($msg) {
@@ -96,7 +100,7 @@ extends WikiPlugin
         $c = $r->getContent();
 
         if ($section)
-            $c = $this->extractSection($section, $c);
+            $c = $this->extractSection($section, $c, $page, $quiet);
         if ($lines)
             $c = array_slice($c, 0, $lines);
         if ($words)
