@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.216 2004-11-11 18:31:26 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.217 2004-11-16 17:31:03 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -690,8 +690,8 @@ class WikiPageName
  */
 function ConvertOldMarkup ($text, $markup_type = "block") {
 
-    //static $subs;
-    //static $block_re;
+    static $subs;
+    static $block_re;
     
     // FIXME:
     // Trying to detect why the 2nd paragraph of OldTextFormattingRules or
@@ -790,9 +790,9 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
 	removed .|\n in the anchor not to crash on /m because with /m "." already includes \n
 	this breaks headings but it doesn't crash anymore (crash on non-cgi, non-cli only)
 	*/
-        $block_re = ( '/\A((?m:.)*?)(^(?m:'
+        $block_re = ( '/\A((?:.|\n)*?)(^(?:'
                       . join("|", $blockpats)
-                      . ').*$)\n?/' );
+                      . ').*$)\n?/m' );
         
     }
     
@@ -1811,6 +1811,9 @@ function printSimpleTrace($bt) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.216  2004/11/11 18:31:26  rurban
+// add simple backtrace on such general failures to get at least an idea where
+//
 // Revision 1.215  2004/11/11 14:34:12  rurban
 // minor clarifications
 //
