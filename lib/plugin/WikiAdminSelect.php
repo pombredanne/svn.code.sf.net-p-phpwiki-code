@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSelect.php,v 1.4 2003-02-24 01:36:27 dairiki Exp $');
+rcs_id('$Id: WikiAdminSelect.php,v 1.5 2003-02-24 19:38:04 dairiki Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -47,7 +47,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -98,7 +98,7 @@ extends WikiPlugin
         $pagename = $request->getArg('pagename');
         // GetUrlToSelf() with all given params
         //$uri = $GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI']; // without s would be better.
-        $uri = $request->getURLtoSelf($request->debugVars(), array('verify'));
+        $uri = $request->getURLtoSelf(false, array('verify'));
         $form = HTML::form(array('action' => $uri, 'method' => 'POST'));
         if ($request->getArg('submit') == 'WikiAdminSelect')
             $p = false;
@@ -181,6 +181,10 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2003/02/24 01:36:27  dairiki
+// Don't use PHPWIKI_DIR unless it's defined.
+// (Also typo/bugfix in SystemInfo plugin.)
+//
 // Revision 1.3  2003/02/22 20:49:56  dairiki
 // Fixes for "Call-time pass by reference has been deprecated" errors.
 //
