@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RedirectTo.php,v 1.1 2002-08-27 21:51:31 rurban Exp $');
+rcs_id('$Id: RedirectTo.php,v 1.2 2002-09-02 10:01:08 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -53,15 +53,16 @@ extends WikiPlugin
         $href = $args['href'];
         $page = $args['page'];
         if (!$href and !$page)
-            return $this->error(sprintf(_("href=%s parameter missing"), 'href'));
+            return $this->error(sprintf(_("%s or %s parameter missing"), 'href', 'page'));
         // FIXME: unmunged url hack
         if ($href)
             $url = preg_replace('/href=(.*)\Z/','$1',$argstr);
         else {
-            $url = $request->getURLtoSelf(array_merge(array('pagename' => $page), $args['args']));
+            $url = $request->getURLtoSelf(array_merge(array('pagename' => $page), 
+                                                      SplitQueryArgs($args['args'])));
         }
         if ($page == $request->getArg($pagename)) {
-            return $this->error(sprintf(_("Recursive redirect to self %s"), $url));
+            return $this->error(sprintf(_("Recursive redirect to self: '%s'"), $url));
         }
         return $request->redirect($url);
     }
