@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: info.tmpl,v 1.7 2002-08-22 23:28:32 rurban Exp $ -->
+<!-- $Id: info.tmpl,v 1.8 2002-09-15 20:21:16 rurban Exp $ -->
 <?php
 
 $modifed = $Theme->formatDateTime($revision->get('mtime'));
@@ -67,17 +67,18 @@ if ($is_current = $revision->isCurrent()) {
         $LOCKED_CB->setAttr('onclick', $clickcheckb);
     }
 
-    $label['date'] = _("Last Modified:");
-    $label['author'] = _("Last Author:");
+    $label['date'] = _("Last Modified") . ':';
+    $label['author'] = _("Last Author") . ':';
     $label['summary'] = _("Last Summary") . ':';
 
 } else {
-    $label['date'] = _("Saved on:");
-    $label['author'] = _("Author:");
+    $label['date'] = _("Saved on") . ':';
+    $label['author'] = _("Author") . ':';
     $label['summary'] = _("Summary") . ':';
 }
 
 $tableSummary = fmt("Statistics about %s.", $page->getName());
+$Sep = $Theme->getButtonSeparator();
 
 ?>
 
@@ -87,7 +88,7 @@ $tableSummary = fmt("Statistics about %s.", $page->getName());
 
 <?php if (!$is_current) { ?>
   <tr>
-    <td align="right" class="pageinfo"><?=_("Supplanted on:")?></td>
+    <td align="right" class="pageinfo"><?=_("Supplanted on")?>:</td>
     <td><?= $Theme->formatDateTime($revision->get('_supplanted')) ?></td>
   </tr>
 <?php } ?>
@@ -99,18 +100,18 @@ $tableSummary = fmt("Statistics about %s.", $page->getName());
     <td align="right" class="pageinfo"><?= $label['author'] ?></td>
     <td><?= $author ?> <span class="pageinfo-authorid">(<?= $authorId ?>)</span></td>
   </tr><tr>
-    <td align="right" class="pageinfo"><?=_("Page Version:")?></td>
+    <td align="right" class="pageinfo"><?=_("Page Version")?>:</td>
     <td><?= $version ?></td>
   </tr><tr>
-    <td align="right" class="pageinfo"><?=_("Markup:")?></td>
+    <td align="right" class="pageinfo"><?=_("Markup")?>:</td>
     <td><?= $markupVersion ?></td>
   </tr><tr>
-    <td align="right" class="pageinfo"><?=_("Size:")?></td>
+    <td align="right" class="pageinfo"><?=_("Size")?>:</td>
     <td><?= $wordcount ?>, <?= $size ?></td>
 
 <?php if ($is_current) { ?>
   </tr><tr>
-    <td align="right" class="pageinfo"><?= _("Hits:") ?></td>
+    <td align="right" class="pageinfo"><?= _("Hits") ?>:</td>
     <td><?= $hits ?></td>
 <?php } ?>
 
@@ -126,3 +127,9 @@ $tableSummary = fmt("Statistics about %s.", $page->getName());
 
   </tr>
 </table>
+
+<?= Button(_("PageHistory")) ?>
+<?=$Sep?><?= Button("diff") ?> 
+<?php if (defined('DEBUG') || $user->isAdmin()) { ?>
+	<?=$Sep?><?= Button(_("DebugInfo")) ?> <!-- For debugging only, really -->
+<?php } ?>

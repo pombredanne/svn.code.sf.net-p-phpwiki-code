@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: navbar.tmpl,v 1.14 2002-09-02 14:36:59 rurban Exp $ -->
+<!-- $Id: navbar.tmpl,v 1.15 2002-09-15 20:21:16 rurban Exp $ -->
 <?php
 
 $s = $Theme->getButtonSeparator();
@@ -10,7 +10,7 @@ $s = $Theme->getButtonSeparator();
       method="get" accept-charset="<?=CHARSET?>">
   <div id="navbuttons">
    <?= WikiLink(_("RecentChanges"), "button") ?>
-   <?=$s?><?= WikiLink(_("FindPage"), "button") ?>
+   <?=$s?><?= WikiLink(_("FindFile"), "button") ?>
    <?=$s?><input type="hidden" name="auto_redirect" value="1" />
       <?php if (! USE_PATH_INFO) { ?>
       <input type="hidden" name="pagename" value="<?=_("TitleSearch")?>" />

@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.28 2002-09-01 15:52:50 rurban Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.29 2002-09-15 20:21:16 rurban Exp $ -->
 <?php
 // Todo: Move the logic and code to the plugin
 // This is very experimental and the read-only part an ugly hack so far.
@@ -106,11 +106,11 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
 	      sprintf("%12s: [% 10s]\n",_("Password"),$request->getPref('passwd')),
 	      sprintf("%12s: [% 10s]  %15s: [% 8s]\n",
 		      _("Auth Level"),$user->_level,_("Auth Method"),$user->_authmethod),
-	      sprintf("%12s: [% 10s]\n",_("Homepage"),$user->homePage() ? $user->_homepage->_pagename : ''),
+	      sprintf("%12s: [% 10s]\n",_("HomePage"),$user->homePage() ? $user->_homepage->_pagename : ''),
 	      sprintf("%12s: [% 10s]\n",_("E-Mail"),$request->getPref('email')),
 	      sprintf("%12s: [% 10s]\n",_("Notify"),$request->getPref('notifyPages')),
-	      sprintf("%12s: [% 10s] %s %8s: [% 10s] \n",_("Theme"), $request->getPref('theme'), _("Current"),_("Theme"),$Theme->_name),
-	      sprintf("%12s: [% 10s] %s %8s: [% 10s] \n",_("Language"),$request->getPref('lang'),_("Current"),_("Language"),$GLOBALS['LANG'])
+	      sprintf("%12s: [% 10s] %16s: [% 10s] \n",_("Theme"), $request->getPref('theme'), _("Current Theme"),$Theme->_name),
+	      sprintf("%12s: [% 10s] %16s: [% 10s] \n",_("Language"),$request->getPref('lang'),_("Current Language"),$GLOBALS['LANG'])
 	      ) ?>
 <?php } ?>
 
