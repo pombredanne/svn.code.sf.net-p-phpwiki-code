@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RandomPage.php,v 1.5 2002-01-30 23:41:54 dairiki Exp $');
+rcs_id('$Id: RandomPage.php,v 1.6 2002-01-31 01:14:14 dairiki Exp $');
 
 require_once('lib/PageList.php');
 
@@ -18,10 +18,8 @@ extends WikiPlugin
 
     function getDefaultArguments() {
         return array('pages'        => 1,
-                     'showname'     => false,
-                     'pagename'     => '[pagename]', // hackish
+                     'redirect'     => false,
                      'exclude'      => '',
-                     'include_self' => 0, // hackish
                      'info'         => '');
     }
 
@@ -30,43 +28,27 @@ extends WikiPlugin
 
         $allpages = $dbi->getAllPages();
 
-        while ($page = $allpages->next())
-            $pagearray[] = $page;
+        $exclude = $exclude ? explode(",", $exclude) : array();
+
+        while ($page = $allpages->next()) {
+            if (!in_array($page->getName(), $exclude))
+                $pagearray[] = $page;
+        }
 
         better_srand(); // Start with a good seed.
 
-        if ($pages < 2) {
+        if ($pages == 1 && $redirect && $pagearray) {
             $page = $pagearray[array_rand($pagearray)];
-            if ($showname)
-                return WikiLink($page);
-            else
-                $request->redirect(WikiURL($page, false, 'absurl'));
-        } else {
-            $pages = min($pages, 20, count($pagearray));
-
-            $PageList = new PageList();
-            $this->_init($pagename, &$PageList, $info, $exclude, $include_self);
-
-            $shuffle = array_rand($pagearray, $pages);
-            foreach ($shuffle as $i) {
-                $PageList->addPage($pagearray[$i]);
-            }
-            return $PageList->getContent();
+            $request->redirect(WikiURL($page, false, 'absurl'));
         }
+
+        $pages = min( max(1, (int)$pages), 20, count($pagearray));
+        $pagelist = new PageList($info);
+        $shuffle = array_rand($pagearray, $pages);
+        foreach ($shuffle as $i)
+            $pagelist->addPage($pagearray[$i]);
+        return $pagelist;
     }
-
-    function _init(&$page, &$pagelist, $info = '', $exclude = '', $include_self = '') {
-	if ($info)
-            foreach (explode(",", $info) as $col)
-                $pagelist->insertColumn($col);
-
-	if ($exclude)
-            foreach (explode(",", $exclude) as $excludepage)
-                $pagelist->excludePageName($excludepage);
-	if (!$include_self)
-            $pagelist->excludePageName($page);
-   }
-
 };
 
 

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: LikePages.php,v 1.16 2002-01-30 23:41:54 dairiki Exp $');
+rcs_id('$Id: LikePages.php,v 1.17 2002-01-31 01:14:14 dairiki Exp $');
 
 require_once('lib/TextSearchQuery.php');
 require_once('lib/PageList.php');
@@ -73,8 +73,9 @@ extends WikiPlugin
         
         $match_re = '/' . join('|', $match) . '/';
 
-        $pagelist = new PageList;
-        $this->_init($page, &$pagelist, $info, $exclude);
+        $pagelist = new PageList($info, $exclude);
+        if (!$noheader)
+            $pagelist->setCaption($descrip);
 
         $pages = $dbi->titleSearch($query);
 
@@ -82,27 +83,11 @@ extends WikiPlugin
             $name = $page->getName();
             if (!preg_match($match_re, $name))
                 continue;
-
             $pagelist->addPage($page);
         }
 
-        if (!$noheader)
-            $pagelist->setCaption($descrip);
-
         return $pagelist;
     }
-
-    function _init(&$page, &$pagelist, $info = '', $exclude = '', $include_self = '') {
-	if ($info)
-            foreach (explode(",", $info) as $col)
-                $pagelist->insertColumn($col);
-
-	if ($exclude)
-            foreach (explode(",", $exclude) as $excludepage)
-                $pagelist->excludePageName($excludepage);
-	if (!$include_self)
-            $pagelist->excludePageName($page);
-   }
 
     function _quote($str) {
         return "'" . str_replace("'", "''", $str) . "'";

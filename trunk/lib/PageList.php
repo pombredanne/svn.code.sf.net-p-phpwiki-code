@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.30 2002-01-30 23:41:54 dairiki Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.31 2002-01-31 01:14:14 dairiki Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -131,14 +131,31 @@ class _PageList_Column_pagename extends _PageList_Column_base {
 };
 
         
+
 class PageList {
-    function PageList () {
-        $this->_caption = "";
-        $this->_columns = array(new _PageList_Column_pagename);
-        $this->_pages = array();
-        $this->_pages_excluded = array();
+    var $_group_rows = 3;
+    var $_columns = array();
+    var $_excluded_pages = array();
+    var $_rows = array();
+    var $_caption = "";
+    var $_pagename_seen = false;
+    
+    function PageList ($columns = false, $exclude = false) {
+        if ($columns) {
+            if (!is_array($columns))
+                $columns = explode(',', $columns);
+            foreach ($columns as $col)
+                $this->_addColumn($col);
+        }
+        $this->_addColumn('pagename');
+
+        if ($exclude) {
+            if (!is_array($exclude))
+                $exclude = explode(',', $exclude);
+            $this->_excluded_pages = $exclude;
+        }
+        
         $this->_messageIfEmpty = _("<no matches>");
-        $this->_group_rows = 3;
     }
 
     function setCaption ($caption_string) {
@@ -156,84 +173,40 @@ class PageList {
         $this->_messageIfEmpty = $msg;
     }
 
-    /**
-     * Add a column to the listing.
-     *
-     * @input $column string Which column to add.
-     * $Column can be one of <ul>
-     * <li>mtime
-     * <li>hits
-     * <li>summary
-     * <li>version
-     * <li>author
-     * <li>locked
-     * <li>minor
-     * </ul>
-     *
-     * If you would like to specify an alternate heading for the
-     * column, concatenate the desired adding to $column, after adding
-     * a colon.  E.g. 'hits:Page Views'.
-     */ 
-    function addColumn ($new_columnname) {
-        if (($col = $this->_getColumn($new_columnname))) {
-           if(! $this->column_exists($col->_heading)) {
-                array_push($this->_columns, $col);
-            }
-        }
-    }
-
-    function insertColumn ($new_columnname) {
-        if (($col = $this->_getColumn($new_columnname))) {
-           if(! $this->column_exists($col->_heading)) {
-                array_unshift($this->_columns, $col);
-            }
-        }
-    }
-
-    function column_exists ($heading) {
-        foreach ($this->_columns as $val) {
-            if ($val->_heading == $heading)
-                return true;
-        }
-        return false;
-    }
-
-    function page_exists ($page) {
-        foreach ($this->_pages as $val) {
-            if ($val->getName() == $page->getName())
-                return true;
-        }
-        return false;
-    }
-
-    function addPage ($page_handle) {
-        if(! $this->page_excluded($page_handle->getName())) {
-            if(! $this->page_exists(&$page_handle)) {
-                array_push($this->_pages, &$page_handle);
-            }
-        }
-    }
-
-    function excludePageName ($pagename) {
-        if(! $this->page_excluded($pagename)) {
-            array_push($this->_pages_excluded, $pagename);
-        }
-    }
-
-    function page_excluded ($pagename) {
-        foreach ($this->_pages_excluded as $val) {
-            if ($val == $pagename)
-                return true;
-        }
-        return false;
-    }
 
     function getTotal () {
-        return count($this->_pages);
+        return count($this->_rows);
     }
 
     function isEmpty () {
-        return empty($this->_pages);
+        return empty($this->_rows);
+    }
+    
+    function addPage ($page_handle) {
+        if (in_array($page_handle->getName(), $this->_excluded_pages))
+            return;             // exclude page.
+
+        $group = (int)(count($this->_rows) / $this->_group_rows);
+        $class = ($group % 2) ? 'oddrow' : 'evenrow';
+        $revision_handle = false;
+
+        if (count($this->_columns) > 1) {
+            $row = HTML::tr(array('class' => $class));
+            foreach ($this->_columns as $col)
+                $row->pushContent($col->format($page_handle, $revision_handle));
+        }
+        else {
+            $col = $this->_columns[0];
+            $row = HTML::li(array('class' => $class),
+                            $col->_getValue($page_handle, $revision_handle));
+        }
+
+        $this->_rows[] = $row;
+    }
+
+    function addPages ($page_iter) {
+        while ($page = $page_iter->next())
+            $this->addPage($page);
     }
     
 
@@ -261,10 +234,12 @@ class PageList {
     ////////////////////
     // private
     ////////////////////
-    function _getColumn ($column) {
+    function _addColumn ($column) {
         static $types;
         if (empty($types)) {
-            $types = array( 'mtime'
+            $types = array( 'pagename'
+                            => new _PageList_Column_pagename,
+                            'mtime'
                             => new _PageList_Column_time('rev:mtime', _("Last Modified")),
                             'hits'
                             => new _PageList_Column('hits',  _("Hits"), 'right'),
@@ -282,6 +257,10 @@ class PageList {
                             );
         }
 
+        if (isset($this->_columns_seen[$column]))
+            return false;       // Already have this one.
+        $this->_columns_seen[$column] = true;
+        
         if (strstr($column, ':'))
             list ($column, $heading) = explode(':', $column, 2);
 
@@ -293,9 +272,11 @@ class PageList {
         $col = $types[$column];
         if (!empty($heading))
             $col->setHeading($heading);
-        return $col;
-    }
+
+        $this->_columns[] = $col;
         
+        return true;
+    }
     
     // make a table given the caption
     function _generateTable($caption) {
@@ -312,36 +293,14 @@ class PageList {
         $row = HTML::tr();
         foreach ($this->_columns as $col)
             $row->pushContent($col->heading());
-        $table->pushContent(HTML::thead($row));
-        
 
-        $tbody = HTML::tbody();
-        $n = 0;
-        foreach ($this->_pages as $page_handle) {
-            $row = HTML::tr();
-            $revision_handle = false;
-            foreach ($this->_columns as $col) {
-                $row->pushContent($col->format($page_handle, $revision_handle));
-            }
-            $group = (int)($n++ / $this->_group_rows);
-            $row->setAttr('class', ($group % 2) ? 'oddrow' : 'evenrow');
-            $tbody->pushContent($row);
-        }
-        $table->pushContent($tbody);
+        $table->pushContent(HTML::thead($row),
+                            HTML::tbody(false, $this->_rows));
         return $table;
     }
 
     function _generateList($caption) {
-        $list = HTML::ul(array('class' => 'pagelist'));
-        $n = 0;
-        foreach ($this->_pages as $page_handle) {
-            $group = (int)($n++ / $this->_group_rows);
-            $class = ($group % 2) ? 'oddrow' : 'evenrow';
-
-            $list->pushContent(HTML::li(array('class' => $class),
-                                        WikiLink($page_handle)));
-        }
-
+        $list = HTML::ul(array('class' => 'pagelist'), $this->_rows);
         return $caption ? HTML(HTML::p($caption), $list) : $list;
     }
 
