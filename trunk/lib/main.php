@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.61 2002-02-22 23:18:39 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.62 2002-02-22 23:25:22 carstenklapp Exp $');
 
 
 include "lib/config.php";
@@ -8,7 +8,7 @@ require_once('lib/Request.php');
 require_once("lib/WikiUser.php");
 require_once('lib/WikiDB.php');
 
-define ('DEBUG', 1);
+//define ('DEBUG', 1);
 
 // FIXME: move to config?
 if (defined('THEME')) {
