@@ -4,7 +4,7 @@ function rcs_id($id) {
   $RcsIdentifiers .= "$id\n";
 };
 
-rcs_id('$Id: wiki_config.php3,v 1.19.2.3 2000-07-30 22:30:36 dairiki Exp $');
+rcs_id('$Id: wiki_config.php3,v 1.19.2.4 2000-08-01 18:20:51 dairiki Exp $');
 
    /*
       Constants and settings. Edit the values below for
@@ -19,11 +19,6 @@ rcs_id('$Id: wiki_config.php3,v 1.19.2.3 2000-07-30 22:30:36 dairiki Exp $');
    // have to: if you don't it will be figured out dynamically.
 
    //$ServerAddress = "http://127.0.0.1:8080/phpwiki/";
-
-   if (!$ServerAddress) {
-      $ServerAddress = "http://$HTTP_HOST"
-	   . preg_replace(':[^/]*$:', '', $SCRIPT_NAME);
-   }
 
    // if you are using MySQL instead of a DBM to store your
    // Wiki pages, use wiki_mysql.php3 instead of wiki_dbmlib.php3
@@ -116,12 +111,12 @@ rcs_id('$Id: wiki_config.php3,v 1.19.2.3 2000-07-30 22:30:36 dairiki Exp $');
    define('WIKI_PGSRC', './pgsrc'); // Default (old) behavior.
    //define('WIKI_PGSRC', './wiki.zip'); // New style.
   
-   $ScriptName = "index.php3";
-   $AdminName = "admin.php3";
+   //$ScriptName = "index.php3";
+   //$AdminName = "admin.php3";
 
 
-//$SignatureImg = "$ServerAddress/signature.png";
-// $LogoURL = "$ServerAddress/wikibase.png";
+   //$SignatureImg = "$ServerAddress/signature.png";
+   //$LogoURL = "$ServerAddress/wikibase.png";
 
    // date & time formats used to display modification times, etc.
    // formats are given as format strings to PHP date() function
@@ -133,7 +128,20 @@ rcs_id('$Id: wiki_config.php3,v 1.19.2.3 2000-07-30 22:30:36 dairiki Exp $');
    $AllowedProtocols = "http|https|mailto|ftp|news|gopher";
    
    // you shouldn't have to edit anything below this line
+   if (!$HTTP_HOST) {
+     $HTTP_HOST = $SERVER_NAME;
+     if ($SERVER_PORT != 80)
+	 $HTTP_HOST .= ":$SERVER_PORT";
+   }
 
+   if (!$ServerAddress) {
+     // See http://hoohoo.ncsa.uiuc.edu/cgi/env.html for a list
+     // of the environment variables specified by CGI/1.1.
+     $ServerAddress = "http://$HTTP_HOST"
+	  . preg_replace(':[^/]*$:', '', $SCRIPT_NAME);
+   }
+
+   $ScriptName = preg_replace(':^.*/:', '', $SCRIPT_NAME);
    $ScriptUrl = $ServerAddress . $ScriptName;
 
    // Apache won't show REMOTE_HOST unless the admin configured it

@@ -14,7 +14,7 @@ if (!defined('WIKI_ADMIN'))
   require('wiki_config.php3');
 }
 
-rcs_id('$Id: index.php3,v 1.7.2.3 2000-07-31 22:07:32 dairiki Exp $');
+rcs_id('$Id: index.php3,v 1.7.2.4 2000-08-01 18:20:51 dairiki Exp $');
 
    /*
       The main page, i.e. the main loop.
@@ -85,7 +85,7 @@ function wiki_lock ($action, $pagename)
    if ( ! $dbi->isWikiPage('FrontPage') ) {
      include("wiki_setupwiki.php3");
    }
-  
+
    switch ($action) {
    case 'unlock':
    case 'lock':

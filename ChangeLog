@@ -1,3 +1,12 @@
+2000-08-01  Geoffrey T. Dairiki  <dairiki@dairiki.org>
+
+	* wiki_config.php3, admin.php3: Cleanup determination
+	of $ScriptName, et. al.
+
+	* wiki_ziplib.php3: Never use gzcompress().  It outputs its
+	compressed data with different headers/checksum than the gzip
+	format obtained through the used of gzopen()/gzwrite().
+
 2000-07-31  Geoffrey T. Dairiki  <dairiki@dairiki.org>
 
 	* index.php3: Added total page generation time to {DebugInfo}.
