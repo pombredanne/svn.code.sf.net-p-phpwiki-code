@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: removepage.php,v 1.10 2002-01-30 23:41:54 dairiki Exp $');
+rcs_id('$Id: removepage.php,v 1.11 2002-02-13 01:16:19 carstenklapp Exp $');
 require_once('lib/Template.php');
 
 function RemovePage (&$request) {
@@ -7,8 +7,6 @@ function RemovePage (&$request) {
 
     $page = $request->getPage();
     $pagelink = WikiLink($page);
-    $rev = $page->getCurrentRevision();
-    $version = $rev->getVersion();
 
     if ($request->getArg('cancel')) {
         $request->redirect(WikiURL($page));
@@ -17,13 +15,15 @@ function RemovePage (&$request) {
                      HTML::p(fmt("Return to %s.", $pagelink)));
     }
 
-    
+    $current = $page->getCurrentRevision();
+    $version = $current->getVersion();
+
     if (!$request->isPost() || !$request->getArg('verify')) {
 
         // FIXME: button should be class wikiadmin
         $removeB = Button('submit:verify', _("Remove the page now"));
         $cancelB = Button('submit:cancel', _("Cancel"));
-        
+
         $html = HTML(HTML::h2(fmt("You are about to remove '%s' permanently!", $pagelink)),
                      HTML::form(array('method' => 'post',
                                       'action' => WikiURL($page)),
@@ -62,5 +62,4 @@ function RemovePage (&$request) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-
-?>   
+?>
