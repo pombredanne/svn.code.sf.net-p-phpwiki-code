@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.8\n"
-"POT-Creation-Date: 2002-01-08 19:04-0500\n"
+"POT-Creation-Date: 2002-01-10 16:25-0500\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Carsten Klapp <carstenklapp@mac.com>, Arno Hollosi "
 "<ahollosi@mail.com>\n"
@@ -14,31 +14,31 @@ msgstr ""
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../lib/Toolbar.php:136 ../templates/browse.html:41
+#: ../lib/Toolbar.php:139 ../templates/browse.html:41
 msgid "Page locked"
 msgstr "Seite gesperrt"
 
-#: ../lib/Toolbar.php:139 ../templates/browse.html:44
+#: ../lib/Toolbar.php:144 ../templates/browse.html:44
 msgid "Edit"
 msgstr "Editieren"
 
-#: ../lib/Toolbar.php:142 ../templates/browse.html:47
+#: ../lib/Toolbar.php:149 ../templates/browse.html:47
 msgid "Edit old revision"
 msgstr "Alte Revision editieren"
 
-#: ../lib/Toolbar.php:147 ../templates/browse.html:52
+#: ../lib/Toolbar.php:156 ../templates/browse.html:52
 msgid "Unlock page"
 msgstr "Seite freigeben"
 
-#: ../lib/Toolbar.php:149 ../templates/browse.html:54
+#: ../lib/Toolbar.php:160 ../templates/browse.html:54
 msgid "Lock page"
 msgstr "Seite sperren"
 
-#: ../lib/Toolbar.php:151 ../lib/removepage.php:20 ../templates/browse.html:56
+#: ../lib/Toolbar.php:164 ../lib/removepage.php:20 ../templates/browse.html:56
 msgid "Remove page"
 msgstr "Seite löschen"
 
-#: ../lib/Toolbar.php:157 ../lib/Toolbar.php:160 ../templates/browse.html:60
+#: ../lib/Toolbar.php:174 ../lib/Toolbar.php:180 ../templates/browse.html:60
 #: ../templates/browse.html:63
 msgid "Diff"
 msgstr "Diff"
@@ -63,7 +63,8 @@ msgstr "SchaueQuelltext"
 msgid "Edit: %s"
 msgstr "Editiere: %s"
 
-#: ../lib/Toolbar.php:163 ../lib/plugin/BackLinks.php:9
+#: ../lib/Toolbar.php:187 ../lib/Toolbar.php:188 ../lib/Toolbar.php:225
+#: ../lib/Toolbar.php:226 ../lib/plugin/BackLinks.php:9
 #: ../templates/editpage.html:19
 msgid "BackLinks"
 msgstr "BackLinks"
@@ -84,25 +85,25 @@ msgstr "Vorschauen"
 msgid "Save"
 msgstr "Speichern"
 
-#: ../lib/Toolbar.php:292 ../templates/editpage.html:56
+#: ../lib/Toolbar.php:333 ../templates/editpage.html:56
 #, c-format
 msgid "You are signed in as %s."
 msgstr "Du bist als %s angemeldet."
 
-#: ../lib/Toolbar.php:294 ../templates/editpage.html:58
+#: ../lib/Toolbar.php:335 ../templates/editpage.html:58
 #, c-format
 msgid "Author will be logged as %s."
 msgstr "%s wird als Author aufgezeichnet."
 
-#: ../lib/Toolbar.php:216 ../lib/Toolbar.php:295 ../templates/editpage.html:59
+#: ../lib/Toolbar.php:254 ../lib/Toolbar.php:339 ../templates/editpage.html:59
 msgid "SignIn"
 msgstr "AnMelden"
 
-#: ../lib/Toolbar.php:331 ../templates/editpage.html:67
+#: ../lib/Toolbar.php:376 ../templates/editpage.html:67
 msgid "TextFormattingRules"
 msgstr "TextFormatierungsRegeln"
 
-#: ../lib/Toolbar.php:332 ../templates/editpage.html:67
+#: ../lib/Toolbar.php:377 ../templates/editpage.html:67
 msgid "Synopsis"
 msgstr "Übersicht"
 
@@ -133,7 +134,7 @@ msgstr "Vorige Monat"
 msgid "Next Month"
 msgstr "Nächste Monat"
 
-#: ../lib/plugin/Calendar.php:114
+#: ../lib/plugin/Calendar.php:116
 #, c-format
 msgid "Edit %s"
 msgstr "Editiere %s"
@@ -167,21 +168,21 @@ msgstr "Einfaches Zusatzprogramm Beispiel"
 msgid "IncludePage"
 msgstr "SeiteEinfügen"
 
-#: ../lib/plugin/IncludePage.php:58
+#: ../lib/plugin/IncludePage.php:58 ../lib/plugin/walkabout.php:69
 #, c-format
 msgid "<%s: no such section>"
 msgstr "<Keiner dergleichener Sektion als: %s>"
 
-#: ../lib/plugin/IncludePage.php:72
+#: ../lib/plugin/IncludePage.php:71
 msgid "no page specified"
 msgstr "Keine Seite angegeben"
 
-#: ../lib/plugin/IncludePage.php:79
+#: ../lib/plugin/IncludePage.php:78
 #, c-format
 msgid "recursive inclusion of page %s"
 msgstr "Fehler beim einfügen der Seite %s: sich selbst aufrufende"
 
-#: ../lib/plugin/IncludePage.php:88
+#: ../lib/plugin/IncludePage.php:87 ../lib/plugin/walkabout.php:120
 #, c-format
 msgid "%s(%d): no such revision"
 msgstr "Es gibt keine Revision als %s(%d)"
@@ -191,7 +192,8 @@ msgstr "Es gibt keine Revision als %s(%d)"
 msgid "Included from %s"
 msgstr "Eingefügter Text von %s"
 
-#: ../lib/Toolbar.php:192 ../lib/plugin/LikePages.php:12
+#: ../lib/Toolbar.php:184 ../lib/Toolbar.php:185 ../lib/Toolbar.php:222
+#: ../lib/Toolbar.php:223 ../lib/plugin/LikePages.php:12
 msgid "LikePages"
 msgstr "GleicheSeiten"
 
@@ -200,22 +202,22 @@ msgstr "GleicheSeiten"
 msgid "List LikePages for %s"
 msgstr "GleicheSeite wie %s auflisten"
 
-#: ../lib/plugin/LikePages.php:39
+#: ../lib/plugin/LikePages.php:40
 #, c-format
 msgid "Page names with prefix '%s'"
 msgstr "Seitenamen mit Vorsatzwort »%s«"
 
-#: ../lib/plugin/LikePages.php:44
+#: ../lib/plugin/LikePages.php:46
 #, c-format
 msgid "Page names with suffix '%s'"
 msgstr "Seitenamen mit Nachsatzwort »%s«"
 
-#: ../lib/plugin/LikePages.php:57
+#: ../lib/plugin/LikePages.php:59
 #, c-format
 msgid "These pages share an initial or final title word with '%s'"
 msgstr "Diese Seiten share an initial or final title word with »%s«"
 
-#: ../lib/plugin/LikePages.php:93
+#: ../lib/plugin/LikePages.php:96
 msgid "<none>"
 msgstr "<Keine>"
 
@@ -268,8 +270,8 @@ msgstr "Version %d."
 msgid "History of changes."
 msgstr "Das Änderungsprotokoll."
 
-#: ../lib/Toolbar.php:154 ../lib/plugin/PageHistory.php:200
-#: ../lib/plugin/RecentChanges.php:42
+#: ../lib/Toolbar.php:168 ../lib/Toolbar.php:169
+#: ../lib/plugin/PageHistory.php:200 ../lib/plugin/RecentChanges.php:42
 msgid "PageHistory"
 msgstr "SeiteProtokoll"
 
@@ -331,14 +333,14 @@ msgstr "Alle %s sind unten auflistet."
 msgid "RecentEdits"
 msgstr "GeringeÄnderungen"
 
-#: ../lib/Toolbar.php:234 ../lib/loadsave.php:452
+#: ../lib/Toolbar.php:272 ../lib/loadsave.php:476
 #: ../lib/plugin/RecentChanges.php:161 ../lib/plugin/RecentChanges.php:270
 #: ../lib/plugin/RecentChanges.php:315 ../lib/plugin/Toolbar.php:87
 #: ../lib/plugin/Toolbar.php:105 ../lib/plugin/Toolbar.php:112
 msgid "RecentChanges"
 msgstr "FrischeSeiten"
 
-#: ../lib/Toolbar.php:68 ../lib/main.php:26 ../lib/main.php:85
+#: ../lib/Toolbar.php:69 ../lib/main.php:26 ../lib/main.php:85
 #: ../lib/main.php:87 ../lib/plugin/RecentChanges.php:253
 msgid "HomePage"
 msgstr "StartSeite"
@@ -351,7 +353,7 @@ msgstr "Suche"
 msgid "Title Search"
 msgstr "Titelsuche"
 
-#: ../lib/Toolbar.php:183 ../lib/main.php:123
+#: ../lib/Toolbar.php:208 ../lib/main.php:123
 #: ../lib/plugin/RecentChanges.php:261 ../lib/plugin/TitleSearch.php:12
 msgid "TitleSearch"
 msgstr "Titelsuche"
@@ -370,7 +372,7 @@ msgstr "Werkzeugleiste"
 msgid "Toolbar for %s"
 msgstr "Werkzeugleiste für %s"
 
-#: ../lib/plugin/Toolbar.php:76
+#: ../lib/plugin/Toolbar.php:76 ../lib/plugin/walkabout.php:81
 #, c-format
 msgid "A required argument '%s' is missing."
 msgstr "Ein Benötiges Argument »%s« ist Fehlend."
@@ -464,36 +466,81 @@ msgstr "Die Datenbank wird direckt nach »%s« abgefragt"
 msgid "No pagedata for %s"
 msgstr "Keine Seitendatei für %s"
 
-#: ../lib/plugin/text2png.php:61
-msgid ""
-"Unable to create a new GD image stream. PHP must be compiled with support "
-"for the GD library version 1.6 or later to create PNG image files."
+#: ../lib/plugin/text2png.php:37
+msgid "Sorry, this version of PHP cannot create PNG image files."
 msgstr ""
 
-#: ../lib/plugin/text2png.php:108
+#: ../lib/plugin/text2png.php:42
+#, fuzzy, c-format
+msgid "See %s"
+msgstr "Sehe"
+
+#: ../lib/plugin/text2png.php:89
+msgid ""
+"PHP was unable to create a new GD image stream. Read 'lib/plugin/text2png."
+"php' for details."
+msgstr ""
+
+#: ../lib/plugin/text2png.php:141
 #, c-format
 msgid "Image saved to cache file: %s"
 msgstr ""
 
-#: ../lib/plugin/text2png.php:111
+#: ../lib/plugin/text2png.php:145
 #, c-format
 msgid "Image loaded from cache file: %s"
 msgstr ""
 
-#: ../lib/loadsave.php:153 ../lib/plugin/text2png.php:118
+#: ../lib/loadsave.php:164 ../lib/plugin/text2png.php:154
 #, c-format
 msgid "couldn't open file '%s' for writing"
 msgstr "Datei »%s« konnte nich geöffnet werden um es auszuschreiben"
 
-#: ../lib/DbaDatabase.php:46 ../lib/ziplib.php:35 ../lib/ziplib.php:38
-#: ../lib/ziplib.php:43 ../lib/ziplib.php:45 ../lib/ziplib.php:47
-#: ../lib/ziplib.php:56 ../lib/ziplib.php:59 ../lib/ziplib.php:62
-#: ../lib/ziplib.php:67
+#: ../lib/plugin/walkabout.php:31
+msgid "walkabout"
+msgstr ""
+
+#: ../lib/plugin/walkabout.php:35
+#, c-format
+msgid "walkabout for %s"
+msgstr ""
+
+#: ../lib/plugin/walkabout.php:42 ../lib/plugin/walkabout.php:90
+msgid "Contents"
+msgstr ""
+
+#: ../lib/plugin/walkabout.php:88
+msgid "Next"
+msgstr ""
+
+#: ../lib/plugin/walkabout.php:89
+#, fuzzy
+msgid "Previous"
+msgstr "Vorige Monat"
+
+#: ../lib/plugin/walkabout.php:91
+msgid "First"
+msgstr ""
+
+#: ../lib/plugin/walkabout.php:92
+msgid "Last"
+msgstr ""
+
+#: ../lib/plugin/walkabout.php:110 ../lib/plugin/walkabout.php:151
+#: ../lib/plugin/walkabout.php:155
+#, fuzzy, c-format
+msgid "%s: %s"
+msgstr "%s Tagen"
+
+#: ../lib/DbaDatabase.php:46 ../lib/ziplib.php:36 ../lib/ziplib.php:39
+#: ../lib/ziplib.php:44 ../lib/ziplib.php:46 ../lib/ziplib.php:48
+#: ../lib/ziplib.php:57 ../lib/ziplib.php:60 ../lib/ziplib.php:63
+#: ../lib/ziplib.php:68
 #, c-format
 msgid "%s failed"
 msgstr "%s hat verfehlt"
 
-#: ../lib/ErrorManager.php:138
+#: ../lib/ErrorManager.php:148
 msgid "error while handling error:"
 msgstr "Fehler während die Fehlerbehandlung von:"
 
@@ -502,87 +549,87 @@ msgstr "Fehler während die Fehlerbehandlung von:"
 msgid "%s: file not found"
 msgstr "%s Datei nicht gefunden"
 
-#: ../lib/Toolbar.php:90
+#: ../lib/Toolbar.php:91 ../lib/editpage.php:28
 msgid "Note:"
 msgstr "Hinweis:"
 
-#: ../lib/Toolbar.php:91
+#: ../lib/Toolbar.php:92
 msgid "You are viewing an old revision of this page."
 msgstr "Du siehst eine alte Revision dieser Seite."
 
-#: ../lib/Toolbar.php:95
+#: ../lib/Toolbar.php:96
 msgid "View the current version"
 msgstr "Schaue die aktuellste Version"
 
-#: ../lib/Toolbar.php:114
+#: ../lib/Toolbar.php:115
 #, c-format
 msgid "Last edited on %s."
 msgstr "Zuletzt am %s verändert."
 
-#: ../lib/Toolbar.php:117
+#: ../lib/Toolbar.php:118
 #, c-format
 msgid "Version %s, saved on %s."
 msgstr "Version %s. zuletzt am %s gespeichert."
 
-#: ../lib/Toolbar.php:184
+#: ../lib/Toolbar.php:211
 msgid "FindPage"
 msgstr "SeiteFinden"
 
-#: ../lib/Toolbar.php:187 ../lib/Toolbar.php:188
+#: ../lib/Toolbar.php:215 ../lib/Toolbar.php:216
 msgid "Quick Search"
 msgstr "Schnelle Suche"
 
-#: ../lib/Toolbar.php:213
+#: ../lib/Toolbar.php:247
 #, c-format
 msgid "You are signed in as %s"
 msgstr "Du bist als %s angemeldet"
 
-#: ../lib/Toolbar.php:214
+#: ../lib/Toolbar.php:250
 msgid "SignOut"
 msgstr "AbMelden"
 
-#: ../lib/Toolbar.php:266
+#: ../lib/Toolbar.php:307
 msgid "Preview only!  Changes not saved."
 msgstr "Nur die Vorschau!  Änderungen nicht gespeichert."
 
-#: ../lib/Toolbar.php:271
+#: ../lib/Toolbar.php:312
 msgid "Warning: You are editing an old revision."
 msgstr "Warnung: Du editierst eine alte Revision."
 
-#: ../lib/Toolbar.php:273
+#: ../lib/Toolbar.php:314
 msgid "Saving this page will overwrite the current version."
 msgstr ""
 "Wenn die Seite jetzt gespeichert werden würde, dann würde die aktuellste "
 "Version überschrieben."
 
-#: ../lib/Toolbar.php:312
+#: ../lib/Toolbar.php:357
 #, c-format
 msgid "You can change the size of the editing area in %s."
 msgstr "Du kannst die Größe des Texteingabefensters in %s ändern."
 
-#: ../lib/Toolbar.php:313
+#: ../lib/Toolbar.php:358
 msgid "UserPreferences"
 msgstr "Einstellungen"
 
-#: ../lib/Toolbar.php:314
+#: ../lib/Toolbar.php:359
 #, c-format
 msgid "See %s tips for editing."
 msgstr "Sehe %s tips fürs Editieren."
 
-#: ../lib/Toolbar.php:315
+#: ../lib/Toolbar.php:360
 msgid "GoodStyle"
 msgstr "GuterStil"
 
-#: ../lib/Toolbar.php:347
+#: ../lib/Toolbar.php:392
 #, c-format
 msgid "Thank you for editing %s."
 msgstr "Danke für das Editieren von %s."
 
-#: ../lib/Toolbar.php:350
+#: ../lib/Toolbar.php:395
 msgid "Your careful attention to detail is much appreciated."
 msgstr "Deine besondere Aufmerksamkeit für Details wird sehr geschätzt."
 
-#: ../lib/Toolbar.php:354
+#: ../lib/Toolbar.php:399
 msgid "Warning!"
 msgstr "Warnung!"
 
@@ -621,8 +668,8 @@ msgstr "Argument »%s« nicht deklariert in Zusatzprogramm"
 msgid "trailing cruft in plugin args: '%s'"
 msgstr "zusätzliche Schrott in Zusatzprogramm Argumenten: »%s«"
 
-#: ../lib/WikiPlugin.php:233 ../lib/ziplib.php:161 ../lib/ziplib.php:163
-#: ../lib/ziplib.php:165 ../lib/ziplib.php:563 ../lib/ziplib.php:659
+#: ../lib/WikiPlugin.php:233 ../lib/ziplib.php:162 ../lib/ziplib.php:164
+#: ../lib/ziplib.php:166 ../lib/ziplib.php:578 ../lib/ziplib.php:675
 #, c-format
 msgid "Bad %s"
 msgstr "Ungültige %s"
@@ -759,20 +806,11 @@ msgstr "Versionen sind identisch"
 msgid "Diff: %s"
 msgstr "Diff: %s"
 
-#: ../lib/editpage.php:25 ../lib/savepage.php:62
-#, c-format
-msgid "Problem while editing %s"
-msgstr "Problem während dem Editieren von %s"
-
-#: ../lib/editpage.php:28
+#: ../lib/editpage.php:29
 msgid "This page has been locked by the administrator and cannot be edited."
 msgstr ""
 "Diese Seite wurde vom Systemverwalter gesperrt und kann nicht editiert "
 "werden."
-
-#: ../lib/editpage.php:30 ../lib/savepage.php:47 ../lib/savepage.php:59
-msgid "Sorry for the inconvenience."
-msgstr "Entschuldigung für die Unannehmlichkeiten."
 
 #: ../lib/loadsave.php:17
 msgid "Complete."
@@ -783,108 +821,108 @@ msgstr "Fertig."
 msgid "Return to %s"
 msgstr "Zurück zur %s"
 
-#: ../lib/loadsave.php:125
+#: ../lib/loadsave.php:133
 msgid "You must specify a directory to dump to"
 msgstr "Du mußt ein Sicherungsdateiverzeichnis spezifizieren."
 
-#: ../lib/loadsave.php:130
+#: ../lib/loadsave.php:138
 #, c-format
 msgid "Cannot create directory '%s'"
 msgstr "Das Verzeichnis »%s«"
 
-#: ../lib/loadsave.php:132
+#: ../lib/loadsave.php:141
 #, c-format
 msgid "Created directory '%s' for the page dump..."
 msgstr "Ich habe den Verzeichnis »%s« erzeugt um die Dateien abzulegen..."
 
-#: ../lib/loadsave.php:134
+#: ../lib/loadsave.php:144
 #, c-format
 msgid "Using directory '%s'"
 msgstr "Verzeichnis »%s« wird zugeleitet"
 
-#: ../lib/loadsave.php:137
+#: ../lib/loadsave.php:147
 msgid "Dumping Pages"
 msgstr "Die Seiten werden ausgeschrieben"
 
-#: ../lib/loadsave.php:148
+#: ../lib/loadsave.php:158
 #, c-format
 msgid "saved as %s"
 msgstr "als %s gespeichert"
 
-#: ../lib/loadsave.php:156
+#: ../lib/loadsave.php:168
 #, c-format
 msgid "%s bytes written"
 msgstr "%s Bytes geschrieben"
 
-#: ../lib/loadsave.php:178
+#: ../lib/loadsave.php:191
 msgid "Empty pagename!"
 msgstr "Seitenname ist leer!"
 
-#: ../lib/loadsave.php:198
+#: ../lib/loadsave.php:211
 #, c-format
 msgid "from %s"
 msgstr "von %s"
 
-#: ../lib/loadsave.php:202
+#: ../lib/loadsave.php:215
 msgid "new page"
 msgstr "neue Seite"
 
-#: ../lib/loadsave.php:208
+#: ../lib/loadsave.php:221
 #, c-format
 msgid "is identical to current version %d"
 msgstr "ist dergleich wie aktuellste Version %d."
 
-#: ../lib/loadsave.php:210
+#: ../lib/loadsave.php:223
 msgid "- skipped"
 msgstr "- ausgelassen"
 
-#: ../lib/loadsave.php:221
+#: ../lib/loadsave.php:234
 #, c-format
 msgid "- saved to database as version %d"
 msgstr "- gespeichert zur Datenbank als Verson %d."
 
-#: ../lib/loadsave.php:313
+#: ../lib/loadsave.php:327
 #, c-format
 msgid "MIME file %s"
 msgstr "MIME-Datei %s"
 
-#: ../lib/loadsave.php:316
+#: ../lib/loadsave.php:331
 #, c-format
 msgid "Serialized file %s"
 msgstr "Seriell-Datei %s"
 
-#: ../lib/loadsave.php:327
+#: ../lib/loadsave.php:343
 #, c-format
 msgid "plain file %s"
 msgstr "Normal-Datei %s"
 
-#: ../lib/loadsave.php:341 ../lib/loadsave.php:360
+#: ../lib/loadsave.php:359 ../lib/loadsave.php:379
 msgid "Skipping"
 msgstr "Wird ausgelassen"
 
-#: ../lib/loadsave.php:399
+#: ../lib/loadsave.php:422
 #, c-format
 msgid "Bad file type: %s"
 msgstr "Ungültiger Filetyp: %s"
 
-#: ../lib/loadsave.php:414
+#: ../lib/loadsave.php:436
 #, c-format
 msgid "Loading '%s'"
 msgstr "»%s« wird eingespeichert"
 
-#: ../lib/loadsave.php:426
+#: ../lib/loadsave.php:448
 msgid "The PhpWiki programming team"
 msgstr "Die Team-PhpWiki Programmierer"
 
-#: ../lib/loadsave.php:428
+#: ../lib/loadsave.php:450
 msgid "Loading up virgin wiki"
 msgstr "Unbeschrifteter Wiki wird jetzt befrucht und munter geworden"
 
-#: ../lib/loadsave.php:444
+#: ../lib/loadsave.php:468
 msgid "No uploaded file to upload?"
 msgstr "Keine heraufgeladene Datei zum hochladen?"
 
-#: ../lib/loadsave.php:447
+#: ../lib/loadsave.php:471
 #, c-format
 msgid "Uploading %s"
 msgstr "%s wird heraufgeladet"
@@ -894,11 +932,11 @@ msgstr "%s wird heraufgeladet"
 msgid "Action %s is disabled in this wiki."
 msgstr "In dieses Wikis wurde die Tatigkeit »%s« nicht erlauben."
 
-#: ../lib/main.php:185
+#: ../lib/main.php:186
 msgid "lock or unlock pages"
 msgstr "Seiten zu sperren oder freigeben"
 
-#: ../lib/main.php:219
+#: ../lib/main.php:220
 #, c-format
 msgid "Bad action: '%s'"
 msgstr "Ungültiges Tätigkeit: »%s«"
@@ -980,6 +1018,10 @@ msgstr ""
 msgid "Press <b>Save</b> again."
 msgstr "Drücke nochmal <b>Speichern</b>"
 
+#: ../lib/savepage.php:47 ../lib/savepage.php:59
+msgid "Sorry for the inconvenience."
+msgstr "Entschuldigung für die Unannehmlichkeiten."
+
 #: ../lib/savepage.php:54
 msgid ""
 "This page has been locked by the administrator so your changes could not be "
@@ -995,6 +1037,11 @@ msgid ""
 msgstr ""
 "Kopiere deine Veränderungen in die Zwischenablage. Du kannst versuchen eine "
 "andere Seite zu editieren oder dein Text in einem Texteditor speichern."
+
+#: ../lib/savepage.php:62
+#, c-format
+msgid "Problem while editing %s"
+msgstr "Problem während dem Editieren von %s"
 
 #: ../lib/savepage.php:68
 #, c-format
@@ -1053,12 +1100,12 @@ msgstr "Die %d meistbesuchten Seiten in der Nähe:"
 msgid "Bad Version"
 msgstr "Version nicht vorliegend"
 
-#: ../lib/stdlib.php:731
+#: ../lib/stdlib.php:725
 #, c-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr ""
 
-#: ../lib/stdlib.php:740
+#: ../lib/stdlib.php:734
 #, c-format
 msgid "%s: argument index out of range"
 msgstr "%s: Index des Arguments außer Reichweite"
@@ -1067,56 +1114,56 @@ msgstr "%s: Index des Arguments außer Reichweite"
 msgid "Lists nested too deep in SetHTMLOutputMode"
 msgstr "Interner Fehler: Stackgrenze in SetHTMLOutputMode überschritten."
 
-#: ../lib/ziplib.php:183
+#: ../lib/ziplib.php:184
 msgid "Can't inflate data: zlib support not enabled in this PHP"
 msgstr ""
 
-#: ../lib/ziplib.php:361
+#: ../lib/ziplib.php:366
 #, c-format
 msgid "Can't open zip file '%s' for reading"
 msgstr "Konnte zip Datei »%s« nich öffnen zum lesen"
 
-#: ../lib/ziplib.php:367
+#: ../lib/ziplib.php:373
 msgid "Unexpected EOF in zip file"
 msgstr "Unerwartetes Dateiende in zip Datei"
 
-#: ../lib/ziplib.php:391
+#: ../lib/ziplib.php:398
 #, c-format
 msgid "Bad header type: %s"
 msgstr "Ungültiger Dateikopf form: %s "
 
-#: ../lib/ziplib.php:395
+#: ../lib/ziplib.php:403
 msgid "Encryption and/or zip patches not supported."
 msgstr ""
 
-#: ../lib/ziplib.php:397
+#: ../lib/ziplib.php:406
 msgid "Postponed CRC not yet supported."
 msgstr ""
 
-#: ../lib/ziplib.php:416
+#: ../lib/ziplib.php:425
 #, c-format
 msgid "Compression method %s unsupported"
 msgstr ""
 
-#: ../lib/ziplib.php:419
+#: ../lib/ziplib.php:429
 msgid "Uncompressed size mismatch"
 msgstr "Größe des Dekomprimierte Datei stimmt nicht"
 
-#: ../lib/ziplib.php:622
+#: ../lib/ziplib.php:636
 #, c-format
 msgid "[%d] See [%s]"
 msgstr "[%d] Sehe [%s]"
 
-#: ../lib/ziplib.php:630
+#: ../lib/ziplib.php:644
 msgid "References"
 msgstr "Fußnoten"
 
-#: ../lib/ziplib.php:651
+#: ../lib/ziplib.php:666
 #, c-format
 msgid "Can't parse %s"
 msgstr "Könnte %s nicht analysieren"
 
-#: ../lib/ziplib.php:704
+#: ../lib/ziplib.php:721
 #, c-format
 msgid "Unknown %s"
 msgstr "Unbekannte %s"
@@ -1304,9 +1351,6 @@ msgstr ""
 
 #~ msgid "here"
 #~ msgstr "hier"
-
-#~ msgid "See"
-#~ msgstr "Sehe"
 
 #~ msgid "Current page:"
 #~ msgstr "Aktuelle Seite:"
