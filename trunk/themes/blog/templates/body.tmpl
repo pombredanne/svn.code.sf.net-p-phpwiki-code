@@ -1,0 +1,43 @@
+<?php // -*-html-*-
+rcs_id('$Id: body.tmpl,v 1.1 2004-12-14 21:30:37 rurban Exp $');
+?>
+<body leftmargin="0" topmargin="0" <?= $WikiTheme->getMoreAttr('body') ?>>
+<!--{{{ Page-->
+<div id="page">
+<?= Template('top') ?>
+
+<?php // $CONTENT includes browse.tmpl ?>
+<!--{{{ Content-->
+<div id="content" class="narrowcolumn">
+<!--{{{ PageTitle-->
+<div id="pagetitle">
+<h1 id="pagetitleText"><?= $HEADER ?></h1></div>
+<!--}}}-->
+<?= $CONTENT ?>
+
+<!--{{{ Comments-->
+<div class="comments">
+</div>
+<!--}}} Comments-->
+
+<div id="LSResult" style="display: none;"></div>
+
+<hr class="printer" noshade="noshade" />
+<small align="center">
+<?= Template('bottom') ?>
+</small>
+
+</div>
+<!--}}} Content-->
+
+<!--{{{ Sidebar-->
+<?=Template('sidebar')?>
+<!--}}}-->
+
+<!--{{{ Footer-->
+<div id="footer">
+<?= Template('browse-footer') ?>
+</div><!--}}} Footer-->
+
+</div><!--}}} Page-->
+</body>
