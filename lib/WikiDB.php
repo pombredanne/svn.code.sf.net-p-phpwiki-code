@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.47 2004-04-29 19:39:44 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.48 2004-04-29 23:03:54 rurban Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -377,6 +377,10 @@ class WikiDB {
                         //trigger_error(_("WikiDB::renamePage(..,..,updateWikiLinks) not yet implemented"),E_USER_WARNING);
                         require_once('lib/plugin/WikiAdminSearchReplace.php');
                         $links = $oldpage->getLinks();
+                        while ($linked_page = $links->next()) {
+                            WikiPlugin_WikiAdminSearchReplace::replaceHelper($this,$linked_page->getName(),$from,$to);
+                        }
+                        $links = $newpage->getLinks();
                         while ($linked_page = $links->next()) {
                             WikiPlugin_WikiAdminSearchReplace::replaceHelper($this,$linked_page->getName(),$from,$to);
                         }
@@ -1697,6 +1701,12 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.47  2004/04/29 19:39:44  rurban
+// special support for formatted plugins (one-liners)
+//   like <small><plugin BlaBla ></small>
+// iter->asArray() helper for PopularNearby
+// db_session for older php's (no &func() allowed)
+//
 // Revision 1.46  2004/04/26 20:44:34  rurban
 // locking table specific for better databases
 //
