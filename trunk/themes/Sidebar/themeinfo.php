@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.9 2002-02-14 06:44:32 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.10 2002-02-14 06:56:40 carstenklapp Exp $');
 
 /*
  * This file defines the Sidebar appearance ("theme") of PhpWiki.
@@ -31,7 +31,6 @@ $Theme->setDefaultCSS(_("Sidebar"), 'sidebar.css');
 $Theme->addAlternateCSS('PhpWiki', 'phpwiki.css');
 $Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
 $Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
-if (defined('DEBUG')) $Theme->addAlternateCSS("Sidebar debug", 'sidebar-debug.css');
 
 /**
  * The logo image appears on every page and links to the HomePage.
