@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.58 2003-03-10 18:25:22 dairiki Exp $');
+rcs_id('$Id: editpage.php,v 1.59 2003-12-07 20:35:26 carstenklapp Exp $');
 
 require_once('lib/Template.php');
 
@@ -172,7 +172,7 @@ class PageEditor
         
         // Save new revision
         $newrevision = $page->save($this->_content, $this->_currentVersion + 1, $meta);
-        if (!is_object($newrevision)) {
+        if (!isa($newrevision, 'wikidb_pagerevision')) {
             // Save failed.  (Concurrent updates).
             return false;
         }
@@ -510,6 +510,11 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.58  2003/03/10 18:25:22  dairiki
+ Bug/typo fix.  If you use the edit page to un/lock a page, it
+ failed with: Fatal error: Call to a member function on a
+ non-object in editpage.php on line 136
+
  Revision 1.57  2003/02/26 03:40:22  dairiki
  New action=create.  Essentially the same as action=edit, except that if the
  page already exists, it falls back to action=browse.
