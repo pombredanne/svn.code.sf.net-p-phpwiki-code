@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.21.2.8 2001-12-02 21:30:36 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.21.2.9 2001-12-03 23:33:21 carstenklapp Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -133,7 +133,25 @@ function split_pagename ($page) {
       }
       if(empty($linktext))
          $linktext = htmlspecialchars($url);
-      return "<a href=\"$url\">$linktext</a>";
+      if (!defined('USE_LINK_ICONS')) {
+          return "<a href=\"$url\">$linktext</a>";
+      } else {
+            //ideally the link image would be specified by a map file
+            //similar to the interwiki.map
+            $linkproto = substr($url, 0, strrpos($url, ":"));
+            if ($linkproto == "mailto") {
+                $linkimg = "/images/mailto.png";
+            } elseif ($linkproto == "http") { 
+                $linkimg = "/images/http.png";
+            } elseif ($linkproto == "https") { 
+                $linkimg = "/images/https.png";
+            } elseif ($linkproto == "ftp") { 
+                $linkimg = "/images/ftp.png";
+            } else {
+                $linkimg = "/images/http.png";
+            }
+      return "<a href=\"$url\"><img src=\"" . DATA_PATH . $linkimg . "\" alt=\"" . $linkproto . "\">$linktext</a>";
+      }
    }
 
    function LinkImage($url, $alt='[External Image]') {
@@ -388,26 +406,8 @@ function split_pagename ($page) {
             $link['link'] = LinkImage($URL, $linkname);
          } else {
 	    $link['type'] = "url-$linktype";
-        
-        if (!defined("USE_LINK_ICONS")) {
-           $link['link'] = LinkURL($URL, $linkname);
-        } else {
-           //preg_split((.*?):(.*)$, $URL, $matches);
-           //preg_split("[:]", $URL, $matches);
-           //$protoc = $matches[1]
-           $protoc = substr($URL, 0, strrpos($URL, ":"));
-           if ($protoc == "mailto") {
-               $link['link'] = "<img src=\"" . DATA_PATH . "/images/mailto.png\"> " . LinkURL($URL, $linkname);
-           } elseif ($protoc == "http") { 
-               $link['link'] = "<img src=\"" . DATA_PATH . "/images/http.png\"> " . LinkURL($URL, $linkname);
-           } elseif ($protoc == "https") { 
-               $link['link'] = "<img src=\"" . DATA_PATH . "/images/https.png\"> " . LinkURL($URL, $linkname);
-           } elseif ($protoc == "ftp") { 
-               $link['link'] = "<img src=\"" . DATA_PATH . "/images/ftp.png\"> " . LinkURL($URL, $linkname);
-            } else {
-               $link['link'] = LinkURL($URL, $linkname);
-           }
-	 }}
+            $link['link'] = LinkURL($URL, $linkname);
+	 }
       } elseif (preg_match("#^phpwiki:(.*)#", $URL, $match)) {
 	 $link['type'] = "url-wiki-$linktype";
 	 if(empty($linkname))
