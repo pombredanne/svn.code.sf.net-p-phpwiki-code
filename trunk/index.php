@@ -81,7 +81,7 @@ define ('DEBUG', 1);
 
 define ('PHPWIKI_VERSION', '1.3.5pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.102 2003-02-22 18:53:38 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.103 2003-02-22 19:43:50 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -192,9 +192,11 @@ $DBParams = array(
    //
    //   mysql://user:password@host/databasename
    //
-   // FIXME: My version Pear::DB seems to be broken enough that there
-   //        is no way to connect to a mysql server over a socket right now.
-   //'dsn' => 'mysql://guest@:/var/lib/mysql/mysql.sock/test',
+   // To connect over a unix socket, use something like
+   //
+   //   mysql://user:password@unix(/path/to/socket)/databasename
+   //
+   //'dsn' => 'mysql://guest@unix(/var/lib/mysql/mysql.sock)/test',
    //'dsn' => 'mysql://guest@localhost/test',
    //'dsn' => 'pgsql://localhost/test',
 
@@ -690,6 +692,11 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 // End:   
 
 // $Log: not supported by cvs2svn $
+// Revision 1.102  2003/02/22 18:53:38  dairiki
+// Renamed method Request::compress_output to Request::buffer_output.
+//
+// Added config option to disable compression.
+//
 // Revision 1.101  2003/02/21 19:29:30  dairiki
 // Update PHPWIKI_VERSION to 1.3.5pre.
 //
