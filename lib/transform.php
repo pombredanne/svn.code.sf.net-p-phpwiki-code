@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.21 2001-03-14 19:48:29 dairiki Exp $');
+<?php rcs_id('$Id: transform.php,v 1.22 2001-04-09 19:28:52 dairiki Exp $');
 
 define('WT_SIMPLE_MARKUP', 0);
 define('WT_TOKENIZER', 1);
@@ -588,7 +588,7 @@ function wtm_table($line, &$trfrm)
    $row = $trfrm->token("<tr>") . $row . $trfrm->token("</tr>");
    
    return $trfrm->SetHTMLMode(array('table',
-				    array('align' => 'center',
+				    array(//'align' => 'left',
 					  'cellpadding' => 1,
 					  'cellspacing' => 1,
 					  'border' => 1))) .
