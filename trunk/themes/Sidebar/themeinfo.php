@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.21 2005-02-03 05:11:40 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.22 2005-02-03 07:11:32 rurban Exp $');
 
 /*
  * This file defines the Sidebar appearance ("theme") of PhpWiki.
