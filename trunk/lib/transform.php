@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.9 2001-02-04 18:22:34 ahollosi Exp $');
+<?php rcs_id('$Id: transform.php,v 1.10 2001-02-07 16:38:33 ahollosi Exp $');
 
 define('WT_TOKENIZER', 1);
 define('WT_SIMPLE_MARKUP', 2);
@@ -90,7 +90,7 @@ class WikiTransform
 
 
       } elseif ($tagtype == NESTED_LEVEL) {
-         if ($level < $this->stack->cnt()) {
+         if ($level <= $this->stack->cnt()) {
             // $tag has fewer nestings (old: tabs) than stack,
 	    // reduce stack to that tab count
             while ($this->stack->cnt() > $level) {
@@ -110,7 +110,7 @@ class WikiTransform
 	       $this->stack->push($tag);
 	    }
    
-         } elseif ($level > $this->stack->cnt()) {
+         } else { // $level > $this->stack->cnt()
             // we add the diff to the stack
             // stack might be zero
             while ($this->stack->cnt() < $level) {
@@ -121,20 +121,8 @@ class WikiTransform
                   ExitWiki(gettext ("Stack bounds exceeded in SetHTMLOutputMode"));
                }
             }
-   
-         } else { // $level == $stack->cnt()
-            if ($tag == $this->stack->top()) {
-               return; // same tag? -> nothing to do
-            } else {
-	       // different tag - close old one, add new one
-               $closetag = $this->stack->pop();
-               $retvar .= "</$closetag>\n";
-               $retvar .= "<$tag>\n";
-               $this->stack->push($tag);
-            }
          }
 
-   
       } else { // unknown $tagtype
          ExitWiki ("Passed bad tag type value in SetHTMLOutputMode");
       }
