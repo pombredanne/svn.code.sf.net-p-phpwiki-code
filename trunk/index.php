@@ -35,7 +35,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.0-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.33 2001-12-06 08:15:38 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.34 2001-12-06 19:15:05 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -266,7 +266,16 @@ $logo = "images/wikibase.png";
 //$SignatureImg = "images/signature.png";
 
 // this turns on url indicator icons, inserted before embedded links
-//define("USE_LINK_ICONS", 1);
+// FIXME: need a special icon (question mark?) for unknown protocols.
+/*
+$LINK_ICONS = array(
+                    'http'	=> 'images/http.png',
+                    'https'	=> 'images/https.png',
+                    'ftp'	=> 'images/ftp.png',
+                    'mailto'	=> 'images/mailto.png',
+                    '*'		=> 'images/http.png'
+                    );
+*/                    
 
 // Date & time formats used to display modification times, etc.
 // Formats are given as format strings to PHP strftime() function
