@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiBlog.php,v 1.17 2004-05-14 17:33:12 rurban Exp $');
+rcs_id('$Id: WikiBlog.php,v 1.18 2004-05-14 20:55:04 rurban Exp $');
 /*
  Copyright 2002, 2003 $ThePhpWikiProgrammingTeam
  
@@ -83,7 +83,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.17 $");
+                            "\$Revision: 1.18 $");
     }
 
     // Arguments:
@@ -321,7 +321,7 @@ extends WikiPlugin
     function findBlogs (&$dbi, $parent, $type='wikiblog') {
         $prefix = $parent . SUBPAGE_SEPARATOR;
         $pfxlen = strlen($prefix);
-            require_once('lib/TextSearchQuery.php');
+        require_once('lib/TextSearchQuery.php');
         $pages = $dbi->titleSearch(new TextSearchQuery($prefix));
 
         $blogs = array();
@@ -350,6 +350,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.17  2004/05/14 17:33:12  rurban
+// new plugin RecentChanges
+//
 // Revision 1.16  2004/04/19 18:27:46  rurban
 // Prevent from some PHP5 warnings (ref args, no :: object init)
 //   php5 runs now through, just one wrong XmlElement object init missing
