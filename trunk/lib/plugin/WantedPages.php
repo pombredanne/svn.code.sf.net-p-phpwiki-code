@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WantedPages.php,v 1.6 2003-11-19 17:08:23 carstenklapp Exp $');
+rcs_id('$Id: WantedPages.php,v 1.7 2003-12-19 06:57:49 carstenklapp Exp $');
 /*
  This file is part of PhpWiki.
 
@@ -22,7 +22,7 @@ rcs_id('$Id: WantedPages.php,v 1.6 2003-11-19 17:08:23 carstenklapp Exp $');
  * A plugin which returns a list of referenced pages which do not exist yet.
  *
  **/
-//require_once('lib/PageList.php');
+//include_once('lib/PageList.php');
 
 /**
  */
@@ -39,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
@@ -66,9 +66,9 @@ extends WikiPlugin
         // for this table
         $this->pagelist = array();
 
-        // There's probably a more efficient way to do this (eg a
-        // tailored SQL query via the backend, but this does the job
-
+        // There's probably a more memory-efficient way to do this (eg
+        // a tailored SQL query via the backend, but this gets the job
+        // done.
         if (!$page) {
             $allpages_iter = $dbi->getAllPages($include_empty = false);
             while ($page_handle = $allpages_iter->next()) {
@@ -109,16 +109,28 @@ extends WikiPlugin
         } else {
             $spacer = new RawXml("&nbsp;&nbsp;&nbsp;&nbsp;");
             // Clicking on the number in the links column does a
-            // FullTextSearch for the citations of the WantedPage links.
+            // FullTextSearch for the citations of the WantedPage
+            // link.
             foreach ($this->pagelist as $key => $val) {
+                $key = (string) $key; // TODO: Not sure why, but this
+                                      // string cast type-coersion
+                                      // does seem necessary here.
+                // Enclose any FullTextSearch keys containing a space
+                // with quotes in oder to request a defnitive search.
+                $searchkey = (strstr($key, ' ') === false) ? $key : "\"$key\"";
                 $row = HTML::tr(HTML::td(array('align' => 'right'),
-                                         Button(array('s' => (string)$key),
-                                                $val, _("FullTextSearch"))),
-                                         // Alternatively, get BackLinks instead
-                                         //Button(array('action' => _("BackLinks")),
-                                         //       $val, (string)$key)),
-                                HTML::td(HTML($spacer,
-                                              WikiLink((string)$key, 'unknown'))));
+                                         Button(array('s' => $searchkey),
+                                                $val, _("FullTextSearch")),
+                                         // Alternatively, get BackLinks
+                                         // instead.
+                                         //
+                                         //Button(array('action'
+                                         //             => _("BackLinks")),
+                                         //       $val, $searchkey),
+                                         HTML::td(HTML($spacer,
+                                                       WikiLink($key,
+                                                                'unknown')))
+                                         ));
                 $this->_rows->pushContent($row);
             }
             $c = count($this->pagelist);
@@ -195,6 +207,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2003/11/19 17:08:23  carstenklapp
+// New feature: Clicking on the number of citations in the links column
+// now does a FullTextSearch for the WantedPage link!
+//
 // Revision 1.5  2003/03/25 21:05:27  dairiki
 // Ensure pagenames are strings.
 //
