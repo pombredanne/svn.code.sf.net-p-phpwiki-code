@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.55 2002-02-17 23:47:44 carstenklapp Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.56 2002-02-19 04:09:48 carstenklapp Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -295,7 +295,7 @@ function _tryinsertInterWikiMap($content) {
     $fd = fopen ($filename, "rb");
     $data = fread ($fd, filesize($filename));
     fclose ($fd);
-    $content = $content . "\n----\n<verbatim>\n$data</verbatim>\n";
+    $content = $content . "\n<verbatim>\n$data</verbatim>\n";
     return $content;
 }
 
