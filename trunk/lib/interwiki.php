@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: interwiki.php,v 1.17 2002-02-03 05:29:34 carstenklapp Exp $');
+<?php rcs_id('$Id: interwiki.php,v 1.18 2002-02-03 19:21:58 carstenklapp Exp $');
 
 class InterWikiMap {
     function InterWikiMap (&$request) {
@@ -88,10 +88,13 @@ class InterWikiMap {
     }
 
     function _getMapFromFile ($filename) {
-        
+        $error_html = sprintf(_("Loading InterWikiMap from external file %s."), $filename);
+        trigger_error( $error_html, E_USER_NOTICE );
+
         @$fd = fopen ($filename, "rb");
         @$data = fread ($fd, filesize($filename));
         @fclose ($fd);
+
         return $data;
     }
 
