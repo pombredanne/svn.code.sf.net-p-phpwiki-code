@@ -54,14 +54,14 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 // as the path separator.
 //ini_set('include_path', '.:/usr/local/httpd/phpwiki');
 
-if (!defined('DEBUG')) define ('DEBUG', 1);
+if (!defined('DEBUG')) define ('DEBUG', 0);
 
 /////////////////////////////////////////////////////////////////////
 // Part Null: Don't touch this!
 
-define ('PHPWIKI_VERSION', '1.3.5pre');
+define ('PHPWIKI_VERSION', '1.3.7pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.111 2003-03-18 21:40:04 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.112 2003-11-17 15:49:21 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -772,6 +772,12 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 // End:   
 
 // $Log: not supported by cvs2svn $
+// Revision 1.111  2003/03/18 21:40:04  dairiki
+// Copy Lawrence's memo on USE_PATH_INFO/AcceptPathInfo to configurator.php
+// (as promised).
+//
+// Plus slight clarification of default (auto-detect) behavior.
+//
 // Revision 1.110  2003/03/18 20:51:10  lakka
 // Revised comments on use of USE_PATH_INFO with Apache 2
 //
