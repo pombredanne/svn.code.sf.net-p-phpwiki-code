@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.14 2001-09-18 19:16:23 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.15 2001-11-08 16:02:40 dairiki Exp $');
 
 include "lib/config.php";
 include "lib/stdlib.php";
@@ -173,7 +173,7 @@ function main ($request) {
         break;
 
     case 'remove':
-        include 'admin/removepage.php';
+        include 'lib/removepage.php';
         break;
     
     case 'lock':
