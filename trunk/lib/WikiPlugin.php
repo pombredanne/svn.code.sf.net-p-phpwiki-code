@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.54 2004-11-23 15:17:16 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.55 2004-11-25 08:26:49 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,7 +87,7 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.54 $");
+        //                    "\$Revision: 1.55 $");
     }
 
     function getArgs($argstr, $request=false, $defaults=false) {
@@ -243,7 +243,7 @@ class WikiPlugin
         if (is_object($pagelist) and isa($pagelist, 'PageList')) {
             // table or list?
             foreach ($pagelist->_pages as $page) {
-            	$list[] = $page->_page->_pagename;
+            	$list[] = $page->getName();
             }
         }
         return $list;
