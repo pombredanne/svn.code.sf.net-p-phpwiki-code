@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: Tools.php,v 1.2 2003-01-28 06:31:00 zorloc Exp $')
+rcs_id('$Id: Tools.php,v 1.3 2003-01-28 18:53:25 zorloc Exp $')
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -69,6 +69,7 @@ class ConfigValue {
     */
     function ConfigValue($params){
         $this->name = $params['name'];
+        $this->section = $params['section'];
         $this->defaultValue = $params['defaultValue'];
         $this->description = $params['description'];
         $this->validator = &$params['validator'];
@@ -578,8 +579,106 @@ class ValidatorConstantList extends Validator {
     }
 }
 
+/**
+* Validator subclass for an array.
+* @author Joby Walker<zorloc@imperium.org>
+*/
+class ValidatorArray extends Validator {
+
+    /*
+    * Checks to ensure that the parameter is an array then passes the
+    * array on to validMembers() to ensure that each member of the 
+    * array is valid.
+    * @param array $array Value to check.
+    * @return boolean True if the value is and array and members are valid, false else.
+    */
+    function validate($array){
+        if(is_array($array)){
+            return $this->validMembers($array);
+        }
+        return false
+    }
+    
+    /**
+    * Checks to ensure that the members of the array are valid.  Always true here.
+    * @param array $array Array of members to check
+    * @return boolean Always true since there are no restrictions on the members.
+    */
+    function validMembers($array){
+        return true;
+    }
+}
+
+/**
+* Validator subclass for an array of strings.
+* @author Joby Walker<zorloc@imperium.org>
+*/
+class ValidatorArrayString extends Validator {
+
+    /**
+    * Checks to ensure that the members of the array are valid strings.
+    * @param array $array Array of members to check
+    * @return boolean True if the members are valid strings, false else.
+    */
+    function validMembers($array){
+        foreach ($array as $member){
+            if (!is_string($member)) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+/**
+* Validator subclass for an array of strings that must be in a list of 
+* defined values.
+* @author Joby Walker<zorloc@imperium.org>
+*/
+class ValidatorArrayStringList extends Validator {
+
+    /** 
+    * Array of potential valid values
+    * @var array
+    * @access protected
+    */
+    var stringList;
+
+    /**
+    * Constructor
+    * 
+    * Saves parameter as the instance variable $stringList.
+    * @param array List of valid values.
+    */
+    function ValidatorArrayStringList($stringList){
+        $this->stringList = $stringList;
+        return;
+    }
+
+    /**
+    * Checks to ensure that the members of the array are valid strings and 
+    * within the defined list.
+    * @param array $array Array of members to check
+    * @return boolean True if the members are valid strings are in the defined list, 
+    * false else.
+    */
+    function validMembers($array){
+        foreach ($array as $member){
+            if(!in_array($member, $stringList, true)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+}
+
+
 
 //$Log: not supported by cvs2svn $
+//Revision 1.2  2003/01/28 06:31:00  zorloc
+//Mostly done but ConfigArray will probably need some more helper methods.
+//
 //Revision 1.1  2003/01/23 00:32:04  zorloc
 //Initial work for classes to hold configuration constants/variables. Base
 //ConfigValue class and subclasses for constants and variables.
