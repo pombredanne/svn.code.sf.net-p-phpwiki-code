@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.31 2005-01-21 11:51:22 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.32 2005-01-21 14:09:08 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004, 2005 $ThePhpWikiProgrammingTeam
  *
@@ -45,18 +45,31 @@ class CacheableMarkup extends XmlContent {
         if (!$packed)
             return false;
 
-        if (function_exists('gzcompress')) {
-            // ZLIB format has a five bit checksum in it's header.
-            // Lets check for sanity.
-            if ((ord($packed[0]) * 256 + ord($packed[1])) % 31 == 0) {
+        // ZLIB format has a five bit checksum in it's header.
+        // Lets check for sanity.
+        if (((ord($packed[0]) * 256 + ord($packed[1])) % 31 == 0)
+             and (substr($packed,0,2) == "\037\213") 
+                  or (substr($packed,0,2) == "x\332"))   // 120, 218
+        {
+            if (function_exists('gzuncompress')) {
                 // Looks like ZLIB.
-                return unserialize(gzuncompress($packed));
+                $data = gzuncompress($packed);
+                return unserialize($data);
+            } else {
+                // user our php lib. TESTME
+                include_once("ziplib.php");
+                $zip = ZipReader($packed);
+                list(,$data,$§attrib) = $zip->readFile();
+                return unserialize($data);
             }
         }
         if (substr($packed,0,2) == "O:") {
             // Looks like a serialized object
             return unserialize($packed);
         }
+        if (preg_match("/^\w+$/", $packed))
+            return $packed;
+        // happened with _BackendInfo problem also.
         trigger_error("Can't unpack bad cached markup. Probably php_zlib extension not loaded.", 
                       E_USER_WARNING);
         return false;
@@ -390,10 +403,18 @@ class Cached_ExternalLink extends Cached_Link {
     }
 
     function expand($basepage, &$markup) {
+        global $request;
+
 	$label = isset($this->_label) ? $this->_label : false;
 	$link = LinkURL($this->_url, $label);
-        if (GOOGLE_LINKS_NOFOLLOW)
-            $link->setAttr('rel', 'nofollow');
+
+        if (GOOGLE_LINKS_NOFOLLOW) {
+            // Ignores nofollow when the user who saved the page was authenticated. 
+            $page = $request->getPage($basepage);
+            $current = $page->getCurrentRevision();
+            if (!$current->get('author_id'))
+                $link->setAttr('rel', 'nofollow');
+        }
         return $link;
     }
 
