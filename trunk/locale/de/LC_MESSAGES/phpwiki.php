@@ -387,11 +387,11 @@ $locale["This page has been locked by the administrator so your changes could no
 $locale["Timeout while obtaining lock."] =
    "Zeitüberschreitung beim Warten auf Aufhebung der Lesesperre.";
 $locale["Title Search"] =
-   "Titelsuche";
+   "TitelSuche";
 $locale["Title search results for '%s'"] =
    "Titel-Suchresultate nach »%s«";
 $locale["TitleSearch"] =
-   "Titelsuche";
+   "TitelSuche";
 $locale["To cancel press the \"Back\" button of your browser."] =
    "Anderenfalls benütze die »Zurück« Funktion deines Browsers.";
 $locale["Toolbar"] =
