@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.63 2002-02-25 15:57:11 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.64 2002-03-01 03:23:57 carstenklapp Exp $');
 
 
 include "lib/config.php";
@@ -8,7 +8,7 @@ require_once('lib/Request.php');
 require_once("lib/WikiUser.php");
 require_once('lib/WikiDB.php');
 
-//define ('DEBUG', 1);
+define ('DEBUG', 1);
 
 // FIXME: move to config?
 if (defined('THEME')) {
@@ -261,20 +261,70 @@ class WikiRequest extends Request {
 
     function _notAuthorized ($require_level) {
         // User does not have required authority.  Prompt for login.
-        $what = HTML::em($this->getArg('action'));
+        $what = $this->getActionDescription($this->getArg('action'));
 
         if ($require_level >= WIKIAUTH_FORBIDDEN) {
-            $this->finish(fmt("Action %s is disallowed on this wiki", $what));
+            $this->finish(fmt("%s is disallowed on this wiki.",
+                              $this->getDisallowedActionDescription($this->getArg('action'))));
         }
         elseif ($require_level == WIKIAUTH_BOGO)
-            $msg = fmt("You must sign in to %s this wiki", $what);
+            $msg = fmt("You must sign in to %s.", $what);
         elseif ($require_level == WIKIAUTH_USER)
-            $msg = fmt("You must log in to %s this wiki", $what);
+            $msg = fmt("You must log in to %s.", $what);
         else
-            $msg = fmt("You must be an administrator to %s this wiki", $what);
+            $msg = fmt("You must be an administrator to %s.", $what);
 
-WikiUser::PrintLoginForm($this, compact('require_level'), $msg);
+        WikiUser::PrintLoginForm($this, compact('require_level'), $msg);
         $this->finish();    // NORETURN
+    }
+
+    function getActionDescription($action) {
+        static $actionDescriptions;
+        if (! $actionDescriptions) {
+            $actionDescriptions
+            = array('browse'     => _("browse pages in this wiki"),
+                    'diff'       => _("diff pages in this wiki"),
+                    'dumphtml'   => _("dump html pages from this wiki"),
+                    'dumpserial' => _("dump serial pages from this wiki"),
+                    'edit'       => _("edit pages in this wiki"),
+                    'loadfile'   => _("load files into this wiki"),
+                    'lock'       => _("lock pages in this wiki"),
+                    'remove'     => _("remove pages from this wiki"),
+                    'unlock'     => _("unlock pages in this wiki"),
+                    'upload'     => _("upload a zip dump to this wiki"),
+                    'viewsource' => _("view the source of pages in this wiki"),
+                    'zip'        => _("download a zip dump from this wiki"),
+                    'ziphtml'    => _("download an html zip dump from this wiki")
+                    );
+        }
+        if (in_array($action, array_keys($actionDescriptions)))
+            return $actionDescriptions[$action];
+        else
+            return $action;
+    }
+    function getDisallowedActionDescription($action) {
+        static $disallowedActionDescriptions;
+        if (! $disallowedActionDescriptions) {
+            $disallowedActionDescriptions
+            = array('browse'     => _("Browsing pages"),
+                    'diff'       => _("Diffing pages"),
+                    'dumphtml'   => _("Dumping html pages"),
+                    'dumpserial' => _("Dumping serial pages"),
+                    'edit'       => _("Editing pages"),
+                    'loadfile'   => _("Loading files"),
+                    'lock'       => _("Locking pages"),
+                    'remove'     => _("Removing pages"),
+                    'unlock'     => _("Unlocking pages"),
+                    'upload'     => _("Uploading zip dumps"),
+                    'viewsource' => _("Viewing the source of pages"),
+                    'zip'        => _("Downloading zip dumps"),
+                    'ziphtml'    => _("Downloading html zip dumps")
+                    );
+        }
+        if (in_array($action, array_keys($disallowedActionDescriptions)))
+            return $disallowedActionDescriptions[$action];
+        else
+            return $action;
     }
 
     function requiredAuthority ($action) {
