@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.21 2002-01-17 20:41:13 dairiki Exp $');
+<?php rcs_id('$Id: Template.php,v 1.22 2002-01-17 23:14:21 dairiki Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -321,12 +321,6 @@ extends TemplateFile
             $this->setWikiUserTokens($user);
         if (isset($RCS_IDS))
             $this->qreplace('RCS_IDS', $RCS_IDS);
-
-        $this->qreplace('BASE_URL',
-			// FIXME:
-                        //WikiURL($GLOBALS['pagename'], false, 'absolute_url')
-                        BaseURL()
-                        );
 
         require_once('lib/ButtonFactory.php');
         $this->replace('ButtonFactory', new ButtonFactory);
