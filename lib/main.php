@@ -1,17 +1,17 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.108 2004-01-28 14:34:14 rurban Exp $');
+rcs_id('$Id: main.php,v 1.109 2004-01-30 19:57:58 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
 include "lib/config.php";
 require_once("lib/stdlib.php");
 require_once('lib/Request.php');
+require_once('lib/WikiDB.php');
 if (ENABLE_USER_NEW)
   require_once("lib/WikiUserNew.php");
 else
   require_once("lib/WikiUser.php");
 require_once("lib/WikiGroup.php");
-require_once('lib/WikiDB.php');
 
 class WikiRequest extends Request {
     // var $_dbi;
@@ -140,20 +140,6 @@ class WikiRequest extends Request {
 
     function getDbh () {
         return $this->_dbi;
-    }
-
-    function getAuthDbh () {
-        global $DBParams, $DBAuthParams;
-        if (!isset($this->_auth_dbi)) {
-            if ($DBParams['dbtype'] == 'dba' or empty($DBAuthParams['auth_dsn']))
-                $this->_auth_dbi = $this->getDbh(); // use phpwiki database 
-            elseif ($DBAuthParams['auth_dsn'] == $DBParams['dsn'])
-                $this->_auth_dbi = $this->getDbh(); // same phpwiki database 
-            else // use external database 
-                // needs PHP 4.1. better use $this->_user->...
-                $this->_auth_dbi = WikiDB_User::open($DBAuthParams);
-        }
-        return $this->_auth_dbi;
     }
 
     /**
@@ -868,6 +854,11 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.108  2004/01/28 14:34:14  rurban
+// session table takes the common prefix
+// + various minor stuff
+// reallow password changing
+//
 // Revision 1.107  2004/01/27 23:23:39  rurban
 // renamed ->Username => _userid for consistency
 // renamed mayCheckPassword => mayCheckPass
