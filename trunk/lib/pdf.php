@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: pdf.php,v 1.4 2004-06-14 11:31:37 rurban Exp $');
+rcs_id('$Id: pdf.php,v 1.5 2004-09-17 14:19:02 rurban Exp $');
 
 // PDF functions taken from FPDF http://www.fpdf.org
 // Edited for PHPWebthings by Don Sebà 
@@ -129,13 +129,21 @@ function ConvertAndDisplayPdf (&$request) {
     $request->buffer_output(false/*'nocompress'*/);
     $pagename = $request->getArg('pagename');
     $dest = $request->getArg('dest');
-    $pdf->Output($pagename.".pdf", $dest ? $dest : 'F');
+    $pdf->Output($pagename.".pdf", $dest ? $dest : 'I');
     if (!empty($errormsg)) {
         $request->discardOutput();
     }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/06/14 11:31:37  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.3  2004/05/15 19:49:09  rurban
 // moved action_pdf to lib/pdf.php
 //
