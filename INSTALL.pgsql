@@ -1,7 +1,3 @@
-FIXME: The pgsql backend has not yet been ported to the new database
-scheme.  (Though it should not be very hard, and is certainly in
-the works.)
-
 ----------
 NOTE for the 1.2 release: You may see a few warnings when you first
 load the pages. They may look like this:
@@ -68,8 +64,8 @@ have a brand-new PhpWiki running!
 
 If you find something I missed, please let me know.
 Steve Wainstead
-swain@panix.com
+swain@wcsb.org
 
 Report bugs to phpwiki-talk@lists.sourceforge.net
 
-$Id: INSTALL.pgsql,v 1.9 2001-09-18 19:16:23 dairiki Exp $
+$Id: INSTALL.pgsql,v 1.7 2001-02-02 02:55:31 wainstead Exp $

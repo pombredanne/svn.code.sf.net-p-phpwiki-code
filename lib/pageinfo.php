@@ -1,98 +1,76 @@
+<!-- $Id: pageinfo.php,v 1.5 2000-11-01 11:31:41 ahollosi Exp $ -->
+<!-- Display the internal structure of a page. Steve Wainstead, June 2000 -->
 <?php
-rcs_id('$Id: pageinfo.php,v 1.12 2001-10-29 18:24:26 dairiki Exp $');
-require_once('lib/Template.php');
+   if (get_magic_quotes_gpc()) {
+      $info = stripslashes($info);
+   }
 
-global $datetimeformat;
+   $encname = htmlspecialchars($info);
+   $enter = gettext ("Enter a page name");
+   $go = gettext ("Go");
+   $html = "<form action=\"$ScriptUrl\" METHOD=GET>\n" .
+	   "<input name=\"info\" value=\"$encname\">" .
+	   " $enter\n" .
+	   "<input type=submit value=$go><br>\n" .
+	   "<input type=checkbox name=showpagesource";
 
-// Display the internal structure of a page.
-$pagename = $request->getArg('pagename');
-$page = $dbi->getPage($pagename);
+   if (isset($showpagesource) && ($showpagesource == "on")) {
+      $html .= " checked";
+   }
+   $html .= "> ";
+   $html .= gettext ("Show the page source and references");
+   $html .= "\n</form>\n";
 
-$rows[] = Element('tr',
-                  "\n"
-                  . Element('th', 'Version') . "\n"
-                  . Element('th', 'Newer') . "\n"
-                  . Element('th', 'Older') . "\n"
-                  . Element('th', 'Created') . "\n"
-                  . Element('th', 'Summary') . "\n"
-                  . Element('th', 'Author') . "\n"
-                  );
+   // don't bother unless we were asked
+   if (! $info) {
+      GeneratePage('MESSAGE', $html, gettext("PageInfo"), 0);
+      exit;
+   }
 
-// Get all versions of a page, then iterate over them to make version list
-$iter = $page->getAllRevisions();
-$i = 0;
-$last_author_id = false;
+   function ViewpageProps($name, $pagestore)
+   {
+      global $dbi, $showpagesource, $datetimeformat, $FieldSeparator;
 
-function bold_if($cond, $text) {
-    return (bool)$cond ? QElement('b', $text) : htmlspecialchars($text);
-}
+      $pagehash = RetrievePage($dbi, $name, $pagestore);
+      if ($pagehash == -1) {
+         $table = sprintf (gettext ("Page name '%s' is not in the database"),
+		$name) . "\n";
+      }
+      else {
+	 $table = "<table border=1 bgcolor=white>\n";
 
+	 while (list($key, $val) = each($pagehash)) {
+	    if ($key > 0 || !$key) #key is an array index
+	       continue;
+            if ((gettype($val) == "array") && ($showpagesource == "on")) {
+               $val = implode($val, "$FieldSeparator#BR#$FieldSeparator\n");
+	       $val = htmlspecialchars($val);
+	       $val = str_replace("$FieldSeparator#BR#$FieldSeparator", "<br>", $val);
+            }
+	    elseif (($key == 'lastmodified') || ($key == 'created'))
+	       $val = date($datetimeformat, $val);
+	    else
+	       $val = htmlspecialchars($val);
 
-while ($rev = $iter->next()) {
-    $version = $rev->getVersion();
-    $cols = array();
-    $is_major_edit = ! $rev->get('is_minor_edit');
-    
-    $cols[] = Element('td', array('align' => 'right'),
-                      Element('a', array('href'
-                                          => WikiURL($pagename,
-                                                     array('version' => $version))),
-                              bold_if($is_major_edit, $version)));
-    
+            $table .= "<tr><td>$key</td><td>$val</td></tr>\n";
+	 }
 
-    $cols[] = Element('td', array('align' => 'center'),
-                      QElement('input', array('type' => 'radio',
-                                              'name' => 'version',
-                                              'value' => $version,
-                                              'checked' => $i == 0)));
-    
-    $cols[] = Element('td', array('align' => 'center'),
-                      QElement('input', array('type' => 'radio',
-                                              'name' => 'previous',
-                                              'value' => $version,
-                                              'checked' => $i++ == 1)));
-    
-    $cols[] = QElement('td', array('align' => 'right'),
-                       strftime($datetimeformat, $rev->get('mtime'))
-                       . "\xa0");
+	 $table .= "</table>";
+      }
+      return $table;
+   }
 
-    
-    $cols[] = Element('td', bold_if($is_major_edit, $rev->get('summary')));
-    
-    $author_id = $rev->get('author_id');
-    $cols[] = Element('td', bold_if($author_id !== $last_author_id,
-                                    $rev->get('author')));
-    $last_author_id = $author_id;
-    $rows[] = Element('tr', "\n" . join("\n", $cols) . "\n");
-}
+   $html .= "<P><B>";
+   $html .= gettext ("Current version");
+   $html .= "</B></p>";
+   // $dbi = OpenDataBase($WikiPageStore);   --- done by index.php
+   $html .= ViewPageProps($info, $WikiPageStore);
 
-$table = ("\n"
-          . Element('table', join("\n", $rows)) . "\n"
-          . Element('input', array('type' => 'hidden',
-                                   'name' => 'action',
-                                   'value' => 'diff')) . "\n"
-          . Element('input', array('type' => 'hidden',
-                                   'name' => 'pagename',
-                                   'value' => $pagename)) . "\n"
-          . Element('input', array('type' => 'submit', 'value' => 'Run Diff')) . "\n");
+   $html .= "<P><B>";
+   $html .= gettext ("Archived version");
+   $html .= "</B></p>";
+   // $dbi = OpenDataBase($ArchivePageStore);
+   $html .= ViewPageProps($info, $ArchivePageStore);
 
-$formargs['action'] = USE_PATH_INFO ? WikiURL($pagename) : SCRIPT_NAME;
-$formargs['method'] = 'post';
-
-$html = Element('p',
-                htmlspecialchars(gettext("Currently archived versions of"))
-                . " "
-                . LinkExistingWikiWord($pagename));
-$html .= Element('form', $formargs, $table);
-
-echo GeneratePage('MESSAGE', $html, gettext("Revision History: ") . $pagename);
-
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:   
+   GeneratePage('MESSAGE', $html, gettext("PageInfo").": '$info'", 0);
 ?>

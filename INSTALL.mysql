@@ -1,4 +1,3 @@
-FIXME: these instructions are slightly broken.
 
 Installing phpwiki with mySQL 
 -----------------------------
@@ -37,16 +36,14 @@ For more information on mySQL go to http://www.mysql.org/
    error. In that case remove existing tables manually and delete
    the "drop tables" lines from schemas/schema.mysql - it should work now
 
-4. Edit $DBParams in index.php to reflect your settings.
+4. Edit lib/config.php to reflect your settings.
 
-	a) $DBParams['dbtype'] should be set to 'SQL'.
-	b) $DBParams['dsn'] should be set to something like
-           'mysql://username:password@host/phpwiki'.
-	   (where 'phpwiki' is the mysql database name.)
-        c) Note that if you set $DBParams['prefix'] to a 
-           non-empty string, you will have to edit
-           schemas/schema.mysql before you perform step
-           three (above).  (Sorry.)
+	a) comment out the DBM settings
+	b) uncomment the mySQL settings
+	c) set $mysql_user to "wikiuser" as used in step 2
+	d) set $mysql_pwd to "password" as used in step 2
+	e) set $mysql_db to "phpwiki" as used in step 1
+
 
 That's it. phpwiki should now work.
 
@@ -61,4 +58,4 @@ if (!extension_loaded("mysql"))  { dl("mysql.so"); }
 /Arno
 ahollosi@mail.com
 
-$Id: INSTALL.mysql,v 1.9 2001-11-09 04:50:30 dairiki Exp $
+$Id: INSTALL.mysql,v 1.6.2.1 2001-11-09 03:13:00 dairiki Exp $

@@ -1,90 +1,17 @@
-02/12/01 More Jeff's hacks:
-
-* More CSS stuff.  I think it's neat.
-* Added tables! And modified the footnote stuff a litte.
-  See TextFormattingRules for details.
-* Fixed bugs: including (I hope the two which
-  Reini Urban <rurban@x-ray.at> just reported.)  Also added
-  Reini's patches to the README.  Thanks!
-
-
-02/11/01 Jeff's hacks continue:
-
-* User preferences can be stored in a cookie.  Currently the only user preference
-  is the size of the textarea on the edit page.  See the UserPreferences wiki page.
-
-* When a zip/file is uploaded, set the author to the user who does the upload
-  (ie. the administrator).  Also enter the upload in RecentChanges.
-* Don't load RecentChanges from zip or dir.  Only from file.
-
-* Clean up error reporting.  Warning messages screw up header() and setcookie()
-  operations, and also corrupt the zip dumps.  New function
-  PostponeErrorMessages() allows one to postpone the reporting of selected warnings.
-
-* Beginnings of CSS support.  Still in the ugly stage.
-
-* More bug fixes.
-
-02/11/01 Jeff's hacks continue:
-
-* Moved user configuration stuff into index.php.  What was index.php is
-  now in lib/main.php.
-
-* Refactored the DB configuration variables.  There's one define() constant
-  which specifies type database type, and one hash (used by all the 
-  databases) which holds database, file, and server selection.
-  The actual file/table names are now "hard-coded" into the individual
-  database modules --- I have added the hook for setting a prefix
-  to be applied to all file/table names.
-  I think it's much cleaner, but let me know if you think otherwise.
-  (I've only tested the dba and mysql backends.)
-  
-* Refactored the dump/load zip/directory stuff.  You can now upload zip-dumps
-  or individual files from your local (client) machine.
-  See PhpWikiAdministration.
-
-* Fixed a bunch of bugs --- mostly the one's I introduced in my last big
-  commit.
-
-02/09/01 Jeff hack's again:
-
-* Pagename in PATH_INFO support added.  This is configurable,
-  cause, near as I can figure, if the php interpreter is run stand-alone
-  in /cgi-bin there's no way to pass any useful PATH_INFO to it.
-  (If a stand-alone php, in say /usr/local/bin, is used as a CGI interpreter,
-  PATH_INFO will work, as long as php was configured with --enable-discard-path .)
-
-  Along with this I refactored the semantics of all the query arguments to
-  make them (IMHO) more consistent.
-
-* Redid the administrator authentication stuff.  Eliminated admin.php ---
-  all access is now through index.php.  (New file lib/userauth.php.)
-  Still a little rough, but a big improvement, I think.  Hopefully this
-  can be developed into a more general user identification scheme...
-
-  Along with eliminating admin.php and the new auth scheme, completely
-  refactored index.php.   It should be easy now to swap config.php and index.php.
-  (I'll do that soon.)
-
-* Continued cleaning out page reference stuff.
-
-* Force archive of old page if author changes.  (Unless new author
-  is admin.)
-  
-* More warning fixes in diff.php
-
-* Refactored the semantics of the phpwiki: URL's.  
-  See pgsrc/PhpWikiAdministration and pgsrc/MagicPhpWikiURLs
-  for more information.
-
-Bug fixes:
 * Don't show signature image if $SignatureImg (in config.php) is left unset
-* Bug fix: hang on full zip dump 
-* Bug fix: hang on diff
-* Bug fix: unzip failed on some old zip-dumps
-* Bug fix: check for DB files in /tmp was broken
-* Minor security fix: pagename must now be url-encoded
-* Spelling fixes in pgsrc/*
+* Much improved german pgsrc/
+* Spelling fixes in english pgsrc/*
+* Minor security fixes:
+  + pagename must now be url-encoded
+  + added permission checks in admin/{load,dump}serial.php
+* Bugs fixed
+  + hang on full zip dump 
+  + hang on diff
+  + unzip failed on some old zip-dumps
+  + check for DB files in /tmp was broken
+  + encode HTML entities within edit textarea 
+  + ensure page linkification in "Describe foo here."
+  + fixes to transform code to improve HTML validity
 
 1.2.0 02/01/01
 * Support for PHP 4.0.4 (using the dba_* interface for DBM files),
@@ -96,7 +23,7 @@ Bug fixes:
 * Spanish version updated
 * More robust support for flat file based Wiki (INSTALL.flatfile
   included)
-* "named internal links," i.e. [wow | HomePage]
+* "named internal links," i.e. [wow | FrontPage]
 * New IF syntax added to templates
 * New PhpWikiAdministration page added
 * New term/defintion syntax (for <DT><DD> tags)
@@ -300,7 +227,7 @@ reverse linking of page titles
 
 0.05: 12/14/99: Added title searches, RecentChanges, fixed numerous bugs like
 only trying to render valid page names, the last-edited-date, removed
-the navigation toolbars, linked the new logo to HomePage, and a half
+the navigation toolbars, linked the new logo to FrontPage, and a half
 dozen other odd things. It's almost ready.
 
 0.04: 12/12/99: Several additions to markup:

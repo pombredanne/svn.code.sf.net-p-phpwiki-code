@@ -1,12 +1,9 @@
-FIXME: The flatfile backend has not yet been ported to the new database
-scheme.  For now, it is broken.
-
 If you cannot run PhpWiki on top of a relational database like
 MySQL or Postgresql, and your system does not support DBM files
 or (worse) has a broken implementation like NDBM on Solaris, then
 a flat file Wiki should work for you. Note that as of 1.2 most of the
 Wiki functionality is there... the MostPopular is not implemented yet
-so you will want to delete that link from the HomePage (or better
+so you will want to delete that link from the FrontPage (or better
 yet, write it and mail us a patch ;-)
 
 Installation is similar to using a DBM file for storing the pages.
@@ -132,4 +129,4 @@ phpwiki-talk list at phpwiki-talk@lists.sourceforge.net.
 Steve Wainstead
 swain@panix.com
 
-$Id: INSTALL.flatfile,v 1.5 2001-09-18 19:16:23 dairiki Exp $
+$Id: INSTALL.flatfile,v 1.2.2.1 2001-08-27 03:55:13 wainstead Exp $

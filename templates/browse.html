@@ -1,124 +1,34 @@
-<?php echo "<?xml version='1.0' encoding='ISO-8859-1'?>\n"; ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-<!-- phpwiki source:
-$Id: browse.html,v 1.22 2001-11-14 21:25:32 dairiki Exp $
-${RCS_IDS}
--->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<!-- <meta name="robots" content="index,follow" /> -->
-<base href="${BASE_URL}" />
-<title>${SPLIT_PAGE}</title>
-<!--
--->
-<link rel="stylesheet" title="phpwiki" href="${CSS_URL}" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>###PAGE###</title>
 </head>
-<body>
-<div><a class="wikilink" 
-        href="${BROWSE}HomePage"
-        ><img src="${LOGO}"
-              border="0" alt="[phpwiki]" 
-              align="right" width="50" height="50" /></a></div>
-<h1>
-<?plugin-link BackLinks description="Get BackLinks for [pagename]"
-                        page="[pagename]" class="backlinks"
-                        linktext="${SPLIT_PAGE}" ?>
-</h1>
-<div class="br"><br clear="all" class="ignore" /></div>
-<?php if (! $IS_CURRENT) { ?>
-  <p><strong>Note</strong>: You are viewing an old revision of this page.
-     Click <a href="${BROWSE}${PAGEURL}">here</a> to view the current version.</p>
-  <hr class="ignore" noshade="noshade" />
-<?php } ?>
-<div class="wikitext">${CONTENT}</div>
-<hr class="ignore" noshade="noshade" />
-<form action="<?php echo WikiURL('TitleSearch'); ?>" method="get">
-<!-- I would like not to have to use these tables, and managed to
-     get this stuff to work more or less correctly using
-     CSS's float:left; and float:right;.  However float:right; seems
-     to cause MSIE4.01/NT to hang. 
-     So, we use tables...  -->
-<table class="toolbar" width="100%"
-       cellpadding="0" cellspacing="0" border="0"><tr valign="baseline">
-  <td>
-    <?php if ($IS_CURRENT) { ?>
-      Last edited on ${LASTMODIFIED}
-    <?php } else { ?>
-      Version ${VERSION}, saved on ${LASTMODIFIED}
-    <?php } ?>
-  </td>
-  <td align="right">
-  <?php echo LinkExistingWikiWord('FindPage') ?> 
-  | <span><input type="hidden" name="auto_redirect" value="1" />
-    <input type="text"  name="s" size="12"
-           title="Quick Search"
-           onmouseover="window.status='Quick Search'; return true;"
-           onmouseout="window.status=''; return true;" /></span>
-  | <?plugin-link LikePages page="[pagename]" description="List LikePages for [pagename]"?>
-  </td>
-</tr></table>
-<table class="toolbar" width="100%"
-       cellpadding="0" cellspacing="0" border="0"><tr valign="baseline">
-  <td>
-    <?php if ($page->get('locked') && !$user->is_admin()) { ?>
-      Page locked
-    <?php } else { ?>
-      <?php if ($IS_CURRENT) { ?>
-        <a class="wikiaction" href="${ACTION}edit">Edit</a>
-      <?php } else { ?>
-        <a class="wikiaction" href="${ACTION}edit&amp;version=${VERSION}"
-          >Edit old revision</a>
-      <?php } ?>
-    <?php } ?>
-    <?php if ($user->is_admin()) { ?>
-      <?php if ($page->get('locked')) { ?>
-        | <a class="wikiadmin" href="${ACTION}unlock">Unlock page</a>
-      <?php } else { ?>
-        | <a class="wikiadmin" href="${ACTION}lock">Lock page</a>
-      <?php } ?>
-      | <a class="wikiadmin" href="${ACTION}remove">Remove page</a>
-    <?php } ?>
-    | <a class="wikiaction" href="${ACTION}info">History</a>
-    <?php if ($IS_CURRENT) { ?>
-      | <a class="wikiaction" href="${ACTION}diff&amp;previous=major">Diff</a>
-    <?php } else { ?>
-      | <a class="wikiaction" 
-           href="${ACTION}diff&amp;version=${VERSION}&amp;previous=major">Diff</a>
-    <?php } ?>
-  </td>
-  <td align="right">
-    <?php if ($user->is_authenticated()) { ?>
-      You are signed in as <?php echo LinkWikiWord($USERID); ?>
-      | <a class="wikiaction" href="${ACTION}logout">SignOut</a>
-    <?php } else { ?>
-      <a class="wikiaction" href="${ACTION}login">SignIn</a>
-    <?php } ?>
-  </td>
-</tr></table>
 
-<?php /*
-<hr class="ignore" noshade="noshade" />
-<small>${RELATEDPAGES}</small>
-*/ ?>
-<?php // FIXME:hack
-ob_start();
-global $ErrorManager;
-$ErrorManager->flushPostponedErrors();
-$errmsgs = ob_get_contents();
-ob_end_clean();
-if ($errmsgs)
-    echo "<div class='errors'><h4>PHP Warnings</h4>$errmsgs</div>";
-?>
-<div class="toolbar">
-  <!-- For debugging only, really: -->
-  <?plugin-link _BackendInfo 
-                linktext=DebugInfo
-                targetpage=DebugInfo
-                page=[pagename]
-                description="Get debugging information for [pagename]."?>
-</div>
-</form>
+<body bgcolor=ivory text=black alink=red link=darkblue vlink=darkmagenta>
+<h1><a href="###SCRIPTURL###"><img src="###LOGO###" border=0 alt="[phpwiki]" align=middle width=50 height=50></a>
+<a href="###SCRIPTURL###?refs=###PAGEURL###">###PAGE###</a></h1>
+###IF:ADMIN###
+###IF LOCK###[<a href="###SCRIPTURL###?unlock=###PAGEURL###">Unlock page</a>]
+###IF !LOCK###[<a href="###SCRIPTURL###?lock=###PAGEURL###">Lock page</a>]
+- - 
+[<a href="###SCRIPTURL###?remove=###PAGEURL###">Remove page</A>]
+<hr noshade>
+###ENDIF:ADMIN###
+<P>
+###CONTENT###
+<hr noshade>
+###IF ADMIN###<a href="###SCRIPTURL###?edit=###PAGEURL###">EditText</a> of this page
+###IF:!ADMIN###
+###IF LOCK###Page locked
+###IF !LOCK###<a href="###SCRIPTURL###?edit=###PAGEURL###">EditText</a> of this page
+###ENDIF:!ADMIN###
+(last edited ###LASTMODIFIED###)
+[<a href="###SCRIPTURL###?info=###PAGEURL###">info</a>]
+[<a href="###SCRIPTURL###?diff=###PAGEURL###">diff</a>])
+<br>
+<a href="###SCRIPTURL###?FindPage">FindPage</a> by browsing or searching
+<hr noshade>
+<small>###RELATEDPAGES###</small>
+
 </body>
 </html>

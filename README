@@ -1,5 +1,3 @@
-FIXME: This is outdated.
-
 This web application is licensed under the Gnu Public License, which
 should be included in the same directory as this README. A copy
 can be found at http://www.gnu.org/copyleft/gpl.txt.
@@ -21,42 +19,40 @@ implementations have the full set of features; DBM and mSQL are
 missing only a few, and the flat file implementation is solid
 and waiting for your improvement. All are suitable for production.
 
+NOTE 2: Not all the admin functions are implemented, but the page
+locking sure is nice.
+
 MANIFEST:
 
-index.php:             just the user-defined configs, calls lib/main.php
+index.php:             the "main page", really a set of branching instructions
+admin.php:             entry page for doing wiki administration
 
-lib/config.php:        not user-definable config functions.
+lib/config.php:        configuration options, constants, global variables
 lib/db_filesystem.php  support for flat file Wiki	
-lib/dbalib.php:        database access functions for the dba interface
 lib/dbmlib.php:        database access functions for dbm files
-lib/diff.php:          request colored diff's
 lib/display.php:       display a page (this calls "lib/transform.php")
+lib/editlinks.php:     edit the embedded links of a page
 lib/editpage.php:      edit a page
 lib/fullsearch.php:    full page text search
-lib/interwiki.map:     list of other wiki's linked by trailing :
-lib/interwiki.php:     do the interwiki linking
-lib/loadsave.php:      make snapshots or backups 
-                       (previously setupwiki.php and dump-/loadserial.php)
-lib/main.php:          the main loop which was previously in index.php
 lib/mysql.php:         database access functions for mySQL
 lib/pageinfo.php:      gives detailed low-level info on the page structure
 lib/pgsql.php:         database access functions for PostgreSQL
-lib/prepend.php:       things which must be done before all else
 lib/savepage.php:      save a page to db, thank user
 lib/search.php:        page title search
+lib/setupwiki.php:     load a set of pages from ./pgsrc/ directory
 lib/stdlib.php:        standard library of functions (non-db related)
 lib/transform.php:     convert wiki markup into HTML
-lib/userauth.php:      the WikiUser class holding saved state in cookies.
 lib/ziplib.php:        support for zip/unzip, used for page dumps
 
 admin/:
-admin/dumpserial.php:        replaced by lib/loadsave.php
-admin/loadserial.php:        replaced by lib/loadsave.php
+admin/dumpserial.php:        dump the Wiki out as serialize() pages
+admin/loadserial.php:        load Wiki pages that were dumped with dumpserial
 admin/lockpage.php:          lock a page so it cannot be edited
 admin/shrinkdbm.pl:          Perl script to reduce size of DBM files
 admin/wiki_dumpHTML.php:     dump the Wiki out as HTML pages
 admin/wiki_port1_0.php:      import a 1.0 PhpWiki database
 admin/wiki_rebuilddbms.php:  rebuild DBM files to reclaim disk space
+admin/zip.php3:              create a Zip archive of all Wiki pages
 
 templates/:
 browse.html:           for rendering most pages
@@ -68,7 +64,7 @@ schemas/:              SQL schemas for the RDBMSs
 
 
 Steve Wainstead
-swain@panix.com
+swain@wcsb.org
 http://wcsb.org/~swain/
 
-$Id: README,v 1.12 2001-09-18 19:16:23 dairiki Exp $
+$Id: README,v 1.9 2001-02-02 03:03:27 wainstead Exp $
