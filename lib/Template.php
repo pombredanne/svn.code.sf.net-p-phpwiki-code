@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.34 2002-02-20 00:11:37 carstenklapp Exp $');
+<?php rcs_id('$Id: Template.php,v 1.35 2002-02-21 08:22:21 carstenklapp Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -225,10 +225,16 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
     if (!isset($args['HEADER']))
         $args['HEADER'] = split_pagename($title);
     
-    global $HIDE_TOOLBARS;
+    global $HIDE_TOOLBARS, $NO_BASEHREF, $HTML_DUMP;
     $HIDE_TOOLBARS = true;
+    $NO_BASEHREF = true;
+    $HTML_DUMP = true;
+
     $html = asXML(new Template('top', $request, $args));
+
     $HIDE_TOOLBARS = false;
+    $NO_BASEHREF = false;
+    $HTML_DUMP = false;
     return $html;
 }
 
