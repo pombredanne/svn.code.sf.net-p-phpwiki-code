@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.49 2004-01-26 09:17:47 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.50 2004-02-11 19:46:54 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -21,10 +21,12 @@
  * 'minor'    _("Minor Edit"), _("minor")
  * 'markup'   _("Markup")
  * 'size'     _("Size")
- * 'remove'   _("Remove") //admin action, not really an info column
+ * 'remove'   _("Remove") //todo: move this admin action away, not really an info column
  *
- * 'all'       All columns will be displayed. This argument must appear alone.
  * 'checkbox'  A selectable checkbox appears at the left.
+ * 'all'       All columns except remove, content and renamed_pagename
+ * 'most'      pagename, mtime, author, size, hits, ...
+ * 'some'      pagename, mtime, author
  *
  * FIXME: In this refactoring I have un-implemented _ctime, _cauthor, and
  * number-of-revision.  Note the _ctime and _cauthor as they were implemented
@@ -33,6 +35,7 @@
  * that some older revisions (include revision 1) have been cleaned (deleted).
  *
  * TODO: limit, offset, rows arguments for multiple pages/multiple rows.
+ *       check PagePerm "list" access-type
  */
 class _PageList_Column_base {
     var $_tdattr = array();
@@ -62,19 +65,9 @@ class _PageList_Column_base {
 
     function heading () {
         if (in_array($this->_field,array('pagename','mtime','hits'))) {
-            $sortby = PageList::sortby($this->_field,'flip_order');
-            // Todo: multiple comma-delimited sortby args: "+hits,+pagename"
+            // multiple comma-delimited sortby args: "+hits,+pagename"
             // asc or desc: +pagename, -pagename
-            /*
-            $sortby = '+' . $this->_field;
-            if ($sorted = $GLOBALS['request']->getArg('sortby')) {
-                // flip order
-                if ($sorted == '+' . $this->_field)
-                    $sortby = '-' . $this->_field;
-                elseif ($sorted == '-' . $this->_field)
-                    $sortby = '+' . $this->_field;
-            }
-            */
+            $sortby = PageList::sortby($this->_field,'flip_order');
             $s = HTML::a(array('href' => $GLOBALS['request']->GetURLtoSelf(array('sortby' => $sortby)),'class' => 'pagetitle', 'title' => sprintf(_("Sort by %s"),$this->_field)), HTML::raw('&nbsp;'), HTML::u($this->_heading), HTML::raw('&nbsp;'));
         } else {
             $s = HTML(HTML::raw('&nbsp;'), HTML::u($this->_heading), HTML::raw('&nbsp;'));
@@ -182,10 +175,22 @@ class _PageList_Column_version extends _PageList_Column {
 
 // If needed this could eventually become a subclass
 // of a new _PageList_Column_action class for other actions.
+// only for WikiAdminRemove or WikiAdminSelect
 class _PageList_Column_remove extends _PageList_Column {
     function _getValue ($page_handle, &$revision_handle) {
         return Button(array('action' => 'remove'), _("Remove"),
                       $page_handle->getName());
+    }
+};
+
+// only for WikiAdminRename
+class _PageList_Column_renamed_pagename extends _PageList_Column {
+    function _getValue ($page_handle, &$revision_handle) {
+        $post_args = $GLOBALS['request']->getArg('admin_rename');
+        $value = str_replace($post_args['from'], $post_args['to'],$page_handle->getName());
+        return HTML::div(" => ",HTML::input(array('type' => 'text',
+                                                  'name' => 'rename[]',
+                                                  'value' => $value)));
     }
 };
 
@@ -267,21 +272,22 @@ class PageList {
     var $_selected = array();
 
     function PageList ($columns = false, $exclude = false, $options = false) {
-        if ($columns == 'all') {
-            $this->_initAvailableColumns();
-            $columns = array_keys($this->_types);
-            // FIXME: Probably a good idea to NOT include the
-            // columns 'content' and 'remove' when 'all' is
-            // specified.
-        }
-
+        $this->_initAvailableColumns();
+        $symbolic_columns = 
+            array(
+                  'all' =>  array_diff(array_keys($this->_types),
+                                       array('checkbox','remove','renamed_pagename','content')),
+                  'most' => array('pagename','mtime','author','size','hits'),
+                  'some' => array('pagename','mtime','author')
+                  );
         if ($columns) {
             if (!is_array($columns))
                 $columns = explode(',', $columns);
-            if (in_array('all',$columns)) { // e.g. 'checkbox,all'
-                $this->_initAvailableColumns();
-                $columns = array_merge($columns,array_keys($this->_types));
-                $columns = array_diff($columns,array('all'));
+            // expand symbolic columns:
+            foreach ($symbolic_columns as $symbol => $cols) {
+                if (in_array($symbol,$columns)) { // e.g. 'checkbox,all'
+                    $columns = array_diff(array_merge($columns,$cols),array($symbol));
+                }
             }
             foreach ($columns as $col) {
                 $this->_addColumn($col);
@@ -445,6 +451,9 @@ class PageList {
                   'remove'
                   => new _PageList_Column_remove('remove', _("Remove")),
 
+                  'renamed_pagename'
+                  => new _PageList_Column_renamed_pagename('rename', _("Rename to")),
+
                   'checkbox'
                   => new _PageList_Column_checkbox('p', _("Selected")),
 
@@ -565,6 +574,8 @@ extends PageList {
     function addPageSelected ($pagename) {
         $this->_selected[$pagename] = 1;
     }
+    //Todo:
+    //insert javascript when clicked on Selected Select/Deselect all
 }
 
 // (c-file-style: "gnu")
