@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.110 2002-02-23 01:45:17 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.111 2002-02-27 04:41:12 carstenklapp Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -99,14 +99,14 @@ function LinkURL($url, $linktext = '') {
                                      _("BAD URL -- remove all of <, >, \"")));
     }
     else {
-        if (!$linktext)
+        if (! $namedlink = $linktext)
             $linktext = preg_replace("/mailto:/A", "", $url);
         
         $link = HTML::a(array('href' => $url),
                         IconForLink($url), $linktext);
         
     }
-    $link->setAttr('class', $linktext ? 'namedurl' : 'rawurl');
+    $link->setAttr('class', $namedlink ? 'namedurl' : 'rawurl');
     return $link;
 }
 
