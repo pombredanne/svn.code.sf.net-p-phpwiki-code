@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.54 2003-02-16 19:47:16 dairiki Exp $');
+rcs_id('$Id: editpage.php,v 1.55 2003-02-21 04:10:58 dairiki Exp $');
 
 require_once('lib/Template.php');
 
@@ -14,9 +14,11 @@ class PageEditor
         $this->current = $this->page->getCurrentRevision();
 
         $this->meta = array('author' => $this->user->getId(),
-                            'locked' => $this->page->get('locked'),
-                            'author_id' => $this->user->getAuthenticatedId());
-
+                            'author_id' => $this->user->getAuthenticatedId(),
+                            'mtime' => time());
+        
+        $this->tokens = array();
+        
         $version = $request->getArg('version');
         if ($version !== false) {
             $this->selected = $this->page->getRevision($version);
@@ -40,9 +42,9 @@ class PageEditor
 
     function editPage () {
         $saveFailed = false;
-        $tokens = array();
+        $tokens = &$this->tokens;
 
-        if ($this->canEdit()) {
+        if (! $this->canEdit()) {
             if ($this->isInitialEdit())
                 return $this->viewSource();
             $tokens['PAGE_LOCKED_MESSAGE'] = $this->getLockedMessage();
@@ -81,10 +83,10 @@ class PageEditor
 
         $tokens = array_merge($tokens, $this->getFormElements());
 
-        return $this->output('editpage', _("Edit: %s"), $tokens);
+        return $this->output('editpage', _("Edit: %s"));
     }
 
-    function output ($template, $title_fs, $tokens) {
+    function output ($template, $title_fs) {
         $selected = &$this->selected;
         $current = &$this->current;
 
@@ -99,30 +101,35 @@ class PageEditor
 
 
         $title = new FormattedText ($title_fs, $pagelink);
-        $template = Template($template, $tokens);
+        $template = Template($template, $this->tokens);
 
         GeneratePage($template, $title, $rev);
         return true;
     }
 
 
-    function viewSource ($tokens = false) {
+    function viewSource () {
         assert($this->isInitialEdit());
         assert($this->selected);
 
-        $tokens['PAGE_SOURCE'] = $this->_content;
-
-        return $this->output('viewsource', _("View Source: %s"), $tokens);
+        $this->tokens['PAGE_SOURCE'] = $this->_content;
+        return $this->output('viewsource', _("View Source: %s"));
     }
 
-    function setPageLockChanged($isadmin, $lock, &$page) {
-        if ($isadmin) {
-            if (! $page->get('locked') == $lock) {
-                $request = &$this->request;
-                $request->setArg('lockchanged', true); //is it safe to add new args to $request like this?
-            }
-            $page->set('locked', $lock);
+    function updateLock() {
+        if ((bool)$this->page->get('locked') == (bool)$this->locked)
+            return false;       // Not changed.
+
+        if (!$this->user->isAdmin()) {
+            // FIXME: some sort of message
+            return false;         // not allowed.
         }
+
+        $page->set('locked', (bool)$this->locked);
+        $this->tokens['LOCK_CHANGED_MSG']
+            = $this->locked ? _("Page now locked.") : _("Page now unlocked.");
+
+        return true;            // lock changed.
     }
 
     function savePage () {
@@ -131,10 +138,7 @@ class PageEditor
         if ($this->isUnchanged()) {
             // Allow admin lock/unlock even if
             // no text changes were made.
-            if ($isadmin = $this->user->isadmin()) {
-                $page = &$this->page;
-                $lock = $this->meta['locked'];
-                $this->setPageLockChanged($isadmin, $lock, $page);
+            if ($this->updateLock()) {
                 $dbi = $request->getDbh();
                 $dbi->touch();
             }
@@ -149,21 +153,21 @@ class PageEditor
         }
 
         $page = &$this->page;
-        $lock = $this->meta['locked'];
-        $this->meta['locked'] = ''; // hackish
 
+        // Include any meta-data from original page version which
+        // has not been explicitly updated.
+        $meta = array_merge($this->selected->getMetaData(),
+                            $this->meta);
+        
         // Save new revision
-        $newrevision = $page->createRevision($this->_currentVersion + 1,
-                                             $this->_content,
-                                             $this->meta,
-                                             ExtractWikiPageLinks($this->_content));
+        $newrevision = $page->save($this->_content, $this->_currentVersion + 1, $meta);
         if (!is_object($newrevision)) {
             // Save failed.  (Concurrent updates).
             return false;
         }
+        
         // New contents successfully saved...
-        if ($isadmin = $this->user->isadmin())
-            $this->setPageLockChanged($isadmin, $lock, $page);
+        $this->updateLock();
 
         // Clean out archived versions of this page.
         include_once('lib/ArchiveCleaner.php');
@@ -186,13 +190,8 @@ class PageEditor
         // Force browse of current page version.
         $request->setArg('version', false);
 
-        require_once('lib/PageType.php');
-        $transformedText = PageType($newrevision);
-        $template = Template('savepage',
-                             array('CONTENT' => $transformedText));
-        //include_once('lib/BlockParser.php');
-        //$template = Template('savepage',
-        //                     array('CONTENT' => TransformText($newrevision)));
+        $template = Template('savepage', $this->tokens);
+        $template->replace('CONTENT', $newrevision->getTransformedContent());
         if (!empty($warnings))
             $template->replace('WARNINGS', $warnings);
 
@@ -208,7 +207,7 @@ class PageEditor
     }
 
     function canEdit () {
-        return $this->page->get('locked') && !$this->user->isAdmin();
+        return !$this->page->get('locked') || $this->user->isAdmin();
     }
 
     function isInitialEdit () {
@@ -225,11 +224,8 @@ class PageEditor
     }
 
     function getPreview () {
-        require_once('lib/PageType.php');
-        return PageType($this->_content, $this->page->getName(), $this->meta['markup']);
-
-        //include_once('lib/BlockParser.php');
-        //return TransformText($this->_content, $this->meta['markup']);
+        include_once('lib/PageType.php');
+	return new TransformedText($this->page, $this->_content, $this->meta);
     }
 
     function getLockedMessage () {
@@ -277,7 +273,7 @@ class PageEditor
 
         // wrap=virtual is not HTML4, but without it NS4 doesn't wrap
         // long lines
-        $readonly = $this->canEdit(); // || $this->isConcurrentUpdate();
+        $readonly = ! $this->canEdit(); // || $this->isConcurrentUpdate();
 
         return HTML::textarea(array('class' => 'wikiedit',
                                     'name' => 'edit[content]',
@@ -296,6 +292,7 @@ class PageEditor
         $h = array('action'   => 'edit',
                    'pagename' => $page->getName(),
                    'version'  => $this->version,
+                   'edit[pagetype]' => $this->meta['pagetype'],
                    'edit[current_version]' => $this->_currentVersion);
 
         $el['HIDDEN_INPUTS'] = HiddenInputs($h);
@@ -326,12 +323,12 @@ class PageEditor
             = HTML::input(array('type' => 'checkbox',
                                 'name' => 'edit[locked]',
                                 'disabled' => (bool) !$this->user->isadmin(),
-                                'checked'  => (bool) $this->meta['locked']));
+                                'checked'  => (bool) $this->locked));
 
         $el['PREVIEW_B'] = Button('submit:edit[preview]', _("Preview"),
                                   'wikiaction');
 
-        //if (!$this->isConcurrentUpdate() && !$this->canEdit())
+        //if (!$this->isConcurrentUpdate() && $this->canEdit())
         $el['SAVE_B'] = Button('submit:edit[save]', _("Save"), 'wikiaction');
 
         $el['IS_CURRENT'] = $this->version == $this->current->getVersion();
@@ -369,10 +366,10 @@ class PageEditor
         $is_old_markup = !empty($posted['markup']) && $posted['markup'] == 'old';
         $meta['markup'] = $is_old_markup ? false : 2.0;
         $meta['summary'] = trim(substr($posted['summary'], 0, 256));
-        $meta['locked'] = !empty($posted['locked']);
         $meta['is_minor_edit'] = !empty($posted['minor_edit']);
-
+        $meta['pagetype'] = !empty($posted['pagetype']) ? $posted['pagetype'] : false;
         $this->meta = array_merge($this->meta, $meta);
+        $this->locked = !empty($posted['locked']);
 
         if (!empty($posted['preview']))
             $this->editaction = 'preview';
@@ -397,10 +394,10 @@ class PageEditor
         $this->_content = $selected->getPackedContent();
 
         $this->meta['summary'] = '';
-        $this->meta['locked'] = $this->page->get('locked');
+        $this->locked = $this->page->get('locked');
 
         // If author same as previous author, default minor_edit to on.
-        $age = time() - $current->get('mtime');
+        $age = $this->meta['mtime'] - $current->get('mtime');
         $this->meta['is_minor_edit'] = ( $age < MINOR_EDIT_TIMEOUT
                                          && $current->get('author') == $user->getId()
                                          );
@@ -412,6 +409,7 @@ class PageEditor
             $is_new_markup = $selected->get('markup') >= 2.0;
 
         $this->meta['markup'] = $is_new_markup ? 2.0: false;
+        $this->meta['pagetype'] = $selected->get('pagetype');
         $this->editaction = 'edit';
     }
 }
@@ -420,9 +418,9 @@ class LoadFileConflictPageEditor
 extends PageEditor
 {
     function editPage ($saveFailed = true) {
-        $tokens = array();
+        $tokens = &$this->tokens;
 
-        if ($this->canEdit()) {
+        if (!$this->canEdit()) {
             if ($this->isInitialEdit())
                 return $this->viewSource();
             $tokens['PAGE_LOCKED_MESSAGE'] = $this->getLockedMessage();
@@ -466,11 +464,11 @@ extends PageEditor
 
         $tokens = array_merge($tokens, $this->getFormElements());
 
-        return $this->output('editpage', _("Merge and Edit: %s"), $tokens);
+        return $this->output('editpage', _("Merge and Edit: %s"));
         // FIXME: this doesn't display
     }
 
-    function output ($template, $title_fs, $tokens) {
+    function output ($template, $title_fs) {
         $selected = &$this->selected;
         $current = &$this->current;
 
@@ -484,7 +482,7 @@ extends PageEditor
         }
 
         $title = new FormattedText ($title_fs, $pagelink);
-        $template = Template($template, $tokens);
+        $template = Template($template, $this->tokens);
 
         //GeneratePage($template, $title, $rev);
         PrintXML($template);
@@ -501,6 +499,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.54  2003/02/16 19:47:16  dairiki
+ Update WikiDB timestamp when editing or deleting pages.
+
  Revision 1.53  2003/02/15 23:20:27  dairiki
  Redirect back to browse current version of page upon save,
  even when no changes were made.
