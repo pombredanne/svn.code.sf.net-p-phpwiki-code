@@ -1,9 +1,9 @@
 /* 
- * $Id: MacOSX-heavy.css,v 1.2 2002-01-05 06:17:02 carstenklapp Exp $
+ * $Id: MacOSX-heavy.css,v 1.3 2002-01-05 16:12:19 carstenklapp Exp $
  *
- * MacOSX-heavy.css
+ * phpwiki-heavy.css
  *
- * This is stuff which should be in MacOSX.css, but which breaks NS4.
+ * This is stuff which should be in phpwiki.css, but which breaks NS4.
  */
 
 /* Hide the elements we put in just to get around NS4 bugs. */
@@ -20,24 +20,8 @@ B .wiki, STRONG .wiki,
 B .wikipage, STRONG .wikipage
 { font-size: larger; }
 
-/* This renders the ? invisible in OW4 */
-.wikiunknown A, .named-wikiunknown
-{ color: white; background-color: #600; }
-
-/* Make wikiaction links look like buttons */ 
-A.wikiaction, A.wikiadmin, INPUT.button
-{
- border-style: outset;
- border-width: thin;
- color: #006;
- padding-top: 0ex;
- padding-bottom: 0ex;
- padding-left: 0.2em;
- padding-right: 0.2em;
-}
-
 /* Link icons */
-img.linkicon     { vertical-align: middle; }
+img.linkicon		{ vertical-align: middle; }
 
 /****************************************************************
  **
@@ -45,6 +29,6 @@ img.linkicon     { vertical-align: middle; }
  **
  *****************************************************************/
 .diff .block div { position: relative; padding-left: 1.5em; } 
-.diff .prefix    { position: absolute; left: 0.5em; top: 0; }
+.diff .prefix	{ position: absolute; left: 0.5em; top: 0; }
 
 
