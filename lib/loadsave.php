@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.25 2002-01-10 23:55:52 carstenklapp Exp $');
+rcs_id('$Id: loadsave.php,v 1.26 2002-01-18 05:18:24 carstenklapp Exp $');
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
 
@@ -128,6 +128,7 @@ function MakeWikiZip ($dbi, $request)
 
 function DumpToDir ($dbi, $request) 
 {
+    global $pagedump_format;
     $directory = $request->getArg('directory');
     if (empty($directory))
         ExitWiki(_("You must specify a directory to dump to"));
@@ -143,7 +144,8 @@ function DumpToDir ($dbi, $request)
     } else {
         $html = sprintf(_("Using directory '%s'"),$directory) . "<br />\n";
     }
-    
+
+    $html .= "MIME " . $pagedump_format . "<br />\n";
     StartLoadDump( _("Dumping Pages"), $html);
     
     $pages = $dbi->getAllPages();
