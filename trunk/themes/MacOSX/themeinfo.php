@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.39 2002-01-23 08:11:42 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.40 2002-01-23 14:17:31 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -11,30 +11,17 @@ rcs_id('$Id: themeinfo.php,v 1.39 2002-01-23 08:11:42 carstenklapp Exp $');
  * rendered with a thick solid black border. When viewed with a modern
  * browser, the images will display with nice edges and blended
  * shadows.
- */
-
-// Button Localization:
-//
-// English "C"  English    - all present, only some with alpha shadows
-// Dutch   "nl" Nederlands - some
-// Spanish "es" Español    - some
-// French  "fr" Français   - none
-// German  "de" Deutsch    - most
-// Swedish "sv" Svenska    - none
-// Italian "it" Italiano   - none
-//
-// More translations are needed in po files before the localized
-// button images can be completed.
-
-/**
- * Known Problems:
  *
- * Most of the images you will see a white area around the outside.
- * Once the icons for the buttons have been finalized, the alpha
- * channel will be added to eliminate the white parts.
+ * The defaut link icons I want to move into this theme, and come up
+ * with some new linkicons for the default look. (Any ideas,
+ * feedback?)
+ *
+ * Do you like the icons used in the buttons?
  *
  * The button toolbars use tables for positioning. Yuck. (It will do
  * for now).
+ *
+ * See buttons/README for more info on the buttons.
  *
  * The CSS is still mostly the same as phpwiki.css. I'd like to change
  * it a bit but have no specific plans yet. Just a general feeling
@@ -43,21 +30,6 @@ rcs_id('$Id: themeinfo.php,v 1.39 2002-01-23 08:11:42 carstenklapp Exp $');
  * Mr. Jobs thoughtfully plastered all over my screen, I've chosen a
  * brushed paper (or stucco?) texture effect very close to white. If
  * your monitor isn't calibrated well you might not even see it.
- *
- * Send me some feedback, do you like the icons used in the buttons?
- *
- * Automatic button generation for localized buttons isn't going to
- * happen for this theme--there is a gradient across the glass surface
- * of the button that only Mac OS X Aqua can generate. Chopping a
- * button up and stamping it with localized words means a lot of
- * tweaking to the blank button pieces to get the seams invisible, so
- * a more authentic Mac OS X user experience is achived by producing
- * the buttons by hand.
- *
- * The defaut link icons I want to move into this theme, and come up
- * with some new linkicons for the default look. (Any ideas,
- * feedback?)
- *
  * */
 
 require_once('lib/Theme.php');
