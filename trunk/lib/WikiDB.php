@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.83 2004-09-08 13:38:00 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.84 2004-09-14 10:34:30 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -1389,9 +1389,10 @@ class WikiDB_PageRevision
 	}
         
         if (!$this->_transformedContent) {
+            $text = $this->getPackedContent();
             $this->_transformedContent
                 = new TransformedText($this->getPage(),
-                                      $this->getPackedContent(),
+                                      $text,
                                       $this->getMetaData());
             
             if ($possibly_cache_results) {
@@ -1421,6 +1422,7 @@ class WikiDB_PageRevision
         
         if (empty($data['%content'])) {
             include_once('lib/InlineParser.php');
+
             // A feature similar to taglines at http://www.wlug.org.nz/
             // Lib from http://www.aasted.org/quote/
             if (defined('FORTUNE_DIR') and is_dir(FORTUNE_DIR)) {
@@ -1914,6 +1916,11 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.83  2004/09/08 13:38:00  rurban
+// improve loadfile stability by using markup=2 as default for undefined markup-style.
+// use more refs for huge objects.
+// fix debug=static issue in WikiPluginCached
+//
 // Revision 1.82  2004/09/06 12:08:49  rurban
 // memory_limit on unix workaround
 // VisualWiki: default autosize image
