@@ -1,5 +1,5 @@
 /*
-  $Id: MacOSX.css,v 1.8 2002-01-16 20:04:04 carstenklapp Exp $
+  $Id: MacOSX.css,v 1.9 2002-01-18 00:03:31 carstenklapp Exp $
 
   Classes:
 
@@ -30,8 +30,8 @@ TODO: Get rid of tables in wikiaction forms.
  */
 @import url(MacOSX-heavy.css);
 
-body { background: #fafafa url("bgpaper8.png"); }
-body.edit { background: #fafafa url("bggranular.png"); }
+body { background: #fafafa url("image/bgpaper8.png"); }
+body.edit { background: #fafafa url("images/bggranular.png"); }
 
 body { font-family: arial, helvetica, sans-serif; }
 
@@ -220,13 +220,13 @@ div.wiki-edithelp .transclusion p {
   margin: 0;
 }
 div.wiki-edithelp {
-  background: #fff url("bgpaper8.png");
+  background: #fff url("images/bgpaper8.png");
   border: solid 1px #d8d8d8;
   font-size: smaller;
   padding: 6pt;
 }
 div.wiki-message {
-  background: #fff url("bggranular.png");
+  background: #fff url("images/bggranular.png");
   border: solid 1px #d8d8d8;
   padding: 6pt;
 }
