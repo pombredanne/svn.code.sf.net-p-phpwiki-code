@@ -41,7 +41,7 @@ Notes:
 
 // by Edd Dumbill (C) 1999,2000
 // <edd@usefulinc.com>
-// $Id: xmlrpcs_emu.inc,v 1.2 2004-12-10 02:36:43 rurban Exp $
+// $Id: xmlrpcs_emu.inc,v 1.3 2005-01-21 14:07:50 rurban Exp $
 
 // License is granted to use or modify this software ("XML-RPC for PHP")
 // for commercial or non-commercial use provided the copyright of the author
@@ -187,7 +187,7 @@ class xmlrpc_server {
    // it's no longer necessary, but we keep it around in case 
    // people are calling it directly from applications.
    function parseRequest($data="") {
-      global $_xh,$HTTP_RAW_POST_DATA;
+      global $_xh, $HTTP_RAW_POST_DATA;
 
       global $xmlrpcerr, $xmlrpcstr, $xmlrpcerrxml, $xmlrpc_defencoding;
 

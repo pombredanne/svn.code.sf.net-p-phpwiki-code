@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.62 2004-11-21 11:59:16 rurban Exp $');
+rcs_id('$Id: WikiUser.php,v 1.63 2005-01-21 14:07:50 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -193,7 +193,7 @@ class WikiUser {
             return _("Insufficient permissions.");
 
         // Successful login.
-        $user = new WikiUser($this->_request,$userid,$authlevel);
+        $user = new WikiUser($this->_request, $userid, $authlevel);
         return $user;
     }
 
@@ -741,6 +741,9 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.62  2004/11/21 11:59:16  rurban
+// remove final \n to be ob_cache independent
+//
 // Revision 1.61  2004/10/21 21:02:04  rurban
 // fix seperate page login
 //
