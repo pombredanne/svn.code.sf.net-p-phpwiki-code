@@ -1,10 +1,10 @@
 Date: Wed, 13 Feb 2002 20:50:00 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: CommentUtiliserUnWiki,v 1.2 2002-02-14 01:49:53 carstenklapp Exp $
+X-Rcs-Id: $Id: CommentUtiliserUnWiki,v 1.3 2002-02-14 01:59:10 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=CommentUtiliserUnWiki;
   flags="";
-  pgsrc_version="2 $Revision: 1.2 $";
+  pgsrc_version="2 $Revision: 1.3 $";
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
@@ -33,9 +33,9 @@ Je suis moi aussi un paragraphe. Nous sommes juste de petits paragraphes.
 
 * Vous pouvez obtenir des règles horizontales à l'aide de quatre tirets ou plus comme ceci :
 ---------
-* Pour créer des hyperliens, vous n'avez qu'à capitaliser les initiales des mots et les coller ensemble. Supposons que vous voulez creer une page sur la façon dont Steve Wainstead mange des vers. Vous mettez les initiales en majuscules et collez les mots ensemble comme ceci : SteveWainsteadMangeDesVersVivants. Si la page n'existe pas encore, un point d'interrogation apparaît après le lien, vous invitant à créer cette page : CettePageNeDevraitPasExister (et s'il-vous-plaît, ne ruinez pas l'exemple en la créant).
+* Pour créer des hyperliens, vous n'avez qu'à capitaliser les initiales des mots et les coller ensemble. Supposons que vous voulez creer une page sur la façon dont Steve Wainstead mange des vers. Vous mettez les initiales en majuscules et collez les mots ensemble comme ceci : SteveWainsteadMangeDesVersVivants. Si la page n'existe pas encore, un point d'interrogation apparaît après le lien, vous invitant à créer cette page  : CettePageNeDevraitPasExister (et s'il-vous-plaît, ne ruinez pas l'exemple en la créant).
 * Pour lier des pages hors du Wiki, vous pouvez simplement taper l'URL et Wiki créera le lien pour vous : http://www.lemonde.fr/
-* Pour insérer des images, fournissez juste le lien entre crochets comme ceci : __~[~http://www.votremachine.votredomaine/images/photo.png]__. Les URL d'image qui ne sont pas entre crochets apparaissent juste comme des hyperliens vers l'image.
+* Pour insérer des images, fournissez juste le lien entre crochets comme ceci : __[[!http://www.votremachine.votredomaine/images/photo.png]__. Les URL d'image qui ne sont pas entre crochets apparaissent juste comme des hyperliens vers l'image.
 * Maintenant vous êtes prêt à commencer à AjouterDesPages.
 
 ----
