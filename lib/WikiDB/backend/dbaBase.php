@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: dbaBase.php,v 1.3 2001-12-19 12:07:49 carstenklapp Exp $');
+<?php rcs_id('$Id: dbaBase.php,v 1.4 2002-01-24 06:53:36 carstenklapp Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -327,7 +327,7 @@ class WikiDB_backend_dbaBase_linktable
             elseif ($key[0] == 'o')
                 $okeys[] = $key;
             else {
-                trigger_error(sprintf(_("Bad key in linktable: %s"),"'$key'"), E_USER_WARNING);
+                trigger_error("Bad key in linktable: '$key'", E_USER_WARNING);
                 $ikeys[] = $key;
             }
         }
@@ -349,7 +349,7 @@ class WikiDB_backend_dbaBase_linktable
 
         for ($key = $db->firstkey(); $key; $key = $db->nextkey()) {
             if (strlen($key) < 1 || ($key[0] != 'i' && $key[0] != 'o')) {
-                $errs[] = sprintf(_("Bad key %s in table"),"'$key'");
+                $errs[] = "Bad key '$key' in table";
                 continue;
             }
             $page = substr($key, 1);
@@ -357,7 +357,7 @@ class WikiDB_backend_dbaBase_linktable
                 // Forward links.
                 foreach($this->_get_links('o', $page) as $link) {
                     if (!$this->_has_link('i', $link, $page))
-                        $errs[] = sprintf(_("backlink entry missing for link %s"),"'$page'->'$link'");
+                        $errs[] = "backlink entry missing for link '$page'->'$link'";
                 }
             }
             else {
@@ -365,7 +365,7 @@ class WikiDB_backend_dbaBase_linktable
                 // Backlinks.
                 foreach($this->_get_links('i', $page) as $link) {
                     if (!$this->_has_link('o', $link, $page))
-                        $errs[] = sprintf(_("link entry missing for backlink %s"),"'$page'<-'$link'");
+                        $errs[] = "link entry missing for backlink '$page'<-'$link'";
                 }
             }
         }

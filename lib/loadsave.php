@@ -1,5 +1,5 @@
-<?php
-rcs_id('$Id: loadsave.php,v 1.33 2002-01-24 00:45:28 dairiki Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.34 2002-01-24 06:50:45 carstenklapp Exp $');
+
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
 
@@ -331,12 +331,13 @@ function LoadFile (&$request, $filename, $text = false, $mtime = false)
     if ( ($parts = ParseMimeifiedPages($text)) ) {
         usort($parts, 'SortByPageVersion');
         foreach ($parts as $pageinfo)
-            SavePage($request, $pageinfo, sprintf(_("MIME file %s"),$filename),
-                     $basename);
+            SavePage($request, $pageinfo, sprintf(_("MIME file %s"), 
+                                                  $filename), $basename);
     }
-    else if ( ($pageinfo = ParseSerializedPage($text, $default_pagename, $request->getUser())) ) {
-        SavePage($request, $pageinfo, sprintf(_("Serialized file %s"),$filename),
-                 $basename);
+    else if ( ($pageinfo = ParseSerializedPage($text, $default_pagename,
+                                               $request->getUser())) ) {
+        SavePage($request, $pageinfo, sprintf(_("Serialized file %s"), 
+                                              $filename), $basename);
     }
     else {
         //FIXME:?
@@ -350,7 +351,7 @@ function LoadFile (&$request, $filename, $text = false, $mtime = false)
                           'content'  => preg_replace('/[ \t\r]*\n/', "\n",
                                                      chop($text))
                           );
-        SavePage($request, $pageinfo, sprintf(_("plain file %s"),$filename),
+        SavePage($request, $pageinfo, sprintf(_("plain file %s"), $filename),
                  $basename);
     }
 }
@@ -359,7 +360,8 @@ function LoadZip (&$request, $zipfile, $files = false, $exclude = false) {
     $zip = new ZipReader($zipfile);
     global $Theme;
     while (list ($fn, $data, $attrib) = $zip->readFile()) {
-        // FIXME: basename("filewithnoslashes") seems to return garbage sometimes.
+        // FIXME: basename("filewithnoslashes") seems to return
+        // garbage sometimes.
         $fn = basename("/dummy/" . $fn);
         if ( ($files && !in_array($fn, $files)) || ($exclude && in_array($fn, $exclude)) ) {
 
@@ -448,7 +450,7 @@ function LoadFileOrDir (&$request)
     $source = $request->getArg('source');
     StartLoadDump($request, sprintf(_("Loading '%s'"), $source));
     echo "<dl>\n";
-    LoadAny($request->getDbh(), $source/*, false, array(gettext("RecentChanges"))*/);
+    LoadAny($request->getDbh(), $source/*, false, array(_("RecentChanges"))*/);
     echo "</dl>\n";
     EndLoadDump($request);
 }
@@ -487,11 +489,11 @@ function LoadPostFile (&$request)
     $upload = $request->getUploadedFile('file');
     
     if (!$upload)
-        // FIXME: better message?
-        $request->finish(_("No uploaded file to upload?"));
+        $request->finish(_("No uploaded file to upload?")); // FIXME: more concise message
+
     
     // Dump http headers.
-    StartLoadDump($request, sprintf(_("Uploading %s"),$upload->getName()));
+    StartLoadDump($request, sprintf(_("Uploading %s"), $upload->getName()));
     echo "<dl>\n";
     
     $fd = $upload->open();

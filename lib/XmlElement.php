@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.6 2002-01-24 00:45:28 dairiki Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.7 2002-01-24 06:50:45 carstenklapp Exp $');
 /*
  * Code for writing XML.
  */
@@ -204,7 +204,7 @@ class FormattedText {
             $this->_args = array();
             foreach($m[1] as $argnum) {
                 if ($argnum < 1 || $argnum > count($args))
-                    trigger_error(sprintf(_("%s: argument index out of range"), 
+                    trigger_error(sprintf("%s: argument index out of range", 
                                           $argnum), E_USER_WARNING);
                 $this->_args[] = $args[$argnum - 1];
             }
@@ -290,7 +290,7 @@ function fmt ($fs /* , ... */) {
     $s = new FormattedText(false);
 
     $args = func_get_args();
-    $args[0] = gettext($args[0]);
+    $args[0] = _($args[0]);
     $s->_init($args);
     return $s;
 }

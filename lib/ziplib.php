@@ -1,5 +1,4 @@
-<?php
-rcs_id('$Id: ziplib.php,v 1.19 2002-01-23 05:10:22 dairiki Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.20 2002-01-24 06:50:45 carstenklapp Exp $');
 
 /**
  * GZIP stuff.
@@ -33,19 +32,19 @@ function gzip_tempnam () {
 function gzip_compress ($data) {
     $filename = gzip_tempnam();
     if (!($fp = gzopen($filename, "wb")))
-        trigger_error(sprintf(_("%s failed"), 'gzopen'), E_USER_ERROR);
+        trigger_error(sprintf("%s failed", 'gzopen'), E_USER_ERROR);
     gzwrite($fp, $data, strlen($data));
     if (!gzclose($fp))
-        trigger_error(sprintf(_("%s failed"), 'gzclose'), E_USER_ERROR);
+        trigger_error(sprintf("%s failed", 'gzclose'), E_USER_ERROR);
     
     $size = filesize($filename);
     
     if (!($fp = fopen($filename, "rb")))
-        trigger_error(sprintf(_("%s failed"), 'fopen'), E_USER_ERROR);
+        trigger_error(sprintf("%s failed", 'fopen'), E_USER_ERROR);
     if (!($z = fread($fp, $size)) || strlen($z) != $size)
-        trigger_error(sprintf(_("%s failed"), 'fread'), E_USER_ERROR);
+        trigger_error(sprintf("%s failed", 'fread'), E_USER_ERROR);
     if (!fclose($fp))
-        trigger_error(sprintf(_("%s failed"), 'fclose'), E_USER_ERROR);
+        trigger_error(sprintf("%s failed", 'fclose'), E_USER_ERROR);
     
     unlink($filename);
     return $z;
@@ -54,18 +53,18 @@ function gzip_compress ($data) {
 function gzip_uncompress ($data) {
     $filename = gzip_tempnam();
     if (!($fp = fopen($filename, "wb")))
-        trigger_error(sprintf(_("%s failed"), 'fopen'), E_USER_ERROR);
+        trigger_error(sprintf("%s failed", 'fopen'), E_USER_ERROR);
     fwrite($fp, $data, strlen($data));
     if (!fclose($fp))
-        trigger_error(sprintf(_("%s failed"), 'fclose'), E_USER_ERROR);
+        trigger_error(sprintf("%s failed", 'fclose'), E_USER_ERROR);
     
     if (!($fp = gzopen($filename, "rb")))
-        trigger_error(sprintf(_("%s failed"), 'gzopen'), E_USER_ERROR);
+        trigger_error(sprintf("%s failed", 'gzopen'), E_USER_ERROR);
     $unz = '';
     while ($buf = gzread($fp, 4096))
         $unz .= $buf;
     if (!gzclose($fp))
-        trigger_error(sprintf(_("%s failed"), 'gzclose'), E_USER_ERROR);
+        trigger_error(sprintf("%s failed", 'gzclose'), E_USER_ERROR);
     
     unlink($filename);
     return $unz;
@@ -159,11 +158,11 @@ function zip_deflate ($content)
     extract(unpack("a2magic/Ccomp_type/Cflags/@9/Cos_type", $z));
     
     if ($magic != GZIP_MAGIC)
-        trigger_error(sprintf(_("Bad %s"), "gzip magic"), E_USER_ERROR);
+        trigger_error(sprintf("Bad %s", "gzip magic"), E_USER_ERROR);
     if ($comp_type != GZIP_DEFLATE)
-        trigger_error(sprintf(_("Bad %s"), "gzip comp type"), E_USER_ERROR);
+        trigger_error(sprintf("Bad %s", "gzip comp type"), E_USER_ERROR);
     if (($flags & 0x3e) != 0)
-        trigger_error(sprintf(_("Bad %s"), sprintf("flags (0x%02x)", $flags)),
+        trigger_error(sprintf("Bad %s", sprintf("flags (0x%02x)", $flags)),
                       E_USER_ERROR);
     
     $gz_header_len = 10;
@@ -398,14 +397,14 @@ class ZipReader
           {
               if ($magic != ZIP_CENTHEAD_MAGIC)
                   // FIXME: better message?
-                  ExitWiki(fmt("Bad header type: %s", $magic));
+                  ExitWiki(sprintf("Bad header type: %s", $magic));
               return $this->done();
           }
       if (($flags & 0x21) != 0)
-          ExitWiki(_("Encryption and/or zip patches not supported."));
+          ExitWiki("Encryption and/or zip patches not supported.");
       if (($flags & 0x08) != 0)
           // FIXME: better message?
-          ExitWiki(_("Postponed CRC not yet supported."));
+          ExitWiki("Postponed CRC not yet supported.");
       
       $filename = $this->_read($filename_len);
       if ($extrafld_len != 0)
@@ -424,11 +423,11 @@ class ZipReader
                   ExitWiki(sprintf("CRC mismatch %x != %x", $crc, $crc32));
           }
       else
-          ExitWiki(sprintf(_("Compression method %s unsupported"),
+          ExitWiki(sprintf("Compression method %s unsupported",
                            $comp_method));
       
       if (strlen($data) != $uncomp_size)
-          ExitWiki(sprintf(_("Uncompressed size mismatch")."%d != %d",
+          ExitWiki(sprintf("Uncompressed size mismatch %d != %d",
                            strlen($data), $uncomp_size));
       
       return array($filename, $data, $attrib);
@@ -577,7 +576,7 @@ function ParseMimeContentType ($string)
                     . '/'
                     . '\s*(' . MIME_TOKEN_REGEXP . ')\s*:x',
                     $string, $match))
-        ExitWiki(sprintf(_("Bad %s"),'MIME content-type'));
+        ExitWiki(sprintf("Bad %s",'MIME content-type'));
     
     $type    = strtolower($match[1]);
     $subtype = strtolower($match[2]);
@@ -665,7 +664,7 @@ function ParseMimeifiedPages ($data)
     $typeheader = $headers['content-type'];
     
     if (!(list ($type, $subtype, $params) = ParseMimeContentType($typeheader))) {
-        trigger_error( sprintf(_("Can't parse %s: (%s)"),
+        trigger_error( sprintf("Can't parse %s: (%s)",
                                'content-type', $typeheader),
                        E_USER_WARNING );
         return false;
@@ -674,7 +673,7 @@ function ParseMimeifiedPages ($data)
         return ParseMimeMultipart($data, $params['boundary']);
     }
     else if ("$type/$subtype" != 'application/x-phpwiki') {
-        trigger_error( sprintf(_("Bad %s"),"content-type: $type/$subtype"),
+        trigger_error( sprintf("Bad %s","content-type: $type/$subtype"),
                        E_USER_WARNING );
         return false;
     }
@@ -722,7 +721,7 @@ function ParseMimeifiedPages ($data)
     if ($encoding == 'quoted-printable')
         $data = QuotedPrintableDecode($data);
     else if ($encoding && $encoding != 'binary')
-        ExitWiki( sprintf(_("Unknown %s"), 'encoding type: $encoding') );
+        ExitWiki( sprintf("Unknown %s", 'encoding type: $encoding') );
     
     $data .= GenerateFootnotesFromRefs($params);
     

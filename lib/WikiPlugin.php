@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.14 2002-01-24 00:45:28 dairiki Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.15 2002-01-24 06:50:45 carstenklapp Exp $');
 
 class WikiPlugin
 {
@@ -61,15 +61,16 @@ class WikiPlugin
         }
 
         foreach (array_merge($argstr_args, $argstr_defaults) as $arg => $val) {
-            trigger_error(sprintf(_("argument '%s' not declared by plugin"),$arg),
-                          E_USER_NOTICE);
+            trigger_error(sprintf(_("argument '%s' not declared by plugin"),
+                                  $arg), E_USER_NOTICE);
         }
         
         return $args;
     }
 
     function expandArg($argval, $request) {
-        return preg_replace('/\[(\w[\w\d]*)\]/e', '$request->getArg("$1")', $argval);
+        return preg_replace('/\[(\w[\w\d]*)\]/e', '$request->getArg("$1")',
+                            $argval);
     }
     
         
@@ -79,6 +80,7 @@ class WikiPlugin
         $word_p = '\S+';
         $opt_ws = '\s*';
         $qq_p = '" ( (?:[^"\\\\]|\\\\.)* ) "';
+        //"<--kludge for brain-dead syntax coloring
         $q_p  = "' ( (?:[^'\\\\]|\\\\.)* ) '";
         $gt_p = "_\\( $opt_ws $qq_p $opt_ws \\)";
         $argspec_p = "($arg_p) $opt_ws ($op_p) $opt_ws (?: $qq_p|$q_p|$gt_p|($word_p))";
@@ -96,7 +98,7 @@ class WikiPlugin
             elseif ($q_val)
                 $val = stripslashes($q_val);
             elseif ($gt_val)
-                $val = gettext(stripslashes($gt_val));
+                $val = _(stripslashes($gt_val));
             else
                 $val = $word_val;
 
@@ -116,7 +118,8 @@ class WikiPlugin
         }
         
         if ($argstr) {
-            trigger_error(sprintf(_("trailing cruft in plugin args: '%s'"),$argstr), E_USER_WARNING);
+            trigger_error(sprintf(_("trailing cruft in plugin args: '%s'"),
+                                  $argstr), E_USER_WARNING);
         }
 
         return array($args, $defaults);
@@ -230,7 +233,7 @@ class WikiPluginLoader {
     
     function expandPI($pi, $request) {
         if (!preg_match('/^\s*<\?(plugin(?:-form|-link)?)\s+(\w+)\s*(.*?)\s*\?>\s*$/s', $pi, $m))
-            return $this->_error(sprintf(_("Bad %s"),'PI'));
+            return $this->_error(sprintf("Bad %s", 'PI'));
 
         list(, $pi_name, $plugin_name, $plugin_args) = $m;
         $plugin = $this->getPlugin($plugin_name);
@@ -260,25 +263,29 @@ class WikiPluginLoader {
         if (!include_once("lib/plugin/$plugin_name.php")) {
             if (!empty($GLOBALS['php_errormsg']))
                 return $this->_error($GLOBALS['php_errormsg']);
-            // If the plugin source has already been included, the include_once()
-            // will fail, so we don't want to crap out just yet.
+            // If the plugin source has already been included, the
+            // include_once() will fail, so we don't want to crap out
+            // just yet.
             $include_failed = true;
         } else {
-            // this avoids: lib/WikiPlugin.php:265: Notice[8]: Undefined variable: include_failed
+            // this avoids:
+            // lib/WikiPlugin.php:265: Notice[8]: Undefined variable: include_failed
             $include_failed = false;
         }
         
         $plugin_class = "WikiPlugin_$plugin_name";
         if (!class_exists($plugin_class)) {
             if ($include_failed)
-                return $this->_error(sprintf(_("Include of '%s' failed"),$plugin_source));
-            return $this->_error(sprintf(_("%s: no such class"),$plugin_class));
+                return $this->_error(sprintf(_("Include of '%s' failed"),
+                                             $plugin_source));
+            return $this->_error(sprintf("%s: no such class", $plugin_class));
         }
         
     
         $plugin = new $plugin_class;
         if (!is_subclass_of($plugin, "WikiPlugin"))
-            return $this->_error(sprintf(_("%s: not a subclass of WikiPlugin"),$plugin_class));
+            return $this->_error(sprintf("%s: not a subclass of WikiPlugin",
+                                         $plugin_class));
 
         return $plugin;
     }

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbaDatabase.php,v 1.3 2001-12-28 09:52:57 carstenklapp Exp $');
+<?php rcs_id('$Id: DbaDatabase.php,v 1.4 2002-01-24 06:50:45 carstenklapp Exp $');
 
 require_once('lib/ErrorManager.php');
 // FIXME: autodetect supported handlers.
@@ -43,7 +43,7 @@ class DbaDatabase
                 $ErrorManager->handleError($error);
             }
             else {
-                trigger_error(sprintf(_("%s failed"),'dba_open'), E_USER_ERROR);
+                trigger_error("dba_open failed", E_USER_ERROR);
             }
         }
         $this->_dbh = $dbh;

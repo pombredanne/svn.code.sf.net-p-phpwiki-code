@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.16 2002-01-10 23:11:01 carstenklapp Exp $');
+rcs_id('$Id: PearDB.php,v 1.17 2002-01-24 06:53:36 carstenklapp Exp $');
 
 //require_once('DB.php');
 require_once('lib/WikiDB/backend.php');
@@ -23,7 +23,7 @@ extends WikiDB_backend
         $this->_dbh = DB::connect($dsn, true); //FIXME: true -> persistent connection
         $dbh = &$this->_dbh;
         if (DB::isError($dbh)) {
-            trigger_error(sprintf(_("Can't connect to database: %s"),$this->_pear_error_message($dbh)),
+            trigger_error(sprintf("Can't connect to database: %s", $this->_pear_error_message($dbh)),
                           E_USER_ERROR);
         }
         $dbh->setErrorHandling(PEAR_ERROR_CALLBACK,
@@ -54,7 +54,7 @@ extends WikiDB_backend
         if (!$this->_dbh)
             return;
         if ($this->_lock_count) {
-            trigger_error( _("WARNING: database still locked") . '(lock_count = $this->_lock_count)' . "\n<br />",
+            trigger_error( "WARNING: database still locked " . '(lock_count = $this->_lock_count)' . "\n<br />",
                           E_USER_WARNING);
         }
         $this->_dbh->setErrorHandling(PEAR_ERROR_PRINT);	// prevent recursive loops.
@@ -708,7 +708,7 @@ extends WikiDB_backend
 
     function _pear_error_message($error) {
         $class = get_class($this);
-        $message = "$class: " . _("fatal database error") ."\n"
+        $message = "$class: fatal database error\n"
              . "\t" . $error->getMessage() . "\n"
              . "\t(" . $error->getDebugInfo() . ")\n";
 
