@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.224 2004-12-20 12:11:50 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.225 2004-12-22 19:02:29 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1344,11 +1344,11 @@ function glob_to_pcre ($glob) {
     $glob = strtr($glob, "\\", "\xff");
     // first convert some unescaped expressions to pcre style: . => \.
     $escape = ".^$";
-    $re = preg_replace('/([^\xff])(['.preg_quote($escape).'])/', "\\1\xff\\2", $glob);
+    $re = preg_replace('/([^\xff])?(['.preg_quote($escape).'])/', "\\1\xff\\2", $glob);
 
     // * => .*, ? => .
-    $re = preg_replace('/([^\xff])\*/', '$1.*', $re);
-    $re = preg_replace('/([^\xff])\?/', '$1.', $re);
+    $re = preg_replace('/([^\xff])?\*/', '$1.*', $re);
+    $re = preg_replace('/([^\xff])?\?/', '$1.', $re);
     if (!preg_match('/^[\?\*]/',$glob))
         $re = '^' . $re;
     if (!preg_match('/[\?\*]$/',$glob))
@@ -1358,7 +1358,7 @@ function glob_to_pcre ($glob) {
     $escape = '\[](){}=!<>|:';
     while (strcspn($re, $escape) != strlen($re)) // loop strangely needed
         $re = preg_replace('/([^\xff])(['.preg_quote($escape).'])/', "\\1\xff\\2", $re);
-    return str_replace("\xff", "\\", $re);
+    return strtr($re, "\xff", "\\");
 }
 
 function glob_match ($glob, $against, $case_sensitive = true) {
@@ -1840,6 +1840,10 @@ function printSimpleTrace($bt) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.224  2004/12/20 12:11:50  rurban
+// fix "lib/stdlib.php:1348: Warning[2]: Compilation failed: unmatched parentheses at offset 2"
+//   not reproducable other than on sf.net, but this seems to fix it.
+//
 // Revision 1.223  2004/12/18 16:49:29  rurban
 // fix RPC for !USE_PATH_INFO, add debugging helper
 //
