@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.36 2003-12-01 22:23:01 carstenklapp Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.37 2003-12-01 22:54:56 carstenklapp Exp $ -->
 <?php
 // Todo: Move the logic and code to the plugin
 // This is very experimental and the read-only part an ugly hack so far.
@@ -30,7 +30,8 @@ if ( $isForm )
 else
     $timeOffsetInput = $pref['timeOffset'];
 
-
+if (empty($pref['relativeDates']))
+    $pref['relativeDates'] = false;
 $RelativeDatesCB = HTML(HTML::input(array('type' => 'hidden',
                                           'name' => 'pref[relativeDates][]',
                                           'value' => '0')),
@@ -38,7 +39,8 @@ $RelativeDatesCB = HTML(HTML::input(array('type' => 'hidden',
                                           'name' => 'pref[relativeDates][]',
                                           'value' => '1',
                                           'checked' => (bool) $pref['relativeDates'])));
-
+if (empty($pref['noLinkIcons']))
+    $pref['noLinkIcons'] = false;
 $NoLinkIconsCB = HTML(HTML::input(array('type' => 'hidden',
                                           'name' => 'pref[noLinkIcons][]',
                                           'value' => '0')),
@@ -59,12 +61,12 @@ $SelectThemesDesc = ''; $SelectLanguagesDesc = '';
 if ( $isForm ) {
     $SelectOptions = HTML(); 
     if (!empty($available_themes) and is_array($available_themes)) {
-	if (! $pref['theme'])
+	if (empty($pref['theme']))
 	    $SelectOptions->pushContent(selectedOption('',_("<system theme>")));
 	else
 	    $SelectOptions->pushContent(unselectedOption('',_("<system theme>")));
 	foreach ($available_themes as $theme) {
-	    if ($theme == $pref['theme'] and $theme != THEME)
+	    if (!empty($pref['theme']) && $theme == $pref['theme'] and $theme != THEME)
 		$SelectOptions->pushContent(selectedOption($theme));
 	    else
 		$SelectOptions->pushContent(unselectedOption($theme));
@@ -76,12 +78,12 @@ if ( $isForm ) {
     
     $SelectOptions = HTML();
     if (!empty($available_languages) and is_array($available_languages)) {
-	if (! $pref['lang'] )
+	if (empty($pref['lang']))
 	    $SelectOptions->pushContent(selectedOption('',_("<system language>")));
 	else
 	    $SelectOptions->pushContent(unselectedOption('',_("<system language>")));
 	foreach ($available_languages as $lang) {
-	    if ($lang == $pref['lang'] and $lang != DEFAULT_LANGUAGE)
+	    if (!empty($pref['lang']) && $lang == $pref['lang'] and $lang != DEFAULT_LANGUAGE)
 		$SelectOptions->pushContent(selectedOption($lang));
 	    else
 		$SelectOptions->pushContent(unselectedOption($lang));
