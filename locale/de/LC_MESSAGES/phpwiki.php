@@ -12,8 +12,6 @@ $locale["(Any password will work, except, of course for the admin user.)"] =
    "(Irgende Wörter können als Passwort angenommen werden sowieso, aber natürlich nicht für den Systemverwalter.)";
 $locale["(diff)"] =
    "(vgl.)";
-$locale[", saved on"] =
-   ", seite zuletzt verändert am";
 $locale["- saved to database as version %d"] =
    "- gespeichert zur Datenbank als Verson %d.";
 $locale["- skipped"] =
@@ -40,8 +38,6 @@ $locale["Calendar"] =
    "Kalender";
 $locale["Can't connect to database: %s"] =
    "Kann Verbindung zu Datenbank nicht aufbauen: %s";
-$locale["Click"] =
-   "Klicke";
 $locale["Click here to <a href=\"%s\">remove the page now</a>."] =
    "Klicke hier um <a href=\"%s\">die Seite jetzt zu löschen</a>.";
 $locale["Complete."] =
@@ -104,14 +100,14 @@ $locale["IncludePage"] =
    "SeiteEinfügen";
 $locale["Included from %s"] =
    "Eingefügter Text von %s";
-$locale["Last edited on"] =
-   "Zuletzt verändert am";
+$locale["Last edited on %s."] =
+   "Zuletzt am %s verändert.";
 $locale["LikePages"] =
    "GleicheSeiten";
 $locale["List LikePages for %s"] =
    "GleicheSeite wie %s auflisten";
-$locale["List PageHistory for [pagename]"] =
-   "Das Änderungsprotokoll für [pagename] auslisten";
+$locale["List PageHistory for %s"] =
+   "Das Änderungsprotokoll für %s auslisten";
 $locale["List the most popular pages"] =
    "Die MeistBesuchter Seiten auslisten";
 $locale["Lists nested too deep in SetHTMLOutputMode"] =
@@ -204,8 +200,8 @@ $locale["Save"] =
    "Speichern";
 $locale["Search"] =
    "Suche";
-$locale["See"] =
-   "Sehe";
+$locale["See %s tips for editing."] =
+   "Sehe %s tips fürs Editieren.";
 $locale["Serialized file %s"] =
    "Serialized Datei %s";
 $locale["SignIn"] =
@@ -258,12 +254,14 @@ $locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
    "Benütze die <b>Zurück</b> Funktion deines Browsers um zur Editierseitezu gelangen.";
 $locale["UserPreferences"] =
    "BenutzerEinstellungen";
-$locale["Version"] =
-   "Version";
 $locale["Version %d"] =
    "Version %d.";
+$locale["Version %s, saved on %s."] =
+   "Version %s. zuletzt am %s gespeichert.";
 $locale["Versions are identical"] =
    "Versionen sind identisch";
+$locale["View the current version"] =
+   "Schaue die aktuellste Version";
 $locale["WARNING: database still locked"] =
    "WARNUNG: Datenbank ist gesperrt";
 $locale["Warning: You are editing an old revision."] =
@@ -272,8 +270,10 @@ $locale["WikiFatalError"] =
    "FatalerWikiFehler";
 $locale["You are about to remove '%s' permanently!"] =
    "Du bist im Begriff »%s« permanent zu löschen!";
-$locale["You are signed in as"] =
-   "Du bist eingemeldet als";
+$locale["You are signed in as %s"] =
+   "Du bist als %s angemeldet";
+$locale["You are signed in as %s."] =
+   "Du bist als %s angemeldet.";
 $locale["You can log in using any valid WikiWord as a user ID."] =
    "Du kannst mit jedes gultiges WikiWort als Benutzername anmelden.";
 $locale["You entered an invalid login or password."] =
@@ -300,8 +300,6 @@ $locale["fatal database error"] =
    "fataler Datenbank Fehler";
 $locale["from %s"] =
    "von %s";
-$locale["here"] =
-   "hier";
 $locale["last modified on %s"] =
    "zuletzt am %s verändert";
 $locale["major edits"] =
@@ -330,14 +328,10 @@ $locale["revision by previous author"] =
    "Revision von vorherige Author";
 $locale["saved as %s"] =
    "als %s gespeichert";
-$locale["tips for editing."] =
-   "tips fürs Editieren.";
 $locale["to do that"] =
    "um daß zu tun";
 $locale["to perform action '%s'"] =
    "um die Tatigkeit »%s« zu tun";
-$locale["to view the current version."] =
-   "um die aktuellste Version zu schauen.";
 $locale["version"] =
    "Version";
 $locale["version %d"] =
