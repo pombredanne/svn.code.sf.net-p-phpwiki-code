@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: HttpAuth.php,v 1.4 2004-12-26 17:11:16 rurban Exp $');
+rcs_id('$Id: HttpAuth.php,v 1.5 2005-02-28 20:35:45 rurban Exp $');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -26,7 +26,8 @@ extends _PassUser
         if ($UserName) $this->_userid = $UserName;
         $this->_authmethod = 'HttpAuth';
         
-        // Is this double check really needed? It is not expensive so we keep it for now.
+        // Is this double check really needed? 
+        // It is not expensive so we keep it for now.
         if ($this->userExists())
             return $this;
         else 
@@ -51,7 +52,8 @@ extends _PassUser
     function logout() {
         if (!isset($_SERVER))
             $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
-        // maybe we should random the realm to really force a logout. but the next login will fail.
+        // Maybe we should random the realm to really force a logout. 
+        // But the next login will fail.
         // better_srand(); $realm = microtime().rand();
         header('WWW-Authenticate: Basic realm="'.WIKI_NAME.'"');
         if (strstr(php_sapi_name(), 'apache'))
@@ -76,7 +78,8 @@ extends _PassUser
 	    return $GLOBALS['REMOTE_USER'];
 	//IIS:
 	if (!empty($_SERVER['HTTP_AUTHORIZATION'])) {
-            list($userid, $passwd) = explode(':', base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));
+            list($userid, $passwd) = explode(':', 
+                base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));
             return $userid;
 	}    
 	return '';
@@ -85,7 +88,9 @@ extends _PassUser
     // force http auth authorization
     function userExists() {
         $username = $this->_http_username();
-        if (empty($username) or strtolower($username) != strtolower($this->_userid)) {
+        if (empty($username) 
+            or strtolower($username) != strtolower($this->_userid)) 
+        {
             $this->logout();
             $user = $GLOBALS['ForbiddenUser'];
             $user->_userid = $this->_userid =  "";
@@ -112,16 +117,12 @@ extends _PassUser
     function mayChangePass() {
         return false;
     }
-/*
-    // hmm... either the server dialog or our own.
-    function _disabled_PrintLoginForm (&$request, $args, $fail_message=false, $seperate_page=true) {
-        $this->_logout();
-        return parent::PrintLoginForm ($request, $args, $fail_message, $seperate_page);
-    }
-*/
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/12/26 17:11:16  rurban
+// just copyright
+//
 // Revision 1.3  2004/12/19 00:58:02  rurban
 // Enforce PASSWORD_LENGTH_MINIMUM in almost all PassUser checks,
 // Provide an errormessage if so. Just PersonalPage and BogoLogin not.
