@@ -1,5 +1,5 @@
 /**
- * $Id: SpaceWiki.css,v 1.1 2002-02-22 23:46:56 carstenklapp Exp $
+ * $Id: SpaceWiki.css,v 1.2 2002-03-03 03:54:31 carstenklapp Exp $
  *
  * This theme will probably be renamed something like "Space" to
  * avoid any potential copyright issues.
@@ -96,7 +96,7 @@ div.wikitext pre { font-family: monospace; }
  * have a class yet, so it must be referenced indirectly
  */
 div.wikiaction, form.wikiadmin div {
-  background-color: black;
+  background-color: #002;
   border: 1px solid #006;
   margin-top: 0.5ex;
   margin-bottom: 0.5ex;
@@ -189,59 +189,45 @@ div.toolbar h1 a.wiki:hover, h1 a.wiki:hover, h2 a.wiki:hover {
   color: #5791ff;
 }
 
-h2 {
-color:            #000;
-  background-color: #0053db;
+h2, h3, h4, h5, h6 {
+  display: table;
+  width: auto;
   padding-top:      0.25ex;
-  padding-left:     0.5em;
-  padding-right:    0.5em;
+  padding-left:     0.25em;
+  padding-right:    0.25em;
   padding-bottom:   1px;
-  margin-top:       2ex;
-  margin-left:      0.5em;
+  margin-top:    2ex;
+  margin-bottom: 0;
+}
+
+h2 {
+  color: #0053db;
+  border-left: 0.25em solid #0053db;
+  border-right: 20em solid #0053db;
 }
 
 h3 {
-  color:            #000;
-  background-color: #96c;
-  padding-top:      0.25ex;
-  padding-left:     0.5em;
-  padding-right:    0.5em;
-  padding-bottom:   1px;
-  margin-top:       2ex;
-  margin-left:      1.0em;
+  color: #96c;
+  border-left: 0.25em solid #96c;
+  border-right: 26em solid #96c;
 }
 
 h4 {
-  color:            #000;
-  background-color: #639;
-  padding-top:      0.25ex;
-  padding-left:     0.5em;
-  padding-right:    0.5em;
-  padding-bottom:   1px;
-  margin-top:       2ex;
-  margin-left:      1.5em;
+  color: #639;
+  border-left: 0.25em solid #639;
+  border-right: 30em solid #639;
 }
 
 h5 {
-  color:            #000;
-  background-color: #888;
-  padding-top:      0.25ex;
-  padding-left:     0.5em;
-  padding-right:    0.5em;
-  padding-bottom:   1px;
-  margin-top:       2ex;
-  margin-left:      2.0em;
+  color: #888;
+  border-left: 0.25em solid #888;
+  border-right: 36em solid #888;
 }
 
 h6 {
-  color:            #000;
-  background-color: #aaa;
-  padding-top:      0.25ex;
-  padding-left:     0.5em;
-  padding-right:    0.5em;
-  padding-bottom:   1px;
-  margin-top:       2ex;
-  margin-left:      2.5em;
+  color: #aaa;
+  border-left: 0.25em solid #aaa;
+  border-right: 42em solid #aaa;
 }
 
 
@@ -270,8 +256,12 @@ div.toolbar, #signin {
 div.toolbar { margin-top: 1ex; }
 
 #navbuttons {
-  padding-right: 7em; /* wrap around logo */
-  padding-bottom: 1ex; /* space for h1 */
+  margin-right: 7em; /* wrap around logo */
+  margin-bottom: 1ex; /* space for h1 */
+}
+#navbuttons input {
+  position: relative;
+  bottom: -2px;
 }
 .editdate {
   font-family: Arial, Helvetica, sans-serif;
@@ -451,10 +441,13 @@ table.pageinfo {
 }
 table.pageinfo td { background: black; }
 table.pageinfo td.pageinfo {
-  background: #639;
+  border-right: 0.15em solid #639;
   font-weight: bold;
-  border: medium solid black;
-  color: black;
+  color: #639;
+  background: #203;
+}
+table.pageinfo td + td.pageinfo {
+  border-right: 0;
 }
 .pageinfo-minoredit, .pageinfo-authorid {
   font-size: smaller;
