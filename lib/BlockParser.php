@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.40 2004-02-28 21:14:08 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.41 2004-03-17 17:42:54 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -619,7 +619,11 @@ class Block_table_dl_defn extends XmlContent
 	$first = &$this->firstTR();
 	$last = &$this->lastTR();
 	$first->setInClass('top', $tight_top);
-	$last->setInClass('bottom', $tight_bot);
+        if (!empty($last)) {
+            $last->setInClass('bottom', $tight_bot);
+        } else {
+            trigger_error(sprintf("no lastTR: %s",AsXml($this->_content[0])), E_USER_WARNING);
+        }
     }
     
     function _addToRow ($item) {
@@ -721,7 +725,8 @@ class Block_table_dl_defn extends XmlContent
             else {
                 $n = count($row->_content);
                 $lastcol = &$row->_content[$n - 1];
-                $lastcol->setAttr('colspan', $ncols - 1);
+                if (!empty($lastcol))
+                  $lastcol->setAttr('colspan', $ncols - 1);
             }
         }
     }
