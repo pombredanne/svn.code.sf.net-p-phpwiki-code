@@ -35,7 +35,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.0-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.32 2001-12-02 07:53:47 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.33 2001-12-06 08:15:38 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -288,6 +288,15 @@ define("NUM_RELATED_PAGES", 5);
 $templates = array("BROWSE" =>    "templates/browse.html",
 		   "EDITPAGE" =>  "templates/editpage.html",
 		   "MESSAGE" =>   "templates/message.html");
+
+// The themeinfo file can be used to override default settings above this line
+// (i.e. templates, logo, signature etc.)
+$theme="";
+if ( !$theme == "" ) {
+    if ( file_exists( "themes/$theme/themeinfo.php" ) ) {
+        include "themes/$theme/themeinfo.php";
+    }
+}
 
 /* WIKI_PGSRC -- specifies the source for the initial page contents
  * of the Wiki.  The setting of WIKI_PGSRC only has effect when
