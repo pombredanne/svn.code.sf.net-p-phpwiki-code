@@ -1,19 +1,33 @@
 <?php // -*-php-*-
-rcs_id('$Id: HelloWorld.php,v 1.4 2001-12-16 18:33:25 dairiki Exp $');
+rcs_id('$Id: HelloWorld.php,v 1.5 2002-01-07 04:14:20 carstenklapp Exp $');
 /**
  * A simple demonstration WikiPlugin.
+ *
+ * Usage:
+ * <?plugin HelloWorld?>
+ * <?plugin HelloWorld salutation="Greetings, " name=Wikimeister ?>
+ * <?plugin HelloWorld salutation=Hi ?>
+ * <?plugin HelloWorld name=WabiSabi ?>
  */
+
+// Constants are defined before the class.
+if (!defined('THE_END'))
+    define('THE_END', "!");
+
 class WikiPlugin_HelloWorld
 extends WikiPlugin
 {
+    // Four required functions in a WikiPlugin.
+
     function getName () {
         return _("HelloWorld");
     }
 
     function getDescription () {
         return _("Simple Sample Plugin");
+
     }
-    
+    // Establish default values for each of this plugin's arguments.
     function getDefaultArguments() {
         return array('salutation'	=> "Hello,",
                      'name'		=> "World");
@@ -21,8 +35,12 @@ extends WikiPlugin
 
     function run($dbi, $argstr, $request) {
         extract($this->getArgs($argstr, $request));
-        
-        return sprintf("<tt>%s %s</tt>", $salutation, $name);
+
+        // Any text that is returned will not be further transformed,
+        // so use html where necessary.
+        $html = Element('tt', __sprintf("%s %s" .THE_END, $salutation,
+                                        do_transform($name, 'LinkTransform')));
+        return $html;
     }
 };
 
