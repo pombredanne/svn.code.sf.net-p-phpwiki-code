@@ -1,4 +1,4 @@
-<?php  rcs_id('$Id: db_filesystem.php,v 1.2 2000-10-19 22:25:45 ahollosi Exp $');
+<?php  rcs_id('$Id: db_filesystem.php,v 1.3 2001-01-01 23:13:32 ahollosi Exp $');
    /*
       Database functions:
 
@@ -104,7 +104,7 @@
 
 
    function IsWikiPage($dbi, $pagename) {
-      return is_file($dbi['wiki'] . "/" . $pagename);
+      return file_exists($dbi['wiki'] . "/" . $pagename);
    }
 
 
