@@ -14,3 +14,17 @@ if we are to use the same InsertPage() function on both.
 Wiki porting: it should be easy to write a function that serializes all
 pages to files, and allows the user to reload them in another database.
 This way it would be easy to move from DBM to a RDBMS.
+
+Proofread README; make sure it lists all the files (wiki_*)
+
+Set up a phpwiki 1.1.6 on sourceforge; there needs to be a demo of 
+the new features. 
+
+Write/proofread pages on wiki markup
+
+Add a TestPage which tests all markup features: wikinames, external
+links, lists, and other markup
+
+Update the ReleaseNotes page
+
+Write up the INSTALL.pgsql file
