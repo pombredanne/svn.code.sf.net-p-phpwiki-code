@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.66 2004-06-07 18:57:27 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.67 2004-06-07 19:12:49 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -386,6 +386,7 @@ class WikiDB {
             $oldpage = $this->getPage($from);
             $newpage = $this->getPage($to);
             //update all WikiLinks in existing pages
+            //non-atomic! i.e. if rename fails the links are not undone
             if ($updateWikiLinks) {
                 require_once('lib/plugin/WikiAdminSearchReplace.php');
                 $links = $oldpage->getBackLinks();
@@ -407,6 +408,9 @@ class WikiDB {
                     $meta['summary'] = sprintf(_("renamed from %s"),$from);
                     $page->save($current->getPackedContent(), $version + 1, $meta);
                 }
+            } elseif (!$oldpage->getCurrentRevision() and !$newpage->exists()) {
+                // if a version 0 exists try it also.
+                $result = $this->_backend->rename_page($from, $to);
             }
         } else {
             trigger_error(_("WikiDB::renamePage() not yet implemented for this backend"),E_USER_WARNING);
@@ -1837,6 +1841,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.66  2004/06/07 18:57:27  rurban
+// fix rename: Change pagename in all linked pages
+//
 // Revision 1.65  2004/06/04 20:32:53  rurban
 // Several locale related improvements suggested by Pierrick Meignen
 // LDAP fix by John Cole
