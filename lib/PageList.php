@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.99 2004-07-02 18:49:02 dfrankow Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.100 2004-07-07 15:02:26 dfrankow Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -1036,7 +1036,6 @@ class PageList {
         }
         else {
             foreach ($pagelist->_sortby as $colNum => $direction) {
-            	if (!isset($pagelist->_columns_seen[$colNum])) return 0;
                 $colkey = $colNum;
                 if (!is_int($colkey)) { // or column fieldname
                     $colkey = $pagelist->_columnsMap[$colNum];
@@ -1271,6 +1270,11 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.99  2004/07/02 18:49:02  dfrankow
+// Change one line so that if addPageList() is passed null, it is still
+// okay.  The unit tests do this (ask to list AllUsers where there are no
+// users, or something like that).
+//
 // Revision 1.98  2004/07/01 08:51:22  rurban
 // dumphtml: added exclude, print pagename before processing
 //
