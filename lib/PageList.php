@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.37 2002-02-13 04:23:54 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.38 2002-02-24 17:59:40 carstenklapp Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -94,12 +94,13 @@ class _PageList_Column_bool extends _PageList_Column {
 class _PageList_Column_time extends _PageList_Column {
     function _PageList_Column_time ($field, $default_heading) {
         $this->_PageList_Column($field, $default_heading, 'right');
+        global $Theme;
+        $this->Theme = &$Theme;
     }
 
     function _getValue ($page_handle, &$revision_handle) {
-        global $Theme;
         $time = _PageList_Column::_getValue($page_handle, $revision_handle);
-        return $Theme->formatDateTime($time);
+        return $this->Theme->formatDateTime($time);
     }
 };
 
@@ -112,12 +113,16 @@ class _PageList_Column_version extends _PageList_Column {
 };
 
 class _PageList_Column_author extends _PageList_Column {
-    function _getValue ($page_handle, &$revision_handle) {
+    function _PageList_Column_author ($field, $default_heading, $align = false) {
+        _PageList_Column::_PageList_Column($field, $default_heading, $align);
         global $WikiNameRegexp, $request;
-        $dbi = $request->getDbh();
+        $this->WikiNameRegexp = $WikiNameRegexp;
+        $this->dbi = &$request->getDbh();
+    }
 
+    function _getValue ($page_handle, &$revision_handle) {
         $author = _PageList_Column::_getValue($page_handle, $revision_handle);
-        if (preg_match("/^$WikiNameRegexp\$/", $author) && $dbi->isWikiPage($author))
+        if (preg_match("/^$this->WikiNameRegexp\$/", $author) && $this->dbi->isWikiPage($author))
             return WikiLink($author);
         else
             return $author;
@@ -127,10 +132,15 @@ class _PageList_Column_author extends _PageList_Column {
 class _PageList_Column_pagename extends _PageList_Column_base {
     function _PageList_Column_pagename () {
         $this->_PageList_Column_base(_("Page Name"));
+        global $request;
+        $this->dbi = &$request->getDbh();
     }
 
     function _getValue ($page_handle, &$revision_handle) {
-        return WikiLink($page_handle);
+        if ($this->dbi->isWikiPage($pagename = $page_handle->getName()))
+            return WikiLink($page_handle);
+        else
+            return WikiLink($page_handle, 'unknown');
     }
 };
 
