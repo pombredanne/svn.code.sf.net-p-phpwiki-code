@@ -1,29 +1,32 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.11 2002-01-24 21:21:37 dairiki Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.12 2002-01-26 01:51:13 dairiki Exp $');
 /*
  * Code for writing XML.
  */
 
 /**
  * An XML element.
+ *
+ * @param $tagname string Tag of html element.
+ *
+ * If $tagname is set to <code>false</code> you get a fake element with no start
+ * or end tag, (just content, if any).  This is useful for creating a single
+ * quasi-element object, which contains a number of other elements.
  */
 class XmlElement
 {
     function XmlElement ($tagname /* , $attr_or_content , ...*/) {
-	$this->_tag = $tagname;
-        $this->_content = array();
-
-        if (func_num_args() > 1)
-            $this->_init(array_slice(func_get_args(), 1));
-        else 
-            $this->_attr = array();
+        $this->_init(func_get_args());
     }
 
     function _init ($args) {
-        assert(is_array($args));
-        if (!$args)
-            return;
+        if (!is_array($args))
+            $args = func_get_args();
 
-        if (is_array($args[0]))
+        assert(count($args) >= 1);
+        //assert(is_string($args[0]));
+        $this->_tag = array_shift($args);
+
+        if ($args && is_array($args[0]))
             $this->_attr = array_shift($args);
         else {
             $this->_attr = array();
@@ -32,9 +35,8 @@ class XmlElement
         }
 
         if (count($args) == 1 && is_array($args[0]))
-            $this->_content = $args[0];
-        else
-            $this->_content = $args;
+            $args = $args[0];
+        $this->_content = $args;
     }
 
     function getTag () {
@@ -83,6 +85,9 @@ class XmlElement
         return $this->_content;
     }
 
+    /**
+     * @access private
+     */
     function _startTag() {
         $start = "<" . $this->_tag;
         foreach ($this->_attr as $attr => $val) {
@@ -97,40 +102,54 @@ class XmlElement
         return $start;
     }
 
+    /**
+     * @access private
+     */
     function _emptyTag() {
         return substr($this->_startTag(), 0, -1) . "/>";
     }
 
-    function _endTag() {
-        return "</$this->_tag>";
+    function startTag() {
+        return $this->_tag ? $this->_startTag() : '';
+    }
+    
+    function endTag() {
+        return $this->_tag ? "</$this->_tag>" : '';
     }
     
         
     function printXML () {
         
-        if ($this->isEmpty()) {
-            echo $this->_emptyTag();
+        if (! $this->_content) {
+            if ($this->_tag)
+                echo $this->_emptyTag();
         }
         else {
             $sep = $this->hasInlineContent() ? "" : "\n";
-            echo $this->_startTag() . $sep;
+            if ($this->_tag)
+                echo $this->_startTag() . $sep;
             foreach ($this->_content as $c) {
                 PrintXML($c);
                 echo $sep;
             }
-            echo "</$this->_tag>";
+            if ($this->_tag)
+                echo "</$this->_tag>";
         }
     }
 
     function asXML () {
-        if ($this->isEmpty())
-            return $this->_emptyTag();
+        if (! $this->_content)
+            return $this->_tag ? $this->_emptyTag() : '';
 
         $sep = $this->hasInlineContent() ? "" : "\n";
-        $xml =  $this->_startTag() . $sep;
+        $xml = '';
+        if ($this->_tag)
+            $xml .= $this->_startTag() . $sep;
         foreach ($this->_content as $c)
             $xml .= AsXML($c) . $sep;
-        return $xml . "</$this->_tag>";
+        if ($this->_tag)
+            $xml .= "</$this->_tag>";
+        return $xml;
     }
 
     function asString () {

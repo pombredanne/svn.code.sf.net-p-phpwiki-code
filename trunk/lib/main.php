@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.34 2002-01-25 00:32:39 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.35 2002-01-26 01:51:13 dairiki Exp $');
 
 
 include "lib/config.php";
@@ -353,7 +353,7 @@ class WikiRequest extends Request {
     }
 
     function action_browse () {
-        $this->compress_output();
+        //$this->compress_output();
         include_once("lib/display.php");
         displayPage($this);
     }

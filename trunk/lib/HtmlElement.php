@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.11 2002-01-24 21:21:37 dairiki Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.12 2002-01-26 01:51:13 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -9,17 +9,33 @@ require_once("lib/XmlElement.php");
 
 class HtmlElement extends XmlElement
 {
-    function HtmlElement ($tagname /* , $attr_or_content , ...*/) {
-	$this->_tag = $tagname;
-        $this->_content = array();
-        $this->_properties = HTML::getTagProperties($tagname);
-        
-        if (func_num_args() > 1)
-            $this->_init(array_slice(func_get_args(), 1));
-        else 
-            $this->_attr = array();
-    }
+    //function HtmlElement ($tagname /* , $attr_or_content , ...*/) {
+    //    $this->_init(func_get_args());
+    //    $this->_properties = HTML::getTagProperties($tagname);
+    //} 
+    
 
+    function _init ($args) {
+        XmlElement::_init($args);
+        $this->_properties = HTML::getTagProperties($this->_tag);
+    }
+        
+    /**
+     * @access protected
+     * This is used by the static factory methods is class HTML.
+     */
+    function _init2 ($args) {
+        if ($args && is_array($args[0]))
+            $this->_attr = array_shift($args);
+        elseif (count($args) > 1 && ! $args[0])
+            array_shift($args);
+
+        if (count($args) == 1 && is_array($args[0]))
+            $args = $args[0];
+        $this->_content = $args;
+        return $this;
+    }
+        
     /** Add a "tooltip" to an element.
      *
      * @param $tooltip_text string The tooltip text.
@@ -37,11 +53,12 @@ class HtmlElement extends XmlElement
     }
 
     function _emptyTag () {
-        return substr($this->_startTag(), 0, -1) . " />";
-    }
+        if (!$this->_tag)
+            return '';
+        elseif (($this->_properties & HTMLTAG_EMPTY) == 0)
+            return $this->_startTag() . "</$this->_tag>";
 
-    function isEmpty () {
-        return ($this->_properties & HTMLTAG_EMPTY) != 0;
+        return substr($this->_startTag(), 0, -1) . " />";
     }
 
     function hasInlineContent () {
@@ -56,275 +73,15 @@ class HtmlElement extends XmlElement
 function HTML ($tag /* , ... */) {
     $el = new HtmlElement($tag);
     if (func_num_args() > 1)
-        $el->_init(array_slice(func_get_args(), 1));
+        $el->_init(func_get_args());
     return $el;
 }
 
 define('NBSP', "\xA0");         // iso-8859-x non-breaking space.
 
-class HTML {
+class HTML extends HtmlElement {
     function raw ($html_text) {
         return new RawXML($html_text);
-    }
-
-
-    function link (/*...*/) {
-        $el = new HtmlElement('link');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function style (/*...*/) {
-        $el = new HtmlElement('style');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function script (/*...*/) {
-        $el = new HtmlElement('script');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function noscript (/*...*/) {
-        $el = new HtmlElement('noscript');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    
-    function a (/*...*/) {
-        $el = new HtmlElement('a');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function img (/*...*/) {
-        $el = new HtmlElement('img');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function br (/*...*/) {
-        $el = new HtmlElement('br');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function h1 (/*...*/) {
-        $el = new HtmlElement('h1');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function h1 (/*...*/) {
-        $el = new HtmlElement('h1');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function h2 (/*...*/) {
-        $el = new HtmlElement('h2');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function h3 (/*...*/) {
-        $el = new HtmlElement('h3');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function h4 (/*...*/) {
-        $el = new HtmlElement('h4');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function h5 (/*...*/) {
-        $el = new HtmlElement('h5');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function h6 (/*...*/) {
-        $el = new HtmlElement('h6');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function hr (/*...*/) {
-        $el = new HtmlElement('hr');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function div (/*...*/) {
-        $el = new HtmlElement('div');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function p (/*...*/) {
-        $el = new HtmlElement('p');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function pre (/*...*/) {
-        $el = new HtmlElement('pre');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function blockquote (/*...*/) {
-        $el = new HtmlElement('blockquote');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function span (/*...*/) {
-        $el = new HtmlElement('span');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function em (/*...*/) {
-        $el = new HtmlElement('em');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function strong (/*...*/) {
-        $el = new HtmlElement('strong');
-        $el->_init(func_get_args());
-        return $el;
-    }
-    
-    function small (/*...*/) {
-        $el = new HtmlElement('small');
-        $el->_init(func_get_args());
-        return $el;
-    }
-    
-    function tt (/*...*/) {
-        $el = new HtmlElement('tt');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function u (/*...*/) {
-        $el = new HtmlElement('u');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function sup (/*...*/) {
-        $el = new HtmlElement('sup');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function sub (/*...*/) {
-        $el = new HtmlElement('sub');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function ul (/*...*/) {
-        $el = new HtmlElement('ul');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function ol (/*...*/) {
-        $el = new HtmlElement('ol');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function dl (/*...*/) {
-        $el = new HtmlElement('dl');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function li (/*...*/) {
-        $el = new HtmlElement('li');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function dt (/*...*/) {
-        $el = new HtmlElement('dt');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function dd (/*...*/) {
-        $el = new HtmlElement('dd');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function table (/*...*/) {
-        $el = new HtmlElement('table');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function caption (/*...*/) {
-        $el = new HtmlElement('caption');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function thead (/*...*/) {
-        $el = new HtmlElement('thead');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function tbody (/*...*/) {
-        $el = new HtmlElement('tbody');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function tfoot (/*...*/) {
-        $el = new HtmlElement('tfoot');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function tr (/*...*/) {
-        $el = new HtmlElement('tr');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function td (/*...*/) {
-        $el = new HtmlElement('td');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function th (/*...*/) {
-        $el = new HtmlElement('th');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function form (/*...*/) {
-        $el = new HtmlElement('form');
-        $el->_init(func_get_args());
-        return $el;
-    }
-
-    function input (/*...*/) {
-        $el = new HtmlElement('input');
-        $el->_init(func_get_args());
-        return $el;
     }
 
     function getTagProperties($tag) {
@@ -342,6 +99,196 @@ class HTML {
             else
                 $props[$tag] = $prop_flag;
         }
+    }
+
+    //
+    // Shell script to generate the following static methods:
+    //
+    // function mkfuncs () {
+    //     for tag in "$@"
+    //     do
+    //         echo "    function $tag (/*...*/) {"
+    //         echo "        \$el = new HtmlElement('$tag');"
+    //         echo "        return \$el->_init2(func_get_args());"
+    //         echo "    }"
+    //     done
+    // }
+    // mkfuncs link style script noscript
+    // mkfuncs a img br span
+    // mkfuncs h1 h2 h3 h4 h5 h6
+    // mkfuncs hr div p pre blockquote
+    // mkfuncs em strong small
+    // mkfuncs tt u sup sub
+    // mkfuncs ul ol dl li dt dd
+    // mkfuncs table caption thead tbody tfoot tr td th
+    // mkfuncs form input
+    function link (/*...*/) {
+        $el = new HtmlElement('link');
+        return $el->_init2(func_get_args());
+    }
+    function style (/*...*/) {
+        $el = new HtmlElement('style');
+        return $el->_init2(func_get_args());
+    }
+    function script (/*...*/) {
+        $el = new HtmlElement('script');
+        return $el->_init2(func_get_args());
+    }
+    function noscript (/*...*/) {
+        $el = new HtmlElement('noscript');
+        return $el->_init2(func_get_args());
+    }
+    function a (/*...*/) {
+        $el = new HtmlElement('a');
+        return $el->_init2(func_get_args());
+    }
+    function img (/*...*/) {
+        $el = new HtmlElement('img');
+        return $el->_init2(func_get_args());
+    }
+    function br (/*...*/) {
+        $el = new HtmlElement('br');
+        return $el->_init2(func_get_args());
+    }
+    function span (/*...*/) {
+        $el = new HtmlElement('span');
+        return $el->_init2(func_get_args());
+    }
+    function h1 (/*...*/) {
+        $el = new HtmlElement('h1');
+        return $el->_init2(func_get_args());
+    }
+    function h2 (/*...*/) {
+        $el = new HtmlElement('h2');
+        return $el->_init2(func_get_args());
+    }
+    function h3 (/*...*/) {
+        $el = new HtmlElement('h3');
+        return $el->_init2(func_get_args());
+    }
+    function h4 (/*...*/) {
+        $el = new HtmlElement('h4');
+        return $el->_init2(func_get_args());
+    }
+    function h5 (/*...*/) {
+        $el = new HtmlElement('h5');
+        return $el->_init2(func_get_args());
+    }
+    function h6 (/*...*/) {
+        $el = new HtmlElement('h6');
+        return $el->_init2(func_get_args());
+    }
+    function hr (/*...*/) {
+        $el = new HtmlElement('hr');
+        return $el->_init2(func_get_args());
+    }
+    function div (/*...*/) {
+        $el = new HtmlElement('div');
+        return $el->_init2(func_get_args());
+    }
+    function p (/*...*/) {
+        $el = new HtmlElement('p');
+        return $el->_init2(func_get_args());
+    }
+    function pre (/*...*/) {
+        $el = new HtmlElement('pre');
+        return $el->_init2(func_get_args());
+    }
+    function blockquote (/*...*/) {
+        $el = new HtmlElement('blockquote');
+        return $el->_init2(func_get_args());
+    }
+    function em (/*...*/) {
+        $el = new HtmlElement('em');
+        return $el->_init2(func_get_args());
+    }
+    function strong (/*...*/) {
+        $el = new HtmlElement('strong');
+        return $el->_init2(func_get_args());
+    }
+    function small (/*...*/) {
+        $el = new HtmlElement('small');
+        return $el->_init2(func_get_args());
+    }
+    function tt (/*...*/) {
+        $el = new HtmlElement('tt');
+        return $el->_init2(func_get_args());
+    }
+    function u (/*...*/) {
+        $el = new HtmlElement('u');
+        return $el->_init2(func_get_args());
+    }
+    function sup (/*...*/) {
+        $el = new HtmlElement('sup');
+        return $el->_init2(func_get_args());
+    }
+    function sub (/*...*/) {
+        $el = new HtmlElement('sub');
+        return $el->_init2(func_get_args());
+    }
+    function ul (/*...*/) {
+        $el = new HtmlElement('ul');
+        return $el->_init2(func_get_args());
+    }
+    function ol (/*...*/) {
+        $el = new HtmlElement('ol');
+        return $el->_init2(func_get_args());
+    }
+    function dl (/*...*/) {
+        $el = new HtmlElement('dl');
+        return $el->_init2(func_get_args());
+    }
+    function li (/*...*/) {
+        $el = new HtmlElement('li');
+        return $el->_init2(func_get_args());
+    }
+    function dt (/*...*/) {
+        $el = new HtmlElement('dt');
+        return $el->_init2(func_get_args());
+    }
+    function dd (/*...*/) {
+        $el = new HtmlElement('dd');
+        return $el->_init2(func_get_args());
+    }
+    function table (/*...*/) {
+        $el = new HtmlElement('table');
+        return $el->_init2(func_get_args());
+    }
+    function caption (/*...*/) {
+        $el = new HtmlElement('caption');
+        return $el->_init2(func_get_args());
+    }
+    function thead (/*...*/) {
+        $el = new HtmlElement('thead');
+        return $el->_init2(func_get_args());
+    }
+    function tbody (/*...*/) {
+        $el = new HtmlElement('tbody');
+        return $el->_init2(func_get_args());
+    }
+    function tfoot (/*...*/) {
+        $el = new HtmlElement('tfoot');
+        return $el->_init2(func_get_args());
+    }
+    function tr (/*...*/) {
+        $el = new HtmlElement('tr');
+        return $el->_init2(func_get_args());
+    }
+    function td (/*...*/) {
+        $el = new HtmlElement('td');
+        return $el->_init2(func_get_args());
+    }
+    function th (/*...*/) {
+        $el = new HtmlElement('th');
+        return $el->_init2(func_get_args());
+    }
+    function form (/*...*/) {
+        $el = new HtmlElement('form');
+        return $el->_init2(func_get_args());
+    }
+    function input (/*...*/) {
+        $el = new HtmlElement('input');
+        return $el->_init2(func_get_args());
     }
 }
 

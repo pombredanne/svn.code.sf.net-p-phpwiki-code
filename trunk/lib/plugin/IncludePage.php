@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: IncludePage.php,v 1.12 2002-01-23 05:42:10 carstenklapp Exp $');
+rcs_id('$Id: IncludePage.php,v 1.13 2002-01-26 01:51:13 dairiki Exp $');
 /**
  * IncludePage:  include text from another wiki page in this one
  * usage:   <?plugin IncludePage page=OtherPage rev=6 quiet=1 words=50 lines=6?>
@@ -102,8 +102,17 @@ extends WikiPlugin
         if ($words)
             $c = $this->firstNWordsOfContent($words, $c);
 
+        
         array_push($included_pages, $page);
-        $content = do_transform($c);
+
+        if ($r->get('markup') == 'new') {
+            include_once('lib/BlockParser.php');
+            $content = NewTransform(implode("\n", $c));
+        }
+        else {
+            $content = do_transform($c);
+        }
+        
         array_pop($included_pages);
 
         if ($quiet) return $content;
@@ -114,7 +123,7 @@ extends WikiPlugin
                               $Theme->LinkExistingWikiWord($page)));
         
         $html[] = HTML::div(array('class' => 'transclusion'),
-                            $content);
+                            false, $content);
         
         return $html;
     }

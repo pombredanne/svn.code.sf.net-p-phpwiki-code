@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.35 2002-01-25 17:58:19 dairiki Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.36 2002-01-26 01:51:13 dairiki Exp $');
 require_once('lib/Template.php');
 require_once('lib/transform.php');
 require_once('lib/ArchiveCleaner.php');
@@ -107,11 +107,15 @@ function savePage (&$request) {
     $meta['is_minor_edit'] = (bool) $request->getArg('minor_edit');
     $meta['summary'] = trim($request->getArg('summary'));
 
+    if ($request->getArg('markup') == 'new')
+        $meta['markup'] = 'new';
+        
     $content = preg_replace('/[ \t\r]+\n/', "\n", chop($content));
     if ($request->getArg('convert'))
         $content = CookSpaces($content);
 
-    if ($content == $current->getPackedContent()) {
+    if ($content == $current->getPackedContent()
+        && (isset($meta['markup']) == ($current->get('markup') == 'new')) ) {
         // Save failed. No changes made.
         include_once('lib/display.php');
         // force browse of current version:
@@ -155,8 +159,9 @@ function savePage (&$request) {
 
     // Force browse of current page version.
     $request->setArg('version', false);
-    
-    $template = Template('savepage', do_transform($newrevision->getContent()));
+    include_once('lib/BlockParser.php');
+    $template = Template('savepage',
+                         array('CONTENT' => TransformRevision($newrevision)));
     if (!empty($warnings))
         $template->replace('WARNINGS', $warnings);
 
