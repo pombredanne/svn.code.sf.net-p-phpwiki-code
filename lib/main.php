@@ -1,9 +1,8 @@
 <?php
-rcs_id('$Id: main.php,v 1.2 2001-02-13 05:54:38 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.3 2001-02-14 22:02:05 dairiki Exp $');
 include "lib/config.php";
 include "lib/stdlib.php";
 include "lib/userauth.php";
-
 
 function DeducePagename () 
 {
@@ -13,7 +12,7 @@ function DeducePagename ()
       return fix_magic_quotes_gpc($pagename);
 
    if (USE_PATH_INFO)
-      if (ereg('^' . PATH_INFO_PREFIX . '(.*)$', $PATH_INFO, $m))
+      if (ereg('^' . PATH_INFO_PREFIX . '(..*)$', $PATH_INFO, $m))
 	 return $m[1];
 
    return gettext("FrontPage");
@@ -37,7 +36,6 @@ else
 {
    $action = 'browse';
 }
-
 
 function IsSafeAction ($action)
 {
@@ -81,12 +79,14 @@ if ( ! IsWikiPage($dbi, gettext("FrontPage")) )
 // FIXME: I think this is redundant.
 if (!IsSafeAction($action))
    $user->must_be_admin($action);
-
+if (isset($DisabledActions) && in_array($action, $DisabledActions))
+   ExitWiki(gettext("Action $action is disabled in this wiki."));
+   
 // Enable the output of most of the warning messages.
 // The warnings will screw up zip files and setpref though.
 if ($action != 'zip' && $action != 'setprefs')
    PostponeErrorMessages(E_NOTICE);
-   
+
 switch ($action) {
    case 'edit':
       include "lib/editpage.php";

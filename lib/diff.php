@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.8 2001-02-13 05:54:38 dairiki Exp $');
+rcs_id('$Id: diff.php,v 1.9 2001-02-14 22:02:05 dairiki Exp $');
 // diff.php
 //
 // A PHP diff engine for phpwiki.
@@ -933,7 +933,7 @@ class WikiDiffFormatter
 	  {
 	    $line = rtrim($line);
 	    $line = empty($line) ? '&nbsp;' : htmlspecialchars($line);
-	    $html .= Element('tr', 
+	    $html .= Element('tr', array('valign' => 'top'), 
 			     $prefix . Element('td', array('bgcolor' => $color),
 					       Element('tt', $line)));
 	  }
@@ -974,7 +974,7 @@ class WikiDiffFormatter
 					     array('width' => '100%',
 						   'bgcolor' => 'white',
 						   'cellspacing' => 0,
-						   'cellpadding' => 4,
+						   'cellpadding' => 1,
 						   'border' => 0),
 					     $header. $diff)));
 	

@@ -1,10 +1,10 @@
-<?php rcs_id('$Id: interwiki.php,v 1.3 2001-02-14 05:22:49 dairiki Exp $');
+<?php rcs_id('$Id: interwiki.php,v 1.4 2001-02-14 22:02:05 dairiki Exp $');
 
 function generate_interwikimap_and_regexp()
 {
    global $interwikimap_file, $InterWikiLinkRegexp, $interwikimap;
 
-   $intermap_data = file(INTERWIKI_MAP_FILE);
+   $intermap_data = file(INTERWIKI_MAP_FILE, 1);
    $wikiname_regexp = "";
    for ($i=0; $i<count($intermap_data); $i++)
    {
@@ -24,9 +24,9 @@ function LinkInterWikiLink($link, $linktext='')
 {
    global $interwikimap;
 
-   list( $wiki, $page ) = split( ":", $link );
+   list( $wiki, $page ) = split( ":", $link, 2 );
 
-   $url = $interwikimap[$wiki] . urlencode($page);
+   $url = $interwikimap[$wiki] . rawurlencode($page);
 
    if ($linktext)
       $linktext = htmlspecialchars($linktext);
@@ -44,8 +44,6 @@ function LinkInterWikiLink($link, $linktext='')
 // These can be protected by a '!' like Wiki words.
 function wtt_interwikilinks($match, &$trfrm)
 {
-   global $InterWikiLinkRegexp, $WikiNameRegexp;
-
    if ($match[0] == "!")
       return htmlspecialchars(substr($match,1));
    return LinkInterWikiLink($match);
