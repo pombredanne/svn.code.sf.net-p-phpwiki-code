@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.37 2002-02-07 03:52:45 carstenklapp Exp $');
+rcs_id('$Id: editpage.php,v 1.38 2002-02-08 03:01:11 dairiki Exp $');
 
 require_once('lib/Template.php');
 
@@ -162,7 +162,7 @@ class PageEditor
         $request->setArg('version', false);
         include_once('lib/BlockParser.php');
         $template = Template('savepage',
-                             array('CONTENT' => TransformRevision($newrevision)));
+                             array('CONTENT' => TransformText($newrevision)));
         if (!empty($warnings))
             $template->replace('WARNINGS', $warnings);
 
@@ -195,15 +195,8 @@ class PageEditor
     }
 
     function getPreview () {
-        if ($this->meta['markup'] == 'new') {
-            include_once('lib/BlockParser.php');
-            $trfm = 'NewTransform';
-        }
-        else {
-            include_once('lib/transform.php');
-            $trfm = 'do_transform';
-        }
-        return $trfm($this->_content);
+        include_once('lib/BlockParser.php');
+        return TransformText($this->_content, $this->meta['markup']);
     }
 
     function getLockedMessage () {
@@ -282,7 +275,7 @@ class PageEditor
             = HTML::input(array('type' => 'checkbox',
                                 'name' => 'edit[markup]',
                                 'value' => 'new',
-                                'checked' => $this->meta['markup'] == 'new'));
+                                'checked' => $this->meta['markup'] >= 2.0));
 
         $el['LOCKED_CB']
             = HTML::input(array('type' => 'checkbox',
@@ -323,7 +316,7 @@ class PageEditor
             return false;       // FIXME: some kind of warning?
 
         $is_new_markup = !empty($posted['markup']) && $posted['markup'] == 'new';
-        $meta['markup'] = $is_new_markup ? 'new' : false;
+        $meta['markup'] = $is_new_markup ? 2.0: false;
         $meta['summary'] = trim(substr($posted['summary'], 0, 256));
         $meta['locked'] = !empty($posted['locked']);
         $meta['is_minor_edit'] = !empty($posted['minor_edit']);
@@ -363,10 +356,11 @@ class PageEditor
 
         // Default for new pages is new-style markup.
         if ($selected->hasDefaultContents())
-            $this->meta['markup'] = 'new';
+            $is_new_markup = true;
         else
-            $this->meta['markup'] = $selected->get('markup');
+            $is_new_markup = $selected->get('markup') >= 2.0;
 
+        $this->meta['markup'] = $is_new_markup ? 2.0: false;
         $this->editaction = 'edit';
     }
 }

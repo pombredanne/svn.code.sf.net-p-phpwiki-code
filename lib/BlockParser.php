@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.21 2002-02-07 19:45:15 dairiki Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.22 2002-02-08 03:01:11 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -19,8 +19,6 @@
  */
 require_once('lib/HtmlElement.php');
 require_once('lib/InlineParser.php');
-
-require_once('lib/transform.php');
 
 ////////////////////////////////////////////////////////////////
 //
@@ -916,11 +914,18 @@ class Block_p extends BlockMarkup
 
 
 
+function TransformText ($text, $markup = 2.0) {
+    if (isa($text, 'WikiDB_PageRevision')) {
+        $rev = $text;
+        $text = $rev->getPackedContent();
+        $markup = $rev->get('markup');
+    }
 
-// FIXME: This is temporary, too...
-function NewTransform ($text) {
-
-    //set_time_limit(5);
+    if (empty($markup) || $markup < 2.0) {
+        include_once("lib/transform.php");
+        return do_transform($text);
+        //$text = ConvertOldMarkup($text);
+    }
     
     // Expand leading tabs.
     // FIXME: do this better. also move  it...
@@ -931,18 +936,7 @@ function NewTransform ($text) {
     return $output;
 }
 
-
-// FIXME: bad name
-function TransformRevision ($revision) {
-    if ($revision->get('markup') == 'new') {
-        return NewTransform($revision->getPackedContent());
-    }
-    else {
-        return do_transform($revision->getContent());
-    }
-}
-
-
+    
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php

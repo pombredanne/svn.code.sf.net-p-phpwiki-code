@@ -1,10 +1,8 @@
 <?php
 // display.php: fetch page or get default content
-// calls transform.php for actual transformation of wiki markup to HTML
-rcs_id('$Id: display.php,v 1.24 2002-01-30 00:36:19 dairiki Exp $');
+rcs_id('$Id: display.php,v 1.25 2002-02-08 03:01:11 dairiki Exp $');
 
 require_once('lib/Template.php');
-//require_once('lib/transform.php');
 require_once('lib/BlockParser.php');
 
 /**
@@ -60,7 +58,7 @@ function actionPage(&$request, $action) {
     $pagetitle = HTML($actionpage->getName(), ": ",
                       $Theme->linkExistingWikiWord($pagename, false, $version));
 
-    $template = Template('browse', array('CONTENT' => TransformRevision($actionrev)));
+    $template = Template('browse', array('CONTENT' => TransformText($actionrev)));
     
     GeneratePage($template, $pagetitle, $revision);
     flush();
@@ -88,7 +86,7 @@ function displayPage(&$request, $tmpl = 'browse') {
     $pagetitle->addTooltip(sprintf(_("BackLinks for %s"), $pagename));
 
     include_once('lib/BlockParser.php');
-    $template = Template($tmpl, array('CONTENT' => TransformRevision($revision)));
+    $template = Template($tmpl, array('CONTENT' => TransformText($revision)));
 
     GeneratePage($template, $pagetitle, $revision,
                  array('ROBOTS_META'	=> 'index,follow',

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.55 2002-02-06 20:46:05 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.56 2002-02-08 03:01:12 dairiki Exp $');
 /**
  */
 
@@ -137,7 +137,7 @@ extends _RecentChanges_Formatter
             return '';
         return  HTML::strong( array('class' => 'wiki-summary'),
                               "[",
-                              do_transform($summary, 'LinkTransform'),
+                              TransformLinks($summary, $rev->get('markup')),
                               "]");
     }
         

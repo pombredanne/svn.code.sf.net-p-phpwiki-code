@@ -1,12 +1,10 @@
 <?php // -*-php-*-
-rcs_id('$Id: IncludePage.php,v 1.16 2002-02-01 04:02:13 carstenklapp Exp $');
+rcs_id('$Id: IncludePage.php,v 1.17 2002-02-08 03:01:11 dairiki Exp $');
 /**
  * IncludePage:  include text from another wiki page in this one
  * usage:   <?plugin IncludePage page=OtherPage rev=6 quiet=1 words=50 lines=6?>
  * author:  Joe Edelman <joe@orbis-tertius.net>
  */
-
-require_once('lib/transform.php');
 
 class WikiPlugin_IncludePage
 extends WikiPlugin
@@ -109,13 +107,8 @@ extends WikiPlugin
         
         array_push($included_pages, $page);
 
-        if ($r->get('markup') == 'new') {
-            include_once('lib/BlockParser.php');
-            $content = NewTransform(implode("\n", $c));
-        }
-        else {
-            $content = do_transform($c);
-        }
+        include_once('lib/BlockParser.php');
+        $content = TransformText(implode("\n", $c), $r->get('markup'));
         
         array_pop($included_pages);
 
