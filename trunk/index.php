@@ -66,15 +66,15 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 // processing timer, and possibly other debugging messages at the
 // bottom of each page.
 if (!defined('DEBUG')) define ('DEBUG', 0);
-//define('ENABLE_USER_NEW',true);    // this will disappear with 1.4.0
-//define('JS_SEARCHREPLACE',true); // experimental
+define('ENABLE_USER_NEW',true);    // this will disappear with 1.4.0
+define('JS_SEARCHREPLACE',true);   // experimental edit feature
 
 /////////////////////////////////////////////////////////////////////
 // Part Null: Don't touch this!
 
 define ('PHPWIKI_VERSION', '1.3.8');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.134 2004-04-10 02:55:48 rurban Exp $');
+rcs_id('$Id: index.php,v 1.135 2004-04-10 03:33:03 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -943,6 +943,9 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 //include "lib/main.php";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.134  2004/04/10 02:55:48  rurban
+// fixed old WikiUser
+//
 // Revision 1.133  2004/04/08 01:22:53  rurban
 // fixed PageChange Notification
 //
