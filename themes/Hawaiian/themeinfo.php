@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.14 2002-01-19 03:23:45 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.15 2002-01-19 19:29:48 carstenklapp Exp $');
 
 /**
  * WikiWiki Hawaiian theme for PhpWiki.
@@ -47,10 +47,6 @@ $Theme->setLinkIcon('*', 'flower.png');
 // If undefined, defaults to '' (nothing) and '...' (three periods).
 //define("RC_SEPARATOR_A", ' . . . ');
 //define("RC_SEPARATOR_B", ' --');
-
-// Controls whether the '?' appears before or after UnknownWikiWords.
-// The PhpWiki default is for the '?' to appear before.
-//$Theme->setWikiMark('?%s');
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

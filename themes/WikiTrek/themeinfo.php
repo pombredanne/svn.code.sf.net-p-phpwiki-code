@@ -1,6 +1,6 @@
 <?php // -*-php-*-
 
-rcs_id('$Id: themeinfo.php,v 1.13 2002-01-19 03:23:44 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.14 2002-01-19 19:29:48 carstenklapp Exp $');
 
 /**
  * This PhpWiki theme is experimental and will likely not appear as
@@ -52,10 +52,6 @@ $Theme->addImageAlias('signature', 'lights.gif');
 // A "real" date2startdate conversion function might be fun but not very useful.
 $Theme->setDateTimeFormat("Stardate %Y%m%d.%H%M%S"); // may contain time of day
 $Theme->setDateFormat("Stardate %Y%m%d"); // must not contain time
-
-// Controls whether the '?' appears before or after UnknownWikiWords.
-// The PhpWiki default is for the '?' to appear before.
-//$Theme->setWikiMark('?%s');
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

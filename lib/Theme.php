@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.7 2002-01-19 03:23:45 carstenklapp Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.8 2002-01-19 19:29:49 carstenklapp Exp $');
 
 class Theme {
     function Theme ($theme_name) {
@@ -87,16 +87,20 @@ class Theme {
         return false;
     }
 
-    function setWikiMark($wikimark=false) {
-        //FIXME: Check for %s in wikimark
-        $this->_wikiMark = $wikimark ? $wikimark : "?%s";
-    }
+    function LinkUnknownWikiWord($wikiword, $linktext = '') {
+        if (empty($linktext)) {
+            $linktext = $wikiword;
+            if (defined("autosplit_wikiwords"))
+                $linktext=split_pagename($linktext);
+            $class = 'wikiunknown';
+        } else
+            $class = 'named-wikiunknown';
 
-    function getWikiMark() {
-        if (! @$this->_wikiMark)
-            $this->setWikiMark();
-        
-        return $this->_wikiMark;
+        return Element('span', array('class' => $class),
+                       QElement('a',
+                                array('href' => WikiURL($wikiword,
+                                                        array('action' => 'edit'))),
+                                '?') . Element('u', $linktext));
     }
 
 
