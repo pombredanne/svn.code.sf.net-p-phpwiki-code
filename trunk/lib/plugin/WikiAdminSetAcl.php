@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSetAcl.php,v 1.2 2004-02-24 04:02:07 rurban Exp $');
+rcs_id('$Id: WikiAdminSetAcl.php,v 1.3 2004-03-12 13:31:43 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -47,7 +47,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -107,9 +107,15 @@ extends WikiPlugin_WikiAdminSelect
         $pages = array();
         if ($p && !$request->isPost())
             $pages = $p;
-        if ($p && $request->isPost() && $request->_user->isAdmin()
-            && !empty($post_args['acl']) && empty($post_args['cancel'])) {
-            // FIXME: error message if not admin.
+        if ($p && $request->isPost() &&
+            !empty($post_args['acl']) && empty($post_args['cancel'])) {
+
+            // FIXME: check individual PagePermissions
+            if (!$request->_user->isAdmin()) {
+                $request->_notAuthorized(WIKIAUTH_ADMIN);
+                $this->disabled("! user->isAdmin");
+            }
+
             if ($post_args['action'] == 'verify') {
                 // Real action
                 return $this->setaclPages($dbi, $request, $p, 
@@ -207,6 +213,9 @@ extends WikiPlugin_WikiAdminSelect
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/02/24 04:02:07  rurban
+// Better warning messages
+//
 // Revision 1.1  2004/02/23 21:30:25  rurban
 // more PagePerm stuff: (working against 1.4.0)
 //   ACL editing and simplification of ACL's to simple rwx------ string

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRename.php,v 1.8 2004-03-01 13:48:46 rurban Exp $');
+rcs_id('$Id: WikiAdminRename.php,v 1.9 2004-03-12 13:31:43 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
@@ -106,8 +106,15 @@ extends WikiPlugin_WikiAdminSelect
         $pages = array();
         if ($p && !$request->isPost())
             $pages = $p;
-        if ($p && $request->isPost() && $request->_user->isAdmin()
-            && !empty($post_args['rename']) && empty($post_args['cancel'])) {
+        if ($p && $request->isPost() &&
+            !empty($post_args['rename']) && empty($post_args['cancel'])) {
+
+            // FIXME: check individual PagePermissions
+            if (!$request->_user->isAdmin()) {
+                $request->_notAuthorized(WIKIAUTH_ADMIN);
+                $this->disabled("! user->isAdmin");
+            }
+
             // FIXME: error message if not admin.
             if ($post_args['action'] == 'verify') {
                 // Real action
@@ -187,6 +194,10 @@ extends WikiPlugin_WikiAdminSelect
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/03/01 13:48:46  rurban
+// rename fix
+// p[] consistency fix
+//
 // Revision 1.7  2004/02/22 23:20:33  rurban
 // fixed DumpHtmlToDir,
 // enhanced sortby handling in PageList

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.65 2004-03-12 11:58:21 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.66 2004-03-12 13:31:42 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -517,6 +517,9 @@ class PageList {
           if (in_array($page_handle->getName(), $this->_excluded_pages))
             return;             // exclude page.
         }
+        // enforce view permission
+        if (!mayAccessPage('view',$page_handle->getName()))
+            return;
 
         $group = (int)(count($this->_rows) / $this->_group_rows);
         $class = ($group % 2) ? 'oddrow' : 'evenrow';
