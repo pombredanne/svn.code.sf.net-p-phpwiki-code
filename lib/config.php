@@ -1,4 +1,5 @@
 <?php
+   rcs_id('$Id: config.php,v 1.29 2001-02-10 22:15:08 dairiki Exp $');
 
    // essential internal stuff -- skip it. Go down to Part One. There
    // are four parts to this file that interest you, all labeled Part
@@ -6,13 +7,6 @@
 
    set_magic_quotes_runtime(0);
    error_reporting(E_ALL ^ E_NOTICE);
-
-   if (!function_exists('rcs_id')) {
-      function rcs_id($id) { echo "<!-- $id -->\n"; };
-   }
-   rcs_id('$Id: config.php,v 1.28 2001-02-08 18:19:16 dairiki Exp $');
-   // end essential internal stuff
-
 
    /////////////////////////////////////////////////////////////////////
    // Part One:
@@ -23,15 +17,30 @@
    // URL of index.php e.g. http://yoursite.com/phpwiki/index.php
    // you can leave this empty - it will be calculated automatically
    $ScriptUrl = "";
-   // URL of admin.php e.g. http://yoursite.com/phpwiki/admin.php
-   // you can leave this empty - it will be calculated automatically
-   // if you fill in $ScriptUrl you *MUST* fill in $AdminUrl as well!
-   $AdminUrl = "";
 
    // Select your language - default language "C": English
    // other languages available: Dutch "nl", Spanish "es", German "de",
    // and Swedish "sv"
    $LANG="C";
+
+   // Define to 'true' to use PATH_INFO to pass the pagename's.
+   // e.g. http://www.some.where/index.php/FrontPage instead
+   // of http://www.some.where/index.php?pagename=FrontPage
+   define('USE_PATH_INFO', true);
+
+   // Username and password of administrator.
+   // Set these to your preferences. For heaven's sake
+   // pick a good password!
+   define('ADMIN_USER', "");
+   define('ADMIN_PASSWD', "");
+
+   // If true, only the admin user can make zip dumps, else
+   // zip dumps require no authentication.
+   define('ZIPDUMP_AUTH', false);
+
+   // If set, we will perform reverse dns lookups to try to convert the users
+   // IP number to a host name, even if the http server didn't do it for us.
+   define('ENABLE_REVERSE_DNS', true);
 
    /////////////////////////////////////////////////////////////////////
    // Part Two:
@@ -152,9 +161,6 @@
    // this defines how many page names to list when displaying related pages
    define("NUM_RELATED_PAGES", 5);
 
-   // number of user-defined external references, i.e. "[1]"
-   define("NUM_LINKS", 12);
-
    // allowed protocols for links - be careful not to allow "javascript:"
    // within a named link [name|uri] one more protocol is defined: phpwiki
    $AllowedProtocols = "http|https|mailto|ftp|news|gopher";
@@ -162,13 +168,11 @@
    // URLs ending with the following extension should be inlined as images
    $InlineImages = "png|jpg|gif";
 
-
    // If the last edit is older than MINOR_EDIT_TIMEOUT seconds, the default
    // state for the "minor edit" checkbox on the edit page form will be off
    // (even if the page author hasn't changed.)
    define("MINOR_EDIT_TIMEOUT", 7 * 24 * 3600);
 
- 
    // Perl regexp for WikiNames
    // (?<!..) & (?!...) used instead of '\b' because \b matches '_' as well
    $WikiNameRegexp = "(?<![A-Za-z0-9])([A-Z][a-z]+){2,}(?![A-Za-z0-9])";
@@ -215,7 +219,6 @@
    $templates = array(
    	"BROWSE" =>    gettext("templates/browse.html"),
 	"EDITPAGE" =>  gettext("templates/editpage.html"),
-	"EDITLINKS" => gettext("templates/editlinks.html"),
 	"MESSAGE" =>   gettext("templates/message.html")
 	);
 
@@ -242,7 +245,6 @@
    define('DEFAULT_WIKI_PGSRC', "./pgsrc");
 
 
-
    //////////////////////////////////////////////////////////////////////
    // you shouldn't have to edit anyting below this line
 
@@ -250,21 +252,12 @@
       $port = ($SERVER_PORT == 80) ? '' : ":$SERVER_PORT";
       $ScriptUrl = "http://$SERVER_NAME$port$SCRIPT_NAME";
    }
-   if (defined('WIKI_ADMIN') && !empty($AdminUrl))
-      $ScriptUrl = $AdminUrl;
+   $ScriptName = preg_replace('@^.*/@', '', $ScriptUrl);
 
-   $FieldSeparator = "\263";
-
-   if (isset($PHP_AUTH_USER)) {
-        $remoteuser = $PHP_AUTH_USER;
-   } else {
-
-      // Apache won't show REMOTE_HOST unless the admin configured it
-      // properly. We'll be nice and see if it's there.
-
-      getenv('REMOTE_HOST') ? ($remoteuser = getenv('REMOTE_HOST'))
-                            : ($remoteuser = getenv('REMOTE_ADDR'));
-   }
+   // "\x80"-"\x9f" (and "\x00" - "\x1f") are non-printing control
+   // chars in iso-8859-*
+   // $FieldSeparator = "\263"; //this is a superscript 3 in ISO-8859-1.
+   $FieldSeparator = "\x81";
 
    // constants used for HTML output. HTML tags may allow nesting
    // other tags always start at level 0

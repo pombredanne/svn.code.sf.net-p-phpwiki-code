@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.13 2001-02-09 04:00:25 dairiki Exp $');
+<?php rcs_id('$Id: transform.php,v 1.14 2001-02-10 22:15:08 dairiki Exp $');
 
 define('WT_TOKENIZER', 1);
 define('WT_SIMPLE_MARKUP', 2);
@@ -204,7 +204,6 @@ class WikiTransform
    $transform->register(WT_TOKENIZER, 'wtt_bumpylinks');
 
    $transform->register(WT_SIMPLE_MARKUP, 'wtm_htmlchars');
-   $transform->register(WT_SIMPLE_MARKUP, 'wtm_hr');
    $transform->register(WT_SIMPLE_MARKUP, 'wtm_linebreak');
    $transform->register(WT_SIMPLE_MARKUP, 'wtm_bold_italics');
    $transform->register(WT_SIMPLE_MARKUP, 'wtm_title_search');
@@ -216,6 +215,7 @@ class WikiTransform
    $transform->register(WT_MODE_MARKUP, 'wtm_list_dl');
    $transform->register(WT_MODE_MARKUP, 'wtm_preformatted');
    $transform->register(WT_MODE_MARKUP, 'wtm_headings');
+   $transform->register(WT_MODE_MARKUP, 'wtm_hr');
    $transform->register(WT_MODE_MARKUP, 'wtm_paragraph');
 
    $html = $transform->do_transform($html, $pagehash['content']);
@@ -386,10 +386,6 @@ of tokenized strings is done by do_transform().
       return($line);
    }
 
-   // four or more dashes to <hr>
-   function wtm_hr($line, &$transformer) {
-      return ereg_replace("^-{4,}", '<hr>', $line);
-   }
 
    // %%% are linebreaks
    function wtm_linebreak($line, &$transformer) {
@@ -410,12 +406,11 @@ of tokenized strings is done by do_transform().
 
    // wiki token: title search dialog
    function wtm_title_search($line, &$transformer) {
-      global $ScriptUrl;
       if (strpos($line, '%%Search%%') !== false) {
-         $html = "<form action=\"$ScriptUrl\">\n" .
-	     "<input type=text size=30 name=search>\n" .
-	     "<input type=submit value=\"". htmlspecialchars(gettext("Search")) .
-	     "\"></form>\n";
+	 $html = LinkPhpwikiURL(
+	    "phpwiki:?action=search&searchterm=()&searchtype=title",
+	    gettext("Search"));
+
 	 $line = str_replace('%%Search%%', $html, $line);
       }
       return $line;
@@ -423,12 +418,11 @@ of tokenized strings is done by do_transform().
 
    // wiki token: fulltext search dialog
    function wtm_fulltext_search($line, &$transformer) {
-      global $ScriptUrl;
       if (strpos($line, '%%Fullsearch%%') !== false) {
-         $html = "<form action=\"$ScriptUrl\">\n" .
-	     "<input type=text size=30 name=full>\n" .
-	     "<input type=submit value=\"". htmlspecialchars(gettext("Search")) .
-	     "\"></form>\n";
+	 $html = LinkPhpwikiURL(
+	    "phpwiki:?action=search&searchterm=()&searchtype=full",
+	    gettext("Search"));
+
 	 $line = str_replace('%%Fullsearch%%', $html, $line);
       }
       return $line;
@@ -512,6 +506,18 @@ of tokenized strings is done by do_transform().
 	 elseif($whichheading[1] == '!!!') $heading = 'h1';
 	 $line = preg_replace("/^!+/", '', $line);
 	 $line = $trfrm->SetHTMLMode($heading, ZERO_LEVEL, 0) . $line;
+      }
+      return $line;
+   }
+
+   // four or more dashes to <hr>
+   // Note this is of type WT_MODE_MARKUP becuase <hr>'s aren't
+   // allowed within <p>'s. (e.g. "<p><hr></p>" is not valid HTML.)
+   function wtm_hr($line, &$trfrm) {
+      if (preg_match('/^-{4,}(.*)$/', $line, $m)) {
+	 $line = $trfrm->SetHTMLMode('', ZERO_LEVEL, 0) . '<hr>';
+	 if ($m[1])
+	    $line .= $trfrm->SetHTMLMode('p', ZERO_LEVEL, 0) . $m[1];
       }
       return $line;
    }

@@ -1,3 +1,35 @@
+02/09/01 Jeff hack's again:
+
+* Pagename in PATH_INFO support added.  This is configurable,
+  cause, near as I can figure, if the php interpreter is run stand-alone
+  in /cgi-bin there's no way to pass any useful PATH_INFO to it.
+  (If a stand-alone php, in say /usr/local/bin, is used as a CGI interpreter,
+  PATH_INFO will work, as long as php was configured with --enable-discard-path .)
+
+  Along with this I refactored the semantics of all the query arguments to
+  make them (IMHO) more consistent.
+
+* Redid the administrator authentication stuff.  Eliminated admin.php ---
+  all access is now through index.php.  (New file lib/userauth.php.)
+  Still a little rough, but a big improvement, I think.  Hopefully this
+  can be developed into a more general user identification scheme...
+
+  Along with eliminating admin.php and the new auth scheme, completely
+  refactored index.php.   It should be easy now to swap config.php and index.php.
+  (I'll do that soon.)
+
+* Continued cleaning out page reference stuff.
+
+* Force archive of old page if author changes.  (Unless new author
+  is admin.)
+  
+* More warning fixes in diff.php
+
+* Refactored the semantics of the phpwiki: URL's.  
+  See pgsrc/PhpWikiAdministration and pgsrc/MagicPhpWikiURLs
+  for more information.
+
+Bug fixes:
 * Don't show signature image if $SignatureImg (in config.php) is left unset
 * Bug fix: hang on full zip dump 
 * Bug fix: hang on diff

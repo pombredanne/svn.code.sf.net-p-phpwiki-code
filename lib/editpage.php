@@ -1,32 +1,22 @@
-<!-- $Id: editpage.php,v 1.9 2001-02-07 22:14:35 dairiki Exp $ -->
+<!-- $Id: editpage.php,v 1.10 2001-02-10 22:15:08 dairiki Exp $ -->
 <?php
 
    // editpage relies on $pagename and $ScriptUrl
 
-   if ($edit) {
-      $pagename = rawurldecode($edit);
-      if (get_magic_quotes_gpc()) {
-         $pagename = stripslashes($pagename);
-      }
-      $banner = htmlspecialchars($pagename);
-      $pagehash = RetrievePage($dbi, $pagename, $WikiPageStore);
+   $currentpage = RetrievePage($dbi, $pagename, $WikiPageStore);
+   $editing_copy = isset($version) && $version == 'archive';
 
-   } elseif ($copy) {
-      $pagename = rawurldecode($copy);
-      if (get_magic_quotes_gpc()) {
-         $pagename = stripslashes($pagename);
-      }
+   if ($editing_copy) {   
       $banner = htmlspecialchars (sprintf (gettext ("Copy of %s"), $pagename));
       $pagehash = RetrievePage($dbi, $pagename, $ArchivePageStore);
-
    } else {
-      ExitWiki(gettext ("No page name passed into editpage!"));
+      $banner = htmlspecialchars($pagename);
+      $pagehash = $currentpage;
    }
-
 
    if (is_array($pagehash)) {
 
-      if (($pagehash['flags'] & FLAG_PAGE_LOCKED) && !defined('WIKI_ADMIN')) {
+      if (($pagehash['flags'] & FLAG_PAGE_LOCKED) && $user->is_admin()) {
 	 $html = "<p>";
 	 $html .= gettext ("This page has been locked by the administrator and cannot be edited.");
 	 $html .= "\n<p>";
@@ -37,16 +27,13 @@
       }
 
       $textarea = implode("\n", $pagehash["content"]);
-      if (isset($copy)) {
-	 // $cdbi = OpenDataBase($WikiPageStore);
-	 $currentpage = RetrievePage($dbi, $pagename, $WikiPageStore);
+      if ($editing_copy) {
          $pagehash["version"] = $currentpage["version"];
       }
       else {
 	 if ($pagehash["version"] > 1 && IsInArchive($dbi, $pagename)) {
 	    $pagehash["copy"] = 1;
 	 }
-	 $currentpage = $pagehash;
       }
    } else {
       $textarea = sprintf(gettext ("Describe %s here."),
@@ -58,11 +45,15 @@
       $currentpage = $pagehash;
    }
 
-   if ($currentpage['author'] == $remoteuser) {
+
+   if ($user->id() == $currentpage['author'] || $user->is_admin()) {
+      $ckbox = element('input', array('type' => 'checkbox',
+				      'name' => 'minor_edit',
+				      'value' => 'yes'));
       $page_age = time() - $currentpage['lastmodified'];
-      if ($page_age < MINOR_EDIT_TIMEOUT) {
-	 $pagehash['minor_edit'] = 1;
-      }
+      if ($user->id() == $currentpage['author'] && $page_age < MINOR_EDIT_TIMEOUT)
+	 $ckbox .= " checked";
+      $pagehash['minor_edit_checkbox'] = $ckbox . '>';
    }
 
    GeneratePage('EDITPAGE', $textarea, $pagename, $pagehash);   

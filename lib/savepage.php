@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.9 2001-02-08 18:19:16 dairiki Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.10 2001-02-10 22:15:08 dairiki Exp $');
 
 /*
    All page saving events take place here.
@@ -9,7 +9,7 @@
 
    function UpdateRecentChanges($dbi, $pagename, $isnewpage)
    {
-      global $remoteuser; // this is set in the config
+      global $user;
       global $dateformat;
       global $WikiPageStore;
 
@@ -50,12 +50,14 @@
       $newpage[$k++] = $isNewDay ? "____$today\r"
 				 : $recentchanges['content'][$i++];
 
+      $userid = $user->id();
+      
       // add the updated page's name to the array
       if($isnewpage) {
-         $newpage[$k++] = "* [$pagename] (new) ..... $remoteuser\r";
+         $newpage[$k++] = "* [$pagename] (new) ..... $userid\r";
       } else {
-	 $diffurl = "phpwiki:?diff=" . rawurlencode($pagename);
-         $newpage[$k++] = "* [$pagename] ([diff|$diffurl]) ..... $remoteuser\r";
+	 $diffurl = "phpwiki:" . rawurlencode($pagename) . "?action=diff";
+         $newpage[$k++] = "* [$pagename] ([diff|$diffurl]) ..... $userid\r";
       }
       if ($isNewDay)
          $newpage[$k++] = "\r";
@@ -105,8 +107,6 @@
    }
 
 
-
-   $pagename = rawurldecode($post);
    $pagehash = RetrievePage($dbi, $pagename, $WikiPageStore);
 
    // if this page doesn't exist yet, now's the time!
@@ -117,7 +117,7 @@
       $pagehash['flags'] = 0;
       $newpage = 1;
    } else {
-      if (($pagehash['flags'] & FLAG_PAGE_LOCKED) && !defined('WIKI_ADMIN')) {
+      if (($pagehash['flags'] & FLAG_PAGE_LOCKED) && ! $user->is_admin()) {
 	 $html = "<p>" . gettext ("This page has been locked by the administrator and cannot be edited.");
 	 $html .= "\n<p>" . gettext ("Sorry for the inconvenience.");
 	 GeneratePage('MESSAGE', $html, sprintf (gettext ("Problem while editing %s"), $pagename), 0);
@@ -128,29 +128,28 @@
          ConcurrentUpdates($pagename);
       }
 
-      // archive it if it's a new author
-      if (empty($minor_edit)) {
-         SaveCopyToArchive($dbi, $pagename, $pagehash);
-      }
+      if ($user->id() != $pagehash['author'] && ! $user->is_admin())
+	 unset($minor_edit);      // Force archive
+      
+      if (empty($minor_edit))
+	 SaveCopyToArchive($dbi, $pagename, $pagehash);
+
       $newpage = 0;
    }
 
    // set new pageinfo
    $pagehash['lastmodified'] = time();
    $pagehash['version']++;
-   $pagehash['author'] = $remoteuser;
+   $pagehash['author'] = $user->id();
 
    // create page header
-   $enc_url = rawurlencode($pagename);
-   $enc_name = htmlspecialchars($pagename);
    $html = sprintf(gettext("Thank you for editing %s."),
-		   "<a href=\"$ScriptUrl?$enc_url\">$enc_name</a>");
+		   WikiURL($pagename));
    $html .= "<br>\n";
 
    if (! empty($content)) {
       // patch from Grant Morgan <grant@ryuuguu.com> for magic_quotes_gpc
-      if (get_magic_quotes_gpc())
-         $content = stripslashes($content);
+      fix_magic_quotes_gpc($content);
 
       $pagehash['content'] = preg_split('/[ \t\r]*\n/', chop($content));
 
@@ -158,16 +157,6 @@
       if (isset($convert)) {
          $pagehash['content'] = CookSpaces($pagehash['content']);
       }
-   }
-
-   for ($i = 1; $i <= NUM_LINKS; $i++) {
-        if (! empty(${'r'.$i})) {
-	   if (preg_match("#^($AllowedProtocols):#", ${'r'.$i}))
-              $pagehash['refs'][$i] = ${'r'.$i};
-	   else
-	      $html .= "<P>Link [$i]: <B>unknown protocol</B>" .
-	           " - use one of $AllowedProtocols - link discarded.</P>\n";
-	}
    }
 
    InsertPage($dbi, $pagename, $pagehash);
@@ -185,8 +174,8 @@
    }
 
    if (!empty($SignatureImg))
-      $html .= "<P><img src=\"$SignatureImg\"></P>\n";
-
+      $html .= sprintf("<P><img src=\"%s\"></P>\n", MakeURLAbsolute($SignatureImg));
+      
    $html .= "<hr noshade><P>";
    include('lib/transform.php');
 

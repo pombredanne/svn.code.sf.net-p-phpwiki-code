@@ -64,6 +64,11 @@ will not work''
 * The & characters will not work
 * If you really must use HTML, your system administrator can enable this feature. Start each line with a bar (|). Note that this feature is disabled by default.
 
+! More detail than you want to know
+
+See MagicPhpWikiURLs for gory details on how to write
+various kind of wiki maintainance links.
+
 -----
 
 Footnotes:

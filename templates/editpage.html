@@ -1,31 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
+<!-- phpwiki source:
+###RCS_IDS###
+-->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<base href="###BASE_URL###">
 <title>###PAGE###</title>
 </head>
 
 <body>
 
-<form method="POST" action="###SCRIPTURL###">
+<form method="POST" action="###BROWSE_PAGE###">
 
-<h1><a href="###SCRIPTURL###"><img src="###LOGO###" border=0 alt="[phpwiki]" width=50 height=50></a>
+<h1><a href="###BROWSE###FrontPage"><img src="###LOGO###" border=0 alt="[phpwiki]" width=50 height=50></a>
 Edit ###PAGE###
 <input type="submit" value=" Save "></h1>
 
 <textarea name="content" ROWS="22" COLS="80" wrap="virtual">###CONTENT###</textarea>
 <br>
-<input type="checkbox" name="minor_edit" value="yes" 
-###IF MINOR_EDIT### checked
->
-This is a minor change, don't archive old version.
-<br>
+###IF:MINOR_EDIT_CHECKBOX###
+  ###MINOR_EDIT_CHECKBOX### This is a minor change, don't archive old version.
+  <br>
+###ENDIF:MINOR_EDIT_CHECKBOX###
 <input type="checkbox" name="convert" value="tabs" >
 I can't type tabs.
-Please <a href="###SCRIPTURL###?ConvertSpacesToTabs">ConvertSpacesToTabs</a>
+Please <a href="###BROWSE###ConvertSpacesToTabs">ConvertSpacesToTabs</a>
 for me when I save.
-<p><a href="###SCRIPTURL###?GoodStyle">GoodStyle</a> tips for editing.
+<p><a href="###BROWSE###GoodStyle">GoodStyle</a> tips for editing.
 
-###IF COPY###<br><a href="###SCRIPTURL###?copy=###PAGEURL###">EditCopy</a> from previous author
+###IF COPY###<br><a href="###ACTION###edit&amp;version=archive">EditCopy</a> from previous author
 
 <hr noshade>
 <small>
@@ -39,7 +43,8 @@ for me when I save.
 <a href="###SCRIPTURL###?TextFormattingRules"><b>TextFormattingRules</b></a>
 </small>
 
-<input type="hidden" name="post" value="###PAGEURL###">
+<input type="hidden" name="action" value="save">
+<input type="hidden" name="pagename" value="###PAGEURL###">
 <input type="hidden" name="editversion" value="###VERSION###">
 </form>
 </body>
