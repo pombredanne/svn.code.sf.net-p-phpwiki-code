@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.7 2004-01-27 23:23:39 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.8 2004-01-30 18:46:15 rurban Exp $');
 
 // This is a complete OOP rewrite of the old WikiUser code with various
 // configurable external authentification methods.
@@ -562,7 +562,7 @@ extends _AnonUser
 
     // check and prepare the auth and pref methods only once
     function _PassUser($UserName = '') {
-        global $DBAuthParams;
+        global $DBAuthParams, $DBParams;
 
         if ($UserName) {
             $this->_userid = $UserName;
@@ -1707,6 +1707,12 @@ class UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/01/27 23:23:39  rurban
+// renamed ->Username => _userid for consistency
+// renamed mayCheckPassword => mayCheckPass
+// fixed recursion problem in WikiUserNew
+// fixed bogo login (but not quite 100% ready yet, password storage)
+//
 // Revision 1.6  2004/01/26 09:17:49  rurban
 // * changed stored pref representation as before.
 //   the array of objects is 1) bigger and 2)
