@@ -4,25 +4,22 @@
 <html>
 <head>
 <!-- phpwiki source:
-$Id: message.html,v 1.16 2001-12-16 16:56:18 carstenklapp Exp $
+$Id: message.html,v 1.17 2001-12-21 03:15:40 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <base href="${BASE_URL}" />
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="robots" content="noindex,nofollow" />
 <link rel="stylesheet" title="phpwiki" href="${CSS_URL}" type="text/css" />
-<title>${TITLE}</title>
+<title>${WIKI_NAME}: ${TITLE}</title>
 </head>
 <body>
 <div><a class="wikilink" 
-       href="${BROWSE}$_("HomePage")"
-       ><img src="${LOGO}" align="right"
-             border="0" alt="[phpwiki]"
-              width="50" height="50"
-       /></a></div>
+        href="${BROWSE}$_("HomePage")"
+        ><img src="${LOGO}"
+              border="0" alt="${WIKI_NAME}: $_("HomePage")" 
+              align="right" /></a></div>
 <h1>${TITLE}</h1>
-
 ${CONTENT}
-
 </body>
 </html>
