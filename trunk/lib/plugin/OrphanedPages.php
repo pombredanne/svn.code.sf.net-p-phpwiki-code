@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: OrphanedPages.php,v 1.7 2004-04-20 00:34:15 rurban Exp $');
+rcs_id('$Id: OrphanedPages.php,v 1.8 2004-04-20 00:56:00 rurban Exp $');
 /**
  This file is part of PhpWiki.
 
@@ -42,7 +42,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -87,8 +87,7 @@ extends WikiPlugin
         if ($include_empty)
             $pagelist->_addColumn('version');
         list($offset,$pagesize) = $pagelist->limit($args['limit']);
-        if (!$pagesize) 
-            $pagelist->addPages($pages);
+        if (!$pagesize) $pagelist->addPageList($pages);
         else {
             for ($i=$offset; $i < $offset + $pagesize - 1; $i++) {
             	if ($i >= $args['count']) break;
@@ -100,6 +99,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/04/20 00:34:15  rurban
+// more paging support
+//
 // Revision 1.6  2004/04/18 01:44:02  rurban
 // more sortby+limit support
 //
