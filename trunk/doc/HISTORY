@@ -1,17 +1,20 @@
 1.3.8 Jan-Feb 2004, Reini Urban:
 
-* new WikiUserNew class (after a kick in the ass by Carsten Klapp), (recursive) 
-  with new Preferences (finally from DB)
+* new WikiUserNew class (after a kick in the ass by Carsten Klapp), 
+  (recursive) with new Preferences (finally from DB), and
+  improved DB_Session
 * PagePermissions (not yet enforced)
 * fixed WikiAdminSelect, WikiAdminRemove
 * new WikiAdminRename, WikiAdminSearchReplace, WikiAdminSetAcl
 * several other new plugins: WikiPoll, WhoIsOnline, UpLoad (contributed), 
-  RichTable (contributed), 
+  RichTable (contributed), CreateToc
 * pear DB update
 * InterWiki image buttons
-* fixed XHTML dumps (css, images, unlinked pages)
+* fixed XHTML dumps (css, images, unlinked pages, \r\r\n issue)
+* WikiGroup (started by ?)
+* preliminary SOAP support
 
-1.3.4 until 1.3.7, 2002-2003 Jeff and Steve Wainstead:
+1.3.4 until 1.3.7, 2002-2003 Jeff, Carsten and Steve Wainstead:
 
 * several stable releases with better documentation (most plugins) and various bugfixes.
 * EditMetaData (by MichaelVanDam) for example. (forgot what else was new)
@@ -371,4 +374,4 @@ URL's.
 Prior to 0.02, there were no numbered releases, and in fact there
 was only one release, so I guess that would be 0.01 :-)
 
-$Id: HISTORY,v 1.3 2004-02-26 22:33:29 rurban Exp $
+$Id: HISTORY,v 1.4 2004-03-10 13:54:07 rurban Exp $

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-    <definitions  name="Wiki"
+    <definitions name="Wiki"
 		 targetNamespace="http://phpwiki.sourceforge.net/PhpWiki.wsdl"
 		 xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
 		 xmlns:tns="http://phpwiki.sourceforge.net/PhpWiki.wsdl"
@@ -9,10 +9,12 @@
 
 	<message name="getPageContent">
 		<part name="pagename" type="xsd:string"/>
+		<part name="credentials" type="typens:Credentials"/>
 	</message>
 	<message name="getPageRevision">
 		<part name="pagename" type="xsd:string"/>
 		<part name="revision" type="xsd:double"/>
+		<part name="credentials" type="typens:Credentials"/>
 	</message>
 	<message name="getPageContentResponse">
 		<part name="content" type="xsd:string"/>
@@ -20,12 +22,14 @@
 
 	<message name="getCurrentRevision">
 		<part name="pagename" type="xsd:string"/>
+		<part name="credentials" type="typens:Credentials"/>
 	</message>
 	<message name="getRevisionResponse">
 		<part name="revision" type="xsd:double"/>
 	</message>
 	<message name="getPageMeta">
 		<part name="pagename" type="typens:PageMetadata"/>
+		<part name="credentials" type="typens:Credentials"/>
 	</message>
 	<message name="getPageMetaResponse">
 		<part name="meta" type="xsd:double"/>
@@ -40,33 +44,36 @@
 	</message>
 
 	<message name="getAllPagenames">
+		<part name="credentials" type="typens:Credentials"/>
 	</message>
 	<message name="getBackLinks">
 		<part name="pagename" type="xsd:string"/>
+		<part name="credentials" type="typens:Credentials"/>
 	</message>
 	<message name="doTitleSearch">
 		<part name="query" type="xsd:string"/>
+		<part name="credentials" type="typens:Credentials"/>
 	</message>
 	<message name="doFullTextSearch">
 		<part name="query" type="xsd:string"/>
+		<part name="credentials" type="typens:Credentials"/>
 	</message>
 
 	<message name="PagenameListResponse">
 		<part name="content" type="xsd:PagenameList"/>
 	</message>
+
         <xsd:complexType name="PagenameList">
           <xsd:all> 
-		<part name="content" type="xsd:string"/>
+		<part name="pagename" type="xsd:string"/>
             </xsd:all>
         </xsd:complexType> 
-
         <xsd:complexType name="Credentials">
             <xsd:all> 
                 <xsd:element name="username" type="xsd:string"/> 
                 <xsd:element name="password" type="xsd:string"/> 
             </xsd:all>
         </xsd:complexType> 
-
         <xsd:complexType name="PageMetadata">
             <xsd:all> 
                 <xsd:element name="createdby" type="xsd:string"/> 
@@ -95,15 +102,15 @@
 			<output message="tns:PagenameListResponse"/>
 		</operation>
 		<operation name="getBackLinks">
-			<input message="tns:getAllPagenames"/>
+			<input message="tns:getBackLinks"/>
 			<output message="tns:PagenameListResponse"/>
 		</operation>
 		<operation name="doTitleSearch">
-			<input message="tns:doSavePage"/>
+			<input message="tns:doTitleSearch"/>
 			<output message="tns:PagenameListResponse"/>
 		</operation>
 		<operation name="doFullTextSearch">
-			<input message="tns:doSavePage"/>
+			<input message="tns:doFullTextSearch"/>
 			<output message="tns:PagenameListResponse"/>
 		</operation>
 	</portType>
@@ -111,19 +118,19 @@
 	<binding name="wikiBinding" type="tns:wikiPortType">
 	    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
 	    <operation name="getPage">
-		  <soap:operation soapAction="http://phpwiki.sourceforge.net/phpwiki/SOAP.php"/>
-			<input>
-			    <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-			</input>
-			<output>
-			    <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-		  </output>
+	    	<soap:operation soapAction="http://phpwiki.sourceforge.net/phpwiki/SOAP.php"/>
+		<input>
+		    <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+		</input>
+		<output>
+		    <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+		</output>
 	    </operation>
 	</binding>
 
 	<service name="wikiService">
-		<port name="wikiPortType" binding="tns:wikiBinding">
-			<soap:address location="http://phpwiki.sourceforge.net/phpwiki/SOAP.php" />
-		</port>
+	    <port name="wikiPortType" binding="tns:wikiBinding">
+		<soap:address location="http://phpwiki.sourceforge.net/phpwiki/SOAP.php" />
+	    </port>
 	</service>
 </definitions>
