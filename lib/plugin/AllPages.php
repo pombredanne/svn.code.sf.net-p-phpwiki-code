@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllPages.php,v 1.23 2004-06-13 15:51:37 rurban Exp $');
+rcs_id('$Id: AllPages.php,v 1.24 2004-06-13 16:02:12 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.23 $");
+                            "\$Revision: 1.24 $");
     }
 
     function getDefaultArguments() {
@@ -84,12 +84,12 @@ extends WikiPlugin
             if (! $request->getArg('count'))  $args['count'] = $dbi->numPages(false,$exclude);
             else $args['count'] = $request->getArg('count');
         }
-        if (empty($args['count']) and $pages)
+        if (empty($args['count']) and is_array($pages))
             $args['count'] = count($pages);
         $pagelist = new PageList($info, $exclude, $args);
         //if (!$sortby) $sorted='pagename';
         if (!$noheader) {
-            if (empty($pages))
+            if (!is_array($pages))
                 $pagelist->setCaption(_("All pages in this wiki (%d total):"));
             else
                 $pagelist->setCaption(_("List of pages (%d total):"));
@@ -99,7 +99,7 @@ extends WikiPlugin
         if ($include_empty)
             $pagelist->_addColumn('version');
 
-        if ( !empty($pages) )
+        if (is_array($pages))
             $pagelist->addPageList($pages);
         else
             $pagelist->addPages( $dbi->getAllPages($include_empty, $sortby, $limit) );
@@ -118,6 +118,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.23  2004/06/13 15:51:37  rurban
+// Support pagelist filter for current author,owner,creator by []
+//
 // Revision 1.22  2004/06/13 15:33:20  rurban
 // new support for arguments owner, author, creator in most relevant
 // PageList plugins. in WikiAdmin* via preSelectS()
