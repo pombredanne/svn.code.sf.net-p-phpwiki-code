@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.37 2004-06-25 14:29:18 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.38 2004-06-27 10:24:19 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -65,7 +65,7 @@ class WikiGroup{
     /** Array of groups $username is confirmed to belong to */
     var $membership;
     /** boolean if not the current user */
-    var $not_current;
+    var $not_current = false;
     
     /**
      * Initializes a WikiGroup object which should never happen.  Use:
@@ -1073,6 +1073,13 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.37  2004/06/25 14:29:18  rurban
+// WikiGroup refactoring:
+//   global group attached to user, code for not_current user.
+//   improved helpers for special groups (avoid double invocations)
+// new experimental config option ENABLE_XHTML_XML (fails with IE, and document.write())
+// fixed a XHTML validation error on userprefs.tmpl
+//
 // Revision 1.36  2004/06/16 13:21:05  rurban
 // stabilize on failing ldap queries or bind
 //
