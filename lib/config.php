@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.76 2003-03-17 23:59:19 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.77 2004-01-25 03:57:15 rurban Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -416,11 +416,15 @@ if (defined('USE_DB_SESSION') and USE_DB_SESSION) {
         define('USE_DB_SESSION',false);
     }
 } else {
-    if (!defined('USE_DB_SESSION')) 
+    if (!defined('USE_DB_SESSION'))
         define('USE_DB_SESSION',false);
 }
+// legacy:
+if (!defined('ENABLE_USER_NEW')) defined('ENABLE_USER_NEW',false);
+if (!defined('ALLOW_USER_LOGIN') and defined('ALLOW_USER_PASSWORDS'))
+    define('ALLOW_USER_LOGIN', ALLOW_USER_PASSWORDS);
 
-if (ALLOW_USER_LOGIN and empty($DBAuthParams['auth_dsn']) and empty($DBAuthParams['auth_user_file'])) {
+if (ALLOW_USER_LOGIN and empty($DBAuthParams['auth_dsn'])) {
     if (isset($DBParams['dsn']))
         $DBAuthParams['auth_dsn'] = $DBParams['dsn'];
 }

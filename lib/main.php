@@ -1,12 +1,15 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.104 2003-12-26 06:41:16 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.105 2004-01-25 03:57:15 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
 include "lib/config.php";
 require_once("lib/stdlib.php");
 require_once('lib/Request.php');
-require_once("lib/WikiUser.php");
+if (ENABLE_USER_NEW)
+  require_once("lib/WikiUserNew.php");
+else
+  require_once("lib/WikiUser.php");
 require_once('lib/WikiDB.php');
 
 class WikiRequest extends Request {
@@ -27,10 +30,14 @@ class WikiRequest extends Request {
         $this->setArg('pagename', $this->_deducePagename());
         $this->setArg('action', $this->_deduceAction());
 
-        // Restore auth state
-        $this->_user = new WikiUser($this, $this->_deduceUsername());
-        // $this->_user = new WikiDB_User($this->_user->getId(), $this->getAuthDbh());
-        $this->_prefs = $this->_user->getPreferences();
+        // Restore auth state. This doesn't check for proper authorization!
+        if (ENABLE_USER_NEW) {
+            $this->_user = WikiUser($this->_deduceUsername());
+            $this->_prefs = $this->_user->_prefs;
+        } else {
+            $this->_user = new WikiUser($this, $this->_deduceUsername());
+            $this->_prefs = $this->_user->getPreferences();
+        }
     }
 
     function initializeLang () {
@@ -59,7 +66,7 @@ class WikiRequest extends Request {
     // to be initialized before we do this stuff.
     function updateAuthAndPrefs () {
         
-        // Handle preference updates, an authentication requests, if any.
+        // Handle preference updates, and authentication requests, if any.
         if ($new_prefs = $this->getArg('pref')) {
             $this->setArg('pref', false);
             if ($this->isPost() and !empty($new_prefs['passwd']) and 
@@ -83,12 +90,15 @@ class WikiRequest extends Request {
         // since logging in may change which preferences
         // we're talking about...
 
+        // even we have disallow anon users?
+        // if (! $this->_user ) $this->_user = new _AnonUser();	
+
         // Handle authentication request, if any.
         if ($auth_args = $this->getArg('auth')) {
             $this->setArg('auth', false);
             $this->_handleAuthRequest($auth_args); // possible NORETURN
         }
-        elseif ( ! $this->_user->isSignedIn() ) {
+        elseif ( ! $this->_user or ! $this->_user->isSignedIn() ) {
             // If not auth request, try to sign in as saved user.
             if (($saved_user = $this->getPref('userid')) != false) {
                 $this->_signIn($saved_user);
@@ -118,7 +128,8 @@ class WikiRequest extends Request {
 
     // Convenience function:
     function getPref ($key) {
-        return $this->_prefs->get($key);
+        if (isset($this->_prefs))
+            return $this->_prefs->get($key);
     }
 
     function getDbh () {
@@ -173,7 +184,10 @@ class WikiRequest extends Request {
         if ($pagename === false)
             $pagename = $this->getArg('pagename');
         $action = $this->getArg('action');
-        return WikiURL($pagename, array('action' => $action));
+        if ($this->getArg('start_debug')) // zend ide support
+            return WikiURL($pagename, array('action' => $action, 'start_debug' => 1));
+        else
+            return WikiURL($pagename, array('action' => $action));
     }
     
     function _handleAuthRequest ($auth_args) {
@@ -184,13 +198,14 @@ class WikiRequest extends Request {
         if (!$this->isPost())
             unset($auth_args['passwd']);
 
+        $olduser = $this->_user;
         $user = $this->_user->AuthCheck($auth_args);
 
-        if (isa($user, 'WikiUser')) {
+        if (isa($user,(ENABLE_USER_NEW ? '_' : '') . 'WikiUser') and $user->isSignedIn()) {
             // Successful login (or logout.)
             $this->_setUser($user);
         }
-        elseif ($user) {
+        elseif (is_string($user)) {
             // Login attempt failed.
             $fail_message = $user;
             $auth_args['pass_required'] = true;
@@ -200,7 +215,7 @@ class WikiRequest extends Request {
                  //$auth_args['pass_required'] = false;
                  $fail_message = false;
             }
-            $this->_user->PrintLoginForm($this, $auth_args, $fail_message);
+            $olduser->PrintLoginForm($this, $auth_args, $fail_message);
             $this->finish();    //NORETURN
         }
         else {
@@ -217,23 +232,30 @@ class WikiRequest extends Request {
      * @access private
      */
     function _signIn ($userid) {
+        if (ENABLE_USER_NEW) {
+            if (! $this->_user )
+                $this->_user = new _BogoUser($userid);
+            if (! $this->_user )
+                $this->_user = new _PassUser($userid);
+        }
         $user = $this->_user->AuthCheck(array('userid' => $userid));
-        if (isa($user, 'WikiUser')) {
+        if (isa($user, (ENABLE_USER_NEW ? '_' : '') . 'WikiUser')) {
             $this->_setUser($user); // success!
         }
     }
 
     function _setUser ($user) {
         $this->_user = $user;
-        $this->setCookieVar('WIKI_ID', $user->_userid, 365);
+        $this->setCookieVar('WIKI_ID', $user->getAuthenticatedId(), 365);
         $this->setSessionVar('wiki_user', $user);
         if ($user->isSignedIn())
             $user->_authhow = 'signin';
 
         // Save userid to prefs..
-        $this->_prefs = $this->_user->getPreferences();
+        if (!($this->_prefs = $this->_user->getPreferences()))
+            $this->_prefs = $this->_user->_prefs;
         $this->_prefs->set('userid',
-                           $user->isSignedIn() ? $user->getId() : '');
+                             $user->isSignedIn() ? $user->getId() : '');
     }
 
     function _notAuthorized ($require_level) {
@@ -251,7 +273,7 @@ class WikiRequest extends Request {
         // User does not have required authority.  Prompt for login.
         $what = $this->getActionDescription($this->getArg('action'));
 
-        if ($require_level >= WIKIAUTH_FORBIDDEN) {
+        if ($require_level == WIKIAUTH_FORBIDDEN) {
             $this->finish(fmt("%s is disallowed on this wiki.",
                               $this->getDisallowedActionDescription($this->getArg('action'))));
         }
@@ -516,10 +538,16 @@ class WikiRequest extends Request {
     }
 
     function _deduceUsername () {
+        if (!empty($this->args['auth']) and !empty($this->args['auth']['userid']))
+            return $this->args['auth']['userid'];
+            
         if ($userid = $this->getSessionVar('wiki_user')) {
             if (!empty($this->_user))
                 $this->_user->_authhow = 'session';
-            return $userid;
+            // users might switch in a session between the two objects
+            $s = ENABLE_USER_NEW ? "UserName" : "_userid";
+            if (isa($userid,(ENABLE_USER_NEW ? '_' : '') .'WikiUser'))
+                return $userid->{$s};
         }
         if ($userid = $this->getCookieVar('WIKI_ID')) {
             if (!empty($this->_user))
@@ -750,7 +778,8 @@ function validateSessionPath() {
 }
 
 function main () {
-    validateSessionPath();
+    if (!USE_DB_SESSION)
+      validateSessionPath();
 
     global $request;
 
@@ -821,6 +850,12 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.104  2003/12/26 06:41:16  carstenklapp
+// Bugfix: Try to defer OS errors about session.save_path and ACCESS_LOG,
+// so they don't prevent IE from partially (or not at all) rendering the
+// page. This should help a little for the IE user who encounters trouble
+// when setting up a new PhpWiki for the first time.
+//
 // Revision 1.103  2003/12/02 00:10:00  carstenklapp
 // Bugfix: Ongoing work to untangle UserPreferences/WikiUser/request code
 // mess: UserPreferences should take effect immediately now upon signing
