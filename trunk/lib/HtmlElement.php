@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.25 2002-09-17 02:35:31 dairiki Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.26 2002-10-29 01:12:23 carstenklapp Exp $');
 /*
  * Code for writing XML.
  */
@@ -74,11 +74,18 @@ function HTML (/* $content, ... */) {
     return new XmlContent(func_get_args());
 }
 
-define('NBSP', "\xA0");         // iso-8859-x non-breaking space.
-
 class HTML extends HtmlElement {
     function raw ($html_text) {
         return new RawXML($html_text);
+    }
+    
+    function nbsp() {
+        if (CHARSET == 'utf-8')
+            return new RawXML("\xC2\xA0");         // utf-8 non-breaking space.
+        elseif (CHARSET == 'iso-8859-1')
+            return new RawXML("\xA0");        // iso-8859-x non-breaking space.
+        else
+            return new RawXML("&nbsp;");     // html-entity non-breaking space.
     }
 
     function getTagProperties($tag) {

@@ -33,7 +33,8 @@ extends WikiPlugin
         // used.)
         $page = $request->getPage();
         if (! $page->get('locked')) {
-            return $this->error(_("Raw HTML is only allowed in locked pages."));
+            return $this->error(fmt(_("%s is only allowed in locked pages."),
+                                    _("Raw HTML")));
         }
 
         return HTML::raw($argstr);

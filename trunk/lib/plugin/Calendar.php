@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.23 2002-08-17 15:52:51 rurban Exp $');
+rcs_id('$Id: Calendar.php,v 1.24 2002-10-29 01:12:24 carstenklapp Exp $');
 
 if (!defined('SECONDS_PER_DAY'))
 define('SECONDS_PER_DAY', 24 * 3600);
@@ -125,7 +125,7 @@ extends WikiPlugin
                                   'title' => sprintf(_("Edit %s"), $page_for_date)),
                             $mday);
         }
-        $td->pushContent(NBSP, $date, NBSP);
+        $td->pushContent(HTML::nbsp(), $date, HTML::nbsp());
         return $td;
     }
 
