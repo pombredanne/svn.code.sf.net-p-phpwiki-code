@@ -45,6 +45,7 @@
 
    // Return hash of page + attributes or default
    function RetrievePage($dbi, $pagename) {
+      $pagename = addslashes($pagename);
       if ($res = mysql_query("select data from $dbi[table] where page='$pagename'", $dbi['dbc'])) {
          if ($o = mysql_fetch_object($res)) {
             // unserialize data into a hash
@@ -59,6 +60,7 @@
 
    // Either insert or replace a key/value (a page)
    function InsertPage($dbi, $pagename, $pagehash) {
+      $pagename = addslashes($pagename);
       $pagedata = addslashes(serialize($pagehash));
 
       if (!mysql_query("replace into $dbi[table] (page, data) values ('$pagename', '$pagedata')", $dbi['dbc'])) {
@@ -70,6 +72,7 @@
 
 
    function IsWikiPage($dbi, $pagename) {
+      $pagename = addslashes($pagename);
       if ($res = mysql_query("select count(*) from $dbi[table] where page='$pagename'", $dbi['dbc'])) {
          return(mysql_result($res, 0));
       }
@@ -78,6 +81,7 @@
 
    // setup for title-search
    function InitTitleSearch($dbi, $search) {
+      $search = addslashes($search);
       $res = mysql_query("select page from $dbi[table] where page like '%$search%' order by page", $dbi["dbc"]);
 
       return $res;
@@ -97,6 +101,7 @@
 
    // setup for full-text search
    function InitFullSearch($dbi, $search) {
+      $search = addslashes($search);
       $res = mysql_query("select page,data from $dbi[table] where data like '%$search%'", $dbi["dbc"]);
 
       return $res;
