@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: dbaBase.php,v 1.15 2004-11-25 17:20:52 rurban Exp $');
+<?php rcs_id('$Id: dbaBase.php,v 1.16 2004-11-29 16:52:32 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -212,7 +212,28 @@ extends WikiDB_backend
         $pagedb->set($pagename, (int)$latest . ':' . (int)$flags . ":$pagedata");
     }
 
-    function get_all_pages($include_empty = false, $sortby=false, $limit=false, $exclude=false) {
+    function numPages($include_empty=false, $exclude=false) {
+        $pagedb = &$this->_pagedb;
+        $count = 0;
+        for ($page = $pagedb->firstkey(); $page!== false; $page = $pagedb->nextkey()) {
+            if (!$page) {
+                assert(!empty($page));
+                continue;
+            }
+            if ($exclude and in_array($page, $exclude)) continue; 
+            if (!$include_empty) {
+            	if (!($data = $pagedb->get($page))) continue;
+                list($latestversion,$flags,) = explode(':', $data, 3);
+                unset($data);
+                if ($latestversion == 0 || $flags != 0)
+                    continue;   // current content is empty 
+            }
+            $count++;
+        }
+        return $count;
+    }
+
+    function get_all_pages($include_empty=false, $sortby=false, $limit=false, $exclude=false) {
         $pagedb = &$this->_pagedb;
         $pages = array();
         for ($page = $pagedb->firstkey(); $page!== false; $page = $pagedb->nextkey()) {
