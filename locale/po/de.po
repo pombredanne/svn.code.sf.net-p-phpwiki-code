@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-17 11:53+0100\n"
+"POT-Creation-Date: 2004-06-17 11:59+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -1996,7 +1996,7 @@ msgstr "Seitenname"
 
 #: ../lib/plugin/FuzzyPages.php:108
 msgid "Score"
-msgstr "Bedeutung"
+msgstr "Gewichtung"
 
 #: ../lib/plugin/FuzzyPages.php:169
 msgid "Spelling Score"
