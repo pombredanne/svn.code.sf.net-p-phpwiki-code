@@ -10,7 +10,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.26 2001-02-08 10:29:44 ahollosi Exp $');
+   rcs_id('$Id: config.php,v 1.27 2001-02-08 15:11:00 dairiki Exp $');
    // end essential internal stuff
 
 
@@ -250,9 +250,6 @@
    }
    if (defined('WIKI_ADMIN') && !empty($AdminUrl))
       $ScriptUrl = $AdminUrl;
-
-   $LogoImage = "<img src=\"$logo\" border=0 ALT=\"[PhpWiki!]\">";
-   $LogoImage = "<a href=\"$ScriptUrl\">$LogoImage</a>";
 
    $FieldSeparator = "\263";
 
