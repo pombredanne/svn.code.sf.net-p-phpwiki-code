@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSearchReplace.php,v 1.16 2004-06-16 10:38:59 rurban Exp $');
+rcs_id('$Id: WikiAdminSearchReplace.php,v 1.17 2004-09-17 14:24:06 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -43,7 +43,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.16 $");
+                            "\$Revision: 1.17 $");
     }
 
     function getDefaultArguments() {
@@ -122,9 +122,12 @@ extends WikiPlugin_WikiAdminSelect
         $args = $this->getArgs($argstr, $request);
         $this->_args = $args;
         if (!empty($args['exclude']))
-            $exclude = explodePageList($args['exclude']);
+            $exclude = is_string($args['exclude']) ? explodePageList($args['exclude']) 
+                                                   : $args['exclude']; // <! plugin-list !>
         else
             $exclude = false;
+            
+        //TODO: support p from <!plugin-list !>
         $this->preSelectS($args, $request);
 
         $p = $request->getArg('p');
@@ -266,6 +269,15 @@ function stri_replace($find,$replace,$string) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2004/06/16 10:38:59  rurban
+// Disallow refernces in calls if the declaration is a reference
+// ("allow_call_time_pass_reference clean").
+//   PhpWiki is now allow_call_time_pass_reference = Off clean,
+//   but several external libraries may not.
+//   In detail these libs look to be affected (not tested):
+//   * Pear_DB odbc
+//   * adodb oracle
+//
 // Revision 1.15  2004/06/14 11:31:39  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList
