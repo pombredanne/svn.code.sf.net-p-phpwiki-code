@@ -1,16 +1,8 @@
 <?php // -*-html-*- ?>
-<!-- $Id: navbar.tmpl,v 1.3 2004-06-18 08:40:39 rurban Exp $ -->
-<?php
-
-$s = $WikiTheme->getButtonSeparator();
-
-global $HIDE_TOOLBARS;
-if (!$HIDE_TOOLBARS) {
-
-?>
+<!-- $Id: navbar.tmpl,v 1.4 2005-02-27 18:36:29 rurban Exp $ -->
 <!-- The top navigation/search bar -->
 <form action="<?= WikiURL(_("TitleSearch"))?>" target="_top"
-      method="get" accept-charset="<?=CHARSET?>">
+      method="get" accept-charset="<?=$charset?>" id="searchform" name="searchform">
 <input type="hidden" name="auto_redirect" value="1" />
 <?php if (! USE_PATH_INFO) { ?>
   <input type="hidden" name="pagename" value="<?=_("TitleSearch")?>" />
@@ -20,15 +12,15 @@ if (!$HIDE_TOOLBARS) {
 <tr valign="middle"><td align="left">
 <?= WikiLink(_("RecentChanges"), "button") ?>
 <?php if (!empty($revision)) { ?>
-<?=$s?><?= Button("RelatedChanges", _("RelatedChanges")) ?>
-<?=$s?><?= Button("LikePages", _("LikePages")) ?>
-<?=$s?><?= Button("BackLinks", _("BackLinks")) ?>
+<?=$SEP?><?= Button("RelatedChanges", _("RelatedChanges")) ?>
+<?=$SEP?><?= Button("LikePages", _("LikePages")) ?>
+<?=$SEP?><?= Button("BackLinks", _("BackLinks")) ?>
 <?php } ?>
 </td>
-<td align="right">
+<td align="right" width="150">
    <div id="search">
     <?php if (!empty($user) && $user->isSignedIn()) { ?>
-     <?= WikiLink(_("UserPreferences"),'button',_("Preferences")) ?>
+     <?= WikiLink(_("UserPreferences"),'button',_("Preferences")) ?><?=$SEP?>
 <?php } ?>
 <?php if (!empty($user)) { ?>
 <?php
@@ -39,13 +31,26 @@ if (!$HIDE_TOOLBARS) {
         $UserCalPageTodayTitle = $UserCalPageTitle . SUBPAGE_SEPARATOR . strftime("%Y-%m-%d", time());
         //$UserCalPageTodayUrl = WikiURL($UserCalPageTodayTitle);
 ?>
-<?=$s?><?= WikiLink($UserCalPageTodayTitle, "button", _("Today")) ?>
+<?= WikiLink($UserCalPageTodayTitle, "button", _("Today")) ?><?=$SEP?>
 <?php } ?>
 <?php if (!empty($user) && $user->isAdmin()) { ?>
-<?=$s?><?= WikiLink(_("PhpWikiAdministration"), "button", _("Admin")) ?>
+<?= WikiLink(_("PhpWikiAdministration"), "button", _("Admin")) ?><?=$SEP?>
 <?php } ?>
 <?php } ?>
-<?=$s?><?= WikiLink(_("FindPage"), "button") ?><input type="text"  name="s" size="12" maxlength="256" title='<?=_("Quick Search")?>' onmouseover="window.status='<?=_("Quick Search")?>'; return true;" onmouseout="window.status=''; return true;" /></div></td></tr></table>
-</div>
+<nobr><?= WikiLink(_("FindPage"), "button") ?><input type="text" id="livesearch" name="s" size="12" 
+   maxlength="256" 
+   onfocus="if (this.value == '<?=_("Search")?>') {this.value = '';}"
+   onmouseout="window.status=''; return true;" 
+   onmouseover="window.status='<?=_("Search")?>'; return true;"
+<?php if (ENABLE_LIVESEARCH) { ?>
+   title="<?=_("LiveSearch")?>" 
+   onKeypress="liveSearchStart()"
+   onblur="setTimeout('closeResults()',2000); if (this.value == '') {this.value = '<?=_("Search")?>';}" />
+   </div></nobr><br /><div align="left" id="LSResult"></div>
+<?php } else { ?>
+   title="<?=_("TitleSearch")?>" /></nobr>
+   </div>
+<?php } ?>
+</td></tr></table></div>
 </form>
-<?php } ?>
+
