@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.19 2004-12-20 13:20:23 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.20 2005-02-02 19:22:46 rurban Exp $');
 
 /*
  * This file defines the Sidebar appearance ("theme") of PhpWiki.
@@ -40,7 +40,7 @@ class Theme_Sidebar extends Theme {
             $this->setButtonSeparator(" ");
             //$WikiTheme->setButtonSeparator($old);
         }
-        return $this->_path . $this->_findFile("templates/$name.tmpl");
+        return parent::findTemplate($name);
     }
 
     function calendarLink($date = false) {
