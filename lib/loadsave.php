@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.20 2002-01-09 03:00:41 carstenklapp Exp $');
+rcs_id('$Id: loadsave.php,v 1.21 2002-01-09 04:01:09 carstenklapp Exp $');
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
 
@@ -28,16 +28,20 @@ function EndLoadDump()
 
 function MailifyPage ($page, $nversions = 1)
 {
-   global $SERVER_ADMIN;
+   global $SERVER_ADMIN, $pagedump_format;
 
    $current = $page->getCurrentRevision();
    $from = isset($SERVER_ADMIN) ? $SERVER_ADMIN : 'foo@bar';
-  
-   $head = "From $from  " . CTime(time()) . "\r\n";
-   $head .= "Subject: " . rawurlencode($page->getName()) . "\r\n";
-   $head .= "From: $from (PhpWiki)\r\n";
-   $head .= "Date: " . Rfc2822DateTime($current->get('mtime')) . "\r\n";
-   $head .= sprintf("Mime-Version: 1.0 (Produced by PhpWiki %s)\r\n", PHPWIKI_VERSION);
+   $head = "";
+   if ($pagedump_format == 'quoted-printable') {
+       $head = "From $from  " . CTime(time()) . "\r\n";
+       $head .= "Subject: " . rawurlencode($page->getName()) . "\r\n";
+       $head .= "From: $from (PhpWiki)\r\n";
+       $head .= "Date: " . Rfc2822DateTime($current->get('mtime')) . "\r\n";
+       $head .= sprintf("Mime-Version: 1.0 (Produced by PhpWiki %s)\r\n", PHPWIKI_VERSION);
+   } else {
+       $head .= sprintf("Mime-Version: 1.0 (Produced by PhpWiki %s)\r\n", PHPWIKI_VERSION."+carsten's-binary-hack");
+   }
    $head .= "X-RCS_ID: $" ."Id" ."$" ."\r\n";
 
    $iter = $page->getAllRevisions();

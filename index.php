@@ -63,7 +63,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.54 2002-01-05 18:33:52 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.55 2002-01-09 04:01:08 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -90,6 +90,10 @@ define('ADMIN_PASSWD', "");
 // If true, only the admin user can make zip dumps, else
 // zip dumps require no authentication.
 define('ZIPDUMP_AUTH', false);
+
+// This setting determines the type of page dumps. Must be one of
+// "quoted-printable" or "binary".
+$pagedump_format = "quoted-printable";
 
 // The maximum file upload size.
 define('MAX_UPLOAD_SIZE', 16 * 1024 * 1024);
