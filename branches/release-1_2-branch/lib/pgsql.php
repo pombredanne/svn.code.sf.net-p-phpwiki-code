@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: pgsql.php,v 1.4.2.5 2001-11-07 20:30:47 dairiki Exp $');
+<?php rcs_id('$Id: pgsql.php,v 1.4.2.6 2001-11-15 01:20:39 dairiki Exp $');
 
    /*
       Database functions:
@@ -85,8 +85,6 @@
 
    // Either insert or replace a key/value (a page)
    function InsertPage($dbi, $pagename, $pagehash) {
-      $pagename = addslashes($pagename);
-
       // update the wikilinks table
       $linklist = ExtractWikiPageLinks($pagehash['content']);
       SetWikiPageLinks($dbi, $pagename, $linklist);
@@ -154,7 +152,6 @@
       global $ArchivePageStore;
       // echo "<p>save copy called<p>";
 
-      $pagename = addslashes($pagename);
       // echo "<p>dbi in SaveCopyToArchive: '$dbi' '$ArchivePageStore' '$dbi[dbc]'<p>";
 
       // prepare the content for storage
@@ -179,7 +176,7 @@
                   "refs='$pagehash[refs]'," .
                   "version=$pagehash[version]";
 
-         $query = "UPDATE $ArchivePageStore SET $PAIRS WHERE pagename='$pagename'";
+         $query = "UPDATE $ArchivePageStore SET $PAIRS WHERE pagename='$pagehash[pagename]'";
 
       } else {
          // do an insert
