@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: difflib.php,v 1.2 2001-12-14 20:15:02 dairiki Exp $');
+rcs_id('$Id: difflib.php,v 1.3 2001-12-15 02:39:43 dairiki Exp $');
 // difflib.php
 //
 // A PHP diff engine for phpwiki.
@@ -26,13 +26,15 @@ class _DiffOp {
 class _DiffOp_Copy extends _DiffOp {
     var $type = 'copy';
     
-    function _DiffOp_Copy ($lines) {
-        $this->orig = $lines;
-        $this->final = &$this->orig;
+    function _DiffOp_Copy ($orig, $final = false) {
+        if (!is_array($final))
+            $final = $orig;
+        $this->orig = $orig;
+        $this->final = $final;
     }
 
     function reverse() {
-        return $this;
+        return new _DiffOp_Copy($this->final, $this->orig);
     }
 }
 
@@ -607,6 +609,72 @@ class Diff
         trigger_error("Diff okay: LCS = $lcs", E_USER_NOTICE);
     }
 }
+
+
+if (!function_exists('array_map')) {
+    function array_map($map_func, $array) {
+        $result = array();
+        foreach ($array as $x)
+            $result[] = call_user_func($map_func, $x);
+        return $result;
+    }
+}
+
+            
+/**
+ * FIXME: bad name.
+ */
+class MappedDiff
+extends Diff
+{
+    /**
+     * Constructor.
+     *
+     * Computes diff between sequences of strings.
+     *
+     * This can be used to compute things like
+     * case-insensitve diffs, or diffs which ignore
+     * changes in white-space.
+     *
+     * @param $from_lines array An array of strings.
+     *  (Typically these are lines from a file.)
+     *
+     * @param $to_lines array An array of strings.
+     *
+     * @param $mapped_from_lines array This array should
+     *  have the same size number of elements as $from_lines.
+     *  The elements in $mapped_from_lines and
+     *  $mapped_to_lines are what is actually compared
+     *  when computing the diff.
+     *
+     * @param $mapped_to_lines array This array should
+     *  have the same number of elements as $to_lines.
+     */
+    function MappedDiff($from_lines, $to_lines,
+                        $mapped_from_lines, $mapped_to_lines) {
+
+        assert(sizeof($from_lines) == sizeof($mapped_from_lines));
+        assert(sizeof($to_lines) == sizeof($mapped_to_lines));
+        
+        $this->Diff($mapped_from_lines, $mapped_to_lines);
+
+        $xi = $yi = 0;
+        for ($i = 0; $i < sizeof($this->edits); $i++) {
+            $orig = &$this->edits[$i]->orig;
+            if (is_array($orig)) {
+                $orig = array_slice($from_lines, $xi, sizeof($orig));
+                $xi += sizeof($orig);
+            }
+            
+            $final = &$this->edits[$i]->final;
+            if (is_array($final)) {
+                $final = array_slice($to_lines, $yi, sizeof($final));
+                $yi += sizeof($final);
+            }
+        }
+    }
+}
+
 
 /**
  * A class to format Diffs
