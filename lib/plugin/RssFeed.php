@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RssFeed.php,v 1.8 2004-07-08 20:30:07 rurban Exp $');
+rcs_id('$Id: RssFeed.php,v 1.9 2004-11-03 16:34:10 rurban Exp $');
 /*
  Copyright 2003 Arnaud Fontaine
 
@@ -39,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     // Establish default values for each of this plugin's arguments.
@@ -82,20 +82,23 @@ extends WikiPlugin
         if (!empty($rss_parser->channel['date']))
             $th->pushContent(HTML::raw("<!--".$rss_parser->channel['date']."-->"));
         $html = HTML::div(array('class'=> 'rss'), $th);
-
-        // limitation du nombre d'items affichs
-        if ($maxitem > 0) $rss_parser->items = array_slice($rss_parser->items, 0, $maxitem);
-
-        foreach ($rss_parser->items as $item) {
-            $cell_title = HTML::div(array('class'=> 'itemname'),
-                                    HTML::a(array('href'=>$item['link']),
-                                            HTML::raw($item['title'])));
-            $cell_content = HTML::div(array('class'=> 'itemdesc'),
-                                      HTML::raw($item['description']));
-            $cell = HTML::div(array('class'=> 'rssitem'));
-            $cell->pushContent($cell_title);
-            $cell->pushContent($cell_content);
-            $html->pushContent($cell);
+        if ($rss_parser->items) { 
+            // only maxitem's
+            if ( $maxitem > 0) 
+                $rss_parser->items = array_slice($rss_parser->items, 0, $maxitem);
+            foreach ($rss_parser->items as $item) {
+                $cell_title = HTML::div(array('class'=> 'itemname'),
+                                        HTML::a(array('href'=>$item['link']),
+                                                HTML::raw($item['title'])));
+                $cell_content = HTML::div(array('class'=> 'itemdesc'),
+                                          HTML::raw($item['description']));
+                $cell = HTML::div(array('class'=> 'rssitem'));
+                $cell->pushContent($cell_title);
+                $cell->pushContent($cell_content);
+                $html->pushContent($cell);
+            }
+        } else {
+            $html = HTML::div(array('class'=> 'rss'), HTML::em(_("no RSS items")));
         }
         if (!check_php_version(5))
             $rss_parser->__destruct();
@@ -116,6 +119,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/07/08 20:30:07  rurban
+// plugin->run consistency: request as reference, added basepage.
+// encountered strange bug in AllPages (and the test) which destroys ->_dbi
+//
 // Revision 1.7  2004/06/08 21:03:20  rurban
 // updated RssParser for XmlParser quirks (store parser object params in globals)
 //

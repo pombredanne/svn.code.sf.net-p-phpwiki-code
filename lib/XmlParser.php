@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: XmlParser.php,v 1.5 2004-06-20 14:42:54 rurban Exp $');
+rcs_id('$Id: XmlParser.php,v 1.6 2004-11-03 16:34:11 rurban Exp $');
 /**
  * Base XmlParser Class.
  * Requires the expat.so/.dll, usually enabled by default.
@@ -144,7 +144,10 @@ class XmlParser {
 
     function parse_url($file, $debug=false)   {
         if (get_cfg_var('allow_url_fopen')) {
-            $fp = fopen("$file","r") or die("Error reading XML file, $file");
+            if (!($fp = fopen("$file","r"))) {
+                trigger_error("Error parse url $file");
+                return;
+            }
             while ($data = fread($fp, 4096))  {
             	$this->parse($data, feof($fp));
             }
@@ -152,13 +155,19 @@ class XmlParser {
         } else {
             // other url_fopen workarounds: curl, socket (http 80 only)
             $data = url_get_contents($file);
-            if (empty($data)) return;
+            if (empty($data)) {
+                trigger_error("Error parse url $file");
+                return;
+            }
             $this->parse($data);
         }
     }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/06/20 14:42:54  rurban
+// various php5 fixes (still broken at blockparser)
+//
 // Revision 1.4  2004/06/08 21:03:20  rurban
 // updated RssParser for XmlParser quirks (store parser object params in globals)
 //
