@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Toolbar.php,v 1.7 2002-01-05 09:34:29 carstenklapp Exp $');
+<?php rcs_id('$Id: Toolbar.php,v 1.8 2002-01-05 10:13:55 carstenklapp Exp $');
 
 //require_once("lib/ErrorManager.php");
 //require_once("lib/WikiPlugin.php");
@@ -225,16 +225,21 @@ function toolbar_User_UserSignInOut($userauth, $userid, $pagename) {
 //
 // Requires:
 // $pagename = ($pagename);
+
 function toolbar_action_Navigation($pagename) {
     $html = "";
     $html .= LinkExistingWikiWord(_("RecentChanges"));
+
     // These lines are here for future anticipated plugins:
+
     //$html .= separator() ."<plugin-link RandomPage page=\"" .$pagename ."\" >";
+
     // FIXME: What to use instead of WikiURL()?
     //$html .= separator() ."<a class=\"wikiaction\" href=\"" .WikiURL('_("RandomPage")', array('page' => $pagename)) ."\">" ._("RandomPage") ."</a>";
     //$html .= separator() ."<plugin-link WantedPages >";
     //$html .= separator() ."<a class=\"wikiaction\" href=\"" . WikiURL(_("WantedPages")) ."\">" ._("WantedPages") ."</a>";
     //$html .= separator() .LinkExistingWikiWord(_("SandBox"));
+
     return $html;
 }
 
