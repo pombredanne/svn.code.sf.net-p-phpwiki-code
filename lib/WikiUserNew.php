@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.42 2004-03-27 13:48:23 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.43 2004-03-27 19:40:09 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -2145,6 +2145,14 @@ extends _UserPreference
 
         return (string) $value;
     }
+    
+    function update ($newvalue) {
+        if (! $this->_init ) {
+            // invalidate etag to force fresh output
+            $GLOBALS['request']->setValidators(array('%mtime' => false));
+            update_locale($newvalue ? $newvalue : $GLOBALS['LANG']);
+        }
+    }
 }
 
 class _UserPreference_theme
@@ -2162,6 +2170,9 @@ extends _UserPreference
 
     function update ($newvalue) {
         global $Theme;
+        // invalidate etag to force fresh output
+        if (! $this->_init )
+            $GLOBALS['request']->setValidators(array('%mtime' => false));
         if ($newvalue)
             include_once($this->_themefile($newvalue));
         if (empty($Theme))
@@ -2438,14 +2449,14 @@ class UserPreferences
         if ($init) $this->_init = $init;
         if (is_object($prefs)) {
             $type = 'emailVerified'; $obj =& $this->_prefs['email'];
-            if ($init) $obj->_init = $init;
+            $obj->_init = $init;
             if ($obj->get($type) !== $prefs->get($type)) {
                 $obj->set($type,$prefs->get($type));
                 $count++;
             }
             foreach (array_keys($this->_prefs) as $type) {
             	$obj =& $this->_prefs[$type];
-                if ($init) $obj->_init = $init;
+                $obj->_init = $init;
                 if ($this->_prefs[$type]->get($type) !== $prefs->get($type)) {
                     $this->_prefs[$type]->set($type,$prefs->get($type));
                     $count++;
@@ -2453,14 +2464,14 @@ class UserPreferences
             }
         } elseif (is_array($prefs)) {
             $type = 'emailVerified'; $obj =& $this->_prefs['email'];
-            if ($init) $obj->_init = $init;
+            $obj->_init = $init;
             if (isset($prefs[$type]) and $obj->get($type) !== $prefs[$type]) {
                 $obj->set($type,$prefs[$type]);
                 $count++;
             }
             foreach (array_keys($this->_prefs) as $type) {
             	$obj =& $this->_prefs[$type];
-                if ($init) $obj->_init = $init;
+                $obj->_init = $init;
                 if (isset($prefs[$type]) and $obj->get($type) != $prefs[$type]) {
                     $obj->set($type,$prefs[$type]);
                     $count++;
