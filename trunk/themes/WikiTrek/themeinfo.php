@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.5 2002-01-01 07:36:15 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.6 2002-01-03 00:09:17 carstenklapp Exp $');
 
 /**
  * This PhpWiki theme is experimental and will likely not appear as 
@@ -28,12 +28,12 @@ rcs_id('$Id: themeinfo.php,v 1.5 2002-01-01 07:36:15 carstenklapp Exp $');
 //$theme="WikiTrek";
 // To deactivate themes, comment out all the $theme=lines in index.php.
 
-// CSS location
-//
 // CSS file defines fonts, colors and background images for this style.
 // The companion '*-heavy.css' file isn't defined, it's just expected to
 // be in the same directory that the base style is in.
-$CSS_URL = "themes/$theme/WikiTrek.css";
+$CSS_DEFAULT = "WikiTrek";
+
+$CSS_URLS = array_merge($CSS_URLS, array( "$CSS_DEFAULT" => "themes/$theme/${CSS_DEFAULT}.css" ) );
 
 // Logo image appears on every page and links to the HomePage.
 $logo = "themes/$theme/Ufp-logo.png";

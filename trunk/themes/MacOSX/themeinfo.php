@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.1 2002-01-02 01:28:57 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.2 2002-01-03 00:09:18 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -16,12 +16,12 @@ rcs_id('$Id: themeinfo.php,v 1.1 2002-01-02 01:28:57 carstenklapp Exp $');
 //$theme="MacOSX";
 // To deactivate themes, comment out all the $theme=lines in index.php.
 
-// CSS location
-//
 // CSS file defines fonts, colors and background images for this style.
 // The companion '*-heavy.css' file isn't defined, it's just expected to
 // be in the same directory that the base style is in.
-//$CSS_URL = "themes/$theme/phpwiki.css";
+$CSS_DEFAULT = "MacOSX";
+
+$CSS_URLS = array_merge($CSS_URLS, array( "$CSS_DEFAULT" => "themes/$theme/${CSS_DEFAULT}.css" ) );
 
 // Logo image appears on every page and links to the HomePage.
 $logo = "themes/$theme/PhpWiki.png";
