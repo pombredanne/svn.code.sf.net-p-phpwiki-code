@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-  rcs_id('$Id: head.tmpl,v 1.16 2004-06-03 16:56:22 rurban Exp $');
+  rcs_id('$Id: head.tmpl,v 1.17 2004-06-04 20:34:11 rurban Exp $');
 ?>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
@@ -58,7 +58,8 @@ _("FindPage"))?>" />
        * http://www.oreillynet.com/cs/weblog/view/wlg/1475
        */
 ?>
-<link rel="alternate" type="application/rss+xml" title="RSS" href="<?=WikiURL(_("RecentChanges"), array('format' => 'rss'))?>" />
+<link rel="alternate" type="application/rss+xml" title="RSS" href="<?=WikiURL(
+_("RecentChanges"), array('format' => 'rss'))?>" />
 
 <?php /**
        * Add some user-specific links.
@@ -109,6 +110,9 @@ _("UserPreferences"))?>" />
 <?php
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2004/06/03 16:56:22  rurban
+// added Sidebar existing calendar dates
+//
 // Revision 1.15  2004/05/16 23:10:45  rurban
 // update_locale wrongly resetted LANG, which broke japanese.
 // japanese now correctly uses EUC_JP, not utf-8.

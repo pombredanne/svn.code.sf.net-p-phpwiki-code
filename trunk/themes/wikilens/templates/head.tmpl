@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-  rcs_id('$Id: head.tmpl,v 1.1 2004-03-30 02:40:07 rurban Exp $');
+  rcs_id('$Id: head.tmpl,v 1.2 2004-06-04 20:34:11 rurban Exp $');
 ?>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
@@ -64,21 +64,25 @@ _("FindPage"))?>" />
        */ ?>
 <?php if (!$user->isSignedIn()) {
       /* For users not signed in */ ?>
-<link rel="bookmark" title="<?=_("SandBox")?>" href="<?=WikiURL(
+<link rel="bookmark" title="<?=
+_("SandBox")?>" href="<?=WikiURL(
 _("SandBox"))?>" />
-<link rel="bookmark" title="<?=_("WikiWikiWeb")?>" href="<?=WikiURL(
+<link rel="bookmark" title="<?=
+_("WikiWikiWeb")?>" href="<?=WikiURL(
 _("WikiWikiWeb"))?>" />
 <?php } ?>
 
 <?php if ($user->isadmin()) {
       /* Only for the Administrator */ ?>
-<link rel="bookmark" title="<?=_("PhpWikiAdministration")?>" href="<?=WikiURL(
+<link rel="bookmark" title="<?=
+_("PhpWikiAdministration")?>" href="<?=WikiURL(
 _("PhpWikiAdministration"))?>" />
 <?php } ?>
 
 <?php if ($user->isSignedIn()) {
       /* For signed-in users */ ?>
-<link rel="bookmark" title="<?=_("UserPreferences")?>" href="<?=WikiURL(
+<link rel="bookmark" title="<?=
+_("UserPreferences")?>" href="<?=WikiURL(
 _("UserPreferences"))?>" />
 <?php /* User's calendar page
        */
@@ -117,6 +121,9 @@ _("UserPreferences"))?>" />
 <?php
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/03/30 02:40:07  rurban
+// sample theme needed for RateIt
+//
 // Revision 1.14  2004/02/17 12:19:49  rurban
 // support to add more javascript dynamically
 //
