@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.32 2003-01-21 07:40:50 zorloc Exp $');
+rcs_id('$Id: WikiUser.php,v 1.33 2003-01-22 03:21:40 zorloc Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -47,6 +47,11 @@ class WikiUser {
 
     /**
      * Constructor.
+     * 
+     * Populates the instance variables and calls $this->_ok() 
+     * to ensure that the parameters are valid.
+     * @param mixed $userid String of username or WikiUser object.
+     * @param integer $authlevel Authorization level.
      */
     function WikiUser ($userid = false, $authlevel = false) {
         $this->_request = &$GLOBALS['request'];
@@ -60,8 +65,6 @@ class WikiUser {
             $this->_userid = $userid;
             $this->_level = $authlevel;
         }
-        if ($this->_userid)
-            $this->_homepage = $this->_dbi->getPage($this->_userid);
         if (!$this->_ok()) {
             // Paranoia: if state is at all inconsistent, log out...
             $this->_userid = false;
@@ -69,8 +72,18 @@ class WikiUser {
             $this->_homepage = false;
             $this->_authhow .= ' paranoia logout';
         }
+        if ($this->_userid) {
+            $this->_homepage = $this->_dbi->getPage($this->_userid);
+        }
     }
 
+    /**
+    * Get the string indicating how the user was authenticated.
+    * 
+    * Get the string indicating how the user was authenticated.
+    * Does not seem to be set - jbw
+    * @return string The method of authentication.
+    */
     function auth_how() {
         return $this->_authhow;
     }
@@ -625,6 +638,11 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.32  2003/01/21 07:40:50  zorloc
+// Modified WikiUser::_ok() -- Inverted the logic so the default is to return
+// false and to return true only in the desired condition.  Added phpdoc
+// comments
+//
 // Revision 1.31  2003/01/15 05:37:20  carstenklapp
 // code reformatting
 //
