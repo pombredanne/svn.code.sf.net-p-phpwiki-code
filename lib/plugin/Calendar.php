@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.12 2002-01-26 03:30:23 dairiki Exp $');
+rcs_id('$Id: Calendar.php,v 1.13 2002-01-26 04:38:54 dairiki Exp $');
 
 if (!defined('SECONDS_PER_DAY'))
     define('SECONDS_PER_DAY', 24 * 3600);
@@ -99,21 +99,28 @@ extends WikiPlugin
                                                     $time);
         $t = localtime($time, 1);
 
-        if ($dbi->isWikiPage($page_for_date)) {
-            $date = HTML::a(array('class' => 'cal-day',
-                                  'href'  => WikiURL($page_for_date),
-                                  'title' => $page_for_date),
-                            HTML::strong($t['tm_mday']));
-        }
-        else {
-            $date = HTML::a(array('class' => 'cal-hide',
-                                  'href'  => WikiURL($page_for_date,
-                                                     array('action' => 'edit')),
-                                  'title' => sprintf(_("Edit %s"), $page_for_date)),
-                            $t['tm_mday']);
+        $td = HTML::td(array('align' => 'center'));
+
+        $mday = $t['tm_mday'];
+        if ($mday == $this->_today) {
+            $mday = HTML::strong($mday);
+            $td->setAttr('class', 'cal-today');
         }
 
-        return  HTML::td(array('align' => 'center'), NBSP, $date, NBSP);
+        if ($dbi->isWikiPage($page_for_date)) {
+            $td->pushContent(HTML::a(array('class' => 'cal-day',
+                                           'href'  => WikiURL($page_for_date),
+                                           'title' => $page_for_date),
+                                     HTML::em($mday)));
+        }
+        else {
+            $td->pushContent(HTML::a(array('class' => 'cal-hide',
+                                           'href'  => WikiURL($page_for_date,
+                                                              array('action' => 'edit')),
+                                           'title' => sprintf(_("Edit %s"), $page_for_date)),
+                                     $mday));
+        }
+        return $td;
     }
 
     function run($dbi, $argstr, $request) {
@@ -141,9 +148,17 @@ extends WikiPlugin
                            $this->__header($request->getArg('pagename'), $time),
                            $this->__daynames($args['start_wday']));
 
+        $t = localtime($time, 1);
+        $now = localtime(time(), 1);
+
+        if ($now['tm_year'] == $t['tm_year'] && $now['tm_mon'] == $t['tm_mon'])
+            $this->_today = $now['tm_mday'];
+        else
+            $this->_today = false;
+        
+        
         $row = HTML::tr();
         
-        $t = localtime($time, 1);
         $col = (7 + $t['tm_wday'] - $args['start_wday']) % 7;
         if ($col > 0)
             $row->pushContent(HTML::td(array('colspan' => $col)));

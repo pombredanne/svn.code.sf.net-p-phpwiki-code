@@ -1,5 +1,5 @@
 /*
-  $Id: phpwiki.css,v 1.26 2002-01-26 03:18:23 carstenklapp Exp $
+  $Id: phpwiki.css,v 1.27 2002-01-26 04:38:54 dairiki Exp $
 
   Classes:
 
@@ -206,8 +206,8 @@ a.cal-hide, a.cal-arrow { text-decoration: none; }
 .cal-arrow      { font-weight: bold; }
 .cal-header     { font-size: larger; }
 .cal-dayname    { font-size: smaller; text-decoration: underline; }
+td.cal-today,
 table.cal       { border: thin solid black; } 
-
 
 /* IncludePage plugin */
 .transclusion-title {
