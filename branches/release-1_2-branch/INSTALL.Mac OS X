@@ -18,8 +18,6 @@ The default PHP module for Apache as supplied by Apple does work with PhpWiki bu
 
 If you want compressed ZIP dumps you will have to install a version of PHP that does support the zlib library, or compile PHP yourself.
 
-PHP with GD library support is required to use "text2png", an experimental plugin for Wiki 1.3.
-
 
 Obtaining and Installing mySQL and PHP.so
 -----------------------------------------
