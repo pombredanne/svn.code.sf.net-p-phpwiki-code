@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: random.php,v 1.1 2002-01-18 20:08:30 carstenklapp Exp $');
+rcs_id('$Id: random.php,v 1.2 2002-01-18 20:46:50 carstenklapp Exp $');
 
 class RandomImage {
 
@@ -18,7 +18,7 @@ class RandomImage {
         //echo "count is " . count($this->imageList) ."<br>\n";//tempdebugcode
 
         if (empty($this->imageList)) {
-            trigger_error(sprintf(_("%s is empty."), 'imageList'),
+            trigger_error(sprintf(_("%s is empty."), $dirname),
                           E_USER_NOTICE);
             return ""; // early return
         }
