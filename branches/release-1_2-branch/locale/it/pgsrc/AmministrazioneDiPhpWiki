@@ -1,0 +1,39 @@
+!!! Questo funziona solo se sei loggato come ADMIN
+
+-----------
+
+! ZIP files del database
+
+ __[ZIP Snapshot | phpwiki:?zip=snapshot]__ : contiene solo l`ultima versione
+
+ __[ZIP Dump | phpwiki:?zip=all]__ : contiene tutte le versione archiviate
+
+Questi links puntano a dei file zip, generati al volo, ognuno contiene le piu' recenti di tutte le pagine contenuto nel PhpWiki. Le pagine sono immagazzinate, una per file, come messaggi MIME (RFC2045) e-mail (RFC822), con il content type application/x-phpwiki per lo snapshot e il content type mulipart/mixed per il dump. In the latter case, there is one subpart (with type application/x-phpwiki) for each version of the page (in chronological order). The message body contains the page text, while the page meta-data is included as parameters in the Content-Type: header field.
+
+-----------
+
+! Load / Dump Serialized Pages
+
+Here you can load or dump pages of your Wiki into a directory of your
+choice.
+
+__Dump__
+
+%%ADMIN-INPUT-dumpserial-Dump_serialized_pages%%
+
+Pages will be written out as "serialized" strings of a PHP
+associative array, meaning they will not be human readable. If
+the directory does not exist PhpWiki will try to create one for you.
+Ensure that your server has write permissions to the directory!
+
+__Load__
+
+%%ADMIN-INPUT-loadserial-Load_serialized_pages%%
+
+If you have dumped a set of pages from PhpWiki, you can reload them here.
+Note that pages in your database will be overwritten; thus, if you dumped
+your FrontPage when you load it from this form it will overwrite the one
+in your database now. If you want to be selective just delete
+the pages from the directory you don't want to load.
+
+-----------
