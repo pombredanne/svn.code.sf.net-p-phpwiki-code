@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.33 2002-01-30 23:41:54 dairiki Exp $');
+rcs_id('$Id: editpage.php,v 1.34 2002-02-04 17:21:34 carstenklapp Exp $');
 
 require_once('lib/Template.php');
 
@@ -14,6 +14,7 @@ class PageEditor
         $this->current = $this->page->getCurrentRevision();
 
         $this->meta = array('author' => $this->user->getId(),
+                            'locked' => $this->page->get('locked'),
                             'author_id' => $this->user->getAuthenticatedId());
         
         $version = $request->getArg('version');
@@ -39,7 +40,7 @@ class PageEditor
         $saveFailed = false;
         $tokens = array();
         
-        if ($this->isLocked()) {
+        if ($this->canEdit()) {
             if ($this->isInitialEdit())
                 return $this->viewSource();
             $tokens['PAGE_LOCKED_MESSAGE'] = $this->getLockedMessage();
@@ -107,7 +108,8 @@ class PageEditor
         }
 
         $page = &$this->page;
-
+        $lock = $this->meta['locked'];
+        $this->meta['locked'] = ''; // hackish
         // Save new revision
         $newrevision = $page->createRevision($this->_currentVersion + 1,
                                              $this->_content,
@@ -117,8 +119,8 @@ class PageEditor
             // Save failed.  (Concurrent updates).
             return false;
         }
-        
         // New contents successfully saved...
+        if ($lock && $this->user->isadmin()) $page->set('locked', true);
 
         // Clean out archived versions of this page.
         include_once('lib/ArchiveCleaner.php');
@@ -156,7 +158,7 @@ class PageEditor
         return $this->current->getVersion() != $this->_currentVersion;
     }
 
-    function isLocked () {
+    function canEdit () {
         return $this->page->get('locked') && !$this->user->isAdmin();
     }
 
@@ -220,7 +222,7 @@ class PageEditor
         $request = &$this->request;
 
         // wrap=virtual is not HTML4, but without it NS4 doesn't wrap long lines
-        $readonly = $this->isLocked() || $this->isConcurrentUpdate();
+        $readonly = $this->canEdit() || $this->isConcurrentUpdate();
         
         return HTML::textarea(array('class' => 'wikiedit',
                                     'name' => 'edit[content]',
@@ -234,8 +236,8 @@ class PageEditor
     function getFormElements () {
         $request = &$this->request;
         $page = &$this->page;
-        
-        
+
+
         $h = array('action' 		   => 'edit',
                    'pagename'		   => $page->getName(),
                    'version'		   => $this->version,
@@ -262,9 +264,15 @@ class PageEditor
                                 'value' => 'new',
                                 'checked' => $this->meta['markup'] == 'new'));
 
+        $el['LOCKED_CB']
+            = HTML::input(array('type' => 'checkbox',
+                                'name' => 'edit[locked]',
+                                'disabled' => (bool) !$this->user->isadmin(),
+                                'checked' => (bool) $this->meta['locked']));
+
         $el['PREVIEW_B'] = Button('submit:edit[preview]', _("Preview"));
 
-        if (!$this->isConcurrentUpdate() && !$this->isLocked())
+        if (!$this->isConcurrentUpdate() && !$this->canEdit())
             $el['SAVE_B'] = Button('submit:edit[save]', _("Save"));
 
         $el['IS_CURRENT'] = $this->version == $this->current->getVersion();
@@ -297,6 +305,7 @@ class PageEditor
         $is_new_markup = !empty($posted['markup']) && $posted['markup'] == 'new';
         $meta['markup'] = $is_new_markup ? 'new' : false;
         $meta['summary'] = trim($posted['summary']);
+        $meta['locked'] = !empty($posted['locked']);
         $meta['is_minor_edit'] = !empty($posted['minor_edit']);
 
         $this->meta = array_merge($this->meta, $meta);
@@ -324,6 +333,7 @@ class PageEditor
         $this->_content = $selected->getPackedContent();
         
         $this->meta['summary'] = '';
+        $this->meta['locked'] = $this->page->get('locked');
 
         // If author same as previous author, default minor_edit to on.
         $age = time() - $current->get('mtime');
