@@ -1,14 +1,11 @@
 Date: Tue, 17 Sep 2002 13:03:19 -0700
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.4pre)
+X-Rcs-Id: $Id: TranscludePlugin,v 1.3 2002-12-29 00:32:34 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=TranscludePlugin;
+  pgsrc_version="2 $Revision: 1.3 $";
   flags="";
-  author=JeffDairiki;
-  version=1;
-  lastmodified=1032292999;
-  author_id=192.168.1.10;
   markup=2;
-  hits=0;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
