@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.61 2004-11-21 11:59:14 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.62 2005-02-05 15:35:37 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004 Reini Urban
  *
@@ -207,7 +207,7 @@ class RegexpSet
 
         /* DEBUGGING */
         /*
-        if (DEBUG == 4) {
+        if (DEBUG & 4) {
           var_dump($regexps); var_dump($matched); var_dump($matched_inc); 
         PrintXML(HTML::dl(HTML::dt("input"),
                           HTML::dd(HTML::pre($text)),
@@ -332,6 +332,7 @@ function LinkBracketLink($bracketlink) {
     // be either a page name, a URL or both separated by a pipe.
     
     // strip brackets and leading space
+    // FIXME: \n inside [] will lead to errors
     preg_match('/(\#?) \[\s* (?: (.*?) \s* (?<!' . ESCAPE_CHAR . ')(\|) )? \s* (.+?) \s*\]/x',
 	       $bracketlink, $matches);
     if (count($matches) < 4) {
