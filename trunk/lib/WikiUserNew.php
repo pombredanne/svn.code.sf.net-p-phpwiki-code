@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.15 2004-02-15 21:34:37 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.16 2004-02-15 22:23:45 rurban Exp $');
 
 // This is a complete OOP rewrite of the old WikiUser code with various
 // configurable external authentification methods.
@@ -953,7 +953,7 @@ extends _DbPassUser
 {
     function _PearDbPassUser($UserName='') {
         global $DBAuthParams;
-        if (!$this->_prefs)
+        if (!$this->_prefs and isa($this,"_PearDbPassUser"))
             _PassUser::_PassUser($UserName);
         $this->getAuthDbh();
         $this->_auth_crypt_method = $GLOBALS['DBAuthParams']['auth_crypt_method'];
@@ -1116,7 +1116,7 @@ extends _DbPassUser
 {
     function _AdoDbPassUser($UserName='') {
         global $DBAuthParams;
-        if (!$this->_prefs)
+        if (!$this->_prefs and isa($this,"_AdoDbPassUser"))
             _PassUser::_PassUser($UserName);
         $this->getAuthDbh();
         $this->_auth_crypt_method = $GLOBALS['DBAuthParams']['auth_crypt_method'];
@@ -1887,6 +1887,15 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2004/02/15 21:34:37  rurban
+// PageList enhanced and improved.
+// fixed new WikiAdmin... plugins
+// editpage, Theme with exp. htmlarea framework
+//   (htmlarea yet committed, this is really questionable)
+// WikiUser... code with better session handling for prefs
+// enhanced UserPreferences (again)
+// RecentChanges for show_deleted: how should pages be deleted then?
+//
 // Revision 1.14  2004/02/15 17:30:13  rurban
 // workaround for lost db connnection handle on session restauration (->_auth_dbi)
 // fixed getPreferences() (esp. from sessions)
