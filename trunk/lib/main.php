@@ -1,12 +1,19 @@
 <?php
-rcs_id('$Id: main.php,v 1.23 2002-01-09 16:57:20 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.24 2002-01-17 20:35:44 dairiki Exp $');
 
 include "lib/config.php";
 include "lib/stdlib.php";
-//include "lib/logger.php";
 require_once('lib/Request.php');
 require_once("lib/WikiUser.php");
 require_once('lib/WikiDB.php');
+
+if (defined('THEME')) {
+    include("themes/" . THEME . "/themeinfo.php");
+}
+if (empty($Theme)) {
+    include("themes/default/themeinfo.php");
+}
+assert(!empty($Theme));
 
 
 function deduce_pagename ($request) {

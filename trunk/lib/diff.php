@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.25 2001-12-21 15:57:10 dairiki Exp $');
+rcs_id('$Id: diff.php,v 1.26 2002-01-17 20:35:44 dairiki Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -161,7 +161,8 @@ class TableUnifiedDiffFormatter extends HtmlUnifiedDiffFormatter
 
 function PageInfoRow ($pagename, $label, $rev)
 {
-   global $datetimeformat;
+   global $Theme;
+    
    
    $cols = QElement('td', array('align' => 'right'), $label);
    
@@ -173,7 +174,7 @@ function PageInfoRow ($pagename, $label, $rev)
 
        $cols .= QElement('td',
                          __sprintf("last modified on %s",
-                                   strftime($datetimeformat, $rev->get('mtime'))));
+                                   $Theme->formatDateTime($rev->get('mtime'))));
        $cols .= QElement('td',
                          __sprintf("by %s", $rev->get('author')));
    } else {

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.21 2002-01-17 05:54:16 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.22 2002-01-17 20:35:44 dairiki Exp $');
 /**
  */
 
@@ -22,13 +22,13 @@ class _RecentChanges_Formatter
     }
     
     function date ($rev) {
-        return strftime($GLOBALS['dateformat'], $rev->get('mtime'));
+        global $Theme;
+        return $Theme->formatDate($rev->get('mtime'));
     }
 
     function time ($rev) {
-        return preg_replace('/^0/', ' ',
-                            strtolower(strftime("%I:%M %p",
-                                                $rev->get('mtime'))));
+        global $Theme;
+        return $Theme->formatTime($rev->get('mtime'));
     }
 
     function diffURL ($rev) {
@@ -116,15 +116,11 @@ extends _RecentChanges_Formatter
 
 
     function rss_icon () {
-        global $request, $rssicon;
+        global $request, $Theme;
 
         $rss_url = $request->getURLtoSelf(array('format' => 'rss'));
-        if (empty($rssicon))
-            $rssicon = 'themes/default/images/RSS.png';
-        return Element('a', array('href' => $rss_url),
-                       Element('img', array('src' => DataURL($rssicon),
-                                            'alt' => _("RSS available"),
-                                            'class' => 'rssicon')));
+        $button = $Theme->makeButton("RSS", $rss_url, 'rssicion');
+        return $button->asHTML();
     }
     
     function description () {
