@@ -25,7 +25,7 @@ development. Among other niceties it provides multiple undos (even
 beyond the last file save), line numbering and syntax coloring; but
 don't rely on PB's text colors too much, it doesn't always properly
 handle coloring for \"escaped quotes\" which are frequently called for
-in PHP when generating HTML code.
+in PHP when generating HTML code. \\" <--(kludge for broken syntax coloring)
 
 Instructions for using Project Builder with PhpWiki can be found at
 the bottom of this document.
@@ -197,35 +197,83 @@ log rotation.
 
 
 Using Apple's Project Builder with PhpWiki
-------------------------------------------
-A PB project file is available on the SourceForge CVS server to allow
-you to easily edit PhpWiki's source code using Apple's Project
-Builder. If you have not yet updated to PB 1.1.1 (Dec 2001 DevTools)
-it is highly recommended you do so because the PhpWiki source are
-written in ISO-8859-1, and some of the bug fixes are pertinent to file
-encoding.
+------------------------------------------ A PB project file is
+available on the SourceForge CVS server to allow you to easily edit
+PhpWiki's source code using Apple's Project Builder. If you have not
+yet updated to PB 1.1.1 (Dec 2001 DevTools) it is highly recommended
+you do so because the PhpWiki source are written in ISO-8859-1, and
+some of the bug fixes are pertinent to file encoding.
 
-PB has some bugs which makes it impossible (in PB 1.1) or difficult
-(in PB 1.1.1) to select the correct character encoding in the GUI for
-any pre-existing source code files. By using this project file you
-will find the PhpWiki source files are already preset to use the
-correct ISO-8859-1 (Western Latin-1) encoding.
+PB 1.1 has some bugs which makes it impossible to select the correct
+character encoding in the GUI for any pre-existing source code
+files. By using this project file you will find the PhpWiki source
+files are already preset to use the correct ISO-8859-1 (Western
+Latin-1) encoding.
 
-The Build target settings have also been preconfigured to
-automatically build a "legacy Makefile", by invoking
-'/usr/bin/gnumake' in the folder'./phpwiki/locale'. When you update
-and save one of the language translation files found in
-'./phpwiki/locale/po/', you can simply click the build button in the
-toolbar to run make, which in turn calls another script and xgettext.
+Also by using this file, if you are updating or adding a tranlastion
+to the './phpwiki/locale/po/' files, you do not have to run 'make'
+from the terminal window. The Build target settings have been
+preconfigured to automatically build the project with a "legacy
+Makefile", by invoking '/usr/bin/gnumake' in the folder
+'./phpwiki/locale'. Just click the build button in the toolbar.
 
 To download the phpwiki.pbxproj bundle, use CVS to checkout the module
 named "phpwiki.pbxproj" then place it into the same folder which
 contains your "phpwiki" folder.
 
-Note that as of this writing (PB 1.1.1), you can only use Project
-Builder's CVS facilities in Anonymous mode with the SourceForge CVS
-server. (Technical explanation: PB tries to use rsh instead of ssh as
-is required for SourceForge).
+Project Builder 1.1.1 can be used with Sourceforge's CVS but there is
+a little bit of work to get it set up the first time.  The following
+instructions were based on a tip from macosxhints.com.
+
+Preparation:
+Checkout phpwiki with the cvs command line tools. Make sure that your
+ssh keys have been uploaded to your account at Sourceforge and that
+you can sucessfully ssh into phpwiki.sourceforge.net.
+
+Instructions:
+1. Download and install "keychain" from:
+
+   <http://www.gentoo.org/projects/keychain.html>.
+
+The Keychain script acts as a front-end to ssh-agent, allowing you to
+easily have one long-running ssh-agent process per system, rather than
+per login session. This dramatically reduces the number of times you
+need to enter your passphrase from once per new login session to once
+every time your local machine is rebooted.
+
+2. Add the following to your .cshrc file (if you use the default tcsh
+   shell or csh).
+
+setenv CVS_RSH 'ssh'
+# Keychain is an OpenSSH key manager
+# This will add my SSH1 and SSH2 key
+/usr/bin/keychain ~/.ssh/id_rsa ~/.ssh/id_dsa
+source ~/.ssh-agent-csh-${HOST}
+# Alias to servers via SSH
+alias sshsf 'ssh mysfuserid@phpwiki.sourceforge.net'
+
+(bash users would substitute the following lines in the above script
+for their .bashrc file:)
+CVS_RSH=ssh; EXPORT CVS_RSH
+source ~/.ssh-agent-${HOSTNAME}
+alias sshsf='ssh mysfuserid@phpwiki.sourceforge.net'
+
+3. Close the terminal window then open a new one. Keychain will
+   activate ssh-agent which will ask for your ssh key password. It keeps
+   running in the background and won't ask for your password again until
+   you log out or restart.
+
+4. From now on, YOU MUST open Project Builder from the Terminal shell
+   for it's CVS to work with SSH. This is why We created a command alias
+   in .cshrc to launch Project Builder. If it is already running because
+   you double-clicked the PB icon, quit it, then launch it from the terminal
+   by typing pb. Once PB is running you can safely double-click a
+   project file to open it.
+
+Using the above method, ProjectBuilder will successfully connect to
+the Sourceforge CVS with SSH. Any other server which requires ssh
+instead of rsh should work too.
+
 
 Emacs Users: You can add custom Alt-key bindings to Project Builder
 for some common Emacs stuff:  *Note the wrapped url!
@@ -239,4 +287,8 @@ phpwiki-talk list at phpwiki-talk@lists.sourceforge.net.
 Carsten Klapp
 carstenklapp@mac.com
 
-$Id: INSTALL.MacOSX,v 1.9 2001-12-30 23:38:34 carstenklapp Exp $
+$Id: INSTALL.MacOSX,v 1.10 2001-12-31 00:38:02 carstenklapp Exp $
+
+
+
+
