@@ -1,16 +1,14 @@
 REQUIREMENTS
 
-PhpWiki requires a web server with PHP version 4.0.4pl1 or greater and a
-database application.
-(PhpWiki uses the array_search() function which is present only in PHP
-version 4.0.4pl1 / 4.0.5 or greater.)
-
-  Latest tests showed, that it requires at least 4.0.6 --rurban
+PhpWiki requires a web server with at least PHP version 4.0.6.
+PhpWiki was tested 4.0.4pl1 and 4.0.5 also, but several bugs in these 
+releases make them unstable for production sites.
 
 Due to a security issue found in all versions of PHP (including 3.x
 and 4.x), all users of PHP are strongly encouraged to either upgrade
-to PHP 4.2.2, or install a patch available for PHP 3.0.18, 4.0.6 and
-4.1.0/4.1.1. Visit <http://www.php.net> for downloads and information.
+to at least PHP 4.2.2, or install a patch available for PHP 3.0.18, 
+4.0.6 and 4.1.0/4.1.1. Visit <http://www.php.net> for downloads and 
+information.
 
 You need the Perl regular expressions package compiled in; this is the
 default for PHP, so you probably have it. If you don't you'll see an
@@ -32,6 +30,7 @@ see <http://pear.php.net/>.
 You'd need to set allow_call_time_pass_reference = On in php.ini 
 or .htaccess: 
   php_value allow_call_time_pass_reference 1
+
 
 QUICK START INSTRUCTIONS
 
@@ -155,4 +154,4 @@ You can join this list at:
 
 FIN
 
-$Id: INSTALL,v 1.21 2004-05-01 16:04:56 rurban Exp $
+$Id: INSTALL,v 1.22 2004-05-08 12:33:42 rurban Exp $
