@@ -68,14 +68,13 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 // bottom of each page.
 if (!defined('DEBUG')) define ('DEBUG', 0);
 define('ENABLE_USER_NEW',true);    // this will disappear with 1.4.0
-define('JS_SEARCHREPLACE',true);   // experimental edit feature
 
 /////////////////////////////////////////////////////////////////////
 // Part Null: Don't touch this!
 
-define ('PHPWIKI_VERSION', '1.3.9');
+define ('PHPWIKI_VERSION', '1.3.10pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.138 2004-04-12 12:27:07 rurban Exp $');
+rcs_id('$Id: index.php,v 1.139 2004-04-12 16:24:28 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -290,7 +289,7 @@ $DBParams = array(
    //'dsn' => 'mysql://guest:pass@localhost/test',
    //'dsn' => 'pgsql://localhost/test',
 
-   // The common table prefix (see below) is added if defined
+   // The common table prefix (see below) is added if defined.
    // Undefine this if you use dbtype = "cvs" or "file"
    'db_session_table'   => 'session',
    
@@ -484,12 +483,12 @@ if (defined('ALLOW_USER_PASSWORDS')) {
             array(
 //                "BogoLogin",
                   "PersonalPage",
+//                "HttpAuth",
                   "Db",
 //		  "LDAP",    // define LDAP_AUTH_HOST and LDAP_BASE_DN
 //                "IMAP",    // define IMAP_AUTH_HOST
 //                "POP3",    // define POP3_AUTH_HOST
 //                "File",    // define AUTH_USER_FILE and opt. AUTH_USER_FILE_STORABLE
-//                "HttpAuth",
                   ) ;
 
     if (!defined('PASSWORD_LENGTH_MINIMUM')) define('PASSWORD_LENGTH_MINIMUM', 2);
@@ -953,6 +952,9 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 //include "lib/main.php";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.138  2004/04/12 12:27:07  rurban
+// more notes and themes
+//
 // Revision 1.137  2004/04/11 10:42:02  rurban
 // pgsrc/CreatePagePlugin
 //
