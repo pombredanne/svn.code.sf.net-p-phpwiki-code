@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Toolbar.php,v 1.5 2002-01-03 19:12:39 carstenklapp Exp $');
+<?php rcs_id('$Id: Toolbar.php,v 1.6 2002-01-03 19:28:24 carstenklapp Exp $');
 
 //require_once("lib/ErrorManager.php");
 //require_once("lib/WikiPlugin.php");
@@ -119,7 +119,7 @@ function toolabr_action_PageActions($pagelocked, $userisadmin, $is_current, $ver
     return $html;
 }
 
-//Calling function should provide:
+//Calling function should provide: - done
 //$pagename = ($page->getName());
 //$charset = (CHARSET);
 function toolbar_action_SearchActions($pagename, $charset) {
@@ -218,10 +218,11 @@ function toolbar_User_AuthorSignInOut($userid) {
     return $html;
 }
 
+//done
 function toolbar_Info_EditTips() {
     $html = "";
     $html .= sprintf(_("You can change the size of the editing area in %s."), LinkExistingWikiWord(_("UserPreferences")));
-    $html .= sprintf(_("See %s tips for editing."),LinkExistingWikiWord(_("GoodStyle")));
+    $html .= " " .sprintf(_("See %s tips for editing."),LinkExistingWikiWord(_("GoodStyle")));
     return $html;
 }
 
