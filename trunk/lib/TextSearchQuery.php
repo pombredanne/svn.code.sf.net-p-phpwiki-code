@@ -170,6 +170,23 @@ class TextSearchQuery {
     }
 }
 
+/**
+ * This is a TextSearchQuery which matches nothing.
+ */
+class NullTextSearchQuery extends TextSearchQuery {
+    /**
+     * Create a new query.
+     *
+     * @see TextSearchQuery
+     */
+    function NullTextSearchQuery() {}
+    function asRegexp()		{ return '/^(?!a)a/x'; }
+    function match($string)	{ return false; }
+    function getHighlightRegexp() { return ""; }
+    function makeSqlClause($make_sql_clause_cb) { return "(1 = 0)"; }
+    function asString() { return "NullTextSearchQuery"; }
+};
+
 
 ////////////////////////////////////////////////////////////////
 //
