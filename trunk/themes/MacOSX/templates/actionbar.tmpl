@@ -1,11 +1,11 @@
 <?php // -*-html-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.12 2002-01-23 16:22:14 dairiki Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.13 2002-01-24 00:45:28 dairiki Exp $ -->
 <?php
   $BF = &$ButtonFactory;
 
   if (!$page->get('locked') || $user->isAdmin())
       $EditB = $BF->makeActionButton("edit",
-                                     $IS_CURRENT ? _("Edit") : _("Edit Old Revision"));
+                                     $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
   else
       $EditB = $BF->makeActionButton("edit", _("View Source"));
 
@@ -46,7 +46,7 @@
   <td align="right">
     <?php if ($user->isSignedIn()) { ?>
       <form method="post" action="<?=BASE_URL?>" accept-charset="<?=CHARSET?>" name="signin">
-        <input type="hidden" name="action" value="<?=$query_args['action']?>" />
+        <input type="hidden" name="action" value="<?=$request->getArg('action')?>" />
         <input type="hidden" name="pagename" value="HomePage" />
         <!-- This extra table data is required to properly align an image
           -- button next to text. With text-only buttons, it would take up
@@ -64,7 +64,7 @@
         </tr></table>
       </form>
     <?php } else { ?>
-      <?= new WikiTemplate('signin') ?>
+      <?= Template('signin') ?>
     <?php } ?>
   </td>
 </tr></table>

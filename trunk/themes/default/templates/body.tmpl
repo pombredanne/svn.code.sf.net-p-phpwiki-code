@@ -1,16 +1,16 @@
 <?php // -*-html-*- ?>
-<!-- $Id: body.tmpl,v 1.6 2002-01-19 07:16:57 dairiki Exp $ -->
+<!-- $Id: body.tmpl,v 1.7 2002-01-24 00:45:28 dairiki Exp $ -->
 <body>
 
 <!-- The logo -->
 <div><a class="wikilink" 
         href="<?=WikiURL(_("HomePage"))?>"
         ><img src="<?=$Theme->getImageURL('logo')?>"
-              border="0" alt="<?=$WIKI_NAME?>: <?=_("HomePage")?>" 
+              border="0" alt="<?=WIKI_NAME?>: <?=_("HomePage")?>" 
               align="right" /></a></div>
 
 <!-- The top navigation/search bar -->
-<?= new WikiTemplate('navbar') ?>
+<?= Template('navbar') ?>
 
 <!-- Page title -->
 <h1><?=$HEADER?></h1>

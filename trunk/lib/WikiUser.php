@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiUser.php,v 1.11 2002-01-23 05:10:22 dairiki Exp $');
+<?php rcs_id('$Id: WikiUser.php,v 1.12 2002-01-24 00:45:28 dairiki Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -124,17 +124,12 @@ class WikiUser
         $require_level = 0;
         extract($args);
         
-        $login = new WikiTemplate('login');
-        $login->replace('userid', $userid);
-        $login->replace('require_level',
-                        max(0, min(WIKIAUTH_ADMIN, (int) $require_level)));
-        if ($fail_message)
-            $login->replace('fail_message', $fail_message);
-
-        $top = new WikiTemplate('top');
-        $top->replace('TITLE', _("Sign In"));
-        $top->replace('HEADER', _("Please Sign In"));
+        $require_level = max(0, min(WIKIAUTH_ADMIN, (int) $require_level));
         
+        $login = new Template('login', $request,
+                              compact('userid', 'require_level', 'fail_message'));
+
+        $top = new Template('top', $request, array('TITLE' =>  _("Sign In")));
         $top->printExpansion($login);
     }
         

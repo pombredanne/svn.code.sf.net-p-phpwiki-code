@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.11 2002-01-23 19:21:43 dairiki Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.12 2002-01-24 00:45:28 dairiki Exp $ -->
 <?php
 $SummaryInput = HTML::input(array('type'  => 'text',
                                   'class' => 'wikitext',
@@ -23,19 +23,17 @@ $SaveB = HTML::input(array('type'  => 'submit',
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
                             'name' => 'pref[editWidth]',
-                            'value' => $preferences->get('editWidth'),
+                            'value' => $request->getPref('editWidth'),
                             'onchange' => 'this.form.submit();'));
 
 $HeightI = HTML::input(array('type' => 'text',
                              'size' => 3,
                              'name' => 'pref[editHeight]',
-                             'value' => $preferences->get('editHeight'),
+                             'value' => $request->getPref('editHeight'),
                              'onchange' => 'this.form.submit();'));
 
 $AdjustB = $Theme->makeButton(_("Adjust"), "submit:");
 
-$SignIn = new WikiTemplate('signin');
-$SignIn->qreplace('FORMNAME', 'editpage');
 
 $GoodStyleB = $ButtonFactory->makeLinkButton(_("GoodStyle"));
 
@@ -47,7 +45,7 @@ $s = $Theme->getButtonSeparator();
   <div class="wikitext"><?= $PREVIEW_CONTENT ?></div>
 <?php } ?>
 
-<?php if (!$IS_CURRENT) { ?>
+<?php if (!$revision->isCurrent()) { ?>
   <p><strong><?=_("Warning: You are editing an old revision.")?>
         <?=_("Saving this page will overwrite the current version.")?></strong></p>
   <hr class="ignore" noshade="noshade" />
@@ -55,7 +53,7 @@ $s = $Theme->getButtonSeparator();
 
 <?php /*
  * FIXME: Hack! 
- * The <?=$ACTION?>EditPage URL used for the form action parameter is bogus.
+ * The funky URL used for the form action parameter is bogus.
  * This is needed, otherwise the redirect to the real browser
  * page won't work with some browsers. (NS4 and Mozilla 0.97 won't accept
  * a redirect from a page to itself.)
@@ -65,7 +63,9 @@ $s = $Theme->getButtonSeparator();
  *
  */ ?>
 
-<form method="post" action="<?=$ACTION?>EditPage" accept-charset="<?=CHARSET?>" name="editpage">
+<form method="post" name="editpage"
+      action="<?=WikiURL($page,array('action'=>'edit'))?>"
+      accept-charset="<?=CHARSET?>">
   <!-- FIXME: fix layout, move CSS to CSS -->
   <div style="text-align: right; vertical-align: top;">
     <small><?=_("Edit Area Size:")?> <b><?=_("H")?></b></small>
@@ -76,8 +76,8 @@ $s = $Theme->getButtonSeparator();
   </div>
 <textarea class="wikiedit"
           name="content"
-          rows="<?=$preferences->get('editHeight')?>"
-          cols="<?=$preferences->get('editWidth')?>"
+          rows="<?=$request->getPref('editHeight')?>"
+          cols="<?=$request->getPref('editWidth')?>"
           wrap="virtual"><?=$FORMVARS['content']?></textarea>
 
 <!-- FIXME: fix layout, move CSS to CSS -->
@@ -98,7 +98,7 @@ $s = $Theme->getButtonSeparator();
     <?= $user->isSignedIn()
         ? ''
         : fmt("Author will be logged as %s.", HTML::em($user->getId())) ?>
-    <?= $SignIn ?> 
+    <?= Template('signin', array('FORMNAME' => 'editpage')) ?>
   </td>
 </tr>
 </table>

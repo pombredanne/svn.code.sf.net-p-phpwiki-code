@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.5 2002-01-24 00:27:55 dairiki Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.6 2002-01-24 00:45:28 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -85,8 +85,14 @@ class XmlElement
 
     function _startTag() {
         $start = "<" . $this->_tag;
-        foreach ($this->_attr as $attr => $val)
+        foreach ($this->_attr as $attr => $val) {
+            if (is_bool($val)) {
+                if (!$val)
+                    continue;
+                $val = $attr;
+            }
             $start .= " $attr=\"" . $this->_quoteAttr($val) . '"';
+        }
         $start .= ">";
         return $start;
     }

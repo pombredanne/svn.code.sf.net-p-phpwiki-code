@@ -1,14 +1,14 @@
 <?php // -*-html-*- ?>
-<!-- $Id: body.tmpl,v 1.2 2002-01-19 23:38:47 carstenklapp Exp $ -->
+<!-- $Id: body.tmpl,v 1.3 2002-01-24 00:45:28 dairiki Exp $ -->
 <body>
 <!-- Page title and logo -->
 <h1><a class="wikilink" 
        href="<?=WikiURL(_("HomePage"))?>"
        ><img src="<?=$Theme->getImageURL('logo')?>"
-             border="0" alt="<?=$WIKI_NAME?>: <?=_("HomePage")?>" 
+             border="0" alt="<?=WIKI_NAME?>: <?=_("HomePage")?>" 
              align="bottom" /></a> <?=$HEADER?></h1>
 <?= $CONTENT ?>
-<?= new WikiTemplate('navbar') ?>
+<?= Template('navbar') ?>
 <!-- RELATEDPAGES were here. -->
 <br />
 <?= $GLOBALS['ErrorManager']->getPostponedErrorsAsHTML() ?>

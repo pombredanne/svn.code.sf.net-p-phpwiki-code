@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-/* $Id: top.tmpl,v 1.4 2002-01-21 06:55:47 dairiki Exp $
+/* $Id: top.tmpl,v 1.5 2002-01-24 00:45:28 dairiki Exp $
  *
  * This template is responsible mainly for the outer level <html> stuff and the and <head>.
  */
@@ -10,7 +10,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- phpwiki source:
-$Id: top.tmpl,v 1.4 2002-01-21 06:55:47 dairiki Exp $
+$Id: top.tmpl,v 1.5 2002-01-24 00:45:28 dairiki Exp $
 <?=$RCS_IDS?>
 -->
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
@@ -19,17 +19,14 @@ $Id: top.tmpl,v 1.4 2002-01-21 06:55:47 dairiki Exp $
 <?php } else { ?>
   <meta name="robots" content="noindex,nofollow" />
 <?php } ?>
-<meta name="keywords" content="<?=$SPLIT_PAGE?>, <?=$WIKI_NAME?>" />
+<meta name="keywords" content="<?=split_pagename($page->getName())?>, <?=WIKI_NAME?>" />
 <?php if (!empty($PAGE_DESCRIPTION)) { ?>
   <meta name="description" content="<?=$PAGE_DESCRIPTION?>" />
 <?php } ?>
 <base href="<?=BASE_URL?>" />
 <link rel="shortcut icon" href="<?=$Theme->getImageURL('favicon.ico')?>" />
 <?= $Theme->getCSS() ?>
-<title><?=$WIKI_NAME?> - <?=$TITLE?></title>
+<title><?=WIKI_NAME?> - <?=AsString($TITLE)?></title>
 </head>
-<?php $body = new WikiTemplate('body') ?>
-<?= /* not the greatest syntax, but this sucks in 'body.tmpl' */
-    new WikiTemplate('body') ?>
-
+<?= Template('body') ?>
 </html>

@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: navbar.tmpl,v 1.4 2002-01-22 04:51:50 dairiki Exp $ -->
+<!-- $Id: navbar.tmpl,v 1.5 2002-01-24 00:45:28 dairiki Exp $ -->
 <?php
 
   $BF = &$ButtonFactory;
@@ -17,7 +17,7 @@
 <!-- The bottom navigation/search bar -->
 
     <?= $BF->makeLinkButton(_("FindPage")) ?> by searching
-    <?php if (!empty($PAGE)) { ?>
+    <?php if (!empty($revision)) { ?>
       (or browse <?= $ButtonFactory->makeActionPageButton(_("LikePages")) ?>)
     <?php } ?>
     <?php if ($user->isAdmin()) { ?>
@@ -43,6 +43,6 @@
     <?php } ?>
   </td>
   <td align="right">
-    <?= new WikiTemplate('signin') ?>
+    <?= Template('signin') ?>
   </td>
 </tr></table>

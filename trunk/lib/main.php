@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.30 2002-01-23 20:18:21 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.31 2002-01-24 00:45:28 dairiki Exp $');
 
 
 include "lib/config.php";
@@ -89,11 +89,7 @@ class WikiRequest extends Request {
 
     function WikiRequest () {
         $this->Request();
-    }
 
-    // FIXME: make $request an argument of WikiTemplate,
-    // then subsume _init into WikiRequest().
-    function _init () {
         // Normalize args...
         $this->setArg('pagename', $this->_deducePagename());
         $this->setArg('action', $this->_deduceAction());
@@ -446,7 +442,6 @@ function main () {
     global $request;
 
     $request = new WikiRequest();
-    $request->_init();
     
     /* FIXME: is this needed anymore?
     if (USE_PATH_INFO && ! $request->get('PATH_INFO')

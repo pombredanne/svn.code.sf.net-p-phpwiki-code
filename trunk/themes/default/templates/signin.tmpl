@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: signin.tmpl,v 1.9 2002-01-23 05:10:22 dairiki Exp $ -->
+<!-- $Id: signin.tmpl,v 1.10 2002-01-24 00:45:28 dairiki Exp $ -->
 <?php
 
      $Sep = $Theme->getButtonSeparator();
@@ -14,7 +14,7 @@
 <?php if (empty($NOFORM)) { ?>
   <form method="post" action="<?=BASE_URL?>" accept-charset="<?=CHARSET?>" name="<?=$FORMNAME?>">
 
-  <?php foreach ($query_args as $key => $val) { ?>
+  <?php foreach ($request->getArgs() as $key => $val) { ?>
     <input type="hidden" name="<?=$key?>" value="<?=$val?>" />
   <?php } ?>
 <?php } ?>

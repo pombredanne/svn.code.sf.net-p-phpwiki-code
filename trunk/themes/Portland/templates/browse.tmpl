@@ -1,11 +1,11 @@
 <?php // -*-html-*- ?>
-<!-- $Id: browse.tmpl,v 1.2 2002-01-19 23:38:47 carstenklapp Exp $ -->
+<!-- $Id: browse.tmpl,v 1.3 2002-01-24 00:45:28 dairiki Exp $ -->
 <?php
 ?>
 
 <div class="br"><br clear="all" class="ignore" /></div>
 
-<?php if (! $IS_CURRENT) { ?>
+<?php if (! $revision->isCurrent()) { ?>
   <p><strong><?=_("Note:")?></strong>
      <?=_("You are viewing an old revision of this page.")?>
      <a href="<?= WikiURL($page->getName()) ?>"
@@ -15,5 +15,5 @@
 
 <div class="wikitext"><?=$CONTENT?></div>
 <hr />
-<?= new WikiTemplate('actionbar') ?>
+<?= Template('actionbar') ?>
 <!-- The bottom navigation/search bar -->
