@@ -1,5 +1,5 @@
 /**
- * $Id: Hawaiian.css,v 1.24 2002-03-03 04:08:37 carstenklapp Exp $
+ * $Id: Hawaiian.css,v 1.25 2002-03-08 04:24:31 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up. It has not yet been tested against NS4.
@@ -87,6 +87,18 @@ div.wikitext {
 div.wikitext hr { height: 1px; }
 
 div.wikitext pre { font-family: monospace; }
+
+
+/* Mozilla RecentChanges Sidebar */
+body.sidebar {
+  font-size: smaller;
+  margin: 0.5em;
+}
+body.sidebar div.wikitext {
+  padding: 0.5em;
+}
+body.sidebar div.wikitext ul { padding-left: 1em; }
+body.sidebar h2 { margin-top: 0; }
 
 
 /**

@@ -1,5 +1,5 @@
 /*
- $Id: MacOSX.css,v 1.28 2002-03-06 22:36:25 carstenklapp Exp $
+ $Id: MacOSX.css,v 1.29 2002-03-08 04:24:31 carstenklapp Exp $
 
  Classes:
 
@@ -108,6 +108,18 @@ div.toolbar { margin: 1ex 0ex; }
 .interwiki-map thead td:first-child { text-decoration: underline; }
 .interwiki-moniker { background: #eee; }
 .interwiki-url { background: #f8f8f8; }
+
+
+/* Mozilla RecentChanges Sidebar */
+body.sidebar {
+  font-size: smaller;
+  margin: 0.5em;
+}
+body.sidebar div.wikitext {
+  padding: 0.5em;
+}
+body.sidebar div.wikitext ul { padding-left: 1em; }
+body.sidebar h2 { margin-top: 0; }
 
 
 div.errors {

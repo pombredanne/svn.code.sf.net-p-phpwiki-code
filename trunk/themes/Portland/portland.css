@@ -1,5 +1,5 @@
 /**
- * $Id: portland.css,v 1.9 2002-02-08 22:56:37 carstenklapp Exp $
+ * $Id: portland.css,v 1.10 2002-03-08 04:25:33 carstenklapp Exp $
  *
  * PhpWiki's Portland style sheet based on the original Wiki
  *
@@ -22,3 +22,12 @@ img {
 input.numeric {
   text-align: right;
 }
+
+/* Mozilla RecentChanges Sidebar */
+body.sidebar {
+  font-size: smaller;
+  margin: 0.5em;
+}
+body.sidebar div.wikitext ul { padding-left: 1em; }
+body.sidebar h2 { margin-top: 0; }
+
