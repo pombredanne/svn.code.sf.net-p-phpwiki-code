@@ -1,0 +1,7 @@
+2000-07-30  Geoffrey T. Dairiki  <dairiki@dairiki.org>
+
+	* wiki_dbmlib.php3: Sort pages returned by retrieveAllPages().
+
+	* DBLIB.txt: Beginnings of documentation of the API to my hacked
+	database interface.
+
