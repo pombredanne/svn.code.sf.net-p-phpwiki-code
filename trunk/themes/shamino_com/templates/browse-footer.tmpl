@@ -1,0 +1,10 @@
+<?php // -*-html-*-
+  rcs_id('$Id: browse-footer.tmpl,v 1.1 2004-12-19 17:34:19 rurban Exp $');
+?>
+<div class="toolbar">
+<?php if (empty($GLOBALS['HIDE_TOOLBARS'])) { ?>
+  <?= Template('actionbar') ?>
+  <?= $WikiTheme->getButtonSeparator() ?>
+<?php } ?>
+  <span class="editdate"><?= $WikiTheme->getOwnerMessage($page) ?>  <?= $WikiTheme->getLastModifiedMessage($revision) ?> <?= $WikiTheme->getAuthorMessage($revision) ?></span>
+</div>
