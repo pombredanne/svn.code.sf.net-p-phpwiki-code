@@ -1,6 +1,6 @@
 <?php  
 
-   rcs_id('$Id: dbmlib.php,v 1.2 2000-10-19 22:25:45 ahollosi Exp $');
+   rcs_id('$Id: dbmlib.php,v 1.3 2000-11-01 11:31:41 ahollosi Exp $');
 
    /*
       Database functions:
@@ -30,29 +30,24 @@
    function OpenDataBase($dbname) {
       global $WikiDB; // hash of all the DBM file names
 
-      ksort($WikiDB);
       reset($WikiDB);
-
       while (list($key, $file) = each($WikiDB)) {
          while (($dbi[$key] = @dbmopen($file, "c")) < 1) {
+            $numattempts++;
             if ($numattempts > MAX_DBM_ATTEMPTS) {
                ExitWiki("Cannot open database '$key' : '$file', giving up.");
             }
-            $numattempts++;
             sleep(1);
          }
       }
-
       return $dbi;
    }
 
 
    function CloseDataBase($dbi) {
-
-      ksort($dbi);
       reset($dbi);
       while (list($dbmfile, $dbihandle) = each($dbi)) {
-         dbmclose($dbi[$dbihandle]);
+         dbmclose($dbihandle);
       }
       return;
    }
@@ -201,19 +196,13 @@
       }
    }
 
-   function cmp($a,$b) {   
-       if ($a == $b) return 0;
-       return ($a > $b) ? -1 : 1;
-   }
 
    function InitMostPopular($dbi, $limit) {
-
       // iterate through the whole dbm file for hit counts
       // sort the results highest to lowest, and return 
       // n..$limit results
 
       $pagename = dbmfirstkey($dbi['hitcount']);
-
       $res[$pagename] = dbmfetch($dbi['hitcount'], $pagename);
 
       while ($pagename = dbmnextkey($dbi['hitcount'], $pagename)) {
@@ -221,7 +210,7 @@
          //echo "got $pagename with value " . $res[$pagename] . "<br>\n";
       }
 
-      uasort($res, cmp);
+      arsort($res);
       return($res);
    }
 
@@ -240,7 +229,7 @@
             "hits" => $hits,
             "pagename" => $pagename
          );
-         $dbm_mostpopular_cntr++;
+         // $dbm_mostpopular_cntr++;
          return $nextpage;
       } else {
          return 0;

@@ -1,4 +1,4 @@
-<!-- $Id: display.php,v 1.3 2000-10-19 21:36:50 ahollosi Exp $ -->
+<!-- $Id: display.php,v 1.4 2000-11-01 11:31:41 ahollosi Exp $ -->
 <?php
    /*
       display.php: render a page. This has all the display 
@@ -8,7 +8,7 @@
    // if we got GET data, the first item is always a page name
    // if it wasn't this file would not have been included
 
-   if ($argv[0]) {
+   if (!empty($argv[0])) {
       $pagename = rawurldecode($argv[0]);
    } else { 
       $pagename = gettext("FrontPage");
