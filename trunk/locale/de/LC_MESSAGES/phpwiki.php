@@ -8,6 +8,8 @@ $locale["%d most popular nearby:"] =
    "Die %d meistbesuchten Seiten in der Nähe:";
 $locale["%s bytes written"] =
    "%s Bytes geschrieben";
+$locale["%s days"] =
+   "%s Tagen";
 $locale["%s failed"] =
    "%s hat verfehlt";
 $locale["%s(%d): no such revision"] =
@@ -18,6 +20,10 @@ $locale["%s: argument index out of range"] =
    "%s: Index des Arguments außer Reichweite";
 $locale["%s: file not found"] =
    "%s Datei nicht gefunden";
+$locale["%s: no such class"] =
+   "Keiner Klasse wie: »%s«";
+$locale["%s: not a subclass of WikiPlugin"] =
+   "»%s«: nicht einer Unterklasse von WikiPlugin";
 $locale["(Any password will work, except, of course for the admin user.)"] =
    "(Irgende Wörter können als Passwort angenommen werden sowieso, aber natürlich nicht für den Systemverwalter.)";
 $locale["(diff)"] =
@@ -26,6 +32,8 @@ $locale["- saved to database as version %d"] =
    "- gespeichert zur Datenbank als Verson %d.";
 $locale["- skipped"] =
    "- ausgelassen";
+$locale["1 day"] =
+   "1 Tag";
 $locale["<%s: no such section>"] =
    "<Keiner dergleichener Sektion als: %s>";
 $locale["<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."] =
@@ -34,6 +42,8 @@ $locale["<no matches>"] =
    "<nichts gefunden>";
 $locale["<none>"] =
    "<Keine>";
+$locale["A required argument '%s' is missing."] =
+   "Ein Benötiges Argument »%s« ist Fehlend.";
 $locale["Action %s is disabled in this wiki."] =
    "In dieses Wikis wurde die Tatigkeit »%s« nicht erlauben.";
 $locale["All %s are listed below."] =
@@ -86,6 +96,8 @@ $locale["Copied to [%s]"] =
    "Kopiert an %s";
 $locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
    "Kopiere deine Veränderungen in die Zwischenablage oder an einen anderentemporären Platz (z.B. einen Texteditor)";
+$locale["Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor."] =
+   "Kopiere deine Veränderungen in die Zwischenablage. Du kannst versuchen eine andere Seite zu editieren oder dein Text in einem Texteditor speichern.";
 $locale["Copying"] =
    "kopieren";
 $locale["Copying from [%s] to [%s]"] =
@@ -121,6 +133,8 @@ $locale["Edit"] =
 $locale["Edit %s"] =
    "Editiere %s";
 $locale["Edit aborted: %s"] =
+   "Editieren abgebrochen: %s";
+$locale["Edit aborted: %s."] =
    "Editieren abgebrochen: %s";
 $locale["Edit old revision"] =
    "Alte Revision editieren";
@@ -160,6 +174,8 @@ $locale["I'm sorry.  Version %d of %s is not in my database."] =
    "Es tut mir leid.  Version %d. von %s war nicht in meine Datenbank.";
 $locale["In order to recover from this situation follow these steps:"] =
    "Um diese Situation zu korrigieren folge bitte den folgenden Schritten:";
+$locale["Include of '%s' failed"] =
+   "Einfügen von »%s« fehlgeschlagen";
 $locale["IncludePage"] =
    "SeiteEinfügen";
 $locale["Included from %s"] =
@@ -228,6 +244,8 @@ $locale["Page names with prefix '%s'"] =
    "Seitenamen mit Vorsatzwort »%s«";
 $locale["Page names with suffix '%s'"] =
    "Seitenamen mit Nachsatzwort »%s«";
+$locale["Page source for %s"] =
+   "Quelltext für die Seite »%s«";
 $locale["PageHistory"] =
    "SeiteProtokoll";
 $locale["PageHistory for %s"] =
@@ -286,6 +304,10 @@ $locale["See %s tips for editing."] =
    "Sehe %s tips fürs Editieren.";
 $locale["Serialized file %s"] =
    "Seriell-Datei %s";
+$locale["Show changes for: %s"] =
+   "Zeige Änderungen innerhalb von: %s";
+$locale["Show minor edits for: %s"] =
+   "Zeige geringe Änderungen innerhalb von: %s";
 $locale["Sign in:"] =
    "Melde dich an:";
 $locale["SignIn"] =
@@ -324,6 +346,8 @@ $locale["This is a minor change."] =
    "Geringfügige Änderung";
 $locale["This page has been locked by the administrator and cannot be edited."] =
    "Diese Seite wurde vom Systemverwalter gesperrt und kann nicht editiert werden.";
+$locale["This page has been locked by the administrator so your changes could not be saved."] =
+   "Diese Seite wurde vom Systemverwalter gesperrt und deine Veränderungen kann nicht gespeichert werden.";
 $locale["Timeout while obtaining lock."] =
    "Zeitüberschreitung während Dateischloß beschaffen";
 $locale["Title Search"] =
@@ -334,6 +358,10 @@ $locale["TitleSearch"] =
    "Titelsuche";
 $locale["To cancel press the \"Back\" button of your browser."] =
    "Anderenfalls benütze die »Zurück« Funktion deines Browsers.";
+$locale["Toolbar"] =
+   "Werkzeugleiste";
+$locale["Toolbar for %s"] =
+   "Werkzeugleiste für %s";
 $locale["Unable to obtain read lock."] =
    "Konnte Dateischloß nicht beschaffen zum lesen.";
 $locale["Unable to open file"] =
@@ -362,8 +390,12 @@ $locale["Version %s, saved on %s."] =
    "Version %s. zuletzt am %s gespeichert.";
 $locale["Versions are identical"] =
    "Versionen sind identisch";
+$locale["View WikiMarkup for page '%s'."] =
+   "Schaue der Quelltext für die Seite »%s«.";
 $locale["View the current version"] =
    "Schaue die aktuellste Version";
+$locale["ViewMarkup"] =
+   "SchaueQuelltext";
 $locale["WARNING: database still locked"] =
    "WARNUNG: Datenbank ist gesperrt";
 $locale["Warning!"] =
@@ -396,8 +428,12 @@ $locale["You must specify a directory to dump to"] =
    "Du mußt ein Sicherungsdateiverzeichnis spezifizieren.";
 $locale["Your careful attention to detail is much appreciated."] =
    "Deine besondere Aufmerksamkeit für Details wird sehr geschätzt.";
+$locale["Your sysadmin has disallowed use of the %s plugin!"] =
+   "Das Zusatzprogramm »%s« wurde von deinem Systemverwalter verworfen!";
 $locale["[%d] See [%s]"] =
    "[%d] Sehe [%s]";
+$locale["argument '%s' not declared by plugin"] =
+   "Argument »%s« nicht deklariert in Zusatzprogramm";
 $locale["backlink entry missing for link %s"] =
    "Es fehlt ein BackLink Datensatz für Link %s";
 $locale["by %s"] =
@@ -460,10 +496,14 @@ $locale["to do that"] =
    "um daß zu tun";
 $locale["to perform action '%s'"] =
    "um die Tatigkeit »%s« zu tun";
+$locale["trailing cruft in plugin args: '%s'"] =
+   "zusätzliche Schrott in Zusatzprogramm Argumenten: »%s«";
 $locale["unable to locate/open [%s], turning debug off"] =
    "könnte [%s] nicht auffinden/öffnen, Debug wird abgeschaltet.";
 $locale["version %d"] =
    "Version %d.";
+$locale["version %d of %s"] =
+   "Version %d. von %s";
 $locale["version %s"] =
    "Version %s.";
 
