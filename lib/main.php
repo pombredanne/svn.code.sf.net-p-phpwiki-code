@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.83 2002-09-16 22:12:48 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.84 2002-09-18 19:29:43 dairiki Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -311,14 +311,6 @@ class WikiRequest extends Request {
             case 'unlock':
                 return WIKIAUTH_ADMIN;
             default:
-                // Temp workaround for french single-word action pages 'Historique'
-                // Some of this make sense as SubPage actions or buttons.
-                $singleWordActionPages = 
-                    array("Historique", "Info",
-                          _("Preferences"), _("Administration"), 
-                          _("Today"), _("Help"));
-                if (in_array($action, $singleWordActionPages))
-                    return WIKIAUTH_ANON; // ActionPage.
                 global $WikiNameRegexp;
                 if (preg_match("/$WikiNameRegexp\Z/A", $action))
                     return WIKIAUTH_ANON; // ActionPage.
@@ -349,8 +341,8 @@ class WikiRequest extends Request {
         if (method_exists($this, $method)) {
             $this->{$method}();
         }
-        elseif ($this->isActionPage($action)) {
-            $this->actionpage($action);
+        elseif ($page = $this->findActionPage($action)) {
+            $this->actionpage($page);
         }
         else {
             $this->finish(fmt("%s: Bad action", $action));
@@ -451,27 +443,60 @@ class WikiRequest extends Request {
         return false;
     }
     
-    function isActionPage ($pagename) {
-        if (isSubPage($pagename)) 
-            $subpagename = subPageSlice($pagename,-1); // last element
-        else 
-            $subpagename = $pagename;
-        // Temp workaround for french single-word action page 'Historique'
-        $singleWordActionPages = array("Historique", "Info", _('Preferences'));
-        if (! in_array($subpagename, $singleWordActionPages)) {
-            // Allow for, e.g. action=LikePages
-            global $WikiNameRegexp;
-            if (!preg_match("/$WikiNameRegexp\\Z/A", $subpagename))
-                return false;
-        }
+    function _isActionPage ($pagename) {
         $dbi = $this->getDbh();
         $page = $dbi->getPage($pagename);
         $rev = $page->getCurrentRevision();
         // FIXME: more restrictive check for sane plugin?
         if (strstr($rev->getPackedContent(), '<?plugin'))
             return true;
-        trigger_error("$pagename: Does not appear to be an 'action page'", E_USER_NOTICE);
+        if (!$rev->hasDefaultContents())
+            trigger_error("$pagename: Does not appear to be an 'action page'", E_USER_NOTICE);
         return false;
+    }
+
+    function findActionPage ($action) {
+        static $cache;
+
+        if (isset($cache) and isset($cache[$action]))
+            return $cache[$action];
+        
+        // Allow for, e.g. action=LikePages
+        global $WikiNameRegexp;
+        if (!preg_match("/$WikiNameRegexp\\Z/A", $action))
+            return $cache[$action] = false;
+
+        // check for translated version (users preferred language)
+        $translation = gettext($action);
+        if ($this->_isActionPage($translation))
+            return $cache[$action] = $translation;
+
+        // check for translated version (default language)
+        global $LANG;
+        if ($LANG != DEFAULT_LANGUAGE and $LANG != "en") {
+            $save_lang = $LANG;
+            update_locale(DEFAULT_LANGUAGE);
+            $default = gettext($action);
+            update_locale($save_lang);
+            if ($this->_isActionPage($default))
+                return $cache[$action] = $default;
+        }
+        else {
+            $default = $translation;
+        }
+        
+        // check for english version
+        if ($action != $translation and $action != $default) {
+            if ($this->_isActionPage($action))
+                return $cache[$action] = $action;
+        }
+
+        trigger_error("$action: Cannot find action page", E_USER_NOTICE);
+        return $cache[$action] = false;
+    }
+    
+    function isActionPage ($pagename) {
+        return $this->findActionPage($pagename);
     }
 
     function action_browse () {
