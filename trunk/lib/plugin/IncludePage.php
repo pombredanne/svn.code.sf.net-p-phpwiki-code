@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: IncludePage.php,v 1.17 2002-02-08 03:01:11 dairiki Exp $');
+rcs_id('$Id: IncludePage.php,v 1.18 2002-02-09 20:20:38 dairiki Exp $');
 /**
  * IncludePage:  include text from another wiki page in this one
  * usage:   <?plugin IncludePage page=OtherPage rev=6 quiet=1 words=50 lines=6?>
@@ -60,26 +60,19 @@ extends WikiPlugin
         return array(sprintf(_("<%s: no such section>"), $mesg));
     }
 
-    function error($msg) {
-        // FIXME: better error reporting?
-        trigger_error($msg, E_USER_NOTICE);
-    }
-
     function run($dbi, $argstr, $request) {
 
         extract($this->getArgs($argstr, $request));
 
         if (!$page) {
-            $this->error(_("no page specified"));
-            return '';
+            return $this->error(_("no page specified"));
         }
 
         // A page can include itself once (this is needed, e.g.,  when editing
         // TextFormattingRules).
         static $included_pages = array();
         if (in_array($page, $included_pages)) {
-            $this->error(sprintf(_("recursive inclusion of page %s"), $page));
-            return '';
+            return $this->error(sprintf(_("recursive inclusion of page %s"), $page));
         }
 
         $p = $dbi->getPage($page);
@@ -87,9 +80,8 @@ extends WikiPlugin
         if ($rev) {
             $r = $p->getRevision($rev);
             if (!$r) {
-                $this->error(sprintf(_("%s(%d): no such revision"), $page,
-                                     $rev));
-                return '';
+                return $this->error(sprintf(_("%s(%d): no such revision"), $page,
+                                            $rev));
             }
         } else {
             $r = $p->getCurrentRevision();
@@ -146,7 +138,6 @@ extends WikiPlugin
 // KNOWN ISSUES:
 // - line & word limit doesn't work if the included page itself
 //   includes a plugin
-// - we need an error reporting scheme
 
 // For emacs users
 // Local Variables:
