@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.9 2002-01-23 05:10:22 dairiki Exp $');
+<?php rcs_id('$Id: Request.php,v 1.10 2002-01-28 20:02:14 dairiki Exp $');
 
 // FIXME: write log entry.
 
@@ -72,11 +72,12 @@ class Request {
         if ($args)
             $get_args = array_merge($get_args, $args);
 
+        $pagename = $get_args['pagename'];
         unset ($get_args['pagename']);
         if ($get_args['action'] == 'browse')
             unset($get_args['action']);
 
-        return WikiURL($this->getArg('pagename'), $get_args);
+        return WikiURL($pagename, $get_args);
     }
     
 

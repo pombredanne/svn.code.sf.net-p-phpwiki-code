@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.41 2002-01-28 18:49:08 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.42 2002-01-28 20:02:14 dairiki Exp $');
 
 
 include "lib/config.php";
@@ -241,7 +241,6 @@ class WikiRequest extends Request {
         switch ($action) {
         case 'browse':
         case 'diff':
-        case 'actionpage':
             return WIKIAUTH_ANON;
 
         case 'zip':
@@ -291,10 +290,15 @@ class WikiRequest extends Request {
     function handleAction () {
         $action = $this->getArg('action');
         $method = "action_$action";
-        if (! method_exists($this, $method)) {
+        if (method_exists($this, $method)) {
+            $this->{$method}();
+        }
+        elseif ($this->isActionPage($action)) {
+            $this->actionpage($action);
+        }
+        else {
             $this->finish(fmt("%s: Bad action", $action));
         }
-        $this->{$method}();
     }
         
         
@@ -347,43 +351,46 @@ class WikiRequest extends Request {
         return HomePage;
     }
 
-    
     function _deduceAction () {
         if (!($action = $this->getArg('action')))
             return 'browse';
 
-        if ($action != 'actionpage' && method_exists($this, "action_$action"))
+        if (method_exists($this, "action_$action"))
             return $action;
 
         // Allow for, e.g. action=LikePages
-        global $WikiNameRegexp;
-        if (preg_match("/$WikiNameRegexp\\Z/A", $action)) {
-            $dbi = $this->getDbh();
-            $actionpage = $dbi->getPage($action);
-            $rev = $actionpage->getCurrentRevision();
-            // FIXME: more restrictive check for sane plugin?
-            if (strstr($rev->getPackedContent(), '<?plugin')) {
-                $this->_actionpage = $actionpage;
-                return 'actionpage';
-            }
-            trigger_error("$action: Does not appera to be an 'action page'", E_USER_NOTICE);
-            return 'browse';
-        }
-                
+        if ($this->isActionPage($action))
+            return $action;
+        
         trigger_error("$action: Unknown action", E_USER_NOTICE);
         return 'browse';
     }
 
+    function isActionPage ($pagename) {
+        // Allow for, e.g. action=LikePages
+        global $WikiNameRegexp;
+        if (!preg_match("/$WikiNameRegexp\\Z/A", $pagename))
+            return false;
+        $dbi = $this->getDbh();
+        $page = $dbi->getPage($pagename);
+        $rev = $page->getCurrentRevision();
+        // FIXME: more restrictive check for sane plugin?
+        if (strstr($rev->getPackedContent(), '<?plugin'))
+            return true;
+        trigger_error("$pagename: Does not appera to be an 'action page'", E_USER_NOTICE);
+        return false;
+    }
+    
     function action_browse () {
         $this->compress_output();
         include_once("lib/display.php");
         displayPage($this);
     }
 
-    function action_actionpage () {
+    function actionpage ($action) {
         $this->compress_output();
         include_once("lib/display.php");
-        actionPage($this, $this->_actionpage);
+        actionPage($this, $action);
     }
     
     function action_diff () {
