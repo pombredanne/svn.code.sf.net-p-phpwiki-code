@@ -1,0 +1,17 @@
+DiversosNavegadores tienen problemas al usar en caractaer TAB en las ReglasDeFormatoDeTexto.  Si no puede escribir un TAB, o si está arreglando una página escrita por alguien que no halla puesto los TABs, entonces debería de permitir a Wiki convertir varios espacios en tabs.  Usted solicita una conversion de espacios a tabs en el cuadro que aparece al final de las páginas EditarElTexto and EditarCopia.  Tal y como...
+
+ [[o] No puedo escribir tabs. Por favor ConvierteEspaciosEnTabs por mi cuando salve.
+
+Un grupo de espacios debe ser al menos '''tres''' espacios para ser reconocidos 
+como un tab.  Use multiplos of '''ocho''' espacios para hacer multiples tabulaciones. 
+Cada grupo de ocho espacios será convertido a una tabulación.  Aunque el último  
+grupo sea un poco mas pequeño no hay problema, si tiene al menos tres espacios.
+
+'''Compruebe su trabajo.'''  Sino puede obtener resultados inesperados. 
+-----
+[Nota:  Esta página es vista cuando el usuario hace click sobre el
+enlave "ConvierteEspaciosEnTabs" en cualquier pantalla de edición.  
+Describe lo que sucede cuando se le pide al sistema hacer esto, y es
+el camino para evitar el problema de "espacios en vez de tabs".]
+
+
