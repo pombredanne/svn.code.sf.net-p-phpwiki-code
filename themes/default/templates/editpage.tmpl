@@ -1,14 +1,16 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.20 2002-02-06 04:42:18 dairiki Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.21 2002-02-07 03:47:27 carstenklapp Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
+                            'maxlength' => 4,
                             'name' => 'pref[editWidth]',
                             'value' => $request->getPref('editWidth'),
                             'onchange' => 'this.form.submit();'));
 
 $HeightI = HTML::input(array('type' => 'text',
                              'size' => 3,
+                             'maxlength' => 4,
                              'name' => 'pref[editHeight]',
                              'value' => $request->getPref('editHeight'),
                              'onchange' => 'this.form.submit();'));
@@ -22,7 +24,7 @@ $s = $Theme->getButtonSeparator();
 <!-- FIXME: it would be nice to put a link to the #editarea anchor below,
      but it does not work currently with the <base> declared in top.tmpl.
      I think we need to do away with using <base> altogether... -->
-     Please continue editing.  (You'll find your edit area at the bottom of the page.)
+     Please continue editing.  (You'll find your <!--a href="#editarea"-->edit area<!--/a--> at the bottom of the page.)
   </p>
   <div class="wikitext"><?= $PREVIEW_CONTENT ?></div>
 <?php } ?>
