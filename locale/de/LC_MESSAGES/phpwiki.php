@@ -114,6 +114,8 @@ $locale["Date Format"] =
    "Datumformat";
 $locale["DebugInfo"] =
    "DebugInfo";
+$locale["Default InterWiki map file not loaded."] =
+   "Standard-Datei der InterWiki-Karte nicht geladen.";
 $locale["Deleted."] =
    "Gelöscht.";
 $locale["Describe %s here."] =
@@ -126,6 +128,8 @@ $locale["Differences between %s and %s of %s."] =
    "Zeilenweiser Vergleich von %3\$s, von %1\$s mit %2\$s";
 $locale["Dump Pages"] =
    "Schreibe Seiten";
+$locale["Dump Pages as XHTML"] =
+   "Schreibe Seiten als XHTML";
 $locale["Dumping Pages"] =
    "Die Seiten werden geschrieben";
 $locale["Edit"] =
@@ -202,6 +206,8 @@ $locale["Info"] =
    "Info";
 $locale["Insufficient permissions."] =
    "Erlaubnisse nicht ausreichend.";
+$locale["InterWiki Address"] =
+   "InterWiki-Adresse";
 $locale["InterWikiMap"] =
    "InterWikiKarte";
 $locale["Invalid password or userid."] =
@@ -262,6 +268,8 @@ $locale["Modern"] =
    "Modern";
 $locale["MostPopular"] =
    "MeistBesucht";
+$locale["Name"] =
+   "Seitenname";
 $locale["New page."] =
    "Neue Seite.";
 $locale["Newer page:"] =
@@ -288,6 +296,10 @@ $locale["Optimizing %s"] =
    "%s wird optimiert";
 $locale["Original (1.2 or 1.0)"] =
    "Originales (1,2 oder 1,0)";
+$locale["Orphaned Pages"] =
+   "Verwaiste Seiten";
+$locale["Orphaned Pages in this wiki (%d total):"] =
+   "Verwaiste Seiten in dieser wiki (%d gesamt):";
 $locale["Other diffs:"] =
    "Andere Vergleiche:";
 $locale["Other version"] =
@@ -352,8 +364,8 @@ $locale["RecentChanges"] =
    "FrischeSeiten";
 $locale["RecentEdits"] =
    "GeringfügigeÄnderungen";
-$locale["Redefinition of default CSS: %s"] =
-   "Datenbestimmung 'default CSS' neu definiert: %s";
+$locale["Redefinition of %s: %s"] =
+   "Datenbestimmung %s neu definiert: %s";
 $locale["References"] =
    "Fußnoten";
 $locale["Remove Page"] =
@@ -444,6 +456,8 @@ $locale["The %d oldest %s during the past %s days are listed below."] =
    "Die %d älteste %s innerhalb der letzten %s Tage sind unten aufgelistet.";
 $locale["The %d oldest %s during the past day are listed below."] =
    "Die %d älteste %s innerhalb des letzten Tages sind unten aufgelistet.";
+$locale["The PhpWiki Programming Team"] =
+   "Das PhpWiki Programmierer-Team";
 $locale["The PhpWiki programming team"] =
    "Das PhpWiki Programmierer-Team";
 $locale["The current time at the server is %s."] =
