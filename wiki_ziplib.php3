@@ -1,4 +1,4 @@
-<? rcs_id("$Id: wiki_ziplib.php3,v 1.1 2000-07-18 03:25:52 dairiki Exp $");
+<? rcs_id("$Id: wiki_ziplib.php3,v 1.2 2000-07-18 05:15:58 dairiki Exp $");
 
 function warn ($msg)
 {
@@ -618,7 +618,7 @@ function ParseMimeifiedPages ($data)
   if (!($headers = ParseRFC822Headers($data))
       || !($typeheader = $headers['content-type']))
     {
-      warn("Can't find content-type header");
+      //warn("Can't find content-type header");
       return false;
     }
   
