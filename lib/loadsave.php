@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.58 2002-02-20 16:55:41 dairiki Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.59 2002-02-20 17:13:49 dairiki Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -397,6 +397,7 @@ function ParseSerializedPage($text, $default_pagename, $user)
         switch($key) {
             case 'pagename':
             case 'version':
+            case 'hits':
                 $pageinfo[$key] = $value;
                 break;
             case 'content':
@@ -415,7 +416,8 @@ function ParseSerializedPage($text, $default_pagename, $user)
             case 'author':
             case 'author_id':
             case 'summary':
-            case 'hits':
+                $versiondata[$key] = $value;
+                break;
         }
     }
     return $pageinfo;
@@ -502,9 +504,9 @@ function LoadDir (&$request, $dirname, $files = false, $exclude = false) {
     // Defer HomePage loading until the end. If anything goes wrong
     // the pages can still be loaded again.
     $files = $fileset->getFiles();
-    if ($home = in_array(HomePage, $files)) {
-        $files[$home]='';
-        array_push($files, HomePage);
+    if (in_array(HomePage, $files)) {
+        $files = array_diff($files, array(HomePage));
+        $files[] = HomePage;
     }
     foreach ($files as $file)
         LoadFile($request, "$dirname/$file");
