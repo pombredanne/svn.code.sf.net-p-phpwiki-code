@@ -1,10 +1,10 @@
 <!-- -*-html-*- -->
-<!-- $Id: viewsource.tmpl,v 1.4 2002-01-24 00:45:28 dairiki Exp $ -->
+<!-- $Id: viewsource.tmpl,v 1.5 2002-01-26 05:51:24 dairiki Exp $ -->
 <p><strong><?=_("Note:")?></strong>
 <?=_("This page has been locked by the administrator and cannot be edited.")?>
 <?php if (! $revision->isCurrent()) { ?>
   <br /><?=_("You are viewing an old revision of this page.")?>
-  <?= $ButtonFactory->makeActionButton('edit', _("View the current version"), $page->getCurrentRevision())?>.
+  <?= $ButtonFactory->makeActionButton('edit', _("View the current version"), $page->getName())?>.
 <?php } ?>
 </p>
 <!-- Dummy form else NS4 doesn't like the textarea -->
