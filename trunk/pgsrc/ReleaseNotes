@@ -1,9 +1,9 @@
-Date: Mon, 24 Jan 2005 17:20:57 +0100
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.11pre)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.51 2005-02-26 19:06:08 rurban Exp $
+Date: Sun, 27 Feb 2005 10:40:00 +0100
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.11)
+X-Rcs-Id: $Id: ReleaseNotes,v 1.52 2005-02-27 09:47:38 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.51 $";
+  pgsrc_version="2 $Revision: 1.52 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
@@ -182,7 +182,6 @@ new:
 * new edit "[] old markup [Convert]" button to convert and save to new markup.
 * new LinkDatabase plugin and actionpage for the http://touchgraph.sourceforge.net/ ~WikiBrowser
 * new hyperwiki applet in Sidebar. See http://hypergraph.sourceforge.net/
-<<<<<<< ReleaseNotes
 * new xmlrpc methods: putPage, mailPasswordToUser
 * new xmlrpc test framework
 * WikiSpam prevention: On GOOGLE_LINKS_NOFOLLOW add rel=nowfollow to all external 
@@ -217,13 +216,6 @@ PhpWiki 1.2.7 backport cvs release-1_2-branch enhancements never released with 1
 flatfile fixes and enhancement:
 * fixed !TitleSearch and Backlinks for flatfile.
 * enable MostPopular (hitcount storage) for flatfile 
-=======
-* new xmlrpc methods: putPage, mailPasswordToUser
-* new xmlrpc test framework
-* WikiSpam prevention: On GOOGLE_LINKS_NOFOLLOW add rel=nowfollow to all external 
-  links, unless the author was authenticated.
-* action=upgrade performs now a mysql LOCK TABLE privileges check and fix,
-* action=upgrade asks now for the admin's user and password if not defined
 
 1.2.7 (the old-stable version) Jan, 6 2005, Reini Urban:
 PhpWiki 1.2.7 backport cvs release-1_2-branch enhancements never released with 1.2.3-1.2.6:
@@ -243,7 +235,6 @@ PhpWiki 1.2.7 backport cvs release-1_2-branch enhancements never released with 1
 flatfile fixes and enhancement:
 * fixed !TitleSearch and Backlinks for flatfile.
 * enable MostPopular (hitcount storage) for flatfile 
->>>>>>> 1.50
 
 1.2.5 (the old-stable branch) Nov, 28 2004, Reini Urban:
 * works with register_globals=off
