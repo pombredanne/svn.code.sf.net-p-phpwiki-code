@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.32 2004-02-27 02:30:32 rurban Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.33 2004-04-01 06:28:33 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -390,7 +390,7 @@ class Markup_wikiword extends SimpleMarkup
 
     function markup ($match) {
         if ($this->_isWikiUserPage($match))
-            return $this->_UserLink($match);
+            return new Cached_UserLink($match); //$this->_UserLink($match);
         else
             return new Cached_WikiLink($match);
     }
