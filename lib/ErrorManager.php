@@ -1,6 +1,7 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.21 2004-04-26 12:22:56 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.22 2004-05-12 10:49:54 rurban Exp $');
 
 require_once(dirname(__FILE__).'/HtmlElement.php');
+if (isset($GLOBALS['ErrorManager'])) return;
 
 define ('EM_FATAL_ERRORS',
 	E_ERROR | E_PARSE | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR);

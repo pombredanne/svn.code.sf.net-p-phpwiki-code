@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.7 2004-05-06 17:30:38 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.8 2004-05-12 10:49:55 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -249,9 +249,9 @@ function CheckDatabaseUpdate($request) {
     if (phpwiki_version() >= 1030.08 and USE_DB_SESSION and isset($request->_dbsession)) {
   	echo _("check for new session.sess_ip column")," ... ";
   	$database = $dbh->_backend->database();
+  	assert(!empty($DBParams['db_session_table']));
         $session_tbl = $prefix . $DBParams['db_session_table'];
-        assert($session_tbl);
-        $fields = $dbh->_backend->listOfFields($database,$session_tbl);
+        $sess_fields = $dbh->_backend->listOfFields($database,$session_tbl);
         if (!in_array("sess_ip",$sess_fields)) {
             echo "<b>",_("ADDING"),"</b>"," ... ";		
             $dbh->simpleQuery("ALTER TABLE $session_tbl ADD sess_ip CHAR(15) NOT NULL");
@@ -264,9 +264,9 @@ function CheckDatabaseUpdate($request) {
     // mysql, mysqli or mysqlt
     if (phpwiki_version() >= 1030.099 and substr($backend_type,0,5) == 'mysql') {
   	echo _("check for page.id auto_increment flag")," ...";
-        assert($page_tbl);
+        assert(!empty($page_tbl));
   	$database = $dbh->_backend->database();
-  	$fields = mysql_list_fields($database,$page_tbl);
+  	$fields = mysql_list_fields($database,$page_tbl,$dbh->_backend->connection());
   	$columns = mysql_num_fields($fields); 
         for ($i = 0; $i < $columns; $i++) {
             if (mysql_field_name($fields, $i) == 'id') {
@@ -330,6 +330,17 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.7  2004/05/06 17:30:38  rurban
+ CategoryGroup: oops, dos2unix eol
+ improved phpwiki_version:
+   pre -= .0001 (1.3.10pre: 1030.099)
+   -p1 += .001 (1.3.9-p1: 1030.091)
+ improved InstallTable for mysql and generic SQL versions and all newer tables so far.
+ abstracted more ADODB/PearDB methods for action=upgrade stuff:
+   backend->backendType(), backend->database(),
+   backend->listOfFields(),
+   backend->listOfTables(),
+
  Revision 1.6  2004/05/03 15:05:36  rurban
  + table messages
 

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.28 2004-05-06 19:26:16 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.29 2004-05-12 10:49:55 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -862,6 +862,9 @@ extends WikiDB_backend
     function backendType() {
         return $this->_dbh->databaseType;
     }
+    function connection() {
+        return $this->_dbh->_connectionID;
+    }
 
     function listOfTables() {
         return $this->_dbh->MetaTables();
@@ -1064,6 +1067,11 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.28  2004/05/06 19:26:16  rurban
+// improve stability, trying to find the InlineParser endless loop on sf.net
+//
+// remove end-of-zip comments to fix sf.net bug #777278 and probably #859628
+//
 // Revision 1.27  2004/05/06 17:30:38  rurban
 // CategoryGroup: oops, dos2unix eol
 // improved phpwiki_version:

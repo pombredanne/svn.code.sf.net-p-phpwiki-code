@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: imagecache.php,v 1.4 2004-05-02 15:10:07 rurban Exp $');
+<?php rcs_id('$Id: imagecache.php,v 1.5 2004-05-12 10:49:55 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -26,7 +26,7 @@
  */
 
 include "lib/config.php";
-require_once("lib/stdlib.php");
+require_once(dirname(__FILE__)."/stdlib.php");
 require_once('lib/Request.php');
 if (ENABLE_USER_NEW) require_once("lib/WikiUserNew.php");
 else                 require_once("lib/WikiUser.php");

@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.177 2004-05-08 14:06:12 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.178 2004-05-12 10:49:55 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -37,6 +37,8 @@
   function: UpdateRecentChanges($dbi, $pagename, $isnewpage) 
   gone see: lib/plugin/RecentChanges.php
 */
+if (defined('_PHPWIKI_STDLIB_LOADED')) return;
+else define('_PHPWIKI_STDLIB_LOADED',true);
 
 define('MAX_PAGENAME_LENGTH', 100);
 
@@ -1418,6 +1420,10 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.177  2004/05/08 14:06:12  rurban
+// new support for inlined image attributes: [image.jpg size=50x30 align=right]
+// minor stability and portability fixes
+//
 // Revision 1.176  2004/05/08 11:25:15  rurban
 // php-4.0.4 fixes
 //
