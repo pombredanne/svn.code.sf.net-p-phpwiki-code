@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.58 2002-02-20 00:12:28 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.59 2002-02-21 04:13:13 carstenklapp Exp $');
 
 
 include "lib/config.php";
@@ -281,7 +281,6 @@ WikiUser::PrintLoginForm($this, compact('require_level'), $msg);
         // FIXME: clean up.
         switch ($action) {
             case 'browse':
-            case 'info':
             case 'viewsource':
             case 'diff':
                 return WIKIAUTH_ANON;
@@ -474,36 +473,6 @@ WikiUser::PrintLoginForm($this, compact('require_level'), $msg);
         include "lib/editpage.php";
         $e = new PageEditor ($this);
         $e->viewSource();
-    }
-
-    function action_info () {
-        // this should probably be incorporated into display.php
-        global $Theme, $request;
-        //require_once('lib/display.php');
-        //displayPage(&$request, 'info'); // this adds to hit counter
-
-        $pagename = $request->getArg('pagename');
-        $version = $request->getArg('version');
-        $pagehandle = $request->getPage();
-        if ($version) {
-            $revision = $pagehandle->getRevision($version);
-            if (!$revision)
-                NoSuchRevision($request, $pagehandle, $version);
-        } else {
-            $revision = $pagehandle->getCurrentRevision();
-        }
-
-        $pagetitle = HTML(fmt("%s: %s", _("Info"),
-                              $Theme->linkExistingWikiWord($pagename, false, $version)));
-
-        //$pagetitle->addTooltip(sprintf(_("Page info for %s"), $pagename));
-
-        require_once("lib/Template.php");
-        $i = Template('info', $this);
-        $t = Template('browse', array('CONTENT' => $i));
-
-        GeneratePage($t, $pagetitle, $revision);
-        flush();
     }
 
     function action_lock () {
