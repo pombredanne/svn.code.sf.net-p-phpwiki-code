@@ -1,5 +1,4 @@
-<!-- $Id: wiki_mysql.php3,v 1.11 2000-07-07 02:44:59 wainstead Exp $ -->
-<?
+<? rcs_id('$Id: wiki_mysql.php3,v 1.12 2000-07-07 19:53:50 dairiki Exp $');
 
    /*
       Database functions:

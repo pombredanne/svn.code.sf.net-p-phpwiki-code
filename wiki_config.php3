@@ -1,5 +1,9 @@
-<!-- $Id: wiki_config.php3,v 1.15 2000-07-04 22:32:17 ahollosi Exp $ -->
 <?
+if (!function_exists('rcs_id')) 
+  function rcs_id($id) { echo "<!-- $id -->\n"; };
+
+rcs_id('$Id: wiki_config.php3,v 1.16 2000-07-07 19:53:50 dairiki Exp $');
+
    /*
       Constants and settings. Edit the values below for
       your site. You need two image files, a banner and 
