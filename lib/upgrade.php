@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.17 2004-06-17 11:31:50 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.18 2004-06-19 11:47:17 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -291,7 +291,7 @@ CREATE TABLE $rating_tbl (
  * jeffs-hacks database api (around 1.3.2) later
  *   people should export/import their pages if using that old versions.
  */
-function CheckDatabaseUpdate($request) {
+function CheckDatabaseUpdate(&$request) {
     global $DBParams, $DBAuthParams;
     if (!in_array($DBParams['dbtype'], array('SQL','ADODB'))) return;
     echo "<h3>",_("check for necessary database updates"),"</h3>\n";
@@ -368,10 +368,62 @@ function CheckDatabaseUpdate($request) {
             $dbh->genericQuery("ALTER TABLE $page_tbl CHANGE pagename pagename VARCHAR(100) NOT NULL;");
             echo sprintf(_("version <em>%s</em> <b>FIXED</b>"), $mysql_version),"<br />\n";	
         } else {
-            echo sprintf(_("version <em>%s</em> not affected"), $mysql_version),"<br />\n";	
+            echo sprintf(_("version <em>%s</em> not affected"), $mysql_version),"<br />\n";
         }
     }
     return;
+}
+
+function fixConfigIni($match, $new) {
+    $file = FindFile("config/config.ini");
+    $found = false;
+    if (is_writable($file)) {
+        $in = fopen($file,"rb");
+        $out = fopen($tmp = tempnam(FindFile("uploads"),"cfg"),"wb");
+        if (isWindows())
+            $tmp = str_replace("/","\\",$tmp);
+        while ($s = fgets($in)) {
+            if (preg_match($match, $s)) {
+                $s = $new . (isWindows() ? "\r\n" : "\n");
+                $found = true;
+            }
+            fputs($out, $s);
+        }
+        fclose($in);
+        fclose($out);
+        if (!$found) {
+            echo " <b><font color=\"red\">",_("FAILED"),"</font></b>: ",
+                sprintf(_("%s not found"), $match);
+            unlink($out);
+        } else {
+            @unlink("$file.bak");
+            @rename($file,"$file.bak");
+            if (rename($tmp, $file))
+                echo " <b>",_("FIXED"),"</b>";
+            else {
+                echo " <b>",_("FAILED"),"</b>: ";
+                sprintf(_("couldn't move %s to %s"), $tmp, $file);
+                return false;
+            }
+        }
+        return $found;
+    } else {
+        echo " <b><font color=\"red\">",_("FAILED"),"</font></b>: ",
+            sprintf(_("%s is not writable"), $file);
+        return false;
+    }
+}
+
+function CheckConfigUpdate(&$request) {
+    echo "<h3>",_("check for necessary config updates"),"</h3>\n";
+    echo _("check for old CACHE_CONTROL = NONE")," ... ";
+    if (defined('CACHE_CONTROL') and CACHE_CONTROL == '') {
+        echo "<br />&nbsp;&nbsp;",_("CACHE_CONTROL is set to 'NONE', and must be changed to 'NO_CACHE'")," ...";
+        fixConfigIni("/^\s*CACHE_CONTROL\s*=\s*NONE/","CACHE_CONTROL = NO_CACHE");
+    } else {
+        echo _("OK");
+    }
+    echo "<br />\n";
 }
 
 /**
@@ -407,12 +459,16 @@ function DoUpgrade($request) {
     CheckDatabaseUpdate($request);
     CheckPgsrcUpdate($request);
     //CheckThemeUpdate($request);
+    CheckConfigUpdate($request);
     EndLoadDump($request);
 }
 
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.17  2004/06/17 11:31:50  rurban
+ check necessary localized actionpages
+
  Revision 1.16  2004/06/16 10:38:58  rurban
  Disallow refernces in calls if the declaration is a reference
  ("allow_call_time_pass_reference clean").
