@@ -1,6 +1,9 @@
+__Note:__ This page is much more impressive on the [alpha server|PhpWikiAlpha:en/PgsrcTranslation] where the page names actually link.
+
 !! Translated Page Name Matrix
 
 | ''Plugin Pages''     | ''Deutsch (de)''       | ''Español (es)'' | ''Français (fr)''      | ''Italiano (it)''  | ''Nederlands (nl)''  | ''Svenska (sv)''
+| AllPages             | AlleSeiten             | TodasLasPaginas  | ToutesLesPages         | TutteLePagina      |
 | BackLinks            | BackLinks              |
 | CalendarPlugin       |
 | DebugInfo            | DebugInfo              |
@@ -40,9 +43,12 @@
 | WikiPlugin         |                   |                       | PluginWiki          |
 | WikiWikiWeb        | WikiWikiWeb       | WikiWikiWeb           | WikiWikiWeb         | WikiWikiWeb           |                    | WikiWikiWeb
 %%%
-| ''Automatically generated pages'' | ''Deutsch (de)'' | ''Español (es)'' | ''Français (fr)'' | ''Italiano (it)'' | ''Nederlands (nl)'' | ''Svenska (sv)''
-| Diff                              | Diff             |                  | Diff              |                   |                     |
-| ViewSource                        | QuellText        |                  | VoirSource        |                   |                     |
+| ''Automatically generated pages'' | ''Deutsch (de)'' | ''Español (es)'' | ''Français (fr)''    | ''Italiano (it)'' | ''Nederlands (nl)'' | ''Svenska (sv)''
+| Diff:                             | Vergleich:       | Diferencia de:   | Diff :               | Differenza di:    | Diff van:           | Diff av:
+| Edit:                             | Editiere:        | Editar:          | Editer :             | Modifica:         | Verander:           | Redigera:
+| Remove Page                       | Seite Löschen    | Borrar Página    | Supprimer la Page    | Rimuovi la Pagina | Verwijder Pagina    | Ta bort Sida
+| Sign In                           | Anmelden         |                  |                      |                   |                     |
+| View Source:                      | Quell Text:      |                  | Afficher la Source : |                   | Bron Tekst:         | Visa Källkoden:
 %%%
 | ''Translator's page'' | ''Deutsch (de)'' | ''Español (es)'' | ''Français (fr)'' | ''Italiano (it)'' | ''Nederlands (nl)'' | ''Svenska (sv)''
 | n/a                   |                  | [KBrown]         |                   |                   | JanNieuwenhuizen    |
