@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.44 2002-02-02 02:10:07 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.45 2002-02-02 05:06:00 carstenklapp Exp $');
 
 
 include "lib/config.php";
@@ -378,7 +378,7 @@ class WikiRequest extends Request {
         // FIXME: more restrictive check for sane plugin?
         if (strstr($rev->getPackedContent(), '<?plugin'))
             return true;
-        trigger_error("$pagename: Does not appera to be an 'action page'", E_USER_NOTICE);
+        trigger_error("$pagename: Does not appear to be an 'action page'", E_USER_NOTICE);
         return false;
     }
     
