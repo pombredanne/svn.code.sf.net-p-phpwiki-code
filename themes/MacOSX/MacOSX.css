@@ -1,5 +1,5 @@
 /*
- $Id: MacOSX.css,v 1.27 2002-03-03 03:58:10 carstenklapp Exp $
+ $Id: MacOSX.css,v 1.28 2002-03-06 22:36:25 carstenklapp Exp $
 
  Classes:
 
@@ -29,7 +29,7 @@
  * break NS4 in another file. */
 @import url(MacOSX-heavy.css);
 
-body { background: #fafafa url("image/bgpaper8.png"); }
+body { background: #fafafa url("images/bgpaper8.png"); }
 body.edit { background: #fafafa url("images/bggranular.png"); }
 
 body { }
