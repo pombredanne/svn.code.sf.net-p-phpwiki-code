@@ -1,48 +1,44 @@
-<?php rcs_id('$Id: Theme.php,v 1.15 2002-01-22 05:29:45 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.16 2002-01-22 16:38:27 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 require_once('lib/ButtonFactory.php');
 
 
 class Theme {
-    function Theme ($theme_name) {
+    function Theme ($theme_name = 'default') {
         $this->_name = $theme_name;
         $themes_dir = defined('PHPWIKI_DIR') ? PHPWIKI_DIR . "/themes" : "themes";
-        $this->_theme_dir = "$themes_dir/$theme_name";
-        $this->_path = array($this->_theme_dir,
-                             "$themes_dir/default");
+        
+        $this->_path  = defined('PHPWIKI_DIR') ? PHPWIKI_DIR . "/" : "";
+        $this->_theme = "themes/$theme_name";
 
+        if ($theme_name != 'default')
+            $this->_default_theme = new Theme;
+    }
 
-        $this->_button_dirs = array();
-        $button_dir = "$this->_theme_dir/buttons";
-        $dir = dir($button_dir);
-        if ($dir) {
-            $this->_button_dirs[] = $button_dir;
-            while (($subdir = $dir->read()) !== false) {
-                if ($subdir[0] == '.')
-                    continue;
-                if (is_dir("$button_dir/$subdir"))
-                    $this->_button_dirs[] = "$button_dir/$subdir";
-            }
-        }
+    function file ($file) {
+        return $this->_path . "$this->_theme/$file";
     }
 
     function _findFile ($file, $missing_okay = false) {
-        foreach ($this->_path as $dir) {
-            if (file_exists("$dir/$file"))
-                return "$dir/$file";
-        }
+        if (file_exists($this->_path . "$this->_theme/$file"))
+            return "$this->_theme/$file";
+        
         // FIXME: this is a short-term hack.  Delete this after all files
         // get moved into themes/...
-        if (file_exists($file))
+        if (file_exists($this->_path . $file))
             return $file;
         
-        if (!$missing_okay) {
+
+        if (isset($this->_default_theme)) {
+            return $this->_default_theme->_findFile($file, $missing_okay);
+        }
+        else if (!$missing_okay) {
             trigger_error("$file: not found", E_USER_ERROR);
         }
         return false;
     }
-    
+
     function _findData ($file, $missing_okay = false) {
         $path = $this->_findFile($file, $missing_okay);
         if (!$path)
@@ -53,10 +49,6 @@ class Theme {
         return $path;
     }
 
-    function file ($file) {
-        return "$this->_theme_dir/$file";
-    }
-    
     ////////////////////////////////////////////////////////////////
     //
     // Date and Time formatting
@@ -214,17 +206,45 @@ class Theme {
         $aliases = &$this->_buttonAliases;
         if (isset($aliases[$text]))
             $text = $aliases[$text];
-        
-        $qtext = urlencode($text);
 
-        foreach ($this->_button_dirs as $dir) {
-            $path = $this->_findData("$dir/$qtext.png", 'missing okay');
-            if ($path)
-                return $path;
+        $qtext = urlencode($text);
+        $url = $this->_findButton("$qtext.png");
+        if ($url && strstr($url, '%')) {
+            $url = preg_replace('|([^/]+)$|e', 'urlencode("\\1")', $url);
+        }
+        return $url;
+    }
+
+    function _findButton ($button_file) {
+        if (!isset($this->_button_path))
+            $this->_button_path = $this->_getButtonPath();
+        
+        foreach ($this->_button_path as $dir) {
+            $path = "$this->_theme/$dir/$button_file";
+            if (file_exists($this->_path . $path))
+                return defined('DATA_PATH') ? DATA_PATH . "/$path" : $path;
         }
         return false;
     }
 
+    function _getButtonPath () {
+        $path = array('buttons');
+
+        $button_dir = $this->file("buttons");
+        if (!($dir = dir($button_dir)))
+            return array();
+
+        while (($subdir = $dir->read()) !== false) {
+            if ($subdir[0] == '.')
+                continue;
+            if (is_dir("$button_dir/$subdir"))
+                $path[] = "buttons/$subdir";
+        }
+        $dir->close();
+        
+        return $path;
+    }
+        
     ////////////////////////////////////////////////////////////////
     //
     // Button style
@@ -292,7 +312,7 @@ class Theme {
     }
 
     function findTemplate ($name) {
-        return $this->_findFile("templates/$name.tmpl");
+        return $this->_path . $this->_findFile("templates/$name.tmpl");
     }
 };
 
