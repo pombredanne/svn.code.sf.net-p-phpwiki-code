@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.19 2004-02-19 21:54:17 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.20 2004-02-24 19:07:06 rurban Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
 
@@ -183,7 +183,7 @@ class PageType_interwikimap extends PageType
             $map[$m[1]] = $m[2];
         }
         if (empty($map['Upload']))
-            $map['Upload'] = SERVER_URL . ((substr(DATA_PATH,0,1)=='/') ? '' : "/") . DATA_PATH . '/upload/';
+            $map['Upload'] = SERVER_URL . ((substr(DATA_PATH,0,1)=='/') ? '' : "/") . DATA_PATH . '/uploads/';
         return $map;
     }
 
@@ -345,6 +345,41 @@ class PageFormatter_wikiblog extends PageFormatter
             $tokens["BLOG_" . strtoupper($key)] = $blog_meta[$key];
         
         return new Template('wikiblog', $request, $tokens);
+    }
+}
+
+class PageFormatter_pdf extends PageFormatter
+{
+
+    function _transform($text) {
+	include_once('lib/BlockParser.php');
+	return TransformText($text, $this->_markup);
+    }
+
+    // one page or set of pages?
+    // here we format only a single page
+    function format($text) {
+        include_once('lib/Template.php');
+        global $request;
+        $tokens['page'] = $this->_page;
+        $tokens['CONTENT'] = $this->_transform($text);
+        // this is a XmlElement tree, which must be converted to PDF
+
+        require_once('lib/fpdf.php');
+        $pdf = new FPDF();
+        $pdf->AddPage();
+        //$pdf->SetFont('Arial','B',16);
+        //$pdf->Cell(40,10,'Hello World!');
+        //$pdf->Output();
+        //$tokens['rev'] = new FakePageRevision($this->_meta);
+        //$name = new WikiPageName($this->_page->getName());
+        //$tokens['PARENT'] = $name->getParent();
+
+        //TODO: define fonts, pagelayout
+        $template = new Template('pdf', $request, $tokens);
+        // catch $pdf->Output()
+        // Output([string name [, string dest]])
+        return $pdf;
     }
 }
 
