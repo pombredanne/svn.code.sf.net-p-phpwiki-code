@@ -1,7 +1,7 @@
 <?php
    // display.php: fetch page or get default content
    // calls transform.php for actual transformation of wiki markup to HTML
-   rcs_id('$Id: display.php,v 1.5.2.2 2001-11-06 20:41:56 dairiki Exp $');
+   rcs_id('$Id: display.php,v 1.5.2.3 2005-01-07 13:59:58 rurban Exp $');
  
    // if we got GET data, the first item is always a page name
    // if it wasn't this file would not have been included

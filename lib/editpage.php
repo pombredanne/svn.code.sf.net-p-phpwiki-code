@@ -1,4 +1,4 @@
-<!-- $Id: editpage.php,v 1.8.2.2 2001-02-27 23:16:12 dairiki Exp $ -->
+<!-- $Id: editpage.php,v 1.8.2.3 2005-01-07 13:59:58 rurban Exp $ -->
 <?php
 
    // editpage relies on $pagename and $ScriptUrl

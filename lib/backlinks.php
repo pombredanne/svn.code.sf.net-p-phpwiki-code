@@ -1,6 +1,6 @@
 <?php
    // Backlinks: returns pages which link to a given page.
-   rcs_id('$Id: backlinks.php,v 1.1.2.1 2001-08-18 00:35:10 dairiki Exp $');
+   rcs_id('$Id: backlinks.php,v 1.1.2.2 2005-01-07 13:59:58 rurban Exp $');
 
 
    if(get_magic_quotes_gpc())

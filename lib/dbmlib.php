@@ -1,6 +1,6 @@
 <?php  
 
-   rcs_id('$Id: dbmlib.php,v 1.7.2.4 2001-11-07 23:19:16 dairiki Exp $');
+   rcs_id('$Id: dbmlib.php,v 1.7.2.5 2005-01-07 13:59:58 rurban Exp $');
 
    /*
       Database functions:
@@ -365,9 +365,9 @@
       $namelist = array();
       $ctr = 0;
 
-      $namelist[$ctr] = $key = dbmfirstkey($dbi);
+      $namelist[$ctr] = $key = dbmfirstkey($dbi['wiki']);
 
-      while ($key = dbmnextkey($dbi, $key)) {
+      while ($key = dbmnextkey($dbi['wiki'], $key)) {
          $ctr++;
          $namelist[$ctr] = $key;
       }

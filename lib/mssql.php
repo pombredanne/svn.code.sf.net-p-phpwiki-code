@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: mssql.php,v 1.1.2.5 2001-11-07 20:30:47 dairiki Exp $');
+<?php rcs_id('$Id: mssql.php,v 1.1.2.6 2005-01-07 13:59:58 rurban Exp $');
 
    /* Microsoft SQL-Server library for PHPWiki
       Author: Andrew K. Pearson

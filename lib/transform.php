@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.8.2.2 2001-09-21 19:15:12 dairiki Exp $');
+<?php rcs_id('$Id: transform.php,v 1.8.2.3 2005-01-07 13:59:59 rurban Exp $');
    // expects $pagehash and $html to be set
 
    function tokenize($str, $pattern, &$orig, &$ntokens) {
