@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.128 2005-04-01 16:11:42 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.129 2005-04-06 05:50:29 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -884,7 +884,7 @@ class WikiDB_Page
 
 	$backend = &$this->_wikidb->_backend;
 	$newrevision = $this->createRevision($version, $wikitext, $meta, $links);
-	if ($newrevision and !WIKIDB_NOCACHE_MARKUP)
+	if ($newrevision and !WIKIDB_NOCACHE_MARKUP and USECACHE)
             $this->set('_cached_html', $formatted->pack());
 
 	// FIXME: probably should have some global state information
@@ -1239,6 +1239,8 @@ class WikiDB_Page
      * <dt>'perm'  <dd> Permission flag to authorize read/write/execution of 
      *                  page-headers and content.
      * <dt>'score' <dd> Page score (not yet implement, do we need?)
+     * <dt>'_cached_html' <dd> Transformed CachedMarkup object, serialized + optionally gzipped.
+     *                         In SQL stored in an extra column.
      * </dl>
      *
      * @return scalar The requested value, or false if the requested data
@@ -1250,7 +1252,10 @@ class WikiDB_Page
         if (!$key || $key[0] == '%')
             return false;
         // several new SQL backends optimize this.
-        if ($key == '_cached_html' and method_exists($backend, 'get_cached_html')) {
+        if (USECACHE 
+            and $key == '_cached_html' 
+            and method_exists($backend, 'get_cached_html')) 
+        {
             return $backend->get_cached_html($this->_pagename);
         }
         $data = $cache->get_pagedata($this->_pagename);
@@ -1290,7 +1295,10 @@ class WikiDB_Page
         assert($key && $key[0] != '%');
 
         // several new SQL backends optimize this.
-        if ($key == '_cached_html' and method_exists($backend, 'set_cached_html')) {
+        if (USECACHE 
+            and $key == '_cached_html' 
+            and method_exists($backend, 'set_cached_html'))
+        {
             return $backend->set_cached_html($pagename, $newval);
         }
 
@@ -1541,11 +1549,11 @@ class WikiDB_PageRevision
             if (WIKIDB_NOCACHE_MARKUP == 'purge') {
                 // flush cache for this page.
                 $page = $this->getPage();
-                $page->set('_cached_html', '');
+                $page->set('_cached_html', ''); // ignored with !USECACHE 
             }
             $possibly_cache_results = false;
         }
-        elseif (!$this->_transformedContent) {
+        elseif (USECACHE and !$this->_transformedContent) {
             //$backend->lock();
             if ($this->isCurrent()) {
                 $page = $this->getPage();
@@ -1563,7 +1571,7 @@ class WikiDB_PageRevision
                                       $this->getPackedContent(),
                                       $this->getMetaData());
             
-            if ($possibly_cache_results) {
+            if (USECACHE and $possibly_cache_results) {
                 // If we're still the current version, cache the transfomed page.
                 //$backend->lock();
                 if ($this->isCurrent()) {
@@ -2127,6 +2135,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.128  2005/04/01 16:11:42  rurban
+// just whitespace
+//
 // Revision 1.127  2005/02/18 20:43:40  uckelman
 // WikiDB::genericWarnings() is no longer used.
 //
