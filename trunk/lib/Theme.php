@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.38 2002-02-08 22:02:58 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.39 2002-02-10 05:13:21 carstenklapp Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -150,7 +150,7 @@ class Theme {
             return $this->_default_theme->_findFile($file, $missing_okay);
         }
         else if (!$missing_okay) {
-            trigger_error("$file: not found", E_USER_ERROR);
+            trigger_error("$file: not found", E_USER_NOTICE);
         }
         return false;
     }
