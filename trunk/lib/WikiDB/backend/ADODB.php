@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.18 2004-03-17 19:35:59 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.19 2004-03-17 22:21:42 rurban Exp $');
 
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
@@ -610,7 +610,7 @@ extends WikiDB_backend
         }
         if ($sortby) $orderby = 'ORDER BY ' . PageList::sortby($sortby,'db');
         else         $orderby = "ORDER BY hits $order";
-        $limit = $limit ? $limit : 1;
+        $limit = $limit ? $limit : -1;
         $result = $dbh->SelectLimit("SELECT " 
                                     . $this->page_tbl_fields
                                     . " FROM $nonempty_tbl, $page_tbl"
@@ -678,7 +678,7 @@ extends WikiDB_backend
             $order = "ASC";
             $limit = -$limit;
         }
-        $limit = $limit ? $limit : 1;
+        $limit = $limit ? $limit : -1;
         $where_clause = $join_clause;
         if ($pick)
             $where_clause .= " AND " . join(" AND ", $pick);
