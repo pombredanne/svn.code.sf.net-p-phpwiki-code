@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.46 2002-02-13 08:45:08 carstenklapp Exp $
+ * $Id: phpwiki.css,v 1.47 2002-02-13 20:26:45 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up. It has not yet been tested against NS4.
@@ -81,11 +81,10 @@ div.wikitext pre { font-family: monospace; }
 }
 
 /* wikiaction, wikiadmin, wikiunsafe: */
-.wikiaction, .wikiadmin, .wiki-rc-action, .backlinks { 
+.wikiaction, .wikiadmin, .wiki-rc-action {
   text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
 }
-.backlinks { color: #006; }
-h1 .backlinks { text-decoration: underline; }
 
 .wikiaction, .wikiaction table, span.wikiaction, input.button { background-color: #ddd; }
 .wikiadmin, .wikiadmin table { background-color: #fdd; }
@@ -98,6 +97,12 @@ h1 .backlinks { text-decoration: underline; }
   color: black;
   background-color: #ddd;
 }
+
+.backlinks {
+  text-decoration: underline;
+  color: #006;
+}
+h1 .backlinks { text-decoration: underline; }
 
 /* Interwiki links */
 .wikipage  { font-weight: bold; }
@@ -127,7 +132,7 @@ caption { font-family: Arial, Helvetica, sans-serif; }
 /**
  * Toolbar
  */
-.toolbar, input.button { font-family: Arial, Helvetica, sans-serif; }
+.toolbar, input.button, #signin { font-family: Arial, Helvetica, sans-serif; }
 
 .toolbar {
   padding: 0;
@@ -137,7 +142,6 @@ caption { font-family: Arial, Helvetica, sans-serif; }
   padding-right: 4em; /* wrap around logo */
   padding-bottom: 1ex; /* space for h1 */
 }
-
 .editdate {
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
@@ -157,8 +161,6 @@ textarea.wikiedit {
   margin-top:    0.5ex;
   padding: 2px;
 }
-
-input.button { font-family: Arial, Helvetica, sans-serif; }
 
 #editarea-size {
   margin-top: 1ex;
