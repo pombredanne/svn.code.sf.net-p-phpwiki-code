@@ -1,4 +1,4 @@
-<!-- $Id: wiki_mysql.php3,v 1.9 2000-07-02 22:12:05 wainstead Exp $ -->
+<!-- $Id: wiki_mysql.php3,v 1.10 2000-07-04 21:18:09 ahollosi Exp $ -->
 <?
 
    /*
@@ -17,6 +17,7 @@
       GetHitCount($dbi, $pagename)   
       InitMostPopular($dbi, $limit)   
       MostPopularNextMatch($dbi, $res)
+      GetAllWikiPageNames($dbi)
 
    */
 
@@ -187,5 +188,14 @@
 	 return $hits;
       else
          return 0;
+   }
+
+   function GetAllWikiPageNames($dbi) {
+      $res = mysql_query("select pagename from wiki");
+      $rows = mysql_num_rows($res);
+      for ($i = 0; $i < $rows; $i++) {
+	 $pages[$i] = mysql_result($res, $i);
+      }
+      return $pages;
    }
 ?>
