@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.82 2003-11-18 19:48:01 carstenklapp Exp $');
+rcs_id('$Id: loadsave.php,v 1.83 2003-11-20 22:18:54 carstenklapp Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -465,18 +465,21 @@ function SavePage (&$request, $pageinfo, $source, $filename)
         $f = str_replace(sprintf(_("Serialized file %s"), ''), '', $f);
         $f = str_replace(sprintf(_("plain file %s"), ''), '', $f);
         global $Theme;
-        $meb = $Theme->makeButton($text = _("Merge Edit"),
-                                  $url = _("PhpWikiAdministration")
-                                  . "?action=loadfile&source="
-                                  . FilenameForPage($f)
-                                  . "&merge=1",
-                                  $class = 'wikiadmin');
-        $owb = $Theme->makeButton($text = _("Restore Anyway"),
-                                  $url = _("PhpWikiAdministration")
-                                  . "?action=loadfile&source="
-                                  . FilenameForPage($f)
-                                  . "&overwrite=1",
-                                  $class = 'wikiunsafe');
+        $meb = Button(array('action' => 'loadfile',
+                            'merge'=> 1,
+                            'source'=> dirname($f) . "/"
+                                       . FilenameForPage(basename($f))),
+                      _("Merge Edit"),
+                      _("PhpWikiAdministration"),
+                      'wikiadmin');
+        $owb = Button(array('action' => 'loadfile',
+                            'merge'=> 1,
+                            'overwrite'=> 1,
+                            'source'=> dirname($f) . "/"
+                                       . FilenameForPage(basename($f))),
+                      _("Restore Anyway"),
+                      _("PhpWikiAdministration"),
+                      'wikiunsafe');
         $mesg->pushContent(' ', $meb, " ", $owb);
     }
 
@@ -767,7 +770,10 @@ function LoadAny (&$request, $file_or_dir, $files = false, $exclude = false)
 function LoadFileOrDir (&$request)
 {
     $source = $request->getArg('source');
-    StartLoadDump($request, sprintf(_("Loading '%s'"), $source));
+    StartLoadDump($request, fmt("Loading '%s'", HTML(dirname($source),
+                                                     "/",
+                                                     WikiLink(basename($source),
+                                                              'auto'))));
     echo "<dl>\n";
     LoadAny($request, $source);
     echo "</dl>\n";
@@ -830,6 +836,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.82  2003/11/18 19:48:01  carstenklapp
+ Fixed missing gettext _() for button name.
+
  Revision 1.81  2003/11/18 18:28:35  carstenklapp
  Bugfix: In the Load File function of PhpWikiAdministration: When doing
  a "Merge Edit" or "Restore Anyway", page names containing accented
