@@ -17,15 +17,22 @@ extends WikiPlugin
     }
     
     function getDefaultArguments() {
-        return array('noheader'	=> false,
-		     'include_empty' => false);
+        return array('noheader'	     => false,
+		     'include_empty' => false,
+		     'info'          => false
+                     );
     }
 
     function run($dbi, $argstr, $request) {
         extract($this->getArgs($argstr, $request));
         
         $pages = $dbi->getAllPages($include_empty);
+
         $pagelist = new PageList();
+        if ($info)
+            foreach (explode(",", $info) as $col)
+                $pagelist->insertColumn($col);
+
         if (!$noheader)
             $pagelist->setCaption(_("Pages in this wiki (%d total):"));
 
