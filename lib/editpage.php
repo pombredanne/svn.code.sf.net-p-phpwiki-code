@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.14 2001-02-15 21:33:40 dairiki Exp $');
+rcs_id('$Id: editpage.php,v 1.15 2001-02-27 23:22:30 dairiki Exp $');
 
    // editpage relies on $pagename, $version
 
@@ -27,7 +27,7 @@ rcs_id('$Id: editpage.php,v 1.14 2001-02-15 21:33:40 dairiki Exp $');
 	 ExitWiki ("");
       }
 
-      $textarea = implode("\n", $pagehash["content"]);
+      $textarea = htmlspecialchars(implode("\n", $pagehash["content"]));
       if ($editing_copy) {
          $pagehash["version"] = $currentpage["version"];
       }
