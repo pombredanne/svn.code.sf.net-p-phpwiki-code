@@ -124,7 +124,7 @@ $locale["WikiFatalError"] =
    "FatalerWikiFehler";
 $locale["Search"] =
    "Suche";
-$locale["Stack bounds exceeded in SetHTMLOutputMode"] =
+$locale["Nesting depth exceeded in SetHTMLOutputMode"] =
    "Interner Fehler: Stackgrenze in SetHTMLOutputMode überschritten.";
 $locale["%d best incoming links:"] =
    "Die %d besten hereinkommenden Links:";

@@ -12,7 +12,7 @@ $locale["Function not yet implemented."] =
    "Funktionen är ännu inte implementerad.";
 $locale["Remove page"] =
    "Ta bort sida";
-$locale["Removed page %s succesfully."] =
+$locale["Removed page '%s' succesfully."] =
    "Tog bort sidan \"%s\".";
 $locale["templates/browse.html"] =
    "locale/sv/templates/browse.html";
@@ -132,7 +132,7 @@ $locale["WikiFatalError"] =
    "WikiFatalError";
 $locale["Search"] =
    "Sök";
-$locale["Stack bounds exceeded in SetHTMLOutputMode"] =
+$locale["Nesting depth exceeded in SetHTMLOutputMode"] =
    "Stackgräns överskriden i SetHTMLOutputMode";
 $locale["%d best incoming links:"] =
    "De %d mest använda ingående länkarna:";

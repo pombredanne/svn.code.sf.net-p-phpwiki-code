@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.8\n"
-"POT-Creation-Date: 2001-01-31 08:44+0100\n"
+"POT-Creation-Date: 2001-05-21 08:27-0700\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Arno Hollosi <ahollosi@mail.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -45,85 +45,85 @@ msgstr "Seite löschen"
 msgid "Removed page '%s' succesfully."
 msgstr "Seite '%s' erfolgreich gelöscht."
 
-#: lib/config.php:195
+#: lib/config.php:197
 msgid "templates/browse.html"
 msgstr "locale/de/templates/browse.html"
 
-#: lib/config.php:196
+#: lib/config.php:198
 msgid "templates/editpage.html"
 msgstr "locale/de/templates/editpage.html"
 
-#: lib/config.php:197
+#: lib/config.php:199
 msgid "templates/editlinks.html"
 msgstr "locale/de/templates/editlinks.html"
 
-#: lib/config.php:198
+#: lib/config.php:200
 msgid "templates/message.html"
 msgstr "locale/de/templates/message.html"
 
-#: lib/config.php:214
+#: lib/config.php:216
 msgid "./pgsrc"
 msgstr "locale/de/pgsrc"
 
-#: lib/diff.php:682
+#: lib/diff.php:711
 #, c-format
 msgid "WikiDiff::apply: line count mismatch: %s != %s"
 msgstr ""
 
-#: lib/diff.php:742
+#: lib/diff.php:771
 msgid "WikiDiff::_check: failed"
 msgstr ""
 
-#: lib/diff.php:752
+#: lib/diff.php:781
 msgid "WikiDiff::_check: edit sequence is non-optimal"
 msgstr ""
 
-#: lib/diff.php:756
+#: lib/diff.php:785
 #, c-format
 msgid "WikiDiff Okay: LCS = %s"
 msgstr ""
 
-#: lib/diff.php:997
+#: lib/diff.php:1026
 msgid "Current page:"
 msgstr "Aktuelle Seite:"
 
-#: lib/diff.php:1001 lib/diff.php:1019
+#: lib/diff.php:1030 lib/diff.php:1048
 #, c-format
 msgid "version %s"
 msgstr "Version %s"
 
-#: lib/diff.php:1003 lib/diff.php:1021
+#: lib/diff.php:1032 lib/diff.php:1050
 #, c-format
 msgid "last modified on %s"
 msgstr "zuletzt verändert am %s"
 
-#: lib/diff.php:1006 lib/diff.php:1024
+#: lib/diff.php:1035 lib/diff.php:1053
 #, c-format
 msgid "by %s"
 msgstr "von %s"
 
-#: lib/diff.php:1010 lib/diff.php:1028
+#: lib/diff.php:1039 lib/diff.php:1057
 msgid "None"
 msgstr "Keine"
 
-#: lib/diff.php:1015
+#: lib/diff.php:1044
 msgid "Archived page:"
 msgstr "Archivierte Seite:"
 
-#: lib/diff.php:1037
+#: lib/diff.php:1066
 msgid "Versions are identical"
 msgstr "Versionen sind identisch"
 
-#: lib/diff.php:1045
+#: lib/diff.php:1074
 #, c-format
 msgid "Diff of %s."
 msgstr "Diff von %s."
 
-#: lib/display.php:12
+#: lib/display.php:15
 msgid "FrontPage"
 msgstr "StartSeite"
 
-#: lib/display.php:29 lib/editpage.php:50
+#: lib/display.php:32 lib/editpage.php:56
 #, c-format
 msgid "Describe %s here."
 msgstr "Beschreibe %s hier."
@@ -331,21 +331,22 @@ msgstr "FatalerWikiFehler"
 msgid "Search"
 msgstr "Suche"
 
-#: lib/stdlib.php:228
-msgid "Stack bounds exceeded in SetHTMLOutputMode"
+#: lib/stdlib.php:185
+#, fuzzy
+msgid "Nesting depth exceeded in SetHTMLOutputMode"
 msgstr "Interner Fehler: Stackgrenze in SetHTMLOutputMode überschritten."
 
-#: lib/stdlib.php:350
+#: lib/stdlib.php:381
 #, c-format
 msgid "%d best incoming links:"
 msgstr "Die %d besten hereinkommenden Links:"
 
-#: lib/stdlib.php:360
+#: lib/stdlib.php:391
 #, c-format
 msgid "%d best outgoing links:"
 msgstr "Die %d besten hinausgehenden Links:"
 
-#: lib/stdlib.php:371
+#: lib/stdlib.php:402
 #, c-format
 msgid "%d most popular nearby:"
 msgstr "Die %d meistbesuchten Seiten in der Nähe:"
