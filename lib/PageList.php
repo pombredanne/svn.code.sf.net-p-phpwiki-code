@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.15 2002-01-22 06:57:22 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.16 2002-01-22 09:23:09 carstenklapp Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -118,6 +118,7 @@ class PageList {
         $this->_columns = array(new _PageList_Column_pagename);
         $this->_pages = array();
         $this->_messageIfEmpty = _("<no matches>");
+        $this->_use_rowcolor = true;
     }
 
     function setCaption ($caption_string) {
@@ -253,11 +254,22 @@ class PageList {
         
 
         $tbody = HTML::tbody();
+        $n = 0;
         foreach ($this->_pages as $page_handle) {
+            $n++;
             $row = HTML::tr();
             $revision_handle = false;
-            foreach ($this->_columns as $col)
+            foreach ($this->_columns as $col) {
                 $row->pushContent($col->format($page_handle, $revision_handle));
+            }
+            if ($this->_use_rowcolor == true) {
+                // alternate bgcolor for 3 rows every other 3 rows
+                if ((($n+2)/6 == round($n/6))||(($n+1)/6 == round($n/6))||(($n)/6 == round($n/6))) {
+                    $row->setAttr('class','pagelistcolor');
+                } else {
+                    $row->setAttr('bgcolor','pagelistnocolor');
+                }
+            }
             $tbody->pushContent($row);
         }
         $table->pushContent($tbody);
