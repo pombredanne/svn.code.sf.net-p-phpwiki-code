@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.122 2002-09-16 22:12:48 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.123 2002-09-17 02:35:31 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -105,9 +105,13 @@ function IconForLink($protocol_or_url) {
     }
 }
 
+function IsSafeURL($url) {
+    return !ereg('[<>"]', $url);
+}
+
 function LinkURL($url, $linktext = '') {
     // FIXME: Is this needed (or sufficient?)
-    if(ereg("[<>\"]", $url)) {
+    if(! IsSafeURL($url)) {
         $link = HTML::strong(HTML::u(array('class' => 'baduri'),
                                      _("BAD URL -- remove all of <, >, \"")));
     }
@@ -126,7 +130,7 @@ function LinkURL($url, $linktext = '') {
 
 function LinkImage($url, $alt = false) {
     // FIXME: Is this needed (or sufficient?)
-    if(ereg("[<>\"]", $url)) {
+    if(! IsSafeURL($url)) {
         $link = HTML::strong(HTML::u(array('class' => 'baduri'),
                                      _("BAD URL -- remove all of <, >, \"")));
     }

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.24 2002-09-02 12:39:02 rurban Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.25 2002-09-17 02:35:31 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -131,7 +131,7 @@ class HTML extends HtmlElement {
     // echo "$d"
     // mkfuncs form input option select textarea
     // echo "$d"
-    // mkfuncs area map frame frameset nobody
+    // mkfuncs area map frame frameset iframe nobody
 
     function link (/*...*/) {
         $el = new HtmlElement('link');
@@ -347,6 +347,10 @@ class HTML extends HtmlElement {
         $el = new HtmlElement('frameset');
         return $el->_init2(func_get_args());
     }
+    function iframe (/*...*/) {
+        $el = new HtmlElement('iframe');
+        return $el->_init2(func_get_args());
+    }
     function nobody (/*...*/) {
         $el = new HtmlElement('nobody');
         return $el->_init2(func_get_args());
@@ -385,7 +389,7 @@ HTML::_setTagProperty(HTMLTAG_INLINE,
                       . 'abbr acronym cite code dfn em kbd samp strong var ' //%phrase
                       . 'a img object br script map q sub sup span bdo '//%special
                       . 'button input label option select textarea ' //%formctl
-                      . 'nobody'
+                      . 'nobody iframe'
                       );
 
 /**
