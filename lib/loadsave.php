@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.122 2004-09-17 14:25:45 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.123 2004-09-25 16:26:54 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -55,6 +55,8 @@ function StartLoadDump(&$request, $title, $html = '')
                                    'HEADER' => $title,
                                    'CONTENT' => $html ? $html : '%BODY%'));
     echo ereg_replace('%BODY%.*', '', $tmpl->getExpansion($html));
+    // set marker for sendPageChangeNotification()
+    $GLOBALS['deferredPageChangeNotification'] = array();
 
     /* Ignore fatals or warnings in any pagedumps (failing plugins). 
      * WikiFunctionCb() fails with 4.0.6, works ok with 4.1.1 
@@ -88,6 +90,31 @@ function EndLoadDump(&$request)
         $pagelink = WikiLink(HOME_PAGE);
     else
         $pagelink = WikiLink(new WikiPageName(_("PhpWikiAdministration"),false,$label));
+    // do deferred sendPageChangeNotification()
+    if (!empty($GLOBALS['deferredPageChangeNotification'])) {
+        $pages = $all_emails = $all_users = array();
+        foreach ($GLOBALS['deferredPageChangeNotification'] as $p) {
+            list($pagename, $emails, $userids) = $p;
+            $pages[] = $pagename;
+            $all_emails = array_unique(array_merge($all_emails, $emails));
+            $all_users = array_unique(array_merge($all_users, $userids));
+        }
+        $editedby = sprintf(_("Edited by: %s"), $request->_userid);
+        $content = "Loaded the following pages:\n" . join("\n", $pages);
+        if (mail(join(',',$all_emails),"[".WIKI_NAME."] "._("LoadDump"), 
+                 _("LoadDump")."\n".
+                 $editedby."\n\n".
+                 $content))
+            trigger_error(sprintf(_("PageChange Notification sent to %s"),
+                                  join(',',$all_users)), E_USER_NOTICE);
+        else
+            trigger_error(sprintf(_("PageChange Notification Error: Couldn't send to %s"),
+                                  join(',',$all_users)), E_USER_WARNING);
+        unset($pages);
+        unset($all_emails);
+        unset($all_users);
+    }
+    unset($GLOBALS['deferredPageChangeNotification']);
 
     PrintXML(HTML::p(HTML::strong(_("Complete."))),
              HTML::p(fmt("Return to %s", $pagelink)));
@@ -1172,6 +1199,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.122  2004/09/17 14:25:45  rurban
+ update comments
+
  Revision 1.121  2004/09/08 13:38:00  rurban
  improve loadfile stability by using markup=2 as default for undefined markup-style.
  use more refs for huge objects.
