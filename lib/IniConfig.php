@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.27 2004-06-03 10:18:19 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.28 2004-06-03 20:42:49 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -513,7 +513,7 @@ function fix_configs() {
     }
 
     if (!defined('ADMIN_PASSWD') or ADMIN_PASSWD == '')
-        trigger_error(_("The admin password cannot be empty. Please update your /index.php"));
+        trigger_error(_("The admin password cannot be empty. Please update your config/config.ini"));
 
     if (defined('USE_DB_SESSION') and USE_DB_SESSION) {
         if (! $DBParams['db_session_table'] ) {
@@ -544,6 +544,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.27  2004/06/03 10:18:19  rurban
+// fix FileUser locking issues, new config ENABLE_PAGEPERM
+//
 // Revision 1.26  2004/06/02 18:01:45  rurban
 // init global FileFinder to add proper include paths at startup
 //   adds PHPWIKI_DIR if started from another dir, lib/pear also
