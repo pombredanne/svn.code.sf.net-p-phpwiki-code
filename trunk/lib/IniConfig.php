@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.62 2004-11-07 16:02:51 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.63 2004-11-07 16:47:32 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -649,16 +649,6 @@ function fixup_dynamic_configs() {
                SERVER_PROTOCOL . '://' . SERVER_NAME);
     }
 
-    if (VIRTUAL_PATH != SCRIPT_NAME) {
-        // Apache action handlers are used.
-        define('PATH_INFO_PREFIX', VIRTUAL_PATH . '/');
-    }
-    else
-        define('PATH_INFO_PREFIX', '/');
-
-    define('PHPWIKI_BASE_URL',
-           SERVER_URL . (USE_PATH_INFO ? VIRTUAL_PATH . '/' : SCRIPT_NAME));
-
     if (!defined('VIRTUAL_PATH')) {
         // We'd like to auto-detect when the cases where apaches
         // 'Action' directive (or similar means) is used to
@@ -694,6 +684,17 @@ function fixup_dynamic_configs() {
         }
     }
 
+    if (VIRTUAL_PATH != SCRIPT_NAME) {
+        // Apache action handlers are used.
+        define('PATH_INFO_PREFIX', VIRTUAL_PATH . '/');
+    }
+    else
+        define('PATH_INFO_PREFIX', '/');
+
+    define('PHPWIKI_BASE_URL',
+           SERVER_URL . (USE_PATH_INFO ? VIRTUAL_PATH . '/' : SCRIPT_NAME));
+
+
     // Detect PrettyWiki setup (not loading index.php directly)
     // $SCRIPT_FILENAME should be the same as __FILE__ in index.php
     if (!isset($SCRIPT_FILENAME))
@@ -721,6 +722,11 @@ function fixup_dynamic_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.62  2004/11/07 16:02:51  rurban
+// new sql access log (for spam prevention), and restructured access log class
+// dbh->quote (generic)
+// pear_db: mysql specific parts seperated (using replace)
+//
 // Revision 1.61  2004/11/06 17:01:30  rurban
 // unify DATABASE constants init as with DBAUTH
 //
