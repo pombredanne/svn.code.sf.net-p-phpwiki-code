@@ -1,0 +1,69 @@
+# $Id: schema.minisql,v 1.1 2000-06-24 06:41:33 wainstead Exp $
+
+drop table wiki\g
+drop table archive\g
+drop table wikilinks\g
+drop table hottopics\g
+drop table hitcount\g
+
+CREATE TABLE wiki (
+        pagename CHAR(100) NOT NULL,
+        version INT NOT NULL,
+        flags INT NOT NULL,
+        author CHAR(100),
+        lastmodified INT NOT NULL,
+        created INT NOT NULL,
+        content TEXT(1024),
+        refs TEXT(100),
+        searchterms char(500)
+        )
+\g
+
+CREATE UNIQUE INDEX wiki_index ON wiki (pagename)
+\g
+
+CREATE TABLE archive (
+        pagename CHAR(100) NOT NULL,
+        version INT NOT NULL,
+        flags INT NOT NULL,
+        author CHAR(100),
+        lastmodified INT NOT NULL,
+        created INT NOT NULL,
+        content TEXT(1024),
+        refs TEXT(100),
+        searchterms char(500)
+        )
+\g
+
+CREATE UNIQUE INDEX archive_index ON archive (pagename, version)
+\g
+
+# tables below are not yet used
+
+CREATE TABLE wikilinks (
+        frompage CHAR(100) NOT NULL,
+        topage CHAR(100) NOT NULL
+        )
+\g
+
+CREATE UNIQUE INDEX wikilinks_index ON wikilinks (frompage, topage)
+\g
+
+CREATE TABLE hottopics (                
+        pagename CHAR(100) NOT NULL,
+        lastmodified INT NOT NULL
+        )
+\g
+
+CREATE UNIQUE INDEX hottopics_index ON hottopics (pagename, lastmodified)
+\g
+
+CREATE TABLE hitcount (                 
+        pagename CHAR(100) NOT NULL, 
+        hits INT NOT NULL
+        )
+\g
+
+CREATE UNIQUE INDEX hitcount_index ON hitcount (pagename)
+\g
+
