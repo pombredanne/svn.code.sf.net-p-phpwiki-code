@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _BackendInfo.php,v 1.22 2004-02-17 12:11:36 rurban Exp $');
+rcs_id('$Id: _BackendInfo.php,v 1.23 2005-01-21 14:13:23 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -36,7 +36,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.22 $");
+                            "\$Revision: 1.23 $");
     }
 
     function getDefaultArguments() {
@@ -91,9 +91,11 @@ extends WikiPlugin
         $user = $request->getUser();
 
         foreach ($data as $key => $val) {
-            if ($key == 'passwd' and !$user->isAdmin())
+            if (is_integer($key)) {
+            	;
+            } elseif ($key == 'passwd' and !$user->isAdmin()) {
                 $data[$key] = $val ? _("<not displayed>") : _("<empty>");
-            elseif ($key == '_cached_html') {
+            } elseif ($key and $key == '_cached_html') {
                 $val = TransformedText::unpack($val);
                 ob_start();
                 print_r($val);
@@ -117,7 +119,7 @@ extends WikiPlugin
                                                 'cellspacing' => 0),
                                           $this->_showhash(false, $val));
             }
-            elseif ($key == '%content') {
+            elseif ($key and $key == '%content') {
                 if ($val === true)
                     $val = '<true>';
                 elseif (strlen($val) > 40)
@@ -154,6 +156,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.22  2004/02/17 12:11:36  rurban
+// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
+//
 // Revision 1.21  2003/02/21 04:22:28  dairiki
 // Make this work for array-valued data.  Make display of cached markup
 // readable.  Some code cleanups.  (This still needs more work.)
