@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.74 2004-02-28 21:14:08 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.75 2004-03-01 09:34:37 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -183,7 +183,7 @@ function Button ($action, $label = false, $page_or_rev = false) {
 
 class Theme {
     var $HTML_DUMP_SUFFIX = '';
-    var $DUMP_MODE, $dumped_images, $dumped_css; 
+    var $DUMP_MODE=false, $dumped_images, $dumped_css; 
 
     function Theme ($theme_name = 'default') {
         $this->_name = $theme_name;
@@ -452,6 +452,11 @@ class Theme {
             return $wikiword;
     }
 
+    var $_anonEditUnknownLinks = true;
+    function setAnonEditUnknownLinks($anonedit=true) {
+        $this->_anonEditUnknownLinks = $anonedit ? true : false;
+    }
+
     function linkExistingWikiWord($wikiword, $linktext = '', $version = false) {
         global $request;
 
@@ -514,9 +519,16 @@ class Theme {
             $link->setAttr('class', empty($linktext) ? 'wikiunknown' : 'named-wikiunknown');
             return $link;
         } else {
-            $url = WikiURL($wikiword, array('action' => 'create'));
-            $button = $this->makeButton('?', $url);
-            $button->addTooltip(sprintf(_("Create: %s"), $wikiword));
+            // if AnonEditUnknownLinks show "?" only users which are allowed to edit this page
+            if (! $this->_anonEditUnknownLinks and ! mayAccessPage('edit',$request->getArg('pagename'))) {
+                $text = HTML::span( empty($linktext) ? $wikiword : $linktext);
+                $text->setAttr('class', empty($linktext) ? 'wikiunknown' : 'named-wikiunknown');
+                return $text;
+            } else {
+                $url = WikiURL($wikiword, array('action' => 'create'));
+                $button = $this->makeButton('?', $url);
+                $button->addTooltip(sprintf(_("Create: %s"), $wikiword));
+            }
             $link = HTML::span($button);
         }
 
@@ -662,7 +674,7 @@ class Theme {
             $this->_button_path = $this->_getButtonPath();
 
         foreach ($this->_button_path as $dir) {
-            $path = "$this->_theme/$dir/$button_file";
+            $path = "$dir/$button_file";
             if (file_exists($this->_path . $path))
                 return defined('DATA_PATH') ? DATA_PATH . "/$path" : $path;
         }
@@ -670,18 +682,20 @@ class Theme {
     }
 
     function _getButtonPath () {
-        $button_dir = $this->file("buttons");
+        $button_dir = $this->_findFile("buttons");
         if (!file_exists($button_dir) || !is_dir($button_dir))
             return array();
 
-        $path = array('buttons');
+        $path = array($button_dir);
 
         $dir = dir($button_dir);
         while (($subdir = $dir->read()) !== false) {
             if ($subdir[0] == '.')
                 continue;
+            if ($subdir == 'CVS')
+                continue;
             if (is_dir("$button_dir/$subdir"))
-                $path[] = "buttons/$subdir";
+                $path[] = "$button_dir/$subdir";
         }
         $dir->close();
 
@@ -1114,6 +1128,15 @@ class SubmitImageButton extends SubmitButton {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.74  2004/02/28 21:14:08  rurban
+// generally more PHPDOC docs
+//   see http://xarch.tu-graz.ac.at/home/rurban/phpwiki/xref/
+// fxied WikiUserNew pref handling: empty theme not stored, save only
+//   changed prefs, sql prefs improved, fixed password update,
+//   removed REPLACE sql (dangerous)
+// moved gettext init after the locale was guessed
+// + some minor changes
+//
 // Revision 1.73  2004/02/26 03:22:05  rurban
 // also copy css and images with XHTML Dump
 //
