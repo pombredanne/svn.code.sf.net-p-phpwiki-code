@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: OldStyleTable.php,v 1.7 2003-02-21 23:00:35 dairiki Exp $');
+rcs_id('$Id: OldStyleTable.php,v 1.8 2004-01-24 23:37:08 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -25,7 +25,7 @@ rcs_id('$Id: OldStyleTable.php,v 1.7 2003-02-21 23:00:35 dairiki Exp $');
  *
  * Usage:
  * <pre>
- *  <?plugin OldStyleTable
+ *  <?plugin OldStyleTable border||=0 summary=""
  *  ||  __Name__               |v __Cost__   |v __Notes__
  *  | __First__   | __Last__
  *  |> Jeff       |< Dairiki   |^  Cheap     |< Not worth it
@@ -55,25 +55,56 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
-        return array();
+        return array(
+                     'caption'     => '',
+                     'cellpadding' => '1',
+                     'cellspacing' => '1',
+                     'border'      => '1',
+                     'summary'     => '',
+                     );
+    }
+
+    function handle_plugin_args_cruft($argstr, $args) {
+        return;
     }
 
     function run($dbi, $argstr, $request, $basepage) {
         global $Theme;
         include_once('lib/InlineParser.php');
 
+        $args = $this->getArgs($argstr, $request);
+        $default = $this->getDefaultArguments();
+        foreach (array('cellpadding','cellspacing','border') as $arg) {
+            if (!is_numeric($args[$arg])) {
+                $args[$arg] = $default[$arg];
+            }
+        }
         $lines = preg_split('/\s*?\n\s*/', $argstr);
-        $table = HTML::table(array('cellpadding' => 1,
-                                   'cellspacing' => 1,
-                                   'border' => 1));
-
+        $table_args = array();
+        $default_args = array_keys($default);
+        foreach ($default_args as $arg) { 
+            if ($args[$arg] == '' and $default[$arg] == '')  
+                continue;			// ignore '' arguments
+            if ($arg == 'caption')
+                $caption = $args[$arg];
+            else
+                $table_args[$arg] = $args[$arg];
+        }
+        $table = HTML::table($table_args);
+        if (!empty($caption))
+            $table->pushContent(HTML::caption(array('valign'=>'top'),$caption));
         foreach ($lines as $line) {
             if (!$line)
                 continue;
+            if (strstr($line,"=")) {
+            	$tmp = explode("=",$line);
+            	if (in_array(trim($tmp[0]),$default_args))
+                    continue;
+            }
             if ($line[0] != '|')
                 return $this->error(fmt("Line does not begin with a '|'."));
             $table->pushContent($this->_parse_row($line, $basepage));
@@ -117,6 +148,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2003/02/21 23:00:35  dairiki
+// Fix SF bug #676309.
+//
+// Also fix new bugs introduced with cached markup changes.
+//
 // Revision 1.6  2003/02/21 04:12:06  dairiki
 // Minor fixes for new cached markup.
 //
