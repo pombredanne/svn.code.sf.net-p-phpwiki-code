@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Toolbar.php,v 1.8 2002-01-05 10:13:55 carstenklapp Exp $');
+<?php rcs_id('$Id: Toolbar.php,v 1.9 2002-01-05 10:32:16 carstenklapp Exp $');
 
 //require_once("lib/ErrorManager.php");
 //require_once("lib/WikiPlugin.php");
@@ -43,8 +43,11 @@ FIXME: IncludePage plugin for EditHelp needs to be dealt with.
 Plugins shuold be cleaned up, in this state they won't display any
 mouseover text.
 
-The raw html should be replaced with calls to Element() and/or
-QElement()
+The raw html should be replaced with calls to Element(QElement()) or
+QElement().
+
+Reminder: xgettext only knows about c/c++ line-continuation strings,
+          it does not know about php's dot operator.
 
 */
 
