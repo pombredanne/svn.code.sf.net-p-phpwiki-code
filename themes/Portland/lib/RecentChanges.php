@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: RecentChanges.php,v 1.1 2002-01-28 19:24:34 carstenklapp Exp $');
+<?php rcs_id('$Id: RecentChanges.php,v 1.2 2002-01-28 22:52:55 carstenklapp Exp $');
 /*
  * Extensions/modifications to the stock RecentChanges (and PageHistory) format.
  */
@@ -8,18 +8,27 @@ require_once('lib/plugin/RecentChanges.php');
 require_once('lib/plugin/PageHistory.php');
 
 function Portland_RC_revision_formatter (&$fmt, &$rev) {
-    $class = 'rc-' . $fmt->importance($rev);
-        
-    return HTML::li(array('class' => $class),
-                    $fmt->diffLink($rev), " ",
-                    $fmt->pageLink($rev), " ",
-                    $fmt->time($rev), " ",
-                    ($fmt->importance($rev)=='minor') ? _("(minor edit)") ." " : '',
-                    " ",
-                    $fmt->summaryAsHTML($rev),
-                    " . . . . . . ",
-                    $fmt->authorLink($rev));
-}
+        $class = 'rc-' . $fmt->importance($rev);
+        $time = $fmt->time($rev);
+        if ($rev->get('is_minor_edit')) {
+            $minor_flag = HTML::small("(" . _("minor edit") . ")");
+        }
+        else {
+            $time = HTML::strong($time);
+            $minor_flag = '';
+        }
+
+        return HTML::li(array('class' => $class),
+                        $fmt->diffLink($rev), ' ',
+                        $fmt->pageLink($rev), ' ',
+                        $time, ' ',
+                        $minor_flag, ' ',
+                        " . . . ", $fmt->summaryAsHTML($rev), ' ',
+                        " . . . ",
+                        $fmt->authorLink($rev)
+                       );
+    }
+
 
 class _Portland_RecentChanges_Formatter
 extends _RecentChanges_HtmlFormatter
