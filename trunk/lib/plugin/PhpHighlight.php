@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PhpHighlight.php,v 1.4 2002-11-08 12:32:30 carstenklapp Exp $');
+rcs_id('$Id: PhpHighlight.php,v 1.5 2002-11-08 18:33:12 carstenklapp Exp $');
 /**
  * A plugin that runs the highlight_string() function in PHP on it's
  * arguments to pretty-print PHP code.
@@ -34,7 +34,8 @@ extends WikiPlugin
     }
     // Establish default values for each of this plugin's arguments.
     function getDefaultArguments() {
-        // TODO: results of ini_get() should be static for multiple invocations of plugin on one WikiPage
+        // TODO: results of ini_get() should be static for multiple
+        // invocations of plugin on one WikiPage
         return array('source'  => false,
                      'string'  => ini_get("highlight.string"),  //'#00CC00',
                      'comment' => ini_get("highlight.comment"), //'#FF9900',
@@ -61,20 +62,34 @@ extends WikiPlugin
         $this->sanify_colors($string, $comment, $keyword, $bg, $default, $html);
         $this->set_colors($string, $comment, $keyword, $bg, $default, $html);
 
+        /* Automatically wrap with "<?php\n" and "\n?>" required by
+           highlight_string(): */
+        $source = "<?php\n" . $source . "\n?>";
+
         if (!empty($has_old_php)) {
             ob_start();
-            highlight_string("<?php\n" . $source . "\n?>");
+            highlight_string($source);
             $str = ob_get_contents();
             ob_end_clean();
         } else {
-            $str = highlight_string("<?php\n" . $source . "\n?>", true);
+            $str = highlight_string($source, true);
         }
         /* Remove "<?php\n" and "\n?>": */
         $str = str_replace(array('&lt;?php<br />', '?&gt;'), '', $str);
-        /* We might have made some empty font tags: */
-        $search = '<font color="$default"></font>';
-        $str = str_replace($search, '', $str);
 
+        /**
+         * We might have made some empty font tags. (The following
+         * str_replace string does not produce results on my system,
+         * maybe a php bug? '<font color="$color"></font>')
+         */
+        foreach (array($string, $comment, $keyword, $bg, $default, $html) as $color) {
+            $search = "<font color=\"$color\"></font>";
+            $str = str_replace($search, '', $str);
+        }
+
+        /* restore default colors in case of multiple invocations of
+           this plugin on one page */
+        $this->restore_colors();
         return new RawXml($str);
     }
 
@@ -82,20 +97,52 @@ extends WikiPlugin
         $args['source'] = $argstr;
     }
 
-    function sanify_colors(&$string, &$comment, &$keyword, &$bg, &$default, &$html) {
-        /* Make sure color argument is either 6 digits or 3 digits prepended by a #,
-           or maybe an html color name like "black" */
-        // TODO
+    /**
+     * Make sure color argument is valid
+     * See http://www.w3.org/TR/REC-html40/types.html#h-6.5
+     */
+    function sanify_colors($string, $comment, $keyword, $bg, $default, $html) {
+        static $html4colors = array("black", "silver", "gray", "white", "maroon", "red",
+                                    "purple", "fuchsia", "green", "lime", "olive", "yellow",
+                                    "navy", "blue", "teal", "aqua");
+        static $MAXLEN = 7; /* strlen("fuchsia"), strlen("#00FF00"), strlen("#fff") */
+        foreach (array($string, $comment, $keyword, $bg, $default, $html) as $color) {
+            $length = strlen($color);
+            //trigger_error(sprintf(_("DEBUG: color '%s' is length %d."), $color, $length), E_USER_NOTICE);
+            if (($length == 7 || $length == 4) && substr($color, 0, 1) == "#"
+            && "#" == preg_replace("/[a-fA-F0-9]/", "", $color)
+             ) {
+                //trigger_error(sprintf(_("DEBUG: color '%s' appears to be hex."), $color), E_USER_NOTICE);
+                // stop checking, ok to go
+            } elseif (($length < $MAXLEN + 1) && in_array($color, $html4colors)) {
+                //trigger_error(sprintf(_("DEBUG color '%s' appears to be an HTML 4 color."), $color), E_USER_NOTICE);
+                // stop checking, ok to go
+            } else {
+                trigger_error(sprintf(_("Invalid color: %s"),
+                                      $color), E_USER_NOTICE);
+                // FIXME: also change color to something valid like "black" or ini_get("highlight.xxx")
+            }
+        }
     }
 
     function set_colors($string, $comment, $keyword, $bg, $default, $html) {
         // set highlight colors
-        ini_set('highlight.string', $string);
-        ini_set('highlight.comment', $comment);
-        ini_set('highlight.keyword', $keyword);
-        ini_set('highlight.bg', $bg);
-        ini_set('highlight.default', $default);
-        ini_set('highlight.html', $html);
+        $this->oldstring = ini_set('highlight.string', $string);
+        $this->oldcomment = ini_set('highlight.comment', $comment);
+        $this->oldkeyword = ini_set('highlight.keyword', $keyword);
+        $this->oldbg = ini_set('highlight.bg', $bg);
+        $this->olddefault = ini_set('highlight.default', $default);
+        $this->oldhtml = ini_set('highlight.html', $html);
+    }
+
+    function restore_colors() {
+        // restore previous default highlight colors
+        ini_set('highlight.string', $this->oldstring);
+        ini_set('highlight.comment', $this->oldcomment);
+        ini_set('highlight.keyword', $this->oldkeyword);
+        ini_set('highlight.bg', $this->oldbg);
+        ini_set('highlight.default', $this->olddefault);
+        ini_set('highlight.html', $this->oldhtml);
     }
 
 };
