@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageHistory.php,v 1.9 2002-01-22 03:17:47 dairiki Exp $');
+rcs_id('$Id: PageHistory.php,v 1.10 2002-01-23 05:13:38 carstenklapp Exp $');
 /**
  */
 require_once('lib/plugin/RecentChanges.php');
@@ -21,7 +21,7 @@ class _PageHistory_PageRevisionIter
             $this->_include_minor = true;
         else
             $this->_include_minor = !empty($include_minor_revisions);
-        
+
         if (empty($include_all_revisions))
             $this->_limit = 1;
         else if (isset($limit))
@@ -31,7 +31,7 @@ class _PageHistory_PageRevisionIter
     function next() {
         if (!$this->_iter)
             return false;
-        
+
         if (isset($this->_limit)) {
             if ($this->_limit <= 0) {
                 $this->free();
@@ -39,7 +39,7 @@ class _PageHistory_PageRevisionIter
             }
             $this->_limit--;
         }
-        
+
         while ( ($rev = $this->_iter->next()) ) {
             if (isset($this->_since) && $rev->get('mtime') < $this->_since) {
                 $this->free();
@@ -51,7 +51,7 @@ class _PageHistory_PageRevisionIter
         return false;
     }
 
-    
+
     function free() {
         if ($this->_iter)
             $this->_iter->free();
@@ -68,55 +68,56 @@ extends _RecentChanges_HtmlFormatter
     }
 
     function title() {
+        global $Theme;
         return array(fmt("PageHistory for %s",
-                         LinkExistingWikiWord($this->_args['page'])),
+                         $Theme->LinkExistingWikiWord($this->_args['page'])),
                      "\n",
                      $this->rss_icon());
     }
 
     function _javascript($script) {
         return HTML::script(array('language' => 'JavaScript',
-                                  'type' => 'text/javascript'),
+                                  'type'     => 'text/javascript'),
                             new RawXml("<!-- //\n$script\n// -->"));
     }
-    
+
     function description() {
         // Doesn't work (PHP bug?): $desc = parent::description() . "\n";
         $desc[] = _RecentChanges_HtmlFormatter::description() . "\n";
 
         $desc[] = $this->_javascript(sprintf('document.write("%s");',
                                              _("Check any two boxes to compare revisions.")));
-        $button = HTML::input(array('type' => 'submit',
+        $button = HTML::input(array('type'  => 'submit',
                                     'value' => _("compare revisions")));
         $desc[] = HTML::noscript(fmt("Check any two boxes then %s.", $button));
 
         return $desc;
     }
-    
-                         
+
+
     function format ($changes) {
         $this->_itemcount = 0;
-        
+
         $pagename = $this->_args['page'];
-        
+
         $html = _RecentChanges_HtmlFormatter::format($changes);
 
-        $html[] = HTML::input(array('type' => 'hidden',
-                                    'name' => 'action',
+        $html[] = HTML::input(array('type'  => 'hidden',
+                                    'name'  => 'action',
                                     'value' => 'diff'));
         if (USE_PATH_INFO) {
             $action = WikiURL($pagename);
         }
         else {
             $action = SCRIPT_NAME;
-            $html[] = HTML::input(array('type' => 'hidden',
-                                        'name' => 'pagename',
+            $html[] = HTML::input(array('type'  => 'hidden',
+                                        'name'  => 'pagename',
                                         'value' => $pagename));
         }
 
         return array(HTML::form(array('method' => 'get',
                                       'action' => $action,
-                                      'name' => 'diff-select'),
+                                      'name'   => 'diff-select'),
                                 $html),
                      "\n",
                      $this->_javascript('
@@ -135,13 +136,14 @@ extends _RecentChanges_HtmlFormatter
     }
     
     function diffLink ($rev) {
-        return HTML::input(array('type' => 'checkbox',
-                                 'name' => 'versions[]',
+        return HTML::input(array('type'  => 'checkbox',
+                                 'name'  => 'versions[]',
                                  'value' => $rev->getVersion()));
     }
 
     function pageLink ($rev) {
-        return HTML::a(array('href' => $this->pageURL($rev), 'class' => 'wiki'),
+        return HTML::a(array('href'  => $this->pageURL($rev),
+                             'class' => 'wiki'),
                        fmt("Version %d", $rev->getVersion()));
     }
 }
@@ -161,7 +163,7 @@ extends _RecentChanges_RssFormatter
     function textinput_properties () {
         return false;
     }
-    
+
     function channel_properties () {
         global $request;
 
@@ -170,18 +172,18 @@ extends _RecentChanges_RssFormatter
         $title = sprintf("%s: %s",
                          WIKI_NAME,
                          split_pagename($this->_args['page']));
-        
-        return array('title' => $title,
+
+        return array('title'          => $title,
                      'dc:description' => _("History of changes."),
-                     'link' => $rc_url,
-                     'dc:date' => Iso8601DateTime(time()));
+                     'link'           => $rc_url,
+                     'dc:date'        => Iso8601DateTime(time()));
     }
-    
+
 
     function item_properties ($rev) {
         if (!($title = $this->summary($rev)))
             $title = sprintf(_("Version %d"), $rev->getVersion());
-        
+ 
         return array( 'title'		=> $title,
                       'link'		=> $this->pageURL($rev),
                       'dc:date'		=> $this->time($rev),
@@ -236,7 +238,7 @@ extends WikiPlugin_RecentChanges
     function format ($changes, $args) {
         global $Theme;
         $format = $args['format'];
-        
+
         $fmt_class = $Theme->getFormatter('PageHistory', $format);
         if (!$fmt_class) {
             if ($format == 'rss')
