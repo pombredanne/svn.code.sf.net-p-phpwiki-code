@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.48 2002-03-27 20:23:43 carstenklapp Exp $');
+rcs_id('$Id: editpage.php,v 1.49 2002-12-17 18:32:48 dairiki Exp $');
 
 require_once('lib/Template.php');
 
@@ -306,11 +306,13 @@ class PageEditor
             = HTML::input(array('type' => 'checkbox',
                                 'name'  => 'edit[minor_edit]',
                                 'checked' => (bool) $this->meta['is_minor_edit']));
-        $el['NEW_MARKUP_CB']
+        $el['OLD_MARKUP_CB']
             = HTML::input(array('type' => 'checkbox',
                                 'name' => 'edit[markup]',
-                                'value' => 'new',
-                                'checked' => $this->meta['markup'] >= 2.0));
+                                'value' => 'old',
+                                'checked' => $this->meta['markup'] < 2.0,
+                                'id' => 'useOldMarkup',
+                                'onclick' => 'showOldMarkupRules(this.checked)'));
 
         $el['LOCKED_CB']
             = HTML::input(array('type' => 'checkbox',
