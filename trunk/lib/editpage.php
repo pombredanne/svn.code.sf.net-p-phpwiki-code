@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.36 2002-02-06 21:08:51 carstenklapp Exp $');
+rcs_id('$Id: editpage.php,v 1.37 2002-02-07 03:52:45 carstenklapp Exp $');
 
 require_once('lib/Template.php');
 
@@ -272,6 +272,7 @@ class PageEditor
                                 'class' => 'wikitext',
                                 'name'  => 'edit[summary]',
                                 'size'  => 50,
+                                'maxlength' => 256,
                                 'value' => $this->meta['summary']));
         $el['MINOR_EDIT_CB']
             = HTML::input(array('type' => 'checkbox',
@@ -323,7 +324,7 @@ class PageEditor
 
         $is_new_markup = !empty($posted['markup']) && $posted['markup'] == 'new';
         $meta['markup'] = $is_new_markup ? 'new' : false;
-        $meta['summary'] = trim(substr($posted['summary'], 0, 50));
+        $meta['summary'] = trim(substr($posted['summary'], 0, 256));
         $meta['locked'] = !empty($posted['locked']);
         $meta['is_minor_edit'] = !empty($posted['minor_edit']);
 
