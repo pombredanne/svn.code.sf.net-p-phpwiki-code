@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.73 2003-01-28 21:09:17 zorloc Exp $');
+rcs_id('$Id: loadsave.php,v 1.74 2003-02-15 02:18:04 dairiki Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -678,7 +678,7 @@ class LimitedFileSet extends FileSet {
     }
 
     function _filenameSelector($fn) {
-        $incl = &$this->_include;
+        $incl = &$this->_includefiles;
         $excl = &$this->_exclude;
 
         if ( ($incl && !in_array($fn, $incl))
@@ -796,10 +796,13 @@ function SetupWiki (&$request)
     StartLoadDump($request, _("Loading up virgin wiki"));
     echo "<dl>\n";
 
-    LoadAny($request, FindLocalizedFile(WIKI_PGSRC));
-    if ($LANG != "C" and $LANG != "en")
-        LoadAny($request, FindFile(DEFAULT_WIKI_PGSRC),
-                $GenericPages);
+    $pgsrc = FindLocalizedFile(WIKI_PGSRC);
+    $default_pgsrc = FindFile(DEFAULT_WIKI_PGSRC);
+    
+    if ($default_pgsrc != $pgsrc)
+        LoadAny($request, $default_pgsrc, $GenericPages);
+
+    LoadAny($request, $pgsrc);
 
     echo "</dl>\n";
     EndLoadDump($request);
@@ -829,6 +832,12 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.73  2003/01/28 21:09:17  zorloc
+ The get_cfg_var() function should only be used when one is
+ interested in the value from php.ini or similar. Use ini_get()
+ instead to get the effective value of a configuration variable.
+ -- Martin Geisler
+
  Revision 1.72  2003/01/03 22:25:53  carstenklapp
  Cosmetic fix to "Merge Edit" & "Overwrite" buttons. Added "The PhpWiki
  programming team" as author when loading from pgsrc. Source
