@@ -1,18 +1,20 @@
-From [no address given]  Sun Dec 16 02:19:06 2001
+From [no address given]  Tue Dec 18 02:37:25 2001
 Subject: FrischeSeiten
 From: [no address given] (PhpWiki)
-Date: Sun, 16 Dec 2001 00:41:59 -0500
+Date: Tue, 18 Dec 2001 02:06:37 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.0-jeffs-hacks)
 Content-Type: application/x-phpwiki;
   pagename=FrischeSeiten;
   flags=PAGE_LOCKED;
+  lastmodified=1008659197;
 Content-Transfer-Encoding: quoted-printable
 
-Eine Liste der k=FCrzlich ver=E4nderter oder neuer Seiten wird erzeugt:
+Eine Liste der k=FCrzlich ver=E4nderter oder neuer Seiten wird hier =
+erzeugt. Geringe=C4nderungen zeigt alle Geringf=FCgige- und =
+Haupt=E4nderungen.
 
 innerhalb von: [1 Tag|phpwiki:?days=3D1] | [3 Tagen|phpwiki:?days=3D3] | =
 [7 Tagen|phpwiki:?days=3D7] | [30 Tagen|phpwiki:?days=3D30] | [90 =
 Tagen|phpwiki:?days=3D90] | [...|phpwiki:?days=3D-1]
 --------
 <?plugin RecentChanges days||=3D30?>
--------
