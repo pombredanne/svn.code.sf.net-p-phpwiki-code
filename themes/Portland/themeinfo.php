@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.4 2002-01-30 23:41:54 dairiki Exp $');
+rcs_id('$Id: themeinfo.php,v 1.5 2002-02-03 19:06:06 carstenklapp Exp $');
 
 /*
  * This file defines an appearance ("theme") of PhpWiki similar to the Portland Pattern Repository.
@@ -85,6 +85,8 @@ $Theme->setAutosplitWikiWords(false);
  * below.  (These examples give the default formats.)
  * Formats are given as format strings to PHP strftime() function See
  * http://www.php.net/manual/en/function.strftime.php for details.
+ * Do not include the server's zone (%Z), times are converted to the
+ * user's time zone.
  */
 $Theme->setDateTimeFormat("%B %e, %Y");   // may contain time of day
 $Theme->setDateFormat("%B %e, %Y");	    // must not contain time

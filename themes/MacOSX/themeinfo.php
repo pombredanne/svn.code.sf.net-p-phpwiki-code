@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.43 2002-02-02 20:53:43 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.44 2002-02-03 19:06:07 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -124,10 +124,12 @@ $Theme->addButtonAlias("...", "alltime");
  * below.  (These examples give the default formats.)
  * Formats are given as format strings to PHP strftime() function See
  * http://www.php.net/manual/en/function.strftime.php for details.
+ * Do not include the server's zone (%Z), times are converted to the
+ * user's time zone.
  */
 //$Theme->setDateTimeFormat("%B %e, %Y");   // may contain time of day
 //$Theme->setDateFormat("%B %e, %Y");	    // must not contain time
-$Theme->setDateTimeFormat("%A, %B %e, %Y. %l:%M:%S %p %Z"); // may contain time of day
+$Theme->setDateTimeFormat("%A, %B %e, %Y %l:%M:%S %p"); // may contain time of day
 $Theme->setDateFormat("%A, %B %e, %Y"); // must not contain time
 
 
