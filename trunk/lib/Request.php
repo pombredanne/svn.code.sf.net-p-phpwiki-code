@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.25 2003-02-16 04:55:54 dairiki Exp $');
+<?php rcs_id('$Id: Request.php,v 1.26 2003-02-16 05:10:00 dairiki Exp $');
 
 // FIXME: write log entry.
 
@@ -176,7 +176,7 @@ class Request {
             // a non-zero value, as it most likely will result in stale
             // pages after editing, and other insidious problems.
             
-            $max_age = defined(CACHE_CONTROL_MAX_AGE) ? CACHE_CONTROL_MAX_AGE : 0;
+            $max_age = defined('CACHE_CONTROL_MAX_AGE') ? CACHE_CONTROL_MAX_AGE : 0;
 
             if ($max_age > 0)
                 $cache_control = sprintf("max-age=%d", $max_age);
