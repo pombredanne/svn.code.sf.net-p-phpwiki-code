@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.72 2005-01-29 19:51:03 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.73 2005-02-04 13:43:30 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -262,6 +262,7 @@ extends WikiDB_backend
     function set_cached_html($pagename, $data) {
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
+        if (empty($data)) $data = '';
         $rs = $dbh->Execute("UPDATE $page_tbl"
                             . " SET cached_html=?"
                             . " WHERE pagename=?",
@@ -1418,6 +1419,10 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.72  2005/01/29 19:51:03  rurban
+// Bugs item #1077769 fixed by frugal.
+// Deleted the wrong page. Fix all other tables also.
+//
 // Revision 1.71  2005/01/25 08:01:00  rurban
 // fix listOfFields with different database
 //
