@@ -1,4 +1,4 @@
-<!-- $Id: wiki_stdlib.php3,v 1.19 2000-06-29 03:25:17 wainstead Exp $ -->
+<!-- $Id: wiki_stdlib.php3,v 1.20 2000-06-30 01:40:40 wainstead Exp $ -->
 <?
    /*
       Standard functions for Wiki functionality
@@ -21,7 +21,7 @@
    function GeneratePage($template, $content, $name, $hash)
    {
       global $ScriptUrl, $AllowedProtocols, $templates;
-      global $datetimeformat, $dbi;
+      global $datetimeformat, $dbi, $logo;
 
       if (!is_array($hash))
          unset($hash);
@@ -36,6 +36,8 @@
 			htmlspecialchars($name), $page);
       $page = str_replace("#$FieldSeparator#ALLOWEDPROTOCOLS#$FieldSeparator#",
 			$AllowedProtocols, $page);
+      $page = str_replace("#$FieldSeparator#LOGO#$FieldSeparator#",
+                        $logo, $page);
 
       // invalid for messages (search results, error messages)
       if ($template != 'MESSAGE') {
