@@ -1,10 +1,12 @@
-<?php rcs_id('$Id: PageList.php,v 1.3 2002-01-21 08:01:42 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.4 2002-01-21 08:19:17 carstenklapp Exp $');
 
 // This will relieve some of the work of plugins like LikePages,
 // MostPopular and allows dynamic expansion of those plugins do
 // include more columns in their output.
 //
 // There are still a few rough edges.
+//
+// TODO: use the new HtmlElement functions
 
 class PageList {
     function PageList ($pagelist_name = '') {
@@ -23,7 +25,7 @@ class PageList {
     function getCaption () {
         // put the total into the caption if needed
         if (strstr($this->_caption, '%d')) {
-            $this->setCaption(sprintf($this->_caption, getTotal()));
+            $this->setCaption(sprintf($this->_caption, $this->getTotal()));
         }
         return $this->_caption;
     }
@@ -59,11 +61,21 @@ class PageList {
         $summary = "FIXME: add brief summary and column names";
         $html .= "<table summary=\"$summary\" border=\"0\" padding=\"0\" cellspacing=\"0\">";
 
-        //FIXME: insert column headers into first row
+        $html .= "<tr>";
+        foreach ($this->_columns as $column_name) {
+            $html .= $this->_column_align($column_name) == 'right' ? "<td align=\"right\">" : "<td>";
+            $html .= $pad;
+
+            $html .= "<u>".$column_name."</u>";
+            $html .= "</td>";
+        }
+        $html .= "</tr>";
+
         foreach ($this->_pages as $page_handle) {
             $html .= "<tr>";
             foreach ($this->_columns as $column_name) {
-                $html .= $this->_column_align($column_name) == 'right' ? "<td align=\"right\">" : "<dr>";
+                $html .= $this->_column_align($column_name) == 'right' ? "<td align=\"right\">" : "<td>";
+                $html .= $pad;
                 $field = $this->_colname_to_dbfield($column_name);
                 if ($this->_does_require_rev($column_name)) {
                     $current = $page_handle->getCurrentRevision();
@@ -82,8 +94,7 @@ class PageList {
                         $html .= $page_handle->get($field);
                     }
                 }
-                //FIXME: omit padding for last column;
-                $html .= $pad . "</td>";
+                $html .= "</td>";
             }
             $html .= "</tr>\n";
         }
