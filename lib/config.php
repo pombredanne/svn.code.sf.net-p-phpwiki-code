@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.109 2004-05-08 14:06:12 rurban Exp $');
+rcs_id('$Id: config.php,v 1.110 2004-05-16 23:10:44 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -171,7 +171,7 @@ function update_locale($loc) {
         //return false;
     }
     //if (substr($newlocale,0,2) == $loc) // don't update with C or failing setlocale
-    $GLOBALS['LANG'] = $loc;
+    if (!isset($GLOBALS['LANG'])) $GLOBALS['LANG'] = $loc;
     // Try to put new locale into environment (so any
     // programs we run will get the right locale.)
     //
@@ -248,8 +248,10 @@ function pcre_fix_posix_classes ($regexp) {
     global $charset;
     if (!isset($charset))
         $charset = CHARSET; // get rid of constant. pref is dynamic and language specific
-    if (in_array($GLOBALS['LANG'],array('ja','zh')))
+    if (in_array($GLOBALS['LANG'],array('zh')))
         $charset = 'utf-8';
+    if (in_array($GLOBALS['LANG'],array('ja')))
+        $charset = 'EUC-JP';
     if (strtolower($charset) == 'utf-8') { // thanks to John McPherson
         // until posix class names/pcre work with utf-8
 	if (preg_match('/[[:upper:]]/', '\xc4\x80'))
@@ -321,6 +323,10 @@ if (!function_exists('is_scalar')) { // lib/stdlib.php:hash()
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.109  2004/05/08 14:06:12  rurban
+// new support for inlined image attributes: [image.jpg size=50x30 align=right]
+// minor stability and portability fixes
+//
 // Revision 1.108  2004/05/08 11:25:16  rurban
 // php-4.0.4 fixes
 //

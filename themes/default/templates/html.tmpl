@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-rcs_id('$Id: html.tmpl,v 1.4 2004-04-09 17:49:12 rurban Exp $');
+rcs_id('$Id: html.tmpl,v 1.5 2004-05-16 23:10:45 rurban Exp $');
 /*
  * This template is responsible mainly for the outer level <html> stuff.
  *
@@ -10,7 +10,7 @@ if (browserVersion() >= 4.0)
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?=$GLOBALS['LANG']?>" lang="<?=$GLOBALS['LANG']?>">
 <?= Template('head') ?>
 <?= Template('body') ?>
 <?php

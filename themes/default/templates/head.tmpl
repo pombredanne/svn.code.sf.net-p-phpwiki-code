@@ -1,8 +1,9 @@
 <?php  // -*-html-*-
-  rcs_id('$Id: head.tmpl,v 1.14 2004-02-17 12:19:49 rurban Exp $');
+  rcs_id('$Id: head.tmpl,v 1.15 2004-05-16 23:10:45 rurban Exp $');
 ?>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
+<meta http-equiv="content-language" content="<?=$GLOBALS['LANG']?>" />
 <?php $ROBOTS_CONTENT = $ROBOTS_META ? $ROBOTS_META : "noindex,nofollow"; ?>
 <meta name="robots" content="<?= $ROBOTS_CONTENT ?>" />
 <?php if (!empty($PAGE_DESCRIPTION)) { ?>
@@ -11,7 +12,7 @@
 <?php if (!empty($PAGE_KEYWORDS)) { ?>
 <meta name="keywords" content="<?=$PAGE_KEYWORDS?>" />
 <?php } ?>
-<meta name="language" content="<?=DEFAULT_LANGUAGE?>" />
+<meta name="language" content="<?=$GLOBALS['LANG']?>" />
 <meta name="document-type" content="Public" />
 <meta name="document-rating" content="General" />
 <meta name="generator" content="PhpWiki" />
@@ -112,6 +113,9 @@ _("UserPreferences"))?>" />
 <?php
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2004/02/17 12:19:49  rurban
+// support to add more javascript dynamically
+//
 // Revision 1.13  2003/12/05 15:36:39  carstenklapp
 // Improvements: to make it easier to run multiple wikis off of one set
 // of code, urls for link rel author and copyright now defined in
