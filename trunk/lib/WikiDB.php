@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.60 2004-05-28 10:09:58 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.61 2004-06-02 17:13:48 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -950,7 +950,7 @@ class WikiDB_Page
         $cache = &$this->_wikidb->_cache;
         $pagename = &$this->_pagename;
         
-        if ($version == 0)
+        if (! $version ) // 0 or false
             return new WikiDB_PageRevision($this->_wikidb, $pagename, 0);
 
         assert($version > 0);
@@ -1823,6 +1823,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.60  2004/05/28 10:09:58  rurban
+// fix bug #962117, incorrect init of auth_dsn
+//
 // Revision 1.59  2004/05/27 17:49:05  rurban
 // renamed DB_Session to DbSession (in CVS also)
 // added WikiDB->getParam and WikiDB->getAuthParam method to get rid of globals
