@@ -35,7 +35,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.0-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.30 2001-11-28 20:12:48 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.31 2001-12-02 03:33:28 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -264,6 +264,9 @@ $logo = "images/wikibase.png";
 // Signature image which is shown after saving an edited page
 // If this is left blank (or unset), the signature will be omitted.
 //$SignatureImg = "images/signature.png";
+
+// this turns on url indicator icons, inserted before embedded links
+//define("USE_LINK_ICONS", 1);
 
 // Date & time formats used to display modification times, etc.
 // Formats are given as format strings to PHP strftime() function
