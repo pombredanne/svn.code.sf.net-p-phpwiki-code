@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.50 2004-09-06 09:28:58 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.51 2004-09-20 13:40:19 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -133,9 +133,13 @@ function IniConfig($file) {
     }
 
     foreach ($_IC_VALID_VALUE as $item) {
-        if (defined($item)) continue;
+        if (defined($item)) {
+            unset($rs[$item]);
+            continue;
+        }
         if (array_key_exists($item, $rs)) {
             define($item, $rs[$item]);
+            unset($rs[$item]);
         //} elseif (array_key_exists($item, $rsdef)) {
         //    define($item, $rsdef[$item]);
         // calculate them later or not at all:
@@ -156,7 +160,10 @@ function IniConfig($file) {
     // be a boolean false, otherwise if there is anything set it'll
     // be true.
     foreach ($_IC_VALID_BOOL as $item) {
-        if (defined($item)) continue;
+        if (defined($item)) {
+            unset($rs[$item]);
+            continue;
+        }
         if (array_key_exists($item, $rs)) {
             $val = $rs[$item];
         //} elseif (array_key_exists($item, $rsdef)) {
@@ -188,6 +195,7 @@ function IniConfig($file) {
         else {
             define($item, true);
         }
+        unset($rs[$item]);
     }
 
     // Special handling for some config options
@@ -208,6 +216,10 @@ function IniConfig($file) {
     $DBParams['dba_handler'] = @$rs['DATABASE_DBA_HANDLER'];
     $DBParams['directory'] = @$rs['DATABASE_DIRECTORY'];
     $DBParams['timeout'] = @$rs['DATABASE_TIMEOUT'];
+    foreach (array('DATABASE_TYPE','DATABASE_DSN','DATABASE_SESSION_TABLE','DATABASE_DBA_HANDLER',
+    	           'DATABASE_DIRECTORY','DATABASE_TIMEOUT','DATABASE_PREFIX') as $item) {
+    	unset($rs[$item]);
+    }
     // USE_DB_SESSION default logic:
     if (!defined('USE_DB_SESSION')) {
         if ($DBParams['db_session_table'] 
@@ -226,11 +238,12 @@ function IniConfig($file) {
             if (defined($item)) $val = constant($item);
             elseif (array_key_exists($item, $rs))
                 $val = $rs[$item];
-            elseif (array_key_exists($item, $rsdef))
+    	    elseif (array_key_exists($item, $rsdef))
                 $val = $rsdef[$item];
             if (!isset($ExpireParams[$major]))
                 $ExpireParams[$major] = array();
             $ExpireParams[$major][$max] = $val;
+            unset($rs[$item]);
     	}
     }
 
@@ -268,13 +281,18 @@ function IniConfig($file) {
         } elseif (isset($rsdef[$rskey])) {
             $DBAuthParams[$apkey] = $rsdef[$rskey];
         }
+        unset($rs[$rskey]);
     }
 
     // optional values will be set to '' to simplify the logic.
     foreach ($_IC_OPTIONAL_VALUE as $item) {
-        if (defined($item)) continue;
+        if (defined($item)) {
+            unset($rs[$item]);
+            continue;
+        }
         if (array_key_exists($item, $rs)) {
             define($item, $rs[$item]);
+            unset($rs[$item]);
         } else 
             define($item, '');
     }
@@ -342,6 +360,15 @@ function IniConfig($file) {
         define('PLUGIN_CACHED_CACHE_DIR', $rs['PLUGIN_CACHED_CACHE_DIR']);
         // will throw an error if not exists.
         FindFile(PLUGIN_CACHED_CACHE_DIR);
+    }
+
+    // process the rest of the config.ini settings:
+    foreach ($rs as $item => $value) {
+        if (defined($item)) {
+            continue;
+        } else {
+            define($item, $value);
+        }
     }
 
     fix_configs();
@@ -618,6 +645,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.50  2004/09/06 09:28:58  rurban
+// fix PLUGIN_CACHED_CACHE_DIR fallback logic. ini entry did not work before
+//
 // Revision 1.49  2004/07/13 13:07:27  rurban
 // improved DB_SESSION logic
 //
