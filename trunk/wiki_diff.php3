@@ -467,9 +467,18 @@ if((!is_array($wiki)) || (!is_array($archive))) {
    $html = 'There exists no archived version of the page, or the page itself does not exist.';
 }
 else {
+   $html = "<table><tr><td>Current page: <td>version $wiki[version],"
+	 . "<td> last modified on "
+	 . date($datetimeformat, $wiki['lastmodified'])
+	 . "<td>by $wiki[author]\n"
+	 . "<tr><td>Archived page: <td>version $archive[version],"
+	 . "<td> last modified on "
+	 . date($datetimeformat, $archive['lastmodified'])
+	 . "<td> by $archive[author]</table><p>\n";
+
    $diff = new WikiDiff($archive['content'], $wiki['content']);
    $plain_fmt = new WikiDiffFormatter();
-   $html = $plain_fmt->format($diff, $archive['content']);
+   $html .= $plain_fmt->format($diff, $archive['content']);
 }
 
 GeneratePage('MESSAGE', $html, 'Diff of '.htmlspecialchars($pagename), 0);
