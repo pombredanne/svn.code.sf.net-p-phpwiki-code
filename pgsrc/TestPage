@@ -1,3 +1,5 @@
+
+
  New lists: astericks and hash marks
 * bullet
 * l1
@@ -60,6 +62,8 @@ __Link tests__
 # A [[Link] produces a [Link]
 # A [Link] looks like this: [[link]
 # This is a [%%%] line break link
+
+Also this page is [[not linked to], and this one is !NotLinkedTo.
 
 ----
  Markup tests:
