@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.52 2003-01-03 22:22:00 carstenklapp Exp $');
+rcs_id('$Id: editpage.php,v 1.53 2003-02-15 23:20:27 dairiki Exp $');
 
 require_once('lib/Template.php');
 
@@ -137,6 +137,8 @@ class PageEditor
                 $this->setPageLockChanged($isadmin, $lock, $page);
             }
             // Save failed. No changes made.
+            $this->_redirectToBrowsePage();
+            // user will probably not see the rest of this...
             include_once('lib/display.php');
             // force browse of current version:
             $request->setArg('version', false);
@@ -175,7 +177,7 @@ class PageEditor
             // been defined.  In this case, the user will most
             // likely not see the rest of the HTML we generate
             // (below).
-            $request->redirect(WikiURL($page, false, 'absolute_url'));
+            $this->_redirectToBrowsePage();
         }
 
         // Force browse of current page version.
@@ -334,6 +336,10 @@ class PageEditor
         return $el;
     }
 
+    function _redirectToBrowsePage() {
+        $this->request->redirect(WikiURL($this->page, false, 'absolute_url'));
+    }
+    
 
     function _restoreState () {
         $request = &$this->request;
@@ -492,6 +498,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.52  2003/01/03 22:22:00  carstenklapp
+ Minor adjustments to diff block markers ("<<<<<<<"). Source reformatting.
+
  Revision 1.51  2003/01/03 02:43:26  carstenklapp
  New class LoadFileConflictPageEditor, for merging / comparing a loaded
  pgsrc file with an existing page.
