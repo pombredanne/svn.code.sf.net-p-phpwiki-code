@@ -155,7 +155,7 @@ function getBacklinks($pagename,$credentials=false) {
     $dbi = WikiDB::open($GLOBALS['DBParams']);
     $backend = &$dbi->_backend;
     $result =  $backend->get_links($pagename);
-    $page_iter = new WikiDB_PageIterator($dbi, $result);
+    $page_iter = new WikiDB_PageIterator(/*$dbi,*/ $result);
     $pages = array();
     while ($page = $page_iter->next()) {
         $pages[] = array('pagename' => $page->_pagename);
