@@ -1,4 +1,4 @@
--- $Id: schema.mysql,v 1.1 2000-06-21 22:59:18 ahollosi Exp $
+-- $Id: schema.mysql,v 1.2 2000-06-29 14:43:36 ahollosi Exp $
 
 drop table if exists wiki;
 drop table if exists archive;
@@ -27,7 +27,7 @@ CREATE TABLE archive (
         created INT NOT NULL,
         content MEDIUMTEXT NOT NULL,
         refs TEXT,
-        PRIMARY KEY (pagename, version)
+        PRIMARY KEY (pagename)
         );
 
 -- tables below are not yet used
