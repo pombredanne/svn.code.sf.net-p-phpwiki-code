@@ -45,15 +45,16 @@ xu_load_extension();
 // xmlrpc_epi_dir = directory where libxmlrpc.so.0 is located
 // xmlrpc_php_dir = directory where xmlrpc-epi-php.so is located
 function xu_load_extension($xmlrpc_php_dir="") {
-   if(!extension_loaded('xmlrpc')) {
-      $bSuccess = true;
+   $bSuccess = extension_loaded('xmlrpc');
+   if (!$bSuccess) {
       putenv("LD_LIBRARY_PATH=/usr/lib/php4/apache/xmlrpc/");
       if ($xmlrpc_php_dir) {
           $xmlrpc_php_dir .= '/';
       }
-      if (!extension_loaded("xmlrpc")) {
+      if (substr(PHP_OS,0,3) == 'WIN')
+          $bSuccess = dl("php_xmlrpc.dll");
+      else    
           $bSuccess = dl($xmlrpc_php_dir . "xmlrpc-epi-php.so");
-      }
    }
    return $bSuccess;
 }
