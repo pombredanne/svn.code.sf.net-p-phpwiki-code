@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.13 2002-01-26 03:04:51 dairiki Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.14 2002-01-27 22:06:38 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -159,8 +159,24 @@ class XmlElement
         return trim($str);
     }
 
+    /**
+     * See if element is empty.
+     *
+     * Empty means it has no content.
+     * @return bool True if empty.
+     *
+     * Bugs: This fails if any of the content is itself an empty array.
+     * We might want to fix things so that content gets flattend by
+     * {push,unshift}Content, rather than by {print,as}XML.
+     */
     function isEmpty () {
-        return empty($this->_content);
+        if (empty($this->_content))
+            return true;
+        foreach ($this->_content as $x) {
+            if (!empty($x))
+                return false;
+        }
+        return true;
     }
 
     function hasInlineContent () {
@@ -195,6 +211,10 @@ class RawXml {
 
     function asXML () {
         return $this->_xml;
+    }
+
+    function isEmpty () {
+        return empty($this->_xml);
     }
 }
 
