@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: cvs.php,v 1.15 2004-03-01 13:48:45 rurban Exp $');
+rcs_id('$Id: cvs.php,v 1.16 2004-03-16 13:30:48 rurban Exp $');
 /**
  * Backend for handling CVS repository. 
  *
@@ -421,18 +421,17 @@ extends WikiDB_backend
         }
     }
 
-    function most_popular($limit,$sortby = '') 
-    {
+    function most_popular($limit,$sortby = '') {
         // TODO: needs to be tested ...
         $mp = $this->_getMostPopular();
-        if($limit < 0){
-		asort ($mp, SORT_NUMERIC);
-		$limit = -$limit;
-		} else {
-        arsort( $mp, SORT_NUMERIC );
-		}
+        if ($limit < 0){
+            asort ($mp, SORT_NUMERIC);
+            $limit = -$limit;
+        } else {
+            arsort( $mp, SORT_NUMERIC );
+        }
         $returnVal = array();
-
+        
         while ( (list($key, $val) = each($a)) && $limit > 0 ) {
             $returnVal[] = $key;
             $limit--;
@@ -451,15 +450,15 @@ extends WikiDB_backend
         $mr = $this->_getMostRecent();
         $rev = false;
         $returnVal = array();
-		if ( isset( $params['limit'] ) ) {
+        if ( isset( $params['limit'] ) ) {
             $limit = $params['limit'];
-			$rev = $limit < 0;
+            $rev = $limit < 0;
         }
-        if($rev){
-		arsort( $mp, SORT_NUMERIC );
-		} else {
-		asort( $mr, SORT_NUMERIC );
-		}
+        if ($rev){
+            arsort( $mr, SORT_NUMERIC );
+        } else {
+            asort( $mr, SORT_NUMERIC );
+        }
         if ( isset( $limit ) ) {
             while ( (list($key, $val) = each($a)) && $limit > 0 ) {
                 $returnVal[] = $key;
@@ -468,10 +467,10 @@ extends WikiDB_backend
         } else if ( isset( $params['since'] ) ) {
             while ( (list($key, $val) = each($a)) ) {
                 
-					if ( $val > $params['since'] ) {
-                    	$returnVal[] = $key;
-                    }
-			}
+                if ( $val > $params['since'] ) {
+                    $returnVal[] = $key;
+                }
+            }
         }
 
         return new Cvs_Backend_Array_Iterator( $returnVal );
@@ -1003,6 +1002,12 @@ extends Cvs_Backend_Array_Iterator
     }
 }
 
-
-
+// (c-file-style: "gnu")
+// Local Variables:
+// mode: php
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
+// End:   
 ?>
