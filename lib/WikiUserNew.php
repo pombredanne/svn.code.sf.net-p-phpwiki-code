@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.53 2004-04-12 18:29:15 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.54 2004-04-18 00:24:45 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -804,9 +804,9 @@ extends _AnonUser
         if ( !isset($this->_prefs->_select) and !empty($DBAuthParams['pref_select']) 
              and in_array($DBParams['dbtype'],array('SQL','ADODB'))) {
             $this->_prefs->_method = $DBParams['dbtype'];
-            $this->getAuthDbh();
             // preparate the SELECT statement
-            $this->_prefs->_select = str_replace('"$userid"','%s',$DBAuthParams['pref_select']);
+            $this->_prefs->_select = $this->prepare($DBAuthParams['pref_select'], 
+                                                    '"$userid"');
         //} else {
         //    unset($this->_prefs->_select);
         } else {
@@ -815,11 +815,9 @@ extends _AnonUser
         if (  !isset($this->_prefs->_update) and !empty($DBAuthParams['pref_update'])
              and in_array($DBParams['dbtype'],array('SQL','ADODB'))) {
             $this->_prefs->_method = $DBParams['dbtype'];
-            $this->getAuthDbh();
             // preparate the SELECT statement
-            $this->_prefs->_update = str_replace(array('"$userid"','"$pref_blob"'),
-                                                 array('%s','%s'),
-                                             $DBAuthParams['pref_update']);
+            $this->_prefs->_update = $this->prepare($DBAuthParams['pref_update'], 
+                                                    array('"$userid"','"$pref_blob"'));
         }
         
         // Upgrade to the next parent _PassUser class. Avoid recursion.
@@ -910,7 +908,8 @@ extends _AnonUser
     function getAuthDbh () {
         global $request, $DBParams, $DBAuthParams;
 
-        // session restauration doesn't re-connect to the database automatically, so dirty it here.
+        // session restauration doesn't re-connect to the database automatically, 
+        // so dirty it here.
         if (($DBParams['dbtype'] == 'SQL') and isset($this->_auth_dbi) and 
              empty($this->_auth_dbi->connection))
             unset($this->_auth_dbi);
@@ -937,22 +936,22 @@ extends _AnonUser
         return $this->_auth_dbi;
     }
 
-    // not used anymore. have to do the prefix fixing somewhere else
+    // TODO: use it again for the auth and member tables
     function prepare ($stmt, $variables) {
         global $DBParams, $request;
-        // preparate the SELECT statement, for ADODB and PearDB (MDB not)
         $this->getAuthDbh();
-        $place = ($DBParams['dbtype'] == 'ADODB') ? '%s' : '?';
+        // '"$userid"' => '%s'
         if (is_array($variables)) {
             $new = array();
-            foreach ($variables as $v) { $new[] = $place; }
+            foreach ($variables as $v) { $new[] = '%s'; }
         } else {
-            $new = $place;
+            $new = '%s';
         }
         // probably prefix table names if in same database
         if (!empty($DBParams['prefix']) and 
-            $this->_auth_dbi === $request->_dbi->_backend->_dbh) {
-            if (!stristr($DBParams['prefix'],$stmt)) {
+            $this->_auth_dbi === $request->_dbi->_backend->_dbh) 
+        {
+            if (!stristr($DBParams['prefix'], $stmt)) {
                 //Do it automatically for the lazy admin? Esp. on sf.net it's nice to have
                 trigger_error("TODO: Need to prefix the DBAuthParam tablename in index.php: $stmt",
                               E_USER_WARNING);
@@ -962,7 +961,9 @@ extends _AnonUser
                                           " ".$prefix."member "),$stmt);
             }
         }
-        return $this->_auth_dbi->prepare(str_replace($variables,$new,$stmt));
+        // preparate the SELECT statement, for ADODB and PearDB (MDB not)
+        // simple sprintf-style.
+        return str_replace($variables,$new,$stmt);
     }
 
     function getPreferences() {
@@ -2767,6 +2768,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.53  2004/04/12 18:29:15  rurban
+// exp. Session auth for already authenticated users from another app
+//
 // Revision 1.52  2004/04/12 13:04:50  rurban
 // added auth_create: self-registering Db users
 // fixed IMAP auth
