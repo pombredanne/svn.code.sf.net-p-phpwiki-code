@@ -1,5 +1,5 @@
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
-X-RCS_ID: $Id: WikiPlugin,v 1.3 2002-01-13 15:55:23 rurban Exp $
+X-RCS_ID: $Id: WikiPlugin,v 1.4 2002-01-23 20:21:23 dairiki Exp $
 Content-Type: application/x-phpwiki;
   pagename=WikiPlugin;
   flags="";
@@ -53,7 +53,6 @@ the current page as the default value for the ''page'' argument.
 * RecentChanges
 * text2png
 * TitleSearch
-* UserPage
 * ViewSource
 * walkabout
 
