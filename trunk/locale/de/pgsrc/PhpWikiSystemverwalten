@@ -1,10 +1,10 @@
-Date: Sun, 24 Feb 2002 00:14:20 -0500
+Date: Thu, 28 Mar 2002 14:57:00 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: PhpWikiSystemverwalten,v 1.13 2002-02-24 06:05:53 carstenklapp Exp $
+X-Rcs-Id: $Id: PhpWikiSystemverwalten,v 1.14 2002-03-28 21:03:42 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiSystemverwalten;
   flags=PAGE_LOCKED;
-  pgsrc_version="2 $Revision: 1.13 $";
+  pgsrc_version="2 $Revision: 1.14 $";
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
@@ -79,5 +79,6 @@ Die Hochlade- und Lade-Funktionen erkennen jeden dieser drei Dateitypen automati
 
 Dieses zieht einer HTML-Speicherauszug in ein Verzeichnis aus, die für Verteilung auf Platte verwendbar sind, in der kein Web-Server vorhanden ist.
 
+Die XHTML-Dateiansammlung kann auch heruntergeladen werden als eine __[XHTML ZIP Datei | phpwiki:?action=ziphtml]__.
 ----
 PhpWikiDokumentation
