@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: signin.tmpl,v 1.19 2002-09-17 19:32:11 dairiki Exp $ -->
+<!-- $Id: signin.tmpl,v 1.20 2003-02-17 05:58:42 dairiki Exp $ -->
 <?php
 
      $Sep = $Theme->getButtonSeparator();
@@ -11,8 +11,8 @@
          $NOFORM = true;
 ?>
 <?php if (empty($NOFORM)) { ?>
-  <form method="post" action="<?=$request->getURLtoSelf()?>" accept-charset="<?=CHARSET?>" name="<?=$FORMNAME?>">
-  <?= HiddenGets(array('auth')) ?>
+  <form method="post" action="<?= $request->getPostURL() ?>" accept-charset="<?=CHARSET?>" name="<?=$FORMNAME?>">
+  <?= HiddenInputs($request->getArgs(), false, array('auth')) ?>
 <?php } ?>
 <?php if ($user->isSignedIn()) {  ?>
   <?= fmt("You are signed in as %s", WikiLink($user->getId(), 'auto')) ?>
@@ -29,7 +29,14 @@
   <noscript>
     <?= Button("submit:auth[logout]", _("Sign Out"), 'wikiaction') ?>
   </noscript>
-<?php } else { ?>
+<?php } else {
+  $SignInInput = HTML::input(array('type' => 'text',
+                                   'name' => "auth[userid]",
+                                   'size' => 12,
+                                   'maxlength' => 256,
+                                   'onchange' => "SignIn(this.form);"));
+  $SignInInput->addTooltip(_("Enter your UserId to sign in")) 
+?>
   <script type="text/javascript"> <!--
     function SignIn(form) {
       <?php /* (comment out:)
@@ -42,14 +49,8 @@
       form.submit();
     }
     //-->
-    </script>
-  <?php $SignInInput = HTML::input(array('type' => 'text',
-                                         'name' => "auth[userid]",
-                                         'size' => 12,
-                                         'maxlength' => 256,
-                                         'onchange' => "SignIn(this.form);"));
-        $SignInInput->addTooltip(_("Enter your UserId to sign in")) ?>
-  <?= Button("submit:auth[login]", _("Sign In"), 'wikiaction')?>
+    document.write('&nbsp;<?= _("Sign in:") ?>');
+  </script>
   <?= $SignInInput ?>
   <noscript>
     <?= Button("submit:auth[login]", _("Sign In"), 'wikiaction')?>
