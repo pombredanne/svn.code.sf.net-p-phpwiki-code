@@ -32,14 +32,10 @@ For more information on MySQL go to http://www.mysql.org/
 
 3. Create tables inside your database (still using the root account).
 
-	mysql -uuser -ppassword phpwiki < schemas/mysql.sql
+	mysql -uuser -ppassword phpwiki < schemas/mysql-initialize.sql
 
    Note: the user specified in this command needs to have the rights
          to drop and create tables. Use the same user as in step 1.
-
-   If you are using MySQL 3.21.x or earlier the script may issue an
-   error. In that case remove existing tables manually and delete
-   the "drop tables" lines from schemas/mysql.sql - it should work now
 
 4. Edit the DATABASE settings in config/config.ini to reflect your settings.
 
@@ -49,8 +45,10 @@ For more information on MySQL go to http://www.mysql.org/
 	   (where 'phpwiki' is the mysql database name.)
         c) Note that if you set DATABASE_PREFIX to a 
            non-empty string, you will have to edit
-           schemas/mysql.sql before you perform step
-           three (above).  (Sorry.)
+           schemas/mysql-initialize.sql before you perform step
+           three (above).  (Sorry.)  (You might also edit
+           schemas/mysql-destroy.sql at the same time, so you
+           don't forget.)
 
 That's it. phpwiki should now work. DATABASE_DIRECTORY,
 DATABASE_DBA_HANDLER and DATABASE_TIMEOUT are ignore for mysql.
@@ -67,14 +65,15 @@ if (!extension_loaded("mysql"))  { dl("mysql.so"); }
 Upgrading a MySQL phpwiki
 -------------------------
 
-If schemas/mysql.sql has changed for your old phpwiki installation, 
-you can either create missing tables manually and ALTER the changed tables 
-manually. 
-Or you can run ?action=upgrade (also from "Upgrade" at PhpWikiAdministration), but 
-then your database user needs the necessary ALTER and CREATE permissions. You 
-might change these temporarly in your config.ini.
-action=upgrade also brings all changed pgsrc files up-to-date.
+If schemas/mysql-initialize.sql has changed for your old phpwiki
+installation (or changed when compared to the old "mysql.sql" file),
+you can either create missing tables manually and ALTER the changed
+tables manually.  Or you can run ?action=upgrade (also from "Upgrade"
+at PhpWikiAdministration), but then your database user needs the
+necessary ALTER and CREATE permissions. You might change these
+temporarily in your config.ini.  action=upgrade also brings all
+changed pgsrc files up-to-date.
 
 /Reini and Arno ahollosi@mail.com
 
-$Id: INSTALL.mysql,v 1.5 2004-06-28 13:54:55 rurban Exp $
+$Id: INSTALL.mysql,v 1.6 2004-07-25 17:46:44 dfrankow Exp $

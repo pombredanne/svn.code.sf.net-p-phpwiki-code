@@ -65,13 +65,16 @@ Next you need to create a database called "wiki".
 
 bash$ createdb wiki
 
-Now run the script schemas/psql.sql to create the tables:
+Now run the script schemas/psql-initialize.sql to create the tables:
 
-bash$ psql wiki -f schemas/psql.sql
+bash$ psql wiki -f schemas/psql-initialize.sql
 
-(Newer versions of postgresql will require: psql wiki < schemas/psql.sql)
+(Newer versions of postgresql will require: psql wiki < schemas/psql-initialize.sql)
 
-If the schema starts to load but then fails near the end, you might need to change the user name at the top of psql.sql to match that which is used by your web server; e.g. nobody, apache, or www.
+If the schema starts to load but then fails near the end, you might
+need to change the user name at the top of psql-initialize.sql to
+match that which is used by your web server; e.g. nobody, apache, or
+www.
 
 For some reason I had to stop/start the database so that these changes took 
 effect.. after that just open up the Wiki in your browser and you should
@@ -83,4 +86,4 @@ swain@panix.com
 
 Report bugs to phpwiki-talk@lists.sourceforge.net
 
-$Id: INSTALL.pgsql,v 1.4 2004-04-10 10:13:22 rurban Exp $
+$Id: INSTALL.pgsql,v 1.5 2004-07-25 17:46:44 dfrankow Exp $
