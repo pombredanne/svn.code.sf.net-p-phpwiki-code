@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.40 2004-06-29 06:48:02 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.41 2004-09-17 14:21:28 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -948,10 +948,10 @@ class GroupLdap extends WikiGroup {
         // then take out the ou= from the base_dn (if exists) and append a default
         // from users and group
         if (!LDAP_OU_USERS)
-            if (strstr("ou=",LDAP_BASE_DN))
+            if (strstr(LDAP_BASE_DN, "ou="))
                 $this->base_dn = preg_replace("/(ou=\w+,)?()/","\$2", LDAP_BASE_DN);
 
-        if (!isset($this->user) or !isa($this->user,'_LDAPPassUser'))
+        if (!isset($this->user) or !isa($this->user, '_LDAPPassUser'))
             $this->_user = new _LDAPPassUser('LdapGroupTest'); // to have a valid username
         else 
             $this->_user =& $this->user;
@@ -1081,6 +1081,13 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.40  2004/06/29 06:48:02  rurban
+// Improve LDAP auth and GROUP_LDAP membership:
+//   no error message on false password,
+//   added two new config vars: LDAP_OU_USERS and LDAP_OU_GROUP with GROUP_METHOD=LDAP
+//   fixed two group queries (this -> user)
+// stdlib: ConvertOldMarkup still flawed
+//
 // Revision 1.39  2004/06/28 15:39:28  rurban
 // fixed endless recursion in WikiGroup: isAdmin()
 //
