@@ -144,7 +144,6 @@ B .wiki, STRONG .wiki { font-size: larger; }
 .wikiunknown, .named-wikiunknown
 {color: #600; }
 
-
 /* Interwiki links */
 A.interwiki { text-decoration: none; }
 .wikipage   { font-weight: bold; }
@@ -212,7 +211,7 @@ table.cal { border: thin solid black; }
 } 
 
 div.transclusion { 
-  background: lightgreen;
+  background: #cfc;
   border: thin;
   border-style: solid;
   padding-left: 0.8em; 
