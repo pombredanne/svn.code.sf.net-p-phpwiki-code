@@ -4,7 +4,7 @@
 <html>
 <head>
 <!-- phpwiki source:
-$Id: editpage.html,v 1.30 2001-12-19 03:46:32 carstenklapp Exp $
+$Id: editpage.html,v 1.31 2001-12-19 15:54:34 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <base href="${BASE_URL}" />
@@ -68,18 +68,17 @@ $_("Edit") <a href="${BROWSE}${PAGEURL}"
   </td>
   <td align="right">
     <?php if ($user->is_authenticated()) { ?>
-      $_("You are signed in as") <?php echo LinkWikiWord($USERID); ?>
+      <?php printf(_("You are signed in as %s."), LinkWikiWord($USERID)); ?>
     <?php } else { ?>
-      $_("Author will be logged as") <i>${USERID}</i> 
+      <?php printf(_("Author will be logged as %s."),"<em>${USERID}</em>"); ?>
        | <a class="wikiaction" href="${ACTION}login">$_("SignIn")<small>*</small></a>
 <br><small>*backup and reload after signing in</small>
     <?php } ?>
   </td>
 </tr></table>
 <p style="clear: both; padding: 2ex 0ex 0ex;">
-  $_("You can change the size of the editing area in")
-  <?php echo LinkExistingWikiWord(_("UserPreferences")); ?>.
-  $_("See") <?php echo LinkExistingWikiWord(_("GoodStyle")) ?> $_("tips for editing.")
+      <?php printf(_("You can change the size of the editing area in %s."), LinkExistingWikiWord(_("UserPreferences"))); ?>
+      <?php printf(_("See %s tips for editing."),LinkExistingWikiWord(_("GoodStyle"))); ?>
 </p>
 <hr noshade="noshade" />
 <div class="wiki-edithelp">
