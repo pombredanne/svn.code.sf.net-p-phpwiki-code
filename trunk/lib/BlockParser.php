@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.27 2002-09-17 19:23:32 dairiki Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.28 2002-11-01 16:49:29 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -717,7 +717,7 @@ class Block_oldlists extends Block_list
     //var $_tag = 'ol', 'ul', or 'dl';
     var $_re = '(?: [*] (?! \S[^*]* (?<=\S) [*](?!\S) )
                   | [#] (?! \[ .*? \] )
-                  | ; .* :
+                  | ; .*? :
                 ) .*? (?=\S)';
 
     function _match (&$input, $m) {
