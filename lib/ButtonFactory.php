@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ButtonFactory.php,v 1.11 2002-01-22 22:37:14 dairiki Exp $');
+<?php rcs_id('$Id: ButtonFactory.php,v 1.12 2002-01-23 03:34:05 carstenklapp Exp $');
 
 require_once("lib/HtmlElement.php");
 
@@ -239,9 +239,9 @@ class ButtonFactory {
             return _("Diff");
             
         case 'logout':
-            return _("SignOut");
+            return _("Sign Out");
         case 'login':
-            return _("SignIn");
+            return _("Sign In");
 
             
         case 'lock':
