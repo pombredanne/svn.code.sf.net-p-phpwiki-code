@@ -263,7 +263,8 @@ function html_option_form() {
                                 HTML::br()));
     unset($input);
     $option = HTML::div(array('class' => 'option'), 'defines: ', HTML::br());
-    foreach ($GLOBALS['define'] as $s) {
+    if (!empty($GLOBALS['define']))
+      foreach ($GLOBALS['define'] as $s) {
         if (defined($s)) {
             $input = array('type' => 'edit', 'name' => $s, 'value' => constant($s));
             $option->pushContent(HTML::input($input), $s, HTML::br());
@@ -318,8 +319,9 @@ if (isset($HTTP_SERVER_VARS['REQUEST_METHOD'])) {
     	else
             $argv[] = $key."=".$val;
     }
-} elseif (!empty($argv) and preg_match("/test\.php$/", $argv[0]))
+} elseif (!empty($argv) and preg_match("/test\.php$/", $argv[0])) {
     array_shift($argv);
+}    
 if (!empty($argv)) {
     $runtests = array();
     $define = array();
@@ -365,6 +367,11 @@ if (!empty($argv)) {
         echo "\n";
     }
     flush();
+} else {
+    if (empty($run_database_backends))
+        $run_database_backends = $database_backends;
+    if (empty($runtests))
+        $runtests = $alltests;
 }
 if (!defined('DEBUG'))
     define('DEBUG', $debug_level);
