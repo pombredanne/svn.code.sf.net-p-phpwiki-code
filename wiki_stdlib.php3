@@ -1,4 +1,4 @@
-<!-- $Id: wiki_stdlib.php3,v 1.18 2000-06-27 20:00:08 ahollosi Exp $ -->
+<!-- $Id: wiki_stdlib.php3,v 1.19 2000-06-29 03:25:17 wainstead Exp $ -->
 <?
    /*
       Standard functions for Wiki functionality
@@ -8,6 +8,7 @@
          LinkURL($url)
          RenderQuickSearch() 
          RenderFullSearch() 
+         RenderMostPopular()
          CookSpaces($pagearray) 
          class Stack
          SetHTMLOutputMode($newmode, $depth)
