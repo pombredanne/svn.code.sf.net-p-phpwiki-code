@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.59 2004-06-14 11:31:36 rurban Exp $');
+rcs_id('$Id: WikiUser.php,v 1.60 2004-06-15 09:15:52 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -512,17 +512,18 @@ class WikiUser {
         if (! $this->mayChangePass() ) {
             trigger_error(sprintf("Attempt to change an external password for '%s'. Not allowed!",
                                   $this->_userid), E_USER_ERROR);
-            return;
+            return false;
         }
         if ($passwd2 && $passwd2 != $newpasswd) {
             trigger_error("The second password must be the same as the first to change it",
                           E_USER_ERROR);
-            return;
+            return false;
         }
         $prefs = $this->getPreferences();
         //$oldpasswd = $prefs->get('passwd');
         $prefs->set('passwd', crypt($newpasswd));
         $this->setPreferences($prefs);
+        return true;
     }
 
     function mayChangePass() {
@@ -739,6 +740,14 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.59  2004/06/14 11:31:36  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.58  2004/06/04 20:32:53  rurban
 // Several locale related improvements suggested by Pierrick Meignen
 // LDAP fix by John Cole
