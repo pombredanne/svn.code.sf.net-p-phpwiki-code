@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.150 2003-09-13 22:43:00 carstenklapp Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.151 2003-11-29 19:30:01 carstenklapp Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -884,6 +884,33 @@ function CTime ($time = false)
 }
 
 
+/**
+ * Format number as kilobytes or bytes.
+ * Short format is used for PageList
+ * Long format is used in PageInfo
+ *
+ * @param $bytes       int.  Default: 0.
+ * @param $longformat  bool. Default: false.
+ * @return class FormattedText (XmlElement.php).
+ */
+function ByteFormatter ($bytes = 0, $longformat = false) {
+    if ($bytes < 0)
+        return fmt("-???");
+    if ($bytes < 1024) {
+        if (! $longformat)
+            $size = fmt("%s b", $bytes);
+        else
+            $size = fmt("%s bytes", $bytes);
+    }
+    else {
+        $kb = round($bytes / 1024, 1);
+        if (! $longformat)
+            $size = fmt("%s k", $kb);
+        else
+            $size = fmt("%s Kb (%s bytes)", $kb, $bytes);
+    }
+    return $size;
+}
 
 /**
  * Internationalized printf.
@@ -1302,6 +1329,9 @@ class Alert {
                       
         
 // $Log: not supported by cvs2svn $
+// Revision 1.150  2003/09/13 22:43:00  carstenklapp
+// New preference to hide LinkIcons.
+//
 // Revision 1.149  2003/03/26 19:37:08  dairiki
 // Fix "object to string conversion" bug with external image links.
 //
