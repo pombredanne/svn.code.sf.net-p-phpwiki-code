@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.26 2004-04-26 20:44:35 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.27 2004-05-06 17:30:38 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -109,7 +109,7 @@ extends WikiDB_backend
                     'maxversion'   => "MAX(version)");
         $this->_lock_count = 0;
     }
-    
+
     /**
      * Close database connection.
      */
@@ -854,6 +854,22 @@ extends WikiDB_backend
     function _unlock_tables($tables, $write_lock) {
         return;
     }
+
+    /* some variables and functions for DB backend abstraction (action=upgrade) */
+    function database () {
+        return $this->_dbh->database;
+    }
+    function backendType() {
+        return $this->_dbh->databaseType;
+    }
+
+    function listOfTables() {
+        return $this->_dbh->MetaTables();
+    }
+    function listOfFields($database,$table) {
+        return $this->_dbh->MetaColumns($table,false);
+    }
+
 };
 
 class WikiDB_backend_ADODB_generic_iter
@@ -1048,6 +1064,9 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.26  2004/04/26 20:44:35  rurban
+// locking table specific for better databases
+//
 // Revision 1.25  2004/04/20 00:06:04  rurban
 // themable paging support
 //

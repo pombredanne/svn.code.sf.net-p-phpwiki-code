@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.6 2004-05-03 15:05:36 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.7 2004-05-06 17:30:38 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -93,31 +93,133 @@ function CheckPgsrcUpdate(&$request) {
 }
 
 /**
- * Search table definition in appropriate schema
- * and create it.
- * Supported: mysql
+ * TODO: Search table definition in appropriate schema
+ *       and create it.
+ * Supported: mysql and generic SQL, for ADODB and PearDB.
  */
 function installTable(&$dbh, $table, $backend_type) {
     global $DBParams;
     if (!in_array($DBParams['dbtype'],array('SQL','ADODB'))) return;
     echo _("MISSING")," ... \n";
     $backend = &$dbh->_backend->_dbh;
+    /*
     $schema = findFile("schemas/${backend_type}.sql");
     if (!$schema) {
         echo "  ",_("FAILED"),": ",sprintf(_("no schema %s found"),"schemas/${backend_type}.sql")," ... <br />\n";
         return false;
     }
+    */
+    extract($dbh->_backend->_table_names);
+    $prefix = isset($DBParams['prefix']) ? $DBParams['prefix'] : '';
     switch ($table) {
-    case 'session': 
+    case 'session':
+        assert($session_tbl);
+        if ($backend_type == 'mysql') {
+            $dbh->simpleQuery("
+CREATE TABLE $session_tbl (
+    	sess_id 	CHAR(32) NOT NULL DEFAULT '',
+    	sess_data 	BLOB NOT NULL,
+    	sess_date 	INT UNSIGNED NOT NULL,
+    	sess_ip 	CHAR(15) NOT NULL,
+    	PRIMARY KEY (sess_id),
+	INDEX (sess_date)
+)");
+        } else {
+            $dbh->simpleQuery("
+CREATE TABLE $session_tbl (
+	sess_id 	CHAR(32) NOT NULL DEFAULT '',
+    	sess_data 	".($backend_type == 'pgsql'?'TEXT':'BLOB')." NOT NULL,
+    	sess_date 	INT,
+    	sess_ip 	CHAR(15) NOT NULL
+)");
+            $dbh->simpleQuery("CREATE UNIQUE INDEX sess_id ON $session_tbl (sess_id)");
+        }
+        $dbh->simpleQuery("CREATE INDEX sess_date on session (sess_date)");
         break;
     case 'user':
+        $user_tbl = $prefix.'user';
+        if ($backend_type == 'mysql') {
+            $dbh->simpleQuery("
+CREATE TABLE $user_tbl (
+  	userid 	CHAR(48) BINARY NOT NULL UNIQUE,
+  	passwd 	CHAR(48) BINARY DEFAULT '',
+  	PRIMARY KEY (userid)
+)");
+        } else {
+            $dbh->simpleQuery("
+CREATE TABLE $user_tbl (
+  	userid 	CHAR(48) NOT NULL,
+  	passwd 	CHAR(48) DEFAULT ''
+)");
+            $dbh->simpleQuery("CREATE UNIQUE INDEX userid ON $user_tbl (userid)");
+        }
         break;
     case 'pref':
+        $pref_tbl = $prefix.'pref';
+        if ($backend_type == 'mysql') {
+            $dbh->simpleQuery("
+CREATE TABLE $pref_tbl (
+  	userid 	CHAR(48) BINARY NOT NULL UNIQUE,
+  	prefs  	TEXT NULL DEFAULT '',
+  	PRIMARY KEY (userid)
+)");
+        } else {
+            $dbh->simpleQuery("
+CREATE TABLE $pref_tbl (
+  	userid 	CHAR(48) NOT NULL,
+  	prefs  	TEXT NULL DEFAULT '',
+)");
+            $dbh->simpleQuery("CREATE UNIQUE INDEX userid ON $pref_tbl (userid)");
+        }
         break;
     case 'member':
+        $member_tbl = $prefix.'member';
+        if ($backend_type == 'mysql') {
+            $dbh->simpleQuery("
+CREATE TABLE $member_tbl (
+	userid    CHAR(48) BINARY NOT NULL,
+   	groupname CHAR(48) BINARY NOT NULL DEFAULT 'users',
+   	INDEX (userid),
+   	INDEX (groupname)
+)");
+        } else {
+            $dbh->simpleQuery("
+CREATE TABLE $member_tbl (
+	userid    CHAR(48) NOT NULL,
+   	groupname CHAR(48) NOT NULL DEFAULT 'users',
+)");
+            $dbh->simpleQuery("CREATE INDEX userid ON $member_tbl (userid)");
+            $dbh->simpleQuery("CREATE INDEX groupname ON $member_tbl (groupname)");
+        }
+        break;
+    case 'rating':
+        $rating_tbl = $prefix.'rating';
+        if ($backend_type == 'mysql') {
+            $dbh->simpleQuery("
+CREATE TABLE $rating_tbl (
+        dimension INT(4) NOT NULL,
+        raterpage INT(11) NOT NULL,
+        rateepage INT(11) NOT NULL,
+        ratingvalue FLOAT NOT NULL,
+        rateeversion INT(11) NOT NULL,
+        tstamp TIMESTAMP(14) NOT NULL,
+        PRIMARY KEY (dimension, raterpage, rateepage)
+)");
+        } else {
+            $dbh->simpleQuery("
+CREATE TABLE $rating_tbl (
+        dimension INT(4) NOT NULL,
+        raterpage INT(11) NOT NULL,
+        rateepage INT(11) NOT NULL,
+        ratingvalue FLOAT NOT NULL,
+        rateeversion INT(11) NOT NULL,
+        tstamp TIMESTAMP(14) NOT NULL,
+)");
+            $dbh->simpleQuery("CREATE UNIQUE INDEX rating ON $rating_tbl (dimension, raterpage, rateepage)");
+        }
         break;
     }
-    echo "  ",_("FAILED"),": ",_("not yet implemented")," ... <br />\n";
+    echo "  ",_("CREATED"),"<br />\n";
 }
 
 /**
@@ -130,42 +232,29 @@ function CheckDatabaseUpdate($request) {
     if (!in_array($DBParams['dbtype'],array('SQL','ADODB'))) return;
     echo "<h3>",_("check for necessary database updates"),"</h3>\n";
     $dbh = &$request->_dbi;
-    $backend = &$dbh->_backend->_dbh;
-    if ($DBParams['dbtype'] == 'SQL') {
-        $tables = $backend->getListOf('tables');
-        $backend_type = $backend->phptype;
-    } elseif ($DBParams['dbtype'] == 'ADODB') {
-        $tables = $backend->MetaTables();
-        $backend_type = $backend->databaseType;
-    }
+    $tables = $dbh->_backend->listOfTables();
+    $backend_type = $dbh->_backend->backendType();
     $prefix = isset($DBParams['prefix']) ? $DBParams['prefix'] : '';
     extract($dbh->_backend->_table_names);
     foreach (explode(':','session:user:pref:member') as $table) {
         echo _("check for table $table")," ...";    	
     	if (!in_array($table,$tables)) {
-    	    if ($prefix and !in_array($prefix.$table,$tables)) {
-    	        installTable(&$dbh, $prefix.$table, $backend_type);
-    	    } else {
-    	    	installTable(&$dbh, $table, $backend_type);
-    	    }
-    	} else 
+            installTable(&$dbh, $table, $backend_type);
+    	} else {
     	    echo "OK <br />\n";
+        }
     }
+    $backend = &$dbh->_backend->_dbh;
     // 1.3.8 added session.sess_ip
     if (phpwiki_version() >= 1030.08 and USE_DB_SESSION and isset($request->_dbsession)) {
-  	echo _("check for new session.sess_ip column")," ...";
-  	$database = $DBParams['dbtype'] == 'ADODB' ? $backend->database : $backend->dsn['database'];
+  	echo _("check for new session.sess_ip column")," ... ";
+  	$database = $dbh->_backend->database();
         $session_tbl = $prefix . $DBParams['db_session_table'];
-  	$fields = mysql_list_fields($database,$session_tbl);
-  	$columns = mysql_num_fields($fields);
-        for ($i = 0; $i < $columns; $i++) {
-            $sess_fields[] = mysql_field_name($fields, $i);
-        }
-        mysql_free_result($fields);
+        assert($session_tbl);
+        $fields = $dbh->_backend->listOfFields($database,$session_tbl);
         if (!in_array("sess_ip",$sess_fields)) {
             echo "<b>",_("ADDING"),"</b>"," ... ";		
-            mysql_query("ALTER TABLE $session_tbl ADD CHAR(15) NOT NULL")
-                or trigger_error("<br />\nSQL Error: ".mysql_error(),E_USER_WARNING);
+            $dbh->simpleQuery("ALTER TABLE $session_tbl ADD sess_ip CHAR(15) NOT NULL");
         } else {
             echo _("OK");
         }
@@ -173,9 +262,10 @@ function CheckDatabaseUpdate($request) {
     }
     // 1.3.10 mysql requires page.id auto_increment
     // mysql, mysqli or mysqlt
-    if (phpwiki_version() >= 1030.10 and substr($backend_type,0,5) == 'mysql') {
+    if (phpwiki_version() >= 1030.099 and substr($backend_type,0,5) == 'mysql') {
   	echo _("check for page.id auto_increment flag")," ...";
-  	$database = $DBParams['dbtype'] == 'ADODB' ? $backend->database : $backend->dsn['database'];
+        assert($page_tbl);
+  	$database = $dbh->_backend->database();
   	$fields = mysql_list_fields($database,$page_tbl);
   	$columns = mysql_num_fields($fields); 
         for ($i = 0; $i < $columns; $i++) {
@@ -185,8 +275,7 @@ function CheckDatabaseUpdate($request) {
                     echo "<b>",_("ADDING"),"</b>"," ... ";		
                     // MODIFY col_def valid since mysql 3.22.16,
                     // older mysql's need CHANGE old_col col_def
-                    mysql_query("ALTER TABLE $page_tbl CHANGE id id INT NOT NULL AUTO_INCREMENT")
-                      or trigger_error("<br />\nSQL Error: ".mysql_error(),E_USER_WARNING);
+                    $dbh->simpleQuery("ALTER TABLE $page_tbl CHANGE id id INT NOT NULL AUTO_INCREMENT");
                     $fields = mysql_list_fields($database,$page_tbl);
                     if (!strstr(mysql_field_flags($fields, $i),"auto_increment"))
                         echo " <b><font color=\"red\">",_("FAILED"),"</font></b><br />\n";		
@@ -241,6 +330,9 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.6  2004/05/03 15:05:36  rurban
+ + table messages
+
  Revision 1.4  2004/05/02 21:26:38  rurban
  limit user session data (HomePageHandle and auth_dbi have to invalidated anyway)
    because they will not survive db sessions, if too large.

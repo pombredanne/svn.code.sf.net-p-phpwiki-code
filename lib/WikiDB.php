@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.50 2004-05-04 22:34:25 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.51 2004-05-06 17:30:37 rurban Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -488,6 +488,29 @@ class WikiDB {
 
         $gd->set('__global', $data);
     }
+
+    // simple select or create/update queries which do trigger_error
+    function simpleQuery($sql) {
+        global $DBParams;
+        if ($DBParams['dbtype'] == 'SQL') {
+            $result = $this->_backend->_dbh->query($sql);
+            if (DB::isError($result)) {
+                $msg = $result->getMessage();
+                trigger_error("SQL Error: ".DB::errorMessage($result),E_USER_WARNING);
+                return false;
+            } else {
+                return $result;
+            }
+        } elseif ($DBParams['dbtype'] == 'ADODB') {
+            if (!($result = $this->_backend->_dbh->Execute($sql))) {
+                trigger_error("SQL Error: ".$this->_backend->_dbh->ErrorMsg(),E_USER_WARNING);
+                return false;
+            } else {
+                return $result;
+            }
+        }
+    }
+
 };
 
 
@@ -1702,6 +1725,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.50  2004/05/04 22:34:25  rurban
+// more pdf support
+//
 // Revision 1.49  2004/05/03 11:16:40  rurban
 // fixed sendPageChangeNotification
 // subject rewording

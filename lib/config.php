@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.106 2004-05-02 19:12:14 rurban Exp $');
+rcs_id('$Id: config.php,v 1.107 2004-05-06 17:30:38 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -297,8 +297,10 @@ if (!function_exists('array_key_exists')) { // lib/IniConfig.php, sqlite, adodb,
     }
 }
 
-
 // $Log: not supported by cvs2svn $
+// Revision 1.106  2004/05/02 19:12:14  rurban
+// fix sf.net bug #945154 Konqueror alt css
+//
 // Revision 1.105  2004/05/02 15:10:06  rurban
 // new finally reliable way to detect if /index.php is called directly
 //   and if to include lib/main.php
