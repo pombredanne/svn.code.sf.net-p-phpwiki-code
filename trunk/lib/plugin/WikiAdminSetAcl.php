@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSetAcl.php,v 1.7 2004-05-16 22:07:35 rurban Exp $');
+rcs_id('$Id: WikiAdminSetAcl.php,v 1.8 2004-05-16 22:32:54 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -27,8 +27,9 @@ rcs_id('$Id: WikiAdminSetAcl.php,v 1.7 2004-05-16 22:07:35 rurban Exp $');
  * Author:  Reini Urban <rurban@x-ray.at>
  *
  * KNOWN ISSUES:
- * Currently we must be Admin. Later we use PagePermissions authorization.
- *   (require_authority_for_post' => WIKIAUTH_ADMIN)
+ * Doesn't accept yet s=wildcard preselection
+ * Fixed to use PagePermissions authorization.
+ *   (require_authority_for_post != WIKIAUTH_ADMIN)
  * Requires PHP 4.2 so far.
  */
 require_once('lib/PageList.php');
@@ -47,7 +48,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -177,7 +178,7 @@ extends WikiPlugin_WikiAdminSelect
             $header = $this->setaclForm($header, $post_args, $pages);
             $header->pushContent(
               HTML::p(HTML::strong(
-                                   _("Are you sure you want to permanently change the selected files?"))));
+                  _("Are you sure you want to permanently change access to the selected files?"))));
         }
         else {
             $button_label = _("SetAcl");
@@ -195,8 +196,7 @@ extends WikiPlugin_WikiAdminSelect
                           HiddenInputs($request->getArgs(),
                                         false,
                                         array('admin_setacl')),
-                          HiddenInputs(array('admin_setacl[action]' => $next_action,
-                                             'require_authority_for_post' => WIKIAUTH_ADMIN)),
+                          HiddenInputs(array('admin_setacl[action]' => $next_action)),
                           $buttons);
     }
 
@@ -285,6 +285,14 @@ class _PageList_Column_perm extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/05/16 22:07:35  rurban
+// check more config-default and predefined constants
+// various PagePerm fixes:
+//   fix default PagePerms, esp. edit and view for Bogo and Password users
+//   implemented Creator and Owner
+//   BOGOUSERS renamed to BOGOUSER
+// fixed syntax errors in signin.tmpl
+//
 // Revision 1.5  2004/04/07 23:13:19  rurban
 // fixed pear/File_Passwd for Windows
 // fixed FilePassUser sessions (filehandle revive) and password update

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.15 2004-05-16 22:07:35 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.16 2004-05-16 22:32:53 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -522,7 +522,7 @@ class PagePermission {
                                      HTML::th(array('align'=>'right'),
                                               _("Group/User")),
                                      HTML::th(_("Grant")),
-                                     HTML::th(_("Del/Add")),
+                                     HTML::th(_("Del/+")),
                                      HTML::th(_("Description"))));
         
         $allGroups = $this->_group->_specialGroups();
@@ -531,7 +531,8 @@ class PagePermission {
                 $allGroups[] = $group;
         }
         //array_unique(array_merge($this->_group->getAllGroupsIn(),
-        $deletesrc = $Theme->getButtonURL('delete');
+        $deletesrc = $Theme->_findData('images/delete.png');
+        $addsrc = $Theme->_findData('images/add.png');
         $nbsp = HTML::raw('&nbsp;');
         foreach ($this->perm as $access => $groups) {
             //$permlist = HTML::table(array('class' => 'cal','valign' => 'top'));
@@ -576,6 +577,7 @@ class PagePermission {
                                  $checkbox);
                 $deletebutton = HTML::input(array('type' => 'checkbox',
                                                   'name' => "acl[_del_group][$access][$group]",
+                                                  'style' => 'background: #aaa url('.$deletesrc.')',
                                                   //'src'  => $deletesrc,
                                                   //'alt'   => "Del",
                                                   'title' => _("Delete this ACL"),
@@ -586,8 +588,8 @@ class PagePermission {
                                  HTML::td(HTML::strong($access.":")),
                                  HTML::td(array('class' => 'cal-today','align'=>'right'),
                                           HTML::strong($this->groupName($group))),
-                                 HTML::td($nbsp,$checkbox),
-                                 HTML::td($nbsp,$deletebutton),
+                                 HTML::td(array('align'=>'center'),$nbsp,$checkbox),
+                                 HTML::td(array('align'=>'right','style' => 'background: #aaa url('.$deletesrc.') no-repeat'),$deletebutton),
                                  HTML::td(HTML::em(getAccessDescription($access)))));
                     $first_only = false;
                 } else {
@@ -596,8 +598,8 @@ class PagePermission {
                                  HTML::td(),
                                  HTML::td(array('class' => 'cal-today','align'=>'right'),
                                           HTML::strong($this->groupName($group))),
-                                 HTML::td($nbsp,$checkbox),
-                                 HTML::td($nbsp,$deletebutton),
+                                 HTML::td(array('align'=>'center'),$nbsp,$checkbox),
+                                 HTML::td(array('align'=>'right','style' => 'background: #aaa url('.$deletesrc.') no-repeat'),$deletebutton),
                                  HTML::td()));
                 }
             }
@@ -606,8 +608,8 @@ class PagePermission {
                     HTML::tr(array('valign' => 'top'),
                              HTML::td(array('align'=>'right'),_("add ")),
                              HTML::td($newgroup),
-                             HTML::td($nbsp,$newperm),
-                             HTML::td($nbsp,$addbutton),
+                             HTML::td(array('align'=>'center'),$nbsp,$newperm),
+                             HTML::td(array('align'=>'right','style' => 'background: #ccc url('.$addsrc.') no-repeat'),$addbutton),
                              HTML::td(HTML::small(_("Check to add this Acl")))));
         }
         if ($type == 'default')
@@ -661,6 +663,14 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2004/05/16 22:07:35  rurban
+// check more config-default and predefined constants
+// various PagePerm fixes:
+//   fix default PagePerms, esp. edit and view for Bogo and Password users
+//   implemented Creator and Owner
+//   BOGOUSERS renamed to BOGOUSER
+// fixed syntax errors in signin.tmpl
+//
 // Revision 1.14  2004/05/15 22:54:49  rurban
 // fixed important WikiDB bug with DEBUG > 0: wrong assertion
 // improved SetAcl (works) and PagePerms, some WikiGroup helpers.
