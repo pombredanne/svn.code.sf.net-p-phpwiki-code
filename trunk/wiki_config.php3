@@ -2,7 +2,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: wiki_config.php3,v 1.18 2000-07-16 06:46:36 wainstead Exp $');
+   rcs_id('$Id: wiki_config.php3,v 1.19 2000-07-18 05:15:58 dairiki Exp $');
 
    /*
       Constants and settings. Edit the values below for
@@ -89,6 +89,28 @@
    // end mSQL settings
 */
 
+   /* WIKI_PGSRC
+    *
+    * This constant specifies the source for the initial page contents
+    * of the Wiki.  The setting of WIKI_PGSRC only has effect when
+    * the wiki is accessed for the first time (or after clearing the
+    * database.)
+    *
+    * The WIKI_PGSRC can either name a directory or a zip file.
+    * In either case WIKI_PGSRC is scanned for files --- one file per page.
+    *
+    * FIXME: this documentation needs to be clarified.
+    *
+    * If the files appear to be MIME formatted messages, they are
+    * scanned for application/x-phpwiki content-types.  Any suitable
+    * content is added to the wiki.
+    *
+    * The files can also be plain text files, in which case the page name
+    * is taken from the file name.
+    */
+   define('WIKI_PGSRC', './pgsrc'); // Default (old) behavior.
+   //define('WIKI_PGSRC', './wiki.zip'); // New style.
+  
    $ScriptName = "index.php3";
 
 
