@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: OrphanedPages.php,v 1.1 2002-02-15 14:45:49 lakka Exp $');
+rcs_id('$Id: OrphanedPages.php,v 1.2 2002-02-15 17:52:46 carstenklapp Exp $');
 
 /*This file is part of PhpWiki.
 
@@ -17,11 +17,11 @@ You should have received a copy of the GNU General Public License
 along with PhpWiki; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-*/ 
+*/
 /**
  * A plugin which returns a list of pages which are not linked to by any other page
- * 
- * Initial version by Lawrence Akka 
+ *
+ * Initial version by Lawrence Akka
  *
  **/
 
@@ -39,12 +39,12 @@ extends WikiPlugin
     function getDescription () {
         return _("Orphaned Pages");
     }
-    
+
     function getDefaultArguments() {
         return array('noheader'	     => false,
-		     'include_empty' => false,
-		     'exclude'       => '',
-		     'info'          => ''
+                     'include_empty' => false,
+                     'exclude'       => '',
+                     'info'          => ''
                      );
     }
     // info arg allows multiple columns info=mtime,hits,summary,version,author,locked,minor,markup or all
@@ -54,31 +54,38 @@ extends WikiPlugin
         extract($this->getArgs($argstr, $request));
 
         $pagelist = new PageList($info, $exclude);
+
         if (!$noheader)
             $pagelist->setCaption(_("Orphaned Pages in this wiki (%d total):"));
-		$allpages_iter = $dbi->getAllPages($include_empty);
-		
-		// There's probably a more efficient way to do this (eg a tailored SQL query via the 
-		// backend, but this does the job
-		
-		while ($page = $allpages_iter->next())
-        {
-		    $links_iter = $page->getLinks();
-			// test for absence of backlinks
-			if (!$links_iter->next())
-			    $pagelist->addPage($page);
-		}            
-        return $pagelist;
-     
-    }
 
-};
+        // deleted pages show up as version 0.
+        if ($include_empty)
+            $pagelist->_addColumn('version');
+
+        // There's probably a more efficient way to do this (eg a tailored SQL query via the
+        // backend, but this does the job
+
+        $allpages_iter = $dbi->getAllPages($include_empty);
+
+        while ($page = $allpages_iter->next())
+        {
+            $links_iter = $page->getLinks();
+            // test for absence of backlinks
+            if (!$links_iter->next())
+                $pagelist->addPage($page);
+        }
+
+        return $pagelist;
         
+    }
+    
+};
+
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End:
 ?>
