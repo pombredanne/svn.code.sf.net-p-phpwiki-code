@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.59 2003-01-04 22:30:16 carstenklapp Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.60 2003-02-15 01:59:47 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -788,7 +788,7 @@ class Theme {
 
     function setDefaultCSS ($title, $css_file, $media = false) {
         if (isset($this->_defaultCSS)) {
-            $oldtitle = $this->_defaultCSS->_attr['title'];
+            $oldtitle = $this->_defaultCSS->getAttr('title');
             $error = sprintf("'%s' -> '%s'", $oldtitle, $title);
             trigger_error(sprintf(_("Redefinition of %s: %s"), "'default CSS'", $error),
                           E_USER_NOTICE);
@@ -806,7 +806,9 @@ class Theme {
         * @return string HTML for CSS.
      */
     function getCSS () {
-        $css = HTML($this->_defaultCSS);
+        $meta = HTML::meta(array('http-equiv' => 'Default-Style',
+                                 'content' => $this->_defaultCSS->getAttr('title')));
+        $css = HTML($meta, $this->_defaultCSS);
         if (!empty($this->_alternateCSS))
             $css->pushContent($this->_alternateCSS);
         return $css;
@@ -919,6 +921,9 @@ class SubmitImageButton extends SubmitButton {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.59  2003/01/04 22:30:16  carstenklapp
+// New: display a "Never edited." message instead of an invalid epoch date.
+//
 
 // (c-file-style: "gnu")
 // Local Variables:
