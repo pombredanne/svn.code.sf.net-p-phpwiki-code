@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: file.php,v 1.9 2004-04-27 16:03:05 rurban Exp $');
+rcs_id('$Id: file.php,v 1.10 2004-06-03 22:08:17 rurban Exp $');
 
 /**
  Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
@@ -45,8 +45,6 @@ rcs_id('$Id: file.php,v 1.9 2004-04-27 16:03:05 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 require_once('lib/ErrorManager.php');
-
-
 
 class WikiDB_backend_file
 extends WikiDB_backend
@@ -124,7 +122,6 @@ extends WikiDB_backend
            if (!$locked) { 
               ExitWiki("Timeout while obtaining lock. Please try again"); 
            }
-	 
 
            rewind($fd);
            ftruncate($fd, 0);
@@ -140,7 +137,7 @@ extends WikiDB_backend
         $filename = $this->_pagename2filename($type, $pagename, $version);
         $f = @unlink($filename);
         if ($f == false)
-	          trigger_error("delete file failed: ".$filename." ver: ".$version, E_USER_WARNING);
+            trigger_error("delete file failed: ".$filename." ver: ".$version, E_USER_WARNING);
     }
 
 
@@ -339,9 +336,15 @@ extends WikiDB_backend
      * @param $version int Find version before this one.
      * @return int The version number of the version in the database which
      *  immediately preceeds $version.
+     *
+     * FIXED: Check if this version really exists!
      */
     function get_previous_version($pagename, $version) {
-        return ($version > 0 ? $version - 1 : 0);
+        $prev = ($version > 0 ? $version - 1 : 0);
+    	while ($prev and !file_exists($this->_pagename2filename('ver_data', $pagename, $prev))) {
+            $prev--;
+    	}
+    	return $prev;
     }
     
     /**
@@ -771,6 +774,9 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/04/27 16:03:05  rurban
+// missing pageiter::count methods
+//
 // Revision 1.8  2004/03/01 13:48:45  rurban
 // rename fix
 // p[] consistency fix
@@ -820,5 +826,4 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-
 ?>
