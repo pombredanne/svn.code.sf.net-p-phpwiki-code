@@ -6,8 +6,6 @@ $locale["(diff)"] =
    "(diff)";
 $locale["(last edited %s)"] =
    "(meest recente verandering op %s)";
-$locale["(version %s, saved on %s)"] =
-   "(versie %s, bewaard op %s)";
 $locale["- saved to database as version %d"] =
    "- bewaard in de data base als versie %d";
 $locale["Action %s is disallowed on this wiki"] =

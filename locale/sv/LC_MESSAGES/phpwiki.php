@@ -6,8 +6,6 @@ $locale["%s: %s"] =
    "%s: %s";
 $locale["(last edited %s)"] =
    "(senast ändrad %s)";
-$locale["(version %s, saved on %s)"] =
-   "(version %s, sparade %s)";
 $locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
    "Kopiera dina ändringar till urklippet eller till ett annat temporärt ställe (t.ex. en texteditor).";
 $locale["Describe %s here."] =
