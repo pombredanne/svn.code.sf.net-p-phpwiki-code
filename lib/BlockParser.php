@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.46 2004-06-20 14:42:53 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.47 2004-06-20 15:30:04 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -622,13 +622,13 @@ class Block_table_dl_defn extends XmlContent
     function setTightness($tight_top, $tight_bot) {
         $this->_tight_top = $tight_top;
 	$this->_tight_bot = $tight_bot;
-	$first = $this->firstTR();
-	$last  = $this->lastTR();
+	$first =& $this->firstTR();
+	$last  =& $this->lastTR();
 	$first->setInClass('top', $tight_top);
         if (!empty($last)) {
             $last->setInClass('bottom', $tight_bot);
         } else {
-            trigger_error(sprintf("no lastTR: %s",AsXml($this->_content[0])), E_USER_WARNING);
+            trigger_error(sprintf("no lastTR: %s",AsXML($this->_content[0])), E_USER_WARNING);
         }
     }
     
@@ -1059,6 +1059,9 @@ function TransformText ($text, $markup = 2.0, $basepage=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.46  2004/06/20 14:42:53  rurban
+// various php5 fixes (still broken at blockparser)
+//
 
 // (c-file-style: "gnu")
 // Local Variables:

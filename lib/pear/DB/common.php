@@ -19,7 +19,7 @@
 // Based on DB 1.3 from the pear.php.net repository. 
 // The only modifications made have been modification of the include paths.
 //
-rcs_id('$Id: common.php,v 1.3 2004-02-07 10:41:25 rurban Exp $');
+rcs_id('$Id: common.php,v 1.4 2004-06-20 15:30:06 rurban Exp $');
 rcs_id('From Pear CVS: Id: common.php,v 1.15 2003/05/07 16:58:28 mj Exp');
 //
 // Base class for DB implementations.
@@ -761,7 +761,7 @@ class DB_common extends PEAR
     {
         $query  = $this->modifyLimitQuery($query, $from, $count);
         $result = $this->query($query, $params);
-        if (DB::isError($result) || get_class($result) == 'db_result' ||
+        if (DB::isError($result) || strtolower(get_class($result)) == 'db_result' ||
             $result === DB_OK) {
             return $result;
         } else {

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.31 2004-06-20 14:42:54 rurban Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.32 2004-06-20 15:30:05 rurban Exp $');
 /**
  * Code for writing XML.
  * @package Markup
@@ -39,7 +39,7 @@ class XmlContent
     }
 
     function _pushContent ($item) {
-        if (get_class($item) == 'xmlcontent')
+        if (strtolower(get_class($item)) == 'xmlcontent')
             array_splice($this->_content, count($this->_content), 0,
                          $item->_content);
         else
@@ -65,7 +65,7 @@ class XmlContent
     }
 
     function _unshiftContent ($item) {
-        if (get_class($item) == 'xmlcontent')
+        if (strtolower(get_class($item)) == 'xmlcontent')
             array_splice($this->_content, 0, 0, $item->_content);
         else
             array_unshift($this->_content, $item);
@@ -591,6 +591,9 @@ function fmt ($fs /* , ... */) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.31  2004/06/20 14:42:54  rurban
+// various php5 fixes (still broken at blockparser)
+//
 
 // (c-file-style: "gnu")
 // Local Variables:

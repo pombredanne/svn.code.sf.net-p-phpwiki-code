@@ -22,7 +22,7 @@
 // The only modifications made have been modification of the include paths,
 // plus the inclusion depricated DB_Warning class.
 //
-rcs_id('$Id: DB.php,v 1.4 2004-04-26 20:44:36 rurban Exp $');
+rcs_id('$Id: DB.php,v 1.5 2004-06-20 15:30:06 rurban Exp $');
 rcs_id('From Pear CVS: Id: DB.php,v 1.20 2003/05/07 16:54:45 mj Exp');
 //
 // Database independent query interface.
@@ -340,7 +340,7 @@ class DB
     function isError($value)
     {
         return (is_object($value) &&
-                (get_class($value) == 'db_error' ||
+                (strtolower(get_class($value)) == 'db_error' ||
                  is_subclass_of($value, 'db_error')));
     }
 
