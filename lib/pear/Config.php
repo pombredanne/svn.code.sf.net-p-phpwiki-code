@@ -15,10 +15,10 @@
 // | Author: Bertrand Mansion <bmansion@mamasam.com>                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: Config.php,v 1.1 2004-04-16 22:49:08 zorloc Exp $
+// $Id: Config.php,v 1.2 2004-04-20 16:41:35 zorloc Exp $
 
-require_once('PEAR.php');
-require_once('Config/Container.php');
+require_once('lib/pear/PEAR.php');
+require_once('lib/pear/Config/Container.php');
 
 $GLOBALS['CONFIG_TYPES'] = 
         array(

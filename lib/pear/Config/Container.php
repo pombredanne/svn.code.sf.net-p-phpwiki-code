@@ -15,9 +15,9 @@
 // | Author: Bertrand Mansion <bmansion@mamasam.com>                     |
 // +---------------------------------------------------------------------+
 //
-// $Id: Container.php,v 1.1 2004-04-16 22:49:08 zorloc Exp $
+// $Id: Container.php,v 1.2 2004-04-20 16:41:36 zorloc Exp $
 
-require_once('Config.php');
+require_once('lib/pear/Config.php');
 
 /**
 * Interface for Config containers
