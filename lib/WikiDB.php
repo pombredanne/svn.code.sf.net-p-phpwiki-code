@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.33 2004-02-12 13:05:49 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.34 2004-02-12 17:05:38 rurban Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -380,11 +380,16 @@ class WikiDB {
             $oldpage = $this->getPage($from);
             if ($oldpage->exists()) {
                 if ($result = $this->_backend->rename_page($from, $to)) {
-                    //TODO: update all WikiLinks in existing pages
+                    //update all WikiLinks in existing pages
                     if ($updateWikiLinks) {
-                        trigger_error(_("WikiDB::renamePage(..,..,updateWikiLinks) not yet implemented"),E_USER_WARNING);
+                        //trigger_error(_("WikiDB::renamePage(..,..,updateWikiLinks) not yet implemented"),E_USER_WARNING);
+                        require_once('lib/plugin/WikiAdminSearchReplace.php');
+                        $links = $page->getLinks();
+                        while ($linked_page = $links->next()) {
+                            WikiPlugin_WikiAdminSearchReplace::replaceHelper($this,$linked_page->getName(),$from,$to);
+                        }
                     }
-                    //create a RecentChanges entry with explaining summary
+                    //create a RecentChanges entry with explaining summary (Fixme: fails)
                     $page = $this->getPage($to);
                     $current = $page->getCurrentRevision();
                     $meta = $current->_data;

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSearchReplace.php,v 1.2 2004-02-12 11:47:51 rurban Exp $');
+rcs_id('$Id: WikiAdminSearchReplace.php,v 1.3 2004-02-12 17:05:39 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -200,7 +200,7 @@ extends WikiPlugin_WikiAdminSelect
         $checkbox = HTML::input(array('type' => 'checkbox',
                                       'name' => 'admin_replace[caseexact]',
                                       'value' => 1));
-        if ($post_args['casexact'])
+        if ($post_args['caseexact'])
             $checkbox->setAttr('checked','checked');
         $header->pushContent($checkbox);
         $header->pushContent(HTML::br());
@@ -236,6 +236,9 @@ function stri_replace($find,$replace,$string) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/02/12 11:47:51  rurban
+// typo
+//
 // Revision 1.1  2004/02/12 11:25:53  rurban
 // new WikiAdminSearchReplace plugin (requires currently Admin)
 // removed dead comments from WikiDB

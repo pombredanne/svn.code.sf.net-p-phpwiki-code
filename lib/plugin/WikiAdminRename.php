@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRename.php,v 1.3 2004-02-12 13:05:50 rurban Exp $');
+rcs_id('$Id: WikiAdminRename.php,v 1.4 2004-02-12 17:05:39 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -63,13 +63,13 @@ extends WikiPlugin_WikiAdminSelect
         return str_replace($from,$to,$name);
     }
 
-    function renamePages(&$dbi, &$request, $pages, $from, $to) {
+    function renamePages(&$dbi, &$request, $pages, $from, $to, $updatelinks=false) {
         $ul = HTML::ul();
         $count = 0;
         foreach ($pages as $name) {
             if ( ($newname = $this->renameHelper($name,$from,$to)) and 
                   $newname != $name and
-                  $dbi->renamePage($name,$newname) ) {
+                 $dbi->renamePage($name,$newname,$updatelinks) ) {
                 /* not yet implemented for all backends */
                 $ul->pushContent(HTML::li(fmt("Renamed page '%s' to '%s'.",$name,WikiLink($newname))));
                 $count++;
@@ -109,7 +109,7 @@ extends WikiPlugin_WikiAdminSelect
             // FIXME: error message if not admin.
             if ($post_args['action'] == 'verify') {
                 // Real action
-                return $this->renamePages($dbi, $request, $p, $post_args['from'], $post_args['to']);
+                return $this->renamePages($dbi, $request, $p, $post_args['from'], $post_args['to'], $post_args['updatelinks']);
             }
 
             if ($post_args['action'] == 'select') {
@@ -173,6 +173,16 @@ extends WikiPlugin_WikiAdminSelect
         $header->pushContent(HTML::input(array('name' => 'admin_rename[to]',
                                                'value' => $post_args['to'])));
         $header->pushContent(' '._("(no regex, case-sensitive)"));
+        if (0) {
+            $header->pushContent(HTML::br());
+            $header->pushContent(_("Change pagename in all linked pages also?"));
+            $checkbox = HTML::input(array('type' => 'checkbox',
+                                          'name' => 'admin_rename[updatelinks]',
+                                          'value' => 1));
+            if ($post_args['updatelinks'])
+                $checkbox->setAttr('checked','checked');
+            $header->pushContent($checkbox);
+        }
         $header->pushContent(HTML::p());
         return $header;
     }
@@ -180,6 +190,11 @@ extends WikiPlugin_WikiAdminSelect
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/02/12 13:05:50  rurban
+// Rename functional for PearDB backend
+// some other minor changes
+// SiteMap comes with a not yet functional feature request: includepages (tbd)
+//
 // Revision 1.2  2004/02/12 11:45:11  rurban
 // only WikiDB method missing
 //
