@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: VisualWiki.php,v 1.10 2004-06-19 10:06:38 rurban Exp $');
+rcs_id('$Id: VisualWiki.php,v 1.11 2004-09-06 10:10:27 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -46,6 +46,7 @@ elseif (isWindows()) {
   define('VISUALWIKIFONT', 'Arial');
 } else { // other os
     $dotbin = '/usr/local/bin/dot';
+    // $dotbin = '/home/groups/p/ph/phpwiki/bin/dot';
 
     // Name of the Truetypefont - Helvetica is probably easier to read
     //define('VISUALWIKIFONT', 'Helvetica');
@@ -84,7 +85,7 @@ extends WikiPluginCached
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     /**
@@ -656,7 +657,7 @@ $tempfiles.map: ".(file_exists("$tempfiles.map") ? filesize("$tempfiles.map"):'m
         }
 
         // clean up tempfiles
-        if ($ok or !$debug)
+        if ($ok or !$argarray['debug'])
         foreach (array('',".$gif",".map",".dot") as $ext) {
             if (file_exists($tempfiles.$ext))
                 unlink($tempfiles.$ext);
@@ -732,6 +733,10 @@ function interpolate($a, $b, $pos) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/06/19 10:06:38  rurban
+// Moved lib/plugincache-config.php to config/*.ini
+// use PLUGIN_CACHED_* constants instead of global $CacheParams
+//
 // Revision 1.9  2004/06/03 09:40:57  rurban
 // WikiPluginCache improvements
 //
