@@ -10,20 +10,20 @@
 <title>###SPLIT_PAGE###</title>
 <link rel="stylesheet" title="phpwiki" href="###CSS_URL###" type="text/css">
 </head>
-
 <body bgcolor=ivory text=black alink=red link=darkblue vlink=darkmagenta>
-<h1><a class="wikilink" href="###BROWSE###VoorPagina"><img src="###LOGO###" border=0 alt="[phpwiki]" align=middle width=50 height=50></a>
+<h1><a class="wikilink" href="###BROWSE###ThuisPagina"><img src="###LOGO###" border=0 alt="[phpwiki]" align=middle width=50 height=50></a>
 <a class='wikiaction'
   href="###ACTION###search&amp;searchtype=full&amp;searchterm=###PAGEURL###"
 ><span class='wikiword'>###PAGE###</span></a></h1>
 ###IF:!ANONYMOUS###
-<p>You are logged in as <em>###USERID###</em>.
+<p>Je bent ingelogd als <em>###USERID###</em>.
 [<a class="wikiaction" href="###ACTION###logout">Log Out</a>]</p>
 ###IF:ADMIN###
-###IF LOCK###[<a class="wikiadmin" href="###ACTION###unlock">Unlock page</a>]
-###IF !LOCK###[<a class="wikiadmin" href="###ACTION###lock">Lock page</a>]
+###IF LOCK###[<a class="wikiadmin" href="###ACTION###unlock">Sluit
+pagina af</a>]
+###IF !LOCK###[<a class="wikiadmin" href="###ACTION###lock">Open pagina</a>]
 - - 
-[<a class="wikiadmin" href="###ACTION###remove">Remove page</a>]
+[<a class="wikiadmin" href="###ACTION###remove">Verwijder pagina</a>]
 ###ENDIF:ADMIN###
 <hr noshade>
 ###ENDIF:!ANONYMOUS###
@@ -38,7 +38,7 @@
 ###IF LOCK###Page locked
 ###IF !LOCK###<a class="wikiaction" href="###ACTION###edit">VeranderTekst</a>
 ###ENDIF:!ADMIN###
-van deze pagina (laatste verandering ###LASTMODIFIED###
+van deze pagina (meest recente verandering ###LASTMODIFIED###
 [<a class="wikiaction" href="###ACTION###info">info</a>]
 [<a class="wikiaction" href="###ACTION###diff">diff</a>])
 <br>

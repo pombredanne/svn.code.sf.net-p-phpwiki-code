@@ -10,12 +10,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.7\n"
-"POT-Creation-Date: 2001-05-21 09:36-0700\n"
+"POT-Creation-Date: 2001-05-31 09:42-0700\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=8859-1\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Date: 1998-05-26 11:26:28+0200\n"
 "From:  <janneke@gnu.org>\n"
@@ -46,7 +46,7 @@ msgstr "versie %s"
 #: ../lib/diff.php:1039
 #, c-format
 msgid "last modified on %s"
-msgstr "laatste verandering op %s"
+msgstr "meest recente verandering op %s"
 
 #: ../lib/diff.php:1042
 #, c-format
@@ -114,46 +114,75 @@ msgstr "Volledige tekst zoek resultaten"
 
 #: ../lib/loadsave.php:15
 msgid "Complete."
-msgstr ""
+msgstr "Klaar."
+
+#: ../lib/loadsave.php:16
+msgid "Return to "
+msgstr "Terug naar "
 
 #: ../lib/loadsave.php:99 ../lib/main.php:158
 msgid "You must specify a directory to dump to"
-msgstr ""
+msgstr "Je moet een directory specificeren om in te storten"
 
 #: ../lib/loadsave.php:175
 #, c-format
 msgid "from %s"
-msgstr ""
+msgstr "van %s"
 
 #: ../lib/loadsave.php:185
 #, c-format
 msgid "is identical to current version %d"
-msgstr ""
+msgstr "is gelijk aaan huidige versie %d"
 
 #: ../lib/loadsave.php:190
 msgid "- skipped"
-msgstr ""
+msgstr "- overgeslagen"
 
 #: ../lib/loadsave.php:211
 msgid "- saved"
-msgstr ""
+msgstr "- bewaard"
 
 #: ../lib/loadsave.php:213
-#, fuzzy, c-format
+#, c-format
 msgid "as version %d"
-msgstr "versie %s"
+msgstr "als versie %d"
+
+#: ../lib/loadsave.php:263
+msgid "MIME file"
+msgstr "MIME bestand"
+
+#: ../lib/loadsave.php:268
+msgid "Serialized file"
+msgstr "Geserialiseerd bestand"
+
+#: ../lib/loadsave.php:275
+msgid "plain file"
+msgstr "plat bestand"
+
+#: ../lib/loadsave.php:363 ../lib/loadsave.php:378 ../lib/loadsave.php:409
+#: ../lib/stdlib.php:595 ../lib/stdlib.php:664
+msgid "RecentChanges"
+msgstr "RecenteVeranderingen"
+
+#: ../lib/loadsave.php:373
+msgid "The PhpWiki programming team"
+msgstr "Het PhpWiki programmeerteam"
+
+#: ../lib/loadsave.php:375
+msgid "Loading up virgin wiki"
+msgstr "Laden van maagdelijke wiki"
 
 #: ../lib/main.php:41 ../lib/main.php:99 ../lib/main.php:101
 msgid "HomePage"
-msgstr "VoorPagina"
+msgstr "ThuisPagina"
 
 #: ../lib/main.php:112
 msgid "Action $action is disabled in this wiki."
-msgstr ""
+msgstr "Actie $action is niet beschikbaar in deze wiki."
 
 #: ../lib/main.php:166
 msgid "You must specify a source to read from"
-msgstr ""
+msgstr "Je moet een bron specificeren om van te lezen."
 
 #: ../lib/msql.php:38 ../lib/mysql.php:47
 msgid "Cannot establish connection to database, giving up."
@@ -206,9 +235,8 @@ msgid "Page name '%s' is not in the database"
 msgstr "Pagina naam `%s' staat niet in de data base"
 
 #: ../lib/pageinfo.php:48
-#, fuzzy
 msgid "Show the page source"
-msgstr "Toon de bron tekst en de koppelingen van de pagina"
+msgstr "Toon de pagina bron tekst"
 
 #: ../lib/pageinfo.php:54
 msgid "Current version"
@@ -252,7 +280,7 @@ msgid ""
 "Copy your changes to the clipboard or to another temporary place (e.g. text "
 "editor)."
 msgstr ""
-"Kopiëer je veranderingen naar het klipbord of een andere tijdelijke plaats "
+"Kopier je veranderingen naar het klipbord of een andere tijdelijke plaats "
 "(bijv. een tekst editor)."
 
 #: ../lib/savepage.php:26
@@ -292,12 +320,11 @@ msgstr "Je zorgvuldige aandacht voor detail wordt erg gewaardeerd."
 #: ../lib/search.php:27
 #, c-format
 msgid "%d pages match your query."
-msgstr ""
+msgstr "%d pagina's voldoen aan je vraag."
 
 #: ../lib/search.php:30
-#, fuzzy
 msgid "Title Search Results"
-msgstr "Volledige tekst zoek resultaten"
+msgstr "Titel zoek resultaten"
 
 #: ../lib/stdlib.php:427
 #, c-format
@@ -314,10 +341,6 @@ msgstr "%d beste uitgaande koppelingen:"
 msgid "%d most popular nearby:"
 msgstr "%d meest gevraagde in de buurt:"
 
-#: ../lib/stdlib.php:595 ../lib/stdlib.php:664
-msgid "RecentChanges"
-msgstr "RecenteVeranderingen"
-
 #: ../lib/stdlib.php:611
 msgid "The most recently changed pages are listed below."
 msgstr "De meest recent veranderde pagina's staan hieronder:"
@@ -330,31 +353,55 @@ msgstr "(eerste dag voor deze Wiki)"
 msgid "Quick title search:"
 msgstr "Zoek snel een pagina op:"
 
+#: ../lib/stdlib.php:645
+msgid "(new)"
+msgstr "(nieuw)"
+
 #: ../lib/transform.php:114
-#, fuzzy
 msgid "Lists nested too deep in SetHTMLOutputMode"
-msgstr "Stack grenzen overschreden in SetHTMLOutputMode"
+msgstr "Lijsten nesten te diep in SetHTMLOutputMode"
 
 #: ../lib/transform.php:461 ../lib/transform.php:473
 msgid "Search"
 msgstr "Zoek"
 
-#: ../lib/userauth.php:158
+#: ../lib/userauth.php:83
+#, c-format
+msgid "to perform action '%s'"
+msgstr ""
+
+#: ../lib/userauth.php:85
+msgid "to do that"
+msgstr ""
+
+#: ../lib/userauth.php:86
+#, fuzzy
+msgid "You must be logged in as an administrator"
+msgstr "Je moet ingelogd zijn als beheerder om te $action."
+
+#: ../lib/userauth.php:154
+msgid ""
+"You must set the administrator account and password before you can log in."
+msgstr ""
+"Je moet de beheerder gebruiker en het wachtwoord zetten voordat je in kan "
+"loggen."
+
+#: ../lib/userauth.php:166
 msgid "You entered an invalid login or password."
 msgstr "Je hebt een ongeldige gebruikersnaam of wachtwoord ingevoerd."
 
 #: ../lib/ziplib.php:657
 #, c-format
 msgid "[%d] See [%s]"
-msgstr ""
+msgstr "[%d] Zie [%s]"
 
 #: ../lib/ziplib.php:665
 msgid "!References"
-msgstr ""
+msgstr "!Referenties"
 
 #: ../admin/removepage.php:6
 msgid "Function not yet implemented."
-msgstr "Functie nog niet geïmplementeerd."
+msgstr "Functie nog niet gemplementeerd."
 
 #: ../admin/removepage.php:10
 #, c-format
@@ -362,9 +409,9 @@ msgid "You are about to remove '%s' permanently!"
 msgstr "Je staat op het punt '%s' voorgoed te verwijderen!"
 
 #: ../admin/removepage.php:13
-#, fuzzy, c-format
+#, c-format
 msgid "Click <a href=\"%s\">here</a> to remove the page now."
-msgstr "Klik %shier%s om de pagina nu te verwijderen."
+msgstr "Klik <a href=\"%s\">hier</a> om de pagina nu te verwijderen."
 
 #: ../admin/removepage.php:17
 msgid "Otherwise press the \"Back\" button of your browser."
@@ -378,30 +425,3 @@ msgstr "Pagina '%s' verwijderd."
 #: ../admin/removepage.php:26
 msgid "Remove page"
 msgstr "Verwijder pagina"
-
-#~ msgid "templates/browse.html"
-#~ msgstr "locale/nl/templates/browse.html"
-
-#~ msgid "templates/editpage.html"
-#~ msgstr "locale/nl/templates/editpage.html"
-
-#~ msgid "templates/editlinks.html"
-#~ msgstr "locale/nl/templates/editlinks.html"
-
-#~ msgid "templates/message.html"
-#~ msgstr "locale/nl/templates/message.html"
-
-#~ msgid "./pgsrc"
-#~ msgstr "locale/nl/pgsrc"
-
-#~ msgid "No page name passed into editpage!"
-#~ msgstr "Geen paginanaam doorgegeven aan veranderpagina"
-
-#~ msgid "Enter a page name"
-#~ msgstr "Geef de naam van een pagina"
-
-#~ msgid "Go"
-#~ msgstr "Ga"
-
-#~ msgid "Inserting page %s, version %s from %s"
-#~ msgstr "Voeg pagina %s toe, versie %s van %s"
