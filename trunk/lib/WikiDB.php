@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.80 2004-07-09 13:05:34 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.81 2004-09-06 08:28:00 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -508,8 +508,9 @@ class WikiDB {
         $gd->set('__global', $data);
     }
 
-    // simple select or create/update queries
-    function genericQuery($sql) {
+    // SQL result: for simple select or create/update queries
+    // returns the database specific resource type
+    function genericSqlQuery($sql) {
         global $DBParams;
         if ($DBParams['dbtype'] == 'SQL') {
             $result = $this->_backend->_dbh->query($sql);
@@ -529,6 +530,17 @@ class WikiDB {
             }
         }
         return false;
+    }
+
+    // SQL iter: for simple select or create/update queries
+    // returns the generic iterator object (count,next)
+    function genericSqlIter($sql) {
+        $result = $this->genericSqlQuery($sql);
+        if ($this->getParam('dbtype') == 'ADODB') {
+            return new WikiDB_backend_ADODB_generic_iter($this->_backend, $result);
+        } else {
+            return new WikiDB_backend_PearDB_generic_iter($this->_backend, $result);
+        }
     }
 
     function getParam($param) {
@@ -1712,6 +1724,38 @@ class WikiDB_Array_PageIterator
     }
 }
 
+/*
+class WikiDB_Array_generic_iter
+{
+    function WikiDB_Array_generic_iter($result) {
+        // $result may be either an array or a query result
+        if (is_array($result)) {
+            $this->_array = $result;
+        } elseif (is_object($result)) {
+            $this->_array = $result->asArray();
+        } else {
+            $this->_array = array();
+        }
+        if (!empty($this->_array))
+            reset($this->_array);
+    }
+    function next() {
+        $c =& current($this->_array);
+        next($this->_array);
+        return $c !== false ? $c : false;
+    }
+    function count() {
+        return count($this->_array);
+    }
+    function free() {}
+    function asArray() {
+        if (!empty($this->_array))
+            reset($this->_array);
+        return $this->_array;
+    }
+}
+*/
+
 /**
  * Data cache used by WikiDB.
  *
@@ -1865,6 +1909,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.80  2004/07/09 13:05:34  rurban
+// just aesthetics
+//
 // Revision 1.79  2004/07/09 10:06:49  rurban
 // Use backend specific sortby and sortable_columns method, to be able to
 // select between native (Db backend) and custom (PageList) sorting.
