@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _WikiTranslation.php,v 1.2 2004-03-16 15:47:27 rurban Exp $');
+rcs_id('$Id: _WikiTranslation.php,v 1.3 2004-03-16 20:22:32 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -57,7 +57,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -284,12 +284,25 @@ class _PageList_Column_custom extends _PageList_Column {
     	$trans = $this->_plugin->translate($text, $this->_field, $this->_from_lang);
         // how to markup untranslated words and not existing pages?
         // untranslated: (TODO) link to translation editor
-        if ($trans == $text) {          // untranslated
+        if ($trans == $text or // untranslated
+            (($this->_from_lang != 'en') and 
+             ($this->_field != 'en') and
+             ($trans == $this->_plugin->translate($text, 'en', $this->_from_lang))
+             ))
+        {    
             global $Theme;
-            if ($this->dbi->isWikiPage($trans))
-                return HTML::span(array('class'=>'wikipage',
-                                        'style'=>'text-decoration:line-through'),$trans);
-            elseif (is_object($page))
+            $link = $Theme->linkUnknownWikiWord($trans);
+            if ($this->dbi->isWikiPage($trans)) {
+                $url = WikiURL($trans, array('action' => 'TranslateText','lang' => $this->_field));
+                $button = $Theme->makeButton('T', $url);
+                $button->addTooltip(sprintf(_("Define the translation for %s in %s"), $trans, $this->_field));
+                $link = HTML::span($button);
+                $link->setAttr('class', 'wikiunknown');
+                $text = HTML::span($Theme->maybeSplitWikiWord($trans));
+                $text->setAttr('style', 'text-decoration:line-through');
+                $link->pushContent($text);
+                return $link;
+            } elseif (is_object($page))
                 return '';
             else                        // not existing: empty
                 return '';
@@ -302,6 +315,9 @@ class _PageList_Column_custom extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/03/16 15:47:27  rurban
+// added match, fixed reverse translation, added page=, what=allpages, what=wikiwords, fixed what=pages, simplified _PageList_Column_custom
+//
 // Revision 1.1  2004/03/14 16:45:10  rurban
 // Just the page matrix for now.
 // doesn't work yet, if the default langauge != en
