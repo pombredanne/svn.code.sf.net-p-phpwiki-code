@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.19 2004-02-25 17:15:17 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.20 2004-02-26 01:29:11 rurban Exp $');
 
 // This is a complete OOP rewrite of the old WikiUser code with various
 // configurable external authentification methods.
@@ -242,11 +242,13 @@ function UserExists ($UserName) {
       $user = new _PassUser($UserName);
     while ($user = $user->nextClass()) {
         return $user->userExists($UserName);
+        $this = $user; // does this work on all PHP version?
     }
     $request->_user = $GLOBALS['ForbiddenUser'];
     return false;
 }
 
+/*
 function CheckPass ($UserName, $Password) {
     global $request;
     if (!($user = $request->getUser()))
@@ -261,11 +263,12 @@ function CheckPass ($UserName, $Password) {
       $user = new _PassUser($UserName);
     while ($user = $user->nextClass()) {
         return $user->checkPass($Password);
+        $this = $user;
     }
     $request->_user = $GLOBALS['ForbiddenUser'];
     return false;
 }
-
+*/
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -320,39 +323,56 @@ class _WikiUser
     function hasHomePage() {
         if ($this->_userid) {
             if ($this->_HomePagehandle) {
-                return $this->_HomePagehandle;
+                return $this->_HomePagehandle->exists();
             }
             else {
                 // check db again (maybe someone else created it since
                 // we logged in.)
                 global $request;
                 $this->_HomePagehandle = $request->getPage($this->_userid);
-                return $this->_HomePagehandle;
+                return $this->_HomePagehandle->exists();
             }
         }
         // nope
         return false;
     }
 
-    function nextAuthMethod() {
-        if (empty($this->_current_method)) {
+    // case-insensitive position in _auth_methods
+    function array_position ($string, $array) {
+        $string = strtolower($string);
+        for ($found = 0; $found < count($array); $found++) {
+            if (strtolower($array[$found]) == $string)
+                return $found;
+        }
+        return false;
+    }
+
+    function nextAuthMethodIndex() {
+        if (empty($this->_auth_methods)) 
+            $this->_auth_methods = $GLOBALS['USER_AUTH_ORDER'];
+        if (empty($this->_current_index)) {
             if (get_class($this) != '_passuser') {
             	$this->_current_method = substr(get_class($this),1,-8);
+                $this->_current_index = $this->array_position($this->_current_method,$this->_auth_methods);
+            } else {
+            	$this->_current_index = -1;
             }
-            $this->_auth_methods = $GLOBALS['USER_AUTH_ORDER'];
-            $this->_current_index = -1;
         }
-        if (empty($this->_current_index)) $this->_current_index = -1;
         $this->_current_index++;
         if ($this->_current_index >= count($this->_auth_methods))
             return false;
         $this->_current_method = $this->_auth_methods[$this->_current_index];
-        return $this->_current_method;
+        return $this->_current_index;
+    }
+
+    function AuthMethod($index = false) {
+        return $this->_auth_methods[ $index === false ? 0 : $index];
     }
 
     // upgrade the user object
     function nextClass() {
-        if ($method = $this->nextAuthMethod()) {
+        if (($next = $this->nextAuthMethodIndex()) !== false) {
+            $method = $this->AuthMethod($next);
             $class = "_".$method."PassUser";
             if ($user = new $class($this->_userid)) {
                 // prevent from endless recursion.
@@ -438,7 +458,7 @@ class _WikiUser
         elseif (!$login && !$userid)
             return false;       // Nothing to do?
 
-        $authlevel = checkPass($userid,$passwd);
+        $authlevel = $this->checkPass($passwd);
         if (!$authlevel)
             return _("Invalid password or userid.");
         elseif ($authlevel < $require_level)
@@ -544,7 +564,7 @@ extends _AnonUser
     var $_level = WIKIAUTH_FORBIDDEN;
 
     function checkPass($submitted_password) {
-        return false;
+        return WIKIAUTH_FORBIDDEN;
     }
 
     function userExists() {
@@ -814,6 +834,8 @@ extends _AnonUser
         while ($user = $this->nextClass()) {
               if ($user->userExists())
                   return true;
+              $this = $user; // prevent endless loop. does this work on all PHP's?
+              // it just has to set the classname, what it correctly does.
         }
         return false;
     }
@@ -912,8 +934,8 @@ extends _PassUser
 
     function checkPass($submitted_password) {
         // A BogoLoginUser requires PASSWORD_LENGTH_MINIMUM. hmm..
-        if ($this->userExists())
-            return $this->_level;
+        $this->userExists();
+        return $this->_level;
     }
 }
 
@@ -922,10 +944,34 @@ class _PersonalPagePassUser
 extends _PassUser
 /**
  * This class is only to simplify the auth method dispatcher.
- * It inherits all methods from _PassUser.
+ * It inherits almost all all methods from _PassUser.
  */
 {
-    function dummy() {}
+    function userExists() {
+        return $this->_HomePagehandle and $this->_HomePagehandle->exists();
+    }
+        
+    function checkPass($submitted_password) {
+        if ($this->userExists()) {
+            // A PersonalPagePassUser requires PASSWORD_LENGTH_MINIMUM.
+            // BUT if the user already has a homepage with en empty password 
+            // stored allow login but warn him to change it.
+            $stored_password = $this->_prefs->get('passwd');
+            if (empty($stored_password)) {
+                trigger_error(sprintf(
+                _("\nYou stored an empty password in your %s page.\n").
+                _("Your access permissions are only for a BogoUser.\n").
+                _("Please set your password in UserPreferences."),
+                                        $this->_userid), E_USER_NOTICE);
+                $this->_level = WIKIAUTH_BOGO;
+                return $this->_level;
+            }
+            if ($this->_checkPass($submitted_password, $stored_password))
+                return ($this->_level = WIKIAUTH_USER);
+            return _PassUser::checkPass($submitted_password);
+        }
+        return WIKIAUTH_ANON;
+    }
 }
 
 class _DbPassUser
@@ -954,7 +1000,7 @@ extends _PassUser
             _PassUser::_PassUser($UserName);
         $this->_authmethod = 'DB';
         $this->getAuthDbh();
-        $this->_auth_crypt_method = $GLOBALS['DBAuthParams']['auth_crypt_method'];
+        $this->_auth_crypt_method = @$GLOBALS['DBAuthParams']['auth_crypt_method'];
 
         if ($GLOBALS['DBParams']['dbtype'] == 'ADODB') 
             return new _AdoDbPassUser($UserName);
@@ -979,7 +1025,7 @@ extends _DbPassUser
         if (!$this->_prefs and isa($this,"_PearDbPassUser"))
             _PassUser::_PassUser($UserName);
         $this->getAuthDbh();
-        $this->_auth_crypt_method = $GLOBALS['DBAuthParams']['auth_crypt_method'];
+        $this->_auth_crypt_method = @$GLOBALS['DBAuthParams']['auth_crypt_method'];
         // Prepare the configured auth statements
         if (!empty($DBAuthParams['auth_check']) and !@is_int($this->_authselect)) {
             $this->_authselect = $this->_auth_dbi->prepare (
@@ -1912,6 +1958,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.19  2004/02/25 17:15:17  rurban
+// improve stability
+//
 // Revision 1.18  2004/02/24 15:20:05  rurban
 // fixed minor warnings: unchecked args, POST => Get urls for sortby e.g.
 //
