@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.54 2004-06-14 11:31:21 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.55 2004-06-18 14:37:47 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004 Reini Urban
  *
@@ -322,6 +322,10 @@ function LinkBracketLink($bracketlink) {
     // strip brackets and leading space
     preg_match('/(\#?) \[\s* (?: (.*?) \s* (?<!' . ESCAPE_CHAR . ')(\|) )? \s* (.+?) \s*\]/x',
 	       $bracketlink, $matches);
+    if (count($matches) < 4) {
+    	trigger_error(_("Invalid [] syntax ignored").": ".$bracketlink, E_USER_NOTICE);
+    	return new Cached_Link;
+    }
     list (, $hash, $label, $bar, $rawlink) = $matches;
 
     $label = UnWikiEscape($label);
