@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiFormRich.php,v 1.11 2004-11-24 15:19:57 rurban Exp $');
+rcs_id('$Id: WikiFormRich.php,v 1.12 2004-11-24 15:21:19 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -28,17 +28,15 @@ rcs_id('$Id: WikiFormRich.php,v 1.11 2004-11-24 15:19:57 rurban Exp $');
  * - editbox[] 		name=.. value=.. text=..
  * - checkbox[] 	name=.. value=0|1 checked text=..
  * - radiobutton[] 	name=.. value=.. text=..
- * - pulldown[]		name=.. values=.. selected=.. text=..  (not yet!)
+ * - pulldown[]		name=.. values=.. selected=.. text=..
  * - hidden[]		name=.. value=..
  * - action, submit buttontext, optional cancel button (bool)
- * - method=GET or POST ((Default: POST).
+ * - method=GET or POST, Default: POST.
  
  * values which are constants are evaluated.
  * The cancel button must be supported by the action. (which?)
-
  * improve layout: nobr=1, class=wikiadmin
- TODO:
- * add pulldown, possibly with <!plugin-list !>
+ * added pulldown, values from <!plugin-list !>
 
  Samples:
    <?plugin WikiFormRich action=dumpserial method=GET 
@@ -84,7 +82,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
     function getDefaultArguments() {
         return array('action' => false,     // required argument
@@ -309,6 +307,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/11/24 15:19:57  rurban
+// allow whitespace in quoted text args
+//
 // Revision 1.10  2004/11/24 15:07:49  rurban
 // added pulldown support, fixed plugin-list whitespace splitting
 //
