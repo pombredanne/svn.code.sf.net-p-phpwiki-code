@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.33 2004-05-10 14:39:52 rurban Exp $
+ * $Id: phpwiki.css,v 1.34 2004-05-13 11:55:20 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -173,11 +173,37 @@ h1 { margin: 0; font-size: 140% }
  */
 table, td { font-family: Arial, Helvetica, sans-serif; }
 caption { font-family: Arial, Helvetica, sans-serif; }
-.pagelist {
+.pagelist { }
+.pagelist thead td {
+  background: #e8e8e8;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: smaller;
 }
-.pagelist thead, .pagelist thead u {  }
+.pagelist thead td u { text-decoration: none; }
 .pagelist tr.evenrow { background: #eee; }
 .pagelist tr.oddrow  { background: white; }
+th.gridbutton {
+  background-color: threedlightshadow;
+  color: black;
+  font-weight: normal;
+  /*font-style: menu;*/
+  margin: 5px 0px;
+  max-height: 18px;
+  padding-top: 5px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: threedhighlight threeddarkshadow threeddarkshadow threedhighlight;
+}
+input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
+  text-decoration: none;
+  font-size: small;
+  font-weight: normal;
+  /*font-style: menu;*/
+  font-family: Tahoma, sans-serif, Arial, Helvetica;
+  background-color: threedlightshadow;
+  color: black;
+}
 
 
 /**
@@ -741,26 +767,6 @@ table.interwiki-map {
   clear: both;
 }
 
-th.gridbutton {
-  background-color: threedlightshadow;
-  color: black;
-  font-weight: normal;
-  /*font-style: menu;*/
-  margin: 5px 0px;
-  padding-top: 5px;
-  border-width: 1px;
-  border-style: solid;
-  border-color: threedhighlight threeddarkshadow threeddarkshadow threedhighlight;
-}
-input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
-  text-decoration: none;
-  font-size: small;
-  font-weight: normal;
-  /*font-style: menu;*/
-  font-family: Tahoma, sans-serif, Arial, Helvetica;
-  background-color: threedlightshadow;
-  color: black;
-}
 
 /* postnuke css:*/
 .gensmall{font-size:10px}

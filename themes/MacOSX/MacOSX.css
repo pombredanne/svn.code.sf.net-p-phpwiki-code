@@ -1,5 +1,5 @@
 /*
- $Id: MacOSX.css,v 1.37 2003-12-09 06:04:42 carstenklapp Exp $
+ $Id: MacOSX.css,v 1.38 2004-05-13 11:55:19 rurban Exp $
 
  Classes:
 
@@ -434,6 +434,30 @@ div.wiki-message {
    use transparent border here instead of padding change */
 .pagelist tbody tr>td {
   border: solid transparent 2px;
+}
+th.gridbutton {
+  background-color: threedlightshadow;
+  color: black;
+  font-weight: normal;
+  /*font-style: menu;*/
+  max-height: 18px;
+  height: 18px;
+  margin: 5px 0px;
+  float: none;
+  white-space: nowrap;
+  padding-top: 5px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: threedhighlight threeddarkshadow threeddarkshadow threedhighlight;
+}
+input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
+  text-decoration: none;
+  font-size: small;
+  font-weight: normal;
+  /*font-style: menu;*/
+  font-family: Tahoma, sans-serif, Arial, Helvetica;
+  background-color: threedlightshadow;
+  color: black;
 }
 
 /**
