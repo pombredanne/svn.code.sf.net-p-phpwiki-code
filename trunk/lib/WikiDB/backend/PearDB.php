@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.60 2004-07-09 10:06:50 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.61 2004-10-14 17:19:17 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -39,7 +39,6 @@ extends WikiDB_backend
         $dbh->setFetchMode(DB_FETCHMODE_ASSOC);
 
         $prefix = isset($dbparams['prefix']) ? $dbparams['prefix'] : '';
-
         $this->_table_names
             = array('page_tbl'     => $prefix . 'page',
                     'version_tbl'  => $prefix . 'version',
@@ -152,7 +151,7 @@ extends WikiDB_backend
             return;
         }
 
-        $this->lock();
+        $this->lock(array($page_tbl), true);
         $data = $this->get_pagedata($pagename);
         if (!$data) {
             $data = array();
@@ -185,7 +184,7 @@ extends WikiDB_backend
                            . " SET hits=?, pagedata=?"
                            . " WHERE pagename=?",
                            array($hits, $this->_serialize($data), $pagename));
-        $this->unlock();
+        $this->unlock(array($page_tbl));
     }
 
     function _get_pageid($pagename, $create_if_missing = false) {
@@ -199,17 +198,17 @@ extends WikiDB_backend
         if (!$create_if_missing)
             return $dbh->getOne($query);
 
-        $this->lock();
         $id = $dbh->getOne($query);
         if (empty($id)) {
+            $this->lock(array($page_tbl), true); // write lock
             $max_id = $dbh->getOne("SELECT MAX(id) FROM $page_tbl");
             $id = $max_id + 1;
             $dbh->query(sprintf("INSERT INTO $page_tbl"
                                 . " (id,pagename,hits)"
                                 . " VALUES (%d,'%s',0)",
                                 $id, $dbh->quoteString($pagename)));
+            $this->unlock(array($page_tbl));
         }
-        $this->unlock();
         return $id;
     }
 
@@ -568,7 +567,7 @@ extends WikiDB_backend
     /**
      * Find highest or lowest hit counts.
      */
-    function most_popular($limit=false) {
+    function most_popular($limit=0, $sortby='-hits') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $order = "DESC";
@@ -579,7 +578,10 @@ extends WikiDB_backend
         } else {
             $where = " AND hits > 0";
         }
-        $orderby = " ORDER BY hits $order";
+        if ($sortby != '-hits') 
+            $orderby = " ORDER BY " . $this->sortby($sortby, 'db');
+        else         
+            $orderby = " ORDER BY hits $order";
         //$limitclause = $limit ? " LIMIT $limit" : '';
         $sql = "SELECT "
             . $this->page_tbl_fields
@@ -588,7 +590,7 @@ extends WikiDB_backend
             . $where
             . $orderby;
          if ($limit) {
-             list($from,$count) = $this->limit($limit);
+             list($from, $count) = $this->limit($limit);
              $result = $dbh->limitQuery($sql, $from, $count);
          } else {
              $result = $dbh->query($sql);
@@ -1030,6 +1032,15 @@ extends WikiDB_backend_PearDB_generic_iter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.60  2004/07/09 10:06:50  rurban
+// Use backend specific sortby and sortable_columns method, to be able to
+// select between native (Db backend) and custom (PageList) sorting.
+// Fixed PageList::AddPageList (missed the first)
+// Added the author/creator.. name to AllPagesBy...
+//   display no pages if none matched.
+// Improved dba and file sortby().
+// Use &$request reference
+//
 // Revision 1.59  2004/07/08 21:32:36  rurban
 // Prevent from more warnings, minor db and sort optimizations
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.44 2004-09-06 08:33:09 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.45 2004-10-14 17:19:17 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -635,7 +635,7 @@ extends WikiDB_backend
     /**
      * Find highest or lowest hit counts.
      */
-    function most_popular($limit=0, $sortby = '') {
+    function most_popular($limit=0, $sortby='-hits') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $order = "DESC";
@@ -646,8 +646,10 @@ extends WikiDB_backend
         } else {
             $where = " AND hits > 0";
         }
-        if ($sortby) $orderby = " ORDER BY " . $this->sortby($sortby, 'db');
-        else         $orderby = " ORDER BY hits $order";
+        if ($sortby != '-hits') 
+            $orderby = " ORDER BY " . $this->sortby($sortby, 'db');
+        else         
+            $orderby = " ORDER BY hits $order";
         $limit = $limit ? $limit : -1;
 
         $result = $dbh->SelectLimit("SELECT " 
@@ -1170,6 +1172,9 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.44  2004/09/06 08:33:09  rurban
+// force explicit mysql auto-incrementing, atomic version
+//
 // Revision 1.43  2004/07/10 08:50:24  rurban
 // applied patch by Philippe Vanhaesendonck:
 //   pass column list to iterators so we can FETCH_NUM in all cases.
