@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.110 2004-09-17 14:43:31 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.111 2004-09-24 18:50:45 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -604,13 +604,15 @@ class PageList {
                      'paging'   => 'auto',  // 'auto'  normal paging mode
                      //			    // 'smart' drop 'info' columns and enhance rows 
                      //                     //         when the list becomes large
-                     //                     // 'none'  don't page at all (TODO: what if $paging==false ?)
+                     //                     // 'none'  don't page at all 
+                     // (TODO: what if $paging==false ?)
 
                      /* list-style options (with single pagename column only so far) */
                      'cols'     => 1,       // side-by-side display of list (1-3)
                      'azhead'   => 0,       // 1: group by initials
                                             // 2: provide shortcut links to initials also
-                     'comma'    => 0,       // condensed comma-seperated list, 1 if without links, 2 if with
+                     'comma'    => 0,       // condensed comma-seperated list, 
+                     			    // 1 if without links, 2 if with
                      'commasep' => false,   // Default: ', '
                      'ordered'  => false,   // OL or just UL lists (ignored for comma)
                      );
@@ -1127,6 +1129,7 @@ class PageList {
     }
 
     function limit($limit) {
+    	if (is_array($limit)) return $limit;
         if (strstr($limit, ','))
             return split(',', $limit);
         else
@@ -1430,6 +1433,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.110  2004/09/17 14:43:31  rurban
+// typo
+//
 // Revision 1.109  2004/09/17 14:22:10  rurban
 // update comments
 //
