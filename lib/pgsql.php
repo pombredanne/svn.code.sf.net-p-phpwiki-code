@@ -1,4 +1,4 @@
-<!-- $Id: pgsql.php,v 1.4.2.1 2001-08-18 00:35:10 dairiki Exp $ -->
+<!-- $Id: pgsql.php,v 1.4.2.2 2001-09-21 21:57:07 wainstead Exp $ -->
 <?php
 
    /*
@@ -296,23 +296,25 @@
       global $WikiLinksPageStore;
      
       $topage = addslashes($pagename);
-      $res['res'] = pg_exec( $dbi["dbc"], ( "SELECT DISTINCT frompage FROM $WikiLinksPageStore"
-					    . " WHERE topage='$topage'"
-					    . " ORDER BY frompage" ));
+      $query = "SELECT DISTINCT frompage FROM $WikiLinksPageStore"
+           . " WHERE topage='$topage'"
+           . " ORDER BY frompage";
+      $res['res'] = pg_exec( $dbi["dbc"], $query);
       $res['row'] = 0;
       return $res;
    }
 
 
-   // iterating through database
-   function BackLinkSearchNextMatch($dbi, $res) {
-      if($a = @pg_fetch_row($res['res'], $res['row']++)) {
-	 return $a[0];
-      }
-      else {
-         return 0;
-      }
-   }
+// iterating through database
+function BackLinkSearchNextMatch($dbi, &$res) {
+    if($a = @pg_fetch_row($res['res'], $res['row'])) {
+        $res['row']++;
+        return $a[0];
+    }
+    else {
+        return 0;
+    }
+}
 
 
    function IncreaseHitCount($dbi, $pagename) {
