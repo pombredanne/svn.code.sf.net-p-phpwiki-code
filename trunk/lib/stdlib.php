@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.178 2004-05-12 10:49:55 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.179 2004-05-18 16:18:37 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -779,8 +779,8 @@ function split_pagename ($page) {
         $RE[] = "/(?<= |${sep}|^)([AI])([[:upper:]][[:lower:]])/";
         // Split numerals from following letters.
         $RE[] = '/(\d)([[:alpha:]])/';
-        //TODO: Split at subpage seperators. TBD in Theme.php
-        //$RE[] = "/(${sep})([^${sep}]+)/";
+        // Split at subpage seperators. TBD in Theme.php
+        $RE[] = "/([^${sep}]+)(${sep})/";
         
         foreach ($RE as $key)
             $RE[$key] = pcre_fix_posix_classes($key);
@@ -1420,6 +1420,13 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.178  2004/05/12 10:49:55  rurban
+// require_once fix for those libs which are loaded before FileFinder and
+//   its automatic include_path fix, and where require_once doesn't grok
+//   dirname(__FILE__) != './lib'
+// upgrade fix with PearDB
+// navbar.tmpl: remove spaces for IE &nbsp; button alignment
+//
 // Revision 1.177  2004/05/08 14:06:12  rurban
 // new support for inlined image attributes: [image.jpg size=50x30 align=right]
 // minor stability and portability fixes

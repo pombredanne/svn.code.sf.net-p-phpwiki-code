@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RssFeed.php,v 1.4 2004-04-18 01:11:52 rurban Exp $');
+rcs_id('$Id: RssFeed.php,v 1.5 2004-05-18 16:18:37 rurban Exp $');
 /*
  Copyright 2003 Arnaud Fontaine
 
@@ -39,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     // Establish default values for each of this plugin's arguments.
@@ -58,7 +58,7 @@ extends WikiPlugin
         $xml_parser = xml_parser_create();
         $rss_parser = new RSSParser();
         if (!empty($url))
-            $rss_parser->parse_results( $xml_parser, &$rss_parser, $url,$debug);
+            $rss_parser->parse_results( $xml_parser, &$rss_parser, $url, $debug);
 
         if (!empty($rss_parser->channel['title'])) $feed = $rss_parser->channel['title'];
         if (!empty($rss_parser->channel['link']))  $url  = $rss_parser->channel['link'];
@@ -115,6 +115,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/04/18 01:11:52  rurban
+// more numeric pagename fixes.
+// fixed action=upload with merge conflict warnings.
+// charset changed from constant to global (dynamic utf-8 switching)
+//
 
 // For emacs users
 // Local Variables:
