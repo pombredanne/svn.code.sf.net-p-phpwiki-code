@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiUser.php,v 1.21 2002-08-30 04:49:59 wainstead Exp $');
+<?php rcs_id('$Id: WikiUser.php,v 1.22 2002-09-09 08:38:19 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -8,6 +8,12 @@
 // HTTP authentication.
 // So we'll hack around this by storing the currently logged
 // in username and other state information in a cookie.
+
+// 2002-09-08 11:44:04 rurban
+// Todo: Fix prefs cookie/session handling:
+//       _userid and _homepage cookie/session vars still hold the serialized string.
+//       If no homepage, fallback to prefs in cookie as in 1.3.3.
+
 
 define('WIKIAUTH_ANON', 0);
 define('WIKIAUTH_BOGO', 1);     // any valid WikiWord is enough
@@ -531,22 +537,20 @@ class UserPreferences {
     function set ($name, $value) {
         if (!($pref = $this->_getPref($name)))
             return false;
-	// don't set default values to safe space (in cookies, db and sesssion)
+	// don't set default values to save space (in cookies, db and sesssion)
 	if ($value == $pref->default_value)
 	    unset($this->_prefs[$name]);
 	else {
             // update on changes
             $newvalue = $pref->sanify($value);
             if (!empty($this->_prefs[$name]) and $this->_prefs[$name] != $newvalue) {
-                global $LANG;
                 // check updates (theme, lang, ...)
                 switch ($name) {
                 case 'theme': 
-                    include_once("themes/$value/themeinfo.php"); 
+                    include_once("themes/$newvalue/themeinfo.php"); 
                     break;
                 case 'lang':
-                    update_locale ($LANG);
-                    $GLOBALS['LANG'] = $value;
+                    update_locale ($newvalue);
                     break;
                 }
             }

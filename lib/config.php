@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.61 2002-08-27 21:51:31 rurban Exp $');
+rcs_id('$Id: config.php,v 1.62 2002-09-09 08:38:19 rurban Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -25,12 +25,14 @@ $FieldSeparator = "\x81";
 
 require_once('lib/FileFinder.php');
 // Search PHP's include_path to find file or directory.
-function FindFile ($file, $missing_okay = false)
+function FindFile ($file, $missing_okay = false, $slashify = false)
 {
     static $finder;
     if (!isset($finder))
         $finder = new FileFinder;
     $s = $finder->findFile($file, $missing_okay);
+    if ($slashify)
+      $s = $finder->slashifyPath($s);
     return $s;
 }
 
@@ -78,62 +80,55 @@ if (!function_exists ('bindtextdomain')) {
 // Setup localisation
 // This is currently broken, after trying to enable dynamic UserPreferences 
 // on the language.
-function update_locale ($LANG) {
-    //return;	
+function update_locale ($language) {
     global $locale, $LC_ALL, $language_locales;
-    if (empty($language_locales[$LANG]))
-      $LC_ALL = $LANG;
-    else
-      $LC_ALL = $language_locales[$LANG];
+    
+    // shortterm LANG fix. We really should define LC_ALL as "C" and LANG as "en"
+    if ($language == 'C') {
+        $language = 'en'; $LC_ALL = 'C';
+    }
+    if (empty($LC_ALL)) {
+    	if (empty($language_locales[$language]))
+      	    $LC_ALL = $language;
+    	else
+      	    $LC_ALL = $language_locales[$language];
+    }
     if (empty($LC_ALL))
-        $LC_ALL = $LANG;
+       $LC_ALL = $language;
 
     // Fixme: Currently we just check the dirs under locale for all 
     // available languages, but with setlocale we must use the long form, 
     // like 'de_DE','nl_NL', 'es_MX', 'es_AR', 'fr_FR'. For Windows maybe even 'german'.
-    setlocale(LC_ALL, $LC_ALL);
-            
+    $result = setlocale(LC_ALL, $LC_ALL);
+    if (!$result and !($result = setlocale(LC_ALL, substr($LC_ALL,0,2)))) {
+    	putenv("LANG=$LC_ALL");
+	// The system supported locale. E.g. my Windows returns "German_Austria.1252"
+    	$result = setlocale(LC_ALL,'');
+    }
+    if ($result) {
+    	$LC_ALL = $result;
+    	putenv("LC_ALL=$LC_ALL");
+    	putenv("LANG=$LC_ALL");
+    }
+
     if (!function_exists ('bindtextdomain')) {
         if ( ($lcfile = FindLocalizedFile("LC_MESSAGES/phpwiki.php", 'missing_ok')) ) {
             include($lcfile);
         }
     } else {
-        if (empty($language_locales[$LANG])) {
-            trigger_error(_("Dynamically changing the language not (yet) available on this locale"), E_USER_NOTICE);
+        if (empty($language_locales[$language])) {
+            trigger_error(sprintf(_("No default locale for this language '%s'"), $language), E_USER_NOTICE);
         }
         // Setup localisation
-        bindtextdomain ("phpwiki", FindFile("locale"));
+        $f = FindFile("locale", false, true);
+        
+        bindtextdomain ("phpwiki", $f);
         textdomain ("phpwiki");
     }
+    $GLOBALS['LANG'] = $language;
 }
-
-//update_locale ($LANG);
-
-    if (empty($language_locales[$LANG]))
-      $LC_ALL = $LANG;
-    else
-      $LC_ALL = $language_locales[$LANG];
-    if (empty($LC_ALL))
-        $LC_ALL = $LANG;
-
-    // Fixme: Currently we just check the dirs under locale for all 
-    // available languages, but with setlocale we must use the long form, 
-    // like 'de_DE','nl_NL', 'es_MX', 'es_AR', 'fr_FR'. For Windows maybe even 'german'.
-    setlocale(LC_ALL, $LC_ALL);
-            
-    if (!function_exists ('bindtextdomain')) {
-        if ( ($lcfile = FindLocalizedFile("LC_MESSAGES/phpwiki.php", 'missing_ok')) ) {
-            include($lcfile);
-        }
-    } else {
-        if (empty($language_locales[$LANG])) {
-            trigger_error(_("Dynamically changing the language not (yet) available on this locale"), E_USER_NOTICE);
-        }
-        // Setup localisation
-        bindtextdomain ("phpwiki", FindFile("locale"));
-        textdomain ("phpwiki");
-    }
-
+update_locale ($LANG);
+$default_language = $LANG;
 
 // To get the POSIX character classes in the PCRE's (e.g.
 // [[:upper:]]) to match extended characters (e.g. GrüßGott), we have
