@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.43 2004-11-21 11:59:14 rurban Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.44 2005-01-08 20:58:19 rurban Exp $');
 /**
  * Code for writing the HTML subset of XML.
  * @author: Jeff Dairiki
@@ -423,7 +423,7 @@ HTML::_setTagProperty(HTMLTAG_ACCEPTS_INLINE,
                       // other with inline content
                       . 'caption dt label legend '
                       // other with either inline or block
-                      . 'dd del ins li td th colgroup ');
+                      . 'dd del ins li td th colgroup');
 
 HTML::_setTagProperty(HTMLTAG_INLINE,
                       // %inline elements:
@@ -529,6 +529,9 @@ function IfJavaScript($if_content = false, $else_content = false) {
     
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.43  2004/11/21 11:59:14  rurban
+ remove final \n to be ob_cache independent
+
  Revision 1.42  2004/09/26 17:09:23  rurban
  add SVG support for Ploticus (and hopefully all WikiPluginCached types)
  SWF not yet.
