@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.68 2002-08-23 18:29:30 rurban Exp $');
+rcs_id('$Id: main.php,v 1.69 2002-08-23 21:54:30 rurban Exp $');
 
 define ('DEBUG', 1);
 define ('USE_PREFS_IN_PAGE', true);
@@ -20,7 +20,8 @@ class WikiRequest extends Request {
         $this->setArg('action', $this->_deduceAction());
 
         // Restore auth state
-        $this->_user = new WikiUser($this->getSessionVar('wiki_user'));
+        $this->_user = new WikiUser($this->_deduceUsername());
+        $this->_deduceUsername();
         // WikiDB Auth later
         // $this->_user = new WikiDB_User($this->getSessionVar('wiki_user'), $this->getAuthDbh());
         $this->_prefs = $this->_user->getPreferences();
@@ -186,6 +187,8 @@ class WikiRequest extends Request {
         $this->_user = $user;
         $this->setCookieVar('WIKI_ID', $user->_userid, 365);
         $this->setSessionVar('wiki_user', $user);
+        if ($user->isSignedIn())
+            $user->_authhow = 'signin';
 
         // Save userid to prefs..
         $this->_prefs->set('userid',
@@ -412,10 +415,16 @@ class WikiRequest extends Request {
     }
 
     function _deduceUsername () {
-        if ($userid = $this->getSessionVar('wiki_user'))
+        if ($userid = $this->getSessionVar('wiki_user')) {
+            if (!empty($this->_user))
+                $this->_user->authhow = 'session';
             return $userid;
-        if ($userid = $this->getCookieVar('WIKI_ID'))
+        }
+        if ($userid = $this->getCookieVar('WIKI_ID')) {
+            if (!empty($this->_user))
+                $this->_user->authhow = 'cookie';
             return $userid;
+        }
         return false;
     }
     

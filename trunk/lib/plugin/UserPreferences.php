@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.4 2002-08-23 18:29:30 rurban Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.5 2002-08-23 21:54:30 rurban Exp $');
 /**
  * Plugin to allow any user to adjust his own preferences.
  * This must be used in the page "UserPreferences" or in a subpage of a
