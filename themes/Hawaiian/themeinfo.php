@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.5 2002-01-05 06:17:02 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.6 2002-01-07 08:10:36 carstenklapp Exp $');
 
 /**
  * WikiWiki Hawaiian theme for PhpWiki.
@@ -23,6 +23,11 @@ $CSS_URLS = array_merge($CSS_URLS,
 // Logo image appears on every page and links to the HomePage.
 $logo = "themes/$theme/PalmBeach.jpg";
 
+// RSS logo icon (path relative to index.php)
+// If this is left blank (or unset), the default "images/rss.png"
+// will be used.
+//$rssicon = "images/rss.png";
+
 // Signature image which is shown after saving an edited page.  If
 // this is left blank, any signature defined in index.php will be
 // used. If it is not defined by index.php or in here then the "Thank
@@ -31,7 +36,7 @@ $logo = "themes/$theme/PalmBeach.jpg";
 $SignatureImg = "themes/$theme/WaterFall.jpg";
 // If you want to see more than just the waterfall let a random
 // picture be chosen for the signature image:
-//include("themes/$theme/pictures/random.php");
+include("themes/$theme/pictures/random.php");
 
 // If this theme defines any templates, they will completely override
 // whatever templates have been defined in index.php.
