@@ -15,7 +15,7 @@
 // | Author: Bertrand Mansion <bmansion@mamasam.com>                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: IniCommented.php,v 1.1 2004-04-16 22:49:09 zorloc Exp $
+// $Id: IniCommented.php,v 1.2 2004-04-20 18:10:53 rurban Exp $
 
 /**
 * Config parser for PHP .ini files with comments
@@ -157,8 +157,8 @@ class Config_Container_IniCommented {
                                 !empty($return[$returnpos][1])) {
                                 return PEAR::raiseError("invalid ini syntax, quotes cannot follow text '$text'",
                                                         null, PEAR_ERROR_RETURN);
-                                }
-                            if ($returnpos >= 0) {
+                            }
+                            if (isset($return[$returnpos]) and $returnpos >= 0) {
                             // trim any unnecessary whitespace in earlier entries
                                 $return[$returnpos][1] = trim($return[$returnpos][1]);
                             } else {

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.5 2004-04-20 17:21:57 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.6 2004-04-20 18:10:27 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -11,7 +11,7 @@ rcs_id('$Id: IniConfig.php,v 1.5 2004-04-20 17:21:57 rurban Exp $');
  * totally backwards-compatible with the old index.php method, while still
  * providing a much tastier on-going experience.
  *
- * @author: Joby Walker
+ * @author: Joby Walker, Reini Urban, Matthew Palmer
  */
 /*
  * Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -47,41 +47,43 @@ rcs_id('$Id: IniConfig.php,v 1.5 2004-04-20 17:21:57 rurban Exp $');
  *      them as constants.  Will involve hacking around
  *      pcre_fix_posix_classes (probably with redefines()).
  */
+
+include_once "lib/config.php";
  
-// List of all valid config options to be define()d which take "values" (not
-// booleans). Needs to be categorised, and generally made a lot tidier.
-$_IC_VALID_VALUE = array
-    ('WIKI_NAME', 'ADMIN_USER', 'ADMIN_PASSWD',
-     'HTML_DUMP_SUFFIX', 'MAX_UPLOAD_SIZE', 'MINOR_EDIT_TIMEOUT',
-     'ACCESS_LOG', 'CACHE_CONTROL', 'CACHE_CONTROL_MAX_AGE',
-     'PASSWORD_LENGTH_MINIMUM', 'USER_AUTH_POLICY', 'LDAP_AUTH_HOST',
-     'LDAP_BASE_DN', 'LDAP_AUTH_USER', 'LDAP_AUTH_PASSWORD',
-     'LDAP_SEARCH_FIELD', 'IMAP_AUTH_HOST', 'POP3_AUTH_HOST',
-     'POP3_AUTH_PORT', 'AUTH_USER_FILE', 'AUTH_SESS_USER', 
-     'AUTH_SESS_LEVEL', 'GROUP_METHOD',
-     'AUTH_GROUP_FILE', 'EDITING_POLICY', 'THEME', 'CHARSET',
-     'DEFAULT_LANGUAGE', 'WIKI_PGSRC', 'DEFAULT_WIKI_PGSRC',
-     'ALLOWED_PROTOCOLS', 'INLINE_IMAGES', 'SUBPAGE_SEPARATOR',
-     'INTERWIKI_MAP_FILE', 'COPYRIGHTPAGE_TITLE', 'COPYRIGHTPAGE_URL',
-     'AUTHORPAGE_TITLE', 'AUTHORPAGE_URL', 'SERVER_NAME', 'SERVER_PORT',
-     'SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH');
-
-// List of all valid config options to be define()d which take booleans.
-$_IC_VALID_BOOL = array
-    ('DEBUG', 'ENABLE_USER_NEW', 'JS_SEARCHREPLACE',
-     'ENABLE_REVERSE_DNS', 'ENCRYPTED_PASSWD', 'ZIPDUMP_AUTH', 
-     'ENABLE_RAW_HTML', 'STRICT_MAILABLE_PAGEDUMPS', 'COMPRESS_OUTPUT',
-     'WIKIDB_NOCACHE_MARKUP', 'ALLOW_ANON_USER', 'ALLOW_ANON_EDIT',
-     'ALLOW_BOGO_LOGIN', 'ALLOW_USER_PASSWORDS',
-     'AUTH_USER_FILE_STORABLE', 'ALLOW_HTTP_AUTH_LOGIN',
-     'ALLOW_USER_LOGIN', 'ALLOW_LDAP_LOGIN', 'ALLOW_IMAP_LOGIN',
-     'WARN_NONPUBLIC_INTERWIKIMAP', 'USE_PATH_INFO',
-     'DISABLE_HTTP_REDIRECT');
-
 function IniConfig($file)
 {
     require_once('lib/pear/Config.php');
-        
+ 
+    // List of all valid config options to be define()d which take "values" (not
+    // booleans). Needs to be categorised, and generally made a lot tidier.
+    $_IC_VALID_VALUE = array
+        ('WIKI_NAME', 'ADMIN_USER', 'ADMIN_PASSWD',
+         'HTML_DUMP_SUFFIX', 'MAX_UPLOAD_SIZE', 'MINOR_EDIT_TIMEOUT',
+         'ACCESS_LOG', 'CACHE_CONTROL', 'CACHE_CONTROL_MAX_AGE',
+         'PASSWORD_LENGTH_MINIMUM', 'USER_AUTH_POLICY', 'LDAP_AUTH_HOST',
+         'LDAP_BASE_DN', 'LDAP_AUTH_USER', 'LDAP_AUTH_PASSWORD',
+         'LDAP_SEARCH_FIELD', 'IMAP_AUTH_HOST', 'POP3_AUTH_HOST',
+         'POP3_AUTH_PORT', 'AUTH_USER_FILE', 'AUTH_SESS_USER', 
+         'AUTH_SESS_LEVEL', 'GROUP_METHOD',
+         'AUTH_GROUP_FILE', 'EDITING_POLICY', 'THEME', 'CHARSET',
+         'DEFAULT_LANGUAGE', 'WIKI_PGSRC', 'DEFAULT_WIKI_PGSRC',
+         'ALLOWED_PROTOCOLS', 'INLINE_IMAGES', 'SUBPAGE_SEPARATOR',
+         'INTERWIKI_MAP_FILE', 'COPYRIGHTPAGE_TITLE', 'COPYRIGHTPAGE_URL',
+         'AUTHORPAGE_TITLE', 'AUTHORPAGE_URL', 'SERVER_NAME', 'SERVER_PORT',
+         'SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH');
+
+    // List of all valid config options to be define()d which take booleans.
+    $_IC_VALID_BOOL = array
+        ('DEBUG', 'ENABLE_USER_NEW', 'JS_SEARCHREPLACE',
+         'ENABLE_REVERSE_DNS', 'ENCRYPTED_PASSWD', 'ZIPDUMP_AUTH', 
+         'ENABLE_RAW_HTML', 'STRICT_MAILABLE_PAGEDUMPS', 'COMPRESS_OUTPUT',
+         'WIKIDB_NOCACHE_MARKUP', 'ALLOW_ANON_USER', 'ALLOW_ANON_EDIT',
+         'ALLOW_BOGO_LOGIN', 'ALLOW_USER_PASSWORDS',
+         'AUTH_USER_FILE_STORABLE', 'ALLOW_HTTP_AUTH_LOGIN',
+         'ALLOW_USER_LOGIN', 'ALLOW_LDAP_LOGIN', 'ALLOW_IMAP_LOGIN',
+         'WARN_NONPUBLIC_INTERWIKIMAP', 'USE_PATH_INFO',
+         'DISABLE_HTTP_REDIRECT');
+
     $config = new Config();
     $root = &$config->parseConfig($file, 'inicommented');
     if (PEAR::isError($root)) {
@@ -91,8 +93,6 @@ function IniConfig($file)
     $out = $root->toArray();
 
     $rs = &$out['root'];
-
-    global $_IC_VALID_VALUE, $_IC_VALID_BOOL;
 
     foreach ($_IC_VALID_VALUE as $item) {
         if (array_key_exists($item, $rs) and !defined($item)) {
@@ -228,9 +228,245 @@ function IniConfig($file)
         
     global $DisabledActions;
     $DisabledActions = preg_split('/\s*:\s*/', @$rs['DISABLED_ACTIONS']);
+
+    fix_configs();
 }
 
+// moved from lib/config.php
+function fix_configs() {
+    global $FieldSeparator, $charset, $WikiNameRegexp, $KeywordLinkRegexp;
+    global $DisabledActions, $HTTP_SERVER_VARS, $DBParams, $LANG;
+
+    // "\x80"-"\x9f" (and "\x00" - "\x1f") are non-printing control
+    // chars in iso-8859-*
+    // $FieldSeparator = "\263"; //this is a superscript 3 in ISO-8859-1.
+    // $FieldSeparator = "\xFF"; // this byte should never appear in utf-8
+    // FIXME: get rid of constant. pref is dynamic and language specific
+    $charset = CHARSET;
+    if (isset($GLOBALS['LANG']) and in_array($GLOBALS['LANG'],array('ja','zh')))
+        $charset = 'utf-8';
+    if (strtolower($charset) == 'utf-8')
+        $FieldSeparator = "\xFF";
+    else
+        $FieldSeparator = "\x81";
+
+    if (!defined('DEFAULT_LANGUAGE'))
+        define('DEFAULT_LANGUAGE', 'en');
+
+    //
+    // Set up (possibly fake) gettext()
+    //
+    if (!function_exists ('bindtextdomain')) {
+        $locale = array();
+
+        function gettext ($text) { 
+            global $locale;
+            if (!empty ($locale[$text]))
+                return $locale[$text];
+            return $text;
+        }
+
+        function _ ($text) {
+            return gettext($text);
+        }
+    }
+    else {
+        // Working around really weird gettext problems: (4.3.2, 4.3.6 win)
+        // bindtextdomain() returns the current domain path.
+        // 1. If the script is not index.php but something like "de", on a different path
+        //    then bindtextdomain() fails, but after chdir to the correct path it will work okay.
+        // 2. But the weird error "Undefined variable: bindtextdomain" is generated then.
+        $bindtextdomain_path = FindFile("locale", false, true);
+        if (isWindows())
+            $bindtextdomain_path = str_replace("/","\\",$bindtextdomain_path);
+        $bindtextdomain_real = @bindtextdomain("phpwiki", $bindtextdomain);
+        if ($bindtextdomain_real != $bindtextdomain_path) {
+            // this will happen with virtual_paths. chdir and try again.
+            chdir($bindtextdomain_path);
+            $bindtextdomain_real = @bindtextdomain("phpwiki", $bindtextdomain);
+        }
+        textdomain("phpwiki");
+        if ($bindtextdomain_real != $bindtextdomain_path) { // change back
+            chdir($bindtextdomain_real . (isWindows() ? "\\.." : "/.."));
+        }
+    }
+
+    $WikiNameRegexp = pcre_fix_posix_classes($WikiNameRegexp);
+    $KeywordLinkRegexp = pcre_fix_posix_classes($KeywordLinkRegexp);
+
+    //////////////////////////////////////////////////////////////////
+    // Autodetect URL settings:
+    //
+    if (!defined('SERVER_NAME')) define('SERVER_NAME', $HTTP_SERVER_VARS['SERVER_NAME']);
+    if (!defined('SERVER_PORT')) define('SERVER_PORT', $HTTP_SERVER_VARS['SERVER_PORT']);
+    if (!defined('SERVER_PROTOCOL')) {
+        if (empty($HTTP_SERVER_VARS['HTTPS']) || $HTTP_SERVER_VARS['HTTPS'] == 'off')
+            define('SERVER_PROTOCOL', 'http');
+        else
+            define('SERVER_PROTOCOL', 'https');
+    }
+
+    if (!defined('SCRIPT_NAME'))
+        define('SCRIPT_NAME', deduce_script_name());
+
+    if (!defined('USE_PATH_INFO')) {
+            /*
+             * If SCRIPT_NAME does not look like php source file,
+             * or user cgi we assume that php is getting run by an
+             * action handler in /cgi-bin.  In this case,
+             * I think there is no way to get Apache to pass
+             * useful PATH_INFO to the php script (PATH_INFO
+             * is used to the the php interpreter where the
+             * php script is...)
+             */
+            switch (php_sapi_name()) {
+            case 'apache':
+            case 'apache2handler':
+                define('USE_PATH_INFO', true);
+                break;
+            case 'cgi':
+            case 'apache2filter':
+                define('USE_PATH_INFO', false);
+                break;
+            default:
+                define('USE_PATH_INFO', ereg('\.(php3?|cgi)$', SCRIPT_NAME));
+                break;
+            }
+        }
+     
+    // If user has not defined DATA_PATH, we want to use relative URLs.
+    if (!defined('DATA_PATH') && USE_PATH_INFO)
+        define('DATA_PATH', '..');
+
+    // If user has not defined PHPWIKI_DIR, and we need it
+    if (!defined('PHPWIKI_DIR') and !file_exists("themes/default")) {
+    	$themes_dir = FindFile("themes");
+        define('PHPWIKI_DIR', dirname($themes_dir));
+    }
+        
+    if (!defined('VIRTUAL_PATH')) {
+        // We'd like to auto-detect when the cases where apaches
+        // 'Action' directive (or similar means) is used to
+        // redirect page requests to a cgi-handler.
+        //
+        // In cases like this, requests for e.g. /wiki/HomePage
+        // get redirected to a cgi-script called, say,
+        // /path/to/wiki/index.php.  The script gets all
+        // of /wiki/HomePage as it's PATH_INFO.
+        //
+        // The problem is:
+        //   How to detect when this has happened reliably?
+        //   How to pick out the "virtual path" (in this case '/wiki')?
+        //
+        // (Another time an redirect might occur is to a DirectoryIndex
+        // -- the requested URI is '/wikidir/', the request gets
+        // passed to '/wikidir/index.php'.  In this case, the
+        // proper VIRTUAL_PATH is '/wikidir/index.php', since the
+        // pages will appear at e.g. '/wikidir/index.php/HomePage'.
+        //
+
+        $REDIRECT_URL = &$HTTP_SERVER_VARS['REDIRECT_URL'];
+        if (USE_PATH_INFO and isset($REDIRECT_URL)
+            and ! IsProbablyRedirectToIndex()) {
+            // FIXME: This is a hack, and won't work if the requested
+            // pagename has a slash in it.
+            define('VIRTUAL_PATH', dirname($REDIRECT_URL . 'x'));
+        } else {
+            define('VIRTUAL_PATH', SCRIPT_NAME);
+        }
+    }
+
+    if (SERVER_PORT
+        && SERVER_PORT != (SERVER_PROTOCOL == 'https' ? 443 : 80)) {
+        define('SERVER_URL',
+               SERVER_PROTOCOL . '://' . SERVER_NAME . ':' . SERVER_PORT);
+    }
+    else {
+        define('SERVER_URL',
+               SERVER_PROTOCOL . '://' . SERVER_NAME);
+    }
+
+    if (VIRTUAL_PATH != SCRIPT_NAME) {
+        // Apache action handlers are used.
+        define('PATH_INFO_PREFIX', VIRTUAL_PATH . '/');
+    }
+    else
+        define('PATH_INFO_PREFIX', '/');
+
+
+    define('PHPWIKI_BASE_URL',
+           SERVER_URL . (USE_PATH_INFO ? VIRTUAL_PATH . '/' : SCRIPT_NAME));
+
+    //////////////////////////////////////////////////////////////////
+    // Select database
+    //
+    if (empty($DBParams['dbtype']))
+        $DBParams['dbtype'] = 'dba';
+
+    if (!defined('THEME'))
+        define('THEME', 'default');
+
+    update_locale(isset($LANG) ? $LANG : DEFAULT_LANGUAGE);
+
+    if (!defined('WIKI_NAME'))
+        define('WIKI_NAME', _("An unnamed PhpWiki"));
+
+    if (!defined('HOME_PAGE'))
+        define('HOME_PAGE', _("HomePage"));
+
+    // FIXME: delete
+    // Access log
+    if (!defined('ACCESS_LOG'))
+        define('ACCESS_LOG', '');
+
+    // FIXME: delete
+    // Get remote host name, if apache hasn't done it for us
+    if (empty($HTTP_SERVER_VARS['REMOTE_HOST']) && ENABLE_REVERSE_DNS)
+        $HTTP_SERVER_VARS['REMOTE_HOST'] = gethostbyaddr($HTTP_SERVER_VARS['REMOTE_ADDR']);
+
+    // check whether the crypt() function is needed and present
+    if (defined('ENCRYPTED_PASSWD') && !function_exists('crypt')) {
+        $error = sprintf(_("Encrypted passwords cannot be used: %s."),
+                         "'function crypt()' not available in this version of php");
+        trigger_error($error);
+    }
+
+    if (!defined('ADMIN_PASSWD') or ADMIN_PASSWD == '')
+        trigger_error(_("The admin password cannot be empty. Please update your /index.php"));
+
+    if (defined('USE_DB_SESSION') and USE_DB_SESSION) {
+        if (! $DBParams['db_session_table'] ) {
+            trigger_error(_("Empty db_session_table. Turn USE_DB_SESSION off or define the table name."), 
+                          E_USER_ERROR);
+            // this is flawed. constants cannot be changed.
+            define('USE_DB_SESSION',false);
+        }
+    } else {
+        // default: true (since v1.3.8)
+        if (!defined('USE_DB_SESSION'))
+            define('USE_DB_SESSION',true);
+    }
+    // legacy:
+    if (!defined('ENABLE_USER_NEW')) define('ENABLE_USER_NEW',true);
+    if (!defined('ALLOW_USER_LOGIN'))
+        define('ALLOW_USER_LOGIN', defined('ALLOW_USER_PASSWORDS') && ALLOW_USER_PASSWORDS);
+    if (!defined('ALLOW_ANON_USER')) define('ALLOW_ANON_USER', true); 
+    if (!defined('ALLOW_ANON_EDIT')) define('ALLOW_ANON_EDIT', false); 
+    if (!defined('REQUIRE_SIGNIN_BEFORE_EDIT')) define('REQUIRE_SIGNIN_BEFORE_EDIT', ! ALLOW_ANON_EDIT);
+    if (!defined('ALLOW_BOGO_LOGIN')) define('ALLOW_BOGO_LOGIN', true);
+
+    if (ALLOW_USER_LOGIN and !empty($DBAuthParams) and empty($DBAuthParams['auth_dsn'])) {
+        if (isset($DBParams['dsn']))
+            $DBAuthParams['auth_dsn'] = $DBParams['dsn'];
+    }
+
+}
+
+
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/04/20 17:21:57  rurban
+// WikiFarm code: honor predefined constants
+//
 // Revision 1.4  2004/04/20 17:08:19  rurban
 // Some IniConfig fixes: prepend our private lib/pear dir
 //   switch from " to ' in the auth statements
