@@ -1,31 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
+<!-- phpwiki source:
+###RCS_IDS###
+-->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<title>###PAGE###</title>
+###ROBOTS_META###
+<base href="###BASE_URL###">
+<title>Edit: ###SPLIT_PAGE###</title>
+<link rel="stylesheet" title="phpwiki" href="###CSS_URL###" type="text/css">
 </head>
 
-<body>
+<body bgcolor=ivory text=black alink=red link=darkblue vlink=darkmagenta>
+<form class="wikiaction" method="POST" action="###BROWSE_PAGE###">
+<h1><a class="wikilink" href="###BROWSE###HomePage"><img src="###LOGO###" border=0 alt="[phpwiki]" width=50 height=50></a>
+Editar <span="wikiword">###PAGE###</span>
+<input type="submit" value=" Save "></h1>
 
-<form method="POST" action="###SCRIPTURL###">
-
-  <h1><a href="###SCRIPTURL###"><img src="###LOGO###" border=0 alt="[phpwiki]" width=50 height=50></a> 
-    Editar ###PAGE### 
-    <input type="submit" value=" Save "></h1>
-
-<textarea name="content" ROWS="22" COLS="80" wrap="virtual">###CONTENT###</textarea>
+<textarea name="content"
+          rows="###EDIT_AREA_HEIGHT###"
+          cols="###EDIT_AREA_WIDTH###"
+          wrap="virtual">###CONTENT###</textarea>
 <br>
-<input type="checkbox" name="minor_edit" value="yes" 
-###IF MINOR_EDIT### checked
->
-Esto es un cambio pequeño, no archiva la versión anterior. 
-<br>
+###IF:MINOR_EDIT_CHECKBOX###
+  ###MINOR_EDIT_CHECKBOX### Esto es un cambio pequeño, no archiva la versión anterior.
+  <br>
+###ENDIF:MINOR_EDIT_CHECKBOX###
 <input type="checkbox" name="convert" value="tabs" >
-  No puedo escribir tabulaciones. Por favor <a href="###SCRIPTURL###?ConvierteEspaciosEnTabs">ConvierteEspaciosEnTabs</a> 
-  al guardar. 
+No puedo escribir tabulaciones.
+Por favor <a class="wikilink" href="###BROWSE###ConvierteEspaciosEnTabs"><span class="wikiword">ConvierteEspaciosEnTabs</span></a>
+al guardar.
+<p>You can change the size of the editing area.
+See <a class="wikilink" href="###BROWSE###UserPreferences"><span class="wikiword">UserPreferences</span></a>.</p>
+<p><a class="wikilink" href="###BROWSE###BuenEstilo"><span class="wikiword">BuenEstilo</span></a> tips para editar.</p>
 
-  <p><a href="###SCRIPTURL###?BuenEstilo">BuenEstilo</a> tips para editar.
-
-  ###IF COPY###<br><a href="###SCRIPTURL###?copy=###PAGEURL###">EditarCopia</a> De un autor previo
+###IF COPY###<br><a class="wikiaction" href="###ACTION###edit&amp;version=archive">EditarCopia</a> De un autor previo
 
   <hr noshade>
   <small> <b>&Eacute;nfasis:</b> '' para it&aacute;licas, ''' para bold, ''''' 
@@ -40,7 +49,9 @@ Esto es un cambio pequeño, no archiva la versión anterior.
   de l&iacute;nea, "- - - -" Hace una linea horizontal, escapar "[" con "[[" <br>
   M&aacute;s en <a href="###SCRIPTURL###?ReglasDeFormatoDeTexto"><b>ReglasDeFormatoDeTexto</b></a> 
   </small> 
-  <input type="hidden" name="post" value="###PAGEURL###">
+
+<input type="hidden" name="action" value="save">
+<input type="hidden" name="pagename" value="###PAGE###">
 <input type="hidden" name="editversion" value="###VERSION###">
 </form>
 </body>
