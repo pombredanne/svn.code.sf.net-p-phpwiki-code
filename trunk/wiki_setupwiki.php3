@@ -1,4 +1,4 @@
-<!-- $Id: wiki_setupwiki.php3,v 1.11 2000-07-19 16:25:58 dairiki Exp $ -->
+<!-- $Id: wiki_setupwiki.php3,v 1.12 2000-08-01 18:57:38 dairiki Exp $ -->
 <?
 require 'wiki_ziplib.php3';
 
@@ -40,8 +40,7 @@ function LoadFile ($dbi, $filename, $text)
       // Can't parse MIME: assume plain text file.
       $page = $defaults;
       $page['pagename'] = rawurldecode($filename);
-      $page['content'] = preg_split('/\r?\n/',
-				    preg_replace('/\r?\n$/','',$text));
+      $page['content'] = preg_split('/[ \t\r]*\n/', chop($text));
       SavePage($dbi, $page, "text file");
     }
   else
