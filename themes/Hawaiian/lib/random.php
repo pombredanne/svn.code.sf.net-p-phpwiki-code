@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: random.php,v 1.6 2002-01-23 18:12:51 carstenklapp Exp $');
+<?php rcs_id('$Id: random.php,v 1.7 2002-01-25 23:00:57 carstenklapp Exp $');
 /**
  */
 class randomImage {
@@ -69,6 +69,7 @@ class imageSet extends fileSet {
 class fileSet {
     /**
      * Build an array in $this->_fileList of files from $dirname.
+     * Subdirectories are not traversed.
      *
      * (This is a variation of function LoadDir in lib/loadsave.php)
      * See also http://www.php.net/manual/en/function.readdir.php
