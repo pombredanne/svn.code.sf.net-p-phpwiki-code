@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: ziplib.php,v 1.11 2001-12-12 05:12:46 carstenklapp Exp $');
+rcs_id('$Id: ziplib.php,v 1.12 2001-12-19 12:08:04 carstenklapp Exp $');
 
 /**
  * GZIP stuff.
@@ -581,6 +581,7 @@ function ParseMimeContentType ($string)
 	   
       $string = substr($string, strlen($match[0]));
     }
+    //" <--(kludge for dumb syntax coloring)
 
   return array($type, $subtype, $param);
 }
@@ -641,21 +642,21 @@ function ParseMimeifiedPages ($data)
 {
     if (!($headers = ParseRFC822Headers($data))
         || empty($headers['content-type'])) {
-        //trigger_error("Can't find content-type header", E_USER_WARNING);
+        //trigger_error( sprintf(_("Can't find %s"),'content-type header'), E_USER_WARNING);
         return false;
     }
     $typeheader = $headers['content-type'];
   
     if (!(list ($type, $subtype, $params) = ParseMimeContentType($typeheader))) {
-        trigger_error("Can't parse content-type: ("
-             . htmlspecialchars($typeheader) . ")", E_USER_WARNING);
+        trigger_error( sprintf(_("Can't parse %s"),'content-type:')
+             . " (" . htmlspecialchars($typeheader) . ")", E_USER_WARNING);
         return false;
     }
     if ("$type/$subtype" == 'multipart/mixed') {
         return ParseMimeMultipart($data, $params['boundary']);
     }
     else if ("$type/$subtype" != 'application/x-phpwiki') {
-        trigger_error("Bad content-type: $type/$subtype", E_USER_WARNING);
+        trigger_error( sprintf(_("Bad %s"),"content-type: $type/$subtype"), E_USER_WARNING);
         return false;
     }
 
@@ -700,7 +701,7 @@ function ParseMimeifiedPages ($data)
     if ($encoding == 'quoted-printable')
         $data = QuotedPrintableDecode($data);
     else if ($encoding && $encoding != 'binary')
-        ExitWiki("Unknown encoding type: $encoding");
+        ExitWiki( sprintf(_("Unknown %s"), 'encoding type: $encoding') );
 
     $data .= GenerateFootnotesFromRefs($params);
 

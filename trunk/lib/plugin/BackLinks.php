@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BackLinks.php,v 1.4 2001-12-16 18:33:25 dairiki Exp $');
+rcs_id('$Id: BackLinks.php,v 1.5 2001-12-19 12:07:34 carstenklapp Exp $');
 /**
  */
 class WikiPlugin_BackLinks
@@ -10,7 +10,7 @@ extends WikiPlugin
     }
 
     function getDescription () {
-        return _("Get BackLinks for [pagename]");
+        return sprintf(_("Get BackLinks for %s"),'[pagename]');
     }
   
     function getDefaultArguments() {
