@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.38 2003-09-13 22:25:38 carstenklapp Exp $');
+rcs_id('$Id: WikiUser.php,v 1.39 2003-10-28 21:13:46 carstenklapp Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -199,6 +199,8 @@ class WikiUser {
                 if ( !empty($passwd)
                      && crypt($passwd, ADMIN_PASSWD) == ADMIN_PASSWD )
                     return WIKIAUTH_ADMIN;
+                else
+                    return false;
             if (!empty($passwd)) {
                 if ($passwd == ADMIN_PASSWD)
                   return WIKIAUTH_ADMIN;
@@ -647,6 +649,9 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.38  2003/09/13 22:25:38  carstenklapp
+// Hook for new user preference 'noLinkIcons'.
+//
 // Revision 1.37  2003/02/22 20:49:55  dairiki
 // Fixes for "Call-time pass by reference has been deprecated" errors.
 //
