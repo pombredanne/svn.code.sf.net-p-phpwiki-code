@@ -75,10 +75,21 @@ DBA or Postgresql on Red Hat 6.2
 
 It reportedly works on Windows with Apache+PHP, which amazes me. 
 
-That should be all. Send patches, bugs etc. to:
+4. PATCHES
 
+Post patches to http://sourceforge.net/tracker/?func=add&group_id=6121&atid=306121
+
+5. BUGS
+
+Post bugs to http://sourceforge.net/tracker/?func=add&group_id=6121&atid=106121
+
+6. SUPPORT
+
+For support from the PhpWiki team and user community post to
 phpwiki-talk@lists.sourceforge.net
+
+You can join this list at http://lists.sourceforge.net/lists/listinfo/phpwiki-talk
 
 FIN
 
-$Id: INSTALL,v 1.10 2001-09-18 21:20:30 wainstead Exp $
+$Id: INSTALL,v 1.11 2001-09-18 21:26:31 wainstead Exp $
