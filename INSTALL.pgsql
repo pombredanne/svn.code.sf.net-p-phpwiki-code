@@ -1,8 +1,4 @@
-$Id: INSTALL.pgsql,v 1.5 2000-10-08 18:12:13 wainstead Exp $
-
-These instructions are not quite complete yet. If you find something
-I missed, please let me know (swain@panix.com).
-
+$Id: INSTALL.pgsql,v 1.6 2000-10-08 19:19:59 wainstead Exp $
 
 Installation instructions for PhpWiki with a Postgresql database
 
@@ -11,7 +7,18 @@ copy from http://www.postgresql.org/. However if you are running
 Red Hat Linux, all you need to do is install the PHP RPM and the 
 Postgresql RPM and edit your Apache httpd.conf file, and uncomment 
 the lines for all PHP files (and add index.php to the list of directory
-files while you're at it! :-)
+files while you're at it... you may also need to add .php as a type
+handled by mod_php: 
+
+<IfModule mod_php3.c>
+  AddType application/x-httpd-php3 .php3
+  AddType application/x-httpd-php3 .php
+  AddType application/x-httpd-php3-source .phps
+</IfModule>
+
+(This is from a stock 6.2 Red Hat distro, which ships with an rpm of
+PHP 3.0.12,but should give you an idea. I had to add the line for
+.php).
 
 Also note that Postgresql by default has a hard limit of 8K per
 row. This is a Really Bad Thing. You can change that when you compile
@@ -41,6 +48,7 @@ For some reason I had to stop/start the database so that these changes took
 effect.. after that just open up the Wiki in your browser and you should
 have a brand-new PhpWiki running!
 
+If you find something I missed, please let me know.
 Steve Wainstead
-swain@panix.com
+swain@wcsb.org
 
