@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.16 2004-05-16 22:32:53 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.17 2004-05-16 23:10:44 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -26,8 +26,9 @@ rcs_id('$Id: PagePerm.php,v 1.16 2004-05-16 22:32:53 rurban Exp $');
    opposed to the simplier unix like ugo:rwx system.
    The previous system was only based on action and current user. (lib/main.php)
 
-   Permissions maybe inherited its parent pages, and ultimativly the 
-   optional master page (".")
+   Permissions may be inherited from its parent pages, a optional the 
+   optional master page ("."), and predefined default permissions, if "." 
+   is not defined.
    Pagenames starting with "." have special default permissions.
    For Authentication see WikiUserNew.php, WikiGroup.php and main.php
    Page Permssions are in PhpWiki since v1.3.9 and enabled since v1.4.0
@@ -663,6 +664,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2004/05/16 22:32:53  rurban
+// setacl icons
+//
 // Revision 1.15  2004/05/16 22:07:35  rurban
 // check more config-default and predefined constants
 // various PagePerm fixes:
