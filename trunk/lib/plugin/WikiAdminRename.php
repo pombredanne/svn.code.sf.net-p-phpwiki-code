@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRename.php,v 1.24 2005-04-01 15:03:01 rurban Exp $');
+rcs_id('$Id: WikiAdminRename.php,v 1.25 2005-04-01 15:22:20 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -24,13 +24,8 @@ rcs_id('$Id: WikiAdminRename.php,v 1.24 2005-04-01 15:03:01 rurban Exp $');
  * Usage:   <?plugin WikiAdminRename ?> or called via WikiAdminSelect
  * @author:  Reini Urban <rurban@x-ray.at>
  *
- * TODO: support case-insensitive checkbox
- *       support regex checkbox and renaming
- *       fix updatelinks
- *
  * KNOWN ISSUES:
- * Enabled now PagePermissions.
- * Requires PHP 4.2 so far.
+ *   Requires PHP 4.2.
  */
 require_once('lib/PageList.php');
 require_once('lib/plugin/WikiAdminSelect.php');
@@ -48,7 +43,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.24 $");
+                            "\$Revision: 1.25 $");
     }
 
     function getDefaultArguments() {
@@ -63,33 +58,23 @@ extends WikiPlugin_WikiAdminSelect
                      ));
     }
 
-    //TODO: regex and case-inexact option
-    function renameHelper($name, $from, $to, $options=false) {
-        return str_replace($from, $to, $name);
+    function renameHelper($name, $from, $to, $options = false) {
+    	if ($options['regex'])
+    	    return preg_replace('/'.$from.'/'.($options['icase']?'i':''), $to, $name);
+    	elseif ($options['icase'])
+    	    return str_ireplace($from, $to, $name);
+    	else
+            return str_replace($from, $to, $name);
     }
 
     function renamePages(&$dbi, &$request, $pages, $from, $to, $updatelinks=false) {
         $ul = HTML::ul();
         $count = 0;
+        $post_args = $request->getArg('admin_rename');
+        $options = array('regex' => @$post_args['regex'],
+                         'icase' => @$post_args['icase']);
         foreach ($pages as $name) {
-            if (0 and $updatelinks) { // do it in the backend
-                $oldpage = $dbi->getPage($from);
-                require_once('lib/plugin/WikiAdminSearchReplace.php');
-                //$newpage = $dbi->getPage($to);
-                $links = $oldpage->getBackLinks();
-                while ($linked_page = $links->next()) {
-                    if (WikiPlugin_WikiAdminSearchReplace::replaceHelper($dbi,$linked_page->getName(),$from,$to))
-                        $ul->pushContent(HTML::li(fmt("Replaced link in %s.",
-                                                      WikiLink($linked_page->getName()))));
-                }
-                $links = $oldpage->getPageLinks();
-                while ($linked_page = $links->next()) {
-                    WikiPlugin_WikiAdminSearchReplace::replaceHelper($dbi,$linked_page->getName(),$from,$to);
-                    $ul->pushContent(HTML::li(fmt("Replaced link in %s.",
-                                                  WikiLink($linked_page->getName()))));
-                }
-            }
-            if ( ($newname = $this->renameHelper($name, $from, $to)) 
+            if ( ($newname = $this->renameHelper($name, $from, $to, $options)) 
                  and $newname != $name )
             {
                 if ($dbi->isWikiPage($newname))
@@ -211,14 +196,11 @@ extends WikiPlugin_WikiAdminSelect
     }
 
     function checkBox (&$post_args, $name, $msg) {
-        //$html = HTML();
         $checkbox = HTML::input(array('type' => 'checkbox',
                                       'name' => 'admin_rename['.$name.']',
                                       'value' => 1));
         if (!empty($post_args[$name]))
             $checkbox->setAttr('checked', 'checked');
-        //$html->pushContent($checkbox);
-        //$html->pushContent($msg);
         return HTML::div($checkbox, HTML::span($msg));
     }
 
@@ -229,32 +211,22 @@ extends WikiPlugin_WikiAdminSelect
         $header->pushContent(' '._("to").': ');
         $header->pushContent(HTML::input(array('name' => 'admin_rename[to]',
                                                'value' => trim($post_args['to']))));
-        if (DEBUG) {
-            $header->pushContent($this->checkBox($post_args, 'regex', _("Regex?")));
-            $header->pushContent($this->checkBox($post_args, 'case-sensitive', _("Case sensitive?")));
-        } else {
-            $header->pushContent(' '._("(no regex, case-sensitive)"));
-        }
-        if (DEBUG) { // not yet tested
-            $header->pushContent($this->checkBox($post_args, 'updatelinks', _("Change pagename in all linked pages also?")));
-        } else {
-            $header->pushContent(HTML::br());
-            $checkbox = HTML::input(array('type' => 'checkbox',
-                                          'name' => 'admin_rename[updatelinks]',
-                                          'value' => 1));
-            if (!empty($post_args['updatelinks']))
-                $checkbox->setAttr('checked','checked');
-            $header->pushContent($checkbox);
-            $header->pushContent(_("Change pagename in all linked pages also?"));
-        }
-        //$header->pushContent(HTML::em(_("(Currently not working)")));
-        //}
+        $header->pushContent($this->checkBox($post_args, 'regex', _("Regex?")));
+        $header->pushContent($this->checkBox($post_args, 'icase', _("Case insensitive?")));
+        $header->pushContent(HTML::br());
+        $checkbox = HTML::input(array('type' => 'checkbox',
+                                      'name' => 'admin_rename[updatelinks]',
+                                      'value' => 1));
+        if (!empty($post_args['updatelinks']))
+            $checkbox->setAttr('checked','checked');
+        $header->pushContent($checkbox);
+        $header->pushContent(_("Change pagename in all linked pages also?"));
         $header->pushContent(HTML::p());
         return $header;
     }
 }
 
-// TODO: grey out unrenamable pages, even in the initial list also?
+// TODO: grey out unchangeble pages, even in the initial list also?
 // TODO: autoselect by matching name javascript in admin_rename[from]
 // TODO: update rename[] fields when case-sensitive and regex is changed
 
@@ -263,8 +235,8 @@ class _PageList_Column_renamed_pagename extends _PageList_Column {
     function _getValue ($page_handle, &$revision_handle) {
         global $request;
         $post_args = $request->getArg('admin_rename');
-        $value = WikiPlugin_WikiAdminRename::renameHelper($page_handle->getName(), $post_args['from'], $post_args['to']);
-
+        $value = WikiPlugin_WikiAdminRename::renameHelper($page_handle->getName(), 
+                                                          $post_args['from'], $post_args['to']);
         $div = HTML::div(" => ",HTML::input(array('type' => 'text',
                                                   'name' => 'rename[]',
                                                   'value' => $value)));
@@ -278,6 +250,9 @@ class _PageList_Column_renamed_pagename extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2005/04/01 15:03:01  rurban
+// Optimize rename UI with one selected pagename
+//
 // Revision 1.23  2005/02/12 17:24:24  rurban
 // locale update: missing . : fixed. unified strings
 // proper linebreaks

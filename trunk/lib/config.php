@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.134 2005-03-27 18:23:39 rurban Exp $');
+rcs_id('$Id: config.php,v 1.135 2005-04-01 15:22:20 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -438,6 +438,37 @@ if (!function_exists('is_a')) {
     }
 }
 
+// needed < php5
+// by bradhuizenga at softhome dot net from the php docs
+if (!function_exists('str_ireplace')) {
+  function str_ireplace($find, $replace, $string) {
+      if (!is_array($find)) $find = array($find);
+      if (!is_array($replace)) {
+          if (!is_array($find)) 
+              $replace = array($replace);
+          else {
+              // this will duplicate the string into an array the size of $find
+              $c = count($find);
+              $rString = $replace;
+              unset($replace);
+              for ($i = 0; $i < $c; $i++) {
+                  $replace[$i] = $rString;
+              }
+          }
+      }
+      foreach ($find as $fKey => $fItem) {
+          $between = explode(strtolower($fItem),strtolower($string));
+          $pos = 0;
+          foreach ($between as $bKey => $bItem) {
+              $between[$bKey] = substr($string,$pos,strlen($bItem));
+              $pos += strlen($bItem) + strlen($fItem);
+          }
+          $string = implode($replace[$fKey], $between);
+      }
+      return($string);
+  }
+}
+
 /**
  * safe php4 definition for clone.
  * php5 copies objects by reference, but we need to clone "deep copy" in some places.
@@ -526,6 +557,9 @@ function getUploadDataPath() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.134  2005/03/27 18:23:39  rurban
+// compute locale only for setlocale and LC_ALL
+//
 // Revision 1.133  2005/02/08 13:26:59  rurban
 //  improve the locale splitter
 //
