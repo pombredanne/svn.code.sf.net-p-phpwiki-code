@@ -1,5 +1,5 @@
 /**
- * $Id: sidebar.css,v 1.24 2004-05-18 16:19:21 rurban Exp $
+ * $Id: sidebar.css,v 1.25 2004-05-18 16:25:04 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -221,13 +221,13 @@ div.box-title a:hover {
 }
 
 /* smaller sidebar links */
-div.box-data a.wiki, div.box-data a.wiki:visited, div.box-data a.wiki:link {
+div.box-data a, div.box-data a:visited, div.box-data a:link {
   text-decoration: none;
   color: black;
   font-size: smaller;
 }
 
-div.box-data a.wiki:hover {
+div.box-data a:hover {
   background-color: #def;
 }
 /* For emacs users
