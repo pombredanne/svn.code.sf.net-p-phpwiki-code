@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.26 2002-01-21 06:55:47 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.27 2002-01-22 03:30:24 carstenklapp Exp $');
 /**
  */
 
@@ -97,7 +97,7 @@ extends _RecentChanges_Formatter
 {
     function diffLink ($rev) {
         global $Theme;
-        return $Theme->makeButton(_("Diff"), $this->diffURL($rev), 'wikiaction');
+        return $Theme->makeButton(_("(diff)"), $this->diffURL($rev), 'wikiaction');
     }
 
     function pageLink ($rev) {
