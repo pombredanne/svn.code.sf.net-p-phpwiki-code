@@ -90,7 +90,7 @@ $locale["Remove Page"] =
    "Verwijder Pagina";
 $locale["Remove page"] =
    "Verwijder pagina";
-$locale["Removed page '%s' succesfully."] =
+$locale["Removed page '%s' successfully."] =
    "Pagina '%s' verwijderd.";
 $locale["Return to %s"] =
    "Terug naar %s";
@@ -118,8 +118,6 @@ $locale["The %d most popular pages of this wiki:"] =
    "De %d meestbezochte pagina's van deze Wiki:";
 $locale["The %d most recent %s are listed below."] =
    "De %d meest recent %s staan hieronder.";
-$locale["The PhpWiki Programming Team"] =
-   "Het PhpWiki programmeerteam";
 $locale["The PhpWiki programming team"] =
    "Het PhpWiki programmeerteam";
 $locale["This page has been locked by the administrator and cannot be edited."] =

@@ -124,7 +124,7 @@ $locale["Remove page"] =
    "Borrar página";
 $locale["Remove the page now"] =
    "Borrar la página ahora";
-$locale["Removed page '%s' succesfully."] =
+$locale["Removed page '%s' successfully."] =
    "Página '%s' borrada satisfactoriamente.";
 $locale["Removing pages"] =
    "Borrar página";

@@ -124,7 +124,7 @@ $locale["Remove page"] =
    "Ta bort sida";
 $locale["Remove the page now"] =
    "Ta bort sida nu";
-$locale["Removed page '%s' succesfully."] =
+$locale["Removed page '%s' successfully."] =
    "Tog bort sidan '%s'.";
 $locale["Return to %s"] =
    "Tillbaka till %s";

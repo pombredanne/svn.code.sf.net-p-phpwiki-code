@@ -114,7 +114,7 @@ $locale["Remove Page"] =
    "Rimuovi la Pagina";
 $locale["Remove page"] =
    "Rimuovi la pagina";
-$locale["Removed page '%s' succesfully."] =
+$locale["Removed page '%s' successfully."] =
    "La pagina '%s' è stata rimossa correttamente.";
 $locale["Save"] =
    "Registra";

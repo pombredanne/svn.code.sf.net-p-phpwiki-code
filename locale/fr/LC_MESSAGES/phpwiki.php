@@ -270,8 +270,6 @@ $locale["Next Month"] =
    "Mois Suivant";
 $locale["No pagedata for %s"] =
    "Pas de données de page pour %s";
-$locale["No pages link to %s."] =
-   "Aucune page ne pointe vers %s.";
 $locale["No uploaded file to upload?"] =
    "Pas de fichier à télécharger ?";
 $locale["None"] =
@@ -360,7 +358,7 @@ $locale["Remove page"] =
    "Supprimer la page";
 $locale["Remove the page now"] =
    "Supprimer la page maintenant";
-$locale["Removed page '%s' succesfully."] =
+$locale["Removed page '%s' successfully."] =
    "Page ' %s ' supprimée avec succès.";
 $locale["Return to %s"] =
    "Retour à l'%s";
@@ -432,8 +430,6 @@ $locale["The %d oldest %s during the past %s days are listed below."] =
    "Les %d %s les plus anciennes pendant les derniers %s jours sont listées ci-dessous.";
 $locale["The %d oldest %s during the past day are listed below."] =
    "Les %d %s les plus anciennes pendant le dernier jour sont listées ci-dessous.";
-$locale["The PhpWiki Programming Team"] =
-   "L'Équipe de Développement de PhpWiki";
 $locale["The PhpWiki programming team"] =
    "L'équipe de développement de PhpWiki";
 $locale["The current time at the server is %s."] =
