@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.19 2002-01-17 23:41:36 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.20 2002-01-18 00:28:44 dairiki Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -63,6 +63,7 @@ rcs_id('$Id: themeinfo.php,v 1.19 2002-01-17 23:41:36 carstenklapp Exp $');
 // To deactivate themes, comment out all the $theme=lines in index.php.
 require_once('lib/Theme.php');
 
+
 class Theme_MacOSX extends Theme {
     function getCSS() {
         // FIXME: this is a hack which will not be needed once
@@ -72,6 +73,20 @@ class Theme_MacOSX extends Theme {
                         sprintf("<!--\nbody {background-image: url(%s);}\n-->\n",
                                 $this->getImageURL('bggranular')));
         return $css;
+    }
+
+    function getRecentChangesFormatter ($format) {
+        $this->requireFile('lib/RecentChanges.php');
+        if ($format == 'rss')
+            return false;       // use default
+        return '_MacOSX_RecentChanges_Formatter';
+    }
+
+    function getPageHistoryFormatter ($format) {
+        $this->requireFile('lib/RecentChanges.php');
+        if ($format == 'rss')
+            return false;       // use default
+        return '_MacOSX_PageHistory_Formatter';
     }
 }
 
@@ -91,11 +106,6 @@ $Theme->setLinkIcon('ftp');
 $Theme->setLinkIcon('mailto');
 $Theme->setLinkIcon('interwiki');
 $Theme->setLinkIcon('*', 'url');
-
-// This defines separators used in RecentChanges and RecentEdits lists.
-// If undefined, defaults to '' (nothing) and '...' (three periods).
-define("RC_SEPARATOR_A", ' . . . ');
-define("RC_SEPARATOR_B", ' --');
 
 // Controls whether the '?' appears before or after UnknownWikiWords.
 // The PhpWiki default is for the '?' to appear before.

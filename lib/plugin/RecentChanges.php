@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.23 2002-01-17 22:52:03 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.24 2002-01-18 00:28:43 dairiki Exp $');
 /**
  */
 
@@ -114,7 +114,13 @@ extends _RecentChanges_Formatter
             return htmlspecialchars($author);
     }
 
-
+    function summaryAsHTML ($rev) {
+        if ( !($summary = $this->summary($rev)) )
+            return '';
+        $summary = do_transform($summary, 'LinkTransform');
+        return  Element('strong', array('class' => 'wiki-summary'), "[$summary]");
+    }
+        
     function rss_icon () {
         global $request, $Theme;
 
@@ -183,25 +189,19 @@ extends _RecentChanges_Formatter
             $html[] = Element('ul', join("\n", $lines));
         return join("\n", $html) . "\n";
     }
-    
+
     function format_revision ($rev) {
         if (!defined('RC_SEPARATOR_A')) define('RC_SEPARATOR_A', '');
         if (!defined('RC_SEPARATOR_B')) define('RC_SEPARATOR_B', '...');
 
-        if ( ($summary = $this->summary($rev)) ) {
-            $summary = do_transform($summary, 'LinkTransform');
-            $summary = Element('strong', array('class' => 'wiki-summary'), "[$summary]");
-        }
-        
         $class = 'rc-' . $this->importance($rev);
         
         return Element('li', array('class' => $class),
                        implode(' ', array( $this->diffLink($rev),
                                            $this->pageLink($rev),
                                            $this->time($rev),
-                                           RC_SEPARATOR_A,
-                                           $summary,
-                                           RC_SEPARATOR_B,
+                                           $this->summaryAsHTML($rev),
+                                           '...',
                                            $this->authorLink($rev) )));
     }
 }
@@ -361,10 +361,18 @@ extends WikiPlugin
     }
 
     function format ($changes, $args) {
-        if ($args['format'] == 'rss')
-            $fmt = new _RecentChanges_RssFormatter($args);
-        else
-            $fmt = new _RecentChanges_HtmlFormatter($args);
+        global $Theme;
+        $format = $args['format'];
+        
+        $fmt_class = $Theme->getFormatter('RecentChanges', $format);
+        if (!$fmt_class) {
+            if ($format == 'rss')
+                $fmt_class = '_RecentChanges_RssFormatter';
+            else
+                $fmt_class = '_RecentChanges_HtmlFormatter';
+        }
+        
+        $fmt = new $fmt_class($args);
         return $fmt->format($changes);
     }
     

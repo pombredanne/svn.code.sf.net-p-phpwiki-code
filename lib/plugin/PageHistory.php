@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageHistory.php,v 1.5 2001-12-19 14:37:52 carstenklapp Exp $');
+rcs_id('$Id: PageHistory.php,v 1.6 2002-01-18 00:28:43 dairiki Exp $');
 /**
  */
 require_once('lib/plugin/RecentChanges.php');
@@ -233,10 +233,18 @@ extends WikiPlugin_RecentChanges
     }
 
     function format ($changes, $args) {
-        if ($args['format'] == 'rss')
-            $fmt = new _PageHistory_RssFormatter($args);
-        else
-            $fmt = new _PageHistory_HtmlFormatter($args);
+        global $Theme;
+        $format = $args['format'];
+        
+        $fmt_class = $Theme->getFormatter('PageHistory', $format);
+        if (!$fmt_class) {
+            if ($format == 'rss')
+                $fmt_class = '_PageHistory_RssFormatter';
+            else
+                $fmt_class = '_PageHistory_HtmlFormatter';
+        }
+
+        $fmt = new $fmt_class($args);
         return $fmt->format($changes);
     }
 
