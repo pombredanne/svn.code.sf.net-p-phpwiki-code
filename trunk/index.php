@@ -15,7 +15,19 @@
 // Part Zero: If PHP needs help in finding where you installed the
 //   rest of the PhpWiki code, you can set the include_path here.
 
-
+// NOTE: phpwiki uses the PEAR library of php code for SQL database
+// access.  Your PHP is probably already configured to set include_path
+// so that PHP can find the pear code.  If not (or if you change
+// include_path here) make sure you include the path to the PEAR
+// code in include_path.  (To find the PEAR code on your system, search
+//
+// for a file named 'PEAR.php'.   Some common locations are:
+//   Unixish systems:
+//     /usr/share/php
+//     /usr/local/share/php
+//   Mac OS X:
+//     /System/Library/PHP
+//
 //ini_set('include_path', '.:/where/you/installed/phpwiki');
 
 /////////////////////////////////////////////////////////////////////
@@ -23,7 +35,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.0-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.26 2001-11-09 18:58:42 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.27 2001-11-14 15:36:41 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
