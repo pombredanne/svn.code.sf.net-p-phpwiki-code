@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.16 2004-12-13 13:24:06 rurban Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.17 2005-02-14 12:16:09 rurban Exp $');
 /**
  * A text search query, converting queries to PCRE or SQL matchers.
  *
@@ -82,7 +82,7 @@ class TextSearchQuery {
         $this->_case_exact = $case_exact;
         $parser = new TextSearchQuery_Parser;
         $this->_tree = $parser->parse($search_query, $case_exact, $this->_regex);
-        $this->_optimize();
+        //$this->_optimize(); // broken under certain circumstances: "word -word -word"
     }
 
     function _optimize() {
@@ -214,6 +214,8 @@ class TextSearchQuery {
         }
     }
 
+    function sql() { return '%'.$this->_sql_quote($this->word).'%'; }
+
     /**
      * Get printable representation of the parse tree.
      *
@@ -294,6 +296,8 @@ class TextSearchQuery_node
     function highlight_words($negated = false) {
         return array();
     }
+
+    function sql()    { return $this->word; }
 }
 
 /**
