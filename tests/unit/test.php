@@ -238,29 +238,101 @@ function printConstant($v) {
  * via the HTML sapi interface print a form to easily change the current cmdline settings.
  */
 function html_option_form() {
-    global $debug_level,$user_level,$start_debug;
+    global $debug_level, $user_level, $start_debug;
 
-    $form = HTML::tr(array('valign'=>'top'));
-    $option = HTML::div(array('class' => 'option'), 'test: ', HTML::br());
+    $form = HTML();
+    $option = HTML::div(array('class' => 'option'), 
+                        HTML::span(array('onDblClick'=>'flipAll(\'test[\')'), 'test: '),
+                        HTML::br());
     foreach ($GLOBALS['alltests'] as $s) {
         $input = array('type' => 'checkbox', 'name' => 'test['.$s.']', 'value' => '1');
         if (in_array($s,$GLOBALS['runtests'])) $input['checked'] = 'checked';
         $option->pushContent(HTML::input($input), $s, HTML::br());
     }
     $form->pushContent(HTML::td($option));
-    $option = HTML::div(array('class' => 'option'), 'db: ', HTML::br());
+
+    $option = HTML::div(array('class' => 'option'), 
+                        HTML::span(array('onDblClick'=>'flipAll(\'db[\')'), 'db: '),
+                        HTML::br());
     foreach ($GLOBALS['database_backends'] as $s) {
         $input = array('type' => 'checkbox', 'name' => 'db['.$s.']', 'value' => '1');
         if (in_array($s,$GLOBALS['run_database_backends'])) $input['checked'] = 'checked';
         $option->pushContent(HTML::input($input), $s, HTML::br());
     }
     $form->pushContent(HTML::td($option));
-    $form->pushContent(HTML::td(array('class' => 'option'), 'debug: ', 
-                                HTML::input(array('name'=>'debug','value'=>$debug_level)),
-                                HTML::br(),
-                                'level: ', 
-                                HTML::input(array('name'=>'level','value'=>$user_level)),
-                                HTML::br()));
+
+    $js = JavaScript(
+"function flipAll(formName) {
+  var isFirstSet = -1;
+  formObj = document.forms[0];
+  for (var i=0; i < formObj.length; i++) {
+      fldObj = formObj.elements[i];
+      if ((fldObj.type == 'checkbox') && (fldObj.name.substring(0,formName.length) == formName)) { 
+         if (isFirstSet == -1)
+           isFirstSet = (fldObj.checked) ? true : false;
+         fldObj.checked = (isFirstSet) ? false : true;
+       }
+   }
+}
+function updateDebugEdit(formObj) {
+  val=0;
+  for (var i=0; i < formObj.length; i++) {
+      fldObj = formObj.elements[i];
+      if ((fldObj.type == 'checkbox') && (fldObj.name.substring(0,6) == 'debug[')) { 
+         if (fldObj.checked) val = val + parseInt(fldObj.value);
+       }
+   }
+   formObj.debug.value = val;
+}
+function updateLevelEdit(formObj) {
+  for (var i=0; i < formObj.length; i++) {
+      fldObj = formObj.elements[i];
+      if ((fldObj.type == 'radio') && (fldObj.name.substring(0,6) == 'level[')) {
+         if (fldObj.checked) {
+            formObj.level.value = fldObj.value;
+            return;
+         }
+      }
+   }
+}");
+    $option = HTML::div(array('class' => 'option'),
+                        HTML::span(array('onDblClick'=>'flipAll(\'debug[\')'), 'debug: '),
+                        HTML::input(array('name'=>'debug','id'=>'debug','value'=>$debug_level,'size'=>5)),
+                        HTML::br());
+    foreach (array('VERBOSE' 	=> 1,
+                   'PAGELINKS' 	=> 2,
+                   'PARSER' 	=> 4,
+                   'TRACE' 	=> 8,
+                   'INFO' 	=> 16,
+                   'APD' 	=> 32,
+                   'LOGIN' 	=> 64,
+                   'SQL' 	=> 128,
+                   ) as $s => $v) {
+        $input = array('type' => 'checkbox', 'name' => 'debug[]', 'value' => $v, 
+                       'onClick' => 'updateDebugEdit(this.form)');
+        if ($debug_level & $v) $input['checked'] = 'checked';
+        $option->pushContent(HTML::input($input), "_DEBUG_".$s, HTML::br());
+    }
+    $form->pushContent(HTML::td($option));
+
+    $option = HTML::div(array('class' => 'option'), 
+                        HTML::span(array('onDblClick'=>'flipAll(\'level[\')'), 'level: '),
+                        HTML::input(array('name'=>'level','id'=>'level','value'=>$user_level,'size'=>5)),
+                        HTML::br());
+    foreach (array('FORBIDDEN' 	=> -1,
+                   'ANON' 	=> 0,
+                   'BOGO' 	=> 1,
+                   'USER' 	=> 2,
+                   'ADMIN' 	=> 10,
+                   'UNOBTAINABLE'=> 100,
+                   ) as $s => $v) {
+        $input = array('type' => 'radio', 'name' => 'level[]', 'value' => $v,
+                       'onClick' => 'updateLevelEdit(this.form)');
+        if ($user_level & $v) $input['checked'] = 'checked';
+        $option->pushContent(HTML::input($input), "WIKIAUTH_".$s, HTML::br());
+    }
+    $form->pushContent(HTML::td($option));
+                                
     unset($input);
     $option = HTML::div(array('class' => 'option'), 'defines: ', HTML::br());
     if (!empty($GLOBALS['define']))
@@ -276,7 +348,8 @@ function html_option_form() {
                                           'method' => 'GET',
                               'accept-charset' => $GLOBALS['charset']),
                         HiddenInputs(array('start_debug' => $start_debug)),
-                        HTML::table($form),
+                        $js,
+                        HTML::table(HTML::tr(array('valign'=>'top'), $form)),
                         HTML::input(array('type' => 'submit')),
                         HTML::input(array('type' => 'reset')));
     return $table->printXml();
@@ -345,34 +418,31 @@ if (!empty($argv)) {
         elseif ($debug_level & 1)
             echo "ignored arg: ", $arg, "\n";
     }
-    if (empty($run_database_backends))
-        $run_database_backends = $database_backends;
-    if (empty($runtests))
-        $runtests = $alltests;
-    if ($debug_level & 1) {
-        //echo "\n";
-        echo "PHP_SAPI=",php_sapi_name(), "\n";
-        echo "PHP_OS=",PHP_OS, "\n";
-        echo "PHP_VERSION=",PHP_VERSION, "\n";
-        echo "test=", join(",",$runtests),"\n";
-        echo "db=", join(",",$run_database_backends),"\n";
-        echo "debug=", $debug_level,"\n";
-        echo "level=", $user_level,"\n";
-        if (!empty($define)) {
-            foreach ($define as $k => $v) printConstant($k);
-        }
-        if ($debug_level & 8) {
-            echo "pid=",getmypid(),"\n";
-        }
-        echo "\n";
-    }
-    flush();
-} else {
-    if (empty($run_database_backends))
-        $run_database_backends = $database_backends;
-    if (empty($runtests))
-        $runtests = $alltests;
 }
+
+if (empty($run_database_backends))
+    $run_database_backends = $database_backends;
+if (empty($runtests))
+    $runtests = $alltests;
+if ($debug_level & 1) {
+    //echo "\n";
+    echo "PHP_SAPI=",php_sapi_name(), "\n";
+    echo "PHP_OS=",PHP_OS, "\n";
+    echo "PHP_VERSION=",PHP_VERSION, "\n";
+    echo "test=", join(",",$runtests),"\n";
+    echo "db=", join(",",$run_database_backends),"\n";
+    echo "debug=", $debug_level,"\n";
+    echo "level=", $user_level,"\n";
+    if (!empty($define)) {
+    	foreach ($define as $k => $v) printConstant($k);
+    }
+    if ($debug_level & 8) {
+    	echo "pid=",getmypid(),"\n";
+    }
+    echo "\n";
+}
+flush();
+
 if (!defined('DEBUG'))
     define('DEBUG', $debug_level);
 // override defaults:
@@ -491,8 +561,7 @@ class phpwiki_TestCase extends PHPUnit_TestCase {
 }
 
 # Test all db backends.
-foreach ($database_backends as $dbtype) {
-
+foreach ($run_database_backends as $dbtype) {
     //    if (DEBUG & _DEBUG_TRACE)
     //        printMemoryUsage("PHPUnitInitialized");
 
