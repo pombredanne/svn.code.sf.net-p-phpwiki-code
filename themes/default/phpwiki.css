@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.5 2003-01-11 22:15:58 carstenklapp Exp $
+ * $Id: phpwiki.css,v 1.6 2003-02-15 03:13:58 dairiki Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -326,7 +326,7 @@ table.cal td.cal-today a.cal-hide {  }
   /* Netscape 4 requires this 1px border.
      Without it, the paper borders below cause
      the white background to disappear. */
-  border: 1px ccc solid;
+  border: 1px #ccc solid;
   color: black;
   border-top: 1px solid #494f5d;
   border-left:  1px solid #494f5d;
@@ -348,7 +348,9 @@ table.cal td.cal-today a.cal-hide {  }
   /*This breaks Netscape 4: (display does not go full width).
    * width: auto;
    */
-   display: editarea;
+  /* I'm not sure what the intent of this was, but it's
+   *  not valid CSS: */
+  /* display: editarea; */
   clear: both;
 }
 .diff .block {
