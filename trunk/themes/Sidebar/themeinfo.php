@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.7 2002-02-08 22:03:03 dairiki Exp $');
+rcs_id('$Id: themeinfo.php,v 1.8 2002-02-14 06:21:41 carstenklapp Exp $');
 
 /*
  * This file defines the Sidebar appearance ("theme") of PhpWiki.
@@ -11,6 +11,7 @@ class Theme_Sidebar extends Theme {
 
     function findTemplate ($name) {
         // hack for navbar.tmpl to hide the buttonseparator
+        // this breaks the buttons on the edit page
         if ($name == "navbar") {
             //$old = $Theme->getButtonSeparator();
             $this->setButtonSeparator(HTML::br());
