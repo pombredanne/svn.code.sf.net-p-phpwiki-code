@@ -1,3 +1,5 @@
+Note: postgresql does work with phpwiki 1.3.
+
 FIXME: The pgsql backend has not yet been ported to the new database
 scheme.  (Though it should not be very hard, and is certainly in
 the works.)
@@ -35,6 +37,8 @@ handled by mod_php:
   AddType application/x-httpd-php3-source .phps
 </IfModule>
 
+FIXME: php4
+
 (This is from a stock 6.2 Red Hat distro, which ships with an rpm of
 PHP 3.0.12, but should give you an idea. I had to add the line for
 .php).
@@ -58,9 +62,13 @@ Next you need to create a database called "wiki".
 
 bash$ createdb wiki
 
-Now run the script schemas/psql.sql
+Now run the script schemas/psql.sql to create the tables:
 
 bash$ psql wiki -f schemas/psql.sql
+
+(Newer versions of postgresql will require: psql wiki < schemas/psql.sql)
+
+If the schema starts to load but then fails near the end, you might need to change the user name at the top of psql.sql to match that which is used by your web server; e.g. nobody, apache, or www.
 
 For some reason I had to stop/start the database so that these changes took 
 effect.. after that just open up the Wiki in your browser and you should
@@ -72,4 +80,4 @@ swain@panix.com
 
 Report bugs to phpwiki-talk@lists.sourceforge.net
 
-$Id: INSTALL.pgsql,v 1.2 2001-12-03 04:10:38 wainstead Exp $
+$Id: INSTALL.pgsql,v 1.3 2001-12-19 06:22:06 carstenklapp Exp $
