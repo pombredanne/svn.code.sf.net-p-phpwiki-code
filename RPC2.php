@@ -1,5 +1,5 @@
 <?php 
-// $Id: RPC2.php,v 1.2 2002-09-04 19:33:36 dairiki Exp $
+// $Id: RPC2.php,v 1.3 2002-09-04 20:35:15 dairiki Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  *
  * LICENCE
@@ -44,7 +44,6 @@
  * NB:  All XMLRPC methods should be prefixed with "wiki."
  * eg  wiki.getAllPages
  * 
- 
 */
 
 // ToDo:  
@@ -85,8 +84,7 @@ function _getPageRevision ($params)
     global $request;
     $ParamPageName = $params->getParam(0);
     $ParamVersion = $params->getParam(1);
-	// ?? really need utf8_decode here?
-    $pagename = utf8_decode($ParamPageName->scalarval());
+    $pagename = short_string_decode($ParamPageName->scalarval());
     $version =  ($ParamVersion) ? ($ParamVersion->scalarval()):(0);
     // FIXME:  test for version <=0 ??
     $dbh = $request->getDbh();
@@ -101,6 +99,47 @@ function _getPageRevision ($params)
     } 
     return false;
 } 
+
+/*
+ * Helper functions for encoding/decoding strings.
+ *
+ * According to WikiRPC spec, all returned strings take one of either
+ * two forms.  Short strings (page names, and authors) are converted to
+ * UTF-8, then rawurlencode()d, and returned as XML-RPC <code>strings</code>.
+ * Long strings (page content) are converted to UTF-8 then returned as
+ * XML-RPC <code>base64</code> binary objects.
+ */
+
+/**
+ * Convert a short string (page name, author) to xmlrpcval.
+ */
+function short_string ($str) {
+    return new xmlrpcval(rawurlencode(utf8_encode($str)), 'string');
+}
+
+/**
+ * Convert a large string (page content) to xmlrpcval.
+ */
+function long_string ($str) {
+    return new xmlrpcval(utf8_encode($str), 'base64');
+}
+
+/**
+ * Decode a short string (e.g. page name)
+ */
+function short_string_decode ($str) {
+    return utf8_decode(urldecode($str));
+}
+
+/**
+ * Get an xmlrpc "No such page" error message
+ */
+function NoSuchPage () 
+{
+    global $xmlrpcerruser;
+    return new xmlrpcresp(0, $xmlrpcerruser + 1, "No such page");
+}
+
 
 // ****************************************************************************
 // Main API functions follow
@@ -142,7 +181,7 @@ $getRecentChanges_doc = 'Get a list of changed pages since [timestamp]';
 
 function getRecentChanges($params)
 {
-    global $request, $xmlrpcerruser;
+    global $request;
     // Get the first parameter as an ISO 8601 date.  Assume UTC
     $encoded_date = $params->getParam(0);
     $datetime = iso8601_decode($encoded_date->scalarval(), 1);
@@ -152,10 +191,10 @@ function getRecentChanges($params)
     while ($page = $iterator->next()) {
         // $page contains a WikiDB_PageRevision object
         // no need to url encode $name, because it is already stored in that format ???
-        $name = new xmlrpcval(utf8_encode($page->getPageName())); 
+        $name = short_string($page->getPageName());
         $lastmodified = new xmlrpcval(iso8601_encode($page->get('mtime')), "dateTime.iso8601");
-        $author = new xmlrpcval(utf8_encode($page->get('author')));
-        $version = new xmlrpcval($page->getVersion, 'int');
+        $author = short_string($page->get('author'));
+        $version = new xmlrpcval($page->getVersion(), 'int');
 
         // Build an array of xmlrpc structs
         $pages[] = new xmlrpcval(array('name'=>$name, 
@@ -179,20 +218,13 @@ $getPage_doc = 'Get the raw Wiki text of the current version of a page';
 
 function getPage($params)
 {
-    global $request, $xmlrpcerruser;
     $revision = _getPageRevision($params);
 
-    if ($revision) {
-        // fixme : need urlencoding here?
-        $content = ($revision->getPackedContent());
-        return new xmlrpcresp(new xmlrpcval($content, "base64"));
-    }
-    else {
-        // return an errror response
-        return new xmlrpcresp(0, $xmlrpcerruser + 1, "No such page");
-    }
-}
+    if (! $revision)
+        return NoSuchPage();
 
+    return new xmlrpcresp(long_string($revision->getPackedContent()));
+}
  
 
 /**
@@ -205,9 +237,8 @@ $getPageVersion_doc = 'Get the raw Wiki text of a page version';
 
 function getPageVersion($params)
 {
-    global $request, $xmlrpcerruser;
-    return getPage($params);
     // error checking is done in getPage
+    return getPage($params);
 } 
 
 /**
@@ -215,29 +246,26 @@ function getPageVersion($params)
  * Returns UTF-8, expects UTF-8 with URL encoding.
  */
 
-$getPageHTML_sig = array(array($xmlrpcString, $xmlrpcString));
+$getPageHTML_sig = array(array($xmlrpcBase64, $xmlrpcString));
 $getPageHTML_doc = 'Get the current version of a page rendered in HTML';
 
 function getPageHTML($params)
 {
-    global $request, $xmlrpcerruser;
     $revision = _getPageRevision($params);
-    if ($revision) {
-        include_once('lib/display.php');
-        // This is a bit hacky.  Start output buffering, fake a request, and get phpWiki
-        // to render the page.  Then return it via XMLRPC.
-        $request->setArg('pagename',$revision->getPageName());
-        $request->setArg('version',$revision->getVersion());
-        ob_start();
-        displayPage($request);
-        $output = ob_get_contents();
-        ob_end_clean();
-        //        xmlrpc_debugmsg("$output");
-        return new xmlrpcresp(new xmlrpcval(utf8_encode($output), "string"));
+    if (!$revision)
+        return NoSuchPage();
+    
+    include_once('lib/PageType.php');
+    $content = array(PageType($revision));
+
+    // Get rid of outer <div class="wikitext">
+    while (count($content) == 1 && isa($content[0], 'XmlContent')) {
+        if (isa($content[0], 'XmlElement') && $content[0]->getTag() != 'div')
+            break;
+        $content = $content[0]->getContent();
     }
-    else {
-        return new xmlrpcresp(0, $xmlrpcerruser + 1, "No such page");
-    }
+
+    return new xmlrpcresp(long_string(AsXML($content)));
 } 
 
 /**
@@ -249,7 +277,6 @@ $getPageHTMLVersion_doc = 'Get a version of a page rendered in HTML';
 
 function getPageHTMLVersion($params)
 {
-    global $request, $xmlrpcerruser;
     return getPageHTML($params);
 } 
 
@@ -262,12 +289,12 @@ $getAllPages_doc = 'Returns a list of all pages as an array of strings';
  
 function getAllPages($params)
 {
-    global $request, $xmlrpcerruser;
+    global $request;
     $dbh = $request->getDbh();
     $iterator = $dbh->getAllPages();
     $pages = array();
     while ($page = $iterator->next()) {
-        $pages[] = new xmlrpcval($page->getName());
+        $pages[] = short_string($page->getName());
     } 
     return new xmlrpcresp(new xmlrpcval($pages, "array"));
 } 
@@ -285,28 +312,27 @@ $getPageInfo_doc = 'Gets info about the current version of a page';
 
 function getPageInfo($params)
 {
-    global $xmlrpcerruser;
     $revision = _getPageRevision($params);
-    if ($revision) {
-        $name = new xmlrpcval($params->getParam(0));
-        $version = new xmlrpcval ($revision->getVersion(), "int");
-        $lastmodified = new xmlrpcval(iso8601_encode($revision->get('mtime'), 0), "dateTime.iso8601");
-        $author = new xmlrpcval($revision->get('author'));
-
-        return new xmlrpcresp(new xmlrpcval(array('name' => $name, 
-                                                  'lastModified' => $lastmodified,
-                                                  'version' => $version, 
-                                                  'author' => $author), 
-                                            "struct"));
-    }
-    else {
-        return new xmlrpcresp(0, $xmlrpcerruser + 1, "No such page");
-    }
+    if (!$revision)
+        return NoSuchPage();
+    
+    $name = short_string($revision->getPageName());
+    $version = new xmlrpcval ($revision->getVersion(), "int");
+    $lastmodified = new xmlrpcval(iso8601_encode($revision->get('mtime'), 0),
+                                  "dateTime.iso8601");
+    $author = short_string($revision->get('author'));
+        
+    return new xmlrpcresp(new xmlrpcval(array('name' => $name, 
+                                              'lastModified' => $lastmodified,
+                                              'version' => $version, 
+                                              'author' => $author), 
+                                        "struct"));
 } 
 
 /**
- * struct getPageInfoVersion( string pagename, int version ) : returns a struct just like plain getPageInfo(), 
- * 	but this time for a specific version.
+ * struct getPageInfoVersion( string pagename, int version ) : returns
+ * a struct just like plain getPageInfo(), but this time for a
+ * specific version.
  */
 
 $getPageInfoVersion_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcInt));
@@ -314,7 +340,6 @@ $getPageInfoVersion_doc = 'Gets info about a page version';
 
 function getPageInfoVersion($params)
 {
-    global $request, $xmlrpcerruser;
     return getPageInfo($params);
 }
 
@@ -325,34 +350,48 @@ function getPageInfoVersion($params)
  *       type (int) : The link type. Zero (0) for internal Wiki link,
  *         one (1) for external link (URL - image link, whatever).
  */
-
 $listLinks_sig = array(array($xmlrpcArray, $xmlrpcString));
 $listLinks_doc = 'Lists all links for a given page';
 
 function listLinks($params)
 {
-    global $request, $xmlrpcerruser;
+    global $request;
+    
     $ParamPageName = $params->getParam(0);
-    // ?? really need utf8_decode here?
-    $pagename = utf8_decode($ParamPageName->scalarval());
+    $pagename = short_string_decode($ParamPageName->scalarval());
     $dbh = $request->getDbh();
-    if ($dbh->isWikiPage($pagename)) {
-        $page = $dbh->getPage($pagename);
-     	$linkiterator = $page->getLinks();
-        $linkstruct = array();
-        while ($currentpage = $linkiterator->next()) {
-            $currentname = $currentpage->getName();
-            $name = new xmlrpcval($currentname, "string");    
-            // NB no clean way to extract a list of external links yet, so
-            // only internal links returned.  ie all type 0.
-            $type = new xmlrpcval(0, "int");
-            $linkstruct[] = new xmlrpcval(array('name'=> $name,
-                                                'type'=> $type
-                                                ), "struct");
-        }
-	    return new xmlrpcresp(new xmlrpcval ($linkstruct, "array"));
-    } else
-        return new xmlrpcresp(0, $xmlrpcerruser + 1, "No such page");
+    if (! $dbh->isWikiPage($pagename))
+        return NoSuchPage();
+    
+    $page = $dbh->getPage($pagename);
+    $linkiterator = $page->getLinks();
+    $linkstruct = array();
+    while ($currentpage = $linkiterator->next()) {
+        $currentname = $currentpage->getName();
+        $name = short_string($currentname);
+        // NB no clean way to extract a list of external links yet, so
+        // only internal links returned.  ie all type 'local'.
+        $type = new xmlrpcval('local');
+
+        // Compute URL to page
+        $args = array();
+        $currentrev = $currentpage->getCurrentRevision();
+        if ($currentrev->hasDefaultContents())
+            $args['action'] = 'edit';
+
+        // FIXME: Autodetected value of VIRTUAL_PATH wrong,
+        // this make absolute URLs contstructed by WikiURL wrong.
+        // Also, if USE_PATH_INFO is false, WikiURL is wrong
+        // due to its use of SCRIPT_NAME.
+        $use_abspath = USE_PATH_INFO && ! preg_match('/RPC2.php$/', VIRTUAL_PATH);
+        $href = new xmlrpcval(WikiURL($currentname, $args, $use_abspath));
+            
+        $linkstruct[] = new xmlrpcval(array('name'=> $name,
+                                            'type'=> $type,
+                                            'href' => $href),
+                                      "struct");
+    }
+    return new xmlrpcresp(new xmlrpcval ($linkstruct, "array"));
 } 
  
 // Construct the server instance, and set up the despatch map, which maps
@@ -398,7 +437,7 @@ $s = new xmlrpc_server(array("wiki.getRPCVersionSupported" =>
                                    "signature" => $listLinks_sig,
                                    "docstring" => $listLinks_doc)
                              ));
-                             
+
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php
