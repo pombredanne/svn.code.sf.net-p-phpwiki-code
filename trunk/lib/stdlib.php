@@ -1,11 +1,10 @@
-<?php rcs_id('$Id: stdlib.php,v 1.71 2002-01-11 04:06:56 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.72 2002-01-11 19:43:15 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
     DataURL($url)
     BaseURL()
     WikiURL($pagename, $args, $get_abs_url)
-    CSS_URL($CSS_URLS, $CSS_DEFAULT)
     StartTag($tag, $args)
     Element($tag, $args, $content)
     QElement($tag, $args, $content)
@@ -74,25 +73,6 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
             $url .= "&$args";
     }
     return $url;
-}
-
-function CSS_URL($CSS_URLS, $CSS_DEFAULT) {
-    $html = "";
-    foreach  ($CSS_URLS as $key => $val) {
-    	$css = array('rel'     => (($CSS_DEFAULT == $key) ?
-                                   'stylesheet' : 'alternate stylesheet'),
-                     'title'   => htmlspecialchars(_($key)),
-                     'href'    => DataURL(htmlspecialchars($val)),
-                     'type'    => 'text/css',
-                     'charset' => CHARSET);
-        // The next line is also used by xgettext to localise the word
-        // "Printer" used in the stylesheet's 'title' (see above).
-        if ($key == _("Printer")) {
-            $css = array_merge($css, array('media' => 'print'));
-        }
-        $html .= QElement('link', $css) ."\n";
-    }
-    return $html;
 }
 
 define('NO_END_TAG_PAT',
