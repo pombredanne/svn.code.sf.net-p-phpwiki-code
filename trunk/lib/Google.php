@@ -161,7 +161,7 @@ class Google {
           $this->license_key = GOOGLE_LICENSE_KEY;
         require_once("lib/nusoap/nusoap.php");
 
-        $this->soapclient = new soapclient(DATA_PATH."/"."GoogleSearch.wsdl", "wsdl");
+        $this->soapclient = new soapclient(SERVER_URL . DATA_PATH."/"."GoogleSearch.wsdl", "wsdl");
         $this->proxy = $this->soapclient->getProxy();
         if ($maxResults > 10) $maxResults = 10;
         if ($maxResults < 1) $maxResults = 1;
