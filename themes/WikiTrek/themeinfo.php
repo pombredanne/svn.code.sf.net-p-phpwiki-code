@@ -1,6 +1,6 @@
 <?php // -*-php-*-
 
-rcs_id('$Id: themeinfo.php,v 1.20 2002-02-06 18:45:53 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.21 2002-02-08 19:02:25 dairiki Exp $');
 
 /**
  * This PhpWiki theme is experimental and will likely not appear as
@@ -69,7 +69,6 @@ $Theme->addImageAlias('logo', 'Ufp-logo.jpg');
 $Theme->addImageAlias('signature', 'lights.gif');
 
 $Theme->addImageAlias('hr', 'hr.png');
-$Theme->sethr();
 
 $Theme->setButtonSeparator(" ");
 
