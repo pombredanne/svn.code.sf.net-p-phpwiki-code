@@ -49,21 +49,6 @@ define('RATING_STORAGE', 'WIKIPAGE');
 // web: Mem29424 => Mem35400  (without USECACHE) (6MB)
 //define('USECACHE', false);
 
-// available database backends to test:
-$database_backends = array(
-                           'file',
-                           'dba',
-                           'SQL',
-                           'ADODB',
-                           );
-// "flatfile" testing occurs in "tests/unit/.testbox/"
-// "dba" needs the DATABASE_DBA_HANDLER, also in the .textbox directory
-$database_dba_handler = (substr(PHP_OS,0,3) == 'WIN') ? "db3" : "gdbm";
-// "SQL" and "ADODB" need delete permissions to the test db
-//  You have to create that database beforehand with our schema
-$database_dsn = "mysql://wikiuser:@localhost/phpwiki_test";
-// For "cvs" see the seperate tests/unit_test_backend_cvs.php
-
 ####################################################################
 #
 # Preamble needed to get the tests to run.
@@ -83,8 +68,25 @@ if ($HTTP_SERVER_VARS["SERVER_NAME"] == 'phpwiki.sourceforge.net') {
     ini_set('include_path', ini_get('include_path') . ":/usr/share/pear");
     //define('ENABLE_PAGEPERM',false); // costs nothing
     define('USECACHE',false);
-    define('WIKIDB_NOCACHE_MARKUP',1);
+    //define('WIKIDB_NOCACHE_MARKUP',1);
 }
+
+// available database backends to test:
+$database_backends = array(
+                           'file',
+                           'dba',
+                           'SQL',
+                           'ADODB',
+                           );
+//TODO: read some database values from config.ini, just use the "test_" prefix
+// "flatfile" testing occurs in "tests/unit/.testbox/"
+// "dba" needs the DATABASE_DBA_HANDLER, also in the .textbox directory
+//$database_dba_handler = (substr(PHP_OS,0,3) == 'WIN') ? "db3" : "gdbm";
+// "SQL" and "ADODB" need delete permissions to the test db
+//  You have to create that database beforehand with our schema
+//$database_dsn = "mysql://wikiuser:@localhost/phpwiki";
+$database_prefix = "test_";
+// For "cvs" see the seperate tests/unit_test_backend_cvs.php
 
 # Quiet warnings in IniConfig.php
 $HTTP_SERVER_VARS['REMOTE_ADDR'] = '127.0.0.1';
@@ -92,6 +94,7 @@ $HTTP_SERVER_VARS['HTTP_USER_AGENT'] = "PHPUnit";
 
 function printMemoryUsage($msg = '') {
     static $mem = 0;
+    static $initmem = 0;
     if ($msg) echo $msg,"\n";
     if ((defined('DEBUG') and (DEBUG & 8)) or !defined('DEBUG')) {
         echo "-- MEMORY USAGE: ";
@@ -119,7 +122,10 @@ function printMemoryUsage($msg = '') {
             $memstr = system("ps -orss -p $pid|sed 1d");
             $mem = (integer) trim($memstr);
         }
-        echo sprintf("%8d (%+4d)\n", $mem, $mem - $oldmem);
+        if (!$initmem) $initmem = $mem;
+        // old libc on sf.net server doesn't understand "%+4d"
+        echo sprintf("%8d\t[%s%4d]\t[+%4d]\n", $mem, $mem > $oldmem ? "+" : ($mem == $oldmem ? " " : ""), $mem - $oldmem, $mem - $initmem);
+        // TODO: print time
         flush();
     }
 }
@@ -188,12 +194,12 @@ function purge_dir($dir) {
 }
 
 function purge_testbox() {
-    global $db_params;	
+    global $DBParams;	
     if (isset($GLOBALS['request'])) {
         $dbi = $GLOBALS['request']->getDbh();
     }
-    $dir = $db_params['directory'];
-    switch ($db_params['dbtype']) {
+    $dir = $DBParams['directory'];
+    switch ($DBParams['dbtype']) {
     case 'file':
         assert(!empty($dir));
         foreach (array('latest_ver','links','page_data','ver_data') as $d) {
@@ -273,6 +279,8 @@ if (!empty($argv)) {
     if (!empty($runtests))
         $alltests = $runtests;
     if ($debug_level & 1) {
+        echo "PHP_OS=",PHP_OS, "\n";
+        echo "PHP_VERSION=",PHP_VERSION, "\n";
         echo "test=", join(",",$alltests),"\n";
         echo "db=", join(",",$database_backends),"\n";
         echo "debug=", $debug_level,"\n";
@@ -301,8 +309,7 @@ require_once $rootdir.'index.php';
 require_once $rootdir.'lib/main.php';
 
 if ($debug_level & 9) {
-    echo "PHP_OS: ",PHP_OS, "\n";
-    echo "PHP_VERSION: ",PHP_VERSION, "\n";
+    // which constants affect memory?
     foreach (explode(",","ENABLE_PAGEPERM,USECACHE,WIKIDB_NOCACHE_MARKUP") as $v)
         echo "$v=",(defined($v) and constant($v)) ? constant($v) : "false","\n";
 }
@@ -361,7 +368,7 @@ else {
 include_once("themes/" . THEME . "/themeinfo.php");
 
 if (DEBUG & _DEBUG_TRACE)
-    printMemoryUsage("after PhpWiki, before tests");
+    printMemoryUsage("PhpWiki loaded, not initialized");
 
 // save and restore all args for each test.
 class phpwiki_TestCase extends PHPUnit_TestCase {
@@ -385,33 +392,41 @@ class phpwiki_TestCase extends PHPUnit_TestCase {
 # Test all db backends.
 foreach ($database_backends as $dbtype) {
 
-    $suite  = new PHPUnit_TestSuite("phpwiki");
+    //    if (DEBUG & _DEBUG_TRACE)
+    //        printMemoryUsage("PHPUnit initialized");
 
-    $db_params                         = array();
-    $db_params['directory']            = $cur_dir . '/.testbox';
-    $db_params['dsn']                  = $database_dsn;
-    $db_params['dba_handler']          = $database_dba_handler;
-    $db_params['dbtype']               = $dbtype;
+    $DBParams['dbtype']               = $dbtype;
+    $DBParams['directory']            = $cur_dir . '/.testbox';
+    $DBParams['prefix']               = $database_prefix;
+    // from config.ini
+    //$DBParams['dsn']                  = $database_dsn;
+    //$DBParams['dba_handler']          = $database_dba_handler;
 
     echo "Testing DB Backend \"$dbtype\" ...\n";
-    $request = new MockRequest($db_params);
+    $request = new MockRequest($DBParams);
+    if (DEBUG & _DEBUG_TRACE)
+        printMemoryUsage("PhpWiki initialized");
 
     foreach ($alltests as $test) {
+        $suite  = new PHPUnit_TestSuite("phpwiki");
         if (file_exists(dirname(__FILE__).'/lib/'.$test.'.php'))
             require_once dirname(__FILE__).'/lib/'.$test.'.php';
         else    
             require_once dirname(__FILE__).'/lib/plugin/'.$test.'.php';
         $suite->addTest( new PHPUnit_TestSuite($test) );
-    }
 
-    $result = PHPUnit::run($suite); 
-    echo "ran " . $result->runCount() . " tests, " . $result->failureCount() . " failures.\n";
-    flush();
-
-    if ($result->failureCount() > 0) {
-        echo "More detail:\n";
-        echo $result->toString();
+        @set_time_limit(240); 
+        $result = PHPUnit::run($suite); 
+        echo "ran " . $result->runCount() . " tests, " . $result->failureCount() . " failures.\n";
+        flush();
+        if ($result->failureCount() > 0) {
+            echo "More detail:\n";
+            echo $result->toString();
+        }
     }
+    unset($request);
+    unset($suite);
+    unset($result);
 }
 
 if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']))
