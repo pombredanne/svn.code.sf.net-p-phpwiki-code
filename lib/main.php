@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.93 2003-02-17 05:56:26 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.94 2003-02-21 04:07:31 dairiki Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -407,8 +407,6 @@ class WikiRequest extends Request {
             $this->finish(fmt("%s: Bad action", $action));
         }
     }
-
-
     
     function finish ($errormsg = false) {
         static $in_exit = 0;
@@ -707,6 +705,16 @@ function main () {
     global $request;
 
     $request = new WikiRequest();
+
+    /*
+     * Allow for disabling of markup cache.
+     * (Mostly for debugging ... hopefully.)
+     *
+     * See also <?plugin WikiAdminUtils action=purge-cache ?>
+     */
+    if (!defined('WIKIDB_NOCACHE_MARKUP') and $request->getArg('nocache'))
+        define('WIKIDB_NOCACHE_MARKUP', $request->getArg('nocache'));
+    
     // Initialize with system defaults in case user not logged in.
     // Should this go into constructor?
     $request->initializeTheme();
@@ -716,17 +724,6 @@ function main () {
     $request->initializeTheme();
     $request->initializeLang();
     
-    /* FIXME: is this needed anymore?
-        if (USE_PATH_INFO && ! $request->get('PATH_INFO')
-            && ! preg_match(',/$,', $request->get('REDIRECT_URL'))) {
-            $request->redirect(SERVER_URL
-                               . preg_replace('/(\?|$)/', '/\1',
-                                              $request->get('REQUEST_URI'),
-                                              1));
-            exit;
-        }
-    */
-
     // Enable the output of most of the warning messages.
     // The warnings will screw up zip files though.
     global $ErrorManager;
@@ -754,12 +751,6 @@ if (defined('DEBUG') and DEBUG>1) phpinfo(INFO_VARIABLES);
     $request->finish();
 }
 
-// Used for debugging purposes
-function getmicrotime(){
-    list($usec, $sec) = explode(" ", microtime());
-    return ((float)$usec + (float)$sec);
-}
-if (defined('DEBUG')) $GLOBALS['debugclock'] = getmicrotime();
 
 main();
 
