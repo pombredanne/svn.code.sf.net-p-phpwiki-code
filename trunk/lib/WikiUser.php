@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiUser.php,v 1.8 2001-12-28 09:46:09 carstenklapp Exp $');
+<?php rcs_id('$Id: WikiUser.php,v 1.9 2002-01-10 23:16:00 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -220,7 +220,7 @@ class WikiUser
             // Default state.
             $this->userid = '';
             $this->state = 'login';
-            $this->realm = 'PhpWiki0000';
+            $this->realm = WIKI_NAME . '0000';
         }
     }
 
