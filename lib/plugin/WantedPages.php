@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WantedPages.php,v 1.4 2003-01-18 22:14:24 carstenklapp Exp $');
+rcs_id('$Id: WantedPages.php,v 1.5 2003-03-25 21:05:27 dairiki Exp $');
 /*
  This file is part of PhpWiki.
 
@@ -39,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -92,7 +92,7 @@ extends WikiPlugin
             // link count always seems to be 1 for a single page so
             // omit count column
             foreach ($this->pagelist as $key => $val) {
-                $row = HTML::li(WikiLink($key, 'unknown'));
+                $row = HTML::li(WikiLink((string)$key, 'unknown'));
                 $this->_rows->pushContent($row);
             }
             if (!$noheader) {
@@ -111,7 +111,7 @@ extends WikiPlugin
             foreach ($this->pagelist as $key => $val) {
                 $row = HTML::tr(HTML::td(array('align' => 'right'), $val),
                                 HTML::td(HTML($spacer,
-                                              WikiLink($key, 'unknown'))));
+                                              WikiLink((string)$key, 'unknown'))));
                 $this->_rows->pushContent($row);
             }
             $c = count($this->pagelist);
@@ -188,6 +188,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2003/01/18 22:14:24  carstenklapp
+// Code cleanup:
+// Reformatting & tabs to spaces;
+// Added copyleft, getVersion, getDescription, rcs_id.
+//
 
 // Local Variables:
 // mode: php
