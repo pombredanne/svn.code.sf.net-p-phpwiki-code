@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.36 2002-08-27 21:51:31 rurban Exp $');
+rcs_id('$Id: display.php,v 1.37 2002-09-02 09:34:05 rurban Exp $');
 
 require_once('lib/Template.php');
 require_once('lib/BlockParser.php');
@@ -121,7 +121,7 @@ function displayPage(&$request, $tmpl = 'browse') {
 
     require_once('lib/PageType.php');
     if ($frame = $request->getArg('frame')) {
-        if (in_array($frame,array('body','browse','editpage')))
+        if (in_array($frame, array('body','browse','editpage')))
             $template = Template($frame, array('CONTENT' => PageType($revision)));
         elseif ($frame == 'top')
             $template = Template($frame, array('framesrc' => $request->getArg('framesrc')));

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.41 2002-08-27 21:51:31 rurban Exp $');
+<?php rcs_id('$Id: Template.php,v 1.42 2002-09-02 09:34:05 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -213,13 +213,14 @@ function GeneratePage($content, $title, $page_revision = false, $args = false) {
         // Early plugin-head check:
         // head plugins must consist of a single line at the VERY FIRST LINE in the content.
         // This is a hack, but it works fast enough.
+        $len = strlen('<?plugin-head');
         if ($page_revision and 
-            $text = &$page_revision->getPackedContent() and 
-            strstr($text, '<?plugin-head'))
+            ($text = &$page_revision->getPackedContent()) and 
+            substr($text,0,$len) == '<?plugin-head')
         {
             $loader = new WikiPluginLoader();
             // CheckMe!
-            return $loader->expandPI('<\?plugin-head\s+(?!\S)',$request);
+            return $loader->expandPI($text,$request);
             /* // the return of FrameInclude:
                $plugin = TransformText($page_revision);
                $args['FRAMESET'] = $plugin->_content[0];
