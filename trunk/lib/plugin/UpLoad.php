@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.4 2004-02-21 19:12:59 rurban Exp $');
+rcs_id('$Id: UpLoad.php,v 1.5 2004-02-27 01:24:43 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -42,47 +42,51 @@ extends WikiPlugin
     //what if the above are not set in index.php? seems to fail...
 
     var $disallowed_extensions = array('.php', '.pl', '.sh', '.cgi', '.exe');
-    var $only_authenticated = true;
+    // todo: use PagePerms instead
+    var $only_authenticated = true; // allow only authenticated users upload.
 
     function getName () {
         return "UpLoad";
     }
 
     function getDescription () {
-        return _("Simple Plugin to load files up to server");
+        return _("Upload files to the local InterWiki Upload:<filename>");
     }
 
     function getDefaultArguments() {
-        return array();
+        return array('logfile'  => 'file_list.txt',
+        	     // add a link of the fresh file automatically to the 
+        	     // end of the page (or current page)
+        	     'autolink' => true, 
+        	     'page'     => '[pagename]',
+        	     );
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
+        $args = $this->getArgs($argstr, $request);
+        extract($args);
+
         $file_dir = defined('PHPWIKI_DIR') ? 
             PHPWIKI_DIR . "/uploads/" : "uploads/";
         $url_prefix = SERVER_NAME.DATA_PATH; 
 
-        $action = $request->getURLtoSelf();
-        $userfile = $request->getUploadedFile('userfile');
-        $form = HTML::form(array('action' => $action,
+        $form = HTML::form(array('action' => $request->getPostURL(),
                                  'enctype' => 'multipart/form-data',
                                  'method' => 'post'));
         $contents = HTML::div(array('class' => 'wikiaction'));
-        //$contents = HTML();
         $contents->pushContent(HTML::input(array('type' => 'hidden',
                                                  'name' => 'MAX_FILE_SIZE',
                                                  'value' => MAX_UPLOAD_SIZE)));
         $contents->pushContent(HTML::input(array('name' => 'userfile',
                                                  'type' => 'file',
                                                  'size' => '50')));
-        //$contents->pushContent(HTML::br());
         $contents->pushContent(HTML::raw(" "));
         $contents->pushContent(HTML::input(array('value' => _("Upload"),
                                                  'type' => 'submit')));
         $form->pushContent($contents);
 
-        //$message = HTML::div(array('class' => 'wikiaction'));
         $message = HTML();
-
+        $userfile = $request->getUploadedFile('userfile');
         if ($userfile) {
             $userfile_name = $userfile->getName();
             $userfile_name = basename($userfile_name);
@@ -90,19 +94,11 @@ extends WikiPlugin
 
             if ($this->only_authenticated) {
                 // Make sure that the user is logged in.
-                // (NOTE: It's probably overkill to make sure that
-                // they're both signed in AND authenticated, and
-                // I'm not exactly sure of the difference between
-                // the two, but I'm using both of them)
                 //
                 $user = $request->getUser();
-                $signed_in = $user->isSignedIn();
-                $authenticated = $user->isAuthenticated();
-                if (!$signed_in || !$authenticated) {
-                    $message->pushContent(_("ACCESS DENIED: Please log in to upload files"));
-                    $message->pushContent(HTML::br());
-                    $message->pushContent(HTML::br());
-
+                if (!$user->isAuthenticated()) {
+                    $message->pushContent(_("ACCESS DENIED: You must log in to upload files."),
+                                          HTML::br(),HTML::br());
                     $result = HTML();
                     $result->pushContent($form);
                     $result->pushContent($message);
@@ -114,60 +110,53 @@ extends WikiPlugin
                            $userfile_name)) {
 
                 $message->pushContent(fmt("Files with extension %s are not allowed",
-                                          join(", ", $this->disallowed_extensions)));
-                $message->pushContent(HTML::br());
-                $message->pushContent(HTML::br());
+                                          join(", ", $this->disallowed_extensions)),HTML::br(),HTML::br());
             }
             elseif (file_exists($file_dir . $userfile_name)) {
                 $message->pushContent(fmt("There is already a file with name %s uploaded",
-                                            $userfile_name));
-                $message->pushContent(HTML::br());
-                $message->pushContent(HTML::br());
+                                          $userfile_name),HTML::br(),HTML::br());
             }
             elseif ($userfile->getSize() > (MAX_UPLOAD_SIZE)) {
-                $message->pushContent(_("Sorry but this file is too big"));
-                $message->pushContent(HTML::br());
-                $message->pushContent(HTML::br());
+                $message->pushContent(_("Sorry but this file is too big"),HTML::br(),HTML::br());
             }
             elseif (move_uploaded_file($userfile_tmpname, $file_dir . $userfile_name)) {
-                $message->pushContent(_("File successfully uploaded to location:"));
-                $message->pushContent(HTML::br());
-                $message->pushContent("$url_prefix$userfile_name");
-                $message->pushContent(HTML::br());
+            	$interwiki = new PageType_interwikimap();
+            	$link = $interwiki->link("Upload:$userfile_name");
+                $message->pushContent(_("File successfully uploaded to location: "),
+                                      HTML::br());
 
                 // the upload was a success and we need to mark this event in the "upload log"
-                $upload_log = $file_dir . "file_list.txt";
-                if (!is_writable($upload_log)) {
-                    $message->pushContent(_("Error: the upload log is not writable"));
-                    $message->pushContent(HTML::br());
+                $upload_log = $file_dir . basename($logfile);
+                if ($logfile) { 
+                    $this->log($userfile, $upload_log, &$message);
                 }
-                elseif (!$log_handle = fopen ($upload_log, "a")) {
-                    $message->pushContent(_("Error: can't open the upload logfile"));
-                    $message->pushContent(HTML::br());
+                if ($autolink) {
+                    $pagehandle = $dbi->getPage($page);
                 }
-                else {        // file size in KB; precision of 0.1
-                    $file_size = round(($userfile->getSize())/1024, 1);
-                    if ($file_size <= 0) {
-                        $file_size = "&lt; 0.1";
-                    }
-                    fwrite($log_handle,
-                           "\n"    // the newline makes it easier to read the log file
-                           . "<tr><td><a href=$userfile_name>$userfile_name</a></td>"
-                           . "<td align=right>$file_size</td>"
-                           . "<td>&nbsp;&nbsp;" . date("M j, Y") . "</td>"
-                           . "<td>&nbsp;&nbsp;<em>" . $user->getId() . "</em></td></tr>");
-                    fclose($log_handle);
+            }
+            elseif (IsWindows()) {
+            	rename($userfile_tmpname, $file_dir . $userfile_name);
+            	$interwiki = new PageType_interwikimap();
+            	$link = $interwiki->link("Upload:$userfile_name");
+                $message->pushContent(_("File quirkfully uploaded to location: "),
+                                      $link,HTML::br());
+                // the upload was a success and we need to mark this event in the "upload log"
+                $upload_log = $file_dir . basename($logfile);
+                if ($logfile) { 
+                    $this->log($userfile, $upload_log, &$message);
+                }
+                if ($autolink) {
+                    require_once("lib/loadsave.php");
+                    $pagehandle = $dbi->getPage($page);
+                    //todo... append "\n* Upload:$userfile_name"
                 }
             }
             else {
-                $message->pushContent(HTML::br());
-                $message->pushContent(_("Uploading failed."));
-                $message->pushContent(HTML::br());
+                $message->pushContent(HTML::br(),_("Uploading failed: "),$userfile_name, HTML::br());
             }
         }
         else {
-            $message->pushContent(HTML::br());
-            $message->pushContent(HTML::br());
+            $message->pushContent(HTML::br(),HTML::br());
         }
 
         //$result = HTML::div( array( 'class' => 'wikiaction' ) );
@@ -176,6 +165,34 @@ extends WikiPlugin
         $result->pushContent($message);
         return $result;
     }
+
+    function log ($userfile, $upload_log, &$message) {
+    	global $Theme;
+    	$user = $GLOBALS['request']->_user;
+        if (!is_writable($upload_log)) {
+            $message->pushContent(_("Error: the upload log is not writable"));
+            $message->pushContent(HTML::br());
+        }
+        elseif (!$log_handle = fopen ($upload_log, "a")) {
+            $message->pushContent(_("Error: can't open the upload logfile"));
+            $message->pushContent(HTML::br());
+        }
+        else {        // file size in KB; precision of 0.1
+            $file_size = round(($userfile->getSize())/1024, 1);
+            if ($file_size <= 0) {
+                $file_size = "&lt; 0.1";
+            }
+            fwrite($log_handle,
+                   "\n"
+                   . "<tr><td><a href=$userfile_name>$userfile_name</a></td>"
+                   . "<td align=\"right\">$file_size kB</td>"
+                   . "<td>&nbsp;&nbsp;" . $Theme->formatDate(time()) . "</td>"
+                   . "<td>&nbsp;&nbsp;<em>" . $user->getId() . "</em></td></tr>");
+            fclose($log_handle);
+        }
+        return;
+    }
+
 }
 
 // (c-file-style: "gnu")
@@ -188,6 +205,9 @@ extends WikiPlugin
 // End:
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/02/21 19:12:59  rurban
+// patch by Sascha Carlin
+//
 // Revision 1.3  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //
