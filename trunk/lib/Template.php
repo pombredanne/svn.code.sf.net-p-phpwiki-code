@@ -1,8 +1,7 @@
-<?php rcs_id('$Id: Template.php,v 1.19 2002-01-15 21:41:10 carstenklapp Exp $');
+<?php rcs_id('$Id: Template.php,v 1.20 2002-01-15 23:40:25 dairiki Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
-require_once("lib/Toolbar.php");
 
 //FIXME: This is a mess and needs to be refactored.
 //  (In other words: this is all in a state of flux, so don't count on any
@@ -34,13 +33,17 @@ class Template
 
          // Convert ${VAR} to < ?php echo "$VAR"; ? >
         //$orig[] = '/\${(\w[\w\d]*)}/';
-        //$repl[] = '<?php echo "$\1"; ? >';
-        $orig[] = '/\${(\w[\w\d]*)}/e';
-        $repl[] = '$this->_getReplacement("\1")';
+        //$repl[] = '< ?php echo "$\1"; ? >';
+        //$orig[] = '/\${(\w[\w\d]*)}/e';
+        //$repl[] = '$this->_getReplacement("\1")';
+        $orig[] = '/\${(\w[\w\d]*)}/';
+        $repl[] = '<?php echo $this->_toString($\1); ?>';
 
 	// Convert $VAR[ind] to < ?php echo "$VAR[ind]"; ? >
-        $orig[] = '/\$(\w[\w\d]*)\[([\w\d]+)\]/e';
-        $repl[] = '$this->_getReplacement("\1", "\2")';
+        $orig[] = '/\$(\w[\w\d]*)\[([\w\d]+)\]/';
+        $repl[] = '<?php echo $this->_toString($\1["\2"]); ?>';
+        //$orig[] = '/\$(\w[\w\d]*)\[([\w\d]+)\]/e';
+        //$repl[] = '$this->_getReplacement("\1", "\2")';
 
         // Convert $_("String") to < ?php echo htmlspecialchars(gettext("String")); ? >
         $orig[] = '/\$_\(("(?:[^"\\\\]|\\.)*")\)/xs';
@@ -55,20 +58,49 @@ class Template
         $ret = preg_replace($orig, $repl, $template);
         echo QElement('pre', $ret);
         return $ret;
-        
-
     }
 
     function _getReplacement($varname, $index = false) {
 	// FIXME: report missing vars.
+
+        echo "GET: $varname<br>\n";
+        
 	$vars = &$this->_vars;
-	if (isset($vars[$varname])) {
-	    $value = $vars[$varname];
-	    if ($index !== false)
-		@$value = (string) $value[$index];
-	    return str_replace('?', '&#63;', $value);
-	}
-	return false;
+	if (!isset($vars[$varname]))
+            return false;
+
+        $value = $vars[$varname];
+        if ($index !== false)
+            @$value = $value[$index];
+
+        if (!is_string($value))
+            $value = $this->_toString($value);
+
+        // Quote '?' to avoid inadvertently inserting "<? php", "? >", or similar...
+        return str_replace('?', '&#63;', $value);
+    }
+    
+    function _toString ($val) {
+        $string_val = '';
+
+        if (is_array($val)) {
+            foreach ($val as $key => $item) {
+                $val[$key] = $this->_toString($item);
+            }
+            return join("\n", $val);
+        }
+        elseif (is_object($val)) {
+            if (method_exists($val, 'ashtml'))
+                return $val->asHTML();
+            elseif (method_exists($val, 'asstring'))
+                return htmlspecialchars($val->asString());
+        }
+        /*
+        elseif (is_object($val) && method_exists($val, 'asString')) {
+            return $val->asString();
+        }
+        */
+        return (string) $val;
     }
     
     /**
@@ -160,6 +192,12 @@ class Template
     function _errorHandler($error) {
         if (!preg_match('/: eval\(\)\'d code$/', $error->errfile))
 	    return false;
+
+        // Hack alert: Ignore 'undefined variable' messages for variables
+        //  whose names are ALL_CAPS.
+        if (preg_match('/Undefined variable:\s*[_A-Z]+\s*$/', $error->errstr))
+            return true;
+        
 	$error->errfile = "In template";
 	$lines = explode("\n", $this->_tmpl);
 	if (isset($lines[$error->errline - 1]))
@@ -215,17 +253,13 @@ extends TemplateFile
 	*/
 	
         $pagename = $page->getName();
-        $this->replace('NAVIGATION', toolbar_action_Navigation($pagename));
-        $this->replace('SEARCH', toolbar_action_SearchActions($pagename,CHARSET));
 
-	$this->replace('page', $page);
+        $this->replace('page', $page);
         $this->qreplace('CHARSET', CHARSET);
         $this->qreplace('PAGE', $pagename);
         $this->qreplace('PAGEURL', rawurlencode($pagename));
         $this->qreplace('SPLIT_PAGE', split_pagename($pagename));
         $this->qreplace('BROWSE_PAGE', WikiURL($pagename));
-
-        $this->replace('EDIT_TIPS', toolbar_Info_EditTips());
 
         // FIXME: this is a bit of dangerous hackage.
         $this->qreplace('ACTION', WikiURL($pagename, array('action' => '')));
@@ -242,32 +276,20 @@ extends TemplateFile
         $current = & $page->getCurrentRevision();
         $previous = & $page->getRevisionBefore($revision->getVersion());
 
-        $this->replace('VIEW_WARNINGS',
-                       toolbar_Warnings_View($current->getVersion() == $revision->getVersion(),$page->getName()));
         $this->replace('IS_CURRENT',
 		       $current->getVersion() == $revision->getVersion());
-//        $this->replace('EDIT_WARNINGS',
-//                       toolbar_Warnings_Edit(!empty($PREVIEW_CONTENT),
-//                                             $current->getVersion() == $revision->getVersion()));
-	/*
-        if ($previous && $previous->getVersion() != 0)
-            $this->setConditional('COPY'); // FIXME: should rename HAVE_COPY?
-	*/
 	
         global $datetimeformat;
         
-        $this->replace('LASTMODIFIED',
-                         toolbar_Info_LastModified(
-                            ($current->getVersion() == $revision->getVersion()),
-                            strftime($datetimeformat, $revision->get('mtime')),
-                            $revision->getVersion() ));
-//        $this->qreplace('LASTMODIFIED',
-//                        strftime($datetimeformat, $revision->get('mtime')));
+        $this->qreplace('LASTMODIFIED',
+                        strftime($datetimeformat, $revision->get('mtime')));
 
         $this->qreplace('LASTAUTHOR', $revision->get('author'));
         $this->qreplace('VERSION', $revision->getVersion());
         $this->qreplace('CURRENT_VERSION', $current->getVersion());
 
+        $this->replace('revision', $revision);
+        
         $this->setPageTokens($page);
     }
 
@@ -282,10 +304,6 @@ extends TemplateFile
 	*/
 	$this->replace('user', $user);
         $this->qreplace('USERID', $user->id());
-
-        //WARNING: hackage! $pagename is not available here
-        $pagename="";
-        $this->replace('SIGNIN', toolbar_User_UserSignInOut($user->is_authenticated(), $user->id(), $pagename, $user->is_admin()));
 
         $prefs = $user->getPreferences();
         $this->qreplace('EDIT_AREA_WIDTH', $prefs['edit_area.width']);
@@ -302,9 +320,7 @@ extends TemplateFile
 
         if (isset($user))
             $this->setWikiUserTokens($user);
-        if (isset($logo))
-            $this->replace('LOGO', toolbar_action_Logo(WIKI_NAME, $logo));
-//            $this->qreplace('LOGO', DataURL($logo));
+        $this->qreplace('LOGO', DataURL($logo));
         if (isset($RCS_IDS))
             $this->qreplace('RCS_IDS', $RCS_IDS);
 
@@ -313,6 +329,9 @@ extends TemplateFile
                         //WikiURL($GLOBALS['pagename'], false, 'absolute_url')
                         BaseURL()
                         );
+
+        require_once('lib/ButtonFactory.php');
+        $this->replace('ButtonFactory', new ButtonFactory);
     }
 
     

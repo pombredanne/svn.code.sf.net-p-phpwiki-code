@@ -1,10 +1,10 @@
-<?php echo "<?xml version='1.0' encoding='${CHARSET}'?>\n"; ?>
+<?php echo "<?xml version='1.0' encoding='$CHARSET'?>\n"; ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- phpwiki source:
-$Id: message.html,v 1.24 2002-01-15 16:44:19 dairiki Exp $
+$Id: message.html,v 1.25 2002-01-15 23:40:26 dairiki Exp $
 ${RCS_IDS}
 -->
 <meta http-equiv="Content-Type" content="text/html; charset=${CHARSET}" />
@@ -15,8 +15,12 @@ ${CSS}
 <title>${WIKI_NAME}: ${TITLE}</title>
 </head>
 <body>
-<div>${LOGO}</div>
-<h1><?plugin-link BackLinks page="[pagename]" class="backlinks" linktext="${SPLIT_PAGE}" ?></h1>
+<div><a class="wikilink" 
+        href="${BROWSE}$_("HomePage")"
+        ><img src="${LOGO}"
+              border="0" alt="${WIKI_NAME}: $_("HomePage")" 
+              align="right" /></a></div>
+<h1>${TITLE}</h1>
 ${CONTENT}
 <?php echo $GLOBALS['ErrorManager']->getPostponedErrorsAsHTML(); ?>
 </body>

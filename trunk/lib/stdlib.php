@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.74 2002-01-15 22:20:53 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.75 2002-01-15 23:40:25 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -731,6 +731,23 @@ function __vsprintf ($fmt, $args) {
     return call_user_func_array('sprintf', $args);
 }
 
+
+// Class introspections
+
+/** Determine whether object is of a specified type.
+ *
+ * @param $object object An object.
+ * @param $class string Class name.
+ * @return bool True iff $object is a $class
+ * or a sub-type of $class. 
+ */
+function isa ($object, $class) 
+{
+    $lclass = strtolower($class);
+
+    return get_class($object) == strtolower($lclass)
+        || is_subclass_of($object, $lclass);
+}
 
 // (c-file-style: "gnu")
 // Local Variables:

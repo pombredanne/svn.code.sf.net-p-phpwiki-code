@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.21 2002-01-13 20:41:26 carstenklapp Exp $');
+rcs_id('$Id: editpage.php,v 1.22 2002-01-15 23:40:25 dairiki Exp $');
 
 require_once('lib/transform.php');
 require_once('lib/Template.php');
@@ -70,7 +70,7 @@ function editPage($dbi, $request) {
     $minor_edit = ( $age < MINOR_EDIT_TIMEOUT && $current->get('author') == $user->id() );
 
     $formvars = array('content'     => htmlspecialchars($selected->getPackedContent()),
-                      'minor_edit'  => $minor_edit ? 'checked' : '',
+                      'minor_edit'  => $minor_edit,
                       'version'     => $selected->getVersion(),
                       'editversion' => $current->getVersion(),
                       'summary'     => '',

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.25 2002-01-08 06:46:58 carstenklapp Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.26 2002-01-15 23:40:25 dairiki Exp $');
 require_once('lib/Template.php');
 require_once('lib/transform.php');
 require_once('lib/ArchiveCleaner.php');
@@ -28,25 +28,30 @@ function ConcurrentUpdates($pagename) {
      it does not know about php's dot operator.
      We want to translate this entire paragraph as one string, of course.
    */
-    $html = "<p>";
-    $html = QElement('h1', __sprintf("Problem while updating %s", $pagename));
-    $html .= _("PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost.");
-    $html .= "</p>\n<p>";
-    $html .= _("In order to recover from this situation follow these steps:");
-    $html .= "\n<ol><li>";
-    $html .= _("Use your browser's <b>Back</b> button to go back to the edit page.");
-    $html .= "</li>\n<li>";
-    $html .= _("Copy your changes to the clipboard or to another temporary place (e.g. text editor).");
-    $html .= "</li>\n<li>";
-    $html .= _("<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there.");
-    $html .= "</li>\n<li>";
-    $html .= _("Make changes to the file again. Paste your additions from the clipboard (or text editor).");
-    $html .= "</li>\n<li>";
-    $html .= _("Press <b>Save</b> again.");
-    $html .= "</li></ol></p>\n";
+    $step = array(_("Use your browser's <b>Back</b> button to go back to the edit page."),
+                  _("Copy your changes to the clipboard or to another temporary place (e.g. text editor)."),
+                  _("<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."),
+                  _("Make changes to the file again. Paste your additions from the clipboard (or text editor)."),
+                  _("Press <b>Save</b> again."));
+
+    foreach ($steps as $key => $step) {
+        $step[$key] = Element('li', $step);
+    }
+    
+        
+    $html = QElement('p',
+                     _("PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."));
+
+    $html .= Element('p',
+                     _("In order to recover from this situation follow these steps:"));
+
+    $html .= Element('ol', join("\n", $steps));
+
     $html .= QElement('p', _("Sorry for the inconvenience."));
 
-    return $html;
+    echo GeneratePage('MESSAGE', $html,
+                      sprintf(_("Problem while updating %s"), $pagename));
+    ExitWiki();
 }
 
 function PageIsLocked($pagename) {
@@ -91,7 +96,7 @@ function savePreview($dbi, $request) {
     // FIXME: sanity checking about posted variables
     // FIXME: check for simultaneous edits.
     foreach (array('minor_edit', 'convert') as $key)
-        $formvars[$key] = $request->getArg($key) ? 'checked' : '';
+        $formvars[$key] = (bool) $request->getArg($key);
     foreach (array('content', 'editversion', 'summary', 'pagename',
                    'version') as $key)
         @$formvars[$key] = htmlspecialchars($request->getArg($key));
@@ -102,9 +107,6 @@ function savePreview($dbi, $request) {
     
     $PREVIEW_CONTENT= do_transform($request->getArg('content'));
     $template->replace('PREVIEW_CONTENT',$PREVIEW_CONTENT);
-    $template->replace('EDIT_WARNINGS',
-                       toolbar_Warnings_Edit(!empty($PREVIEW_CONTENT),
-                                             $version == $request->getArg('editversion')));
     
     echo $template->getExpansion();
 }
@@ -147,7 +149,7 @@ function savePage ($dbi, $request) {
         // (This is a bit kludgy...)
         $template = new WikiTemplate('BROWSE');
         $template->replace('TITLE', $pagename);
-        $template->replace('EDIT_FAIL_MESSAGES',
+        $template->replace('SAVEPAGE_MESSAGES',
                            NoChangesMade($pagename)
                            . QElement('hr', array('noshade' => 'noshade')));
         $newrevision = $current;
@@ -164,44 +166,56 @@ function savePage ($dbi, $request) {
         $template = new WikiTemplate('BROWSE');
         $template->replace('TITLE', $pagename);
         
-        if (is_object($newrevision)) {
-            // New contents successfully saved...
-            
-            // Clean out archived versions of this page.
-            $cleaner = new ArchiveCleaner($GLOBALS['ExpireParams']);
-            $cleaner->cleanPageRevisions($page);
-            
-            $warnings = $dbi->GenericWarnings();
-            global $SignatureImg;
-            if (empty($warnings)) {
-                if (empty($SignatureImg)){
-                    // Do redirect to browse page if no signature has
-                    // been defined.  In this case, the user will most
-                    // likely not see the rest of the HTML we generate
-                    // (below).
-                    $request->redirect(WikiURL($pagename, false,
-                                               'absolute_url'));
-                }
-            }
-            
-            $template->replace('THANK_YOU',
-                               toolbar_Info_ThankYou($pagename, $warnings));
-        } else {
-            // Save failed.
-            // (This is a bit kludgy...)
-            $template->replace('EDIT_FAIL_MESSAGES',
-                               ConcurrentUpdates($pagename)
-                               . QElement('hr',
-                                          array('noshade' => 'noshade')));
-            $newrevision = $current;
+        if (!is_object($newrevision)) {
+            // Save failed.  (Concurrent updates).
+            // FIXME: this should return one to the editing form,
+            //        (with an explanatory message, and options to
+            //        view diffs & merge...)
+            ConcurrentUpdates($pagename);
         }
+        // New contents successfully saved...
+
+        // Clean out archived versions of this page.
+        $cleaner = new ArchiveCleaner($GLOBALS['ExpireParams']);
+        $cleaner->cleanPageRevisions($page);
+            
+        $warnings = $dbi->GenericWarnings();
+        global $SignatureImg;
+        if (empty($warnings) && empty($SignatureImg)) {
+            // Do redirect to browse page if no signature has
+            // been defined.  In this case, the user will most
+            // likely not see the rest of the HTML we generate
+            // (below).
+            $request->redirect(WikiURL($pagename, false,
+                                       'absolute_url'));
+        }
+
+        $html = Element('p',
+                        sprintf(_("Thank you for editing %s."),
+                                LinkExistingWikiWord($pagename))
+                        . Element('br')
+                        . _("Your careful attention to detail is much appreciated."));
+
+        
+        if ($warnings) {
+            $html .= Element('p',
+                             QElement('b', _("Warning!"))
+                             . htmlspecialchars($warnings));
+        }
+
+        if (!empty($SignatureImg))
+            $html .= Element('p', Element('img',
+                                          array ('src' => DataURL($SignatureImg))));
+    
+        $html .= "<hr noshade>\n";
+    
+        $template->replace('SAVEPAGE_MESSAGES', $html);
     }
     
     $template->setPageRevisionTokens($newrevision);
     $template->replace('CONTENT', do_transform($newrevision->getContent()));
     echo $template->getExpansion();
 }
-
 
 // Local Variables:
 // mode: php
