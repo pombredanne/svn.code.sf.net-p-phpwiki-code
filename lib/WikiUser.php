@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiUser.php,v 1.6 2001-12-11 18:42:12 dairiki Exp $');
+<?php rcs_id('$Id: WikiUser.php,v 1.7 2001-12-21 00:50:51 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -176,10 +176,8 @@ class WikiUser
     function _demand_http_authentication () {
         if (!defined('ADMIN_USER') || !defined('ADMIN_PASSWD')
             || ADMIN_USER == '' || ADMIN_PASSWD =='') {
-            return
-                "<p><b>"
-                . gettext("You must set the administrator account and password before you can log in.")
-                . "</b></p>\n";
+            echo '<html><body>';
+            ExitWiki(gettext("You must set the administrator account and password before you can log in."));
         }
 
         // Request password
