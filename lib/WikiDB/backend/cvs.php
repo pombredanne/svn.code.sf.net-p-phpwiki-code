@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: cvs.php,v 1.13 2004-01-25 08:17:29 rurban Exp $');
+rcs_id('$Id: cvs.php,v 1.14 2004-02-12 14:11:36 rurban Exp $');
 /**
  * Backend for handling CVS repository. 
  *
@@ -326,6 +326,26 @@ extends WikiDB_backend
         $this->_removePage( $pagename );
 
         return true;
+    }
+
+    /**
+     * For now delete and create a new one.
+     *
+     * This returns false if page was not renamed,
+     * else return true.
+     */
+    function rename_page($pagename, $to) 
+    {
+        $this->_cvsDebug( "rename_page [$pagename,$to]") ;
+	$data = get_pagedata($pagename);
+	if (isset($data['pagename']))
+	  $data['pagename'] = $to;
+	//$version = $this->get_latest_version($pagename);
+	//$vdata = get_versiondata($pagename, $version, 1);
+        //$data[CMD_CONTENT] = $vdata[CMD_CONTENT];
+	$this->delete_page($pagename);
+	$this->update_pagedata($to, $data);
+	return true;
     }
 
     function delete_versiondata($pagename, $version) 
