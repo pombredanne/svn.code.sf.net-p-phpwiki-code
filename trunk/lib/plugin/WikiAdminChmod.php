@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminChmod.php,v 1.10 2004-06-14 11:31:39 rurban Exp $');
+rcs_id('$Id: WikiAdminChmod.php,v 1.11 2004-06-16 10:38:59 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -48,7 +48,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     function getDefaultArguments() {
@@ -106,7 +106,7 @@ extends WikiPlugin_WikiAdminSelect
             $exclude = explodePageList($args['exclude']);
         else
             $exclude = false;
-        $this->preSelectS(&$args, &$request);
+        $this->preSelectS($args, $request);
 
         $p = $request->getArg('p');
         if (!$p) $p = $this->_list;
@@ -189,7 +189,7 @@ extends WikiPlugin_WikiAdminSelect
         $checkbox = HTML::input(array('type' => 'checkbox',
                                       'name' => 'admin_chmod[updatechildren]',
                                       'value' => 1));
-        if ($post_args['updatechildren'])  $checkbox->setAttr('checked','checked');
+        if (!empty($post_args['updatechildren']))  $checkbox->setAttr('checked','checked');
         $header->pushContent($checkbox,
         	_("Propagate new permissions to all subpages?"),
         	HTML::raw("&nbsp;&nbsp;"),
@@ -201,6 +201,14 @@ extends WikiPlugin_WikiAdminSelect
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/06/14 11:31:39  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.9  2004/06/13 15:33:20  rurban
 // new support for arguments owner, author, creator in most relevant
 // PageList plugins. in WikiAdmin* via preSelectS()

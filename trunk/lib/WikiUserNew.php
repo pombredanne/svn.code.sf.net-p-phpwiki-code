@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.94 2004-06-15 10:40:35 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.95 2004-06-16 10:38:58 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1678,9 +1678,10 @@ extends _DbPassUser
             $this->_authcreate = $this->prepare($dbi->getAuthParam('auth_create'),
                                                 array("userid", "password"));
         }
-        if (!empty($this->_authcreate)) {
+        if (!empty($this->_authcreate) and isset($GLOBALS['HTTP_POST_VARS']['auth']['passwd'])) {
+            $passwd = $GLOBALS['HTTP_POST_VARS']['auth']['passwd'];
             $dbh->simpleQuery(sprintf($this->_authcreate,
-                                      $dbh->quote($GLOBALS['HTTP_POST_VARS']['auth']['passwd']),
+                                      $dbh->quote($passwd),
                                       $dbh->quote($this->_userid)
                                       ));
             return true;
@@ -3010,6 +3011,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.94  2004/06/15 10:40:35  rurban
+// minor WikiGroup cleanup: no request param, start of current user independency
+//
 // Revision 1.93  2004/06/15 09:15:52  rurban
 // IMPORTANT: fixed passwd handling for passwords stored in prefs:
 //   fix encrypted usage, actually store and retrieve them from db

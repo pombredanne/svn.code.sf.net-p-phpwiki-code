@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.187 2004-06-14 11:31:37 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.188 2004-06-16 10:38:58 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1127,7 +1127,7 @@ function __vsprintf ($fmt, $args) {
 }
 
 function file_mtime ($filename) {
-    if ($stat = stat($filename))
+    if ($stat = @stat($filename))
         return $stat[9];
     else 
         return false;
@@ -1594,6 +1594,14 @@ function url_get_contents( $uri ) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.187  2004/06/14 11:31:37  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.186  2004/06/13 13:54:25  rurban
 // Catch fatals on the four dump calls (as file and zip, as html and mimified)
 // FoafViewer: Check against external requirements, instead of fatal.

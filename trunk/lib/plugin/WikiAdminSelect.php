@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSelect.php,v 1.17 2004-06-14 11:31:39 rurban Exp $');
+rcs_id('$Id: WikiAdminSelect.php,v 1.18 2004-06-16 10:38:59 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -46,7 +46,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.17 $");
+                            "\$Revision: 1.18 $");
     }
 
     function getDefaultArguments() {
@@ -122,7 +122,7 @@ extends WikiPlugin
         //    return $this->disabled("(action != 'browse')");
         $args = $this->getArgs($argstr, $request);
         $this->_args = $args;
-        $this->preSelectS(&$args, &$request);
+        $this->preSelectS($args, $request);
 
         $info = $args['info'];
         $this->debug = $args['debug'];
@@ -248,6 +248,14 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.17  2004/06/14 11:31:39  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.16  2004/06/13 15:33:20  rurban
 // new support for arguments owner, author, creator in most relevant
 // PageList plugins. in WikiAdmin* via preSelectS()

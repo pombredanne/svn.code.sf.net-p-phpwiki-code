@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.26 2004-06-14 11:31:36 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.27 2004-06-16 10:38:58 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -318,7 +318,7 @@ class PagePermission {
     var $perm;
 
     function PagePermission($hash = array()) {
-        $this->_group = &WikiGroup::getGroup($GLOBALS['request']);
+        $this->_group = &WikiGroup::getGroup();
         if (is_array($hash) and !empty($hash)) {
             $accessTypes = $this->accessTypes();
             foreach ($hash as $access => $requires) {
@@ -358,7 +358,7 @@ class PagePermission {
     function isMember($user, $group) {
         global $request;
         if ($group === ACL_EVERY) return true;
-        if (!isset($this->_group)) $member =& WikiGroup::getGroup($request);
+        if (!isset($this->_group)) $member =& WikiGroup::getGroup();
         else $member =& $this->_group;
         //$user = & $request->_user;
         if ($group === ACL_ADMIN)   // WIKI_ADMIN or member of _("Administrators")
@@ -525,7 +525,7 @@ class PagePermission {
     function asEditableTable($type) {
         global $WikiTheme;
         if (!isset($this->_group)) { 
-            $this->_group =& WikiGroup::getGroup($GLOBALS['request']);
+            $this->_group =& WikiGroup::getGroup();
         }
         $table = HTML::table();
         $table->pushContent(HTML::tr(
@@ -699,6 +699,14 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.26  2004/06/14 11:31:36  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.25  2004/06/08 13:51:57  rurban
 // some comments only
 //

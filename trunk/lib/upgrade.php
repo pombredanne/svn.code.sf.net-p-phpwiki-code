@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.15 2004-06-07 19:50:40 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.16 2004-06-16 10:38:58 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -295,7 +295,7 @@ function CheckDatabaseUpdate($request) {
     foreach (explode(':','session:user:pref:member') as $table) {
         echo sprintf(_("check for table %s"), $table)," ...";
     	if (!in_array($prefix.$table, $tables)) {
-            installTable(&$dbh, $table, $backend_type);
+            installTable($dbh, $table, $backend_type);
     	} else {
     	    echo _("OK")," <br />\n";
         }
@@ -405,6 +405,9 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.15  2004/06/07 19:50:40  rurban
+ add owner field to mimified dump
+
  Revision 1.14  2004/06/07 18:38:18  rurban
  added mysql 4.1.x search fix
 
