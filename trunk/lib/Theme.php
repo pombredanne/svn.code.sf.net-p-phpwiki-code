@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.30 2002-02-03 19:04:42 carstenklapp Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.31 2002-02-03 22:12:34 carstenklapp Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -174,15 +174,23 @@ class Theme {
     
     var $_dateTimeFormat = "%B %e, %Y";
     var $_dateFormat = "%B %e, %Y";
+    var $_timeFormat = "%l:%M %p";
+    //var $_timeFormat = "%l:%M:%S %p";
 
     function setDateFormat ($fs) {
         $this->_dateFormat = $fs;
     }
 
     function formatDate ($time_t) {
-        return HTML(strftime($this->_dateFormat,
-                             $time_t + PrefTimezoneOffset()),
-                    HTML::small("*"));
+        $offset_time = $time_t + PrefTimezoneOffset();
+
+        if (istoday($offset_time))
+            $date = _("Today");
+        else if (isyesterday($offset_time))
+            $date = _("Yesterday");
+        else
+            $date = strftime($this->_dateFormat, $offset_time);
+        return HTML($date, HTML::small("*"));
         // The asterisk is temporary, for debugging it indicates a
         // time has been converted to the user's local time.
     }
@@ -192,9 +200,14 @@ class Theme {
     }
 
     function formatDateTime ($time_t) {
-        return HTML(strftime($this->_dateTimeFormat,
-                             $time_t + PrefTimezoneOffset()),
-                    HTML::small("*"));
+        $offset_time = $time_t + PrefTimezoneOffset();
+        if (istoday($offset_time))
+            $date = sprintf(_("Today at %s"), strtolower(strftime($this->_timeFormat, $offset_time)));
+        else if (isyesterday($offset_time))
+            $date = sprintf(_("Yesterday at %s"), strtolower(strftime($this->_timeFormat, $offset_time)));
+        else
+            $date = strftime($this->_dateTimeFormat, $offset_time);
+        return HTML($date, HTML::small("*"));
         // The asterisk is temporary, for debugging it indicates a
         // time has been converted to the user's local time.
     }

@@ -1,12 +1,22 @@
 <!-- -*-html-*- -->
-<!-- $Id: viewsource.tmpl,v 1.11 2002-02-03 21:32:08 carstenklapp Exp $ -->
+<!-- $Id: viewsource.tmpl,v 1.12 2002-02-03 22:12:33 carstenklapp Exp $ -->
 <?php
-  $mtime = $Theme->formatDateTime($revision->get('mtime'));
-  if ($revision->isCurrent())
-      $LastModifiedMsg = fmt("Last edited on %s.", $mtime);
-  else
+  $mtime = $revision->get('mtime');
+  $fmtime = $Theme->formatDateTime($mtime);
+
+  if ($revision->isCurrent()) {
+    if (istoday($mtime) || isyesterday($mtime))
+      $LastModifiedMsg = fmt("Last edited %s.", $fmtime);
+    else
+      $LastModifiedMsg = fmt("Last edited on %s.", $fmtime);
+  } else {
+    if (istoday($mtime) || isyesterday($mtime))
+      $LastModifiedMsg = fmt("Version %s, saved %s.",
+                             $revision->getVersion(), $fmtime);
+    else
       $LastModifiedMsg = fmt("Version %s, saved on %s.",
-                             $revision->getVersion(), $mtime);
+                             $revision->getVersion(), $fmtime);
+  }
 ?>
 
 <?php if ($page->get('locked') && !$user->isAdmin()) { ?>
