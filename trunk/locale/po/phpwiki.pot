@@ -6,12 +6,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2001-12-18 16:46-0500\n"
+"POT-Creation-Date: 2001-12-19 03:49-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../templates/browse.html:34
@@ -732,4 +732,188 @@ msgstr ""
 
 #: ../lib/ziplib.php:629
 msgid "!References"
+msgstr ""
+
+#: ../lib/WikiDB/backend/PearDB.php:26
+#, c-format
+msgid "Can't connect to database: %s"
+msgstr ""
+
+#: ../lib/WikiDB/backend/PearDB.php:57
+#, c-format
+msgid "WARNING: database still locked (lock_count = %s)"
+msgstr ""
+
+#: ../lib/WikiDB/backend/PearDB.php:710
+#, c-format
+msgid "%s: fatal database error"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:93
+#, c-format
+msgid "Creating new repository [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:128
+#, c-format
+msgid "Found [%s] in [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:182
+msgid "update_pagedata: Argument 'newdata' was not array"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:190
+msgid "update_pagedata: no meta data found"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:243
+#, c-format
+msgid "get_latest_versioned FAILED for [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:260
+#, c-format
+msgid "get_versiondata: [%s] [%s] [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:315
+#, c-format
+msgid "delete_page [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:337
+msgid "delete_versiondata: Not Implemented"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:347
+msgid "set_versiondata: Not Implemented"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:450
+msgid "lock: Not Implemented"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:456
+msgid "unlock: Not Implemented"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:520
+#, c-format
+msgid "Creating meta file for [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:614
+msgid "CP: got revision information"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:619
+msgid "CP: is initial release"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:622
+msgid "CP: returning old version"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:689
+msgid "Unable to delete file, lock was not obtained."
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:699
+msgid "deleteFile: Unable to open file"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:709
+msgid "no message"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:749
+#, c-format
+msgid "unable to locate/open [%s], turning debug off"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:760
+#, c-format
+msgid "Preparing to execute [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:763
+#, c-format
+msgid "Command failed [%s], Output: ["
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:765
+#, c-format
+msgid "Command failed [%s], Return value: %s"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:768
+msgid "Done execution"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:782
+msgid "Unable to obtain read lock."
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:789
+#, c-format
+msgid "Unable to open file '%s' for reading"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:808
+msgid "Timeout while obtaining lock."
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:827
+#, c-format
+msgid "Copying from [%s] to [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:830
+msgid "Copying"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:835
+#, c-format
+msgid "Copied to [%s/%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:837
+#, c-format
+msgid "Failed to copy [%s/%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:843
+msgid "Not copying"
+msgstr ""
+
+#: ../lib/WikiDB/backend/dba.php:23
+#, c-format
+msgid "%s: Can't open dba database"
+msgstr ""
+
+#: ../lib/WikiDB/backend/dbaBase.php:330
+#, c-format
+msgid "Bad key in linktable: '%s'"
+msgstr ""
+
+#: ../lib/WikiDB/backend/dbaBase.php:352
+#, c-format
+msgid "Bad key '%s' in table"
+msgstr ""
+
+#: ../lib/WikiDB/backend/dbaBase.php:360
+#, c-format
+msgid "backlink entry missing for link '%s'->'%s'"
+msgstr ""
+
+#: ../lib/WikiDB/backend/dbaBase.php:368
+#, c-format
+msgid "link entry missing for backlink '%s'<-'%s'"
+msgstr ""
+
+#: ../lib/WikiDB/dba.php:17
+msgid ""
+"DBA files are in the /tmp directory. Please read the INSTALL file and move "
+"the DB file to a permanent location or risk losing all the pages!"
 msgstr ""

@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.7\n"
-"POT-Creation-Date: 2001-12-18 01:18-0500\n"
+"POT-Creation-Date: 2001-12-19 03:49-0500\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -58,7 +58,7 @@ msgid ", saved on"
 msgstr "- bewaard"
 
 #: ../lib/loadsave.php:452 ../lib/plugin/RecentChanges.php:159
-#: ../lib/plugin/RecentChanges.php:262 ../lib/plugin/RecentChanges.php:307
+#: ../lib/plugin/RecentChanges.php:264 ../lib/plugin/RecentChanges.php:309
 #: ../templates/browse.html:56
 msgid "RecentChanges"
 msgstr "RecenteVeranderingen"
@@ -111,7 +111,7 @@ msgstr ""
 msgid "SignOut"
 msgstr ""
 
-#: ../templates/browse.html:100
+#: ../templates/browse.html:100 ../templates/editpage.html:74
 msgid "SignIn"
 msgstr ""
 
@@ -160,33 +160,33 @@ msgstr ""
 msgid "Author will be logged as"
 msgstr ""
 
-#: ../templates/editpage.html:78
+#: ../templates/editpage.html:80
 msgid "You can change the size of the editing area in"
 msgstr ""
 
-#: ../templates/editpage.html:79
+#: ../templates/editpage.html:81
 #, fuzzy
 msgid "UserPreferences"
 msgstr "!Referenties"
 
-#: ../templates/editpage.html:80
+#: ../templates/editpage.html:82
 msgid "See"
 msgstr ""
 
-#: ../templates/editpage.html:80
+#: ../templates/editpage.html:82
 msgid "GoodStyle"
 msgstr ""
 
-#: ../templates/editpage.html:80
+#: ../templates/editpage.html:82
 #, fuzzy
 msgid "tips for editing."
 msgstr "Bedankt voor het veranderen van %s."
 
-#: ../templates/editpage.html:84
+#: ../templates/editpage.html:86
 msgid "TextFormattingRules"
 msgstr ""
 
-#: ../templates/editpage.html:84
+#: ../templates/editpage.html:86
 msgid "Synopsis"
 msgstr ""
 
@@ -417,20 +417,20 @@ msgid "RecentEdits"
 msgstr ""
 
 #: ../lib/main.php:26 ../lib/main.php:85 ../lib/main.php:87
-#: ../lib/plugin/RecentChanges.php:245
+#: ../lib/plugin/RecentChanges.php:247
 msgid "HomePage"
 msgstr "ThuisPagina"
 
-#: ../lib/plugin/RecentChanges.php:250
+#: ../lib/plugin/RecentChanges.php:252
 msgid "Search"
 msgstr "Zoek"
 
-#: ../lib/plugin/RecentChanges.php:251 ../lib/plugin/TitleSearch.php:16
+#: ../lib/plugin/RecentChanges.php:253 ../lib/plugin/TitleSearch.php:16
 #, fuzzy
 msgid "Title Search"
 msgstr "Titel zoek resultaten"
 
-#: ../lib/main.php:123 ../lib/plugin/RecentChanges.php:253
+#: ../lib/main.php:123 ../lib/plugin/RecentChanges.php:255
 #: ../lib/plugin/TitleSearch.php:12
 #, fuzzy
 msgid "TitleSearch"
@@ -778,6 +778,192 @@ msgstr "[%d] Zie [%s]"
 msgid "!References"
 msgstr "!Referenties"
 
+#: ../lib/WikiDB/backend/PearDB.php:26
+#, fuzzy, c-format
+msgid "Can't connect to database: %s"
+msgstr "Kan verbinding naar data base niet tot stand brengen, geef op."
+
+#: ../lib/WikiDB/backend/PearDB.php:57
+#, c-format
+msgid "WARNING: database still locked (lock_count = %s)"
+msgstr ""
+
+#: ../lib/WikiDB/backend/PearDB.php:710
+#, c-format
+msgid "%s: fatal database error"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:93
+#, c-format
+msgid "Creating new repository [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:128
+#, c-format
+msgid "Found [%s] in [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:182
+msgid "update_pagedata: Argument 'newdata' was not array"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:190
+msgid "update_pagedata: no meta data found"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:243
+#, c-format
+msgid "get_latest_versioned FAILED for [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:260
+#, c-format
+msgid "get_versiondata: [%s] [%s] [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:315
+#, c-format
+msgid "delete_page [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:337
+msgid "delete_versiondata: Not Implemented"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:347
+msgid "set_versiondata: Not Implemented"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:450
+msgid "lock: Not Implemented"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:456
+#, fuzzy
+msgid "unlock: Not Implemented"
+msgstr "Functie nog niet gemplementeerd."
+
+#: ../lib/WikiDB/backend/cvs.php:520
+#, c-format
+msgid "Creating meta file for [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:614
+msgid "CP: got revision information"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:619
+msgid "CP: is initial release"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:622
+msgid "CP: returning old version"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:689
+msgid "Unable to delete file, lock was not obtained."
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:699
+msgid "deleteFile: Unable to open file"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:709
+#, fuzzy
+msgid "no message"
+msgstr "ThuisPagina"
+
+#: ../lib/WikiDB/backend/cvs.php:749
+#, c-format
+msgid "unable to locate/open [%s], turning debug off"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:760
+#, c-format
+msgid "Preparing to execute [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:763
+#, c-format
+msgid "Command failed [%s], Output: ["
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:765
+#, c-format
+msgid "Command failed [%s], Return value: %s"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:768
+msgid "Done execution"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:782
+msgid "Unable to obtain read lock."
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:789
+#, c-format
+msgid "Unable to open file '%s' for reading"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:808
+msgid "Timeout while obtaining lock."
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:827
+#, c-format
+msgid "Copying from [%s] to [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:830
+msgid "Copying"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:835
+#, c-format
+msgid "Copied to [%s/%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:837
+#, c-format
+msgid "Failed to copy [%s/%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:843
+msgid "Not copying"
+msgstr ""
+
+#: ../lib/WikiDB/backend/dba.php:23
+#, c-format
+msgid "%s: Can't open dba database"
+msgstr ""
+
+#: ../lib/WikiDB/backend/dbaBase.php:330
+#, c-format
+msgid "Bad key in linktable: '%s'"
+msgstr ""
+
+#: ../lib/WikiDB/backend/dbaBase.php:352
+#, c-format
+msgid "Bad key '%s' in table"
+msgstr ""
+
+#: ../lib/WikiDB/backend/dbaBase.php:360
+#, c-format
+msgid "backlink entry missing for link '%s'->'%s'"
+msgstr ""
+
+#: ../lib/WikiDB/backend/dbaBase.php:368
+#, c-format
+msgid "link entry missing for backlink '%s'<-'%s'"
+msgstr ""
+
+#: ../lib/WikiDB/dba.php:17
+msgid ""
+"DBA files are in the /tmp directory. Please read the INSTALL file and move "
+"the DB file to a permanent location or risk losing all the pages!"
+msgstr ""
+
 #, fuzzy
 #~ msgid "Currently archived versions of"
 #~ msgstr "Actuele versie:"
@@ -821,9 +1007,6 @@ msgstr "!Referenties"
 
 #~ msgid "You must specify a source to read from"
 #~ msgstr "Je moet een bron specificeren om van te lezen."
-
-#~ msgid "Cannot establish connection to database, giving up."
-#~ msgstr "Kan verbinding naar data base niet tot stand brengen, geef op."
 
 #~ msgid "Error message: %s"
 #~ msgstr "Foutboodschap: %s"
@@ -869,6 +1052,3 @@ msgstr "!Referenties"
 
 #~ msgid "(new)"
 #~ msgstr "(nieuw)"
-
-#~ msgid "Function not yet implemented."
-#~ msgstr "Functie nog niet gemplementeerd."
