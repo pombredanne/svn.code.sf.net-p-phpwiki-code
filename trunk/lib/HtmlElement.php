@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.20 2002-08-17 15:52:51 rurban Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.21 2002-08-19 11:32:29 rurban Exp $');
 /*
  * Code for writing XML.
  */
@@ -393,10 +393,11 @@ HTML::_setTagProperty(HTMLTAG_INLINE,
  *
  * @return object An XmlContent object containing the inputs.
  */
-function HiddenInputs ($query_args, $pfx = false) {
+function HiddenInputs ($query_args, $pfx = false, $exclude = array()) {
     $inputs = HTML();
 
     foreach ($query_args as $key => $val) {
+        if (in_array($key,$exclude)) continue;
         $name = $pfx ? $pfx . "[$key]" : $key;
         if (is_array($val))
             $inputs->pushContent(HiddenInputs($val, $name));

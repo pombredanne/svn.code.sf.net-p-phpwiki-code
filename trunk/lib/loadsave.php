@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.66 2002-03-28 07:08:10 carstenklapp Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.67 2002-08-19 11:32:30 rurban Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -455,7 +455,7 @@ function _tryinsertInterWikiMap($content) {
 function ParseSerializedPage($text, $default_pagename, $user)
 {
     if (!preg_match('/^a:\d+:{[si]:\d+/', $text))
-    return false;
+        return false;
     
     $pagehash = unserialize($text);
     
@@ -466,7 +466,7 @@ function ParseSerializedPage($text, $default_pagename, $user)
     //   revision-level meta-data
     
     if (!defined('FLAG_PAGE_LOCKED'))
-    define('FLAG_PAGE_LOCKED', 1);
+        define('FLAG_PAGE_LOCKED', 1);
     $pageinfo = array('pagedata'    => array(),
                       'versiondata' => array());
     
@@ -592,9 +592,9 @@ function LoadDir (&$request, $dirname, $files = false, $exclude = false) {
     // Defer HomePage loading until the end. If anything goes wrong
     // the pages can still be loaded again.
     $files = $fileset->getFiles();
-    if (in_array(HomePage, $files)) {
-        $files = array_diff($files, array(HomePage));
-        $files[] = HomePage;
+    if (in_array(HOME_PAGE, $files)) {
+        $files = array_diff($files, array(HOME_PAGE));
+        $files[] = HOME_PAGE;
     }
     foreach ($files as $file)
         LoadFile($request, "$dirname/$file");

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: VisualWiki.php,v 1.2 2002-08-18 13:14:10 rurban Exp $');
+<?php rcs_id('$Id: VisualWiki.php,v 1.3 2002-08-19 11:32:30 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -18,7 +18,6 @@
  along with PhpWiki; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */ 
-
 /**
  * Produces graphical site map of PhpWiki
  * Example for an image map creating plugin. It produces a graphical
@@ -39,8 +38,6 @@ if (!defined('VISUALWIKI_ALLOWOPTIONS')) define('VISUALWIKI_ALLOWOPTIONS',false)
 require_once "lib/WikiPluginCached.php";
 
 class WikiPlugin_VisualWiki extends WikiPluginCached {
-    // ToDo: check if "ImageCreateFrom$imgtype"() exists.
-
     /**
      * Sets plugin type to map production
      */
@@ -73,7 +70,7 @@ class WikiPlugin_VisualWiki extends WikiPluginCached {
         return array('imgtype'        => 'png',
                      'width'          => 5,
                      'height'         => 7,
-                     'colorby'        => 'age',
+                     'colorby'        => 'age', // sort by 'age' or 'revtime'
                      'fillnodes'      => 'off',
                      'label'          => 'name', 
                      'shape'          => 'ellipse',
@@ -126,6 +123,7 @@ class WikiPlugin_VisualWiki extends WikiPluginCached {
         if (($recent_nb<0)  ||($recent_nb>50))   $arg['recent_nb']   = $def['recent_nb'];
         if (($refined_nb<0) ||($refined_nb>50))  $arg['refined_nb']  = $def['refined_nb'];
         if (($backlink_nb<0)||($backlink_nb>50)) $arg['backlink_nb'] = $def['backlink_nb'];
+	// ToDo: check if "ImageCreateFrom$imgtype"() exists.
         if (!in_array($imgtype,$GLOBALS['CacheParams']['imgtypes']))
             $arg['imgtype'] = $def['imgtype'];
 	if (empty($fontname)) $arg['fontname'] = VISUALWIKIFONT;
@@ -451,8 +449,8 @@ class WikiPlugin_VisualWiki extends WikiPluginCached {
         foreach ($names as $name) {
 
             $url = rawurlencode($name);
-	    // patch to allow page/subpage as with the Calender plugin
-	    $url = preg_replace('/%2F/','/',$url);
+	    // patch to allow Page/SubPage
+	    $url = preg_replace('/' . urlencode(SUBPAGE_SEPERATOR) . '/',SUBPAGE_SEPERATOR,$url);
             $nodename = ($label!='name'?$nametonumber[$name]+1:$name);
 
             $dot .= "    \"$nodename\" [URL=\"$url\"";
@@ -567,13 +565,14 @@ class WikiPlugin_VisualWiki extends WikiPluginCached {
                             'shape'  => 'rect',
                             'coords' => "$x1,$y1,$x2,$y2",
                             'href'   => $url,
-                            'title'  => rawurldecode($url) )));
+                            'title'  => rawurldecode($url),
+			    'alt' => $url)));
                 }
             fclose($fp); 
         }
 
         // clean up tempfiles
-        if ($ok and isset($_GET['debug']) and $tempfiles) { 
+        if ($ok and empty($_GET['debug']) and $tempfiles) { 
             unlink($tempfiles);
             unlink("$tempfiles.$gif");
             unlink($tempfiles.'.map');

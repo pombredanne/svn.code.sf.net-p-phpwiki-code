@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.57 2002-02-24 20:36:23 carstenklapp Exp $');
+rcs_id('$Id: config.php,v 1.58 2002-08-19 11:32:29 rurban Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -275,8 +275,8 @@ if (empty($DBParams['dbtype']))
 if (!defined('WIKI_NAME')) {
     define('WIKI_NAME', _("An unnamed PhpWiki"));
 }
-if (!defined('HomePage')) {
-    define('HomePage', _("HomePage"));
+if (!defined('HOME_PAGE')) {
+    define('HOME_PAGE', _("HomePage"));
 }
 
 // FIXME: delete

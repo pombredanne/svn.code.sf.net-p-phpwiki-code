@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiForm.php,v 1.5 2002-08-17 15:52:51 rurban Exp $');
+rcs_id('$Id: WikiForm.php,v 1.6 2002-08-19 11:32:30 rurban Exp $');
 /**
  * This is a replacement for MagicPhpWikiURL forms.
  *
@@ -22,15 +22,18 @@ extends WikiPlugin
 
     function run($dbi, $argstr, $request) {
         extract($this->getArgs($argstr, $request));
-
         $form = HTML::form(array('action' => USE_PATH_INFO ? WikiURL($request->getPage()) : SCRIPT_NAME,
                                  'method' => 'post',
                                  'class'  => 'wikiadmin',
                                  'accept-charset' => CHARSET),
                            HTML::input(array('type' => 'hidden',
                                              'name' => 'action',
-                                             'value' => $action)));
-
+                                             'value' => $action)),
+                           USE_PATH_INFO 
+                             ? false
+                             : HTML::input(array('type' => 'hidden',
+                                                 'name' => 'pagename',
+                                                 'value' => $targetpage)));
         $input = array('type' => 'text',
                        'value' => $default,
                        'size' => $size);
