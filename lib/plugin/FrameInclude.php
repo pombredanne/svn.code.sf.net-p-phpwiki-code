@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FrameInclude.php,v 1.5 2002-09-17 03:57:41 dairiki Exp $');
+rcs_id('$Id: FrameInclude.php,v 1.6 2003-01-18 21:41:01 carstenklapp Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -23,7 +23,7 @@ rcs_id('$Id: FrameInclude.php,v 1.5 2002-09-17 03:57:41 dairiki Exp $');
 /**
  * FrameInclude:  Displays a url or page in a seperate frame inside our body.
  *
- * Usage:   
+ * Usage:
  *  <?plugin-head FrameInclude src=http://www.internet-technology.de/fourwins_de.htm ?>
  *  <?plugin-head FrameInclude page=OtherPage ?>
  *  at the VERY BEGINNING in the content! Otherwise it will be ignored.
@@ -31,24 +31,30 @@ rcs_id('$Id: FrameInclude.php,v 1.5 2002-09-17 03:57:41 dairiki Exp $');
  * Author:  Reini Urban <rurban@x-ray.at>
  *
  * KNOWN ISSUES:
- *  This is a dirty hack into the whole system. To display the page as frameset
- *  we must know in advance about the plugin existence.
+ *
+ * This is a dirty hack into the whole system. To display the page as
+ * frameset we must know in advance about the plugin existence.
+ *
  *  1. Check the page content for the start string '<?plugin-head '
  *     which we currently do.
- *  2. We can buffer the output stream (which in certain cases is not doable).
+ *
+ * 2. We can buffer the output stream (which in certain cases is not
+      doable).
+ *
  *  3. Redirect to a new page with the frameset only. ?frameset=pagename
  *      $request->setArg('framesrc', $src);
  *      $request->redirect('frameset', $request->getName());
- *  In any cases we can now serve only specific templates with the new frame 
- *  argument. The whole page is now ?frame=html (before it was named "top")
- *  For the Sidebar theme (or derived from it) we provide a left frame also, otherwise 
- *  only top, content and bottom.
  *
- *  This plugin doesn't return a typical html stream inside a <body>, only a 
- *  <frameset> which has to go before <body>, right after <head>.
+ *  In any cases we can now serve only specific templates with the new
+ *  frame argument. The whole page is now ?frame=html (before it was
+ *  named "top") For the Sidebar theme (or derived from it) we provide
+ *  a left frame also, otherwise only top, content and bottom.
+ *
+ *  This plugin doesn't return a typical html stream inside a <body>,
+ *  only a <frameset> which has to go before <body>, right after
+ *  <head>.
  *
  */
-
 class WikiPlugin_FrameInclude
 extends WikiPlugin
 {
@@ -58,6 +64,11 @@ extends WikiPlugin
 
     function getDescription() {
         return _("Displays a url in a seperate frame inside our body. Only one frame allowed.");
+    }
+
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
@@ -77,17 +88,21 @@ extends WikiPlugin
     }
 
     function run($dbi, $argstr, $request) {
-    	global $Theme;
+        global $Theme;
 
         $args = ($this->getArgs($argstr, $request));
         extract($args);
 
         if (!$src) {
             if (!$page) {
-                return $this->error(sprintf(_("%s or %s parameter missing"), 'src', 'page'));
+                return
+                    $this->error(sprintf(_("%s or %s parameter missing"),
+                                         'src', 'page'));
             } else {
                 if ($page == $request->get('pagename')) {
-                    return $this->error(sprintf(_("recursive inclusion of page %s"), $page));
+                    return
+                        $this->error(sprintf(_("recursive inclusion of page %s"),
+                                             $page));
                 }
                 $src = WikiURL($page);
             }
@@ -95,7 +110,8 @@ extends WikiPlugin
 
         // How to normalize url's to compare against recursion?
         if ($src == $request->getURLtoSelf() ) {
-            return $this->error(sprintf(_("recursive inclusion of url %s"), $src));
+            return $this->error(sprintf(_("recursive inclusion of url %s"),
+                                        $src));
         }
 
         // pass FRAMEPARAMS directly to the Template call in Template.php:214
@@ -106,24 +122,29 @@ extends WikiPlugin
         $bottom = HTML::frame(array('name' => "bottom", "src" => $bottomuri));
         //$bottom = "<frame name=\"bottom\" src=\"$bottomuri\" />";
 
-        $content_opts = array('name' => $name, "src" => $src, 'frameborder' => $frameborder);
+        $content_opts = array('name' => $name, "src" => $src,
+                              'frameborder' => $frameborder);
         //        $content = "<frame name=\"$name\" src=\"$src\" frameborder=\"$frameborder\" ";
-        if ($marginwidth)  $content_opts['marginwidth'] = $marginwidth;
-        if ($marginheight) $content_opts['marginheight'] = $marginheight;
-        if ($noresize) $content_opts['noresize'] = "noresize";
+        if ($marginwidth)
+            $content_opts['marginwidth'] = $marginwidth;
+        if ($marginheight)
+            $content_opts['marginheight'] = $marginheight;
+        if ($noresize)
+            $content_opts['noresize'] = "noresize";
         $content_opts['scrolling'] = $scrolling;
         $content = HTML::frame($content_opts);
 
         // include this into top.tmpl instead
         //$memo = HTML(HTML::p(array('class' => 'transclusion-title'),
         //                     fmt("Included frame from %s", $src)));
-        if (isa($Theme,'Theme_Sidebar')) {
+        if (isa($Theme, 'Theme_Sidebar')) {
             // left also.
             $lefturi = $request->getURLtoSelf(array('frame' => 'navbar'));
             $frameset = HTML::frameset(array('rows' => $rows));
             $frameset->pushContent($top);
             $colframeset = HTML::frameset(array('cols' => $cols));
-            $colframeset->pushContent(HTML::frame(array('name' => "left", "src" => $lefturi)));
+            $colframeset->pushContent(HTML::frame(array('name' => "left",
+                                                        "src" => $lefturi)));
             $colframeset->pushContent($content);
             $frameset->pushContent($colframeset);
             $frameset->pushContent($bottom);
@@ -139,6 +160,8 @@ extends WikiPlugin
         return printXML(new Template('frameset', $request, $args));
     }
 };
+
+// $Log: not supported by cvs2svn $
 
 // For emacs users
 // Local Variables:

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: IncludePage.php,v 1.19 2002-03-02 05:40:33 carstenklapp Exp $');
+rcs_id('$Id: IncludePage.php,v 1.20 2003-01-18 21:41:02 carstenklapp Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -34,6 +34,15 @@ extends WikiPlugin
         return _("IncludePage");
     }
 
+    function getDescription() {
+        return _("Include text from another wiki page.");
+    }
+
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.20 $");
+    }
+
     function getDefaultArguments() {
         return array( 'page'    => false, // the page to include
                       'rev'     => false, // the revision (defaults to most recent)
@@ -52,7 +61,7 @@ extends WikiPlugin
             $words = explode(' ', $line);
             if ($wordcount + count($words) > $n) {
                 $new[] = implode(' ', array_slice($words, 0, $n - $wordcount))
-                         . "... (first $n words)";
+                    . "... (first $n words)";
                 return $new;
             } else {
                 $wordcount += count($words);
@@ -96,7 +105,8 @@ extends WikiPlugin
         // TextFormattingRules).
         static $included_pages = array();
         if (in_array($page, $included_pages)) {
-            return $this->error(sprintf(_("recursive inclusion of page %s"), $page));
+            return $this->error(sprintf(_("recursive inclusion of page %s"),
+                                        $page));
         }
 
         $p = $dbi->getPage($page);
@@ -104,8 +114,8 @@ extends WikiPlugin
         if ($rev) {
             $r = $p->getRevision($rev);
             if (!$r) {
-                return $this->error(sprintf(_("%s(%d): no such revision"), $page,
-                                            $rev));
+                return $this->error(sprintf(_("%s(%d): no such revision"),
+                                            $page, $rev));
             }
         } else {
             $r = $p->getCurrentRevision();
@@ -114,7 +124,8 @@ extends WikiPlugin
         $c = $r->getContent();
 
         if ($section)
-            $c = $this->extractSection($section, $c, $page, $quiet, $sectionhead);
+            $c = $this->extractSection($section, $c, $page, $quiet,
+                                       $sectionhead);
         if ($lines)
             $c = array_slice($c, 0, $lines);
         if ($words)
@@ -128,11 +139,11 @@ extends WikiPlugin
 
         array_pop($included_pages);
 
-        if ($quiet) return $content;
+        if ($quiet)
+            return $content;
 
         return HTML(HTML::p(array('class' => 'transclusion-title'),
-                            fmt("Included from %s",
-                                WikiLink($page))),
+                            fmt("Included from %s", WikiLink($page))),
 
                     HTML::div(array('class' => 'transclusion'),
                               false, $content));
@@ -162,6 +173,9 @@ extends WikiPlugin
 // KNOWN ISSUES:
 // - line & word limit doesn't work if the included page itself
 //   includes a plugin
+
+
+// $Log: not supported by cvs2svn $
 
 // For emacs users
 // Local Variables:

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.14 2002-03-01 17:03:11 carstenklapp Exp $');
+rcs_id('$Id: FullTextSearch.php,v 1.15 2003-01-18 21:41:01 carstenklapp Exp $');
 /*
 Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -27,17 +27,22 @@ require_once('lib/TextSearchQuery.php');
 class WikiPlugin_FullTextSearch
 extends WikiPlugin
 {
-    function getName () {
+    function getName() {
         return _("FullTextSearch");
     }
 
-    function getDescription () {
-        return _("Full Text Search");
+    function getDescription() {
+        return _("Search the content of all pages in this wiki.");
+    }
+
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.15 $");
     }
 
     function getDefaultArguments() {
-        return array('s'	=> false,
-                     'noheader'	=> false);
+        return array('s'        => false,
+                     'noheader' => false);
         // TODO: multiple page exclude
     }
 
@@ -82,7 +87,8 @@ extends WikiPlugin
         $html = array();
         foreach ($matches as $line) {
             $line = $this->highlight_line($line, $hilight_re);
-            $html[] = HTML::dd(HTML::small(array('class' => 'search-context'), $line));
+            $html[] = HTML::dd(HTML::small(array('class' => 'search-context'),
+                                           $line));
         }
         return $html;
     }
@@ -97,6 +103,8 @@ extends WikiPlugin
         return $html;
     }
 };
+
+// $Log: not supported by cvs2svn $
 
 // Local Variables:
 // mode: php
