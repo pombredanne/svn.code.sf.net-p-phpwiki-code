@@ -30,6 +30,9 @@ A.wikiaction, A.wikiadmin, INPUT.button
  padding-right: 0.2em;
 }
 
+/* Link icons */
+img.linkicon		{ vertical-align: middle; }
+
 /****************************************************************
  **
  ** Diff Output
