@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.66 2004-11-01 10:43:55 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.67 2004-11-05 18:03:35 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -177,8 +177,11 @@ class Template
         }
         // ignore recursively nested htmldump loop: browse -> body -> htmldump -> browse -> body ...
         // FIXME for other possible loops also
-        elseif (strstr($error->errfile, "(In template 'htmldump')")) {
+        elseif (strstr($error->errfile, "In template 'htmldump'")) {
             ; //return $error;
+        }
+        elseif (strstr($error->errfile, "In template '")) { // merge
+            $error->errfile = preg_replace("/'(\w+)'\)$/", "'\\1' < '$this->_name')", $error->errfile);
         }
         else {
             $error->errfile .= " (In template '$this->_name')";
@@ -267,6 +270,12 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.66  2004/11/01 10:43:55  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 // Revision 1.65  2004/10/07 16:08:58  rurban
 // fixed broken FileUser session handling.
 //   thanks to Arnaud Fontaine for detecting this.
