@@ -1,4 +1,4 @@
-<!-- $Id: wiki_pgsql.php3,v 1.16 2000-08-29 02:37:42 aredridel Exp $ -->
+<!-- $Id: wiki_pgsql.php3,v 1.17 2000-09-04 16:55:54 wainstead Exp $ -->
 <?php
 
    /*
@@ -18,6 +18,8 @@
       GetHitCount($dbi, $pagename)
       InitMostPopular($dbi, $limit)
       MostPopularNextMatch($dbi, $res)
+      GetWikiPageLinks($dbi, $pagename)
+      SetWikiPageLinks($dbi, $pagename, $linklist)
    */
 
 
@@ -239,6 +241,7 @@
    function InitFullSearch($dbi, $search) {
       global $search_counter;
       $search_counter = 0;
+      $search = strtolower($search);
       $search = addslashes($search);
       $search = addslashes($search);
       $query = "select pagename,content from $dbi[table] " .
@@ -321,7 +324,7 @@
 
    function GetAllWikiPageNames($dbi) {
 
-      $res = pg_exec("select pagename from wiki");
+      $res = pg_exec($dbi['dbc'], "select pagename from wiki");
       $rows = pg_numrows($res);
       for ($i = 0; $i < $rows; $i++) {
 	 $pages[$i] = mysql_result($res, $i, "pagename");
@@ -329,5 +332,42 @@
       return $pages;
    }
 
+   ////////////////////////////////////////
+   // functionality for the wikilinks table
+
+   // takes a page name, returns array of links
+
+   function GetWikiPageLinks($dbi, $pagename) {
+
+      $query = "select * from wikilinks where frompage='$pagename'";
+      $res = pg_exec($dbi['dbc'], $query);
+      $rows = pg_numrows($res);
+      for ($i = 0; $i < $rows; $i++) {
+	 $pages[$i] = mysql_result($res, $i, "topage");
+      }
+      return $pages;
+      
+   }
+
+
+   // takes page name, list of links it contains
+
+   function SetWikiPageLinks($dbi, $pagename, $linklist) {
+
+      $pagename = addslashes($pagename);
+      //array_walk($linklist, 'addslashes');
+
+      // first delete the old list of links
+      $query = "delete * from wikilinks where frompage='$pagename'";
+      $res = pg_exec($dbi['dbc'], $query);
+
+      // now insert the new list of links
+      $numlinks = count($linklist);
+      for ($x = 0; $x < $numlinks; $x++) {
+         $query = "insert into wikilinks (frompage, topage) " .
+                  "values ('$pagename', '$linklist[$x]')";
+         $res = pg_exec($dbi['dbc'], $query);
+      }
+   }
 
 ?>
