@@ -1,0 +1,42 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>###PAGE###</title>
+</head>
+
+<body>
+
+<form method="POST" action="###SCRIPTURL###">
+
+  <h1><a href="###SCRIPTURL###"><img src="###LOGO###" border=0 alt="[phpwiki]" width=50 height=50></a> 
+    Editar ###PAGE### 
+    <input type="submit" value=" Save "></h1>
+
+<textarea name="content" ROWS="22" COLS="80" wrap="virtual">###CONTENT###</textarea>
+<br>
+
+<input type="checkbox" name="convert" value="tabs" >
+  No puedo escribir tabulaciones. Por favor <a href="###SCRIPTURL###?ConvierteEspaciosEnTabs">ConvierteEspaciosEnTabs</a> 
+  al guardar. 
+  <p><a href="###SCRIPTURL###?BuenEstilo">BuenEstilo</a> tips para editar. <br>
+    <a href="###SCRIPTURL###?links=###PAGEURL###">EditarEnlaces</a> a otros servidores. 
+    ###IF COPY###<br>
+    <a href="###SCRIPTURL###?copy=###PAGEURL###">EditarCopia</a> De un autor previo 
+  <hr noshade>
+  <small> <b>&Eacute;nfasis:</b> '' para it&aacute;licas, ''' para bold, ''''' 
+  para ambos <br>
+  <b>Listas:</b> tab-* para listas de balazos, tab-# para listas numeradas, tab-Term:-tab 
+  para listas de definiciones <br>
+  <b>Referencias:</b> UnirPalabrasEnMay&uacute;sculas o usar corchetes para una 
+  [enlace hacia una p&aacute;gina] o URL [http://cool.wiki.int/]. <br>
+  <b>Referencias:</b> Use [1],[2],[3],... y EditarEnlacess. Evite hacer enlaces 
+  con "!": !NoHiperEnlaces. Enlaces con nombres como [text | URL] <br>
+  <b>Varios:</b>"!", "!!", "!!!" para hacer t&iacute;tulos, "%%%" hace un salto 
+  de l&iacute;nea, "- - - -" Hace una linea horizontal, escapar "[" con "[[" <br>
+  M&aacute;s en <a href="###SCRIPTURL###?ReglasDeFormatoDeTexto"><b>ReglasDeFormatoDeTexto</b></a> 
+  </small> 
+  <input type="hidden" name="post" value="###PAGEURL###">
+<input type="hidden" name="editversion" value="###VERSION###">
+</form>
+</body>
+</html>

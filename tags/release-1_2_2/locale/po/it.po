@@ -1,0 +1,348 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: phpwiki 1.2.0\n"
+"POT-Creation-Date: 2001-05-21 08:27-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Marco Milanesi <kpanic@ada2.unipv.it>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin.php:26
+msgid "You entered an invalid login or password."
+msgstr "Nome utente o password errata."
+
+#: admin.php:47
+#, c-format
+msgid "You are about to remove '%s' permanently!"
+msgstr "Stai per rimuovere %s"
+
+#: admin.php:50
+#, c-format
+msgid "Click %shere%s to remove the page now."
+msgstr "Per rimuovere la pagina clicca %squa%s"
+
+#: admin.php:53
+msgid "Otherwise press the \"Back\" button of your browser."
+msgstr "Altrimenti premi il bottone \"Precedente\" sul tuo browser"
+
+#: admin.php:55
+msgid "Function not yet implemented."
+msgstr "Funzione non implementata."
+
+#: admin.php:57 admin.php:65
+msgid "Remove page"
+msgstr "Rimuovi la pagina"
+
+#: admin.php:63
+#, c-format
+msgid "Removed page '%s' succesfully."
+msgstr "La pagina '%s' &egrave; stata rimossa correttamente."
+
+#: lib/config.php:197
+msgid "templates/browse.html"
+msgstr "locale/it/templates/browse.html"
+
+#: lib/config.php:198
+msgid "templates/editpage.html"
+msgstr "locale/it/templates/editpage.html"
+
+#: lib/config.php:199
+msgid "templates/editlinks.html"
+msgstr "locale/it/templates/editlinks.html"
+
+#: lib/config.php:200
+msgid "templates/message.html"
+msgstr "locale/it/templates/message.html"
+
+#: lib/config.php:216
+msgid "./pgsrc"
+msgstr "locale/it/pgsrc"
+
+#: lib/diff.php:711
+#, c-format
+msgid "WikiDiff::apply: line count mismatch: %s != %s"
+msgstr "WikiDiff::applu: il numero delle linee &egrave; differente: %s != %s"
+
+#: lib/diff.php:771
+msgid "WikiDiff::_check: failed"
+msgstr "WikiDiff::_check: fallito"
+
+#: lib/diff.php:781
+msgid "WikiDiff::_check: edit sequence is non-optimal"
+msgstr "WikiDiff::_check: la sequenza di editazione non e` ottimale"
+
+#: lib/diff.php:785
+#, c-format
+msgid "WikiDiff Okay: LCS = %s"
+msgstr "WikiDiff Ok: LCS = %s"
+
+#: lib/diff.php:1026
+msgid "Current page:"
+msgstr "Pagina corrente:"
+
+#: lib/diff.php:1030 lib/diff.php:1048
+#, c-format
+msgid "version %s"
+msgstr "versione %s"
+
+#: lib/diff.php:1032 lib/diff.php:1050
+#, c-format
+msgid "last modified on %s"
+msgstr "Ultima modifica: %s"
+
+#: lib/diff.php:1035 lib/diff.php:1053
+#, c-format
+msgid "by %s"
+msgstr "di %s"
+
+#: lib/diff.php:1039 lib/diff.php:1057
+msgid "None"
+msgstr "Nessuno"
+
+#: lib/diff.php:1044
+msgid "Archived page:"
+msgstr "Pagina archiviata:"
+
+#: lib/diff.php:1066
+msgid "Versions are identical"
+msgstr "Le versioni sono identiche"
+
+#: lib/diff.php:1074
+#, c-format
+msgid "Diff of %s."
+msgstr "Differenza di %s"
+
+#: lib/display.php:15
+msgid "FrontPage"
+msgstr "PaginaPrincipale"
+
+#: lib/display.php:32 lib/editpage.php:56
+#, c-format
+msgid "Describe %s here."
+msgstr "Descrivi %s qui"
+
+#: lib/editpage.php:19
+#, c-format
+msgid "Copy of %s"
+msgstr "Copia di %s"
+
+#: lib/editpage.php:23
+msgid "No page name passed into editpage!"
+msgstr "Nessuna pagina &grave; passata a modificapagina"
+
+#: lib/editpage.php:31 lib/savepage.php:121
+msgid "This page has been locked by the administrator and cannot be edited."
+msgstr ""
+"Questa pagina &grave; stata bloccata dall'amministratore e non pu&ograve; "
+"essere modificata"
+
+#: lib/editpage.php:33 lib/savepage.php:99 lib/savepage.php:122
+msgid "Sorry for the inconvenience."
+msgstr "Scusa per l'inconveniente."
+
+#: lib/editpage.php:35 lib/savepage.php:123
+#, c-format
+msgid "Problem while editing %s"
+msgstr "Si sono verificati problemi durante la modifica %s"
+
+#: lib/fullsearch.php:9 lib/search.php:9
+#, c-format
+msgid "Searching for \"%s\" ....."
+msgstr "Sto cercando \"%s\" ....."
+
+#: lib/fullsearch.php:41
+#, c-format
+msgid "%d matches found in %d pages."
+msgstr "Ho trovato %d occorrente in %d pagine."
+
+#: lib/fullsearch.php:45
+msgid "Full Text Search Results"
+msgstr "Risultati della ricerca su tutto il testo"
+
+#: lib/msql.php:29 lib/mysql.php:36
+msgid "Cannot establish connection to database, giving up."
+msgstr "Non riesco a stabilire una connessione col database, abbandono."
+
+#: lib/msql.php:31 lib/msql.php:37
+#, c-format
+msgid "Error message: %s"
+msgstr "Messaggio d'errore: %s"
+
+#: lib/msql.php:35 lib/mysql.php:42
+#, c-format
+msgid "Cannot open database %s, giving up."
+msgstr "Non riesco ad aprire il database %s, abbandono."
+
+#: lib/msql.php:210 lib/msql.php:286
+#, c-format
+msgid "Insert/update failed: %s"
+msgstr "Inserimento/aggiornamento fallito: %s"
+
+#: lib/msql.php:221 lib/msql.php:296
+#, c-format
+msgid "Delete on %s failed: %s"
+msgstr "Cancellazione su %s fallita: %s"
+
+#: lib/msql.php:237 lib/msql.php:312
+#, c-format
+msgid "Insert into %s failed: %s"
+msgstr "Inserimento in %s fallito: %s"
+
+#: lib/mysql.php:38 lib/mysql.php:44 lib/mysql.php:123 lib/mysql.php:163
+#, c-format
+msgid "MySQL error: %s"
+msgstr "Errore di MySQL: %s"
+
+#: lib/mysql.php:121
+#, c-format
+msgid "Error writing page '%s'"
+msgstr "Errore durante il salvataggio della pagina '%s'"
+
+#: lib/mysql.php:161
+#, c-format
+msgid "Cannot delete '%s' from table '%s'"
+msgstr "Non posso cancellare '%s' dalla tabella '%s'"
+
+#: lib/pageinfo.php:9
+msgid "Enter a page name"
+msgstr "Scrivi un nome di una pagina"
+
+#: lib/pageinfo.php:10 lib/stdlib.php:116
+msgid "Go"
+msgstr "Vai"
+
+#: lib/pageinfo.php:21
+msgid "Show the page source and references"
+msgstr "Mostra il sorgente della pagina e le sue referenze"
+
+#: lib/pageinfo.php:26 lib/pageinfo.php:75
+msgid "PageInfo"
+msgstr "InformazioniDellaPagina"
+
+#: lib/pageinfo.php:36
+#, c-format
+msgid "Page name '%s' is not in the database"
+msgstr "La pagina '%s' non e` presente nel database"
+
+#: lib/pageinfo.php:64
+msgid "Current version"
+msgstr "Versione corrente"
+
+#: lib/pageinfo.php:70
+msgid "Archived version"
+msgstr "Versione archiviata"
+
+#: lib/savepage.php:16 lib/savepage.php:74
+msgid "RecentChanges"
+msgstr "ModificheRecenti"
+
+#: lib/savepage.php:85
+msgid ""
+"PhpWiki is unable to save your changes, because another user edited and "
+"saved the page while you were editing the page too. If saving proceeded now "
+"changes from the previous author would be lost."
+msgstr ""
+"PhpWiki non &egrave; riuscito a salvare i tuoi cambiamenti perch&egrave; un "
+"altro utente ha cambiato la pagina mentre la stavi modificando. Se il "
+"salvataggio viene comunque fatto, i cambiamenti dell'altro utente verranno "
+"persi."
+
+#: lib/savepage.php:87
+msgid "In order to recover from this situation follow these steps:"
+msgstr "Per risolvere questa situazione segui questi passi:"
+
+#: lib/savepage.php:89
+msgid "Use your browser's <b>Back</b> button to go back to the edit page."
+msgstr ""
+"Usa il pulsante <b>Precedente</b> del tuo browser per tornarealla pagina di "
+"modifica"
+
+#: lib/savepage.php:91
+msgid ""
+"Copy your changes to the clipboard or to another temporary place (e.g. text "
+"editor)."
+msgstr ""
+"Copia le tue modifiche nella clipboard o temporaneamente in unaltro posto "
+"(es: un editor di testo)"
+
+#: lib/savepage.php:93
+msgid ""
+"<b>Reload</b> the page. You should now see the most current version of the "
+"page. Your changes are no longer there."
+msgstr ""
+"<b>Aggiorna</b> la pagina. Dovresti vedere l'ultima versione senzamodifiche"
+
+#: lib/savepage.php:95
+msgid ""
+"Make changes to the file again. Paste your additions from the clipboard (or "
+"text editor)."
+msgstr ""
+"Cambia ancora il file ed installa le tue modifiche dalla clipboard (o "
+"dall'editor di testo)"
+
+#: lib/savepage.php:97
+msgid "Press <b>Save</b> again."
+msgstr "Premi ancora <b>Salva</b>"
+
+#: lib/savepage.php:103
+#, c-format
+msgid "Problem while updating %s"
+msgstr "Problemi durante l'aggiornamento %s"
+
+#: lib/savepage.php:146
+#, c-format
+msgid "Thank you for editing %s."
+msgstr "Grazie per le modifiche! %s."
+
+#: lib/savepage.php:176
+msgid "Your careful attention to detail is much appreciated."
+msgstr "La tua cura verso il dettaglio &egrave; molto apprezzata."
+
+#: lib/search.php:25
+#, c-format
+msgid "%d pages match your query."
+msgstr ""
+
+#: lib/search.php:28
+#, fuzzy
+msgid "Title Search Results"
+msgstr "Risultati della ricerca su tutto il testo"
+
+#: lib/setupwiki.php:21
+#, c-format
+msgid "Inserting page %s, version %s from %s"
+msgstr "Sto inserendo la pagina %s, versione %s da %s"
+
+#: lib/stdlib.php:36
+msgid "WikiFatalError"
+msgstr "ErroreFataleDiWiki"
+
+#: lib/stdlib.php:83 lib/stdlib.php:91
+msgid "Search"
+msgstr "Ricerca"
+
+#: lib/stdlib.php:185
+msgid "Nesting depth exceeded in SetHTMLOutputMode"
+msgstr ""
+
+#: lib/stdlib.php:381
+#, c-format
+msgid "%d best incoming links:"
+msgstr "%d migliori link in entrata:"
+
+#: lib/stdlib.php:391
+#, c-format
+msgid "%d best outgoing links:"
+msgstr "%s migliori link in uscita:"
+
+#: lib/stdlib.php:402
+#, c-format
+msgid "%d most popular nearby:"
+msgstr "%d pi&ugrave; popolari:"

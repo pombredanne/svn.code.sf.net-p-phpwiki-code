@@ -1,0 +1,12 @@
+MancheWebbrowser haben Probleme mit dem Tabulator, der in den TextFormatierungsRegeln verwendet wird. Falls du keinen Tab eingeben kannst oder eine Seite bearbeitest, die jemand geschrieben hat, der keine Tabs verwendet hat, kann das Wiki-System Folgen von Leerzeichen für dich in Tabs umwandeln.
+
+Du aktivierst die Umwandlung, indem du das Kontrollfeld unten auf der Seite EditiereText markierst. Das Kontrollfeld sieht etwa so aus:
+
+ [[o] Ich kann keine Tabulatoren verwenden. Bitte für mich, wenn ich speichere.
+
+Eine Folge von Leerzeichen muß mindestens '''drei''' Leerzeichen lang sein, um als Tab erkannt zu werden. Verwende Vielfache von '''acht''' Leerzeichen, um mehrere Tabs einzugeben. Jeweils acht Leerzeichen werden in einen Tab umgewandelt. Die letzte Folge darf auch etwas kürzer sein, so lange mindestens drei Leerzeichen in der letzten (oder einzigen) Folge sind.
+
+'''Bitte überprüfe die so erstellten Seiten!''' Diese Art der Tabulatorerkennung kann manchmal zu unerwarteten Ergebnissen führen.
+ 
+-----
+[Hinweis zu dieser Seite: diese Seite wird angezeigt, wenn der Benutzer den Link "Konvertiere LeerzeichenZuTabs" auf irgendeiner Bearbeiten-Seite anzeigt. Sie erklärt, was diese Funktion bewirkt, warum man sie verwendet, und Möglichkeiten zum Vermeiden des Problems der Leerzeichen statt Tabs.]

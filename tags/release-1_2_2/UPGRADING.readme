@@ -1,0 +1,27 @@
+MySQL
+
+  The MySQL schema has changed since PhpWiki 1.2.0.
+
+  If you're upgrading from PhpWiki 1.2.0 and you use the MySQL back end,
+  you need to update the schema.
+
+  As long as you use the stock table names you can just do something like:
+
+    mysql -u <username> -p wiki < schemas/update.mysql.1.2.0-1.2.1
+
+  If you don't use the stock table names, look at the script in
+  schemas/update.mysql.1.2.0-1.2.1 and use it as a guide.
+
+
+Flat File
+
+  We are now (since 1.2.0) urlencoding the characters '%', '/', '\\',
+  and ':' when forming filenames from page names.  (This is to fix a bug
+  having to do with page names containing slashes.)  If you currently have
+  any page names with any of those special characters, they will not be
+  visible to PhpWiki after you upgrade.  (Any pages without those funny
+  characters in their names will be unaffected.)
+
+  If you do have pages with slashes, colons or percent signs in their names,
+  you should probably make a backup dump of your database before upgrading
+  and re-load the database after upgrading.
