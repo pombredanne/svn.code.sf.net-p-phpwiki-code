@@ -1,9 +1,9 @@
 Date: Sun, 27 Jan 2002 17:28:55 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.19 2004-04-10 03:56:41 rurban Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.20 2004-04-10 08:18:15 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.19 $";
+  pgsrc_version="2 $Revision: 1.20 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
@@ -39,6 +39,7 @@ some more fixes, docs, themes and plugins.
 * Pear DB update, minor performance improvement for PearDB
 * PageList: enhanced sortby + limit support, sortable gridbuttons enforced, cleanup.
 * minor theme/default overhaul, new theme/smaller, new experimental theme/wikilens
+* new theme/Wordpress by Mike Pickering
 * updated theme/Sidebar: box methods, fast jscalendar and easier to customize
 * more OldStyleTable arguments, PhotoAlbum local fs support
 * preliminary action=upgrade (To import new pgsrc pages only yet. not for DB)
