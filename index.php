@@ -73,7 +73,7 @@ define('ENABLE_USER_NEW',true); // this will disappear with 1.4.0
 
 define ('PHPWIKI_VERSION', '1.3.8');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.125 2004-02-24 02:51:57 rurban Exp $');
+rcs_id('$Id: index.php,v 1.126 2004-02-27 16:27:48 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -269,6 +269,7 @@ $DBParams = array(
    //'dbtype' => 'SQL',
    'dbtype'   => 'dba',
    //'dbtype' => 'file',
+   //'dbtype' => 'cvs',
    
    // For SQL based backends, specify the database as a DSN
    // The most general form of a DSN looks like:
@@ -320,8 +321,6 @@ $DBParams = array(
 // PHP Session settings:
 //
 
-// USE_DB_SESSION fails with the current CVS code.
-//define('USE_DB_SESSION',false);
 // Only for $DBParams['dbtype'] => 'SQL'. See schemas/mysql.sql or 
 // schemas/psql.sql. $DBParams['db_session_table'] must be defined.
 if (!defined('USE_DB_SESSION') and 
@@ -506,11 +505,22 @@ if (defined('ALLOW_USER_PASSWORDS')) {
         //define('USER_AUTH_POLICY','stacked');
 }
 
-// LDAP auth:
-if (!defined('LDAP_AUTH_HOST'))   define('LDAP_AUTH_HOST', 'localhost');
+// LDAP Auth:
+if (!defined('LDAP_AUTH_HOST'))   define('LDAP_AUTH_HOST', "ldap://localhost:389");
+//                                                      or "ldaps://server:636"
 // The organizational or domain BASE DN: e.g. "dc=mydomain,dc=com" to restrict the search
 // Note: ou=Users and ou=Groups are used for GroupLdap Membership
 if (!defined('LDAP_BASE_DN')) define('LDAP_BASE_DN', "ou=Users,o=Development,dc=mycompany.com");
+// LDAP Auth Optional:
+// Some LDAP servers disallow anonymous binds, and need some more options,
+// such as the Windows Active Directory Server:
+// $LDAP_SET_OPTION = array(LDAP_OPT_PROTOCOL_VERSION => 3,
+//                          LDAP_OPT_REFERRALS, 0);
+// define(LDAP_AUTH_USER, "CN=ldapuser,CN=Users,DC=uai,DC=int");
+// define(LDAP_AUTH_PASSWORD, '');
+// define(LDAP_SEARCH_FIELD, 'sAMAccountName'); // might be different from uid, 
+//                                                 here's its a Windows/Samba account
+
 
 // IMAP auth: 
 //   check userid/passwords from a imap server, defaults to localhost
@@ -560,18 +570,19 @@ $DBAuthParams = array (
    // $password is processed  by the 'auth_crypt_method', don't create.
    //'auth_update'  => 'UPDATE user SET passwd="$password" WHERE userid="$userid"',
    // for mysql md5 use 'auth_crypt_method'  => 'plain'
-   //'auth_update'  => 'UPDATE user SET passwd=PASSWORD("$password") WHERE userid="$userid"',
+   'auth_update'  => 'UPDATE user SET passwd=PASSWORD("$password") WHERE userid="$userid"',
    //or create new users automatically, with auth_crypt_method = plain
-   'auth_update'  => 'REPLACE INTO user SET userid="$userid", passwd=PASSWORD("$password")',
+   // Order important: Password first!
+   //'auth_update'  => 'REPLACE INTO user SET passwd=PASSWORD("$password"), userid="$userid"',
 
    // USER => PREFERENCES
    //   This can be optionally defined in the phpwiki db.
    //   The default is to store it the users homepage.
    'pref_select' => 'SELECT prefs FROM user WHERE userid="$userid"',
    //users must be predefined:
-   //'pref_update' => 'UPDATE user SET prefs="$pref_blob" WHERE userid="$userid"',
+   'pref_update' => 'UPDATE user SET prefs="$pref_blob" WHERE userid="$userid"',
    //or users can create themselves:
-   'pref_update' => 'REPLACE INTO user SET prefs="$pref_blob", userid="$userid"',
+   //'pref_update' => 'REPLACE INTO user SET prefs="$pref_blob", userid="$userid"',
 
    // USERS <=> GROUPS
    //   DB methods for lib/WikiGroup.php, see also AUTH_GROUP_FILE above.
@@ -914,6 +925,9 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 include "lib/main.php";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.125  2004/02/24 02:51:57  rurban
+// release 1.3.8 ready
+//
 // Revision 1.124  2004/02/16 00:20:30  rurban
 // new Japanses language
 //
