@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki-heavy.css,v 1.15 2002-02-13 08:45:08 carstenklapp Exp $
+ * $Id: phpwiki-heavy.css,v 1.16 2002-02-13 08:56:24 carstenklapp Exp $
  *
  * phpwiki-heavy.css
  *
@@ -24,7 +24,7 @@ img { vertical-align: baseline; }
 /* NS4 inserts a br after this */
 input { margin: 0.1em; }
 /* NS4 inserts a br after this */
-input.numeric { /*text-align: right;*/ }
+input.numeric { text-align: right; }
 
 /**
  * Links
