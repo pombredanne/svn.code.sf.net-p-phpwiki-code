@@ -1,6 +1,6 @@
 <?php // -*-php-*-
 
-rcs_id('$Id: themeinfo.php,v 1.16 2002-01-28 19:23:25 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.17 2002-01-28 21:49:24 carstenklapp Exp $');
 
 /**
  * This PhpWiki theme is experimental and will likely not appear as
@@ -42,6 +42,24 @@ class Theme_WikiTrek extends Theme {
         return '_WikiTrek_PageHistory_Formatter';
     }
 
+    function linkExistingWikiWord($wikiword, $linktext = '', $version = false) {
+        if ($version !== false)
+            $url = WikiURL($wikiword, array('version' => $version));
+        else
+            $url = WikiURL($wikiword);
+
+        $link = HTML::a(array('href' => $url));
+
+        if (!empty($linktext)) {
+            $link->pushContent($linktext);
+            $link->setAttr('class', 'named-wiki');
+        }
+        else {
+            $link->pushContent($this->maybeSplitWikiWord($wikiword));
+            $link->setAttr('class', 'wiki');
+        }
+        return HTML::span("[ ", $link, " ]");
+    }
 }
 
 $Theme = new Theme_WikiTrek('WikiTrek');

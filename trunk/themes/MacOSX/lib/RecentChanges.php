@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: RecentChanges.php,v 1.3 2002-01-28 18:56:34 carstenklapp Exp $');
+<?php rcs_id('$Id: RecentChanges.php,v 1.4 2002-01-28 21:49:24 carstenklapp Exp $');
 /*
  * Extensions/modifications to the stock RecentChanges (and PageHistory) format.
  */
@@ -13,12 +13,25 @@ function MacOSX_RC_revision_formatter (&$fmt, &$rev) {
     return HTML::li(array('class' => $class),
                     $fmt->diffLink($rev), ' ',
                     $fmt->pageLink($rev), ' ',
-                    $fmt->time($rev), ' ',
-                    ($fmt->importance($rev)=='minor') ? _("(minor edit)") ." " : '',
+                    $rev->get('is_minor_edit') ? $fmt->time($rev) : HTML::strong($fmt->time($rev)),
                     ' . . . ',
                     $fmt->summaryAsHTML($rev),
                     ' -- ',
                     $fmt->authorLink($rev));
+}
+
+function MacOSX_PH_revision_formatter (&$fmt, &$rev) {
+    $class = 'rc-' . $fmt->importance($rev);
+
+    return HTML::li(array('class' => $class),
+                    $fmt->diffLink($rev), ' ',
+                    $fmt->pageLink($rev), ' ',
+                    $rev->get('is_minor_edit') ? $fmt->time($rev) : HTML::strong($fmt->time($rev)),
+                    ' . . . ',
+                    $fmt->summaryAsHTML($rev),
+                    ' -- ',
+                    $fmt->authorLink($rev),
+                    $rev->get('is_minor_edit') ? HTML::em(" (" . _("minor edit") . ")") : '');
 }
 
 class _MacOSX_RecentChanges_Formatter
@@ -33,7 +46,7 @@ class _MacOSX_PageHistory_Formatter
 extends _PageHistory_HtmlFormatter
 {
     function format_revision (&$rev) {
-        return MacOSX_RC_revision_formatter($this, $rev);
+        return MacOSX_PH_revision_formatter($this, $rev);
     }
 }
 

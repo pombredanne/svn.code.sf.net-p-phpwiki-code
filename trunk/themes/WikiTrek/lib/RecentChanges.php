@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: RecentChanges.php,v 1.2 2002-01-28 19:25:27 carstenklapp Exp $');
+<?php rcs_id('$Id: RecentChanges.php,v 1.3 2002-01-28 21:49:24 carstenklapp Exp $');
 /*
  * Extensions/modifications to the stock RecentChanges (and PageHistory) format.
  */
@@ -11,14 +11,27 @@ function WikiTrek_RC_revision_formatter (&$fmt, &$rev) {
     $class = 'rc-' . $fmt->importance($rev);
         
     return HTML::li(array('class' => $class),
-                    $fmt->diffLink($rev), " ",
-                    $fmt->pageLink($rev), " ",
-                    $fmt->time($rev), " ",
-                    ($fmt->importance($rev)=='minor') ? _("(minor edit)") ." " : '',
-                    " . . . ",
+                    $fmt->diffLink($rev), ' ',
+                    $fmt->pageLink($rev), ' ',
+                    $rev->get('is_minor_edit') ? $fmt->time($rev) : HTML::strong($fmt->time($rev)), ' ',
+                    ' . . . ',
                     $fmt->summaryAsHTML($rev),
-                    " . . . [ ",
-                    $fmt->authorLink($rev), " ]");
+                    ' . . . ',
+                    $fmt->authorLink($rev));
+}
+
+function WikiTrek_PH_revision_formatter (&$fmt, &$rev) {
+    $class = 'rc-' . $fmt->importance($rev);
+
+    return HTML::li(array('class' => $class),
+                    $fmt->diffLink($rev), ' ',
+                    $fmt->pageLink($rev), ' ',
+                    $rev->get('is_minor_edit') ? $fmt->time($rev) : HTML::strong($fmt->time($rev)), ' ',
+                    ' . . . ',
+                    $fmt->summaryAsHTML($rev),
+                    ' . . . ',
+                    $fmt->authorLink($rev),
+                    ($fmt->importance($rev)=='minor') ? HTML::em(" (" . _("minor edit") . ")") : '');
 }
 
 class _WikiTrek_RecentChanges_Formatter
@@ -38,7 +51,7 @@ extends _RecentChanges_HtmlFormatter
 
     function diffLink ($rev) {
         global $Theme;
-        return $Theme->makeButton(_("[diff]"), $this->diffURL($rev), 'wiki-rc-action');
+        return $Theme->makeButton(_("diff"), $this->diffURL($rev), 'wiki-rc-action');
     }
 
 }
@@ -47,7 +60,7 @@ class _WikiTrek_PageHistory_Formatter
 extends _PageHistory_HtmlFormatter
 {
     function format_revision (&$rev) {
-        return WikiTrek_RC_revision_formatter($this, $rev);
+        return WikiTrek_PH_revision_formatter($this, $rev);
     }
     function summaryAsHTML ($rev) {
         if ( !($summary = $this->summary($rev)) )
