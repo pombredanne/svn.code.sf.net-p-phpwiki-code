@@ -1,6 +1,6 @@
 Date: Sun, 27 Jan 2002 17:28:55 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: PhpWikiBeheer,v 1.3 2002-08-20 22:30:00 rurban Exp $
+X-Rcs-Id: $Id: PhpWikiBeheer,v 1.4 2002-08-20 22:50:06 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiBeheer;
   flags=PAGE_LOCKED;
@@ -15,18 +15,9 @@ en wachtwoord in het PhpWiki configuratiebestand hebt gezet.
 !! Cleanup
 A Wiki SandBox is very easy to clean. Here you can restore it to pristine condition by loading the default from pgsrc:
 
-[ Rake the SandBox | phpwiki:?action=loadfile&source=pgsrc/SandBox ].
+[ Rake the SandBox | phpwiki:?action=loadfile&source=locale/nl/pgsrc/ZandBak ].
 
-[/Verwijder] multiple paginas. 
-
------------
-! Log In
-
- __[Log In | phpwiki:?action=login]__
-
-Dit staat je toe in te loggen.  Wanneer je ingelogd bent, kun je
-pagina's ''afsluiten'', ''openen'', en ''verwijderen''.  Je kunt ook
-''gesloten'' pagina's wijzigen.
+[/Verwijder] multiple paginas.
 
 ----------
 
@@ -50,7 +41,7 @@ archief gecomprimeerd, anders worden ze simpelweg opgeslagen.
 
 Hier kun je pagina's van je Wiki in een willekeurige directory storten.
 
-[ Stort pagina's | phpwiki:?action=dumpserial&directory=(/tmp/wikistort) ]
+<?plugin WikiForm action=dumpserial?>
 
 De meest recente versie van elke pagina wordt naar de directory geschreven,
 een pagina be bestand.  Je server moet schrijfpermissies naar die directory
@@ -73,7 +64,7 @@ laden.
 Hier kun je ZIP archieven uploaden, of individuele bestanden van je (client)
 machine.
 
-[ Upload | phpwiki:?action=upload&file=50()upload ]
+<?plugin WikiForm action=upload?>
 
 ! Laad bestand
 
@@ -81,7 +72,7 @@ Here you can load ZIP archives, individual files or entire directories.
 The file or directory must be local to the http server.
 You can also use this form to load from an http: or ftp: URL.
 
-[ Laad | phpwiki:?action=loadfile&source=50(/tmp/wikidump) ]
+<?plugin WikiForm action=loadfile?>
 
 -----------
 
