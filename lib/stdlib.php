@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.222 2004-12-17 16:40:45 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.223 2004-12-18 16:49:29 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -205,11 +205,14 @@ function AbsoluteURL ($url) {
     return SERVER_URL . $url;
 }
 
-/*function DataURL ($url) {
+function DataURL ($url) {
     if (preg_match('/^https?:/', $url))
         return $url;
-    return AbsoluteURL(NormalizeWebFileName($url));
-}*/
+    $url = NormalizeWebFileName($url);
+    if (DEBUG and $GLOBALS['request']->getArg('start_debug') and substr($url,-4,4) == '.php')
+        $url .= "?start_debug=1"; // XMLRPC and SOAP debugging helper.
+    return AbsoluteURL($url);
+}
 
 /**
  * Generates icon in front of links.
@@ -1820,6 +1823,9 @@ function printSimpleTrace($bt) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.222  2004/12/17 16:40:45  rurban
+// add not yet used url helper
+//
 // Revision 1.221  2004/12/06 19:49:58  rurban
 // enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
 // renamed delete_page to purge_page.
