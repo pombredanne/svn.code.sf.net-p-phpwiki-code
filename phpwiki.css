@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.45 2002-02-12 07:31:45 carstenklapp Exp $
+ * $Id: phpwiki.css,v 1.46 2002-02-13 08:45:08 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up. It has not yet been tested against NS4.
@@ -21,12 +21,9 @@
  */ 
 img {
   border: 0;
-  vertical-align: baseline;
 }
 
 form  { margin: 0; }
-input { margin: 0.1em; }
-input.numeric { text-align: right; }
 table {
   border-spacing: 1px;
   /* For Mozilla */
@@ -90,23 +87,12 @@ div.wikitext pre { font-family: monospace; }
 .backlinks { color: #006; }
 h1 .backlinks { text-decoration: underline; }
 
-.wikiaction, .wikiaction table, span.wikiaction, input.button {
-  border: 1px outset;
-  background-color: #ddd;
-}
-.wikiadmin, .wikiadmin table {
-  border: 1px outset;
-  background-color: #fdd;
-}
-.wikiunsafe {
-  border: 1px outset;
-  background-color: #ccc;
-}
+.wikiaction, .wikiaction table, span.wikiaction, input.button { background-color: #ddd; }
+.wikiadmin, .wikiadmin table { background-color: #fdd; }
+.wikiunsafe { background-color: #ccc; }
 
 /* Unknown links */
-.wikiunknown a, .named-wikiunknown a, .wikiunknown u {
-  text-decoration: none;
-}
+.wikiunknown a, .named-wikiunknown a, .wikiunknown u { text-decoration: none; }
  /* QuestionMark #600 */
 .wikiunknown a, .named-wikiunknown {
   color: black;
@@ -116,12 +102,8 @@ h1 .backlinks { text-decoration: underline; }
 /* Interwiki links */
 .wikipage  { font-weight: bold; }
 .interwiki { text-decoration: none; }
-.interwiki, i.interwiki .wikipage, em .interwiki .wikipage {
-  font-style: oblique;
-}
-.interwiki .wikipage, i .interwiki, em .interwiki {
-  font-style: normal;
-}
+.interwiki, i.interwiki .wikipage, em .interwiki .wikipage { font-style: oblique; }
+.interwiki .wikipage, i .interwiki, em .interwiki { font-style: normal; }
 
 
 /**
@@ -137,8 +119,7 @@ h1 { margin: 0; }
 caption { font-family: Arial, Helvetica, sans-serif; }
 .pagelist {
 }
-.pagelist thead, .pagelist thead u {
-}
+.pagelist thead, .pagelist thead u {  }
 .pagelist tr.evenrow { background: #eee; }
 .pagelist tr.oddrow  { background: white; }
 
@@ -198,7 +179,6 @@ input.button { font-family: Arial, Helvetica, sans-serif; }
   font-size: smaller;
 }
 .transclusion {
-  background: inherit;
   border: 1px solid gray;
   padding-left:  0.8em; 
   padding-right: 0.8em; 
@@ -224,7 +204,6 @@ input.button { font-family: Arial, Helvetica, sans-serif; }
   /* color: #5454ff;*/
 }
 .wiki-edithelp p {
-  background: inherit;
   font-family: Arial, Helvetica, sans-serif;
   padding-left:  0.5em;
   padding-right: 0.5em;
@@ -253,22 +232,15 @@ table.cal td {
 } 
 
 /* Month-name header */
-table.cal-header { /* the html for this should really be in the thead */
-  font-size: larger;
-}
-table.cal-header tr, table.cal-header td {
-  text-align: center;
-  background: inherit;
-}
+table.cal-header { font-size: larger; }
+table.cal-header tr, table.cal-header td { text-align: center; }
 .cal-arrow {
   font-weight: bold;
   text-decoration: none;
 }
 
 /* Day-names header */
-table.cal tbody tr .cal-dayname { /* the html for this should really be in the thead */
-  background: inherit;
-}
+table.cal tbody tr .cal-dayname {  }
 .cal-dayname td {
   text-align: center;
   font-size: smaller;
@@ -281,14 +253,11 @@ a.cal-hide { text-decoration: none; }
 /* Today */
  /* cell */
 table.cal td.cal-today {
-  background: inherit;
   margin: 1px;
   border: 1px solid gray;
 }
  /* text */
-table.cal td.cal-today a.cal-hide {
-  color: inherit;
-}
+table.cal td.cal-today a.cal-hide {  }
 
 
 /**
@@ -298,7 +267,6 @@ table.cal td.cal-today a.cal-hide {
 /* main box */
 .diff .block {
   background: #ccc;
-  /*border: 1px solid black;*/
   padding: 0.5ex 0.5em;
   margin:  0.5ex 0;
 }
@@ -343,11 +311,11 @@ div.errors {
   padding-bottom: 0;
   font-size: smaller;
   border: medium solid red;
+  width: 100%; /* for Netscape 4 */
   clear: both;
 }
 .errors h4 {
   color: red;
-  background: inherit;
   margin:  0;
   padding: 0;
   text-decoration: underline;
