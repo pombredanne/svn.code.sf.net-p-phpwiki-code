@@ -33,6 +33,10 @@
 *****************************************************************/
 // common cfg options are taken from config/config.ini
 
+define('GROUP_METHOD', 'NONE');
+define('USE_DB_SESSION', false);
+define('RATING_STORAGE', 'WIKIPAGE');
+
 // available database backends to test:
 $database_backends = array(
                            'file',
@@ -65,12 +69,11 @@ ini_set('include_path', ini_get('include_path') . $ini_sep . $rootdir);
 # This quiets a warning in config.php
 $HTTP_SERVER_VARS['REMOTE_ADDR'] = '127.0.0.1';
 $HTTP_SERVER_VARS['HTTP_USER_AGENT'] = "PHPUnit";
-define('GROUP_METHOD', 'NONE');
-define('RATING_STORAGE','WIKIPAGE');
+
 define('PHPWIKI_NOMAIN',true);
+define('DEBUG', 9); //_DEBUG_VERBOSE | _DEBUG_TRACE
 
 # Other needed files
-define('DEBUG', 9); //_DEBUG_VERBOSE | _DEBUG_TRACE
 require_once $rootdir.'index.php';
 require_once $rootdir.'lib/main.php';
 
@@ -190,7 +193,7 @@ function purge_testbox() {
     case 'SQL':
     case 'ADODB':
         foreach ($dbi->_backend->_table_names as $table) {
-            $dbi->genericQuery("DELETE FROM $table");
+            $dbi->genericSqlQuery("DELETE FROM $table");
         }
         break;
     case 'dba':
