@@ -1,5 +1,5 @@
 /*
-  $Id: Hawaiian.css,v 1.5 2002-01-09 04:11:13 carstenklapp Exp $
+  $Id: Hawaiian.css,v 1.6 2002-01-12 07:20:14 carstenklapp Exp $
 
   Classes:
 
@@ -165,9 +165,9 @@ I .interwiki, EM .interwiki
  * wikiaction, wikiadmin, wikiunsafe:
  */
 A.wikiaction, A.wikiadmin       { text-decoration: none; }
-A.wikiaction, .wikiaction TABLE, SPAN.wikiaction  { background-color: inherit; }
-A.wikiadmin, .wikiadmin TABLE   { background-color: inherit ; }
-.wikiunsafe                     { background-color: inherit; }
+A.wikiaction, .wikiaction TABLE, SPAN.wikiaction  { font-weight: normal; color: #ff7e00; }
+A.wikiadmin, .wikiadmin TABLE   { color: #444; }
+.wikiunsafe                     { color: #ccc; }
 
 /*
  * No border on external link icons.
@@ -179,8 +179,17 @@ img.linkicon		{ vertical-align: middle; }
 */
 
  
-.wikiaction TABLE { border-color: inherit; }
-.wikiadmin TABLE  { border-color: inherit; }
+/*
+ * Put a border around wikiaction forms:
+ * This doesn't work for NS4.
+ */
+.wikiaction TABLE, .wikiadmin TABLE
+{
+  border-style: ridge;
+  border-width: medium;
+}
+.wikiaction TABLE { border-color: #9cf; }
+.wikiadmin TABLE  { border-color: #f99; }
 
 /* Backlinks */
 A.backlinks { color: #006; }
@@ -230,7 +239,7 @@ div.wikis-edithelp .transclusion p {
 div.wikis-edithelp {
   background: #fff8dc; /* darker ivory */
   font-size: smaller;
-  padding: 0.05ex 2pt;
+  padding: 0.05ex 1%;
 }
   
 /****************************************************************
@@ -245,10 +254,10 @@ div.wikis-edithelp {
 
 /* These screw up NS4 --- moved to phpwiki-heavy.css
 .diff .block div { position: relative; padding-left: 1.5em; } 
-.diff .prefix    { position: absolute; left: 0.5em; top: 0; }
+.diff .prefix	{ position: absolute; left: 0.5em; top: 0; }
 */
 
-.diff .block    { background: #ccc; }
+.diff .block	{ background: #ccc; }
 .diff .context	{ background: #fff; }
 .diff .original,
 .diff .deleted	{ background: #fcc; }
