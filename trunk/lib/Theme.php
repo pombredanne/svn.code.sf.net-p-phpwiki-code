@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.70 2004-01-26 09:17:48 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.71 2004-02-15 21:34:37 rurban Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -926,6 +926,44 @@ class Theme {
     function findTemplate ($name) {
         return $this->_path . $this->_findFile("templates/$name.tmpl");
     }
+
+    var $_MoreHeaders = array();
+    function addMoreHeaders ($element) {
+        array_push($this->_MoreHeaders,$element);
+    }
+    function getMoreHeaders () {
+        if (empty($this->_MoreHeaders))
+            return '';
+        $out = '';
+        //$out = "<!-- More Headers -->\n";
+        foreach ($this->_MoreHeaders as $h) {
+            if (is_object($h))
+                $out .= printXML($h);
+            else
+                $out .= "$h\n";
+        }
+        return $out;
+    }
+
+    var $_MoreAttr = array();
+    function addMoreAttr ($id,$element) {
+        if (empty($this->_MoreAttr) or !is_array($this->_MoreAttr[$id]))
+            $this->_MoreAttr[$id] = array($element);
+        else
+            array_push($this->_MoreAttr[$id],$element);
+    }
+    function getMoreAttr ($id) {
+        if (empty($this->_MoreAttr[$id]))
+            return '';
+        $out = '';
+        foreach ($this->_MoreAttr[$id] as $h) {
+            if (is_object($h))
+                $out .= printXML($h);
+            else
+                $out .= "$h";
+        }
+        return $out;
+    }
 };
 
 
@@ -1030,6 +1068,26 @@ class SubmitImageButton extends SubmitButton {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.70  2004/01/26 09:17:48  rurban
+// * changed stored pref representation as before.
+//   the array of objects is 1) bigger and 2)
+//   less portable. If we would import packed pref
+//   objects and the object definition was changed, PHP would fail.
+//   This doesn't happen with an simple array of non-default values.
+// * use $prefs->retrieve and $prefs->store methods, where retrieve
+//   understands the interim format of array of objects also.
+// * simplified $prefs->get() and fixed $prefs->set()
+// * added $user->_userid and class '_WikiUser' portability functions
+// * fixed $user object ->_level upgrading, mostly using sessions.
+//   this fixes yesterdays problems with loosing authorization level.
+// * fixed WikiUserNew::checkPass to return the _level
+// * fixed WikiUserNew::isSignedIn
+// * added explodePageList to class PageList, support sortby arg
+// * fixed UserPreferences for WikiUserNew
+// * fixed WikiPlugin for empty defaults array
+// * UnfoldSubpages: added pagename arg, renamed pages arg,
+//   removed sort arg, support sortby arg
+//
 // Revision 1.69  2003/12/05 01:32:28  carstenklapp
 // New feature: Easier to run multiple wiks off of one set of code. Name
 // your logo and signature image files "YourWikiNameLogo.png" and

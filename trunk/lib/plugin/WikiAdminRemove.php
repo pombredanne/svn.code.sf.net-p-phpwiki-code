@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.11 2004-02-11 20:00:16 rurban Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.12 2004-02-15 21:34:37 rurban Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     function getDefaultArguments() {
@@ -100,11 +100,12 @@ extends WikiPlugin
                 $checked = false;
             }
 
-            if ($age > $min_age) {
+            if ($age >= $min_age) {
                 if (empty($list[$pagename]))
                     $list[$pagename] = $checked;
             }
         }
+        return $list;
     }
 
     function removePages(&$request, $pages) {
@@ -157,14 +158,10 @@ extends WikiPlugin
         }
         if ($next_action == 'select') {
             // List all pages to select from.
-            $list = $this->collectPages($pages, $dbi, $args['sortby']);
+            $pages = $this->collectPages($pages, $dbi, $args['sortby']);
         }
 
-
-        $info = 'checkbox';
-        if ($args['info'])
-            $info .= "," . $args['info'];
-        $pagelist = new PageList_Selectable($info, $exclude);
+        $pagelist = new PageList_Selectable($args['info'], $exclude);
         $pagelist->addPageList($pages);
 
         $header = HTML::p();
@@ -175,19 +172,20 @@ extends WikiPlugin
         }
         else {
             $button_label = _("Remove selected pages");
-            if ($args['min_age'] >= 0) {
+            $header->pushContent(_("Permanently remove the selected files:"),HTML::br());
+            if ($args['min_age'] > 0) {
                 $header->pushContent(
-                    fmt("Listing pages which have been deleted at least %s days.",
+                    fmt("Also pages which have been deleted at least %s days.",
                         $args['min_age']));
             }
             else {
-                $header->pushContent(_("Listing all pages."));
+                $header->pushContent(_("List all pages."));
             }
             
-            if ($args['max_age'] >= 0) {
+            if ($args['max_age'] > 0) {
                 $header->pushContent(
                     " ",
-                    fmt("(Automatically checking pages which have been deleted at least %s days.)",
+                    fmt("(Pages which have been deleted at least %s days are already checked.)",
                         $args['max_age']));
             }
         }
@@ -214,6 +212,9 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/02/11 20:00:16  rurban
+// WikiAdmin... series overhaul. Rename misses the db backend methods yet. Chmod + Chwon still missing.
+//
 // Revision 1.9  2003/02/26 22:27:22  dairiki
 // Fix and refactor FrameInclude plugin (more or less).
 //

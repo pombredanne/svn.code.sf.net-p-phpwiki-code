@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSearchReplace.php,v 1.3 2004-02-12 17:05:39 rurban Exp $');
+rcs_id('$Id: WikiAdminSearchReplace.php,v 1.4 2004-02-15 21:34:37 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -124,36 +124,36 @@ extends WikiPlugin_WikiAdminSelect
         $post_args = $request->getArg('admin_replace');
         $next_action = 'select';
         $pages = array();
-        
+        if ($p && !$request->isPost())
+            $pages = $p;
         if ($p && $request->isPost() && $request->_user->isAdmin()
-            && !empty($post_args['rename']) && empty($post_args['cancel'])) {
+            && empty($post_args['cancel'])) {
             // FIXME: error message if not admin.
-            if ($post_args['action'] == 'verify') {
+            if ($post_args['action'] == 'verify' and !empty($post_args['from'])) {
                 // Real action
                 return $this->searchReplacePages($dbi, $request, $p, $post_args['from'], $post_args['to']);
             }
-
             if ($post_args['action'] == 'select') {
                 if (!empty($post_args['from']))
                     $next_action = 'verify';
-                foreach ($p as $name) {
+                if (is_array($p[0])) {
+                  foreach ($p as $name) {
                     $pages[$name] = 1;
+                  }
+                } else {
+                  $pages = $p;
                 }
             }
         }
-        if ($next_action == 'select') {
+        if ($next_action == 'select' and empty($pages)) {
             // List all pages to select from.
-            $list = $this->collectPages($pages, $dbi, $args['sortby']);
+            $pages = $this->collectPages($pages, $dbi, $args['sortby']);
         }
 
-
-        $info = 'checkbox';
-        if ($args['info'])
-            $info .= "," . $args['info'];
         if ($next_action == 'verify') {
-            $info = "checkbox,pagename,content";
+            $args['info'] = "checkbox,pagename,hi_content";
         }
-        $pagelist = new PageList_Selectable($info, $exclude);
+        $pagelist = new PageList_Selectable($args['info'], $exclude);
         $pagelist->addPageList($pages);
 
         $header = HTML::p();
@@ -236,6 +236,14 @@ function stri_replace($find,$replace,$string) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/02/12 17:05:39  rurban
+// WikiAdminRename:
+//   added "Change pagename in all linked pages also"
+// PageList:
+//   added javascript toggle for Select
+// WikiAdminSearchReplace:
+//   fixed another typo
+//
 // Revision 1.2  2004/02/12 11:47:51  rurban
 // typo
 //

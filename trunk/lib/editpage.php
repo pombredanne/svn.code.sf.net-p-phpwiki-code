@@ -1,7 +1,12 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.59 2003-12-07 20:35:26 carstenklapp Exp $');
+rcs_id('$Id: editpage.php,v 1.60 2004-02-15 21:34:37 rurban Exp $');
 
 require_once('lib/Template.php');
+
+// Not yet enabled, since we cannot convert HTML to Wiki Markup yet.
+//Todo: change from constant to user preference variable. (or checkbox setting)
+if (!defined('USE_HTMLAREA')) define('USE_HTMLAREA',false);
+if (USE_HTMLAREA) require_once('lib/htmlarea.php');
 
 class PageEditor
 {
@@ -95,6 +100,7 @@ class PageEditor
     }
 
     function output ($template, $title_fs) {
+        global $Theme;
         $selected = &$this->selected;
         $current = &$this->current;
 
@@ -109,8 +115,11 @@ class PageEditor
 
 
         $title = new FormattedText ($title_fs, $pagelink);
+        if ($template == 'editpage' and USE_HTMLAREA) {
+            $Theme->addMoreHeaders(Edit_HtmlArea_Head());
+            //$tokens['PAGE_SOURCE'] = Edit_HtmlArea_ConvertBefore($this->_content);
+        }
         $template = Template($template, $this->tokens);
-
         GeneratePage($template, $title, $rev);
         return true;
     }
@@ -171,6 +180,7 @@ class PageEditor
         $meta = array_merge($meta, $this->meta);
         
         // Save new revision
+        $this->_content = $this->getContent();
         $newrevision = $page->save($this->_content, $this->_currentVersion + 1, $meta);
         if (!isa($newrevision, 'wikidb_pagerevision')) {
             // Save failed.  (Concurrent updates).
@@ -236,7 +246,19 @@ class PageEditor
 
     function getPreview () {
         include_once('lib/PageType.php');
+        $this->_content = $this->getContent();
 	return new TransformedText($this->page, $this->_content, $this->meta);
+    }
+
+    // possibly convert HTMLAREA content back to Wiki markup
+    function getContent () {
+        if (USE_HTMLAREA) {
+            $xml_output = Edit_HtmlArea_ConvertAfter($this->_content);
+            $this->_content = join("",$xml_output->_content);
+            return $this->_content;
+        } else {
+            return $this->_content;
+        }
     }
 
     function getLockedMessage () {
@@ -285,14 +307,23 @@ class PageEditor
         // wrap=virtual is not HTML4, but without it NS4 doesn't wrap
         // long lines
         $readonly = ! $this->canEdit(); // || $this->isConcurrentUpdate();
-
-        return HTML::textarea(array('class' => 'wikiedit',
-                                    'name' => 'edit[content]',
-                                    'rows' => $request->getPref('editHeight'),
-                                    'cols' => $request->getPref('editWidth'),
-                                    'readonly' => (bool) $readonly,
-                                    'wrap' => 'virtual'),
-                              $this->_content);
+        if (USE_HTMLAREA) {
+            $html = $this->getPreview();
+            $this->_wikicontent = $this->_content;
+            $this->_content = $html->asXML();
+        }
+        $textarea = HTML::textarea(array('class' => 'wikiedit',
+                                         'name' => 'edit[content]',
+                                         'id'   => 'edit[content]',
+                                         'rows' => $request->getPref('editHeight'),
+                                         'cols' => $request->getPref('editWidth'),
+                                         'readonly' => (bool) $readonly,
+                                         'wrap' => 'virtual'),
+                                   $this->_content);
+        if (USE_HTMLAREA)
+            return Edit_HtmlArea_Textarea($textarea,$this->_wikicontent,'edit[content]');
+        else
+            return $textarea;
     }
 
     function getFormElements () {
@@ -366,6 +397,7 @@ class PageEditor
             return false;
         $this->_content = preg_replace('/[ \t\r]+\n/', "\n",
                                         rtrim($posted['content']));
+        $this->_content = $this->getContent();
 
         $this->_currentVersion = (int) $posted['current_version'];
 
@@ -510,6 +542,12 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.59  2003/12/07 20:35:26  carstenklapp
+ Bugfix: Concurrent updates broken since after 1.3.4 release: Fatal
+ error: Call to undefined function: gettransformedcontent() in
+ /home/groups/p/ph/phpwiki/htdocs/phpwiki2/lib/editpage.php on line
+ 205.
+
  Revision 1.58  2003/03/10 18:25:22  dairiki
  Bug/typo fix.  If you use the edit page to un/lock a page, it
  failed with: Fatal error: Call to a member function on a

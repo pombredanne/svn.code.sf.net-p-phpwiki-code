@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.15 2004-01-27 22:37:50 rurban Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.16 2004-02-15 21:34:37 rurban Exp $');
 /**
- Copyright 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
+ Copyright 2001, 2002, 2003, 2004 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -36,7 +36,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.15 $");
+                            "\$Revision: 1.16 $");
     }
 
     function getDefaultArguments() {
@@ -73,18 +73,21 @@ extends WikiPlugin
             //trigger_error("DEBUG: reading prefs from getPreferences".print_r($pref));
  
             if ($request->isPost()) {
-                //trigger_error("DEBUG: request is post");
-                if ($request->_prefs) {
+                if ($rp = $request->getArg('pref')) {
                     // replace only changed prefs in $pref with those from request
-                    $rp = $request->_prefs->_prefs;
-                    //trigger_error("DEBUG: reading prefs from request".print_r($rp));
-                    //trigger_error("DEBUG: writing prefs with setPreferences".print_r($pref));
-                    $num = $user->setPreferences(new UserPreferences($rp));
-                    if (!$num) {
-                        $errmsg = _("No changes.");
-                    }
-                    else {
-                        $errmsg = fmt("%d UserPreferences fields successfully updated.", $num);
+                    if (!empty($rp['passwd']) and ($rp['passwd2'] != $rp['passwd'])) {
+                        $errmsg = _("Wrong password. Try again.");
+                    } else {
+                        //trigger_error("DEBUG: reading prefs from request".print_r($rp));
+                        //trigger_error("DEBUG: writing prefs with setPreferences".print_r($pref));
+                        $num = $user->setPreferences($rp);
+                        if (!$num) {
+                            $errmsg = _("No changes.");
+                        }
+                        else {
+                            $pref = $user->_prefs;	
+                            $errmsg = fmt("%d UserPreferences fields successfully updated.", $num);
+                        }
                     }
                     $args['errmsg'] = HTML(HTML::h2($errmsg), HTML::hr());
                 }
@@ -133,6 +136,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2004/01/27 22:37:50  rurban
+// fixed default args: no objects
+//
 // Revision 1.14  2004/01/26 09:18:00  rurban
 // * changed stored pref representation as before.
 //   the array of objects is 1) bigger and 2)

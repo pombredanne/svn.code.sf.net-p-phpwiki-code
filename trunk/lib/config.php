@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.81 2004-01-30 19:57:58 rurban Exp $');
+rcs_id('$Id: config.php,v 1.82 2004-02-15 21:34:37 rurban Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -435,7 +435,6 @@ if (ALLOW_USER_LOGIN and empty($DBAuthParams['auth_dsn'])) {
     if (isset($DBParams['dsn']))
         $DBAuthParams['auth_dsn'] = $DBParams['dsn'];
 }
-
 
 // For emacs users
 // Local Variables:

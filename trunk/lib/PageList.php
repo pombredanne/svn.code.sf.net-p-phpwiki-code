@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.52 2004-02-15 15:25:23 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.53 2004-02-15 21:34:37 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -207,8 +207,13 @@ class _PageList_Column_content extends _PageList_Column {
     function _PageList_Column_content ($field, $default_heading, $align = false) {
         _PageList_Column::_PageList_Column($field, $default_heading, $align);
         $this->bytes = 50;
-        $this->_heading .= sprintf(_(" ... first %d bytes"),
-                                   $this->bytes);
+        if ($field == 'content')
+            $this->_heading .= sprintf(_(" ... first %d bytes"),
+                                       $this->bytes);
+        elseif ($field == 'hi_content') {
+            $search = $_POST['admin_replace']['from'];
+            $this->_heading .= sprintf(_(" ... around »%s«"),$search);
+        }
     }
     function _getValue ($page_handle, &$revision_handle) {
         if (!$revision_handle)
@@ -216,17 +221,33 @@ class _PageList_Column_content extends _PageList_Column {
         // Not sure why implode is needed here, I thought
         // getContent() already did this, but it seems necessary.
         $c = implode("\n", $revision_handle->getContent());
-        if (($len = strlen($c)) > $this->bytes) {
+        if ($this->_field == 'hi_content') {
+            $search = $_POST['admin_replace']['from'];
+            if ($search and ($i = strpos($c,$search))) {
+                $l = strlen($search);
+                $j = max(0,$i - ($this->bytes / 2));
+                return HTML::div(array('style' => 'font-size:x-small'),
+                                 HTML::div(array('class' => 'transclusion'),
+                                           HTML::span(substr($c, $j, ($this->bytes / 2))),
+                                           HTML::span(array("style"=>"background:yellow"),$search),
+                                           HTML::span(substr($c, $i+$l, ($this->bytes / 2))))
+                                 );
+            } else {
+                $c = sprintf(_("»%s« not found"),$search);
+                return HTML::div(array('style' => 'font-size:x-small','align'=>'center'),
+                                 $c);
+            }
+        } elseif (($len = strlen($c)) > $this->bytes) {
             $c = substr($c, 0, $this->bytes);
         }
         include_once('lib/BlockParser.php');
         // false --> don't bother processing hrefs for embedded WikiLinks
         $ct = TransformText($c, $revision_handle->get('markup'), false);
-        return HTML::div(array('style' => 'font-size:xx-small'),
+        return HTML::div(array('style' => 'font-size:x-small'),
                          HTML::div(array('class' => 'transclusion'), $ct),
-                         // TODO: Don't show bytes here if size column present too
-                         /* Howto??? $this->parent->_columns['size'] ? "" :*/
-                         ByteFormatter($len, /*$longformat = */true));
+                         // Don't show bytes here if size column present too
+                         ($this->parent->_columns_seen['size'] or !$len) ? "" :
+                           ByteFormatter($len, /*$longformat = */true));
     }
 };
 
@@ -341,7 +362,7 @@ class PageList {
         	return;             // exclude page.
             $dbi = $GLOBALS['request']->getDbh();
             $page_handle = $dbi->getPage($page_handle);
-        } else {
+        } elseif (is_object($page_handle)) {
           if (in_array($page_handle->getName(), $this->_excluded_pages))
             return;             // exclude page.
         }
@@ -454,6 +475,9 @@ class PageList {
                   'content'
                   => new _PageList_Column_content('content', _("Content")),
 
+                  'hi_content'
+                  => new _PageList_Column_content('hi_content', _("Content")),
+                  
                   'remove'
                   => new _PageList_Column_remove('remove', _("Remove")),
 

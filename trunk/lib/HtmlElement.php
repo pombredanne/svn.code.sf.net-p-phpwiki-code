@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.31 2003-02-27 22:47:26 dairiki Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.32 2004-02-15 21:34:37 rurban Exp $');
 /*
  * Code for writing XML.
  */
@@ -444,12 +444,20 @@ function HiddenInputs ($query_args, $pfx = false, $exclude = array()) {
 /** Generate a <script> tag containing javascript.
  *
  * @param string $js  The javascript.
+ * @param string $script_args  (optional) hash of script tags options
+ *                             e.g. to provide another version or the defer attr
  * @return HtmlElement A <script> element.
  */
-function JavaScript($js) {
-    return HTML::script(array('language' => 'JavaScript',
-                              'type'     => 'text/javascript'),
-                        new RawXml("<!-- //\n${js}\n// -->"));
+function JavaScript ($js, $script_args = false) {
+    $default_script_args = array('version' => 'JavaScript',
+                                 'type' => 'text/javascript');
+    $script_args = $script_args ? array_merge($default_script_args,$script_args)
+                                : $default_script_args;
+    if (empty($js))
+        return HTML::script($script_args);
+    else
+        return HTML::script($script_args,
+                            new RawXml("<!-- //\n${js}\n// -->"));
 }
 
 /** Conditionally display content based of whether javascript is supported.
@@ -485,6 +493,17 @@ function IfJavaScript($if_content = false, $else_content = false) {
     
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.31  2003/02/27 22:47:26  dairiki
+ New functions in HtmlElement:
+
+ JavaScript($js)
+    Helper for generating javascript.
+
+ IfJavaScript($if_content, $else_content)
+    Helper for generating
+       <script>document.write('...')</script><noscript>...</noscript>
+    constructs.
+
  Revision 1.30  2003/02/17 06:02:25  dairiki
  Remove functions HiddenGets() and HiddenPosts().
 

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.82 2004-01-25 03:58:43 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.83 2004-02-15 21:34:37 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -607,7 +607,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.82 $");
+                            "\$Revision: 1.83 $");
     }
 
     function managesValidators() {
@@ -679,14 +679,14 @@ extends WikiPlugin
     }
 
     function getChanges ($dbi, $args) {
-        $changes = $dbi->mostRecent($this->getMostRecentParams($args));
-
         $show_deleted = $args['show_deleted'];
         if ($show_deleted == 'sometimes')
             $show_deleted = $args['show_minor'];
 
         if (!$show_deleted)
             $changes = new NonDeletedRevisionIterator($changes, !$args['show_all']);
+        else    
+            $changes = $dbi->mostRecent($this->getMostRecentParams($args));
 
         return $changes;
     }
@@ -774,6 +774,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.82  2004/01/25 03:58:43  rurban
+// use stdlib:isWikiWord()
+//
 // Revision 1.81  2003/11/28 21:06:31  carstenklapp
 // Enhancement: Mozilla RecentChanges sidebar now defaults to 10 changes
 // instead of 1. Make diff buttons smaller with css. Added description
