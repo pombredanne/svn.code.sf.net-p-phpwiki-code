@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.67 2004-03-12 15:48:07 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.68 2004-03-14 16:28:53 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -31,6 +31,7 @@
  * 'perm'     _("Permission Mask")
  * 'acl'      _("ACL")
  * 'renamed_pagename'   _("Rename to")
+ * 'custom'   
  *
  * Symbolic 'info=' arguments:
  * 'all'       All columns except remove, content and renamed_pagename
@@ -156,7 +157,10 @@ class _PageList_Column extends _PageList_Column_base {
         $this->_PageList_Column_base($default_heading, $align);
 
         $this->_need_rev = substr($field, 0, 4) == 'rev:';
-        if ($this->_need_rev)
+        $this->_iscustom = substr($field, 0, 7) == 'custom:';
+        if ($this->_iscustom)
+            $this->_field = substr($field, 7);
+        elseif ($this->_need_rev)
             $this->_field = substr($field, 4);
         else
             $this->_field = $field;
