@@ -1,4 +1,4 @@
-# $Id: .htaccess,v 1.5 2004-02-03 09:17:05 rurban Exp $
+# $Id: .htaccess,v 1.6 2004-03-12 21:35:35 rurban Exp $
 
 <IfModule mod_php4.c>
 
@@ -14,10 +14,10 @@
 </IfModule>
 
 # Try various wiki versions, like wiki, wikide, wikisidebar, ...
-# <FilesMatch "wiki*">
+# <Files "wiki*">
 #   SetHandler application/x-httpd-php
 #   <IfDefine APACHE2>
 #    ForceType  application/x-httpd-php
 #    AcceptPathInfo on
 #   </IfDefine>
-# </FilesMatch>
+# </Files>
