@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: OldStyleTable.php,v 1.1 2002-09-17 15:24:41 dairiki Exp $');
+rcs_id('$Id: OldStyleTable.php,v 1.2 2002-09-17 19:19:53 dairiki Exp $');
 /**
  * OldStyleTable: Layout tables using the old table style.
  * 
@@ -79,7 +79,8 @@ extends WikiPlugin
             else
                 $attr['align'] = 'left';
 
-            $content = TransformInline($m[4], 1.0);
+            // Assume new-style inline markup.
+            $content = TransformInline($m[4]);
             
             $row->pushContent(HTML::td($attr,
                                        $NBSP, $content, $NBSP));
