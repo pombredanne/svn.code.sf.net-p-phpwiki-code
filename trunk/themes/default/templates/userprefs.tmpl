@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.16 2002-02-07 22:01:33 dairiki Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.17 2002-02-08 05:26:00 carstenklapp Exp $ -->
 <?php
 
 /**
@@ -10,7 +10,7 @@ if ($PreftimeOffset = $request->getPref('timeOffset'))
 else
     $defaultOffset = TimezoneOffset(false, true);
 
-$yourTime = date('D, j M Y H:i:s ', time() + PrefTimezoneOffset()) . $defaultOffset;
+$yourTime = $Theme->formatDateTime(time(), true);
 
 /**
  * Generate the popup menu.
@@ -27,7 +27,7 @@ for ($z = -14; $z < 12; $z++) {
     $z = $z-0.5;
 }
 
-$TimeZoneSelect = HTML::select(array('name' => "pref[timeOffset]"), $select);
+$offsetTimePopup = HTML::select(array('name' => "pref[timeOffset]"), $select);
 
 $RelativeDatesCB = HTML(HTML::input(array('type' => 'hidden',
                                           'name' => 'pref[relativeDates][]',
@@ -67,9 +67,9 @@ $RelativeDatesCB = HTML(HTML::input(array('type' => 'hidden',
       <td align="right"><?=_("Your time:")?></td>
       <td><?= $yourTime ?></td>
     </tr><tr>
-      <td align="right">GMT</td>
+      <td align="right"><?=_("Offset time:")?></td>
       <td>
-        <?= $TimeZoneSelect ?>
+        <?= $offsetTimePopup ?>
       </td>
     </tr>
       <!--until timezone functions have been fully debugged-->
@@ -84,7 +84,6 @@ $RelativeDatesCB = HTML(HTML::input(array('type' => 'hidden',
         <?=_("Show relative dates using 'Today' and 'Yesterday'.")?>
       </td>
     </tr>
-    <!--tr><td></td><td><small>Not yet implemented.</small></td></tr-->
   </table>
   </blockquote>
   <hr />
