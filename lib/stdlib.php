@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.109 2002-02-09 03:46:03 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.110 2002-02-23 01:45:17 carstenklapp Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -711,6 +711,29 @@ function better_srand($seed = '') {
         //trigger_error("new random seed", E_USER_NOTICE); //debugging
     }
 }
+
+/**
+ * Recursively count all non-empty elements 
+ * in array of any dimension or mixed - i.e. 
+ * array('1' => 2, '2' => array('1' => 3, '2' => 4))
+ * See http://www.php.net/manual/en/function.count.php
+ */
+function count_all($arg)
+{
+    // skip if argument is empty
+    if ($arg) {
+        //print_r($arg); //debugging
+        $count = 0;
+        // not an array, return 1 (base case) 
+        if(!is_array($arg))
+            return 1;
+        // else call recursively for all elements $arg
+        foreach($arg as $key => $val)
+            $count += count_all($val);
+        return $count;
+    }
+}
+
 
 // (c-file-style: "gnu")
 // Local Variables:
