@@ -1,0 +1,177 @@
+This is a description of the database interface for PhpWiki. Regardless
+of what kind of data store is used (RDBMS, DBM files, flat text files)
+you should be able to write a library that supports that data store.
+
+A few notes: 
+
+* While most functions specify a "db reference" as the first value
+  passed in, this can be any kind of data type that your functions
+  know about. For example, in the DBM implementation this is a hash of
+  integers that refer to open database files, but in the MySQL
+  version it's an associative array that contains the DB information.
+
+* Functions that return the page data must return a hash (associative
+  array) of all the data, where 'content' == the text of the page in Wiki
+  markup, 'version' is an integer representing the version, 'author'
+  the IP address or host name of the previous author and so on. See
+  the next paragraph for a precise description.
+
+* The data structure. This is commonly named $pagehash in the source
+  code; it's an associative array with values that are integers,
+  strings and arrays (i.e. a heterogenous data structure). Here's a
+  current description:
+
+  $pagehash = {
+     author       => string,
+     content      => array (where each element is a line of the page),
+     created      => integer (a number in Unix time since the Epoch),
+     flags        => integer,
+     lastmodified => integer (also Unix time),
+     pagename     => string,
+     version      => integer,
+     refs         => array (where each element is a reference)
+  };
+
+The functions are:
+
+      OpenDataBase($dbname)
+      takes:   a string, the name of the database
+      returns: a reference to the database (a handle)
+
+
+      CloseDataBase($dbi)
+      takes:   a reference to the database (handle)
+      returns: the value of the close. For databases with persistent
+               connections, this doesn't return anything.
+
+
+      MakeDBHash($pagename, $pagehash)
+      takes: page name, page array
+      returns: an encoded version of the $pagehash suitable for
+      insertion into the data store. This is an internal helper
+      function used mainly for the RDBMSs.
+
+      MakePageHash($dbhash)
+      takes: an array that came from the database
+      returns: the $pagehash data structure used by the
+      application. This function undoes what MakeDBHash does.
+
+      RetrievePage($dbi, $pagename, $pagestore)
+      takes:   db reference, string which is the name of a page, and a
+      string indicating which store to fetch the page from (live or archive).
+      returns: a PHP associative array containing the page data
+	       (text, version, author, etc)
+
+
+      InsertPage($dbi, $pagename, $pagehash)
+      takes:   db reference, page name (string), associative array
+	       of all page data
+      returns: nothing (hmm. It should probably return true/false)
+
+      SaveCopyToArchive($dbi, $pagename, $pagehash)
+      Similar to InsertPage but for handling the archive store. The
+      goal here was to separate the two (live db and archive db) in
+      case there were different storage formats (for example, the
+      archive might only store diffs of the pages). However this is
+      not the case in the implementations.
+
+      IsWikiPage($dbi, $pagename)
+      takes:   db reference, string containing page name
+      returns: true or false, if the page already exists in the live db.
+
+      IsInArchive($dbi, $pagename)
+      takes:   db reference, string containing page name
+      returns: true or false, if the page already exists in the archive.
+
+      InitTitleSearch($dbi, $search)
+      takes:   db reference, search string
+      returns: a handle to identify the query and the current position
+               within the result set.
+
+      RemovePage($dbi, $pagename)
+      takes: db reference, name of the page
+      returns: nothing
+      This deletes a page from both the live and archive page stores.
+
+      TitleSearchNextMatch($dbi, &$pos)
+      takes:   db reference, reference to a hash created by
+               InitTitleSearch
+      returns: the next page name that contains a match to the search term
+               (advances $pos to next result field as well)
+
+      MakeSQLSearchClause($search, $column)
+      takes: a search string, column name
+      returns: a SQL query string suitable for a database query
+
+      InitFullSearch($dbi, $search)
+      takes:   db reference, string containing search term
+      returns: similar to InitTitleSearch: a handle to identify the
+               query and the current position within the result set.
+
+
+      FullSearchNextMatch($dbi, &$pos)
+      takes:   db reference, reference to a hash created by
+               InitFullSearch
+      returns: an associative array, where:
+		  'name' -- contains the page name
+		  'hash' -- contains the hash of the page data
+               (advances $pos to next result field as well)
+
+
+      MakeBackLinkSearchRegexp($pagename)
+      takes: a page name
+      returns: A PCRE suitable for searching for a link to the given page
+               within page (wiki-markup) text.  
+
+      InitBackLinkSearch($dbi, $pagename)
+      takes:   db reference, page name
+      returns: a handle to identify the query and the current position
+               within the result set.
+
+      BackLinkSearchNextMatch($dbi, &$pos)
+      takes:   db reference, reference to a hash created by
+               InitBackLinkSearch
+      returns: the next page name that contains a link to the specified page.
+               (advances $pos to next result field as well)
+
+
+      IncreaseHitCount($dbi, $pagename)
+      takes: db reference, string (name of a page)
+      returns: nothing (MySQL implementation returns the last result
+               set but it is not used by the caller)
+	       
+
+      GetHitCount($dbi, $pagename)
+      takes: db reference, string (page name)
+      returns: an integer, the number of hits the page has received
+
+
+      InitMostPopular($dbi, $limit)
+      takes: a db reference and an integer, which is the limit of the
+             number of pages you want returned.
+      returns: the result set from the query
+
+
+      MostPopularNextMatch($dbi, $res)
+      takes: db reference, the result set returned by InitMostPopular
+      returns: the next row from the result set, as a PHP array type
+
+      GetAllWikiPageNames($dbi)
+      takes: db reference
+      returns: an array containing all page names
+
+      GetWikiPageLinks($dbi, $pagename)
+      takes: db reference, page name
+      returns: a two-dimensional array containing outbound links
+      ordered by score desc ('out'); inbound links ordered by score
+      desc ('in'); inbound or outbound links ordered by most number of
+      page views ('popular').
+
+      SetWikiPageLinks($dbi, $pagename, $linklist)
+      takes: db reference, page name, list of pages linking to this
+      one
+      This deletes the existing list of linking pages and inserts all
+      the page names in $linklist.
+
+$Id: DBLIB.txt,v 1.8.2.1 2001-08-18 00:35:10 dairiki Exp $
+

@@ -1,0 +1,85 @@
+Note: this is the email I got when the files were contributed. I cannot test
+the code, since I don't have access to mssql, so ymmv. The files referenced
+here are at:
+
+lib/mssql.php
+admin/translate_mysql.pl (you probably won't need this)
+
+The code for lib/config.php has already been added.
+
+~swain
+
+
+From: Andrew.Pearson@barclayscapital.com
+To: swain@panix.com
+Cc: phpwiki-talk@lists.sourceforge.net
+Subject: PHPWiki with Microsoft SQL-Server
+Date: Tue, 1 May 2001 16:26:50 +0100 
+
+
+
+My colleague John Clayton set up PHPWiki for our development team using
+Apache and MySQL on Windows NT 4.  He then left, and I was asked to port
+this to IIS and SQLServer. Please note this is not a reflection of the
+Apache and MySQL products, which were performing the task admirably, but had
+more to do with consistency of our environment. Since PHP does work with
+SQL-Server, the whole migration took about a day. Here are the steps I
+carried out:
+
+1. Wrote a sql-server library called mssql.php to reside in wiki\lib.
+ <<mssql.php>> 
+2. Added the following clause to wiki\lib\config.php
+   // MS SQLServer settings
+   } elseif ($WhichDatabase == 'mssql') {
+      $WikiPageStore = "wiki";
+      $ArchivePageStore = "archive";
+      $WikiLinksStore = "wikilinks";
+      $WikiScoreStore = "wikiscore";
+      $HitCountStore = "hitcount";
+      $mssql_server = 'servername';
+      $mssql_user = 'wikiweb';
+      $mssql_pwd = 'wikiweb';
+      $mssql_db = 'wiki';
+      include "lib/mssql.php";
+}
+
+3. Set $WhichDatabase='mssql' in config.php
+
+4. Dumped out the mysql wiki database (mysqldump --user=john
+--host=localhost wiki) and wrote the following perl script to convert to
+sql-server compatible sql
+ <<translate_mysql.pl>> 
+
+5. Loaded the translated db script into SQL-Server and granted relevant
+permissions/logins etc. 
+
+6. Set "magic_quotes_sybase=On" in php.ini to handle embedded quote
+characters in strings. This is because SQL-Server, like Sybase, uses ''
+instead of \' within strings to cope with embedded quotes.
+
+We had some problems initially with the PHP extension dll for sql-server,
+but I installed a newer version from http://www.mm4.de. In fact I unpacked
+their whole php4.0.5-rc1 distribution.
+
+I make no claims about all this working 100%, but our existing site seems to
+work okay in its new IIS/SQL-Server home :-)
+
+Andrew Pearson
+Barclays Capital, UK
+
+
+
+
+--------------------------------------------------------------------------------------
+For more information about Barclays Capital, please
+visit our web site at http://www.barcap.com.
+
+
+Internet communications are not secure and therefore the Barclays Group
+does not accept legal responsibility for the contents of this message.
+Any views or opinions presented are solely those of the author and do 
+not necessarily represent those of the Barclays Group unless otherwise 
+specifically stated.
+
+--------------------------------------------------------------------------------------
+
