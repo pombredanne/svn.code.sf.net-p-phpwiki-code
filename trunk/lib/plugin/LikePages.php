@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: LikePages.php,v 1.20 2004-05-18 16:23:40 rurban Exp $');
+rcs_id('$Id: LikePages.php,v 1.21 2004-09-25 16:33:52 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -39,17 +39,19 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.20 $");
+                            "\$Revision: 1.21 $");
     }
 
     function getDefaultArguments() {
-        return array('page'     => '[pagename]',
-                     'prefix'   => false,
-                     'suffix'   => false,
-                     'exclude'  => '',
-                     'noheader' => false,
-                     'info'     => ''
-                     );
+        return array_merge
+            (
+             PageList::supportedArgs(),
+             array('page'     => '[pagename]',
+                   'prefix'   => false,
+                   'suffix'   => false,
+                   'exclude'  => '',
+                   'noheader' => false,
+                   ));
     }
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor
@@ -98,12 +100,10 @@ extends WikiPlugin
 
         $match_re = '/' . join('|', $match) . '/';
 
-        $pagelist = new PageList($info, $exclude);
+        $pagelist = new PageList($info, $exclude, $args);
         if (!$noheader)
             $pagelist->setCaption($descrip);
-
         $pages = $dbi->titleSearch($query);
-
         while ($page = $pages->next()) {
             $name = $page->getName();
             if (!preg_match($match_re, $name))
@@ -120,6 +120,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2004/05/18 16:23:40  rurban
+// rename split_pagename to SplitPagename
+//
 // Revision 1.19  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //
