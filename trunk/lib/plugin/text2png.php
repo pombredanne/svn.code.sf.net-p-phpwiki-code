@@ -1,5 +1,26 @@
 <?php // -*-php-*-
-rcs_id('$Id: text2png.php,v 1.9 2002-01-10 04:16:33 carstenklapp Exp $');
+rcs_id('$Id: text2png.php,v 1.10 2002-03-28 06:50:48 carstenklapp Exp $');
+/*
+ Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+
+ This file is part of PhpWiki.
+
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+
 /**
  * File loading and saving diagnostic messages, to see whether an
  * image was saved to or loaded from the cache and what the path is
@@ -35,10 +56,7 @@ extends WikiPlugin
         } else {
             // we don't have png and/or gd.
             $error_html = _("Sorry, this version of PHP cannot create PNG image files.");
-            $link = QElement('a',
-                             array('href'  => "http://www.php.net/manual/pl/ref.image.php",
-                                   'class' => 'rawurl'),
-                             "http://www.php.net/manual/pl/ref.image.php");
+            $link = "http://www.php.net/manual/pl/ref.image.php";
             $error_html .= sprintf(_("See %s"), $link) .".";
             trigger_error( $error_html, E_USER_NOTICE );
             return;
@@ -89,10 +107,8 @@ extends WikiPlugin
                 $error_html = _("PHP was unable to create a new GD image stream. Read 'lib/plugin/text2png.php' for details.");
                 // FIXME: Error manager does not transform URLs passed
                 //        through it.
-                $error_html .= QElement('a',
-                                        array('href'  => "http://www.php.net/manual/en/function.imagecreate.php",
-                                              'class' => 'rawurl'),
-                                        "PHP web page");
+                $link = "http://www.php.net/manual/en/function.imagecreate.php";
+                $error_html .= sprintf(_("See %s"), $link) .".";
                 trigger_error( $error_html, E_USER_NOTICE );
                 return;
             }
@@ -133,7 +149,7 @@ extends WikiPlugin
         }
 
         // create an <img src= tag to show the image!
-        $html = "";
+        $html = HTML();
         if ($success > 0) {
             if (defined('text2png_debug')) {
                 switch($success) {
@@ -148,8 +164,8 @@ extends WikiPlugin
                 }
             }
             $urlpath = DATA_PATH . "/images/$l/";
-            $html .= Element('img', array('src' => $urlpath . $filename,
-                                          'alt' => $text));
+            $html->pushContent(HTML::img(array('src' => $urlpath . $filename,
+                                          'alt' => $text)));
         } else {
             trigger_error(sprintf(_("couldn't open file '%s' for writing"),
                                   $filepath . $filename), E_USER_NOTICE);
