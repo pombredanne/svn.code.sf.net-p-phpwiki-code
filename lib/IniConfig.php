@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.53 2004-10-12 13:13:19 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.54 2004-10-14 17:13:01 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -127,10 +127,11 @@ function IniConfig($file) {
     $rs = @parse_ini_file($file);
     $rsdef = @parse_ini_file(dirname(__FILE__)."/../config/config-default.ini");
     foreach ($rsdef as $k => $v) {
-    	if (defined($k))
+    	if (defined($k)) {
     	    $rs[$k] = constant($k);
-    	elseif (!isset($rs[$k]))
+    	} elseif (!isset($rs[$k])) {
     	    $rs[$k] = $v;
+    	}
     }
 
     foreach ($_IC_VALID_VALUE as $item) {
@@ -211,7 +212,9 @@ function IniConfig($file) {
     global $DBParams;
     $DBParams['dbtype'] = DATABASE_TYPE;
     $DBParams['dsn'] = DATABASE_DSN;
-    if (isset($rs['DATABASE_PREFIX']))
+    if (defined('DATABASE_PREFIX'))
+        $DBParams['prefix'] = DATABASE_PREFIX;
+    elseif (isset($rs['DATABASE_PREFIX']))
         $DBParams['prefix'] = $rs['DATABASE_PREFIX'];
     $DBParams['db_session_table'] = @$rs['DATABASE_SESSION_TABLE'];
     $DBParams['dba_handler'] = @$rs['DATABASE_DBA_HANDLER'];
@@ -649,6 +652,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.53  2004/10/12 13:13:19  rurban
+// php5 compatibility (5.0.1 ok)
+//
 // Revision 1.52  2004/10/04 23:38:07  rurban
 // unittest fix
 //
