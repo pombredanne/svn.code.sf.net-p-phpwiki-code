@@ -1,5 +1,5 @@
 /*
-  $Id: phpwiki-modern.css,v 1.7 2002-01-26 03:14:36 carstenklapp Exp $
+  $Id: phpwiki-modern.css,v 1.8 2002-02-02 20:54:11 carstenklapp Exp $
 
   Inspiration for this stylesheet:
 
@@ -358,7 +358,11 @@ div.wiki-edithelp {
 .diff del	{ background: #f99; }
 .diff ins	{ background: #9f9; }
 
-
+/* PageList output */
+table.pagelist { background: #bebebe; }
+table.pagelist thead { background: #f4f4f4; color: #555; font-size: smaller; }
+.pagelist tr.evenrow { background: #e6e6e6; }
+.pagelist tr.oddrow  { background: #f4f4f4; }
 
 /* For emacs users
  *
