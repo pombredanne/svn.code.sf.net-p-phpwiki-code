@@ -1,4 +1,4 @@
-<!-- $Id: wiki_stdlib.php3,v 1.15 2000-06-21 22:57:17 ahollosi Exp $ -->
+<!-- $Id: wiki_stdlib.php3,v 1.16 2000-06-26 20:05:22 ahollosi Exp $ -->
 <?
    /*
       Standard functions for Wiki functionality
@@ -264,8 +264,9 @@
       $k = 0;
 
       // scroll through the page to the first date and break
+      // dates are marked with "____" at the beginning of the line
       for ($i = 0; $i < ($numlines + 1); $i++) {
-         if (preg_match("/^\w\w\w+ \d\d?, \d\d\d\d\r$/",
+         if (preg_match("/^____/",
                         $recentchanges["content"][$i])) {
             break;
          } else {
@@ -277,7 +278,7 @@
       // name to the array
 
       if ($isNewDay) {
-         $newpage[$k++] = "$today\r";
+         $newpage[$k++] = "____$today\r";
       } else {
          $newpage[$k++] = $recentchanges["content"][$i++];
       }
