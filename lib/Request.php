@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.16 2002-08-27 21:51:31 rurban Exp $');
+<?php rcs_id('$Id: Request.php,v 1.17 2002-09-09 12:14:37 rurban Exp $');
 
 // FIXME: write log entry.
 
@@ -11,9 +11,11 @@ class Request {
         switch($this->get('REQUEST_METHOD')) {
         case 'GET':
         case 'HEAD':
+            $this->sanify_input_array(&$GLOBALS['HTTP_GET_VARS']);
             $this->args = &$GLOBALS['HTTP_GET_VARS'];
             break;
         case 'POST':
+            $this->sanify_input_array(&$GLOBALS['HTTP_POST_VARS']);
             $this->args = &$GLOBALS['HTTP_POST_VARS'];
             break;
         default:
@@ -198,6 +200,22 @@ class Request {
         }
         elseif (is_string($var))
             $var = preg_replace('|^\r?\n?|', '', $var);
+    }
+
+    function sanify_input_array (&$arr) {
+        if (!empty($arr)) {
+            foreach (array_keys($arr) as $key) {
+                $arr[$key] = $this->sanify_userinput($arr[$key]);
+            }
+        }
+    }
+
+    function sanify_userinput ($var) {
+        // Prevent possible XSS attacks (cross site scripting attacks)
+        // see http://www.cert.org/advisories/CA-2000-02.html, http://www.perl.com/pub/a/2002/02/20/css.html
+        // <script> tags, ...
+        // /wiki/?pagename=<script>alert(document.cookie)</script>
+        return htmlentities(strip_tags($var));
     }
 }
 
