@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.46 2002-03-08 20:31:14 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.47 2003-02-26 23:59:47 dairiki Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -55,20 +55,35 @@ class Theme_MacOSX extends Theme {
     }
 
     function linkUnknownWikiWord($wikiword, $linktext = '') {
-        $url = WikiURL($wikiword, array('action' => 'edit'));
-        //$link = HTML::span(HTML::a(array('href' => $url), '?'));
-        $link = HTML::span($this->makeButton('?', $url));
+        global $request;
+
+        // Get rid of anchors on unknown wikiwords
+        if (isa($wikiword, 'WikiPageName')) {
+            $default_text = $wikiword->shortName;
+            $wikiword = $wikiword->name;
+        }
+        else {
+            $default_text = $wikiword;
+        }
         
+        $url = WikiURL($wikiword, array('action' => 'create'));
+        //$link = HTML::span(HTML::a(array('href' => $url), '?'));
+        $button = $this->makeButton('?', $url);
+        $button->addTooltip(sprintf(_("Create: %s"), $wikiword));
+        $link = HTML::span($button);
+
 
         if (!empty($linktext)) {
             $link->unshiftContent(HTML::u($linktext));
             $link->setAttr('class', 'named-wikiunknown');
         }
         else {
-            $link->unshiftContent(HTML::u($this->maybeSplitWikiWord($wikiword)));
+            $link->unshiftContent(HTML::u($this->maybeSplitWikiWord($default_text)));
             $link->setAttr('class', 'wikiunknown');
         }
-        
+        if ($request->getArg('frame'))
+            $link->setAttr('target', '_top');
+
         return $link;
     }
 }
