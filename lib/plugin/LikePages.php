@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: LikePages.php,v 1.3 2001-12-16 18:33:25 dairiki Exp $');
+rcs_id('$Id: LikePages.php,v 1.4 2001-12-16 19:35:35 dairiki Exp $');
 
 require_once('lib/TextSearchQuery.php');
 
@@ -45,10 +45,12 @@ extends WikiPlugin
                                                $suffix));
         }
         elseif ($page) {
-            $words = explode(" ", split_pagename($page));
-            assert($words);
-            $prefix = $words[0];
-            list($suffix) = array_reverse($words);
+            $words = preg_split('/[\s:-;.,]+/',
+                                split_pagename($page));
+            $words = preg_grep('/\S/', $words);
+            
+            $prefix = reset($words);
+            $suffix = end($words);
             $exclude = $page;
             
             if (!$noheader) {
@@ -58,7 +60,7 @@ extends WikiPlugin
         }
 
         // Search for pages containing either the suffix or the prefix.
-        $search = array();
+        $search = $match = array();
         if (!empty($prefix)) {
             $search[] = $this->_quote($prefix);
             $match[] = '^' . preg_quote($prefix, '/');
@@ -67,7 +69,12 @@ extends WikiPlugin
             $search[] = $this->_quote($suffix);
             $match[] = preg_quote($suffix, '/') . '$';
         }
-        $query = new TextSearchQuery(join(' OR ', $search));
+
+        if ($search)
+            $query = new TextSearchQuery(join(' OR ', $search));
+        else
+            $query = new NullTextSearchQuery; // matches nothing
+        
         $match_re = '/' . join('|', $match) . '/';
 
         $pages = $dbi->titleSearch($query);
