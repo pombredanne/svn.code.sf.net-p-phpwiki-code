@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.66 2004-12-13 14:39:16 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.67 2004-12-22 15:47:41 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -989,38 +989,21 @@ extends WikiDB_backend
 
         $pageid = (int)$pageid;
 
-        // Optimize: mysql can do this with one REPLACE INTO.
-        // FIXME: This treally should be moved into ADODB_mysql.php but 
-        // then it must be duplicated for mysqli and mysqlt also.
-        $backend_type = $this->backendType();
-        if (substr($backend_type,0,5) == 'mysql') {
-            $dbh->Execute("REPLACE INTO $nonempty_tbl (id)"
-                          . " SELECT $recent_tbl.id"
-                          . " FROM $recent_tbl, $version_tbl"
-                          . " WHERE $recent_tbl.id=$version_tbl.id"
-                          . "       AND version=latestversion"
-                          // We have some specifics here (Oracle)
-                          // . "  AND content<>''"
-                          . "  AND content $notempty"
-                          . ( $pageid ? " AND $recent_tbl.id=$pageid" : ""));
-        } else {
-            extract($this->_expressions);
-            $this->lock(array('nonempty'));
-            $dbh->Execute("DELETE FROM $nonempty_tbl"
-                          . ( $pageid ? " WHERE id=$pageid" : ""));
-            $dbh->Execute("INSERT INTO $nonempty_tbl (id)"
-                          . " SELECT $recent_tbl.id"
-                          . " FROM $recent_tbl, $version_tbl"
-                          . " WHERE $recent_tbl.id=$version_tbl.id"
-                          . "       AND version=latestversion"
-                          // We have some specifics here (Oracle)
-                          //. "  AND content<>''"
-                          . "  AND content $notempty"
-                          . ( $pageid ? " AND $recent_tbl.id=$pageid" : ""));
-            $this->unlock(array('nonempty'));
-        }
+        extract($this->_expressions);
+        $this->lock(array('nonempty'));
+        $dbh->Execute("DELETE FROM $nonempty_tbl"
+                      . ( $pageid ? " WHERE id=$pageid" : ""));
+        $dbh->Execute("INSERT INTO $nonempty_tbl (id)"
+                      . " SELECT $recent_tbl.id"
+                      . " FROM $recent_tbl, $version_tbl"
+                      . " WHERE $recent_tbl.id=$version_tbl.id"
+                      . "       AND version=latestversion"
+                      // We have some specifics here (Oracle)
+                      //. "  AND content<>''"
+                      . "  AND content $notempty"
+                      . ( $pageid ? " AND $recent_tbl.id=$pageid" : ""));
+        $this->unlock(array('nonempty'));
     }
-
 
     /**
      * Grab a write lock on the tables in the SQL database.
@@ -1385,6 +1368,9 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.66  2004/12/13 14:39:16  rurban
+// avoid warning
+//
 // Revision 1.65  2004/12/10 22:15:00  rurban
 // fix $page->get('_cached_html)
 // refactor upgrade db helper _convert_cached_html() to be able to call them from WikiAdminUtils also.

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.21 2004-12-08 12:55:50 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.22 2004-12-22 15:47:40 rurban Exp $');
 
 /*
   Pagedata
@@ -172,6 +172,7 @@ class WikiDB_backend
         $version = $this->get_latest_version($pagename);
         $this->set_versiondata($pagename, $version+1, $vdata);
         $this->set_links($pagename, false); // links are purged.
+        // SQL needs to invalidate the non_empty id
         if (! WIKIDB_NOCACHE_MARKUP) {
             // need the hits, perms and LOCKED, otherwise you can reset the perm 
             // by action=remove and re-create it with default perms
