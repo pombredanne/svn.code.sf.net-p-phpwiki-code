@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.7 2003-02-17 06:06:33 dairiki Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.8 2003-02-17 17:23:59 dairiki Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -46,7 +46,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -81,8 +81,6 @@ extends WikiPlugin
 
     function collectPages(&$list, &$dbi) {
         extract($this->_args);
-        if (!is_numeric($min_age))
-            $min_age = -1;
 
         $now = time();
         
@@ -123,7 +121,12 @@ extends WikiPlugin
     }
     
     function run($dbi, $argstr, $request) {
+        if ($request->getArg('action') != 'browse')
+            return $this->disabled("(action != 'browse')");
+        
         $args = $this->getArgs($argstr, $request);
+        if (!is_numeric($args['min_age']))
+            $args['min_age'] = -1;
         $this->_args = $args;
         
         if (!empty($args['exclude']))
@@ -131,18 +134,12 @@ extends WikiPlugin
         else
             $exclude = false;
 
-        $info = 'checkbox';
-        if ($args['info'])
-            $info .= "," . $args['info'];
-
 
         $p = $request->getArg('p');
         $post_args = $request->getArg('admin_remove');
 
-        $html = HTML();
         $next_action = 'select';
         $pages = array();
-        $label = _("Remove selected pages");
         
         if ($p && $request->isPost() && $request->_user->isAdmin()
             && !empty($post_args['remove']) && empty($post_args['cancel'])) {
@@ -154,28 +151,57 @@ extends WikiPlugin
 
             if ($post_args['action'] == 'select') {
                 $next_action = 'verify';
-                $label = _("Really remove selected pages");
-                $html->pushContent(HTML::h2(false, _("Verify Selections")));
                 foreach ($p as $name) {
                     $pages[$name] = 1;
                 }
             }
         }
-
         if ($next_action == 'select') {
             // List all pages to select from.
             $list = $this->collectPages($pages, $dbi);
         }
 
+
+        $info = 'checkbox';
+        if ($args['info'])
+            $info .= "," . $args['info'];
         $pagelist = new PageList_Selectable($info, $exclude);
         $pagelist->addPageList($pages);
 
+        $header = HTML::p();
+        if ($next_action == 'verify') {
+            $button_label = _("Permanently remove selected pages");
+            $header->pushContent(HTML::strong(
+                _("Are you sure you want to permanently remove the selected files?")));
+        }
+        else {
+            $button_label = _("Remove selected pages");
+            if ($args['min_age'] >= 0) {
+                $header->pushContent(
+                    fmt("Listing pages which have been deleted at least %s days.",
+                        $args['min_age']));
+            }
+            else {
+                $header->pushContent(_("Listing all pages."));
+            }
+            
+            if ($args['max_age'] >= 0) {
+                $header->pushContent(
+                    " ",
+                    fmt("(Automatically checking pages which have been deleted at least %s days.)",
+                        $args['max_age']));
+            }
+        }
+
+
+        $buttons = HTML::p(Button('submit:admin_remove[remove]', $button_label, 'wikiadmin'),
+                           Button('submit:admin_remove[cancel]', _("Cancel"), 'button'));
 
         return HTML::form(array('action' => $request->getPostURL(),
                                 'method' => 'post'),
 
-                          $html,
-
+                          $header,
+                          
                           $pagelist->getContent(),
 
                           HiddenInputs($request->getArgs(),
@@ -184,13 +210,28 @@ extends WikiPlugin
 
                           HiddenInputs(array('admin_remove[action]' => $next_action,
                                              'require_authority_for_post' => WIKIAUTH_ADMIN)),
-
-                          Button('submit:admin_remove[remove]', $label, 'wikiadmin'),
-                          Button('submit:admin_remove[cancel]', _("Cancel"), 'button'));
+                          $buttons);
     }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2003/02/17 06:06:33  dairiki
+// Refactor & code cleanup.
+//
+// Added two new plugin arguments:
+//
+//   min_age - only display pages which have been "deleted" for at
+//             least this many days.  (Use min_age=none to get all
+//             pages, even non-deleted ones listed.)
+//
+//   max_age - automatically check the checkboxes of pages which
+//             have been "deleted" this many days or more.
+//
+// ("Deleted" means the current version of the page is empty.
+// For the most part, PhpWiki treats these "deleted" pages as
+// if they didn't exist --- but, of course, the PageHistory is
+// still available, allowing old versions of the page to be restored.)
+//
 // Revision 1.6  2003/02/16 19:47:17  dairiki
 // Update WikiDB timestamp when editing or deleting pages.
 //
