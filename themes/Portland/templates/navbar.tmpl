@@ -1,9 +1,18 @@
 <?php // -*-html-*- ?>
-<!-- $Id: navbar.tmpl,v 1.1 2002-01-19 22:48:42 carstenklapp Exp $ -->
+<!-- $Id: navbar.tmpl,v 1.2 2002-01-20 02:48:05 carstenklapp Exp $ -->
 <?php
 
-$BF = &$ButtonFactory;
-$s = $Theme->getButtonSeparator();
+  $BF = &$ButtonFactory;
+
+  $LockPageB = $BF->makeActionButton($page->get('locked') ? 'unlock' : 'lock');
+  $RemovePageB = $BF->makeActionButton('remove');
+
+  $DiffB = $BF->makeActionButton(array('action' => 'diff', 'previous' => 'major'));
+
+  $DebugInfoB = $BF->makeActionPageButton(_("DebugInfo"));
+
+  $Sep = $Theme->getButtonSeparator();
+
 
 /* TODO: Cleanup for localization. */
 ?>
@@ -13,6 +22,11 @@ $s = $Theme->getButtonSeparator();
     <?php if (!empty($PAGE)) { ?>
       (or browse <?= $ButtonFactory->makeActionPageButton(_("LikePages")) ?>)
     <?php } ?>
+    <?php if ($user->isAdmin()) { ?>
+     <?=$Sep?><?= $LockPageB ?><?=$Sep?><?= $RemovePageB ?>
+    <?php } ?>
+    <!-- For debugging only, really -->
+    <?=$Sep?><?= $DebugInfoB ?><br />
    <hr />
 <!-- I would like not to have to use these tables, and managed to
      get this stuff to work more or less correctly using
@@ -27,7 +41,7 @@ $s = $Theme->getButtonSeparator();
   <td>
    <?= $BF->makeLinkButton(_("RecentChanges")) ?>
     <?php if (!empty($user) && $user->isAdmin()) { ?>
-     <?=$s?><?= $ButtonFactory->makeLinkButton(_("PhpWikiAdministration")) ?>
+     <?=$Sep?><?= $ButtonFactory->makeLinkButton(_("PhpWikiAdministration")) ?>
     <?php } ?>
   <td align="right">
     <?= new WikiTemplate('signin') ?>
