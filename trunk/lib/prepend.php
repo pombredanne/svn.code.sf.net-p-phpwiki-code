@@ -5,7 +5,7 @@
  */
 $RCS_IDS = '';
 function rcs_id ($id) { $GLOBALS['RCS_IDS'] .= "$id\n"; }
-rcs_id('$Id: prepend.php,v 1.11 2002-01-28 18:49:08 dairiki Exp $');
+rcs_id('$Id: prepend.php,v 1.12 2002-09-09 08:38:19 rurban Exp $');
 
 error_reporting(E_ALL);
 require_once('lib/ErrorManager.php');
@@ -34,9 +34,10 @@ function ExitWiki($errormsg = false)
     }
     exit;
 }
-
-$ErrorManager->setPostponedErrorMask(E_ALL);
-$ErrorManager->setFatalHandler(new WikiFunctionCb('ExitWiki'));
+if (!defined('DEBUG') or (defined('DEBUG') and DEBUG > 2)) {
+  $ErrorManager->setPostponedErrorMask(E_ALL);
+  $ErrorManager->setFatalHandler(new WikiFunctionCb('ExitWiki'));
+}
 
 // (c-file-style: "gnu")
 // Local Variables:

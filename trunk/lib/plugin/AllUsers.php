@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllUsers.php,v 1.2 2002-08-27 21:51:31 rurban Exp $');
+rcs_id('$Id: AllUsers.php,v 1.3 2002-09-09 08:38:19 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -42,15 +42,19 @@ extends WikiPlugin
                      'include_empty' => true,
                      'exclude'       => '',
                      'info'          => '',
+                     'sortby'        => '',   // +mtime,-pagename
                      'debug'         => false
                      );
     }
     // info arg allows multiple columns info=mtime,hits,summary,version,author,locked,minor,markup or all
     // exclude arg allows multiple pagenames exclude=WikiAdmin,.SecretUser
     // include_empty shows also users which stored their preferences, but never saved their homepage
+    // sortby: [+|-] pagename|mtime|hits
 
     function run($dbi, $argstr, $request) {
         extract($this->getArgs($argstr, $request));
+        // Todo: extend given _GET args
+        if ($sortby) $request->setArg('sortby',$sortby);
 
         $pagelist = new PageList($info, $exclude);
         if (!$noheader)

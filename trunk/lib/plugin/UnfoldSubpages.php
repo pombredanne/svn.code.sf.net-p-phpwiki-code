@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UnfoldSubpages.php,v 1.1 2002-09-01 16:33:19 rurban Exp $');
+rcs_id('$Id: UnfoldSubpages.php,v 1.2 2002-09-09 08:38:19 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -58,7 +58,7 @@ extends WikiPlugin
             $words = explode(' ', $line);
             if ($wordcount + count($words) > $n) {
                 $new[] = implode(' ', array_slice($words, 0, $n - $wordcount))
-                         . sprintf(_("... first $d words"), $n);
+                         . sprintf(_("... first %d words"), $n);
                 return $new;
             } else {
                 $wordcount += count($words);
@@ -114,12 +114,12 @@ extends WikiPlugin
             if ($section)
                 $c = $this->extractSection($section, $c, $page, $quiet, $sectionhead);
             if ($lines)
-                $c = array_slice($c, 0, $lines) . sprintf(_(" ... first $d lines"), $bytes);
+                $c = array_slice($c, 0, $lines) . sprintf(_(" ... first %d lines"), $bytes);
             if ($words)
                 $c = $this->firstNWordsOfContent($words, $c);
             if ($bytes) {
                 if (strlen($c) > $bytes)
-                    $c = substr($c,0,$bytes) . sprintf(_(" ... first $d bytes"), $bytes);
+                    $c = substr($c,0,$bytes) . sprintf(_(" ... first %d bytes"), $bytes);
             }
 
             array_push($included_pages, $page);

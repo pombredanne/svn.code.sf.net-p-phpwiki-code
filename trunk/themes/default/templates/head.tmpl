@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-/* $Id: head.tmpl,v 1.1 2002-08-23 18:29:34 rurban Exp $
+/* $Id: head.tmpl,v 1.2 2002-09-09 08:38:19 rurban Exp $
  *
  * This template is responsible mainly for the outer level <html> stuff and the <head>.
  */
@@ -9,7 +9,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: head.tmpl,v 1.1 2002-08-23 18:29:34 rurban Exp $ -->
+<!-- $Id: head.tmpl,v 1.2 2002-09-09 08:38:19 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
 <?php $ROBOTS_CONTENT = $ROBOTS_META ? $ROBOTS_META : "noindex,nofollow"; ?>
 <meta name="robots" content="<?= $ROBOTS_CONTENT ?>" />
@@ -17,6 +17,9 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
 <?php if (!empty($PAGE_DESCRIPTION)) { ?>
 <meta name="description" content="<?=$PAGE_DESCRIPTION?>" />
 <?php } ?>
+<meta name="language" content="<?=$LANG?>" />
+<meta name="document-type" content="Public" />
+<meta name="document-rating" content="General" />
 <meta name="PHPWIKI_VERSION" content="<?=PHPWIKI_VERSION?>" />
 <base href="<?=BASE_URL?>" />
 <?php /**

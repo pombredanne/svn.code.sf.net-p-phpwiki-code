@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _BackendInfo.php,v 1.16 2002-08-24 13:18:56 rurban Exp $');
+rcs_id('$Id: _BackendInfo.php,v 1.17 2002-09-09 08:38:19 rurban Exp $');
 require_once('lib/Template.php');
 /**
  */
@@ -73,7 +73,8 @@ extends WikiPlugin
                 $val = unserialize($val);
                 $rows[] = $this->_showhash (NBSP . NBSP . "get_pagedata('$pagename')['$key']" , $val);
             } else {
-                if ($key == 'passwd') $val = $val ? _("<not displayed>") : _("<empty>");
+                if ($key == 'passwd' and ! $request->_user->isAdmin())
+                    $val = $val ? _("<not displayed>") : _("<empty>");
                 $rows[] = HTML::tr(HTML::td(array('align' => 'right',
                                                   'bgcolor' => '#cccccc',
                                                   'style' => 'color:#000000'),

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllPages.php,v 1.13 2002-08-27 21:51:31 rurban Exp $');
+rcs_id('$Id: AllPages.php,v 1.14 2002-09-09 08:38:19 rurban Exp $');
 
 require_once('lib/PageList.php');
 
@@ -21,14 +21,18 @@ extends WikiPlugin
                      'include_empty' => false,
                      'exclude'       => '',
                      'info'          => '',
+                     'sortby'        => '',   // +mtime,-pagename
                      'debug'         => false
                      );
     }
     // info arg allows multiple columns info=mtime,hits,summary,version,author,locked,minor,markup or all
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
+    // sortby: [+|-] pagename|mtime|hits
 
     function run($dbi, $argstr, $request) {
         extract($this->getArgs($argstr, $request));
+        // Todo: extend given _GET args
+        if ($sortby) $request->setArg('sortby',$sortby);
 
         $pagelist = new PageList($info, $exclude);
         if (!$noheader)

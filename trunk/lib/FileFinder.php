@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.8 2002-08-27 21:51:31 rurban Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.9 2002-09-09 08:38:18 rurban Exp $');
 
 // FIXME: make this work with non-unix (e.g. DOS) filenames.
 
@@ -41,8 +41,14 @@ class FileFinder
         elseif ( ($dir = $this->_search_path($file)) ) {
             return $dir . $this->_use_path_separator($dir) . $file;
         }
-
         return $missing_okay ? false : $this->_not_found($file);
+    }
+
+    function slashifyPath ($path) {
+        if ($this->_isOtherPathsep())
+            return strtr($path,$this->_use_path_separator($path),'/');
+        else 
+            return $path;
     }
 
     /**
@@ -69,18 +75,24 @@ class FileFinder
         return $this->_not_found($file);
     }
 
+    function _isOtherPathsep() {
+        return $this->_pathsep != '/';
+    }
+
     /**
      * The system-dependent path-separator character. 
-     * UNIX:    /
-     * Windows: \
-     * Mac:     :
+     * UNIX,WindowsNT,MacOSX: /
+     * Windows95: \
+     * Mac:       :
      *
      * @access private
      * @return string path_separator.
      */
     function _get_syspath_separator () {
-        if (isWindows()) return '\\';  // anyway: we support only WinNT and use /
-        elseif (isMac()) return ':';   // MacOsX is /
+    	if (!empty($this->_pathsep)) return $this->_pathsep;
+        elseif (isWindowsNT()) return '\\';
+        elseif (isWindows()) return '\\';
+        elseif (isMac()) return ':';    // MacOsX is /
         // VMS or LispM is really weird, we ignore it.
         else return '/';
     }
@@ -98,8 +110,8 @@ class FileFinder
      * @return string path_separator.
      */
     function _use_path_separator ($path) {
-        if (isWindows()) {
-            return (strstr('\\',$path)) ? '\\' : '/';
+        if (isWindows95()) {
+            return (strchr($path,'\\')) ? '\\' : '/';
         } else {
             return $this->_get_syspath_separator();
         }
@@ -140,8 +152,14 @@ class FileFinder
      */
     function _search_path ($file) {
         foreach ($this->_path as $dir) {
-            if (file_exists($dir . $this->_use_path_separator($dir) . $file))
-                return $dir;
+            // ensure we use the same pathsep
+            if ($this->_pathsep != '/') {
+            	$dir = $this->slashifyPath($dir);
+            	$file = $this->slashifyPath($file);
+                if (file_exists($dir . $this->_pathsep . $file))
+                    return $dir;
+            } elseif (file_exists("$dir/$file"))
+               	return $dir;
         }
         return false;
     }
@@ -170,7 +188,7 @@ class FileFinder
         $path = ini_get('include_path');
         if (empty($path))
             $path = '.';
-        return explode($this->_get_ini_separator(), $path);
+        return explode($this->_get_ini_separator(), $this->slashifyPath($path));
     }
 
     /**
@@ -199,7 +217,7 @@ class FileFinder
          * This following line should be in the above if-block, but we
          * put it here, as it seems to work-around the bug.
          */
-        ini_set('include_path', implode($this->_get_ini_separator(), $path));
+        ini_set('include_path', implode($this->_get_ini_separator(), $this->slashifyPath($path)));
     }
 
     // Return all the possible shortened locale specifiers for the given locale.
@@ -213,6 +231,7 @@ class FileFinder
             if ( ($tail = strchr($lang, $sep)) )
                 $langs[] = substr($lang, 0, -strlen($tail));
         }
+        return $langs;
     }
 
     /**
@@ -308,7 +327,7 @@ class LocalizedFileFinder
           foreach ($locales as $lang) {
             if ($lang == 'C') $lang='en';
             foreach ($include_path as $dir) {
-                $path[] = "$dir/locale/$lang";
+                $path[] = $this->slashifyPath($dir) . "/locale/$lang";
             }
           }
         $this->FileFinder(array_merge($path, $include_path));
@@ -356,12 +375,29 @@ class LocalizedButtonFinder
 }
 
 function isWindows() {
+    static $win;
+    if (isset($win)) return $win;
     //return preg_match('/^Windows/', php_uname());
-    return (substr(PHP_OS,0,3) == 'WIN');
+    $win = (substr(PHP_OS,0,3) == 'WIN');
+    return $win;
 }
 
-// So far not supported. This has really ugly pathname semantics
-// :path is relative, Desktop:path (I think) is absolute. Please fix this someone
+function isWindows95() {
+    static $win95;
+    if (isset($win95)) return $win95;
+    $win95 = isWindows() and !isWindowsNT();
+    return $win95;
+}
+
+function isWindowsNT() {
+    static $winnt;
+    if (isset($winnt)) return $winnt;
+    $winnt = preg_match('/^Windows NT/', php_uname());
+    return $winnt;
+}
+
+// So far not supported. This has really ugly pathname semantics.
+// :path is relative, Desktop:path (I think) is absolute. Please fix this someone.
 function isMac() {
     return (substr(PHP_OS,0,3) == 'MAC'); // not tested!
 }

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.39 2002-08-27 21:51:31 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.40 2002-09-09 08:38:19 rurban Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -33,7 +33,7 @@
  * The 'sortby' option is handled here correctly, but at the backends at 
  * the page iterator not yet.
  *
- * TODO: sortby, limit, offset, rows arguments for multiple pages/multiple rows.
+ * TODO: order, sortby, limit, offset, rows arguments for multiple pages/multiple rows.
  */
 class _PageList_Column_base {
 
@@ -58,6 +58,7 @@ class _PageList_Column_base {
 
     function heading () {
         if (in_array($this->_field,array('pagename','mtime','hits'))) {
+            // Todo: multiple comma-delimited sortby args: "+hits,+pagename"
             // asc or desc: +pagename, -pagename
             $sortby = '+' . $this->_field;
             if ($sorted = $GLOBALS['request']->getArg('sortby')) {
