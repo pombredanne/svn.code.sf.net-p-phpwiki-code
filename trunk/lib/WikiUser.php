@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiUser.php,v 1.29 2002-11-19 07:07:38 carstenklapp Exp $');
+<?php rcs_id('$Id: WikiUser.php,v 1.30 2003-01-15 04:59:27 carstenklapp Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -261,9 +261,11 @@ class WikiUser {
         //}
 
         // before we get his prefs we should check if he is signed in
-        if (!$prefs->_prefs and USE_PREFS_IN_PAGE and $this->homePage()) { // in page metadata
-            if ($pref = $this->_homepage->get('pref'))
+        if (USE_PREFS_IN_PAGE and $this->homePage()) { // in page metadata
+            if ($pref = $this->_homepage->get('pref')) {
+                //trigger_error("pref=".$pref);//debugging
                 $prefs = unserialize($pref);
+            }
         }
         return new UserPreferences($prefs);
     }
@@ -591,6 +593,8 @@ class UserPreferences {
             $this->_prefs[$name] = $newvalue;
     }
 }
+
+// $Log: not supported by cvs2svn $
 
 // Local Variables:
 // mode: php
