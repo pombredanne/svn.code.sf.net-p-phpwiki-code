@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: HelloWorld.php,v 1.6 2002-01-09 00:03:50 carstenklapp Exp $');
+rcs_id('$Id: HelloWorld.php,v 1.7 2002-01-09 18:06:49 carstenklapp Exp $');
 /**
  * A simple demonstration WikiPlugin.
  *
@@ -29,8 +29,8 @@ extends WikiPlugin
     }
     // Establish default values for each of this plugin's arguments.
     function getDefaultArguments() {
-        return array('salutation'	=> "Hello,",
-                     'name'		=> "World");
+        return array('salutation' => "Hello,",
+                     'name'	  => "World");
     }
 
     function run($dbi, $argstr, $request) {
@@ -39,7 +39,7 @@ extends WikiPlugin
         // Any text that is returned will not be further transformed,
         // so use html where necessary.
         $html = Element('tt', sprintf('%s %s', $salutation,
-                                        do_transform($name, 'LinkTransform'))
+                                      do_transform($name, 'LinkTransform'))
                         .THE_END);
         return $html;
     }
@@ -53,5 +53,4 @@ extends WikiPlugin
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-        
 ?>

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: IncludePage.php,v 1.5 2001-12-17 16:40:43 dairiki Exp $');
+rcs_id('$Id: IncludePage.php,v 1.6 2002-01-09 18:06:49 carstenklapp Exp $');
 /**
  * IncludePage:  include text from another wiki page in this one
  * usage:   <?plugin IncludePage page=OtherPage rev=6 quiet=1 words=50 lines=6?>
@@ -14,24 +14,24 @@ extends WikiPlugin
     function getName() {
         return _("IncludePage");
     }
-    
+
     function getDefaultArguments() {
-        return array( 'page'  => false,    // the page to include
-                      'rev'   => false,    // the revision (defaults to most recent)
-                      'quiet' => false,    // if set, inclusion appears as normal content
-                      'words' => false,    // maximum number of words to include
-                      'lines' => false,    // maximum number of lines to include
-                      'section'=> false    // include a named section
-                                        );
+        return array( 'page'    => false, // the page to include
+                      'rev'     => false, // the revision (defaults to most recent)
+                      'quiet'   => false, // if set, inclusion appears as normal content
+                      'words'   => false, // maximum number of words to include
+                      'lines'   => false, // maximum number of lines to include
+                      'section' => false  // include a named section
+                      );
     }
 
     function firstNWordsOfContent( $n, $content ) {
-        $wordcount = 0; 
+        $wordcount = 0;
         $new = array( );
         foreach ($content as $line) {
             $words = explode(' ', $line);
             if ($wordcount + count($words) > $n) {
-                $new[] = implode(' ', array_slice($words, 0, $n - $wordcount)) 
+                $new[] = implode(' ', array_slice($words, 0, $n - $wordcount))
                     . "... (first $n words)";
                 return $new;
             } else {
@@ -57,15 +57,14 @@ extends WikiPlugin
         }
         return array(sprintf(_("<%s: no such section>"), $section));
     }
-    
-                
+
     function error($msg) {
         // FIXME: better error reporting?
         trigger_error($msg, E_USER_NOTICE);
     }
-    
+
     function run($dbi, $argstr, $request) {
-        
+
         extract($this->getArgs($argstr, $request));
 
         if (!$page) {
@@ -79,13 +78,14 @@ extends WikiPlugin
             $this->error(sprintf(_("recursive inclusion of page %s"), $page));
             return '';
         }
-        
-        $p = $dbi->getPage($page); 
-        
+
+        $p = $dbi->getPage($page);
+
         if ($rev) {
             $r = $p->getRevision($rev);
             if (!$r) {
-                $this->error(sprintf(_("%s(%d): no such revision"), $page, $rev));
+                $this->error(sprintf(_("%s(%d): no such revision"), $page,
+                                     $rev));
                 return '';
             }
         } else {
@@ -98,17 +98,18 @@ extends WikiPlugin
             $c = $this->extractSection($section, $c);
         if ($lines)
             $c = array_slice($c, 0, $lines);
-        if ($words) 
+        if ($words)
             $c = $this->firstNWordsOfContent($words, $c);
 
         array_push($included_pages, $page);
         $content = do_transform($c);
         array_pop($included_pages);
-        
+
         if ($quiet) return $content;
 
         return Element('p', array('class' => 'transclusion-title'),
-                       sprintf(_("Included from %s"), LinkExistingWikiWord($page)))
+                       sprintf(_("Included from %s"),
+                               LinkExistingWikiWord($page)))
             . Element('div', array('class' => 'transclusion'),
                       $content);
     }
@@ -121,22 +122,23 @@ extends WikiPlugin
 //   font-size: 0.75em;
 //   text-decoration: underline;
 //   text-align: right;
-// } 
+// }
 //
-// DIV.transclusion { 
+// DIV.transclusion {
 //   background: lightgreen;
 //   border: thin;
 //   border-style: solid;
-//   padding-left: 0.8em; 
-//   padding-right: 0.8em; 
+//   padding-left: 0.8em;
+//   padding-right: 0.8em;
 //   padding-top: 0px;
 //   padding-bottom: 0px;
 //   margin: 0.5ex 0px;
 // }
 
 // KNOWN ISSUES:
-//   - line & word limit doesn't work if the included page itself includes a plugin
-//   - we need an error reporting scheme
+// - line & word limit doesn't work if the included page itself
+//   includes a plugin
+// - we need an error reporting scheme
 
 // For emacs users
 // Local Variables:
@@ -146,5 +148,4 @@ extends WikiPlugin
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-        
 ?>

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPage.php,v 1.3 2001-12-28 11:12:21 carstenklapp Exp $');
+rcs_id('$Id: UserPage.php,v 1.4 2002-01-09 18:06:50 carstenklapp Exp $');
 /**
  * UserPage:  a clone of the clublet sign-in facility
  * usage:   <?plugin UserPage?>
@@ -94,5 +94,4 @@ extends WikiPlugin
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-        
 ?>
