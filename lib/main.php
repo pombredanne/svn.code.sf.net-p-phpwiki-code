@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.179 2004-09-25 18:57:42 rurban Exp $');
+rcs_id('$Id: main.php,v 1.180 2004-10-04 23:39:34 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -1069,6 +1069,7 @@ function main () {
         $_PEAR_destructor_object_list = array();
     $request->possiblyDeflowerVirginWiki();
     
+// hack! define proper actions for these.
 if (defined('WIKI_XMLRPC') and WIKI_XMLRPC) return;
 if (defined('WIKI_SOAP')   and WIKI_SOAP)   return;
 
@@ -1108,6 +1109,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.179  2004/09/25 18:57:42  rurban
+// better ACL error message: view not browse, change not setacl, ...
+//
 // Revision 1.178  2004/09/25 16:27:36  rurban
 // better not allowed description: on global disallowed, and on missing pageperms
 //
