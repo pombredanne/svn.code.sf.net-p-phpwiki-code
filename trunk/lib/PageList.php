@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.111 2004-09-24 18:50:45 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.112 2004-10-04 23:39:58 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -712,6 +712,8 @@ class PageList {
     function addPageList (&$list) {
         if (empty($list)) return;  // Protect reset from a null arg
         foreach ($list as $page) {
+            if (is_object($page))
+                $page = $page->_pagename;
             $this->addPage((string)$page);
         }
     }
@@ -1433,6 +1435,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.111  2004/09/24 18:50:45  rurban
+// fix paging of SqlResult
+//
 // Revision 1.110  2004/09/17 14:43:31  rurban
 // typo
 //
