@@ -307,16 +307,16 @@ msgstr ""
 
 #: ../lib/plugin/MostPopular.php:27
 msgid "Hits"
-msgstr ""
+msgstr "antal träffar"
 
 #: ../lib/plugin/MostPopular.php:28
 msgid "Page Name"
-msgstr ""
+msgstr "namn på sidan"
 
 #: ../lib/plugin/MostPopular.php:42
 #, c-format
 msgid "The %s most popular pages of this wiki:"
-msgstr ""
+msgstr "De %s mest populära sidorna för den här wikin:"
 
 #: ../lib/plugin/PageHistory.php:71
 #, c-format
