@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.21 2002-02-27 19:04:30 carstenklapp Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.22 2002-02-28 00:42:58 carstenklapp Exp $');
 
 class WikiPlugin
 {
@@ -127,12 +127,12 @@ class WikiPlugin
 
 
     function getDefaultLinkArguments() {
-        return array('targetpage'  => $this->getName(),
-                    'linktext'    => $this->getName(),
-                    'description' => $this->getDescription(),
-                    'class'       => 'wikiaction');
+        return array('targetpage' => $this->getName(),
+                     'linktext' => $this->getName(),
+                     'description' => $this->getDescription(),
+                     'class' => 'wikiaction');
     }
-
+    
     function makeLink($argstr, $request) {
         $defaults = $this->getDefaultArguments();
         $link_defaults = $this->getDefaultLinkArguments();
@@ -157,13 +157,13 @@ class WikiPlugin
     }
     
     function getDefaultFormArguments() {
-        return array('targetpage'  => $this->getName(),
-                     'buttontext'  => $this->getName(),
-                     'class'       => 'wikiaction',
-                     'method'      => 'get',
-                     'textinput'   => 's',
-                     'description' => $this->getDescription(),
-                     'formsize'    => 'size');
+        return array('targetpage' => $this->getName(),
+                    'buttontext' => $this->getName(),
+                    'class' => 'wikiaction',
+                    'method' => 'get',
+                    'textinput' => 's',
+                    'description' => $this->getDescription(),
+                    'formsize' => 30);
     }
     
     function makeForm($argstr, $request) {
@@ -178,7 +178,7 @@ class WikiPlugin
     
         $form = HTML::form(array('action' => WikiURL($args['targetpage']),
                                 'method' => $args['method'],
-                                'class'  => $args['class'],
+                                'class' => $args['class'],
                                 'accept-charset' => CHARSET));
         $contents = HTML::div();
         $contents->setAttr('class', $args['class']);
@@ -195,9 +195,8 @@ class WikiPlugin
                 //if ($inputs[$arg] == 'file')
                 //    $attr['type'] = 'file';
                 //else
-                $size = $args['size'] > 0 ? $args['size'] : 30;
                 $i->setAttr('type', 'text');
-                $i->setAttr('size', $size);
+                $i->setAttr('size', $args['formsize']);
                 if ($args['description'])
                     $i->addTooltip($args['description']);
             }
@@ -211,15 +210,15 @@ class WikiPlugin
                 $form->setAttr('enctype', 'multipart/form-data');
                 $form->setAttr('method', 'post');
                 $contents->pushContent(HTML::input(array('name' => 'MAX_FILE_SIZE',
-                                                        'value' => MAX_UPLOAD_SIZE,
-                                                        'type' => 'hidden')));
+                                                         'value' => MAX_UPLOAD_SIZE,
+                                                         'type' => 'hidden')));
             }
         }
     
         if (!empty($args['buttontext']))
             $contents->pushContent(HTML::input(array('type' => 'submit',
-                                                    'class' => 'button',
-                                                    'value' => $args['buttontext'])));
+                                                     'class' => 'button',
+                                                     'value' => $args['buttontext'])));
     
         $form->pushContent($contents);
         return $form;
