@@ -1,9 +1,8 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.27 2004-04-19 18:27:45 rurban Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.28 2004-05-24 17:31:31 rurban Exp $');
 /**
  * Code for writing XML.
  * @author: Jeff Dairiki
  *
- * FIXME: This code is not (yet) php5 compatible.
  */
 
 /**
@@ -196,6 +195,28 @@ class XmlElement extends XmlContent
 
         $this->setContent($args);
     }
+    
+    /** Methods only needed for XmlParser,
+     *  to be fully compatible to perl Html::Element
+     */
+    function __destruct () {
+        foreach ($this->getChildren() as $node) {
+            $node->__destruct();
+        }
+        unset($this->_tag);
+        unset($this->_attr);
+        unset($this->_content);
+    }
+
+    function getChildren () {
+        return $this->_children;
+    }
+
+    function hasChildren () {
+        return !empty($this->_children);
+    }
+    /* End XmlParser Methods
+     */
 
     function getTag () {
         return $this->_tag;
@@ -204,8 +225,10 @@ class XmlElement extends XmlContent
     function setAttr ($attr, $value = false) {
 	if (is_array($attr)) {
             assert($value === false);
-            foreach ($attr as $a => $v)
-		$this->set($a, $v);
+            foreach ($attr as $a => $v) {
+                $this->_attr[strtolower($a)] = $v;
+		//$this->set($a, $v);
+            }
             return;
 	}
 
