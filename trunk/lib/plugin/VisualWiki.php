@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: VisualWiki.php,v 1.13 2004-09-06 12:13:00 rurban Exp $');
+rcs_id('$Id: VisualWiki.php,v 1.14 2004-09-07 13:26:31 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -46,15 +46,16 @@ elseif (isWindows()) {
   define('VISUALWIKIFONT', 'Arial');
 } else { // other os
     $dotbin = '/usr/local/bin/dot';
-    if ($_SERVER["SERVER_NAME"] == 'phpwiki.sourceforge.net')
+    // sf.net specials
+    if ($_SERVER["SERVER_NAME"] == 'phpwiki.sourceforge.net') {
         $dotbin = '/home/groups/p/ph/phpwiki/bin/dot';
-
-    // Name of the Truetypefont - Helvetica is probably easier to read
-    //define('VISUALWIKIFONT', 'Helvetica');
-    //define('VISUALWIKIFONT', 'Times');
-    //define('VISUALWIKIFONT', 'Arial');
-    define('VISUALWIKIFONT', 'luximr'); // sf.net, sf.net can only do gif
-
+        define('VISUALWIKIFONT', 'luximr'); 
+    } else {
+        // Name of the Truetypefont - Helvetica is probably easier to read
+        define('VISUALWIKIFONT', 'Helvetica');
+        //define('VISUALWIKIFONT', 'Times');
+        //define('VISUALWIKIFONT', 'Arial');
+    }
     // The default font paths do not find your fonts, set the path here:
     //$fontpath = "/usr/X11R6/lib/X11/fonts/TTF/";
     //$fontpath = "/usr/share/fonts/default/TrueType/";
@@ -72,7 +73,7 @@ extends WikiPluginCached
      * Sets plugin type to map production
      */
     function getPluginType() {
-        return PLUGIN_CACHED_MAP;
+        return ($GLOBALS['request']->getArg('debug')) ? PLUGIN_CACHED_IMG_ONDEMAND : PLUGIN_CACHED_MAP;
     }
 
     /**
@@ -86,7 +87,7 @@ extends WikiPluginCached
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.13 $");
+                            "\$Revision: 1.14 $");
     }
 
     /**
@@ -498,13 +499,14 @@ extends WikiPluginCached
         $ok = true;
         $names = &$this->names;
         $pages = &$this->pages;
-
-        $nametonumber = array_flip($names);
+	if ($names)
+            $nametonumber = array_flip($names);
 
         $dot = "digraph VisualWiki {\n" // }
             . (!empty($fontpath) ? "    fontpath=\"$fontpath\"\n" : "");
         if ($width and $height)
             $dot .= "    size=\"$width,$height\";\n    ";
+
 
         switch ($shape) {
         case 'point':
@@ -594,14 +596,28 @@ extends WikiPluginCached
      * @param  cmd string   command to be invoked
      * @return     boolean  error status; true=ok; false=error
      */
-    function execute($cmd) {
-        exec($cmd, $outarr, $returnval); // normally 127
-        $errstr = join('',$outarr);
-        if (!empty($errstr))
-            trigger_error($cmd.": ".$errstr, E_USER_WARNING);
-        if (!isWindows())
-            usleep(1000);
-        return empty($errstr);
+    function execute($cmd, $until = false) {
+        $errstr = exec($cmd); //, $outarr, $returnval); // normally 127
+        // $errstr = join('',$outarr);
+        $ok = empty($errstr);
+        if (!$ok) {
+            trigger_error("\n".$cmd." failed: $errstr", E_USER_WARNING);
+        } elseif ($GLOBALS['request']->getArg('debug'))
+            trigger_error("\n".$cmd.": success\n", E_USER_NOTICE);
+        if (!isWindows()) {
+            if ($until) {
+                $loop = 100000;
+                while (!file_exists($until) and $loop > 0) {
+                    $loop -= 100;
+                    usleep(100);
+                }
+            } else {
+                usleep(5000);
+            }
+        }
+        if ($until)
+            return file_exists($until);
+        return $ok;
     }
 
     /**
@@ -622,17 +638,41 @@ extends WikiPluginCached
         $tempfiles = $this->tempnam('VisualWiki');
         $gif = $argarray['imgtype'];
         $ImageCreateFromFunc = "ImageCreateFrom$gif";
-        $ok =  $tempfiles
+        $outfile = $tempfiles.".".$gif;
+        $debug = $GLOBALS['request']->getArg('debug');
+        if ($debug) {
+            $tempdir = dirname($tempfiles);
+            $tempout = $tempdir . "/.debug";
+        }
+        $ok = $tempfiles
             && $this->createDotFile($tempfiles.'.dot',$argarray)
-            && $this->execute("$dotbin -T$gif $tempfiles.dot -o $tempfiles.$gif")
-            && $this->execute("$dotbin -Timap $tempfiles.dot -o $tempfiles.map")
-            && file_exists( "$tempfiles.$gif" )
+            // && $this->filterThroughCmd('',"$dotbin -T$gif $tempfiles.dot -o $outfile")
+            // && $this->filterThroughCmd('',"$dotbin -Timap $tempfiles.dot -o ".$tempfiles.".map")
+            && $this->execute("$dotbin -T$gif $tempfiles.dot -o $outfile" . ($debug ? " > $tempout 2>&1" : ""), $outfile)
+            && $this->execute("$dotbin -Timap $tempfiles.dot -o ".$tempfiles.".map" . ($debug ? " > $tempout 2>&1" : ""), $tempfiles.".map")
+            && file_exists( $outfile )
             && file_exists( $tempfiles.'.map' )
-            && ($img = $ImageCreateFromFunc( "$tempfiles.$gif" ))
-            && ($fp = fopen($tempfiles.'.map','r'));
+            && ($img = $ImageCreateFromFunc($outfile))
+            && ($fp = fopen($tempfiles.'.map', 'r'));
 
         $map = HTML();
-        if ($ok) {
+        if ($debug == 'static') {
+            // workaround for misconfigured WikiPluginCached (sf.net) or dot.
+            // present a static png and map file.
+            if (file_exists($outfile) and filesize($outfile) > 900)
+                $img = $outfile;
+            else
+                $img = $tempdir . "/VisualWiki.".$gif;
+            if (file_exists( $tempfiles.".map") and filesize($tempfiles.".map") > 20)
+                $map = $tempfiles.".map";
+            else
+                $map = $tempdir . "/VisualWiki.map";
+            $img = $ImageCreateFromFunc($img);
+            $fp = fopen($map, 'r');
+            $map = HTML();	
+            $ok = true;
+        }
+        if ($ok and $fp) {
             while (!feof($fp)) {
                 $line = fgets($fp, 1000);
                 if (substr($line, 0, 1) == '#')
@@ -654,28 +694,63 @@ extends WikiPluginCached
                             'href'   => $url,
                             'title'  => rawurldecode($url),
                             'alt' => $url)));
-                }
+            }
             fclose($fp);
-//trigger_error("url=".$url);
+            //trigger_error("url=".$url);
         } else {
             trigger_error("
-$tempfiles.$gif: ".(file_exists("$tempfiles.$gif") ? filesize("$tempfiles.$gif"):'missing')."
-$tempfiles.map: ".(file_exists("$tempfiles.map") ? filesize("$tempfiles.map"):'missing')."
-",E_USER_WARNING);
+$outfile: ".(file_exists($outfile) ? filesize($outfile):'missing')."
+$tempfiles.map: ".(file_exists("$tempfiles.map") ? filesize("$tempfiles.map"):'missing'), E_USER_WARNING);
         }
 
         // clean up tempfiles
         if ($ok and !$argarray['debug'])
-        foreach (array('',".$gif",".map",".dot") as $ext) {
-            if (file_exists($tempfiles.$ext))
-                unlink($tempfiles.$ext);
-        }
+            foreach (array('',".$gif",'.map','.dot') as $ext) {
+                if (file_exists($tempfiles.$ext))
+                    unlink($tempfiles.$ext);
+            }
 
         if ($ok)
             return array($img, $map);
         else
             return array(false, false);
     } // invokeDot
+
+
+    /** 
+     * static workaround on broken Cache, called only if debug=static
+     *
+     * @access private
+     * @param  url      string  url pointing to the image part of the map
+     * @param  map      string  &lt;area&gt; tags defining active
+     *                          regions in the map
+     * @param  dbi      WikiDB  database abstraction class
+     * @param  argarray array   complete (!) arguments to produce 
+     *                          image. It is not necessary to call 
+     *                          WikiPlugin->getArgs anymore.
+     * @param  request  Request ??? 
+     * @return          string  html output
+     */
+    function embedImg($url,&$dbi,$argarray,&$request) {
+        if (!VISUALWIKI_ALLOWOPTIONS)
+            $argarray = $this->defaultarguments();
+        $this->checkArguments($argarray);
+        //extract($argarray);
+        if ($argarray['help'])
+            return array($this->helpImage(), ' '); // FIXME
+        $this->createColors();
+        $this->extract_wikipages($dbi, $argarray);
+        list($imagehandle, $content['html']) = $this->invokeDot($argarray);
+        // write to uploads and produce static url
+        $file_dir = defined('PHPWIKI_DIR') ? 
+            PHPWIKI_DIR . "/uploads" : "uploads";
+        $upload_dir = SERVER_URL . ((substr(DATA_PATH,0,1)=='/') ? '' : "/") . DATA_PATH . '/uploads/';
+        $tmpfile = tempnam($file_dir,"VisualWiki").".".$argarray['imgtype'];
+        WikiPluginCached::writeImage($argarray['imgtype'], $imagehandle, $tmpfile);             
+        ImageDestroy($imagehandle);
+        return WikiPluginCached::embedMap(1,$upload_dir.basename($tmpfile),$content['html'],$dbi,$argarray,$request);
+    }
+
 
     /**
      * Prepares some rainbow colors for the nodes of the graph
@@ -741,6 +816,9 @@ function interpolate($a, $b, $pos) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2004/09/06 12:13:00  rurban
+// provide sf.net default dotbin
+//
 // Revision 1.12  2004/09/06 12:08:50  rurban
 // memory_limit on unix workaround
 // VisualWiki: default autosize image

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiPluginCached.php,v 1.11 2004-09-06 09:12:46 rurban Exp $');
+<?php rcs_id('$Id: WikiPluginCached.php,v 1.12 2004-09-07 13:26:31 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -161,8 +161,9 @@ class WikiPluginCached extends WikiPlugin
             case PLUGIN_CACHED_MAP:
                 if (!$content || !$content['image'] || !$content['html'] ) {
                     $do_save = WikiPluginCached::produceImage($content, $this, $dbi, $sortedargs, $request, 'html');
-                    $content['html'] = $do_save?WikiPluginCached::embedMap($id,
-                        $url,$content['html'],$dbi,$sortedargs,$request):false;
+                    $content['html'] = $do_save 
+                        ? WikiPluginCached::embedMap($id,$url,$content['html'],$dbi,$sortedargs,$request)
+                        : false;
                 }
                 break;
         }
@@ -334,7 +335,7 @@ class WikiPluginCached extends WikiPlugin
      * @param  request  Request ??? 
      * @return          string  html output
      */
-    function embedMap($id,$url,$map,$dbi,$argarray,$request) {
+    function embedMap($id,$url,$map,&$dbi,$argarray,&$request) {
         // id is not unique if the same map is produced twice
         $key = substr($id,0,8).substr(microtime(),0,6);
         return HTML(HTML::map(array( 'name' => $key ), $map ),
@@ -814,8 +815,12 @@ class WikiPluginCached extends WikiPlugin
             'width'  => 600,
             'height' => 350 );
 
-        $charx    = ImageFontWidth($fontnr);
-        $chary    = ImageFontHeight($fontnr);
+        if (function_exists('ImageFontWidth')) {
+            $charx    = ImageFontWidth($fontnr);
+            $chary    = ImageFontHeight($fontnr);
+        } else {
+            $charx = 10; $chary = 10; 
+        }
         $marginx  = $charx;
         $marginy  = floor($chary/2);
 
@@ -862,10 +867,78 @@ class WikiPluginCached extends WikiPlugin
         return $im;
     } // text2img
 
+    function newFilterThroughCmd($input, $commandLine) {
+        $descriptorspec = array(
+               0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
+               1 => array("pipe", "w"),  // stdout is a pipe that the child will write to
+               2 => array("pipe", "w"),  // stdout is a pipe that the child will write to
+        );
+
+        $process = proc_open("$commandLine", $descriptorspec, $pipes);
+        if (is_resource($process)) {
+            // $pipes now looks like this:
+            // 0 => writeable handle connected to child stdin
+            // 1 => readable  handle connected to child stdout
+            // 2 => readable  handle connected to child stderr
+            fwrite($pipes[0], $input);
+            fclose($pipes[0]);
+            $buf = "";
+            while(!feof($pipes[1])) {
+                $buf .= fgets($pipes[1], 1024);
+            }
+            fclose($pipes[1]);
+            $stderr = '';
+            while(!feof($pipes[2])) {
+                $stderr .= fgets($pipes[2], 1024);
+            }
+            fclose($pipes[2]);
+            // It is important that you close any pipes before calling
+            // proc_close in order to avoid a deadlock
+            $return_value = proc_close($process);
+            if (empty($buf)) printXML($this->error($stderr));
+            return $buf;
+        }
+    }
+
+    /* PHP versions < 4.3
+     * TODO: via temp file looks more promising
+     */
+    function OldFilterThroughCmd($input, $commandLine) {
+         $input = str_replace ("\\", "\\\\", $input);
+         $input = str_replace ("\"", "\\\"", $input);
+         $input = str_replace ("\$", "\\\$", $input);
+         $input = str_replace ("`", "\`", $input);
+         $input = str_replace ("'", "\'", $input);
+         //$input = str_replace (";", "\;", $input);
+
+         $pipe = popen("echo \"$input\"|$commandLine", 'r');
+         if (!$pipe) {
+            print "pipe failed.";
+            return "";
+         }
+         $output = '';
+         while (!feof($pipe)) {
+            $output .= fread($pipe, 1024);
+         }
+         pclose($pipe);
+         return $output;
+    }
+
+    // run "echo $source | $commandLine" and return result
+    function filterThroughCmd($source, $commandLine) {
+        if (check_php_version(4,3,0))
+            return $this->newFilterThroughCmd($source, $commandLine);
+        else 
+            return $this->oldFilterThroughCmd($source, $commandLine);
+    }
+
 } // WikiPluginCached
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/09/06 09:12:46  rurban
+// improve pear handling with silent fallback to ours
+//
 
 // For emacs users
 // Local Variables:

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Ploticus.php,v 1.5 2004-06-28 16:35:12 rurban Exp $');
+rcs_id('$Id: Ploticus.php,v 1.6 2004-09-07 13:26:31 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -80,7 +80,7 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
     function getDefaultArguments() {
         return array(
@@ -159,63 +159,6 @@ extends WikiPluginCached
         return $this->text2img($helptext, 4, array(1, 0, 0),
                                array(255, 255, 255));
     }
- 
-    function newFilterThroughCmd($input, $commandLine) {
-        $descriptorspec = array(
-               0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
-               1 => array("pipe", "w"),  // stdout is a pipe that the child will write to
-               2 => array("pipe", "w"),  // stdout is a pipe that the child will write to
-        );
-
-        $process = proc_open("$commandLine", $descriptorspec, $pipes);
-        if (is_resource($process)) {
-            // $pipes now looks like this:
-            // 0 => writeable handle connected to child stdin
-            // 1 => readable  handle connected to child stdout
-            // 2 => readable  handle connected to child stderr
-            fwrite($pipes[0], $input);
-            fclose($pipes[0]);
-            $buf = "";
-            while(!feof($pipes[1])) {
-                $buf .= fgets($pipes[1], 1024);
-            }
-            fclose($pipes[1]);
-            $stderr = '';
-            while(!feof($pipes[2])) {
-                $stderr .= fgets($pipes[2], 1024);
-            }
-            fclose($pipes[2]);
-            // It is important that you close any pipes before calling
-            // proc_close in order to avoid a deadlock
-            $return_value = proc_close($process);
-            if (empty($buf)) printXML($this->error($stderr));
-            return $buf;
-        }
-    }
-
-    /* PHP versions < 4.3
-     * TODO: via temp file looks more promising
-     */
-    function OldFilterThroughCmd($input, $commandLine) {
-         $input = str_replace ("\\", "\\\\", $input);
-         $input = str_replace ("\"", "\\\"", $input);
-         $input = str_replace ("\$", "\\\$", $input);
-         $input = str_replace ("`", "\`", $input);
-         $input = str_replace ("'", "\'", $input);
-         //$input = str_replace (";", "\;", $input);
-
-         $pipe = popen("echo \"$input\"|$commandLine", 'r');
-         if (!$pipe) {
-            print "pipe failed.";
-            return "";
-         }
-         $output = '';
-         while (!feof($pipe)) {
-            $output .= fread($pipe, 1024);
-         }
-         pclose($pipe);
-         return $output;
-    }
 
     function withShellCommand($script) {
         $findme  = 'shell';
@@ -243,11 +186,7 @@ extends WikiPluginCached
             	$args .= " -csmap -mapfile $tempfiles.map";
             	$this->_mapfile = "$tempfiles.map";
             }
-            $commandLine = PLOTICUS_EXE . "$args";
-            if (check_php_version(4,3,0))
-                $code = $this->newFilterThroughCmd($source, $commandLine);
-            else 
-                $code = $this->oldFilterThroughCmd($source, $commandLine);
+            $code = $this->filterThroughCmd($source, PLOTICUS_EXE . "$args");
             //if (empty($code))
             //    return $this->error(fmt("Couldn't start commandline '%s'", $commandLine));
             if (! file_exists("$tempfiles.$gif") ) {
@@ -269,6 +208,9 @@ extends WikiPluginCached
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/06/28 16:35:12  rurban
+// prevent from shell commands
+//
 // Revision 1.4  2004/06/19 10:06:38  rurban
 // Moved lib/plugincache-config.php to config/*.ini
 // use PLUGIN_CACHED_* constants instead of global $CacheParams
