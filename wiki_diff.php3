@@ -1,3 +1,4 @@
+<!-- $Id: wiki_diff.php3,v 1.4 2000-07-02 15:54:44 wainstead Exp $ -->
 <?
 // wiki_diff.php3
 //
