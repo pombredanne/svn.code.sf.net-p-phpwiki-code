@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: InlineParserTest.php,v 1.4 2004-07-09 12:29:26 rurban Exp $');
+rcs_id('$Id: InlineParserTest.php,v 1.5 2005-01-21 08:48:09 rurban Exp $');
 
 /* Copyright (C) 2004, Dan Frankowski <dfrankow@cs.umn.edu>
  * testLinks: Reini Urban
@@ -35,33 +35,40 @@ class InlineParserTest extends phpwiki_TestCase {
     
     function testLinks() {
         $uplink = 'http://'.(defined('SERVER_NAME')?SERVER_NAME:'').DATA_PATH.'/uploads/image.jpg';
-        $tests = array("[label|link]" => 'O:10:"xmlcontent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:15:"cached_wikilink":2:{s:5:"_page";s:4:"link";s:6:"_label";s:5:"label";}i:2;s:0:"";}}',
-                       "[ label | link.jpg ]" => 'O:10:"xmlcontent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:15:"cached_wikilink":2:{s:5:"_page";s:8:"link.jpg";s:6:"_label";s:5:"label";}i:2;s:0:"";}}',
-                       "[ image.jpg | link ]" => 'O:10:"xmlcontent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:15:"cached_wikilink":2:{s:5:"_page";s:4:"link";s:6:"_label";O:11:"htmlelement":4:{s:8:"_content";a:0:{}s:4:"_tag";s:3:"img";s:5:"_attr";a:3:{s:3:"src";b:0;s:3:"alt";s:4:"link";s:5:"class";s:11:"inlineimage";}s:11:"_properties";i:7;}}i:2;s:0:"";}}',
-                       //"[ Upload:image.jpg | link ]" => 'O:10:"xmlcontent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:15:"cached_wikilink":2:{s:5:"_page";s:4:"link";s:6:"_label";O:11:"htmlelement":4:{s:8:"_content";a:0:{}s:4:"_tag";s:3:"img";s:5:"_attr";a:3:{s:3:"src";s:'.strlen($uplink).':"'.$uplink.'";s:3:"alt";s:4:"link";s:5:"class";s:11:"inlineimage";}s:11:"_properties";i:7;}}i:2;s:0:"";}}',
-                       //"[ http://server/image.jpg | link ]" => 'O:10:"xmlcontent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:15:"cached_wikilink":2:{s:5:"_page";s:4:"link";s:6:"_label";O:11:"htmlelement":4:{s:8:"_content";a:0:{}s:4:"_tag";s:3:"img";s:5:"_attr";a:3:{s:3:"src";s:23:"http://server/image.jpg";s:3:"alt";s:4:"link";s:5:"class";s:11:"inlineimage";}s:11:"_properties";i:7;}}i:2;s:0:"";}}',
-                       "[ label | http://server/link ]" => 'O:10:"xmlcontent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:19:"cached_externallink":2:{s:4:"_url";s:18:"http://server/link";s:6:"_label";s:5:"label";}i:2;s:0:"";}}',
-                       "[ label | Upload:link ]" => 'O:10:"xmlcontent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:20:"cached_interwikilink":2:{s:5:"_link";s:11:"Upload:link";s:6:"_label";s:5:"label";}i:2;s:0:"";}}',
-                       "[ label | phpwiki:action=link ]" => 'O:10:"xmlcontent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:17:"cached_phpwikiurl":2:{s:4:"_url";s:19:"phpwiki:action=link";s:6:"_label";s:5:"label";}i:2;s:0:"";}}',
-                       "Upload:image.jpg" => 'O:10:"xmlcontent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:20:"cached_interwikilink":1:{s:5:"_link";s:16:"Upload:image.jpg";}i:2;s:0:"";}}',
-                       "http://server/image.jpg" => 'O:10:"xmlcontent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:19:"cached_externallink":1:{s:4:"_url";s:23:"http://server/image.jpg";}i:2;s:0:"";}}',
-                       "http://server/link" => 'O:10:"xmlcontent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:19:"cached_externallink":1:{s:4:"_url";s:18:"http://server/link";}i:2;s:0:"";}}',
-                       "[http:/server/~name/]" => 'O:10:"xmlcontent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:19:"cached_externallink":1:{s:4:"_url";s:18:"http:/server/name/";}i:2;s:0:"";}}',
-                       "http:/server/~name/" => 'O:10:"xmlcontent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:19:"cached_externallink":1:{s:4:"_url";s:18:"http:/server/name/";}i:2;s:0:"";}}'
+        $tests = array("[label|link]" => 'O:10:"XmlContent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:15:"Cached_WikiLink":2:{s:5:"_page";s:4:"link";s:6:"_label";s:5:"label";}i:2;s:0:"";}}',
+                       "[ label | link.jpg ]" => 'O:10:"XmlContent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:15:"Cached_WikiLink":2:{s:5:"_page";s:8:"link.jpg";s:6:"_label";s:5:"label";}i:2;s:0:"";}}',
+                       "[ image.jpg | link ]" => check_php_version(5)
+				// php5 does not have _content as first HtmlElement property
+                       		? 'O:10:"XmlContent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:15:"Cached_WikiLink":2:{s:5:"_page";s:4:"link";s:6:"_label";O:11:"HtmlElement":4:{s:4:"_tag";s:3:"img";s:5:"_attr";a:3:{s:3:"src";b:0;s:3:"alt";s:4:"link";s:5:"class";s:11:"inlineimage";}s:8:"_content";a:0:{}s:11:"_properties";i:7;}}i:2;s:0:"";}}' 
+                       		: 'O:10:"XmlContent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:15:"Cached_WikiLink":2:{s:5:"_page";s:4:"link";s:6:"_label";O:11:"HtmlElement":4:{s:8:"_content";a:0:{}s:4:"_tag";s:3:"img";s:5:"_attr";a:3:{s:3:"src";b:0;s:3:"alt";s:4:"link";s:5:"class";s:11:"inlineimage";}s:11:"_properties";i:7;}}i:2;s:0:"";}}',
+                       "[ Upload:image.jpg | link ]" => !check_php_version(5) ? 'O:10:"XmlContent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:15:"Cached_WikiLink":2:{s:5:"_page";s:4:"link";s:6:"_label";O:11:"HtmlElement":4:{s:8:"_content";a:0:{}s:4:"_tag";s:3:"img";s:5:"_attr";a:3:{s:3:"src";s:'.strlen($uplink).':"'.$uplink.'";s:3:"alt";s:4:"link";s:5:"class";s:11:"inlineimage";}s:11:"_properties";i:7;}}i:2;s:0:"";}}' 
+                       : 'O:10:"XmlContent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:15:"Cached_WikiLink":2:{s:5:"_page";s:4:"link";s:6:"_label";O:11:"HtmlElement":4:{s:4:"_tag";s:3:"img";s:5:"_attr";a:3:{s:3:"src";s:'.strlen($uplink).':"'.$uplink.'";s:3:"alt";s:4:"link";s:5:"class";s:11:"inlineimage";}s:8:"_content";a:0:{}s:11:"_properties";i:7;}}i:2;s:0:"";}}',
+                       "[ http://server/image.jpg | link ]" => !check_php_version(5) ? 'O:10:"XmlContent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:15:"Cached_WikiLink":2:{s:5:"_page";s:4:"link";s:6:"_label";O:11:"HtmlElement":4:{s:8:"_content";a:0:{}s:4:"_tag";s:3:"img";s:5:"_attr";a:3:{s:3:"src";s:23:"http://server/image.jpg";s:3:"alt";s:4:"link";s:5:"class";s:11:"inlineimage";}s:11:"_properties";i:7;}}i:2;s:0:"";}}' 
+                       : 'O:10:"XmlContent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:15:"Cached_WikiLink":2:{s:5:"_page";s:4:"link";s:6:"_label";O:11:"HtmlElement":4:{s:4:"_tag";s:3:"img";s:5:"_attr";a:3:{s:3:"src";s:23:"http://server/image.jpg";s:3:"alt";s:4:"link";s:5:"class";s:11:"inlineimage";}s:8:"_content";a:0:{}s:11:"_properties";i:7;}}i:2;s:0:"";}}',
+                       "[ label | http://server/link ]" => 'O:10:"XmlContent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:19:"Cached_ExternalLink":2:{s:4:"_url";s:18:"http://server/link";s:6:"_label";s:5:"label";}i:2;s:0:"";}}',
+                       "[ label | Upload:link ]" => 'O:10:"XmlContent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:20:"Cached_InterwikiLink":2:{s:5:"_link";s:11:"Upload:link";s:6:"_label";s:5:"label";}i:2;s:0:"";}}',
+                       "[ label | phpwiki:action=link ]" => 'O:10:"XmlContent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:17:"Cached_PhpwikiURL":2:{s:4:"_url";s:19:"phpwiki:action=link";s:6:"_label";s:5:"label";}i:2;s:0:"";}}',
+                       "Upload:image.jpg" => 'O:10:"XmlContent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:20:"Cached_InterwikiLink":1:{s:5:"_link";s:16:"Upload:image.jpg";}i:2;s:0:"";}}',
+                       "http://server/image.jpg" => 'O:10:"XmlContent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:19:"Cached_ExternalLink":1:{s:4:"_url";s:23:"http://server/image.jpg";}i:2;s:0:"";}}',
+                       "http://server/link" => 'O:10:"XmlContent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:19:"Cached_ExternalLink":1:{s:4:"_url";s:18:"http://server/link";}i:2;s:0:"";}}',
+                       "[http:/server/~name/]" => 'O:10:"XmlContent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:19:"Cached_ExternalLink":1:{s:4:"_url";s:18:"http:/server/name/";}i:2;s:0:"";}}',
+                       "http:/server/~name/" => 'O:10:"XmlContent":1:{s:8:"_content";a:3:{i:0;s:0:"";i:1;O:19:"Cached_ExternalLink":1:{s:4:"_url";s:18:"http:/server/name/";}i:2;s:0:"";}}'
                        );
         //$i = 0;
-        foreach ($tests as $wiki => $dump) {
+        foreach ($tests as $wiki => $expected) {
             //print $i++ . " .. ";
             $xml = TransformInline($wiki);
             $this->assertTrue(isa($xml, 'XmlContent'));
-            //echo var_export($xml),"\n";
-            //echo serialize($xml),"\n";
-            $this->assertEquals($dump, serialize($xml));
+            $actual = serialize($xml);
+            if (!check_php_version(5))  {
+                $expected = strtolower($expected);
+                $actual = strtolower($actual);
+            }
+            $this->assertEquals($expected, $actual);
         }
     }
     
 }
-
 
 // (c-file-style: "gnu")
 // Local Variables:
