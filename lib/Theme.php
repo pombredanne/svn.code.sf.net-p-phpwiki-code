@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.71 2004-02-15 21:34:37 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.72 2004-02-26 02:25:53 rurban Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -161,6 +161,8 @@ function Button ($action, $label = false, $page_or_rev = false) {
 
 class Theme {
     var $HTML_DUMP_SUFFIX = '';
+    var $DUMP_MODE;
+
     function Theme ($theme_name = 'default') {
         $this->_name = $theme_name;
         $themes_dir = defined('PHPWIKI_DIR') ? PHPWIKI_DIR . "/themes" : "themes";
@@ -439,10 +441,16 @@ class Theme {
         // Extra steps for dumping page to an html file.
         // FIXME: shouldn't this be in WikiURL?
         if ($this->HTML_DUMP_SUFFIX) {
+            // no action or sortby links
+            $url = preg_replace("/\?.*$/","",$url);
             // urlencode for pagenames with accented letters
             $url = rawurlencode($url);
             $url = preg_replace('/^\./', '%2e', $url);
-            $url .= $this->HTML_DUMP_SUFFIX;
+            // fix url#anchor links (looks awful)
+            if (strstr($url,'%23'))
+                $url = preg_replace("/%23/",$this->HTML_DUMP_SUFFIX."#",$url);
+            else
+                $url .= $this->HTML_DUMP_SUFFIX;
         }
 
         $link = HTML::a(array('href' => $url));
@@ -478,11 +486,17 @@ class Theme {
             $default_text = $wikiword;
         }
         
-        $url = WikiURL($wikiword, array('action' => 'create'));
-
-        $button = $this->makeButton('?', $url);
-        $button->addTooltip(sprintf(_("Create: %s"), $wikiword));
-        $link = HTML::span($button);
+        if ($this->DUMP_MODE) {
+            $link = HTML::u( empty($linktext) ? $wikiword : $linktext);
+            $link->addTooltip(sprintf(_("Empty link to: %s"), $wikiword));
+            $link->setAttr('class', empty($linktext) ? 'wikiunknown' : 'named-wikiunknown');
+            return $link;
+        } else {
+            $url = WikiURL($wikiword, array('action' => 'create'));
+            $button = $this->makeButton('?', $url);
+            $button->addTooltip(sprintf(_("Create: %s"), $wikiword));
+            $link = HTML::span($button);
+        }
 
 
         if (!empty($linktext)) {
@@ -1068,6 +1082,15 @@ class SubmitImageButton extends SubmitButton {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.71  2004/02/15 21:34:37  rurban
+// PageList enhanced and improved.
+// fixed new WikiAdmin... plugins
+// editpage, Theme with exp. htmlarea framework
+//   (htmlarea yet committed, this is really questionable)
+// WikiUser... code with better session handling for prefs
+// enhanced UserPreferences (again)
+// RecentChanges for show_deleted: how should pages be deleted then?
+//
 // Revision 1.70  2004/01/26 09:17:48  rurban
 // * changed stored pref representation as before.
 //   the array of objects is 1) bigger and 2)
