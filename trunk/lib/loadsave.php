@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.23 2002-01-10 23:11:01 carstenklapp Exp $');
+rcs_id('$Id: loadsave.php,v 1.24 2002-01-10 23:22:49 carstenklapp Exp $');
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
 
@@ -161,8 +161,8 @@ function DumpToDir ($dbi, $request)
         $data = MailifyPage($page);
         
         if ( !($fd = fopen("$directory/$filename", "w")) )
-            ExitWiki("<b>" . sprintf(_("couldn't open file '%s' for writing"),
-                                     "$directory/$filename") . "</b>\n");
+            ExitWiki("<strong>" . sprintf(_("couldn't open file '%s' for writing"),
+                                     "$directory/$filename") . "</strong>\n");
         
         $num = fwrite($fd, $data, strlen($data));
         echo "<small>" . sprintf(_("%s bytes written"),$num) . "</small>\n";
