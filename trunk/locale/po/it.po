@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.2.0\n"
-"POT-Creation-Date: 2001-12-28 06:12-0500\n"
+"POT-Creation-Date: 2001-12-31 00:53-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marco Milanesi <kpanic@ada2.unipv.it>\n"
 "Language-Team: \n"
@@ -17,7 +17,7 @@ msgstr ""
 #: ../templates/browse.html:34
 #, fuzzy
 msgid "Note:"
-msgstr "Nessuno"
+msgstr "Nessuno:"
 
 #: ../templates/browse.html:34
 msgid "You are viewing an old revision of this page."
@@ -45,9 +45,8 @@ msgid "RecentChanges"
 msgstr "ModificheRecenti"
 
 #: ../templates/browse.html:57
-#, fuzzy
 msgid "FindPage"
-msgstr "PaginaPrincipale"
+msgstr "TrovaPagina"
 
 #: ../templates/browse.html:60
 #, fuzzy
@@ -56,25 +55,24 @@ msgstr "Ricerca"
 
 #: ../templates/browse.html:70
 msgid "Page locked"
-msgstr ""
+msgstr "Pagina bloccata"
 
 #: ../templates/browse.html:73
+#, fuzzy
 msgid "Edit"
-msgstr ""
+msgstr "ModificaIlTesto"
 
 #: ../templates/browse.html:76
 msgid "Edit old revision"
 msgstr ""
 
 #: ../templates/browse.html:81
-#, fuzzy
 msgid "Unlock page"
-msgstr "Rimuovi la pagina"
+msgstr "Sblocca la pagina"
 
 #: ../templates/browse.html:83
-#, fuzzy
 msgid "Lock page"
-msgstr "Rimuovi la pagina"
+msgstr "Blocca la pagina"
 
 #: ../lib/removepage.php:20 ../templates/browse.html:85
 msgid "Remove page"
@@ -114,9 +112,9 @@ msgstr ""
 
 #: ../templates/editpage.html:16 ../templates/editpage.html:25
 #: ../templates/editpage.html:26
-#, fuzzy, c-format
+#, c-format
 msgid "Edit: %s"
-msgstr "Differenza di %s"
+msgstr "Modifica: %s"
 
 #: ../lib/plugin/BackLinks.php:9 ../templates/editpage.html:25
 msgid "BackLinks"
@@ -170,17 +168,17 @@ msgid "UserPreferences"
 msgstr ""
 
 #: ../templates/editpage.html:80
-#, fuzzy, c-format
+#, c-format
 msgid "See %s tips for editing."
-msgstr "Grazie per le modifiche! %s."
+msgstr "%s consigli per le modifiche."
 
 #: ../templates/editpage.html:80
 msgid "GoodStyle"
-msgstr ""
+msgstr "BuonStile"
 
 #: ../templates/editpage.html:84
 msgid "TextFormattingRules"
-msgstr ""
+msgstr "RegoleDiFormattazioneDelTesto"
 
 #: ../templates/editpage.html:84
 msgid "Synopsis"
@@ -216,22 +214,22 @@ msgstr ""
 #: ../lib/plugin/Calendar.php:114
 #, c-format
 msgid "Edit %s"
-msgstr ""
+msgstr "Modifica %s"
 
 #: ../lib/main.php:120 ../lib/plugin/FullTextSearch.php:12
 #, fuzzy
 msgid "FullTextSearch"
-msgstr "Risultati della ricerca su tutto il testo"
+msgstr "una ricerca completa del testo"
 
 #: ../lib/plugin/FullTextSearch.php:16
 #, fuzzy
 msgid "Full Text Search"
-msgstr "Risultati della ricerca su tutto il testo"
+msgstr "una ricerca completa del testo"
 
 #: ../lib/plugin/FullTextSearch.php:52
-#, c-format
+#, fuzzy, c-format
 msgid "Full text search results for '%s'"
-msgstr ""
+msgstr "Risultati della ricerca su tutto il testo '%s'"
 
 #: ../lib/plugin/FullTextSearch.php:54 ../lib/plugin/TitleSearch.php:52
 msgid "<no matches>"
@@ -418,25 +416,24 @@ msgid "HomePage"
 msgstr "PaginaPrincipale"
 
 #: ../lib/plugin/RecentChanges.php:252
-#, fuzzy
 msgid "Search"
-msgstr "Risultati della ricerca su tutto il testo"
+msgstr "Ricerca"
 
 #: ../lib/plugin/RecentChanges.php:253 ../lib/plugin/TitleSearch.php:16
 #, fuzzy
 msgid "Title Search"
-msgstr "Risultati della ricerca su tutto il testo"
+msgstr "la ricerca su tutto il testo"
 
 #: ../lib/main.php:123 ../lib/plugin/RecentChanges.php:255
 #: ../lib/plugin/TitleSearch.php:12
 #, fuzzy
 msgid "TitleSearch"
-msgstr "Risultati della ricerca su tutto il testo"
+msgstr "la ricerca su tutto il testo"
 
 #: ../lib/plugin/TitleSearch.php:48
 #, c-format
 msgid "Title search results for '%s'"
-msgstr ""
+msgstr "Risultati della ricerca su tutto il testo '%s'"
 
 #: ../lib/plugin/UserPage.php:35
 #, c-format
@@ -557,9 +554,9 @@ msgid "Optimizing %s"
 msgstr ""
 
 #: ../lib/WikiDB.php:837
-#, fuzzy, c-format
+#, c-format
 msgid "Describe %s here."
-msgstr "Descrivi %s qui"
+msgstr "Descrivi %s qui."
 
 #: ../lib/WikiUser.php:97
 #, c-format
@@ -602,7 +599,7 @@ msgid "version %s"
 msgstr "versione %s"
 
 #: ../lib/diff.php:175
-#, c-format
+#, fuzzy, c-format
 msgid "last modified on %s"
 msgstr "Ultima modifica: %s"
 
@@ -659,9 +656,8 @@ msgid "Other diffs:"
 msgstr ""
 
 #: ../lib/diff.php:275
-#, fuzzy
 msgid "Newer page:"
-msgstr "Rimuovi la pagina"
+msgstr ""
 
 #: ../lib/diff.php:276
 msgid "Older page:"
