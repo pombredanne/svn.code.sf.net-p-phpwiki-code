@@ -1,0 +1,11 @@
+Date: Tue, 30 Nov 2004 21:46:53 +0100
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.11pre-20041130)
+X-Rcs-Id: $Id: LinkDatabase,v 1.1 2004-11-30 21:07:38 rurban Exp $
+Content-Type: application/x-phpwiki;
+  pagename=LinkDatabase;
+  flags="";
+  markup=2;
+  charset=iso-8859-1
+Content-Transfer-Encoding: binary
+
+<?plugin LinkDatabase format||=text ?>
