@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.36 2004-02-26 21:20:06 rurban Exp $
+ # $Id: Makefile,v 1.37 2004-02-26 21:22:36 rurban Exp $
 #
 # locale/Makefile
 #
@@ -47,7 +47,7 @@ dep :
 #
 # The remainder of this file is auto-generated
 #
-# (Run 'make dependo regenerate this section.)
+# (Run 'make depend' to regenerate this section.)
 #
 po: po/de.po
 mo: de/LC_MESSAGES/phpwiki.mo de/LC_MESSAGES/phpwiki.php
@@ -64,7 +64,6 @@ mo: nl/LC_MESSAGES/phpwiki.mo nl/LC_MESSAGES/phpwiki.php
 po: po/sv.po
 mo: sv/LC_MESSAGES/phpwiki.mo sv/LC_MESSAGES/phpwiki.php
 #
-${POT_FILE}: ../lib/Amazon.php
 ${POT_FILE}: ../lib/ArchiveCleaner.php
 ${POT_FILE}: ../lib/BlockParser.php
 ${POT_FILE}: ../lib/CachedMarkup.php
@@ -75,7 +74,6 @@ ${POT_FILE}: ../lib/DbaListSet.php
 ${POT_FILE}: ../lib/DbaPartition.php
 ${POT_FILE}: ../lib/ErrorManager.php
 ${POT_FILE}: ../lib/FileFinder.php
-${POT_FILE}: ../lib/Google.php
 ${POT_FILE}: ../lib/HtmlElement.php
 ${POT_FILE}: ../lib/InlineParser.php
 ${POT_FILE}: ../lib/PageList.php
@@ -128,22 +126,6 @@ ${POT_FILE}: ../lib/diff3.php
 ${POT_FILE}: ../lib/difflib.php
 ${POT_FILE}: ../lib/display.php
 ${POT_FILE}: ../lib/editpage.php
-${POT_FILE}: ../lib/fpdf.php
-${POT_FILE}: ../lib/fpdf/courier.php
-${POT_FILE}: ../lib/fpdf/helvetica.php
-${POT_FILE}: ../lib/fpdf/helveticab.php
-${POT_FILE}: ../lib/fpdf/helveticabi.php
-${POT_FILE}: ../lib/fpdf/helveticai.php
-${POT_FILE}: ../lib/fpdf/symbol.php
-${POT_FILE}: ../lib/fpdf/tahoma.php
-${POT_FILE}: ../lib/fpdf/tahomab.php
-${POT_FILE}: ../lib/fpdf/times.php
-${POT_FILE}: ../lib/fpdf/timesb.php
-${POT_FILE}: ../lib/fpdf/timesbi.php
-${POT_FILE}: ../lib/fpdf/timesi.php
-${POT_FILE}: ../lib/fpdf/zapfdingbats.php
-${POT_FILE}: ../lib/htmlarea.php
-${POT_FILE}: ../lib/htmlarea3/popups/insert_pagelink.php
 ${POT_FILE}: ../lib/imagecache.php
 ${POT_FILE}: ../lib/loadsave.php
 ${POT_FILE}: ../lib/main.php
@@ -186,7 +168,6 @@ ${POT_FILE}: ../lib/plugin/FuzzyPages.php
 ${POT_FILE}: ../lib/plugin/HelloWorld.php
 ${POT_FILE}: ../lib/plugin/IncludePage.php
 ${POT_FILE}: ../lib/plugin/IncludeSiteMap.php
-${POT_FILE}: ../lib/plugin/Info.php
 ${POT_FILE}: ../lib/plugin/InterWikiSearch.php
 ${POT_FILE}: ../lib/plugin/LikePages.php
 ${POT_FILE}: ../lib/plugin/ListSubpages.php
@@ -236,7 +217,6 @@ ${POT_FILE}: ../lib/plugin/WikiForum.php
 ${POT_FILE}: ../lib/plugin/WikiPoll.php
 ${POT_FILE}: ../lib/plugin/_AuthInfo.php
 ${POT_FILE}: ../lib/plugin/_BackendInfo.php
-${POT_FILE}: ../lib/plugin/_MailifyPage.php
 ${POT_FILE}: ../lib/plugin/_PreferencesInfo.php
 ${POT_FILE}: ../lib/plugin/text2png.php
 ${POT_FILE}: ../lib/plugincache-config.php
