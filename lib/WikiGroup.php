@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.32 2004-06-15 09:15:52 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.33 2004-06-15 10:40:35 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -38,8 +38,10 @@ define('GROUP_CREATOR',	   	_("Creator"));
 
 /**
  * WikiGroup is an abstract class to provide the base functions for determining
- * group membership. 
- * Limitation: For the current user only.
+ * group membership for a specific user. Some functions are user independent.
+ *
+ * Limitation: For the current user only. This must be fixed to be able to query 
+ * for membership of any user.
  * 
  * WikiGroup is an abstract class with three functions:
  * <ol><li />Provide the static method getGroup with will return the proper
@@ -47,7 +49,7 @@ define('GROUP_CREATOR',	   	_("Creator"));
  *     <li />Provide an interface for subclasses to implement.
  *     <li />Provide fallover methods (with error msgs) if not impemented in subclass.
  * </ol>
- * Do not ever instantiate this class use: $group = &WikiGroup::getGroup($request);
+ * Do not ever instantiate this class. Use: $group = &WikiGroup::getGroup();
  * This will instantiate the proper subclass.
  *
  * @author Joby Walker <zorloc@imperium.org>
@@ -56,6 +58,8 @@ define('GROUP_CREATOR',	   	_("Creator"));
 class WikiGroup{
     /** User name */
     var $username = '';
+    /** User object if different from current user */
+    var $user;
     /** The global WikiRequest object */
     var $request;
     /** Array of groups $username is confirmed to belong to */
@@ -63,11 +67,11 @@ class WikiGroup{
     
     /**
      * Initializes a WikiGroup object which should never happen.  Use:
-     * $group = &WikiGroup::getGroup($request);
+     * $group = &WikiGroup::getGroup();
      * @param object $request The global WikiRequest object -- ignored.
      */ 
-    function WikiGroup(&$request){    
-        $this->request = $request;
+    function WikiGroup() {
+        $this->request = &$GLOBALS['request'];
     }
 
     /**
@@ -76,8 +80,7 @@ class WikiGroup{
      * @return string Current username.
      */ 
     function _getUserName(){
-        $request = &$this->request;
-        $user = $request->getUser();
+        $user = (!empty($this->user)) ? $this->user : $this->request->getUser();
         $username = $user->getID();
         if ($username != $this->username) {
             $this->membership = array();
@@ -92,33 +95,34 @@ class WikiGroup{
      * @param object $request The global WikiRequest object.
      * @return object Subclass of WikiGroup selected via GROUP_METHOD.
      */ 
-    function getGroup($request){
+    function getGroup(){
         switch (GROUP_METHOD){
             case "NONE": 
-                return new GroupNone($request);
+                return new GroupNone();
                 break;
             case "WIKIPAGE":
-                return new GroupWikiPage($request);
+                return new GroupWikiPage();
                 break;
             case "DB":
                 if ($GLOBALS['DBParams']['dbtype'] == 'ADODB') {
-                    return new GroupDB_ADODB($request);
+                    return new GroupDB_ADODB();
                 } elseif ($GLOBALS['DBParams']['dbtype'] == 'SQL') {
-                    return new GroupDb_PearDB($request);
+                    return new GroupDb_PearDB();
                 } else {
-                    trigger_error("GROUP_METHOD = DB: Unsupported dbtype " . $DBParams['dbtype'],
+                    trigger_error("GROUP_METHOD = DB: Unsupported dbtype " 
+                                  . $GLOBALS['DBParams']['dbtype'],
                                   E_USER_ERROR);
                 }
                 break;
             case "FILE": 
-                return new GroupFile($request);
+                return new GroupFile();
                 break;
             case "LDAP": 
-                return new GroupLDAP($request);
+                return new GroupLDAP();
                 break;
             default:
                 trigger_error(_("No or unsupported GROUP_METHOD defined"), E_USER_WARNING);
-                return new WikiGroup($request);
+                return new WikiGroup();
         }
     }
 
@@ -161,16 +165,21 @@ class WikiGroup{
         if (isset($this->membership[$group]))
             return $this->membership[$group];
     	if ($this->specialGroup($group)) {
-            $request = &$this->request;
-            $user = $request->getUser();
+            $user = (!empty($this->user)) ? $this->user : $this->request->getUser();
             switch ($group) {
-            case GROUP_EVERY: 		return $this->membership[$group] = true;
-            case GROUP_ANONYMOUS: 	return $this->membership[$group] = ! $user->isSignedIn();
-            case GROUP_BOGOUSER: 	return $this->membership[$group] = (isa($user,'_BogoUser') and 
-                                                                            $user->_level >= WIKIAUTH_BOGO);
-            case GROUP_SIGNED:    	return $this->membership[$group] = $user->isSignedIn();
-            case GROUP_AUTHENTICATED: 	return $this->membership[$group] = $user->isAuthenticated();
-            case GROUP_ADMIN:		return $this->membership[$group] = $user->isAdmin();
+            case GROUP_EVERY: 		
+                return $this->membership[$group] = true;
+            case GROUP_ANONYMOUS: 	
+                return $this->membership[$group] = ! $user->isSignedIn();
+            case GROUP_BOGOUSER: 	
+                return $this->membership[$group] = (isa($user,'_BogoUser') and 
+                                                    $user->_level >= WIKIAUTH_BOGO);
+            case GROUP_SIGNED:    	
+                return $this->membership[$group] = $user->isSignedIn();
+            case GROUP_AUTHENTICATED: 	
+                return $this->membership[$group] = $user->isAuthenticated();
+            case GROUP_ADMIN:		
+                return $this->membership[$group] = $user->isAdmin();
             default:
                 trigger_error(__sprintf("Undefined method %s for special group %s",
                                         'isMember',$group),
@@ -178,7 +187,7 @@ class WikiGroup{
             }
         } else {
             trigger_error(__sprintf("Method '%s' not implemented in this GROUP_METHOD %s",
-                                    'isMember',GROUP_METHOD),
+                                    'isMember', GROUP_METHOD),
                           E_USER_WARNING);
         }
         return false;
@@ -193,7 +202,7 @@ class WikiGroup{
      */ 
     function getAllGroupsIn(){
         trigger_error(__sprintf("Method '%s' not implemented in this GROUP_METHOD %s",
-                                'getAllGroupsIn',GROUP_METHOD),
+                                'getAllGroupsIn', GROUP_METHOD),
                       E_USER_WARNING);
         return array();
     }
@@ -216,7 +225,8 @@ class WikiGroup{
         $dbi = _PassUser::getAuthDbh();
         if ($dbi and !empty($GLOBALS['DBAuthParams']['pref_select'])) {
             //get prefs table
-            $sql = preg_replace('/SELECT .+ FROM/i','SELECT userid FROM',$GLOBALS['DBAuthParams']['pref_select']);
+            $sql = preg_replace('/SELECT .+ FROM/i','SELECT userid FROM',
+                                $GLOBALS['DBAuthParams']['pref_select']);
             //don't strip WHERE, only the userid stuff.
             $sql = preg_replace('/(WHERE.*?)\s+\w+\s*=\s*"\$userid"/i','\\1 AND 1',$sql);
             $sql = str_replace('WHERE AND 1','',$sql);
@@ -234,7 +244,8 @@ class WikiGroup{
         // Fixme: don't strip WHERE, only the userid stuff.
         if ($dbi and !empty($GLOBALS['DBAuthParams']['auth_user_exists'])) {
             //don't strip WHERE, only the userid stuff.
-            $sql = preg_replace('/(WHERE.*?)\s+\w+\s*=\s*"\$userid"/i','\\1 AND 1',$GLOBALS['DBAuthParams']['auth_user_exists']);
+            $sql = preg_replace('/(WHERE.*?)\s+\w+\s*=\s*"\$userid"/i','\\1 AND 1',
+                                $GLOBALS['DBAuthParams']['auth_user_exists']);
             $sql = str_replace('WHERE AND 1','',$sql);
             if ($GLOBALS['DBParams']['dbtype'] == 'ADODB') {
                 $db_result = $dbi->Execute($sql);
@@ -298,12 +309,12 @@ class WikiGroup{
                 return $users;
             default:
                 trigger_error(__sprintf("Method '%s' not implemented in this GROUP_METHOD %s",
-                                        'getMembersOf',GROUP_METHOD),
+                                        'getMembersOf', GROUP_METHOD),
                               E_USER_WARNING);
             }
         }
         trigger_error(__sprintf("Method '%s' not implemented in this GROUP_METHOD %s",
-                                'getMembersOf',GROUP_METHOD),
+                                'getMembersOf', GROUP_METHOD),
                       E_USER_WARNING);
         return array();
     }
@@ -319,7 +330,7 @@ class WikiGroup{
      */ 
     function setMemberOf($group, $user = false){
         trigger_error(__sprintf("Method '%s' not implemented in this GROUP_METHOD %s",
-                                'setMemberOf',GROUP_METHOD),
+                                'setMemberOf', GROUP_METHOD),
                       E_USER_WARNING);
         return false;
     }
@@ -335,7 +346,7 @@ class WikiGroup{
      */ 
     function removeMemberOf($group, $user = false){
         trigger_error(__sprintf("Method '%s' not implemented in this GROUP_METHOD %s",
-                                'removeMemberOf',GROUP_METHOD),
+                                'removeMemberOf', GROUP_METHOD),
                       E_USER_WARNING);
         return false;
     }
@@ -356,8 +367,8 @@ class GroupNone extends WikiGroup{
      * Ignores the parameter provided.
      * @param object $request The global WikiRequest object - ignored.
      */ 
-    function GroupNone(&$request){
-        $this->request = &$request;
+    function GroupNone() {
+        $this->request = &$GLOBALS['request'];
         return;
     }    
 
@@ -416,8 +427,8 @@ class GroupWikiPage extends WikiGroup{
      * Initializes the three superclass instance variables
      * @param object $request The global WikiRequest object.
      */ 
-    function GroupWikiPage(&$request){
-        $this->request = &$request;
+    function GroupWikiPage() {
+        $this->request = &$GLOBALS['request'];
         $this->username = $this->_getUserName();
         //$this->username = null;
         $this->membership = array();
@@ -434,12 +445,10 @@ class GroupWikiPage extends WikiGroup{
      * @return boolean True if user is a member, else false.
      */ 
     function isMember($group){
-        $request = $this->request;
-        //$username = $this->_getUserName();
         if (isset($this->membership[$group])) {
             return $this->membership[$group];
         }
-        $group_page = $request->getPage($group);
+        $group_page = $this->request->getPage($group);
         if ($this->_inGroupPage($group_page)) {
             $this->membership[$group] = true;
             return true;
@@ -462,7 +471,8 @@ class GroupWikiPage extends WikiGroup{
         $group_revision = $group_page->getCurrentRevision();
         if ($group_revision->hasDefaultContents()) {
             $group = $group_page->getName();
-            if ($strict) trigger_error(sprintf(_("Group page '%s' does not exist"),$group), E_USER_WARNING);
+            if ($strict) trigger_error(sprintf(_("Group page '%s' does not exist"), $group), 
+                                       E_USER_WARNING);
             return false;
         }
         $contents = $group_revision->getContent();
@@ -484,8 +494,6 @@ class GroupWikiPage extends WikiGroup{
      * @return array Array of groups to which the user belongs.
      */ 
     function getAllGroupsIn(){
-        $request = &$this->request;
-        //$username = $this->_getUserName();
         $membership = array();
 
     	$specialgroups = $this->specialGroups();
@@ -493,8 +501,8 @@ class GroupWikiPage extends WikiGroup{
             $this->membership[$group] = $this->isMember($group);
         }
 
-        $dbh = &$request->getDbh();
-        $master_page = $request->getPage(_("CategoryGroup"));
+        $dbh = &$this->request->getDbh();
+        $master_page = $this->request->getPage(_("CategoryGroup"));
         $master_list = $master_page->getLinks(true);
         while ($group_page = $master_list->next()){
             $group = $group_page->getName();
@@ -560,23 +568,28 @@ class GroupDb extends WikiGroup {
      * 
      * @param object $request The global WikiRequest object. ignored
      */ 
-    function GroupDb(&$request){
+    function GroupDb() {
     	global $DBAuthParams, $DBParams;
-        $this->request = &$request;
+        $this->request = &$GLOBALS['request'];
         $this->username = $this->_getUserName();
         $this->membership = array();
 
         if (empty($DBAuthParams['group_members']) or 
             empty($DBAuthParams['user_groups']) or
             empty($DBAuthParams['is_member'])) {
-            trigger_error(_("No or not enough GROUP_DB SQL statements defined"), E_USER_WARNING);
-            return new GroupNone($request);
+            trigger_error(_("No or not enough GROUP_DB SQL statements defined"), 
+                          E_USER_WARNING);
+            return new GroupNone();
         }
-        // use _PassUser::prepare instead
-        if (isa($request->_user,'_PassUser'))
-            $user =& $request->_user;
-        else
-            $user = new _PassUser($this->username);
+        if (empty($this->user)) {
+            // use _PassUser::prepare instead
+            if (isa($this->request->getUser(),'_PassUser'))
+                $user =& $this->request->getUser();
+            else
+                $user = new _PassUser($this->username);
+        } else { 
+            $user =& $this->user;
+        }
         $this->_is_member = $user->prepare($DBAuthParams['is_member'],
                                            array('userid','groupname'));
         $this->_group_members = $user->prepare($DBAuthParams['group_members'],'groupname');
@@ -624,8 +637,8 @@ class GroupDb_PearDB extends GroupDb {
      * @return array Array of groups to which the user belongs.
      */ 
     function getAllGroupsIn(){
-
     	$membership = array();
+
     	$specialgroups = $this->specialGroups();
         foreach ($specialgroups as $group) {
             if ($this->isMember($group)) {
@@ -663,7 +676,7 @@ class GroupDb_PearDB extends GroupDb {
         }
         // add certain defaults, such as members of admin
     	if ($this->specialGroup($group))
-            $members = array_merge($memebrs,WikiGroup::getMembersOf($group));
+            $members = array_merge($members, WikiGroup::getMembersOf($group));
         return $members;
     }
 }
@@ -712,8 +725,8 @@ class GroupDb_ADODB extends GroupDb {
      * @return array Array of groups to which the user belongs.
      */ 
     function getAllGroupsIn(){
-
     	$membership = array();
+
     	$specialgroups = $this->specialGroups();
         foreach ($specialgroups as $group) {
             if ($this->isMember($group)) {
@@ -721,7 +734,7 @@ class GroupDb_ADODB extends GroupDb {
             }
         }
         $dbh = & $this->dbh;
-        $rs = $dbh->Execute(sprintf($this->_user_groups,$dbh->qstr($this->username)));
+        $rs = $dbh->Execute(sprintf($this->_user_groups, $dbh->qstr($this->username)));
         if (!$rs->EOF and $rs->numRows() > 0) {
             while (!$rs->EOF) {
                 $group = reset($rs->fields);
@@ -771,8 +784,8 @@ class GroupFile extends WikiGroup {
      * 
      * @param object $request The global WikiRequest object.
      */ 
-    function GroupFile(&$request){
-        $this->request = &$request;
+    function GroupFile(){
+        $this->request = &$GLOBALS['request'];
         $this->username = $this->_getUserName();
         //$this->username = null;
         $this->membership = array();
@@ -782,7 +795,8 @@ class GroupFile extends WikiGroup {
             return false;
         }
         if (!file_exists(AUTH_GROUP_FILE)) {
-            trigger_error(sprintf(_("Cannot open AUTH_GROUP_FILE %s"), AUTH_GROUP_FILE), E_USER_WARNING);
+            trigger_error(sprintf(_("Cannot open AUTH_GROUP_FILE %s"), AUTH_GROUP_FILE), 
+                          E_USER_WARNING);
             return false;
         }
         require_once('lib/pear/File_Passwd.php');
@@ -882,8 +896,8 @@ class GroupLdap extends WikiGroup {
      * 
      * @param object $request The global WikiRequest object.
      */ 
-    function GroupLdap(&$request){
-        $this->request = &$request;
+    function GroupLdap(){
+        $this->request = &$GLOBALS['request'];
         $this->username = $this->_getUserName();
         $this->membership = array();
 
@@ -902,7 +916,7 @@ class GroupLdap extends WikiGroup {
             define("LDAP_BASE_DN",'');
         $this->base_dn = LDAP_BASE_DN;
         if (strstr("ou=",LDAP_BASE_DN))
-            $this->base_dn = preg_replace("/(ou=\w+,)?()/","\$2",LDAP_BASE_DN);
+            $this->base_dn = preg_replace("/(ou=\w+,)?()/","\$2", LDAP_BASE_DN);
     }
 
     /**
@@ -1014,6 +1028,14 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.32  2004/06/15 09:15:52  rurban
+// IMPORTANT: fixed passwd handling for passwords stored in prefs:
+//   fix encrypted usage, actually store and retrieve them from db
+//   fix bogologin with passwd set.
+// fix php crashes with call-time pass-by-reference (references wrongly used
+//   in declaration AND call). This affected mainly Apache2 and IIS.
+//   (Thanks to John Cole to detect this!)
+//
 // Revision 1.31  2004/06/03 18:06:29  rurban
 // fix file locking issues (only needed on write)
 // fixed immediate LANG and THEME in-session updates if not stored in prefs
