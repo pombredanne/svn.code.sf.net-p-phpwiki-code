@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.33 2004-04-01 06:28:33 rurban Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.34 2004-04-10 06:40:05 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -495,8 +495,10 @@ class Markup_html_emphasis extends BalancedMarkup
 {
     var $_start_regexp = "<(?: b|big|i|small|tt|
                                em|strong|
-                               abbr|acronym|cite|code|dfn|kbd|samp|var|
+                               cite|code|dfn|kbd|samp|var|
                                sup|sub )>";
+    //rurban: abbr|acronym need an optional title tag.
+    //sf.net bug #728595
 
     function getEndRegexp ($match) {
         return "<\\/" . substr($match, 1);
@@ -505,6 +507,34 @@ class Markup_html_emphasis extends BalancedMarkup
     function markup ($match, $body) {
         $tag = substr($match, 1, -1);
         return new HtmlElement($tag, $body);
+    }
+}
+
+class Markup_html_abbr extends BalancedMarkup
+{
+    //rurban: abbr|acronym need an optional title tag.
+    //sf.net bug #728595
+    var $_start_regexp = "<(?: abbr|acronym )(?: \stitle=[^>]*)?>";
+
+    function getEndRegexp ($match) {
+    	if (substr($match,1,4) == 'abbr')
+    	    $tag = 'abbr';
+    	else
+    	    $tag = 'acronym';
+        return "<\\/" . $tag . '>';
+    }
+    
+    function markup ($match, $body) {
+    	if (substr($match,1,4) == 'abbr')
+    	    $tag = 'abbr';
+    	else
+    	    $tag = 'acronym';
+    	$rest = substr($match,1+strlen($tag),-1);
+    	if (!empty($rest)) {
+    	    list($key,$val) = explode("=",$rest);
+    	    $args = array($key => $val);
+    	} else $args = array();
+        return new HtmlElement($tag, $args, $body);
     }
 }
 
@@ -523,7 +553,7 @@ class InlineTransformer
             $markup_types = array('escape', 'bracketlink', 'url',
                                   'interwiki', 'wikiword', 'linebreak',
                                   'old_emphasis', 'nestled_emphasis',
-                                  'html_emphasis');
+                                  'html_emphasis', 'html_abbr');
 
         foreach ($markup_types as $mtype) {
             $class = "Markup_$mtype";
@@ -564,6 +594,7 @@ class InlineTransformer
             }
 
             $markup = $this->_markup[$match->regexp_ind - 1];
+            //if (!$markup) return false;
             $body = $this->_parse_markup_body($markup, $match->match, $match->postmatch, $end_regexps);
             if (!$body) {
                 // Couldn't match balanced expression.
