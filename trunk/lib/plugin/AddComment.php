@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AddComment.php,v 1.6 2004-03-16 15:44:34 rurban Exp $');
+rcs_id('$Id: AddComment.php,v 1.7 2004-03-29 21:33:32 rurban Exp $');
 /*
  Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  
@@ -45,7 +45,7 @@ extends WikiPlugin_WikiBlog
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     // Arguments:
@@ -63,18 +63,19 @@ extends WikiPlugin_WikiBlog
     //                      and addcomment box
 
     function getDefaultArguments() {
-        return array('page'       => '[pagename]',
+        return array('pagename'   => '[pagename]',
                      'order'      => 'normal',
                      'mode'       => 'add,show',
                      'jshide'     => '0',
-                     'noheader'   => false
+                     'noheader'   => false,
+                     //'sortby'     => '-pagename' // oldest first. reverse by order=reverse
                     );
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
-        if (!$args['page'])
-            return $this->error("No page specified");
+        if (!$args['pagename'])
+            return $this->error(_("No pagename specified"));
 
         // Get our form args.
         $comment = $request->getArg("comment");
@@ -135,6 +136,9 @@ function togglecomments(a) {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/03/16 15:44:34  rurban
+// jshide not default as in CreateToc
+//
 // Revision 1.5  2004/03/15 09:52:59  rurban
 // jshide button: dynamic titles
 //
