@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopular.php,v 1.7 2002-01-20 16:54:06 dairiki Exp $');
+rcs_id('$Id: MostPopular.php,v 1.8 2002-01-21 02:34:56 dairiki Exp $');
 /**
  */
 class WikiPlugin_MostPopular
@@ -28,7 +28,6 @@ extends WikiPlugin
 
         while ($page = $pages->next()) {
             $hits = $page->get('hits');
-            echo "HITS: $hits<br>\n";
             if ($hits == 0)
                 break;
             $lines[] = $this->_tr($hits,
