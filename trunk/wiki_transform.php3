@@ -1,4 +1,4 @@
-<!-- $Id: wiki_transform.php3,v 1.16 2000-09-20 19:28:46 ahollosi Exp $ -->
+<!-- $Id: wiki_transform.php3,v 1.17 2000-09-23 14:33:37 ahollosi Exp $ -->
 <?php
    // expects $pagehash and $html to be set
 
@@ -93,7 +93,8 @@ your web server it is highly advised that you do not allow this.
                                  $tmpline);
 
 	 $tokens[] = $linktoken;
-         $replacements[] = ParseAndLink($brktlinks[0][$i]);
+	 $link = ParseAndLink($brktlinks[0][$i]);
+         $replacements[] = $link['link'];
       }
 
       //////////////////////////////////////////////////////////
