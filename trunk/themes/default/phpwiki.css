@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.26 2004-04-10 02:55:48 rurban Exp $
+ * $Id: phpwiki.css,v 1.27 2004-04-12 16:30:26 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -775,7 +775,7 @@ td.spacerow{background:#cad9ea;color:#000000}
 table.sidebar { border-spacing: 0px; margin: 0ex;}
 
 /* RssFeed */
-div.rss { margin: 1em; padding: 1em; font-size: 0.7em; background-color: #eeeeee; border: thin dashed #aaa; }
+div.rss { margin: 1em; padding: 1em; font-size: 0.9em; background-color: #eeeeee; border: thin dashed #aaa; }
 div.feed { color: #333; margin: -0.5em; margin-bottom: 0em; padding: 0.3em; font-weight: bold; background-color: #f2f2f2; font-size: 2em; }
 div.itemdesc {  padding-left: 1em; }
 div.rssitem { border-top: thin dashed #aaa; }
