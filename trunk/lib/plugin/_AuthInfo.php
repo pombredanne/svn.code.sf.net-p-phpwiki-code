@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _AuthInfo.php,v 1.15 2004-06-16 10:38:59 rurban Exp $');
+rcs_id('$Id: _AuthInfo.php,v 1.16 2004-06-25 14:29:22 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.15 $");
+                            "\$Revision: 1.16 $");
     }
 
     function getDefaultArguments() {
@@ -107,7 +107,7 @@ extends WikiPlugin
             //$table->pushContent(HTML::tr(HTML::td(array('colspan' => 2))));
             $userdata = obj2hash($user);
             $table->pushContent($this->_showhash("User: Object of ".get_class($user), $userdata));
-            $group = &WikiGroup::getGroup();
+            $group = &$request->getGroup();
             $groups = $group->getAllGroupsIn();
             $groupdata = obj2hash($group);
             unset($groupdata['request']);
@@ -190,6 +190,15 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2004/06/16 10:38:59  rurban
+// Disallow refernces in calls if the declaration is a reference
+// ("allow_call_time_pass_reference clean").
+//   PhpWiki is now allow_call_time_pass_reference = Off clean,
+//   but several external libraries may not.
+//   In detail these libs look to be affected (not tested):
+//   * Pear_DB odbc
+//   * adodb oracle
+//
 // Revision 1.14  2004/05/18 14:49:52  rurban
 // Simplified strings for easier translation
 //

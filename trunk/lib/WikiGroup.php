@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.36 2004-06-16 13:21:05 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.37 2004-06-25 14:29:18 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -64,18 +64,22 @@ class WikiGroup{
     var $request;
     /** Array of groups $username is confirmed to belong to */
     var $membership;
+    /** boolean if not the current user */
+    var $not_current;
     
     /**
      * Initializes a WikiGroup object which should never happen.  Use:
      * $group = &WikiGroup::getGroup();
      * @param object $request The global WikiRequest object -- ignored.
      */ 
-    function WikiGroup() {
-        $this->request = &$GLOBALS['request'];
+    function WikiGroup($not_current = false) {
+    	$this->not_current = $not_current;
+        $this->request =& $GLOBALS['request'];
     }
 
     /**
-     * Gets the current username and erases $this->membership if is different than
+     * Gets the current username from the internal user object
+     * and erases $this->membership if is different than
      * the stored $this->username
      * @return string Current username.
      */ 
@@ -86,6 +90,8 @@ class WikiGroup{
             $this->membership = array();
             $this->username = $username;
         }
+        if (!$this->not_current)
+           $this->user = $user;
         return $username;
     }
     
@@ -95,19 +101,19 @@ class WikiGroup{
      * @param object $request The global WikiRequest object.
      * @return object Subclass of WikiGroup selected via GROUP_METHOD.
      */ 
-    function getGroup(){
+    function getGroup($not_current = false){
         switch (GROUP_METHOD){
             case "NONE": 
-                return new GroupNone();
+                return new GroupNone($not_current);
                 break;
             case "WIKIPAGE":
-                return new GroupWikiPage();
+                return new GroupWikiPage($not_current);
                 break;
             case "DB":
                 if ($GLOBALS['DBParams']['dbtype'] == 'ADODB') {
-                    return new GroupDB_ADODB();
+                    return new GroupDB_ADODB($not_current);
                 } elseif ($GLOBALS['DBParams']['dbtype'] == 'SQL') {
-                    return new GroupDb_PearDB();
+                    return new GroupDb_PearDB($not_current);
                 } else {
                     trigger_error("GROUP_METHOD = DB: Unsupported dbtype " 
                                   . $GLOBALS['DBParams']['dbtype'],
@@ -115,25 +121,28 @@ class WikiGroup{
                 }
                 break;
             case "FILE": 
-                return new GroupFile();
+                return new GroupFile($not_current);
                 break;
             case "LDAP": 
-                return new GroupLDAP();
+                return new GroupLDAP($not_current);
                 break;
             default:
                 trigger_error(_("No or unsupported GROUP_METHOD defined"), E_USER_WARNING);
-                return new WikiGroup();
+                return new WikiGroup($not_current);
         }
     }
 
-    /* ACL PagePermissions will need those special groups based on the User status only */
+    /** ACL PagePermissions will need those special groups based on the User status only.
+     *  translated 
+     */
     function specialGroup($group){
     	return in_array($group,$this->specialGroups());
     }
+    /** untranslated */
     function _specialGroup($group){
     	return in_array($group,$this->_specialGroups());
     }
-
+    /** translated */
     function specialGroups(){
     	return array(
                      GROUP_EVERY,
@@ -143,6 +152,7 @@ class WikiGroup{
                      GROUP_AUTHENTICATED,
                      GROUP_ADMIN);
     }
+    /** untranslated */
     function _specialGroups(){
     	return array(
                      "_EVERY",
@@ -165,8 +175,20 @@ class WikiGroup{
         if (isset($this->membership[$group]))
             return $this->membership[$group];
     	if ($this->specialGroup($group)) {
-            $user = (!empty($this->user)) ? $this->user : $this->request->getUser();
-            switch ($group) {
+    	    return $this->isSpecialMember($group);
+        } else {
+            trigger_error(__sprintf("Method '%s' not implemented in this GROUP_METHOD %s",
+                                    'isMember', GROUP_METHOD),
+                          E_USER_WARNING);
+        }
+        return false;
+    }
+
+    function isSpecialMember($group){
+        if (isset($this->membership[$group]))
+            return $this->membership[$group];
+        $user = (!empty($this->user)) ? $this->user : $this->request->getUser();
+        switch ($group) {
             case GROUP_EVERY: 		
                 return $this->membership[$group] = true;
             case GROUP_ANONYMOUS: 	
@@ -184,11 +206,6 @@ class WikiGroup{
                 trigger_error(__sprintf("Undefined method %s for special group %s",
                                         'isMember',$group),
                               E_USER_WARNING);
-            }
-        } else {
-            trigger_error(__sprintf("Method '%s' not implemented in this GROUP_METHOD %s",
-                                    'isMember', GROUP_METHOD),
-                          E_USER_WARNING);
         }
         return false;
     }
@@ -228,7 +245,7 @@ class WikiGroup{
             $sql = preg_replace('/SELECT .+ FROM/i','SELECT userid FROM',
                                 $GLOBALS['DBAuthParams']['pref_select']);
             //don't strip WHERE, only the userid stuff.
-            $sql = preg_replace('/(WHERE.*?)\s+\w+\s*=\s*"\$userid"/i','\\1 AND 1',$sql);
+            $sql = preg_replace('/(WHERE.*?)\s+\w+\s*=\s*["\']\$userid[\'"]/i','\\1 AND 1',$sql);
             $sql = str_replace('WHERE AND 1','',$sql);
             if ($GLOBALS['DBParams']['dbtype'] == 'ADODB') {
                 $db_result = $dbi->Execute($sql);
@@ -244,7 +261,7 @@ class WikiGroup{
         // Fixme: don't strip WHERE, only the userid stuff.
         if ($dbi and !empty($GLOBALS['DBAuthParams']['auth_user_exists'])) {
             //don't strip WHERE, only the userid stuff.
-            $sql = preg_replace('/(WHERE.*?)\s+\w+\s*=\s*"\$userid"/i','\\1 AND 1',
+            $sql = preg_replace('/(WHERE.*?)\s+\w+\s*=\s*["\']\$userid[\'"]/i','\\1 AND 1',
                                 $GLOBALS['DBAuthParams']['auth_user_exists']);
             $sql = str_replace('WHERE AND 1','',$sql);
             if ($GLOBALS['DBParams']['dbtype'] == 'ADODB') {
@@ -276,47 +293,50 @@ class WikiGroup{
      */ 
     function getMembersOf($group){
     	if ($this->specialGroup($group)) {
-            //$request = &$this->request;
-            $all = $this->_allUsers();
-            $users = array();
-            switch ($group) {
-            case GROUP_EVERY: 		
-                return $all;
-            case GROUP_ANONYMOUS: 	
-                return $users;
-            case GROUP_BOGOUSER:
-                foreach ($all as $u) {
-                    if (isWikiWord($user)) $users[] = $u;
-                }
-                return $users;
-            case GROUP_SIGNED:    	
-                foreach ($all as $u) {
-                    $user = WikiUser($u);
-                    if ($user->isSignedIn()) $users[] = $u;
-                }
-                return $users;
-            case GROUP_AUTHENTICATED:
-                foreach ($all as $u) {
-                    $user = WikiUser($u);
-                    if ($user->isAuthenticated()) $users[] = $u;
-                }
-                return $users;
-            case GROUP_ADMIN:		
-                foreach ($all as $u) {
-                    $user = WikiUser($u);
-                    if ($user->isAdmin()) $users[] = $u;
-                }
-                return $users;
-            default:
-                trigger_error(__sprintf("Method '%s' not implemented in this GROUP_METHOD %s",
-                                        'getMembersOf', GROUP_METHOD),
-                              E_USER_WARNING);
-            }
-        }
+    	    return getSpecialMembersOf($group);
+    	}
         trigger_error(__sprintf("Method '%s' not implemented in this GROUP_METHOD %s",
                                 'getMembersOf', GROUP_METHOD),
                       E_USER_WARNING);
         return array();
+    }
+        	
+    function getSpecialMembersOf($group) {
+        //$request = &$this->request;
+        $all = $this->_allUsers();
+        $users = array();
+        switch ($group) {
+        case GROUP_EVERY:
+            return $all;
+        case GROUP_ANONYMOUS: 	
+            return $users;
+        case GROUP_BOGOUSER:
+            foreach ($all as $u) {
+                if (isWikiWord($user)) $users[] = $u;
+            }
+            return $users;
+        case GROUP_SIGNED:    	
+            foreach ($all as $u) {
+                $user = WikiUser($u);
+                if ($user->isSignedIn()) $users[] = $u;
+            }
+            return $users;
+        case GROUP_AUTHENTICATED:
+            foreach ($all as $u) {
+                $user = WikiUser($u);
+                if ($user->isAuthenticated()) $users[] = $u;
+            }
+            return $users;
+        case GROUP_ADMIN:		
+            foreach ($all as $u) {
+                $user = WikiUser($u);
+                if ($user->isAdmin()) $users[] = $u;
+            }
+            return $users;
+        default:
+            trigger_error(__sprintf("Unknown special group '%s'", $group),
+                          E_USER_WARNING);
+        }
     }
 
     /**
@@ -381,7 +401,7 @@ class GroupNone extends WikiGroup{
      */ 
     function isMember($group){
     	if ($this->specialGroup($group)) {
-            return WikiGroup::isMember($group);
+    	    return $this->isSpecialMember($group);
         } else {
             return false;
         }
@@ -455,8 +475,9 @@ class GroupWikiPage extends WikiGroup{
         }
         $this->membership[$group] = false;
         // Let grouppages override certain defaults, such as members of admin
-    	if ($this->specialGroup($group))
-            return WikiGroup::isMember($group);
+    	if ($this->specialGroup($group)) {
+    	    return $this->isSpecialMember($group);
+    	}
         return false;
     }
     
@@ -467,7 +488,7 @@ class GroupWikiPage extends WikiGroup{
     * @return boolean True if user is a member, else false.
     * @access private
     */
-    function _inGroupPage($group_page,$strict=false){
+    function _inGroupPage($group_page, $strict=false){
         $group_revision = $group_page->getCurrentRevision();
         if ($group_revision->hasDefaultContents()) {
             $group = $group_page->getName();
@@ -498,7 +519,7 @@ class GroupWikiPage extends WikiGroup{
 
     	$specialgroups = $this->specialGroups();
         foreach ($specialgroups as $group) {
-            $this->membership[$group] = $this->isMember($group);
+            $this->membership[$group] = $this->isSpecialMember($group);
         }
 
         $dbh = &$this->request->getDbh();
@@ -524,7 +545,7 @@ class GroupWikiPage extends WikiGroup{
      */ 
     function getMembersOf($group){
     	if ($this->specialGroup($group))
-            return WikiGroup::getMembersOf($group);
+            return $this->getSpecialMembersOf($group);
 
         trigger_error("GroupWikiPage::getMembersOf is not yet implimented",
                       E_USER_WARNING);
@@ -625,7 +646,7 @@ class GroupDb_PearDB extends GroupDb {
         $this->membership[$group] = false;
         // Let override certain defaults, such as members of admin
     	if ($this->specialGroup($group))
-            return WikiGroup::isMember($group);
+            return $this->isSpecialMember($group);
         return false;
     }
     
@@ -676,7 +697,7 @@ class GroupDb_PearDB extends GroupDb {
         }
         // add certain defaults, such as members of admin
     	if ($this->specialGroup($group))
-            $members = array_merge($members, WikiGroup::getMembersOf($group));
+            $members = array_merge($members, $this->getSpecialMembersOf($group));
         return $members;
     }
 }
@@ -712,7 +733,7 @@ class GroupDb_ADODB extends GroupDb {
         }
         $this->membership[$group] = false;
     	if ($this->specialGroup($group))
-            return WikiGroup::isMember($group);
+            return $this->isSpecialMember($group);
 
         return false;
     }
@@ -766,7 +787,7 @@ class GroupDb_ADODB extends GroupDb {
         $rs->Close();
         // add certain defaults, such as members of admin
     	if ($this->specialGroup($group))
-            $members = array_merge($members,WikiGroup::getMembersOf($group));
+            $members = array_merge($members, $this->getSpecialMembersOf($group));
         return $members;
     }
 }
@@ -831,7 +852,7 @@ class GroupFile extends WikiGroup {
         }
         $this->membership[$group] = false;
     	if ($this->specialGroup($group))
-            return WikiGroup::isMember($group);
+            return $this->isSpecialMember($group);
         return false;
     }
     
@@ -878,7 +899,7 @@ class GroupFile extends WikiGroup {
             $members = explode(' ',$this->_file->users[$group]);
         }
     	if ($this->specialGroup($group)) {
-            $members = array_merge($members,WikiGroup::getMembersOf($group));
+            $members = array_merge($members, $this->getSpecialMembersOf($group));
         }
         return $members;
     }
@@ -931,7 +952,7 @@ class GroupLdap extends WikiGroup {
      */ 
     function isMember($group) {
     	if ($this->specialGroup($group))
-            return WikiGroup::isMember($group);
+            return $this->isSpecialMember($group);
 
         if (isset($this->membership[$group])) {
             return $this->membership[$group];
@@ -1029,7 +1050,7 @@ class GroupLdap extends WikiGroup {
      */ 
     function getMembersOf($group){
     	if ($this->specialGroup($group))
-            return WikiGroup::getMembersOf($group);
+            return $this->getSpecialMembersOf($group);
 
         $members = array();
         if ($ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
@@ -1052,6 +1073,9 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.36  2004/06/16 13:21:05  rurban
+// stabilize on failing ldap queries or bind
+//
 // Revision 1.35  2004/06/16 12:08:25  rurban
 // better desc
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.60 2004-06-19 11:51:13 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.61 2004-06-25 14:29:17 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -473,6 +473,10 @@ class Request_SessionVars {
                 // otherwise it will get lost.
                 unset($val->_HomePagehandle);
                 unset($val->_auth_dbi);
+        	if (isset($val->_group)) {
+          	    unset($val->_group->_request);
+            	    unset($val->_group->_user);
+        	}
 	    }
         }
         if (!function_usable('get_cfg_var') or get_cfg_var('register_globals')) {
@@ -872,10 +876,10 @@ class HTTP_ETag {
 
 // Possible results from the HTTP_ValidatorSet::_check*() methods.
 // (Higher numerical values take precedence.)
-define ('_HTTP_VAL_PASS', 0);   // Test is irrelevant
-define ('_HTTP_VAL_NOT_MODIFIED', 1); // Test passed, content not changed
-define ('_HTTP_VAL_MODIFIED', 2); // Test failed, content changed
-define ('_HTTP_VAL_FAILED', 3); // Precondition failed.
+define ('_HTTP_VAL_PASS', 0);         	// Test is irrelevant
+define ('_HTTP_VAL_NOT_MODIFIED', 1); 	// Test passed, content not changed
+define ('_HTTP_VAL_MODIFIED', 2); 	// Test failed, content changed
+define ('_HTTP_VAL_FAILED', 3);   	// Precondition failed.
 
 class HTTP_ValidatorSet {
     function HTTP_ValidatorSet($validators) {
@@ -989,6 +993,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.60  2004/06/19 11:51:13  rurban
+// CACHE_CONTROL: NONE => NO_CACHE
+//
 // Revision 1.59  2004/06/13 11:34:22  rurban
 // fixed bug #969532 (space in uploaded filenames)
 // improved upload error messages

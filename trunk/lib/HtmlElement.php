@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.39 2004-05-17 13:36:49 rurban Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.40 2004-06-25 14:29:17 rurban Exp $');
 /**
  * Code for writing the HTML subset of XML.
  * @author: Jeff Dairiki
@@ -481,8 +481,11 @@ function JavaScript ($js, $script_args = false) {
     if (empty($js))
         return HTML::script($script_args);
     else
+        // see http://devedge.netscape.com/viewsource/2003/xhtml-style-script/
         return HTML::script($script_args,
-                            new RawXml("<!-- //\n${js}\n// -->"));
+                            new RawXml((ENABLE_XHTML_XML ? "\n//<![CDATA[" : "\n<!--//")
+                                       . "\n".rtrim($js)."\n"
+                                       . (ENABLE_XHTML_XML ? "//]]>\n" : "// -->")));
 }
 
 /** Conditionally display content based of whether javascript is supported.
@@ -518,6 +521,10 @@ function IfJavaScript($if_content = false, $else_content = false) {
     
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.39  2004/05/17 13:36:49  rurban
+ Apply RFE #952323 "ExternalSearchPlugin improvement", but
+   with <button><img></button>
+
  Revision 1.38  2004/05/12 10:49:54  rurban
  require_once fix for those libs which are loaded before FileFinder and
    its automatic include_path fix, and where require_once doesn't grok

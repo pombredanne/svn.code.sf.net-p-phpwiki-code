@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.60 2004-06-14 11:31:36 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.61 2004-06-25 14:29:18 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -74,10 +74,11 @@ class Template
     }
     
     function _print ($val) {
-        if (isa($val, 'Template'))
+        if (isa($val, 'Template')) {
             $this->_expandSubtemplate($val);
-        else
+        } else {
             PrintXML($val);
+        }
     }
 
     function _expandSubtemplate (&$template) {
@@ -255,6 +256,14 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.60  2004/06/14 11:31:36  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.59  2004/05/18 16:23:39  rurban
 // rename split_pagename to SplitPagename
 //

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.169 2004-06-20 14:42:54 rurban Exp $');
+rcs_id('$Id: main.php,v 1.170 2004-06-25 14:29:20 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -113,8 +113,14 @@ $this->version = phpwiki_version();
         {
             include_once("themes/" . THEME . "/themeinfo.php");
         }
-        if (empty($WikiTheme) and isset($user_theme))
+        if (empty($WikiTheme) and isset($user_theme)) {
+            if (strcspn($user_theme,"./\x00]") != strlen($user_theme)) {
+            	trigger_error(sprintf("invalid theme '%s': Invalid characetsr detected", $user_theme),
+            	              E_USER_WARNING);
+                $user_theme = "default";
+            }
             include_once("themes/$user_theme/themeinfo.php");
+        }
         if (empty($WikiTheme) and defined('THEME'))
             include_once("themes/" . THEME . "/themeinfo.php");
         if (empty($WikiTheme))
@@ -175,6 +181,13 @@ $this->version = phpwiki_version();
         else
             return $GLOBALS['ForbiddenUser'];
     }
+    
+    function & getGroup () {
+        if (isset($this->_user) and isset($this->_user->_group))
+            return $this->_user->_group;
+        else
+            return WikiGroup::getGroup();
+    }
 
     function getPrefs () {
         return $this->_prefs;
@@ -186,7 +199,6 @@ $this->version = phpwiki_version();
             return $this->_prefs->get($key);
         }
     }
-
     function getDbh () {
         return $this->_dbi;
     }
@@ -295,7 +307,6 @@ $this->version = phpwiki_version();
         define('MAIN_setUser',true);
         $this->setCookieVar('WIKI_ID', $user->getAuthenticatedId(),
                             COOKIE_EXPIRATION_DAYS, COOKIE_DOMAIN);
-        $this->setSessionVar('wiki_user', $user);
         if ($user->isSignedIn())
             $user->_authhow = 'signin';
 
@@ -304,6 +315,15 @@ $this->version = phpwiki_version();
             $this->_user->_prefs = $this->_user->getPreferences();
             $this->_prefs =& $this->_user->_prefs;
         }
+        $this->_user->_group = $this->getGroup();
+        // avoid recursive objects and session resource handles
+        if (isset($user->_group)) {
+            unset($user->_group->_request);
+            unset($user->_group->_user);
+        }
+        unset($user->_HomePagehandle);
+        unset($user->_auth_dbi);
+        $this->setSessionVar('wiki_user', $user);
         $this->_prefs->set('userid',
                            $user->isSignedIn() ? $user->getId() : '');
         $this->initializeTheme();
@@ -450,6 +470,10 @@ $this->version = phpwiki_version();
     }
         
     function requiredAuthorityForAction ($action) {
+        global $DisabledActions;
+        if ($DisabledActions and in_array($action,$DisabledActions))
+            return WIKIAUTH_UNOBTAINABLE;
+            
     	if (ENABLE_PAGEPERM and class_exists("PagePermission")) {
     	   return requiredAuthorityForPage($action);
     	} else {
@@ -979,15 +1003,15 @@ function main () {
 
     // Postpone warnings
     global $ErrorManager;
-    $ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE|E_USER_WARNING);
+    $ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE|E_USER_WARNING|E_WARNING);
     $request = new WikiRequest();
 
     $action = $request->getArg('action');
     if (substr($action, 0, 3) != 'zip') {
     	if ($action == 'pdf')
     	    $ErrorManager->setPostponedErrorMask(-1);
-    	else // reject postponing of warnings
-            $ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE);
+    	//else // reject postponing of warnings
+        //    $ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE);
     }
 
     /*
@@ -1046,6 +1070,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.169  2004/06/20 14:42:54  rurban
+// various php5 fixes (still broken at blockparser)
+//
 // Revision 1.168  2004/06/17 10:39:18  rurban
 // fix reverse translation of possible actionpage
 //

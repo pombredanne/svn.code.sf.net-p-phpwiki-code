@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.57 2004-06-20 15:26:29 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.58 2004-06-25 14:29:17 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004 Reini Urban
  *
@@ -156,7 +156,7 @@ class RegexpSet
 	$matched = array(); $matched_ind = array();
         for ($i=0; $i<count($regexps); $i++) {
             if (!trim($regexps[$i])) {
-                trigger_error("empty regexp $i",E_USER_WARNING);
+                trigger_error("empty regexp $i", E_USER_WARNING);
                 continue;
             }
             $pat= "/ ( . $repeat ) ( " . $regexps[$i] . " ) /x";
@@ -175,6 +175,14 @@ class RegexpSet
         
         // Optimization: if the matches are only "$" and another, then omit "$"
         if (! _INLINE_OPTIMIZATION or count($matched) > 2) {
+            assert(!empty($repeat));
+            assert(!empty($regexps));
+            for ($i=0; $i<count($regexps); $i++) {
+                if (!trim($regexps[$i])) {
+                    trigger_error("empty regexp $i", E_USER_WARNING);
+                    $regexps[$i] = '\Wxxxx\w\W\w\W\w\W\w\W\w\W\w'; // some placeholder
+                }
+            }
             // We could do much better, if we would know the matching markup for the 
             // longest regexp match:
             $hugepat= "/ ( . $repeat ) ( (" . join(')|(', $regexps) . ") ) /Asx";

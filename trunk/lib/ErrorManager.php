@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.29 2004-06-20 15:30:04 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.30 2004-06-25 14:29:12 rurban Exp $');
 
 require_once(dirname(__FILE__).'/HtmlElement.php');
 if (isset($GLOBALS['ErrorManager'])) return;
@@ -220,6 +220,8 @@ class ErrorManager
             }
         }
 
+        $this->_noCacheHeaders();
+
         // Error was either fatal, or was not handled by a handler.
         // Handle it ourself.
         if ($error->isFatal()) {
@@ -277,6 +279,24 @@ class ErrorManager
             $flushed->pushContent($error);
         }
         return $flushed;
+    }
+
+    function _noCacheHeaders() {
+        global $request;
+        static $already = false;
+
+        if (isset($request) and isset($request->_validators)) {
+            $request->_validators->_tag = false;
+            $request->_validators->_mtime = false;
+        }
+        if ($already) return;
+        
+        // FIXME: Howto announce that to Request->cacheControl()?
+        if (!headers_sent()) {
+            header( "Cache-control: no-cache" );
+            header( "Pragma: nocache" );
+        }
+        $already = true;
     }
 }
 
@@ -528,6 +548,9 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.29  2004/06/20 15:30:04  rurban
+// get_class case-sensitivity issues
+//
 // Revision 1.28  2004/06/16 11:51:04  rurban
 // fixed typo: undefined object #235
 //

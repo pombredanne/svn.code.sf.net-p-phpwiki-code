@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllUsers.php,v 1.13 2004-06-16 10:38:59 rurban Exp $');
+rcs_id('$Id: AllUsers.php,v 1.14 2004-06-25 14:29:22 rurban Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -42,7 +42,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.13 $");
+                            "\$Revision: 1.14 $");
     }
 
     function getDefaultArguments() {
@@ -77,7 +77,7 @@ extends WikiPlugin
         if ($debug)
             $timer = new DebugTimer;
 
-        $group = WikiGroup::getGroup();
+        $group = $request->getGroup();
         $allusers = $group->_allUsers();
         $args['count'] = count($allusers);
         // deleted pages show up as version 0.
@@ -112,6 +112,15 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2004/06/16 10:38:59  rurban
+// Disallow refernces in calls if the declaration is a reference
+// ("allow_call_time_pass_reference clean").
+//   PhpWiki is now allow_call_time_pass_reference = Off clean,
+//   but several external libraries may not.
+//   In detail these libs look to be affected (not tested):
+//   * Pear_DB odbc
+//   * adodb oracle
+//
 // Revision 1.12  2004/04/20 00:56:00  rurban
 // more paging support and paging fix for shorter lists
 //
