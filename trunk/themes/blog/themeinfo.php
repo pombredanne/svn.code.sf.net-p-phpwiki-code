@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.2 2004-12-15 17:47:32 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.3 2005-02-02 19:14:13 rurban Exp $');
 
 /**
  * This file defines a blog theme for PhpWiki, 
@@ -32,8 +32,8 @@ require_once('themes/Sidebar/themeinfo.php');
 
 class Theme_blog extends Theme_Sidebar {
    function _findFile ($file, $missing_okay=false) {
-        if (file_exists($this->_path . "themes/blog/$file"))
-            return "themes/blog/$file";
+        if (file_exists($this->_path . "themes/".$this->_name."/$file"))
+            return "themes/".$this->_name."/$file";
         if (file_exists($this->_path . "themes/Sidebar/$file"))
             return "themes/Sidebar/$file";
         return parent::_findFile($file, $missing_okay);
@@ -61,49 +61,6 @@ class Theme_blog extends Theme_Sidebar {
             return '_blog_RecentChanges_BoxFormatter';
         return '_blog_RecentChanges_Formatter';
     }
-/*
-    function getPageHistoryFormatter ($format) {
-        include_once($this->file('lib/RecentChanges.php'));
-        if (preg_match('/^rss|^sidebar/', $format))
-            return false;       // use default
-        return '_blog_PageHistory_Formatter';
-    }
-
-    function _get_name_and_rev ($page_or_rev) {
-        $version = false;
-
-        if (empty($page_or_rev)) {
-            global $request;
-            $pagename = $request->getArg("pagename");
-            $version = $request->getArg("version");
-        }
-        elseif (is_object($page_or_rev)) {
-            if (isa($page_or_rev, 'WikiDB_PageRevision')) {
-                $rev = $page_or_rev;
-                $page = $rev->getPage();
-                if (!$rev->isCurrent()) $version = $rev->getVersion();
-            }
-            else {
-                $page = $page_or_rev;
-            }
-            $pagename = $page->getName();
-        }
-        else {
-            $pagename = (string) $page_or_rev;
-        }
-        return compact('pagename', 'version');
-    }
-*/
-
-/*
-    function maybeSplitWikiWord($pagename) {
-    	if (strstr($pagename, "/Blog/")) {
-    	    return "/Blog/...";
-    	} else {
-    	    return parent::maybeSplitWikiWord($pagename);
-    	}
-    }
-*/
     
     /* TODO: use the blog summary as label instead of the pagename */
     function linkExistingWikiWord($wikiword, $linktext = '', $version = false) {
