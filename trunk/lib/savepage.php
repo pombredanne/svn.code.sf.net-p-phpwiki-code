@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.21 2002-01-05 13:39:54 carstenklapp Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.22 2002-01-07 21:09:11 carstenklapp Exp $');
 require_once('lib/Template.php');
 require_once('lib/transform.php');
 require_once('lib/ArchiveCleaner.php');
@@ -177,7 +177,7 @@ function savePage ($dbi, $request) {
     }
 
     
-    $html .= QElement('hr', array('noshade' => 'noshade');
+    $html .= QElement('hr', array('noshade' => 'noshade'));
     $html .= do_transform($newrevision->getContent());
     echo GeneratePage('BROWSE', $html, $pagename, $newrevision);
 }
