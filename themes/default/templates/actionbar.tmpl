@@ -1,5 +1,5 @@
 <?php // -*-html-*-
-  rcs_id('$Id: actionbar.tmpl,v 1.20 2003-03-05 21:38:15 dairiki Exp $');
+  rcs_id('$Id: actionbar.tmpl,v 1.21 2003-11-25 21:14:12 carstenklapp Exp $');
   if (!$page->get('locked') || $user->isAdmin())
       $EditB = Button("edit",
                       $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
@@ -19,7 +19,7 @@
 <tr valign="baseline">
   <td>
   <div id="actionbuttons">
-    <?= $EditB ?> 
+    <?= $EditB ?>
     <?php if ($user->isAdmin()) { ?>
       <?=$Sep?><?= Button($page->get('locked') ? 'unlock' : 'lock') ?>
       <?=$Sep?><?= Button('remove') ?>
@@ -27,7 +27,7 @@
     <?=$Sep?><?= Button("PageHistory", _("PageHistory")) ?>
     <?=$Sep?><?= Button("diff") ?> 
     <?=$Sep?><?= Button("PageInfo", _("PageInfo")) ?>
-<?php if (defined('DEBUG') || $user->isAdmin()) { ?> 
+<?php if ((defined('DEBUG') && DEBUG) || $user->isAdmin()) { ?> 
     <?=$Sep?><?= Button("DebugInfo", _("DebugInfo")) ?> <!-- For debugging only, really -->
 <?php } ?>
   </div>
