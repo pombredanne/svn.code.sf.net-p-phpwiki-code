@@ -1,9 +1,9 @@
 <?php // -*-php-*-
-rcs_id('$Id: RateIt.php,v 1.5 2004-04-11 10:42:02 rurban Exp $');
+rcs_id('$Id: RateIt.php,v 1.6 2004-04-12 14:07:12 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
- This file is (not yet) part of PhpWiki.
+ This file is part of PhpWiki.
 
  PhpWiki is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -20,8 +20,8 @@ rcs_id('$Id: RateIt.php,v 1.5 2004-04-11 10:42:02 rurban Exp $');
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-//define('RATING_STORAGE','WIKIPAGE');
-define('RATING_STORAGE','SQL');
+//define('RATING_STORAGE','WIKIPAGE');   // not fully supported yet
+define('RATING_STORAGE','SQL');          // only for mysql yet.
 // leave undefined for internal, slow php engine.
 //define('RATING_EXTERNAL',PHPWIKI_DIR . 'suggest.exe');
 
@@ -79,6 +79,7 @@ define('RATING_STORAGE','SQL');
  * @author:  Dan Frankowski (wikilens author), Reini Urban (as plugin)
  *
  * TODO: 
+ * - fix RATING_STORAGE = WIKIPAGE
  * - fix smart caching
  * - finish mysuggest.c (external engine with data from mysql)
  * - add php_prediction
@@ -109,7 +110,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function RatingWidgetJavascript() {
@@ -746,6 +747,9 @@ function deleteRating(actionImg, page, dimension) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/04/11 10:42:02  rurban
+// pgsrc/CreatePagePlugin
+//
 // Revision 1.4  2004/04/06 20:00:11  rurban
 // Cleanup of special PageList column types
 // Added support of plugin and theme specific Pagelist Types
