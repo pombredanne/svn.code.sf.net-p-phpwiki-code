@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BackLinks.php,v 1.25 2004-09-13 15:00:50 rurban Exp $');
+rcs_id('$Id: BackLinks.php,v 1.26 2004-09-14 10:32:32 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
     
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.25 $");
+                            "\$Revision: 1.26 $");
     }
     
     function getDefaultArguments() {
@@ -59,7 +59,7 @@ extends WikiPlugin
         if (empty($page) and $page != '0')
             return '';
         
-        $exclude = $exclude ? explode(",", $exclude) : array();
+        $exclude = is_string($exclude) ? explodePageList($exclude) : (is_array($exclude) ? $exclude : array());
         if (!$include_self)
             $exclude[] = $page;
         if ($info) {
@@ -144,6 +144,9 @@ class _PageList_Column_BackLinks_count extends _PageList_Column {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.25  2004/09/13 15:00:50  rurban
+// info=count: number of links at this subpage
+//
 // Revision 1.24  2004/04/18 05:42:17  rurban
 // more fixes for page="0"
 // better WikiForum support
