@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiForm.php,v 1.15 2004-06-22 07:12:49 rurban Exp $');
+rcs_id('$Id: WikiForm.php,v 1.16 2004-07-01 13:14:01 rurban Exp $');
 /**
- Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+ Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -22,8 +22,10 @@ rcs_id('$Id: WikiForm.php,v 1.15 2004-06-22 07:12:49 rurban Exp $');
 
 /**
  * This is a replacement for MagicPhpWikiURL forms.
+ * Just a few old actions are supported, which where previously 
+ * encoded with the phpwiki: syntax.
  *
- *
+ * See WikiFormMore for the more generic version.
  */
 class WikiPlugin_WikiForm
 extends WikiPlugin
@@ -34,7 +36,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.15 $");
+                            "\$Revision: 1.16 $");
     }
 
     function getDefaultArguments() {
@@ -121,6 +123,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2004/06/22 07:12:49  rurban
+// removed USE_TAGLINES constant
+//
 // Revision 1.14  2004/06/21 17:06:38  rurban
 // renamed constant
 //

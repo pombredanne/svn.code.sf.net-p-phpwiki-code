@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiFormMore.php,v 1.1 2004-07-01 13:11:53 rurban Exp $');
+rcs_id('$Id: WikiFormMore.php,v 1.2 2004-07-01 13:14:01 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
 
@@ -52,7 +52,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -86,8 +86,6 @@ extends WikiPlugin
         $editboxes=array(); $hidden=array(); $checkboxes=array(); $radiobuttons=array(); $pulldown=array();
         extract($this->getArgs($argstr, $request));
         if (empty($action)) {
-            //trigger_error(sprintf(_("argument '%s' not declared by plugin"),
-            //                      'action'), E_USER_NOTICE);
             return $this->error(fmt("A required argument '%s' is missing.","action"));
         }
         $form = HTML::form(array('action' => $request->getPostURL(),
@@ -161,6 +159,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/07/01 13:11:53  rurban
+// more generic forms
+//
 //
 
 // For emacs users
