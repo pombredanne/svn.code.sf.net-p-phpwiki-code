@@ -1,58 +1,103 @@
 <?php // -*-php-*-
 
+define('text2png_debug', true);
+
+
 class WikiPlugin_text2png
 extends WikiPlugin
 {
-    var $name = 'text2png';
-    function getDefaultArguments() {
-        return array('text'    => 'Hello WikiWorld!');
-    }
-   function run($args) {
-        //FIXME: are quotes needed for the argument string text= or no?
-        //FIXME: the next two lines aren't the correct way to extract a text argument for a WikiPlugin
-        $args = &$this->args;
-        $t = $args['text'];
-        return $this->text2png($t);
+	var $name = 'text2png';
+	
+	function getDefaultArguments() {
+    global $LANG;
+	return array('text'	=> "Hello WikiWorld!",
+	             'l'    => $LANG );
+	}
+
+	function run($dbi, $argstr, $request) {
+		extract($this->getArgs($argstr, $request));
+		return $this->text2png($text,$l);
+	}
+
+	function text2png($text,$l) {
+
+        //basic image creation and caching
+		//you MUST delete the image cache yourself if you change the drawing routines!
+		
+        //to show debug string, whether image was saved or loaded from cache
+		//and what the path is
         
-//        return sprintf("<tt>%s %s</tt>", $salutation, $name);
-    }
+		$filename = $text . ".png";
+        if ($l == "C") { $l = "en"; } //FIXME: hack for english, C=en
+		$filepath = getcwd() . "/images/$l";
+ 
+        if (!file_exists($filepath ."/". $filename)) {
+            
+            if (!file_exists($filepath)) {
+			    $oldumask = umask(0);
+                mkdir($filepath, 0777);    //permissions affected by user the www server is running as
+                umask($oldumask);
+            }
+            
+			// add trailing slash to save some keystrokes later
+            $filepath .= "/";
+            
+			// prepare a new image
+            $im = @ImageCreate(150, 50) or die ("Cannot Initialize new GD image stream. PHP must be compiled with support for GD 1.6 or later to create png files.");
 
-    function text2png($text) {
-        //FIXME: once this accepts a text argument the next line should be removed
-        $text="Hello WikiWorld!";
-        
-        $text or die ("?text string required");
-        $im = @ImageCreate(150, 75) or die ("Cannot Initialize new GD image stream. PHP must be compiled with support for GD 1.6 or later to create png files.");
+            // get ready to draw
+		    $bg_color   = ImageColorAllocate($im, 255, 255, 255);
+		    $ttfont     = "/System/Library/Frameworks/JavaVM.framework/Versions/1.3.1/Home/lib/fonts/LucidaSansRegular.ttf";
 
-        $bg_color   = ImageColorAllocate($im, 255, 255, 255);
-        $text_color = ImageColorAllocate($im, 50, 50, 200);
-        $ttfont     = "/System/Library/Frameworks/JavaVM.framework/Versions/1.3.1/Home/lib/fonts/LucidaSansRegular.ttf";
+            // http://download.php.net/manual/en/function.imagettftext.php
+			// array imagettftext (int im, int size, int angle, int x, int y, int col, string fontfile, string text)
 
-        ImageTTFText($im, 10, 0, 10, 30, $text_color, $ttfont, $text);
-        ImageString($im, 2, 10, 40, $text, $text_color);
+            //draw shadow
+		    $text_color = ImageColorAllocate($im, 175, 175, 175);
+            //shadow is 1 pixel down and 2 pixels right
+		    ImageTTFText($im, 10, 0, 12, 31, $text_color, $ttfont, $text);
+            //draw text
+		    $text_color = ImageColorAllocate($im, 0, 0, 0);
+		    ImageTTFText($im, 10, 0, 10, 30, $text_color, $ttfont, $text);
+		    //ImageString($im, 2, 10, 40, $text, $text_color);
 
-        // dump directly to browser:
-        //        header("Content-type: image/png");
-        //        ImagePng($im);
+		    // to dump directly to browser:
+		    //header("Content-type: image/png");
+		    //ImagePng($im);
 
-        // save to file:
-        $filename = $text . ".png";
-        $success = ImagePng($im, "../" . $filename);
+		    // to save to file:
+            $success = ImagePng($im, $filepath . $filename);
 
-        //FIXME: the link generated doesn't work. The image file is dumped in the same directory as index.php
-        if($success = 1) {
-            $s = "<p>png image saved as <a href=\"/$filename\">$filename</a>.</p>";
-         } else {
-            $s = "<p>Error creating png file.</p>";
-        }  
-        return $s;
-    }
+        } else {
+            $filepath .= "/";
+            $success = 2;
+        }
+
+        // create an <img src= tag to show the image!
+        // this could use some better error reporting
+		$html = "";
+		if ($success > 0) {
+            if (defined('text2png_debug')) {
+                   switch($success) { 
+                   case 1:
+                        $html .= Element('p', "Image saved to cache file: " . $filepath . $filename) . "\n" ;
+                   case 2:
+                        $html .= Element('p', "Image loaded from cache file: " . $filepath . $filename) . "\n" ;
+                     }
+            }
+            $urlpath = DATA_PATH . "/images/$l/";
+            $html .= Element('img', array('src' => $urlpath . $filename, 'alt' => $text));
+		} else {
+			$html .= Element('p', "Error writing png file: " . $filepath . $filename) . "\n";
+		}
+		return $html;
+	}
 };
 
 // For emacs users
 // Local Variables:
 // mode: php
-// tab-width: 8
+// tab-width: 4
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
