@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.215 2004-11-11 14:34:12 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.216 2004-11-11 18:31:26 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1798,7 +1798,22 @@ function longer_timeout($secs = 30) {
         @set_time_limit(max($timeout,(integer)($secs + $timeleft)));
 }
 
+function printSimpleTrace($bt) {
+    //print_r($bt);
+    echo "Traceback:\n";
+    foreach ($bt as $i => $elem) {
+        if (!array_key_exists('file', $elem)) {
+            continue;
+        }
+        echo join(" ",array_values($elem)),"\n";
+        //print "  " . $elem['file'] . ':' . $elem['line'] . " " .$elem['function']"\n";
+    }
+}
+
 // $Log: not supported by cvs2svn $
+// Revision 1.215  2004/11/11 14:34:12  rurban
+// minor clarifications
+//
 // Revision 1.214  2004/11/11 11:01:20  rurban
 // fix loadPhpExtension
 //
