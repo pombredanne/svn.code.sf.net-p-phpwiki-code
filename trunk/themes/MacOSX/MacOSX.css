@@ -1,5 +1,5 @@
 /*
-  $Id: MacOSX.css,v 1.25 2002-02-19 21:36:19 carstenklapp Exp $
+  $Id: MacOSX.css,v 1.26 2002-03-01 17:04:54 carstenklapp Exp $
 
   Classes:
 
@@ -46,8 +46,24 @@ input.button { font-family: "Lucida Grande", Helvetica, Arial, sans-serif; }
 input.numeric {
   text-align: right;
 }
-
 .wikitext pre { font-family: Monaco, monospace; }
+
+
+
+
+input[type=text] {
+  border-top:    1px solid #7c7c7c;
+  border-left:   1px solid #c3c3c3;
+  border-bottom: 1px solid #dddddd;
+  border-right:  1px solid #c3c3c3;
+}
+/* Add space between the input field and following buttons, but not after the last button. */
+div.wikiaction input[type=text],
+div.wikiadmin input[type=text],
+form.wikiadmin input[type=file] {
+  margin-right: 0.5em;
+}
+
 
 
 /**
@@ -192,13 +208,13 @@ a.cal-hide,
                text-decoration: none; }
 table.cal   {
   /* for NS4 */
-  border: 1px solid black;
+/*border: 1px solid black;
 
   border-top:    1px solid #7c7c7c;
   border-left:   1px solid #c3c3c3;
   border-bottom: 1px solid #dddddd;
   border-right:  1px solid #c3c3c3;
-  background: #bebebe;
+  background: #bebebe;*/
 } 
 table.cal td {
   background: white;
@@ -214,7 +230,7 @@ table.cal-header td {
   font-size:  larger;
   background: white;
   border: 0px; }
-table.cal td.cal-dayname { background: #f4f4f4; }
+table.cal td.cal-dayname { background: #e8e8e8; }
 table.cal td.cal-today {
   background:    #f4f4f4;
   /* for NS4 */
@@ -350,9 +366,29 @@ div.wiki-message {
 .diff ins { background: #cfc; } /* 9f9 */
 
 
-/* PageList output */
-.pagelist tr.evenrow { background: #eee; }
-.pagelist tr.oddrow  { background: #f7f7f7; }
+/**
+ * PageList output
+ */
+.pagelist tr.evenrow { background: #f8f8f8; }
+.pagelist tr.oddrow  { background: #eee; }
+.pagelist thead td {
+  background: #e8e8e8;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: smaller;
+}
+.pagelist thead td u { text-decoration: none; }
+
+
+/**
+ * Search Results
+ */
+.search-context { background: white; }
+.search-term  {
+  background: #9bdaff;
+  font-weight: normal;
+}
+
 
 /* For emacs users
  *
