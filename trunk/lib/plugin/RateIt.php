@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RateIt.php,v 1.9 2004-06-14 11:31:39 rurban Exp $');
+rcs_id('$Id: RateIt.php,v 1.10 2004-06-18 14:42:17 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -19,11 +19,6 @@ rcs_id('$Id: RateIt.php,v 1.9 2004-06-14 11:31:39 rurban Exp $');
  along with PhpWiki; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
-//define('RATING_STORAGE','WIKIPAGE');   // not fully supported yet
-define('RATING_STORAGE','SQL');          // only for mysql yet.
-// leave undefined for internal, slow php engine.
-//define('RATING_EXTERNAL',PHPWIKI_DIR . 'suggest.exe');
 
 /**
  * RateIt: A recommender system, based on MovieLens and suggest.
@@ -83,21 +78,10 @@ define('RATING_STORAGE','SQL');          // only for mysql yet.
  * - fix smart caching
  * - finish mysuggest.c (external engine with data from mysql)
  * - add php_prediction
- * - add the various show modes (esp. TopN queries in PHP)
  */
-/*
- CREATE TABLE rating (
-        dimension INT(4) NOT NULL,
-        raterpage INT(11) NOT NULL,
-        rateepage INT(11) NOT NULL,
-        ratingvalue FLOAT NOT NULL,
-        rateeversion INT(11) NOT NULL,
-        tstamp TIMESTAMP(14) NOT NULL,
-        PRIMARY KEY (dimension, raterpage, rateepage)
- );
-*/
 
 require_once("lib/WikiPlugin.php");
+require_once("lib/wikilens/RatingsDb.php");
 
 class WikiPlugin_RateIt
 extends WikiPlugin
@@ -110,7 +94,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function RatingWidgetJavascript() {
@@ -221,18 +205,8 @@ function deleteRating(actionImg, page, dimension) {
         $this->pagename = $args['pagename'];
 
         if (RATING_STORAGE == 'SQL') {
-            $dbi = &$this->_dbi->_backend;
-            if (isa($dbi,'WikiDB_backend_PearDB'))
-                $this->dbtype = "PearDB";
-            else
-                $this->dbtype = "ADODB";
-            $this->iter_class = "WikiDB_backend_".$this->dbtype."_generic_iter";
-            extract($dbi->_table_names);
-            if (empty($rating_tbl)) {
-                $rating_tbl = (!empty($GLOBALS['DBParams']['prefix']) 
-                               ? $GLOBALS['DBParams']['prefix'] : '') . 'rating';
-                $dbi->_table_names['rating_tbl'] = $rating_tbl;
-            }
+            $rdbi = new RatingsDb();
+            $this->_rdbi =& $rdbi;
         }
 
         if ($args['mode'] === 'add') {
@@ -240,7 +214,7 @@ function deleteRating(actionImg, page, dimension) {
                 return $this->error(_("You must sign in"));
             global $WikiTheme;
             $actionImg = $WikiTheme->_path . $this->actionImgPath();
-            $this->addRating($request->getArg('rating'));
+            $rdbi->addRating($request->getArg('rating'));
             ob_end_clean();  // discard any previous output
             // delete the cache
             $page = $request->getPage();
@@ -258,7 +232,7 @@ function deleteRating(actionImg, page, dimension) {
                 return $this->error(_("You must sign in"));
             global $WikiTheme;
             $actionImg = $WikiTheme->_path . $this->actionImgPath();
-            $this->deleteRating();
+            $rdbi->deleteRating();
             ob_end_clean();  // discard any previous output
             // delete the cache
             $page = $request->getPage();
@@ -277,7 +251,7 @@ function deleteRating(actionImg, page, dimension) {
             // or we change the header in the ob_buffer.
 
             //Todo: add a validator based on the users last rating mtime
-            $rating = $this->getRating();
+            $rating = $rdbi->getRating();
             /*
                 static $validated = 0;
             	if (!$validated) {
@@ -331,342 +305,6 @@ function deleteRating(actionImg, page, dimension) {
                               $widget);
     }
 
-    function addRating($rating, $userid=null, $pagename=null, $dimension=null) {
-        if (is_null($dimension)) $dimension = $this->dimension;
-        if (is_null($userid))    $userid = $this->userid; 
-        if (is_null($pagename))  $pagename = $this->pagename;
-        if (RATING_STORAGE == 'SQL') {
-            $page = $this->_dbi->getPage($this->pagename);
-            $current = $page->getCurrentRevision();
-            $rateeversion = $current->getVersion();
-            $this->sql_rate($userid, $pagename, $rateeversion, $dimension, $rating);
-        } else {
-            $this->metadata_set_rating($userid, $pagename, $dimension, $rating);
-        }
-    }
-
-    function deleteRating($userid=null, $pagename=null, $dimension=null) {
-        if (is_null($dimension)) $dimension = $this->dimension;
-        if (is_null($userid))    $userid = $this->userid; 
-        if (is_null($pagename))  $pagename = $this->pagename;
-        if (RATING_STORAGE == 'SQL') {
-            $this->sql_delete_rating($userid, $pagename, $dimension);
-        } else {
-            $this->metadata_set_rating($userid, $pagename, $dimension, -1);
-        }
-    }
-
-    function getRating($userid=null, $pagename=null, $dimension=null) {
-        if (is_null($dimension)) $dimension = $this->dimension;
-        if (is_null($userid))    $userid = $this->userid; 
-        if (is_null($pagename))  $pagename = $this->pagename;
-        if (RATING_STORAGE == 'SQL') {
-            $ratings_iter = $this->sql_get_rating($dimension, $userid, $pagename);
-            if ($rating = $ratings_iter->next()) {
-                return $rating['ratingvalue'];
-            } else 
-                return false;
-        } else {
-            return $this->metadata_get_rating($userid, $pagename, $dimension);
-        }
-    }
-
-    function getUsersRated($dimension=null, $orderby = null) {
-        if (is_null($dimension)) $dimension = $this->dimension;
-        if (is_null($userid))    $userid = $this->userid; 
-        if (is_null($pagename))  $pagename = $this->pagename;
-        if (RATING_STORAGE == 'SQL') {
-            $ratings_iter = $this->sql_get_users_rated($dimension, $orderby);
-            if ($rating = $ratings_iter->next()) {
-                return $rating['ratingvalue'];
-            } else 
-                return false;
-        } else {
-            return $this->metadata_get_users_rated($dimension, $orderby);
-        }
-    }
-
-    // TODO
-    // Currently we have to call the "suggest" CGI
-    //   http://www-users.cs.umn.edu/~karypis/suggest/
-    // until we implement a simple recommendation engine.
-    // Note that "suggest" is only free for non-profit organizations.
-    // I am currently writing a binary CGI using suggest, which loads 
-    // data from mysql.
-    function getPrediction($userid=null, $pagename=null, $dimension=null) {
-        if (is_null($dimension)) $dimension = $this->dimension;
-        if (is_null($userid))    $userid   = $this->userid; 
-        if (is_null($pagename))  $pagename = $this->pagename;
-        $dbi = &$this->_dbi->_backend;
-        if (isset($pagename))
-            $page = $dbi->_get_pageid($pagename);
-        else return 0;
-        if (isset($userid))
-            $user = $dbi->_get_pageid($userid);
-        else return 0;
-        
-        return 0;
-        
-        if (defined('RATING_EXTERNAL')) {
-            // how call suggest.exe? as CGI or natively
-            //$rating = HTML::Raw("<!--#include virtual=".RATING_ENGINE." -->");
-            $args = "-u$user -p$page -malpha"; // --top 10
-            if (isset($dimension))
-                $args .= " -d$dimension";
-            $rating = passthru(RATING_EXTERNAL . " $args");
-        } else {
-            $rating = $this->php_prediction($userid, $pagename, $dimension);
-        }
-        return $rating;
-    }
-
-    /**
-     * TODO: slow item-based recommendation engine, similar to suggest RType=2.
-     * Only the SUGGEST_EstimateAlpha part
-     */
-    function php_prediction($userid=null, $pagename=null, $dimension=null) {
-        if (is_null($dimension)) $dimension = $this->dimension;
-        if (is_null($userid))    $userid   = $this->userid; 
-        if (is_null($pagename))  $pagename = $this->pagename;
-        if (RATING_STORAGE == 'SQL') {
-            $rating = 0;
-        } else {
-            $rating = 0;
-        }
-        return $rating;
-    }
-    
-    function getNumUsers($pagename=null, $dimension=null) {
-        if (is_null($dimension)) $dimension = $this->dimension;
-        if (is_null($pagename))  $pagename = $this->pagename;
-        if (RATING_STORAGE == 'SQL') {
-            $ratings_iter = $this->sql_get_rating($dimension, null, $pagename,
-                                                  null, "ratee");
-            return $ratings_iter->count();
-        } else {
-            $page = $this->_dbi->getPage($pagename);
-            $data = $page->get('rating');
-            if (!empty($data[$dimension]))
-                return count($data[$dimension]);
-            else 
-                return 0;
-        }
-    }
-    // TODO: metadata method
-    function getAvg($pagename=null, $dimension=null) {
-        if (is_null($dimension)) $dimension = $this->dimension;
-        if (is_null($pagename))  $pagename = $this->pagename;
-        if (RATING_STORAGE == 'SQL') {
-            $dbi = &$this->_dbi->_backend;
-            $where = "WHERE 1";
-            if (isset($pagename)) {
-                $raterid = $dbi->_get_pageid($pagename, true);
-                $where .= " AND raterpage=$raterid";
-            }
-            if (isset($dimension)) {
-                $where .= " AND dimension=$dimension";
-            }
-            //$dbh = &$this->_dbi;
-            extract($dbi->_table_names);
-            $query = "SELECT AVG(ratingvalue) as avg"
-                   . " FROM $rating_tbl r, $page_tbl p "
-                   . $where. " GROUP BY raterpage";
-            $result = $dbi->_dbh->query($query);
-            $iter = new $this->iter_class($this,$result);
-            $row = $iter->next();
-            return $row['avg'];
-        } else {
-            return 2.5;
-        }
-    }
-
-    /**
-     * Get ratings.
-     *
-     * @param dimension  The rating dimension id.
-     *                   Example: 0
-     *                   [optional]
-     *                   If this is null (or left off), the search for ratings
-     *                   is not restricted by dimension.
-     *
-     * @param rater  The page id of the rater, i.e. page doing the rating.
-     *               This is a Wiki page id, often of a user page.
-     *               Example: "DanFr"
-     *               [optional]
-     *               If this is null (or left off), the search for ratings
-     *               is not restricted by rater.
-     *               TODO: Support an array
-     *
-     * @param ratee  The page id of the ratee, i.e. page being rated.
-     *               Example: "DudeWheresMyCar"
-     *               [optional]
-     *               If this is null (or left off), the search for ratings
-     *               is not restricted by ratee.
-     *               TODO: Support an array
-     *
-     * @param orderby An order-by clause with fields and (optionally) ASC
-     *                or DESC.
-     *               Example: "ratingvalue DESC"
-     *               [optional]
-     *               If this is null (or left off), the search for ratings
-     *               has no guaranteed order
-     *
-     * @param pageinfo The type of page that has its info returned (i.e.,
-     *               'pagename', 'hits', and 'pagedata') in the rows.
-     *               Example: "rater"
-     *               [optional]
-     *               If this is null (or left off), the info returned
-     *               is for the 'ratee' page (i.e., thing being rated).
-     *
-     * @return DB iterator with results 
-     */
-    function sql_get_rating($dimension=null, $rater=null, $ratee=null,
-                            $orderby=null, $pageinfo = "ratee") {
-        if (empty($dimension)) $dimension=null;
-        $result = $this->_sql_get_rating_result($dimension, $rater, $ratee, $orderby, $pageinfo);
-        return new $this->iter_class($this, $result);
-    }
-
-    function sql_get_users_rated($dimension=null, $orderby=null) {
-        if (empty($dimension)) $dimension=null;
-        $result = $this->_sql_get_rating_result($dimension, null, null, $orderby, "rater");
-        return new $this->iter_class($this, $result);
-    }
-
-    /**
-     * @access private
-     * @return result ressource, suitable to the iterator
-     */
-    function _sql_get_rating_result($dimension=null, $rater=null, $ratee=null,
-                                    $orderby=null, $pageinfo = "ratee") {
-        // pageinfo must be 'rater' or 'ratee'
-        if (($pageinfo != "ratee") && ($pageinfo != "rater"))
-            return;
-
-        $dbi = &$this->_dbi->_backend;
-        //$dbh = &$this->_dbi;
-        extract($dbi->_table_names);
-        $where = "WHERE r." . $pageinfo . "page = p.id";
-        if (isset($dimension)) {
-            $where .= " AND dimension=$dimension";
-        }
-        if (isset($rater)) {
-            $raterid = $dbi->_get_pageid($rater, true);
-            $where .= " AND raterpage=$raterid";
-        }
-        if (isset($ratee)) {
-            $rateeid = $dbi->_get_pageid($ratee, true);
-            $where .= " AND rateepage=$rateeid";
-        }
-        $orderbyStr = "";
-        if (isset($orderby)) {
-            $orderbyStr = " ORDER BY " . $orderby;
-        }
-        if (isset($rater) or isset($ratee)) $what = '*';
-        // same as _get_users_rated_result()
-        else $what = 'DISTINCT p.pagename';
-
-        $query = "SELECT $what"
-               . " FROM $rating_tbl r, $page_tbl p "
-               . $where
-               . $orderbyStr;
-
-        $result = $dbi->_dbh->query($query);
-        return $result;
-    }
-
-    /**
-     * Delete a rating.
-     *
-     * @param rater  The page id of the rater, i.e. page doing the rating.
-     *               This is a Wiki page id, often of a user page.
-     * @param ratee  The page id of the ratee, i.e. page being rated.
-     * @param dimension  The rating dimension id.
-     *
-     * @access public
-     *
-     * @return true upon success
-     */
-    function sql_delete_rating($rater, $ratee, $dimension) {
-        //$dbh = &$this->_dbi;
-        $dbi = &$this->_dbi->_backend;
-        extract($dbi->_table_names);
-
-        $dbi->lock();
-        $raterid = $dbi->_get_pageid($rater, true);
-        $rateeid = $dbi->_get_pageid($ratee, true);
-        $where = "WHERE raterpage=$raterid and rateepage=$rateeid";
-        if (isset($dimension)) {
-            $where .= " AND dimension=$dimension";
-        }
-        $dbi->_dbh->query("DELETE FROM $rating_tbl $where");
-        $dbi->unlock();
-        return true;
-    }
-
-    /**
-     * Rate a page.
-     *
-     * @param rater  The page id of the rater, i.e. page doing the rating.
-     *               This is a Wiki page id, often of a user page.
-     * @param ratee  The page id of the ratee, i.e. page being rated.
-     * @param rateeversion  The version of the ratee page.
-     * @param dimension  The rating dimension id.
-     * @param rating The rating value (a float).
-     *
-     * @access public
-     *
-     * @return true upon success
-     */
-    //               ($this->userid, $this->pagename, $this->dimension, $rating);
-    function sql_rate($rater, $ratee, $rateeversion, $dimension, $rating) {
-        $dbi = &$this->_dbi->_backend;
-        extract($dbi->_table_names);
-        if (empty($rating_tbl))
-            $rating_tbl = $this->_dbi->getParam('prefix') . 'rating';
-
-        //$dbi->lock();
-        $raterid = $dbi->_get_pageid($rater, true);
-        $rateeid = $dbi->_get_pageid($ratee, true);
-        assert($raterid);
-        assert($rateeid);
-        $where = "WHERE raterpage='$raterid' AND rateepage='$rateeid'";
-        if (isset($dimension)) $where .= " AND dimension='$dimension'";
-        // atomic transaction:
-        $dbi->_dbh->query("UPDATE $rating_tbl SET ratingvalue='$rating', rateeversion='$rateeversion' $where");
-
-        /*
-        $dbi->_dbh->query("DELETE FROM $rating_tbl $where");
-        // NOTE: Leave tstamp off the insert, and MySQL automatically updates it (only if MySQL is used)
-        $dbi->_dbh->query("INSERT INTO $rating_tbl (dimension, raterpage, rateepage, ratingvalue, rateeversion) VALUES ('$dimension', $raterid, $rateeid, '$rating', '$rateeversion')");
-        */
-        //$dbi->unlock();
-        return true;
-    }
-
-    function metadata_get_rating($userid, $pagename, $dimension) {
-    	$page = $this->_dbi->getPage($pagename);
-        $data = $page->get('rating');
-        if (!empty($data[$dimension][$userid]))
-            return (float)$data[$dimension][$userid];
-        else 
-            return false;
-    }
-
-    function metadata_set_rating($userid, $pagename, $dimension, $rating = -1) {
-    	$page = $this->_dbi->getPage($pagename);
-        $data = $page->get('rating');
-        if ($rating == -1)
-            unset($data[$dimension][$userid]);
-        else {
-            if (empty($data[$dimension][$userid]))
-                $data[$dimension] = array($userid => (float)$rating);
-            else
-                $data[$dimension][$userid] = $rating;
-        }
-        $page->set('rating',$data);
-    }
-
     /**
      * HTML widget display
      *
@@ -691,6 +329,7 @@ function deleteRating(actionImg, page, dimension) {
         $actionImgName = $imgPrefix . 'RateItAction';
         $dbi =& $GLOBALS['request']->getDbh();
         $version = $dbi->_backend->get_latest_version($pagename);
+        $rdbi =& $this->_rdbi;
 
         // Protect against 's, though not \r or \n
         $reImgPrefix     = $this->_javascript_quote_string($imgPrefix);
@@ -712,9 +351,9 @@ function deleteRating(actionImg, page, dimension) {
         $user = $request->getUser();
         $userid = $user->getId();
         if (!isset($args['rating']))
-            $rating = $this->getRating($userid, $pagename, $dimension);
+            $rating = $rdbi->getRating($userid, $pagename, $dimension);
         if (!$rating) {
-            $pred = $this->getPrediction($userid,$pagename,$dimension);
+            $pred = $rdbi->getPrediction($userid,$pagename,$dimension);
         }
         for ($i = 1; $i <= 10; $i++) {
             $a1 = HTML::a(array('href' => 'javascript:click(\'' . $reActionImgName . '\',\'' . $rePagename . '\',\'' . $version . '\',\'' . $reImgPrefix . '\',\'' . $dimension . '\',' . ($i/2) . ')'));
@@ -767,6 +406,14 @@ function deleteRating(actionImg, page, dimension) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/06/14 11:31:39  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.8  2004/06/01 15:28:01  rurban
 // AdminUser only ADMIN_USER not member of Administrators
 // some RateIt improvements by dfrankow

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ListPages.php,v 1.1 2004-06-08 13:49:43 rurban Exp $');
+rcs_id('$Id: ListPages.php,v 1.2 2004-06-18 14:42:17 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -43,7 +43,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -61,7 +61,7 @@ extends WikiPlugin
         $args = $this->getArgs($argstr, $request);
         extract($args);
 
-        if (in_array('top3recs',split(',',$info))) {
+        if (in_array('top3recs', split(',', $info))) {
 
             require_once('lib/wikilens/Buddy.php');
             require_once('lib/wikilens/PageListColumns.php');
@@ -93,9 +93,12 @@ extends WikiPlugin
                 // out is... odd)
                 unset($user);
             }
-            $top3 = new _PageList_Column_top3recs('top3recs', _("Top Recommendations"), 
-                                                  'left', 0, $allowed_users);
-            $options = array('dimension' => $dimension, 'users' => $allowed_users);
+            //DONE:
+            //What we really want is passing the pagelist object to the column
+            //$top3 = new _PageList_Column_top3recs('top3recs', _("Top Recommendations"), 
+            //                                      'left', 0, $allowed_users);
+            $options = array('dimension' => $dimension, 
+                             'users' => $allowed_users);
         } else {
             $options = array();
         }
@@ -103,12 +106,15 @@ extends WikiPlugin
         if (empty($pages))
             return '';
 
-        $page_list = explode(',', $pages);
         $pagelist = new PageList($info, false, $options);
-        if (in_array('top3recs',split(',',$info))) {
-            $pagelist->addColumnObject($top3);
+        // FIXME: This should be not neccessary with the new custom pagelist columns
+        /*
+        if (!empty($options)) {
+            $pagelist->addColumnObject(new _PageList_Column_top3recs('custom:top3recs', _("Top Recommendations"), 
+                                                                     'left', $pagelist));
         }
-        foreach ($page_list as $key => $pagename) {
+        */
+        foreach (explode(',', $pages) as $key => $pagename) {
             $page = $pages = $dbi->getPage($pagename); 
             $pagelist->addPage($page);
         }
@@ -117,7 +123,10 @@ extends WikiPlugin
     }
 };
 
-// $Log: not supported by cvs2svn $ 
+// $Log: not supported by cvs2svn $
+// Revision 1.1  2004/06/08 13:49:43  rurban
+// List pages that are explicitly given as the pages argument, by DanFr
+// 
 
 // Local Variables:
 // mode: php
