@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.7.2.3 2001-11-07 18:52:14 dairiki Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.7.2.3.2.1 2005-01-07 13:48:42 rurban Exp $');
 
 /*
    All page saving events take place here.
@@ -194,7 +194,7 @@
    if (isset($DBMdir) && preg_match('@^/tmp\b@', $DBMdir)) {
       $html .= "<P><B>Warning: the Wiki DB files still live in the " .
 		"/tmp directory. Please read the INSTALL file and move " .
-		"the DBM file to a permanent location or risk losing " .
+		"the DB files to a permanent location or risk losing " .
 		"all the pages!</B>\n";
    }
 

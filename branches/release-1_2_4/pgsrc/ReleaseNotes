@@ -1,3 +1,10 @@
+PhpWiki 1.2.4 improves possible deadlocks in DBA, and fixes problems
+  with DBA open failures.
+
+PhpWiki 1.2.3 just adds the RELATEDPAGES footer support to dba, 
+  adds remove to dba,
+  and fixes one minor aesthetic error on info w/o "Show the page source"
+
 PhpWiki 1.2 is a huge advance over version 1.0:
 
 * Database support for MySQL, Postgresql, mSQL, flat file and the new dba_ library in PHP4 is included.

@@ -74,24 +74,18 @@ $locale["Error message: %s"] =
    "Messaggio d'errore: %s";
 $locale["Cannot open database %s, giving up."] =
    "Non riesco ad aprire il database %s, abbandono.";
-$locale["Insert/update to table 'wiki' failed: %s"] =
+$locale["Insert/update failed: %s"] =
    "Inserimento/aggiornamento fallito: %s";
 $locale["Delete on %s failed: %s"] =
    "Cancellazione su %s fallita: %s";
 $locale["Insert into %s failed: %s"] =
    "Inserimento in %s fallito: %s";
-$locale["Insert/update into table 'archive' failed: %s"] =
-   "Inserimento/aggiornamento fallito: %s";
-$locale["MSSQL error: %s"] =
-   "Errore di MySQL: %s";
-$locale["Insert/Update failed: %s <br>\n"] =
-   "Inserimento/aggiornamento fallito: %s";
-$locale["Cannot delete '%s' from table '%s'"] =
-   "Non posso cancellare '%s' dalla tabella '%s'";
 $locale["MySQL error: %s"] =
    "Errore di MySQL: %s";
 $locale["Error writing page '%s'"] =
    "Errore durante il salvataggio della pagina '%s'";
+$locale["Cannot delete '%s' from table '%s'"] =
+   "Non posso cancellare '%s' dalla tabella '%s'";
 $locale["Enter a page name"] =
    "Scrivi un nome di una pagina";
 $locale["Go"] =

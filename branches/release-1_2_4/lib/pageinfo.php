@@ -1,4 +1,4 @@
-<!-- $Id: pageinfo.php,v 1.5 2000-11-01 11:31:41 ahollosi Exp $ -->
+<!-- $Id: pageinfo.php,v 1.5.4.1 2005-01-07 13:48:42 rurban Exp $ -->
 <!-- Display the internal structure of a page. Steve Wainstead, June 2000 -->
 <?php
    if (get_magic_quotes_gpc()) {
@@ -49,7 +49,7 @@
             }
 	    elseif (($key == 'lastmodified') || ($key == 'created'))
 	       $val = date($datetimeformat, $val);
-	    else
+	    elseif (gettype($val) != "array")
 	       $val = htmlspecialchars($val);
 
             $table .= "<tr><td>$key</td><td>$val</td></tr>\n";

@@ -4,7 +4,7 @@ som ASP, EmbPerl eller JSP.
 
 PhpWiki består av dussin filer med en blandning av PHP och
 HTML. Webbsidorna som en PHP-baserad WikiWikiWeb består av finns i en
-DBM-fil med backupkopior av tidigare versioner i en annan DBM-fil.
+DBM-fil med backupkopior av tidigare versioner i en andra DBM-fil.
 
 Varje gång en användare vill titta på en sida tas den från DBM-filen
 och rendreras. Användaren anropar bara filen index.php, som sedan

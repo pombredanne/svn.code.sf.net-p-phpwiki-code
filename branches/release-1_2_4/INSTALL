@@ -26,7 +26,7 @@ http://www.foo.com/phpwiki/
 
 If you get a blank page, PhpWiki tried to open the wrong DBM file
 type, most likely. Edit the file lib/config.php and set DBM_FILE_TYPE
-to the correct type for your system. 'gdbm' or 'db2' usually work.
+to the correct type for your system. 'gdbm' or 'db3' usually work.
 
 1. CONFIGURATION
 
@@ -88,8 +88,8 @@ the latest build of PHP4. It's tested under the following systems:
 MySQL + Debian
 mSQL + Red Hat 4.1
 DBM or Postgresql on Red Hat 6.2
-
-It reportedly works on Windows with Apache+PHP, which amazes me. 
+Win2000 + MySQL and dba + Apache 1.3.26 + 
+  PHP: 4.0.6, 4.1.2, 4.2.1, 4.3.2, 4.3.5, 4.3.7
 
 That should be all. Send patches, bugs etc. to:
 
