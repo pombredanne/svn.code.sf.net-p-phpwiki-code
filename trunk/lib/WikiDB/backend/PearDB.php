@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.80 2004-12-22 18:33:31 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.81 2005-01-17 08:53:09 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -351,7 +351,7 @@ extends WikiDB_backend
             $data['%content'] = '';
 
         // FIXME: this is ugly.
-        if (isset($query_result['pagename'])) {
+        if (isset($query_result['pagedata'])) {
             // Query also includes page data.
             // We might as well send that back too...
             unset($query_result['versiondata']);
@@ -1218,6 +1218,9 @@ extends WikiDB_backend_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.80  2004/12/22 18:33:31  rurban
+// fix page _id_cache logic for _get_pageid create_if_missing
+//
 // Revision 1.79  2004/12/10 02:45:27  rurban
 // SQL optimization:
 //   put _cached_html from pagedata into a new seperate blob, not huge serialized string.
