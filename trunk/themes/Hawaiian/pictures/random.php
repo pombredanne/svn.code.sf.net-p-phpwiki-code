@@ -1,21 +1,28 @@
 <?php
 
-rcs_id('$Id: random.php,v 1.4 2002-01-03 04:28:28 carstenklapp Exp $');
+rcs_id('$Id: random.php,v 1.5 2002-01-05 06:17:02 carstenklapp Exp $');
 
 // FIXME: This whole file could be refactored and turned in a
 //        RandomImage plugin.
 //
 //        Performace issues? $SignatureImg does not appear on
-//        every page but index.php is loaded every time
+//        every page but index.php is loaded every time:
 //        index.php -> themeinfo.php -> random.php
 //
 
 /*
-$RandomPictures = array("BeachPalmDusk.jpg", "Coastline.jpg",
-    "HawaiiMauiFromSpace.jpg", "LavaTwilight.jpg",
-    "LoihiSeamount.jpg", "SteamVolcanoDusk.jpg",
-    "SubmersiblePiscesV.jpg", "SwimmingPoolWater.jpg",
-    "Waterfall.jpg", "WhaleRainbow.jpg");
+$RandomPictures = array(
+                        "BeachPalmDusk.jpg",
+                        "Coastline.jpg",
+                        "HawaiiMauiFromSpace.jpg",
+                        "LavaTwilight.jpg",
+                        "LoihiSeamount.jpg",
+                        "SteamVolcanoDusk.jpg",
+                        "SubmersiblePiscesV.jpg",
+                        "SwimmingPoolWater.jpg",
+                        "Waterfall.jpg",
+                        "WhaleRainbow.jpg"
+                        );
 */
 
 // Mac users take note:
@@ -26,17 +33,18 @@ $RandomPictures = array("BeachPalmDusk.jpg", "Coastline.jpg",
 // bytes of the file).
 //
 // This code is a variation of function LoadDir in lib/loadsave.php
-// See http://www.php.net/manual/en/function.readdir.php 
+// See http://www.php.net/manual/en/function.readdir.php
 
 function imagelist($dirname) {
     if (empty($dirname)) {
-        //ignore quietly
-        //trigger_error(("dirname is empty"), E_USER_NOTICE);
-        //$imagelist = "";
+        // ignore quietly
+        //trigger_error(("dirname is empty"),
+        //E_USER_NOTICE); $imagelist = "";
     } else {
         $handle = opendir($dir = $dirname);
         if (empty($handle)) {
-            // FIXME: gettext doesn't work in index.php or themeinfo.php
+            // FIXME: gettext doesn't work in index.php or
+            // themeinfo.php
             trigger_error(sprintf(("Unable to open directory '%s' for reading"),
                                   $dir), E_USER_NOTICE);
             //$imagelist = "";
@@ -46,7 +54,8 @@ function imagelist($dirname) {
 
                 if ($fn[0] == '.' || filetype("$dir/$fn") != 'file')
                     continue;
-                // FIXME: Use $InlineImages instead of just ".jpg" hardcoded.
+                // FIXME: Use $InlineImages instead of just ".jpg"
+                //        hardcoded.
                 if (substr($fn,-4) == ".jpg")
                     array_push($imagelist, "$fn");
 
@@ -78,14 +87,15 @@ if (!empty($RandomPictures)) {
 
     my_srand();
 
-    // For testing the randomization out, just use $logo instead
-    // of #Signature
+    // For testing the randomization out, just use $logo instead of
+    // #Signature
 
-//    $logo = "themes/$theme/pictures/"
+    // $logo = "themes/$theme/pictures/"
     $SignatureImg = "themes/$theme/pictures/"
-                 . $RandomPictures[mt_rand(0,count($RandomPictures)-1)];
+        .$RandomPictures[mt_rand(0,count($RandomPictures)-1)];
 }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php

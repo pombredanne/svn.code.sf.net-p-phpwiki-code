@@ -1,16 +1,17 @@
 /**
- * $Id: WikiTrek.css,v 1.4 2002-01-01 07:10:47 carstenklapp Exp $
+ * $Id: WikiTrek.css,v 1.5 2002-01-05 06:17:01 carstenklapp Exp $
  *
- * This PhpWiki theme is experimental and will likely not appear as part of any release.
- * ("accessories not included"--download seperately)
+ * This PhpWiki theme is experimental and will likely not appear as
+ * part of any release. ("accessories not included"--download
+ * seperately)
  *
  * http://www.w3.org/TR/REC-CSS2/indexlist.html
  *
         #fff; /white/
         #000; /black/
-	#ffcf00; /yellow/
-	#0700ff; /blue/
-	#8452b5; /magenta/
+        #ffcf00; /yellow/
+        #0700ff; /blue/
+        #8452b5; /magenta/
 */
 
 /* NS4 doesn't grok @import.  This allows us to put things which
@@ -18,7 +19,7 @@
  */
 @import url(WikiTrek-gravimetric.css);
 
-BODY {
+BODY { 
 /* the background image url is relative to this file's directory */
         color :             #fff;
         background-color :  #000;
@@ -27,7 +28,8 @@ BODY {
 }
 
 BODY {
-        font-family : "Helvetica Narrow", "Arial Narrow", Helvetica, Arial, sans-serif;
+        font-family : "Helvetica Narrow", "Arial Narrow", Helvetica,
+                      Arial, sans-serif;
 }
 
 .rssicon {
@@ -36,11 +38,13 @@ BODY {
 }
 
 .wikitext , .toolbar , P , TD {
-        font-family : "Helvetica Narrow", "Arial Narrow", Helvetica, Arial, sans-serif;
+        font-family : "Helvetica Narrow", "Arial Narrow", Helvetica,
+                      Arial, sans-serif;
 }
 
 INPUT.button {
-        font-family : "Helvetica Narrow", "Arial Narrow", Helvetica, Arial, sans-serif;
+        font-family : "Helvetica Narrow", "Arial Narrow", Helvetica,
+                      Arial, sans-serif;
 }
 
 .wikitext PRE {
@@ -142,11 +146,11 @@ b.wikisummary {
 }
 
 img.linkicon, img.rssicon {
-	border : 0px;
+        border : 0px;
 }
 
 img.rssicon {
-	vertical-align : top;
+        vertical-align : top;
 }
 
 /* this doesn't work! */

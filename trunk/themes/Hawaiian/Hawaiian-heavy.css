@@ -1,9 +1,9 @@
 /* 
- * $Id: Hawaiian-heavy.css,v 1.1 2001-12-31 23:24:37 carstenklapp Exp $
+ * $Id: Hawaiian-heavy.css,v 1.2 2002-01-05 06:17:02 carstenklapp Exp $
  *
- * phpwiki-heavy.css
+ * Hawaiian-heavy.css
  *
- * This is stuff which should be in phpwiki.css, but which breaks NS4.
+ * This is stuff which should be in Hawaiian.css, but which breaks NS4.
  */
 
 /* Hide the elements we put in just to get around NS4 bugs. */
@@ -41,7 +41,7 @@ A.wikiaction, A.wikiadmin, INPUT.button
 }
 
 /* Link icons */
-img.linkicon		{ vertical-align: middle; }
+img.linkicon        { vertical-align: middle; }
 
 /****************************************************************
  **
@@ -49,6 +49,6 @@ img.linkicon		{ vertical-align: middle; }
  **
  *****************************************************************/
 .diff .block div { position: relative; padding-left: 1.5em; } 
-.diff .prefix	{ position: absolute; left: 0.5em; top: 0; }
+.diff .prefix    { position: absolute; left: 0.5em; top: 0; }
 
 
