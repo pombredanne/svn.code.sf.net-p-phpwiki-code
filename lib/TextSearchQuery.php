@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.6 2004-04-18 01:11:51 rurban Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.7 2004-09-06 10:22:15 rurban Exp $');
 /**
  * A text search query.
  *
@@ -105,7 +105,9 @@ class TextSearchQuery {
      * containing the word.  The word passed to the callback will always
      * be in all lower case.
      *
-     * TODO: support db-specific extensions, like MATCH or REGEX
+     * TODO: support db-specific extensions, like MATCH AGAINST or REGEX
+     *       mysql => 4.0.1 can also do Google: MATCH AGAINST IN BOOLEAN MODE
+     *       How? WikiDB backend method?
      *
      * Example usage:
      * <pre>

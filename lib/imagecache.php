@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: imagecache.php,v 1.8 2004-06-19 10:06:37 rurban Exp $');
+<?php rcs_id('$Id: imagecache.php,v 1.9 2004-09-06 10:22:15 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -150,7 +150,7 @@ function mainImageCache() {
         $request->setStatus(200); // No, we do _not_ have an Error 404 :->
     }
 
-    WikiPluginCached::fetchImageFromCache($request->_dbi,$request,'png');
+    WikiPluginCached::fetchImageFromCache($request->_dbi, $request, 'png');
 }
 
 

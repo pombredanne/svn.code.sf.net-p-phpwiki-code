@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.105 2004-09-06 08:38:30 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.106 2004-09-06 10:22:14 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -1265,7 +1265,7 @@ class PageList {
             }
             */
 
-            $paging = new Template("pagelink", $request, $tokens);
+            $paging = Template("pagelink", $tokens);
             $table->pushContent(HTML::thead($paging),
                                 HTML::tbody(false, HTML($row, $rows)),
                                 HTML::tfoot($paging));
@@ -1360,6 +1360,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.105  2004/09/06 08:38:30  rurban
+// modularize paging helper (for SqlResult)
+//
 // Revision 1.104  2004/08/18 11:01:55  rurban
 // fixed checkbox list Select button:
 //   no GET request on click,
