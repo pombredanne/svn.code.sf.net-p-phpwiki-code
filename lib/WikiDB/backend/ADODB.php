@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.59 2004-11-27 14:39:05 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.60 2004-11-28 20:42:18 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -366,7 +366,7 @@ extends WikiDB_backend
             $data['%content'] = !empty($row[7]);
         }
         if (!empty($row[3])) {
-            $data['%pagedata'] = $this->_extract_page_data($row[3],$row[2]);
+            $data['%pagedata'] = $this->_extract_page_data($row[3], $row[2]);
         }
         return $data;
     }
@@ -386,7 +386,7 @@ extends WikiDB_backend
         else
             $data['%content'] = '';
         if (!empty($pagedata)) {
-            $data['%pagedata'] = $this->_extract_page_data($pagedata,$hits);
+            $data['%pagedata'] = $this->_extract_page_data($pagedata, $hits);
         }
         return $data;
     }
@@ -1279,6 +1279,18 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.59  2004/11/27 14:39:05  rurban
+// simpified regex search architecture:
+//   no db specific node methods anymore,
+//   new sql() method for each node
+//   parallel to regexp() (which returns pcre)
+//   regex types bitmasked (op's not yet)
+// new regex=sql
+// clarified WikiDB::quote() backend methods:
+//   ->quote() adds surrounsing quotes
+//   ->qstr() (new method) assumes strings and adds no quotes! (in contrast to ADODB)
+//   pear and adodb have now unified quote methods for all generic queries.
+//
 // Revision 1.58  2004/11/26 18:39:02  rurban
 // new regex search parser and SQL backends (90% complete, glob and pcre backends missing)
 //

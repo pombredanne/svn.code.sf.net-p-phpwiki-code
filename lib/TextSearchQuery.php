@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.12 2004-11-27 14:39:04 rurban Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.13 2004-11-28 20:42:18 rurban Exp $');
 /**
  * A text search query, converting queries to PCRE or SQL matchers.
  *
@@ -11,7 +11,8 @@
  * <dt> wiki word or page
  *   <dd> Match strings containing the substring 'wiki' and either the substring
  *        'word' or the substring 'page'.
- * <dt> detects regex hints, glob-style or regex-style, and converts them to PCRE or SQL matchers
+ * <dt> auto-detect regex hints, glob-style or regex-style, and converts them 
+ *      to PCRE or SQL matchers
  *   <dd> "^word$" => EXACT(word)
  *   <dd> "^word"  => STARTS_WITH(word)
  *   <dd> "word*"  => STARTS_WITH(word)

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ExternalSearch.php,v 1.11 2004-09-17 14:25:45 rurban Exp $');
+rcs_id('$Id: ExternalSearch.php,v 1.12 2004-11-28 20:42:33 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     function _getInterWikiUrl(&$request) {
@@ -55,7 +55,7 @@ extends WikiPlugin
         if (in_array($this->_url, array_keys($map))) {
             if (empty($this->_name))
                 $this->_name = $this->_url;
-            $this->_url = sprintf($map[$this->_url],'%s');
+            $this->_url = sprintf($map[$this->_url], '%s');
         }
         if (empty($this->_name))
             $this->_name = $this->getName();
@@ -136,6 +136,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/09/17 14:25:45  rurban
+// update comments
+//
 // Revision 1.10  2004/05/17 13:36:49  rurban
 // Apply RFE #952323 "ExternalSearchPlugin improvement", but
 //   with <button><img></button>
