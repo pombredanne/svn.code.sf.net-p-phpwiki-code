@@ -80,7 +80,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.75 2002-01-25 18:00:21 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.76 2002-01-29 05:04:04 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -410,7 +410,7 @@ $InlineImages = "png|jpg|gif|tiff|tif";
 
 // Perl regexp for WikiNames ("bumpy words")
 // (?<!..) & (?!...) used instead of '\b' because \b matches '_' as well
-$WikiNameRegexp = "(?<![[:alnum:]])([[:upper:]][[:lower:]]+){2,}(?![[:alnum:]])";
+$WikiNameRegexp = "(?<![[:alnum:]])(?:[[:upper:]][[:lower:]]+){2,}(?![[:alnum:]])";
 
 // InterWiki linking -- wiki-style links to other wikis on the web
 //
