@@ -1,6 +1,21 @@
 REQUIREMENTS
 
-PhpWiki requires PHP version 4.0.? or greater. 
+PhpWiki requires a web server with PHP version 4.0.? or greater and a
+database application.
+
+QUICK START INSTRUCTIONS
+
+By default PhpWiki is configured to use a flatfile database. If there
+is no dbm on your system, you will see an error like this the first
+time you try to use PhpWiki:
+ 
+    "Fatal error: Call to undefined function: dba_open() in 
+     phpwiki/lib/DbaDatabase.php on line 32"
+
+To correct this you will have to install a dbm package or preferably
+an sql-compatible database such as MySQL or PostgreSQL and make the
+necessary configuration changes to index.php.
+
 
 Since version 1.3.0 PhpWiki uses the 'DB.php' from PEAR, a database
 absraction layer which is part of PHP. PEAR must be installed and
@@ -21,11 +36,13 @@ You need the Perl regular expressions package compiled in; this is the
 default for PHP, so you probably have it. If you don't you'll see an
 error like "function preg_replace() not defined."
 
+
+INSTRUCTIONS
+
 Below are the instructions for the "out of the box" installation,
 which uses DB files. If you are using a relational database like
 MySQL, see the INSTALL file for your database in the 'doc/' directory
 under the root of your PhpWiki installation.
-
 
 
 0. INSTALLATION
@@ -124,4 +141,4 @@ You can join this list at:
 
 FIN
 
-$Id: INSTALL,v 1.14 2002-01-03 07:59:36 carstenklapp Exp $
+$Id: INSTALL,v 1.15 2002-01-17 08:10:45 carstenklapp Exp $
