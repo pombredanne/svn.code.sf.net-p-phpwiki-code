@@ -28,8 +28,6 @@ $locale["Make changes to the file again. Paste your additions from the clipboard
    "Breng je veranderingen aan de pagina opnieuw aan.  Plak je toevoeginen van het klipbord (of tekst editor).";
 $locale["None"] =
    "Geen";
-$locale["Otherwise press the \"Back\" button of your browser."] =
-   "Druk anders op de \"Terug\" knop van je bladeraar.";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
    "PhpWiki kan je veranderingen niet bewaren, want een andere gebruiker\nheeft de pagina veranderd terwijl jij de pagina ook aan het veranderen\nwas.  Als bewaren nu doorgang zou vinden, zouden de veranderingen van\nde vorige auteur verloren gaan.";
 $locale["Press <b>Save</b> again."] =
@@ -38,10 +36,14 @@ $locale["Problem while editing %s"] =
    "Probleem tijdens veranderen %s";
 $locale["Problem while updating %s"] =
    "Probleem tijdens veranderen van %s";
+$locale["RecentChanges"] =
+   "RecenteVeranderingen";
 $locale["Remove page"] =
    "Verwijder pagina";
 $locale["Removed page '%s' succesfully."] =
    "Pagina '%s' verwijderd.";
+$locale["Search"] =
+   "Zoek";
 $locale["Sorry for the inconvenience."] =
    "Excuses voor het ongemak.";
 $locale["Thank you for editing %s."] =

@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.7\n"
-"POT-Creation-Date: 2001-11-28 15:04-0800\n"
+"POT-Creation-Date: 2001-12-17 22:06-0500\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -20,95 +20,555 @@ msgstr ""
 "Date: 1998-05-26 11:26:28+0200\n"
 "From:  <janneke@gnu.org>\n"
 
-#: ../lib/diff.php:714
+#: ../templates/browse.html:34
+#, fuzzy
+msgid "Note:"
+msgstr "Geen"
+
+#: ../templates/browse.html:34
+msgid "You are viewing an old revision of this page."
+msgstr ""
+
+#: ../templates/browse.html:35
+msgid "Click"
+msgstr ""
+
+#: ../templates/browse.html:35
+msgid "here"
+msgstr ""
+
+#: ../templates/browse.html:35
+#, fuzzy
+msgid "to view the current version."
+msgstr "is gelijk aaan huidige versie %d"
+
+#: ../templates/browse.html:50
+#, fuzzy
+msgid "Last edited on"
+msgstr "meest recente verandering op %s"
+
+#: ../templates/browse.html:52
+#, fuzzy
+msgid "Version"
+msgstr "versie %s"
+
+#: ../templates/browse.html:52
+#, fuzzy
+msgid ", saved on"
+msgstr "- bewaard"
+
+#: ../lib/loadsave.php:452 ../lib/plugin/RecentChanges.php:159
+#: ../lib/plugin/RecentChanges.php:262 ../lib/plugin/RecentChanges.php:307
+#: ../templates/browse.html:56
+msgid "RecentChanges"
+msgstr "RecenteVeranderingen"
+
+#: ../templates/browse.html:57
+msgid "FindPage"
+msgstr ""
+
+#: ../templates/browse.html:60
+#, fuzzy
+msgid "Quick Search"
+msgstr "Zoek snel een pagina op:"
+
+#: ../templates/browse.html:70
+msgid "Page locked"
+msgstr ""
+
+#: ../templates/browse.html:73 ../templates/editpage.html:24
+msgid "Edit"
+msgstr ""
+
+#: ../templates/browse.html:76
+msgid "Edit old revision"
+msgstr ""
+
+#: ../templates/browse.html:81
+#, fuzzy
+msgid "Unlock page"
+msgstr "Verwijder pagina"
+
+#: ../templates/browse.html:83
+#, fuzzy
+msgid "Lock page"
+msgstr "Verwijder pagina"
+
+#: ../lib/removepage.php:20 ../templates/browse.html:85
+msgid "Remove page"
+msgstr "Verwijder pagina"
+
+#: ../templates/browse.html:89 ../templates/browse.html:92
+#, fuzzy
+msgid "Diff"
+msgstr "Diff van %s."
+
+#: ../templates/browse.html:97 ../templates/editpage.html:71
+msgid "You are signed in as"
+msgstr ""
+
+#: ../templates/browse.html:98
+msgid "SignOut"
+msgstr ""
+
+#: ../templates/browse.html:100
+msgid "SignIn"
+msgstr ""
+
+#: ../templates/browse.html:117
+msgid "PHP Warnings"
+msgstr ""
+
+#: ../lib/plugin/_BackendInfo.php:10 ../templates/browse.html:123
+#: ../templates/browse.html:124
+msgid "DebugInfo"
+msgstr ""
+
+#: ../templates/editpage.html:15
+msgid "Edit:"
+msgstr ""
+
+#: ../templates/editpage.html:29
+msgid "Preview only!  Changes not saved."
+msgstr ""
+
+#: ../templates/editpage.html:35
+msgid "Warning: You are editing an old revision."
+msgstr ""
+
+#: ../templates/editpage.html:36
+msgid "Saving this page will overwrite the current version."
+msgstr ""
+
+#: ../templates/editpage.html:56
+msgid "Summary:"
+msgstr ""
+
+#: ../templates/editpage.html:63
+msgid "This is a minor change."
+msgstr ""
+
+#: ../templates/editpage.html:66
+msgid "Preview"
+msgstr ""
+
+#: ../templates/editpage.html:67
+msgid "Save"
+msgstr ""
+
+#: ../templates/editpage.html:73
+msgid "Author will be logged as"
+msgstr ""
+
+#: ../templates/editpage.html:78
+msgid "You can change the size of the editing area in"
+msgstr ""
+
+#: ../templates/editpage.html:79
+#, fuzzy
+msgid "UserPreferences"
+msgstr "!Referenties"
+
+#: ../templates/editpage.html:80
+msgid "See"
+msgstr ""
+
+#: ../templates/editpage.html:80
+msgid "GoodStyle"
+msgstr ""
+
+#: ../templates/editpage.html:80
+#, fuzzy
+msgid "tips for editing."
+msgstr "Bedankt voor het veranderen van %s."
+
+#: ../templates/editpage.html:84
+msgid "TextFormattingRules"
+msgstr ""
+
+#: ../templates/editpage.html:84
+msgid "Synopsis"
+msgstr ""
+
+#: ../lib/plugin/BackLinks.php:9
+msgid "BackLinks"
+msgstr ""
+
+#: ../lib/plugin/BackLinks.php:13
+msgid "Get BackLinks for [pagename]"
+msgstr ""
+
+#: ../lib/plugin/BackLinks.php:44
 #, c-format
-msgid "WikiDiff::apply: line count mismatch: %s != %s"
+msgid "These pages link to %s:"
 msgstr ""
 
-#: ../lib/diff.php:774
-msgid "WikiDiff::_check: failed"
-msgstr ""
-
-#: ../lib/diff.php:784
-msgid "WikiDiff::_check: edit sequence is non-optimal"
-msgstr ""
-
-#: ../lib/diff.php:788
+#: ../lib/plugin/BackLinks.php:44
 #, c-format
-msgid "WikiDiff Okay: LCS = %s"
+msgid "No pages link to %s."
 msgstr ""
 
-#: ../lib/diff.php:1037
+#: ../lib/plugin/Calendar.php:24 ../lib/plugin/Calendar.php:28
+msgid "Calendar"
+msgstr ""
+
+#: ../lib/plugin/Calendar.php:57
+msgid "Previous Month"
+msgstr ""
+
+#: ../lib/plugin/Calendar.php:61
+msgid "Next Month"
+msgstr ""
+
+#: ../lib/plugin/Calendar.php:114
+#, c-format
+msgid "Edit %s"
+msgstr ""
+
+#: ../lib/main.php:120 ../lib/plugin/FullTextSearch.php:12
+#, fuzzy
+msgid "FullTextSearch"
+msgstr "Volledige tekst zoek resultaten"
+
+#: ../lib/plugin/FullTextSearch.php:16
+#, fuzzy
+msgid "Full Text Search"
+msgstr "Volledige tekst zoek resultaten"
+
+#: ../lib/plugin/FullTextSearch.php:52
+#, c-format
+msgid "Full text search results for '%s'"
+msgstr ""
+
+#: ../lib/plugin/FullTextSearch.php:54 ../lib/plugin/TitleSearch.php:52
+msgid "<no matches>"
+msgstr ""
+
+#: ../lib/plugin/HelloWorld.php:10
+msgid "HelloWorld"
+msgstr ""
+
+#: ../lib/plugin/HelloWorld.php:14
+msgid "Simple Sample Plugin"
+msgstr ""
+
+#: ../lib/plugin/IncludePage.php:15
+msgid "IncludePage"
+msgstr ""
+
+#: ../lib/plugin/IncludePage.php:58
+#, c-format
+msgid "<%s: no such section>"
+msgstr ""
+
+#: ../lib/plugin/IncludePage.php:72
+msgid "no page specified"
+msgstr ""
+
+#: ../lib/plugin/IncludePage.php:79
+#, c-format
+msgid "recursive inclusion of page %s"
+msgstr ""
+
+#: ../lib/plugin/IncludePage.php:88
+#, c-format
+msgid "%s(%d): no such revision"
+msgstr ""
+
+#: ../lib/plugin/IncludePage.php:111
+#, fuzzy, c-format
+msgid "Included from %s"
+msgstr "van %s"
+
+#: ../lib/plugin/LikePages.php:12
+msgid "LikePages"
+msgstr ""
+
+#: ../lib/plugin/LikePages.php:16
+msgid "List LikePages for [pagename]"
+msgstr ""
+
+#: ../lib/plugin/LikePages.php:39
+#, c-format
+msgid "Page names with prefix '%s'"
+msgstr ""
+
+#: ../lib/plugin/LikePages.php:44
+#, c-format
+msgid "Page names with suffix '%s'"
+msgstr ""
+
+#: ../lib/plugin/LikePages.php:57
+#, c-format
+msgid "These pages share an initial or final title word with '%s'"
+msgstr ""
+
+#: ../lib/plugin/LikePages.php:93
+msgid "<none>"
+msgstr ""
+
+#: ../lib/plugin/MostPopular.php:9
+msgid "MostPopular"
+msgstr ""
+
+#: ../lib/plugin/MostPopular.php:13
+msgid "List the most popular pages"
+msgstr ""
+
+#: ../lib/plugin/MostPopular.php:27
+msgid "Hits"
+msgstr ""
+
+#: ../lib/plugin/MostPopular.php:28
+msgid "Page Name"
+msgstr ""
+
+#: ../lib/plugin/MostPopular.php:42
+#, c-format
+msgid "The %s most popular pages of this wiki:"
+msgstr ""
+
+#: ../lib/plugin/PageHistory.php:71
+#, c-format
+msgid "PageHistory for %s"
+msgstr ""
+
+#: ../lib/plugin/PageHistory.php:86
+msgid "Check any two boxes to compare revisions."
+msgstr ""
+
+#: ../lib/plugin/PageHistory.php:88
+msgid "compare revisions"
+msgstr ""
+
+#: ../lib/plugin/PageHistory.php:90
+#, c-format
+msgid "Check any two boxes then %s."
+msgstr ""
+
+#: ../lib/plugin/PageHistory.php:144 ../lib/plugin/PageHistory.php:182
+#, fuzzy, c-format
+msgid "Version %d"
+msgstr "versie %s"
+
+#: ../lib/plugin/PageHistory.php:174
+msgid "History of changes."
+msgstr ""
+
+#: ../lib/plugin/PageHistory.php:200 ../lib/plugin/RecentChanges.php:42
+msgid "PageHistory"
+msgstr ""
+
+#: ../lib/plugin/PageHistory.php:204
+msgid "List PageHistory for [pagename]"
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:84
+msgid "Deleted."
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:86
+#, fuzzy
+msgid "New page."
+msgstr "Verwijder pagina"
+
+#: ../lib/plugin/RecentChanges.php:98
+msgid "(diff)"
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:122
+msgid "RSS available"
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:132
+msgid "edits"
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:134
+msgid "major edits"
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:136
+msgid "minor edits"
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:140
+#, fuzzy, c-format
+msgid "The %d most recent %s during the past %.1f days are listed below."
+msgstr "De meest recent veranderde pagina's staan hieronder:"
+
+#: ../lib/plugin/RecentChanges.php:143
+#, fuzzy, c-format
+msgid "The %d most recent %s are listed below."
+msgstr "De meest recent veranderde pagina's staan hieronder:"
+
+#: ../lib/plugin/RecentChanges.php:148
+#, fuzzy, c-format
+msgid "The most recent %s during the past %.1f days are listed below."
+msgstr "De meest recent veranderde pagina's staan hieronder:"
+
+#: ../lib/plugin/RecentChanges.php:151
+#, c-format
+msgid "All %s are listed below."
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:159
+msgid "RecentEdits"
+msgstr ""
+
+#: ../lib/main.php:26 ../lib/main.php:85 ../lib/main.php:87
+#: ../lib/plugin/RecentChanges.php:245
+msgid "HomePage"
+msgstr "ThuisPagina"
+
+#: ../lib/plugin/RecentChanges.php:250
+msgid "Search"
+msgstr "Zoek"
+
+#: ../lib/plugin/RecentChanges.php:251 ../lib/plugin/TitleSearch.php:16
+#, fuzzy
+msgid "Title Search"
+msgstr "Titel zoek resultaten"
+
+#: ../lib/main.php:123 ../lib/plugin/RecentChanges.php:253
+#: ../lib/plugin/TitleSearch.php:12
+#, fuzzy
+msgid "TitleSearch"
+msgstr "Titel zoek resultaten"
+
+#: ../lib/plugin/TitleSearch.php:48
+#, c-format
+msgid "Title search results for '%s'"
+msgstr ""
+
+#: ../lib/plugin/_BackendInfo.php:14
+msgid "Get debugging information for [pagename]."
+msgstr ""
+
+#: ../lib/plugin/_BackendInfo.php:45
+#, c-format
+msgid "Querying backend directly for '%s'"
+msgstr ""
+
+#: ../lib/plugin/_BackendInfo.php:51
+#, c-format
+msgid "No pagedata for %s\n"
+msgstr ""
+
+#: ../lib/WikiDB.php:837
+#, fuzzy, c-format
+msgid "Describe [%s] here."
+msgstr "Beschrijf %s hier."
+
+#: ../lib/WikiUser.php:97
+#, c-format
+msgid "to perform action '%s'"
+msgstr ""
+
+#: ../lib/WikiUser.php:99
+msgid "to do that"
+msgstr ""
+
+#: ../lib/WikiUser.php:100
+#, fuzzy
+msgid "You must be logged in as an administrator"
+msgstr "Je moet ingelogd zijn als beheerder om te $action."
+
+#: ../lib/WikiUser.php:181
+msgid ""
+"You must set the administrator account and password before you can log in."
+msgstr ""
+"Je moet de beheerder gebruiker en het wachtwoord zetten voordat je in kan "
+"loggen."
+
+#: ../lib/WikiUser.php:193
+msgid "You entered an invalid login or password."
+msgstr "Je hebt een ongeldige gebruikersnaam of wachtwoord ingevoerd."
+
+#: ../lib/WikiUser.php:196
+msgid "You can log in using any valid WikiWord as a user ID."
+msgstr ""
+
+#: ../lib/WikiUser.php:197
+msgid "(Any password will work, except, of course for the admin user.)"
+msgstr ""
+
+#: ../lib/diff.php:172
 #, fuzzy
 msgid "version"
 msgstr "versie %s"
 
-#: ../lib/diff.php:1040
+#: ../lib/diff.php:175
 #, c-format
 msgid "last modified on %s"
 msgstr "meest recente verandering op %s"
 
-#: ../lib/diff.php:1043
+#: ../lib/diff.php:178
 #, c-format
 msgid "by %s"
 msgstr "door %s"
 
-#: ../lib/diff.php:1046
+#: ../lib/diff.php:180
 msgid "None"
 msgstr "Geen"
 
-#: ../lib/diff.php:1061 ../lib/diff.php:1071
+#: ../lib/diff.php:201 ../lib/diff.php:211
 #, fuzzy, c-format
 msgid "version %d"
 msgstr "versie %s"
 
-#: ../lib/diff.php:1082
+#: ../lib/diff.php:205
+#, fuzzy
+msgid "current version"
+msgstr "is gelijk aaan huidige versie %d"
+
+#: ../lib/diff.php:222
 msgid "previous major revision"
 msgstr ""
 
-#: ../lib/diff.php:1091
+#: ../lib/diff.php:231
 msgid "revision by previous author"
 msgstr ""
 
-#: ../lib/diff.php:1098
+#: ../lib/diff.php:238
 msgid "previous revision"
 msgstr ""
 
-#: ../lib/diff.php:1111
+#: ../lib/diff.php:251
 #, c-format
 msgid "Differences between %s and %s of %s."
 msgstr ""
 
-#: ../lib/diff.php:1115
+#: ../lib/diff.php:255
 msgid "Previous Major Revision"
 msgstr ""
 
-#: ../lib/diff.php:1116
+#: ../lib/diff.php:256
 msgid "Previous Revision"
 msgstr ""
 
-#: ../lib/diff.php:1117
+#: ../lib/diff.php:257
 msgid "Previous Author"
 msgstr ""
 
-#: ../lib/diff.php:1127
+#: ../lib/diff.php:267
 msgid "Other diffs:"
 msgstr ""
 
-#: ../lib/diff.php:1135
+#: ../lib/diff.php:275
 #, fuzzy
 msgid "Newer page:"
 msgstr "Verwijder pagina"
 
-#: ../lib/diff.php:1136
+#: ../lib/diff.php:276
 msgid "Older page:"
 msgstr ""
 
-#: ../lib/diff.php:1143
+#: ../lib/diff.php:284
 msgid "Versions are identical"
 msgstr "Versies zijn identiek"
 
-#: ../lib/diff.php:1154
+#: ../lib/diff.php:298
 #, fuzzy, c-format
 msgid "Diff: %s"
 msgstr "Diff van %s."
@@ -159,23 +619,10 @@ msgstr "- overgeslagen"
 msgid "- saved as version %d"
 msgstr "als versie %d"
 
-#: ../lib/main.php:26 ../lib/main.php:83 ../lib/main.php:85
-msgid "HomePage"
-msgstr "ThuisPagina"
-
-#: ../lib/main.php:97
+#: ../lib/main.php:99
 #, fuzzy, c-format
 msgid "Action %s is disabled in this wiki."
 msgstr "Actie $action is niet beschikbaar in deze wiki."
-
-#: ../lib/pageinfo.php:83
-#, fuzzy
-msgid "Currently archived versions of"
-msgstr "Actuele versie:"
-
-#: ../lib/pageinfo.php:88
-msgid "Revision History: "
-msgstr ""
 
 #: ../lib/prepend.php:31
 msgid "WikiFatalError"
@@ -192,17 +639,14 @@ msgid "Click here to <a href=\"%s\">remove the page now</a>."
 msgstr "Klik hier om <a href=\"%s\">de pagina nu te verwijderen</a>."
 
 #: ../lib/removepage.php:12
-msgid "Otherwise press the \"Back\" button of your browser."
+#, fuzzy
+msgid "To cancel press the \"Back\" button of your browser."
 msgstr "Druk anders op de \"Terug\" knop van je bladeraar."
 
 #: ../lib/removepage.php:16
 #, c-format
 msgid "Removed page '%s' succesfully."
 msgstr "Pagina '%s' verwijderd."
-
-#: ../lib/removepage.php:20 ../templates/browse.html:81
-msgid "Remove page"
-msgstr "Verwijder pagina"
 
 #: ../lib/savepage.php:22
 msgid ""
@@ -288,27 +732,35 @@ msgstr "Bedankt voor het veranderen van %s."
 msgid "Your careful attention to detail is much appreciated."
 msgstr "Je zorgvuldige aandacht voor detail wordt erg gewaardeerd."
 
-#: ../lib/stdlib.php:434
+#: ../lib/stdlib.php:130
+msgid "BAD URL -- remove all of <, >, \""
+msgstr ""
+
+#: ../lib/stdlib.php:336
+msgid "Lock page to enable link"
+msgstr ""
+
+#: ../lib/stdlib.php:455
 #, c-format
 msgid "%d best incoming links:"
 msgstr "%d beste inkomende koppelingen:"
 
-#: ../lib/stdlib.php:444
+#: ../lib/stdlib.php:465
 #, c-format
 msgid "%d best outgoing links:"
 msgstr "%d beste uitgaande koppelingen:"
 
-#: ../lib/stdlib.php:455
+#: ../lib/stdlib.php:476
 #, c-format
 msgid "%d most popular nearby:"
 msgstr "%d meest gevraagde in de buurt:"
 
-#: ../lib/stdlib.php:505 ../lib/stdlib.php:511
+#: ../lib/stdlib.php:526 ../lib/stdlib.php:532
 #, fuzzy
 msgid "Bad Version"
 msgstr "als versie %d"
 
-#: ../lib/stdlib.php:507
+#: ../lib/stdlib.php:528
 #, c-format
 msgid "I'm sorry.  Version %d of %s is not in my database."
 msgstr ""
@@ -317,318 +769,22 @@ msgstr ""
 msgid "Lists nested too deep in SetHTMLOutputMode"
 msgstr "Lijsten nesten te diep in SetHTMLOutputMode"
 
-#: ../lib/WikiDB.php:837
-#, fuzzy, c-format
-msgid "Describe [%s] here."
-msgstr "Beschrijf %s hier."
-
-#: ../lib/WikiUser.php:80
-#, c-format
-msgid "to perform action '%s'"
-msgstr ""
-
-#: ../lib/WikiUser.php:82
-msgid "to do that"
-msgstr ""
-
-#: ../lib/WikiUser.php:83
-#, fuzzy
-msgid "You must be logged in as an administrator"
-msgstr "Je moet ingelogd zijn als beheerder om te $action."
-
-#: ../lib/WikiUser.php:164
-msgid ""
-"You must set the administrator account and password before you can log in."
-msgstr ""
-"Je moet de beheerder gebruiker en het wachtwoord zetten voordat je in kan "
-"loggen."
-
-#: ../lib/WikiUser.php:177
-msgid "You entered an invalid login or password."
-msgstr "Je hebt een ongeldige gebruikersnaam of wachtwoord ingevoerd."
-
-#: ../lib/WikiUser.php:180
-msgid "You can log in using any valid WikiWord as a user ID."
-msgstr ""
-
-#: ../lib/WikiUser.php:181
-msgid "(Any password will work, except, of course for the admin user.)"
-msgstr ""
-
-#: ../lib/ziplib.php:641
+#: ../lib/ziplib.php:621
 #, c-format
 msgid "[%d] See [%s]"
 msgstr "[%d] Zie [%s]"
 
-#: ../lib/ziplib.php:649
+#: ../lib/ziplib.php:629
 msgid "!References"
 msgstr "!Referenties"
 
-#: ../templates/browse.html:25
-msgid "Get BackLinks for [pagename]"
-msgstr ""
-
-#: ../templates/browse.html:31
 #, fuzzy
-msgid "Note:"
-msgstr "Geen"
+#~ msgid "Currently archived versions of"
+#~ msgstr "Actuele versie:"
 
-#: ../templates/browse.html:31
-msgid "You are viewing an old revision of this page."
-msgstr ""
-
-#: ../templates/browse.html:32
-msgid "Click"
-msgstr ""
-
-#: ../templates/browse.html:32
-msgid "here"
-msgstr ""
-
-#: ../templates/browse.html:32
 #, fuzzy
-msgid "to view the current version."
-msgstr "is gelijk aaan huidige versie %d"
-
-#: ../templates/browse.html:47
-#, fuzzy
-msgid "Last edited on"
-msgstr "meest recente verandering op %s"
-
-#: ../templates/browse.html:49
-#, fuzzy
-msgid "Version"
-msgstr "versie %s"
-
-#: ../templates/browse.html:49
-#, fuzzy
-msgid ", saved on"
-msgstr "- bewaard"
-
-#: ../templates/browse.html:53
-msgid "FindPage"
-msgstr ""
-
-#: ../templates/browse.html:56
-#, fuzzy
-msgid "Quick Search"
-msgstr "Zoek snel een pagina op:"
-
-#: ../templates/browse.html:59
-msgid "List LikePages for [pagename]"
-msgstr ""
-
-#: ../templates/browse.html:66
-msgid "Page locked"
-msgstr ""
-
-#: ../templates/browse.html:69 ../templates/editpage.html:24
-msgid "Edit"
-msgstr ""
-
-#: ../templates/browse.html:72
-msgid "Edit old revision"
-msgstr ""
-
-#: ../templates/browse.html:77
-#, fuzzy
-msgid "Unlock page"
-msgstr "Verwijder pagina"
-
-#: ../templates/browse.html:79
-#, fuzzy
-msgid "Lock page"
-msgstr "Verwijder pagina"
-
-#: ../templates/browse.html:83
-msgid "History"
-msgstr ""
-
-#: ../templates/browse.html:85 ../templates/browse.html:88
-#, fuzzy
-msgid "Diff"
-msgstr "Diff van %s."
-
-#: ../templates/browse.html:93 ../templates/editpage.html:71
-msgid "You are signed in as"
-msgstr ""
-
-#: ../templates/browse.html:94
-msgid "SignOut"
-msgstr ""
-
-#: ../templates/browse.html:96
-msgid "SignIn"
-msgstr ""
-
-#: ../templates/browse.html:113
-msgid "PHP Warnings"
-msgstr ""
-
-#: ../templates/browse.html:119 ../templates/browse.html:120
-msgid "DebugInfo"
-msgstr ""
-
-#: ../templates/browse.html:122
-msgid "Get debugging information for [pagename]."
-msgstr ""
-
-#: ../templates/editpage.html:15
-msgid "Edit:"
-msgstr ""
-
-#: ../templates/editpage.html:29
-msgid "Preview only!  Changes not saved."
-msgstr ""
-
-#: ../templates/editpage.html:35
-msgid "Warning: You are editing an old revision."
-msgstr ""
-
-#: ../templates/editpage.html:36
-msgid "Saving this page will overwrite the current version."
-msgstr ""
-
-#: ../templates/editpage.html:56
-msgid "Summary:"
-msgstr ""
-
-#: ../templates/editpage.html:63
-msgid "This is a minor change."
-msgstr ""
-
-#: ../templates/editpage.html:66
-msgid "Preview"
-msgstr ""
-
-#: ../templates/editpage.html:67
-msgid "Save"
-msgstr ""
-
-#: ../templates/editpage.html:73
-msgid "Author will be logged as"
-msgstr ""
-
-#: ../templates/editpage.html:78
-msgid "You can change the size of the editing area."
-msgstr ""
-
-#: ../templates/editpage.html:79
-msgid "See"
-msgstr ""
-
-#: ../templates/editpage.html:79
-#, fuzzy
-msgid "UserPreferences"
-msgstr "!Referenties"
-
-#: ../templates/editpage.html:80
-msgid "Also see"
-msgstr ""
-
-#: ../templates/editpage.html:80
-msgid "GoodStyle"
-msgstr ""
-
-#: ../templates/editpage.html:80
-#, fuzzy
-msgid "tips for editing."
-msgstr "Bedankt voor het veranderen van %s."
-
-#: ../templates/editpage.html:84
-msgid "Emphasis:"
-msgstr ""
-
-#: ../templates/editpage.html:85
-msgid "for italics"
-msgstr ""
-
-#: ../templates/editpage.html:86
-msgid "for bold"
-msgstr ""
-
-#: ../templates/editpage.html:87
-msgid "for both"
-msgstr ""
-
-#: ../templates/editpage.html:88
-msgid "Lists:"
-msgstr ""
-
-#: ../templates/editpage.html:89
-msgid "for bullet lists"
-msgstr ""
-
-#: ../templates/editpage.html:90
-msgid "for numbered lists"
-msgstr ""
-
-#: ../templates/editpage.html:91
-msgid "term"
-msgstr ""
-
-#: ../templates/editpage.html:91
-msgid "definition"
-msgstr ""
-
-#: ../templates/editpage.html:91
-msgid "for definition lists"
-msgstr ""
-
-#: ../templates/editpage.html:92
-#, fuzzy
-msgid "References:"
-msgstr "!Referenties"
-
-#: ../templates/editpage.html:93
-msgid ""
-"JoinCapitalizedWords or use square brackets for a [page link] or URL "
-"[http://cool.wiki.int/]."
-msgstr ""
-
-#: ../templates/editpage.html:94
-msgid "Footnotes:"
-msgstr ""
-
-#: ../templates/editpage.html:95
-msgid "Use [1],[2],[3],..."
-msgstr ""
-
-#: ../templates/editpage.html:96
-msgid "Preventing linking:"
-msgstr ""
-
-#: ../templates/editpage.html:97
-msgid "Avoid linking with '!': !DoNotHyperlink,"
-msgstr ""
-
-#: ../templates/editpage.html:98
-msgid "name links like [[text | URL] (double up on the '[')"
-msgstr ""
-
-#: ../templates/editpage.html:99
-msgid "Misc:"
-msgstr ""
-
-#: ../templates/editpage.html:100
-msgid "make headings"
-msgstr ""
-
-#: ../templates/editpage.html:101
-msgid "makes a linebreak"
-msgstr ""
-
-#: ../templates/editpage.html:102
-msgid "makes a horizontal rule"
-msgstr ""
-
-#: ../templates/editpage.html:104
-msgid "more on"
-msgstr ""
-
-#: ../templates/editpage.html:104
-msgid "TextFormattingRules"
-msgstr ""
+#~ msgid "References:"
+#~ msgstr "!Referenties"
 
 #~ msgid "Current page:"
 #~ msgstr "Huidige pagina:"
@@ -645,9 +801,6 @@ msgstr ""
 #~ msgid "%d matches found in %d pages."
 #~ msgstr "%d keer gevonden in %d pagina's."
 
-#~ msgid "Full Text Search Results"
-#~ msgstr "Volledige tekst zoek resultaten"
-
 #~ msgid "Return to "
 #~ msgstr "Terug naar "
 
@@ -659,9 +812,6 @@ msgstr ""
 
 #~ msgid "plain file"
 #~ msgstr "plat bestand"
-
-#~ msgid "RecentChanges"
-#~ msgstr "RecenteVeranderingen"
 
 #~ msgid "The PhpWiki programming team"
 #~ msgstr "Het PhpWiki programmeerteam"
@@ -714,20 +864,11 @@ msgstr ""
 #~ msgid "%d pages match your query."
 #~ msgstr "%d pagina's voldoen aan je vraag."
 
-#~ msgid "Title Search Results"
-#~ msgstr "Titel zoek resultaten"
-
-#~ msgid "The most recently changed pages are listed below."
-#~ msgstr "De meest recent veranderde pagina's staan hieronder:"
-
 #~ msgid "(first day for this Wiki)"
 #~ msgstr "(eerste dag voor deze Wiki)"
 
 #~ msgid "(new)"
 #~ msgstr "(nieuw)"
-
-#~ msgid "Search"
-#~ msgstr "Zoek"
 
 #~ msgid "Function not yet implemented."
 #~ msgstr "Functie nog niet gemplementeerd."
