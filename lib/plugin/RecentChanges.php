@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.102 2004-12-06 19:29:24 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.103 2004-12-15 17:45:09 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -505,7 +505,8 @@ extends _RecentChanges_HtmlFormatter
         while ($rev = $changes->next()) {
             // enforce view permission
             if (mayAccessPage('view',$rev->_pagename)) {
-                $html->pushContent($sp,$this->pageLink($rev),HTML::br());
+            	if ($link = $this->pageLink($rev)) // some entries may be empty (/Blog/.. interim pages)
+                    $html->pushContent($sp, $link, HTML::br());
                 if ($first)
                     $this->setValidators($rev);
                 $first = false;
@@ -732,7 +733,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.102 $");
+                            "\$Revision: 1.103 $");
     }
 
     function managesValidators() {
@@ -919,6 +920,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.102  2004/12/06 19:29:24  rurban
+// simplify RSS: add RSS2 link (rss tag only, new content-type)
+//
 // Revision 1.101  2004/11/10 19:32:24  rurban
 // * optimize increaseHitCount, esp. for mysql.
 // * prepend dirs to the include_path (phpwiki_dir for faster searches)
