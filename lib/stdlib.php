@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.76 2002-01-16 02:45:04 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.77 2002-01-17 20:36:39 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -125,21 +125,14 @@ function QElement($tag, $args = '', $content = '')
 }
 
 function IconForLink($protocol_or_url) {
-    global $URL_LINK_ICONS;
-    
+    global $Theme;
+
     list ($proto) = explode(':', $protocol_or_url, 2);
-    
-    if (isset($URL_LINK_ICONS[$proto])) {
-        $linkimg = $URL_LINK_ICONS[$proto];
-    }
-    elseif (isset($URL_LINK_ICONS['*'])) {
-        $linkimg = $URL_LINK_ICONS['*'];
-    }
-    
-    if (empty($linkimg))
+    $src = $Theme->getLinkIconURL($proto);
+    if (empty($src))
         return '';
     
-    return Element('img', array('src'   => DataURL($linkimg),
+    return Element('img', array('src'   => $src,
                                 'alt'   => $proto,
                                 'class' => 'linkicon'));
 }
@@ -165,7 +158,7 @@ function LinkURL($url, $linktext = '') {
                    IconForLink($url) . htmlspecialchars($linktext));
 }
 
-function LinkWikiWord($wikiword, $linktext = '') {
+function LinkWikiWord($wikiword, $linktext = '', $version = false) {
     global $dbi;
     if ($dbi->isWikiPage($wikiword))
         return LinkExistingWikiWord($wikiword, $linktext);
@@ -173,21 +166,26 @@ function LinkWikiWord($wikiword, $linktext = '') {
         return LinkUnknownWikiWord($wikiword, $linktext);
 }
 
-function LinkExistingWikiWord($wikiword, $linktext = '') {
+function LinkExistingWikiWord($wikiword, $linktext = '', $version = false) {
     if (empty($linktext)) {
         $linktext = $wikiword;
-    if (defined("autosplit_wikiwords"))
-            $linktext=split_pagename($linktext);
+        if (defined("autosplit_wikiwords"))
+            $linktext = split_pagename($linktext);
         $class = 'wiki';
-    } else
+    }
+    else
         $class = 'named-wiki';
-    
-    return QElement('a', array('href'  => WikiURL($wikiword),
+
+    $attr = array();
+    if ($version !== false)
+        $attr['version'] = $version;
+
+    return QElement('a', array('href'  => WikiURL($wikiword, $attr),
                                'class' => $class),
                     $linktext);
 }
 
-function LinkUnknownWikiWord($wikiword, $linktext = '') {
+function LinkUnknownWikiWord($wikiword, $linktext = '', $version = false) {
     if (empty($linktext)) {
         $linktext = $wikiword;
         if (defined("autosplit_wikiwords"))
@@ -196,18 +194,20 @@ function LinkUnknownWikiWord($wikiword, $linktext = '') {
     } else
         $class = 'named-wikiunknown';
     
-    $a = QElement('a',
-                  array('href' => WikiURL($wikiword,
-                                          array('action' => 'edit'))),
-                  '?');
+    $attr = array('action' => 'edit');
+    if ($version !== false)
+        $attr['version'] = $version;
 
-    if (defined('WIKIMARK_AFTER') && WIKIMARK_AFTER) {
-        return Element('span', array('class' => $class),
-                       Element('u', $linktext) . $a);
-    } else {
-        return Element('span', array('class' => $class),
-                       $a . Element('u', $linktext));
-    }
+    $qmark = QElement('a', array('href' => WikiURL($wikiword, $attr)),
+                      '?');
+    $text = QElement('u', $linktext);
+
+    if (defined('WIKIMARK_AFTER') && WIKIMARK_AFTER)
+        $text .= $qmark;
+    else 
+        $text = $qmark . $text;
+    
+    return Element('span', array('class' => $class), $text);
 }
 
 function LinkImage($url, $alt = '[External Image]') {
