@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.9 2004-04-29 17:18:19 zorloc Exp $');
+rcs_id('$Id: PagePerm.php,v 1.10 2004-04-29 22:32:56 zorloc Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -155,7 +155,7 @@ function requiredAuthorityForPage ($action) {
                                       $GLOBALS['request']->getArg('pagename')))
         return $GLOBALS['request']->_user->_level;
     else
-        return WIKIAUTH_UNOBTAINABLE;
+        return $GLOBALS['request']->_user->_level + 1;
 }
 
 // Translate action or plugin to the simplier access types:
@@ -543,6 +543,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/04/29 17:18:19  zorloc
+// Fixes permission failure issues.  With PagePermissions and Disabled Actions when user did not have permission WIKIAUTH_FORBIDDEN was returned.  In WikiUser this was ok because WIKIAUTH_FORBIDDEN had a value of 11 -- thus no user could perform that action.  But WikiUserNew has a WIKIAUTH_FORBIDDEN value of -1 -- thus a user without sufficent permission to do anything.  The solution is a new high value permission level (WIKIAUTH_UNOBTAINABLE) to be the default level for access failure.
+//
 // Revision 1.8  2004/03/14 16:24:35  rurban
 // authenti(fi)cation spelling
 //
