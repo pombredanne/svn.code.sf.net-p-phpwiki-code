@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.34 2004-06-28 14:17:38 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.35 2004-06-28 14:45:12 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -71,8 +71,12 @@ extends WikiDB_backend
     function WikiDB_backend_ADODB ($dbparams) {
         $parsed = parseDSN($dbparams['dsn']);
         $this->_dbh = &ADONewConnection($parsed['phptype']);
-        $conn = $this->_dbh->Connect($parsed['hostspec'],$parsed['username'], 
-                                     $parsed['password'], $parsed['database']);
+        if (!empty($parsed['persistent']))
+            $conn = $this->_dbh->PConnect($parsed['hostspec'],$parsed['username'], 
+                                         $parsed['password'], $parsed['database']);
+        else
+            $conn = $this->_dbh->Connect($parsed['hostspec'],$parsed['username'], 
+                                         $parsed['password'], $parsed['database']);
 
         //$this->_dbh->debug = true;
         
@@ -1128,6 +1132,9 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.34  2004/06/28 14:17:38  rurban
+// updated DSN parser from Pear. esp. for sqlite
+//
 // Revision 1.33  2004/06/27 10:26:02  rurban
 // oci8 patch by Philippe Vanhaesendonck + some ADODB notes+fixes
 //
