@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: pageinfo.php,v 1.8 2001-02-13 05:54:38 dairiki Exp $');
+rcs_id('$Id: pageinfo.php,v 1.9 2001-04-07 00:34:30 dairiki Exp $');
 // Display the internal structure of a page. Steve Wainstead, June 2000
 
 
@@ -30,7 +30,7 @@ function ViewpageProps($name, $pagestore)
       }
       elseif (($key == 'lastmodified') || ($key == 'created'))
 	 $cols .= QElement('td',
-			   date($datetimeformat, $val));
+			   strftime($datetimeformat, $val));
       else
 	 $cols .= QElement('td', $val);
       

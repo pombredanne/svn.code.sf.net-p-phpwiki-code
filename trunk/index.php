@@ -23,7 +23,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.0pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.15 2001-04-06 18:21:36 wainstead Exp $');
+rcs_id('$Id: index.php,v 1.16 2001-04-07 00:34:30 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -113,10 +113,33 @@ $DBParams = array(
 //
 /////////////////////////////////////////////////////////////////////
 
-// Select your language - default language "C": English
+// Select your language/locale - default language "C": English
 // other languages available: Dutch "nl", Spanish "es", German "de",
-// and Swedish "sv"
-$LANG = "C";
+// and Swedish "sv".
+//
+// Note that on some systems, apprently using these short forms for
+// the locale won't work.  On my home system 'LANG=de' won't result
+// in german pages.  Somehow the system must recognize the locale
+// as a valid locale before gettext() will work.  ('de_DE' works for
+// me.)
+putenv('LANG=C');
+
+// Setting the LANG environment variable (accomplished above) may or
+// may not be sufficient to cause PhpWiki to produce dates in your
+// native language.  (It depends on the configuration of the operating
+// system on your http server.)  The problem is that, e.g. 'de' is
+// often not a valid locale.
+//
+// A standard locale name is typically of  the  form
+// language[_territory][.codeset][@modifier],  where  language is
+// an ISO 639 language code, territory is an ISO 3166 country code,
+// and codeset  is  a  character  set or encoding identifier like
+// ISO-8859-1 or UTF-8.
+//
+// You can tailor the locale used for time and date formatting by setting
+// the LC_TIME environment variable.  You'll have to experiment to find
+// the correct setting:
+//putenv('LC_TIME=de_DE');
 
 // If you specify a relative URL for the CSS and images,
 // the are interpreted relative to DATA_PATH (see below).
@@ -133,11 +156,11 @@ $logo = "images/wikibase.png";
 // If this is left blank (or unset), the signature will be omitted.
 //$SignatureImg = "images/signature.png";
 
-// date & time formats used to display modification times, etc.
-// formats are given as format strings to PHP date() function
-// FIXME: these should have different defaults depending on locale.
-$datetimeformat = "F j, Y";	// may contain time of day
-$dateformat = "F j, Y";	// must not contain time
+// Date & time formats used to display modification times, etc.
+// Formats are given as format strings to PHP strftime() function
+// See http://www.php.net/manual/en/function.strftime.php for details.
+$datetimeformat = "%B %e, %Y";	// may contain time of day
+$dateformat = "%B %e, %Y";	// must not contain time
 
 // this defines how many page names to list when displaying
 // the MostPopular pages; the default is to show the 20 most popular pages
@@ -147,7 +170,8 @@ define("MOST_POPULAR_LIST_LENGTH", 20);
 define("NUM_RELATED_PAGES", 5);
 
 // Template files (filenames are relative to script position)
-// (These filenames will be passed through gettext() before use.)
+// However, if a LANG is set, they we be searched for in a locale
+// specific location first.
 $templates = array("BROWSE" =>    "templates/browse.html",
 		   "EDITPAGE" =>  "templates/editpage.html",
 		   "MESSAGE" =>   "templates/message.html");

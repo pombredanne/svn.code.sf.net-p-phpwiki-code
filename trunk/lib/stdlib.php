@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.37 2001-03-05 23:37:32 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.38 2001-04-07 00:34:30 dairiki Exp $');
 
 
    /*
@@ -569,7 +569,7 @@ function StartTag($tag, $args = '')
          _dotoken('PAGEURL', rawurlencode($name), $page);
 	 if (!empty($hash['lastmodified']))
 	    _dotoken('LASTMODIFIED',
-		     date($datetimeformat, $hash['lastmodified']), $page);
+		     strftime($datetimeformat, $hash['lastmodified']), $page);
 	 if (!empty($hash['author']))
 	    _dotoken('LASTAUTHOR', $hash['author'], $page);
 	 if (!empty($hash['version']))
@@ -597,12 +597,14 @@ function UpdateRecentChanges($dbi, $pagename, $isnewpage)
    // this shouldn't be necessary, since PhpWiki loads 
    // default pages if this is a new baby Wiki
    $now = time();
-   $today = date($dateformat, $now);
+   $today = strftime($dateformat, $now);
 
-   if (!is_array($recentchanges)) {
+   if (is_array($recentchanges)) {
+      $isNewDay = strftime($dateformat, $recentchanges['lastmodified']) != $today;
+   }
+   else {
       $recentchanges = array('version' => 1,
 			     'created' => $now,
-			     'lastmodified' => $now - 48 * 4600, // force $isNewDay
 			     'flags' => FLAG_PAGE_LOCKED,
 			     'author' => $GLOBALS['user']->id());
       $recentchanges['content']
@@ -613,9 +615,8 @@ function UpdateRecentChanges($dbi, $pagename, $isnewpage)
 		  gettext("Quick title search:"),
 		  '[phpwiki:?action=search&searchterm=()]',
 		  '----');
+      $isNewDay = 0;
    }
-
-   $isNewDay = date($dateformat, $recentchanges['lastmodified']) != $today;
    $recentchanges['lastmodified'] = $now;
 
    $numlines = sizeof($recentchanges['content']);

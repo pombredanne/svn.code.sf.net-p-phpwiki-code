@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.10 2001-03-05 23:38:16 dairiki Exp $');
+rcs_id('$Id: diff.php,v 1.11 2001-04-07 00:34:30 dairiki Exp $');
 // diff.php
 //
 // A PHP diff engine for phpwiki.
@@ -1037,7 +1037,7 @@ function PageInfoRow ($label, $hash)
 			sprintf(gettext ("version %s"), $version));
       $cols .= QElement('td',
 			sprintf(gettext ("last modified on %s"),
-				date($datetimeformat, $lastmodified)));
+				strftime($datetimeformat, $lastmodified)));
       $cols .= QElement('td',
 			sprintf(gettext ("by %s"), $author));
    } else {
