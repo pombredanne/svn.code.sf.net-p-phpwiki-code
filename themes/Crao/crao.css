@@ -185,11 +185,12 @@ p a.wiki-rc-action
  */
 
 div.ie-actionbuttons {
-	position: absolute;
- 	max-width: 30%; height: 22px;
+        position: relative/*absolute*/;
+  /*max-width: 30%;*/ height: 22px;
 	right: 0; bottom: 0;
 	margin: 0px;
-        background: transparent url(images/BG.png) top left;
+        background: transparent url(images/BG.png) no-repeat top right;
+	text-align: right;
 	vertical-align: bottom;
 	padding-left: 2em;
 	padding-right: 1em;
