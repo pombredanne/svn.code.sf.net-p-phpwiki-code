@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.22 2002-01-23 16:21:03 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.23 2002-01-24 01:01:33 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 require_once('lib/ButtonFactory.php');
@@ -95,10 +95,9 @@ class Theme {
     function getFormatter ($type, $format) {
         $method = strtolower("get${type}Formatter");
         if (method_exists($this, $method))
-            return @call_user_method($method, $this, $format);
+            return $this->{$method}($format);
         return false;
     }
-
 
     ////////////////////////////////////////////////////////////////
     //
@@ -161,6 +160,10 @@ class Theme {
     //
     ////////////////////////////////////////////////////////////////
 
+    /**
+     *
+     * (To disable an image, alias the image to <code>false</code>.
+     */
     function addImageAlias ($alias, $image_name) {
         $this->_imageAliases[$alias] = $image_name;
     }
@@ -168,8 +171,11 @@ class Theme {
     function getImageURL ($image) {
         $aliases = &$this->_imageAliases;
         
-        if (isset($aliases[$image]))
+        if (isset($aliases[$image])) {
             $image = $aliases[$image];
+            if (!$image)
+                return false;
+        }
 
         // If not extension, default to .png.
         if (!preg_match('/\.\w+$/', $image))
