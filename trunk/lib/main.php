@@ -1,12 +1,12 @@
 <?php
-rcs_id('$Id: main.php,v 1.5 2001-02-16 04:43:08 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.6 2001-02-16 05:10:54 dairiki Exp $');
 include "lib/config.php";
 include "lib/stdlib.php";
 include "lib/userauth.php";
+include "lib/logger.php";
 
 if (ACCESS_LOG)
 {
-   include "lib/logger.php";
    $LogEntry = new AccessLogEntry;
 
    function _write_log () { $GLOBALS['LogEntry']->write(ACCESS_LOG); }
@@ -16,7 +16,7 @@ if (ACCESS_LOG)
 if (USE_PATH_INFO && !isset($PATH_INFO))
 {
    $LogEntry->status = 302;	// "302 Found"
-   header("Location: " . SERVER_URL . $REQUEST_URI);
+   header("Location: " . SERVER_URL . $REQUEST_URI . '/');
    exit;
 }
 
@@ -84,7 +84,7 @@ function get_auth_mode ($action)
 
    
 $user = new WikiUser(get_auth_mode($action));
-if (ACCESS_LOG and $user->is_authenticated())
+if ($user->is_authenticated())
    $LogEntry->user = $user->id;
 
 
