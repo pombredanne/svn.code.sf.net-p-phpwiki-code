@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_oci8po.php,v 1.1 2004-07-10 08:50:24 rurban Exp $');
+rcs_id('$Id: ADODB_oci8po.php,v 1.2 2004-12-08 12:55:04 rurban Exp $');
 
 /**
  * Oracle extensions for the ADODB DB backend.
@@ -29,7 +29,6 @@ extends WikiDB_backend_ADODB
         $this->_expressions['iscontent'] = "DECODE(DBMS_LOB.GETLENGTH(content), NULL, 0, 0, 0, 1)";
 
         $this->_prefix = isset($dbparams['prefix']) ? $dbparams['prefix'] : '';
-
     }
     
     /**
@@ -75,26 +74,29 @@ extends WikiDB_backend_ADODB
         $dbh->Execute("COMMIT WORK");
     }
 
-    // Search callabcks
+    // Search callbacks (replaced by class below)
     // Page name
+    /*
     function _sql_match_clause($word) {
         $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
         $word = $this->_dbh->qstr("%$word%");
         return "LOWER(pagename) LIKE $word";
     }
+    */
 
     // Fulltext -- case sensisitive :-\
     // If we want case insensitive search, one need to create a Context
     // Index on the CLOB. While it is very efficient, it requires the
     // Intermedia Text option, so let's stick to the 'simple' thing
+    /*
     function _fullsearch_sql_match_clause($word) {
         $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
         $wordq = $this->_dbh->qstr("%$word%");
         return "LOWER(pagename) LIKE $wordq " 
                . "OR DBMS_LOB.INSTR(content, '$word') > 0";
     }
-
-
+    */
+    
     /**
      * Serialize data
      */
@@ -119,6 +121,22 @@ extends WikiDB_backend_ADODB
     }
 
 };
+
+class WikiDB_backend_ADODB_oci8_search
+extends WikiDB_backend_ADODB_search
+{
+    // If we want case insensitive search, one need to create a Context
+    // Index on the CLOB. While it is very efficient, it requires the
+    // Intermedia Text option, so let's stick to the 'simple' thing
+    // Note that this does only an exact fulltext search, not using MATCH or LIKE.
+    function _fulltext_match_clause($node) { 
+        $page = $node->sql($word);
+        $exactword = $node->_sql_quote();
+        return $this->_case_exact
+            ? "pagename LIKE '$page' OR DBMS_LOB.INSTR(content, '$exactword') > 0"
+            : "LOWER(pagename) LIKE '$page' OR DBMS_LOB.INSTR(content, '$exactword') > 0";
+    }
+}
 
 // (c-file-style: "gnu")
 // Local Variables:
