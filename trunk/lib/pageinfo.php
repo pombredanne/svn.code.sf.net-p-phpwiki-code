@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: pageinfo.php,v 1.13 2001-12-13 18:29:24 dairiki Exp $');
+rcs_id('$Id: pageinfo.php,v 1.14 2001-12-13 20:10:26 dairiki Exp $');
 require_once('lib/Template.php');
 
 global $datetimeformat;
@@ -43,7 +43,6 @@ while ($rev = $iter->next()) {
                       QElement('input', array('type' => 'checkbox',
                                               'name' => 'versions[]',
                                               'value' => $version,
-                                              'onClick' => "check_cb(this);",
                                               'checked' => ($i++ <= 1))));
     
     $cols[] = QElement('td', array('align' => 'right'),
@@ -72,41 +71,44 @@ $table = ("\n"
 
 $formargs['action'] = USE_PATH_INFO ? WikiURL($pagename) : SCRIPT_NAME;
 $formargs['method'] = 'post';
+$formargs['name'] = 'diff-select';
 
-$jscript = 'function check_cb(checkbox) {
-  // If more than two diff selection checkboxes are checked,
-  // uncheck some.  (But don\'t uncheck either the currently
-  // clicked or the previously clicked box.)
-  form = checkbox.form;
 
-  selected = checkbox.value;
-  previous = form.previous_selection;
-  form.previous_selection = selected;
 
-  deletable = new Array();
-  nchecked = 0;
-  for (i = 0; i < form.elements.length; i++) {
-    cb = form.elements[i];
-    if (cb.name != "versions[]" || ! cb.checked)
-      continue;
-
-    nchecked++;
-    if (cb.value != selected && cb.value != previous)
-      deletable[deletable.length] = cb;
-  }
-
-  for (i = 0; i < nchecked - 2; i++)
-    deletable[i].checked = false;
-}';
-
-$html = Element('script', array('language' => 'JavaScript'),
-                "<!-- //\n$jscript\n//-->") . "\n";
-
-$html .= Element('p',
+$html = Element('p',
                 htmlspecialchars(gettext("Currently archived versions of"))
                 . " "
                 . LinkExistingWikiWord($pagename)) . "\n";
 $html .= Element('form', $formargs, $table);
+
+$html .= Element('script', array('language' => 'JavaScript'),
+                 '<!-- //
+var versionCheckboxes = document.forms["diff-select"].elements["versions[]"];
+var previousSelection;
+
+function _diffcheck_cb() {
+  // If more than two diff selection checkboxes are checked,
+  // uncheck some.  (But don\'t uncheck either the currently
+  // clicked or the previously clicked box.)
+
+  var nchecked = 0;
+  var uncheckable = new Array();
+  for (i = 0; i < versionCheckboxes.length; i++) {
+    var cb = versionCheckboxes[i];
+    if (cb.checked) {
+      nchecked++;
+      if (cb != this && cb != previousSelection)
+        uncheckable[uncheckable.length] = cb;
+    }
+  }
+  for (i = 0; i < nchecked - 2; i++)
+    uncheckable[i].checked = false;
+  previousSelection = this;
+}
+
+for (i = 0; i < versionCheckboxes.length; i++)
+  versionCheckboxes[i].onclick = _diffcheck_cb;
+//-->') . "\n";
 
 echo GeneratePage('MESSAGE', $html, gettext("Revision History: ") . $pagename);
 
