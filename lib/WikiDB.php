@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.110 2004-11-26 18:39:01 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.111 2004-11-28 20:39:43 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -1801,7 +1801,7 @@ class WikiDB_PageRevisionIterator
         if ( ! ($next = $this->_revisions->next()) )
             return false;
 
-        $this->_wikidb->_cache->cache_data($next);
+        //$this->_wikidb->_cache->cache_data($next);
 
         $pagename = $next['pagename'];
         $version = $next['version'];
@@ -1983,10 +1983,11 @@ class WikiDB_cache
         $this->invalidate_cache($pagename);
     }
 
-    // FIXME: ugly
+    // FIXME: ugly and wrong. overwrites full cache with partial cache
     function cache_data($data) {
-        if (isset($data['pagedata']))
-            $this->_pagedata_cache[$data['pagename']] = $data['pagedata'];
+    	;
+        //if (isset($data['pagedata']))
+        //    $this->_pagedata_cache[$data['pagename']] = $data['pagedata'];
     }
     
     function get_versiondata($pagename, $version, $need_content = false) {
@@ -2096,6 +2097,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.110  2004/11/26 18:39:01  rurban
+// new regex search parser and SQL backends (90% complete, glob and pcre backends missing)
+//
 // Revision 1.109  2004/11/25 17:20:50  rurban
 // and again a couple of more native db args: backlinks
 //
