@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: ziplib.php,v 1.12 2001-12-19 12:08:04 carstenklapp Exp $');
+rcs_id('$Id: ziplib.php,v 1.13 2001-12-28 09:53:34 carstenklapp Exp $');
 
 /**
  * GZIP stuff.
@@ -32,19 +32,19 @@ function gzip_tempnam () {
 function gzip_compress ($data) {
   $filename = gzip_tempnam();
   if (!($fp = gzopen($filename, "wb")))
-      ExitWiki("gzopen failed");
+      ExitWiki(sprintf(_("%s failed"),'gzopen'));
   gzwrite($fp, $data, strlen($data));
   if (!gzclose($fp))
-      ExitWiki("gzclose failed");
+      ExitWiki(sprintf(_("%s failed"),'gzclose'));
     
   $size = filesize($filename);
 
   if (!($fp = fopen($filename, "rb")))
-      ExitWiki("fopen failed");
+      ExitWiki(sprintf(_("%s failed"),'fopen'));
   if (!($z = fread($fp, $size)) || strlen($z) != $size)
-      ExitWiki("fread failed");
+      ExitWiki(sprintf(_("%s failed"),'fread'));
   if (!fclose($fp))
-      ExitWiki("fclose failed");
+      ExitWiki(sprintf(_("%s failed"),'fclose'));
 
   unlink($filename);
   return $z;
@@ -53,18 +53,18 @@ function gzip_compress ($data) {
 function gzip_uncompress ($data) {
   $filename = gzip_tempnam();
   if (!($fp = fopen($filename, "wb")))
-      ExitWiki("fopen failed");
+      ExitWiki(sprintf(_("%s failed"),'fopen'));
   fwrite($fp, $data, strlen($data));
   if (!fclose($fp))
-      ExitWiki("fclose failed");
+      ExitWiki(sprintf(_("%s failed"),'fclose'));
 
   if (!($fp = gzopen($filename, "rb")))
-      ExitWiki("gzopen failed");
+      ExitWiki(sprintf(_("%s failed"),'gzopen'));
   $unz = '';
   while ($buf = gzread($fp, 4096))
       $unz .= $buf;
   if (!gzclose($fp))
-      ExitWiki("gzclose failed");
+      ExitWiki(sprintf(_("%s failed"),'gzclose'));
 
   unlink($filename);
   return $unz;
@@ -158,11 +158,11 @@ function zip_deflate ($content)
   extract(unpack("a2magic/Ccomp_type/Cflags/@9/Cos_type", $z));
   
   if ($magic != GZIP_MAGIC)
-      ExitWiki("Bad gzip magic");
+      ExitWiki(sprintf(_("Bad %s"),"gzip magic"));
   if ($comp_type != GZIP_DEFLATE)
-      ExitWiki("Bad gzip comp type");
+      ExitWiki(sprintf(_("Bad %s"),"gzip comp type"));
   if (($flags & 0x3e) != 0)
-      ExitWiki(sprintf("Bad flags (0x%02x)", $flags));
+      ExitWiki(sprintf(_("Bad %s"),sprintf("flags (0x%02x)", $flags)));
 
   $gz_header_len = 10;
   $gz_data_len = strlen($z) - $gz_header_len - 8;
@@ -180,7 +180,7 @@ function zip_deflate ($content)
 function zip_inflate ($data, $crc32, $uncomp_size)
 {
   if (!function_exists('gzopen'))
-      ExitWiki("Can't inflate data: zlib support not enabled in this PHP");
+      ExitWiki(_("Can't inflate data: zlib support not enabled in this PHP"));
 
   // Reconstruct gzip header and ungzip the data.
   $mtime = time();		//(Bogus mtime)
@@ -358,13 +358,13 @@ class ZipReader
     if (!is_string($zipfile))
 	$this->fp = $zipfile;	// File already open
     else if (!($this->fp = fopen($zipfile, "rb")))
-	ExitWiki("Can't open zip file '$zipfile' for reading");
+	ExitWiki(sprintf(_("Can't open zip file '%s' for reading"),$zipfile));
   }
 
   function _read ($nbytes) {
     $chunk = fread($this->fp, $nbytes);
     if (strlen($chunk) != $nbytes)
-	ExitWiki("Unexpected EOF in zip file");
+	ExitWiki(_("Unexpected EOF in zip file"));
     return $chunk;
   }
 
@@ -388,13 +388,13 @@ class ZipReader
     if ($magic != ZIP_LOCHEAD_MAGIC)
       {
 	if ($magic != ZIP_CENTHEAD_MAGIC)
-	    ExitWiki("Bad header type: " . htmlspecialchars($magic)); // FIXME: better message?
+	    ExitWiki(sprintf(_("Bad header type: %s"),htmlspecialchars($magic))); // FIXME: better message?
 	return $this->done();
       }
     if (($flags & 0x21) != 0)
-	ExitWiki("Encryption and/or zip patches not supported.");
+	ExitWiki(_("Encryption and/or zip patches not supported."));
     if (($flags & 0x08) != 0)
-	ExitWiki("Postponed CRC not yet supported."); // FIXME: ???
+	ExitWiki(_("Postponed CRC not yet supported.")); // FIXME: ???
 
     $filename = $this->_read($filename_len);
     if ($extrafld_len != 0)
@@ -413,10 +413,10 @@ class ZipReader
 	    ExitWiki(sprintf("CRC mismatch %x != %x", $crc, $crc32));
       }
     else
-	ExitWiki("Compression method $comp_method unsupported");
+	ExitWiki(sprintf(_("Compression method %s unsupported"),$comp_method));
 
     if (strlen($data) != $uncomp_size)
-	ExitWiki(sprintf("Uncompressed size mismatch %d != %d",
+	ExitWiki(sprintf(_("Uncompressed size mismatch")."%d != %d",
 		    strlen($data), $uncomp_size));
 
     return array($filename, $data, $attrib);
@@ -560,7 +560,7 @@ function ParseMimeContentType ($string)
 		  . '/'
 		  . '\s*(' . MIME_TOKEN_REGEXP . ')\s*:x',
 		  $string, $match))
-      ExitWiki ("Bad MIME content-type");
+      ExitWiki(sprintf(_("Bad %s"),'MIME content-type'));
 
   $type = strtolower($match[1]);
   $subtype = strtolower($match[2]);
@@ -578,7 +578,7 @@ function ParseMimeContentType ($string)
 	  $val = preg_replace('/[\\\\](.)/s', '\\1', $match[3]);
       
       $param[strtolower($match[1])] = $val;
-	   
+        
       $string = substr($string, strlen($match[0]));
     }
     //" <--(kludge for dumb syntax coloring)
@@ -619,7 +619,7 @@ function GenerateFootnotesFromRefs($params)
   while (list($p, $reference) = each($params))
     {
       if (preg_match('/^ref([1-9][0-9]*)$/', $p, $m))
-	  $footnotes[$m[1]] = sprintf(gettext ("[%d] See [%s]"),
+	  $footnotes[$m[1]] = sprintf(_("[%d] See [%s]"),
 				      $m[1], rawurldecode($reference));
     }
 
@@ -627,7 +627,7 @@ function GenerateFootnotesFromRefs($params)
     {
       ksort($footnotes);
       return "-----\n"
-	  . gettext ("!References") . "\n"
+	  . "!" ._("References") . "\n"
 	  . join("\n%%%\n", $footnotes) . "\n";
     }
   else

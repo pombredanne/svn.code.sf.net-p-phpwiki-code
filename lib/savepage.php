@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.18 2001-12-22 02:39:32 carstenklapp Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.19 2001-12-28 09:53:19 carstenklapp Exp $');
 require_once('lib/Template.php');
 require_once('lib/transform.php');
 require_once('lib/ArchiveCleaner.php');
@@ -19,51 +19,51 @@ function ConcurrentUpdates($pagename) {
      We want to translate this entire paragraph as one string, of course.
    */
     $html = "<p>";
-    $html .= gettext ("PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost.");
+    $html .= _("PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost.");
     $html .= "</p>\n<p>";
-    $html .= gettext ("In order to recover from this situation follow these steps:");
+    $html .= _("In order to recover from this situation follow these steps:");
     $html .= "\n<ol><li>";
-    $html .= gettext ("Use your browser's <b>Back</b> button to go back to the edit page.");
+    $html .= _("Use your browser's <b>Back</b> button to go back to the edit page.");
     $html .= "</li>\n<li>";
-    $html .= gettext ("Copy your changes to the clipboard or to another temporary place (e.g. text editor).");
+    $html .= _("Copy your changes to the clipboard or to another temporary place (e.g. text editor).");
     $html .= "</li>\n<li>";
-    $html .= gettext ("<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there.");
+    $html .= _("<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there.");
     $html .= "</li>\n<li>";
-    $html .= gettext ("Make changes to the file again. Paste your additions from the clipboard (or text editor).");
+    $html .= _("Make changes to the file again. Paste your additions from the clipboard (or text editor).");
     $html .= "</li>\n<li>";
-    $html .= gettext ("Press <b>Save</b> again.");
+    $html .= _("Press <b>Save</b> again.");
     $html .= "</li></ol></p>\n";
-    $html .= QElement('p', gettext ("Sorry for the inconvenience."));
+    $html .= QElement('p', _("Sorry for the inconvenience."));
 
     echo GeneratePage('MESSAGE', $html,
-                      sprintf (gettext ("Problem while updating %s"), $pagename));
+                      sprintf (_("Problem while updating %s"), $pagename));
     ExitWiki();
 }
 
 function PageIsLocked($pagename) {
     $html = QElement('p',
-                     gettext("This page has been locked by the administrator and cannot be edited."));
+                     _("This page has been locked by the administrator and cannot be edited."));
     $html .= QElement('p',
-                      gettext ("Sorry for the inconvenience."));
+                      _("Sorry for the inconvenience."));
 
     echo GeneratePage('MESSAGE', $html,
-                      sprintf (gettext ("Problem while editing %s"), $pagename));
+                      sprintf (_("Problem while editing %s"), $pagename));
     ExitWiki ("");
 }
 
 function NoChangesMade($pagename) {
-    $html = QElement('p', gettext ("You have not made any changes."));
-    $html .= QElement('p', gettext ("New version not saved."));
+    $html = QElement('p', _("You have not made any changes."));
+    $html .= QElement('p', _("New version not saved."));
     echo GeneratePage('MESSAGE', $html,
-                      sprintf(gettext("Edit aborted: %s"), $pagename));
+                      sprintf(_("Edit aborted: %s"), $pagename));
     ExitWiki ("");
 }
 
 function BadFormVars($pagename) {
-    $html = QElement('p', gettext ("Bad form submission"));
-    $html .= QElement('p', gettext ("Required form variables are missing."));
+    $html = QElement('p', _("Bad form submission"));
+    $html .= QElement('p', _("Required form variables are missing."));
     echo GeneratePage('MESSAGE', $html,
-                      sprintf(gettext("Edit aborted: %s"), $pagename));
+                      sprintf(_("Edit aborted: %s"), $pagename));
     ExitWiki ("");
 }
     
@@ -152,14 +152,14 @@ function savePage ($dbi, $request) {
         }
     }
 
-    $html = sprintf(gettext("Thank you for editing %s."),
+    $html = sprintf(_("Thank you for editing %s."),
                     LinkExistingWikiWord($pagename));
     $html .= "<br>\n";
-    $html .= gettext ("Your careful attention to detail is much appreciated.");
+    $html .= _("Your careful attention to detail is much appreciated.");
     $html .= "\n";
 
     if ($warnings) {
-        $html .= Element('p', "<b>Warning!</b> "
+        $html .= Element('p', "<b>"._("Warning!")."</b> "
                          . htmlspecialchars($warnings)
                          . "<br>\n");
     }

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.62 2001-12-26 10:40:13 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.63 2001-12-28 09:53:24 carstenklapp Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -131,7 +131,7 @@ function LinkURL($url, $linktext = '') {
     if(ereg("[<>\"]", $url)) {
         return Element('strong',
                        QElement('u', array('class' => 'baduri'),
-                                _("BAD URL -- remove all of <, >, \""))); //"
+                                _("BAD URL -- remove all of <, >, \"")));
     }
 
     $attr['href'] = $url;
@@ -193,10 +193,10 @@ function LinkWikiWord($wikiword, $linktext='') {
    function LinkImage($url, $alt='[External Image]') {
       // FIXME: Is this needed (or sufficient?)
       //  As long as the src in htmlspecialchars()ed I think it's safe.
-      if(ereg('[<>"]', $url)) {
+      if(ereg("[<>\"]", $url)) {
          return Element('strong',
                         QElement('u', array('class' => 'baduri'),
-                                 'BAD URL -- remove all of <, >, "'));
+                                 _("BAD URL -- remove all of <, >, \"")));
       }
       return Element('img', array('src' => $url, 'alt' => $alt));
    }
@@ -456,7 +456,7 @@ function ExtractWikiPageLinks($content)
       $links = GetWikiPageLinks($dbi, $pagename);
 
       $txt = QElement('strong',
-                      sprintf (gettext ("%d best incoming links:"), NUM_RELATED_PAGES));
+                      sprintf (_("%d best incoming links:"), NUM_RELATED_PAGES));
       for($i = 0; $i < NUM_RELATED_PAGES; $i++) {
          if(isset($links['in'][$i])) {
             list($name, $score) = $links['in'][$i];
@@ -466,7 +466,7 @@ function ExtractWikiPageLinks($content)
       
       $txt .= "\n" . Element('br');
       $txt .= Element('strong',
-                      sprintf (gettext ("%d best outgoing links:"), NUM_RELATED_PAGES));
+                      sprintf (_("%d best outgoing links:"), NUM_RELATED_PAGES));
       for($i = 0; $i < NUM_RELATED_PAGES; $i++) {
          if(isset($links['out'][$i])) {
             list($name, $score) = $links['out'][$i];
@@ -477,7 +477,7 @@ function ExtractWikiPageLinks($content)
 
       $txt .= "\n" . Element('br');
       $txt .= Element('strong',
-                      sprintf (gettext ("%d most popular nearby:"), NUM_RELATED_PAGES));
+                      sprintf (_("%d most popular nearby:"), NUM_RELATED_PAGES));
       for($i = 0; $i < NUM_RELATED_PAGES; $i++) {
          if(isset($links['popular'][$i])) {
             list($name, $score) = $links['popular'][$i];
@@ -529,11 +529,11 @@ function split_pagename ($page) {
 function NoSuchRevision ($page, $version) {
     $html = Element('p', QElement('strong', gettext("Bad Version"))) . "\n";
     $html .= QElement('p',
-                      sprintf(gettext("I'm sorry.  Version %d of %s is not in my database."),
+                      sprintf(_("I'm sorry.  Version %d of %s is not in my database."),
                               $version, $page->getName())) . "\n";
 
     include_once('lib/Template.php');
-    echo GeneratePage('MESSAGE', $html, gettext("Bad Version"));
+    echo GeneratePage('MESSAGE', $html, _("Bad Version"));
     ExitWiki ("");
 }
 
@@ -681,7 +681,7 @@ function __vsprintf ($fmt, $args) {
         // Format string has '%2$s' style argument reordering.
         // PHP doesn't support this.
         if (preg_match('/(?<!%)%[- ]?\d*[^- \d$]/x', $fmt))
-            trigger_error("Can't mix '%1\$s' with '%s' type format strings", E_USER_WARNING);
+            trigger_error(sprintf(_("Can't mix '%s' with '%s' type format strings"),'%1\$s','%s'), E_USER_WARNING);
     
         $fmt = preg_replace('/(?<!%)%\d+\$/x', '%', $fmt);
         $newargs = array();
@@ -689,7 +689,7 @@ function __vsprintf ($fmt, $args) {
         // Reorder arguments appropriately.
         foreach($m[1] as $argnum) {
             if ($argnum < 1 || $argnum > count($args))
-                trigger_error("$argnum: argument index out of range", E_USER_WARNING);
+                trigger_error(sprintf(_("%s: argument index out of range"),$argnum), E_USER_WARNING);
             $newargs[] = $args[$argnum - 1];
         }
         $args = $newargs;

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.21 2001-12-16 18:33:25 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.22 2001-12-28 09:53:15 carstenklapp Exp $');
 
 include "lib/config.php";
 include "lib/stdlib.php";
@@ -23,7 +23,7 @@ function deduce_pagename ($request) {
     if (preg_match('/^[^&=]+$/', $query_string))
         return urldecode($query_string);
     
-    return gettext("HomePage");
+    return _("HomePage");
 }
 
 function is_safe_action ($action) {
@@ -82,9 +82,9 @@ function main ($request) {
     global $dbi;                // FIXME: can we keep this non-global?
     $dbi = WikiDB::open($GLOBALS['DBParams']);
     
-    if ( $action == 'browse' && $request->getArg('pagename') == gettext("HomePage") ) {
+    if ( $action == 'browse' && $request->getArg('pagename') == _("HomePage") ) {
         // if there is no HomePage, create a basic set of Wiki pages
-        if ( ! $dbi->isWikiPage(gettext("HomePage")) ) {
+        if ( ! $dbi->isWikiPage(_("HomePage")) ) {
             include_once("lib/loadsave.php");
             SetupWiki($dbi);
             ExitWiki();
@@ -96,7 +96,7 @@ function main ($request) {
         $user->must_be_admin($action);
 
     if (isset($DisabledActions) && in_array($action, $DisabledActions))
-        ExitWiki(sprintf(gettext("Action %s is disabled in this wiki."), $action));
+        ExitWiki(sprintf(_("Action %s is disabled in this wiki."), $action));
    
     // Enable the output of most of the warning messages.
     // The warnings will screw up zip files and setpref though.
@@ -182,7 +182,7 @@ function main ($request) {
     
     case 'lock':
     case 'unlock':
-        $user->must_be_admin("lock or unlock pages");
+        $user->must_be_admin(_("lock or unlock pages"));
         $page = $dbi->getPage($request->getArg('pagename'));
         $page->set('locked', $action == 'lock');
 
@@ -216,7 +216,7 @@ function main ($request) {
         break;
 
     default:
-        echo QElement('p', sprintf("Bad action: '%s'", urlencode($action)));
+        echo QElement('p', sprintf(_("Bad action: '%s'"), urlencode($action)));
         break;
     }
     ExitWiki();
