@@ -1,4 +1,4 @@
-<?php // $Id: configurator.php,v 1.30 2005-02-28 19:24:41 rurban Exp $
+<?php // $Id: configurator.php,v 1.31 2005-02-28 20:02:26 rurban Exp $
 /*
  * Copyright 2002,2003,2005 $ThePhpWikiProgrammingTeam
  * Copyright 2002 Martin Geisler <gimpster@gimpster.com> 
@@ -25,24 +25,22 @@
 /**
  * Starts automatically the first time by IniConfig("config/config.ini") 
  * if it doesn't exist.
- * Initial expand ?show=_part1 (the part id)
+ *
+ * DONE:
+ * o Initial expand ?show=_part1 (the part id)
+ * o read config-default.ini
+ * o commented / optional: non-default values should not be commented!
+ *                         default values if optional can be omitted.
+ * o validate input (fix javascript, add POST checks)
+ * o start this automatically the first time
+ * o fix include_path
  *
  * 1.3.11 TODO: (or 1.3.12?)
- * fix SQL quotes, AUTH_ORDER quotes and file forward slashes
- * commented / optional: non-default values should not be commented!
- *                       default values if optional can be omitted.
- * posted values validation, extend js validation for sane DB values
- * read config-default.ini
- * read config-dist.ini into sections, comments, and optional/required settings
+ * o fix SQL quotes, AUTH_ORDER quotes and file forward slashes
+ * o posted values validation, extend js validation for sane DB values
+ * o read config-dist.ini into sections, comments, and optional/required settings
  *
- * 1.3.9 Todo: 
- * validate input (fix javascript, add POST checks)
- * start this automatically the first time
- * fix include_path
- * eval index-user.php or index.php to get the actual settings.
- * ask to store it in index.php or index-user.php
- * 
- * A file config/config.ini will be generated, if writable.
+ * A file config/config.ini will be automatically generated, if writable.
  *
  * NOTE: If you have a starterscript outside PHOWIKI_DIR but no 
  * config/config.ini yet (very unlikely!), you must define DATA_PATH in the 
@@ -135,6 +133,14 @@ if (file_exists($fs_config_file)) {
     } elseif ($admin_pw != ADMIN_PASSWD) {
         _http_logout();
     }
+} else {
+    if (!function_exists("IniConfig")) {
+        include_once("lib/prepend.php");
+	include_once("lib/IniConfig.php");
+    }
+    $def_file = (substr(PHP_OS,0,3) == 'WIN') ? 'config\\config-default.ini' : 'config/config-default.ini';
+    $fs_def_file = dirname(__FILE__) . (substr(PHP_OS,0,3) == 'WIN' ? '\\' : '/') . $def_file;
+    IniConfig($fs_def_file);
 }
 
 echo "<","?xml version=\"1.0\" encoding=\"'iso-8859-1'\"?",">\n";
@@ -143,7 +149,7 @@ echo "<","?xml version=\"1.0\" encoding=\"'iso-8859-1'\"?",">\n";
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.30 2005-02-28 19:24:41 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.31 2005-02-28 20:02:26 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
@@ -303,16 +309,20 @@ new part('_part0', $SEPARATOR."\n", "
 Part Zero: (optional)
 Latest Development and Tricky Options");
 
-if (substr(PHP_OS,0,3) == 'WIN') {
-    $include_path = dirname(__FILE__) . ';' . ini_get('include_path');
-    if (strchr(ini_get('include_path'),'/'))
-	$include_path = strtr($include_path,'\\','/');
-} else {
+if (defined('INCLUDE_PATH'))
+    $include_path = INCLUDE_PATH;
+else {
+  if (substr(PHP_OS,0,3) == 'WIN') {
+      $include_path = dirname(__FILE__) . ';' . ini_get('include_path');
+      if (strchr(ini_get('include_path'),'/'))
+	  $include_path = strtr($include_path,'\\','/');
+  } else {
     $include_path = dirname(__FILE__) . ':' . ini_get('include_path');
+  }
 }
 
 $properties["PHP include_path"] =
-    new _define('INCLUDE_PATH', ini_get('include_path'), "
+    new _define('INCLUDE_PATH', $include_path, "
 If PHP needs help in finding where you installed the rest of the PhpWiki
 code, you can set the include_path here.
 
@@ -327,12 +337,13 @@ as the path separator.");
 
 // TODO: convert this a checkbox row as in tests/unit/test.pgp
 $properties["DEBUG"] =
-new numeric_define_optional('DEBUG', '0', "
+new numeric_define_optional('DEBUG', DEBUG, "
 Set DEBUG to 1 to view the XHTML and CSS validator icons, page
 processing timer, and possibly other debugging messages at the
 bottom of each page. 65 for a more verbose level with AUTH hints. 
 See lib/config.php for all supported values.");
 
+// TODO: bring the default to the front
 $properties["ENABLE_USER_NEW"] =
 new boolean_define_commented_optional
 ('ENABLE_USER_NEW', 
@@ -439,12 +450,12 @@ new part('_part1', $SEPARATOR."\n", "
 Part One: Authentication and security settings. See Part Three for more.");
 
 $properties["Admin Username"] =
-new _define_notempty('ADMIN_USER', "", "
+new _define_notempty('ADMIN_USER', ADMIN_USER, "
 You must set this! Username and password of the administrator.",
 "onchange=\"validate_ereg('Sorry, ADMIN_USER cannot be empty.', '^.+$', 'ADMIN_USER', this);\"");
 
 $properties["Admin Password"] =
-new _define_password('ADMIN_PASSWD', "", "
+new _define_password('ADMIN_PASSWD', ADMIN_PASSWD, "
 For heaven's sake pick a good password.
 If your version of PHP supports encrypted passwords, your password will be
 automatically encrypted within the generated config file. 
@@ -470,7 +481,7 @@ You might have to set it to false, if your PHP doesn't support crypt().
 ");
 
 $properties["Wiki Name"] =
-new _define_optional('WIKI_NAME', 'PhpWiki', "
+new _define_optional('WIKI_NAME', WIKI_NAME, "
 The name of your wiki.
 
 This is used to generate a keywords meta tag in the HTML templates,
@@ -525,23 +536,23 @@ See <a href=\"http://chxo.com/scripts/safe_html-test.php\" target=\"_new\">chxo.
 ");
 
 $properties["Maximum Upload Size"] =
-new numeric_define_optional('MAX_UPLOAD_SIZE', "16 * 1024 * 1024", "
+new numeric_define_optional('MAX_UPLOAD_SIZE', MAX_UPLOAD_SIZE /*"16 * 1024 * 1024"*/, "
 The maximum file upload size.");
 
 $properties["Minor Edit Timeout"] =
-new numeric_define_optional('MINOR_EDIT_TIMEOUT', "7 * 24 * 3600", "
+new numeric_define_optional('MINOR_EDIT_TIMEOUT', MINOR_EDIT_TIMEOUT /*"7 * 24 * 3600"*/, "
 If the last edit is older than MINOR_EDIT_TIMEOUT seconds, the
 default state for the \"minor edit\" checkbox on the edit page form
 will be off.");
 
 $properties["Disabled Actions"] =
-new array_define('DISABLED_ACTIONS', array(), "
+new array_define('DISABLED_ACTIONS', DISABLED_ACTIONS /*array()*/, "
 Actions listed in this array will not be allowed. Actions are:
 browse, create, diff, dumphtml, dumpserial, edit, loadfile, lock, remove, 
 unlock, upload, viewsource, zip, ziphtml");
 
 $properties["Access Log File"] =
-new _define_commented_optional('ACCESS_LOG', "/var/logs/wiki_access.log", "
+new _define_commented_optional('ACCESS_LOG', ACCESS_LOG /*"/var/logs/wiki_access.log"*/, "
 PhpWiki can generate an access_log (in \"NCSA combined log\" format)
 for you. If you want one, define this to the name of the log file,
 such as /tmp/wiki_access_log. Preferred is to use SQL access logging as below.
@@ -636,7 +647,7 @@ The default is currently LOOSE.");
 
 // FIXME: should be numeric_define_optional
 $properties["HTTP Cache Control Max Age"] =
-new numeric_define_optional('CACHE_CONTROL_MAX_AGE', 600,
+new numeric_define_optional('CACHE_CONTROL_MAX_AGE', CACHE_CONTROL_MAX_AGE,
             "
 Maximum page staleness, in seconds.");
 
@@ -664,7 +675,7 @@ You can also purge the cached markup globally by using the
 \"Purge Markup Cache\" button on the PhpWikiAdministration page.");
 
 $properties["Path for PHP Session Support"] =
-    new _define_optional('SESSION_SAVE_PATH', ini_get('session.save_path'), "
+    new _define_optional('SESSION_SAVE_PATH', defined('SESSION_SAVE_PATH') ? SESSION_SAVE_PATH : ini_get('session.save_path'), "
 The login code now uses PHP session support. Usually, the default
 configuration of PHP is to store the session state information in
 /tmp. That probably will work fine, but fails e.g. on clustered
@@ -776,7 +787,7 @@ new unchangeable_define("DATABASE_DSN",
 Calculated from the settings above:");
 
 $properties["Filename / Table name Prefix"] =
-new _define_commented("DATABASE_PREFIX", "", "
+new _define_commented("DATABASE_PREFIX", DATABASE_PREFIX, "
 Used by all DB types:
 
 Prefix for filenames or table names, e.g. \"phpwiki_\"
@@ -786,7 +797,7 @@ directory because we aren't doing on the fly sql generation
 during the installation.");
 
 $properties["DB Session table"] =
-new _define_optional("DATABASE_SESSION_TABLE", "session", "
+new _define_optional("DATABASE_SESSION_TABLE", DATABASE_SESSION_TABLE, "
 Tablename to store session information. Only supported by SQL backends.
 
 A word of warning - any prefix defined above will be prepended to whatever is given here.
@@ -810,7 +821,7 @@ Use 'gdbm', 'dbm', 'db2', 'db3' or 'db4' depending on your DBA handler methods s
                       . (function_exists("dba_handlers") ? join(", ",dba_handlers()) : ""));
 
 $properties["dba timeout"] =
-new numeric_define("DATABASE_TIMEOUT", "12", "
+new numeric_define("DATABASE_TIMEOUT", DATABASE_TIMEOUT, "
 Recommended values are 10-20 seconds. The more load the server has, the higher the timeout.");
 
 $properties["DATABASE_PERSISTENT"] =
@@ -882,23 +893,23 @@ is not changed.
 // config file if you really want to change these from the default.
 
 $properties["Major Edits: keep minumum days"] =
-    new numeric_define("MAJOR_MIN_KEEP", "2147483647", "
+    new numeric_define("MAJOR_MIN_KEEP", MAJOR_MIN_KEEP, "
 Default: Keep at least for unlimited time. 
 Set to 0 to enable archive cleanup");
 $properties["Minor Edits: keep minumum days"] =
-    new numeric_define("MINOR_MIN_KEEP", "2147483647", "
+    new numeric_define("MINOR_MIN_KEEP", MINOR_MIN_KEEP, "
 Default: Keep at least for unlimited time. 
 Set to 0 to enable archive cleanup");
 
 $properties["Major Edits: how many"] =
-    new numeric_define("MAJOR_KEEP", "8", "
+    new numeric_define("MAJOR_KEEP", MAJOR_KEEP, "
 Keep up to 8 major edits");
 $properties["Major Edits: how many days"] =
-    new numeric_define("MAJOR_MAX_AGE", "32", "
+    new numeric_define("MAJOR_MAX_AGE", MAJOR_MAX_AGE, "
 keep them no longer than a month");
 
 $properties["Minor Edits: how many"] =
-    new numeric_define("MINOR_KEEP", "4", "
+    new numeric_define("MINOR_KEEP", MINOR_KEEP, "
 Keep up to 4 minor edits");
 $properties["Minor Edits: how many days"] =
     new numeric_define("MINOR_MAX_AGE", "7", "
@@ -1787,7 +1798,12 @@ class _variable {
     function _variable($config_item_name, $default_value, $description, $jscheck = '') {
         $this->config_item_name = $config_item_name;
         $this->description = $description;
-        $this->default_value = $default_value;
+	if (defined($config_item_name) 
+	    and !preg_match("/(selection|boolean)/", get_class($this))
+	    and !preg_match("/(SCRIPT_NAME|VIRTUAL_PATH)/", $config_item_name))
+	    $this->default_value = constant($config_item_name); // ignore given default value
+	else
+	    $this->default_value = $default_value;
 	$this->jscheck = $jscheck;
         if (preg_match("/variable/i",get_class($this)))
 	    $this->prefix = "\$";
@@ -1917,8 +1933,16 @@ extends _variable {
 	$output = $this->get_config_item_header();
         $output .= '<select name="' . $this->get_config_item_name() . "\">\n";
         /* The first option is the default */
-        while(list($option, $label) = each($this->default_value)) {
-            $output .= "  <option value=\"$option\">$label</option>\n";
+	$values = $this->default_value;
+	if (defined($this->get_config_item_name()))
+	    $this->default_value = constant($this->get_config_item_name());
+	else
+	    $this->default_value = null;
+        while(list($option, $label) = each($values)) {
+	    if (!is_null($this->default_value) and $this->default_value === $option)
+		$output .= "  <option value=\"$option\" selected=\"selected\">$label</option>\n";
+	    else
+		$output .= "  <option value=\"$option\">$label</option>\n";
         }
         $output .= "</select>\n";
         return $output;
@@ -2265,13 +2289,22 @@ extends _define {
     function get_html() {
         $output = $this->get_config_item_header();
         $output .= '<select name="' . $this->get_config_item_name() . "\" {$this->jscheck}>\n";
-        /* The first option is the default */
-        list($option, $label) = each($this->default_value);
-        $output .= "  <option value=\"$option\" selected='selected'>$label</option>\n";
+	$values = $this->default_value;
+	if (defined($this->get_config_item_name()))
+	    $this->default_value = constant($this->get_config_item_name());
+	else {
+	    $this->default_value = null;
+	    list($option, $label) = each($values);
+	    $output .= "  <option value=\"$option\" selected=\"selected\">$label</option>\n";
+	}
         /* There can usually, only be two options, there can be
          * three options in the case of a boolean_define_commented_optional */
-        while (list($option, $label) = each($this->default_value)) 
-          $output .= "  <option value=\"$option\">$label</option>\n";
+        while (list($option, $label) = each($values)) {
+	    if (!is_null($this->default_value) and $this->default_value === $option)
+		$output .= "  <option value=\"$option\" selected=\"selected\">$label</option>\n";
+	    else
+		$output .= "  <option value=\"$option\">$label</option>\n";
+	}
         $output .= "</select>\n";
         return $output;
     }
@@ -2421,8 +2454,8 @@ if (!empty($HTTP_POST_VARS['action'])
 ";
 
     $posted = $GLOBALS['HTTP_POST_VARS'];
-    if (defined('DEBUG'))
-        printArray($GLOBALS['HTTP_POST_VARS']);
+    /*if (defined('DEBUG'))
+     printArray($GLOBALS['HTTP_POST_VARS']);*/
 
     foreach ($properties as $option_name => $a) {
         $posted_value = stripslashes($posted[$a->config_item_name]);
