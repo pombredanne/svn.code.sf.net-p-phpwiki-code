@@ -395,6 +395,8 @@ msgstr ""
 msgid "Diff: %s"
 msgstr ""
 
+# This entry is important for French punctuation rules which stipulate
+# a space before each colon.
 #: ../lib/display.php:59 ../lib/plugin/PageGroup.php:62
 #: ../lib/plugin/PageGroup.php:128 ../lib/plugin/PageGroup.php:136
 #: ../lib/plugin/PageGroup.php:148 ../lib/plugin/PageGroup.php:154
