@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-
+rcs_id('$Id: text2png.php,v 1.7 2001-12-27 18:11:28 carstenklapp Exp $');
 /**
  * File loading and saving diagnostic messages, to see whether an
  * image was saved to or loaded from the cache and what the path is

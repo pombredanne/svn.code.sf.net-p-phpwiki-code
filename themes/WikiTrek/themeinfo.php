@@ -1,5 +1,7 @@
 <?php
 
+rcs_id('$Id: themeinfo.php,v 1.3 2001-12-27 18:11:55 carstenklapp Exp $');
+
 /**
  * This PhpWiki theme is experimental and will likely not appear as 
  * part of any release ("accessories not included"--download seperately.)

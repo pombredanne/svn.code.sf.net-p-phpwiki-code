@@ -1,5 +1,7 @@
 <?php
 
+rcs_id('$Id: themeinfo.php,v 1.5 2001-12-27 18:11:49 carstenklapp Exp $');
+
 // FIXME: these files are moved to a subfolder in /templates
 // e.g. /templates/vanilla so relative paths to index.php
 // should be irrelevant.
@@ -41,6 +43,8 @@ $URL_LINK_ICONS = array(
                     'interwiki' => "themes/$theme/icons/interwiki.png",
                     '*'		=> "themes/$theme/icons/zapg.png"
                     );
+
+rcs_id('$Id: themeinfo.php,v 1.5 2001-12-27 18:11:49 carstenklapp Exp $');
 
 // (c-file-style: "gnu")
 // Local Variables:
