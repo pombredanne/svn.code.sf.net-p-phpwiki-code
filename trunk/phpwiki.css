@@ -1,5 +1,5 @@
 /*
-  $Id: phpwiki.css,v 1.35 2002-02-09 23:53:41 carstenklapp Exp $
+  $Id: phpwiki.css,v 1.36 2002-02-10 05:22:12 carstenklapp Exp $
 
   Classes:
 
@@ -287,6 +287,15 @@ div.wiki-edithelp {
 /* PageList output */
 .pagelist tr.evenrow { background: #eeeeee; }
 .pagelist tr.oddrow  { background: white; }
+
+caption {
+  caption-side: top;
+  text-align: left;
+  margin-bottom: .5ex;
+  /* Allow the caption to extend to the full page width
+     Mac ie5.1 ignores this*/
+  width: 100%;
+}
 
 /* For emacs users
  *
