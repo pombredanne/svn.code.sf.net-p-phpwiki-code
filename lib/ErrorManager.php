@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.3 2001-11-21 19:46:50 dairiki Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.4 2001-12-13 05:06:06 dairiki Exp $');
 
 
 define ('EM_FATAL_ERRORS',
@@ -188,7 +188,7 @@ class ErrorManager
         $error->printError();
         $this->_flush_errors();
         if ($this->_fatal_handler)
-            $this->_fatal_hander->call($error);
+            $this->_fatal_handler->call($error);
         exit -1;
     }
         
