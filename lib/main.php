@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.62 2002-02-22 23:25:22 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.63 2002-02-25 15:57:11 carstenklapp Exp $');
 
 
 include "lib/config.php";
@@ -290,6 +290,11 @@ WikiUser::PrintLoginForm($this, compact('require_level'), $msg);
                     return WIKIAUTH_ADMIN;
                 return WIKIAUTH_ANON;
 
+            case 'ziphtml':
+                if (defined('ZIPDUMP_AUTH') && ZIPDUMP_AUTH)
+                    return WIKIAUTH_ADMIN;
+                return WIKIAUTH_ANON;
+
             case 'edit':
                 if (defined('REQUIRE_SIGNIN_BEFORE_EDIT') && REQUIRE_SIGNIN_BEFORE_EDIT)
                     return WIKIAUTH_BOGO;
@@ -512,6 +517,14 @@ WikiUser::PrintLoginForm($this, compact('require_level'), $msg);
         echo "PhpWiki " . PHPWIKI_VERSION . " source:\n$GLOBALS[RCS_IDS]\n";
     }
 
+    function action_ziphtml () {
+        include_once("lib/loadsave.php");
+        MakeWikiZipHtml($this);
+        // I don't think it hurts to add cruft at the end of the zip file.
+        echo "\n========================================================\n";
+        echo "PhpWiki " . PHPWIKI_VERSION . " source:\n$GLOBALS[RCS_IDS]\n";
+    }
+
     function action_dumpserial () {
         include_once("lib/loadsave.php");
         DumpToDir($this);
@@ -554,7 +567,7 @@ function main () {
     // Enable the output of most of the warning messages.
     // The warnings will screw up zip files though.
     global $ErrorManager;
-    if ($request->getArg('action') != 'zip') {
+    if (substr($request->getArg('action'), 0, 3) != 'zip') {
         $ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE);
         //$ErrorManager->setPostponedErrorMask(0);
     }
