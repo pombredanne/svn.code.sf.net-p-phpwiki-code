@@ -1,31 +1,43 @@
-<?php // -*-php-*-
-// +---------------------------------------------------------------------+
-// | VisualWiki.php                                                      |
-// +---------------------------------------------------------------------+
-// | Produces graphical site map of PhpWiki                              |
-// |                                                                     |
-// | Copyright (C) 2002 Johannes Groﬂe (Johannes Gro&szlig;e)            |
-// | You may copy this code freely under the conditions of the GPL       |
-// +---------------------------------------------------------------------+
+<?php rcs_id('$Id: VisualWiki.php,v 1.2 2002-08-18 13:14:10 rurban Exp $');
+/*
+ Copyright (C) 2002 Johannes Groﬂe (Johannes Gro&szlig;e)
 
+ This file is (not yet) part of PhpWiki.
+
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */ 
+
+/**
+ * Produces graphical site map of PhpWiki
+ * Example for an image map creating plugin. It produces a graphical
+ * sitemap of PhpWiki by calling the <code>dot</code> commandline tool
+ * from graphviz (http://www.graphviz.org).
+ * @author Johannes Groﬂe
+ * @version 0.8
+ */
 define('VISUALWIKI_ALLOWOPTIONS',true);
 // Name of the Truetypefont - Helvetica is probably easier to read
 //define('VISUALWIKIFONT','Helvetica');
 //define('VISUALWIKIFONT','Times');
 define('VISUALWIKIFONT','Arial');
+$dotbin = '/usr/local/bin/dot';
 
 if (!defined('VISUALWIKI_ALLOWOPTIONS')) define('VISUALWIKI_ALLOWOPTIONS',false); 
 
 require_once "lib/WikiPluginCached.php";
 
-/**
- * Example for an image map creating plugin. It produces a graphical
- * sitemap of PhpWiki by calling the <code>dot</code> commandline tool
- * from graphviz (http://www.graphviz.org).
- *
- * @author Johannes Groﬂe
- * @version 0.8
- */
 class WikiPlugin_VisualWiki extends WikiPluginCached {
     // ToDo: check if "ImageCreateFrom$imgtype"() exists.
 
@@ -529,8 +541,8 @@ class WikiPlugin_VisualWiki extends WikiPluginCached {
 	$ImageCreateFromFunc = "ImageCreateFrom$gif";
         $ok =  $tempfiles 
             && $this->createDotFile($tempfiles.'.dot',$argarray)
-            && $this->execute("dot -T$gif $tempfiles.dot -o $tempfiles.$gif")
-            && $this->execute("dot -Timap $tempfiles.dot -o $tempfiles.map")
+            && $this->execute("$dotbin -T$gif $tempfiles.dot -o $tempfiles.$gif")
+            && $this->execute("$dotbin -Timap $tempfiles.dot -o $tempfiles.map")
             && file_exists( "$tempfiles.$gif" )
             && file_exists( $tempfiles.'.map' )
             && ($img = $ImageCreateFromFunc( "$tempfiles.$gif" ))
