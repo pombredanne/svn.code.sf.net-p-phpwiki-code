@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: EditMetaData.php,v 1.2 2002-10-29 01:12:24 carstenklapp Exp $');
+rcs_id('$Id: EditMetaData.php,v 1.3 2002-11-15 00:32:01 carstenklapp Exp $');
 /**
  * Plugin EditMetaData
  *
@@ -122,7 +122,7 @@ extends WikiPlugin
                                      'method' => 'post'),
                                $hiddenfield,
                                $instructions, HTML::br(),
-                               $keyfield, ' => ', $valfield, HTML::nbsp(), $button
+                               $keyfield, ' => ', $valfield, HTML::raw('&nbsp;'), $button
                                );
             
             $html->pushContent(HTML::br(),$form);
