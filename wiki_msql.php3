@@ -1,4 +1,4 @@
-<!-- $Id: wiki_msql.php3,v 1.15 2000-08-29 02:37:42 aredridel Exp $ -->
+<!-- $Id: wiki_msql.php3,v 1.16 2000-09-16 19:20:46 wainstead Exp $ -->
 <?php
 
    /*
@@ -15,6 +15,7 @@
       TitleSearchNextMatch($dbi, &$pos)
       InitFullSearch($dbi, $search)
       FullSearchNextMatch($dbi, &$pos)
+      GetAllWikiPageNames($dbi)
    */
 
 
@@ -137,7 +138,7 @@
                   "where pagename='$pagename' " .
                   "order by lineno";
 
-         if ($res = msql_query($query, $dbi[dbc])) {
+         if ($res = msql_query($query, $dbi['dbc'])) {
             $dbhash["content"] = array();
             while ($row = msql_fetch_array($res)) {
 		$msql_content .= $row["line"];
@@ -323,7 +324,7 @@
       $search = addslashes($search);
       $query = "select pagename from $dbi[table] " .
                "where pagename clike '%$search%' order by pagename";
-      $res = msql_query($query, $dbi["dbc"]);
+      $res = msql_query($query, $dbi['dbc']);
 
       return $res;
    }
@@ -348,7 +349,7 @@
       $query = "select distinct pagename from $dbi[page_table] " .
                "where line clike '%$search%' " .
                "order by pagename";
-      $res = msql_query($query, $dbi["dbc"]);
+      $res = msql_query($query, $dbi['dbc']);
 
       return $res;
    }
@@ -406,7 +407,7 @@
       $query = "select * from hitcount " .
                "order by hits desc, pagename limit $limit";
 
-      $res = msql_query($query);
+      $res = msql_query($query, $dbi['dbc']);
       
       return $res;
    }
@@ -420,6 +421,14 @@
       }
    }
 
+   function GetAllWikiPageNames($dbi_) {
+      $res = msql_query("select pagename from wiki", $dbi['dbc']);
+      $rows = msql_num_rows($res);
+      for ($i = 0; $i < $rows; $i++) {
+	 $pages[$i] = msql_result($res, $i, 'pagename');
+      }
+      return $pages;
+   }
 
 
 ?>
