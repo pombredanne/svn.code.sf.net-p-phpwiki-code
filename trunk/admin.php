@@ -1,4 +1,4 @@
-<?php // $Id: admin.php,v 1.1 2000-11-08 15:32:34 ahollosi Exp $
+<?php // $Id: admin.php,v 1.2 2000-11-08 15:43:46 ahollosi Exp $
 
    function rcs_id($id) {}   // otherwise this gets in the way
 
@@ -9,8 +9,8 @@
 
    // set these to your preferences. For heaven's sake
    // pick a good password!
-   $wikiadmin   = "wiki";
-   $adminpasswd = "wiki";
+   $wikiadmin   = "";
+   $adminpasswd = "";
 
    // Do not tolerate sloppy systems administration
    if (empty($wikiadmin) || empty($adminpasswd)) {
