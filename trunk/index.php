@@ -73,14 +73,14 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 // } else {
 //     ;
 // }
-//ini_set('include_path', $include_path);
+if (!empty($include_path)) ini_set('include_path', $include_path);
 
 /////////////////////////////////////////////////////////////////////
 // Part Null: Don't touch this!
 
-define ('PHPWIKI_VERSION', '1.3.3');
+define ('PHPWIKI_VERSION', '1.3.4');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.87 2002-08-20 08:56:58 rurban Exp $');
+rcs_id('$Id: index.php,v 1.88 2002-08-20 22:29:59 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //

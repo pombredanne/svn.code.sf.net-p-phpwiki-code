@@ -1,4 +1,4 @@
 <?php // -*-php-*-
-include ("C:/Apache/phpwiki/index.php");
+include ("index.php");
 include "lib/imagecache.php";
 ?>
