@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.104 2004-11-19 19:22:03 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.105 2004-11-20 09:16:27 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -1155,7 +1155,7 @@ class WikiDB_Page
      */
     function getLinks($reversed = true, $include_empty=false) {
         $backend = &$this->_wikidb->_backend;
-        $result =  $backend->get_links($this->_pagename, $reversed, $include_empty=false);
+        $result =  $backend->get_links($this->_pagename, $reversed, $include_empty);
         return new WikiDB_PageIterator($this->_wikidb, $result, array('include_empty' => $include_empty));
     }
 
@@ -1163,13 +1163,13 @@ class WikiDB_Page
      * All Links from other pages to this page.
      */
     function getBackLinks($include_empty=false) {
-        return $this->getLinks(true, $include_empty=false);
+        return $this->getLinks(true, $include_empty);
     }
     /**
      * Forward Links: All Links from this page to other pages.
      */
     function getPageLinks($include_empty=false) {
-        return $this->getLinks(false, $include_empty=false);
+        return $this->getLinks(false, $include_empty);
     }
     
     /**
@@ -2076,6 +2076,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.104  2004/11/19 19:22:03  rurban
+// ModeratePage part1: change status
+//
 // Revision 1.103  2004/11/16 17:29:04  rurban
 // fix remove notification error
 // fix creation + update id_cache update
