@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.51 2004-05-12 10:49:55 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.52 2004-06-25 14:15:08 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -47,7 +47,7 @@ extends WikiDB_backend
                     'nonempty_tbl' => $prefix . 'nonempty');
         $page_tbl = $this->_table_names['page_tbl'];
         $version_tbl = $this->_table_names['version_tbl'];
-        $this->page_tbl_fields = "$page_tbl.id as id, $page_tbl.pagename as pagename, $page_tbl.hits as hits, $page_tbl.pagedata as pagedata";
+        $this->page_tbl_fields = "$page_tbl.id as id, $page_tbl.pagename as pagename, $page_tbl.hits as hits";
         $this->version_tbl_fields = "$version_tbl.version as version, $version_tbl.mtime as mtime, ".
             "$version_tbl.minor_edit as minor_edit, $version_tbl.content as content, $version_tbl.versiondata as versiondata";
 
@@ -115,7 +115,7 @@ extends WikiDB_backend
         //trigger_error("GET_PAGEDATA $pagename", E_USER_NOTICE);
 
         $result = $dbh->getRow(sprintf("SELECT %s FROM $page_tbl WHERE pagename='%s'",
-        							   $this->page_tbl_fields,
+                                       $this->page_tbl_fields.",pagedata",
                                        $dbh->quoteString($pagename)),
                                DB_FETCHMODE_ASSOC);
         if (!$result)
@@ -125,8 +125,9 @@ extends WikiDB_backend
 
     function  _extract_page_data(&$query_result) {
         extract($query_result);
-        $data = $this->_unserialize($pagedata);
-        $data['hits'] = $hits;
+        if (isset($query_result['pagedata']))
+            $data = $this->_unserialize($query_result['pagedata']);
+        $data['hits'] = $query_result['hits'];
         return $data;
     }
 
@@ -241,9 +242,8 @@ extends WikiDB_backend
         
         //trigger_error("GET_REVISION $pagename $version $want_content", E_USER_NOTICE);
         // FIXME: optimization: sometimes don't get page data?
-
         if ($want_content) {
-            $fields = $this->page_tbl_fields . "," . $this->version_tbl_fields;
+            $fields = $this->page_tbl_fields . ",$page_tbl.pagedata as pagedata," . $this->version_tbl_fields;
         }
         else {
             $fields = $this->page_tbl_fields . ","
@@ -442,11 +442,11 @@ extends WikiDB_backend
         else         $limit = '';
         if ($sortby) $orderby = 'ORDER BY ' . PageList::sortby($sortby,'db');
         else         $orderby = '';
-        if (strstr($orderby,' mtime')) {
+        if (strstr($orderby,'mtime')) {
             if ($include_deleted) {
                 $result = $dbh->query("SELECT "
-                					  . $this->page_tbl_fields
-                					  . " FROM $page_tbl, $recent_tbl, $version_tbl"
+                                      . $this->page_tbl_fields
+                                      . " FROM $page_tbl, $recent_tbl, $version_tbl"
                                       . " WHERE $page_tbl.id=$recent_tbl.id"
                                       . " AND $page_tbl.id=$version_tbl.id AND latestversion=version"
                                       . " $orderby $limit");
@@ -462,7 +462,9 @@ extends WikiDB_backend
             }
         } else {
             if ($include_deleted) {
-                $result = $dbh->query("SELECT * FROM $page_tbl $orderby $limit");
+                $result = $dbh->query("SELECT "
+                			. $this->page_tbl_fields 
+                			." FROM $page_tbl $orderby $limit");
             }
             else {
                 $result = $dbh->query("SELECT "
@@ -494,7 +496,7 @@ extends WikiDB_backend
             $table .= ", $version_tbl";
             $join_clause .= " AND $page_tbl.id=$version_tbl.id AND latestversion=version";
 
-            $fields .= ", " . $this->version_tbl_fields;
+            $fields .= ", $page_tbl.pagedata as pagedata, " . $this->version_tbl_fields;
             $callback = new WikiMethodCb($this, '_fullsearch_sql_match_clause');
         }
         
@@ -548,7 +550,7 @@ extends WikiDB_backend
         else         $orderby = " ORDER BY hits $order";
         //$limitclause = $limit ? " LIMIT $limit" : '';
         $result = $dbh->query("SELECT "
-                              . $this->page_tbl_fields
+                              . $this->page_tbl_fields.",$page_tbl.pagedata as pagedata"
                               . " FROM $nonempty_tbl, $page_tbl"
                               . " WHERE $nonempty_tbl.id=$page_tbl.id" 
                               . $where
@@ -962,6 +964,13 @@ extends WikiDB_backend_PearDB_generic_iter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.51  2004/05/12 10:49:55  rurban
+// require_once fix for those libs which are loaded before FileFinder and
+//   its automatic include_path fix, and where require_once doesn't grok
+//   dirname(__FILE__) != './lib'
+// upgrade fix with PearDB
+// navbar.tmpl: remove spaces for IE &nbsp; button alignment
+//
 // Revision 1.50  2004/05/06 17:30:39  rurban
 // CategoryGroup: oops, dos2unix eol
 // improved phpwiki_version:
