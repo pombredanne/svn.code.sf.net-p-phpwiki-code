@@ -1,4 +1,4 @@
-<!-- $Id: wiki_config.php3,v 1.4 2000-06-05 21:46:50 wainstead Exp $ -->
+<!-- $Id: wiki_config.php3,v 1.5 2000-06-12 04:15:40 wainstead Exp $ -->
 <?
    /*
       Constants and settings. Edit the values below for
@@ -40,6 +40,14 @@
    $mysql_db = 'wiki';
 */
 
+/*
+   // PostgreSQL settings. 
+
+   $pg_database = "swain1";
+   $pg_table    = "wiki";
+   $pg_dbhost   = "localhost";
+   $pg_dbport   = "5432";
+*/
 
    $ScriptName = "index.php3";
    $SignatureImg = "$ServerAddress/signature.png";
