@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: RatingsUser.php,v 1.1 2004-06-18 14:42:17 rurban Exp $');
+rcs_id('$Id: RatingsUser.php,v 1.2 2004-06-21 17:01:41 rurban Exp $');
 /* Copyright (C) 2004 Dan Frankowski
  *
  * This file is (not yet) part of PhpWiki.
@@ -347,7 +347,8 @@ class RatingsUser {
 
             // passing null as first parameter to indicate all dimensions
             $dbi = $this->_get_rating_dbi();
-            $rating_iter = $dbi->get_rating(null, $this->_userid);
+            $rating_iter = $dbi->sql_get_rating(null, $this->_userid, null);
+            //$rating_iter = $dbi->get_rating(null, $this->_userid);
             while($rating = $rating_iter->next())
             {
                 $this->_num_ratings++;
@@ -415,6 +416,9 @@ class _UserRating
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/06/18 14:42:17  rurban
+// added wikilens libs (not yet merged good enough, some work for DanFr)
+//
 
 // Local Variables:
 // mode: php

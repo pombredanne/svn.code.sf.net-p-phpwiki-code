@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageListColumns.php,v 1.2 2004-06-21 16:22:32 rurban Exp $');
+rcs_id('$Id: PageListColumns.php,v 1.3 2004-06-21 17:01:41 rurban Exp $');
 
 /*
  Copyright 2004 Mike Cassano
@@ -329,6 +329,7 @@ class _PageList_Column_top3recs extends _PageList_Column_custom
 };
 
 // register custom PageList type
+global $WikiTheme;
 $WikiTheme->addPageListColumn
   (array
    (
@@ -347,6 +348,16 @@ $WikiTheme->addPageListColumn
     ));
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/06/21 16:22:32  rurban
+// add DEFAULT_DUMP_DIR and HTML_DUMP_DIR constants, for easier cmdline dumps,
+// fixed dumping buttons locally (images/buttons/),
+// support pages arg for dumphtml,
+// optional directory arg for dumpserial + dumphtml,
+// fix a AllPages warning,
+// show dump warnings/errors on DEBUG,
+// don't warn just ignore on wikilens pagelist columns, if not loaded.
+// RateIt pagelist column is called "rating", not "ratingwidget" (Dan?)
+//
 // Revision 1.1  2004/06/18 14:42:17  rurban
 // added wikilens libs (not yet merged good enough, some work for DanFr)
 // 
