@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.13 2002-01-26 04:38:54 dairiki Exp $');
+rcs_id('$Id: Calendar.php,v 1.14 2002-01-26 04:43:39 dairiki Exp $');
 
 if (!defined('SECONDS_PER_DAY'))
     define('SECONDS_PER_DAY', 24 * 3600);
@@ -108,18 +108,19 @@ extends WikiPlugin
         }
 
         if ($dbi->isWikiPage($page_for_date)) {
-            $td->pushContent(HTML::a(array('class' => 'cal-day',
-                                           'href'  => WikiURL($page_for_date),
-                                           'title' => $page_for_date),
-                                     HTML::em($mday)));
+            $date = HTML::a(array('class' => 'cal-day',
+                                  'href'  => WikiURL($page_for_date),
+                                  'title' => $page_for_date),
+                            HTML::em($mday));
         }
         else {
-            $td->pushContent(HTML::a(array('class' => 'cal-hide',
-                                           'href'  => WikiURL($page_for_date,
-                                                              array('action' => 'edit')),
-                                           'title' => sprintf(_("Edit %s"), $page_for_date)),
-                                     $mday));
+            $date = HTML::a(array('class' => 'cal-hide',
+                                  'href'  => WikiURL($page_for_date,
+                                                     array('action' => 'edit')),
+                                  'title' => sprintf(_("Edit %s"), $page_for_date)),
+                            $mday);
         }
+        $td->pushContent(NBSP, $date, NBSP);
         return $td;
     }
 
