@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.41 2004-11-01 10:43:58 rurban Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.42 2004-11-16 16:17:51 rurban Exp $');
 
 /**
  * GZIP stuff.
@@ -569,7 +569,7 @@ function MimeifyPageRevision ($revision) {
         $params['hits'] = $page->get('hits');
     if ($page->get('owner'))
         $params['owner'] = $page->get('owner');
-    if ($page->get('perm')) {
+    if ($page->get('perm') and class_exists('PagePermission')) {
         $acl = getPagePermissions($page);
         $params['acl'] = $acl->asAclLines();
         //TODO: convert to multiple lines? acl-view => groups,...; acl-edit => groups,... 
@@ -716,6 +716,9 @@ function GenerateFootnotesFromRefs($params)
 // default: "view:_EVERY; edit:_AUTHENTICATED; create:_AUTHENTICATED,_BOGOUSER; ".
 //          "list:_EVERY; remove:_ADMIN,_OWNER; change:_ADMIN,_OWNER; dump:_EVERY; "
 function ParseMimeifiedPerm($string) {
+    if (!class_exists('PagePermission')) {
+        return '';
+    }
     $hash = array();
     foreach (split(";",trim($string)) as $accessgroup) {
         list($access,$groupstring) = split(":",trim($accessgroup));
@@ -789,7 +792,9 @@ function ParseMimeifiedPages ($data)
             break;
         case 'acl':
         case 'perm':
-            $pagedata['perm'] = ParseMimeifiedPerm($value);
+            if (class_exists('PagePermission')) {
+                $pagedata['perm'] = ParseMimeifiedPerm($value);
+            }
             break;
         case 'lastmodified':
             $versiondata['mtime'] = $value;
@@ -828,6 +833,12 @@ function ParseMimeifiedPages ($data)
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.41  2004/11/01 10:43:58  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 // Revision 1.40  2004/06/19 12:32:37  rurban
 // new TEMP_DIR for ziplib
 //
