@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.60 2004-11-06 03:06:58 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.61 2004-11-06 17:01:30 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -240,24 +240,34 @@ function IniConfig($file) {
 
     // Database
     global $DBParams;
-    $DBParams['dbtype'] = DATABASE_TYPE;
-    $DBParams['dsn'] = DATABASE_DSN;
-    if (defined('DATABASE_PREFIX'))
-        $DBParams['prefix'] = DATABASE_PREFIX;
-    elseif (isset($rs['DATABASE_PREFIX']))
-        $DBParams['prefix'] = $rs['DATABASE_PREFIX'];
-    $DBParams['db_session_table'] = @$rs['DATABASE_SESSION_TABLE'];
-    $DBParams['dba_handler'] = @$rs['DATABASE_DBA_HANDLER'];
-    $DBParams['directory'] = @$rs['DATABASE_DIRECTORY'];
-    $DBParams['timeout'] = @$rs['DATABASE_TIMEOUT'];
-    foreach (array('DATABASE_TYPE','DATABASE_DSN','DATABASE_SESSION_TABLE','DATABASE_DBA_HANDLER',
-    	           'DATABASE_DIRECTORY','DATABASE_TIMEOUT','DATABASE_PREFIX') as $item) {
-    	unset($rs[$item]);
+    foreach (array('DATABASE_TYPE' 	=> 'dbtype',
+    		   'DATABASE_DSN'  	=> 'dsn',
+    		   'DATABASE_SESSION_TABLE' => 'db_session_table',
+    		   'DATABASE_DBA_HANDLER'   => 'dba_handler',
+    	           'DATABASE_DIRECTORY' => 'directory',
+    	           'DATABASE_TIMEOUT'   => 'timeout',
+    	           'DATABASE_PREFIX'    => 'prefix') 
+             as $d => $k) 
+    {
+        if (defined($d)) {
+            $DBParams[$k] = constant($d);
+            unset($rs[$d]);
+        } elseif (array_key_exists($d, $rs)) {
+            $DBParams[$k] = $rs[$d];
+            define($d, $rs[$d]);
+            unset($rs[$d]);
+        } elseif (array_key_exists($d, $rsdef)) {
+            $DBParams[$k] = $rsdef[$d];
+            define($d, $rsdef[$d]);
+            unset($rsdef[$d]);
+        }
     }
     // USE_DB_SESSION default logic:
     if (!defined('USE_DB_SESSION')) {
-        if ($DBParams['db_session_table'] 
-            and in_array($DBParams['dbtype'], array('SQL','ADODB'/*,'dba'*/))) {
+        if ($DBParams['db_session_table']
+            and in_array($DBParams['dbtype'], array('SQL','ADODB'))) {
+            define('USE_DB_SESSION', true);
+        } elseif ($DBParams['dbtype'] == 'dba' and check_php_version(4,1,2)) {
             define('USE_DB_SESSION', true);
         } else {
             define('USE_DB_SESSION', false);
@@ -312,8 +322,10 @@ function IniConfig($file) {
             $DBAuthParams[$apkey] = constant($rskey);
         } elseif (isset($rs[$rskey])) {
             $DBAuthParams[$apkey] = $rs[$rskey];
+            define($rskey, $rs[$rskey]);
         } elseif (isset($rsdef[$rskey])) {
             $DBAuthParams[$apkey] = $rsdef[$rskey];
+            define($rskey, $rsdef[$rskey]);
         }
         unset($rs[$rskey]);
     }
@@ -691,7 +703,7 @@ function fixup_dynamic_configs() {
     if (!isset($SCRIPT_FILENAME))
         $SCRIPT_FILENAME = dirname(__FILE__.'/../') . '/index.php';
     if (isWindows())
-        $SCRIPT_FILENAME = strtr($SCRIPT_FILENAME, '/', '\\');
+        $SCRIPT_FILENAME = str_replace('\\\\','\\',strtr($SCRIPT_FILENAME, '/', '\\'));
     define('SCRIPT_FILENAME', $SCRIPT_FILENAME);
 
     if (!defined('WIKI_NAME'))
@@ -700,14 +712,18 @@ function fixup_dynamic_configs() {
     if (!defined('HOME_PAGE'))
         define('HOME_PAGE', _("HomePage"));
 
-    // FIXME: delete
     // Get remote host name, if apache hasn't done it for us
-    if (empty($HTTP_SERVER_VARS['REMOTE_HOST']) && ENABLE_REVERSE_DNS)
+    if (empty($HTTP_SERVER_VARS['REMOTE_HOST'])
+        and !empty($HTTP_SERVER_VARS['REMOTE_ADDR'])
+        and ENABLE_REVERSE_DNS)
         $HTTP_SERVER_VARS['REMOTE_HOST'] = gethostbyaddr($HTTP_SERVER_VARS['REMOTE_ADDR']);
 
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.60  2004/11/06 03:06:58  rurban
+// make use of dumped static config state in config/config.php (if writable)
+//
 // Revision 1.59  2004/11/05 20:53:35  rurban
 // login cleanup: better debug msg on failing login,
 // checked password less immediate login (bogo or anon),
