@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.12 2004-04-27 16:16:27 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.13 2004-04-29 21:54:05 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -170,25 +170,23 @@ function IniConfig($file) {
     }
 
     // Expiry stuff
-    global $ExpiryParams;
+    global $ExpireParams;
 
-    $ExpiryParams['major'] = array(
+    $ExpireParams['major'] = array(
                                    'max_age' => @$rs['MAJOR_MAX_AGE'],
                                    'min_age' => @$rs['MAJOR_MIN_AGE'],
                                    'min_keep' => @$rs['MAJOR_MIN_KEEP'],
                                    'keep' => @$rs['MAJOR_KEEP'],
                                    'max_keep' => @$rs['MAJOR_MAX_KEEP']
                                    );
-
-    $ExpiryParams['minor'] = array(
+    $ExpireParams['minor'] = array(
                                    'max_age' => @$rs['MINOR_MAX_AGE'],
                                    'min_age' => @$rs['MINOR_MIN_AGE'],
                                    'min_keep' => @$rs['MINOR_MIN_KEEP'],
                                    'keep' => @$rs['MINOR_KEEP'],
                                    'max_keep' => @$rs['MINOR_MAX_KEEP']
                                    );
-
-    $ExpiryParams['author'] = array(
+    $ExpireParams['author'] = array(
                                     'max_age' => @$rs['AUTHOR_MAX_AGE'],
                                     'min_age' => @$rs['AUTHOR_MIN_AGE'],
                                     'min_keep' => @$rs['AUTHOR_MIN_KEEP'],
@@ -494,6 +492,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2004/04/27 16:16:27  rurban
+// more subtle config problems with defaults
+//
 // Revision 1.11  2004/04/26 20:44:34  rurban
 // locking table specific for better databases
 //
