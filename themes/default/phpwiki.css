@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.41 2004-06-11 09:01:52 rurban Exp $
+ * $Id: phpwiki.css,v 1.42 2004-06-13 09:40:08 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -822,6 +822,13 @@ table.sqlresult td {
   border: 1px solid gray;
 }
 
+/**
+ * TeX2png plugin
+ */
+img.tex { 
+  border: 0ex;
+  vertical-align: middle; 
+}
 
 /* For emacs users
  *
