@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.66 2004-09-25 16:24:52 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.67 2004-09-25 18:56:54 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -331,9 +331,9 @@ class Request {
             $compress = false;
         elseif (isCGI()) // necessary?
             $compress = false;
-        elseif ($GLOBALS['request']->getArg('start_debug'))
+            
+        if ($GLOBALS['request']->getArg('start_debug'))
             $compress = false;
-
         // Should we compress even when apache_note is not available?
         // sf.net bug #933183 and http://bugs.php.net/17557
         // This effectively eliminates CGI, but all other servers also. hmm.
@@ -1016,6 +1016,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.66  2004/09/25 16:24:52  rurban
+// dont compress on debugging
+//
 // Revision 1.65  2004/09/17 14:13:49  rurban
 // We check for the client Accept-Encoding: "gzip" presence also
 // This should eliminate a lot or reported problems.
