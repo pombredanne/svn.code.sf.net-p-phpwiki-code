@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSetAcl.php,v 1.21 2004-11-23 15:17:20 rurban Exp $');
+rcs_id('$Id: WikiAdminSetAcl.php,v 1.22 2005-01-25 08:05:17 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.21 $");
+                            "\$Revision: 1.22 $");
     }
 
     function getDefaultArguments() {
@@ -119,6 +119,8 @@ extends WikiPlugin_WikiAdminSelect
         if ($request->getArg('action') != 'browse')
             if ($request->getArg('action') != _("PhpWikiAdministration/SetAcl"))
                 return $this->disabled("(action != 'browse')");
+        if (!ENABLE_PAGEPERM)
+            return $this->disabled("ENABLE_PAGEPERM = false");
         
         $args = $this->getArgs($argstr, $request);
         $this->_args = $args;
@@ -276,6 +278,14 @@ class _PageList_Column_perm extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.21  2004/11/23 15:17:20  rurban
+// better support for case_exact search (not caseexact for consistency),
+// plugin args simplification:
+//   handle and explode exclude and pages argument in WikiPlugin::getArgs
+//     and exclude in advance (at the sql level if possible)
+//   handle sortby and limit from request override in WikiPlugin::getArgs
+// ListSubpages: renamed pages to maxpages
+//
 // Revision 1.20  2004/11/01 10:43:59  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session
