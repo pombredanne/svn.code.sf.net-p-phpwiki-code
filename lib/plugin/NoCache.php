@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: NoCache.php,v 1.2 2004-02-25 16:21:25 rurban Exp $');
+rcs_id('$Id: NoCache.php,v 1.3 2004-06-18 14:42:17 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -56,11 +56,14 @@ extends WikiPlugin
         $args = $this->getArgs($argstr, $request);
         // works regardless of WIKIDB_NOCACHE_MARKUP
         // if WIKIDB_NOCACHE_MARKUP is false it doesn't hurt
-        return $request->setArg('nocache',$args['nocache']);
+        return $request->setArg('nocache', $args['nocache']);
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/02/25 16:21:25  rurban
+// fixed parse error on line 71
+//
 // Revision 1.1  2004/02/24 17:34:26  rurban
 // Don't cache the following page. Mostly used for plugins, which
 // display dynamic content.
