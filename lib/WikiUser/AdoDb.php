@@ -1,6 +1,7 @@
 <?php //-*-php-*-
-rcs_id('$Id: AdoDb.php,v 1.3 2004-12-20 16:05:01 rurban Exp $');
-/* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
+rcs_id('$Id: AdoDb.php,v 1.4 2004-12-26 17:11:15 rurban Exp $');
+/* Copyright (C) 2004 ReiniUrban
+ * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
 
 class _AdoDbPassUser
@@ -246,6 +247,9 @@ extends _DbPassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/12/20 16:05:01  rurban
+// gettext msg unification
+//
 // Revision 1.2  2004/12/19 00:58:02  rurban
 // Enforce PASSWORD_LENGTH_MINIMUM in almost all PassUser checks,
 // Provide an errormessage if so. Just PersonalPage and BogoLogin not.

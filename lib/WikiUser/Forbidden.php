@@ -1,6 +1,7 @@
 <?php //-*-php-*-
-rcs_id('$Id: Forbidden.php,v 1.1 2004-11-05 18:11:38 rurban Exp $');
-/* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
+rcs_id('$Id: Forbidden.php,v 1.2 2004-12-26 17:11:16 rurban Exp $');
+/* Copyright (C) 2004 ReiniUrban
+ * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
 
 /** 
@@ -16,6 +17,9 @@ extends _ForbiddenUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/11/05 18:11:38  rurban
+// required dummy file
+//
 
 // Local Variables:
 // mode: php

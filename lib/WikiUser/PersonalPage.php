@@ -1,6 +1,7 @@
 <?php //-*-php-*-
-rcs_id('$Id: PersonalPage.php,v 1.3 2004-11-05 22:09:39 rurban Exp $');
-/* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
+rcs_id('$Id: PersonalPage.php,v 1.4 2004-12-26 17:11:17 rurban Exp $');
+/* Copyright (C) 2004 ReiniUrban
+ * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
 
 /**
@@ -53,6 +54,9 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/11/05 22:09:39  rurban
+// empty passwd PersonalPage case
+//
 // Revision 1.2  2004/11/05 20:53:36  rurban
 // login cleanup: better debug msg on failing login,
 // checked password less immediate login (bogo or anon),
