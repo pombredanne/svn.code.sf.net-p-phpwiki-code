@@ -97,7 +97,7 @@ $locale["Diff"] =
 $locale["Diff: %s"] =
    "Vergleich: %s";
 $locale["Differences between %s and %s of %s."] =
-   "Der Unterschiedsergebnis zwischen %s und %s von %s.";
+   "Der Unterschiedsergebnis von %3\$s, zwischen %1\$s und %2\$s.";
 $locale["Done execution"] =
    "Ausgeführt.";
 $locale["Dumping Pages"] =

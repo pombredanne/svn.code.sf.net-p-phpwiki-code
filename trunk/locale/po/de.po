@@ -517,7 +517,7 @@ msgstr "vorige Revision"
 #: ../lib/diff.php:251
 #, c-format
 msgid "Differences between %s and %s of %s."
-msgstr "Der Unterschiedsergebnis zwischen %s und %s von %s."
+msgstr "Der Unterschiedsergebnis von %3\$s, zwischen %1\$s und %2\$s."
 
 #: ../lib/diff.php:255
 msgid "Previous Major Revision"
