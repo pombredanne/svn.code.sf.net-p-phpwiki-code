@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.96 2003-02-26 02:55:53 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.97 2003-02-26 03:40:22 dairiki Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -270,6 +270,7 @@ class WikiRequest extends Request {
                     'dumphtml'   => _("dump html pages from this wiki"),
                     'dumpserial' => _("dump serial pages from this wiki"),
                     'edit'       => _("edit pages in this wiki"),
+                    'create'	 => _("create pages in this wiki"),
                     'loadfile'   => _("load files into this wiki"),
                     'lock'       => _("lock pages in this wiki"),
                     'remove'     => _("remove pages from this wiki"),
@@ -296,6 +297,7 @@ class WikiRequest extends Request {
                     'dumphtml'   => _("Dumping html pages"),
                     'dumpserial' => _("Dumping serial pages"),
                     'edit'       => _("Editing pages"),
+                    'create'     => _("Creating pages"),
                     'loadfile'   => _("Loading files"),
                     'lock'       => _("Locking pages"),
                     'remove'     => _("Removing pages"),
@@ -360,6 +362,13 @@ class WikiRequest extends Request {
                     return WIKIAUTH_BOGO;
                 return WIKIAUTH_ANON;
                 // return WIKIAUTH_BOGO;
+
+            case 'create':
+                $page = $this->getPage();
+                $current = $page->getCurrentRevision();
+                if ($current->hasDefaultContents())
+                    return $this->requiredAuthorityForAction('edit');
+                return $this->requiredAuthorityForAction('browse');
 
             case 'upload':
             case 'dumpserial':
@@ -618,6 +627,10 @@ class WikiRequest extends Request {
         $e->editPage();
     }
 
+    function action_create () {
+        $this->action_edit();
+    }
+    
     function action_viewsource () {
         $this->buffer_output();
         include "lib/editpage.php";
