@@ -323,7 +323,7 @@ $locale["Uploading %s"] =
 $locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
    "Benütze die <b>Zurück</b> Funktion deines Browsers um zur Editierseitezu gelangen.";
 $locale["UserPreferences"] =
-   "BenutzerEinstellungen";
+   "Einstellungen";
 $locale["Using directory '%s'"] =
    "Verzeichnis »%s« wird zugeleitet";
 $locale["Version %d"] =
