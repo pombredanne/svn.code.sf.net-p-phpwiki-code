@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.183 2004-06-01 10:22:56 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.184 2004-06-04 20:32:53 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -766,17 +766,36 @@ function SplitPagename ($page) {
     if (preg_match("/\s/", $page))
         return $page;           // Already split --- don't split any more.
     
-    // FIXME: this algorithm is Anglo-centric.
+    // This algorithm is specialized for several languages.
+    // (Thanks to Pierrick MEIGNEN)
+    // Improvements for other languages welcome.
     static $RE;
     if (!isset($RE)) {
         // This mess splits between a lower-case letter followed by
         // either an upper-case or a numeral; except that it wont
         // split the prefixes 'Mc', 'De', or 'Di' off of their tails.
-        $RE[] = '/([[:lower:]])((?<!Mc|De|Di)[[:upper:]]|\d)/';
+        switch ($GLOBALS['LANG']) {
+        case 'en':
+        case 'it':
+        case 'es': 
+        case 'de':
+            $RE[] = '/([[:lower:]])((?<!Mc|De|Di)[[:upper:]]|\d)/';
+            break;
+        case 'fr': 
+            $RE[] = '/([[:lower:]])((?<!Mc|Di)[[:upper:]]|\d)/';
+            break;
+        }
+	$sep = preg_quote(SUBPAGE_SEPARATOR, '/');
         // This the single-letter words 'I' and 'A' from any following
         // capitalized words.
-	$sep = preg_quote(SUBPAGE_SEPARATOR, '/');
-        $RE[] = "/(?<= |${sep}|^)([AI])([[:upper:]][[:lower:]])/";
+        switch ($GLOBALS['LANG']) {
+        case 'en': 
+            $RE[] = "/(?<= |${sep}|^)([AI])([[:upper:]][[:lower:]])/";
+            break;
+        case 'fr': 
+            $RE[] = "/(?<= |${sep}|^)([À])([[:upper:]][[:lower:]])/";
+            break;
+        }
         // Split numerals from following letters.
         $RE[] = '/(\d)([[:alpha:]])/';
         // Split at subpage seperators. TBD in Theme.php
@@ -1519,6 +1538,9 @@ function url_get_contents( $uri ) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.183  2004/06/01 10:22:56  rurban
+// added url_get_contents() used in XmlParser and elsewhere
+//
 // Revision 1.182  2004/05/25 12:40:48  rurban
 // trim the pagename
 //

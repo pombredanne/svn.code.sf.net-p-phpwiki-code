@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.87 2004-06-04 12:40:21 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.88 2004-06-04 20:32:53 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -58,7 +58,7 @@ rcs_id('$Id: WikiUserNew.php,v 1.87 2004-06-04 12:40:21 rurban Exp $');
  *
  * Random architectural notes, sorted by date:
  * 2004-01-25 rurban
- * Test it by defining ENABLE_USER_NEW in index.php
+ * Test it by defining ENABLE_USER_NEW in config/config.ini
  * 1) Now a ForbiddenUser is returned instead of false.
  * 2) Previously ALLOW_ANON_USER = false meant that anon users cannot edit, 
  *    but may browse. Now with ALLOW_ANON_USER = false he may not browse, 
@@ -114,7 +114,7 @@ define('TIMEOFFSET_MAX_HOURS',  26);
 if (!defined('TIMEOFFSET_DEFAULT_HOURS')) define('TIMEOFFSET_DEFAULT_HOURS', 0);
 
 /**
- * There are be the following constants in index.php to 
+ * There are be the following constants in config/config.ini to 
  * establish login parameters:
  *
  * ALLOW_ANON_USER         default true
@@ -1039,7 +1039,7 @@ extends _AnonUser
         {
             if (!stristr($stmt, $prefix)) {
                 //Do it automatically for the lazy admin? Esp. on sf.net it's nice to have
-                trigger_error("TODO: Need to prefix the DBAuthParam tablename in index.php:\n  $stmt",
+                trigger_error("TODO: Need to prefix the DBAuthParam tablename in config/config.ini:\n  $stmt",
                               E_USER_WARNING);
                 $stmt = str_replace(array(" user "," pref "," member "),
                                     array(" ".$prefix."user ",
@@ -1181,7 +1181,7 @@ extends _AnonUser
                 }
                 else {
                     trigger_error(_("The crypt function is not available in this version of PHP.") . " "
-                                  . _("Please set ENCRYPTED_PASSWD to false in index.php and probably change ADMIN_PASSWD."),
+                                  . _("Please set ENCRYPTED_PASSWD to false in config/config.ini and probably change ADMIN_PASSWD."),
                                   E_USER_WARNING);
                     return false;
                 }
@@ -1194,7 +1194,7 @@ extends _AnonUser
                     // Check whether we forgot to enable ENCRYPTED_PASSWD
                     if (function_exists('crypt')) {
                         if (crypt($submitted_password, $stored_password) == $stored_password) {
-                            trigger_error(_("Please set ENCRYPTED_PASSWD to true in index.php."),
+                            trigger_error(_("Please set ENCRYPTED_PASSWD to true in config/config.ini."),
                                           E_USER_WARNING);
                             return true;
                         }
@@ -1469,7 +1469,7 @@ extends _PassUser
  * Authenticate against a database, to be able to use shared users.
  *   internal: no different $DbAuthParams['dsn'] defined, or
  *   external: different $DbAuthParams['dsn']
- * The magic is done in the symbolic SQL statements in index.php, similar to
+ * The magic is done in the symbolic SQL statements in config/config.ini, similar to
  * libnss-mysql.
  *
  * We support only the SQL and ADODB backends.
@@ -1982,7 +1982,7 @@ extends _DbPassUser
 class _LDAPPassUser
 extends _PassUser
 /**
- * Define the vars LDAP_AUTH_HOST and LDAP_BASE_DN in index.php
+ * Define the vars LDAP_AUTH_HOST and LDAP_BASE_DN in config/config.ini
  *
  * Preferences are handled in _PassUser
  */
@@ -2001,6 +2001,13 @@ extends _PassUser
         }
 
         if ($ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
+            if (!empty($LDAP_SET_OPTION)) {
+                foreach ($LDAP_SET_OPTION as $key => $value) {
+                    if (is_string($key) and defined($key))
+                        $key = constant($key);
+                    ldap_set_option($ldap,$key,$value);
+                }
+            }
             if (defined('LDAP_AUTH_USER'))
                 if (defined('LDAP_AUTH_PASSWORD'))
                     // Windows Active Directory Server is strict
@@ -2009,13 +2016,7 @@ extends _PassUser
                     $r = @ldap_bind($ldap,LDAP_AUTH_USER); 
             else
                 $r = @ldap_bind($ldap); // this is an anonymous bind
-            if (!empty($LDAP_SET_OPTION)) {
-                foreach ($LDAP_SET_OPTION as $key => $value) {
-                    if (is_string($key) and defined($key))
-                        $key = constant($key);
-                    ldap_set_option($ldap,$key,$value);
-                }
-            }
+
             // Need to set the right root search information. see ../index.php
             $st_search = defined('LDAP_SEARCH_FIELD') 
                 ? LDAP_SEARCH_FIELD."=$userid"
@@ -2052,6 +2053,13 @@ extends _PassUser
             return WIKIAUTH_FORBIDDEN;
         }
         if ($ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
+            if (!empty($LDAP_SET_OPTION)) {
+                foreach ($LDAP_SET_OPTION as $key => $value) {
+                    if (is_string($key) and defined($key))
+                        $key = constant($key);
+                    ldap_set_option($ldap,$key,$value);
+                }
+            }
             if (defined('LDAP_AUTH_USER'))
                 if (defined('LDAP_AUTH_PASSWORD'))
                     // Windows Active Directory Server is strict
@@ -2060,11 +2068,7 @@ extends _PassUser
                     $r = @ldap_bind($ldap,LDAP_AUTH_USER); 
             else
                 $r = @ldap_bind($ldap); // this is an anonymous bind
-            if (!empty($LDAP_SET_OPTION)) {
-                foreach ($LDAP_SET_OPTION as $key => $value) {
-                    ldap_set_option($ldap,$key,$value);
-                }
-            }
+
             // Need to set the right root search information. see ../index.php
             $st_search = defined('LDAP_SEARCH_FIELD') 
                 ? LDAP_SEARCH_FIELD."=$userid"
@@ -2092,7 +2096,7 @@ extends _PassUser
 class _IMAPPassUser
 extends _PassUser
 /**
- * Define the var IMAP_AUTH_HOST in index.php (with port probably)
+ * Define the var IMAP_AUTH_HOST in config/config.ini (with port probably)
  *
  * Preferences are handled in _PassUser
  */
@@ -2134,7 +2138,7 @@ extends _PassUser
 class _POP3PassUser
 extends _IMAPPassUser {
 /**
- * Define the var POP3_AUTH_HOST in index.php
+ * Define the var POP3_AUTH_HOST in config/config.ini
  * Preferences are handled in _PassUser
  */
     function checkPass($submitted_password) {
@@ -2986,6 +2990,12 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.87  2004/06/04 12:40:21  rurban
+// Restrict valid usernames to prevent from attacks against external auth or compromise
+// possible holes.
+// Fix various WikiUser old issues with default IMAP,LDAP,POP3 configs. Removed these.
+// Fxied more warnings
+//
 // Revision 1.86  2004/06/03 18:06:29  rurban
 // fix file locking issues (only needed on write)
 // fixed immediate LANG and THEME in-session updates if not stored in prefs

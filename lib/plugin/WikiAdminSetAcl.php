@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSetAcl.php,v 1.12 2004-06-03 22:24:48 rurban Exp $');
+rcs_id('$Id: WikiAdminSetAcl.php,v 1.13 2004-06-04 20:32:54 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -46,7 +46,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.12 $");
+                            "\$Revision: 1.13 $");
     }
 
     function getDefaultArguments() {
@@ -137,8 +137,7 @@ extends WikiPlugin_WikiAdminSelect
         $header = HTML::p();
         if ($p && $request->isPost() &&
             !empty($post_args['acl']) && empty($post_args['cancel'])) {
-
-            // DONE: check individual PagePermissions
+            // without individual PagePermissions:
             if (!ENABLE_PAGEPERM and !$request->_user->isAdmin()) {
                 $request->_notAuthorized(WIKIAUTH_ADMIN);
                 $this->disabled("! user->isAdmin");
@@ -197,6 +196,9 @@ extends WikiPlugin_WikiAdminSelect
                                         false,
                                         array('admin_setacl')),
                           HiddenInputs(array('admin_setacl[action]' => $next_action)),
+                          ENABLE_PAGEPERM
+                          ? ''
+                          : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)),
                           $buttons);
     }
 
@@ -287,6 +289,9 @@ class _PageList_Column_perm extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2004/06/03 22:24:48  rurban
+// reenable admin check on !ENABLE_PAGEPERM, honor s=Wildcard arg, fix warning after Remove
+//
 // Revision 1.11  2004/06/01 15:28:02  rurban
 // AdminUser only ADMIN_USER not member of Administrators
 // some RateIt improvements by dfrankow

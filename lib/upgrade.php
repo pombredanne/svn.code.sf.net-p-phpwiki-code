@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.12 2004-05-18 13:59:15 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.13 2004-06-04 20:32:53 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -69,20 +69,20 @@ function doPgsrcUpdate(&$request,$pagename,$path,$filename) {
             if (!$new_mtime)
                 $new_mtime = $stat[9];
             if ($new_mtime > $page_mtime) {
-                echo "$path/$pagename: newer than the existing page.",
-                    " replace ($new_mtime &gt; $page_mtime)<br />\n";
+                echo "$path/$pagename: ",_("newer than the existing page."),
+                    _(" replace "),"($new_mtime &gt; $page_mtime)","<br />\n";
                 LoadAny($request,$path."/".$filename);
                 echo "<br />\n";
             } else {
-                echo "$path/$pagename: older than the existing page.",
-                    " skipped.<br />\n";
+                echo "$path/$pagename: ",_("older than the existing page."),
+                    _(" skipped"),".<br />\n";
             }
         } else {
-            echo "$path/$pagename: unknown format.",
-                " skipped.<br />\n";
+            echo "$path/$pagename: ",("unknown format."),
+                    _(" skipped"),".<br />\n";
         }
     } else {
-        echo "$pagename does not exist<br />\n";
+        echo sprintf(_("%s does not exist"),$pagename),"<br />\n";
         LoadAny($request,$path."/".$filename);
         echo "<br />\n";
     }
@@ -136,8 +136,8 @@ function CheckPgsrcUpdate(&$request) {
             if ($pagename == _("HomePage")) $isHomePage = true;
         if ($pagename == "HomePage") $isHomePage = true;
         if ($isHomePage) {
-            echo "$path/$pagename: always skip the HomePage.",
-                " skipped<br />\n";
+            echo "$path/$pagename: ",_("always skip the HomePage."),
+                _(" skipped"),".<br />\n";
             $isHomePage = false;
             continue;
         }
@@ -293,11 +293,11 @@ function CheckDatabaseUpdate($request) {
     $prefix = isset($DBParams['prefix']) ? $DBParams['prefix'] : '';
     extract($dbh->_backend->_table_names);
     foreach (explode(':','session:user:pref:member') as $table) {
-        echo _("check for table $table")," ...";    	
+        echo sprintf(_("check for table %s"),$table)," ...";
     	if (!in_array($prefix.$table,$tables)) {
             installTable(&$dbh, $table, $backend_type);
     	} else {
-    	    echo "OK <br />\n";
+    	    echo _("OK")," <br />\n";
         }
     }
     $backend = &$dbh->_backend->_dbh;
@@ -389,6 +389,9 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.12  2004/05/18 13:59:15  rurban
+ rename simpleQuery to genericQuery
+
  Revision 1.11  2004/05/15 13:06:17  rurban
  skip the HomePage, at first upgrade the ActionPages, then the database, then the rest
 

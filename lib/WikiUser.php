@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.57 2004-06-04 12:40:21 rurban Exp $');
+rcs_id('$Id: WikiUser.php,v 1.58 2004-06-04 20:32:53 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -243,7 +243,7 @@ class WikiUser {
                     // maybe we forgot to enable ENCRYPTED_PASSWD?
                     if ( function_exists('crypt')
                          && crypt($passwd, ADMIN_PASSWD) == ADMIN_PASSWD ) {
-                        trigger_error(_("You forgot to set ENCRYPTED_PASSWD to true. Please update your /index.php"),
+                        trigger_error(_("You forgot to set ENCRYPTED_PASSWD to true. Please update your config/config.ini"),
                                       E_USER_WARNING);
                         return WIKIAUTH_ADMIN;
                     }
@@ -361,7 +361,7 @@ class WikiUser {
             if ($this->isSignedIn()) {
                 if ($this->isAdmin())
                     $prefs->set('passwd', '');
-                // already stored in index.php, and it might be
+                // already stored in config/config.ini, and it might be
                 // plaintext! well oh well
                 if ($homepage = $this->homePage()) {
                     // check for page revision 0
@@ -739,6 +739,12 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.57  2004/06/04 12:40:21  rurban
+// Restrict valid usernames to prevent from attacks against external auth or compromise
+// possible holes.
+// Fix various WikiUser old issues with default IMAP,LDAP,POP3 configs. Removed these.
+// Fxied more warnings
+//
 // Revision 1.56  2004/06/03 12:36:03  rurban
 // fix eval warning on signin
 //

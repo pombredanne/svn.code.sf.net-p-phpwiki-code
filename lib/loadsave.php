@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.100 2004-05-02 21:26:38 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.101 2004-06-04 20:32:53 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -874,7 +874,8 @@ function SetupWiki (&$request)
             */
         }
         if (!$request->_dbi->isWikiPage($page)) {
-            trigger_error("Mandatory file %s couldn't be loaded!",E_USER_WARNING);
+            trigger_error(sprintf("Mandatory file %s couldn't be loaded!",$page),
+                          E_USER_WARNING);
         }
     }
 
@@ -906,6 +907,14 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.100  2004/05/02 21:26:38  rurban
+ limit user session data (HomePageHandle and auth_dbi have to invalidated anyway)
+   because they will not survive db sessions, if too large.
+ extended action=upgrade
+ some WikiTranslation button work
+ revert WIKIAUTH_UNOBTAINABLE (need it for main.php)
+ some temp. session debug statements
+
  Revision 1.99  2004/05/02 15:10:07  rurban
  new finally reliable way to detect if /index.php is called directly
    and if to include lib/main.php

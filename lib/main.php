@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.157 2004-06-04 12:40:21 rurban Exp $');
+rcs_id('$Id: main.php,v 1.158 2004-06-04 20:32:53 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -892,7 +892,7 @@ function validateSessionPath() {
             (sprintf(_("%s is not writable."),
                      _("The session.save_path directory"))
              . "\n"
-             . sprintf(_("Please ensure that %s is writable, or redefine %s in index.php."),
+             . sprintf(_("Please ensure that %s is writable, or redefine %s in config/config.ini."),
                        sprintf(_("the directory '%s'"),
                                ini_get('session.save_path')),
                        'session.save_path')
@@ -990,6 +990,12 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.157  2004/06/04 12:40:21  rurban
+// Restrict valid usernames to prevent from attacks against external auth or compromise
+// possible holes.
+// Fix various WikiUser old issues with default IMAP,LDAP,POP3 configs. Removed these.
+// Fxied more warnings
+//
 // Revision 1.156  2004/06/03 17:58:16  rurban
 // support immediate LANG and THEME switch inside a session
 //
