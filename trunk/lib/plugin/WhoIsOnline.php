@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WhoIsOnline.php,v 1.8 2004-06-14 11:31:39 rurban Exp $');
+rcs_id('$Id: WhoIsOnline.php,v 1.9 2004-12-18 17:04:24 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
@@ -44,7 +44,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
@@ -115,8 +115,8 @@ extends WikiPlugin
                 $num_online++;
                 $user = @unserialize($data);
                 if (!empty($user)) {
-                    if ($mode == 'summary' and in_array($user->UserName(),$uniquenames)) continue;
-                    $uniquenames[] = $user->UserName();
+                    if ($mode == 'summary' and in_array($user->_userid,$uniquenames)) continue;
+                    $uniquenames[] = $user->_userid;
                     $page = _("<unknown>");  // where is he?
 	            $action = 'browse';
 	            $objvars = array_keys(get_object_vars($user));
@@ -124,10 +124,10 @@ extends WikiPlugin
                         $action = $user->action;
                     if (in_array('page',$objvars))
                         $page = $user->page;
-                    if ($user->_level and $user->UserName()) { // registered or guest or what?
+                    if ($user->_level and $user->_userid) { // registered or guest or what?
                         //FIXME: htmlentitities name may not be called here. but where then?
                         $num_registered++;
-                        $registered[] = array('name'  => $user->UserName(),
+                        $registered[] = array('name'  => $user->_userid,
                                               'date'  => $date,
                                               'action'=> $action,
                                               'page'  => $page,
@@ -194,6 +194,14 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/06/14 11:31:39  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.7  2004/05/27 17:49:06  rurban
 // renamed DB_Session to DbSession (in CVS also)
 // added WikiDB->getParam and WikiDB->getAuthParam method to get rid of globals
