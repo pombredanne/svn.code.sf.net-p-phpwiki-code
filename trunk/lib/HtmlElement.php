@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.40 2004-06-25 14:29:17 rurban Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.41 2004-08-05 17:31:50 rurban Exp $');
 /**
  * Code for writing the HTML subset of XML.
  * @author: Jeff Dairiki
@@ -474,7 +474,7 @@ function HiddenInputs ($query_args, $pfx = false, $exclude = array()) {
  * @return HtmlElement A <script> element.
  */
 function JavaScript ($js, $script_args = false) {
-    $default_script_args = array('version' => 'JavaScript',
+    $default_script_args = array(//'version' => 'JavaScript', // not xhtml conformant
                                  'type' => 'text/javascript');
     $script_args = $script_args ? array_merge($default_script_args,$script_args)
                                 : $default_script_args;
@@ -521,6 +521,13 @@ function IfJavaScript($if_content = false, $else_content = false) {
     
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.40  2004/06/25 14:29:17  rurban
+ WikiGroup refactoring:
+   global group attached to user, code for not_current user.
+   improved helpers for special groups (avoid double invocations)
+ new experimental config option ENABLE_XHTML_XML (fails with IE, and document.write())
+ fixed a XHTML validation error on userprefs.tmpl
+
  Revision 1.39  2004/05/17 13:36:49  rurban
  Apply RFE #952323 "ExternalSearchPlugin improvement", but
    with <button><img></button>
