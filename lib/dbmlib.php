@@ -1,6 +1,6 @@
 <?php  
 
-   rcs_id('$Id: dbmlib.php,v 1.8 2001-02-12 01:43:10 dairiki Exp $');
+   rcs_id('$Id: dbmlib.php,v 1.9 2001-02-17 05:36:21 dairiki Exp $');
 
    /*
       Database functions:
@@ -36,7 +36,7 @@ $WikiDB = array('wiki'		=> _dbname('pagesdb'),
 		'hottopics'	=> _dbname('hottopicsdb'),
 		'hitcount'	=> _dbname('hitcountdb'));
 
-if (preg_match('@%/tmp\b@', $DBParams['directory']))
+if (preg_match('@^/tmp\b@', $DBParams['directory']))
    $DBWarning = "DBM files are in the /tmp directory.";
 
 define('MAX_DBM_ATTEMPTS', $DBParams['timeout']);
