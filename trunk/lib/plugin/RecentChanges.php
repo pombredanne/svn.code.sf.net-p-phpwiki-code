@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.33 2002-01-25 14:48:27 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.34 2002-01-26 01:57:47 carstenklapp Exp $');
 /**
  */
 
@@ -104,8 +104,11 @@ extends _RecentChanges_Formatter
 
     function pageLink ($rev) {
         $page = $rev->getPage();
-        return HTML::a(array('href' => $this->pageURL($rev), 'class' => 'wiki'),
-                       $page->getName());
+        global $Theme;
+        if ($this->include_versions_in_URLs())
+            return $Theme->LinkExistingWikiWord($page->getName(), false, $rev->getVersion());
+        else
+            return $Theme->LinkExistingWikiWord($page->getName());
     }
     
     function authorLink ($rev) {
