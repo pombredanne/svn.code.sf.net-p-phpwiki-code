@@ -21,9 +21,9 @@
 // for outputting RecentChanges in RSS 0.91 format
 // ----------------------------------------------------------------------
 
-rcs_id('$Id: RSSWriter091.php,v 1.3 2002-01-19 21:36:31 lakka Exp $');
+rcs_id('$Id: RSSWriter091.php,v 1.4 2002-01-21 01:48:50 dairiki Exp $');
 
-include_once "lib/RSSWriter.php";
+include_once "lib/RssWriter.php";
 class RSSWriter091 extends RSSWriter
 {
 	function RSSWriter091()
@@ -45,9 +45,9 @@ class RSSWriter091 extends RSSWriter
 		if ($items)
 		{
 		foreach ($items as $i)
-            $channel->add($i);
+            $channel->pushContent($i);
 		}
-        $this->add($channel);
+        $this->pushContent($channel);
 		$this->__spew();
         $this->_finished = true;
     }
@@ -68,7 +68,7 @@ class RSSWriter091 extends RSSWriter
         printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", RSS_ENCODING);
 		print("<!DOCTYPE rss PUBLIC \"-//Netscape Communications//DTD RSS 0.91//EN\"\n");
 		print("\"http://my.netscape.com/publish/formats/rss-0.91.dtd\">\n\n");
-        echo $this->asString();
+        $this->printXML();
     }
 	
 	
@@ -137,4 +137,12 @@ extends _RecentChanges_RSSFormatter
 
 }
 
+// (c-file-style: "gnu")
+// Local Variables:
+// mode: php
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
+// End:   
 ?>

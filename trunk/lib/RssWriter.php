@@ -1,118 +1,8 @@
-<?php rcs_id('$Id: RssWriter.php,v 1.4 2002-01-10 23:24:52 carstenklapp Exp $');
+<?php rcs_id('$Id: RssWriter.php,v 1.5 2002-01-21 01:48:50 dairiki Exp $');
 /*
  * Code for creating RSS 1.0.
  */
 
-// FIXME: this should probably be improved/cleaned then moved into its own file.
-//
-/**
- * An XML element.
- */
-class XmlElement
-{
-    function XmlElement ($name, $attr = false, $content = false) {
-	$this->_name = $name;
-	$this->_attr = array();
-	if (is_array($attr)) {
-	    $this->set($attr);
-	}
-	$this->_content = array();
-	if ($content) {
-	    $this->add($content);
-	}
-    }
-
-    function set ($attr, $value = false) {
-	if (is_array($attr)) {
-            assert($value === false);
-            foreach ($attr as $a => $v)
-		$this->set($a, $v);
-	}
-	else {
-	    assert(is_string($attr));
-	    assert(is_string($value));
-	    $this->_attr[$attr] = $value;
-	}
-    }
-
-    function get ($attr) {
-	if (isset($this->_attr[$attr]))
-	    return $this->_attr[$attr];
-	else
-	    return false;
-    }
-    
-    function add ($content) {
-	if (!is_array($content))
-            $content = array($content);
-        foreach ($content as $c)
-            $this->_content[] = $c;
-    }
-
-    function asString ($indent = '') {
-	$begin[0] = $indent . '<' . $this->_name;
-	$nchars = strlen($begin[0]) + 1;
-	
-	reset($this->_attr);
-	while (list ($attr, $value) = each($this->_attr)) {
-	    $q = sprintf('%s="%s"',
-			      $attr, $this->_quote_attribute($value));
-	    $nchars += strlen($q) + 1;
-	    $begin[] = $q;
-	}
-
-	if ($nchars > 79) {
-	    $xml = join("\n$indent    ", $begin);
-	}
-	else {
-	    $xml = join(" ", $begin);
-	}
-	
-	if (($n = count($this->_content)) > 0) {
-	    $xml .= ">";
-
-	    $c = $this->_content[0];
-	    if (is_object($c)) {
-		$xml .= "\n" . $c->asString($indent . "  ");
-		$break_lines = true;
-	    }
-	    else {
-		$xml .= $this->_quote($c);
-		$break_lines = false;
-	    }
-
-	    for ($i = 1; $i < $n; $i++) {
-		$c = $this->_content[$i];
-		if (is_string($c)) {
-		    $xml .= "\n$indent" . $this->_quote($c);
-		}
-		else {
-		    $xml .= "\n" . $c->asString($indent . "  ");
-		}
-		$break_lines = true;
-	    }
-	    if ($break_lines) {
-		$xml .= "\n$indent";
-	    }
-	    $xml .= sprintf("</%s>", $this->_name);
-	}
-	else {
-	    $xml .= "/>";
-	}
-	return $xml;
-    }
-
-    function _quote ($string) {
-	return str_replace('<', '&lt;',
-			   str_replace('>', '&gt;',
-				       str_replace('&', '&amp;', $string)));
-    }
-
-    function _quote_attribute ($value) {
-	return str_replace('"', '&quot;', $this->_quote($value));
-    }
-    
-};
 
 // Encoding for RSS output.
 define('RSS_ENCODING', CHARSET);
@@ -201,22 +91,22 @@ class RssWriter extends XmlElement
         if ($items) {
             $seq = new XmlElement('rdf:Seq');
             foreach ($items as $item)
-                $seq->add($this->__ref('rdf:li', $item));
-            $channel->add(new XmlElement('items', false, $seq));
+                $seq->pushContent($this->__ref('rdf:li', $item));
+            $channel->pushContent(new XmlElement('items', false, $seq));
         }
      
 	if (isset($this->_image)) {
-            $channel->add($this->__ref('image', $this->_image));
+            $channel->pushContent($this->__ref('image', $this->_image));
 	    $items[] = $this->_image;
 	}
 	if (isset($this->_textinput)) {
-            $channel->add($this->__ref('textinput', $this->_textinput));
+            $channel->pushContent($this->__ref('textinput', $this->_textinput));
 	    $items[] = $this->_textinput;
 	}
 
-	$this->add($channel);
+	$this->pushContent($channel);
 	if ($items)
-	    $this->add($items);
+	    $this->pushContent($items);
 
         $this->__spew();
         $this->_finished = true;
@@ -229,7 +119,7 @@ class RssWriter extends XmlElement
     function __spew() {
         header("Content-Type: application/xml; charset=" . RSS_ENCODING);
         printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", RSS_ENCODING);
-        echo $this->asString();
+        $this->printXML();
     }
         
     
@@ -250,7 +140,7 @@ class RssWriter extends XmlElement
     function __uniquify_uri ($uri) {
 	if (!$uri || isset($this->_uris_seen[$uri])) {
 	    $n = count($this->_uris_seen);
-	    $uri = $this->_channel->get('rdf:about') . "#uri$n";
+	    $uri = $this->_channel->getAttr('rdf:about') . "#uri$n";
 	    assert(!isset($this->_uris_seen[$uri]));
 	}
 	$this->_uris_seen[$uri] = true;
@@ -275,10 +165,10 @@ class RssWriter extends XmlElement
     function __check_predicate ($name) {
 	if (preg_match('/^([^:]+):[^:]/', $name, $m)) {
 	    $ns = $m[1];
-	    if (! $this->get("xmlns:$ns")) {
+	    if (! $this->getAttr("xmlns:$ns")) {
 		if (!isset($this->_modules[$ns]))
 		    die("$name: unknown namespace ($ns)");
-		$this->set("xmlns:$ns", $this->_modules[$ns]);
+		$this->setAttr("xmlns:$ns", $this->_modules[$ns]);
 	    }
 	}
     }
@@ -287,7 +177,7 @@ class RssWriter extends XmlElement
      * Create a <em>propertyElt</em> which references another node in the RSS.
      */
     function __ref($predicate, $reference) {
-        $attr['rdf:resource'] = $reference->get('rdf:about');
+        $attr['rdf:resource'] = $reference->getAttr('rdf:about');
         return new XmlElement($predicate, $attr);
     }
 };
