@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.67 2004-05-04 22:26:40 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.68 2004-05-05 13:37:54 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -2650,10 +2650,10 @@ class UserPreferences
                     $count++;
             }
             foreach (array_keys($this->_prefs) as $type) {
-                if (!isset($prefs[$type]) and isa($obj,"_UserPreference_bool")) 
-                    $prefs[$type] = false;
             	$obj =& $this->_prefs[$type];
                 $obj->_init = $init;
+                if (!isset($prefs[$type]) and isa($obj,"_UserPreference_bool")) 
+                    $prefs[$type] = false;
                 if (isset($prefs[$type]) and isa($obj,"_UserPreference_int"))
                     $prefs[$type] = (int) $prefs[$type];
                 if (isset($prefs[$type]) and $obj->get($type) != $prefs[$type]) {
@@ -2727,6 +2727,14 @@ class UserPreferences
         return false;
     }
 
+    function defaultPreferences() {
+    	$prefs = array();
+    	foreach ($this->_prefs as $key => $obj) {
+    	    $prefs[$key] = $obj->default_value;
+    	}
+    	return $prefs;
+    }
+    
     // array of objects
     function getAll() {
         return $this->_prefs;
