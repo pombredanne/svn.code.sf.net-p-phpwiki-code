@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.21.2.10 2001-12-04 21:32:06 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.21.2.11 2001-12-04 23:17:27 carstenklapp Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -576,6 +576,7 @@ function split_pagename ($page) {
 
       _dotoken('SCRIPTURL', $ScriptUrl, $page);
       _dotoken('PAGE', htmlspecialchars($name), $page);
+      _dotoken('SPLIT_PAGE', htmlspecialchars(split_pagename($name)), $page);
       _dotoken('ALLOWEDPROTOCOLS', $AllowedProtocols, $page);
       _dotoken('LOGO', $logo, $page);
       
