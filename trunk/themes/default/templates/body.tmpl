@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: body.tmpl,v 1.17 2002-02-07 03:48:19 carstenklapp Exp $ -->
+<!-- $Id: body.tmpl,v 1.18 2002-02-07 19:49:42 carstenklapp Exp $ -->
 <body>
 
 <!-- The logo -->
@@ -26,5 +26,5 @@
 <?php
 if (defined('DEBUG')){
 $t = round(getmicrotime()-$GLOBALS['debugclock'], 3); 
-echo "<p>Page Execution took $t seconds</p>";} ?>
+echo "<p class=\"debug\">Page Execution took $t seconds</p>";} ?>
 </body>
