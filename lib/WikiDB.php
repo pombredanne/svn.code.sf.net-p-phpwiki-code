@@ -1,5 +1,7 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.19 2003-02-16 19:43:10 dairiki Exp $');
+rcs_id('$Id: WikiDB.php,v 1.20 2003-02-18 21:52:06 dairiki Exp $');
+
+require_once('lib/stdlib.php');
 
 //FIXME: arg on get*Revision to hint that content is wanted.
 
@@ -1034,8 +1036,8 @@ class WikiDB_PageRevision
         
         if (empty($data['%content'])) {
             // Replace empty content with default value.
-            return sprintf(_("Describe %s here."),
-                           "[". $this->_pagename ."]");
+            return sprintf(_("Describe %s here."), 
+			   "[" . WikiPageName::escape($this->_pagename) . "]");
         }
 
         // There is (non-default) content.

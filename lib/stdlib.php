@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.135 2003-02-18 19:17:04 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.136 2003-02-18 21:52:07 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -40,6 +40,12 @@
   function: UpdateRecentChanges($dbi, $pagename, $isnewpage) 
   gone see: lib/plugin/RecentChanges.php
 */
+
+/**
+ * This is the character used in wiki markup to escape characters with
+ * special meaning.
+ */
+define('ESCAPE_CHAR', '~');
 
 /**
  * Convert string to a valid XML identifier.
@@ -98,7 +104,7 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
         }
         elseif (isa($pagename, 'WikiPageName')) {
             $anchor = $pagename->anchor;
-            $pagename = $pagename->fullPagename;
+            $pagename = $pagename->name;
         }
     }
     
@@ -361,7 +367,7 @@ class WikiPagename
      *
      * This is the full name of the page (without anchor).
      */
-    var $fullPagename;
+    var $name;
     
     /** The anchor.
      *
@@ -371,37 +377,46 @@ class WikiPagename
     
     /** Constructor
      *
-     * @param WikiRequest $request
      * @param string $name Page name.
      * This can be a relative subpage name (like '/SubPage'), and can also
      * include an anchor (e.g. 'SandBox#anchorname' or just '#anchor').
+     *
+     * If you want to include the character '#' within the page name,
+     * you can escape it with ~.  (The escape character doesn't work for '/').
      */
-    function WikiPageName($request, $name) {
-        $this->shortName = $name;
+    function WikiPageName($name, $basename) {
+ 	$this->shortName = $this->unescape($name);
 
         if ($name[0] == SUBPAGE_SEPARATOR or $name[0] == '#')
-            $name = $request->getArg('pagename') . $name;
+            $name = $this->_pagename($basename) . $name;
+	
+	$split = preg_split("/\s*(?<!" . ESCAPE_CHAR . ")#\s*/", $name, 2);
+        if (count($split) > 1)
+	    list ($name, $anchor) = $split;
+	else
+	    $anchor = '';
 
-        if (strstr($name, '#')) {
-            list($this->fullPagename, $this->anchor) = split('#', $name, 2);
-        }
-        else {
-            $this->fullPagename = $name;
-            $this->anchor = '';
-        }
-        
-
-        $dbi = $request->getDbh();
-        $this->_exists = $dbi->isWikiPage($this->fullPagename);
+	$this->name = $this->unescape($name);
+	$this->anchor = $this->unescape($name);
     }
 
-    /**
-     * Determine whether page 'exists'.
-     *
-     * @return boolean True if page exists with non-default content.
-     */
-    function exists() {
-        return $this->_exists;
+    function escape($page) {
+	return str_replace('#', ESCAPE_CHAR . '#', $page);
+    }
+
+    function unescape($page) {
+	return preg_replace('/' . ESCAPE_CHAR . '(.)/', '\1', $page);
+    }
+
+    function _pagename($page) {
+	if (isa($page, 'WikiDB_Page'))
+	    return $page->getName();
+        elseif (isa($page, 'WikiDB_PageRevision'))
+	    return $page->getPageName();
+        elseif (isa($page, 'WikiPageName'))
+	    return $page->name;
+	assert(is_string($page));
+	return $page;
     }
 }
 
@@ -415,8 +430,13 @@ function LinkBracketLink($bracketlink) {
     // be either a page name, a URL or both separated by a pipe.
     
     // strip brackets and leading space
-    preg_match('/(\#?) \[\s* (?: ([^|]*?) \s* (\|) )? \s* (.+?) \s*\]/x', $bracketlink, $matches);
+    preg_match('/(\#?) \[\s* (?: (.+?) \s* (?<!' . ESCAPE_CHAR . ')(\|) )? \s* (.+?) \s*\]/x',
+	       $bracketlink, $matches);
     list (, $hash, $label, $bar, $link) = $matches;
+
+    $wikipage = new WikiPageName($link, $request->getPage());
+    $label = WikiPageName::unescape($label);
+    $link = WikiPageName::unescape($link);
 
     // if label looks like a url to an image, we want an image link.
     if (preg_match("/\\.($InlineImages)$/i", $label)) {
@@ -436,8 +456,8 @@ function LinkBracketLink($bracketlink) {
                        $bar ? $label : $link);
     }
 
-    $wikipage = new WikiPageName($request, $link);
-    if ($wikipage->exists()) {
+    $dbi = $request->getDbh();
+    if ($dbi->isWikiPage($wikipage->name)) {
         return WikiLink($wikipage, 'known', $label);
     }
     elseif (preg_match("#^($AllowedProtocols):#", $link)) {
@@ -1261,6 +1281,11 @@ function subPageSlice($pagename, $pos) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.135  2003/02/18 19:17:04  dairiki
+// split_pagename():
+//     Bug fix. 'ThisIsABug' was being split to 'This IsA Bug'.
+//     Cleanup up subpage splitting code.
+//
 // Revision 1.134  2003/02/16 19:44:20  dairiki
 // New function hash().  This is a helper, primarily for generating
 // HTTP ETags.
