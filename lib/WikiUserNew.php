@@ -1,13 +1,23 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.4 2003-12-07 19:29:48 carstenklapp Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.5 2004-01-25 03:05:00 rurban Exp $');
 
-// This is a complete rewrite of the old WikiUser code but it is not
-// implemented yet. Much of the existing UserPreferences class should
-// work fine with this but a few other parts of PhpWiki need to be
-// refitted: main.php, config.php, index.php. --Carsten
-
-
-// Returns a user object, which contains the user's preferences.
+// This is a complete OOP rewrite of the old WikiUser code with various 
+// configurable external authentification methods.
+//
+// There's only one entry point, the function WikiUser which returns 
+// a WikiUser object, which contains the user's preferences.
+// This object might get upgraded during the login step.
+// There exist three preferences storage methods: cookie, homepage and db,
+// and multiple password checking methods.
+// See index.php for $USER_AUTH_ORDER[] and USER_AUTH_POLICY if 
+// ALLOW_USER_PASSWORDS is defined.
+//
+// Each user object must define the two preferences methods 
+//  getPreferences(), setPreferences(), 
+// and the following 1-3 auth methods: 
+//  checkPass()  must be defined by all classes,
+//  userExists() only if USER_AUTH_POLICY'=='strict' 
+//  storePass()  only if the password is storable.
 //
 // Given no name, returns an _AnonUser (anonymous user) object, who
 // may or may not have a cookie. Given a user name, returns a
@@ -17,13 +27,24 @@ rcs_id('$Id: WikiUserNew.php,v 1.4 2003-12-07 19:29:48 carstenklapp Exp $');
 // Takes care of passwords, all preference loading/storing in the
 // user's page and any cookies. main.php will query the user object to
 // verify the password as appropriate.
+//
+// Notes by 2004-01-25 03:43:45 rurban
+// Currently this library doesn't work yet good enough with 
+// the current configuration options. 
+// Test it by defining ENABLE_USER_NEW in index.php
+// The problem is that the previous code was written to do auth checks 
+// only on action != browse, and this code requires a good enough 
+// user object even for browse. I don't think that this is a good idea.
+// e.g. previously ALLOW_ANON_USER = false meant that anon users cannot edit, 
+// but may browse. Here with ALLOW_ANON_USER = false he may not browse, 
+// which is needed to disable browse PagePermissions. Hmm...
+// 
 
-
+define('WIKIAUTH_FORBIDDEN', -1); // Completely not allowed.
 define('WIKIAUTH_ANON', 0);       // Not signed in.
 define('WIKIAUTH_BOGO', 1);       // Any valid WikiWord is enough.
 define('WIKIAUTH_USER', 2);       // Bogo user with a password.
 define('WIKIAUTH_ADMIN', 10);     // UserName == ADMIN_USER.
-define('WIKIAUTH_FORBIDDEN', -1); // Completely not allowed.
 
 if (!defined('COOKIE_EXPIRATION_DAYS')) define('COOKIE_EXPIRATION_DAYS', 365);
 if (!defined('COOKIE_DOMAIN'))          define('COOKIE_DOMAIN', '/');
@@ -50,9 +71,10 @@ if (!defined('TIMEOFFSET_DEFAULT_HOURS')) define('TIMEOFFSET_DEFAULT_HOURS', 0);
  * PASSWORD_LENGTH_MINIMUM default 6?
  *
  *
- * To require user passwords:
+ * To require user passwords for editing:
  * ALLOW_BOGO_LOGIN = false,
  * ALLOW_USER_PASSWORDS = true.
+ * REQUIRE_SIGNIN_BEFORE_EDIT = true
  *
  * To establish a COMPLETELY private wiki, such as an internal
  * corporate one:
@@ -64,6 +86,11 @@ if (!defined('TIMEOFFSET_DEFAULT_HOURS')) define('TIMEOFFSET_DEFAULT_HOURS', 0);
  * There are other possible combinations, but the typical wiki (such
  * as PhpWiki.sf.net) would usually just leave all three enabled.
  */
+
+if (!is_array($USER_AUTH_ORDER))
+    $USER_AUTH_ORDER = array("Forbidden");
+else
+    $USER_AUTH_ORDER[] = "Forbidden";
 
 // Local convenience functions.
 function _isAnonUserAllowed() {
@@ -80,9 +107,9 @@ function _isUserPasswordsAllowed() {
 // Possibly upgrade userobject functions.
 function _determineAdminUserOrOtherUser($UserName) {
     // Sanity check. User name is a condition of the definition of the
-    // _AdminUser, _BogoUser and _PassUser.
+    // _AdminUser, _BogoUser and _passuser.
     if (!$UserName)
-        return false;
+        return $GLOBALS['ForbiddenUser'];
 
     if ($UserName == ADMIN_USER)
         return new _AdminUser($UserName);
@@ -91,16 +118,23 @@ function _determineAdminUserOrOtherUser($UserName) {
 }
 
 function _determineBogoUserOrPassUser($UserName) {
+    global $ForbiddenUser;
+
     // Sanity check. User name is a condition of the definition of
     // _BogoUser and _PassUser.
     if (!$UserName)
-        return false;
+        return $ForbiddenUser;
 
     // Check for password and possibly upgrade user object.
     $_BogoUser = new _BogoUser($UserName);
     if (_isUserPasswordsAllowed()) {
         if (/*$has_password =*/ $_BogoUser->_prefs->get('passwd'))
             return new _PassUser($UserName);
+        else { // PassUsers override BogoUsers if they exist
+            $_PassUser = new _PassUser($UserName);
+            if ($_PassUser->userExists())
+                return $_PassUser;
+        }
     }
     // User has no password.
     if (_isBogoUserAllowed())
@@ -108,7 +142,7 @@ function _determineBogoUserOrPassUser($UserName) {
 
     // Passwords are not allowed, and Bogo is disallowed too. (Only
     // the admin can sign in).
-    return false;
+    return $ForbiddenUser;
 }
 
 /**
@@ -121,16 +155,24 @@ function _determineBogoUserOrPassUser($UserName) {
  * If an _AnonUser object is returned, the user may only browse pages
  * (and save prefs in a cookie).
  *
- * When this function returns false instead of any user object, the
- * user has been denied access to the wiki (possibly even reading
- * pages) and must therefore sign in to continue.
+ * To disable access but provide prefs the global $ForbiddenUser class 
+ * is returned. (was previously false)
+ * 
  */
 function WikiUser ($UserName = '') {
+    global $ForbiddenUser;
+
     //TODO: Check sessionvar for username & save username into
     //sessionvar (may be more appropriate to do this in main.php).
     if ($UserName) {
+        $ForbiddenUser = new _ForbiddenUser($UserName);
         // Found a user name.
         return _determineAdminUserOrOtherUser($UserName);
+    }
+    elseif (!empty($_SESSION['userid'])) {
+        // Found a user name.
+        $ForbiddenUser = new _ForbiddenUser($_SESSION['userid']);
+        return _determineAdminUserOrOtherUser($_SESSION['userid']);
     }
     else {
         // Check for autologin pref in cookie and possibly upgrade
@@ -138,48 +180,98 @@ function WikiUser ($UserName = '') {
         $_AnonUser = new _AnonUser();
         if ($UserName = $_AnonUser->UserName && $_AnonUser->_prefs->get('autologin')) {
             // Found a user name.
+            $ForbiddenUser = new _ForbiddenUser($UserName);
             return _determineAdminUserOrOtherUser($UserName);
         }
         else {
+            $ForbiddenUser = new _ForbiddenUser();
             if (_isAnonUserAllowed())
                 return $_AnonUser;
-            return false; // User must sign in to browse pages.
+            return $ForbiddenUser; // User must sign in to browse pages.
         }
-        return false; // User must sign in with a password.
+        return $ForbiddenUser;     // User must sign in with a password.
     }
+    /*
     trigger_error("DEBUG: Note: End of function reached in WikiUser." . " "
                   . "Unexpectedly, an appropriate user class could not be determined.");
-    return false; // Failsafe.
+    return $ForbiddenUser; // Failsafe.
+    */
 }
+
+function UserExists ($UserName) {
+    global $request;
+    if (!($user = $request->getUser()))
+        $user = WikiUser($UserName);
+    if (!$user) 
+        return false;
+    if ($user->userExists($UserName)) {
+        $request->_user = $user;
+        return true;
+    }
+    elseif ($user = $user->nextClass())
+        return $user->userExists($UserName);
+    $request->_user = $GLOBALS['ForbiddenUser'];
+    return false;
+}
+
+function CheckPass ($UserName, $Password) {
+    global $request;
+    if (!($user = $request->getUser()))
+        $user = WikiUser($UserName);
+    if (!$user) 
+        return false;
+    if ($user->checkPass($Password)) {
+        $request->_user = $user;
+        return true;
+    }
+    elseif ($user = $user->nextClass())
+        return $user->userExists($Password);
+    $request->_user = $GLOBALS['ForbiddenUser'];
+    return false;
+}
+
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// Base _WikiUser class.
+// Base WikiUser class.
 class _WikiUser
 {
+    var $UserName = '';
+
     var $_level = WIKIAUTH_FORBIDDEN;
     var $_prefs = false;
     var $_HomePagehandle = false;
-
-    var $UserName = '';
+    var $_request, $_dbi, $_current_method, $_current_index;
 
     // constructor
     function _WikiUser($UserName = '') {
+
         if ($UserName) {
             $this->UserName = $UserName;
             $this->_HomePagehandle = $this->hasHomePage();
         }
-        $this->loadPreferences();
+        $this->getPreferences();
     }
 
-    function loadPreferences() {
+    function getPreferences() {
         trigger_error("DEBUG: Note: undefined _WikiUser class trying to load prefs." . " "
                       . "New subclasses of _WikiUser must override this function.");
         return false;
     }
 
-    function savePreferences() {
+    function setPreferences($prefs, $id_only) {
         trigger_error("DEBUG: Note: undefined _WikiUser class trying to save prefs." . " "
+                      . "New subclasses of _WikiUser must override this function.");
+        return false;
+    }
+
+    function userExists() {
+        return $this->hasHomePage();
+    }
+
+    function checkPass($submitted_password) {
+        // By definition, an undefined user class cannot sign in.
+        trigger_error("DEBUG: Warning: undefined _WikiUser class trying to sign in." . " "
                       . "New subclasses of _WikiUser must override this function.");
         return false;
     }
@@ -202,11 +294,126 @@ class _WikiUser
         return false;
     }
 
-    function checkPass($submitted_password) {
-        // By definition, an undefined user class cannot sign in.
-        trigger_error("DEBUG: Warning: undefined _WikiUser class trying to sign in." . " "
-                      . "New subclasses of _WikiUser must override this function.");
-        return false;
+    function nextAuthMethod() {
+        if (! $this->_current_method) {
+            $this->_auth_methods = $GLOBALS['USER_AUTH_ORDER'];
+            $this->_current_index = -1;
+        }
+        $this->_current_index++;
+        if ($this->_current_index > count($this->_auth_methods))
+            return false;
+        $this->_current_method = $this->_auth_methods[$this->_current_index];
+        return $this->_current_method;
+    }
+
+    // upgrade the user object
+    function nextClass() {
+        if ($method = $this->nextAuthMethod()) {
+            $class = "_".$method."PassUser";
+            if ($user = new $class($this->UserName)) {
+                // populate the upgraded class with the values 
+                // from the old class, to prevent from endless recursion.
+            	foreach (get_object_vars($this) as $k => $v) {
+            	    $user->$k = $v;		
+            	}
+                $GLOBALS['request']->_user = $user;
+            }
+            return $user;
+        }
+    }
+
+    // lib/main.php:198 on succesfull login
+    function _setUser($UserName) {
+        $this->UserName = $UserName;
+    }
+
+    function PrintLoginForm (&$request, $args, $fail_message = false,
+                             $seperate_page = true) {
+        include_once('lib/Template.php');
+        // Call update_locale in case the system's default language is not 'en'.
+        // (We have no user pref for lang at this point yet, no one is logged in.)
+        update_locale(DEFAULT_LANGUAGE);
+        $userid = $this->UserName;
+        $require_level = 0;
+        extract($args); // fixme
+
+        $require_level = max(0, min(WIKIAUTH_ADMIN, (int)$require_level));
+
+        $pagename = $request->getArg('pagename');
+        $nocache = 1;
+        $login = new Template('login', $request,
+                              compact('pagename', 'userid', 'require_level',
+                                      'fail_message', 'pass_required', 'nocache'));
+        if ($seperate_page) {
+            $top = new Template('html', $request,
+                                array('TITLE' => _("Sign In")));
+            return $top->printExpansion($login);
+        } else {
+            return $login;
+        }
+    }
+
+    //Legacy: same as isAuthenticated(), 
+    function isSignedIn() {
+        return $this->_level >= WIKIAUTH_ANON;
+    }
+
+    function isAuthenticated () {
+        //return isa($this,'_PassUser');
+        //return isa($this,'_BogoUser') || isa($this,'_PassUser');
+        return $this->_level >= WIKIAUTH_USER;
+    }
+
+    function isAdmin () {
+        return isa($this,'_AdminUser');
+        //return $this->_level == WIKIAUTH_ADMIN;
+    }
+
+    function getId () {
+        return ( $this->UserName
+                 ? $this->UserName
+                 : $GLOBALS['request']->get('REMOTE_ADDR') ); // FIXME: globals
+    }
+
+    function getAuthenticatedId() {
+        return ( $this->isAuthenticated()
+                 ? $this->UserName
+                 : ''); //$GLOBALS['request']->get('REMOTE_ADDR') ); // FIXME: globals
+    }
+
+    function hasAuthority ($require_level) {
+        return $this->_level >= $require_level;
+    }
+
+    function AuthCheck ($postargs) {
+        // Normalize args, and extract.
+        $keys = array('userid', 'passwd', 'require_level', 'login', 'logout',
+                      'cancel');
+        foreach ($keys as $key)
+            $args[$key] = isset($postargs[$key]) ? $postargs[$key] : false;
+        extract($args);
+        $require_level = max(0, min(WIKIAUTH_ADMIN, (int)$require_level));
+
+        if ($logout) { // Log out
+            $GLOBALS['request']->_user = new _AnonUser();
+            return $GLOBALS['request']->_user; 
+        } elseif ($cancel)
+            return false;        // User hit cancel button.
+        elseif (!$login && !$userid)
+            return false;       // Nothing to do?
+
+        $this->UserName = $userid;
+        $authlevel = $this->checkPass($passwd);
+        if (!$authlevel)
+            return _("Invalid password or userid.");
+        elseif ($authlevel < $require_level)
+            return _("Insufficient permissions.");
+
+        // Successful login.
+        $user = $GLOBALS['request']->_user;
+        $user->_userid = $userid;
+        $user->_level = $authlevel;
+        return $user;
     }
 
 }
@@ -217,7 +424,7 @@ extends _WikiUser
     var $_level = WIKIAUTH_ANON;
 
     // Anon only gets to load and save prefs in a cookie, that's it.
-    function loadPreferences() {
+    function getPreferences() {
         global $request;
         if ($cookie = $request->getCookieVar(WIKI_NAME)) {
             if (! $unboxedcookie = $this->_prefs->unpack($cookie)) {
@@ -244,8 +451,12 @@ extends _WikiUser
                 $this->UserName = $unboxedcookie['userid'];
             }
         }
+        // initializeTheme() needs at least an empty object
+        if (!$this->_prefs)
+            $this->_prefs = new UserPreferences();
+
     }
-    function savePreferences() {
+    function setPreferences($prefs, $id_only) {
         // Allow for multiple wikis in same domain. Encode only the
         // _prefs array of the UserPreference object. Ideally the
         // prefs array should just be imploded into a single string or
@@ -256,17 +467,35 @@ extends _WikiUser
                   COOKIE_EXPIRATION_DAYS, COOKIE_DOMAIN);
     }
 
+    function userExists() {
+        return true;
+    }
+
     function checkPass($submitted_password) {
         // By definition, the _AnonUser does not HAVE a password
         // (compared to _BogoUser, who has an EMPTY password).
         trigger_error("DEBUG: Warning: _AnonUser unexpectedly asked to checkPass()." . " "
-                      . "Check isa($user, '_PassUser'), or: isa($user, '_AdminUser') etc. first." . " "
+                      . "Check isa(\$user, '_PassUser'), or: isa(\$user, '_AdminUser') etc. first." . " "
                       . "New subclasses of _WikiUser must override this function.");
         return false;
     }
 
 }
 
+class _ForbiddenUser
+extends _AnonUser
+{
+    var $_level = WIKIAUTH_FORBIDDEN;
+
+    function checkPass($submitted_password) {
+        return false;
+    }
+
+    function userExists() {
+        if ($this->_HomePagehandle) return true;
+        return false;
+    }
+}
 /**
  * Do NOT extend _BogoUser to other classes, for checkPass()
  * security. (In case of defects in code logic of the new class!)
@@ -274,59 +503,231 @@ extends _WikiUser
 class _BogoUser
 extends _AnonUser
 {
-    var $_level = WIKIAUTH_BOGO;
+    function userExists() {
+        if (isWikiWord($this->UserName)) {
+            $this->_level = WIKIAUTH_BOGO;
+            return true;
+        } else {
+            $this->_level = WIKIAUTH_ANON;
+            return false;
+        }
+    }
 
     function checkPass($submitted_password) {
         // By definition, BogoUser has an empty password.
-        return true;
+        return $this->userExists();
     }
 }
 
 class _PassUser
 extends _AnonUser
 /**
- * New classes for externally authenticated users should extend from
- * this class.
+ * Called if ALLOW_USER_PASSWORDS and Anon and Bogo failed.
+ *
+ * The classes for all subsequent auth methods extend from
+ * this class. 
+ * This handles the auth method type dispatcher according $USER_AUTH_ORDER, 
+ * the three auth method policies first-only, strict and stacked
+ * and the two methods for prefs: homepage or database, 
+ * if $DBAuthParams['pref_select'] is defined.
+ *
+ * Default is PersonalPage auth and prefs.
  * 
- * For now, the prefs $restored_from_page stuff is in here, but that
- * will soon be moved into a new PersonalPage PassUser class or
- * something, thus leaving this as a more generic passuser class from
- * which other new authentication classes (and preference storage
- * types) can extend.
  */
 {
-    var $_level = WIKIAUTH_USER;
+    var $_auth_dbi, $_prefmethod, $_prefselect, $_prefupdate;
+
+    // check and prepare the auth and pref methods only once
+    function _PassUser($UserName = '') {
+        global $DBAuthParams;
+
+        if ($UserName) {
+            $this->UserName = $UserName;
+            $this->_HomePagehandle = $this->hasHomePage();
+        }
+        // Check the configured Prefs methods
+        if (!empty($DBAuthParams['pref_select']) and $DBParams['dbtype'] == 'SQL') {
+            $this->_prefmethod = 'SQL'; // really pear db
+            $dbh = $this->getAuthDbh();
+            // preparate the SELECT statement
+            $this->_prefselect = $dbh->_backend->prepare(
+		preg_replace('"$userid"','?',$DBAuthParams['pref_select'])
+	    );
+        }
+        if (!empty($DBAuthParams['pref_select']) and $DBParams['dbtype'] == 'ADODB') {
+            $this->_prefmethod = 'ADODB'; // uses a simplier execute syntax
+            $dbh = $this->getAuthDbh();
+            // preparate the SELECT statement
+            $this->_prefselect = preg_replace('"$userid"','%s',$DBAuthParams['pref_select']);
+        }
+        if (!empty($DBAuthParams['pref_update']) and $DBParams['dbtype'] == 'SQL') {
+            $this->_prefmethod = 'SQL';
+            $dbh = $this->getAuthDbh();
+            $this->_prefupdate = $dbh->_backend->prepare(
+                preg_replace(array('"$userid"','"$pref_blob"'),array('?','?'),$DBAuthParams['pref_update'])
+	    );
+        }
+        if (!empty($DBAuthParams['pref_update']) and $DBParams['dbtype'] == 'ADODB') {
+            $this->_prefmethod = 'ADODB'; // uses a simplier execute syntax
+            $dbh = $this->getAuthDbh();
+            // preparate the SELECT statement
+            $this->_prefupdate = preg_replace(array('"$userid"','"$pref_blob"'),array('%s','%s'),$DBAuthParams['pref_update']);
+        }
+        $this->getPreferences();
+
+        // Upgrade to the next parent _PassUser class. Avoid recursion.
+        if ( get_class($this) === '_PassUser' ) {
+            //Auth policy: Check the order of the configured auth methods
+            // 1. first-only: Upgrade the class here in the constructor
+            // 2. old:       ignore USER_AUTH_ORDER and try to use all available methods as in the previous PhpWiki releases (slow)
+            // 3. strict:    upgrade the class after checking the user existance in userExists()
+            // 4. stacked:   upgrade the class after the password verification in checkPass()
+            // Methods: PersonalPage, HTTP_AUTH, DB, LDAP, IMAP, File
+            if (!defined('USER_AUTH_POLICY')) define('USER_AUTH_POLICY','old');
+            if (defined('USER_AUTH_POLICY')) {
+                // policy 1: only pre-define one method for all users
+                if (USER_AUTH_POLICY === 'first-only') {
+                    if ($user = $this->nextClass())
+                        return $user;
+                    else 
+                        return $GLOBALS['ForbiddenUser'];
+                }
+                // use the default behaviour from the previous versions:
+                elseif (USER_AUTH_POLICY === 'old') {
+                    // default: try to be smart
+                    if (!empty($GLOBALS['PHP_AUTH_USER'])) {
+                        return new _HttpAuthUserClass($UserName);
+                    } elseif (!empty($DBAuthParams['auth_check']) and ($DBAuthParams['auth_dsn'] or $GLOBALS ['DBParams']['dsn'])) {
+                        return new _DbUserClass($UserName);
+                    } elseif (defined('LDAP_AUTH_HOST') and defined('LDAP_AUTH_SEARCH') and function_exists('ldap_open')) {
+                        return new _LDAPUserClass($UserName);
+                    } elseif (defined('IMAP_AUTH_HOST') and function_exists('imap_open')) {
+                        return new _IMAPUserClass($UserName);
+                    } elseif (defined('AUTH_USER_FILE')) {
+                        return new _FileUserClass($UserName);
+                    } else {
+                        return new _PersonalPageUserClass($UserName);
+                    }
+                }
+                else 
+                    // else use the page methods defined in _PassUser.
+                    return $this;
+            }
+        }
+    }
+
+    function getAuthDbh () {
+        global $DBParams, $DBAuthParams;
+        if (!isset($this->_auth_dbi)) {
+            if ($DBParams['dbtype'] == 'dba' or empty($DBAuthParams['auth_dsn']))
+                $this->_auth_dbi = $this->getDbh(); // use phpwiki database 
+            elseif ($DBAuthParams['auth_dsn'] == $DBParams['dsn'])
+                $this->_auth_dbi = $this->getDbh(); // same phpwiki database 
+            else // use another external database handle
+                // needs PHP 4.1. better use $this->_user->...
+                $this->_auth_dbi = WikiDB::open($DBAuthParams);
+        }
+        return $this->_auth_dbi;
+    }
 
     //TODO: password changing
     //TODO: email verification
 
-    function loadPreferences() {
+    function getPreferences() {
+
         // We don't necessarily have to read the cookie first. Since
         // the user has a password, the prefs stored in the homepage
         // cannot be arbitrarily altered by other Bogo users.
-        _AnonUser::loadPreferences();
+        _AnonUser::getPreferences();
+
+        // database prefs
+        if ((! $this->_prefs) && $this->_prefselect) {
+            if ($this->_prefmethod == 'ADODB') {
+                $dbh = & $this->_auth_dbi;
+                $db_result = $dbh->_backend->Execute($this->_prefselect,$dbh->qstr($this->UserName));
+                if (!$rs->EOF)
+                    $prefs_blob = $db_result->fields['pref_blob'];
+                $db_result->Close();
+            }
+            else { // pear db methods
+                $db_result = $this->_auth_dbi->_backend->execute($this->_prefselect,$this->UserName);
+                list($prefs_blob) = $db_result->fetchRow();
+            }
+            if ($restored_from_db = $this->_prefs->unpack($prefs_blob)) {
+                $this->_prefs = new UserPreferences($restored_from_db);
+                return $this->_prefs;
+            }
+        }
+        
         // User may have deleted cookie, retrieve from his
-        // NamesakePage if there is one.
+        // PersonalPage if there is one.
         if ((! $this->_prefs) && $this->_HomePagehandle) {
             if ($restored_from_page = $this->_prefs->unpack($this->_HomePagehandle->get('_prefs'))) {
                 $this->_prefs = new UserPreferences($restored_from_page);
+                return $this->_prefs;
             }
         }
     }
-    function savePreferences() {
-        _AnonUser::savePreferences();
+
+    function setPreferences($prefs, $id_only) {
+        _AnonUser::setPreferences($prefs, $id_only);
         // Encode only the _prefs array of the UserPreference object
         $serialized = $this->_prefs->pack($this->_prefs->getAll());
-        $this->_HomePagehandle->set('_prefs', $serialized);
+
+        // database prefs
+        if ((! $this->_prefs) && $this->_prefupdate) {
+            if ($this->_prefmethod == 'ADODB') {
+                $dbh =& $this->_auth_dbi;
+                $db_result = $dbh->_backend->Execute($this->_prefupdate,$dbh->qstr($serialized),$dbh->qstr($this->UserName));
+                $db_result->Close();
+            }
+            else { // pear db methods
+                $db_result = $this->_auth_dbi->_backend->execute($this->_prefupdate,$serialized,$this->UserName);
+            }
+        }
+        else
+            $this->_HomePagehandle->set('_prefs', $serialized);
     }
 
-    //TODO: alternatively obtain $stored_password from external auth
+    function mayChangePassword() {
+        return true;
+    }
+
+    //The default method is getting the password from prefs. 
+    // child methods obtain $stored_password from external auth.
+    function userExists() {
+        if ($this->_HomePagehandle) return true;
+
+        if (USER_AUTH_POLICY === 'strict') {
+            if ($user = $this->nextClass())
+                return $user->userExists();
+        }
+        return false;
+    }
+
+    //The default method is getting the password from prefs. 
+    // child methods obtain $stored_password from external auth.
     function checkPass($submitted_password) {
         $stored_password = $this->_prefs->get('passwd');
-        return $this->_checkPass($submitted_password, $stored_password);
+        $result = $this->_checkPass($submitted_password, $stored_password);
+        if ($result) $this->_level = WIKIAUTH_USER;
+
+        if (!$result) {
+            if (USER_AUTH_POLICY === 'strict') {
+                if ($user = $this->nextClass()) {
+                    if ($user = $user->userExists())
+                        return $user->checkPass($submitted_password);
+                }
+            }
+            if (USER_AUTH_POLICY === 'stacked' or USER_AUTH_POLICY === 'old') {
+                if ($user = $this->nextClass())
+                    return $user->checkPass($submitted_password);
+            }
+        }
+        return $result;
     }
 
-    //TODO: remove crypt() function check from config.php:396
+    //TODO: remove crypt() function check from config.php:396 ??
     function _checkPass($submitted_password, $stored_password) {
         if(!empty($submitted_password)) {
             if (defined('ENCRYPTED_PASSWD') && ENCRYPTED_PASSWD) {
@@ -364,6 +765,567 @@ extends _AnonUser
     }
 }
 
+class _PersonalPagePassUser
+extends _PassUser
+/**
+ * This class is only to simplify the auth method dispatcher.
+ * It inherits all methods from _PassUser.
+ */
+{
+    function dummy() {}
+}
+
+class _DbPassUser
+extends _PassUser
+/**
+ * Authenticate against a database, to be able to use shared users.
+ *   internal: no different $DbAuthParams['dsn'] defined, or
+ *   external: different $DbAuthParams['dsn']
+ * The magic is done in the symbolic SQL statements in index.php
+ *
+ * We support only the SQL and ADODB backends.
+ * The other WikiDB backends (flat, cvs, dba, ...) should be used for pages, 
+ * not for auth stuff. If one would like to use e.g. dba for auth, he should 
+ * use PearDB (SQL) with the right $DBAuthParam['auth_dsn'].
+ * Flat files for auth use is handled by the auth method "File".
+ *
+ * Preferences are handled in the parent class.
+ */
+{
+    var $_authselect, $_authupdate;
+
+    // This can only be called from _PassUser, because the parent class 
+    // sets the auth_dbi and pref methods, before this class is initialized.
+    function _DbPassUser() {
+        if (!$this->_prefs) {
+            trigger_error(__vsprintf("Internal error: %s may only called from %s","_DbPassUser","_PassUser"),
+                          E_USER_WARNING);
+            return false;
+        }
+        $this->_authmethod = 'DB';
+        $this->_auth_dbi = $this->getAuthDbh();
+        $this->_auth_crypt_method = $GLOBALS['DBAuthParams']['auth_crypt_method'];
+
+        if ($GLOBALS['DBParams']['dbtype'] == 'ADODB') 
+            return new _AdoDbPassUser();
+        else 
+            return new _PearDbPassUser();
+    }
+
+    function mayChangePassword() {
+        return !empty($this->_authupdate);
+    }
+
+}
+
+class _PearDbPassUser
+extends _DbPassUser
+/**
+ * Pear DB methods
+ */
+{
+    function _PearDbPassUser() {
+        global $DBAuthParams;
+        if (!$this->_prefs) {
+            trigger_error(__vsprintf("Internal error: %s may only called from %s","_PearDbPassUser","_DbPassUser"),
+                          E_USER_WARNING);
+            return false;
+        }
+        // Prepare the configured auth statements
+        if (!empty($DBAuthParams['auth_check'])) {
+            $this->_authselect = $this->_auth_dbi->_backend->prepare (
+                     preg_replace(array('"$userid"','"$password"'),array('?','?'),
+                                  $DBAuthParams['auth_check'])
+                     );
+        }
+        if (!empty($DBAuthParams['auth_update'])) {
+            $this->_authupdate = $this->_auth_dbi->_backend->prepare(
+                    preg_replace(array('"$userid"','"$password"'),array('?','?'),$DBAuthParams['auth_update'])
+                    );
+        }
+    }
+
+    function getPreferences() {
+        // override the generic slow method here for efficiency and not to 
+        // clutter the homepage metadata with prefs.
+        _AnonUser::getPreferences();
+        if ((! $this->_prefs) && $this->_prefselect) {
+            $db_result = $this->_auth_dbi->_backend->execute($this->_prefselect,$this->UserName);
+            list($prefs_blob) = $db_result->fetchRow();
+            if ($restored_from_db = $this->_prefs->unpack($prefs_blob)) {
+                $this->_prefs = new UserPreferences($restored_from_db);
+                return $this->_prefs;
+            }
+        }
+        if ((! $this->_prefs) && $this->_HomePagehandle) {
+            if ($restored_from_page = $this->_prefs->unpack($this->_HomePagehandle->get('_prefs'))) {
+                $this->_prefs = new UserPreferences($restored_from_page);
+                return $this->_prefs;
+            }
+        }
+    }
+
+    function setPreferences($prefs, $id_only) {
+        $serialized = $this->_prefs->pack($this->_prefs->getAll());
+        if ($this->_prefupdate) {
+            $db_result = $this->_auth_dbi->_backend->execute($this->_prefupdate,$serialized,$this->UserName);
+        } else {
+            _AnonUser::setPreferences($prefs, $id_only);
+            $this->_HomePagehandle->set('_prefs', $serialized);
+        }
+    }
+
+    function userExists() {
+        if (!$this->_authselect)
+            trigger_error("Either \$DBAuthParams['auth_check'] is missing or \$DBParams['dbtype'] != 'SQL'",
+                          E_USER_WARNING);
+        $dbh = &$this->_auth_dbi;
+        //NOTE: for auth_crypt_method='crypt' no special auth_user_exists is needed
+        if ($this->_auth_crypt_method == 'crypt') {
+            $rs = $dbh->_backend->Execute($this->_authselect,$this->UserName) ;
+            if ($rs->numRows())
+                return true;
+        }
+        else {
+            if (! $GLOBALS['DBAuthParams']['auth_user_exists'])
+                trigger_error("\$DBAuthParams['auth_user_exists'] is missing",
+                              E_USER_WARNING);
+            $this->_authcheck = preg_replace('/"$userid"/','? ',
+                                             $GLOBALS['DBAuthParams']['auth_user_exists']);
+            $rs = $dbh->_backend->Execute($this->_authcheck,
+                                          $this->UserName) ;
+            if ($rs->numRows())
+                return true;
+        }
+        
+        if (USER_AUTH_POLICY === 'strict') {
+            if ($user = $this->nextClass()) {
+                return $user->userExists();
+            }
+        }
+    }
+ 
+    function checkPass($submitted_password) {
+        if (!$this->_authselect)
+            trigger_error("Either \$DBAuthParams['auth_check'] is missing or \$DBParams['dbtype'] != 'SQL'",
+                          E_USER_WARNING);
+
+        //NOTE: for auth_crypt_method='crypt'  defined('ENCRYPTED_PASSWD',true) must be set
+        if ($this->_auth_crypt_method == 'crypt') {
+            $db_result = $this->_auth_dbi->_backend->execute($this->_authselect,$this->UserName);
+            list($stored_password) = $db_result->fetchRow();
+            $result = $this->_checkPass($submitted_password, $stored_password);
+        } else {
+            $db_result = $this->_auth_dbi->_backend->execute($this->_authselect,$submitted_password,$this->UserName);
+            list($okay) = $db_result->fetchRow();
+            $result = !empty($okay);
+        }
+
+        if ($result) {
+            $this->_level = WIKIAUTH_USER;
+        } else {
+            if (USER_AUTH_POLICY === 'strict') {
+                if ($user = $this->nextClass()) {
+                    if ($user = $user->userExists())
+                        return $user->checkPass($submitted_password);
+                }
+            }
+            if (USER_AUTH_POLICY === 'stacked' or USER_AUTH_POLICY === 'old') {
+                if ($user = $this->nextClass())
+                    return $user->checkPass($submitted_password);
+            }
+        }
+        return $result;
+    }
+
+    function storePass($submitted_password) {
+        if (!$this->_authupdate) {
+            //CHECKME
+            trigger_warning("Either \$DBAuthParams['auth_update'] not defined or \$DBParams['dbtype'] != 'SQL'",
+                          E_USER_WARNING);
+            return false;
+        }
+
+        if ($this->_auth_crypt_method == 'crypt') {
+            if (function_exists('crypt'))
+                $submitted_password = crypt($submitted_password);
+        }
+        $db_result = $this->_auth_dbi->_backend->execute($this->_authupdate,$submitted_password,$this->UserName);
+    }
+
+}
+
+class _AdoDbPassUser
+extends _DbPassUser
+/**
+ * ADODB methods
+ */
+{
+    function _AdoDbPassUser() {
+        global $DBAuthParams;
+        if (!$this->_prefs) {
+            trigger_error(__vsprintf("Internal error: %s may only called from %s","_AdoDbPassUser","_DbPassUser"),
+                          E_USER_WARNING);
+            return false;
+        }
+        // Prepare the configured auth statements
+        if (!empty($DBAuthParams['auth_check'])) {
+            $this->_authselect = preg_replace(array('"$userid"','"$password"'),array('%s','%s'),
+                                              $DBAuthParams['auth_check']);
+        }
+        if (!empty($DBAuthParams['auth_update'])) {
+            $this->_authupdate = preg_replace(array('"$userid"','"$password"'),array('%s','%s'),
+                                              $DBAuthParams['auth_update']);
+        }
+    }
+
+    function getPreferences() {
+        // override the generic slow method here for efficiency
+        _AnonUser::getPreferences();
+        if ((! $this->_prefs) && $this->_prefselect) {
+            $dbh = & $this->_auth_dbi;
+            $rs = $dbh->_backend->Execute($this->_prefselect,$dbh->qstr($this->UserName));
+            if ($rs->EOF) {
+                $rs->Close();
+            } else {
+                $prefs_blob = $rs->fields['pref_blob'];
+                $rs->Close();
+                if ($restored_from_db = $this->_prefs->unpack($prefs_blob)) {
+                    $this->_prefs = new UserPreferences($restored_from_db);
+                    return $this->_prefs;
+                }
+            }
+        }
+        if ((! $this->_prefs) && $this->_HomePagehandle) {
+            if ($restored_from_page = $this->_prefs->unpack($this->_HomePagehandle->get('_prefs'))) {
+                $this->_prefs = new UserPreferences($restored_from_page);
+                return $this->_prefs;
+            }
+        }
+    }
+
+    function setPreferences($prefs, $id_only) {
+        $serialized = $this->_prefs->pack($this->_prefs->getAll());
+        if ($this->_prefupdate) {
+            $dbh = & $this->_auth_dbi;
+            $db_result = $dbh->_backend->Execute($this->_prefupdate,$dbh->qstr($serialized),$dbh->qstr($this->UserName));
+            $db_result->Close();
+        } else {
+            _AnonUser::setPreferences($prefs, $id_only);
+            $this->_HomePagehandle->set('_prefs', $serialized);
+        }
+    }
+ 
+    function userExists() {
+        if (!$this->_authselect)
+            trigger_error("Either \$DBAuthParams['auth_check'] is missing or \$DBParams['dbtype'] != 'ADODB'",
+                          E_USER_WARNING);
+        $dbh = &$this->_auth_dbi;
+        //NOTE: for auth_crypt_method='crypt' no special auth_user_exists is needed
+        if ($this->_auth_crypt_method == 'crypt') {
+            $rs = $dbh->_backend->Execute($this->_authselect,$dbh->qstr($this->UserName));
+            if (!$rs->EOF) {
+                $rs->Close();
+                return true;
+            } else {
+                $rs->Close();
+            }
+        }
+        else {
+            if (! $GLOBALS['DBAuthParams']['auth_user_exists'])
+                trigger_error("\$DBAuthParams['auth_user_exists'] is missing",
+                              E_USER_WARNING);
+            $this->_authcheck = preg_replace('/"$userid"/','%s',
+                                             $GLOBALS['DBAuthParams']['auth_user_exists']);
+            $rs = $dbh->_backend->Execute($this->_authcheck,
+                                          $dbh->qstr($this->UserName));
+            if (!$rs->EOF) {
+                $rs->Close();
+                return true;
+            } else {
+                $rs->Close();
+            }
+        }
+        
+        if (USER_AUTH_POLICY === 'strict') {
+            if ($user = $this->nextClass())
+                return $user->userExists();
+        }
+        return false;
+    }
+
+    function checkPass($submitted_password) {
+        if (!$this->_authselect)
+            trigger_error("Either \$DBAuthParams['auth_check'] is missing or \$DBParams['dbtype'] != 'ADODB'",
+                          E_USER_WARNING);
+        $dbh = &$this->_auth_dbi;
+        //NOTE: for auth_crypt_method='crypt'  defined('ENCRYPTED_PASSWD',true) must be set
+        if ($this->_auth_crypt_method == 'crypt') {
+            $rs = $dbh->_backend->Execute($this->_authselect,$dbh->qstr($this->UserName));
+            if (!$rs->EOF) {
+                $stored_password = $rs->fields['password'];
+                $rs->Close();
+                $result = $this->_checkPass($submitted_password, $stored_password);
+            } else {
+                $rs->Close();
+                $result = false;
+            }
+        }
+        else {
+            $rs = $dbh->_backend->Execute($this->_authselect,
+                                          $dbh->qstr($submitted_password),
+                                          $dbh->qstr($this->UserName));
+            $okay = $rs->fields['ok'];
+            $rs->Close();
+            $result = !empty($okay);
+        }
+
+        if ($result) { 
+            $this->_level = WIKIAUTH_USER;
+        } else {
+            if (USER_AUTH_POLICY === 'strict') {
+                if ($user = $this->nextClass()) {
+                    if ($user = $user->userExists())
+                        return $user->checkPass($submitted_password);
+                }
+            }
+            if (USER_AUTH_POLICY === 'stacked' or USER_AUTH_POLICY === 'old') {
+                if ($user = $this->nextClass())
+                    return $user->checkPass($submitted_password);
+            }
+        }
+        return $result;
+    }
+
+    function storePass($submitted_password) {
+        if (!$this->_authupdate) {
+            //CHECKME
+            trigger_warning("Either \$DBAuthParams['auth_update'] not defined or \$DBParams['dbtype'] != 'ADODB'",
+                          E_USER_WARNING);
+            return false;
+        }
+
+        if ($this->_auth_crypt_method == 'crypt') {
+            if (function_exists('crypt'))
+                $submitted_password = crypt($submitted_password);
+        }
+        $dbh = &$this->_auth_dbi;
+        $rs = $dbh->_backend->Execute($this->_authupdate,
+                                      $dbh->qstr($submitted_password),
+                                      $dbh->qstr($this->UserName));
+        $rs->Close();
+    }
+
+}
+
+class _LDAPPassUser
+extends _PassUser
+/**
+ * Define the vars LDAP_HOST and LDAP_AUTH_SEARCH in index.php
+ *
+ * Preferences are handled in _PassUser
+ */
+{
+    function checkPass($submitted_password) {
+        $this->_authmethod = 'LDAP';
+        $userid = $this->UserName;
+        if ($ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
+            $r = @ldap_bind($ldap); // this is an anonymous bind
+            $st_search = "uid=$userid";
+            // Need to set the right root search information. see ../index.php
+            $sr = ldap_search($ldap, LDAP_AUTH_SEARCH,
+                              "$st_search");
+            $info = ldap_get_entries($ldap, $sr); // there may be more hits with this userid. try every
+            for ($i = 0; $i < $info["count"]; $i++) {
+                $dn = $info[$i]["dn"];
+                // The password is still plain text.
+                if ($r = @ldap_bind($ldap, $dn, $passwd)) {
+                    // ldap_bind will return TRUE if everything matches
+                    ldap_close($ldap);
+                    $this->_level = WIKIAUTH_USER;
+                    return true;
+                }
+            }
+        } else {
+            trigger_error(_("Unable to connect to LDAP server "). LDAP_AUTH_HOST, E_USER_WARNING);
+        }
+
+        if (USER_AUTH_POLICY === 'strict') {
+            if ($user = $this->nextClass()) {
+                if ($user = $user->userExists())
+                    return $user->checkPass($submitted_password);
+            }
+        }
+        if (USER_AUTH_POLICY === 'stacked' or USER_AUTH_POLICY === 'old') {
+            if ($user = $this->nextClass())
+                return $user->checkPass($submitted_password);
+        }
+        return false;
+    }
+
+    function userExists() {
+        $userid = $this->UserName;
+        if ($ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
+            $r = @ldap_bind($ldap); // this is an anonymous bind
+            $st_search = "uid=$userid";
+            // Need to set the right root search information. see ../index.php
+            $sr = ldap_search($ldap, LDAP_AUTH_SEARCH,
+                              "$st_search");
+            $info = ldap_get_entries($ldap, $sr); // there may be more hits with this userid. try every
+            if ($info["count"]) {
+                ldap_close($ldap);
+                return true;
+            }
+        } else {
+            trigger_error(_("Unable to connect to LDAP server "). LDAP_AUTH_HOST, E_USER_WARNING);
+        }
+
+        if (USER_AUTH_POLICY === 'strict') {
+            if ($user = $this->nextClass())
+                return $user->userExists();
+        }
+        return false;
+    }
+
+    function mayChangePassword() {
+        return false;
+    }
+
+}
+
+class _IMAPPassUser
+extends _PassUser
+/**
+ * Define the var IMAP_HOST in index.php
+ *
+ * Preferences are handled in _PassUser
+ */
+{
+    function checkPass($submitted_password) {
+        $userid = $this->UserName;
+        $mbox = @imap_open( "{" . IMAP_AUTH_HOST . "}",
+                            $userid, $submitted_password, OP_HALFOPEN );
+        if ($mbox) {
+            imap_close($mbox);
+            $this->_authmethod = 'IMAP';
+            $this->_level = WIKIAUTH_USER;
+            return true;
+        } else {
+            trigger_error(_("Unable to connect to IMAP server "). IMAP_AUTH_HOST, E_USER_WARNING);
+        }
+        if (USER_AUTH_POLICY === 'strict') {
+            if ($user = $this->nextClass()) {
+                if ($user = $user->userExists())
+                    return $user->checkPass($submitted_password);
+            }
+        }
+        if (USER_AUTH_POLICY === 'stacked' or USER_AUTH_POLICY === 'old') {
+            if ($user = $this->nextClass())
+                return $user->checkPass($submitted_password);
+        }
+        return false;
+    }
+
+    //CHECKME: this will not be okay for the auth policy strict
+    function userExists() {
+        if (checkPass($this->_prefs->get('passwd')))
+            return true;
+            
+        if (USER_AUTH_POLICY === 'strict') {
+            if ($user = $this->nextClass())
+                return $user->userExists();
+        }
+    }
+
+    function mayChangePassword() {
+        return false;
+    }
+
+}
+
+class _FilePassUser
+extends _PassUser
+/**
+ * Check users defined in a .htaccess style file
+ * username:crypt\n...
+ *
+ * Preferences are handled in _PassUser
+ */
+{
+    var $_file, $_may_change;
+
+    // This can only be called from _PassUser, because the parent class 
+    // sets the pref methods, before this class is initialized.
+    function _FilePassUser($file = '') {
+        global $DBAuthParams;
+        if (!$this->_prefs) {
+            trigger_error(__vsprintf("Internal error: %s may only called from %s","_FilePassUser","_PassUser"),
+                          E_USER_WARNING);
+            return false;
+        }
+
+        // read the .htaccess style file. We use our own copy of the standard pear class.
+        require 'lib/pear/File_Passwd.php';
+        // if passwords may be changed we have to lock them:
+        $this->_may_change = defined('AUTH_USER_FILE_STORABLE') && AUTH_USER_FILE_STORABLE;
+        if (empty($file) and defined('AUTH_USER_FILE'))
+            $this->_file = AUTH_USER_FILE;
+        elseif (!empty($file))
+            $this->_file = File_Passwd($file, !empty($this->_may_change));
+        else
+            return false;
+        return $this;
+    }
+ 
+    function mayChangePassword() {
+        return $this->_may_change;
+    }
+
+    function userExists() {
+        if (isset($this->_file->users[$this->UserName]))
+            return true;
+            
+        if (USER_AUTH_POLICY === 'strict') {
+            if ($user = $this->nextClass())
+                return $user->userExists();
+        }
+    }
+
+    function checkPass($submitted_password) {
+        if ($this->_file->verifyPassword($this->UserName,$submitted_password)) {
+            $this->_authmethod = 'File';
+            $this->_level = WIKIAUTH_USER;
+            return true;
+        }
+        
+        if (USER_AUTH_POLICY === 'strict') {
+            if ($user = $this->nextClass()) {
+                if ($user = $user->userExists())
+                    return $user->checkPass($submitted_password);
+            }
+        }
+        if (USER_AUTH_POLICY === 'stacked' or USER_AUTH_POLICY === 'old') {
+            if ($user = $this->nextClass())
+                return $user->checkPass($submitted_password);
+        }
+        return false;
+    }
+
+    function storePass($submitted_password) {
+        if ($this->_may_change)
+            return $this->_file->modUser($this->UserName,$submitted_password);
+        else 
+            return false;
+    }
+
+}
+
+/**
+ * Insert more auth classes here...
+ *
+ */
+
+
 /**
  * For security, this class should not be extended. Instead, extend
  * from _PassUser (think of this as unix "root").
@@ -371,12 +1333,23 @@ extends _AnonUser
 class _AdminUser
 extends _PassUser
 {
-    var $_level = WIKIAUTH_ADMIN;
+    //var $_level = WIKIAUTH_ADMIN;
 
     function checkPass($submitted_password) {
         $stored_password = ADMIN_PASSWD;
-        return $this->_checkPass($submitted_password, $stored_password);
+        if ($this->_checkPass($submitted_password, $stored_password)) {
+            $this->_level = WIKIAUTH_ADMIN;
+            return true;
+        } else {
+            $this->_level = WIKIAUTH_ANON;
+            return false;
+        }
     }
+
+    function isAdmin () {
+        return $this->_level == WIKIAUTH_ADMIN;
+    }
+
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -389,6 +1362,13 @@ class _UserPreference
 
     function sanify ($value) {
         return (string)$value;
+    }
+
+    function get ($name) {
+    	if (isset($this->$name))
+	    return $this->$name;
+    	else 
+            return $this->default_value;
     }
 
     function update ($value) {
@@ -547,16 +1527,32 @@ class UserPreferences
     }
 
     function get ($name) {
-        if (isset($this->_prefs[$name]))
-            return $this->_prefs[$name];
-        if (!($pref = $this->_getPref($name)))
+    	if ($_pref = $this->_getPref($name))
+    	  return $_pref->get($name);
+    	else 
+    	  return false;  
+    	
+        if (is_object($this->_prefs[$name]))
+            return $this->_prefs[$name]->get($name);
+        elseif (($value = $this->_getPref($name)) === false)
             return false;
-        return $pref->default_value;
+        elseif (!isset($value))
+            return $this->_prefs[$name]->default_value;
+        else return $value;
     }
 
     function set ($name, $value) {
-        if (!($pref = $this->_getPref($name)))
+        $pref = $this->_getPref($name);
+        if ($pref === false)
             return false;
+
+        /* do it here or outside? */
+        if ($name == 'passwd' and 
+            defined('PASSWORD_LENGTH_MINIMUM') and 
+            $strlen($value) <= PASSWORD_LENGTH_MINIMUM ) {
+            //TODO: How to notify the user?
+            return false;
+        }
 
         $newvalue = $pref->sanify($value);
         $oldvalue = $this->get($name);
@@ -599,6 +1595,9 @@ class UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2003/12/07 19:29:48  carstenklapp
+// Code Housecleaning: fixed syntax errors. (php -l *.php)
+//
 // Revision 1.3  2003/12/06 19:10:46  carstenklapp
 // Finished off logic for determining user class, including
 // PassUser. Removed ability of BogoUser to save prefs into a page.
