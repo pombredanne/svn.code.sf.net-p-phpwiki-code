@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FrameInclude.php,v 1.4 2002-09-02 12:39:02 rurban Exp $');
+rcs_id('$Id: FrameInclude.php,v 1.5 2002-09-17 03:57:41 dairiki Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -91,10 +91,8 @@ extends WikiPlugin
                 }
                 $src = WikiURL($page);
             }
-        } else {
-            // FIXME: unmunged url hack
-            $src = preg_replace('/src=(.*)\Z/','$1',$argstr);
         }
+
         // How to normalize url's to compare against recursion?
         if ($src == $request->getURLtoSelf() ) {
             return $this->error(sprintf(_("recursive inclusion of url %s"), $src));
