@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.187 2004-11-05 22:08:52 rurban Exp $');
+rcs_id('$Id: main.php,v 1.188 2004-11-07 16:02:52 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -194,7 +194,7 @@ $this->version = phpwiki_version();
             $this->_notAuthorized($require_level); // NORETURN
     }
 
-    function getUser () {
+    function & getUser () {
         if (isset($this->_user))
             return $this->_user;
         else
@@ -653,11 +653,6 @@ TODO: check against these cases:
             unset($this->_user->_HomePagehandle);
             unset($this->_user->_auth_dbi);
 	}
-        if (!empty($this->_dbi)) {
-            session_write_close();
-            $this->_dbi->close();
-            unset($this->_dbi);
-        }
         Request::finish();
         exit;
     }
@@ -1028,7 +1023,9 @@ function validateSessionPath() {
     // is output, which causes some versions of IE to display a blank
     // page (due to its strict mode while parsing a page?).
     if (! is_writeable(ini_get('session.save_path'))) {
-        $tmpdir = '/tmp';
+        $tmpdir = defined('SESSION_SAVE_PATH') ? SESSION_SAVE_PATH : '/tmp';
+        if (!is_writeable($tmpdir))
+            $tmpdir = '/tmp';
         trigger_error
             (sprintf(_("%s is not writable."),
                      _("The session.save_path directory"))
@@ -1144,6 +1141,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.187  2004/11/05 22:08:52  rurban
+// Ok: Fix loading all required userclasses beforehand. This is much slower than before but safes a few bytes RAM
+//
 // Revision 1.186  2004/11/05 20:53:35  rurban
 // login cleanup: better debug msg on failing login,
 // checked password less immediate login (bogo or anon),

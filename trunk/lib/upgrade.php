@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.26 2004-10-14 19:19:34 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.27 2004-11-07 16:02:52 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -290,6 +290,50 @@ CREATE TABLE $rating_tbl (
             $dbh->genericSqlQuery("CREATE UNIQUE INDEX rating ON $rating_tbl (dimension, raterpage, rateepage)");
         }
         break;
+    case 'accesslog':
+        $log_tbl = $prefix.'accesslog';
+        // fields according to http://www.outoforder.cc/projects/apache/mod_log_sql/docs-2.0/#id2756178
+        /*
+A	User Agent agent	varchar(255)	Mozilla/4.0 (compat; MSIE 6.0; Windows)
+a	CGi request arguments	request_args	varchar(255)	user=Smith&cart=1231&item=532
+b	Bytes transfered	bytes_sent	int unsigned	32561
+c???	Text of cookie	cookie	varchar(255)	Apache=sdyn.fooonline.net 1300102700823
+f	Local filename requested	request_file	varchar(255)	/var/www/html/books-cycroad.html
+H	HTTP request_protocol	request_protocol	varchar(10)	HTTP/1.1
+h	Name of remote host	remote_host	varchar(50)	blah.foobar.com
+I	Request ID (from modd_unique_id)	id	char(19)	POlFcUBRH30AAALdBG8
+l	Ident user info	remote_logname	varcgar(50)	bobby
+M	Machine ID???	machine_id	varchar(25)	web01
+m	HTTP request method	request_method	varchar(10)	GET
+P	httpd cchild PID	child_pid	smallint unsigned	3215
+p	http port	server_port	smallint unsigned	80
+R	Referer	referer	varchar(255)	http://www.biglinks4u.com/linkpage.html
+r	Request in full form	request_line	varchar(255)	GET /books-cycroad.html HTTP/1.1
+S	Time of request in UNIX time_t format	time_stamp	int unsigned	1005598029
+T	Seconds to service request	request_duration	smallint unsigned	2
+t	Time of request in human format	request_time	char(28)	[02/Dec/2001:15:01:26 -0800]
+U	Request in simple form	request_uri	varchar(255)	/books-cycroad.html
+u	User info from HTTP auth	remote_user	varchar(50)	bobby
+v	Virtual host servicing the request	virtual_host	varchar(255)
+        */
+        $dbh->genericSqlQuery("
+CREATE TABLE $log_tbl (
+        time_stamp    int unsigned,
+	remote_host   varchar(50),
+	remote_user   varchar(50),
+        request_method varchar(10),
+	request_line  varchar(255),
+	request_args  varchar(255),
+	request_uri   varchar(255),
+	request_time  char(28),
+	status 	      smallint unsigned,
+	bytes_sent    smallint unsigned,
+        referer       varchar(255), 
+	agent         varchar(255),
+	request_duration float
+)");
+        $dbh->genericSqlQuery("CREATE INDEX log_time ON $log_tbl (time_stamp)");
+        $dbh->genericSqlQuery("CREATE INDEX log_host ON $log_tbl (remote_host)");
     }
     echo "  ",_("CREATED"),"<br />\n";
 }
@@ -324,6 +368,15 @@ function CheckDatabaseUpdate(&$request) {
     $backend_type = $dbh->_backend->backendType();
     $prefix = isset($DBParams['prefix']) ? $DBParams['prefix'] : '';
     foreach (explode(':','session:user:pref:member') as $table) {
+        echo sprintf(_("check for table %s"), $table)," ...";
+    	if (!in_array($prefix.$table, $tables)) {
+            installTable($dbh, $table, $backend_type);
+    	} else {
+    	    echo _("OK")," <br />\n";
+        }
+    }
+    if (ACCESS_LOG_SQL) {
+        $table = "log";
         echo sprintf(_("check for table %s"), $table)," ...";
     	if (!in_array($prefix.$table, $tables)) {
             installTable($dbh, $table, $backend_type);
@@ -384,9 +437,9 @@ function CheckDatabaseUpdate(&$request) {
     //   http://bugs.mysql.com/bug.php?id=4398
     // "select * from page where LOWER(pagename) like '%search%'" does not apply LOWER!
     // confirmed for 4.1.0alpha,4.1.3-beta,5.0.0a; not yet tested for 4.1.2alpha,
-    // TODO: there's a known workaround, not yet applied. on windows only.
-    if (substr($backend_type,0,5) == 'mysql') {
-  	echo _("check for mysql 4.1.x/5.0.0 binary search problem")," ...";
+    // TODO: there's another known workaround, not yet applied. on windows only.
+    if (isWindows() and substr($backend_type,0,5) == 'mysql') {
+  	echo _("check for mysql 4.1.x/5.0.0 binary search on windows problem")," ...";
   	$result = mysql_query("SELECT VERSION()",$dbh->_backend->connection());
         $row = mysql_fetch_row($result);
         $mysql_version = $row[0];
@@ -451,6 +504,13 @@ function CheckConfigUpdate(&$request) {
     } else {
         echo _("OK");
     }
+    echo _("check for GROUP_METHOD = NONE")," ... ";
+    if (defined('GROUP_METHOD') and GROUP_METHOD == '') {
+        echo "<br />&nbsp;&nbsp;",_("GROUP_METHOD is set to NONE, and must be changed to \"NONE\"")," ...";
+        fixConfigIni("/^\s*GROUP_METHOD\s*=\s*NONE/","GROUP_METHOD = \"NONE\"");
+    } else {
+        echo _("OK");
+    }
     echo "<br />\n";
 }
 
@@ -496,6 +556,10 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.26  2004/10/14 19:19:34  rurban
+ loadsave: check if the dumped file will be accessible from outside.
+ and some other minor fixes. (cvsclient native not yet ready)
+
  Revision 1.25  2004/09/06 08:28:00  rurban
  rename genericQuery to genericSqlQuery
 

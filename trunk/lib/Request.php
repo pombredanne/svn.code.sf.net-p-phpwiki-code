@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.73 2004-11-06 04:51:25 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.74 2004-11-07 16:02:51 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -28,6 +28,7 @@ if (!function_exists('ob_clean')) {
     }
 }
 
+if (!defined('ACCESS_LOG_SQL')) define('ACCESS_LOG_SQL', false);
         
 class Request {
         
@@ -51,20 +52,8 @@ class Request {
         $this->session = new Request_SessionVars; 
         $this->cookies = new Request_CookieVars;
         
-        if (ACCESS_LOG) {
-            if (! is_writeable(ACCESS_LOG)) {
-                trigger_error
-                    (sprintf(_("%s is not writable."), _("The PhpWiki access log file"))
-                    . "\n"
-                    . sprintf(_("Please ensure that %s is writable, or redefine %s in config/config.ini."),
-                            sprintf(_("the file '%s'"), ACCESS_LOG),
-                            'ACCESS_LOG')
-                    , E_USER_NOTICE);
-            }
-            else {
-                $this->_log_entry = & new Request_AccessLogEntry(ACCESS_LOG);
-                $this->_log_entry->push($this);
-            }
+        if (ACCESS_LOG or ACCESS_LOG_SQL) {
+            $this->_accesslog =& new Request_AccessLog(ACCESS_LOG, ACCESS_LOG_SQL);
         }
         
         $GLOBALS['request'] = $this;
@@ -177,7 +166,6 @@ class Request {
              * version < 1.1.
              */
             $status = $this->httpVersion() >= 1.1 ? 303 : 302;
-
             $this->setStatus($status);
         }
 
@@ -286,7 +274,7 @@ class Request {
      */
     function cacheControl($strategy=CACHE_CONTROL, $max_age=CACHE_CONTROL_MAX_AGE) {
         if ($strategy == 'NO_CACHE') {
-            $cache_control = "no-cache";
+            $cache_control = "no-cache"; // better set private. See Pear HTTP_Header
             $max_age = -20;
         }
         elseif ($strategy == 'ALLOW_STALE' && $max_age > 0) {
@@ -423,6 +411,21 @@ class Request {
 
     function finish() {
         session_write_close();
+
+        if (!empty($this->_accesslog)) {
+            $this->_accesslog->push($this);
+            if (empty($this->_do_chunked_output))
+                $this->_ob_get_length = ob_get_length();
+            $this->_accesslog->setSize($this->_ob_get_length);
+            global $RUNTIMER;
+            if ($RUNTIMER) $this->_accesslog->setDuration($RUNTIMER->getTime());
+            // sql logging must be done before the db s closed.
+            if (isset($this->_accesslog->entries) and $this->_accesslog->_dbh)
+                foreach ($this->_accesslog->entries as $entry) {
+                    $entry->write_sql();
+                }
+        }
+
         if (!empty($this->_is_buffering_output)) {
             /* This cannot work because it might destroy xml markup */
             /*
@@ -436,13 +439,16 @@ class Request {
             } else {
             */
             if (empty($this->_do_chunked_output)) {
-                header(sprintf("Content-Length: %d", ob_get_length()));
-            } else {
-                header(sprintf("Content-Length: %d", $this->ob_get_length));
+                $this->_ob_get_length = ob_get_length();
             }
+            header(sprintf("Content-Length: %d", $this->_ob_get_length));
             //}
             while (@ob_end_flush());
             $this->_is_buffering_output = false;
+        }
+        if (!empty($this->_dbi)) {
+            $this->_dbi->close();
+            unset($this->_dbi);
         }
         exit;
     }
@@ -741,14 +747,59 @@ class Request_UploadedFile {
 
 /**
  * Create NCSA "combined" log entry for current request.
+ * Also needed for advanced spam prevention.
+ * global object holding global state (sql or file, entries, to dump)
  */
+class Request_AccessLog {
+    /**
+     * @param $logfile string  Log file name.
+     */
+    function Request_AccessLog ($logfile, $do_sql = false) {
+        global $request;
+
+        $this->logfile = $logfile;
+        if ($logfile and !is_writeable($logfile)) {
+            trigger_error
+                (sprintf(_("%s is not writable."), _("The PhpWiki access log file"))
+                 . "\n"
+                 . sprintf(_("Please ensure that %s is writable, or redefine %s in config/config.ini."),
+                           sprintf(_("the file '%s'"), ACCESS_LOG),
+                           'ACCESS_LOG')
+                 , E_USER_NOTICE);
+        }
+        //$request->_accesslog =& $this;
+        if (empty($request->_accesslog->entries))
+            register_shutdown_function("Request_AccessLogEntry_shutdown_function");
+        
+        if ($do_sql) {
+            global $DBParams;
+            if (!in_array($DBParams['dbtype'], array('SQL','ADODB')))
+                trigger_error("Unsupported database backend for ACCESS_LOG_SQL.\nNeed DATABASE_TYPE=SQL or ADODB");
+            $this->_dbh =& $request->_dbi;
+            $this->logtable = (!empty($DBParams['prefix']) ? $DBParams['prefix'] : '')."accesslog";
+        }
+        $this->entries = array();
+        $this->entries[] = & new Request_AccessLogEntry($this);
+    }
+
+    function _do($cmd, &$arg) {
+        if ($this->entries)
+            for ($i=0; $i < count($this->entries);$i++)
+                $this->entries[$i]->$cmd($arg);
+    }
+    function push(&$request)   { $this->_do('push',$request); }
+    function setSize($arg)     { $this->_do('setSize',$arg); }
+    function setStatus($arg)   { $this->_do('setStatus',$arg); }
+    function setDuration($arg) { $this->_do('setDuration',$arg); }
+}
+
 class Request_AccessLogEntry
 {
     /**
      * Constructor.
      *
-     * The log entry will be automatically appended to the log file
-     * when the current request terminates.
+     * The log entry will be automatically appended to the log file or 
+     * SQL table when the current request terminates.
      *
      * If you want to modify a Request_AccessLogEntry before it gets
      * written (e.g. via the setStatus and setSize methods) you should
@@ -756,39 +807,39 @@ class Request_AccessLogEntry
      * original (rather than a copy) object.
      *
      * <pre>
-     *    $log_entry = & new Request_AccessLogEntry($req, "/tmp/wiki_access_log");
+     *    $log_entry = & new Request_AccessLogEntry("/tmp/wiki_access_log");
      *    $log_entry->setStatus(401);
+     *    $log_entry->push($request);
      * </pre>
      *
      *
-     * @param $request object  Request object for current request.
-     * @param $logfile string  Log file name.
      */
-    function Request_AccessLogEntry ($logfile) {
-        $this->logfile = $logfile;
-
-        global $Request_AccessLogEntry_entries;
-        if (!isset($Request_AccessLogEntry_entries)) {
-            register_shutdown_function("Request_AccessLogEntry_shutdown_function");
-        }
+    function Request_AccessLogEntry (&$accesslog) {
+        $this->_accesslog = $accesslog;
+        $this->logfile = $accesslog->logfile;
+        $this->time = time();
+        $this->status = 200;    // see setStatus()
+        $this->size = 0;	// see setSize()
     }
 
+    /**
+     * @param $request object  Request object for current request.
+     */
     function push(&$request) {
         $this->host  = $request->get('REMOTE_HOST');
         $this->ident = $request->get('REMOTE_IDENT');
         if (!$this->ident)
             $this->ident = '-';
-        $this->user = '-';        // FIXME: get logged-in user name
-        $this->time = time();
+        $user = $request->getUser();
+        if ($user->isAuthenticated())
+            $this->user = $user->UserName();
+        else
+            $this->user = '-';
         $this->request = join(' ', array($request->get('REQUEST_METHOD'),
                                          $request->get('REQUEST_URI'),
                                          $request->get('SERVER_PROTOCOL')));
-        $this->status = 200;
-        $this->size = 0;
         $this->referer = (string) $request->get('HTTP_REFERER');
         $this->user_agent = (string) $request->get('HTTP_USER_AGENT');
-
-        $Request_AccessLogEntry_entries[] = &$this;
     }
 
     /**
@@ -805,8 +856,11 @@ class Request_AccessLogEntry
      *
      * @param $size integer
      */
-    function setSize ($size) {
+    function setSize ($size=0) {
         $this->size = $size;
+    }
+    function setDuration ($seconds) {
+        $this->duration = $seconds;
     }
     
     /**
@@ -842,21 +896,28 @@ class Request_AccessLogEntry
     function _ncsa_time($time = false) {
         if (!$time)
             $time = time();
-
         return date("d/M/Y:H:i:s", $time) .
             " " . $this->_zone_offset();
+    }
+
+    function write() {
+        if ($this->_accesslog->logfile) $this->write_file();
+        if ($this->_accesslog->_dbh) $this->write_sql();
     }
 
     /**
      * Write entry to log file.
      */
-    function write() {
+    function write_file() {
         $entry = sprintf('%s %s %s [%s] "%s" %d %d "%s" "%s"',
                          $this->host, $this->ident, $this->user,
                          $this->_ncsa_time($this->time),
                          $this->request, $this->status, $this->size,
                          $this->referer, $this->user_agent);
-
+        if (!empty($this->_accesslog->reader)) {
+            fclose($this->_accesslog->reader);
+            unset($this->_accesslog->reader);
+        }
         //Error log doesn't provide locking.
         //error_log("$entry\n", 3, $this->logfile);
         // Alternate method
@@ -867,16 +928,105 @@ class Request_AccessLogEntry
         }
     }
 
+    /* This is better been done by apache mod_log_sql */
+    /* If ACCESS_LOG_SQL & 2 we do write it by our own */
+    function write_sql() {
+        $dbh =& $this->_accesslog->_dbh;
+        if ($dbh) {
+          $log_tbl =& $this->_accesslog->logtable;
+          if ($GLOBALS['request']->get('REQUEST_METHOD') == "POST") {
+          	if (check_php_version(4,2))
+          	  // strangely HTTP_POST_VARS doesn't contain all posted vars.
+          	  $this->request_args = substr(serialize($_POST),0,254); // if VARCHAR(255) is used.
+          	else
+          	  $this->request_args = substr(serialize($GLOBALS['HTTP_POST_VARS']),0,254);
+          } else { 
+          	$this->request_args = $GLOBALS['request']->get('QUERY_STRING'); 
+          }
+          $dbh->genericSqlQuery
+            (
+             sprintf("INSERT DELAYED INTO $log_tbl"
+                     . " (time_stamp,remote_host,remote_user,request_method,request_line,request_uri,"
+                     .   "request_args,request_time,status,bytes_sent,referer,agent,request_duration)"
+                     . " VALUES(%d,'%s','%s','%s','%s','%s','%s','%s','%d','%d',%s,'%s','%f')",
+                     $this->time,
+                     $dbh->quote($this->host), $dbh->quote($this->user),
+                     $GLOBALS['request']->get('REQUEST_METHOD'), $dbh->quote($this->request), 
+                     $dbh->quote($GLOBALS['request']->get('REQUEST_URI')), $dbh->quote($this->request_args),
+                     $dbh->quote($this->_ncsa_time($this->time)), $this->status, $this->size,
+                     $this->referer ? "'".$dbh->quote($this->referer)."'" : "NULL", 
+                     $dbh->quote($this->user_agent),
+                     $this->duration));
+        }
+    }
+
     /**
-     * Read sequentially previous entries from log file.
+     * Read sequentially all previous entries from the beginning.
      * while ($logentry = Request_AccessLogEntry::read()) ;
      * For internal log analyzers: RecentReferrers, WikiAccessRestrictions
      */
     function read() {
-        global $Request_AccessLogEntry_reader;
-        if (!$Request_AccessLogEntry_reader) // start at the beginning
-            $Request_AccessLogEntry_reader = fopen(ACCESS_LOG, "r");
-        if ($s = fgets($Request_AccessLogEntry_reader)) {
+        return $this->accesslog->_dbh ? $this->read_sql() : $this->read_file();
+    }
+
+    /**
+     * Return iterator of referer items reverse sorted (latest first).
+     */
+    function get_referer($limit=15) {
+        if ($this->accesslog->_dbh) {
+            return read_sql("referer <>'' ORDER BY time_stamp DESC LIMIT $limit");
+        } else {
+            $iter = new WikiDB_Array_generic_iter();
+            $logs =& $iter->_array;
+            while ($logentry->read_file()) {
+                if (!empty($logentry->referer)) {
+                    $iter->_array[] = $logentry;
+                    if ($limit and count($logs) > $limit)
+                        array_shift($logs);
+                    $logentry = new Request_AccessLogEntry($this->_accesslog);
+                }
+            }
+            $logs = array_reverse($logs);
+            $logs = array_slice($logs,0,min($limit,count($logs)));
+            return $iter;
+        }
+    }
+    /**
+     * Return iterator of matching host items reverse sorted (latest first).
+     */
+    function get_host($host, $since_minutes=20) {
+        if ($this->accesslog->_dbh) {
+            // mysql specific only:
+            return read_sql("request_host='".$dbh->quote($host)."' AND time_stamp > ". (time()-$since_minutes*60) 
+                            ." ORDER BY time_stamp DESC");
+        } else {
+            $iter = new WikiDB_Array_generic_iter();
+            $logs =& $iter->_array;
+            while ($logentry->read_file()) {
+                if (!empty($logentry->referer)) {
+                    $iter->_array[] = $logentry;
+                    if ($limit and count($logs) > $limit)
+                        array_shift($logs);
+                    $logentry = new Request_AccessLogEntry($this->_accesslog);
+                }
+            }
+            $logs = array_reverse($logs);
+            $logs = array_slice($logs,0,min($limit,count($logs)));
+            return $iter;
+        }
+    }
+
+
+    /**
+     * Read sequentially all previous entries from log file.
+     */
+    function read_file() {
+        global $request;
+        if ($this->logfile) $this->logfile = ACCESS_LOG; // support Request_AccessLogEntry::read
+
+        if (empty($request->_accesslog->reader))       // start at the beginning
+            $request->_accesslog->reader = fopen($this->logfile, "r");
+        if ($s = fgets($request->_accesslog->reader)) {
             if (preg_match('/^(\S+)\s(\S+)\s(\S+)\s\[(.+?)\] "([^"]+)" (\d+) (\d+) "([^"]*)" "([^"]*)"$/',$s,$m)) {
             	list(,$this->host, $this->ident, $this->user, $this->time,
                      $this->request, $this->status, $this->size,
@@ -884,9 +1034,23 @@ class Request_AccessLogEntry
             }
             return $this;
         } else { // until the end
-            fclose($Request_AccessLogEntry_reader);
+            fclose($request->_accesslog->reader);
             return false;
         }
+    }
+
+    function _read_sql_query($where='') {
+        $dbh =& $this->_accesslog->_dbh;
+        $log_tbl =& $this->_accesslog->logtable;
+        if ($where)
+            return $dbh->genericSqlIter("SELECT * FROM $log_tbl WHERE $where");
+        else
+            return $dbh->genericSqlIter("SELECT * FROM $log_tbl");
+    }
+    function read_sql($where='') {
+        if (empty($this->_accesslog->sqliter))
+            $this->_accesslog->sqliter = $this->_read_sql_query($where);
+        return $this->_accesslog->sqliter->next();
     }
 }
 
@@ -896,18 +1060,14 @@ class Request_AccessLogEntry
  * @access private
  * @see Request_AccessLogEntry
  */
-function Request_AccessLogEntry_shutdown_function ()
-{
-    global $Request_AccessLogEntry_entries, $Request_AccessLogEntry_reader;
+function Request_AccessLogEntry_shutdown_function () {
+    global $request;
     
-    if (!empty($Request_AccessLogEntry_reader)) {
-        fclose($Request_AccessLogEntry_reader);
-        unset($Request_AccessLogEntry_reader);
-    }
-    foreach ($Request_AccessLogEntry_entries as $entry) {
-        $entry->write();
-    }
-    unset($Request_AccessLogEntry_entries);
+    if (isset($request->_accesslog->entries) and $request->_accesslog->logfile)
+      foreach ($request->_accesslog->entries as $entry) {
+          $entry->write_file();
+      }
+    unset($request->_accesslog->entries);
 }
 
 
@@ -1091,6 +1251,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.73  2004/11/06 04:51:25  rurban
+// readable ACCESS_LOG support: RecentReferrers, WikiAccessRestrictions
+//
 // Revision 1.72  2004/11/01 10:43:55  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session

@@ -1,10 +1,10 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.63 2004-11-01 10:43:58 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.64 2004-11-07 16:02:52 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
 require_once('lib/ErrorManager.php');
-require_once('DB.php'); // Always favor use our local pear copy
+require_once('DB.php'); // Either our local pear copy or the systems
 
 class WikiDB_backend_PearDB
 extends WikiDB_backend
@@ -17,8 +17,12 @@ extends WikiDB_backend
         //$pearFinder->includeOnce('DB.php');
 
         // Install filter to handle bogus error notices from buggy DB.php's.
-        global $ErrorManager;
-        $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_pear_notice_filter'));
+        //TODO: check the Pear_DB version
+        if (0) {
+            global $ErrorManager;
+            $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_pear_notice_filter'));
+            $this->_pearerrhandler = true;
+        }
         
         // Open connection to database
         $this->_dsn = $dbparams['dsn'];
@@ -76,8 +80,9 @@ extends WikiDB_backend
 
         $this->_dbh->disconnect();
 
-        global $ErrorManager;
-        $ErrorManager->popErrorHandler();
+        if (!empty($this->_pearerrhandler)) {
+            $GLOBALS['ErrorManager']->popErrorHandler();
+        }
     }
 
 
@@ -337,7 +342,7 @@ extends WikiDB_backend
                             . " WHERE id=%d AND version=%d",
                             $id, $version));
 
-        /* Same as above -- bind!
+        /* mysql optimized version. 
         $dbh->query(sprintf("INSERT INTO $version_tbl"
                             . " (id,version,mtime,minor_edit,content,versiondata)"
                             . " VALUES(%d,%d,%d,%d,'%s','%s')",
@@ -345,6 +350,7 @@ extends WikiDB_backend
                             $dbh->quoteString($content),
                             $dbh->quoteString($this->_serialize($data))));
         */
+        // generic slow PearDB bind eh quoting.
         $dbh->query("INSERT INTO $version_tbl"
                     . " (id,version,mtime,minor_edit,content,versiondata)"
                     . " VALUES(?, ?, ?, ?, ?, ?)",
@@ -713,27 +719,16 @@ extends WikiDB_backend
 
         $pageid = (int)$pageid;
 
-        // optimize: mysql can do this with one REPLACE INTO.
-        $backend_type = $this->backendType();
-        if (substr($backend_type,0,5) == 'mysql') {
-            $dbh->query("REPLACE INTO $recent_tbl"
-                        . " (id, latestversion, latestmajor, latestminor)"
-                        . " SELECT id, $maxversion, $maxmajor, $maxminor"
-                        . " FROM $version_tbl"
-                        . ( $pageid ? " WHERE id=$pageid" : "")
-                        . " GROUP BY id" );
-        } else {
-            $this->lock();
-            $dbh->query("DELETE FROM $recent_tbl"
-                        . ( $pageid ? " WHERE id=$pageid" : ""));
-            $dbh->query( "INSERT INTO $recent_tbl"
-                         . " (id, latestversion, latestmajor, latestminor)"
-                         . " SELECT id, $maxversion, $maxmajor, $maxminor"
-                         . " FROM $version_tbl"
-                         . ( $pageid ? " WHERE id=$pageid" : "")
-                         . " GROUP BY id" );
-            $this->unlock();
-        }
+        $this->lock();
+        $dbh->query("DELETE FROM $recent_tbl"
+                    . ( $pageid ? " WHERE id=$pageid" : ""));
+        $dbh->query( "INSERT INTO $recent_tbl"
+                     . " (id, latestversion, latestmajor, latestminor)"
+                     . " SELECT id, $maxversion, $maxmajor, $maxminor"
+                     . " FROM $version_tbl"
+                     . ( $pageid ? " WHERE id=$pageid" : "")
+                     . " GROUP BY id" );
+        $this->unlock();
     }
 
     function _update_nonempty_table($pageid = false) {
@@ -742,35 +737,21 @@ extends WikiDB_backend
 
         $pageid = (int)$pageid;
 
-        // Optimize: mysql can do this with one REPLACE INTO.
-        // FIXME: This treally should be moved into ADODB_mysql.php but 
-        // then it must be duplicated for mysqli and mysqlt also.
-        $backend_type = $this->backendType();
-        if (substr($backend_type,0,5) == 'mysql') {
-            $dbh->query("REPLACE INTO $nonempty_tbl (id)"
-                        . " SELECT $recent_tbl.id"
-                        . " FROM $recent_tbl, $version_tbl"
-                        . " WHERE $recent_tbl.id=$version_tbl.id"
-                        . "       AND version=latestversion"
-                        . "  AND content<>''"
-                        . ( $pageid ? " AND $recent_tbl.id=$pageid" : ""));
-        } else {
-            extract($this->_expressions);
-            $this->lock();
-            $dbh->query("DELETE FROM $nonempty_tbl"
-                        . ( $pageid ? " WHERE id=$pageid" : ""));
-            $dbh->query("INSERT INTO $nonempty_tbl (id)"
-                        . " SELECT $recent_tbl.id"
-                        . " FROM $recent_tbl, $version_tbl"
-                        . " WHERE $recent_tbl.id=$version_tbl.id"
-                        . "       AND version=latestversion"
-                        // We have some specifics here (Oracle)
-                        //. "  AND content<>''"
-                        . "  AND content $notempty"
-                        . ( $pageid ? " AND $recent_tbl.id=$pageid" : ""));
-
-            $this->unlock();
-        }
+        extract($this->_expressions);
+        $this->lock();
+        $dbh->query("DELETE FROM $nonempty_tbl"
+                    . ( $pageid ? " WHERE id=$pageid" : ""));
+        $dbh->query("INSERT INTO $nonempty_tbl (id)"
+                    . " SELECT $recent_tbl.id"
+                    . " FROM $recent_tbl, $version_tbl"
+                    . " WHERE $recent_tbl.id=$version_tbl.id"
+                    . "       AND version=latestversion"
+                    // We have some specifics here (Oracle)
+                    //. "  AND content<>''"
+                    . "  AND content $notempty"
+                    . ( $pageid ? " AND $recent_tbl.id=$pageid" : ""));
+        
+        $this->unlock();
     }
 
 
@@ -1038,6 +1019,12 @@ extends WikiDB_backend_PearDB_generic_iter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.63  2004/11/01 10:43:58  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 // Revision 1.62  2004/10/14 19:19:34  rurban
 // loadsave: check if the dumped file will be accessible from outside.
 // and some other minor fixes. (cvsclient native not yet ready)

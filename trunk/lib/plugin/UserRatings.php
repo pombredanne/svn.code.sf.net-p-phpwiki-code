@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserRatings.php,v 1.2 2004-07-08 20:30:07 rurban Exp $');
+rcs_id('$Id: UserRatings.php,v 1.3 2004-11-07 16:02:52 rurban Exp $');
 /**
  Copyright 2004 Dan Frankowski
 
@@ -53,7 +53,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -226,21 +226,18 @@ extends WikiPlugin
         
         $noRatingUsers = array();
         if (!$nobuds){
-        foreach($allowed_users_toshow as $idx => $user)
-        {
-            // For proper caching behavior, get a ref, don't user $user
-            $u = & $allowed_users_toshow[$idx];
-            //$col = & new _PageList_Column_ratingvalue('ratingvalue', $u->getId(), 'right', $dimension, $u);
-            $col = array('_PageList_Column_ratingvalue','custom:ratingvalue', $u->getId(), 'right',' ' ,$u);
-            $pagelist->addColumnObject($col);
-            unset($u);
-
+            foreach($allowed_users_toshow as $idx => $user) {
+                // For proper caching behavior, get a ref, don't user $user
+                $u = & $allowed_users_toshow[$idx];
+                //$col = & new _PageList_Column_ratingvalue('ratingvalue', $u->getId(), 'right', $dimension, $u);
+                $col = array('_PageList_Column_ratingvalue','custom:ratingvalue', $u->getId(), 'right',' ' ,$u);
+                $pagelist->addColumnObject($col);
+                unset($u);
+            }
         }
-}
 
         // add rows -- each row represents an item (page)
-        foreach($pageids as $pagename)
-        {
+        foreach($pageids as $pagename)  {
             // addPage can deal with cases where it is passed a string
             $pagelist->addPage($pagename);
         }

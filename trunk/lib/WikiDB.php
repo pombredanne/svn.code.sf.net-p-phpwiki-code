@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.96 2004-11-05 22:32:15 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.97 2004-11-07 16:02:51 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -590,6 +590,14 @@ class WikiDB {
             }
         }
         return false;
+    }
+
+    function quote ($s) {
+        global $DBParams;
+        if ($DBParams['dbtype'] == 'SQL')
+            return $this->_backend->_dbh->quoteString($s);
+        else
+            return $this->_backend->_dbh->qstr($s);
     }
 
     // SQL iter: for simple select or create/update queries
@@ -1835,7 +1843,6 @@ class WikiDB_Array_PageIterator
     }
 }
 
-/*
 class WikiDB_Array_generic_iter
 {
     function WikiDB_Array_generic_iter($result) {
@@ -1865,7 +1872,6 @@ class WikiDB_Array_generic_iter
         return $this->_array;
     }
 }
-*/
 
 /**
  * Data cache used by WikiDB.
@@ -2034,6 +2040,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.96  2004/11/05 22:32:15  rurban
+// encode the subject to be 7-bit safe
+//
 // Revision 1.95  2004/11/05 20:53:35  rurban
 // login cleanup: better debug msg on failing login,
 // checked password less immediate login (bogo or anon),
