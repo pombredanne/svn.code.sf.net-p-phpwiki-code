@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.35 2002-02-08 02:32:49 dairiki Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.36 2002-02-13 03:08:44 carstenklapp Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -9,16 +9,18 @@
  * columns in their output.
  *
  *
- * Column arguments:
+ * Column 'info=' arguments:
  *
  * 'mtime'   _("Last Modified")
  * 'hits'    _("Hits")
  * 'summary' _("Last Summary")
- * 'Version' _("Version")),
+ * 'version' _("Version")),
  * 'author'  _("Last Author")),
  * 'locked'  _("Locked"), _("locked")
  * 'minor'   _("Minor Edit"), _("minor")
  * 'markup'  _("Markup")
+ *
+ * 'all'     All columns will be displayed. This argument must appear alone.
  *
  * FIXME: In this refactoring I have un-implemented _ctime, _cauthor, and
  * number-of-revision.  Note the _ctime and _cauthor as they were implemented
@@ -140,15 +142,21 @@ class PageList {
     var $_rows = array();
     var $_caption = "";
     var $_pagename_seen = false;
+    var $_types = array();
 
     function PageList ($columns = false, $exclude = false) {
-        if ($columns) {
+        if ($columns == 'all') {
+            $this->_initAvailableColumns();
+            foreach ($this->_types as $key => $_obj)
+                $this->_addColumn($key);
+        } else if ($columns) {
             if (!is_array($columns))
                 $columns = explode(',', $columns);
             foreach ($columns as $col)
                 $this->_addColumn($col);
-        }
-        $this->_addColumn('pagename');
+            $this->_addColumn('pagename');
+        } else
+            $this->_addColumn('pagename');
 
         if ($exclude) {
             if (!is_array($exclude))
@@ -235,30 +243,43 @@ class PageList {
     ////////////////////
     // private
     ////////////////////
+    function _initAvailableColumns() {
+        if (!empty($this->_types))
+            return;
+
+        $this->_types =
+            array('pagename'
+                  => new _PageList_Column_pagename,
+
+                  'mtime'
+                  => new _PageList_Column_time('rev:mtime',
+                                               _("Last Modified")),
+                  'hits'
+                  => new _PageList_Column('hits',  _("Hits"), 'right'),
+
+                  'summary'
+                  => new _PageList_Column('rev:summary', _("Last Summary")),
+
+                  'version'
+                  => new _PageList_Column_version('rev:version', _("Version"),
+                                                  'right'),
+                  'author'
+                  => new _PageList_Column_author('rev:author',
+                                                 _("Last Author")),
+                  'locked'
+                  => new _PageList_Column_bool('locked', _("Locked"),
+                                               _("locked")),
+                  'minor'
+                  => new _PageList_Column_bool('rev:is_minor_edit',
+                                               _("Minor Edit"), _("minor")),
+                  'markup'
+                  => new _PageList_Column('rev:markup', _("Markup"))
+                  );
+    }
+
     function _addColumn ($column) {
-        static $types;
-        if (empty($types)) {
-            $types = array( 'pagename'
-                            => new _PageList_Column_pagename,
-                            'mtime'
-                            => new _PageList_Column_time('rev:mtime', _("Last Modified")),
-                            'hits'
-                            => new _PageList_Column('hits',  _("Hits"), 'right'),
-                            'summary'
-                            => new _PageList_Column('rev:summary',  _("Last Summary")),
-                            'version'
-                            => new _PageList_Column_version('rev:version', _("Version"), 'right'),
-                            'author'
-                            => new _PageList_Column_author('rev:author', _("Last Author")),
-                            'locked'
-                            => new _PageList_Column_bool('locked', _("Locked"), _("locked")),
-                            'minor'
-                            => new _PageList_Column_bool('rev:is_minor_edit',
-                                                         _("Minor Edit"), _("minor")),
-                            'markup'
-                            => new _PageList_Column('rev:markup', _("Markup"))
-                            );
-        }
+
+        $this->_initAvailableColumns();
 
         if (isset($this->_columns_seen[$column]))
             return false;       // Already have this one.
@@ -272,12 +293,12 @@ class PageList {
         if (strstr($column, ':'))
             list ($column, $heading) = explode(':', $column, 2);
 
-        if (!isset($types[$column])) {
+        if (!isset($this->_types[$column])) {
             trigger_error(sprintf("%s: Bad column", $column), E_USER_NOTICE);
             return false;
         }
 
-        $col = $types[$column];
+        $col = $this->_types[$column];
         if (!empty($heading))
             $col->setHeading($heading);
 
