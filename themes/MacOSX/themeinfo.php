@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.27 2002-01-19 19:38:27 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.28 2002-01-19 20:05:19 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -46,6 +46,8 @@ rcs_id('$Id: themeinfo.php,v 1.27 2002-01-19 19:38:27 carstenklapp Exp $');
  * feedback?)
  *
  * */
+
+require_once('lib/Theme.php');
 
 class Theme_MacOSX extends Theme {
     function getCSS() {
