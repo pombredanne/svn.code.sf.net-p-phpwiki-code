@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.40 2004-03-01 13:48:45 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.41 2004-03-17 19:35:59 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -43,6 +43,11 @@ extends WikiDB_backend
                     'link_tbl'     => $prefix . 'link',
                     'recent_tbl'   => $prefix . 'recent',
                     'nonempty_tbl' => $prefix . 'nonempty');
+        $page_tbl = $this->_table_names['page_tbl'];
+        $version_tbl = $this->_table_names['version_tbl'];
+        $this->page_tbl_fields = "$page_tbl.id as id, $page_tbl.pagename as pagename, $page_tbl.hits as hits, $page_tbl.pagedata as pagedata";
+        $this->version_tbl_fields = "$version_tbl.version as version, $version_tbl.mtime as mtime, ".
+            "$version_tbl.minor_edit as minor_edit, $version_tbl.content as content, $version_tbl.versiondata as versiondata";
 
         $this->_expressions
             = array('maxmajor'     => "MAX(CASE WHEN minor_edit=0 THEN version END)",
@@ -75,7 +80,7 @@ extends WikiDB_backend
     function is_wiki_page($pagename) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-        return $dbh->getOne(sprintf("SELECT $page_tbl.id"
+        return $dbh->getOne(sprintf("SELECT $page_tbl.id as id"
                                     . " FROM $nonempty_tbl, $page_tbl"
                                     . " WHERE $nonempty_tbl.id=$page_tbl.id"
                                     . "   AND pagename='%s'",
@@ -231,9 +236,9 @@ extends WikiDB_backend
             $fields = "*";
         }
         else {
-            $fields = ("$page_tbl.*,"
+            $fields = $this->page_tbl_fields . ","
                        . "mtime,minor_edit,versiondata,"
-                       . "content<>'' AS have_content");
+                       . "content<>'' AS have_content";
         }
 
         $result = $dbh->getRow(sprintf("SELECT $fields"
@@ -410,7 +415,7 @@ extends WikiDB_backend
         
         $qpagename = $dbh->quoteString($pagename);
         
-        $result = $dbh->query("SELECT $want.*"
+        $result = $dbh->query("SELECT $want.id as id, $want.pagename as pagename, $want.hits as hits, $want.pagedata as pagedata"
                               . " FROM $link_tbl, $page_tbl AS linker, $page_tbl AS linkee"
                               . " WHERE linkfrom=linker.id AND linkto=linkee.id"
                               . "  AND $have.pagename='$qpagename'"
@@ -435,7 +440,8 @@ extends WikiDB_backend
                                       . " $orderby $limit");
             }
             else {
-                $result = $dbh->query("SELECT $page_tbl.*"
+                $result = $dbh->query("SELECT "
+                                      . $this->page_tbl_fields
                                       . " FROM $nonempty_tbl, $page_tbl, $recent_tbl, $version_tbl"
                                       . " WHERE $nonempty_tbl.id=$page_tbl.id"
                                       . " AND $page_tbl.id=$recent_tbl.id"
@@ -447,7 +453,8 @@ extends WikiDB_backend
                 $result = $dbh->query("SELECT * FROM $page_tbl $orderby $limit");
             }
             else {
-                $result = $dbh->query("SELECT $page_tbl.*"
+                $result = $dbh->query("SELECT "
+                                      . $this->page_tbl_fields
                                       . " FROM $nonempty_tbl, $page_tbl"
                                       . " WHERE $nonempty_tbl.id=$page_tbl.id"
                                       . " $orderby $limit");
@@ -465,7 +472,7 @@ extends WikiDB_backend
         
         $table = "$nonempty_tbl, $page_tbl";
         $join_clause = "$nonempty_tbl.id=$page_tbl.id";
-        $fields = "$page_tbl.*";
+        $fields = $this->page_tbl_fields;
         $callback = new WikiMethodCb($this, '_sql_match_clause');
         
         if ($fullsearch) {
@@ -475,7 +482,7 @@ extends WikiDB_backend
             $table .= ", $version_tbl";
             $join_clause .= " AND $page_tbl.id=$version_tbl.id AND latestversion=version";
 
-            $fields .= ",$version_tbl.*";
+            $fields .= ", " . $this->version_tbl_fields;
             $callback = new WikiMethodCb($this, '_fullsearch_sql_match_clause');
         }
         
@@ -525,7 +532,8 @@ extends WikiDB_backend
         if ($sortby) $orderby = 'ORDER BY ' . PageList::sortby($sortby,'db');
         else         $orderby = "ORDER BY hits $order";
         //$limitclause = $limit ? " LIMIT $limit" : '';
-        $result = $dbh->query("SELECT $page_tbl.*"
+        $result = $dbh->query("SELECT "
+                              . $this->page_tbl_fields
                               . " FROM $nonempty_tbl, $page_tbl"
                               . " WHERE $nonempty_tbl.id=$page_tbl.id"
                               . " $orderby"
@@ -597,7 +605,8 @@ extends WikiDB_backend
             $where_clause .= " AND " . join(" AND ", $pick);
 
         // FIXME: use SQL_BUFFER_RESULT for mysql?
-        $result = $dbh->query("SELECT $page_tbl.*,$version_tbl.*"
+        $result = $dbh->query("SELECT " 
+                              . $this->page_tbl_fields . ", " . $this->version_tbl_fields
                               . " FROM $table"
                               . " WHERE $where_clause"
                               . " ORDER BY mtime $order"
