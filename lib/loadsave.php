@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.81 2003-11-18 18:28:35 carstenklapp Exp $');
+rcs_id('$Id: loadsave.php,v 1.82 2003-11-18 19:48:01 carstenklapp Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -465,7 +465,7 @@ function SavePage (&$request, $pageinfo, $source, $filename)
         $f = str_replace(sprintf(_("Serialized file %s"), ''), '', $f);
         $f = str_replace(sprintf(_("plain file %s"), ''), '', $f);
         global $Theme;
-        $meb = $Theme->makeButton($text = ("Merge Edit"),
+        $meb = $Theme->makeButton($text = _("Merge Edit"),
                                   $url = _("PhpWikiAdministration")
                                   . "?action=loadfile&source="
                                   . FilenameForPage($f)
@@ -830,6 +830,12 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.81  2003/11/18 18:28:35  carstenklapp
+ Bugfix: In the Load File function of PhpWikiAdministration: When doing
+ a "Merge Edit" or "Restore Anyway", page names containing accented
+ letters (such as locale/de/pgsrc/G%E4steBuch) would produce a file not
+ found error (Use FilenameForPage funtion to urlencode page names).
+
  Revision 1.80  2003/03/07 02:46:57  dairiki
  Omit checks for safe_mode before set_time_limit().  Just prefix the
  set_time_limit() calls with @ so that they fail silently if not
