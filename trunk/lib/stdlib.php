@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.97 2002-02-03 01:29:42 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.98 2002-02-03 19:03:44 carstenklapp Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -400,6 +400,13 @@ function TimezoneOffset ($time = false, $no_colon = false) {
     if ($time === false)
         $time = time();
     $secs = date('Z', $time);
+    return seconds2zoneOffset($secs, $no_colon);
+}
+
+/**
+ * Format a timezone offset from seconds to ±HH:MM format.
+ */
+function seconds2zoneOffset ($secs, $no_colon = false) {
     if ($secs < 0) {
         $sign = '-';
         $secs = -$secs;
