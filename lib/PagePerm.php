@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.29 2004-07-03 08:04:19 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.30 2004-09-25 16:24:02 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -156,11 +156,12 @@ function mayAccessPage ($access, $pagename) {
  * Todo: cache result per access and page in session?
  */
 function requiredAuthorityForPage ($action) {
+    global $request;
     $auth = _requiredAuthorityForPagename(action2access($action),
-                                          $GLOBALS['request']->getArg('pagename'));
+                                          $request->getArg('pagename'));
     assert($auth !== -1);
     if ($auth)
-        return $GLOBALS['request']->_user->_level;
+        return $request->_user->_level;
     else
         return WIKIAUTH_UNOBTAINABLE;
 }
@@ -232,7 +233,7 @@ function _requiredAuthorityForPagename($access, $pagename) {
     }
     // ACL defined; check if isAuthorized returns true or false or undecided
     $authorized = $perm->isAuthorized($access, $request->_user);
-    if ($authorized != -1) // -1 for undecided
+    if ($authorized !== 'undecided') // interestingly true is also -1, so we use a string
         return $authorized;
     else
         return _requiredAuthorityForPagename($access, getParentPage($pagename));
@@ -347,7 +348,7 @@ class PagePermission {
                 }
             }
         }
-        return -1; // undecided
+        return 'undecided'; // undecided
     }
 
     /**
@@ -698,6 +699,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.29  2004/07/03 08:04:19  rurban
+// fixed implicit PersonalPage login (e.g. on edit), fixed to check against create ACL on create, not edit
+//
 // Revision 1.28  2004/06/25 14:29:17  rurban
 // WikiGroup refactoring:
 //   global group attached to user, code for not_current user.
