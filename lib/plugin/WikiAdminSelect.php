@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSelect.php,v 1.5 2003-02-24 19:38:04 dairiki Exp $');
+rcs_id('$Id: WikiAdminSelect.php,v 1.6 2004-01-26 19:15:29 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -22,7 +22,7 @@ rcs_id('$Id: WikiAdminSelect.php,v 1.5 2003-02-24 19:38:04 dairiki Exp $');
 
 /**
  * Allows selection of multiple pages which get passed to other
- * WikiAdmin plugins then.
+ * WikiAdmin plugins then. Then do Rename, Remove, Chmod, Chown, ...
  *
  * Usage:   <?plugin WikiAdminSelect?>
  * Author:  Reini Urban <rurban@x-ray.at>
@@ -47,7 +47,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
@@ -79,6 +79,8 @@ extends WikiPlugin
             $exclude = false;
         $info = $args['info'];
         $this->debug = $args['debug'];
+        if (!empty($request->getArg['s']))
+            $args['s'] = $request->getArg['s'];
         if (!empty($args['s'])) {
             $s = $args['s'];
             $sl = explodePageList($args['s']);
@@ -144,7 +146,10 @@ extends WikiPlugin
                                             : 'checkbox', $exclude);
         $pagelist->addPageList($this->_list);
         $form->pushContent($pagelist->getContent());
-        $form->pushContent(HiddenGets(array('s'))); // debugging params, ...
+        foreach ($_GET as $k => $v) {
+            if (!in_array($k,array('s','WikiAdminSelect','action')))
+                $form->pushContent(HiddenInputs(array($k => $v))); // debugging params, ...
+        }
         if (! $request->getArg('verify')) {
             $form->pushContent(HTML::input(array('type' => 'hidden',
                                                  'name' => 'action',
@@ -181,6 +186,9 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2003/02/24 19:38:04  dairiki
+// Get rid of unused method Request::debugVars().
+//
 // Revision 1.4  2003/02/24 01:36:27  dairiki
 // Don't use PHPWIKI_DIR unless it's defined.
 // (Also typo/bugfix in SystemInfo plugin.)
