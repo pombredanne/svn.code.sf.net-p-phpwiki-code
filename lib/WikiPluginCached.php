@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiPluginCached.php,v 1.14 2004-09-25 16:26:08 rurban Exp $');
+<?php rcs_id('$Id: WikiPluginCached.php,v 1.15 2004-09-26 17:09:23 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
  Copyright (C) 2004 Reini Urban
@@ -32,11 +32,18 @@ require_once "lib/WikiPlugin.php";
 // Try the system pear class. See newCache()
 @require_once('Cache.php');
 
+// types:
 define('PLUGIN_CACHED_HTML', 0);         // cached html (extensive calculation)
 define('PLUGIN_CACHED_IMG_INLINE', 1);   // gd images
-define('PLUGIN_CACHED_IMG_ONDEMAND', 2); // don't cache
-define('PLUGIN_CACHED_MAP', 4);    	     // area maps
-define('PLUGIN_CACHED_STATIC', 8); 	     // make it available via /uploads/, not via /getimg.php?id=
+define('PLUGIN_CACHED_MAP', 2);    	     // area maps
+define('PLUGIN_CACHED_SVG', 3);    	     // special SVG/SVGZ object
+define('PLUGIN_CACHED_SVG_PNG', 4);      // special SVG/SVGZ object with PNG fallback
+define('PLUGIN_CACHED_SWF', 5);    	     // special SWF (flash) object
+define('PLUGIN_CACHED_PDF', 6);    	     // special PDF object (inlinable?)
+define('PLUGIN_CACHED_PS', 7);    	     // special PS object (inlinable?)
+// boolean tests:
+define('PLUGIN_CACHED_IMG_ONDEMAND', 64); // don't cache
+define('PLUGIN_CACHED_STATIC', 128); 	 // make it available via /uploads/, not via /getimg.php?id=
 
 /**
  * An extension of the WikiPlugin class to allow image output and      
@@ -200,6 +207,38 @@ class WikiPluginCached extends WikiPlugin
                     if ($this->_static) $url = $content['url'];
                     $content['html'] = $do_save 
                         ? $this->embedMap($id, $url, $content['html'], $dbi, $sortedargs, $request)
+                        : false;
+                }
+                break;
+            case PLUGIN_CACHED_SVG:
+                if (!$content || !$content['html'] ) {
+                    $do_save = $this->produceImage($content, $this, $dbi, $sortedargs, $request, 'html');
+                    if ($this->_static) $url = $content['url'];
+                    $args = array(); //width+height => object args
+                    if (!empty($sortedargs['width'])) $args['width'] = $sortedargs['width'];
+                    if (!empty($sortedargs['height'])) $args['height'] = $sortedargs['height'];
+                    $content['html'] = $do_save 
+                        ? $this->embedObject($url, 'image/svg+xml', $args,
+                                             HTML::embed(array_merge(
+                                             array('src'=>$url, 'type'=>'image/svg+xml'),
+                                             $args)))
+                        : false;
+                }
+                break;
+            case PLUGIN_CACHED_SVG_PNG:
+                if (!$content || !$content['html'] ) {
+                    $do_save_svg = $this->produceImage($content, $this, $dbi, $sortedargs, $request, 'html');
+                    if ($this->_static) $url = $content['url'];
+                    // hack alert! somehow we should know which argument will produce the secondary image (PNG)
+                    $args = $sortedargs;
+                    $args[$this->pngArg()] = $content['imagetype']; // default type: PNG or GIF
+                    $do_save = $this->produceImage($pngcontent, $this, $dbi, $args, $request, $content['imagetype']);
+                    $args = array(); //width+height => object args
+                    if (!empty($sortedargs['width'])) $args['width'] = $sortedargs['width'];
+                    if (!empty($sortedargs['height'])) $args['height'] = $sortedargs['height'];
+                    $content['html'] = $do_save_svg 
+                        ? $this->embedObject($url, 'image/svg+xml', $args, 
+                                             $this->embedImg($pngcontent['url'], $dbi, $sortedargs, $request))
                         : false;
                 }
                 break;
@@ -403,7 +442,32 @@ class WikiPluginCached extends WikiPlugin
     function embedImg($url, $dbi, $argarray, $request) {
         return HTML::img( array( 
             'src' => $url,
-            'alt' => htmlspecialchars($this->getAlt($dbi, $argarray, $request)) ) );         
+            'alt' => htmlspecialchars($this->getAlt($dbi, $argarray, $request)) ) );
+    }
+
+    /**
+     * svg?, swf, ...
+     <object type="audio/x-wav" standby="Loading Audio" data="example.wav">
+       <param name="src" value="example.wav" valuetype="data"></param>
+       <param name="autostart" value="false" valuetype="data"></param>
+       <param name="controls" value="ControlPanel" valuetype="data"></param>
+       <a href="example.wav">Example Audio File</a>
+     </object>
+     * See http://www.protocol7.com/svg-wiki/?EmbedingSvgInHTML
+     <object data="sample.svgz" type="image/svg+xml"
+             width="400" height="300">
+       <embed src="sample.svgz" type="image/svg+xml"
+              width="400" height="300" />
+       <p>Alternate Content like <img src="" /></p>
+     </object>
+     */
+    // how to handle alternate images? always provide alternate static images?
+    function embedObject($url, $type, $args = false, $params = false) {
+        if (!$args) $args = array();
+        $object = HTML::object(array_merge($args, array('src' => $url, 'type' => $type)));
+        if ($params)
+            $object->pushContent($params);
+        return $object;
     }
 
 
@@ -643,7 +707,7 @@ class WikiPluginCached extends WikiPlugin
     function produceImage(&$content, $plugin, $dbi, $argarray, $request, $errorformat) {
         $plugin->resetError();
         $content['html'] = $imagehandle = false;
-        if ($plugin->getPluginType() & PLUGIN_CACHED_MAP ) {
+        if ($plugin->getPluginType() == PLUGIN_CACHED_MAP ) {
             list($imagehandle,$content['html']) = $plugin->getMap($dbi, $argarray, $request);
         } else {
             $imagehandle = $plugin->getImage($dbi, $argarray, $request);
@@ -666,18 +730,32 @@ class WikiPluginCached extends WikiPlugin
         // image handle -> image data        
         if ($this->_static) {
             $ext = "." . $content['imagetype'];
+            if (is_string($imagehandle) and file_exists($imagehandle)) {
+            	if (preg_match("/.(\w+)$/",$imagehandle,$m)) {
+            	    $ext = "." . $m[1];
+            	}
+            }
             $tmpfile = tempnam(getUploadFilePath(), PLUGIN_CACHED_FILENAME_PREFIX . $ext);
             if (!strstr(basename($tmpfile), $ext)) {
                 unlink($tmpfile);
                 $tmpfile .= $ext;
             }
             $tmpfile = getUploadFilePath() . basename($tmpfile);
+            if (is_string($imagehandle) and file_exists($imagehandle)) {
+                rename($imagehandle, $tmpfile);
+            }
         } else {
             $tmpfile = $this->tempnam();
         }
-        $this->writeImage($content['imagetype'], $imagehandle, $tmpfile);
-        ImageDestroy($imagehandle);
-        sleep(1);
+        if (is_resource($imagehandle)) {
+            $this->writeImage($content['imagetype'], $imagehandle, $tmpfile);
+            ImageDestroy($imagehandle);
+            sleep(0.2);
+        } elseif (is_string($imagehandle)) {
+            $content['file'] = getUploadFilePath() . basename($tmpfile);
+            $content['url'] = getUploadDataPath() . basename($tmpfile);
+            return true;
+        }
         if (file_exists($tmpfile)) {
             $fp = fopen($tmpfile,'rb');
             $content['image'] = fread($fp, filesize($tmpfile));
@@ -693,7 +771,13 @@ class WikiPluginCached extends WikiPlugin
                 return true;
         }
         return false;
-    } // produceImage
+    }
+
+    function staticUrl ($tmpfile) {
+        $content['file'] = $tmpfile;
+        $content['url'] = getUploadDataPath() . basename($tmpfile);
+        return $content;
+    }
 
     function tempnam($prefix = false) {
         return tempnam(isWindows() ? str_replace('/', "\\", PLUGIN_CACHED_CACHE_DIR) : PLUGIN_CACHED_CACHE_DIR,
@@ -1005,6 +1089,9 @@ class WikiPluginCached extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2004/09/25 16:26:08  rurban
+// some plugins use HTML
+//
 // Revision 1.13  2004/09/22 13:46:25  rurban
 // centralize upload paths.
 // major WikiPluginCached feature enhancement:

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Ploticus.php,v 1.8 2004-09-22 15:23:56 rurban Exp $');
+rcs_id('$Id: Ploticus.php,v 1.9 2004-09-26 17:09:23 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -31,9 +31,9 @@ rcs_id('$Id: Ploticus.php,v 1.8 2004-09-22 15:23:56 rurban Exp $');
  *
  * Note: 
  * - For windows you need either a gd library with GIF support or 
- *   a ploticus with PNG support. This comes only with the cygwin build.
+ *   a ploticus with PNG support. This comes e.g. with the cygwin build.
  * - We support only images supported by GD so far (PNG most likely). 
- *   No EPS, PS, SWF, SVG or SVGZ support due to limitations in WikiPluginCached.
+ *   No EPS, PS, SWF, SVG or SVGZ support yet, due to limitations in WikiPluginCached.
  *   This will be fixed soon.
  *
  * Usage:
@@ -45,6 +45,7 @@ rcs_id('$Id: Ploticus.php,v 1.8 2004-09-22 15:23:56 rurban Exp $');
  *
  * TODO: PloticusSql - create intermediate data from SQL. Similar to SqlResult, just in graphic form.
  * For example to produce nice looking pagehit statistics or ratings statistics.
+ * Ploticus has its own sql support within #getproc data, but this would expose security information.
  */
 
 if (!defined("PLOTICUS_EXE"))
@@ -66,11 +67,26 @@ extends WikiPluginCached
     function getPluginType() {
     	if (!empty($this->_args['-csmap']))
     	    return PLUGIN_CACHED_MAP; // not yet tested
-    	elseif (in_array($this->decideImgType($this->_args['device']),
-                         array('','svg','swf','svgz','eps','ps','pdf','html')))
-            return PLUGIN_CACHED_IMG_ONDEMAND;
-    	else
+        // produce these on-demand so far, uncached. 
+        // will get better support in WikiPluginCached soon.
+        // FIXME: html also? what about ''?
+        $type = $this->decideImgType($this->_args['device']);
+        if ($type == $this->_args['device'])
             return PLUGIN_CACHED_IMG_INLINE;
+        $device = strtolower($this->_args['device']);
+    	if (in_array($device, array('svg','swf','svgz','eps','ps','pdf','html'))) {
+            switch ($this->_args['device']) {
+            	case 'svg':
+            	case 'svgz':
+                   return PLUGIN_CACHED_STATIC | PLUGIN_CACHED_SVG_PNG;
+            	case 'swf':
+                   return PLUGIN_CACHED_STATIC | PLUGIN_CACHED_SWF;
+                default: 
+                   return PLUGIN_CACHED_STATIC | PLUGIN_CACHED_HTML;
+            }
+        }
+    	else
+            return PLUGIN_CACHED_IMG_INLINE; // normal cached libgd image handles
     }
     function getName () {
         return _("Ploticus");
@@ -83,7 +99,7 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
     function getDefaultArguments() {
         return array(
@@ -216,11 +232,18 @@ extends WikiPluginCached
                 return false;
             }
             $ImageCreateFromFunc = "ImageCreateFrom$gif";
-            $img = $ImageCreateFromFunc( "$tempfile.$gif" );
-            return $img;
+            if (function_exists($ImageCreateFromFunc))
+                return $ImageCreateFromFunc( "$tempfile.$gif" );
+            return "$tempfile.$gif";
         } else {
             return $this->error(fmt("empty source"));
         }
+    }
+    
+    // which argument must be set to 'png', for the fallback image when svg will fail on the client.
+    // type: SVG_PNG
+    function pngArg() {
+    	return 'device';
     }
     
     function getMap($dbi, $argarray, $request) {
@@ -230,6 +253,10 @@ extends WikiPluginCached
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/09/22 15:23:56  rurban
+// support <!plugin-list !> pagelist data
+// add -prefab arg support
+//
 // Revision 1.7  2004/09/22 13:46:26  rurban
 // centralize upload paths.
 // major WikiPluginCached feature enhancement:
