@@ -1,4 +1,4 @@
-<!-- $Id: wiki_msql.php3,v 1.8 2000-06-29 04:29:06 wainstead Exp $ -->
+<!-- $Id: wiki_msql.php3,v 1.9 2000-06-30 02:47:07 wainstead Exp $ -->
 <?
 
    /*
@@ -255,8 +255,12 @@
 
    // setup for full-text search
    function InitFullSearch($dbi, $search) {
+      // select unique page names from wikipages, and then 
+      // retrieve all pages that come back.
       $search = addslashes($search);
-      $query = "select * from $dbi[table] where searchterms clike '%$search%'";
+      $query = "select distinct pagename from $dbi[page_table] " .
+               "where line clike '%$search%' " .
+               "order by pagename";
       $res = msql_query($query, $dbi["dbc"]);
 
       return $res;
@@ -264,10 +268,10 @@
 
    // iterating through database
    function FullSearchNextMatch($dbi, $res) {
-      if($hash = msql_fetch_array($res)) {
-         return MakePageHash($hash);
+      if ($row = msql_fetch_row($res)) {
+	return RetrievePage($dbi, $row[0]);
       } else {
-         return 0;
+	return 0;
       }
    }
 
