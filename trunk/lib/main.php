@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.45 2002-02-02 05:06:00 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.46 2002-02-03 01:28:56 carstenklapp Exp $');
 
 
 include "lib/config.php";
@@ -48,7 +48,7 @@ class _UserPreference_int extends _UserPreference
 
 $UserPreferences = array('editWidth' => new _UserPreference_int(80, 30, 150),
                          'editHeight' => new _UserPreference_int(22, 5, 80),
-                         'timeOffset' => new _UserPreference('0000'),
+                         'timeOffset' => new _UserPreference(TimezoneOffset(false, true)),
                          'userid' => new _UserPreference(''));
 
 class UserPreferences {
