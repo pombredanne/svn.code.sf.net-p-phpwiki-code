@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.11 2002-01-14 02:31:00 carstenklapp Exp $
+# $Id: Makefile,v 1.12 2002-01-17 06:52:26 carstenklapp Exp $
 #
 # locale/Makefile
 #
@@ -58,6 +58,7 @@ po: po/sv.po
 mo: sv/LC_MESSAGES/phpwiki.mo sv/LC_MESSAGES/phpwiki.php
 #
 ${POT_FILE}: ../lib/ArchiveCleaner.php
+${POT_FILE}: ../lib/ButtonFactory.php
 ${POT_FILE}: ../lib/config.php
 ${POT_FILE}: ../lib/DbaDatabase.php
 ${POT_FILE}: ../lib/DbaListSet.php
@@ -96,7 +97,6 @@ ${POT_FILE}: ../lib/savepage.php
 ${POT_FILE}: ../lib/stdlib.php
 ${POT_FILE}: ../lib/Template.php
 ${POT_FILE}: ../lib/TextSearchQuery.php
-${POT_FILE}: ../lib/Toolbar.php
 ${POT_FILE}: ../lib/transform.php
 ${POT_FILE}: ../lib/WikiCallback.php
 ${POT_FILE}: ../lib/WikiDB/backend/cvs.php
