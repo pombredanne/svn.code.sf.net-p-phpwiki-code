@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.26 2002-01-15 23:40:25 dairiki Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.27 2002-01-16 04:16:56 carstenklapp Exp $');
 require_once('lib/Template.php');
 require_once('lib/transform.php');
 require_once('lib/ArchiveCleaner.php');
@@ -9,15 +9,6 @@ require_once('lib/ArchiveCleaner.php');
    This is klugey. But it works. There's probably a slicker way of
    coding it.
 */
-
-
-// Changed ConcurrentUpdates--it works ok, but not sure if I like this
-// though. Please try it out, is it too confusing?
-//
-// Moved the Thank You... message into lib/Toolbar.php. I'm thinking
-// these kind of static (non-clickable) messages should be moved out
-// of lib/Toolbar.php into a page all their own. --Carsten
-
 
 // FIXME: some links so that it's easy to get back to someplace useful
 // from these error pages.
