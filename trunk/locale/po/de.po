@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.3.2-jeffs-hacks\n"
-"POT-Creation-Date: 2002-08-17 16:58+0000\n"
+"POT-Creation-Date: 2002-08-20 18:01+0000\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Carsten Klapp <carstenklapp@mac.com>, Reini Urban <rurban@x-"
 "ray.at>, Arno Hollosi <ahollosi@mail.com>\n"
@@ -110,7 +110,7 @@ msgid "%s: %s"
 msgstr "%s: %s"
 
 #: ../lib/display.php:107 ../lib/display.php:114
-#: ../lib/plugin/BackLinks.php:12 ../themes/default/templates/navbar.tmpl:21
+#: ../lib/plugin/BackLinks.php:12 ../themes/default/templates/navbar.tmpl:24
 msgid "BackLinks"
 msgstr "BackLinks"
 
@@ -143,7 +143,7 @@ msgstr "Deine Version"
 msgid "Other version"
 msgstr "Andere Version"
 
-#: ../lib/editpage.php:83 ../lib/Theme.php:450
+#: ../lib/editpage.php:83 ../lib/Theme.php:441
 #, c-format
 msgid "Edit: %s"
 msgstr "Editiere: %s"
@@ -298,7 +298,7 @@ msgstr "%s Bytes geschrieben"
 #: ../lib/loadsave.php:283
 #, c-format
 msgid "%s bytes written\n"
-msgstr "%s Bytes geschrieben"
+msgstr "%s Bytes geschrieben\n"
 
 #: ../lib/loadsave.php:364
 msgid "Empty pagename!"
@@ -574,11 +574,11 @@ msgstr "Quelltext"
 msgid "Columns: %s."
 msgstr "Spalten: %s."
 
-#: ../lib/PageType.php:148 ../lib/plugin/FuzzyPages.php:107
+#: ../lib/PageType.php:147 ../lib/plugin/FuzzyPages.php:107
 msgid "Name"
 msgstr "Seitenname"
 
-#: ../lib/PageType.php:149
+#: ../lib/PageType.php:148
 msgid "InterWiki Address"
 msgstr "InterWiki-Adresse"
 
@@ -642,7 +642,7 @@ msgid "%s pages link to %s:"
 msgstr "%s Seiten sind mit %s verlinkt:"
 
 #: ../lib/plugin/Calendar.php:24 ../lib/plugin/Calendar.php:28
-#: ../themes/default/templates/navbar.tmpl:29
+#: ../themes/default/templates/navbar.tmpl:32
 #: ../themes/default/templates/top.tmpl:77
 msgid "Calendar"
 msgstr "Kalender"
@@ -689,11 +689,11 @@ msgstr "Ergebnis FuzzySuche nach %s"
 #: ../lib/plugin/FuzzyPages.php:102
 #, c-format
 msgid "These page titles match fuzzy with '%s'"
-msgstr "Diese Seite Namen sehen sich ungefähr ähnlich aus wie »%s«."
+msgstr "Diese Seiten sind das Ergebnis der ungenauen Suche nach »%s«."
 
 #: ../lib/plugin/FuzzyPages.php:108
 msgid "Score"
-msgstr ""
+msgstr "Güte"
 
 #: ../lib/plugin/FuzzyPages.php:169
 msgid "Spelling Score"
@@ -748,7 +748,7 @@ msgstr "Info"
 msgid "Show extra page Info and statistics for %s"
 msgstr "Zeige zusätzliches Seiten-Info und Statistiken für %s"
 
-#: ../lib/plugin/LikePages.php:13 ../themes/default/templates/navbar.tmpl:20
+#: ../lib/plugin/LikePages.php:13 ../themes/default/templates/navbar.tmpl:23
 #: ../themes/Portland/templates/navbar.tmpl:10
 msgid "LikePages"
 msgstr "GleicheSeiten"
@@ -1075,27 +1075,27 @@ msgstr "Fundstellen"
 msgid "WikiForm"
 msgstr "WikiFormular"
 
-#: ../lib/plugin/WikiForm.php:44
+#: ../lib/plugin/WikiForm.php:47
 msgid "Load File"
 msgstr "Datei Laden"
 
-#: ../lib/plugin/WikiForm.php:50
+#: ../lib/plugin/WikiForm.php:53
 msgid "Login"
 msgstr ""
 
-#: ../lib/plugin/WikiForm.php:58
+#: ../lib/plugin/WikiForm.php:61
 msgid "Dump Pages"
 msgstr "Schreibe Seiten"
 
-#: ../lib/plugin/WikiForm.php:66
+#: ../lib/plugin/WikiForm.php:69
 msgid "Dump Pages as XHTML"
 msgstr "Schreibe Seiten als XHTML"
 
-#: ../lib/plugin/WikiForm.php:77
+#: ../lib/plugin/WikiForm.php:80
 msgid "Upload"
 msgstr "Hochladen"
 
-#: ../lib/plugin/WikiForm.php:81
+#: ../lib/plugin/WikiForm.php:84
 #, c-format
 msgid "WikiForm: %s: unknown action"
 msgstr "WikiForm: %s: unbekannte Aktion"
@@ -1196,71 +1196,71 @@ msgstr "Konnte Verzeichnis »%s« nicht zum Lesen öffnen"
 msgid "%4d  %s\n"
 msgstr ""
 
-#: ../lib/Theme.php:343
+#: ../lib/Theme.php:334
 #, c-format
 msgid "%s at %s"
 msgstr "%s um %s"
 
-#: ../lib/Theme.php:347
+#: ../lib/Theme.php:338
 #, c-format
 msgid "Version %s, saved %s."
 msgstr "Version %s. %s gespeichert."
 
-#: ../lib/Theme.php:349
+#: ../lib/Theme.php:340
 #, c-format
 msgid "Last edited %s."
 msgstr "Letzte Änderung %s."
 
-#: ../lib/Theme.php:358
+#: ../lib/Theme.php:349
 #, c-format
 msgid "Version %s, saved on %s."
 msgstr "Version %s. am %s gespeichert."
 
-#: ../lib/Theme.php:360
+#: ../lib/Theme.php:351
 #, c-format
 msgid "Last edited on %s."
 msgstr "Letzte Änderung am %s."
 
-#: ../lib/Theme.php:372
+#: ../lib/Theme.php:363
 msgid "today"
 msgstr "heute"
 
-#: ../lib/Theme.php:378
+#: ../lib/Theme.php:369
 msgid "yesterday"
 msgstr "gestern"
 
-#: ../lib/Theme.php:707 ../themes/default/templates/actionbar.tmpl:6
+#: ../lib/Theme.php:698 ../themes/default/templates/actionbar.tmpl:6
 msgid "Edit"
 msgstr "Editieren"
 
-#: ../lib/Theme.php:708
+#: ../lib/Theme.php:699
 msgid "Diff"
 msgstr "Diff"
 
-#: ../lib/Theme.php:709 ../themes/default/templates/signin.tmpl:6
+#: ../lib/Theme.php:700 ../themes/default/templates/signin.tmpl:6
 #: ../themes/default/templates/signin.tmpl:32
 msgid "Sign Out"
 msgstr "Abmelden"
 
-#: ../lib/Theme.php:710 ../lib/WikiUser.php:132
+#: ../lib/Theme.php:701 ../lib/WikiUser.php:132
 #: ../themes/default/templates/login.tmpl:28
 #: ../themes/default/templates/signin.tmpl:49
 msgid "Sign In"
 msgstr "Anmelden"
 
-#: ../lib/Theme.php:711 ../themes/MacOSX/themeinfo.php:111
+#: ../lib/Theme.php:702 ../themes/MacOSX/themeinfo.php:111
 msgid "Lock Page"
 msgstr "Seite Sperren"
 
-#: ../lib/Theme.php:712 ../themes/MacOSX/themeinfo.php:112
+#: ../lib/Theme.php:703 ../themes/MacOSX/themeinfo.php:112
 msgid "Unlock Page"
 msgstr "Seite Freigeben"
 
-#: ../lib/Theme.php:713
+#: ../lib/Theme.php:704
 msgid "Remove Page"
 msgstr "Seite Löschen"
 
-#: ../lib/Theme.php:756
+#: ../lib/Theme.php:747
 #, c-format
 msgid "Redefinition of %s: %s"
 msgstr "Datenbestimmung %s neu definiert: %s"
@@ -1314,12 +1314,12 @@ msgstr "Argument »%s« ist nicht deklariert im Zusatzprogramm"
 msgid "trailing cruft in plugin args: '%s'"
 msgstr "Unbekannte Zusatzprogramm Argumente: »%s«"
 
-#: ../lib/WikiPlugin.php:229
+#: ../lib/WikiPlugin.php:234
 #, c-format
 msgid "Plugin %s failed."
 msgstr "Zusatzprogramm %s fehlgeschlagen."
 
-#: ../lib/WikiPlugin.php:274
+#: ../lib/WikiPlugin.php:279
 #, c-format
 msgid "Include of '%s' failed"
 msgstr "Einfügen von »%s« fehlgeschlagen"
@@ -1563,12 +1563,12 @@ msgstr "Passwort"
 msgid "FindPage"
 msgstr "SeiteFinden"
 
-#: ../themes/default/templates/navbar.tmpl:24
+#: ../themes/default/templates/navbar.tmpl:27
 #: ../themes/Portland/templates/navbar.tmpl:30
 msgid "PhpWikiAdministration"
 msgstr "PhpWikiSystemverwalten"
 
-#: ../themes/default/templates/navbar.tmpl:35
+#: ../themes/default/templates/navbar.tmpl:38
 msgid "Today"
 msgstr "Heute"
 
@@ -1615,7 +1615,7 @@ msgid "Enter your UserId to sign in"
 msgstr "Trage deinen Benutzernamen ein, um dich anzumelden"
 
 #: ../themes/default/templates/top.tmpl:34
-#: ../themes/default/templates/top-htmldump.tmpl:26
+#: ../themes/default/templates/top-htmldump.tmpl:25
 msgid "The PhpWiki Programming Team"
 msgstr "Das PhpWiki Programmierer-Team"
 
