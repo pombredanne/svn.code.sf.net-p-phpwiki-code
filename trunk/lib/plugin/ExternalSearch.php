@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ExternalSearch.php,v 1.5 2003-02-26 01:56:52 dairiki Exp $');
+rcs_id('$Id: ExternalSearch.php,v 1.6 2004-02-19 22:06:53 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -38,11 +38,11 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function _getInterWikiUrl(&$request) {
-        $intermap = InterWikiMap::GetMap($request);
+        $intermap = PageType_interwikimap::GetMap($request);
         $map = $intermap->_map;
 
         if (in_array($this->_url, array_keys($map))) {
@@ -118,6 +118,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2003/02/26 01:56:52  dairiki
+// Tuning/fixing of POST action URLs and hidden inputs.
+//
 // Revision 1.4  2003/01/30 02:46:46  carstenklapp
 // Bugfix: Plugin was redirecting to nonexistant local wiki page named
 // "ExternalSearch" instead of the invoked url. Reported by Arthur Chereau.

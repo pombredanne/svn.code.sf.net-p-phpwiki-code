@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: InterWikiSearch.php,v 1.4 2004-02-17 12:11:36 rurban Exp $');
+rcs_id('$Id: InterWikiSearch.php,v 1.5 2004-02-19 22:06:53 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -48,12 +48,18 @@ extends WikiPlugin
         $args = $this->getArgs($argstr, $request);
         extract($args);
 
-        return $this->disabled("Sorry, this plugin is currently out of order.");
-        
-        return PageType($pagerevisionhandle,
-                        $pagename = _('InterWikiMap'),
-                        $markup = 2,
-                        $overridePageType = 'searcableInterWikiMapPageType');
+        if (!DEBUG)
+            return $this->disabled("Sorry, this plugin is currently out of order.");
+
+        $page = $dbi->getPage($request->getArg('pagename'));
+        return new TransformedText($page,_('InterWikiMap'),array($markup => 2),
+                                   'searchableInterWikiMap');
+        /*
+        return new PageType($pagerevisionhandle,
+                            $pagename = _('InterWikiMap'),
+                            $markup = 2,
+                            $overridePageType = 'PageType_searchableInterWikiMap');
+        */
     }
 };
 
@@ -61,16 +67,31 @@ extends WikiPlugin
 /**
  * @desc
  */
-if (0) {
-class searcableInterWikiMapPageType
-extends interWikiMapPageType
+if (DEBUG) {
+class PageFormatter_searchableInterWikiMap 
+extends PageFormatter_interwikimap {}
+
+class PageType_searchableInterWikiMap
+extends PageType_interwikimap
 {
+    function format($text) {
+	return HTML::div(array('class' => 'wikitext'),
+			 $this->_transform($this->_getHeader($text)),
+			 $this->_formatMap(),
+			 $this->_transform($this->_getFooter($text)));
+    }
+
+    function _formatMap() {
+	global $request;
+        return $this->_arrayToTable ($this->_getMap(), &$request);
+    }
+
     function _arrayToTable ($array, &$request) {
         $thead = HTML::thead();
         $label[0] = _("Wiki Name");
         $label[1] = _("Search");
-        $thead->pushContent(HTML::tr(HTML::td($label[0]),
-                                     HTML::td($label[1])));
+        $thead->pushContent(HTML::tr(HTML::th($label[0]),
+                                     HTML::th($label[1])));
 
         $tbody = HTML::tbody();
         $dbi = $request->getDbh();
@@ -83,7 +104,7 @@ extends interWikiMapPageType
 
                 $w = new WikiPluginLoader;
                 $p = $w->getPlugin('ExternalSearch');
-                $argstr = sprintf('url="%s"', addslashes($moniker));
+                $argstr = sprintf('url="%s"', addslashes($interurl));
                 $searchtd = HTML::td($p->run($dbi, $argstr, $request, $basepage));
 
                 $tbody->pushContent(HTML::tr($monikertd, $searchtd));
@@ -101,6 +122,9 @@ extends interWikiMapPageType
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/02/17 12:11:36  rurban
+// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
+//
 // Revision 1.3  2003/02/23 20:10:48  dairiki
 // Disable currently broken plugin to prevent fatal PHP errors.
 // (Sorry.)
