@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.24 2001-12-21 08:05:17 carstenklapp Exp $');
+rcs_id('$Id: diff.php,v 1.25 2001-12-21 15:57:10 dairiki Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -169,13 +169,13 @@ function PageInfoRow ($pagename, $label, $rev)
        $url = WikiURL($pagename, array('version' => $rev->getVersion()));
        $linked_version = QElement('a', array('href' => $url), $rev->getVersion());
        $cols .= Element('td',
-                        sprintf(_("version %d"),$linked_version));
+                        __sprintf("version %s",$linked_version));
 
        $cols .= QElement('td',
-                         sprintf(_("last modified on %s"),
-                                 strftime($datetimeformat, $rev->get('mtime'))));
+                         __sprintf("last modified on %s",
+                                   strftime($datetimeformat, $rev->get('mtime'))));
        $cols .= QElement('td',
-                         sprintf(_("by %s"), $rev->get('author')));
+                         __sprintf("by %s", $rev->get('author')));
    } else {
        $cols .= QElement('td', array('colspan' => '3'), _("None"));
    }
@@ -251,7 +251,7 @@ function showDiff ($dbi, $request) {
                     __sprintf("Differences between %s and %s of %s.",
                               $new_link, $old_link, $page_link));
 
-    $otherdiffs='';
+    $otherdiffs = array();
     $label = array('major' => _("Previous Major Revision"),
                    'minor' => _("Previous Revision"),
                    'author'=> _("Previous Author"));
@@ -259,13 +259,13 @@ function showDiff ($dbi, $request) {
         $args = array('action' => 'diff', 'previous' => $other);
         if ($version)
             $args['version'] = $version;
-        $otherdiffs .= ', ' . QElement('a', array('href' => WikiURL($pagename, $args),
-                                                 'class' => 'wikiaction'),
-                                      $label[$other]);
+        $otherdiffs[] = QElement('a', array('href' => WikiURL($pagename, $args),
+                                            'class' => 'wikiaction'),
+                                 $label[$other]);
     }
     $html .= Element('p',
                      htmlspecialchars(_("Other diffs:"))
-                     . $otherdiffs . '.');
+                     . " " . join(", ", $otherdiffs) . '.');
             
             
     if ($old and $old->getVersion() == 0)
