@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: SQL.php,v 1.1 2001-09-18 19:16:23 dairiki Exp $');
+<?php rcs_id('$Id: SQL.php,v 1.2 2001-09-19 03:24:36 wainstead Exp $');
 
 require_once('lib/WikiDB.php');
 
@@ -44,7 +44,13 @@ class WikiDB_SQL extends WikiDB
 };
 
   
+// For emacs users
 // Local Variables:
 // mode: php
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
 // End:
+
 ?>

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BackLinks.php,v 1.1 2001-09-18 19:19:05 dairiki Exp $');
+rcs_id('$Id: BackLinks.php,v 1.2 2001-09-19 03:24:36 wainstead Exp $');
 /**
  */
 class WikiPlugin_BackLinks
@@ -46,5 +46,14 @@ extends WikiPlugin
         return $html . Element('ul', join("\n", $lines));
     }
 };
+
+// For emacs users
+// Local Variables:
+// mode: php
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
+// End:
         
 ?>

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbaListSet.php,v 1.1 2001-09-18 19:16:23 dairiki Exp $');
+<?php rcs_id('$Id: DbaListSet.php,v 1.2 2001-09-19 03:24:36 wainstead Exp $');
 
 class DbaListSet
 {
@@ -136,7 +136,13 @@ class DbaListSet
 }
 
 
+// For emacs users
 // Local Variables:
 // mode: php
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
 // End:
+
 ?>

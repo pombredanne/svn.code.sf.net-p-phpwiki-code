@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopularIter.php,v 1.1 2001-09-18 19:16:23 dairiki Exp $');
+rcs_id('$Id: MostPopularIter.php,v 1.2 2001-09-19 03:24:36 wainstead Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -44,5 +44,14 @@ function WikiDB_backend_dumb_MostPopularIter_sortf($a,$b) {
     @$bhits = (int)$b['pagedata']['hits'];
     return $bhits - $ahits;
 }
+
+// For emacs users
+// Local Variables:
+// mode: php
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
+// End:
 
 ?>

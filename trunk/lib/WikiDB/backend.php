@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.1 2001-09-18 19:16:23 dairiki Exp $');
+rcs_id('$Id: backend.php,v 1.2 2001-09-19 03:24:36 wainstead Exp $');
 
 /*
   Pagedata
@@ -478,12 +478,13 @@ class WikiDB_backend_iterator
     }
 };
 
-// (c-file-style: "gnu")
+// For emacs users
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End:
+
 ?>

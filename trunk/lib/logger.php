@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: logger.php,v 1.2 2001-05-31 17:41:55 dairiki Exp $');
+rcs_id('$Id: logger.php,v 1.3 2001-09-19 03:24:36 wainstead Exp $');
 
 class AccessLogEntry
 {
@@ -67,6 +67,10 @@ class AccessLogEntry
 // For emacs users
 // Local Variables:
 // mode: php
-// c-file-style: "ellemtel"
-// End:   
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
+// End:
+
 ?>

@@ -23,7 +23,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.0-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.21 2001-09-18 19:16:23 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.22 2001-09-19 03:24:36 wainstead Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -109,7 +109,7 @@ $DBParams = array(
    //'prefix' => 'phpwiki_',
    
    // Used by 'dba'
-   'directory' => "/tmp",
+   'directory' => "/tmp/delme",
    'dba_handler' => 'gdbm',   // Either of 'gdbm' or 'db2' work great for me.
    //'dba_handler' => 'db2',
    //'dba_handler' => 'db3',    // doesn't work at all for me....
