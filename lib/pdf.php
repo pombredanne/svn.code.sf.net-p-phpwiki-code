@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: pdf.php,v 1.5 2004-09-17 14:19:02 rurban Exp $');
+rcs_id('$Id: pdf.php,v 1.6 2004-09-20 13:40:19 rurban Exp $');
 
 // PDF functions taken from FPDF http://www.fpdf.org
 // Edited for PHPWebthings by Don Sebà 
@@ -8,6 +8,11 @@ rcs_id('$Id: pdf.php,v 1.5 2004-09-17 14:19:02 rurban Exp $');
 // Changes for PhpWiki by Reini Urban
 
 require_once('lib/fpdf.php');
+
+// http://phpwiki.sourceforge.net/phpwiki/PhpWikiToDocBookAndPDF
+// htmldoc or ghostscript + html2ps or docbook (dbdoclet, xsltproc, fop)
+// http://www.easysw.com/htmldoc
+//define("USE_EXTERNAL_HTML2PDF", "htmldoc --quiet --format pdf14 --no-toc --no-title %s");
 
 class PDF extends FPDF {
     var $B = 0;
@@ -109,33 +114,57 @@ class PDF extends FPDF {
 function ConvertAndDisplayPdf (&$request) {
     if (empty($request->_is_buffering_output))
         $request->buffer_output(false/*'nocompress'*/);
-    if ($GLOBALS['LANG'] == 'ja') {
-        include_once("lib/fpdf/japanese.php");
-        $pdf = new PDF_Japanese;
-    } elseif ($GLOBALS['LANG'] == 'zh') {
-        include_once("lib/fpdf/chinese.php");
-        $pdf = new PDF_Chinese;
-    } else {
-        $pdf = new PDF;
-    }
+    $pagename = $request->getArg('pagename');
+    $dest = $request->getArg('dest');
+
     include_once("lib/display.php");
     displayPage($request);
     $html = ob_get_contents();
-    $pdf->Open();
-    $pdf->AddPage();
-    $pdf->ConvertFromHTML($html);
-    $request->discardOutput();
-        
-    $request->buffer_output(false/*'nocompress'*/);
-    $pagename = $request->getArg('pagename');
-    $dest = $request->getArg('dest');
-    $pdf->Output($pagename.".pdf", $dest ? $dest : 'I');
+    
+    // check hook for external converters
+    if (defined('USE_EXTERNAL_HTML2PDF')
+        and USE_EXTERNAL_HTML2PDF)
+    {   // See http://phpwiki.sourceforge.net/phpwiki/PhpWikiToDocBookAndPDF
+        // htmldoc or ghostscript + html2ps or docbook (dbdoclet, xsltproc, fop)
+        $request->discardOutput();
+        $request->buffer_output(false/*'nocompress'*/);
+        require_once("lib/WikiPluginCached.php");
+        $cache = new WikiPluginCached;
+        $cache->newCache();
+        $tmpfile = $cache->tempnam();
+        $fp = fopen($tmpfile, "wb");
+        fwrite($fp, $html);
+        fclose($fp);
+        Header('Content-Type: application/pdf');
+        passthru(sprintf(USE_EXTERNAL_HTML2PDF, $tmpfile));
+        unlink($tmpfile);
+    } else {
+        // use fpdf:
+        if ($GLOBALS['LANG'] == 'ja') {
+            include_once("lib/fpdf/japanese.php");
+            $pdf = new PDF_Japanese;
+        } elseif ($GLOBALS['LANG'] == 'zh') {
+            include_once("lib/fpdf/chinese.php");
+            $pdf = new PDF_Chinese;
+        } else {
+            $pdf = new PDF;
+        }
+        $pdf->Open();
+        $pdf->AddPage();
+        $pdf->ConvertFromHTML($html);
+        $request->discardOutput();
+        $request->buffer_output(false/*'nocompress'*/);
+        $pdf->Output($pagename.".pdf", $dest ? $dest : 'I');
+    }
     if (!empty($errormsg)) {
         $request->discardOutput();
     }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/09/17 14:19:02  rurban
+// default pdf dest: browser
+//
 // Revision 1.4  2004/06/14 11:31:37  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList
