@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _BackendInfo.php,v 1.7 2002-01-17 20:42:21 dairiki Exp $');
+rcs_id('$Id: _BackendInfo.php,v 1.8 2002-01-20 07:17:27 carstenklapp Exp $');
 require_once('lib/Template.php');
 /**
  */
@@ -21,7 +21,7 @@ extends WikiPlugin
         $html .= '<?php foreach ($hash as $key => $val) { ?>'."\n";
         $html .= '  <tr>'."\n";
         $html .= '    <td align="right" bgcolor="#cccccc">&nbsp;<?=$key?>&nbsp;</td>'."\n";
-        $html .= '    <td><?=$val?></td>'."\n";
+        $html .= '    <td><?=$val?>&nbsp;</td>'."\n";
         $html .= '  </tr>'."\n";
         $html .= '<?php } ?>'."\n";
         $this->_hashtemplate = new Template($html);
