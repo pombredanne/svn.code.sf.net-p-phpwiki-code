@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.32 2003-11-09 04:54:40 carstenklapp Exp $
+# $Id: Makefile,v 1.33 2003-11-18 19:30:29 carstenklapp Exp $
 #
 # locale/Makefile
 #
@@ -148,6 +148,7 @@ ${POT_FILE}: ../lib/plugin/AllUsers.php
 ${POT_FILE}: ../lib/plugin/BackLinks.php
 ${POT_FILE}: ../lib/plugin/CacheTest.php
 ${POT_FILE}: ../lib/plugin/Calendar.php
+${POT_FILE}: ../lib/plugin/CalendarList.php
 ${POT_FILE}: ../lib/plugin/Comment.php
 ${POT_FILE}: ../lib/plugin/EditMetaData.php
 ${POT_FILE}: ../lib/plugin/ExternalSearch.php
@@ -201,6 +202,10 @@ ${POT_FILE}: ../lib/stdlib.php
 ${POT_FILE}: ../lib/ziplib.php
 ${POT_FILE}: ../themes/Hawaiian/lib/random.php
 ${POT_FILE}: ../themes/Hawaiian/themeinfo.php
+${POT_FILE}: ../themes/MacOSX/buttons/de/index.php
+${POT_FILE}: ../themes/MacOSX/buttons/en/index.php
+${POT_FILE}: ../themes/MacOSX/buttons/index.php
+${POT_FILE}: ../themes/MacOSX/images/index.php
 ${POT_FILE}: ../themes/MacOSX/lib/RecentChanges.php
 ${POT_FILE}: ../themes/MacOSX/themeinfo.php
 ${POT_FILE}: ../themes/Portland/lib/RecentChanges.php
