@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _AuthInfo.php,v 1.2 2004-02-01 09:14:11 rurban Exp $');
+rcs_id('$Id: _AuthInfo.php,v 1.3 2004-02-02 05:36:29 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -38,7 +38,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -59,25 +59,24 @@ extends WikiPlugin
         $table = HTML::table(array('border' => 1,
                                   'cellpadding' => 2,
                                   'cellspacing' => 0));
-        $auth_defines = array();
-        foreach (array("ENABLE_USER_NEW","ALLOW_ANON_USER","ALLOW_ANON_EDIT","ALLOW_BOGO_LOGIN",
-                       "REQUIRE_SIGNIN_BEFORE_EDIT","ALLOW_USER_PASSWORDS",
-                       "PASSWORD_LENGTH_MINIMUM","USE_DB_SESSION") as $constant) {
-            $auth_defines[$constant] = constant($constant);
-        }
-        $table->pushContent($this->_showhash("AUTH DEFINES", $auth_defines));
+        $table->pushContent($this->_showhash("AUTH DEFINES", 
+                                $this->_buildConstHash(
+                                    array("ENABLE_USER_NEW","ALLOW_ANON_USER",
+                                          "ALLOW_ANON_EDIT","ALLOW_BOGO_LOGIN",
+                                          "REQUIRE_SIGNIN_BEFORE_EDIT","ALLOW_USER_PASSWORDS",
+                                          "PASSWORD_LENGTH_MINIMUM","USE_DB_SESSION"))));
         if ((defined('ALLOW_LDAP_LOGIN') && ALLOW_LDAP_LOGIN) or in_array("LDAP",$GLOBALS['USER_AUTH_ORDER']))
-            $table->pushContent($this->_showhash("LDAP DEFINES", array("LDAP_AUTH_HOST" => LDAP_AUTH_HOST,
-                                                                       "LDAP_AUTH_SEARCH" => LDAP_AUTH_SEARCH)));
+            $table->pushContent($this->_showhash("LDAP DEFINES", 
+                                                 $this->_buildConstHash(array("LDAP_AUTH_HOST","LDAP_AUTH_SEARCH"))));
         if ((defined('ALLOW_IMAP_LOGIN') && ALLOW_IMAP_LOGIN) or in_array("IMAP",$GLOBALS['USER_AUTH_ORDER']))
             $table->pushContent($this->_showhash("IMAP DEFINES", array("IMAP_AUTH_HOST" => IMAP_AUTH_HOST)));
         if (defined('AUTH_USER_FILE') or in_array("File",$GLOBALS['USER_AUTH_ORDER']))
-            $table->pushContent($this->_showhash("AUTH_USER_FILE", array("AUTH_USER_FILE" => AUTH_USER_FILE,
-                                                                         "AUTH_USER_FILE_STORABLE" => AUTH_USER_FILE_STORABLE,
-                                                                         "AUTH_GROUP_FILE" => AUTH_GROUP_FILE
-                                                                         )));
+            $table->pushContent($this->_showhash("AUTH_USER_FILE", 
+                                    $this->_buildConstHash(array("AUTH_USER_FILE",
+                                                                 "AUTH_USER_FILE_STORABLE"))));
         if (defined('GROUP_METHOD'))
-            $table->pushContent($this->_showhash("GROUP_METHOD", array("GROUP_METHOD" => GROUP_METHOD)));
+            $table->pushContent($this->_showhash("GROUP_METHOD", 
+                                    $this->_buildConstHash(array("GROUP_METHOD","AUTH_GROUP_FILE","GROUP_LDAP_QUERY"))));
         $table->pushContent($this->_showhash("\$USER_AUTH_ORDER[]", $GLOBALS['USER_AUTH_ORDER']));
         $table->pushContent($this->_showhash("USER_AUTH_POLICY", array("USER_AUTH_POLICY"=>USER_AUTH_POLICY)));
         $table->pushContent($this->_showhash("\$DBParams[]", $GLOBALS['DBParams']));
@@ -163,9 +162,35 @@ extends WikiPlugin
         }
         return $rows;
     }
+    
+    function _buildConstHash($constants) {
+        $hash = array();
+        foreach ($constants as $c) {
+            $hash[$c] = defined($c) ? constant($c) : '<empty>';
+            if ($hash[$c] === false) $hash[$c] = 'false';
+            elseif ($hash[$c] === true) $hash[$c] = 'true';
+        }
+        return $hash;
+    }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/02/01 09:14:11  rurban
+// Started with Group_Ldap (not yet ready)
+// added new _AuthInfo plugin to help in auth problems (warning: may display passwords)
+// fixed some configurator vars
+// renamed LDAP_AUTH_SEARCH to LDAP_BASE_DN
+// changed PHPWIKI_VERSION from 1.3.8a to 1.3.8pre
+// USE_DB_SESSION defaults to true on SQL
+// changed GROUP_METHOD definition to string, not constants
+// changed sample user DBAuthParams from UPDATE to REPLACE to be able to
+//   create users. (Not to be used with external databases generally, but
+//   with the default internal user table)
+//
+// fixed the IndexAsConfigProblem logic. this was flawed:
+//   scripts which are the same virtual path defined their own lib/main call
+//   (hmm, have to test this better, phpwiki.sf.net/demo works again)
+//
 // Revision 1.1  2004/02/01 01:04:34  rurban
 // Used to debug auth problems and settings.
 // This may display passwords in cleartext.
