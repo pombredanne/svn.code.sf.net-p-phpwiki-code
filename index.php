@@ -63,7 +63,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.53 2002-01-05 11:46:03 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.54 2002-01-05 18:33:52 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -359,6 +359,11 @@ define("MOST_POPULAR_LIST_LENGTH", 20);
 
 // this defines how many page names to list when displaying related pages
 define("NUM_RELATED_PAGES", 5);
+
+// This defines separators used in RecentChanges and RecentEdits lists.
+// If undefined, defaults to '' (nothing) and '...' (three periods).
+//define("RC_SEPARATOR_A", '. . . ');
+//define("RC_SEPARATOR_B", '. . . . . ');
 
 // Template files (filenames are relative to script position)
 // However, if a LANG is set, they we be searched for in a locale

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.17 2002-01-05 11:46:03 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.18 2002-01-05 18:33:51 carstenklapp Exp $');
 /**
  */
 
@@ -187,6 +187,9 @@ extends _RecentChanges_Formatter
     }
     
     function format_revision ($rev) {
+        if (!defined('RC_SEPARATOR_A')) define('RC_SEPARATOR_A', '');
+        if (!defined('RC_SEPARATOR_B')) define('RC_SEPARATOR_B', '...');
+
         if ( ($summary = $this->summary($rev)) ) {
             $summary = do_transform($summary, 'LinkTransform');
             $summary = Element('b', array('class' => 'wiki-summary'), "[$summary]");
@@ -198,8 +201,9 @@ extends _RecentChanges_Formatter
                        implode(' ', array( $this->diffLink($rev),
                                            $this->pageLink($rev),
                                            $this->time($rev),
+                                           RC_SEPARATOR_A,
                                            $summary,
-                                           '...',
+                                           RC_SEPARATOR_B,
                                            $this->authorLink($rev) )));
     }
 }
