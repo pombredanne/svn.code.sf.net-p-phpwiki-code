@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.38 2004-05-12 10:49:54 rurban Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.39 2004-05-17 13:36:49 rurban Exp $');
 /**
  * Code for writing the HTML subset of XML.
  * @author: Jeff Dairiki
@@ -348,6 +348,10 @@ class HTML extends HtmlElement {
         $el = new HtmlElement('input');
         return $el->_init2(func_get_args());
     }
+    function button (/*...*/) {
+        $el = new HtmlElement('button');
+        return $el->_init2(func_get_args());
+    }
     function option (/*...*/) {
         $el = new HtmlElement('option');
         return $el->_init2(func_get_args());
@@ -514,6 +518,13 @@ function IfJavaScript($if_content = false, $else_content = false) {
     
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.38  2004/05/12 10:49:54  rurban
+ require_once fix for those libs which are loaded before FileFinder and
+   its automatic include_path fix, and where require_once doesn't grok
+   dirname(__FILE__) != './lib'
+ upgrade fix with PearDB
+ navbar.tmpl: remove spaces for IE &nbsp; button alignment
+
  Revision 1.37  2004/04/26 20:44:34  rurban
  locking table specific for better databases
 

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ExternalSearch.php,v 1.9 2004-04-19 18:27:46 rurban Exp $');
+rcs_id('$Id: ExternalSearch.php,v 1.10 2004-05-17 13:36:49 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -20,10 +20,17 @@ rcs_id('$Id: ExternalSearch.php,v 1.9 2004-04-19 18:27:46 rurban Exp $');
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-//require_once("lib/interwiki.php");
-
 /**
+ * Redirects to an external web site based on form input
+ * See http://phpwiki.sourceforge.net/phpwiki/ExternalSearchPlugin
+ *
+ * useimage sample:
+   ExternalSearch
+     url="http://www.geourl.org/near/?xsize=2048&ysize=1024&xoffset=1650&yoffset=550"
+     useimage="http://www.geourl.org/maps/au.png"
+     name="Go Godzilla All Over It"
  */
+
 class WikiPlugin_ExternalSearch
 extends WikiPlugin
 {
@@ -38,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function _getInterWikiUrl(&$request) {
@@ -59,6 +66,9 @@ extends WikiPlugin
                      'formsize' => 30,
                      'url'      => false,
                      'name'     => '',
+                     'useimage' => false,
+                     'width'    => false,
+                     'height'   => false,
                      'debug'    => false
                      );
     }
@@ -79,45 +89,57 @@ extends WikiPlugin
                 $this->_url = sprintf($this->_url, $s);
             } else
                 $this->_url .= $s;
-
             if ($debug) {
                 trigger_error("redirect url: " . $this->_url);
-            } else
+            } else {
                 $request->redirect($this->_url); //no return!
+            }
         }
-
         $this->_name = $name;
-
         $this->_s = $s;
         if ($formsize < 1)
             $formsize = 30;
         $this->_url = $url;
-
         $this->_getInterWikiUrl($request);
-
         $form = HTML::form(array('action' => $request->getPostURL(),
                                  'method' => 'post',
                                  //'class'  => 'class', //fixme
                                  'accept-charset' => $GLOBALS['charset']),
                            HiddenInputs(array('pagename' => $basepage)));
-
-        $form->pushContent(HTML::input(array('type' => 'text',
-                                             'value' => $this->_s,
-                                             'name'  => 's',
-                                             'size'  => $formsize)));
-
         $form->pushContent(HTML::input(array('type' => 'hidden',
                                              'name'  => 'url',
                                              'value' => $this->_url)));
-
-        $form->pushContent(HTML::input(array('type' => 'submit',
-                                             'class' => 'button',
-                                             'value' => $this->_name)));
+        if (!empty($args["useimage"])) {
+            //FIXME: This does not work with Gecko
+            $button = HTML::img(array('src' => $useimage, 'alt' => 'imagebutton'));
+            if (!empty($width))
+                $button->setAttr('width',$width);
+            if (!empty($height))
+                $button->setAttr('height',$height);
+            $form->pushContent(HTML::button(array('type' => 'button',
+                                                  'class' => 'button',
+                                                  'value' => $this->_name,
+                                                  ),
+                                            $button));
+        } else {
+            $form->pushContent(HTML::input(array('type' => 'submit',
+                                                 'class' => 'button',
+                                                 'value' => $this->_name)));
+            $form->pushContent(HTML::input(array('type' => 'text',
+                                                 'value' => $this->_s,
+                                                 'name'  => 's',
+                                                 'size'  => $formsize)));
+        }
         return $form;
     }
 };
-
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/04/19 18:27:46  rurban
+// Prevent from some PHP5 warnings (ref args, no :: object init)
+//   php5 runs now through, just one wrong XmlElement object init missing
+// Removed unneccesary UpgradeUser lines
+// Changed WikiLink to omit version if current (RecentChanges)
+//
 // Revision 1.8  2004/04/18 01:11:52  rurban
 // more numeric pagename fixes.
 // fixed action=upload with merge conflict warnings.
