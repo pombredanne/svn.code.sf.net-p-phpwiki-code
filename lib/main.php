@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.186 2004-11-05 20:53:35 rurban Exp $');
+rcs_id('$Id: main.php,v 1.187 2004-11-05 22:08:52 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -25,6 +25,20 @@ class WikiRequest extends Request {
             // force our local copy, until the pear version is fixed.
             include_once(dirname(__FILE__)."/pear/File_Passwd.php");
         }
+        if (ENABLE_USER_NEW) {
+            // load all necessary userclasses (otherwise session => __PHP_Incomplete_Class_Name)
+            // There's no way to demandload it later. (This way its slower but needs less memory than loading all)
+            if (ALLOW_BOGO_LOGIN)
+                include_once("lib/WikiUser/BogoLogin.php");
+            foreach ($GLOBALS['USER_AUTH_ORDER'] as $method) {
+                include_once("lib/WikiUser/$method.php");
+            	if ($method == 'Db')
+            	    switch($GLOBALS['DBParams']['dbtype']) {
+            	    	case 'SQL' : include_once("lib/WikiUser/PearDb.php"); break;
+            	    	case 'ADODB': include_once("lib/WikiUser/AdoDb.php"); break;
+            	    }
+            }
+        }
         if (USE_DB_SESSION) {
             include_once('lib/DbSession.php');
             $dbi =& $this->_dbi;
@@ -38,7 +52,7 @@ $this->version = phpwiki_version();
         // Normalize args...
         $this->setArg('pagename', $this->_deducePagename());
         $this->setArg('action', $this->_deduceAction());
-
+        
         // Restore auth state. This doesn't check for proper authorization!
         if (ENABLE_USER_NEW) {
             $userid = $this->_deduceUsername();	
@@ -751,7 +765,8 @@ TODO: check against these cases:
             return $HTTP_ENV_VARS['REMOTE_USER'];
             
         if ($user = $this->getSessionVar('wiki_user')) {
-            /// switched auth between sessions
+            // switched auth between sessions. 
+            // Note: There's no way to demandload a missing class-definition afterwards! (Stupid php)
             if (isa($user, WikiUserClassname())) {
                 $this->_user = $user;
                 $this->_user->_authhow = 'session';
@@ -1129,6 +1144,13 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.186  2004/11/05 20:53:35  rurban
+// login cleanup: better debug msg on failing login,
+// checked password less immediate login (bogo or anon),
+// checked olduser pref session error,
+// better PersonalPage without password warning on minimal password length=0
+//   (which is default now)
+//
 // Revision 1.185  2004/11/01 13:55:05  rurban
 // fix against switching user new/old between sessions
 //
