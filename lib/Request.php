@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.71 2004-10-22 09:20:36 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.72 2004-11-01 10:43:55 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -326,10 +326,11 @@ class Request {
 
     function buffer_output($compress = true) {
         // USECACHE = false turns off ob buffering also for now. (sf.net)
-        if (defined('USECACHE') and !USECACHE) {
+        // FIXME: disables sessions (some byte before all headers_sent())
+        /*if (defined('USECACHE') and !USECACHE) {
             $this->_is_buffering_output = false;
             return;
-        }
+        }*/
         if (defined('COMPRESS_OUTPUT')) {
             if (!COMPRESS_OUTPUT)
                 $compress = false;
@@ -339,7 +340,7 @@ class Request {
         elseif (isCGI()) // necessary?
             $compress = false;
             
-        if ($GLOBALS['request']->getArg('start_debug'))
+        if ($this->getArg('start_debug'))
             $compress = false;
         // Should we compress even when apache_note is not available?
         // sf.net bug #933183 and http://bugs.php.net/17557
@@ -347,6 +348,9 @@ class Request {
         if ($compress 
             and (!function_exists('ob_gzhandler') 
                  or !function_exists('apache_note'))) 
+            $compress = false;
+        // http://www.php.net/ob_gzhandler "output handler 'ob_gzhandler' cannot be used twice"
+        if ($compress and ini_get("zlib.output_compression"))
             $compress = false;
 
         // New: we check for the client Accept-Encoding: "gzip" presence also
@@ -406,7 +410,8 @@ class Request {
      * sections with ob_buffering.
      */
     function chunkOutput() {
-        if (!empty($this->_is_buffering_output)) {
+        if (!empty($this->_is_buffering_output) or 
+            (function_exists('ob_get_level') and @ob_get_level())) {
             $this->_do_chunked_output = true;
             $this->_ob_get_length += ob_get_length();
             while (@ob_end_flush());
@@ -524,28 +529,6 @@ class Request_SessionVars {
     
     function set($key, $val) {
         $vars = &$GLOBALS['HTTP_SESSION_VARS'];
-        if ($key == 'wiki_user') {
-            if (DEBUG) {
-	      if (!$val) {
-	        trigger_error("delete user session", E_USER_WARNING);
-	      } elseif (!isset($val->_level)) {
-                  trigger_error("lost level in session", E_USER_WARNING);
-	      }
-            }
-	    if (is_object($val)) {
-                $val->page   = $GLOBALS['request']->getArg('pagename');
-                $val->action = $GLOBALS['request']->getArg('action');
-                // sessiondata may not exceed a certain size!
-                // otherwise it will get lost.
-                unset($val->_HomePagehandle);
-                unset($val->_auth_dbi);
-                unset($val->_HomePagehandle);
-        	if (isset($val->_group)) {
-          	    unset($val->_group->request);
-            	    unset($val->_group->user);
-        	}
-	    }
-        }
         if (!function_usable('get_cfg_var') or get_cfg_var('register_globals')) {
             // This is funky but necessary, at least in some PHP's
             $GLOBALS[$key] = $val;
@@ -622,7 +605,8 @@ class Request_CookieVars {
         static $deleted = array();
         if (isset($deleted[$key])) return;
         $vars = &$GLOBALS['HTTP_COOKIE_VARS'];
-        @setcookie($key,'',0);
+        if (!defined('COOKIE_DOMAIN'))
+            @setcookie($key,'',0);
         @setcookie($key,'',0,defined('COOKIE_DOMAIN') ? COOKIE_DOMAIN : '/');
         unset($vars[$key]);
         unset($GLOBALS['HTTP_COOKIE_VARS'][$key]);
@@ -1078,6 +1062,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.71  2004/10/22 09:20:36  rurban
+// fix for USECACHE=false
+//
 // Revision 1.70  2004/10/21 19:59:18  rurban
 // Patch #991494 (ppo): Avoid notice in PHP >= 4.3.3 if session already started
 //

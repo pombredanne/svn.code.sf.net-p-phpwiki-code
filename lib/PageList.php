@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.117 2004-10-14 21:06:01 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.118 2004-11-01 10:43:55 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -1009,15 +1009,20 @@ class PageList {
             list ($column, $heading) = explode(':', $column, 2);
 
         // FIXME: these column types have hooks (objects) elsewhere
+        // Omitting this warning should be overridable by the extension
         if (!isset($this->_types[$column])) {
-            $silently_ignore = array('numbacklinks','rating','coagreement','minmisery',
-                                     'averagerating','top3recs');
-            if (!in_array($column,$silently_ignore))
+            $silently_ignore = array('numbacklinks',
+                                     'rating',/*'ratingwidget',*/
+                                     'coagreement', 'minmisery',
+                                     /*'prediction',*/
+                                     'averagerating', 'top3recs');
+            if (!in_array($column, $silently_ignore))
                 trigger_error(sprintf("%s: Bad column", $column), E_USER_NOTICE);
             return false;
         }
-        // FIXME: anon users might rate also. defer this logic to the plugin.
-        if ($column == 'ratingwidget' and !$GLOBALS['request']->_user->isSignedIn())
+        // FIXME: anon users might rate and see ratings also. 
+        // Defer this logic to the plugin.
+        if ($column == 'rating' and !$GLOBALS['request']->_user->isSignedIn())
             return false;
 
         $this->addColumnObject($this->_types[$column]);
@@ -1424,6 +1429,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.117  2004/10/14 21:06:01  rurban
+// fix dumphtml with USE_PATH_INFO (again). fix some PageList refs
+//
 // Revision 1.116  2004/10/14 19:19:33  rurban
 // loadsave: check if the dumped file will be accessible from outside.
 // and some other minor fixes. (cvsclient native not yet ready)

@@ -1,8 +1,8 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.126 2004-10-16 15:13:39 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.127 2004-11-01 10:43:57 rurban Exp $');
 
 /*
- Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+ Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -55,25 +55,16 @@ function StartLoadDump(&$request, $title, $html = '')
                                    'HEADER' => $title,
                                    'CONTENT' => $html ? $html : '%BODY%'));
     echo ereg_replace('%BODY%.*', '', $tmpl->getExpansion($html));
+    $request->chunkOutput();
+    
     // set marker for sendPageChangeNotification()
-    $GLOBALS['deferredPageChangeNotification'] = array();
-
-    /* Ignore fatals or warnings in any pagedumps (failing plugins). 
-     * WikiFunctionCb() fails with 4.0.6, works ok with 4.1.1 
-     */
-    if (!check_php_version(4,1) or (DEBUG & _DEBUG_VERBOSE)) return;
-    global $ErrorManager;
-    $ErrorManager->pushErrorHandler(new WikiFunctionCb('_dump_error_handler'));
+    $request->_deferredPageChangeNotification = array();
 }
 
 function EndLoadDump(&$request)
 {
     if (isa($request,'MockRequest'))
         return;
-    if (check_php_version(4,1)) {
-        global $ErrorManager;
-        $ErrorManager->popErrorHandler();
-    }
     $action = $request->getArg('action');
     $label = '';
     switch ($action) {
@@ -90,16 +81,17 @@ function EndLoadDump(&$request)
         $pagelink = WikiLink(HOME_PAGE);
     else
         $pagelink = WikiLink(new WikiPageName(_("PhpWikiAdministration"),false,$label));
+
     // do deferred sendPageChangeNotification()
-    if (!empty($GLOBALS['deferredPageChangeNotification'])) {
+    if (!empty($request->_deferredPageChangeNotification)) {
         $pages = $all_emails = $all_users = array();
-        foreach ($GLOBALS['deferredPageChangeNotification'] as $p) {
+        foreach ($request->_deferredPageChangeNotification as $p) {
             list($pagename, $emails, $userids) = $p;
             $pages[] = $pagename;
             $all_emails = array_unique(array_merge($all_emails, $emails));
             $all_users = array_unique(array_merge($all_users, $userids));
         }
-        $editedby = sprintf(_("Edited by: %s"), $request->_userid);
+        $editedby = sprintf(_("Edited by: %s"), $request->_user->getId());
         $content = "Loaded the following pages:\n" . join("\n", $pages);
         if (mail(join(',',$all_emails),"[".WIKI_NAME."] "._("LoadDump"), 
                  _("LoadDump")."\n".
@@ -114,7 +106,7 @@ function EndLoadDump(&$request)
         unset($all_emails);
         unset($all_users);
     }
-    unset($GLOBALS['deferredPageChangeNotification']);
+    unset($request->_deferredPageChangeNotification);
 
     PrintXML(HTML::p(HTML::strong(_("Complete."))),
              HTML::p(fmt("Return to %s", $pagelink)));
@@ -270,6 +262,7 @@ function MakeWikiZip (&$request)
     }
     $zip->finish();
     if (check_php_version(4,1)) {
+        global $ErrorManager;
         $ErrorManager->popErrorHandler();
     }
 }
@@ -344,7 +337,7 @@ function DumpToDir (&$request)
         else
             $data = MailifyPage($page);
 
-        if ( !($fd = fopen("$directory/$filename", "wb")) ) {
+        if ( !($fd = fopen($directory."/".$filename, "wb")) ) {
             $msg->pushContent(HTML::strong(fmt("couldn't open file '%s' for writing",
                                                "$directory/$filename")));
             $request->finish($msg);
@@ -393,11 +386,11 @@ function DumpHtmlToDir (&$request)
     } else {
         $html = HTML::p(fmt("Using directory '%s'", $directory));
     }
-
+    $request->_TemplatesProcessed = array();
     StartLoadDump($request, _("Dumping Pages"), $html);
     $thispage = $request->getArg('pagename'); // for "Return to ..."
 
-    $dbi = $request->getDbh();
+    $dbi =& $request->_dbi;
     if ($exclude = $request->getArg('exclude')) {   // exclude which pagenames
         $excludeList = explodePageList($exclude); 
     } else {
@@ -458,14 +451,13 @@ function DumpHtmlToDir (&$request)
         $msg = HTML();
 
         $revision = $page->getCurrentRevision();
-        $transformedContent = $revision->getTransformedContent();
         $template = new Template('browse', $request,
                                  array('revision' => $revision,
-                                       'CONTENT' => $transformedContent));
+                                       'CONTENT' => $revision->getTransformedContent()));
 
         $data = GeneratePageasXML($template, $pagename);
 
-        if ( !($fd = fopen("$directory/$filename", "wb")) ) {
+        if ( !($fd = fopen($directory."/".$filename, "wb")) ) {
             $msg->pushContent(HTML::strong(fmt("couldn't open file '%s' for writing",
                                                "$directory/$filename")));
             $request->finish($msg);
@@ -478,12 +470,29 @@ function DumpHtmlToDir (&$request)
         $msg->pushContent(HTML::small(fmt("%s bytes written", $num), "\n"));
         if (!isa($request,'MockRequest')) {
             PrintXML($msg);
-            flush();
         }
+        flush();
+        $request->chunkOutput();
 
         assert($num == strlen($data));
         fclose($fd);
+
+        if (USECACHE) {
+          $request->_dbi->_cache->invalidate_cache($pagename);
+          unset ($request->_dbi->_cache->_pagedata_cache);
+          unset ($request->_dbi->_cache->_versiondata_cache);
+          unset ($request->_dbi->_cache->_glv_cache);
+        }
+        unset ($request->_dbi->_cache->_backend->_page_data);
+
+        unset($msg);
+        unset($revision->_transformedContent);
+        unset($revision);
+        unset($template->_request);
+        unset($template);
+        unset($data);
     }
+    $pages->free();
 
     if (!empty($WikiTheme->dumped_images) and is_array($WikiTheme->dumped_images)) {
         @mkdir("$directory/images");
@@ -555,6 +564,7 @@ function DumpHtmlToDir (&$request)
  */
 function MakeWikiZipHtml (&$request)
 {
+    $request->_TemplatesProcessed = array();
     $zipname = "wikihtml.zip";
     $zip = new ZipWriter("Created by PhpWiki " . PHPWIKI_VERSION, $zipname);
     $dbi = $request->getDbh();
@@ -617,10 +627,25 @@ function MakeWikiZipHtml (&$request)
         $data = GeneratePageasXML($template, $pagename);
 
         $zip->addRegularFile( $filename, $data, $attrib);
+        
+        if (USECACHE) {
+          $request->_dbi->_cache->invalidate_cache($pagename);
+          unset ($request->_dbi->_cache->_pagedata_cache);
+          unset ($request->_dbi->_cache->_versiondata_cache);
+          unset ($request->_dbi->_cache->_glv_cache);
+        }
+        unset ($request->_dbi->_cache->_backend->_page_data);
+
+        unset($revision->_transformedContent);
+        unset($revision);
+        unset($template->_request);
+        unset($template);
+        unset($data);
     }
-    // FIXME: Deal with images here.
+    // FIXME: Deal with css and images here.
     $zip->finish();
     if (check_php_version(4,1)) {
+        global $ErrorManager;
         $ErrorManager->popErrorHandler();
     }
     $WikiTheme->$HTML_DUMP_SUFFIX = '';
@@ -1220,6 +1245,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.126  2004/10/16 15:13:39  rurban
+ new [Overwrite All] button
+
  Revision 1.125  2004/10/14 19:19:33  rurban
  loadsave: check if the dumped file will be accessible from outside.
  and some other minor fixes. (cvsclient native not yet ready)
@@ -1321,7 +1349,7 @@ function LoadPostFile (&$request)
  Revision 1.101  2004/06/04 20:32:53  rurban
  Several locale related improvements suggested by Pierrick Meignen
  LDAP fix by John Cole
- reanable admin check without ENABLE_PAGEPERM in the admin plugins
+ reenable admin check without ENABLE_PAGEPERM in the admin plugins
 
  Revision 1.100  2004/05/02 21:26:38  rurban
  limit user session data (HomePageHandle and auth_dbi have to invalidated anyway)

@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.56 2004-10-14 13:44:14 rurban Exp $');
+rcs_id('$Id: display.php,v 1.57 2004-11-01 10:43:57 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -152,6 +152,9 @@ function displayPage(&$request, $template=false) {
     // OR: add the searchhightplugin line to the content?
     if ($result = isExternalReferrer($request)) {
     	if (DEBUG and !empty($result['query'])) {
+            //$GLOBALS['SearchHighLightQuery'] = $result['query'];
+            /* simply add the SearchHighLight plugin to the top of the page. 
+               This just parses the wikitext, and doesn't highlight the markup */
             include_once('lib/WikiPlugin.php');
 	    $loader = new WikiPluginLoader;
             $xml = $loader->expandPI('<'.'?plugin SearchHighLight s="'.$result['query'].'"?'.'>', $request, $markup);
@@ -162,24 +165,32 @@ function displayPage(&$request, $template=false) {
               array_unshift($page_content->_content, 
                             HTML::div(_("You searched for: "), HTML::strong($result['query'])));
             }
+            
             if (0) {
+            /* Parse the transformed (mixed HTML links + strings) lines?
+               This looks like overkill.
+             */
             require_once("lib/TextSearchQuery.php");
             $query = new TextSearchQuery($result['query']);
             $hilight_re = $query->getHighlightRegexp();
-            $matches = preg_grep("/$hilight_re/i", $revision->getContent());
+            //$matches = preg_grep("/$hilight_re/i", $revision->getContent());
             // FIXME!
-            foreach ($page_content->_content as $line) {
+            for ($i=0; $i < count($page_content->_content); $i++) {
+                $found = false;
+                $line = $page_content->_content[$i];
             	if (is_string($line)) {
-            	  $html = array();
-                  while (preg_match("/^(.*?)($hilight_re)/i", $line, $m)) {
-                    $line = substr($line, strlen($m[0]));
-                    $html[] = $m[1];    // prematch
-                    $html[] = HTML::strong(array('class' => 'search-term'), $m[2]); // match
-                  }
+                    while (preg_match("/^(.*?)($hilight_re)/i", $line, $m)) {
+                        $found = true;
+                        $line = substr($line, strlen($m[0]));
+                        $html[] = $m[1];    // prematch
+                        $html[] = HTML::strong(array('class' => 'search-term'), $m[2]); // match
+                    }
             	}
-                $html[] = $line;  // postmatch
-                //$html = HTML::dd(HTML::small(array('class' => 'search-context'),
-                //                             $html));
+                if ($found) {
+                    $html[] = $line;  // postmatch
+                    $page_content->_content[$i] = HTML::span(array('class' => 'search-context'),
+                                                             $html);
+                }
             }
             }
         }
@@ -207,6 +218,9 @@ function displayPage(&$request, $template=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.56  2004/10/14 13:44:14  rurban
+// fix lib/display.php:159: Warning[2]: Argument to array_reverse() should be an array
+//
 // Revision 1.55  2004/09/26 14:58:35  rurban
 // naive SearchHighLight implementation
 //

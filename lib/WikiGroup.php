@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.41 2004-09-17 14:21:28 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.42 2004-11-01 10:43:56 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -61,7 +61,7 @@ class WikiGroup{
     /** User object if different from current user */
     var $user;
     /** The global WikiRequest object */
-    var $request;
+    //var $request;
     /** Array of groups $username is confirmed to belong to */
     var $membership;
     /** boolean if not the current user */
@@ -74,7 +74,7 @@ class WikiGroup{
      */ 
     function WikiGroup($not_current = false) {
     	$this->not_current = $not_current;
-        $this->request =& $GLOBALS['request'];
+        //$this->request =& $GLOBALS['request'];
     }
 
     /**
@@ -84,7 +84,8 @@ class WikiGroup{
      * @return string Current username.
      */ 
     function _getUserName(){
-        $user = (!empty($this->user)) ? $this->user : $this->request->getUser();
+        global $request;
+        $user = (!empty($this->user)) ? $this->user : $request->getUser();
         $username = $user->getID();
         if ($username != $this->username) {
             $this->membership = array();
@@ -185,9 +186,11 @@ class WikiGroup{
     }
 
     function isSpecialMember($group){
+        global $request;
+
         if (isset($this->membership[$group]))
             return $this->membership[$group];
-        $user = (!empty($this->user)) ? $this->user : $this->request->getUser();
+        $user = (!empty($this->user)) ? $this->user : $request->getUser();
         switch ($group) {
             case GROUP_EVERY: 		
                 return $this->membership[$group] = true;
@@ -229,9 +232,10 @@ class WikiGroup{
     	static $result = array();
     	if (!empty($result))
     		return $result;
-    		
+
+        global $request;
         /* WikiPage users: */
-        $dbh = $this->request->getDbh();
+        $dbh = $request->getDbh();
         $page_iter = $dbh->getAllPages();
         $users = array();
         while ($page = $page_iter->next()) {
@@ -240,7 +244,11 @@ class WikiGroup{
         }
 
         /* WikiDB users from prefs (not from users): */
-        $dbi = _PassUser::getAuthDbh();
+        if (ENABLE_USER_NEW)
+            $dbi = _PassUser::getAuthDbh();
+        else 
+            $dbi = false;
+
         if ($dbi and !empty($GLOBALS['DBAuthParams']['pref_select'])) {
             //get prefs table
             $sql = preg_replace('/SELECT .+ FROM/i','SELECT userid FROM',
@@ -251,7 +259,7 @@ class WikiGroup{
             if ($GLOBALS['DBParams']['dbtype'] == 'ADODB') {
                 $db_result = $dbi->Execute($sql);
                 foreach ($db_result->GetArray() as $u) {
-                   $users = array_merge($users,array_values($u));
+                    $users = array_merge($users,array_values($u));
                 }
             } elseif ($GLOBALS['DBParams']['dbtype'] == 'SQL') {
                 $users = array_merge($users,$dbi->getCol($sql));
@@ -390,7 +398,7 @@ class GroupNone extends WikiGroup{
      * @param object $request The global WikiRequest object - ignored.
      */ 
     function GroupNone() {
-        $this->request = &$GLOBALS['request'];
+        //$this->request = &$GLOBALS['request'];
         return;
     }    
 
@@ -450,7 +458,7 @@ class GroupWikiPage extends WikiGroup{
      * @param object $request The global WikiRequest object.
      */ 
     function GroupWikiPage() {
-        $this->request = &$GLOBALS['request'];
+        //$this->request = &$GLOBALS['request'];
         $this->username = $this->_getUserName();
         //$this->username = null;
         $this->membership = array();
@@ -470,7 +478,8 @@ class GroupWikiPage extends WikiGroup{
         if (isset($this->membership[$group])) {
             return $this->membership[$group];
         }
-        $group_page = $this->request->getPage($group);
+        global $request;
+        $group_page = $request->getPage($group);
         if ($this->_inGroupPage($group_page)) {
             $this->membership[$group] = true;
             return true;
@@ -524,8 +533,9 @@ class GroupWikiPage extends WikiGroup{
             $this->membership[$group] = $this->isSpecialMember($group);
         }
 
-        $dbh = &$this->request->getDbh();
-        $master_page = $this->request->getPage(_("CategoryGroup"));
+        global $request;
+        $dbh = &$request->_dbi;
+        $master_page = $request->getPage(_("CategoryGroup"));
         $master_list = $master_page->getLinks(true);
         while ($group_page = $master_list->next()){
             $group = $group_page->getName();
@@ -593,7 +603,7 @@ class GroupDb extends WikiGroup {
      */ 
     function GroupDb() {
     	global $DBAuthParams, $DBParams;
-        $this->request = &$GLOBALS['request'];
+        //$this->request = &$GLOBALS['request'];
         $this->username = $this->_getUserName();
         $this->membership = array();
 
@@ -606,8 +616,8 @@ class GroupDb extends WikiGroup {
         }
         if (empty($this->user)) {
             // use _PassUser::prepare instead
-            if (isa($this->request->getUser(),'_PassUser'))
-                $user =& $this->request->getUser();
+            if (isa($request->getUser(),'_PassUser'))
+                $user =& $request->getUser();
             else
                 $user = new _PassUser($this->username);
         } else { 
@@ -810,7 +820,7 @@ class GroupFile extends WikiGroup {
      * @param object $request The global WikiRequest object.
      */ 
     function GroupFile(){
-        $this->request = &$GLOBALS['request'];
+        //$this->request = &$GLOBALS['request'];
         $this->username = $this->_getUserName();
         //$this->username = null;
         $this->membership = array();
@@ -923,7 +933,7 @@ class GroupLdap extends WikiGroup {
      * @param object $request The global WikiRequest object.
      */ 
     function GroupLdap(){
-        $this->request = &$GLOBALS['request'];
+        //$this->request = &$GLOBALS['request'];
         $this->username = $this->_getUserName();
         $this->membership = array();
 
@@ -1081,6 +1091,9 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.41  2004/09/17 14:21:28  rurban
+// fix LDAP ou= issue, wrong strstr arg order
+//
 // Revision 1.40  2004/06/29 06:48:02  rurban
 // Improve LDAP auth and GROUP_LDAP membership:
 //   no error message on false password,

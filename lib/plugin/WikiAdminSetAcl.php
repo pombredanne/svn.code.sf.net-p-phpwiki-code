@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSetAcl.php,v 1.19 2004-06-16 10:38:59 rurban Exp $');
+rcs_id('$Id: WikiAdminSetAcl.php,v 1.20 2004-11-01 10:43:59 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.19 $");
+                            "\$Revision: 1.20 $");
     }
 
     function getDefaultArguments() {
@@ -267,13 +267,6 @@ class _PageList_Column_acl extends _PageList_Column {
     function _getValue ($page_handle, &$revision_handle) {
         $perm_tree = pagePermissions($page_handle->_pagename);
         return pagePermissionsAclFormat($perm_tree);
-        if (0) {
-            ob_start();
-            var_dump($perm_array);
-            $xml = ob_get_contents();
-            ob_end_clean();
-            return $xml;
-        }
     }
 };
 
@@ -283,17 +276,19 @@ class _PageList_Column_perm extends _PageList_Column {
         return pagePermissionsSimpleFormat($perm_array,
                                            $page_handle->get('author'),
                                            $page_handle->get('group'));
-        if (0) {
-            ob_start();
-            var_dump($perm_array);
-            $xml = ob_get_contents();
-            ob_end_clean();
-            return $xml;
-        }
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.19  2004/06/16 10:38:59  rurban
+// Disallow refernces in calls if the declaration is a reference
+// ("allow_call_time_pass_reference clean").
+//   PhpWiki is now allow_call_time_pass_reference = Off clean,
+//   but several external libraries may not.
+//   In detail these libs look to be affected (not tested):
+//   * Pear_DB odbc
+//   * adodb oracle
+//
 // Revision 1.18  2004/06/14 11:31:39  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList

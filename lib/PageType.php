@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.31 2004-09-22 13:46:25 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.32 2004-11-01 10:43:55 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004 $ThePhpWikiProgrammingTeam
 
@@ -258,7 +258,9 @@ class PageFormatter {
 	if (!empty($meta['markup']))
 	    $this->_markup = $meta['markup'];
 	else
-	    $this->_markup = 2; // new policy: default = new markup (old crashes quite often)
+	    $this->_markup = 1; // dump used old-markup as empty. 
+        // to be able to restore it we must keep markup 1 as default.
+        // new policy: default = new markup (old crashes quite often)
     }
 
     function _transform(&$text) {

@@ -1,8 +1,8 @@
-<?php rcs_id('$Id: DbaDatabase.php,v 1.13 2004-05-04 14:24:07 rurban Exp $');
+<?php rcs_id('$Id: DbaDatabase.php,v 1.14 2004-11-01 10:43:55 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 
-define('DBA_DATABASE_DEFAULT_TIMEOUT', 20);
+define('DBA_DATABASE_DEFAULT_TIMEOUT', 5);
 
 class DbaDatabase
 {

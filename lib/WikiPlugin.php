@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.51 2004-09-14 10:29:59 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.52 2004-11-01 10:43:57 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,7 +87,7 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.51 $");
+        //                    "\$Revision: 1.52 $");
     }
 
     function getArgs($argstr, $request=false, $defaults = false) {
@@ -475,6 +475,7 @@ class WikiPluginLoader {
                 return $this->_error(sprintf(_("%s: no such class"), $plugin_class));
             }
         }
+        $ErrorManager->popErrorHandler();
         $plugin = new $plugin_class;
         if (!is_subclass_of($plugin, "WikiPlugin"))
             return $this->_error(sprintf(_("%s: not a subclass of WikiPlugin"),

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.65 2004-10-07 16:08:58 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.66 2004-11-01 10:43:55 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -14,9 +14,9 @@ class Template
     function Template ($name, &$request, $args = false) {
         global $WikiTheme;
 
-        $this->_request = &$request;
+        $this->_request = $request;
         $this->_name = $name;
-        $GLOBALS['TemplatesProcessed'][$name] = 1;
+        $request->_TemplatesProcessed[$name] = 1;
         $this->_basepage = $request->getArg('pagename');
         
         $file = $WikiTheme->findTemplate($name);
@@ -83,8 +83,8 @@ class Template
 
     function _expandSubtemplate (&$template) {
         // FIXME: big hack!        
-        if (!$template->_request)
-            $template->_request = &$this->_request;
+        //if (!$template->_request)
+        //    $template->_request = &$this->_request;
         if (defined('DEBUG') and DEBUG) {
             echo "<!-- Begin $template->_name -->\n";
         }
@@ -112,19 +112,18 @@ class Template
 
     
     function printExpansion ($defaults = false) {
-        if (!is_array($defaults))
+        if (!is_array($defaults)) // HTML object or template object
             $defaults = array('CONTENT' => $defaults);
         $this->_vars = array_merge($defaults, $this->_locals);
         extract($this->_vars);
 
-        $request = &$this->_request;
+        global $request;
         if (!isset($user))
             $user = $request->getUser();
         if (!isset($page))
-            $page = &$request->getPage();
-        
-        global $WikiTheme, $RCS_IDS, $charset;
-        
+            $page = $request->getPage();
+
+        global $WikiTheme, $RCS_IDS, $charset; 
         //$this->_dump_template();
 
         global $ErrorManager;
@@ -135,11 +134,14 @@ class Template
         $ErrorManager->popErrorHandler();
     }
 
+    // FIXME: find a way to do template expansion less memory intensive. 
+    // 1.3.4 needed no memory at all for dumphtml, now it needs +15MB
+    // Smarty? As before?
     function getExpansion ($defaults = false) {
         ob_start();
         $this->printExpansion($defaults);
         $xml = ob_get_contents();
-        ob_end_clean();
+        ob_end_clean(); 	// PHP problem: doesn't release its memory?
         return $xml;
     }
 
@@ -205,7 +207,8 @@ function Template($name, $args = false) {
 }
 
 function alreadyTemplateProcessed($name) {
-    return !empty($GLOBALS['TemplatesProcessed'][$name]) ? true : false;
+    global $request;
+    return !empty($request->_TemplatesProcessed[$name]) ? true : false;
 }
 /**
  * Make and expand the top-level template. 
@@ -257,13 +260,18 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
     $HTML_DUMP = true;
 
     $html = asXML(new Template('htmldump', $request, $args));
-
+    
     $HIDE_TOOLBARS = false;
     $HTML_DUMP = false;
     return $html;
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.65  2004/10/07 16:08:58  rurban
+// fixed broken FileUser session handling.
+//   thanks to Arnaud Fontaine for detecting this.
+// enable file user Administrator membership.
+//
 // Revision 1.64  2004/10/04 23:40:35  rurban
 // fix nested loops on htmldump errors
 //

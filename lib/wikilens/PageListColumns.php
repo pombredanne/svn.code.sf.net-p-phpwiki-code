@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageListColumns.php,v 1.6 2004-07-08 20:30:07 rurban Exp $');
+rcs_id('$Id: PageListColumns.php,v 1.7 2004-11-01 10:43:59 rurban Exp $');
 
 /*
  Copyright 2004 Mike Cassano
@@ -39,18 +39,14 @@ require_once('lib/plugin/RateIt.php');
  * Column representing the number of backlinks to the page.
  * Perhaps this number should be made a 'field' of a page, in
  * which case this column type would not be necessary.
+ * See also info=numbacklinks,numpagelinks at plugin/ListPages.php:_PageList_Column_ListPages_count
+ * and info=count at plugin/BackLinks.php:PageList_Column_BackLinks_count
  */
 class _PageList_Column_numbacklinks extends _PageList_Column_custom
 {
-    function _getValue ($page_handle, &$revision_handle) 
-    {
-        //return $page_handle->getNumLinks();
+    function _getValue ($page_handle, &$revision_handle) {
         $theIter = $page_handle->getBackLinks();
-        $total = 0;
-        while($curr = $theIter->next()){
-            $total++;
-        }
-        return $total;
+        return $theIter->count();
     }
     
     function _getSortableValue ($page_handle, &$revision_handle) {
@@ -218,7 +214,9 @@ class _PageList_Column_ratingwidget extends _PageList_Column_custom
     }
 
     function format ($pagelist, $page_handle, &$revision_handle) {
-        $widget = WikiPlugin_RateIt::RatingWidgetHtml($page_handle->getName(), "", "pagerat", $this->_dimension, "small");
+        $plugin = new WikiPlugin_RateIt();
+        $widget = $plugin->RatingWidgetHtml($page_handle->getName(), "", 
+                                            "pagerat", $this->_dimension, "small");
         $td = HTML::td($widget);
         $td->setAttr('nowrap', 'nowrap');
         return $td;
@@ -377,6 +375,10 @@ $WikiTheme->addPageListColumn
     ));
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/07/08 20:30:07  rurban
+// plugin->run consistency: request as reference, added basepage.
+// encountered strange bug in AllPages (and the test) which destroys ->_dbi
+//
 // Revision 1.5  2004/07/07 15:01:44  dfrankow
 // Allow ratingvalue, ratingwidget, prediction, numbacklinks columns to be sortable
 //

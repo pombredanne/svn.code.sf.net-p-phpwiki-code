@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.33 2004-09-26 11:47:52 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.34 2004-11-01 10:43:55 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -220,13 +220,13 @@ function action2access ($action) {
 // Recursive helper to do the real work
 // TODO: check if a perm cache for page-(current+edit+change?)action pairs will help
 function _requiredAuthorityForPagename($access, $pagename) {
-    global $request;
     static $permcache = array();
     
     if (array_key_exists($pagename, $permcache)
         and array_key_exists($access, $permcache[$pagename]))
         return $permcache[$pagename][$access];
         
+    global $request;
     $page = $request->getPage($pagename);
     // Page not found; check against default permissions
     if (! $page->exists() ) {
@@ -444,6 +444,8 @@ class PagePermission {
                                   ACL_OWNER => true);
         else
             $perm['dump'] = array(ACL_EVERY => true);
+        if (defined('REQUIRE_SIGNIN_BEFORE_EDIT') && REQUIRE_SIGNIN_BEFORE_EDIT)
+            $perm['edit'] = array(ACL_SIGNED => true);
         // view:
         if (!ALLOW_ANON_USER) {
             if (!ALLOW_USER_PASSWORDS) 
@@ -727,6 +729,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.33  2004/09/26 11:47:52  rurban
+// fix another reecursion loop when . exists: deny if ACL not defined; implement pageperm cache
+//
 // Revision 1.32  2004/09/25 18:56:09  rurban
 // avoid recursion bug on setacl for "."
 //

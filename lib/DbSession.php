@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbSession.php,v 1.22 2004-07-01 13:14:01 rurban Exp $');
+<?php rcs_id('$Id: DbSession.php,v 1.23 2004-11-01 10:43:55 rurban Exp $');
 
 /**
  * Store sessions data in Pear DB / ADODB / dba / ....
@@ -159,10 +159,12 @@ extends DbSession
             //if (preg_match('|^[a-zA-Z0-9/+=]+$|', $res))
             $res = base64_decode($res);
         if (strlen($res) > 4000) {
-            trigger_error("Overlarge session data!", E_USER_WARNING);
-            $res = '';
-            //$res = preg_replace('/s:6:"_cache";O:12:"WikiDB_cache".+}$/',"",$res);
-        }    
+            trigger_error("Overlarge session data! ".strlen($res).
+                        " gt. 4000", E_USER_WARNING);
+            //$res = '';
+            $res = preg_replace('/s:6:"_cache";O:12:"WikiDB_cache".+}$/',"",$res);
+            $res = preg_replace('/s:12:"_cached_html";s:.+",s:4:"hits"/','s:4:"hits"',$res);
+        }
         return $res;
     }
   
@@ -379,8 +381,11 @@ extends DbSession
         if (!empty($res) and preg_match('|^[a-zA-Z0-9/+=]+$|', $res))
             $res = base64_decode($res);
         if (strlen($res) > 4000) {
-            trigger_error("Overlarge session data!", E_USER_WARNING);
-            $res = '';
+            trigger_error("Overlarge session data! ".strlen($res).
+                        " gt. 4000", E_USER_WARNING);
+            //$res = '';
+            $res = preg_replace('/s:6:"_cache";O:12:"WikiDB_cache".+}$/',"",$res);
+            $res = preg_replace('/s:12:"_cached_html";s:.+",s:4:"hits"/','s:4:"hits"',$res);
         }
         return $res;
     }

@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.212 2004-10-22 09:15:39 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.213 2004-11-01 10:43:57 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -690,8 +690,8 @@ class WikiPageName
  */
 function ConvertOldMarkup ($text, $markup_type = "block") {
 
-    static $subs;
-    static $block_re;
+    //static $subs;
+    //static $block_re;
     
     // FIXME:
     // Trying to detect why the 2nd paragraph of OldTextFormattingRules or
@@ -727,9 +727,12 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
         // change ! escapes to ~'s.
         global $WikiNameRegexp, $request;
         $bang_esc[] = "(?:" . ALLOWED_PROTOCOLS . "):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]";
-        $map = getInterwikiMap();
-        if ($map_regex = $map->getRegexp())
+        // before 4.3.9 pcre had a memory release bug, which might hit us here. so be safe.
+        if (check_php_version(4,3,9)) {
+          $map = getInterwikiMap();
+          if ($map_regex = $map->getRegexp())
             $bang_esc[] = $map_regex . ":[^\\s.,;?()]+"; // FIXME: is this really needed?
+        }
         $bang_esc[] = $WikiNameRegexp;
         $orig[] = '/!((?:' . join(')|(', $bang_esc) . '))/';
         $repl[] = '~\\1';
@@ -783,10 +786,13 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
 
         // Section Title
         $blockpats[] = '!{1,3}[^!]';
-
-        $block_re = ( '/\A((?:.|\n)*?)(^(?:'
+        /*
+	removed .|\n in the anchor not to crash on /m because with /m "." already includes \n
+	this breaks headings but it doesn't crash anymore (crash on non-cgi, non-cli only)
+	*/
+        $block_re = ( '/\A((?m:.)*?)(^(?m:'
                       . join("|", $blockpats)
-                      . ').*$)\n?/m' );
+                      . ').*$)\n?/' );
         
     }
     
@@ -800,6 +806,7 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
 	//FIXME:
 	// php crashes here in the 2nd paragraph of OldTextFormattingRules, 
 	// AnciennesR%E8glesDeFormatage and more 
+	// See http://www.pcre.org/pcre.txt LIMITATIONS
 	 while (preg_match($block_re, $text, $m)) {
             $text = substr($text, strlen($m[0]));
             list (,$leading_text, $block) = $m;
@@ -1789,6 +1796,9 @@ function longer_timeout($secs = 30) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.212  2004/10/22 09:15:39  rurban
+// Alert::show has no arg anymore
+//
 // Revision 1.211  2004/10/22 09:05:11  rurban
 // added longer_timeout (HttpClient)
 // fixed warning

@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.23 2004-09-14 10:06:42 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.24 2004-11-01 10:43:55 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -208,7 +208,7 @@ class CacheableMarkup extends XmlContent {
             }
             elseif (is_subclass_of($item, 'cached_dynamiccontent')) {
             	// give the content the chance to know about itself or even 
-            	// to change itself itself
+            	// to change itself
                 $val = $item->expand($basepage, $this);
                 $val->printXML();
             }

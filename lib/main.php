@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.183 2004-10-14 19:23:58 rurban Exp $');
+rcs_id('$Id: main.php,v 1.184 2004-11-01 10:43:57 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -218,8 +218,7 @@ $this->version = phpwiki_version();
      * database for the page requested.
      */
     function getPage ($pagename = false) {
-        if (!isset($this->_dbi))
-            $this->getDbh();
+        //if (!isset($this->_dbi)) $this->getDbh();
         if (!$pagename) 
             $pagename = $this->getArg('pagename');
         return $this->_dbi->getPage($pagename);
@@ -323,12 +322,24 @@ $this->version = phpwiki_version();
         }
         $this->_user->_group = $this->getGroup();
         // avoid recursive objects and session resource handles
+        // avoid overlarge session data (max 4000 byte!)
         if (isset($user->_group)) {
             unset($user->_group->_request);
             unset($user->_group->_user);
         }
-        unset($user->_HomePagehandle);
-        unset($user->_auth_dbi);
+        if (ENABLE_USER_NEW) {
+            unset($user->_HomePagehandle);
+            unset($user->_auth_dbi);
+        } else {
+            unset($user->_dbi);
+            unset($user->_authdbi);
+            unset($user->_homepage);
+            unset($user->_request);
+        }
+        if (empty($user->page))
+            $user->page = $this->getArg('pagename');
+        if (empty($user->action))
+            $user->action = $this->getArg('action');
         $this->setSessionVar('wiki_user', $user);
         $this->_prefs->set('userid',
                            $user->isSignedIn() ? $user->getId() : '');
@@ -1114,6 +1125,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.183  2004/10/14 19:23:58  rurban
+// remove debugging prints
+//
 // Revision 1.182  2004/10/12 13:13:19  rurban
 // php5 compatibility (5.0.1 ok)
 //

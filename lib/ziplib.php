@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.40 2004-06-19 12:32:37 rurban Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.41 2004-11-01 10:43:58 rurban Exp $');
 
 /**
  * GZIP stuff.
@@ -561,7 +561,7 @@ function MimeifyPageRevision ($revision) {
         $params['flags'] = 'PAGE_LOCKED';
     if ($revision->get('author_id'))
         $params['author_id'] = $revision->get('author_id');
-    if ($revision->get('markup'))
+    if ($revision->get('markup')) // what is the default? we must use 1
         $params['markup'] = $revision->get('markup');
     if ($revision->get('summary'))
         $params['summary'] = $revision->get('summary');
@@ -828,6 +828,9 @@ function ParseMimeifiedPages ($data)
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.40  2004/06/19 12:32:37  rurban
+// new TEMP_DIR for ziplib
+//
 // Revision 1.39  2004/06/08 10:54:47  rurban
 // better acl dump representation, read back acl and owner
 //
