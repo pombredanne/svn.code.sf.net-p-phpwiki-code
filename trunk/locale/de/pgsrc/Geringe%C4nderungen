@@ -1,0 +1,16 @@
+From [no address given]  Tue Dec 18 02:37:25 2001
+Subject: Geringe%C4nderungen
+From: [no address given] (PhpWiki)
+Date: Tue, 18 Dec 2001 02:05:19 -0500
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.0-jeffs-hacks)
+Content-Type: application/x-phpwiki;
+  pagename=Geringe%C4nderungen;
+  flags=PAGE_LOCKED;
+  lastmodified=1008659119;
+Content-Transfer-Encoding: quoted-printable
+
+Eine Liste der Geringf=FCgige Seiten wird hier erzeugt. FrischeSeiten =
+zeigt alle  Haupt- und Geringf=FCgige =C4nderungen.
+
+--------
+<?plugin RecentChanges  days=3D4 show_all=3D1 show_minor=3D1?>
