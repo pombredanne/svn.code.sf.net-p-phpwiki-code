@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.15 2002-02-08 23:04:48 carstenklapp Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.16 2002-02-14 04:09:36 carstenklapp Exp $ -->
 <?php
 
 $WidthI = HTML::input(array('type' => 'text',
@@ -70,7 +70,7 @@ $s = $Theme->getButtonSeparator();
   <?=$HeightI?>
   <b><?=_("W")?></b>
   <?=$WidthI?>
-  <?=Button("submit:", _("Adjust"))?>
+  <?=Button("submit:", _("Adjust"), 'wikiaction')?>
   <br />
   <?=$NEW_MARKUP_CB?>  <?=_("Use new markup")?>
 </p>
