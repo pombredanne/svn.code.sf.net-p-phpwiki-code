@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.82 2002-01-19 19:29:49 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.83 2002-01-19 20:37:21 carstenklapp Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -155,23 +155,10 @@ function LinkWikiWord($wikiword, $linktext = '', $version = false) {
         return $Theme->LinkUnknownWikiWord($wikiword, $linktext);
 }
 
+//This function will be deleted once all references to it are updated.
 function LinkExistingWikiWord($wikiword, $linktext = '', $version = false) {
-    if (empty($linktext)) {
-        $linktext = $wikiword;
-        if (defined("autosplit_wikiwords"))
-            $linktext = split_pagename($linktext);
-        $class = 'wiki';
-    }
-    else
-        $class = 'named-wiki';
-
-    $attr = array();
-    if ($version !== false)
-        $attr['version'] = $version;
-
-    return QElement('a', array('href'  => WikiURL($wikiword, $attr),
-                               'class' => $class),
-                    $linktext);
+    global $Theme;
+    return $Theme->LinkExistingWikiWord($wikiword, $linktext, $version);
 }
 
 
