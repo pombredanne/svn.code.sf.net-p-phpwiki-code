@@ -36,8 +36,6 @@ $locale["(hist)"] =
    "(protok.)";
 $locale["(last edited %s)"] =
    "(letzte Änderung %s)";
-$locale["(version %s, saved on %s)"] =
-   "(Version %s. zuletzt am %s gespeichert)";
 $locale["- saved to database as version %d"] =
    "- in der Datenbank gespeichert als Version %d.";
 $locale["1 day"] =
@@ -220,8 +218,6 @@ $locale["List the most popular pages"] =
    "Die MeistBesuchten Seiten auflisten";
 $locale["Lists nested too deep in SetHTMLOutputMode"] =
    "Interner Fehler: Stackgrenze in SetHTMLOutputMode überschritten.";
-$locale["Loaded"] =
-   "Geladet";
 $locale["Loading '%s'"] =
    "»%s« wird geladen";
 $locale["Loading up virgin wiki"] =
@@ -510,6 +506,8 @@ $locale["from %s"] =
    "von %s";
 $locale["is identical to current version %d - skipped"] =
    "ist identisch mit der aktuellen Version %d - ausgelassen";
+$locale["last modified %s"] =
+   "zuletzt geändert %s";
 $locale["last modified on %s"] =
    "zuletzt am %s geändert";
 $locale["locked"] =
@@ -542,5 +540,9 @@ $locale["version %d"] =
    "Version %d.";
 $locale["version %s"] =
    "Version %s.";
+$locale["version %s, saved %s."] =
+   "Version %s. %s gespeichert.";
+$locale["version %s, saved on %s."] =
+   "Version %s. am %s gespeichert.";
 
 ?>
