@@ -1,4 +1,4 @@
-<!-- $Id: wiki_transform.php3,v 1.14 2000-08-29 02:37:42 aredridel Exp $ -->
+<!-- $Id: wiki_transform.php3,v 1.15 2000-09-04 05:12:12 wainstead Exp $ -->
 <?php
    // expects $pagehash and $html to be set
 
@@ -16,6 +16,13 @@
    }
 
    $numlines = count($pagehash["content"]);
+
+   // only call these once, for efficiency
+   $quick_search_box  = RenderQuickSearch();
+   $full_search_box   = RenderFullSearch();
+   $most_popular_list = RenderMostPopular();
+
+
 
    // Loop over all lines of the page and apply transformation rules
    for ($index = 0; $index < $numlines; $index++) {
@@ -252,9 +259,9 @@ your web server it is highly advised that you do not allow this.
          $html .= SetHTMLOutputMode("", ZERO_DEPTH, 0);
       }
 
-      $tmpline = str_replace("%%Search%%", RenderQuickSearch(), $tmpline);
-      $tmpline = str_replace("%%Fullsearch%%", RenderFullSearch(), $tmpline);
-      $tmpline = str_replace("%%Mostpopular%%", RenderMostPopular(), $tmpline);
+      $tmpline = str_replace("%%Search%%", $quick_search_box, $tmpline);
+      $tmpline = str_replace("%%Fullsearch%%", $full_search_box, $tmpline);
+      $tmpline = str_replace("%%Mostpopular%%", $most_popular_list, $tmpline);
 
       $html .= "$tmpline";
    }
