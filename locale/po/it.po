@@ -182,7 +182,7 @@ msgstr "RegoleDiFormattazioneDelTesto"
 
 #: ../templates/editpage.html:84
 msgid "Synopsis"
-msgstr ""
+msgstr "Sinossi"
 
 #: ../lib/plugin/BackLinks.php:13
 #, c-format

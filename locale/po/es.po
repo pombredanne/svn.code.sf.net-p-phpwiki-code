@@ -189,7 +189,7 @@ msgstr "ReglasDeFormatoDeTexto"
 
 #: ../templates/editpage.html:84
 msgid "Synopsis"
-msgstr ""
+msgstr "Sinopsis"
 
 #: ../lib/plugin/BackLinks.php:13
 #, c-format
