@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.59 2002-02-21 04:13:13 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.60 2002-02-21 06:08:25 carstenklapp Exp $');
 
 
 include "lib/config.php";
@@ -413,7 +413,8 @@ WikiUser::PrintLoginForm($this, compact('require_level'), $msg);
 
     function isActionPage ($pagename) {
         // Temp workaround for french single-word action page 'Historique'
-        if (! _("PageHistory") == $pagename) {
+        $singleWordActionPages = array("Historique", "Info");
+        if (! in_array($pagename, $singleWordActionPages)) {
             // Allow for, e.g. action=LikePages
             global $WikiNameRegexp;
             if (!preg_match("/$WikiNameRegexp\\Z/A", $pagename))
