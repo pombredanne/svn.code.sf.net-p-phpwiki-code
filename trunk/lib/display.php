@@ -1,11 +1,13 @@
 <?php
    // display.php: fetch page or get default content
    // calls transform.php for actual transformation of wiki markup to HTML
-   rcs_id('$Id: display.php,v 1.8 2001-02-12 01:43:10 dairiki Exp $');
- 
-   $html = "";
+   rcs_id('$Id: display.php,v 1.9 2001-06-26 18:04:54 uckelman Exp $');
 
-   $pagehash = RetrievePage($dbi, $pagename, $WikiPageStore);
+	if (!isset($version)) $version = 0;
+	$pagestore = SelectStore($dbi, $pagename, $version, $WikiPageStore, $ArchivePageStore);
+   $pagehash = RetrievePage($dbi, $pagename, $pagestore, $version);
+   
+	$html = "";
 
    // we render the page if it exists, else ask the user to write one.
    if (is_array($pagehash)) {
