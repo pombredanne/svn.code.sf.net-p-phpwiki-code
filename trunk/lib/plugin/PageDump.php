@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageDump.php,v 1.4 2004-04-18 01:11:52 rurban Exp $');
+rcs_id('$Id: PageDump.php,v 1.5 2004-05-03 17:42:44 rurban Exp $');
 /**
  * PhpWikiPlugin for PhpWiki developers to generate single page dumps
  * for checking into cvs, or for users or the admin to produce a
@@ -39,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -212,13 +212,13 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
         $array = explode("\n", $mailified);
 
         // Massage headers to prepare for developer checkin to CVS.
-        $item_to_insert = "X-Rcs-Id: \$Id\$";
+        $item_to_insert = "X-Rcs-Id: \$Id: PageDump.php,v 1.5 2004-05-03 17:42:44 rurban Exp $";
         $insert_into_key_position = 2;
         $returnval_ignored = array_splice($array,
                                           $insert_into_key_position,
                                           0, $item_to_insert);
 
-        $item_to_insert = "  pgsrc_version=\"2 \$Revision\$\";";
+        $item_to_insert = "  pgsrc_version=\"2 \$Revision: 1.5 $\";";
         $insert_into_key_position = 5;
         $returnval_ignored = array_splice($array,
                                           $insert_into_key_position,
@@ -251,6 +251,11 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/04/18 01:11:52  rurban
+// more numeric pagename fixes.
+// fixed action=upload with merge conflict warnings.
+// charset changed from constant to global (dynamic utf-8 switching)
+//
 // Revision 1.3  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //
