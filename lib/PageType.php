@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.26 2004-04-19 18:27:45 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.27 2004-04-19 23:13:03 zorloc Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004 $ThePhpWikiProgrammingTeam
 
@@ -188,7 +188,6 @@ class PageType_interwikimap extends PageType
 
 
     function _parseMap ($text) {
-        global $AllowedProtocols;
         if (!preg_match_all("/^\s*(\S+)\s+(\S+)/m",
                             $text, $matches, PREG_SET_ORDER))
             return false;

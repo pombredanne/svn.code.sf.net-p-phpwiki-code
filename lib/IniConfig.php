@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.2 2004-04-19 18:33:13 zorloc Exp $');
+rcs_id('$Id: IniConfig.php,v 1.3 2004-04-19 23:13:03 zorloc Exp $');
 
 /**************************************************************************
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -51,7 +51,8 @@ $_IC_VALID_VALUE = array('WIKI_NAME', 'ADMIN_USER', 'ADMIN_PASSWD',
         'PASSWORD_LENGTH_MINIMUM', 'USER_AUTH_POLICY', 'LDAP_AUTH_HOST',
         'LDAP_BASE_DN', 'LDAP_AUTH_USER', 'LDAP_AUTH_PASSWORD',
         'LDAP_SEARCH_FIELD', 'IMAP_AUTH_HOST', 'POP3_AUTH_HOST',
-        'POP3_AUTH_PORT', 'AUTH_USER_FILE', 'GROUP_METHOD',
+        'POP3_AUTH_PORT', 'AUTH_USER_FILE', 'AUTH_SESS_USER', 
+        'AUTH_SESS_LEVEL', 'GROUP_METHOD',
         'AUTH_GROUP_FILE', 'EDITING_POLICY', 'THEME', 'CHARSET',
         'DEFAULT_LANGUAGE', 'WIKI_PGSRC', 'DEFAULT_WIKI_PGSRC',
         'ALLOWED_PROTOCOLS', 'INLINE_IMAGES', 'SUBPAGE_SEPARATOR',
@@ -60,9 +61,9 @@ $_IC_VALID_VALUE = array('WIKI_NAME', 'ADMIN_USER', 'ADMIN_PASSWD',
         'SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH');
 
 // List of all valid config options to be define()d which take booleans.
-$_IC_VALID_BOOL = array('DEBUG', 'ENABLE_USER_NEW', 'ENABLE_REVERSE_DNS', 
-        'ENCRYPTED_PASSWD', 'ZIPDUMP_AUTH', 'ENABLE_RAW_HTML',
-        'STRICT_MAILABLE_PAGEDUMPS', 'COMPRESS_OUTPUT',
+$_IC_VALID_BOOL = array('DEBUG', 'ENABLE_USER_NEW', 'JS_SEARCHREPLACE',
+        'ENABLE_REVERSE_DNS', 'ENCRYPTED_PASSWD', 'ZIPDUMP_AUTH', 
+        'ENABLE_RAW_HTML', 'STRICT_MAILABLE_PAGEDUMPS', 'COMPRESS_OUTPUT',
         'WIKIDB_NOCACHE_MARKUP', 'ALLOW_ANON_USER', 'ALLOW_ANON_EDIT',
         'ALLOW_BOGO_LOGIN', 'ALLOW_USER_PASSWORDS',
         'AUTH_USER_FILE_STORABLE', 'ALLOW_HTTP_AUTH_LOGIN',
@@ -75,7 +76,7 @@ function IniConfig($file)
         require_once('lib/pear/Config.php');
         
         $config = new Config();
-        $root = &$config->parseConfig('config/config.ini', 'inicommented');
+        $root = &$config->parseConfig($file, 'inicommented');
         $out = $root->toArray();
 
         $rs = &$out['root'];
@@ -225,9 +226,10 @@ function IniConfig($file)
 
         // Another "too-tricky" redefine
         global $KeywordLinkRegexp;
-        $KeywordLinkRegexp = @$rs['KEYWORD_LINK_REGEXP'];
+        $keywords = preg_split('/\s*:\s*/', @$rs['KEYWORDS']);
+        $KeywordLinkRegexp = '(?<=' . implode('|^', $keywords) . ')[[:upper:]].*$';
         
         global $DisabledActions;
-        $DisabledActions = preg_split('/\s*:\s*/', @$rs['DisabledActions']);
+        $DisabledActions = preg_split('/\s*:\s*/', @$rs['DISABLED_ACTIONS']);
 
 }

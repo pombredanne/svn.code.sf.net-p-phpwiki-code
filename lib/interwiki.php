@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: interwiki.php,v 1.23 2002-10-06 16:45:10 dairiki Exp $');
+<?php rcs_id('$Id: interwiki.php,v 1.24 2004-04-19 23:13:03 zorloc Exp $');
 
 class InterWikiMap {
     function InterWikiMap (&$request) {
@@ -61,7 +61,6 @@ class InterWikiMap {
 
 
     function _parseMap ($text) {
-        global $AllowedProtocols;
         if (!preg_match_all("/^\s*(\S+)\s+(\S+)/m",
                             $text, $matches, PREG_SET_ORDER))
             return false;

@@ -1,4 +1,4 @@
-# $Id: .htaccess,v 1.6 2004-03-12 21:35:35 rurban Exp $
+# $Id: .htaccess,v 1.7 2004-04-19 23:13:02 zorloc Exp $
 
 <IfModule mod_php4.c>
 
@@ -12,6 +12,11 @@
 #  php_flag allow_url_fopen off
 
 </IfModule>
+
+<Files *.ini>
+   Order deny,allow
+   Deny from all
+</Files>
 
 # Try various wiki versions, like wiki, wikide, wikisidebar, ...
 # <Files "wiki*">

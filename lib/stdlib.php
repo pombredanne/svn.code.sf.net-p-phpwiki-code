@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.170 2004-04-19 18:27:45 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.171 2004-04-19 23:13:03 zorloc Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -560,10 +560,10 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
         $repl[] = '~[';
 
         // change ! escapes to ~'s.
-        global $AllowedProtocols, $WikiNameRegexp, $request;
+        global $WikiNameRegexp, $request;
         //include_once('lib/interwiki.php');
         $map = getInterwikiMap();
-        $bang_esc[] = "(?:$AllowedProtocols):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]";
+        $bang_esc[] = "(?:" . ALLOWED_PROTOCOLS . "):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]";
         $bang_esc[] = $map->getRegexp() . ":[^\\s.,;?()]+"; // FIXME: is this really needed?
         $bang_esc[] = $WikiNameRegexp;
         $orig[] = '/!((?:' . join(')|(', $bang_esc) . '))/';
@@ -1382,6 +1382,12 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.170  2004/04/19 18:27:45  rurban
+// Prevent from some PHP5 warnings (ref args, no :: object init)
+//   php5 runs now through, just one wrong XmlElement object init missing
+// Removed unneccesary UpgradeUser lines
+// Changed WikiLink to omit version if current (RecentChanges)
+//
 // Revision 1.169  2004/04/15 21:29:48  rurban
 // allow [0] with new markup: link to page "0"
 //
