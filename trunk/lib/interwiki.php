@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: interwiki.php,v 1.11 2001-12-11 17:47:10 dairiki Exp $');
+<?php rcs_id('$Id: interwiki.php,v 1.12 2002-01-09 17:09:31 carstenklapp Exp $');
 
 function generate_interwikimap_and_regexp()
 {
@@ -31,7 +31,7 @@ function LinkInterWikiLink($link, $linktext='')
     // Urlencode page only if it's a query arg.
     // FIXME: this is a somewhat broken heuristic.
     $page_enc = strstr($url, '?') ? rawurlencode($page) : $page;
-    
+
     if (strstr($url, '%s'))
         $url = sprintf($url, $page_enc);
     else
@@ -39,15 +39,15 @@ function LinkInterWikiLink($link, $linktext='')
 
     if ($linktext) {
         $linktext = htmlspecialchars($linktext);
-        $class = 'named-interwiki';
+        $class    = 'named-interwiki';
     }
     else {
-        $linktext = ( htmlspecialchars("$wiki:")
-                      . QElement('span', array('class' => 'wikipage'), $page) );
+        $linktext = (htmlspecialchars("$wiki:")
+                     . QElement('span', array('class' => 'wikipage'), $page));
         $class = 'interwiki';
     }
 
-    return Element('a', array('href' => $url,
+    return Element('a', array('href'  => $url,
                               'class' => $class),
                    IconForLink('interwiki') . $linktext);
 }
@@ -70,5 +70,4 @@ function wtt_interwikilinks($match, &$trfrm)
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-
 ?>
