@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.36 2002-12-17 18:32:50 dairiki Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.37 2003-02-17 06:08:25 dairiki Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
@@ -54,7 +54,7 @@ $s = $Theme->getButtonSeparator();
  */ ?>
 
 <form method="post" name="editpage"
-      action="<?=WikiURL($page,array('action'=>'edit'))?>"
+      action="<?= $request->getPostURL() ?>"
       accept-charset="<?=CHARSET?>">
   <?php /* To clear beyond a larger logo, such as in the Hawaiian theme */ ?>
   <br clear="both" />
