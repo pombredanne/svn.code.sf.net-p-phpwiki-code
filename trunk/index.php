@@ -81,7 +81,7 @@ define ('DEBUG', 1);
 
 define ('PHPWIKI_VERSION', '1.3.4pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.97 2002-09-18 18:34:13 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.98 2002-10-12 19:11:42 lakka Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -417,7 +417,7 @@ $DBAuthParams = array(
 );
 
 /////////////////////////////////////////////////////////////////////
-// 
+//
 // Part Four:
 // Page appearance and layout
 //
@@ -623,6 +623,20 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
  * (VIRTUAL_PATH is only used if USE_PATH_INFO is true.)
  */
 //if (!defined('VIRTUAL_PATH')) define('VIRTUAL_PATH', '/SomeWiki');
+
+/////////////////////////////////////////////////////////////////////
+//
+// Part Seven:
+// Miscellaneous settings
+//
+/////////////////////////////////////////////////////////////////////
+
+/*
+ * Page name of RecentChanges page.  Used for RSS Auto-discovery
+ */
+ 
+if (!defined('RECENT_CHANGES')) define ('RECENT_CHANGES', 'RecentChanges');
+
 
 
 ////////////////////////////////////////////////////////////////
