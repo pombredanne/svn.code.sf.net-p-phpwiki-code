@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.49 2004-07-02 09:55:58 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.50 2004-09-08 13:38:00 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -1034,14 +1034,14 @@ class Block_p extends BlockMarkup
 ////////////////////////////////////////////////////////////////
 //
 
-function TransformText ($text, $markup = 2.0, $basepage=false) {
+function TransformText (&$text, $markup = 2.0, $basepage=false) {
     if (isa($text, 'WikiDB_PageRevision')) {
         $rev = $text;
         $text = $rev->getPackedContent();
         $markup = $rev->get('markup');
     }
-
-    if (empty($markup) || $markup < 2.0) {
+    // NEW: default markup is new, to increase stability
+    if (!empty($markup) && $markup < 2.0) {
         //include_once("lib/transform.php");
         //return do_transform($text);
         $text = ConvertOldMarkup($text);
@@ -1068,6 +1068,9 @@ function TransformText ($text, $markup = 2.0, $basepage=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.49  2004/07/02 09:55:58  rurban
+// more stability fixes: new DISABLE_GETIMAGESIZE if your php crashes when loading LinkIcons: failing getimagesize in old phps; blockparser stabilized
+//
 // Revision 1.48  2004/06/21 06:30:16  rurban
 // revert to prev references
 //

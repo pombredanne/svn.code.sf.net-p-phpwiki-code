@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.82 2004-09-06 12:08:49 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.83 2004-09-08 13:38:00 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -814,7 +814,7 @@ class WikiDB_Page
      *
      * @param hash $meta  Meta-data for new revision.
      */
-    function save($wikitext, $version, $meta) {
+    function save(&$wikitext, $version, $meta) {
 	$formatted = new TransformedText($this, $wikitext, $meta);
         $type = $formatted->getType();
 	$meta['pagetype'] = $type->getName();
@@ -1914,6 +1914,10 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.82  2004/09/06 12:08:49  rurban
+// memory_limit on unix workaround
+// VisualWiki: default autosize image
+//
 // Revision 1.81  2004/09/06 08:28:00  rurban
 // rename genericQuery to genericSqlQuery
 //

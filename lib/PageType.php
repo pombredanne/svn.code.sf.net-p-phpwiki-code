@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.29 2004-07-02 09:55:58 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.30 2004-09-08 13:38:00 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004 $ThePhpWikiProgrammingTeam
 
@@ -33,7 +33,7 @@ class TransformedText extends CacheableMarkup {
      * @param string $type_override  For markup of page using a different
      *        pagetype than that specified in its version meta-data.
      */
-    function TransformedText($page, $text, $meta, $type_override=false) {
+    function TransformedText($page, &$text, $meta, $type_override=false) {
     	$pagetype = false;
         if ($type_override)
             $pagetype = $type_override;
@@ -103,7 +103,7 @@ class PageType {
      * @param hash $meta Version meta-data
      * @return XmlContent The transformed page text.
      */
-    function transform($page, $text, $meta) {
+    function transform(&$page, &$text, $meta) {
         $fmt_class = 'PageFormatter_' . $this->getName();
         $formatter = new $fmt_class($page, $meta);
         return $formatter->format($text);
@@ -248,16 +248,16 @@ class PageFormatter {
      * @param WikiDB_Page $page
      * @param hash $meta Version meta-data.
      */
-    function PageFormatter($page, $meta) {
+    function PageFormatter(&$page, $meta) {
         $this->_page = $page;
 	$this->_meta = $meta;
 	if (!empty($meta['markup']))
 	    $this->_markup = $meta['markup'];
 	else
-	    $this->_markup = 1;
+	    $this->_markup = 2; // new policy: default = new markup (old crashes quite often)
     }
 
-    function _transform($text) {
+    function _transform(&$text) {
 	include_once('lib/BlockParser.php');
 	return TransformText($text, $this->_markup);
     }
@@ -274,7 +274,7 @@ class PageFormatter {
 
 class PageFormatter_wikitext extends PageFormatter 
 {
-    function format($text) {
+    function format(&$text) {
 	return HTML::div(array('class' => 'wikitext'),
 			 $this->_transform($text));
     }

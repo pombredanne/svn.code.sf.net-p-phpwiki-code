@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.120 2004-07-08 19:04:42 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.121 2004-09-08 13:38:00 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -594,7 +594,7 @@ function MakeWikiZipHtml (&$request)
 //
 ////////////////////////////////////////////////////////////////
 
-function SavePage (&$request, $pageinfo, $source, $filename)
+function SavePage (&$request, &$pageinfo, $source, $filename)
 {
     $pagedata    = $pageinfo['pagedata'];    // Page level meta-data.
     $versiondata = $pageinfo['versiondata']; // Revision level meta-data.
@@ -1170,6 +1170,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.120  2004/07/08 19:04:42  rurban
+ more unittest fixes (file backend, metadata RatingsDb)
+
  Revision 1.119  2004/07/08 15:23:59  rurban
  less verbose for tests
 

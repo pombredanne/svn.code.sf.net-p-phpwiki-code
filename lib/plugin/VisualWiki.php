@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: VisualWiki.php,v 1.14 2004-09-07 13:26:31 rurban Exp $');
+rcs_id('$Id: VisualWiki.php,v 1.15 2004-09-08 13:38:00 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -87,7 +87,7 @@ extends WikiPluginCached
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.14 $");
+                            "\$Revision: 1.15 $");
     }
 
     /**
@@ -196,6 +196,7 @@ extends WikiPluginCached
         if (!VISUALWIKI_ALLOWOPTIONS)
             $argarray = $this->defaultarguments();
         $this->checkArguments($argarray);
+        $request->setArg('debug',$argarray['debug']);
         //extract($argarray);
         if ($argarray['help'])
             return array($this->helpImage(), ' '); // FIXME
@@ -718,7 +719,8 @@ $tempfiles.map: ".(file_exists("$tempfiles.map") ? filesize("$tempfiles.map"):'m
 
 
     /** 
-     * static workaround on broken Cache, called only if debug=static
+     * static workaround on broken Cache or broken dot executable, 
+     * called only if debug=static.
      *
      * @access private
      * @param  url      string  url pointing to the image part of the map
@@ -816,6 +818,9 @@ function interpolate($a, $b, $pos) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2004/09/07 13:26:31  rurban
+// new WikiPluginCached option debug=static and some more sf.net defaults for VisualWiki
+//
 // Revision 1.13  2004/09/06 12:13:00  rurban
 // provide sf.net default dotbin
 //
