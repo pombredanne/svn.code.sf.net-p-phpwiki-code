@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.24 2004-04-18 01:34:20 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.25 2004-04-20 00:06:04 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -154,7 +154,16 @@ extends WikiDB_backend
                                 . " WHERE $nonempty_tbl.id=$page_tbl.id");
         return $result->GetArray();
     }
-            
+
+    function numPages($filter=false, $exclude='') {
+        $dbh = &$this->_dbh;
+        extract($this->_table_names);
+        $result = $dbh->getRow("SELECT count(*)"
+                            . " FROM $nonempty_tbl, $page_tbl"
+                            . " WHERE $nonempty_tbl.id=$page_tbl.id");
+        return $result[0];
+    }
+    
     /**
      * Read page information from database.
      */
@@ -613,16 +622,19 @@ extends WikiDB_backend
     /**
      * Find highest or lowest hit counts.
      */
-    function most_popular($limit=20,$sortby = '') {
+    function most_popular($limit=0,$sortby = '') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $order = "DESC";
         if ($limit < 0){ 
             $order = "ASC"; 
             $limit = -$limit;
+            $where = "";
+        } else {
+            $where = " AND hits > 0";
         }
-        if ($sortby) $orderby = "ORDER BY " . PageList::sortby($sortby,'db');
-        else         $orderby = "ORDER BY hits $order";
+        if ($sortby) $orderby = " ORDER BY " . PageList::sortby($sortby,'db');
+        else         $orderby = " ORDER BY hits $order";
         $limit = $limit ? $limit : -1;
 
         $dbh->SetFetchMode(ADODB_FETCH_ASSOC);
@@ -630,7 +642,8 @@ extends WikiDB_backend
                                     . $this->page_tbl_fields
                                     . " FROM $nonempty_tbl, $page_tbl"
                                     . " WHERE $nonempty_tbl.id=$page_tbl.id"
-                                    . " $orderby"
+                                    . $where
+                                    . $orderby
                                     , $limit);
         $dbh->SetFetchMode(ADODB_FETCH_NUM);
         return new WikiDB_backend_ADODB_iter($this, $result);
@@ -1039,6 +1052,9 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2004/04/18 01:34:20  rurban
+// protect most_popular from sortby=mtime
+//
 // Revision 1.23  2004/04/16 14:19:39  rurban
 // updated ADODB notes
 //
