@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.118 2004-02-26 01:32:03 rurban Exp $');
+rcs_id('$Id: main.php,v 1.119 2004-02-26 20:45:06 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -359,6 +359,7 @@ class WikiRequest extends Request {
 
     function requiredAuthority ($action) {
         $auth = $this->requiredAuthorityForAction($action);
+        if (!ALLOW_ANON_USER) return WIKIAUTH_USER;
         
         /*
          * This is a hook for plugins to require authority
@@ -557,6 +558,8 @@ class WikiRequest extends Request {
     function _deduceUsername() {
         if (!empty($this->args['auth']) and !empty($this->args['auth']['userid']))
             return $this->args['auth']['userid'];
+        if (!empty($_SERVER['PHP_AUTH_USER']))
+            return $_SERVER['PHP_AUTH_USER'];
             
         if ($user = $this->getSessionVar('wiki_user')) {
             $this->_user = $user;
@@ -864,6 +867,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.118  2004/02/26 01:32:03  rurban
+// fixed session login with old WikiUser object. strangely, the errormask gets corruoted to 1, Pear???
+//
 // Revision 1.117  2004/02/24 17:19:37  rurban
 // debugging helpers only
 //
