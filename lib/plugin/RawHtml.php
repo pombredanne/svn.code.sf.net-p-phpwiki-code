@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id:');
+rcs_id('$Id: RawHtml.php,v 1.4 2002-12-28 22:15:34 wainstead Exp $');
 
 // Define ENABLE_RAW_HTML to true to enable the RawHtml plugin.
 //
