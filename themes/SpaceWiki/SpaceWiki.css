@@ -1,5 +1,5 @@
 /**
- * $Id: SpaceWiki.css,v 1.6 2003-02-27 23:55:52 dairiki Exp $
+ * $Id: SpaceWiki.css,v 1.7 2004-05-14 10:52:44 rurban Exp $
  *
  * This theme will probably be renamed something like "Space" to
  * avoid any potential copyright issues.
@@ -288,7 +288,30 @@ caption { font-family: Arial, Helvetica, sans-serif; }
 .pagelist thead, .pagelist thead u {  }
 .pagelist tr.evenrow { background: #111; }
 .pagelist tr.oddrow  { background: black; }
-
+th.gridbutton {
+  background-color: threedlightshadow;
+  color: black;
+  font-family: Tahoma, sans-serif, Arial, Helvetica;
+  font-size: small;
+  font-weight: normal;
+  /*font-style: menu;*/
+  margin: 5px 0px;
+  white-space: nowrap;
+  max-height: 24px;
+  padding: 5px 0px 5px 0px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: threedhighlight threeddarkshadow threeddarkshadow threedhighlight;
+}
+input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
+  text-decoration: none;
+  font-size: small;
+  font-weight: normal;
+  /*font-style: menu;*/
+  font-family: Tahoma, sans-serif, Arial, Helvetica;
+  background-color: threedlightshadow;
+  color: black;
+}
 
 /**
  * Toolbar

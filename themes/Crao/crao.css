@@ -612,8 +612,10 @@ caption {
 th.gridbutton {
   background-color: threedlightshadow;
   color: black;
+  font-size: small;
   font-weight: normal;
   /*font-style: menu;*/
+  font-family: Tahoma, sans-serif, Arial, Helvetica;
   max-height: 18px;
   height: 18px;
   margin: 5px 0px;
