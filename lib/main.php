@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.174 2004-07-08 13:50:32 rurban Exp $');
+rcs_id('$Id: main.php,v 1.175 2004-07-13 13:08:25 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -1037,6 +1037,11 @@ function main () {
     //if ($user->is_authenticated())
     //  $LogEntry->user = $user->getId();
 
+    // Memory optimization:
+    // http://www.procata.com/blog/archives/2004/05/27/rephlux-and-php-memory-usage/
+    // kill the global PEAR _PEAR_destructor_object_list
+    if (!empty($_PEAR_destructor_object_list))
+        $_PEAR_destructor_object_list = array();
     $request->possiblyDeflowerVirginWiki();
     
 if (defined('WIKI_XMLRPC') and WIKI_XMLRPC) return;
@@ -1075,6 +1080,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.174  2004/07/08 13:50:32  rurban
+// various unit test fixes: print error backtrace on _DEBUG_TRACE; allusers fix; new PHPWIKI_NOMAIN constant for omitting the mainloop
+//
 // Revision 1.173  2004/07/05 12:57:54  rurban
 // add mysql timeout
 //
