@@ -1,14 +1,15 @@
 <?php // -*-html-*- ?>
-<!-- $Id: info.tmpl,v 1.11 2002-12-31 19:56:33 carstenklapp Exp $ -->
+<!-- $Id: info.tmpl,v 1.12 2003-01-11 22:54:28 carstenklapp Exp $ -->
 <?php
 
 $modifed = $Theme->formatDateTime($revision->get('mtime'));
 
-$author = $revision->get('author');
 global $WikiNameRegexp;
 $dbi = $request->getDbh();
+$author = $revision->get('author');
+$authorLink = $author;
 if (preg_match("/^$WikiNameRegexp\$/", $author) && $dbi->isWikiPage($author))
-    $author = WikiLink($author);
+    $authorLink = WikiLink($author);
 
 $authorId = $revision->get('author_id');
 $version = $revision->getVersion();
@@ -98,7 +99,10 @@ $Sep = $Theme->getButtonSeparator();
     <td><?= $modifed ?><?= $minor_flag ?></td>
   </tr><tr>
     <td align="right" class="pageinfo"><?= $label['author'] ?></td>
-    <td><?= $author ?> <span class="pageinfo-authorid">(<?= $authorId ?>)</span></td>
+    <td><?= $authorLink ?>
+<?php if (! ($author == $authorId)) { ?>
+ <span class="pageinfo-authorid">(<?= $authorId ?>)</span>
+<?php } ?></td>
   </tr><tr>
     <td align="right" class="pageinfo"><?=_("Page Version:")?></td>
     <td><?= $version ?></td>
@@ -125,5 +129,36 @@ $Sep = $Theme->getButtonSeparator();
     <td class="pageinfo"><?=_("Locked")?></td>
 <?php } ?>
 
+<?php // determine page type
+if (HOME_PAGE == $page->getName()) {
+    $pagetype []= sprintf('%s %s', WIKI_NAME, _("home page"));
+}
+if ($page->isUserPage($include_empty=true)) {
+    $pagetype []= _("User page");
+}
+if (@$request->isActionPage($page->getName())) {
+    $pagetype []= _("Action page");
+}
+if ($page->get('pagetype') == 'wikiblog') {
+    $pagetype []= _("Blog page");
+}
+if ($page->getName() == _("InterWikiMap")) {
+    $pagetype []= _("InterWikiMap");
+}
+if (isSubPage($page->getName())) {
+    $pagetype []= _("Subpage");
+} ?>
+
+<?php if (!empty($pagetype)) { $pagetype = implode(", ", $pagetype); ?>
+  <tr>
+    <td align="right" class="pageinfo"><?=_("Page Type:")?></td>
+    <td align="left"><?=$pagetype?></td>
   </tr>
+<?php } ?>
+
 </table>
+
+<?php
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
+// $Log: not supported by cvs2svn $
+?>
