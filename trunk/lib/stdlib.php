@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.175 2004-05-06 17:30:38 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.176 2004-05-08 11:25:15 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1359,16 +1359,6 @@ class Alert {
     }
 }
 
-/** 
- * Returns true if current php version is at mimimum a.b.c 
- * Called: check_php_version(4,1)
- */
-function check_php_version ($a = '0', $b = '0', $c = '0') {
-    global $PHP_VERSION;
-    if(!isset($PHP_VERSION))
-        $PHP_VERSION = substr( str_pad( preg_replace('/\D/','', PHP_VERSION), 3, '0'), 0, 3);
-    return $PHP_VERSION >= ($a.$b.$c);
-}
 // 1.3.8     => 1030.08
 // 1.3.9-p1  => 1030.091
 // 1.3.10pre => 1030.099
@@ -1404,6 +1394,17 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.175  2004/05/06 17:30:38  rurban
+// CategoryGroup: oops, dos2unix eol
+// improved phpwiki_version:
+//   pre -= .0001 (1.3.10pre: 1030.099)
+//   -p1 += .001 (1.3.9-p1: 1030.091)
+// improved InstallTable for mysql and generic SQL versions and all newer tables so far.
+// abstracted more ADODB/PearDB methods for action=upgrade stuff:
+//   backend->backendType(), backend->database(),
+//   backend->listOfFields(),
+//   backend->listOfTables(),
+//
 // Revision 1.174  2004/05/06 12:02:05  rurban
 // fix sf.net bug#949002: [ Link | ] assertion
 //

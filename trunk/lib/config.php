@@ -1,15 +1,31 @@
 <?php
-rcs_id('$Id: config.php,v 1.107 2004-05-06 17:30:38 rurban Exp $');
+rcs_id('$Id: config.php,v 1.108 2004-05-08 11:25:16 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
  * The run-time code have been moved to lib/IniConfig.php:fix_configs()
  */
  
+/** 
+ * Returns true if current php version is at mimimum a.b.c 
+ * Called: check_php_version(4,1)
+ */
+function check_php_version ($a = '0', $b = '0', $c = '0') {
+    global $PHP_VERSION;
+    if(!isset($PHP_VERSION))
+        $PHP_VERSION = substr( str_pad( preg_replace('/\D/','', PHP_VERSION), 3, '0'), 0, 3);
+    return $PHP_VERSION >= ($a.$b.$c);
+}
+
 if (!defined("LC_ALL")) {
     // Backward compatibility (for PHP < 4.0.5)
-    define("LC_ALL",   0);
-    define("LC_CTYPE", 2);
+    if (!check_php_version(4,0,5)) {
+        define("LC_ALL",   "LC_ALL");
+        define("LC_CTYPE", "LC_CTYPE");
+    } else {
+        define("LC_ALL",   0);
+        define("LC_CTYPE", 2);
+    }
 }
 
 function isCGI() {
@@ -297,7 +313,25 @@ if (!function_exists('array_key_exists')) { // lib/IniConfig.php, sqlite, adodb,
     }
 }
 
+// => php-4.0.5
+if (!function_exists('is_scalar')) { // lib/stdlib.php:hash()
+    function is_scalar($x) {
+        return is_numeric($x) or is_string($x) or is_float($x) or is_bool($x); 
+    }
+}
+
 // $Log: not supported by cvs2svn $
+// Revision 1.107  2004/05/06 17:30:38  rurban
+// CategoryGroup: oops, dos2unix eol
+// improved phpwiki_version:
+//   pre -= .0001 (1.3.10pre: 1030.099)
+//   -p1 += .001 (1.3.9-p1: 1030.091)
+// improved InstallTable for mysql and generic SQL versions and all newer tables so far.
+// abstracted more ADODB/PearDB methods for action=upgrade stuff:
+//   backend->backendType(), backend->database(),
+//   backend->listOfFields(),
+//   backend->listOfTables(),
+//
 // Revision 1.106  2004/05/02 19:12:14  rurban
 // fix sf.net bug #945154 Konqueror alt css
 //
