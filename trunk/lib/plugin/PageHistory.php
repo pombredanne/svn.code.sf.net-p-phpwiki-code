@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageHistory.php,v 1.24 2003-01-18 21:49:00 carstenklapp Exp $');
+rcs_id('$Id: PageHistory.php,v 1.25 2003-02-17 02:19:01 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -94,6 +94,10 @@ extends _RecentChanges_HtmlFormatter
                      $this->rss_icon());
     }
 
+    function empty_message () {
+        return _("No revisions found");
+    }
+
     function _javascript($script) {
         return HTML::script(array('language' => 'JavaScript',
                                   'type'     => 'text/javascript'),
@@ -159,9 +163,8 @@ extends _RecentChanges_HtmlFormatter
     }
 
     function pageLink ($rev) {
-        return HTML::a(array('href'  => $this->pageURL($rev),
-                             'class' => 'wiki'),
-                       fmt("Version %d", $rev->getVersion()));
+        $text = fmt("Version %d", $rev->getVersion());
+        return _RecentChanges_HtmlFormatter::pageLink($rev, $text);
     }
 
     function format_revision ($rev) {
@@ -250,7 +253,7 @@ extends WikiPlugin_RecentChanges
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.24 $");
+                            "\$Revision: 1.25 $");
     }
 
     function getDefaultArguments() {
@@ -303,17 +306,24 @@ extends WikiPlugin_RecentChanges
         if (empty($pagename))
             return $this->makeForm("", $request);
 
-        if (! $dbi->isWikiPage($pagename))
+        $page = $dbi->getPage($pagename);
+        $current = $page->getCurrentRevision();
+        if ($current->getVersion() < 1) {
             return HTML(HTML::p(fmt("I'm sorry, there is no such page as %s.",
                                     WikiLink($pagename, 'unknown'))),
                         $this->makeForm("", $request));
+        }
         // Hack alert: format() is a NORETURN for rss formatters.
-
         return $this->format($this->getChanges($dbi, $args), $args);
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2003/01/18 21:49:00  carstenklapp
+// Code cleanup:
+// Reformatting & tabs to spaces;
+// Added copyleft, getVersion, getDescription, rcs_id.
+//
 // Revision 1.23  2003/01/04 23:27:39  carstenklapp
 // New: Gracefully handle non-existant pages. Added copyleft;
 // getVersion() for PluginManager.
