@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _WikiTranslation.php,v 1.11 2004-06-14 11:31:39 rurban Exp $');
+rcs_id('$Id: _WikiTranslation.php,v 1.12 2004-06-17 10:39:18 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -127,7 +127,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     function getDefaultArguments() {
@@ -171,7 +171,7 @@ extends WikiPlugin
     }
 
     // reverse translation: 
-    function translate_to_en($text,$lang=false) {
+    function translate_to_en($text, $lang=false) {
         if (!$lang) $lang = $this->lang; // current locale
         if ($lang == 'en') return $text;
 
@@ -193,7 +193,7 @@ extends WikiPlugin
         }
     }
 
-    function translate($text,$to_lang,$from_lang=false) {
+    function translate($text, $to_lang, $from_lang=false) {
         if (!$from_lang) $from_lang = $this->lang; // current locale
         if ($from_lang == $to_lang) return $text;
         // speed up hash lookup. not needed for gettext module
@@ -403,6 +403,14 @@ class _PageList_Column_custom extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/06/14 11:31:39  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.10  2004/05/03 21:57:47  rurban
 // locale updates: we previously lost some words because of wrong strings in
 //   PhotoAlbum, german rewording.

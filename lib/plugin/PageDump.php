@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageDump.php,v 1.12 2004-06-16 13:32:43 rurban Exp $');
+rcs_id('$Id: PageDump.php,v 1.13 2004-06-17 10:39:18 rurban Exp $');
 /**
  * PhpWikiPlugin for PhpWiki developers to generate single page dumps
  * for checking into cvs, or for users or the admin to produce a
@@ -23,6 +23,7 @@ rcs_id('$Id: PageDump.php,v 1.12 2004-06-16 13:32:43 rurban Exp $');
  *  Dynamic form (put both on the page):
  *   <?plugin PageDump?>
  *   <?plugin-form PageDump?>
+ *  Typical usage: as actionbar button
  */
 
 class WikiPlugin_PageDump
@@ -39,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.12 $");
+                            "\$Revision: 1.13 $");
     }
 
     function getDefaultArguments() {
@@ -251,6 +252,9 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2004/06/16 13:32:43  rurban
+// fix urlencoding of pagename in PageDump buttons
+//
 // Revision 1.11  2004/06/14 11:31:39  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList
