@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _WikiTranslation.php,v 1.4 2004-03-17 13:20:31 rurban Exp $');
+rcs_id('$Id: _WikiTranslation.php,v 1.5 2004-03-17 15:38:03 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -42,8 +42,9 @@ rcs_id('$Id: _WikiTranslation.php,v 1.4 2004-03-17 13:20:31 rurban Exp $');
  * @author:  Reini Urban
  */
 
-/* Container for untranslated pagenames: */
+/* Container for untranslated pagenames. Needed to show up in locale/po/phpwiki.pot */
 $pgsrc_container = 
+    _("AddCommentPlugin")  .','.
     _("AddingPages")  .','.
     _("AuthorHistoryPlugin") .','.
     _("BackLinks") .','.
@@ -52,6 +53,7 @@ $pgsrc_container =
     _("CategoryCategory")  .','.
     _("CategoryHomePages")  .','.
     _("CommentPlugin")  .','.
+    _("CreateTocPlugin")  .','.
     _("DebugInfo") .','.
     _("EditMetaDataPlugin") .','.
     _("ExternalSearchPlugin") .','.
@@ -100,12 +102,13 @@ $pgsrc_container =
     _("WikiBlogPlugin") .','.
     _("WikiPlugin") .','.
     _("WikiWikiWeb");
-
+ 
 require_once('lib/PageList.php');
 
 class WikiPlugin__WikiTranslation
 extends WikiPlugin
 {
+
     function getName() {
         return _("_WikiTranslation");
     }
@@ -116,7 +119,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -374,6 +377,9 @@ class _PageList_Column_custom extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/03/17 13:20:31  rurban
+// Placeholder for all yet untranslated pgsrc pagenames. Add german translations of these.
+//
 // Revision 1.3  2004/03/16 20:22:32  rurban
 // added link to TranslateText action
 //
