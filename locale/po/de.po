@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.8\n"
-"POT-Creation-Date: 2002-01-20 14:32-0500\n"
+"POT-Creation-Date: 2002-01-20 21:48-0500\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@mac.com>, Arno Hollosi <ahollosi@mail.com>\n"
@@ -14,32 +14,32 @@ msgstr ""
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../lib/ButtonFactory.php:227 ../themes/MacOSX/templates/actionbar.tmpl:8
+#: ../lib/ButtonFactory.php:206 ../themes/MacOSX/templates/actionbar.tmpl:8
 #: ../themes/default/templates/actionbar.tmpl:8
 msgid "Edit"
 msgstr "Editieren"
 
-#: ../lib/ButtonFactory.php:229
+#: ../lib/ButtonFactory.php:208
 msgid "Diff"
 msgstr "Diff"
 
-#: ../lib/ButtonFactory.php:232 ../themes/default/templates/signin.tmpl:6
+#: ../lib/ButtonFactory.php:211 ../themes/default/templates/signin.tmpl:6
 msgid "SignOut"
 msgstr "AbMelden"
 
-#: ../lib/ButtonFactory.php:234
+#: ../lib/ButtonFactory.php:213
 msgid "SignIn"
 msgstr "AnMelden"
 
-#: ../lib/ButtonFactory.php:238
+#: ../lib/ButtonFactory.php:217
 msgid "Lock Page"
 msgstr "Seite Sperren"
 
-#: ../lib/ButtonFactory.php:240
+#: ../lib/ButtonFactory.php:219
 msgid "Unlock Page"
 msgstr "Seite Freigeben"
 
-#: ../lib/ButtonFactory.php:242
+#: ../lib/ButtonFactory.php:221
 msgid "Remove Page"
 msgstr "Seite Löschen"
 
@@ -309,19 +309,19 @@ msgstr "»%s«: keine Unterklasse von WikiPlugin"
 
 #: ../lib/WikiUser.php:63
 msgid "Insufficient permissions."
-msgstr ""
+msgstr "Erlaubnisse nicht ausreichend."
 
 #: ../lib/WikiUser.php:65
 msgid "Invalid password or userid."
-msgstr ""
+msgstr "Ungültiges Passwort oder Benutzername."
 
 #: ../lib/WikiUser.php:97
 msgid "Sign In"
-msgstr "AnMelden"
+msgstr "Anmelden"
 
 #: ../lib/WikiUser.php:98
 msgid "Please Sign In"
-msgstr ""
+msgstr "Bitte melde dich an:"
 
 #: ../lib/config.php:274
 msgid "An unnamed PhpWiki"
@@ -707,7 +707,7 @@ msgstr "Die %s meistbesuchten Seiten dieses Wikis:"
 
 #: ../lib/plugin/MostPopular.php:44
 msgid "Visited pages on this wiki, ordered by popularity:"
-msgstr ""
+msgstr "Die besuchten Seiten dieses Wikis, nach Popularität geordnet:"
 
 #: ../lib/plugin/PageHistory.php:71
 #, c-format
@@ -937,8 +937,8 @@ msgid ""
 "PHP was unable to create a new GD image stream. Read 'lib/plugin/text2png."
 "php' for details."
 msgstr ""
-"PHP konnten keinen neues GD Bild erzeugen. Lese 'lib/plugin/text2png.php' für "
-"Details."
+"PHP konnten keinen neues GD Bild erzeugen. Lese 'lib/plugin/text2png.php' "
+"für Details."
 
 #: ../lib/plugin/text2png.php:141
 #, c-format
@@ -952,7 +952,7 @@ msgstr "Bild geladen von Cachedatei: %s"
 
 #: ../lib/plugin/walkabout.php:33
 msgid "walkabout"
-msgstr ""
+msgstr "walkabout"
 
 #: ../lib/plugin/walkabout.php:37
 #, c-format
@@ -1095,7 +1095,7 @@ msgstr "Problem beim Editieren von %s"
 
 #: ../lib/savepage.php:63
 msgid "Bad form submission"
-msgstr ""
+msgstr "Ungültiges Formular eingesendet"
 
 #: ../lib/savepage.php:64
 msgid "Required form variables are missing."
@@ -1318,12 +1318,12 @@ msgid "Preview only!  Changes not saved."
 msgstr "Nur die Vorschau! Änderungen nicht gespeichert."
 
 #: ../themes/Portland/templates/editpage.tmpl:72
-#: ../themes/default/templates/editpage.tmpl:65
+#: ../themes/default/templates/editpage.tmpl:68
 msgid "Summary:"
 msgstr "Kommentar:"
 
 #: ../themes/Portland/templates/editpage.tmpl:74
-#: ../themes/default/templates/editpage.tmpl:77
+#: ../themes/default/templates/editpage.tmpl:80
 #, c-format
 msgid "Author will be logged as %s."
 msgstr "%s wird als Autor gespeichert."
@@ -1332,37 +1332,39 @@ msgstr "%s wird als Autor gespeichert."
 #, fuzzy, c-format
 msgid ""
 "I'm just doing minor edits. Please divert the usual logging to %s instead."
-msgstr "Ich mache nur geringfügige Änderungen. Bitte die übliche protokollieren zu %s umleiten."
+msgstr ""
+"Ich mache nur geringfügige Änderungen. Bitte die übliche protokollieren zu %"
+"s umleiten."
 
 #: ../themes/Portland/templates/editpage.tmpl:83
-#: ../themes/default/templates/editpage.tmpl:87
+#: ../themes/default/templates/editpage.tmpl:96
 #, c-format
 msgid "See %s tips for editing."
 msgstr "Siehe %s Tips fürs Editieren."
 
 #: ../themes/Portland/templates/editpage.tmpl:84
-#: ../themes/default/templates/editpage.tmpl:88
+#: ../themes/default/templates/editpage.tmpl:62
 msgid "GoodStyle"
 msgstr "GuterStil"
 
 #: ../themes/Portland/templates/editpage.tmpl:85
-#: ../themes/default/templates/editpage.tmpl:85
+#: ../themes/default/templates/editpage.tmpl:93
 #, c-format
 msgid "You can change the size of the editing area in %s."
 msgstr "Du kannst die Größe des Texteingabefensters in %s ändern."
 
 #: ../themes/Portland/templates/editpage.tmpl:86
-#: ../themes/default/templates/editpage.tmpl:86
+#: ../themes/default/templates/editpage.tmpl:61
 msgid "UserPreferences"
 msgstr "Einstellungen"
 
 #: ../themes/Portland/templates/editpage.tmpl:90
-#: ../themes/default/templates/editpage.tmpl:95
+#: ../themes/default/templates/editpage.tmpl:103
 msgid "TextFormattingRules"
 msgstr "TextFormatierungsRegeln"
 
 #: ../themes/Portland/templates/editpage.tmpl:90
-#: ../themes/default/templates/editpage.tmpl:95
+#: ../themes/default/templates/editpage.tmpl:103
 msgid "Synopsis"
 msgstr "Übersicht"
 
@@ -1395,13 +1397,14 @@ msgstr "Letzte Änderung: %s "
 msgid "Version %s, saved on %s."
 msgstr "Version %s. zuletzt am %s gespeichert."
 
-#: ../themes/default/templates/editpage.tmpl:70
+#: ../themes/default/templates/editpage.tmpl:73
 msgid "This is a minor change."
 msgstr "Geringfügige Änderung"
 
 #: ../themes/default/templates/login.tmpl:6
+#, fuzzy
 msgid "Signin Failed"
-msgstr ""
+msgstr "Anmeldung nicht bestanden"
 
 #: ../themes/default/templates/nochanges.tmpl:4
 msgid "Edit aborted."
