@@ -74,7 +74,7 @@ define('JS_SEARCHREPLACE',true);   // experimental edit feature
 
 define ('PHPWIKI_VERSION', '1.3.8');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.135 2004-04-10 03:33:03 rurban Exp $');
+rcs_id('$Id: index.php,v 1.136 2004-04-10 04:14:13 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -286,7 +286,7 @@ $DBParams = array(
    //   mysql://user:password@unix(/path/to/socket)/databasename
    //
    //'dsn' => 'mysql://guest@unix(/var/lib/mysql/mysql.sock)/test',
-   //'dsn' => 'mysql://guest@localhost/test',
+   //'dsn' => 'mysql://guest:pass@localhost/test',
    //'dsn' => 'pgsql://localhost/test',
 
    // The common table prefix (see below) is added if defined
@@ -943,6 +943,9 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 //include "lib/main.php";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.135  2004/04/10 03:33:03  rurban
+// Oops revert
+//
 // Revision 1.134  2004/04/10 02:55:48  rurban
 // fixed old WikiUser
 //
