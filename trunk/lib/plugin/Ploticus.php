@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Ploticus.php,v 1.7 2004-09-22 13:46:26 rurban Exp $');
+rcs_id('$Id: Ploticus.php,v 1.8 2004-09-22 15:23:56 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -31,7 +31,7 @@ rcs_id('$Id: Ploticus.php,v 1.7 2004-09-22 13:46:26 rurban Exp $');
  *
  * Note: 
  * - For windows you need either a gd library with GIF support or 
- *   a ploticus with PNG support. This comes only with the cygwin built.
+ *   a ploticus with PNG support. This comes only with the cygwin build.
  * - We support only images supported by GD so far (PNG most likely). 
  *   No EPS, PS, SWF, SVG or SVGZ support due to limitations in WikiPluginCached.
  *   This will be fixed soon.
@@ -66,7 +66,10 @@ extends WikiPluginCached
     function getPluginType() {
     	if (!empty($this->_args['-csmap']))
     	    return PLUGIN_CACHED_MAP; // not yet tested
-    	else    
+    	elseif (in_array($this->decideImgType($this->_args['device']),
+                         array('','svg','swf','svgz','eps','ps','pdf','html')))
+            return PLUGIN_CACHED_IMG_ONDEMAND;
+    	else
             return PLUGIN_CACHED_IMG_INLINE;
     }
     function getName () {
@@ -80,12 +83,14 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
     function getDefaultArguments() {
         return array(
                      'device' => 'png', // png,gif,svgz,svg,...
+                     '-prefab' => '',
                      '-csmap' => false,
+                     'data'    => false, // <!plugin-list !> support
                      'alt'    => false,
                      'help'   => false,
                      );
@@ -140,6 +145,7 @@ extends WikiPluginCached
         $helparr = array(
             '<?plugin Ploticus ' .
             'device'           => ' = "' . $def['device'] . "(default)|" . join('|',$GLOBALS['PLUGIN_CACHED_IMGTYPES']).'"',
+            'data'             => ' <!plugin-list !>: pagelist as input',
             'alt'              => ' = "alternate text"',
             '-csmap'           => ' bool: clickable map?',
             'help'             => ' bool: displays this screen',
@@ -162,7 +168,7 @@ extends WikiPluginCached
 
     function withShellCommand($script) {
         $findme  = 'shell';
-        $pos = strpos($script, $findme);
+        $pos = strpos($script, $findme); // uppercase?
         if ($pos === false) 
             return 0;
         return 1;
@@ -177,24 +183,40 @@ extends WikiPluginCached
                 $this->_errortext .= _("shell commands not allowed in Ploticus");
                 return false;
             }
-            $html = HTML();
-            //$cacheparams = $GLOBALS['CacheParams'];
-            $tempfiles = $this->tempnam('Ploticus');
+            if (is_array($argarray['data'])) { // support <!plugin-list !> pagelists
+                $src = "#proc getdata\ndata:";
+                $i = 0;
+                foreach ($argarray['data'] as $data) {
+                    // hash or array?
+                    if (is_array($data))
+                        $src .= ("\t" . join(" ", $data) . "\n");
+                    else
+                        $src .= ("\t" . '"' . $data . '" ' . $i++ . "\n");
+                }
+                $src .= $source;
+                $source = $src;
+            }
+            $tempfile = $this->tempnam('Ploticus');
+            unlink($tempfile);
             $gif = $argarray['device'];
-            $args = " -stdin -$gif -o $tempfiles.$gif";
+            $args = " -stdin -$gif -o $tempfile.$gif";
             if (!empty($argarray['-csmap'])) {
-            	$args .= " -csmap -mapfile $tempfiles.map";
-            	$this->_mapfile = "$tempfiles.map";
+            	$args .= " -csmap -mapfile $tempfile.map";
+            	$this->_mapfile = "$tempfile.map";
+            }
+            if (!empty($argarray['-prefab'])) {
+            	//TODO: check $_ENV['PLOTICUS_PREFABS'] and default directory
+            	$args .= (" -prefab " . $argarray['-prefab']);
             }
             $code = $this->filterThroughCmd($source, PLOTICUS_EXE . "$args");
             //if (empty($code))
             //    return $this->error(fmt("Couldn't start commandline '%s'", $commandLine));
-            if (! file_exists("$tempfiles.$gif") ) {
-                $this->_errortext .= fmt("Ploticus error: Outputfile '%s' not created", $tempfiles.$gif);
+            if (! file_exists("$tempfile.$gif") ) {
+                $this->_errortext .= sprintf(_("Ploticus error: Outputfile '%s' not created"), "$tempfile.$gif");
                 return false;
             }
             $ImageCreateFromFunc = "ImageCreateFrom$gif";
-            $img = $ImageCreateFromFunc( "$tempfiles.$gif" );
+            $img = $ImageCreateFromFunc( "$tempfile.$gif" );
             return $img;
         } else {
             return $this->error(fmt("empty source"));
@@ -208,6 +230,12 @@ extends WikiPluginCached
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/09/22 13:46:26  rurban
+// centralize upload paths.
+// major WikiPluginCached feature enhancement:
+//   support _STATIC pages in uploads/ instead of dynamic getimg.php? subrequests.
+//   mainly for debugging, cache problems and action=pdf
+//
 // Revision 1.6  2004/09/07 13:26:31  rurban
 // new WikiPluginCached option debug=static and some more sf.net defaults for VisualWiki
 //
