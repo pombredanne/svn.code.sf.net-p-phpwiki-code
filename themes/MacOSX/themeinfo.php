@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: themeinfo.php,v 1.53 2003-12-05 01:37:42 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.54 2003-12-05 15:01:49 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -85,25 +85,6 @@ class Theme_MacOSX extends Theme {
 
         return $link;
     }
-    //*********************
-
-
-    function ImageButton ($text, $url, $class, $img_url, $img_attr = false) {
-        $this->HtmlElement('a', array('href' => $url));
-        if ($class)
-            $this->setAttr('class', $class);
-
-        if (!is_array($img_attr))
-            $img_attr = array();
-        $img_attr['src'] = $img_url;
-        $img_attr['alt'] = $text;
-        $img_attr['class'] = 'wiki-button';
-        $img_attr['border'] = 0;
-        $this->pushContent(HTML::img($img_attr), $text==_("(diff)") ? HTML::small($text) : "");
-    }
-    //*********************
-
-
 }
 
 $Theme = new Theme_MacOSX('MacOSX');
