@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.46 2002-02-03 01:28:56 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.47 2002-02-04 00:42:41 carstenklapp Exp $');
 
 
 include "lib/config.php";
@@ -353,7 +353,7 @@ class WikiRequest extends Request {
     }
 
     function _deduceAction () {
-        if (!($action = $this->getArg('action')))
+        if (!($action = strtolower($this->getArg('action'))))
             return 'browse';
 
         if (method_exists($this, "action_$action"))
