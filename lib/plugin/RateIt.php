@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RateIt.php,v 1.16 2004-08-05 17:23:54 rurban Exp $');
+rcs_id('$Id: RateIt.php,v 1.17 2004-08-05 17:31:52 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -94,7 +94,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.16 $");
+                            "\$Revision: 1.17 $");
     }
 
     function RatingWidgetJavascript() {
@@ -317,8 +317,7 @@ function deleteRating(actionImg, page, dimension) {
     function RatingWidgetHtml($pagename, $version, $imgPrefix, $dimension, $small = false) {
         global $WikiTheme, $request;
 
-
-        $imgPrefix = $pagename . $imgPrefix;
+        $imgPrefix = MangleXmlIdentifier($pagename) . $imgPrefix;
         $actionImgName = $imgPrefix . 'RateItAction';
         $dbi =& $GLOBALS['request']->getDbh();
         $version = $dbi->_backend->get_latest_version($pagename);
@@ -368,12 +367,12 @@ function deleteRating(actionImg, page, dimension) {
        
         $a0 = HTML::a(array('href' => 'javascript:click(\'' . $reActionImgName . '\',\'' . $rePagename . '\',\'' . $version . '\',\'' . $reImgPrefix . '\',\'' . $dimension . '\',\'X\')'));
 
-            $msg = _("Cancel rating");
-            $a0->pushContent(HTML::img(array('src' => $WikiTheme->getImageUrl("RateItCancel"),
+        $msg = _("Cancel rating");
+        $a0->pushContent(HTML::img(array('src' => $WikiTheme->getImageUrl("RateItCancel"),
                                              'name'=> $imgPrefix.'Cancel',
                                              'alt' => $msg)));
-            $a0->addToolTip($msg);
-            $html->pushContent($a0);
+        $a0->addToolTip($msg);
+        $html->pushContent($a0);
         /*} elseif ($pred) {
             $msg = _("No opinion");
             $html->pushContent(HTML::img(array('src' => $WikiTheme->getImageUrl("RateItCancelN"),
@@ -403,6 +402,9 @@ function deleteRating(actionImg, page, dimension) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2004/08/05 17:23:54  rurban
+// add alt tag for xhtml conformance
+//
 // Revision 1.15  2004/07/09 12:50:50  rurban
 // references are declared, not enforced
 //
