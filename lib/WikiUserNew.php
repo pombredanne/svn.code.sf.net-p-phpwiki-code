@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.13 2004-02-09 03:58:12 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.14 2004-02-15 17:30:13 rurban Exp $');
 
 // This is a complete OOP rewrite of the old WikiUser code with various
 // configurable external authentification methods.
@@ -14,7 +14,7 @@ rcs_id('$Id: WikiUserNew.php,v 1.13 2004-02-09 03:58:12 rurban Exp $');
 //
 // Each user object must define the two preferences methods 
 //  getPreferences(), setPreferences(), 
-// and the following 1-3 auth methods: 
+// and the following 1-3 auth methods
 //  checkPass()  must be defined by all classes,
 //  userExists() only if USER_AUTH_POLICY'=='strict' 
 //  mayChangePass()  only if the password is storable.
@@ -502,8 +502,24 @@ extends _WikiUser
         // something so it is completely human readable by the end
         // user. In that case stricter error checking will be needed
         // when loading the cookie.
-        setcookie(WIKI_NAME, $this->_prefs->store(),
-                  COOKIE_EXPIRATION_DAYS, COOKIE_DOMAIN);
+        if (!is_object($prefs)) {
+            $prefs = new UserPreferences($prefs);
+        }
+        $packed = $prefs->store();
+        $unpacked = $prefs->unpack($packed);
+        if (!empty($unpacked)) { // check how many are different from the default_value
+            setcookie(WIKI_NAME, $packed,
+                      COOKIE_EXPIRATION_DAYS, COOKIE_DOMAIN);
+        }
+        if (count($unpacked)) {
+            global $request;
+            $this->_prefs = $prefs;
+            $request->_prefs =& $this->_prefs; 
+            $request->_user->_prefs =& $this->_prefs; 
+            //$request->setSessionVar('wiki_prefs', $this->_prefs);
+            $request->setSessionVar('wiki_user', $request->_user);
+        }
+        return count($unpacked);
     }
 
     function userExists() {
@@ -595,27 +611,27 @@ extends _AnonUser
             $this->_HomePagehandle = $this->hasHomePage();
         }
         // Check the configured Prefs methods
-        if (  !empty($DBAuthParams['pref_select']) and 
-              $DBParams['dbtype'] == 'SQL' and 
-              !isset($this->_prefselect)) {
-            $this->_prefmethod = 'SQL'; // really pear db
-            $this->getAuthDbh();
-            // preparate the SELECT statement
-            $this->_prefselect = $this->_auth_dbi->prepare(
-		str_replace('"$userid"','?',$DBAuthParams['pref_select'])
-	    );
-        }
-        if (  !empty($DBAuthParams['pref_select']) and 
-              $DBParams['dbtype'] == 'ADODB' and
-              !isset($this->_prefselect)) {
-            $this->_prefmethod = 'ADODB'; // uses a simplier execute syntax
-            $this->getAuthDbh();
-            // preparate the SELECT statement
-            $this->_prefselect = str_replace('"$userid"','%s',$DBAuthParams['pref_select']);
+        if (  !empty($DBAuthParams['pref_select']) ) {
+            if ( $DBParams['dbtype'] == 'SQL' and !is_int($this->_prefselect)) {
+                $this->_prefmethod = 'SQL'; // really pear db
+                $this->getAuthDbh();
+                // preparate the SELECT statement
+                $this->_prefselect = $this->_auth_dbi->prepare(
+		    str_replace('"$userid"','?',$DBAuthParams['pref_select'])
+	        );
+            }
+            if (  $DBParams['dbtype'] == 'ADODB' and !isset($this->_prefselect)) {
+                $this->_prefmethod = 'ADODB'; // uses a simplier execute syntax
+                $this->getAuthDbh();
+                // preparate the SELECT statement
+                $this->_prefselect = str_replace('"$userid"','%s',$DBAuthParams['pref_select']);
+            }
+        } else {
+            unset($this->_prefselect);
         }
         if (  !empty($DBAuthParams['pref_update']) and 
               $DBParams['dbtype'] == 'SQL' and
-              !isset($this->_prefupdate)) {
+              !is_int($this->_prefupdate)) {
             $this->_prefmethod = 'SQL';
             $this->getAuthDbh();
             $this->_prefupdate = $this->_auth_dbi->prepare(
@@ -624,11 +640,12 @@ extends _AnonUser
         }
         if (  !empty($DBAuthParams['pref_update']) and 
               $DBParams['dbtype'] == 'ADODB' and
-              !isset($this->_prefupdate)) {
+              !is_int($this->_prefupdate)) {
             $this->_prefmethod = 'ADODB'; // uses a simplier execute syntax
             $this->getAuthDbh();
             // preparate the SELECT statement
-            $this->_prefupdate = str_replace(array('"$userid"','"$pref_blob"'),array('%s','%s'),$DBAuthParams['pref_update']);
+            $this->_prefupdate = str_replace(array('"$userid"','"$pref_blob"'),array('%s','%s'),
+                                             $DBAuthParams['pref_update']);
         }
         $this->getPreferences();
 
@@ -675,14 +692,26 @@ extends _AnonUser
 
     function getAuthDbh () {
         global $request, $DBParams, $DBAuthParams;
+
+        // session restauration doesn't re-connect to the database automatically, so dirty it here.
+        if (($DBParams['dbtype'] == 'SQL') and isset($this->_auth_dbi) and empty($this->_auth_dbi->connection))
+            unset($this->_auth_dbi);
+        if (($DBParams['dbtype'] == 'ADODB') and isset($this->_auth_dbi) and empty($this->_auth_dbi->_connectionID))
+            unset($this->_auth_dbi);
+
         if (empty($this->_auth_dbi)) {
-            if ($DBParams['dbtype'] == 'SQL' and empty($DBAuthParams['auth_dsn']))
-                $dbh = $request->getDbh(); // use phpwiki database 
+            if (empty($DBAuthParams['auth_dsn'])) {
+                if ($DBParams['dbtype'] == 'SQL')
+                    $dbh = $request->getDbh(); // use phpwiki database 
+                else 
+                    return false;
+            }
             elseif ($DBAuthParams['auth_dsn'] == $DBParams['dsn'])
                 $dbh = $request->getDbh(); // same phpwiki database 
             else // use another external database handle. needs PHP >= 4.1
                 $dbh = WikiDB::open($DBAuthParams);
-            $this->_auth_dbi = & $dbh->_backend->_dbh;    
+                
+            $this->_auth_dbi =& $dbh->_backend->_dbh;    
         }
         return $this->_auth_dbi;
     }
@@ -718,34 +747,21 @@ extends _AnonUser
     //TODO: email verification
 
     function getPreferences() {
+        if ($this->_prefmethod == 'ADODB') {
+            _AdoDbPassUser::_AdoDbPassUser();
+            return _AdoDbPassUser::getPreferences();
+        } elseif ($this->_prefmethod == 'SQL') {
+            _PearDbPassUser::_PearDbPassUser();
+            return _PearDbPassUser::getPreferences();
+        }
 
         // We don't necessarily have to read the cookie first. Since
         // the user has a password, the prefs stored in the homepage
         // cannot be arbitrarily altered by other Bogo users.
         _AnonUser::getPreferences();
-
-        // database prefs
-        if ((! $this->_prefs) and isset($this->_prefselect)) {
-            if ($this->_prefmethod == 'ADODB') {
-                $dbh = & $this->_auth_dbi;
-                $db_result = $dbh->Execute($this->_prefselect,$dbh->qstr($this->_userid));
-                if (!$rs->EOF)
-                    $prefs_blob = $db_result->fields['pref_blob'];
-                $db_result->Close();
-            }
-            else { // pear db methods
-                $db_result = $this->_auth_dbi->execute($this->_prefselect,$this->_userid);
-                list($prefs_blob) = $db_result->fetchRow();
-            }
-            if ($restored_from_db = $this->_prefs->retrieve($prefs_blob)) {
-                $this->_prefs = new UserPreferences($restored_from_db);
-                return $this->_prefs;
-            }
-        }
-        
         // User may have deleted cookie, retrieve from his
         // PersonalPage if there is one.
-        if ((! $this->_prefs) && $this->_HomePagehandle) {
+        if (! $this->_prefs && $this->_HomePagehandle) {
             if ($restored_from_page = $this->_prefs->retrieve($this->_HomePagehandle->get('pref'))) {
                 $this->_prefs = new UserPreferences($restored_from_page);
                 return $this->_prefs;
@@ -755,28 +771,32 @@ extends _AnonUser
     }
 
     function setPreferences($prefs, $id_only=false) {
+        if ($this->_prefmethod == 'ADODB') {
+            _AdoDbPassUser::_AdoDbPassUser();
+            return _AdoDbPassUser::setPreferences($prefs, $id_only);
+        }
+        elseif ($this->_prefmethod == 'SQL') {
+            _PearDbPassUser::_PearDbPassUser();
+            return _PearDbPassUser::setPreferences($prefs, $id_only);
+        }
+
         _AnonUser::setPreferences($prefs, $id_only);
         // Encode only the _prefs array of the UserPreference object
-        $serialized = $this->_prefs->store();
-
-        // database prefs
-        if (!empty($prefs) and isset($this->_prefupdate)) {
-            if ($this->_prefmethod == 'ADODB') {
-                $dbh =& $this->_auth_dbi;
-                $db_result = $dbh->Execute($this->_prefupdate,
-                                           array($dbh->qstr($serialized),
-                                                 $dbh->qstr($this->_userid)));
-                $db_result->Close();
-            }
-            else { // pear db methods
-                //Fixme: The prepared params get reversed somehow! 
-                //cannot find the pear bug for now
-                $db_result = $this->_auth_dbi->execute($this->_prefupdate,
-                                                       array($serialized,$this->_userid));
-            }
+        if (!is_object($prefs)) {
+            $prefs = new UserPreferences($prefs);
         }
-        else
-            $this->_HomePagehandle->set('pref', $serialized);
+        $packed = $prefs->store();
+        $unpacked = $prefs->unpack($packed);
+        if (count($unpacked)) {
+            global $request;
+            $this->_prefs = $prefs;
+            $request->_prefs =& $this->_prefs; 
+            $request->_user->_prefs =& $this->_prefs; 
+            //$request->setSessionVar('wiki_prefs', $this->_prefs);
+            $request->setSessionVar('wiki_user', $request->_user);
+        }
+        $this->_HomePagehandle->set('pref', $packed);
+        return count($unpacked);    
     }
 
     function mayChangePass() {
@@ -938,13 +958,13 @@ extends _DbPassUser
         $this->getAuthDbh();
         $this->_auth_crypt_method = $GLOBALS['DBAuthParams']['auth_crypt_method'];
         // Prepare the configured auth statements
-        if (!empty($DBAuthParams['auth_check']) and !isset($this->_authselect)) {
+        if (!empty($DBAuthParams['auth_check']) and !is_int($this->_authselect)) {
             $this->_authselect = $this->_auth_dbi->prepare (
                      str_replace(array('"$userid"','"$password"'),array('?','?'),
                                   $DBAuthParams['auth_check'])
                      );
         }
-        if (!empty($DBAuthParams['auth_update']) and !isset($this->_authupdate)) {
+        if (!empty($DBAuthParams['auth_update']) and !is_int($this->_authupdate)) {
             $this->_authupdate = $this->_auth_dbi->prepare(
                     str_replace(array('"$userid"','"$password"'),array('?','?'),
                                 $DBAuthParams['auth_update'])
@@ -957,7 +977,8 @@ extends _DbPassUser
         // override the generic slow method here for efficiency and not to 
         // clutter the homepage metadata with prefs.
         _AnonUser::getPreferences();
-        if ((! $this->_prefs) && isset($this->_prefselect)) {
+        $this->getAuthDbh();
+        if ((! $this->_prefs) && is_int($this->_prefselect)) {
             $db_result = $this->_auth_dbi->execute($this->_prefselect,$this->_userid);
             list($prefs_blob) = $db_result->fetchRow();
             if ($restored_from_db = $this->_prefs->retrieve($prefs_blob)) {
@@ -975,22 +996,36 @@ extends _DbPassUser
     }
 
     function setPreferences($prefs, $id_only=false) {
-        $serialized = $this->_prefs->store();
-        if (isset($this->_prefupdate)) {
-            //Fixme: The prepared params get reversed somehow! 
-            //cannot find the pear bug for now
+        // Encode only the _prefs array of the UserPreference object
+        $this->getAuthDbh();
+        if (!is_object($prefs)) {
+            $prefs = new UserPreferences($prefs);
+        }
+        $packed = $prefs->store();
+        $unpacked = $prefs->unpack($packed);
+        if (count($unpacked)) {
+            global $request;
+            $this->_prefs = $prefs;
+            $request->_prefs =& $this->_prefs; 
+            $request->_user->_prefs =& $this->_prefs; 
+            //$request->setSessionVar('wiki_prefs', $this->_prefs);
+            $request->setSessionVar('wiki_user', $request->_user);
+        }
+        if (is_int($this->_prefupdate)) {
             $db_result = $this->_auth_dbi->execute($this->_prefupdate,
-                                                   array($serialized,$this->_userid));
+                                                   array($packed,$this->_userid));
         } else {
             _AnonUser::setPreferences($prefs, $id_only);
-            $this->_HomePagehandle->set('pref', $serialized);
+            $this->_HomePagehandle->set('pref', $packed);
         }
+        return count($unpacked);
     }
 
     function userExists() {
         if (!$this->_authselect)
             trigger_error("Either \$DBAuthParams['auth_check'] is missing or \$DBParams['dbtype'] != 'SQL'",
                           E_USER_WARNING);
+        $this->getAuthDbh();
         $dbh = &$this->_auth_dbi;
         //NOTE: for auth_crypt_method='crypt' no special auth_user_exists is needed
         if ($this->_auth_crypt_method == 'crypt') {
@@ -1017,11 +1052,12 @@ extends _DbPassUser
     }
  
     function checkPass($submitted_password) {
-        if (!isset($this->_authselect))
+        if (!is_int($this->_authselect))
             trigger_error("Either \$DBAuthParams['auth_check'] is missing or \$DBParams['dbtype'] != 'SQL'",
                           E_USER_WARNING);
 
         //NOTE: for auth_crypt_method='crypt'  defined('ENCRYPTED_PASSWD',true) must be set
+        $this->getAuthDbh();
         if ($this->_auth_crypt_method == 'crypt') {
             $db_result = $this->_auth_dbi->execute($this->_authselect,$this->_userid);
             list($stored_password) = $db_result->fetchRow();
@@ -1053,7 +1089,7 @@ extends _DbPassUser
     }
 
     function storePass($submitted_password) {
-        if (!isset($this->_authupdate)) {
+        if (!is_int($this->_authupdate)) {
             //CHECKME
             trigger_warning("Either \$DBAuthParams['auth_update'] not defined or \$DBParams['dbtype'] != 'SQL'",
                           E_USER_WARNING);
@@ -1090,7 +1126,7 @@ extends _DbPassUser
                                               $DBAuthParams['auth_check']);
         }
         if (!empty($DBAuthParams['auth_update'])) {
-            $this->_authupdate = str_replace(array('"$userid"','"$password"'),array('%s','%s'),
+            $this->_authupdate = str_replace(array('"$userid"','"$password"'),array("%s","%s"),
                                               $DBAuthParams['auth_update']);
         }
         return $this;
@@ -1099,9 +1135,10 @@ extends _DbPassUser
     function getPreferences() {
         // override the generic slow method here for efficiency
         _AnonUser::getPreferences();
+        $this->getAuthDbh();
         if ((! $this->_prefs) and isset($this->_prefselect)) {
             $dbh = & $this->_auth_dbi;
-            $rs = $dbh->Execute($this->_prefselect,$dbh->qstr($this->_userid));
+            $rs = $dbh->Execute(sprintf($this->_prefselect,$dbh->qstr($this->_userid)));
             if ($rs->EOF) {
                 $rs->Close();
             } else {
@@ -1123,25 +1160,41 @@ extends _DbPassUser
     }
 
     function setPreferences($prefs, $id_only=false) {
-        $serialized = $this->_prefs->store();
+        if (!is_object($prefs)) {
+            $prefs = new UserPreferences($prefs);
+        }
+        $this->getAuthDbh();
+        $packed = $prefs->store();
+        $unpacked = $prefs->unpack($packed);
+        if (count($unpacked)) {
+            global $request;
+            $this->_prefs = $prefs;
+            $request->_prefs =& $this->_prefs; 
+            $request->_user->_prefs =& $this->_prefs; 
+            //$request->setSessionVar('wiki_prefs', $this->_prefs);
+            $request->setSessionVar('wiki_user', $request->_user);
+        }
         if (isset($this->_prefupdate)) {
             $dbh = & $this->_auth_dbi;
-            $db_result = $dbh->Execute($this->_prefupdate,array($dbh->qstr($serialized),$dbh->qstr($this->_userid)));
+            $db_result = $dbh->Execute(sprintf($this->_prefupdate,
+                                               $dbh->qstr($packed),$dbh->qstr($this->_userid)));
             $db_result->Close();
         } else {
             _AnonUser::setPreferences($prefs, $id_only);
             $this->_HomePagehandle->set('pref', $serialized);
         }
+        return count($unpacked);
     }
  
     function userExists() {
         if (!$this->_authselect)
             trigger_error("Either \$DBAuthParams['auth_check'] is missing or \$DBParams['dbtype'] != 'ADODB'",
                           E_USER_WARNING);
+        $this->getAuthDbh();
         $dbh = &$this->_auth_dbi;
         //NOTE: for auth_crypt_method='crypt' no special auth_user_exists is needed
         if ($this->_auth_crypt_method == 'crypt') {
-            $rs = $dbh->Execute($this->_authselect,$dbh->qstr($this->_userid));
+            $rs = $dbh->Execute(sprintf($this->_authselect,$dbh->qstr($this->_userid)));
             if (!$rs->EOF) {
                 $rs->Close();
                 return true;
@@ -1155,7 +1208,7 @@ extends _DbPassUser
                               E_USER_WARNING);
             $this->_authcheck = str_replace('"$userid"','%s',
                                              $GLOBALS['DBAuthParams']['auth_user_exists']);
-            $rs = $dbh->Execute($this->_authcheck,$dbh->qstr($this->_userid));
+            $rs = $dbh->Execute(sprintf($this->_authcheck,$dbh->qstr($this->_userid)));
             if (!$rs->EOF) {
                 $rs->Close();
                 return true;
@@ -1175,10 +1228,11 @@ extends _DbPassUser
         if (!isset($this->_authselect))
             trigger_error("Either \$DBAuthParams['auth_check'] is missing or \$DBParams['dbtype'] != 'ADODB'",
                           E_USER_WARNING);
+        $this->getAuthDbh();
         $dbh = &$this->_auth_dbi;
         //NOTE: for auth_crypt_method='crypt'  defined('ENCRYPTED_PASSWD',true) must be set
         if ($this->_auth_crypt_method == 'crypt') {
-            $rs = $dbh->Execute($this->_authselect,$dbh->qstr($this->_userid));
+            $rs = $dbh->Execute(sprintf($this->_authselect,$dbh->qstr($this->_userid)));
             if (!$rs->EOF) {
                 $stored_password = $rs->fields['password'];
                 $rs->Close();
@@ -1189,9 +1243,9 @@ extends _DbPassUser
             }
         }
         else {
-            $rs = $dbh->Execute($this->_authselect,array(
-                                          $dbh->qstr($submitted_password),
-                                          $dbh->qstr($this->_userid)));
+            $rs = $dbh->Execute(sprintf($this->_authselect,
+                                        $dbh->qstr($submitted_password),
+                                        $dbh->qstr($this->_userid)));
             $okay = $rs->fields['ok'];
             $rs->Close();
             $result = !empty($okay);
@@ -1226,10 +1280,11 @@ extends _DbPassUser
             if (function_exists('crypt'))
                 $submitted_password = crypt($submitted_password);
         }
+        $this->getAuthDbh();
         $dbh = &$this->_auth_dbi;
-        $rs = $dbh->Execute($this->_authupdate,array(
-                                      $dbh->qstr($submitted_password),
-                                      $dbh->qstr($this->_userid)));
+        $rs = $dbh->Execute(sprintf($this->_authupdate,
+                                    $dbh->qstr($submitted_password),
+                                    $dbh->qstr($this->_userid)));
         $rs->Close();
     }
 
@@ -1477,7 +1532,7 @@ class _UserPreference
     }
 
     function get ($name) {
-    	if (isset($this->$name))
+    	if (isset($this->{$name}))
 	    return $this->{$name};
     	else 
             return $this->default_value;
@@ -1490,14 +1545,19 @@ class _UserPreference
 
     // stores the value as $this->$name, and not as $this->value (clever?)
     function set ($name, $value) {
-        if ($value != $this->default_value)
-	    $this->$name = $value;
+	if ($this->get($name) != $value) {
+	    $this->update($value);
+	}
+	if ($value != $this->default_value) {
+	    $this->{$name} = $value;
+        }
         else 
-            unset($this->$name);
+            unset($this->{$name});
     }
 
     // default: no side-effects 
     function update ($value) {
+    	;
     }
 }
 
@@ -1693,11 +1753,8 @@ class UserPreferences
         }
 
         $newvalue = $pref->sanify($value);
-        $oldvalue = $pref->get($name);
-
-        // update on changes
-        if ($newvalue != $oldvalue)
-            $pref->update($newvalue);
+	$pref->set($name,$newvalue);
+        $this->_prefs[$name] = $pref;
         return true;
 
         // don't set default values to save space (in cookies, db and
@@ -1757,6 +1814,9 @@ class UserPreferences
             // Looks like a serialized object
             return unserialize($packed);
         }
+        if (substr($packed, 0, 2) == "a:") {
+            return unserialize($packed);
+        }
         //trigger_error("DEBUG: Can't unpack bad UserPreferences",
         //E_USER_WARNING);
         return false;
@@ -1783,16 +1843,65 @@ extends UserPreferences
     }
 }
 
-class DbUserPreferences
+class PearDbUserPreferences
 extends UserPreferences
 {
-    function DbUserPreferences ($saved_prefs = false) {
+    function PearDbUserPreferences ($saved_prefs = false) {
         UserPreferences::UserPreferences($saved_prefs);
+    }
+}
+
+class AdoDbUserPreferences
+extends UserPreferences
+{
+    function AdoDbUserPreferences ($saved_prefs = false) {
+        UserPreferences::UserPreferences($saved_prefs);
+    }
+    function getPreferences() {
+        // override the generic slow method here for efficiency
+        _AnonUser::getPreferences();
+        $this->getAuthDbh();
+        if ((! $this->_prefs) and isset($this->_prefselect)) {
+            $dbh = & $this->_auth_dbi;
+            $rs = $dbh->Execute(sprintf($this->_prefselect,$dbh->qstr($this->_userid)));
+            if ($rs->EOF) {
+                $rs->Close();
+            } else {
+                $prefs_blob = $rs->fields['pref_blob'];
+                $rs->Close();
+                if ($restored_from_db = $this->_prefs->retrieve($prefs_blob)) {
+                    $this->_prefs = new UserPreferences($restored_from_db);
+                    return $this->_prefs;
+                }
+            }
+        }
+        if ((! $this->_prefs) && $this->_HomePagehandle) {
+            if ($restored_from_page = $this->_prefs->retrieve($this->_HomePagehandle->get('pref'))) {
+                $this->_prefs = new UserPreferences($restored_from_page);
+                return $this->_prefs;
+            }
+        }
+        return $this->_prefs;
     }
 }
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2004/02/09 03:58:12  rurban
+// for now default DB_SESSION to false
+// PagePerm:
+//   * not existing perms will now query the parent, and not
+//     return the default perm
+//   * added pagePermissions func which returns the object per page
+//   * added getAccessDescription
+// WikiUserNew:
+//   * added global ->prepare (not yet used) with smart user/pref/member table prefixing.
+//   * force init of authdbh in the 2 db classes
+// main:
+//   * fixed session handling (not triple auth request anymore)
+//   * don't store cookie prefs with sessions
+// stdlib: global obj2hash helper from _AuthInfo, also needed for PagePerm
+//
 // Revision 1.12  2004/02/07 10:41:25  rurban
 // fixed auth from session (still double code but works)
 // fixed GroupDB

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.113 2004-02-12 13:05:49 rurban Exp $');
+rcs_id('$Id: main.php,v 1.114 2004-02-15 17:30:13 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -40,18 +40,7 @@ class WikiRequest extends Request {
                 // users might switch in a session between the two objects.
                 // restore old auth level here or in updateAuthAndPrefs?
                 $user = $this->getSessionVar('wiki_user');
-                if (isa($user,WikiUserClassname()) and !empty($user->_level)) {
-                    ;
-                    /* not needed:
-                    if (empty($this->_user)) {
-                        $c = get_class($user);
-                        $userid = $user->UserName();
-                        $this->_user = new $c($userid);
-                    }
-                    if ($user = UpgradeUser($this->_user,$user))
-                        $this->_user = $user;
-                    */
-                } else {
+                if (!isa($user,WikiUserClassname()) or empty($user->_level)) {
                     $user = UpgradeUser($this->_user,$user);
                 }
             	$this->_prefs = $this->_user->_prefs;
@@ -95,7 +84,7 @@ class WikiRequest extends Request {
     // may involve HTML/template output, the global $request really needs
     // to be initialized before we do this stuff.
     function updateAuthAndPrefs () {
-        
+        /*
         // Handle preference updates, and authentication requests, if any.
         if ($new_prefs = $this->getArg('pref')) {
             $this->setArg('pref', false);
@@ -114,6 +103,7 @@ class WikiRequest extends Request {
                 $this->_prefs->set($key, $val);
             }
         }
+        */
 
         // FIXME: need to move authentication request processing
         // up to be before pref request processing, I think,
@@ -142,7 +132,7 @@ class WikiRequest extends Request {
             $this->_user->setPreferences($this->_prefs, $id_only);
         } else {
             $this->setSessionVar('wiki_user', $this->_user);
-            $this->setSessionVar('wiki_prefs', $this->_prefs);
+            //$this->setSessionVar('wiki_prefs', $this->_prefs);
         }
 
         // Ensure user has permissions for action
@@ -874,6 +864,11 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.113  2004/02/12 13:05:49  rurban
+// Rename functional for PearDB backend
+// some other minor changes
+// SiteMap comes with a not yet functional feature request: includepages (tbd)
+//
 // Revision 1.112  2004/02/09 03:58:12  rurban
 // for now default DB_SESSION to false
 // PagePerm:
