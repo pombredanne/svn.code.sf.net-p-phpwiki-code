@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: ziplib.php,v 1.2.2.3 2001-11-07 20:32:24 dairiki Exp $');
+rcs_id('$Id: ziplib.php,v 1.2.2.4 2001-12-12 05:12:06 carstenklapp Exp $');
 
 //FIXME: get rid of this.
 function warn ($msg)
@@ -240,7 +240,7 @@ class ZipWriter
 
     $zipname = addslashes($zipname);
     header("Content-Type: application/zip; name=\"$zipname\"");
-    header("Content-Disposition: save; filename=\"$zipname\"");
+    header("Content-Disposition: attachment; filename=\"$zipname\"");
   }
 
   function addRegularFile ($filename, $content, $attrib = false) {
