@@ -1,4 +1,4 @@
-<!-- $Id: pageviewer.php3,v 1.3 2000-06-18 15:08:53 ahollosi Exp $ -->
+<!-- $Id: pageviewer.php3,v 1.4 2000-06-18 17:23:03 wainstead Exp $ -->
 <!-- Display the internal structure of a page. Steve Wainstead, June 2000 -->
 <html>
 <head>
@@ -16,7 +16,15 @@
    if (! $pagename) { exit; }
 
    include "wiki_config.php3";
-   include "wiki_stdlib.php3";
+
+   echo "Opening database '$WikiDataBase'<br>";
+   $dbi = OpenDataBase($WikiDataBase);
+   $pagehash = RetrievePage($dbi, $pagename);
+   if ($pagehash == -1) {
+      echo "Page name '$pagename' is not in the database<br>\n";
+      echo "(return code was -1)<br>\n";
+      exit();
+   }
 
    function ViewpageProps($name)
    {
@@ -28,19 +36,18 @@
          echo "(return code was -1)<br>\n";
          exit();
       }
-      reset($pagehash);
-
-      echo "<table border=1 bgcolor=white>\n";
-
-      while (list($key, $val) = each($pagehash)) {
-         if ($key == "text") {
-            $val = implode($val, "<br>\n");
-         }
-         echo "<tr><td>$key</td><td>$val</td></tr>\n";
-      }
-
-      echo "</table>";
    }
+
+   echo "<table border=1 bgcolor=white>\n";
+
+   reset($pagehash);
+   while (list($key, $val) = each($pagehash)) {
+      if (gettype($val) == "array") {
+         $val = implode($val, "<br>\n");
+      }
+      echo "<tr><td>$key</td><td>$val</td></tr>\n";
+   }   
+   echo "</table>";
 
    echo "<P><B>Current version</B></p>";
    $dbi = OpenDataBase($WikiDataBase);
@@ -50,6 +57,7 @@
    $dbi = OpenDataBase($ArchiveDataBase);
    ViewPageProps($pagename);
 ?>
+
 
 </body></html>
 
