@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: info.tmpl,v 1.13 2003-02-21 04:24:48 dairiki Exp $ -->
+<!-- $Id: info.tmpl,v 1.14 2003-11-29 20:13:38 carstenklapp Exp $ -->
 <?php
 
 $modifed = $Theme->formatDateTime($revision->get('mtime'));
@@ -25,12 +25,7 @@ if ($minor_flag = $is_minor_edit) {
 /* better way to do this? */
 $data = &$revision->_data;
 $bytes = strlen(&$data['%content']);
-if ($bytes < 1024 )
-    $size = fmt("%s bytes", $bytes);
-else {
-    $kb = round($bytes / 1024, 1);
-    $size = fmt("%s Kb (%s bytes)", $kb, $bytes);
-}
+$size = ByteFormatter($bytes, /* $longformat = */true);
 // Count words
 preg_match_all('/\\w+\\W*/', &$data['%content'], $whitespacematches);
 if (1 == $c = count_all($whitespacematches))
@@ -166,6 +161,9 @@ if (isSubPage($page->getName())) {
 <?php
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2003/02/21 04:24:48  dairiki
+// Fix <td> </td> nesting. (Was generating invalid HTML.)
+//
 // Revision 1.12  2003/01/11 22:54:28  carstenklapp
 // Added Page type field displayed for special pages.
 //
