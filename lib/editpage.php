@@ -1,9 +1,9 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.74 2004-07-03 07:36:28 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.75 2004-09-16 08:00:52 rurban Exp $');
 
 require_once('lib/Template.php');
 
-// USE_HTMLAREA - WYSIWYG HTML Editor
+// USE_HTMLAREA - Support for some WYSIWYG HTML Editor
 // Not yet enabled, since we cannot convert HTML to Wiki Markup yet.
 // (See HtmlParser.php for the ongoing efforts)
 // We might use a HTML PageType, which is contra wiki, but some people might prefer HTML markup.
@@ -762,6 +762,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.74  2004/07/03 07:36:28  rurban
+ do not get unneccessary content
+
  Revision 1.73  2004/06/16 21:23:44  rurban
  fixed non-object fatal #215
 
