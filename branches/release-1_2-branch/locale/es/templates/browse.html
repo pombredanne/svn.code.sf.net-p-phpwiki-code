@@ -7,7 +7,7 @@
 <body bgcolor=ivory text=black alink=red link=darkblue vlink=darkmagenta>
 <h1><a href="###SCRIPTURL###"><img src="###LOGO###" border=0 alt="[phpwiki]" align=middle width=50 height=50></a>
 <a href="###SCRIPTURL###?full=###PAGEURL###">###PAGE###</a></h1>
-###IF:ADMIN###<FORM ACTION="###SCRIPTURL###" METHOD=POST>
+###IF:ADMIN###
   ###IF LOCK###[<a href="###SCRIPTURL###?unlock=###PAGEURL###">Desbloquear p&aacute;gina</a>] 
   ###IF !LOCK###[<a href="###SCRIPTURL###?lock=###PAGEURL###">Bloquear p&aacute;gina</a>] 
   - - [<a href="###SCRIPTURL###?remove=###PAGEURL###">Borrar p&aacute;gina</A>] 
@@ -16,15 +16,18 @@
 <P>
 ###CONTENT###
 <hr noshade>
-  ###IF ADMIN###<a href="###SCRIPTURL###?edit=###PAGEURL###">EditarElTexto</a> 
-  de esta p&aacute;gina ###IF:!ADMIN### ###IF LOCK###P&aacute;gina bloqueada ###IF 
-  !LOCK###<a href="###SCRIPTURL###?edit=###PAGEURL###">EditarElTexto</a> de esta 
-  p&aacute;gina ###ENDIF:!ADMIN### (editada por &uacute;ltima vez ###LASTMODIFIED###) 
-  [<a href="###SCRIPTURL###?info=###PAGEURL###">info</a>] [<a href="###SCRIPTURL###?diff=###PAGEURL###">diff</a>]) 
-  <br>
-  <a href="###SCRIPTURL###?FindPage">BuscarP&aacute;gina</a> navegando o buscando 
-  <hr noshade>
+###IF ADMIN###<a href="###SCRIPTURL###?edit=###PAGEURL###">EditarElTexto</a> de esta p&aacute;gina 
+###IF:!ADMIN###
+###IF LOCK###P&aacute;gina bloqueada
+###IF !LOCK###<a href="###SCRIPTURL###?edit=###PAGEURL###">EditarElTexto</a> de esta p&aacute;gina
+###ENDIF:!ADMIN###
+(editada por &uacute;ltima vez ###LASTMODIFIED###) 
+[<a href="###SCRIPTURL###?info=###PAGEURL###">info</a>] 
+[<a href="###SCRIPTURL###?diff=###PAGEURL###">diff</a>]) 
+<br>
+<a href="###SCRIPTURL###?FindPage">BuscarP&aacute;gina</a> navegando o buscando 
+<hr noshade>
 <small>###RELATEDPAGES###</small>
 
-</form></body>
+</body>
 </html>
