@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.16 2002-01-31 02:48:16 dairiki Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.17 2002-01-31 05:05:11 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -21,61 +21,6 @@ require_once('lib/HtmlElement.php');
 require_once('lib/InlineParser.php');
 
 require_once('lib/transform.php');
-/*
-class InlineTransform
-extends WikiTransform {
-    function InlineTransform() {
-        global $WikiNameRegexp, $AllowedProtocols, $InterWikiLinkRegexp;
-
-        $this->WikiTransform();
-
-        // register functions
-        // functions are applied in order of registering
-
-        $this->register(WT_SIMPLE_MARKUP, 'wtm_plugin_link');
- 
-        $this->register(WT_TOKENIZER, 'wtt_doublebrackets', '\[\[');
-        //$this->register(WT_TOKENIZER, 'wtt_footnotes', '^\[\d+\]');
-        //$this->register(WT_TOKENIZER, 'wtt_footnoterefs', '\[\d+\]');
-        $this->register(WT_TOKENIZER, 'wtt_bracketlinks', '\[.+?\]');
-        $this->register(WT_TOKENIZER, 'wtt_urls',
-                        "!?\b($AllowedProtocols):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]");
-
-        if (function_exists('wtt_interwikilinks')) {
-            $this->register(WT_TOKENIZER, 'wtt_interwikilinks',
-                            pcre_fix_posix_classes("!?(?<![[:alnum:]])") .
-                            "$InterWikiLinkRegexp:[^\\s.,;?()]+");
-        }
-        $this->register(WT_TOKENIZER, 'wtt_bumpylinks', "!?$WikiNameRegexp");
-
-        $this->register(WT_SIMPLE_MARKUP, 'wtm_htmlchars');
-        $this->register(WT_SIMPLE_MARKUP, 'wtm_linebreak');
-        $this->register(WT_SIMPLE_MARKUP, 'wtm_bold_italics');
-    }
-};
-
-function TransformInline ($text) {
-    // The old transform code does funny things with trailing
-    // white space....
-
-    $trfm = new InlineTransform;
-    preg_match('/\s*$/', $text, $m);
-    $tail = $m[0];
-    // This "\n" -> "\r" hackage is to fool the old transform code
-    // into continuing italics across lines.
-    $in = str_replace("\n", "\r", $text);
-    $out = preg_replace('/\s*$/', '', AsXML($trfm->do_transform('', array($in))));
-    $out = str_replace("\r", "\n", $out);
-    $out .= $tail;
-
-    // DEBUGGING
-    if (false && $out != $text) {
-        echo(" IN <pre>'" . htmlspecialchars($text) . "'</pre><br>\n");
-        echo("OUT <pre>'" . htmlspecialchars($out) . "'</pre><br>\n");
-    }
-    return new RawXml($out);
-}
-*/
 
 ////////////////////////////////////////////////////////////////
 //
@@ -628,6 +573,8 @@ class Block_pre extends Block
         $text = $m->getMatch(2);
         $tag = $m->getMatch(1);
 
+        // FIXME: no <img>, <big>, <small>, <sup>, or <sub>'s allowed
+        // in a <pre>.
         if ($tag == 'pre')
             $text = TransformInline($text);
 
