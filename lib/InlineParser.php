@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.18 2002-11-22 23:22:54 dairiki Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.19 2002-11-25 22:51:37 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -305,7 +305,7 @@ class Markup_wikiword extends SimpleMarkup
 
 class Markup_linebreak extends SimpleMarkup
 {
-    var $_match_regexp = "(?: (?<! %) %%% (?! %) | <br> )";
+    var $_match_regexp = "(?: (?<! %) %%% (?! %) | <(?:br|BR)> )";
 
     function _markup () {
         return HTML::br();
