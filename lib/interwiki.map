@@ -19,7 +19,7 @@ CLiki http://ww.telent.net/cliki/
 CmWiki http://www.ourpla.net/cgi-bin/wiki.pl?
 CreationMatters http://www.ourpla.net/cgi-bin/wiki.pl?
 DejaNews http://www.deja.com/=dnc/getdoc.xp?AN=
-DeWikiPedia http://www.wikipedia.de/wiki.cgi?
+DeWikiPedia http://de.wikipedia.org/wiki/
 Dict http://www.dict.org/bin/Dict?Database=*&Form=Dict1&Strategy=*&Query=
 Dictionary http://www.dict.org/bin/Dict?Database=*&Form=Dict1&Strategy=*&Query=
 DiveIntoOsx http://diveintoosx.org/
@@ -32,12 +32,14 @@ EfnetPythonWiki http://purl.net/wiki/python/
 EfnetXmlWiki http://purl.net/wiki/xml/
 EljWiki http://elj.sourceforge.net/phpwiki/index.php/
 EmacsWiki http://www.emacswiki.org/cgi-bin/wiki.pl?
+EoWikiPedia http://eo.wikipedia.org/
 FinalEmpire http://final-empire.sourceforge.net/cgi-bin/wiki.pl?
 Foldoc http://www.foldoc.org/foldoc/foldoc.cgi?
 FoxWiki http://fox.wikis.com/wc.dll?Wiki~
 FreeBSDman http://www.FreeBSD.org/cgi/man.cgi?apropos=1&query=
 FreeNetworks http://www.freenetworks.org/index.cgi/
 FreshMeat http://freshmeat.net/
+FrWikiPedia http://fr.wikipedia.org/
 Google http://www.google.com/search?q=
 GoogleGroups http://groups.google.com/groups?q=
 GreenCheese http://www.greencheese.org/
@@ -74,6 +76,7 @@ PhpWikiCvs http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/phpwiki/phpwiki/
 PhpWikiDemo http://phpwiki.sourceforge.net/demo/
 Pikie http://pikie.darktech.org/cgi/pikie?
 PolitizenWiki http://www.politizen.com/wiki.asp?
+PlWikiPedia http://pl.wikipedia.org/
 PPR http://c2.com/cgi/wiki?
 PurlNet http://purl.oclc.org/NET/
 PythonInfo http://www.python.org/cgi-bin/moinmoin/
