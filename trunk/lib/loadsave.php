@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.54 2002-02-17 06:39:54 carstenklapp Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.55 2002-02-17 23:47:44 carstenklapp Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -220,6 +220,9 @@ function SavePage (&$request, $pageinfo, $source, $filename)
     $pagename = $pageinfo['pagename'];
     $content  = $pageinfo['content'];
 
+    if ($pagename ==_("InterWikiMap"))
+        $content = _tryinsertInterWikiMap($content);
+
     $dbi = $request->getDbh();
     $page = $dbi->getPage($pagename);
 
@@ -263,11 +266,44 @@ function SavePage (&$request, $pageinfo, $source, $filename)
     flush();
 }
 
+function _tryinsertInterWikiMap($content) {
+    $goback = false;
+    if (strpos($content, "<verbatim>")) {
+        //$error_html = " The newly loaded pgsrc already contains a verbatim block.";
+        $goback = true;
+    }
+    if (!$goback && !defined('INTERWIKI_MAP_FILE')) {
+        $error_html = sprintf(" "._("%s: not defined"), "INTERWIKI_MAP_FILE");
+        $goback = true;
+    }
+    if (!$goback && !file_exists(INTERWIKI_MAP_FILE)) {
+        $error_html = sprintf(" "._("%s: file not found"), INTERWIKI_MAP_FILE);
+        $goback = true;
+    }
+
+    if (!empty($error_html))
+        trigger_error(_("Default InterWiki map file not loaded.")
+                      . $error_html, E_USER_NOTICE);
+
+    if ($goback)
+        return $content;
+
+    $filename = INTERWIKI_MAP_FILE;
+    trigger_error(sprintf(_("Loading InterWikiMap from external file %s."),
+                          $filename), E_USER_NOTICE);
+
+    $fd = fopen ($filename, "rb");
+    $data = fread ($fd, filesize($filename));
+    fclose ($fd);
+    $content = $content . "\n----\n<verbatim>\n$data</verbatim>\n";
+    return $content;
+}
+
 function ParseSerializedPage($text, $default_pagename, $user)
 {
     if (!preg_match('/^a:\d+:{[si]:\d+/', $text))
         return false;
-
+    
     $pagehash = unserialize($text);
     
     // Split up pagehash into four parts:
