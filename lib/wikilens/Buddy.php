@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Buddy.php,v 1.1 2004-06-18 14:42:17 rurban Exp $');
+rcs_id('$Id: Buddy.php,v 1.2 2004-11-15 16:00:02 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -40,10 +40,9 @@ function getBuddies($fromUser, $dbi, $thePage = ""){
     $DELIM = ",";
     
     $buddies_array = getPageTextData($fromUser, $dbi, $START_DELIM, $DELIM);
-    if (count($buddies_array) == 0){
+    if (count($buddies_array) == 0 and $thePage !== "") {
         $buddies_array = getPageTextData($fromUser, $dbi, _("Buddies:"), $DELIM);
     }
-    
     return $buddies_array;
 }
 
@@ -141,7 +140,10 @@ function AverageRating($dbi, $page, $users, $active_userid){
     }
 }
 
-// $Log: not supported by cvs2svn $ 
+// $Log: not supported by cvs2svn $
+// Revision 1.1  2004/06/18 14:42:17  rurban
+// added wikilens libs (not yet merged good enough, some work for DanFr)
+// 
 
 // Local Variables:
 // mode: php

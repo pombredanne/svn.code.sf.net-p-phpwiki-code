@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: RatingsUser.php,v 1.4 2004-07-08 19:04:49 rurban Exp $');
+rcs_id('$Id: RatingsUser.php,v 1.5 2004-11-15 16:00:02 rurban Exp $');
 /* Copyright (C) 2004 Dan Frankowski
  *
  * This file is (not yet) part of PhpWiki.
@@ -66,7 +66,7 @@ class RatingsUser {
         return $this->_userid;
     }
 
-    function _get_rating_dbi() {
+    function & _get_rating_dbi() {
         // This is a hack, because otherwise this object doesn't know about a
         // DBI at all.  Perhaps all this ratings stuff should live somewhere
         // else that's less of a base class.
@@ -168,11 +168,8 @@ class RatingsUser {
         // XXX: does this really want to do a full ratings load?  (scalability?)
         $this->_load_ratings();
 
-
         if ($this->has_rated($pagename, $dimension))
         {
-
-            
             return $this->_ratings[$pagename][$dimension]->get_rating();
         }
         return false;
@@ -425,6 +422,9 @@ class _UserRating
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/07/08 19:04:49  rurban
+// more unittest fixes (file backend, metadata RatingsDb)
+//
 // Revision 1.3  2004/06/30 20:06:44  dfrankow
 // Use RatingsDb singleton.
 //
