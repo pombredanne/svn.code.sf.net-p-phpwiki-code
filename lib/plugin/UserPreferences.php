@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.11 2003-09-19 22:01:19 carstenklapp Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.12 2003-12-01 22:21:33 carstenklapp Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -22,8 +22,8 @@ rcs_id('$Id: UserPreferences.php,v 1.11 2003-09-19 22:01:19 carstenklapp Exp $')
 
 /**
  * Plugin to allow any user to adjust his own preferences.
- * This must be used in the page "UserPreferences" or in a subpage of a
- * user called like HomePage/Preferences.
+ * This must be used in the page "UserPreferences".
+ * Prefs are stored in metadata within the user's home page or in a cookie.
  */
 class WikiPlugin_UserPreferences
 extends WikiPlugin
@@ -36,33 +36,18 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     function getDefaultArguments() {
         global $request;
         $pagename = $request->getArg('pagename');
+        // take current userid from request
         $user = $request->getUser();
-        // for a UserPage/Prefences plugin default to this userid
-        if (isSubPage($pagename)) {
-            $pages  = explode(SUBPAGE_SEPARATOR, $pagename);
-            $userid = $pages[0];
-        } else {
-            // take current user
-            $userid = $user->_userid;
-        }
-        return
-            array('userid'  => $userid, // current or the one from the SubPage
-                  'changePass'    => $user->mayChangePassword(),
-                  'appearance'    => true,
-                  'email'         => true,
-                  'notifyPages'   => true,
-                  'editAreaSize'  => true,
-                  'timeOffset'    => true,
-                  'theme'         => THEME,
-                  'lang'          => DEFAULT_LANGUAGE,
-                  'relativeDates' => true
-                  );
+        $userid = $user->_userid;
+        $prefs = $user->getPreferences();
+        // return defaults established by the UserPreferences class
+        return $prefs;
     }
 
     function run($dbi, $argstr, $request) {
@@ -70,30 +55,39 @@ extends WikiPlugin
         $user = &$request->getUser();
         if (! $request->isActionPage($request->getArg('pagename'))) {
             $no_args = $this->getDefaultArguments();
-            foreach ($no_args as $key => $value) {
-                $no_args[$value] = false;
-            }
-            $no_args['errmsg'] = HTML(HTML::h2(_("Error: The page with the UserPreferences plugin must be valid WikiWord or a Preferences subpage of the users HomePage. Sorry, UserPreferences cannot be saved."),HTML::hr()));
+// ?
+//            foreach ($no_args as $key => $value) {
+//                $no_args[$value] = false;
+//            }
+            $no_args['errmsg'] = HTML(HTML::h2(_("Error: The user HomePage must be a valid WikiWord. Sorry, UserPreferences cannot be saved."),HTML::hr()));
             $no_args['isForm'] = false;
             return Template('userprefs', $no_args);
         }
         if (((defined('ALLOW_BOGO_LOGIN') && ALLOW_BOGO_LOGIN && $user->isSignedIn())
              || $user->isAuthenticated())
-            && $args['userid'] == $user->_userid) {
+            && !empty($user->_userid)) {
+            $pref = $user->getPreferences();
+            //trigger_error("DEBUG: reading prefs from getPreferences".print_r($pref));
+ 
             if ($request->isPost()) {
+                //trigger_error("DEBUG: request is post");
                 if ($request->_prefs) {
-                    $pref = $request->_prefs;
-                } else { // hmm. already handled somewhere else...
-                    $pref = new UserPreferences($request->getArg('pref'));
+                    // replace only changed prefs in $pref with those from request
+                    $rp = $request->_prefs->_prefs;
+                    //trigger_error("DEBUG: reading prefs from request".print_r($rp));
+                    while (list($key, $newvalue) = each ($rp)) {
+                        $pref->_prefs[$key] = $newvalue;
+                    }
+                    //trigger_error("DEBUG: writing prefs with setPreferences".print_r($pref));
+                    $num = $user->setPreferences($pref);
+                    if (!$num) {
+                        $errmsg = _("No changes.");
+                    }
+                    else {
+                        $errmsg = fmt("%d UserPreferences fields successfully updated.", $num);
+                    }
+                    $args['errmsg'] = HTML(HTML::h2($errmsg), HTML::hr());
                 }
-                // Fixme: How to update the Theme? Correct update?
-                $num = $request->_user->SetPreferences($pref);
-                if (!$num) {
-                    $errmsg = _("No changes.");
-                } else {
-                    $errmsg = fmt("%d UserPreferences fields successfully updated.", $num);
-                }
-                $args['errmsg'] = HTML(HTML::h2($errmsg), HTML::hr());
             }
             $available_themes = array(); 
             $dir_root = 'themes/';
@@ -131,13 +125,17 @@ extends WikiPlugin
             $args['available_languages'] = $available_languages;
 
             return Template('userprefs', $args);
-        } else {
+        }
+        else {
             return $user->PrintLoginForm ($request, $args, false, false);
         }
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2003/09/19 22:01:19  carstenklapp
+// BOGO users allowed preferences too when ALLOW_BOGO_LOGIN == true.
+//
 // Revision 1.10  2003/09/13 21:57:26  carstenklapp
 // Reformatting only.
 //
