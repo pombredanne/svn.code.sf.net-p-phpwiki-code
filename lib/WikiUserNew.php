@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.113 2004-11-03 17:13:49 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.114 2004-11-05 16:15:57 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -190,6 +190,7 @@ function _determineBogoUserOrPassUser($UserName) {
     // Check for password and possibly upgrade user object.
     // $_BogoUser = new _BogoUser($UserName);
     if (_isBogoUserAllowed()) {
+        include_once("lib/WikiUser/BogoLogin.php");
         $_BogoUser = new _BogoLoginPassUser($UserName);
         if ($_BogoUser->userExists())
             return $_BogoUser;
@@ -2023,6 +2024,10 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.113  2004/11/03 17:13:49  rurban
+// make it easier to disable EmailVerification
+//   Bug #1053681
+//
 // Revision 1.112  2004/11/01 10:43:57  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session
