@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.35 2003-11-18 17:24:19 carstenklapp Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.36 2003-12-01 22:23:01 carstenklapp Exp $ -->
 <?php
 // Todo: Move the logic and code to the plugin
 // This is very experimental and the read-only part an ugly hack so far.
@@ -14,17 +14,21 @@ if ($request->isActionPage($request->getArg('pagename')) and
 }
 
 $time = time();
-$offset = $request->getPref('timeOffset') * 3600;
-$serverTime = $time - $offset;
+$user = &$request->getUser();
+$_upo = $user->getPreferences();
+$pref = $_upo->_prefs;
+
+$offset = $pref['timeOffset'];
+$serverTime = $time - $offset * 3600;
 if ( $isForm )
     $timeOffsetInput = HTML::input(array('type' => "text",
                                          'size' => 6,
                                          'maxlength' => 6,
                                          'name' => "pref[timeOffset]",
                                          'class' => "numeric",
-                                         'value' => $request->getPref('timeOffset')));
+                                         'value' => $offset));
 else
-    $timeOffsetInput = $request->getPref('timeOffset');
+    $timeOffsetInput = $pref['timeOffset'];
 
 
 $RelativeDatesCB = HTML(HTML::input(array('type' => 'hidden',
@@ -33,7 +37,7 @@ $RelativeDatesCB = HTML(HTML::input(array('type' => 'hidden',
                         HTML::input(array('type' => 'checkbox',
                                           'name' => 'pref[relativeDates][]',
                                           'value' => '1',
-                                          'checked' => (bool) $request->getPref('relativeDates'))));
+                                          'checked' => (bool) $pref['relativeDates'])));
 
 $NoLinkIconsCB = HTML(HTML::input(array('type' => 'hidden',
                                           'name' => 'pref[noLinkIcons][]',
@@ -41,7 +45,7 @@ $NoLinkIconsCB = HTML(HTML::input(array('type' => 'hidden',
                         HTML::input(array('type' => 'checkbox',
                                           'name' => 'pref[noLinkIcons][]',
                                           'value' => '1',
-                                          'checked' => (bool) $request->getPref('noLinkIcons'))));
+                                          'checked' => (bool) $pref['noLinkIcons'])));
 
 function selectedOption ($value, $label = false) {
     return HTML::option(array('value' => $value,'selected'=>"selected"), ($label ? $label : $value) . "\n");
@@ -55,12 +59,12 @@ $SelectThemesDesc = ''; $SelectLanguagesDesc = '';
 if ( $isForm ) {
     $SelectOptions = HTML(); 
     if (!empty($available_themes) and is_array($available_themes)) {
-	if (! $request->getPref('theme'))
+	if (! $pref['theme'])
 	    $SelectOptions->pushContent(selectedOption('',_("<system theme>")));
 	else
 	    $SelectOptions->pushContent(unselectedOption('',_("<system theme>")));
 	foreach ($available_themes as $theme) {
-	    if ($theme == $request->getPref('theme') and $theme != THEME)
+	    if ($theme == $pref['theme'] and $theme != THEME)
 		$SelectOptions->pushContent(selectedOption($theme));
 	    else
 		$SelectOptions->pushContent(unselectedOption($theme));
@@ -72,12 +76,12 @@ if ( $isForm ) {
     
     $SelectOptions = HTML();
     if (!empty($available_languages) and is_array($available_languages)) {
-	if (! $request->getPref('lang') )
+	if (! $pref['lang'] )
 	    $SelectOptions->pushContent(selectedOption('',_("<system language>")));
 	else
 	    $SelectOptions->pushContent(unselectedOption('',_("<system language>")));
 	foreach ($available_languages as $lang) {
-	    if ($lang == $request->getPref('lang') and $lang != DEFAULT_LANGUAGE)
+	    if ($lang == $pref['lang'] and $lang != DEFAULT_LANGUAGE)
 		$SelectOptions->pushContent(selectedOption($lang));
 	    else
 		$SelectOptions->pushContent(unselectedOption($lang));
@@ -95,8 +99,8 @@ if ( $isForm ) {
 } else {
     $SelectThemesDesc = _("Personal theme:");
     $SelectLanguagesDesc = _("Personal language:");
-    $SelectThemes = $request->getPref('theme');
-    $SelectLanguages = $request->getPref('lang');
+    $SelectThemes = $pref['theme'];
+    $SelectLanguages = $pref['lang'];
 }
 
 if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr());
@@ -109,16 +113,16 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
   $user = $request->_user; 
   $fill = "&nbsp;";
 ?>
-<?= HTML::pre(sprintf("%12s: [% 10s]  %s\n",_("UserId"),$request->getPref('userid'), " from " . $request->_user->auth_how()),
+<?= HTML::pre(sprintf("%12s: [% 10s]  %s\n",_("UserId"),$pref['userid'], " from " . $request->_user->auth_how()),
 	      sprintf("%12s: [% 10s]  %16s: [% 10s] | %8s: [%2s]\n","getId",$user->getId(),"getAuthenticatedId",$user->getAuthenticatedId(),"isSignedIn", $user->isSignedIn()),
-	      //sprintf("%12s: [% 10s]\n",_("Password"),$request->getPref('passwd')),
+	      //sprintf("%12s: [% 10s]\n",_("Password"),$pref['passwd']),
 	      sprintf("%12s: [% 10s]  %15s: [% 8s]\n",
 		      _("Auth Level"),$user->_level,_("Auth Method"),$user->_authmethod),
 	      sprintf("%12s: [% 10s]\n",_("HomePage"),$user->homePage() ? $user->_homepage->_pagename : ''),
-	      sprintf("%12s: [% 10s]\n",_("E-Mail"),$request->getPref('email')),
-	      sprintf("%12s: [% 10s]\n",_("Notify"),$request->getPref('notifyPages')),
-	      sprintf("%12s: [% 10s] %16s: [% 10s] \n",_("Theme"), $request->getPref('theme'), _("Current Theme"),$Theme->_name),
-	      sprintf("%12s: [% 10s] %16s: [% 10s] \n",_("Language"),$request->getPref('lang'),_("Current Language"),$GLOBALS['LANG'])
+	      sprintf("%12s: [% 10s]\n",_("E-Mail"),$pref['email']),
+	      //sprintf("%12s: [% 10s]\n",_("Notify"),$pref['notifyPages']),
+	      sprintf("%12s: [% 10s] %16s: [% 10s] \n",_("Theme"), $pref['theme'], _("Current Theme"),$Theme->_name),
+	      sprintf("%12s: [% 10s] %16s: [% 10s] \n",_("Language"),$pref['lang'],_("Current Language"),$GLOBALS['LANG'])
 	      ) ?>
 <?php } ?>
 
@@ -132,12 +136,12 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
   <p><?=_("Your E-Mail:")?>
   <?php if ($isForm) { ?>
      <input type="text" name="pref[email]" size="30" maxlength="60"
-	    value="<?=$request->getPref('email')?>" />
+	    value="<?=$pref['email']?>" />
   <?php } else { ?>
-     '<?= $request->getPref('email') ?>'
+     '<?= $pref['email'] ?>'
   <?php } ?>
   &nbsp;&nbsp;<?= _("Status:") ?>&nbsp;&nbsp;
-  <?php if ($request->getPref('emailVerified')) { ?>
+  <?php if (!empty($pref['emailVerified']) && $pref['emailVerified']) { ?>
     <?= _("Email verified.") ?>
   <?php } else { ?>
     <?= _("Email not yet verified.") ?>
@@ -150,11 +154,11 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
    <p><?=_("Get an email notification at changes of the following pages:")?><br />
 /* ?>
   <?php /*if ($isForm) { ?>
-     &nbsp;<textarea name="pref[notifyPages]" cols="50" rows="5"><?=$request->getPref('notifyPages')?></textarea>
+     &nbsp;<textarea name="pref[notifyPages]" cols="50" rows="5"><?=$pref['notifyPages']?></textarea>
      <p class="hint">(<?=_("Enter pages seperated by space or comma. Wildcards (fileglobbing) allowed.")?>)</p>
    </p>
   <?php } else { ?>
-    <?=$request->getPref('notifyPages')?>
+    <?=$pref['notifyPages']?>
   <?php } */ ?>
   <h2><?=_("Appearance")?></h2>
   <p class="hint"><?=_("Here you can override site-specific default values. Currently not recommended!")?></p>
@@ -168,16 +172,16 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
   <p><?=_("Height")?>
     <?php if ($isForm) { ?>
      <input type="text" name="pref[editHeight]" size="4" maxlength="4" class="numeric"
-            value="<?=$request->getPref('editHeight')?>" />
+            value="<?=$pref['editHeight']?>" />
     <?php } else { ?>
-      <?=$request->getPref('editHeight')?>
+      <?=$pref['editHeight']?>
     <?php } ?>
     <?=_("Width")?>
     <?php if ($isForm) { ?>
      <input type="text" name="pref[editWidth]" size="4" maxlength="4" class="numeric"
-            value="<?=$request->getPref('editWidth')?>" />
+            value="<?=$pref['editWidth']?>" />
     <?php } else { ?>
-      <?=$request->getPref('editWidth')?>
+      <?=$pref['editWidth']?>
     <?php } ?>
   </p>
   <p class="hint"><?=_("Note that many browsers will automatically adjust the width of the editing area so that it fills the browser window.  In this case, the width preference will be ignored.")?></p>
