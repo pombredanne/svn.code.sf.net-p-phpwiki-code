@@ -20,7 +20,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'iso-8859-1');
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.17 2003-03-17 21:24:52 dairiki Exp $ -->
+<!-- $Id: configurator.php,v 1.18 2003-03-18 21:40:05 dairiki Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki 1.3.x</title>
 <style type="text/css" media="screen">
@@ -245,7 +245,7 @@ $properties["Part Null Settings"] =
 new unchangeable_variable('_partnullsettings', "
 define ('PHPWIKI_VERSION', '1.3.5pre');
 require \"lib/prepend.php\";
-rcs_id('\$Id: configurator.php,v 1.17 2003-03-17 21:24:52 dairiki Exp $');", "");
+rcs_id('\$Id: configurator.php,v 1.18 2003-03-18 21:40:05 dairiki Exp $');", "");
 
 
 $properties["Part One"] =
@@ -1015,11 +1015,22 @@ $properties["Use PATH_INFO"] =
 new boolean_define_commented_optional('USE_PATH_INFO', 
                     array('true'  => 'use PATH_INFO',
 			  'false' => 'do not use PATH_INFO'), "
-Define to 'true' to use PATH_INFO to pass the pagenames.
-e.g. http://www.some.where/index.php/HomePage instead
-of http://www.some.where/index.php?pagename=HomePage
-FIXME: more docs (maybe in README). Default: true");
+PhpWiki will try to use short urls to pages, eg 
+http://www.example.com/index.php/HomePage
+If you want to use urls like 
+http://www.example.com/index.php?pagename=HomePage
+then define 'USE_PATH_INFO' as false by uncommenting the line below.
+NB:  If you are using Apache >= 2.0.30, then you may need to to use
+the directive \"AcceptPathInfo On\" in your Apache configuration file
+(or in an appropriate <.htaccess> file) for the short urls to work:  
+See http://httpd.apache.org/docs-2.0/mod/core.html#acceptpathinfo
 
+See also http://phpwiki.sourceforge.net/phpwiki/PrettyWiki for more ideas
+on prettifying your urls.
+
+Default: PhpWiki will try to divine whether use of PATH_INFO
+is supported in by your webserver/PHP configuration, and will
+use PATH_INFO if it thinks that is possible.");
 
 
 $properties["Virtual Path"] =
