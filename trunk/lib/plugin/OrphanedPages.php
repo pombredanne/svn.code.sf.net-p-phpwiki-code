@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: OrphanedPages.php,v 1.8 2004-04-20 00:56:00 rurban Exp $');
+rcs_id('$Id: OrphanedPages.php,v 1.9 2004-07-09 12:49:46 rurban Exp $');
 /**
  This file is part of PhpWiki.
 
@@ -42,7 +42,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
@@ -51,7 +51,7 @@ extends WikiPlugin
                      'exclude'       => '',
                      'info'          => '',
                      'sortby'        => false,
-                     'limit'         => 50,
+                     'limit'         => 0,
                      'paging'        => 'auto',
                      );
     }
@@ -66,10 +66,10 @@ extends WikiPlugin
         // There's probably a more efficient way to do this (eg a
         // tailored SQL query via the backend, but this does the job
 
-        $allpages_iter = $dbi->getAllPages($include_empty,$sortby,0);
+        $allpages_iter = $dbi->getAllPages($include_empty);
 	$pages = array();
         while ($page = $allpages_iter->next()) {
-            $links_iter = $page->getLinks();
+            $links_iter = $page->getBackLinks();
             // test for absence of backlinks. If a page is linked to
             // only by itself, it is still an orphan
             $parent = $links_iter->next();
@@ -99,6 +99,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/04/20 00:56:00  rurban
+// more paging support and paging fix for shorter lists
+//
 // Revision 1.7  2004/04/20 00:34:15  rurban
 // more paging support
 //
