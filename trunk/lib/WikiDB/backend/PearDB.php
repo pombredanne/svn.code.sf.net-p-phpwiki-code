@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.7 2001-10-29 17:57:24 dairiki Exp $');
+rcs_id('$Id: PearDB.php,v 1.8 2001-11-07 21:12:47 dairiki Exp $');
 
 //require_once('DB.php');
 require_once('lib/WikiDB/backend.php');
@@ -457,11 +457,13 @@ extends WikiDB_backend
     }
 
     function _sql_match_clause($word) {
+        $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
         $word = $this->_dbh->quoteString($word);
         return "LOWER(pagename) LIKE '%$word%'";
     }
 
     function _fullsearch_sql_match_clause($word) {
+        $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
         $word = $this->_dbh->quoteString($word);
         return "LOWER(pagename) LIKE '%$word%' OR content LIKE '%$word%'";
     }
