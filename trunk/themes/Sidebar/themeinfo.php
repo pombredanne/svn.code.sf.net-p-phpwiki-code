@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.3 2002-02-02 07:24:50 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.4 2002-02-02 19:22:06 carstenklapp Exp $');
 
 /*
  * This file defines the Sidebar appearance ("theme") of PhpWiki.
@@ -10,12 +10,13 @@ require_once('lib/Theme.php');
 class Theme_Sidebar extends Theme {
 
     function findTemplate ($name) {
-        // hack for navbar.tmpl to invoke default's navbar.tmpl
-        if ($name == "default-navbar")
+        // hack for navbar.tmpl to hide the buttonseparator
+        if ($name == "navbar") {
+            //$old = $Theme->getButtonSeparator();
+            $this->setButtonSeparator(HTML::br());
             return "themes/default/templates/navbar.tmpl";
-
-        if ($name == "default-actionbar")
-            return "themes/default/templates/actionbar.tmpl";
+            //$Theme->setButtonSeparator($old);
+        }
 
         return $this->_path . $this->_findFile("templates/$name.tmpl");
     }
