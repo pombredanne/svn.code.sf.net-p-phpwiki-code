@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiForm.php,v 1.3 2002-02-15 05:35:02 carstenklapp Exp $');
+rcs_id('$Id: WikiForm.php,v 1.4 2002-02-20 00:16:11 carstenklapp Exp $');
 /**
  * This is a replacement for MagicPhpWikiURL forms.
  *
@@ -45,10 +45,18 @@ extends WikiPlugin
                 break;
             case 'dumpserial':
                 $input['name'] = 'directory';
-            if (!$default)
-                $input['value'] = '/tmp/wikidump';
-                if (!$buttontext)
-                    $buttontext = _("Dump Pages");
+                if (!$default)
+                    $input['value'] = '/tmp/wikidump';
+                    if (!$buttontext)
+                        $buttontext = _("Dump Pages");
+                $class = 'wikiadmin';
+                break;
+            case 'dumphtml':
+                $input['name'] = 'directory';
+                if (!$default)
+                    $input['value'] = '/tmp/wikidumphtml';
+                    if (!$buttontext)
+                        $buttontext = _("Dump Pages as XHTML");
                 $class = 'wikiadmin';
                 break;
             case 'upload':
