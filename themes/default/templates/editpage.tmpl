@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.29 2002-02-16 23:31:48 carstenklapp Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.30 2002-02-18 23:16:29 carstenklapp Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
@@ -29,7 +29,7 @@ $s = $Theme->getButtonSeparator();
      Please continue editing.  (You'll find your <!--a href="#editarea"-->edit area<!--/a--> at the bottom of the page.)
   </p>
   <hr class="printer" noshade="noshade" />
-  <div class="wikitext"><?= $PREVIEW_CONTENT ?></div>
+  <?= $PREVIEW_CONTENT ?>
   <hr class="printer" noshade="noshade" />
 <?php } ?>
 
