@@ -4,7 +4,7 @@
 <html>
 <head>
 <!-- phpwiki source:
-$Id: editpage.html,v 1.33 2001-12-26 10:45:46 carstenklapp Exp $
+$Id: editpage.html,v 1.34 2001-12-27 01:19:44 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <base href="${BASE_URL}" />
@@ -22,7 +22,7 @@ ${RCS_IDS}
               border="0" alt="${WIKI_NAME}: $_("HomePage")" 
               align="right" /></a></div>
 <!--This hack allows the h1 to be localised. FIXME: move out of html template into php-->
-<h1><?php printf(_("Edit: %s"),"<a class=\"wikilink\" href=\"${BROWSE}"._("BackLinks")."?page=${PAGE}\">${PAGE}</a>"); ?></h1>
+<h1><?php printf(_("Edit: %s"),"<a class=\"backlinks\" href=\"${BROWSE}"._("BackLinks")."?page=${PAGE}\">${PAGE}</a>"); ?></h1>
 <!--=this line=<?php $bl='<plugin-link BackLinks page="[pagename]" class="backlinks" linktext="${SPLIT_PAGE}" ?>';printf(_("Edit: %s"),"$bl"); ?>=doesn't work=-->
 <?php if (!empty($PREVIEW_CONTENT)) { ?>
   <p><strong>$_("Preview only!  Changes not saved.")</strong></p>
