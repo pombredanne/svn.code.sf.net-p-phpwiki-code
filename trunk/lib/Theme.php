@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.52 2002-08-27 21:51:31 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.53 2002-09-02 14:36:58 rurban Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -406,6 +406,7 @@ class Theme {
     }
 
     function linkExistingWikiWord($wikiword, $linktext = '', $version = false) {
+        global $request;
         if ($version !== false)
             $url = WikiURL($wikiword, array('version' => $version));
         else
@@ -429,10 +430,13 @@ class Theme {
             $link->pushContent($this->maybeSplitWikiWord($wikiword));
             $link->setAttr('class', 'wiki');
         }
+        if ($request->getArg('frame'))
+            $link->setAttr('target', '_top');
         return $link;
     }
 
     function linkUnknownWikiWord($wikiword, $linktext = '') {
+        global $request;
         $url = WikiURL($wikiword, array('action' => 'edit'));
         //$link = HTML::span(HTML::a(array('href' => $url), '?'));
         $button = $this->makeButton('?', $url);
@@ -448,6 +452,8 @@ class Theme {
             $link->pushContent(HTML::u($this->maybeSplitWikiWord($wikiword)));
             $link->setAttr('class', 'wikiunknown');
         }
+        if ($request->getArg('frame'))
+            $link->setAttr('target', '_top');
 
         return $link;
     }
@@ -799,9 +805,12 @@ class Button extends HtmlElement {
      * @param $class string The CSS class for the button.
      */
     function Button ($text, $url, $class = false) {
+        global $request;
         $this->HtmlElement('a', array('href' => $url));
         if ($class)
             $this->setAttr('class', $class);
+        if ($request->getArg('frame'))
+            $this->setAttr('target', '_top');
         $this->pushContent($text);
     }
 

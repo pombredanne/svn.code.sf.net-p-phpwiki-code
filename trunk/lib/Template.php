@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.44 2002-09-02 12:39:02 rurban Exp $');
+<?php rcs_id('$Id: Template.php,v 1.45 2002-09-02 14:36:58 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
