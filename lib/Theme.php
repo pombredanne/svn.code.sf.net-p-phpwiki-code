@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.33 2002-02-06 18:45:55 carstenklapp Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.34 2002-02-07 04:11:44 carstenklapp Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -182,13 +182,17 @@ class Theme {
 
     function formatDate ($time_t) {
         $offset_time = $time_t + PrefTimezoneOffset();
-
-        if (istoday($offset_time))
-            $date = _("Today");
-        else if (isyesterday($offset_time))
-            $date = _("Yesterday");
-        else
+        global $request;
+        if ($request->getPref('relativeDates')) {
+            if (istoday($offset_time))
+                $date = _("Today");
+            else if (isyesterday($offset_time))
+                $date = _("Yesterday");
+            else
+                $date = strftime($this->_dateFormat, $offset_time);
+        } else {
             $date = strftime($this->_dateFormat, $offset_time);
+        }
         return HTML($date, HTML::small("*"));
         // The asterisk is temporary, for debugging it indicates a
         // time has been converted to the user's local time.
@@ -200,12 +204,17 @@ class Theme {
 
     function formatDateTime ($time_t) {
         $offset_time = $time_t + PrefTimezoneOffset();
-        if (istoday($offset_time))
-            $date = sprintf(_("Today at %s"), strtolower(strftime($this->_timeFormat, $offset_time)));
-        else if (isyesterday($offset_time))
-            $date = sprintf(_("Yesterday at %s"), strtolower(strftime($this->_timeFormat, $offset_time)));
-        else
+        global $request;
+        if ($request->getPref('relativeDates')) {
+            if (istoday($offset_time))
+                $date = sprintf(_("Today at %s"), strtolower(strftime($this->_timeFormat, $offset_time)));
+            else if (isyesterday($offset_time))
+                $date = sprintf(_("Yesterday at %s"), strtolower(strftime($this->_timeFormat, $offset_time)));
+            else
+                $date = strftime($this->_dateTimeFormat, $offset_time);
+        } else {
             $date = strftime($this->_dateTimeFormat, $offset_time);
+        }
         return HTML($date, HTML::small("*"));
         // The asterisk is temporary, for debugging it indicates a
         // time has been converted to the user's local time.
@@ -306,9 +315,9 @@ class Theme {
     ////////////////////////////////////////////////////////////////
 
     /**
-     *
+        *
      * (To disable an image, alias the image to <code>false</code>.
-     */
+        */
     function addImageAlias ($alias, $image_name) {
         $this->_imageAliases[$alias] = $image_name;
     }
@@ -613,7 +622,7 @@ class Theme {
     }
 
     /**
-     * @return string HTML for CSS.
+        * @return string HTML for CSS.
      */
     function getCSS () {
         $css = HTML($this->_defaultCSS);
@@ -656,13 +665,13 @@ class Button extends HtmlElement {
  */
 class ImageButton extends Button {
     /** Constructor
-    *
-    * @param $text string The text for the button.
-    * @param $url string The url (href) for the button.
-    * @param $class string The CSS class for the button.
-    * @param $img_url string URL for button's image.
-    * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
-    */
+     *
+     * @param $text string The text for the button.
+     * @param $url string The url (href) for the button.
+     * @param $class string The CSS class for the button.
+     * @param $img_url string URL for button's image.
+     * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
+     */
     function ImageButton ($text, $url, $class, $img_url, $img_attr = false) {
         $this->HtmlElement('a', array('href' => $url));
         if ($class)
@@ -683,11 +692,11 @@ class ImageButton extends Button {
  */
 class SubmitButton extends HtmlElement {
     /** Constructor
-    *
-    * @param $text string The text for the button.
-    * @param $name string The name of the form field.
-    * @param $class string The CSS class for the button.
-    */
+     *
+     * @param $text string The text for the button.
+     * @param $name string The name of the form field.
+     * @param $class string The CSS class for the button.
+     */
     function SubmitButton ($text, $name = false, $class = false) {
         $this->HtmlElement('input', array('type' => 'submit',
                                           'value' => $text));
@@ -705,13 +714,13 @@ class SubmitButton extends HtmlElement {
  */
 class SubmitImageButton extends SubmitButton {
     /** Constructor
-    *
-    * @param $text string The text for the button.
-    * @param $name string The name of the form field.
-    * @param $class string The CSS class for the button.
-    * @param $img_url string URL for button's image.
-    * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
-    */
+     *
+     * @param $text string The text for the button.
+     * @param $name string The name of the form field.
+     * @param $class string The CSS class for the button.
+     * @param $img_url string URL for button's image.
+     * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
+     */
     function SubmitImageButton ($text, $name = false, $class = false, $img_url) {
         $this->HtmlElement('input', array('type'  => 'image',
                                           'src'   => $img_url,

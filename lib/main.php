@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.49 2002-02-05 22:04:04 lakka Exp $');
+rcs_id('$Id: main.php,v 1.50 2002-02-07 04:11:44 carstenklapp Exp $');
 
 
 include "lib/config.php";
@@ -28,14 +28,14 @@ class _UserPreference
     }
 }
 
-class _UserPreference_int extends _UserPreference 
+class _UserPreference_int extends _UserPreference
 {
     function _UserPreference_int ($default, $minval = false, $maxval = false) {
         $this->_UserPreference((int) $default);
         $this->_minval = (int) $minval;
         $this->_maxval = (int) $maxval;
     }
-    
+
     function sanify ($value) {
         $value = (int) $value;
         if ($this->_minval !== false && $value < $this->_minval)
@@ -49,6 +49,7 @@ class _UserPreference_int extends _UserPreference
 $UserPreferences = array('editWidth' => new _UserPreference_int(80, 30, 150),
                          'editHeight' => new _UserPreference_int(22, 5, 80),
                          'timeOffset' => new _UserPreference(TimezoneOffset(false, true)),
+                         'relativeDates' => new _UserPreference(false),
                          'userid' => new _UserPreference(''));
 
 class UserPreferences {
@@ -69,7 +70,7 @@ class UserPreferences {
         }
         return $UserPreferences[$name];
     }
-    
+
     function get ($name) {
         if (isset($this->_prefs[$name]))
             return $this->_prefs[$name];
@@ -90,7 +91,7 @@ class WikiRequest extends Request {
 
     function WikiRequest () {
         $this->Request();
-        
+
         // Normalize args...
         $this->setArg('pagename', $this->_deducePagename());
         $this->setArg('action', $this->_deduceAction());
@@ -232,46 +233,46 @@ class WikiRequest extends Request {
             $msg = fmt("You must log in to %s this wiki", $what);
         else
             $msg = fmt("You must be an administrator to %s this wiki", $what);
-        
+
         WikiUser::PrintLoginForm($this, compact('require_level'), $msg);
         $this->finish();    // NORETURN
     }
-    
+
     function requiredAuthority ($action) {
         // FIXME: clean up.
         switch ($action) {
-        case 'browse':
-        case 'viewsource':
-        case 'diff':
-            return WIKIAUTH_ANON;
+            case 'browse':
+            case 'viewsource':
+            case 'diff':
+                return WIKIAUTH_ANON;
 
-        case 'zip':
-            if (defined('ZIPDUMP_AUTH') && ZIPDUMP_AUTH)
-                return WIKIAUTH_ADMIN;
-            return WIKIAUTH_ANON;
-            
-        case 'edit':
-            if (defined('REQUIRE_SIGNIN_BEFORE_EDIT') && REQUIRE_SIGNIN_BEFORE_EDIT)
-                return WIKIAUTH_BOGO;
-            return WIKIAUTH_ANON;
-            // return WIKIAUTH_BOGO;
+            case 'zip':
+                if (defined('ZIPDUMP_AUTH') && ZIPDUMP_AUTH)
+                    return WIKIAUTH_ADMIN;
+                return WIKIAUTH_ANON;
 
-        case 'upload':
-        case 'dumpserial':
-        case 'loadfile':
-        case 'remove':
-        case 'lock':
-        case 'unlock':
-            return WIKIAUTH_ADMIN;
-        default:
-            global $WikiNameRegexp;
-            if (preg_match("/$WikiNameRegexp\Z/A", $action))
-                return WIKIAUTH_ANON; // ActionPage.
-            else
+            case 'edit':
+                if (defined('REQUIRE_SIGNIN_BEFORE_EDIT') && REQUIRE_SIGNIN_BEFORE_EDIT)
+                    return WIKIAUTH_BOGO;
+                return WIKIAUTH_ANON;
+                // return WIKIAUTH_BOGO;
+
+            case 'upload':
+            case 'dumpserial':
+            case 'loadfile':
+            case 'remove':
+            case 'lock':
+            case 'unlock':
                 return WIKIAUTH_ADMIN;
+            default:
+                global $WikiNameRegexp;
+                if (preg_match("/$WikiNameRegexp\Z/A", $action))
+                    return WIKIAUTH_ANON; // ActionPage.
+                else
+                    return WIKIAUTH_ADMIN;
         }
     }
-        
+
     function possiblyDeflowerVirginWiki () {
         if ($this->getArg('action') != 'browse')
             return;
@@ -301,23 +302,23 @@ class WikiRequest extends Request {
             $this->finish(fmt("%s: Bad action", $action));
         }
     }
-        
-        
+
+
     function finish ($errormsg = false) {
         static $in_exit = 0;
 
         if ($in_exit)
-            exit();		// just in case CloseDataBase calls us
+            exit();        // just in case CloseDataBase calls us
         $in_exit = true;
 
         if (!empty($this->_dbi))
             $this->_dbi->close();
         unset($this->_dbi);
-        
+
 
         global $ErrorManager;
         $ErrorManager->flushPostponedErrors();
-   
+
         if (!empty($errormsg)) {
             PrintXML(HTML::br(),
                      HTML::hr(),
@@ -330,7 +331,7 @@ class WikiRequest extends Request {
         Request::finish();
         exit;
     }
-        
+
     function _deducePagename () {
         if ($this->getArg('pagename'))
             return $this->getArg('pagename');
@@ -338,7 +339,7 @@ class WikiRequest extends Request {
         if (USE_PATH_INFO) {
             $pathinfo = $this->get('PATH_INFO');
             $tail = substr($pathinfo, strlen(PATH_INFO_PREFIX));
-            
+
             if ($tail && $pathinfo == PATH_INFO_PREFIX . $tail) {
                 return $tail;
             }
@@ -348,7 +349,7 @@ class WikiRequest extends Request {
         if (preg_match('/^[^&=]+$/', $query_string)) {
             return urldecode($query_string);
         }
-    
+
         return HomePage;
     }
 
@@ -362,7 +363,7 @@ class WikiRequest extends Request {
         // Allow for, e.g. action=LikePages
         if ($this->isActionPage($action))
             return $action;
-        
+
         trigger_error("$action: Unknown action", E_USER_NOTICE);
         return 'browse';
     }
@@ -381,7 +382,7 @@ class WikiRequest extends Request {
         trigger_error("$pagename: Does not appear to be an 'action page'", E_USER_NOTICE);
         return false;
     }
-    
+
     function action_browse () {
         $this->compress_output();
         include_once("lib/display.php");
@@ -393,7 +394,7 @@ class WikiRequest extends Request {
         include_once("lib/display.php");
         actionPage($this, $action);
     }
-    
+
     function action_diff () {
         $this->compress_output();
         include_once "lib/diff.php";
@@ -449,12 +450,12 @@ class WikiRequest extends Request {
         RemovePage($this);
     }
 
-    
+
     function action_upload () {
         include_once("lib/loadsave.php");
         LoadPostFile($this);
     }
-    
+
     function action_zip () {
         include_once("lib/loadsave.php");
         MakeWikiZip($this);
@@ -462,7 +463,7 @@ class WikiRequest extends Request {
         echo "\n========================================================\n";
         echo "PhpWiki " . PHPWIKI_VERSION . " source:\n$GLOBALS[RCS_IDS]\n";
     }
-        
+
     function action_dumpserial () {
         include_once("lib/loadsave.php");
         DumpToDir($this);
@@ -485,16 +486,16 @@ function main () {
 
     $request = new WikiRequest();
     $request->updateAuthAndPrefs();
-    
+
     /* FIXME: is this needed anymore?
-    if (USE_PATH_INFO && ! $request->get('PATH_INFO')
-        && ! preg_match(',/$,', $request->get('REDIRECT_URL'))) {
-        $request->redirect(SERVER_URL
-                           . preg_replace('/(\?|$)/', '/\1',
-                                          $request->get('REQUEST_URI'),
-                                          1));
-        exit;
-    }
+        if (USE_PATH_INFO && ! $request->get('PATH_INFO')
+            && ! preg_match(',/$,', $request->get('REDIRECT_URL'))) {
+            $request->redirect(SERVER_URL
+                               . preg_replace('/(\?|$)/', '/\1',
+                                              $request->get('REQUEST_URI'),
+                                              1));
+            exit;
+        }
     */
 
     // Enable the output of most of the warning messages.
@@ -504,7 +505,7 @@ function main () {
         $ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE);
         //$ErrorManager->setPostponedErrorMask(0);
     }
-    
+
     //FIXME:
     //if ($user->is_authenticated())
     //  $LogEntry->user = $user->getId();
@@ -516,9 +517,9 @@ function main () {
 }
 
 // Used for debugging purposes
-function getmicrotime(){ 
-	list($usec, $sec) = explode(" ",microtime()); 
-    return ((float)$usec + (float)$sec); 
+function getmicrotime(){
+    list($usec, $sec) = explode(" ", microtime());
+    return ((float)$usec + (float)$sec);
 }
 define ('DEBUG', 1);
 if (defined ('DEBUG')) $GLOBALS['debugclock'] = getmicrotime();
@@ -532,5 +533,5 @@ main();
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End:
 ?>
