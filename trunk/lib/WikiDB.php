@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.90 2004-09-28 12:50:22 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.91 2004-10-04 23:41:19 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -234,7 +234,7 @@ class WikiDB {
 
         /* Generate notification emails? */
         if (! $this->isWikiPage($pagename) ) {
-            $notify = $this->_wikidb->get('notify');
+            $notify = $this->get('notify');
             if (!empty($notify) and is_array($notify)) {
                 //TODO: deferr it (quite a massive load if you remove some pages).
                 //TODO: notification class which catches all changes,
@@ -242,7 +242,6 @@ class WikiDB {
                 // could be used for PageModeration also.
                 list($emails, $userids) = WikiDB_Page::getPageChangeEmails($notify);
                 if (!empty($emails)) {
-                    $notify = $this->get('notify');
                     $editedby = sprintf(_("Edited by: %s"), $GLOBALS['request']->UserName()); // Todo: host_id
                     $emails = join(',', $emails);
                     $subject = sprintf(_("Page deleted %s"), $pagename);
@@ -1967,9 +1966,12 @@ class WikiDB_cache
 
     function delete_versiondata($pagename, $version) {
         $new = $this->_backend->delete_versiondata($pagename, $version);
-        @unset ($this->_versiondata_cache[$pagename][$version]['1']);
-        @unset ($this->_versiondata_cache[$pagename][$version]['0']);
-        @unset ($this->_glv_cache[$pagename]);
+        if (isset($this->_versiondata_cache[$pagename][$version]['1']))
+            unset ($this->_versiondata_cache[$pagename][$version]['1']);
+        if (isset($this->_versiondata_cache[$pagename][$version]['0']))
+            unset ($this->_versiondata_cache[$pagename][$version]['0']);
+        if (isset($this->_glv_cache[$pagename]))
+            unset ($this->_glv_cache[$pagename]);
     }
 	
     function get_latest_version($pagename)  {
@@ -1990,6 +1992,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.90  2004/09/28 12:50:22  rurban
+// https://sourceforge.net/forum/forum.php?thread_id=1150924&forum_id=18929
+//
 // Revision 1.89  2004/09/26 10:54:42  rurban
 // silence deferred check
 //
