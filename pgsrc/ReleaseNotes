@@ -1,9 +1,9 @@
 Date: Fri, 29 Apr 2004 17:28:55 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.26 2004-05-02 15:10:08 rurban Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.27 2004-05-03 15:36:12 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.26 $";
+  pgsrc_version="2 $Revision: 1.27 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
@@ -20,8 +20,12 @@ fixes:
 * fixed dba session reading
 * fixed loading of localized pagenames on action=upgrade
 * fixed interwiki.map loading on certain PrettyWiki setups
-* re-enabled php-4.0.6 support (broken since ...),
+* re-enabled php-4.0.6 support (broken since 1.3.x),
   <= 4.0.5 not supported anymore.
+* fix running phpwiki in "/" (DATA_PATH)
+* fix PhpWiki:PrettyWiki detection: starter script includes index.php,
+  and include main.php by its own to override certain config values.
+* fix WikiAdminRemove arguments passed from WikiAdminSelect
 changes:
 * pear not in our include_path anymore: either use your pear or our pear, 
   by adding it to your include_path or not. use now 1:1 copies of pear libs.
@@ -31,13 +35,21 @@ changes:
 * CreateToc parses now headers with links and formatting
 * PageChangeNotification: userids, not emails are printed
 * default theme navbar consistency: linkButtons instead of action buttons
+* _~WikiTranslation what=buttons, noT=1, nolinks=1
+* ~SetupWiki (virgin setup) also loads all mandatory pages now 
+  and overwrites ReleaseNotes
+* PageChangeNotification changed subject to "[WikiName] Page change %s",
+  update your filters accordingly
+* action=upgrade now linked in PhpWikiAdministration, 
+  fix page.id auto_increment and ADD session.sess_ip
 new:
 * new ini-style config, instead of old index.php
 * paging support for pagelists longer than limit
 * PopularNearby plugin: same as the classic most popular footer
 * RelatedChanges plugin: only those which are links at the current page
 * new GoogleLink pref: add "[G]" lookup on unknown links
-* chinese language support by Yan-ren Tsai (druryl)
+* added chinese language support, by Yan-ren Tsai (druryl)
+* added missing MacOSX buttons, by Carsten Klapp.
 
 1.2.3 (the classic version) 29.Apr 2004, Reini Urban:
 * added the most popular footer for dba

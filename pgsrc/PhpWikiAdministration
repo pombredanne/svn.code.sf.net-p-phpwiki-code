@@ -1,9 +1,9 @@
 Date: Wed, 26 Nov 2003 18:34:06 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.7pre)
-X-Rcs-Id: $Id: PhpWikiAdministration,v 1.28 2004-04-01 15:57:20 rurban Exp $
+X-Rcs-Id: $Id: PhpWikiAdministration,v 1.29 2004-05-03 15:36:12 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiAdministration;
-  pgsrc_version="2 $Revision: 1.28 $";
+  pgsrc_version="2 $Revision: 1.29 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
@@ -111,6 +111,16 @@ directories. The file or directory must be local to the http
 server. You can also use this form to load from an http: or ftp: URL.
 
   <?plugin WikiForm action=loadfile?>
+
+!! Upgrade
+
+Do some verification checks and upgrade changes automatically, after having installed a 
+new phpwiki engine update:
+* Upgrade new or changed page revisions from pgsrc,
+* Upgrade the database schema (_page.id auto_increment_),
+* Upgrade theme files (_not yet_).
+
+;:[ Upgrade | phpwiki:HomePage?action=upgrade ]
 
 -----------
 
