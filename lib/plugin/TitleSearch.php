@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TitleSearch.php,v 1.19 2003-03-07 02:50:16 dairiki Exp $');
+rcs_id('$Id: TitleSearch.php,v 1.20 2003-11-02 20:42:35 carstenklapp Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.19 $");
+                            "\$Revision: 1.20 $");
     }
 
     function getDefaultArguments() {
@@ -63,13 +63,17 @@ extends WikiPlugin
         $pages = $dbi->titleSearch($query);
 
         $pagelist = new PageList($info, $exclude);
-        if (!$noheader)
-            $pagelist->setCaption(fmt("Title search results for '%s'", $s));
 
         while ($page = $pages->next()) {
             $pagelist->addPage($page);
             $last_name = $page->getName();
         }
+        // Provide an unknown WikiWord link to allow for page creation
+        // when a search returns no results
+        if (!$noheader)
+            $pagelist->setCaption(fmt("Title search results for '%s'",
+                                      $pagelist->getTotal() == 0
+                                      ? WikiLink($s, 'auto') : $s));
 
         if ($auto_redirect && ($pagelist->getTotal() == 1)) {
             return HTML($request->redirect(WikiURL($last_name, false, 'absurl'), false),
@@ -81,6 +85,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.19  2003/03/07 02:50:16  dairiki
+// Fixes for new javascript redirect.
+//
 // Revision 1.18  2003/02/21 04:16:51  dairiki
 // Don't NORETURN from redirect.
 //
