@@ -1,5 +1,5 @@
 /* 
- * $Id: MacOSX-heavy.css,v 1.7 2002-02-18 01:34:48 carstenklapp Exp $
+ * $Id: MacOSX-heavy.css,v 1.8 2002-02-19 03:40:10 carstenklapp Exp $
  *
  * phpwiki-heavy.css
  *
@@ -18,9 +18,19 @@ div.wikitext  {
 img.linkicon  {
   vertical-align : middle;
 }
-/*
- * Diff Output
+
+
+/**
+ * PageTypes
  */
+.interwiki-map thead td,
+.interwiki-moniker,
+.interwiki-url {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+
 /**
  * Diff Output
  */
