@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.9 2001-09-19 02:58:00 dairiki Exp $');
+rcs_id('$Id: loadsave.php,v 1.10 2001-11-09 16:23:37 dairiki Exp $');
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
 
@@ -52,6 +52,25 @@ function MailifyPage ($page, $nversions = 1)
    return $head . $parts[0];
 }
 
+/***
+ * Compute filename to used for storing contents of a wiki page.
+ *
+ * Basically we do a rawurlencode() which encodes everything
+ * except ASCII alphanumerics and '.', '-', and '_'.
+ *
+ * But we also want to encode leading dots to avoid filenames
+ * like '.', and '..'.  (Also, there's no point in generating
+ * "hidden" file names, like '.foo'.)
+ *
+ * @param $pagename string Pagename.
+ * @return string Filename for page.
+ */
+function FilenameForPage ($pagename)
+{
+    $enc = rawurlencode($pagename);
+    return preg_replace('/^\./', '%2e', $enc);
+}
+
 /**
  * The main() function which generates a zip archive of a PhpWiki.
  *
@@ -93,7 +112,7 @@ function MakeWikiZip ($dbi, $request)
         else
             $content = MailifyPage($page);
 		     
-        $zip->addRegularFile( rawurlencode($page->getName()),
+        $zip->addRegularFile( FilenameForPage($page->getName()),
                               $content, $attrib);
     }
     $zip->finish();
@@ -122,7 +141,7 @@ function DumpToDir ($dbi, $request)
     while ($page = $pages->next()) {
         
         $enc_name = htmlspecialchars($page->getName());
-        $filename = rawurlencode($page->getName());
+        $filename = FilenameForPage($page->getName());
 
         echo "<br>$enc_name ... ";
         if($pagename != $filename)
