@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.193 2004-11-30 07:51:08 rurban Exp $');
+rcs_id('$Id: main.php,v 1.194 2004-11-30 17:46:49 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -21,7 +21,7 @@ if (ENABLE_PAGEPERM)
  */
 function mayAccessPage ($access, $pagename) {
     if (ENABLE_PAGEPERM)
-        return _requiredAuthorityForPagename($access, $pagename);
+        return _requiredAuthorityForPagename($access, $pagename); // typically [10-20ms per page]
     else
         return true;
 }
@@ -612,6 +612,35 @@ TODO: check against these cases:
     // [574ms] mainly template:printexpansion: 393ms and template::expandsubtemplate [100+70+60ms]
     function handleAction () {
         $action = $this->getArg('action');
+        if ($this->isPost()) {
+            $page = $this->getPage();
+            if (!$this->_user->isAdmin() and $action != 'browse' and $page->get('moderation')) {
+                require_once("lib/WikiPlugin.php");
+                $loader = new WikiPluginLoader();
+                $plugin = $loader->getPlugin("ModeratedPage");
+            	if ($plugin->handler($this, $page)) {
+            	    $CONTENT = HTML::div(array('class' => 'wikitext'),
+            	                                 fmt("%s: action forwarded to a moderator.", 
+            	    				     $action), 
+                                         HTML::br(),
+                                         _("You must wait for moderator approval."));
+                    if ($plugin->_tokens['CONTENT'])
+                        $plugin->_tokens['CONTENT']->pushContent
+                            (
+                             HTML::br(),
+                             _("You must wait for moderator approval."));
+                    else
+                        $plugin->_tokens['CONTENT'] = $CONTENT;
+            	    require_once("lib/Template.php");
+            	    $title = WikiLink($page->getName());
+            	    $title->pushContent(' : ', WikiLink(_("ModeratedPage")));
+	            GeneratePage(Template('browse', $plugin->_tokens), 
+	                         $title,
+	                         $page->getCurrentRevision());
+                    $this->finish();
+                }
+            }
+        }
         $method = "action_$action";
         if (method_exists($this, $method)) {
             $this->{$method}();
@@ -1148,6 +1177,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.193  2004/11/30 07:51:08  rurban
+// fixed SESSION_SAVE_PATH warning msg
+//
 // Revision 1.192  2004/11/21 11:59:20  rurban
 // remove final \n to be ob_cache independent
 //
