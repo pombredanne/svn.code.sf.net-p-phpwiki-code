@@ -1,5 +1,5 @@
 <?php 
-// $Id: XmlRpcServer.php,v 1.9 2004-12-10 00:14:41 rurban Exp $
+// $Id: XmlRpcServer.php,v 1.10 2004-12-10 02:36:43 rurban Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  *
  * LICENCE
@@ -60,7 +60,7 @@ Done:
 // Intercept GET requests from confused users.  Only POST is allowed here!
 // There is some indication that $HTTP_SERVER_VARS is deprecated in php > 4.1.0
 // in favour of $_Server, but as far as I know, it still works.
-if ($GLOBALS['HTTP_SERVER_VARS']['REQUEST_METHOD'] != "POST")  
+if ($GLOBALS['HTTP_SERVER_VARS']['REQUEST_METHOD'] != "POST")
 {
     die('This is the address of the XML-RPC interface.' .
         '  You must use XML-RPC calls to access information here');
@@ -87,6 +87,7 @@ if (loadPhpExtension('xmlrpc')) { // fast c lib
     global $xmlrpc_util_path;
     $xmlrpc_util_path = dirname(__FILE__)."/XMLRPC/";
     include_once("lib/XMLRPC/xmlrpc_emu.inc"); 
+    global $_xmlrpcs_debug;
     include_once("lib/XMLRPC/xmlrpcs_emu.inc");
 
  } else { // slow php lib
@@ -102,7 +103,7 @@ if (loadPhpExtension('xmlrpc')) { // fast c lib
  
 
 //  API version
-define ("WIKI_XMLRPC_VERSION", "1.1");
+define ("WIKI_XMLRPC_VERSION", 2);
 
 /**
  * Helper function:  Looks up a page revision (most recent by default) in the wiki database
@@ -203,7 +204,7 @@ $wiki_dmap['getRPCVersionSupported']
 // method.
 function getRPCVersionSupported($params)
 {
-    return new xmlrpcresp(new xmlrpcval(WIKI_XMLRPC_VERSION, "string"));
+    return new xmlrpcresp(new xmlrpcval((integer)WIKI_XMLRPC_VERSION, "int"));
 }
 
 /**
@@ -529,7 +530,8 @@ class XmlRpcServer extends xmlrpc_server
         $msg = htmlspecialchars($e->asString());
         // '--' not allowed within xml comment
         $msg = str_replace('--', '&#45;&#45;', $msg);
-        xmlrpc_debugmsg($msg);
+        if (function_exists('xmlrpc_debugmsg'))
+            xmlrpc_debugmsg($msg);
         return true;
     }
 }

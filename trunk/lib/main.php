@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.195 2004-12-09 22:24:44 rurban Exp $');
+rcs_id('$Id: main.php,v 1.196 2004-12-10 02:36:43 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -31,6 +31,7 @@ class WikiRequest extends Request {
 
     function WikiRequest () {
         $this->_dbi = WikiDB::open($GLOBALS['DBParams']); // first mysql request costs [958ms]! [670ms] is mysql_connect()
+        
         if (in_array('File', $this->_dbi->getAuthParam('USER_AUTH_ORDER'))) {
             // force our local copy, until the pear version is fixed.
             include_once(dirname(__FILE__)."/pear/File_Passwd.php");
@@ -185,13 +186,15 @@ $this->version = phpwiki_version();
         }
 
         // Save preferences in session and cookie
-        if (isset($this->_user) and 
-            (!isset($this->_user->_authhow) or $this->_user->_authhow != 'session')) {
-            $id_only = true; 
-            $this->_user->setPreferences($this->_prefs, $id_only);
-        } else {
-            $this->setSessionVar('wiki_user', $this->_user);
-            //$this->setSessionVar('wiki_prefs', $this->_prefs);
+        if (!defined('WIKI_XMLRPC') or !WIKI_XMLRPC) {
+            if (isset($this->_user) and 
+                (!isset($this->_user->_authhow) or $this->_user->_authhow != 'session')) {
+                $id_only = true; 
+                $this->_user->setPreferences($this->_prefs, $id_only);
+            } else {
+                $this->setSessionVar('wiki_user', $this->_user);
+                //$this->setSessionVar('wiki_prefs', $this->_prefs);
+            }
         }
 
         // Ensure user has permissions for action
@@ -1180,6 +1183,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.195  2004/12/09 22:24:44  rurban
+// optimize on _DEBUG_SQL only. but now again on every 50th request, not just save.
+//
 // Revision 1.194  2004/11/30 17:46:49  rurban
 // added ModeratedPage POST action hook (part 2/3)
 //
