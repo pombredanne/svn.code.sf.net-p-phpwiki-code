@@ -1,4 +1,4 @@
-$Id: DBLIB.txt,v 1.1 2000-06-05 20:54:42 wainstead Exp $
+$Id: DBLIB.txt,v 1.2 2000-06-09 10:17:42 ahollosi Exp $
 
 This is a description of the database interface for PhpWiki. Regardless
 of what kind of data store is used (RDBMS, DBM files, flat text files)
@@ -32,7 +32,7 @@ A few notes:
       RetrievePage($dbi, $pagename)
       takes:   db reference, string which is the name of a page
       returns: a PHP associative array containing the page data
-	       (text, version, prvious author, etc)
+	       (text, version, author, etc)
 
 
       InsertPage($dbi, $pagename, $pagehash)
@@ -48,20 +48,21 @@ A few notes:
 
       InitTitleSearch($dbi, $search)
       takes:   db reference, search string
-      returns: a hash with two keys:
-		 'search' -- the search string passed in
-		 'key'    -- the first page name returned from the database
+      returns: a handle to identify the query and the current position
+               within the result set.
 
 
       TitleSearchNextMatch($dbi, &$pos)
       takes:   db reference, reference to a hash created by
                InitTitleSearch
       returns: the next page name that contains a match to the search term
+               (advances $pos to next result field as well)
 
 
       InitFullSearch($dbi, $search)
       takes:   db reference, string containing search term
-      returns: this calls InitTitleSearch and returns that result
+      returns: similar to InitTitleSearch: a handle to identify the
+               query and the current position within the result set.
 
 
       FullSearchNextMatch($dbi, &$pos)
@@ -70,3 +71,4 @@ A few notes:
       returns: an associative array, where:
 		  'name' -- contains the page name
 		  'hash' -- contains the hash of the page data
+               (advances $pos to next result field as well)
