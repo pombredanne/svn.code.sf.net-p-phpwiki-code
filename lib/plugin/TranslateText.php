@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TranslateText.php,v 1.3 2004-03-17 15:38:03 rurban Exp $');
+rcs_id('$Id: TranslateText.php,v 1.4 2004-05-18 13:58:39 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -50,7 +50,7 @@ extends WikiPlugin__WikiTranslation
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -95,7 +95,7 @@ extends WikiPlugin__WikiTranslation
                 $text .= $user->getId() . " " . Iso8601DateTime() . "\n" .
                          "* " . sprintf(_("Translate '%s' to '%s' in *%s*"),
                                         $pagename, $trans, $lang);
-                $text .= "  <verbatim>locale/po/$lang.po:\n  msgid \"".$pagename."\"\n  msgstr \"".$trans."\"\n  </verbatim>";
+                $text .= "\n  <verbatim>locale/po/$lang.po:\n  msgid \"".$pagename."\"\n  msgstr \"".$trans."\"\n  </verbatim>";
                 $meta['summary'] = sprintf(_("Translate %s to %s in %s"),
                                            substr($pagename,0,15),substr($trans,0,15),$lang);
                 $page->save($text, $version + 1, $meta);
@@ -137,6 +137,9 @@ extends WikiPlugin__WikiTranslation
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/03/17 15:38:03  rurban
+// more translations
+//
 // Revision 1.2  2004/03/17 12:04:36  rurban
 // more docs
 //
