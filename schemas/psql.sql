@@ -1,4 +1,4 @@
--- $Id: psql.sql,v 1.1 2001-12-03 04:05:38 wainstead Exp $
+-- $Id: psql.sql,v 1.2 2001-12-19 05:16:13 carstenklapp Exp $
 
 \set QUIET
 
@@ -18,7 +18,7 @@
 -- user who will be accessing the tables.
 --
 -- Commonly, connections from php are made under
--- the user name of 'nobody' or 'apache'.  
+-- the user name of 'nobody', 'apache' or 'www'.
 
 \set httpd_user	'apache'
 
