@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: file.php,v 1.12 2004-07-08 13:50:32 rurban Exp $');
+rcs_id('$Id: file.php,v 1.13 2004-07-08 15:23:59 rurban Exp $');
 
 /**
  Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
@@ -141,6 +141,7 @@ extends WikiDB_backend
 
     function _removePage($type, $pagename, $version) {
         $filename = $this->_pagename2filename($type, $pagename, $version);
+        if (!file_exists($filename)) return NULL;
         $f = @unlink($filename);
         if ($f == false)
             trigger_error("delete file failed: ".$filename." ver: ".$version, E_USER_WARNING);
@@ -780,6 +781,9 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2004/07/08 13:50:32  rurban
+// various unit test fixes: print error backtrace on _DEBUG_TRACE; allusers fix; new PHPWIKI_NOMAIN constant for omitting the mainloop
+//
 // Revision 1.11  2004/07/08 11:12:49  rurban
 // quiet the testruns
 //
