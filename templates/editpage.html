@@ -1,14 +1,14 @@
-<?php echo "<?xml version='1.0' encoding='ISO-8859-1'?>\n"; ?>
+<?php echo "<?xml version='1.0' encoding='${CHARSET}'?>\n"; ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
 <!-- phpwiki source:
-$Id: editpage.html,v 1.34 2001-12-27 01:19:44 carstenklapp Exp $
+$Id: editpage.html,v 1.35 2001-12-30 06:10:55 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <base href="${BASE_URL}" />
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Type" content="text/html; charset=${CHARSET}" />
 <meta name="robots" content="noindex,nofollow" />
 <link rel="stylesheet" title="phpwiki" href="${CSS_URL}" type="text/css" />
 <link rel="alternate stylesheet" title="printer" href="${BASE_URL}phpwiki-printer.css" type="text/css" />
@@ -44,7 +44,7 @@ ${RCS_IDS}
  * a redirect from a page to itself.)
  */ ?>
 
-<form method="post" action="${BROWSE}EditPage">
+<form method="post" action="${BROWSE}EditPage" accept-charset="${CHARSET}">
 <textarea class="wikiedit"
           name="content"
           rows="${EDIT_AREA_HEIGHT}"
