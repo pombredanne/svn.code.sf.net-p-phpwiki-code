@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.32 2002-08-23 18:29:34 rurban Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.33 2002-09-17 19:30:23 dairiki Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
@@ -26,7 +26,8 @@ $s = $Theme->getButtonSeparator();
 <!-- FIXME: it would be nice to put a link to the #editarea anchor below,
      but it does not work currently with the <base> declared in top.tmpl.
      I think we need to do away with using <base> altogether... -->
-     <?= sprintf(_("Please continue editing.  (You'll find your %sedit area%s at the bottom of the page.)"), '<a href="#editarea">', '</a>') ?>
+     <?= fmt("Please continue editing.  (You'll find your %s at the bottom of the page.)",
+          /* HTML::a(array("href" => "#editarea"), */ _("edit area") /*)  */) ?>
   </p>
   <hr class="printer" noshade="noshade" />
   <?= $PREVIEW_CONTENT ?>
