@@ -171,13 +171,13 @@ A.wikiadmin, .wikiadmin TABLE   { background-color: #fdd; }
 /*
  * No border on external link icons.
  */
-img.linkicon {
-  border: none;
-  margin-right: 0.5ex;
-  margin-left: 0.25ex;
-  vertical-align: middle /* bottom */;
-}
-   
+img.linkicon, img.rssicon	{ border: 0px; }
+img.rssicon		{ vertical-align: top; }
+/* This screws up NS4, moved to phpwiki-heavy.css 
+img.linkicon		{ vertical-align: middle; }
+*/
+
+ 
 /*
  * Put a border around wikiaction forms:
  * This doesn't work for NS4.
