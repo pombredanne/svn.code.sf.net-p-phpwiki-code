@@ -2,13 +2,13 @@
 $locale["./pgsrc"] =
    "./locale/nl/pgsrc";
 $locale["templates/browse.html"] =
-   "";
+   "./locale/nl/templates/browse.html";
 $locale["templates/editpage.html"] =
-   "";
+   "./locale/nl/templates/editpage.html";
 $locale["templates/editlinks.html"] =
-   "";
+   "./locale/nl/templates/editlinks.html";
 $locale["templates/message.html"] =
-   "";
+   "./locale/nl/templates/message.html";
 $locale["Diff of %s."] =
    "Diff van %s.";
 $locale["FrontPage"] =
