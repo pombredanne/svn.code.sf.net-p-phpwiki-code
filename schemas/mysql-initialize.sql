@@ -1,4 +1,4 @@
--- $Id: mysql-initialize.sql,v 1.1 2004-07-22 16:49:20 dfrankow Exp $
+-- $Id: mysql-initialize.sql,v 1.2 2004-09-06 08:31:27 rurban Exp $
 
 CREATE TABLE page (
 	id              INT NOT NULL AUTO_INCREMENT,
@@ -49,9 +49,11 @@ CREATE TABLE session (
 	INDEX (sess_date)
 ); -- TYPE=heap; -- if your Mysql supports it and you have enough RAM
 
--- upgrade from 1.3.7:
+-- upgrade to 1.3.8: (see lib/upgrade.php)
 -- ALTER TABLE session ADD sess_ip CHAR(15) NOT NULL;
 -- CREATE INDEX sess_date on session (sess_date);
+-- update to 1.3.10: (see lib/upgrade.php)
+-- ALTER TABLE page CHANGE id id INT NOT NULL AUTO_INCREMENT;
 
 -- Optional DB Auth and Prefs
 -- For these tables below the default table prefix must be used 
@@ -80,7 +82,7 @@ CREATE TABLE member (
    	INDEX (groupname)
 ) TYPE=MyISAM;
 
--- if you plan to use the wikilens theme
+-- only if you plan to use the wikilens theme
 CREATE TABLE rating (
         dimension INT(4) NOT NULL,
         raterpage INT(11) NOT NULL,
