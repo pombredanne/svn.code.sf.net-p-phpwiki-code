@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiUser.php,v 1.12 2002-01-24 00:45:28 dairiki Exp $');
+<?php rcs_id('$Id: WikiUser.php,v 1.13 2002-01-24 01:26:55 dairiki Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -117,7 +117,7 @@ class WikiUser
         return $user;
     }
     
-    function PrintLoginForm ($args, $fail_message = false) {
+    function PrintLoginForm (&$request, $args, $fail_message = false) {
         include_once('lib/Template.php');
         
         $userid = '';

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.31 2002-01-24 00:45:28 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.32 2002-01-24 01:26:55 dairiki Exp $');
 
 
 include "lib/config.php";
@@ -178,7 +178,11 @@ class WikiRequest extends Request {
         elseif ($user) {
             // Login attempt failed.
             $fail_message = $user;
-            WikiUser::PrintLoginForm($auth_args, $fail_message);
+            // If no password was submitted, it's not really
+            // a failure --- just need to prompt for password...
+            if (!isset($auth_args['password']))
+                $fail_message = false;
+            WikiUser::PrintLoginForm($this, $auth_args, $fail_message);
             $this->finish();    //NORETURN
         }
         else {
