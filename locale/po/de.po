@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.8\n"
-"POT-Creation-Date: 2001-05-21 09:36-0700\n"
+"POT-Creation-Date: 2001-05-31 09:42-0700\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Arno Hollosi <ahollosi@mail.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -111,6 +111,10 @@ msgstr "Volltext-Suchresultate"
 msgid "Complete."
 msgstr ""
 
+#: ../lib/loadsave.php:16
+msgid "Return to "
+msgstr ""
+
 #: ../lib/loadsave.php:99 ../lib/main.php:158
 msgid "You must specify a directory to dump to"
 msgstr ""
@@ -137,6 +141,31 @@ msgstr ""
 #, fuzzy, c-format
 msgid "as version %d"
 msgstr "Version %s"
+
+#: ../lib/loadsave.php:263
+msgid "MIME file"
+msgstr ""
+
+#: ../lib/loadsave.php:268
+msgid "Serialized file"
+msgstr ""
+
+#: ../lib/loadsave.php:275
+msgid "plain file"
+msgstr ""
+
+#: ../lib/loadsave.php:363 ../lib/loadsave.php:378 ../lib/loadsave.php:409
+#: ../lib/stdlib.php:595 ../lib/stdlib.php:664
+msgid "RecentChanges"
+msgstr "FrischeSeiten"
+
+#: ../lib/loadsave.php:373
+msgid "The PhpWiki programming team"
+msgstr ""
+
+#: ../lib/loadsave.php:375
+msgid "Loading up virgin wiki"
+msgstr ""
 
 #: ../lib/main.php:41 ../lib/main.php:99 ../lib/main.php:101
 msgid "HomePage"
@@ -311,10 +340,6 @@ msgstr "Die %d besten hinausgehenden Links:"
 msgid "%d most popular nearby:"
 msgstr "Die %d meistbesuchten Seiten in der Nähe:"
 
-#: ../lib/stdlib.php:595 ../lib/stdlib.php:664
-msgid "RecentChanges"
-msgstr "FrischeSeiten"
-
 #: ../lib/stdlib.php:611
 msgid "The most recently changed pages are listed below."
 msgstr "Hier findest du eine Liste kürzlich veränderter oder neuer Seiten."
@@ -327,6 +352,10 @@ msgstr "(Erster Tag dises Wikis)"
 msgid "Quick title search:"
 msgstr "Schnelle Titelsuche:"
 
+#: ../lib/stdlib.php:645
+msgid "(new)"
+msgstr ""
+
 #: ../lib/transform.php:114
 #, fuzzy
 msgid "Lists nested too deep in SetHTMLOutputMode"
@@ -336,7 +365,25 @@ msgstr "Interner Fehler: Stackgrenze in SetHTMLOutputMode überschritten."
 msgid "Search"
 msgstr "Suche"
 
-#: ../lib/userauth.php:158
+#: ../lib/userauth.php:83
+#, c-format
+msgid "to perform action '%s'"
+msgstr ""
+
+#: ../lib/userauth.php:85
+msgid "to do that"
+msgstr ""
+
+#: ../lib/userauth.php:86
+msgid "You must be logged in as an administrator"
+msgstr ""
+
+#: ../lib/userauth.php:154
+msgid ""
+"You must set the administrator account and password before you can log in."
+msgstr ""
+
+#: ../lib/userauth.php:166
 msgid "You entered an invalid login or password."
 msgstr "Du hast ein ungültiges Login oder Passwort eingegeben."
 
