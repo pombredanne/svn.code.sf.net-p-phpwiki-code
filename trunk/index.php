@@ -73,7 +73,7 @@ define('ENABLE_USER_NEW',true);
 
 define ('PHPWIKI_VERSION', '1.3.8a');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.117 2004-01-27 23:25:50 rurban Exp $');
+rcs_id('$Id: index.php,v 1.118 2004-01-28 14:34:13 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -316,7 +316,7 @@ $DBParams = array(
    //'dsn' => 'mysql://guest@localhost/test',
    //'dsn' => 'pgsql://localhost/test',
 
-   // experimental
+   // The common table prefix (see below) is added if defined
    'db_session_table'   => 'session',
    
    // Used by all DB types:
@@ -903,6 +903,11 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 include "lib/main.php";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.117  2004/01/27 23:25:50  rurban
+// added new tables to mysql schema
+// fixed default DBAUthParam samples to match these
+// added group constants (look terrible, I'd prefer strings instead of constants)
+//
 // Revision 1.116  2004/01/25 04:21:02  rurban
 // WikiUserNew support (temp. ENABLE_USER_NEW constant)
 //

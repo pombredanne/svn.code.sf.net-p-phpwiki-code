@@ -331,13 +331,13 @@ if (!defined('REQUIRE_SIGNIN_BEFORE_EDIT')) define('REQUIRE_SIGNIN_BEFORE_EDIT',
 
 // LDAP auth
 //if (!defined('ALLOW_LDAP_LOGIN')) define('ALLOW_LDAP_LOGIN', true and function_exists('ldap_connect'));
-//if (!defined('LDAP_AUTH_HOST'))   define('LDAP_AUTH_HOST', 'localhost');
+//if (!defined('LDAP_AUTH_HOST'))   define('LDAP_AUTH_HOST', 'localhost:443');
 // Give the right LDAP root search information in the next statement. 
 //if (!defined('LDAP_AUTH_SEARCH')) define('LDAP_AUTH_SEARCH', "ou=mycompany.com,o=My Company");
 
 // IMAP auth: check userid/passwords from a imap server, defaults to localhost
 //if (!defined('ALLOW_IMAP_LOGIN')) define('ALLOW_IMAP_LOGIN', true and function_exists('imap_open'));
-//if (!defined('IMAP_AUTH_HOST'))   define('IMAP_AUTH_HOST', 'localhost');
+//if (!defined('IMAP_AUTH_HOST'))   define('IMAP_AUTH_HOST', 'localhost:443');
 
 // Sample of external AuthDB mysql tables to check against
 /*

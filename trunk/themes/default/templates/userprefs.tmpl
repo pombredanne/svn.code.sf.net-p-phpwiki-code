@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.38 2003-12-04 19:21:10 carstenklapp Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.39 2004-01-28 14:34:15 rurban Exp $ -->
 <?php
 // Todo: Move the logic and code to the plugin
 // This is very experimental and the read-only part an ugly hack so far.
@@ -123,11 +123,11 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
 	      ) ?>
 <?php } ?>
 
-<?php /* if ($isForm and !$user->isAdmin()) { ?>
+<?php if ($isForm and !$user->isAdmin()) { ?>
   <h2><?=_("Change Password")?></h2>
      <input type="password" name="pref[passwd]" size="16" maxlength="16" class="text" value="" /> <?=_("New password")?>.<br />
      <input type="password" name="pref[passwd2]" size="16" maxlength="16" class="text" value="" /> <?=_("Type it again")?>.
-<?php } */?>
+<?php } ?>
 
   <h2><?=_("E-mail")?></h2>
   <p><?=_("Your E-Mail:")?>
