@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.88 2004-04-01 15:57:10 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.89 2004-04-10 02:30:49 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -134,6 +134,9 @@ extends _RecentChanges_Formatter
     }
 
     function pageLink ($rev, $link_text=false) {
+
+        return WikiLink($rev,'auto',$link_text);
+
         $page = $rev->getPage();
         global $Theme;
         if ($this->include_versions_in_URLs()) {
@@ -651,7 +654,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.88 $");
+                            "\$Revision: 1.89 $");
     }
 
     function managesValidators() {
@@ -836,6 +839,11 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.88  2004/04/01 15:57:10  rurban
+// simplified Sidebar theme: table, not absolute css positioning
+// added the new box methods.
+// remaining problems: large left margin, how to override _autosplitWikiWords in Template only
+//
 // Revision 1.87  2004/03/30 02:14:03  rurban
 // fixed yet another Prefs bug
 // added generic PearDb_iter

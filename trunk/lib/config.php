@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.92 2004-04-09 17:49:03 rurban Exp $');
+rcs_id('$Id: config.php,v 1.93 2004-04-10 02:30:49 rurban Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -9,9 +9,8 @@ rcs_id('$Id: config.php,v 1.92 2004-04-09 17:49:03 rurban Exp $');
 
 if (!defined("LC_ALL")) {
     // Backward compatibility (for PHP < 4.0.5)
-    // huh? I have LC_ALL = 0. Does old PHP really have this odd definition?
-    define("LC_ALL", "LC_ALL");
-    define("LC_CTYPE", "LC_CTYPE");
+    define("LC_ALL",   0);
+    define("LC_CTYPE", 2);
 }
 
 function isCGI() {
@@ -135,13 +134,13 @@ function guessing_setlocale ($category, $locale) {
     $alt = array('en' => array('C', 'en_US', 'en_GB', 'en_AU', 'en_CA', 'english'),
                  'de' => array('de_DE', 'de_DE', 'de_DE@euro', 
                                'de_AT@euro', 'de_AT', 'German_Austria.1252', 'deutsch', 
-                               'german', 'German', 'ge'),
+                               'german', 'ge'),
                  'es' => array('es_ES', 'es_MX', 'es_AR', 'spanish'),
                  'nl' => array('nl_NL', 'dutch'),
                  'fr' => array('fr_FR', 'français', 'french'),
                  'it' => array('it_IT'),
                  'sv' => array('sv_SE'),
-                 'ja' => array('ja_JP','ja_JP.eucJP')
+                 'ja' => array('ja_JP','ja_JP.eucJP','japanese.euc')
                  );
     if (strlen($locale) == 2)
         $lang = $locale;
@@ -175,15 +174,17 @@ function guessing_setlocale ($category, $locale) {
 function update_locale($loc) {
     $newlocale = guessing_setlocale(LC_ALL, $loc);
     if (!$newlocale) {
-        trigger_error(sprintf(_("Can't setlocale(LC_ALL,'%s')"), $loc), E_USER_NOTICE);
+        //trigger_error(sprintf(_("Can't setlocale(LC_ALL,'%s')"), $loc), E_USER_NOTICE);
         // => LC_COLLATE=C;LC_CTYPE=German_Austria.1252;LC_MONETARY=C;LC_NUMERIC=C;LC_TIME=C
-        $loc = setlocale(LC_CTYPE, '');  // pull locale from environment.
-        list ($loc,) = split('_', $loc, 2);
-        $GLOBALS['LANG'] = $loc;
-        return false;
+        //$loc = setlocale(LC_CTYPE, '');  // pull locale from environment.
+        $newlocale = FileFinder::_get_lang();
+        list ($newlocale,) = split('_', $newlocale, 2);
+        //$GLOBALS['LANG'] = $loc;
+        //$newlocale = $loc;
+        //return false;
     }
-
-    $GLOBALS['LANG'] = $loc;
+    if (substr($newlocale,0,2) == $loc) // don't update with C or failing setlocale
+        $GLOBALS['LANG'] = $loc;
     // Try to put new locale into environment (so any
     // programs we run will get the right locale.)
     //
@@ -191,8 +192,9 @@ function update_locale($loc) {
     // so hide errors...
     @putenv("LC_ALL=$newlocale");
     @putenv("LANG=$newlocale");
+    @putenv("LANGUAGE=$newlocale");
     
-    if (!function_exists ('bindtextdomain')) {
+    if (!function_exists ('bindtextdomain'))  {
         // Reinitialize translation array.
         global $locale;
         $locale = array();
@@ -220,10 +222,11 @@ function update_locale($loc) {
     //
     // FIXME: Not all environments may support en_US?  We should probably
     // have a list of locales to try.
-    if (setlocale(LC_CTYPE, 0) == 'C')
-        setlocale(LC_CTYPE, 'en_US.' . CHARSET );
-    else
-        setlocale(LC_CTYPE, $newlocale);
+    if (setlocale(LC_CTYPE, 0) == 'C') {
+        $x = setlocale(LC_CTYPE, 'en_US.' . CHARSET );
+    } else {
+        $x = setlocale(LC_CTYPE, $newlocale);
+    }
 
     return $newlocale;
 }
@@ -249,8 +252,20 @@ if (!function_exists ('bindtextdomain')) {
     }
 }
 else {
-    //update_locale (DEFAULT_LANGUAGE); // will fail with a failing gettext
-    bindtextdomain("phpwiki", FindFile("locale", false, true));
+    // Working around really weird gettext problems: (4.3.2, 4.3.6 win)
+    // bindtextdomain() returns the current domain path.
+    // 1. If the script is not index.php but something like "de", on a different path
+    //    then bindtextdomain() fails, but after chdir to the correct path it will work okay.
+    // 2. But the weird error "Undefined variable: bindtextdomain" is generated then.
+    $bindtextdomain_path = FindFile("locale", false, true);
+    if (isWindows())
+        $bindtextdomain_path = str_replace("/","\\",$bindtextdomain_path);
+    $bindtextdomain_real = @bindtextdomain("phpwiki", $bindtextdomain);
+    if ($bindtextdomain_real != $bindtextdomain_path) {
+        // this will happen with virtual_paths. chdir and try again.
+        chdir($bindtextdomain_path);
+        $bindtextdomain_real = @bindtextdomain("phpwiki", $bindtextdomain);
+    }
     textdomain("phpwiki");
 }
 

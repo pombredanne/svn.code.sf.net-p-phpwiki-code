@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.167 2004-04-02 15:06:55 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.168 2004-04-10 02:30:49 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -742,7 +742,7 @@ function split_pagename ($page) {
         $RE[] = "/(?<= |${sep}|^)([AI])([[:upper:]][[:lower:]])/";
         // Split numerals from following letters.
         $RE[] = '/(\d)([[:alpha:]])/';
-        //TODO: Split at subpage seperators
+        //TODO: Split at subpage seperators. TBD in Theme.php
         //$RE[] = "/(${sep})([^${sep}]+)/";
         
         foreach ($RE as $key)
@@ -1377,6 +1377,13 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.167  2004/04/02 15:06:55  rurban
+// fixed a nasty ADODB_mysql session update bug
+// improved UserPreferences layout (tabled hints)
+// fixed UserPreferences auth handling
+// improved auth stability
+// improved old cookie handling: fixed deletion of old cookies with paths
+//
 // Revision 1.166  2004/04/01 15:57:10  rurban
 // simplified Sidebar theme: table, not absolute css positioning
 // added the new box methods.

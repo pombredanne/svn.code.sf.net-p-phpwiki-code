@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.14 2003-09-20 00:02:12 carstenklapp Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.15 2004-04-10 02:30:49 rurban Exp $');
 
 require_once('lib/stdlib.php');
 
@@ -247,7 +247,7 @@ class FileFinder
             return $GLOBALS['LANG'];
 
         foreach (array('LC_ALL', 'LC_MESSAGES', 'LC_RESPONSES') as $var) {
-            $lang = setlocale($var, 0);
+            $lang = setlocale(constant($var), 0);
             if (!empty($lang))
                 return $lang;
         }
