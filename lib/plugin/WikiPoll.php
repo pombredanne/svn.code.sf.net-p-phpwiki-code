@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiPoll.php,v 1.4 2004-02-26 01:42:27 rurban Exp $');
+rcs_id('$Id: WikiPoll.php,v 1.5 2004-03-01 16:11:13 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
@@ -65,7 +65,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -153,7 +153,7 @@ extends WikiPlugin
         $poll = $page->get("poll");
         $ip = $_SERVER['REMOTE_ADDR'];
         $disable_submit = false;
-        if (isset($poll['ip'][$ip]) and ((time() - $poll['ip'][$ip]) < 20*60)) {
+        if (0 and isset($poll['ip'][$ip]) and ((time() - $poll['ip'][$ip]) < 20*60)) {
             //view at least the result or disable the Go button
             $html = HTML(HTML::strong(
                         _("Sorry! You must wait at least 20 minutes until you can vote again!")));
@@ -229,6 +229,18 @@ extends WikiPlugin
         return $html;
     }
 
+    function bar($percent) {
+        global $Theme;
+        return HTML(HTML::img(array('src' => $Theme->getImageUrl('leftbar'),
+                                    'alt' => '<')),
+                    HTML::img(array('src' => $Theme->getImageUrl('mainbar'),
+                                    'alt' => '-',
+                                    'width' => sprintf("%02d",$percent),
+                                    'height' => 14)),
+                    HTML::img(array('src' => $Theme->getImageUrl('rightbar'),
+                                    'alt' => '>')));
+    }
+
     function doPoll($page, $request, $answers, $readonly = false) {
     	$question = $this->_args['question'];
     	$answer   = $this->_args['answer'];
@@ -245,38 +257,41 @@ extends WikiPlugin
             if (!$readonly)
                 $page->set('poll',$poll);
             $a = $answer[$i];
+            $result = (isset($answers[$i])) ? $answers[$i] : -1;
             if (! is_array($a) ) {
                 $checkbox = HTML::input(array('type' => 'checkbox',
                                               'name' => "answer[$i]",
                                               'value' => $a));
-                if ($answers[$i])
+                if ($result >= 0)
                     $checkbox->setAttr('checked',1);
 	        if (!$readonly)
-                    list($percent,$count,$all) = $this->storeResult(&$page, $i, $answers[$i] ? 1 : 0);
+                    list($percent,$count,$all) = $this->storeResult(&$page, $i, $result ? 1 : 0);
                 else 
                     list($percent,$count,$all) = $this->getResult(&$page, $i, 1);
-                $result = sprintf(_("  %d%% selected this (%d/%d)"),$percent,$count,$all);
-                $html->pushContent(HTML::tr(HTML::th(array('colspan' => 3,'align'=>'left'),$q)));
+                $print = sprintf(_("  %d%% (%d/%d)"),$percent,$count,$all);
+                $html->pushContent(HTML::tr(HTML::th(array('colspan' => 4,'align'=>'left'),$q)));
                 $html->pushContent(HTML::tr(HTML::td($checkbox),
                                             HTML::td($a),
-                                            HTML::td($result)));
+                       		            HTML::td($this->bar($percent)),
+                                            HTML::td($print)));
             } else {
-                $html->pushContent(HTML::tr(HTML::th(array('colspan' => 3,'align'=>'left'),$q)));
+                $html->pushContent(HTML::tr(HTML::th(array('colspan' => 4,'align'=>'left'),$q)));
                 $row = HTML();
                 if (!$readonly)
                     $this->storeResult(&$page,$i,$answers[$i]);
                 for ($j=0; $j <= count($a); $j++) {
                     if (isset($a[$j])) {
                     	list($percent,$count,$all) = $this->getResult(&$page,$i,$j);
-                        $result = sprintf(_("  %d%% selected this (%d/%d)"),$percent,$count,$all);
+                        $print = sprintf(_("  %d%% (%d/%d)"),$percent,$count,$all);
                         $radio = HTML::input(array('type' => 'radio',
                                                    'name' => "answer[$i]",
                                                    'value' => $j));
-                        if ($answers[$i] == $j)
+                        if ($result == $j)
                             $radio->setAttr('checked',1);
                         $row->pushContent(HTML::tr(HTML::td($radio),
                         		           HTML::td($a[$j]),
-                                                   HTML::td($result)));
+                        		           HTML::td($this->bar($percent)),
+                                                   HTML::td($print)));
                     }
                 }
                 $html->pushContent($row);
@@ -313,6 +328,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/02/26 01:42:27  rurban
+// don't cache this at all
+//
 // Revision 1.3  2004/02/24 03:54:46  rurban
 // lock page, more questions, new require_least arg
 //
