@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: CachedMarkup.php,v 1.10 2004-03-02 18:11:39 rurban Exp $');
+<?php rcs_id('$Id: CachedMarkup.php,v 1.11 2004-04-01 06:28:33 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -409,7 +409,21 @@ class Cached_InterwikiLink extends Cached_ExternalLink {
     }
 }
 
-
+// Needed to put UserPages to backlinks. Special method to markup userpages with icons
+// Thanks to PhpWiki:DanFr for finding this bug. 
+// Fixed since 1.3.8, prev. versions had no userpages in backlinks
+class Cached_UserLink extends Cached_WikiLink {
+    function expand($basepage, &$markup) {
+        $label = isset($this->_label) ? $this->_label : false;
+	$anchor = isset($this->_anchor) ? (string)$this->_anchor : '';
+        $page = new WikiPageName($this->_page, $basepage, $anchor);
+	$link = WikiLink($page, 'auto', $label);
+        // $link = HTML::a(array('href' => $PageName));
+        $link->setContent(PossiblyGlueIconToText('wikiuser', $this->_page));
+        $link->setAttr('class', 'wikiuser');
+        return $link;
+    }
+}
 
 class Cached_PluginInvocation extends Cached_DynamicContent {
     function Cached_PluginInvocation ($pi) {
