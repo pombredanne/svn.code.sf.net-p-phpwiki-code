@@ -1,5 +1,5 @@
 /**
- * $Id: WikiTrek.css,v 1.7 2002-01-16 20:04:04 carstenklapp Exp $
+ * $Id: WikiTrek.css,v 1.8 2002-01-17 20:34:53 dairiki Exp $
  *
  * This PhpWiki theme is experimental and will likely not appear as
  * part of any release. ("accessories not included"--download
@@ -30,7 +30,7 @@ body {
 /* the background image url is relative to this file's directory */
         color :             #fff;
         background-color :  #000;
-        background-image :  url("starfield.png");
+        background-image :  url(images/starfield.png);
         background-repeat : repeat;
         font-size :         larger;
 }
