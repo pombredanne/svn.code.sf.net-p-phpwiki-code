@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.12 2002-01-10 06:40:31 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.13 2002-01-13 02:42:03 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -101,9 +101,9 @@ $URL_LINK_ICONS = array(
                         'http'      => "images/http.png",
                         'https'     => "images/https.png",
                         'ftp'       => "images/ftp.png",
-                        'mailto'    => "images/mailto.png",
+                        'mailto'    => "themes/$theme/mailto.png",
                         'interwiki' => "images/interwiki.png",
-                        '*'         => "images/zapg.png"
+                        '*'         => "images/url.png"
                         );
 
 $ToolbarImages = array(
