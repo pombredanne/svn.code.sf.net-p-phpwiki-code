@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPage.php,v 1.1 2001-12-02 02:31:17 joe_edelman Exp $');
+rcs_id('$Id: UserPage.php,v 1.2 2001-12-21 00:50:51 rurban Exp $');
 /**
  * UserPage:  a clone of the clublet sign-in facility
  * usage:   <?plugin UserPage?>
@@ -56,13 +56,13 @@ extends WikiPlugin
                 $wst = LinkWikiWord('WordsStrungTogether');
                 $text .= "<p> Please enter your name as $wst (e.g. John Smith as JohnSmith).";
             }
-            $text .= "<p><form>Sign in: <input type=text name=uname>";
+            $text .= '<p><form>Sign in: <input type="text" name="uname">';
             foreach (array('edit', 'browse') as $k) 
                 if ($$k) {
                     $v = $$k;
-                    $text .= "<input type=hidden name=$k value=$v>";
+                    $text .= "<input type=\"hidden\" name=\"$k\" value=\"$v\">";
                 }
-            $text .= '<input type=submit value="Sign In">';
+            $text .= '<input type="submit" value="Sign In">';
             $text .= "</form>";
             return $text;
 
