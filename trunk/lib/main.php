@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.173 2004-07-05 12:57:54 rurban Exp $');
+rcs_id('$Id: main.php,v 1.174 2004-07-08 13:50:32 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -1069,10 +1069,15 @@ if (defined('WIKI_SOAP')   and WIKI_SOAP)   return;
 
 $x = error_reporting(); // why is it 1 here? should be E_ALL
 error_reporting(E_ALL);
-main();
+// don't run the main loop for special requests (test, getimg, xmlrpc, soap, ...)
+if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
+    main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.173  2004/07/05 12:57:54  rurban
+// add mysql timeout
+//
 // Revision 1.172  2004/07/03 08:04:19  rurban
 // fixed implicit PersonalPage login (e.g. on edit), fixed to check against create ACL on create, not edit
 //

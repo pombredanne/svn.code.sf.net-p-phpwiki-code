@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: file.php,v 1.11 2004-07-08 11:12:49 rurban Exp $');
+rcs_id('$Id: file.php,v 1.12 2004-07-08 13:50:32 rurban Exp $');
 
 /**
  Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
@@ -60,6 +60,8 @@ extends WikiDB_backend
     function WikiDB_backend_file( $dbparam )
     {
         $this->data_dir = $dbparam['directory'];
+        if (file_exists($this->data_dir) and is_file($this->data_dir))
+        	unlink($this->data_dir);
         if (is_dir($this->data_dir) == false) {
             mkdir($this->data_dir, 0755);
         }
@@ -71,6 +73,8 @@ extends WikiDB_backend
                     'links'        => $this->data_dir.'/'.'links' );
 
         foreach ($this->_dir_names as $key => $val) {
+        	if (file_exists($val) and is_file($val))
+        	    unlink($val);
             if (is_dir($val) == false)
                 mkdir($val, 0755);
         }
@@ -776,6 +780,9 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/07/08 11:12:49  rurban
+// quiet the testruns
+//
 // Revision 1.10  2004/06/03 22:08:17  rurban
 // fix bug #963268 (check existing previous version)
 //
