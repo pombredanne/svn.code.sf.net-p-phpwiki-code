@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.30 2004-06-03 09:39:51 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.31 2004-06-03 18:06:29 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -786,7 +786,7 @@ class GroupFile extends WikiGroup {
             return false;
         }
         require_once('lib/pear/File_Passwd.php');
-        $this->_file = new File_Passwd(AUTH_GROUP_FILE,true);
+        $this->_file = new File_Passwd(AUTH_GROUP_FILE,false,AUTH_GROUP_FILE.".lock");
     }
 
     /**
@@ -1014,6 +1014,9 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.30  2004/06/03 09:39:51  rurban
+// fix LDAP injection (wildcard in username) detected by Steve Christey, MITRE
+//
 // Revision 1.29  2004/05/16 22:07:35  rurban
 // check more config-default and predefined constants
 // various PagePerm fixes:

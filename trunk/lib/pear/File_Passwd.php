@@ -16,7 +16,7 @@
 // | Author: Rasmus Lerdorf <rasmus@php.net>                              |
 // +----------------------------------------------------------------------+
 //
-// $Id: File_Passwd.php,v 1.8 2004-06-03 10:18:20 rurban Exp $
+// $Id: File_Passwd.php,v 1.9 2004-06-03 18:06:29 rurban Exp $
 //
 // Manipulate standard UNIX passwd,.htpasswd and CVS pserver passwd files
 
@@ -91,7 +91,7 @@ class File_Passwd {
         if ($lock) {
             //check if already locked, on some error or race condition or other user.
             //FIXME: implement timeout as with dba
-            if (file_exists($this->lockfile)) {
+            if (!empty($this->lockfile) and file_exists($this->lockfile)) {
             	if (isset($GLOBALS['HTTP_GET_VARS']['force_unlock'])) {
             	    $this->fplock = fopen($this->lockfile, 'w');
             	    flock($this->fplock, LOCK_UN);

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.85 2004-06-03 12:46:03 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.86 2004-06-03 18:06:29 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -2161,7 +2161,7 @@ extends _PassUser
         include_once(dirname(__FILE__)."/pear/File_Passwd.php"); // same style as in main.php
         // "__PHP_Incomplete_Class"
         if (!empty($file) or empty($this->_file) or !isa($this->_file,"File_Passwd"))
-            $this->_file = new File_Passwd($file, false);
+            $this->_file = new File_Passwd($file, false, $file.'.lock');
         else
             return false;
         return $this;
@@ -2920,11 +2920,14 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.85  2004/06/03 12:46:03  rurban
+// fix signout, level must be 0 not -1
+//
 // Revision 1.84  2004/06/03 12:36:03  rurban
 // fix eval warning on signin
 //
 // Revision 1.83  2004/06/03 10:18:19  rurban
-// fix FileUser locking issues, new config ENABLE_PAGEPERM
+// fix User locking issues, new config ENABLE_PAGEPERM
 //
 // Revision 1.82  2004/06/03 09:39:51  rurban
 // fix LDAP injection (wildcard in username) detected by Steve Christey, MITRE

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.70 2004-06-02 20:47:47 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.71 2004-06-03 18:06:29 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -117,31 +117,59 @@ class PageEditor
             $tokens['PREVIEW_CONTENT'] = $this->getPreview(); // FIXME: convert to _MESSAGE?
 
         // FIXME: NOT_CURRENT_MESSAGE?
-
         $tokens = array_merge($tokens, $this->getFormElements());
 
-        // TODO: add this to the EDIT_TOOLBAR
+        //FIXME: enable Undo button for all other buttons also, not only the search/replace button
         if (defined('JS_SEARCHREPLACE') and JS_SEARCHREPLACE) {
             $tokens['JS_SEARCHREPLACE'] = 1;
+            $undo_btn = $GLOBALS['Theme']->getImageURL("ed_undo.gif"); 
+            $undo_d_btn = $GLOBALS['Theme']->getImageURL("ed_undo_d.gif"); 
+            // JS_SEARCHREPLACE from walterzorn.de
             $GLOBALS['Theme']->addMoreHeaders(Javascript("
-var wart=0, d, f, x='', replacewin, pretxt=new Array(), pretxt_anzahl=0;
-var fag='<font face=\"arial,helvetica,sans-serif\" size=\"-1\">', fr='<font color=\"#cc0000\">', spn='<span class=\"grey\">';
+var f, sr_undo, replacewin, undo_buffer=new Array(), undo_buffer_index=0;
 
 function define_f() {
    f=document.getElementById('editpage');
    f.editarea=document.getElementById('edit[content]');
-   if(f.rck.style) f.rck.style.color='#ececec';
+   sr_undo=document.getElementById('sr_undo');
+   undo_enable(false);
    f.editarea.focus();
+}
+function undo_enable(bool) {
+   if (bool) {
+     sr_undo.src='".$undo_btn."';
+     sr_undo.alt='"
+._("Undo")
+."';
+     sr_undo.disabled = false;
+   } else {
+     sr_undo.src='".$undo_d_btn."';
+     sr_undo.alt='"
+._("Undo disabled")
+."';
+     sr_undo.disabled = true;
+     if(sr_undo.blur) sr_undo.blur();
+  }
 }
 
 function replace() {
    replacewin=window.open('','','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,copyhistory=no,height=90,width=450');
-   replacewin.window.document.write('<html><head><title>"._("Search & Replace")."</title><style type=\"text/css\"><'+'!'+'-- input.btt {font-family:Tahoma,Verdana,Geneva,sans-serif;font-size:10pt} --'+'></style></head><body bgcolor=\"#dddddd\" onload=\"if(document.forms[0].ein.focus) document.forms[0].ein.focus()\"><form><center><table><tr><td align=\"right\">'+fag+'"._("Search").":</font></td><td align=\"left\"><input type=\"text\" name=\"ein\" size=\"50\" maxlength=\"500\"></td></tr><tr><td align=\"right\">'+fag+' "._("Replace with").":</font></td><td align=\"left\"><input type=\"text\" name=\"aus\" size=\"50\" maxlength=\"500\"></td></tr><tr><td colspan=\"2\" align=\"center\"><input class=\"btt\" type=\"button\" value=\" "._("OK")." \" onclick=\"self.opener.do_replace()\">&nbsp;&nbsp;&nbsp;<input class=\"btt\" type=\"button\" value=\""._("Close")."\" onclick=\"self.close()\"></td></tr></table></center></form></body></html>');
+   replacewin.window.document.write('<html><head><title>"
+._("Search & Replace")
+."</title><style type=\"text/css\"><'+'!'+'-- body, input {font-family:Tahoma,Arial,Helvetica,sans-serif;font-size:10pt;font-weight:bold;} td {font-size:9pt}  --'+'></style></head><body bgcolor=\"#dddddd\" onload=\"if(document.forms[0].ein.focus) document.forms[0].ein.focus()\"><form><center><table><tr><td align=\"right\">'+'"
+._("Search")
+.":</td><td align=\"left\"><input type=\"text\" name=\"ein\" size=\"45\" maxlength=\"500\"></td></tr><tr><td align=\"right\">'+' "
+._("Replace with")
+.":</td><td align=\"left\"><input type=\"text\" name=\"aus\" size=\"45\" maxlength=\"500\"></td></tr><tr><td colspan=\"2\" align=\"center\"><input type=\"button\" value=\" "
+._("OK")
+." \" onclick=\"self.opener.do_replace()\">&nbsp;&nbsp;&nbsp;<input type=\"button\" value=\""
+._("Close")
+."\" onclick=\"self.close()\"></td></tr></table></center></form></body></html>');
    replacewin.window.document.close();
 }
 
 function do_replace() {
-   var txt=pretxt[pretxt_anzahl]=f.editarea.value, ein=new RegExp(replacewin.document.forms[0].ein.value,'g'), aus=replacewin.document.forms[0].aus.value;
+   var txt=undo_buffer[undo_buffer_index]=f.editarea.value, ein=new RegExp(replacewin.document.forms[0].ein.value,'g'), aus=replacewin.document.forms[0].aus.value;
    if(ein==''||ein==null) {
       replacewin.window.document.forms[0].ein.focus();
       return;
@@ -154,38 +182,31 @@ function do_replace() {
    replacewin.window.document.forms[0].ein.focus();
 }
 function result(zahl,frage,txt,alert_txt) {
-   if(wart!=0&&wart.window) {
-      wart.window.close();
-      wart=0;
-   }
    if(zahl>0) {
       if(window.confirm(frage)==true) {
          f.editarea.value=txt;
-         pretxt_anzahl++;
-         if(f.rck.style) f.rck.style.color='#000000';
-         f.rck.value='"._("Undo")."';
+         undo_buffer_index++;
+         undo_enable(true);
       }
    } else alert(alert_txt);
 }
-function rueck() {
-   if(pretxt_anzahl==0) return;
-   else if(pretxt_anzahl>0) {
-      f.editarea.value=pretxt[pretxt_anzahl-1];
-      pretxt[pretxt_anzahl]=null;
-      pretxt_anzahl--;
-      if(pretxt_anzahl==0) {
+function do_undo() {
+   if(undo_buffer_index==0) return;
+   else if(undo_buffer_index>0) {
+      f.editarea.value=undo_buffer[undo_buffer_index-1];
+      undo_buffer[undo_buffer_index]=null;
+      undo_buffer_index--;
+      if(undo_buffer_index==0) {
          alert('Operation undone.');
-         if(f.rck.style) f.rck.style.color='#ececec';
-         f.rck.value='("._("Undo").")';
-         if(f.rck.blur) f.rck.blur();
+         undo_enable(false);
       }
    }
 }
+//save a snapshot in the undo buffer (unused)
 function speich() {
-   pretxt[pretxt_anzahl]=f.editarea.value;
-   pretxt_anzahl++;
-   if(f.rck.style) f.rck.style.color='#000000';
-   f.rck.value='"._("Undo")."';
+   undo_buffer[undo_buffer_index]=f.editarea.value;
+   undo_buffer_index++;
+   undo_enable(true);
 }
 "));
             $GLOBALS['Theme']->addMoreAttr('body'," onload='define_f()'");
@@ -254,10 +275,10 @@ function speich() {
                            );
         $toolbar = "document.writeln(\"<div class=\\\"edit-toolbar\\\" id=\\\"toolbar\\\">\");\n";
 
-        $btn = new SubmitImageButton(_("Save"), "edit[save]", '', $Theme->getImageURL("ed_save.gif"));
+        $btn = new SubmitImageButton(_("Save"), "edit[save]", 'toolbar', $Theme->getImageURL("ed_save.gif"));
         $btn->addTooltip(_("Save"));
         $toolbar.='document.writeln("'.addslashes($btn->asXml()).'");'."\n";
-        $btn = new SubmitImageButton(_("Preview"), "edit[preview]", '', $Theme->getImageURL("ed_preview.gif"));
+        $btn = new SubmitImageButton(_("Preview"), "edit[preview]", 'toolbar', $Theme->getImageURL("ed_preview.gif"));
         $btn->addTooltip(_("Preview"));
         $toolbar.='document.writeln("'.addslashes($btn->asXml()).'");'."\n";
 
@@ -275,14 +296,19 @@ function speich() {
         }
         $toolbar.="addInfobox('" . addslashes( _("Click a button to get an example text") ) . "');\n";
         if (defined('JS_SEARCHREPLACE') and JS_SEARCHREPLACE) {
-            $undo_btn = $Theme->getImageURL("ed_undo.gif"); 
-            $redo_btn = $Theme->getImageURL("ed_redo.gif");
+            //$undo_btn = $GLOBALS['Theme']->getImageURL("ed_undo.gif"); 
+            $undo_d_btn = $GLOBALS['Theme']->getImageURL("ed_undo_d.gif"); 
+            //$redo_btn = $Theme->getImageURL("ed_redo.gif");
             $sr_btn   = $Theme->getImageURL("ed_replace.gif");
-            $sr_js = '<input name="rck" type="image" src="'.$undo_btn.'" title="'._("Undo Search & Replace").'" onfocus="if(this.blur && pretxt_anzahl==0) this.blur()" onclick="rueck()">'
-                . '<input type="image" src="'.$redo_btn.'" title="'._("Redo").'" onclick="speich()">'
-                . '<input type="image" src="'.$sr_btn.'" title="'._("Search & Replace").'" onclick="replace()">';
+            $sr_js = '<input type="image" class="toolbar" id="sr_undo" src="'.$undo_d_btn.'" title="'._("Undo Search & Replace").'" disabled="disabled" value="Undo" onfocus="if(this.blur && undo_buffer_index==0) this.blur()" onclick="do_undo()">'
+                // . '<input type="image" class="toolbar" src="'.$redo_btn.'" title="'._("Snap").'" onclick="speich()">'
+                . '<input type="image" class="toolbar" src="'.$sr_btn.'" title="'._("Search & Replace").'" onclick="replace()">';
             $toolbar.='document.writeln("'.addslashes($sr_js).'");'."\n";
         }
+        // More:
+        // Button to generate pagenames, display in extra window as pulldown and insert
+        // Button to generate plugins, display in extra window as pulldown and insert
+        // Button to generate categories, display in extra window as pulldown and insert
         $toolbar.="document.writeln(\"</div>\");";
         return Javascript($toolbar);
     }
@@ -504,14 +530,19 @@ function speich() {
             $this->_wikicontent = $this->_content;
             $this->_content = $html->asXML();
         }
+
+        /** <textarea wrap="virtual"> is not valid xhtml but Netscape 4 requires it
+         * to wrap long lines.
+         */
         $textarea = HTML::textarea(array('class' => 'wikiedit',
                                          'name' => 'edit[content]',
                                          'id'   => 'edit[content]',
                                          'rows' => $request->getPref('editHeight'),
                                          'cols' => $request->getPref('editWidth'),
-                                         'readonly' => (bool) $readonly,
-                                         'wrap' => 'virtual'),
+                                         'readonly' => (bool) $readonly),
                                    $this->_content);
+        if (isBrowserNS4())
+            $textarea->setAttr('wrap','virtual');
         if (USE_HTMLAREA)
             return Edit_HtmlArea_Textarea($textarea,$this->_wikicontent,'edit[content]');
         else
@@ -530,10 +561,7 @@ function speich() {
                    'edit[current_version]' => $this->_currentVersion);
 
         $el['HIDDEN_INPUTS'] = HiddenInputs($h);
-
-
         $el['EDIT_TEXTAREA'] = $this->getTextArea();
-
         $el['SUMMARY_INPUT']
             = HTML::input(array('type'  => 'text',
                                 'class' => 'wikitext',
@@ -734,6 +762,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.70  2004/06/02 20:47:47  rurban
+ dont use the wikiaction class
+
  Revision 1.69  2004/06/02 10:17:56  rurban
  integrated search/replace into toolbar
  added save+preview buttons
