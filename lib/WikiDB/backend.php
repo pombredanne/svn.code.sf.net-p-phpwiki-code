@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.14 2004-11-23 15:17:19 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.15 2004-11-25 17:20:51 rurban Exp $');
 
 /*
   Pagedata
@@ -245,7 +245,8 @@ class WikiDB_backend
      * FIXME: array or iterator?
      * @return object A WikiDB_backend_iterator.
      */
-    function get_links($pagename, $reversed) {
+    function get_links($pagename, $reversed, $include_empty=false,
+                       $sortby=false, $limit=false, $exclude=false) {
         //FIXME: implement simple (but slow) link finder.
         die("FIXME");
     }

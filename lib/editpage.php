@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.79 2004-11-21 11:59:20 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.80 2004-11-25 17:20:51 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -328,7 +328,9 @@ function undo_save() {
             //TODO: delegate this calculation to a seperate pulldown action request
             require_once('lib/TextSearchQuery.php');
             $dbi =& $GLOBALS['request']->_dbi;
-            $pages = $dbi->titleSearch(new TextSearchQuery(''._("Category").' OR '._("Topic").''));
+            $pages = $dbi->titleSearch(new TextSearchQuery(''.
+                                                           _("Category").' OR '.
+                                                           _("Topic").''));
             if ($pages->count()) {
                 $categories = array();
                 while ($p = $pages->next()){
@@ -336,9 +338,9 @@ function undo_save() {
                 }
                 $more_buttons = HTML::img(array('class'=>"toolbar",
                                                 'src'  => $WikiTheme->getImageURL("ed_category.gif"),
-                                                'title'=>_("Categories"),
+                                                'title'=>_("AddCategory"),
                                                 'onclick'=>"showPulldown('".
-                                                _("Categories")
+                                                _("Insert Categories double-click")
                                                 ."',['".join("','",$categories)."'])"));
                 if ($sr_html) $sr_html = HTML($sr_html, $more_buttons);
                 else $sr_html = $more_buttons;
@@ -803,6 +805,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.79  2004/11/21 11:59:20  rurban
+ remove final \n to be ob_cache independent
+
  Revision 1.78  2004/11/16 17:57:45  rurban
  fix search&replace button
  use new addTagButton machinery

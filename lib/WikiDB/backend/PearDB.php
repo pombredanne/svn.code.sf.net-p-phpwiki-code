@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.71 2004-11-23 13:35:48 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.72 2004-11-25 17:20:51 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -470,7 +470,8 @@ extends WikiDB_backend
     /**
      * Find pages which link to or are linked from a page.
      */
-    function get_links($pagename, $reversed=true, $include_empty=false) {
+    function get_links($pagename, $reversed=true, $include_empty=false,
+                       $sortby=false, $limit=false, $exclude='') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
 
@@ -478,30 +479,47 @@ extends WikiDB_backend
             list($have,$want) = array('linkee', 'linker');
         else
             list($have,$want) = array('linker', 'linkee');
-        
+        $orderby = $this->sortby($sortby, 'db', array('pagename'));
+        if ($orderby) $orderby = ' ORDER BY $want.' . $orderby;
+        if ($exclude) // array of pagenames
+            $exclude = " AND $want.pagename NOT IN ".$this->_sql_set($exclude);
+        else 
+            $exclude='';
+
         $qpagename = $dbh->escapeSimple($pagename);
-        $result = $dbh->query("SELECT $want.id as id, $want.pagename as pagename, $want.hits as hits"
-                               // Looks like 'AS' in column alias is a MySQL thing, Oracle does not like it
-                               // and the PostgresSQL manual does not have it either
-                               // Since it is optional in mySQL, just remove it...
-                              . " FROM $link_tbl, $page_tbl linker, $page_tbl linkee"
-                              . (!$include_empty ? ", $nonempty_tbl" : '')
-                              . " WHERE linkfrom=linker.id AND linkto=linkee.id"
-                              . "  AND $have.pagename='$qpagename'"
-                              . (!$include_empty ? " AND $nonempty_tbl.id=$want.id" : "")
-                              //. " GROUP BY $want.id"
-                              . " ORDER BY $want.pagename");
+        $sql = "SELECT $want.id as id, $want.pagename as pagename, $want.hits as hits"
+            // Looks like 'AS' in column alias is a MySQL thing, Oracle does not like it
+            // and the PostgresSQL manual does not have it either
+            // Since it is optional in mySQL, just remove it...
+            . " FROM $link_tbl, $page_tbl linker, $page_tbl linkee"
+            . (!$include_empty ? ", $nonempty_tbl" : '')
+            . " WHERE linkfrom=linker.id AND linkto=linkee.id"
+            . "  AND $have.pagename='$qpagename'"
+            . (!$include_empty ? " AND $nonempty_tbl.id=$want.id" : "")
+            //. " GROUP BY $want.id"
+            . $exclude
+            . $orderby;
+        if ($limit) {
+            // extract from,count from limit
+            list($from,$count) = $this->limit($limit);
+            $result = $dbh->limitQuery($sql, $from, $count);
+        } else {
+            $result = $dbh->query($sql);
+        }
         
         return new WikiDB_backend_PearDB_iter($this, $result);
     }
 
-    function get_all_pages($include_empty=false, $sortby=false, $limit=false, $exclude=false) {
+    function get_all_pages($include_empty=false, $sortby=false, $limit=false, $exclude='') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $orderby = $this->sortby($sortby, 'db');
-        if ($orderby) $orderby = 'ORDER BY ' . $orderby;
+        if ($orderby) $orderby = ' ORDER BY ' . $orderby;
         if ($exclude) // array of pagenames
             $exclude = " AND $page_tbl.pagename NOT IN ".$this->_sql_set($exclude);
+        else 
+            $exclude='';
+
         if (strstr($orderby, 'mtime ')) { // multiple columns possible
             if ($include_empty) {
                 $sql = "SELECT "
@@ -509,7 +527,8 @@ extends WikiDB_backend
                     . " FROM $page_tbl, $recent_tbl, $version_tbl"
                     . " WHERE $page_tbl.id=$recent_tbl.id"
                     . " AND $page_tbl.id=$version_tbl.id AND latestversion=version"
-                    . " $orderby";
+                    . $exclude
+                    . $orderby;
             }
             else {
                 $sql = "SELECT "
@@ -518,20 +537,24 @@ extends WikiDB_backend
                     . " WHERE $nonempty_tbl.id=$page_tbl.id"
                     . " AND $page_tbl.id=$recent_tbl.id"
                     . " AND $page_tbl.id=$version_tbl.id AND latestversion=version"
-                    . " $orderby";
+                    . $exclude
+                    . $orderby;
             }
         } else {
             if ($include_empty) {
                 $sql = "SELECT "
                     . $this->page_tbl_fields 
-                    ." FROM $page_tbl $orderby";
+                    ." FROM $page_tbl"
+                    . $exclude ? " WHERE $exclude" : ''
+                    . $orderby;
             }
             else {
                 $sql = "SELECT "
                     . $this->page_tbl_fields
                     . " FROM $nonempty_tbl, $page_tbl"
                     . " WHERE $nonempty_tbl.id=$page_tbl.id"
-                    . " $orderby";
+                    . $exclude
+                    . $orderby;
             }
         }
         if ($limit) {
@@ -1094,6 +1117,9 @@ extends WikiDB_backend_PearDB_generic_iter
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.71  2004/11/23 13:35:48  rurban
+// add case_exact search
+//
 // Revision 1.70  2004/11/21 11:59:26  rurban
 // remove final \n to be ob_cache independent
 //

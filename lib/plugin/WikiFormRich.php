@@ -1,6 +1,6 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiFormRich.php,v 1.13 2004-11-25 12:04:17 rurban Exp $');
-/**
+rcs_id('$Id: WikiFormRich.php,v 1.14 2004-11-25 17:20:52 rurban Exp $');
+/*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
@@ -32,43 +32,52 @@ rcs_id('$Id: WikiFormRich.php,v 1.13 2004-11-25 12:04:17 rurban Exp $');
  * - hidden[]		name=.. value=..
  * - submit[]
  * - action, submit buttontext, optional cancel button (bool)
- * - method=GET or POST, Default: POST.
+ * - method=get or post, Default: post.
  
- * values which are constants are evaluated.
- * The cancel button must be supported by the action. (which?)
- * improve layout: nobr=1, class=wikiadmin
- * added pulldown, values from <!plugin-list !>
+ * @Author: Reini Urban
+
+ * Values which are constants are evaluated.
+ * The cancel button must be supported by the action. 
+ *   (just some wikiadmin actions so far)
+ * improve layout by: nobr=1
+ * some allow values as list from from <!plugin-list !>
 
  Samples:
-   <?plugin WikiFormRich action=dumpserial method=GET 
+   <?plugin WikiFormRich action=dumpserial method=get 
             checkbox[] name=include value="all" 
             editbox[] name=directory value=DEFAULT_DUMP_DIR
             editbox[] name=pages value=*
             editbox[] name=exclude value="" ?>
-   <?plugin WikiFormRich action=dumphtml method=GET 
+   <?plugin WikiFormRich action=dumphtml method=get 
             editbox[] name=directory value=HTML_DUMP_DIR
             editbox[] name=pages value="*"
             editbox[] name=exclude value="" ?>
-   <?plugin WikiFormRich action=loadfile method=GET 
+   <?plugin WikiFormRich action=loadfile method=get 
             editbox[]  name=source value=DEFAULT_WIKI_PGSRC
             checkbox[] name=overwrite value=1
             editbox[]  name=exclude value="" ?>
-  <?plugin WikiFormRich action=TitleSearch method=GET class=wikiadmin nobr=1
+  <?plugin WikiFormRich action=TitleSearch method=get class=wikiadmin nobr=1
   	   editbox[] name=s text=""
-  	   checkbox[] name=case_exact
-  	  checkbox[] name=regex ?>
-  <?plugin WikiFormRich action=FullTextSearch method=GET class=wikiadmin nobr=1
-  	   editbox[] name=s text=""
+           submit[]
   	   checkbox[] name=case_exact
   	   checkbox[] name=regex ?>
-  <?plugin WikiFormRich action=FuzzyPages method=GET class=wikiadmin nobr=1
+  <?plugin WikiFormRich action=FullTextSearch method=get class=wikiadmin nobr=1
   	   editbox[] name=s text=""
+           submit[]
+  	   checkbox[] name=case_exact
+  	   checkbox[] name=regex ?>
+  <?plugin WikiFormRich action=FuzzyPages method=get class=wikiadmin nobr=1
+  	   editbox[] name=s text=""
+           submit[]
   	   checkbox[] name=case_exact ?>
   <?plugin WikiFormRich action=AppendText buttontext="AddPlugin"
-  	   pulldown[] name=text text="Plugins: " value=<!plugin-list BackLinks page=WikiPlugin !>
+  	   radio[] name=s value=<!plugin-list BackLinks page=WikiPlugin limit=10 !>
+  	   ?>
+  <?plugin WikiFormRich action=AppendText buttontext="AddPlugin"
+  	   pulldown[] name=s text="Plugins: " value=<!plugin-list BackLinks page=WikiPlugin !>
   	   ?>
   <?plugin WikiFormRich action=AppendText buttontext="AddCategory"
-  	   pulldown[] name=text text="Categories: " value=<!plugin-list TitleSearch s=Category !>
+  	   pulldown[] name=s text="Categories: " value=<!plugin-list TitleSearch s=Category !>
   	   ?>
 */
 
@@ -83,11 +92,11 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.13 $");
+                            "\$Revision: 1.14 $");
     }
     function getDefaultArguments() {
         return array('action' => false,     // required argument
-                     'method' => 'POST',    // or GET
+                     'method' => 'post',    // or get
                      'class'  => 'wikiaction',
                      'buttontext' => false, // for the submit button. default: action
                      'cancel' => false,     // boolean if the action supports cancel also
@@ -111,7 +120,8 @@ extends WikiPlugin
                 $this->inputbox[][$name] = array(); $j = count($this->inputbox) - 1;
                 $curargs = trim($m[2]);
                 // must match name=NAME and also value=<!plugin-list name !>
-                while (preg_match("/^(\w+)=((?:\".*\")|(?:\w+)|(?:\"?<!plugin-list.+!>\"?))\s*/", $curargs, $m)) {
+                while (preg_match("/^(\w+)=((?:\".*\")|(?:\w+)|(?:\"?<!plugin-list.+!>\"?))\s*/", 
+                                  $curargs, $m)) {
                     $attr = $m[1]; $value = $m[2];
                     $curargs = substr($curargs, strlen($m[0]));
                     if (preg_match("/^\"(.*)\"$/", $value, $m))
@@ -152,16 +162,17 @@ extends WikiPlugin
             return $this->error(fmt("A required argument '%s' is missing.", "action"));
         }
         $form = HTML::form(array('action' => $request->getPostURL(),
-                                 'method' => $method,
+                                 'method' => strtolower($method),
                                  'class'  => 'wikiaction',
                                  'accept-charset' => $GLOBALS['charset']),
                            HiddenInputs(array('action' => $action)));
-        if ($nobr) $nbsp = HTML::Raw('&nbsp;');
+        $nbsp = HTML::Raw('&nbsp;');
         $already_submit = 0;
         foreach ($this->inputbox as $inputbox) {
             foreach ($inputbox as $inputtype => $input) {
               if ($inputtype == 'radiobutton') $inputtype='radio'; // convert from older versions
               $input['type'] = $inputtype;
+              $text = '';
               if ($inputtype != 'submit') {
                   if (empty($input['name']))
                       return $this->error(fmt("A required argument '%s' is missing.",
@@ -172,49 +183,13 @@ extends WikiPlugin
               }
               switch($inputtype) {
               case 'checkbox':
-                if (empty($input['checked'])) {
-                    if ($request->getArg($input['name']))
-                        $input['checked'] = 'checked';
-                } else {
-                    $input['checked'] = 'checked';
-                }
-                if (empty($input['value'])) $input['value'] = 1;
-                if (is_array($input['value'])) {
-                    $div = HTML::div(array('class' => $class));
-                    $values = $input['value'];
-                    $name = $input['name'];
-                    $input['name'] .= "[]";
-                    foreach ($values as $val) {
-                        // TODO: get checked status from a possible select column?
-                        $input['value'] = $val;
-                        if ($request->getArg($name)) {
-                            if ($request->getArg($name) == $val)
-                                $input['checked'] = 'checked';
-                            else 
-                                unset($input['checked']);
-                        }
-                        $text .= (" " . $val);
-                        $div->pushContent(HTML::input($input), $nbsp, $text, $nbsp);
-                        if (!$nobr)
-                            $div->pushContent(HTML::br());
-                    }
-                    $form->pushContent($div);
-                } else {
-                    if ($nobr)
-                        $form->pushContent(HTML::input($input), $nbsp, $text, $nbsp);
-                    else
-                        $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $text));
-                }
-                break;
               case 'radio':
-                if ($input['checked']) $input['checked'] = 'checked';
                 if (is_array($input['value'])) {
                     $div = HTML::div(array('class' => $class));
                     $values = $input['value'];
                     $name = $input['name'];
-                    $input['name'] .= "[]";
+                    $input['name'] = $inputtype == 'checkbox' ? $name."[]" : $name;
                     foreach ($values as $val) {
-                        // TODO: get checked status from a possible select column?
                         $input['value'] = $val;
                         if ($request->getArg($name)) {
                             if ($request->getArg($name) == $val)
@@ -222,13 +197,19 @@ extends WikiPlugin
                             else 
                                 unset($input['checked']);
                         }
-                        $text .= (" " . $val);
-                        $div->pushContent(HTML::input($input), $nbsp, $text, $nbsp);
+                        $div->pushContent(HTML::input($input), $nbsp, $val, $nbsp, "\n");
                         if (!$nobr)
                             $div->pushContent(HTML::br());
                     }
                     $form->pushContent($div);
                 } else {
+                    if (empty($input['value'])) $input['value'] = 1;
+                    if (empty($input['checked'])) {
+                        if ($request->getArg($input['name']))
+                            $input['checked'] = 'checked';
+                    } else {
+                        $input['checked'] = 'checked';
+                    }
                     if ($nobr)
                         $form->pushContent(HTML::input($input), $nbsp, $text, $nbsp);
                     else
@@ -312,6 +293,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2004/11/25 12:04:17  rurban
+// support extra submit[] and reste[] buttons to place it before. renamed radiobutton to radio
+//
 // Revision 1.12  2004/11/24 15:21:19  rurban
 // docs
 //

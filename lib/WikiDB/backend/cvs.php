@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: cvs.php,v 1.21 2004-11-23 13:35:48 rurban Exp $');
+rcs_id('$Id: cvs.php,v 1.22 2004-11-25 17:20:51 rurban Exp $');
 /**
  * Backend for handling CVS repository. 
  *
@@ -381,7 +381,8 @@ extends WikiDB_backend
         $this->_writeMetaInfo( $pagename, $megaHash );
     }
 
-    function get_links($pagename, $reversed) 
+    function get_links($pagename, $reversed=true, $include_empty=false,
+                       $sortby=false, $limit=false, $exclude=false)
     {
         // TODO: ignores the $reversed argument and returns
         // TODO: the value of _links_ attribute of the meta information

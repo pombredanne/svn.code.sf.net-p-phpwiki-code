@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: dbaBase.php,v 1.14 2004-11-23 13:35:49 rurban Exp $');
+<?php rcs_id('$Id: dbaBase.php,v 1.15 2004-11-25 17:20:52 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -242,7 +242,8 @@ extends WikiDB_backend
         $this->_linkdb->set_links($pagename, $links);
     }
 
-    function get_links($pagename, $reversed = true) {
+    function get_links($pagename, $reversed = true, $include_empty=false,
+                       $sortby=false, $limit=false, $exclude=false) {
         /*
         if ($reversed) {
             include_once('lib/WikiDB/backend/dumb/BackLinkIter.php');
