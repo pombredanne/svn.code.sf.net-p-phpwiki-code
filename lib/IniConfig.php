@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.8 2004-04-23 16:55:59 zorloc Exp $');
+rcs_id('$Id: IniConfig.php,v 1.9 2004-04-26 12:15:01 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -48,22 +48,24 @@ rcs_id('$Id: IniConfig.php,v 1.8 2004-04-23 16:55:59 zorloc Exp $');
  *      pcre_fix_posix_classes (probably with redefines()).
  */
 
-include_once "lib/config.php";
- 
-function IniConfig($file)
-{
+include_once (dirname(__FILE__)."/config.php");
+include_once (dirname(__FILE__)."/FileFinder.php");
+
+function IniConfig($file) {
+    
+    //FindFile("pear/Config.php");
+    //require_once("Config.php");
  
     // List of all valid config options to be define()d which take "values" (not
-    // booleans). Needs to be categorised, and generally made a lot tidier.
-    $_IC_VALID_VALUE = array
-        ('WIKI_NAME', 'ADMIN_USER', 'ADMIN_PASSWD',
+    // booleans). Needs to be categorised, and generally made a lot tidier. 
+   $_IC_VALID_VALUE = array
+        ('DEBUG', 'WIKI_NAME', 'ADMIN_USER', 'ADMIN_PASSWD',
          'HTML_DUMP_SUFFIX', 'MAX_UPLOAD_SIZE', 'MINOR_EDIT_TIMEOUT',
          'ACCESS_LOG', 'CACHE_CONTROL', 'CACHE_CONTROL_MAX_AGE',
          'PASSWORD_LENGTH_MINIMUM', 'USER_AUTH_POLICY', 'LDAP_AUTH_HOST',
          'LDAP_BASE_DN', 'LDAP_AUTH_USER', 'LDAP_AUTH_PASSWORD',
          'LDAP_SEARCH_FIELD', 'IMAP_AUTH_HOST', 'POP3_AUTH_HOST',
-         'POP3_AUTH_PORT', 'AUTH_USER_FILE', 'AUTH_SESS_USER', 
-         'AUTH_SESS_LEVEL', 'GROUP_METHOD',
+         'AUTH_USER_FILE', 'AUTH_SESS_USER', 'AUTH_SESS_LEVEL', 'GROUP_METHOD',
          'AUTH_GROUP_FILE', 'EDITING_POLICY', 'THEME', 'CHARSET',
          'DEFAULT_LANGUAGE', 'WIKI_PGSRC', 'DEFAULT_WIKI_PGSRC',
          'ALLOWED_PROTOCOLS', 'INLINE_IMAGES', 'SUBPAGE_SEPARATOR',
@@ -73,7 +75,7 @@ function IniConfig($file)
 
     // List of all valid config options to be define()d which take booleans.
     $_IC_VALID_BOOL = array
-        ('DEBUG', 'ENABLE_USER_NEW', 'JS_SEARCHREPLACE',
+        ('ENABLE_USER_NEW', 'ENABLE_EDIT_TOOLBAR', 'JS_SEARCHREPLACE',
          'ENABLE_REVERSE_DNS', 'ENCRYPTED_PASSWD', 'ZIPDUMP_AUTH', 
          'ENABLE_RAW_HTML', 'STRICT_MAILABLE_PAGEDUMPS', 'COMPRESS_OUTPUT',
          'WIKIDB_NOCACHE_MARKUP', 'ALLOW_ANON_USER', 'ALLOW_ANON_EDIT',
@@ -89,10 +91,19 @@ function IniConfig($file)
     }
          
     $rs = @parse_ini_file($file);
+    $rsdef = @parse_ini_file(dirname(__FILE__)."/../config/config-default.ini");
 
     foreach ($_IC_VALID_VALUE as $item) {
-        if (array_key_exists($item, $rs) and !defined($item)) {
+        if (defined($item)) continue;
+        if (array_key_exists($item, $rs)) {
             define($item, $rs[$item]);
+        } elseif (array_key_exists($item, $rsdef)) {
+            define($item, $rsdef[$item]);
+        } elseif (in_array($item,array('SERVER_NAME', 'SERVER_PORT',
+         	'SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH'))) {
+            ;
+        } else {
+            trigger_error(sprintf("missing config setting for %s",$item));
         }
     }
 
@@ -101,21 +112,26 @@ function IniConfig($file)
     // be a boolean false, otherwise if there is anything set it'll
     // be true.
     foreach ($_IC_VALID_BOOL as $item) {
+        if (defined($item)) continue;
         if (array_key_exists($item, $rs)) {
             $val = $rs[$item];
-            if (!$val and !defined($item)) {
+        } elseif (array_key_exists($item, $rsdef)) {
+            $val = $rsdef[$item];
+        } else {
+            ; //trigger_error(sprintf("missing boolean config setting for %s",$item));
+        }
+        if (!$val and !defined($item)) {
+            define($item, false);
+        }
+        else if (strtolower($val) == 'false' ||
+                 strtolower($val) == 'no' ||
+                 $val == '0') {
+            if (!defined($item))
                 define($item, false);
-            }
-            else if (strtolower($val) == 'false' ||
-                     strtolower($val) == 'no' ||
-                     $val == '0') {
-                if (!defined($item))
-                    define($item, false);
-            }
-            else {
-                if (!defined($item))
-                    define($item, true);
-            }
+        }
+        else {
+            if (!defined($item))
+                define($item, true);
         }
     }
 
@@ -205,14 +221,15 @@ function IniConfig($file)
                       );
 
     foreach ($DBAP_MAP as $rskey => $apkey) {
-        $val = @$rs[$rskey];
-        if ($val) {
-            $DBAuthParams[$apkey] = $val;
+        if (isset($rs[$rskey])) {
+            $DBAuthParams[$apkey] = $rs[$rskey];
         }
     }
 
     // Default Wiki pages
     global $GenericPages;
+    if (!isset($rs['DEFAULT_WIKI_PAGES']))
+        $rs['DEFAULT_WIKI_PAGES'] = "ReleaseNotes:SteveWainstead:TestPage";
     $GenericPages = preg_split('/\s*:\s*/', @$rs['DEFAULT_WIKI_PAGES']);
 
     // Wiki name regexp.  Should be a define(), but too many places want
@@ -223,7 +240,9 @@ function IniConfig($file)
 
     // Another "too-tricky" redefine
     global $KeywordLinkRegexp;
-    $keywords = preg_split('/\s*:\s*/', @$rs['KEYWORDS']);
+    if (!isset($rs['KEYWORDS']))
+        $rs['KEYWORDS'] = "Category:Topic";
+    $keywords = preg_split('/\s*:\s*/', $rs['KEYWORDS']);
     $KeywordLinkRegexp = '(?<=' . implode('|^', $keywords) . ')[[:upper:]].*$';
         
     global $DisabledActions;
@@ -462,8 +481,10 @@ function fix_configs() {
 
 }
 
-
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/04/23 16:55:59  zorloc
+// If using Db auth and DBAUTH_AUTH_DSN is empty set DBAUTH_AUTH_DSN to $DBParams['dsn']
+//
 // Revision 1.7  2004/04/20 22:26:27  zorloc
 // Removed Pear_Config for parse_ini_file().
 //

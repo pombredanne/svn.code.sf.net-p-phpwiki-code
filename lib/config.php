@@ -1,13 +1,11 @@
 <?php
-rcs_id('$Id: config.php,v 1.99 2004-04-21 14:04:24 zorloc Exp $');
+rcs_id('$Id: config.php,v 1.100 2004-04-26 12:15:01 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
  * The run-time code have been moved to lib/IniConfig.php:fix_configs()
  */
  
-require_once 'lib/FileFinder.php';
-
 if (!defined("LC_ALL")) {
     // Backward compatibility (for PHP < 4.0.5)
     define("LC_ALL",   0);
@@ -135,6 +133,7 @@ function guessing_setlocale ($category, $locale) {
 }
 
 function update_locale($loc) {
+    require_once(dirname(__FILE__)."/FileFinder.php");
     $newlocale = guessing_setlocale(LC_ALL, $loc);
     if (!$newlocale) {
         //trigger_error(sprintf(_("Can't setlocale(LC_ALL,'%s')"), $loc), E_USER_NOTICE);
@@ -283,6 +282,9 @@ function IsProbablyRedirectToIndex () {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.99  2004/04/21 14:04:24  zorloc
+// 'Require lib/FileFinder.php' necessary to allow for call to FindLocalizedFile().
+//
 // Revision 1.98  2004/04/20 18:10:28  rurban
 // config refactoring:
 //   FileFinder is needed for WikiFarm scripts calling index.php
