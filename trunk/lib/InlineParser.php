@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.1 2002-01-29 05:06:31 dairiki Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.2 2002-01-29 05:33:29 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -233,7 +233,7 @@ class Markup_url extends SimpleMarkup
 
     function getMatchRegexp () {
         global $AllowedProtocols;
-        return "(?<![[:alnum:]]) (?:$AllowedProtocols) : \S+ (?<![ ,.?; \] \) \" ' ])";
+        return "(?<![[:alnum:]]) (?:$AllowedProtocols) : [^\s<>\"']+ (?<![ ,.?; \] \) ])";
     }
     
     function markup ($match) {
