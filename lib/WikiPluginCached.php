@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiPluginCached.php,v 1.8 2004-04-26 20:44:34 rurban Exp $');
+<?php rcs_id('$Id: WikiPluginCached.php,v 1.9 2004-06-02 19:12:43 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -131,7 +131,7 @@ class WikiPluginCached extends WikiPlugin
         $sortedargs = $this->getArgs($argstr, $request);
         if (is_array($sortedargs) )
             ksort($sortedargs);
-
+        $this->_args =& $sortedargs;
         list($id,$url) = $this->genUrl($cache, $sortedargs);
 
         // ---------- html and img gen. -----------------
@@ -181,7 +181,7 @@ class WikiPluginCached extends WikiPlugin
 
     /**
      * Sets the type of the plugin to html, image or map 
-     * prodcution
+     * production
      *
      * @access protected 
      * @return int determines the plugin to produce either html, 
@@ -197,8 +197,6 @@ class WikiPluginCached extends WikiPlugin
     function getPluginType() {
         return PLUGIN_CACHED_IMG_ONDEMAND;
     }
-
-
 
     /** 
      * Creates an image handle from the given user arguments. 
@@ -255,12 +253,11 @@ class WikiPluginCached extends WikiPlugin
      * @return           string       'png', 'jpeg' or 'gif'
      */    
     function getImageType($dbi,$argarray,$request) {
-        if (in_array($argarray['imgtype'],$GLOBAL['CacheParams']['imgtypes']))
+        if (in_array($argarray['imgtype'], $GLOBAL['CacheParams']['imgtypes']))
             return $argarray['imgtype'];
         else
             return 'png';
     }
-
 
     /** 
      * Produces the alt text for an image.
@@ -297,7 +294,6 @@ class WikiPluginCached extends WikiPlugin
         trigger_error('WikiPluginCached::getHtml: pure virtual function in file ' 
                       . __FILE__ . ' line ' . __LINE__, E_USER_ERROR);
     }
-
 
     /** 
      * Creates HTML output to be cached.  
