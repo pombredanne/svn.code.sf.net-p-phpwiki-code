@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.120 2004-12-23 14:12:31 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.121 2005-01-04 20:25:01 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -1977,13 +1977,6 @@ class WikiDB_cache
             $cache = &$this->_pagedata_cache;
             if (!isset($cache[$pagename]) || !is_array($cache[$pagename])) {
                 $cache[$pagename] = $this->_backend->get_pagedata($pagename);
-                // Never keep a ['%pagedata']['_cached_html'] in cache, other than the current page.
-                /*
-                if (isset($cache[$pagename]['_cached_html'])
-                    and $pagename != $GLOBALS['request']->getArg('pagename')) {
-                    unset($cache[$pagename]['_cached_html']);
-                }
-                */
                 if (empty($cache[$pagename]))
                     $cache[$pagename] = array();
             }
@@ -1995,17 +1988,18 @@ class WikiDB_cache
     
     function update_pagedata($pagename, $newdata) {
         assert(is_string($pagename) && $pagename != '');
-        unset ($this->_pagedata_cache[$pagename]);
-        
+       
         $this->_backend->update_pagedata($pagename, $newdata);
 
-        if (USECACHE 
-            and !empty($this->_pagedata_cache[$pagename]) 
-            and is_array($this->_pagedata_cache[$pagename])) 
-        {
-            $cachedata = &$this->_pagedata_cache[$pagename];
-            foreach($newdata as $key => $val)
-                $cachedata[$key] = $val;
+        if (USECACHE) {
+            if (!empty($this->_pagedata_cache[$pagename]) 
+                and is_array($this->_pagedata_cache[$pagename])) 
+            {
+                $cachedata = &$this->_pagedata_cache[$pagename];
+                foreach($newdata as $key => $val)
+                    $cachedata[$key] = $val;
+            } else 
+                $this->_pagedata_cache[$pagename] = $newdata;
         }
     }
 
@@ -2058,20 +2052,8 @@ class WikiDB_cache
 	} else {
             $vdata = $this->_backend->get_versiondata($pagename, $version, $need_content);
 	}
-        // FIXME: ugly. 
-        // Rationale: never keep ['%pagedata']['_cached_html'] in cache.
         if ($vdata && !empty($vdata['%pagedata'])) {
             $this->_pagedata_cache[$pagename] =& $vdata['%pagedata'];
-            // only store _cached_html for the requested page
-            if (0 and USECACHE 
-                and isset($vdata['%pagedata']['_cached_html'])
-                and $pagename != $GLOBALS['request']->getArg('pagename')) 
-            {
-                unset($this->_pagedata_cache[$pagename]['_cached_html']);
-                unset($cache[$pagename][$version][$nc]['%pagedata']['_cached_html']);
-                if ($need_content)
-                    unset($cache[$pagename][$version][0]['%pagedata']['_cached_html']);
-            }
         }
         return $vdata;
     }
@@ -2090,7 +2072,6 @@ class WikiDB_cache
     function update_versiondata($pagename, $version, $data) {
         $new = $this->_backend->update_versiondata($pagename, $version, $data);
         // Update the cache
-        // FIXME: never keep ['%pagedata']['_cached_html'] in cache.
         $this->_versiondata_cache[$pagename][$version]['1'] = $data;
         // FIXME: hack
         $this->_versiondata_cache[$pagename][$version]['0'] = $data;
@@ -2144,6 +2125,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.120  2004/12/23 14:12:31  rurban
+// dont email on unittest
+//
 // Revision 1.119  2004/12/20 16:05:00  rurban
 // gettext msg unification
 //
