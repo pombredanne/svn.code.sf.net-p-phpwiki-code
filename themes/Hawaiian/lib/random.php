@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: random.php,v 1.8 2002-01-26 06:58:27 carstenklapp Exp $');
+<?php rcs_id('$Id: random.php,v 1.9 2002-01-28 15:52:40 carstenklapp Exp $');
 /**
  */
 class randomImage {
@@ -33,26 +33,6 @@ class randomImage {
         return $this->filename;
     }
 };
-
-
-/**
- * Seed the random number generator.
- *
- * better_srand() ensures the randomizer is seeded only once.
- * 
- * How random do you want it? See:
- * http://www.php.net/manual/en/function.srand.php
- * http://www.php.net/manual/en/function.mt-srand.php
- */
-function better_srand($seed = '') {
-    static $wascalled = FALSE;
-    if (!$wascalled) {
-        $seed = $seed === '' ? (double) microtime() * 1000000 : $seed;
-        srand($seed);
-        $wascalled = TRUE;
-        //trigger_error("new random seed", E_USER_NOTICE); //debugging
-    }
-}
 
 
 class imageSet extends fileSet {
