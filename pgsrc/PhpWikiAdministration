@@ -37,7 +37,7 @@ choice.
 
 __Dump__
 
-[ Dump Serialized Pages | phpwiki:?action=dumpserial&directory=%/tmp/wikidump ]
+[ Dump Serialized Pages | phpwiki:?action=dumpserial&directory=(/tmp/wikidump) ]
 
 Pages will be written out as "serialized" strings of a PHP
 associative array, meaning they will not be human readable. If
@@ -46,7 +46,7 @@ Ensure that your server has write permissions to the directory!
 
 __Load__
 
-[ Load Serialized Pages | phpwiki:?action=loadserial&directory=%/tmp/wikidump ]
+[ Load Serialized Pages | phpwiki:?action=loadserial&directory=(/tmp/wikidump) ]
 
 If you have dumped a set of pages from PhpWiki, you can reload them here.
 Note that pages in your database will be overwritten; thus, if you dumped
