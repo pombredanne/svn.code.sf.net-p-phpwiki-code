@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.32 2004-06-20 15:30:05 rurban Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.33 2004-07-02 09:55:58 rurban Exp $');
 /**
  * Code for writing XML.
  * @package Markup
@@ -262,8 +262,8 @@ class XmlElement extends XmlContent
 	if ($attr == 'class')
 	    $this->_setClasses();
 
-	if (isset($this->_attr[$attr]))
-	    return $this->_attr[$attr];
+	if (isset($this->_attr[strtolower($attr)]))
+	    return $this->_attr[strtolower($attr)];
 	else
 	    return false;
     }
@@ -591,6 +591,9 @@ function fmt ($fs /* , ... */) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.32  2004/06/20 15:30:05  rurban
+// get_class case-sensitivity issues
+//
 // Revision 1.31  2004/06/20 14:42:54  rurban
 // various php5 fixes (still broken at blockparser)
 //

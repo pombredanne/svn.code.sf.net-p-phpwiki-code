@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.58 2004-06-25 14:29:17 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.59 2004-07-02 09:55:58 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004 Reini Urban
  *
@@ -321,6 +321,7 @@ class Markup_escape  extends SimpleMarkup
  */
 function isImageLink($link) {
     if (!$link) return false;
+    assert(defined('INLINE_IMAGES'));
     return preg_match("/\\.(" . INLINE_IMAGES . ")$/i", $link)
         or preg_match("/\\.(" . INLINE_IMAGES . ")\s+(size|border|align|hspace|vspace)=/i", $link);
 }
@@ -723,7 +724,10 @@ class InlineTransformer
 
             // Matched markup.  Eat input, push output.
             // FIXME: combine adjacent strings.
-            $current = $markup->markup($match->match, $body);
+            if (isa($markup, 'SimpleMarkup'))
+                $current = $markup->markup($match->match);
+            else
+                $current = $markup->markup($match->match, $body);
             $input = $match->postmatch;
             if (isset($markup) and is_object($markup) and isa($markup,'Markup_plugin')) {
                 $current->setTightness(true,true);

@@ -4485,8 +4485,8 @@ msgstr "有人編輯了此頁面!"
 #: ../lib/removepage.php:39
 #, c-format
 msgid ""
-"Since you started the deletion process, someone has saved a new version of %"
-"s.  Please check to make sure you still want to permanently remove the page "
+"Since you started the deletion process, someone has saved a new version of"
+" %s.  Please check to make sure you still want to permanently remove the page "
 "from the database."
 msgstr ""
 "從你開始刪除到現在,有人已經儲存了一份 %s 的較新版本. 請檢查以確定你仍想要從資"
@@ -4503,7 +4503,7 @@ msgstr "錯誤 URL -- 移除所有的 <, >, \""
 #: ../lib/stdlib.php:336 ../lib/stdlib.php:346
 #, fuzzy
 msgid "Invalid image size"
-msgstr "Inline 圖片"
+msgstr ""
 
 #: ../lib/stdlib.php:406
 msgid "BAD phpwiki: URL"
@@ -4554,7 +4554,6 @@ msgid ""
 msgstr ""
 
 #: ../lib/stdlib.php:647
-#, fuzzy
 msgid "Skipped."
 msgstr "跳過"
 

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.48 2004-06-21 06:30:16 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.49 2004-07-02 09:55:58 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -95,6 +95,7 @@ class AnchoredRegexpSet
      * @return object  A RegexpSet_match object, or false if no match.
      */
     function match ($text) {
+    	if (!is_string($text)) return false;
         if (! preg_match($this->_re, $text, $m)) {
             return false;
         }
@@ -233,6 +234,7 @@ class BlockParser_Input {
         printXML(HTML::div("$tab $msg: at: '",
                            HTML::tt($where),
                            "'"));
+        flush();                   
     }
 }
 
@@ -374,9 +376,10 @@ class ParsedBlock extends Block_HtmlElement {
     function _getBlock (&$input) {
         $this->_atSpace = $input->skipSpace();
 
-        if (($line = $input->currentLine()) === '')
+        $line = $input->currentLine();
+        if ($line === false or $line === '') { // allow $line === '0' 
             return false;
-
+        }
         $tight_top = !$this->_atSpace;
         $re_set = &$this->_regexpset;
         for ($m = $re_set->match($line); $m; $m = $re_set->nextMatch($line, $m)) {
@@ -394,7 +397,7 @@ class ParsedBlock extends Block_HtmlElement {
             if (DEBUG & _DEBUG_PARSER)
                 $input->_debug('[', "_match failed");
         }
-        if (!$line)
+        if ($line === false or $line === '') // allow $line === '0' 
             return false;
 
         trigger_error("Couldn't match block: '$line'", E_USER_NOTICE);
@@ -1065,6 +1068,9 @@ function TransformText ($text, $markup = 2.0, $basepage=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.48  2004/06/21 06:30:16  rurban
+// revert to prev references
+//
 // Revision 1.47  2004/06/20 15:30:04  rurban
 // get_class case-sensitivity issues
 //
