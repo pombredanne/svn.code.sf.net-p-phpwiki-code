@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.15 2004-09-22 13:46:26 rurban Exp $');
+rcs_id('$Id: UpLoad.php,v 1.16 2004-10-21 19:03:37 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -143,6 +143,12 @@ ws[cfh]");
             	$message->pushContent(fmt("ERROR uploading '%s': ",$userfile_name));
                 $message->pushContent(fmt("Files with extension %s are not allowed",
                                           join(", ", $this->disallowed_extensions)),HTML::br(),HTML::br());
+            } 
+            elseif (preg_match("/[^._a-zA-Z0-9-]/", $userfile_name))
+            {
+            	$message->pushContent(fmt("ERROR uploading '%s': ",$userfile_name));
+                $message->pushContent(_("File names may only contain alphanumeric characters and dot, underscore or dash."),
+                                      HTML::br(),HTML::br());
             }
             elseif (file_exists($file_dir . $userfile_name)) {
             	$message->pushContent(fmt("ERROR uploading '%s': ",$userfile_name));
@@ -228,6 +234,12 @@ ws[cfh]");
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2004/09/22 13:46:26  rurban
+// centralize upload paths.
+// major WikiPluginCached feature enhancement:
+//   support _STATIC pages in uploads/ instead of dynamic getimg.php? subrequests.
+//   mainly for debugging, cache problems and action=pdf
+//
 // Revision 1.14  2004/06/16 10:38:59  rurban
 // Disallow refernces in calls if the declaration is a reference
 // ("allow_call_time_pass_reference clean").
