@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.39 2004-02-27 02:22:21 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.40 2004-02-28 21:14:08 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -26,12 +26,21 @@ require_once('lib/InlineParser.php');
 //
 
 /**
+ * Deal with paragraphs and proper, recursive block indents 
+ * for the new style markup (version 2)
+ *
+ * Everything which goes over more than line:
+ * automatic lists, UL, OL, DL, table, blockquote, verbatim, 
+ * p, pre, plugin, ...
+ *
  * FIXME:
  *  Still to do:
  *    (old-style) tables
+ * FIXME: unify this with the RegexpSet in InlineParser.
+ *
+ * @package Markup
+ * @author: Geoffrey T. Dairiki 
  */
-
-// FIXME: unify this with the RegexpSet in InlineParser.
 
 /**
  * Return type from RegexpSet::match and RegexpSet::nextMatch.

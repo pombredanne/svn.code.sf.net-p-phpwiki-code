@@ -24,9 +24,9 @@
 
 */
 
-rcs_id('$Id: RichTable.php,v 1.2 2004-02-17 12:11:36 rurban Exp $');
+rcs_id('$Id: RichTable.php,v 1.3 2004-02-28 21:14:08 rurban Exp $');
 
-error_reporting (E_ALL & ~E_NOTICE);
+// error_reporting (E_ALL & ~E_NOTICE);
 
 class WikiPlugin_RichTable
 extends WikiPlugin
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function run($dbi, $argstr, &$request, $basepage) {

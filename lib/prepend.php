@@ -5,7 +5,7 @@
  */
 $RCS_IDS = '';
 function rcs_id ($id) { $GLOBALS['RCS_IDS'] .= "$id\n"; }
-rcs_id('$Id: prepend.php,v 1.15 2003-03-07 02:47:32 dairiki Exp $');
+rcs_id('$Id: prepend.php,v 1.16 2004-02-28 21:14:08 rurban Exp $');
 
 // Used for debugging purposes
 class DebugTimer {
@@ -85,12 +85,10 @@ function ExitWiki($errormsg = false)
     exit;
 }
 if (!defined('DEBUG') or (defined('DEBUG') and DEBUG > 2)) {
-  $ErrorManager->setPostponedErrorMask(E_ALL);
-  $ErrorManager->setFatalHandler(new WikiFunctionCb('ExitWiki'));
-}
-else 
-{
-  $ErrorManager->setPostponedErrorMask(E_USER_NOTICE | E_NOTICE);
+    $ErrorManager->setPostponedErrorMask(E_ALL); // ignore all errors
+    $ErrorManager->setFatalHandler(new WikiFunctionCb('ExitWiki'));
+} else {
+    $ErrorManager->setPostponedErrorMask(E_USER_NOTICE | E_NOTICE);
 }
 
 
