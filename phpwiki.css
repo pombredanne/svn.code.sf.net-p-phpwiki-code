@@ -1,8 +1,8 @@
 /**
- * $Id: phpwiki.css,v 1.55 2002-02-16 15:10:00 carstenklapp Exp $
+ * $Id: phpwiki.css,v 1.56 2002-02-17 01:28:10 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
- * ground up. It has not yet been tested against NS4.
+ * ground up.
  *
  * Mozilla's "DOM Inspector" Sidebar was an invaluable troubleshooting
  * tool for mapping the more complex CSS node selectors, such as those
@@ -19,11 +19,9 @@
 /**
  * General
  */ 
-img {
-  border: 0;
-}
+img { border: 0; }
 
-form  { margin: 0; }
+form { margin: 0; }
 table {
   border-spacing: 1px;
   /* For Mozilla */
@@ -42,8 +40,6 @@ caption {
 /**
  * Wiki
  */
-
-/* Main wiki text box */
 body {
   /* ivory #ffe #fffff0*/
   background: #fffff0;
@@ -51,6 +47,7 @@ body {
   margin: 1.5ex 1em;
 }
 
+/* Main wiki text box */
 div.wikitext {
   margin-top:    1ex;
   margin-bottom: 0.5ex;
