@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.65 2004-05-03 13:16:47 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.66 2004-05-03 21:44:24 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1880,6 +1880,8 @@ extends _PassUser
                 $r = @ldap_bind($ldap); // this is an anonymous bind
             if (!empty($LDAP_SET_OPTION)) {
                 foreach ($LDAP_SET_OPTION as $key => $value) {
+                    if (is_string($key) and defined($key))
+                        $key = constant($key);
                     ldap_set_option($ldap,$key,$value);
                 }
             }
@@ -2816,6 +2818,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.65  2004/05/03 13:16:47  rurban
+// fixed UserPreferences update, esp for boolean and int
+//
 // Revision 1.64  2004/05/02 15:10:06  rurban
 // new finally reliable way to detect if /index.php is called directly
 //   and if to include lib/main.php
