@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.33 2003-02-18 03:59:11 dairiki Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.34 2003-02-18 19:01:35 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -315,14 +315,9 @@ class Block_HtmlElement extends HtmlElement
 
 
     function setTightness($top, $bottom) {
-        $class = (string) $this->getAttr('class');
-        if ($top)
-            $class .= " tight-top";
-        if ($bottom)
-            $class .= " tight-bottom";
-        $class = ltrim($class);
-        if ($class)
-            $this->setAttr('class', $class);
+	$this->setInClass('tightenable');
+	$this->setInClass('top', $top);
+	$this->setInClass('bottom', $bottom);
     }
 }
 
@@ -421,7 +416,7 @@ class TightSubBlock extends SubBlock {
         if (count($this->_content) == 1) {
             $elem = $this->_content[0];
             if ($elem->getTag() == 'p') {
-                assert($elem->getAttr('class') == 'tight-top tight-bottom');
+                assert($elem->getAttr('class') == 'tightenable top bottom');
                 $this->setContent($elem->getContent());
             }
         }
@@ -430,16 +425,13 @@ class TightSubBlock extends SubBlock {
 
 class BlockMarkup {
     var $_re;
-    var $_tight_top = false;
-    var $_tight_bot = false;
 
     function _match (&$input, $match) {
         trigger_error('pure virtual', E_USER_ERROR);
     }
 
     function _setTightness ($top, $bot) {
-        $this->_tight_top = $top;
-        $this->_tight_bot = $bot;
+        $this->_element->setTightness($top, $bot);
     }
 
     function merge ($followingBlock) {
@@ -447,7 +439,6 @@ class BlockMarkup {
     }
 
     function finish () {
-        $this->_element->setTightness($this->_tight_top, $this->_tight_bot);
         return $this->_element;
     }
 }
@@ -537,10 +528,11 @@ class Block_dl extends Block_list
     function _match (&$input, $m) {
         if (!($p = $this->_do_match($input, $m)))
             return false;
-        list ($term, $defn) = $p;
+        list ($term, $defn, $loose) = $p;
         
         $this->_content[] = new Block_HtmlElement('dt', false, $term);
         $this->_content[] = $defn;
+	$this->_tight_defn = !$loose;
         return true;
     }
 
@@ -548,8 +540,8 @@ class Block_dl extends Block_list
         $dt = &$this->_content[0];
         $dd = &$this->_content[1];
         
-        $dt->setTightness($top, false);
-        $dd->setTightness(false, $bot);
+        $dt->setTightness($top, $this->_tight_defn);
+        $dd->setTightness($this->_tight_defn, $bot);
     }
 
     function _do_match (&$input, $m) {
@@ -559,7 +551,7 @@ class Block_dl extends Block_list
         $pat = sprintf('/\ {%d,%d}(?=\s*\S)/A', $firstIndent + 1, $firstIndent + 5);
 
         $input->advance();
-        $input->skipSpace();
+        $loose = $input->skipSpace();
         $line = $input->currentLine();
         
         if (!$line || !preg_match($pat, $line, $mm)) {
@@ -570,7 +562,7 @@ class Block_dl extends Block_list
         $indent = strlen($mm[0]);
         $term = TransformInline(rtrim(substr(trim($m->match),0,-1)));
         $defn = new TightSubBlock($input, sprintf("\\ {%d}", $indent), false, 'dd');
-        return array($term, $defn);
+        return array($term, $defn, $loose);
     }
 }
 
@@ -586,12 +578,10 @@ class Block_table_dl_defn extends XmlContent
         if (!is_array($defn))
             $defn = $defn->getContent();
 
+	$this->_next_tight_top = false; // value irrelevant - gets fixed later
         $this->_ncols = $this->_ComputeNcols($defn);
-        
-        $this->_tight_top = false;
-        $this->_tight_bot = false;
-        $this->_atSpace = true;
         $this->_nrows = 0;
+
         foreach ($defn as $item) {
             if ($this->_IsASubtable($item))
                 $this->_addSubtable($item);
@@ -606,11 +596,13 @@ class Block_table_dl_defn extends XmlContent
         $this->_setTerm($th);
     }
 
-    function setTightness($top, $bot) {
-        $this->_content[0]->setTightness($top, false);
-        $this->_content[$this->_nrows-1]->setTightness(false, $bot);
-        $this->_tight_top = $top;
-        $this->_tight_bot = $bot;
+    function setTightness($tight_top, $tight_bot) {
+        $this->_tight_top = $tight_top;
+	$this->_tight_bot = $tight_bot;
+	$first = &$this->firstTR();
+	$last = &$this->lastTR();
+	$first->setInClass('top', $tight_top);
+	$last->setInClass('bottom', $tight_bot);
     }
     
     function _addToRow ($item) {
@@ -626,8 +618,8 @@ class Block_table_dl_defn extends XmlContent
         if (!empty($this->_accum)) {
             $row = new Block_HtmlElement('tr', false, $this->_accum);
 
-            $row->setTightness(!$this->_atSpace, $tight_bottom);
-            $this->_atSpace = !$tight_bottom;
+            $row->setTightness($this->_next_tight_top, $tight_bottom);
+            $this->_next_tight_top = $tight_bottom;
             
             $this->pushContent($row);
             $this->_accum = false;
@@ -644,7 +636,7 @@ class Block_table_dl_defn extends XmlContent
         foreach ($table_rows as $subdef) {
             $this->pushContent($subdef);
             $this->_nrows += $subdef->nrows();
-            $this->_atSpace = ! $subdef->_tight_bot;
+            $this->_next_tight_top = $subdef->_tight_bot;
         }
     }
 
@@ -686,6 +678,20 @@ class Block_table_dl_defn extends XmlContent
         return $this->_nrows;
     }
 
+    function & firstTR() {
+	$first = &$this->_content[0];
+	if (isa($first, 'Block_table_dl_defn'))
+	    return $first->firstTR();
+	return $first;
+    }
+
+    function & lastTR() {
+	$last = &$this->_content[$this->_nrows - 1];
+	if (isa($last, 'Block_table_dl_defn'))
+	    return $last->lastTR();
+	return $last;
+    }
+
     function setWidth ($ncols) {
         assert($ncols >= $this->_ncols);
         if ($ncols <= $this->_ncols)
@@ -713,7 +719,7 @@ class Block_table_dl extends Block_dl
     function _match (&$input, $m) {
         if (!($p = $this->_do_match($input, $m)))
             return false;
-        list ($term, $defn) = $p;
+        list ($term, $defn, $loose) = $p;
 
         $this->_content[] = new Block_table_dl_defn($term, $defn);
         return true;
@@ -920,7 +926,12 @@ class Block_p extends BlockMarkup
         $input->advance();
         return true;
     }
-    
+
+    function _setTightness ($top, $bot) {
+        $this->_tight_top = $top;
+        $this->_tight_bot = $bot;
+    }
+
     function merge ($nextBlock) {
         $class = get_class($nextBlock);
         if ($class == 'block_p' && $this->_tight_bot) {
