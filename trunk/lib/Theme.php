@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.5 2002-01-19 00:04:49 carstenklapp Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.6 2002-01-19 03:10:45 carstenklapp Exp $');
 
 class Theme {
     function Theme ($theme_name) {
@@ -87,16 +87,18 @@ class Theme {
         return false;
     }
 
-    function setButtonSeparator($separator=false) {
-        $this->_buttonSeparator = $separator ? $separator : " ";
+    function setWikiMark($wikimark=false) {
+        //FIXME: Check for %s in wikimark
+        $this->_wikiMark = $wikimark ? $wikimark : "?%s";
     }
 
-    function getButtonSeparator() {
-        if (! @$this->_buttonSeparator)
-            $this->setButtonSeparator(" | ");
+    function getWikiMark() {
+        if (! @$this->_wikiMark)
+            $this->setWikiMark("?%s");
         
-        return $this->_buttonSeparator;
+        return $this->_wikiMark;
     }
+
 
     ////////////////////////////////////////////////////////////////
     //
@@ -168,6 +170,17 @@ class Theme {
             return new ImageButton($text, $url, $class, $imgurl);
         else
             return new Button($text, $url, $class);
+    }
+
+    function setButtonSeparator($separator=false) {
+        $this->_buttonSeparator = $separator ? $separator : " ";
+    }
+
+    function getButtonSeparator() {
+        if (! @$this->_buttonSeparator)
+            $this->setButtonSeparator(" | ");
+        
+        return $this->_buttonSeparator;
     }
 
     
