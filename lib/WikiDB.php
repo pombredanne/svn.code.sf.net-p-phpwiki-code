@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.125 2005-02-03 05:08:39 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.126 2005-02-04 17:58:06 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -2046,18 +2046,23 @@ class WikiDB_cache
     
     function get_versiondata($pagename, $version, $need_content = false) {
         //  FIXME: Seriously ugly hackage
+        $readdata = false;
 	if (USECACHE) {   //temporary - for debugging
             assert(is_string($pagename) && $pagename != '');
-            // there is a bug here somewhere which results in an assertion failure at line 105
+            // There is a bug here somewhere which results in an assertion failure at line 105
             // of ArchiveCleaner.php  It goes away if we use the next line.
             //$need_content = true;
             $nc = $need_content ? '1':'0';
             $cache = &$this->_versiondata_cache;
-            if (!isset($cache[$pagename][$version][$nc])||
-                !(is_array ($cache[$pagename])) || !(is_array ($cache[$pagename][$version]))) {
+            if (!isset($cache[$pagename][$version][$nc]) 
+                || !(is_array ($cache[$pagename])) 
+                || !(is_array ($cache[$pagename][$version]))) 
+            {
                 $cache[$pagename][$version][$nc] = 
                     $this->_backend->get_versiondata($pagename, $version, $need_content);
-                // If we have retrieved all data, we may as well set the cache for $need_content = false
+                $readdata = true;
+                // If we have retrieved all data, we may as well set the cache for 
+                // $need_content = false
                 if ($need_content){
                     $cache[$pagename][$version]['0'] =& $cache[$pagename][$version]['1'];
                 }
@@ -2065,8 +2070,9 @@ class WikiDB_cache
             $vdata = $cache[$pagename][$version][$nc];
 	} else {
             $vdata = $this->_backend->get_versiondata($pagename, $version, $need_content);
+            $readdata = true;
 	}
-        if ($vdata && !empty($vdata['%pagedata'])) {
+        if ($readdata && $vdata && !empty($vdata['%pagedata'])) {
             $this->_pagedata_cache[$pagename] =& $vdata['%pagedata'];
         }
         return $vdata;
@@ -2139,6 +2145,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.125  2005/02/03 05:08:39  rurban
+// ref fix by Charles Corrigan
+//
 // Revision 1.124  2005/01/29 20:43:32  rurban
 // protect against empty request: on some occasion this happens
 //
