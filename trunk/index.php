@@ -68,7 +68,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.59 2002-01-11 04:15:03 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.60 2002-01-13 02:37:53 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -355,7 +355,7 @@ $URL_LINK_ICONS = array(
                         'ftp'	    => 'images/ftp.png',
                         'mailto'    => 'images/mailto.png',
                         'interwiki' => 'images/interwiki.png',
-                        '*'	    => 'images/zapg.png'
+                        '*'         => 'images/url.png'
                         );
 */                    
 
