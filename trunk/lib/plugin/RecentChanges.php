@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.86 2004-03-12 13:31:43 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.87 2004-03-30 02:14:03 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -256,7 +256,6 @@ extends _RecentChanges_Formatter
     function empty_message () {
         return _("No changes found");
     }
-    
         
     function sidebar_link() {
         extract($this->_args);
@@ -454,6 +453,43 @@ extends _RecentChanges_HtmlFormatter
     }
 }
 
+class _RecentChanges_BoxFormatter
+extends _RecentChanges_HtmlFormatter
+{
+    function rss_icon () {
+    }
+    function title () {
+    }
+    function authorLink ($rev) {
+    }
+    function diffLink ($rev) {
+    }
+    function historyLink ($rev) {
+    }
+    function summaryAsHTML ($rev) {
+    }
+    function description () {
+    }
+    function format ($changes) {
+        include_once('lib/InlineParser.php');
+        $last_date = '';
+        $first = true;
+        $html = HTML::ol();
+        while ($rev = $changes->next()) {
+            // enforce view permission
+            if (mayAccessPage('view',$rev->_pagename)) {
+                $html->pushContent(HTML::li($this->pageLink($rev)));
+                if ($first)
+                    $this->setValidators($rev);
+                $first = false;
+            }
+        }
+        if ($first)
+            $html->pushContent(HTML::p(array('class' => 'rc-empty'),
+                                       $this->empty_message()));
+        return $html;
+    }
+}
 
 class _RecentChanges_RssFormatter
 extends _RecentChanges_Formatter
@@ -613,7 +649,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.86 $");
+                            "\$Revision: 1.87 $");
     }
 
     function managesValidators() {
@@ -711,6 +747,8 @@ extends WikiPlugin
             }
             elseif ($format == 'sidebar')
                 $fmt_class = '_RecentChanges_SideBarFormatter';
+            elseif ($format == 'box')
+                $fmt_class = '_RecentChanges_BoxFormatter';
             else
                 $fmt_class = '_RecentChanges_HtmlFormatter';
         }
@@ -729,6 +767,19 @@ extends WikiPlugin
         // Hack alert: format() is a NORETURN for rss formatters.
         return $this->format($this->getChanges($dbi, $args), $args);
     }
+
+    // box is used to display a fixed-width, narrow version with common header.
+    // just a numbered list of limit pagenames, without date.
+    function box($args = false, $request = false, $basepage = false) {
+        if (!$request) $request =& $GLOBALS['request'];
+        if (!isset($args['limit'])) $args['limit'] = 15;
+        $args['format'] = 'box';
+        $args['show_minor'] = false;
+        $args['show_deleted'] = false;
+        return $this->makeBox(WikiLink(_("RecentChanges"),'',_("Recent Changes")),
+                              $this->format($this->getChanges($request->_dbi, $args), $args));
+    }
+
 };
 
 
@@ -780,6 +831,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.86  2004/03/12 13:31:43  rurban
+// enforce PagePermissions, errormsg if not Admin
+//
 // Revision 1.85  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.44 2004-03-27 22:01:03 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.45 2004-03-30 02:14:03 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -607,12 +607,14 @@ extends _WikiUser
             } else {
                 // update the prefs values from scratch. This could leed to unnecessary
                 // side-effects: duplicate emailVerified, ...
-                $prefs = new UserPreferences($prefs);
-                // check if different from the current prefs
-                $updated = $this->_prefs->isChanged($prefs);
+                $this->_prefs = new UserPreferences($prefs);
+                $updated = true;
             }
         } else {
-            $updated = $this->_prefs->isChanged($prefs);
+            if (!isset($this->_prefs))
+                $this->_prefs =& $prefs;
+            else
+                $updated = $this->_prefs->isChanged($prefs);
         }
         if ($updated) {
             if ($id_only) {
@@ -968,7 +970,7 @@ extends _AnonUser
         if (_AnonUser::setPreferences($prefs, $id_only)) {
             // Encode only the _prefs array of the UserPreference object
             if ($this->_HomePagehandle and !$id_only) {
-                $this->_HomePagehandle->set('pref', $this->store());
+                $this->_HomePagehandle->set('pref', $this->_prefs->store());
             }
         }
         return;
@@ -2638,6 +2640,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.44  2004/03/27 22:01:03  rurban
+// two catches by Konstantin Zadorozhny
+//
 // Revision 1.43  2004/03/27 19:40:09  rurban
 // init fix and validator reset
 //

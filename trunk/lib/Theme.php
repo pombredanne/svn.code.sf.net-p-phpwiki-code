@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.79 2004-03-24 19:39:02 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.80 2004-03-30 02:14:03 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -1131,7 +1131,74 @@ class SubmitImageButton extends SubmitButton {
 
 };
 
+/** 
+ * A sidebar box with title and body, narrow fixed-width.
+ * To represent abbrevated content of plugins, links or forms,
+ * like "Getting Started", "Search", "Sarch Pagename", 
+ * "Login", "Menu", "Recent Changes", "Last comments", "Last Blogs"
+ * "Calendar"
+ * ... See http://tikiwiki.org/
+ *
+ * Usage:
+ * sidebar.tmpl:
+ *   $menu = SidebarBox("Menu",HTML::dl(HTML::dt(...))); $menu->format();
+ *   $menu = PluginSidebarBox("RecentChanges",array('limit'=>10)); $menu->format();
+ */
+class SidebarBox {
+
+    function SidebarBox($title, $body) {
+        $this->title = $title;
+        $this->body = $body;
+    }
+    function format() {
+        return WikiPlugin::makeBox($this->title, $this->body);
+    }
+}
+
+/** 
+ * A sidebar box for plugins.
+ * Any plugin may provide a box($args=false, $request=false, $basepage=false) 
+ * method, with the help of WikiPlugin::makeBox()
+ */
+class PluginSidebarBox extends SidebarBox {
+
+    var $_plugin, $_args = false, $_basepage = false;
+
+    function PluginSidebarBox($name, $args = false, $basepage = false) {
+        $loader = new WikiPluginLoader();
+        $plugin = $loader->getPlugin($name);
+        if (!method_exists($plugin,'box')) {
+            return $loader->error(sprintf(_("%s: has no box method"),
+                                          get_class($plugin)));
+        }
+        $this->_plugin   =& $plugin;
+        $this->_args     = $args ? $args : array();
+        $this->_basepage = $basepage;
+    }
+
+    function format($args = false) {
+        return $this->_plugin->box($args ? array_merge($this->_args,$args) : $this->_args,
+                                   $GLOBALS['request'], 
+                                   $this->_basepage);
+    }
+}
+
+
 // $Log: not supported by cvs2svn $
+// Revision 1.79  2004/03/24 19:39:02  rurban
+// php5 workaround code (plus some interim debugging code in XmlElement)
+//   php5 doesn't work yet with the current XmlElement class constructors,
+//   WikiUserNew does work better than php4.
+// rewrote WikiUserNew user upgrading to ease php5 update
+// fixed pref handling in WikiUserNew
+// added Email Notification
+// added simple Email verification
+// removed emailVerify userpref subclass: just a email property
+// changed pref binary storage layout: numarray => hash of non default values
+// print optimize message only if really done.
+// forced new cookie policy: delete pref cookies, use only WIKI_ID as plain string.
+//   prefs should be stored in db or homepage, besides the current session.
+//
 // Revision 1.78  2004/03/18 22:32:33  rurban
 // work to make it php5 compatible
 //

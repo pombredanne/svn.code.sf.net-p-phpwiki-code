@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.38 2004-03-24 19:39:02 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.39 2004-03-30 02:14:03 rurban Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -1387,6 +1387,10 @@ class WikiDB_PageIterator
         $this->_wikidb = &$wikidb;
     }
     
+    function count () {
+        return $this->_pages->count();
+    }
+
     /**
      * Get next WikiDB_Page in sequence.
      *
@@ -1421,7 +1425,8 @@ class WikiDB_PageIterator
         $this->_pages->free();
     }
 
-    // Not yet used. See PageList::sortby
+    // Not yet used and problematic. Order should be set in the query, not afterwards.
+    // See PageList::sortby
     function setSortby ($arg = false) {
         if (!$arg) {
             $arg = @$_GET['sortby'];
@@ -1462,6 +1467,10 @@ class WikiDB_PageRevisionIterator
         $this->_wikidb = &$wikidb;
     }
     
+    function count () {
+        return $this->_revisions->count();
+    }
+
     /**
      * Get next WikiDB_PageRevision in sequence.
      *
@@ -1527,8 +1536,8 @@ class WikiDB_cache
     
     function close() {
         $this->_pagedata_cache = false;
-		$this->_versiondata_cache = false;
-		$this->_glv_cache = false;
+        $this->_versiondata_cache = false;
+        $this->_glv_cache = false;
     }
 
     function get_pagedata($pagename) {
@@ -1558,14 +1567,14 @@ class WikiDB_cache
 
     function invalidate_cache($pagename) {
         unset ($this->_pagedata_cache[$pagename]);
-		unset ($this->_versiondata_cache[$pagename]);
-		unset ($this->_glv_cache[$pagename]);
+        unset ($this->_versiondata_cache[$pagename]);
+        unset ($this->_glv_cache[$pagename]);
     }
     
     function delete_page($pagename) {
         $this->_backend->delete_page($pagename);
         unset ($this->_pagedata_cache[$pagename]);
-		unset ($this->_glv_cache[$pagename]);
+        unset ($this->_glv_cache[$pagename]);
     }
 
     // FIXME: ugly
@@ -1575,28 +1584,26 @@ class WikiDB_cache
     }
     
     function get_versiondata($pagename, $version, $need_content = false) {
-		//  FIXME: Seriously ugly hackage
+        //  FIXME: Seriously ugly hackage
 	if (defined ('USECACHE')){   //temporary - for debugging
-        assert(is_string($pagename) && $pagename);
-		// there is a bug here somewhere which results in an assertion failure at line 105
-		// of ArchiveCleaner.php  It goes away if we use the next line.
-		$need_content = true;
-		$nc = $need_content ? '1':'0';
-        $cache = &$this->_versiondata_cache;
-        if (!isset($cache[$pagename][$version][$nc])||
-				!(is_array ($cache[$pagename])) || !(is_array ($cache[$pagename][$version]))) {
-            $cache[$pagename][$version][$nc] = 
-				$this->_backend->get_versiondata($pagename,$version, $need_content);
-			// If we have retrieved all data, we may as well set the cache for $need_content = false
-			if($need_content){
-				$cache[$pagename][$version]['0'] = $cache[$pagename][$version]['1'];
-			}
-		}
-        $vdata = $cache[$pagename][$version][$nc];
-	}
-	else
-	{
-    $vdata = $this->_backend->get_versiondata($pagename, $version, $need_content);
+            assert(is_string($pagename) && $pagename);
+            // there is a bug here somewhere which results in an assertion failure at line 105
+            // of ArchiveCleaner.php  It goes away if we use the next line.
+            $need_content = true;
+            $nc = $need_content ? '1':'0';
+            $cache = &$this->_versiondata_cache;
+            if (!isset($cache[$pagename][$version][$nc])||
+                !(is_array ($cache[$pagename])) || !(is_array ($cache[$pagename][$version]))) {
+                $cache[$pagename][$version][$nc] = 
+                    $this->_backend->get_versiondata($pagename,$version, $need_content);
+                // If we have retrieved all data, we may as well set the cache for $need_content = false
+                if($need_content){
+                    $cache[$pagename][$version]['0'] = $cache[$pagename][$version]['1'];
+                }
+            }
+            $vdata = $cache[$pagename][$version][$nc];
+	} else {
+            $vdata = $this->_backend->get_versiondata($pagename, $version, $need_content);
 	}
         // FIXME: ugly
         if ($vdata && !empty($vdata['%pagedata']))
@@ -1605,48 +1612,43 @@ class WikiDB_cache
     }
 
     function set_versiondata($pagename, $version, $data) {
-        $new = $this->_backend->
-             set_versiondata($pagename, $version, $data);
-		// Update the cache
-		$this->_versiondata_cache[$pagename][$version]['1'] = $data;
-		// FIXME: hack
-		$this->_versiondata_cache[$pagename][$version]['0'] = $data;
-		// Is this necessary?
-		unset($this->_glv_cache[$pagename]);
-		
+        $new = $this->_backend->set_versiondata($pagename, $version, $data);
+        // Update the cache
+        $this->_versiondata_cache[$pagename][$version]['1'] = $data;
+        // FIXME: hack
+        $this->_versiondata_cache[$pagename][$version]['0'] = $data;
+        // Is this necessary?
+        unset($this->_glv_cache[$pagename]);
     }
 
     function update_versiondata($pagename, $version, $data) {
-        $new = $this->_backend->
-             update_versiondata($pagename, $version, $data);
-		// Update the cache
-		$this->_versiondata_cache[$pagename][$version]['1'] = $data;
-		// FIXME: hack
-		$this->_versiondata_cache[$pagename][$version]['0'] = $data;
-		// Is this necessary?
-		unset($this->_glv_cache[$pagename]);
-
+        $new = $this->_backend->update_versiondata($pagename, $version, $data);
+        // Update the cache
+        $this->_versiondata_cache[$pagename][$version]['1'] = $data;
+        // FIXME: hack
+        $this->_versiondata_cache[$pagename][$version]['0'] = $data;
+        // Is this necessary?
+        unset($this->_glv_cache[$pagename]);
     }
 
     function delete_versiondata($pagename, $version) {
-        $new = $this->_backend->
-            delete_versiondata($pagename, $version);
+        $new = $this->_backend->delete_versiondata($pagename, $version);
         unset ($this->_versiondata_cache[$pagename][$version]['1']);
         unset ($this->_versiondata_cache[$pagename][$version]['0']);
         unset ($this->_glv_cache[$pagename]);
     }
 	
     function get_latest_version($pagename)  {
-	if(defined('USECACHE')){
+	if (defined('USECACHE')){
             assert (is_string($pagename) && $pagename);
             $cache = &$this->_glv_cache;	
             if (!isset($cache[$pagename])) {
                 $cache[$pagename] = $this->_backend->get_latest_version($pagename);
                 if (empty($cache[$pagename]))
                     $cache[$pagename] = 0;
-            } 
-            return $cache[$pagename];}
-	else {
+            }
+            return $cache[$pagename];
+        } else {
             return $this->_backend->get_latest_version($pagename); 
         }
     }

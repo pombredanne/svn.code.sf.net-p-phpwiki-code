@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.69 2004-03-17 20:23:43 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.70 2004-03-30 02:14:03 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -23,34 +23,39 @@
  * 'size'     _("Size")
  * 'owner'    _("Owner"),  //todo: implement this again for PagePerm
  * 'group'    _("Group"),  //todo: implement this for PagePerm
-
- * More columns for special plugins:
- *    Todo: move this admin action away, not really an info column
  * 'checkbox'  A selectable checkbox appears at the left.
+ *             Todo: move this admin action away, not really an info column
+ *
+ * Special, custom columns:
  * 'remove'   _("Remove")     
  * 'perm'     _("Permission Mask")
  * 'acl'      _("ACL")
  * 'renamed_pagename'   _("Rename to")
- * 'custom'   
+ * 'content'  
+ * 'custom'   TODO: implement the above as custom columns.
+ *            See plugin/WikiTranslation
  *
  * Symbolic 'info=' arguments:
- * 'all'       All columns except remove, content and renamed_pagename
+ * 'all'       All columns except the special columns
  * 'most'      pagename, mtime, author, size, hits, ...
  * 'some'      pagename, mtime, author
  *
- * FIXME: In this refactoring I have un-implemented _ctime, _cauthor, and
+ * FIXME: In this refactoring I (Jeff) have un-implemented _ctime, _cauthor, and
  * number-of-revision.  Note the _ctime and _cauthor as they were implemented
  * were somewhat flawed: revision 1 of a page doesn't have to exist in the
  * database.  If lots of revisions have been made to a page, it's more than likely
  * that some older revisions (include revision 1) have been cleaned (deleted).
  *
+ * DONE: 
+ *   check PagePerm "list" access-type
+ *
  * TODO: 
  *   limit, offset, rows arguments for multiple pages/multiple rows.
  *
- *   check PagePerm "list" access-type
- *
  *   ->supportedArgs() which arguments are supported, so that the plugin 
  *                     doesn't explictly need to declare it
+ *   new method:
+ *     list not as <ul> or table, but as simple comma-seperated list
  */
 class _PageList_Column_base {
     var $_tdattr = array();
@@ -550,8 +555,7 @@ class PageList {
         }
         else {
             $col = $this->_columns[0];
-            $row = HTML::li(array('class' => $class),
-                            $col->_getValue($page_handle, $revision_handle));
+            $row = $col->_getValue($page_handle, $revision_handle);
         }
 
         $this->_rows[] = $row;
@@ -781,14 +785,18 @@ function flipAll(formObj) {
     }
 
     function _generateList($caption) {
-        $list = HTML::ul(array('class' => 'pagelist'), $this->_rows);
+        $list = HTML::ul(array('class' => 'pagelist'));
+        $i = 0;
+        foreach ($this->_rows as $page) {
+            $group = ($i++ / $this->_group_rows);
+            $class = ($group % 2) ? 'oddrow' : 'evenrow';
+            $list->pushContent(HTML::li(array('class' => $class),$page));
+        }
         $out = HTML();
         //Warning: This is quite fragile. It depends solely on a private variable
         //         in ->_addColumn()
-        // questionable if its of use here anyway. this is a one-col list only.
-        if (!empty($this->_columns_seen['checkbox'])) {
-            $out->pushContent($this->_jsFlipAll());
-        }
+        // Questionable if its of use here anyway. This is a one-col pagename list only.
+        //if (!empty($this->_columns_seen['checkbox'])) $out->pushContent($this->_jsFlipAll());
         if ($caption)
             $out->pushContent(HTML::p($caption));
         $out->pushContent($list);
@@ -802,6 +810,12 @@ function flipAll(formObj) {
         if ($this->_messageIfEmpty)
             $html->pushContent(HTML::blockquote(HTML::p($this->_messageIfEmpty)));
         return $html;
+    }
+
+    // Condense list: "Page1, Page2, ..." 
+    // Alternative $seperator = HTML::Raw(' &middot; ')
+    function _generateCommaList($seperator = ', ') {
+        return HTML(join($seperator, $list));
     }
 
 };
