@@ -3,24 +3,13 @@ BEGIN {
   print ("<?php\n");
 }
 
-/^msgid ""/ {
-  if (msgid && str)
-    print ("$locale[\"" msgid "\"] =\n   \"" str "\";");
-  str="";
-  next;
-}
-
 /^msgid "/ { #"{
-  if (msgid && str)
+  if (msgid && str) {
+    gsub(/\$/, "\\$", str);
     print ("$locale[\"" msgid "\"] =\n   \"" str "\";");
+  }
   str = substr ($0, 8, length ($0) - 8);
   msgstr="";
-}
-
-/^msgstr ""/ {
-  msgid=str;
-  str="";
-  next;
 }
 
 /^msgstr "/ { #"{
@@ -35,8 +24,10 @@ BEGIN {
 }
 
 END {
-  if (msgid && str)
+  if (msgid && str) {
+    gsub(/\$/, "\\$", str);
     print ("$locale[\"" msgid "\"] =\n   \"" str "\";");
+  }
   print ("\n;?>");
 }
 
