@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki-topbottombars.css,v 1.1 2002-03-06 02:21:16 carstenklapp Exp $
+ * $Id: phpwiki-topbottombars.css,v 1.2 2003-02-26 22:27:13 dairiki Exp $
  *
  */
 @import url("phpwiki.css");
@@ -19,7 +19,7 @@ body {
  * Note that div.toolbar is used for other toolbars besides
  * #navbar and #actionbar, such as in editpage and removepage
  */
-div#navbar, div#actionbar {
+div#header, div#footer {
   background: ivory;
   margin: 0px;
   padding: 0px;
@@ -39,7 +39,7 @@ hr.toolbar {
 /**
  * Navbar
  */
-div#navbar {
+div#header {
   top: 0px;
   padding-top: 1.5ex;
   border-bottom: 1px solid #b2b2b2;
@@ -52,7 +52,7 @@ div#navbuttons {
 /**
  * Actionbar
  */
-div#actionbar {
+div#footer {
   border-top: 1px solid #b2b2b2;
   /* kludge for Mozilla */
     bottom: -1ex;

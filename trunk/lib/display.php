@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.42 2003-02-21 04:12:05 dairiki Exp $');
+rcs_id('$Id: display.php,v 1.43 2003-02-26 22:27:19 dairiki Exp $');
 
 require_once('lib/Template.php');
 
@@ -88,7 +88,7 @@ function actionPage(&$request, $action) {
     flush();
 }
 
-function displayPage(&$request, $tmpl = 'browse') {
+function displayPage(&$request, $template=false) {
     $pagename = $request->getArg('pagename');
     $version = $request->getArg('version');
     $page = $request->getPage();
@@ -129,37 +129,39 @@ function displayPage(&$request, $tmpl = 'browse') {
                                    'class' => 'backlinks'),
                              $splitname);
         $pagetitle->addTooltip(sprintf(_("BackLinks for %s"), $pagename));
+        if ($request->getArg('frame'))
+            $pagetitle->setAttr('target', '_top');
     }
 
-    $redirect_from = $request->getArg('redirectfrom');
-    if ($redirect_from) {
-        $redirect_from = fmt("Redirected from %s", RedirectorLink($redirect_from));
+    $pageheader = $pagetitle;
+    if (($redirect_from = $request->getArg('redirectfrom'))) {
+        $redirect_message = HTML::span(array('class' => 'redirectfrom'),
+                                       fmt("(Redirected from %s)",
+                                           RedirectorLink($redirect_from)));
+        $pageheader = HTML($pagetitle, $redirect_message);
     }
-
-    //include_once('lib/BlockParser.php');
 
     $request->appendValidators(array('pagerev' => $revision->getVersion(),
                                      '%mtime' => $revision->get('mtime')));
 
-    if ($frame = $request->getArg('frame')) {
-        if (in_array($frame, array('body','browse','editpage')))
-            $template = Template($frame, array('CONTENT' => $revision->getTransformedContent()));
-        elseif ($frame == 'top')
-            $template = Template($frame, array('framesrc' => $request->getArg('framesrc')));
-        else
-            $template = Template($frame);
-    } else {
-        $transformedContent = $revision->getTransformedContent();
-        $template = Template('browse', array('CONTENT' => $transformedContent));
-    }
-
+    // FIXME: should probably be in a template...
     header("Content-Type: text/html; charset=" . CHARSET); // FIXME: this gets done twice?
     
-    GeneratePage($template, $pagetitle, $revision,
-                 array('ROBOTS_META'	=> 'index,follow',
-                       'PAGE_DESCRIPTION' => GleanDescription($revision),
-                       'REDIRECT_FROM' => $redirect_from));
+    $toks['CONTENT'] = new Template('browse', $request,
+                                    $revision->getTransformedContent());
+    
     $request->checkValidators();
+    
+    $toks['TITLE'] = $pagetitle;
+    $toks['HEADER'] = $pageheader;
+    $toks['revision'] = $revision;
+    $toks['ROBOTS_META'] = 'index,follow';
+    $toks['PAGE_DESCRIPTION'] = GleanDescription($revision);
+    
+    if (!$template)
+        $template = new Template('html', $request);
+
+    $template->printExpansion($toks);
     flush();
     $page->increaseHitCount();
 }

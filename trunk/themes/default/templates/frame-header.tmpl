@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-/* $Id: html.tmpl,v 1.2 2003-02-26 22:27:18 dairiki Exp $
+/* $Id: frame-header.tmpl,v 1.1 2003-02-26 22:27:17 dairiki Exp $
  *
  * This template is responsible mainly for the outer level <html> stuff.
  */
@@ -9,8 +9,5 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <?= Template('head') ?>
-<?= Template('body') ?>
-<!-- phpwiki source:
-<?=$RCS_IDS?>
--->
+<body><?= Template('top') ?></body>
 </html>

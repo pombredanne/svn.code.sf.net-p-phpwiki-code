@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.48 2003-02-21 22:58:58 dairiki Exp $');
+<?php rcs_id('$Id: Template.php,v 1.49 2003-02-26 22:27:18 dairiki Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -110,6 +110,8 @@ class Template
             $page = &$request->getPage();
         
         global $Theme, $RCS_IDS;
+
+        
         
         //$this->_dump_template();
 
@@ -208,14 +210,6 @@ function GeneratePage($content, $title, $page_revision = false, $args = false) {
     if (!isset($args['HEADER']))
         $args['HEADER'] = $title;
     
-    if ($frame = $request->getArg('frame')) {
-        if ($frame == 'top') $args['framesrc'] = $request->getArg('framesrc');
-        printXML(new Template('head', $request, $args));
-        printXML(new Template($frame, $request, $args));
-        $request->setArg('framesrc',false);
-        return;
-    }
-
     printXML(new Template('html', $request, $args));
 }
 

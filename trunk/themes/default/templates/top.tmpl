@@ -1,6 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: top.tmpl,v 1.23 2003-02-15 23:32:57 dairiki Exp $ -->
-<div id="navbar" class="toolbar">
+<!-- $Id: top.tmpl,v 1.24 2003-02-26 22:27:18 dairiki Exp $ -->
 <?php
 global $HIDE_TOOLBARS;
 if (!$HIDE_TOOLBARS) {
@@ -13,16 +12,9 @@ if (!$HIDE_TOOLBARS) {
                         align="right" /></a></div>
 
 <!-- The top navigation/search bar -->
-<?= Template('navbar') ?>
+<div class="toolbar"><?= Template('navbar') ?></div>
 <?php } ?>
+
 <!-- Page title -->
-<h1><?= $HEADER ?>
-  <?php if ($REDIRECT_FROM) { ?>
-    <span class="redirectfrom">(<?=$REDIRECT_FROM?>)</span>
-  <?php } ?>
-</h1>
-</div>
-<?php if ($request->getArg('frame')) { ?>
-<!-- The included frame url for safety -->
-<p class="transclusion-title"><?fmt("Included frame from %s",$framesrc)?></p>
-<?php } ?>
+<h1><?= $HEADER ?></h1>
+
