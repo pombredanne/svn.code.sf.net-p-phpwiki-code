@@ -4,7 +4,7 @@
 <html>
 <head>
 <!-- phpwiki source:
-$Id: editpage.html,v 1.41 2002-01-07 18:40:06 carstenklapp Exp $
+$Id: editpage.html,v 1.42 2002-01-10 22:45:50 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <base href="${BASE_URL}" />
@@ -34,8 +34,7 @@ ${EDIT_WARNINGS}
 <textarea class="wikiedit"
           name="content"
           rows="${EDIT_AREA_HEIGHT}"
-          cols="${EDIT_AREA_WIDTH}"
-          wrap="virtual">$FORMVARS[content]</textarea>
+          cols="${EDIT_AREA_WIDTH}">$FORMVARS[content]</textarea>
 
 <div class="toolbar" style="text-align: center;">
   $_("Summary:")<input type="text" class="wikitext"
@@ -57,11 +56,11 @@ ${EDIT_WARNINGS}
     <?php } else { ?>
       <?php printf(_("Author will be logged as %s."),"<em>${USERID}</em>"); ?>
        | <a class="wikiaction" href="${ACTION}login">$_("SignIn")<small>*</small></a>
-<br><small>*backup and reload after signing in</small>
+<br /><small>*backup and reload after signing in</small>
     <?php } ?>
   </td>
 </tr></table>
-<p style="clear: both; padding: 2ex 0ex 0ex;">${EDIT_TIPS}</p>
+<div style="clear: both; padding: 2ex 0ex 0ex;">${EDIT_TIPS}</div>
 <hr noshade="noshade" />
 <div class="wiki-edithelp">
 <?plugin IncludePage page=_("TextFormattingRules") section=_("Synopsis") quiet=1?>
