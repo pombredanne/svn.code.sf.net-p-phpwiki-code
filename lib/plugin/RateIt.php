@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RateIt.php,v 1.14 2004-07-08 20:30:07 rurban Exp $');
+rcs_id('$Id: RateIt.php,v 1.15 2004-07-09 12:50:50 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -94,7 +94,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.14 $");
+                            "\$Revision: 1.15 $");
     }
 
     function RatingWidgetJavascript() {
@@ -180,7 +180,7 @@ function deleteRating(actionImg, page, dimension) {
         global $WikiTheme;
         //$this->_request = & $request;
         //$this->_dbi = & $dbi;
-        $user = & $request->getUser();
+        $user = $request->getUser();
         //FIXME: fails on test with DumpHtml:RateIt
         if (!is_object($user)) return HTML();
         $this->userid = $user->UserName();
@@ -401,6 +401,10 @@ function deleteRating(actionImg, page, dimension) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2004/07/08 20:30:07  rurban
+// plugin->run consistency: request as reference, added basepage.
+// encountered strange bug in AllPages (and the test) which destroys ->_dbi
+//
 // Revision 1.12  2004/06/30 19:59:07  dfrankow
 // Make changes suitable so that wikilens theme (and wikilens.org) work properly.
 // + Remove predictions (for now)
