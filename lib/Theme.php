@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.43 2002-02-22 20:03:50 carstenklapp Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.44 2002-02-26 11:08:41 lakka Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -171,8 +171,15 @@ class Theme {
     //
     ////////////////////////////////////////////////////////////////
 
-    var $_dateFormat = "%B %e, %Y";
+    // Note:  Windows' implemetation of strftime does not include certain
+	// format specifiers, such as %e (for date without leading zeros).  In
+	// general, see:
+	// http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vclib/html/_crt_strftime.2c_.wcsftime.asp
+	// As a result, we have to use %d, and strip out leading zeros ourselves.
+
+    var $_dateFormat = "%B %d, %Y";
     var $_timeFormat = "%I:%M %p";
+
     var $_showModTime = true;
 
     /**
@@ -212,7 +219,9 @@ class Theme {
         global $request;
         
         $offset_time = $time_t + 3600 * $request->getPref('timeOffset');
-        return strftime($this->_dateFormat, $offset_time);
+        // strip leading zeros from date elements (ie space followed by zero)
+        return preg_replace('/ 0/', ' ', 
+                            strftime($this->_dateFormat, $offset_time));
     }
 
     /**
