@@ -19,8 +19,9 @@ with xgettext you will want to read this document to be aware of
 translation issues and tips specific to PhpWiki; perhaps skimming
 through the Makefile section.
 
-PhpWiki does not require gettext support to be compiled in to PHP.  It
-automatically provides a pure PHP replacement in case it's not available.
+PhpWiki does not require gettext support to be compiled in to PHP. It
+automatically provides a pure PHP replacement in case it's not
+available.
 
 
 Formalities
@@ -228,11 +229,11 @@ important translation tasks:
    '.po' files, for each of the locale subdirectories.
 
 When a new language module is added to PhpWiki, the 'Makefile' in the
-'locale' folder also needs to be updated.  The process
+'locale' folder also needs to be updated. The process:
 
  0. Change into the locale directory (if you're not already there.)
 
- 1. If there isn't one alreayd, Create a new .po (in the po/ subdirectory)
+ 1. If there isn't one already, Create a new .po (in the po/ subdirectory)
     for your translations:
 
       cp po/phpwiki.pot po/xx.po
@@ -261,6 +262,37 @@ Make will then automatically generate and update all the necessary
 files. If this step fails because you don't have the necessary
 software installed, then send your '.po' files to one of the PhpWiki
 developers who will run Makefile for you.
+
+
+NOTE: "Fuzzy" translations will NOT be included in the final '.mo' and
+'phpwiki.php' files. If you are not using the emacs editor, make sure
+to remove the fuzzy marks from any *completed translations* before you
+run the makefile, like this:
+
+    #: ../lib/plugin/BackLinks.php:44
+    #, fuzzy, c-format
+    msgid "These pages link to %s:"
+    msgstr "%d pages pointent vers %s."
+
+should become:
+
+    #: ../lib/plugin/BackLinks.php:44
+    #, c-format
+    msgid "These pages link to %s:"
+    msgstr "%d pages pointent vers %s."
+
+and...
+
+    #: ../lib/Toolbar.php:160 ../templates/browse.html:54
+    #, fuzzy
+    msgid "Lock page"
+    msgstr "Bloquear página"
+
+should become:
+
+    #: ../lib/Toolbar.php:160 ../templates/browse.html:54
+    msgid "Lock page"
+    msgstr "Bloquear página"
 
 
 HTML Templates
@@ -311,4 +343,4 @@ Jan Nieuwenhuizen <janneke@gnu.org>
 Arno Hollosi <ahollosi@mail.com>
 Carsten Klapp <carstenklapp@mac.com>
 
-$Id: README,v 1.6 2002-01-13 22:43:08 dairiki Exp $
+$Id: README,v 1.7 2002-01-13 23:33:43 carstenklapp Exp $
