@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.41 2002-01-28 18:59:14 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.42 2002-01-28 20:02:14 dairiki Exp $');
 /**
  */
 
@@ -212,10 +212,11 @@ extends _RecentChanges_Formatter
                         $this->diffLink($rev), ' ',
                         $this->pageLink($rev), ' ',
                         $this->time($rev), ' ',
-                        ($this->importance($rev)=='minor') ? _("(minor edit)") ." " : '',
+                        $rev->get('is_minor_edit') ? " " . _("(minor edit)") . " " : '',
                         $this->summaryAsHTML($rev),
                         ' ... ',
                         $this->authorLink($rev));
+        
     }
 }
 
@@ -381,7 +382,8 @@ extends WikiPlugin
     function getArgs ($argstr, $request, $defaults = false) {
         $args = WikiPlugin::getArgs($argstr, $request, $defaults);
 
-        if ($request->getArg('action') != 'browse')
+        $action = $request->getArg('action');
+        if ($action != 'browse' && ! $request->isActionPage($action))
             $args['format'] = false; // default -> HTML
         
         if ($args['format'] == 'rss' && empty($args['limit']))

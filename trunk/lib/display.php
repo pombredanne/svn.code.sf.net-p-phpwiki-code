@@ -1,7 +1,7 @@
 <?php
 // display.php: fetch page or get default content
 // calls transform.php for actual transformation of wiki markup to HTML
-rcs_id('$Id: display.php,v 1.22 2002-01-28 18:49:08 dairiki Exp $');
+rcs_id('$Id: display.php,v 1.23 2002-01-28 20:02:14 dairiki Exp $');
 
 require_once('lib/Template.php');
 //require_once('lib/transform.php');
@@ -43,7 +43,7 @@ function GleanDescription ($rev) {
 }
 
 
-function actionPage(&$request, $actionpage) {
+function actionPage(&$request, $action) {
     global $Theme;
     
     $pagename = $request->getArg('pagename');
@@ -51,14 +51,16 @@ function actionPage(&$request, $actionpage) {
 
     $page = $request->getPage();
     $revision = $page->getCurrentRevision();
-    
-    $view = $actionpage->getCurrentRevision();
+
+    $dbi = $request->getDbh();
+    $actionpage = $dbi->getPage($action);
+    $actionrev = $actionpage->getCurrentRevision();
 
     $splitname = split_pagename($pagename);
     $pagetitle = HTML($actionpage->getName(), ": ",
                       $Theme->linkExistingWikiWord($pagename, false, $version));
 
-    $template = Template('browse', array('CONTENT' => TransformRevision($view)));
+    $template = Template('browse', array('CONTENT' => TransformRevision($actionrev)));
     
     GeneratePage($template, $pagetitle, $revision);
     flush();
