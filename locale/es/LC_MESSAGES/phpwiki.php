@@ -102,5 +102,7 @@ $locale["%d most popular nearby:"] =
    "%d las m&aacute;s populares:";
 $locale["Stack bounds exceeded in SetHTMLOutputMode"] =
    "L&iacute;mites de la pila excedidos en SetHTMLOutputMode";
+$locale["RecentChanges"] =
+   "CambiosRecientes";
 
 ;?>

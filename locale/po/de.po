@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.8\n"
-"POT-Creation-Date: 2000-11-02 22:18+0100\n"
+"POT-Creation-Date: 2000-11-13 12:30+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Arno Hollosi <ahollosi@mail.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -14,23 +14,54 @@ msgstr ""
 "Content-Type: text/plain; charset=8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lib/config.php:148
+#: admin.php:26
+msgid "You entered an invalid login or password."
+msgstr "Du hast ein ungültiges Login oder Passwort eingegeben."
+
+#: admin.php:47
+#, c-format
+msgid "You are about to remove '%s' permanently!"
+msgstr "Du bist im Begriff '%s' permanent zu löschen!"
+
+#: admin.php:50
+#, c-format
+msgid "Click %shere%s to remove the page now."
+msgstr "Klicke %shier%s um die Seite jetzt zu löschen."
+
+#: admin.php:53
+msgid "Otherwise press the \"Back\" button of your browser."
+msgstr "Anderenfalls benütze die \"Zurück\" Funktion deines Browsers."
+
+#: admin.php:55
+msgid "Function not yet implemented."
+msgstr "Funktion noch nicht implementiert."
+
+#: admin.php:57 admin.php:65
+msgid "Remove page"
+msgstr "Seite löschen"
+
+#: admin.php:63
+#, c-format
+msgid "Removed page '%s' succesfully."
+msgstr "Seite '%s' erfolgreich gelöscht."
+
+#: lib/config.php:159
 msgid "templates/browse.html"
 msgstr "locale/de/templates/browse.html"
 
-#: lib/config.php:149
+#: lib/config.php:160
 msgid "templates/editpage.html"
 msgstr "locale/de/templates/editpage.html"
 
-#: lib/config.php:150
+#: lib/config.php:161
 msgid "templates/editlinks.html"
 msgstr "locale/de/templates/editlinks.html"
 
-#: lib/config.php:151
+#: lib/config.php:162
 msgid "templates/message.html"
 msgstr "locale/de/templates/message.html"
 
-#: lib/config.php:167
+#: lib/config.php:178
 msgid "./pgsrc"
 msgstr "locale/de/pgsrc"
 
@@ -135,7 +166,7 @@ msgstr "%d Treffer in %d Seiten."
 msgid "Full Text Search Results"
 msgstr "Volltext-Suchresultate"
 
-#: lib/msql.php:29 lib/mysql.php:33
+#: lib/msql.php:29 lib/mysql.php:35
 msgid "Cannot establish connection to database, giving up."
 msgstr "Kann Verbindung zu Datenbank nicht aufbauen - Abbruch."
 
@@ -144,47 +175,52 @@ msgstr "Kann Verbindung zu Datenbank nicht aufbauen - Abbruch."
 msgid "Error message: %s"
 msgstr "Fehlermeldung: %s"
 
-#: lib/msql.php:35 lib/mysql.php:39
+#: lib/msql.php:35 lib/mysql.php:41
 #, c-format
 msgid "Cannot open database %s, giving up."
 msgstr "Kann Datenbank %s nicht öffnen - Abbruch."
 
-#: lib/msql.php:200 lib/msql.php:276
+#: lib/msql.php:210 lib/msql.php:286
 #, c-format
 msgid "Insert/update failed: %s"
 msgstr "Einfügen/Verändern fehlgeschlagen: %s"
 
-#: lib/msql.php:211 lib/msql.php:286
+#: lib/msql.php:221 lib/msql.php:296
 #, c-format
 msgid "Delete on %s failed: %s"
 msgstr "Löschen in %s fehlgeschlagen: %s"
 
-#: lib/msql.php:227 lib/msql.php:302
+#: lib/msql.php:237 lib/msql.php:312
 #, c-format
 msgid "Insert into %s failed: %s"
 msgstr "Einfügen in %s fehlgeschlagen: %s"
 
-#: lib/mysql.php:35 lib/mysql.php:41 lib/mysql.php:115
+#: lib/mysql.php:37 lib/mysql.php:43 lib/mysql.php:117 lib/mysql.php:156
 #, c-format
 msgid "MySQL error: %s"
 msgstr "MySQL Fehler: %s"
 
-#: lib/mysql.php:113
+#: lib/mysql.php:115
 #, c-format
 msgid "Error writing page '%s'"
 msgstr "Fehler beim Schreiben der Seite '%s'"
 
+#: lib/mysql.php:154
+#, c-format
+msgid "Cannot delete '%s' from table '%s'"
+msgstr "Kann nicht '%s' aus Tabelle '%s' löschen"
+
 #: lib/pageinfo.php:9
 msgid "Enter a page name"
-msgstr ""
+msgstr "Seitenname eingeben"
 
-#: lib/pageinfo.php:10
+#: lib/pageinfo.php:10 lib/stdlib.php:239
 msgid "Go"
-msgstr ""
+msgstr "Los"
 
 #: lib/pageinfo.php:21
 msgid "Show the page source and references"
-msgstr ""
+msgstr "Zeige den Seitenquelltext und die Verweise"
 
 #: lib/pageinfo.php:26 lib/pageinfo.php:75
 msgid "PageInfo"
@@ -193,7 +229,7 @@ msgstr "SeitenInfo"
 #: lib/pageinfo.php:36
 #, c-format
 msgid "Page name '%s' is not in the database"
-msgstr ""
+msgstr "Seite '%s' ist nicht in der Datenbank"
 
 #: lib/pageinfo.php:64
 #, fuzzy
@@ -211,36 +247,48 @@ msgid ""
 "saved the page while you were editing the page too. If saving proceeded now "
 "changes from the previous author would be lost."
 msgstr ""
+"PhpWiki kann deine Veränderungen nicht speichern, da ein andererBenützer die "
+"Seite verändert und gespeichert hat, während du diese Seiteeditiert hast. "
+"Wenn die Seite jetzt gespeichert werden würde, dann würdendie Veränderungen "
+"des anderen Benützers verloren gehen."
 
 #: lib/savepage.php:20
 msgid "In order to recover from this situation follow these steps:"
-msgstr ""
+msgstr "Um diese Situation zu korrigieren folge bitte den folgenden Schritten:"
 
 #: lib/savepage.php:22
 msgid "Use your browser's <b>Back</b> button to go back to the edit page."
 msgstr ""
+"Benütze die <b>Zurück</b> Funktion deines Browsers um zur Editierseitezu "
+"gelangen."
 
 #: lib/savepage.php:24
 msgid ""
 "Copy your changes to the clipboard or to another temporary place (e.g. text "
 "editor)."
 msgstr ""
+"Kopiere deine Veränderungen in die Zwischenablage oder an einen "
+"anderentemporären Platz (z.B. einen Texteditor)"
 
 #: lib/savepage.php:26
 msgid ""
 "<b>Reload</b> the page. You should now see the most current version of the "
 "page. Your changes are no longer there."
 msgstr ""
+"<b>Aktualisiere</b> die Seite. Du solltest jetzt die neueste Versionder "
+"Seite sehen. Deine Veränderungen sind verschwunden."
 
 #: lib/savepage.php:28
 msgid ""
 "Make changes to the file again. Paste your additions from the clipboard (or "
 "text editor)."
 msgstr ""
+"Editiere die Seite erneut. Kopiere deine Veränderungen aus derZwischenablage "
+"(oder aus dem Texteditor)"
 
 #: lib/savepage.php:30
 msgid "Press <b>Save</b> again."
-msgstr ""
+msgstr "Drücke nochmal <b>Speichern</b>"
 
 #: lib/savepage.php:36
 #, fuzzy, c-format
@@ -280,14 +328,14 @@ msgstr "Die %d besten hinausgehenden Links:"
 msgid "%d most popular nearby:"
 msgstr "Die %d meistbesuchten Seiten in der Nähe:"
 
-#: lib/stdlib.php:186 lib/stdlib.php:194
+#: lib/stdlib.php:207 lib/stdlib.php:215
 msgid "Search"
-msgstr ""
+msgstr "Suche"
 
-#: lib/stdlib.php:295
+#: lib/stdlib.php:330
 msgid "Stack bounds exceeded in SetHTMLOutputMode"
 msgstr "Interner Fehler: Stackgrenze in SetHTMLOutputMode überschritten."
 
-#: lib/stdlib.php:349 lib/stdlib.php:412
+#: lib/stdlib.php:384 lib/stdlib.php:447
 msgid "RecentChanges"
 msgstr "FrischeSeiten"

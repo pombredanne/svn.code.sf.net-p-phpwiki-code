@@ -106,5 +106,7 @@ $locale["%d best outgoing links:"] =
    "%d beste uitgaande koppelingen:";
 $locale["%d most popular nearby:"] =
    "%d meest gevraagde in de buurt:";
+$locale["RecentChanges"] =
+   "RecenteVeranderingen";
 
 ;?>
