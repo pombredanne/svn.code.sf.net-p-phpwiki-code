@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.43 2002-01-26 07:01:42 carstenklapp Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.44 2002-01-26 07:03:31 carstenklapp Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -418,7 +418,6 @@ class loadFileSet extends fileSet {
     function _filenameSelector($filename) {
         if (($this->_files && !in_array($fn, $this->_files)) || ($this->_exclude && in_array($fn, $this->_exclude)))
         {
-            global $Theme;
             $this->_skiplist[] = $filename;
             return false;
         } else {
