@@ -1,0 +1,64 @@
+<?php // -*-html-*- ?>
+<!-- $Id: signin.tmpl,v 1.1 2004-03-01 09:38:01 rurban Exp $ -->
+<script type="text/javascript">
+<!--
+function popup(mylink, windowname)
+{
+if (! window.focus) return true;
+var href;
+if (typeof(mylink) == 'string')
+   href=mylink;
+else
+   href=mylink.href;
+window.open(href, windowname, 'width=600,height=430,scrollbars=yes,resizable=yes,toolbar=yes');
+return false;
+}
+//-->
+</script>
+<?php
+
+     $Sep = $Theme->getButtonSeparator();
+     $SignOutB = $Theme->makeButton(_("Sign Out"), "javascript:SignOut();", 'wikiaction');
+
+     if (empty($FORMNAME))
+         $FORMNAME = 'signin';
+     else
+         $NOFORM = true;
+?>
+<?php if (empty($NOFORM)) { ?>
+  <form method="post" action="<?=$request->getURLtoSelf()?>" accept-charset="<?=CHARSET?>" name="<?=$FORMNAME?>">
+  <?= HiddenInputs($request->getArgs(), false, array('auth')) ?>
+<?php } ?>
+<?php if ($user->isSignedIn()) {  ?>
+  <?= fmt("You are signed in as %s", WikiLink($user->getId(), 'auto')) ?>
+  <?=$Sep?>
+  <script language="JavaScript" type="text/javascript"><!--
+    document.write('<input type="hidden" name="auth[logout]" value="0" />');
+    function SignOut() { 
+      document.forms["<?=$FORMNAME?>"].elements["auth[logout]"].value = 1;
+      document.forms["<?=$FORMNAME?>"].submit();
+    }
+    document.write('<?=$SignOutB?>'); // -->
+  </script>
+  <noscript>
+    <?= Button("submit:auth[logout]", _("Sign Out"), 'wikiaction') ?>
+  </noscript>
+<?php } else { ?>
+  <?php $SignInInput = HTML::input(array('type' => 'text',
+                                         'name' => "auth[userid]",
+                                         'size' => 12,
+                                         'maxlength' => 256,
+					 //'onchange' => "popup('/EditingPolicy.html','PleaseReadThisFirst');this.form.submit();"));
+                                         'onchange' => "this.form.submit();"));
+        $SignInInput->addTooltip(_("Enter your UserId to sign in")) ?>
+  <?= Button("submit:auth[login]", _("Sign In"), 'wikiaction')?>
+  <?= $SignInInput ?>
+  <noscript>
+    <?= Button("submit:auth[login]", _("Sign In"), 'wikiaction')?>
+  </noscript>
+
+<?php } ?>
+
+<?php if (empty($NOFORM)) { ?>
+  </form>
+<?php } ?>
