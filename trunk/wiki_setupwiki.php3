@@ -1,3 +1,4 @@
+<!-- $Id: wiki_setupwiki.php3,v 1.3 2000-06-05 21:46:50 wainstead Exp $ -->
 <?
 
    /* Add the very first pages to a wiki */

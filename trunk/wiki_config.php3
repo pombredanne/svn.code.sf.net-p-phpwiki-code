@@ -1,3 +1,4 @@
+<!-- $Id: wiki_config.php3,v 1.4 2000-06-05 21:46:50 wainstead Exp $ -->
 <?
    /*
       Constants and settings. Edit the values below for

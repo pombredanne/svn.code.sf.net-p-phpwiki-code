@@ -1,3 +1,4 @@
+<!-- $Id: wiki_fullsearch.php3,v 1.4 2000-06-05 21:46:50 wainstead Exp $ -->
 <?
    /*
       Search the text of pages for a match.

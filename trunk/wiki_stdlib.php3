@@ -1,3 +1,4 @@
+<!-- $Id: wiki_stdlib.php3,v 1.9 2000-06-05 21:46:50 wainstead Exp $ -->
 <?
    /*
       Standard functions for Wiki functionality

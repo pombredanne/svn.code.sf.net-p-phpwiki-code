@@ -1,3 +1,4 @@
+<!-- $Id: index.php3,v 1.3 2000-06-05 21:46:50 wainstead Exp $ -->
 <?
    /*
       The main page, i.e. the main loop.
