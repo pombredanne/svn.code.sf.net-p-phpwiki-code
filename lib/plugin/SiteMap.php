@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SiteMap.php,v 1.11 2004-03-24 19:39:03 rurban Exp $');
+rcs_id('$Id: SiteMap.php,v 1.12 2004-11-01 09:14:25 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -57,7 +57,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     function getDefaultArguments() {
@@ -213,7 +213,7 @@ extends WikiPlugin
             }
         }
         if (empty($includepages)) {
-            return TransformText($out, 1.0, $page); 
+            return TransformText($out, 2.0, $page); 
         } else {
             return $html; 
         }
@@ -221,6 +221,20 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/03/24 19:39:03  rurban
+// php5 workaround code (plus some interim debugging code in XmlElement)
+//   php5 doesn't work yet with the current XmlElement class constructors,
+//   WikiUserNew does work better than php4.
+// rewrote WikiUserNew user upgrading to ease php5 update
+// fixed pref handling in WikiUserNew
+// added Email Notification
+// added simple Email verification
+// removed emailVerify userpref subclass: just a email property
+// changed pref binary storage layout: numarray => hash of non default values
+// print optimize message only if really done.
+// forced new cookie policy: delete pref cookies, use only WIKI_ID as plain string.
+//   prefs should be stored in db or homepage, besides the current session.
+//
 // Revision 1.10  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //
