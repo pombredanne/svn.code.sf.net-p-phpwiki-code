@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.28 2004-06-16 11:51:04 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.29 2004-06-20 15:30:04 rurban Exp $');
 
 require_once(dirname(__FILE__).'/HtmlElement.php');
 if (isset($GLOBALS['ErrorManager'])) return;
@@ -231,7 +231,7 @@ class ErrorManager
                     or (!function_exists('is_a') and 
                     (
                      // stdlib independent isa()
-                     (strtolower(get_class($error)) == 'PhpErrorOnce')
+                     (strtolower(get_class($error)) == 'phperroronce')
                      or (is_subclass_of($error, 'PhpErrorOnce'))))) {
                     $error->removeDoublettes($this->_postponed_errors);
                     if ( $error->_count < 2 )
@@ -528,6 +528,9 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.28  2004/06/16 11:51:04  rurban
+// fixed typo: undefined object #235
+//
 // Revision 1.27  2004/06/13 09:38:20  rurban
 // isa() workaround, if stdlib.php is not loaded
 //

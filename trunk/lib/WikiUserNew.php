@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.98 2004-06-16 21:24:31 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.99 2004-06-20 15:30:05 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -413,7 +413,7 @@ class _WikiUser
         if (empty($this->_auth_methods)) 
             $this->_auth_methods = $GLOBALS['USER_AUTH_ORDER'];
         if (empty($this->_current_index)) {
-            if (get_class($this) != '_passuser') {
+            if (strtolower(get_class($this)) != '_passuser') {
             	$this->_current_method = substr(get_class($this),1,-8);
                 $this->_current_index = $this->array_position($this->_current_method,
                                                               $this->_auth_methods);
@@ -1105,7 +1105,7 @@ extends _AnonUser
                 return _AdoDbPassUser::setPreferences($prefs, $id_only);
             }
             elseif ($this->_prefs->_method == 'SQL') {
-                _PearDbPassUser::_PearDbPassUser($this->_userid,$prefs);
+                _PearDbPassUser::_PearDbPassUser($this->_userid, $prefs);
                 return _PearDbPassUser::setPreferences($prefs, $id_only);
             }
         }
@@ -1127,10 +1127,10 @@ extends _AnonUser
     function userExists() {
         //if ($this->_HomePagehandle) return true;
         $class = $this->nextClass();
-        while ($user = new $class($this->_userid,$this->_prefs)) {
+        while ($user = new $class($this->_userid, $this->_prefs)) {
             //todo: with php5 comment the following line:
             /*PHP5 patch*/$this = $user;
-            //UpgradeUser($this,$user);
+            UpgradeUser($this,$user);
             if ($user->userExists()) {
                 return true;
             }
@@ -3031,6 +3031,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.98  2004/06/16 21:24:31  rurban
+// do not display no-connect warning: #2662
+//
 // Revision 1.97  2004/06/16 13:21:16  rurban
 // stabilize on failing ldap queries or bind
 //
