@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRename.php,v 1.1 2004-02-11 20:00:16 rurban Exp $');
+rcs_id('$Id: WikiAdminRename.php,v 1.2 2004-02-12 11:45:11 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -63,12 +63,13 @@ extends WikiPlugin_WikiAdminSelect
         return str_replace($from,$to,$name);
     }
 
-    function renamePages(&$request, $pages, $from, $to) {
+    function renamePages(&$dbi, &$request, $pages, $from, $to) {
         $ul = HTML::ul();
-        $dbi = $request->getDbh();
         $count = 0;
         foreach ($pages as $name) {
             if (($newname = $this->renameHelper($name,$from,$to)) and $newname != $name) {
+                //Fixme!
+                break;
                 $dbi->renamePage($name,$newname); /* not yet implemented */
                 $ul->pushContent(HTML::li(fmt("Renamed page '%s' to '%s'.", $name, $newname)));
                 $count++;
@@ -76,9 +77,16 @@ extends WikiPlugin_WikiAdminSelect
                 $ul->pushContent(HTML::li(fmt("Couldn't rename page '%s' to '%s'.", $name, $newname)));
             }
         }
-        $dbi->touch();
-        return HTML($ul,
-                    HTML::p(fmt("%s pages have been permanently renamed.",$count)));
+        if ($count) {
+            $dbi->touch();
+            return HTML($ul,
+                        HTML::p(fmt("%s pages have been permanently renamed.",$count)),
+                        HTML::p(HTML::em(fmt("WikiDB::renamePage(\"%s\",\"%s\") not yet implemented for this backend.",$name,$newname))));
+        } else {
+            return HTML($ul,
+                        HTML::p(fmt("No pages renamed.")),
+                        HTML::p(HTML::em(fmt("WikiDB::renamePage(\"%s\",\"%s\") not yet implemented for this backend.",$name,$newname))));
+        }
     }
     
     function run($dbi, $argstr, $request) {
@@ -103,7 +111,7 @@ extends WikiPlugin_WikiAdminSelect
             // FIXME: error message if not admin.
             if ($post_args['action'] == 'verify') {
                 // Real action
-                return $this->renamePages($request, $p, $post_args['from'], $post_args['to']);
+                return $this->renamePages($dbi, $request, $p, $post_args['from'], $post_args['to']);
             }
 
             if ($post_args['action'] == 'select') {
@@ -135,24 +143,12 @@ extends WikiPlugin_WikiAdminSelect
             $header->pushContent(
               HTML::p(HTML::strong(
                                    _("Are you sure you want to permanently rename the selected files?"))));
-            $header->pushContent(_("Rename")." "._("from").': ');
-            $header->pushContent(HTML::input(array('name' => 'admin_rename[from]',
-                                                   'value' => $post_args['from'])));
-            $header->pushContent(' '._("to").': ');
-            $header->pushContent(HTML::input(array('name' => 'admin_rename[to]',
-                                                   'value' => $post_args['to'])));
-            $header->pushContent(' '._("(no regex, case-sensitive)"));
-            $header->pushContent(HTML::p());
+            $header = $this->renameForm($header, $post_args);
         }
         else {
             $button_label = _("Rename selected pages");
             $header->pushContent(HTML::p(_("Select the pages to rename:")));
-            $header->pushContent(_("Rename")." "._("from").': ');
-            $header->pushContent(HTML::input(array('name' => 'admin_rename[from]')));
-            $header->pushContent(' '._("to").': ');
-            $header->pushContent(HTML::input(array('name' => 'admin_rename[to]')));
-            $header->pushContent(' '._("(no regex, case-sensitive)"));
-            $header->pushContent(HTML::p());
+            $header = $this->renameForm($header, $post_args);
         }
 
 
@@ -170,9 +166,25 @@ extends WikiPlugin_WikiAdminSelect
                                              'require_authority_for_post' => WIKIAUTH_ADMIN)),
                           $buttons);
     }
+
+    function renameForm(&$header, $post_args) {
+        $header->pushContent(_("Rename")." "._("from").': ');
+        $header->pushContent(HTML::input(array('name' => 'admin_rename[from]',
+                                               'value' => $post_args['from'])));
+        $header->pushContent(' '._("to").': ');
+        $header->pushContent(HTML::input(array('name' => 'admin_rename[to]',
+                                               'value' => $post_args['to'])));
+        $header->pushContent(' '._("(no regex, case-sensitive)"));
+        $header->pushContent(HTML::p());
+        return $header;
+    }
+
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/02/11 20:00:16  rurban
+// WikiAdmin... series overhaul. Rename misses the db backend methods yet. Chmod + Chwon still missing.
+//
 
 // Local Variables:
 // mode: php
