@@ -1,0 +1,60 @@
+-- $Id: schema.mysql,v 1.3.2.1 2001-08-18 03:57:27 dairiki Exp $
+
+drop table if exists wiki;
+drop table if exists archive;
+drop table if exists wikilinks;
+drop table if exists hitcount;
+drop table if exists wikiscore;
+drop table if exists hottopics;
+
+
+CREATE TABLE wiki (
+        pagename VARCHAR(100) BINARY NOT NULL,
+        version INT NOT NULL DEFAULT 1,
+        flags INT NOT NULL DEFAULT 0,
+        author VARCHAR(100),
+        lastmodified INT NOT NULL,
+        created INT NOT NULL,
+        content MEDIUMTEXT NOT NULL,
+        refs TEXT,
+        PRIMARY KEY (pagename)
+        );
+
+CREATE TABLE archive (
+        pagename VARCHAR(100) BINARY NOT NULL,
+        version INT NOT NULL DEFAULT 1,
+        flags INT NOT NULL DEFAULT 0,
+        author VARCHAR(100),
+        lastmodified INT NOT NULL,
+        created INT NOT NULL,
+        content MEDIUMTEXT NOT NULL,
+        refs TEXT,
+        PRIMARY KEY (pagename)
+        );
+
+CREATE TABLE wikilinks (
+        frompage VARCHAR(100) BINARY NOT NULL,
+        topage VARCHAR(100) BINARY NOT NULL,
+        PRIMARY KEY (frompage, topage)
+        );
+
+CREATE TABLE hitcount (
+        pagename VARCHAR(100) BINARY NOT NULL,
+        hits INT NOT NULL DEFAULT 0,
+        PRIMARY KEY (pagename)
+        );
+
+CREATE TABLE wikiscore (
+        pagename VARCHAR(100) BINARY NOT NULL,
+        score INT NOT NULL DEFAULT 0,
+        PRIMARY KEY (pagename)
+        );
+
+
+-- tables below are not yet used
+
+CREATE TABLE hottopics (                
+        pagename VARCHAR(100) BINARY NOT NULL,
+        lastmodified INT NOT NULL,
+        PRIMARY KEY (pagename, lastmodified)
+        );
