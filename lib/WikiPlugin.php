@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.24 2002-08-27 21:51:31 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.25 2002-09-02 14:36:58 rurban Exp $');
 
 class WikiPlugin
 {
@@ -43,7 +43,7 @@ class WikiPlugin
             $defaults = $this->getDefaultArguments();
 
         list ($argstr_args, $argstr_defaults) = $this->parseArgStr($argstr);
-
+        $args = array();
         foreach ($defaults as $arg => $default_val) {
             if (isset($argstr_args[$arg]))
                 $args[$arg] = $argstr_args[$arg];

@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: top.tmpl,v 1.18 2002-08-27 21:51:31 rurban Exp $ -->
+<!-- $Id: top.tmpl,v 1.19 2002-09-02 14:36:59 rurban Exp $ -->
 <div id="navbar" class="toolbar">
 <?php
 global $HIDE_TOOLBARS;
@@ -10,7 +10,7 @@ if (!$HIDE_TOOLBARS) {
 <?php } ?>
 <!-- The logo -->
 <div align="right" id="logo"><a class="wikilink" 
-                  href="<?=WikiURL(HOME_PAGE)?>"
+                  href="<?=WikiURL(HOME_PAGE)?>" target="_top"
                   ><img src="<?=$Theme->getImageURL('logo')?>"
                         border="0" alt="<?=WIKI_NAME?>: <?=HOME_PAGE?>" 
                         align="right" /></a></div>

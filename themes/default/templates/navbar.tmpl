@@ -1,12 +1,12 @@
 <?php // -*-html-*- ?>
-<!-- $Id: navbar.tmpl,v 1.13 2002-08-27 21:51:31 rurban Exp $ -->
+<!-- $Id: navbar.tmpl,v 1.14 2002-09-02 14:36:59 rurban Exp $ -->
 <?php
 
 $s = $Theme->getButtonSeparator();
 
 ?>
 <!-- The top navigation/search bar -->
-<form action="<?= WikiURL(_("TitleSearch"))?>"
+<form action="<?= WikiURL(_("TitleSearch"))?>" target="_top"
       method="get" accept-charset="<?=CHARSET?>">
   <div id="navbuttons">
    <?= WikiLink(_("RecentChanges"), "button") ?>
