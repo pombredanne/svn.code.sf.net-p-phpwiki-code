@@ -304,7 +304,7 @@ $user_level  = 1; // BOGO (conflicts with RateIt)
 $alltests = array('InlineParserTest','HtmlParserTest',
                   'PageListTest','ListPagesTest',
                   'SetupWiki',
-                  'AllPagesTest','AllUsersTest','OrphanedPagesTest',
+                  'AllPagesTest','AllUsersTest','OrphanedPagesTest','WantedPagesTest',
                   'DumpHtml');
 // support db=file db=dba test=SetupWiki test=DumpHtml debug=num -dconstant=value
 // or  db=file,dba test=SetupWiki,DumpHtml debug=num -dconstant=value
