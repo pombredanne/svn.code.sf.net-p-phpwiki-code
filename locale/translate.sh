@@ -16,7 +16,7 @@ if [ ! -f index.php ]; then
 	exit 2
 fi
 
-ALL_LINGUAS=nl
+ALL_LINGUAS="nl es de"
 
 xgettext -L C++ -o locale/po/phpwiki.pot lib/*php
 podir=locale/po
