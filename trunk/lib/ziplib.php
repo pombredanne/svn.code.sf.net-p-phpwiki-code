@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: ziplib.php,v 1.10 2001-12-11 18:21:38 dairiki Exp $');
+rcs_id('$Id: ziplib.php,v 1.11 2001-12-12 05:12:46 carstenklapp Exp $');
 
 /**
  * GZIP stuff.
@@ -238,7 +238,7 @@ class ZipWriter
 
     $zipname = addslashes($zipname);
     header("Content-Type: application/zip; name=\"$zipname\"");
-    header("Content-Disposition: save; filename=\"$zipname\"");
+    header("Content-Disposition: attachment; filename=\"$zipname\"");
   }
 
   function addRegularFile ($filename, $content, $attrib = false) {
