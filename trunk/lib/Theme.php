@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.107 2004-06-21 16:22:29 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.108 2004-09-26 12:24:02 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -180,7 +180,7 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
 function Button ($action, $label = false, $page_or_rev = false) {
     global $WikiTheme;
 
-    if (!is_array($action) && preg_match('/submit:(.*)/A', $action, $m))
+    if (!is_array($action) && preg_match('/^submit:(.*)/', $action, $m))
         return $WikiTheme->makeSubmitButton($label, $m[1], $class = $page_or_rev);
     else
         return $WikiTheme->makeActionButton($action, $label, $page_or_rev);
@@ -1372,6 +1372,16 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.107  2004/06/21 16:22:29  rurban
+// add DEFAULT_DUMP_DIR and HTML_DUMP_DIR constants, for easier cmdline dumps,
+// fixed dumping buttons locally (images/buttons/),
+// support pages arg for dumphtml,
+// optional directory arg for dumpserial + dumphtml,
+// fix a AllPages warning,
+// show dump warnings/errors on DEBUG,
+// don't warn just ignore on wikilens pagelist columns, if not loaded.
+// RateIt pagelist column is called "rating", not "ratingwidget" (Dan?)
+//
 // Revision 1.106  2004/06/20 14:42:54  rurban
 // various php5 fixes (still broken at blockparser)
 //
