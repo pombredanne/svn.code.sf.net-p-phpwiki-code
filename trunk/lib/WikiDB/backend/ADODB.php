@@ -1,6 +1,23 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.1 2002-02-01 23:57:30 lakka Exp $');
+rcs_id('$Id: ADODB.php,v 1.2 2002-02-02 22:50:24 lakka Exp $');
 
+/*This file is part of PhpWiki.
+
+PhpWiki is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+PhpWiki is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with PhpWiki; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+*/ 
 //  Based on PearDB.php
 //
 //  Comments:
@@ -16,7 +33,9 @@ rcs_id('$Id: ADODB.php,v 1.1 2002-02-01 23:57:30 lakka Exp $');
 //require_once('DB.php');
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
-require_once('lib/ErrorManager.php');
+//require_once('lib/ErrorManager.php');
+// Error handling - calls trigger_error.  NB - does not close the connection.  Does it need to?
+include_once('lib/WikiDB/adodb/adodb-errorhandler.inc.php');
 // include the main adodb file
 require_once('lib/WikiDB/adodb/adodb.inc.php');
 
@@ -29,7 +48,7 @@ extends WikiDB_backend
         //$pearFinder->includeOnce('DB.php');
 
         // Install filter to handle bogus error notices from buggy DB.php's.
-        global $ErrorManager;
+//        global $ErrorManager;
 //        $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_pear_notice_filter'));
         
         // Open connection to database
@@ -51,18 +70,24 @@ extends WikiDB_backend
         $this->_dbh = &ADONewConnection($parsed['phptype']); // Probably only MySql works just now
 		$conn = $this->_dbh->PConnect($parsed['hostspec'],$parsed['username'], 
 					$parsed['password'], $parsed['database']);
-		
-		if ($conn === false)  {
+
+//  Error handling not needed here -all dealt with by adodb-errorhandler.inc.php		
+/*		if ($conn === false)  {
 			trigger_error(sprintf("Can't connect to database: %s",
                                   $this->_pear_error_message($conn)),
                           E_USER_ERROR);}
+*/
 
-//error handling here ???
 
 //  Uncomment the following line to enable debugging output (not very pretty!)		
 //		$this->_dbh->debug = true;
 		
 		$GLOBALS['ADODB_FETCH_MODE'] = ADODB_FETCH_ASSOC;
+
+//  The next line should speed up queries if enabled, but:
+//  1)  It only works with PHP >= 4.0.6; and
+//  2)  At the moment, I haven't figured out why thw wrong results are returned'
+//		$GLOBALS['ADODB_COUNTRECS'] = false;
 
         $prefix = isset($dbparams['prefix']) ? $dbparams['prefix'] : '';
 
@@ -112,10 +137,16 @@ extends WikiDB_backend
                                     $dbh->qstr($pagename)));
 		if (!$rs->EOF)
 		{
-			return $rs->fields["id"];							
+			$result = $rs->fields["id"];
+			$rs->Close();
+			return $result;
 		}
-		else return false;
-    }
+		else 
+		{
+			$rs->Close();
+			return false;
+    	}
+	}
         
     function get_all_pagenames() {
         $dbh = &$this->_dbh;
@@ -165,7 +196,7 @@ extends WikiDB_backend
             // Note that this will fail silently if the page does not
             // have a record in the page table.  Since it's just the
             // hit count, who cares?
-            $dbh->query(sprintf("UPDATE $page_tbl SET hits=%d WHERE pagename=%s",
+            $dbh->Execute(sprintf("UPDATE $page_tbl SET hits=%d WHERE pagename=%s",
                                 $newdata['hits'], $dbh->qstr($pagename)));
             return;
         }
@@ -189,7 +220,7 @@ extends WikiDB_backend
                 $data[$key] = $val;
         }
 
-        $dbh->query(sprintf("UPDATE $page_tbl"
+        $dbh->Execute(sprintf("UPDATE $page_tbl"
                             . " SET hits=%d, pagedata=%s"
                             . " WHERE pagename=%s",
                             $hits,
@@ -210,17 +241,16 @@ extends WikiDB_backend
         if (!$create_if_missing)
             {
 			 	$rs = $dbh->Execute($query);
-				return $fs->fields['id'];
+				return $rs->fields['id'];
 			}
         $this->lock();
         $rs = $dbh->Execute($query);
 		$id = $rs->fields['id'];
 	    if (empty($id)) {
-echo "hi";
 			// kludge necessary because an assoc array is returned with a reserved name as the key
             $rs = $dbh->Execute("SELECT MAX(id) AS M FROM $page_tbl");
 		    $id = $rs->fields['M'] + 1;
-            $dbh->query(sprintf("INSERT INTO $page_tbl"
+            $dbh->Execute(sprintf("INSERT INTO $page_tbl"
                                 . " (id,pagename,hits)"
                                 . " VALUES (%d,%s,0)",
                                 $id, $dbh->qstr($pagename)));
@@ -243,16 +273,16 @@ echo "hi";
     function get_previous_version($pagename, $version) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-//FIXME - use SELECTLIMIT        
-        $rs = $dbh->Execute(sprintf("SELECT version"
+		//Use SELECTLIMIT for maximum portability
+        $rs = $dbh->SelectLimit(sprintf("SELECT version"
                                       . " FROM $version_tbl, $page_tbl"
                                       . " WHERE $version_tbl.id=$page_tbl.id"
                                       . "  AND pagename=%s"
                                       . "  AND version < %d"
                                       . " ORDER BY version DESC"
-                                      . " LIMIT 1",
-                                      $dbh->qstr($pagename),
-                                      $version));
+                                      ,$dbh->qstr($pagename),
+                                      $version),
+									  1);
 		return (int)$rs->fields['version'];
     }
     
@@ -344,11 +374,11 @@ echo "hi";
         $id = $this->_get_pageid($pagename, true);
 
         // FIXME: optimize: mysql can do this with one REPLACE INTO (I think).
-        $dbh->query(sprintf("DELETE FROM $version_tbl"
+        $dbh->Execute(sprintf("DELETE FROM $version_tbl"
                             . " WHERE id=%d AND version=%d",
                             $id, $version));
 
-        $dbh->query(sprintf("INSERT INTO $version_tbl"
+        $dbh->Execute(sprintf("INSERT INTO $version_tbl"
                             . " (id,version,mtime,minor_edit,content,versiondata)"
                             . " VALUES(%d,%d,%d,%d,%s,%s)",
                             $id, $version, $mtime, $minor_edit,
@@ -370,7 +400,7 @@ echo "hi";
 
         $this->lock();
         if ( ($id = $this->_get_pageid($pagename)) ) {
-            $dbh->query("DELETE FROM $version_tbl"
+            $dbh->Execute("DELETE FROM $version_tbl"
                         . " WHERE id=$id AND version=$version");
             $this->_update_recent_table($id);
             // This shouldn't be needed (as long as the latestversion
@@ -389,19 +419,19 @@ echo "hi";
         
         $this->lock();
         if ( ($id = $this->_get_pageid($pagename, 'id')) ) {
-            $dbh->query("DELETE FROM $version_tbl  WHERE id=$id");
-            $dbh->query("DELETE FROM $recent_tbl   WHERE id=$id");
-            $dbh->query("DELETE FROM $nonempty_tbl WHERE id=$id");
-            $dbh->query("DELETE FROM $link_tbl     WHERE linkfrom=$id");
+            $dbh->Execute("DELETE FROM $version_tbl  WHERE id=$id");
+            $dbh->Execute("DELETE FROM $recent_tbl   WHERE id=$id");
+            $dbh->Execute("DELETE FROM $nonempty_tbl WHERE id=$id");
+            $dbh->Execute("DELETE FROM $link_tbl     WHERE linkfrom=$id");
 			$rs = $dbh->Execute("SELECT COUNT(*) AS C FROM $link_tbl WHERE linkto=$id");
             $nlinks = $rs->fields['C'];
             if ($nlinks) {
                 // We're still in the link table (dangling link) so we can't delete this
                 // altogether.
-                $dbh->query("UPDATE $page_tbl SET hits=0, pagedata='' WHERE id=$id");
+                $dbh->Execute("UPDATE $page_tbl SET hits=0, pagedata='' WHERE id=$id");
             }
             else {
-                $dbh->query("DELETE FROM $page_tbl WHERE id=$id");
+                $dbh->Execute("DELETE FROM $page_tbl WHERE id=$id");
             }
             $this->_update_recent_table();
             $this->_update_nonempty_table();
@@ -426,7 +456,7 @@ echo "hi";
         $this->lock();
         $pageid = $this->_get_pageid($pagename, true);
 
-        $dbh->query("DELETE FROM $link_tbl WHERE linkfrom=$pageid");
+        $dbh->Execute("DELETE FROM $link_tbl WHERE linkfrom=$pageid");
 
 	if ($links) {
             foreach($links as $link) {
@@ -434,7 +464,7 @@ echo "hi";
                     continue;
                 $linkseen[$link] = true;
                 $linkid = $this->_get_pageid($link, true);
-                $dbh->query("INSERT INTO $link_tbl (linkfrom, linkto)"
+                $dbh->Execute("INSERT INTO $link_tbl (linkfrom, linkto)"
                             . " VALUES ($pageid, $linkid)");
             }
 	}
@@ -455,14 +485,14 @@ echo "hi";
 
         $qpagename = $dbh->qstr($pagename);
 // removed ref to FETCH_MODE in next line        
-        $result = $dbh->query("SELECT $want.*"
+        $result = $dbh->Execute("SELECT $want.*"
                               . " FROM $link_tbl, $page_tbl AS linker, $page_tbl AS linkee"
                               . " WHERE linkfrom=linker.id AND linkto=linkee.id"
                               . "  AND $have.pagename='$qpagename'"
                               //. " GROUP BY $want.id"
                               . " ORDER BY $want.pagename");
         
-        return new WikiDB_backend_PearDB_iter($this, $result);
+        return new WikiDB_backend_ADODB_iter($this, $result);
     }
 
     function get_all_pages($include_deleted) {
@@ -470,16 +500,16 @@ echo "hi";
         extract($this->_table_names);
 
         if ($include_deleted) {
-            $result = $dbh->query("SELECT * FROM $page_tbl ORDER BY pagename");
+            $result = $dbh->Execute("SELECT * FROM $page_tbl ORDER BY pagename");
         }
         else {
-            $result = $dbh->query("SELECT $page_tbl.*"
+            $result = $dbh->Execute("SELECT $page_tbl.*"
                                   . " FROM $nonempty_tbl, $page_tbl"
                                   . " WHERE $nonempty_tbl.id=$page_tbl.id"
                                   . " ORDER BY pagename");
         }
 
-        return new WikiDB_backend_PearDB_iter($this, $result);
+        return new WikiDB_backend_ADODB_iter($this, $result);
     }
         
     /**
@@ -507,24 +537,24 @@ echo "hi";
         
         $search_clause = $search->makeSqlClause($callback);
         
-        $result = $dbh->query("SELECT $fields FROM $table"
+        $result = $dbh->Execute("SELECT $fields FROM $table"
                               . " WHERE $join_clause"
                               . "  AND ($search_clause)"
                               . " ORDER BY pagename");
         
-        return new WikiDB_backend_PearDB_iter($this, $result);
+        return new WikiDB_backend_ADODB_iter($this, $result);
     }
 
     function _sql_match_clause($word) {
-        $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
-        $word = $this->_dbh->qstr($word);
-        return "LOWER(pagename) LIKE '%$word%'";
+        $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);  //not sure if we need this.  ADODB may do it for us
+        $word = $this->_dbh->qstr($word, get_magic_quotes_runtime());
+        return "LOWER(pagename) LIKE %$word%";
     }
 
     function _fullsearch_sql_match_clause($word) {
-        $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
-        $word = $this->_dbh->qstr($word);
-        return "LOWER(pagename) LIKE '%$word%' OR content LIKE '%$word%'";
+        $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);  //not sure if we need this
+        $word = $this->_dbh->qstr($word, get_magic_quotes_runtime());
+        return "LOWER(pagename) LIKE %$word% OR content LIKE %$word%";
     }
 
     /**
@@ -534,14 +564,14 @@ echo "hi";
         $dbh = &$this->_dbh;
         extract($this->_table_names);
 
-        $limitclause = $limit ? " LIMIT $limit" : '';
-        $result = $dbh->query("SELECT $page_tbl.*"
+        $limit = $limit ? $limit : -1;
+        $result = $dbh->SelectLimit("SELECT $page_tbl.*"
                               . " FROM $nonempty_tbl, $page_tbl"
                               . " WHERE $nonempty_tbl.id=$page_tbl.id"
                               . " ORDER BY hits DESC"
-                              . " $limitclause");
+                              , $limit);
 
-        return new WikiDB_backend_PearDB_iter($this, $result);
+        return new WikiDB_backend_ADODB_iter($this, $result);
     }
 
     /**
@@ -596,20 +626,20 @@ echo "hi";
             }
         }
 
-        $limitclause = $limit ? " LIMIT $limit" : '';
+        $limit = $limit ? $limit : -1;
         $where_clause = $join_clause;
         if ($pick)
             $where_clause .= " AND " . join(" AND ", $pick);
 
         // FIXME: use SQL_BUFFER_RESULT for mysql?
-//FIXME use SELECTLIMIT
-        $result = $dbh->query("SELECT $page_tbl.*,$version_tbl.*"
+		//Use SELECTLIMIT for portability
+        $result = $dbh->SelectLimit("SELECT $page_tbl.*,$version_tbl.*"
                               . " FROM $table"
                               . " WHERE $where_clause"
-                              . " ORDER BY mtime DESC"
-                              . $limitclause);
+                              . " ORDER BY mtime DESC",
+                              $limit);
 
-        return new WikiDB_backend_PearDB_iter($this, $result);
+        return new WikiDB_backend_ADODB_iter($this, $result);
     }
 
     function _update_recent_table($pageid = false) {
@@ -621,10 +651,10 @@ echo "hi";
 
         $this->lock();
 
-        $dbh->query("DELETE FROM $recent_tbl"
+        $dbh->Execute("DELETE FROM $recent_tbl"
                     . ( $pageid ? " WHERE id=$pageid" : ""));
         
-        $dbh->query( "INSERT INTO $recent_tbl"
+        $dbh->Execute( "INSERT INTO $recent_tbl"
                      . " (id, latestversion, latestmajor, latestminor)"
                      . " SELECT id, $maxversion, $maxmajor, $maxminor"
                      . " FROM $version_tbl"
@@ -641,10 +671,10 @@ echo "hi";
 
         $this->lock();
 
-        $dbh->query("DELETE FROM $nonempty_tbl"
+        $dbh->Execute("DELETE FROM $nonempty_tbl"
                     . ( $pageid ? " WHERE id=$pageid" : ""));
 
-        $dbh->query("INSERT INTO $nonempty_tbl (id)"
+        $dbh->Execute("INSERT INTO $nonempty_tbl (id)"
                     . " SELECT $recent_tbl.id"
                     . " FROM $recent_tbl, $version_tbl"
                     . " WHERE $recent_tbl.id=$version_tbl.id"
@@ -709,7 +739,7 @@ echo "hi";
      *
      * @param A PEAR_error object.
      */
-    function _pear_error_callback($error) {
+/*  function _pear_error_callback($error) {
         if ($this->_is_false_error($error))
             return;
         
@@ -717,7 +747,7 @@ echo "hi";
         $this->close();
         trigger_error($this->_pear_error_message($error), E_USER_ERROR);
     }
-
+*/
     /**
      * Detect false errors messages from PEAR DB.
      *
@@ -729,7 +759,7 @@ echo "hi";
      * @access private
      * @return bool True iff error is not really an error.
      */
-    function _is_false_error($error) {
+/*    function _is_false_error($error) {
         if ($error->getCode() != DB_ERROR)
             return false;
 
@@ -756,8 +786,8 @@ echo "hi";
 
         return true;
     }
-
-    function _pear_error_message($error) {
+*/
+/*    function _pear_error_message($error) {
         $class = get_class($this);
         $message = "$class: fatal database error\n"
              . "\t" . $error->getMessage() . "\n"
@@ -768,7 +798,7 @@ echo "hi";
                                  '\\1:XXXXXXXX', $this->_dsn);
         return str_replace($this->_dsn, $safe_dsn, $message);
     }
-
+*/
     /**
      * Filter PHP errors notices from PEAR DB code.
      *
@@ -778,18 +808,19 @@ echo "hi";
      * @see _is_false_error, ErrorManager
      * @access private
      */
-    function _pear_notice_filter($err) {
+/*    function _pear_notice_filter($err) {
         return ( $err->isNotice()
                  && preg_match('|DB[/\\\\]common.php$|', $err->errfile)
                  && $err->errline == 126
                  && preg_match('/Undefined offset: +0\b/', $err->errstr) );
     }
+*/
 };
 
-class WikiDB_backend_PearDB_iter
+class WikiDB_backend_ADODB_iter
 extends WikiDB_backend_iterator
 {
-    function WikiDB_backend_PearDB_iter(&$backend, &$query_result) {
+    function WikiDB_backend_ADODB_iter(&$backend, &$query_result) {
 // ADODB equivalent of this?  May not matter, since we should never get here
 /*        if (DB::isError($query_result)) {
             // This shouldn't happen, I thought.
