@@ -1,7 +1,9 @@
 <?php // -*-php-*-
-rcs_id('$Id: Toolbar.php,v 1.3 2002-01-07 09:04:41 carstenklapp Exp $');
+rcs_id('$Id: Toolbar.php,v 1.4 2002-01-08 21:09:39 carstenklapp Exp $');
 /**
  * Usage:
+ *
+ * <?plugin Toolbar name=RecentEdits days=1,2,3,7,30,-1 label="Show edits for: %s" sep=| ?>
  *
  * <?plugin Toolbar label="My favorites pages are %s." sep=, go="SandBox|SandBox,stuff|TestPage" ?>
  *
@@ -38,7 +40,8 @@ extends WikiPlugin
                      'label'	=> false,
                      'go'	=> false,
                      'style'	=> 'text',
-                     'name'	=> ''
+                     'name'	=> '',
+                     'days'	=> ''
                      // TODO: new 'image' style for use with themes
                      // which have graphic buttons
                      );
@@ -48,10 +51,14 @@ extends WikiPlugin
         $html .= "<td><a href=\"". $ToolbarURLs[$key]."\"><img alt=\"$key\" src=\"$val\" border=\"0\"></a></td>";
     }
 
+    function mklinks($text, $action) {
+        return "[$text|$action]";
+    }
+
     function run($dbi, $argstr, $request) {
         $args = $this->getArgs($argstr, $request);
         extract($args);
-        if (empty($go)) {
+        if (empty($go) && empty($days)) {
             $html="";
             if (!empty($label)) {
                 // cleanup and display label
@@ -67,37 +74,22 @@ extends WikiPlugin
             }
             return $html;
         }
+
+
+
         global $theme;
-//$name="RecentChanges";
         if ($theme == "MacOSX" && $name=="RecentChanges") {
             global $ToolbarImages;
-/*
-                $ToolbarImages = array(
-                'RecentChanges' => array(
-                '1 day'		=> "themes/$theme/locale/en/toolbars/RecentChanges/1day.png",
-                '3 days'	=> "themes/$theme/locale/en/toolbars/RecentChanges/3days.png",
-                '7 days'	=> "themes/$theme/locale/en/toolbars/RecentChanges/7days.png",
-                '30 days'	=> "themes/$theme/locale/en/toolbars/RecentChanges/30days.png",
-                '90 days'	=> "themes/$theme/locale/en/toolbars/RecentChanges/90days.png",
-                '...'		=> "themes/$theme/locale/en/toolbars/RecentChanges/alltime.png")
-                );
-*/                
                 $ToolbarURLs = array(
-                //'RecentChanges' => array(
                 '1 day'		=> "RecentChanges?days=1",
                 '3 days'	=> "RecentChanges?days=3",
                 '7 days'	=> "RecentChanges?days=7",
                 '30 days'	=> "RecentChanges?days=30",
                 '90 days'	=> "RecentChanges?days=90",
                 '...'		=> "RecentChanges?days=-1"
-                //)
                 );
 
 
-
-            //while(list($key, $val) = each($ToolbarImages)) {
-            //    echo "$key => $val<br>";
-            //}
 
 //            if (in_array ($name, $ToolbarImages)) {
                 $rcimages = $ToolbarImages[$name];
@@ -121,7 +113,7 @@ extends WikiPlugin
             // add spaces
             switch ($sep) {
             case '|':
-                $sep = " | ";
+            $sep = " | ";
                 break;
             case ',':
                 $sep = ", ";
@@ -130,8 +122,31 @@ extends WikiPlugin
                 //$sep = $sep ." ";
             }
 
-            $links = "[" .str_replace(",", "]" .$sep ."[", $go) ."]";
+            if (($name==_("RecentChanges")||_("RecentEdits")) && $days) {
 
+                $days = explode(",", $days);
+
+                $day1    = _("1 day");
+                $ndays   = _("%s days");
+                $alldays = "...";
+
+                $links = array();
+                foreach ($days as $val) {
+                    if ($val == 1)
+                        $text = $day1;
+                    elseif ($val == -1)
+                        $text = $alldays;
+                    else
+                        $text = sprintf($ndays, $val);
+                    $action = 'phpwiki:' .$name ."?days=" .$val;
+
+                    $links[] = $this->mklinks($text, $action);
+                }
+            $links = join($sep, $links);
+
+            } else {
+                $links = "[" .str_replace(",", "]" .$sep ."[", $go) ."]";
+            }
             $content = sprintf(_($label),$links);
             // TODO: (maybe) localise individual item labels (the
             // parts of the $go text before the "|"s)
