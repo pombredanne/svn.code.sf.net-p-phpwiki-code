@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.86 2003-12-02 16:18:26 carstenklapp Exp $');
+rcs_id('$Id: loadsave.php,v 1.87 2004-01-26 09:17:49 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -793,8 +793,12 @@ function SetupWiki (&$request)
     // This really needs to be cleaned up...
     // (I'm working on it.)
     $real_user = $request->_user;
-    $request->_user = new WikiUser($request, _("The PhpWiki programming team"),
-                                   WIKIAUTH_BOGO);
+    if (ENABLE_USER_NEW)
+        $request->_user = new _BogoUser(_("The PhpWiki programming team"));
+
+    else
+        $request->_user = new WikiUser($request, _("The PhpWiki programming team"),
+                                       WIKIAUTH_BOGO);
 
     StartLoadDump($request, _("Loading up virgin wiki"));
     echo "<dl>\n";
@@ -835,6 +839,10 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.86  2003/12/02 16:18:26  carstenklapp
+ Minor enhancement: Provide more meaningful filenames for WikiDB zip
+ dumps & snapshots.
+
  Revision 1.85  2003/11/30 18:18:13  carstenklapp
  Minor code optimization: use include_once instead of require_once
  inside functions that might not always called.

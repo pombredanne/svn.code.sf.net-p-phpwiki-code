@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.1 2003-11-04 18:41:41 carstenklapp Exp $');
+rcs_id('$Id: UpLoad.php,v 1.2 2004-01-26 09:18:00 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -40,8 +40,6 @@ extends WikiPlugin
     //var $file_dir = PHPWIKI_DIR . "/img/";
     //var $url_prefix = DATA_PATH . "/img/";
     //what if the above are not set in index.php? seems to fail...
-    var $file_dir = "/srv/www/htdocs/.../dateien/";
-    var $url_prefix = "/dateien/";
 
     var $disallowed_extensions = array('.php', '.pl', '.sh', '.cgi', '.exe');
     var $only_authenticated = true;
@@ -59,8 +57,9 @@ extends WikiPlugin
     }
 
     function run($dbi, $argstr, $request) {
-        $file_dir = $this->file_dir;
-        $url_prefix = $this->url_prefix;
+        $file_dir = defined('PHPWIKI_DIR') ? 
+            PHPWIKI_DIR . "/uploads" : "uploads";
+        $url_prefix = SERVER_NAME.DATA_PATH; 
 
         $action = $request->getURLtoSelf();
         $userfile = $request->getUploadedFile('userfile');
@@ -189,4 +188,10 @@ extends WikiPlugin
 // End:
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2003/11/04 18:41:41  carstenklapp
+// New plugin which was submitted to the mailing list some time
+// ago. (This is the best UpLoad function I have seen for PhpWiki so
+// far. Cleaned up text formatting and typos from the version on the
+// mailing list. Still needs a few adjustments.)
+//
 ?>

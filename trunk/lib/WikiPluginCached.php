@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiPluginCached.php,v 1.5 2003-02-22 20:49:55 dairiki Exp $');
+<?php rcs_id('$Id: WikiPluginCached.php,v 1.6 2004-01-26 09:17:48 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -32,7 +32,7 @@ require_once "lib/plugincache-config.php";
 // Try the installed pear class first. It might be newer. Not yet.
 // @require_once('Cache.php');
 // if (!class_exists('Cache'))
-     require_once('lib/pear/Cache.php'); // We have to create your own copy here.
+require_once('lib/pear/Cache.php'); // We have to create your own copy here.
 
 define('PLUGIN_CACHED_HTML',0);
 define('PLUGIN_CACHED_IMG_INLINE',1);
@@ -67,6 +67,7 @@ class WikiPluginCached extends WikiPlugin
      * @return array(id,url)  
      */
     function genUrl($cache,$argarray) {
+    	global $request;
         $cacheparams = $GLOBALS['CacheParams'];
 
         $plugincall = serialize( array( 
@@ -99,6 +100,8 @@ class WikiPluginCached extends WikiPlugin
             $url .= '/' . $cacheparams['filename_prefix'] . $id . '.img' 
                     . ($plugincall ? '?args='.rawurlencode($plugincall) : '');
         }
+        if ($request->getArg("start_debug"))
+            $url .= "&start_debug=1";
         return array($id, $url);
     } // genUrl
 

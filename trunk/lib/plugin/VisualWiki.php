@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: VisualWiki.php,v 1.7 2003-03-03 13:57:31 carstenklapp Exp $');
+rcs_id('$Id: VisualWiki.php,v 1.8 2004-01-26 09:18:00 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -41,7 +41,10 @@ if (PHP_OS == "Darwin") { // Mac OS X
     $fontpath = "/System/Library/Frameworks/JavaVM.framework/Versions/1.3.1/Home/lib/fonts/";
     //$fontpath = "/usr/X11R6/lib/X11/fonts/TTF/";
 }
-else { // other os
+elseif (isWindows()) {
+  $dotbin = 'dot';
+  define('VISUALWIKIFONT', 'Arial');
+} else { // other os
     $dotbin = '/usr/local/bin/dot';
 
     // Name of the Truetypefont - Helvetica is probably easier to read
@@ -80,7 +83,7 @@ extends WikiPluginCached
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     /**
@@ -719,6 +722,11 @@ function interpolate($a, $b, $pos) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2003/03/03 13:57:31  carstenklapp
+// Added fontpath (see PhpWiki:VisualWiki), tries to be smart about which OS.
+// (This plugin still doesn't work for me on OS X, but at least image files
+// are actually being created now in '/tmp/cache'.)
+//
 // Revision 1.6  2003/01/18 22:11:45  carstenklapp
 // Code cleanup:
 // Reformatting & tabs to spaces;

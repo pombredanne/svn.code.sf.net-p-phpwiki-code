@@ -1,6 +1,7 @@
-<?php rcs_id('$Id: PageList.php,v 1.48 2004-01-25 10:52:18 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.49 2004-01-26 09:17:47 rurban Exp $');
 
 /**
+ * List a number of pagenames, optionally as table with various columns.
  * This library relieves some work for these plugins:
  *
  * AllPages, BackLinks, LikePages, Mostpopular, TitleSearch and more
@@ -61,8 +62,10 @@ class _PageList_Column_base {
 
     function heading () {
         if (in_array($this->_field,array('pagename','mtime','hits'))) {
+            $sortby = PageList::sortby($this->_field,'flip_order');
             // Todo: multiple comma-delimited sortby args: "+hits,+pagename"
             // asc or desc: +pagename, -pagename
+            /*
             $sortby = '+' . $this->_field;
             if ($sorted = $GLOBALS['request']->getArg('sortby')) {
                 // flip order
@@ -71,6 +74,7 @@ class _PageList_Column_base {
                 elseif ($sorted == '-' . $this->_field)
                     $sortby = '+' . $this->_field;
             }
+            */
             $s = HTML::a(array('href' => $GLOBALS['request']->GetURLtoSelf(array('sortby' => $sortby)),'class' => 'pagetitle', 'title' => sprintf(_("Sort by %s"),$this->_field)), HTML::raw('&nbsp;'), HTML::u($this->_heading), HTML::raw('&nbsp;'));
         } else {
             $s = HTML(HTML::raw('&nbsp;'), HTML::u($this->_heading), HTML::raw('&nbsp;'));
@@ -319,26 +323,6 @@ class PageList {
         return empty($this->_rows);
     }
 
-    // $action = flip_order, db
-    function sortby ($string, $action) {
-        $order = '+';
-        if (substr($string,0,1) == '+') {
-            $order = '+'; $string = substr($string,1);
-        } elseif (substr($string,0,1) == '-') {
-            $order = '-'; $string = substr($string,1);
-        }
-        if (in_array($string,array('pagename','mtime','hits'))) {
-            // Todo: multiple comma-delimited sortby args: "+hits,+pagename"
-            // asc or desc: +pagename, -pagename
-            if ($action == 'flip_order') {
-                return ($order == '+' ? '-' : '+') . $string;
-            } elseif ($action == 'db') {
-                return $string . ($order == '+' ? ' ASC' : ' DESC');
-            }
-        }
-        return '';
-    }
-
     function addPage ($page_handle) {
         if (is_string($page_handle)) {
 	    if (in_array($page_handle, $this->_excluded_pages))
@@ -397,6 +381,52 @@ class PageList {
 
     function asXML() {
         return AsXML($this->getContent());
+    }
+
+    /** 
+     * handles sortby requests for the DB iterator and table header links
+     * prefix the column with + or - like "+pagename","-mtime", ...
+     * supported column: 'pagename','mtime','hits'
+     * supported action: 'flip_order', 'db'
+     */
+    function sortby ($column, $action) {
+        if (substr($column,0,1) == '+') {
+            $order = '+'; $column = substr($column,1);
+        } elseif (substr($column,0,1) == '-') {
+            $order = '-'; $column = substr($column,1);
+        }
+        if (in_array($column,array('pagename','mtime','hits'))) {
+            // default order: +pagename, -mtime, -hits
+            if (empty($order))
+                if (in_array($column,array('mtime','hits')))
+                    $order = '-';
+                else
+                    $order = '+';
+            //TODO: multiple comma-delimited sortby args: "+hits,+pagename"
+            if ($action == 'flip_order') {
+                return ($order == '+' ? '-' : '+') . $column;
+            } elseif ($action == 'db') {
+                // asc or desc: +pagename, -pagename
+                return $column . ($order == '+' ? ' ASC' : ' DESC');
+            }
+        }
+        return '';
+    }
+
+    // echo implode(":",explodeList("Test*",array("xx","Test1","Test2")));
+    function explodePageList($input, $perm = false, $sortby = '') {
+        // expand wildcards from list of all pages
+        if (preg_match('/[\?\*]/',$input)) {
+            $dbi = $GLOBALS['request']->getDbh();
+            $allPagehandles = $dbi->getAllPages($perm,$sortby);
+            while ($pagehandle = $allPagehandles->next()) {
+                $allPages[] = $pagehandle->getName();
+            }
+            return explodeList($input, $allPages);
+        } else {
+            //TODO: do the sorting
+            return explode(',',$input);
+        }
     }
 
 
@@ -487,7 +517,7 @@ class PageList {
 
         $row = HTML::tr();
         foreach ($this->_columns as $col) {
-            // Todo: add links to resort the table
+            //TODO: add links to resort the table
             $row->pushContent($col->heading());
             $table_summary[] = $col->_heading;
         }

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UnfoldSubpages.php,v 1.8 2004-01-25 10:52:16 rurban Exp $');
+rcs_id('$Id: UnfoldSubpages.php,v 1.9 2004-01-26 09:18:00 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -23,7 +23,10 @@ rcs_id('$Id: UnfoldSubpages.php,v 1.8 2004-01-25 10:52:16 rurban Exp $');
 /**
  * UnfoldSubpages:  Lists the content of all SubPages of the current page.
  *   This is e.g. useful for the CalendarPlugin, to see all entries at once.
- * Usage:   <?plugin UnfoldSubpages words=50 ?>
+ *   Warning: Don't use it with subpages where the RedirectTo plugin is used
+ *            or with non-existant sections!
+ *	      The section extractor is currently quite unstable.
+ * Usage:   <?plugin UnfoldSubpages sortby=-mtime words=50 maxpages=5 ?>
  * Author:  Reini Urban <rurban@x-ray.at>
  */
 class WikiPlugin_UnfoldSubpages
@@ -39,37 +42,34 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
-        return array(//'header'  => '',  // expandable string
-                     'quiet'   => false, // no header
-                     'sort'    => 'asc',    // deprecated: 
-                     // use sortby=+pagename or sortby=-mtime instead,
-                     'sortby'  => 'pagename',
-                     'pages'   => '',       // maximum number of pages
-                                            //  to include
-                     'sections' => false,   // maximum number of
-                                            //  sections per page to
-                                            //  include
-                     'smalltitle' => false, // if set, hide
-                                            //  transclusion-title,
-                                            //  just have a small link
-                                            //  at the start of the
-                                            //  page.
-                     'words'   => false,    // maximum number of words
-                                            //  per page to include
-                     'lines'   => false,    // maximum number of lines
-                                            //  per page to include
-                     'bytes'   => false,    // maximum number of bytes
-                                            //  per page to include
-                     'section' => false,    // named section per page
-                                            //  only
-                     'sectionhead' => false // when including a named
-                                            //  section show the
-                                            //  heading
-                     );
+        return array(
+            'pagename' => '',   // not the current page
+            //'header'  => '',  // expandable string
+            'quiet'   => false, // no header
+            'sort'    => 'asc', // deprecated: use sortby=+pagename or 
+            			//   sortby=-mtime instead,
+            'sortby'  => 'pagename', // [+|-]pagename, [+|-]mtime, [+|-]hits
+            'pages'   => '',    // deprecated. use maxpages instead
+            'maxpages' => '',   // maximum number of pages to include
+            'sections' => false,// maximum number of sections per page to
+            			//  include
+            'smalltitle' => false, // if set, hide transclusion-title,
+                                //  just have a small link at the start of 
+            			//  the page.
+            'words'   => false, // maximum number of words
+                                //  per page to include
+            'lines'   => false, // maximum number of lines
+                                //  per page to include
+            'bytes'   => false, // maximum number of bytes
+                                //  per page to include
+            'section' => '',    // this named section per page only
+            'sectionhead' => false // when including a named
+                                //  section show the heading
+            );
     }
 
     // from IncludePage
@@ -91,6 +91,7 @@ extends WikiPlugin
         return $new;
     }
 
+    //TODO: move this to stdlib.php
     function extractSection ($section, $content, $page, $quiet, $sectionhead) {
         $qsection = preg_replace('/\s+/', '\s+', preg_quote($section, '/'));
 
@@ -118,24 +119,27 @@ extends WikiPlugin
     function run($dbi, $argstr, $request) {
         include_once('lib/BlockParser.php');
         
-        $pagename = $request->getArg('pagename');
+        if (!$this->getArg('pagename'))
+            $pagename = $request->getArg('pagename');
         $sortby = 'pagename';
         if ($request->getArg('sortby')) {
-            $pagelist = new PageList();
-            $sortby = $pagelist->sortby($request->getArg('sortby'),'db');
+            $sortby = PageList::sortby($request->getArg('sortby'),'db');
         }
+        extract($this->getArgs($argstr, $request));
+        //TODO: explodePageList should be a PageList method.
         $subpages = explodePageList($pagename . SUBPAGE_SEPARATOR . '*',$sortby);
         if (! $subpages ) {
             return $this->error(_("The current page has no subpages defined."));
         }           
-        //include_once('lib/BlockParser.php');
         extract($this->getArgs($argstr, $request));
         $content = HTML();
+        // ignore the sort argument, use sortby with the + or - prefix instead
+        // default: +
         //if ($sort != 'asc') {
         //    $subpages = array_reverse($subpages);
         //}
-        if($pages) {
-          $subpages = array_slice ($subpages, 0, $pages);        
+        if ($numpages) {
+          $subpages = array_slice ($subpages, 0, $numpages);
         }
         foreach ($subpages as $page) {
             // A page cannot include itself. Avoid doublettes.
@@ -193,6 +197,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/01/25 10:52:16  rurban
+// added sortby support to explodePageList() and UnfoldSubpages
+// fixes [ 758044 ] Plugin UnfoldSubpages does not sort (includes fix)
+//
 // Revision 1.7  2003/02/21 04:12:06  dairiki
 // Minor fixes for new cached markup.
 //

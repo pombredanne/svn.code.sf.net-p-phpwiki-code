@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.34 2004-01-25 08:17:29 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.35 2004-01-26 09:17:51 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -505,10 +505,10 @@ extends WikiDB_backend
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $order = "DESC";
-		if ($limit < 0){ 
-			$order = "ASC";
-			$limit = -$limit;
-			}
+        if ($limit < 0){ 
+            $order = "ASC";
+            $limit = -$limit;
+        }
         $limitclause = $limit ? " LIMIT $limit" : '';
         $result = $dbh->query("SELECT $page_tbl.*"
                               . " FROM $nonempty_tbl, $page_tbl"
@@ -535,7 +535,7 @@ extends WikiDB_backend
 
         $pick = array();
         if ($since)
-			$pick[] = "mtime >= $since";
+            $pick[] = "mtime >= $since";
 			
         
         if ($include_all_revisions) {
@@ -572,10 +572,10 @@ extends WikiDB_backend
             }
         }
         $order = "DESC";
-		if($limit < 0){
-    		$order = "ASC";
-	    	$limit = -$limit;
-		}
+        if($limit < 0){
+            $order = "ASC";
+            $limit = -$limit;
+        }
         $limitclause = $limit ? " LIMIT $limit" : '';
         $where_clause = $join_clause;
         if ($pick)
