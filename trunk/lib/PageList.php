@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.53 2004-02-15 21:34:37 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.54 2004-02-15 21:41:29 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -212,7 +212,8 @@ class _PageList_Column_content extends _PageList_Column {
                                        $this->bytes);
         elseif ($field == 'hi_content') {
             $search = $_POST['admin_replace']['from'];
-            $this->_heading .= sprintf(_(" ... around »%s«"),$search);
+            $this->_heading .= sprintf(_(" ... around %s"),
+                                       '»'.$search.'«');
         }
     }
     function _getValue ($page_handle, &$revision_handle) {
@@ -233,7 +234,8 @@ class _PageList_Column_content extends _PageList_Column {
                                            HTML::span(substr($c, $i+$l, ($this->bytes / 2))))
                                  );
             } else {
-                $c = sprintf(_("»%s« not found"),$search);
+                $c = sprintf(_("%s not found"),
+                             '»'.$search.'«');
                 return HTML::div(array('style' => 'font-size:x-small','align'=>'center'),
                                  $c);
             }
