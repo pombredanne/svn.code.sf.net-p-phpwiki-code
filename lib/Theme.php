@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.125 2005-02-03 05:09:56 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.126 2005-02-04 11:43:18 rurban Exp $');
 /* Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -203,7 +203,7 @@ class Theme {
         if ($theme_name != 'default')
             $this->_default_theme = new Theme;
 
-        if (defined("ENABLE_LIVESEARCH") and ENABLE_LIVESEARCH) { // by bitflux.ch. not yet enabled
+        if (defined("ENABLE_LIVESEARCH") and ENABLE_LIVESEARCH) { // by bitflux.ch
             $this->initLiveSearch();
         }
         $this->_css = array();
@@ -845,7 +845,7 @@ class Theme {
             $attr['action'] = $action;
 
         $class = is_safe_action($action) ? 'wikiaction' : 'wikiadmin';
-        if (!$label)
+        if ( !$label )
             $label = $this->_labelForAction($action);
 
         if ($version)
@@ -1163,7 +1163,7 @@ class Theme {
 
     // Immediate title search results via XMLHttpRequest
     // by Bitflux GmbH, bitflux.ch
-    // Google's is better.
+    // Google's or acdropdown is better.
     function initLiveSearch() {
         if (!$this->HTML_DUMP_SUFFIX) {
             $this->addMoreAttr('body', 'LiveSearch', HTML::Raw(" onload=\"liveSearchInit()"));
@@ -1424,6 +1424,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.125  2005/02/03 05:09:56  rurban
+// livesearch.js support
+//
 // Revision 1.124  2005/01/27 16:28:15  rurban
 // especially for Google: nofollow on unauthenticated edit,diff,create,pdf
 //
