@@ -1,9 +1,27 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.68 2002-10-30 23:14:28 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.69 2003-01-18 22:01:43 carstenklapp Exp $');
 /**
+ Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+
+ This file is part of PhpWiki.
+
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
+/**
+ */
 class _RecentChanges_Formatter
 {
     var $_absurls = false;
@@ -248,7 +266,7 @@ extends _RecentChanges_Formatter
             ."       \"$sidebarurl\",\"\");\n"
             ."}\n";
         $jsf = $this->_javascript($addsidebarjsfunc);
-    
+
         $addsidebarjsclick = " " . "<small style=\"font-weight:normal;\"><a href=\"javascript:addPanel();\">sidebar</a></small>";
         $jsc = $this->_javascript("if ((typeof window.sidebar == 'object') &&\n"
                                 ."    (typeof window.sidebar.addPanel == 'function'))\n"
@@ -398,7 +416,7 @@ extends _RecentChanges_HtmlFormatter
         printf('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"');
         printf('  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">');
         printf('<html xmlns="http://www.w3.org/1999/xhtml">');
-        
+
         printf("<head>\n");
         extract($this->_args);
         $title = WIKI_NAME . $show_minor ? _("RecentEdits") : _("RecentChanges");
@@ -407,7 +425,7 @@ extends _RecentChanges_HtmlFormatter
         $css = $Theme->getCSS();
         $css->PrintXML();
         printf("</head>\n");
-        
+
         printf("<body class=\"sidebar\">\n");
         $html->PrintXML();
         printf("\n</body>\n");
@@ -516,16 +534,16 @@ extends _RecentChanges_Formatter
         $page = $rev->getPage();
         $pagename = $page->getName();
 
-        return array( 'title'		=> split_pagename($pagename),
-                      'description'	=> $this->summary($rev),
-                      'link'		=> $this->pageURL($rev),
-                      'dc:date'		=> $this->time($rev),
-                      'dc:contributor'	=> $rev->get('author'),
-                      'wiki:version'	=> $rev->getVersion(),
+        return array( 'title'           => split_pagename($pagename),
+                      'description'     => $this->summary($rev),
+                      'link'            => $this->pageURL($rev),
+                      'dc:date'         => $this->time($rev),
+                      'dc:contributor'  => $rev->get('author'),
+                      'wiki:version'    => $rev->getVersion(),
                       'wiki:importance' => $this->importance($rev),
-                      'wiki:status'	=> $this->status($rev),
-                      'wiki:diff'	=> $this->diffURL($rev),
-                      'wiki:history'	=> $this->historyURL($rev)
+                      'wiki:status'     => $this->status($rev),
+                      'wiki:diff'       => $this->diffURL($rev),
+                      'wiki:history'    => $this->historyURL($rev)
                       );
     }
 }
@@ -569,18 +587,23 @@ extends WikiPlugin
         return _("RecentChanges");
     }
 
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.69 $");
+    }
+
     function getDefaultArguments() {
-        return array('days'		=> 2,
-                     'show_minor'	=> false,
-                     'show_major'	=> true,
-                     'show_all'		=> false,
-                     'show_deleted'	=> 'sometimes',
-                     'limit'		=> false,
-                     'format'		=> false,
-                     'daylist'          => false,
-                     'difflinks'        => true,
-                     'historylinks'     => false,
-                     'caption'          => ''
+        return array('days'         => 2,
+                     'show_minor'   => false,
+                     'show_major'   => true,
+                     'show_all'     => false,
+                     'show_deleted' => 'sometimes',
+                     'limit'        => false,
+                     'format'       => false,
+                     'daylist'      => false,
+                     'difflinks'    => true,
+                     'historylinks' => false,
+                     'caption'      => ''
                      );
     }
 
@@ -710,7 +733,7 @@ class DayButtonBar extends HtmlElement {
     }
 }
 
-
+// $Log: not supported by cvs2svn $
 
 // (c-file-style: "gnu")
 // Local Variables:
