@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff3.php,v 1.3 2002-02-14 23:13:46 lakka Exp $');
+rcs_id('$Id: diff3.php,v 1.4 2002-02-15 14:05:44 lakka Exp $');
 // diff3.php
 //
 // A class for computing three way diffs
@@ -105,7 +105,7 @@ class _Diff3_BlockBuilder {
 class Diff3 {
     function Diff3 ($orig, $final1, $final2) {
         $eng = new _DiffEngine;
-
+        $this->ConflictingBlocks = 0;  //Conflict counter
         $this->blocks = $this->__diff3($eng->diff($orig, $final1),
                                        $eng->diff($orig, $final2));
     }
@@ -189,6 +189,7 @@ class Diff3 {
                                      array("======="),
                                      $block->final2,
                                      array(">>>>>>>" . ($label2 ? " $label2" : '')));
+				$this->ConflictingBlocks++;
             }
             else {
                 $lines = array_merge($lines, $block->merged());
