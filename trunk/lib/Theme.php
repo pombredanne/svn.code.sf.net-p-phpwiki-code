@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.60 2003-02-15 01:59:47 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.61 2003-02-18 21:52:05 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -53,11 +53,11 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
     }
     elseif (isa($page_or_rev, 'WikiPageName')) {
         $wikipage = $page_or_rev;
-        $pagename = $wikipage->fullPagename;
+        $pagename = $wikipage->name;
     }
     else {
-        $wikipage = new WikiPageName($request, $page_or_rev);
-        $pagename = $wikipage->fullPagename;
+        $wikipage = new WikiPageName($page_or_rev, $request->getPage());
+        $pagename = $wikipage->name;
     }
     
 
@@ -67,7 +67,8 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
             $exists = ! $current->hasDefaultContents();
         }
         else {
-            $exists = $wikipage->exists();
+	    $dbi = $request->getDbh();
+            $exists = $dbi->isWikiPage($wikipage->name);
         }
     }
     elseif ($type == 'unknown') {
@@ -457,7 +458,7 @@ class Theme {
         // Get rid of anchors on unknown wikiwords
         if (isa($wikiword, 'WikiPageName')) {
             $default_text = $wikiword->shortName;
-            $wikiword = $wikiword->fullPagename;
+            $wikiword = $wikiword->name;
         }
         else {
             $default_text = $wikiword;
@@ -921,6 +922,12 @@ class SubmitImageButton extends SubmitButton {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.60  2003/02/15 01:59:47  dairiki
+// Theme::getCSS():  Add Default-Style HTTP(-eqiv) header in attempt
+// to fix default stylesheet selection on some browsers.
+// For details on the Default-Style header, see:
+//  http://home.dairiki.org/docs/html4/present/styles.html#h-14.3.2
+//
 // Revision 1.59  2003/01/04 22:30:16  carstenklapp
 // New: display a "Never edited." message instead of an invalid epoch date.
 //

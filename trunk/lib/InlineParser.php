@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.21 2003-02-18 20:24:13 dairiki Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.22 2003-02-18 21:52:04 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -29,9 +29,7 @@
 
 require_once('lib/HtmlElement.php');
 require_once('lib/interwiki.php');
-
-//FIXME: intubate ESCAPE_CHAR into BlockParser.php.
-define('ESCAPE_CHAR', '~');
+require_once('lib/stdlib.php');
 
 /**
  * Return type from RegexpSet::match and RegexpSet::nextMatch.
@@ -256,7 +254,8 @@ class Markup_bracketlink  extends SimpleMarkup
 {
     var $_match_regexp = "\\#? \\[ .*?\S.*? \\]";
     
-    function _markup ($match) {
+    function markup ($match) {
+	print "LINK: " . htmlspecialchars($match) . "<br>\n";
         $link = LinkBracketLink($match);
         assert($link->isInlineElement());
         return $link;
@@ -328,11 +327,10 @@ class Markup_old_emphasis  extends BalancedMarkup
 
 class Markup_nestled_emphasis extends BalancedMarkup
 {
-    //var $_start_regexp = "(?<! [[:alnum:]] ) [*_=] (?=[[:alnum:]])";
-    var $_start_regexp = false;
-
     function getStartRegexp() {
-	if (!$this->_start_regexp) {
+	static $start_regexp = false;
+
+	if (!$start_regexp) {
 	    // The three possible delimiters
             // (none of which can be followed by itself.)
 	    $i = "_ (?! _)";
@@ -361,9 +359,10 @@ class Markup_nestled_emphasis extends BalancedMarkup
 	    $start = "(?:" . join('|', $start) . ")";
 	    
 	    // Any of the above must be immediately followed by non-whitespace.
-	    $this->_start_regexp = $start . "(?= \S)";
+	    $start_regexp = $start . "(?= \S)";
 	}
-	return $this->_start_regexp;
+
+	return $start_regexp;
     }
 
     function getEndRegexp ($match) {
