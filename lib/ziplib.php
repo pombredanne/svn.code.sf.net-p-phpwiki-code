@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.26 2002-02-17 05:56:08 carstenklapp Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.27 2002-02-20 17:27:51 dairiki Exp $');
 
 /**
  * GZIP stuff.
@@ -732,6 +732,7 @@ function ParseMimeifiedPages ($data)
                 $pagedata['locked'] = 'yes';
             break;
         case 'created':
+        case 'hits':
             $pagedata[$key] = $value;
             break;
         case 'lastmodified':
@@ -740,11 +741,6 @@ function ParseMimeifiedPages ($data)
         case 'author':
         case 'author_id':
         case 'summary':
-            $versiondata[$key] = $value;
-            break;
-        case 'hits':
-            $pagedata[$key] = $value;
-            break;
         case 'markup':
             $versiondata[$key] = $value;
             break;
