@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.121 2005-01-04 20:25:01 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.122 2005-01-20 10:18:17 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -457,11 +457,15 @@ class WikiDB {
                 require_once('lib/plugin/WikiAdminSearchReplace.php');
                 $links = $oldpage->getBackLinks();
                 while ($linked_page = $links->next()) {
-                    WikiPlugin_WikiAdminSearchReplace::replaceHelper($this,$linked_page->getName(),$from,$to);
+                    WikiPlugin_WikiAdminSearchReplace::replaceHelper($this,
+                                                                     $linked_page->getName(),
+                                                                     $from, $to);
                 }
                 $links = $newpage->getBackLinks();
                 while ($linked_page = $links->next()) {
-                    WikiPlugin_WikiAdminSearchReplace::replaceHelper($this,$linked_page->getName(),$from,$to);
+                    WikiPlugin_WikiAdminSearchReplace::replaceHelper($this,
+                                                                     $linked_page->getName(),
+                                                                     $from, $to);
                 }
             }
             if ($oldpage->exists() and ! $newpage->exists()) {
@@ -1026,13 +1030,16 @@ class WikiDB_Page
             //$context_lines = max(4, count($other_content) + 1,
             //                     count($this_content) + 1);
             $fmt = new UnifiedDiffFormatter(/*$context_lines*/);
-            $content  = $this->_pagename . " " . $previous . " " . Iso8601DateTime($prevdata['mtime']) . "\n";
-            $content .= $this->_pagename . " " . $version . " " .  Iso8601DateTime($meta['mtime']) . "\n";
+            $content  = $this->_pagename . " " . $previous . " " . 
+                Iso8601DateTime($prevdata['mtime']) . "\n";
+            $content .= $this->_pagename . " " . $version . " " .  
+                Iso8601DateTime($meta['mtime']) . "\n";
             $content .= $fmt->format($diff2);
             
         } else {
             $difflink = WikiURL($this->_pagename,array(),true);
-            $content = $this->_pagename . " " . $version . " " .  Iso8601DateTime($meta['mtime']) . "\n";
+            $content = $this->_pagename . " " . $version . " " .  
+                Iso8601DateTime($meta['mtime']) . "\n";
             $content .= _("New page");
         }
         $editedby = sprintf(_("Edited by: %s"), $meta['author']);
@@ -1054,7 +1061,8 @@ class WikiDB_Page
     function sendPageRenameNotification($to, &$meta, $emails, $userids) {
         global $request;
         if (@is_array($request->_deferredPageRenameNotification)) {
-            $request->_deferredPageRenameNotification[] = array($this->_pagename, $to, $meta, $emails, $userids);
+            $request->_deferredPageRenameNotification[] = array($this->_pagename, 
+                                                                $to, $meta, $emails, $userids);
         } else {
             $from = $this->_pagename;
             $editedby = sprintf(_("Edited by: %s"), $meta['author']) . ' ' . $meta['author_id'];
@@ -1186,9 +1194,11 @@ class WikiDB_Page
      * @return WikiDB_PageIterator A WikiDB_PageIterator containing
      * all matching pages.
      */
-    function getLinks($reversed = true, $include_empty=false, $sortby=false, $limit=false, $exclude=false) {
+    function getLinks($reversed = true, $include_empty=false, $sortby=false, 
+                      $limit=false, $exclude=false) {
         $backend = &$this->_wikidb->_backend;
-        $result =  $backend->get_links($this->_pagename, $reversed, $include_empty, $sortby, $limit, $exclude);
+        $result =  $backend->get_links($this->_pagename, $reversed, 
+                                       $include_empty, $sortby, $limit, $exclude);
         return new WikiDB_PageIterator($this->_wikidb, $result, 
                                        array('include_empty' => $include_empty,
                                              'sortby' => $sortby, 
@@ -2125,6 +2135,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.121  2005/01/04 20:25:01  rurban
+// remove old [%pagedata][_cached_html] code
+//
 // Revision 1.120  2004/12/23 14:12:31  rurban
 // dont email on unittest
 //
