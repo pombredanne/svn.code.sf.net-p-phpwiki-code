@@ -1,11 +1,20 @@
 <?
+// FIXME: debug only
+function utime() {
+  $mtime = microtime();
+  $mtime = explode(" ",$mtime);
+  $mtime = $mtime[1] + $mtime[0];
+  return $mtime;
+}
+$start_time = utime();
+
 if (!defined('WIKI_ADMIN'))
 {
   define('WIKI_ADMIN', 'no');
   require('wiki_config.php3');
 }
 
-rcs_id('$Id: index.php3,v 1.7.2.2 2000-07-29 00:36:45 dairiki Exp $');
+rcs_id('$Id: index.php3,v 1.7.2.3 2000-07-31 22:07:32 dairiki Exp $');
 
    /*
       The main page, i.e. the main loop.
@@ -33,13 +42,6 @@ function wiki_lock ($action, $pagename)
   return true;
 }
 
-// FIXME: debug only
-function utime() {
-  $mtime = microtime();
-  $mtime = explode(" ",$mtime);
-  $mtime = $mtime[1] + $mtime[0];
-  return $mtime;
-}
 
    require "wiki_stdlib.php3";
    require "wiki_dblib.php3";
@@ -124,6 +126,7 @@ function utime() {
 
    SafeSetToken('PhpWikiVersion', $RcsIdentifiers);
    SafeSetToken('PlainTitle', strip_tags(GetToken('Title')));
+   Debug(sprintf("Page generation took %f seconds", utime() - $start_time));
    SetToken('DebugInfo', $DebugInfo);
 
    print Template('WRAPPER');
