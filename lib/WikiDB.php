@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.113 2004-12-06 19:49:55 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.114 2004-12-09 22:24:44 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -902,7 +902,7 @@ class WikiDB_Page
         //
         // We're doing this here rather than in createRevision because
         // postgres can't optimize while locked.
-        if (DEBUG or (time() % 50 == 0)) {
+        if ((DEBUG & _DEBUG_SQL) or (time() % 5 == 0)) {
             if ($backend->optimize())
                 trigger_error(_("Optimizing database"), E_USER_NOTICE);
         }
@@ -1983,7 +1983,10 @@ class WikiDB_cache
         
         $this->_backend->update_pagedata($pagename, $newdata);
 
-        if (USECACHE and !empty($this->_pagedata_cache[$pagename]) and is_array($this->_pagedata_cache[$pagename])) {
+        if (USECACHE 
+            and !empty($this->_pagedata_cache[$pagename]) 
+            and is_array($this->_pagedata_cache[$pagename])) 
+        {
             $cachedata = &$this->_pagedata_cache[$pagename];
             foreach($newdata as $key => $val)
                 $cachedata[$key] = $val;
@@ -2125,6 +2128,14 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.113  2004/12/06 19:49:55  rurban
+// enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
+// renamed delete_page to purge_page.
+// enable action=edit&version=-1 to force creation of a new version.
+// added BABYCART_PATH config
+// fixed magiqc in adodb.inc.php
+// and some more docs
+//
 // Revision 1.112  2004/11/30 17:45:53  rurban
 // exists_links backend implementation
 //
