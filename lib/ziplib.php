@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.29 2003-02-21 04:17:46 dairiki Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.30 2003-03-17 22:20:20 dairiki Exp $');
 
 /**
  * GZIP stuff.
@@ -151,7 +151,10 @@ define('GZIP_DEFLATE', 010);
 function zip_deflate ($content)
 {
     // Compress content, and suck information from gzip header.
-    $z = gzip_compress($content);
+    if (function_exists('gzencode'))
+        $z = gzencode($content);
+    else
+        $z = gzip_compress($content);
     
     // Suck OS type byte from gzip header. FIXME: this smells bad.
     
@@ -179,7 +182,16 @@ function zip_deflate ($content)
 }
 
 function zip_inflate ($data, $crc32, $uncomp_size)
-{    
+{
+    if (function_exists('gzinflate')) {
+        $data = gzinflate($data);
+        if (strlen($data) != $uncomp_size)
+            trigger_error("not enough output from gzinflate", E_USER_ERROR);
+        if (zip_crc32($data) != $crc32)
+            trigger_error("CRC32 mismatch", E_USER_ERROR);
+        return $data;
+    }
+    
     if (!function_exists('gzopen')) {
         global $request;
         $request->finish(_("Can't inflate data: zlib support not enabled in this PHP"));
