@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: OrphanedPages.php,v 1.9 2004-07-09 12:49:46 rurban Exp $');
+rcs_id('$Id: OrphanedPages.php,v 1.10 2004-07-09 13:05:34 rurban Exp $');
 /**
  This file is part of PhpWiki.
 
@@ -42,7 +42,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
@@ -70,14 +70,15 @@ extends WikiPlugin
 	$pages = array();
         while ($page = $allpages_iter->next()) {
             $links_iter = $page->getBackLinks();
-            // test for absence of backlinks. If a page is linked to
+            // Test for absence of backlinks. If a page is linked to
             // only by itself, it is still an orphan
             $parent = $links_iter->next();
-            if (!$parent ||               // page has no parents
-                (($parent->getName() == $page->getName())
-                 && !$links_iter->next()) // page has only itself as a parent
-                )
+            if (!$parent               // page has no parents
+                or (($parent->getName() == $page->getName())
+                    and !$links_iter->next())) // or page has only itself as a parent
+            {
                 $pages[] = $page;
+            }
         }
         $args['count'] = count($pages);
         $pagelist = new PageList($info, $exclude, $args);
@@ -99,6 +100,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/07/09 12:49:46  rurban
+// no limit, no sorting
+//
 // Revision 1.8  2004/04/20 00:56:00  rurban
 // more paging support and paging fix for shorter lists
 //

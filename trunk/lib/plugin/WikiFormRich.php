@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiFormRich.php,v 1.2 2004-07-09 10:25:52 rurban Exp $');
+rcs_id('$Id: WikiFormRich.php,v 1.3 2004-07-09 13:05:34 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
 
@@ -28,10 +28,13 @@ rcs_id('$Id: WikiFormRich.php,v 1.2 2004-07-09 10:25:52 rurban Exp $');
  * - editbox[] 		name=.. value=.. text=..
  * - checkbox[] 	name=.. value=0|1 checked text=..
  * - radiobutton[] 	name=.. value=.. text=..
- * - pulldown[]		name=.. value=.. text=..
+ * - pulldown[]		name=.. values=.. selected=.. text=..  (not yet!)
  * - hidden[]		name=.. value=..
  * - action, submit buttontext, optional cancel button (bool)
- * - method=GET or POST.
+ * - method=GET or POST ((Default: POST).
+ 
+ * values which are constants are evaluated.
+ * The cancel button must be supported by the action. (which?)
 
  Samples:
    <?plugin WikiFormRich action=dumpserial method=GET 
@@ -58,7 +61,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -172,6 +175,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/07/09 10:25:52  rurban
+// fix the args parser
+//
 // Revision 1.1  2004/07/02 11:03:53  rurban
 // renamed WikiFormMore to WikiFormRich: better syntax, no eval (safer)
 //
