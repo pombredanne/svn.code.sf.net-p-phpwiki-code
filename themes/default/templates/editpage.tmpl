@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.4 2002-01-19 07:21:58 dairiki Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.5 2002-01-19 23:43:39 carstenklapp Exp $ -->
 
 <?php if (isset($PREVIEW_CONTENT)) { ?>
   <p><strong><?=_("Preview only!  Changes not saved.")?></strong></p>
@@ -9,7 +9,7 @@
 <?php if (!$IS_CURRENT) { ?>
   <p><strong><?=_("Warning: You are editing an old revision.")?>
         <?=_("Saving this page will overwrite the current version.")?></strong></p>
-  <hr class="ignore" noshade />
+  <hr class="ignore" noshade="noshade" />
 <?php } ?>
 
 <?php /*
