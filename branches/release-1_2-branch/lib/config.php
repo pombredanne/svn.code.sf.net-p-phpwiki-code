@@ -10,7 +10,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.24.2.12 2001-12-27 01:36:35 carstenklapp Exp $'); 
+   rcs_id('$Id: config.php,v 1.24.2.13 2002-02-08 15:46:30 dairiki Exp $'); 
    // end essential internal stuff
 
 
@@ -198,7 +198,7 @@
    $AllowedProtocols = "http|https|mailto|ftp|news|nntp|gopher";
 
    // URLs ending with the following extension should be inlined as images
-   $InlineImages = "png|jpg|gif|tiff|tif";
+   $InlineImages = "png|jpg|gif";
 
    // Uncomment this to automatically split WikiWords by inserting spaces.
    // The default is to leave WordsSmashedTogetherLikeSo in the body text.
