@@ -1,0 +1,30 @@
+Jan Nieuwenhuizen <janneke@gnu.org> contributed a major patch to
+supply default pages in Dutch; this led to an architecture to support
+internationalization, and PhpWiki can now accomodate pages in any
+language.
+
+Neil Brown <neilb@cse.unsw.edu.au> has contributed numerous useful
+patches for the 1.1.8 release.
+
+Aredridel Niothke     <aredridel@nbtsc.org> has started a flat file
+database for Phpwiki, which is included in the 1.1.8 release.
+
+Arno Hollosi wrote the MySQL library, the templates, and wrote the 
+finished version of the database schema, plus many other things too
+numerous to mention.
+
+Jeff Dairiki <dairiki@dairiki.org> wrote the diff code and a complete
+rewrite of PhpWiki using PHP classes.
+
+Jeremie Kass <jeremie@umich.edu> contributed a patch so the logo is 
+decided in the templates instead of being hardcoded.
+
+In the 1.0 series:
+
+John Jorgensen http://c2.com/cgi-bin/wiki?AnotherPhpWiki,
+Tim Voght http://c2.com/cgi-bin/wiki?TimVoght,
+Grant Morgan http://c2.com/cgi-bin/wiki?GrantMorgan,
+
+and especially Clifford A. Adams:
+http://c2.com/cgi-bin/wiki?CliffordAdams
+
