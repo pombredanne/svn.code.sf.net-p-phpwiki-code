@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.14 2002-01-30 03:15:56 dairiki Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.15 2002-01-31 02:15:32 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -377,7 +377,7 @@ class Block_blockquote extends CompoundBlock
 class Block_list extends CompoundBlock
 {
     //var $_tag = 'ol' or 'ul';
-    var $_re = '\ {0,4}([*+#]|-(?!-)|o(?=\ ))\ *(?=\S)';
+    var $_re = '\ {0,4}([+#]|-(?!-)|[*o](?=\ ))\ *(?=\S)';
 
     function _parse (&$input, $m) {
         // A list as the first content in a list is not allowed.
@@ -581,8 +581,8 @@ class Block_table_dl extends Block_list
 class Block_oldlists extends Block_list
 {
     //var $_tag = 'ol', 'ul', or 'dl';
-    var $_re = '(?:([*#])|;(.*):).*?(?=\S)';
-    //             1----1  2--2
+    var $_re = '(?:([*](?!\S[^*]*(?<=\S)[*]\s)|[#])|;(.*):).*?(?=\S)';
+    //             1------------------------------1  2--2
     
     function _parse (&$input, $m) {
         if (!preg_match('/[*#;]*$/A', $m->getPrefix()))
