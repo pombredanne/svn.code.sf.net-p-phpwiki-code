@@ -1,2 +1,23 @@
 #!/bin/sh
-php -Cq -d register_argc_argv=1 test.php level=10
+# TODO: need to check write perms to the .testbox/* (mixed web/cli perms)
+# TODO: need to add the ploticus path
+
+if [ -d .testbox/page_data -a ! -w .testbox/page_data/AllPages ]; then
+  rm -rf .testbox/*
+fi
+today=`date` 
+# title="cli-`echo '<?= PHP_OS,PHP_VERSION ?> | php -Cq`"
+for db in file dba SQL ADODB; do
+    php -Cq -d register_argc_argv=1 test.php level=10 db=$db | tee all_$db.result
+    ./prepare_pl $db
+    title="cli-`grep PHP_OS all_$db.result|cut -d= -f2`-`grep PHP_VERSION all_$db.result|cut -d= -f2` $today"
+    pl -png -o all_$db.png -prefab vbars data=all_$db.data delim=tab x=2 y=1 xstep=2 barwidth=line ylbl="memory (kb)" title="$db $title" xlbl="consecutive tests" stubvert=yes ygrid=yes ylbldet="adjust=-0.1,0" xlbldet="adjust=0,-1.2" # vals=yes 
+    # pl -png all_$db.ploticus -o all_$db.png
+done
+
+./combine_pl
+# pl -png -o stack.png -prefab stack data=combined.data x=1 y=2 y2=3 y3=4 y4=5 barwidth=line ylbl="memory (kb)" title="cli-4.3.9WIN" ygrid=yes ylbldet="adjust=-0.1,0" stubvert=yes stackarea=yes name=file name2=dba name3=SQL name4=ADODB
+
+pl -png -o compare.png -prefab compare data=combined.data delim=tab catfields=1 y=3 y2=4 y3=5 y4=6 ylbl="memory (kb)" title="$title" ygrid=yes ylbldet="adjust=-0.1,0" barwidth=0.01 stubvert=yes header=yes name=file name2=dba name3=SQL name4=ADODB
+
+pl -png -o lines.png -prefab lines data=combined.data delim=tab x=2 y=3 y2=4 y3=5 y4=6 ylbl="memory (kb)" title="$title" ygrid=yes ylbldet="adjust=-0.1,0" stubvert=yes header=yes name=file name2=dba name3=SQL name4=ADODB

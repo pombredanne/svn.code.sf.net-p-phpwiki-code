@@ -25,9 +25,9 @@ class SetupWiki extends phpwiki_TestCase {
     function testSetupWiki() {
         global $request;
 
-        print "Purge the testbox ... ";
+        //print "Purge the testbox ... ";
         purge_testbox();
-        print "\n";
+        //print "\n";
         
         $dbi = $request->getDbh();
         $dbi->deletePage('HomePage'); // possibly in cache
