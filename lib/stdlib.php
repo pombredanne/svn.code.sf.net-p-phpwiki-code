@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.124 2002-09-17 15:23:32 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.125 2002-09-17 19:23:32 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -499,13 +499,15 @@ function ExtractLinks($content) {
  *
  * @return string New-style wiki markup.
  *
- * @bugs FIXME: footnotes and old-style tables are known to be broken.
+ * @bugs Footnotes don't work quite as before (esp if there are
+ *   multiple references to the same footnote.  But close enough,
+ *   probably for now....
  */
 function ConvertOldMarkup ($text, $markup_type = "block") {
 
-    static $orig, $repl, $link_orig, $link_repl;
-
-    if (empty($orig)) {
+    static $subs;
+    
+    if (empty($subs)) {
         /*****************************************************************
          * Conversions for inline markup:
          */
@@ -528,10 +530,31 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
         $orig[] = '/!((?:' . join(')|(', $bang_esc) . '))/';
         $repl[] = '~\\1';
 
+        $subs["links"] = array($orig, $repl);
 
-        $link_orig = $orig;
-        $link_repl = $repl;
+        // Escape '<'s
+        //$orig[] = '/<(?!\?plugin)|(?<!^)</m';
+        //$repl[] = '~<';
         
+        // Convert footnote references.
+        $orig[] = '/(?<=.)(?<!~)\[\s*(\d+)\s*\]/m';
+        $repl[] = '#[|ftnt_ref_\\1]<sup>~[[\\1|#ftnt_\\1]~]</sup>';
+
+        // Convert old style emphases to HTML style emphasis.
+        $orig[] = '/__(.*?)__/';
+        $repl[] = '<strong>\\1</strong>';
+        $orig[] = "/''(.*?)''/";
+        $repl[] = '<em>\\1</em>';
+
+
+        $subs["inline"] = array($orig, $repl);
+
+        // Escape nestled markup. (two versions: inline & block)
+        $subs["inline"][0][] = '/^(?<=^|\s)[=_*](?=\S)|(?<=\S)[=_*](?=\s|$)/m';
+        $subs["inline"][1][] = '/~\\0/';
+        $orig[] = '/^.*?(?:(?<=^|\s)[=_*](?=\S)|(?<=\S)[=_*](?=\s|$)).*$/me';
+        $repl[] = "_EscapeNestledMarkup('\\0')";
+            
         /*****************************************************************
          * Conversions for block markup
          */
@@ -539,31 +562,70 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
         $orig[] = '/^[ \t]+\S.*\n(?:(?:\s*\n)?^[ \t]+\S.*\n)*/m';
         $repl[] = "<pre>\n\\0</pre>\n";
 
+        // convert tables
+        $orig[] = '/(?:^\|.*\n)+/m';
+        $repl[] = "<?plugin OldStyleTable\n\\0?>\n";
+
         // convert lists
         $orig[] = '/^([#*;]*)([*#]|;.*?:) */me';
         $repl[] = "_ConvertOldListMarkup('\\1', '\\2')";
+
+        // convert footnote definitions
+        $orig[] = '/^\[\s*(\d+)\s*\]/m';
+        $repl[] = '#[|ftnt_\\1]~[[\\1|#ftnt_ref_\\1]~]';
+
+        // in old markup headings only allowed at beginning of line
+        //$orig[] = '/(?<=[^!])!/';
+        $orig[] = '/([^\n!])!/';
+        $repl[] = '\\1~!';
+
+        $subs["block"] = array($orig, $repl);
     }
     
-
-    if ($markup_type == "block") {
-        return preg_replace($orig, $repl, $text);
-    }
-    else {
-        return preg_replace($link_orig, $link_repl, $text);
-    }
+    list ($orig, $repl) = $subs[$markup_type];
+    if ($markup_type == "block" and substr($text,-1) != "\n")
+        $text .= "\n";
+    return preg_replace($orig, $repl, $text);
 }
 
-function _ConvertOldListMarkup ($indent, $bullet) {
-    $indent = str_repeat('     ', strlen($indent));
+function _ConvertOldListMarkup ($ind, $bullet) {
+    $indent = str_repeat('     ', strlen($ind));
     if ($bullet[0] == ';') {
-        $term = ltrim(substr($bullet, 1));
-        return $indent . $term . "\n" . $indent . '     ';
+        //$term = ltrim(substr($bullet, 1));
+        //return $indent . $term . "\n" . $indent . '     ';
+        return $ind . $bullet;
     }
     else
         return $indent . $bullet . ' ';
 }
 
+function _EscapeNestledMarkup ($line) {
+    if (!preg_match('/^<\?plugin.*\?>/', $line))
+        $line = preg_replace('/[=_]|(?<!^|[*#;])\*/', '~\\0', $line);
+    return $line;
+}
 
+
+/**
+ * Expand tabs in string.
+ *
+ * Converts all tabs to (the appropriate number of) spaces.
+ *
+ * @param string $str
+ * @param integer $tab_width
+ * @return string
+ */
+function expand_tabs($str, $tab_width = 8) {
+    $split = split("\t", $str);
+    $tail = array_pop($split);
+    $expanded = "\n";
+    foreach ($split as $hunk) {
+        $expanded .= $hunk;
+        $pos = strlen(strrchr($expanded, "\n")) - 1;
+        $expanded .= str_repeat(" ", ($tab_width - $pos % $tab_width));
+    }
+    return substr($expanded, 1) . $tail;
+}
 
 /**
  * Split WikiWords in page names.
