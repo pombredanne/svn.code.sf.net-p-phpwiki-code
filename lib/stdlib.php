@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.119 2002-09-14 22:58:06 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.120 2002-09-15 05:45:09 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -307,14 +307,54 @@ function LinkBracketLink($bracketlink) {
     
 }
 
-/* FIXME: this should be done by the transform code */
+/**
+ * Extract internal links from wiki page.
+ *
+ * @param mixed $content The raw wiki-text, either as
+ * an array of lines or as one big string.
+ *
+ * @return array List of the names of pages linked to.
+ */
 function ExtractWikiPageLinks($content) {
-    global $WikiNameRegexp;
+    list ($wikilinks,) = ExtractLinks($content);
+    return $wikilinks;
+}      
+
+/**
+ * Extract external links from a wiki page.
+ *
+ * @param mixed $content The raw wiki-text, either as
+ * an array of lines or as one big string.
+ *
+ * @return array List of the names of pages linked to.
+ */
+function ExtractExternalLinks($content) {
+    list (, $urls) = ExtractLinks($content);
+    return $urls;
+}      
+
+/**
+ * Extract links from wiki page.
+ *
+ * FIXME: this should be done by the transform code.
+ *
+ * @param mixed $content The raw wiki-text, either as
+ * an array of lines or as one big string.
+ *
+ * @return array List of two arrays.  The first contains
+ * the internal links (names of pages linked to), the second
+ * contains external URLs linked to.
+ */
+function ExtractLinks($content) {
+    include_once('lib/interwiki.php');
+    global $request, $WikiNameRegexp, $AllowedProtocols;
     
     if (is_string($content))
         $content = explode("\n", $content);
     
     $wikilinks = array();
+    $urls = array();
+    
     foreach ($content as $line) {
         // remove plugin code
         $line = preg_replace('/<\?plugin\s+\w.*?\?>/', '', $line);
@@ -328,24 +368,48 @@ function ExtractWikiPageLinks($content) {
                                           $line, $brktlinks);
         for ($i = 0; $i < $numBracketLinks; $i++) {
             $link = LinkBracketLink($brktlinks[0][$i]);
-            if (preg_match('/^(named-)?wiki(unknown)?$/', $link->getAttr('class')))
+            $class = $link->getAttr('class');
+            if (preg_match('/^(named-)?wiki(unknown)?$/', $class)) {
                 if ($brktlinks[2][$i][0] == SUBPAGE_SEPARATOR) {
-                    global $request;
                     $wikilinks[$request->getArg('pagename') . $brktlinks[2][$i]] = 1;
                 } else {
                     $wikilinks[$brktlinks[2][$i]] = 1;
                 }
-            
-            $brktlink = preg_quote($brktlinks[0][$i]);
-            $line = preg_replace("|$brktlink|", '', $line);
+            }
+            elseif (preg_match('/^(namedurl|rawurl|(named-)?interwiki)$/', $class)) {
+                $urls[$brktlinks[2][$i]] = 1;
+            }
+            $line = str_replace($brktlinks[0][$i], '', $line);
         }
         
+        // Raw URLs
+        preg_match_all("/!?\b($AllowedProtocols):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]/",
+                       $line, $link);
+        foreach ($link[0] as $url) {
+            if ($url[0] <> '!') {
+                $urls[$url] = 1;
+            }
+            $line = str_replace($url, '', $line);
+        }
+
+        // Interwiki links
+        $map = InterWikiMap::GetMap($request);
+        $regexp = pcre_fix_posix_classes("!?(?<![[:alnum:]])") 
+            . $map->getRegexp() . ":[^\\s.,;?()]+";
+        preg_match_all("/$regexp/", $line, $link);
+        foreach ($link[0] as $interlink) {
+            if ($interlink[0] <> '!') {
+                $link = $map->link($interlink);
+                $urls[$link->getAttr('href')] = 1;
+            }
+            $line = str_replace($interlink, '', $line);
+        }
+
         // BumpyText old-style wiki links
         if (preg_match_all("/!?$WikiNameRegexp/", $line, $link)) {
             for ($i = 0; isset($link[0][$i]); $i++) {
                 if($link[0][$i][0] <> '!') {
                     if ($link[0][$i][0] == SUBPAGE_SEPARATOR) {
-                        global $request;
                         $wikilinks[$request->getArg('pagename') . $link[0][$i]] = 1;
                     } else {
                         $wikilinks[$link[0][$i]] = 1;
@@ -354,8 +418,9 @@ function ExtractWikiPageLinks($content) {
             }
         }
     }
-    return array_keys($wikilinks);
+    return array(array_keys($wikilinks), array_keys($urls));
 }      
+
 
 /**
  * Convert old page markup to new-style markup.
