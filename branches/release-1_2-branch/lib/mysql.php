@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: mysql.php,v 1.10.2.1 2001-08-18 00:35:10 dairiki Exp $');
+<?php rcs_id('$Id: mysql.php,v 1.10.2.2 2001-08-18 03:57:27 dairiki Exp $');
 
    /*
       Database functions:
@@ -213,15 +213,15 @@
       $term = strtok($search, ' ');
       $clause = '';
       while($term) {
-         $word = "$term";
+         $word = strtolower("$term");
 	 if ($word[0] == '-') {
 	    $word = substr($word, 1);
-	    $clause .= "not ($column like '%$word%') ";
+	    $clause .= "not (LCASE($column) like '%$word%') ";
 	 } else {
-	    $clause .= "($column like '%$word%') ";
+	    $clause .= "(LCASE($column) like '%$word%') ";
 	 }
 	 if ($term = strtok(' '))
-	    $clause .= 'and ';
+	    $clause .= 'AND ';
       }
       return $clause;
    }
