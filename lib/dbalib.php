@@ -1,6 +1,6 @@
 <?php  
 
-   rcs_id('$Id: dbalib.php,v 1.1 2001-01-19 22:20:30 wainstead Exp $');
+   rcs_id('$Id: dbalib.php,v 1.2 2001-01-31 02:01:27 wainstead Exp $');
 
    /*
       Database functions:
@@ -39,8 +39,7 @@
          while (($dbi[$key] = @dba_open($file, "c", "gdbm")) < 1) {
             $numattempts++;
             if ($numattempts > MAX_DBM_ATTEMPTS) {
-               ExitWiki("Cannot open database '$key' : '$file', giving 
-up.");
+               ExitWiki("Cannot open database '$key' : '$file', giving up.");
             }
             sleep(1);
          }
@@ -256,5 +255,3 @@ up.");
    }
 
 ?>
-
-
