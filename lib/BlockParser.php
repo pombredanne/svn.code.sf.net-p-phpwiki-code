@@ -1,4 +1,4 @@
-<?php rcs_id('$Id');
+<?php rcs_id('$Id: BlockParser.php,v 1.8 2002-01-28 03:59:30 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.

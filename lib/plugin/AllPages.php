@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id');
+rcs_id('$Id: AllPages.php,v 1.5 2002-01-28 03:59:30 dairiki Exp $');
 
 require_once('lib/PageList.php');
 
