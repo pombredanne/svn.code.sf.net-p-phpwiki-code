@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.46 2002-02-26 21:58:49 carstenklapp Exp $');
+rcs_id('$Id: editpage.php,v 1.47 2002-03-21 21:24:50 lakka Exp $');
 
 require_once('lib/Template.php');
 
@@ -134,7 +134,7 @@ class PageEditor
             if ($isadmin = $this->user->isadmin()) {
                 $page = &$this->page;
                 $lock = $this->meta['locked'];
-                $this->setPageLockChanged($isadmin, $lock, &$page);
+                $this->setPageLockChanged($isadmin, $lock, $page);
             }
             // Save failed. No changes made.
             include_once('lib/display.php');
@@ -159,7 +159,7 @@ class PageEditor
         }
         // New contents successfully saved...
         if ($isadmin = $this->user->isadmin())
-            $this->setPageLockChanged($isadmin, $lock, &$page);
+            $this->setPageLockChanged($isadmin, $lock, $page);
 
         // Clean out archived versions of this page.
         include_once('lib/ArchiveCleaner.php');
