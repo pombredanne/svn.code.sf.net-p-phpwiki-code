@@ -1,4 +1,4 @@
-<!-- $Id: pageinfo.php,v 1.5.4.3 2005-01-07 14:02:28 rurban Exp $ -->
+<!-- $Id: pageinfo.php,v 1.5.4.4 2005-01-07 14:23:05 rurban Exp $ -->
 <!-- Display the internal structure of a page. Steve Wainstead, June 2000 -->
 <?php
    if (get_magic_quotes_gpc()) {
@@ -8,16 +8,16 @@
    $encname = htmlspecialchars($info);
    $enter = gettext ("Enter a page name");
    $go = gettext ("Go");
-   $html = "<form action=\"$ScriptUrl\" METHOD=GET>\n" .
-	   "<input name=\"info\" value=\"$encname\">" .
+   $html = "<form action=\"$ScriptUrl\" method=\"get\">\n" .
+	   "<input name=\"info\" value=\"$encname\" />" .
 	   " $enter\n" .
-	   "<input type=submit value=$go><br>\n" .
-	   "<input type=checkbox name=showpagesource";
+	   "<input type=\"submit\" value=\"$go\" /><br />\n" .
+	   "<input type=\"checkbox\" name=\"showpagesource\"";
 
    if (isset($showpagesource) && ($showpagesource == "on")) {
       $html .= " checked";
    }
-   $html .= "> ";
+   $html .= " /> ";
    $html .= gettext ("Show the page source and references");
    $html .= "\n</form>\n";
 
@@ -37,7 +37,7 @@
 		$name) . "\n";
       }
       else {
-	 $table = "<table border=1 bgcolor=white>\n";
+	 $table = "<table border=\"1\" bgcolor=\"white\">\n";
 
 	 while (list($key, $val) = each($pagehash)) {
 	    if ($key > 0 || !$key) #key is an array index
@@ -60,15 +60,15 @@
       return $table;
    }
 
-   $html .= "<P><B>";
+   $html .= "<p><b>";
    $html .= gettext ("Current version");
-   $html .= "</B></p>";
+   $html .= "</b></p>";
    // $dbi = OpenDataBase($WikiPageStore);   --- done by index.php
    $html .= ViewPageProps($info, $WikiPageStore);
 
-   $html .= "<P><B>";
+   $html .= "<p><b>";
    $html .= gettext ("Archived version");
-   $html .= "</B></p>";
+   $html .= "</b></p>";
    // $dbi = OpenDataBase($ArchivePageStore);
    $html .= ViewPageProps($info, $ArchivePageStore);
 

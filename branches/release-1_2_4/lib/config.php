@@ -13,7 +13,8 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.24.2.13.2.3 2005-01-07 14:02:28 rurban Exp $'); 
+   rcs_id('$Id: config.php,v 1.24.2.13.2.4 2005-01-07 14:23:04 rurban Exp $'); 
+   define('PHPWIKI_VERSION', '1.2.7');
    // end essential internal stuff
 
 
@@ -47,8 +48,14 @@
    /////////////////////////////////////////////////////////////////////
 
    $WhichDatabase = 'default'; // use one of "dbm", "dba", "mysql",
-                           // "pgsql", "msql", "mssql", or "file"
+                               // "pgsql", "msql", "mssql", or "file"
 
+   if ($WhichDatabase == 'default' and function_exists("dba_open"))
+       $WhichDatabase = 'dba';
+   if ($WhichDatabase == 'default' and function_exists("dbmopen") 
+       and floor(phpversion()) == 3)
+       $WhichDatabase = 'dbm';
+       
    // DBM and DBA settings (default)
    if ($WhichDatabase == 'dbm' or $WhichDatabase == 'dba' or
        $WhichDatabase == 'default') {
@@ -61,13 +68,26 @@
       $WikiDB['hottopics'] = "$DBMdir/wikihottopicsdb";
       $WikiDB['hitcount']  = "$DBMdir/wikihitcountdb";
 
-      // this is the type of DBM file on your system. For most Linuxen
-      // 'gdbm' is fine; 'db2' is another common type. 'ndbm' appears
-      // on Solaris but won't work because it won't store pages larger
+      // This is the type of DBA handler for your system. For most Linuxen
+      // 'gdbm' is best; 'db2', 'db3' or 'db4' (BerkeleyDB) are another common types. 
+      // 'ndbm' appears on Solaris but won't work because it won't store pages larger
       // than 1000 bytes.
-      define("DBM_FILE_TYPE", 'gdbm');
+      // We do now some smart auto-detection, which will be the best.
+      // You can override it by defining DBM_FILE_TYPE earlier.
+      if (!defined("DBM_FILE_TYPE")) {
+          if (function_exists("dba_handlers")) { // since 4.3.0
+              foreach (array('gdbm','db4','db3','db2','sdbm','ndbm') as $handler) {
+                  if (in_array($handler, dba_handlers())) {
+                      define("DBM_FILE_TYPE", $handler);
+                      break;
+                  }
+              }
+          }
+      }
+      if (!defined("DBM_FILE_TYPE"))
+          define("DBM_FILE_TYPE", (substr(PHP_OS,0,3) == 'WIN') ? 'db3' : 'gdbm');
 
-      // try this many times if the dbm is unavailable
+      // time in seconds to try if the dbm is unavailable
       define("MAX_DBM_ATTEMPTS", 20);
 
       // for PHP3 use dbmlib, else use dbalib for PHP4
@@ -144,11 +164,11 @@
       $DBdir = "/tmp/wiki";
       $WikiPageStore = "wiki";
       $ArchivePageStore = "archive";
-      $WikiDB['wiki']      = "$DBdir/pages";
-      $WikiDB['archive']   = "$DBdir/archive";
-      $WikiDB['wikilinks'] = "$DBdir/links";
-      $WikiDB['hottopics'] = "$DBdir/hottopics";
-      $WikiDB['hitcount']  = "$DBdir/hitcount";
+      $WikiDB[$WikiPageStore]      = "$DBdir/pages";
+      $WikiDB[$ArchivePageStore]   = "$DBdir/archive";
+      //$WikiDB['wikilinks'] = "$DBdir/links";
+      //$WikiDB['hottopics'] = "$DBdir/hottopics";
+      $WikiDB['hitcount']    = "$DBdir/hitcount";
       include "lib/db_filesystem.php";
 
    // MS SQLServer settings
@@ -179,6 +199,11 @@
    // If this is left blank (or unset), the signature will be omitted.
    $SignatureImg = "images/signature.png";
 
+   // this turns on url indicator icons, inserted before embedded links
+   //define("USE_LINK_ICONS", 1);
+   if (defined('USE_LINK_ICONS') and !defined('DATA_PATH'))
+       define("DATA_PATH", dirname($SCRIPT_NAME));
+
    // date & time formats used to display modification times, etc.
    // formats are given as format strings to PHP date() function
    $datetimeformat = "F j, Y";	// may contain time of day
@@ -196,16 +221,20 @@
 
    // allowed protocols for links - be careful not to allow "javascript:"
    // within a named link [name|uri] one more protocol is defined: phpwiki
-   $AllowedProtocols = "http|https|mailto|ftp|news|gopher";
+   $AllowedProtocols = "http|https|mailto|ftp|news|nntp|gopher";
 
    // URLs ending with the following extension should be inlined as images
    $InlineImages = "png|jpg|gif";
 
+   // Uncomment this to automatically split WikiWords by inserting spaces.
+   // The default is to leave WordsSmashedTogetherLikeSo in the body text.
+   //define("AUTOSPLIT_WIKIWORDS", 1);
+
    // Perl regexp for WikiNames
    // (?<!..) & (?!...) used instead of '\b' because \b matches '_' as well
-   $WikiNameRegexp = "(?<![A-Za-z0-9])([A-Z][a-z]+){2,}(?![A-Za-z0-9])";
-
-
+   //$WikiNameRegexp = "(?<![A-Za-z0-9])([A-Z][a-z]+){2,}(?![A-Za-z0-9])";
+   // This should work for all ISO-8859-1 languages:
+   $WikiNameRegexp = "(?<![A-Za-z0-9µÀ-ÖØ-öø-ÿ])([A-ZÀ-ÖØ-Þ][a-zµß-öø-ÿ]+){2,}(?![A-Za-z0-9µÀ-ÖØ-öø-ÿ])";
 
    /////////////////////////////////////////////////////////////////////
    // Part Four:
@@ -226,15 +255,16 @@
       }
    } else {
       // This putenv() fails when safe_mode is on.
-      // I think it is unnecessary. 
-      //putenv ("LANG=$LANG");
-      bindtextdomain ("phpwiki", "./locale");
-      textdomain ("phpwiki");
+      @putenv("LC_ALL=$LANG");
+      @putenv("LANG=$LANG");
+      @putenv("LANGUAGE=$LANG");
       if (!defined("LC_ALL")) {
          // Backwards compatibility (for PHP < 4.0.5)
          define("LC_ALL", "LC_ALL");
-      }   
+      }
       setlocale(LC_ALL, "$LANG");
+      bindtextdomain ("phpwiki", "./locale");
+      textdomain ("phpwiki");
    }
    // end of localization function
 

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.8.2.4 2005-01-07 14:02:29 rurban Exp $');
+<?php rcs_id('$Id: transform.php,v 1.8.2.5 2005-01-07 14:23:05 rurban Exp $');
    // expects $pagehash and $html to be set
 
    function tokenize($str, $pattern, &$orig, &$ntokens) {
@@ -132,7 +132,7 @@ your web server it is highly advised that you do not allow this.
 
 
       // %%% are linebreaks
-      $tmpline = str_replace('%%%', '<br>', $tmpline);
+      $tmpline = str_replace('%%%', '<br />', $tmpline);
 
       // bold italics (old way)
       $tmpline = preg_replace("|(''''')(.*?)(''''')|",

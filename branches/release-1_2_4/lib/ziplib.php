@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: ziplib.php,v 1.2.2.5.2.3 2005-01-07 14:02:29 rurban Exp $');
+rcs_id('$Id: ziplib.php,v 1.2.2.5.2.4 2005-01-07 14:23:05 rurban Exp $');
 
 //FIXME: get rid of this.
 function warn ($msg)
@@ -240,7 +240,7 @@ class ZipWriter
 
     $zipname = addslashes($zipname);
     header("Content-Type: application/zip; name=\"$zipname\"");
-    header("Content-Disposition: save; filename=\"$zipname\"");
+    header("Content-Disposition: attachment; filename=\"$zipname\"");
   }
 
   function addRegularFile ($filename, $content, $attrib = false) {
@@ -512,6 +512,15 @@ function MimeMultipart ($parts)
   
 function MimeifyPage ($pagehash) {
   extract($pagehash);
+
+  if (!isset($content))
+      $content = array();
+  elseif (!is_array($content)) {
+      // paranoia: should never happen, but we don't want
+      //     to lose page content, in case it does.
+      $content = array($content);
+  }
+
   // FIXME: add 'hits' to $params 
   $params = array('pagename' => rawurlencode($pagename),
 		  'author' => rawurlencode($author),

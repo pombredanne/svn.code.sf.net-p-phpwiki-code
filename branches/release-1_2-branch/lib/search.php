@@ -1,14 +1,14 @@
 <?php
    // Title search: returns pages having a name matching the search term
-   rcs_id('$Id: search.php,v 1.3.2.4 2005-01-07 14:02:28 rurban Exp $');
+   rcs_id('$Id: search.php,v 1.3.2.5 2005-01-07 14:23:05 rurban Exp $');
 
    if(get_magic_quotes_gpc())
       $search = stripslashes($search);
 
-   $html = "<P><B>"
+   $html = "<p><b>"
 	   . sprintf(gettext ("Searching for \"%s\" ....."),
 		     htmlspecialchars($search))
-	   . "</B></P>\n";
+	   . "</b></p>\n";
 
    // quote regexp chars (backends should do this...) 
    //$search = preg_quote($search);
@@ -19,11 +19,11 @@
       $query = InitTitleSearch($dbi, $search);
       while ($page = TitleSearchNextMatch($dbi, $query)) {
          $found++;
-         $html .= LinkExistingWikiWord($page) . "<br>\n";
+         $html .= LinkExistingWikiWord($page) . "<br />\n";
       }
    }
    else {
-      $html .= gettext("(You entered an empty search string)") . "<br>\n";
+      $html .= gettext("(You entered an empty search string)") . "<br />\n";
    }   
      
    $html .= "<hr noshade>\n"

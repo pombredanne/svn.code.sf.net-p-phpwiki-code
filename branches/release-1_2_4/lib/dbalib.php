@@ -1,6 +1,6 @@
 <?php  
 
-   rcs_id('$Id: dbalib.php,v 1.2.2.5.2.3 2005-01-07 14:02:28 rurban Exp $');
+   rcs_id('$Id: dbalib.php,v 1.2.2.5.2.4 2005-01-07 14:23:04 rurban Exp $');
 
    /*
       Database functions:
@@ -49,17 +49,21 @@
               $mode .= "d"; 			// else use internal locking
           }
       }
-      $timeout = 0;
       while (list($key, $file) = each($WikiDB)) {
-         while (($dbi[$key] = @dba_open($file, $mode, DBM_FILE_TYPE)) < 1) {
-            if (file_exists($file))
-                $mode = "w";
-            $secs = 0.5 + ((double)rand(1,32767)/32767);
-            sleep($secs);
-            $timeout += $secs;
-            if ($timeout > MAX_DBM_ATTEMPTS) {
-               ExitWiki("Cannot open database '$key' : '$file', giving up.");
-            }
+         $timeout = 0;
+         if (($dbi[$key] = @dba_open($file, $mode, DBM_FILE_TYPE)) < 1) {
+             $secs = 0.5 + ((double)rand(1,32767)/32767);
+             sleep($secs);
+             $timeout += $secs;
+             while (($dbi[$key] = dba_open($file, $mode, DBM_FILE_TYPE)) < 1) {
+                 if (file_exists($file)) $mode = "w";
+                 $secs = 0.5 + ((double)rand(1,32767)/32767);
+                 sleep($secs);
+                 $timeout += $secs;
+                 if ($timeout > MAX_DBM_ATTEMPTS) {
+                     ExitWiki("Cannot open database '$key' : '$file', giving up.");
+                 }
+             }
          }
       }
       return $dbi;
@@ -67,6 +71,7 @@
 
 
    function CloseDataBase($dbi) {
+      if (empty($dbi)) return;
       reset($dbi);
       while (list($dbafile, $dbihandle) = each($dbi)) {
          dba_close($dbihandle);

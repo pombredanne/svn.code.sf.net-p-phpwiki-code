@@ -66,18 +66,24 @@ $locale["Error message: %s"] =
    "Fehlermeldung: %s";
 $locale["Cannot open database %s, giving up."] =
    "Kann Datenbank %s nicht öffnen - Abbruch.";
-$locale["Insert/update failed: %s"] =
-   "Einfügen/Verändern fehlgeschlagen: %s";
+$locale["Insert/update to table 'wiki' failed: %s"] =
+   "Einfügen/Verändern in Tabelle 'wiki' fehlgeschlagen: %s";
 $locale["Delete on %s failed: %s"] =
    "Löschen in %s fehlgeschlagen: %s";
 $locale["Insert into %s failed: %s"] =
    "Einfügen in %s fehlgeschlagen: %s";
+$locale["Insert/update into table 'archive' failed: %s"] =
+   "Einfügen/Verändern in Tabelle 'archive' fehlgeschlagen: %s";
+$locale["MSSQL error: %s"] =
+   "MSSQL Fehler: %s";
+$locale["Insert/Update failed: %s"] =
+   "Einfügen/Verändern fehlgeschlagen: %s";
+$locale["Cannot delete '%s' from table '%s'"] =
+   "Kann nicht '%s' aus Tabelle '%s' löschen";
 $locale["MySQL error: %s"] =
    "MySQL Fehler: %s";
 $locale["Error writing page '%s'"] =
    "Fehler beim Schreiben der Seite '%s'";
-$locale["Cannot delete '%s' from table '%s'"] =
-   "Kann nicht '%s' aus Tabelle '%s' löschen";
 $locale["Enter a page name"] =
    "Seitenname eingeben";
 $locale["Go"] =
@@ -89,9 +95,9 @@ $locale["PageInfo"] =
 $locale["Page name '%s' is not in the database"] =
    "Seite '%s' ist nicht in der Datenbank";
 $locale["Current version"] =
-   "Aktuelle Seite:";
+   "Aktuelle Version";
 $locale["Archived version"] =
-   "Archivierte Seite:";
+   "Archivierte Version";
 $locale["RecentChanges"] =
    "FrischeSeiten";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
@@ -109,7 +115,7 @@ $locale["Make changes to the file again. Paste your additions from the clipboard
 $locale["Press <b>Save</b> again."] =
    "Drücke nochmal <b>Speichern</b>";
 $locale["Problem while updating %s"] =
-   "Problem während dem Editieren von %s";
+   "Problem während dem Speichern von %s";
 $locale["Thank you for editing %s."] =
    "Danke für das Editieren von %s.";
 $locale["Your careful attention to detail is much appreciated."] =
@@ -124,8 +130,6 @@ $locale["WikiFatalError"] =
    "FatalerWikiFehler";
 $locale["Search"] =
    "Suche";
-$locale["Nesting depth exceeded in SetHTMLOutputMode"] =
-   "Interner Fehler: Stackgrenze in SetHTMLOutputMode überschritten.";
 $locale["%d best incoming links:"] =
    "Die %d besten hereinkommenden Links:";
 $locale["%d best outgoing links:"] =

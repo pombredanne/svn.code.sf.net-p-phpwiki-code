@@ -1,68 +1,95 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2001-05-21 08:27-0700\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-01-07 15:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: ENCODING\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: admin.php:26
+#: admin.php:32
 msgid "You entered an invalid login or password."
 msgstr ""
 
-#: admin.php:47
+#: admin.php:54
 #, c-format
 msgid "You are about to remove '%s' permanently!"
 msgstr ""
 
-#: admin.php:50
+#: admin.php:57
 #, c-format
 msgid "Click %shere%s to remove the page now."
 msgstr ""
 
-#: admin.php:53
+#: admin.php:60
 msgid "Otherwise press the \"Back\" button of your browser."
 msgstr ""
 
-#: admin.php:55
+#: admin.php:62
 msgid "Function not yet implemented."
 msgstr ""
 
-#: admin.php:57 admin.php:65
+#: admin.php:64 admin.php:72
 msgid "Remove page"
 msgstr ""
 
-#: admin.php:63
+#: admin.php:70
 #, c-format
 msgid "Removed page '%s' succesfully."
 msgstr ""
 
-#: lib/config.php:197
+#: lib/backlinks.php:11 lib/backlinks.php:19
+#, c-format
+msgid "Pages which link to %s"
+msgstr ""
+
+#: lib/backlinks.php:32
+#, c-format
+msgid "%d pages link to %s."
+msgstr ""
+
+#: lib/config.php:273
 msgid "templates/browse.html"
 msgstr ""
 
-#: lib/config.php:198
+#: lib/config.php:274
 msgid "templates/editpage.html"
 msgstr ""
 
-#: lib/config.php:199
+#: lib/config.php:275
 msgid "templates/editlinks.html"
 msgstr ""
 
-#: lib/config.php:200
+#: lib/config.php:276
 msgid "templates/message.html"
 msgstr ""
 
-#: lib/config.php:216
+#: lib/config.php:292
 msgid "./pgsrc"
+msgstr ""
+
+#: lib/db_filesystem.php:76
+#, c-format
+msgid "'%s': corrupt file"
+msgstr ""
+
+#: lib/db_filesystem.php:221 lib/db_filesystem.php:251
+#, c-format
+msgid "%s: bad data<br>\n"
+msgstr ""
+
+#: lib/db_filesystem.php:301
+#, c-format
+msgid "%s: Bad filename in database<br>\n"
 msgstr ""
 
 #: lib/diff.php:711
@@ -119,11 +146,11 @@ msgstr ""
 msgid "Diff of %s."
 msgstr ""
 
-#: lib/display.php:15
+#: lib/display.php:17
 msgid "FrontPage"
 msgstr ""
 
-#: lib/display.php:32 lib/editpage.php:56
+#: lib/display.php:34 lib/editpage.php:56
 #, c-format
 msgid "Describe %s here."
 msgstr ""
@@ -137,82 +164,101 @@ msgstr ""
 msgid "No page name passed into editpage!"
 msgstr ""
 
-#: lib/editpage.php:31 lib/savepage.php:121
+#: lib/editpage.php:31 lib/savepage.php:135
 msgid "This page has been locked by the administrator and cannot be edited."
 msgstr ""
 
-#: lib/editpage.php:33 lib/savepage.php:99 lib/savepage.php:122
+#: lib/editpage.php:33 lib/savepage.php:111 lib/savepage.php:136
 msgid "Sorry for the inconvenience."
 msgstr ""
 
-#: lib/editpage.php:35 lib/savepage.php:123
+#: lib/editpage.php:35 lib/savepage.php:137
 #, c-format
 msgid "Problem while editing %s"
 msgstr ""
 
-#: lib/fullsearch.php:9 lib/search.php:9
+#: lib/fullsearch.php:10 lib/search.php:9
 #, c-format
 msgid "Searching for \"%s\" ....."
 msgstr ""
 
-#: lib/fullsearch.php:41
+#: lib/fullsearch.php:43 lib/search.php:26
+msgid "(You entered an empty search string)"
+msgstr ""
+
+#: lib/fullsearch.php:47
 #, c-format
 msgid "%d matches found in %d pages."
 msgstr ""
 
-#: lib/fullsearch.php:45
+#: lib/fullsearch.php:51
 msgid "Full Text Search Results"
 msgstr ""
 
-#: lib/msql.php:29 lib/mysql.php:36
+#: lib/msql.php:31 lib/mssql.php:41 lib/mysql.php:38
 msgid "Cannot establish connection to database, giving up."
 msgstr ""
 
-#: lib/msql.php:31 lib/msql.php:37
+#: lib/msql.php:33 lib/msql.php:39
 #, c-format
 msgid "Error message: %s"
 msgstr ""
 
-#: lib/msql.php:35 lib/mysql.php:42
+#: lib/msql.php:37 lib/mssql.php:50 lib/mysql.php:44
 #, c-format
 msgid "Cannot open database %s, giving up."
 msgstr ""
 
-#: lib/msql.php:210 lib/msql.php:286
+#: lib/msql.php:212
 #, c-format
-msgid "Insert/update failed: %s"
+msgid "Insert/update to table 'wiki' failed: %s"
 msgstr ""
 
-#: lib/msql.php:221 lib/msql.php:296
+#: lib/msql.php:223 lib/msql.php:300
 #, c-format
 msgid "Delete on %s failed: %s"
 msgstr ""
 
-#: lib/msql.php:237 lib/msql.php:312
+#: lib/msql.php:241 lib/msql.php:316
 #, c-format
 msgid "Insert into %s failed: %s"
 msgstr ""
 
-#: lib/mysql.php:38 lib/mysql.php:44 lib/mysql.php:123 lib/mysql.php:163
+#: lib/msql.php:290
+#, c-format
+msgid "Insert/update into table 'archive' failed: %s"
+msgstr ""
+
+#: lib/mssql.php:43 lib/mssql.php:52 lib/mssql.php:197
+#, c-format
+msgid "MSSQL error: %s"
+msgstr ""
+
+#: lib/mssql.php:158
+#, c-format
+msgid "Insert/Update failed: %s"
+msgstr ""
+
+#: lib/mssql.php:195 lib/mysql.php:163
+#, c-format
+msgid "Cannot delete '%s' from table '%s'"
+msgstr ""
+
+#: lib/mysql.php:40 lib/mysql.php:46 lib/mysql.php:125 lib/mysql.php:165
 #, c-format
 msgid "MySQL error: %s"
 msgstr ""
 
-#: lib/mysql.php:121
+#: lib/mysql.php:123
 #, c-format
 msgid "Error writing page '%s'"
-msgstr ""
-
-#: lib/mysql.php:161
-#, c-format
-msgid "Cannot delete '%s' from table '%s'"
 msgstr ""
 
 #: lib/pageinfo.php:9
 msgid "Enter a page name"
 msgstr ""
 
-#: lib/pageinfo.php:10 lib/stdlib.php:116
+#: lib/pageinfo.php:10 lib/stdlib.php:197
 msgid "Go"
 msgstr ""
 
@@ -237,67 +283,67 @@ msgstr ""
 msgid "Archived version"
 msgstr ""
 
-#: lib/savepage.php:16 lib/savepage.php:74
+#: lib/savepage.php:16 lib/savepage.php:86
 msgid "RecentChanges"
 msgstr ""
 
-#: lib/savepage.php:85
+#: lib/savepage.php:97
 msgid ""
 "PhpWiki is unable to save your changes, because another user edited and "
 "saved the page while you were editing the page too. If saving proceeded now "
 "changes from the previous author would be lost."
 msgstr ""
 
-#: lib/savepage.php:87
+#: lib/savepage.php:99
 msgid "In order to recover from this situation follow these steps:"
 msgstr ""
 
-#: lib/savepage.php:89
+#: lib/savepage.php:101
 msgid "Use your browser's <b>Back</b> button to go back to the edit page."
 msgstr ""
 
-#: lib/savepage.php:91
+#: lib/savepage.php:103
 msgid ""
 "Copy your changes to the clipboard or to another temporary place (e.g. text "
 "editor)."
 msgstr ""
 
-#: lib/savepage.php:93
+#: lib/savepage.php:105
 msgid ""
 "<b>Reload</b> the page. You should now see the most current version of the "
 "page. Your changes are no longer there."
 msgstr ""
 
-#: lib/savepage.php:95
+#: lib/savepage.php:107
 msgid ""
 "Make changes to the file again. Paste your additions from the clipboard (or "
 "text editor)."
 msgstr ""
 
-#: lib/savepage.php:97
+#: lib/savepage.php:109
 msgid "Press <b>Save</b> again."
 msgstr ""
 
-#: lib/savepage.php:103
+#: lib/savepage.php:115
 #, c-format
 msgid "Problem while updating %s"
 msgstr ""
 
-#: lib/savepage.php:146
+#: lib/savepage.php:160
 #, c-format
 msgid "Thank you for editing %s."
 msgstr ""
 
-#: lib/savepage.php:176
+#: lib/savepage.php:190
 msgid "Your careful attention to detail is much appreciated."
 msgstr ""
 
-#: lib/search.php:25
+#: lib/search.php:30
 #, c-format
 msgid "%d pages match your query."
 msgstr ""
 
-#: lib/search.php:28
+#: lib/search.php:33
 msgid "Title Search Results"
 msgstr ""
 
@@ -306,29 +352,25 @@ msgstr ""
 msgid "Inserting page %s, version %s from %s"
 msgstr ""
 
-#: lib/stdlib.php:36
+#: lib/stdlib.php:38
 msgid "WikiFatalError"
 msgstr ""
 
-#: lib/stdlib.php:83 lib/stdlib.php:91
+#: lib/stdlib.php:164 lib/stdlib.php:172
 msgid "Search"
 msgstr ""
 
-#: lib/stdlib.php:185
-msgid "Nesting depth exceeded in SetHTMLOutputMode"
-msgstr ""
-
-#: lib/stdlib.php:381
+#: lib/stdlib.php:469
 #, c-format
 msgid "%d best incoming links:"
 msgstr ""
 
-#: lib/stdlib.php:391
+#: lib/stdlib.php:482
 #, c-format
 msgid "%d best outgoing links:"
 msgstr ""
 
-#: lib/stdlib.php:402
+#: lib/stdlib.php:496
 #, c-format
 msgid "%d most popular nearby:"
 msgstr ""

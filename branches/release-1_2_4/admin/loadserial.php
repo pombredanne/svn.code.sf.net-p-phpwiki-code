@@ -1,4 +1,4 @@
-<!-- $Id: loadserial.php,v 1.1.2.1.2.3 2005-01-07 14:02:27 rurban Exp $ -->
+<!-- $Id: loadserial.php,v 1.1.2.1.2.4 2005-01-07 14:23:04 rurban Exp $ -->
 <?php
    /*
       Load a set of pages that have been serialized with 
@@ -8,10 +8,10 @@
       die("You must be logged in as the administrator to load serialized pages.");
 
    $directory = $loadserial;
-   $html = "Loading serialized pages from '$directory'.<p>\n";
+   $html = "Loading serialized pages from '$directory'.<p />\n";
 
    if (! file_exists($directory)) {
-      echo "No such directory '$directory'.<br>\n";
+      echo "No such directory '$directory'.<br />\n";
       exit;
    }
    
@@ -22,7 +22,7 @@
       if ($file[0] == ".")
          continue;
 
-      $html .= "Reading '$file'...<br>\n";
+      $html .= "Reading '$file'...<br />\n";
 
       $data = implode("", file("$directory/$file"));
       $pagehash = unserialize($data);
@@ -31,12 +31,12 @@
       // that we are about to insert a page.
 
       $pagename = rawurldecode($file);
-      $html .= "inserting file '".htmlspecialchars($pagename)."' into the database...<br>\n";
+      $html .= "inserting file '".htmlspecialchars($pagename)."' into the database...<br />\n";
       InsertPage($dbi, $pagename, $pagehash);
    }
    closedir($handle); 
 
-   $html .= "<p><b>Load complete.</b>";
+   $html .= "<p></p><b>Load complete.</b>";
    GeneratePage('MESSAGE', $html, 'Load serialized pages', 0);
    ExitWiki('');
 ?>

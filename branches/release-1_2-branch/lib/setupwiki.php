@@ -1,4 +1,4 @@
-<!-- $Id: setupwiki.php,v 1.3.2.3 2005-01-07 14:02:28 rurban Exp $ -->
+<!-- $Id: setupwiki.php,v 1.3.2.4 2005-01-07 14:23:05 rurban Exp $ -->
 <?php
 require "lib/ziplib.php";
 
@@ -20,7 +20,7 @@ function SavePage ($dbi, $page, $source)
 
   printf (gettext ("Inserting page %s, version %s from %s"),
 	 "<b>" . htmlspecialchars ($pagename) . "</b>", $version, $source);
-  print ("<br>\n");
+  print ("<br />\n");
 
   flush();
   InsertPage($dbi, $pagename, $page);
@@ -62,7 +62,7 @@ function LoadFile ($dbi, $filename, $text, $mtime)
 	  if ($page['pagename'] != rawurldecode($filename))
 	      printf("<b>Warning:</b> "
 		     . "pagename (%s) doesn't match filename (%s)"
-		     . " (using pagename)<br>\n",
+		     . " (using pagename)<br />\n",
 		     htmlspecialchars($page['pagename']),
 		     htmlspecialchars(rawurldecode($filename)));
 

@@ -1,3 +1,17 @@
+PhpWiki 1.2.7 backport cvs release-1_2-branch enhancements never 
+released with 1.2.4-1.2.6:
+* full xhtml conformity
+* split_pagename in title and header to help google
+* "INSTALL.Mac OS X" added from cvs
+* lib/zipfile.php: Content-Disposition: attachment
+* lib/config.php, lib/stdlib.php: support new USE_LINK_ICONS and AUTOSPLIT_WIKIWORDS, better i18n $!WikiNameRegexp
+* re-added images/* LINK_ICONS, pre-calculate DATA_PATH
+* locale/*: fix and update strings and templates esp. for german, 
+* index.php: urlparser extended to omit &start_debug=1 and other args
+* added minor_edit checkbox
+* print more meta tags: robots, favicon, language and PHPWIKI_VERSION
+* dbalib: dba default detection for dba/dbm and take best handler, fix timeout logic, improve error diagnostics: print errors after the first failing attempts
+
 PhpWiki 1.2.6 flatfile fixes and enhancement:
 * fixed !TitleSearch and Backlinks for flatfile.
 * enable MostPopular (hitcount storage) for flatfile
