@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.126 2005-02-28 20:30:46 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.127 2005-04-02 18:01:41 uckelman Exp $');
 /* Copyright (C) 2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1644,8 +1644,38 @@ function ValidateMail($email, $noconnect=false) {
     // see http://sourceforge.net/tracker/index.php?func=detail&aid=1053681&group_id=6121&atid=106121
 
     $result = array();
-    // well, technically ".a.a.@host.com" is also valid
-    if (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $email)) {
+
+    // This is Paul Warren's (pdw@ex-parrot.com) monster regex for RFC822
+    // addresses, from the Perl module Mail::RFC822::Address, reduced to
+    // accept single RFC822 addresses without comments only. (The original
+    // accepts groups and properly commented addresses also.)
+    $lwsp = "(?:(?:\\r\\n)?[ \\t])";
+
+    $specials = '()<>@,;:\\\\".\\[\\]';
+    $controls = '\\000-\\031';
+
+    $dtext = "[^\\[\\]\\r\\\\]";
+    $domain_literal = "\\[(?:$dtext|\\\\.)*\\]$lwsp*";
+
+    $quoted_string = "\"(?:[^\\\"\\r\\\\]|\\\\.|$lwsp)*\"$lwsp*";
+
+    $atom = "[^$specials $controls]+(?:$lwsp+|\\Z|(?=[\\[\"$specials]))";
+    $word = "(?:$atom|$quoted_string)";
+    $localpart = "$word(?:\\.$lwsp*$word)*";
+
+    $sub_domain = "(?:$atom|$domain_literal)";
+    $domain = "$sub_domain(?:\\.$lwsp*$sub_domain)*";
+
+    $addr_spec = "$localpart\@$lwsp*$domain";
+
+    $phrase = "$word*";
+    $route = "(?:\@$domain(?:,\@$lwsp*$domain)*:$lwsp*)";
+    $route_addr = "\\<$lwsp*$route?$addr_spec\\>$lwsp*";
+    $mailbox = "(?:$addr_spec|$phrase$route_addr)";
+
+    $rfc822re = "/$lwsp*$mailbox/";
+
+    if (!preg_match($rfc822re, $email)) {
         $result[0] = false;
         $result[1] = sprintf(_("E-Mail address '%s' is not properly formatted"), $email);
         return $result;
@@ -2038,6 +2068,9 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.126  2005/02/28 20:30:46  rurban
+// some stupid code for _AdminUser (probably not needed)
+//
 // Revision 1.125  2005/02/08 13:25:50  rurban
 // encrypt password. fix strict logic.
 // both bugs reported by Mikhail Vladimirov
