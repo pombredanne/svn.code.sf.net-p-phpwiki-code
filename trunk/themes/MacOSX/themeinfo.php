@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.5 2002-01-04 02:02:31 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.6 2002-01-04 02:22:21 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -80,7 +80,7 @@ $logo = "themes/$theme/PhpWiki.png";
 // If this is left blank, any signature defined in index.php will be
 // used. If it is not defined by index.php or in here then the
 // "Thank you for editing..." screen will be omitted.
-//$SignatureImg = "themes/$theme/signature.png";
+$SignatureImg = "themes/$theme/Signature.png"; // Papyrus 19pt
 
 // If this theme defines any templates, they will completely override
 // whatever templates have been defined in index.php.
