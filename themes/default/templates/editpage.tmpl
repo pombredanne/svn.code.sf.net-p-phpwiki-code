@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.34 2002-12-15 01:30:47 carstenklapp Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.35 2002-12-15 01:38:35 carstenklapp Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
@@ -65,10 +65,6 @@ $s = $Theme->getButtonSeparator();
     <noscript><?=Button("submit:", _("Adjust"), 'wikiaction')?></noscript>
   </div>
   <a name="editarea" id="editarea"><?=$EDIT_TEXTAREA?></a>
-  <br><input type="button" 
-             value="Check Spelling" 
-             onclick="window.open('../squirrelspell/sqspell_interface.php', 
-                      'sqspell', 'status=yes,width=550,height=370,resizable=yes')">
 
 <!-- FIXME: fix layout, move CSS to CSS -->
 <div class="toolbar" style="text-align: center;">
