@@ -1,5 +1,5 @@
 <?php // -*-html-*-
-rcs_id('$Id: body.tmpl,v 1.4 2004-04-10 02:55:48 rurban Exp $');
+rcs_id('$Id: body.tmpl,v 1.5 2004-06-03 16:56:21 rurban Exp $');
 ?>
 <body<?= $Theme->getMoreAttr('body') ?>>
 <table class="sidebar" width="100%">
@@ -45,12 +45,12 @@ printXml($box->format());
 
 $box = new PluginSidebarBox("WhoIsOnline"); 
 printXml($box->format());
-
+/*
 $box = new PluginSidebarBox("RssFeed",
                             array('url' => 'http://phpwiki.sourceforge.net/phpwiki/RecentChanges?format=rss',
                                   'title' => _("PhpWiki News"))); 
 printXml($box->format());
-
+*/
 ?>
         </td>
       </tr>

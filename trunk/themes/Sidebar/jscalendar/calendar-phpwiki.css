@@ -103,6 +103,11 @@ div.calendar { position: relative; }
   background: #cde;
   padding: 2px 2px 0px 2px;
 }
+.calendar tbody .existing { /* Existing dates */
+  background: #cde;
+  color: #a66;
+  padding: 2px 2px 0px 2px;
+}
 
 .calendar tbody td.selected { /* Cell showing today date */
   font-weight: bold;
