@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.93 2004-04-10 02:30:49 rurban Exp $');
+rcs_id('$Id: config.php,v 1.94 2004-04-10 02:38:03 rurban Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -183,8 +183,8 @@ function update_locale($loc) {
         //$newlocale = $loc;
         //return false;
     }
-    if (substr($newlocale,0,2) == $loc) // don't update with C or failing setlocale
-        $GLOBALS['LANG'] = $loc;
+    //if (substr($newlocale,0,2) == $loc) // don't update with C or failing setlocale
+    $GLOBALS['LANG'] = $loc;
     // Try to put new locale into environment (so any
     // programs we run will get the right locale.)
     //
