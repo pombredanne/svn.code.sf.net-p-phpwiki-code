@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.6 2002-01-07 08:10:36 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.7 2002-01-15 23:22:26 carstenklapp Exp $');
 
 /**
  * WikiWiki Hawaiian theme for PhpWiki.
@@ -37,6 +37,15 @@ $SignatureImg = "themes/$theme/WaterFall.jpg";
 // If you want to see more than just the waterfall let a random
 // picture be chosen for the signature image:
 include("themes/$theme/pictures/random.php");
+
+// This defines separators used in RecentChanges and RecentEdits lists.
+// If undefined, defaults to '' (nothing) and '...' (three periods).
+//define("RC_SEPARATOR_A", ' . . . ');
+//define("RC_SEPARATOR_B", ' --');
+
+// Controls whether the '?' appears before or after UnknownWikiWords.
+// The PhpWiki default is for the '?' to appear before.
+//define('WIKIMARK_AFTER', true);
 
 // If this theme defines any templates, they will completely override
 // whatever templates have been defined in index.php.
