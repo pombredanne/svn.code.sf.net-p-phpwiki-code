@@ -28,7 +28,7 @@ else
 $select = HTML();
 for ($z = -14; $z < 12; $z++) {
     $tz_val = hTimezoneOffset($z, false);
-    $tz_string = sprintf("GMT %s", hTimezoneOffset($z));
+    $tz_string = hTimezoneOffset($z);
 
     $selected = $defaultOffset == $tz_val ? array('selected' => 'selected') : array();
     $select->pushContent(HTML::option(array_merge(array('value' => $tz_val),
@@ -36,10 +36,10 @@ for ($z = -14; $z < 12; $z++) {
                                       $tz_string));
     $z = $z-0.5;
 }
-$TimeZoneSelect = HTML::select(array('name' => "pref[timeOffset]"), $select);
+$TimeZoneSelect = HTML("GMT ", HTML::select(array('name' => "pref[timeOffset]"), $select));
 
 ?>
-<!-- $Id: userprefs.tmpl,v 1.8 2002-02-02 23:18:40 carstenklapp Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.9 2002-02-02 23:23:18 carstenklapp Exp $ -->
 <form action="<?=WikiURL($page)?>" method="post">
   <input type="hidden" name="pagename" value="<?=$request->getArg('pagename')?>" />
   <blockquote>
