@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RssParser.php,v 1.1 2004-04-09 17:46:40 rurban Exp $');
+rcs_id('$Id: RssParser.php,v 1.2 2004-04-12 17:13:43 rurban Exp $');
 /**
  * RSSParser Class, requires the expat extension
  * Based on Duncan Gough RSSParser class
@@ -33,6 +33,7 @@ class RSSParser {
     var $link  = "";
     var $description = "";
     var $inside_item = false;
+    var $item  = array();
     var $items = array();
     var $channel = array();
     var $divers = "";
@@ -42,7 +43,9 @@ class RSSParser {
         global $current_tag;
 
         $current_tag = $name;
-        if ($current_tag == "ITEM")
+        if ($name == "ITEM")
+            $this->inside_item = true;
+        elseif ($name == "IMAGE")
             $this->inside_item = true;
     } // startElement
 
@@ -50,16 +53,16 @@ class RSSParser {
         global $current_tag;
 
         if ($tagName == "ITEM") {
-            $this->items[] = array("title" => $this->title,
-                                   "description" => $this->description,
-                                   "link" => $this->link);
-            $this->title       = "";
-            $this->description = "";
-            $this->link        = "";
+            $this->items[] = array("title"       => $this->item['TITLE'],
+                                   "description" => $this->item['DESCRIPTION'],
+                                   "link"        => $this->item['LINK']);
+            $this->item['TITLE']       = "";
+            $this->item['DESCRIPTION'] = "";
+            $this->item['LINK']        = "";
             $this->inside_item = false;
-
+        } elseif ($tagName == "IMAGE") {
+            $this->inside_item = false;
         } elseif ($tagName == "CHANNEL") {
-
             $this->channel = array("title" => $this->title,
                                    "description" => $this->description,
                                    "link" => $this->link,
@@ -71,49 +74,41 @@ class RSSParser {
             $this->divers      = "";
             $this->date        = "";
         }
-    } // endElement
+    }
 
     function characterData($parser, $data){
         global $current_tag;
 
-        if ($this->inside_item){
-            switch ($current_tag){
-
-            case "TITLE":
-                $this->title .= trim($data);
-                break;
-            case "DESCRIPTION":
-                $this->description .= trim($data);
-                break;
-            case "LINK":
-                $this->link .= trim($data);
-                break;
-
-            default:
-                break;
-            }
+        if ($this->inside_item) {
+            if (empty($this->item[$current_tag]))
+                $this->item[$current_tag] = '';
+            $this->item[$current_tag] .= trim($data);
         } else {
-            switch($current_tag){
-
+            switch ($current_tag) {
             case "TITLE":
-                $this->title .= trim($data);
+                if (trim($data))
+                    $this->title .= " " . trim($data);
                 break;
             case "DESCRIPTION":
-                $this->description .= trim($data);
+                if (trim($data))
+                    $this->description .= "<br />\n" . trim($data);
                 break;
             case "LINK":
-                $this->link .= trim($data);
+                if (trim($data))
+                    $this->link .= " " . trim($data);
                 break;
             case "DC:DATE":
-                $this->date .= trim($data);
+                if (trim($data))
+                    $this->date .= " " . trim($data);
             default:
-                $this->divers .= $current_tag."/".$data;
+                if (trim($data))
+                    $this->divers .= " " . $current_tag."/".$data;
                 break;
             }
         }
     } // characterData
 
-    function parse_results($xml_parser, $rss_parser, $file)   {
+    function parse_results($xml_parser, $rss_parser, $file, $debug=false)   {
         xml_set_object($xml_parser, &$rss_parser);
         xml_set_element_handler($xml_parser, "startElement", "endElement");
         xml_set_character_data_handler($xml_parser, "characterData");
@@ -130,7 +125,21 @@ class RSSParser {
         } else {
             // other url_fopen workarounds: curl, socket (http 80 only)
             require_once("lib/HttpClient.php");
-            $data = HttpClient::quickGet($file);
+            $bits = parse_url($file);
+            $host = $bits['host'];
+            $port = isset($bits['port']) ? $bits['port'] : 80;
+            $path = isset($bits['path']) ? $bits['path'] : '/';
+            if (isset($bits['query'])) {
+                $path .= '?'.$bits['query'];
+            }
+            $client = new HttpClient($host, $port);
+            $client->use_gzip = false;
+            if ($debug) $client->debug = true;
+            if (!$client->get($path)) {
+                $data = false;
+            } else {
+                $data = $client->getContent();
+            }
             xml_parse($xml_parser, $data, true) or 
                 die(sprintf("XML error: %s at line %d", 
                             xml_error_string(xml_get_error_code($xml_parser)), 
