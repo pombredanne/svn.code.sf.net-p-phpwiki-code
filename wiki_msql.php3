@@ -1,4 +1,4 @@
-<!-- $Id: wiki_msql.php3,v 1.7 2000-06-28 22:22:05 wainstead Exp $ -->
+<!-- $Id: wiki_msql.php3,v 1.8 2000-06-29 04:29:06 wainstead Exp $ -->
 <?
 
    /*
@@ -48,6 +48,11 @@
    }
 
 
+   // This should receive the full text of the page in one string
+   // It will break the page text into an array of strings
+   // of length MSQL_MAX_LINE_LENGTH which should match the length
+   // of the columns wikipages.LINE, archivepages.LINE in schema.minisql
+
    function msqlDecomposeString($string) {
       $ret_arr = array();
       $el = 0;
@@ -94,8 +99,12 @@
       $pagehash["pagename"] = addslashes($pagename);
       if (!isset($pagehash["flags"]))
          $pagehash["flags"] = 0;
-      if (!isset($pagehash["content"]))
+      if (!isset($pagehash["content"])) {
          $pagehash["content"] = array();
+      } else {
+         $pagehash["content"] = implode("\n", $pagehash["content"]);
+         $pagehash["content"] = msqlDecomposeString($pagehash["content"]);
+      }
       $pagehash["author"] = addslashes($pagehash["author"]);
       $pagehash["refs"] = serialize($pagehash["refs"]);
 
@@ -128,8 +137,9 @@
          if ($res = msql_query($query, $dbi[dbc])) {
             $dbhash["content"] = array();
             while ($row = msql_fetch_array($res)) {
-               $dbhash["content"][ $row["lineno"] ] = $row["line"];
+		$msql_content .= $row["line"];
             }
+            $dbhash["content"] = explode("\n", $msql_content);
          }
 
          return MakePageHash($dbhash);
@@ -139,12 +149,13 @@
 
 
    // Either insert or replace a key/value (a page)
-   function InsertPage($dbi, $pagename, $pagehash)
-   {
-      $pagehash = MakeDBHash($pagename, $pagehash);
+   function InsertPage($dbi, $pagename, $pagehash) {
 
-      // temporary hack until the time stuff is brought up to date
-      $pagehash["created"] = time();
+      $pagehash = MakeDBHash($pagename, $pagehash);
+      // $pagehash["content"] is now an array of strings 
+      // of MSQL_MAX_LINE_LENGTH
+
+      // record the time of modification
       $pagehash["lastmodified"] = time();
 
       if (IsWikiPage($dbi, $pagename)) {
@@ -175,7 +186,7 @@
          $query = "INSERT INTO $dbi[table] ($COLUMNS) VALUES($VALUES)";
       }
 
-//      echo "<p>Query: $query<p>\n";
+      // echo "<p>Query: $query<p>\n";
 
       // first, insert the metadata
       $retval = msql_query($query, $dbi['dbc']);
@@ -186,7 +197,7 @@
       // second, insert the page data
       // remove old data from page_table
       $query = "delete from $dbi[page_table] where pagename='$pagename'";
-      echo "Delete query: $query<br>\n";
+      // echo "Delete query: $query<br>\n";
       $retval = msql_query($query, $dbi['dbc']);
       if ($retval == false) 
          echo "Delete on $dbi[page_table] failed: ", msql_error(), "<br>\n";
@@ -194,40 +205,18 @@
       // insert the new lines
       reset($pagehash["content"]);
 
-      $tmparray = array();
-      $y = 0;
-
       for ($x = 0; $x < count($pagehash["content"]); $x++) {
-
-         // manage line length here, lines should not exceed the
-         // length MSQL_MAX_LINE_LENGTH or something
-
-         if (strlen($pagehash["content"][$x]) > MSQL_MAX_LINE_LENGTH) {
-            $length = strlen($pagehash["content"][$x]);
-            echo "Must break up line ($length): " . $pagehash["content"][$x] ."<br>\n";
-            // can I cheat and use preg_split to break the line up?
-            // match this line with: /(.{1,127})+/
-            // in fact, split it on a zero-width metachar every 127th position
-            // take the returned array and add elements to $tmparray
-         } else {
-            $tmparray[$y] = $pagehash["content"][$x];
-            $y++;
-         }
-      }
-
-      reset($tmparray);
-      for ($x = 0; $x < count($tmparray); $x ++) {
-         $line = addslashes($tmparray[$x]);
+         $line = addslashes($pagehash["content"][$x]);
          $query = "INSERT INTO $dbi[page_table] " .
                   "(pagename, lineno, line) " .
                   "VALUES('$pagename', $x, '$line')";
-         echo "Page line insert query: $query<br>\n";
+         // echo "Page line insert query: $query<br>\n";
          $retval = msql_query($query, $dbi['dbc']);
          if ($retval == false) 
-            echo "Insert into $dbi[page_table] failed: ", msql_error(), "<br>\n";;
+            echo "Insert into $dbi[page_table] failed: ", 
+                  msql_error(), "<br>\n";
          
       }
-      //echo "<H1>inserted $x lines for $pagename</H1>\n";
 
    }
 
@@ -235,7 +224,7 @@
    function IsWikiPage($dbi, $pagename) {
       $pagename = addslashes($pagename);
       $query = "select pagename from $dbi[table] where pagename='$pagename'";
-//      echo "Query: $query<br>\n";
+      // echo "Query: $query<br>\n";
       if ($res = msql_query($query, $dbi['dbc'])) {
          return(msql_affected_rows($res));
       }
