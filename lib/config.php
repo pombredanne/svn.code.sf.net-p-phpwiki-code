@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.49 2001-12-28 09:45:50 carstenklapp Exp $');
+rcs_id('$Id: config.php,v 1.50 2002-01-01 06:20:46 carstenklapp Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -99,7 +99,7 @@ else
 // FIXME: Not all environments may support en_US?  We should probably
 // have a list of locales to try.
 if (setlocale(LC_CTYPE, 0) == 'C')
-     setlocale(LC_CTYPE, 'en_US.iso-8859-1');
+     setlocale(LC_CTYPE, 'en_US.' . CHARSET );
 
 /** string pcre_fix_posix_classes (string $regexp)
 *
