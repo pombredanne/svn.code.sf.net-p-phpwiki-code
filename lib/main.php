@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.163 2004-06-13 11:35:32 rurban Exp $');
+rcs_id('$Id: main.php,v 1.164 2004-06-13 13:54:25 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -697,6 +697,7 @@ $this->version = phpwiki_version();
     function _isActionPage ($pagename) {
         $dbi = $this->getDbh();
         $page = $dbi->getPage($pagename);
+        if (!$page) return false;
         $rev = $page->getCurrentRevision();
         // FIXME: more restrictive check for sane plugin?
         if (strstr($rev->getPackedContent(), '<?plugin'))
@@ -1040,6 +1041,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.163  2004/06/13 11:35:32  rurban
+// check for create action on action=edit not to fool PagePerm checks
+//
 // Revision 1.162  2004/06/08 10:05:11  rurban
 // simplified admin action shortcuts
 //
