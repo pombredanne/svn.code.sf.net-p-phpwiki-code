@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.119 2004-11-21 11:59:17 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.120 2004-12-17 12:31:57 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -543,6 +543,9 @@ class _WikiUser
             $GLOBALS['request']->_user = new _AnonUser();
             $GLOBALS['request']->_user->_userid = '';
             $GLOBALS['request']->_user->_level = WIKIAUTH_ANON;
+            if (isa($this, "_HttpAuth")) {
+          	$this->_logout();
+            }
             return $GLOBALS['request']->_user; 
         } elseif ($cancel)
             return false;        // User hit cancel button.
@@ -1320,6 +1323,10 @@ extends _PassUser
         }
         if ($this->_checkPass($submitted_password, $stored_password)) {
             $this->_level = WIKIAUTH_ADMIN;
+            if (!empty($GLOBALS['HTTP_SERVER_VARS']['PHP_AUTH_USER']) and class_exists("_HttpAuthPassUser")) {
+                // fake http auth
+                _HttpAuthPassUser::_fake_auth($this->_userid, $submitted_password);
+            }
             return $this->_level;
         } else {
             return $this->_tryNextPass($submitted_password);
@@ -2022,6 +2029,9 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.119  2004/11/21 11:59:17  rurban
+// remove final \n to be ob_cache independent
+//
 // Revision 1.118  2004/11/19 19:22:03  rurban
 // ModeratePage part1: change status
 //
