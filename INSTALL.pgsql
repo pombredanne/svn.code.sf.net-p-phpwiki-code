@@ -1,4 +1,4 @@
-$Id: INSTALL.pgsql,v 1.4 2000-07-11 02:57:05 wainstead Exp $
+$Id: INSTALL.pgsql,v 1.5 2000-10-08 18:12:13 wainstead Exp $
 
 These instructions are not quite complete yet. If you find something
 I missed, please let me know (swain@panix.com).
@@ -10,7 +10,7 @@ Installation of Postgresql will not be discussed here... you can get a
 copy from http://www.postgresql.org/. However if you are running 
 Red Hat Linux, all you need to do is install the PHP RPM and the 
 Postgresql RPM and edit your Apache httpd.conf file, and uncomment 
-the lines for all PHP files (and add index.php3 to the list of directory
+the lines for all PHP files (and add index.php to the list of directory
 files while you're at it! :-)
 
 Also note that Postgresql by default has a hard limit of 8K per
@@ -25,7 +25,7 @@ the Wiki.
 Once that's done and you have the basic stuff done that's listed in 
 the INSTALL, the time comes to move to Postgresql.
 
-Edit wiki_config.php3 and comment out the lines for DBM file usage; then
+Edit lib/config.php and comment out the lines for DBM file usage; then
 uncomment the lines for Postgresql. The lines are clearly commented and 
 you should have no problem with this.
 

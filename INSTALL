@@ -4,7 +4,7 @@ PhpWiki requires PHP version 3.0.9 or greater, since it uses the
 preg_*() family of functions.
 
 Untar/gzip this file into the directory where you want it to live.
-That's it. To improve efficiency, edit wiki_config.php3 and set the
+That's it. To improve efficiency, edit lib/config.php and set the
 $ServerAddress by hand; this will save a regexp call on every invocation.
 
 bash$ gzip -d phpwiki-X.XX.tar.gz
@@ -14,9 +14,9 @@ Let's say you own the web server http://www.foo.com/. You untar in the
 server's root directory; then you should be able to just go to your new
 Wiki:
 
-http://www.foo.com/wiki/index.php3
+http://www.foo.com/wiki/index.php
 
-If you configure your server to recognize index.php3 as the index of a
+If you configure your server to recognize index.php as the index of a
 directory, you can just do:
 
 http://www.foo.com/wiki/
@@ -32,7 +32,7 @@ live site, archived pages, and some additional information.
 
 If you don't want the DBM files to live in /tmp you must make sure the web
 server can read/write to your chosen location.  It's probably a bad idea
-to leave it in /tmp. (Again, edit wiki_config.php3). 
+to leave it in /tmp. (Again, edit lib/config.php). 
 
 For example, you create a subdirectory called "pages" in the wiki
 directory made when you untarred PhpWiki. Move the DBM files there.
@@ -63,7 +63,7 @@ This is necessary so that the server can also create/set the lock file
 PhpWiki ships with this featured disabled by default. According to CERT 
 (http://www.cert.org/advisories/CA-2000-02.html) malicious users can embed
 HTML in your pages that allow pure evil to happen. You can uncomment the 
-"elseif" in wiki_transform.php3 to allow embedded HTML; but you should never
+"elseif" in lib/transform.php to allow embedded HTML; but you should never
 do this if your Wiki is publically accessible.
 
 

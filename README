@@ -12,21 +12,21 @@ The out-of-the-box version uses a dbm file in the /tmp directory; you may
 wish a more permanent place for yours, but make sure it's read/writable
 by your web server!
 
-index.php3:            the "main page", really a set of branching instructions
-wiki_config.php3:      configuration options, constants, global variables
-wiki_dbmlib.php3:      database access functions for dbm files
-wiki_display.php3:     display a page (this calls "wiki_transform.php3")
-wiki_editlinks.php3:   edit the embedded links of a page
-wiki_editpage.php3:    edit a page
-wiki_fullsearch.php3:  full page text search
-wiki_mysql.php3:       database access functions for mySQL
-wiki_pageinfo.php3:    gives detailed low-level info on the page structure
-wiki_pgsql.php3:       database access functions for PostgreSQL
-wiki_savepage.php3:    save a page to db, thank user
-wiki_search.php3:      page title search
-wiki_setupwiki.php3:   load a set of pages from ./pgsrc/ directory
-wiki_stdlib.php3:      standard library of functions (non-db related)
-wiki_transform.php3:   convert wiki markup into HTML
+index.php:            the "main page", really a set of branching instructions
+lib/config.php:      configuration options, constants, global variables
+lib/dbmlib.php:      database access functions for dbm files
+lib/display.php:     display a page (this calls "lib/transform.php")
+lib/editlinks.php:   edit the embedded links of a page
+lib/editpage.php:    edit a page
+lib/fullsearch.php:  full page text search
+lib/mysql.php:       database access functions for mySQL
+lib/pageinfo.php:    gives detailed low-level info on the page structure
+lib/pgsql.php:       database access functions for PostgreSQL
+lib/savepage.php:    save a page to db, thank user
+lib/search.php:      page title search
+lib/setupwiki.php:   load a set of pages from ./pgsrc/ directory
+lib/stdlib.php:      standard library of functions (non-db related)
+lib/transform.php:   convert wiki markup into HTML
 
 admin/:
 index.php3:            entry point for administration forms
@@ -54,4 +54,4 @@ Steve Wainstead
 swain@wcsb.org
 http://wcsb.org/~swain/
 
-$Id: README,v 1.5 2000-07-15 20:56:45 wainstead Exp $
+$Id: README,v 1.6 2000-10-08 18:12:13 wainstead Exp $

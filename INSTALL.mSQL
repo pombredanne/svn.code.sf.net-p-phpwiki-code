@@ -36,14 +36,14 @@ Bye!
 [swain@localhost phpwiki]$ 
 
 
-Now the database is created; edit wiki_config.php3 and comment out the
+Now the database is created; edit lib/config.php and comment out the
 DBM file settings. Uncomment the mSQL settings, making sure the values
 are correct.
 
 That should be all! Try accessing your Wiki now. Read INSTALL and
-README for more information, plus the comments in wiki_config.php3.
+README for more information, plus the comments in lib/config.php.
 
 --Steve Wainstead
 swain@panix.com
 
-$Id: INSTALL.mSQL,v 1.1 2000-07-15 20:53:00 wainstead Exp $
+$Id: INSTALL.mSQL,v 1.2 2000-10-08 18:12:13 wainstead Exp $

@@ -2,7 +2,7 @@ PhpWiki is written in the server-side scripting language PHP, available from htt
 
 PhpWiki consists of a dozen or so files of mixed PHP and HTML. The web pages that make up a WikiWikiWeb based on PHP live in a DBM file with backup copies of previous versions of pages stored in a second DBM file.
 
-Every time a user hits the site the page requested is pulled from the DBM and rendered on the fly. The user only ever requests the file index.php3, which then decides which other php files to include.
+Every time a user hits the site the page requested is pulled from the DBM and rendered on the fly. The user only ever requests the file index.php, which then decides which other php files to include.
 
 Links to pages in the wiki are automatically linked: PhpWiki. This might be the single most compelling aspect of a wiki, the ability to add pages simply by linking to them. The next most compelling thing is how easily external URL's link:
 	# http://www.wcsb.org/

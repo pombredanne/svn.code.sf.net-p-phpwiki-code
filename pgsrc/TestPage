@@ -54,10 +54,10 @@ __Link tests__
 # [FrontPage]
 # Link in brackets: [http://phpwiki.sourceforge.net]
 # Link outside brackets: http://phpwiki.sourceforge.net/
-# Link with Wiki word: http://phpwiki.sourceforge.net/phpwiki/index.php3?FrontPage
+# Link with Wiki word: http://phpwiki.sourceforge.net/phpwiki/index.php?FrontPage
 # Two consecutive links: http://phpwiki.sourceforge.net/ http://phpwiki.sourceforge.net/phpwiki/
 # [PhpWiki on Sourceforge | http://phpwiki.sourceforge.net/]
-# [URL with a WikiWord | http://phpwiki.sourceforge.net/phpwiki/index.php3?RecentChanges]
+# [URL with a WikiWord | http://phpwiki.sourceforge.net/phpwiki/index.php?RecentChanges]
 # Javascript: [boo! | javascript:alert('oops') ] 
 # A [[Link] produces a [Link]
 # A [Link] looks like this: [[link]
