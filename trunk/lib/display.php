@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.38 2002-09-15 20:17:58 rurban Exp $');
+rcs_id('$Id: display.php,v 1.39 2003-02-15 23:32:56 dairiki Exp $');
 
 require_once('lib/Template.php');
 require_once('lib/BlockParser.php');
@@ -41,6 +41,19 @@ function GleanDescription ($rev) {
 }
 
 
+/** Make a link back to redirecting page.
+ *
+ * @param $pagename string  Name of redirecting page.
+ * @return XmlContent Link to the redirecting page.
+ */
+function RedirectorLink($pagename) {
+    $url = WikiURL($pagename, array('redirectfrom' => ''));
+    return HTML::a(array('class' => 'redirectfrom wiki',
+                         'href' => $url),
+                   $pagename);
+}
+
+    
 function actionPage(&$request, $action) {
     global $Theme;
 
@@ -117,6 +130,11 @@ function displayPage(&$request, $tmpl = 'browse') {
         $pagetitle->addTooltip(sprintf(_("BackLinks for %s"), $pagename));
     }
 
+    $redirect_from = $request->getArg('redirectfrom');
+    if ($redirect_from) {
+        $redirect_from = fmt("Redirected from %s", RedirectorLink($redirect_from));
+    }
+
     //include_once('lib/BlockParser.php');
 
     require_once('lib/PageType.php');
@@ -140,7 +158,8 @@ function displayPage(&$request, $tmpl = 'browse') {
 
     GeneratePage($template, $pagetitle, $revision,
                  array('ROBOTS_META'	=> 'index,follow',
-                       'PAGE_DESCRIPTION' => GleanDescription($revision)));
+                       'PAGE_DESCRIPTION' => GleanDescription($revision),
+                       'REDIRECT_FROM' => $redirect_from));
     flush();
 
     $page->increaseHitCount();

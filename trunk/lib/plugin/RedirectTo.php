@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RedirectTo.php,v 1.6 2003-01-18 22:01:44 carstenklapp Exp $');
+rcs_id('$Id: RedirectTo.php,v 1.7 2003-02-15 23:32:56 dairiki Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -52,7 +52,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
@@ -65,6 +65,7 @@ extends WikiPlugin
 
     function run($dbi, $argstr, $request) {
         $args = ($this->getArgs($argstr, $request));
+
         $href = $args['href'];
         $page = $args['page'];
         if ($href) {
@@ -78,10 +79,8 @@ extends WikiPlugin
             $url = preg_replace('/%\d\d/','',strip_tags($href));
             $thispage = $request->getPage();
             if (! $thispage->get('locked')) {
-                return $this->error(HTML(fmt(_("%s is only allowed in locked pages."),
-                                             _("Redirect to an external url")),
-                                         HTML::br(),
-                                         fmt("url=\"%s\"", $url)));
+                return $this->disabled(fmt(_("%s is only allowed in locked pages."),
+                                           _("Redirect to an external url")));
             }
         }
         else if ($page) {
@@ -89,19 +88,40 @@ extends WikiPlugin
                                                             'redirectfrom' => $request->getArg('pagename')),
                                                       SplitQueryArgs($args['args'])));
         }
-        else
-            return $this->error(sprintf(_("%s or %s parameter missing"),
-                                        "'href'", "'page'"));
+        else {
+            return $this->error(fmt("%s or %s parameter missing",
+                                    "'href'", "'page'"));
+        }
 
         if ($page == $request->getArg('pagename')) {
-            return $this->error(sprintf(_("Recursive redirect to self: '%s'"),
-                                        $url));
+            return $this->error(fmt("Recursive redirect to self: '%s'", $url));
         }
+
+        if ($request->getArg('action') != 'browse')
+            return $this->disabled("(action != 'browse')");
+
+        $redirectfrom = $request->getArg('redirectfrom');
+        if ($redirectfrom !== false) {
+            if ($redirectfrom)
+                return $this->disabled(_("Double redirect not allowed."));
+            else {
+                // Got here by following the "Redirected from ..." link
+                // on a browse page.
+                return $this->disabled(_("Viewing redirecting page."));
+            }
+        }
+        
+        
         return $request->redirect($url);
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2003/01/18 22:01:44  carstenklapp
+// Code cleanup:
+// Reformatting & tabs to spaces;
+// Added copyleft, getVersion, getDescription, rcs_id.
+//
 
 // For emacs users
 // Local Variables:
