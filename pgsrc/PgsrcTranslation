@@ -2,10 +2,10 @@
 
 | ''Plugin Pages''     | ''Deutsch (de)''       | ''Español (es)'' | ''Français (fr)''      | ''Italiano (it)''  | ''Nederlands (nl)''  | ''Svenska (sv)''
 | BackLinks            | BackLinks              |
-| CalendarPlugin       | 
+| CalendarPlugin       |
 | DebugInfo            | DebugInfo              |
 | FindPage             | SeiteFinden            | BuscarPágina     | ChercherPage           | TrovaPagina        | ZoekPagina           | SökEfterSida
-| FullRecentChanges    | 
+| FullRecentChanges    |
 | FullTextSearch       | VolltextSuche          |
 | LikePages            | GleicheSeiten          |
 | MostPopular          | MeistBesucht           | MasPopulares     | LePlusVisité           | PiuPopolari        | MeestBezocht         | MestPopulär
@@ -15,18 +15,18 @@
 | RecentEdits          | GeringfügigeÄnderungen |
 | TitleSearch          | TitelSuche             |                  | RechercheParTitre      |
 %%%
-| ''Special Pages''     | Deutsch (de)            | Español (es)           | Français (fr)              |  Italiano (it)                | Nederlands (nl)          | Svenska (sv)
-| HomePage              | StartSeite              | PáginaPrincipal        | Accueil                    | PaginaPrincipale              | ThuisPagina              | [Framsida]
-| [MagicPhpWikiURLs]    |                         |                        |                            | [MagicPhpWikiURLs]            | [ToverPhpWikiURLs]       |
+| ''Special Pages''     | ''Deutsch (de)''        | ''Español (es)''       | ''Français (fr)''          | ''Italiano (it)''             | ''Nederlands (nl)''      | ''Svenska (sv)''
+| HomePage              | StartSeite              | PáginaPrincipal        | [Accueil]                  | PaginaPrincipale              | ThuisPagina              | [Framsida]
+| [MagicPhpWikiURLs]    |                         |                        |                            | [MagiaPhpWikiURLs]?           | [ToverPhpWikiURLs]       |
 | PhpWikiAdministration | PhpWikiSystemverwalten  |                        | AdministrationDePhpWiki    | AmministrazioneDiPhpWiki      | PhpWikiBeheer            | PhpWikiAdministration?
 | TextFormattingRules   | TextFormatierungsRegeln | ReglasDeFormatoDeTexto | RéglesDeFormatageDesTextes | RegoleDiFormattazioneDelTesto | TekstFormatteringsRegels | [Textformateringsregler]
 | UserPreferences       | [Einstellungen]         |                        | PréférencesUtilisateurs    | UserPreferences?              | GebruikersVoorkeuren     |
 %%%
-| ''Normal pages''   | Deutsch (de)      | Español (es)          | Français (fr)       | Italiano (it)         | Nederlands (nl)    | Svenska (sv)
-| AddingPages        | SeitenErzeugen    | AgregarPaginas        | AjouterDesPages     | AggiungerePagine      | PaginasToevoegen   | LäggaTillSidor
-| EditText           | EditiereText      | EditarElTexto         | EditerLeContenu     | ModificaIlTesto       | VeranderTekst      | RedigeraText
-| GoodStyle          | GuterStil         | BuenEstilo            | StyleCorrect        | BuonStile             | GoedeStijl         | BraStil
-| HowToUseWiki       | WieManWikiBenutzt | ComoUsarWiki          | CommentUtiliserWiki | ComeUsareWiki         | HoeWikiTeGebruiken | HurManAnvänderWiki
+| ''Normal pages''   | ''Deutsch (de)''  | ''Español (es)''      | ''Français (fr)''   | ''Italiano (it)''     | ''Nederlands (nl)'' | ''Svenska (sv)''
+| AddingPages        | SeitenErzeugen    | AgregarPaginas        | AjouterDesPages     | AggiungerePagine      | PaginasToevoegen    | LäggaTillSidor
+| EditText           | EditiereText      | EditarElTexto         | EditerLeContenu     | ModificaIlTesto       | VeranderTekst       | RedigeraText
+| GoodStyle          | GuterStil         | BuenEstilo            | StyleCorrect        | BuonStile             | GoedeStijl          | BraStil
+| HowToUseWiki       | WieManWikiBenutzt | ComoUsarWiki          | CommentUtiliserWiki | ComeUsareWiki         | HoeWikiTeGebruiken  | HurManAnvänderWiki
 | InterWiki          |
 | LinkIcons          |
 | MoreAboutMechanics | WikiTechnik       | MasAcercadeLaMecanica |                     | VarieSulFunzionamento | MeerOverTechnieken | MerOmMekanismerna
@@ -40,17 +40,25 @@
 | WikiPlugin         |                   |                       | PluginWiki          |
 | WikiWikiWeb        | WikiWikiWeb       | WikiWikiWeb           | WikiWikiWeb         | WikiWikiWeb           |                    | WikiWikiWeb
 %%%
-| ''Automatically generated pages'' | Deutsch (de) | Español (es) | Français (fr) | Italiano (it) | Nederlands (nl) | Svenska (sv)
-| Diff                              | Diff         |              | Diff          |               |                 |
-| ViewSource                        | QuellText    |              | VoirSource    |               |                 |
+| ''Automatically generated pages'' | ''Deutsch (de)'' | ''Español (es)'' | ''Français (fr)'' | ''Italiano (it)'' | ''Nederlands (nl)'' | ''Svenska (sv)''
+| Diff                              | Diff             |                  | Diff              |                   |                     |
+| ViewSource                        | QuellText        |                  | VoirSource        |                   |                     |
 %%%
-| ''Translator's page'' | Deutsch (de) | Español (es) | Français (fr) | Italiano (it) | Nederlands (nl)  | Svenska (sv)
-| n/a                   |              | KBrown       |               |               | JanNieuwenhuizen |
+| ''Translator's page'' | ''Deutsch (de)'' | ''Español (es)'' | ''Français (fr)'' | ''Italiano (it)'' | ''Nederlands (nl)'' | ''Svenska (sv)''
+| n/a                   |                  | [KBrown]         |                   |                   | JanNieuwenhuizen    |
 %%%
-| ''Obsolete Pages''  | Deutsch (de)                 | Español (es)            | Français (fr) | Italiano (it)         | Nederlands (nl)        | Svenska (sv)
-| ConvertTabsToSpaces | KonvertiereLeerzeichenZuTabs | ConvierteEspaciosEnTabs | n/a           | ConvertiGliSpaziInTab | VertaalSpatiesNaarTabs | KonverteraMellanslagTillTabbar
+| ''Obsolete Pages''  | ''Deutsch (de)''             | ''Español (es)''        | ''Français (fr)'' | ''Italiano (it)''     | ''Nederlands (nl)''    | ''Svenska (sv)''
+| ConvertTabsToSpaces | KonvertiereLeerzeichenZuTabs | ConvierteEspaciosEnTabs | n/a               | ConvertiGliSpaziInTab | VertaalSpatiesNaarTabs | KonverteraMellanslagTillTabbar
+
+!! Notes
+These pages do not automatically link as !WikiWords:
+;:es:[KBrown] en,it:[MagicPhpWikiURLs] nl:[ToverPhpWikiURLs].
+
+These pages have single word titles so [[square brackets] are required to link:
+;:fr:[Accueil] de:[Einstellungen] sv:[Framsida], [Gästboken], [Sandlådan], [Textformateringsregler].
+
  %%%
  %%%
-To edit this table copy the source text into a text editor, or set your !EditArea width to 188 in UserPreferences.
+''To edit this table copy the source text into a text editor, or set your !EditArea width to 190 in UserPreferences.''
 ----
 See also: PhpWiki:MultiLingualWiki, PhpWiki:LanguageSelection, PhpWikiDocumentation.
