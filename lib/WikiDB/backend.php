@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.6 2004-03-01 13:48:45 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.7 2004-04-27 16:03:05 rurban Exp $');
 
 /*
   Pagedata
@@ -472,6 +472,10 @@ class WikiDB_backend_iterator
      */
     function next() {
         trigger_error("virtual", E_USER_ERROR);
+    }
+
+    function count() {
+        return count($this->_pages);
     }
 
     /**

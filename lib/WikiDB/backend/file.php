@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: file.php,v 1.8 2004-03-01 13:48:45 rurban Exp $');
+rcs_id('$Id: file.php,v 1.9 2004-04-27 16:03:05 rurban Exp $');
 
 /**
  Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
@@ -762,11 +762,19 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
         return $rec;
     }
 
+    function count() {
+    	return count($this->_result);
+    }
+    
     function free () {
     }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/03/01 13:48:45  rurban
+// rename fix
+// p[] consistency fix
+//
 // Revision 1.7  2004/02/12 14:11:36  rurban
 // more rename_page backend methods: only tested for PearDB! please help
 //

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: dbaBase.php,v 1.7 2004-02-12 14:11:36 rurban Exp $');
+<?php rcs_id('$Id: dbaBase.php,v 1.8 2004-04-27 16:03:05 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -262,6 +262,10 @@ extends WikiDB_backend_iterator
         return array('pagename' => $next);
     }
             
+    function count() {
+        return count($this->_pages);
+    }
+
     function free() {
         $this->_pages = array();
     }
