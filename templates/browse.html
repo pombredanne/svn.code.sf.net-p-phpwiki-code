@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- phpwiki source:
-$Id: browse.html,v 1.32 2001-12-26 10:45:41 carstenklapp Exp $
+$Id: browse.html,v 1.33 2001-12-28 03:42:41 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <meta name="keywords" content="${SPLIT_PAGE}, ${WIKI_NAME}" />
@@ -122,6 +122,11 @@ if ($errmsgs)
   <?plugin-link _BackendInfo 
                 linktext=_("DebugInfo")
                 targetpage=_("DebugInfo")
+                page=[pagename] ?>
+ | 
+  <?plugin-link ViewMarkup 
+                linktext=_("ViewMarkup")
+                targetpage=_("ViewMarkup")
                 page=[pagename] ?>
 </div>
 </form>
