@@ -282,6 +282,8 @@ $locale["PageHistory for %s"] =
    "Änderungsprotokoll für Seite %s";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
    "PhpWiki kann deine Veränderungen nicht speichern, da ein anderer Benützer die Seite verändert und gespeichert hat, während du diese Seite editiert hast. Wenn die Seite jetzt gespeichert werden würde, dann würden die Veränderungen des anderen Benützers verlorengehen.";
+$locale["PhpWikiAdministration"] =
+   "PhpWikiSystemverwalten";
 $locale["Please enter your name as WordsStrungTogether (e.g. John Smith as JohnSmith)."] =
    "Gib bitte deinen Namen als ZusammenGesetztesHauptWort ein. (z.B. Hans Müller als HansMüller).";
 $locale["Please re-enter your name in this form."] =
@@ -438,6 +440,8 @@ $locale["View Wiki code for page '%s'."] =
    "Quelltext für die Seite »%s«.";
 $locale["View the current version"] =
    "Siehe die aktuellste Version";
+$locale["ViewSource"] =
+   "QuellText";
 $locale["WARNING: database still locked"] =
    "WARNUNG: Datenbank ist gesperrt";
 $locale["Warning!"] =
