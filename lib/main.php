@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.203 2005-01-21 14:11:23 rurban Exp $');
+rcs_id('$Id: main.php,v 1.204 2005-01-25 07:35:42 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -665,6 +665,7 @@ TODO: check against these cases:
             	                                 fmt("%s: action forwarded to a moderator.", 
             	    				     $action), 
                                          HTML::br(),
+                                         // better msg: "This action requires moderator approval. Please be patient."
                                          _("You must wait for moderator approval."));
                     if (!empty($plugin->_tokens['CONTENT']))
                         $plugin->_tokens['CONTENT']->pushContent
@@ -1234,6 +1235,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.203  2005/01/21 14:11:23  rurban
+// better moderation class tag
+//
 // Revision 1.202  2005/01/21 12:02:32  rurban
 // deduce username for xmlrpc also
 //
