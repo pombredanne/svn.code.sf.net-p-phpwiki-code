@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.116 2004-02-24 15:17:14 rurban Exp $');
+rcs_id('$Id: main.php,v 1.117 2004-02-24 17:19:37 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -720,12 +720,6 @@ class WikiRequest extends Request {
         }
     }
 
-
-    function action_upload () {
-        include_once("lib/loadsave.php");
-        LoadPostFile($this);
-    }
-
     function action_xmlrpc () {
         include_once("lib/XmlRpcServer.php");
         $xmlrpc = new XmlRpcServer($this);
@@ -756,6 +750,11 @@ class WikiRequest extends Request {
     function action_dumphtml () {
         include_once("lib/loadsave.php");
         DumpHtmlToDir($this);
+    }
+
+    function action_upload () {
+        include_once("lib/loadsave.php");
+        LoadPostFile($this);
     }
 
     function action_loadfile () {
@@ -872,6 +871,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.116  2004/02/24 15:17:14  rurban
+// improved auth errors with individual pages. the fact that you may not browse a certain admin page does not conclude that you may not browse the whole wiki. renamed browse => view
+//
 // Revision 1.115  2004/02/15 21:34:37  rurban
 // PageList enhanced and improved.
 // fixed new WikiAdmin... plugins
