@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RandomPage.php,v 1.11 2004-10-04 23:42:42 rurban Exp $');
+rcs_id('$Id: RandomPage.php,v 1.12 2004-11-25 08:30:15 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -35,7 +35,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     function getDefaultArguments() {
@@ -50,12 +50,7 @@ extends WikiPlugin
         extract($this->getArgs($argstr, $request));
 
         $allpages = $dbi->getAllPages();
-
-        $exclude = $exclude ? explode(",", $exclude) : array();
-        foreach ($exclude as $e) {
-            $_exclude []= trim($e);
-        }
-
+        $_exclude = $exclude ? explode(",", $exclude) : array();
         while ($page = $allpages->next()) {
             if (!in_array($page->getName(), $_exclude))
                 $pagearray[] = $page;
@@ -88,16 +83,19 @@ extends WikiPlugin
 
     function default_exclude() {
         // Some useful default pages to exclude.
-        $default_exclude = 'RandomPage, HomePage, AllPages, RecentChanges, RecentEdits, FullRecentChanges';
+        $default_exclude = 'RandomPage,HomePage,AllPages,RecentChanges,RecentEdits,FullRecentChanges';
         foreach (explode(",", $default_exclude) as $e) {
-            $_exclude[] = gettext(trim($e));
+            $_exclude[] = gettext($e);
         }
-        return implode(", ", $_exclude);
+        return implode(",", $_exclude);
     }
 };
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/10/04 23:42:42  rurban
+// fix for pages=1
+//
 // Revision 1.10  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //
