@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.7\n"
-"POT-Creation-Date: 2000-10-20 13:43+0200\n"
+"POT-Creation-Date: 2000-10-24 12:00+0200\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -24,19 +24,19 @@ msgstr ""
 msgid "./pgsrc"
 msgstr "locale/nl/pgsrc"
 
-#: lib/config.php:168
+#: lib/config.php:174
 msgid "templates/browse.html"
 msgstr "locale/nl/templates/browse.html"
 
-#: lib/config.php:169
+#: lib/config.php:175
 msgid "templates/editpage.html"
 msgstr "locale/nl/templates/editpage.html"
 
-#: lib/config.php:170
+#: lib/config.php:176
 msgid "templates/editlinks.html"
 msgstr "locale/nl/templates/editlinks.html"
 
-#: lib/config.php:171
+#: lib/config.php:177
 msgid "templates/message.html"
 msgstr "locale/nl/templates/message.html"
 
@@ -179,9 +179,34 @@ msgstr "MySQL fout: %s"
 msgid "Error writing page '%s'"
 msgstr "Fout bij schrijven pagina `%s'"
 
-#: lib/pageinfo.php:22 lib/pageinfo.php:66
+#: lib/pageinfo.php:9
+msgid "Enter a page name"
+msgstr "Geef de naam van een pagina"
+
+#: lib/pageinfo.php:10
+msgid "Go"
+msgstr "Ga"
+
+#: lib/pageinfo.php:21
+msgid "Show the page source and references"
+msgstr "Toon de bron tekst en de koppelingen van de pagina"
+
+#: lib/pageinfo.php:26 lib/pageinfo.php:75
 msgid "PageInfo"
 msgstr "PaginaInfo"
+
+#: lib/pageinfo.php:36
+#, c-format
+msgid "Page name '%s' is not in the database"
+msgstr "Pagina naam `%s' staat niet in de data base"
+
+#: lib/pageinfo.php:64
+msgid "Current version"
+msgstr "Actuele versie:"
+
+#: lib/pageinfo.php:70
+msgid "Archived version"
+msgstr "Gearchiveerde versie:"
 
 #: lib/savepage.php:60
 #, c-format

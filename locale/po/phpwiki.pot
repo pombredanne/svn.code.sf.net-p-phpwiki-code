@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2000-10-20 13:43+0200\n"
+"POT-Creation-Date: 2000-10-24 12:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,19 +18,19 @@ msgstr ""
 msgid "./pgsrc"
 msgstr ""
 
-#: lib/config.php:168
+#: lib/config.php:174
 msgid "templates/browse.html"
 msgstr ""
 
-#: lib/config.php:169
+#: lib/config.php:175
 msgid "templates/editpage.html"
 msgstr ""
 
-#: lib/config.php:170
+#: lib/config.php:176
 msgid "templates/editlinks.html"
 msgstr ""
 
-#: lib/config.php:171
+#: lib/config.php:177
 msgid "templates/message.html"
 msgstr ""
 
@@ -172,8 +172,33 @@ msgstr ""
 msgid "Error writing page '%s'"
 msgstr ""
 
-#: lib/pageinfo.php:22 lib/pageinfo.php:66
+#: lib/pageinfo.php:9
+msgid "Enter a page name"
+msgstr ""
+
+#: lib/pageinfo.php:10
+msgid "Go"
+msgstr ""
+
+#: lib/pageinfo.php:21
+msgid "Show the page source and references"
+msgstr ""
+
+#: lib/pageinfo.php:26 lib/pageinfo.php:75
 msgid "PageInfo"
+msgstr ""
+
+#: lib/pageinfo.php:36
+#, c-format
+msgid "Page name '%s' is not in the database"
+msgstr ""
+
+#: lib/pageinfo.php:64
+msgid "Current version"
+msgstr ""
+
+#: lib/pageinfo.php:70
+msgid "Archived version"
 msgstr ""
 
 #: lib/savepage.php:60
