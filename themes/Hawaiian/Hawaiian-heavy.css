@@ -1,5 +1,5 @@
 /* 
- * $Id: Hawaiian-heavy.css,v 1.4 2002-01-12 07:20:15 carstenklapp Exp $
+ * $Id: Hawaiian-heavy.css,v 1.5 2002-01-16 20:04:04 carstenklapp Exp $
  *
  * Hawaiian-heavy.css
  *
@@ -7,17 +7,17 @@
  */
 
 /* Hide the elements we put in just to get around NS4 bugs. */
-.ns4bug, DIV.br { display: none; }
+.ns4bug, div.br { display: none; }
 
 /* This makes spacings in NS4 too big. */
-.toolbar, DIV.toolbar { margin: 0.5ex 0ex; }
+.toolbar, div.toolbar { margin: 0.5ex 0ex; }
 
 /* This break NS4, but is necessary for IE4. */
-DIV.wikitext { width: auto; }
+div.wikitext { width: auto; }
 
 /* Make Wikilinks inside <B> tags larger. */
-B .wiki, STRONG .wiki,
-B .wikipage, STRONG .wikipage
+b .wiki, strong .wiki,
+b .wikipage, strong .wikipage
 
 /* Link icons */
 img.linkicon        { vertical-align: middle; }

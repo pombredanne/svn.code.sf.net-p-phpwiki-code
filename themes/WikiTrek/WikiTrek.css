@@ -1,5 +1,5 @@
 /**
- * $Id: WikiTrek.css,v 1.6 2002-01-11 05:34:10 carstenklapp Exp $
+ * $Id: WikiTrek.css,v 1.7 2002-01-16 20:04:04 carstenklapp Exp $
  *
  * This PhpWiki theme is experimental and will likely not appear as
  * part of any release. ("accessories not included"--download
@@ -26,7 +26,7 @@
  */
 @import url(WikiTrek-gravimetric.css);
 
-BODY { 
+body { 
 /* the background image url is relative to this file's directory */
         color :             #fff;
         background-color :  #000;
@@ -35,7 +35,7 @@ BODY {
         font-size :         larger;
 }
 
-BODY {
+body {
         font-family : "Helvetica Narrow", "Arial Narrow", Helvetica,
                       Arial, sans-serif;
 }
@@ -45,21 +45,21 @@ BODY {
         border-width : 2px;
 }
 
-.wikitext , .toolbar , P , TD {
+.wikitext , .toolbar , p , td {
         font-family : "Helvetica Narrow", "Arial Narrow", Helvetica,
                       Arial, sans-serif;
 }
 
-INPUT.button {
+input.button {
         font-family : "Helvetica Narrow", "Arial Narrow", Helvetica,
                       Arial, sans-serif;
 }
 
-.wikitext PRE {
+.wikitext pre {
         font-family : monospace;
 }
 
-DIV.wikitext {
+div.wikitext {
         color :       #fff;
         background :  #000;
         font-weight : normal;
@@ -87,7 +87,7 @@ h1 {
         padding-bottom :   1px;
 }
 
-H2 , H3 , H4 {
+h2 , h3 , h4 {
         color :            #000;
         background-color : #ffcf00;
         padding-top :      0.25em;
@@ -177,7 +177,7 @@ img.rssicon {
 }
 
 /* this doesn't work! */
-.wikitext HR {
+.wikitext hr {
         background-image :  url("themes/WikiTrek/lights5.gif");
 }
 /* this image also used for the thank-you signature */

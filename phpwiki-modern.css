@@ -1,5 +1,5 @@
 /*
-  $Id: phpwiki-modern.css,v 1.5 2002-01-15 00:59:06 carstenklapp Exp $
+  $Id: phpwiki-modern.css,v 1.6 2002-01-16 20:04:04 carstenklapp Exp $
 
   Inspiration for this stylesheet:
 
@@ -8,24 +8,24 @@
 
   Classes:
 
-  DIV.wikitext - the transformed wiki page text.
+  div.wikitext - the transformed wiki page text.
 
-  A.wiki             - link to page in wiki.
-  A.named-wiki       - a named link to page in wiki (from e.g. [name|WikiPage]).
-  A.interwiki        - link to page in another wiki
-    SPAN.wikipage    - page name within interwiki link.
-  A.named-interwiki  - link to page in another wiki
-  A.url              - link to external URL from wiki page.
-  A.named-url        - link to external URL from wiki page.
+  a.wiki             - link to page in wiki.
+  a.named-wiki       - a named link to page in wiki (from e.g. [name|WikiPage]).
+  a.interwiki        - link to page in another wiki
+    span.wikipage    - page name within interwiki link.
+  a.named-interwiki  - link to page in another wiki
+  a.url              - link to external URL from wiki page.
+  a.named-url        - link to external URL from wiki page.
 
-  .wikiunknown A, .wikiunknown U
-  .named-wikiunknown A, .named-wikiunknown U
+  .wikiunknown a, .wikiunknown u
+  .named-wikiunknown a, .named-wikiunknown u
   
-  A.wikiaction
-  A.wikiadmin
+  a.wikiaction
+  a.wikiadmin
   .wikiunsafe
 
-  A.backlinks
+  a.backlinks
   
 TODO: Get rid of tables in wikiaction forms.
 */
@@ -52,11 +52,11 @@ BODY { /* user's browser settings */ }
  */ 
 .toolbar, TD { font-family: arial, helvetica, sans-serif; }
 
-INPUT.button { font-family: arial, helvetica, sans-serif; }
+input.button { font-family: arial, helvetica, sans-serif; }
 
 .wikitext PRE { font-family: monospace; }
 
-DIV.wikitext {
+div.wikitext {
  background:     white;
  border:         0.5pt;
  border-color: #888888;
@@ -85,7 +85,7 @@ h1 {    color :            #ffffff;
         padding-right :      0.6em;
 }
 
-h1 A.backlinks {
+h1 a.backlinks {
         color :            #ffffff;
         text-decoration:      none;
 }
@@ -100,7 +100,7 @@ h2 {
 }
 
 h3 {    color :            #ffffff;
-        background-color : #828DA6;
+        background-color : #828da6;
         padding-top :       0.15em;
         padding-left :       0.6em;
         padding-bottom :     0.1em;
@@ -108,11 +108,11 @@ h3 {    color :            #ffffff;
         margin-left :          1em;
 }
 
-INPUT.wikitext { margin: 0px; }
+input.wikitext { margin: 0px; }
 
 .toolbar {
  color:          black;
- background:   #DDDDDD; /* dark grey */
+ background:   #dddddd; /* dark grey */
  border:         0.5pt;
  border-color: #666666; /* medium grey */
  border-style:   solid;
@@ -135,17 +135,17 @@ INPUT.wikitext { margin: 0px; }
  *
  *  <div class="br"><br class="ignore" clear="all"></div>
  *
- * The clear:both on DIV.br seems to work.  And we'll disable the <br> altogether (in
+ * The clear:both on div.br seems to work.  And we'll disable the <br> altogether (in
  * CSS aware browsers) by setting display:none.
  *
  * Actually, I haven't yet found a browser which doesn't put a line break
  * between successive <div>'s.  This makes the <br class="ignore"> completely
  * unnecessary. 
  */
-DIV.br { clear:both; line-height: 0px; }
+div.br { clear:both; line-height: 0px; }
 .ignore { display: none; }
  
-DIV.errors {
+div.errors {
  background:     white;
  border:          thin;
  border-color:     red;
@@ -161,7 +161,7 @@ DIV.errors {
  clear: both;
 }
 
-.errors H4 {
+.errors h4 {
  color: red;
  text-decoration: underline;
  margin: 0px;
@@ -172,7 +172,7 @@ P.error {
  font-family: monospace;
  margin: 0px;
 }
-.error UL
+.error ul
 {
  font-size:     smaller;
  font-family: monospace;
@@ -181,17 +181,17 @@ P.error {
 /*
  * Style for <hr>s in wiki markup.
  */
-.wikitext HR { height: 1pt; }
+.wikitext hr { height: 1pt; }
 
 
 /*
  * Link styles
  */
 /* Wiki Links */
-A.wiki { text-decoration: none;
+a.wiki { text-decoration: none;
 color: #004662 /* dark cyan */
 }
-A.wikiaction:hover {
+a.wikiaction:hover {
   color: #5454ff;  /* blue */
   padding-top:    1pt;
   padding-left:   0pt;
@@ -200,7 +200,7 @@ A.wikiaction:hover {
 
 }
 
-A.wiki:hover, A.backlinks:hover {
+a.wiki:hover, a.backlinks:hover {
   color: #5454ff;  /* blue */
 }
 
@@ -215,14 +215,14 @@ B .wiki, STRONG .wiki { font-size: larger; }
 }
 
 /* Unknown links */
-.wikiunknown A, .named-wikiunknown A, .wikiunknown U
+.wikiunknown a, .named-wikiunknown a, .wikiunknown u
 { text-decoration: none; }
 
 .wikiunknown, .named-wikiunknown
 {color: #600; }
 
 /* Interwiki links */
-A.interwiki { text-decoration: none; }
+a.interwiki { text-decoration: none; }
 .wikipage   { font-weight: bold; }
 
 .interwiki,
@@ -236,9 +236,9 @@ I .interwiki, EM .interwiki
 /*
  * wikiaction, wikiadmin, wikiunsafe:
  */
-A.wikiaction, A.wikiadmin       { text-decoration: none; }
-A.wikiaction, .wikiaction TABLE, SPAN.wikiaction  { /* background-color: #ddd; */ }
-A.wikiadmin, .wikiadmin TABLE   { /* background-color: #fdd; */ }
+a.wikiaction, a.wikiadmin       { text-decoration: none; }
+a.wikiaction, .wikiaction table, span.wikiaction  { /* background-color: #ddd; */ }
+a.wikiadmin, .wikiadmin table   { /* background-color: #fdd; */ }
 .wikiunsafe                     { /* background-color: #ccc; */ }
 
 /*
@@ -255,21 +255,21 @@ img.linkicon		{ vertical-align: middle; }
  * Put a border around wikiaction forms:
  * This doesn't work for NS4.
  */
-.wikiaction TABLE, .wikiadmin TABLE
+.wikiaction table, .wikiadmin table
 {
 /*
   border-style: ridge;
   border-width: medium;
 */
 }
-.wikiaction TABLE { border-color: #9cf; }
-.wikiadmin TABLE  { border-color: #f99; }
+.wikiaction table { border-color: #9cf; }
+.wikiadmin table  { border-color: #f99; }
 
 /* Backlinks */
 A.backlinks { color: #006; }
 
 /* Make the textarea on the edit page full width */
-TEXTAREA.wikiedit { width: 100%; margin-top: 1ex; }
+textarea.wikiedit { width: 100%; margin-top: 1ex; }
 
 
 /* Calendar plugin */
@@ -290,7 +290,7 @@ table.cal       { border: thin solid black; }
 } 
 
 div.transclusion { 
-  background:   #EEEEFF; /*powder blue */
+  background:   #eeeeff; /*powder blue */
   border:         0.5pt;
   border-color:   white;
   border-style:   solid;
@@ -314,12 +314,12 @@ div.wiki-edithelp .transclusion p {
 }
 
 div.wiki-edithelp .wiki {
-  background: #A9A9E6;  /* blue highlight */
+  background: #a9a9e6;  /* blue highlight */
   padding: 1pt;
 }
 
 div.wiki-edithelp {
-  background: #EEEEFF;  /* powder blue */
+  background: #eeeeff;  /* powder blue */
   border:         1pt;
   border-color: white;
   border-style: solid;
