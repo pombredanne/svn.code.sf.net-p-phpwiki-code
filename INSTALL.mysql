@@ -44,8 +44,12 @@ That's it. phpwiki should now work.
 If you run into problems then check that your mySQL-user has
 the necessary access rights for the phpwiki tables.
 
+Hint for Linux-Debian users: it may be necessary to load the mySQL
+module first: insert the following line in config.php before
+"mysql.php" gets included:
+if (!extension_loaded("mysql"))  { dl("mysql.so"); }
 
 /Arno
-ahollosi@iname.com
+ahollosi@mail.com
 
-$Id: INSTALL.mysql,v 1.5 2000-10-08 18:12:13 wainstead Exp $
+$Id: INSTALL.mysql,v 1.6 2001-01-24 18:36:17 ahollosi Exp $
