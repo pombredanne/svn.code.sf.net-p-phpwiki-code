@@ -28,7 +28,10 @@ rcs_id('$Id PhpWeather.php 2002-08-26 15:30:13 rurban$');
 $WEATHER = $_SERVER['DOCUMENT_ROOT'] . '/phpweather/phpweather.php';
 if(! @include_once($WEATHER)) {
     if(!in_array($WEATHER, get_included_files()) ) {
-        trigger_error(sprintf(_("Could not open file %s."), "'$WEATHER'"));
+        $error = sprintf(_("Could not open file %s."), "'$WEATHER'") . " ";
+        $error .= sprintf(_("Make sure %s is installed and properly configured."),
+                          'PHP Weather');
+        trigger_error($error);
     }
 }
 
