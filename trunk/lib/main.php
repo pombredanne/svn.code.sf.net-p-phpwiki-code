@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.39 2002-01-28 01:57:13 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.40 2002-01-28 03:06:55 dairiki Exp $');
 
 
 include "lib/config.php";
@@ -101,7 +101,12 @@ class WikiRequest extends Request {
         if (!($prefs = $this->getCookieVar('WIKI_PREFS2')))
             $prefs = $this->getSessionVar('wiki_prefs');
         $this->_prefs = new UserPreferences($prefs);
+    }
 
+    // This really maybe should be part of the constructor, but since it
+    // may involve HTML/template output, the global $request really needs
+    // to be initialized before we do this stuff.
+    function updateAuthAndPrefs () {
         // Handle preference updates, an authentication requests, if any.
         if ($new_prefs = $this->getArg('pref')) {
             $this->setArg('pref', false);
@@ -267,7 +272,7 @@ class WikiRequest extends Request {
         }
     }
         
-    function deflowerDatabase () {
+    function possiblyDeflowerVirginWiki () {
         if ($this->getArg('action') != 'browse')
             return;
         if ($this->getArg('pagename') != HomePage)
@@ -338,7 +343,6 @@ class WikiRequest extends Request {
         if (preg_match('/^[^&=]+$/', $query_string)) {
             return urldecode($query_string);
         }
-        
     
         return HomePage;
     }
@@ -471,6 +475,7 @@ function main () {
     global $request;
 
     $request = new WikiRequest();
+    $request->updateAuthAndPrefs();
     
     /* FIXME: is this needed anymore?
     if (USE_PATH_INFO && ! $request->get('PATH_INFO')
@@ -484,19 +489,18 @@ function main () {
     */
 
     // Enable the output of most of the warning messages.
-    // The warnings will screw up zip files and setpref though.
+    // The warnings will screw up zip files though.
     global $ErrorManager;
     if ($request->getArg('action') != 'zip') {
         $ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE);
         //$ErrorManager->setPostponedErrorMask(0);
     }
-
     
     //FIXME:
     //if ($user->is_authenticated())
     //  $LogEntry->user = $user->getId();
 
-    $request->deflowerDatabase();
+    $request->possiblyDeflowerVirginWiki();
 
     $request->handleAction();
     $request->finish();
