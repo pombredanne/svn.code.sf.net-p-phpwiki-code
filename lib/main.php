@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.82 2002-09-16 18:49:17 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.83 2002-09-16 22:12:48 dairiki Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -143,19 +143,6 @@ class WikiRequest extends Request {
         return $this->_dbi->getPage($this->getArg('pagename'));
     }
 
-    /**
-     * Convert (possibly) relative name of subpage to full name.
-     *
-     * @param string $relname
-     * @return string
-     */
-    function fullPagename ($relname) {
-        if ($relname[0] == SUBPAGE_SEPARATOR)
-            return $this->getArg('pagename') . $relname;
-        else
-            return $relname;
-    }
-     
     function _handleAuthRequest ($auth_args) {
         if (!is_array($auth_args))
             return;

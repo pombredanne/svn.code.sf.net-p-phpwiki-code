@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.25 2002-08-23 18:29:29 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.26 2002-09-16 22:12:47 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -484,7 +484,10 @@ class Block_list extends BlockMarkup
 {
     //var $_tag = 'ol' or 'ul';
     var $_re = '\ {0,4}
-                (?: [+#] | -(?!-) | [o](?=\ )
+                (?: \+
+                  | \\# (?!\[.*\])
+                  | -(?!-)
+                  | [o](?=\ )
                   | [*] (?! \S[^*]*(?<=\S)[*](?!\S) )
                 )\ *(?=\S)';
 
@@ -713,7 +716,7 @@ class Block_oldlists extends Block_list
 {
     //var $_tag = 'ol', 'ul', or 'dl';
     var $_re = '(?: [*] (?! \S[^*]* (?<=\S) [*](?!\S) )
-                  | [#]
+                  | [#] (?! \[ .*? \] )
                   | ; .* :
                 ) .*? (?=\S)';
 
