@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.29 2002-01-24 01:26:55 dairiki Exp $');
+<?php rcs_id('$Id: Template.php,v 1.30 2002-01-24 21:22:24 dairiki Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -121,18 +121,23 @@ class Template
         $ErrorManager->popErrorHandler();
     }
 
-    function printXML () {
-        $this->printExpansion();
-    }
-
-    function asXML () {
+    function getExpansion ($defaults = false) {
         ob_start();
-        $this->printXML();
+        $this->printExpansion($defaults);
         $xml = ob_get_contents();
         ob_end_clean();
         return $xml;
     }
 
+    function printXML () {
+        $this->printExpansion();
+    }
+
+    function asXML () {
+        return $this->getExpansion();
+    }
+    
+            
     // Debugging:
     function _dump_template () {
         $lines = explode("\n", $this->_munge_input($this->_tmpl));
