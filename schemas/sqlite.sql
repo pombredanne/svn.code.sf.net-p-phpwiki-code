@@ -1,21 +1,21 @@
 -- http://www.hezmatt.org/~mpalmer/sqlite-phpwiki/sqlite.sql
 
--- $Id: sqlite.sql,v 1.4 2004-07-05 13:57:03 rurban Exp $
+-- $Id: sqlite.sql,v 1.5 2004-07-05 14:12:59 rurban Exp $
 
 CREATE TABLE page (
 	id              INTEGER PRIMARY KEY,
 	pagename        VARCHAR(100) NOT NULL,
-	hits            INT NOT NULL DEFAULT 0,
-	pagedata        MEDIUMTEXT NOT NULL DEFAULT '',
+	hits            INTEGER NOT NULL DEFAULT 0,
+	pagedata        MEDIUMTEXT NOT NULL DEFAULT ''
 );
 
 CREATE UNIQUE INDEX page_index ON page (pagename);
 
 CREATE TABLE version (
-	id              INT NOT NULL,
-	version         INT NOT NULL,
-	mtime           INT NOT NULL,
-	minor_edit      TINYINT DEFAULT 0,
+	id              INTEGER NOT NULL,
+	version         INTEGER NOT NULL,
+	mtime           INTEGER NOT NULL,
+	minor_edit      TINYINTEGER DEFAULT 0,
 	content         MEDIUMTEXT NOT NULL DEFAULT '',
 	versiondata     MEDIUMTEXT NOT NULL DEFAULT '',
 	PRIMARY KEY (id,version)
@@ -24,32 +24,30 @@ CREATE TABLE version (
 CREATE INDEX version_index ON version (mtime);
 
 CREATE TABLE recent (
-	id              INT NOT NULL,
-	latestversion   INT,
-	latestmajor     INT,
-	latestminor     INT,
-	PRIMARY KEY (id)
+	id              INTEGER NOT NULL PRIMARY KEY,
+	latestversion   INTEGER,
+	latestmajor     INTEGER,
+	latestminor     INTEGER
 );
 
 CREATE TABLE nonempty (
-	id              INT NOT NULL,
-	PRIMARY KEY (id)
+	id              INTEGER NOT NULL
 );
+CREATE INDEX nonempty_index ON nonempty (id);
 
 CREATE TABLE link (
-	linkfrom        INT NOT NULL,
-	linkto          INT NOT NULL
+	linkfrom        INTEGER NOT NULL,
+	linkto          INTEGER NOT NULL
 );
 
 CREATE INDEX linkfrom_index ON link (linkfrom);
 CREATE INDEX linkto_index ON link (linkto);
 
 CREATE TABLE session (
-	sess_id   char(32) not null default '',
-	sess_data blob not null,
-	sess_date INT UNSIGNED NOT NULL,
-	sess_ip   char(15) not null,
-	PRIMARY KEY (sess_id)
+	sess_id   CHAR(32) NOT NULL DEFAULT '' PRIMARY KEY,
+	sess_data BLOB NOT NULL,
+	sess_date INTEGER UNSIGNED NOT NULL,
+	sess_ip   CHAR(15) NOT NULL
 );
 
 CREATE INDEX sessdate_index ON session (sess_date);
@@ -60,7 +58,6 @@ CREATE INDEX sessip_index ON session (sess_ip);
 -- in the DBAuthParam SQL statements also.
 
 CREATE TABLE pref (
-  	userid 	CHAR(48) NOT NULL UNIQUE,
-  	prefs  	TEXT NULL DEFAULT '',
-  	PRIMARY KEY (userid)
+  	userid 	CHAR(48) NOT NULL PRIMARY KEY,
+  	prefs  	TEXT NULL DEFAULT ''
 );
