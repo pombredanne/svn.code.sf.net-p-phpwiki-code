@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.26 2002-09-16 22:12:47 dairiki Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.27 2002-09-17 19:23:32 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -903,8 +903,6 @@ class Block_p extends BlockMarkup
 ////////////////////////////////////////////////////////////////
 //
 
-
-
 function TransformText ($text, $markup = 2.0) {
     if (isa($text, 'WikiDB_PageRevision')) {
         $rev = $text;
@@ -913,23 +911,20 @@ function TransformText ($text, $markup = 2.0) {
     }
 
     if (empty($markup) || $markup < 2.0) {
-        include_once("lib/transform.php");
-        return do_transform($text);
-        //$text = ConvertOldMarkup($text);
+        //include_once("lib/transform.php");
+        //return do_transform($text);
+        $text = ConvertOldMarkup($text);
     }
     
     // Expand leading tabs.
-    // FIXME: do this better. also move  it...
-    $text = preg_replace('/^\ *[^\ \S\n][^\S\n]*/me', "str_repeat(' ', strlen('\\0'))", $text);
-    assert(!preg_match('/^\ *\t/', $text));
+    $text = expand_tabs($text);
 
     //set_time_limit(3);
 
     $output = new WikiText($text);
-    return $output;
+    return new XmlContent($output->getContent());
 }
 
-    
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php
