@@ -6,13 +6,13 @@ VariBrowser hanno problemi con i caratteri di tabulazione usati nelle RegoleDiFo
 
  [[o] Ops, non posso scrivere tabulazioni.  Per favore ConvertiGliSpaziInTabs per me quando salvo la pagina.
 
-Per scrivere una tabulazione (una spaziatura) e` necessario utilizzare almeno __tre__ spazi
+Per scrivere una tabulazione (una spaziatura) è necessario utilizzare almeno __tre__ spazi
 Usa multipli di __otto__ spazi per usare multipli tab 
 Ogni volta che le spaziature saranno otto verranno convertite in un tab
-Se le spaziature sono corte, e` tutto ok, almeno devono esserci tre
+Se le spaziature sono corte, è tutto ok, almeno devono esserci tre
 spazi nell'ultima spaziatura.
 
-__Controlla il tuo lavoro.__  Questo lavoro puo` anche causare comportamenti non previsti da parte del programma.
+__Controlla il tuo lavoro.__  Questo lavoro può anche causare comportamenti non previsti da parte del programma.
 
 -----
-[Nota: Questa pagina e` vista quando l'utente clicca sul collegamento "ConvertiGliSpaziInTab" in un edit screen. Descrive cio` che accade quando chiedi al sistema di farlo, perche` tu vuoi farlo e vuoi evitare il problema degli spazi-invece-dei-tab.]
+[Nota: Questa pagina è vista quando l'utente clicca sul collegamento "ConvertiGliSpaziInTab" in un edit screen. Descrive ciò che accade quando chiedi al sistema di farlo, perchè tu vuoi farlo e vuoi evitare il problema degli spazi-invece-dei-tab.]
