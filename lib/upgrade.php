@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.5 2004-05-03 15:00:33 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.6 2004-05-03 15:05:36 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -100,7 +100,7 @@ function CheckPgsrcUpdate(&$request) {
 function installTable(&$dbh, $table, $backend_type) {
     global $DBParams;
     if (!in_array($DBParams['dbtype'],array('SQL','ADODB'))) return;
-    echo _("install table")," ",$table," ... <br />\n";
+    echo _("MISSING")," ... \n";
     $backend = &$dbh->_backend->_dbh;
     $schema = findFile("schemas/${backend_type}.sql");
     if (!$schema) {
@@ -141,13 +141,15 @@ function CheckDatabaseUpdate($request) {
     $prefix = isset($DBParams['prefix']) ? $DBParams['prefix'] : '';
     extract($dbh->_backend->_table_names);
     foreach (explode(':','session:user:pref:member') as $table) {
+        echo _("check for table $table")," ...";    	
     	if (!in_array($table,$tables)) {
     	    if ($prefix and !in_array($prefix.$table,$tables)) {
     	        installTable(&$dbh, $prefix.$table, $backend_type);
     	    } else {
     	    	installTable(&$dbh, $table, $backend_type);
     	    }
-    	}
+    	} else 
+    	    echo "OK <br />\n";
     }
     // 1.3.8 added session.sess_ip
     if (phpwiki_version() >= 1030.08 and USE_DB_SESSION and isset($request->_dbsession)) {
@@ -187,7 +189,7 @@ function CheckDatabaseUpdate($request) {
                       or trigger_error("<br />\nSQL Error: ".mysql_error(),E_USER_WARNING);
                     $fields = mysql_list_fields($database,$page_tbl);
                     if (!strstr(mysql_field_flags($fields, $i),"auto_increment"))
-                        echo " <b>",_("FAILED"),"</b><br />\n";		
+                        echo " <b><font color=\"red\">",_("FAILED"),"</font></b><br />\n";		
                     else     
                         echo _("OK"),"<br />\n";            		
             	} else {
