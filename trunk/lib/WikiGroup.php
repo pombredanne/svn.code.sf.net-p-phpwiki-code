@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.39 2004-06-28 15:39:28 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.40 2004-06-29 06:48:02 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -194,14 +194,15 @@ class WikiGroup{
             case GROUP_ANONYMOUS: 	
                 return $this->membership[$group] = ! $user->isSignedIn();
             case GROUP_BOGOUSER: 	
-                return $this->membership[$group] = (isa($user,'_BogoUser') and 
-                                                    $user->_level >= WIKIAUTH_BOGO);
+                return $this->membership[$group] = (isa($user,'_BogoUser') 
+                                                    and $user->_level >= WIKIAUTH_BOGO);
             case GROUP_SIGNED:    	
                 return $this->membership[$group] = $user->isSignedIn();
             case GROUP_AUTHENTICATED: 	
                 return $this->membership[$group] = $user->isAuthenticated();
             case GROUP_ADMIN:		
-                return $this->membership[$group] = $this->_level == WIKIAUTH_ADMIN;
+                return $this->membership[$group] = (isset($user->_level) 
+                                                    and $user->_level == WIKIAUTH_ADMIN);
             default:
                 trigger_error(__sprintf("Undefined method %s for special group %s",
                                         'isMember',$group),
@@ -330,7 +331,8 @@ class WikiGroup{
         case GROUP_ADMIN:		
             foreach ($all as $u) {
                 $user = WikiUser($u);
-                if ($this->_level == WIKIAUTH_ADMIN) $users[] = $u;
+                if (isset($user->_level) and $user->_level == WIKIAUTH_ADMIN) 
+                    $users[] = $u;
             }
             return $users;
         default:
@@ -942,11 +944,15 @@ class GroupLdap extends WikiGroup {
         if (!defined("LDAP_BASE_DN"))
             define("LDAP_BASE_DN",'');
         $this->base_dn = LDAP_BASE_DN;
-        if (strstr("ou=",LDAP_BASE_DN))
-            $this->base_dn = preg_replace("/(ou=\w+,)?()/","\$2", LDAP_BASE_DN);
+        // if no users ou (organizational unit) is defined,
+        // then take out the ou= from the base_dn (if exists) and append a default
+        // from users and group
+        if (!LDAP_OU_USERS)
+            if (strstr("ou=",LDAP_BASE_DN))
+                $this->base_dn = preg_replace("/(ou=\w+,)?()/","\$2", LDAP_BASE_DN);
 
         if (!isset($this->user) or !isa($this->user,'_LDAPPassUser'))
-            $this->_user = new _LDAPPassUser('LdapBogo');
+            $this->_user = new _LDAPPassUser('LdapGroupTest'); // to have a valid username
         else 
             $this->_user =& $this->user;
     }
@@ -992,10 +998,11 @@ class GroupLdap extends WikiGroup {
         
         // must be a valid LDAP server, and username must not contain a wildcard
         if ($ldap = $this->_user->_init()) {
-            $st_search = defined('LDAP_SEARCH_FIELD')
-                ? LDAP_SEARCH_FIELD."=".$this->username
-                : "uid=".$this->username;
-            $sr = ldap_search($ldap, "ou=Users".($this->base_dn ? ",".$this->base_dn : ''), $st_search);
+            $st_search = LDAP_SEARCH_FIELD ? LDAP_SEARCH_FIELD."=".$this->username
+                			   : "uid=".$this->username;
+            $sr = ldap_search($ldap, (LDAP_OU_USERS ? LDAP_OU_USERS : "ou=Users")
+                              .($this->base_dn ? ",".$this->base_dn : ''), 
+                              $st_search);
             if (!$sr) {
  		$this->_user->_free();
                 return $this->membership;
@@ -1006,9 +1013,11 @@ class GroupLdap extends WikiGroup {
                 return $this->membership;
             }
             for ($i = 0; $i < $info["count"]; $i++) {
-            	if ($info[$i]["gidnumber"]["count"]) {
+            	if ($info[$i]["gidNumber"]["count"]) {
                     $gid = $info[$i]["gidnumber"][0];
-                    $sr2 = ldap_search($ldap, "ou=Groups".($this->base_dn ? ",".$this->base_dn : ''),"gidNumber=$gid");
+                    $sr2 = ldap_search($ldap, (LDAP_OU_GROUP ? LDAP_OU_GROUP : "ou=Groups")
+                                       .($this->base_dn ? ",".$this->base_dn : ''),
+                                       "gidNumber=$gid");
                     if ($sr2) {
                         $info2 = ldap_get_entries($ldap, $sr2);
                         if (!empty($info2["count"]))
@@ -1036,20 +1045,28 @@ class GroupLdap extends WikiGroup {
     function getMembersOf($group){
         $members = array();
         if ($ldap = $this->_user->_init()) {
-            $sr = ldap_search($ldap, "ou=Groups,".$this->base_dn,"cn=$group");
+            $base_dn = (LDAP_OU_GROUP ? LDAP_OU_GROUP : "ou=Groups")
+                .($this->base_dn ? ",".$this->base_dn : '');
+            $sr2 = ldap_search($ldap, $base_dn, "cn=$group");
             if ($sr)
                 $info = ldap_get_entries($ldap, $sr);
             else {
                 $info = array('count' => 0);
-                trigger_error("LDAP_SEARCH: base=\"ou=Groups,".$this->base_dn."\" \"(cn=$group)\" failed", E_USER_NOTICE);
+                trigger_error("LDAP_SEARCH: base=\"$base_dn\" \"(cn=$group)\" failed", E_USER_NOTICE);
             }
+            $base_dn = (LDAP_OU_USERS ? LDAP_OU_USERS : "ou=Users")
+                .($this->base_dn ? ",".$this->base_dn : '');
             for ($i = 0; $i < $info["count"]; $i++) {
-                $gid = $info[$i]["gidnumber"][0];
+                $gid = $info[$i]["gidNumber"][0];
                 //uid=* would be better probably
-                $sr2 = ldap_search($ldap, "ou=Users,".$this->base_dn,"gidNumber=$gid");
-                $info2 = ldap_get_entries($ldap, $sr2);
-                for ($j = 0; $j < $info2["count"]; $j++) {
-                    $members[] = $info2[$j]["cn"][0];
+                $sr2 = ldap_search($ldap, $base_dn, "gidNumber=$gid");
+                if ($sr2) {
+                    $info2 = ldap_get_entries($ldap, $sr2);
+                    for ($j = 0; $j < $info2["count"]; $j++) {
+                        $members[] = $info2[$j]["cn"][0];
+                    }
+                } else {
+                    trigger_error("LDAP_SEARCH: base=\"$base_dn\" \"(gidNumber=$gid)\" failed", E_USER_NOTICE);
                 }
             }
         }
@@ -1064,6 +1081,9 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.39  2004/06/28 15:39:28  rurban
+// fixed endless recursion in WikiGroup: isAdmin()
+//
 // Revision 1.38  2004/06/27 10:24:19  rurban
 // suggestion by Paul Henry
 //

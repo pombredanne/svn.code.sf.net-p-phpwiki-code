@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.104 2004-06-28 15:39:37 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.105 2004-06-29 06:48:03 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -2080,12 +2080,15 @@ extends _PassUser
             	$this->_free();
                 return $this->_tryNextPass($submitted_password);
             }
-            // there may be more hits with this userid.
-            // of course it would be better to narrow down the BASE_DN
+            // There may be more hits with this userid.
+            // Of course it would be better to narrow down the BASE_DN
             for ($i = 0; $i < $info["count"]; $i++) {
                 $dn = $info[$i]["dn"];
                 // The password is still plain text.
-                if ($r = ldap_bind($ldap, $dn, $submitted_password)) {
+                // On wrong password the ldap server will return: 
+                // "Unable to bind to server: Server is unwilling to perform"
+                // The @ catches this error message.
+                if ($r = @ldap_bind($ldap, $dn, $submitted_password)) {
                     // ldap_bind will return TRUE if everything matches
             	    $this->_free();
                     $this->_level = WIKIAUTH_USER;
@@ -3040,6 +3043,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.104  2004/06/28 15:39:37  rurban
+// fixed endless recursion in WikiGroup: isAdmin()
+//
 // Revision 1.103  2004/06/28 15:01:07  rurban
 // fixed LDAP_SET_OPTION handling, LDAP error on connection problem
 //

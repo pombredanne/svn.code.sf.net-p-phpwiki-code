@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.193 2004-06-28 13:27:03 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.194 2004-06-29 06:48:04 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -665,8 +665,8 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
 
         // change ! escapes to ~'s.
         global $WikiNameRegexp, $request;
-        $map = getInterwikiMap();
         $bang_esc[] = "(?:" . ALLOWED_PROTOCOLS . "):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]";
+        $map = getInterwikiMap();
         $bang_esc[] = $map->getRegexp() . ":[^\\s.,;?()]+"; // FIXME: is this really needed?
         $bang_esc[] = $WikiNameRegexp;
         $orig[] = '/!((?:' . join(')|(', $bang_esc) . '))/';
@@ -1615,6 +1615,9 @@ function url_get_contents( $uri ) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.193  2004/06/28 13:27:03  rurban
+// CreateToc disabled for old markup and Apache2 only
+//
 // Revision 1.192  2004/06/28 12:47:43  rurban
 // skip if non-DEBUG and old markup with CreateToc
 //
