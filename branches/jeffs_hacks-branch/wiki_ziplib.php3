@@ -1,4 +1,4 @@
-<? rcs_id("$Id: wiki_ziplib.php3,v 1.4.2.1 2000-07-29 00:36:45 dairiki Exp $");
+<? rcs_id("$Id: wiki_ziplib.php3,v 1.4.2.2 2000-08-01 18:19:43 dairiki Exp $");
 
 //FIXME: get rid of this.
 function warn ($msg)
@@ -9,68 +9,69 @@ function warn ($msg)
 /**
  * GZIP stuff.
  *
- * All this is just to get around the fact that not all PHP's (even if
- * they have zlib support built in) have gz[un]compress().
+ * Note that we use gzopen()/gzwrite() instead of gzcompress() even
+ * if gzcompress() is available.  Gzcompress() puts out data with different
+ * headers --- in particular it includes an "adler-32" checksum rather than
+ * a "CRC32" checksum.  Since we need the CRC-32 checksum, and since not
+ * all PHP's have gzcompress(), we'll just stick with gzopen(). 
  */
-if (! function_exists('gzcompress')) {
-  function gzip_cleanup () {
-    global $gzip_tmpfile;
+function gzip_cleanup () {
+  global $gzip_tmpfile;
     
-    if ($gzip_tmpfile)
-	unlink($gzip_tmpfile);
-  }
+  if ($gzip_tmpfile)
+      @unlink($gzip_tmpfile);
+}
 
-  function gzip_tempnam () {
-    global $gzip_tmpfile;
+function gzip_tempnam () {
+  global $gzip_tmpfile;
 
-    if (!$gzip_tmpfile)
-      {
-	//FIXME: does this work on non-unix machines?
-	$gzip_tmpfile = tempnam("/tmp", "wkzip");
-	register_shutdown_function("gzip_cleanup");
-      }
+  if (!$gzip_tmpfile)
+    {
+      //FIXME: does this work on non-unix machines?
+      $gzip_tmpfile = tempnam("/tmp", "wkzip");
+      register_shutdown_function("gzip_cleanup");
+    }
     return $gzip_tmpfile;
   }
 
-  function gzcompress ($data) {
-    $filename = gzip_tempnam();
-    if (!($fp = gzopen($filename, "wb")))
-	die("gzopen failed");
-    gzwrite($fp, $data, strlen($data));
-    if (!gzclose($fp))
-	die("gzclose failed");
+function gzip_compress ($data) {
+  $filename = gzip_tempnam();
+  if (!($fp = gzopen($filename, "wb")))
+      die("gzopen failed");
+  gzwrite($fp, $data, strlen($data));
+  if (!gzclose($fp))
+      die("gzclose failed");
     
-    $size = filesize($filename);
+  $size = filesize($filename);
 
-    if (!($fp = fopen($filename, "rb")))
-	die("fopen failed");
-    if (!($z = fread($fp, $size)) || strlen($z) != $size)
-	die("fread failed");
-    if (!fclose($fp))
-	die("fclose failed");
+  if (!($fp = fopen($filename, "rb")))
+      die("fopen failed");
+  if (!($z = fread($fp, $size)) || strlen($z) != $size)
+      die("fread failed");
+  if (!fclose($fp))
+      die("fclose failed");
 
-    unlink($filename);
-    return $z;
-  }
+  unlink($filename);
+  return $z;
+}
 
-  function gzuncompress ($data) {
-    $filename = gzip_tempnam();
-    if (!($fp = fopen($filename, "wb")))
-	die("fopen failed");
-    fwrite($fp, $data, strlen($data));
-    if (!fclose($fp))
-	die("fclose failed");
+function gzip_uncompress ($data) {
+  $filename = gzip_tempnam();
+  if (!($fp = fopen($filename, "wb")))
+      die("fopen failed");
+  fwrite($fp, $data, strlen($data));
+  if (!fclose($fp))
+      die("fclose failed");
 
-    if (!($fp = gzopen($filename, "rb")))
-	die("gzopen failed");
-    while ($buf = gzread($fp, 4096))
-	$unz .= $buf;
-    if (!gzclose($fp))
-	die("gzclose failed");
+  if (!($fp = gzopen($filename, "rb")))
+      die("gzopen failed");
+  while ($buf = gzread($fp, 4096))
+      $unz .= $buf;
+  if (!gzclose($fp))
+      die("gzclose failed");
 
-    unlink($filename);
-    return $unz;
-  }
+  unlink($filename);
+  return $unz;
 }
 
 /**
@@ -178,9 +179,10 @@ function zip_crc32 ($str, $crc = 0)
 
 function zip_deflate ($content)
 {
+  
   // Compress content, and suck information from gzip header.
-  $z = gzcompress($content);
-
+  $z = gzip_compress($content);
+  
   if (substr($z,0,3) != "\037\213\010")
       die("Bad gzip magic");
 
@@ -219,7 +221,7 @@ function zip_inflate ($data, $crc32, $uncomp_size, $comp_type)
   $tail = zip_pack($crc32, 4);
   $tail .= zip_pack($uncomp_size, 4);
 
-  return gzuncompress($head . $data . $tail);
+  return gzip_uncompress($head . $data . $tail);
 }
 
 function unixtime2dostime ($unix_time) {
