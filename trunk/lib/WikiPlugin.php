@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.26 2002-09-15 15:05:47 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.27 2002-11-04 03:15:59 carstenklapp Exp $');
 
 class WikiPlugin
 {
@@ -118,13 +118,17 @@ class WikiPlugin
         }
 
         if ($argstr) {
-            trigger_error(sprintf(_("trailing cruft in plugin args: '%s'"),
-                                    $argstr), E_USER_NOTICE);
+           $this->handle_plugin_args_cruft($argstr, $args);
         }
 
         return array($args, $defaults);
     }
 
+    /* A plugin can override this function to define how any remaining text is handled */
+    function handle_plugin_args_cruft($argstr, $args) {
+        trigger_error(sprintf(_("trailing cruft in plugin args: '%s'"),
+                              $argstr), E_USER_NOTICE);
+    }
 
     function getDefaultLinkArguments() {
         return array('targetpage' => $this->getName(),
