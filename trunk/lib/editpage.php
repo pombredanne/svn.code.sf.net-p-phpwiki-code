@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.82 2004-11-30 22:21:56 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.83 2004-12-04 11:55:39 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -92,7 +92,7 @@ class PageEditor
             $saveFailed = true;
         }
 
-        if ($saveFailed || $this->isConcurrentUpdate())
+        if ($saveFailed and $this->isConcurrentUpdate())
         {
             // Get the text of the original page, and the two conflicting edits
             // The diff3 class takes arrays as input.  So retrieve content as
@@ -429,6 +429,21 @@ function undo_save() {
             return true;
         }
 
+        if ($this->isSpam()) {
+            $this->tokens['PAGE_LOCKED_MESSAGE'] = $this->getSpamMessage();
+            return false;
+            /*
+            // Save failed. No changes made.
+            $this->_redirectToBrowsePage();
+            // user will probably not see the rest of this...
+            include_once('lib/display.php');
+            // force browse of current version:
+            $request->setArg('version', false);
+            displayPage($request, 'nochanges');
+            return true;
+            */
+        }
+
         $page = &$this->page;
 
         // Include any meta-data from original page version which
@@ -506,6 +521,38 @@ function undo_save() {
             return false;
 
         return $this->_content == $current->getPackedContent();
+    }
+
+    /** 
+     * Handle AntiSpam here. How? http://wikiblacklist.blogspot.com/
+     * Need to check dynamically some blacklist content (plugin WikiAccessRestrictions)
+     * DONE: 
+     *   More then 20 new external links
+     * TODO: 
+     *   IP BlackList 
+     *   domain blacklist
+     *   url patterns
+     *   content patterns by babycart
+     */
+    function isSpam () {
+        $current = &$this->current;
+        $oldtext = $current->getPackedContent();
+        $newtext =& $this->_content;
+        if ($this->numLinks($newtext) - $this->numLinks($oldtext) >= 20)
+            return true;
+        return false;
+    }
+
+    function numLinks(&$text) {
+        return substr_count($text, "http://");
+    }
+
+    function getSpamMessage () {
+        return
+            HTML(HTML::h2(_("Spam Prevention")),
+                 HTML::p(_("This page edit seems to contain spam and was therefore not saved.")),
+                 HTML::p(_("")),
+                 HTML::p(_("Sorry for the inconvenience.")));
     }
 
     function getPreview () {
@@ -588,17 +635,19 @@ function undo_save() {
                                          'readonly' => (bool) $readonly),
                                    $this->_content);
         if (isBrowserNS4())
-            $textarea->setAttr('wrap','virtual');
+            $textarea->setAttr('wrap', 'virtual');
         if (USE_HTMLAREA)
             return Edit_HtmlArea_Textarea($textarea,$this->_wikicontent,'edit[content]');
         else
             return $textarea;
     }
 
+    /**
+     * TODO: maybe support an uploadfile button.
+     */
     function getFormElements () {
         $request = &$this->request;
         $page = &$this->page;
-
 
         $h = array('action'   => 'edit',
                    'pagename' => $page->getName(),
@@ -647,7 +696,6 @@ function undo_save() {
     function _redirectToBrowsePage() {
         $this->request->redirect(WikiURL($this->page, false, 'absolute_url'));
     }
-    
 
     function _restoreState () {
         $request = &$this->request;
@@ -808,6 +856,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.82  2004/11/30 22:21:56  rurban
+ changed gif to optimized (pngout) png
+
  Revision 1.81  2004/11/29 17:57:27  rurban
  translated pulldown buttons
 
