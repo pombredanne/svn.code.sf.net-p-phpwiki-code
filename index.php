@@ -39,7 +39,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.48 2002-01-03 00:09:15 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.49 2002-01-03 05:10:33 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -51,7 +51,7 @@ rcs_id('$Id: index.php,v 1.48 2002-01-03 00:09:15 carstenklapp Exp $');
 // The name of your wiki.
 // This is used to generate a keywords meta tag in the HTML templates,
 // and during RSS generation for the <title> of the RSS channel.
-define('WIKI_NAME', 'PhpWiki');
+//define('WIKI_NAME', 'PhpWiki');
 
 // If set, we will perform reverse dns lookups to try to convert the users
 // IP number to a host name, even if the http server didn't do it for us.
@@ -201,7 +201,7 @@ $DBParams = array(
 //
 // Keep up to 8 major edits, but keep them no longer than a month.
 $ExpireParams['major'] = array('max_age' => 32,
-                               'keep'	   => 8);
+                               'keep'    => 8);
 // Keep up to 4 minor edits, but keep them no longer than a week.
 $ExpireParams['minor'] = array('max_age' => 7,
                                'keep'    => 4);
@@ -235,9 +235,14 @@ $ExpireParams['author'] = array('max_age'  => 365,
 // this area in the future).
 define("CHARSET", "iso-8859-1");
 
-// Select your language/locale - default language "C": English
-// other languages available: Dutch "nl", Spanish "es", German "de",
-// Swedish "sv", and Italian, "it".
+// Select your language/locale - default language is "C" for English.
+// Other languages available:
+// English "C"  (English    - HomePage)
+// Dutch   "nl" (Nederlands - ThuisPagina)
+// Spanish "es" (Español    - PáginaPrincipal)
+// German  "de" (Deutsch    - StartSeite)
+// Swedish "sv" (Svenska    - Framsida)
+// Italian "it" (Italiano   - PaginaPrincipale)
 //
 // If you set $LANG to the empty string, your systems default
 // language (as determined by the applicable environment variables)
@@ -278,6 +283,8 @@ $LANG='C';
 // Note that if you use the stock phpwiki style sheet, 'phpwiki.css',
 // you should make sure that it's companion 'phpwiki-heavy.css'
 // is installed in the same directory that the base style file is.
+// FIXME: These default CSS key names could use localization, but
+// gettext() is not available at this point yet 
 $CSS_URLS = array(
     'PhpWiki' => "phpwiki.css",
     'Printer' => "phpwiki-printer.css",
