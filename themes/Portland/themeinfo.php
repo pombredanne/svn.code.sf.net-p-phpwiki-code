@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.11 2004-06-14 11:26:50 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.12 2005-01-20 10:09:27 rurban Exp $');
 
 /*
  * This file defines an appearance ("theme") of PhpWiki similar to the Portland Pattern Repository.
@@ -19,7 +19,7 @@ class Theme_Portland extends Theme {
         }
         
         $url = WikiURL($wikiword, array('action' => 'create'));
-        $link = HTML::span(HTML::a(array('href' => $url), '?'));
+        $link = HTML::span(HTML::a(array('href' => $url, 'rel' => 'nofollow'), '?'));
 
         if (!empty($linktext)) {
             $link->unshiftContent(HTML::u($linktext));
@@ -31,7 +31,7 @@ class Theme_Portland extends Theme {
         }
         if ($request->getArg('frame'))
             $link->setAttr('target', '_top');
-        
+
         return $link;
     }
     function getRecentChangesFormatter ($format) {

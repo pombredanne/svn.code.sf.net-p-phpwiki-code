@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.4 2004-06-14 11:26:51 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.5 2005-01-20 10:09:27 rurban Exp $');
 
 /*
  * This file defines an appearance ("theme") of PhpWiki similar to the 
@@ -21,7 +21,7 @@ class Theme_Wordpress extends Theme {
         }
         
         $url = WikiURL($wikiword, array('action' => 'create'));
-        $link = HTML::span(HTML::a(array('href' => $url), '?'));
+        $link = HTML::span(HTML::a(array('href' => $url, 'rel' => 'nofollow'), '?'));
 
         if (!empty($linktext)) {
             $link->unshiftContent(HTML::u($linktext));
