@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.28 2003-02-15 23:25:48 dairiki Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.29 2003-02-16 05:09:43 dairiki Exp $');
 
 class WikiPlugin
 {
@@ -7,9 +7,22 @@ class WikiPlugin
         return array('description' => $this->getDescription());
     }
 
+    /** Does plugin have static output?
+     *
+     * Should return true iff the output of the plugin only depends
+     * on its arguments and/or the contents of the current page.
+     *
+     * The safe answer is false, but that will probably make the page
+     * output uncacheable.  Plugins should override this method to return
+     * true if possible.
+     */
+    function hasStaticOutput() {
+        return false;
+    }
+    
 
     // FIXME: args?
-    function run ($dbi, $argstr, $request) {
+    function run ($dbi, $argstr, &$request) {
         trigger_error("WikiPlugin::run: pure virtual function",
                       E_USER_ERROR);
     }
@@ -251,7 +264,7 @@ class WikiPlugin
 class WikiPluginLoader {
     var $_errors;
 
-    function expandPI($pi, $request) {
+    function expandPI($pi, &$request) {
         if (!preg_match('/^\s*<\?(plugin(?:-form|-link)?)\s+(\w+)\s*(.*?)\s*\?>\s*$/s', $pi, $m))
             return $this->_error(sprintf("Bad %s", 'PI'));
 
@@ -266,6 +279,16 @@ class WikiPluginLoader {
             case 'plugin':
                 // FIXME: change API for run() (no $dbi needed).
                 $dbi = $request->getDbh();
+                // FIXME: could do better here...
+                if (! $plugin->hasStaticOutput()) {
+                    // Output of plugin (potentially) depends on
+                    // the state of the WikiDB (other than the current
+                    // page.)  Individual plugins should try to add
+                    // there own bits to ETag --- but for now, we'll
+                    // at least mark ETag as a weak validator.
+                    $request->setETagIsWeak();
+                }
+                
                 return $plugin->run($dbi, $plugin_args, $request);
             case 'plugin-link':
                 return $plugin->makeLink($plugin_args, $request);

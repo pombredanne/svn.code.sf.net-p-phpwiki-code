@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.69 2003-01-18 22:01:43 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.70 2003-02-16 05:09:43 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -110,12 +110,12 @@ class _RecentChanges_Formatter
         }
     }
 
-    function http_lastmodified_header($mtime) {
-        static $mostrecentlymodified = false;
-        if (! $mostrecentlymodified) {
-            // set http header to date of most recently modified page
-            $mostrecentlymodified = $mtime; //$rev->get('mtime');
-            header("Last-Modified: " . Rfc2822DateTime($mostrecentlymodified));
+    function setValidators($rev) {
+        global $request;
+        if ($request->hasETag()) {
+            $request->addToETag('RecentChanges-top',
+                                array($rev->getPageName(), $rev->getVersion()));
+            $request->setModificationTime($rev->get('mtime'));
         }
     }
 }
@@ -293,6 +293,7 @@ extends _RecentChanges_Formatter
 
         $last_date = '';
         $lines = false;
+        $first = true;
 
         while ($rev = $changes->next()) {
             if (($date = $this->date($rev)) != $last_date) {
@@ -301,9 +302,13 @@ extends _RecentChanges_Formatter
                 $html->pushContent(HTML::h3($date));
                 $lines = HTML::ul();
                 $last_date = $date;
+
             }
-            $this->http_lastmodified_header($rev->get('mtime'));
             $lines->pushContent($this->format_revision($rev));
+
+            if ($first)
+                $this->setValidators($rev);
+            $first = false;
         }
         if ($lines)
             $html->pushContent($lines);
@@ -464,10 +469,13 @@ extends _RecentChanges_Formatter
         if (($props = $this->textinput_properties()))
             $rss->textinput($props);
 
+        $first = true;
         while ($rev = $changes->next()) {
             $rss->addItem($this->item_properties($rev),
                           $this->pageURI($rev));
-            $this->http_lastmodified_header($rev->get('mtime'));
+            if ($first)
+                $this->setValidators($rev);
+            $first = false;
         }
 
         $rss->finish();
@@ -589,7 +597,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.69 $");
+                            "\$Revision: 1.70 $");
     }
 
     function getDefaultArguments() {
@@ -734,6 +742,11 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.69  2003/01/18 22:01:43  carstenklapp
+// Code cleanup:
+// Reformatting & tabs to spaces;
+// Added copyleft, getVersion, getDescription, rcs_id.
+//
 
 // (c-file-style: "gnu")
 // Local Variables:

@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.39 2003-02-15 23:32:56 dairiki Exp $');
+rcs_id('$Id: display.php,v 1.40 2003-02-16 05:09:43 dairiki Exp $');
 
 require_once('lib/Template.php');
 require_once('lib/BlockParser.php');
@@ -72,15 +72,18 @@ function actionPage(&$request, $action) {
     $pagetitle = HTML(fmt("%s: %s", $actionpage->getName(),
                           $Theme->linkExistingWikiWord($pagename, false, $version)));
 
+    $request->addToETag('pageversion', $revision->getVersion());
+    $request->setModificationTime($revision->get('mtime'));
+    $request->addToETag('actionpageversion', $actionrev->getVersion());
+    $request->setModificationTime($actionrev->get('mtime'));
+
     require_once('lib/PageType.php');
     $transformedContent = PageType($actionrev);
     $template = Template('browse', array('CONTENT' => $transformedContent));
 
     header("Content-Type: text/html; charset=" . CHARSET);
-    if (!defined('DEBUG')) {
-        header("Last-Modified: ".Rfc2822DateTime($revision->get('mtime')));
-    }
-
+    $request->setValidators();
+    
     // $template = Template('browse', array('CONTENT' => TransformText($actionrev)));
     
     GeneratePage($template, $pagetitle, $revision);
@@ -137,6 +140,9 @@ function displayPage(&$request, $tmpl = 'browse') {
 
     //include_once('lib/BlockParser.php');
 
+    $request->addToETag('pageversion', $revision->getVersion());
+    $request->setModificationTime($revision->get('mtime'));
+
     require_once('lib/PageType.php');
     if ($frame = $request->getArg('frame')) {
         if (in_array($frame, array('body','browse','editpage')))
@@ -150,12 +156,9 @@ function displayPage(&$request, $tmpl = 'browse') {
         $template = Template('browse', array('CONTENT' => $transformedContent));
     }
 
-    header("Content-Type: text/html; charset=" . CHARSET);
-    // don't clobber date header given by RC
-    if ( ! ($pagename == _("RecentChanges") || $pagename == _("RecentEdits") || 
-            (defined('DEBUG') and DEBUG)) )
-        header("Last-Modified: ".Rfc2822DateTime($revision->get('mtime')));
-
+    header("Content-Type: text/html; charset=" . CHARSET); // FIXME: this gets done twice?
+    $request->setValidators();
+    
     GeneratePage($template, $pagetitle, $revision,
                  array('ROBOTS_META'	=> 'index,follow',
                        'PAGE_DESCRIPTION' => GleanDescription($revision),
