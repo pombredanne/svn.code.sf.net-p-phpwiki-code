@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.1 2001-09-18 19:16:23 dairiki Exp $');
+rcs_id('$Id: WikiDB.php,v 1.2 2001-10-29 17:58:37 dairiki Exp $');
 
 //FIXME: arg on get*Revision to hint that content is wanted.
 
@@ -683,15 +683,13 @@ class WikiDB_Page
         if (!empty($newval)) {
             if (!empty($data[$key]) && $data[$key] == $newval)
                 return;         // values identical, skip update.
-            $data[$key] = $newval;
         }
         else {
             if (empty($data[$key]))
                 return;         // values identical, skip update.
-            unset($data[$key]);
         }
 
-        $cache->update_pagedata($pagename, $data, array($key => $newval));
+        $cache->update_pagedata($pagename, array($key => $newval));
     }
 
     /**
