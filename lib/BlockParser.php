@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.20 2002-02-06 23:45:34 dairiki Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.21 2002-02-07 19:45:15 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -549,8 +549,11 @@ class Block_dl extends Block_list
     function _do_match (&$input, $m) {
         $pos = $input->getPos();
 
+        $firstIndent = strspn($m->match, ' ');
+        $pat = sprintf('/\ {%d,%d}(?=\s*\S)/A', $firstIndent + 1, $firstIndent + 5);
+
         while ( ($line = $input->nextLine()) !== false ) {
-            if (preg_match('/\ *(?=\S)/A', $line, $mm)) {
+            if (preg_match($pat, $line, $mm)) {
                 $indent = strlen($mm[0]);
                 break;
             }
@@ -917,7 +920,7 @@ class Block_p extends BlockMarkup
 // FIXME: This is temporary, too...
 function NewTransform ($text) {
 
-    set_time_limit(5);
+    //set_time_limit(5);
     
     // Expand leading tabs.
     // FIXME: do this better. also move  it...
