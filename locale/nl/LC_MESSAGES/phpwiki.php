@@ -1,13 +1,9 @@
 <?php
 
-$locale["%s of the page. You should now see the most current version of the page. Your changes are no longer there."] =
-   "%s op de pagina.  Je zou nu de meest recente versie van de pagina moeten zien.  Jouw veranderingen staan er nu niet meer.";
 $locale["%s: %s"] =
    "%s: %s";
 $locale["(diff)"] =
    "(diff)";
-$locale["(last edited %s)"] =
-   "(meest recente verandering op %s)";
 $locale["- saved to database as version %d"] =
    "- bewaard in de data base als versie %d";
 $locale["Action %s is disallowed on this wiki"] =
@@ -16,8 +12,6 @@ $locale["Cancel"] =
    "Annuleer";
 $locale["Complete."] =
    "Klaar.";
-$locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
-   "Kopier je veranderingen naar het klipbord of een andere tijdelijke plaats (bijv. een tekst editor).";
 $locale["Describe %s here."] =
    "Beschrijf %s hier.";
 $locale["Diff"] =
@@ -48,14 +42,12 @@ $locale["Height"] =
    "Hoogte";
 $locale["Hits"] =
    "Teller";
+$locale["Hits:"] =
+   "Teller:";
 $locale["HomePage"] =
    "ThuisPagina";
-$locale["In order to recover from this situation, follow these steps:"] =
-   "Om uit deze benarde situatie te geraken, volg je deze stappen:";
 $locale["Include of '%s' failed"] =
    "Insert van '%s' gefaald";
-$locale["InterWikiMap"] =
-   "InterWikiMap";
 $locale["Last Author"] =
    "Vorige Auteur";
 $locale["Last edited on %s."] =
@@ -72,8 +64,6 @@ $locale["Locked"] =
    "Låst";
 $locale["MIME file %s"] =
    "MIME bestand %";
-$locale["Make changes to the file again. Paste your additions from the clipboard (or text editor)."] =
-   "Breng je veranderingen aan de pagina opnieuw aan.  Plak je toevoeginen van het klipbord (of tekst editor).";
 $locale["MostPopular"] =
    "Meestbezochte";
 $locale["New page."] =
@@ -86,12 +76,16 @@ $locale["Page Locked"] =
    "Sidan är Låst";
 $locale["Page Name"] =
    "Pagina Naam";
+$locale["PageHistory"] =
+   "PaginaGeschiedenis";
 $locale["Preview"] =
    "Voorvertonig";
 $locale["Previous"] =
    "Vorige";
 $locale["Previous Author"] =
    "Vorige Auteur";
+$locale["Printer"] =
+   "Drukker";
 $locale["RecentChanges"] =
    "RecenteVeranderingen";
 $locale["References"] =
@@ -118,6 +112,8 @@ $locale["See %s tips for editing."] =
    "%s tips for veranderen.";
 $locale["Serialized file %s"] =
    "Geserialiseerd bestand %s";
+$locale["Skipping"] =
+   "Overgeslagen";
 $locale["Sorry for the inconvenience."] =
    "Excuses voor het ongemak.";
 $locale["TextFormattingRules"] =
@@ -128,10 +124,14 @@ $locale["The %d most popular pages of this wiki:"] =
    "De %d meestbezochte pagina's van deze Wiki:";
 $locale["The %d most recent %s are listed below."] =
    "De %d meest recent %s staan hieronder.";
+$locale["The PhpWiki Programming Team"] =
+   "Het PhpWiki programmeerteam";
 $locale["The PhpWiki programming team"] =
    "Het PhpWiki programmeerteam";
 $locale["This page has been locked by the administrator and cannot be edited."] =
    "Deze pagina is afgesloten door de beheerder en kan niet veranderd worden.";
+$locale["This page has been locked by the administrator so your changes can not be saved."] =
+   "Deze pagina is afgesloten door de beheerder en je veranderingen kan niet bewaar worden.";
 $locale["Title Search"] =
    "Titel Zoek";
 $locale["Title search results for '%s'"] =
@@ -182,8 +182,8 @@ $locale["diff"] =
    "diff";
 $locale["from %s"] =
    "van %s";
-$locale["last modified on %s"] =
-   "meest recente verandering op %s";
+$locale["is identical to current version %d - skipped"] =
+   "is gelijk aaan huidige versie %d - overgeslagen";
 $locale["locked"] =
    "låst";
 $locale["new page"] =
@@ -196,9 +196,5 @@ $locale["version %d"] =
    "versie %d";
 $locale["version %s"] =
    "versie %s";
-$locale["version %s, saved %s."] =
-   "versie %s, bewarrd %s.";
-$locale["version %s, saved on %s."] =
-   "versie %s, bewarrd op %s.";
 
 ?>
