@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PluginManager.php,v 1.9 2003-11-19 00:02:42 carstenklapp Exp $');
+rcs_id('$Id: PluginManager.php,v 1.10 2003-11-30 18:23:48 carstenklapp Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
@@ -129,7 +129,7 @@ extends WikiPlugin
             // obtain plugin's default arguments
             $arguments = HTML();
             $args = $p->getDefaultArguments();
-
+            
             foreach ($args as $arg => $default) {
                 if (stristr($default, ' '))
                     $default = "'$default'";
@@ -141,7 +141,8 @@ extends WikiPlugin
             // Also look for pages in the current locale
             if (_($pname) != $pname) {
                 $l1 = _($pname);
-            } else
+            }
+            else
                 $l1 = '';
             if (preg_match("/^$WikiNameRegexp\$/", $pname)
                 && $dbi->isWikiPage($pname)) {
@@ -152,7 +153,8 @@ extends WikiPlugin
             // Also look for pages in the current locale
             if (_($ppname) != $ppname) {
                 $l2 = _($ppname);
-            } else
+            }
+            else
                 $l2 = '';
             if (preg_match("/^$WikiNameRegexp\$/", $ppname)
                 && $dbi->isWikiPage($ppname)) {
@@ -161,44 +163,48 @@ extends WikiPlugin
             else {
                 // don't link to actionpages and plugins starting with
                 // an _ from page list
-                if ( !preg_match("/^_/", $pname)
-                     //&& !(@$request->isActionPage($pname)) //FIXME?
+                if (!preg_match("/^_/", $pname)
+                    //&& !(@$request->isActionPage($pname)) //FIXME?
                     ) {
-                        // $plink = WikiLink($ppname, 'unknown');
-                        global $Theme;
-                        $plink = $Theme->linkUnknownWikiWord($ppname);
-                    }
-                        else
-                            $plink = false;
+                    // $plink = WikiLink($ppname, 'unknown');
+                    global $Theme;
+                    $plink = $Theme->linkUnknownWikiWord($ppname);
+                }
+                else
+                    $plink = false;
             }
-            // insert any found locale-specific pages at the bottom of the td
+            // insert any found locale-specific pages at the bottom of
+            // the td
             if ($l1 || $l2) {
                 // really this should all just be put into a new <p>
                 $par = HTML::p();
                 //$plink->pushContent(HTML::br());
                 //$plink->pushContent(HTML::br());
-				if ($l1) {
-                    // Don't offer to create a link to a non-wikiword localized plugin page
-                    // but show those that already exist (Calendar, Comment, etc.)
-                    // (Non non-wikiword plugins are okay, they just can't become actionPages.)
-		            if (preg_match("/^$WikiNameRegexp\$/", $l1) || $dbi->isWikiPage($l1)) {
-						$par->pushContent(WikiLink($l1, 'auto'));
-                    } else {
+                if ($l1) {
+                    // Don't offer to create a link to a non-wikiword
+                    // localized plugin page but show those that
+                    // already exist (Calendar, Comment, etc.)  (Non
+                    // non-wikiword plugins are okay, they just can't
+                    // become actionPages.)
+                    if (preg_match("/^$WikiNameRegexp\$/", $l1) || $dbi->isWikiPage($l1)) {
+                        $par->pushContent(WikiLink($l1, 'auto'));
+                    }
+                    else {
                         // probably incorrectly translated, so no page link
-						$par->pushContent($l1, ' ' . _("(Not a WikiWord)"));
+                        $par->pushContent($l1, ' ' . _("(Not a WikiWord)"));
                     }
                 }
                 if ($l1 && $l2)
                     $par->pushContent(HTML::br());
-				if ($l2) {
-		            if (preg_match("/^$WikiNameRegexp\$/", $l2) || $dbi->isWikiPage($l2)) {
-						$par->pushContent(WikiLink($l2, 'auto'));
-                    } else {
+                if ($l2) {
+                    if (preg_match("/^$WikiNameRegexp\$/", $l2) || $dbi->isWikiPage($l2)) {
+                        $par->pushContent(WikiLink($l2, 'auto'));
+                    }
+                    else {
                         // probably incorrectly translated, so no page link
-						$par->pushContent($l2, ' ' . _("(Not a WikiWord)"));
+                        $par->pushContent($l2, ' ' . _("(Not a WikiWord)"));
                     }
                 }
-
                 $plink->pushContent($par);
             }
 
@@ -232,6 +238,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2003/11/19 00:02:42  carstenklapp
+// Include found locale-specific pages for the current (non-English)
+// locale.
+//
 // Revision 1.8  2003/11/15 21:53:53  wainstead
 // Minor change: list plugins in asciibetical order. It'd be better if
 // they were alphabetical.
@@ -241,7 +251,8 @@ extends WikiPlugin
 // (Also typo/bugfix in SystemInfo plugin.)
 //
 // Revision 1.6  2003/02/24 00:56:53  carstenklapp
-// Updated to work with recent changes to WikiLink function (fix "==Object(wikipagename)==" for unknown wiki links).
+// Updated to work with recent changes to WikiLink function (fix
+// "==Object(wikipagename)==" for unknown wiki links).
 //
 // Revision 1.5  2003/02/22 20:49:56  dairiki
 // Fixes for "Call-time pass by reference has been deprecated" errors.
