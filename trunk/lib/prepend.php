@@ -5,7 +5,7 @@
  */
 $RCS_IDS = '';
 function rcs_id ($id) { $GLOBALS['RCS_IDS'] .= "$id\n"; }
-rcs_id('$Id: prepend.php,v 1.6 2001-12-21 00:50:51 rurban Exp $');
+rcs_id('$Id: prepend.php,v 1.7 2001-12-28 09:46:00 carstenklapp Exp $');
 
 error_reporting(E_ALL);
 require_once('lib/ErrorManager.php');
@@ -28,7 +28,7 @@ function ExitWiki($errormsg = false)
     $ErrorManager->flushPostponedErrors();
    
     if(!empty($errormsg)) {
-        print "<p /><hr /><h2>" . gettext("WikiFatalError") . "</h2>\n";
+        print "<p /><hr /><h2>" . _("WikiFatalError") . "</h2>\n";
         
         if (is_string($errormsg))
             print $errormsg;
