@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.58 2004-02-24 15:20:05 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.59 2004-02-26 04:23:19 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -422,7 +422,7 @@ class PageList {
 
         if ($exclude) {
             if (!is_array($exclude))
-                $exclude = explode(',', $exclude);
+                $exclude = $this->explodePageList($exclude);
             $this->_excluded_pages = $exclude;
         }
 
@@ -606,7 +606,7 @@ class PageList {
             }
             return explodeList($input, $allPages);
         } else {
-            //TODO: do the sorting
+            //TODO: do the sorting, normally not needed if used for exclude only
             return explode(',',$input);
         }
     }
