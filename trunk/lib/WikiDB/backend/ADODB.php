@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.11 2004-01-25 08:00:45 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.12 2004-01-25 08:17:29 rurban Exp $');
 
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
@@ -500,7 +500,7 @@ extends WikiDB_backend
         return new WikiDB_backend_ADODB_iter($this, $result);
     }
 
-    function get_all_pages($include_deleted,$orderby) {
+    function get_all_pages($include_deleted=false,$orderby='pagename') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
 

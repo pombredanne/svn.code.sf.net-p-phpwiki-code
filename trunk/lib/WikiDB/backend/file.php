@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: file.php,v 1.4 2003-02-24 01:53:28 dairiki Exp $');
+rcs_id('$Id: file.php,v 1.5 2004-01-25 08:17:29 rurban Exp $');
 
 /**
  Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
@@ -532,7 +532,7 @@ extends WikiDB_backend
      *
      * @return object A WikiDB_backend_iterator.
      */
-    function get_all_pages($include_deleted) {
+    function get_all_pages($include_deleted=false, $orderby='pagename') {
         $this->_loadLatestVersions();
         $a = array_keys($this->_latest_versions);
 
@@ -586,7 +586,7 @@ extends WikiDB_backend
         // It is expected that most backends will overload
         // method with something more efficient.
         include_once('lib/WikiDB/backend/dumb/MostPopularIter.php');
-        $pages = $this->get_all_pages(false);
+        $pages = $this->get_all_pages(false,'hits DESC');
         
         return new WikiDB_backend_dumb_MostPopularIter($this, $pages, $limit);
     }
@@ -607,7 +607,7 @@ extends WikiDB_backend
         // It is expected that most backends will overload
         // method with something more efficient.
         include_once('lib/WikiDB/backend/dumb/MostRecentIter.php');
-        $pages = $this->get_all_pages(true);
+        $pages = $this->get_all_pages(true,'mtime DESC');
         return new WikiDB_backend_dumb_MostRecentIter($this, $pages, $params);
     }
 
@@ -748,6 +748,9 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2003/02/24 01:53:28  dairiki
+// Bug fix.  Don't need to urldecode pagenames in WikiDB_backend_file_iter.
+//
 // Revision 1.3  2003/01/04 03:41:51  wainstead
 // Added copyleft flowerboxes
 //

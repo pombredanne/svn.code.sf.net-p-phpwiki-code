@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostRecentIter.php,v 1.4 2003-02-23 19:55:21 dairiki Exp $');
+rcs_id('$Id: MostRecentIter.php,v 1.5 2004-01-25 08:17:30 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -18,8 +18,8 @@ extends WikiDB_backend_iterator
         if ($exclude_major_revisions)
             $include_minor_revisions = true;
 
-		$reverse = $limit < 0;
-		if($reverse){$limit = -$limit;}
+        $reverse = $limit < 0;
+        if($reverse){$limit = -$limit;}
         $this->_revisions = array();
         while ($page = $pages->next()) {
             $revs = $backend->get_all_revisions($page['pagename']);
@@ -34,7 +34,7 @@ extends WikiDB_backend_iterator
                     if ($exclude_major_revisions)
                         continue;
                 }
-				if (!empty($since) && $vdata['mtime'] < $since)
+                if (!empty($since) && $vdata['mtime'] < $since)
                     break;
 
                 $this->_revisions[] = $revision;
@@ -44,9 +44,9 @@ extends WikiDB_backend_iterator
             }
             $revs->free();
         }
-        if($reverse){
-    		usort($this->_revisions, 'WikiDB_backend_dumb_MostRecentIter_sortf_rev');
-		}
+        if ($reverse){
+            usort($this->_revisions, 'WikiDB_backend_dumb_MostRecentIter_sortf_rev');
+        }
         else usort($this->_revisions, 'WikiDB_backend_dumb_MostRecentIter_sortf');
         if (!empty($limit) && $limit < count($this->_revisions))
             array_splice($this->_revisions, $limit);

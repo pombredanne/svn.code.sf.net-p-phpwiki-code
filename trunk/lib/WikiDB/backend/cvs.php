@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: cvs.php,v 1.12 2003-12-07 19:27:53 carstenklapp Exp $');
+rcs_id('$Id: cvs.php,v 1.13 2004-01-25 08:17:29 rurban Exp $');
 /**
  * Backend for handling CVS repository. 
  *
@@ -380,10 +380,10 @@ extends WikiDB_backend
         return new WikiDB_backend_dumb_AllRevisionsIter($this, $pagename);
     }
 
-    function get_all_pages($include_defaulted) 
+    function get_all_pages($include_defaulted=false, $orderby='pagename') 
     {
         // FIXME: this ignores the include_defaulted parameter.
-        return new Cvs_Backend_Array_Iterator( 
+        return new Cvs_Backend_Array_Iterator(
                               $this->_getAllFileNamesInDir( $this->_docDir ));
     }
 
