@@ -1,19 +1,12 @@
-VariousBrowsers have trouble with the tab character used in the TextFormatierungsRegeln.  If you can't type a tab, or, if you are fixing up a page written by someone who didn't type tabs, then you should have us convert spans of spaces to tabs for you.  You request space to tab conversion with the checkbox that appears near the bottom of EditText and EditCopy pages.  It looks something like this...
+MancheWebbrowser haben Probleme mit dem Tabulator, der in den TextFormatierungsRegeln verwendet wird. Falls du keinen Tab eingeben kannst oder eine Seite bearbeitest, die jemand geschrieben hat, der keine Tabs verwendet hat, kann das Wiki-System Folgen von Leerzeichen für dich in Tabs umwandeln.
 
- [[o] I can't type tabs.  Please KonvertiereLeerzeichenZuTabs for me when I save.
+Du aktivierst die Umwandlung, indem du das Kontrollfeld unten auf der Seite EditiereText markierst. Das Kontrollfeld sieht etwa so aus:
 
-A span of spaces must be at least '''three''' spaces long to be recognized 
-as a tab.  Use multiples of '''eight''' spaces to make multiple tabs. 
-Each span of eight spaces will convert to one tab.  If the  
-last span comes up a little short, that's ok, as long as  
-there are at least three spaces in the last (only) span.
+ [[o] Ich kann keine Tabulatoren verwenden. Bitte für mich, wenn ich speichere.
 
-'''Check your work.'''  This sort of heuristic can lead to  
-unexpected results. 
+Eine Folge von Leerzeichen muß mindestens '''drei''' Leerzeichen lang sein, um als Tab erkannt zu werden. Verwende Vielfache von '''acht''' Leerzeichen, um mehrere Tabs einzugeben. Jeweils acht Leerzeichen werden in einen Tab umgewandelt. Die letzte Folge darf auch etwas kürzer sein, so lange mindestens drei Leerzeichen in der letzten (oder einzigen) Folge sind.
+
+'''Bitte überprüfe die so erstellten Seiten!''' Diese Art der Tabulatorerkennung kann manchmal zu unerwarteten Ergebnissen führen.
+ 
 -----
-[Maintenance note:  This page is seen when the user clicks on the 
-"KonvertiereLeerzeichenZuTabs" link on any edit screen.  It describes what happens  
-when you ask the system to do this, why you would want it to, and ways to 
-avoid the spaces-instead-of-tabs problem.]
-
-
+[Hinweis zu dieser Seite: diese Seite wird angezeigt, wenn der Benutzer den Link "Konvertiere LeerzeichenZuTabs" auf irgendeiner Bearbeiten-Seite anzeigt. Sie erklärt, was diese Funktion bewirkt, warum man sie verwendet, und Möglichkeiten zum Vermeiden des Problems der Leerzeichen statt Tabs.]

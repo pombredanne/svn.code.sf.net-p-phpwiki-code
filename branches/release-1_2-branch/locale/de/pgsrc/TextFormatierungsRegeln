@@ -1,64 +1,67 @@
-'''Paragraphs'''
+! Tip
 
-* Don't indent paragraphs
-* Words wrap and fill as needed
-* Use blank lines as separators
-* Four or more minus signs make a horizontal rule
-* %%''''% makes a linebreak (in headings and lists too)
+Schau dir am besten auch den "Quelltext" dieser Seite an, indem du unten auf den Link zum Editieren klickst. Dann verstehst du die Beispiele besser.
 
+! Absätze
 
-'''Lists'''
-
-* asterick for first level
-** asterick-asterick for second level, etc.
-* Use * for bullet lists, # for numbered lists (mix at will)
-* tab-Term:-tab Definition for definition lists
-* One line for each item
-* Other leading whitespace signals preformatted text, changes font.
-
-'''Headings'''
-
-* '!' at the start of a line makes a small heading
-* '!!' at the start of a line makes a medium heading 
-* '!!!' at the start of a line makes a large heading
-
-'''Fonts'''
-* Indent with one or more spaces to use a monospace font:
-
- This is in monospace
-This is not
-
-'''Indented Paragraphs'''
-''(Quotes)''
-
-* tab-space-:-tab -- often used (with emphasis) for quotations.
+* Rücke Absätze nicht ein
+* Zeilenumbrüche werden automatisch erstellt
+* Absätze werden durch Leerzeilen getrennt
+* Vier oder mehr Minuszeichen am Zeilenanfang erzeugen eine horizontale Linie
+* %%''''% erstellt einen Zeilenumbruch (auch in Überschriften und Listen)
 
 
-'''Emphasis'''
+! Listen
 
-* Use doubled single-quotes ('') for emphasis (usually italics)
-* Use doubled underscores (__) for strong emphasis (usually bold)
-* Mix them at will: ''__bold italics__''
-* ''Emphasis'' can be used ''multiple'' times within a line, but ''cannot'' cross line boundaries:
+* Ein Sternchen für die erste Ebene
+** Sternchen-Sternchen für die zweite Ebene, usw.
+* Verwende * für Aufzählungslisten, # für numerierte Listen (auch durcheinander)
+* Eine Zeile für jeden Listenpunkt
+* Tab-Begriff:-Tab erstellt eine Definition für glossarähnliche Listen
+* Andere Leerzeichen als Tab am Zeilenanfang erstellen vorformatierten Text mit einer anderen Schriftart
 
-''this
-will not work''
+! Überschriften
 
-'''References'''
-* Hyperlinks to other pages within the Wiki are made by placing the page name in square brackets: [this is a page link] or UsingWikiWords (preferred)
-* Hyperlinks to external pages are done like this: [http://www.wcsb.org/]
-* You can name the links to the external pages by providing a name, a bar (|) and then the hyperlink: [Steve's home page | http://wcsb.org/~swain/]  
-* You can suppress linking to old-style references by preceeding the word with a '!', e.g. !NotLinkedAsWikiName
-* [1], [2], [3], [4] refer to remote references. Click EditLinks on the edit form to enter URLs. These differ from the newer linking scheme; references are unique to a page.
-* Also, the old way of linking URL's is still supported: precede URLs with "http:", "ftp:" or "mailto:" to create links automatically as in: http://c2.com/
-* URLs ending with .png, or .jpg are inlined if in square brackets, by themselves: [http://phpwiki.sourceforge.net/phpwiki/png.png]
+* '!' am Zeilenanfang erstellt eine kleine Überschrift
+* '!!' eine mittlere
+* '!!!' eine große
 
+! Schriftart
+* Um eine Schriftart mit gleichen Zeichenabständen (schreibmaschinenähnlich, zum Beispiel für Quelltexte) zu erhalten, füge am Anfang der Zeile ein oder mehr Leerzeichen ein.
 
-'''HTML Mark-Up Language'''
+ Hier haben alle Zeichen den gleichen Abstand
+Und hier nicht.
 
-* Don't bother
-* < and > are themselves
-* The & characters will not work
-* If you really must use HTML, your system administrator can enable this feature. Start each line with a bar (|). Note that this feature is disabled by default.
+! Eingerückte Absätze
+
+* Mit einem Semikolon und einem Doppelpunkt (;:) am Zeilenanfang erstellst du einen eingerückten Absatz.
+
+;: Dieser Absatz ist eingerückt. Verwende diese Funktion zum Beispiel (zusammen mit ''Betonung'' zum zitieren von Texten).
 
 
+! Hervorhebung
+
+* Verwende zwei einfache Anführungszeichen für ''Betonung'' (wird normalerweise kursiv dargestellt)
+* Verwende doppelte Unterstriche für __starke Betonung__ (wird normalerweise fett dargestellt)
+* Du kannst sie auch zusammen verwenden: ''__fett & kursiv__''
+* ''Betonungen'' können ''mehrfach'' in einer Zeile verwendet werden, aber sie können ''nicht'' über das Zeilenende hinausgehen:
+
+''So etwas
+funktioniert nicht''
+
+! Querverweise
+* Hyperlinks zu anderen Seiten im Wiki werden erstellt, indem man den Namen in eckige Klammern einschließt [das ist ein Link] oder besser WikiWörterVerwendet.
+* Hyperlinks zu externen Seiten werden so erstellt: [http://www.wcsb.org/]
+* Du kannst Links zu externen Seiten einen Namen geben, indem du in der eckigen Klammer erst den Namen und dann, getrennt durch einen senkrechten Strich (|), die Adresse angibst: [Steve's Homepage | http://wcsb.org/~swain/]
+* Du kannst das Erstellen eines Links verhindern, indem du vor das Wort ein Ausrufungszeichen setzt, zum Beispiel !DasIstKeinLink.
+* [1], [2], [3], [4] beziehen sich auf externe Verweise. Klicke auf !EditiereVerweise auf der Bearebiten-Seite, um die Adressen einzugeben.
+* Wenn du im Text Adressen eingibst, die mit "http:", "ftp:" oder "mailto:" beginnen, werden diese auch automatisch in Links umgewandelt, zum Beispiel http://c2.com/
+* Adressen, die mit .png oder .jpg enden (d.h. Bilder) werden in die Seite eingefügt, wenn sie in eckige Klammern gesetzt werden. HIER EIN BEISPIEL EINFÜGEN!!!
+
+
+! HTML-Formatierungen
+
+* Du benötigst keine HTML-Formatierungen
+* < und > erscheinen einfach so im Text
+* Sonderzeichen mit & funktionieren nicht
+* Wenn du wirklich HTML verwenden ''mußt'', kann dein Systemverwalter diese Funktion aktivieren. Du mußt dann jede Zeile mit einem senkrechten Strich (|) beginnen. Normalerweise ist diese Funktion aber deaktiviert.
