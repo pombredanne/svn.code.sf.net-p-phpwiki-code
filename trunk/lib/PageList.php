@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.106 2004-09-06 10:22:14 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.107 2004-09-14 10:29:08 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -32,7 +32,7 @@
  * 'acl'      _("ACL")
  * 'renamed_pagename'   _("Rename to")
  * 'ratingwidget', ... wikilens theme specific.
- * 'custom'   See plugin/WikiTranslation
+ * 'custom'   See plugin/_WikiTranslation
  *
  * Symbolic 'info=' arguments:
  * 'all'       All columns except the special columns
@@ -635,7 +635,13 @@ class PageList {
     }
 
     function addPage($page_handle) {
-        $this->_pages[] = new _PageList_Page($this, $page_handle);
+    	if (!empty($this->_excluded_pages)) {
+            if (!in_array((is_string($page_handle) ? $page_handle : $page_handle->getName()),
+                          $this->_excluded_pages))
+                $this->_pages[] = new _PageList_Page($this, $page_handle);
+        } else {
+            $this->_pages[] = new _PageList_Page($this, $page_handle);        
+        }
     }
 
     function _getPageFromHandle($ph) {
@@ -1360,6 +1366,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.106  2004/09/06 10:22:14  rurban
+// oops, forgot global request
+//
 // Revision 1.105  2004/09/06 08:38:30  rurban
 // modularize paging helper (for SqlResult)
 //
