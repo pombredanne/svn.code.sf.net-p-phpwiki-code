@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.3 2001-10-29 20:43:18 dairiki Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.4 2001-12-13 08:22:47 carstenklapp Exp $');
 
 // FIXME: make this work with non-unix (e.g. DOS) filenames.
 
@@ -186,7 +186,8 @@ class PearFileFinder
                                 '/usr/local/share/php4',
                                 '/usr/local/share/php',
                                 '/usr/local/lib/php4',
-                                '/usr/local/lib/php'));
+                                '/usr/local/lib/php',
+                                '/System/Library/PHP'));
     }
 }
 

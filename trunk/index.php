@@ -28,6 +28,10 @@
 //   Mac OS X:
 //     /System/Library/PHP
 //
+// The above examples are already included by PhpWiki.
+// You shouldn't have to change this unless you see a WikiFatalError:
+//   lib/FileFinder.php:82: Fatal[256]: DB.php: file not found
+//
 //ini_set('include_path', '.:/where/you/installed/phpwiki');
 
 /////////////////////////////////////////////////////////////////////
@@ -35,7 +39,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.0-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.39 2001-12-11 22:41:38 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.40 2001-12-13 08:22:43 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
