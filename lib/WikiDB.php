@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.65 2004-06-04 20:32:53 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.66 2004-06-07 18:57:27 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -385,21 +385,20 @@ class WikiDB {
         if (method_exists($this->_backend,'rename_page')) {
             $oldpage = $this->getPage($from);
             $newpage = $this->getPage($to);
+            //update all WikiLinks in existing pages
+            if ($updateWikiLinks) {
+                require_once('lib/plugin/WikiAdminSearchReplace.php');
+                $links = $oldpage->getBackLinks();
+                while ($linked_page = $links->next()) {
+                    WikiPlugin_WikiAdminSearchReplace::replaceHelper($this,$linked_page->getName(),$from,$to);
+                }
+                $links = $newpage->getBackLinks();
+                while ($linked_page = $links->next()) {
+                    WikiPlugin_WikiAdminSearchReplace::replaceHelper($this,$linked_page->getName(),$from,$to);
+                }
+            }
             if ($oldpage->exists() and ! $newpage->exists()) {
                 if ($result = $this->_backend->rename_page($from, $to)) {
-                    //update all WikiLinks in existing pages
-                    if ($updateWikiLinks) {
-                        //trigger_error(_("WikiDB::renamePage(..,..,updateWikiLinks) not yet implemented"),E_USER_WARNING);
-                        require_once('lib/plugin/WikiAdminSearchReplace.php');
-                        $links = $oldpage->getLinks();
-                        while ($linked_page = $links->next()) {
-                            WikiPlugin_WikiAdminSearchReplace::replaceHelper($this,$linked_page->getName(),$from,$to);
-                        }
-                        $links = $newpage->getLinks();
-                        while ($linked_page = $links->next()) {
-                            WikiPlugin_WikiAdminSearchReplace::replaceHelper($this,$linked_page->getName(),$from,$to);
-                        }
-                    }
                     //create a RecentChanges entry with explaining summary
                     $page = $this->getPage($to);
                     $current = $page->getCurrentRevision();
@@ -1838,6 +1837,11 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.65  2004/06/04 20:32:53  rurban
+// Several locale related improvements suggested by Pierrick Meignen
+// LDAP fix by John Cole
+// reanable admin check without ENABLE_PAGEPERM in the admin plugins
+//
 // Revision 1.64  2004/06/04 16:50:00  rurban
 // add random quotes to empty pages
 //

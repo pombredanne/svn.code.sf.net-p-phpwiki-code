@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRename.php,v 1.15 2004-06-04 20:32:54 rurban Exp $');
+rcs_id('$Id: WikiAdminRename.php,v 1.16 2004-06-07 18:57:31 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -48,7 +48,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.15 $");
+                            "\$Revision: 1.16 $");
     }
 
     function getDefaultArguments() {
@@ -74,6 +74,23 @@ extends WikiPlugin_WikiAdminSelect
         $ul = HTML::ul();
         $count = 0;
         foreach ($pages as $name) {
+            if ($updatelinks) {
+                $oldpage = $dbi->getPage($from);
+                require_once('lib/plugin/WikiAdminSearchReplace.php');
+                //$newpage = $dbi->getPage($to);
+                $links = $oldpage->getBackLinks();
+                while ($linked_page = $links->next()) {
+                    if (WikiPlugin_WikiAdminSearchReplace::replaceHelper($dbi,$linked_page->getName(),$from,$to))
+                        $ul->pushContent(HTML::li(fmt("Replaced link in %s.",
+                                                      WikiLink($linked_page->getName()))));
+                }
+                $links = $oldpage->getPageLinks();
+                while ($linked_page = $links->next()) {
+                    WikiPlugin_WikiAdminSearchReplace::replaceHelper($dbi,$linked_page->getName(),$from,$to);
+                    $ul->pushContent(HTML::li(fmt("Replaced link in %s.",
+                                                  WikiLink($linked_page->getName()))));
+                }
+            }
             if ( ($newname = $this->renameHelper($name, $from, $to)) and 
                  $newname != $name ) {
                 if ($dbi->isWikiPage($newname))
@@ -135,7 +152,7 @@ extends WikiPlugin_WikiAdminSelect
             if ($post_args['action'] == 'verify') {
                 // Real action
                 return $this->renamePages($dbi, $request, array_keys($p), 
-                                          $post_args['from'], $post_args['to'], 
+                                          trim($post_args['from']), trim($post_args['to']), 
                                           !empty($post_args['updatelinks']));
             }
             if ($post_args['action'] == 'select') {
@@ -196,22 +213,22 @@ extends WikiPlugin_WikiAdminSelect
     function renameForm(&$header, $post_args) {
         $header->pushContent(_("Rename")." "._("from").': ');
         $header->pushContent(HTML::input(array('name' => 'admin_rename[from]',
-                                               'value' => $post_args['from'])));
+                                               'value' => trim($post_args['from']))));
         $header->pushContent(' '._("to").': ');
         $header->pushContent(HTML::input(array('name' => 'admin_rename[to]',
-                                               'value' => $post_args['to'])));
+                                               'value' => trim($post_args['to']))));
         $header->pushContent(' '._("(no regex, case-sensitive)"));
-        if (DEBUG) { // not yet tested
-            $header->pushContent(HTML::br());
-            $header->pushContent(_("Change pagename in all linked pages also?"));
-            $header->pushContent(HTML::em(_("(Currently not working)")));
-            $checkbox = HTML::input(array('type' => 'checkbox',
+        //if (DEBUG) { // not yet tested
+        $header->pushContent(HTML::br());
+        $checkbox = HTML::input(array('type' => 'checkbox',
                                           'name' => 'admin_rename[updatelinks]',
                                           'value' => 1));
-            if (!empty($post_args['updatelinks']))
-                $checkbox->setAttr('checked','checked');
-            $header->pushContent($checkbox);
-        }
+        if (!empty($post_args['updatelinks']))
+            $checkbox->setAttr('checked','checked');
+        $header->pushContent($checkbox);
+        $header->pushContent(_("Change pagename in all linked pages also?"));
+        //$header->pushContent(HTML::em(_("(Currently not working)")));
+        //}
         $header->pushContent(HTML::p());
         return $header;
     }
@@ -235,6 +252,11 @@ class _PageList_Column_renamed_pagename extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2004/06/04 20:32:54  rurban
+// Several locale related improvements suggested by Pierrick Meignen
+// LDAP fix by John Cole
+// reanable admin check without ENABLE_PAGEPERM in the admin plugins
+//
 // Revision 1.14  2004/06/03 22:24:48  rurban
 // reenable admin check on !ENABLE_PAGEPERM, honor s=Wildcard arg, fix warning after Remove
 //
