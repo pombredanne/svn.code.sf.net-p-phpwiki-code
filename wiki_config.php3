@@ -2,7 +2,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: wiki_config.php3,v 1.24 2000-09-04 05:50:40 wainstead Exp $');
+   rcs_id('$Id: wiki_config.php3,v 1.25 2000-09-23 14:34:22 ahollosi Exp $');
 
    /*
       Constants and settings. Edit the values below for
@@ -181,5 +181,9 @@
    // the MostPopular pages; i.e. setting this to 20 will show
    // the 20 most popular pages
    define("MOST_POPULAR_LIST_LENGTH", 20);
+
+   // this defines how many page names to list when displaying
+   // scored related pages
+   define("NUM_RELATED_PAGES", 5);
 
 ?>
