@@ -1,16 +1,21 @@
 <?php
-   // essential internal stuff -- skip it
+
+   // essential internal stuff -- skip it. Go down to Part One. There
+   // are four parts to this file that interest you, all labeled Part
+   // One, Two, Three and Four.
+
    set_magic_quotes_runtime(0);
    error_reporting(E_ALL ^ E_NOTICE);
 
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.19 2001-01-04 18:32:43 ahollosi Exp $');
+   rcs_id('$Id: config.php,v 1.20 2001-01-19 22:20:30 wainstead Exp $');
    // end essential internal stuff
 
 
    /////////////////////////////////////////////////////////////////////
+   // Part One:
    // Constants and settings. Edit the values below for your site.
    /////////////////////////////////////////////////////////////////////
 
@@ -28,13 +33,17 @@
    $LANG="C";
 
    /////////////////////////////////////////////////////////////////////
+   // Part Two:
    // Database section
-   // set your database here and edit the according section below
-   $WhichDatabase = 'dbm'; // use one of "dbm", "mysql", "pgsql", "msql",
-			   // or "file"
+   // set your database here and edit the according section below.
+   // For PHP 4.0.4 and later you must use "dba" if you are using 
+   // DBM files for storage. "dbm" uses the older deprecated interface.
+
+   $WhichDatabase = 'dbm'; // use one of "dbm", "dba", "mysql",
+                           // "pgsql", "msql", or "file"
    
-   // DBM settings (default)
-   if ($WhichDatabase == 'dbm') {
+   // DBM (default) and DBA settings
+   if ($WhichDatabase == 'dbm' or 'dba') {
       $DBMdir = "/tmp";
       $WikiPageStore = "wiki";
       $ArchivePageStore = "archive";
@@ -45,7 +54,11 @@
       $WikiDB['hitcount']  = "$DBMdir/wikihitcountdb";
       // try this many times if the dbm is unavailable
       define("MAX_DBM_ATTEMPTS", 20);
-      include "lib/dbmlib.php";
+      if ($WhichDatabase == 'dbm') {
+          include "lib/dbmlib.php";
+      } else {
+          include "lib/dbalib.php";
+      }
 
    // MySQL settings -- see INSTALL.mysql for details on using MySQL
    } elseif ($WhichDatabase == 'mysql') {
@@ -101,7 +114,9 @@
 
 
    /////////////////////////////////////////////////////////////////////
-   // Miscellanious
+   // Part Three:
+   // Miscellaneous
+   /////////////////////////////////////////////////////////////////////
 
    // logo image (path relative to index.php)
    $logo = "images/wikibase.png";
@@ -137,7 +152,9 @@
 
 
    /////////////////////////////////////////////////////////////////////
+   // Part Four:
    // Original pages and layout
+   /////////////////////////////////////////////////////////////////////
 
    // need to define localization function first -- skip this
    if (!function_exists ('gettext')) {
