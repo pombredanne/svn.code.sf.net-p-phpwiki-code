@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.20 2004-03-12 10:47:30 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.21 2004-03-12 11:18:24 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -148,16 +148,18 @@ class WikiGroup{
      * @return boolean True if user is a member, else false (always false).
      */ 
     function isMember($group){
+        if (isset($this->membership[$group]))
+            return $this->membership[$group];
     	if ($this->specialGroup($group)) {
             $request = &$this->request;
             $user = $request->getUser();
             switch ($group) {
-            case GROUP_EVERY: 		return true;
-            case GROUP_ANONYMOUS: 	return ! $user->isSignedIn();
-            case GROUP_BOGOUSERS: 	return isa($user,'_BogoUser');
-            case GROUP_SIGNED:    	return $user->isSignedIn();
-            case GROUP_AUTHENTICATED: 	return $user->isAuthenticated();
-            case GROUP_ADMIN:		return $user->isAdmin();
+            case GROUP_EVERY: 		return $this->membership[$group] = true;
+            case GROUP_ANONYMOUS: 	return $this->membership[$group] = ! $user->isSignedIn();
+            case GROUP_BOGOUSERS: 	return $this->membership[$group] = isa($user,'_BogoUser');
+            case GROUP_SIGNED:    	return $this->membership[$group] = $user->isSignedIn();
+            case GROUP_AUTHENTICATED: 	return $this->membership[$group] = $user->isAuthenticated();
+            case GROUP_ADMIN:		return $this->membership[$group] = $user->isAdmin();
             default:
                 trigger_error(__sprintf("Undefined method %s for special group %s",
                                         'isMember',$group),
@@ -622,9 +624,9 @@ class GroupDb_PearDB extends GroupDb {
         if ($db_result->numRows() > 0) {
             while (list($group) = $db_result->fetchRow()) {
                 $membership[] = $group;
+                $this->membership[$group] = true;
             }
         }
-        $this->membership = $membership;
         return $membership;
     }
 
@@ -707,12 +709,13 @@ class GroupDb_ADODB extends GroupDb {
         $rs = $dbh->Execute(sprintf($this->_user_groups,$dbh->qstr($this->username)));
         if (!$rs->EOF and $rs->numRows() > 0) {
             while (!$rs->EOF) {
-                $membership[] = reset($rs->fields);
+                $group = reset($rs->fields);
+                $membership[] = $group;
+                $this->membership[$group] = true;
                 $rs->MoveNext();
             }
         }
         $rs->Close();
-        $this->membership = $membership;
         return $membership;
     }
 
@@ -831,7 +834,6 @@ class GroupFile extends WikiGroup {
             }
           }
         }
-        $this->membership = $membership;
         return $membership;
     }
 
@@ -996,6 +998,9 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2004/03/12 10:47:30  rurban
+// fixed GroupDB for ADODB
+//
 // Revision 1.19  2004/03/11 16:27:30  rurban
 // fixed GroupFile::getMembersOf for special groups
 // added authenticated bind for GroupLdap (Windows AD) as in WikiUserNew
