@@ -1,19 +1,19 @@
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
-X-RCS_ID: $Id: LinkIcons,v 1.4 2002-01-13 02:59:01 carstenklapp Exp $
+X-RCS_ID: $Id: LinkIcons,v 1.5 2002-01-17 21:52:33 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=LinkIcons;
   flags="";
-  lastmodified=1010890417;
+  lastmodified=1011303721
 Content-Transfer-Encoding: binary
 
 LinkIcons are an optional new feature of PhpWiki. When activated, icons will be displayed in front of URLs to indicate the type of link.
 
-*[http://phpwiki.sourceforge.net/alpha/images/http.png] http link
-*[http://phpwiki.sourceforge.net/alpha/images/url.png] generic internet link
-*[http://phpwiki.sourceforge.net/alpha/images/interwiki.png] InterWiki link
-*[http://phpwiki.sourceforge.net/alpha/images/https.png] https link
-*[http://phpwiki.sourceforge.net/alpha/images/mailto.png] mailto link
-*[http://phpwiki.sourceforge.net/alpha/images/ftp.png] ftp link
+*[http://phpwiki.sourceforge.net/alpha/themes/default/images/http.png] http link
+*[http://phpwiki.sourceforge.net/alpha/themes/default/images/url.png] generic internet link
+*[http://phpwiki.sourceforge.net/alpha/themes/default/images/interwiki.png] InterWiki link
+*[http://phpwiki.sourceforge.net/alpha/themes/default/images/https.png] https link
+*[http://phpwiki.sourceforge.net/alpha/themes/default/images/mailto.png] mailto link
+*[http://phpwiki.sourceforge.net/alpha/themes/default/images/ftp.png] ftp link
 
 ;__Note__: Some of the default icons use the alpha channel feature of the [PNG|http://www.libpng.org/pub/png/png-sitemap.html] image format for smooth rendering on any page color or textured background. Older browsers may not display all the images properly.
 
