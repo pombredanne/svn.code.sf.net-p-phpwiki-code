@@ -1,0 +1,72 @@
+0. INSTALLATION
+
+PhpWiki requires PHP version 3.0.9 or greater, since it uses the 
+preg_*() family of functions.
+
+Untar/gzip this file into the directory where you want it to live.
+That's it. To improve efficiency, edit wiki_config.php3 and set the
+$ServerAddress by hand; this will save a regexp call on every invocation.
+
+bash$ gzip -d phpwiki-X.XX.tar.gz
+bash$ tar xvf phpwiki-X.XX.tar
+
+Let's say you own the web server http://www.foo.com/. You untar in the
+server's root directory; then you should be able to just go to your new
+Wiki:
+
+http://www.foo.com/wiki/index.php3
+
+If you configure your server to recognize index.php3 as the index of a
+directory, you can just do:
+
+http://www.foo.com/wiki/
+
+
+1. CONFIGURATION
+
+PhpWiki will create two DBM files in /tmp. One contains the pages of the
+live site and the other has the archived pages.
+
+If you don't want the DBM files to live in /tmp you must make sure the web
+server can read/write to it.  It's probably a bad idea to leave it in
+/tmp. (Again, edit wiki_config.php3). 
+
+For example, you create a subdirectory called "pages" in the wiki
+directory made when you untarred PhpWiki. Move the DBM files there, and do 
+
+bash$ chmod 666 wikidb wikiarchive
+
+so your web server can read/write the DBM files. Then you must do
+
+bash$ chmod 777 pages
+
+on the "pages" directory to make sure the server can also create/set 
+the lock file (PHP has a built in locking mechanism for DBM file access).
+
+The first time you run this Wiki it will load a set of basic pages from
+the pgsrc/ directory. These should be enough to get your Wiki started!
+
+
+2. ALLOWING EMBEDDED HTML
+
+PhpWiki ships with this featured disabled by default. According to CERT 
+(http://www.cert.org/advisories/CA-2000-02.html) malicious users can embed
+HTML in your pages that allow pure evil to happen. You can uncomment the 
+"elseif" in wiki_display.php3 to allow embedded HTML; but you should never
+do this if your Wiki is publically accessible.
+
+
+3. ETC
+
+Installing PHP is beyond the scope of this document :-)
+You should visit http://www.php.net/ if you don't have PHP.
+Note that I have the web server configured to allow index.php3
+as the root document of a directory.
+
+This web application was written under PHP version 3.0.12. I used
+a very generic installation, so hopefully you will have no problems.
+The development platform is a Redhat Linux 4.2 box.
+
+That should be all. Send patches, bugs etc. to swain@wcsb.org.
+
+FIN
