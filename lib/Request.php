@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.2 2001-09-19 02:58:00 dairiki Exp $');
+<?php rcs_id('$Id: Request.php,v 1.3 2001-11-17 16:39:08 dairiki Exp $');
 
 // FIXME: write log entry.
 
@@ -238,10 +238,26 @@ class Request_UploadedFile {
 
     function open() {
         if ( ($fd = fopen($this->_info['tmp_name'], "rb")) ) {
-            // Dump http headers.
-            while ( ($header = fgets($fd, 4096)) )
-                if (trim($header) == '')
-                    break;
+            if ($this->getSize() < filesize($this->_info['tmp_name'])) {
+                // FIXME: Some PHP's (or is it some browsers?) put
+                //    HTTP/MIME headers in the file body, some don't.
+                //
+                // At least, I think that's the case.  I know I used
+                // to need this code, now I don't.
+                //
+                // This code is more-or-less untested currently.
+                //
+                // Dump HTTP headers.
+                while ( ($header = fgets($fd, 4096)) ) {
+                    if (trim($header) == '') {
+                        break;
+                    }
+                    else if (!preg_match('/^content-(length|type):/i', $header)) {
+                        rewind($fd);
+                        break;
+                    }
+                }
+            }
         }
         return $fd;
     }
