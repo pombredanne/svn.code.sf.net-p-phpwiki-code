@@ -1,14 +1,11 @@
 Date: Sat, 15 Nov 2003 17:23:27 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.5pre)
+X-Rcs-Id: $Id: HelloWorldPlugin,v 1.2 2004-01-03 22:33:53 wainstead Exp $
 Content-Type: application/x-phpwiki;
   pagename=HelloWorldPlugin;
+  pgsrc_version="2 $Revision: 1.2 $";
   flags="";
-  author=test;
-  version=10;
-  lastmodified=1068935007;
-  author_id=test;
   markup=2;
-  hits=10;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
@@ -60,7 +57,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     // Establish default values for each of this plugin's arguments.
