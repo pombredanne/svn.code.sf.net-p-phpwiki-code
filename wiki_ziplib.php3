@@ -1,4 +1,4 @@
-<? rcs_id("$Id: wiki_ziplib.php3,v 1.2 2000-07-18 05:15:58 dairiki Exp $");
+<? rcs_id("$Id: wiki_ziplib.php3,v 1.3 2000-07-19 16:25:58 dairiki Exp $");
 
 function warn ($msg)
 {
@@ -453,6 +453,48 @@ function rfc1123date ($unix_time)
   return date("D, j M Y H:i:s", $unix_time) . $zone;
 }
 
+/**
+ * Routines for quoted-printable en/decoding.
+ */
+function QuotedPrintableEncode ($lines)
+{
+  $lines = preg_replace('/\r?\n/', '', $lines);
+  reset ($lines);
+  while (list($junk, $line) = each($lines))
+    {
+      // Quote special characters in line.
+      $quoted = "";
+      while ($line)
+	{
+	  preg_match('/^([ !-<>-~]*)(?:([!-<>-~]$)|(.))/s', $line, $match);
+	  $quoted .= $match[1] . $match[2];
+	  if ($match[3])
+	      $quoted .= sprintf("=%02X", ord($match[3]));
+	  $line = substr($line, strlen($match[0]));
+	}
+
+      // Split line.
+      $out .= preg_replace('/(?=.{77})(.{10,75}[ \t]|.{72,74}[^=][^=])/s',
+			   "\\1=\r\n", $quoted) . "\r\n";
+    }
+  return $out;
+}
+
+function QuotedPrintableDecode ($string)
+{
+  // Eliminate soft line-breaks.
+  $string = preg_replace('/=\s*\r?\n/', '', $string);
+  // Unquote quoted chars.
+  while (preg_match('/^(.*?)=([0-9a-fA-F]{2})/s', $string, $match))
+    {
+      $unquoted .= $match[1] . chr(hexdec($match[2]));
+      $string = substr($string, strlen($match[0]));
+    }
+  return preg_split('/\r?\n/',
+		    preg_replace('/\r?\n$/', '', $unquoted . $string));
+}
+
+
 define('MIME_TOKEN_REGEXP', "[-!#-'*+.0-9A-Z^-~]+");
 
 function MimeContentTypeHeader ($type, $subtype, $params)
@@ -461,6 +503,7 @@ function MimeContentTypeHeader ($type, $subtype, $params)
   reset($params);
   while (list($key, $val) = each($params))
     {
+      //FIXME:  what about non-ascii printables in $val?
       if (!preg_match('/^' . MIME_TOKEN_REGEXP . '$/', $val))
 	  $val = '"' . addslashes($val) . '"';
       $header .= ";\r\n  $key=$val";
@@ -470,30 +513,24 @@ function MimeContentTypeHeader ($type, $subtype, $params)
 
 function MimeMultipart ($parts) 
 {
-  $nparts = sizeof($parts);
-  
-  while (1)
-    {
-      $boundary = md5(uniqid($n++));
-      for ($i = 0; $i < $nparts; $i++)
-	  if (strstr($parts[$i], "\n--$boundary"))
-	      continue 2;
-      break;
-    }
+  global $mime_multipart_count;
+
+  // The string "=_" can not occur in quoted-printable encoded data.
+  $boundary = "=_multipart_boundary_" . ++$mime_multipart_count;
   
   $head = MimeContentTypeHeader('multipart', 'mixed',
 				array('boundary' => $boundary));
-  $head .= "Content-Transfer-Encoding: binary\r\n";
-  for ($i = 0; $i < $nparts; $i++)
-      $head .= "\r\n--$boundary\r\n" . $parts[$i];
-  return $head . "\r\n--${boundary}--\r\n";
+
+  $sep = "\r\n--$boundary\r\n";
+
+  return $head . $sep . implode($sep, $parts) . "\r\n--${boundary}--\r\n";
 }
   
 function MimeifyPage ($pagehash) {
   extract($pagehash);
 
-  $params = array('pagename' => $pagename,
-		  'author' => $author,
+  $params = array('pagename' => rawurlencode($pagename),
+		  'author' => rawurlencode($author),
 		  'version' => $version,
 		  'flags' =>"",
 		  'lastmodified' => $lastmodified,
@@ -503,13 +540,12 @@ function MimeifyPage ($pagehash) {
       $params['flags'] = 'PAGE_LOCKED';
   for ($i = 1; $i <= NUM_LINKS; $i++) 
       if ($ref = $refs[$i])
-	  $params["ref$i"] = $ref;
+	  $params["ref$i"] = rawurlencode($ref);
   
   $head = MimeContentTypeHeader('application', 'x-phpwiki', $params);
-  $head .= "Content-Transfer-Encoding: binary\r\n";
+  $head .= "Content-Transfer-Encoding: quoted-printable\r\n";
   
-  return "$head\r\n" . implode('',
-			       preg_replace("/[\r\n]+$/", "\r\n", $content));
+  return "$head\r\n" . QuotedPrintableEncode($content);
 }
 
 function MimeifyPages ($pagehashes)
@@ -637,8 +673,8 @@ function ParseMimeifiedPages ($data)
     }
 
   // FIXME: more sanity checking?
-  $pagehash = array('pagename' => $params['pagename'],
-		    'author' => $params['author'],
+  $pagehash = array('pagename' => rawurldecode($params['pagename']),
+		    'author' => rawurldecode($params['author']),
 		    'version' => $params['version'],
 		    'lastmodified' => $params['lastmodified'],
 		    'created' => $params['created']);
@@ -647,8 +683,17 @@ function ParseMimeifiedPages ($data)
       $pagehash['flags'] |= FLAG_PAGE_LOCKED;
   for ($i = 1; $i <= NUM_LINKS; $i++) 
       if ($ref = $params["ref$i"])
-	  $pagehash['refs'][$i] = $ref;
-  $pagehash['content'] = preg_split('/\r?\n/', $data);
+	  $pagehash['refs'][$i] = rawurldecode($ref);
+
+
+  $encoding = strtolower($headers['content-transfer-encoding']);
+  if (!$encoding || $encoding == 'binary')
+      $pagehash['content'] = preg_split('/\r?\n/', $data);
+  else if ($encoding == 'quoted-printable')
+      $pagehash['content'] = QuotedPrintableDecode($data);
+  else
+      die("Unknown encoding type: $enconding");
+  
 
   return array($pagehash);
 }

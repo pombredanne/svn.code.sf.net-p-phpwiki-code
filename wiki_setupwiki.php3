@@ -1,4 +1,4 @@
-<!-- $Id: wiki_setupwiki.php3,v 1.10 2000-07-18 05:15:58 dairiki Exp $ -->
+<!-- $Id: wiki_setupwiki.php3,v 1.11 2000-07-19 16:25:58 dairiki Exp $ -->
 <?
 require 'wiki_ziplib.php3';
 
@@ -25,9 +25,10 @@ function SavePage ($dbi, $page, $source)
       
 function LoadFile ($dbi, $filename, $text)
 {
+  set_time_limit(30);	// Reset watchdog.
   $now = time();
   $defaults = array('author' => 'The PhpWiki programming team',
-		    'pagename' => $filename,
+		    'pagename' => rawurldecode($filename),
 		    'created' => $now,
 		    'flags' => 0,
 		    'lastmodified' => $now,
@@ -38,9 +39,9 @@ function LoadFile ($dbi, $filename, $text)
     {
       // Can't parse MIME: assume plain text file.
       $page = $defaults;
-      $page['pagename'] = $filename;
-      $page['content'] = preg_split('/\r?\n/', preg_replace('/\r$/','',$text));
-
+      $page['pagename'] = rawurldecode($filename);
+      $page['content'] = preg_split('/\r?\n/',
+				    preg_replace('/\r?\n$/','',$text));
       SavePage($dbi, $page, "text file");
     }
   else
@@ -54,12 +55,12 @@ function LoadFile ($dbi, $filename, $text)
 	      if (!isset($page[$key]))
 		  $page[$key] = $val;
 
-	  if ($page['pagename'] != $filename)
+	  if ($page['pagename'] != rawurldecode($filename))
 	      printf("<b>Warning:</b> "
 		     . "pagename (%s) doesn't match filename (%s)"
 		     . " (using pagename)<br>\n",
 		     htmlspecialchars($page['pagename']),
-		     htmlspecialchars($filename));
+		     htmlspecialchars(rawurldecode($filename)));
 
 	  SavePage($dbi, $page, "MIME file");
 	}
