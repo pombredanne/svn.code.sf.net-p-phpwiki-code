@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-  rcs_id('$Id: actionbar.tmpl,v 1.2 2005-02-02 19:14:14 rurban Exp $');
+  rcs_id('$Id: actionbar.tmpl,v 1.3 2005-02-03 05:11:41 rurban Exp $');
 if ((!$page->get('locked') || $user->isAdmin()) and $revision)
     $EditB = Button("edit",
                     $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
@@ -27,18 +27,23 @@ if ((!$page->get('locked') || $user->isAdmin()) and $revision)
 <!--{{{ Search-->
 <div id="searchholder">
 <form id="searchform" name="searchform" action="<?= WikiURL(_("TitleSearch"))?>"
-      method="get" accept-charset="<?=CHARSET?>">
+      method="get" accept-charset="<?=$charset?>">
 <input type="text" id="livesearch" name="s" size="12" maxlength="256"
-   title="Search" value="Search" />
+   title="<?=_("TitleSearch")?>" value="<?=_("Search")?>"
+   onfocus="if (this.value == '<?=_("Search")?>') {this.value = '';}"
+   onmouseout="window.status=''; return true;" 
+   onmouseover="window.status='<?=_("Search")?>'; return true;"
+<?php if (defined("ENABLE_LIVESEARCH") and ENABLE_LIVESEARCH) { ?>
+   onKeypress="liveSearchStart()"
+   onblur="setTimeout('closeResults()',2000); if (this.value == '') {this.value = '<?=_("Search")?>';}" />
    <br/>
-   <!-- Insert LiveSearch or similar code here -->
    <div id="LSResult">
    </div>
-   <input type="hidden" name="auto_redirect" value="0" />
+<?php } else { echo " />"; } ?>
 </form>
 </div>
 <!--}}}-->
   </td>
 </tr>
 </table>
-<div id="pagetrail"><p><?=_("Page Trail")?>: <?plugin PageTrail ?></p></div>
+<div id="pagetrail"><p><?=_("Page Trail")?>: <?plugin PageTrail numberlinks=7 ?></p></div>
