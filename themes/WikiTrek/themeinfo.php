@@ -47,7 +47,7 @@
 $CSS_URL = "themes/$theme/WikiTrek.css";
 
 // logo image
-$logo = "themes/$theme/ufp-logo.png";
+$logo = "themes/$theme/Ufp-logo.png";
 
 // Signature image which is shown after saving an edited page
 // If this is left blank (or unset), the signature will be omitted.
