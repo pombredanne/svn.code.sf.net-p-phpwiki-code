@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.115 2004-07-01 08:51:22 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.116 2004-07-01 09:05:41 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -188,8 +188,23 @@ function MakeWikiZip (&$request)
     }
 
     $dbi = $request->getDbh();
-    $pages = $dbi->getAllPages();
+    $thispage = $request->getArg('pagename'); // for "Return to ..."
+    if ($exclude = $request->getArg('exclude')) {   // exclude which pagenames
+        $excludeList = explodePageList($exclude); 
+    } else {
+        $excludeList = array();
+    }
+    if ($whichpages = $request->getArg('pages')) {  // which pagenames
+        if ($whichpages == '[]') // current page
+            $whichpages = $thispage;
+        $pages = new WikiDB_Array_PageIterator(explodePageList($whichpages));
+    } else {
+        $pages = $dbi->getAllPages();
+    }
+    $request_args = $request->args;
+    
     while ($page = $pages->next()) {
+	$request->args = $request_args; // some plugins might change them (esp. on POST)
     	if (! $request->getArg('start_debug'))
             @set_time_limit(30); // Reset watchdog
 
@@ -197,9 +212,13 @@ function MakeWikiZip (&$request)
         if ($current->getVersion() == 0)
             continue;
 
-        $wpn = new WikiPageName($page->getName());
+        $pagename = $page->getName();
+        $wpn = new WikiPageName($pagename);
         if (!$wpn->isValid())
             continue;
+        if (in_array($page->getName(), $excludeList)) {
+            continue;
+        }
 
         $attrib = array('mtime'    => $current->get('mtime'),
                         'is_ascii' => 1);
@@ -211,7 +230,7 @@ function MakeWikiZip (&$request)
         else
             $content = MailifyPage($page);
 
-        $zip->addRegularFile( FilenameForPage($page->getName()),
+        $zip->addRegularFile( FilenameForPage($pagename),
                               $content, $attrib);
     }
     $zip->finish();
@@ -242,16 +261,38 @@ function DumpToDir (&$request)
     StartLoadDump($request, _("Dumping Pages"), $html);
 
     $dbi = $request->getDbh();
-    $pages = $dbi->getAllPages();
+    $thispage = $request->getArg('pagename'); // for "Return to ..."
+    if ($exclude = $request->getArg('exclude')) {   // exclude which pagenames
+        $excludeList = explodePageList($exclude); 
+    } else {
+        $excludeList = array();
+    }
+    if ($whichpages = $request->getArg('pages')) {  // which pagenames
+        if ($whichpages == '[]') // current page
+            $whichpages = $thispage;
+        $pages = new WikiDB_Array_PageIterator(explodePageList($whichpages));
+    } else {
+        $pages = $dbi->getAllPages();
+    }
 
+    $request_args = $request->args;
+    
     while ($page = $pages->next()) {
+	$request->args = $request_args; // some plugins might change them (esp. on POST)
     	if (! $request->getArg('start_debug'))
           @set_time_limit(30); // Reset watchdog.
 
-        $filename = FilenameForPage($page->getName());
+        $pagename = $page->getName();
+        PrintXML(HTML::br(), $pagename, ' ... ');
+        flush();
 
-        $msg = HTML(HTML::br(), $page->getName(), ' ... ');
-
+        if (in_array($pagename, $excludeList)) {
+            PrintXML(_("Skipped."));
+            flush();
+            continue;
+        }
+        $filename = FilenameForPage($pagename);
+        $msg = HTML();
         if($page->getName() != $filename) {
             $msg->pushContent(HTML::small(fmt("saved as %s", $filename)),
                               " ... ");
@@ -317,6 +358,8 @@ function DumpHtmlToDir (&$request)
     $dbi = $request->getDbh();
     if ($exclude = $request->getArg('exclude')) {   // exclude which pagenames
         $excludeList = explodePageList($exclude); 
+    } else {
+        $excludeList = array();
     }
     if ($whichpages = $request->getArg('pages')) {  // which pagenames
         if ($whichpages == '[]') // current page
@@ -349,7 +392,6 @@ function DumpHtmlToDir (&$request)
 
         $request->setArg('pagename', $pagename); // Template::_basepage fix
         $filename = FilenameForPage($pagename) . $WikiTheme->HTML_DUMP_SUFFIX;
-
         $msg = HTML();
 
         $revision = $page->getCurrentRevision();
@@ -451,7 +493,19 @@ function MakeWikiZipHtml (&$request)
     $zipname = "wikihtml.zip";
     $zip = new ZipWriter("Created by PhpWiki " . PHPWIKI_VERSION, $zipname);
     $dbi = $request->getDbh();
-    $pages = $dbi->getAllPages();
+    $thispage = $request->getArg('pagename'); // for "Return to ..."
+    if ($exclude = $request->getArg('exclude')) {   // exclude which pagenames
+        $excludeList = explodePageList($exclude); 
+    } else {
+        $excludeList = array();
+    }
+    if ($whichpages = $request->getArg('pages')) {  // which pagenames
+        if ($whichpages == '[]') // current page
+            $whichpages = $thispage;
+        $pages = new WikiDB_Array_PageIterator(explodePageList($whichpages));
+    } else {
+        $pages = $dbi->getAllPages();
+    }
 
     global $WikiTheme;
     if (defined('HTML_DUMP_SUFFIX'))
@@ -463,20 +517,26 @@ function MakeWikiZipHtml (&$request)
         $ErrorManager->pushErrorHandler(new WikiFunctionCb('_dump_error_handler'));
     }
 
+    $request_args = $request->args;
+    
     while ($page = $pages->next()) {
+	$request->args = $request_args; // some plugins might change them (esp. on POST)
     	if (! $request->getArg('start_debug'))
             @set_time_limit(30); // Reset watchdog.
 
         $current = $page->getCurrentRevision();
         if ($current->getVersion() == 0)
             continue;
+        $pagename = $page->getName();
+        if (in_array($pagename, $excludeList)) {
+            continue;
+        }
 
         $attrib = array('mtime'    => $current->get('mtime'),
                         'is_ascii' => 1);
         if ($page->get('locked'))
             $attrib['write_protected'] = 1;
 
-        $pagename = $page->getName();
         $request->setArg('pagename',$pagename); // Template::_basepage fix
         $filename = FilenameForPage($pagename) . $WikiTheme->HTML_DUMP_SUFFIX;
         $revision = $page->getCurrentRevision();
@@ -1069,6 +1129,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.115  2004/07/01 08:51:22  rurban
+ dumphtml: added exclude, print pagename before processing
+
  Revision 1.114  2004/06/28 12:51:41  rurban
  improved dumphtml and virgin setup
 
