@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSearchReplace.php,v 1.9 2004-04-07 23:13:19 rurban Exp $');
+rcs_id('$Id: WikiAdminSearchReplace.php,v 1.10 2004-06-03 22:24:48 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -45,11 +45,12 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
         return array(
+                     's' 	=> false,
                      /* Pages to exclude */
                      'exclude'  => '.',
                      /* Columns to include in listing */
@@ -119,9 +120,10 @@ extends WikiPlugin_WikiAdminSelect
             $exclude = explodePageList($args['exclude']);
         else
             $exclude = false;
-
+        $this->preSelectS(&$args, &$request);
 
         $p = $request->getArg('p');
+        if (!$p) $p = $this->_list;
         $post_args = $request->getArg('admin_replace');
         $next_action = 'select';
         $pages = array();
@@ -129,9 +131,8 @@ extends WikiPlugin_WikiAdminSelect
             $pages = $p;
         if ($p && $request->isPost() &&
             empty($post_args['cancel'])) {
-
             // FIXME: check individual PagePermissions
-            if (!$request->_user->isAdmin()) {
+            if (!ENABLE_PAGEPERM and !$request->_user->isAdmin()) {
                 $request->_notAuthorized(WIKIAUTH_ADMIN);
                 $this->disabled("! user->isAdmin");
             }
@@ -243,6 +244,10 @@ function stri_replace($find,$replace,$string) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/04/07 23:13:19  rurban
+// fixed pear/File_Passwd for Windows
+// fixed FilePassUser sessions (filehandle revive) and password update
+//
 // Revision 1.8  2004/03/17 20:23:44  rurban
 // fixed p[] pagehash passing from WikiAdminSelect, fixed problem removing pages with [] in the pagename
 //

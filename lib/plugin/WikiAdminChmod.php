@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminChmod.php,v 1.6 2004-03-17 20:23:44 rurban Exp $');
+rcs_id('$Id: WikiAdminChmod.php,v 1.7 2004-06-03 22:24:42 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -48,11 +48,12 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
         return array(
+                     's' 	=> false,
                      /* Pages to exclude in listing */
                      'exclude'  => '',
                      /* Columns to include in listing */
@@ -106,8 +107,10 @@ extends WikiPlugin_WikiAdminSelect
             $exclude = explodePageList($args['exclude']);
         else
             $exclude = false;
+        $this->preSelectS(&$args, &$request);
 
         $p = $request->getArg('p');
+        if (!$p) $p = $this->_list;
         $post_args = $request->getArg('admin_chmod');
         $next_action = 'select';
         $pages = array();
@@ -116,8 +119,8 @@ extends WikiPlugin_WikiAdminSelect
         if ($p && $request->isPost() &&
             !empty($post_args['chmod']) && empty($post_args['cancel'])) {
 
-            // FIXME: check individual PagePermissions
-            if (!$request->_user->isAdmin()) {
+            // check individual PagePermissions
+            if (!ENABLE_PAGEPERM and !$request->_user->isAdmin()) {
                 $request->_notAuthorized(WIKIAUTH_ADMIN);
                 $this->disabled("! user->isAdmin");
             }
@@ -198,6 +201,9 @@ extends WikiPlugin_WikiAdminSelect
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/03/17 20:23:44  rurban
+// fixed p[] pagehash passing from WikiAdminSelect, fixed problem removing pages with [] in the pagename
+//
 // Revision 1.5  2004/03/12 13:31:43  rurban
 // enforce PagePermissions, errormsg if not Admin
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.22 2004-05-16 22:07:35 rurban Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.23 2004-06-03 22:24:48 rurban Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -31,9 +31,10 @@ rcs_id('$Id: WikiAdminRemove.php,v 1.22 2004-05-16 22:07:35 rurban Exp $');
  */
 // maybe display more attributes with this class...
 require_once('lib/PageList.php');
+require_once('lib/plugin/WikiAdminSelect.php');
 
 class WikiPlugin_WikiAdminRemove
-extends WikiPlugin
+extends WikiPlugin_WikiAdminSelect
 {
     function getName() {
         return _("WikiAdminRemove");
@@ -45,11 +46,12 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.22 $");
+                            "\$Revision: 1.23 $");
     }
 
     function getDefaultArguments() {
         return array(
+                     's' 	=> false,
                      /*
                       * Show only pages which have been 'deleted' this
                       * long (in days).  (negative or non-numeric
@@ -124,7 +126,7 @@ extends WikiPlugin
         }
         if ($count) $dbi->touch();
         return HTML($ul,
-                    HTML::p(fmt("%d pages have been permanently removed."),$count));
+                    HTML::p(fmt("%d pages have been permanently removed.",$count)));
     }
     
     function run($dbi, $argstr, &$request, $basepage) {
@@ -140,24 +142,22 @@ extends WikiPlugin
             $exclude = explodePageList($args['exclude']);
         else
             $exclude = false;
-
+        $this->preSelectS(&$args, &$request);
 
         $p = $request->getArg('p');
+        if (!$p) $p = $this->_list;
         $post_args = $request->getArg('admin_remove');
 
         $next_action = 'select';
         $pages = array();
-        
         if ($p && $request->isPost() &&
             !empty($post_args['remove']) && empty($post_args['cancel'])) {
 
-            // FIXME: check individual PagePermissions
-            /*
-            if (!$request->_user->isAdmin()) {
+            // check individual PagePermissions
+            if (!ENABLE_PAGEPERM and !$request->_user->isAdmin()) {
                 $request->_notAuthorized(WIKIAUTH_ADMIN);
                 $this->disabled("! user->isAdmin");
             }
-            */
             if ($post_args['action'] == 'verify') {
                 // Real delete.
                 return $this->removePages($request, array_keys($p));
@@ -170,7 +170,7 @@ extends WikiPlugin
                     $pages[$name] = $c;
                 }
             }
-        } elseif (is_array($p) && !$request->isPost()) { // from WikiAdminSelect
+        } elseif ($p && is_array($p) && !$request->isPost()) { // from WikiAdminSelect
             $next_action = 'verify';
             foreach ($p as $name => $c) {
                 $name = str_replace(array('%5B','%5D'),array('[',']'),$name);
@@ -244,6 +244,14 @@ class _PageList_Column_remove extends _PageList_Column {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.22  2004/05/16 22:07:35  rurban
+// check more config-default and predefined constants
+// various PagePerm fixes:
+//   fix default PagePerms, esp. edit and view for Bogo and Password users
+//   implemented Creator and Owner
+//   BOGOUSERS renamed to BOGOUSER
+// fixed syntax errors in signin.tmpl
+//
 // Revision 1.21  2004/05/04 16:34:22  rurban
 // prvent hidden p overwrite checked p
 //

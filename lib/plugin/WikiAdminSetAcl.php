@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSetAcl.php,v 1.11 2004-06-01 15:28:02 rurban Exp $');
+rcs_id('$Id: WikiAdminSetAcl.php,v 1.12 2004-06-03 22:24:48 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -46,11 +46,12 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     function getDefaultArguments() {
         return array(
+                     's' 	=> false,
                      'p'        => "[]",
                      /* Pages to exclude in listing */
                      'exclude'  => '',
@@ -138,12 +139,10 @@ extends WikiPlugin_WikiAdminSelect
             !empty($post_args['acl']) && empty($post_args['cancel'])) {
 
             // DONE: check individual PagePermissions
-            /*
-            if (!$request->_user->isAdmin()) {
+            if (!ENABLE_PAGEPERM and !$request->_user->isAdmin()) {
                 $request->_notAuthorized(WIKIAUTH_ADMIN);
                 $this->disabled("! user->isAdmin");
             }
-            */
             if ($post_args['action'] == 'verify') {
                 // Real action
                 $header->pushContent(
@@ -288,6 +287,11 @@ class _PageList_Column_perm extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/06/01 15:28:02  rurban
+// AdminUser only ADMIN_USER not member of Administrators
+// some RateIt improvements by dfrankow
+// edit_toolbar buttons
+//
 // Revision 1.10  2004/05/27 17:49:06  rurban
 // renamed DB_Session to DbSession (in CVS also)
 // added WikiDB->getParam and WikiDB->getAuthParam method to get rid of globals
