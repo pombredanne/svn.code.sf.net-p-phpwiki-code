@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.13 2002-01-29 05:06:30 dairiki Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.14 2002-01-30 03:15:56 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -743,7 +743,7 @@ $GLOBALS['Block_BlockTypes'] = array(new Block_oldlists,
 // FIXME: This is temporary, too...
 function NewTransform ($text) {
 
-    set_time_limit(2);
+    //set_time_limit(2);
     
     // Expand leading tabs.
     // FIXME: do this better. also move  it...
