@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.39 2001-05-31 17:43:05 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.40 2001-06-26 18:08:32 uckelman Exp $');
 
 
    /*
@@ -472,6 +472,7 @@ function StartTag($tag, $args = '')
       global $templates;
       global $datetimeformat, $dbi, $logo, $FieldSeparator;
       global $user, $pagename;
+		global $WikiPageStore;
       
       if (!is_array($hash))
          unset($hash);
@@ -518,6 +519,7 @@ function StartTag($tag, $args = '')
 			($hash['flags'] & FLAG_PAGE_LOCKED)), $page);
       _iftoken('ADMIN', $user->is_admin(), $page);
       _iftoken('ANONYMOUS', !$user->is_authenticated(), $page);
+		_iftoken('CURRENT', isset($hash['version']) && $hash['version'] == GetMaxVersionNumber($dbi, $hash['pagename'], $WikiPageStore), $page);
 
       if (empty($hash['minor_edit_checkbox']))
 	  $hash['minor_edit_checkbox'] = '';
@@ -574,6 +576,8 @@ function StartTag($tag, $args = '')
 	    _dotoken('LASTAUTHOR', $hash['author'], $page);
 	 if (!empty($hash['version']))
 	    _dotoken('VERSION', $hash['version'], $page);
+	 if (!empty($hash['pagename']))
+       _dotoken('CURRENT_VERSION', GetMaxVersionNumber($dbi, $hash['pagename'], $WikiPageStore), $page);
 	 if (strstr($page, "$FieldSeparator#HITS$FieldSeparator#")) {
             _dotoken('HITS', GetHitCount($dbi, $name), $page);
 	 }
@@ -592,7 +596,7 @@ function UpdateRecentChanges($dbi, $pagename, $isnewpage)
    global $dateformat;
    global $WikiPageStore;
 
-   $recentchanges = RetrievePage($dbi, gettext ("RecentChanges"), $WikiPageStore);
+   $recentchanges = RetrievePage($dbi, gettext ("RecentChanges"), $WikiPageStore, 0);
 
    // this shouldn't be necessary, since PhpWiki loads 
    // default pages if this is a new baby Wiki
@@ -642,7 +646,7 @@ function UpdateRecentChanges($dbi, $pagename, $isnewpage)
 
    // add the updated page's name to the array
    if($isnewpage) {
-      $newpage[$k++] = "* [$pagename] " . gettext("(new)") . " ..... $userid\r";
+      $newpage[$k++] = "* [$pagename] (new) ..... $userid\r";
    } else {
       $diffurl = "phpwiki:" . rawurlencode($pagename) . "?action=diff";
       $newpage[$k++] = "* [$pagename] ([diff|$diffurl]) ..... $userid\r";
@@ -661,7 +665,7 @@ function UpdateRecentChanges($dbi, $pagename, $isnewpage)
 
    $recentchanges['content'] = $newpage;
 
-   InsertPage($dbi, gettext ("RecentChanges"), $recentchanges);
+   ReplaceCurrentPage(gettext ("RecentChanges"), $recentchanges);
 }
 
 // For emacs users
