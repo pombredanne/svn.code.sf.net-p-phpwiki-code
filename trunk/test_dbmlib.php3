@@ -1,4 +1,4 @@
-<!-- $Id: test_dbmlib.php3,v 1.3 2000-06-14 03:25:23 wainstead Exp $ -->
+<!-- $Id: test_dbmlib.php3,v 1.4 2000-06-18 03:53:29 wainstead Exp $ -->
 <html>
 <head>
 <title>Test bed for database library</title>
@@ -12,9 +12,22 @@
    // OpenDataBase()
    // Try to open the database
    //
-   $dbi = OpenDataBase($WikiDataBase); 
-   echo "Result from OpenDataBase($WikiDataBase):<br>", 
-   "dbc: ", $dbi['dbc'], "<br>table: ",  $dbi['table'], "<br>\n";
+   $dbi = OpenDataBase($WikiDataBase);
+
+   if ($dbi) {
+      $vartype = gettype($dbi);
+      echo "Return type from OpenDataBase($WikiDataBase): $vartype<br>\n";
+      if ($vartype == 'array') {
+         reset($dbi);
+         while (list($key, $val) = each($dbi)) {
+            echo "<dd>$key : $val</dd>\n";
+         }
+      } else {
+         echo "Return value: $dbi <p>\n";
+      }
+   } else {
+      echo "Database open failed: return value '$dbi' <br>\n";
+   }
 
 ?>
 
