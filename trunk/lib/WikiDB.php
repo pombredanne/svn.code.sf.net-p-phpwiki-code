@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.30 2004-01-27 23:23:39 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.31 2004-02-11 19:49:21 rurban Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -477,6 +477,10 @@ class WikiDB_Page
         return $this->_pagename;
     }
 
+    function exists() {
+        $current = $this->getCurrentRevision();
+        return ! $current->hasDefaultContents();
+    }
 
     /**
      * Delete an old revision of a WikiDB_Page.
@@ -628,7 +632,7 @@ class WikiDB_Page
                 unset($data[$key]);
         }
 			
-        assert(!empty($data['author_id']));
+        assert(!empty($data['author']));
         if (empty($data['author_id']))
             @$data['author_id'] = $data['author'];
 		
