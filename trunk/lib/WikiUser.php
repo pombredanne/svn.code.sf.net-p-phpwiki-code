@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.43 2003-12-04 19:33:30 carstenklapp Exp $');
+rcs_id('$Id: WikiUser.php,v 1.44 2003-12-06 04:56:23 carstenklapp Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -322,8 +322,18 @@ class WikiUser {
                 // already stored in index.php, and it might be
                 // plaintext! well oh well
                 if ($homepage = $this->homePage()) {
-                    $homepage->set('pref', serialize($prefs->_prefs));
-                    return sizeof($prefs->_prefs);
+                    if ((!$homepage->get('locked')) && !$this->isAdmin()) {
+                        $homepage->set('pref', serialize($prefs->_prefs));
+                        return sizeof($prefs->_prefs);
+                    }
+                    else {
+                        // FIXME: This permission situation should
+                        // probably be handled by the DB backend, once
+                        // the new WikiUser code has been implemented.
+                        trigger_error(_("Your home page is locked so your preferences cannot not be saved.")
+                                      . " " . _("Please contact your PhpWiki administrator for assistance."),
+                                      E_USER_WARNING);
+                    }
                 } else {
                     trigger_error("No homepage for user found. Creating one...",
                                   E_USER_WARNING);
@@ -656,6 +666,12 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.43  2003/12/04 19:33:30  carstenklapp
+// Bugfix: Under certain PhpWiki installations (such as the PhpWiki at
+// SF), the user was unable to select a theme other than the server's
+// default. (Use the more robust Theme::findFile instead of PHP's
+// file_exists function to detect installed themes).
+//
 // Revision 1.42  2003/11/30 18:18:13  carstenklapp
 // Minor code optimization: use include_once instead of require_once
 // inside functions that might not always called.
