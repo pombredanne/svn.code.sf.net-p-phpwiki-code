@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.93 2004-06-25 14:29:17 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.94 2004-06-27 10:26:02 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -676,10 +676,12 @@ class PageList {
             $dbi =& $request->getDbh();
             extract($dbi->_backend->_table_names);
             if ($DBParams['dbtype'] == 'SQL') {
+                //FIXME: LIMIT not portable
                 $res = $dbi->_backend->_dbh->getOne("SELECT max(length(pagename)) FROM $page_tbl LIMIT 1");
                 if (DB::isError($res) || empty($res)) return false;
                 else return $res;
             } elseif ($DBParams['dbtype'] == 'ADODB') {
+                //FIXME: LIMIT not portable
                 $row = $dbi->_backend->_dbh->getRow("SELECT max(length(pagename)) FROM $page_tbl LIMIT 1");
                 return $row ? $row[0] : false;
             }
@@ -1245,6 +1247,13 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.93  2004/06/25 14:29:17  rurban
+// WikiGroup refactoring:
+//   global group attached to user, code for not_current user.
+//   improved helpers for special groups (avoid double invocations)
+// new experimental config option ENABLE_XHTML_XML (fails with IE, and document.write())
+// fixed a XHTML validation error on userprefs.tmpl
+//
 // Revision 1.92  2004/06/21 17:01:39  rurban
 // fix typo and rating method call
 //

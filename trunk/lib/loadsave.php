@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.112 2004-06-25 14:29:20 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.113 2004-06-27 10:26:02 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -356,7 +356,7 @@ function DumpHtmlToDir (&$request)
         fclose($fd);
     }
 
-    if (is_array($WikiTheme->dumped_images)) {
+    if (!empty($WikiTheme->dumped_images) and is_array($WikiTheme->dumped_images)) {
         @mkdir("$directory/images");
         foreach ($WikiTheme->dumped_images as $img_file) {
             if (($from = $WikiTheme->_findFile($img_file)) and basename($from)) {
@@ -371,7 +371,7 @@ function DumpHtmlToDir (&$request)
             }
         }
     }
-    if (is_array($WikiTheme->dumped_buttons)) {
+    if (!empty($WikiTheme->dumped_buttons) and is_array($WikiTheme->dumped_buttons)) {
     	// Buttons also
         @mkdir("$directory/images/buttons");
         foreach ($WikiTheme->dumped_buttons as $text => $img_file) {
@@ -387,7 +387,7 @@ function DumpHtmlToDir (&$request)
             }
         }
     }
-    if (is_array($WikiTheme->dumped_css)) {
+    if (!empty($WikiTheme->dumped_css) and is_array($WikiTheme->dumped_css)) {
       foreach ($WikiTheme->dumped_css as $css_file) {
           if (($from = $WikiTheme->_findFile(basename($css_file))) and basename($from)) {
               $target = "$directory/" . basename($css_file);
@@ -1041,6 +1041,13 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.112  2004/06/25 14:29:20  rurban
+ WikiGroup refactoring:
+   global group attached to user, code for not_current user.
+   improved helpers for special groups (avoid double invocations)
+ new experimental config option ENABLE_XHTML_XML (fails with IE, and document.write())
+ fixed a XHTML validation error on userprefs.tmpl
+
  Revision 1.111  2004/06/21 16:38:55  rurban
  fixed the StartLoadDump html argument hack.
 

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.52 2004-06-25 14:15:08 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.53 2004-06-27 10:26:03 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -47,14 +47,16 @@ extends WikiDB_backend
                     'nonempty_tbl' => $prefix . 'nonempty');
         $page_tbl = $this->_table_names['page_tbl'];
         $version_tbl = $this->_table_names['version_tbl'];
-        $this->page_tbl_fields = "$page_tbl.id as id, $page_tbl.pagename as pagename, $page_tbl.hits as hits";
-        $this->version_tbl_fields = "$version_tbl.version as version, $version_tbl.mtime as mtime, ".
-            "$version_tbl.minor_edit as minor_edit, $version_tbl.content as content, $version_tbl.versiondata as versiondata";
+        $this->page_tbl_fields = "$page_tbl.id AS id, $page_tbl.pagename AS pagename, $page_tbl.hits AS hits";
+        $this->version_tbl_fields = "$version_tbl.version AS version, $version_tbl.mtime AS mtime, ".
+            "$version_tbl.minor_edit AS minor_edit, $version_tbl.content AS content, $version_tbl.versiondata AS versiondata";
 
         $this->_expressions
             = array('maxmajor'     => "MAX(CASE WHEN minor_edit=0 THEN version END)",
                     'maxminor'     => "MAX(CASE WHEN minor_edit<>0 THEN version END)",
-                    'maxversion'   => "MAX(version)");
+                    'maxversion'   => "MAX(version)",
+                    'notempty'     => "<>''",
+                    'iscontent'    => "content<>''");
         
         $this->_lock_count = 0;
     }
@@ -164,12 +166,20 @@ extends WikiDB_backend
                 $data[$key] = $val;
         }
 
+        /* Portability issue -- not all DBMS supports huge strings 
+         * so we need to 'bind' instead of building a SQL statment.
+         * Note that we do not need to quoteString when we bind
         $dbh->query(sprintf("UPDATE $page_tbl"
                             . " SET hits=%d, pagedata='%s'"
                             . " WHERE pagename='%s'",
                             $hits,
                             $dbh->quoteString($this->_serialize($data)),
                             $dbh->quoteString($pagename)));
+        */
+        $sth = $dbh->query("UPDATE $page_tbl"
+                           . " SET hits=?, pagedata=?"
+                           . " WHERE pagename=?",
+                           array($hits, $this->_serialize($data), $pagename));
         $this->unlock();
     }
 
@@ -219,8 +229,10 @@ extends WikiDB_backend
                                       . " WHERE $version_tbl.id=$page_tbl.id"
                                       . "  AND pagename='%s'"
                                       . "  AND version < %d"
-                                      . " ORDER BY version DESC"
+                                      . " ORDER BY version DESC",
+                                      /* Non portable and useless anyway with getOne
                                       . " LIMIT 1",
+                                      */
                                       $dbh->quoteString($pagename),
                                       $version));
     }
@@ -236,6 +248,7 @@ extends WikiDB_backend
     function get_versiondata($pagename, $version, $want_content = false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
+        extract($this->_expressions);
 
         assert(is_string($pagename) and $pagename != "");
         assert($version > 0);
@@ -248,7 +261,7 @@ extends WikiDB_backend
         else {
             $fields = $this->page_tbl_fields . ","
                        . "mtime, minor_edit, versiondata,"
-                       . "content<>'' AS have_content";
+                       . "$iscontent AS have_content";
         }
 
         $result = $dbh->getRow(sprintf("SELECT $fields"
@@ -317,12 +330,19 @@ extends WikiDB_backend
                             . " WHERE id=%d AND version=%d",
                             $id, $version));
 
+        /* Same as above -- bind!
         $dbh->query(sprintf("INSERT INTO $version_tbl"
                             . " (id,version,mtime,minor_edit,content,versiondata)"
                             . " VALUES(%d,%d,%d,%d,'%s','%s')",
                             $id, $version, $mtime, $minor_edit,
                             $dbh->quoteString($content),
                             $dbh->quoteString($this->_serialize($data))));
+        */
+        $dbh->query("INSERT INTO $version_tbl"
+                    . " (id,version,mtime,minor_edit,content,versiondata)"
+                    . " VALUES(?, ?, ?, ?, ?, ?)",
+                    array($id, $version, $mtime, $minor_edit, $content,
+                    $this->_serialize($data)));
 
         $this->_update_recent_table($id);
         $this->_update_nonempty_table($id);
@@ -425,8 +445,11 @@ extends WikiDB_backend
         
         $qpagename = $dbh->quoteString($pagename);
         
-        $result = $dbh->query("SELECT $want.id as id, $want.pagename as pagename, $want.hits as hits, $want.pagedata as pagedata"
-                              . " FROM $link_tbl, $page_tbl AS linker, $page_tbl AS linkee"
+        $result = $dbh->query("SELECT $want.id as id, $want.pagename as pagename, $want.hits as hits"
+                               // Looks like 'AS' in column alias is a MySQL thing, Oracle does not like it
+                               // and the PostgresSQL manual does not have it either
+                               // Since it is optional in mySQL, just remove it...
+                              . " FROM $link_tbl, $page_tbl linker, $page_tbl linkee"
                               . " WHERE linkfrom=linker.id AND linkto=linkee.id"
                               . "  AND $have.pagename='$qpagename'"
                               //. " GROUP BY $want.id"
@@ -438,41 +461,50 @@ extends WikiDB_backend
     function get_all_pages($include_deleted=false,$sortby=false,$limit=false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-        if ($limit)  $limit = "LIMIT $limit";
-        else         $limit = '';
+        // Limit clause is NOT portable!
+        // if ($limit)  $limit = "LIMIT $limit";
+        // else         $limit = '';
         if ($sortby) $orderby = 'ORDER BY ' . PageList::sortby($sortby,'db');
         else         $orderby = '';
-        if (strstr($orderby,'mtime')) {
+        if (strstr($orderby,'mtime')) { // multiple columns possible
             if ($include_deleted) {
-                $result = $dbh->query("SELECT "
-                                      . $this->page_tbl_fields
-                                      . " FROM $page_tbl, $recent_tbl, $version_tbl"
-                                      . " WHERE $page_tbl.id=$recent_tbl.id"
-                                      . " AND $page_tbl.id=$version_tbl.id AND latestversion=version"
-                                      . " $orderby $limit");
+                $sql = "SELECT "
+                    . $this->page_tbl_fields
+                    . " FROM $page_tbl, $recent_tbl, $version_tbl"
+                    . " WHERE $page_tbl.id=$recent_tbl.id"
+                    . " AND $page_tbl.id=$version_tbl.id AND latestversion=version"
+                    . " $orderby";
             }
             else {
-                $result = $dbh->query("SELECT "
-                                      . $this->page_tbl_fields
-                                      . " FROM $nonempty_tbl, $page_tbl, $recent_tbl, $version_tbl"
-                                      . " WHERE $nonempty_tbl.id=$page_tbl.id"
-                                      . " AND $page_tbl.id=$recent_tbl.id"
-                                      . " AND $page_tbl.id=$version_tbl.id AND latestversion=version"
-                                      . " $orderby $limit");
+                $sql = "SELECT "
+                    . $this->page_tbl_fields
+                    . " FROM $nonempty_tbl, $page_tbl, $recent_tbl, $version_tbl"
+                    . " WHERE $nonempty_tbl.id=$page_tbl.id"
+                    . " AND $page_tbl.id=$recent_tbl.id"
+                    . " AND $page_tbl.id=$version_tbl.id AND latestversion=version"
+                    . " $orderby";
             }
         } else {
             if ($include_deleted) {
-                $result = $dbh->query("SELECT "
-                			. $this->page_tbl_fields 
-                			." FROM $page_tbl $orderby $limit");
+                $sql = "SELECT "
+                    . $this->page_tbl_fields 
+                    ." FROM $page_tbl $orderby";
             }
             else {
-                $result = $dbh->query("SELECT "
-                                      . $this->page_tbl_fields
-                                      . " FROM $nonempty_tbl, $page_tbl"
-                                      . " WHERE $nonempty_tbl.id=$page_tbl.id"
-                                      . " $orderby $limit");
+                $sql = "SELECT "
+                    . $this->page_tbl_fields
+                    . " FROM $nonempty_tbl, $page_tbl"
+                    . " WHERE $nonempty_tbl.id=$page_tbl.id"
+                    . " $orderby";
             }
+        }
+        if ($limit) {
+            // extract from,count from limit
+            require_once("lib/PageList.php");
+            list($from,$count) = PageList::limit($limit);
+            $result = $dbh->limitQuery($sql, $from, $count);
+        } else {
+            $result = $dbh->query($sql);
         }
         return new WikiDB_backend_PearDB_iter($this, $result);
     }
@@ -544,18 +576,22 @@ extends WikiDB_backend
         } else {
             $where = " AND hits > 0";
         }
-        if ($limit)  $limit = " LIMIT $limit";
-        else         $limit = '';
         if ($sortby) $orderby = ' ORDER BY ' . PageList::sortby($sortby,'db');
         else         $orderby = " ORDER BY hits $order";
         //$limitclause = $limit ? " LIMIT $limit" : '';
-        $result = $dbh->query("SELECT "
-                              . $this->page_tbl_fields.",$page_tbl.pagedata as pagedata"
-                              . " FROM $nonempty_tbl, $page_tbl"
-                              . " WHERE $nonempty_tbl.id=$page_tbl.id" 
-                              . $where
-                              . $orderby
-                              . $limit);
+        $sql = "SELECT "
+            . $this->page_tbl_fields
+            . " FROM $nonempty_tbl, $page_tbl"
+            . " WHERE $nonempty_tbl.id=$page_tbl.id" 
+            . $where
+            . $orderby;
+         if ($limit) {
+             require_once("lib/PageList.php");
+             list($from,$count) = PageList::limit($limit);
+             $result = $dbh->limitQuery($sql, $from, $count);
+         } else {
+             $result = $dbh->query($sql);
+         }
 
         return new WikiDB_backend_PearDB_iter($this, $result);
     }
@@ -617,18 +653,23 @@ extends WikiDB_backend
             $order = "ASC";
             $limit = -$limit;
         }
-        $limitclause = $limit ? " LIMIT $limit" : '';
+        // $limitclause = $limit ? " LIMIT $limit" : '';
         $where_clause = $join_clause;
         if ($pick)
             $where_clause .= " AND " . join(" AND ", $pick);
 
         // FIXME: use SQL_BUFFER_RESULT for mysql?
-        $result = $dbh->query("SELECT " 
-                              . $this->page_tbl_fields . ", " . $this->version_tbl_fields
-                              . " FROM $table"
-                              . " WHERE $where_clause"
-                              . " ORDER BY mtime $order"
-                              . $limitclause);
+        $sql = "SELECT " 
+               . $this->page_tbl_fields . ", " . $this->version_tbl_fields
+               . " FROM $table"
+               . " WHERE $where_clause"
+               . " ORDER BY mtime $order";
+
+        if ($limit) {
+            $result = $dbh->limitQuery($sql, 0, $limit);
+        } else {
+            $result = $dbh->query($sql);
+        }
 
         return new WikiDB_backend_PearDB_iter($this, $result);
     }
@@ -680,6 +721,7 @@ extends WikiDB_backend
     function _update_nonempty_table($pageid = false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
+        extract($this->_expressions);
 
         $pageid = (int)$pageid;
 
@@ -693,7 +735,9 @@ extends WikiDB_backend
                     . " FROM $recent_tbl, $version_tbl"
                     . " WHERE $recent_tbl.id=$version_tbl.id"
                     . "       AND version=latestversion"
-                    . "  AND content<>''"
+                    // We have some specifics here (Oracle)
+                    //. "  AND content<>''"
+                    . "  AND content $notempty"
                     . ( $pageid ? " AND $recent_tbl.id=$pageid" : ""));
 
         $this->unlock();
@@ -867,9 +911,9 @@ extends WikiDB_backend
             assert(!empty($database));
             assert(!empty($table));
   	    $result = mysql_list_fields($database, $table, $this->_dbh->connection) or 
-  	        trigger_error(__FILE__.':'.__LINE__.' '.mysql_error(),E_USER_WARNING);
+  	        trigger_error(__FILE__.':'.__LINE__.' '.mysql_error(), E_USER_WARNING);
   	    if (!$result) return array();
-  	    $columns = mysql_num_fields($result);
+              $columns = mysql_num_fields($result);
             for ($i = 0; $i < $columns; $i++) {
                 $fields[] = mysql_field_name($result, $i);
             }
@@ -964,6 +1008,9 @@ extends WikiDB_backend_PearDB_generic_iter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.52  2004/06/25 14:15:08  rurban
+// reduce memory footprint by caching only requested pagedate content (improving most page iterators)
+//
 // Revision 1.51  2004/05/12 10:49:55  rurban
 // require_once fix for those libs which are loaded before FileFinder and
 //   its automatic include_path fix, and where require_once doesn't grok

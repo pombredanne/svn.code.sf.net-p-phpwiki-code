@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.61 2004-06-25 14:29:17 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.62 2004-06-27 10:26:02 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -546,17 +546,17 @@ class Request_CookieVars {
             $packedval = urlencode($val);
         $vars[$key] = $packedval;
         if ($path)
-            setcookie($key, $packedval, $expires, $path);
+            @setcookie($key, $packedval, $expires, $path);
         else
-            setcookie($key, $packedval, $expires);
+            @setcookie($key, $packedval, $expires);
     }
     
     function delete($key) {
         static $deleted = array();
         if (isset($deleted[$key])) return;
         $vars = &$GLOBALS['HTTP_COOKIE_VARS'];
-        setcookie($key,'',0);
-        setcookie($key,'',0,defined('COOKIE_DOMAIN') ? COOKIE_DOMAIN : '/');
+        @setcookie($key,'',0);
+        @setcookie($key,'',0,defined('COOKIE_DOMAIN') ? COOKIE_DOMAIN : '/');
         unset($vars[$key]);
         unset($GLOBALS['HTTP_COOKIE_VARS'][$key]);
         $deleted[$key] = 1;
@@ -993,6 +993,13 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.61  2004/06/25 14:29:17  rurban
+// WikiGroup refactoring:
+//   global group attached to user, code for not_current user.
+//   improved helpers for special groups (avoid double invocations)
+// new experimental config option ENABLE_XHTML_XML (fails with IE, and document.write())
+// fixed a XHTML validation error on userprefs.tmpl
+//
 // Revision 1.60  2004/06/19 11:51:13  rurban
 // CACHE_CONTROL: NONE => NO_CACHE
 //
