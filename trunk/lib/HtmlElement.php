@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.10 2002-01-24 20:08:05 carstenklapp Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.11 2002-01-24 21:21:37 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -34,6 +34,10 @@ class HtmlElement extends XmlElement
                        sprintf('window.status="%s"; return true;',
                                addslashes($tooltip_text)));
         $this->setAttr('onmouseout', "window.status='';return true;");
+    }
+
+    function _emptyTag () {
+        return substr($this->_startTag(), 0, -1) . " />";
     }
 
     function isEmpty () {
