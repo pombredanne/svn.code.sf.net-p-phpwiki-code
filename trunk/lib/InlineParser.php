@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.9 2002-02-08 03:01:11 dairiki Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.10 2002-02-08 05:44:54 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -373,12 +373,11 @@ class InlineTransformer
         $this->_markup[] = $markup;
     }
         
-    function parse (&$text, $end_re = '$') {
-        //static $depth;
+    function parse (&$text, $end_regexps = array('$')) {
         $regexps = $this->_regexps;
 
         // $end_re takes precedence: "favor reduce over shift"
-        array_unshift($regexps, $end_re);
+        array_unshift($regexps, $end_regexps[0]);
         $regexps = new RegexpSet($regexps);
         
         $input = $text;
@@ -396,7 +395,7 @@ class InlineTransformer
             }
 
             $markup = $this->_markup[$match->regexp_ind - 1];
-            $body = $this->_parse_markup_body($markup, $match->match, $match->postmatch);
+            $body = $this->_parse_markup_body($markup, $match->match, $match->postmatch, $end_regexps);
             if (!$body) {
                 // Couldn't match balanced expression.
                 // Ignore and look for next matching start regexp.
@@ -418,19 +417,19 @@ class InlineTransformer
         return false;
     }
 
-    function _parse_markup_body ($markup, $match, &$text) {
+    function _parse_markup_body ($markup, $match, &$text, $end_regexps) {
         if (isa($markup, 'SimpleMarkup'))
             return true;        // Done. SimpleMarkup is simple.
 
-        $end_regexp = $markup->getEndRegexp($match);
+        array_unshift($end_regexps, $markup->getEndRegexp($match));
         // Optimization: if no end pattern in text, we know the
         // parse will fail.  This is an important optimization,
         // e.g. when text is "*lots *of *start *delims *with
         // *no *matching *end *delims".
-        // 
-        if (!preg_match("/$end_regexp/xs", $text))
+        $ends_pat = "/(?:" . join(").*(?:", $end_regexps) . ")/xs";
+        if (!preg_match($ends_pat, $text))
             return false;
-        return $this->parse($text, $end_regexp);
+        return $this->parse($text, $end_regexps);
     }
 }
 
