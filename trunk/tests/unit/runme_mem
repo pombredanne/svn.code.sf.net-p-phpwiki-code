@@ -14,6 +14,7 @@ tests="test=SetupWiki test=AllPagesTest test=DumpHtml"
 prefix=$1
 if [ -z $prefix ]; then prefix="439dba"; fi
 chmod -R a+rw .testbox .dumphtml
+chmod +x prepare_pl combine_define.pl
 
 today=`date`
 for define in USECACHE ENABLE_USER_NEW; do
