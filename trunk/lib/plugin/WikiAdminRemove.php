@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.4 2002-08-27 21:51:31 rurban Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.5 2003-01-18 22:14:28 carstenklapp Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -29,9 +29,9 @@ rcs_id('$Id: WikiAdminRemove.php,v 1.4 2002-08-27 21:51:31 rurban Exp $');
  * Currently we must be Admin.
  * Future versions will support PagePermissions.
  * requires PHP 4.2 so far.
- */ 
+ */
 // maybe display more attributes with this class...
-require_once('lib/PageList.php'); 
+require_once('lib/PageList.php');
 
 class WikiPlugin_WikiAdminRemove
 extends WikiPlugin
@@ -42,6 +42,11 @@ extends WikiPlugin
 
     function getDescription() {
         return _("Permanently remove all selected pages.");
+    }
+
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -57,7 +62,8 @@ extends WikiPlugin
         $allPages = $dbi->getAllPages();
         while ($pagehandle = $allPages->next()) {
             $pagename = $pagehandle->getName();
-            if (empty($list[$pagename])) $list[$pagename] = 0;
+            if (empty($list[$pagename]))
+                $list[$pagename] = 0;
         }
     }
 
@@ -68,7 +74,8 @@ extends WikiPlugin
         else $only = false;
         if (!empty($args['exclude']))
             $exclude = explodePageList($args['exclude']);
-        else $exclude = false;
+        else
+            $exclude = false;
         $info = $args['info'];
         $this->debug = $args['debug'];
 
@@ -77,24 +84,24 @@ extends WikiPlugin
         $pagename = $request->getArg('pagename');
         // GetUrlToSelf() with all given params
         //$uri = $GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI'];
-        $uri = $request->getURLtoSelf($request->debugVars(),array('verify'));
+        $uri = $request->getURLtoSelf($request->debugVars(), array('verify'));
         $form = HTML::form(array('action' => $uri, 'method' => 'POST'));
-	$p = $request->getArg('p');
+        $p = $request->getArg('p');
         // Handle WikiAdminSelect
-        if ($request->isPost() and $request->_user->isAdmin() and 
-            $p and $request->getArg('action') == 'select') {
+        if ($request->isPost() && $request->_user->isAdmin()
+            && $p && $request->getArg('action') == 'select') {
             $request->setArg('verify',1);
             foreach ($p as $page => $name) {
                 $this->_list[$name] = 1;
             }
-        } elseif ($request->isPost() and $request->_user->isAdmin() and 
-            $request->getArg('verify')) {
+        } elseif ($request->isPost() && $request->_user->isAdmin()
+                  && $request->getArg('verify')) {
             // List all to be deleted pages again.
             foreach ($p as $page => $name) {
                 $this->_list[$name] = 1;
             }
-        } elseif ($request->isPost() and $request->_user->isAdmin() and 
-        	  $request->getArg('remove')) {
+        } elseif ($request->isPost() && $request->_user->isAdmin()
+                  && $request->getArg('remove')) {
             // Real delete.
             $ul = HTML::ul();
             foreach ($p as $page => $name) {
@@ -106,27 +113,40 @@ extends WikiPlugin
             // List all pages to select from.
             $this->collectPages($this->_list, &$dbi);
         }
-        $pagelist = new PageList_Selectable($info ? 'checkbox,'.$info : 'checkbox', $exclude); 
+        $pagelist = new PageList_Selectable($info
+                                            ? 'checkbox,' . $info
+                                            : 'checkbox', $exclude);
         $pagelist->addPageList($this->_list);
         $form->pushContent($pagelist->getContent());
-        $form->pushContent(HiddenGets(array('s','sortby','verify','WikiAdminRemove','remove'))); 
+        $form->pushContent(HiddenGets(array('s', 'sortby', 'verify',
+                                            'WikiAdminRemove', 'remove')));
         // if (! USE_PATH_INFO ) $form->pushContent(HTML::input(array('type' => 'hidden', 'name' => 'pagename', 'value' => $pagename)));
         if (! $request->getArg('verify')) {
-            $form->pushContent(HTML::input(array('type' => 'hidden', 'name' => 'action', 'value' => 'verify')));
-            $form->pushContent(Button('submit:verify', _("Remove selected pages"), 'wikiadmin'), 
+            $form->pushContent(HTML::input(array('type' => 'hidden',
+                                                 'name' => 'action',
+                                                 'value' => 'verify')));
+            $form->pushContent(Button('submit:verify',
+                                      _("Remove selected pages"),
+                                      'wikiadmin'),
                                Button('submit:cancel', _("Cancel"), 'button'));
         } else {
-            $form->pushContent(HTML::input(array('type' => 'hidden', 'name' => 'action', 'value' => 'WikiAdminRemove')));
-            $form->pushContent(Button('submit:remove', _("Remove selected pages"), 'wikiadmin'),
+            $form->pushContent(HTML::input(array('type' => 'hidden',
+                                                 'name' => 'action',
+                                                 'value' => 'WikiAdminRemove'))
+                               );
+            $form->pushContent(Button('submit:remove',
+                                      _("Remove selected pages"), 'wikiadmin'),
                                Button('submit:cancel', _("Cancel"), 'button'));
         }
         if (! $request->getArg('remove')) {
             return $form;
         } else {
-            return HTML::div($ul,HTML::p(_('All selected pages have been permanently removed.')));
+            return HTML::div($ul, HTML::p(_('All selected pages have been permanently removed.')));
         }
     }
 }
+
+// $Log: not supported by cvs2svn $
 
 // Local Variables:
 // mode: php

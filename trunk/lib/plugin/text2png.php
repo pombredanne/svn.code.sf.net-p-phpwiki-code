@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: text2png.php,v 1.10 2002-03-28 06:50:48 carstenklapp Exp $');
+rcs_id('$Id: text2png.php,v 1.11 2003-01-18 22:08:01 carstenklapp Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -42,6 +42,15 @@ extends WikiPlugin
         return "text2png";
     }
 
+    function getDescription() {
+        return _("Convert text into a png image using GD.");
+    }
+
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.11 $");
+    }
+
     function getDefaultArguments() {
         global $LANG;
         return array('text' => "Hello WikiWorld!",
@@ -58,12 +67,12 @@ extends WikiPlugin
             $error_html = _("Sorry, this version of PHP cannot create PNG image files.");
             $link = "http://www.php.net/manual/pl/ref.image.php";
             $error_html .= sprintf(_("See %s"), $link) .".";
-            trigger_error( $error_html, E_USER_NOTICE );
+            trigger_error($error_html, E_USER_NOTICE);
             return;
         }
     }
 
-    function text2png($text,$l) {
+    function text2png($text, $l) {
 
         /**
          * Basic image creation and caching
@@ -80,7 +89,9 @@ extends WikiPlugin
          *        user's locale preferences.
          */
 
-        if ($l == "C") { $l = "en"; } //english=C
+        if ($l == "C") {
+            $l = "en";
+        } //english=C
         $filepath = getcwd() . "/images/$l";
 
         if (!file_exists($filepath ."/". $filename)) {
@@ -165,7 +176,7 @@ extends WikiPlugin
             }
             $urlpath = DATA_PATH . "/images/$l/";
             $html->pushContent(HTML::img(array('src' => $urlpath . $filename,
-                                          'alt' => $text)));
+                                               'alt' => $text)));
         } else {
             trigger_error(sprintf(_("couldn't open file '%s' for writing"),
                                   $filepath . $filename), E_USER_NOTICE);
@@ -173,6 +184,8 @@ extends WikiPlugin
         return $html;
     }
 };
+
+// $Log: not supported by cvs2svn $
 
 // For emacs users
 // Local Variables:
