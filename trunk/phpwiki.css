@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.60 2002-02-19 06:49:13 carstenklapp Exp $
+ * $Id: phpwiki.css,v 1.61 2002-02-19 07:01:35 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -60,11 +60,15 @@ div.wikitext {
   margin-top:    1ex;
   margin-bottom: 0.5ex;
   background: white;
+  /* Netscape 4 requires this 1px border.
+     Without it, the paper borders below cause
+     the white background to disappear. */
+  border: 1px black solid;
   /* "paper" borders */
-  border-top:  1px solid #e8e6df;
-  border-left: 1px solid #e8e6df;
-  border-bottom: 1px solid #d2d2d2;
-  border-right:  1px solid #b2b2b2;
+  border-top:  1px #e8e6df solid;
+  border-left: 1px #e8e6df solid;
+  border-bottom: 1px #d2d2d2 solid;
+  border-right:  1px #b2b2b2 solid;
   padding-left:  0.8em; 
   padding-right: 0.8em;
   padding-top:    0.5ex;
