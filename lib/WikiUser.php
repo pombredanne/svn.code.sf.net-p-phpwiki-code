@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiUser.php,v 1.7 2001-12-21 00:50:51 rurban Exp $');
+<?php rcs_id('$Id: WikiUser.php,v 1.8 2001-12-28 09:46:09 carstenklapp Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -94,11 +94,11 @@ class WikiUser
         if (! $this->is_admin()) 
             {
                 if ($action)
-                    $to_what = sprintf(gettext("to perform action '%s'"), $action);
+                    $to_what = sprintf(_("to perform action '%s'"), $action);
                 else
                     $to_what = gettext("to do that");
-                ExitWiki(gettext("You must be logged in as an administrator")
-                         . " $to_what");
+                ExitWiki(sprintf(_("You must be logged in as an administrator %s"),
+                         $to_what));
             }
     }
 
@@ -177,7 +177,7 @@ class WikiUser
         if (!defined('ADMIN_USER') || !defined('ADMIN_PASSWD')
             || ADMIN_USER == '' || ADMIN_PASSWD =='') {
             echo '<html><body>';
-            ExitWiki(gettext("You must set the administrator account and password before you can log in."));
+            ExitWiki(_("You must set the administrator account and password before you can log in."));
         }
 
         // Request password
@@ -188,11 +188,11 @@ class WikiUser
         $request = &$this->_request;
         header('WWW-Authenticate: Basic realm="' . $this->realm . '"');
         $request->setStatus("HTTP/1.0 401 Unauthorized");
-        echo "<p>" . gettext ("You entered an invalid login or password.") . "\n";
+        echo "<p>" . _("You entered an invalid login or password.") . "\n";
         if (ALLOW_BOGO_LOGIN) {
             echo "<p>";
-            echo gettext ("You can log in using any valid WikiWord as a user ID.") . "\n";
-            echo gettext ("(Any password will work, except, of course for the admin user.)") . "\n";
+            echo _("You can log in using any valid WikiWord as a user ID.") . "\n";
+            echo _("(Any password will work, except, of course for the admin user.)") . "\n";
         }
       
         ExitWiki();

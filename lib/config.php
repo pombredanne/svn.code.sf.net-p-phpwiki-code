@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.48 2001-12-17 02:08:58 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.49 2001-12-28 09:45:50 carstenklapp Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -236,20 +236,20 @@ if (!defined('VIRTUAL_PATH'))
 if (SERVER_PORT
     && SERVER_PORT != (SERVER_PROTOCOL == 'https' ? 443 : 80)) {
     define('SERVER_URL',
-           SERVER_PROTOCOL . "://" . SERVER_NAME . ':' . SERVER_PORT);
+           SERVER_PROTOCOL . '://' . SERVER_NAME . ':' . SERVER_PORT);
 }
 else {
     define('SERVER_URL',
-           SERVER_PROTOCOL . "://" . SERVER_NAME);
+           SERVER_PROTOCOL . '://' . SERVER_NAME);
 }
 
 if (VIRTUAL_PATH != SCRIPT_NAME)
 {
     // Apache action handlers are used.
-    define('PATH_INFO_PREFIX', VIRTUAL_PATH . "/");
+    define('PATH_INFO_PREFIX', VIRTUAL_PATH . '/');
 }
 else
-define("PATH_INFO_PREFIX", '/');
+define('PATH_INFO_PREFIX', '/');
 
 
 //////////////////////////////////////////////////////////////////
@@ -268,7 +268,7 @@ if (defined('INTERWIKI_MAP_FILE'))
 }
 
 if (!defined('WIKI_NAME')) {
-    define('WIKI_NAME', "An unnamed PhpWiki");
+    define('WIKI_NAME', _("An unnamed PhpWiki"));
 }
 
 // FIXME: delete

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.18 2001-11-14 21:05:38 dairiki Exp $');
+rcs_id('$Id: editpage.php,v 1.19 2001-12-28 09:45:55 carstenklapp Exp $');
 
 require_once('lib/Template.php');
 
@@ -23,12 +23,12 @@ function editPage($dbi, $request) {
     global $user;               // FIXME: make this non-global.
     if ($page->get('locked') && !$user->is_admin()) {
         $html = QElement('p',
-                         gettext ("This page has been locked by the administrator and cannot be edited."));
+                        _("This page has been locked by the administrator and cannot be edited."));
         $html .= "\n";
-        $html .= QElement('p', gettext ("Sorry for the inconvenience.")) . "\n";
+        $html .= QElement('p', _("Sorry for the inconvenience.")) . "\n";
 
         echo GeneratePage('MESSAGE', $html,
-                          sprintf(gettext("Problem while editing %s"),
+                          sprintf(_("Problem while editing %s"),
                                   $request->getArg('pagename')),
                           $selected);
         ExitWiki ("");
