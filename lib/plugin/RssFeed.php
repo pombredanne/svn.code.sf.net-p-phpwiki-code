@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RssFeed.php,v 1.2 2004-04-12 16:21:01 rurban Exp $');
+rcs_id('$Id: RssFeed.php,v 1.3 2004-04-12 17:13:44 rurban Exp $');
 /*
  Copyright 2003 Arnaud Fontaine
 
@@ -39,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     // Establish default values for each of this plugin's arguments.
@@ -47,7 +47,9 @@ extends WikiPlugin
         return array('feed' 		=> "",
                      'description' 	=> "",
                      'url' 		=> "", //"http://phpwiki.sourceforge.net/phpwiki/RecentChanges?format=rss",
-                     'maxitem' 		=> 0);
+                     'maxitem' 		=> 0,
+                     'debug' 		=> false,
+                     );
    }
 
     function run($dbi, $argstr, $request, $basepage) {
@@ -56,7 +58,7 @@ extends WikiPlugin
         $xml_parser = xml_parser_create();
         $rss_parser = new RSSParser();
         if (!empty($url))
-            $rss_parser->parse_results( $xml_parser, &$rss_parser, $url );
+            $rss_parser->parse_results( $xml_parser, &$rss_parser, $url,$debug);
 
         if (!empty($rss_parser->channel['title'])) $feed = $rss_parser->channel['title'];
         if (!empty($rss_parser->channel['link']))  $url  = $rss_parser->channel['link'];
@@ -70,7 +72,7 @@ extends WikiPlugin
             } else {
                 $titre = HTML::span($rss_parser->channel['title']);
             }
-            $th = HTML::div(array('class'=> 'feed'),$titre);
+            $th = HTML::div(array('class'=> 'feed'), $titre);
             if (!empty($description))
                 $th->pushContent(HTML::p(array('class' => 'chandesc'),
                                          HTML::raw($description)));
