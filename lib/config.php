@@ -2,7 +2,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.9 2000-10-28 17:44:00 ahollosi Exp $');
+   rcs_id('$Id: config.php,v 1.10 2000-10-30 07:41:10 ahollosi Exp $');
 
    /*
       Constants and settings. Edit the values below for
@@ -223,8 +223,8 @@
 
    // Apache won't show REMOTE_HOST unless the admin configured it
    // properly. We'll be nice and see if it's there.
-   empty($REMOTE_HOST) ?
-      ($remoteuser = $REMOTE_ADDR) : ($remoteuser = $REMOTE_HOST);
+   getenv('REMOTE_HOST') ? ($remoteuser = getenv('REMOTE_HOST'))
+                         : ($remoteuser = getenv('REMOTE_ADDR'));
 
    // constants used for HTML output. List tags like UL and 
    // OL have a depth of one, PRE has a depth of 0.
