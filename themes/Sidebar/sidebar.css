@@ -1,14 +1,14 @@
 /*
-  $Id: sidebar.css,v 1.4 2002-02-06 20:11:57 carstenklapp Exp $
+  $Id: sidebar.css,v 1.5 2002-02-07 21:42:28 carstenklapp Exp $
 */
 @import url("../../phpwiki.css");
 
 #navbar {
+    line-height: 2.5ex;
     position: absolute;
-    width: 9em;
-    left:  1em;
-    top:   4em;
-    line-height: 1.4;
+    top:    10ex; /*6ex*/
+    width: 11em;
+    left:   1em;
 }
 
 body {
@@ -16,11 +16,11 @@ body {
 }
 
 #actionbar {
+    line-height: 2.5ex;
     position: absolute;
-    width: 9em;
-    left:  1em;
-    top:  13.4em;
-    line-height: 1.4;
+    top:   31.5ex; /*31.5ex*/
+    width: 11em;
+    left:   1em;
 }
 
 /* ie5 mac allows html img align to override this.
@@ -29,14 +29,14 @@ body {
 #logo {
     position: absolute;
     left: 1em;
-    top:  1em;
+    top:  1ex;
 }
 
 /* ie5 mac sometimes ignores the bottom position of classes so id is used instead. */
 #xhtml-validator {
     position: absolute;
     left:   1em;
-    bottom: 1em;
+    bottom: 1ex;
 }
 
 /* For emacs users
