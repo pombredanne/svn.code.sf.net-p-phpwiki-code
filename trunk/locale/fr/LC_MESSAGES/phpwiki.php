@@ -2,16 +2,18 @@
 
 $locale["%4d  %s\n"] =
    "%4d  %s\n";
+$locale["%s Kb (%s bytes)"] =
+   "%s Ko (%s octets)";
 $locale["%s at %s"] =
    "%s : %s";
+$locale["%s bytes"] =
+   "%s octets";
 $locale["%s bytes written"] =
    "%s octets enregistrés";
 $locale["%s days"] =
    "%s jours";
 $locale["%s is empty."] =
    "%s est vide.";
-$locale["%s of the page. You should now see the most current version of the page. Your changes are no longer there."] =
-   "%s de la page. Vous devriez voir maintenant la version la plus récente de la page. Vos modifications n'y sont plus.";
 $locale["%s of this page"] =
    "%s de cette page";
 $locale["%s pages link to %s:"] =
@@ -32,6 +34,8 @@ $locale["%s: error while handling error:"] =
    "%s : erreur pendant la gestion de l'erreur :";
 $locale["%s: file not found"] =
    "%s : fichier non trouvé";
+$locale["%s: not defined"] =
+   "%s : non défini";
 $locale["(Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor.)"] =
    "(Copiez vos modifications dans le presse-papier. Vous pouvez essayer d'éditer une page différente ou sauver votre texte dans un éditeur).";
 $locale["(diff)"] =
@@ -66,6 +70,8 @@ $locale["An unnamed PhpWiki"] =
    "Un PhpWiki sans titre";
 $locale["Author will be logged as %s."] =
    "L'auteur sera enregistré sous le nom %s.";
+$locale["Author:"] =
+   "Auteur :";
 $locale["BAD URL -- remove all of <, >, \""] =
    "MAUVAIS URL -- retirez tous les <, >, \"";
 $locale["BAD phpwiki: URL"] =
@@ -102,8 +108,6 @@ $locale["Conflicting Edits!"] =
    "Conflit d'Éditions !";
 $locale["Contents"] =
    "Table des Matières";
-$locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
-   "Copiez vos modifications dans le presse-papier ou un autre emplacement temporaire (un éditeur de texte par exemple).";
 $locale["Created directory '%s' for the page dump..."] =
    "Répertoire '%s' créé pour le vidage...";
 $locale["DBA files are in the %s directory. Please read the INSTALL file and move the DB file to a permanent location or risk losing all the pages!"] =
@@ -112,6 +116,8 @@ $locale["Date Format"] =
    "Format de Date";
 $locale["DebugInfo"] =
    "DebugInfo";
+$locale["Default InterWiki map file not loaded."] =
+   "Carte InterWiki par défaut non chargée.";
 $locale["Deleted."] =
    "Effacé.";
 $locale["Describe %s here."] =
@@ -124,6 +130,8 @@ $locale["Differences between %s and %s of %s."] =
    "Différences entre %s et %s de %s.";
 $locale["Dump Pages"] =
    "Vider les Pages";
+$locale["Dump Pages as XHTML"] =
+   "Vider les Pages au format XHTML";
 $locale["Dumping Pages"] =
    "Vidage des pages";
 $locale["Edit"] =
@@ -138,8 +146,6 @@ $locale["Edit Old Revision"] =
    "Éditer la Version Archivée";
 $locale["Edit aborted."] =
    "Édition annulée.";
-$locale["Edit the new version"] =
-   "Éditer la nouvelle version";
 $locale["Edit: %s"] =
    "Éditer : %s";
 $locale["EditText"] =
@@ -178,6 +184,8 @@ $locale["History of changes."] =
    "Historique des changements.";
 $locale["Hits"] =
    "Visites";
+$locale["Hits:"] =
+   "Visites :";
 $locale["HomePage"] =
    "Accueil";
 $locale["I'm just doing minor edits. Please divert the usual logging to %s instead."] =
@@ -188,9 +196,7 @@ $locale["Image loaded from cache file: %s"] =
    "Image chargée depuis le fichier cache : %s";
 $locale["Image saved to cache file: %s"] =
    "Image sauvée dans le fichier cache : %s";
-$locale["In order to recover from this situation, follow these steps:"] =
-   "Pour remettre de l'ordre dans cette situation, suivez ces étapes :";
-$locale["In the time since you started editing this page, another user has saved a new version of it.  Your changes can not be saved, since doing so would overwrite the other author's changes."] =
+$locale["In the time since you started editing this page, another user has saved a new version of it.  Your changes can not be saved as they are, since doing so would overwrite the other author's changes."] =
    "Depuis que vous avez commencé à éditer cette page, un autre utilisateur en a enregistré une nouvelle version. Vos modifications ne peuvent être enegistrées, puisqu'elles écraseraient celles de l'autre utilisateur.";
 $locale["Include of '%s' failed"] =
    "L'insertion de ' %s ' a échoué";
@@ -198,8 +204,12 @@ $locale["IncludePage"] =
    "InsérezLaPage";
 $locale["Included from %s"] =
    "Inséré de %s";
+$locale["Info"] =
+   "InfosDeLaPage";
 $locale["Insufficient permissions."] =
    "Permissions insuffisantes.";
+$locale["InterWiki Address"] =
+   "Adress InterWiki";
 $locale["InterWikiMap"] =
    "CarteInterWiki";
 $locale["Invalid password or userid."] =
@@ -208,10 +218,16 @@ $locale["Last"] =
    "Finale";
 $locale["Last Author"] =
    "Auteur Précédent";
+$locale["Last Author:"] =
+   "Auteur Précédent :";
 $locale["Last Modified"] =
    "Dernière Modification";
+$locale["Last Modified:"] =
+   "Dernière Modification :";
 $locale["Last Summary"] =
    "Dernier Résumé";
+$locale["Last Summary:"] =
+   "Dernier Résumé :";
 $locale["Last edited %s."] =
    "Dernière modification %s.";
 $locale["Last edited on %s."] =
@@ -244,16 +260,18 @@ $locale["Locked"] =
    "Verrouillée";
 $locale["MIME file %s"] =
    "Fichier MIME %s";
-$locale["Make changes to the file again. Paste your additions from the clipboard (or text editor)."] =
-   "Réappliquez vos modifications, collez vos ajouts depuis le presse-papier (ou l'éditeur de texte).";
 $locale["Markup"] =
    "Marquage";
+$locale["Markup:"] =
+   "Marquage :";
 $locale["Minor Edit"] =
    "Édition Mineure";
 $locale["Modern"] =
    "Moderne";
 $locale["MostPopular"] =
    "LePlusVisité";
+$locale["Name"] =
+   "Nom de Page";
 $locale["New page."] =
    "Nouvelle page.";
 $locale["Newer page:"] =
@@ -280,14 +298,26 @@ $locale["One page links to %s:"] =
    "Une page pointe vers %s :";
 $locale["Optimizing %s"] =
    "Optimisation de %s";
+$locale["Original (1.2 or 1.0)"] =
+   "Original (1.2 ou 1.0)";
+$locale["Orphaned Pages"] =
+   "Pages Orphelines";
+$locale["Orphaned Pages in this wiki (%d total):"] =
+   "Pages Orphelines dans ce wiki (%d au total) :";
+$locale["OrphanedPages"] =
+   "PagesOrphelines";
 $locale["Other diffs:"] =
    "Autres comparaisons :";
+$locale["Other version"] =
+   "L'autre version";
 $locale["PHP was unable to create a new GD image stream. Read 'lib/plugin/text2png.php' for details."] =
    "PHP n'a pas pu créer un nouveau flux d'image GD. Lisez 'lib/plugin/text2png.php' pour plus de détails.";
 $locale["Page Locked"] =
    "Page Verrouillée";
 $locale["Page Name"] =
    "Nom de Page";
+$locale["Page Version:"] =
+   "Version de la Page :";
 $locale["Page names with prefix '%s'"] =
    "Noms de page ayant le préfixe ' %s '";
 $locale["Page names with suffix '%s'"] =
@@ -310,6 +340,8 @@ $locale["Password"] =
    "Mot de passe";
 $locale["PhpWikiAdministration"] =
    "AdministrationDePhpWiki";
+$locale["Please check it through and click Save to save it."] =
+   "Veuillez la vérifier et cliquer sur Enregistrer pour la sauver.";
 $locale["Plugin %s failed."] =
    "Plugin %s a échoué.";
 $locale["Preview"] =
@@ -332,10 +364,16 @@ $locale["Querying backend directly for '%s'"] =
    "Requête directe au backend pour '%s'";
 $locale["RandomPage"] =
    "PageAléatoire";
+$locale["Raw HTML is disabled in this wiki."] =
+   "Le HTML est interdit sur ce wiki.";
+$locale["Raw HTML is only allowed in locked pages."] =
+   "Le HTML n'est autorisé que dans les pages verrouillées.";
 $locale["RecentChanges"] =
    "DernièresModifs";
 $locale["RecentEdits"] =
    "ÉditionsRécentes";
+$locale["Redefinition of %s: %s"] =
+   "Redéfinition du %s : %s";
 $locale["References"] =
    "Références";
 $locale["Remove Page"] =
@@ -356,8 +394,8 @@ $locale["Revision Not Found"] =
    "Révision Non Trouvée";
 $locale["Save"] =
    "Enregistrer";
-$locale["Save your updated changes."] =
-   "Enregistrez vos modifications mises à jour.";
+$locale["Saved on:"] =
+   "Enregistrée le :";
 $locale["Saved: %s"] =
    "Enregistrée : %s";
 $locale["Saving this page will overwrite the current version."] =
@@ -388,16 +426,26 @@ $locale["Simple Sample Plugin"] =
    "Exemple Simple de Plugin";
 $locale["Since you started the deletion process, someone has saved a new version of %s.  Please check to make sure you still want to permanently remove the page from the database."] =
    "Depuis que vous avez entamé le processus d'effacement, quelqu'un a enregistré une nouvelle version de %s. Veuillez vérifier que vous désirez toujours retirer de façon permanente cette page de la base de données.";
+$locale["Size:"] =
+   "Taille :";
 $locale["Skipping"] =
    "Ignoré";
+$locale["So, your changes and those of the other author have been combined.  The result is shown below"] =
+   "Ainsi donc, vos modifications et celles de l'autre auteur ont été combinées. Le résultat est affiché ci-dessous";
+$locale["Some of the changes could not automatically be combined.  Please look for sections beginning with <<<<<<< Your version, and ending with >>>>>>> Other version.  You will need to edit those sections by hand, and the click Save"] =
+   "Certaines modifications n'ont pas pu être combinées automatiquement. Veuillez regarder les sections commençant par <<<<<<< Votre version, et se terminant par >>>>>>> L'autre version. Vous devrez éditer ces sections à la main, puis cliquer sur Enregistrer";
 $locale["Someone has edited the page!"] =
    "Quelqu'un a édité la page !";
 $locale["Sorry for the inconvenience."] =
    "Désolé pour la gène occasionnée.";
 $locale["Sorry, this version of PHP cannot create PNG image files."] =
    "Désolé, cette version de PHP ne peut pas créer des fichiers d'image PNG.";
+$locale["Statistics about %s."] =
+   "Statistiques sur %s.";
 $locale["Summary:"] =
    "Résumé :";
+$locale["Supplanted on:"] =
+   "Remplacée le :";
 $locale["Synopsis"] =
    "Vue d'ensemble";
 $locale["TextFormattingRules"] =
@@ -420,6 +468,8 @@ $locale["The %d oldest %s during the past %s days are listed below."] =
    "Les %d %s les plus anciennes pendant les derniers %s jours sont listées ci-dessous.";
 $locale["The %d oldest %s during the past day are listed below."] =
    "Les %d %s les plus anciennes pendant le dernier jour sont listées ci-dessous.";
+$locale["The PhpWiki Programming Team"] =
+   "L'Équipe de Développement de PhpWiki";
 $locale["The PhpWiki programming team"] =
    "L'équipe de développement de PhpWiki";
 $locale["The current time at the server is %s."] =
@@ -472,6 +522,8 @@ $locale["Version"] =
    "Version";
 $locale["Version %d"] =
    "Version %d";
+$locale["Version %s"] =
+   "Version %s";
 $locale["Version %s, saved %s."] =
    "Version %s, enregistrée %s.";
 $locale["Version %s, saved on %s."] =
@@ -520,6 +572,8 @@ $locale["You must specify a directory to dump to"] =
    "Vous devez spécifier un répertoire de vidage";
 $locale["Your careful attention to detail is much appreciated."] =
    "Votre souci particulier du détail est très apprécié.";
+$locale["Your version"] =
+   "Votre version";
 $locale["[%d] See [%s]"] =
    "[%d] Voir [%s]";
 $locale["argument '%s' not declared by plugin"] =
