@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.13 2002-01-28 18:49:08 dairiki Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.14 2002-01-30 00:43:07 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -116,7 +116,7 @@ class HTML extends HtmlElement {
     // mkfuncs tt u sup sub
     // mkfuncs ul ol dl li dt dd
     // mkfuncs table caption thead tbody tfoot tr td th
-    // mkfuncs form input
+    // mkfuncs form input textarea
     function link (/*...*/) {
         $el = new HtmlElement('link');
         return $el->_init2(func_get_args());
@@ -285,6 +285,10 @@ class HTML extends HtmlElement {
         $el = new HtmlElement('input');
         return $el->_init2(func_get_args());
     }
+    function textarea (/*...*/) {
+        $el = new HtmlElement('textarea');
+        return $el->_init2(func_get_args());
+    }
 }
 
 define('HTMLTAG_EMPTY', 1);
@@ -321,7 +325,43 @@ HTML::_setTagProperty(HTMLTAG_INLINE,
                       . 'button input label select textarea ' //%formctl
                       );
 
-      
+/**
+ * Generate hidden form input fields.
+ *
+ * @param $query_args hash  A hash mapping names to values for the hidden inputs.
+ * Values in the hash can themselves be hashes.  The will result in hidden inputs
+ * which will reconstruct the nested structure in the resulting query args (as
+ * processed by PHP.
+ *
+ * Example:
+ *
+ * $args = array('x' => '2',
+ *               'y' => array('a' => 'aval', 'b' => 'bval'));
+ * $inputs = HiddenInputs($args);
+ *
+ * Will result in:
+ *
+ *  <input type="hidden" name="x" value = "2" />
+ *  <input type="hidden" name="y[a]" value = "aval" />
+ *  <input type="hidden" name="y[b]" value = "bval" />
+ *
+ * @return object An XmlContent object containing the inputs.
+ */
+function HiddenInputs ($query_args, $pfx = false) {
+    $inputs = HTML();
+    
+    foreach ($query_args as $key => $val) {
+        $name = $pfx ? $pfx . "[$key]" : $key;
+        if (is_array($val))
+            $inputs->pushContent(HiddenInputs($val, $name));
+        else
+            $inputs->pushContent(HTML::input(array('type' => 'hidden',
+                                                   'name' => $name,
+                                                   'value' => $val)));
+    }
+    return $inputs;
+}
+
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php
