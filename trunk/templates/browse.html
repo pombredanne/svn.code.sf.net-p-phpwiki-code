@@ -4,9 +4,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- phpwiki source:
-$Id: browse.html,v 1.24 2001-12-10 20:53:40 carstenklapp Exp $
+$Id: browse.html,v 1.25 2001-12-11 22:41:40 dairiki Exp $
 ${RCS_IDS}
 -->
+<meta name="keywords" content="${SPLIT_PAGE}, ${WIKI_NAME}" />
+<?php if (!empty($PAGE_DESCRIPTION)) { ?>
+  <meta name="description" content="${PAGE_DESCRIPTION}" />
+<?php } ?>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <!-- <meta name="robots" content="index,follow" /> -->
 <base href="${BASE_URL}" />
@@ -19,7 +23,7 @@ ${RCS_IDS}
 <div><a class="wikilink" 
         href="${BROWSE}HomePage"
         ><img src="${LOGO}"
-              border="0" alt="[phpwiki]" 
+              border="0" alt="${WIKI_NAME}" 
               align="right" width="50" height="50" /></a></div>
 <h1>
 <?plugin-link BackLinks description=_("Get BackLinks for [pagename]")

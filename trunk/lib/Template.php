@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.4 2001-11-29 02:59:21 dairiki Exp $');
+<?php rcs_id('$Id: Template.php,v 1.5 2001-12-11 22:41:40 dairiki Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -276,6 +276,7 @@ extends TemplateFile
         // FIXME: This a a bit of dangerous hackage.
         $this->qreplace('BROWSE', WikiURL(''));
         $this->qreplace('CSS_URL', DataURL(CSS_URL));
+        $this->qreplace('WIKI_NAME', WIKI_NAME);
 
         if (isset($user))
             $this->setWikiUserTokens($user);

@@ -35,7 +35,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.0-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.38 2001-12-07 05:37:13 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.39 2001-12-11 22:41:38 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -43,6 +43,11 @@ rcs_id('$Id: index.php,v 1.38 2001-12-07 05:37:13 carstenklapp Exp $');
 // Authentication and security settings:
 // 
 /////////////////////////////////////////////////////////////////////
+
+// The name of your wiki.
+// This is used to generate a keywords meta tag in the HTML templates,
+// and during RSS generation for the <title> of the RSS channel.
+//define('WIKI_NAME', 'PhpWiki');
 
 // If set, we will perform reverse dns lookups to try to convert the users
 // IP number to a host name, even if the http server didn't do it for us.
