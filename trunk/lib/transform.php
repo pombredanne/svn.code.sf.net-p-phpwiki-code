@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.16 2001-02-14 05:22:49 dairiki Exp $');
+<?php rcs_id('$Id: transform.php,v 1.17 2001-02-15 21:37:08 dairiki Exp $');
 
 define('WT_SIMPLE_MARKUP', 0);
 define('WT_TOKENIZER', 1);
@@ -553,12 +553,12 @@ function wtm_table($line, &$trfrm)
       if (strlen($m[2]) > 0)
 	 $td['rowspan'] = strlen($m[2]) + 1;
       
-      if ($m[3] == '<')
-	 $td['align'] = 'left';
+      if ($m[3] == '^')
+	 $td['align'] = 'center';
       else if ($m[3] == '>')
 	 $td['align'] = 'right';
       else
-	 $td['align'] = 'center';
+	 $td['align'] = 'left';
       
       $row .= $trfrm->token(StartTag('td', $td) . "&nbsp;");
       $row .= trim($m[4]);
