@@ -1,5 +1,5 @@
 /* 
- * $Id: phpwiki-heavy.css,v 1.8 2002-01-26 03:18:23 carstenklapp Exp $
+ * $Id: phpwiki-heavy.css,v 1.9 2002-01-26 07:16:11 carstenklapp Exp $
  *
  * phpwiki-heavy.css
  *
@@ -32,16 +32,6 @@ a.wikiaction, a.wikiadmin, input.button
  padding-left: .5em;
  padding-right: .5em;
 }
-
-/* reduces the size of "(diff)" buttons in RecentChanges a bit so they
-   don't overlap as much (for mozilla)
-   This, too, completely screws up NS4. */
-div.wikitext .wikiaction
-    { font-size:  smaller;
-      padding-top:    0pt;
-      padding-left:   2pt;
-      padding-bottom: 0pt;
-      padding-right:  2pt; }
 
 /* Link icons - This screws up NS4 */
 img.linkicon		{ vertical-align: middle; }
