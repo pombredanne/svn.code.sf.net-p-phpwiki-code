@@ -171,12 +171,6 @@ into the mod_alias section as shown below.
     Alias /icons/ "/usr/share/httpd/icons/"
 
 #PhpWiki 1.3 aliases
-    Alias /wiki/phpwiki.css       "/Library/WebServer/Documents/phpwiki/phpwiki.css"
-    Alias /wiki/phpwiki-heavy.css "/Library/WebServer/Documents/phpwiki/phpwiki-heavy.css"
-    Alias /wiki/phpwiki-modern.css        "/Library/WebServer/Documents/phpwiki/phpwiki-modern.css"
-    Alias /wiki/phpwiki-mordern-heavy.css "/Library/WebServer/Documents/phpwiki/phpwiki-mordern-heavy.css"
-    Alias /wiki/phpwiki-printer.css "/Library/WebServer/Documents/phpwiki/phpwiki-printer.css"
-    Alias /wiki/phpwiki-topbottombars.css "/Library/WebServer/Documents/phpwiki/phpwiki-topbottombars.css"
     Alias /wiki/themes/ "/Library/WebServer/Documents/phpwiki/themes/"
     Alias /wiki/themes  "/Library/WebServer/Documents/phpwiki/themes"
     Alias /wiki/favicon.ico "/Library/WebServer/Documents/phpwiki/favicon.ico"
@@ -358,4 +352,4 @@ phpwiki-talk list at phpwiki-talk@lists.sourceforge.net.
 Carsten Klapp
 carstenklapp@mac.com
 
-$Id: INSTALL.MacOSX,v 1.13 2002-02-23 23:32:29 carstenklapp Exp $
+$Id: INSTALL.MacOSX,v 1.14 2002-03-06 02:21:16 carstenklapp Exp $
