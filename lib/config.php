@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.95 2004-04-10 04:23:10 rurban Exp $');
+rcs_id('$Id: config.php,v 1.96 2004-04-12 10:08:34 rurban Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -271,6 +271,9 @@ else {
         $bindtextdomain_real = @bindtextdomain("phpwiki", $bindtextdomain);
     }
     textdomain("phpwiki");
+    if ($bindtextdomain_real != $bindtextdomain_path) { // change back
+        chdir($bindtextdomain_real . (isWindows() ? "\\.." : "/.."));
+    }
 }
 
 /** string pcre_fix_posix_classes (string $regexp)
