@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.55 2004-07-03 16:51:06 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.56 2004-07-04 10:24:43 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -704,6 +704,7 @@ extends WikiDB_backend
     function _update_recent_table($pageid = false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
+        extract($this->_expressions);
 
         $pageid = (int)$pageid;
 
@@ -1030,6 +1031,12 @@ extends WikiDB_backend_PearDB_generic_iter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.55  2004/07/03 16:51:06  rurban
+// optional DBADMIN_USER:DBADMIN_PASSWD for action=upgrade (if no ALTER permission)
+// added atomic mysql REPLACE for PearDB as in ADODB
+// fixed _lock_tables typo links => link
+// fixes unserialize ADODB bug in line 180
+//
 // Revision 1.54  2004/06/29 08:52:24  rurban
 // Use ...version() $need_content argument in WikiDB also:
 // To reduce the memory footprint for larger sets of pagelists,
