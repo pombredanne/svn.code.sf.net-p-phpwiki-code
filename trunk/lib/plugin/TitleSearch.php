@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TitleSearch.php,v 1.18 2003-02-21 04:16:51 dairiki Exp $');
+rcs_id('$Id: TitleSearch.php,v 1.19 2003-03-07 02:50:16 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.18 $");
+                            "\$Revision: 1.19 $");
     }
 
     function getDefaultArguments() {
@@ -71,14 +71,19 @@ extends WikiPlugin
             $last_name = $page->getName();
         }
 
-        if ($auto_redirect && ($pagelist->getTotal() == 1))
-            $request->redirect(WikiURL($last_name, false, 'absurl'), false);
+        if ($auto_redirect && ($pagelist->getTotal() == 1)) {
+            return HTML($request->redirect(WikiURL($last_name, false, 'absurl'), false),
+                        $pagelist);
+        }
 
         return $pagelist;
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.18  2003/02/21 04:16:51  dairiki
+// Don't NORETURN from redirect.
+//
 // Revision 1.17  2003/01/18 22:08:01  carstenklapp
 // Code cleanup:
 // Reformatting & tabs to spaces;
