@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.111 2004-05-17 17:43:29 rurban Exp $');
+rcs_id('$Id: config.php,v 1.112 2004-06-02 18:01:46 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -158,7 +158,7 @@ function guessing_setlocale ($category, $locale) {
 }
 
 function update_locale($loc) {
-    require_once(dirname(__FILE__)."/FileFinder.php");
+    //require_once(dirname(__FILE__)."/FileFinder.php");
     $newlocale = guessing_setlocale(LC_ALL, $loc);
     if (!$newlocale) {
         //trigger_error(sprintf(_("Can't setlocale(LC_ALL,'%s')"), $loc), E_USER_NOTICE);
@@ -186,7 +186,7 @@ function update_locale($loc) {
         global $locale;
         $locale = array();
         // do reinit to purge PHP's static cache
-        if ( ($lcfile = FindLocalizedFile("LC_MESSAGES/phpwiki.php", 'missing_ok','reinit')) ) {
+        if ( ($lcfile = FindLocalizedFile("LC_MESSAGES/phpwiki.php", 'missing_ok', 'reinit')) ) {
             include($lcfile);
         }
     }
@@ -323,6 +323,9 @@ if (!function_exists('is_scalar')) { // lib/stdlib.php:hash()
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.111  2004/05/17 17:43:29  rurban
+// CGI: no PATH_INFO fix
+//
 // Revision 1.110  2004/05/16 23:10:44  rurban
 // update_locale wrongly resetted LANG, which broke japanese.
 // japanese now correctly uses EUC_JP, not utf-8.

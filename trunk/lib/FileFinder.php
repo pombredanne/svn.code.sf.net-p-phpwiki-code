@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.20 2004-05-27 17:49:05 rurban Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.21 2004-06-02 18:01:45 rurban Exp $');
 
 require_once(dirname(__FILE__).'/stdlib.php');
 
@@ -64,7 +64,7 @@ class FileFinder
     	    foreach ($path as $dir) { $result[] = $this->forcePathSlashes($dir,$sep); }
     	    return $result;
     	} else {
-            if ($this->_isOtherPathsep()) {
+            if (isWindows() or $this->_isOtherPathsep()) {
                 if (isMac()) $from = ":";
                 elseif (isWindows()) $from = "\\";
                 else $from = "\\";
@@ -197,7 +197,7 @@ class FileFinder
     function _search_path ($file) {
         foreach ($this->_path as $dir) {
             // ensure we use the same pathsep
-            if ($this->_pathsep != '/') {
+            if ($this->_isOtherPathsep()) {
             	$dir = $this->slashifyPath($dir);
             	$file = $this->slashifyPath($file);
                 if (file_exists($dir . $this->_pathsep . $file))
@@ -442,7 +442,8 @@ function FindFile ($file, $missing_okay = false, $slashify = false)
     	$finder->_append_to_include_path($wikidir);
     	$finder->_append_to_include_path(dirname(__FILE__)."/pear");
         // Don't override existing INCLUDE_PATH config.
- 	define("INCLUDE_PATH", implode($finder->_get_ini_separator(), $finder->_path));
+        if (!defined("INCLUDE_PATH"))
+ 	    define("INCLUDE_PATH", implode($finder->_get_ini_separator(), $finder->_path));
     }
     $s = $finder->findFile($file, $missing_okay);
     if ($slashify)
@@ -554,6 +555,15 @@ function isCygwin() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2004/05/27 17:49:05  rurban
+// renamed DB_Session to DbSession (in CVS also)
+// added WikiDB->getParam and WikiDB->getAuthParam method to get rid of globals
+// remove leading slash in error message
+// added force_unlock parameter to File_Passwd (no return on stale locks)
+// fixed adodb session AffectedRows
+// added FileFinder helpers to unify local filenames and DATA_PATH names
+// editpage.php: new edit toolbar javascript on ENABLE_EDIT_TOOLBAR
+//
 //
 
 // Local Variables:
