@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.41 2004-03-27 13:39:58 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.42 2004-03-27 13:48:23 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -2191,6 +2191,7 @@ extends _UserPreference
      *                ...);
      */
     function update ($value) {
+    	if (!empty($this->_init)) return;
         $dbh = $GLOBALS['request']->getDbh();
         $notify = $dbh->get('notify');
         if (empty($notify))
@@ -2258,26 +2259,13 @@ extends _UserPreference
             return $this->default_value;
         }
     }
-
-    // stores the value as $this->$name, and not as $this->value (clever?)
-    function set ($name, $value) {
-    	$new = $this->get($name);
-	if ($new and $name = 'email' and $new != $value) {
-	    // don't update on init	
-	    $this->update($value);
-	}
-	if ($value != $this->default_value) {
-	    $this->{$name} = $value;
-        }
-        else 
-            unset($this->{$name});
-    }
     
     /** Side-effect on email changes:
      * Send a verification mail or for now just a notification email.
      * For true verification (value = 2), we'd need a mailserver hook.
      */
     function update ($value) {
+    	if (!empty($this->_init)) return;
         $verified = $this->getraw('emailVerified');
         if (!empty($value) and !$verified) {
             list($ok,$msg) = ValidateMail($value);
@@ -2442,17 +2430,22 @@ class UserPreferences
         $this->_prefs[$name] = $pref;
         return true;
     }
-
+    /**
+     * use init to avoid update on set
+     */
     function updatePrefs($prefs, $init = false) {
         $count = 0;
         if ($init) $this->_init = $init;
         if (is_object($prefs)) {
             $type = 'emailVerified'; $obj =& $this->_prefs['email'];
+            if ($init) $obj->_init = $init;
             if ($obj->get($type) !== $prefs->get($type)) {
                 $obj->set($type,$prefs->get($type));
                 $count++;
             }
             foreach (array_keys($this->_prefs) as $type) {
+            	$obj =& $this->_prefs[$type];
+                if ($init) $obj->_init = $init;
                 if ($this->_prefs[$type]->get($type) !== $prefs->get($type)) {
                     $this->_prefs[$type]->set($type,$prefs->get($type));
                     $count++;
@@ -2460,12 +2453,14 @@ class UserPreferences
             }
         } elseif (is_array($prefs)) {
             $type = 'emailVerified'; $obj =& $this->_prefs['email'];
+            if ($init) $obj->_init = $init;
             if (isset($prefs[$type]) and $obj->get($type) !== $prefs[$type]) {
                 $obj->set($type,$prefs[$type]);
                 $count++;
             }
             foreach (array_keys($this->_prefs) as $type) {
             	$obj =& $this->_prefs[$type];
+                if ($init) $obj->_init = $init;
                 if (isset($prefs[$type]) and $obj->get($type) != $prefs[$type]) {
                     $obj->set($type,$prefs[$type]);
                     $count++;
