@@ -1,5 +1,5 @@
 /*
-  $Id: phpwiki.css,v 1.24 2002-01-22 15:36:42 dairiki Exp $
+  $Id: phpwiki.css,v 1.25 2002-01-23 03:24:01 carstenklapp Exp $
 
   Classes:
 
@@ -149,6 +149,10 @@ b .wiki, strong .wiki { font-size: larger; }
 
 .wikiunknown, .named-wikiunknown
 { color: #600; }
+
+/* This renders the ? invisible in OW4.1 < sp29 */
+.wikiunknown A, .named-wikiunknown
+{ color: white; background-color: #600; }
 
 /* Interwiki links */
 a.interwiki { text-decoration: none; }
