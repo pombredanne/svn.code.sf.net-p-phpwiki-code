@@ -1,4 +1,4 @@
--- $Id: oci8-destroy.sql,v 1.1 2004-07-22 16:50:07 dfrankow Exp $
+-- $Id: oci8-destroy.sql,v 1.2 2005-02-27 09:33:05 rurban Exp $
 
 set verify off
 set feedback off
@@ -37,41 +37,16 @@ prompt overwriting existing tables.
 prompt 
 
 define page_tbl=&prefix.page
-define page_id=&prefix.page_id
-define page_nm=&prefix.page_nm
-
 define version_tbl=&prefix.version
-define vers_id=&prefix.vers_id
-define vers_mtime=&prefix.vers_mtime
-
 define recent_tbl=&prefix.recent
-define recent_id=&prefix.recent_id
-
 define nonempty_tbl=&prefix.nonempty
-define nonmt_id=&prefix.nonmt_id
-
 define link_tbl=&prefix.link
-define link_from=&prefix.link_from
-define link_to=&prefix.link_to
-
 define session_tbl=&prefix.session
-define sess_id=&prefix.sess_id
-define sess_date=&prefix.sess_date
-define sess_ip=&prefix.sess_ip
-
 define pref_tbl=&prefix.pref
-define pref_id=&prefix.pref_id
-
 define user_tbl=&prefix.user
-define user_id=&prefix.user_id
-
 define member_tbl=&prefix.member
-define member_userid=&prefix.member_userid
-define member_groupname=&prefix.member_groupname
-
 define rating_tbl=&prefix.rating
-define rating_id=&prefix.rating_id
-
+define accesslog_tbl=&prefix.accesslog
 
 prompt Dropping &page_tbl
 DROP TABLE &page_tbl;
@@ -110,3 +85,6 @@ DROP TABLE &member_tbl;
 -- if you plan to use the wikilens theme
 prompt Dropping &rating_tbl
 DROP TABLE &rating_tbl;
+
+prompt Dropping &accesslog_tbl
+DROP TABLE &accesslog_tbl;

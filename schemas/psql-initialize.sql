@@ -1,4 +1,4 @@
--- $Id: psql-initialize.sql,v 1.1 2004-07-22 16:49:20 dfrankow Exp $
+-- $Id: psql-initialize.sql,v 1.2 2005-02-27 09:33:05 rurban Exp $
 
 \set QUIET
 
@@ -63,12 +63,19 @@
 \set pref_tbl		:prefix 'pref'
 \set pref_id		:prefix 'pref_id'
 
+\set rating_tbl		:prefix 'rating'
+
+\set accesslog_tbl	:prefix 'accesslog'
+\set accesslog_time	:prefix 'log_time'
+\set accesslog_host     :prefix 'log_host'
+
 \echo Creating :page_tbl
 CREATE TABLE :page_tbl (
 	id		INT NOT NULL,
         pagename	VARCHAR(100) NOT NULL,
 	hits		INT NOT NULL DEFAULT 0,
-        pagedata	TEXT NOT NULL DEFAULT ''
+        pagedata	TEXT NOT NULL DEFAULT '',
+	cached_html 	TEXT DEFAULT ''    -- added with 1.3.11
 );
 CREATE UNIQUE INDEX :page_id ON :page_tbl (id);
 CREATE UNIQUE INDEX :page_nm ON :page_tbl (pagename);
@@ -133,10 +140,55 @@ CREATE TABLE :pref_tbl (
 );
 CREATE UNIQUE INDEX :pref_id ON :pref_tbl (userid);
 
-GRANT ALL ON :page_tbl		TO :httpd_user;
-GRANT ALL ON :version_tbl	TO :httpd_user;
-GRANT ALL ON :recent_tbl	TO :httpd_user;
-GRANT ALL ON :nonempty_tbl	TO :httpd_user;
-GRANT ALL ON :link_tbl		TO :httpd_user;
-GRANT ALL ON :session_tbl	TO :httpd_user;
-GRANT ALL ON :pref_tbl		TO :httpd_user;
+-- Use the user and member tables - if you need them - from the other schemas
+-- and adjust your DBAUTH_AUTH_ SQL statements
+
+-- if you plan to use the wikilens theme
+\echo Creating :rating_tbl
+CREATE TABLE :rating_tbl (
+        dimension NUMBER(4) NOT NULL,
+        raterpage NUMBER(11) NOT NULL,
+        rateepage NUMBER(11) NOT NULL,
+        ratingvalue FLOAT NOT NULL,
+        rateeversion NUMBER(11) NOT NULL,
+        tstamp TIMESTAMP NOT NULL
+);
+CREATE UNIQUE INDEX :rating_id ON :rating_tbl (dimension, raterpage, rateepage);
+
+-- if ACCESS_LOG_SQL > 0
+-- only if you need fast log-analysis (spam prevention, recent referrers)
+-- see http://www.outoforder.cc/projects/apache/mod_log_sql/docs-2.0/#id2756178
+\echo Creating :accesslog_tbl
+CREATE TABLE :accesslog_tbl (
+        time_stamp    INT UNSIGNED,
+	remote_host   VARCHAR(50),
+	remote_user   VARCHAR(50),
+        request_method VARCHAR(10),
+	request_line  VARCHAR(255),
+	request_args  VARCHAR(255),
+	request_file  VARCHAR(255),
+	request_uri   VARCHAR(255),
+	request_time  CHAR(28),
+	status 	      SMALLINT UNSIGNED,
+	bytes_sent    SMALLINT UNSIGNED,
+        referer       VARCHAR(255), 
+	agent         VARCHAR(255),
+	request_duration FLOAT
+);
+CREATE INDEX :accesslog_time ON :accesslog_tbl (time_stamp);
+CREATE INDEX :accesslog_host ON :accesslog_tbl (remote_host);
+-- create extra indices on demand (usually referer. see plugin/AccessLogSql)
+
+GRANT SELECT,INSERT,UPDATE,DELETE ON :page_tbl		TO :httpd_user;
+GRANT SELECT,INSERT,UPDATE,DELETE ON :version_tbl	TO :httpd_user;
+GRANT SELECT,INSERT,UPDATE,DELETE ON :recent_tbl	TO :httpd_user;
+GRANT SELECT,INSERT,UPDATE,DELETE ON :nonempty_tbl	TO :httpd_user;
+GRANT SELECT,INSERT,UPDATE,DELETE ON :link_tbl		TO :httpd_user;
+
+GRANT SELECT,INSERT,UPDATE,DELETE ON :session_tbl	TO :httpd_user;
+-- you may want to fine tune this:
+GRANT SELECT,INSERT,UPDATE,DELETE ON :pref_tbl		TO :httpd_user;
+-- GRANT SELECT ON :user_tbl	TO :httpd_user;
+-- GRANT SELECT ON :member_tbl	TO :httpd_user;
+GRANT SELECT,INSERT,UPDATE,DELETE ON :rating_tbl	TO :httpd_user;
+GRANT SELECT,INSERT,UPDATE,DELETE ON :accesslog_tbl	TO :httpd_user;

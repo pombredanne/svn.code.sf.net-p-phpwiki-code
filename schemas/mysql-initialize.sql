@@ -1,9 +1,10 @@
--- $Id: mysql-initialize.sql,v 1.6 2005-02-07 15:18:52 rurban Exp $
+-- $Id: mysql-initialize.sql,v 1.7 2005-02-27 09:33:05 rurban Exp $
 
 CREATE TABLE page (
 	id              INT NOT NULL AUTO_INCREMENT,
 -- for mysql => 4.1 define the charset here
--- this is esp. needed for mysql 4.1.0 up to 4.1.6. not yet confirmed, at least since 4.1.8 it's okay with binary.
+-- this is esp. needed for mysql 4.1.0 up to 4.1.6. 
+-- not yet confirmed, at least since 4.1.8 it's okay with binary.
 --      pagename        VARCHAR(100) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
 -- otherwise use the old syntax to do case-sensitive comparison
         pagename        VARCHAR(100) BINARY NOT NULL,
@@ -100,24 +101,30 @@ CREATE TABLE rating (
         tstamp TIMESTAMP(14) NOT NULL,
         PRIMARY KEY (dimension, raterpage, rateepage)
 );
+-- for empty dimensions use extra indices. see lib/wikilens/RatingsDb.php
+CREATE INDEX rating_dimension ON rating (dimension);
+CREATE INDEX rating_raterpage ON rating (raterpage);
+CREATE INDEX rating_rateepage ON rating (rateepage);
 
+-- if ACCESS_LOG_SQL > 0
 -- only if you need fast log-analysis (spam prevention, recent referrers)
 -- see http://www.outoforder.cc/projects/apache/mod_log_sql/docs-2.0/#id2756178
 CREATE TABLE accesslog (
-        time_stamp    int unsigned,
-	remote_host   varchar(50),
-	remote_user   varchar(50),
-        request_method varchar(10),
-	request_line  varchar(255),
-	request_args  varchar(255),
-	request_file  varchar(255),
-	request_uri   varchar(255),
-	request_time  char(28),
-	status 	      smallint unsigned,
-	bytes_sent    smallint unsigned,
-        referer       varchar(255), 
-	agent         varchar(255),
-	request_duration float
+        time_stamp    INT UNSIGNED,
+	remote_host   VARCHAR(50),
+	remote_user   VARCHAR(50),
+        request_method VARCHAR(10),
+	request_line  VARCHAR(255),
+	request_args  VARCHAR(255),
+	request_file  VARCHAR(255),
+	request_uri   VARCHAR(255),
+	request_time  CHAR(28),
+	status 	      SMALLINT UNSIGNED,
+	bytes_sent    SMALLINT UNSIGNED,
+        referer       VARCHAR(255), 
+	agent         VARCHAR(255),
+	request_duration FLOAT
 );
 CREATE INDEX log_time ON accesslog (time_stamp);
 CREATE INDEX log_host ON accesslog (remote_host);
+-- create extra indices on demand (usually referer. see plugin/AccessLogSql)

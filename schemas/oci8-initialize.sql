@@ -1,4 +1,4 @@
--- $Id: oci8-initialize.sql,v 1.1 2004-07-22 16:50:07 dfrankow Exp $
+-- $Id: oci8-initialize.sql,v 1.2 2005-02-27 09:33:05 rurban Exp $
 
 set verify off
 set feedback off
@@ -71,7 +71,13 @@ define member_groupname=&prefix.member_groupname
 
 define rating_tbl=&prefix.rating
 define rating_id=&prefix.rating_id
+define rating_dimension=&prefix.rating_dimension
+define rating_raterpage=&prefix.rating_raterpage
+define rating_rateepage=&prefix.rating_rateepage
 
+define accesslog_tbl=&prefix.accesslog
+define accesslog_time=&prefix.log_time
+define accesslog_host=&prefix.log_host
 
 prompt Creating &page_tbl
 CREATE TABLE &page_tbl (
@@ -79,6 +85,7 @@ CREATE TABLE &page_tbl (
         pagename	VARCHAR(100) NOT NULL,
 	hits		INT DEFAULT 0 NOT NULL,
         pagedata	CLOB DEFAULT '',
+	cached_html 	CLOB DEFAULT '',   -- added with 1.3.11
 	CONSTRAINT &page_id PRIMARY KEY (id),
 	CONSTRAINT &page_nm UNIQUE (pagename)
 );
@@ -171,3 +178,29 @@ CREATE TABLE &rating_tbl (
         tstamp TIMESTAMP NOT NULL,
         CONSTRAINT &rating_id PRIMARY KEY (dimension, raterpage, rateepage)
 );
+CREATE INDEX &rating_dimension ON &rating_tbl (dimension);
+CREATE INDEX &rating_raterpage ON &rating_tbl (raterpage);
+CREATE INDEX &rating_rateepage ON &rating_tbl (rateepage);
+
+-- if ACCESS_LOG_SQL > 0
+-- only if you need fast log-analysis (spam prevention, recent referrers)
+-- see http://www.outoforder.cc/projects/apache/mod_log_sql/docs-2.0/#id2756178
+prompt Creating &accesslog_tbl
+CREATE TABLE &accesslog_tbl (
+        time_stamp    INT UNSIGNED,
+	remote_host   VARCHAR(50),
+	remote_user   VARCHAR(50),
+        request_method VARCHAR(10),
+	request_line  VARCHAR(255),
+	request_args  VARCHAR(255),
+	request_file  VARCHAR(255),
+	request_uri   VARCHAR(255),
+	request_time  CHAR(28),
+	status 	      SMALLINT UNSIGNED,
+	bytes_sent    SMALLINT UNSIGNED,
+        referer       VARCHAR(255), 
+	agent         VARCHAR(255),
+	request_duration FLOAT
+);
+CREATE INDEX &accesslog_time ON &accesslog_tbl (time_stamp);
+CREATE INDEX &accesslog_host ON &accesslog_tbl (remote_host);
