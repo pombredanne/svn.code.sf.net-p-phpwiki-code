@@ -1,15 +1,14 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.11 2002-01-15 23:22:26 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.12 2002-01-17 05:46:19 carstenklapp Exp $');
 
 /**
- * This is really just a template to copy for designing new
- * themes. The real "default" theme is built into index.php, none of
- * the variables here point to any actual files.
+ * You can use this as a template to copy for designing new
+ * themes.
  */
 
 // To activate this theme, specify this setting in index.php:
-//$theme="default";
+$theme="default";
 // To deactivate themes, comment out all the $theme=lines in index.php.
 
 // CSS file defines fonts, colors and background images for this
@@ -23,18 +22,18 @@ $CSS_URLS = array_merge($CSS_URLS,
 */
 
 // Logo image appears on every page and links to the HomePage.
-//$logo = "themes/$theme/wikibase.png";
+$logo = "themes/$theme/images/logo.png";
 
 // RSS logo icon (path relative to index.php)
 // If this is left blank (or unset), the default "images/rss.png"
 // will be used.
-//$rssicon = "themes/$theme/rss.png";
+$rssicon = "themes/$theme/images/RSS.png";
 
 // Signature image which is shown after saving an edited page.  If
 // this is left blank, any signature defined in index.php will be
 // used. If it is not defined by index.php or in here then the "Thank
 // you for editing..." screen will be omitted.
-//$SignatureImg = "themes/$theme/signature.png";
+$SignatureImg = "themes/$theme/images/signature.png";
 
 // This defines separators used in RecentChanges and RecentEdits lists.
 // If undefined, defaults to '' (nothing) and '...' (three periods).
@@ -59,12 +58,12 @@ $templates = array(
 // override any link icon settings defined in index.php.
 /*
 $URL_LINK_ICONS = array(
-                        'http'      => "themes/$theme/icons/http.png",
-                        'https'     => "themes/$theme/icons/https.png",
-                        'ftp'       => "themes/$theme/icons/ftp.png",
-                        'mailto'    => "themes/$theme/icons/mailto.png",
-                        'interwiki' => "themes/$theme/icons/interwiki.png",
-                        '*'         => "themes/$theme/icons/url.png"
+                        'http'      => "themes/$theme/images/http.png",
+                        'https'     => "themes/$theme/images/https.png",
+                        'ftp'       => "themes/$theme/images/ftp.png",
+                        'mailto'    => "themes/$theme/images/mailto.png",
+                        'interwiki' => "themes/$theme/images/interwiki.png",
+                        '*'         => "themes/$theme/images/url.png"
                         );
 */
 
