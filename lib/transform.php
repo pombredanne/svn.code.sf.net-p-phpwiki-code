@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.40 2002-01-31 05:10:28 dairiki Exp $');
+<?php rcs_id('$Id: transform.php,v 1.41 2002-02-09 03:41:54 dairiki Exp $');
 require_once('lib/WikiPlugin.php');
 require_once('lib/HtmlElement.php');
 require_once('lib/interwiki.php');
@@ -93,10 +93,13 @@ class WikiTransform
     */
    function SetHTMLMode($tag, $level = 1)
    {
-      if (is_array($tag))
+      if (is_array($tag)) {
          $el = new HtmlElement($tag[0], $tag[1]);
-      else
+         $tag = $tag[0];
+      }
+      else {
          $el = new HtmlElement($tag);
+      }
 
       $this->mode_set = 1;	// in order to prevent other mode markup
 				// to be executed
