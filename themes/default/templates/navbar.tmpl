@@ -1,5 +1,5 @@
 <?php // -*-html-*-
-    rcs_id('$Id: navbar.tmpl,v 1.21 2003-11-25 21:58:33 carstenklapp Exp $');
+    rcs_id('$Id: navbar.tmpl,v 1.22 2004-02-17 12:21:31 rurban Exp $');
 
     $s = $Theme->getButtonSeparator();
 ?>
@@ -13,6 +13,7 @@
       <?php if (! USE_PATH_INFO) { ?>
       <input type="hidden" name="pagename" value="<?=_("TitleSearch")?>" />
       <?php } ?>
+      <input type="hidden" name="nocache" value="purge" /><input type="hidden" name="start_debug" value="<?=@$_GET['start_debug']?>" />
       <input type="text"  name="s" size="12" maxlength="256"
              title='<?=_("Quick Search")?>'
              onmouseover="window.status='<?=_("Quick Search")?>'; return true;"
