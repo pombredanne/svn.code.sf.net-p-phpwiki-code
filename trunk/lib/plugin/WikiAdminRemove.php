@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.24 2004-06-08 10:05:11 rurban Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.25 2004-06-13 15:33:20 rurban Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -46,12 +46,16 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.24 $");
+                            "\$Revision: 1.25 $");
     }
 
     function getDefaultArguments() {
         return array(
                      's' 	=> false,
+                     /* select pages by meta-data: */
+                     'author'   => false,
+                     'owner'    => false,
+                     'creator'  => false,
                      /*
                       * Show only pages which have been 'deleted' this
                       * long (in days).  (negative or non-numeric
@@ -245,6 +249,9 @@ class _PageList_Column_remove extends _PageList_Column {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2004/06/08 10:05:11  rurban
+// simplified admin action shortcuts
+//
 // Revision 1.23  2004/06/03 22:24:48  rurban
 // reenable admin check on !ENABLE_PAGEPERM, honor s=Wildcard arg, fix warning after Remove
 //

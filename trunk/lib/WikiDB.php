@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.68 2004-06-08 21:03:20 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.69 2004-06-13 15:33:20 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -1206,6 +1206,12 @@ class WikiDB_Page
         else return '';
     }
 
+    // The authenticated author of the current revision.
+    function getAuthor() {
+        if ($current = $this->getCurrentRevision()) return $current->get('author_id');
+        else return '';
+    }
+
 };
 
 /**
@@ -1842,6 +1848,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.68  2004/06/08 21:03:20  rurban
+// updated RssParser for XmlParser quirks (store parser object params in globals)
+//
 // Revision 1.67  2004/06/07 19:12:49  rurban
 // fixed rename version=0, bug #966284
 //

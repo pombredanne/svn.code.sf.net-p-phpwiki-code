@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllPages.php,v 1.21 2004-04-20 00:06:53 rurban Exp $');
+rcs_id('$Id: AllPages.php,v 1.22 2004-06-13 15:33:20 rurban Exp $');
 /**
- Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+ Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -37,12 +37,16 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.21 $");
+                            "\$Revision: 1.22 $");
     }
 
     function getDefaultArguments() {
         return array('noheader'      => false,
                      'include_empty' => false,
+                     /* select pages by meta-data: */
+                     'author'   => false,
+                     'owner'    => false,
+                     'creator'  => false,
                      'exclude'       => '',
                      'info'          => '',
                      'sortby'        => 'pagename',   // +mtime,-pagename
@@ -65,8 +69,20 @@ extends WikiPlugin
         elseif ($sortby)
             $request->setArg('sortby',$sortby);
 
-        if (! $request->getArg('count'))  $args['count'] = $dbi->numPages(false,$exclude);
-        else $args['count'] = $request->getArg('count');
+        if ($debug)
+            $timer = new DebugTimer;
+        if ( !empty($args['owner']) )
+            $pages = PageList::allPagesByOwner($args['owner'],$include_empty,$args['sortby'],$args['limit']);
+        elseif ( !empty($args['author']) )
+            $pages = PageList::allPagesByAuthor($args['author'],$include_empty,$args['sortby'],$args['limit']);
+        elseif ( !empty($args['creator']) ) {
+            $pages = PageList::allPagesByCreator($args['creator'],$include_empty,$args['sortby'],$args['limit']);
+        } else {
+            if (! $request->getArg('count'))  $args['count'] = $dbi->numPages(false,$exclude);
+            else $args['count'] = $request->getArg('count');
+        }
+        if (empty($args['count']) and $pages)
+            $args['count'] = count($pages);
         $pagelist = new PageList($info, $exclude, $args);
         //if (!$sortby) $sorted='pagename';
         if (!$noheader)
@@ -76,10 +92,10 @@ extends WikiPlugin
         if ($include_empty)
             $pagelist->_addColumn('version');
 
-        //if (defined('DEBUG') and DEBUG) $debug = true;
-        if ($debug)
-            $timer = new DebugTimer;
-        $pagelist->addPages( $dbi->getAllPages($include_empty, $sortby, $limit) );
+        if ( !empty($pages) )
+            $pagelist->addPageList($pages);
+        else
+            $pagelist->addPages( $dbi->getAllPages($include_empty, $sortby, $limit) );
         if ($debug) {
             return HTML($pagelist,
                         HTML::p(fmt("Elapsed time: %s s", $timer->getStats())));
@@ -95,6 +111,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.21  2004/04/20 00:06:53  rurban
+// paging support
+//
 // Revision 1.20  2004/02/22 23:20:33  rurban
 // fixed DumpHtmlToDir,
 // enhanced sortby handling in PageList
