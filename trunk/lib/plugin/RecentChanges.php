@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.44 2002-01-28 21:22:40 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.45 2002-01-29 02:26:05 carstenklapp Exp $');
 /**
  */
 
@@ -12,7 +12,7 @@ class _RecentChanges_Formatter
         $this->_args = $rc_args;
         $this->_diffargs = array('action' => 'diff');
 
-        if (!$rc_args['show_minor'])
+        if (!$rc_args['show_all'] || $rc_args['show_major'] && !$rc_args['show_minor'])
             $this->_diffargs['previous'] = 'major';
     }
 
