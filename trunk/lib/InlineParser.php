@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.52 2004-05-13 13:48:34 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.53 2004-05-24 17:36:32 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004 Reini Urban
  *
@@ -340,6 +340,7 @@ function LinkBracketLink($bracketlink) {
     // if label looks like a url to an image, we want an image link.
     if (isImageLink($label)) {
         $imgurl = $label;
+        $intermap = getInterwikiMap();
         if (preg_match("/^" . $intermap->getRegexp() . ":/", $label)) {
             $imgurl = $intermap->link($label);
             $imgurl = $imgurl->getAttr('href');
