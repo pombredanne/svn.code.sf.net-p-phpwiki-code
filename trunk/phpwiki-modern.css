@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki-modern.css,v 1.12 2002-02-10 05:06:37 carstenklapp Exp $
+ * $Id: phpwiki-modern.css,v 1.13 2002-02-10 05:36:18 carstenklapp Exp $
  *
  * Inspiration for this stylesheet:
  *
@@ -47,7 +47,7 @@ caption {
 
 /* Main wiki text box */
 body {
-  /* light grey */
+  /* light gray */
   background: #eee;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -152,7 +152,7 @@ h1 .backlinks {
   text-decoration: none;
 }
 h1 .wiki {
-  color: grey;
+  color: gray;
   text-decoration: none;
 }
 
@@ -211,7 +211,7 @@ caption { font-family: Arial, Helvetica, sans-serif; }
 
 #navbar, #actionbar {
   color:      black;
-  background: #ddd; /* dark grey */
+  background: #ddd; /* dark gray */
   margin-top:    0.1ex;
   margin-bottom: 1ex;
   margin-left:  1em;
@@ -219,7 +219,7 @@ caption { font-family: Arial, Helvetica, sans-serif; }
 }
 
 #actionbar table, #navbar {
-  border-top:    0.5pt solid black; /* medium grey */
+  border-top:    0.5pt solid black; /* medium gray */
   border-bottom: 0.5pt solid black;
   padding-top:    0.3ex;
   padding-bottom: 0.4ex;
@@ -235,7 +235,7 @@ caption { font-family: Arial, Helvetica, sans-serif; }
   padding-bottom: 0.3ex;
   padding-left:  0.5em; 
   padding-right: 0.5em; 
-  /* border-top: 0.5pt solid #666; * medium grey */
+  /* border-top: 0.5pt solid #666; * medium gray */
 }
 
 hr.ignore, hr.toolbar {
@@ -316,7 +316,7 @@ textarea.wikiedit {
  * Calendar plugin
  */
 table.cal {
-  border: thin outset grey;
+  border: thin outset gray;
   background: #ddd;
   padding: 1px;
   /* For Mozilla */
@@ -339,7 +339,7 @@ table.cal-header tr, table.cal-header td {
   color: white;
 }
 .cal-arrow {
-  color: grey;
+  color: gray;
   font-weight: bold;
   text-decoration: none;
 }
@@ -347,8 +347,8 @@ table.cal-header tr, table.cal-header td {
 /* Day-names header */
 table.cal tbody tr .cal-dayname { /* the html for this should really be in the thead */
   background: #eee;
-  border-top:    1px solid grey;
-  border-bottom: 1px solid grey;
+  border-top:    1px solid gray;
+  border-bottom: 1px solid gray;
 }
 .cal-dayname td {
   text-align: center;
@@ -363,7 +363,7 @@ a.cal-hide { text-decoration: none; }
  /* cell */
 table.cal td.cal-today {
   background: inherit;
-  border: 2px solid grey;
+  border: 2px solid gray;
 }
  /* text */
 table.cal td.cal-today a.cal-hide {
