@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.77 2004-03-08 19:30:01 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.78 2004-03-18 22:32:33 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -1041,7 +1041,11 @@ class Button extends HtmlElement {
      */
     function Button ($text, $url, $class = false) {
         global $request;
-        $this->HtmlElement('a', array('href' => $url));
+        //FIXME: php5 incompatible
+        if (check_php_version(5))
+            $this->_init('a', array('href' => $url));
+        else
+            $this->HtmlElement('a', array('href' => $url));
         if ($class)
             $this->setAttr('class', $class);
         if ($request->getArg('frame'))
@@ -1127,6 +1131,11 @@ class SubmitImageButton extends SubmitButton {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.77  2004/03/08 19:30:01  rurban
+// fixed Theme->getButtonURL
+// AllUsers uses now WikiGroup (also DB User and DB Pref users)
+// PageList fix for empty pagenames
+//
 // Revision 1.76  2004/03/08 18:17:09  rurban
 // added more WikiGroup::getMembersOf methods, esp. for special groups
 // fixed $LDAP_SET_OPTIONS
