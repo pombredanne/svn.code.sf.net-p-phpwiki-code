@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.55 2002-01-31 05:10:28 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.56 2002-02-15 14:14:13 lakka Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -59,7 +59,7 @@ setlocale(LC_ALL, "$LANG");
 // if PHP's safe_mode is enabled:
 //putenv("LC_ALL=$LANG");
 
-if (!function_exists ('gettext'))
+if (!function_exists ('bindtextdomain'))
 {
     $locale = array();
 
