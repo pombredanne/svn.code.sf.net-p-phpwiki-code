@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.2 2004-04-01 15:57:20 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.3 2004-04-06 20:00:11 rurban Exp $');
 /**
  */
 require_once('lib/Theme.php');
@@ -81,6 +81,76 @@ $Theme->setTimeFormat("%H:%M");
  * give a second argument of false:
  */
 //$Theme->setDateFormat("%B %d, %Y", false); 
+
+/**
+ * Custom UserPreferences:
+ * A list of name => _UserPreference class pairs.
+ * Rationale: Certain themes should be able to extend the predefined list 
+ * of preferences. Display/editing is done in the theme specific userprefs.tmpl
+ * but storage/sanification/update/... must be extended to the Get/SetPreferences methods.
+ */
+
+class _UserPreference_recengine // recommendation engine method
+extends _UserPreference
+{
+    var $valid_values = array('php','mysuggest','mymovielens','mycluto');
+    var $default_value = 'php';
+
+    function sanify ($value) {
+        if (!in_array($value,$this->valid_values)) return $this->default_value;
+        else return $value;
+    }
+}
+
+class _UserPreference_recalgo // recommendation engine algorithm
+extends _UserPreference
+{
+    var $valid_values = array
+        (
+         'itemCos',  // Item-based Top-N recommendation algorithm with cosine-based similarity function
+         'itemProb', // Item-based Top-N recommendation algorithm with probability-based similarity function. 
+                     // This algorithms tends to outperform the rest.
+         'userCos',  // User-based Top-N recommendation algorithm with cosine-based similarity function.
+         'bayes');   // Naïve Bayesian Classifier
+    var $default_value = 'itemProb';
+
+    function sanify ($value) {
+        if (!in_array($value,$this->valid_values)) return $this->default_value;
+        else return $value;
+    }
+}
+
+class _UserPreference_recnnbr // recommendation engine key clustering, neighborhood size
+extends _UserPreference_numeric{}
+
+$Theme->customUserPreferences(array(
+                                   'recengine' => new _UserPreference_recengine(),
+                                   'recalgo'   => new _UserPreference_recalgo(),
+                                   //recnnbr: typically 15-30 for item-based, 40-80 for user-based algos
+                                   'recnnbr'   => new _UserPreference_recnnbr(10,14,80),
+                                   ));
+
+/**
+ *  Custom PageList classes
+ *  Rationale: Certain themes should be able to extend the predefined list 
+ *  of pagelist types. E.g. certain plugins, like MostPopular might use 
+ *  info=pagename,hits,rating
+ *  which displays the rating column whenever the wikilens theme is active.
+ *  Similarly as in certain plugins, like WikiAdminRename or _WikiTranslation
+ */
+class _PageList_Column_rating extends _PageList_Column {
+    function _getValue ($page_handle, &$revision_handle) {
+        static $prefix = 0;
+        $loader = new WikiPluginLoader();
+        $args = "pagename=".$page_handle->_pagename;
+        $args .= " small=1";
+        $args .= " imgPrefix=".$prefix++;
+        return $loader->expandPi('<'."?plugin RateIt $args ?".'>',$GLOBALS['request'],$page_handle);
+    }
+};
+
+// register custom PageList type
+$Theme->addPageListColumn(array('rating' => new _PageList_Column_rating('rating', _("Rate")))); 
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

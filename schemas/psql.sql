@@ -1,4 +1,4 @@
--- $Id: psql.sql,v 1.5 2004-04-01 15:57:20 rurban Exp $
+-- $Id: psql.sql,v 1.6 2004-04-06 20:00:11 rurban Exp $
 
 \set QUIET
 
@@ -57,9 +57,11 @@
 
 \set session_tbl	:prefix 'session'
 \set sess_id		:prefix 'sess_id'
-\set sess_data		:prefix 'sess_data'
 \set sess_date		:prefix 'sess_date'
+\set sess_ip		:prefix 'sess_ip'
 
+\set pref_tbl		:prefix 'pref'
+\set pref_id		:prefix 'pref_id'
 
 \echo Dropping :page_tbl
 DROP TABLE :page_tbl;
@@ -128,12 +130,29 @@ CREATE INDEX :link_to   ON :link_tbl (linkto);
 DROP TABLE :session_tbl;
 \echo Creating :session_tbl
 CREATE TABLE :session_tbl (
-    sess_id 	VARCHAR(32) NOT NULL DEFAULT '',
-    sess_data 	TEXT NOT NULL,
-    sess_date 	INT
+	sess_id 	CHAR(32) NOT NULL DEFAULT '',
+    	sess_data 	TEXT NOT NULL,
+    	sess_date 	INT
+    	sess_ip 	CHAR(15) NOT NULL,
 );
 CREATE UNIQUE INDEX :sess_id
 	ON :session_tbl (sess_id);
+CREATE INDEX :sess_date ON :session_tbl (sess_date);
+CREATE INDEX :sess_ip   ON :session_tbl (sess_ip);
+
+-- Optional DB Auth and Prefs
+-- For these tables below the default table prefix must be used 
+-- in the DBAuthParam SQL statements also.
+
+\echo Dropping :pref_tbl
+DROP TABLE :pref_tbl;
+\echo Creating :pref_tbl
+CREATE TABLE :pref_tbl (
+  	userid 	CHAR(48) NOT NULL,
+  	prefs  	TEXT NULL DEFAULT '',
+);
+CREATE UNIQUE INDEX :pref_id
+	ON :pref_tbl (userid);
 
 GRANT ALL ON :page_tbl		TO :httpd_user;
 GRANT ALL ON :version_tbl	TO :httpd_user;
@@ -141,3 +160,4 @@ GRANT ALL ON :recent_tbl	TO :httpd_user;
 GRANT ALL ON :nonempty_tbl	TO :httpd_user;
 GRANT ALL ON :link_tbl		TO :httpd_user;
 GRANT ALL ON :session_tbl	TO :httpd_user;
+GRANT ALL ON :pref_tbl		TO :httpd_user;

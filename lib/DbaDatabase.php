@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbaDatabase.php,v 1.7 2004-04-05 19:24:16 rurban Exp $');
+<?php rcs_id('$Id: DbaDatabase.php,v 1.8 2004-04-06 20:00:10 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 // FIXME: autodetect supported handlers.
@@ -37,7 +37,7 @@ class DbaDatabase
 
         // PHP 4.3.x Windows lock bug workaround: http://bugs.php.net/bug.php?id=23975
         if (isWindows() and (strlen($mode) == 1)) {
-            $mode .= "l"; // add locking
+            $mode .= "-"; // add locking
         }
         while (($dbh = dba_open($this->_file, $mode, $this->_handler)) < 1) {
             if (--$watchdog <= 0)

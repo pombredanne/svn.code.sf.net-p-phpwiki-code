@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.72 2004-03-31 06:22:22 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.73 2004-04-06 20:00:10 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -25,15 +25,15 @@
  * 'group'    _("Group"),  //todo: implement this for PagePerm
  * 'checkbox'  A selectable checkbox appears at the left.
  *             Todo: move this admin action away, not really an info column
+ * 'content'  
  *
- * Special, custom columns:
+ * Special, custom columns: Either theme or plugin specific.
  * 'remove'   _("Remove")     
  * 'perm'     _("Permission Mask")
  * 'acl'      _("ACL")
  * 'renamed_pagename'   _("Rename to")
- * 'content'  
- * 'custom'   TODO: implement the above as custom columns.
- *            See plugin/WikiTranslation
+ * 'rating'   wikilens theme specific.
+ * 'custom'   See plugin/WikiTranslation
  *
  * Symbolic 'info=' arguments:
  * 'all'       All columns except the special columns
@@ -278,22 +278,6 @@ class _PageList_Column_remove extends _PageList_Column {
     }
 };
 
-// only for WikiAdminRename
-class _PageList_Column_renamed_pagename extends _PageList_Column {
-    function _getValue ($page_handle, &$revision_handle) {
-        $post_args = $GLOBALS['request']->getArg('admin_rename');
-        $value = str_replace($post_args['from'], $post_args['to'],$page_handle->getName());
-        $div = HTML::div(" => ",HTML::input(array('type' => 'text',
-                                                  'name' => 'rename[]',
-                                                  'value' => $value)));
-        $new_page = $GLOBALS['request']->getPage($value);
-        if ($new_page->exists()) {
-            $div->setAttr('class','error');
-            $div->setAttr('title',_("This page already exists"));
-        }
-        return $div;
-    }
-};
 
 // Output is hardcoded to limit of first 50 bytes. Otherwise
 // on very large Wikis this will fail if used with AllPages
@@ -395,17 +379,10 @@ class _PageList_Column_acl extends _PageList_Column {
         }
     }
 };
-// TODO: only if RateIt is used
-class _PageList_Column_rating extends _PageList_Column {
-    function _getValue ($page_handle, &$revision_handle) {
-        static $prefix = 0;
-        $loader = new WikiPluginLoader();
-        $args = "pagename=".$page_handle->_pagename;
-        $args .= " small=1";
-        $args .= " imgPrefix=".$prefix++;
-        return $loader->expandPi('<'."?plugin RateIt $args ?".'>',$GLOBALS['request'],$page_handle);
-    }
-};
+
+// DONE: only if RateIt is used
+// class _PageList_Column_rating extends _PageList_Column
+// moved to theme/wikilens/themeinfo.php
 
 class _PageList_Column_pagename extends _PageList_Column_base {
     var $_field = 'pagename';
@@ -439,6 +416,11 @@ class PageList {
     var $_sortby = array();
 
     function PageList ($columns = false, $exclude = false, $options = false) {
+        // let plugins predefine only certain objects, such its own custom pagelist columns
+        if (!empty($options) and !empty($options['types'])) {
+            $this->_types = $options['types'];
+            unset($options['types']);
+        }
         $this->_initAvailableColumns();
         $symbolic_columns = 
             array(
@@ -674,25 +656,30 @@ class PageList {
     ////////////////////
     // private
     ////////////////////
-    //Performance Fixme: Initialize only the requested objects
+    /** Plugin and theme hooks: 
+     *  If the pageList is initialized with $options['types'] these types are also initialized, 
+     *  overriding the standard types.
+     */
     function _initAvailableColumns() {
-        if (!empty($this->_types))
-            return;
-
-        $this->_types =
+        global $customPageListColumns;
+        $standard_types =
             array(
                   'content'
                   => new _PageList_Column_content('rev:content', _("Content")),
+                  // new: plugin specific column types initialised by the relevant plugins
+                  /*
                   'hi_content' // with highlighted search for SearchReplace
                   => new _PageList_Column_content('rev:hi_content', _("Content")),
                   'remove'
                   => new _PageList_Column_remove('remove', _("Remove")),
+                  // initialised by the plugin
                   'renamed_pagename'
                   => new _PageList_Column_renamed_pagename('rename', _("Rename to")),
                   'perm'
                   => new _PageList_Column_perm('perm', _("Permission")),
                   'acl'
                   => new _PageList_Column_acl('acl', _("ACL")),
+                  */
                   'checkbox'
                   => new _PageList_Column_checkbox('p', _("Select")),
                   'pagename'
@@ -723,17 +710,27 @@ class PageList {
                                                _("Minor Edit"), _("minor")),
                   'markup'
                   => new _PageList_Column('rev:markup', _("Markup")),
+                  // 'rating' initialised by the wikilens theme hook: addPageListColumn
+                  /*
                   'rating'
                   => new _PageList_Column_rating('rating', _("Rate")),
+                  */
                   );
+        if (empty($this->_types))
+            $this->_types = array();
+        // add plugin specific pageList columns, initialized by $options['types']
+        $this->_types = array_merge($standard_types, $this->_types);
+        // add theme specific pageList columns
+        if (!empty($customPageListColumns))
+            $this->_types = array_merge($this->_types, $customPageListColumns);
     }
 
     function _addColumn ($column) {
-
-        $this->_initAvailableColumns();
-
+    	
         if (isset($this->_columns_seen[$column]))
             return false;       // Already have this one.
+	if (!isset($this->_types[$column]))
+            $this->_initAvailableColumns();
         $this->_columns_seen[$column] = true;
 
         if (strstr($column, ':'))

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.41 2004-03-30 02:14:03 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.42 2004-04-06 20:00:10 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,7 +87,7 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.41 $");
+        //                    "\$Revision: 1.42 $");
     }
 
     function getArgs($argstr, $request=false, $defaults = false) {
@@ -317,6 +317,18 @@ class WikiPlugin
                             ' ', $message);
         $html[] = HTML::pre($this->_pi);
         return HTML::div(array('class' => 'disabled-plugin'), $html);
+    }
+
+    // TODO: Not really needed, since our plugins generally initialize their own 
+    // PageList object, which accepts options['types'].
+    // Register custom PageList types for special plugins, like 
+    // 'hi_content' for WikiAdminSearcheplace, 'renamed_pagename' for WikiAdminRename, ...
+    function addPageListColumn ($array) {
+        global $customPageListColumns;
+        if (empty($customPageListColumns)) $customPageListColumns = array();
+        foreach ($array as $column => $obj) {
+            $customPageListColumns[$column] = $obj;
+        }
     }
 }
 

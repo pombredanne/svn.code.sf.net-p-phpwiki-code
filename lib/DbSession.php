@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbSession.php,v 1.8 2004-04-02 15:06:55 rurban Exp $');
+<?php rcs_id('$Id: DbSession.php,v 1.9 2004-04-06 20:00:09 rurban Exp $');
 
 /**
  * Store sessions data in Pear DB / ADODB ....
@@ -97,7 +97,7 @@ extends DB_Session
     }
 
     function _disconnect() {
-        if (!$this->_connected)
+        if (0 and $this->_connected)
             $this->_dbh->disconnect();
     }
 
@@ -174,6 +174,7 @@ extends DB_Session
         $dbh = &$this->_connect();
         $table = $this->_table;
         $qid = $dbh->quote($id);
+        $qip = $dbh->quote($GLOBALS['HTTP_SERVER_VARS']['REMOTE_ADDR']);
         $time = time();
 
         // postgres can't handle binary data in a TEXT field.
@@ -182,13 +183,13 @@ extends DB_Session
         $qdata = $dbh->quote($sess_data);
         
         $res = $dbh->query("UPDATE $table"
-                           . " SET sess_data=$qdata, sess_date=$time"
+                           . " SET sess_data=$qdata, sess_date=$time, sess_ip=$qip"
                            . " WHERE sess_id=$qid");
 
         if ($dbh->affectedRows() == 0)
             $res = $dbh->query("INSERT INTO $table"
-                               . " (sess_id, sess_data, sess_date)"
-                               . " VALUES ($qid, $qdata, $time)");
+                               . " (sess_id, sess_data, sess_date, sess_ip)"
+                               . " VALUES ($qid, $qdata, $time, $qip)");
 
         $this->_disconnect();
         return ! DB::isError($res);
@@ -233,29 +234,31 @@ extends DB_Session
     }
 
     // WhoIsOnline support
+    // TODO: ip-accesstime dynamic blocking API
     function currentSessions() {
         $sessions = array();
         $dbh = &$this->_connect();
         $table = $this->_table;
-        $res = $this->query("SELECT sess_data,sess_date FROM $table ORDER BY sess_date DESC");
+        $res = $this->query("SELECT sess_data,sess_date,sess_ip FROM $table ORDER BY sess_date DESC");
         if (DB::isError($res) || empty($res))
             return $sessions;
         while ($row = $res->fetchRow()) {
             $data = $row['sess_data'];
             $date = $row['sess_date'];
+            $ip   = $row['sess_ip'];
             if (preg_match('|^[a-zA-Z0-9/+=]+$|', $data))
                 $data = base64_decode($data);
             // session_data contains the <variable name> + "|" + <packed string>
             // we need just the wiki_user object (might be array as well)
             $user = strstr($data,"wiki_user|");
             $sessions[] = array('wiki_user' => substr($user,10), // from "O:" onwards
-                                'date' => $date);
+                                'date' => $date,
+                                'ip'   => $ip);
         }
         $this->_disconnect();
         return $sessions;
     }
 }
-
 
 // self-written adodb-sessions
 class DB_Session_ADODB
@@ -302,7 +305,7 @@ extends DB_Session
     }
 
     function _disconnect() {
-        if (!$this->_dbh)
+        if (0 and $this->_dbh)
             $this->_dbh->close();
     }
 
@@ -379,6 +382,7 @@ extends DB_Session
         $dbh = &$this->_connect();
         $table = $this->_table;
         $qid = $dbh->quote($id);
+        $qip = $dbh->quote($GLOBALS['HTTP_SERVER_VARS']['REMOTE_ADDR']);
         $time = time();
 
         // postgres can't handle binary data in a TEXT field.
@@ -386,14 +390,14 @@ extends DB_Session
             $sess_data = base64_encode($sess_data);
         $qdata = $dbh->quote($sess_data);
         $res = $dbh->query("UPDATE $table"
-                           . " SET sess_data=$qdata, sess_date=$time"
+                           . " SET sess_data=$qdata, sess_date=$time, sess_ip=$qip"
                            . " WHERE sess_id=$qid");
         // Warning: This works only only adodb_mysql!
         // The parent class adodb needs ->AffectedRows()
         if (!$dbh->_AffectedRows()) 
             $res = $dbh->query("INSERT INTO $table"
-                               . " (sess_id, sess_data, sess_date)"
-                               . " VALUES ($qid, $qdata, $time)");
+                               . " (sess_id, sess_data, sess_date, sess_ip)"
+                               . " VALUES ($qid, $qdata, $time, $qip)");
         $this->_disconnect();
         return ! $res->EOF;
     }
@@ -436,31 +440,160 @@ extends DB_Session
         return true;
     }
 
-    // WhoIsOnline support
+    // WhoIsOnline support. 
+    // TODO: ip-accesstime dynamic blocking API
     function currentSessions() {
         $sessions = array();
         $dbh = &$this->_connect();
         $table = $this->_table;
-        $rs = $this->query("SELECT sess_data,sess_date FROM $table ORDER BY sess_date DESC");
+        $rs = $this->query("SELECT sess_data,sess_date,sess_ip FROM $table ORDER BY sess_date DESC");
         if ($rs->EOF) {
             return $sessions;
         }
         while ($row = $rs->fetchRow()) {
             $data = $row['sess_data'];
             $date = $row['sess_date'];
+            $ip   = $row['sess_ip'];
             if (preg_match('|^[a-zA-Z0-9/+=]+$|', $data))
                 $data = base64_decode($data);
             // session_data contains the <variable name> + "|" + <packed string>
             // we need just the wiki_user object (might be array as well)
             $user = strstr($data,"wiki_user|");
             $sessions[] = array('wiki_user' => substr($user,10), // from "O:" onwards
-                                'date' => $date);
+                                'date' => $date,
+                                'ip' => $ip);
         }
         $this->_disconnect();
         return $sessions;
     }
-
 }
+
+/** DBA Sessions
+ *  session:
+ *    Index: session_id
+ *   Values: date : IP : data
+ */
+class DB_Session_dba
+extends DB_Session
+{
+    var $_backend_type = "dba";
+
+    function DB_Session_dba ($dbh, $table) {
+        $this->_dbh = &$dbh;
+        ini_set('session.save_handler','user');
+        session_module_name('user'); // new style
+        session_set_save_handler(array(&$this, 'open'),
+                                 array(&$this, 'close'),
+                                 array(&$this, 'read'),
+                                 array(&$this, 'write'),
+                                 array(&$this, 'destroy'),
+                                 array(&$this, 'gc'));
+        return $this;
+    }
+
+    function quote($str) { return $str; }
+    function query($sql) { return false; }
+
+    function _connect() {
+        global $DBParams;
+        $dbh = &$this->_dbh;
+        if (!$dbh) {
+            $directory = '/tmp';
+            $prefix = 'wiki_';
+            $dba_handler = 'gdbm';
+            $timeout = 20;
+            extract($DBParams);
+            $dbfile = "$directory/$prefix" . 'session' . '.' . $dba_handler;
+            $dbh = new DbaDatabase($dbfile, false, $dba_handler);
+            $dbh->set_timeout($timeout);
+            if (!$dbh->open('c')) {
+                trigger_error(sprintf(_("%s: Can't open dba database"), $dbfile), E_USER_ERROR);
+                global $request;
+                $request->finish(fmt("%s: Can't open dba database", $dbfile));
+            }
+            $this->_dbh = &$dbh;
+        }
+        return $dbh;
+    }
+
+    function _disconnect() {
+        if (0 and isset($this->_dbh))
+            $this->_dbh->close();
+    }
+
+    function open ($save_path, $session_name) {
+        $dbh = &$this->_connect();
+        $dbh->open();
+    }
+
+    function close() {
+        $dbh = &$this->_connect();
+        $dbh->close();
+    }
+
+    function read ($id) {
+        $dbh = &$this->_connect();
+        $result = $dbh->get($id);
+        if (!$result) {
+            return false;
+        }
+        list(,,$packed) = explode(':', $result, 3);
+        $data = unserialize($packed);
+        $this->_disconnect();
+        return $data;
+    }
+  
+    function write ($id, $sess_data) {
+        $dbh = &$this->_connect();
+        $time = time();
+        $ip = $GLOBALS['HTTP_SERVER_VARS']['REMOTE_ADDR'];
+        $dbh->set($id,$time.':'.$ip.':'.$sess_data);
+        $this->_disconnect();
+        return true;
+    }
+
+    function destroy ($id) {
+        $dbh = &$this->_connect();
+        $dbh->delete($id);
+        $this->_disconnect();
+        return true;
+    }
+
+    function gc ($maxlifetime) {
+        $dbh = &$this->_connect();
+        $threshold = time() - $maxlifetime;
+        for ($id = $dbh->firstkey(); $id !== false; $id = $dbh->nextkey()) {
+            $result = $dbh->get($id);
+            list($date,,) = explode(':', $result, 3);
+            //$dbh->query("DELETE FROM $table WHERE sess_date < $threshold");
+            if ($date < $threshold)
+                $dbh->delete($id);
+        }
+        $this->_disconnect();
+        return true;
+    }
+
+    // WhoIsOnline support. 
+    // TODO: ip-accesstime dynamic blocking API
+    function currentSessions() {
+        $sessions = array();
+        $dbh = &$this->_connect();
+        for ($id = $dbh->firstkey(); $id !== false; $id = $dbh->nextkey()) {
+            $result = $dbh->get($id);
+            list($date,$ip,$packed) = explode(':', $result, 3);
+            $data = unserialize($packed);
+            // session_data contains the <variable name> + "|" + <packed string>
+            // we need just the wiki_user object (might be array as well)
+            $user = strstr($data,"wiki_user|");
+            $sessions[] = array('wiki_user' => substr($user,10), // from "O:" onwards
+                                'date' => $date,
+                                'ip' => $ip);
+        }
+        $this->_disconnect();
+        return $sessions;
+    }
+}
+
 
 // Local Variables:
 // mode: php

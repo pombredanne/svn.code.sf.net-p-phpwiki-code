@@ -1,19 +1,25 @@
 <?php
-/*
-V1.71 18 Jan 2001 (c) 2000, 2001 John Lim (jlim@natsoft.com.my). All rights reserved.
-  Released under both BSD license and Lesser GPL library license. 
-  Whenever there is any discrepancy between the two licenses, 
-  the BSD license will take precedence.
-  Set tabs to 8.
-  
-  MySQL code that does not support transactions. Use mysqlt if you need transactions.
-  Requires mysql client. Works on Windows and Unix.
-  
- 28 Feb 2001: MetaColumns bug fix - suggested by  Freek Dijkstra (phpeverywhere@macfreek.com)
-*/ 
+/**
+ * V1.71 18 Jan 2001 (c) 2000, 2001 John Lim (jlim@natsoft.com.my). All rights reserved.
+ * Released under both BSD license and Lesser GPL library license. 
+ * Whenever there is any discrepancy between the two licenses, 
+ * the BSD license will take precedence.
+ * Set tabs to 4.
+ *
+ * MySQL code that does not support transactions. Use mysqlt if you need transactions.
+ * Requires mysql client. Works on Windows and Unix.
+ * 
+ * 28 Feb 2001: MetaColumns bug fix - suggested by  Freek Dijkstra (phpeverywhere@macfreek.com)
+ */
+/**
+ * Included with PhpWiki, which uses for now this mysql-specific backend directly, 
+ * instead of going through the main adodb.inc.php library.
+ * Initial port by Lawrence Akka. See lib/WikiDB/ADODB.php
+ */
 
 if (! defined("_ADODB_MYSQL_LAYER")) {
  define("_ADODB_MYSQL_LAYER", 1 );
+rcs_id('$Id: adodb-mysql.inc.php,v 1.2 2004-04-06 20:00:10 rurban Exp $');
 
 class ADODB_mysql extends ADOConnection {
 	var $databaseType = 'mysql';
@@ -121,7 +127,7 @@ class ADODB_mysql extends ADOConnection {
 	{
 	
 		if ($this->metaColumnsSQL) {
-		global $ADODB_FETCH_MODE;
+            global $ADODB_FETCH_MODE;
 		
 			$save = $ADODB_FETCH_MODE;
 			$ADODB_FETCH_MODE = ADODB_FETCH_NUM;
@@ -179,7 +185,8 @@ class ADODB_mysql extends ADOConnection {
 	}
 	
 	// parameters use PostgreSQL convention, not MySQL
-	function &SelectLimit($sql,$nrows=-1,$offset=-1,$inputarr=false, $arg3=false,$secs=0)
+	function &SelectLimit($sql,$nrows=-1,$offset=-1,
+                          $inputarr=false, $arg3=false,$secs=0)
 	{
 		$offsetStr =($offset>=0) ? "$offset," : '';
 		
@@ -191,7 +198,8 @@ class ADODB_mysql extends ADOConnection {
 	// returns queryID or false
 	function _query($sql,$inputarr)
 	{
-	global $ADODB_COUNTRECS;
+        global $ADODB_COUNTRECS;
+
 		if($ADODB_COUNTRECS) return mysql_query($sql,$this->_connectionID);
 		else return mysql_unbuffered_query($sql,$this->_connectionID); // requires PHP >= 4.0.6
 	}
@@ -262,9 +270,9 @@ class ADODB_mysql extends ADOConnection {
 	
 }
 	
-/*--------------------------------------------------------------------------------------
+/*------------------------------------------------------------------------------
 	 Class Name: Recordset
---------------------------------------------------------------------------------------*/
+------------------------------------------------------------------------------*/
 
 class ADORecordSet_mysql extends ADORecordSet{	
 	
@@ -297,14 +305,19 @@ class ADORecordSet_mysql extends ADORecordSet{
 		if ($fieldOffset != -1) {
 			$o =  @mysql_fetch_field($this->_queryID, $fieldOffset);
 			$f = @mysql_field_flags($this->_queryID,$fieldOffset);
-			$o->max_length = @mysql_field_len($this->_queryID,$fieldOffset); // suggested by: Jim Nicholson (jnich@att.com)
-			//$o->max_length = -1; // mysql returns the max length less spaces -- so it is unrealiable
+            // suggested by: Jim Nicholson (jnich@att.com)
+			$o->max_length = @mysql_field_len($this->_queryID,$fieldOffset); 
+            // mysql returns the max length less spaces -- so it is unrealiable
+			//$o->max_length = -1; 
 			$o->binary = (strpos($f,'binary')!== false);
 		}
-		else if ($fieldOffset == -1) {	/*	The $fieldOffset argument is not provided thus its -1 	*/
+        /*	The $fieldOffset argument is not provided thus its -1 	*/
+		else if ($fieldOffset == -1) {	
 			$o = @mysql_fetch_field($this->_queryID);
-			$o->max_length = @mysql_field_len($this->_queryID); // suggested by: Jim Nicholson (jnich@att.com)
-			//$o->max_length = -1; // mysql returns the max length less spaces -- so it is unrealiable
+            // suggested by: Jim Nicholson (jnich@att.com)
+			$o->max_length = @mysql_field_len($this->_queryID); 
+            // mysql returns the max length less spaces -- so it is unrealiable
+			//$o->max_length = -1; 
 		}
 		
 		return $o;
@@ -429,4 +442,12 @@ class ADORecordSet_mysql extends ADORecordSet{
 
 }
 }
+// For emacs users
+// Local Variables:
+// mode: php
+// tab-width: 4
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
+// End:
 ?>

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.47 2004-04-02 15:06:55 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.48 2004-04-06 20:00:10 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -40,7 +40,8 @@ rcs_id('$Id: WikiUserNew.php,v 1.47 2004-04-02 15:06:55 rurban Exp $');
  * @author: Reini Urban (the tricky parts), 
  *          Carsten Klapp (started rolling the ball)
  *
- * Notes by 2004-01-25 03:43:45 rurban
+ * Random architectural notes, sorted by date:
+ * 2004-01-25 rurban
  * Test it by defining ENABLE_USER_NEW in index.php
  * 1) Now a ForbiddenUser is returned instead of false.
  * 2) Previously ALLOW_ANON_USER = false meant that anon users cannot edit, 
@@ -55,15 +56,24 @@ rcs_id('$Id: WikiUserNew.php,v 1.47 2004-04-02 15:06:55 rurban Exp $');
  *    objects are tried, but not used.
  * 4) Already gotten prefs are passed to the next object to avoid 
  *    duplicate getPreferences() calls.
- * 2004-03-18 17:32:21 rurban
+ * 2004-03-18 rurban
  * 5) Major php-5 problem: $this re-assignment is disallowed by the parser
  *    So we cannot just discrimate with 
  *      if (!check_php_version(5))
  *          $this = $user;
+ *    A /php5-patch.php is provided, which patches the src automatically 
+ *    for php4 and php5. Default is php4.
  * 2004-03-24 rurban
  * 6) enforced new cookie policy: prefs don't get stored in cookies
  *    anymore, only in homepage and/or database, but always in the 
  *    current session. old pref cookies will get deleted.
+ * 2004-04-04 rurban
+ * 7) TODO:
+ *    Certain themes should be able to extend the predefined list 
+ *    of preferences. Display/editing is done in the theme specific userprefs.tmpl
+ *    but storage must be extended to the Get/SetPreferences methods.
+ *    <theme>/themeinfo.php must provide CustomUserPreferences:
+ *      A list of name => _UserPreference class pairs.
  */
 
 define('WIKIAUTH_FORBIDDEN', -1); // Completely not allowed.
@@ -643,21 +653,25 @@ extends _WikiUser
         $packed = $prefs->store();
         $unpacked = $prefs->unpack($packed);
         if (count($unpacked)) {
-            global $request;
             foreach (array('_method','_select','_update') as $param) {
             	if (!empty($this->_prefs->{$param}))
             	    $prefs->{$param} = $this->_prefs->{$param};
             }
             $this->_prefs = $prefs;
-            $request->_prefs =& $this->_prefs; 
-            $request->_user->_prefs =& $this->_prefs;
-            if (isset($request->_user->_auth_dbi)) {
-            	$user = $request->_user;
-            	unset($user->_auth_dbi);
-            	$request->setSessionVar('wiki_user', $user);
-            } else {
-              //$request->setSessionVar('wiki_prefs', $this->_prefs);
-              $request->setSessionVar('wiki_user', $request->_user);
+            //FIXME! The following must be done in $request->_setUser(), not here,
+            // to be able to iterate over multiple users, without tampering the current user.
+            if (0) {
+                global $request;
+                $request->_prefs =& $this->_prefs; 
+                $request->_user->_prefs =& $this->_prefs;
+                if (isset($request->_user->_auth_dbi)) {
+                    $user = $request->_user;
+                    unset($user->_auth_dbi);
+                    $request->setSessionVar('wiki_user', $user);
+                } else {
+                    //$request->setSessionVar('wiki_prefs', $this->_prefs);
+                    $request->setSessionVar('wiki_user', $request->_user);
+                }
             }
         }
         return $updated;
@@ -1387,6 +1401,7 @@ extends _DbPassUser
  * @tables: pref
  */
 {
+    var $_authmethod = 'PearDb';
     function _PearDbPassUser($UserName='',$prefs=false) {
         global $DBAuthParams;
         if (!$this->_prefs and isa($this,"_PearDbPassUser")) {
@@ -1432,9 +1447,10 @@ extends _DbPassUser
     function setPreferences($prefs, $id_only=false) {
         // if the prefs are changed
         if (_AnonUser::setPreferences($prefs, 1)) {
-            global $request;
-            $user = $request->_user;
+            //global $request;
+            //$user = $request->_user;
             //unset($user->_auth_dbi);
+            // this must be done in $request->_setUser, not here!
             //$request->setSessionVar('wiki_user', $user);
             $this->getAuthDbh();
             $packed = $this->_prefs->store();
@@ -1572,6 +1588,7 @@ extends _DbPassUser
  * @tables: user
  */
 {
+    var $_authmethod = 'AdoDb';
     function _AdoDbPassUser($UserName='',$prefs=false) {
         if (!$this->_prefs and isa($this,"_AdoDbPassUser")) {
             if ($prefs) $this->_prefs = $prefs;
@@ -1619,8 +1636,8 @@ extends _DbPassUser
         if (_AnonUser::setPreferences($prefs, 1)) {
             global $request;
             $packed = $this->_prefs->store();
-            $user = $request->_user;
-            unset($user->_auth_dbi);
+            //$user = $request->_user;
+            //unset($user->_auth_dbi);
             if (!$id_only and isset($this->_prefs->_update)) {
                 $this->getAuthDbh();
                 $dbh = &$this->_auth_dbi;
@@ -1975,6 +1992,7 @@ extends _PassUser
     }
 
     function userExists() {
+        $this->_authmethod = 'File';
         if (isset($this->_file->users[$this->_userid]))
             return true;
             
@@ -2405,6 +2423,12 @@ class UserPreferences
                                                                    TIMEOFFSET_MAX_HOURS),
                     'relativeDates' => new _UserPreference_bool()
                     );
+        // add custom theme-specific pref types:
+        // FIXME: on theme changes the wiki_user session pref object will fail. 
+        // We will silently ignore this.
+        if (!empty($customUserPreferenceColumns))
+            $this->_prefs = array_merge($this->_prefs,$customUserPreferenceColumns);
+
         if (isset($this->_method) and $this->_method == 'SQL') {
             //unset($this->_prefs['userid']);
             unset($this->_prefs['passwd']);
@@ -2663,6 +2687,13 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.47  2004/04/02 15:06:55  rurban
+// fixed a nasty ADODB_mysql session update bug
+// improved UserPreferences layout (tabled hints)
+// fixed UserPreferences auth handling
+// improved auth stability
+// improved old cookie handling: fixed deletion of old cookies with paths
+//
 // Revision 1.46  2004/04/01 06:29:51  rurban
 // better wording
 // RateIt also for ADODB

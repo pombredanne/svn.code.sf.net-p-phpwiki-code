@@ -1,8 +1,15 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_mysql.php,v 1.3 2004-03-24 19:39:03 rurban Exp $');
+rcs_id('$Id: ADODB_mysql.php,v 1.4 2004-04-06 20:00:11 rurban Exp $');
 
 require_once('lib/WikiDB/backend/ADODB.php');
 
+/**
+ * WikiDB layer for ADODB-mysql, called by lib/WikiDB/ADODB.php.
+ * Support for a newer adodb library, the adodb extension library 
+ * and more databases will come with PhpWiki v1.3.9
+ * 
+ * @author: Lawrence Akka
+ */
 class WikiDB_backend_ADODB_mysql
 extends WikiDB_backend_ADODB
 {

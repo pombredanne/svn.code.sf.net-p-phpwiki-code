@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.81 2004-04-01 15:57:10 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.82 2004-04-06 20:00:10 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -1023,6 +1023,36 @@ class Theme {
         }
         return $out;
     }
+
+    /**
+     * Custom UserPreferences:
+     * A list of name => _UserPreference class pairs.
+     * Rationale: Certain themes should be able to extend the predefined list 
+     * of preferences. Display/editing is done in the theme specific userprefs.tmpl
+     * but storage/sanification/update/... must be extended to the Get/SetPreferences methods.
+     * These values are just ignored if another theme is used.
+     */
+    function customUserPreferences($array) {
+        global $customUserPreferenceColumns; // FIXME: really a global?
+        if (empty($customUserPreferenceColumns)) $customUserPreferenceColumns = array();
+        //array('wikilens' => new _UserPreference_wikilens());
+        foreach ($array as $field => $prefobj) {
+            $customUserPreferenceColumns[$field] = $prefobj;
+        }
+    }
+
+    /** addPageListColumn(array('rating' => new _PageList_Column_rating('rating', _("Rate"))))
+     *  Register custom PageList types for special themes, like 
+     *  'rating' for wikilens
+     */
+    function addPageListColumn ($array) {
+        global $customPageListColumns;
+        if (empty($customPageListColumns)) $customPageListColumns = array();
+        foreach ($array as $column => $obj) {
+            $customPageListColumns[$column] = $obj;
+        }
+    }
+
 };
 
 
@@ -1226,6 +1256,11 @@ class RelatedExternalLinksBox extends SidebarBox {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.81  2004/04/01 15:57:10  rurban
+// simplified Sidebar theme: table, not absolute css positioning
+// added the new box methods.
+// remaining problems: large left margin, how to override _autosplitWikiWords in Template only
+//
 // Revision 1.80  2004/03/30 02:14:03  rurban
 // fixed yet another Prefs bug
 // added generic PearDb_iter
