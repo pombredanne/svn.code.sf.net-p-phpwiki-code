@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.53 2002-02-03 01:57:47 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.54 2002-02-04 07:42:45 carstenklapp Exp $');
 /**
  */
 
@@ -160,25 +160,47 @@ extends _RecentChanges_Formatter
         else
             $edits = _("minor edits");
 
-        if ($days > 0) {
+        if ($timespan = $days > 0) {
             if (intval($days) != $days)
                 $days = sprintf("%.1f", $days);
-            $timespan = $days == 1 ? _("day") :  sprintf(_("%s days"), $days);
         }
-            
+
+        /**
+         * Depending how this text is split up it can be tricky or
+         * impossible to translate with good grammar. So the seperate
+         * strings for 1 day and %s days are necessary in this case
+         * for translating to multiple languages, due to differing
+         * overlapping ideal word cutting points.
+         *
+         * en: day/days "The %d most recent %s [during (the past] day) are listed below."
+         * de: 1 Tag    "Die %d jüngste %s [innerhalb (von des letzten] Tages) sind unten aufgelistet."
+         * de: %s days  "Die %d jüngste %s [innerhalb (von] %s Tagen) sind unten aufgelistet."
+         *
+         * en: day/days "The %d most recent %s during [the past] (day) are listed below."
+         * fr: 1 jour   "Les %d %s les plus récentes pendant [le dernier (d'une] jour) sont énumérées ci-dessous."
+         * fr: %s jours "Les %d %s les plus récentes pendant [les derniers (%s] jours) sont énumérées ci-dessous."
+         */
         if ($limit > 0) {
-            if (!empty($timespan))
-                $desc = fmt("The %d most recent %s during the past %s are listed below.",
-                            $limit, $edits, $timespan);
-            else
+            if ($timespan) {
+                if (intval($days) == 1)
+                    $desc = fmt("The %d most recent %s during the past day are listed below.",
+                                $limit, $edits);
+                else
+                    $desc = fmt("The %d most recent %s during the past %s days are listed below.",
+                                $limit, $edits, $days);
+            } else
                 $desc = fmt("The %d most recent %s are listed below.",
                             $limit, $edits);
         }
         else {
-            if (!empty($timespan))
-                $desc = fmt("The most recent %s during the past %s are listed below.",
-                            $edits, $timespan);
-            else
+            if ($timespan) {
+                if (intval($days) == 1)
+                    $desc = fmt("The most recent %s during the past day are listed below.",
+                                $edits);
+                else
+                    $desc = fmt("The most recent %s during the past %s days are listed below.",
+                                $edits, $days);
+            } else
                 $desc = fmt("All %s are listed below.", $edits);
         }
         return $desc;
