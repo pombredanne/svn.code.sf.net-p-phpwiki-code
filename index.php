@@ -70,9 +70,9 @@ if (!defined('DEBUG')) define ('DEBUG', 0);
 /////////////////////////////////////////////////////////////////////
 // Part Null: Don't touch this!
 
-define ('PHPWIKI_VERSION', '1.3.7pre');
+define ('PHPWIKI_VERSION', '1.3.7');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.114 2003-12-05 16:00:42 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.115 2003-12-22 04:58:11 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -831,6 +831,9 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 // End:   
 
 // $Log: not supported by cvs2svn $
+// Revision 1.114  2003/12/05 16:00:42  carstenklapp
+// ACK! gettext is not available at this point in index.php.
+//
 // Revision 1.113  2003/12/05 15:51:37  carstenklapp
 // Added note that use of the configurator is depreciated.
 //
