@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.171 2004-06-29 09:30:42 rurban Exp $');
+rcs_id('$Id: main.php,v 1.172 2004-07-03 08:04:19 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -291,7 +291,8 @@ $this->version = phpwiki_version();
         if (ENABLE_USER_NEW) {
             if (! $this->_user )
                 $this->_user = new _BogoUser($userid);
-            if (! $this->_user )
+            // FIXME: is this always false? shouldn't we try passuser first?
+            if (! $this->_user ) 
                 $this->_user = new _PassUser($userid);
         }
         $user = $this->_user->AuthCheck(array('userid' => $userid));
@@ -365,7 +366,7 @@ $this->version = phpwiki_version();
             	$msg = fmt("%s is disallowed on this wiki for %s user '%s' (level: %s).",
                            $this->getDisallowedActionDescription($this->getArg('action')),
                            $status, $user->getId(),$this->getLevelDescription($user->_level));
-                $user->PrintLoginForm($this, compact('require_level','pass_required'), $msg);
+                $user->PrintLoginForm($this, compact('pass_required'), $msg);
                 $this->finish();
             } else {
             	$msg = fmt("%s is disallowed on this wiki.",
@@ -1070,6 +1071,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.171  2004/06/29 09:30:42  rurban
+// force string hash
+//
 // Revision 1.170  2004/06/25 14:29:20  rurban
 // WikiGroup refactoring:
 //   global group attached to user, code for not_current user.

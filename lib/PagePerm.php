@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.28 2004-06-25 14:29:17 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.29 2004-07-03 08:04:19 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -187,9 +187,8 @@ function action2access ($action) {
         return 'edit';
     case 'create':
         $page = $request->getPage();
-        $current = $page->getCurrentRevision();
-        if ($current->hasDefaultContents())
-            return 'edit';
+        if (!$page->exists())
+            return 'create';
         else
             return 'view'; 
         break;
@@ -699,6 +698,13 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.28  2004/06/25 14:29:17  rurban
+// WikiGroup refactoring:
+//   global group attached to user, code for not_current user.
+//   improved helpers for special groups (avoid double invocations)
+// new experimental config option ENABLE_XHTML_XML (fails with IE, and document.write())
+// fixed a XHTML validation error on userprefs.tmpl
+//
 // Revision 1.27  2004/06/16 10:38:58  rurban
 // Disallow refernces in calls if the declaration is a reference
 // ("allow_call_time_pass_reference clean").
