@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.45 2002-03-25 20:21:57 carstenklapp Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.46 2002-03-28 07:20:48 carstenklapp Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -383,8 +383,13 @@ class Theme {
         else
             $url = WikiURL($wikiword);
 
-        if ($this->HTML_DUMP_SUFFIX)
+        // Extra steps for dumping page to an html file.
+        if ($this->HTML_DUMP_SUFFIX) {
+            // urlencode for pagenames with accented letters
+            $url = rawurlencode($url);
+            $url = preg_replace('/^\./', '%2e', $url);
             $url .= $this->HTML_DUMP_SUFFIX;
+        }
         $link = HTML::a(array('href' => $url));
 
         if (!empty($linktext)) {
