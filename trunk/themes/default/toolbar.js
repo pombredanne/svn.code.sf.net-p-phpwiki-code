@@ -1,11 +1,12 @@
 // Toolbar JavaScript support functions from mediawiki 
-// $Id: toolbar.js,v 1.1 2004-05-27 17:51:57 rurban Exp $ 
+// $Id: toolbar.js,v 1.2 2004-05-27 17:55:38 rurban Exp $ 
 
 // Un-trap us from framesets
 if( window.top != window ) window.top.location = window.location;
 
-// this function generates the actual toolbar buttons with localized text
-// we use it to avoid creating the toolbar where javascript is not enabled
+// This function generates the actual toolbar buttons with localized text
+// We use it to avoid creating the toolbar where javascript is not enabled
+// Not all buttons use this helper, some need special javascript treatment.
 function addButton(imageFile, speedTip, tagOpen, tagClose, sampleText) {
 	speedTip=escapeQuotes(speedTip);
 	tagOpen=escapeQuotes(tagOpen);
