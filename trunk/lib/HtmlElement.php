@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.7 2002-01-22 06:55:04 dairiki Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.8 2002-01-22 16:35:56 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -149,6 +149,12 @@ class HTML {
 
     function h6 (/*...*/) {
         $el = new HtmlElement('h6');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function hr (/*...*/) {
+        $el = new HtmlElement('hr');
         $el->_init(func_get_args());
         return $el;
     }
