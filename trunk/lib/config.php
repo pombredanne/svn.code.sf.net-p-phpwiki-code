@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.70 2003-02-22 19:21:47 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.71 2003-02-22 21:06:10 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -271,7 +271,7 @@ if (!defined('USE_PATH_INFO'))
     if (php_sapi_name() == 'apache')
         define('USE_PATH_INFO', true);
     else
-        define('USE_PATH_INFO', ereg('\.(php3?|cgi)$', $SCRIPT_NAME));
+        define('USE_PATH_INFO', ereg('\.(php3?|cgi)$', SCRIPT_NAME));
 }
 
 // If user has not defined DATA_PATH, we want to use relative URLs.
