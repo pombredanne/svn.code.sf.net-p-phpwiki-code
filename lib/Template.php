@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.22 2002-01-17 23:14:21 dairiki Exp $');
+<?php rcs_id('$Id: Template.php,v 1.23 2002-01-19 07:21:58 dairiki Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -293,16 +293,8 @@ extends TemplateFile
     }
 
     function setWikiUserTokens(&$user) {
-	/*
-        if ( $user->is_admin() ) {
-            $this->setConditional('ADMIN');
-            $this->setConditional('EDITABLE');
-        }
-        if ( ! $user->is_authenticated() )
-            $this->setConditional('ANONYMOUS');
-	*/
 	$this->replace('user', $user);
-        $this->qreplace('USERID', $user->id());
+        $this->qreplace('USERID', $user->getId());
 
         $prefs = $user->getPreferences();
         $this->qreplace('EDIT_AREA_WIDTH', $prefs['edit_area.width']);
@@ -310,7 +302,7 @@ extends TemplateFile
     }
 
     function setGlobalTokens () {
-        global $user, $RCS_IDS, $Theme;
+        global $user, $RCS_IDS, $Theme, $request;
         
         // FIXME: This a a bit of dangerous hackage.
         $this->replace('Theme', $Theme);
@@ -324,6 +316,10 @@ extends TemplateFile
 
         require_once('lib/ButtonFactory.php');
         $this->replace('ButtonFactory', new ButtonFactory);
+
+        $query_args = $request->getArgs();
+        unset($query_args['login']);
+        $this->replace('query_args', $query_args);
     }
 };
 

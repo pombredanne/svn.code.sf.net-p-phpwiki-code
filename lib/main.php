@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.24 2002-01-17 20:35:44 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.25 2002-01-19 07:21:58 dairiki Exp $');
 
 include "lib/config.php";
 include "lib/stdlib.php";
@@ -39,22 +39,14 @@ function is_safe_action ($action) {
     return in_array ( $action, array('browse', 'info',
                                      'diff',   'search',
                                      'edit',   'save',
-                                     'login',  'logout',
                                      'setprefs') );
 }
 
-function get_auth_mode ($action) {
-    switch ($action) {
-    case 'logout':
-        return  'LOGOUT';
-    case 'login':
-        return 'LOGIN';
-    default:
-        if (is_safe_action($action))
-            return 'ANON_OK';
-        else
-            return 'REQUIRE_AUTH';
-    }
+function authlevelForAction ($action) {
+    if (is_safe_action($action))
+        return WIKIAUTH_ANON;
+    else
+        return WIKIAUTH_ADMIN;
 }
 
 function main ($request) {
@@ -80,15 +72,19 @@ function main ($request) {
     }
     
     global $user;               // FIXME: can we make this non-global?
-    $user = new WikiUser($request, get_auth_mode($action));
+    $user = new WikiUser($request);
+    $user->requireAuth( authlevelForAction($action) );
+    
+
     //FIXME:
     //if ($user->is_authenticated())
-    //  $LogEntry->user = $user->id();
+    //  $LogEntry->user = $user->getId();
     
     // All requests require the database
     global $dbi;                // FIXME: can we keep this non-global?
     $dbi = WikiDB::open($GLOBALS['DBParams']);
-    
+
+    // FIXME: need something more robust here...
     if ( $action == 'browse' && $request->getArg('pagename') == _("HomePage") ) {
         // if there is no HomePage, create a basic set of Wiki pages
         if ( ! $dbi->isWikiPage(_("HomePage")) ) {
@@ -99,9 +95,10 @@ function main ($request) {
     }
 
     // FIXME: I think this is redundant.
-    if (!is_safe_action($action))
-        $user->must_be_admin($action);
-    
+    //if (!is_safe_action($action))
+    //    $user->must_be_admin($action);
+
+    // FIXME: this should be moved higher in the logic.
     if (isset($DisabledActions) && in_array($action, $DisabledActions))
         ExitWiki(sprintf(_("Action %s is disabled in this wiki."), $action));
    
@@ -190,7 +187,8 @@ function main ($request) {
     
     case 'lock':
     case 'unlock':
-        $user->must_be_admin(_("lock or unlock pages"));
+        // FIXME: This check is redundant.
+        $user->requireAuth(WIKIAUTH_ADMIN);
         $page = $dbi->getPage($request->getArg('pagename'));
         $page->set('locked', $action == 'lock');
 
@@ -218,11 +216,12 @@ function main ($request) {
     case 'browse':
     case 'login':
     case 'logout':
+
         $request->compress_output();
         include_once("lib/display.php");
         displayPage($dbi, $request);
         break;
-
+        
     default:
         echo QElement('p', sprintf(_("Bad action: '%s'"), urlencode($action)));
         break;

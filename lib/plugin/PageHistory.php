@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageHistory.php,v 1.6 2002-01-18 00:28:43 dairiki Exp $');
+rcs_id('$Id: PageHistory.php,v 1.7 2002-01-19 07:21:58 dairiki Exp $');
 /**
  */
 require_once('lib/plugin/RecentChanges.php');
@@ -74,7 +74,8 @@ extends _RecentChanges_HtmlFormatter
     }
 
     function _javascript($script) {
-        return Element('script', array('language' => 'JavaScript'),
+        return Element('script', array('language' => 'JavaScript',
+                                       'type' => 'text/javascript'),
                        "<!-- //\n$script\n// -->");
     }
     

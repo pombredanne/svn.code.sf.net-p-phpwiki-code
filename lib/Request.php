@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.7 2002-01-09 16:57:20 carstenklapp Exp $');
+<?php rcs_id('$Id: Request.php,v 1.8 2002-01-19 07:21:58 dairiki Exp $');
 
 // FIXME: write log entry.
 
@@ -55,9 +55,17 @@ class Request {
         return false;
     }
 
-    function setArg($key, $val) {
-        $this->args[$key] = $val;
+    function getArgs () {
+        return $this->args;
     }
+    
+    function setArg($key, $val) {
+        if ($val === false)
+            unset($this->args[$key]);
+        else
+            $this->args[$key] = $val;
+    }
+    
 
     function getURLtoSelf($args = false) {
         $get_args = $this->args;

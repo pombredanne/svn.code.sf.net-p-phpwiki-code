@@ -1,0 +1,52 @@
+<?php // -*-html-*- ?>
+<!-- $Id: signin.tmpl,v 1.1 2002-01-19 07:21:58 dairiki Exp $ -->
+<?php
+
+     $Sep = $Theme->getButtonSeparator();
+     $SignOutB = $Theme->makeButton(_("SignOut"), "javascript:SignOut();", 'wikiaction');
+
+     if (empty($FORMNAME))
+         $FORMNAME = 'signin';
+     else
+         $NOFORM = true;
+?>
+
+<?php if (empty($NOFORM)) { ?>
+  <form method="post" action="<?=BASE_URL?>" accept-charset="<?=CHARSET?>" name="<?=$FORMNAME?>">
+
+  <?php foreach ($query_args as $key => $val) { ?>
+    <input type="hidden" name="<?=htmlspecialchars($key)?>" value="<?=htmlspecialchars($val)?>" />
+  <?php } ?>
+<?php } ?>
+
+<?php if ($user->isSignedIn()) {  ?>
+
+  <?=sprintf(_("You are signed in as %s"), LinkWikiWord($USERID))?>
+  <?=$Sep?>
+  <script language="JavaScript" type="text/javascript"><!--
+    document.write('<input type="hidden" name="login[logout]" value="0" />');
+    function SignOut() { 
+      document.forms["<?=$FORMNAME?>"].elements["login[logout]"].value = 1;
+      document.forms["<?=$FORMNAME?>"].submit();
+    }
+    document.write('<?=$SignOutB?>'); // -->
+  </script>
+  <noscript>
+    <input type="submit" name="login[logout]" value="<?=_("SignOut")?>" />
+  </noscript>
+
+<?php } else { ?>
+
+  <script language="JavaScript" type="text/javascript"><!--
+    document.write("<?=_("Sign In")?> ");
+  // --></script>
+  <input type="text" name="login[userid]" size="12" onchange="this.form.submit();" />
+  <noscript>
+    <input type="submit" name="login[login]" value="<?=_("SignIn")?>" />
+  </noscript>
+
+<?php } ?>
+
+<?php if (empty($NOFORM)) { ?>
+  </form>
+<?php } ?>
