@@ -581,6 +581,11 @@ ol li, #sidebar ul ol li {
 #searchform {
   text-align: right;
 }
+
+body p, #editpage { 
+  margin-left: 40px;
+  margin-right: 20px;
+}
 /* End Form Elements */
 
 /* Begin Various Tags & Classes */
