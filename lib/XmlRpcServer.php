@@ -1,5 +1,5 @@
 <?php 
-// $Id: XmlRpcServer.php,v 1.1 2002-09-14 22:28:33 dairiki Exp $
+// $Id: XmlRpcServer.php,v 1.2 2002-09-15 05:52:23 dairiki Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  *
  * LICENCE
@@ -124,10 +124,23 @@ function _getPageRevision ($params)
  */
 
 /**
+ * Urlencode ASCII control characters.
+ *
+ * (And control characters...)
+ *
+ * @param string $str
+ * @return string
+ * @see urlencode
+ */
+function UrlencodeControlCharacters($str) {
+    return preg_replace('/([\x00-\x20])/e', "urlencode('\\1')", $str);
+}
+
+/**
  * Convert a short string (page name, author) to xmlrpcval.
  */
 function short_string ($str) {
-    return new xmlrpcval(rawurlencode(utf8_encode($str)), 'string');
+    return new xmlrpcval(UrlencodeControlCharacters(utf8_encode($str)), 'string');
 }
 
 /**
@@ -383,9 +396,10 @@ function listLinks($params)
     $dbh = $request->getDbh();
     if (! $dbh->isWikiPage($pagename))
         return NoSuchPage();
-    
+
     $page = $dbh->getPage($pagename);
-    $linkiterator = $page->getLinks();
+    /*
+    $linkiterator = $page->getLinks(false);
     $linkstruct = array();
     while ($currentpage = $linkiterator->next()) {
         $currentname = $currentpage->getName();
@@ -412,6 +426,35 @@ function listLinks($params)
                                             'href' => $href),
                                       "struct");
     }
+    */
+    
+    $current = $page->getCurrentRevision();
+    list ($pages, $urls) = ExtractLinks($current->getContent());
+
+    $type = new xmlrpcval("internal");
+    foreach ($pages as $wikiword) {
+        $name = short_string($wikiword);
+        $args = array();
+        if (! $dbh->isWikiPage($wikiword))
+            $args['action'] = 'edit';
+        // FIXME: see comments in above commented sections
+        // about possible screwed up absolute URLS...
+        $href = short_string(WikiURL($wikiword, $args, 'abspath'));
+        $linkstruct[] = new xmlrpcval(array('name'=> $name,
+                                            'type'=> $type,
+                                            'href' => $href),
+                                      "struct");
+    }
+        
+    $type = new xmlrpcval("external");
+    foreach ($urls as $url) {
+        $href = short_string($url);
+        $linkstruct[] = new xmlrpcval(array('name'=> $href,
+                                            'type'=> $type,
+                                            'href' => $href),
+                                      "struct");
+    }
+    
     return new xmlrpcresp(new xmlrpcval ($linkstruct, "array"));
 } 
  
