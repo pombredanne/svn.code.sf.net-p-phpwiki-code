@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.17 2002-11-21 18:07:32 dairiki Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.18 2002-11-22 23:22:54 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -329,12 +329,15 @@ class Markup_old_emphasis  extends BalancedMarkup
 class Markup_nestled_emphasis extends BalancedMarkup
 {
     //var $_start_regexp = "(?<! [[:alnum:]] ) [*_=] (?=[[:alnum:]])";
-    var $_start_regexp = "(?<= \s | ^  ) (?: _\\* | \\*_ | [*_=] ) (?= \S)";
+    var $_start_regexp = "(?<= \\s | ^ | [_=*(] )
+                          (?: (?<! _) _ (?! _)
+                            | (?<! \\*) \\* (?! \\*)
+                            | (?<! =) = (?! =) )
+                          (?= \S )";
 
     function getEndRegexp ($match) {
-        //return "(?<= [[:alnum:]]) \\$match (?![[:alnum:]])";
-        $rev = preg_quote(strrev($match));
-        return "(?<= \S) $rev (?= \s | [.,:;\"'?] | $)";
+        $chr = preg_quote($match);
+        return "(?<= \S | ^ ) (?<! $chr) $chr (?! $chr) (?= \s | [.,:;\"'?_*=)] | $)";
     }
     
     function markup ($match, $body) {
@@ -342,7 +345,6 @@ class Markup_nestled_emphasis extends BalancedMarkup
         case '*': return new HtmlElement('b', $body);
         case '=': return new HtmlElement('tt', $body);
         case '_':  return new HtmlElement('i', $body);
-        default:  return new HtmlElement('b', new HtmlElement('i', $body));
         }
     }
 }
