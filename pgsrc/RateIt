@@ -1,9 +1,9 @@
 Date: Mon, 12 Apr 2004 11:26:41 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.9)
-X-Rcs-Id: $Id: RateIt,v 1.1 2004-04-12 18:11:31 rurban Exp $
+X-Rcs-Id: $Id: RateIt,v 1.2 2004-05-09 00:57:32 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=RateIt;
-  pgsrc_version="2 $Revision: 1.1 $";
+  pgsrc_version="2 $Revision: 1.2 $";
   flags="";
   markup=2;
   charset=iso-8859-1
