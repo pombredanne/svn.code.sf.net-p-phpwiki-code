@@ -25,9 +25,12 @@ rcs_id('$Id PhpWeather.php 2002-08-26 15:30:13 rurban$');
 
 // We require the base class from PHP Weather, adjust this to match
 // the location of PhpWeather on your server:
-require_once($_SERVER['DOCUMENT_ROOT'] . '/phpweather/phpweather.php');
-require_once(PHPWEATHER_BASE_DIR . '/output/pw_images.php');
-require_once(PHPWEATHER_BASE_DIR . '/pw_utilities.php');
+$WEATHER = $_SERVER['DOCUMENT_ROOT'] . '/phpweather/phpweather.php';
+if(! @include_once($WEATHER)) {
+    if(!in_array($WEATHER, get_included_files()) ) {
+        trigger_error(sprintf(_("Could not open file %s."), "'$WEATHER'"));
+    }
+}
 
 class WikiPlugin_PhpWeather
 extends WikiPlugin
@@ -35,7 +38,7 @@ extends WikiPlugin
     function getName () {
         return _("PhpWeather");
     }
-    
+
     function getDescription () {
         return _("The PhpWeather plugin provides weather reports from the Internet.");
     }
@@ -47,13 +50,21 @@ extends WikiPlugin
                      'menu'  => false,
                      'units' => 'both_metric');
     }
-    
+
     function run($dbi, $argstr, $request) {
+        // When 'phpweather/phpweather.php' is not installed then
+        // PHPWEATHER_BASE_DIR will be undefined
+        if (!defined('PHPWEATHER_BASE_DIR'))
+            return fmt("Plugin %s failed.", $this->getName()); //early return
+
+        require_once(PHPWEATHER_BASE_DIR . '/output/pw_images.php');
+        require_once(PHPWEATHER_BASE_DIR . '/pw_utilities.php');
+
         extract($this->getArgs($argstr, $request));
         $html = HTML();
-        
+
         $w = new phpweather(); // Our weather object
-        
+
         if (!empty($icao)) {
             /* We assign the ICAO to the weather object: */
             $w->set_icao($icao);
@@ -65,21 +76,22 @@ extends WikiPlugin
                 $icao = '';
             }
         }
-        
+
         if (!empty($icao)) {
-            
+
             /* We check and correct the language if necessary: */
-            if (!in_array($lang, array_keys($w->get_languages('text')))) {
+            //if (!in_array($lang, array_keys($w->get_languages('text')))) {
+            if (!in_array($lang, array_keys(get_languages('text')))) {
                 trigger_error(sprintf(_("%s does not know about the language '%s', using 'en' instead."),
                                       $this->getName(), $lang), E_USER_NOTICE);
                 $lang = 'en';
             }
-            
+
             $class = "pw_text_$lang";
             require_once(PHPWEATHER_BASE_DIR . "/output/$class.php");
-            
+
             $t = new $class($w);
-            $t->set_pref_units($units);            
+            $t->set_pref_units($units);
             $i = new pw_images($w);
 
             $i_temp = HTML::img(array('src' => $i->get_temp_image()));
@@ -87,34 +99,34 @@ extends WikiPlugin
             $i_sky  = HTML::img(array('src' => $i->get_sky_image()));
 
             $m = $t->print_pretty();
-            
+
             $m_td = HTML::td(HTML::p(new RawXml($m)));
-            
+
             $i_tr = HTML::tr();
             $i_tr->pushContent(HTML::td($i_temp));
             $i_tr->pushContent(HTML::td($i_wind));
-            
+
             $i_table = HTML::table($i_tr);
             $i_table->pushContent(HTML::tr(HTML::td(array('colspan' => '2'),
                                                     $i_sky)));
-            
+
             $tr = HTML::tr();
             $tr->pushContent($m_td);
             $tr->pushContent(HTML::td($i_table));
-            
+
             $html->pushContent(HTML::table($tr));
-            
+
         }
-        
+
         /* We make a menu if asked to, or if $icao is empty: */
         if ($menu || empty($icao)) {
-            
+
             $form_arg = array('action' => $request->getURLtoSelf(),
                               'method' => 'get');
-            
+
             /* The country box is always part of the menu: */
             $p1 = HTML::p(new RawXml(get_countries_select($w, $cc)));
-            
+
             /* We want to save the language: */
             $p1->pushContent(HTML::input(array('type'  => 'hidden',
                                                'name'  => 'lang',
@@ -123,18 +135,18 @@ extends WikiPlugin
             $p1->pushContent(HTML::input(array('type'  => 'hidden',
                                                'name'  => 'icao',
                                                'value' => $icao)));
-            
+
             $caption = (empty($cc) ? _("Submit country") : _("Change country"));
             $p1->pushContent(HTML::input(array('type'  => 'submit',
                                                'value' => $caption)));
-            
+
             $html->pushContent(HTML::form($form_arg, $p1));
-            
+
             if (!empty($cc)) {
                 /* We have selected a country, now display a list with
                  * the available stations in that country: */
                 $p2 = HTML::p();
-                
+
                 /* We need the country code after the form is submitted: */
                 $p2->pushContent(HTML::input(array('type'  => 'hidden',
                                                    'name'  => 'cc',
@@ -146,11 +158,11 @@ extends WikiPlugin
                                                    'value' => 'Submit location')));
 
                 $html->pushContent(HTML::form($form_arg, $p2));
-                
+
             }
-            
+
         }
-        
+
         return $html;
     }
 };
