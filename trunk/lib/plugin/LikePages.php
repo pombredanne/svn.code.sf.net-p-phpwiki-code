@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: LikePages.php,v 1.9 2002-01-22 03:17:47 dairiki Exp $');
+rcs_id('$Id: LikePages.php,v 1.10 2002-01-22 05:06:50 dairiki Exp $');
 
 require_once('lib/TextSearchQuery.php');
 require_once('lib/PageList.php');
@@ -73,9 +73,9 @@ extends WikiPlugin
         $match_re = '/' . join('|', $match) . '/';
 
         $pages = $dbi->titleSearch($query);
-        $pagelist = new PageList();
-        //$pagelist->insertColumn(_("Hits"));
-        //$pagelist->addcolumn(_("Last Modified"));
+        $pagelist = new PageList;
+        //$pagelist->insertColumn('hits');
+        //$pagelist->addcolumn('mtime');
 
         while ($page = $pages->next()) {
             $name = $page->getName();

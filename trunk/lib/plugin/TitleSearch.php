@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TitleSearch.php,v 1.7 2002-01-22 03:17:47 dairiki Exp $');
+rcs_id('$Id: TitleSearch.php,v 1.8 2002-01-22 05:06:50 dairiki Exp $');
 
 require_once('lib/TextSearchQuery.php');
 require_once('lib/PageList.php');
@@ -34,8 +34,8 @@ extends WikiPlugin
         $pages = $dbi->titleSearch($query);
 
         $pagelist = new PageList();
-//        $pagelist->insertColumn(_("Hits"));
-//        $pagelist->addColumn(_("Last Modified"));
+//        $pagelist->insertColumn('hits');
+//        $pagelist->addColumn('mtime');
 
         while ($page = $pages->next()) {
             $pagelist->addPage($page);
