@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: themeinfo.php,v 1.52 2003-12-05 01:31:50 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.53 2003-12-05 01:37:42 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -133,7 +133,7 @@ $Theme->addImageAlias('logo', WIKI_NAME . 'Logo.png');
  * is set to false then the "Thank you for editing..." screen will
  * be omitted.
  */
-$Theme->addImageAlias('signature', PHPWIKI_NAME . "Signature.png");
+$Theme->addImageAlias('signature', WIKI_NAME . "Signature.png");
 // Uncomment this next line to disable the signature.
 //$Theme->addImageAlias('signature', false);
 
