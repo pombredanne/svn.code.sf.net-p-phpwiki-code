@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: themeinfo.php,v 1.54 2003-12-05 15:01:49 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.55 2004-06-14 11:26:49 rurban Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -87,7 +87,7 @@ class Theme_MacOSX extends Theme {
     }
 }
 
-$Theme = new Theme_MacOSX('MacOSX');
+$WikiTheme = new Theme_MacOSX('MacOSX');
 
 // CSS file defines fonts, colors and background images for this
 // style.  The companion '*-heavy.css' file isn't defined, it's just
@@ -95,53 +95,53 @@ $Theme = new Theme_MacOSX('MacOSX');
 
 // This should result in phpwiki-printer.css being used when
 // printing or print-previewing with style "PhpWiki" or "MacOSX" selected.
-$Theme->setDefaultCSS('MacOSX',
+$WikiTheme->setDefaultCSS('MacOSX',
                        array(''      => 'MacOSX.css',
                              'print' => 'phpwiki-printer.css'));
 
 // This allows one to manually select "Printer" style (when browsing page)
 // to see what the printer style looks like.
-$Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
-$Theme->addAlternateCSS(_("Top & bottom toolbars"), 'MacOSX-topbottombars.css');
+$WikiTheme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
+$WikiTheme->addAlternateCSS(_("Top & bottom toolbars"), 'MacOSX-topbottombars.css');
 
 /**
  * The logo image appears on every page and links to the HomePage.
  */
-$Theme->addImageAlias('logo', WIKI_NAME . 'Logo.png');
+$WikiTheme->addImageAlias('logo', WIKI_NAME . 'Logo.png');
 
 /**
  * The Signature image is shown after saving an edited page. If this
  * is set to false then the "Thank you for editing..." screen will
  * be omitted.
  */
-$Theme->addImageAlias('signature', WIKI_NAME . "Signature.png");
+$WikiTheme->addImageAlias('signature', WIKI_NAME . "Signature.png");
 // Uncomment this next line to disable the signature.
-//$Theme->addImageAlias('signature', false);
+//$WikiTheme->addImageAlias('signature', false);
 
 /*
  * Link icons.
  */
-$Theme->setLinkIcon('http');
-$Theme->setLinkIcon('https');
-$Theme->setLinkIcon('ftp');
-$Theme->setLinkIcon('mailto');
-$Theme->setLinkIcon('interwiki');
-$Theme->setLinkIcon('wikiuser');
-$Theme->setLinkIcon('*', 'url');
+$WikiTheme->setLinkIcon('http');
+$WikiTheme->setLinkIcon('https');
+$WikiTheme->setLinkIcon('ftp');
+$WikiTheme->setLinkIcon('mailto');
+$WikiTheme->setLinkIcon('interwiki');
+$WikiTheme->setLinkIcon('wikiuser');
+$WikiTheme->setLinkIcon('*', 'url');
 
-$Theme->setButtonSeparator(""); //use no separator instead of default
+$WikiTheme->setButtonSeparator(""); //use no separator instead of default
 
-$Theme->addButtonAlias('?', 'uww');
-$Theme->addButtonAlias(_("Lock Page"), "Lock Page");
-$Theme->addButtonAlias(_("Unlock Page"), "Unlock Page");
-$Theme->addButtonAlias(_("Page Locked"), "Page Locked");
-$Theme->addButtonAlias("...", "alltime");
+$WikiTheme->addButtonAlias('?', 'uww');
+$WikiTheme->addButtonAlias(_("Lock Page"), "Lock Page");
+$WikiTheme->addButtonAlias(_("Unlock Page"), "Unlock Page");
+$WikiTheme->addButtonAlias(_("Page Locked"), "Page Locked");
+$WikiTheme->addButtonAlias("...", "alltime");
 
 /**
  * WikiWords can automatically be split by inserting spaces between
  * the words. The default is to leave WordsSmashedTogetherLikeSo.
  */
-//$Theme->setAutosplitWikiWords(false);
+//$WikiTheme->setAutosplitWikiWords(false);
 
 /*
  * You may adjust the formats used for formatting dates and times
@@ -151,8 +151,8 @@ $Theme->addButtonAlias("...", "alltime");
  * Do not include the server's zone (%Z), times are converted to the
  * user's time zone.
  */
-$Theme->setDateFormat("%A, %B %d, %Y"); // must not contain time
-$Theme->setTimeFormat("%I:%M:%S %p");
+$WikiTheme->setDateFormat("%A, %B %d, %Y"); // must not contain time
+$WikiTheme->setTimeFormat("%I:%M:%S %p");
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // (c-file-style: "gnu")

@@ -1,11 +1,11 @@
-<?php rcs_id('$Id: random.php,v 1.10 2004-04-19 23:13:04 zorloc Exp $');
+<?php rcs_id('$Id: random.php,v 1.11 2004-06-14 11:26:49 rurban Exp $');
 /**
  */
 class randomImage {
     /**
      * Usage:
      *
-     * $imgSet = new randomImage($Theme->file("images/pictures"));
+     * $imgSet = new randomImage($WikiTheme->file("images/pictures"));
      * $imgFile = "pictures/" . $imgSet->filename;
      */
     function randomImage ($dirname) {

@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-  rcs_id('$Id: head.tmpl,v 1.17 2004-06-04 20:34:11 rurban Exp $');
+  rcs_id('$Id: head.tmpl,v 1.18 2004-06-14 11:26:52 rurban Exp $');
 ?>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
@@ -18,7 +18,7 @@
 <meta name="generator" content="PhpWiki" />
 <meta name="PHPWIKI_VERSION" content="<?=PHPWIKI_VERSION?>" />
 <base href="<?=PHPWIKI_BASE_URL?>" />
-<link rel="shortcut icon" href="<?=$Theme->getImageURL('favicon.ico')?>" />
+<link rel="shortcut icon" href="<?=$WikiTheme->getImageURL('favicon.ico')?>" />
 <?php /**
        * Additional navigation links are provided here in the html header for browsers
        * which support them: Mozilla, iCab, Amaya (and certain versions of Opera??).
@@ -97,7 +97,7 @@ _("UserPreferences"))?>" />
 <link rel="bookmark" title="<?= $UserCalPageTodayTitle ?>" href="<?= $UserCalPageTodayUrl ?>" />
 <?php } ?>
 <?php } //end of links for signed-in user ?>
-<?= $Theme->getCSS() ?><?php
+<?= $WikiTheme->getCSS() ?><?php
   // avoid redundant bookmark title for custom home page
   if ($page->getName() == WIKI_NAME && HOME_PAGE == WIKI_NAME)
       $pagetitle = "";
@@ -105,11 +105,15 @@ _("UserPreferences"))?>" />
       $pagetitle = " - ". AsString($TITLE);
 ?>
 <title><?= WIKI_NAME.$pagetitle ?></title>
-<?= $Theme->getMoreHeaders() ?>
+<?= $WikiTheme->getMoreHeaders() ?>
 </head>
 <?php
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
 // $Log: not supported by cvs2svn $
+// Revision 1.17  2004/06/04 20:34:11  rurban
+// Put several _("") into new lines if inside attr="", so that xgettext
+// can pick it up. (Suggested by Pierrick Meignen)
+//
 // Revision 1.16  2004/06/03 16:56:22  rurban
 // added Sidebar existing calendar dates
 //

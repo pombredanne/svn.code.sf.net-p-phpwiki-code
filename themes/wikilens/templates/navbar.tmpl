@@ -1,7 +1,7 @@
 <?php // -*-html-*-
-    rcs_id('$Id: navbar.tmpl,v 1.3 2004-06-04 20:34:11 rurban Exp $');
+    rcs_id('$Id: navbar.tmpl,v 1.4 2004-06-14 11:26:54 rurban Exp $');
 
-    $s = $Theme->getButtonSeparator();
+    $s = $WikiTheme->getButtonSeparator();
 ?>
 <!-- The top navigation/search bar -->
 <form action="<?= WikiURL(_("TitleSearch"))?>" target="_top"
@@ -26,7 +26,7 @@ _("Quick Search")?>'; return true;"
     <?php } ?>
     <?php if (!empty($user)) { ?>
      <?=$s?>
-<?php 
+<?php
 $loader = new WikiPluginLoader();
 printXML($loader->expandPI("<"."?plugin RateIt ?".">", $request, $dbi->_markup));
 ?>

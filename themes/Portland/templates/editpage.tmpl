@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.20 2003-02-26 01:56:53 dairiki Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.21 2004-06-14 11:26:50 rurban Exp $ -->
 <?php
 
 $WidthI = HTML::input(array('type' => 'text',
@@ -18,11 +18,11 @@ $HeightI = HTML::input(array('type' => 'text',
                              'value' => $request->getPref('editHeight'),
                              'onchange' => 'this.form.submit();'));
 
-$s = $Theme->getButtonSeparator();
+$s = $WikiTheme->getButtonSeparator();
 ?>
 
 <?php /*
- * FIXME: Hack! 
+ * FIXME: Hack!
  * The funky URL used for the form action parameter is bogus.
  * This is needed, otherwise the redirect to the real browser
  * page won't work with some browsers. (NS4 and Mozilla 0.97 won't accept

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.2 2004-04-21 04:21:32 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.3 2004-06-14 11:26:53 rurban Exp $');
 /**
  * tiny actionbar, only Edit (if signed in) and Info => PageInfo,
  *   all other Actionbars buttons in info.tmpl
@@ -35,7 +35,7 @@ class Theme_smaller extends Theme {
     }
 }
 
-$Theme = new Theme_smaller('smaller');
+$WikiTheme = new Theme_smaller('smaller');
 
 // CSS file defines fonts, colors and background images for this
 // style.  The companion '*-heavy.css' file isn't defined, it's just
@@ -43,20 +43,20 @@ $Theme = new Theme_smaller('smaller');
 
 // This should result in phpwiki-printer.css being used when
 // printing or print-previewing with style "PhpWiki" or "MacOSX" selected.
-$Theme->setDefaultCSS('PhpWiki',
+$WikiTheme->setDefaultCSS('PhpWiki',
                        array(''      => 'phpwiki.css',
                              'print' => 'phpwiki-printer.css'));
 
 // This allows one to manually select "Printer" style (when browsing page)
 // to see what the printer style looks like.
-$Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
-$Theme->addAlternateCSS(_("Top & bottom toolbars"), 'phpwiki-topbottombars.css');
-$Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
+$WikiTheme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
+$WikiTheme->addAlternateCSS(_("Top & bottom toolbars"), 'phpwiki-topbottombars.css');
+$WikiTheme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
 
 /**
  * The logo image appears on every page and links to the HomePage.
  */
-$Theme->addImageAlias('logo', WIKI_NAME . 'Logo.png');
+$WikiTheme->addImageAlias('logo', WIKI_NAME . 'Logo.png');
 
 /**
  * The Signature image is shown after saving an edited page. If this
@@ -64,28 +64,28 @@ $Theme->addImageAlias('logo', WIKI_NAME . 'Logo.png');
  * be omitted.
  */
 
-$Theme->addImageAlias('signature', WIKI_NAME . "Signature.png");
+$WikiTheme->addImageAlias('signature', WIKI_NAME . "Signature.png");
 // Uncomment this next line to disable the signature.
-$Theme->addImageAlias('signature', false);
+$WikiTheme->addImageAlias('signature', false);
 
 /*
  * Link icons.
  */
-//$Theme->setLinkIcon('http');
-$Theme->setLinkIcon('https');
-$Theme->setLinkIcon('ftp');
-$Theme->setLinkIcon('mailto');
-//$Theme->setLinkIcon('interwiki');
-//$Theme->setLinkIcon('wikiuser');
-//$Theme->setLinkIcon('*', 'url');
+//$WikiTheme->setLinkIcon('http');
+$WikiTheme->setLinkIcon('https');
+$WikiTheme->setLinkIcon('ftp');
+$WikiTheme->setLinkIcon('mailto');
+//$WikiTheme->setLinkIcon('interwiki');
+//$WikiTheme->setLinkIcon('wikiuser');
+//$WikiTheme->setLinkIcon('*', 'url');
 
-//$Theme->setButtonSeparator("\n | ");
+//$WikiTheme->setButtonSeparator("\n | ");
 
 /**
  * WikiWords can automatically be split by inserting spaces between
  * the words. The default is to leave WordsSmashedTogetherLikeSo.
  */
-//$Theme->setAutosplitWikiWords(false);
+//$WikiTheme->setAutosplitWikiWords(false);
 
 /**
  * Layout improvement with dangling links for mostly closed wiki's:
@@ -94,7 +94,7 @@ $Theme->setLinkIcon('mailto');
  * If true (default), any user will see the ?, but will be presented 
  * the PrintLoginForm on a click.
  */
-$Theme->setAnonEditUnknownLinks(false);
+$WikiTheme->setAnonEditUnknownLinks(false);
 
 /*
  * You may adjust the formats used for formatting dates and times
@@ -104,14 +104,14 @@ $Theme->setAnonEditUnknownLinks(false);
  * Do not include the server's zone (%Z), times are converted to the
  * user's time zone.
  */
-$Theme->setDateFormat("%B %d, %Y");
-$Theme->setTimeFormat("%H:%M");
+$WikiTheme->setDateFormat("%B %d, %Y");
+$WikiTheme->setTimeFormat("%H:%M");
 
 /*
  * To suppress times in the "Last edited on" messages, give a
  * give a second argument of false:
  */
-//$Theme->setDateFormat("%B %d, %Y", false); 
+//$WikiTheme->setDateFormat("%B %d, %Y", false); 
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.1 2004-05-12 19:42:15 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.2 2004-06-14 11:26:45 rurban Exp $');
 
 /*
  * This file defines the default appearance ("theme") of PhpWiki.
@@ -7,7 +7,7 @@ rcs_id('$Id: themeinfo.php,v 1.1 2004-05-12 19:42:15 rurban Exp $');
 
 require_once('lib/Theme.php');
 
-$Theme = new Theme('Crao');
+$WikiTheme = new Theme('Crao');
 
 // CSS file defines fonts, colors and background images for this
 // style.  The companion '*-heavy.css' file isn't defined, it's just
@@ -15,21 +15,21 @@ $Theme = new Theme('Crao');
 
 // This should result in phpwiki-printer.css being used when
 // printing or print-previewing with style "PhpWiki" selected.
-$Theme->setDefaultCSS('Crao',
+$WikiTheme->setDefaultCSS('Crao',
                       array(''		=> 'crao.css',
                             'print'	=> ''));
 
 // This allows one to manually select "Printer" style (when browsing page)
 // to see what the printer style looks like.
-//$Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css');
-//$Theme->addAlternateCSS(_("Top & bottom toolbars"), 'phpwiki-topbottombars.css');
-//$Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
+//$WikiTheme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css');
+//$WikiTheme->addAlternateCSS(_("Top & bottom toolbars"), 'phpwiki-topbottombars.css');
+//$WikiTheme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
 
 
 /**
  * The logo image appears on every page and links to the HomePage.
  */
-//$Theme->addImageAlias('logo', 'logo.png');
+//$WikiTheme->addImageAlias('logo', 'logo.png');
 
 /**
  * The Signature image is shown after saving an edited page. If this
@@ -39,25 +39,25 @@ $Theme->setDefaultCSS('Crao',
  */
 
 // Comment this next line out to enable signature.
-$Theme->addImageAlias('signature', false);
+$WikiTheme->addImageAlias('signature', false);
 
 /*
  * Link icons.
  */
-$Theme->setLinkIcon('http');
-$Theme->setLinkIcon('https');
-$Theme->setLinkIcon('ftp');
-$Theme->setLinkIcon('mailto');
-$Theme->setLinkIcon('interwiki');
-$Theme->setLinkIcon('*', 'url');
+$WikiTheme->setLinkIcon('http');
+$WikiTheme->setLinkIcon('https');
+$WikiTheme->setLinkIcon('ftp');
+$WikiTheme->setLinkIcon('mailto');
+$WikiTheme->setLinkIcon('interwiki');
+$WikiTheme->setLinkIcon('*', 'url');
 
-$Theme->setButtonSeparator(HTML::raw("&nbsp;|&nbsp;"));
+$WikiTheme->setButtonSeparator(HTML::raw("&nbsp;|&nbsp;"));
 
 /**
  * WikiWords can automatically be split by inserting spaces between
  * the words. The default is to leave WordsSmashedTogetherLikeSo.
  */
-$Theme->setAutosplitWikiWords(true);
+$WikiTheme->setAutosplitWikiWords(true);
 
 /*
  * You may adjust the formats used for formatting dates and times
@@ -67,18 +67,18 @@ $Theme->setAutosplitWikiWords(true);
  * Do not include the server's zone (%Z), times are converted to the
  * user's time zone.
  */
-//$Theme->setDateFormat("%B %d, %Y");
-//$Theme->setTimeFormat("%I:%M %p");
+//$WikiTheme->setDateFormat("%B %d, %Y");
+//$WikiTheme->setTimeFormat("%I:%M %p");
 
 /*
  * To suppress times in the "Last edited on" messages, give a
  * give a second argument of false:
  */
-//$Theme->setDateFormat("%B %d, %Y", false); 
-$Theme->setDateFormat("%A %e %B %Y"); // must not contain time
-//$Theme->setDateFormat("%x"); // must not contain time
-$Theme->setTimeFormat("%H:%M:%S");
-//$Theme->setTimeFormat("%X");
+//$WikiTheme->setDateFormat("%B %d, %Y", false); 
+$WikiTheme->setDateFormat("%A %e %B %Y"); // must not contain time
+//$WikiTheme->setDateFormat("%x"); // must not contain time
+$WikiTheme->setTimeFormat("%H:%M:%S");
+//$WikiTheme->setTimeFormat("%X");
 
 
 

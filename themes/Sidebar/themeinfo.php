@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.15 2004-06-03 16:56:21 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.16 2004-06-14 11:26:51 rurban Exp $');
 
 /*
  * This file defines the Sidebar appearance ("theme") of PhpWiki.
@@ -12,16 +12,16 @@ class Theme_Sidebar extends Theme {
     function findTemplate ($name) {
         // hack for navbar.tmpl to hide the buttonseparator
         if ($name == "navbar") {
-            //$old = $Theme->getButtonSeparator();
+            //$old = $WikiTheme->getButtonSeparator();
             $this->setButtonSeparator(HTML::Raw('<br /> &middot; '));
             //$this->setButtonSeparator("\n");
-            //$Theme->setButtonSeparator($old);
+            //$WikiTheme->setButtonSeparator($old);
         }
         if ($name == "actionbar" || $name == "signin") {
-            //$old = $Theme->getButtonSeparator();
+            //$old = $WikiTheme->getButtonSeparator();
             //$this->setButtonSeparator(HTML::br());
             $this->setButtonSeparator(" ");
-            //$Theme->setButtonSeparator($old);
+            //$WikiTheme->setButtonSeparator($old);
         }
         return $this->_path . $this->_findFile("templates/$name.tmpl");
     }
@@ -39,28 +39,28 @@ class Theme_Sidebar extends Theme {
         return $UserCalPageTitle;
     }
 }
-$Theme = new Theme_Sidebar('Sidebar');
+$WikiTheme = new Theme_Sidebar('Sidebar');
 
 $dbi = $GLOBALS['request']->getDbh();
 // display flat calender dhtml under the clock
-if ($dbi->isWikiPage($Theme->calendarBase())) {
+if ($dbi->isWikiPage($WikiTheme->calendarBase())) {
     $jslang = @$GLOBALS['LANG'];
-    $Theme->addMoreHeaders($Theme->_CSSlink(0,
-        $Theme->_findFile('jscalendar/calendar-phpwiki.css'),'all'));
-    $Theme->addMoreHeaders("\n");
-    $Theme->addMoreHeaders(JavaScript('',
-        array('src' => $Theme->_findData('jscalendar/calendar_stripped.js'))));
-    $Theme->addMoreHeaders("\n");
-    if (!($langfile = $Theme->_findData("jscalendar/lang/calendar-$jslang.js")))
-        $langfile = $Theme->_findData("jscalendar/lang/calendar-en.js");
-    $Theme->addMoreHeaders(JavaScript('',array('src' => $langfile)));
-    $Theme->addMoreHeaders("\n");
-    $Theme->addMoreHeaders(JavaScript('',
-        array('src' => $Theme->_findData('jscalendar/calendar-setup_stripped.js'))));
-    $Theme->addMoreHeaders("\n");
+    $WikiTheme->addMoreHeaders($WikiTheme->_CSSlink(0,
+        $WikiTheme->_findFile('jscalendar/calendar-phpwiki.css'),'all'));
+    $WikiTheme->addMoreHeaders("\n");
+    $WikiTheme->addMoreHeaders(JavaScript('',
+        array('src' => $WikiTheme->_findData('jscalendar/calendar_stripped.js'))));
+    $WikiTheme->addMoreHeaders("\n");
+    if (!($langfile = $WikiTheme->_findData("jscalendar/lang/calendar-$jslang.js")))
+        $langfile = $WikiTheme->_findData("jscalendar/lang/calendar-en.js");
+    $WikiTheme->addMoreHeaders(JavaScript('',array('src' => $langfile)));
+    $WikiTheme->addMoreHeaders("\n");
+    $WikiTheme->addMoreHeaders(JavaScript('',
+        array('src' => $WikiTheme->_findData('jscalendar/calendar-setup_stripped.js'))));
+    $WikiTheme->addMoreHeaders("\n");
     require_once("lib/TextSearchQuery.php");
     // get existing date entries for the current user:
-    $iter = $dbi->titleSearch(new TextSearchQuery($Theme->calendarBase().SUBPAGE_SEPARATOR));
+    $iter = $dbi->titleSearch(new TextSearchQuery($WikiTheme->calendarBase().SUBPAGE_SEPARATOR));
     $existing = array();
     while ($page = $iter->next()) {
         if ($page->exists())
@@ -68,7 +68,7 @@ if ($dbi->isWikiPage($Theme->calendarBase())) {
     }
     $js_exist = '{"'.join('":1,"',$existing).'":1}';
     //var SPECIAL_DAYS = {"2004-05-11":1,"2004-05-12":1,"2004-06-01":1}
-    $Theme->addMoreHeaders(JavaScript('
+    $WikiTheme->addMoreHeaders(JavaScript('
 // this table holds the existing calender entries for the current user
 // calculated from the database
 var SPECIAL_DAYS = '.$js_exist.';
@@ -96,16 +96,16 @@ function dateStatusHandler(date, y, m, d) {
 // style.  The companion '*-heavy.css' file isn't defined, it's just
 // expected to be in the same directory that the base style is in.
 
-$Theme->setDefaultCSS(_("Sidebar"), 'sidebar.css');
-//$Theme->addAlternateCSS('PhpWiki', 'phpwiki.css');
-//$Theme->setDefaultCSS('PhpWiki', 'phpwiki.css');
-$Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
-$Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
+$WikiTheme->setDefaultCSS(_("Sidebar"), 'sidebar.css');
+//$WikiTheme->addAlternateCSS('PhpWiki', 'phpwiki.css');
+//$WikiTheme->setDefaultCSS('PhpWiki', 'phpwiki.css');
+$WikiTheme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
+$WikiTheme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
 
 /**
  * The logo image appears on every page and links to the HomePage.
  */
-//$Theme->addImageAlias('logo', 'logo.png');
+//$WikiTheme->addImageAlias('logo', 'logo.png');
 
 /**
  * The Signature image is shown after saving an edited page. If this
@@ -115,25 +115,25 @@ $Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
  */
 
 // Comment this next line out to enable signature.
-$Theme->addImageAlias('signature', false);
+$WikiTheme->addImageAlias('signature', false);
 
 /*
  * Link icons.
  */
-$Theme->setLinkIcon('http');
-$Theme->setLinkIcon('https');
-$Theme->setLinkIcon('ftp');
-$Theme->setLinkIcon('mailto');
-$Theme->setLinkIcon('interwiki');
-$Theme->setLinkIcon('*', 'url');
+$WikiTheme->setLinkIcon('http');
+$WikiTheme->setLinkIcon('https');
+$WikiTheme->setLinkIcon('ftp');
+$WikiTheme->setLinkIcon('mailto');
+$WikiTheme->setLinkIcon('interwiki');
+$WikiTheme->setLinkIcon('*', 'url');
 
-//$Theme->setButtonSeparator(' | ');
+//$WikiTheme->setButtonSeparator(' | ');
 
 /**
  * WikiWords can automatically be split by inserting spaces between
  * the words. The default is to leave WordsSmashedTogetherLikeSo.
  */
-$Theme->setAutosplitWikiWords(true);
+$WikiTheme->setAutosplitWikiWords(true);
 
 /**
  * If true (default) show create '?' buttons on not existing pages, even if the 
@@ -141,7 +141,7 @@ $Theme->setAutosplitWikiWords(true);
  * If false, anon users get no links and it looks cleaner, but then they 
  * cannot easily fix missing pages.
  */
-$Theme->setAnonEditUnknownLinks(false);
+$WikiTheme->setAnonEditUnknownLinks(false);
 
 /*
  * You may adjust the formats used for formatting dates and times
@@ -151,7 +151,7 @@ $Theme->setAnonEditUnknownLinks(false);
  * Do not include the server's zone (%Z), times are converted to the
  * user's time zone.
  */
-//$Theme->setDateFormat("%B %d, %Y");
+//$WikiTheme->setDateFormat("%B %d, %Y");
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

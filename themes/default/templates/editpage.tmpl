@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.48 2004-06-04 20:34:11 rurban Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.49 2004-06-14 11:26:52 rurban Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
@@ -17,7 +17,7 @@ $HeightI = HTML::input(array('type' => 'text',
                              'value' => $request->getPref('editHeight'),
                              'onchange' => 'this.form.submit();'));
 
-$s = $Theme->getButtonSeparator();
+$s = $WikiTheme->getButtonSeparator();
 ?>
 
 <?php if (isset($PREVIEW_CONTENT)) { ?>

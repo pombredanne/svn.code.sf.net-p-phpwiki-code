@@ -1,8 +1,8 @@
 <?php // -*-php-*- ?>
-<!-- $Id: info.tmpl,v 1.2 2004-05-18 14:47:21 rurban Exp $ -->
+<!-- $Id: info.tmpl,v 1.3 2004-06-14 11:26:53 rurban Exp $ -->
 <?php
 
-$modifed = $Theme->formatDateTime($revision->get('mtime'));
+$modifed = $WikiTheme->formatDateTime($revision->get('mtime'));
 
 $author = $revision->get('author');
 global $WikiNameRegexp;
@@ -79,7 +79,7 @@ if ($is_current = $revision->isCurrent()) {
 }
 
 $tableSummary = fmt("Statistics about %s.", $page->getName());
-$Sep = $Theme->getButtonSeparator();
+$Sep = $WikiTheme->getButtonSeparator();
 
 ?>
 
@@ -90,7 +90,7 @@ $Sep = $Theme->getButtonSeparator();
 <?php if (!$is_current) { ?>
   <tr>
     <td align="right" class="pageinfo"><?=_("Supplanted on:")?></td>
-    <td><?= $Theme->formatDateTime($revision->get('_supplanted')) ?></td>
+    <td><?= $WikiTheme->formatDateTime($revision->get('_supplanted')) ?></td>
   </tr>
 <?php } ?>
 
@@ -167,10 +167,10 @@ if (0 and isSubPage($page->getName())) {
     <?= Button("viewsource", _("View Source")) ?>
     <?=$Sep?><?= Button("PageHistory", _("PageHistory")) ?>
     <?=$Sep?><?= Button("AuthorHistory", _("AuthorHistory")) ?>
-    <?=$Sep?><?= Button("Diff") ?> 
-    <?=$Sep?><?= Button(array('action'=>'diff','previous' => 'minor'),_("Diff previous Revision"),$page->getName()) ?> 
-    <?=$Sep?><?= Button(array('action'=>'diff','previous' => 'author'),_("Diff previous Author"),$page->getName()) ?> 
-<?php if ((defined('DEBUG') && DEBUG) || $user->isAdmin()) { ?> 
+    <?=$Sep?><?= Button("Diff") ?>
+    <?=$Sep?><?= Button(array('action'=>'diff','previous' => 'minor'),_("Diff previous Revision"),$page->getName()) ?>
+    <?=$Sep?><?= Button(array('action'=>'diff','previous' => 'author'),_("Diff previous Author"),$page->getName()) ?>
+<?php if ((defined('DEBUG') && DEBUG) || $user->isAdmin()) { ?>
     <!-- Buttons really only for debugging -->
     <?=$Sep?><?= Button("DebugInfo", _("DebugInfo")) ?>
 <?php
@@ -185,8 +185,11 @@ if (0 and isSubPage($page->getName())) {
   </div>
 
 <?php
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/05/18 14:47:21  rurban
+// Simplified strings for easier translation
+//
 // Revision 1.1  2004/03/01 09:38:01  rurban
 // Theme with less buttons and shorter descriptions:
 //   More behind "Info"

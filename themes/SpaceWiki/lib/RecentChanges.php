@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: RecentChanges.php,v 1.3 2003-03-01 22:27:22 carstenklapp Exp $');
+<?php rcs_id('$Id: RecentChanges.php,v 1.4 2004-06-14 11:26:51 rurban Exp $');
 /*
  * Extensions/modifications to the stock RecentChanges (and PageHistory) format.
  */
@@ -51,8 +51,8 @@ extends _RecentChanges_HtmlFormatter
     }
 
     function diffLink ($rev) {
-        global $Theme;
-        return $Theme->makeButton(_("diff"), $this->diffURL($rev), 'wiki-rc-action');
+        global $WikiTheme;
+        return $WikiTheme->makeButton(_("diff"), $this->diffURL($rev), 'wiki-rc-action');
     }
 
 }

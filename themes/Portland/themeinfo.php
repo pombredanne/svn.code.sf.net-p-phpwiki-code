@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.10 2003-12-05 01:31:50 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.11 2004-06-14 11:26:50 rurban Exp $');
 
 /*
  * This file defines an appearance ("theme") of PhpWiki similar to the Portland Pattern Repository.
@@ -49,48 +49,48 @@ class Theme_Portland extends Theme {
     }
 }
 
-$Theme = new Theme_Portland('Portland');
+$WikiTheme = new Theme_Portland('Portland');
 
 // CSS file defines fonts, colors and background images for this
 // style.  The companion '*-heavy.css' file isn't defined, it's just
 // expected to be in the same directory that the base style is in.
 
-$Theme->setDefaultCSS('Portland', 'portland.css');
-$Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
-$Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
-$Theme->addAlternateCSS('PhpWiki', 'phpwiki.css');
+$WikiTheme->setDefaultCSS('Portland', 'portland.css');
+$WikiTheme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
+$WikiTheme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
+$WikiTheme->addAlternateCSS('PhpWiki', 'phpwiki.css');
 
 /**
  * The logo image appears on every page and links to the HomePage.
  */
-$Theme->addImageAlias('logo', WIKI_NAME . 'logo.png');
+$WikiTheme->addImageAlias('logo', WIKI_NAME . 'logo.png');
 
 /**
  * The Signature image is shown after saving an edited page. If this
  * is set to false then the "Thank you for editing..." screen will
  * be omitted.
  */
-$Theme->addImageAlias('signature', WIKI_NAME . "Signature.png");
+$WikiTheme->addImageAlias('signature', WIKI_NAME . "Signature.png");
 // Uncomment this next line to disable the signature.
-//$Theme->addImageAlias('signature', false);
+//$WikiTheme->addImageAlias('signature', false);
 
 /*
  * Link icons.
  */
-//$Theme->setLinkIcon('http');
-//$Theme->setLinkIcon('https');
-//$Theme->setLinkIcon('ftp');
-//$Theme->setLinkIcon('mailto');
-//$Theme->setLinkIcon('interwiki');
-//$Theme->setLinkIcon('*', 'url');
+//$WikiTheme->setLinkIcon('http');
+//$WikiTheme->setLinkIcon('https');
+//$WikiTheme->setLinkIcon('ftp');
+//$WikiTheme->setLinkIcon('mailto');
+//$WikiTheme->setLinkIcon('interwiki');
+//$WikiTheme->setLinkIcon('*', 'url');
 
-$Theme->setButtonSeparator(' ');
+$WikiTheme->setButtonSeparator(' ');
 
 /**
  * WikiWords can automatically be split by inserting spaces between
  * the words. The default is to leave WordsSmashedTogetherLikeSo.
  */
-$Theme->setAutosplitWikiWords(false);
+$WikiTheme->setAutosplitWikiWords(false);
 
 /*
  * You may adjust the formats used for formatting dates and times
@@ -100,7 +100,7 @@ $Theme->setAutosplitWikiWords(false);
  * Do not include the server's zone (%Z), times are converted to the
  * user's time zone.
  */
-$Theme->setDateFormat("%B %d, %Y", false);
+$WikiTheme->setDateFormat("%B %d, %Y", false);
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
