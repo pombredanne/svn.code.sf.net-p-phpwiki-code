@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.40 2005-01-30 23:22:17 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.41 2005-01-31 12:15:29 rurban Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -430,7 +430,7 @@ function CheckDatabaseUpdate(&$request) {
             	    echo "sess_ip ", $col["Type"], " ", _("fixed"), " =&gt; CHAR(15) ";
             	}
             }
-            echo "<br />\n";
+            echo _("OK"), "<br />\n";
         }
     }
 
@@ -833,6 +833,9 @@ function DoUpgrade($request) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.40  2005/01/30 23:22:17  rurban
+ clarify messages
+
  Revision 1.39  2005/01/30 23:09:17  rurban
  sanify session fields
 
