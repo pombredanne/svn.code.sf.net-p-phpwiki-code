@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.20 2002-01-24 06:50:45 carstenklapp Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.21 2002-01-24 20:16:49 carstenklapp Exp $');
 
 /**
  * GZIP stuff.
@@ -583,11 +583,11 @@ function ParseMimeContentType ($string)
     $string  = substr($string, strlen($match[0]));
     
     $param = array();
-    
     while (preg_match('/^;\s*(' . MIME_TOKEN_REGEXP . ')\s*=\s*'
                       . '(?:(' . MIME_TOKEN_REGEXP . ')|"((?:[^"\\\\]|\\.)*)") \s*/sx',
                       $string, $match))
         {
+            //" <--kludge for brain-dead syntax coloring
             if (strlen($match[2]))
                 $val = $match[2];
             else
@@ -597,7 +597,6 @@ function ParseMimeContentType ($string)
             
             $string = substr($string, strlen($match[0]));
         }
-    //" <--(kludge for dumb syntax coloring)
     
     return array($type, $subtype, $param);
 }
