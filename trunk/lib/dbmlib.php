@@ -1,24 +1,28 @@
 <?php  
 
-   rcs_id('$Id: dbmlib.php,v 1.3 2000-11-01 11:31:41 ahollosi Exp $');
+   rcs_id('$Id: dbmlib.php,v 1.4 2000-12-12 22:06:09 wainstead Exp $');
 
    /*
       Database functions:
 
-      OpenDataBase($table)
-      CloseDataBase($dbi)
-      RetrievePage($dbi, $pagename, $pagestore)
-      InsertPage($dbi, $pagename, $pagehash)
+      OpenDataBase($dbname) 
+      CloseDataBase($dbi) 
+      PadSerializedData($data) 
+      UnPadSerializedData($data) 
+      RetrievePage($dbi, $pagename, $pagestore) 
+      InsertPage($dbi, $pagename, $pagehash) 
       SaveCopyToArchive($dbi, $pagename, $pagehash) 
-      IsWikiPage($dbi, $pagename)
-      InitTitleSearch($dbi, $search)
-      TitleSearchNextMatch($dbi, $res)
-      InitFullSearch($dbi, $search)
-      FullSearchNextMatch($dbi, $res)
-      IncreaseHitCount($dbi, $pagename)
-      GetHitCount($dbi, $pagename)
-      InitMostPopular($dbi, $limit)
-      MostPopularNextMatch($dbi, $res)
+      IsWikiPage($dbi, $pagename) 
+      IsInArchive($dbi, $pagename) 
+      InitTitleSearch($dbi, $search) 
+      TitleSearchNextMatch($dbi, &$pos) 
+      InitFullSearch($dbi, $search) 
+      FullSearchNextMatch($dbi, &$pos) 
+      IncreaseHitCount($dbi, $pagename) 
+      GetHitCount($dbi, $pagename) 
+      InitMostPopular($dbi, $limit) 
+      MostPopularNextMatch($dbi, &$res) 
+      GetAllWikiPagenames($dbi) 
    */
 
 
