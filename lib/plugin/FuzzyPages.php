@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FuzzyPages.php,v 1.2 2002-02-02 05:00:04 carstenklapp Exp $');
+rcs_id('$Id: FuzzyPages.php,v 1.3 2002-02-02 06:13:08 carstenklapp Exp $');
 
 //require_once('lib/TextSearchQuery.php');
 //require_once('lib/PageList.php');
@@ -24,7 +24,7 @@ extends WikiPlugin
 
     function getDefaultArguments() {
         return array('page'	=> '[pagename]',
-                     );
+                     's'	=> false);
     }
 
     function run($dbi, $argstr, $request) {
@@ -34,6 +34,7 @@ extends WikiPlugin
             return '';
 
         $thispage = $page;
+if ($s) $thispage = $s;
         $list = array();
         $pages = $dbi->getAllPages();
 
