@@ -1,10 +1,9 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.36 2002-01-27 22:00:58 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.37 2002-01-28 02:40:32 dairiki Exp $');
 /**
  */
 
-
-
+        
 class _RecentChanges_Formatter
 {
     var $_absurls = false;
@@ -12,7 +11,7 @@ class _RecentChanges_Formatter
     function _RecentChanges_Formatter ($rc_args) {
         $this->_args = $rc_args;
         $this->_diffargs = array('action' => 'diff');
-        
+
         if ($rc_args['show_major'] && !$rc_args['show_minor'])
             $this->_diffargs['previous'] = 'major';
     }
@@ -105,10 +104,19 @@ extends _RecentChanges_Formatter
     function pageLink ($rev) {
         $page = $rev->getPage();
         global $Theme;
-        if ($this->include_versions_in_URLs())
-            return $Theme->LinkExistingWikiWord($page->getName(), false, $rev->getVersion());
+        if ($this->include_versions_in_URLs()) {
+            $version = $rev->getVersion();
+            $exists = !$rev->hasDefaultContents();
+        }
+        else {
+            $version = false;
+            $cur = $page->getCurrentRevision();
+            $exists = !$cur->hasDefaultContents();
+        }
+        if ($exists)
+            return $Theme->linkExistingWikiWord($page->getName(), false, $version);
         else
-            return $Theme->LinkExistingWikiWord($page->getName());
+            return $Theme->linkUnknownWikiWord($page->getName(), false, $version);
     }
     
     function authorLink ($rev) {
@@ -317,6 +325,38 @@ extends _RecentChanges_Formatter
     }
 }
 
+class NonDeletedRevisionIterator extends WikiDB_PageRevisionIterator
+{
+    /** Constructor
+     *
+     * @param $revisions object a WikiDB_PageRevisionIterator.
+     */
+    function NonDeletedRevisionIterator ($revisions, $check_current_revision = true) {
+        $this->_revisions = $revisions;
+        $this->_check_current_revision = $check_current_revision;
+    }
+
+    function next () {
+        while (($rev = $this->_revisions->next())) {
+            if ($this->_check_current_revision) {
+                $page = $rev->getPage();
+                $check_rev = $page->getCurrentRevision();
+            }
+            else {
+                $check_rev = $rev;
+            }
+            if (! $check_rev->hasDefaultContents())
+                return $rev;
+        }
+        $this->free();
+        return false;
+    }
+
+    function free () {
+        $this->_revisions->free();
+    }
+}
+
 class WikiPlugin_RecentChanges
 extends WikiPlugin
 {
@@ -329,6 +369,7 @@ extends WikiPlugin
                      'show_minor'	=> false,
                      'show_major'	=> true,
                      'show_all'		=> false,
+                     'show_deleted'	=> 'sometimes',
                      'limit'		=> false,
                      'format'		=> false,
                      'daylist'          => false,
@@ -365,7 +406,16 @@ extends WikiPlugin
     }
     
     function getChanges ($dbi, $args) {
-        return $dbi->mostRecent($this->getMostRecentParams($args));
+        $changes = $dbi->mostRecent($this->getMostRecentParams($args));
+
+        $show_deleted = $args['show_deleted'];
+        if ($show_deleted == 'sometimes')
+            $show_deleted = $args['show_minor'];
+
+        if (!$show_deleted)
+            $changes = new NonDeletedRevisionIterator($changes, !$args['show_all']);
+
+        return $changes;
     }
 
     function format ($changes, $args) {
