@@ -88,7 +88,7 @@ $database_backends = array(
 //  You have to create that database beforehand with our schema
 //$database_dsn = "mysql://wikiuser:@localhost/phpwiki";
 $database_prefix = "test_";
-// For "cvs" see the seperate tests/unit_test_backend_cvs.php
+// For "cvs" see the seperate tests/unit_test_backend_cvs.php (cvs is experimental)
 
 # Quiet warnings in IniConfig.php
 $HTTP_SERVER_VARS['REMOTE_ADDR'] = '127.0.0.1';
@@ -99,6 +99,7 @@ function printMemoryUsage($msg = '') {
     static $initmem = 0;
     if ($msg) echo $msg,"\n";
     if ((defined('DEBUG') and (DEBUG & 8)) or !defined('DEBUG')) {
+        require_once("lib/stdlib.php");
         echo "-- MEMORY USAGE: ";
         $oldmem = $mem;
         $mem = getMemoryUsage();
