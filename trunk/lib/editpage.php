@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.41 2002-02-15 14:05:44 lakka Exp $');
+rcs_id('$Id: editpage.php,v 1.42 2002-02-18 08:48:18 carstenklapp Exp $');
 
 require_once('lib/Template.php');
 
@@ -177,9 +177,14 @@ class PageEditor
 
         // Force browse of current page version.
         $request->setArg('version', false);
-        include_once('lib/BlockParser.php');
+
+        require_once('lib/PageType.php');
+        $transformedText = PageType($newrevision);
         $template = Template('savepage',
-                             array('CONTENT' => TransformText($newrevision)));
+                             array('CONTENT' => $transformedText));
+//        include_once('lib/BlockParser.php');
+//        $template = Template('savepage',
+//                             array('CONTENT' => TransformText($newrevision)));
         if (!empty($warnings))
             $template->replace('WARNINGS', $warnings);
 
@@ -212,8 +217,11 @@ class PageEditor
     }
 
     function getPreview () {
-        include_once('lib/BlockParser.php');
-        return TransformText($this->_content, $this->meta['markup']);
+        require_once('lib/PageType.php');
+        return PageType($this->_content, $this->page->getName(), $this->meta['markup']);
+
+//        include_once('lib/BlockParser.php');
+//        return TransformText($this->_content, $this->meta['markup']);
     }
 
     function getLockedMessage () {
