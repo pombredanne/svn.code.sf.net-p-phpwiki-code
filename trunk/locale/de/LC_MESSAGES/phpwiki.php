@@ -14,6 +14,8 @@ $locale["%s failed"] =
    "%s hat verfehlt";
 $locale["%s(%d): no such revision"] =
    "Es gibt keine Revision als %s(%d)";
+$locale["%s: %s"] =
+   "%s: %s";
 $locale["%s: Can't open dba database"] =
    "%s: Konnte dba Datenbank nich öffnen.";
 $locale["%s: argument index out of range"] =
@@ -92,6 +94,8 @@ $locale["Command failed [%s], Return value: %s"] =
    "Fehler beim ausführen: [%s], Ausgabewert: %s";
 $locale["Complete."] =
    "Fertig.";
+$locale["Contents"] =
+   "Inhalt";
 $locale["Copied to [%s]"] =
    "Kopiert an %s";
 $locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
@@ -148,6 +152,8 @@ $locale["Failed to copy [%s]"] =
    "Konnte [%s] nicht kopieren";
 $locale["FindPage"] =
    "SeiteFinden";
+$locale["First"] =
+   "Erste";
 $locale["Found [%s] in [%s]"] =
    "[%s] in [%s] gefunden";
 $locale["Full Text Search"] =
@@ -180,6 +186,8 @@ $locale["IncludePage"] =
    "SeiteEinfügen";
 $locale["Included from %s"] =
    "Eingefügter Text von %s";
+$locale["Last"] =
+   "Letzte";
 $locale["Last edited on %s."] =
    "Zuletzt am %s verändert.";
 $locale["LikePages"] =
@@ -212,6 +220,8 @@ $locale["New version not saved."] =
    "Keine neue Version gespeichert.";
 $locale["Newer page:"] =
    "Neuere Seite:";
+$locale["Next"] =
+   "Nächste";
 $locale["Next Month"] =
    "Nächste Monat";
 $locale["No pagedata for %s"] =
@@ -260,6 +270,8 @@ $locale["Preview"] =
    "Vorschauen";
 $locale["Preview only!  Changes not saved."] =
    "Nur die Vorschau!  Änderungen nicht gespeichert.";
+$locale["Previous"] =
+   "Vorherige";
 $locale["Previous Author"] =
    "Vorherige Author";
 $locale["Previous Major Revision"] =
