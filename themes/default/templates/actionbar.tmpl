@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.12 2002-02-12 07:13:34 carstenklapp Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.13 2002-02-16 02:36:45 carstenklapp Exp $ -->
 <?php
   if (!$page->get('locked') || $user->isAdmin())
       $EditB = Button("edit",
@@ -28,7 +28,10 @@
 	<?php } ?>
 	<?=$Sep?><?= Button(_("PageHistory")) ?>
 	<?=$Sep?><?= Button("diff") ?> 
+	<?=$Sep?><?= Button(_("info")) ?>
+<?php if (defined('DEBUG')) { ?>
 	<?=$Sep?><?= Button(_("DebugInfo")) ?> <!-- For debugging only, really -->
+<?php } ?>
   </div>
   </td>
   <td align="right">
