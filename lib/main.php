@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.80 2002-09-12 20:58:25 rurban Exp $');
+rcs_id('$Id: main.php,v 1.81 2002-09-14 22:28:33 dairiki Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -238,6 +238,7 @@ class WikiRequest extends Request {
                     'upload'     => _("upload a zip dump to this wiki"),
                     'verify'     => _("verify the current action"),
                     'viewsource' => _("view the source of pages in this wiki"),
+                    'xmlrpc'	 => _("access this wiki via XML-RPC"),
                     'zip'        => _("download a zip dump from this wiki"),
                     'ziphtml'    => _("download an html zip dump from this wiki")
                     );
@@ -263,6 +264,7 @@ class WikiRequest extends Request {
                     'upload'     => _("Uploading zip dumps"),
                     'verify'     => _("Verify the current action"),
                     'viewsource' => _("Viewing the source of pages"),
+                    'xmlrpc'	 => _("XML-RPC access"),
                     'zip'        => _("Downloading zip dumps"),
                     'ziphtml'    => _("Downloading html zip dumps")
                     );
@@ -281,6 +283,7 @@ class WikiRequest extends Request {
             case 'viewsource':
             case 'diff':
             case 'select':
+            case 'xmlrpc':    
                 return WIKIAUTH_ANON;
 
             case 'zip':
@@ -405,8 +408,18 @@ class WikiRequest extends Request {
     }
 
     function _deduceAction () {
-        if (!($action = $this->getArg('action')))
-            return 'browse';
+        if (!($action = $this->getArg('action'))) {
+            // Detect XML-RPC requests
+            if ($this->isPost()
+                && $this->get('CONTENT_TYPE') == 'text/xml') {
+                global $HTTP_RAW_POST_DATA;
+                if (strstr($HTTP_RAW_POST_DATA, '<methodCall>')) {
+                    return 'xmlrpc';
+                }
+            }
+
+            return 'browse';    // Default if no action specified.
+        }
 
         if (method_exists($this, "action_$action"))
             return $action;
@@ -543,6 +556,12 @@ class WikiRequest extends Request {
         LoadPostFile($this);
     }
 
+    function action_xmlrpc () {
+        include_once("lib/XmlRpcServer.php");
+        $xmlrpc = new XmlRpcServer($this);
+        $xmlrpc->service();
+    }
+    
     function action_zip () {
         include_once("lib/loadsave.php");
         MakeWikiZip($this);
