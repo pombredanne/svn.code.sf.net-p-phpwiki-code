@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.29 2003-02-22 00:28:34 dairiki Exp $');
+rcs_id('$Id: PearDB.php,v 1.30 2003-02-25 20:13:57 dairiki Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -32,7 +32,7 @@ extends WikiDB_backend
                           E_USER_ERROR);
         }
         $dbh->setErrorHandling(PEAR_ERROR_CALLBACK,
-                               array($this, '_pear_error_callback'));
+                               array(&$this, '_pear_error_callback'));
         $dbh->setFetchMode(DB_FETCHMODE_ASSOC);
 
         $prefix = isset($dbparams['prefix']) ? $dbparams['prefix'] : '';

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.23 2003-02-24 01:18:19 dairiki Exp $');
+rcs_id('$Id: WikiDB.php,v 1.24 2003-02-25 20:13:56 dairiki Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -107,7 +107,7 @@ class WikiDB {
      * @access private
      * @see open()
      */
-    function WikiDB ($backend, $dbparams) {
+    function WikiDB (&$backend, $dbparams) {
         $this->_backend = &$backend;
         $this->_cache = new WikiDB_cache($backend);
 
