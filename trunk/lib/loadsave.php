@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.101 2004-06-04 20:32:53 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.102 2004-06-06 16:58:51 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -858,22 +858,25 @@ function SetupWiki (&$request)
 
     // Ensure that all mandatory pages are loaded
     $finder = new FileFinder;
-    foreach (array_merge(explode(':',constant('HOME_PAGE')
-                                 .':OldTextFormattingRules:TextFormattingRules'),
+    foreach (array_merge(explode
+                         (':',constant('HOME_PAGE')
+                          .':OldTextFormattingRules:TextFormattingRules'
+                          .':PhpWikiAdministration:PhpWikiAdministration%2FRemove'
+                          .':PhpWikiAdministration%2FRename:PhpWikiAdministration%2FReplace'
+                          .':PhpWikiAdministration%2FSetAcl:PhpWikiAdministration%2FChown'
+                          ),
                          $GLOBALS['AllActionPages']) as $f) {
         $page = gettext($f);
-        if (! $request->_dbi->isWikiPage($page) ) {
+        if (! $request->_dbi->isWikiPage(urldecode($page)) ) {
             // translated version provided?
             if ($f = FindLocalizedFile($pgsrc . $finder->_pathsep . $page, 1))
                 LoadAny($request, $f);
-            /*
-            else {
-                LoadAny($request, FindFile(WIKI_PGSRC . $finder->_pathsep . $f));
+            else { // load english version
+                LoadAny($request, FindFile(DEFAULT_WIKI_PGSRC . $finder->_pathsep . $f));
                 $page = basename($f);
             }
-            */
         }
-        if (!$request->_dbi->isWikiPage($page)) {
+        if (!$request->_dbi->isWikiPage(urldecode($page))) {
             trigger_error(sprintf("Mandatory file %s couldn't be loaded!",$page),
                           E_USER_WARNING);
         }
@@ -907,6 +910,11 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.101  2004/06/04 20:32:53  rurban
+ Several locale related improvements suggested by Pierrick Meignen
+ LDAP fix by John Cole
+ reanable admin check without ENABLE_PAGEPERM in the admin plugins
+
  Revision 1.100  2004/05/02 21:26:38  rurban
  limit user session data (HomePageHandle and auth_dbi have to invalidated anyway)
    because they will not survive db sessions, if too large.

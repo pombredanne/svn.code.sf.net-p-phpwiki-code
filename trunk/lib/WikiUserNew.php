@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.88 2004-06-04 20:32:53 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.89 2004-06-06 16:58:51 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -335,7 +335,7 @@ function UserExists ($UserName) {
 class _WikiUser
 {
      var $_userid = '';
-     var $_level = WIKIAUTH_FORBIDDEN;
+     var $_level = WIKIAUTH_ANON;
      var $_prefs = false;
      var $_HomePagehandle = false;
 
@@ -347,7 +347,6 @@ class _WikiUser
         if ($UserName) {
             $this->hasHomePage();
         }
-        $this->_level = WIKIAUTH_FORBIDDEN;
         if (empty($this->_prefs)) {
             if ($prefs) $this->_prefs = $prefs;
             else $this->getPreferences();
@@ -2990,6 +2989,11 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.88  2004/06/04 20:32:53  rurban
+// Several locale related improvements suggested by Pierrick Meignen
+// LDAP fix by John Cole
+// reanable admin check without ENABLE_PAGEPERM in the admin plugins
+//
 // Revision 1.87  2004/06/04 12:40:21  rurban
 // Restrict valid usernames to prevent from attacks against external auth or compromise
 // possible holes.
