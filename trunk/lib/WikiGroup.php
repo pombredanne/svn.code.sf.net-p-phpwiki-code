@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.44 2004-11-11 10:31:26 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.45 2004-11-17 20:06:30 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -614,13 +614,16 @@ class GroupDb extends WikiGroup {
                           E_USER_WARNING);
             return new GroupNone();
         }
+        // FIXME: This only works with ENABLE_USER_NEW
         if (empty($this->user)) {
             // use _PassUser::prepare instead
             if (isa($request->getUser(),'_PassUser'))
-                $user =& $request->getUser();
+                $user = $request->getUser();
             else
                 $user = new _PassUser($this->username);
-        } else { 
+        } elseif (!isa($this->user, '_PassUser')) {
+            $user = new _PassUser($this->username);
+        } else {
             $user =& $this->user;
         }
         $this->_is_member = $user->prepare($DBAuthParams['is_member'],
@@ -1091,6 +1094,11 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.44  2004/11/11 10:31:26  rurban
+// Disable default options in config-dist.ini
+// Add new CATEGORY_GROUP_PAGE root page: Default: Translation of "CategoryGroup"
+// Clarify more options.
+//
 // Revision 1.43  2004/11/10 15:29:21  rurban
 // * requires newer Pear_DB (as the internal one): quote() uses now escapeSimple for strings
 // * ACCESS_LOG_SQL: fix cause request not yet initialized
