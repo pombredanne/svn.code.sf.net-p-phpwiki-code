@@ -1,4 +1,4 @@
-<!-- $Id: transform.php,v 1.5 2000-10-25 14:45:53 ahollosi Exp $ -->
+<!-- $Id: transform.php,v 1.6 2000-10-31 19:24:08 ahollosi Exp $ -->
 <?php
    // expects $pagehash and $html to be set
 
@@ -102,9 +102,12 @@ your web server it is highly advised that you do not allow this.
       // replace all URL's with tokens, so we don't confuse them
       // with Wiki words later. Wiki words in URL's break things.
 
-      $tmpline = tokenize($tmpline, "\b($AllowedProtocols):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]", $replacements, $ntokens);
+      $tmpline = tokenize($tmpline, "!?\b($AllowedProtocols):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]", $replacements, $ntokens);
       while ($oldn < $ntokens) {
-	$replacements[$oldn] = LinkURL($replacements[$oldn]);
+        if($replacements[$oldn][0] == '!')
+	   $replacements[$oldn] = substr($replacements[$oldn], 1);
+	else
+	   $replacements[$oldn] = LinkURL($replacements[$oldn]);
         $oldn++;
       }
 
