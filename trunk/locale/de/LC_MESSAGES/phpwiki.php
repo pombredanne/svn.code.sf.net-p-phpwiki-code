@@ -14,8 +14,6 @@ $locale["(diff)"] =
    "(vgl.)";
 $locale[", saved on"] =
    ", seite zuletzt verändert am";
-$locale["- saved as version %d"] =
-   "- als Version %d. gespeichert";
 $locale["- skipped"] =
    "- ausgelassen";
 $locale["<%s: no such section>"] =

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.2.0\n"
-"POT-Creation-Date: 2001-12-19 03:49-0500\n"
+"POT-Creation-Date: 2001-12-19 04:50-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marco Milanesi <kpanic@ada2.unipv.it>\n"
 "Language-Team: \n"
@@ -583,9 +583,53 @@ msgstr "Si sono verificati problemi durante la modifica %s"
 msgid "Complete."
 msgstr ""
 
+#: ../lib/loadsave.php:18
+#, c-format
+msgid "Return to %s"
+msgstr ""
+
 #: ../lib/loadsave.php:125
 msgid "You must specify a directory to dump to"
 msgstr ""
+
+#: ../lib/loadsave.php:130
+#, c-format
+msgid "Cannot create directory '%s'"
+msgstr ""
+
+#: ../lib/loadsave.php:132
+#, c-format
+msgid "Created directory '%s' for the page dump..."
+msgstr ""
+
+#: ../lib/loadsave.php:134
+#, c-format
+msgid "Using directory '%s'"
+msgstr ""
+
+#: ../lib/loadsave.php:137
+msgid "Dumping Pages"
+msgstr ""
+
+#: ../lib/loadsave.php:148
+#, fuzzy, c-format
+msgid "saved as %s"
+msgstr "versione %s"
+
+#: ../lib/loadsave.php:153
+#, c-format
+msgid "couldn't open file '%s' for writing"
+msgstr ""
+
+#: ../lib/loadsave.php:156
+#, c-format
+msgid "%s bytes written"
+msgstr ""
+
+#: ../lib/loadsave.php:178
+#, fuzzy
+msgid "Empty pagename!"
+msgstr "Scrivi un nome di una pagina"
 
 #: ../lib/loadsave.php:198
 #, c-format
@@ -608,8 +652,54 @@ msgstr ""
 
 #: ../lib/loadsave.php:221
 #, fuzzy, c-format
-msgid "- saved as version %d"
+msgid "- saved to database as version %d"
 msgstr "versione %s"
+
+#: ../lib/loadsave.php:313
+#, c-format
+msgid "MIME file %s"
+msgstr ""
+
+#: ../lib/loadsave.php:316
+#, c-format
+msgid "Serialized file %s"
+msgstr ""
+
+#: ../lib/loadsave.php:327
+#, c-format
+msgid "plain file %s"
+msgstr ""
+
+#: ../lib/loadsave.php:341 ../lib/loadsave.php:360
+msgid "Skipping"
+msgstr ""
+
+#: ../lib/loadsave.php:399
+#, c-format
+msgid "Bad file type: %s"
+msgstr ""
+
+#: ../lib/loadsave.php:414
+#, c-format
+msgid "Loading '%s'"
+msgstr ""
+
+#: ../lib/loadsave.php:426
+msgid "The PhpWiki programming team"
+msgstr ""
+
+#: ../lib/loadsave.php:428
+msgid "Loading up virgin wiki"
+msgstr ""
+
+#: ../lib/loadsave.php:444
+msgid "No uploaded file to upload?"
+msgstr ""
+
+#: ../lib/loadsave.php:447
+#, c-format
+msgid "Uploading %s"
+msgstr ""
 
 #: ../lib/main.php:99
 #, c-format
@@ -1038,9 +1128,6 @@ msgstr ""
 
 #~ msgid "No page name passed into editpage!"
 #~ msgstr "Nessuna pagina &grave; passata a modificapagina"
-
-#~ msgid "Enter a page name"
-#~ msgstr "Scrivi un nome di una pagina"
 
 #~ msgid "Go"
 #~ msgstr "Vai"
