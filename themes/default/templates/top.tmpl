@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-/* $Id: top.tmpl,v 1.15 2002-08-17 17:03:11 rurban Exp $
+/* $Id: top.tmpl,v 1.16 2002-08-19 11:32:30 rurban Exp $
  *
  * This template is responsible mainly for the outer level <html> stuff and the and <head>.
  */
@@ -9,7 +9,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: top.tmpl,v 1.15 2002-08-17 17:03:11 rurban Exp $ -->
+<!-- $Id: top.tmpl,v 1.16 2002-08-19 11:32:30 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
 <?php $ROBOTS_CONTENT = $ROBOTS_META ? $ROBOTS_META : "noindex,nofollow"; ?>
 <meta name="robots" content="<?= $ROBOTS_CONTENT ?>" />
@@ -27,7 +27,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
        *     http://www.euronet.nl/~tekelenb/WWW/LINK/index.html
        */ ?>
 <link rel="shortcut icon" href="<?=$Theme->getImageURL('favicon.ico')?>" />
-<link rel="home" title="<?=HomePage?>" href="<?=WikiURL(HomePage)?>" />
+<link rel="home" title="<?=HOME_PAGE?>" href="<?=WikiURL(HOME_PAGE)?>" />
 <link rel="help" title="<?=_("HowToUseWiki")?>" href="<?=WikiURL(_("HowToUseWiki"))?>" />
 <link rel="copyright" title="GNU General Public License" href="http://www.gnu.org/copyleft/gpl.html#SEC1" />
 <?php

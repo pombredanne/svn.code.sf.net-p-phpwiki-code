@@ -78,9 +78,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 /////////////////////////////////////////////////////////////////////
 // Part Null: Don't touch this!
 
-define ('PHPWIKI_VERSION', '1.3.3-jeffs-hacks');
+define ('PHPWIKI_VERSION', '1.3.3');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.85 2002-08-17 15:52:51 rurban Exp $');
+rcs_id('$Id: index.php,v 1.86 2002-08-19 11:32:29 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //

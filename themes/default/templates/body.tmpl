@@ -1,13 +1,7 @@
 <?php // -*-html-*- ?>
-<!-- $Id: body.tmpl,v 1.26 2002-02-22 19:23:43 carstenklapp Exp $ -->
+<!-- $Id: body.tmpl,v 1.27 2002-08-19 11:32:30 rurban Exp $ -->
 <body>
 <div id="navbar" class="toolbar">
-<!-- The logo -->
-<div id="logo"><a class="wikilink" 
-                  href="<?=WikiURL(HomePage)?>"
-                  ><img src="<?=$Theme->getImageURL('logo')?>"
-                        border="0" alt="<?=WIKI_NAME?>: <?=HomePage?>" 
-                        align="right" /></a></div>
 <?php
 global $HIDE_TOOLBARS;
 if (!$HIDE_TOOLBARS) {
@@ -15,9 +9,15 @@ if (!$HIDE_TOOLBARS) {
 <!-- The top navigation/search bar -->
 <?= Template('navbar') ?>
 <?php } ?>
+<!-- The logo -->
+<div align="right" valign="top" id="logo"><a class="wikilink" 
+                  href="<?=WikiURL(HOME_PAGE)?>"
+                  ><img src="<?=$Theme->getImageURL('logo')?>"
+                        border="0" alt="<?=WIKI_NAME?>: <?=HOME_PAGE?>" 
+                        align="right" /></a></div>
 
 <!-- Page title -->
-<h1><?=$HEADER?></h1>
+<h1><?= $HEADER ?></h1>
 </div>
 <?= $CONTENT ?>
 

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.64 2002-03-01 03:23:57 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.65 2002-08-19 11:32:30 rurban Exp $');
 
 
 include "lib/config.php";
@@ -375,7 +375,7 @@ class WikiRequest extends Request {
     function possiblyDeflowerVirginWiki () {
         if ($this->getArg('action') != 'browse')
             return;
-        if ($this->getArg('pagename') != HomePage)
+        if ($this->getArg('pagename') != HOME_PAGE)
             return;
 
         $page = $this->getPage();
@@ -449,7 +449,7 @@ class WikiRequest extends Request {
             return urldecode($query_string);
         }
 
-        return HomePage;
+        return HOME_PAGE;
     }
 
     function _deduceAction () {

@@ -1,4 +1,16 @@
-$Id: README,v 1.1 2002-01-17 20:57:41 dairiki Exp $
+$Id: README,v 1.2 2002-08-19 11:32:30 rurban Exp $
+
+The rest of this file is currently obsolete, and should be ignored.
+The template situation has completely changed with 1.3.3. 
+See lib/Template.php for more, esp. the defined global php variables.
+($request, $user, $page, $Theme and some action specific local vars.)
+
+There's no ###<variable>### markup anymore, instead normal php 
+variables, constants and code can be used.
+
+Templates may be nested. Usage sample: <?= Template('browse') ?>
+
+=========
 
 PhpWiki distinguishes between three different templates:
 
@@ -17,14 +29,6 @@ PhpWiki distinguishes between three different templates:
 The location of the template files is defined in lib/config.php
 The specification is relative to the index.php script.
 
-
-=========
-Tue Sep 18 12:00:12 PDT 2001 Jeff Dairiki <dairiki@dairiki.org>
-
-The rest of this file is currently obsolete, and should be ignored.
-The template situation is in a state of flux, and will probably be
-changed again very soon.  See lib/Template.php for more, but mostly
-just "stay tuned" for details.
 
 =========
 

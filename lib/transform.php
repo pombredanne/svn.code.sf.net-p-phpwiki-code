@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.43 2002-03-06 01:02:59 carstenklapp Exp $');
+<?php rcs_id('$Id: transform.php,v 1.44 2002-08-19 11:32:30 rurban Exp $');
 require_once('lib/WikiPlugin.php');
 require_once('lib/HtmlElement.php');
 require_once('lib/interwiki.php');
@@ -332,7 +332,7 @@ extends WikiTransform {
         $this->register(WT_TOKENIZER, 'wtt_bracketlinks', '\[.+?\]');
         $this->register(WT_TOKENIZER, 'wtt_urls',
                         "!?\b($AllowedProtocols):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]");
-
+        // Todo: get the map only when a interwikilink occurs.
         $map = InterWikiMap::GetMap($request);
         $this->register(WT_TOKENIZER, 'wtt_interwikilinks',
                         pcre_fix_posix_classes("!?(?<![[:alnum:]])") 
@@ -417,61 +417,59 @@ of tokenized strings is done by do_transform().
    // Tokenizer functions
 
 
-function  wtt_doublebrackets($match, &$trfrm)
-{
-   return '[';
+function  wtt_doublebrackets($match, &$trfrm) {
+    return '[';
 }
 
-function wtt_footnotes($match, &$trfrm)
-{
-   // FIXME: should this set HTML mode?
-   $ftnt = trim(substr($match,1,-1)) + 0;
-   $fntext = "[$ftnt]";
-   $html = HTML(HTML::br());
+function wtt_footnotes($match, &$trfrm) {
+    global $request;
+    $page = rawurlencode($request->getArg('pagename'));
+    // FIXME: should this set HTML mode?
+    $ftnt = trim(substr($match,1,-1)) + 0;
+    $fntext = "[$ftnt]";
+    $html = HTML(HTML::br());
    
-   $fnlist = $trfrm->user_data['footnotes'][$ftnt];
-   if (!is_array($fnlist)) {
-       $html->pushContent($fntext);
-   }
-   else {
-       $trfrm->user_data['footnotes'][$ftnt] = 'footnote_seen';
-       
-       while (list($k, $anchor) = each($fnlist)) {
-           $html->pushContent(HTML::a(array("name" => "footnote-$ftnt",
-                                            "href" => "#$anchor",
-                                            "class" => "footnote-rev"),
-                                      $fntext));
-           $fntext = '+';
-       }
-   }
-   return $html;
+    $fnlist = $trfrm->user_data['footnotes'][$ftnt];
+    if (!is_array($fnlist)) {
+        $html->pushContent($fntext);
+    }
+    else {
+        $trfrm->user_data['footnotes'][$ftnt] = 'footnote_seen';
+        while (list($k, $anchor) = each($fnlist)) {
+            $html->pushContent(HTML::a(array("name" => "footnote-$ftnt",
+                                             "href" => "$page#$anchor",
+                                             "class" => "footnote-rev"),
+                                       $fntext));
+            $fntext = '+';
+        }
+    }
+    return $html;
 }
 
-function wtt_footnoterefs($match, &$trfrm)
-{
-   $ftnt = trim(substr($match,1,-1)) + 0;
+function wtt_footnoterefs($match, &$trfrm) {
+    global $request;
+    $ftnt = trim(substr($match,1,-1)) + 0;
 
    $footnote_definition_seen = false;
 
-   if (empty($trfrm->user_data['footnotes']))
-      $trfrm->user_data['footnotes'] = array();
-   if (empty($trfrm->user_data['footnotes'][$ftnt]))
-      $trfrm->user_data['footnotes'][$ftnt] = array();
-   else if (!is_array($trfrm->user_data['footnotes'][$ftnt]))
-      $footnote_definition_seen = true;
+    if (empty($trfrm->user_data['footnotes']))
+        $trfrm->user_data['footnotes'] = array();
+    if (empty($trfrm->user_data['footnotes'][$ftnt]))
+        $trfrm->user_data['footnotes'][$ftnt] = array();
+    else if (!is_array($trfrm->user_data['footnotes'][$ftnt]))
+        $footnote_definition_seen = true;
    
-
-   $link = HTML::a(array('href' => "#footnote-$ftnt"), "[$ftnt]");
-   if (!$footnote_definition_seen) {
-       $name = "footrev-$ftnt-" . count($trfrm->user_data['footnotes'][$ftnt]);
-       $link->setAttr('name', $name);
-       $trfrm->user_data['footnotes'][$ftnt][] = $name;
-   }
-   return HTML::sup(array('class' => 'footnote'), $link);
+    $page = rawurlencode($request->getArg('pagename'));
+    $link = HTML::a(array('href' => "$page#footnote-$ftnt"), "[$ftnt]");
+    if (!$footnote_definition_seen) {
+        $name = "footrev-$ftnt-" . count($trfrm->user_data['footnotes'][$ftnt]);
+        $link->setAttr('name', $name);
+        $trfrm->user_data['footnotes'][$ftnt][] = $name;
+    }
+    return HTML::sup(array('class' => 'footnote'), $link);
 }
 
-function wtt_bracketlinks($match, &$trfrm)
-{
+function wtt_bracketlinks($match, &$trfrm) {
     
     if (preg_match('/^\[\s*\]$/', $match))
         return $match;
@@ -501,9 +499,7 @@ function wtt_urls($match, &$trfrm) {
 function wtt_interwikilinks($match, &$trfrm) {
     if ($match[0] == '!')
         return substr($match, 1);
-    
-    global $request;
-    $map = InterWikiMap::GetMap($request);
+    $map = InterWikiMap::GetMap($GLOBALS['request']);
     return $map->link($match);
 }
 
@@ -538,17 +534,17 @@ function wtm_linebreak($line, &$transformer) {
     return str_replace('%%%', '<br />', $line);
 }
 
-   // bold and italics
-   function wtm_bold_italics($line, &$transformer) {
-      $line = preg_replace('|(__)(.*?)(__)|', '<strong>\2</strong>', $line);
-      $line = preg_replace("|('')(.*?)('')|", '<em>\2</em>', $line);
-      return $line;
-   }
+// bold and italics
+function wtm_bold_italics($line, &$transformer) {
+    $line = preg_replace('|(__)(.*?)(__)|', '<strong>\2</strong>', $line);
+    $line = preg_replace("|('')(.*?)('')|", '<em>\2</em>', $line);
+    return $line;
+}
 
 
 
-   //////////////////////////////////////////////////////////
-   // some tokens to be replaced by (dynamic) content
+//////////////////////////////////////////////////////////
+// some tokens to be replaced by (dynamic) content
 
 // FIXME: some plugins are in-line (maybe?) and some are block level.
 // Here we treat them all as inline, which will probably
@@ -556,12 +552,10 @@ function wtm_linebreak($line, &$transformer) {
 //
 function wtm_plugin_link($line, &$transformer) {
     // FIXME: is this good syntax?
-    global $request;      // FIXME: make these non-global?
-    
     if (preg_match('/^(.*?)(<\?plugin-link\s+.*?\?>)(.*)$/', $line, $m)) {
         list(, $prematch, $plugin_pi, $postmatch) = $m;
         $loader = new WikiPluginLoader;
-        $html = $loader->expandPI($plugin_pi, $request);
+        $html = $loader->expandPI($plugin_pi, $GLOBALS['request']);
         $line = $prematch . $transformer->token($html) . $postmatch;
     }
     return $line;
@@ -569,83 +563,80 @@ function wtm_plugin_link($line, &$transformer) {
 
 function wtm_plugin($line, &$transformer) {
     // FIXME: is this good syntax?
-    global $request;      // FIXME: make these non-global?
-    
     if (preg_match('/^<\?plugin(-form)?\s.*\?>\s*$/', $line)) {
         $loader = new WikiPluginLoader;
-        $html = $loader->expandPI($line, $request);
+        $html = $loader->expandPI($line, $GLOBALS['request']);
         $line = $transformer->SetHTMLMode('', 0) . $transformer->token($html);
     }
     return $line;
 }
 
 
-   //////////////////////////////////////////////////////////
-   // mode markup functions
+//////////////////////////////////////////////////////////
+// mode markup functions
 
 
-   // tabless markup for unordered, ordered, and dictionary lists
-   // ul/ol list types can be mixed, so we only look at the last
-   // character. Changes e.g. from "**#*" to "###*" go unnoticed.
-   // and wouldn't make a difference to the HTML layout anyway.
+// tabless markup for unordered, ordered, and dictionary lists
+// ul/ol list types can be mixed, so we only look at the last
+// character. Changes e.g. from "**#*" to "###*" go unnoticed.
+// and wouldn't make a difference to the HTML layout anyway.
 
-   // unordered lists <UL>: "*"
-   // has to be registereed before list OL
-   function wtm_list_ul($line, &$trfrm) {
-      if (preg_match("/^([#*;]*\*)[^#]/", $line, $matches)) {
-         $numtabs = strlen($matches[1]);
-         $line = preg_replace("/^([#*]*\*)/", '', $line);
-         $line = $trfrm->ListItem('ul', $numtabs) . $line;
-      }
-      return $line;
-   }
+// unordered lists <UL>: "*"
+// has to be registereed before list OL
+function wtm_list_ul($line, &$trfrm) {
+    if (preg_match("/^([#*;]*\*)[^#]/", $line, $matches)) {
+        $numtabs = strlen($matches[1]);
+        $line = preg_replace("/^([#*]*\*)/", '', $line);
+        $line = $trfrm->ListItem('ul', $numtabs) . $line;
+    }
+    return $line;
+}
 
-   // ordered lists <OL>: "#"
-   function wtm_list_ol($line, &$trfrm) {
-      if (preg_match("/^([#*;]*\#)/", $line, $matches)) {
-         $numtabs = strlen($matches[1]);
-         $line = preg_replace("/^([#*]*\#)/", "", $line);
-         $line = $trfrm->ListItem('ol', $numtabs) . $line;
-      }
-      return $line;
-   }
+// ordered lists <OL>: "#"
+function wtm_list_ol($line, &$trfrm) {
+    if (preg_match("/^([#*;]*\#)/", $line, $matches)) {
+        $numtabs = strlen($matches[1]);
+        $line = preg_replace("/^([#*]*\#)/", "", $line);
+        $line = $trfrm->ListItem('ol', $numtabs) . $line;
+    }
+    return $line;
+}
 
 
-   // definition lists <DL>: ";text:text"
-   function wtm_list_dl($line, &$trfrm) {
-      if (preg_match("/^([#*;]*;)(.*?):(.*$)/", $line, $matches)) {
-         $numtabs = strlen($matches[1]);
-         $line = $trfrm->ListItem('dl', $numtabs, $matches[2]) . $matches[3];
-      }
-      return $line;
-   }
+// definition lists <DL>: ";text:text"
+function wtm_list_dl($line, &$trfrm) {
+    if (preg_match("/^([#*;]*;)(.*?):(.*$)/", $line, $matches)) {
+        $numtabs = strlen($matches[1]);
+        $line = $trfrm->ListItem('dl', $numtabs, $matches[2]) . $matches[3];
+    }
+    return $line;
+}
 
-   // mode: preformatted text, i.e. <pre>
-   function wtm_preformatted($line, &$trfrm) {
-      if (preg_match("/^\s+/", $line)) {
-         $line = $trfrm->SetHTMLMode('pre') . $line;
-      }
-      return $line;
-   }
+// mode: preformatted text, i.e. <pre>
+function wtm_preformatted($line, &$trfrm) {
+    if (preg_match("/^\s+/", $line)) {
+        $line = $trfrm->SetHTMLMode('pre') . $line;
+    }
+    return $line;
+}
 
-   // mode: headings, i.e. <h1>, <h2>, <h3>
-   // lines starting with !,!!,!!! are headings
-   // Patch from steph/tara <tellme@climbtothestars.org>:
-   //    use <h2>, <h3>, <h4> since <h1> is page title.
-   function wtm_headings($line, &$trfrm) {
-      if (preg_match("/^(!{1,3})[^!]/", $line, $whichheading)) {
-	 if($whichheading[1] == '!') $heading = 'h4';
-	 elseif($whichheading[1] == '!!') $heading = 'h3';
-	 elseif($whichheading[1] == '!!!') $heading = 'h2';
-	 $line = preg_replace("/^!+/", '', $line);
-	 $line = $trfrm->SetHTMLMode($heading) . $line;
-      }
-      return $line;
-   }
+// mode: headings, i.e. <h1>, <h2>, <h3>
+// lines starting with !,!!,!!! are headings
+// Patch from steph/tara <tellme@climbtothestars.org>:
+//    use <h2>, <h3>, <h4> since <h1> is page title.
+function wtm_headings($line, &$trfrm) {
+    if (preg_match("/^(!{1,3})[^!]/", $line, $whichheading)) {
+        if($whichheading[1] == '!') $heading = 'h4';
+        elseif($whichheading[1] == '!!') $heading = 'h3';
+        elseif($whichheading[1] == '!!!') $heading = 'h2';
+        $line = preg_replace("/^!+/", '', $line);
+        $line = $trfrm->SetHTMLMode($heading) . $line;
+    }
+    return $line;
+}
 
 // markup for tables
-function wtm_table($line, &$trfrm)
-{
+function wtm_table($line, &$trfrm) {
    $row = '';
    while (preg_match('/^(\|+)(v*)([<>^]?)([^|]*)/', $line, $m))
    {
@@ -681,22 +672,22 @@ function wtm_table($line, &$trfrm)
        $row;
 }
 
-   // four or more dashes to <hr>
-   // Note this is of type WT_MODE_MARKUP becuase <hr>'s aren't
-   // allowed within <p>'s. (e.g. "<p><hr></p>" is not valid HTML.)
-   function wtm_hr($line, &$trfrm) {
-      if (preg_match('/^-{4,}(.*)$/', $line, $m)) {
-         $line = $trfrm->SetHTMLMode('', 0) . '<hr />';
-	 if ($m[1])
+// four or more dashes to <hr>
+// Note this is of type WT_MODE_MARKUP becuase <hr>'s aren't
+// allowed within <p>'s. (e.g. "<p><hr></p>" is not valid HTML.)
+function wtm_hr($line, &$trfrm) {
+    if (preg_match('/^-{4,}(.*)$/', $line, $m)) {
+        $line = $trfrm->SetHTMLMode('', 0) . '<hr />';
+        if ($m[1])
             $line .= $trfrm->SetHTMLMode('p') . $m[1];
-      }
-      return $line;
-   }
+    }
+    return $line;
+}
 
-   // default mode: simple text paragraph
-   function wtm_paragraph($line, &$trfrm) {
-      return $trfrm->SetHTMLMode('p') . $line;
-   }
+// default mode: simple text paragraph
+function wtm_paragraph($line, &$trfrm) {
+    return $trfrm->SetHTMLMode('p') . $line;
+}
 
 // (c-file-style: "gnu")
 // Local Variables:

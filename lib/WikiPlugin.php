@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.22 2002-02-28 00:42:58 carstenklapp Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.23 2002-08-19 11:32:29 rurban Exp $');
 
 class WikiPlugin
 {
@@ -177,9 +177,14 @@ class WikiPlugin
         assert(!empty($textinput) && isset($args['textinput']));
     
         $form = HTML::form(array('action' => WikiURL($args['targetpage']),
-                                'method' => $args['method'],
-                                'class' => $args['class'],
-                                'accept-charset' => CHARSET));
+                                 'method' => $args['method'],
+                                 'class' => $args['class'],
+                                 'accept-charset' => CHARSET));
+        if (! USE_PATH_INFO ) {
+            $pagename = $request->get('pagename');
+            $form->pushContent(HTML::input(array('type' => 'hidden', 'name' => 'pagename', 
+                                                 'value' => $args['targetpage'])));
+        }
         $contents = HTML::div();
         $contents->setAttr('class', $args['class']);
     
