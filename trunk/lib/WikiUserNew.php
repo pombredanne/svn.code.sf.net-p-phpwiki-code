@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.83 2004-06-03 10:18:19 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.84 2004-06-03 12:36:03 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -473,8 +473,9 @@ class _WikiUser
         // check if the html template was already processed
         $seperate_page = $seperate_page ? true : !alreadyTemplateProcessed('html');
         if ($seperate_page) {
-            $top = Template('html', array('TITLE' => _("Sign In")));
-            return $top->printExpansion($login);
+            $page = $request->getPage($pagename);
+            $revision = $page->getCurrentRevision();
+            return GeneratePage($login,_("Sign In"),$revision);
         } else {
             return $login->printExpansion();
         }
@@ -2918,6 +2919,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.83  2004/06/03 10:18:19  rurban
+// fix FileUser locking issues, new config ENABLE_PAGEPERM
+//
 // Revision 1.82  2004/06/03 09:39:51  rurban
 // fix LDAP injection (wildcard in username) detected by Steve Christey, MITRE
 //

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.55 2004-06-03 09:39:51 rurban Exp $');
+rcs_id('$Id: WikiUser.php,v 1.56 2004-06-03 12:36:03 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -201,9 +201,9 @@ class WikiUser {
                               compact('pagename', 'userid', 'require_level',
                                       'fail_message', 'pass_required'));
         if ($seperate_page) {
-            $top = new Template('html', $request,
-                                array('TITLE' => _("Sign In")));
-            return $top->printExpansion($login);
+            $page = $request->getPage($pagename);
+            $revision = $page->getCurrentRevision();
+            return GeneratePage($login,_("Sign In"),$revision);
         } else {
             return $login;
         }
@@ -722,6 +722,9 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.55  2004/06/03 09:39:51  rurban
+// fix LDAP injection (wildcard in username) detected by Steve Christey, MITRE
+//
 // Revision 1.54  2004/04/29 17:18:19  zorloc
 // Fixes permission failure issues.  With PagePermissions and Disabled Actions when user did not have permission WIKIAUTH_FORBIDDEN was returned.  In WikiUser this was ok because WIKIAUTH_FORBIDDEN had a value of 11 -- thus no user could perform that action.  But WikiUserNew has a WIKIAUTH_FORBIDDEN value of -1 -- thus a user without sufficent permission to do anything.  The solution is a new high value permission level (WIKIAUTH_UNOBTAINABLE) to be the default level for access failure.
 //
