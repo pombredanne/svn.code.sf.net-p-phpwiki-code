@@ -1,4 +1,4 @@
-<!-- $Id: wiki_editpage.php3,v 1.5 2000-06-07 11:07:23 ahollosi Exp $ -->
+<!-- $Id: wiki_editpage.php3,v 1.6 2000-06-09 10:19:40 ahollosi Exp $ -->
 <?
 
 /*
@@ -78,6 +78,17 @@ to other web servers.
    }
 
 ?>
+<hr>
+<small>
+<b>Emphasis:</b> '' for italics, ''' for bold, ''''' for both
+<br><b>Lists:</b> tab-* for bullet lists, tab-# for numbered lists, tab-Term:-tab for definition lists
+<br><b>References:</b> JoinCapitalizedWords or use square brackets for a [page link] or URL [http://cool.wiki.int/].
+<br><b>References:</b> Use [1],[2],[3],... and EditLinks. Avoid linking with "!": !DoNotHyperlink, name links like [text | URL]
+<br><b>Misc:</b>"!", "!!", "!!!" make headings,
+"%%%" makes a linebreak, "- - - -" makes a horizontal rule, escape "[" with "[["
+<br>more on <a href="<? echo $ScriptUrl ?>?TextFormattingRules"><b>TextFormattingRules</b></a>
+</small>
+
 <input type="hidden" name="post" value="<? echo rawurlencode($pagename); ?>">
 <input type="hidden" name="editversion" value="<? echo $version+0 ?>">
 </form>
