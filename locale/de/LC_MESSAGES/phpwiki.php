@@ -424,8 +424,6 @@ $locale["to perform action '%s'"] =
    "um die Tatigkeit »%s« zu tun";
 $locale["unable to locate/open [%s], turning debug off"] =
    "könnte [%s] nicht auffinden/öffnen, Debug wird abgeschaltet.";
-$locale["version"] =
-   "Version";
 $locale["version %d"] =
    "Version %d.";
 

@@ -74,8 +74,6 @@ $locale["by %s"] =
    "por %s";
 $locale["last modified on %s"] =
    "modificado por última vez el %s";
-$locale["version"] =
-   "versión";
 $locale["version %d"] =
    "versión %d";
 
