@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.85 2003-11-30 18:18:13 carstenklapp Exp $');
+rcs_id('$Id: loadsave.php,v 1.86 2003-12-02 16:18:26 carstenklapp Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -126,11 +126,11 @@ function FilenameForPage ($pagename)
 function MakeWikiZip (&$request)
 {
     if ($request->getArg('include') == 'all') {
-        $zipname         = "wikidb.zip";
+        $zipname         = WIKI_NAME . _("FullDump") . date('Ymd-Hi') . '.zip';
         $include_archive = true;
     }
     else {
-        $zipname         = "wiki.zip";
+        $zipname         = WIKI_NAME . _("LatestSnapshot") . date('Ymd-Hi') . '.zip';
         $include_archive = false;
     }
 
@@ -835,6 +835,10 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.85  2003/11/30 18:18:13  carstenklapp
+ Minor code optimization: use include_once instead of require_once
+ inside functions that might not always called.
+
  Revision 1.84  2003/11/26 20:47:47  carstenklapp
  Redo bugfix: My last refactoring broke merge-edit & overwrite
  functionality again, should be fixed now. Sorry.
