@@ -1,5 +1,5 @@
 /*
- $Id: MacOSX.css,v 1.33 2003-11-22 21:39:19 carstenklapp Exp $
+ $Id: MacOSX.css,v 1.34 2003-11-27 16:47:11 carstenklapp Exp $
 
  Classes:
 
@@ -56,6 +56,7 @@ input[type=text] {
   border-bottom: 1px solid #dddddd;
   border-right:  1px solid #c3c3c3;
 }
+
 /* Add space between the input field and following buttons, but not after the last button. */
 div.wikiaction input[type=text],
 div.wikiadmin input[type=text],
@@ -486,6 +487,53 @@ div.plugin code {
 pre {
   background: #fafafa url("images/bgpaper8.png");
 }
+/* Indented wrap past diff buttons in RecentChanges */
+ul li.rc-major, ul li.rc-minor {
+  margin-left: 0;
+  padding-left: 3em;
+  text-indent: -3em;
+}
+
+
+/*
+ * Vertical margins around block elements.
+ */
+p { margin: 1em 0; }		/* Normal ("loose") paragraphs */
+li p, dd p, td p { margin: 1ex 0; } /* Paragraphs within lists are a little tighter. */
+  
+/* ul, ol, dl { margin: 0.2ex 0; }	/* A little room around lists. */
+/* li ul, li ol, li dl,
+dd ul, dd ol, dd dl { margin: 0 0; } /* but not around sub-lists. */
+
+/* Normal ("loose") list elements */
+li.tightenable { margin: 1em 0; }
+dt.tightenable { margin-top: 1em; }
+dd.tightenable { margin-bottom: 1.5ex; }
+  
+li.tightenable.top,
+dt.tightenable.top,
+dd.tightenable.top {
+  margin-top: 0.2ex;
+}
+li li.tightenable.top {
+  margin-top: 0;
+}
+li.tightenable.bottom,
+dd.tightenable.bottom {
+  margin-bottom: 0.2ex;
+}
+li li.tightenable.bottom {
+  margin-bottom: 0;
+}
+
+.tightenable.top {
+  margin-top: 0;
+}
+.tightenable.bottom {
+  margin-bottom: 0;
+}
+
+
 /* For emacs users
  *
  * Local Variables:
