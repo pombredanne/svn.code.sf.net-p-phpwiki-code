@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.127 2005-02-18 20:43:40 uckelman Exp $');
+rcs_id('$Id: WikiDB.php,v 1.128 2005-04-01 16:11:42 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -473,7 +473,7 @@ class WikiDB {
                           E_USER_WARNING);
         }
         /* Generate notification emails? */
-        if ($result and !isa($GLOBALS['request'],'MockRequest')) {
+        if ($result and !isa($GLOBALS['request'], 'MockRequest')) {
             $notify = $this->get('notify');
             if (!empty($notify) and is_array($notify)) {
                 list($emails, $userids) = $oldpage->getPageChangeEmails($notify);
@@ -2127,6 +2127,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.127  2005/02/18 20:43:40  uckelman
+// WikiDB::genericWarnings() is no longer used.
+//
 // Revision 1.126  2005/02/04 17:58:06  rurban
 // minor versioncache improvement. part 2/3 of Charles Corrigan cache patch. not sure about the 0/1 issue
 //
