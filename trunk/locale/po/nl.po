@@ -262,9 +262,9 @@ msgid "RecentChanges"
 msgstr "RecenteVeranderingen"
 
 #: ../lib/main.php:226
-#, fuzzy, c-format
+#, c-format
 msgid "Action %s is disallowed on this wiki"
-msgstr "Actie %s is niet beschikbaar in deze wiki."
+msgstr "Actie %s is niet beschikbaar in deze wiki"
 
 #: ../lib/main.php:229
 #, c-format
@@ -277,9 +277,9 @@ msgid "You must log in to %s this wiki"
 msgstr ""
 
 #: ../lib/main.php:233
-#, fuzzy, c-format
+#, c-format
 msgid "You must be an administrator to %s this wiki"
-msgstr "Je moet ingelogd zijn als beheerder om te $action."
+msgstr "Je moet ingelogd zijn als beheerder om te %s in deze wiki"
 
 #: ../lib/main.php:300
 #, c-format
@@ -287,9 +287,8 @@ msgid "%s: Bad action"
 msgstr ""
 
 #: ../lib/main.php:323
-#, fuzzy
 msgid "Fatal PhpWiki Error"
-msgstr "WikiFataleFout"
+msgstr "PhpWiki Fatale Fout"
 
 #: ../lib/main.php:406 ../lib/plugin/FullTextSearch.php:12
 msgid "FullTextSearch"
@@ -322,24 +321,20 @@ msgid "Last Summary"
 msgstr ""
 
 #: ../lib/PageList.php:249
-#, fuzzy
 msgid "Version"
-msgstr "Versie %d"
+msgstr "Versie"
 
 #: ../lib/PageList.php:251
-#, fuzzy
 msgid "Last Author"
 msgstr "Vorige Auteur"
 
 #: ../lib/PageList.php:253
-#, fuzzy
 msgid "Locked"
-msgstr "Open Pagina"
+msgstr "Låst"
 
 #: ../lib/PageList.php:253
-#, fuzzy
 msgid "locked"
-msgstr "Sidan är låst"
+msgstr "låst"
 
 #: ../lib/PageList.php:256
 msgid "Minor Edit"
@@ -491,14 +486,13 @@ msgid "MostPopular"
 msgstr "Meestbezochte"
 
 #: ../lib/plugin/MostPopular.php:16
-#, fuzzy
 msgid "List the most popular pages"
 msgstr "Lijst de meestbezochte pagina's"
 
 #: ../lib/plugin/MostPopular.php:49
-#, fuzzy, c-format
+#, c-format
 msgid "The %d most popular pages of this wiki:"
-msgstr "De %s meestbezochte pagina's van deze Wiki:"
+msgstr "De %d meestbezochte pagina's van deze Wiki:"
 
 #: ../lib/plugin/MostPopular.php:51
 msgid "Visited pages on this wiki, ordered by popularity:"
@@ -552,9 +546,8 @@ msgstr ""
 
 #: ../lib/plugin/RandomPage.php:12 ../lib/plugin/RandomPage.php:16
 #: ../lib/plugin/RandomPage.php:41
-#, fuzzy
 msgid "RandomPage"
-msgstr "ZoekPagina"
+msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:87
 msgid "Deleted."
@@ -1150,7 +1143,7 @@ msgid "Synopsis"
 msgstr ""
 
 #: ../themes/default/templates/login.tmpl:12
-msgid "You may sign in using any WikiWord as a UserId. (ÀÖØöøÿßö etc. may be used too). The UserId will be used as link in RecentChanges to your UserId page, your HomePage. You do not need to enter a password."
+msgid "You may sign in using any WikiWord as a UserId. (ÀÖØöøÿßö etc. may be used too). The UserId will be used as a link in RecentChanges to your UserId page, your HomePage. You do not need to enter a password."
 msgstr ""
 
 #: ../themes/default/templates/login.tmpl:20
@@ -1235,9 +1228,8 @@ msgid "Modern"
 msgstr ""
 
 #: ../themes/MacOSX/themeinfo.php:121
-#, fuzzy
 msgid "Page Locked"
-msgstr "Sidan är låst"
+msgstr "Sidan är Låst"
 
 #: ../themes/Portland/templates/actionbar.tmpl:6
 msgid "EditText"
@@ -1267,9 +1259,8 @@ msgid ""
 msgstr ""
 
 #: ../themes/WikiTrek/lib/RecentChanges.php:54
-#, fuzzy
 msgid "diff"
-msgstr "(diff)"
+msgstr "diff"
 
 #, fuzzy
 #~ msgid "WantedPages"

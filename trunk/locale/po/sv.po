@@ -279,9 +279,8 @@ msgid "%s: Bad action"
 msgstr ""
 
 #: ../lib/main.php:323
-#, fuzzy
 msgid "Fatal PhpWiki Error"
-msgstr "WikiFatalError"
+msgstr "PhpWiki Fatal Error"
 
 #: ../lib/main.php:406 ../lib/plugin/FullTextSearch.php:12
 msgid "FullTextSearch"
@@ -301,22 +300,20 @@ msgid "<no matches>"
 msgstr ""
 
 #: ../lib/PageList.php:243
-#, fuzzy
 msgid "Last Modified"
-msgstr "senast ändrad %s"
+msgstr "Senast Ändrad"
 
 #: ../lib/PageList.php:245
 msgid "Hits"
-msgstr "antal träffar"
+msgstr "Träffar"
 
 #: ../lib/PageList.php:247
 msgid "Last Summary"
 msgstr ""
 
 #: ../lib/PageList.php:249
-#, fuzzy
 msgid "Version"
-msgstr "Version %d"
+msgstr "Version"
 
 #: ../lib/PageList.php:251
 #, fuzzy
@@ -324,14 +321,12 @@ msgid "Last Author"
 msgstr "Göregående Författare"
 
 #: ../lib/PageList.php:253
-#, fuzzy
 msgid "Locked"
-msgstr "Lås Sida"
+msgstr "Låst"
 
 #: ../lib/PageList.php:253
-#, fuzzy
 msgid "locked"
-msgstr "Sidan är låst"
+msgstr "låst"
 
 #: ../lib/PageList.php:256
 msgid "Minor Edit"
@@ -450,7 +445,7 @@ msgid "%s(%d): no such revision"
 msgstr ""
 
 #: ../lib/plugin/IncludePage.php:122
-#, fuzzy, c-format
+#, c-format
 msgid "Included from %s"
 msgstr "Insättning från %s"
 
@@ -488,9 +483,9 @@ msgid "List the most popular pages"
 msgstr ""
 
 #: ../lib/plugin/MostPopular.php:49
-#, fuzzy, c-format
+#, c-format
 msgid "The %d most popular pages of this wiki:"
-msgstr "De %s mest populära sidorna för den här wikin:"
+msgstr "De %d mest populära sidorna för den här wikin:"
 
 #: ../lib/plugin/MostPopular.php:51
 msgid "Visited pages on this wiki, ordered by popularity:"
@@ -544,9 +539,8 @@ msgstr ""
 
 #: ../lib/plugin/RandomPage.php:12 ../lib/plugin/RandomPage.php:16
 #: ../lib/plugin/RandomPage.php:41
-#, fuzzy
 msgid "RandomPage"
-msgstr "SökEfterSida"
+msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:87
 msgid "Deleted."
@@ -826,7 +820,7 @@ msgid "Edit aborted: %s"
 msgstr ""
 
 #: ../lib/savepage.php:168
-#, fuzzy, c-format
+#, c-format
 msgid "Saved: %s"
 msgstr "Sparade: %s"
 
@@ -1127,7 +1121,7 @@ msgid "Synopsis"
 msgstr ""
 
 #: ../themes/default/templates/login.tmpl:12
-msgid "You may sign in using any WikiWord as a UserId. (ÀÖØöøÿßö etc. may be used too). The UserId will be used as link in RecentChanges to your UserId page, your HomePage. You do not need to enter a password."
+msgid "You may sign in using any WikiWord as a UserId. (ÀÖØöøÿßö etc. may be used too). The UserId will be used as a link in RecentChanges to your UserId page, your HomePage. You do not need to enter a password."
 msgstr ""
 
 #: ../themes/default/templates/login.tmpl:20
@@ -1210,9 +1204,8 @@ msgid "Modern"
 msgstr ""
 
 #: ../themes/MacOSX/themeinfo.php:121
-#, fuzzy
 msgid "Page Locked"
-msgstr "Sidan är låst"
+msgstr "Sidan är Låst"
 
 #: ../themes/Portland/templates/actionbar.tmpl:6
 msgid "EditText"
@@ -1242,9 +1235,8 @@ msgid ""
 msgstr ""
 
 #: ../themes/WikiTrek/lib/RecentChanges.php:54
-#, fuzzy
 msgid "diff"
-msgstr "Diff"
+msgstr "diff"
 
 #, fuzzy
 #~ msgid "WantedPages"

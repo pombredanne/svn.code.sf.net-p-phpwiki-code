@@ -281,20 +281,19 @@ msgid "%s: Bad action"
 msgstr ""
 
 #: ../lib/main.php:323
-#, fuzzy
 msgid "Fatal PhpWiki Error"
-msgstr "ErroreFataleDiWiki"
+msgstr "Errore Fatale Di PhpWiki"
 
 #: ../lib/main.php:406 ../lib/plugin/FullTextSearch.php:12
 #, fuzzy
 msgid "FullTextSearch"
-msgstr "una ricerca completa del testo"
+msgstr "RicercaDelTesto"
 
 #: ../lib/main.php:409 ../lib/plugin/RecentChanges.php:278
 #: ../lib/plugin/TitleSearch.php:13
 #, fuzzy
 msgid "TitleSearch"
-msgstr "la ricerca su tutto il testo"
+msgstr "RicercaSuTutto"
 
 #: ../lib/PageList.php:125
 msgid "Page Name"
@@ -305,9 +304,8 @@ msgid "<no matches>"
 msgstr ""
 
 #: ../lib/PageList.php:243
-#, fuzzy
 msgid "Last Modified"
-msgstr "ultima modifica su %s"
+msgstr "Ultima Modifica su"
 
 #: ../lib/PageList.php:245
 msgid "Hits"
@@ -318,23 +316,20 @@ msgid "Last Summary"
 msgstr ""
 
 #: ../lib/PageList.php:249
-#, fuzzy
 msgid "Version"
-msgstr "Versione %d"
+msgstr "Versione"
 
 #: ../lib/PageList.php:251
 msgid "Last Author"
 msgstr ""
 
 #: ../lib/PageList.php:253
-#, fuzzy
 msgid "Locked"
-msgstr "Blocca la Pagina"
+msgstr "Bloccata"
 
 #: ../lib/PageList.php:253
-#, fuzzy
 msgid "locked"
-msgstr "Pagina bloccata"
+msgstr "bloccata"
 
 #: ../lib/PageList.php:256
 msgid "Minor Edit"
@@ -412,9 +407,8 @@ msgid "Edit %s"
 msgstr "Modifica %s"
 
 #: ../lib/plugin/FullTextSearch.php:16
-#, fuzzy
 msgid "Full Text Search"
-msgstr "una ricerca completa del testo"
+msgstr "Una ricerca completa del testo"
 
 #: ../lib/plugin/FullTextSearch.php:56
 #, fuzzy, c-format
@@ -456,7 +450,7 @@ msgstr ""
 #: ../lib/plugin/IncludePage.php:122
 #, fuzzy, c-format
 msgid "Included from %s"
-msgstr "dalla %s"
+msgstr "Inserire dalla %s"
 
 #: ../lib/plugin/LikePages.php:13 ../themes/Portland/templates/navbar.tmpl:19
 #: ../themes/default/templates/navbar.tmpl:20
@@ -492,9 +486,9 @@ msgid "List the most popular pages"
 msgstr ""
 
 #: ../lib/plugin/MostPopular.php:49
-#, fuzzy, c-format
+#, c-format
 msgid "The %d most popular pages of this wiki:"
-msgstr "Le %s pagine più popolari di questo wiki sono:"
+msgstr "Le %d pagine più popolari di questo wiki sono:"
 
 #: ../lib/plugin/MostPopular.php:51
 msgid "Visited pages on this wiki, ordered by popularity:"
@@ -549,9 +543,8 @@ msgstr ""
 
 #: ../lib/plugin/RandomPage.php:12 ../lib/plugin/RandomPage.php:16
 #: ../lib/plugin/RandomPage.php:41
-#, fuzzy
 msgid "RandomPage"
-msgstr "TrovaPagina"
+msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:87
 msgid "Deleted."
@@ -607,9 +600,8 @@ msgid "Search"
 msgstr "Ricerca"
 
 #: ../lib/plugin/RecentChanges.php:276 ../lib/plugin/TitleSearch.php:17
-#, fuzzy
 msgid "Title Search"
-msgstr "la ricerca su tutto il testo"
+msgstr "La ricerca su tutto il testo"
 
 #: ../lib/plugin/RecentChanges.php:468
 #, fuzzy
@@ -621,9 +613,8 @@ msgid "Show all changes for:"
 msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:473
-#, fuzzy
 msgid "Show minor edits for:"
-msgstr "Mostrare le modifiche secondarie per: %s"
+msgstr "Mostrare le modifiche secondarie per:"
 
 #: ../lib/plugin/RecentChanges.php:483
 msgid "1 day"
@@ -728,9 +719,9 @@ msgid "Cancel"
 msgstr ""
 
 #: ../lib/removepage.php:29
-#, c-format
+#, fuzzy, c-format
 msgid "You are about to remove '%s' permanently!"
-msgstr "Stai per rimuovere %s"
+msgstr "Stai per rimuovere '%s'"
 
 #: ../lib/removepage.php:44
 #, fuzzy
@@ -1143,7 +1134,7 @@ msgid "Synopsis"
 msgstr "Sinossi"
 
 #: ../themes/default/templates/login.tmpl:12
-msgid "You may sign in using any WikiWord as a UserId. (ÀÖØöøÿßö etc. may be used too). The UserId will be used as link in RecentChanges to your UserId page, your HomePage. You do not need to enter a password."
+msgid "You may sign in using any WikiWord as a UserId. (ÀÖØöøÿßö etc. may be used too). The UserId will be used as a link in RecentChanges to your UserId page, your HomePage. You do not need to enter a password."
 msgstr ""
 
 #: ../themes/default/templates/login.tmpl:20
@@ -1225,9 +1216,8 @@ msgid "Modern"
 msgstr "Moderno"
 
 #: ../themes/MacOSX/themeinfo.php:121
-#, fuzzy
 msgid "Page Locked"
-msgstr "Pagina bloccata"
+msgstr "Pagina Bloccata"
 
 #: ../themes/Portland/templates/actionbar.tmpl:6
 msgid "EditText"
@@ -1257,9 +1247,8 @@ msgid ""
 msgstr ""
 
 #: ../themes/WikiTrek/lib/RecentChanges.php:54
-#, fuzzy
 msgid "diff"
-msgstr "(diff)"
+msgstr "diff"
 
 #, fuzzy
 #~ msgid "WantedPages"

@@ -131,9 +131,9 @@ msgid "Edit: %s"
 msgstr "Editer : %s"
 
 #: ../lib/ErrorManager.php:167
-#, fuzzy, c-format
+#, c-format
 msgid "%s: error while handling error:"
-msgstr "erreur pendant la manipulation de l'erreur :"
+msgstr "%s : erreur pendant la manipulation de l'erreur :"
 
 #: ../lib/FileFinder.php:82
 #, c-format
@@ -205,7 +205,7 @@ msgstr "nouvelle page"
 #: ../lib/loadsave.php:247
 #, fuzzy, c-format
 msgid "is identical to current version %d - skipped"
-msgstr "est identique à la version en cours %d"
+msgstr "est identique à la version en cours %d - "
 
 #: ../lib/loadsave.php:259
 #, c-format
@@ -294,9 +294,8 @@ msgstr ""
 
 # lib/stdlib.php:36
 #: ../lib/main.php:323
-#, fuzzy
 msgid "Fatal PhpWiki Error"
-msgstr "ErreurFataleDeWiki"
+msgstr "Erreur Fatale De PhpWiki"
 
 # lib/fullsearch.php:48
 #: ../lib/main.php:406 ../lib/plugin/FullTextSearch.php:12
@@ -319,9 +318,8 @@ msgstr "< aucun d'résultat >"
 
 # lib/diff.php:1003 lib/diff.php:1021
 #: ../lib/PageList.php:243
-#, fuzzy
 msgid "Last Modified"
-msgstr "dernière modification le %s"
+msgstr "Dernière Modification le"
 
 #: ../lib/PageList.php:245
 msgid "Hits"
@@ -333,42 +331,36 @@ msgstr ""
 
 # lib/diff.php:1001 lib/diff.php:1019
 #: ../lib/PageList.php:249
-#, fuzzy
 msgid "Version"
-msgstr "version %d"
+msgstr "Version"
 
 #: ../lib/PageList.php:251
-#, fuzzy
 msgid "Last Author"
 msgstr "Auteur Précédent"
 
 #: ../lib/PageList.php:253
-#, fuzzy
 msgid "Locked"
-msgstr "Verrouiller la Page"
+msgstr "Verrouillée"
 
 #: ../lib/PageList.php:253
-#, fuzzy
 msgid "locked"
-msgstr "Page verrouillée"
+msgstr "verrouillée"
 
 #: ../lib/PageList.php:256
-#, fuzzy
 msgid "Minor Edit"
-msgstr "petites modifications"
+msgstr "Petite Modif"
 
 #: ../lib/PageList.php:256
-#, fuzzy
 msgid "minor"
-msgstr "petites modifications"
+msgstr "petite"
 
 #: ../lib/plugin/AllPages.php:12
 msgid "AllPages"
-msgstr ""
+msgstr "ToutesLesPages"
 
 #: ../lib/plugin/AllPages.php:16
 msgid "All Pages"
-msgstr ""
+msgstr "Toutes les Pages"
 
 #: ../lib/plugin/AllPages.php:38
 #, c-format
@@ -408,9 +400,9 @@ msgid "No pages link to %s."
 msgstr "Aucun lien de pages à %s."
 
 #: ../lib/plugin/BackLinks.php:61
-#, fuzzy, c-format
+#, c-format
 msgid "%d pages link to %s:"
-msgstr "Aucun lien de pages à %s."
+msgstr "Lien de %d pages à la %s :"
 
 #: ../lib/plugin/Calendar.php:24 ../lib/plugin/Calendar.php:28
 msgid "Calendar"
@@ -510,7 +502,7 @@ msgid "List the most popular pages"
 msgstr "Énumérez le plus populaire des pages"
 
 #: ../lib/plugin/MostPopular.php:49
-#, fuzzy, c-format
+#, c-format
 msgid "The %d most popular pages of this wiki:"
 msgstr "Les %s des pages les plus populaires de ce wiki :"
 
@@ -545,9 +537,8 @@ msgstr "version %d"
 #: ../lib/plugin/PageHistory.php:152 ../themes/MacOSX/lib/RecentChanges.php:34
 #: ../themes/Portland/lib/RecentChanges.php:14
 #: ../themes/WikiTrek/lib/RecentChanges.php:34
-#, fuzzy
 msgid "minor edit"
-msgstr "petites modifications"
+msgstr "petite modif"
 
 #: ../lib/plugin/PageHistory.php:196
 msgid "History of changes."
@@ -569,9 +560,8 @@ msgstr ""
 # lib/display.php:14
 #: ../lib/plugin/RandomPage.php:12 ../lib/plugin/RandomPage.php:16
 #: ../lib/plugin/RandomPage.php:41
-#, fuzzy
 msgid "RandomPage"
-msgstr "ChercherPage"
+msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:87
 msgid "Deleted."
@@ -633,19 +623,16 @@ msgid "Title Search"
 msgstr "Recherche par titre"
 
 #: ../lib/plugin/RecentChanges.php:468
-#, fuzzy
 msgid "Show changes for:"
-msgstr "Indiquez les changements dans les : %s"
+msgstr "Indiquez les changements dans les :"
 
 #: ../lib/plugin/RecentChanges.php:471
-#, fuzzy
 msgid "Show all changes for:"
-msgstr "Indiquez les changements dans les : %s"
+msgstr "Indiquez toutes les changements dans les :"
 
 #: ../lib/plugin/RecentChanges.php:473
-#, fuzzy
 msgid "Show minor edits for:"
-msgstr "Indiquez les petits modifs dans les : %s"
+msgstr "Indiquez les petits modifs dans les :"
 
 #: ../lib/plugin/RecentChanges.php:483
 msgid "1 day"
@@ -737,15 +724,14 @@ msgid "Request Cancelled!"
 msgstr ""
 
 #: ../lib/removepage.php:19
-#, fuzzy, c-format
+#, c-format
 msgid "Return to %s."
-msgstr "Retour à la %s"
+msgstr "Retour à la %s."
 
 # admin.php:57 admin.php:65
 #: ../lib/removepage.php:26
-#, fuzzy
 msgid "Remove the page now"
-msgstr "Supprimer la page"
+msgstr "Supprimer la page maintenant"
 
 #: ../lib/removepage.php:27 ../themes/default/templates/login.tmpl:30
 msgid "Cancel"
@@ -1181,7 +1167,7 @@ msgid "Synopsis"
 msgstr "Vue d'ensemble"
 
 #: ../themes/default/templates/login.tmpl:12
-msgid "You may sign in using any WikiWord as a UserId. (ÀÖØöøÿßö etc. may be used too). The UserId will be used as link in RecentChanges to your UserId page, your HomePage. You do not need to enter a password."
+msgid "You may sign in using any WikiWord as a UserId. (ÀÖØöøÿßö etc. may be used too). The UserId will be used as a link in RecentChanges to your UserId page, your HomePage. You do not need to enter a password."
 msgstr ""
 
 #: ../themes/default/templates/login.tmpl:20
@@ -1268,9 +1254,8 @@ msgid "Modern"
 msgstr "Moderne"
 
 #: ../themes/MacOSX/themeinfo.php:121
-#, fuzzy
 msgid "Page Locked"
-msgstr "Page verrouillée"
+msgstr "Page Verrouillée"
 
 #: ../themes/Portland/templates/actionbar.tmpl:6
 #, fuzzy
@@ -1302,9 +1287,8 @@ msgid ""
 msgstr ""
 
 #: ../themes/WikiTrek/lib/RecentChanges.php:54
-#, fuzzy
 msgid "diff"
-msgstr "(diff)"
+msgstr "diff"
 
 # lib/display.php:14
 #, fuzzy
