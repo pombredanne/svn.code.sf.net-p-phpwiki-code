@@ -1,6 +1,7 @@
-<?php  // -*-html-*- ?>
+<?php  // -*-html-*-
+  rcs_id('$Id: head.tmpl,v 1.8 2003-03-05 21:38:15 dairiki Exp $');
+?>
 <head>
-<!-- $Id: head.tmpl,v 1.7 2003-02-26 22:27:17 dairiki Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
 <?php $ROBOTS_CONTENT = $ROBOTS_META ? $ROBOTS_META : "noindex,nofollow"; ?>
 <meta name="robots" content="<?= $ROBOTS_CONTENT ?>" />
@@ -105,6 +106,18 @@
 <?php
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2003/02/26 22:27:17  dairiki
+// Fix and refactor FrameInclude plugin (more or less).
+//
+// (This should now generate valid HTML.  Woohoo!)
+//
+// The output when using the Sidebar theme is ugly enough that it should
+// be considered broken.  (But the Sidebar theme appears pretty broken in
+// general right now.)
+//
+// (Personal comment (not to be taken personally): I must say that I
+// remain unconvinced of the usefulness of this plugin.)
+//
 // Revision 1.6  2003/01/11 22:29:47  carstenklapp
 // Tweak redundant bookmark title when browsing a custom home page with
 // the same name as the wiki (i.e. avoid titles like "MyWiki - MyWiki"
