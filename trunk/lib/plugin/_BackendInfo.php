@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _BackendInfo.php,v 1.8 2002-01-20 07:17:27 carstenklapp Exp $');
+rcs_id('$Id: _BackendInfo.php,v 1.9 2002-01-21 06:55:47 dairiki Exp $');
 require_once('lib/Template.php');
 /**
  */
@@ -80,7 +80,7 @@ extends WikiPlugin
                                         'cellpadding' => 2,
                                         'cellspacing' => 0),
                          $rows) . "\n";
-        return $html;
+        return new RawXml($html); // FIXME: avoid RawXml.
     }
 };
         

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.5 2002-01-10 23:23:39 carstenklapp Exp $');
+rcs_id('$Id: FullTextSearch.php,v 1.6 2002-01-21 06:55:47 dairiki Exp $');
 
 require_once('lib/TextSearchQuery.php');
 
@@ -17,7 +17,6 @@ extends WikiPlugin
     }
 
     function getDefaultArguments() {
-        // FIXME: how to exclude multiple pages?
         return array('s'		=> false,
                      'noheader'		=> false);
     }
@@ -37,38 +36,39 @@ extends WikiPlugin
         $hilight_re = $query->getHighlightRegexp();
         $count = 0;
         $found = 0;
+
+        $list = HTML::dl();
+        global $Theme;
         
         while ($page = $pages->next()) {
             $count++;
             $name = $page->getName();
-            $lines[] = Element('dt', LinkExistingWikiWord($name));
+            $list->pushContent(HTML::dt($Theme->linkExistingWikiWord($name)));
             if ($hilight_re)
-                $lines[] = $this->showhits($page, $hilight_re);
+                $list->pushContent($this->showhits($page, $hilight_re));
         }
+        if (!$list->getContent())
+            $list->pushContent(HTML::dd(_("<no matches>")));
 
-        $html = '';
-        if (!$noheader)
-            $html .= QElement('p',
-                              sprintf(_("Full text search results for '%s'"), $s));
-        if (!$lines)
-            $lines[] = QElement('dd', _("<no matches>"));
-
-        $html .= Element('dl', join("\n", $lines));
-        return $html;
+        if ($noheader)
+            return $list;
+        
+        return array(HTML::p(fmt("Full text search results for '%s'", $s)),
+                     $list);
     }
 
     function showhits($page, $hilight_re) {
         $FS = &$GLOBALS['FieldSeparator'];
         $current = $page->getCurrentRevision();
         $matches = preg_grep("/$hilight_re/i", $current->getContent());
-        $html = '';
+        $html = array();
         foreach ($matches as $line) {
             $line = str_replace($FS, '', $line);
             $line = preg_replace("/$hilight_re/i", "${FS}OT\\0${FS}CT", $line);
             $line = htmlspecialchars($line);
             $line = str_replace("${FS}OT", '<strong>', $line);
             $line = str_replace("${FS}CT", '</strong>', $line);
-            $html .= Element('dd', Element('small', $line)) . "\n";
+            $html[] = HTML::dd(HTML::small(new RawXml($line)));
         }
         return $html;
     }

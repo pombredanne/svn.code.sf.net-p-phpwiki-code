@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.25 2002-01-18 23:38:30 lakka Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.26 2002-01-21 06:55:47 dairiki Exp $');
 /**
  */
 
@@ -96,37 +96,38 @@ class _RecentChanges_HtmlFormatter
 extends _RecentChanges_Formatter
 {
     function diffLink ($rev) {
-        return QElement('a', array('href' => $this->diffURL($rev), 'class' => 'wikiaction'),
-                        _("(diff)"));
+        global $Theme;
+        return $Theme->makeButton(_("Diff"), $this->diffURL($rev), 'wikiaction');
     }
 
     function pageLink ($rev) {
         $page = $rev->getPage();
-        return QElement('a', array('href' => $this->pageURL($rev), 'class' => 'wiki'),
-                        $page->getName());
+        return HTML::a(array('href' => $this->pageURL($rev), 'class' => 'wiki'),
+                       $page->getName());
     }
     
     function authorLink ($rev) {
         $author = $rev->get('author');
         if ( ($url = $this->authorURL($author)) )
-            return QElement('a', array('href' => $url, 'class' => 'wiki'), $author);
+            return HTML::a(array('href' => $url, 'class' => 'wiki'), $author);
         else
-            return htmlspecialchars($author);
+            return $author;
     }
 
     function summaryAsHTML ($rev) {
         if ( !($summary = $this->summary($rev)) )
             return '';
-        $summary = do_transform($summary, 'LinkTransform');
-        return  Element('strong', array('class' => 'wiki-summary'), "[$summary]");
+        return  HTML::strong( array('class' => 'wiki-summary'),
+                              "[",
+                              do_transform($summary, 'LinkTransform'),
+                              "]");
     }
         
     function rss_icon () {
         global $request, $Theme;
 
         $rss_url = $request->getURLtoSelf(array('format' => 'rss'));
-        $button = $Theme->makeButton("RSS", $rss_url, 'rssicion');
-        return $button->asHTML();
+        return $Theme->makeButton("RSS", $rss_url, 'rssicion');
     }
     
     function description () {
@@ -143,69 +144,65 @@ extends _RecentChanges_Formatter
             
         if ($limit > 0) {
             if ($days > 0)
-                $desc = sprintf(_("The %d most recent %s during the past %.1f days are listed below."),
-                               $limit, $edits, $days);
+                $desc = fmt("The %d most recent %s during the past %.1f days are listed below.",
+                            $limit, $edits, $days);
             else
-                $desc = sprintf(_("The %d most recent %s are listed below."),
-                               $limit, $edits);
+                $desc = fmt("The %d most recent %s are listed below.",
+                            $limit, $edits);
         }
         else {
             if ($days > 0)
-                $desc = sprintf(_("The most recent %s during the past %.1f days are listed below."),
-                               $edits, $days);
+                $desc = fmt("The most recent %s during the past %.1f days are listed below.",
+                            $edits, $days);
             else
-                $desc = sprintf(_("All %s are listed below."), $edits);
+                $desc = fmt("All %s are listed below.", $edits);
         }
-        return htmlspecialchars($desc);
+        return $desc;
     }
 
         
     function title () {
         extract($this->_args);
-        return htmlspecialchars( $show_minor ? _("RecentEdits") : _("RecentChanges") ) . "\n" . $this->rss_icon();
+        return array($show_minor ? _("RecentEdits") : _("RecentChanges"),
+                     ' ',
+                     $this->rss_icon());
     }
 
     function format ($changes) {
-        $html[] = Element('h2', $this->title());
+        $html[] = HTML::h2(false, $this->title());
         if (($desc = $this->description()))
-            $html[] = Element('p', $desc);
+            $html[] = HTML::p(false, $desc);
         
         $last_date = '';
-        $lines = array();
+        $lines = false;
         
         while ($rev = $changes->next()) {
             if (($date = $this->date($rev)) != $last_date) {
-                if ($lines) {
-                    $html[] = Element('ul', join("\n", $lines));
-                    $lines = array();
-                }
-                $html[] = QElement('h3', $date);
+                if ($lines)
+                    $html[] = $lines;
+                $html[] = HTML::h3($date);
+                $lines = HTML::ul();
                 $last_date = $date;
             }
-            
-            $lines[] = $this->format_revision($rev);
+            $lines->pushContent($this->format_revision($rev));
         }
         if ($lines)
-            $html[] = Element('ul', join("\n", $lines));
-        return join("\n", $html) . "\n";
+            $html[] = $lines;
+        return $html;
     }
 
     function format_revision ($rev) {
-        if (!defined('RC_SEPARATOR_A')) define('RC_SEPARATOR_A', '');
-        if (!defined('RC_SEPARATOR_B')) define('RC_SEPARATOR_B', '...');
-
         $class = 'rc-' . $this->importance($rev);
         
-        return Element('li', array('class' => $class),
-                       implode(' ', array( $this->diffLink($rev),
-                                           $this->pageLink($rev),
-                                           $this->time($rev),
-                                           $this->summaryAsHTML($rev),
-                                           '...',
-                                           $this->authorLink($rev) )));
+        return HTML::li(array('class' => $class),
+                        $this->diffLink($rev), ' ',
+                        $this->pageLink($rev), ' ',
+                        $this->time($rev), ' ',
+                        $this->summaryAsHTML($rev),
+                        ' ... ',
+                        $this->authorLink($rev));
     }
 }
-
 
 
 class _RecentChanges_RssFormatter

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.10 2002-01-20 03:45:47 carstenklapp Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.11 2002-01-21 06:55:47 dairiki Exp $');
 
 
 define ('EM_FATAL_ERRORS',
@@ -82,10 +82,9 @@ class ErrorManager
         if (!$html)
             return false;
         
-        return Element('div', array('class' => 'errors'),
-                       QElement('h4', sprintf(_("PHP %s Warnings"),
-                                              PHP_VERSION))
-                       . $html);
+        return HTML::div(array('class' => 'errors'),
+                         HTML::h4("PHP Warnings"),
+                         new RawXml($html));
     }
     
     /**

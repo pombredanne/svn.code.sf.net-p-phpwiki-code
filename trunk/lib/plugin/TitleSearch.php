@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TitleSearch.php,v 1.4 2001-12-16 18:33:25 dairiki Exp $');
+rcs_id('$Id: TitleSearch.php,v 1.5 2002-01-21 06:55:47 dairiki Exp $');
 
 require_once('lib/TextSearchQuery.php');
 
@@ -23,7 +23,8 @@ extends WikiPlugin
     }
 
     function run($dbi, $argstr, $request) {
-
+        global $Theme;
+        
         $args = $this->getArgs($argstr, $request);
         if (empty($args['s']))
             return '';
@@ -32,26 +33,23 @@ extends WikiPlugin
         
         $query = new TextSearchQuery($s);
         $pages = $dbi->titleSearch($query);
-        $lines = array();
+        $list = HTML::ul();
         while ($page = $pages->next()) {
             $name = $page->getName();
-            $lines[] = Element('li', LinkExistingWikiWord($name));
+            $list->pushContent(HTML::li($Theme->linkExistingWikiWord($name)));
             $last_name = $name;
         }
 
-        if ($auto_redirect && count($lines) == 1)
+        if ($auto_redirect && count($list->getContent()) == 1)
             $request->redirect(WikiURL($last_name));
-
-        $html = '';
-        if (!$noheader)
-            $html .= QElement('p',
-                              sprintf(_("Title search results for '%s'"), $s));
-        if ($lines)
-            $html .= Element('ul', join("\n", $lines));
-        else
-            $html .= Element('dl', QElement('dd', _("<no matches>")));
+        if (!$list->getContent())
+            $list = HTML::blockquote(_("<no matches>"));
+        if ($noheader)
+            return $list;
         
-        return $html;
+
+        return array(HTML::p(fmt("Title search results for '%s'", $s)),
+                     $list);
     }
 };
         

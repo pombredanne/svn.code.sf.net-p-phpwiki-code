@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.23 2002-01-19 07:21:58 dairiki Exp $');
+<?php rcs_id('$Id: Template.php,v 1.24 2002-01-21 06:55:47 dairiki Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -77,24 +77,12 @@ class Template
                 $this->_print($item);
             }
         }
-        elseif (is_object($val)) {
-            if (isa($val, 'Template')) {
-                // Expand sub-template with defaults from this template.
-                $val->printExpansion($this->_vars);
-            }
-            elseif (method_exists($val, 'printhtml')) {
-                $val->printHTML();
-            }
-            elseif (method_exists($val, 'ashtml')) {
-                echo $val->asHTML();
-            }
-            elseif (method_exists($val, 'asstring')) {
-                return htmlspecialchars($val->asString());
-            }
+        elseif (isa($val, 'Template')) {
+            // Expand sub-template with defaults from this template.
+            $val->printExpansion($this->_vars);
         }
-        else {
-            echo (string) $val;
-        }
+        else
+            printXML($val);
     }
     
     /**
@@ -115,6 +103,7 @@ class Template
     /**
      * Substitute text for tokens in template. 
      *
+     * FIXME: this is now identical to Template::replace();
      * @access public
      *
      * @param $token string Name of token to substitute for.
@@ -124,7 +113,8 @@ class Template
      * to escape any special characters.
      */
     function qreplace($varname, $value) {
-        $this->_vars[$varname] = htmlspecialchars($value);
+        //$this->_vars[$varname] = htmlspecialchars($value);
+        $this->_vars[$varname] = $value;
     }
     
 

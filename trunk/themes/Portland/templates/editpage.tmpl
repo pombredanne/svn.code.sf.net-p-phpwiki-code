@@ -1,28 +1,24 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.3 2002-01-21 00:40:15 carstenklapp Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.4 2002-01-21 06:55:47 dairiki Exp $ -->
 <?php
-  $SummaryInput = Element('input', 
-                          array('type' => 'text',
-                                'class' => 'wikitext',
-                                'name' => 'summary',
-                                'size' => 50,
-                                'value' => $FORMVARS['summary']));
+$SummaryInput = HTML::input(array('type' => 'text',
+                                  'class' => 'wikitext',
+                                  'name' => 'summary',
+                                  'size' => 50,
+                                  'value' => $FORMVARS['summary']));
 
-  $MinorEditCb = Element('input', 
-                         array('type' => 'checkbox',
-                               'name' => 'minor_edit',
-                               'checked' => (bool) $FORMVARS['minor_edit']));
+$MinorEditCb = HTML::input(array('type' => 'checkbox',
+                                 'name' => 'minor_edit',
+                                 'checked' => (bool) $FORMVARS['minor_edit']));
 
-  $PreviewB = Element('input', 
-                      array('type' => 'submit',
-                            'class' => 'button',
-                            'name' => 'preview',
-                            'value' => _("Preview")));
-  $SaveB = Element('input', 
-                   array('type' => 'submit',
-                         'class' => 'button',
-                         'name' => 'save',
-                         'value' => _("Save")));
+$PreviewB = HTML::input(array('type' => 'submit',
+                              'class' => 'button',
+                              'name' => 'preview',
+                              'value' => _("Preview")));
+$SaveB = HTML::input(array('type' => 'submit',
+                           'class' => 'button',
+                           'name' => 'save',
+                           'value' => _("Save")));
 
 
   $SignIn = new WikiTemplate('signin');
@@ -71,20 +67,20 @@
   <br />
   <?=_("Summary:")?> <?= $SummaryInput ?>
   <br />
-  <?php printf(_("Author will be logged as %s."),
-               QElement('em', $USERID)); ?>
+  <?= fmt("Author will be logged as %s.", HTML::em($user->getId())) ?>
   <br />
   <?= $MinorEditCb ?>
-  <?php printf(_("I'm just doing minor edits. Please divert the usual logging to %s instead."),
-               LinkExistingWikiWord(_("RecentEdits"))); ?>
+  <?= fmt("I'm just doing minor edits. Please divert the usual logging to %s instead.",
+          $Theme->linkExistingWikiWord(_("RecentEdits"))) ?>
   <br /><br />
 <div name="#edit-tips"><?php
-  // FIXME: convert this to use the IncludePage plugin.
-  printf(_("See %s tips for editing."),
-         LinkExistingWikiWord(_("GoodStyle")));
-  printf("<br />\n" ._("You can change the size of the editing area in %s."),
-         LinkExistingWikiWord(_("UserPreferences")));
-?></div>
+  // FIXME: convert this to use the IncludePage plugin. ?>
+<?= fmt("See %s tips for editing.",
+        $Theme->linkExistingWikiWord(_("GoodStyle"))) ?>
+<br />
+<?= fmt("You can change the size of the editing area in %s.",
+        $Theme->linkExistingWikiWord(_("UserPreferences"))) ?>
+</div>
 
 <div class="wiki-edithelp">
 <?plugin IncludePage page=_("TextFormattingRules") section=_("Synopsis") quiet=1?>

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageHistory.php,v 1.7 2002-01-19 07:21:58 dairiki Exp $');
+rcs_id('$Id: PageHistory.php,v 1.8 2002-01-21 06:55:47 dairiki Exp $');
 /**
  */
 require_once('lib/plugin/RecentChanges.php');
@@ -68,27 +68,29 @@ extends _RecentChanges_HtmlFormatter
     }
 
     function title() {
-        return sprintf(_("PageHistory for %s"),
-                       LinkExistingWikiWord($this->_args['page']))
-            . "\n" . $this->rss_icon();
+        global $Theme;
+        
+        return array(fmt("PageHistory for %s",
+                         $Theme->linkExistingWikiWord($this->_args['page'])),
+                     "\n",
+                     $this->rss_icon());
     }
 
     function _javascript($script) {
-        return Element('script', array('language' => 'JavaScript',
-                                       'type' => 'text/javascript'),
-                       "<!-- //\n$script\n// -->");
+        return HTML::script(array('language' => 'JavaScript',
+                                  'type' => 'text/javascript'),
+                            new RawXml("<!-- //\n$script\n// -->"));
     }
     
     function description() {
         // Doesn't work (PHP bug?): $desc = parent::description() . "\n";
-        $desc = _RecentChanges_HtmlFormatter::description() . "\n";
+        $desc[] = _RecentChanges_HtmlFormatter::description() . "\n";
 
-        $desc .= $this->_javascript(sprintf('document.write("%s");',
-                                            _("Check any two boxes to compare revisions.")));
-        $button = Element('input', array('type' => 'submit',
-                                         'value' => _("compare revisions")));
-        $desc .= Element('noscript',
-                         sprintf(_("Check any two boxes then %s."), $button));
+        $desc[] = $this->_javascript(sprintf('document.write("%s");',
+                                             _("Check any two boxes to compare revisions.")));
+        $button = HTML::input(array('type' => 'submit',
+                                    'value' => _("compare revisions")));
+        $desc[] = HTML::noscript(fmt("Check any two boxes then %s.", $button));
 
         return $desc;
     }
@@ -99,27 +101,27 @@ extends _RecentChanges_HtmlFormatter
         
         $pagename = $this->_args['page'];
         
-        $html[] = _RecentChanges_HtmlFormatter::format($changes);
+        $html = _RecentChanges_HtmlFormatter::format($changes);
 
-        $html[] = Element('input', array('type' => 'hidden',
-                                         'name' => 'action',
-                                         'value' => 'diff'));
+        $html[] = HTML::input(array('type' => 'hidden',
+                                    'name' => 'action',
+                                    'value' => 'diff'));
         if (USE_PATH_INFO) {
             $action = WikiURL($pagename);
         }
         else {
             $action = SCRIPT_NAME;
-            $html[] = Element('input', array('type' => 'hidden',
-                                             'name' => 'pagename',
-                                             'value' => $pagename));
+            $html[] = HTML::input(array('type' => 'hidden',
+                                        'name' => 'pagename',
+                                        'value' => $pagename));
         }
 
-        return Element('form', array('method' => 'get',
-                                     'action' => $action,
-                                     'name' => 'diff-select'),
-                       join("\n", $html))
-            . "\n"
-            . $this->_javascript('
+        return array(HTML::form(array('method' => 'get',
+                                      'action' => $action,
+                                      'name' => 'diff-select'),
+                                $html),
+                     "\n",
+                     $this->_javascript('
         var diffCkBoxes = document.forms["diff-select"].elements["versions[]"];
 
         function diffCkBox_onclick() {
@@ -131,18 +133,18 @@ extends _RecentChanges_HtmlFormatter
         }
 
         for (i = 0; i < diffCkBoxes.length; i++)
-          diffCkBoxes[i].onclick = diffCkBox_onclick;');
+          diffCkBoxes[i].onclick = diffCkBox_onclick;'));
     }
     
     function diffLink ($rev) {
-        return Element('input', array('type' => 'checkbox',
-                                      'name' => 'versions[]',
-                                      'value' => $rev->getVersion()));
+        return HTML::input(array('type' => 'checkbox',
+                                 'name' => 'versions[]',
+                                 'value' => $rev->getVersion()));
     }
 
     function pageLink ($rev) {
-        return QElement('a', array('href' => $this->pageURL($rev), 'class' => 'wiki'),
-                        sprintf(_("Version %d"), $rev->getVersion()));
+        return HTML::a(array('href' => $this->pageURL($rev), 'class' => 'wiki'),
+                       fmt("Version %d", $rev->getVersion()));
     }
 }
 

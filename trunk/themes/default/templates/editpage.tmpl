@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.6 2002-01-21 00:16:04 carstenklapp Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.7 2002-01-21 06:55:47 dairiki Exp $ -->
 
 <?php if (isset($PREVIEW_CONTENT)) { ?>
   <p><strong><?=_("Preview only!  Changes not saved.")?></strong></p>
@@ -31,28 +31,24 @@
           cols="<?=$EDIT_AREA_WIDTH?>"
           wrap="virtual"><?=$FORMVARS['content']?></textarea>
 <?php
-  $SummaryInput = Element('input', 
-                          array('type' => 'text',
-                                'class' => 'wikitext',
-                                'name' => 'summary',
-                                'size' => 50,
-                                'value' => $FORMVARS['summary']));
+$SummaryInput = HTML::input(array('type' => 'text',
+                                  'class' => 'wikitext',
+                                  'name' => 'summary',
+                                  'size' => 50,
+                                  'value' => $FORMVARS['summary']));
 
-  $MinorEditCb = Element('input', 
-                         array('type' => 'checkbox',
-                               'name' => 'minor_edit',
-                               'checked' => (bool) $FORMVARS['minor_edit']));
+$MinorEditCb = HTML::input(array('type' => 'checkbox',
+                                 'name' => 'minor_edit',
+                                 'checked' => (bool) $FORMVARS['minor_edit']));
 
-  $PreviewB = Element('input', 
-                      array('type' => 'submit',
-                            'class' => 'button',
-                            'name' => 'preview',
+$PreviewB = HTML::input(array('type' => 'submit',
+                              'class' => 'button',
+                              'name' => 'preview',
                             'value' => _("Preview")));
-  $SaveB = Element('input', 
-                   array('type' => 'submit',
-                         'class' => 'button',
-                         'name' => 'save',
-                         'value' => _("Save")));
+$SaveB = HTML::input(array('type' => 'submit',
+                           'class' => 'button',
+                           'name' => 'save',
+                           'value' => _("Save")));
 
 
   $SignIn = new WikiTemplate('signin');
@@ -76,9 +72,9 @@
     <?= $PreviewB ?><?=$s?><?= $SaveB ?>
   </td>
   <td align="right">
-    <?php if (!$user->isSignedIn())
-              printf(_("Author will be logged as %s."),
-                      QElement('em', $USERID)); ?>
+    <?= $user->isSignedIn()
+        ? ''
+        : fmt("Author will be logged as %s.", HTML::em($USERID)) ?>
     <?= $SignIn ?> 
   </td>
 </tr></table>
@@ -89,12 +85,13 @@
          * A table is used for proper image to text alignment when
          * a theme uses image buttons.
          */ ?>
+<!-- FIXME:--> 
   <td>
     <?php printf(_("You can change the size of the editing area in %s."),
-                 "</td><td>&nbsp;".$UserPrefsB->asHTML()."</td><td>"); ?>&nbsp;</td>
+                 "</td><td>&nbsp;".$UserPrefsB->asXML()."</td><td>"); ?>&nbsp;</td>
   <td>
     <?php printf(_("See %s tips for editing."),
-                 "</td><td>&nbsp;".$GoodStyleB->asHTML()."&nbsp;</td><td>"); ?></td>
+                 "</td><td>&nbsp;".$GoodStyleB->asXML()."&nbsp;</td><td>"); ?></td>
 </tr></table>
 
 <hr noshade="noshade" />

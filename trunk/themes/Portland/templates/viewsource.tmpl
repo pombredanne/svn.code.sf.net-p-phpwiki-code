@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: viewsource.tmpl,v 1.1 2002-01-20 02:49:03 carstenklapp Exp $ -->
+<!-- $Id: viewsource.tmpl,v 1.2 2002-01-21 06:55:47 dairiki Exp $ -->
 <p><strong><?=_("Note:")?></strong>
 <?=_("This page has been locked by the administrator and cannot be edited.")?>
 <?php if (! $IS_CURRENT) { ?>
@@ -21,10 +21,9 @@
   $PageHistoryB = $ButtonFactory->makeLabelActionPageButton($mtime, _("PageHistory"));
 
   if ($IS_CURRENT)
-      $LastModifiedMsg = sprintf(_("(last edited %s)"), $PageHistoryB->asHTML());
+      $LastModifiedMsg = fmt("(last edited %s)", $PageHistoryB);
   else
-      $LastModifiedMsg = __sprintf(_("(version %s, saved on %s)"),
-                                   $VERSION, $PageHistoryB->asHTML());
+      $LastModifiedMsg = fmt("(version %s, saved on %s)", $VERSION, $PageHistoryB);
 
 ?>
 <input type="hidden" name="action" value="browse" />

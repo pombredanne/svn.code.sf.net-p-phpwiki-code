@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: LikePages.php,v 1.6 2002-01-09 18:06:49 carstenklapp Exp $');
+rcs_id('$Id: LikePages.php,v 1.7 2002-01-21 06:55:47 dairiki Exp $');
 
 require_once('lib/TextSearchQuery.php');
 
@@ -32,19 +32,13 @@ extends WikiPlugin
         if (empty($page) && empty($prefix) && empty($suffix))
             return '';
 
-        $html = '';
+        
         if ($prefix) {
             $suffix = false;
-            if (!$noheader)
-                $html .= QElement('p',
-                                  sprintf(_("Page names with prefix '%s'"),
-                                               $prefix));
+            $descrip = fmt("Page names with prefix '%s'", $prefix);
         }
         elseif ($suffix) {
-            if (!$noheader)
-                $html .= QElement('p',
-                                  sprintf(_("Page names with suffix '%s'"),
-                                               $suffix));
+            $descrip = fmt("Page names with suffix '%s'", $suffix);
         }
         elseif ($page) {
             $words = preg_split('/[\s:-;.,]+/',
@@ -55,11 +49,8 @@ extends WikiPlugin
             $suffix = end($words);
             $exclude = $page;
             
-            if (!$noheader) {
-                $fs = _("These pages share an initial or final title word with '%s'");
-                $html .= Element('p', sprintf(htmlspecialchars($fs),
-                                              LinkWikiWord($page)));
-            }
+            $descrip = fmt("These pages share an initial or final title word with '%s'",
+                           _LinkWikiWord($page));
         }
 
         // Search for pages containing either the suffix or the prefix.
@@ -81,21 +72,21 @@ extends WikiPlugin
         $match_re = '/' . join('|', $match) . '/';
 
         $pages = $dbi->titleSearch($query);
-        $lines = array();
+        $list = HTML::ul();
         while ($page = $pages->next()) {
             $name = $page->getName();
             if (!preg_match($match_re, $name))
                 continue;
             if (!empty($exclude) && $name == $exclude)
                 continue;
-            $lines[] = Element('li', LinkWikiWord($name));
+            $list->pushContent(HTML::li(_LinkWikiWord($name)));
         }
-        if ($lines)
-            $html .= Element('ul', join("\n", $lines));
-        else
-            $html .= QElement('blockquote', gettext("<none>"));
-        
-        return $html;
+        if (!$list->getContent())
+            $list = HTML::blockquote(_("<none>"));
+
+        if ($noheader)
+            return $list;
+        return array(HTML::p($descrip), $list);
     }
 
     function _quote($str) {

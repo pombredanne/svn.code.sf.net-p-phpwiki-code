@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.1 2002-01-19 22:48:42 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.2 2002-01-21 06:55:47 dairiki Exp $');
 
 /*
  * This file defines an appearance ("theme") of PhpWiki similar to the Portland Pattern Repository.
@@ -9,18 +9,19 @@ require_once('lib/Theme.php');
 
 class Theme_Portland extends Theme {
     function LinkUnknownWikiWord($wikiword, $linktext = '') {
-        if (empty($linktext)) {
-            $linktext = $wikiword;
-            if ($this->getAutoSplitWikiWords())
-                $linktext=split_pagename($linktext);
-            $class = 'wikiunknown';
-        } else
-            $class = 'named-wikiunknown';
+        $url = WikiURL($wikiword, array('action' => 'edit'));
+        $link = HTML::span(HTML::a(array('href' => $url), '?'));
 
-        return Element('span', array('class' => $class),
-                       Element('u', $linktext)
-                       . Element('a', array('href' => WikiURL($wikiword, array('action' => 'edit'))),
-                                 '?'));
+        if (!empty($linktext)) {
+            $link->unshiftContent(HTML::u($linktext));
+            $link->setAttr('class', 'named-wikiunknown');
+        }
+        else {
+            $link->unshiftContent(HTML::u($this->maybeSplitWikiWord($wikiword)));
+            $link->setAttr('class', 'wikiunknown');
+        }
+        
+        return $link;
     }
 }
 

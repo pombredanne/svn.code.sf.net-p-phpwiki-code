@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: difflib.php,v 1.4 2001-12-16 16:47:17 dairiki Exp $');
+rcs_id('$Id: difflib.php,v 1.5 2002-01-21 06:55:47 dairiki Exp $');
 // difflib.php
 //
 // A PHP diff engine for phpwiki.
@@ -720,7 +720,6 @@ class DiffFormatter
         $nlead = $this->leading_context_lines;
         $ntrail = $this->trailing_context_lines;
 
-        ob_start();
         $this->_start_diff();
 
         foreach ($diff->edits as $edit) {
@@ -765,11 +764,7 @@ class DiffFormatter
                           $y0, $yi - $y0,
                           $block);
 
-        $this->_end_diff();
-
-        $val = ob_get_contents();
-        ob_end_clean();
-        return $val;
+        return $this->_end_diff();
     }
 
     function _block($xbeg, $xlen, $ybeg, $ylen, &$edits) {
@@ -790,9 +785,13 @@ class DiffFormatter
     }
 
     function _start_diff() {
+        ob_start();
     }
 
     function _end_diff() {
+        $val = ob_get_contents();
+        ob_end_clean();
+        return $val;
     }
 
     function _block_header($xbeg, $xlen, $ybeg, $ylen) {

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.84 2002-01-21 01:46:18 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.85 2002-01-21 06:55:47 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -147,18 +147,26 @@ function LinkURL($url, $linktext = '') {
 }
 
 function LinkWikiWord($wikiword, $linktext = '', $version = false) {
-    global $dbi;
+    $link = _LinkWikiWord($wikiword, $linktext, $version);
+    return $link->asXML();
+}
+
+// This function will be renamed LinkWikiWord once changeover
+// to object based HTML generation is complete.
+function _LinkWikiWord($wikiword, $linktext = '', $version = false) {
+    global $dbi, $Theme;
     if ($dbi->isWikiPage($wikiword))
-        return LinkExistingWikiWord($wikiword, $linktext);
+        $link = $Theme->linkExistingWikiWord($wikiword, $linktext, $version);
     else
-        global $Theme;
-        return $Theme->LinkUnknownWikiWord($wikiword, $linktext);
+        $link = $Theme->linkUnknownWikiWord($wikiword, $linktext);
+    return $link;
 }
 
 //This function will be deleted once all references to it are updated.
 function LinkExistingWikiWord($wikiword, $linktext = '', $version = false) {
     global $Theme;
-    return $Theme->LinkExistingWikiWord($wikiword, $linktext, $version);
+    $link = $Theme->linkExistingWikiWord($wikiword, $linktext, $version);
+    return $link->asXML();
 }
 
 
@@ -379,7 +387,8 @@ function ParseAndLink($bracketlink) {
       } else {
           $link['type'] = "wiki-unknown-$linktype";
           global $Theme;
-          $link['link'] = $Theme->LinkUnknownWikiWord($URL, $linkname);
+          $uww = $Theme->linkUnknownWikiWord($URL, $linkname);
+          $link['link'] = $uww->asXML();
       }
     
     return $link;
@@ -698,8 +707,9 @@ function isa ($object, $class)
 {
     $lclass = strtolower($class);
 
-    return get_class($object) == strtolower($lclass)
-        || is_subclass_of($object, $lclass);
+    return is_object($object)
+        && ( get_class($object) == strtolower($lclass)
+             || is_subclass_of($object, $lclass) );
 }
 
 /** Determine whether (possible) object has method.
