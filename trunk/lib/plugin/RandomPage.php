@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RandomPage.php,v 1.3 2002-01-29 20:08:29 carstenklapp Exp $');
+rcs_id('$Id: RandomPage.php,v 1.4 2002-01-30 22:45:33 carstenklapp Exp $');
 
 require_once('lib/PageList.php');
 
@@ -17,9 +17,12 @@ extends WikiPlugin
     }
 
     function getDefaultArguments() {
-        return array('pages'    => 1,
-                     'showname' => false,
-                     'info'     => '');
+        return array('pages'        => 1,
+                     'showname'     => false,
+                     'pagename'     => '[pagename]', // hackish
+                     'exclude'      => '',
+                     'include_self' => 0, // hackish
+                     'info'         => '');
     }
 
     function run($dbi, $argstr, $request) {
@@ -43,15 +46,27 @@ extends WikiPlugin
             if ($pages > 20)
                 $pages = 20;
             $PageList = new PageList();
-            if ($info)
-                foreach (explode(",", $info) as $col)
-                    $PageList->insertColumn($col);
+            $this->_init($pagename, &$PageList, $info, $exclude, $include_self);
+
             while ($PageList->getTotal() < $pages) {
                 $PageList->addPage($pagearray[array_rand($pagearray)]);
             }
+            return $PageList->getContent();
         }
-        return $PageList->getContent();
     }
+
+    function _init(&$page, &$pagelist, $info = '', $exclude = '', $include_self = '') {
+	if ($info)
+            foreach (explode(",", $info) as $col)
+                $pagelist->insertColumn($col);
+
+	if ($exclude)
+            foreach (explode(",", $exclude) as $excludepage)
+                $pagelist->excludePageName($excludepage);
+	if (!$include_self)
+            $pagelist->excludePageName($page);
+   }
+
 };
 
 
