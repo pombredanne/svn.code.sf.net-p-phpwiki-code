@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.61 2004-06-25 14:29:18 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.62 2004-06-28 15:39:27 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -119,7 +119,7 @@ class Template
 
         $request = &$this->_request;
         if (!isset($user))
-            $user = &$request->getUser();
+            $user = $request->getUser();
         if (!isset($page))
             $page = &$request->getPage();
         
@@ -256,6 +256,13 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.61  2004/06/25 14:29:18  rurban
+// WikiGroup refactoring:
+//   global group attached to user, code for not_current user.
+//   improved helpers for special groups (avoid double invocations)
+// new experimental config option ENABLE_XHTML_XML (fails with IE, and document.write())
+// fixed a XHTML validation error on userprefs.tmpl
+//
 // Revision 1.60  2004/06/14 11:31:36  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList
