@@ -1,7 +1,8 @@
-<?php rcs_id('$Id: SQL.php,v 1.4 2004-02-15 15:21:25 rurban Exp $');
+<?php rcs_id('$Id: SQL.php,v 1.5 2004-03-18 21:41:09 rurban Exp $');
 
 require_once('lib/WikiDB.php');
-
+//require_once('lib/WikiDB/backend/PearDB.php');
+//require_once('lib/pear/DB.php'); // Always favor use our local pear copy
 
 /**
  *
@@ -10,9 +11,11 @@ class WikiDB_SQL extends WikiDB
 {
     function WikiDB_SQL ($dbparams) {
         $backend_type = 'PearDB';
-        if (preg_match('/^(\w+):/', $dbparams['dsn'], $m))
+        if (is_array($dbparams['dsn']))
+            $backend_type = $dbparams['dsn']['phptype'];
+        elseif (preg_match('/^(\w+):/', $dbparams['dsn'], $m))
             $backend_type = $m[1];
-        include_once("lib/WikiDB/backend/$backend_type.php");
+        include_once ("lib/WikiDB/backend/$backend_type.php");
         $backend_class = "WikiDB_backend_$backend_type";
         $backend = & new $backend_class($dbparams);
 

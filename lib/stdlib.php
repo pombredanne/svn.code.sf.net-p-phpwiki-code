@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.163 2004-03-17 18:41:49 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.164 2004-03-18 21:41:09 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1343,7 +1343,7 @@ class Alert {
 }
 
 /** 
- * returns true if current php version is at mimimum a.b.c 
+ * Returns true if current php version is at mimimum a.b.c 
  * Called: check_php_version(4,1)
  */
 function check_php_version ($a = '0', $b = '0', $c = '0') {
@@ -1373,6 +1373,9 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.163  2004/03/17 18:41:49  rurban
+// just reformatting
+//
 // Revision 1.162  2004/03/16 15:43:08  rurban
 // make fileSet sortable to please PageList
 //
