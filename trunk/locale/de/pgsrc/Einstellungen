@@ -1,0 +1,39 @@
+From [no address given]  Thu Dec 27 16:36:57 2001
+
+Subject: Einstellungen
+
+From: [no address given] (PhpWiki)
+
+Date: Thu, 27 Dec 2001 16:35:35 -0500
+
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
+
+X-RCS: "$Id: Einstellungen,v 1.1 2001-12-27 21:49:00 carstenklapp Exp $"
+Content-Type: application/x-phpwiki;
+
+  pagename=Einstellungen;
+
+  flags=PAGE_LOCKED;
+
+  lastmodified=1009488935;
+
+Content-Transfer-Encoding: quoted-printable
+
+
+
+Du kannst einige Einstellungen jetzt bestimmen. Die Werte werden in einer =
+
+__Cookie__ deines Browsers gespeichert, daher mu=DFt du Cookies erlauben =
+
+um das Feature zu benutzen.
+
+
+
+! Gr=F6=DFe des Texteingabefensters
+
+
+
+[Stelle Spalten | phpwiki:?action=3Dsetprefs&edit_area_width=3D3()]
+
+[Stelle Zeilen | phpwiki:?action=3Dsetprefs&edit_area_height=3D3()]
+
