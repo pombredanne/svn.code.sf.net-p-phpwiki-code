@@ -3,11 +3,7 @@
 require_once 'lib/PageList.php';
 require_once 'PHPUnit.php';
 
-class PageListTest extends PHPUnit_TestCase {
-    // constructor of the test suite
-    function PageListTest($name) {
-       $this->PHPUnit_TestCase($name);
-    }
+class PageListTest extends phpwiki_TestCase {
 
     function testPageList() {
         // Completely empty PageList

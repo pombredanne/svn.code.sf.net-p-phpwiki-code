@@ -83,19 +83,27 @@ $foo = assert_options( ASSERT_CALLBACK, 'assert_callback');
 #
 // set the error reporting level for this script
 error_reporting(E_ALL);
-/*
 // This is too strict, fails on every notice and warning. 
-// TODO: push an errorhandler with printSimpleTrace
-function myErrorHandler($errno, $errstr, $errfile, $errline)
-{
+/*
+function myErrorHandler$errno, $errstr, $errfile, $errline) {
    echo "$errfile: $errline: error# $errno: $errstr\n";
-   // Back trace
    echo "Traceback:\n";
    printSimpleTrace(debug_backtrace());
-   exit;
+}
+// The ErrorManager version
+function _ErrorHandler_CB(&$error) {
+   echo "Traceback:\n";
+   printSimpleTrace(debug_backtrace());
+   if ($error->isFatal()) {
+        $error->errno = E_USER_WARNING;
+        return true; // ignore error
+   }
+   return true;
 }
 // set to the user defined error handler
-$old_error_handler = set_error_handler("myErrorHandler");
+// $old_error_handler = set_error_handler("myErrorHandler");
+// This is already done via _DEBUG_TRACE
+//$ErrorManager->pushErrorHandler(new WikiFunctionCb('_ErrorHandler_CB'));
 */
 
 # This is the test DB backend
@@ -147,8 +155,8 @@ function purge_dir($dir) {
     if (!isset($finder)) {
         $finder = new FileFinder;
     }
-	$fileSet = new fileSet($dir);
-	assert($dir);
+    $fileSet = new fileSet($dir);
+    assert($dir);
     foreach ($fileSet->getFiles() as $f) {
     	unlink("$dir/$f");
     }
@@ -169,7 +177,7 @@ function purge_testbox() {
 }
 
 global $ErrorManager;
-$ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE|E_USER_WARNING|E_WARNING);
+$ErrorManager->setPostponedErrorMask(E_FATAL|E_NOTICE|E_USER_NOTICE|E_USER_WARNING|E_WARNING);
 $request = new MockRequest($db_params);
 
 /*
@@ -199,9 +207,23 @@ if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']))
 print "Run tests .. ";
 
 $suite  = new PHPUnit_TestSuite("phpwiki");
+
+// save and restore all args for each test.
+class phpwiki_TestCase extends PHPUnit_TestCase {
+    function setUp() { 
+        global $request;
+        $this->_savedargs = $request->_args;
+        $request->_args = array();
+    }
+    function tearDown() {
+        global $request;
+        $request->_args = $this->_savedargs;
+    }
+}
+
 // use argv (from cli) or tests (from browser) params to run only certain tests
 $alltests = array('InlineParserTest','HtmlParserTest','PageListTest','ListPagesTest',
-			      'SetupWiki','DumpHtml','AllPagesTest','AllUsersTest','OrphanedPagesTest');
+                  'SetupWiki','DumpHtml','AllPagesTest','AllUsersTest','OrphanedPagesTest');
 if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']) and !empty($HTTP_GET_VARS['tests']))
     $argv = explode(',',$HTTP_GET_VARS['tests']);
 if (!empty($argv) and preg_match("/test\.php$/", $argv[0]))
@@ -214,6 +236,7 @@ if (!empty($argv)) {
     }
     $alltests = $runtests;
     print_r($runtests);
+    flush();
 }
 
 foreach ($alltests as $test) {

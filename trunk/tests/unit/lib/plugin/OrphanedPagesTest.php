@@ -4,12 +4,7 @@ require_once 'lib/WikiPlugin.php';
 require_once 'lib/plugin/OrphanedPages.php';
 require_once 'PHPUnit.php';
 
-class OrphanedPagesTest extends PHPUnit_TestCase {
-    // constructor of the test suite
-    function OrphanedPagesTest($name) {
-       $this->PHPUnit_TestCase($name);
-    }
-
+class OrphanedPagesTest extends phpwiki_TestCase {
     /**
      * Test that we can instantiate and run OrphanedPages plugin without error.
      */

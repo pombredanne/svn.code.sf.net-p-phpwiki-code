@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: HtmlParserTest.php,v 1.1 2004-05-24 17:33:17 rurban Exp $');
+rcs_id('$Id: HtmlParserTest.php,v 1.2 2004-07-09 12:29:26 rurban Exp $');
 
 /* Copyright (C) 2004, Reini Urban <rurban@x-ray.at>
  */
@@ -9,12 +9,7 @@ require_once 'PHPUnit.php';
 
 define('USE_GLOBAL_SAX',false); // this seems to be a xml bug
 
-class HtmlParserTest extends PHPUnit_TestCase {
-
-    // constructor of the test suite
-    function HtmlParserTest($name) {
-       $this->PHPUnit_TestCase($name);
-    }
+class HtmlParserTest extends phpwiki_TestCase {
 
     function testSimple() {
         $html2wiki = array(

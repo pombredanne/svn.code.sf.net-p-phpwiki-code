@@ -56,10 +56,27 @@ You must be in the phpwiki/tests/unit subdirectory.  Then use the php
 command-line executable to run the tests.  For example:
 
 <pre>
-phpwiki/tests/unit % php test.php
+phpwiki/tests/unit % ./test.php
 Run tests ..
-TestCase inlineparsertest->testnowikiwords() passed
-TestCase inlineparsertest->testwikiword() passed
+ran 8 tests, 0 failures.
+</pre>
+
+Or for only some tests, give the test names on the commandline:
+
+<pre>
+phpwiki/tests/unit % php -Cq test.php SetupWiki DumpHtml
+Run tests .. Array
+(
+    [0] => SetupWiki
+    [1] => DumpHtml
+)
+Purge the testbox .. ran 4 tests, 0 failures.
+</pre>
+
+Or run it from the browser like this:
+
+<pre>
+http://localhost/phpwiki/test/unit/test.php?tests=SetupWiki,DumpHtml
 </pre>
 
 </body>
