@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.7 2002-01-05 06:17:02 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.8 2002-01-05 11:44:55 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -20,9 +20,6 @@ rcs_id('$Id: themeinfo.php,v 1.7 2002-01-05 06:17:02 carstenklapp Exp $');
  *
  * The button toolbars use tables for positioning. Yuck. (It will do
  * for now).
- *
- * RSS has it's own Mac OS X style button but it's not actually used
- * yet.
  *
  * In Mozilla, there is a grey line under each of the images. I
  * haven't been able to determine the cause of this yet.
@@ -78,7 +75,7 @@ $CSS_URLS = array_merge($CSS_URLS,
 
 // Logo image appears on every page and links to the HomePage.
 $logo = "themes/$theme/PhpWiki.png";
-//$RSS = 
+$rssicon = "themes/$theme/RSS.png";
 
 // Signature image which is shown after saving an edited page.  If
 // this is left blank, any signature defined in index.php will be
