@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.32 2002-02-06 04:10:45 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.33 2002-02-06 18:45:55 carstenklapp Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -37,7 +37,7 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
     }
 
     $version = false;
-    
+
     if (isa($page_or_rev, 'WikiDB_PageRevision')) {
         $version = $page_or_rev->getVersion();
         $page = $page_or_rev->getPage();
@@ -69,7 +69,7 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
     else {
         $exists = true;
     }
-    
+
 
     if ($exists)
         return $Theme->linkExistingWikiWord($pagename, $label, $version);
@@ -77,7 +77,7 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
         return $Theme->linkUnknownWikiWord($pagename, $label);
 }
 
-     
+
 
 /**
  * Make a button.
@@ -96,7 +96,7 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
  * </dl>
  *
  * @param $label string
- * A label for the button.  If ommited, a suitable default (based on the valued of $action
+ * A label for the button.  If ommited, a suitable default (based on the valued of $action)
  * will be picked.
  *
  * @param $page_or_rev mixed
@@ -124,7 +124,7 @@ class Theme {
     function Theme ($theme_name = 'default') {
         $this->_name = $theme_name;
         $themes_dir = defined('PHPWIKI_DIR') ? PHPWIKI_DIR . "/themes" : "themes";
-        
+
         $this->_path  = defined('PHPWIKI_DIR') ? PHPWIKI_DIR . "/" : "";
         $this->_theme = "themes/$theme_name";
 
@@ -139,12 +139,12 @@ class Theme {
     function _findFile ($file, $missing_okay = false) {
         if (file_exists($this->_path . "$this->_theme/$file"))
             return "$this->_theme/$file";
-        
+
         // FIXME: this is a short-term hack.  Delete this after all files
         // get moved into themes/...
         if (file_exists($this->_path . $file))
             return $file;
-        
+
 
         if (isset($this->_default_theme)) {
             return $this->_default_theme->_findFile($file, $missing_okay);
@@ -159,7 +159,7 @@ class Theme {
         $path = $this->_findFile($file, $missing_okay);
         if (!$path)
             return false;
-        
+
         if (defined('DATA_PATH'))
             return DATA_PATH . "/$path";
         return $path;
@@ -170,7 +170,7 @@ class Theme {
     // Date and Time formatting
     //
     ////////////////////////////////////////////////////////////////
-    
+
     var $_dateTimeFormat = "%B %e, %Y";
     var $_dateFormat = "%B %e, %Y";
     var $_timeFormat = "%l:%M %p";
@@ -211,12 +211,12 @@ class Theme {
         // time has been converted to the user's local time.
     }
 
-    
+
     function formatTime ($time_t) {
         //FIXME: make 24-hour mode configurable?
         $offset_time = $time_t + PrefTimezoneOffset();
         return HTML(preg_replace('/^0/', ' ',
-                            strtolower(strftime("%I:%M %p", $offset_time))),
+                                 strtolower(strftime("%I:%M %p", $offset_time))),
                     HTML::small("*"));
         // The asterisk is temporary, for debugging it indicates a
         // time has been converted to the user's local time.
@@ -247,7 +247,7 @@ class Theme {
     ////////////////////////////////////////////////////////////////
 
     var $_autosplitWikiWords = false;
-    
+
     function setAutosplitWikiWords($autosplit=false) {
         $this->_autosplitWikiWords = $autosplit ? true : false;
     }
@@ -285,8 +285,8 @@ class Theme {
         $button = $this->makeButton('?', $url);
         $button->addTooltip(sprintf(_("Edit: %s"), $wikiword));
         $link = HTML::span($button);
-        
-        
+
+
         if (!empty($linktext)) {
             $link->pushContent(HTML::u($linktext));
             $link->setAttr('class', 'named-wikiunknown');
@@ -295,7 +295,7 @@ class Theme {
             $link->pushContent(HTML::u($this->maybeSplitWikiWord($wikiword)));
             $link->setAttr('class', 'wikiunknown');
         }
-        
+
         return $link;
     }
 
@@ -312,10 +312,10 @@ class Theme {
     function addImageAlias ($alias, $image_name) {
         $this->_imageAliases[$alias] = $image_name;
     }
-    
+
     function getImageURL ($image) {
         $aliases = &$this->_imageAliases;
-        
+
         if (isset($aliases[$image])) {
             $image = $aliases[$image];
             if (!$image)
@@ -329,17 +329,38 @@ class Theme {
         // FIXME: this should probably be made to fall back
         //        automatically to .gif, .jpg.
         //        Also try .gif before .png if browser doesn't like png.
-        
+
         return $this->_findData("images/$image", 'missing okay');
     }
 
     function setLinkIcon($proto, $image = false) {
         if (!$image)
             $image = $proto;
-        
+
         $this->_linkIcons[$proto] = $image;
     }
-    
+
+    var $_hr = false;
+    function sethr($image = false) {
+        if (!$image)
+            $image = $this->getImageURL('hr');
+
+        $this->_hr = $image;
+    }
+    function hr(){
+        if ($this->_hr) {
+            $h = new HtmlElement('img');
+            $h->setAttr('src', $this->_hr);
+            $h->setAttr('class', 'wikihr');
+
+            $d = new HtmlElement('div');
+            $d->setAttr('align', 'center');
+            $d->setAttr('class', 'wikihr');
+            $d->_content[0] = $h;
+            return $d;
+        }
+    }
+
     function getLinkIconURL ($proto) {
         $icons = &$this->_linkIcons;
         if (!empty($icons[$proto]))
@@ -376,7 +397,7 @@ class Theme {
     function _findButton ($button_file) {
         if (!isset($this->_button_path))
             $this->_button_path = $this->_getButtonPath();
-        
+
         foreach ($this->_button_path as $dir) {
             $path = "$this->_theme/$dir/$button_file";
             if (file_exists($this->_path . $path))
@@ -400,10 +421,10 @@ class Theme {
                 $path[] = "buttons/$subdir";
         }
         $dir->close();
-        
+
         return $path;
     }
-        
+
     ////////////////////////////////////////////////////////////////
     //
     // Button style
@@ -417,7 +438,7 @@ class Theme {
         // submission buttons.
         if (preg_match('/^submit:(.*)$/', $url, $m))
             return $this->makeSubmitButton($text, $m[1], $class);
-        
+
         $imgurl = $this->getButtonURL($text);
         if ($imgurl)
             return new ImageButton($text, $url, $class, $imgurl);
@@ -438,8 +459,8 @@ class Theme {
      * Make button to perform action.
      *
      * This constructs a button which performs an action on the
-     * currently selected version of the current page.  (Or another
-     * page or version, if you want...)
+     * currently selected version of the current page.
+     * (Or anotherpage or version, if you want...)
      *
      * @param $action string The action to perform (e.g. 'edit', 'lock').
      * This can also be the name of an "action page" like 'LikePages'.
@@ -503,15 +524,15 @@ class Theme {
      */
     function makeLinkButton ($page_or_rev) {
         extract($this->_get_name_and_rev($page_or_rev));
-        
+
         $args = $version ? array('version' => $version) : false;
-        
+
         return $this->makeButton($pagename, WikiURL($pagename, $args), 'wiki');
     }
 
     function _get_name_and_rev ($page_or_rev) {
         $version = false;
-        
+
         if (empty($page_or_rev)) {
             global $request;
             $pagename = $request->getArg("pagename");
@@ -536,25 +557,25 @@ class Theme {
 
     function _labelForAction ($action) {
         switch ($action) {
-        case 'edit':	return _("Edit");
-        case 'diff':	return _("Diff");
-        case 'logout':	return _("Sign Out");
-        case 'login':	return _("Sign In");
-        case 'lock':	return _("Lock Page");
-        case 'unlock':	return _("Unlock Page");
-        case 'remove':	return _("Remove Page");
-        default:
-            // I don't think the rest of these actually get used.
-            // 'setprefs'
-            // 'upload' 'dumpserial' 'loadfile' 'zip'
-            // 'save' 'browse'
-            return ucfirst($action);
+            case 'edit':   return _("Edit");
+            case 'diff':   return _("Diff");
+            case 'logout': return _("Sign Out");
+            case 'login':  return _("Sign In");
+            case 'lock':   return _("Lock Page");
+            case 'unlock': return _("Unlock Page");
+            case 'remove': return _("Remove Page");
+            default:
+                // I don't think the rest of these actually get used.
+                // 'setprefs'
+                // 'upload' 'dumpserial' 'loadfile' 'zip'
+                // 'save' 'browse'
+                return ucfirst($action);
         }
     }
- 
+
     //----------------------------------------------------------------
     var $_buttonSeparator = ' | ';
-    
+
     function setButtonSeparator($separator) {
         $this->_buttonSeparator = $separator;
     }
@@ -569,13 +590,13 @@ class Theme {
     // CSS
     //
     ////////////////////////////////////////////////////////////////
-    
+
     function _CSSlink($title, $css_file, $media, $is_alt = false) {
-        $link = HTML::link(array('rel' 	  => $is_alt ? 'alternate stylesheet' : 'stylesheet',
-                                 'title'  => $title,
-                                 'type'	  => 'text/css',
-                                 'charset'=> CHARSET,
-                                 'href'	  => $this->_findData($css_file)));
+        $link = HTML::link(array('rel'     => $is_alt ? 'alternate stylesheet' : 'stylesheet',
+                                 'title'   => $title,
+                                 'type'    => 'text/css',
+                                 'charset' => CHARSET,
+                                 'href'    => $this->_findData($css_file)));
         if ($media)
             $link->setAttr('media', $media);
         return $link;
@@ -590,7 +611,7 @@ class Theme {
     function addAlternateCSS ($title, $css_file, $media = false) {
         $this->_alternateCSS[$title] = $this->_CSSlink($title, $css_file, $media, true);
     }
-    
+
     /**
      * @return string HTML for CSS.
      */
@@ -635,18 +656,18 @@ class Button extends HtmlElement {
  */
 class ImageButton extends Button {
     /** Constructor
-     *
-     * @param $text string The text for the button.
-     * @param $url string The url (href) for the button.
-     * @param $class string The CSS class for the button.
-     * @param $img_url string URL for button's image.
-     * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
-     */
+    *
+    * @param $text string The text for the button.
+    * @param $url string The url (href) for the button.
+    * @param $class string The CSS class for the button.
+    * @param $img_url string URL for button's image.
+    * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
+    */
     function ImageButton ($text, $url, $class, $img_url, $img_attr = false) {
         $this->HtmlElement('a', array('href' => $url));
         if ($class)
             $this->setAttr('class', $class);
- 
+
         if (!is_array($img_attr))
             $img_attr = array();
         $img_attr['src'] = $img_url;
@@ -662,11 +683,11 @@ class ImageButton extends Button {
  */
 class SubmitButton extends HtmlElement {
     /** Constructor
-     *
-     * @param $text string The text for the button.
-     * @param $name string The name of the form field.
-     * @param $class string The CSS class for the button.
-     */
+    *
+    * @param $text string The text for the button.
+    * @param $name string The name of the form field.
+    * @param $class string The CSS class for the button.
+    */
     function SubmitButton ($text, $name = false, $class = false) {
         $this->HtmlElement('input', array('type' => 'submit',
                                           'value' => $text));
@@ -684,18 +705,18 @@ class SubmitButton extends HtmlElement {
  */
 class SubmitImageButton extends SubmitButton {
     /** Constructor
-     *
-     * @param $text string The text for the button.
-     * @param $name string The name of the form field.
-     * @param $class string The CSS class for the button.
-     * @param $img_url string URL for button's image.
-     * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
-     */
+    *
+    * @param $text string The text for the button.
+    * @param $name string The name of the form field.
+    * @param $class string The CSS class for the button.
+    * @param $img_url string URL for button's image.
+    * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
+    */
     function SubmitImageButton ($text, $name = false, $class = false, $img_url) {
-        $this->HtmlElement('input', array('type' => 'image',
-                                          'src' => $img_url,
+        $this->HtmlElement('input', array('type'  => 'image',
+                                          'src'   => $img_url,
                                           'value' => $text,
-                                          'alt' => $text));
+                                          'alt'   => $text));
         if ($name)
             $this->setAttr('name', $name);
         if ($class)
@@ -704,6 +725,7 @@ class SubmitImageButton extends SubmitButton {
 
 };
 
+
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php
@@ -711,5 +733,5 @@ class SubmitImageButton extends SubmitButton {
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End:
 ?>
