@@ -73,6 +73,19 @@ To require user passwords set
 </verbatim>
 Otherwise any anon or bogo user might login without any or a wrong password. A login attempt with ALLOW_USER_PASSWORDS = true depends on the defined USER_AUTH_ORDER auth methods, the USER_AUTH_POLICY and PASSWORD_LENGTH_MINIMUM.
 
+!! FAQ - UPGRADE PROBLEMS:
+
+* ''Fatal error: The script tried to execute a method or access a property of an incomplete object. Please ensure that the class definition wikiuser of the object you are trying to operate on was loaded _before_ the session was started in...''
+
+This error will appear you switch from old (or from new to old) in the same browser session. You have an old (or new) WikiUser object in your current session, which is incompatible with the new (or old) WikiUser object on session restauration. 
+Workaround: Close and open your browser again. The session cookie should be destroyed, and you will get a fresh new WikiUser object. Your default WIKI_ID (your username) will not be lost.
+
+* ''lib\Template.php:22: Warning[2]: fopen("", "rb") - No such file or directory''
+
+PHPWIKI_DIR could not be determined automatically. You probably started from a different diretory.
+Workaround: Set PHPWIKI_DIR in index.php or in your start script. You most likely have to set DATA_PATH also, when your pages look like the ancient-style Wiki (Times-Roman, black-white), i.e. no CSS is loaded.
+
+
 Below we define which methods exists and in which order theys are used:
 
 !! USER_AUTH_ORDER auth methods
