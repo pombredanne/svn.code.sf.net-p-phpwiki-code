@@ -473,7 +473,7 @@ msgstr ""
 #: ../lib/plugin/text2png.php:42
 #, fuzzy, c-format
 msgid "See %s"
-msgstr "Sehe"
+msgstr "Sehe %s"
 
 #: ../lib/plugin/text2png.php:89
 msgid ""
@@ -507,30 +507,29 @@ msgstr ""
 
 #: ../lib/plugin/walkabout.php:42 ../lib/plugin/walkabout.php:90
 msgid "Contents"
-msgstr ""
+msgstr "Inhalt"
 
 #: ../lib/plugin/walkabout.php:88
 msgid "Next"
-msgstr ""
+msgstr "Nächste"
 
 #: ../lib/plugin/walkabout.php:89
-#, fuzzy
 msgid "Previous"
-msgstr "Vorige Monat"
+msgstr "Vorherige"
 
 #: ../lib/plugin/walkabout.php:91
 msgid "First"
-msgstr ""
+msgstr "Erste"
 
 #: ../lib/plugin/walkabout.php:92
 msgid "Last"
-msgstr ""
+msgstr "Letzte"
 
 #: ../lib/plugin/walkabout.php:110 ../lib/plugin/walkabout.php:151
 #: ../lib/plugin/walkabout.php:155
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %s"
-msgstr "%s Tagen"
+msgstr "%s: %s"
 
 #: ../lib/DbaDatabase.php:46 ../lib/ziplib.php:36 ../lib/ziplib.php:39
 #: ../lib/ziplib.php:44 ../lib/ziplib.php:46 ../lib/ziplib.php:48
