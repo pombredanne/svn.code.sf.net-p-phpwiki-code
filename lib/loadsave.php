@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.128 2004-11-16 16:16:44 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.129 2004-11-25 08:11:40 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
@@ -224,7 +224,7 @@ function MakeWikiZip (&$request)
             $whichpages = $thispage;
         $pages = new WikiDB_Array_PageIterator(explodePageList($whichpages));
     } else {
-        $pages = $dbi->getAllPages();
+        $pages = $dbi->getAllPages(false,false,false,$excludeList);
     }
     $request_args = $request->args;
     
@@ -300,7 +300,7 @@ function DumpToDir (&$request)
             $whichpages = $thispage;
         $pages = new WikiDB_Array_PageIterator(explodePageList($whichpages));
     } else {
-        $pages = $dbi->getAllPages();
+        $pages = $dbi->getAllPages(false,false,false,$excludeList);
     }
 
     $request_args = $request->args;
@@ -401,7 +401,7 @@ function DumpHtmlToDir (&$request)
             $whichpages = $thispage;
         $pages = new WikiDB_Array_PageIterator(explodePageList($whichpages));
     } else {
-        $pages = $dbi->getAllPages();
+        $pages = $dbi->getAllPages(false,false,false,$excludeList);
     }
 
     global $WikiTheme;
@@ -579,7 +579,7 @@ function MakeWikiZipHtml (&$request)
             $whichpages = $thispage;
         $pages = new WikiDB_Array_PageIterator(explodePageList($whichpages));
     } else {
-        $pages = $dbi->getAllPages();
+        $pages = $dbi->getAllPages(false,false,false,$excludeList);
     }
 
     global $WikiTheme;
@@ -1245,6 +1245,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.128  2004/11/16 16:16:44  rurban
+ enable Overwrite All for upgrade
+
  Revision 1.127  2004/11/01 10:43:57  rurban
  seperate PassUser methods into seperate dir (memory usage)
  fix WikiUser (old) overlarge data session
