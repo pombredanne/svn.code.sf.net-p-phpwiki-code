@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.29 2004-05-16 22:07:35 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.30 2004-06-03 09:39:51 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -902,7 +902,7 @@ class GroupLdap extends WikiGroup {
             define("LDAP_BASE_DN",'');
         $this->base_dn = LDAP_BASE_DN;
         if (strstr("ou=",LDAP_BASE_DN))
-            $this->base_dn =  preg_replace("/(ou=\w+,)?()/","\$2",LDAP_BASE_DN);
+            $this->base_dn = preg_replace("/(ou=\w+,)?()/","\$2",LDAP_BASE_DN);
     }
 
     /**
@@ -944,7 +944,8 @@ class GroupLdap extends WikiGroup {
                 $membership[] = $group;
             }
         }
-        if ($ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
+        // must be a valid LDAP server, and username must not contain a wildcard
+        if ($ldap = ldap_connect(LDAP_AUTH_HOST) and !strstr($this->username,'*')) { 
             if (defined('LDAP_AUTH_USER'))
                 if (defined('LDAP_AUTH_PASSWORD'))
                     // Windows Active Directory Server is strict
@@ -999,6 +1000,7 @@ class GroupLdap extends WikiGroup {
             $info = ldap_get_entries($ldap, $sr);
             for ($i = 0; $i < $info["count"]; $i++) {
                 $gid = $info[$i]["gidnumber"][0];
+                //uid=* would be better probably
                 $sr2 = ldap_search($ldap, "ou=Users,".$this->base_dn,"gidNumber=$gid");
                 $info2 = ldap_get_entries($ldap, $sr2);
                 for ($j = 0; $j < $info2["count"]; $j++) {
@@ -1012,6 +1014,14 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.29  2004/05/16 22:07:35  rurban
+// check more config-default and predefined constants
+// various PagePerm fixes:
+//   fix default PagePerms, esp. edit and view for Bogo and Password users
+//   implemented Creator and Owner
+//   BOGOUSERS renamed to BOGOUSER
+// fixed syntax errors in signin.tmpl
+//
 // Revision 1.28  2004/05/15 22:54:49  rurban
 // fixed important WikiDB bug with DEBUG > 0: wrong assertion
 // improved SetAcl (works) and PagePerms, some WikiGroup helpers.
