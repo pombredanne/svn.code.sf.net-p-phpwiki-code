@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbSession.php,v 1.15 2004-05-03 10:41:06 rurban Exp $');
+<?php rcs_id('$Id: DbSession.php,v 1.16 2004-05-07 15:11:28 rurban Exp $');
 
 /**
  * Store sessions data in Pear DB / ADODB ....
@@ -30,6 +30,13 @@ class DB_Session
             $backend = &$dbh->_backend;
             $db_type = substr(get_class($dbh),7);
             $class = "DB_Session_".$db_type;
+            
+            // < 4.1.2 crash on dba sessions at session_write_close(). 
+            // (Tested with 4.1.1 and 4.1.2)
+            // Didn't try postgres sessions.
+            if (!check_php_version(4,1,2) and $db_type=='dba')
+                return false;
+                
             if (class_exists($class)) {
                 $this->_backend = new $class($backend->_dbh, $table);
                 return $this->_backend;
@@ -536,8 +543,8 @@ extends DB_Session
     }
 
     function close() {
-        $dbh = &$this->_connect();
-        $dbh->close();
+    	if ($this->_dbh)
+            $this->_dbh->close();
     }
 
     function read ($id) {
