@@ -1,4 +1,4 @@
--- $Id: mysql.sql,v 1.11 2004-04-12 09:12:23 rurban Exp $
+-- $Id: mysql.sql,v 1.12 2004-04-12 10:07:45 rurban Exp $
 
 drop table if exists page;
 CREATE TABLE page (
@@ -88,3 +88,15 @@ CREATE TABLE member (
    	INDEX (userid),
    	INDEX (groupname)
 ) TYPE=MyISAM;
+
+-- if you plan to use the wikilens theme
+drop table if exists rating;
+CREATE TABLE rating (
+        dimension INT(4) NOT NULL,
+        raterpage INT(11) NOT NULL,
+        rateepage INT(11) NOT NULL,
+        ratingvalue FLOAT NOT NULL,
+        rateeversion INT(11) NOT NULL,
+        tstamp TIMESTAMP(14) NOT NULL,
+        PRIMARY KEY (dimension, raterpage, rateepage)
+);
