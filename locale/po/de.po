@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-16 16:26+0100\n"
+"POT-Creation-Date: 2004-06-17 11:53+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -311,7 +311,7 @@ msgstr "InterWiki-Adresse"
 msgid "RecentChanges"
 msgstr "NeuesteÄnderungen"
 
-#: ../lib/Request.php:57 ../lib/main.php:951 ../lib/main.php:964
+#: ../lib/Request.php:57 ../lib/main.php:948 ../lib/main.php:961
 #, c-format
 msgid "%s is not writable."
 msgstr "%s is nicht änderbar."
@@ -320,7 +320,7 @@ msgstr "%s is nicht änderbar."
 msgid "The PhpWiki access log file"
 msgstr "Die PhpWiki Zugriffslog Datei"
 
-#: ../lib/Request.php:59 ../lib/main.php:954
+#: ../lib/Request.php:59 ../lib/main.php:951
 #, c-format
 msgid "Please ensure that %s is writable, or redefine %s in config/config.ini."
 msgstr ""
@@ -349,24 +349,24 @@ msgstr "%s um %s"
 #: ../lib/Theme.php:383
 #, c-format
 msgid "Version %s, saved %s"
-msgstr "Version %s. %s gespeichert."
+msgstr "Version %s. %s gespeichert"
 
 # (Usually a verb, never a noun; siehe nächste Reihe:
 # saved=gespeichert nicht "Speicherung am.")
 #: ../lib/Theme.php:385
 #, c-format
 msgid "Last edited %s"
-msgstr "Zuletzt geändert %s."
+msgstr "Zuletzt geändert %s"
 
 #: ../lib/Theme.php:394
 #, c-format
 msgid "Version %s, saved on %s"
-msgstr "Version %s. gespeichert am %s ."
+msgstr "Version %s. gespeichert am %s"
 
 #: ../lib/Theme.php:396
 #, c-format
 msgid "Last edited on %s"
-msgstr "Zuletzt bearbeitet am %s."
+msgstr "Zuletzt bearbeitet am %s"
 
 #: ../lib/Theme.php:412
 msgid "today"
@@ -936,11 +936,11 @@ msgstr "BackLinks für %s"
 msgid "(Redirected from %s)"
 msgstr "(Weitergeleitet von %s)"
 
-#: ../lib/editpage.php:106 ../lib/editpage.php:501
+#: ../lib/editpage.php:107 ../lib/editpage.php:501
 msgid "Your version"
 msgstr "Ihre Version"
 
-#: ../lib/editpage.php:106 ../lib/editpage.php:502
+#: ../lib/editpage.php:107 ../lib/editpage.php:502
 msgid "Other version"
 msgstr "Andere Version"
 
@@ -1279,7 +1279,7 @@ msgstr "Zusammenfügen Bearbeiten"
 
 # Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
 # must also be renamed to match what is here.
-#: ../lib/loadsave.php:558 ../lib/loadsave.php:564 ../lib/main.php:779
+#: ../lib/loadsave.php:558 ../lib/loadsave.php:564 ../lib/main.php:776
 #: ../lib/plugin/WikiAdminSelect.php:193 ../themes/Crao/templates/head.tmpl:79
 #: ../themes/Crao/templates/head.tmpl:80
 #: ../themes/Crao/templates/navbar.tmpl:45
@@ -1590,30 +1590,30 @@ msgstr "%s: Ungültige Aktion"
 msgid "Fatal PhpWiki Error"
 msgstr "Fataler PhpWiki Fehler"
 
-#: ../lib/main.php:792
+#: ../lib/main.php:789
 msgid "Chown"
 msgstr "Chown"
 
-#: ../lib/main.php:796 ../lib/plugin/WikiAdminSetAcl.php:185
+#: ../lib/main.php:793 ../lib/plugin/WikiAdminSetAcl.php:185
 msgid "SetAcl"
 msgstr "AclSetzen"
 
-#: ../lib/main.php:800 ../lib/plugin/WikiAdminRename.php:213
+#: ../lib/main.php:797 ../lib/plugin/WikiAdminRename.php:213
 msgid "Rename"
 msgstr "Umbenennen"
 
-#: ../lib/main.php:804 ../lib/main.php:809 ../lib/plugin/PageDump.php:35
+#: ../lib/main.php:801 ../lib/main.php:806 ../lib/plugin/PageDump.php:35
 #: ../themes/default/templates/actionbar.tmpl:37
 #: ../themes/smaller/templates/actionbar.tmpl:39
 msgid "PageDump"
 msgstr "SeiteSpeichern"
 
-#: ../lib/main.php:823 ../lib/plugin/FullTextSearch.php:39
+#: ../lib/main.php:820 ../lib/plugin/FullTextSearch.php:39
 #: ../lib/plugin/WantedPages.php:133
 msgid "FullTextSearch"
 msgstr "VolltextSuche"
 
-#: ../lib/main.php:826 ../lib/plugin/RecentChanges.php:576
+#: ../lib/main.php:823 ../lib/plugin/RecentChanges.php:576
 #: ../lib/plugin/TitleSearch.php:31 ../themes/Sidebar/templates/navbar.tmpl:20
 #: ../themes/default/templates/navbar.tmpl:8
 #: ../themes/default/templates/navbar.tmpl:15
@@ -1621,21 +1621,21 @@ msgstr "VolltextSuche"
 msgid "TitleSearch"
 msgstr "TitelSuche"
 
-#: ../lib/main.php:952
+#: ../lib/main.php:949
 msgid "The session.save_path directory"
 msgstr "Das session.save_path Verzeichnis"
 
-#: ../lib/main.php:955
+#: ../lib/main.php:952
 #, c-format
 msgid "the directory '%s'"
 msgstr "Das Verzeichnis »%s«"
 
-#: ../lib/main.php:959
+#: ../lib/main.php:956
 #, c-format
 msgid "Attempting to use the directory '%s' instead."
 msgstr "Versuche stattdessen das Verzeichnis »%s« zu verwenden."
 
-#: ../lib/main.php:966
+#: ../lib/main.php:963
 msgid "Users will not be able to sign in."
 msgstr "Benutzer werden sich nicht anmelden können."
 
@@ -4247,9 +4247,8 @@ msgid "PhpWikiPoll"
 msgstr "PhpWikiUmfrage"
 
 #: ../lib/plugin/_WikiTranslation.php:96
-#, fuzzy
 msgid "PloticusPlugin"
-msgstr "BilderAlbumPlugin"
+msgstr "PloticusPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:97
 msgid "RawHtmlPlugin"
@@ -4293,9 +4292,8 @@ msgid "UpLoad"
 msgstr "HochLaden"
 
 #: ../lib/plugin/_WikiTranslation.php:108
-#, fuzzy
 msgid "UpLoadPlugin"
-msgstr "HochLaden"
+msgstr "HochLadenPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:109
 msgid "WabiSabi"
@@ -4398,9 +4396,8 @@ msgid "BAD URL -- remove all of <, >, \""
 msgstr "URL Formfehler - Entfernen Sie alle Zeichen mit <, >, \""
 
 #: ../lib/stdlib.php:336 ../lib/stdlib.php:346
-#, fuzzy
 msgid "Invalid image size"
-msgstr "Eingebundene Bilder"
+msgstr "Ungültige Bildgröße"
 
 #: ../lib/stdlib.php:406
 msgid "BAD phpwiki: URL"
@@ -5339,9 +5336,8 @@ msgid "Change Password"
 msgstr "Ändere Passwort"
 
 #: ../themes/default/templates/userprefs.tmpl:130
-#, fuzzy
 msgid "Set Password"
-msgstr "Passwort:"
+msgstr "Setze Passwort"
 
 #: ../themes/default/templates/userprefs.tmpl:132
 msgid "New password"
