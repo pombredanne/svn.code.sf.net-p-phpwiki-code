@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: imagecache.php,v 1.2 2002-08-18 12:34:14 rurban Exp $');
+<?php rcs_id('$Id: imagecache.php,v 1.3 2004-01-25 10:14:13 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -26,10 +26,12 @@
  */
 
 include "lib/config.php";
-include "lib/stdlib.php";
-//include "lib/logger.php";
+require_once("lib/stdlib.php");
 require_once('lib/Request.php');
-require_once("lib/WikiUser.php");
+if (ENABLE_USER_NEW)
+    require_once("lib/WikiUserNew.php");
+else  
+    require_once("lib/WikiUser.php");
 require_once('lib/WikiDB.php');
 
 require_once "lib/WikiPluginCached.php";
@@ -69,7 +71,10 @@ function mainImageCache() {
 
     // assume that every user may use the cache    
     global $user; // FIXME: necessary ?
-    $user = new WikiUser($request, 'ANON_OK'); 
+    if (ENABLE_USER_NEW)
+        $user = WikiUser();
+    else
+        $user = new WikiUser($request, 'ANON_OK'); 
 
     $dbi = WikiDB::open($GLOBALS['DBParams']);
     
@@ -98,7 +103,7 @@ function mainImageCache() {
         if (!$uri) {
             $uri = $request->get('REQUEST_URI');
         }
-        if (!uri) {
+        if (!$uri) {
             WikiPluginCached::printError( 'png', 
                 'Could not deduce image identifier or creation'
                 . ' parameters. (Neither REQUEST nor REDIRECT'
@@ -116,7 +121,7 @@ function mainImageCache() {
            $request->setArg('args',rawurldecode($matches[4]));
         }
         $request->setStatus(200); // No, we do _not_ have an Error 404 :->
-    } 
+    }
 
     WikiPluginCached::fetchImageFromCache($dbi,$request,'png');
 }
