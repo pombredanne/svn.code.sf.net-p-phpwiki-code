@@ -10,7 +10,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.24.2.4 2001-11-07 03:23:20 wainstead Exp $'); 
+   rcs_id('$Id: config.php,v 1.24.2.5 2001-11-08 22:39:26 dairiki Exp $'); 
    // end essential internal stuff
 
 
@@ -247,10 +247,22 @@
 
    //////////////////////////////////////////////////////////////////////
    // you shouldn't have to edit anyting below this line
+   function compute_default_scripturl() {
+      global $SERVER_PORT, $SERVER_NAME, $SCRIPT_NAME, $HTTPS;
+      if (!empty($HTTPS) && $HTTPS != 'off') {
+         $proto = 'https';
+         $dflt_port = 443;
+      }
+      else {
+         $proto = 'http';
+         $dflt_port = 80;
+      }
+      $port = ($SERVER_PORT == $dflt_port) ? '' : ":$SERVER_PORT";
+      return $proto . '://' . $SERVER_NAME . $port . $SCRIPT_NAME;
+   }
 
    if (empty($ScriptUrl)) {
-      $port = ($SERVER_PORT == 80) ? '' : ":$SERVER_PORT";
-      $ScriptUrl = "http://$SERVER_NAME$port$SCRIPT_NAME";
+      $ScriptUrl = compute_default_scripturl();
    }
    if (defined('WIKI_ADMIN') && !empty($AdminUrl))
       $ScriptUrl = $AdminUrl;
