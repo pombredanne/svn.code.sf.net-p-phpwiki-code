@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: CachedMarkup.php,v 1.11 2004-04-01 06:28:33 rurban Exp $');
+<?php rcs_id('$Id: CachedMarkup.php,v 1.12 2004-04-15 21:11:45 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -306,6 +306,14 @@ class Cached_WikiLink extends Cached_Link {
 	return WikiLink($page, 'auto', $label);
     }
 
+    function asXml() {
+	$label = isset($this->_label) ? $this->_label : false;
+	$anchor = isset($this->_anchor) ? (string)$this->_anchor : '';
+        $page = new WikiPageName($this->_page, false, $anchor);
+	$link = WikiLink($page, 'auto', $label);
+        return $link->asXml();
+    }
+
     function asString() {
         if (isset($this->_label))
             return $this->_label;
@@ -339,6 +347,12 @@ class Cached_PhpwikiURL extends Cached_DynamicContent
     function expand($basepage, &$markup) {
         $label = isset($this->_label) ? $this->_label : false;
         return LinkPhpwikiURL($this->_url, $label, $basepage);
+    }
+
+    function asXml() {
+        $label = isset($this->_label) ? $this->_label : false;
+        $link = LinkPhpwikiURL($this->_url, $label);
+        return $link->asXml();
     }
 
     function asString() {
