@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.37 2004-06-19 12:32:37 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.38 2004-06-21 08:39:36 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -53,9 +53,6 @@ include_once (dirname(__FILE__)."/FileFinder.php");
 
 function IniConfig($file) {
     
-    //FindFile("pear/Config.php");
-    //require_once("Config.php");
- 
     // List of all valid config options to be define()d which take "values" (not
     // booleans). Needs to be categorised, and generally made a lot tidier. 
     $_IC_VALID_VALUE = array
@@ -593,6 +590,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.37  2004/06/19 12:32:37  rurban
+// new TEMP_DIR for ziplib
+//
 // Revision 1.36  2004/06/19 10:06:37  rurban
 // Moved lib/plugincache-config.php to config/*.ini
 // use PLUGIN_CACHED_* constants instead of global $CacheParams
