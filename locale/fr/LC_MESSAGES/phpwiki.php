@@ -4,6 +4,10 @@ $locale["%s bytes written"] =
    "%s octets enregistrés";
 $locale["%s days"] =
    "%s jours";
+$locale["%s of the page. You should now see the most current version of the page. Your changes are no longer there."] =
+   "%s de la page. Tu devrais alors voir la version actuelle de la page. Tes modifications n'y sont pas.";
+$locale["%s pages link to %s:"] =
+   "Lien de %s pages à la %s :";
 $locale["%s(%d): no such revision"] =
    "%s(%d) : aucune une telle révision";
 $locale["%s: %s"] =
@@ -14,10 +18,10 @@ $locale["%s: file not found"] =
    "%s : fichier non trouvé";
 $locale["(diff)"] =
    "(diff)";
+$locale["(hist)"] =
+   "(hist)";
 $locale["(last edited %s)"] =
-   "(dernière modification le %s)";
-$locale["(version %s, saved on %s)"] =
-   "(version %s, enregistrée sur %s)";
+   "(dernière modification %s)";
 $locale["1 day"] =
    "1 jour";
 $locale["<%s: no such section>"] =
@@ -33,7 +37,7 @@ $locale["AllPages"] =
 $locale["An unnamed PhpWiki"] =
    "Un PhpWiki sans le titre";
 $locale["Author will be logged as %s."] =
-   "L'auteur sera enregistré comme %s.";
+   "L'auteur sera enregistrée comme %s.";
 $locale["Bad file type: %s"] =
    "Mauvais type de fichier : %s";
 $locale["Calendar"] =
@@ -62,6 +66,8 @@ $locale["Edit Old Revision"] =
    "Éditer la Version Archivée";
 $locale["Edit aborted."] =
    "Éditer annulé.";
+$locale["Edit the new version"] =
+   "Editer le version nouveau";
 $locale["Edit: %s"] =
    "Editer : %s";
 $locale["Empty pagename!"] =
@@ -80,6 +86,10 @@ $locale["FullTextSearch"] =
    "RechercheDeTexte";
 $locale["GoodStyle"] =
    "StyleCorrect";
+$locale["H"] =
+   "T";
+$locale["Height"] =
+   "Taille";
 $locale["HelloWorld"] =
    "BonjourAuMonde";
 $locale["History of changes."] =
@@ -90,18 +100,22 @@ $locale["HomePage"] =
    "Accueil";
 $locale["I'm sorry.  Version %d of %s is not in my database."] =
    "I'm sorry.  Version %d of %s n'est pas dans la base de données.";
+$locale["In order to recover from this situation, follow these steps:"] =
+   "Pour remettre de l'ordre dans cette situation, suis ces étapes :";
 $locale["Include of '%s' failed"] =
    "L'insertion de ' %s ' a provoqué une erreur";
 $locale["IncludePage"] =
    "InsérezLaPage";
 $locale["Included from %s"] =
    "Inséré de la %s";
+$locale["InterWikiMap"] =
+   "InterWikiMap";
 $locale["Last"] =
    "Finale";
 $locale["Last Author"] =
    "Auteur Précédent";
 $locale["Last Modified"] =
-   "Dernière Modification le";
+   "Dernière Modification";
 $locale["Last edited on %s."] =
    "Dernière modification le %s.";
 $locale["List the most popular pages"] =
@@ -138,6 +152,8 @@ $locale["None"] =
    "Aucune";
 $locale["Older page:"] =
    "La page plus ancienne :";
+$locale["One page links to %s:"] =
+   "Lien d'une page à la %s :";
 $locale["Optimizing %s"] =
    "Optimalisant %s";
 $locale["Other diffs:"] =
@@ -150,6 +166,8 @@ $locale["Page names with prefix '%s'"] =
    "Noms de page avec le préfixe ' %s '";
 $locale["Page names with suffix '%s'"] =
    "Noms de page avec le suffixe ' %s '";
+$locale["Password"] =
+   "Mot de passe";
 $locale["Preview"] =
    "Prévision";
 $locale["Previous"] =
@@ -214,26 +232,36 @@ $locale["The %d most popular pages of this wiki:"] =
    "Les %s des pages les plus populaires de ce wiki :";
 $locale["The %d most recent %s are listed below."] =
    "Les %d %s les plus récents sont énumérés ci-dessous";
-$locale["The %d most recent %s during the past %.1f days are listed below."] =
-   "Les %d %s les plus récentes pendant les derniers %.1f jours sont énumérées ci-dessous.";
+$locale["The %d most recent %s during the past %s are listed below."] =
+   "Les %d %s les plus récentes pendant les derniers %s sont énumérées ci-dessous.";
 $locale["The PhpWiki programming team"] =
    "L'équipe de programmeurs de PhpWiki";
-$locale["The most recent %s during the past %.1f days are listed below."] =
-   "Les %s les plus récentes pendant les derniers %.1f jours sont énumérées ci-dessous.";
+$locale["The most recent %s during the past %s are listed below."] =
+   "Les %s les plus récentes pendant les derniers %s sont énumérées ci-dessous.";
 $locale["These pages share an initial or final title word with '%s'"] =
    "Ces pages partagent un premier ou final mot de titre avec ' %s '";
 $locale["This is a minor change."] =
    "C'est une modification minuscule.";
 $locale["This page has been locked by the administrator and cannot be edited."] =
    "Cette page a été verrouillée par l'administrateur et ne peut pas être modifiée.";
+$locale["This page has been locked by the administrator so your changes can not be saved."] =
+   "Cette page a été verrouillée par l'administrateur et vos changements n'ont pas pu être enregistrée.";
+$locale["Time Zone"] =
+   "Fuseau Horaire";
 $locale["Title Search"] =
    "Recherche par titre";
 $locale["Title search results for '%s'"] =
    "Résultat de recherche sur les titres de pages pour ' %s '";
 $locale["TitleSearch"] =
    "RechercheParTitre";
+$locale["Today"] =
+   "Aujourd'hui";
+$locale["Today at %s"] =
+   "Aujourd'hui à %s";
 $locale["Unlock Page"] =
    "Déverrouiller la Page";
+$locale["Update Preferences"] =
+   "Enregistrer Préférences";
 $locale["Uploading %s"] =
    "Télécharger %s";
 $locale["UserPreferences"] =
@@ -242,6 +270,8 @@ $locale["Version"] =
    "Version";
 $locale["Version %d"] =
    "version %d";
+$locale["Version %s, saved %s."] =
+   "Version %s, enregistrée %s.";
 $locale["Version %s, saved on %s."] =
    "Version %s, enregistrée sur %s.";
 $locale["Versions are identical"] =
@@ -252,10 +282,18 @@ $locale["View Source: %s"] =
    "Afficher la Source : %s";
 $locale["View the current version"] =
    "Visualisez le version actuelle";
+$locale["W"] =
+   "L";
 $locale["Warning!"] =
    "Avertissement!";
 $locale["Warning: You are editing an old revision."] =
    "Avertissement : Tu editer une version archivée.";
+$locale["Width"] =
+   "Largeur";
+$locale["Yesterday"] =
+   "Hier";
+$locale["Yesterday at %s"] =
+   "Hier à %s";
 $locale["You are about to remove '%s' permanently!"] =
    "Tu es sur le point de supprimer ' %s ' de façon permanente!";
 $locale["Your careful attention to detail is much appreciated."] =
@@ -266,12 +304,16 @@ $locale["compare revisions"] =
    "comparez les révisions";
 $locale["current version"] =
    "Version actuelle";
+$locale["day"] =
+   "d'une jour";
 $locale["diff"] =
    "diff";
 $locale["edits"] =
    "modifications";
 $locale["from %s"] =
    "de %s";
+$locale["last modified %s"] =
+   "dernière modification %s";
 $locale["last modified on %s"] =
    "dernière modification le %s";
 $locale["locked"] =
@@ -295,10 +337,14 @@ $locale["recursive inclusion of page %s"] =
 $locale["revision by previous author"] =
    "révision par auteur précédent";
 $locale["saved as %s"] =
-   "enregistré à %s";
+   "enregistrée à %s";
 $locale["version %d"] =
    "version %d";
 $locale["version %s"] =
    "version %s";
+$locale["version %s, saved %s."] =
+   "version %s, enregistrée %s.";
+$locale["version %s, saved on %s."] =
+   "version %s, enregistrée sur %s.";
 
 ?>
