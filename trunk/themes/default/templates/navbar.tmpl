@@ -1,5 +1,5 @@
 <?php // -*-html-*-
-    rcs_id('$Id: navbar.tmpl,v 1.19 2003-11-20 19:28:47 carstenklapp Exp $');
+    rcs_id('$Id: navbar.tmpl,v 1.20 2003-11-20 20:05:53 carstenklapp Exp $');
 
     $s = $Theme->getButtonSeparator();
 ?>
@@ -7,8 +7,8 @@
 <form action="<?= WikiURL(_("TitleSearch"))?>" target="_top"
       method="get" accept-charset="<?=CHARSET?>">
   <div id="navbuttons">
-   <?= Button(_("RecentChanges")) ?>
-   <?=$s?><?= Button(_("FindPage")) ?>
+   <?= WikiLink(_("RecentChanges"), "button") ?>
+   <?=$s?><?= WikiLink(_("FindPage"), "button") ?>
    <?=$s?><input type="hidden" name="auto_redirect" value="1" />
       <?php if (! USE_PATH_INFO) { ?>
       <input type="hidden" name="pagename" value="<?=_("TitleSearch")?>" />
