@@ -1,5 +1,5 @@
 /**
- * $Id: sidebar.css,v 1.12 2002-02-14 06:21:41 carstenklapp Exp $
+ * $Id: sidebar.css,v 1.13 2002-02-14 06:44:32 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -49,9 +49,9 @@ div#logo img {
 
 h1 {
   position: fixed;
-  top:  0;
+  top: 0;
   background: ivory;
-  padding-top: 0.5ex;
+  padding-top:    0.5ex;
   padding-bottom: 0.5ex;
   padding-left: 0.25em;
   width: 100%;
@@ -73,11 +73,11 @@ h1 a.backlinks { text-decoration: none; }
 /* Make the buttons as wide as the containing box */
 a.wikiaction, a.wikiadmin {
   display: block;
-  margin-bottom: -2ex;
+  margin-bottom: 0.5ex;
   line-height: 100%;
   text-align: center;
   /* ie5.1mac ignores this! */
-*  width: 9.25em;*/
+  width: 9.25em;
   max-width: 9.25em;
 }
 
@@ -87,7 +87,6 @@ a.wikiaction, a.wikiadmin {
   text-align: left;
   position: fixed;
   left:   0.5em;
-
   /* ie5.1 ignores max-width and sets the box
      width to the width of the whole page.
      ARGH! The buttons look so much better
@@ -95,15 +94,10 @@ a.wikiaction, a.wikiadmin {
   width: 10.5em;
   max-width: 10.5em;
 
-  padding-left: 0.5em;
+  padding-left:  0.5em;
   padding-right: 0.5em;
-  padding-top: 0.5ex;
-  /* This hack provides enough room for the
-     last actionbutton. Unfortunately when 
-     the last line isn't an actionbutton
-     (like PhpWikiAdministration)
-     this creates an extra blank line. */
-  padding-bottom: 2.5ex;
+  padding-top:    0.6ex;
+  padding-bottom: 0.25ex;
 
   border-top:  1px solid #e8e6df;
   border-left: 1px solid #e8e6df;
@@ -133,7 +127,7 @@ div#actionbuttons:before {
   display: block;
   content: "Actions"; /* localise with dynamic css? */
 }
-div#actionbuttons { bottom: 11ex; }
+div#actionbuttons { bottom: 12ex; }
 
 
 /**
