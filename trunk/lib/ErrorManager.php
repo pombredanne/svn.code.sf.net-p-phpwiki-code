@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.19 2004-02-26 01:27:58 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.20 2004-04-13 14:58:03 rurban Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -61,7 +61,11 @@ class ErrorManager
      */
     function setPostponedErrorMask($newmask) {
         $this->_postpone_mask = $newmask;
-        PrintXML($this->_flush_errors($newmask));
+        if (function_exists('PrintXML'))
+            PrintXML($this->_flush_errors($newmask));
+        else
+            echo($this->_flush_errors($newmask));
+
     }
 
     /**
@@ -69,7 +73,10 @@ class ErrorManager
      * @access public
      */
     function flushPostponedErrors() {
-        PrintXML($this->_flush_errors());
+        if (function_exists('PrintXML'))
+            PrintXML($this->_flush_errors());
+        else
+            echo $this->_flush_errors();
     }
 
     /**
