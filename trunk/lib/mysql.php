@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: mysql.php,v 1.12 2001-02-12 01:43:10 dairiki Exp $');
+<?php rcs_id('$Id: mysql.php,v 1.13 2001-06-26 18:01:01 uckelman Exp $');
 
    /*
       Database functions:
@@ -6,9 +6,15 @@
       CloseDataBase($dbi)
       MakeDBHash($pagename, $pagehash)
       MakePageHash($dbhash)
-      RetrievePage($dbi, $pagename, $pagestore)
-      InsertPage($dbi, $pagename, $pagehash)
-      SaveCopyToArchive($dbi, $pagename, $pagehash)
+      RetrievePage($dbi, $pagename, $pagestore, $version)
+		RetrievePageVersions($dbi, $pagename, $curstore, $archstore)
+		GetMaxVersionNumber($dbi, $pagename, $pagestore)
+      InsertPage($dbi, $pagename, $pagehash, $clobber)
+		ReplaceCurrentPage($pagename, $pagehash)
+      SavePageToArchive($pagename, $pagehash)
+		SelectStore($dbi, $pagename, $version, $curstore, $archstore)
+		IsVersionInWiki($dbi, $pagename, $version)
+		IsVersionInArchive($dbi, $pagename, $version)
       IsWikiPage($dbi, $pagename)
       IsInArchive($dbi, $pagename)
       RemovePage($dbi, $pagename)
@@ -96,9 +102,12 @@ $HitCountStore = $DBParams['prefix'] . "hitcount";
 
 
    // Return hash of page + attributes or default
-   function RetrievePage($dbi, $pagename, $pagestore) {
+   function RetrievePage($dbi, $pagename, $pagestore, $version) {
       $pagename = addslashes($pagename);
-      if ($res = mysql_query("select * from $pagestore where pagename='$pagename'", $dbi['dbc'])) {
+
+		$version = $version ? " and version=$version" : '';
+
+      if ($res = mysql_query("select * from $pagestore where pagename='$pagename'$version", $dbi['dbc'])) {
          if ($dbhash = mysql_fetch_array($res)) {
             return MakePageHash($dbhash);
          }
@@ -107,16 +116,34 @@ $HitCountStore = $DBParams['prefix'] . "hitcount";
    }
 
 
+	// Return all versions of a page as an array of page hashes
+	function RetrievePageVersions($dbi, $pagename, $curstore, $archstore) {
+		$pagename = addslashes($pagename);
+		if (($page[0] = RetrievePage($dbi, $pagename, $curstore, 0)) != -1) {
+			if ($res = mysql_query("select * from $archstore where pagename='$pagename' order by version desc", $dbi['dbc'])) {
+				while ($dbhash = mysql_fetch_array($res)) {
+					array_push($page, MakePageHash($dbhash));
+				}
+				return $page;
+			}
+		}
+		return -1;
+	}
+
+
+	// Get maximum version number of a page in pagestore
+	function GetMaxVersionNumber($dbi, $pagename, $pagestore) {
+		$pagename = addslashes($pagename);
+		if ($res = mysql_query("select max(version) from $pagestore where pagename='$pagename'", $dbi['dbc'])) {
+			return mysql_result($res, 0);
+		}
+		return -1;
+	}
+
+
    // Either insert or replace a key/value (a page)
-   function InsertPage($dbi, $pagename, $pagehash)
+   function InsertPage($dbi, $pagename, $pagehash, $clobber)
    {
-      global $WikiPageStore; // ugly hack
-
-      if ($dbi['table'] == $WikiPageStore) { // HACK
-         $linklist = ExtractWikiPageLinks($pagehash['content']);
-	 SetWikiPageLinks($dbi, $pagename, $linklist);
-      }
-
       $pagehash = MakeDBHash($pagename, $pagehash);
 
       $COLUMNS = "author, content, created, flags, " .
@@ -127,7 +154,10 @@ $HitCountStore = $DBParams['prefix'] . "hitcount";
                  "$pagehash[lastmodified], '$pagehash[pagename]', " .
                  "'$pagehash[refs]', $pagehash[version]";
 
-      if (!mysql_query("replace into $dbi[table] ($COLUMNS) values ($VALUES)",
+      // Clobber existing page?
+      $clobber = $clobber ? 'replace' : 'insert';
+
+      if (!mysql_query("$clobber into $dbi[table] ($COLUMNS) values ($VALUES)",
       			$dbi['dbc'])) {
             $msg = htmlspecialchars(sprintf(gettext ("Error writing page '%s'"), $pagename));
 	    $msg .= "<BR>";
@@ -137,12 +167,53 @@ $HitCountStore = $DBParams['prefix'] . "hitcount";
    }
 
 
-   // for archiving pages to a seperate dbm
-   function SaveCopyToArchive($dbi, $pagename, $pagehash) {
-      global $ArchivePageStore;
-      $adbi = OpenDataBase($ArchivePageStore);
-      InsertPage($adbi, $pagename, $pagehash);
-   }
+	// Adds to or replaces a page in the current pagestore
+	function ReplaceCurrentPage($pagename, $pagehash) {
+		global $WikiPageStore;
+		$dbi = OpenDataBase($WikiPageStore);
+		$linklist = ExtractWikiPageLinks($pagehash['content']);
+		SetWikiPageLinks($dbi, $pagename, $linklist);
+		InsertPage($dbi, $pagename, $pagehash, true);
+	}
+
+
+	// Adds a page to the archive pagestore
+	function SavePageToArchive($pagename, $pagehash) {
+		global $ArchivePageStore;
+		$dbi = OpenDataBase($ArchivePageStore);
+		InsertPage($dbi, $pagename, $pagehash, false);
+	}
+
+
+	// Returns store where version of page resides
+	function SelectStore($dbi, $pagename, $version, $curstore, $archstore) {
+		if ($version) {
+			if (IsVersionInWiki($dbi, $pagename, $version)) return $curstore;
+			elseif (IsVersionInArchive($dbi, $pagename, $version)) return $archstore;
+			else return -1; 
+		}
+		elseif (IsWikiPage($dbi, $pagename)) return $curstore;
+		else return -1;	
+	}
+
+
+	function IsVersionInWiki($dbi, $pagename, $version) {
+      $pagename = addslashes($pagename);
+      if ($res = mysql_query("select count(*) from $dbi[table] where pagename='$pagename' and version='$version'", $dbi['dbc'])) {
+         return mysql_result($res, 0);
+      }
+		return 0;
+	}
+
+	function IsVersionInArchive($dbi, $pagename, $version) {
+		global $ArchivePageStore;
+
+      $pagename = addslashes($pagename);
+      if ($res = mysql_query("select count(*) from $ArchivePageStore where pagename='$pagename' and version='$version'", $dbi['dbc'])) {
+         return mysql_result($res, 0);
+      }
+      return 0;
+	}
 
 
    function IsWikiPage($dbi, $pagename) {
