@@ -1,5 +1,5 @@
-<?php // -*-html-*-
-  rcs_id('$Id: actionbar.tmpl,v 1.25 2004-03-24 19:40:34 rurban Exp $');
+<?php // -*-php-*-
+  rcs_id('$Id: actionbar.tmpl,v 1.26 2004-05-03 15:57:16 rurban Exp $');
   if (!$page->get('locked') || $user->isAdmin())
       $EditB = Button("edit",
                       $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
@@ -30,6 +30,7 @@
 <?php if ((defined('DEBUG') && DEBUG) || $user->isAdmin()) { ?> 
     <!-- Buttons really only for debugging -->
     <?=$Sep?><?= Button("DebugInfo", _("DebugInfo")) ?>
+    <?=$Sep?><?= Button("PageDump", _("PageDump")) ?>
 <?php
      $PurgeCache = Button(array('nocache' => 'purge'),
                      _("PurgeHtmlCache"), $page->getName());
