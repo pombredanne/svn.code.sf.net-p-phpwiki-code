@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSetAcl.php,v 1.6 2004-05-15 22:54:49 rurban Exp $');
+rcs_id('$Id: WikiAdminSetAcl.php,v 1.7 2004-05-16 22:07:35 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -47,17 +47,16 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
         return array(
                      'p'        => "[]",
-                     //'acl'      => false,
                      /* Pages to exclude in listing */
                      'exclude'  => '',
                      /* Columns to include in listing */
-                     'info'     => 'pagename,perm,owner,group,mtime,author',
+                     'info'     => 'pagename,perm,mtime,owner,author',
                      /* How to sort */
                      'sortby'   => 'pagename',
                      'limit'    => 0,
@@ -87,14 +86,19 @@ extends WikiPlugin_WikiAdminSelect
         }
         if ($perm = new PagePermission($acl)) {
             $perm->sanify();
-            foreach ($pages as $name) {
-            	//TODO: check if unchanged?
-                if (mayAccessPage('change',$name)) {
-                    $perm->store($dbi->getPage($name));
-                    $ul->pushContent(HTML::li(fmt("ACL changed for page '%s'.",$name)));
+            foreach ($pages as $pagename) {
+            	// check if unchanged? we need a deep array_equal
+            	$page = $dbi->getPage($pagename);
+            	$oldperm = getPagePermissions($page);
+            	$oldperm->sanify();
+            	if ($perm->equal($oldperm->perm)) // (serialize($oldperm->perm) == serialize($perm->perm))
+                    $ul->pushContent(HTML::li(fmt("ACL not changed for page '%s'.",$pagename)));
+                elseif (mayAccessPage('change',$pagename)) {
+                    setPagePermissions ($page,$perm);
+                    $ul->pushContent(HTML::li(fmt("ACL changed for page '%s'.",$pagename)));
                     $count++;
                 } else {
-                    $ul->pushContent(HTML::li(fmt("Access denied to change page '%s'.",$name)));
+                    $ul->pushContent(HTML::li(fmt("Access denied to change page '%s'.",$pagename)));
                 }
             }
         } else {
@@ -111,8 +115,8 @@ extends WikiPlugin_WikiAdminSelect
     }
     
     function run($dbi, $argstr, &$request, $basepage) {
-        if (!DEBUG)
-            return $this->disabled("WikiAdminSetAcl not yet enabled. Set DEBUG to try it.");
+        //if (!DEBUG)
+        //    return $this->disabled("WikiAdminSetAcl not yet enabled. Set DEBUG to try it.");
         
         $args = $this->getArgs($argstr, $request);
         $this->_args = $args;
@@ -131,12 +135,13 @@ extends WikiPlugin_WikiAdminSelect
         if ($p && $request->isPost() &&
             !empty($post_args['acl']) && empty($post_args['cancel'])) {
 
-            // FIXME: check individual PagePermissions
+            // DONE: check individual PagePermissions
+            /*
             if (!$request->_user->isAdmin()) {
                 $request->_notAuthorized(WIKIAUTH_ADMIN);
                 $this->disabled("! user->isAdmin");
             }
-
+            */
             if ($post_args['action'] == 'verify') {
                 // Real action
                 $header->pushContent(
@@ -156,7 +161,7 @@ extends WikiPlugin_WikiAdminSelect
             $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit']);
         }
         if ($next_action == 'verify') {
-            $args['info'] = "checkbox,pagename,perm,owner,group,mtime,author";
+            $args['info'] = "checkbox,pagename,perm,mtime,owner,author";
         }
         $pagelist = new PageList_Selectable($args['info'], 
                                             $exclude,

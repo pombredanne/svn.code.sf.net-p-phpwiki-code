@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.21 2004-05-04 16:34:22 rurban Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.22 2004-05-16 22:07:35 rurban Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.21 $");
+                            "\$Revision: 1.22 $");
     }
 
     function getDefaultArguments() {
@@ -111,15 +111,20 @@ extends WikiPlugin
 
     function removePages(&$request, $pages) {
         $ul = HTML::ul();
-        $dbi = $request->getDbh();
+        $dbi = $request->getDbh(); $count = 0;
         foreach ($pages as $name) {
             $name = str_replace(array('%5B','%5D'),array('[',']'),$name);
-            $dbi->deletePage($name);
-            $ul->pushContent(HTML::li(fmt("Removed page '%s' successfully.", $name)));
+            if (mayAccessPage('remove',$name)) {
+                $dbi->deletePage($name);
+                $ul->pushContent(HTML::li(fmt("Removed page '%s' successfully.", $name)));
+                $count++;
+            } else {
+            	$ul->pushContent(HTML::li(fmt("Didn't removed page '%s'. Access denied.", $name)));
+            }
         }
-        $dbi->touch();
+        if ($count) $dbi->touch();
         return HTML($ul,
-                    HTML::p(_('All selected pages have been permanently removed.')));
+                    HTML::p(fmt("%d pages have been permanently removed."),$count));
     }
     
     function run($dbi, $argstr, &$request, $basepage) {
@@ -147,10 +152,12 @@ extends WikiPlugin
             !empty($post_args['remove']) && empty($post_args['cancel'])) {
 
             // FIXME: check individual PagePermissions
+            /*
             if (!$request->_user->isAdmin()) {
                 $request->_notAuthorized(WIKIAUTH_ADMIN);
                 $this->disabled("! user->isAdmin");
             }
+            */
             if ($post_args['action'] == 'verify') {
                 // Real delete.
                 return $this->removePages($request, array_keys($p));
@@ -237,6 +244,9 @@ class _PageList_Column_remove extends _PageList_Column {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.21  2004/05/04 16:34:22  rurban
+// prvent hidden p overwrite checked p
+//
 // Revision 1.20  2004/05/03 11:02:30  rurban
 // fix passing args from WikiAdminSelect to WikiAdminRemove
 //

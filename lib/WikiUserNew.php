@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.74 2004-05-15 19:48:33 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.75 2004-05-16 22:07:35 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -970,7 +970,7 @@ extends _AnonUser
         // old-style strings don't survive pear/Config/IniConfig treatment, that's why we changed it.
         $new = array();
         if (is_array($variables)) {
-            for ($i=0; $i<count($variables); $i++) { 
+            for ($i=0; $i < count($variables); $i++) { 
                 $var = $this->_normalize_stmt_var($variables[$i],$oldstyle);
                 if (!$var)
                     trigger_error(sprintf("DbAuthParams: Undefined or empty statement variable %s in %s",
@@ -2848,6 +2848,12 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.74  2004/05/15 19:48:33  rurban
+// fix some too loose PagePerms for signed, but not authenticated users
+//  (admin, owner, creator)
+// no double login page header, better login msg.
+// moved action_pdf to lib/pdf.php
+//
 // Revision 1.73  2004/05/15 18:31:01  rurban
 // some action=pdf Request fixes: With MSIE it works now. Now the work with the page formatting begins.
 //

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.56 2004-05-15 22:54:49 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.57 2004-05-16 22:07:35 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -1149,6 +1149,28 @@ class WikiDB_Page
         return $this->get('pref') ? true : false;
     }
 
+    // May be empty. Either the stored owner (/Chown), or the first authorized author
+    function getOwner() {
+        if ($owner = $this->get('owner'))
+            return $owner;
+        // check all revisions for the first author_id
+        $backend = &$this->_wikidb->_backend;
+        $pagename = &$this->_pagename;
+        $latestversion = $backend->get_latest_version($pagename);
+        for ($v=1; $v <= $latestversion; $v++) {
+            $rev = $this->getRevision($v);
+            if ($rev and $owner = $rev->get('author_id'))
+                return $owner;
+        }
+        return '';
+    }
+
+    // The authenticated author of the first revision or empty if not authenticated then.
+    function getCreator() {
+        $current = $this->getRevision(1);
+        return $current->get('author_id');
+    }
+
 };
 
 /**
@@ -1767,6 +1789,10 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.56  2004/05/15 22:54:49  rurban
+// fixed important WikiDB bug with DEBUG > 0: wrong assertion
+// improved SetAcl (works) and PagePerms, some WikiGroup helpers.
+//
 // Revision 1.55  2004/05/12 19:27:47  rurban
 // revert wrong inline optimization.
 //
