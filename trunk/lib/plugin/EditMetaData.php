@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: EditMetaData.php,v 1.6 2003-02-26 01:56:52 dairiki Exp $');
+rcs_id('$Id: EditMetaData.php,v 1.7 2003-11-22 17:41:42 carstenklapp Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -51,7 +51,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     // Arguments:
@@ -110,7 +110,7 @@ extends WikiPlugin
 
         $html = HTML();
 
-        $html->pushContent(fmt(_("Existing page-level metadata for %s:"),
+        $html->pushContent(fmt("Existing page-level metadata for %s:",
                                $page));
         $dl = HTML::dl();
 
@@ -170,6 +170,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2003/02/26 01:56:52  dairiki
+// Tuning/fixing of POST action URLs and hidden inputs.
+//
 // Revision 1.5  2003/02/21 04:17:13  dairiki
 // Delete now irrelevant comment.
 //
