@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.63 2002-02-25 15:57:11 carstenklapp Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.64 2002-03-02 22:45:30 carstenklapp Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -371,8 +371,10 @@ function SavePage (&$request, $pageinfo, $source, $filename)
         $mesg->pushContent(' ', fmt("- saved to database as version %d",
                                     $new->getVersion()));
     }
-
-    PrintXML(HTML::dt(WikiLink($pagename)), $mesg);
+    if ($skip)
+        PrintXML(HTML::dt(HTML::em(WikiLink($pagename))), $mesg);
+    else
+        PrintXML(HTML::dt(WikiLink($pagename)), $mesg);
     flush();
 }
 
