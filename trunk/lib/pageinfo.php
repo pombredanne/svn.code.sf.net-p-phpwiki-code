@@ -1,62 +1,25 @@
 <?php
-rcs_id('$Id: pageinfo.php,v 1.9 2001-04-07 00:34:30 dairiki Exp $');
+rcs_id('$Id: pageinfo.php,v 1.10 2001-06-26 18:02:43 uckelman Exp $');
 // Display the internal structure of a page. Steve Wainstead, June 2000
 
+$html = "\n" . Element('th', 'Version') . "\n" . Element('th', 'Newer') . "\n" . Element('th', 'Older') . "\n" . Element('th', 'Created') . "\n" . Element('th', 'Author') . "\n";
+$html = "\n" . Element('tr', $html) . "\n";
 
+// Get all versions of a page, then iterate over them to make version list
+$pages = RetrievePageVersions($dbi, $pagename, $WikiPageStore, $ArchivePageStore);
+$i = 0;
+foreach ($pages as $pagehash) {
+	$row = "\n" . Element('td', array('align' => 'right'), QElement('a', array('href' => "$pagename?version=" . $pagehash['version']), $pagehash['version']));
+	$row .= "\n" . Element('td', array('align' => 'center'), QElement('input', array('type' => 'radio', 'name' => 'ver2', 'value' => ($i ? $pagehash['version'] : 0), 'checked' => ($i ? false : true))));
+	$row .= "\n" . Element('td', array('align' => 'center'), QElement('input', array('type' => 'radio', 'name' => 'ver1', 'value' => ($i ? $pagehash['version'] : 0), 'checked' => ($i++-1 ? false : true))));
+	$row .= "\n" . QElement('td', strftime($datetimeformat, $pagehash['lastmodified']));
+	$row .= "\n" . QElement('td', $pagehash['author']) . "\n";
 
-function ViewpageProps($name, $pagestore)
-{
-   global $dbi, $showpagesource, $datetimeformat, $FieldSeparator;
-
-   $pagehash = RetrievePage($dbi, $name, $pagestore);
-   if ($pagehash == -1) {
-      return QElement('p',
-		      sprintf (gettext ("Page name '%s' is not in the database"),
-			       $name));
-   }
-
-   $rows = '';
-   while (list($key, $val) = each($pagehash)) {
-      if ($key > 0 || !$key)
-	 continue; //key is an array index
-      $cols = QElement('td', array('align' => 'right'), $key);
-
-      if (is_array($val))
-      {
-	 if (empty($showpagesource))
-	    continue;
-	 $cols .= Element('td',
-			  nl2br(htmlspecialchars(join("\n", $val))));
-      }
-      elseif (($key == 'lastmodified') || ($key == 'created'))
-	 $cols .= QElement('td',
-			   strftime($datetimeformat, $val));
-      else
-	 $cols .= QElement('td', $val);
-      
-      $rows .= Element('tr', $cols);
-   }
-
-   return Element('table', array('border' => 1, 'bgcolor' => 'white'), $rows);
+	$html .= Element('tr', $row) . "\n"; 
 }
 
+$html = "\n" . Element('table', $html) . "\n" . Element('input', array('type' => 'hidden', 'name' => 'action', 'value' => 'diff')) . "\n" . Element('input', array('type' => 'submit', 'value' => 'Run Diff')) . "\n";
+$html = Element('form', array('method' => 'get', 'action' => $pagename), $html);
 
-$html = '';
-
-if (empty($showpagesource))
-{
-   $text = gettext ("Show the page source");
-   $url = WikiURL($pagename, array('action' => 'info',
-				   'showpagesource' => 'on'));
-   $html .= QElement('a', array('href' => $url), $text);
-}
-
-$html .= Element('p', QElement('b', gettext ("Current version")));
-$html .= ViewPageProps($pagename, $WikiPageStore);
-
-$html .= Element('p', QElement('b', gettext ("Archived version")));
-$html .= ViewPageProps($pagename, $ArchivePageStore);
-
-echo GeneratePage('MESSAGE', $html,
-		  gettext("PageInfo").": '$pagename'", 0);
+echo GeneratePage('MESSAGE', $html, gettext("PageInfo").": '$pagename'", 0);
 ?>
