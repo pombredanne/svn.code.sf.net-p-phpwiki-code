@@ -1,6 +1,6 @@
-$Id: README,v 1.4 2001-02-10 22:15:08 dairiki Exp $
+$Id: README,v 1.5 2001-03-02 00:42:50 wainstead Exp $
 
-PhpWiki distinguishes between four different templates:
+PhpWiki distinguishes between three different templates:
 
 - template for browsing pages (default: browse.html)
   This template is used when viewing Wiki pages.
@@ -8,10 +8,6 @@ PhpWiki distinguishes between four different templates:
 - template for editing pages (default: editpage.html)
   This template is used when users edit a page by clicking on
   the EditText link.
-
-- template for editing references (default: editlinks.html)
-  This template is used when users edit references of a page
-  by clicking on the EditLinks link on the EditText page.
 
 - template for plain messages from PhpWiki (default: message.html)
   This template is used when displaying search results, or when
