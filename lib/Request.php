@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Request.php,v 1.37 2003-12-26 06:41:16 carstenklapp Exp $');
+rcs_id('$Id: Request.php,v 1.38 2004-01-25 10:26:02 rurban Exp $');
 
 
 // backward compatibility for PHP < 4.2.0
@@ -52,7 +52,10 @@ class Request {
     }
 
     function get($key) {
-        $vars = &$GLOBALS['HTTP_SERVER_VARS'];
+        if (!empty($GLOBALS['HTTP_SERVER_VARS']))
+            $vars = &$GLOBALS['HTTP_SERVER_VARS'];
+        else // cgi or other servers than Apache
+            $vars = &$GLOBALS['_ENV'];
 
         if (isset($vars[$key]))
             return $vars[$key];
@@ -863,6 +866,12 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.37  2003/12/26 06:41:16  carstenklapp
+// Bugfix: Try to defer OS errors about session.save_path and ACCESS_LOG,
+// so they don't prevent IE from partially (or not at all) rendering the
+// page. This should help a little for the IE user who encounters trouble
+// when setting up a new PhpWiki for the first time.
+//
 
 // Local Variables:
 // mode: php
