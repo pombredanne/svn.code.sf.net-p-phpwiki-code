@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.2 2004-03-12 15:48:07 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.3 2004-04-29 22:33:30 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -51,15 +51,15 @@ function CheckPgsrcUpdate(&$request) {
     $path = FindLocalizedFile(WIKI_PGSRC);
     $pgsrc = new fileSet($path);
     // fixme: verification, ...
-    foreach ($pgsrc->getFiles() as $pagename) {
-        $pagename = urldecode($pagename);
-        if (substr($pagename,-1,1) == '~') continue;
+    foreach ($pgsrc->getFiles() as $filename) {
+        if (substr($filename,-1,1) == '~') continue;
+        $pagename = urldecode($filename);
         if ($dbh->isWikiPage($pagename)) {
             // check mtime
             ; //echo "$pagename exists<br />\n";
         } else {
             echo "$pagename does not exist<br />\n";
-            LoadAny($request,$path."/".$pagename);
+            LoadAny($request,$path."/".$filename);
             echo "<br />\n";
         }
     }
@@ -144,6 +144,10 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.2  2004/03/12 15:48:07  rurban
+ fixed explodePageList: wrong sortby argument order in UnfoldSubpages
+ simplified lib/stdlib.php:explodePageList
+
  */
 
 // For emacs users
