@@ -43,15 +43,17 @@ rcs_id('$Id PhpWeather.php 2002-08-26 15:30:13 rurban$');
  * both_metric, or both_imperial.
  */
 
-// We require the base class from PHP Weather, adjust this to match
-// the location of PhpWeather on your server:
+// We require the base class from PHP Weather. Try some default directories. 
+// Better define PHPWEATHER_BASE_DIR to the directory on your server:
 if (!defined('PHPWEATHER_BASE_DIR')) {
     /* PhpWeather has not been loaded before. We include the base
      * class from PhpWeather, adjust this to match the location of
      * PhpWeather on your server: */
     if (!isset($_SERVER))
         $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
-    @include_once($_SERVER['DOCUMENT_ROOT'] . '/phpweather-2.1.0/phpweather.php');
+    @include_once($_SERVER['DOCUMENT_ROOT'] . '/phpweather-2.2.1/phpweather.php');
+    if (!defined('PHPWEATHER_BASE_DIR'))
+        @include_once($_SERVER['DOCUMENT_ROOT'] . '/phpweather/phpweather.php');
 }
 
 class WikiPlugin_PhpWeather
@@ -67,7 +69,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     function getDefaultArguments() {
@@ -81,9 +83,9 @@ extends WikiPlugin
 
     function run($dbi, $argstr, &$request, $basepage) {
         // When 'phpweather/phpweather.php' is not installed then
-        // PHPWEATHER_BASE_DIR will be undefined
+        // PHPWEATHER_BASE_DIR will be undefined.
         if (!defined('PHPWEATHER_BASE_DIR'))
-            return $this->error(_("You have to configure it before use.")); //early return
+            return $this->error(_("You have to define PHPWEATHER_BASE_DIR before use. (config/config.ini)")); //early return
 
         require_once(PHPWEATHER_BASE_DIR . '/output/pw_images.php');
         require_once(PHPWEATHER_BASE_DIR . '/pw_utilities.php');
@@ -197,6 +199,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/05/01 15:59:29  rurban
+// more php-4.0.6 compatibility: superglobals
+//
 // Revision 1.10  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //
