@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.54 2002-02-16 01:12:51 carstenklapp Exp $
+ * $Id: phpwiki.css,v 1.55 2002-02-16 15:10:00 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up. It has not yet been tested against NS4.
@@ -74,9 +74,13 @@ div.wikitext pre { font-family: monospace; }
 
 /**
  * Wiki Forms
+ * 
+ * The div inside the wikiadmin upload form does not
+ * have a class yet, so it must be referenced indirectly
  */
-div.wikiaction, span.wikiaction { background-color: #eee; }
-form.wikiadmin { background-color: #fee; }
+div.wikiaction { background-color: #eee; }
+/* div.wikiadmin { background-color: #fee; } */
+form.wikiadmin div { background-color: #fee; }
 
 
 /**

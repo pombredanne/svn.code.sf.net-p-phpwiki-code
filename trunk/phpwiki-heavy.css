@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki-heavy.css,v 1.19 2002-02-15 05:43:13 carstenklapp Exp $
+ * $Id: phpwiki-heavy.css,v 1.20 2002-02-16 15:10:00 carstenklapp Exp $
  *
  * This is stuff which should be in phpwiki.css, but which breaks Netscape 4.
  *
@@ -38,16 +38,24 @@ input.numeric { text-align: right; }
 
 /**
  * Wiki Forms
+ * 
+ * The div inside the wikiadmin upload form does not
+ * have a class yet, so it must be referenced indirectly
  */
-div.wikiaction, form.wikiadmin {
+/* div.wikiaction, div.wikiadmin { */
+div.wikiaction, form.wikiadmin div {
   border: 1px inset #006;
   margin-top: 0.5ex;
   margin-bottom: 0.5ex;
   padding: 0.5ex 0.5em;
+  /* Emulate the display behaviour of a table, to shrink it's width.
+   * ie5.1Mac ignores this */
+  display: table;
 }
 
-/* space between input and button */
+/* Add space between the input field and following buttons, but not after the last button. */
 div.wikiaction input, div.wikiadmin input { margin-right: 0.5em; }
+div.wikiaction input:last-child, div.wikiadmin input:last-child { margin-right: 0; }
 
 
 /**
