@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.48 2002-02-04 01:11:10 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.49 2002-02-05 22:04:04 lakka Exp $');
 
 
 include "lib/config.php";
@@ -514,6 +514,14 @@ function main () {
     $request->handleAction();
     $request->finish();
 }
+
+// Used for debugging purposes
+function getmicrotime(){ 
+	list($usec, $sec) = explode(" ",microtime()); 
+    return ((float)$usec + (float)$sec); 
+}
+define ('DEBUG', 1);
+if (defined ('DEBUG')) $GLOBALS['debugclock'] = getmicrotime();
 
 main();
 
