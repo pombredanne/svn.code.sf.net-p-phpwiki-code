@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.32 2002-01-22 03:17:47 dairiki Exp $');
+rcs_id('$Id: themeinfo.php,v 1.33 2002-01-22 03:26:22 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -21,7 +21,8 @@ rcs_id('$Id: themeinfo.php,v 1.32 2002-01-22 03:17:47 dairiki Exp $');
  * The button toolbars use tables for positioning. Yuck. (It will do
  * for now).
  *
- * Only English buttons are available. Full localization is coming.
+ * Only English and German buttons are available. Full localization is
+ * coming.
  *
  * The CSS is still mostly the same as phpwiki.css. I'd like to change
  * it a bit but have no specific plans yet. Just a general feeling
@@ -79,7 +80,7 @@ class Theme_MacOSX extends Theme {
     function linkUnknownWikiWord($wikiword, $linktext = '') {
         $url = WikiURL($wikiword, array('action' => 'edit'));
         //$link = HTML::span(HTML::a(array('href' => $url), '?'));
-        $link = HTML::span($this->makeButton('?', $url,));
+        $link = HTML::span($this->makeButton('?', $url));
         
 
         if (!empty($linktext)) {
