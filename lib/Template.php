@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.43 2002-09-02 09:42:20 rurban Exp $');
+<?php rcs_id('$Id: Template.php,v 1.44 2002-09-02 12:39:02 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -73,8 +73,8 @@ class Template
         // FIXME: big hack!        
         if (!$template->_request)
             $template->_request = &$this->_request;
-        
-        echo "<!-- Begin $template->_name -->\n";
+        if ($template->_name != 'head')
+            echo "<!-- Begin $template->_name -->\n";
         // Expand sub-template with defaults from this template.
         $template->printExpansion($this->_vars);
         echo "<!-- End $template->_name -->\n";
@@ -207,6 +207,7 @@ function GeneratePage($content, $title, $page_revision = false, $args = false) {
     
     if ($frame = $request->getArg('frame')) {
         if ($frame == 'top') $args['framesrc'] = $request->getArg('framesrc');
+        printXML(new Template('head', $request, $args));
         printXML(new Template($frame, $request, $args));
         $request->setArg('framesrc',false);
     } else {
