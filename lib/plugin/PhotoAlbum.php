@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PhotoAlbum.php,v 1.4 2004-02-28 21:14:08 rurban Exp $');
+rcs_id('$Id: PhotoAlbum.php,v 1.5 2004-03-09 12:10:23 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
  
@@ -152,7 +152,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -265,10 +265,14 @@ extends WikiPlugin
 	    	    break;
 	    }
 
-	    // FIXME: get getimagesize to work with names with spaces in it
+	    // FIXME: get getimagesize to work with names with spaces in it.
+            // convert $value["name"] from webpath to local path
 	    $size = @getimagesize($value["name"]); // try " " => "\\ "
-	    if (!$size) {
-	    	trigger_error("Unable to getimagesize(".$value["name"].")",E_USER_NOTICE);
+	    if (!$size and !empty($value["src"])) {
+		$size = @getimagesize($value["src"]);
+		if (!$size) {
+	    	    trigger_error("Unable to getimagesize(".$value["name"].")",E_USER_NOTICE);
+		}
 	    }
 
 	    $newwidth = $this->newSize($size[0], $width);
@@ -461,6 +465,7 @@ extends WikiPlugin
                 foreach ($list as $file) {
                     // convert local path to webpath
                     $photos[] = array ("name" => $webpath . "/$file",
+                                       "src"  => $src . "/$file",
                                        "desc" => "",
                                        );
                 }
@@ -491,6 +496,15 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/02/28 21:14:08  rurban
+// generally more PHPDOC docs
+//   see http://xarch.tu-graz.ac.at/home/rurban/phpwiki/xref/
+// fxied WikiUserNew pref handling: empty theme not stored, save only
+//   changed prefs, sql prefs improved, fixed password update,
+//   removed REPLACE sql (dangerous)
+// moved gettext init after the locale was guessed
+// + some minor changes
+//
 // Revision 1.3  2004/02/27 08:03:35  rurban
 // Update from version 1.2 by Ted Vinke
 // implemented the localdir support
