@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.40 2004-03-17 20:23:44 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.41 2004-03-30 02:14:03 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,7 +87,7 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.40 $");
+        //                    "\$Revision: 1.41 $");
     }
 
     function getArgs($argstr, $request=false, $defaults = false) {
@@ -297,6 +297,13 @@ class WikiPlugin
         $form->pushContent($contents);
         return $form;
     }
+
+    function makeBox($title,$body) {
+        if (!$title) $title = $this->_getName();
+        return HTML::div(array('class'=>'box'),
+                         HTML::div(array('class'=>'box-title'),$title),
+                         HTML::div(array('class'=>'box-data'),$body));
+    }
     
     function error ($message) {
         return HTML::div(array('class' => 'errors'),
@@ -399,12 +406,12 @@ class WikiPluginLoader {
                 if ($include_failed)
                     return $this->_error(sprintf(_("Include of '%s' failed"),
                                                  $plugin_source));
-                return $this->_error(sprintf("%s: no such class", $plugin_class));
+                return $this->_error(sprintf(_("%s: no such class"), $plugin_class));
             }
         }
         $plugin = new $plugin_class;
         if (!is_subclass_of($plugin, "WikiPlugin"))
-            return $this->_error(sprintf("%s: not a subclass of WikiPlugin",
+            return $this->_error(sprintf(_("%s: not a subclass of WikiPlugin"),
                                          $plugin_class));
 
         $plugin->_pi = $pi;

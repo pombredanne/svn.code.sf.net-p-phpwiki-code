@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WhoIsOnline.php,v 1.3 2004-03-12 15:48:08 rurban Exp $');
+rcs_id('$Id: WhoIsOnline.php,v 1.4 2004-03-30 02:14:04 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
@@ -44,7 +44,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -72,6 +72,15 @@ extends WikiPlugin
         $other = array(); 
         $other['ONLINE_ICON'] = $img;
         return new Template('online', $request, array_merge($args, $stats, $other));
+    }
+
+    // box is used to display a fixed-width, narrow version with common header
+    // just the number of online users.
+    function box($args=false, $request=false, $basepage=false) {
+        if (!$request) $request =& $GLOBALS['request'];
+        $stats = $this->getStats($request->_dbi,$request,'summary');
+        return $this->makeBox(WikiLink(_("WhoIsOnline"),'',_("Who is online")),
+                              fmt("%d online users",$stats['NUM_USERS']));
     }
 
     function getSessions($dbi, &$request) {
@@ -172,6 +181,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/03/12 15:48:08  rurban
+// fixed explodePageList: wrong sortby argument order in UnfoldSubpages
+// simplified lib/stdlib.php:explodePageList
+//
 // Revision 1.2  2004/03/10 15:38:49  rurban
 // store current user->page and ->action in session for WhoIsOnline
 // better WhoIsOnline icon

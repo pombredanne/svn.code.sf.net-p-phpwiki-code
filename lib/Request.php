@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.45 2004-03-24 19:39:02 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.46 2004-03-30 02:14:03 rurban Exp $');
 /*
  Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  
@@ -230,12 +230,15 @@ class Request {
         $this->_validators = $validator_set;
     }
     
-    /** Append validators for this response.
-     *
-     * This appends additional validators to this response.
-     * You must call setValidators() before calling this method.
+    /** Append more validators for this response. 
+     *  i.e dependencies on other pages mtimes
+     *  now it may be called in init also to simplify client code.
      */ 
     function appendValidators($validator_set) {
+        if (!isset($this->_validators)) {
+            $this->setValidators($validator_set);
+            return;
+        }
         $this->_validators->append($validator_set);
     }
     
@@ -949,6 +952,20 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.45  2004/03/24 19:39:02  rurban
+// php5 workaround code (plus some interim debugging code in XmlElement)
+//   php5 doesn't work yet with the current XmlElement class constructors,
+//   WikiUserNew does work better than php4.
+// rewrote WikiUserNew user upgrading to ease php5 update
+// fixed pref handling in WikiUserNew
+// added Email Notification
+// added simple Email verification
+// removed emailVerify userpref subclass: just a email property
+// changed pref binary storage layout: numarray => hash of non default values
+// print optimize message only if really done.
+// forced new cookie policy: delete pref cookies, use only WIKI_ID as plain string.
+//   prefs should be stored in db or homepage, besides the current session.
+//
 // Revision 1.44  2004/03/14 16:26:22  rurban
 // copyright line
 //

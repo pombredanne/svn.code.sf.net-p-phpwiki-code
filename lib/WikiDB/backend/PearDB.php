@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.42 2004-03-18 21:41:10 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.43 2004-03-30 02:14:03 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -833,10 +833,22 @@ extends WikiDB_backend
     }
 };
 
-class WikiDB_backend_PearDB_iter
+/**
+ * This class is a generic iterator.
+ *
+ * WikiDB_backend_PearDB_iter only iterates over things that have
+ * 'pagename', 'pagedata', etc. etc.
+ *
+ * Probably WikiDB_backend_PearDB_iter and this class should be merged
+ * (most of the code is cut-and-paste :-( ), but I am trying to make
+ * changes that could be merged easily.
+ *
+ * @author: Dan Frankowski
+ */
+class WikiDB_backend_PearDB_generic_iter
 extends WikiDB_backend_iterator
 {
-    function WikiDB_backend_PearDB_iter(&$backend, &$query_result) {
+    function WikiDB_backend_PearDB_generic_iter(&$backend, &$query_result) {
         if (DB::isError($query_result)) {
             // This shouldn't happen, I thought.
             $backend->_pear_error_callback($query_result);
@@ -845,7 +857,39 @@ extends WikiDB_backend_iterator
         $this->_backend = &$backend;
         $this->_result = $query_result;
     }
+
+    function count() {
+        if (!$this->_result)
+            return false;
+        return $this->_result->numRows();
+    }
     
+    function next() {
+        $backend = &$this->_backend;
+        if (!$this->_result)
+            return false;
+
+        $record = $this->_result->fetchRow(DB_FETCHMODE_ASSOC);
+        if (!$record) {
+            $this->free();
+            return false;
+        }
+        
+        return $record;
+    }
+
+    function free () {
+        if ($this->_result) {
+            $this->_result->free();
+            $this->_result = false;
+        }
+    }
+}
+
+class WikiDB_backend_PearDB_iter
+extends WikiDB_backend_PearDB_generic_iter
+{
+
     function next() {
         $backend = &$this->_backend;
         if (!$this->_result)
@@ -867,13 +911,6 @@ extends WikiDB_backend_iterator
         }
         
         return $rec;
-    }
-
-    function free () {
-        if ($this->_result) {
-            $this->_result->free();
-            $this->_result = false;
-        }
     }
 }
 
