@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.50 2002-02-14 03:27:58 carstenklapp Exp $
+ * $Id: phpwiki.css,v 1.51 2002-02-14 21:54:48 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up. It has not yet been tested against NS4.
@@ -95,7 +95,7 @@ form.wikiadmin { background-color: #eee; }
 /* Unknown links */
 .wikiunknown, .named-wikiunknown {
   font-weight: normal;
-  font-size: normal;
+  font-size: 100%;
 }
  /* QuestionMark #600 */
 .wikiunknown a, .named-wikiunknown a {
