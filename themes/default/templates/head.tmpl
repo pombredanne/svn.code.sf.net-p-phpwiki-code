@@ -1,15 +1,6 @@
-<?php  // -*-html-*-
-/* $Id: head.tmpl,v 1.6 2003-01-11 22:29:47 carstenklapp Exp $
- *
- * This template is responsible mainly for the outer level <html> stuff and the <head>.
- */
-printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<?php  // -*-html-*- ?>
 <head>
-<!-- $Id: head.tmpl,v 1.6 2003-01-11 22:29:47 carstenklapp Exp $ -->
+<!-- $Id: head.tmpl,v 1.7 2003-02-26 22:27:17 dairiki Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
 <?php $ROBOTS_CONTENT = $ROBOTS_META ? $ROBOTS_META : "noindex,nofollow"; ?>
 <meta name="robots" content="<?= $ROBOTS_CONTENT ?>" />
@@ -114,4 +105,9 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
 <?php
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2003/01/11 22:29:47  carstenklapp
+// Tweak redundant bookmark title when browsing a custom home page with
+// the same name as the wiki (i.e. avoid titles like "MyWiki - MyWiki"
+// when HOME_PAGE==WIKI_NAME)
+//
 ?>

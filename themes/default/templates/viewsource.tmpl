@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: viewsource.tmpl,v 1.20 2003-02-26 01:56:53 dairiki Exp $ -->
+<!-- $Id: viewsource.tmpl,v 1.21 2003-02-26 22:27:18 dairiki Exp $ -->
 
 <?php if ($page->get('locked') && !$user->isAdmin()) { ?>
   <p><strong><?=_("Note:")?></strong>
@@ -14,7 +14,7 @@
 <!-- Dummy form else NS4 does not like the textarea -->
 <form method="post" action="<?=$request->getPostURL()?>" accept-charset="<?=CHARSET?>">
 <?php /* To clear beyond a larger logo, such as in the Hawaiian theme */ ?>
-<br clear="both" />
+<br clear="all" />
 <!-- wrap=virtual is not HTML4, but without it NS4 does not wrap long lines -->
 <textarea class="wikiedit"
 name="content"
@@ -23,12 +23,9 @@ cols="<?=$request->getPref('editWidth')?>"
 readonly="readonly"
 wrap="virtual"><?= $PAGE_SOURCE ?></textarea>
 
-<div id="actionbar" class="toolbar">
-<hr class="printer" noshade="noshade" />
-<p class="editdate"><?= $Theme->getLastModifiedMessage($revision) ?></p>
-<hr class="toolbar" noshade="noshade" />
-<?= Template('actionbar') ?>
-<!-- RELATEDPAGES were here. -->
+<div id="footer"><!-- for top & bottom toolbars stylesheet -->
+<?=Template('browse-footer')?>
 </div>
+
 <?= HiddenInputs($request->getArgs()) ?>
 </form>

@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: browse.tmpl,v 1.22 2002-02-19 23:00:26 carstenklapp Exp $ -->
+<!-- $Id: browse.tmpl,v 1.23 2003-02-26 22:27:16 dairiki Exp $ -->
 
 <?php if (! $revision->isCurrent()) { ?>
   <p><strong><?=_("Note:")?></strong>
@@ -10,15 +10,6 @@
 
 <?=$CONTENT?>
 
-<div id="actionbar" class="toolbar">
-<hr class="printer" noshade="noshade" />
-<p class="editdate"><?= $Theme->getLastModifiedMessage($revision) ?></p>
-<?php
-global $HIDE_TOOLBARS;
-if (!$HIDE_TOOLBARS) {
-?>
-<hr class="toolbar" noshade="noshade" />
-<?= Template('actionbar') ?>
-<?php } ?>
-<!-- RELATEDPAGES were here. -->
+<div id="footer"><!-- for top & bottom toolbars stylesheet -->
+<?=Template('browse-footer')?>
 </div>

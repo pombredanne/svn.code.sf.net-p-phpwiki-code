@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.8 2003-02-17 17:23:59 dairiki Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.9 2003-02-26 22:27:22 dairiki Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -21,7 +21,6 @@ rcs_id('$Id: WikiAdminRemove.php,v 1.8 2003-02-17 17:23:59 dairiki Exp $');
  */
 
 /**
- * Displays a url in a seperate frame inside our body.
  * Usage:   <?plugin WikiAdminRemove?>
  * Author:  Reini Urban <rurban@x-ray.at>
  *
@@ -46,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
@@ -215,6 +214,11 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2003/02/17 17:23:59  dairiki
+// Disable plugin unless action='browse'.
+//
+// Add a header to the output, and adjust the HTML formatting a bit.
+//
 // Revision 1.7  2003/02/17 06:06:33  dairiki
 // Refactor & code cleanup.
 //

@@ -1,14 +1,9 @@
 <?php // -*-html-*- ?>
-<!-- $Id: body.tmpl,v 1.30 2002-09-02 14:36:58 rurban Exp $ -->
+<!-- $Id: body.tmpl,v 1.31 2003-02-26 22:27:14 dairiki Exp $ -->
 <body>
+<div id="header"> <!-- for top&bottom toolbars style sheet -->
 <?= Template('top') ?>
-<?php if (!empty($framesrc)) { ?>
-<p class="transclusion-title"><?=fmt("Included from %s:",$framesrc)?></p>
-<div class="transclusion">
-<?php } ?>
-<?= $CONTENT ?>
-<?php if (!empty($framesrc)) { ?>
 </div>
-<?php } ?>
+<?= $CONTENT ?>
 <?= Template('bottom') ?>
 </body>
