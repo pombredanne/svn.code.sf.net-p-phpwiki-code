@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RawHtml.php,v 1.7 2003-03-17 22:32:26 dairiki Exp $');
+rcs_id('$Id: RawHtml.php,v 1.8 2003-11-22 17:50:32 carstenklapp Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function managesValidators() {
@@ -62,7 +62,7 @@ extends WikiPlugin
         $page = $request->getPage($basepage);
 
         if (! $page->get('locked')) {
-            return $this->disabled(fmt(_("%s is only allowed in locked pages."),
+            return $this->disabled(fmt("%s is only allowed in locked pages.",
                                        _("Raw HTML")));
         }
 
@@ -71,6 +71,9 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2003/03/17 22:32:26  dairiki
+// Minor HTTP caching fix.
+//
 // Revision 1.6  2003/03/17 21:24:53  dairiki
 // Fix security bugs in the RawHtml plugin.
 //
