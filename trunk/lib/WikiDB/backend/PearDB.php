@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.77 2004-12-06 19:50:04 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.78 2004-12-08 12:55:51 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -410,11 +410,27 @@ extends WikiDB_backend
     }
 
     /**
-     * See ADODB for a better delete_page(), which can be undone and is seen in RecentChanges.
+     * Delete page from the database with backup possibility.
+     * i.e save_page('') and DELETE nonempty id
+     * Can be undone and is seen in RecentChanges.
      */
+    /* // see parent backend.php
     function delete_page($pagename) {
-        $this->purge_page($pagename);
+        $mtime = time();
+        $user =& $GLOBALS['request']->_user;
+        $vdata = array('author' => $user->getId(),
+                       'author_id' => $user->getAuthenticatedId(),
+                       'mtime' => $mtime);
+
+        $this->lock();
+        $version = $this->get_latest_version($pagename);
+        $this->set_versiondata($pagename, $version+1, $vdata);
+        $this->set_links($pagename, false);
+        $pagedata = get_pagedata($pagename);
+        $this->update_pagedata($pagename, array('hits' => $pagedata['hits']));
+        $this->unlock();
     }
+    */
 
     /**
      * Delete page completely from the database.
@@ -1182,6 +1198,14 @@ extends WikiDB_backend_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.77  2004/12/06 19:50:04  rurban
+// enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
+// renamed delete_page to purge_page.
+// enable action=edit&version=-1 to force creation of a new version.
+// added BABYCART_PATH config
+// fixed magiqc in adodb.inc.php
+// and some more docs
+//
 // Revision 1.76  2004/11/30 17:45:53  rurban
 // exists_links backend implementation
 //
