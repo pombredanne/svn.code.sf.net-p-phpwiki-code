@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.130 2005-01-29 20:36:44 rurban Exp $');
+rcs_id('$Id: config.php,v 1.131 2005-02-05 15:32:09 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -221,7 +221,7 @@ function guessing_setlocale ($category, $locale) {
                  );
     if (!$locale) { 
         // do the reverse: return the detected locale collapsed to our LANG
-        $locale = setlocale($category,'');
+        $locale = setlocale($category, '');
         if ($locale) {
             if (strstr($locale, '_')) list ($lang) = split('_', $locale);
             else $lang = $locale;
@@ -265,18 +265,18 @@ function guessing_setlocale ($category, $locale) {
 
 // [99ms]
 function update_locale($loc) {
-    if (!$loc) {
-        $newlocale = guessing_setlocale(LC_ALL, $loc); // [56ms]
-        if (!$newlocale) {
-            $newlocale = FileFinder::_get_lang();
-            list ($newlocale,) = split('_', $newlocale, 2);
-        } else {
-            $loc = guessing_setlocale(LC_ALL, $newlocale);
-        }
+    // $LANG or DEFAULT_LANGUAGE is too less information, at least on unix for
+    // setlocale(), for bindtextdomain() to succeed.
+    $newlocale = guessing_setlocale(LC_ALL, $loc); // [56ms]
+    if (!$newlocale) {
+        $newlocale = FileFinder::_get_lang();
+        list ($newlocale,) = split('_', $newlocale, 2);
+    } else {
+        $loc = guessing_setlocale(LC_ALL, $newlocale);
     }
     // Try to put new locale into environment (so any
     // programs we run will get the right locale.)
-    if (!function_exists ('bindtextdomain'))  {
+    if (!function_exists('bindtextdomain'))  {
         // Reinitialize translation array.
         global $locale;
         $locale = array();
@@ -524,6 +524,9 @@ function getUploadDataPath() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.130  2005/01/29 20:36:44  rurban
+// very important php5 fix! clone objects
+//
 // Revision 1.129  2005/01/08 22:53:50  rurban
 // hardcode list of langs (file access is slow)
 // fix client detection
