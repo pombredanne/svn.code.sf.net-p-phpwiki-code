@@ -1,4 +1,15 @@
 <?php 
+/*
+ * Todo: 
+ *   * validate input (fix javascript, add POST checks)
+ *   * start this automatically the first time
+ *   * fix include_path
+ *   * eval index-user.php or index.php to get the actual settings.
+ *   * ask to store it in index.php or index-user.php
+ * 
+ * The file index-user.php will be generated which you can use as your index.php.
+ */
+
 $tdwidth = 700;
 $config_file = 'index-user.php';
 $fs_config_file = dirname(__FILE__) . (substr(PHP_OS,0,3) == 'WIN' ? '\\' : "/") . $config_file;
@@ -9,7 +20,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'iso-8859-1');
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.7 2002-09-15 16:17:37 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.8 2002-09-15 16:30:27 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki 1.3.x</title>
 <style type="text/css" media="screen">
@@ -229,7 +240,7 @@ $properties["Part Null Settings"] =
 new unchangeable_variable('_partnullsettings', "
 define ('PHPWIKI_VERSION', '1.3.4pre');
 require \"lib/prepend.php\";
-rcs_id('\$Id: configurator.php,v 1.7 2002-09-15 16:17:37 rurban Exp $');", "");
+rcs_id('\$Id: configurator.php,v 1.8 2002-09-15 16:30:27 rurban Exp $');", "");
 
 
 $properties["Part One"] =
@@ -616,7 +627,9 @@ if (function_exists('ldap_connect')) {
 $properties["LDAP Authentication"] =
   new boolean_define_optional('ALLOW_LDAP_LOGIN',
                     array('true'  => "Allow LDAP Authentication",
-	                  'false' => "Ignore LDAP"), "LDAP Authentication");
+	                  'false' => "Ignore LDAP"), "
+LDAP Authentication
+");
 $properties["LDAP Host"] =
   new _define_optional('LDAP_AUTH_HOST', "localhost", "");
 $properties["LDAP Root Search"] =
@@ -639,7 +652,9 @@ if (function_exists('imap_open')) {
 $properties["IMAP Authentication"] =
   new boolean_define_optional('ALLOW_IMAP_LOGIN',
                     array('true'  => "Allow IMAP Authentication",
-	                  'false' => "Ignore IMAP"), "IMAP Authentication");
+	                  'false' => "Ignore IMAP"), "
+IMAP Authentication
+");
 $properties["IMAP Host"] =
   new _define_optional('IMAP_AUTH_HOST', 'localhost', '');
 } else {
@@ -746,7 +761,7 @@ new unchangeable_variable('language_locales',
 if (empty(\$LC_ALL)) {
   if (empty(\$language_locales[\$LANG]))
      \$LC_ALL = \$LANG;
-  else <br />
+  else
      \$LC_ALL = \$language_locales[\$LANG];
 }
 putenv(\"LC_TIME=\$LC_ALL\");
