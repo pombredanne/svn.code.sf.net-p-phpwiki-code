@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.68 2004-12-22 18:33:25 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.69 2004-12-26 17:14:03 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -196,8 +196,10 @@ extends WikiDB_backend
     }
 
     function  _extract_page_data($data, $hits) {
-        if (empty($data)) return array();
-        else return array_merge(array('hits' => $hits), $this->_unserialize($data));
+        if (empty($data))
+            return array('hits' => $hits);
+        else 
+            return array_merge(array('hits' => $hits), $this->_unserialize($data));
     }
 
     function update_pagedata($pagename, $newdata) {
@@ -799,7 +801,7 @@ extends WikiDB_backend
     /**
      * Find highest or lowest hit counts.
      */
-    function most_popular($limit=0, $sortby='-hits') {
+    function most_popular($limit=20, $sortby='-hits') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $order = "DESC";
@@ -815,14 +817,19 @@ extends WikiDB_backend
             else $orderby = "";
         } else
             $orderby = " ORDER BY hits $order";
-        $limit = $limit ? $limit : -1;
-
-        $result = $dbh->SelectLimit("SELECT " 
-                                    . $this->page_tbl_fields
-                                    . " FROM $nonempty_tbl, $page_tbl"
-                                    . " WHERE $nonempty_tbl.id=$page_tbl.id"
-                                    . $where
-                                    . $orderby, $limit);
+        $sql = "SELECT " 
+            . $this->page_tbl_fields
+            . " FROM $nonempty_tbl, $page_tbl"
+            . " WHERE $nonempty_tbl.id=$page_tbl.id"
+            . $where
+            . $orderby;
+        if ($limit) {
+            // extract from,count from limit
+            list($offset,$count) = $this->limit($limit);
+            $result = $dbh->SelectLimit($sql, $count, $offset);
+        } else {
+            $result = $dbh->Execute($sql);
+        }
         return new WikiDB_backend_ADODB_iter($this, $result, $this->page_tbl_field_list);
     }
 
@@ -882,19 +889,22 @@ extends WikiDB_backend
             $order = "ASC";
             $limit = -$limit;
         }
-        $limit = $limit ? $limit : -1;
         $where_clause = $join_clause;
         if ($pick)
             $where_clause .= " AND " . join(" AND ", $pick);
-
+        $sql = "SELECT "
+            . $this->page_tbl_fields . ", " . $this->version_tbl_fields
+            . " FROM $table"
+            . " WHERE $where_clause"
+            . " ORDER BY mtime $order";
         // FIXME: use SQL_BUFFER_RESULT for mysql?
-        // Use SELECTLIMIT for portability
-        $result = $dbh->SelectLimit("SELECT "
-                                    . $this->page_tbl_fields . ", " . $this->version_tbl_fields
-                                    . " FROM $table"
-                                    . " WHERE $where_clause"
-                                    . " ORDER BY mtime $order",
-                                    $limit);
+        if ($limit) {
+            // extract from,count from limit
+            list($offset,$count) = $this->limit($limit);
+            $result = $dbh->SelectLimit($sql, $count, $offset);
+        } else {
+            $result = $dbh->Execute($sql);
+        }
         //$result->fields['version'] = $result->fields[6];
         return new WikiDB_backend_ADODB_iter($this, $result, 
             array_merge($this->page_tbl_field_list, $this->version_tbl_field_list));
@@ -914,7 +924,6 @@ extends WikiDB_backend
         if ($exclude) // array of pagenames
             $exclude = " AND $page_tbl.pagename NOT IN ".$this->_sql_set($exclude);
 
-        $limit = $limit ? $limit : -1;
         /* 
          all empty pages, independent of linkstatus:
            select pagename as empty from page left join nonempty using(id) where isnull(nonempty.id);
@@ -931,7 +940,13 @@ extends WikiDB_backend
             . $exclude_from
             . $exclude
             . $orderby;
-        $result = $dbh->SelectLimit($sql, $limit);
+        if ($limit) {
+            // extract from,count from limit
+            list($offset,$count) = $this->limit($limit);
+            $result = $dbh->SelectLimit($sql, $count, $offset);
+        } else {
+            $result = $dbh->Execute($sql);
+        }
         return new WikiDB_backend_ADODB_iter($this, $result, array('pagename','wantedfrom'));
     }
 
@@ -1374,6 +1389,9 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.68  2004/12/22 18:33:25  rurban
+// fix page _id_cache logic for _get_pageid create_if_missing
+//
 // Revision 1.67  2004/12/22 15:47:41  rurban
 // fix wrong _update_nonempty_table on empty content (i.e. the new deletePage)
 //
