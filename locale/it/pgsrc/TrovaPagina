@@ -4,12 +4,11 @@ Ecco alcuni buoni punti di partenza per iniziare ad usare Wiki.
 * CambiamentiRecenti sono registrati automaticamente
 * VarieSulFunzionamento di browsing e modifica sul server
 
-Questo e` un titolo di ricerca.   Prova qualcosa come ''wiki''
-o ''sandwich''.
+Questo è un titolo di ricerca. Prova qualcosa come ''wiki'' o ''sandwich''.
 
 <?plugin-form TitleSearch?>
 
-Usa il seguente campo per una ricerca completa del testo. Verranno impiegati alcuni secondi ed i risultati  saranno mostrati su tutte le linee che contengono l'occorrenza.
+Usa il seguente campo per una ricerca completa del testo. Verranno impiegati alcuni secondi ed i risultati saranno mostrati su tutte le linee che contengono l'occorrenza.
 
 <?plugin-form FullTextSearch?>
 

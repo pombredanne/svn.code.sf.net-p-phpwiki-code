@@ -4,11 +4,11 @@
 
 ! ZIP files del database
 
- __[ZIP Snapshot | phpwiki:?zip=snapshot]__ : contiene solo l`ultima versione
+ __[ZIP Snapshot | phpwiki:?zip=snapshot]__ : contiene solo l'ultima versione
 
  __[ZIP Dump | phpwiki:?zip=all]__ : contiene tutte le versione archiviate
 
-Questi links puntano a dei file zip, generati al volo, ognuno contiene le piu' recenti di tutte le pagine contenuto nel PhpWiki. Le pagine sono immagazzinate, una per file, come messaggi MIME (RFC2045) e-mail (RFC822), con il content type application/x-phpwiki per lo snapshot e il content type mulipart/mixed per il dump. In the latter case, there is one subpart (with type application/x-phpwiki) for each version of the page (in chronological order). The message body contains the page text, while the page meta-data is included as parameters in the Content-Type: header field.
+Questi links puntano a dei file zip, generati al volo, ognuno contiene le più recenti di tutte le pagine contenuto nel PhpWiki. Le pagine sono immagazzinate, una per file, come messaggi MIME (RFC2045) e-mail (RFC822), con il content type application/x-phpwiki per lo snapshot e il content type mulipart/mixed per il dump. In the latter case, there is one subpart (with type application/x-phpwiki) for each version of the page (in chronological order). The message body contains the page text, while the page meta-data is included as parameters in the Content-Type: header field.
 
 -----------
 
