@@ -1,5 +1,5 @@
 <?php
-   rcs_id('$Id: stdlib.php,v 1.14 2000-12-06 10:59:27 ahollosi Exp $');
+   rcs_id('$Id: stdlib.php,v 1.15 2000-12-06 23:12:02 ahollosi Exp $');
    /*
       Standard functions for Wiki functionality
          LinkRelatedPages($dbi, $pagename)
@@ -115,13 +115,13 @@
 	    $page = str_replace($blockyes, '', $page);
 	    $page = str_replace($blockyesend, '', $page);
 	    $page = preg_replace("/$blockno(.*?)$blocknoend/s", '', $page);
-	    $page = ereg_replace("{$lineno}[^\n]*\n", '', $page);
+	    $page = ereg_replace("${lineno}[^\n]*\n", '', $page);
          } else {
 	    $page = str_replace($lineno, '', $page);
 	    $page = str_replace($blockno, '', $page);
 	    $page = str_replace($blocknoend, '', $page);
 	    $page = preg_replace("/$blockyes(.*?)$blockyesend/s", '', $page);
-	    $page = ereg_replace("{$lineyes}[^\n]*\n", '', $page);
+	    $page = ereg_replace("${lineyes}[^\n]*\n", '', $page);
 	 }
       }
 
