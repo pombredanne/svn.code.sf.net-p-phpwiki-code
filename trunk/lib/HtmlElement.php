@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.41 2004-08-05 17:31:50 rurban Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.42 2004-09-26 17:09:23 rurban Exp $');
 /**
  * Code for writing the HTML subset of XML.
  * @author: Jeff Dairiki
@@ -390,6 +390,14 @@ class HTML extends HtmlElement {
         $el = new HtmlElement('nobody');
         return $el->_init2(func_get_args());
     }
+    function object (/*...*/) {
+        $el = new HtmlElement('object');
+        return $el->_init2(func_get_args());
+    }
+    function embed (/*...*/) {
+        $el = new HtmlElement('embed');
+        return $el->_init2(func_get_args());
+    }
 }
 
 define('HTMLTAG_EMPTY', 1);
@@ -404,7 +412,7 @@ HTML::_setTagProperty(HTMLTAG_ACCEPTS_INLINE,
                       'b big i small tt ' // %fontstyle
                       . 's strike u ' // (deprecated)
                       . 'abbr acronym cite code dfn em kbd samp strong var ' //%phrase
-                      . 'a img object br script map q sub sup span bdo '//%special
+                      . 'a img object embed br script map q sub sup span bdo '//%special
                       . 'button input label option select textarea ' //%formctl
 
                       // %block elements which contain inline content
@@ -521,6 +529,9 @@ function IfJavaScript($if_content = false, $else_content = false) {
     
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.41  2004/08/05 17:31:50  rurban
+ more xhtml conformance fixes
+
  Revision 1.40  2004/06/25 14:29:17  rurban
  WikiGroup refactoring:
    global group attached to user, code for not_current user.
