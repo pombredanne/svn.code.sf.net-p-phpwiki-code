@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.70 2005-01-25 07:01:26 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.71 2005-02-02 19:29:30 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -9,26 +9,31 @@ require_once("lib/ErrorManager.php");
 class Template
 {
     /**
-     *
+     * name optionally of form "theme/template" to include parent templates in children
      */
     function Template ($name, &$request, $args = false) {
         global $WikiTheme;
 
         $this->_request =& $request;
-        $this->_name = $name;
-        $request->_TemplatesProcessed[$name] = 1;
         $this->_basepage = $request->getArg('pagename');
-        
+
+        if (strstr($name, "/")) {
+            $oldtheme = $WikiTheme->_name;
+            list($WikiTheme->_name, $name) = explode("/", $name);
+        }
+        $this->_name = $name;
         $file = $WikiTheme->findTemplate($name);
         if (!$file) {
             trigger_error("no template for $name found.", E_USER_WARNING);
             return;
         }
+        if (isset($oldtheme)) $WikiTheme->_name = $oldtheme;
         $fp = fopen($file, "rb");
         if (!$fp) {
             trigger_error("$file not found", E_USER_WARNING);
             return;
         }
+        $request->_TemplatesProcessed[$name] = 1;
         $this->_tmpl = fread($fp, filesize($file));
         fclose($fp);
         //$userid = $request->_user->_userid;
@@ -271,6 +276,9 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.70  2005/01/25 07:01:26  rurban
+// update comments about future plans
+//
 // Revision 1.69  2004/11/17 20:07:17  rurban
 // just whitespace
 //
