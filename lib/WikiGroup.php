@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.43 2004-11-10 15:29:21 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.44 2004-11-11 10:31:26 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -535,7 +535,7 @@ class GroupWikiPage extends WikiGroup{
 
         global $request;
         $dbh = &$request->_dbi;
-        $master_page = $request->getPage(_("CategoryGroup"));
+        $master_page = $request->getPage(CATEGORY_GROUP_PAGE);
         $master_list = $master_page->getLinks(true);
         while ($group_page = $master_list->next()){
             $group = $group_page->getName();
@@ -1091,6 +1091,13 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.43  2004/11/10 15:29:21  rurban
+// * requires newer Pear_DB (as the internal one): quote() uses now escapeSimple for strings
+// * ACCESS_LOG_SQL: fix cause request not yet initialized
+// * WikiDB: moved SQL specific methods upwards
+// * new Pear_DB quoting: same as ADODB and as newer Pear_DB.
+//   fixes all around: WikiGroup, WikiUserNew SQL methods, SQL logging
+//
 // Revision 1.42  2004/11/01 10:43:56  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session

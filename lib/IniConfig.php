@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.64 2004-11-09 17:11:03 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.65 2004-11-11 10:31:26 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -559,6 +559,11 @@ function fixup_static_configs() {
     }
 }
 
+/** 
+ * Define constants which are client or request specific and should not be dumped statically.
+ * Such as the language, and the virtual and server paths, which might be overridden 
+ * by startup scripts for wiki farms.
+ */
 function fixup_dynamic_configs() {
     global $WikiNameRegexp, $KeywordLinkRegexp;
     global $HTTP_SERVER_VARS, $DBParams, $LANG;
@@ -608,9 +613,17 @@ function fixup_dynamic_configs() {
             chdir($bindtextdomain_real . (isWindows() ? "\\.." : "/.."));
         }
     }
-    // language dependent updates
+
+    // language dependent updates:
     $WikiNameRegexp = pcre_fix_posix_classes($WikiNameRegexp);
     $KeywordLinkRegexp = pcre_fix_posix_classes($KeywordLinkRegexp);
+    if (!defined('CATEGORY_GROUP_PAGE'))
+        define('CATEGORY_GROUP_PAGE',_("CategoryGroup"));
+    if (!defined('WIKI_NAME'))
+        define('WIKI_NAME', _("An unnamed PhpWiki"));
+    if (!defined('HOME_PAGE'))
+        define('HOME_PAGE', _("HomePage"));
+
 
     //////////////////////////////////////////////////////////////////
     // Autodetect URL settings:
@@ -714,7 +727,6 @@ function fixup_dynamic_configs() {
     define('PHPWIKI_BASE_URL',
            SERVER_URL . (USE_PATH_INFO ? VIRTUAL_PATH . '/' : SCRIPT_NAME));
 
-
     // Detect PrettyWiki setup (not loading index.php directly)
     // $SCRIPT_FILENAME should be the same as __FILE__ in index.php
     if (!isset($SCRIPT_FILENAME))
@@ -727,12 +739,6 @@ function fixup_dynamic_configs() {
         $SCRIPT_FILENAME = str_replace('\\\\','\\',strtr($SCRIPT_FILENAME, '/', '\\'));
     define('SCRIPT_FILENAME', $SCRIPT_FILENAME);
 
-    if (!defined('WIKI_NAME'))
-        define('WIKI_NAME', _("An unnamed PhpWiki"));
-
-    if (!defined('HOME_PAGE'))
-        define('HOME_PAGE', _("HomePage"));
-
     // Get remote host name, if apache hasn't done it for us
     if (empty($HTTP_SERVER_VARS['REMOTE_HOST'])
         and !empty($HTTP_SERVER_VARS['REMOTE_ADDR'])
@@ -742,6 +748,17 @@ function fixup_dynamic_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.64  2004/11/09 17:11:03  rurban
+// * revert to the wikidb ref passing. there's no memory abuse there.
+// * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively
+//   store page ids with getPageLinks (GleanDescription) of all existing pages, which
+//   are also needed at the rendering for linkExistingWikiWord().
+//   pass options to pageiterator.
+//   use this cache also for _get_pageid()
+//   This saves about 8 SELECT count per page (num all pagelinks).
+// * fix passing of all page fields to the pageiterator.
+// * fix overlarge session data which got broken with the latest ACCESS_LOG_SQL changes
+//
 // Revision 1.63  2004/11/07 16:47:32  rurban
 // fix VIRTUAL_PATH
 //
