@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2002-01-29 09:08+0100\n"
+"POT-Creation-Date: 2002-01-29 12:22-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,11 +14,11 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../lib/config.php:297
+#: ../lib/config.php:283
 msgid "An unnamed PhpWiki"
 msgstr ""
 
-#: ../lib/config.php:300
+#: ../lib/config.php:286
 msgid "HomePage"
 msgstr ""
 
@@ -905,22 +905,22 @@ msgstr ""
 msgid "Lists nested too deep in SetHTMLOutputMode"
 msgstr ""
 
-#: ../lib/WikiDB.php:516
+#: ../lib/WikiDB.php:501
 #, c-format
 msgid "%s: Date of new revision is %s"
 msgstr ""
 
-#: ../lib/WikiDB.php:543
+#: ../lib/WikiDB.php:528
 #, c-format
 msgid "Optimizing %s"
 msgstr ""
 
-#: ../lib/WikiDB.php:889
+#: ../lib/WikiDB.php:874
 #, c-format
 msgid "Describe %s here."
 msgstr ""
 
-#: ../lib/WikiDB.php:924
+#: ../lib/WikiDB.php:909
 #, c-format
 msgid "Acck! Revision %s of %s seems to have been deleted!"
 msgstr ""
@@ -1114,7 +1114,7 @@ msgid "Synopsis"
 msgstr ""
 
 #: ../themes/default/templates/login.tmpl:12
-msgid "You may sign in using any WikiWord as a UserId. (ÀÖØöøÿßö etc. may be used too). The UserId will be used as link in RecentChanges to your UserId page, your HomePage. You do not need to enter a password."
+msgid "You may sign in using any WikiWord as a UserId. (ÀÖØöøÿßö etc. may be used too). The UserId will be used as a link in RecentChanges to your UserId page, your HomePage. You do not need to enter a password."
 msgstr ""
 
 #: ../themes/default/templates/login.tmpl:20
