@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: dbaBase.php,v 1.16 2004-11-29 16:52:32 rurban Exp $');
+<?php rcs_id('$Id: dbaBase.php,v 1.17 2004-11-29 17:13:42 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -252,28 +252,23 @@ extends WikiDB_backend
             }
             $pages[] = $page;
         }
-        $sortby = $this->sortby($sortby, 'db', array('pagename','mtime'));
-        if ($sortby and !strstr($sortby, "hits ")) { // check for which column to sortby
-            usort($pages, 'WikiDB_backend_dbaBase_sortby_'.str_replace(' ','_',$sortby));
-        }
-        return new WikiDB_backend_dbaBase_pageiter($this, $pages);
+        return new WikiDB_backend_dbaBase_pageiter($this, $pages, 
+                                                   array('sortby'=>$sortby,
+                                                         'limit' =>$limit));
     }
 
     function set_links($pagename, $links) {
         $this->_linkdb->set_links($pagename, $links);
     }
 
-    function get_links($pagename, $reversed = true, $include_empty=false,
+    function get_links($pagename, $reversed=true, $include_empty=false,
                        $sortby=false, $limit=false, $exclude=false) {
-        /*
-        if ($reversed) {
-            include_once('lib/WikiDB/backend/dumb/BackLinkIter.php');
-            $pages = $this->get_all_pages();
-            return new WikiDB_backend_dumb_BackLinkIter($this, $pages, $pagename);
-        }
-        */
         $links = $this->_linkdb->get_links($pagename, $reversed);
-        return new WikiDB_backend_dbaBase_pageiter($this, $links);
+        return new WikiDB_backend_dbaBase_pageiter($this, $links, 
+                                                   array('sortby'=>$sortby,
+                                                         'limit' =>$limit,
+                                                         'exclude'=>$exclude,
+                                                         ));
     }
 };
 
@@ -317,24 +312,42 @@ function WikiDB_backend_dbaBase_sortby_num($aname, $bname, $field) {
 class WikiDB_backend_dbaBase_pageiter
 extends WikiDB_backend_iterator
 {
-    function WikiDB_backend_dbaBase_pageiter(&$backend, &$pages) {
+    function WikiDB_backend_dbaBase_pageiter(&$backend, &$pages, $options=false) {
         $this->_backend = $backend;
-        $this->_pages = $pages ? $pages : array();
+        $this->_options = $options;
+        if ($pages) { 
+            if (!empty($options['sortby'])) {
+                $sortby = $this->sortby($options['sortby'], 'db', array('pagename','mtime'));
+                if ($sortby and !strstr($sortby, "hits ")) { // check for which column to sortby
+                    usort($pages, 'WikiDB_backend_dbaBase_sortby_'.str_replace(' ','_',$sortby));
+                }
+            }
+            if (!empty($options['limit'])) {
+                list($offset,$limit) = $this->limit($options['limit']);
+                $pages = array_slice($pages, $offset, $limit);
+            }
+            $this->_pages = $pages;
+        } else 
+            $this->_pages = array();
     }
 
     function next() {
         if ( ! ($next = array_shift($this->_pages)) )
             return false;
+        if (!empty($options['exclude']) and in_array($next, $options['exclude']))
+            return $this->next();
         return array('pagename' => $next);
     }
             
     function count() {
         return count($this->_pages);
     }
+
     function asArray() {
         reset($this->_pages);
         return $this->_pages;
     }
+
     function free() {
         $this->_pages = array();
     }
@@ -346,10 +359,9 @@ class WikiDB_backend_dbaBase_linktable
         $this->_db = &$dba;
     }
 
-    //FIXME: try stroring link lists as hashes rather than arrays.
+    //FIXME: try storing link lists as hashes rather than arrays.
     // (backlink deletion would be faster.)
-    
-    function get_links($page, $reversed = true) {
+    function get_links($page, $reversed=true) {
         return $this->_get_links($reversed ? 'i' : 'o', $page);
     }
     
