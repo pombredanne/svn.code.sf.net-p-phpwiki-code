@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UnfoldSubpages.php,v 1.9 2004-01-26 09:18:00 rurban Exp $');
+rcs_id('$Id: UnfoldSubpages.php,v 1.10 2004-01-27 12:10:45 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -42,19 +42,19 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
         return array(
-            'pagename' => '',   // not the current page
+            'pagename' => '[pagename]', // default: current page
             //'header'  => '',  // expandable string
-            'quiet'   => false, // no header
+            'quiet'   => false, // print no header
             'sort'    => 'asc', // deprecated: use sortby=+pagename or 
             			//   sortby=-mtime instead,
             'sortby'  => 'pagename', // [+|-]pagename, [+|-]mtime, [+|-]hits
-            'pages'   => '',    // deprecated. use maxpages instead
-            'maxpages' => '',   // maximum number of pages to include
+            'pages'   => false,    // deprecated. use maxpages instead
+            'maxpages' => false,   // maximum number of pages to include
             'sections' => false,// maximum number of sections per page to
             			//  include
             'smalltitle' => false, // if set, hide transclusion-title,
@@ -66,7 +66,7 @@ extends WikiPlugin
                                 //  per page to include
             'bytes'   => false, // maximum number of bytes
                                 //  per page to include
-            'section' => '',    // this named section per page only
+            'section' => false, // this named section per page only
             'sectionhead' => false // when including a named
                                 //  section show the heading
             );
@@ -118,14 +118,15 @@ extends WikiPlugin
 
     function run($dbi, $argstr, $request) {
         include_once('lib/BlockParser.php');
-        
-        if (!$this->getArg('pagename'))
+
+        $args = $this->getArgs($argstr, $request);
+        if (empty($args['pagename']))
             $pagename = $request->getArg('pagename');
         $sortby = 'pagename';
         if ($request->getArg('sortby')) {
             $sortby = PageList::sortby($request->getArg('sortby'),'db');
         }
-        extract($this->getArgs($argstr, $request));
+        extract($args);
         //TODO: explodePageList should be a PageList method.
         $subpages = explodePageList($pagename . SUBPAGE_SEPARATOR . '*',$sortby);
         if (! $subpages ) {
@@ -138,8 +139,8 @@ extends WikiPlugin
         //if ($sort != 'asc') {
         //    $subpages = array_reverse($subpages);
         //}
-        if ($numpages) {
-          $subpages = array_slice ($subpages, 0, $numpages);
+        if ($maxpages) {
+          $subpages = array_slice ($subpages, 0, $maxpages);
         }
         foreach ($subpages as $page) {
             // A page cannot include itself. Avoid doublettes.
@@ -197,6 +198,26 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/01/26 09:18:00  rurban
+// * changed stored pref representation as before.
+//   the array of objects is 1) bigger and 2)
+//   less portable. If we would import packed pref
+//   objects and the object definition was changed, PHP would fail.
+//   This doesn't happen with an simple array of non-default values.
+// * use $prefs->retrieve and $prefs->store methods, where retrieve
+//   understands the interim format of array of objects also.
+// * simplified $prefs->get() and fixed $prefs->set()
+// * added $user->_userid and class '_WikiUser' portability functions
+// * fixed $user object ->_level upgrading, mostly using sessions.
+//   this fixes yesterdays problems with loosing authorization level.
+// * fixed WikiUserNew::checkPass to return the _level
+// * fixed WikiUserNew::isSignedIn
+// * added explodePageList to class PageList, support sortby arg
+// * fixed UserPreferences for WikiUserNew
+// * fixed WikiPlugin for empty defaults array
+// * UnfoldSubpages: added pagename arg, renamed pages arg,
+//   removed sort arg, support sortby arg
+//
 // Revision 1.8  2004/01/25 10:52:16  rurban
 // added sortby support to explodePageList() and UnfoldSubpages
 // fixes [ 758044 ] Plugin UnfoldSubpages does not sort (includes fix)
