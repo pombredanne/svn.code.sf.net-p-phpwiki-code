@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: debug.tmpl,v 1.10 2003-02-21 04:08:26 dairiki Exp $ -->
+<!-- $Id: debug.tmpl,v 1.11 2003-02-27 23:55:52 dairiki Exp $ -->
 <?php global $RUNTIMER; ?>
 <table width="%100" border="0" cellpadding="0" cellspacing="0">
 <tr><td>
@@ -22,4 +22,4 @@
 <span class="debug"><?=fmt("Page Execution took %s seconds", $RUNTIMER->getStats())?></span>
 </td></tr></table>
 <!-- This keeps the valid XHTML! icons from "hanging off the bottom of the screen" -->
-<br style="clear: both;" />
+<br clear="all" class="clear-floats" />

@@ -1,5 +1,5 @@
 /**
- * $Id: sidebar.css,v 1.17 2002-03-07 03:47:00 carstenklapp Exp $
+ * $Id: sidebar.css,v 1.18 2003-02-27 23:55:51 dairiki Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -200,6 +200,9 @@ div#xhtml-validator {
   top: 1ex;
 }
 
+.clear-floats {
+  clear: both;
+}
 
 /* For emacs users
  *

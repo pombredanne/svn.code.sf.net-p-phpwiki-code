@@ -1,4 +1,4 @@
-<!-- $Id: wikiblog.tmpl,v 1.1 2003-02-21 04:20:09 dairiki Exp $ -->
+<!-- $Id: wikiblog.tmpl,v 1.2 2003-02-27 23:55:52 dairiki Exp $ -->
 <?php
 $CDATE = $Theme->formatDateTime($BLOG_CTIME);
 
@@ -27,7 +27,7 @@ if ($rev->get('mtime') != $BLOG_CTIME) {
   <div class="wikiblog-header">
     <strong class="floatleft"><?= WikiLink($page, 'known', $CDATE) ?></strong>
     <strong class="floatright"><?= WikiLink($BLOG_CREATOR, 'if_known') ?></strong>
-    <br style="clear:both;" />
+    <br clear="all" class="clear-floats" />
   </div>
   <div class="wikiblog-body">
     <?php if ($rev->get('summary')) { ?> 
@@ -40,7 +40,7 @@ if ($rev->get('mtime') != $BLOG_CTIME) {
     <div class="wikiblog-footer">
       <?= $buttons ?>
       <?= $modified ?>
-      <br style="clear:both;" />
+      <br clear="all" class="clear-floats" />
     </div>
   <?php } ?>
 
