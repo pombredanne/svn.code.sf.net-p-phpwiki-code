@@ -20,7 +20,7 @@ einschlie=DFende einklammern [[ein Link] oder URL =
 [[!http://cool.wiki.int/].%%%
 __Fu=DFnoten:__ Benutze [[1],[[2],[[3],...%%%
 __Das Erstellen eines Links verhindern:__ das Wort mit ein =BB!=AB =
-beginnen: !!NichtLinken, Links so angeben: [[[Text | URL] (zweimal =
+beginnen: !!NichtLinken, Links so angeben: [[[[Text | URL] (zweimal =
 =BB[=AB).%%%
 __Verschiedenes:__ =BB!=AB, =BB!!=AB, =BB!!!=AB f=FCr =FCberschriften, =
 =BB%%''''%=AB f=FCr Zeilenvorschubzeichen, u. =BB---''''-=AB zeichnet eine =
