@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageHistory.php,v 1.25 2003-02-17 02:19:01 dairiki Exp $');
+rcs_id('$Id: PageHistory.php,v 1.26 2003-02-27 21:15:14 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -142,18 +142,22 @@ extends _RecentChanges_HtmlFormatter
                                $html),
                     "\n",
                     $this->_javascript('
-                                       var diffCkBoxes = document.forms["diff-select"].elements["versions[]"];
+        var diffCkBoxes = document.forms["diff-select"].elements["versions[]"];
 
-                                       function diffCkBox_onclick() {
-                                           // If two checkboxes are checked, submit form
-                                           var nchecked = 0;
-                                           for (i = 0; i < diffCkBoxes.length; i++)
-                                               if (diffCkBoxes[i].checked && ++nchecked >= 2)
-                                                   this.form.submit();
-                                       }
+        function diffCkBox_onclick() {
+            var nchecked = 0, box = diffCkBoxes;
+            for (i = 0; i < box.length; i++)
+                if (box[i].checked) nchecked++;
+            if (nchecked == 2)
+                this.form.submit();
+            else if (nchecked > 2) {
+                for (i = 0; i < box.length; i++)
+                    if (box[i] != this) box[i].checked = 0;
+            }
+        }
 
-                                       for (i = 0; i < diffCkBoxes.length; i++)
-                                       diffCkBoxes[i].onclick = diffCkBox_onclick;'));
+        for (i = 0; i < diffCkBoxes.length; i++)
+            diffCkBoxes[i].onclick = diffCkBox_onclick;'));
     }
 
     function diffLink ($rev) {
@@ -253,7 +257,7 @@ extends WikiPlugin_RecentChanges
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.25 $");
+                            "\$Revision: 1.26 $");
     }
 
     function getDefaultArguments() {
@@ -319,6 +323,10 @@ extends WikiPlugin_RecentChanges
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.25  2003/02/17 02:19:01  dairiki
+// Fix so that PageHistory will work when the current revision
+// of a page has been "deleted".
+//
 // Revision 1.24  2003/01/18 21:49:00  carstenklapp
 // Code cleanup:
 // Reformatting & tabs to spaces;
