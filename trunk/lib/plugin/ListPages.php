@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ListPages.php,v 1.2 2004-06-18 14:42:17 rurban Exp $');
+rcs_id('$Id: ListPages.php,v 1.3 2004-06-28 18:58:18 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -43,7 +43,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -87,7 +87,7 @@ extends WikiPlugin
             foreach ($userids as $userid) {
                 $user = new RatingsUser($userid);
                 if ($user->allow_view_ratings($active_user)) {
-                    array_push($allowed_users, &$user);
+                    array_push($allowed_users, $user);
                 }
                 // PHP's silly references... (the behavior with this line commented
                 // out is... odd)
@@ -124,6 +124,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/06/18 14:42:17  rurban
+// added wikilens libs (not yet merged good enough, some work for DanFr)
+//
 // Revision 1.1  2004/06/08 13:49:43  rurban
 // List pages that are explicitly given as the pages argument, by DanFr
 // 
