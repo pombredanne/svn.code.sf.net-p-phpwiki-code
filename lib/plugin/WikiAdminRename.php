@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRename.php,v 1.23 2005-02-12 17:24:24 rurban Exp $');
+rcs_id('$Id: WikiAdminRename.php,v 1.24 2005-04-01 15:03:01 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -48,7 +48,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.23 $");
+                            "\$Revision: 1.24 $");
     }
 
     function getDefaultArguments() {
@@ -186,6 +186,10 @@ extends WikiPlugin_WikiAdminSelect
         else {
             $button_label = _("Rename selected pages");
             $header->pushContent(HTML::p(_("Select the pages to rename:")));
+            if (!$post_args and count($pages) == 1) {
+                list($post_args['from'],) = array_keys($pages);
+                $post_args['to'] = $post_args['from'];
+            }
             $header = $this->renameForm($header, $post_args);
         }
 
@@ -274,6 +278,10 @@ class _PageList_Column_renamed_pagename extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.23  2005/02/12 17:24:24  rurban
+// locale update: missing . : fixed. unified strings
+// proper linebreaks
+//
 // Revision 1.22  2004/11/23 15:17:20  rurban
 // better support for case_exact search (not caseexact for consistency),
 // plugin args simplification:
