@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: ziplib.php,v 1.16 2002-01-09 16:14:49 carstenklapp Exp $');
+rcs_id('$Id: ziplib.php,v 1.17 2002-01-19 21:58:38 dairiki Exp $');
 
 /**
  * GZIP stuff.
@@ -711,7 +711,7 @@ function ParseMimeifiedPages ($data)
     // FIXME: do we need to try harder to find a pagename if we
     //        haven't got one yet?
     if (!isset($versiondata['author'])) {
-        $versiondata['author'] = $GLOBALS['user']->id();
+        $versiondata['author'] = $GLOBALS['user']->getId(); //FIXME:?
     }
     
     $encoding = strtolower($headers['content-transfer-encoding']);
