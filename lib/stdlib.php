@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.129 2002-10-19 20:56:19 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.130 2002-10-19 21:04:58 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -712,10 +712,10 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
             }
             elseif ($block[0] == '[') {
                 // Footnote definition
-                preg_match('/^\[\s*(\d+)/', $block, $m);
+                preg_match('/^\[\s*(\d+)\s*\]/', $block, $m);
                 $footnum = $m[1];
                 $block = substr($block, strlen($m[0]));
-                $prefix = "#[|ftnt_$footnum]~[[\\1|#ftnt_ref_$footnum]~] ";
+                $prefix = "#[|ftnt_${footnum}]~[[${footnum}|#ftnt_ref_${footnum}]~] ";
             }
             elseif ($block[0] == '<') {
                 // Plugin.
@@ -741,24 +741,6 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
         }
         return $out . preg_replace($orig, $repl, $text);
     }
-}
-
-
-function _ConvertOldListMarkup ($ind, $bullet) {
-    $indent = str_repeat('     ', strlen($ind));
-    if ($bullet[0] == ';') {
-        //$term = ltrim(substr($bullet, 1));
-        //return $indent . $term . "\n" . $indent . '     ';
-        return $ind . $bullet;
-    }
-    else
-        return $indent . $bullet . ' ';
-}
-
-function _EscapeNestledMarkup ($line) {
-    if (!preg_match('/^<\?plugin.*\?>/', $line))
-        $line = preg_replace('/[=_]|(?<!^|[*#;])\*/', '~\\0', $line);
-    return $line;
 }
 
 
