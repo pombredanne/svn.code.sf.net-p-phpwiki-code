@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiPluginCached.php,v 1.15 2004-09-26 17:09:23 rurban Exp $');
+<?php rcs_id('$Id: WikiPluginCached.php,v 1.16 2004-10-12 14:56:57 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
  Copyright (C) 2004 Reini Urban
@@ -728,7 +728,7 @@ class WikiPluginCached extends WikiPlugin
         }
 
         // image handle -> image data        
-        if ($this->_static) {
+        if (!empty($this->_static)) {
             $ext = "." . $content['imagetype'];
             if (is_string($imagehandle) and file_exists($imagehandle)) {
             	if (preg_match("/.(\w+)$/",$imagehandle,$m)) {
@@ -760,7 +760,7 @@ class WikiPluginCached extends WikiPlugin
             $fp = fopen($tmpfile,'rb');
             $content['image'] = fread($fp, filesize($tmpfile));
             fclose($fp);
-            if ($this->_static) {
+            if (!empty($this->_static)) {
             	// on static it is in "uploads/" but in wikicached also
                 $content['file'] = $tmpfile;
                 $content['url'] = getUploadDataPath() . basename($tmpfile);
@@ -1089,6 +1089,10 @@ class WikiPluginCached extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2004/09/26 17:09:23  rurban
+// add SVG support for Ploticus (and hopefully all WikiPluginCached types)
+// SWF not yet.
+//
 // Revision 1.14  2004/09/25 16:26:08  rurban
 // some plugins use HTML
 //
