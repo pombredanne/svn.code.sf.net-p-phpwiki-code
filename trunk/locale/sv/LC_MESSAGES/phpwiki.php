@@ -66,8 +66,6 @@ $locale["Not Implemented"] =
    "Funktionen är ännu inte implementerad.";
 $locale["Page Name"] =
    "Namn på Sidan";
-$locale["Page source for %s"] =
-   "Visa källkoden för %s";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
    "PhpWiki kan inte spara dina ändringar eftersom en annan användare ändrade och sparade sidan under tiden som du ändrade på sidan. Sparar du nu försvinner ändringarna gjorda av den förra användaren.";
 $locale["Press <b>Save</b> again."] =

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.9\n"
-"POT-Creation-Date: 2002-01-23 11:38-0500\n"
+"POT-Creation-Date: 2002-01-23 20:00-0500\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -28,8 +28,8 @@ msgstr "Diff"
 msgid "Sign Out"
 msgstr ""
 
-#: ../lib/ButtonFactory.php:244 ../lib/WikiUser.php:135
-#: ../lib/plugin/UserPage.php:87 ../themes/default/templates/login.tmpl:27
+#: ../lib/ButtonFactory.php:244 ../lib/WikiUser.php:132
+#: ../themes/default/templates/login.tmpl:26
 #: ../themes/default/templates/signin.tmpl:44
 #: ../themes/default/templates/signin.tmpl:51
 msgid "Sign In"
@@ -109,7 +109,7 @@ msgstr ""
 msgid "minor"
 msgstr ""
 
-#: ../lib/RSSWriter091.php:115 ../lib/loadsave.php:499
+#: ../lib/RSSWriter091.php:115 ../lib/loadsave.php:583
 #: ../lib/plugin/RecentChanges.php:166 ../lib/plugin/RecentChanges.php:273
 #: ../lib/plugin/RecentChanges.php:318
 #: ../themes/Portland/templates/navbar.tmpl:40
@@ -117,7 +117,7 @@ msgstr ""
 msgid "RecentChanges"
 msgstr "SenasteÄndringar"
 
-#: ../lib/Template.php:152
+#: ../lib/Template.php:135
 #, c-format
 msgid "%4d  %s\n"
 msgstr ""
@@ -142,12 +142,12 @@ msgstr ""
 msgid "Optimizing %s"
 msgstr ""
 
-#: ../lib/WikiDB.php:837
+#: ../lib/WikiDB.php:853
 #, c-format
 msgid "Describe %s here."
 msgstr "Beskriv %s här."
 
-#: ../lib/WikiDB.php:872
+#: ../lib/WikiDB.php:888
 #, c-format
 msgid "Acck! Revision %s of %s seems to have been deleted!"
 msgstr ""
@@ -327,28 +327,28 @@ msgstr ""
 msgid "argument '%s' not declared by plugin"
 msgstr ""
 
-#: ../lib/WikiPlugin.php:112
+#: ../lib/WikiPlugin.php:119
 #, c-format
 msgid "trailing cruft in plugin args: '%s'"
 msgstr ""
 
-#: ../lib/WikiPlugin.php:226 ../lib/ziplib.php:162 ../lib/ziplib.php:164
+#: ../lib/WikiPlugin.php:233 ../lib/ziplib.php:162 ../lib/ziplib.php:164
 #: ../lib/ziplib.php:166 ../lib/ziplib.php:580 ../lib/ziplib.php:677
 #, c-format
 msgid "Bad %s"
 msgstr ""
 
-#: ../lib/WikiPlugin.php:267
+#: ../lib/WikiPlugin.php:274
 #, c-format
 msgid "Include of '%s' failed"
 msgstr "Insättning för '%s' misslyckades"
 
-#: ../lib/WikiPlugin.php:268
+#: ../lib/WikiPlugin.php:275
 #, c-format
 msgid "%s: no such class"
 msgstr ""
 
-#: ../lib/WikiPlugin.php:274
+#: ../lib/WikiPlugin.php:281
 #, c-format
 msgid "%s: not a subclass of WikiPlugin"
 msgstr ""
@@ -361,16 +361,12 @@ msgstr ""
 msgid "Insufficient permissions."
 msgstr ""
 
-#: ../lib/WikiUser.php:136
-msgid "Please Sign In"
-msgstr ""
-
-#: ../lib/XmlElement.php:193 ../lib/stdlib.php:548
+#: ../lib/XmlElement.php:199 ../lib/stdlib.php:548
 #, c-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr ""
 
-#: ../lib/XmlElement.php:201 ../lib/stdlib.php:557
+#: ../lib/XmlElement.php:207 ../lib/stdlib.php:557
 #, c-format
 msgid "%s: argument index out of range"
 msgstr ""
@@ -452,7 +448,7 @@ msgstr ""
 msgid "Versions are identical"
 msgstr "Versionerna är identiska"
 
-#: ../lib/diff.php:361
+#: ../lib/diff.php:360
 #, fuzzy, c-format
 msgid "Diff: %s"
 msgstr "Diff av: %s"
@@ -467,17 +463,12 @@ msgstr ""
 msgid "BackLinks for %s"
 msgstr ""
 
-#: ../lib/editpage.php:32
-#, c-format
-msgid "Page source for %s"
-msgstr "Visa källkoden för %s"
-
-#: ../lib/editpage.php:33
+#: ../lib/editpage.php:29
 #, c-format
 msgid "View Source: %s"
 msgstr "Visa Källkoden: %s"
 
-#: ../lib/editpage.php:38 ../lib/editpage.php:39
+#: ../lib/editpage.php:34
 #, c-format
 msgid "Edit: %s"
 msgstr "Redigera: %s"
@@ -571,72 +562,72 @@ msgstr ""
 msgid "Skipping"
 msgstr ""
 
-#: ../lib/loadsave.php:435
+#: ../lib/loadsave.php:519
 #, c-format
 msgid "Bad file type: %s"
 msgstr ""
 
-#: ../lib/loadsave.php:449
+#: ../lib/loadsave.php:533
 #, c-format
 msgid "Loading '%s'"
 msgstr ""
 
-#: ../lib/loadsave.php:470
+#: ../lib/loadsave.php:554
 msgid "The PhpWiki programming team"
 msgstr ""
 
-#: ../lib/loadsave.php:473
+#: ../lib/loadsave.php:557
 msgid "Loading up virgin wiki"
 msgstr ""
 
-#: ../lib/loadsave.php:491
+#: ../lib/loadsave.php:575
 msgid "No uploaded file to upload?"
 msgstr ""
 
-#: ../lib/loadsave.php:494
+#: ../lib/loadsave.php:578
 #, c-format
 msgid "Uploading %s"
 msgstr ""
 
-#: ../lib/main.php:141
+#: ../lib/main.php:217
 #, c-format
 msgid "Action %s is disallowed on this wiki"
 msgstr ""
 
-#: ../lib/main.php:144
+#: ../lib/main.php:220
 #, c-format
 msgid "You must sign in to %s this wiki"
 msgstr ""
 
-#: ../lib/main.php:146
+#: ../lib/main.php:222
 #, c-format
 msgid "You must log in to %s this wiki"
 msgstr ""
 
-#: ../lib/main.php:148
+#: ../lib/main.php:224
 #, c-format
 msgid "You must be an administrator to %s this wiki"
 msgstr ""
 
-#: ../lib/main.php:198 ../lib/main.php:268 ../lib/plugin/RecentChanges.php:256
+#: ../lib/main.php:265 ../lib/main.php:335 ../lib/plugin/RecentChanges.php:256
 msgid "HomePage"
 msgstr "Framsida"
 
-#: ../lib/main.php:215
+#: ../lib/main.php:282
 #, c-format
 msgid "%s: Bad action"
 msgstr ""
 
-#: ../lib/main.php:239
+#: ../lib/main.php:306
 #, fuzzy
 msgid "Fatal PhpWiki Error"
 msgstr "WikiFatalError"
 
-#: ../lib/main.php:300 ../lib/plugin/FullTextSearch.php:12
+#: ../lib/main.php:367 ../lib/plugin/FullTextSearch.php:12
 msgid "FullTextSearch"
 msgstr "Fulltextsökning"
 
-#: ../lib/main.php:303 ../lib/plugin/RecentChanges.php:264
+#: ../lib/main.php:370 ../lib/plugin/RecentChanges.php:264
 #: ../lib/plugin/TitleSearch.php:13
 msgid "TitleSearch"
 msgstr "Titelsökningen"
@@ -884,11 +875,11 @@ msgstr ""
 msgid "Show minor edits for:"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:420
+#: ../lib/plugin/RecentChanges.php:426
 msgid "1 day"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:421
+#: ../lib/plugin/RecentChanges.php:430
 #, c-format
 msgid "%s days"
 msgstr ""
@@ -898,38 +889,9 @@ msgstr ""
 msgid "Title search results for '%s'"
 msgstr "Sökresultat för titelsökningen för '%s'"
 
-#: ../lib/plugin/UserPage.php:35
-msgid "Your sysadmin has disallowed use of the UserPage plugin!"
-msgstr ""
-
-#: ../lib/plugin/UserPage.php:42
-msgid "You should be logged in now."
-msgstr ""
-
-#: ../lib/plugin/UserPage.php:46
-#, c-format
-msgid "Before you can edit %s, you need to sign in."
-msgstr ""
-
-#: ../lib/plugin/UserPage.php:50
-msgid "The name you use to sign in must be in WikiWord format."
-msgstr ""
-
-#: ../lib/plugin/UserPage.php:55
-msgid "examples include: TomJefferson, AlexHamilton"
-msgstr ""
-
-#: ../lib/plugin/UserPage.php:64
-msgid "Please re-enter your name in this form."
-msgstr ""
-
-#: ../lib/plugin/UserPage.php:72
-msgid ""
-"Please enter your name as WordsStrungTogether (e.g. John Smith as JohnSmith)."
-msgstr ""
-
-#: ../lib/plugin/UserPage.php:83
-msgid "Sign in:"
+#: ../lib/plugin/UserPreferences.php:10
+#: ../themes/Portland/templates/editpage.tmpl:82
+msgid "UserPreferences"
 msgstr ""
 
 #: ../lib/plugin/_BackendInfo.php:10
@@ -1025,7 +987,7 @@ msgstr "%s: %s"
 msgid "Remove the page now"
 msgstr "Ta bort sida"
 
-#: ../lib/removepage.php:14 ../themes/default/templates/login.tmpl:29
+#: ../lib/removepage.php:14 ../themes/default/templates/login.tmpl:28
 msgid "Cancel"
 msgstr ""
 
@@ -1039,7 +1001,7 @@ msgstr "Du kommer att ta bort \"%s\" permanent!"
 msgid "Removed page '%s' succesfully."
 msgstr "Tog bort sidan '%s'."
 
-#: ../lib/removepage.php:27
+#: ../lib/removepage.php:28
 msgid "Remove page"
 msgstr "Ta bort sida"
 
@@ -1134,7 +1096,7 @@ msgstr ""
 msgid "Edit aborted: %s"
 msgstr ""
 
-#: ../lib/savepage.php:153 ../lib/savepage.php:154
+#: ../lib/savepage.php:158
 #, fuzzy, c-format
 msgid "Saved: %s"
 msgstr "Sparade: %s"
@@ -1219,12 +1181,12 @@ msgstr ""
 msgid "Unknown %s"
 msgstr ""
 
-#: ../themes/Hawaiian/lib/random.php:18 ../themes/Hawaiian/lib/random.php:83
+#: ../themes/Hawaiian/lib/random.php:20 ../themes/Hawaiian/lib/random.php:90
 #, c-format
 msgid "%s is empty."
 msgstr ""
 
-#: ../themes/Hawaiian/lib/random.php:90
+#: ../themes/Hawaiian/lib/random.php:97
 #, c-format
 msgid "Unable to open directory '%s' for reading"
 msgstr ""
@@ -1287,57 +1249,57 @@ msgstr "(version %s, sparade %s)"
 
 #: ../themes/Portland/templates/browse.tmpl:9
 #: ../themes/Portland/templates/viewsource.tmpl:3
-#: ../themes/default/templates/browse.tmpl:15
-#: ../themes/default/templates/viewsource.tmpl:3
+#: ../themes/default/templates/browse.tmpl:16
+#: ../themes/default/templates/viewsource.tmpl:13
 msgid "Note:"
 msgstr ""
 
 #: ../themes/Portland/templates/browse.tmpl:10
 #: ../themes/Portland/templates/viewsource.tmpl:6
-#: ../themes/default/templates/browse.tmpl:16
-#: ../themes/default/templates/viewsource.tmpl:7
+#: ../themes/default/templates/browse.tmpl:17
+#: ../themes/default/templates/viewsource.tmpl:18
 msgid "You are viewing an old revision of this page."
 msgstr ""
 
 #: ../themes/Portland/templates/browse.tmpl:12
 #: ../themes/Portland/templates/viewsource.tmpl:7
-#: ../themes/default/templates/browse.tmpl:17
-#: ../themes/default/templates/viewsource.tmpl:8
+#: ../themes/default/templates/browse.tmpl:18
+#: ../themes/default/templates/viewsource.tmpl:19
 msgid "View the current version"
 msgstr ""
 
 #: ../themes/Portland/templates/editpage.tmpl:17
-#: ../themes/default/templates/editpage.tmpl:47
+#: ../themes/default/templates/editpage.tmpl:17
 msgid "Preview"
 msgstr ""
 
 #: ../themes/Portland/templates/editpage.tmpl:21
-#: ../themes/default/templates/editpage.tmpl:51
+#: ../themes/default/templates/editpage.tmpl:21
 msgid "Save"
 msgstr "Spara"
 
 #: ../themes/Portland/templates/editpage.tmpl:47
-#: ../themes/default/templates/editpage.tmpl:10
+#: ../themes/default/templates/editpage.tmpl:49
 msgid "Warning: You are editing an old revision."
 msgstr ""
 
 #: ../themes/Portland/templates/editpage.tmpl:48
-#: ../themes/default/templates/editpage.tmpl:11
+#: ../themes/default/templates/editpage.tmpl:50
 msgid "Saving this page will overwrite the current version."
 msgstr ""
 
 #: ../themes/Portland/templates/editpage.tmpl:51
-#: ../themes/default/templates/editpage.tmpl:5
+#: ../themes/default/templates/editpage.tmpl:44
 msgid "Preview only!  Changes not saved."
 msgstr ""
 
 #: ../themes/Portland/templates/editpage.tmpl:68
-#: ../themes/default/templates/editpage.tmpl:64
+#: ../themes/default/templates/editpage.tmpl:85
 msgid "Summary:"
 msgstr ""
 
 #: ../themes/Portland/templates/editpage.tmpl:70
-#: ../themes/default/templates/editpage.tmpl:77
+#: ../themes/default/templates/editpage.tmpl:100
 #, c-format
 msgid "Author will be logged as %s."
 msgstr ""
@@ -1349,34 +1311,28 @@ msgid ""
 msgstr ""
 
 #: ../themes/Portland/templates/editpage.tmpl:78
-#: ../themes/default/templates/editpage.tmpl:86
+#: ../themes/default/templates/editpage.tmpl:107
 #, c-format
 msgid "See %s tips for editing."
 msgstr "%s: Redigeringstips."
 
 #: ../themes/Portland/templates/editpage.tmpl:79
-#: ../themes/default/templates/editpage.tmpl:58
+#: ../themes/default/templates/editpage.tmpl:38
 msgid "GoodStyle"
 msgstr "BraStil"
 
 #: ../themes/Portland/templates/editpage.tmpl:81
-#: ../themes/default/templates/editpage.tmpl:84
 #, c-format
 msgid "You can change the size of the editing area in %s."
 msgstr ""
 
-#: ../themes/Portland/templates/editpage.tmpl:82
-#: ../themes/default/templates/editpage.tmpl:57
-msgid "UserPreferences"
-msgstr ""
-
 #: ../themes/Portland/templates/editpage.tmpl:86
-#: ../themes/default/templates/editpage.tmpl:92
+#: ../themes/default/templates/editpage.tmpl:112
 msgid "TextFormattingRules"
 msgstr "Textformateringsregler"
 
 #: ../themes/Portland/templates/editpage.tmpl:86
-#: ../themes/default/templates/editpage.tmpl:92
+#: ../themes/default/templates/editpage.tmpl:112
 msgid "Synopsis"
 msgstr ""
 
@@ -1391,28 +1347,40 @@ msgid "PhpWikiAdministration"
 msgstr ""
 
 #: ../themes/Portland/templates/viewsource.tmpl:4
-#: ../themes/default/templates/viewsource.tmpl:4
+#: ../themes/default/templates/viewsource.tmpl:14
 msgid "This page has been locked by the administrator and cannot be edited."
 msgstr "Den här sidan är låst av administratören och kan ej redigeras."
 
-#: ../themes/default/templates/browse.tmpl:6
-#: ../themes/default/templates/viewsource.tmpl:23
+#: ../themes/default/templates/browse.tmpl:7
+#: ../themes/default/templates/viewsource.tmpl:6
 #, c-format
 msgid "Last edited on %s."
 msgstr "Senast ändrad %s."
 
-#: ../themes/default/templates/browse.tmpl:8
-#: ../themes/default/templates/viewsource.tmpl:25
+#: ../themes/default/templates/browse.tmpl:9
+#: ../themes/default/templates/viewsource.tmpl:8
 #, c-format
 msgid "Version %s, saved on %s."
 msgstr "Version %s, sparade %s"
 
-#: ../themes/default/templates/editpage.tmpl:69
-msgid "This is a minor change."
+#: ../themes/default/templates/editpage.tmpl:35
+msgid "Adjust"
 msgstr ""
 
-#: ../themes/default/templates/login.tmpl:6
-msgid "Signin Failed"
+#: ../themes/default/templates/editpage.tmpl:71
+msgid "Edit Area Size:"
+msgstr ""
+
+#: ../themes/default/templates/editpage.tmpl:71
+msgid "H"
+msgstr ""
+
+#: ../themes/default/templates/editpage.tmpl:73
+msgid "W"
+msgstr ""
+
+#: ../themes/default/templates/editpage.tmpl:91
+msgid "This is a minor change."
 msgstr ""
 
 #: ../themes/default/templates/nochanges.tmpl:4
@@ -1436,6 +1404,21 @@ msgstr "Din omstänksamhet för detaljer är mycket uppskattad."
 #: ../themes/default/templates/savepage.tmpl:15
 msgid "Warning!"
 msgstr ""
+
+#: ../themes/default/templates/userprefs.tmpl:9
+msgid "Height"
+msgstr ""
+
+#: ../themes/default/templates/userprefs.tmpl:16
+msgid "Width"
+msgstr ""
+
+#: ../themes/default/templates/userprefs.tmpl:25
+msgid "Update Preferences"
+msgstr ""
+
+#~ msgid "Page source for %s"
+#~ msgstr "Visa källkoden för %s"
 
 #~ msgid "ViewSource"
 #~ msgstr "VisaKällkoden"
@@ -1538,4 +1521,4 @@ msgstr ""
 #~ msgstr "\"Gå till sidan\""
 
 #~ msgid "Inserting page %s, version %s from %s"
-#~ msgstr "Sätter in sidan %s, version %s från %s"
+#~ msgstr "Sätter in sidan %s, version %s från %s"
