@@ -1,10 +1,13 @@
 /**
- * $Id: phpwiki-printer.css,v 1.11 2002-02-09 21:25:16 carstenklapp Exp $
+ * $Id: phpwiki-printer.css,v 1.12 2002-02-10 05:25:53 carstenklapp Exp $
  *
  * PhpWiki style sheet for the printed page:
  * Black on white only, with no toolbar commands and no link icons.
  * Styles are kept to a minimum, so the printed page will otherwise
  * appear according to your browser's default font settings.
+ *
+ * Some browsers don't understand visibility settings, so we use white text
+ * on white in addition to hidden.
  */
 
 /**
@@ -39,16 +42,13 @@ a {
 
 p.editdate {
   font-size: smaller;
-  margin-top: 0ex;
+  margin-top: 0;
 }
 
 .rawurl {
   text-decoration: underline;
 }
 
-/* Some browsers don't understand visibility settings, so we use white text
- * on white in addition to hidden.
- */
 /**
  * Toolbars
  */
@@ -62,6 +62,7 @@ p.editdate {
   visibility: hidden;
   color:      white;
   background: white;
+  height: 0;
 }
 
 .toolbar hr {
@@ -90,13 +91,13 @@ p.editdate {
 /* Hide (diff) links and days buttons in RecentChanges */
 .wiki-rc-action {
   visibility: hidden;
-  color:      white;
+  color: white;
   /**
    * This hack works in Mozilla to reduce the extra white space
    * which results from hiding (diff). Browsers which allow a minimum
    * font size as a user preference will not honour it.
    */
-  font-size:  1pt;
+  font-size: 1pt;
 }
 
 /**
@@ -110,23 +111,19 @@ img {
 
 /* Hide other non-essential page elements from the printer. */
 .linkicon {
-  /**
-   * Some browsers ignore this completely: OmniWeb 4.1
-   * also shrink down the image to nothing so the text flows around it.
-   */
   visibility: hidden;
   width:  0;
   height: 0;
 }
 
-/* Hide the rss icon from the printed page (perhaps this should be left in? */
+/* Hide the rss icon from the printed page (perhaps this should be left in?) */
 .rssicon {
   visibility: hidden;
   width:  0;
   height: 0;
 }
 
-/* Hide the w3.org link image from the printed page */
+/* Hide the w3.org validator images from the printed page */
 #xhtml-validator {
   visibility: hidden;
   width:  0;
