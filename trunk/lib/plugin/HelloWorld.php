@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: HelloWorld.php,v 1.10 2002-01-30 23:41:54 dairiki Exp $');
+rcs_id('$Id: HelloWorld.php,v 1.11 2002-12-30 23:49:35 carstenklapp Exp $');
 /**
  * A simple demonstration WikiPlugin.
  *
@@ -17,7 +17,7 @@ if (!defined('THE_END'))
 class WikiPlugin_HelloWorld
 extends WikiPlugin
 {
-    // Four required functions in a WikiPlugin.
+    // Five required functions in a WikiPlugin.
 
     function getName () {
         return _("HelloWorld");
@@ -27,6 +27,12 @@ extends WikiPlugin
         return _("Simple Sample Plugin");
 
     }
+
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.11 $");
+    }
+
     // Establish default values for each of this plugin's arguments.
     function getDefaultArguments() {
         return array('salutation' => "Hello,",

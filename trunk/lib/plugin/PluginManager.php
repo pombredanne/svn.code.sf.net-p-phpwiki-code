@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PluginManager.php,v 1.1 2002-12-30 11:52:20 carstenklapp Exp $');
+rcs_id('$Id: PluginManager.php,v 1.2 2002-12-30 23:49:35 carstenklapp Exp $');
 /**
  */
 
@@ -12,6 +12,11 @@ extends WikiPlugin
 
     function getDescription () {
         return _("Overview of the available PhpWikiPlugins");
+    }
+
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -40,17 +45,23 @@ extends WikiPlugin
         global $WikiNameRegexp;
         foreach($plugins as $pname) {
             $pname = str_replace(".php", "", $pname);
-            $ppname = $pname . "Plugin";
             $temppluginclass = "<? plugin " . /*"WikiPlugin_" .*/ $pname . " ?>";
             $w = new WikiPluginLoader;
             $p = $w->getPlugin($pname);
             $desc = $p->getDescription();
+            if (method_exists($p, 'getVersion')) {
+                $ver = $p->getVersion();
+            }
+            else {
+                $ver = "--";
+            }
 
             $pnamelink = $pname;
             $plink = false;
             if (preg_match("/^$WikiNameRegexp\$/", $pname) && $dbi->isWikiPage($pname))
                 $pnamelink = WikiLink($pname);
 
+            $ppname = $pname . "Plugin";
             if (preg_match("/^$WikiNameRegexp\$/", $ppname) && $dbi->isWikiPage($ppname))
                 $plink = WikiLink($ppname);
             else {
@@ -64,19 +75,17 @@ extends WikiPlugin
             $group = (int)($row_no / 2); //_group_rows
             $class = ($group % 2) ? 'oddrow' : 'evenrow';
 
+            $tr = HTML::tr(array('class' => $class));
             if ($plink) {
-                $tr = HTML::tr(array('class' => $class));
-                $tr->pushContent(HTML::td($plink), HTML::td($desc));
+                $tr->pushContent(HTML::td($plink), HTML::td($ver), HTML::td($desc));
                 $tr2 = HTML::tr(array('class' => $class));
-                $tr2->pushContent(HTML::td($pnamelink), HTML::td(" "));
+                $tr2->pushContent(HTML::td($pnamelink), HTML::td(" "), HTML::td(" "));
                 $plink = false;
                 $table->pushContent($tr, $tr2);
                 $row_no++;
-
             }
             else {
-                $tr = HTML::tr(array('class' => $class));
-                $tr->pushContent(HTML::td($pnamelink), HTML::td($desc));
+                $tr->pushContent(HTML::td($pnamelink), HTML::td($ver), HTML::td($desc));
                 $table->pushContent($tr);
             }
         }
@@ -85,7 +94,6 @@ extends WikiPlugin
         //$h->pushContent(HTML::h2(_("Disabled Plugins")));
 
         return $h;
-
     }
 };
 
