@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.27 2002-01-28 18:49:08 dairiki Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.28 2002-01-29 20:04:19 carstenklapp Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -198,9 +198,18 @@ class PageList {
         return false;
     }
 
+    function page_exists ($page) {
+        foreach ($this->_pages as $val) {
+            if ($val->getName() == $page->getName())
+                return true;
+        }
+        return false;
+    }
 
     function addPage ($page_handle) {
-        array_push($this->_pages, &$page_handle);
+        if(! $this->page_exists(&$page_handle)) {
+            array_push($this->_pages, &$page_handle);
+        }
     }
 
     function getTotal () {
