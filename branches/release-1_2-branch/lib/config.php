@@ -10,7 +10,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.24.2.6 2001-11-08 23:15:43 dairiki Exp $'); 
+   rcs_id('$Id: config.php,v 1.24.2.7 2001-11-09 03:13:00 dairiki Exp $'); 
    // end essential internal stuff
 
 
@@ -84,15 +84,29 @@
 
    // MySQL settings -- see INSTALL.mysql for details on using MySQL
    } elseif ($WhichDatabase == 'mysql') {
+      // MySQL server host:
+      $mysql_server = 'localhost';
+
+      // username as used in step 2 of INSTALL.mysql:
+      $mysql_user = 'wikiuser';
+
+      // password of above user (or leave blank if none):
+      $mysql_pwd = '';
+
+      // name of the mysql database
+      //  (this used to default to 'wiki' prior to phpwiki-1.2.2)
+      $mysql_db = 'phpwiki';
+
+      // Names of the tables.
+      // You probably don't need to change these.  If you do change
+      // them you will also have to make corresponding changes in
+      // schemas/schema.mysql before you initialize the database.
       $WikiPageStore = "wiki";
       $ArchivePageStore = "archive";
       $WikiLinksStore = "wikilinks";
       $WikiScoreStore = "wikiscore";
       $HitCountStore = "hitcount";
-      $mysql_server = 'localhost';
-      $mysql_user = 'root';
-      $mysql_pwd = '';
-      $mysql_db = 'wiki';
+
       include "lib/mysql.php";
 
    // PostgreSQL settings -- see INSTALL.pgsql for more details
