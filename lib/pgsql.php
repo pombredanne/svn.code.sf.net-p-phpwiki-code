@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: pgsql.php,v 1.4.2.3 2001-11-04 03:46:10 dairiki Exp $');
+<?php rcs_id('$Id: pgsql.php,v 1.4.2.4 2001-11-07 18:58:14 dairiki Exp $');
 
    /*
       Database functions:
@@ -318,12 +318,14 @@ function BackLinkSearchNextMatch($dbi, &$res) {
 
    function IncreaseHitCount($dbi, $pagename) {
       global $HitCountPageStore;
-      $query = "update $HitCountPageStore set hits=hits+1 where pagename='$pagename'";
+
+      $qpagename = addslashes($pagename);
+      $query = "update $HitCountPageStore set hits=hits+1 where pagename='$qpagename'";
       $res = pg_exec($dbi['dbc'], $query);
 
       if (!pg_cmdtuples($res)) {
          $query = "insert into $HitCountPageStore (pagename, hits) " .
-                  "values ('$pagename', 1)";
+                  "values ('$qpagename', 1)";
 	 $res = pg_exec($dbi['dbc'], $query);
       }
 
@@ -332,7 +334,8 @@ function BackLinkSearchNextMatch($dbi, &$res) {
 
    function GetHitCount($dbi, $pagename) {
       global $HitCountPageStore;
-      $query = "select hits from $HitCountPageStore where pagename='$pagename'";
+      $qpagename = addslashes($pagename);
+      $query = "select hits from $HitCountPageStore where pagename='$qpagename'";
       $res = pg_exec($dbi['dbc'], $query);
       if (pg_cmdtuples($res)) {
          $hits = pg_result($res, 0, "hits");

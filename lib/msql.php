@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: msql.php,v 1.6.2.2 2001-11-04 03:46:10 dairiki Exp $');
+<?php rcs_id('$Id: msql.php,v 1.6.2.3 2001-11-07 18:58:14 dairiki Exp $');
 
    /*
       Database functions:
@@ -454,17 +454,18 @@
 
    function IncreaseHitCount($dbi, $pagename) {
 
-      $query = "select hits from hitcount where pagename='$pagename'";
+      $qpagename = addslashes($pagename);
+      $query = "select hits from hitcount where pagename='$qpagename'";
       $res = msql_query($query, $dbi['dbc']);
       if (msql_num_rows($res)) {
          $hits = msql_result($res, 0, 'hits');
          $hits++;
-         $query = "update hitcount set hits=$hits where pagename='$pagename'";
+         $query = "update hitcount set hits=$hits where pagename='$qpagename'";
          $res = msql_query($query, $dbi['dbc']);
 
       } else {
          $query = "insert into hitcount (pagename, hits) " .
-                  "values ('$pagename', 1)";
+                  "values ('$qpagename', 1)";
 	 $res = msql_query($query, $dbi['dbc']);
       }
 
@@ -473,7 +474,8 @@
 
    function GetHitCount($dbi, $pagename) {
 
-      $query = "select hits from hitcount where pagename='$pagename'";
+      $qpagename = addslashes($pagename);
+      $query = "select hits from hitcount where pagename='$qpagename'";
       $res = msql_query($query, $dbi['dbc']);
       if (msql_num_rows($res)) {
          $hits = msql_result($res, 0, 'hits');
