@@ -1,3 +1,11 @@
+1.1.6b 06/27/00: The wrong wiki_config.php3 file was included in 1.1.6, 
+and this release corrects that; also in my hurry, I included all the CVS
+directories and files, and a test file. That stuff was left out.
+
+1.1.6 06/26/00: Added templates, Postgresql support, mSQL support, new
+database schema, new date storage format, an "info" link on all pages,
+and introduced some new bugs (RecentChanges is broken ;-)
+
 1.1.5 06/08/00: Here are the comments from the CVS logs:
 
 fixed magic_quotes_gpc=1 bug for $pagename
