@@ -37,9 +37,9 @@
 /////////////////////////////////////////////////////////////////////
 // Part Null: Don't touch this!
 
-define ('PHPWIKI_VERSION', '1.3.0-jeffs-hacks');
+define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.40 2001-12-13 08:22:43 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.41 2001-12-21 00:56:56 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
