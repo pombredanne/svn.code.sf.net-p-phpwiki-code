@@ -3,6 +3,7 @@ lib/WikiDB/adodb/
 lib/nusoap/
 lib/fpdf/
 lib/XMLRPC/
+lib/ASCIIMathPHP/
 lib/WikiDB/backend/cvsclient.php
 lib/SemanticWeb.php
 lib/plugin/CreateBib.php
@@ -12,5 +13,11 @@ lib/plugin/RdfDefinition.php
 lib/plugin/WikiAccessRestrictions.php
 lib/plugin/WikiAdminSetAclSimple.php
 lib/plugin/WikiSettings.php
-themes/film/
+lib/plugin/BlockQuote.php
+lib/plugin/SpecialTag.php
+lib/plugin/SpellCheck.php
+lib/plugin/PreferenceApp.php
 themes/wikilens/templates/newuserwelcomepage.tmpl
+themes/wikilens/templates/categorypage.tmpl
+themes/archX/
+themes/film/
