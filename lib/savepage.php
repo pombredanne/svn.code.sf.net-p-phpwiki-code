@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.14 2001-03-14 19:45:42 dairiki Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.15 2001-06-26 18:08:32 uckelman Exp $');
 
 /*
    All page saving events take place here.
@@ -38,7 +38,7 @@
    }
 
 
-   $pagehash = RetrievePage($dbi, $pagename, $WikiPageStore);
+   $pagehash = RetrievePage($dbi, $pagename, $WikiPageStore, 0);
 
    // if this page doesn't exist yet, now's the time!
    if (! is_array($pagehash)) {
@@ -48,26 +48,21 @@
       $pagehash['flags'] = 0;
       $newpage = 1;
    } else {
-      if (($pagehash['flags'] & FLAG_PAGE_LOCKED) && ! $user->is_admin()) {
-	 $html = "<p>" . gettext ("This page has been locked by the administrator and cannot be edited.");
-	 $html .= "\n<p>" . gettext ("Sorry for the inconvenience.");
-	 echo GeneratePage('MESSAGE', $html,
-			   sprintf (gettext ("Problem while editing %s"), $pagename), 0);
-	 ExitWiki ("");
+		if (($pagehash['flags'] & FLAG_PAGE_LOCKED) && ! $user->is_admin()) {
+			$html = "<p>" . gettext ("This page has been locked by the administrator and cannot be edited.");
+			$html .= "\n<p>" . gettext ("Sorry for the inconvenience.");
+			echo GeneratePage('MESSAGE', $html,
+			sprintf (gettext ("Problem while editing %s"), $pagename), 0);
+			 ExitWiki ("");
       }
 
       if(isset($editversion) && ($editversion != $pagehash['version'])) {
          ConcurrentUpdates($pagename);
       }
 
-      if ($user->id() != $pagehash['author'] && ! $user->is_admin())
-	 unset($minor_edit);      // Force archive
-      
-      if (empty($minor_edit))
-	 SaveCopyToArchive($dbi, $pagename, $pagehash);
-
-      $newpage = 0;
-   }
+		SavePageToArchive($pagename, $pagehash);
+		$newpage = 0;
+	}
 
    // set new pageinfo
    $pagehash['lastmodified'] = time();
@@ -91,8 +86,8 @@
       }
    }
 
-   InsertPage($dbi, $pagename, $pagehash);
-   UpdateRecentChanges($dbi, $pagename, $newpage);
+   ReplaceCurrentPage($pagename, $pagehash);
+	UpdateRecentChanges($dbi, $pagename, $newpage);
 
    $html .= gettext ("Your careful attention to detail is much appreciated.");
    $html .= "\n";
