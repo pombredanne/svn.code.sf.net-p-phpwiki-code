@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.30 2002-01-23 07:52:53 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.31 2002-01-23 22:46:19 carstenklapp Exp $');
 /**
  */
 
@@ -326,7 +326,7 @@ extends WikiPlugin
                      'limit'		=> false,
                      'format'		=> false,
                      'daylist'          => false,
-                     'label'            => ''
+                     'caption'          => ''
                      );
     }
 
@@ -392,63 +392,84 @@ extends WikiPlugin
             return $this->format($this->getChanges($dbi, $args), $args);
         } else {
             // Display days selection buttons
-            $daylist = explode(",", $args['daylist']);
+            extract($args);
+
+            $daysarray = explode(",", $daylist);
 
             // Defaults
-            $show_minor = "";
-            $show_all = "";
+            $url_show_minor = "";
+            $url_show_all = "";
 
             // RecentEdits args
-            if (($args['show_minor'] == 1)||($args['show_minor'] == true))
-                $show_minor = "&show_minor=1";
-            if (($args['show_all'] == 1)||($args['show_all'] == true))
-                $show_all = "&show_all=1";
-            // Custom label
-            if ($args['label'])
-                $label = $args['label'];
-            else {
-                if ($show_minor)
-                    $label = _("Show changes for:");
+            if (($show_minor == 1)||($show_minor == true))
+                $url_show_minor = "&show_minor=1";
+            if (($show_all == 1)||($show_all == true))
+                $url_show_all = "&show_all=1";
+            // Custom caption
+            if (! $caption) {
+                if ($url_show_minor)
+                    $caption = _("Show changes for:");
                 else {
-                    if ($show_all)
-                        $label = _("Show all changes for:");
+                    if ($url_show_all)
+                        $caption = _("Show all changes for:");
                     else
-                        $label = _("Show minor edits for:");
+                        $caption = _("Show minor edits for:");
                 }
             }
 
-            $day1    = _("1 day");
-            $ndays   = _("%s days");
-            $alldays = "...";
+            $b = new buttonSet();
+            $b->caption = $caption;
 
-            $b = array();
-            global $Theme;
+            foreach ($daysarray as $daynum) {
 
-            foreach ($daylist as $val) {
-
-                if ($val == 1)
-                    $text = $day1;
-                elseif ($val < 1)
-                    $text = $alldays;
+                if ($daynum == 1)
+                    $label = _("1 day");
+                elseif ($daynum < 1)
+                    $label = "..."; //alldays
                 else
-                    $text = sprintf($ndays, $val);
+                    $label = sprintf(_("%s days"), $daynum);
 
                 // Build the button's url
-                $b[] = $Theme->makeButton($text, "RecentChanges?days=" .$val
-                                          .$show_minor .$show_all,
-                                          'wikiaction');
+                $b->addButton($label, "RecentChanges?days=" .$daynum
+                                      .$url_show_minor .$url_show_all,
+                              'wikiaction');
             }
-            $buttons = HTML::p($label . " ");
-            // Avoid an extraneous ButtonSeparator
-            $buttons->pushContent(array_shift($b));
-
-            foreach ($b as $button) {
-                $buttons->pushContent($Theme->getButtonSeparator());
-                $buttons->pushContent($button);
-            }
-            return $buttons;
+            return $b->getContent();
         }
     }
+};
+
+
+class buttonSet {
+    function buttonSet() {
+        $this->caption = "";
+        $this->content = "";
+        $this->_b = array();
+    }
+
+    function addButton($label, $url, $action) {
+        global $Theme;
+        $this->_b[] = $Theme->makeButton($label, $url, $action);
+    }
+
+    function getContent() {
+        if (empty($this->content))
+            $this->_generateContent();
+        return $this->content;
+    }
+
+    function _generateContent() {
+        $this->content = HTML::p($this->caption . " ");
+        // Avoid an extraneous ButtonSeparator
+        $this->content->pushContent(array_shift($this->_b));
+
+        global $Theme;
+        foreach ($this->_b as $button) {
+            $this->content->pushContent($Theme->getButtonSeparator());
+            $this->content->pushContent($button);
+        }
+    }
+
 };
 
 
