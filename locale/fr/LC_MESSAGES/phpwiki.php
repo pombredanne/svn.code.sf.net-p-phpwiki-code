@@ -20,6 +20,10 @@ $locale["%s: file not found"] =
    "%s : fichier non trouvé";
 $locale["(diff)"] =
    "(diff)";
+$locale["(last edited %s)"] =
+   "(dernière modification le %s)";
+$locale["(version %s, saved on %s)"] =
+   "(version %s, enregistrée sur %s)";
 $locale["1 day"] =
    "1 jour";
 $locale["<%s: no such section>"] =
@@ -148,8 +152,8 @@ $locale["Optimizing %s"] =
    "Optimalisant %s";
 $locale["Other diffs:"] =
    "D'autres comparaisons :";
-$locale["PHP Warnings"] =
-   "PHP Avertissements";
+$locale["PHP %s Warnings"] =
+   "PHP %s Avertissements";
 $locale["Page Name"] =
    "Nom de Page";
 $locale["Page names with prefix '%s'"] =
@@ -280,10 +284,6 @@ $locale["WikiFatalError"] =
    "ErreurFataleDeWiki";
 $locale["You are about to remove '%s' permanently!"] =
    "Tu es sur le point de supprimer ' %s ' de façon permanente!";
-$locale["You entered an invalid login or password."] =
-   "Tu as entré un login ou mot de passe invalide";
-$locale["You must set the administrator account and password before you can log in."] =
-   "Vous devez établir le compte et le mot de passe d'administrateur avant que vous puissiez ouvrir une session.";
 $locale["Your careful attention to detail is much appreciated."] =
    "Ton souci particulière apporté à la rédaction est très apprécié.";
 $locale["by %s"] =
@@ -304,8 +304,6 @@ $locale["is initial release"] =
    "est la première version";
 $locale["last modified on %s"] =
    "dernière modification le %s";
-$locale["lock or unlock pages"] =
-   "verrouiller ou déverrouiller des pages";
 $locale["major edits"] =
    "principales modifications";
 $locale["minor edits"] =

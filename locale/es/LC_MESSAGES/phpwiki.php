@@ -6,8 +6,14 @@ $locale["%d best outgoing links:"] =
    "%d mejores enlaces de salida:";
 $locale["%d most popular nearby:"] =
    "%d las más populares:";
+$locale["(last edited %s)"] =
+   "(editada por última vez %s)";
 $locale["<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."] =
    "<b>Vuelva a cargar</b> la página. Ahora podrá ver la versión mas actual de la página. Sus cambios no están ahí.";
+$locale["Click here to <a href=\"%s\">remove the page now</a>."] =
+   "Haga Click aqui para <a href=\"%s\">borrar la página ahora</a>.";
+$locale["Copied to [%s]"] =
+   "Copia de [%s]";
 $locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
    "Copie sus cambios al portapapeles o a otro sitio temporal (p.ej. editor de textos).";
 $locale["Describe %s here."] =
@@ -28,10 +34,20 @@ $locale["HomePage"] =
    "PáginaPrincipal";
 $locale["In order to recover from this situation follow these steps:"] =
    "Para restaurar esta situación siga los siguientes pasos:";
+$locale["Include of '%s' failed"] =
+   "Inserción de '%s' falló";
+$locale["Last edited on %s."] =
+   "Editada por última vez %s.";
+$locale["Lists nested too deep in SetHTMLOutputMode"] =
+   "Límites de la pila excedidos en SetHTMLOutputMode";
+$locale["Lock Page"] =
+   "Bloquear Página";
 $locale["Make changes to the file again. Paste your additions from the clipboard (or text editor)."] =
    "Haga cambios a la página otra vez. Pegue sus modificaciones del portapapeles (o del editor de textos).";
 $locale["None"] =
    "Ninguno";
+$locale["Not Implemented"] =
+   "Función todaví no implementada";
 $locale["Page Name"] =
    "Nombre de la página";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
@@ -44,6 +60,10 @@ $locale["Problem while updating %s"] =
    "Problema al editar %s";
 $locale["RecentChanges"] =
    "CambiosRecientes";
+$locale["References"] =
+   "Referencias";
+$locale["Remove Page"] =
+   "Borrar Página";
 $locale["Remove page"] =
    "Borrar página";
 $locale["Removed page '%s' succesfully."] =
@@ -62,6 +82,10 @@ $locale["The %s most popular pages of this wiki:"] =
    "Las %s páginas más populares de este wiki:";
 $locale["This is a minor change."] =
    "Esto es un cambio pequeño.";
+$locale["This page has been locked by the administrator and cannot be edited."] =
+   "Esta página ha sido bloqueada por el administrador y no puede ser editada.";
+$locale["Unlock Page"] =
+   "Desbloquear Página";
 $locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
    "Use el botón <b>Atrás<b> para retornar a la página editada";
 $locale["Version %d"] =
@@ -72,8 +96,6 @@ $locale["WikiFatalError"] =
    "ErrorFatalDeWiki";
 $locale["You are about to remove '%s' permanently!"] =
    "¡Va a borrar '%s' permanentemente!";
-$locale["You entered an invalid login or password."] =
-   "Se há introducido un nombre de usuario o palabra de paso invalido.";
 $locale["Your careful attention to detail is much appreciated."] =
    "Se agradece una cuidadosa atención a los detalles.";
 $locale["by %s"] =
@@ -82,6 +104,8 @@ $locale["last modified on %s"] =
    "modificado por última vez el %s";
 $locale["version %d"] =
    "versión %d";
+$locale["version %d of %s"] =
+   "versión %s de %s";
 $locale["version %s"] =
    "versión %s";
 

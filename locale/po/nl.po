@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.7\n"
-"POT-Creation-Date: 2002-01-17 17:30-0800\n"
+"POT-Creation-Date: 2002-01-20 14:32-0500\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -20,40 +20,34 @@ msgstr ""
 "Date: 1998-05-26 11:26:28+0200\n"
 "From:  <janneke@gnu.org>\n"
 
-#: ../lib/ButtonFactory.php:217 ../themes/default/templates/browse.tmpl:8
+#: ../lib/ButtonFactory.php:227 ../themes/MacOSX/templates/actionbar.tmpl:8
+#: ../themes/default/templates/actionbar.tmpl:8
 msgid "Edit"
 msgstr "Verander"
 
-#: ../lib/ButtonFactory.php:219
+#: ../lib/ButtonFactory.php:229
 msgid "Diff"
 msgstr "Diff"
 
-#: ../lib/ButtonFactory.php:222
+#: ../lib/ButtonFactory.php:232 ../themes/default/templates/signin.tmpl:6
 msgid "SignOut"
 msgstr ""
 
-#: ../lib/ButtonFactory.php:224
+#: ../lib/ButtonFactory.php:234
 msgid "SignIn"
 msgstr ""
 
-#: ../lib/ButtonFactory.php:228
-#, fuzzy
+#: ../lib/ButtonFactory.php:238
 msgid "Lock Page"
-msgstr "Open pagina"
+msgstr "Open Pagina"
 
-#: ../lib/ButtonFactory.php:230
-#, fuzzy
+#: ../lib/ButtonFactory.php:240
 msgid "Unlock Page"
-msgstr "Sluit pagina af"
+msgstr "Sluit Pagina Af"
 
-#: ../lib/ButtonFactory.php:232
-#, fuzzy
+#: ../lib/ButtonFactory.php:242
 msgid "Remove Page"
-msgstr "Verwijder pagina"
-
-#: ../lib/config.php:274
-msgid "An unnamed PhpWiki"
-msgstr ""
+msgstr "Verwijder Pagina"
 
 #: ../lib/DbaDatabase.php:46 ../lib/ziplib.php:36 ../lib/ziplib.php:39
 #: ../lib/ziplib.php:44 ../lib/ziplib.php:46 ../lib/ziplib.php:48
@@ -63,8 +57,282 @@ msgstr ""
 msgid "%s failed"
 msgstr ""
 
-#: ../lib/diff.php:173
+#: ../lib/ErrorManager.php:86
+#, c-format
+msgid "PHP %s Warnings"
+msgstr ""
+
+#: ../lib/ErrorManager.php:170
+msgid "error while handling error:"
+msgstr ""
+
+#: ../lib/FileFinder.php:82
+#, c-format
+msgid "%s: file not found"
+msgstr ""
+
+#: ../lib/RSSWriter091.php:114 ../lib/loadsave.php:484
+#: ../lib/plugin/RecentChanges.php:165 ../lib/plugin/RecentChanges.php:274
+#: ../lib/plugin/RecentChanges.php:319 ../lib/plugin/Toolbar.php:87
+#: ../lib/plugin/Toolbar.php:105 ../lib/plugin/Toolbar.php:112
+#: ../themes/Portland/templates/navbar.tmpl:40
+#: ../themes/default/templates/navbar.tmpl:13
+msgid "RecentChanges"
+msgstr "RecenteVeranderingen"
+
+#: ../lib/WikiDB.php:353
+#, c-format
+msgid "Attempt to delete most recent revision of '%s'"
+msgstr ""
+
+#: ../lib/WikiDB.php:401
+#, c-format
+msgid "Attempt to merge most recent revision of '%s'"
+msgstr ""
+
+#: ../lib/WikiDB.php:488
+#, c-format
+msgid "%s: Date of new revision is %s"
+msgstr ""
+
+#: ../lib/WikiDB.php:513
+#, c-format
+msgid "Optimizing %s"
+msgstr ""
+
+#: ../lib/WikiDB.php:837
+#, c-format
+msgid "Describe %s here."
+msgstr "Beschrijf %s hier."
+
+#: ../lib/WikiDB.php:872
+#, c-format
+msgid "Acck! Revision %s of %s seems to have been deleted!"
+msgstr ""
+
+#: ../lib/WikiDB/backend/PearDB.php:26
 #, fuzzy, c-format
+msgid "Can't connect to database: %s"
+msgstr "Kan verbinding naar data base niet tot stand brengen, geef op."
+
+#: ../lib/WikiDB/backend/PearDB.php:57
+msgid "WARNING: database still locked"
+msgstr ""
+
+#: ../lib/WikiDB/backend/PearDB.php:711
+msgid "fatal database error"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:93
+#, c-format
+msgid "Creating new repository [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:128
+#, c-format
+msgid "Found [%s] in [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:182
+#, c-format
+msgid "Argument %s was not array"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:190
+msgid "no meta data found"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:243
+#, c-format
+msgid "FAILED for [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:337 ../lib/WikiDB/backend/cvs.php:347
+#: ../lib/WikiDB/backend/cvs.php:353 ../lib/WikiDB/backend/cvs.php:450
+#: ../lib/WikiDB/backend/cvs.php:456
+msgid "Not Implemented"
+msgstr "Functie nog niet gemplementeerd."
+
+#: ../lib/WikiDB/backend/cvs.php:520
+#, c-format
+msgid "Creating meta file for [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:614
+msgid "got revision information"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:619
+msgid "is initial release"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:622
+#, fuzzy
+msgid "returning old version"
+msgstr "is gelijk aaan huidige versie %d"
+
+#: ../lib/WikiDB/backend/cvs.php:689
+msgid "Unable to delete file, lock was not obtained."
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:699
+msgid "Unable to open file"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:709
+msgid "no message"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:749
+#, c-format
+msgid "unable to locate/open [%s], turning debug off"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:760
+#, c-format
+msgid "Preparing to execute [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:763
+#, c-format
+msgid "Command failed [%s], Output:"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:765
+#, c-format
+msgid "Command failed [%s], Return value: %s"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:768
+msgid "Done execution"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:782
+msgid "Unable to obtain read lock."
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:789
+#, c-format
+msgid "Unable to open file '%s' for reading"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:808
+msgid "Timeout while obtaining lock."
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:817
+#, c-format
+msgid "Could not open file '%s' for writing"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:827
+#, c-format
+msgid "Copying from [%s] to [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:830
+msgid "Copying"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:835
+#, c-format
+msgid "Copied to [%s]"
+msgstr "Kopie van [%s]"
+
+#: ../lib/WikiDB/backend/cvs.php:837
+#, c-format
+msgid "Failed to copy [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:843
+msgid "Not copying"
+msgstr ""
+
+#: ../lib/WikiDB/backend/dba.php:23
+#, c-format
+msgid "%s: Can't open dba database"
+msgstr ""
+
+#: ../lib/WikiDB/backend/dbaBase.php:330
+#, c-format
+msgid "Bad key in linktable: %s"
+msgstr ""
+
+#: ../lib/WikiDB/backend/dbaBase.php:352
+#, c-format
+msgid "Bad key %s in table"
+msgstr ""
+
+#: ../lib/WikiDB/backend/dbaBase.php:360
+#, c-format
+msgid "backlink entry missing for link %s"
+msgstr ""
+
+#: ../lib/WikiDB/backend/dbaBase.php:368
+#, c-format
+msgid "link entry missing for backlink %s"
+msgstr ""
+
+#: ../lib/WikiDB/dba.php:17
+#, c-format
+msgid ""
+"DBA files are in the %s directory. Please read the INSTALL file and move the "
+"DB file to a permanent location or risk losing all the pages!"
+msgstr ""
+
+#: ../lib/WikiPlugin.php:64
+#, c-format
+msgid "argument '%s' not declared by plugin"
+msgstr ""
+
+#: ../lib/WikiPlugin.php:112
+#, c-format
+msgid "trailing cruft in plugin args: '%s'"
+msgstr ""
+
+#: ../lib/WikiPlugin.php:236 ../lib/ziplib.php:162 ../lib/ziplib.php:164
+#: ../lib/ziplib.php:166 ../lib/ziplib.php:578 ../lib/ziplib.php:675
+#, c-format
+msgid "Bad %s"
+msgstr ""
+
+#: ../lib/WikiPlugin.php:275
+#, c-format
+msgid "Include of '%s' failed"
+msgstr "Insert van '%s' gefaald"
+
+#: ../lib/WikiPlugin.php:276
+#, c-format
+msgid "%s: no such class"
+msgstr ""
+
+#: ../lib/WikiPlugin.php:282
+#, c-format
+msgid "%s: not a subclass of WikiPlugin"
+msgstr ""
+
+#: ../lib/WikiUser.php:63
+msgid "Insufficient permissions."
+msgstr ""
+
+#: ../lib/WikiUser.php:65
+msgid "Invalid password or userid."
+msgstr ""
+
+#: ../lib/WikiUser.php:97
+msgid "Sign In"
+msgstr ""
+
+#: ../lib/WikiUser.php:98
+msgid "Please Sign In"
+msgstr ""
+
+#: ../lib/config.php:274
+msgid "An unnamed PhpWiki"
+msgstr ""
+
+#: ../lib/diff.php:173
+#, c-format
 msgid "version %s"
 msgstr "versie %s"
 
@@ -88,9 +356,8 @@ msgid "version %d"
 msgstr "versie %d"
 
 #: ../lib/diff.php:206
-#, fuzzy
 msgid "current version"
-msgstr "is gelijk aaan huidige versie %d"
+msgstr "huidige versie"
 
 #: ../lib/diff.php:223
 msgid "previous major revision"
@@ -126,9 +393,8 @@ msgid "Other diffs:"
 msgstr ""
 
 #: ../lib/diff.php:276
-#, fuzzy
 msgid "Newer page:"
-msgstr "Verwijder pagina"
+msgstr ""
 
 #: ../lib/diff.php:277
 msgid "Older page:"
@@ -149,7 +415,7 @@ msgid "BackLinks for %s"
 msgstr ""
 
 #: ../lib/display.php:67 ../lib/plugin/BackLinks.php:9
-#: ../themes/default/templates/body.tmpl:25
+#: ../themes/default/templates/navbar.tmpl:22
 msgid "BackLinks"
 msgstr ""
 
@@ -161,119 +427,106 @@ msgstr ""
 #: ../lib/editpage.php:32
 #, c-format
 msgid "View Source: %s"
-msgstr ""
+msgstr "Bron tekst: %s"
 
 #: ../lib/editpage.php:37 ../lib/editpage.php:38
 #, c-format
 msgid "Edit: %s"
 msgstr "Verander: %s"
 
-#: ../lib/ErrorManager.php:86
-msgid "PHP Warnings"
-msgstr ""
-
-#: ../lib/ErrorManager.php:169
-msgid "error while handling error:"
-msgstr ""
-
-#: ../lib/FileFinder.php:82
-#, c-format
-msgid "%s: file not found"
-msgstr ""
-
 #: ../lib/loadsave.php:17
 msgid "Complete."
 msgstr "Klaar."
 
 #: ../lib/loadsave.php:18
-#, fuzzy, c-format
+#, c-format
 msgid "Return to %s"
 msgstr "Terug naar %s"
 
-#: ../lib/loadsave.php:133
+#: ../lib/loadsave.php:134
 msgid "You must specify a directory to dump to"
 msgstr "Je moet een directory specificeren om in te storten"
 
-#: ../lib/loadsave.php:138
+#: ../lib/loadsave.php:139
 #, c-format
 msgid "Cannot create directory '%s'"
 msgstr ""
 
-#: ../lib/loadsave.php:141
+#: ../lib/loadsave.php:142
 #, c-format
 msgid "Created directory '%s' for the page dump..."
 msgstr ""
 
-#: ../lib/loadsave.php:144
+#: ../lib/loadsave.php:145
 #, c-format
 msgid "Using directory '%s'"
 msgstr ""
 
-#: ../lib/loadsave.php:147
+#: ../lib/loadsave.php:149
 msgid "Dumping Pages"
 msgstr ""
 
-#: ../lib/loadsave.php:158
-#, fuzzy, c-format
+#: ../lib/loadsave.php:160
+#, c-format
 msgid "saved as %s"
-msgstr "als versie %d"
+msgstr "bewaard als %s"
 
-#: ../lib/loadsave.php:164 ../lib/plugin/text2png.php:154
+#: ../lib/loadsave.php:166 ../lib/plugin/text2png.php:154
 #, c-format
 msgid "couldn't open file '%s' for writing"
 msgstr ""
 
-#: ../lib/loadsave.php:168
+#: ../lib/loadsave.php:170
 #, c-format
 msgid "%s bytes written"
 msgstr ""
 
-#: ../lib/loadsave.php:191
+#: ../lib/loadsave.php:193
 msgid "Empty pagename!"
 msgstr ""
 
-#: ../lib/loadsave.php:211
+#: ../lib/loadsave.php:213
 #, c-format
 msgid "from %s"
 msgstr "van %s"
 
-#: ../lib/loadsave.php:215
-#, fuzzy
+#: ../lib/loadsave.php:217
 msgid "new page"
-msgstr "Verwijder pagina"
+msgstr "nieuw pagina"
 
-#: ../lib/loadsave.php:221
+#: ../lib/loadsave.php:223
 #, c-format
 msgid "is identical to current version %d"
 msgstr "is gelijk aaan huidige versie %d"
 
-#: ../lib/loadsave.php:223
+#: ../lib/loadsave.php:225
 msgid "- skipped"
 msgstr "- overgeslagen"
 
-#: ../lib/loadsave.php:234
-#, fuzzy, c-format
+#: ../lib/loadsave.php:236
+#, c-format
 msgid "- saved to database as version %d"
-msgstr "als versie %d"
+msgstr "- bewaard in de data base als versie %d"
 
-#: ../lib/loadsave.php:327
-#, fuzzy, c-format
+#: ../lib/loadsave.php:326
+#, c-format
 msgid "MIME file %s"
-msgstr "MIME bestand"
+msgstr "MIME bestand %"
 
-#: ../lib/loadsave.php:331
-#, fuzzy, c-format
+#: ../lib/loadsave.php:330
+#, c-format
 msgid "Serialized file %s"
-msgstr "Geserialiseerd bestand"
+msgstr "Geserialiseerd bestand %s"
 
-#: ../lib/loadsave.php:343
-#, fuzzy, c-format
+#: ../lib/loadsave.php:342
+#, c-format
 msgid "plain file %s"
-msgstr "plat bestand"
+msgstr "plat bestand %"
 
-#: ../lib/loadsave.php:359 ../lib/loadsave.php:379
+#: ../lib/loadsave.php:358 ../lib/loadsave.php:378
+#, fuzzy
 msgid "Skipping"
-msgstr ""
+msgstr "overgeslagen"
 
 #: ../lib/loadsave.php:422
 #, c-format
@@ -285,77 +538,45 @@ msgstr ""
 msgid "Loading '%s'"
 msgstr ""
 
-#: ../lib/loadsave.php:448
+#: ../lib/loadsave.php:455
 msgid "The PhpWiki programming team"
 msgstr "Het PhpWiki programmeerteam"
 
-#: ../lib/loadsave.php:450
+#: ../lib/loadsave.php:458
 msgid "Loading up virgin wiki"
 msgstr "Laden van maagdelijke wiki"
 
-#: ../lib/loadsave.php:468
+#: ../lib/loadsave.php:476
 msgid "No uploaded file to upload?"
 msgstr ""
 
-#: ../lib/loadsave.php:471
+#: ../lib/loadsave.php:479
 #, c-format
 msgid "Uploading %s"
 msgstr ""
 
-#: ../lib/loadsave.php:476 ../lib/plugin/RecentChanges.php:165
-#: ../lib/plugin/RecentChanges.php:274 ../lib/plugin/RecentChanges.php:319
-#: ../lib/plugin/Toolbar.php:87 ../lib/plugin/Toolbar.php:105
-#: ../lib/plugin/Toolbar.php:112 ../themes/default/templates/body.tmpl:16
-msgid "RecentChanges"
-msgstr "RecenteVeranderingen"
-
-#: ../lib/main.php:33 ../lib/main.php:92 ../lib/main.php:94
+#: ../lib/main.php:33 ../lib/main.php:88 ../lib/main.php:90
 #: ../lib/plugin/RecentChanges.php:257
 msgid "HomePage"
 msgstr "ThuisPagina"
 
-#: ../lib/main.php:106
-#, fuzzy, c-format
+#: ../lib/main.php:103
+#, c-format
 msgid "Action %s is disabled in this wiki."
-msgstr "Actie $action is niet beschikbaar in deze wiki."
+msgstr "Actie %s is niet beschikbaar in deze wiki."
 
-#: ../lib/main.php:127 ../lib/plugin/FullTextSearch.php:12
+#: ../lib/main.php:124 ../lib/plugin/FullTextSearch.php:12
 msgid "FullTextSearch"
 msgstr "VolledigeTekstZoek"
 
-#: ../lib/main.php:130 ../lib/plugin/RecentChanges.php:265
+#: ../lib/main.php:127 ../lib/plugin/RecentChanges.php:265
 #: ../lib/plugin/TitleSearch.php:12
 msgid "TitleSearch"
 msgstr "TitelZoek"
 
-#: ../lib/main.php:193
-#, fuzzy
-msgid "lock or unlock pages"
-msgstr "Verwijder pagina"
-
-#: ../lib/main.php:227
+#: ../lib/main.php:226
 #, c-format
 msgid "Bad action: '%s'"
-msgstr ""
-
-#: ../lib/plugin/_BackendInfo.php:10
-#: ../themes/default/templates/browse.tmpl:19
-msgid "DebugInfo"
-msgstr ""
-
-#: ../lib/plugin/_BackendInfo.php:14
-#, c-format
-msgid "Get debugging information for %s."
-msgstr ""
-
-#: ../lib/plugin/_BackendInfo.php:45
-#, c-format
-msgid "Querying backend directly for '%s'"
-msgstr ""
-
-#: ../lib/plugin/_BackendInfo.php:51
-#, c-format
-msgid "No pagedata for %s"
 msgstr ""
 
 #: ../lib/plugin/BackLinks.php:13
@@ -363,9 +584,9 @@ msgstr ""
 msgid "Get BackLinks for %s"
 msgstr ""
 
-#: ../lib/plugin/BackLinks.php:39 ../lib/plugin/MostPopular.php:28
+#: ../lib/plugin/BackLinks.php:39 ../lib/plugin/MostPopular.php:27
 msgid "Page Name"
-msgstr "Pagina"
+msgstr "Pagina Naam"
 
 #: ../lib/plugin/BackLinks.php:57
 #, c-format
@@ -392,16 +613,16 @@ msgstr ""
 #: ../lib/plugin/Calendar.php:115
 #, c-format
 msgid "Edit %s"
-msgstr ""
+msgstr "Verander %s"
 
 #: ../lib/plugin/FullTextSearch.php:16
 msgid "Full Text Search"
 msgstr "Volledige tekst zoek"
 
 #: ../lib/plugin/FullTextSearch.php:52
-#, fuzzy, c-format
+#, c-format
 msgid "Full text search results for '%s'"
-msgstr "Volledige tekst zoek resultaten '%s'"
+msgstr "Volledige tekst zoek resultaten naar '%s'"
 
 #: ../lib/plugin/FullTextSearch.php:54 ../lib/plugin/TitleSearch.php:52
 msgid "<no matches>"
@@ -428,22 +649,23 @@ msgstr ""
 msgid "no page specified"
 msgstr ""
 
-#: ../lib/plugin/IncludePage.php:78
+#: ../lib/plugin/IncludePage.php:79
 #, c-format
 msgid "recursive inclusion of page %s"
 msgstr ""
 
-#: ../lib/plugin/IncludePage.php:87 ../lib/plugin/walkabout.php:122
+#: ../lib/plugin/IncludePage.php:88 ../lib/plugin/walkabout.php:122
 #, c-format
 msgid "%s(%d): no such revision"
 msgstr ""
 
-#: ../lib/plugin/IncludePage.php:111
+#: ../lib/plugin/IncludePage.php:112
 #, fuzzy, c-format
 msgid "Included from %s"
 msgstr "van %s"
 
-#: ../lib/plugin/LikePages.php:12 ../themes/default/templates/body.tmpl:24
+#: ../lib/plugin/LikePages.php:12 ../themes/Portland/templates/navbar.tmpl:21
+#: ../themes/default/templates/navbar.tmpl:21
 msgid "LikePages"
 msgstr ""
 
@@ -476,10 +698,11 @@ msgid "MostPopular"
 msgstr "Meestbezochte"
 
 #: ../lib/plugin/MostPopular.php:13
+#, fuzzy
 msgid "List the most popular pages"
-msgstr ""
+msgstr "Lijst de meestbezochte pagina's"
 
-#: ../lib/plugin/MostPopular.php:27
+#: ../lib/plugin/MostPopular.php:26
 msgid "Hits"
 msgstr "Teller"
 
@@ -488,39 +711,46 @@ msgstr "Teller"
 msgid "The %s most popular pages of this wiki:"
 msgstr "De %s meestbezochte pagina's van deze Wiki:"
 
+#: ../lib/plugin/MostPopular.php:44
+msgid "Visited pages on this wiki, ordered by popularity:"
+msgstr ""
+
 #: ../lib/plugin/PageHistory.php:71
 #, c-format
 msgid "PageHistory for %s"
 msgstr ""
 
-#: ../lib/plugin/PageHistory.php:86
+#: ../lib/plugin/PageHistory.php:87
 msgid "Check any two boxes to compare revisions."
 msgstr ""
 
-#: ../lib/plugin/PageHistory.php:88
+#: ../lib/plugin/PageHistory.php:89
 msgid "compare revisions"
 msgstr ""
 
-#: ../lib/plugin/PageHistory.php:90
+#: ../lib/plugin/PageHistory.php:91
 #, c-format
 msgid "Check any two boxes then %s."
 msgstr ""
 
-#: ../lib/plugin/PageHistory.php:144 ../lib/plugin/PageHistory.php:182
-#, fuzzy, c-format
+#: ../lib/plugin/PageHistory.php:145 ../lib/plugin/PageHistory.php:183
+#, c-format
 msgid "Version %d"
-msgstr "versie %s"
+msgstr "Versie %d"
 
-#: ../lib/plugin/PageHistory.php:174
+#: ../lib/plugin/PageHistory.php:175
 msgid "History of changes."
 msgstr ""
 
-#: ../lib/plugin/PageHistory.php:200 ../lib/plugin/RecentChanges.php:44
-#: ../themes/default/templates/browse.tmpl:16
+#: ../lib/plugin/PageHistory.php:201 ../lib/plugin/RecentChanges.php:44
+#: ../themes/MacOSX/templates/actionbar.tmpl:16
+#: ../themes/Portland/templates/actionbar.tmpl:15
+#: ../themes/Portland/templates/viewsource.tmpl:21
+#: ../themes/default/templates/actionbar.tmpl:16
 msgid "PageHistory"
 msgstr ""
 
-#: ../lib/plugin/PageHistory.php:204
+#: ../lib/plugin/PageHistory.php:205
 #, c-format
 msgid "List PageHistory for %s"
 msgstr ""
@@ -530,13 +760,12 @@ msgid "Deleted."
 msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:88
-#, fuzzy
 msgid "New page."
-msgstr "Verwijder pagina"
+msgstr "Nieuw pagina."
 
 #: ../lib/plugin/RecentChanges.php:100
 msgid "(diff)"
-msgstr ""
+msgstr "(diff)"
 
 #: ../lib/plugin/RecentChanges.php:138
 msgid "edits"
@@ -553,17 +782,17 @@ msgstr ""
 #: ../lib/plugin/RecentChanges.php:146
 #, fuzzy, c-format
 msgid "The %d most recent %s during the past %.1f days are listed below."
-msgstr "De meest recent veranderde pagina's staan hieronder:"
+msgstr "De %d meest recent %s during the past %.1f days staan hieronder:"
 
 #: ../lib/plugin/RecentChanges.php:149
-#, fuzzy, c-format
+#, c-format
 msgid "The %d most recent %s are listed below."
-msgstr "De meest recent veranderde pagina's staan hieronder:"
+msgstr "De %d meest recent %s staan hieronder."
 
 #: ../lib/plugin/RecentChanges.php:154
 #, fuzzy, c-format
 msgid "The most recent %s during the past %.1f days are listed below."
-msgstr "De meest recent veranderde pagina's staan hieronder:"
+msgstr "De meest recent %s during the past %.1f days staan hieronder:"
 
 #: ../lib/plugin/RecentChanges.php:157
 #, c-format
@@ -572,6 +801,7 @@ msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:165 ../lib/plugin/Toolbar.php:87
 #: ../lib/plugin/Toolbar.php:107 ../lib/plugin/Toolbar.php:112
+#: ../themes/Portland/templates/editpage.tmpl:79
 msgid "RecentEdits"
 msgstr ""
 
@@ -581,37 +811,12 @@ msgstr "Zoek"
 
 #: ../lib/plugin/RecentChanges.php:263 ../lib/plugin/TitleSearch.php:16
 msgid "Title Search"
-msgstr "Titel zoek"
-
-#: ../lib/plugin/text2png.php:37
-msgid "Sorry, this version of PHP cannot create PNG image files."
-msgstr ""
-
-#: ../lib/plugin/text2png.php:42
-#, fuzzy, c-format
-msgid "See %s"
-msgstr "[%d] Zie [%s]"
-
-#: ../lib/plugin/text2png.php:89
-msgid ""
-"PHP was unable to create a new GD image stream. Read "
-"'lib/plugin/text2png.php' for details."
-msgstr ""
-
-#: ../lib/plugin/text2png.php:141
-#, c-format
-msgid "Image saved to cache file: %s"
-msgstr ""
-
-#: ../lib/plugin/text2png.php:145
-#, c-format
-msgid "Image loaded from cache file: %s"
-msgstr ""
+msgstr "Titel Zoek"
 
 #: ../lib/plugin/TitleSearch.php:48
-#, fuzzy, c-format
+#, c-format
 msgid "Title search results for '%s'"
-msgstr "Titel zoek resultaten '%s'"
+msgstr "Titel zoek resultaten naar '%s'"
 
 #: ../lib/plugin/Toolbar.php:31
 msgid "Toolbar"
@@ -683,22 +888,69 @@ msgstr ""
 
 #: ../lib/plugin/ViewSource.php:20
 msgid "ViewSource"
-msgstr ""
+msgstr "BronTekst"
 
 #: ../lib/plugin/ViewSource.php:24
-#, c-format
+#, fuzzy, c-format
 msgid "View Wiki code for page '%s'."
-msgstr ""
+msgstr "Toon de pagina bron tekst '%s'."
 
-#: ../lib/plugin/ViewSource.php:52 ../lib/stdlib.php:543
+#: ../lib/plugin/ViewSource.php:52 ../lib/stdlib.php:509
 #, c-format
 msgid "I'm sorry.  Version %d of %s is not in my database."
 msgstr ""
 
 #: ../lib/plugin/ViewSource.php:59
-#, fuzzy, c-format
+#, c-format
 msgid "version %d of %s"
-msgstr "versie %s"
+msgstr "versie %d van %s"
+
+#: ../lib/plugin/_BackendInfo.php:10
+#: ../themes/MacOSX/templates/actionbar.tmpl:19
+#: ../themes/Portland/templates/navbar.tmpl:12
+#: ../themes/default/templates/actionbar.tmpl:19
+msgid "DebugInfo"
+msgstr ""
+
+#: ../lib/plugin/_BackendInfo.php:14
+#, c-format
+msgid "Get debugging information for %s."
+msgstr ""
+
+#: ../lib/plugin/_BackendInfo.php:45
+#, c-format
+msgid "Querying backend directly for '%s'"
+msgstr ""
+
+#: ../lib/plugin/_BackendInfo.php:51
+#, c-format
+msgid "No pagedata for %s"
+msgstr ""
+
+#: ../lib/plugin/text2png.php:37
+msgid "Sorry, this version of PHP cannot create PNG image files."
+msgstr ""
+
+#: ../lib/plugin/text2png.php:42
+#, c-format
+msgid "See %s"
+msgstr "Zie %s"
+
+#: ../lib/plugin/text2png.php:89
+msgid ""
+"PHP was unable to create a new GD image stream. Read 'lib/plugin/text2png."
+"php' for details."
+msgstr ""
+
+#: ../lib/plugin/text2png.php:141
+#, c-format
+msgid "Image saved to cache file: %s"
+msgstr ""
+
+#: ../lib/plugin/text2png.php:145
+#, c-format
+msgid "Image loaded from cache file: %s"
+msgstr ""
 
 #: ../lib/plugin/walkabout.php:33
 msgid "walkabout"
@@ -718,9 +970,8 @@ msgid "Next"
 msgstr ""
 
 #: ../lib/plugin/walkabout.php:91
-#, fuzzy
 msgid "Previous"
-msgstr "Vorige Auteur"
+msgstr "Vorige"
 
 #: ../lib/plugin/walkabout.php:93
 msgid "First"
@@ -735,7 +986,7 @@ msgstr ""
 #: ../lib/plugin/walkabout.php:183
 #, c-format
 msgid "%s: %s"
-msgstr ""
+msgstr "%s: %s"
 
 #: ../lib/prepend.php:31
 msgid "WikiFatalError"
@@ -819,17 +1070,17 @@ msgid "Sorry for the inconvenience."
 msgstr "Excuses voor het ongemak."
 
 #: ../lib/savepage.php:44
-#, c-format
+#, fuzzy, c-format
 msgid "Problem while updating %s"
 msgstr "Probleem tijdens veranderen van %s"
 
 #: ../lib/savepage.php:50
-#, fuzzy
 msgid ""
 "This page has been locked by the administrator so your changes could not be "
 "saved."
 msgstr ""
-"Deze pagina is afgesloten door de beheerder en kan niet veranderd worden."
+"Deze pagina is afgesloten door de beheerder en je veranderingen kan niet "
+"bewaar worden."
 
 #: ../lib/savepage.php:52
 #, fuzzy
@@ -859,44 +1110,44 @@ msgid "Edit aborted: %s"
 msgstr ""
 
 #: ../lib/savepage.php:150 ../lib/savepage.php:151
-#, fuzzy, c-format
+#, c-format
 msgid "Saved: %s"
-msgstr "als versie %d"
+msgstr "Bewaard: %s"
 
-#: ../lib/stdlib.php:133 ../lib/stdlib.php:206
+#: ../lib/stdlib.php:134 ../lib/stdlib.php:171
 msgid "BAD URL -- remove all of <, >, \""
 msgstr ""
 
-#: ../lib/stdlib.php:350
+#: ../lib/stdlib.php:315
 msgid "Lock page to enable link"
 msgstr ""
 
-#: ../lib/stdlib.php:469
+#: ../lib/stdlib.php:435
 #, c-format
 msgid "%d best incoming links:"
 msgstr "%d beste inkomende koppelingen:"
 
-#: ../lib/stdlib.php:479
+#: ../lib/stdlib.php:445
 #, c-format
 msgid "%d best outgoing links:"
 msgstr "%d beste uitgaande koppelingen:"
 
-#: ../lib/stdlib.php:490
+#: ../lib/stdlib.php:456
 #, c-format
 msgid "%d most popular nearby:"
 msgstr "%d meest gevraagde in de buurt:"
 
-#: ../lib/stdlib.php:541 ../lib/stdlib.php:547
+#: ../lib/stdlib.php:507 ../lib/stdlib.php:513
 #, fuzzy
 msgid "Bad Version"
-msgstr "als versie %d"
+msgstr "versie"
 
-#: ../lib/stdlib.php:700
+#: ../lib/stdlib.php:666
 #, c-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr ""
 
-#: ../lib/stdlib.php:709
+#: ../lib/stdlib.php:675
 #, c-format
 msgid "%s: argument index out of range"
 msgstr ""
@@ -904,272 +1155,6 @@ msgstr ""
 #: ../lib/transform.php:108
 msgid "Lists nested too deep in SetHTMLOutputMode"
 msgstr "Lijsten nesten te diep in SetHTMLOutputMode"
-
-#: ../lib/WikiDB/backend/cvs.php:93
-#, c-format
-msgid "Creating new repository [%s]"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:128
-#, c-format
-msgid "Found [%s] in [%s]"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:182
-#, c-format
-msgid "Argument %s was not array"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:190
-msgid "no meta data found"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:243
-#, c-format
-msgid "FAILED for [%s]"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:337 ../lib/WikiDB/backend/cvs.php:347
-#: ../lib/WikiDB/backend/cvs.php:353 ../lib/WikiDB/backend/cvs.php:450
-#: ../lib/WikiDB/backend/cvs.php:456
-#, fuzzy
-msgid "Not Implemented"
-msgstr "Functie nog niet gemplementeerd."
-
-#: ../lib/WikiDB/backend/cvs.php:520
-#, c-format
-msgid "Creating meta file for [%s]"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:614
-msgid "got revision information"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:619
-msgid "is initial release"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:622
-#, fuzzy
-msgid "returning old version"
-msgstr "is gelijk aaan huidige versie %d"
-
-#: ../lib/WikiDB/backend/cvs.php:689
-msgid "Unable to delete file, lock was not obtained."
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:699
-msgid "Unable to open file"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:709
-#, fuzzy
-msgid "no message"
-msgstr "ThuisPagina"
-
-#: ../lib/WikiDB/backend/cvs.php:749
-#, c-format
-msgid "unable to locate/open [%s], turning debug off"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:760
-#, c-format
-msgid "Preparing to execute [%s]"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:763
-#, c-format
-msgid "Command failed [%s], Output:"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:765
-#, c-format
-msgid "Command failed [%s], Return value: %s"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:768
-msgid "Done execution"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:782
-msgid "Unable to obtain read lock."
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:789
-#, c-format
-msgid "Unable to open file '%s' for reading"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:808
-msgid "Timeout while obtaining lock."
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:817
-#, c-format
-msgid "Could not open file '%s' for writing"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:827
-#, c-format
-msgid "Copying from [%s] to [%s]"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:830
-msgid "Copying"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:835
-#, fuzzy, c-format
-msgid "Copied to [%s]"
-msgstr "Kopie van %s"
-
-#: ../lib/WikiDB/backend/cvs.php:837
-#, c-format
-msgid "Failed to copy [%s]"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:843
-msgid "Not copying"
-msgstr ""
-
-#: ../lib/WikiDB/backend/dbaBase.php:330
-#, c-format
-msgid "Bad key in linktable: %s"
-msgstr ""
-
-#: ../lib/WikiDB/backend/dbaBase.php:352
-#, c-format
-msgid "Bad key %s in table"
-msgstr ""
-
-#: ../lib/WikiDB/backend/dbaBase.php:360
-#, c-format
-msgid "backlink entry missing for link %s"
-msgstr ""
-
-#: ../lib/WikiDB/backend/dbaBase.php:368
-#, c-format
-msgid "link entry missing for backlink %s"
-msgstr ""
-
-#: ../lib/WikiDB/backend/dba.php:23
-#, c-format
-msgid "%s: Can't open dba database"
-msgstr ""
-
-#: ../lib/WikiDB/backend/PearDB.php:26
-#, fuzzy, c-format
-msgid "Can't connect to database: %s"
-msgstr "Kan verbinding naar data base niet tot stand brengen, geef op."
-
-#: ../lib/WikiDB/backend/PearDB.php:57
-msgid "WARNING: database still locked"
-msgstr ""
-
-#: ../lib/WikiDB/backend/PearDB.php:711
-msgid "fatal database error"
-msgstr ""
-
-#: ../lib/WikiDB/dba.php:17
-#, c-format
-msgid ""
-"DBA files are in the %s directory. Please read the INSTALL file and move the "
-"DB file to a permanent location or risk losing all the pages!"
-msgstr ""
-
-#: ../lib/WikiDB.php:353
-#, c-format
-msgid "Attempt to delete most recent revision of '%s'"
-msgstr ""
-
-#: ../lib/WikiDB.php:401
-#, c-format
-msgid "Attempt to merge most recent revision of '%s'"
-msgstr ""
-
-#: ../lib/WikiDB.php:488
-#, c-format
-msgid "%s: Date of new revision is %s"
-msgstr ""
-
-#: ../lib/WikiDB.php:513
-#, c-format
-msgid "Optimizing %s"
-msgstr ""
-
-#: ../lib/WikiDB.php:837
-#, fuzzy, c-format
-msgid "Describe %s here."
-msgstr "Beschrijf %s hier."
-
-#: ../lib/WikiDB.php:872
-#, c-format
-msgid "Acck! Revision %s of %s seems to have been deleted!"
-msgstr ""
-
-#: ../lib/WikiPlugin.php:64
-#, c-format
-msgid "argument '%s' not declared by plugin"
-msgstr ""
-
-#: ../lib/WikiPlugin.php:112
-#, c-format
-msgid "trailing cruft in plugin args: '%s'"
-msgstr ""
-
-#: ../lib/WikiPlugin.php:236 ../lib/ziplib.php:162 ../lib/ziplib.php:164
-#: ../lib/ziplib.php:166 ../lib/ziplib.php:578 ../lib/ziplib.php:675
-#, c-format
-msgid "Bad %s"
-msgstr ""
-
-#: ../lib/WikiPlugin.php:275
-#, fuzzy, c-format
-msgid "Include of '%s' failed"
-msgstr "Insert in %s gefaald: %s"
-
-#: ../lib/WikiPlugin.php:276
-#, c-format
-msgid "%s: no such class"
-msgstr ""
-
-#: ../lib/WikiPlugin.php:282
-#, c-format
-msgid "%s: not a subclass of WikiPlugin"
-msgstr ""
-
-#: ../lib/WikiUser.php:97
-#, c-format
-msgid "to perform action '%s'"
-msgstr ""
-
-#: ../lib/WikiUser.php:99
-msgid "to do that"
-msgstr ""
-
-#: ../lib/WikiUser.php:100
-#, fuzzy, c-format
-msgid "You must be logged in as an administrator %s"
-msgstr "Je moet ingelogd zijn als beheerder om te $action."
-
-#: ../lib/WikiUser.php:180
-msgid ""
-"You must set the administrator account and password before you can log in."
-msgstr ""
-"Je moet de beheerder gebruiker en het wachtwoord zetten voordat je in kan "
-"loggen."
-
-#: ../lib/WikiUser.php:191
-msgid "You entered an invalid login or password."
-msgstr "Je hebt een ongeldige gebruikersnaam of wachtwoord ingevoerd."
-
-#: ../lib/WikiUser.php:194
-msgid "You can log in using any valid WikiWord as a user ID."
-msgstr ""
-
-#: ../lib/WikiUser.php:195
-msgid "(Any password will work, except, of course for the admin user.)"
-msgstr ""
 
 #: ../lib/ziplib.php:184
 msgid "Can't inflate data: zlib support not enabled in this PHP"
@@ -1225,120 +1210,203 @@ msgstr ""
 msgid "Unknown %s"
 msgstr ""
 
-#: ../themes/default/templates/body.tmpl:17
-msgid "FindPage"
-msgstr "ZoekPagina"
+#: ../themes/Hawaiian/lib/random.php:12 ../themes/Hawaiian/lib/random.php:22
+#, c-format
+msgid "%s is empty."
+msgstr ""
 
-#: ../themes/default/templates/browse.tmpl:8
+#: ../themes/Hawaiian/lib/random.php:68
+#, c-format
+msgid "Unable to open directory '%s' for reading"
+msgstr ""
+
+#: ../themes/Hawaiian/themeinfo.php:18 ../themes/MacOSX/themeinfo.php:101
+#: ../themes/Portland/themeinfo.php:34 ../themes/WikiTrek/themeinfo.php:37
+#: ../themes/default/themeinfo.php:17
+msgid "Printer"
+msgstr ""
+
+#: ../themes/Hawaiian/themeinfo.php:19 ../themes/MacOSX/themeinfo.php:102
+#: ../themes/Portland/themeinfo.php:35 ../themes/WikiTrek/themeinfo.php:38
+#: ../themes/default/themeinfo.php:18
+msgid "Modern"
+msgstr ""
+
+#: ../themes/MacOSX/templates/actionbar.tmpl:8
+#: ../themes/Portland/templates/actionbar.tmpl:8
+#: ../themes/default/templates/actionbar.tmpl:8
 msgid "Edit Old Revision"
 msgstr ""
 
-#: ../themes/default/templates/browse.tmpl:10
+#: ../themes/MacOSX/templates/actionbar.tmpl:10
+#: ../themes/Portland/templates/actionbar.tmpl:10
+#: ../themes/default/templates/actionbar.tmpl:10
 msgid "View Source"
-msgstr ""
+msgstr "Bron Tekst"
 
-#: ../themes/default/templates/browse.tmpl:25
-#, fuzzy, c-format
-msgid "Last edited on %s."
-msgstr "meest recente verandering op %s"
-
-#: ../themes/default/templates/browse.tmpl:27
+#: ../themes/MacOSX/templates/actionbar.tmpl:56
+#: ../themes/default/templates/signin.tmpl:24
 #, c-format
-msgid "Version %s, saved on %s."
+msgid "You are signed in as %s"
+msgstr "Je bent ingelogd als %s"
+
+#: ../themes/Portland/templates/actionbar.tmpl:8
+msgid "EditText"
+msgstr "VeranderTekst"
+
+#: ../themes/Portland/templates/actionbar.tmpl:11
+#, c-format
+msgid "%s of this page"
 msgstr ""
 
-#: ../themes/default/templates/browse.tmpl:34
-#: ../themes/default/templates/viewsource.tmpl:3
-#, fuzzy
-msgid "Note:"
-msgstr "Geen"
+#: ../themes/Portland/templates/actionbar.tmpl:18
+#: ../themes/Portland/templates/viewsource.tmpl:24
+#, c-format
+msgid "(last edited %s)"
+msgstr "(meest recente verandering op %s)"
 
-#: ../themes/default/templates/browse.tmpl:35
+#: ../themes/Portland/templates/actionbar.tmpl:20
+#: ../themes/Portland/templates/viewsource.tmpl:26
+#, c-format
+msgid "(version %s, saved on %s)"
+msgstr "(versie %s, bewaard op %s)"
+
+#: ../themes/Portland/templates/browse.tmpl:9
+#: ../themes/Portland/templates/viewsource.tmpl:3
+#: ../themes/default/templates/browse.tmpl:15
+#: ../themes/default/templates/viewsource.tmpl:3
+msgid "Note:"
+msgstr ""
+
+#: ../themes/Portland/templates/browse.tmpl:10
+#: ../themes/Portland/templates/viewsource.tmpl:6
+#: ../themes/default/templates/browse.tmpl:16
+#: ../themes/default/templates/viewsource.tmpl:7
 msgid "You are viewing an old revision of this page."
 msgstr ""
 
-#: ../themes/default/templates/browse.tmpl:37
+#: ../themes/Portland/templates/browse.tmpl:12
+#: ../themes/Portland/templates/viewsource.tmpl:7
+#: ../themes/default/templates/browse.tmpl:17
+#: ../themes/default/templates/viewsource.tmpl:8
 #, fuzzy
 msgid "View the current version"
-msgstr "is gelijk aaan huidige versie"
+msgstr "huidige versie"
 
-#: ../themes/default/templates/browse.tmpl:66
-#, c-format
-msgid "You are signed in as %s"
-msgstr ""
-
-#: ../themes/default/templates/editpage.tmpl:5
-msgid "Preview only!  Changes not saved."
-msgstr ""
-
-#: ../themes/default/templates/editpage.tmpl:10
-msgid "Warning: You are editing an old revision."
-msgstr ""
-
-#: ../themes/default/templates/editpage.tmpl:11
-msgid "Saving this page will overwrite the current version."
-msgstr ""
-
+#: ../themes/Portland/templates/editpage.tmpl:20
 #: ../themes/default/templates/editpage.tmpl:50
 msgid "Preview"
 msgstr ""
 
-#: ../themes/default/templates/editpage.tmpl:54
+#: ../themes/Portland/templates/editpage.tmpl:25
+#: ../themes/default/templates/editpage.tmpl:55
 msgid "Save"
 msgstr "Bewaar"
 
-#: ../themes/default/templates/editpage.tmpl:57
-#, c-format
-msgid "You are signed in as %s."
-msgstr "Je bent ingelogd als %s."
+#: ../themes/Portland/templates/editpage.tmpl:51
+#: ../themes/default/templates/editpage.tmpl:10
+msgid "Warning: You are editing an old revision."
+msgstr ""
 
-#: ../themes/default/templates/editpage.tmpl:60
+#: ../themes/Portland/templates/editpage.tmpl:52
+#: ../themes/default/templates/editpage.tmpl:11
+msgid "Saving this page will overwrite the current version."
+msgstr ""
+
+#: ../themes/Portland/templates/editpage.tmpl:55
+#: ../themes/default/templates/editpage.tmpl:5
+msgid "Preview only!  Changes not saved."
+msgstr ""
+
+#: ../themes/Portland/templates/editpage.tmpl:72
+#: ../themes/default/templates/editpage.tmpl:65
+msgid "Summary:"
+msgstr ""
+
+#: ../themes/Portland/templates/editpage.tmpl:74
+#: ../themes/default/templates/editpage.tmpl:77
 #, c-format
 msgid "Author will be logged as %s."
 msgstr ""
 
-#: ../themes/default/templates/editpage.tmpl:64
-msgid "backup and reload after signing in"
-msgstr ""
-
-#: ../themes/default/templates/editpage.tmpl:69
-msgid "Summary:"
-msgstr ""
-
-#: ../themes/default/templates/editpage.tmpl:74
-msgid "This is a minor change."
-msgstr ""
-
-#: ../themes/default/templates/editpage.tmpl:86
+#: ../themes/Portland/templates/editpage.tmpl:78
 #, c-format
-msgid "You can change the size of the editing area in %s."
-msgstr "Je kunt de afmetingen van het invoerveld veranderen. Zie %s."
+msgid ""
+"I'm just doing minor edits. Please divert the usual logging to %s instead."
+msgstr ""
 
+#: ../themes/Portland/templates/editpage.tmpl:83
 #: ../themes/default/templates/editpage.tmpl:87
-msgid "UserPreferences"
-msgstr "GebruikersVoorkeuren"
-
-#: ../themes/default/templates/editpage.tmpl:88
 #, c-format
 msgid "See %s tips for editing."
 msgstr "%s tips for veranderen."
 
-#: ../themes/default/templates/editpage.tmpl:89
+#: ../themes/Portland/templates/editpage.tmpl:84
+#: ../themes/default/templates/editpage.tmpl:88
 msgid "GoodStyle"
 msgstr "GoedeStijl"
 
-#: ../themes/default/templates/editpage.tmpl:96
+#: ../themes/Portland/templates/editpage.tmpl:85
+#: ../themes/default/templates/editpage.tmpl:85
+#, c-format
+msgid "You can change the size of the editing area in %s."
+msgstr "Je kunt de afmetingen van het invoerveld veranderen. Zie %s."
+
+#: ../themes/Portland/templates/editpage.tmpl:86
+#: ../themes/default/templates/editpage.tmpl:86
+msgid "UserPreferences"
+msgstr "GebruikersVoorkeuren"
+
+#: ../themes/Portland/templates/editpage.tmpl:90
+#: ../themes/default/templates/editpage.tmpl:95
 msgid "TextFormattingRules"
 msgstr "TekstFormatteringsRegels"
 
-#: ../themes/default/templates/editpage.tmpl:96
+#: ../themes/Portland/templates/editpage.tmpl:90
+#: ../themes/default/templates/editpage.tmpl:95
 msgid "Synopsis"
+msgstr ""
+
+#: ../themes/Portland/templates/navbar.tmpl:19
+#: ../themes/default/templates/navbar.tmpl:14
+msgid "FindPage"
+msgstr "ZoekPagina"
+
+#: ../themes/Portland/templates/navbar.tmpl:42
+#: ../themes/default/templates/navbar.tmpl:25
+msgid "PhpWikiAdministration"
+msgstr ""
+
+#: ../themes/Portland/templates/viewsource.tmpl:4
+#: ../themes/default/templates/viewsource.tmpl:4
+msgid "This page has been locked by the administrator and cannot be edited."
+msgstr ""
+"Deze pagina is afgesloten door de beheerder en kan niet veranderd worden."
+
+#: ../themes/default/templates/browse.tmpl:6
+#: ../themes/default/templates/viewsource.tmpl:23
+#, c-format
+msgid "Last edited on %s."
+msgstr "Meest recente verandering op %s."
+
+#: ../themes/default/templates/browse.tmpl:8
+#: ../themes/default/templates/viewsource.tmpl:25
+#, c-format
+msgid "Version %s, saved on %s."
+msgstr "Versie %s, bewarrd op %s."
+
+#: ../themes/default/templates/editpage.tmpl:70
+msgid "This is a minor change."
+msgstr ""
+
+#: ../themes/default/templates/login.tmpl:6
+msgid "Signin Failed"
 msgstr ""
 
 #: ../themes/default/templates/nochanges.tmpl:4
 #, fuzzy
 msgid "Edit aborted."
-msgstr "Verander: %s"
+msgstr "Verander"
 
 #: ../themes/default/templates/nochanges.tmpl:5
 msgid "You have not made any changes so no new version has been saved."
@@ -1357,19 +1425,21 @@ msgstr "Je zorgvuldige aandacht voor detail wordt erg gewaardeerd."
 msgid "Warning!"
 msgstr ""
 
-#: ../themes/default/templates/viewsource.tmpl:4
 #, fuzzy
-msgid "This page has been locked by the administrator and cannot be edited."
-msgstr "%s is afgesloten door de beheerder en kan niet veranderd worden."
+#~ msgid "You must be logged in as an administrator %s"
+#~ msgstr "Je moet ingelogd zijn als beheerder om te $action."
 
-#: ../themes/Hawaiian/themeinfo.php:18 ../themes/MacOSX/themeinfo.php:99
-#: ../themes/WikiTrek/themeinfo.php:37 ../themes/default/themeinfo.php:17
-msgid "Printer"
-msgstr ""
+#~ msgid ""
+#~ "You must set the administrator account and password before you can log in."
+#~ msgstr ""
+#~ "Je moet de beheerder gebruiker en het wachtwoord zetten voordat je in kan "
+#~ "loggen."
 
-#: ../themes/default/themeinfo.php:18
-msgid "Modern"
-msgstr ""
+#~ msgid "You entered an invalid login or password."
+#~ msgstr "Je hebt een ongeldige gebruikersnaam of wachtwoord ingevoerd."
+
+#~ msgid "You are signed in as %s."
+#~ msgstr "Je bent ingelogd als %s."
 
 #~ msgid "Page locked"
 #~ msgstr "Sidan är låst"
@@ -1378,17 +1448,8 @@ msgstr ""
 #~ msgid "Quick Search"
 #~ msgstr "Zoek snel een pagina op:"
 
-#, fuzzy
 #~ msgid "Return to %s."
-#~ msgstr "Terug naar %s"
-
-#, fuzzy
-#~ msgid "version"
-#~ msgstr "versie %s"
-
-#, fuzzy
-#~ msgid "Version"
-#~ msgstr "versie %s"
+#~ msgstr "Terug naar %s."
 
 #, fuzzy
 #~ msgid ", saved on"
