@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: SQL.php,v 1.2 2001-09-19 03:24:36 wainstead Exp $');
+<?php rcs_id('$Id: SQL.php,v 1.3 2003-02-25 20:13:57 dairiki Exp $');
 
 require_once('lib/WikiDB.php');
 
@@ -14,7 +14,7 @@ class WikiDB_SQL extends WikiDB
             $backend_type = $m[1];
         include_once("lib/WikiDB/backend/$backend_type.php");
         $backend_class = "WikiDB_backend_$backend_type";
-        $backend = new $backend_class($dbparams);
+        $backend = & new $backend_class($dbparams);
 
         $this->WikiDB($backend, $dbparams);
     }
