@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.11 2002-01-18 20:08:30 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.12 2002-01-18 22:46:32 carstenklapp Exp $');
 
 /**
  * WikiWiki Hawaiian theme for PhpWiki.
@@ -26,11 +26,12 @@ $Theme->addImageAlias('signature', 'WaterFall.jpg');
 // If you want to see more than just the waterfall let a random
 // picture be chosen for the signature image:
 require_once('lib/random.php');
-$RandomImg = new RandomImage("themes/Hawaiian/images/pictures");
-//$Theme->addImageAlias('signature', $RandomImg);
+$imgSet = new ImageSet("themes/Hawaiian/images/pictures");
+$imgFile = "pictures/" . $imgSet->pickRandomImage();
+$Theme->addImageAlias('signature', $imgFile);
 
 //To test out the randomization just use logo instead of signature
-$Theme->addImageAlias('logo', $RandomImg);
+//$Theme->addImageAlias('logo', $imgFile);
 
 
 /*
