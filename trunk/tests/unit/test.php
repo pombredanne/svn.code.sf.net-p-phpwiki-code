@@ -58,7 +58,7 @@ $database_backends = array(
                            );
 // "flatfile" testing occurs in "tests/unit/.testbox/"
 // "dba" needs the DATABASE_DBA_HANDLER, also in the .textbox directory
-$database_dba_handler = "db3";
+$database_dba_handler = (substr(PHP_OS,0,3) == 'WIN') ? "db3" : "gdbm";
 // "SQL" and "ADODB" need delete permissions to the test db
 //  You have to create that database beforehand with our schema
 $database_dsn = "mysql://wikiuser:@localhost/phpwiki_test";
@@ -81,6 +81,9 @@ ini_set('include_path', ini_get('include_path')
         . $ini_sep . $rootdir . "lib/pear");
 if ($HTTP_SERVER_VARS["SERVER_NAME"] == 'phpwiki.sourceforge.net') {
     ini_set('include_path', ini_get('include_path') . ":/usr/share/pear");
+    //define('ENABLE_PAGEPERM',false); // costs nothing
+    define('USECACHE',false);
+    define('WIKIDB_NOCACHE_MARKUP',1);
 }
 
 # Quiet warnings in IniConfig.php
@@ -109,7 +112,11 @@ function printMemoryUsage($msg = '') {
             echo `pslist $pid|grep -A1 Mem|perl -ane"print \$F[5]"`,"\n";
         } else {
             $pid = getmypid();
-            echo `ps -o%mem,vsz,rss,pid -p $pid|sed 1d`,"\n";
+            //%MEM: Percentage of total memory in use by this process
+            //VSZ: Total virtual memory size, in 1K blocks.
+            //RSS: Real Set Size, the actual amount of physical memory allocated to this process.
+            //CPU time used by process since it started.
+            echo "%",`ps -o%mem,vsz,rss,time -p $pid|sed 1d`,"\n";
         }
         flush();
     }
@@ -270,7 +277,6 @@ if (!empty($argv)) {
         echo "level=", $user_level,"\n";
         if ($debug_level & 8) {
             echo "pid=",getmypid(),"\n";
-            echo "USECACHE=",(defined('USECACHE') and USECACHE) ? "true" : "false","\n";
         }
         echo "\n";
     }
@@ -291,6 +297,13 @@ define('PHPWIKI_NOMAIN', true);
 # Other needed files
 require_once $rootdir.'index.php';
 require_once $rootdir.'lib/main.php';
+
+if ($debug_level & 9) {
+    echo "PHP_OS: ",PHP_OS, "\n";
+    echo "PHP_VERSION: ",PHP_VERSION, "\n";
+    foreach (explode(",","ENABLE_PAGEPERM,USECACHE,WIKIDB_NOCACHE_MARKUP") as $v)
+        echo "$v=",(defined($v) and constant($v)) ? constant($v) : "false","\n";
+}
 
 global $ErrorManager;
 $ErrorManager->setPostponedErrorMask(EM_FATAL_ERRORS|EM_WARNING_ERRORS|EM_NOTICE_ERRORS);
