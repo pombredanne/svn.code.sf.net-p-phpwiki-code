@@ -1,7 +1,6 @@
-<?php rcs_id('$Id: Template.php,v 1.46 2002-09-15 15:05:47 rurban Exp $');
+<?php rcs_id('$Id: Template.php,v 1.47 2003-02-21 04:22:54 dairiki Exp $');
 
 require_once("lib/ErrorManager.php");
-require_once("lib/WikiPlugin.php");
 
 
 /** An HTML template.
@@ -54,6 +53,7 @@ class Template
     }
     
     function _printPlugin ($pi) {
+	include_once("lib/WikiPlugin.php");
 	static $loader;
 
         if (empty($loader))
@@ -103,9 +103,11 @@ class Template
         extract($this->_vars);
 
         $request = &$this->_request;
-        $user = &$request->getUser();
-        $page = &$request->getPage();
-
+        if (!isset($user))
+            $user = &$request->getUser();
+        if (!isset($page))
+            $page = &$request->getPage();
+        
         global $Theme, $RCS_IDS;
         
         //$this->_dump_template();
@@ -220,6 +222,7 @@ function GeneratePage($content, $title, $page_revision = false, $args = false) {
             ($text = &$page_revision->getPackedContent()) and 
             substr($text,0,$len) == '<?plugin-head')
         {
+	    include_once("lib/WikiPlugin.php");
             $loader = new WikiPluginLoader();
             return $loader->expandPI_head($text,$request);
         } else {
