@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- phpwiki source:
-$Id: browse.html,v 1.47 2002-01-12 06:00:56 carstenklapp Exp $
+$Id: browse.html,v 1.48 2002-01-12 07:04:36 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <meta http-equiv="Content-Type" content="text/html; charset=${CHARSET}" />
@@ -95,12 +95,12 @@ if ($errmsgs)
                 page=[pagename] ?>
  | 
     <?php if ($IS_CURRENT) { ?>
-        <?plugin-link ViewMarkup 
+        <?plugin-link ViewSource 
                 linktext=_("ViewSource")
                 targetpage=_("ViewSource")
                 page=[pagename] ?>
     <?php } else { ?>
-        <?plugin-link ViewMarkup 
+        <?plugin-link ViewSource 
                 linktext=_("ViewSource")
                 targetpage=_("ViewSource")
                 page=[pagename] ?>
