@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.12 2003-02-21 04:21:31 dairiki Exp $
+ * $Id: phpwiki.css,v 1.13 2003-02-24 22:04:45 dairiki Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -632,7 +632,7 @@ div.wikiblog > div.wikiblog-footer {
   padding: 0.2ex 0.5em;
 }
 h3.wikiblog-summary {
-  font-size: normal;
+  font-size: medium;
   font-weight: bold;
   margin: 0 0 1ex 0;
 }
