@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.120 2002-09-15 05:45:09 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.121 2002-09-16 18:44:51 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -276,18 +276,17 @@ function LinkBracketLink($bracketlink) {
     }
     if ($dbi->isWikiPage($URL)) {
         // if it's an image, it's an named image link [img|link]
-        if (preg_match("/($InlineImages)$/i", $linkname))
-            if (preg_match("#^($AllowedProtocols):#", $URL)) {
-                return WikiLink($URL, 'known', LinkImage($linkname,$URL));
-            } 
-            else {
+        if (preg_match("/($InlineImages)$/i", $linkname)) {
+            $imgurl = $linkname;
+            if (! preg_match("#^($AllowedProtocols):#", $imgurl)) {
                 // linkname like 'images/next.gif'.
                 global $Theme;
-                return WikiLink($URL, 'known', LinkImage($Theme->getImageURL($linkname),$URL));
+                $imgurl = $Theme->getImageURL($linkname);
             }
-        else {
-            return WikiLink($URL, 'known', $linkname);
+            $linkname = LinkImage($imgurl, $URL);
         }
+
+        return WikiLink($URL, 'known', $linkname);
     }
     elseif (preg_match("#^($AllowedProtocols):#", $URL)) {
         // if it's an image, embed it; otherwise, it's a regular link
@@ -304,7 +303,6 @@ function LinkBracketLink($bracketlink) {
     else {
         return WikiLink($URL, 'unknown', $linkname);
     }
-    
 }
 
 /**
@@ -529,6 +527,7 @@ function split_pagename ($page) {
             $RE[$key] = pcre_fix_posix_classes($val);
     }
     if (isSubPage($page)) {
+        // FIXME: is this needed?
         $pages = explode(SUBPAGE_SEPARATOR,$page);
         $new_page = $pages[0] ? split_pagename($pages[0]) : '';
         for ($i=1; $i < sizeof($pages); $i++) {
