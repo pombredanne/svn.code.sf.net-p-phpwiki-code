@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.37 2004-11-23 13:06:30 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.38 2004-11-30 17:48:38 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -206,8 +206,9 @@ function action2access ($action) {
     }
 }
 
-// Recursive helper to do the real work
-// TODO: check if a perm cache for page-(current+edit+change?)action pairs will help
+// Recursive helper to do the real work.
+// Using a simple perm cache for page-access pairs.
+// Maybe page-(current+edit+change?)action pairs will help
 function _requiredAuthorityForPagename($access, $pagename) {
     static $permcache = array();
     
@@ -722,6 +723,15 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.37  2004/11/23 13:06:30  rurban
+// several fixes and suggestions by Charles Corrigan:
+// * fix GROUP_BOGO_USER check
+// * allow group pages to have the link to the user page in [ ] brackets
+// * fix up the implementation of GroupWikiPage::getMembersOf and allow the
+//   user page to be linked in [ ] brackets
+// * added _OWNER and _CREATOR to special wikigroups
+// * check against those two for group membership also, not only the user.
+//
 // Revision 1.36  2004/11/21 11:59:16  rurban
 // remove final \n to be ob_cache independent
 //
