@@ -1,26 +1,26 @@
 <?php // -*-php-*-
-rcs_id('$Id: WantedPages.php,v 1.1 2002-02-24 20:18:36 carstenklapp Exp $');
+rcs_id('$Id: WantedPages.php,v 1.2 2002-02-25 01:04:12 carstenklapp Exp $');
 /*
-This file is part of PhpWiki.
+ This file is part of PhpWiki.
 
-PhpWiki is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-PhpWiki is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with PhpWiki; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 /**
  * A plugin which returns a list of referenced pages which do not exist yet.
- * 
+ *
  **/
 //require_once('lib/PageList.php');
 
@@ -40,7 +40,7 @@ extends WikiPlugin
     function getDefaultArguments() {
         return array('noheader' => false,
                      'exclude'  => _("PgsrcTranslation"),
-                     'page'     => '');
+                     'page'     => '[pagename]');
     }
     // info arg allows multiple columns info=mtime,hits,summary,version,author,locked,minor,markup or all
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
@@ -53,106 +53,124 @@ extends WikiPlugin
                 $exclude = explode(',', $exclude);
         }
 
+        if ($page == _("WantedPages"))
+            $page = "";
+
         // The PageList class can't handle the 'count' column needed for this table
-        $pagelist = array();
+        $this->pagelist = array();
 
         // There's probably a more efficient way to do this (eg a tailored SQL query via the
         // backend, but this does the job
 
-        if ($page) { //only get WantedPages links for one page
-            $page_handle = $dbi->getPage($page);
-            $links_iter = $page_handle->getLinks($reversed = false);
-            while ($link_handle = $links_iter->next())
-            {
-                if (! $dbi->isWikiPage($linkname = $link_handle->getName()))
-                    if (! in_array($linkname, array_keys($pagelist)))
-                        $pagelist[$linkname] = 1;
-                    else
-                        $pagelist[$linkname] += 1;
-            }
-        }
-        else {
+        if (!$page) {
             $allpages_iter = $dbi->getAllPages($include_empty = false);
-            while ($page_handle = $allpages_iter->next())
-            {
+            while ($page_handle = $allpages_iter->next()) {
                 $name = $page_handle->getName();
                 if (! in_array($name, $exclude))
-                {
-                    $links_iter = $page_handle->getLinks($reversed = false);
-                    while ($link_handle = $links_iter->next())
-                    {
-                        if (! $dbi->isWikiPage($linkname = $link_handle->getName()))
-                            if (! in_array($linkname, array_keys($pagelist)))
-                                $pagelist[$linkname] = 1;
-                            else
-                                $pagelist[$linkname] += 1;
-                    }
-                }
+                    $this->_iterateLinks($page_handle, $dbi);
             }
+        } else if ($page && $pageisWikiPage = $dbi->isWikiPage($page)) {
+            //only get WantedPages links for one page
+            $page_handle = $dbi->getPage($page);
+            $this->_iterateLinks($page_handle, $dbi);
         }
-        ksort($pagelist);
-        arsort($pagelist);
-
-        if ($page) // link count always seems to be 1 for a single page
-            $this->_columns = array(_("Page Name"));
-        else
-            $this->_columns = array(_("Count"), _("Page Name"));
-
-        if (!$noheader) {
-            $c = count($pagelist);
-            if ($page)
-                $caption = sprintf(_("Wanted Pages for %s (%d total):"), $page, $c);
-            else
-            $caption = sprintf(_("Wanted Pages in this wiki (%d total):"), $c);
-        } else
-            $caption = false;
+        ksort($this->pagelist);
+        arsort($this->pagelist);
 
         $this->_rows = HTML();
-        $spacer = new RawXml("&nbsp;&nbsp;&nbsp;&nbsp;");
-        foreach ($pagelist as $key => $val) {
-            if ($page)
+        $caption = false;
+        $this->_messageIfEmpty = _("<none>");
+
+        if ($page) {
+            // link count always seems to be 1 for a single page so omit count column
+            foreach ($this->pagelist as $key => $val) {
                 $row = HTML::li(WikiLink($key, 'unknown'));
-            else
+                $this->_rows->pushContent($row);
+            }
+            if (!$noheader) {
+                if ($pageisWikiPage)
+                    $pagelink = WikiLink($page);
+                else
+                    $pagelink = WikiLink($page, 'unknown');
+                $caption = fmt("Wanted Pages for %s (%d total):", $pagelink);
+            }
+            return $this->_generateList($caption);
+
+        } else {
+            $spacer = new RawXml("&nbsp;&nbsp;&nbsp;&nbsp;");
+            foreach ($this->pagelist as $key => $val) {
                 $row = HTML::tr(HTML::td(array('align' => 'right'), $val),
                                 HTML::td(HTML($spacer, WikiLink($key, 'unknown'))));
-            $this->_rows->pushContent($row);
+                $this->_rows->pushContent($row);
+            }
+            $c = count($this->pagelist);
+            if (!$noheader)
+                $caption = sprintf(_("Wanted Pages in this wiki (%d total):"), $c);
+            $this->_columns = array(_("Count"), _("Page Name"));
+            if ($c > 0)
+                return $this->_generateTable($caption);
+            else
+                return HTML(HTML::p($caption), HTML::p($messageIfEmpty));
         }
-
-        if ($page)
-            return $this->_generateList($caption);
-        else
-            return $this->_generateTable($caption);
     }
 
     function _generateTable($caption) {
-        $table = HTML::table(array('cellpadding' => 0,
-                                   'cellspacing' => 1,
-                                   'border'      => 0,
-                                   'class'       => 'pagelist'));
-        if ($caption)
-            $table->pushContent(HTML::caption(array('align'=>'top'), $caption));
 
-        $row = HTML::tr();
-        $spacer = new RawXml("&nbsp;&nbsp;&nbsp;&nbsp;");
-        foreach ($this->_columns as $col_heading) {
-            $row->pushContent(HTML::td(HTML($spacer, HTML::u($col_heading))));
-            $table_summary[] = $col_heading;
+        if (count($this->pagelist) > 0) {
+            $table = HTML::table(array('cellpadding' => 0,
+                                    'cellspacing' => 1,
+                                    'border'      => 0,
+                                    'class'       => 'pagelist'));
+            if ($caption)
+                $table->pushContent(HTML::caption(array('align'=>'top'), $caption));
+    
+            $row = HTML::tr();
+            $spacer = new RawXml("&nbsp;&nbsp;&nbsp;&nbsp;");
+            foreach ($this->_columns as $col_heading) {
+                $row->pushContent(HTML::td(HTML($spacer, HTML::u($col_heading))));
+                $table_summary[] = $col_heading;
+            }
+            // Table summary for non-visual browsers.
+            $table->setAttr('summary', sprintf(_("Columns: %s."), implode(", ", $table_summary)));
+    
+            $table->pushContent(HTML::thead($row),
+                                HTML::tbody(false, $this->_rows));
+        } else {
+            $table = HTML();
+            if ($caption)
+                $table->pushContent(HTML::p($caption));
+            $table->pushContent(HTML::p($this->_messageIfEmpty));
         }
-        // Table summary for non-visual browsers.
-        $table->setAttr('summary', sprintf(_("Columns: %s."), implode(", ", $table_summary)));
 
-        $table->pushContent(HTML::thead($row),
-                            HTML::tbody(false, $this->_rows));
         return $table;
     }
 
     function _generateList($caption) {
         $list = HTML();
+        $c = count($this->pagelist);
         if ($caption)
-            $list->pushContent(HTML::p($caption));
-        $list->pushContent(HTML::ul($this->_rows));
+            $list->pushContent(HTML::p(fmt($caption, $c)));
+
+        if ($c > 0)
+            $list->pushContent(HTML::ul($this->_rows));
+        else
+            $list->pushContent(HTML::p($this->_messageIfEmpty));
+
         return $list;
     }
+
+    function _iterateLinks($page_handle, $dbi) {
+        $links_iter = $page_handle->getLinks($reversed = false);
+        while ($link_handle = $links_iter->next())
+        {
+            if (! $dbi->isWikiPage($linkname = $link_handle->getName()))
+                if (! in_array($linkname, array_keys($this->pagelist)))
+                    $this->pagelist[$linkname] = 1;
+                else
+                    $this->pagelist[$linkname] += 1;
+        }
+    }
+
 };
 
 
