@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.9\n"
-"POT-Creation-Date: 2001-12-21 02:13-0500\n"
+"POT-Creation-Date: 2001-12-27 00:19-0500\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -14,169 +14,169 @@ msgstr ""
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../templates/browse.html:32
+#: ../templates/browse.html:34
 #, fuzzy
 msgid "Note:"
 msgstr "ingen"
 
-#: ../templates/browse.html:32
+#: ../templates/browse.html:34
 msgid "You are viewing an old revision of this page."
 msgstr ""
 
-#: ../templates/browse.html:33
+#: ../templates/browse.html:35
 #, fuzzy
 msgid "View the current version"
 msgstr "Arkiverad version"
 
-#: ../templates/browse.html:48
+#: ../templates/browse.html:50
 #, fuzzy, c-format
 msgid "Last edited on %s."
 msgstr "senast ändrad %s"
 
-#: ../templates/browse.html:50
+#: ../templates/browse.html:52
 #, c-format
 msgid "Version %s, saved on %s."
 msgstr ""
 
 #: ../lib/loadsave.php:452 ../lib/plugin/RecentChanges.php:159
 #: ../lib/plugin/RecentChanges.php:264 ../lib/plugin/RecentChanges.php:309
-#: ../templates/browse.html:54
+#: ../templates/browse.html:56
 msgid "RecentChanges"
 msgstr "SenasteÄndringar"
 
-#: ../templates/browse.html:55
+#: ../templates/browse.html:57
 msgid "FindPage"
 msgstr ""
 
-#: ../templates/browse.html:58
+#: ../templates/browse.html:60
 #, fuzzy
 msgid "Quick Search"
 msgstr "Snabb titelsökning:"
 
-#: ../templates/browse.html:68
+#: ../templates/browse.html:70
 msgid "Page locked"
 msgstr ""
 
-#: ../templates/browse.html:71
+#: ../templates/browse.html:73
 msgid "Edit"
 msgstr ""
 
-#: ../templates/browse.html:74
+#: ../templates/browse.html:76
 msgid "Edit old revision"
 msgstr ""
 
-#: ../templates/browse.html:79
+#: ../templates/browse.html:81
 #, fuzzy
 msgid "Unlock page"
 msgstr "Ta bort sida"
 
-#: ../templates/browse.html:81
+#: ../templates/browse.html:83
 #, fuzzy
 msgid "Lock page"
 msgstr "Ta bort sida"
 
-#: ../lib/removepage.php:20 ../templates/browse.html:83
+#: ../lib/removepage.php:20 ../templates/browse.html:85
 msgid "Remove page"
 msgstr "Ta bort sida"
 
-#: ../templates/browse.html:87 ../templates/browse.html:90
+#: ../templates/browse.html:89 ../templates/browse.html:92
 #, fuzzy
 msgid "Diff"
 msgstr "Diff av %s."
 
-#: ../templates/browse.html:95
+#: ../templates/browse.html:97
 #, c-format
 msgid "You are signed in as %s"
 msgstr ""
 
-#: ../templates/browse.html:96
+#: ../templates/browse.html:98
 msgid "SignOut"
 msgstr ""
 
-#: ../templates/browse.html:98 ../templates/editpage.html:72
+#: ../templates/browse.html:100 ../templates/editpage.html:73
 msgid "SignIn"
 msgstr ""
 
-#: ../templates/browse.html:115
+#: ../templates/browse.html:117
 msgid "PHP Warnings"
 msgstr ""
 
-#: ../lib/plugin/_BackendInfo.php:10 ../templates/browse.html:121
-#: ../templates/browse.html:122
+#: ../lib/plugin/_BackendInfo.php:10 ../templates/browse.html:123
+#: ../templates/browse.html:124
 msgid "DebugInfo"
 msgstr ""
 
-#: ../templates/editpage.html:15 ../templates/editpage.html:24
-#: ../templates/editpage.html:25
+#: ../templates/editpage.html:16 ../templates/editpage.html:25
+#: ../templates/editpage.html:26
 #, fuzzy, c-format
 msgid "Edit: %s"
 msgstr "Diff av %s."
 
-#: ../lib/plugin/BackLinks.php:9 ../templates/editpage.html:24
+#: ../lib/plugin/BackLinks.php:9 ../templates/editpage.html:25
 msgid "BackLinks"
 msgstr ""
 
-#: ../templates/editpage.html:27
+#: ../templates/editpage.html:28
 msgid "Preview only!  Changes not saved."
 msgstr ""
 
-#: ../templates/editpage.html:33
+#: ../templates/editpage.html:34
 msgid "Warning: You are editing an old revision."
 msgstr ""
 
-#: ../templates/editpage.html:34
+#: ../templates/editpage.html:35
 msgid "Saving this page will overwrite the current version."
 msgstr ""
 
-#: ../templates/editpage.html:54
+#: ../templates/editpage.html:55
 msgid "Summary:"
 msgstr ""
 
-#: ../templates/editpage.html:61
+#: ../templates/editpage.html:62
 msgid "This is a minor change."
 msgstr ""
 
-#: ../templates/editpage.html:64
+#: ../templates/editpage.html:65
 msgid "Preview"
 msgstr ""
 
-#: ../templates/editpage.html:65
+#: ../templates/editpage.html:66
 msgid "Save"
 msgstr ""
 
-#: ../templates/editpage.html:69
+#: ../templates/editpage.html:70
 #, c-format
 msgid "You are signed in as %s."
 msgstr ""
 
-#: ../templates/editpage.html:71
+#: ../templates/editpage.html:72
 #, c-format
 msgid "Author will be logged as %s."
 msgstr ""
 
-#: ../templates/editpage.html:78
+#: ../templates/editpage.html:79
 #, c-format
 msgid "You can change the size of the editing area in %s."
 msgstr ""
 
-#: ../templates/editpage.html:78
+#: ../templates/editpage.html:79
 msgid "UserPreferences"
 msgstr ""
 
-#: ../templates/editpage.html:79
+#: ../templates/editpage.html:80
 #, fuzzy, c-format
 msgid "See %s tips for editing."
 msgstr "Tack för att du redigerade %s."
 
-#: ../templates/editpage.html:79
+#: ../templates/editpage.html:80
 msgid "GoodStyle"
 msgstr ""
 
-#: ../templates/editpage.html:83
+#: ../templates/editpage.html:84
 msgid "TextFormattingRules"
 msgstr ""
 
-#: ../templates/editpage.html:83
+#: ../templates/editpage.html:84
 msgid "Synopsis"
 msgstr ""
 
@@ -445,6 +445,27 @@ msgstr ""
 msgid "No pagedata for %s"
 msgstr ""
 
+#: ../lib/plugin/text2png.php:61
+msgid ""
+"Unable to create a new GD image stream. PHP must be compiled with support "
+"for the GD library version 1.6 or later to create PNG image files."
+msgstr ""
+
+#: ../lib/plugin/text2png.php:108
+#, c-format
+msgid "Image saved to cache file: %s"
+msgstr ""
+
+#: ../lib/plugin/text2png.php:111
+#, c-format
+msgid "Image loaded from cache file: %s"
+msgstr ""
+
+#: ../lib/loadsave.php:153 ../lib/plugin/text2png.php:118
+#, c-format
+msgid "couldn't open file '%s' for writing"
+msgstr ""
+
 #: ../lib/WikiDB.php:837
 #, fuzzy, c-format
 msgid "Describe [%s] here."
@@ -481,8 +502,8 @@ msgid "(Any password will work, except, of course for the admin user.)"
 msgstr ""
 
 #: ../lib/diff.php:172
-#, fuzzy
-msgid "version"
+#, fuzzy, c-format
+msgid "version %s"
 msgstr "version %s"
 
 #: ../lib/diff.php:175
@@ -609,11 +630,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "saved as %s"
 msgstr "version %s"
-
-#: ../lib/loadsave.php:153
-#, c-format
-msgid "couldn't open file '%s' for writing"
-msgstr ""
 
 #: ../lib/loadsave.php:156
 #, c-format
@@ -798,44 +814,44 @@ msgstr ""
 msgid "Required form variables are missing."
 msgstr ""
 
-#: ../lib/savepage.php:152
+#: ../lib/savepage.php:155
 #, c-format
 msgid "Thank you for editing %s."
 msgstr "Tack för att du redigerade %s."
 
-#: ../lib/savepage.php:155
+#: ../lib/savepage.php:158
 msgid "Your careful attention to detail is much appreciated."
 msgstr "Din omstänksamhet för detaljer är mycket uppskattad."
 
-#: ../lib/stdlib.php:130
+#: ../lib/stdlib.php:134
 msgid "BAD URL -- remove all of <, >, \""
 msgstr ""
 
-#: ../lib/stdlib.php:336
+#: ../lib/stdlib.php:340
 msgid "Lock page to enable link"
 msgstr ""
 
-#: ../lib/stdlib.php:455
+#: ../lib/stdlib.php:459
 #, c-format
 msgid "%d best incoming links:"
 msgstr "De %d mest använda ingående länkarna:"
 
-#: ../lib/stdlib.php:465
+#: ../lib/stdlib.php:469
 #, c-format
 msgid "%d best outgoing links:"
 msgstr "De %d mest använda utgående länkarna:"
 
-#: ../lib/stdlib.php:476
+#: ../lib/stdlib.php:480
 #, c-format
 msgid "%d most popular nearby:"
 msgstr "De %d mest populära grannarna:"
 
-#: ../lib/stdlib.php:526 ../lib/stdlib.php:532
+#: ../lib/stdlib.php:530 ../lib/stdlib.php:536
 #, fuzzy
 msgid "Bad Version"
 msgstr "version %s"
 
-#: ../lib/stdlib.php:528
+#: ../lib/stdlib.php:532
 #, c-format
 msgid "I'm sorry.  Version %d of %s is not in my database."
 msgstr ""
@@ -1040,6 +1056,10 @@ msgid ""
 "DBA files are in the %s directory. Please read the INSTALL file and move the "
 "DB file to a permanent location or risk losing all the pages!"
 msgstr ""
+
+#, fuzzy
+#~ msgid "version"
+#~ msgstr "version %s"
 
 #, fuzzy
 #~ msgid "Version"
