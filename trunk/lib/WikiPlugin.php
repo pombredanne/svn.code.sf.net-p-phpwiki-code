@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.48 2004-07-08 20:30:07 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.49 2004-07-08 21:32:35 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,7 +87,7 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.48 $");
+        //                    "\$Revision: 1.49 $");
     }
 
     function getArgs($argstr, $request=false, $defaults = false) {
@@ -99,17 +99,17 @@ class WikiPlugin
         $args = array();
         if (!empty($defaults))
           foreach ($defaults as $arg => $default_val) {
-            if (isset($argstr_args[$arg]))
+            if (isset($argstr_args[$arg])) {
                 $args[$arg] = $argstr_args[$arg];
-            elseif ( $request and ($argval = $request->getArg($arg)) !== false )
+            } elseif ( $request and ($argval = $request->getArg($arg)) !== false ) {
                 $args[$arg] = $argval;
-            elseif (isset($argstr_defaults[$arg]))
+            } elseif (isset($argstr_defaults[$arg])) {
                 $args[$arg] = (string) $argstr_defaults[$arg];
-            else
+            } else {
                 $args[$arg] = $default_val;
-                
-            // only expand given args
-            if ($request and !empty($argstr)) {
+            }
+            // expand [arg]
+            if ($request and strstr($args[$arg], "[")) {
                 $args[$arg] = $this->expandArg($args[$arg], $request);
             }
 
@@ -131,7 +131,7 @@ class WikiPlugin
 
     // Patch by Dan F:
     // Expand [arg] to $request->getArg("arg") unless preceded by ~
-    function expandArg($argval, $request) {
+    function expandArg($argval, &$request) {
         // return preg_replace('/\[(\w[\w\d]*)\]/e', '$request->getArg("$1")',
         // Replace the arg unless it is preceded by a ~
         $ret = preg_replace('/([^~]|^)\[(\w[\w\d]*)\]/e',

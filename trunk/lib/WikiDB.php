@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.77 2004-07-08 19:04:42 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.78 2004-07-08 21:32:35 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -1199,7 +1199,7 @@ class WikiDB_Page
         $pagename = &$this->_pagename;
         $latestversion = $backend->get_latest_version($pagename);
         for ($v=1; $v <= $latestversion; $v++) {
-            $rev = $this->getRevision($v);
+            $rev = $this->getRevision($v,false);
             if ($rev and $owner = $rev->get('author_id')) {
             	return ($owner == "The PhpWiki programming team") ? ADMIN_USER : $owner;
             }
@@ -1209,7 +1209,7 @@ class WikiDB_Page
 
     // The authenticated author of the first revision or empty if not authenticated then.
     function getCreator() {
-        if ($current = $this->getRevision(1)) return $current->get('author_id');
+        if ($current = $this->getRevision(1,false)) return $current->get('author_id');
         else return '';
     }
 
@@ -1892,6 +1892,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.77  2004/07/08 19:04:42  rurban
+// more unittest fixes (file backend, metadata RatingsDb)
+//
 // Revision 1.76  2004/07/08 17:31:43  rurban
 // improve numPages for file (fixing AllPagesTest)
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.58 2004-07-08 16:56:16 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.59 2004-07-08 21:32:36 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -469,8 +469,8 @@ extends WikiDB_backend
         // Limit clause is NOT portable!
         // if ($limit)  $limit = "LIMIT $limit";
         // else         $limit = '';
-        if ($sortby) $orderby = 'ORDER BY ' . PageList::sortby($sortby,'db');
-        else         $orderby = '';
+        $orderby = PageList::sortby($sortby,'db');
+        if ($orderby) $orderby = 'ORDER BY ' . $orderby;
         if (strstr($orderby,'mtime')) { // multiple columns possible
             if ($include_deleted) {
                 $sql = "SELECT "
@@ -1034,6 +1034,9 @@ extends WikiDB_backend_PearDB_generic_iter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.58  2004/07/08 16:56:16  rurban
+// use the backendType abstraction
+//
 // Revision 1.57  2004/07/05 12:57:54  rurban
 // add mysql timeout
 //

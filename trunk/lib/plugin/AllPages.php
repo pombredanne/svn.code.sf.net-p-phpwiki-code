@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllPages.php,v 1.28 2004-07-08 20:30:07 rurban Exp $');
+rcs_id('$Id: AllPages.php,v 1.29 2004-07-08 21:32:36 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.28 $");
+                            "\$Revision: 1.29 $");
     }
 
     function getDefaultArguments() {
@@ -70,6 +70,7 @@ extends WikiPlugin
         	return HTML();
         }
         //extract($args);
+        $pages = isset($args['pages']) ? $args['pages'] : false;
         // Todo: extend given _GET args
         if ($sorted = $request->getArg('sortby'))
             $args['sortby'] = $sorted;
@@ -87,14 +88,14 @@ extends WikiPlugin
         } else {
             if (! $request->getArg('count'))  $args['count'] = $dbi->numPages(false,$args['exclude']);
             else $args['count'] = $request->getArg('count');
-            $args['pages'] = false;
+            $pages = false;
         }
-        if (empty($args['count']) and is_array($args['pages']))
-            $args['count'] = count($args['pages']);
+        if (empty($args['count']) and !empty($pages))
+            $args['count'] = count($pages);
         $pagelist = new PageList($args['info'], $args['exclude'], $args);
         //if (!$sortby) $sorted='pagename';
         if (!$args['noheader']) {
-            if (!is_array($args['pages']))
+            if (empty($pages))
                 $pagelist->setCaption(_("All pages in this wiki (%d total):"));
             else
                 $pagelist->setCaption(_("List of pages (%d total):"));
@@ -104,8 +105,8 @@ extends WikiPlugin
         if ($args['include_empty'])
             $pagelist->_addColumn('version');
 
-        if (is_array($args['pages']))
-            $pagelist->addPageList($args['pages']);
+        if (!empty($pages))
+            $pagelist->addPageList($pages);
         else
             $pagelist->addPages( $dbi->getAllPages($args['include_empty'], $args['sortby'], $args['limit']) );
         if ($args['debug']) {
@@ -123,6 +124,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.28  2004/07/08 20:30:07  rurban
+// plugin->run consistency: request as reference, added basepage.
+// encountered strange bug in AllPages (and the test) which destroys ->_dbi
+//
 // Revision 1.27  2004/07/08 17:31:43  rurban
 // improve numPages for file (fixing AllPagesTest)
 //

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.101 2004-07-08 19:04:41 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.102 2004-07-08 21:32:35 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -745,7 +745,7 @@ class PageList {
      * Now all columns are sortable. (patch by DanFr)
      */
     function sortby ($column, $action) {
-        if (empty($column)) return;
+        if (empty($column)) return '';
         //support multiple comma-delimited sortby args: "+hits,+pagename"
         if (strstr($column,',')) {
             $result = array();
@@ -775,8 +775,12 @@ class PageList {
                     ($GLOBALS['request']->getArg('sortby') and 
                      strstr($GLOBALS['request']->getArg('sortby'),$column)));
         } elseif ($action == 'db') {
-            // asc or desc: +pagename, -pagename
-            return $column . ($order == '+' ? ' ASC' : ' DESC');
+        	// native sort possible?
+            if (in_array($column, PageList::sortable_columns()))
+                // asc or desc: +pagename, -pagename
+                return $column . ($order == '+' ? ' ASC' : ' DESC');
+            else 
+                return '';
         }
         return '';
     }
@@ -805,11 +809,12 @@ class PageList {
             $wildcard = $GLOBALS['request']->_user->getAuthenticatedId();
             if (!$wildcard) return $allPages;
         }
+        $do_glob = preg_match('/[\?\*]/', $wildcard);
         while ($pagehandle = $allPagehandles->next()) {
             $name = $pagehandle->getName();
             $author = $pagehandle->getAuthor();
             if ($author) {
-                if (preg_match('/[\?\*]/', $wildcard)) {
+                if ($do_glob) {
                     if (glob_match($wildcard, $author))
                         $allPages[] = $name;
                 } elseif ($wildcard == $author) {
@@ -828,11 +833,12 @@ class PageList {
             $wildcard = $GLOBALS['request']->_user->getAuthenticatedId();
             if (!$wildcard) return $allPages;
         }
+        $do_glob = preg_match('/[\?\*]/', $wildcard);
         while ($pagehandle = $allPagehandles->next()) {
             $name = $pagehandle->getName();
             $owner = $pagehandle->getOwner();
             if ($owner) {
-                if (preg_match('/[\?\*]/', $wildcard)) {
+                if ($do_glob) {
                     if (glob_match($wildcard, $owner))
                         $allPages[] = $name;
                 } elseif ($wildcard == $owner) {
@@ -851,11 +857,12 @@ class PageList {
             $wildcard = $GLOBALS['request']->_user->getAuthenticatedId();
             if (!$wildcard) return $allPages;
         }
+        $do_glob = preg_match('/[\?\*]/', $wildcard);
         while ($pagehandle = $allPagehandles->next()) {
             $name = $pagehandle->getName();
             $creator = $pagehandle->getCreator();
             if ($creator) {
-                if (preg_match('/[\?\*]/', $wildcard)) {
+                if ($do_glob) {
                     if (glob_match($wildcard, $creator))
                         $allPages[] = $name;
                 } elseif ($wildcard == $creator) {
@@ -1069,9 +1076,17 @@ class PageList {
      * Put pages in order according to the sortby arg, if given
      */
     function _sortPages() {
+        //TODO: if the sortby cols are already sorted by the DB call don't do usort.
         if (count($this->_sortby) > 0) {
-            // There are columns to sort by
-            usort($this->_pages, array('PageList', '_pageCompare'));
+            $need_sort = 0;
+            foreach ($this->_sortby as $col) {
+                if (!$this->sortby($col,'db'))
+                    $need_sort = 1;
+            }
+            if ($need_sort) {
+                // There are columns to sort by
+                usort($this->_pages, array('PageList', '_pageCompare'));
+            }
         }        
     }
 
@@ -1267,6 +1282,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.101  2004/07/08 19:04:41  rurban
+// more unittest fixes (file backend, metadata RatingsDb)
+//
 // Revision 1.100  2004/07/07 15:02:26  dfrankow
 // Take out if that prevents column sorting
 //
