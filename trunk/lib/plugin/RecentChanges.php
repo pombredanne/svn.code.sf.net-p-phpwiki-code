@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.28 2002-01-23 05:10:22 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.29 2002-01-23 06:36:16 carstenklapp Exp $');
 /**
  */
 
@@ -324,7 +324,10 @@ extends WikiPlugin
                      'show_major'	=> true,
                      'show_all'		=> false,
                      'limit'		=> false,
-                     'format'		=> false);
+                     'format'		=> false,
+                     'daylist'          => false,
+                     'label'            => ''
+                     );
     }
 
     function getArgs ($argstr, $request, $defaults = false) {
@@ -378,12 +381,65 @@ extends WikiPlugin
         $fmt = new $fmt_class($args);
         return $fmt->format($changes);
     }
-    
-        
+
     function run ($dbi, $argstr, $request) {
         $args = $this->getArgs($argstr, $request);
-        // Hack alert: format() is a NORETURN for rss formatters.
-        return $this->format($this->getChanges($dbi, $args), $args);
+        
+        if (! $args['daylist']) {
+            // Display RecentChanges
+            //
+            // Hack alert: format() is a NORETURN for rss formatters.
+            return $this->format($this->getChanges($dbi, $args), $args);
+        } else {
+            // Display days selection buttons
+            $daylist = explode(",", $args['daylist']);
+
+            // Defaults
+            $show_minor = "";
+            $show_all = "";
+
+            // RecentEdits args
+            if (($args['show_minor'] == 1)||($args['show_minor'] == true))
+                $show_minor = "&show_minor=1";
+            if (($args['show_all'] == 1)||($args['show_all'] == true))
+                $show_all = "&show_all=1";
+            // Custom label
+            if ($args['label'])
+                $label = $args['label'];
+            else {
+                if ($show_minor)
+                    $label = _("Show changes for: %s");
+                else {
+                    if ($show_all)
+                        $label = _("Show all changes for: %s");
+                    else
+                        $label = _("Show minor edits for: %s");
+                }
+            }
+
+            $day1    = _("1 day");
+            $ndays   = _("%s days");
+            $alldays = "...";
+
+            $b = array();
+            global $Theme;
+
+            foreach ($daylist as $val) {
+
+                if ($val == 1)
+                    $text = $day1;
+                elseif ($val < 1)
+                    $text = $alldays;
+                else
+                    $text = sprintf($ndays, $val);
+
+                // Build the button's url
+                $b[] = $Theme->makeButton($text, "RecentChanges?days=" .$val
+                                          .$show_minor .$show_all,
+                                          'wikiaction');
+            }
+            return fmt($label, $b);
+        }
     }
 };
 
