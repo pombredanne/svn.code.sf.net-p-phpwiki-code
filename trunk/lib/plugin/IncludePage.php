@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: IncludePage.php,v 1.1 2001-12-02 02:12:21 joe_edelman Exp $');
+rcs_id('$Id: IncludePage.php,v 1.2 2001-12-06 18:26:50 dairiki Exp $');
 /**
  * IncludePage:  include text from another wiki page in this one
  * usage:   <?plugin IncludePage page=OtherPage rev=6 quiet=1 words=50 lines=6?>
@@ -36,15 +36,36 @@ extends WikiPlugin
         }
         return $new;
     }
+
+    function error($msg) {
+        // FIXME: better error reporting?
+        trigger_error($msg, E_USER_NOTICE);
+    }
     
     function run($dbi, $argstr, $request) {
+        
         extract($this->getArgs($argstr, $request));
-        if (!$page) return '';         // FIXME:  error reporting?
+
+        if (!$page) {
+            $this->error(_("no page specified"));
+            return '';
+        }
+
+        static $included_pages = array();
+        if ($page == $request->getArg('pagename')
+            || in_array($page, $included_pages)) {
+            $this->error(sprintf(_("recursive inclusion of page %s"), $page));
+            return '';
+        }
+        
         $p = $dbi->getPage($page); 
         
         if ($rev) {
             $r = $p->getRevision($rev);
-            if (!$r) return '';        // FIXME:  error reporting?
+            if (!$r) {
+                $this->error(sprintf(_("%s(%d): no such revision"), $page, $rev));
+                return '';
+            }
         } else {
             $r = $p->getCurrentRevision();
         }
@@ -55,15 +76,17 @@ extends WikiPlugin
             $c = array_slice($c, 0, $lines);
         if ($words) 
             $c = $this->firstNWordsOfContent($words, $c);
-                    
+
+        array_push($included_pages, $page);
         $content = do_transform($c);
+        array_pop($included_pages);
+        
         if ($quiet) return $content;
-        return 
-                 '<p class="transclusion-title">Included from '
-               . LinkExistingWikiWord($page)
-               . '</p>'
-               . '<div class="transclusion">'  . $content 
-               . '</div>';
+
+        return Element('p', array('class' => 'transclusion-title'),
+                       sprintf(_("Included from %s"), LinkExistingWikiWord($page)))
+            . Element('div', array('class' => 'transclusion'),
+                      $content);
     }
 };
 
