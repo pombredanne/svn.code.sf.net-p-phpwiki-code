@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiBlog.php,v 1.9 2004-02-27 02:10:50 rurban Exp $');
+rcs_id('$Id: WikiBlog.php,v 1.10 2004-03-12 17:32:41 rurban Exp $');
 /*
  Copyright 2002, 2003 $ThePhpWikiProgrammingTeam
  
@@ -28,6 +28,8 @@ require_once('lib/TextSearchQuery.php');
 /**
  * This plugin shows 'blogs' (comments/news) associated with a
  * particular page and provides an input form for adding a new blog.
+ * It is also the base class for all attachable pagetypes: 
+ *    wikiblog, comment and wikiforum
  *
  * HINTS/COMMENTS:
  *
@@ -80,7 +82,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     // Arguments:
@@ -123,7 +125,7 @@ extends WikiPlugin
         $request->setArg('blog', false);
             
         if ($request->isPost() and !empty($blog['addblog'])) {
-            $this->addBlog($request, $blog); // noreturn
+            $this->add($request, $blog); // noreturn
         }
 
         // Now we display previous comments and/or provide entry box
@@ -136,10 +138,10 @@ extends WikiPlugin
                 
             switch ($show) {
             case 'show':
-                $html->pushContent($this->showBlogs($request, $args));
+                $html->pushContent($this->showAll($request, $args));
                 break;
             case 'add':
-                $html->pushContent($this->showBlogForm($request, $args));
+                $html->pushContent($this->showForm($request, $args));
                 break;
             default:
                 return $this->error(sprintf("Bad mode ('%s')", $show));
@@ -148,10 +150,9 @@ extends WikiPlugin
         return $html;
     }
 
-
-    function addBlog (&$request, $blog) {
+    function add (&$request, $blog, $type='wikiblog') {
         if (!($parent = $blog['page']))
-            $request->finish("No page specified for blog.");
+            $request->finish(fmt("No page specified for %s",$type));
 
         $user = $request->getUser();
         $now = time();
@@ -159,6 +160,7 @@ extends WikiPlugin
         
         /*
          * Page^H^H^H^H Blog meta-data
+         * This method is reused for all attachable pagetypes: wikiblog, comment and wikiforum
          *
          * This is info that won't change for each revision.
          * Nevertheless, it's now stored in the revision meta-data.
@@ -177,14 +179,16 @@ extends WikiPlugin
 
         // Version meta-data
         $summary = trim($blog['summary']);
-        $version_meta = array('author' => $blog_meta['creator'],
+        $version_meta = array('author'    => $blog_meta['creator'],
                               'author_id' => $blog_meta['creator_id'],
-                              'markup' => 2.0,   // assume new markup
-                              'summary' => $summary ? $summary : _("New comment."),
-                              'mtime' => $now,
-                              'pagetype' => 'wikiblog',
-                              'wikiblog' => $blog_meta,
+                              'markup'    => 2.0,   // assume new markup
+                              'summary'   => $summary ? $summary : _("New comment."),
+                              'mtime'     => $now,
+                              'pagetype'  => $type,
+                              'wikiblog'  => $blog_meta,
                               );
+        if ($type == 'comment')
+            unset($version_meta['summary']);
 
         // Comment body.
         $body = trim($blog['body']);
@@ -192,17 +196,19 @@ extends WikiPlugin
         $saved = false;
         while (!$saved) {
             // Generate the page name.  For now, we use the format:
-            //   Rootname/Blog-YYYYMMDDHHMMSS
+            //   Rootname/Blog/2003-01-11/24:03:02
             // This gives us natural chronological order when sorted
             // alphabetically.
-            // a unique name is found.
 
-            // change to ISO formatted time? 2003-01-11T24:03:02
-            // Yes, I think that's a good idea. -- JeffDairiki.
-
-            //$time = strftime ('%Y%m%d%H%M%S', $now);
             $time = Iso8601DateTime();
-            $p = $dbi->getPage($parent . SUBPAGE_SEPARATOR . "Blog" . SUBPAGE_SEPARATOR . str_replace("T", SUBPAGE_SEPARATOR, "$time"));
+            if ($type == 'wikiblog')
+                $pagename = "Blog";
+            elseif ($type == 'comment')
+                $pagename = "Comment";
+            elseif ($type == 'wikiforum')
+                $pagename = "Topic";
+
+            $p = $dbi->getPage($parent . SUBPAGE_SEPARATOR . $pagename . SUBPAGE_SEPARATOR . str_replace("T", SUBPAGE_SEPARATOR, "$time"));
             $pr = $p->getCurrentRevision();
 
             // Version should be zero.  If not, page already exists
@@ -211,7 +217,6 @@ extends WikiPlugin
                 $now++;
                 continue;
             }
-            
 
             // FIXME: there's a slight, but currently unimportant
             // race condition here.  If someone else happens to
@@ -236,7 +241,7 @@ extends WikiPlugin
         // Any way to jump back to preview mode???
     }
 
-    function showBlogs (&$request, $args) {
+    function showAll (&$request, $args, $type="wikiblog") {
         // FIXME: currently blogSearch uses WikiDB->titleSearch to
         // get results, so results are in alphabetical order.
         // When PageTypes fully implemented, could have smarter
@@ -255,16 +260,15 @@ extends WikiPlugin
                 $blogs = array_reverse($blogs);
            
             if (!$args['noheader'])
-                $html->pushContent(HTML::h2(array('class' => 'wikiblog-heading'),
+                $html->pushContent(HTML::h4(array('class' => "$type-heading"),
                                             fmt("Comments on %s:", WikiLink($parent))));
             foreach ($blogs as $rev) {
-                if (!$rev->get('wikiblog')) {
+                if (!$rev->get($type)) {
                     // Ack! this is an old-style blog with data ctime in page meta-data.
-                    $content = $this->_transformOldFormatBlog($rev);
+                    $content = $this->_transformOldFormatBlog($rev,$type);
                 }
                 else
-                    $content = $rev->getTransformedContent('wikiblog');
-
+                    $content = $rev->getTransformedContent($type);
                 $html->pushContent($content);
             }
             
@@ -272,14 +276,14 @@ extends WikiPlugin
         return $html;
     }
 
-    function _transformOldFormatBlog($rev) {
+    function _transformOldFormatBlog($rev,$type='wikiblog') {
         $page = $rev->getPage();
 
         foreach (array('ctime', 'creator', 'creator_id') as $key)
-            $blog_meta[$key] = $page->get($key);
+            $metadata[$key] = $page->get($key);
         $meta = $rev->getMetaData();
-        $meta['wikiblog'] = $blog_meta;
-        return new TransformedText($page, $rev->getPackedContent(), $meta, 'wikiblog');
+        $meta[$type] = $metadata;
+        return new TransformedText($page, $rev->getPackedContent(), $meta, $type);
     }
 
     function findBlogs (&$dbi, $parent) {
@@ -312,14 +316,18 @@ extends WikiPlugin
                       $b->get('mtime')));
     }
     
-    function showBlogForm (&$request, $args) {
+    function showForm (&$request, $args, $template='blogform') {
         // Show blog-entry form.
-        return new Template('blogform', $request,
+        return new Template($template, $request,
                             array('PAGENAME' => $args['page']));
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/02/27 02:10:50  rurban
+// Patch #891133 by pablom517
+//   "WikiBlog Plugin now sorts logs correctly"
+//
 // Revision 1.8  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //
