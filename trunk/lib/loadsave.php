@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.131 2004-11-30 17:48:38 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.132 2004-12-08 01:18:33 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
@@ -956,8 +956,19 @@ function SortByPageVersion ($a, $b) {
     return $a['version'] - $b['version'];
 }
 
+/**
+ * Security alert! We should not allow to import config.ini into our wiki (or from a sister wiki?)
+ * because the sql passwords are in plaintext there. And the webserver must be able to read it.
+ * Detected by Santtu Jarvi.
+ */
 function LoadFile (&$request, $filename, $text = false, $mtime = false)
 {
+    if (preg_match("/config$/", dirname($filename))             // our or other config
+        and preg_match("/config.*\.ini/", basename($filename))) // backups and other versions also
+    {
+        trigger_error(sprintf("Refused to load %s", $filename), E_USER_WARNING);
+        return;
+    }
     if (!is_string($text)) {
         // Read the file.
         $stat  = stat($filename);
@@ -965,7 +976,7 @@ function LoadFile (&$request, $filename, $text = false, $mtime = false)
         $text  = implode("", file($filename));
     }
 
-   	if (! $request->getArg('start_debug'))
+    if (! $request->getArg('start_debug'))
         @set_time_limit(30); // Reset watchdog.
     else    
         @set_time_limit(240);
@@ -977,7 +988,6 @@ function LoadFile (&$request, $filename, $text = false, $mtime = false)
         $mtime = time();    // Last resort.
 
     $default_pagename = rawurldecode($basename);
-
     if ( ($parts = ParseMimeifiedPages($text)) ) {
         usort($parts, 'SortByPageVersion');
         foreach ($parts as $pageinfo)
@@ -1251,6 +1261,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.131  2004/11/30 17:48:38  rurban
+ just comments
+
  Revision 1.130  2004/11/25 08:28:12  rurban
  dont fatal on missing css or imgfiles and actually print the miss
 
