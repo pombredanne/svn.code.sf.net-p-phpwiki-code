@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.55 2001-12-06 19:15:05 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.56 2001-12-07 22:14:32 dairiki Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -523,6 +523,57 @@ function NoSuchRevision ($page, $version) {
     ExitWiki ("");
 }
 
+
+/**
+ * Get time offset for local time zone.
+ *
+ * @param $time time_t Get offset for this time.  Default: now.
+ * @param $no_colon boolean Don't put colon between hours and minutes.
+ * @return string Offset as a string in the format +HH:MM.
+ */
+function TimezoneOffset ($time = false, $no_colon = false) {
+    if ($time === false)
+        $time = time();
+    $secs = date('Z', $time);
+    if ($secs < 0) {
+        $sign = '-';
+        $secs = -$secs;
+    }
+    else {
+        $sign = '+';
+    }
+    $colon = $no_colon ? '' : ':';
+    $mins = intval(($secs + 30) / 60);
+    return sprintf("%s%02d%s%02d",
+                   $sign, $mins / 60, $colon, $mins % 60);
+}
+    
+/**
+ * Format time in ISO-8601 format.
+ *
+ * @param $time time_t Time.  Default: now.
+ * @return string Date and time in ISO-8601 format.
+ */
+function Iso8601DateTime ($time = false) {
+    if ($time === false)
+        $time = time();
+    $tzoff = TimezoneOffset($time);
+    $date = date('Y-m-d', $time);
+    $time=date('H:i:s', $time);
+    return $date . 'T' . $time . $tzoff;
+}
+
+/**
+ * Format time in RFC-2822 format.
+ *
+ * @param $time time_t Time.  Default: now.
+ * @return string Date and time in RFC-2822 format.
+ */
+function Rfc822DateTime ($time = false) {
+    if ($time === false)
+        $time = time();
+    return date('D, d F H:i:s ', $time) . TimezoneOffset($time, 'no colon');
+}
 
 // (c-file-style: "gnu")
 // Local Variables:
