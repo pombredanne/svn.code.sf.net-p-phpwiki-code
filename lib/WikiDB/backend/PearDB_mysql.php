@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_mysql.php,v 1.5 2004-07-03 14:48:18 rurban Exp $');
+rcs_id('$Id: PearDB_mysql.php,v 1.6 2004-07-05 12:57:54 rurban Exp $');
 
 require_once('lib/WikiDB/backend/PearDB.php');
 
@@ -11,7 +11,6 @@ extends WikiDB_backend_PearDB
      */
     function WikiDB_backend_mysql($dbparams) {
         $this->WikiDB_backend_PearDB($dbparams);
-
         //$this->_serverinfo = $this->_dbh->ServerInfo();
         $row = $this->_dbh->GetOne("SELECT version()");
         if (!DB::isError($row) and !empty($row)) {
@@ -26,10 +25,28 @@ extends WikiDB_backend_PearDB
     }
     
     /**
+     * Kill timed out processes. ( so far only called on about every 50-th save. )
+     */
+    function _timeout() {
+    	if (empty($this->_dbparams['timeout'])) return;
+	$result = mysql_query("SHOW processlist");
+	while ($row = mysql_fetch_array($result)) { 
+	    if ($row["db"] == $this->_dbh->dsn['database']
+	        and $row["User"] == $this->_dbh->dsn['username']
+	        and $row["Time"] > $this->_dbparams['timeout']
+	        and $row["Command"] == "Sleep") {
+	            $process_id = $row["Id"]; 
+	            mysql_query("KILL $process_id");
+	    }
+	}
+    }
+   
+    /**
      * Pack tables.
      */
     function optimize() {
         $dbh = &$this->_dbh;
+	$this->_timeout();
         foreach ($this->_table_names as $table) {
             $dbh->query("OPTIMIZE TABLE $table");
         }

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.56 2004-07-04 10:24:43 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.57 2004-07-05 12:57:54 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -22,6 +22,7 @@ extends WikiDB_backend
         
         // Open connection to database
         $this->_dsn = $dbparams['dsn'];
+	$this->_dbparams = $dbparams;
         $dboptions = array('persistent' => true,
                            'debug' => 2);
         if (preg_match('/^pgsql/',$this->_dsn))
@@ -1031,6 +1032,9 @@ extends WikiDB_backend_PearDB_generic_iter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.56  2004/07/04 10:24:43  rurban
+// forgot the expressions
+//
 // Revision 1.55  2004/07/03 16:51:06  rurban
 // optional DBADMIN_USER:DBADMIN_PASSWD for action=upgrade (if no ALTER permission)
 // added atomic mysql REPLACE for PearDB as in ADODB
