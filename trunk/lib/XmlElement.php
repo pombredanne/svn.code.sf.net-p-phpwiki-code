@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.29 2004-06-19 11:48:53 rurban Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.30 2004-06-19 12:33:25 rurban Exp $');
 /**
  * Code for writing XML.
  * @author: Jeff Dairiki
@@ -161,7 +161,7 @@ class XmlContent
     
     function _quote ($string) {
     	if (!$string) return $string;
-        if (check_php_version(4,1))
+        if (check_php_version(4,1) and isset($GLOBALS['charset']))
             return htmlspecialchars($string,ENT_COMPAT,$GLOBALS['charset']);
         else
             return htmlspecialchars($string);
