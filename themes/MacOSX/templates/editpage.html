@@ -4,7 +4,7 @@
 <html>
 <head>
 <!-- phpwiki source:
-$Id: editpage.html,v 1.2 2002-01-05 10:17:06 carstenklapp Exp $
+$Id: editpage.html,v 1.3 2002-01-11 00:18:38 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <base href="${BASE_URL}" />
@@ -24,13 +24,13 @@ ${EDIT_WARNINGS}
 <?php } ?>
 <?php /*
  * FIXME: Hack! 
- * The URL used for the form action parameter is bogus.
+ * The ${ACTION}EditPage URL used for the form action parameter is bogus.
  * This is needed, otherwise the redirect to the real browser
- * page won't work with some browsers (NS4).  (NS4 won't accept
+ * page won't work with some browsers. (NS4 and Mozilla 0.97 won't accept
  * a redirect from a page to itself.)
  */ ?>
-
-<form method="post" action="${BROWSE}EditPage" accept-charset="${CHARSET}">
+<?php //<textarea wrap="virtual"> is not valid xhtml but Netscape 4 requires it to wrap long lines. ?>
+<form method="post" action="${ACTION}EditPage" accept-charset="${CHARSET}">
 <textarea class="wikiedit"
           name="content"
           rows="${EDIT_AREA_HEIGHT}"
