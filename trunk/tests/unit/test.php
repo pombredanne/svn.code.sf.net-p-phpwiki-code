@@ -35,8 +35,6 @@
 // common cfg options are taken from config/config.ini
 
 //TODO: let the user decide which constants to use: define="x=y"
-define('RATING_STORAGE', 'WIKIPAGE');
-define('GROUP_METHOD', 'NONE');
 //define('USE_DB_SESSION', false);
 //define('ENABLE_USER_NEW', false);
 
@@ -63,13 +61,13 @@ if (substr(PHP_OS,0,3) == 'WIN')
     $cur_dir = str_replace("\\","/", $cur_dir);
 $rootdir = $cur_dir . '/../../';
 $ini_sep = substr(PHP_OS,0,3) == 'WIN' ? ';' : ':';
-ini_set('include_path', ini_get('include_path')
-        . $ini_sep . $rootdir 
-        . $ini_sep . $rootdir . "lib/pear");
+$include_path = ini_get('include_path') . $ini_sep . $rootdir . $ini_sep . $rootdir . "lib/pear";
+ini_set('include_path', $include_path);
+
 if ($HTTP_SERVER_VARS["SERVER_NAME"] == 'phpwiki.sourceforge.net') {
     ini_set('include_path', ini_get('include_path') . ":/usr/share/pear");
     //define('ENABLE_PAGEPERM',false); // costs nothing
-    define('USECACHE',false);
+    define('USECACHE',false); // really?
     //define('WIKIDB_NOCACHE_MARKUP',1);
 }
 
@@ -234,6 +232,51 @@ function printConstant($v) {
     } else echo "undefined";
     echo "\n";
 }
+
+function html_option_form() {
+    global $debug_level,$user_level,$start_debug;
+
+    $form = HTML::tr(array('valign'=>'top'));
+    $option = HTML::div(array('class' => 'option'), 'test: ', HTML::br());
+    foreach ($GLOBALS['alltests'] as $s) {
+        $input = array('type' => 'checkbox', 'name' => 'test['.$s.']', 'value' => '1');
+        if (in_array($s,$GLOBALS['runtests'])) $input['checked'] = 'checked';
+        $option->pushContent(HTML::input($input), $s, HTML::br());
+    }
+    $form->pushContent(HTML::td($option));
+    $option = HTML::div(array('class' => 'option'), 'db: ', HTML::br());
+    foreach ($GLOBALS['database_backends'] as $s) {
+        $input = array('type' => 'checkbox', 'name' => 'db['.$s.']', 'value' => '1');
+        if (in_array($s,$GLOBALS['run_database_backends'])) $input['checked'] = 'checked';
+        $option->pushContent(HTML::input($input), $s, HTML::br());
+    }
+    $form->pushContent(HTML::td($option));
+    $form->pushContent(HTML::td(array('class' => 'option'), 'debug: ', 
+                                HTML::input(array('name'=>'debug','value'=>$debug_level)),
+                                HTML::br(),
+                                'level: ', 
+                                HTML::input(array('name'=>'level','value'=>$user_level)),
+                                HTML::br()));
+    unset($input);
+    $option = HTML::div(array('class' => 'option'), 'defines: ', HTML::br());
+    foreach ($GLOBALS['define'] as $s) {
+        if (defined($s)) {
+            $input = array('type' => 'edit', 'name' => $s, 'value' => constant($s));
+            $option->pushContent(HTML::input($input), $s, HTML::br());
+        }
+    }
+    if ($input)
+        $form->pushContent(HTML::td($option));
+    $table = HTML::form(array('action' => $GLOBALS['PHP_SELF'],
+                                          'method' => 'GET',
+                              'accept-charset' => $GLOBALS['charset']),
+                        HiddenInputs(array('start_debug' => $start_debug)),
+                        HTML::table($form),
+                        HTML::input(array('type' => 'submit')),
+                        HTML::input(array('type' => 'reset')));
+    return $table->printXml();
+}
+
 ####################################################################
 #
 # End of preamble, run the test suite ..
@@ -263,7 +306,7 @@ if (isset($HTTP_SERVER_VARS['REQUEST_METHOD'])) {
     $argv = array();
     foreach ($HTTP_GET_VARS as $key => $val) {
     	if (is_array($val)) 
-    	    foreach ($val as $v) $argv[] = $key."=".$v;
+    	    foreach ($val as $k => $v) $argv[] = $key."=".$k;
     	elseif (strstr($val,",") and in_array($key,array("test","db")))
     	    foreach (explode(",",$val) as $v) $argv[] = $key."=".$v;
     	else
@@ -295,17 +338,17 @@ if (!empty($argv)) {
         elseif ($debug_level & 1)
             echo "ignored arg: ", $arg, "\n";
     }
-    if (!empty($run_database_backends))
-        $database_backends = $run_database_backends;
-    if (!empty($runtests))
-        $alltests = $runtests;
+    if (empty($run_database_backends))
+        $run_database_backends = $database_backends;
+    if (empty($runtests))
+        $runtests = $alltests;
     if ($debug_level & 1) {
         echo "\n";
         echo "PHP_SAPI=",php_sapi_name(), "\n";
         echo "PHP_OS=",PHP_OS, "\n";
         echo "PHP_VERSION=",PHP_VERSION, "\n";
-        echo "test=", join(",",$alltests),"\n";
-        echo "db=", join(",",$database_backends),"\n";
+        echo "test=", join(",",$runtests),"\n";
+        echo "db=", join(",",$run_database_backends),"\n";
         echo "debug=", $debug_level,"\n";
         echo "level=", $user_level,"\n";
         if (!empty($define)) {
@@ -318,13 +361,16 @@ if (!empty($argv)) {
     }
     flush();
 }
-define('DEBUG', $debug_level); 
+if (!defined('DEBUG'))
+    define('DEBUG', $debug_level);
+// override defaults:
+if (!defined('RATING_STORAGE')) 
+   define('RATING_STORAGE', 'WIKIPAGE');
+if (!defined('GROUP_METHOD'))
+    define('GROUP_METHOD', 'NONE');
 
 if (DEBUG & 8)
     printMemoryUsage("beforePEAR");
-
-# Test files
-require_once 'PHPUnit.php';
 
 if (DEBUG & 8)
     printMemoryUsage("beforePhpWiki");
@@ -333,6 +379,12 @@ define('PHPWIKI_NOMAIN', true);
 # Other needed files
 require_once $rootdir.'index.php';
 require_once $rootdir.'lib/main.php';
+
+// init filefinder for pear path fixup.
+FindFile ('PHPUnit.php', 'missing_okay');
+// PEAR library (requires version ??)
+require_once 'PHPUnit.php';
+
 ob_end_flush();
 
 if ($debug_level & 1) {
@@ -402,6 +454,11 @@ include_once("themes/" . THEME . "/themeinfo.php");
 if (DEBUG & _DEBUG_TRACE)
     printMemoryUsage("PhpWikiLoaded");
 
+// provide a nice input form for all options
+if (isset($HTTP_SERVER_VARS['REQUEST_METHOD'])) {
+    echo html_option_form();
+}
+
 // save and restore all args for each test.
 class phpwiki_TestCase extends PHPUnit_TestCase {
     function setUp() { 
@@ -443,7 +500,7 @@ foreach ($database_backends as $dbtype) {
     if (DEBUG & _DEBUG_TRACE)
         printMemoryUsage("PhpWikiInitialized");
 
-    foreach ($alltests as $test) {
+    foreach ($runtests as $test) {
     	if (!@ob_get_level()) ob_start();
         $suite  = new PHPUnit_TestSuite("phpwiki");
         if (file_exists(dirname(__FILE__).'/lib/'.$test.'.php'))
