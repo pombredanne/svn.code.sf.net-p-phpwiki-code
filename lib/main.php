@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.56 2002-02-16 00:08:00 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.57 2002-02-16 02:08:26 carstenklapp Exp $');
 
 
 include "lib/config.php";
@@ -273,7 +273,7 @@ class WikiRequest extends Request {
         else
             $msg = fmt("You must be an administrator to %s this wiki", $what);
 
-        WikiUser::PrintLoginForm($this, compact('require_level'), $msg);
+WikiUser::PrintLoginForm($this, compact('require_level'), $msg);
         $this->finish();    // NORETURN
     }
 
@@ -418,7 +418,7 @@ class WikiRequest extends Request {
             global $WikiNameRegexp;
             if (!preg_match("/$WikiNameRegexp\\Z/A", $pagename))
                 return false;
-            }
+        }
         $dbi = $this->getDbh();
         $page = $dbi->getPage($pagename);
         $rev = $page->getCurrentRevision();
@@ -480,7 +480,7 @@ class WikiRequest extends Request {
         global $Theme, $request;
         //require_once('lib/display.php');
         //displayPage(&$request, 'info'); // this adds to hit counter
-    
+
         $pagename = $request->getArg('pagename');
         $version = $request->getArg('version');
         $pagehandle = $request->getPage();
@@ -491,16 +491,16 @@ class WikiRequest extends Request {
         } else {
             $revision = $pagehandle->getCurrentRevision();
         }
-    
-        $pagetitle = HTML("Info for", ": ",
-                        $Theme->linkExistingWikiWord($pagename, false, $version));
-    
+
+        $pagetitle = HTML(fmt("%s: %s", _("Info"),
+                              $Theme->linkExistingWikiWord($pagename, false, $version)));
+
         //$pagetitle->addTooltip(sprintf(_("Page info for %s"), $pagename));
-    
+
         require_once("lib/Template.php");
         $i = Template('info', $this);
         $t = Template('browse', array('CONTENT' => $i));
-    
+
         GeneratePage($t, $pagetitle, $revision);
         flush();
     }
