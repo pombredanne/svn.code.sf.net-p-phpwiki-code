@@ -1,6 +1,6 @@
 <?php // -*-php-*-
 
-rcs_id('$Id: themeinfo.php,v 1.18 2002-02-03 19:06:07 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.19 2002-02-06 04:21:19 carstenklapp Exp $');
 
 /**
  * This PhpWiki theme is experimental and will likely not appear as
@@ -41,25 +41,6 @@ class Theme_WikiTrek extends Theme {
             return false;       // use default
         return '_WikiTrek_PageHistory_Formatter';
     }
-
-    function linkExistingWikiWord($wikiword, $linktext = '', $version = false) {
-        if ($version !== false)
-            $url = WikiURL($wikiword, array('version' => $version));
-        else
-            $url = WikiURL($wikiword);
-
-        $link = HTML::a(array('href' => $url));
-
-        if (!empty($linktext)) {
-            $link->pushContent($linktext);
-            $link->setAttr('class', 'named-wiki');
-        }
-        else {
-            $link->pushContent($this->maybeSplitWikiWord($wikiword));
-            $link->setAttr('class', 'wiki');
-        }
-        return HTML::span("[ ", $link, " ]");
-    }
 }
 
 $Theme = new Theme_WikiTrek('WikiTrek');
@@ -88,7 +69,7 @@ $Theme->addImageAlias('logo', 'Ufp-logo.jpg');
  */
 $Theme->addImageAlias('signature', 'lights.gif');
 
-//$Theme->setButtonSeparator(' | ');
+$Theme->setButtonSeparator('');
 
 /**
  * WikiWords can automatically be split by inserting spaces between

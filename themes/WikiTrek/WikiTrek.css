@@ -1,233 +1,329 @@
 /**
- * $Id: WikiTrek.css,v 1.17 2002-02-03 21:32:08 carstenklapp Exp $
+* $Id: WikiTrek.css,v 1.18 2002-02-06 04:21:19 carstenklapp Exp $
  *
  * This PhpWiki theme is experimental and will likely not appear as
  * part of any release. ("accessories not included"--download
- * seperately)
+                         * seperately)
  *
  * http://www.w3.org/TR/REC-CSS2/indexlist.html
  *
-        #fff; /white/
-        #000; /black/
-        #ffcf00; /yellow/
-        #ddc300; /darker-yellow/
-        #0700ff; /bright-blue/
-        #0c10bc; /blue/
-        #8452b5; /magenta/
-        #982505; /red/
-        #ef0032; /light-red/
-        #009000; /green/
-        #1bab11; /light-green/
-        #ff7e00; /orange/
-*/
+ * #fff; white
+ * #000; black
+ * #fff313; yellow
+ * #ddc300; darker-yellow
+ * #5791ff; bright-blue
+ * #0053db; blue
+ * #8452b5; magenta
+ * #982505; red
+ * #ef0032; light-red
+ * #009000; green
+ * #1bab11; light-green
+ * #ff7e00; orange
+ */
 
 /* NS4 doesn't grok @import.  This allows us to put things which
  * break NS4 in another file.
  */
 @import url(WikiTrek-gravimetric.css);
 
-body { 
-/* the background image url is relative to this file's directory */
-        color :             #fff;
-        background-color :  #000;
-        background-image :  url(images/starfield.png);
-        background-repeat : repeat;
-        font-size :         larger;
+body {
+  /* the background image url is relative to this file's directory */
+  /*background-image:  url(images/starfield.png); */
+  color:             #fff;
+  background-color:  #000;
+  background-repeat: repeat;
 }
 
 body {
-        font-family : "Helvetica Narrow", "Arial Narrow", Helvetica,
-                      Arial, sans-serif;
+  font-family: "Helvetica Narrow", "Arial Narrow", Helvetica,
+  Arial, sans-serif;
 }
 
+/**
+ * forms
+ */
+textarea, input {
+  color:      white;
+  background: black;
+}
+textarea {
+  border: 2px solid #0053db;
+  padding-top:   .5ex;
+  padding-bottom:.5ex;
+  padding-left:  .5em;
+  padding-right: .25em;
+}
+input {
+  border: 2px solid #0053db;
+  text-align:  center;
+  font-family: Helvetica, Arial, sans-serif;
+}
+div.toolbar input {
+  border:  1px solid #0053db;
+  padding: 1px;
+  text-size:   smaller;
+  text-align:  left;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+a { color: #0053db; }
+
 .rssicon {
-        border-color : #000;
-        border-width : 2px;
+  border-color: #000;
+  border-width: 2px;
 }
 
 .wikitext , .toolbar , p , td {
-        font-family : "Helvetica Narrow", "Arial Narrow", Helvetica,
-                      Arial, sans-serif;
+  font-family: "Helvetica Narrow", "Arial Narrow", Helvetica,
+  Arial, sans-serif;
 }
 
 .wikitext td { color: white; }
 
 input.button {
-        font-family : "Helvetica Narrow", "Arial Narrow", Helvetica,
-                      Arial, sans-serif;
+  font-family: "Helvetica Narrow", "Arial Narrow", Helvetica,
+  Arial, sans-serif;
 }
 
 .wikitext pre {
-        font-family : monospace;
+  font-family: monospace;
 }
 
 div.wikitext {
-        color :       #fff;
-        background :  url("images/tchecker-black.png") repeat;
-        font-weight : normal;
-        padding :     1em;
-        margin :      0.5ex;
-        clear :       both;
+  font-weight: normal;
+  color:       #fff;
+  background:  url("images/tchecker-black.png") repeat;
+  padding: 1em;
+  margin:  0.5ex;
+  clear:   both;
 }
 
-p.editdate { margin-bottom: 0ex; }
+p.editdate {
+  color:            #000;
+  background-color: #96c;
+  padding-top:    0.25ex;
+  padding-left:   0.5em;
+  padding-right:  0.5em;
+  padding-bottom: 1px;
+  margin-top:     2em;
+  margin-bottom:  0ex;
+}
+
 
 h1 {
-        color :            #000;
-        background-color : #0c10bc;
-        width :            100%;
-        padding-top :      0.25em;
-        padding-left :     0.5ex;
-        padding-bottom :   1px;
+  color:            #000;
+  background-color: #fff313;
+  width:          100%;
+  padding-top:    0.25em;
+  padding-left:   0.5ex;
+  padding-bottom: 1px;
+}
+h1 a.wiki, h1 .backlinks {
+  color:            #fff313;
+  background-color: #000;
+  text-decoration:  none;
+  padding-top:      0.25em;
+  padding-left:     0.5ex;
+  padding-right:    0.5ex;
+  padding-bottom:   1px;
 }
 
-.backlinks {
-        color :            #ffcf00;
-        background-color : #000;
-        text-decoration :  none;
-        padding-top :      0.25em;
-        padding-left :     0.5ex;
-        padding-right :    0.5ex;
-        padding-bottom :   1px;
+h2 {
+color:            #000;
+  background-color: #0053db;
+  padding-top:      0.25em;
+  padding-left:     0.5ex;
+  padding-right:    0.5ex;
+  padding-bottom:   1px;
+  margin-top:        2em;
 }
 
-h2 , h3 , h4 {
-        color :            #000;
-        background-color : #ffcf00;
-        padding-top :      0.25em;
-        padding-left :     0.5ex;
-        padding-right :    0.5ex;
-        padding-bottom :   1px;
-        margin-top:        2em;
+h3 {
+  color:            #000;
+  background-color: #96c;
+  padding-top:      0.25em;
+  padding-left:     0.5ex;
+  padding-right:    0.5ex;
+  padding-bottom:   1px;
+  margin-top:        2em;
 }
 
-.wiki {
-        color :           #ffcf00;
-        background :      #000;
-        font-weight :     bold;
-        text-decoration : none;
+h4 {
+  color:            #000;
+  background-color: #639;
+  padding-top:      0.25em;
+  padding-left:     0.5ex;
+  padding-right:    0.5ex;
+  padding-bottom:   1px;
+  margin-top:        2em;
 }
-.wiki:hover {
-        color : #000;
-        background : #ddc300;
+
+.wikitext a.wiki {
+  color:           #fff313;
+  background:      inherit;
+  font-weight:     bold;
+  text-decoration: none;
+}
+.wikitext a.wiki:hover, .wiki:hover {
+  color: #44cff4;
 }
 
 .rc-major {
-        color :           #fff;
-        background :      #000;
-        font-weight :     normal;
-        text-decoration : none;
+  color:       #fff;
+  background:  #000;
+  font-weight: normal;
+  text-decoration: none;
 }
 
+.toolbar {
+  color: white;
+  font-size: larger;
+}
+
+div.toolbar { margin-top: 1em; }
+
 .toolbar .wiki {
-        color :           #000;
-        background :      #0c109c;
-        text-decoration : none;
-        font-weight :     bold;
-        padding :         2px;
-        margin :          1px;
-        border :          1px none ;
-        border-color :    #000;
-        border-style :    solid;
+  color:           #0053db;
+  background:      inherit;
+  text-decoration: none;
+  font-weight:  bold;
+  border-left:  1.5em solid #0053db;
+  border-right: .15em solid #0053db;
+  padding-left: .15em;
+  padding-right:.3em;
 }
 .toolbar .wiki:hover {
-        color : #000;
-        background :   #0c10bc;
-        font-weight :  bold;
+color: #5791ff;
+  border-right: .15em solid #5791ff;
+  font-weight:  bold;
 }
 
 .wikiaction {
-        color : #000;
-        background :      #009000;
-        text-decoration : none;
-        font-weight :     bold;
-        padding :         2px;
-        margin :          1px;
-        border :          1px none ;
-        border-color :    #000;
-        border-style :    solid;
+  color:           #115511;
+  background:      inherit;
+  text-decoration: none;
+  font-weight:     bold;
+  border-left:   1.5em solid #115511;
+  border-right:  .15em solid #115511;
+  padding-left:  .15em;
+  padding-right: .3em;
 }
 .wikiaction:hover {
-        color : #000;
-        background : #1bab11;
+  color: #1bab11;
+  border-right: .15em solid #1bab11;
 }
 
 .wikiadmin {
-        color : #000;
-        background :      #982505;
-        text-decoration : none;
-        font-weight :     bold;
-        padding :         2px;
-        margin :          1px;
-        border :          1px none ;
-        border-color :    #000;
-        border-style :    solid;
+  color: #982505;
+  text-decoration: none;
+  font-weight:     bold;
+  border-left:   1.5em solid #982505;
+  border-right:  .15em solid #982505;
+  padding-left:  .15em;
+  padding-right:  .3em;
 }
 .wikiadmin:hover {
-        color : #000;
-        background :      #ef0032;
+color:       #ef0032;
+  border-right: .15em solid #ef0032;
 }
 
 b.wikisummary {
-        color :           #ffcf00;
-        background :      #000;
-        text-decoration : none;
-        font-weight :     bold;
-        padding :         2px;
-        margin :          1px;
-        border :          1px none ;
-        border-color :    #000;
-        border-style :    solid;
+  color:        #fff313;
+  background:   #000;
+  text-decoration: none;
+  font-weight:  bold;
+  padding:      2px;
+  margin:       1px;
+  border:       1px none ;
+  border-color: #000;
+  border-style: solid;
 }
 
 img.linkicon, img.rssicon {
-        border : 0px;
+  border: 0px;
 }
 
 img.rssicon {
-        vertical-align : top;
+  vertical-align: top;
 }
 
 /* Not all browsers support this, but it's a cool trick when is!
- * It maybe better to do this with a new wiki Theme element.
- * yes=OmniWeb 4.1sp28; No=IE5.1Mac, Mozilla0.97Mac, iCAB2.6Mac.
- * For now this is also the same image as the thank-you signature.
- */
+* It maybe better to do this with a new wiki Theme element.
+* yes=OmniWeb 4.1sp28; No=IE5.1Mac, Mozilla0.97Mac, iCAB2.6Mac.
+* For now this is also the same image as the thank-you signature.
+*/
 .wikitext hr {
-    background-image :   url("images/lights.gif");
-    background-repeat:   no-repeat;
-    background-position: center;
+  background-image:   url("images/hr.png");
+  background-repeat:   repeat;
+  background-position: center;
 }
 
-div.wiki-edithelp { font-size: smaller;
-               background: url("images/tchecker-black.png") repeat;
+/* IncludePage plugin */
+.transclusion-title {
+  font-style: oblique;
+  font-size: smaller; /* 0.75em; */
+  text-decoration: underline;
+  text-align: right;
+}
+
+div.transclusion {
+background: #1b1722;
+border:     1px solid #403752;
+margin:     0.5ex 0px;
+}
+
+/* The transclusion of the TextEditingRules Synopsis on templates/editpage.html */
+div.wiki-edithelp .transclusion {
+  font-size:   smaller;
+  background:  inherit;
+  margin:     0.2ex 5%;
+}
+div.wiki-edithelp .transclusion p {
+  margin: 0;
+}
+div.wiki-edithelp {
+  color: #a2a2a2;
+  background-color: #1b1722;
+  /*background: url(images/tchecker-grey.png);*/
+  border: 1px solid #403752;
+  padding-top: 0;
+  padding-left: 1em;
+  padding-bottom: 0;
+  padding-right: 1em;
+  font-size:  smaller;
+}
+div.wiki-edithelp .wiki {
+  color:           #fff313;
+  background:      inherit;
+  font-weight:     bold;
+  text-decoration: none;
 }
 
 /****************************************************************
- **
- ** Diff Output
- **
- *****************************************************************/
+**
+** Diff Output
+**
+*****************************************************************/
 .diff .block	{ padding: 0.5ex 0.5em; margin: 0.5ex 0; }
 .diff .block tt	{ font-weight: bold; }
 .diff del,
 .diff ins	{ font-weight: normal; text-decoration: none; }
 
 /* These screw up NS4 --- moved to phpwiki-heavy.css
-.diff .block div { position: relative; padding-left: 1.5em; } 
+.diff .block div { position: relative; padding-left: 1.5em; }
 .diff .prefix	{ position: absolute; left: 0.5em; top: 0; }
 */
 
-.diff .block	{ color: #000; background: #ffcf00; }
+.diff .block	{ color: #000; background: #fff313; }
 .diff .context	{ color: #fff; background: #000; }
 .diff .original,
 .diff .deleted	{ background: #a40024; }
 .diff .final,
 .diff .added	{ background: #cfc; }
 /*
-.diff .original	{ background: #feb; }
-.diff .final	{ background: #efb; }
-*/
+ .diff .original	{ background: #feb; }
+ .diff .final	{ background: #efb; }
+ */
 /* These don't work in NS4 -- it completely ignores <del> and <ins>. */
 .diff del	{ background: #a40024; }
 .diff ins	{ background: #9f9; }
