@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.119 2004-02-26 20:45:06 rurban Exp $');
+rcs_id('$Id: main.php,v 1.120 2004-03-01 10:22:41 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -79,39 +79,10 @@ class WikiRequest extends Request {
         assert(!empty($Theme));
     }
 
-
     // This really maybe should be part of the constructor, but since it
     // may involve HTML/template output, the global $request really needs
     // to be initialized before we do this stuff.
     function updateAuthAndPrefs () {
-        /*
-        // Handle preference updates, and authentication requests, if any.
-        if ($new_prefs = $this->getArg('pref')) {
-            $this->setArg('pref', false);
-            if ($this->isPost() and !empty($new_prefs['passwd']) and 
-                ($new_prefs['passwd2'] != $new_prefs['passwd'])) {
-                // FIXME: enh?
-                $this->_prefs->set('passwd','');
-                // $this->_prefs->set('passwd2',''); // This is not stored anyway
-                return false;
-            }
-            foreach ($new_prefs as $key => $val) {
-                if ($key == 'passwd') {
-                    // FIXME: enh?
-                    $val = crypt('passwd');
-                }
-                $this->_prefs->set($key, $val);
-            }
-        }
-        */
-
-        // FIXME: need to move authentication request processing
-        // up to be before pref request processing, I think,
-        // since logging in may change which preferences
-        // we're talking about...
-
-        // even we have disallow anon users?
-        // if (! $this->_user ) $this->_user = new _AnonUser();	
 
         // Handle authentication request, if any.
         if ($auth_args = $this->getArg('auth')) {
@@ -265,6 +236,7 @@ class WikiRequest extends Request {
             $this->_prefs = $this->_user->_prefs;
         $this->_prefs->set('userid',
                            $user->isSignedIn() ? $user->getId() : '');
+        $this->initializeTheme();
     }
 
     /* Permission system */
@@ -815,8 +787,6 @@ function main () {
     $request->initializeTheme();
 
     $request->updateAuthAndPrefs();
-    // initialize again with user's prefs
-    $request->initializeTheme();
     $request->initializeLang();
     
     // Enable the output of most of the warning messages.
@@ -833,7 +803,9 @@ function main () {
 
     $request->possiblyDeflowerVirginWiki();
     
-if(defined('WIKI_XMLRPC')) return;
+if (defined('WIKI_XMLRPC') and WIKI_XMLRPC) return;
+if (defined('WIKI_SOAP')   and WIKI_SOAP)   return;
+
 
     $validators = array('wikiname' => WIKI_NAME,
                         'args'     => hash($request->getArgs()),
@@ -867,6 +839,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.119  2004/02/26 20:45:06  rurban
+// check for ALLOW_ANON_USER = false
+//
 // Revision 1.118  2004/02/26 01:32:03  rurban
 // fixed session login with old WikiUser object. strangely, the errormask gets corruoted to 1, Pear???
 //
