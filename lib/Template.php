@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.64 2004-10-04 23:40:35 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.65 2004-10-07 16:08:58 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -176,7 +176,7 @@ class Template
         // ignore recursively nested htmldump loop: browse -> body -> htmldump -> browse -> body ...
         // FIXME for other possible loops also
         elseif (strstr($error->errfile, "(In template 'htmldump')")) {
-            return $error;
+            ; //return $error;
         }
         else {
             $error->errfile .= " (In template '$this->_name')";
@@ -264,6 +264,9 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.64  2004/10/04 23:40:35  rurban
+// fix nested loops on htmldump errors
+//
 // Revision 1.63  2004/09/06 08:22:33  rurban
 // prevent errorhandler to fail on empty templates
 //

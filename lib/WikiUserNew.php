@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.108 2004-10-05 17:00:04 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.109 2004-10-07 16:08:58 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -2300,12 +2300,15 @@ extends _PassUser
 
     function checkPass($submitted_password) {
         if (!$this->isValidName()) {
+            trigger_error(_("Invalid username"),E_USER_WARNING);
             return $this->_tryNextPass($submitted_password);
         }
         //include_once 'lib/pear/File_Passwd.php';
         if ($this->_file->verifyPassword($this->_userid, $submitted_password)) {
             $this->_authmethod = 'File';
             $this->_level = WIKIAUTH_USER;
+            if ($this->isAdmin()) // member of the Administrators group
+                $this->_level = WIKIAUTH_ADMIN;
             return $this->_level;
         }
         
@@ -3056,6 +3059,11 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.108  2004/10/05 17:00:04  rurban
+// support paging for simple lists
+// fix RatingDb sql backend.
+// remove pages from AllPages (this is ListPages then)
+//
 // Revision 1.107  2004/10/04 23:42:15  rurban
 // HttpAuth admin group logic. removed old logs
 //
