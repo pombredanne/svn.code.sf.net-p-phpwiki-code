@@ -35,7 +35,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.0-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.34 2001-12-06 19:15:05 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.35 2001-12-06 21:13:30 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -273,7 +273,7 @@ $LINK_ICONS = array(
                     'https'	=> 'images/https.png',
                     'ftp'	=> 'images/ftp.png',
                     'mailto'	=> 'images/mailto.png',
-                    '*'		=> 'images/http.png'
+                    '*'		=> 'images/zapg.png'
                     );
 */                    
 
