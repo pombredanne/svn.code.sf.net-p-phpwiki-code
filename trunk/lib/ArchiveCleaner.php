@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ArchiveCleaner.php,v 1.1 2001-09-18 19:16:23 dairiki Exp $');
+<?php rcs_id('$Id: ArchiveCleaner.php,v 1.2 2002-09-14 20:12:33 dairiki Exp $');
 
 class ArchiveCleaner
 {
@@ -102,7 +102,10 @@ class ArchiveCleaner_Counter
         if (!$supplanted) {
             // Every revision but the most recent should have a supplanted time.
             // However, if it doesn't...
-            assert($supplanted > 0);
+            trigger_error(sprintf("Warning: Page '%s', version '%d' has no '_supplanted' timestamp",
+                                  $revision->getPageName(),
+                                  $revision->getVersion()),
+                          E_USER_NOTICE);
             // Assuming revisions are chronologically ordered, the previous
             // supplanted time is a good value to use...
             if ($this->previous_supplanted > 0)
@@ -114,7 +117,7 @@ class ArchiveCleaner_Counter
             }
         }
 
-        $this->last_supplanted = $supplanted;
+        $this->previous_supplanted = $supplanted;
         return ($this->now - $supplanted) / (24 * 3600);
     }
         
