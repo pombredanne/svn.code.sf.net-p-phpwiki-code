@@ -1,9 +1,9 @@
 Date: Tue, 8 Jun 2004 22:20:05 +0200
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.11pre)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.35 2004-06-08 20:37:58 rurban Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.36 2004-06-10 12:22:40 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.35 $";
+  pgsrc_version="2 $Revision: 1.36 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
@@ -46,6 +46,7 @@ fixes:
   and removed LDAP, POP3, IMAP default configs.
 * RelatedChanges: fixed days links
 * fix Rename: Change pagename in all linked pages
+* fixed PageChangeNotification for not-current users
 
 changes:
 * WikiAdminSetAcl functional
