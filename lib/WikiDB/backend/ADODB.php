@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.17 2004-03-01 13:48:45 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.18 2004-03-17 19:35:59 rurban Exp $');
 
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
@@ -51,6 +51,7 @@ require_once('lib/WikiDB/adodb/adodb.inc.php');
 class WikiDB_backend_ADODB
 extends WikiDB_backend
 {
+
     function WikiDB_backend_ADODB ($dbparams) {
         // Find and include PEAR's DB.php.
         //$pearFinder = new PearFileFinder;
@@ -107,6 +108,11 @@ extends WikiDB_backend
                     'link_tbl'     => $prefix . 'link',
                     'recent_tbl'   => $prefix . 'recent',
                     'nonempty_tbl' => $prefix . 'nonempty');
+        $page_tbl = $this->_table_names['page_tbl'];
+        $version_tbl = $this->_table_names['version_tbl'];
+        $this->page_tbl_fields = "$page_tbl.id as id, $page_tbl.pagename as pagename, $page_tbl.hits as hits, $page_tbl.pagedata as pagedata";
+        $this->version_tbl_fields = "$version_tbl.version as version, $version_tbl.mtime as mtime, ".
+            "$version_tbl.minor_edit as minor_edit, $version_tbl.content as content, $version_tbl.versiondata as versiondata";
 
         $this->_expressions
             = array('maxmajor'     => "MAX(CASE WHEN minor_edit=0 THEN version END)",
@@ -313,9 +319,9 @@ extends WikiDB_backend
         if ($want_content) {
             $fields = "*";
         } else {
-            $fields = ("$page_tbl.*,"
-                       . "mtime,minor_edit,versiondata,"
-                       . "content<>'' AS have_content");
+            $fields =  $this->page_tbl_fields . ", "
+                       . "mtime, minor_edit, versiondata,"
+                       . "content<>'' AS have_content";
         }
         // removed ref to FETCH_MODE in next line
         $result = $dbh->GetRow(sprintf("SELECT $fields"
@@ -490,7 +496,7 @@ extends WikiDB_backend
 
         $qpagename = $dbh->qstr($pagename);
         // removed ref to FETCH_MODE in next line        
-        $result = $dbh->Execute("SELECT $want.*"
+        $result = $dbh->Execute("SELECT $want.id as id, $want.pagename as pagename, $want.hits as hits, $want.pagedata as pagedata"
                               . " FROM $link_tbl, $page_tbl AS linker, $page_tbl AS linkee"
                               . " WHERE linkfrom=linker.id AND linkto=linkee.id"
                               . " AND $have.pagename=$qpagename"
@@ -515,7 +521,8 @@ extends WikiDB_backend
                                         . " $orderby $limit");
             }
             else {
-                $result = $dbh->Execute("SELECT $page_tbl.*"
+                $result = $dbh->Execute("SELECT "
+                                        . $this->page_tbl_fields
                                         . " FROM $nonempty_tbl, $page_tbl, $recent_tbl, $version_tbl"
                                         . " WHERE $nonempty_tbl.id=$page_tbl.id"
                                         . " AND $page_tbl.id=$recent_tbl.id"
@@ -526,7 +533,8 @@ extends WikiDB_backend
             if ($include_deleted) {
                 $result = $dbh->Execute("SELECT * FROM $page_tbl $orderby $limit");
             } else {
-                $result = $dbh->Execute("SELECT $page_tbl.*"
+                $result = $dbh->Execute("SELECT "
+                                        . $this->page_tbl_fields
                                         . " FROM $nonempty_tbl, $page_tbl"
                                         . " WHERE $nonempty_tbl.id=$page_tbl.id"
                                         . " $orderby $limit");
@@ -544,7 +552,7 @@ extends WikiDB_backend
         
         $table = "$nonempty_tbl, $page_tbl";
         $join_clause = "$nonempty_tbl.id=$page_tbl.id";
-        $fields = "$page_tbl.*";
+        $fields = $this->page_tbl_fields;
         $callback = new WikiMethodCb($this, '_sql_match_clause');
         
         if ($fullsearch) {
@@ -554,7 +562,7 @@ extends WikiDB_backend
             $table .= ", $version_tbl";
             $join_clause .= " AND $page_tbl.id=$version_tbl.id AND latestversion=version";
 
-            $fields .= ",$version_tbl.*";
+            $fields .= "," . $this->version_tbl_fields;
             $callback = new WikiMethodCb($this, '_fullsearch_sql_match_clause');
         }
         
@@ -603,11 +611,12 @@ extends WikiDB_backend
         if ($sortby) $orderby = 'ORDER BY ' . PageList::sortby($sortby,'db');
         else         $orderby = "ORDER BY hits $order";
         $limit = $limit ? $limit : 1;
-        $result = $dbh->SelectLimit("SELECT $page_tbl.*"
-                              . " FROM $nonempty_tbl, $page_tbl"
-                              . " WHERE $nonempty_tbl.id=$page_tbl.id"
-                              . " $orderby"
-                              , $limit);
+        $result = $dbh->SelectLimit("SELECT " 
+                                    . $this->page_tbl_fields
+                                    . " FROM $nonempty_tbl, $page_tbl"
+                                    . " WHERE $nonempty_tbl.id=$page_tbl.id"
+                                    . " $orderby"
+                                    , $limit);
 
         return new WikiDB_backend_ADODB_iter($this, $result);
     }
@@ -676,7 +685,8 @@ extends WikiDB_backend
 
         // FIXME: use SQL_BUFFER_RESULT for mysql?
         // Use SELECTLIMIT for portability
-        $result = $dbh->SelectLimit("SELECT $page_tbl.*,$version_tbl.*"
+        $result = $dbh->SelectLimit("SELECT "
+                                    . $this->page_tbl_fields . ", " . $this->version_tbl_fields
                                     . " FROM $table"
                                     . " WHERE $where_clause"
                                     . " ORDER BY mtime $order",
