@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: ExternalReferrer.php,v 1.1 2004-09-26 12:20:28 rurban Exp $');
+rcs_id('$Id: ExternalReferrer.php,v 1.2 2004-09-26 14:55:55 rurban Exp $');
 
 /** 
  * Detect external referrers
@@ -11,7 +11,7 @@ rcs_id('$Id: ExternalReferrer.php,v 1.1 2004-09-26 12:20:28 rurban Exp $');
 if (!function_exists('isExternalReferrer')) { // better define that in stdlib.php
   function isExternalReferrer(&$request) {
     if ($referrer = $request->get('HTTP_REFERER')) {
-    	$home = SCRIPT_NAME; // TODO: check sister wiki's: same host but other other script url
+    	$home = SCRIPT_NAME; // was SERVER_URL, check sister wiki's: same host but other other script url
     	if (substr(strtolower($referrer),0,strlen($home)) == strtolower($home)) return false;
         require_once("lib/ExternalReferrer.php");
         $se = new SearchEngines();
@@ -103,7 +103,7 @@ class SearchEngines {
         else if ($query2 and @stristr($url, $query2)) {
             $query = explode($query2, $url);
         }
-        if ($query) {
+        if (!empty($query)) {
             $query = @explode("&", $query[1]);
             $ref["query"] = @urldecode($query[0]);
         }
@@ -112,6 +112,9 @@ class SearchEngines {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/09/26 12:20:28  rurban
+// Detect external referrers, handle search engines
+//
 
 // For emacs users
 // Local Variables:
