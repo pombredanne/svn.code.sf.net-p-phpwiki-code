@@ -1,5 +1,7 @@
 <?php
 
+$locale["%s of the page. You should now see the most current version of the page. Your changes are no longer there."] =
+   "%s op de pagina.  Je zou nu de meest recente versie van de pagina moeten zien.  Jouw veranderingen staan er nu niet meer.";
 $locale["%s: %s"] =
    "%s: %s";
 $locale["(diff)"] =
@@ -10,6 +12,8 @@ $locale["- saved to database as version %d"] =
    "- bewaard in de data base als versie %d";
 $locale["Action %s is disallowed on this wiki"] =
    "Actie %s is niet beschikbaar in deze wiki";
+$locale["Cancel"] =
+   "Annuleer";
 $locale["Complete."] =
    "Klaar.";
 $locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
@@ -38,12 +42,20 @@ $locale["FullTextSearch"] =
    "VolledigeTekstZoek";
 $locale["GoodStyle"] =
    "GoedeStijl";
+$locale["H"] =
+   "H";
+$locale["Height"] =
+   "Hoogte";
 $locale["Hits"] =
    "Teller";
 $locale["HomePage"] =
    "ThuisPagina";
+$locale["In order to recover from this situation, follow these steps:"] =
+   "Om uit deze benarde situatie te geraken, volg je deze stappen:";
 $locale["Include of '%s' failed"] =
    "Insert van '%s' gefaald";
+$locale["InterWikiMap"] =
+   "InterWikiMap";
 $locale["Last Author"] =
    "Vorige Auteur";
 $locale["Last edited on %s."] =
@@ -66,12 +78,16 @@ $locale["MostPopular"] =
    "Meestbezochte";
 $locale["New page."] =
    "Nieuw pagina.";
+$locale["Next"] =
+   "Volgende";
 $locale["None"] =
    "Geen";
 $locale["Page Locked"] =
    "Sidan är Låst";
 $locale["Page Name"] =
    "Pagina Naam";
+$locale["Preview"] =
+   "Voorvertonig";
 $locale["Previous"] =
    "Vorige";
 $locale["Previous Author"] =
@@ -124,12 +140,16 @@ $locale["TitleSearch"] =
    "TitelZoek";
 $locale["Unlock Page"] =
    "Sluit Pagina Af";
+$locale["Update Preferences"] =
+   "Zet Voorkeuren";
 $locale["UserPreferences"] =
    "GebruikersVoorkeuren";
 $locale["Version"] =
    "Versie";
 $locale["Version %d"] =
    "Versie %d";
+$locale["Version %s, saved %s."] =
+   "Versie %s, bewarrd %s.";
 $locale["Version %s, saved on %s."] =
    "Versie %s, bewarrd op %s.";
 $locale["Versions are identical"] =
@@ -138,6 +158,10 @@ $locale["View Source"] =
    "Bron Tekst";
 $locale["View Source: %s"] =
    "Bron tekst: %s";
+$locale["W"] =
+   "B";
+$locale["Width"] =
+   "Breedte";
 $locale["You are about to remove '%s' permanently!"] =
    "Je staat op het punt '%s' voorgoed te verwijderen!";
 $locale["You are signed in as %s"] =
@@ -172,5 +196,9 @@ $locale["version %d"] =
    "versie %d";
 $locale["version %s"] =
    "versie %s";
+$locale["version %s, saved %s."] =
+   "versie %s, bewarrd %s.";
+$locale["version %s, saved on %s."] =
+   "versie %s, bewarrd op %s.";
 
 ?>
