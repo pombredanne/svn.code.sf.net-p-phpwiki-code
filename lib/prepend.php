@@ -5,7 +5,7 @@
  */
 $RCS_IDS = '';
 function rcs_id ($id) { $GLOBALS['RCS_IDS'] .= "$id\n"; }
-rcs_id('$Id: prepend.php,v 1.17 2004-04-19 23:13:03 zorloc Exp $');
+rcs_id('$Id: prepend.php,v 1.18 2004-04-26 12:22:56 rurban Exp $');
 
 define ('PHPWIKI_VERSION', '1.3.10pre');
 
@@ -72,8 +72,8 @@ class DebugTimer {
 $RUNTIMER = new DebugTimer;
 
 error_reporting(E_ALL);
-require_once('lib/ErrorManager.php');
-require_once('lib/WikiCallback.php');
+require_once(dirname(__FILE__).'/ErrorManager.php');
+require_once(dirname(__FILE__).'/WikiCallback.php');
 
 // FIXME: deprecated
 function ExitWiki($errormsg = false)
