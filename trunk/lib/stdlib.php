@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.236 2005-02-08 13:41:32 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.237 2005-02-12 17:22:18 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -1881,7 +1881,7 @@ function isExternalReferrer(&$request) {
 }
 
 /**
- * useful for PECL overrides: cvsclient, ldap, soap.
+ * Useful for PECL overrides: cvsclient, ldap, soap, xmlrpc, pdo, pdo_<driver>
  */
 function loadPhpExtension($extension) {
     if (!extension_loaded($extension)) {
@@ -1956,6 +1956,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.236  2005/02/08 13:41:32  rurban
+// add rand_ascii
+//
 // Revision 1.235  2005/02/04 11:54:48  rurban
 // fix Talk: names
 //

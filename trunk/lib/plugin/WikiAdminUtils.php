@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminUtils.php,v 1.16 2004-12-13 14:35:42 rurban Exp $');
+rcs_id('$Id: WikiAdminUtils.php,v 1.17 2005-02-12 17:24:24 rurban Exp $');
 /**
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -37,12 +37,12 @@ extends WikiPlugin
     }
 
     function getDescription () {
-        return _("Miscellaneous utility functions for the WIKIADMIN.");
+        return _("Miscellaneous utility functions for the Administrator.");
     }
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.16 $");
+                            "\$Revision: 1.17 $");
     }
 
     function getDefaultArguments() {

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSetAcl.php,v 1.22 2005-01-25 08:05:17 rurban Exp $');
+rcs_id('$Id: WikiAdminSetAcl.php,v 1.23 2005-02-12 17:24:24 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.22 $");
+                            "\$Revision: 1.23 $");
     }
 
     function getDefaultArguments() {
@@ -223,11 +223,11 @@ extends WikiPlugin_WikiAdminSelect
             $type = _("invidual page permission");
         elseif ($type == 'default')
             $type = _("default page permission");
-        $header->pushContent(HTML::strong(_("Type: ")), HTML::tt($type),HTML::br());
-        $header->pushContent(HTML::strong(_("getfacl: ")), pagePermissionsSimpleFormat($perm_tree, $owner),HTML::br());
-        $header->pushContent(HTML::strong(_("ACL: ")), HTML::tt($perm->asAclLines()),HTML::br());
+        $header->pushContent(HTML::strong(_("Type").': '), HTML::tt($type),HTML::br());
+        $header->pushContent(HTML::strong(_("getfacl").': '), pagePermissionsSimpleFormat($perm_tree, $owner),HTML::br());
+        $header->pushContent(HTML::strong(_("ACL").': '), HTML::tt($perm->asAclLines()),HTML::br());
         
-        $header->pushContent(HTML::p(HTML::strong(_("Description: ")),
+        $header->pushContent(HTML::p(HTML::strong(_("Description").': '),
                                      _("Selected Grant checkboxes allow access, unselected checkboxes deny access."),
                                      _("To ignore delete the line."),
                                      _("To add check 'Add' near the dropdown list.")
@@ -278,6 +278,9 @@ class _PageList_Column_perm extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.22  2005/01/25 08:05:17  rurban
+// protect against !ENABLE_PAGEPERM
+//
 // Revision 1.21  2004/11/23 15:17:20  rurban
 // better support for case_exact search (not caseexact for consistency),
 // plugin args simplification:
