@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Request.php,v 1.40 2004-02-26 01:39:51 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.41 2004-02-27 01:25:14 rurban Exp $');
 
 
 // backward compatibility for PHP < 4.2.0
@@ -496,21 +496,34 @@ class Request_UploadedFile {
             return false;
         
         $fileinfo = &$HTTP_POST_FILES[$postname];
-        if ($fileinfo['error'])
+        if ($fileinfo['error']) {
+            trigger_error("Upload error: #" . $fileinfo['error'],
+                          E_USER_ERROR);
             return false;
-        // with windows/php 4.2.1 is_uploaded_file() always returns false.
+        }
+
+        // With windows/php 4.2.1 is_uploaded_file() always returns false.
         if (!is_uploaded_file($fileinfo['tmp_name'])) {
             if (isWindows()) {
                 if (!$tmp_file = get_cfg_var('upload_tmp_dir')) {
                     $tmp_file = dirname(tempnam('', ''));
                 }
                 $tmp_file .= '/' . basename($fileinfo['tmp_name']);
-                /* but ending slash in php.ini upload_tmp_dir is required... */
-                if (ereg_replace('/+', '/', $tmp_file) != $fileinfo['tmp_name'])
+                /* but ending slash in php.ini upload_tmp_dir is required. */
+                if (ereg_replace('/+', '/', $tmp_file) != $fileinfo['tmp_name']) {
+                    trigger_error(sprintf("Uploaded tmpfile illegal: %s != %s",$tmp_file, $fileinfo['tmp_name']),
+                                  E_USER_ERROR);
                     return false;
+                } else {
+                    trigger_error(sprintf("Workaround for PHP/Windows is_uploaded_file() problem for %s.",
+                                          $fileinfo['tmp_name'])."\n".
+            	                  "Probably illegal TEMP environment setting.",E_USER_NOTICE);
+                }
+            } else {
+              trigger_error(sprintf("Uploaded tmpfile %s not found.",$fileinfo['tmp_name'])."\n".
+                           " Probably illegal TEMP environment setting.",
+                          E_USER_WARNING);
             }
-        } else {
-            return false;
         }
         return new Request_UploadedFile($fileinfo);
     }
@@ -891,6 +904,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.40  2004/02/26 01:39:51  rurban
+// safer code
+//
 // Revision 1.39  2004/02/24 15:14:57  rurban
 // fixed action=upload problems on Win32, and remove Merge Edit buttons: file does not exist anymore
 //
