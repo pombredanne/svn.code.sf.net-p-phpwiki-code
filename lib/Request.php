@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.82 2004-12-06 19:49:55 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.83 2004-12-10 02:36:43 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -605,6 +605,8 @@ class Request_CookieVars {
     function set($key, $val, $persist_days = false, $path = false) {
     	// if already defined, ignore
     	if (defined('MAIN_setUser') and $key = 'WIKI_ID') return;
+        if (defined('WIKI_XMLRPC') and WIKI_XMLRPC) return;
+    	
         $vars = &$GLOBALS['HTTP_COOKIE_VARS'];
         if (is_numeric($persist_days)) {
             $expires = time() + (24 * 3600) * $persist_days;
@@ -626,6 +628,8 @@ class Request_CookieVars {
     function delete($key) {
         static $deleted = array();
         if (isset($deleted[$key])) return;
+        if (defined('WIKI_XMLRPC') and WIKI_XMLRPC) return;
+        
         $vars = &$GLOBALS['HTTP_COOKIE_VARS'];
         if (!defined('COOKIE_DOMAIN'))
             @setcookie($key,'',0);
@@ -1304,6 +1308,14 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.82  2004/12/06 19:49:55  rurban
+// enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
+// renamed delete_page to purge_page.
+// enable action=edit&version=-1 to force creation of a new version.
+// added BABYCART_PATH config
+// fixed magiqc in adodb.inc.php
+// and some more docs
+//
 // Revision 1.81  2004/11/27 14:39:04  rurban
 // simpified regex search architecture:
 //   no db specific node methods anymore,

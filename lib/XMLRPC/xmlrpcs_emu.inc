@@ -41,7 +41,7 @@ Notes:
 
 // by Edd Dumbill (C) 1999,2000
 // <edd@usefulinc.com>
-// $Id: xmlrpcs_emu.inc,v 1.1 2004-12-10 00:12:14 rurban Exp $
+// $Id: xmlrpcs_emu.inc,v 1.2 2004-12-10 02:36:43 rurban Exp $
 
 // License is granted to use or modify this software ("XML-RPC for PHP")
 // for commercial or non-commercial use provided the copyright of the author
@@ -123,7 +123,7 @@ function _introspection_cb($userdata) {
 * xmlrpc_server class.  Wrappers around the xmlrpc-epi server APIs. *
 ********************************************************************/
 class xmlrpc_server {
-   var $dmap=array();
+   var $dmap = array();
    var $xmlrpc_server;
 
    // constructor. creates server and optionally services request.
@@ -134,7 +134,7 @@ class xmlrpc_server {
       // if a method
       // doesn't appear in the map then an unknown
       // method error is generated
-      $this->dmap=$dispMap;
+      $this->dmap = $dispMap;
 
       // create server.
       // php has no destructor support currently, so we can't call xmlrpc_server_destroy()
@@ -168,14 +168,14 @@ class xmlrpc_server {
    
    // public. service the xmlrpc request
    function service() {
-      Header("Content-type: text/xml\nContent-length: " . strlen($payload));
-
       global $HTTP_RAW_POST_DATA;
-      $data=$HTTP_RAW_POST_DATA;
+      $data = $HTTP_RAW_POST_DATA;
 
       // call server
-      echo xmlrpc_server_call_method($this->xmlrpc_server, $data, $this->dmap, 
-                                     array(output_type => "xml", version => "xmlrpc"));
+      $payload = xmlrpc_server_call_method($this->xmlrpc_server, $data, $this->dmap, 
+                                           array('output_type' => "xml", 'version' => "xmlrpc"));
+      Header("Content-type: text/xml\nContent-length: " . strlen($payload));
+      echo $payload;
    }
 
    // private. no equivalent in C library (yet)
@@ -191,18 +191,18 @@ class xmlrpc_server {
 
       global $xmlrpcerr, $xmlrpcstr, $xmlrpcerrxml, $xmlrpc_defencoding;
 
-      if ($data=="") {
-         $data=$HTTP_RAW_POST_DATA;
+      if ($data == "") {
+         $data = $HTTP_RAW_POST_DATA;
       }
 
       // call server
       $php_val = xmlrpc_server_call_method($this->xmlrpc_server, $data, $this->dmap, 
-                                           array(output_type => "php", version => "xmlrpc"));
+                                           array('output_type' => "php", 'version' => "xmlrpc"));
 
       /* check for fault */
-      if (is_array($php_val) && isset($php_val[faultCode])) {
-         $fc = $php_val[faultCode];
-         $fs = $php_val[faultString];
+      if (is_array($php_val) && isset($php_val['faultCode'])) {
+         $fc = $php_val['faultCode'];
+         $fs = $php_val['faultString'];
       } else {
          $rpc_val = php_to_val($php_val);
       }
@@ -218,8 +218,8 @@ class xmlrpc_server {
       // a debugging routine: just echos back the input
       // packet as a string value
 
-      $r=new xmlrpcresp;
-      $r->xv=new xmlrpcval( "'Aha said I: '" . $HTTP_RAW_POST_DATA, "string");
+      $r = new xmlrpcresp;
+      $r->xv = new xmlrpcval( "'Aha said I: '" . $HTTP_RAW_POST_DATA, "string");
       print $r->serialize();
    }
 }
@@ -261,4 +261,10 @@ function xmlrpc_user_func_wrapper_cb($methodname, $params, $method_map) {
    return xu_fault_code( $xmlrpcerr["unknown_method"], $xmlrpcstr["unknown_method"]);
 }
 
+$_xmlrpc_debuginfo='';
+function xmlrpc_debugmsg($m)
+{
+    global $_xmlrpc_debuginfo;
+    $_xmlrpc_debuginfo=$_xmlrpc_debuginfo . $m . "\n";
+} 
 ?>

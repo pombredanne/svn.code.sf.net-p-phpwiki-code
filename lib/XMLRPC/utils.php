@@ -49,10 +49,10 @@ function xu_load_extension($xmlrpc_php_dir="") {
       $bSuccess = true;
       putenv("LD_LIBRARY_PATH=/usr/lib/php4/apache/xmlrpc/");
       if ($xmlrpc_php_dir) {
-         $xmlrpc_php_dir .= '/';
+          $xmlrpc_php_dir .= '/';
       }
       if (!extension_loaded("xmlrpc")) {
-         $bSuccess = dl($xmlrpc_php_dir . "xmlrpc-epi-php.so");
+          $bSuccess = dl($xmlrpc_php_dir . "xmlrpc-epi-php.so");
       }
    }
    return $bSuccess;
@@ -61,66 +61,66 @@ function xu_load_extension($xmlrpc_php_dir="") {
 /* generic function to call an http server with post method */
 function xu_query_http_post($request, $host, $uri, $port, $debug, 
                             $timeout, $user, $pass, $secure=false) {
-   $response_buf = "";
-   if ($host && $uri && $port) {
-      $content_len = strlen($request);
+    $response_buf = "";
+    if ($host && $uri && $port) {
+        $content_len = strlen($request);
 
-      $fsockopen = $secure ? "fsockopen_ssl" : "fsockopen";
+        $fsockopen = $secure ? "fsockopen_ssl" : "fsockopen";
 
-      dbg1("opening socket to host: $host, port: $port, uri: $uri", $debug);
-      $query_fd = $fsockopen($host, $port, $errno, $errstr, 10);
+        dbg1("opening socket to host: $host, port: $port, uri: $uri", $debug);
+        $query_fd = $fsockopen($host, $port, $errno, $errstr, 10);
 
-      if ($query_fd) {
+        if ($query_fd) {
 
-         $auth = "";
-         if ($user) {
-            $auth = "Authorization: Basic " .
+            $auth = "";
+            if ($user) {
+                $auth = "Authorization: Basic " .
                     base64_encode($user . ":" . $pass) . "\r\n";
-         }
+            }
 
-         $http_request = 
-         "POST $uri HTTP/1.0\r\n" .
-         "User-Agent: xmlrpc-epi-php/0.2 (PHP)\r\n" .
-         "Host: $host:$port\r\n" .
-         $auth .
-         "Content-Type: text/xml\r\n" .
-         "Content-Length: $content_len\r\n" . 
-         "\r\n" .
-         $request;
+            $http_request = 
+                "POST $uri HTTP/1.0\r\n" .
+                "User-Agent: xmlrpc-epi-php/0.2 (PHP)\r\n" .
+                "Host: $host:$port\r\n" .
+                $auth .
+                "Content-Type: text/xml\r\n" .
+                "Content-Length: $content_len\r\n" . 
+                "\r\n" .
+                $request;
 
-         dbg1("sending http request:</h3> <xmp>\n$http_request\n</xmp>", $debug);
+           dbg1("sending http request:</em><br /> <xmp>\n$http_request\n</xmp>", $debug);
 
-         fputs($query_fd, $http_request, strlen($http_request));
+           fputs($query_fd, $http_request, strlen($http_request));
 
-         dbg1("receiving response...", $debug);
+           dbg1("receiving response...", $debug);
 
-         $header_parsed = false;
+           $header_parsed = false;
 
-         $line = fgets($query_fd, 4096);
-         while ($line) {
-            if (!$header_parsed) {
-               if ($line === "\r\n" || $line === "\n") {
-                  $header_parsed = 1;
+           $line = fgets($query_fd, 4096);
+           while ($line) {
+               if (!$header_parsed) {
+                   if ($line === "\r\n" || $line === "\n") {
+                       $header_parsed = 1;
+                   }
+                   dbg2("got header - $line", $debug);
                }
-               dbg2("got header - $line", $debug);
-            }
-            else {
-               $response_buf .= $line;
-            }
-            $line = fgets($query_fd, 4096);
-         }
+               else {
+                   $response_buf .= $line;
+               }
+               $line = fgets($query_fd, 4096);
+           }
 
-         fclose($query_fd);
-      }
-      else {
-         dbg1("socket open failed", $debug);
-      }
+           fclose($query_fd);
+       }
+       else {
+           dbg1("socket open failed", $debug);
+       }
    }
    else {
-      dbg1("missing param(s)", $debug);
+       dbg1("missing param(s)", $debug);
    }
 
-   dbg1("got response:</h3>. <xmp>\n$response_buf\n</xmp>\n", $debug);
+   dbg1("got response:</em><br />. <xmp>\n$response_buf\n</xmp>\n", $debug);
 
    return $response_buf;
 }
@@ -132,22 +132,21 @@ function xu_fault_code($code, $string) {
 
 
 function find_and_decode_xml($buf, $debug) {
-   if (strlen($buf)) {
-      $xml_begin = substr($buf, strpos($buf, "<?xml"));
-      if (strlen($xml_begin)) {
+    if (strlen($buf)) {
+        $xml_begin = substr($buf, strpos($buf, "<?xml"));
+        if (strlen($xml_begin)) {
 
-         $retval = xmlrpc_decode($xml_begin);
-      }
-      else {
-         dbg1("xml start token not found", $debug);
-      }
-   }
-   else {
-      dbg1("no data", $debug);
-   }
-   return $retval;
+            $retval = xmlrpc_decode($xml_begin);
+        }
+        else {
+            dbg1("xml start token not found", $debug);
+        }
+    }
+    else {
+        dbg1("no data", $debug);
+    }
+    return $retval;
 }
-
  
 /**
  * @param params   a struct containing 3 or more of these key/val pairs:
@@ -164,7 +163,7 @@ function find_and_decode_xml($buf, $debug) {
  * @param output	 array. xml output options. can be null.  details below:
  *
  *     output_type: return data as either php native data types or xml
- *                  encoded. ifphp is used, then the other values are ignored. default = xml
+ *                  encoded. if php is used, then the other values are ignored. default = xml
  *     verbosity:   determine compactness of generated xml. options are
  *                  no_white_space, newlines_only, and pretty. default = pretty
  *     escaping:    determine how/whether to escape certain characters. 1 or
@@ -195,26 +194,26 @@ function xu_rpc_http_concise($params) {
    $host = $uri = $port = $method = $args = $debug = null;
    $timeout = $user = $pass = $secure = $debug = null;
 
-	extract($params);
+   extract($params);
 
-	// default values
-	if(!$port) {
-		$port = 80;
-	}
-	if(!$uri) {
-		$uri = '/';
-	}
-	if(!$output) {
-		$output = array(version => 'xmlrpc');
-	}
+   // default values
+   if(!$port) {
+       $port = 80;
+   }
+   if(!$uri) {
+       $uri = '/';
+   }
+   if(!$output) {
+       $output = array('version' => 'xmlrpc');
+   }
 
    $response_buf = "";
    if ($host && $uri && $port) {
-      $request_xml = xmlrpc_encode_request($method, $args, $output);
-      $response_buf = xu_query_http_post($request_xml, $host, $uri, $port, $debug,
-                                         $timeout, $user, $pass, $secure);
+       $request_xml = xmlrpc_encode_request($method, $args, $output);
+       $response_buf = xu_query_http_post($request_xml, $host, $uri, $port, $debug,
+                                          $timeout, $user, $pass, $secure);
 
-      $retval = find_and_decode_xml($response_buf, $debug);
+       $retval = find_and_decode_xml($response_buf, $debug);
    }
    return $retval;
 }
@@ -224,16 +223,16 @@ function xu_rpc_http($method, $args, $host, $uri="/", $port=80, $debug=false,
                      $timeout=0, $user=false, $pass=false, $secure=false) {
 	return xu_rpc_http_concise(
 		array(
-			method  => $method,
-			args    => $args,
-			host    => $host,
-			uri     => $uri,
-			port    => $port,
-			debug   => $debug,
-			timeout => $timeout,
-			user    => $user,
-			pass    => $pass,
-			secure  => $secure
+			'method'  => $method,
+			'args'    => $args,
+			'host'    => $host,
+			'uri'     => $uri,
+			'port'    => $port,
+			'debug'   => $debug,
+			'timeout' => $timeout,
+			'user'    => $user,
+			'pass'    => $pass,
+			'secure'  => $secure
 		));
 }
 
@@ -251,9 +250,8 @@ function xu_server_send_http_response($xml) {
     echo $xml;
 }
 
-
 function dbg($msg) {
-   echo "<h3>$msg</h3>"; flush();
+    echo "<em>",$msg,"</em><br />"; flush();
 }
 function dbg1($msg, $debug_level) {
    if ($debug_level >= 1) {
@@ -265,6 +263,4 @@ function dbg2($msg, $debug_level) {
       dbg($msg);
    }
 }
-
-
 ?>
