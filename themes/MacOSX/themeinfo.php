@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.18 2002-01-17 20:34:02 dairiki Exp $');
+rcs_id('$Id: themeinfo.php,v 1.19 2002-01-17 23:41:36 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -104,14 +104,14 @@ define('WIKIMARK_AFTER', true);
 /*
 $ToolbarImages = array(
 'RecentChanges' => array(
-'1 day'		=> "themes/$theme/locale/en/toolbars/RecentChanges/1day.png",
-'2 days'	=> "themes/$theme/locale/en/toolbars/RecentChanges/2days.png",
-'3 days'	=> "themes/$theme/locale/en/toolbars/RecentChanges/3days.png",
-'4 days'	=> "themes/$theme/locale/en/toolbars/RecentChanges/4days.png",
-'7 days'	=> "themes/$theme/locale/en/toolbars/RecentChanges/7days.png",
-'30 days'	=> "themes/$theme/locale/en/toolbars/RecentChanges/30days.png",
-'90 days'	=> "themes/$theme/locale/en/toolbars/RecentChanges/90days.png",
-'...'		=> "themes/$theme/locale/en/toolbars/RecentChanges/alltime.png")
+'1 day'		=> "themes/$theme/buttons/en/1+day.png",
+'2 days'	=> "themes/$theme/buttons/en/2+days.png",
+'3 days'	=> "themes/$theme/buttons/en/3+days.png",
+'4 days'	=> "themes/$theme/buttons/en/4+days.png",
+'7 days'	=> "themes/$theme/buttons/en/7+days.png",
+'30 days'	=> "themes/$theme/buttons/en/30+days.png",
+'90 days'	=> "themes/$theme/buttons/en/90+days.png",
+'...'		=> "themes/$theme/buttons/en/alltime.png")
 );
 */
 
