@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.7\n"
-"POT-Creation-Date: 2000-11-02 22:18+0100\n"
+"POT-Creation-Date: 2000-11-13 12:30+0100\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -20,23 +20,54 @@ msgstr ""
 "Date: 1998-05-26 11:26:28+0200\n"
 "From:  <janneke@gnu.org>\n"
 
-#: lib/config.php:148
+#: admin.php:26
+msgid "You entered an invalid login or password."
+msgstr ""
+
+#: admin.php:47
+#, c-format
+msgid "You are about to remove '%s' permanently!"
+msgstr ""
+
+#: admin.php:50
+#, c-format
+msgid "Click %shere%s to remove the page now."
+msgstr ""
+
+#: admin.php:53
+msgid "Otherwise press the \"Back\" button of your browser."
+msgstr ""
+
+#: admin.php:55
+msgid "Function not yet implemented."
+msgstr ""
+
+#: admin.php:57 admin.php:65
+msgid "Remove page"
+msgstr ""
+
+#: admin.php:63
+#, c-format
+msgid "Removed page '%s' succesfully."
+msgstr ""
+
+#: lib/config.php:159
 msgid "templates/browse.html"
 msgstr "locale/nl/templates/browse.html"
 
-#: lib/config.php:149
+#: lib/config.php:160
 msgid "templates/editpage.html"
 msgstr "locale/nl/templates/editpage.html"
 
-#: lib/config.php:150
+#: lib/config.php:161
 msgid "templates/editlinks.html"
 msgstr "locale/nl/templates/editlinks.html"
 
-#: lib/config.php:151
+#: lib/config.php:162
 msgid "templates/message.html"
 msgstr "locale/nl/templates/message.html"
 
-#: lib/config.php:167
+#: lib/config.php:178
 msgid "./pgsrc"
 msgstr "locale/nl/pgsrc"
 
@@ -140,7 +171,7 @@ msgstr "%d keer gevonden in %d pagina's."
 msgid "Full Text Search Results"
 msgstr "Volledige tekst zoek resultaten"
 
-#: lib/msql.php:29 lib/mysql.php:33
+#: lib/msql.php:29 lib/mysql.php:35
 msgid "Cannot establish connection to database, giving up."
 msgstr "Kan verbinding naar data base niet tot stand brengen, geef op."
 
@@ -149,41 +180,46 @@ msgstr "Kan verbinding naar data base niet tot stand brengen, geef op."
 msgid "Error message: %s"
 msgstr "Foutboodschap: %s"
 
-#: lib/msql.php:35 lib/mysql.php:39
+#: lib/msql.php:35 lib/mysql.php:41
 #, c-format
 msgid "Cannot open database %s, giving up."
 msgstr "Kan data base %s niet openen, geef op."
 
-#: lib/msql.php:200 lib/msql.php:276
+#: lib/msql.php:210 lib/msql.php:286
 #, c-format
 msgid "Insert/update failed: %s"
 msgstr "Insert/update gefaald: %s"
 
-#: lib/msql.php:211 lib/msql.php:286
+#: lib/msql.php:221 lib/msql.php:296
 #, c-format
 msgid "Delete on %s failed: %s"
 msgstr "Delete op %s gefaald: %s"
 
-#: lib/msql.php:227 lib/msql.php:302
+#: lib/msql.php:237 lib/msql.php:312
 #, c-format
 msgid "Insert into %s failed: %s"
 msgstr "Insert in %s gefaald: %s"
 
-#: lib/mysql.php:35 lib/mysql.php:41 lib/mysql.php:115
+#: lib/mysql.php:37 lib/mysql.php:43 lib/mysql.php:117 lib/mysql.php:156
 #, c-format
 msgid "MySQL error: %s"
 msgstr "MySQL fout: %s"
 
-#: lib/mysql.php:113
+#: lib/mysql.php:115
 #, c-format
 msgid "Error writing page '%s'"
 msgstr "Fout bij schrijven pagina `%s'"
+
+#: lib/mysql.php:154
+#, c-format
+msgid "Cannot delete '%s' from table '%s'"
+msgstr ""
 
 #: lib/pageinfo.php:9
 msgid "Enter a page name"
 msgstr "Geef de naam van een pagina"
 
-#: lib/pageinfo.php:10
+#: lib/pageinfo.php:10 lib/stdlib.php:239
 msgid "Go"
 msgstr "Ga"
 
@@ -295,14 +331,14 @@ msgstr "%d beste uitgaande koppelingen:"
 msgid "%d most popular nearby:"
 msgstr "%d meest gevraagde in de buurt:"
 
-#: lib/stdlib.php:186 lib/stdlib.php:194
+#: lib/stdlib.php:207 lib/stdlib.php:215
 msgid "Search"
 msgstr ""
 
-#: lib/stdlib.php:295
+#: lib/stdlib.php:330
 msgid "Stack bounds exceeded in SetHTMLOutputMode"
 msgstr ""
 
-#: lib/stdlib.php:349 lib/stdlib.php:412
+#: lib/stdlib.php:384 lib/stdlib.php:447
 msgid "RecentChanges"
 msgstr "RecenteVeranderingen"

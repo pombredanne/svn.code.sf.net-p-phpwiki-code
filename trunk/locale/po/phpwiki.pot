@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2000-11-02 22:18+0100\n"
+"POT-Creation-Date: 2000-11-13 12:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,23 +14,54 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: ENCODING\n"
 
-#: lib/config.php:148
+#: admin.php:26
+msgid "You entered an invalid login or password."
+msgstr ""
+
+#: admin.php:47
+#, c-format
+msgid "You are about to remove '%s' permanently!"
+msgstr ""
+
+#: admin.php:50
+#, c-format
+msgid "Click %shere%s to remove the page now."
+msgstr ""
+
+#: admin.php:53
+msgid "Otherwise press the \"Back\" button of your browser."
+msgstr ""
+
+#: admin.php:55
+msgid "Function not yet implemented."
+msgstr ""
+
+#: admin.php:57 admin.php:65
+msgid "Remove page"
+msgstr ""
+
+#: admin.php:63
+#, c-format
+msgid "Removed page '%s' succesfully."
+msgstr ""
+
+#: lib/config.php:159
 msgid "templates/browse.html"
 msgstr ""
 
-#: lib/config.php:149
+#: lib/config.php:160
 msgid "templates/editpage.html"
 msgstr ""
 
-#: lib/config.php:150
+#: lib/config.php:161
 msgid "templates/editlinks.html"
 msgstr ""
 
-#: lib/config.php:151
+#: lib/config.php:162
 msgid "templates/message.html"
 msgstr ""
 
-#: lib/config.php:167
+#: lib/config.php:178
 msgid "./pgsrc"
 msgstr ""
 
@@ -133,7 +164,7 @@ msgstr ""
 msgid "Full Text Search Results"
 msgstr ""
 
-#: lib/msql.php:29 lib/mysql.php:33
+#: lib/msql.php:29 lib/mysql.php:35
 msgid "Cannot establish connection to database, giving up."
 msgstr ""
 
@@ -142,41 +173,46 @@ msgstr ""
 msgid "Error message: %s"
 msgstr ""
 
-#: lib/msql.php:35 lib/mysql.php:39
+#: lib/msql.php:35 lib/mysql.php:41
 #, c-format
 msgid "Cannot open database %s, giving up."
 msgstr ""
 
-#: lib/msql.php:200 lib/msql.php:276
+#: lib/msql.php:210 lib/msql.php:286
 #, c-format
 msgid "Insert/update failed: %s"
 msgstr ""
 
-#: lib/msql.php:211 lib/msql.php:286
+#: lib/msql.php:221 lib/msql.php:296
 #, c-format
 msgid "Delete on %s failed: %s"
 msgstr ""
 
-#: lib/msql.php:227 lib/msql.php:302
+#: lib/msql.php:237 lib/msql.php:312
 #, c-format
 msgid "Insert into %s failed: %s"
 msgstr ""
 
-#: lib/mysql.php:35 lib/mysql.php:41 lib/mysql.php:115
+#: lib/mysql.php:37 lib/mysql.php:43 lib/mysql.php:117 lib/mysql.php:156
 #, c-format
 msgid "MySQL error: %s"
 msgstr ""
 
-#: lib/mysql.php:113
+#: lib/mysql.php:115
 #, c-format
 msgid "Error writing page '%s'"
+msgstr ""
+
+#: lib/mysql.php:154
+#, c-format
+msgid "Cannot delete '%s' from table '%s'"
 msgstr ""
 
 #: lib/pageinfo.php:9
 msgid "Enter a page name"
 msgstr ""
 
-#: lib/pageinfo.php:10
+#: lib/pageinfo.php:10 lib/stdlib.php:239
 msgid "Go"
 msgstr ""
 
@@ -276,14 +312,14 @@ msgstr ""
 msgid "%d most popular nearby:"
 msgstr ""
 
-#: lib/stdlib.php:186 lib/stdlib.php:194
+#: lib/stdlib.php:207 lib/stdlib.php:215
 msgid "Search"
 msgstr ""
 
-#: lib/stdlib.php:295
+#: lib/stdlib.php:330
 msgid "Stack bounds exceeded in SetHTMLOutputMode"
 msgstr ""
 
-#: lib/stdlib.php:349 lib/stdlib.php:412
+#: lib/stdlib.php:384 lib/stdlib.php:447
 msgid "RecentChanges"
 msgstr ""
