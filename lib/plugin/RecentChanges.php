@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.73 2003-02-21 04:12:06 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.74 2003-02-21 22:52:21 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -164,7 +164,7 @@ extends _RecentChanges_Formatter
             return '';
         return  HTML::strong( array('class' => 'wiki-summary'),
                               "[",
-                              TransformLinks($summary, $rev->get('markup')),
+                              TransformLinks($summary, $rev->get('markup'), $rev->getPageName()),
                               "]");
     }
 
@@ -608,7 +608,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.73 $");
+                            "\$Revision: 1.74 $");
     }
 
     function managesValidators() {
@@ -771,6 +771,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.73  2003/02/21 04:12:06  dairiki
+// Minor fixes for new cached markup.
+//
 // Revision 1.72  2003/02/17 02:19:01  dairiki
 // Fix so that PageHistory will work when the current revision
 // of a page has been "deleted".
