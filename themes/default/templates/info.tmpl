@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: info.tmpl,v 1.14 2003-11-29 20:13:38 carstenklapp Exp $ -->
+<!-- $Id: info.tmpl,v 1.15 2003-12-11 19:38:29 carstenklapp Exp $ -->
 <?php
 
 $modifed = $Theme->formatDateTime($revision->get('mtime'));
@@ -23,11 +23,10 @@ if ($minor_flag = $is_minor_edit) {
 }
 
 /* better way to do this? */
-$data = &$revision->_data;
-$bytes = strlen(&$data['%content']);
+$bytes = strlen($revision->_data['%content']);
 $size = ByteFormatter($bytes, /* $longformat = */true);
 // Count words
-preg_match_all('/\\w+\\W*/', &$data['%content'], $whitespacematches);
+preg_match_all('/\\w+\\W*/', $revision->_data['%content'], $whitespacematches);
 if (1 == $c = count_all($whitespacematches))
   $wordcount = fmt("1 word");
 else
@@ -161,6 +160,10 @@ if (isSubPage($page->getName())) {
 <?php
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2003/11/29 20:13:38  carstenklapp
+// Internal change: Refactored ByteFormatter code into a new function in
+// stdlib (now used by PageList too).
+//
 // Revision 1.13  2003/02/21 04:24:48  dairiki
 // Fix <td> </td> nesting. (Was generating invalid HTML.)
 //
