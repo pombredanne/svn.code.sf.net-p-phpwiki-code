@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Toolbar.php,v 1.3 2002-01-03 15:40:40 carstenklapp Exp $');
+<?php rcs_id('$Id: Toolbar.php,v 1.4 2002-01-03 15:47:06 carstenklapp Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -53,12 +53,12 @@ the same tomorrow...)
 
 //Calling function should provide:
 //$is_current = ($current->getVersion() == $revision->getVersion())
-//$pageurl = (rawurlencode($pagename))
-function toolbar_Warning_IsCurrent($is_current, $pageurl) {
+//$pagename = ($pagename)
+function toolbar_Warning_IsCurrent($is_current, $pagename) {
     $html = "";
     if (!$is_current) {
         $html .= "<p><strong>" ._("Note:") ."</strong> " ._("You are viewing an old revision of this page.");
-        $html .= "<a href=\"" .WikiURL('') .$pageurl ."\">" ._("View the current version") ."</a>.</p>";
+        $html .= "<a href=\"" .WikiURL('') .rawurlencode($pagename) ."\">" ._("View the current version") ."</a>.</p>";
 	$html .= "<hr class=\"ignore\" noshade=\"noshade\" />";
     }
     return $html;
