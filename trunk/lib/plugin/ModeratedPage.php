@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: ModeratedPage.php,v 1.3 2004-12-06 19:50:05 rurban Exp $');
+rcs_id('$Id: ModeratedPage.php,v 1.4 2005-01-29 19:52:09 rurban Exp $');
 /*
- Copyright 2004 $ThePhpWikiProgrammingTeam
+ Copyright 2004,2005 $ThePhpWikiProgrammingTeam
  
  This file is part of PhpWiki.
 
@@ -26,6 +26,8 @@ rcs_id('$Id: ModeratedPage.php,v 1.3 2004-12-06 19:50:05 rurban Exp $');
  * after a special moderators request. Usually by email.
  *   http://mywiki/SomeModeratedPage?action=ModeratedPage&id=kdclcr78431zr43uhrn&pass=approve
  *
+ * Not yet ready! part 3/3 is missing: The moderator approve/reject methods.
+ *
  * See http://phpwiki.org/PageModeration
  * Author: ReiniUrban
  */
@@ -43,7 +45,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
     function getDefaultArguments() {
         return array('page'          => '[pagename]',
@@ -63,19 +65,19 @@ extends WikiPlugin
             if (!$args['page'])
                 return $this->error("No page specified");
 	    $page = $dbi->getPage($args['page']);
-            $moderation = $page->get("moderation");
-            if ($moderation) {
-                if (isset($moderation['id']) and $moderation['id'] == $args['id']) {
+            if ($moderated = $page->get("moderated")) {
+                if (array_key_exists($args['id'], $moderated['data'])) {
+                    $moderation = $moderated['data'][$args['id']];
                     // handle defaults:
                     //   approve or reject
                     if ($args['pass'] == 'approve')
-                        return $this->approve($args, $moderation);
+                        return $this->approve($request, $args, $moderation);
                     elseif ($args['pass'] == 'reject')
-                        return $this->reject($args, $moderation);
+                        return $this->reject($request, $args, $moderation);
                     else
                         return $this->error("Wrong pass ".$args['pass']);
                 } else {
-                    return $this->error("Wrong id");
+                    return $this->error("Wrong id ".htmlentities($args['id']));
                 }
             }
         }
@@ -110,7 +112,8 @@ extends WikiPlugin
         foreach ($args['moderators'] as $userid) {
             $users[$userid] = 0;
         }
-        list($args['emails'], $args['moderators']) = $page->getPageChangeEmails(array($page->getName() => $users));
+        list($args['emails'], $args['moderators']) = 
+            $page->getPageChangeEmails(array($page->getName() => $users));
 
         if (!empty($args['require_access'])) {
             $args['require_access'] = preg_split("/\s*,\s*/", $args['require_access']);
@@ -135,7 +138,8 @@ extends WikiPlugin
         $status = $this->getSiteStatus($request, $action_page);
         if (is_array($status)) {
             if (!empty($status['emails'])) {
-                trigger_error(_("ModeratedPage: No emails for the moderators defined"), E_USER_WARNING);
+                trigger_error(_("ModeratedPage: No emails for the moderators defined"), 
+                              E_USER_WARNING);
                 return false;
             }
             $page->set('moderation', array('_status' => $status));
@@ -158,7 +162,8 @@ extends WikiPlugin
         $status = $this->getSiteStatus($request, $action_page);
         if (is_array($status)) {
             if (!empty($status['emails'])) {
-                trigger_error(_("ModeratedPage: No emails for the moderators defined"), E_USER_WARNING);
+                trigger_error(_("ModeratedPage: No emails for the moderators defined"), 
+                              E_USER_WARNING);
                 return false;
             }
             $page->set('moderation', array('_status' => $status));
@@ -180,7 +185,7 @@ extends WikiPlugin
         $s = "";
         for ($i = 1; $i <= 16; $i++) {
             $r = function_exists('mt_rand') ? mt_rand(55, 90) : rand(55, 90);
-            $s .= chr($r < 65 ? $r-17 : $r);
+            $s .= chr(($r < 65) ? ($r-17) : $r);
         }
         return $s;
     }
@@ -206,7 +211,8 @@ extends WikiPlugin
             return true;
         }
         // which action?
-        if (!empty($status['require_access']) and !in_array(action2access($action), $status['require_access']))
+        if (!empty($status['require_access']) 
+            and !in_array(action2access($action), $status['require_access']))
             return false; // allow and fall through, not moderated
         if (!empty($status['require_level']) and $request->_user->_level >= $status['require_level'])
             return false; // allow and fall through, not moderated
@@ -227,7 +233,7 @@ extends WikiPlugin
                                                       $action, 
                                                       join(", ", $status['moderators'])
                                                       ));
-	    //send email
+	    // send email
             $pagename = $page->getName();
             $subject = "[".WIKI_NAME.'] '.$action.': '._("ModeratedPage").' '.$pagename;
             if (mail(join(",", $status['emails']), 
@@ -242,8 +248,9 @@ extends WikiPlugin
                 $page->set('moderated', $moderated);
                 return false; // pass thru
             } else {
-            	//FIXME: This will msg get lost on the edit redirect
-                trigger_error(_("ModeratedPage Notification Error: Couldn't send email"), E_USER_WARNING);
+            	//FIXME: This msg get lost on the edit redirect
+                trigger_error(_("ModeratedPage Notification Error: Couldn't send email"), 
+                              E_USER_WARNING);
                 return true;
             }
     	}
@@ -252,18 +259,55 @@ extends WikiPlugin
 
     /** 
      * Handle admin-side moderation resolve.
-     * We might have to convert the GET to a POST request to continue with the left-over stored request.
+     * We might have to convert the GET to a POST request to continue 
+     * with the left-over stored request.
+     * Better we display a post form for verification.
      */
-    function approve($args, $moderation) {
+    function approve(&$request, $args, &$moderation) {
         // check id, convert to POST, continue
-        ;
+        if ($request->isPost()) {
+            $this->error("ModeratedPage::approve not yet implemented");
+        } else {
+            return $this->_approval_form($request, $args, $moderation, 'approve');
+        }
     }
     /** 
      * Handle admin-side moderation resolve.
      */
-    function reject($args, $moderation) {
+    function reject(&$request, $args, &$moderation) {
         // check id, delete action
-        ;
+        if ($request->isPost()) {
+            $this->error("ModeratedPage::reject not yet implemented");
+        } else {
+            return $this->_approval_form($request, $args, $moderation, 'reject');
+        }
+    }
+
+    function _approval_form(&$request, $args, $moderation, $pass='approve') {
+        $header = HTML::h3(_("Please approve or reject this request:"));
+        $loader = new WikiPluginLoader();
+        $BackendInfo = $loader->getPlugin("_BackendInfo");
+        $content = HTML::table(array('border' => 1,
+                                     'cellpadding' => 2,
+                                     'cellspacing' => 0));
+	$myargs  = $args;
+        $BackendInfo->_fixupData($myargs);
+        $content->pushContent($BackendInfo->_showhash("request args", $myargs));
+        $BackendInfo->_fixupData($moderation);
+        $content->pushContent($BackendInfo->_showhash("moderation data", $moderation));
+        $approve = Button('submit:ModeratedPage[approve]', _("Approve"), 
+                          $pass == 'approve' ? 'wikiadmin' : 'button');
+        $reject  = Button('submit:ModeratedPage[reject]', _("Reject"),
+                          $pass == 'reject' ? 'wikiadmin' : 'button');
+        return HTML::form(array('action' => $request->getPostURL(),
+                                'method' => 'post'),
+                          $header,
+                          $content,
+                          ENABLE_PAGEPERM ? ''
+                          : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)),
+                          HiddenInputs($args),
+                          $pass == 'approve' ? HTML::p($approve, $reject) 
+                          		     : HTML::p($reject, $approve));
     }
     
     /**
@@ -293,6 +337,14 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/12/06 19:50:05  rurban
+// enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
+// renamed delete_page to purge_page.
+// enable action=edit&version=-1 to force creation of a new version.
+// added BABYCART_PATH config
+// fixed magiqc in adodb.inc.php
+// and some more docs
+//
 // Revision 1.2  2004/11/30 17:46:49  rurban
 // added ModeratedPage POST action hook (part 2/3)
 //
