@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.21.2.7 2001-12-02 07:39:15 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.21.2.8 2001-12-02 21:30:36 carstenklapp Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -407,7 +407,7 @@ function split_pagename ($page) {
             } else {
                $link['link'] = LinkURL($URL, $linkname);
            }
-	 }
+	 }}
       } elseif (preg_match("#^phpwiki:(.*)#", $URL, $match)) {
 	 $link['type'] = "url-wiki-$linktype";
 	 if(empty($linkname))
