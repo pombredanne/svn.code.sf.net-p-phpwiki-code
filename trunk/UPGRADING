@@ -1,59 +1,78 @@
 FIXME: WARNING WARNING: the schemas used by the new databases
 are completely incompatible with schemas in any previous version
-of PhpWiki.  If you install this new PhpWiki, you must start with a
-new empty database (currently either mysql or dba).  (It will be
-filled with the usual default pages.)
+(i.e. before release 1.3.1 of PhpWiki).  If you install this new
+PhpWiki, you must start with a new empty database (currently
+either mysql, postgres or dba).  (It will be filled with the
+usual default pages.)
 
 FIXME: add more.
 
+Here's an excerpt from a note I posted on phpwiki-talk with my 
+recommendation on how to move a wiki from and older version of 
+PhpWiki to a 1.3.x PhpWiki:
 
-More comprehensive updgrading information is forthcoming... however in
-the meantime, this message is in the Open Discussion board on
-Sourceforge (see URL below for the thread). In it Jeff describes how
-to dump your current Wiki to a zip file and load the zip file into a
-new Wiki.
+From: Jeff Dairiki <dairiki@dairiki.org>
+Cc: phpwiki-talk@lists.sourceforge.net
+Date: Fri, 9 Nov 2001 11:33:18 -0800
 
-To: noreply@sourceforge.net
-Subject: [phpwiki - Open Discussion] RE: convert dbm to mySql
-From: nobody <nobody@sourceforge.net>
-Date: Fri, 09 Feb 2001 16:42:57 -0800
+> Now, say I want to migrate all my 1.2.1 pages. I need to do a zip dump 
+> (does the admin page let me do that?) and then.... what?
+ 
+It's still a bit of a messy process at this point.  Here's my suggestion.
 
-Read and respond to this message at: 
-http://sourceforge.net/forum/message.php?msg_id=107858
-By: dairiki
+1. Start 1.3.x with an empty database.  Browse the FrontPage.  This should
+fill the wiki with the distributed default 1.3.x pgsrc.  (You've probably
+already gotten this far.)
 
-Yes this is a little clumsy and non-obvious.
-I'm currently working on making it better (at least
-in the development branch.)
+2. Make a zip dump of your 1.2 wiki.  If the contents of
+PhpWikiAdministration are correct there should be a links 
+(near the top) which will do that for you.  You need to be
+in admin mode, though.  This means you must have set an
+admin user and passwd in admin.php, and you should be browsing
+through a URL like:
+  http://path.to.your/wiki/admin.php?PhpWikiAdministration
+(If your PhpWikAdministration page is broken, then
+  http://path.to.your/wiki/admin.php?zip=all
+should get you a zip dump.)
 
-In the mean time, here's how I suggest you
-
-Get either a zip dump, or a serialized dump from your
-old wiki. (But first, create a copy of FrontPage called HomePage, or
-else you will have trouble loading the new wiki. It will try to load
-the zip file every time since it doesn't detect a HomePage. --SW)
-
-(If your using a zip dump, it must (for now) be
-on the server machine.  Copy it there if it's not
-there yet.)
-
-Edit lib/config.php in the new wiki and set WIKI_PGSRC
-to point either to your zip file, or the the serialized
-dump directory.
-
-Blow away the database of your new wiki.
-(Delete the db files for a db base wiki,
-or do something like:
-  mysql -u <user> -p <database> < schemas/schema.mysql
-to blow away a mysql based wiki.
-
-Now with your web browser, go browse to
-the HomePage of your new wiki.  It will detect
-that it's working with a virgin database and
-will pull in the pages from the source
-specified in WIKI_PGSRC.
-
-Jeff
+3. Now upload your zip dump to your new 1.3 wiki.  (First you need to
+have set the admin user/passwd in the new index.php.)  You should
+be able to use the "Upload File" form on the PhpWikiAdministration
+page.
 
 
-$Id: UPGRADING,v 1.4 2001-11-07 22:27:54 wainstead Exp $
+If that works, the pages from your 1.2 wiki have now overwritten
+the 1.3 pages (though the 1.3 pages are still saved in the archive).
+This will break a bunch of 1.3 functionality until you restore
+the page contents.  Of the top of my head, some pages for which 
+this will be an issue are:
+  MostPopular, RecentChanges, PhpWikiAdministration,
+  MagicPhpWikiURLs, and ReleaseNotes.
+
+To restore these pages to the original (1.3) contents:
+
+4a. Login as the administration user (using the SignIn button at the
+bottom right corner of the page.)  (You need to do this because
+some of the pages which need fixing are locked.)
+
+4b. Browse to a page which needs restoring.  Hit the "History" button
+(at the bottom of the page).  This should get you a list of all
+archived versions of the page.
+
+4c. Browse to the archive 1.3 version of the page (probably version number
+1) by clicking on the version number of the desired version.
+
+4d. Click the "Edit old revision" button (bottom of page).  This should
+get you to the edit form.
+
+4e. Click the "Save" button.  This should save the archived page contents
+as the current contents.
+
+We really need to figure out a way to simplify this process, but, for now,
+that's what you gotta do.
+
+
+An older note of mine on the same subject can be found at:
+ http://sourceforge.net/forum/message.php?msg_id=107858
+
+$Id: UPGRADING,v 1.5 2001-11-09 20:36:45 dairiki Exp $
