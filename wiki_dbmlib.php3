@@ -1,4 +1,4 @@
-<!-- $Id: wiki_dbmlib.php3,v 1.3 2000-06-05 21:46:50 wainstead Exp $ -->
+<!-- $Id: wiki_dbmlib.php3,v 1.4 2000-06-23 01:30:27 wainstead Exp $ -->
 <?
    /*
       Database functions:
@@ -102,8 +102,9 @@
          $pagedata = dbmfetch($dbi, $key);
          // test the serialized data
          if (eregi($pos['search'], $pagedata)) {
-	    $page['name'] = $key;
-	    $page['hash'] = unserialize($pagedata);
+	    $page['pagename'] = $key;
+            $pagedata = unserialize($pagedata);
+	    $page['content'] = $pagedata['content'];
 	    return $page;
 	 }
       }
