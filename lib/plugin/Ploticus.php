@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Ploticus.php,v 1.10 2004-10-04 23:43:35 rurban Exp $');
+rcs_id('$Id: Ploticus.php,v 1.11 2004-10-14 13:48:07 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -100,7 +100,7 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
     function getDefaultArguments() {
         return array(
@@ -233,8 +233,10 @@ extends WikiPluginCached
             $code = $this->filterThroughCmd($source, PLOTICUS_EXE . "$args");
             //if (empty($code))
             //    return $this->error(fmt("Couldn't start commandline '%s'", $commandLine));
+            sleep(1);
             if (! file_exists("$tempfile.$gif") ) {
                 $this->_errortext .= sprintf(_("Ploticus error: Outputfile '%s' not created"), "$tempfile.$gif");
+                $this->_errortext .= ("\ncmd-line: cat script | " . PLOTICUS_EXE . "$args");
                 return false;
             }
             $ImageCreateFromFunc = "ImageCreateFrom$gif";
@@ -259,6 +261,9 @@ extends WikiPluginCached
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/10/04 23:43:35  rurban
+// honor _ENV PLOTICUS_PREFABS
+//
 // Revision 1.9  2004/09/26 17:09:23  rurban
 // add SVG support for Ploticus (and hopefully all WikiPluginCached types)
 // SWF not yet.
