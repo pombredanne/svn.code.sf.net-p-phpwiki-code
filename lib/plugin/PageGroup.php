@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageGroup.php,v 1.2 2002-01-31 08:27:33 carstenklapp Exp $');
+<?php rcs_id('$Id: PageGroup.php,v 1.3 2002-02-01 04:59:51 carstenklapp Exp $');
 /**
  * Usage:
  *
@@ -35,7 +35,7 @@ extends WikiPlugin
     }
 
     // Stolen from IncludePage.php
-    function extractSection ($section, $content) {
+    function extractSection ($section, $content, $page) {
         $qsection = preg_replace('/\s+/', '\s+', preg_quote($section, '/'));
 
         if (preg_match("/ ^(!{1,})\\s*$qsection" // section header
@@ -48,7 +48,7 @@ extends WikiPlugin
             $text = preg_replace("/\\s*^-{4,}\\s*$/m", "", $match[2]);
             return explode("\n", $text);
         }
-        return array(sprintf(_("<%s: no such section>"), $parent."->".$section));
+        return array(sprintf(_("<%s: no such section>"), $page ." ". $section));
     }
 
     function run($dbi, $argstr, $request) {
@@ -99,7 +99,7 @@ extends WikiPlugin
         }
 
         $c = $r->getContent();
-        $c = $this->extractSection($section, $c);
+        $c = $this->extractSection($section, $c, $parent);
 
        $pagename = $request->getArg('pagename');
 
