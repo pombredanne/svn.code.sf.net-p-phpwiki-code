@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.36 2002-01-24 21:22:59 dairiki Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.37 2002-01-25 03:23:00 carstenklapp Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -159,7 +159,7 @@ function DumpToDir (&$request)
         $msg = array(HTML::br(), $page->getName(), ' ... ');
         
         if($page->getName() != $filename) {
-            $msg[] = HTTP::small(fmt("saved as %s", $filename));
+            $msg[] = HTML::small(fmt("saved as %s", $filename));
             $msg[] = " ... ";
         }
         
