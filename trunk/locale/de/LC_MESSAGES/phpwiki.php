@@ -225,11 +225,11 @@ $locale["This is a minor change."] =
 $locale["This page has been locked by the administrator and cannot be edited."] =
    "Diese Seite wurde vom Systemverwalter gesperrt und kann nicht editiert werden.";
 $locale["Title Search"] =
-   "Volltextsuch";
+   "Titelsuch";
 $locale["Title search results for '%s'"] =
    "Titel-Suchresultate nach »%s«";
 $locale["TitleSearch"] =
-   "Volltextsuch";
+   "Titelsuch";
 $locale["To cancel press the \"Back\" button of your browser."] =
    "Anderenfalls benütze die »Zurück« Funktion deines Browsers.";
 $locale["Unlock page"] =

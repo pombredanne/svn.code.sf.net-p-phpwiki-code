@@ -408,12 +408,12 @@ msgstr "Suche"
 
 #: ../lib/plugin/RecentChanges.php:251 ../lib/plugin/TitleSearch.php:16
 msgid "Title Search"
-msgstr "Volltextsuch"
+msgstr "Titelsuch"
 
 #: ../lib/main.php:123 ../lib/plugin/RecentChanges.php:253
 #: ../lib/plugin/TitleSearch.php:12
 msgid "TitleSearch"
-msgstr "Volltextsuch"
+msgstr "Titelsuch"
 
 #: ../lib/plugin/TitleSearch.php:48
 #, c-format
