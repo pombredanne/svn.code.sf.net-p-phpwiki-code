@@ -1,12 +1,17 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopular.php,v 1.3 2001-12-16 07:33:56 carstenklapp Exp $');
+rcs_id('$Id: MostPopular.php,v 1.4 2001-12-16 18:33:25 dairiki Exp $');
 /**
  */
 class WikiPlugin_MostPopular
 extends WikiPlugin
 {
-    var $name = 'MostPopular';
-    var $description = 'MostPopular';
+    function getName () {
+        return _("MostPopular");
+    }
+
+    function getDescription () {    
+        return _("List the most popular pages");
+    }
     
     function getDefaultArguments() {
         // FIXME: how to exclude multiple pages?
@@ -19,8 +24,8 @@ extends WikiPlugin
         
         $pages = $dbi->mostPopular($limit);
 
-        $lines[] = $this->_tr(QElement('u', gettext("Hits")),
-                              QElement('u', gettext("Page Name")));
+        $lines[] = $this->_tr(QElement('u', _("Hits")),
+                              QElement('u', _("Page Name")));
         
         while ($page = $pages->next()) {
             $hits = $page->get('hits');

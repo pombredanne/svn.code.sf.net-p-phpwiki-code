@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.3 2001-12-16 11:52:30 carstenklapp Exp $');
+rcs_id('$Id: FullTextSearch.php,v 1.4 2001-12-16 18:33:25 dairiki Exp $');
 
 require_once('lib/TextSearchQuery.php');
 
@@ -8,8 +8,13 @@ require_once('lib/TextSearchQuery.php');
 class WikiPlugin_FullTextSearch
 extends WikiPlugin
 {
-    var $name = 'FullTextSearch';
-    var $description = 'FullTextSearch';
+    function getName () {
+        return _("FullTextSearch");
+    }
+
+    function getDescription () {
+        return _("Full Text Search");
+    }
 
     function getDefaultArguments() {
         // FIXME: how to exclude multiple pages?
@@ -17,11 +22,6 @@ extends WikiPlugin
                      'noheader'		=> false);
     }
 
-    function getDefaultFormArguments() {
-        $defaults = parent::getDefaultFormArguments();
-        $defaults['description'] = gettext('Full Text Search');
-        return $defaults;
-    }
         
     function run($dbi, $argstr, $request) {
 
@@ -49,9 +49,9 @@ extends WikiPlugin
         $html = '';
         if (!$noheader)
             $html .= QElement('p',
-                              sprintf(gettext("Full text search results for '%s'"), $s));
+                              sprintf(_("Full text search results for '%s'"), $s));
         if (!$lines)
-            $lines[] = QElement('dd', gettext("<no matches>"));
+            $lines[] = QElement('dd', _("<no matches>"));
 
         $html .= Element('dl', join("\n", $lines));
         return $html;
@@ -71,12 +71,6 @@ extends WikiPlugin
             $html .= Element('dd', Element('small', $line)) . "\n";
         }
         return $html;
-    }
-
-    function make_form($args) {
-        // FIXME: need more thought about this whole interface.
-        $args['search'] = '()';
-        return MakeWikiForm(_($GLOBALS['pagename']), $args, 'wikiaction','Full Text Search');
     }
 };
         

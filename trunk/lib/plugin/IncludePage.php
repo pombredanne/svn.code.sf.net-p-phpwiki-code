@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: IncludePage.php,v 1.3 2001-12-16 16:52:45 carstenklapp Exp $');
+rcs_id('$Id: IncludePage.php,v 1.4 2001-12-16 18:33:25 dairiki Exp $');
 /**
  * IncludePage:  include text from another wiki page in this one
  * usage:   <?plugin IncludePage page=OtherPage rev=6 quiet=1 words=50 lines=6?>
@@ -11,9 +11,10 @@ require_once('lib/transform.php');
 class WikiPlugin_IncludePage
 extends WikiPlugin
 {
-    var $name='IncludePage';
-    var $description='Embeds text from another page.';
-
+    function getName() {
+        return _("IncludePage");
+    }
+    
     function getDefaultArguments() {
         return array( 'page'  => false,    // the page to include
                       'rev'   => false,    // the revision (defaults to most recent)

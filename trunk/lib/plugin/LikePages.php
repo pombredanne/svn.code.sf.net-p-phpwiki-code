@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: LikePages.php,v 1.2 2001-12-15 10:54:54 carstenklapp Exp $');
+rcs_id('$Id: LikePages.php,v 1.3 2001-12-16 18:33:25 dairiki Exp $');
 
 require_once('lib/TextSearchQuery.php');
 
@@ -8,9 +8,14 @@ require_once('lib/TextSearchQuery.php');
 class WikiPlugin_LikePages
 extends WikiPlugin
 {
-    var $name = 'LikePages';
-    var $description = "List LikePages for [pagename]";
-
+    function getName() {
+        return _("LikePages");
+    }
+    
+    function getDescription() {
+        return _("List LikePages for [pagename]");
+    }
+    
     function getDefaultArguments() {
         // FIXME: how to exclude multiple pages?
         return array('page'		=> false,
@@ -31,12 +36,12 @@ extends WikiPlugin
         if ($prefix) {
             $suffix = false;
             if (!$noheader)
-                $html .= QElement('p', sprintf(gettext("Page names with prefix '%s'"),
+                $html .= QElement('p', sprintf(_("Page names with prefix '%s'"),
                                                $prefix));
         }
         elseif ($suffix) {
             if (!$noheader)
-                $html .= QElement('p', sprintf(gettext("Page names with suffix '%s'"),
+                $html .= QElement('p', sprintf(_("Page names with suffix '%s'"),
                                                $suffix));
         }
         elseif ($page) {
@@ -45,10 +50,11 @@ extends WikiPlugin
             $prefix = $words[0];
             list($suffix) = array_reverse($words);
             $exclude = $page;
-
-            $fs = gettext("These pages share an initial or final title word with '%s'");
-            if (!$noheader)
+            
+            if (!$noheader) {
+                $fs = _("These pages share an initial or final title word with '%s'");
                 $html .= Element('p', sprintf(htmlspecialchars($fs), LinkWikiWord($page)));
+            }
         }
 
         // Search for pages containing either the suffix or the prefix.

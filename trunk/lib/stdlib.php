@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.59 2001-12-12 23:51:25 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.60 2001-12-16 18:33:25 dairiki Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -127,7 +127,7 @@ function LinkURL($url, $linktext = '') {
     if(ereg("[<>\"]", $url)) {
         return Element('strong',
                        QElement('u', array('class' => 'baduri'),
-                                _('BAD URL -- remove all of <, >, "'))); //"
+                                _("BAD URL -- remove all of <, >, \""))); //"
     }
 
     $attr['href'] = $url;
@@ -333,7 +333,7 @@ function LinkPhpwikiURL($url, $text = '') {
 		$page = $dbi->getPage($GLOBALS['pagename']);
 		if (!$page->get('locked'))
 			return QElement('u', array('class' => 'wikiunsafe'),
-							gettext('Lock page to enable link'));
+                                        _("Lock page to enable link"));
 
 		$class = 'wikiadmin';
 	}

@@ -6,13 +6,14 @@ define('text2png_debug', true);
 class WikiPlugin_text2png
 extends WikiPlugin
 {
-	var $name = 'text2png';
-	var $description = 'text2png';
+    function getName () {
+        return "text2png";
+    }
 	
 	function getDefaultArguments() {
-    global $LANG;
-	return array('text'	=> "Hello WikiWorld!",
-	             'l'    => $LANG );
+        global $LANG;
+        return array('text'	=> "Hello WikiWorld!",
+                     'l'    => $LANG );
 	}
 
 	function run($dbi, $argstr, $request) {
