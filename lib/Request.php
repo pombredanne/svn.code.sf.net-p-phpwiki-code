@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.58 2004-06-04 20:32:53 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.59 2004-06-13 11:34:22 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -581,6 +581,7 @@ class Request_UploadedFile {
         }
 
         // With windows/php 4.2.1 is_uploaded_file() always returns false.
+        // Be sure that upload_tmp_dir ends with a slash!
         if (!is_uploaded_file($fileinfo['tmp_name'])) {
             if (isWindows()) {
                 if (!$tmp_file = get_cfg_var('upload_tmp_dir')) {
@@ -589,17 +590,23 @@ class Request_UploadedFile {
                 $tmp_file .= '/' . basename($fileinfo['tmp_name']);
                 /* but ending slash in php.ini upload_tmp_dir is required. */
                 if (ereg_replace('/+', '/', $tmp_file) != $fileinfo['tmp_name']) {
-                    trigger_error(sprintf("Uploaded tmpfile illegal: %s != %s",$tmp_file, $fileinfo['tmp_name']),
+                    trigger_error(sprintf("Uploaded tmpfile illegal: %s != %s.",$tmp_file, $fileinfo['tmp_name']).
+                    	          "\n".
+                    	          "Probably illegal TEMP environment or upload_tmp_dir setting.",
                                   E_USER_ERROR);
                     return false;
                 } else {
+                    /*
                     trigger_error(sprintf("Workaround for PHP/Windows is_uploaded_file() problem for %s.",
                                           $fileinfo['tmp_name'])."\n".
-            	                  "Probably illegal TEMP environment setting.",E_USER_NOTICE);
+            	                  "Probably illegal TEMP environment or upload_tmp_dir setting.", 
+            	                  E_USER_NOTICE);
+            	    */
+            	    ;
                 }
             } else {
               trigger_error(sprintf("Uploaded tmpfile %s not found.",$fileinfo['tmp_name'])."\n".
-                           " Probably illegal TEMP environment setting.",
+                           " Probably illegal TEMP environment or upload_tmp_dir setting.",
                           E_USER_WARNING);
             }
         }
@@ -982,6 +989,11 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.58  2004/06/04 20:32:53  rurban
+// Several locale related improvements suggested by Pierrick Meignen
+// LDAP fix by John Cole
+// reanable admin check without ENABLE_PAGEPERM in the admin plugins
+//
 // Revision 1.57  2004/06/03 18:54:25  rurban
 // fixed "lost level in session" warning, now that signout sets level = 0 (before -1)
 //

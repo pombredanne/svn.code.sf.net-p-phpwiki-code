@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.11 2004-06-11 09:07:30 rurban Exp $');
+rcs_id('$Id: UpLoad.php,v 1.12 2004-06-13 11:34:22 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -141,14 +141,17 @@ ws[cfh]");
             if (preg_match("/(\." . join("|\.", $this->disallowed_extensions) . ")\$/",
                            $userfile_name))
             {
+            	$message->pushContent(fmt("ERROR uploading '%s': ",$userfile_name));
                 $message->pushContent(fmt("Files with extension %s are not allowed",
                                           join(", ", $this->disallowed_extensions)),HTML::br(),HTML::br());
             }
             elseif (file_exists($file_dir . $userfile_name)) {
+            	$message->pushContent(fmt("ERROR uploading '%s': ",$userfile_name));
                 $message->pushContent(fmt("There is already a file with name %s uploaded",
                                           $userfile_name),HTML::br(),HTML::br());
             }
             elseif ($userfile->getSize() > (MAX_UPLOAD_SIZE)) {
+            	$message->pushContent(fmt("ERROR uploading '%s': ",$userfile_name));
                 $message->pushContent(_("Sorry but this file is too big"),HTML::br(),HTML::br());
             }
             elseif (move_uploaded_file($userfile_tmpname, $file_dir . $userfile_name) or
@@ -161,8 +164,8 @@ ws[cfh]");
                 $message->pushContent(HTML::ul(HTML::li($link)));
 
                 // the upload was a success and we need to mark this event in the "upload log"
-                $upload_log = $file_dir . basename($logfile);
                 if ($logfile) { 
+                    $upload_log = $file_dir . basename($logfile);
                     $this->log($userfile, $upload_log, &$message);
                 }
                 if ($autolink) {
@@ -172,7 +175,7 @@ ws[cfh]");
                         $current = $pagehandle->getCurrentRevision();
                         $version = $current->getVersion();
                         $text = $current->getPackedContent();
-                        $newtext = $text . "\n* Upload:$userfile_name";
+                        $newtext = $text . "\n* [Upload:$userfile_name]";
                         $meta = $current->_data;
                         $meta['summary'] = sprintf(_("uploaded %s"),$userfile_name);
                         $pagehandle->save($newtext, $version + 1, $meta);
@@ -180,7 +183,8 @@ ws[cfh]");
                 }
             }
             else {
-                $message->pushContent(HTML::br(),_("Uploading failed: "),$userfile_name, HTML::br());
+            	$message->pushContent(fmt("ERROR uploading '%s': ",$userfile_name));
+                $message->pushContent(HTML::br(),_("Uploading failed."),HTML::br());
             }
         }
         else {
@@ -225,6 +229,9 @@ ws[cfh]");
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/06/11 09:07:30  rurban
+// support theme-specific LinkIconAttr: front or after or none
+//
 // Revision 1.10  2004/04/12 10:19:18  rurban
 // fixed copyright year
 //
