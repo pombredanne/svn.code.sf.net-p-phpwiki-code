@@ -1,12 +1,13 @@
 <?php //-*-php-*-
-rcs_id('$Id: HttpAuth.php,v 1.3 2004-12-19 00:58:02 rurban Exp $');
-/* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
+rcs_id('$Id: HttpAuth.php,v 1.4 2004-12-26 17:11:16 rurban Exp $');
+/* Copyright (C) 2004 ReiniUrban
+ * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
 
 /**
  * We have two possibilities here.
  * 1) The webserver location is already HTTP protected (usually Basic). Then just 
- *    use the username and do nothing
+ *    use the username and do nothing.
  * 2) The webserver location is not protected, so we enforce basic HTTP Protection
  *    by sending a 401 error and let the client display the login dialog.
  *    This makes only sense if HttpAuth is the last method in USER_AUTH_ORDER,
@@ -51,7 +52,7 @@ extends _PassUser
         if (!isset($_SERVER))
             $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
         // maybe we should random the realm to really force a logout. but the next login will fail.
-        //better_srand(); $realm = microtime().rand();
+        // better_srand(); $realm = microtime().rand();
         header('WWW-Authenticate: Basic realm="'.WIKI_NAME.'"');
         if (strstr(php_sapi_name(), 'apache'))
             header('HTTP/1.0 401 Unauthorized'); 
@@ -121,6 +122,12 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/12/19 00:58:02  rurban
+// Enforce PASSWORD_LENGTH_MINIMUM in almost all PassUser checks,
+// Provide an errormessage if so. Just PersonalPage and BogoLogin not.
+// Simplify httpauth logout handling and set sessions for all methods.
+// fix main.php unknown index "x" getLevelDescription() warning.
+//
 // Revision 1.2  2004/12/17 12:31:57  rurban
 // better logout, fake httpauth not yet
 //
