@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.18 2004-03-01 02:25:27 rurban Exp $
+ * $Id: phpwiki.css,v 1.19 2004-03-10 15:38:49 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -81,6 +81,7 @@ div.wikitext {
    */
   clear: both;
 }
+/* .interwiki-map thead td { text-decoration: underline; } */
 
 /* Mozilla RecentChanges Sidebar */
 body.sidebar {
@@ -731,8 +732,10 @@ th.gridbutton {
 }
 a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
   text-decoration: none;
+  font-size: small;
   font-weight: normal;
   font-style: menu;
+  font-family: Tahoma, sans-serif, Arial, Helvetica;
   background-color: threedlightshadow;
   color: black;
 }
