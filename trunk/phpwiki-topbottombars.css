@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki-topbottombars.css,v 1.1 2002-02-09 20:58:20 carstenklapp Exp $
+ * $Id: phpwiki-topbottombars.css,v 1.2 2002-02-10 22:01:59 carstenklapp Exp $
  *
  * The html really needs to be tweaked a bit to get this stuff to
  * work properly.
@@ -21,7 +21,7 @@
   position: fixed;
   border-style: outset;
   border-width: 1px;
-  padding-top: 2ex;
+  padding-top: 1ex;
   padding-left: 1em;
   padding-bottom: 3em;
   margin-top: 0ex;
@@ -43,17 +43,20 @@
 }
 h1 {
   position: fixed;
-  top: 1.5ex;
+  top: 2ex;
   left: 0.5em;
 }
 .toolbar {
   background: ivory;
 }
+#actionbar table {
+  padding-bottom: 1ex;
+}
 #actionbar  {
   line-height: 150%;
   background: ivory;
   position: fixed;
-  bottom: -1px;
+  bottom: -3px;
   left: -1px;
   right: -1px;
   border-style: outset;
@@ -61,17 +64,10 @@ h1 {
   padding-left: 1em;
   padding-right: 1em;
 }
-p.editdate  {
-  position: fixed;
-  left: 1em; /* ie isn't very smart about left auto */
-  /* bottom auto allows nice wrapping of buttons
-     in a small window, but in ie the date will vanish*/
-  bottom: 5ex;
-}
 hr.toolbar {
-  visibility: hidden;
+  display: none;
 }
-.wikitext  {
+div.wikitext  {
   margin-top: 9ex;
 }
 
