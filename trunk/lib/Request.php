@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Request.php,v 1.39 2004-02-24 15:14:57 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.40 2004-02-26 01:39:51 rurban Exp $');
 
 
 // backward compatibility for PHP < 4.2.0
@@ -112,7 +112,7 @@ class Request {
 
         $pagename = $get_args['pagename'];
         unset ($get_args['pagename']);
-        if ($get_args['action'] == 'browse')
+        if (!empty($get_args['action']) and $get_args['action'] == 'browse')
             unset($get_args['action']);
 
         return WikiURL($pagename, $get_args);
@@ -891,6 +891,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.39  2004/02/24 15:14:57  rurban
+// fixed action=upload problems on Win32, and remove Merge Edit buttons: file does not exist anymore
+//
 // Revision 1.38  2004/01/25 10:26:02  rurban
 // fixed bug [ 541193 ] HTTP_SERVER_VARS are Apache specific
 // http://sourceforge.net/tracker/index.php?func=detail&aid=541193&group_id=6121&atid=106121
