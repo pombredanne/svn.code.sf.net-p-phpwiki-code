@@ -20,7 +20,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'iso-8859-1');
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.15 2003-03-07 20:51:49 dairiki Exp $ -->
+<!-- $Id: configurator.php,v 1.16 2003-03-07 22:46:38 dairiki Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki 1.3.x</title>
 <style type="text/css" media="screen">
@@ -217,48 +217,23 @@ Part Zero: If PHP needs help in finding where you installed the
 rest of the PhpWiki code, you can set the include_path here.");
 
 if (substr(PHP_OS,0,3) == 'WIN') {
-    $include_path = ini_get('include_path') . ';' . dirname(__FILE__);
+    $include_path = dirname(__FILE__) . ';' . ini_get('include_path');
     if (strchr(ini_get('include_path'),'/'))
 	$include_path = strtr($include_path,'\\','/');
 } else {
-    $include_path = ini_get('include_path') . ':' . dirname(__FILE__);
+    $include_path = dirname(__FILE__) . ':' . ini_get('include_path');
 }
 
 $properties["PHP include_path"] =
 new _ini_set('include_path', $include_path, "
-NOTE: phpwiki uses the PEAR library of php code for SQL database
-access. Your PHP is probably already configured to set
-include_path so that PHP can find the pear code. If not (or if you
-change include_path here) make sure you include the path to the
-PEAR code in include_path. (To find the PEAR code on your system,
-search for a file named 'PEAR.php'. Some common locations are:
-<pre>
-  Unixish systems:
-    /usr/share/php
-    /usr/local/share/php
-  Mac OS X:
-    /System/Library/PHP
-</pre>
-The above examples are already included by PhpWiki. You shouldn't
-have to change this unless you see a WikiFatalError:
-<pre>
-    lib/FileFinder.php:82: Fatal[256]: 
-    DB.php: file not found
-</pre>
-Define the include path for this wiki: pear plus the phpwiki path
-<pre>
-\$include_path = '.:/Apache/php/pear:/prog/php/phpwiki';
-</pre>
-Windows needs ';' as path delimiter. cygwin, mac and unix ':'
-<pre>
-if (substr(PHP_OS,0,3) == 'WIN') {
-  \$include_path = implode(';',explode(':',\$include_path));
-} elseif (substr(PHP_OS,0,6) == 'CYGWIN') {
-  \$include_path = '.:/usr/local/lib/php/pear'.
-                     ':/usr/src/php/phpwiki';
-} else {
-  ;
-}</pre>");
+Define PHP's include path so that it can find the PHP source code
+for this PhpWiki.
+
+You shouldn't need to do this unless you've moved index.php out
+of the PhpWiki install directory.
+
+Note that on Windows-based servers, you should use ; rather than :
+as the path separator.");
 
 $properties["Part Null"] =
 new part('_partnullheader', "", "
@@ -270,7 +245,7 @@ $properties["Part Null Settings"] =
 new unchangeable_variable('_partnullsettings', "
 define ('PHPWIKI_VERSION', '1.3.5pre');
 require \"lib/prepend.php\";
-rcs_id('\$Id: configurator.php,v 1.15 2003-03-07 20:51:49 dairiki Exp $');", "");
+rcs_id('\$Id: configurator.php,v 1.16 2003-03-07 22:46:38 dairiki Exp $');", "");
 
 
 $properties["Part One"] =
@@ -291,30 +266,27 @@ and during RSS generation for the title of the RSS channel.");
 
 
 $properties["Reverse DNS"] =
-new boolean_define('ENABLE_REVERSE_DNS',
-                    array('true'  => "true. perform additional reverse dns lookups",
-                          'false' => "false. just record the address as given by the httpd server"), "
+new boolean_define_optional
+('ENABLE_REVERSE_DNS',
+ array('true'  => "true. perform additional reverse dns lookups",
+       'false' => "false. just record the address as given by the httpd server"),
+" 
 If set, we will perform reverse dns lookups to try to convert the
 users IP number to a host name, even if the http server didn't do it for us.");
 
 $properties["Admin Username"] =
 new _define_optional_notempty('ADMIN_USER', "", "
-<a name=\"create\">You must set this! Username and password of the administrator.</a>",
+You must set this! Username and password of the administrator.",
 "onchange=\"validate_ereg('Sorry, ADMIN_USER cannot be empty.', '^.+$', 'ADMIN_USER', this);\"");
 
 $properties["Admin Password"] =
 new _define_password_optional('ADMIN_PASSWD', "", "
 For heaven's sake pick a good password.
-You can also use our <a target=\"_new\" href=\"passencrypt.php\">passwordencrypter</a> to encrypt an existing password or 
-the \"Create Password\" button to create a good password.",
+If your version of PHP supports encrypted passwords, your password will be
+automatically encrypted within the generated config file. 
+Use the \"Create Password\" button to create a good (random) password.",
 "onchange=\"validate_ereg('Sorry, ADMIN_PASSWD must be at least 4 chars long.', '^....+$', 'ADMIN_PASSWD', this);\"");
 
-$properties["Encrypted Password"] = 
-new boolean_define_optional('ENCRYPTED_PASSWD',
-                    array('true'  => "true. ADMIN_PASSWD is encrypted",
-                          'false' => "false. ADMIN_PASSWD is plaintext. Not recommended!"), "
-If you used the passencrypt.php utility to encode the password or use an existing unix-crypt password,
-then set this to true. Recommended!");
 
 $properties["ZIPdump Authentication"] =
 new boolean_define_optional('ZIPDUMP_AUTH', 
@@ -330,9 +302,11 @@ new boolean_define_optional('ENABLE_RAW_HTML',
 Allow &lt; ?plugin RawHtml ...&gt;. Don't do this on a publicly accessable wiki for now.");
 
 $properties["Strict Mailable Pagedumps"] =
-new boolean_define('STRICT_MAILABLE_PAGEDUMPS', 
-                    array('false' => "binary",
-                          'true'  => "quoted-printable"), "
+new boolean_define_optional
+('STRICT_MAILABLE_PAGEDUMPS', 
+ array('false' => "binary",
+       'true'  => "quoted-printable"),
+"
 If you define this to true, (MIME-type) page-dumps (either zip dumps,
 or \"dumps to directory\" will be encoded using the quoted-printable
 encoding.  If you're actually thinking of mailing the raw page dumps,
@@ -355,12 +329,14 @@ If you don't want any suffix just comment this out.");
 
 
 
+//FIXME: should be numeric_define_optional
 $properties["Maximum Upload Size"] =
 new numeric_define('MAX_UPLOAD_SIZE', "16 * 1024 * 1024", "
 The maximum file upload size.");
 
 
 
+//FIXME: should be numeric_define_optional
 $properties["Minor Edit Timeout"] =
 new numeric_define('MINOR_EDIT_TIMEOUT', "7 * 24 * 3600", "
 If the last edit is older than MINOR_EDIT_TIMEOUT seconds, the
@@ -390,7 +366,7 @@ new boolean_define_commented_optional
   "
 By default PhpWiki will try to have PHP compress it's output
 before sending it to the browser (if you have a recent enough
-version of PHP and the browser supports it.
+version of PHP and the browser supports it.)
 
 Define COMPRESS_OUTPUT to false to prevent output compression.
 
@@ -452,6 +428,7 @@ Choose one of:
 
 The default is currently LOOSE.");
 
+// FIXME: should be numeric_define_optional
 $properties["HTTP Cache Control Max Age"] =
 new numeric_define('CACHE_CONTROL_MAX_AGE', 600,
             "
@@ -862,7 +839,7 @@ area in the future).");
 
 
 $properties["Language"] =
-new _variable_selection_optional('LANG',
+new _define_selection_optional('DEFAULT_LANGUAGE',
               array('en' => "English",
                     'nl' => "Nederlands",
                     'es' => "Español",
@@ -881,46 +858,9 @@ German  \"de\" (Deutsch    - StartSeite)
 Swedish \"sv\" (Svenska    - Framsida)
 Italian \"it\" (Italiano   - PaginaPrincipale)
 </pre>
-If you set \$LANG to the empty string, your systems default language
+If you set DEFAULT_LANGUAGE to the empty string, your systems default language
 (as determined by the applicable environment variables) will be
 used.");
-
-$properties["Language Locales"] =
-new unchangeable_variable('language_locales',
-"\$language_locales = array('en' => 'C',
-                            'de' => 'de_DE',
-                            'es' => 'es_MX',
-                            'nl' => 'nl_NL',
-                            'fr' => 'fr_FR',
-                            'it' => 'it_IT',
-                            'sv' => 'sv_SV'
-                            );
-if (empty(\$LC_ALL)) {
-  if (empty(\$language_locales[\$LANG]))
-     \$LC_ALL = \$LANG;
-  else
-     \$LC_ALL = \$language_locales[\$LANG];
-}
-putenv(\"LC_TIME=\$LC_ALL\");
-", "
-Setting the LANG environment variable (accomplished above) may or
-may not be sufficient to cause PhpWiki to produce dates in your
-native language. (It depends on the configuration of the operating
-system on your http server.)  The problem is that, e.g. 'de' is
-often not a valid locale.
-
-A standard locale name is typically of  the  form
-language[_territory][.codeset][@modifier],  where  language is
-an ISO 639 language code, territory is an ISO 3166 country code,
-and codeset  is  a  character  set or encoding identifier like
-ISO-8859-1 or UTF-8.
-
-You can tailor the locale used for time and date formatting by
-setting the LC_TIME environment variable. You'll have to experiment
-to find the correct setting.
-gettext() fix: With setlocale() we must use the long form, 
-like 'de_DE','nl_NL', 'es_MX', 'es_AR', 'fr_FR'. 
-For Windows maybe even 'german'. You might fix this accordingly.");
 
 $properties["Wiki Page Source"] =
 new _define_optional('WIKI_PGSRC', 'pgsrc', "
@@ -1490,11 +1430,9 @@ extends _define {
                 return $p . "\ndefine('ENCRYPTED_PASSWD', true);";
             } else {
                 $p = "${n}" . $this->_config_format($posted_value);
-                $p = $p . "\n// If you used the passencrypt.php utility to encode the password";
-                $p = $p . "\n// then uncomment this line:";
-                $p = $p . "\n//define('ENCRYPTED_PASSWD', false);";
                 $p = $p . "\n// Encrypted passwords cannot be used:";
                 $p = $p . "\n// 'function crypt()' not available in this version of php";
+                $p = $p . "\ndefine('ENCRYPTED_PASSWD', false);";
                 return $p;
             }
         }
@@ -1520,13 +1458,13 @@ extends _variable {
     function get_html() {
 	global $HTTP_POST_VARS, $HTTP_GET_VARS;
 	$s = $this->get_config_item_header();
-        $s .= "<input type=\"password\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\" {$this->jscheck} />" . 
-"&nbsp;&nbsp;<input type=\"submit\" name=\"create\" value=\"Create Password\" />";
         if (isset($HTTP_POST_VARS['create']) or isset($HTTP_GET_VARS['create'])) {
 	    $new_password = random_good_password();
 	    $this->default_value = $new_password;
-	    $s .= "<br />&nbsp;<br />Created password: <strong>$new_password</strong>";
+	    $s .= "Created password: <strong>$new_password</strong><br />&nbsp;<br />";
 	}
+        $s .= "<input type=\"password\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\" {$this->jscheck} />" . 
+"&nbsp;&nbsp;<input type=\"submit\" name=\"create\" value=\"Create Password\" />";
 	if (empty($this->default_value))
 	    $s .= "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: red\">Cannot be empty.</p>";
 	elseif (strlen($this->default_value) < 4)
