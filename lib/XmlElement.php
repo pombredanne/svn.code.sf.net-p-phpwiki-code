@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.21 2003-02-21 04:23:19 dairiki Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.22 2003-03-10 19:51:03 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -135,7 +135,7 @@ class XmlContent
         if (empty($this->_content))
             return true;
         foreach ($this->_content as $x) {
-            if (!empty($x))
+            if (is_string($x) ? strlen($x) : !empty($x))
                 return false;
         }
         return true;
