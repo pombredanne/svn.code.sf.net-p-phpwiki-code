@@ -1,4 +1,4 @@
-<!-- $Id: wiki_config.php3,v 1.12 2000-06-25 20:00:22 wainstead Exp $ -->
+<!-- $Id: wiki_config.php3,v 1.13 2000-06-26 03:54:10 wainstead Exp $ -->
 <?
    /*
       Constants and settings. Edit the values below for
@@ -28,15 +28,21 @@
    // Wiki pages, use wiki_pgsql.php3 instead of wiki_dbmlib.php3
    // See INSTALL.pgsql for details on using Postgresql
 
+   // if you are using mSQL instead of a DBM to store your
+   // Wiki pages, use wiki_msql.php3 instead of wiki_dbmlib.php3
+   // See INSTALL.mysql for details on using mSQL
+
+
    // DBM settings (default)
    include "wiki_dbmlib.php3";
    $WikiDataBase = "/tmp/wikidb"; // must be server-writable!
    $ArchiveDataBase = "/tmp/wikiarchive"; // see above!
 
+/*
    // MySQL settings (thanks Arno Hollosi! <ahollosi@iname.com>)
    // Comment out the lines above (for the DBM) if you use these
 
-/*   include "wiki_mysql.php3";
+   include "wiki_mysql.php3";
    $WikiDataBase = "wiki";
    $ArchiveDataBase = "archive";
    $mysql_server = 'localhost';
@@ -54,11 +60,13 @@
    $pg_dbport    = "5432";
 */
 
+
 /*
    // MiniSQL (mSQL) settings.
    include "wiki_msql.php3";
    $msql_db = "wiki";
-
+   // should be the same as wikipages.line
+   define("MSQL_MAX_LINE_LENGTH", 512);
    $WikiDataBase = array();
    $ArchiveDataBase = array();
 
@@ -73,10 +81,10 @@
 
    // Template files (filenames are relative to script position)
    $templates = array(
-   	"BROWSE" => "templates/browse.html",
-	"EDITPAGE" => "templates/editpage.html",
+   	"BROWSE" =>    "templates/browse.html",
+	"EDITPAGE" =>  "templates/editpage.html",
 	"EDITLINKS" => "templates/editlinks.html",
-	"MESSAGE" => "templates/message.html"
+	"MESSAGE" =>   "templates/message.html"
 	);
 
    $SignatureImg = "$ServerAddress/signature.png";
@@ -87,7 +95,7 @@
    $datetimeformat = "F j, Y";	// may contain time of day
    $dateformat = "F j, Y";	// must not contain time
 
-   // allowed protocols for links - be careful not to allow "javscript:"
+   // allowed protocols for links - be careful not to allow "javascript:"
    $AllowedProtocols = "http|https|mailto|ftp|news|gopher";
    
    // you shouldn't have to edit anyting below this line
