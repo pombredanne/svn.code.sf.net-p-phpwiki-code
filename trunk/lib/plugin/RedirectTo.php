@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RedirectTo.php,v 1.9 2003-02-21 22:59:00 dairiki Exp $');
+rcs_id('$Id: RedirectTo.php,v 1.10 2003-02-24 00:40:09 carstenklapp Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -52,7 +52,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
@@ -115,6 +115,23 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2003/02/21 22:59:00  dairiki
+// Add new argument $basepage to WikiPlugin::run() and WikiPluginLoader::expandPI().
+// Plugins need to know what page they were invoked from so that they can handle
+// relative page links (like [/Subpage]) correctly.  ($request->getArg('pagename')
+// is not always the right page to use --- think included pages...)
+//
+// Many plugins don't need the $basepage, in which case, I think they can just ignore
+// the extra argument.  (I don't think PHP will generate any warnings.)
+//
+//
+// Also: deleted <?plugin-head? > code.  It's not needed any more, now that
+// we always cache output.
+//
+// The FrameInclude plugin seems broken now, though I'm not convinced it's
+// my fault.  If it is, sorry...   (I'll try to look at it a bit more
+// within a few days, to see if I can figure out the problem.)
+//
 // Revision 1.8  2003/02/16 19:49:18  dairiki
 // When redirecting to a page, use an absolute URL.
 // This fixes a bug when redirecting from a sub-page (since,
