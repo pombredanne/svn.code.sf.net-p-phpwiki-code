@@ -23,7 +23,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.0pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.16 2001-04-07 00:34:30 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.17 2001-05-31 17:39:01 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -115,14 +115,15 @@ $DBParams = array(
 
 // Select your language/locale - default language "C": English
 // other languages available: Dutch "nl", Spanish "es", German "de",
-// and Swedish "sv".
+// Swedish "sv", and Italian, "it".
 //
 // Note that on some systems, apprently using these short forms for
 // the locale won't work.  On my home system 'LANG=de' won't result
 // in german pages.  Somehow the system must recognize the locale
-// as a valid locale before gettext() will work.  ('de_DE' works for
-// me.)
-putenv('LANG=C');
+// as a valid locale before gettext() will work, i.e., use 'de_DE',
+// 'nl_NL'.
+$LANG='C';
+//$LANG='nl_NL';
 
 // Setting the LANG environment variable (accomplished above) may or
 // may not be sufficient to cause PhpWiki to produce dates in your

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.39 2001-04-07 00:34:30 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.40 2001-05-31 17:39:02 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
  *
@@ -7,8 +7,13 @@ rcs_id('$Id: config.php,v 1.39 2001-04-07 00:34:30 dairiki Exp $');
  * (The user-configurable settings have been moved to index.php.)
  */
 
-// essential internal stuff
+if (!defined("LC_ALL")) {
+   // Backward compatibility (for PHP < 4.0.5)
+   define("LC_ALL", "LC_ALL");
+   define("LC_CTYPE", "LC_CTYPE");
+}
 
+// essential internal stuff
 set_magic_quotes_runtime(0);
 
 // Some constants.
@@ -22,12 +27,6 @@ $FieldSeparator = "\x81";
 // constants for flags in $pagehash
 define("FLAG_PAGE_LOCKED", 1);
 
-//////////////////////////////////////////////////////////////////
-//
-// Set up localization
-//
-setlocale('LC_ALL', "");
-   
 // Search PHP's include_path to find file or directory.
 function FindFile ($file, $missing_okay = false)
 {
@@ -59,7 +58,10 @@ function FindFile ($file, $missing_okay = false)
 // Searches for "locale/$LANG/$file", then for "$file".
 function FindLocalizedFile ($file, $missing_okay = false)
 {
-   $language = getenv("LC_ALL");
+   $language = $GLOBALS['LANG'];
+   
+   if (empty($language))
+      $language = getenv("LC_ALL");
    if (empty($language))
       $language = getenv("LC_MESSAGES");
    if (empty($language))
@@ -68,7 +70,6 @@ function FindLocalizedFile ($file, $missing_okay = false)
       $language = getenv("LANG");
    if (empty($language))
       $language = "C";
-
    
    // FIXME: This wont work for DOS filenames.
    if (!ereg('^/', $file))
@@ -106,6 +107,9 @@ if (!function_exists ('gettext'))
 }
 else
 {
+   // Setup localisation
+   setlocale(LC_ALL, "$LANG");
+   putenv("LC_ALL=$LANG");
    bindtextdomain ("phpwiki", FindFile("locale"));
    textdomain ("phpwiki");
 }
@@ -130,8 +134,8 @@ else
 //
 // FIXME: Not all environments may support en_US?  We should probably
 // have a list of locales to try.
-if (setlocale('LC_CTYPE', 0) == 'C')
-   setlocale('LC_CTYPE', 'en_US.iso-8859-1');
+if (setlocale(LC_CTYPE, 0) == 'C')
+   setlocale(LC_CTYPE, 'en_US.iso-8859-1');
 
 /** string pcre_fix_posix_classes (string $regexp)
  *
