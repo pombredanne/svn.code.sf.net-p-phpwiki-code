@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-08 20:50+0100\n"
+"POT-Creation-Date: 2004-06-08 21:04+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -1295,7 +1295,7 @@ msgstr "PhpWikiSystemverwalten"
 
 #: ../lib/loadsave.php:518
 msgid "Restore Anyway"
-msgstr "Ungeprüft hochladen"
+msgstr "Ungeprüft überschreiben"
 
 #: ../lib/loadsave.php:523
 msgid " Sorry, cannot merge uploaded files."
@@ -1331,7 +1331,7 @@ msgstr "»%s« wird geladen"
 
 #: ../lib/loadsave.php:855
 msgid "Loading up virgin wiki"
-msgstr "Erstes Hochladen des noch gänzlich unberührten Wikis"
+msgstr "Lade neue Seiten in das frische Wiki"
 
 #: ../lib/loadsave.php:900
 msgid "No uploaded file to upload?"
@@ -1344,27 +1344,27 @@ msgstr "%s wird hochgeladen"
 
 #: ../lib/main.php:306
 msgid "FORBIDDEN"
-msgstr ""
+msgstr "VERBOTEN"
 
 #: ../lib/main.php:307
 msgid "ANON"
-msgstr ""
+msgstr "ANON"
 
 #: ../lib/main.php:308
 msgid "BOGO"
-msgstr ""
+msgstr "BOGO"
 
 #: ../lib/main.php:309
 msgid "USER"
-msgstr ""
+msgstr "BENUTZER"
 
 #: ../lib/main.php:310
 msgid "ADMIN"
-msgstr ""
+msgstr "ADMIN"
 
 #: ../lib/main.php:311
 msgid "UNOBTAINABLE"
-msgstr ""
+msgstr "UNERREICHBAR"
 
 #: ../lib/main.php:334
 msgid "authenticated"
@@ -1555,9 +1555,8 @@ msgid "Fatal PhpWiki Error"
 msgstr "Fataler PhpWiki Fehler"
 
 #: ../lib/main.php:778
-#, fuzzy
 msgid "Chown"
-msgstr "Chmod"
+msgstr "Chown"
 
 #: ../lib/main.php:782 ../lib/plugin/WikiAdminSetAcl.php:188
 msgid "SetAcl"
@@ -3511,9 +3510,9 @@ msgid "Rename selected pages."
 msgstr "Ausgewählte Seiten umbenennen"
 
 #: ../lib/plugin/WikiAdminRename.php:84 ../lib/plugin/WikiAdminRename.php:90
-#, fuzzy, c-format
+#, c-format
 msgid "Replaced link in %s."
-msgstr "Verwandte Links"
+msgstr "Link in %s ersetzt."
 
 #: ../lib/plugin/WikiAdminRename.php:97
 #, c-format
@@ -3691,9 +3690,8 @@ msgstr "Ungültige ACL"
 # Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
 # must also be renamed to match what is here.
 #: ../lib/plugin/WikiAdminSetAcl.php:123
-#, fuzzy
 msgid "PhpWikiAdministration/SetAcl"
-msgstr "PhpWikiSystemverwalten"
+msgstr "PhpWikiSystemverwalten/AclSetzen"
 
 #: ../lib/plugin/WikiAdminSetAcl.php:175
 msgid "Permission"
@@ -3710,9 +3708,8 @@ msgstr ""
 "Sind Sie sicher, daß Sie die ausgewählen Seiten wirklich ändern wollen?"
 
 #: ../lib/plugin/WikiAdminSetAcl.php:220
-#, fuzzy
 msgid "Selected Pages: "
-msgstr "Ausgewählte Seiten: %s"
+msgstr "Ausgewählte Seiten: "
 
 #: ../lib/plugin/WikiAdminSetAcl.php:226
 #, c-format
@@ -3736,14 +3733,12 @@ msgid "getfacl: "
 msgstr ""
 
 #: ../lib/plugin/WikiAdminSetAcl.php:233
-#, fuzzy
 msgid "ACL: "
-msgstr "ACL"
+msgstr "ACL: "
 
 #: ../lib/plugin/WikiAdminSetAcl.php:235
-#, fuzzy
 msgid "Description: "
-msgstr "Beschreibung"
+msgstr "Beschreibung: "
 
 #: ../lib/plugin/WikiAdminSetAcl.php:236
 msgid ""
