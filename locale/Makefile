@@ -1,9 +1,9 @@
-# $Id: Makefile,v 1.6 2001-12-21 07:43:08 carstenklapp Exp $
+# $Id: Makefile,v 1.7 2002-01-05 13:42:29 carstenklapp Exp $
 #
 # locale/Makefile
 #
-# This is a replacement for locale/translate.sh to avoid remaking files that
-# don't need to be remade.
+# This is a replacement for locale/translate.sh to avoid remaking
+# files that don't need to be remade.
 #
 
 ALL_LINGUAS = nl es de sv it
@@ -12,8 +12,8 @@ PO_FILES = $(patsubst %, po/%.po, ${ALL_LINGUAS})
 MO_FILES = $(patsubst %, %/LC_MESSAGES/phpwiki.mo, ${ALL_LINGUAS})
 PHP_FILES = ${MO_FILES:.mo=.php}
 
-#PHP_SRC := $(wildcard ../lib/*.php ../admin/*.php ../templates/*.html)
-PHP_SRC := $(wildcard ../templates/*.html ../lib/plugin/*.php ../lib/*.php ../lib/WikiDB/backend/*.php ../lib/WikiDB/*.php)
+PHP_SRC := $(wildcard ../templates/*.html ../lib/plugin/*.php \
+	../lib/*.php ../lib/WikiDB/backend/*.php ../lib/WikiDB/*.php)
 
 .PHONY: all po mo
 
@@ -38,4 +38,4 @@ po/%.po : po/phpwiki.pot
 %/LC_MESSAGES/phpwiki.php : %/LC_MESSAGES/phpwiki.mo
 	msgunfmt $< | awk -f make-php-trans.awk > $@
 
-clean : #Nothing to be done for 'clean'.
+clean : # Nothing to be done for 'clean'.
