@@ -6,11 +6,14 @@
 
    set_magic_quotes_runtime(0);
    error_reporting(E_ALL ^ E_NOTICE);
+   if (!ini_get('register_globals')) {
+       extract($HTTP_SERVER_VARS);
+   }
 
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.24.2.13.2.1 2005-01-07 13:48:42 rurban Exp $'); 
+   rcs_id('$Id: config.php,v 1.24.2.13.2.2 2005-01-07 13:59:58 rurban Exp $'); 
    // end essential internal stuff
 
 
@@ -113,6 +116,8 @@
    } elseif ($WhichDatabase == 'pgsql') {
       $pg_dbhost    = "localhost";
       $pg_dbport    = "5432";
+      $pg_dbuser    = "";      // username as used in step 2 of INSTALL.mysql
+      $pg_dbpass    = "";      // password of above user (or leave blank if none)	
       $WikiDataBase  = "wiki"; // name of the database in Postgresql
       $WikiPageStore = "wiki";
       $ArchivePageStore = "archive";
@@ -268,7 +273,11 @@
    //////////////////////////////////////////////////////////////////////
    // you shouldn't have to edit anyting below this line
    function compute_default_scripturl() {
-      global $SERVER_PORT, $SERVER_NAME, $SCRIPT_NAME, $HTTPS;
+      global $HTTP_SERVER_VARS, $SERVER_PORT, $SERVER_NAME, $SCRIPT_NAME, $HTTPS;
+      if (!ini_get('register_globals')) {
+          extract($HTTP_SERVER_VARS);
+      }
+      
       if (!empty($HTTPS) && $HTTPS != 'off') {
          $proto = 'https';
          $dflt_port = 443;

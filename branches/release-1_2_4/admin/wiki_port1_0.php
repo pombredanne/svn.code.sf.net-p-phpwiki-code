@@ -1,10 +1,9 @@
-<!-- $Id: wiki_port1_0.php,v 1.1.2.1.2.1 2005-01-07 13:48:42 rurban Exp $ -->
-
 <html>
 <head>
 <title>Importing phpwiki 1.0.x dbm files</title>
 </head>
 <body bgcolor="navajowhite">
+<!-- $Id: wiki_port1_0.php,v 1.1.2.1.2.2 2005-01-07 13:59:57 rurban Exp $ -->
 
 <?php
    function port1_0RenderHash($dbi, $dbmh, $pagename) {

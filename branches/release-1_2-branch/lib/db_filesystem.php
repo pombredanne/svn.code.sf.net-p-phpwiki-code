@@ -1,4 +1,4 @@
-<?php  rcs_id('$Id: db_filesystem.php,v 1.4.2.7 2001-11-07 23:19:16 dairiki Exp $');
+<?php  rcs_id('$Id: db_filesystem.php,v 1.4.2.8 2005-01-07 13:59:58 rurban Exp $');
    /*
       Database functions:
 
@@ -308,7 +308,7 @@ return;
 
    function GetAllWikiPagenames($dbi) {
       $namelist = array();
-      $d = opendir($dbi);
+      $d = opendir($dbi['wiki']);
       while($entry = readdir($d)) {
 	 if ($entry == '.' || $entry == '..')
 	    continue;

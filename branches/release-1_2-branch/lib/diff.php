@@ -1,4 +1,4 @@
-<!-- $Id: diff.php,v 1.4.2.2 2001-02-10 05:26:00 dairiki Exp $ -->
+<!-- $Id: diff.php,v 1.4.2.3 2005-01-07 13:59:58 rurban Exp $ -->
 <?php
 // diff.php
 //

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: ziplib.php,v 1.2.2.5.2.1 2005-01-07 13:48:42 rurban Exp $');
+rcs_id('$Id: ziplib.php,v 1.2.2.5.2.2 2005-01-07 13:59:59 rurban Exp $');
 
 //FIXME: get rid of this.
 function warn ($msg)
@@ -522,7 +522,8 @@ function MimeifyPage ($pagehash) {
 
   if (($flags & FLAG_PAGE_LOCKED) != 0)
       $params['flags'] = 'PAGE_LOCKED';
-  for ($i = 1; $i <= NUM_LINKS; $i++) 
+  if (!empty($refs))
+    for ($i = 1; $i <= NUM_LINKS; $i++) 
       if ($ref = $refs[$i])
 	  $params["ref$i"] = rawurlencode($ref);
   

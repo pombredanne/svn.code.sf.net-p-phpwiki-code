@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: pgsql.php,v 1.4.2.6 2001-11-15 01:20:39 dairiki Exp $');
+<?php rcs_id('$Id: pgsql.php,v 1.4.2.7 2005-01-07 13:59:58 rurban Exp $');
 
    /*
       Database functions:
@@ -29,11 +29,13 @@
    // open a database and return a hash
 
    function OpenDataBase($table) {
-      global $WikiDataBase, $pg_dbhost, $pg_dbport;
+       global $WikiDataBase, $pg_dbhost, $pg_dbport, $pg_dbuser, $pg_dbpass;
 
       $connectstring = $pg_dbhost?"host=$pg_dbhost ":"";
-	 $connectstring .= $pg_dbport?"port=$pg_dbport ":"";
-	 $connectstring .= $WikiDataBase?"dbname=$WikiDataBase":"";
+      $connectstring .= $pg_dbport?"port=$pg_dbport ":"";
+      $connectstring .= $pg_dbuser?"user=$pg_dbuser ":"";
+      $connectstring .= $pg_dbpass?"password=$pg_dbpass ":"";
+      $connectstring .= $WikiDataBase?"dbname=$WikiDataBase":"";
 
       if (!($dbc = pg_pconnect($connectstring))) {
          echo "Cannot establish connection to database, giving up.";

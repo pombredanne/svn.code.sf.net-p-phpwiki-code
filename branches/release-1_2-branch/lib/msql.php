@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: msql.php,v 1.6.2.7 2001-11-16 02:53:21 wainstead Exp $');
+<?php rcs_id('$Id: msql.php,v 1.6.2.8 2005-01-07 13:59:58 rurban Exp $');
 
    /*
       Database functions:
@@ -541,7 +541,7 @@ function BackLinkSearchNextMatch($dbi, &$res) {
       }
    }
 
-   function GetAllWikiPageNames($dbi_) {
+   function GetAllWikiPageNames($dbi) {
       $res = msql_query("select pagename from wiki", $dbi['dbc']);
       $rows = msql_num_rows($res);
       for ($i = 0; $i < $rows; $i++) {

@@ -1,4 +1,4 @@
-<!-- $Id: editlinks.php,v 1.1 2000-10-08 17:33:26 wainstead Exp $ -->
+<!-- $Id: editlinks.php,v 1.1.2.1 2005-01-07 13:59:58 rurban Exp $ -->
 <?php
    // Thanks to Alister <alister@minotaur.nu> for this code.
    // This allows an arbitrary number of reference links.

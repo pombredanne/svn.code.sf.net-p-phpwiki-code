@@ -1,11 +1,17 @@
-<?php // $Id: admin.php,v 1.5 2000-11-13 10:59:27 ahollosi Exp $
+<?php // $Id: admin.php,v 1.5.2.1 2005-01-07 13:59:57 rurban Exp $
 
    function rcs_id($id) {}   // otherwise this gets in the way
 
    define('WIKI_ADMIN', true);	// has to be before includes
+   if (!ini_get('register_globals')) {
+       extract($HTTP_SERVER_VARS);
+   }
 
    include("lib/config.php");
    include("lib/stdlib.php");
+   if (!ini_get('register_globals')) {
+       import_request_variables('gps');
+   }
 
    // set these to your preferences. For heaven's sake
    // pick a good password!
@@ -32,6 +38,7 @@
 
    if (isset($lock) || isset($unlock)) {
       include ('admin/lockpage.php');
+      $QUERY_STRING = $pagename;
    } elseif (isset($zip)) {
       include ('lib/ziplib.php');
       include ('admin/zip.php');
