@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.65 2004-11-09 17:11:17 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.66 2004-11-10 15:29:21 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -96,7 +96,7 @@ extends WikiDB_backend
                                     . " FROM $nonempty_tbl, $page_tbl"
                                     . " WHERE $nonempty_tbl.id=$page_tbl.id"
                                     . "   AND pagename='%s'",
-                                    $dbh->quoteString($pagename)));
+                                    $dbh->escapeSimple($pagename)));
     }
         
     function get_all_pagenames() {
@@ -126,7 +126,7 @@ extends WikiDB_backend
 
         $result = $dbh->getRow(sprintf("SELECT %s FROM $page_tbl WHERE pagename='%s'",
                                        $this->page_tbl_fields.",pagedata",
-                                       $dbh->quoteString($pagename)),
+                                       $dbh->escapeSimple($pagename)),
                                DB_FETCHMODE_ASSOC);
         if (!$result)
             return false;
@@ -155,7 +155,7 @@ extends WikiDB_backend
             // have a record in the page table.  Since it's just the
             // hit count, who cares?
             $dbh->query(sprintf("UPDATE $page_tbl SET hits=%d WHERE pagename='%s'",
-                                $newdata['hits'], $dbh->quoteString($pagename)));
+                                $newdata['hits'], $dbh->escapeSimple($pagename)));
             return;
         }
 
@@ -180,13 +180,13 @@ extends WikiDB_backend
 
         /* Portability issue -- not all DBMS supports huge strings 
          * so we need to 'bind' instead of building a SQL statment.
-         * Note that we do not need to quoteString when we bind
+         * Note that we do not need to escapeSimple when we bind
         $dbh->query(sprintf("UPDATE $page_tbl"
                             . " SET hits=%d, pagedata='%s'"
                             . " WHERE pagename='%s'",
                             $hits,
-                            $dbh->quoteString($this->_serialize($data)),
-                            $dbh->quoteString($pagename)));
+                            $dbh->escapeSimple($this->_serialize($data)),
+                            $dbh->escapeSimple($pagename)));
         */
         $sth = $dbh->query("UPDATE $page_tbl"
                            . " SET hits=?, pagedata=?"
@@ -200,13 +200,13 @@ extends WikiDB_backend
         // check id_cache
         global $request;
         $cache =& $request->_dbi->_cache->_id_cache;
-        if ($cache[$pagename]) return $cache[$pagename];
+        if (isset($cache[$pagename])) return $cache[$pagename];
 
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
         
         $query = sprintf("SELECT id FROM $page_tbl WHERE pagename='%s'",
-                         $dbh->quoteString($pagename));
+                         $dbh->escapeSimple($pagename));
 
         if (!$create_if_missing)
             return $dbh->getOne($query);
@@ -219,7 +219,7 @@ extends WikiDB_backend
             $dbh->query(sprintf("INSERT INTO $page_tbl"
                                 . " (id,pagename,hits)"
                                 . " VALUES (%d,'%s',0)",
-                                $id, $dbh->quoteString($pagename)));
+                                $id, $dbh->escapeSimple($pagename)));
             $this->unlock(array($page_tbl));
         }
         return $id;
@@ -233,7 +233,7 @@ extends WikiDB_backend
                                       . " FROM $page_tbl, $recent_tbl"
                                       . " WHERE $page_tbl.id=$recent_tbl.id"
                                       . "  AND pagename='%s'",
-                                      $dbh->quoteString($pagename)));
+                                      $dbh->escapeSimple($pagename)));
     }
 
     function get_previous_version($pagename, $version) {
@@ -250,7 +250,7 @@ extends WikiDB_backend
                                       /* Non portable and useless anyway with getOne
                                       . " LIMIT 1",
                                       */
-                                      $dbh->quoteString($pagename),
+                                      $dbh->escapeSimple($pagename),
                                       $version));
     }
     
@@ -286,7 +286,7 @@ extends WikiDB_backend
                                        . " WHERE $page_tbl.id=$version_tbl.id"
                                        . "  AND pagename='%s'"
                                        . "  AND version=%d",
-                                       $dbh->quoteString($pagename), $version),
+                                       $dbh->escapeSimple($pagename), $version),
                                DB_FETCHMODE_ASSOC);
 
         return $this->_extract_version_data($result);
@@ -352,8 +352,8 @@ extends WikiDB_backend
                             . " (id,version,mtime,minor_edit,content,versiondata)"
                             . " VALUES(%d,%d,%d,%d,'%s','%s')",
                             $id, $version, $mtime, $minor_edit,
-                            $dbh->quoteString($content),
-                            $dbh->quoteString($this->_serialize($data))));
+                            $dbh->quoteSmart($content),
+                            $dbh->quoteSmart($this->_serialize($data))));
         */
         // generic slow PearDB bind eh quoting.
         $dbh->query("INSERT INTO $version_tbl"
@@ -460,7 +460,7 @@ extends WikiDB_backend
         else
             list($have,$want) = array('linker', 'linkee');
         
-        $qpagename = $dbh->quoteString($pagename);
+        $qpagename = $dbh->escapeSimple($pagename);
         $result = $dbh->query("SELECT $want.id as id, $want.pagename as pagename, $want.hits as hits"
                                // Looks like 'AS' in column alias is a MySQL thing, Oracle does not like it
                                // and the PostgresSQL manual does not have it either
@@ -563,7 +563,7 @@ extends WikiDB_backend
     // (ranked search) and also google like expressions.
     function _sql_match_clause($word) {
         $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
-        $word = $this->_dbh->quoteString($word);
+        $word = $this->_dbh->escapeSimple($word);
         //$page_tbl = $this->_table_names['page_tbl'];
         //Note: Mysql 4.1.0 has a bug which fails with binary fields.
         //      e.g. if word is lowercased.
@@ -573,7 +573,7 @@ extends WikiDB_backend
 
     function _fullsearch_sql_match_clause($word) {
         $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
-        $word = $this->_dbh->quoteString($word);
+        $word = $this->_dbh->escapeSimple($word);
         //$page_tbl = $this->_table_names['page_tbl'];
         //Mysql 4.1.1 has a bug which fails here if word is lowercased.
         return "LOWER(pagename) LIKE '%$word%' OR content LIKE '%$word%'";
@@ -708,11 +708,10 @@ extends WikiDB_backend
                 //cludge alert!
                 //this page does not exist (already verified before), but exists in the page table.
                 //so we delete this page.
-                $dbh->query(sprintf("DELETE FROM $page_tbl WHERE id=$id",
-                                    $dbh->quoteString($to)));
+                $dbh->query("DELETE FROM $page_tbl WHERE id=$id");
             }
             $dbh->query(sprintf("UPDATE $page_tbl SET pagename='%s' WHERE id=$id",
-                                $dbh->quoteString($to)));
+                                $dbh->escapeSimple($to)));
         }
         $this->unlock();
         return $id;
@@ -959,7 +958,7 @@ extends WikiDB_backend
 class WikiDB_backend_PearDB_generic_iter
 extends WikiDB_backend_iterator
 {
-    function WikiDB_backend_PearDB_generic_iter($backend, $query_result) {
+    function WikiDB_backend_PearDB_generic_iter($backend, $query_result, $field_list = NULL) {
         if (DB::isError($query_result)) {
             // This shouldn't happen, I thought.
             $backend->_pear_error_callback($query_result);
@@ -1026,6 +1025,17 @@ extends WikiDB_backend_PearDB_generic_iter
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.65  2004/11/09 17:11:17  rurban
+// * revert to the wikidb ref passing. there's no memory abuse there.
+// * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively
+//   store page ids with getPageLinks (GleanDescription) of all existing pages, which
+//   are also needed at the rendering for linkExistingWikiWord().
+//   pass options to pageiterator.
+//   use this cache also for _get_pageid()
+//   This saves about 8 SELECT count per page (num all pagelinks).
+// * fix passing of all page fields to the pageiterator.
+// * fix overlarge session data which got broken with the latest ACCESS_LOG_SQL changes
+//
 // Revision 1.64  2004/11/07 16:02:52  rurban
 // new sql access log (for spam prevention), and restructured access log class
 // dbh->quote (generic)

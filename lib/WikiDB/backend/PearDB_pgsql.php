@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_pgsql.php,v 1.10 2004-07-08 15:35:17 rurban Exp $');
+rcs_id('$Id: PearDB_pgsql.php,v 1.11 2004-11-10 15:29:21 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB.php');
@@ -71,14 +71,14 @@ extends WikiDB_backend_PearDB
     // Use Postgres' caseless ILIKE
     function _sql_match_clause($word) {
         $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
-        $word = $this->_dbh->quoteString($word);
+        $word = $this->_dbh->escapeSimple($word);
         return "pagename ILIKE '%$word%'";
     }
 
     // Use Postgres' caseless ILIKE
     function _fullsearch_sql_match_clause($word) {
         $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
-        $word = $this->_dbh->quoteString($word);
+        $word = $this->_dbh->escapeSimple($word);
         return "pagename ILIKE '%$word%' OR content ILIKE '%$word%'";
     }
 

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.99 2004-11-09 17:11:05 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.100 2004-11-10 15:29:20 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -284,7 +284,7 @@ class WikiDB {
     function getAllPages($include_empty=false, $sortby=false, $limit=false) {
         // HACK: memory_limit=8M will fail on too large pagesets. old php on unix only!
     	$mem = ini_get("memory_limit");
-    	if (ini_get("memory_limit") and !$limit and !isWindows() and !check_php_version(4,3)) {
+    	if ($mem and !$limit and !isWindows() and !check_php_version(4,3)) {
     	    $limit = 450;
             $GLOBALS['request']->setArg('limit',$limit);
             $GLOBALS['request']->setArg('paging','auto');
@@ -541,7 +541,6 @@ class WikiDB {
             return;
         
         $gd = $this->getPage('global_data');
-        
         $data = $gd->get('__global');
         if ($data === false)
             $data = array();
@@ -557,58 +556,27 @@ class WikiDB {
     // SQL result: for simple select or create/update queries
     // returns the database specific resource type
     function genericSqlQuery($sql) {
-        if ($this->getParam('dbtype') == 'SQL') {
-            $result = $this->_backend->_dbh->query($sql);
-            if (DB::isError($result)) {
-                $msg = $result->getMessage();
-                trigger_error("SQL Error: ".DB::errorMessage($result), E_USER_WARNING);
-                return false;
-            } else {
-                return $result;
-            }
-        } elseif ($this->getParam('dbtype') == 'ADODB') {
-            if (!($result = $this->_backend->_dbh->Execute($sql))) {
-                trigger_error("SQL Error: ".$this->_backend->_dbh->ErrorMsg(), E_USER_WARNING);
-                return false;
-            } else {
-                return $result;
-            }
-        } else {
-            trigger_error("no SQL database");
-        }
+        trigger_error("no SQL database", E_USER_ERROR);
         return false;
-    }
-
-    function quote ($s) {
-        if ($this->getParam('dbtype') == 'SQL')
-            return $this->_backend->_dbh->quoteString($s);
-        elseif ($this->getParam('dbtype') == 'ADODB')
-            return $this->_backend->_dbh->qstr($s);
-        else return $s;
-    }
-    
-    function isOpen () {
-        global $request;
-        if (!$request->_dbi) return false;
-        if ($this->getParam('dbtype') == 'SQL')
-            return is_resource($this->_backend->connection());
-        elseif ($this->getParam('dbtype') == 'ADODB') 
-            return is_resource($this->_backend->connection());
-        else return true;
     }
 
     // SQL iter: for simple select or create/update queries
     // returns the generic iterator object (count,next)
-    function genericSqlIter($sql) {
-        if ($this->getParam('dbtype') == 'ADODB') {
-            $result = $this->genericSqlQuery($sql);
-            return new WikiDB_backend_ADODB_generic_iter($this->_backend, $result);
-        } elseif ($this->getParam('dbtype') == 'SQL') {
-            $result = $this->genericSqlQuery($sql);
-            return new WikiDB_backend_PearDB_generic_iter($this->_backend, $result);
-        } else {
-            trigger_error("no SQL database");
-        }
+    function genericSqlIter($sql, $field_list = NULL) {
+        trigger_error("no SQL database", E_USER_ERROR);
+        return false;
+    }
+    
+    // see upstream methods:
+    // ADODB adds surrounding quotes, SQL not yet!
+    function quote ($s) {
+        return $s;
+    }
+
+    function isOpen () {
+        global $request;
+        if (!$request->_dbi) return false;
+        else return true;
     }
 
     function getParam($param) {
@@ -743,7 +711,7 @@ class WikiDB_Page
             return;
 
         $backend->lock(array('version'));
-        $latestversion = $backend->get_latest_version($pagename);
+        $latestversion = $cache->get_latest_version($pagename);
         if ($latestversion && $version == $latestversion) {
             $backend->unlock(array('version'));
             trigger_error(sprintf("Attempt to merge most recent revision of '%s'",
@@ -967,7 +935,7 @@ class WikiDB_Page
 
     /**
      * Send udiff for a changed page to multiple users.
-     * TODO: for remove, rename also
+     * See rename and remove methods also
      */
     function sendPageChangeNotification(&$wikitext, $version, $meta, $emails, $userids) {
         global $request;
@@ -991,11 +959,11 @@ class WikiDB_Page
                 $prevdata = $backend->get_versiondata($this->_pagename, $previous, true);
             $other_content = explode("\n", $prevdata['%content']);
             
-            include_once("lib/diff.php");
+            include_once("lib/difflib.php");
             $diff2 = new Diff($other_content, $this_content);
-            $context_lines = max(4, count($other_content) + 1,
-                                 count($this_content) + 1);
-            $fmt = new UnifiedDiffFormatter($context_lines);
+            //$context_lines = max(4, count($other_content) + 1,
+            //                     count($this_content) + 1);
+            $fmt = new UnifiedDiffFormatter(/*$context_lines*/);
             $content  = $this->_pagename . " " . $previous . " " . Iso8601DateTime($prevdata['mtime']) . "\n";
             $content .= $this->_pagename . " " . $version . " " .  Iso8601DateTime($meta['mtime']) . "\n";
             $content .= $fmt->format($diff2);
@@ -1090,8 +1058,9 @@ class WikiDB_Page
 
         assert($version > 0);
         $vdata = $cache->get_versiondata($pagename, $version, $need_content);
-        if (!$vdata)
+        if (!$vdata) {
             return false;
+        }
         return new WikiDB_PageRevision($this->_wikidb, $pagename, $version,
                                        $vdata);
     }
@@ -2060,6 +2029,17 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.99  2004/11/09 17:11:05  rurban
+// * revert to the wikidb ref passing. there's no memory abuse there.
+// * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively
+//   store page ids with getPageLinks (GleanDescription) of all existing pages, which
+//   are also needed at the rendering for linkExistingWikiWord().
+//   pass options to pageiterator.
+//   use this cache also for _get_pageid()
+//   This saves about 8 SELECT count per page (num all pagelinks).
+// * fix passing of all page fields to the pageiterator.
+// * fix overlarge session data which got broken with the latest ACCESS_LOG_SQL changes
+//
 // Revision 1.98  2004/11/07 18:34:29  rurban
 // more logging fixes
 //

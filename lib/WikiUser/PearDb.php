@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: PearDb.php,v 1.1 2004-11-01 10:43:58 rurban Exp $');
+rcs_id('$Id: PearDb.php,v 1.2 2004-11-10 15:29:21 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 
@@ -40,7 +40,7 @@ extends _DbPassUser
         $this->getAuthDbh();
         if (isset($this->_prefs->_select)) {
             $dbh = &$this->_auth_dbi;
-            $db_result = $dbh->query(sprintf($this->_prefs->_select,$dbh->quote($this->_userid)));
+            $db_result = $dbh->query(sprintf($this->_prefs->_select, $dbh->quote($this->_userid)));
             // patched by frederik@pandora.be
             $prefs = $db_result->fetchRow();
             $prefs_blob = @$prefs["prefs"]; 
@@ -155,7 +155,7 @@ extends _DbPassUser
             $this->userExists();
         if (!isset($this->_authselect))
             trigger_error(fmt("Either %s is missing or DATABASE_TYPE != '%s'",
-                              'DBAUTH_AUTH_CHECK','SQL'),
+                              'DBAUTH_AUTH_CHECK', 'SQL'),
                           E_USER_WARNING);
 
         //NOTE: for auth_crypt_method='crypt'  defined('ENCRYPTED_PASSWD',true) must be set
@@ -214,6 +214,12 @@ extends _DbPassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/11/01 10:43:58  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 
 // Local Variables:
 // mode: php

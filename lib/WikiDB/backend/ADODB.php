@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.48 2004-11-09 17:11:16 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.49 2004-11-10 15:29:21 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -654,9 +654,10 @@ extends WikiDB_backend
         } else {
             $where = " AND hits > 0";
         }
-        if ($sortby != '-hits') 
-            $orderby = " ORDER BY " . $this->sortby($sortby, 'db');
-        else         
+        if ($sortby != '-hits') {
+            if ($order = $this->sortby($sortby, 'db'))  $orderby = " ORDER BY " . $order;
+            else $orderby = "";
+        } else
             $orderby = " ORDER BY hits $order";
         $limit = $limit ? $limit : -1;
 
@@ -1178,6 +1179,17 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.48  2004/11/09 17:11:16  rurban
+// * revert to the wikidb ref passing. there's no memory abuse there.
+// * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively
+//   store page ids with getPageLinks (GleanDescription) of all existing pages, which
+//   are also needed at the rendering for linkExistingWikiWord().
+//   pass options to pageiterator.
+//   use this cache also for _get_pageid()
+//   This saves about 8 SELECT count per page (num all pagelinks).
+// * fix passing of all page fields to the pageiterator.
+// * fix overlarge session data which got broken with the latest ACCESS_LOG_SQL changes
+//
 // Revision 1.47  2004/11/06 17:11:42  rurban
 // The optimized version doesn't query for pagedata anymore.
 //
