@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.22 2001-12-28 09:53:15 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.23 2002-01-09 16:57:20 carstenklapp Exp $');
 
 include "lib/config.php";
 include "lib/stdlib.php";
@@ -29,10 +29,10 @@ function deduce_pagename ($request) {
 function is_safe_action ($action) {
     if (! ZIPDUMP_AUTH and ($action == 'zip' || $action == 'xmldump'))
         return true;
-    return in_array ( $action, array('browse',
-                                     'info', 'diff', 'search',
-                                     'edit', 'save',
-                                     'login', 'logout',
+    return in_array ( $action, array('browse', 'info',
+                                     'diff',   'search',
+                                     'edit',   'save',
+                                     'login',  'logout',
                                      'setprefs') );
 }
 
@@ -51,7 +51,7 @@ function get_auth_mode ($action) {
 }
 
 function main ($request) {
-
+    
     
     if (USE_PATH_INFO && ! $request->get('PATH_INFO')
         && ! preg_match(',/$,', $request->get('REDIRECT_URL'))) {
@@ -77,7 +77,7 @@ function main ($request) {
     //FIXME:
     //if ($user->is_authenticated())
     //  $LogEntry->user = $user->id();
-
+    
     // All requests require the database
     global $dbi;                // FIXME: can we keep this non-global?
     $dbi = WikiDB::open($GLOBALS['DBParams']);
@@ -94,7 +94,7 @@ function main ($request) {
     // FIXME: I think this is redundant.
     if (!is_safe_action($action))
         $user->must_be_admin($action);
-
+    
     if (isset($DisabledActions) && in_array($action, $DisabledActions))
         ExitWiki(sprintf(_("Action %s is disabled in this wiki."), $action));
    
@@ -104,7 +104,7 @@ function main ($request) {
     if ($action != 'zip' && $action != 'setprefs') {
         $ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE);
     }
-
+    
     
     switch ($action) {
     case 'edit':
@@ -126,7 +126,7 @@ function main ($request) {
                                    array('s' => $request->getArg('searchterm')),
                                    'absolute_url'));
         break;
-      
+        
     case 'save':
         $request->compress_output();
         include "lib/savepage.php";
@@ -155,7 +155,8 @@ function main ($request) {
         require_once("lib/libxml.php");
         $xmlwriter = new WikiXmlWriter;
         $xmlwriter->begin();
-        $xmlwriter->writeComment("PhpWiki " . PHPWIKI_VERSION . " source:\n$RCS_IDS\n");
+        $xmlwriter->writeComment("PhpWiki " . PHPWIKI_VERSION
+                                 . " source:\n$RCS_IDS\n");
         $xmlwriter->writeDatabase($dbi, $limit);
         $xmlwriter->end();
         break;
