@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.45 2002-01-26 14:46:25 dairiki Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.46 2002-01-27 07:32:53 carstenklapp Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -390,21 +390,7 @@ function LoadZip (&$request, $zipfile, $files = false, $exclude = false) {
 function LoadDir (&$request, $dirname, $files = false, $exclude = false) {
     $fileset = new LimitedFileSet($dirname, $files, $exclude);
 
-    
     if (($skiplist = $fileset->getSkippedFiles())) {
-        // FIXME: use PageList?
-        // Note: I'm not sure using PageLists here is a good idea.
-        // This is the one place where it's nice to be able to flush
-        // output on a file by file basis.  I don't think it's worth
-        // the effort to modify PageList so that it can do that.
-        // (File loading doesn't really happen very often anyway,
-        // so it doesn't matter so much if the output is
-        // themed or artfully pretty.)
-        //
-        // In any case, for now, all these Load* functions are
-        // called within the middle of a <dl>, so you can't
-        // print anything but <dt>'s and <dd>'s.
-        
         PrintXML(HTML::dt(HTML::strong(_("Skipping"))));
         $list = HTML::ul();
         global $Theme;
@@ -413,12 +399,15 @@ function LoadDir (&$request, $dirname, $files = false, $exclude = false) {
         PrintXML(HTML::dd($list));
     }
 
-    //PrintXML(HTML::h2(_("Loading")));
-
-    foreach ($fileset->getFiles() as $file) {
-        // TODO: pass PageLists to LoadFile for output
-        LoadFile($request, "$dirname/$file");
+    // Defer HomePage loading until the end. If anything goes wrong
+    // the pages can still be loaded again.
+    $files = $fileset->getFiles();
+    if ($home = array_search(_("HomePage"), $files)) {
+        $files[$home]='';
+        array_push($files, _("HomePage"));
     }
+    foreach ($files as $file)
+        LoadFile($request, "$dirname/$file");
 }
 
 class LimitedFileSet extends FileSet {
