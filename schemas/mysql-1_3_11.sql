@@ -1,4 +1,4 @@
--- $Id: mysql-1_3_11.sql,v 1.2 2005-01-25 08:12:41 rurban Exp $
+-- $Id: mysql-1_3_11.sql,v 1.3 2005-02-07 15:18:52 rurban Exp $
 -- phpwiki 1.3.11 upgrade from 1.3.10
 
 -- only if you need fast log-analysis (spam prevention, recent referrers)
