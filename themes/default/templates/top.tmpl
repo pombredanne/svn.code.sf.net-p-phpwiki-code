@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-/* $Id: top.tmpl,v 1.14 2002-08-17 15:52:53 rurban Exp $
+/* $Id: top.tmpl,v 1.15 2002-08-17 17:03:11 rurban Exp $
  *
  * This template is responsible mainly for the outer level <html> stuff and the and <head>.
  */
@@ -9,7 +9,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: top.tmpl,v 1.14 2002-08-17 15:52:53 rurban Exp $ -->
+<!-- $Id: top.tmpl,v 1.15 2002-08-17 17:03:11 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
 <?php $ROBOTS_CONTENT = $ROBOTS_META ? $ROBOTS_META : "noindex,nofollow"; ?>
 <meta name="robots" content="<?= $ROBOTS_CONTENT ?>" />
@@ -54,6 +54,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
           } ?>
 <link rel="alternate" title="<?= $alternatelinkTitle ?>" href="<?= $alternatelinkUrl ?>" />
 <?php } ?>
+
 <?php /**
        * Add some user-specific links.
        */ ?>
@@ -62,10 +63,12 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
 <link rel="bookmark" title="<?=_("SandBox")?>" href="<?=WikiURL(_("SandBox"))?>" />
 <link rel="bookmark" title="<?=_("WikiWikiWeb")?>" href="<?=WikiURL(_("WikiWikiWeb"))?>" />
 <?php } ?>
+
 <?php if ($user->isadmin()) {
       /* Only for the Administrator */ ?>
 <link rel="bookmark" title="<?=_("PhpWikiAdministration")?>" href="<?=WikiURL(_("PhpWikiAdministration"))?>" />
 <?php } ?>
+
 <?php if ($user->isSignedIn()) {
       /* For signed-in users */ ?>
 <link rel="bookmark" title="<?=_("UserPreferences")?>" href="<?=WikiURL(_("UserPreferences"))?>" />
@@ -85,13 +88,11 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
 <link rel="bookmark" title="<?= $UserCalPageTodayTitle ?>" href="<?= $UserCalPageTodayUrl ?>" />
 <?php } ?>
 <?php } //end of links for signed-in user ?>
+
 <?= $Theme->getCSS() ?>
 <title><?=WIKI_NAME?> - <?=AsString($TITLE)?></title>
 </head>
 <?= Template('body') ?>
-<? if (!empty($UserCalPageTodayUrl)) { ?>
-  <a href="<?= $UserCalPageTodayUrl ?>"><?= $UserCalPageTodayTitle ?></a>
-<? } ?>
 <!-- phpwiki source:
 <?=$RCS_IDS?>
 -->

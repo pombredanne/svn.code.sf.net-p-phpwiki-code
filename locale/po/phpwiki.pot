@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2002-08-17 14:28+0000\n"
+"POT-Creation-Date: 2002-08-17 16:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -101,7 +101,7 @@ msgstr ""
 msgid "Diff: %s"
 msgstr ""
 
-#: ../lib/display.php:57 ../lib/plugin/PageGroup.php:62
+#: ../lib/display.php:59 ../lib/plugin/PageGroup.php:62
 #: ../lib/plugin/PageGroup.php:128 ../lib/plugin/PageGroup.php:136
 #: ../lib/plugin/PageGroup.php:148 ../lib/plugin/PageGroup.php:154
 #: ../themes/default/templates/top.tmpl:48
@@ -109,17 +109,17 @@ msgstr ""
 msgid "%s: %s"
 msgstr ""
 
-#: ../lib/display.php:101 ../lib/display.php:108
+#: ../lib/display.php:107 ../lib/display.php:114
 #: ../lib/plugin/BackLinks.php:12 ../themes/default/templates/navbar.tmpl:21
 msgid "BackLinks"
 msgstr ""
 
-#: ../lib/display.php:104 ../lib/display.php:111
+#: ../lib/display.php:110 ../lib/display.php:117
 #, c-format
 msgid "BackLinks for %s"
 msgstr ""
 
-#: ../lib/display.php:122 ../lib/loadsave.php:746
+#: ../lib/display.php:128 ../lib/loadsave.php:746
 #: ../lib/plugin/RecentChanges.php:232 ../lib/plugin/RecentChanges.php:240
 #: ../lib/plugin/RecentChanges.php:335 ../lib/plugin/RecentChanges.php:389
 #: ../lib/plugin/RecentChanges.php:477 ../lib/plugin/RecentChanges.php:554
@@ -128,7 +128,7 @@ msgstr ""
 msgid "RecentChanges"
 msgstr ""
 
-#: ../lib/display.php:122 ../lib/plugin/RecentChanges.php:232
+#: ../lib/display.php:128 ../lib/plugin/RecentChanges.php:232
 #: ../lib/plugin/RecentChanges.php:240 ../lib/plugin/RecentChanges.php:335
 #: ../lib/plugin/RecentChanges.php:389
 #: ../themes/Portland/templates/editpage.tmpl:66
@@ -629,6 +629,7 @@ msgid "%s pages link to %s:"
 msgstr ""
 
 #: ../lib/plugin/Calendar.php:24 ../lib/plugin/Calendar.php:28
+#: ../themes/default/templates/navbar.tmpl:29
 #: ../themes/default/templates/top.tmpl:77
 msgid "Calendar"
 msgstr ""
@@ -1057,23 +1058,27 @@ msgstr ""
 msgid "WikiForm"
 msgstr ""
 
-#: ../lib/plugin/WikiForm.php:43
+#: ../lib/plugin/WikiForm.php:44
 msgid "Load File"
 msgstr ""
 
-#: ../lib/plugin/WikiForm.php:51
+#: ../lib/plugin/WikiForm.php:50
+msgid "Login"
+msgstr ""
+
+#: ../lib/plugin/WikiForm.php:58
 msgid "Dump Pages"
 msgstr ""
 
-#: ../lib/plugin/WikiForm.php:59
+#: ../lib/plugin/WikiForm.php:66
 msgid "Dump Pages as XHTML"
 msgstr ""
 
-#: ../lib/plugin/WikiForm.php:70
+#: ../lib/plugin/WikiForm.php:77
 msgid "Upload"
 msgstr ""
 
-#: ../lib/plugin/WikiForm.php:74
+#: ../lib/plugin/WikiForm.php:81
 #, c-format
 msgid "WikiForm: %s: unknown action"
 msgstr ""
@@ -1531,6 +1536,10 @@ msgstr ""
 #: ../themes/default/templates/navbar.tmpl:24
 #: ../themes/Portland/templates/navbar.tmpl:30
 msgid "PhpWikiAdministration"
+msgstr ""
+
+#: ../themes/default/templates/navbar.tmpl:35
+msgid "Today"
 msgstr ""
 
 #: ../themes/default/templates/nochanges.tmpl:6
