@@ -20,15 +20,15 @@ msgstr "locale/de/templates/browse.html"
 
 #: lib/config.php:149
 msgid "templates/editpage.html"
-msgstr "locale/de/editpage.html"
+msgstr "locale/de/templates/editpage.html"
 
 #: lib/config.php:150
 msgid "templates/editlinks.html"
-msgstr "locale/de/editlinks.html"
+msgstr "locale/de/templates/editlinks.html"
 
 #: lib/config.php:151
 msgid "templates/message.html"
-msgstr "locale/de/message.html"
+msgstr "locale/de/templates/message.html"
 
 #: lib/config.php:167
 msgid "./pgsrc"
@@ -290,4 +290,4 @@ msgstr "Interner Fehler: Stackgrenze in SetHTMLOutputMode überschritten."
 
 #: lib/stdlib.php:349 lib/stdlib.php:412
 msgid "RecentChanges"
-msgstr "JuengsteVeraenderungen"
+msgstr "FrischeSeiten"
