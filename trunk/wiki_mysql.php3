@@ -2,11 +2,11 @@
 
    /*
       Database functions:
+
       OpenDataBase($dbname)
       CloseDataBase($dbi)
       RetrievePage($dbi, $pagename)
       InsertPage($dbi, $pagename, $pagehash)
-      UpdateRecentChanges($dbi, $pagename) 
       IsWikiPage($dbi, $pagename)
       InitTitleSearch($dbi, $search)
       TitleSearchNextMatch($dbi, &$pos)
