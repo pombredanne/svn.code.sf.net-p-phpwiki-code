@@ -1,9 +1,9 @@
 <?php
-//
+/* vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2002 The PHP Group                                |
+// | Copyright (c) 1997-2003 The PHP Group                                |
 // +----------------------------------------------------------------------+
 // | This source file is subject to version 2.02 of the PHP license,      |
 // | that is bundled with this package in the file LICENSE, and is        |
@@ -13,14 +13,14 @@
 // | obtain it through the world-wide-web, please send a note to          |
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
-// | Author: Stig Bakken <ssb@fast.no>                                    |
+// | Author: Stig Bakken <ssb@php.net>                                    |
 // +----------------------------------------------------------------------+
 //
 // Based on DB 1.3 from the pear.php.net repository. 
 // The only modifications made have been modification of the include paths. 
 //
-rcs_id('$Id: mysql.php,v 1.2 2002-09-12 11:45:33 rurban Exp $');
-rcs_id('From Pear CVS: Id: mysql.php,v 1.5 2002/06/19 00:41:06 cox Exp');
+rcs_id('$Id: mysql.php,v 1.3 2004-02-07 10:41:25 rurban Exp $');
+rcs_id('From Pear CVS: Id: mysql.php,v 1.15 2003/05/07 16:58:28 mj Exp');
 //
 // Database independent query interface definition for PHP's MySQL
 // extension.
@@ -121,7 +121,6 @@ class DB_mysql extends DB_common
 
         $connect_function = $persistent ? 'mysql_pconnect' : 'mysql_connect';
 
-        @ini_set('track_errors', true);
         if ($dbhost && $user && $pw) {
             $conn = @$connect_function($dbhost, $user, $pw);
         } elseif ($dbhost && $user) {
@@ -131,7 +130,6 @@ class DB_mysql extends DB_common
         } else {
             $conn = false;
         }
-        @ini_restore('track_errors');
         if (empty($conn)) {
             if (($err = @mysql_error()) != '') {
                 return $this->raiseError(DB_ERROR_CONNECT_FAILED, null, null,
@@ -243,11 +241,13 @@ class DB_mysql extends DB_common
     /**
      * Move the internal mysql result pointer to the next available result
      *
-     * @param a valid fbsql result resource
+     * This method has not been implemented yet.
+     *
+     * @param a valid sql result resource
      *
      * @access public
      *
-     * @return true if a result is available otherwise return false
+     * @return false
      */
     function nextResult($result)
     {
@@ -336,18 +336,11 @@ class DB_mysql extends DB_common
             return false;
         }
 
-        // [ssb]: WTF? unset($this->prepare_types[$result]) makes PHP
-        // crash on my laptop (4.1.2 as well as 4.3.0-dev)
 
-        $copy = $this->prepare_types;
-        unset($copy[$result]);
-        $this->prepare_types = $copy;
-//        unset($this->prepare_types[$result]);
+		// I fixed the unset thing.
 
-        $copy = $this->prepare_tokens;
-        unset($copy[$result]);
-        $this->prepare_tokens = $copy;
-//        unset($this->prepare_tokens[$result]);
+        $this->prepare_types = array();
+        $this->prepare_tokens = array();
 
         return true;
     }
@@ -608,10 +601,12 @@ class DB_mysql extends DB_common
     }
 
     // }}}
+    // {{{ _BCsequence()
 
     /**
-    * Bacwards Compatibility with old sequence emulation implementation
+    * Backwards compatibility with old sequence emulation implementation
     * (clean up the dupes)
+    *
     * @param string $seqname The sequence name to clean up
     * @return mixed DB_Error or true
     */
@@ -652,7 +647,9 @@ class DB_mysql extends DB_common
         return true;
     }
 
+    // }}}
     // {{{ quote()
+
     /**
     * Quote the given string so it can be safely used within string delimiters
     * in a query.
@@ -665,12 +662,18 @@ class DB_mysql extends DB_common
             case 'null':
                 return 'NULL';
             case 'integer':
+            case 'double':
                 return $str;
             case 'string':
             default:
-                return "'".mysql_escape_string($str)."'";
+                if(function_exists('mysql_real_escape_string')) {
+                    return "'".mysql_real_escape_string($str, $this->connection)."'";
+                } else {
+                    return "'".mysql_escape_string($str)."'";
+                }
         }
     }
+
     // }}}
     // {{{ modifyQuery()
 
@@ -692,7 +695,11 @@ class DB_mysql extends DB_common
 
     function modifyLimitQuery($query, $from, $count)
     {
-        return $query . " LIMIT $from, $count";
+        if (DB::isManip($query)) {
+            return $query . " LIMIT $count";
+        } else {
+            return $query . " LIMIT $from, $count";
+        }
     }
 
     // }}}
@@ -719,7 +726,7 @@ class DB_mysql extends DB_common
         /*
          * depending on $mode, metadata returns the following values:
          *
-         * - mode is false (default):
+         * - mode is null (default):
          * $result[]:
          *   [0]["table"]  table name
          *   [0]["name"]   field name
@@ -805,7 +812,7 @@ class DB_mysql extends DB_common
     }
 
     // }}}
-    // {{{ getTablesQuery()
+    // {{{ getSpecialQuery()
 
     /**
     * Returns the query needed to get some backend info

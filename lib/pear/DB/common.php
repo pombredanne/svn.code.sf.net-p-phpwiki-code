@@ -1,9 +1,9 @@
 <?php
-//
+/* vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2002 The PHP Group                                |
+// | Copyright (c) 1997-2003 The PHP Group                                |
 // +----------------------------------------------------------------------+
 // | This source file is subject to version 2.02 of the PHP license,      |
 // | that is bundled with this package in the file LICENSE, and is        |
@@ -13,14 +13,14 @@
 // | obtain it through the world-wide-web, please send a note to          |
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
-// | Author: Stig Bakken <ssb@fast.no>                                    |
+// | Author: Stig Bakken <ssb@php.net>                                    |
 // +----------------------------------------------------------------------+
 //
 // Based on DB 1.3 from the pear.php.net repository. 
 // The only modifications made have been modification of the include paths.
 //
-rcs_id('$Id: common.php,v 1.2 2002-09-12 11:45:33 rurban Exp $');
-rcs_id('From Pear CVS: Id: common.php,v 1.8 2002/06/12 15:03:16 fab Exp');
+rcs_id('$Id: common.php,v 1.3 2004-02-07 10:41:25 rurban Exp $');
+rcs_id('From Pear CVS: Id: common.php,v 1.15 2003/05/07 16:58:28 mj Exp');
 //
 // Base class for DB implementations.
 //
@@ -495,44 +495,44 @@ class DB_common extends PEAR
     */
     function buildManipSQL($table, $table_fields, $mode, $where = false)
     {
-        if (count($table_fields)==0) {
+        if (count($table_fields) == 0) {
             $this->raiseError(DB_ERROR_NEED_MORE_DATA);
         }
         $first = true;
-        switch($mode) {
-        case DB_AUTOQUERY_INSERT:
-            $values = '';
-            $names = '';
-            while (list(, $value) = each($table_fields)) {
-                if ($first) {
-                    $first = false;
-                } else {
-                    $names .= ',';
-                    $values .= ',';
+        switch ($mode) {
+            case DB_AUTOQUERY_INSERT:
+                $values = '';
+                $names = '';
+                while (list(, $value) = each($table_fields)) {
+                    if ($first) {
+                        $first = false;
+                    } else {
+                        $names .= ',';
+                        $values .= ',';
+                    }
+                    $names .= $value;
+                    $values .= '?';
                 }
-                $names .= $value;
-                $values .= '?';
-            }
-            return "INSERT INTO $table ($names) VALUES ($values)";
-            break;
-        case DB_AUTOQUERY_UPDATE:
-            $set = '';
-            while (list(, $value) = each($table_fields)) {
-                if ($first) {
-                    $first = false;
-                } else {
-                    $set .= ',';
+                return "INSERT INTO $table ($names) VALUES ($values)";
+                break;
+            case DB_AUTOQUERY_UPDATE:
+                $set = '';
+                while (list(, $value) = each($table_fields)) {
+                    if ($first) {
+                        $first = false;
+                    } else {
+                        $set .= ',';
+                    }
+                    $set .= "$value = ?";
                 }
-                $set .= "$value = ?";
-            }
-            $sql = "UPDATE $table SET $set";
-            if ($where) {
-                $sql .= " WHERE $sql";
-            }
-            return $sql;
-            break;
-        default:
-            $this->raiseError(DB_ERROR_SYNTAX);
+                $sql = "UPDATE $table SET $set";
+                if ($where) {
+                    $sql .= " WHERE $where";
+                }
+                return $sql;
+                break;
+            default:
+                $this->raiseError(DB_ERROR_SYNTAX);
         }
     }
 
@@ -554,7 +554,7 @@ class DB_common extends PEAR
     * @access public
     * @see prepare()
     */
-    function execute($stmt, $data = false)
+    function &execute($stmt, $data = false)
     {
         $realquery = $this->executeEmulateQuery($stmt, $data);
         if (DB::isError($realquery)) {
@@ -612,9 +612,9 @@ class DB_common extends PEAR
             $type = $this->prepare_types[$stmt][$i];
             if ($type == DB_PARAM_OPAQUE) {
                 if (is_array($data)) {
-                    $fp = fopen($data[$i], 'r');
+                    $fp = fopen($data[$i], 'rb');
                 } else {
-                    $fp = fopen($data, 'r');
+                    $fp = fopen($data, 'rb');
                 }
 
                 $pdata = '';
@@ -747,21 +747,22 @@ class DB_common extends PEAR
     // {{{ limitQuery()
     /**
     * Generates a limited query
-    * *EXPERIMENTAL*
     *
     * @param string  $query query
     * @param integer $from  the row to start to fetching
     * @param integer $count the numbers of rows to fetch
+    * @param array   $params required for a statement
     *
-    * @return mixed a DB_Result object or a DB_Error
+    * @return mixed a DB_Result object, DB_OK or a DB_Error
     *
     * @access public
     */
-    function &limitQuery($query, $from, $count)
+    function &limitQuery($query, $from, $count, $params = array())
     {
         $query  = $this->modifyLimitQuery($query, $from, $count);
-        $result = $this->simpleQuery($query);
-        if (DB::isError($result) || $result === DB_OK) {
+        $result = $this->query($query, $params);
+        if (DB::isError($result) || get_class($result) == 'db_result' ||
+            $result === DB_OK) {
             return $result;
         } else {
             $options['limit_from']  = $from;
