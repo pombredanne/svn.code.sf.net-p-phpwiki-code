@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.42 2004-11-16 16:17:51 rurban Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.43 2005-01-25 08:00:09 rurban Exp $');
 
 /**
  * GZIP stuff.
@@ -168,7 +168,7 @@ function zip_deflate ($content)
     if (function_exists('gzencode'))
         $z = gzencode($content);
     else
-    $z = gzip_compress($content);
+        $z = gzip_compress($content);
     
     // Suck OS type byte from gzip header. FIXME: this smells bad.
     
@@ -286,7 +286,7 @@ class ZipWriter
       }
       else  {
           // Punt:
-          $os_type = 0;     // 0 = FAT --- hopefully this is good enough.
+          $os_type = 3;     // 0 = FAT --- hopefully this is good enough.
           /* (Another choice might be 3 = Unix) */
       }
 
@@ -833,6 +833,9 @@ function ParseMimeifiedPages ($data)
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.42  2004/11/16 16:17:51  rurban
+// support ENABLE_PAGEPERM=false mime load/save
+//
 // Revision 1.41  2004/11/01 10:43:58  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session
