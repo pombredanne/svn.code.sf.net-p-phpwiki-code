@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.96 2004-05-18 16:23:40 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.97 2004-06-03 18:58:27 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -658,7 +658,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.96 $");
+                            "\$Revision: 1.97 $");
     }
 
     function managesValidators() {
@@ -834,13 +834,16 @@ class DayButtonBar extends HtmlElement {
         else
             $label = sprintf(_("%s days"), abs($days));
 
-        $url = $request->getURLtoSelf(array('action' => 'browse', 'days' => $days));
+        $url = $request->getURLtoSelf(array('action' => $request->getArg('action'), 'days' => $days));
 
         return $Theme->makeButton($label, $url, 'wiki-rc-action');
     }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.96  2004/05/18 16:23:40  rurban
+// rename split_pagename to SplitPagename
+//
 // Revision 1.95  2004/05/16 22:07:35  rurban
 // check more config-default and predefined constants
 // various PagePerm fixes:
