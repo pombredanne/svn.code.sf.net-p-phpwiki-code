@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.29 2001-02-13 05:54:38 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.30 2001-02-14 05:22:49 dairiki Exp $');
 
 
    /*
@@ -41,23 +41,6 @@ function get_remote_host () {
    return $host;
 }
 
-function SearchPath ($file, $missing_ok = false, $path = false) 
-{
-   if (ereg('^/', $file))
-      return $file;		// absolute path.
-
-   if (!$path)
-      $path = $GLOBALS['DataPath'];
-   
-   while (list($i, $dir) = each($path))
-   {
-      if (file_exists("$dir/$file"))
-	 return "$dir/$file";
-   }
-   if ($missing_ok)
-      return false;
-   ExitWiki("$file: file not found");
-}
 
 function arrays_equal ($a, $b) 
 {
@@ -68,9 +51,6 @@ function arrays_equal ($a, $b)
 	 return false;
    return true;
 }
-
-   
-   
 
 
    function DataURL($url) {
@@ -105,34 +85,43 @@ function arrays_equal ($a, $b)
       return $url;
    }
 
+function StartTag($tag, $args = '')
+{
+   $s = '';
+   if (is_array($args))
+   {
+      while (list($key, $val) = each($args))
+      {
+	 if (is_string($val) || is_numeric($val))
+	    $s .= sprintf(' %s="%s"', $key, htmlspecialchars($val));
+	 else if ($val)
+	    $s .= " $key";
+      }
+   }
+   return "<$tag $s>";
+}
+
+   
    define('NO_END_TAG_PAT',
 	  '/^' . join('|', array('area', 'base', 'basefont',
 				 'br', 'col', 'frame',
 				 'hr', 'image', 'input',
 				 'isindex', 'link', 'meta',
 				 'param')) . '$/i');
-	  
+
    function Element($tag, $args = '', $content = '')
    {
       $html = "<$tag";
-      if (is_array($args))
+      if (!is_array($args))
       {
-	 while (list($key, $val) = each($args))
-	 {
-	    if (is_string($val) || is_numeric($val))
-	       $html .= sprintf(' %s="%s"', $key, htmlspecialchars($val));
-	    else if ($val)
-	       $html .= " $key";
-	 }
-      }
-      else
 	 $content = $args;
-      
-      $html .= '>';
+	 $args = false;
+      }
+      $html = StartTag($tag, $args);
       if (!preg_match(NO_END_TAG_PAT, $tag))
       {
 	 $html .= $content;
-	 $html .= "</$tag>\n";//FIXME: newline might not always be desired.
+	 $html .= "</$tag>";//FIXME: newline might not always be desired.
       }
       return $html;
    }
@@ -153,24 +142,40 @@ function arrays_equal ($a, $b)
       if(ereg("[<>\"]", $url)) {
          return "<b><u>BAD URL -- remove all of &lt;, &gt;, &quot;</u></b>";
       }
-      return QElement('a', array('href' => $url), ($linktext ? $linktext : $url));
-   }
 
-   function LinkExistingWikiWord($wikiword, $linktext='', $class = 'wikiword') {
-      return Element('a', array('href' => WikiURL($wikiword),
-				'class' => $class),
-		     $linktext ? $linktext : $wikiword);
-   }
 
-   function LinkUnknownWikiWord($wikiword, $linktext='', $class = 'unknownwikiword') {
       if (empty($linktext))
-	 $linktext = $wikiword;
+	 $linktext = QElement('span', array('class' => 'rawurl'), $url);
+      else
+	 $linktext = htmlspecialchars($linktext);
 
-      return Element('span', array('class' => 'unknownwikiword'),
-		     QElement('u', array('class' => 'unknownwikiword'), $linktext) .
+      return Element('a',
+		     array('href' => $url, 'class' => 'linkurl'),
+		     $linktext);
+   }
+
+   function LinkExistingWikiWord($wikiword, $linktext='') {
+      if (empty($linktext))
+	 $linktext = QElement('span', array('class' => 'wikiword'), $wikiword);
+      else
+	 $linktext = htmlspecialchars($linktext);
+      
+      return Element('a', array('href' => WikiURL($wikiword),
+				'class' => 'wikilink'),
+		     $linktext);
+   }
+
+   function LinkUnknownWikiWord($wikiword, $linktext='') {
+      if (empty($linktext))
+	 $linktext = QElement('span', array('class' => 'wikiword'), $wikiword);
+      else
+	 $linktext = htmlspecialchars($linktext);
+
+      return Element('span', array('class' => 'wikiunknown'),
+		     Element('u', $linktext) .
 		     QElement('a',
 			      array('href' => WikiURL($wikiword, array('action' => 'edit')),
-				    'class' => 'unknownwikiword'),
+				    'class' => 'wikiunknown'),
 			      '?'));
    }
 
@@ -224,10 +229,12 @@ function arrays_equal ($a, $b)
    // end class definition
 
 
-   function MakeWikiForm ($pagename, $args, $button_text = '')
+   function MakeWikiForm ($pagename, $args, $class, $button_text = '')
    {
       $formargs['action'] = USE_PATH_INFO ? WikiURL($pagename) : SCRIPT_NAME;
       $formargs['method'] = 'post';
+      $formargs['class'] = $class;
+      
       $contents = '';
       $input_seen = 0;
       
@@ -263,7 +270,7 @@ function arrays_equal ($a, $b)
       }
 
       return Element('form', $formargs,
-		     Element('table',
+		     Element('table', array('cellspacing' => 0, 'cellpadding' => 2, 'border' => 0),
 			     Element('tr', $row)));
    }
 
@@ -300,22 +307,39 @@ function arrays_equal ($a, $b)
 	 $args = SplitQueryArgs($qargs);
       }
 
+      if ($args['action'] == 'browse')
+	 unset($args['action']);
 
-      // FIXME: ug, don't like this
-      
-      if (!empty($args['action']) && !IsSafeAction($args['action']))
+      if (empty($args['action']))
+	 $class = 'wikilink';
+      else if (IsSafeAction($args['action']))
+	 $class = 'wikiaction';
+      else
       {
          // Don't allow administrative links on unlocked pages.
+	 // FIXME: Ugh: don't like this...
 	 global $pagehash;
 	 if (($pagehash['flags'] & FLAG_PAGE_LOCKED) == 0)
-	    return QElement('u', gettext('Lock page to enable link'));
+	    return QElement('u', array('class' => 'wikiunsafe'),
+			    gettext('Lock page to enable link'));
+
+	 $class = 'wikiadmin';
       }
       
       // FIXME: ug, don't like this
       if (preg_match('/=\d*\(/', $qargs))
-	 return MakeWikiForm($page, $args, $text);
+	 return MakeWikiForm($page, $args, $class, $text);
       else
-	 return LinkURL(WikiURL($page, $args), $text ? $text : $url);
+      {
+	 if ($text)
+	    $text = htmlspecialchars($text);
+	 else
+	    $text = QElement('span', array('class' => 'rawurl'), $url);
+			     
+	 return Element('a', array('href' => WikiURL($page, $args),
+				   'class' => $class),
+			$text);
+      }
    }
 
    function ParseAndLink($bracketlink) {
@@ -519,6 +543,7 @@ function arrays_equal ($a, $b)
       _dotoken('USERID', htmlspecialchars($user->id()), $page);
       _dotoken('PAGE', htmlspecialchars($name), $page);
       _dotoken('LOGO', htmlspecialchars(DataURL($logo)), $page);
+      _dotoken('CSS_URL', htmlspecialchars(DataURL(CSS_URL)), $page);
 
       _dotoken('RCS_IDS', $GLOBALS['RCS_IDS'], $page);
 
@@ -571,16 +596,28 @@ function UpdateRecentChanges($dbi, $pagename, $isnewpage)
 
    // this shouldn't be necessary, since PhpWiki loads 
    // default pages if this is a new baby Wiki
-   if ($recentchanges == -1) {
-      $recentchanges = array(); 
-   }
-
    $now = time();
    $today = date($dateformat, $now);
 
+   if (!is_array($recentchanges)) {
+      $recentchanges = array('version' => 1,
+			     'created' => $now,
+			     'lastmodified' => $now - 48 * 4600, // force $isNewDay
+			     'flags' => FLAG_PAGE_LOCKED,
+			     'author' => $GLOBALS['user']->id());
+      $recentchanges['content']
+	  = array(gettext("The most recently changed pages are listed below."),
+		  '',
+		  "____$today " . gettext("(first day for this Wiki)"),
+		  '',
+		  gettext("Quick title search:"),
+		  '[phpwiki:?action=search&searchterm=()]',
+		  '----');
+   }
+   $recentchanges['lastmodified'] = $now;
+
    if (date($dateformat, $recentchanges['lastmodified']) != $today) {
       $isNewDay = TRUE;
-      $recentchanges['lastmodified'] = $now;
    } else {
       $isNewDay = FALSE;
    }

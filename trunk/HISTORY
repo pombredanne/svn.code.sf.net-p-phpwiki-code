@@ -1,3 +1,13 @@
+02/12/01 More Jeff's hacks:
+
+* More CSS stuff.  I think it's neat.
+* Added tables! And modified the footnote stuff a litte.
+  See TextFormattingRules for details.
+* Fixed bugs: including (I hope the two which
+  Reini Urban <rurban@x-ray.at> just reported.)  Also added
+  Reini's patches to the README.  Thanks!
+
+
 02/11/01 Jeff's hacks continue:
 
 * User preferences can be stored in a cookie.  Currently the only user preference

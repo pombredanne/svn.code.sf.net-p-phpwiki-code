@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.12 2001-02-13 05:54:38 dairiki Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.13 2001-02-14 05:22:49 dairiki Exp $');
 
 /*
    All page saving events take place here.
@@ -76,7 +76,7 @@
 
    // create page header
    $html = sprintf(gettext("Thank you for editing %s."),
-		   WikiURL($pagename));
+		   LinkExistingWikiWord($pagename));
    $html .= "<br>\n";
 
    if (! empty($content)) {

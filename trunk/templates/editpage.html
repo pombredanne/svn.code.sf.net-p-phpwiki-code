@@ -7,14 +7,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <!-- <base href="###BASE_URL###"> -->
 <title>###PAGE###</title>
+<link rel="stylesheet" title="phpwiki" href="###CSS_URL###" type="text/css">
 </head>
 
-<body>
-
-<form method="POST" action="###BROWSE_PAGE###">
-
-<h1><a href="###BROWSE###FrontPage"><img src="###LOGO###" border=0 alt="[phpwiki]" width=50 height=50></a>
-Edit ###PAGE###
+<body bgcolor=ivory text=black alink=red link=darkblue vlink=darkmagenta>
+<form class="wikiaction" method="POST" action="###BROWSE_PAGE###">
+<h1><a class="wikilink" href="###BROWSE###FrontPage"><img src="###LOGO###" border=0 alt="[phpwiki]" width=50 height=50></a>
+Edit <span="wikiword">###PAGE###</span>
 <input type="submit" value=" Save "></h1>
 
 <textarea name="content"
@@ -28,11 +27,11 @@ Edit ###PAGE###
 ###ENDIF:MINOR_EDIT_CHECKBOX###
 <input type="checkbox" name="convert" value="tabs" >
 I can't type tabs.
-Please <a href="###BROWSE###ConvertSpacesToTabs">ConvertSpacesToTabs</a>
+Please <a class="wikilink" href="###BROWSE###ConvertSpacesToTabs"><span class="wikiword">ConvertSpacesToTabs</span></a>
 for me when I save.
-<p><a href="###BROWSE###GoodStyle">GoodStyle</a> tips for editing.
+<p><a class="wikilink" href="###BROWSE###GoodStyle"><span class="wikiword">GoodStyle</span></a> tips for editing.
 
-###IF COPY###<br><a href="###ACTION###edit&amp;version=archive">EditCopy</a> from previous author
+###IF COPY###<br><a class="wikiaction" href="###ACTION###edit&amp;version=archive">EditCopy</a> from previous author
 
 <hr noshade>
 <small>
@@ -43,7 +42,7 @@ for me when I save.
 <br><b>Misc:</b>"!", "!!", "!!!" make headings,
 "%%%" makes a linebreak, "- - - -" makes a horizontal rule, escape "[" with "[["
 <br>more on
-<a href="###BROWSE###?TextFormattingRules"><b>TextFormattingRules</b></a>
+<a class="wikilink" href="###BROWSE###TextFormattingRules"><b><span class="wikiword">TextFormattingRules</span></b></a>
 </small>
 
 <input type="hidden" name="action" value="save">
