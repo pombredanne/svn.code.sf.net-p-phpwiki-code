@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.16 2004-05-08 14:06:12 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.17 2004-05-08 19:55:29 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -462,16 +462,18 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
     function expand($basepage, &$markup) {
         $loader = &$this->_getLoader();
 
-        $xml = HTML::div(array('class' => 'plugin'),
-			 $loader->expandPI($this->_pi, $GLOBALS['request'], &$markup, $basepage));
+        $xml = $loader->expandPI($this->_pi, $GLOBALS['request'], &$markup, $basepage);
+        $div = HTML::div(array('class' => 'plugin'));
         
 	if (isset($this->_tightenable)) {
-	    $xml->setInClass('tightenable');
-	    $xml->setInClass('top', ($this->_tightenable & 1) != 0);
-	    $xml->setInClass('bottom', ($this->_tightenable & 2) != 0);
+	    if ($this->_tightenable == 3)
+	        return HTML::span(array('class' => 'plugin'), $xml);
+	    $div->setInClass('tightenable');
+	    $div->setInClass('top', ($this->_tightenable & 1) != 0);
+	    $div->setInClass('bottom', ($this->_tightenable & 2) != 0);
 	}
-
-	return $xml;
+	$div->pushContent($xml);
+	return $div;
     }
 
     function asString() {
