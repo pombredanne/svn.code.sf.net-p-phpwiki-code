@@ -1,5 +1,5 @@
 /**
- * $Id: sidebar.css,v 1.21 2004-04-01 15:57:20 rurban Exp $
+ * $Id: sidebar.css,v 1.22 2004-04-09 17:49:04 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -13,7 +13,6 @@
  * 
  */
 @import url("../default/phpwiki.css");
-
 
 /**
  * General settings
@@ -90,7 +89,6 @@ h1 a.backlinks { text-decoration: none; }
   border-left: 1px solid #eee;
   border-bottom: 1px solid #999;
   border-right:  1px solid #999;
-
 }
 
 #navbuttons, #actionbuttons, #signin {
@@ -205,6 +203,13 @@ div#xhtml-validator {
 
 .clear-floats {
   clear: both;
+}
+
+/* Black Links (not yet working) */
+div.box-title a:visited, div.box-title a:link
+{
+  text-decoration: none;
+  color: black;
 }
 
 /* For emacs users

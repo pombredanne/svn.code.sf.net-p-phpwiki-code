@@ -1,9 +1,12 @@
 <?php  // -*-html-*-
-rcs_id('$Id: html.tmpl,v 1.3 2003-03-04 23:34:11 dairiki Exp $');
+rcs_id('$Id: html.tmpl,v 1.4 2004-04-09 17:49:12 rurban Exp $');
 /*
  * This template is responsible mainly for the outer level <html> stuff.
+ *
+ * NS/MO/IE/Op Browsers before 4.0 don't like that.
  */
-printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
+if (browserVersion() >= 4.0)
+  printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
