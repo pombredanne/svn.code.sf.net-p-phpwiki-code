@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.17 2002-01-22 22:37:14 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.18 2002-01-23 08:10:49 carstenklapp Exp $');
 
 require_once('lib/HtmlElement.php');
 require_once('lib/ButtonFactory.php');
@@ -282,13 +282,13 @@ class Theme {
             return new SubmitButton($text, $name, $class);
     }
 
-    function setButtonSeparator($separator=false) {
-        $this->_buttonSeparator = $separator ? $separator : " | ";
+    function setButtonSeparator($separator) {
+        $this->_buttonSeparator = $separator;
     }
 
     function getButtonSeparator() {
-        if (! @$this->_buttonSeparator)
-            $this->setButtonSeparator();
+        if (!isset($this->_buttonSeparator))
+            $this->setButtonSeparator(" | ");
         
         return $this->_buttonSeparator;
     }
