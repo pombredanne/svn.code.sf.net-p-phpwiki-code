@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.14 2002-01-22 03:17:47 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.15 2002-01-22 05:29:45 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 require_once('lib/ButtonFactory.php');
@@ -11,6 +11,20 @@ class Theme {
         $this->_theme_dir = "$themes_dir/$theme_name";
         $this->_path = array($this->_theme_dir,
                              "$themes_dir/default");
+
+
+        $this->_button_dirs = array();
+        $button_dir = "$this->_theme_dir/buttons";
+        $dir = dir($button_dir);
+        if ($dir) {
+            $this->_button_dirs[] = $button_dir;
+            while (($subdir = $dir->read()) !== false) {
+                if ($subdir[0] == '.')
+                    continue;
+                if (is_dir("$button_dir/$subdir"))
+                    $this->_button_dirs[] = "$button_dir/$subdir";
+            }
+        }
     }
 
     function _findFile ($file, $missing_okay = false) {
@@ -203,23 +217,11 @@ class Theme {
         
         $qtext = urlencode($text);
 
-            // search no-label buttons in ./buttons
-            // FIXME: this probably needs the untranslated button label to work correctly 
-            $path = $this->_findData("buttons/$qtext.png", 'missing okay');
+        foreach ($this->_button_dirs as $dir) {
+            $path = $this->_findData("$dir/$qtext.png", 'missing okay');
             if ($path)
                 return $path;
-
-            // search languages ./buttons/??
-            $path = FindLocalizedButtonFile("$qtext.png", 'missing okay');
-            if ($path)
-                return $path;
-
-            // search english ./buttons/en in case word is spelled the same
-            $path = $this->_findData("buttons/en/$qtext.png", 'missing okay');
-            if ($path)
-                return $path;
-
-
+        }
         return false;
     }
 
