@@ -1,11 +1,14 @@
 <?php // -*-php-*-
-rcs_id('$Id: RssParser.php,v 1.9 2004-06-08 21:12:02 rurban Exp $');
+rcs_id('$Id: RssParser.php,v 1.10 2005-01-22 11:45:09 rurban Exp $');
 /**
  * Simple RSSParser Class
  * Based on Duncan Gough RSSParser class
  * Copyleft Arnaud Fontaine
  * Licence : GPL
  * See lib/plugin/RssFeed.php and lib/XmlParser.php
+ *
+ * The myth of RSS compatibility:
+ *   http://diveintomark.org/archives/2004/02/04/incompatible-rss
  */
 
 /*
@@ -149,6 +152,9 @@ extends XmlParser {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/06/08 21:12:02  rurban
+// is_final fix for incremental parsing
+//
 // Revision 1.8  2004/06/08 21:03:20  rurban
 // updated RssParser for XmlParser quirks (store parser object params in globals)
 //
