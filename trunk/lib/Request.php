@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.87 2005-01-08 21:27:45 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.88 2005-01-25 07:00:23 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -142,7 +142,7 @@ class Request {
     /* Redirects after edit may fail if no theme signature image is defined. 
      * Set DISABLE_HTTP_REDIRECT = true then.
      */
-    function redirect($url, $noreturn=true) {
+    function redirect($url, $noreturn = true) {
         $bogus = defined('DISABLE_HTTP_REDIRECT') && DISABLE_HTTP_REDIRECT;
         
         if (!$bogus) {
@@ -171,15 +171,15 @@ class Request {
         }
 
         if ($noreturn) {
-            include_once('lib/Template.php');
-            $this->_is_buffering_output = false;
-            //$this->discardOutput(); // this prints the gzip headers
+            $this->discardOutput(); // This might print the gzip headers. Not good.
             $this->buffer_output(false);
+            
+            include_once('lib/Template.php');
             $tmpl = new Template('redirect', $this, array('REDIRECT_URL' => $url));
             $tmpl->printXML();
             $this->finish();
         }
-        else if ($bogus) {
+        elseif ($bogus) {
             // Safari needs window.location.href = targeturl
             return JavaScript("
               function redirect(url) {
@@ -1320,6 +1320,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.87  2005/01/08 21:27:45  rurban
+// Prevent from Overlarge session data crash
+//
 // Revision 1.86  2005/01/04 20:26:34  rurban
 // honor DISABLE_HTTP_REDIRECT, do not gzip the redirect template, flush it
 //
