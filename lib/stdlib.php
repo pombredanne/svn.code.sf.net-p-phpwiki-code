@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.154 2004-01-25 03:49:03 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.155 2004-01-25 10:52:22 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1126,11 +1126,11 @@ function explodeList($input, $allnames, $glob_style = true, $case_sensitive = tr
 
 // echo implode(":",explodeList("Test*",array("xx","Test1","Test2")));
 
-function explodePageList($input, $perm = false) {
+function explodePageList($input, $perm = false, $orderby = 'pagename') {
     // expand wildcards from list of all pages
     if (preg_match('/[\?\*]/',$input)) {
         $dbi = $GLOBALS['request']->_dbi;
-        $allPagehandles = $dbi->getAllPages($perm);
+        $allPagehandles = $dbi->getAllPages($perm,$orderby);
         while ($pagehandle = $allPagehandles->next()) {
             $allPages[] = $pagehandle->getName();
         }
@@ -1346,6 +1346,11 @@ function isWikiWord($word) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.154  2004/01/25 03:49:03  rurban
+// added isWikiWord() to avoid redundancy
+// added check_php_version() to check for older php versions.
+//   e.g. object::method calls, ...
+//
 // Revision 1.153  2003/11/30 18:43:18  carstenklapp
 // Fixed careless mistakes in my last optimization commit.
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UnfoldSubpages.php,v 1.7 2003-02-21 04:12:06 dairiki Exp $');
+rcs_id('$Id: UnfoldSubpages.php,v 1.8 2004-01-25 10:52:16 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -39,13 +39,14 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
         return array(//'header'  => '',  // expandable string
                      'quiet'   => false, // no header
-                     'sort'    => 'asc',
+                     'sort'    => 'asc',    // deprecated: 
+                     // use sortby=+pagename or sortby=-mtime instead,
                      'sortby'  => 'pagename',
                      'pages'   => '',       // maximum number of pages
                                             //  to include
@@ -118,14 +119,21 @@ extends WikiPlugin
         include_once('lib/BlockParser.php');
         
         $pagename = $request->getArg('pagename');
-        $subpages = explodePageList($pagename . SUBPAGE_SEPARATOR . '*');
-        if (! $subpages) {
+        $sortby = 'pagename';
+        if ($request->getArg('sortby')) {
+            $pagelist = new PageList();
+            $sortby = $pagelist->sortby($request->getArg('sortby'),'db');
+        }
+        $subpages = explodePageList($pagename . SUBPAGE_SEPARATOR . '*',$sortby);
+        if (! $subpages ) {
             return $this->error(_("The current page has no subpages defined."));
         }           
-        include_once('lib/BlockParser.php');
+        //include_once('lib/BlockParser.php');
         extract($this->getArgs($argstr, $request));
         $content = HTML();
-        $subpages = array_reverse($subpages);
+        //if ($sort != 'asc') {
+        //    $subpages = array_reverse($subpages);
+        //}
         if($pages) {
           $subpages = array_slice ($subpages, 0, $pages);        
         }
@@ -185,6 +193,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2003/02/21 04:12:06  dairiki
+// Minor fixes for new cached markup.
+//
 // Revision 1.6  2003/02/11 09:34:34  rurban
 // fix by Steven D. Brewer <sbrewer@bio.umass.edu> to respect the $pages argument
 //
