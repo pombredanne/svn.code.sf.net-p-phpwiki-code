@@ -240,7 +240,7 @@ function printConstant($v) {
 #
 ####################################################################
 
-# lib/config.php might do a cwd()
+ob_start();
 
 if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']))
     echo "<pre>\n";
@@ -254,8 +254,11 @@ $debug_level = 1; //was 9, _DEBUG_VERBOSE | _DEBUG_TRACE
 $user_level  = 1; // BOGO (conflicts with RateIt)
 // use argv (from cli) or tests (from browser) params to run only certain tests
 // avoid pear: Console::Getopt
-$alltests = array('InlineParserTest','HtmlParserTest','PageListTest','ListPagesTest',
-                  'SetupWiki','DumpHtml','AllPagesTest','AllUsersTest','OrphanedPagesTest');
+$alltests = array('InlineParserTest','HtmlParserTest',
+                  'PageListTest','ListPagesTest',
+                  'SetupWiki',
+                  'AllPagesTest','AllUsersTest','OrphanedPagesTest',
+                  'DumpHtml');
 if (isset($HTTP_SERVER_VARS['REQUEST_METHOD'])) {
     $argv = array();
     foreach ($HTTP_GET_VARS as $key => $val) {
@@ -330,6 +333,7 @@ define('PHPWIKI_NOMAIN', true);
 # Other needed files
 require_once $rootdir.'index.php';
 require_once $rootdir.'lib/main.php';
+ob_end_flush();
 
 if ($debug_level & 1) {
     echo "\n";
@@ -440,6 +444,7 @@ foreach ($database_backends as $dbtype) {
         printMemoryUsage("PhpWikiInitialized");
 
     foreach ($alltests as $test) {
+    	if (!@ob_get_level()) ob_start();
         $suite  = new PHPUnit_TestSuite("phpwiki");
         if (file_exists(dirname(__FILE__).'/lib/'.$test.'.php'))
             require_once dirname(__FILE__).'/lib/'.$test.'.php';
@@ -450,7 +455,7 @@ foreach ($database_backends as $dbtype) {
         @set_time_limit(240); 
         $result = PHPUnit::run($suite); 
         echo "ran " . $result->runCount() . " tests, " . $result->failureCount() . " failures.\n";
-        flush();
+        ob_end_flush();
         if ($result->failureCount() > 0) {
             echo "More detail:\n";
             echo $result->toString();
@@ -458,6 +463,9 @@ foreach ($database_backends as $dbtype) {
     }
 
     $request->chunkOutput();
+    $request->_dbi->close();
+    unset($request->_user);
+    unset($request->_dbi);
     unset($request);
     unset($suite);
     unset($result);

@@ -15,16 +15,24 @@ class AllPagesTest extends phpwiki_TestCase {
         $lp = new WikiPlugin_AllPages();
         $this->assertEquals("AllPages", $lp->getName());
         $args = "";
+        $this->assertType('object', $request->_dbi, 'isa WikiDB');
+/*
+*/        
+        $result = $lp->run($request->_dbi, $args, $request, "AllPages");
+        $this->assertType('object', $result, 'isa PageList');
+        $this->assertType('object', $request->_dbi, 'isa WikiDB');
         if (!isa($request->_dbi, "WikiDB")) {
             // very very strange bug
-            $request->_dbi = WikiDB::open($GLOBALS['db_params']);
+            $request->_dbi = WikiDB::open($GLOBALS['DBParams']);
             if (!isa($request->_dbi, "WikiDB")) {
                 trigger_error("strange php bug\n",E_USER_WARNING);
                 return;
             }
-        }
-        $result = $lp->run($request->getDbh(), $args, $request, "AllPages");
-        $this->assertType('object', $result, 'isa PageList');
+        }        
+        $xml = $result->asXml();
+        $this->assertType('object', $result, 'isa XmlContent');
+        //$xml->asString();
+        //$this->assertType('object', $result, 'isa XmlContent');
     }
 }
 
