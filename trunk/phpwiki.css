@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.42 2002-02-11 14:46:32 carstenklapp Exp $
+ * $Id: phpwiki.css,v 1.43 2002-02-11 14:52:00 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up. It has not yet been tested against NS4.
@@ -58,7 +58,7 @@ div.wikitext {
   margin-top:    1ex;
   margin-bottom: 0.5ex;
   background: white;
-  border: thin black solid;
+  border: 1px black solid;
   padding-left:  0.8em; 
   padding-right: 0.8em;
   padding-top:    0.5ex;
@@ -236,7 +236,7 @@ input.button { font-family: Arial, Helvetica, sans-serif; }
  * Calendar plugin
  */
 table.cal {
-  border: thin outset gray;
+  border: 1px outset gray;
   background: white;
   margin: 0.5ex 0.5em;
   padding: 1px;

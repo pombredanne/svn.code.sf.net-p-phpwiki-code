@@ -1,5 +1,5 @@
 /**
- * $Id: Hawaiian.css,v 1.21 2002-02-11 02:30:10 carstenklapp Exp $
+ * $Id: Hawaiian.css,v 1.22 2002-02-11 14:53:03 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up. It has not yet been tested against NS4.
@@ -235,7 +235,7 @@ input.button { font-family: Arial, Helvetica, sans-serif; }
  * Calendar plugin
  */
 table.cal {
-  border: thin outset gray;
+  border: 1px outset gray;
   margin: 0.5ex 0.5em;
   padding: 1px;
   /* For Mozilla */
