@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.18 2003-02-21 04:18:06 dairiki Exp $');
+rcs_id('$Id: PageType.php,v 1.19 2004-02-19 21:54:17 rurban Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
 
@@ -55,6 +55,8 @@ class TransformedText extends CacheableMarkup {
  * Currently the only information encapsulated is how to format
  * the specific page type.  In the future or capabilities may be
  * added, e.g. the abilities to edit different page types (differently.)
+ * e.g. Support for the javascript htmlarea editor, which can only edit 
+ * pure HTML.
  *
  * IMPORTANT NOTE: Since the whole PageType class gets stored (serialized)
  * as of the cached marked-up page, it is important that the PageType classes
@@ -112,7 +114,117 @@ class PageType_wikitext extends PageType {}
 class PageType_wikiblog extends PageType {}
 class PageType_interwikimap extends PageType
 {
-    // FIXME: move code from interwikimap into here.(?)
+    function PageType_interwikimap() {
+        global $request;
+        $dbi = $request->getDbh();
+        $intermap = $this->_getMapFromWikiPage($dbi->getPage(_("InterWikiMap")));
+        if (!$intermap && defined('INTERWIKI_MAP_FILE'))
+            $intermap = $this->_getMapFromFile(INTERWIKI_MAP_FILE);
+
+        $this->_map = $this->_parseMap($intermap);
+        $this->_regexp = $this->_getRegexp();
+    }
+
+    function GetMap ($request = false) {
+        if (empty($this->_map)) {
+            $map = new PageType_interwikimap();
+            return $map;
+        } else {
+            return $this;
+        }
+    }
+
+    function getRegexp() {
+        return $this->_regexp;
+    }
+
+    function link ($link, $linktext = false) {
+
+        list ($moniker, $page) = split (":", $link, 2);
+        
+        if (!isset($this->_map[$moniker])) {
+            return HTML::span(array('class' => 'bad-interwiki'),
+                              $linktext ? $linktext : $link);
+        }
+
+        $url = $this->_map[$moniker];
+        
+        // Urlencode page only if it's a query arg.
+        // FIXME: this is a somewhat broken heuristic.
+        $page_enc = strstr($url, '?') ? rawurlencode($page) : $page;
+
+        if (strstr($url, '%s'))
+            $url = sprintf($url, $page_enc);
+        else
+            $url .= $page_enc;
+
+        $link = HTML::a(array('href' => $url));
+
+        if (!$linktext) {
+            $link->pushContent(PossiblyGlueIconToText('interwiki', "$moniker:"),
+                               HTML::span(array('class' => 'wikipage'), $page));
+            $link->setAttr('class', 'interwiki');
+        }
+        else {
+            $link->pushContent(PossiblyGlueIconToText('interwiki', $linktext));
+            $link->setAttr('class', 'named-interwiki');
+        }
+        
+        return $link;
+    }
+
+
+    function _parseMap ($text) {
+        global $AllowedProtocols;
+        if (!preg_match_all("/^\s*(\S+)\s+(\S+)/m",
+                            $text, $matches, PREG_SET_ORDER))
+            return false;
+        foreach ($matches as $m) {
+            $map[$m[1]] = $m[2];
+        }
+        if (empty($map['Upload']))
+            $map['Upload'] = SERVER_URL . ((substr(DATA_PATH,0,1)=='/') ? '' : "/") . DATA_PATH . '/upload/';
+        return $map;
+    }
+
+    function _getMapFromWikiPage ($page) {
+        if (! $page->get('locked'))
+            return false;
+        
+        $current = $page->getCurrentRevision();
+        
+        if (preg_match('|^<verbatim>\n(.*)^</verbatim>|ms',
+                       $current->getPackedContent(), $m)) {
+            return $m[1];
+        }
+        return false;
+    }
+
+    // Fixme!
+    function _getMapFromFile ($filename) {
+        if (defined('WARN_NONPUBLIC_INTERWIKIMAP') and WARN_NONPUBLIC_INTERWIKIMAP) {
+            $error_html = sprintf(_("Loading InterWikiMap from external file %s."), $filename);
+            trigger_error( $error_html, E_USER_NOTICE );
+        }
+        if (!file_exists($filename)) {
+            $finder = new FileFinder();
+            $filename = $finder->findFile(INTERWIKI_MAP_FILE);
+        }
+        @$fd = fopen ($filename, "rb");
+        @$data = fread ($fd, filesize($filename));
+        @fclose ($fd);
+
+        return $data;
+    }
+
+    function _getRegexp () {
+        if (!$this->_map)
+            return '(?:(?!a)a)'; //  Never matches.
+        
+        foreach (array_keys($this->_map) as $moniker)
+            $qkeys[] = preg_quote($moniker, '/');
+        return "(?:" . join("|", $qkeys) . ")";
+    }
 }
 
 
@@ -168,18 +280,16 @@ class PageFormatter_interwikimap extends PageFormatter
     function _getHeader($text) {
 	return preg_replace('/<verbatim>.*/s', '', $text);
     }
+
     function _getFooter($text) {
 	return preg_replace('@.*?(</verbatim>|\Z)@s', '', $text, 1);
     }
-
+    
     function _getMap() {
-        global $request;
-        // let interwiki.php get the map
-        include_once("lib/interwiki.php");
-        $map = InterWikiMap::GetMap($request);
+        $map = PageType_interwikimap::getMap();
         return $map->_map;
     }
-
+    
     function _formatMap() {
 	$map = $this->_getMap();
 	if (!$map)

@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.157 2004-02-09 03:58:12 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.158 2004-02-19 21:54:17 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -559,8 +559,8 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
 
         // change ! escapes to ~'s.
         global $AllowedProtocols, $WikiNameRegexp, $request;
-        include_once('lib/interwiki.php');
-        $map = InterWikiMap::GetMap($request);
+        //include_once('lib/interwiki.php');
+        $map = PageType_interwikimap::GetMap($request);
         $bang_esc[] = "(?:$AllowedProtocols):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]";
         $bang_esc[] = $map->getRegexp() . ":[^\\s.,;?()]+"; // FIXME: is this really needed?
         $bang_esc[] = $WikiNameRegexp;
@@ -1358,6 +1358,21 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.157  2004/02/09 03:58:12  rurban
+// for now default DB_SESSION to false
+// PagePerm:
+//   * not existing perms will now query the parent, and not
+//     return the default perm
+//   * added pagePermissions func which returns the object per page
+//   * added getAccessDescription
+// WikiUserNew:
+//   * added global ->prepare (not yet used) with smart user/pref/member table prefixing.
+//   * force init of authdbh in the 2 db classes
+// main:
+//   * fixed session handling (not triple auth request anymore)
+//   * don't store cookie prefs with sessions
+// stdlib: global obj2hash helper from _AuthInfo, also needed for PagePerm
+//
 // Revision 1.156  2004/01/26 09:17:49  rurban
 // * changed stored pref representation as before.
 //   the array of objects is 1) bigger and 2)

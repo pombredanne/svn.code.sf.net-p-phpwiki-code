@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.30 2004-02-15 21:34:37 rurban Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.31 2004-02-19 21:54:17 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -35,7 +35,7 @@ define('ESCAPE_CHAR', '~');
 
 require_once('lib/HtmlElement.php');
 require_once('lib/CachedMarkup.php');
-require_once('lib/interwiki.php');
+//require_once('lib/interwiki.php');
 require_once('lib/stdlib.php');
 
 
@@ -257,8 +257,8 @@ class Markup_escape  extends SimpleMarkup
 function LinkBracketLink($bracketlink) {
     global $request, $AllowedProtocols, $InlineImages;
 
-    include_once("lib/interwiki.php");
-    $intermap = InterWikiMap::GetMap($request);
+    //include_once("lib/interwiki.php");
+    $intermap = PageType_interwikimap::GetMap($request);
     
     // $bracketlink will start and end with brackets; in between will
     // be either a page name, a URL or both separated by a pipe.
@@ -269,15 +269,19 @@ function LinkBracketLink($bracketlink) {
     list (, $hash, $label, $bar, $rawlink) = $matches;
 
     $label = UnWikiEscape($label);
-    $link = UnWikiEscape($rawlink);
+    $link  = UnWikiEscape($rawlink);
 
+    // [label|link]
     // if label looks like a url to an image, we want an image link.
     if (preg_match("/\\.($InlineImages)$/i", $label)) {
         $imgurl = $label;
-        if (! preg_match("#^($AllowedProtocols):#", $imgurl)) {
-            // linkname like 'images/next.gif'.
+        if (preg_match("/^" . $intermap->getRegexp() . ":/", $label)) {
+            $imgurl = $intermap->link($label);
+            $imgurl = $imgurl->getAttr('href');
+        } elseif (! preg_match("#^($AllowedProtocols):#", $imgurl)) {
+            // local theme linkname like 'images/next.gif'.
             global $Theme;
-            $imgurl = $Theme->getImageURL($linkname);
+            $imgurl = $Theme->getImageURL($imgurl);
         }
         $label = LinkImage($imgurl, $link);
     }
@@ -292,16 +296,27 @@ function LinkBracketLink($bracketlink) {
     if (preg_match("#^($AllowedProtocols):#", $link)) {
         // if it's an image, embed it; otherwise, it's a regular link
         if (preg_match("/\\.($InlineImages)$/i", $link))
-            // no image link, just the src. see [img|link] above
             return LinkImage($link, $label);
         else
             return new Cached_ExternalLink($link, $label);
     }
     elseif (preg_match("/^phpwiki:/", $link))
         return new Cached_PhpwikiURL($link, $label);
-    elseif (preg_match("/^" . $intermap->getRegexp() . ":/", $link))
+    /*
+     * Inline images in Interwiki urls's:
+     * [File:my_image.gif] inlines the image,
+     * File:my_image.gif shows a plain inter-wiki link,
+     * [what a pic|File:my_image.gif] shows a named inter-wiki link to the gif
+     * [File:my_image.gif|what a pic] shows a inlimed image linked to the page "what a pic"
+     */
+    elseif (preg_match("/^" . $intermap->getRegexp() . ":/", $link)) {
+        if (empty($label) && preg_match("/\\.($InlineImages)$/i", $link)) {
+            // if without label => inlined image [File:xx.gif]
+            $imgurl = $intermap->link($link);
+            return LinkImage($imgurl->getAttr('href'), $label);
+        }
         return new Cached_InterwikiLink($link, $label);
-    else {
+    } else {
         // Split anchor off end of pagename.
         if (preg_match('/\A(.*)(?<!'.ESCAPE_CHAR.')#(.*?)\Z/', $rawlink, $m)) {
             list(,$rawlink,$anchor) = $m;
@@ -346,13 +361,13 @@ class Markup_interwiki extends SimpleMarkup
 {
     function getMatchRegexp () {
         global $request;
-        $map = InterWikiMap::GetMap($request);
+        $map = PageType_interwikimap::GetMap($request);
         return "(?<! [[:alnum:]])" . $map->getRegexp(). ": \S+ (?<![ ,.?;! \] \) \" \' ])";
     }
 
     function markup ($match) {
         global $request;
-        $map = InterWikiMap::GetMap($request);
+        $map = PageType_interwikimap::GetMap($request);
         return new Cached_InterwikiLink(UnWikiEscape($match));
     }
 }
