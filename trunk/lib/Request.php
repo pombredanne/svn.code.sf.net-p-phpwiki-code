@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.23 2002-10-10 00:18:01 carstenklapp Exp $');
+<?php rcs_id('$Id: Request.php,v 1.24 2002-12-14 16:21:46 dairiki Exp $');
 
 // FIXME: write log entry.
 
@@ -129,7 +129,10 @@ class Request {
     }
 
     function compress_output() {
-        if (function_exists('ob_gzhandler')) {
+        if ( function_exists('ob_gzhandler')
+             && function_exists('version_compare') /* (only in php >= 4.1.0) */
+             && version_compare(phpversion(), '4.2.3', ">=")
+             ){
             ob_start('ob_gzhandler');
             $this->_is_compressing_output = true;
         }
