@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SystemInfo.php,v 1.9 2004-02-17 12:11:36 rurban Exp $');
+rcs_id('$Id: SystemInfo.php,v 1.10 2004-03-08 18:17:10 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -58,7 +58,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getExpire($dbi, $argarray, $request) {
@@ -68,7 +68,7 @@ extends WikiPlugin
         $loader = new WikiPluginLoader;
         return $loader->expandPI('<?plugin SystemInfo '
                                  . WikiPluginCached::glueArgs($argarray) // all
-                                 . ' ?>', $request, $basepage);
+                                 . ' ?>', $request, $this, $basepage);
     }
     /*
     function getDefaultArguments() {
@@ -519,6 +519,9 @@ function stddev(&$hits, $total = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/02/17 12:11:36  rurban
+// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
+//
 // Revision 1.8  2003/02/24 01:36:26  dairiki
 // Don't use PHPWIKI_DIR unless it's defined.
 // (Also typo/bugfix in SystemInfo plugin.)

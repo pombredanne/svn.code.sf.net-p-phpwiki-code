@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.27 2004-03-01 09:35:13 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.28 2004-03-08 18:17:09 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -1612,12 +1612,14 @@ extends _DbPassUser
 class _LDAPPassUser
 extends _PassUser
 /**
- * Define the vars LDAP_HOST and LDAP_BASE_DN in index.php
+ * Define the vars LDAP_AUTH_HOST and LDAP_BASE_DN in index.php
  *
  * Preferences are handled in _PassUser
  */
 {
     function checkPass($submitted_password) {
+        global $LDAP_SET_OPTION;
+
         $this->_authmethod = 'LDAP';
         $userid = $this->_userid;
         if ($ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
@@ -1662,8 +1664,9 @@ extends _PassUser
     }
 
     function userExists() {
-        $userid = $this->_userid;
+        global $LDAP_SET_OPTION;
 
+        $userid = $this->_userid;
         if ($ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
             if (defined('LDAP_AUTH_USER'))
                 if (defined('LDAP_AUTH_PASSWORD'))
@@ -2269,6 +2272,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.27  2004/03/01 09:35:13  rurban
+// fixed DbPassuser pref init; lost userid
+//
 // Revision 1.26  2004/02/29 04:10:56  rurban
 // new POP3 auth (thanks to BiloBilo: pentothal at despammed dot com)
 // fixed syntax error in index.php
