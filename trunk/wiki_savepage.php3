@@ -1,4 +1,4 @@
-<!-- $Id: wiki_savepage.php3,v 1.13 2000-07-20 18:36:46 dairiki Exp $ -->
+<!-- $Id: wiki_savepage.php3,v 1.14 2000-08-07 22:47:40 wainstead Exp $ -->
 <?
 
 /*
@@ -88,7 +88,7 @@
 
    $html .= "Your careful attention to detail is much appreciated.\n";
 
-   if ($WikiDataBase == "/tmp/wikidb") {
+   if ($WikiPageStore == "/tmp/wikidb") {
       $html .= "<P><B>Warning: the Wiki DBM file still lives in the " .
 		"/tmp directory. Please read the INSTALL file and move " .
 		"the DBM file to a permanent location or risk losing " .
