@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: mysql.php,v 1.15 2001-07-18 01:06:29 uckelman Exp $');
+<?php rcs_id('$Id: mysql.php,v 1.16 2001-07-18 04:56:14 uckelman Exp $');
 
    /*
       Database functions:
@@ -112,6 +112,8 @@ $HitCountStore = $DBParams['prefix']     . "hitcount";
             return MakePageHash($dbhash);
          }
       }
+
+      // if we reach this the query failed
       return -1;
    }
 
@@ -187,17 +189,17 @@ $HitCountStore = $DBParams['prefix']     . "hitcount";
 
 	// Returns store where version of page resides
 	function SelectStore($dbi, $pagename, $version, $curstore, $archstore) {
-    if ($version) {
-        if (IsVersionInWiki($dbi, $pagename, $version)) return $curstore;
-            elseif (IsVersionInArchive($dbi, $pagename, $version)) return $archstore;
-            else return -1; 
-        }
-        elseif (IsWikiPage($dbi, $pagename)) return $curstore;
-        else return -1;	
-    }
+      if ($version) {
+         if (IsVersionInWiki($dbi, $pagename, $version)) return $curstore;
+         elseif (IsVersionInArchive($dbi, $pagename, $version)) return $archstore;
+         else return -1; 
+      }
+      elseif (IsWikiPage($dbi, $pagename)) return $curstore;
+      else return -1;	
+   }
 
 
-    function IsVersionInWiki($dbi, $pagename, $version) {
+   function IsVersionInWiki($dbi, $pagename, $version) {
       $pagename = addslashes($pagename);
       if ($res = mysql_query("select count(*) from $dbi[table] where pagename='$pagename' and version='$version'", $dbi['dbc'])) {
          return mysql_result($res, 0);
@@ -219,7 +221,7 @@ $HitCountStore = $DBParams['prefix']     . "hitcount";
    function IsWikiPage($dbi, $pagename) {
       $pagename = addslashes($pagename);
       if ($res = mysql_query("select count(*) from $dbi[table] where pagename='$pagename'", $dbi['dbc'])) {
-         return(mysql_result($res, 0));
+         return mysql_result($res, 0);
       }
       return 0;
    }
@@ -229,7 +231,7 @@ $HitCountStore = $DBParams['prefix']     . "hitcount";
 
       $pagename = addslashes($pagename);
       if ($res = mysql_query("select count(*) from $ArchivePageStore where pagename='$pagename'", $dbi['dbc'])) {
-         return(mysql_result($res, 0));
+         return mysql_result($res, 0);
       }
       return 0;
    }
