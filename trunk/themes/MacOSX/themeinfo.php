@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.28 2002-01-19 20:05:19 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.29 2002-01-19 20:38:09 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -79,7 +79,7 @@ class Theme_MacOSX extends Theme {
     function LinkUnknownWikiWord($wikiword, $linktext = '') {
         if (empty($linktext)) {
             $linktext = $wikiword;
-            if (defined("autosplit_wikiwords"))
+            if ($this->getAutoSplitWikiWords())
                 $linktext=split_pagename($linktext);
             $class = 'wikiunknown';
         } else
@@ -103,6 +103,19 @@ $Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
 $Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
 $Theme->addAlternateCSS('PhpWiki', 'phpwiki.css');
 
+/**
+ * The logo image appears on every page and links to the HomePage.
+ */
+//$Theme->addImageAlias('logo', 'logo.png');
+
+/**
+ * The Signature image is shown after saving an edited page. If this
+ * is not set, any signature defined in index.php will be used. If it
+ * is not defined by index.php or in here then the "Thank you for
+ * editing..." screen will be omitted.
+ */
+//$Theme->addImageAlias('signature', 'signature.png');
+
 /*
  * Link icons.
  */
@@ -115,6 +128,20 @@ $Theme->setLinkIcon('*', 'url');
 
 $Theme->setButtonSeparator(' ');
 
+/**
+ * WikiWords can automatically be split by inserting spaces between
+ * the words. The default is to leave WordsSmashedTogetherLikeSo.
+ */
+//$Theme->setAutosplitWikiWords(false);
+
+/*
+ * You may adjust the formats used for formatting dates and times
+ * below.  (These examples give the default formats.)
+ * Formats are given as format strings to PHP strftime() function See
+ * http://www.php.net/manual/en/function.strftime.php for details.
+ */
+//$Theme->setDateTimeFormat("%B %e, %Y");   // may contain time of day
+//$Theme->setDateFormat("%B %e, %Y");	    // must not contain time
 $Theme->setDateTimeFormat("%A, %B %e, %Y. %l:%M:%S %p %Z"); // may contain time of day
 $Theme->setDateFormat("%A, %B %e, %Y"); // must not contain time
 

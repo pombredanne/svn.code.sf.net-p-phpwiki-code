@@ -1,6 +1,6 @@
 <?php // -*-php-*-
 
-rcs_id('$Id: themeinfo.php,v 1.14 2002-01-19 19:29:48 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.15 2002-01-19 20:38:09 carstenklapp Exp $');
 
 /**
  * This PhpWiki theme is experimental and will likely not appear as
@@ -39,17 +39,42 @@ $Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
 $Theme->addAlternateCSS('PhpWiki', 'phpwiki.css');
 
 
-// The logo image
+/**
+ * The logo image appears on every page and links to the HomePage.
+ */
+//$Theme->addImageAlias('logo', 'logo.png');
 $Theme->addImageAlias('logo', 'Ufp-logo.jpg');
 
-// Signature image which is shown after saving an edited page.  If
-// this is left blank, any signature defined in index.php will be
-// used. If it is not defined by index.php or in here then the "Thank
-// you for editing..." screen will be omitted.
+/**
+ * The Signature image is shown after saving an edited page. If this
+ * is not set, any signature defined in index.php will be used. If it
+ * is not defined by index.php or in here then the "Thank you for
+ * editing..." screen will be omitted.
+ */
 $Theme->addImageAlias('signature', 'lights.gif');
 
-// The "stardate" used here is really just metricdate.24hourtime.
-// A "real" date2startdate conversion function might be fun but not very useful.
+//$Theme->setButtonSeparator(' | ');
+
+/**
+ * WikiWords can automatically be split by inserting spaces between
+ * the words. The default is to leave WordsSmashedTogetherLikeSo.
+ */
+//$Theme->setAutosplitWikiWords(false);
+
+/*
+ * You may adjust the formats used for formatting dates and times
+ * below.  (These examples give the default formats.) Formats are
+ * given as format strings to PHP strftime() function See
+ * http://www.php.net/manual/en/function.strftime.php for details.
+ */
+//$Theme->setDateTimeFormat("%B %e, %Y");   // may contain time of day
+//$Theme->setDateFormat("%B %e, %Y");	    // must not contain time
+
+/**
+ * The "stardate" format here is really just metricdate.24hourtime. A
+ * "real" date2startdate conversion function might be fun but not very
+ * useful on a wiki.
+ */
 $Theme->setDateTimeFormat("Stardate %Y%m%d.%H%M%S"); // may contain time of day
 $Theme->setDateFormat("Stardate %Y%m%d"); // must not contain time
 
