@@ -1,17 +1,24 @@
-/* $Id: WikiTrek-gravimetric.css,v 1.2 2001-12-27 18:12:00 carstenklapp Exp $ */
+/* 
+$Id: WikiTrek-gravimetric.css,v 1.3 2002-01-03 21:38:02 carstenklapp Exp $
+*/
 
-.toolbar .wiki {
-        color :           #000;
+/*
+These colors are here to prevent OmniWeb from rendering black text on
+black.
+*/
+  .toolbar .wiki {
+        color : #000;
 }
 
 .wikiaction {
-        color :           #000;
+        color : #000;
 }
 
 .wiki:hover {
-        color :      #000;
+        color : #000;
 }
 
 .wikiaction:hover {
-        color :      #000;
+        color : #000;
 }
+
