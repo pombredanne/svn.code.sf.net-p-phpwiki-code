@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllPages.php,v 1.10 2002-02-06 17:01:07 carstenklapp Exp $');
+rcs_id('$Id: AllPages.php,v 1.11 2002-02-14 03:51:29 carstenklapp Exp $');
 
 require_once('lib/PageList.php');
 
@@ -24,7 +24,7 @@ extends WikiPlugin
 		     'debug'         => false
                      );
     }
-    // info arg allows multiple columns info=mtime,hits,summary,version,author,locked,minor
+    // info arg allows multiple columns info=mtime,hits,summary,version,author,locked,minor,markup or all
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
 
     function run($dbi, $argstr, $request) {
@@ -44,7 +44,7 @@ extends WikiPlugin
         if ($debug) $time_end = $this->getmicrotime();
 
         if ($debug) {
-            $time = $time_end - $time_start;
+            $time = round($time_end - $time_start, 3);
             return HTML::p(fmt("elapsed time: %s s", $time), $pagelist);
         } else {
             return $pagelist;
@@ -52,8 +52,8 @@ extends WikiPlugin
     }
 
     function getmicrotime(){ 
-        list($usec, $sec) = explode(" ",microtime()); 
-        return ((float)$usec + (float)$sec); 
+        list($usec, $sec) = explode(" ",microtime());
+        return (float)$usec + (float)$sec;
     } 
 };
         
