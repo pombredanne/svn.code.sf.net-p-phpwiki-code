@@ -2,7 +2,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.3 2000-10-08 19:46:53 wainstead Exp $');
+   rcs_id('$Id: config.php,v 1.4 2000-10-08 20:05:59 wainstead Exp $');
 
    /*
       Constants and settings. Edit the values below for
@@ -147,8 +147,8 @@
 	"MESSAGE" =>   "templates/message.html"
 	);
 
-   $SignatureImg = "$ServerAddress/signature.png";
-   $logo = "wikibase.png";
+   $SignatureImg = "images/signature.png";
+   $logo = "images/wikibase.png";
 
    // date & time formats used to display modification times, etc.
    // formats are given as format strings to PHP date() function
