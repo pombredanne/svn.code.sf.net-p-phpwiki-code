@@ -1,4 +1,4 @@
-<!-- $Id: wiki_editpage.php3,v 1.8 2000-06-18 15:12:13 ahollosi Exp $ -->
+<!-- $Id: wiki_editpage.php3,v 1.9 2000-06-21 23:55:45 ahollosi Exp $ -->
 <?
 
    // editpage relies on $pagename and $ScriptUrl
@@ -23,13 +23,16 @@
    $pagehash = RetrievePage($dbi, $pagename);
 
    if (is_array($pagehash)) {
-      $textarea = implode($pagehash["content"], "\n");
-      if (($pagehash["version"] > 1) &&
-          ($pagehash["author"] != $remoteuser)) {  ### FIXME - should compare with author of archived version
-         $pagehash["copy"] = 1;
+      $textarea = implode("\n", $pagehash["content"]);
+      if($copy) {
+	 $cdbi = OpenDataBase($WikiDataBase);
+	 $currentpage = RetrievePage($cdbi, $pagename);
+         $pagehash["version"] = $currentpage["version"];
       }
-      if($copy) {		### FIXME - version++ is wrong
-         $pagehash["version"]++;
+      elseif ($pagehash["version"] > 1) {
+	 $adbi = OpenDataBase($ArchiveDataBase);
+	 if(IsWikiPage($adbi, $pagename))
+           $pagehash["copy"] = 1;
       }
    } else {
       $textarea = "Describe " . htmlspecialchars($pagename) . " here.";
