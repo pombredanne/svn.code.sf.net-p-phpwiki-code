@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPage.php,v 1.2 2001-12-21 00:50:51 rurban Exp $');
+rcs_id('$Id: UserPage.php,v 1.3 2001-12-28 11:12:21 carstenklapp Exp $');
 /**
  * UserPage:  a clone of the clublet sign-in facility
  * usage:   <?plugin UserPage?>
@@ -31,32 +31,46 @@ extends WikiPlugin
         global $WikiNameRegexp;
         extract($this->getArgs($argstr, $request));
         
-        if (! ALLOW_BOGO_LOGIN) 
-            return '<p> Your sysadmin has disallowed use of this plugin!';
+        if (! ALLOW_BOGO_LOGIN)
+            return Element('p',sprintf(_("Your sysadmin has disallowed use of the %s plugin!"),"UserPage"));
             
         if ($uname && preg_match('/\A' . $WikiNameRegexp . '\z/', $uname)) {
             $this->login($uname);
             if ($edit) $request->redirect(WikiURL($edit, array('action' => 'edit')));
             if ($browse) $request->redirect(WikiURL($browse));
-            return '<p> You should be logged in now.';
+            return Element('p',_("You should be logged in now."));
 
         } else {  // not logged in yet
             $text = '';
             if ($edit) {
                 $p = LinkWikiWord($edit);
-                $text .= "<p> Before you can edit $p, you need to sign in.";
+                $text .= Element('p',sprintf(_("Before you can edit %s, you need to sign in."),$p));
             }
             if ($uname && ! preg_match('/\A' . $WikiNameRegexp . '\z/', $uname)) {
-                $wwf = LinkWikiWord('WikiWord');
-                $text .= "<p> The name you use to sign in must be in $wwf format.";
-                $text .= " examples include: <ul><li>TomJefferson<li>AlexHamilton";
-                $text .= "<li>YoYoMa</ul>";
-                $text .= "<p> Please re-enter your name in this form:";
+                $text .= Element('p',_("The name you use to sign in must be in WikiWord format."));
+
+                // this 'list explosion' simply provides an
+                // uncluttered _() string for the language translator
+                // it could use some refactoring
+                list($wne,$example_names) = explode(':', _("examples include: TomJefferson, AlexHamilton"));
+                list($ea,$eb) = explode(",",$example_names);
+                $text .= " $wne: <ul><li>$ea<li>$eb";
+
+                // Note: Don't _() the "YoYoMa", see:
+                // <http://bsuvc.bsu.edu/~jdbrocklesby/yoyoma.htm>
+                $text .= '<li>YoYoMa</ul>';
+
+                $text .= Element('p',_("Please re-enter your name in this form."));
             } else {
-                $wst = LinkWikiWord('WordsStrungTogether');
-                $text .= "<p> Please enter your name as $wst (e.g. John Smith as JohnSmith).";
+
+                // temporary comment: in this case it may assist the
+                // translator for grammar sake to see the complete
+                // sentence without variable substitution ($wst,$wwf)
+                // $wst = LinkWikiWord("WordsStrungTogether");
+
+                $text .= Element('p',_("Please enter your name as WordsStrungTogether (e.g. John Smith as JohnSmith)."));
             }
-            $text .= '<p><form>Sign in: <input type="text" name="uname">';
+            $text .= '<p><form>' ._("Sign in:"). ' <input type="text" name="uname">';
             foreach (array('edit', 'browse') as $k) 
                 if ($$k) {
                     $v = $$k;
