@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.46 2004-11-01 10:43:58 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.47 2004-11-06 17:11:42 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -1000,8 +1000,10 @@ extends WikiDB_backend_ADODB_generic_iter
         }
 
         $result->MoveNext();
-        
-        $pagedata = $backend->_extract_page_data($rec_assoc['pagedata'], $rec_assoc['hits']);
+        if (isset($rec_assoc['pagedata']))
+            $pagedata = $backend->_extract_page_data($rec_assoc['pagedata'], $rec_assoc['hits']);
+        else 
+            $pagedata = false;
         $rec = array('pagename' => $rec_assoc['pagename'],
                      'pagedata' => $pagedata);
         if (!empty($rec_assoc['version'])) {
@@ -1172,6 +1174,12 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.46  2004/11/01 10:43:58  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 // Revision 1.45  2004/10/14 17:19:17  rurban
 // allow most_popular sortby arguments
 //
