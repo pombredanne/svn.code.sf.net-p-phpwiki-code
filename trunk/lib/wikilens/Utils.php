@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Utils.php,v 1.1 2004-06-18 14:42:17 rurban Exp $');
+rcs_id('$Id: Utils.php,v 1.2 2004-11-15 16:00:02 rurban Exp $');
 /*
  Copyright 2004 Mike Cassano
 
@@ -61,9 +61,10 @@ function getMembers($groupName, $dbi, $START_DELIM = false, $DELIM = ",") {
 }
 
 function getPageTextData($fromUser, $dbi, $START_DELIM, $DELIM) {
-    if ($fromUser == "") {
+    if (is_object($fromUser))
+        $fromUser = $fromUser->getId();
+    if ($fromUser == "")
     	return "";
-    }
     $userPage = $dbi->getPage($fromUser);
     $transformed = $userPage->getCurrentRevision();
     $pageArray = $transformed->getContent();
@@ -96,7 +97,10 @@ function notEmptyName($var) {
     return $var != "";
 }
 
-// $Log: not supported by cvs2svn $ 
+// $Log: not supported by cvs2svn $
+// Revision 1.1  2004/06/18 14:42:17  rurban
+// added wikilens libs (not yet merged good enough, some work for DanFr)
+// 
 
 // Local Variables:
 // mode: php
