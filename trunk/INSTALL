@@ -1,13 +1,37 @@
 REQUIREMENTS
 
-PhpWiki requires a web server with PHP version 4.0.5? or greater and a
+PhpWiki requires a web server with PHP version 4.0.4pl1 or greater and a
 database application.
 
 (PhpWiki uses the array_search() function which is present only in PHP
-version 4.0.5 or greater.)
+version 4.0.4pl1 / 4.0.5 or greater.)
+
+Due to a security issue found in all versions of PHP (including 3.x
+and 4.x), all users of PHP are strongly encouraged to either upgrade
+to PHP 4.1.2, or install a patch available for PHP 3.0.18, 4.0.6 and
+4.1.0/4.1.1. Visit <http://www.php.net> for downloads and information.
+
+You need the Perl regular expressions package compiled in; this is the
+default for PHP, so you probably have it. If you don't you'll see an
+error like "function preg_replace() not defined."
+
+PHP must also be compiled with support for the type of database you
+want to use, i.e. --with-gdbm, --with-db2, --with-db3, --with-msql,
+--with-pgsql. (With PHP4 MySQL support is always enabled). Consult the
+PHP installation manual for specific installation and configure
+options. <http://www.php.net/manual/en/installation.php>
+
+Since version 1.3.0 PhpWiki uses the 'DB.php' from PEAR, a database
+absraction layer which is part of PHP. PhpWiki version 1.3.3 and later
+includes the necessary PEAR library and will use it instead of any
+PEAR library which may already be present on your system. For more
+information about PEAR see <http://pear.php.net/>.
+
 
 
 QUICK START INSTRUCTIONS
+
+Look at 'index.php' and edit the settings there to your liking.
 
 By default PhpWiki is configured to use a flatfile database. If there
 is no dbm on your system, you will see an error like this the first
@@ -20,25 +44,6 @@ To correct this you will have to install a dbm package or preferably
 an sql-compatible database such as MySQL or PostgreSQL and make the
 necessary configuration changes to index.php.
 
-
-Since version 1.3.0 PhpWiki uses the 'DB.php' from PEAR, a database
-absraction layer which is part of PHP. PEAR must be installed and
-enabled too. If PHP cannot find it's 'DB.php', the first time you try
-to use PhpWiki you will see an error like this:
-
-    "lib/FileFinder.php:82: Fatal[256]: DB.php: file not found"
-
-To fix this, locate the file 'DB.php' on your system, then uncomment
-and modify the "ini_set" line in part zero of 'index.php':
-
-    ini_set('include_path', '.:/my/location/of/pear/directory');
-
-For more information about PEAR see <http://pear.php.net/>.
-
-
-You need the Perl regular expressions package compiled in; this is the
-default for PHP, so you probably have it. If you don't you'll see an
-error like "function preg_replace() not defined."
 
 
 INSTRUCTIONS
@@ -145,4 +150,4 @@ You can join this list at:
 
 FIN
 
-$Id: INSTALL,v 1.16 2002-02-23 23:31:19 carstenklapp Exp $
+$Id: INSTALL,v 1.17 2002-03-27 00:38:51 carstenklapp Exp $
