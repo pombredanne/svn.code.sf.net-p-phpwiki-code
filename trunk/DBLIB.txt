@@ -1,4 +1,4 @@
-$Id: DBLIB.txt,v 1.4 2000-06-20 03:41:43 wainstead Exp $
+$Id: DBLIB.txt,v 1.5 2000-06-29 03:08:37 wainstead Exp $
 
 This is a description of the database interface for PhpWiki. Regardless
 of what kind of data store is used (RDBMS, DBM files, flat text files)
@@ -13,10 +13,10 @@ A few notes:
   version it's an associative array that contains the DB information.
 
 * Functions that return the page data must return a hash (associative
-  array) of all the data, where 'text' == the text of the page in Wiki
+  array) of all the data, where 'content' == the text of the page in Wiki
   markup, 'version' is an integer representing the version, 'author'
   the IP address or host name of the previous author and so on. See
-  the source code for the full listing.
+  the next paragraph for a precise description.
 
 * The data structure. This is commonly named $pagehash in the source
   code; it's an associative array with values that are integers,
@@ -28,7 +28,7 @@ A few notes:
      content      => array (where each element is a line of the page),
      created      => integer (a number in Unix time since the Epoch),
      flags        => integer,
-     lastmodified => integer (Unix time),
+     lastmodified => integer (also Unix time),
      pagename     => string,
      version      => integer,
      refs         => array (where each element is a reference)
