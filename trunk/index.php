@@ -68,7 +68,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.58 2002-01-10 20:03:33 rurban Exp $');
+rcs_id('$Id: index.php,v 1.59 2002-01-11 04:15:03 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -259,16 +259,19 @@ $ExpireParams['author'] = array('max_age'  => 365,
 //
 /////////////////////////////////////////////////////////////////////
 
-// Select a valid charset name to be inserted into the xml/html pages.
-// For more info see:<http://www.iana.org/assignments/character-sets>.
-// Note that PhpWiki has been extensively tested only with the latin1
-// (iso-8859-1) character set. If you change the default from
-// iso-8859-1 PhpWiki may not work properly and it will require code
-// modifications. However, character sets similar to iso-8859-1 may
-// work with little or no modification depending on your setup. The
-// database must also support the same charset, and of course the same
-// is true for the web browser. (Some work is in progress hopefully to
-// allow more flexibility in this area in the future).
+// Select a valid charset name to be inserted into the xml/html pages,
+// and to reference links to the stylesheets (css). For more info see:
+// <http://www.iana.org/assignments/character-sets>. Note that PhpWiki
+// has been extensively tested only with the latin1 (iso-8859-1)
+// character set.
+//
+// If you change the default from iso-8859-1 PhpWiki may not work
+// properly and it will require code modifications. However, character
+// sets similar to iso-8859-1 may work with little or no modification
+// depending on your setup. The database must also support the same
+// charset, and of course the same is true for the web browser. (Some
+// work is in progress hopefully to allow more flexibility in this
+// area in the future).
 define("CHARSET", "iso-8859-1");
 
 // Select your language/locale - default language is "C" for English.
