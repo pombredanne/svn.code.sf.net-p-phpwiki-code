@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: interwiki.php,v 1.22 2002-08-27 21:51:31 rurban Exp $');
+<?php rcs_id('$Id: interwiki.php,v 1.23 2002-10-06 16:45:10 dairiki Exp $');
 
 class InterWikiMap {
     function InterWikiMap (&$request) {
@@ -44,15 +44,15 @@ class InterWikiMap {
         else
             $url .= $page_enc;
 
-        $link = HTML::a(array('href' => $url),
-                        IconForLink('interwiki'));
+        $link = HTML::a(array('href' => $url));
+
         if (!$linktext) {
-            $link->pushContent("$moniker:",
+            $link->pushContent(PossiblyGlueIconToText('interwiki', "$moniker:"),
                                HTML::span(array('class' => 'wikipage'), $page));
             $link->setAttr('class', 'interwiki');
         }
         else {
-            $link->pushContent($linktext);
+            $link->pushContent(PossiblyGlueIconToText('interwiki', $linktext));
             $link->setAttr('class', 'named-interwiki');
         }
         

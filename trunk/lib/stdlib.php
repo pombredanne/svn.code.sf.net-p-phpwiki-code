@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.127 2002-09-24 01:12:28 zorloc Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.128 2002-10-06 16:45:10 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -76,14 +76,14 @@ function MangleXmlIdentifier($str)
     
 
 /**
-* Generates a valid URL for a given Wiki pagename.
-* @param mixed $pagename If a string this will be the name of the Wiki page to link to.
-* 			 If a WikiDB_Page object function will extract the name to link to.
-* 			 If a WikiDB_PageRevision object function will extract the name to link to.
-* @param array $args 
-* @param boolean $get_abs_url Default value is false.
-* @return string The absolute URL to the page passed as $pagename.
-*/
+ * Generates a valid URL for a given Wiki pagename.
+ * @param mixed $pagename If a string this will be the name of the Wiki page to link to.
+ * 			  If a WikiDB_Page object function will extract the name to link to.
+ * 			  If a WikiDB_PageRevision object function will extract the name to link to.
+ * @param array $args 
+ * @param boolean $get_abs_url Default value is false.
+ * @return string The absolute URL to the page passed as $pagename.
+ */
 function WikiURL($pagename, $args = '', $get_abs_url = false) {
     $anchor = false;
     
@@ -129,12 +129,14 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
 }
 
 /**
-* Generates icon in front of links.
-* @param string $protocol_or_url URL or protocol to determine which icon to use.
-* @return HtmlElement HtmlElement object that contains data to create img link to
-* icon for use with url or protocol passed to the function. False if no img to be
-* displayed
-*/
+ * Generates icon in front of links.
+ *
+ * @param string $protocol_or_url URL or protocol to determine which icon to use.
+ *
+ * @return HtmlElement HtmlElement object that contains data to create img link to
+ * icon for use with url or protocol passed to the function. False if no img to be
+ * displayed.
+ */
 function IconForLink($protocol_or_url) {
     global $Theme;
     if ($filename_suffix = false) {
@@ -155,21 +157,44 @@ function IconForLink($protocol_or_url) {
 }
 
 /**
-* Determines if the url passed to function is safe, by detecting if the characters
-* '<', '>', or '"' are present.
-* @param string $url URL to check for unsafe characters.
-* @return boolean True if same, false else.
-*/
+ * Glue icon in front of text.
+ *
+ * @param string $protocol_or_url Protocol or URL.  Used to determine the
+ * proper icon.
+ * @param string $text The text.
+ * @return XmlContent.
+ */
+function PossiblyGlueIconToText($proto_or_url, $text) {
+    $icon = IconForLink($proto_or_url);
+    if ($icon) {
+        preg_match('/^\s*(\S*)(.*?)\s*$/', $text, $m);
+        list (, $first_word, $tail) = $m;
+        $text = HTML::span(array('style' => 'white-space: nowrap'),
+                           $icon, $first_word);
+        if ($tail)
+            $text = HTML($text, $tail);
+    }
+    return $text;
+}
+
+/**
+ * Determines if the url passed to function is safe, by detecting if the characters
+ * '<', '>', or '"' are present.
+ *
+ * @param string $url URL to check for unsafe characters.
+ * @return boolean True if same, false else.
+ */
 function IsSafeURL($url) {
     return !ereg('[<>"]', $url);
 }
 
 /**
-* Generates an HtmlElement object to store data for a link.
-* @param string $url URL that the link will point to.
-* @param string $linktext Text to be displayed as link.
-* @return HtmlElement HtmlElement object that contains data to construct an html link.
-*/
+ * Generates an HtmlElement object to store data for a link.
+ *
+ * @param string $url URL that the link will point to.
+ * @param string $linktext Text to be displayed as link.
+ * @return HtmlElement HtmlElement object that contains data to construct an html link.
+ */
 function LinkURL($url, $linktext = '') {
     // FIXME: Is this needed (or sufficient?)
     if(! IsSafeURL($url)) {
@@ -181,7 +206,7 @@ function LinkURL($url, $linktext = '') {
             $linktext = preg_replace("/mailto:/A", "", $url);
         
         $link = HTML::a(array('href' => $url),
-                        IconForLink($url), $linktext);
+                        PossiblyGlueIconToText($url, $linktext));
         
     }
     $link->setAttr('class', $linktext ? 'namedurl' : 'rawurl');
