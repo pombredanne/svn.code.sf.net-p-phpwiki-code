@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-    rcs_id('$Id: navbar.tmpl,v 1.33 2004-06-14 11:26:52 rurban Exp $');
+    rcs_id('$Id: navbar.tmpl,v 1.34 2004-11-25 17:05:48 rurban Exp $');
 
     $s = $WikiTheme->getButtonSeparator();
 ?>
@@ -14,7 +14,7 @@ _("TitleSearch"))?>" target="_top"
 <input type="hidden" name="pagename" value="<?=
 _("TitleSearch")?>" />
 <?php } ?>
-<input type="hidden" name="nocache" value="purge" />
+<input type="hidden" name="nocache" value="1" />
 <input type="text"  name="s" size="12" maxlength="256"
        title='<?=
 _("Quick Search")?>'
