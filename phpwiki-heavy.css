@@ -1,9 +1,10 @@
 /* 
- * $Id: phpwiki-heavy.css,v 1.7 2002-01-23 03:24:01 carstenklapp Exp $
+ * $Id: phpwiki-heavy.css,v 1.8 2002-01-26 03:18:23 carstenklapp Exp $
  *
  * phpwiki-heavy.css
  *
  * This is stuff which should be in phpwiki.css, but which breaks NS4.
+ * Margins and padding on in-line elements are generally bad for NS4.
  */
 
 /* Hide the elements we put in just to get around NS4 bugs. */
@@ -28,11 +29,21 @@ a.wikiaction, a.wikiadmin, input.button
  color: #006;
  padding-top: 0ex;
  padding-bottom: 0ex;
- padding-left: 0.2em;
- padding-right: 0.2em;
+ padding-left: .5em;
+ padding-right: .5em;
 }
 
-/* Link icons */
+/* reduces the size of "(diff)" buttons in RecentChanges a bit so they
+   don't overlap as much (for mozilla)
+   This, too, completely screws up NS4. */
+div.wikitext .wikiaction
+    { font-size:  smaller;
+      padding-top:    0pt;
+      padding-left:   2pt;
+      padding-bottom: 0pt;
+      padding-right:  2pt; }
+
+/* Link icons - This screws up NS4 */
 img.linkicon		{ vertical-align: middle; }
 
 /****************************************************************

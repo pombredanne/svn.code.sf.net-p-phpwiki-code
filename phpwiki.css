@@ -1,5 +1,5 @@
 /*
-  $Id: phpwiki.css,v 1.25 2002-01-23 03:24:01 carstenklapp Exp $
+  $Id: phpwiki.css,v 1.26 2002-01-26 03:18:23 carstenklapp Exp $
 
   Classes:
 
@@ -174,44 +174,12 @@ a.wikiaction, .wikiaction table, span.wikiaction { background-color: #ddd; }
 a.wikiadmin, .wikiadmin table	{ background-color: #fdd; }
 .wikiunsafe                     { background-color: #ccc; }
 
-/* Adds a little more surface area to make actions a little more like
-   buttons. Apparently some versions of ie choke on percentages, so
-   these just are fixed dimensions and may need some tweaking, add or
-   subtract a pixel or so.
-
-   DELETEME: This completely screws up NS4.  (Margins and padding on
-   in-line elements are generally bad for NS4.)  So this belongs in
-   phpwiki-heavy.css.  But it's already there (albeit, with different
-   dimensions.)
-a.wikiaction, 
-a.wikiadmin     { padding-top:    0pt;
-                  padding-left:   6pt;
-                  padding-bottom: 1pt;
-                  padding-right:  6pt; }
-*/
-
-/* reduces the size of "(diff)" buttons in RecentChanges a bit so they
-   don't overlap as much (for mozilla)
-
-   This, too, completely screws up NS4.
-div.wikitext 
-.wikiaction     { font-size:  smaller;
-                  padding-top:    0pt;
-                  padding-left:   2pt;
-                  padding-bottom: 0pt;
-                  padding-right:  2pt; }
-*/
-
 /*
  * No border on external link icons.
  */
 img.linkicon,
 img.rssicon     { border: 0px; }
 img.rssicon	{ vertical-align: top; }
-/* This screws up NS4, moved to phpwiki-heavy.css 
-img.linkicon    { vertical-align: middle; }
-*/
-
 
 /*
  * Put a border around wikiaction forms:
