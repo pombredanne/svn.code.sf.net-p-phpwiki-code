@@ -1,40 +1,40 @@
 <?php
 
-rcs_id('$Id: random.php,v 1.2 2002-01-18 20:46:50 carstenklapp Exp $');
+rcs_id('$Id: random.php,v 1.3 2002-01-18 22:46:32 carstenklapp Exp $');
 
-class RandomImage {
+class ImageSet {
 
     /**
      * Constructor
      */
-    function RandomImage ($dirname) {
+    function ImageSet ($dirname) {
         if (empty($dirname)) {
             trigger_error(sprintf(_("%s is empty."), 'dirname'),
                           E_USER_NOTICE);
-            return ""; // early return
+            return; // early return
         }
-
-        $this->readAvailableImages($dirname);
-        //echo "count is " . count($this->imageList) ."<br>\n";//tempdebugcode
-
+        $this->dirname = $dirname;
+        $this->readAvailableImages($this->dirname);
+        //trigger_error(sprintf(_("%s images were found"),
+        //              count($this->imageList)),
+        //              E_USER_NOTICE);//debugging
         if (empty($this->imageList)) {
-            trigger_error(sprintf(_("%s is empty."), $dirname),
+            trigger_error(sprintf(_("%s is empty."), $this->dirname),
                           E_USER_NOTICE);
-            return ""; // early return
+            return; // early return
         }
         $this->_srand(); // Start with a good seed.
-
-        $random_num = mt_rand(0,count($this->imageList)-1);
-        //echo "random_num is " . $random_num;
-
-//FIXME: Help! This is where it all craps out.
-trigger_error("The random image class doesn't quite work yet. Help!", E_USER_NOTICE);
-
-        $imgname = $this->imageList[$random_num];
-
-        return "$dirname/" . $imgname;
     }
 
+    function pickRandomImage() {
+        $random_num = mt_rand(0,count($this->imageList)-1);
+        $imgname = $this->imageList[$random_num];
+        //trigger_error(sprintf(_("random image chosen: %s"), $imgname),
+        //              E_USER_NOTICE);//debugging
+        //return $this->dirname . "/" . $imgname;
+
+        return $imgname;
+    }
 
     /**
      * Prepare a random seed.
@@ -49,6 +49,7 @@ trigger_error("The random image class doesn't quite work yet. Help!", E_USER_NOT
             $seed = $seed === '' ? (double) microtime() * 1000000 : $seed;
             srand($seed);
             $wascalled = TRUE;
+            //trigger_error("new random seed", E_USER_NOTICE);//debugging
         }
     }
 
@@ -61,13 +62,14 @@ trigger_error("The random image class doesn't quite work yet. Help!", E_USER_NOT
      * (This is a variation of function LoadDir in lib/loadsave.php)
      * See also http://www.php.net/manual/en/function.readdir.php
      */
-    function readAvailableImages($dirname) {
-        @ $handle = opendir($dir = $dirname);
+    function readAvailableImages() {
+        @ $handle = opendir($dir = $this->dirname);
         if (empty($handle)) {
             trigger_error(sprintf(_("Unable to open directory '%s' for reading"),
                                   $dir), E_USER_NOTICE);
             return; // early return
         }
+
         $this->imageList = array();
         while ($fn = readdir($handle)) {
 
@@ -76,7 +78,7 @@ trigger_error("The random image class doesn't quite work yet. Help!", E_USER_NOT
             global $InlineImages;
             if (preg_match("/($InlineImages)$/i", $fn)) {
                 array_push($this->imageList, "$fn");
-            //echo $fn."<br>\n"; //debug
+            //trigger_error(sprintf(_("found image %s"), $fn), E_USER_NOTICE);//debugging
             }
         }
         closedir($handle);
