@@ -218,7 +218,7 @@ msgstr "%s: Datei nicht gefunden"
 
 #: ../lib/interwiki.php:7
 msgid "InterWikiMap"
-msgstr ""
+msgstr "InterWikiMap"
 
 #: ../lib/interwiki.php:94
 #, c-format
@@ -356,9 +356,8 @@ msgid "New page."
 msgstr "Neue Seite."
 
 #: ../lib/loadsave2.php:429
-#, fuzzy
 msgid "Loaded"
-msgstr "Gesperrt"
+msgstr "Geladet"
 
 #: ../lib/main.php:227
 #, c-format
@@ -445,7 +444,7 @@ msgstr "gerigne"
 #: ../lib/PageList.php:296
 #, c-format
 msgid "Columns: %s."
-msgstr ""
+msgstr "Spalten: %s."
 
 #: ../lib/plugin/AllPages.php:12
 msgid "AllPages"
@@ -463,7 +462,7 @@ msgstr "Seiten in dieser wiki (%d gesamt):"
 #: ../lib/plugin/AllPages.php:45
 #, c-format
 msgid "elapsed time: %s s"
-msgstr ""
+msgstr "Ablaufzeit: %s s"
 
 #: ../lib/plugin/_BackendInfo.php:10
 #: ../themes/Portland/templates/navbar.tmpl:17
@@ -535,17 +534,17 @@ msgstr "Volltext-Suchresultate nach »%s«"
 
 #: ../lib/plugin/FuzzyPages.php:18
 msgid "FuzzyPages"
-msgstr ""
+msgstr "FuzzySuche"
 
 #: ../lib/plugin/FuzzyPages.php:22
-#, fuzzy, c-format
+#, c-format
 msgid "List FuzzyPages for %s"
-msgstr "GleicheSeite wie %s"
+msgstr "Ausliste FuzzySuche nach %s"
 
 #: ../lib/plugin/FuzzyPages.php:73
 #, c-format
 msgid "These page titles match fuzzy with '%s'"
-msgstr ""
+msgstr "Diese Seite Namen sehen sich ungefähr ähnlich aus wie »%s«."
 
 #: ../lib/plugin/HelloWorld.php:23
 msgid "HelloWorld"
@@ -726,7 +725,7 @@ msgstr "(Diff)"
 
 #: ../lib/plugin/RecentChanges.php:106
 msgid "(hist)"
-msgstr ""
+msgstr "(protok.)"
 
 #: ../lib/plugin/RecentChanges.php:157
 msgid "edits"
@@ -741,9 +740,8 @@ msgid "minor edits"
 msgstr "Geringfügige Änderungen"
 
 #: ../lib/plugin/RecentChanges.php:166
-#, fuzzy
 msgid "day"
-msgstr "1 Tag"
+msgstr "einem Tag"
 
 #: ../lib/plugin/RecentChanges.php:166 ../lib/plugin/RecentChanges.php:516
 #, c-format
@@ -751,9 +749,9 @@ msgid "%s days"
 msgstr "%s Tagen"
 
 #: ../lib/plugin/RecentChanges.php:171
-#, fuzzy, c-format
+#, c-format
 msgid "The %d most recent %s during the past %s are listed below."
-msgstr "Die %d jüngste %s innerhalb von %.1f Tagen sind unten aufgelistet."
+msgstr "Die %d jüngste %s innerhalb von %s sind unten aufgelistet."
 
 #: ../lib/plugin/RecentChanges.php:174
 #, c-format
@@ -761,9 +759,9 @@ msgid "The %d most recent %s are listed below."
 msgstr "Die %d jüngste %s sind unten aufgelistet."
 
 #: ../lib/plugin/RecentChanges.php:179
-#, fuzzy, c-format
+#, c-format
 msgid "The most recent %s during the past %s are listed below."
-msgstr "Die jüngste %s innerhalb von %.1f Tagen sind unten aufgelistet."
+msgstr "Die jüngste %s innerhalb von %s sind unten aufgelistet."
 
 #: ../lib/plugin/RecentChanges.php:182
 #, c-format
@@ -933,21 +931,21 @@ msgstr ""
 
 #: ../lib/Theme.php:188
 msgid "Today"
-msgstr ""
+msgstr "Heute"
 
 #: ../lib/Theme.php:190
 msgid "Yesterday"
-msgstr ""
+msgstr "Gestern"
 
 #: ../lib/Theme.php:205
 #, c-format
 msgid "Today at %s"
-msgstr ""
+msgstr "Heute um %s"
 
 #: ../lib/Theme.php:207
-#, fuzzy, c-format
+#, c-format
 msgid "Yesterday at %s"
-msgstr "als %s gespeichert"
+msgstr "Gestern um %s"
 
 #: ../lib/Theme.php:540 ../themes/Sidebar/templates/actionbar.tmpl:10
 #: ../themes/default/templates/actionbar.tmpl:6
@@ -1081,9 +1079,9 @@ msgstr "Quell Text"
 
 #: ../themes/default/templates/browse.tmpl:9
 #: ../themes/default/templates/viewsource.tmpl:9
-#, fuzzy, c-format
+#, c-format
 msgid "Last edited %s."
-msgstr "Letzte Änderung am %s."
+msgstr "Letzte Änderung %s."
 
 #: ../themes/default/templates/browse.tmpl:11
 #: ../themes/default/templates/viewsource.tmpl:11
@@ -1093,15 +1091,15 @@ msgstr "Letzte Änderung am %s."
 
 #: ../themes/default/templates/browse.tmpl:14
 #: ../themes/default/templates/viewsource.tmpl:14
-#, fuzzy, c-format
+#, c-format
 msgid "Version %s, saved %s."
-msgstr "Version %s. zuletzt am %s gespeichert."
+msgstr "Version %s. %s gespeichert."
 
 #: ../themes/default/templates/browse.tmpl:17
 #: ../themes/default/templates/viewsource.tmpl:17
 #, c-format
 msgid "Version %s, saved on %s."
-msgstr "Version %s. zuletzt am %s gespeichert."
+msgstr "Version %s. am %s gespeichert."
 
 #: ../themes/Portland/templates/browse.tmpl:9
 #: ../themes/Portland/templates/viewsource.tmpl:5
@@ -1263,9 +1261,8 @@ msgid "Enter your UserId to sign in"
 msgstr "Trage deinen Benutzernamen ein, um dich anzumelden"
 
 #: ../themes/default/templates/userprefs.tmpl:39
-#, fuzzy
 msgid "Edit Area Size"
-msgstr "Texteingabefenstergröße:"
+msgstr "Texteingabefenstergröße"
 
 #: ../themes/default/templates/userprefs.tmpl:41
 msgid "Height"
@@ -1277,15 +1274,15 @@ msgstr "Breite"
 
 #: ../themes/default/templates/userprefs.tmpl:56
 msgid "Time Zone"
-msgstr ""
+msgstr "Zeitzone"
 
 #: ../themes/default/templates/userprefs.tmpl:58
 msgid "Server time:"
-msgstr ""
+msgstr "Die Zeit des Servers:"
 
 #: ../themes/default/templates/userprefs.tmpl:61
 msgid "Your time:"
-msgstr ""
+msgstr "Ihre Zeit:"
 
 #: ../themes/default/templates/userprefs.tmpl:75
 msgid "Update Preferences"
@@ -1340,9 +1337,8 @@ msgstr ""
 "s umleiten."
 
 #: ../themes/Sidebar/themeinfo.php:30
-#, fuzzy
 msgid "Sidebar"
-msgstr "Suche"
+msgstr "Sidebar"
 
 #: ../themes/WikiTrek/lib/RecentChanges.php:54
 msgid "diff"
