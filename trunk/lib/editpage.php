@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.35 2002-02-04 20:40:25 carstenklapp Exp $');
+rcs_id('$Id: editpage.php,v 1.36 2002-02-06 21:08:51 carstenklapp Exp $');
 
 require_once('lib/Template.php');
 
@@ -323,7 +323,7 @@ class PageEditor
 
         $is_new_markup = !empty($posted['markup']) && $posted['markup'] == 'new';
         $meta['markup'] = $is_new_markup ? 'new' : false;
-        $meta['summary'] = trim($posted['summary']);
+        $meta['summary'] = trim(substr($posted['summary'], 0, 50));
         $meta['locked'] = !empty($posted['locked']);
         $meta['is_minor_edit'] = !empty($posted['minor_edit']);
 
