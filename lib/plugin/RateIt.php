@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RateIt.php,v 1.10 2004-06-18 14:42:17 rurban Exp $');
+rcs_id('$Id: RateIt.php,v 1.11 2004-06-19 10:22:41 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -94,7 +94,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     function RatingWidgetJavascript() {
@@ -267,16 +267,16 @@ function deleteRating(actionImg, page, dimension) {
             if (!$user->isSignedIn())
                 return $this->error(_("You must sign in"));
             extract($args);
-            $rating = $this->getRating();
+            $rating = $rdbi->getRating();
             $html = HTML::p(sprintf(_("Rated by %d users | Average rating %.1f stars"),
-                                    $this->getNumUsers($this->pagename,$this->dimension),
-                                    $this->getAvg($this->pagename,$this->dimension)),
+                                    $rdbi->getNumUsers($this->pagename, $this->dimension),
+                                    $rdbi->getAvg($this->pagename, $this->dimension)),
                             HTML::br());
             if ($rating !== false)
                 $html->pushContent(sprintf(_("Your rating was %.1f"),
                                            $rating));
             else {
-            	$pred = $this->getPrediction($this->userid,$this->pagename,$this->dimension);
+            	$pred = $rdbi->getPrediction($this->userid, $this->pagename, $this->dimension);
             	if (is_string($pred))
                     $html->pushContent(sprintf(_("%s prediction for you is %s stars"),
                                                WIKI_NAME, $pred));
@@ -406,6 +406,9 @@ function deleteRating(actionImg, page, dimension) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/06/18 14:42:17  rurban
+// added wikilens libs (not yet merged good enough, some work for DanFr)
+//
 // Revision 1.9  2004/06/14 11:31:39  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList
