@@ -2,14 +2,13 @@ VariousBrowsers have trouble with the tab character used in the TextFormattingRu
 
  [[o] I can't type tabs.  Please ConvertSpacesToTabs for me when I save.
 
-A span of spaces must be at least '''three''' spaces long to be recognized 
-as a tab.  Use multiples of '''eight''' spaces to make multiple tabs. 
+A span of spaces must be at least __three__ spaces long to be recognized 
+as a tab.  Use multiples of __eight__ spaces to make multiple tabs. 
 Each span of eight spaces will convert to one tab.  If the  
 last span comes up a little short, that's ok, as long as  
 there are at least three spaces in the last (only) span.
 
-'''Check your work.'''  This sort of heuristic can lead to  
-unexpected results. 
+__Check your work.__  This sort of heuristic can lead to unexpected results. 
 -----
 [Maintenance note:  This page is seen when the user clicks on the 
 "ConvertSpacesToTabs" link on any edit screen.  It describes what happens  
