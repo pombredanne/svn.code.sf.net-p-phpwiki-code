@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.56 2002-02-19 04:09:48 carstenklapp Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.57 2002-02-20 00:14:40 carstenklapp Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -197,6 +197,72 @@ function DumpToDir (&$request)
 
     EndLoadDump($request);
 }
+
+
+function DumpHtmlToDir (&$request)
+{
+    $directory = $request->getArg('directory');
+    if (empty($directory))
+        $request->finish(_("You must specify a directory to dump to"));
+
+    // see if we can access the directory the user wants us to use
+    if (! file_exists($directory)) {
+        if (! mkdir($directory, 0755))
+            $request->finish(fmt("Cannot create directory '%s'", $directory));
+        else
+            $html = HTML::p(fmt("Created directory '%s' for the page dump...",
+                                $directory));
+    } else {
+        $html = HTML::p(fmt("Using directory '%s'", $directory));
+    }
+
+    StartLoadDump($request, _("Dumping Pages"), $html);
+
+    $dbi = $request->getDbh();
+    $pages = $dbi->getAllPages();
+
+    while ($page = $pages->next()) {
+
+        $filename = FilenameForPage($page->getName()) . ".html";
+
+        $msg = HTML(HTML::br(), $page->getName(), ' ... ');
+
+        if($page->getName() != $filename) {
+            $msg->pushContent(HTML::small(fmt("saved as %s", $filename)),
+                              " ... ");
+        }
+
+        $revision = $page->getCurrentRevision();
+
+        require_once('lib/PageType.php');
+        $transformedContent = PageType($revision);
+
+        require_once('lib/Template.php');
+        //Can't get the template to work...
+        //$transformedContent = array('CONTENT' => $transformedContent);
+        //$transformedContent = array_merge($request, array('CONTENT' => $transformedContent));
+        $template = $transformedContent; //this works but no template!!
+        //$template = Template('browse', $transformedContent);
+        $data = GeneratePageasXML($template, $page->getName());
+
+        if ( !($fd = fopen("$directory/$filename", "w")) ) {
+            $msg->pushContent(HTML::strong(fmt("couldn't open file '%s' for writing",
+                                               "$directory/$filename")));
+            $request->finish($msg);
+        }
+
+        $num = fwrite($fd, $data, strlen($data));
+        $msg->pushContent(HTML::small(fmt("%s bytes written", $num)));
+        PrintXML($msg);
+
+        flush();
+        assert($num == strlen($data));
+        fclose($fd);
+    }
+
+    EndLoadDump($request);
+}
+
 
 ////////////////////////////////////////////////////////////////
 //
