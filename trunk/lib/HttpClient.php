@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: HttpClient.php,v 1.3 2004-04-12 17:37:32 rurban Exp $');
+rcs_id('$Id: HttpClient.php,v 1.4 2004-04-12 18:15:28 rurban Exp $');
 
 /** 
    Version 0.9, 6th April 2003 - Simon Willison ( http://simon.incutio.com/ )
@@ -342,4 +342,14 @@ class HttpClient {
     }   
 }
 
+// $Log: not supported by cvs2svn $
+
+// For emacs users
+// Local Variables:
+// mode: php
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
+// End:
 ?>
