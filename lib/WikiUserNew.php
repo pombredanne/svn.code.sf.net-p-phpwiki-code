@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.36 2004-03-24 19:39:02 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.37 2004-03-25 17:00:31 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -60,7 +60,10 @@ rcs_id('$Id: WikiUserNew.php,v 1.36 2004-03-24 19:39:02 rurban Exp $');
  *    So we cannot just discrimate with 
  *      if (!check_php_version(5))
  *          $this = $user;
- *
+ * 2004-03-24 rurban
+ * 6) enforced new cookie policy: prefs don't get stored in cookies
+ *    anymore, only in homepage and/or database, but always in the 
+ *    current session. old pref cookies will get deleted.
  */
 
 define('WIKIAUTH_FORBIDDEN', -1); // Completely not allowed.
@@ -2463,6 +2466,12 @@ class UserPreferences
                 if (empty($pref))
                     $pref = @unserialize(base64_decode($packed_pref));
                 $prefs[$name] = $pref->get($name);
+            // fix old-style prefs
+            } elseif (is_numeric($name) and is_array($packed_pref)) {
+            	if (count($packed_pref) == 1) {
+            	    list($name,$value) = each($packed_pref);
+            	    $prefs[$name] = $value;
+            	}
             } else {
                 $prefs[$name] = @unserialize($packed_pref);
                 if (empty($prefs[$name]))
@@ -2583,6 +2592,20 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.36  2004/03/24 19:39:02  rurban
+// php5 workaround code (plus some interim debugging code in XmlElement)
+//   php5 doesn't work yet with the current XmlElement class constructors,
+//   WikiUserNew does work better than php4.
+// rewrote WikiUserNew user upgrading to ease php5 update
+// fixed pref handling in WikiUserNew
+// added Email Notification
+// added simple Email verification
+// removed emailVerify userpref subclass: just a email property
+// changed pref binary storage layout: numarray => hash of non default values
+// print optimize message only if really done.
+// forced new cookie policy: delete pref cookies, use only WIKI_ID as plain string.
+//   prefs should be stored in db or homepage, besides the current session.
+//
 // Revision 1.35  2004/03/18 22:18:31  rurban
 // workaround for php5 object upgrading problem
 //

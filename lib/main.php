@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.126 2004-03-24 19:39:03 rurban Exp $');
+rcs_id('$Id: main.php,v 1.127 2004-03-25 17:00:31 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -119,7 +119,10 @@ class WikiRequest extends Request {
     }
 
     function getUser () {
-        return $this->_user;
+        if (isset($this->_user))
+            return $this->_user;
+        else
+            return $GLOBALS['ForbiddenUser'];
     }
 
     function getPrefs () {
@@ -854,6 +857,20 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.126  2004/03/24 19:39:03  rurban
+// php5 workaround code (plus some interim debugging code in XmlElement)
+//   php5 doesn't work yet with the current XmlElement class constructors,
+//   WikiUserNew does work better than php4.
+// rewrote WikiUserNew user upgrading to ease php5 update
+// fixed pref handling in WikiUserNew
+// added Email Notification
+// added simple Email verification
+// removed emailVerify userpref subclass: just a email property
+// changed pref binary storage layout: numarray => hash of non default values
+// print optimize message only if really done.
+// forced new cookie policy: delete pref cookies, use only WIKI_ID as plain string.
+//   prefs should be stored in db or homepage, besides the current session.
+//
 // Revision 1.125  2004/03/14 16:30:52  rurban
 // db-handle session revivification, dba fixes
 //
