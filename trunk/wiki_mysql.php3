@@ -1,4 +1,4 @@
-<!-- $Id: wiki_mysql.php3,v 1.5 2000-06-08 22:11:05 ahollosi Exp $ -->
+<!-- $Id: wiki_mysql.php3,v 1.6 2000-06-21 22:59:18 ahollosi Exp $ -->
 <?
 
    /*
@@ -44,37 +44,65 @@
    }
 
 
+   function MakeDBHash($pagename, $pagehash)
+   {
+      $pagehash["pagename"] = addslashes($pagename);
+      if (!isset($pagehash["flags"]))
+         $pagehash["flags"] = 0;
+      $pagehash["author"] = addslashes($pagehash["author"]);
+      $pagehash["content"] = implode("\n", $pagehash["content"]);
+      $pagehash["content"] = addslashes($pagehash["content"]);
+      $pagehash["refs"] = serialize($pagehash["refs"]);
+ 
+      return $pagehash;
+   }
+
+   function MakePageHash($dbhash)
+   {
+      // unserialize/explode content
+      $dbhash['refs'] = unserialize($dbhash['refs']);
+      $dbhash['content'] = explode("\n", $dbhash['content']);
+      return $dbhash;
+   }
+
+
    // Return hash of page + attributes or default
    function RetrievePage($dbi, $pagename) {
       $pagename = addslashes($pagename);
-      if ($res = mysql_query("select hash from $dbi[table] where page='$pagename'", $dbi['dbc'])) {
-         if ($o = mysql_fetch_object($res)) {
-            // unserialize data into a hash
-            $pagehash = unserialize($o->hash);
-            return $pagehash;
+      if ($res = mysql_query("select * from $dbi[table] where pagename='$pagename'", $dbi['dbc'])) {
+         if ($dbhash = mysql_fetch_array($res)) {
+            return MakePageHash($dbhash);
          }
       }
-
       return -1;
    }
 
 
    // Either insert or replace a key/value (a page)
-   function InsertPage($dbi, $pagename, $pagehash) {
-      $pagename = addslashes($pagename);
-      $pagedata = addslashes(serialize($pagehash));
+   function InsertPage($dbi, $pagename, $pagehash)
+   {
+      $pagehash = MakeDBHash($pagename, $pagehash);
 
-      if (!mysql_query("replace into $dbi[table] (page, hash) values ('$pagename', '$pagedata')", $dbi['dbc'])) {
-            echo "error writing value";
+      $COLUMNS = "author, content, created, flags, " .
+                 "lastmodified, pagename, refs, version";
+
+      $VALUES =  "'$pagehash[author]', '$pagehash[content]', " .
+                 "$pagehash[created], $pagehash[flags], " .
+                 "$pagehash[lastmodified], '$pagehash[pagename]', " .
+                 "'$pagehash[refs]', $pagehash[version]";
+
+
+      if (!mysql_query("replace into $dbi[table] ($COLUMNS) values ($VALUES)",
+      			$dbi['dbc'])) {
+            echo "error writing page '$pagename'";
             exit();
       }
    }
 
 
-
    function IsWikiPage($dbi, $pagename) {
       $pagename = addslashes($pagename);
-      if ($res = mysql_query("select count(*) from $dbi[table] where page='$pagename'", $dbi['dbc'])) {
+      if ($res = mysql_query("select count(*) from $dbi[table] where pagename='$pagename'", $dbi['dbc'])) {
          return(mysql_result($res, 0));
       }
    }
@@ -83,7 +111,7 @@
    // setup for title-search
    function InitTitleSearch($dbi, $search) {
       $search = addslashes($search);
-      $res = mysql_query("select page from $dbi[table] where page like '%$search%' order by page", $dbi["dbc"]);
+      $res = mysql_query("select pagename from $dbi[table] where pagename like '%$search%' order by pagename", $dbi["dbc"]);
 
       return $res;
    }
@@ -92,7 +120,7 @@
    // iterating through database
    function TitleSearchNextMatch($dbi, $res) {
       if($o = mysql_fetch_object($res)) {
-         return $o->page;
+         return $o->pagename;
       }
       else {
          return 0;
@@ -103,17 +131,15 @@
    // setup for full-text search
    function InitFullSearch($dbi, $search) {
       $search = addslashes($search);
-      $res = mysql_query("select page,hash from $dbi[table] where hash like '%$search%'", $dbi["dbc"]);
+      $res = mysql_query("select * from $dbi[table] where content like '%$search%'", $dbi["dbc"]);
 
       return $res;
    }
 
    // iterating through database
    function FullSearchNextMatch($dbi, $res) {
-      if($o = mysql_fetch_object($res)) {
-	 $page['name'] = $o->page;
-	 $page['hash'] = unserialize($o->hash);
-         return $page;
+      if($hash = mysql_fetch_array($res)) {
+         return MakePageHash($hash);
       }
       else {
          return 0;

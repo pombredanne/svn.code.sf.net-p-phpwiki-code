@@ -1,0 +1,51 @@
+-- $Id: schema.mysql,v 1.1 2000-06-21 22:59:18 ahollosi Exp $
+
+drop table if exists wiki;
+drop table if exists archive;
+drop table if exists wikilinks;
+drop table if exists hottopics;
+drop table if exists hitcount;
+
+CREATE TABLE wiki (
+        pagename VARCHAR(100) NOT NULL,
+        version INT NOT NULL DEFAULT 1,
+        flags INT NOT NULL DEFAULT 0,
+        author VARCHAR(100),
+        lastmodified INT NOT NULL,
+        created INT NOT NULL,
+        content MEDIUMTEXT NOT NULL,
+        refs TEXT,
+        PRIMARY KEY (pagename)
+        );
+
+CREATE TABLE archive (
+        pagename VARCHAR(100) NOT NULL,
+        version INT NOT NULL DEFAULT 1,
+        flags INT NOT NULL DEFAULT 0,
+        author VARCHAR(100),
+        lastmodified INT NOT NULL,
+        created INT NOT NULL,
+        content MEDIUMTEXT NOT NULL,
+        refs TEXT,
+        PRIMARY KEY (pagename, version)
+        );
+
+-- tables below are not yet used
+
+CREATE TABLE wikilinks (
+        frompage VARCHAR(100) NOT NULL,
+        topage VARCHAR(100) NOT NULL,
+        PRIMARY KEY (frompage, topage)
+        );
+
+CREATE TABLE hottopics (                
+        pagename VARCHAR(100) NOT NULL,
+        lastmodified INT NOT NULL,
+        PRIMARY KEY (pagename, lastmodified)
+        );
+
+CREATE TABLE hitcount (                 
+        pagename VARCHAR(100) NOT NULL, 
+        hits INT NOT NULL DEFAULT 0,    
+        PRIMARY KEY (pagename)          
+        );
