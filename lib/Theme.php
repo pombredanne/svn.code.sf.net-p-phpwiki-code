@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.117 2004-11-30 17:44:54 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.118 2004-12-13 14:34:46 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1295,17 +1295,21 @@ class PluginSidebarBox extends SidebarBox {
     function PluginSidebarBox($name, $args = false, $basepage = false) {
         $loader = new WikiPluginLoader();
         $plugin = $loader->getPlugin($name);
-        if (!method_exists($plugin,'box')) {
-            return $loader->error(sprintf(_("%s: has no box method"),
-                                          get_class($plugin)));
-        }
+        if (!$plugin) {
+            return $loader->_error(sprintf(_("Plugin %s: undefined"),
+                                          $name));
+        }/*
+        if (!method_exists($plugin, 'box')) {
+            return $loader->_error(sprintf(_("%s: has no box method"),
+                                           get_class($plugin)));
+        }*/
         $this->_plugin   =& $plugin;
         $this->_args     = $args ? $args : array();
         $this->_basepage = $basepage;
     }
 
     function format($args = false) {
-        return $this->_plugin->box($args ? array_merge($this->_args,$args) : $this->_args,
+        return $this->_plugin->box($args ? array_merge($this->_args, $args) : $this->_args,
                                    $GLOBALS['request'], 
                                    $this->_basepage);
     }
@@ -1391,6 +1395,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.117  2004/11/30 17:44:54  rurban
+// revisison neutral
+//
 // Revision 1.116  2004/11/21 11:59:16  rurban
 // remove final \n to be ob_cache independent
 //
