@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.50 2004-02-11 19:46:54 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.51 2004-02-12 17:05:38 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -129,7 +129,13 @@ class _PageList_Column_bool extends _PageList_Column {
 class _PageList_Column_checkbox extends _PageList_Column {
     function _PageList_Column_checkbox ($field, $default_heading, $name='p') {
         $this->_name = $name;
-        $this->_PageList_Column($field, $default_heading, 'center');
+        $heading = HTML::input(array('type'  => 'button',
+                                     'title' => _("Click to de-/select all pages"),
+                                     'name'  => $default_heading,
+                                     'value' => $default_heading,
+                                     'onclick' => "flipAll(this.form)"
+                                     ));
+        $this->_PageList_Column($field, $heading, 'center');
     }
     function _getValue ($pagelist, $page_handle, &$revision_handle) {
         $pagename = $page_handle->getName();
@@ -137,7 +143,7 @@ class _PageList_Column_checkbox extends _PageList_Column {
             return HTML::input(array('type' => 'checkbox',
                                      'name' => $this->_name . "[$pagename]",
                                      'value' => $pagename,
-                                     'checked' => '1'));
+                                     'checked' => 'CHECKED'));
         } else {
             return HTML::input(array('type' => 'checkbox',
                                      'name' => $this->_name . "[$pagename]",
@@ -455,7 +461,7 @@ class PageList {
                   => new _PageList_Column_renamed_pagename('rename', _("Rename to")),
 
                   'checkbox'
-                  => new _PageList_Column_checkbox('p', _("Selected")),
+                  => new _PageList_Column_checkbox('p', _("Select")),
 
                   'pagename'
                   => new _PageList_Column_pagename,
@@ -523,7 +529,9 @@ class PageList {
                                    'class'       => 'pagelist'));
         if ($caption)
             $table->pushContent(HTML::caption(array('align'=>'top'), $caption));
-
+        if (in_array('checkbox',$this->_columns_seen)) {
+            $table->pushContent($this->_jsFlipAll());
+        }
         $row = HTML::tr();
         foreach ($this->_columns as $col) {
             //TODO: add links to resort the table
@@ -538,9 +546,31 @@ class PageList {
         return $table;
     }
 
+    function _jsFlipAll() {
+      return JavaScript("
+function flipAll(formObj) {
+  var isFirstSet = -1;
+  for (var i=0;i < formObj.length;i++) {
+      fldObj = formObj.elements[i];
+      if (fldObj.type == 'checkbox') { 
+         if (isFirstSet == -1)
+           isFirstSet = (fldObj.checked) ? true : false;
+         fldObj.checked = (isFirstSet) ? false : true;
+       }
+   }
+}");
+    }
+
     function _generateList($caption) {
         $list = HTML::ul(array('class' => 'pagelist'), $this->_rows);
-        return $caption ? HTML(HTML::p($caption), $list) : $list;
+        $out = HTML();
+        if (in_array('checkbox',$this->_columns)) {
+            $out->pushContent($this->_jsFlipAll());
+        }
+        if ($caption)
+            $out->pushContent(HTML::p($caption));
+        $out->pushContent($list);
+        return $out;
     }
 
     function _emptyList($caption) {
