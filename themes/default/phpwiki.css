@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.39 2004-06-03 12:30:38 rurban Exp $
+ * $Id: phpwiki.css,v 1.40 2004-06-03 16:56:22 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -797,7 +797,7 @@ td.spacerow{background:#cad9ea;color:#000000}
 
 /* Sidebar */
 .box { background:#ffffff; border: 1px solid #888888 }
-.box-title { font-weight: bold; font-size: 11pt; background-color: #cdcdcd; color: black; /*font-style: menu;*/ }
+.box-title { font-weight: bold; font-size: 11pt; background-color: #ccc; color: black; /*font-style: menu;*/ }
 .box-data { width: 160px; font-size: 9pt; font-weight: normal; }
 .box-data .wiki { font-weight: normal; }
 table.sidebar { border-spacing: 0px; margin: 0ex;}

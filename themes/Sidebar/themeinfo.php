@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.14 2004-05-18 15:35:54 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.15 2004-06-03 16:56:21 rurban Exp $');
 
 /*
  * This file defines the Sidebar appearance ("theme") of PhpWiki.
@@ -58,6 +58,38 @@ if ($dbi->isWikiPage($Theme->calendarBase())) {
     $Theme->addMoreHeaders(JavaScript('',
         array('src' => $Theme->_findData('jscalendar/calendar-setup_stripped.js'))));
     $Theme->addMoreHeaders("\n");
+    require_once("lib/TextSearchQuery.php");
+    // get existing date entries for the current user:
+    $iter = $dbi->titleSearch(new TextSearchQuery($Theme->calendarBase().SUBPAGE_SEPARATOR));
+    $existing = array();
+    while ($page = $iter->next()) {
+        if ($page->exists())
+            $existing[] = basename($page->_pagename);
+    }
+    $js_exist = '{"'.join('":1,"',$existing).'":1}';
+    //var SPECIAL_DAYS = {"2004-05-11":1,"2004-05-12":1,"2004-06-01":1}
+    $Theme->addMoreHeaders(JavaScript('
+// this table holds the existing calender entries for the current user
+// calculated from the database
+var SPECIAL_DAYS = '.$js_exist.';
+// this function returns true if the date exists
+function dateExists(date, y, m, d) {
+    var year = date.getFullYear();
+    m = m + 1;
+    m = m < 10 ? "0" + m : m;  // integer, 0..11
+    d = d < 10 ? "0" + d : d;  // integer, 1..31
+    var date = year+"-"+m+"-"+d;
+    var exists = SPECIAL_DAYS[date];
+    if (!exists) return false;
+    else return true;
+}
+// this is the actual date status handler.  Note that it receives the
+// date object as well as separate values of year, month and date, for
+// your confort.
+function dateStatusHandler(date, y, m, d) {
+    if (dateExists(date, y, m, d)) return "existing";
+    else return false;
+}'));
 }
 
 // CSS file defines fonts, colors and background images for this

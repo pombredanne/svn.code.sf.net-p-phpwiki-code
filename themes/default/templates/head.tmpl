@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-  rcs_id('$Id: head.tmpl,v 1.15 2004-05-16 23:10:45 rurban Exp $');
+  rcs_id('$Id: head.tmpl,v 1.16 2004-06-03 16:56:22 rurban Exp $');
 ?>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
@@ -76,7 +76,6 @@ _("WikiWikiWeb"))?>" />
 <link rel="bookmark" title="<?=_("PhpWikiAdministration")?>" href="<?=WikiURL(
 _("PhpWikiAdministration"))?>" />
 <?php } ?>
-
 <?php if ($user->isSignedIn()) {
       /* For signed-in users */ ?>
 <link rel="bookmark" title="<?=_("UserPreferences")?>" href="<?=WikiURL(
@@ -97,9 +96,7 @@ _("UserPreferences"))?>" />
 <link rel="bookmark" title="<?= $UserCalPageTodayTitle ?>" href="<?= $UserCalPageTodayUrl ?>" />
 <?php } ?>
 <?php } //end of links for signed-in user ?>
-
-<?= $Theme->getCSS() ?>
-<?php
+<?= $Theme->getCSS() ?><?php
   // avoid redundant bookmark title for custom home page
   if ($page->getName() == WIKI_NAME && HOME_PAGE == WIKI_NAME)
       $pagetitle = "";
@@ -109,10 +106,14 @@ _("UserPreferences"))?>" />
 <title><?= WIKI_NAME.$pagetitle ?></title>
 <?= $Theme->getMoreHeaders() ?>
 </head>
-
 <?php
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2004/05/16 23:10:45  rurban
+// update_locale wrongly resetted LANG, which broke japanese.
+// japanese now correctly uses EUC_JP, not utf-8.
+// more charset and lang headers to help the browser.
+//
 // Revision 1.14  2004/02/17 12:19:49  rurban
 // support to add more javascript dynamically
 //
