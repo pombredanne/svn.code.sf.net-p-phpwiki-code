@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.57 2004-04-19 18:27:45 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.58 2004-04-20 17:08:28 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -821,7 +821,7 @@ extends _AnonUser
             $this->_prefs->_method = $DBParams['dbtype'];
             // preparate the SELECT statement
             $this->_prefs->_select = $this->prepare($DBAuthParams['pref_select'], 
-                                                    '"$userid"');
+                                                    "'\$userid'");
         //} else {
         //    unset($this->_prefs->_select);
         } else {
@@ -832,7 +832,7 @@ extends _AnonUser
             $this->_prefs->_method = $DBParams['dbtype'];
             // preparate the SELECT statement
             $this->_prefs->_update = $this->prepare($DBAuthParams['pref_update'], 
-                                                    array('"$userid"','"$pref_blob"'));
+                                                    array("'\$userid'","'\$pref_blob'"));
         }
         
         // Upgrade to the next parent _PassUser class. Avoid recursion.
@@ -955,7 +955,7 @@ extends _AnonUser
     function prepare ($stmt, $variables) {
         global $DBParams, $request;
         $this->getAuthDbh();
-        // '"$userid"' => '%s'
+        // "'\$userid"' => '%s'
         if (is_array($variables)) {
             $new = array();
             foreach ($variables as $v) { $new[] = '%s'; }
@@ -1544,7 +1544,7 @@ extends _DbPassUser
         }
         // Prepare the configured auth statements
         if (!empty($DBAuthParams['auth_check']) and empty($this->_authselect)) {
-            $this->_authselect = str_replace(array('"$userid"','"$password"'),
+            $this->_authselect = str_replace(array("'\$userid'","'\$password'"),
                                              array('%s','%s'),
                                              $DBAuthParams['auth_check']);
         }
@@ -1561,7 +1561,7 @@ extends _DbPassUser
             if (! $GLOBALS['DBAuthParams']['auth_user_exists'])
                 trigger_error("\$DBAuthParams['auth_user_exists'] is missing",
                               E_USER_WARNING);
-            $this->_authcheck = str_replace('"$userid"','%s',
+            $this->_authcheck = str_replace("'\$userid'",'%s',
                                              $DBAuthParams['auth_user_exists']);
             $rs = $dbh->query(sprintf($this->_authcheck,$dbh->quote($this->_userid)));
             if ($rs->numRows())
@@ -1571,8 +1571,9 @@ extends _DbPassUser
         // external databases, but maybe wanted for the wiki database, for performance 
         // reasons
         if (empty($this->_authcreate) and !empty($DBAuthParams['auth_create'])) {
-            $this->_authcreate = str_replace(array('"$userid"','"$password"'),array('%s','%s'),
-                                              $DBAuthParams['auth_create']);
+            $this->_authcreate = str_replace(array("'\$userid'","'\$password'"),
+                                             array('%s','%s'),
+                                             $DBAuthParams['auth_create']);
         }
         if (!empty($this->_authcreate)) {
             $dbh->simpleQuery(sprintf($this->_authcreate,
@@ -1625,7 +1626,7 @@ extends _DbPassUser
         global $DBAuthParams;
         $dbh = &$this->_auth_dbi;
         if (!empty($DBAuthParams['auth_update']) and empty($this->_authupdate)) {
-            $this->_authupdate = str_replace(array('"$userid"','"$password"'),
+            $this->_authupdate = str_replace(array("'\$userid'","'\$password'"),
                                              array('%s','%s'),
                                              $DBAuthParams['auth_update']);
         }
@@ -1731,8 +1732,9 @@ extends _DbPassUser
     function userExists() {
         global $DBAuthParams;
         if (empty($this->_authselect) and !empty($DBAuthParams['auth_check'])) {
-            $this->_authselect = str_replace(array('"$userid"','"$password"'),array('%s','%s'),
-                                              $DBAuthParams['auth_check']);
+            $this->_authselect = str_replace(array("'\$userid'","'\$password'"),
+                                             array('%s','%s'),
+                                             $DBAuthParams['auth_check']);
         }
         if (empty($this->_authselect))
             trigger_error("Either \$DBAuthParams['auth_check'] is missing or \$DBParams['dbtype'] != 'ADODB'",
@@ -1753,7 +1755,7 @@ extends _DbPassUser
             if (! $DBAuthParams['auth_user_exists'])
                 trigger_error("\$DBAuthParams['auth_user_exists'] is missing",
                               E_USER_WARNING);
-            $this->_authcheck = str_replace('"$userid"','%s',
+            $this->_authcheck = str_replace("'\$userid'",'%s',
                                              $DBAuthParams['auth_user_exists']);
             $rs = $dbh->Execute(sprintf($this->_authcheck,$dbh->qstr($this->_userid)));
             if (!$rs->EOF) {
@@ -1767,8 +1769,9 @@ extends _DbPassUser
         // external databases, but maybe wanted for the wiki database, for performance 
         // reasons
         if (!$this->_authcreate and !empty($DBAuthParams['auth_create'])) {
-            $this->_authcreate = str_replace(array('"$userid"','"$password"'),array('%s','%s'),
-                                              $DBAuthParams['auth_create']);
+            $this->_authcreate = str_replace(array("'\$userid'","'\$password'"),
+                                             array('%s','%s'),
+                                             $DBAuthParams['auth_create']);
         }
         if (!empty($this->_authcreate)) {
             $dbh->Execute(sprintf($this->_authcreate,
@@ -1783,7 +1786,8 @@ extends _DbPassUser
     function checkPass($submitted_password) {
         global $DBAuthParams;
         if (empty($this->_authselect) and !empty($DBAuthParams['auth_check'])) {
-            $this->_authselect = str_replace(array('"$userid"','"$password"'),array('%s','%s'),
+            $this->_authselect = str_replace(array("'\$userid'","'\$password'"),
+                                             array('%s','%s'),
                                               $DBAuthParams['auth_check']);
         }
         if (!isset($this->_authselect))
@@ -1830,7 +1834,8 @@ extends _DbPassUser
     function storePass($submitted_password) {
     	global $DBAuthParams;
         if (!isset($this->_authupdate) and !empty($DBAuthParams['auth_update'])) {
-            $this->_authupdate = str_replace(array('"$userid"','"$password"'),array("%s","%s"),
+            $this->_authupdate = str_replace(array("'\$userid'","'\$password'"),
+                                             array("%s","%s"),
                                               $DBAuthParams['auth_update']);
         }
         if (!isset($this->_authupdate)) {
@@ -2788,6 +2793,12 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.57  2004/04/19 18:27:45  rurban
+// Prevent from some PHP5 warnings (ref args, no :: object init)
+//   php5 runs now through, just one wrong XmlElement object init missing
+// Removed unneccesary UpgradeUser lines
+// Changed WikiLink to omit version if current (RecentChanges)
+//
 // Revision 1.56  2004/04/19 09:13:24  rurban
 // new pref: googleLink
 //
