@@ -1,9 +1,9 @@
 <?php // -*-php-*-
-rcs_id('$Id: SqlResult.php,v 1.3 2004-09-06 08:36:28 rurban Exp $');
+rcs_id('$Id: SqlResult.php,v 1.4 2004-09-17 14:23:21 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
- This file is (not yet) part of PhpWiki.
+ This file is part of PhpWiki.
 
  PhpWiki is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -42,15 +42,15 @@ rcs_id('$Id: SqlResult.php,v 1.3 2004-09-06 08:36:28 rurban Exp $');
  *                   ORDER BY rating DESC 
  *                   LIMIT 5
  *   ?>
-  <?plugin SqlResult alias=imdb template=imdbmovies where||="Davies, Jeremy%"
-SELECT m.title, m.date, n.name, c.role
-  FROM movies as m, names as n, jobs as j, characters as c
-  WHERE n.name LIKE "%%where%%"
-  AND m.title_id = c.title_id
-  AND n.name_id = c.name_id
-  AND c.job_id = j.job_id
-  AND j.description = 'Actor'
-  ORDER BY m.date DESC
+ *   <?plugin SqlResult alias=imdb template=imdbmovies where||="Davies, Jeremy%"
+ *   SELECT m.title, m.date, n.name, c.role
+ *     FROM movies as m, names as n, jobs as j, characters as c
+ *     WHERE n.name LIKE "%%where%%"
+ *     AND m.title_id = c.title_id
+ *     AND n.name_id = c.name_id
+ *     AND c.job_id = j.job_id
+ *     AND j.description = 'Actor'
+ *     ORDER BY m.date DESC
 ?>
  *
  * @author: ReiniUrban
@@ -71,7 +71,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -81,7 +81,7 @@ extends WikiPlugin
                      'template'    => false, // use a custom <theme>/template.tmpl
                      'where'       => false, // custom filter for the query
                      'sortby'      => false, // for paging, default none
-                     'limit'       => false, // for paging, default: only the first 50 
+                     'limit'       => "0,50", // for paging, default: only the first 50 
                     );
     }
 
@@ -106,21 +106,28 @@ extends WikiPlugin
 	$sql = $this->_sql;
 
         // apply custom filters
-        if ($where and strstr($sql,"%%where%%"))
+        if ($where and strstr($sql, "%%where%%"))
             $sql = str_replace("%%where%%", $where, $sql);
-        if (strstr($sql,"%%limit%%")) // default: only the first 50 
-            $sql = str_replace("%%limit%%", $limit ? $limit : "0,50", $sql);
-        else {
-            if (strstr($sql,"LIMIT")) // default: only the first 50 
-                $sql = str_replace("%%limit%%", $limit ? $limit : "0,50", $sql);
-            else
-                $sql .= " LIMIT 0,50";
+        // TODO: use a SQL construction library?
+        if ($limit) {
+            $limit = PageList::limit($limit);
+            if (strstr($sql, "%%limit%%"))
+                $sql = str_replace("%%limit%%", $limit, $sql);
+            else {
+                if (strstr($sql, "LIMIT"))
+                    $sql = preg_replace("/LIMIT\s+[\d,]+\s+/m", "LIMIT ".$limit." ", $sql);
+            }
         }
-        if (strstr($sql,"%%sortby%%")) {
+        if (strstr($sql, "%%sortby%%")) {
             if (!$sortby)
                 $sql = preg_replace("/ORDER BY .*%%sortby%%\s/m", "", $sql);
             else
                 $sql = str_replace("%%sortby%%", $sortby, $sql);
+        } else { // add sorting: support paging sortby links
+            if (preg_match("/\sORDER\s/",$sql))
+                $sql = preg_replace("/ORDER BY\s\S+\s/m", "ORDER BY " . PageList::sortby($sortby,'db'), $sql);
+            else
+                $sql .= "ORDER BY " . PageList::sortby($sortby,'db');
         }
 
         $inidsn = $this->getDsn($alias);
@@ -149,18 +156,22 @@ extends WikiPlugin
             $GLOBALS['ADODB_FETCH_MODE'] = ADODB_FETCH_NUM;
             $dbh->SetFetchMode(ADODB_FETCH_NUM);
         }
-
-        // if ($limit) ; // TODO: fill paging vars (see PageList)
+        $args = array();
+        if ($limit) { // fill paging vars (see PageList)
+            $args = $this->pagingTokens(count($all), count($all[0]), $limit);
+            if (!$args) $args = array();
+        }
 
         if ($template) {
-            $args = array('SqlResult' => $all,   // the resulting array of rows
-                          'ordered' => $ordered, // whether to display as <ul>/<dt> or <ol> 
-                          'where'   => $where,
-                          'sortby'  => $sortby,  // paging params (could also be taken from request...)
-                          'limit'   => $limit);
+            $args = array_merge(
+                      array('SqlResult' => $all,   // the resulting array of rows
+                            'ordered' => $ordered, // whether to display as <ul>/<dt> or <ol> 
+                            'where'   => $where,
+                            'sortby'  => $sortby,  
+                            'limit'   => $limit),
+                      $args);		// paging params override given params
             return Template($template, $args);
         } else {
-            // if ($limit) ; // do paging via pagelink template
             if ($ordered) {
                 $html = HTML::ol(array('class'=>'sqlresult'));
                 foreach ($all as $row) {
@@ -177,7 +188,13 @@ extends WikiPlugin
                     $html->pushContent($tr);
                 }
             }
-            // if ($limit) ; // do paging via pagelink template
+        }
+        // do paging via pagelink template
+        if (args['NUMPAGES']) {
+            $paging = Template("pagelink", $args);
+            $html = $table->pushContent(HTML::thead($paging),
+                                        HTML::tbody($html),
+                                        HTML::tfoot($paging));
         }
         return $html;
     }
@@ -185,6 +202,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/09/06 08:36:28  rurban
+// support templates, with some vars
+//
 // Revision 1.2  2004/05/03 21:57:47  rurban
 // locale updates: we previously lost some words because of wrong strings in
 //   PhotoAlbum, german rewording.
