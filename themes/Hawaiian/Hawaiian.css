@@ -1,5 +1,5 @@
 /*
-  $Id: Hawaiian.css,v 1.10 2002-01-19 03:25:06 carstenklapp Exp $
+  $Id: Hawaiian.css,v 1.11 2002-01-20 07:06:58 carstenklapp Exp $
 
   Classes:
 
@@ -51,7 +51,7 @@ input.button { font-family: arial, helvetica, sans-serif; }
 .wikitext PRE { font-family: monospace; }
 
 div.wikitext {
- background: transparent;
+ background: url("images/tchecker-white.png");
  border: thin;
  border-color: none;
  border-style: solid;
@@ -141,7 +141,7 @@ a.wiki { text-decoration: none; color: #36c;}
 { text-decoration: none; }
 
 .wikiunknown, .named-wikiunknown
-{color: #600; }
+{color: #a6977a; }
 
 /* Interwiki links */
 a.interwiki { text-decoration: none; }
@@ -159,7 +159,7 @@ i .interwiki, em .interwiki
  * wikiaction, wikiadmin, wikiunsafe:
  */
 a.wikiaction, a.wikiadmin       { text-decoration: none; }
-a.wikiaction, .wikiaction table, span.wikiaction  { font-weight: normal; color: #a6977a; }
+a.wikiaction, .wikiaction table, span.wikiaction  { font-weight: normal; color: #1d2a3b ; }
 a.wikiadmin, .wikiadmin table   { color: #ff7e00; }
 .wikiunsafe                     { color: #ccc; }
 
@@ -186,7 +186,7 @@ img.linkicon		{ vertical-align: middle; }
 .wikiadmin table  { border-color: #f99; }
 
 /* Backlinks */
-a.backlinks { color: #96876a; }
+a.backlinks { color: #81748e;}
 
 /* Make the textarea on the edit page full width */
 textarea.wikiedit { width: 100%; margin-top: 1ex; }
@@ -221,17 +221,17 @@ div.transclusion {
 }
 
 /* The transclusion of the TextEditingRules Synopsis on templates/editpage.html */
-div.wikis-edithelp .transclusion {
+div.wiki-edithelp .transclusion {
   font-size: smaller;
   background: inherit;
   padding: 0.5ex 0.5em;
   margin: 0.2ex 5%;
 }
-div.wikis-edithelp .transclusion p {
+div.wiki-edithelp .transclusion p {
   margin: 0;
 }
-div.wikis-edithelp {
-  background: #fff8dc; /* darker ivory */
+div.wiki-edithelp {
+  background: url("images/tchecker-sand.png");
   font-size: smaller;
   padding: 0.05ex 1%;
 }
