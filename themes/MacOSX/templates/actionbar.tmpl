@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.1 2002-01-18 20:02:00 dairiki Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.2 2002-01-18 20:19:27 carstenklapp Exp $ -->
 <?php
   $BF = &$ButtonFactory;
 
@@ -49,13 +49,8 @@
        * too much room on small screens to align text this way, so the
        * default browse template is overridden for this theme.
        */ ?>
-
-      <table cellspacing="0" cellpadding="0" border="0">
-      <tr valign="middle">
-        <td><?php printf(_("You are signed in as %s"), LinkWikiWord($USERID)); ?>&nbsp;</td>
-        <td><?=$s?><?= $SignInB ?></td>
-      </tr>
-      </table>
+      <?php printf(_("You are signed in as %s"), LinkWikiWord($USERID)); ?>&nbsp;</td>
+      <td><?=$s?><?= $SignInB ?></td>
     <?php } else { ?>
       <?= $SignInB ?>
     <?php } ?>
