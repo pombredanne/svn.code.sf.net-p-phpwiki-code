@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.120 2004-12-17 12:31:57 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.121 2004-12-19 00:58:01 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -540,13 +540,13 @@ class _WikiUser
         $require_level = max(0, min(WIKIAUTH_ADMIN, (int)$require_level));
 
         if ($logout) { // Log out
-            $GLOBALS['request']->_user = new _AnonUser();
-            $GLOBALS['request']->_user->_userid = '';
-            $GLOBALS['request']->_user->_level = WIKIAUTH_ANON;
-            if (isa($this, "_HttpAuth")) {
-          	$this->_logout();
+            if (method_exists($GLOBALS['request']->_user, "logout")) { //_HttpAuthPassUser
+          	$GLOBALS['request']->_user->logout();
             }
-            return $GLOBALS['request']->_user; 
+            $user = new _AnonUser();
+            $user->_userid = '';
+            $user->_level = WIKIAUTH_ANON;
+            return $user; 
         } elseif ($cancel)
             return false;        // User hit cancel button.
         elseif (!$login && !$userid)
@@ -1164,6 +1164,15 @@ extends _AnonUser
         }
     }
 
+
+    function _checkPassLength($submitted_password) {
+        if (strlen($submitted_password) < PASSWORD_LENGTH_MINIMUM) {
+            trigger_error(_("The length of the password is shorter than the system policy allows."));
+            return false;
+        }
+        return true;
+    }
+
     /**
      * The basic password checker for all PassUser objects.
      * Uses global ENCRYPTED_PASSWD and PASSWORD_LENGTH_MINIMUM.
@@ -1180,15 +1189,14 @@ extends _AnonUser
      * TODO: remove crypt() function check from config.php:396 ??
      */
     function _checkPass($submitted_password, $stored_password) {
-        if(!empty($submitted_password)) {
-            //FIXME: This will work only on plaintext passwords.
-            if (strlen($stored_password) < PASSWORD_LENGTH_MINIMUM) {
+        if (!empty($submitted_password)) {
+            // This works only on plaintext passwords.
+            if (!ENCRYPTED_PASSWD and (strlen($stored_password) < PASSWORD_LENGTH_MINIMUM)) {
                 // With the EditMetaData plugin
                 trigger_error(_("The length of the stored password is shorter than the system policy allows. Sorry, you cannot login.\n You have to ask the System Administrator to reset your password."));
                 return false;
             }
-            if (strlen($submitted_password) < PASSWORD_LENGTH_MINIMUM) {
-		trigger_error(_("The length of the password is shorter than the system policy allows."));
+            if (!$this->_checkPassLength($submitted_password)) {
                 return false;
             }
             if (ENCRYPTED_PASSWD) {
@@ -2029,6 +2037,9 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.120  2004/12/17 12:31:57  rurban
+// better logout, fake httpauth not yet
+//
 // Revision 1.119  2004/11/21 11:59:17  rurban
 // remove final \n to be ob_cache independent
 //

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: HttpAuth.php,v 1.2 2004-12-17 12:31:57 rurban Exp $');
+rcs_id('$Id: HttpAuth.php,v 1.3 2004-12-19 00:58:02 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 
@@ -24,6 +24,8 @@ extends _PassUser
            _PassUser::_PassUser($UserName);
         if ($UserName) $this->_userid = $UserName;
         $this->_authmethod = 'HttpAuth';
+        
+        // Is this double check really needed? It is not expensive so we keep it for now.
         if ($this->userExists())
             return $this;
         else 
@@ -45,9 +47,11 @@ extends _PassUser
         //$GLOBALS['request']->setStatus(200);
     }
 
-    function _logout() {
+    function logout() {
         if (!isset($_SERVER))
             $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
+        // maybe we should random the realm to really force a logout. but the next login will fail.
+        //better_srand(); $realm = microtime().rand();
         header('WWW-Authenticate: Basic realm="'.WIKI_NAME.'"');
         if (strstr(php_sapi_name(), 'apache'))
             header('HTTP/1.0 401 Unauthorized'); 
@@ -81,7 +85,7 @@ extends _PassUser
     function userExists() {
         $username = $this->_http_username();
         if (empty($username) or strtolower($username) != strtolower($this->_userid)) {
-            $this->_logout();
+            $this->logout();
             $user = $GLOBALS['ForbiddenUser'];
             $user->_userid = $this->_userid =  "";
             $this->_level = WIKIAUTH_FORBIDDEN;
@@ -117,6 +121,9 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/12/17 12:31:57  rurban
+// better logout, fake httpauth not yet
+//
 // Revision 1.1  2004/11/01 10:43:58  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session

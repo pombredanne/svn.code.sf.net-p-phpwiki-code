@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: AdoDb.php,v 1.1 2004-11-01 10:43:58 rurban Exp $');
+rcs_id('$Id: AdoDb.php,v 1.2 2004-12-19 00:58:02 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 
@@ -161,7 +161,11 @@ extends _DbPassUser
             return $this->_tryNextPass($submitted_password);
         }
         if (!$this->isValidName()) {
+            trigger_error(_("Invalid username"),E_USER_WARNING);
             return $this->_tryNextPass($submitted_password);
+        }
+        if (!$this->_checkPassLength($submitted_password)) {
+            return WIKIAUTH_FORBIDDEN;
         }
         $dbh =& $this->_auth_dbi;
         $dbi =& $GLOBALS['request']->_dbi;
@@ -242,6 +246,12 @@ extends _DbPassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/11/01 10:43:58  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 
 // Local Variables:
 // mode: php
