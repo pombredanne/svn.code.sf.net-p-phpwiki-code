@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageDump.php,v 1.6 2004-05-03 20:44:55 rurban Exp $');
+rcs_id('$Id: PageDump.php,v 1.7 2004-05-04 17:21:06 rurban Exp $');
 /**
  * PhpWikiPlugin for PhpWiki developers to generate single page dumps
  * for checking into cvs, or for users or the admin to produce a
@@ -39,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
@@ -212,13 +212,13 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
         $array = explode("\n", $mailified);
 
         // Massage headers to prepare for developer checkin to CVS.
-        $item_to_insert = "X-Rcs-Id: \$Id: PageDump.php,v 1.6 2004-05-03 20:44:55 rurban Exp $";
+        $item_to_insert = "X-Rcs-Id: \$Id\$";
         $insert_into_key_position = 2;
         $returnval_ignored = array_splice($array,
                                           $insert_into_key_position,
                                           0, $item_to_insert);
 
-        $item_to_insert = "  pgsrc_version=\"2 \$Revision: 1.6 $\";";
+        $item_to_insert = "  pgsrc_version=\"2 \$Revision\$\";";
         $insert_into_key_position = 5;
         $returnval_ignored = array_splice($array,
                                           $insert_into_key_position,
@@ -251,6 +251,11 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/05/03 20:44:55  rurban
+// fixed gettext strings
+// new SqlResult plugin
+// _WikiTranslation: fixed init_locale
+//
 // Revision 1.5  2004/05/03 17:42:44  rurban
 // fix cvs tags: "$tag$" => "$tag: $"
 //
