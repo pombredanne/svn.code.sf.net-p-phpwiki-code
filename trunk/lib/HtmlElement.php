@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.18 2002-02-06 19:56:24 carstenklapp Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.19 2002-02-07 00:26:08 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -25,11 +25,13 @@ class HtmlElement extends XmlElement
      * This is used by the static factory methods is class HTML.
      */
     function _init2 ($args) {
-        if ($args && is_array($args[0]))
-            $this->_attr = array_shift($args);
-        elseif (count($args) > 1 && ! $args[0])
-            array_shift($args);
-
+        if ($args) {
+            if (is_array($args[0]))
+                $this->_attr = array_shift($args);
+            elseif ($args[0] === false)
+                array_shift($args);
+        }
+        
         if (count($args) == 1 && is_array($args[0]))
             $args = $args[0];
         $this->_content = $args;
