@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.35 2004-02-12 13:05:49 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.36 2004-02-17 12:15:24 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,7 +87,7 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.35 $");
+        //                    "\$Revision: 1.36 $");
     }
 
     function getArgs($argstr, $request=false, $defaults = false) {
@@ -216,11 +216,11 @@ class WikiPlugin
     function getDefaultFormArguments() {
         return array('targetpage' => $this->getName(),
                      'buttontext' => $this->getName(),
-                     'class' => 'wikiaction',
-                     'method' => 'get',
-                     'textinput' => 's',
+                     'class'      => 'wikiaction',
+                     'method'     => 'get',
+                     'textinput'  => 's',
                      'description' => $this->getDescription(),
-                     'formsize' => 30);
+                     'formsize'   => 30);
     }
     
     function makeForm($argstr, $request) {
@@ -366,7 +366,7 @@ class WikiPluginLoader {
         return array($pi_name, $plugin, $plugin_args);
     }
     
-    function getPlugin($plugin_name, $pi) {
+    function getPlugin($plugin_name, $pi=false) {
         global $ErrorManager;
 
         // Note that there seems to be no way to trap parse errors
