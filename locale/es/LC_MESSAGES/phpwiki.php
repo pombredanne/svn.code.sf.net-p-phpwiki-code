@@ -1,5 +1,19 @@
 <?php
 
+$locale["You entered an invalid login or password."] =
+   "Se h&aacute; introducido un nombre de usuario o palabra de paso invalido.";
+$locale["You are about to remove '%s' permanently!"] =
+   "¡Va a borrar '%s' permanentemente!";
+$locale["Click %shere%s to remove the page now."] =
+   "Haga Click %aqu&iacute;% para borrar la p&aacute;gina ahora";
+$locale["Otherwise press the \"Back\" button of your browser."] =
+   "En caso contrario pulse el bot&oacute; \"Atr&aacute;s\" en su navegador";
+$locale["Function not yet implemented."] =
+   "Funci&oacute;n todav&iacute; no implementada";
+$locale["Remove page"] =
+   "Borrar p&aacute;gina";
+$locale["Removed page '%s' succesfully."] =
+   "P&aacute;gina '%s' borrada satisfactoriamente.";
 $locale["templates/browse.html"] =
    "locale/es/templates/browse.html";
 $locale["templates/editpage.html"] =
@@ -35,13 +49,13 @@ $locale["Versions are identical"] =
 $locale["Diff of %s."] =
    "Diferencia de %s.";
 $locale["FrontPage"] =
-   "PrimeraPlana";
+   "PaginaPrincipal";
 $locale["Describe %s here."] =
    "Describe %s aqu&iacute;.";
 $locale["Copy of %s"] =
    "Copia de %s";
 $locale["No page name passed into editpage!"] =
-   "¡Ning&uacute;n nombre de p&aacute;gina pas&oacute; dentro de la p&aacute;gina de edici&oacute;n!";
+   "No se h&aacute; pasado nombre de p&aacute;gina a editarpagina";
 $locale["This page has been locked by the administrator and cannot be edited."] =
    "Esta p&aacute;gina ha sido bloqueada por el administrador y no puede ser editada.";
 $locale["Sorry for the inconvenience."] =
@@ -59,9 +73,9 @@ $locale["Cannot establish connection to database, giving up."] =
 $locale["Error message: %s"] =
    "Mensaje de error: %s";
 $locale["Cannot open database %s, giving up."] =
-   "No puedo abrir la base de datos %s me doy por vencido.";
+   "No se puede abrir la base de datos %s , me doy por vencido.";
 $locale["Insert/update failed: %s"] =
-   "Inserci&oacute;n/actualizaci&oacute;n fall&oacute;: %s";
+   "Inserci&oacute;n/Actualizaci&oacute;n fall&oacute;: %s";
 $locale["Delete on %s failed: %s"] =
    "Eliminaci&oacute;n en %s fall&oacute;: %s";
 $locale["Insert into %s failed: %s"] =
@@ -70,12 +84,14 @@ $locale["MySQL error: %s"] =
    "Error de MySQL: %s";
 $locale["Error writing page '%s'"] =
    "Error al escribir la p&aacute;gina `%s'";
+$locale["Cannot delete '%s' from table '%s'"] =
+   "No se puede borrar '%s' de la tabla '%s'";
 $locale["Enter a page name"] =
    "Escriba un nombre de p&aacute;gina";
 $locale["Go"] =
    "Aceptar";
 $locale["Show the page source and references"] =
-   "Mostrar la fuente de la p&aacute;gina y referencias";
+   "Mostrar el c&oacute;digo fuente de la p&aacute;gina y referencias";
 $locale["PageInfo"] =
    "InformacionDeLaPagina";
 $locale["Page name '%s' is not in the database"] =
@@ -84,25 +100,43 @@ $locale["Current version"] =
    "Versi&oacute;n actual:";
 $locale["Archived version"] =
    "Versi&oacute;n archivada:";
+$locale["RecentChanges"] =
+   "CambiosRecientes";
+$locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
+   "PhpWiki no es capaz de grabar sus cambios, debido a que otro usuarioh&aacute; editado y guardado la p&aacute;gina mientras usted estaba editando esta p&aacute;gina. Si se guarda ahora los cambios del autor anterior se podr&iacute;an perder.";
+$locale["In order to recover from this situation follow these steps:"] =
+   "Para restaurar esta situaci&oacute;n siga los siguientes pasos:";
+$locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
+   "Use el bot&oacute;n <b>Atr&aacute;s<b> para retornar a la p&aacute;gina editada";
+$locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
+   "Copie sus cambios al portapapeles o a otro sitio temporal (p.ej. editor de textos).";
+$locale["<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."] =
+   "<b>Vuelva a cargar</b> la p&aacute;gina. Ahora podr&aacute; ver la versi&oacute;n mas actual de la p&aacute;gina. Sus cambios no est&aacute;n ah&iacute;.";
+$locale["Make changes to the file again. Paste your additions from the clipboard (or text editor)."] =
+   "Haga cambios a la p&aacute;gina otra vez. Pegue sus modificaciones del portapapeles (o del editor de textos).";
+$locale["Press <b>Save</b> again."] =
+   "Pulse <b>Guardar<b> otra vez.";
 $locale["Problem while updating %s"] =
    "Problema al editar %s";
 $locale["Thank you for editing %s."] =
    "Gracias por editar %s.";
 $locale["Your careful attention to detail is much appreciated."] =
-   "Tu cuidadosa atenci&oacute;n a los detalles es muy agradecida.";
+   "Se agradece una cuidadosa atenci&oacute;n a los detalles.";
+$locale["Title Search Results"] =
+   "Resultados de la búsqueda en el texto completo";
 $locale["Inserting page %s, version %s from %s"] =
    "Insertando p&aacute;gina %s, versi&oacute;n %s de %s";
 $locale["WikiFatalError"] =
    "ErrorFatalDeWiki";
-$locale["%d best incoming links:"] =
-   "%d mejores ligas de entrada:";
-$locale["%d best outgoing links:"] =
-   "%d mejores ligas de salida:";
-$locale["%d most popular nearby:"] =
-   "%d las m&aacute;s populares:";
+$locale["Search"] =
+   "Buscar";
 $locale["Stack bounds exceeded in SetHTMLOutputMode"] =
    "L&iacute;mites de la pila excedidos en SetHTMLOutputMode";
-$locale["RecentChanges"] =
-   "CambiosRecientes";
+$locale["%d best incoming links:"] =
+   "%d mejores enlaces de entrada:";
+$locale["%d best outgoing links:"] =
+   "%d mejores enlaces de salida:";
+$locale["%d most popular nearby:"] =
+   "%d las m&aacute;s populares:";
 
 ;?>
