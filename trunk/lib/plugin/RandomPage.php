@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RandomPage.php,v 1.2 2002-01-28 16:43:15 carstenklapp Exp $');
+rcs_id('$Id: RandomPage.php,v 1.3 2002-01-29 20:08:29 carstenklapp Exp $');
 
 require_once('lib/PageList.php');
 
@@ -46,7 +46,7 @@ extends WikiPlugin
             if ($info)
                 foreach (explode(",", $info) as $col)
                     $PageList->insertColumn($col);
-            for ($n=1;$n<=$pages;$n++) {
+            while ($PageList->getTotal() < $pages) {
                 $PageList->addPage($pagearray[array_rand($pagearray)]);
             }
         }
