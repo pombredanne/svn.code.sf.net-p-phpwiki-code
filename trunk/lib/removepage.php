@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: removepage.php,v 1.17 2004-02-03 09:16:25 rurban Exp $');
+rcs_id('$Id: removepage.php,v 1.18 2004-05-13 11:03:47 rurban Exp $');
 require_once('lib/Template.php');
 
 function RemovePage (&$request) {
@@ -18,7 +18,8 @@ function RemovePage (&$request) {
     if (!$request->isPost() || !$request->getArg('verify')) {
 
         // FIXME: button should be class wikiadmin
-        $removeB = Button('submit:verify', _("Remove the page now"), 'wikiadmin');
+        // Use the macosx button
+        $removeB = Button('submit:verify', _("Remove Page"), 'wikiadmin');
         $cancelB = Button('submit:cancel', _("Cancel"), 'button'); // use generic wiki button look
 
         $html = HTML(HTML::h2(fmt("You are about to remove '%s' permanently!", $pagelink)),
