@@ -1,7 +1,262 @@
-<?php rcs_id('$Id: transform.php,v 1.8 2001-01-04 18:34:15 ahollosi Exp $');
-   // expects $pagehash and $html to be set
+<?php rcs_id('$Id: transform.php,v 1.9 2001-02-04 18:22:34 ahollosi Exp $');
 
-   function tokenize($str, $pattern, &$orig, &$ntokens) {
+define('WT_TOKENIZER', 1);
+define('WT_SIMPLE_MARKUP', 2);
+define('WT_MODE_MARKUP', 3);
+
+class WikiTransform
+{
+   /*
+   function WikiTransform() -- init
+
+   function register($type, $function)
+	Registers transformer functions
+	This should be done *before* calling do_transform
+
+	$type ... one of WT_TOKENIZER, WT_SIMPLE_MARKUP, WT_MODE_MARKUP
+		  Currently on WT_MODE_MARKUP has a special meaning.
+		  If one WT_MODE_MARKUP really sets the html mode, then
+		  all successive WT_MODE_MARKUP functions are skipped
+
+	$function ... function name
+
+   function SetHTMLMode($tag, $tagtype, $level)
+	Wiki HTML output can, at any given time, be in only one mode.
+	It will be something like Unordered List, Preformatted Text,
+	plain text etc. When we change modes we have to issue close tags
+	for one mode and start tags for another.
+	SetHTMLMode takes care of this.
+
+	$tag ... HTML tag to insert
+	$tagtype ... ZERO_LEVEL - close all open tags before inserting $tag
+		     NESTED_LEVEL - close tags until depths match
+	$level ... nesting level (depth) of $tag
+		   nesting is arbitrary limited to 10 levels
+
+   function do_transform($html, $content)
+	contains main-loop and calls transformer functions
+
+	$html ... HTML header (if needed, otherwise '')
+	$content ... wiki markup as array of lines
+   */
+
+
+   // public variables (only meaningful during do_transform)
+   var $linenumber;	// current linenumber
+   var $replacements;	// storage for tokenized strings of current line
+   var $tokencounter;	// counter of $replacements array
+
+   // private variables
+   var $content;	// wiki markup, array of lines
+   var $mode_set;	// stores if a HTML mode for this line has been set
+   var $trfrm_func;	// array of registered functions
+   var $stack;		// stack for SetHTMLMode (keeping track of open tags)
+
+   // init function
+   function WikiTransform()
+   {
+      $this->trfrm_func = array();
+      $this->stack = new Stack;
+   }
+
+   // register transformation functions
+   function register($type, $function)
+   {
+      $this->trfrm_func[] = array ($type, $function);
+   }
+   
+   // sets current mode like list, preformatted text, plain text, ...
+   // takes care of closing (open) tags
+   function SetHTMLMode($tag, $tagtype, $level)
+   {
+      $this->mode_set = 1;	// in order to prevent other mode markup
+				// to be executed
+      $retvar = '';
+
+      if ($tagtype == ZERO_LEVEL) {
+         // empty the stack until $level == 0;
+         if ($tag == $this->stack->top()) {
+            return; // same tag? -> nothing to do
+         }
+         while ($this->stack->cnt() > 0) {
+            $closetag = $this->stack->pop();
+            $retvar .= "</$closetag>\n";
+         }
+   
+         if ($tag) {
+            $retvar .= "<$tag>\n";
+            $this->stack->push($tag);
+         }
+
+
+      } elseif ($tagtype == NESTED_LEVEL) {
+         if ($level < $this->stack->cnt()) {
+            // $tag has fewer nestings (old: tabs) than stack,
+	    // reduce stack to that tab count
+            while ($this->stack->cnt() > $level) {
+               $closetag = $this->stack->pop();
+               if ($closetag == false) {
+                  //echo "bounds error in tag stack";
+                  break;
+               }
+               $retvar .= "</$closetag>\n";
+            }
+
+	    // if list type isn't the same,
+	    // back up one more and push new tag
+	    if ($tag != $this->stack->top()) {
+	       $closetag = $this->stack->pop();
+	       $retvar .= "</$closetag><$tag>\n";
+	       $this->stack->push($tag);
+	    }
+   
+         } elseif ($level > $this->stack->cnt()) {
+            // we add the diff to the stack
+            // stack might be zero
+            while ($this->stack->cnt() < $level) {
+               $retvar .= "<$tag>\n";
+               $this->stack->push($tag);
+               if ($this->stack->cnt() > 10) {
+                  // arbitrarily limit tag nesting
+                  ExitWiki(gettext ("Stack bounds exceeded in SetHTMLOutputMode"));
+               }
+            }
+   
+         } else { // $level == $stack->cnt()
+            if ($tag == $this->stack->top()) {
+               return; // same tag? -> nothing to do
+            } else {
+	       // different tag - close old one, add new one
+               $closetag = $this->stack->pop();
+               $retvar .= "</$closetag>\n";
+               $retvar .= "<$tag>\n";
+               $this->stack->push($tag);
+            }
+         }
+
+   
+      } else { // unknown $tagtype
+         ExitWiki ("Passed bad tag type value in SetHTMLOutputMode");
+      }
+
+      return $retvar;
+   }
+   // end SetHTMLMode
+
+
+   // work horse and main loop
+   // this function does the transform from wiki markup to HTML
+   function do_transform($html, $content)
+   {
+      global $FieldSeparator;
+
+      $this->content = $content;
+
+      // Loop over all lines of the page and apply transformation rules
+      $numlines = count($this->content);
+      for ($lnum = 0; $lnum < $numlines; $lnum++)
+      {
+	 $this->tokencounter = 0;
+	 $this->replacements = array();
+	 $this->linenumber = $lnum;
+	 $line = $this->content[$lnum];
+
+	 // blank lines clear the current mode
+	 if (!strlen($line) || $line == "\r") {
+            $html .= $this->SetHTMLMode('', ZERO_LEVEL, 0);
+            continue;
+	 }
+
+	 $this->mode_set = 0;
+
+	 // main loop applying all registered functions
+	 // tokenizers, markup, html mode, ...
+	 // functions are executed in order of registering
+	 for ($func = 0; $func < count($this->trfrm_func); $func++) {
+	    // if HTMLmode is already set then skip all following
+	    // WT_MODE_MARKUP functions
+	    if ($this->mode_set &&
+	       ($this->trfrm_func[$func][0] == WT_MODE_MARKUP)) {
+	       continue;
+	    }
+	    // call registered function
+	    $line = $this->trfrm_func[$func][1]($line, $this);
+	 }
+
+	 // Replace tokens ($replacements was filled by wtt_* functions)
+	 for ($i = 0; $i < $this->tokencounter; $i++) {
+	     $line = str_replace($FieldSeparator.$FieldSeparator.$i.$FieldSeparator, $this->replacements[$i], $line);
+	 }
+
+	 $html .= $line . "\n";
+      }
+      // close all tags
+      $html .= $this->SetHTMLMode('', ZERO_LEVEL, 0);
+
+      return $html;
+   }
+   // end do_transfrom()
+
+}
+// end class WikiTransform
+
+
+   //////////////////////////////////////////////////////////
+
+   $transform = new WikiTransform;
+
+   // register functions
+   // functions are applied in order of registering
+
+   $transform->register(WT_TOKENIZER, 'wtt_bracketlinks');
+   $transform->register(WT_TOKENIZER, 'wtt_urls');
+   $transform->register(WT_TOKENIZER, 'wtt_bumpylinks');
+
+   $transform->register(WT_SIMPLE_MARKUP, 'wtm_htmlchars');
+   $transform->register(WT_SIMPLE_MARKUP, 'wtm_hr');
+   $transform->register(WT_SIMPLE_MARKUP, 'wtm_linebreak');
+   $transform->register(WT_SIMPLE_MARKUP, 'wtm_bold_italics');
+   $transform->register(WT_SIMPLE_MARKUP, 'wtm_title_search');
+   $transform->register(WT_SIMPLE_MARKUP, 'wtm_fulltext_search');
+   $transform->register(WT_SIMPLE_MARKUP, 'wtm_mostpopular');
+
+   $transform->register(WT_MODE_MARKUP, 'wtm_list_ul');
+   $transform->register(WT_MODE_MARKUP, 'wtm_list_ol');
+   $transform->register(WT_MODE_MARKUP, 'wtm_list_dl');
+   $transform->register(WT_MODE_MARKUP, 'wtm_preformatted');
+   $transform->register(WT_MODE_MARKUP, 'wtm_headings');
+   $transform->register(WT_MODE_MARKUP, 'wtm_paragraph');
+
+   $html = $transform->do_transform($html, $pagehash['content']);
+
+
+/*
+Requirements for functions registered to WikiTransform:
+
+Signature:  function wtm_xxxx($line, &$transform)
+
+$line ... current line containing wiki markup
+	(Note: it may already contain HTML from other transform functions)
+&$transform ... WikiTransform object -- public variables of this
+	object and their use see above.
+
+Functions have to return $line (doesn't matter if modified or not)
+All conversion should take place inside $line.
+
+Tokenizer functions should use $transform->replacements to store
+the replacement strings. Also, they have to keep track of
+$transform->tokencounter. See functions below. Back substitution
+of tokenized strings is done by do_transform().
+*/
+
+
+
+   //////////////////////////////////////////////////////////
+   // Tokenizer functions
+
+   // helper function which does actual tokenizing and is
+   // called by other wtt_* functions
+   function wt_tokenize($str, $pattern, &$orig, &$ntokens) {
       global $FieldSeparator;
       // Find any strings in $str that match $pattern and
       // store them in $orig, replacing them with tokens
@@ -18,241 +273,223 @@
    }
 
 
-   // Prepare replacements for references [\d+]
-   for ($i = 1; $i < (NUM_LINKS + 1); $i++) {
-      if (! empty($pagehash['refs'][$i])) {
-         if (preg_match("/($InlineImages)$/i", $pagehash['refs'][$i])) {
-            // embed images
-            $embedded[$i] = LinkImage($pagehash['refs'][$i]);
-         } else {
-            // ordinary link
-            $embedded[$i] = LinkURL($pagehash['refs'][$i], "[$i]");
-         }
-      }
-   }
-
-
-   // only call these once, for efficiency
-   $quick_search_box  = RenderQuickSearch();
-   $full_search_box   = RenderFullSearch();
-   $most_popular_list = RenderMostPopular();
-
-
-   // Loop over all lines of the page and apply transformation rules
-   $numlines = count($pagehash["content"]);
-
-   for ($index = 0; $index < $numlines; $index++) {
-      unset($tokens);
-      unset($replacements);
-      $ntokens = 0;
-      $replacements = array();
-      
-      $tmpline = $pagehash['content'][$index];
-
-      if (!strlen($tmpline) || $tmpline == "\r") {
-         // this is a blank line, send <p>
-         $html .= SetHTMLOutputMode('', ZERO_LEVEL, 0);
-         continue;
-      }
-
-/* If your web server is not accessble to the general public, you may
-allow this code below, which allows embedded HTML. If just anyone can reach
-your web server it is highly advised that you do not allow this.
-
-      elseif (preg_match("/(^\|)(.*)/", $tmpline, $matches)) {
-         // HTML mode
-         $html .= SetHTMLOutputMode("", ZERO_LEVEL, 0);
-         $html .= $matches[2];
-         continue;
-      }
-*/
-
-
-      //////////////////////////////////////////////////////////
-      // New linking scheme: links are in brackets. This will
-      // emulate typical HTML linking as well as Wiki linking.
-	
-      // First need to protect [[. 
-      $oldn = $ntokens;
-      $tmpline = tokenize($tmpline, '\[\[', $replacements, $ntokens);
-      while ($oldn < $ntokens)
-         $replacements[$oldn++] = '[';
-
-      // Now process the [\d+] links which are numeric references	
-      $oldn = $ntokens;
-      $tmpline = tokenize($tmpline, '\[\s*\d+\s*\]', $replacements, $ntokens);
-      while ($oldn < $ntokens) {
-	 $num = (int) substr($replacements[$oldn], 1);
-         if (! empty($embedded[$num]))
-            $replacements[$oldn] = $embedded[$num];
-	 $oldn++;
+   // New linking scheme: links are in brackets. This will
+   // emulate typical HTML linking as well as Wiki linking.
+   function wtt_bracketlinks($line, &$trfrm)
+   {
+      // protecting [[
+      $n = $ntok = $trfrm->tokencounter;
+      $line = wt_tokenize($line, '\[\[', $trfrm->replacements, $ntok);
+      while ($n < $ntok) {
+         $trfrm->replacements[$n++] = '[';
       }
 
       // match anything else between brackets 
-      $oldn = $ntokens;
-      $tmpline = tokenize($tmpline, '\[.+?\]', $replacements, $ntokens);
-      while ($oldn < $ntokens) {
-	$link = ParseAndLink($replacements[$oldn]);	
-	$replacements[$oldn] = $link['link'];
-	$oldn++;
+      $line = wt_tokenize($line, '\[.+?\]', $trfrm->replacements, $ntok);
+      while ($n < $ntok) {
+	$link = ParseAndLink($trfrm->replacements[$n]);
+	$trfrm->replacements[$n++] = $link['link'];
       }
 
-      //////////////////////////////////////////////////////////
-      // replace all URL's with tokens, so we don't confuse them
-      // with Wiki words later. Wiki words in URL's break things.
-      // URLs preceeded by a '!' are not linked
+      $trfrm->tokencounter = $ntok;
+      return $line;
+   }
 
-      $tmpline = tokenize($tmpline, "!?\b($AllowedProtocols):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]", $replacements, $ntokens);
-      while ($oldn < $ntokens) {
-        if($replacements[$oldn][0] == '!')
-	   $replacements[$oldn] = substr($replacements[$oldn], 1);
+
+   // replace all URL's with tokens, so we don't confuse them
+   // with Wiki words later. Wiki words in URL's break things.
+   // URLs preceeded by a '!' are not linked
+   function wtt_urls($line, &$trfrm)
+   {
+      global $AllowedProtocols;
+
+      $n = $ntok = $trfrm->tokencounter;
+      $line = wt_tokenize($line, "!?\b($AllowedProtocols):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]", $trfrm->replacements, $ntok);
+      while ($n < $ntok) {
+        if($trfrm->replacements[$n][0] == '!')
+	   $trfrm->replacements[$n] = substr($trfrm->replacements[$n], 1);
 	else
-	   $replacements[$oldn] = LinkURL($replacements[$oldn]);
-        $oldn++;
+	   $trfrm->replacements[$n] = LinkURL($trfrm->replacements[$n]);
+        $n++;
       }
 
-      //////////////////////////////////////////////////////////
-      // Link Wiki words
-      // Wikiwords preceeded by a '!' are not linked
+      $trfrm->tokencounter = $ntok;
+      return $line;
+   }
 
-      $oldn = $ntokens;
-      $tmpline = tokenize($tmpline, "!?$WikiNameRegexp", $replacements, $ntokens);
-      while ($oldn < $ntokens) {
-        $old = $replacements[$oldn];
+   // Link Wiki words (BumpyText)
+   // Wikiwords preceeded by a '!' are not linked
+   function wtt_bumpylinks($line, &$trfrm)
+   {
+      global $WikiNameRegexp, $dbi;
+
+      $n = $ntok = $trfrm->tokencounter;
+      $line = wt_tokenize($line, "!?$WikiNameRegexp", $trfrm->replacements, $ntok);
+      while ($n < $ntok) {
+        $old = $trfrm->replacements[$n];
         if ($old[0] == '!') {
-	  $replacements[$oldn] = substr($old,1);
+	  $trfrm->replacements[$n] = substr($old,1);
 	} elseif (IsWikiPage($dbi, $old)) {
-	  $replacements[$oldn] = LinkExistingWikiWord($old);
+	  $trfrm->replacements[$n] = LinkExistingWikiWord($old);
 	} else {
-	  $replacements[$oldn] = LinkUnknownWikiWord($old);
+	  $trfrm->replacements[$n] = LinkUnknownWikiWord($old);
 	}
-	$oldn++;
+	$n++;
       }
 
+      $trfrm->tokencounter = $ntok;
+      return $line;
+   }
 
-      //////////////////////////////////////////////////////////
-      // escape HTML metachars
-      $tmpline = str_replace('&', '&amp;', $tmpline);
-      $tmpline = str_replace('>', '&gt;', $tmpline);
-      $tmpline = str_replace('<', '&lt;', $tmpline);
-
-      // four or more dashes to <hr>
-      $tmpline = ereg_replace("^-{4,}", '<hr>', $tmpline);
-
-      // %%% are linebreaks
-      $tmpline = str_replace('%%%', '<br>', $tmpline);
-
-      // bold italics (old way)
-      $tmpline = preg_replace("|(''''')(.*?)(''''')|",
-                              "<strong><em>\\2</em></strong>", $tmpline);
-
-      // bold (old way)
-      $tmpline = preg_replace("|(''')(.*?)(''')|",
-                              "<strong>\\2</strong>", $tmpline);
-
-      // bold
-      $tmpline = preg_replace("|(__)(.*?)(__)|",
-                              "<strong>\\2</strong>", $tmpline);
-
-      // italics
-      $tmpline = preg_replace("|('')(.*?)('')|",
-                              "<em>\\2</em>", $tmpline);
+   // end of tokenizer functions
+   //////////////////////////////////////////////////////////
 
 
-      //////////////////////////////////////////////////////////
-      // unordered, ordered, and dictionary list  (using TAB)
+   //////////////////////////////////////////////////////////
+   // basic simple markup functions
 
-      if (preg_match("/(^\t+)(.*?)(:\t)(.*$)/", $tmpline, $matches)) {
-         // this is a dictionary list (<dl>) item
+   // escape HTML metachars
+   function wtm_htmlchars($line, &$transformer)
+   {
+      $line = str_replace('&', '&amp;', $line);
+      $line = str_replace('>', '&gt;', $line);
+      $line = str_replace('<', '&lt;', $line);
+      return($line);
+   }
+
+   // four or more dashes to <hr>
+   function wtm_hr($line, &$transformer) {
+      return ereg_replace("^-{4,}", '<hr>', $line);
+   }
+
+   // %%% are linebreaks
+   function wtm_linebreak($line, &$transformer) {
+      return str_replace('%%%', '<br>', $line);
+   }
+
+   // bold and italics
+   function wtm_bold_italics($line, &$transformer) {
+      $line = preg_replace('|(__)(.*?)(__)|', '<strong>\2</strong>', $line);
+      $line = preg_replace("|('')(.*?)('')|", '<em>\2</em>', $line);
+      return $line;
+   }
+
+
+
+   //////////////////////////////////////////////////////////
+   // some tokens to be replaced by (dynamic) content
+
+   // wiki token: title search dialog
+   function wtm_title_search($line, &$transformer) {
+      global $ScriptUrl;
+      if (strpos($line, '%%Search%%') !== false) {
+         $html = "<form action=\"$ScriptUrl\">\n" .
+	     "<input type=text size=30 name=search>\n" .
+	     "<input type=submit value=\"". gettext("Search") .
+	     "\"></form>\n";
+	 $line = str_replace('%%Search%%', $html, $line);
+      }
+      return $line;
+   }
+
+   // wiki token: fulltext search dialog
+   function wtm_fulltext_search($line, &$transformer) {
+      global $ScriptUrl;
+      if (strpos($line, '%%Fullsearch%%') !== false) {
+         $html = "<form action=\"$ScriptUrl\">\n" .
+	     "<input type=text size=30 name=full\n" .
+	     "<input type=submit value=\"". gettext("Search") .
+	     "\"></form>\n";
+	 $line = str_replace('%%Fullsearch%%', $html, $line);
+      }
+      return $line;
+   }
+
+   // wiki token: mostpopular list
+   function wtm_mostpopular($line, &$transformer) {
+      global $ScriptUrl, $dbi;
+      if (strpos($line, '%%Mostpopular%%') !== false) {
+	 $query = InitMostPopular($dbi, MOST_POPULAR_LIST_LENGTH);
+	 $html = "<DL>\n";
+	 while ($qhash = MostPopularNextMatch($dbi, $query)) {
+	    $html .= "<DD>$qhash[hits] ... " . LinkExistingWikiWord($qhash['pagename']) . "\n";
+	 }
+	 $html .= "</DL>\n";
+	 $line = str_replace('%%Mostpopular%%', $html, $line);
+      }
+      return $line;
+   }
+
+
+   //////////////////////////////////////////////////////////
+   // mode markup functions
+
+
+   // tabless markup for unordered, ordered, and dictionary lists
+   // ul/ol list types can be mixed, so we only look at the last
+   // character. Changes e.g. from "**#*" to "###*" go unnoticed.
+   // and wouldn't make a difference to the HTML layout anyway.
+
+   // unordered lists <UL>: "*"
+   // has to be registereed before list OL
+   function wtm_list_ul($line, &$trfrm) {
+      if (preg_match("/^([#*]*\*)[^#]/", $line, $matches)) {
          $numtabs = strlen($matches[1]);
-         $html .= SetHTMLOutputMode('dl', NESTED_LEVEL, $numtabs);
-	 $tmpline = '';
+         $line = preg_replace("/^([#*]*\*)/", '', $line);
+         $html = $trfrm->SetHTMLMode('ul', NESTED_LEVEL, $numtabs) . '<li>';
+         $line = $html . $line;
+      }
+      return $line;
+   }
+
+   // ordered lists <OL>: "#"
+   function wtm_list_ol($line, &$trfrm) {
+      if (preg_match("/^([#*]*\#)/", $line, $matches)) {
+         $numtabs = strlen($matches[1]);
+         $line = preg_replace("/^([#*]*\#)/", "", $line);
+         $html = $trfrm->SetHTMLMode('ol', NESTED_LEVEL, $numtabs) . '<li>';
+         $line = $html . $line;
+      }
+      return $line;
+   }
+
+
+   // definition lists <DL>: ";text:text"
+   function wtm_list_dl($line, &$trfrm) {
+      if (preg_match("/(^;+)(.*?):(.*$)/", $line, $matches)) {
+         $numtabs = strlen($matches[1]);
+         $line = $trfrm->SetHTMLMode('dl', NESTED_LEVEL, $numtabs);
 	 if(trim($matches[2]))
-            $tmpline = '<dt>' . $matches[2];
-	 $tmpline .= '<dd>' . $matches[4];
+            $line = '<dt>' . $matches[2];
+	 $line .= '<dd>' . $matches[3];
+      }
+      return $line;
+   }
 
-      } elseif (preg_match("/(^\t+)(\*|\d+|#)/", $tmpline, $matches)) {
-         // this is part of a list (<ul>, <ol>)
-         $numtabs = strlen($matches[1]);
-         if ($matches[2] == '*') {
-            $listtag = 'ul';
-         } else {
-            $listtag = 'ol'; // a rather tacit assumption. oh well.
-         }
-         $tmpline = preg_replace("/^(\t+)(\*|\d+|#)/", "", $tmpline);
-         $html .= SetHTMLOutputMode($listtag, NESTED_LEVEL, $numtabs);
-         $html .= '<li>';
+   // mode: preformatted text, i.e. <pre>
+   function wtm_preformatted($line, &$trfrm) {
+      if (preg_match("/^\s+/", $line)) {
+         $line = $trfrm->SetHTMLMode('pre', ZERO_LEVEL, 0) . $line;
+      }
+      return $line;
+   }
 
-
-      //////////////////////////////////////////////////////////
-      // tabless markup for unordered, ordered, and dictionary lists
-      // ul/ol list types can be mixed, so we only look at the last
-      // character. Changes e.g. from "**#*" to "###*" go unnoticed.
-      // and wouldn't make a difference to the HTML layout anyway.
-
-      // unordered lists <UL>: "*"
-      } elseif (preg_match("/^([#*]*\*)[^#]/", $tmpline, $matches)) {
-         // this is part of an unordered list
-         $numtabs = strlen($matches[1]);
-         $tmpline = preg_replace("/^([#*]*\*)/", '', $tmpline);
-         $html .= SetHTMLOutputMode('ul', NESTED_LEVEL, $numtabs);
-         $html .= '<li>';
-
-      // ordered lists <OL>: "#"
-      } elseif (preg_match("/^([#*]*\#)/", $tmpline, $matches)) {
-         // this is part of an ordered list
-         $numtabs = strlen($matches[1]);
-         $tmpline = preg_replace("/^([#*]*\#)/", "", $tmpline);
-         $html .= SetHTMLOutputMode('ol', NESTED_LEVEL, $numtabs);
-         $html .= '<li>';
-
-      // definition lists <DL>: ";text:text"
-      } elseif (preg_match("/(^;+)(.*?):(.*$)/", $tmpline, $matches)) {
-         // this is a dictionary list item
-         $numtabs = strlen($matches[1]);
-         $html .= SetHTMLOutputMode('dl', NESTED_LEVEL, $numtabs);
-	 $tmpline = '';
-	 if(trim($matches[2]))
-            $tmpline = '<dt>' . $matches[2];
-	 $tmpline .= '<dd>' . $matches[3];
-
-
-      //////////////////////////////////////////////////////////
-      // remaining modes: preformatted text, headings, normal text	
-
-      } elseif (preg_match("/^\s+/", $tmpline)) {
-         // this is preformatted text, i.e. <pre>
-         $html .= SetHTMLOutputMode('pre', ZERO_LEVEL, 0);
-
-      } elseif (preg_match("/^(!{1,3})[^!]/", $tmpline, $whichheading)) {
-	 // lines starting with !,!!,!!! are headings
+   // mode: headings, i.e. <h1>, <h2>, <h3>
+   // lines starting with !,!!,!!! are headings
+   function wtm_headings($line, &$trfrm) {
+      if (preg_match("/^(!{1,3})[^!]/", $line, $whichheading)) {
 	 if($whichheading[1] == '!') $heading = 'h3';
 	 elseif($whichheading[1] == '!!') $heading = 'h2';
 	 elseif($whichheading[1] == '!!!') $heading = 'h1';
-	 $tmpline = preg_replace("/^!+/", '', $tmpline);
-	 $html .= SetHTMLOutputMode($heading, ZERO_LEVEL, 0);
-
-      } else {
-         // it's ordinary output if nothing else
-         $html .= SetHTMLOutputMode('p', ZERO_LEVEL, 0);
+	 $line = preg_replace("/^!+/", '', $line);
+	 $line = $trfrm->SetHTMLMode($heading, ZERO_LEVEL, 0) . $line;
       }
-
-      $tmpline = str_replace('%%Search%%', $quick_search_box, $tmpline);
-      $tmpline = str_replace('%%Fullsearch%%', $full_search_box, $tmpline);
-      $tmpline = str_replace('%%Mostpopular%%', $most_popular_list, $tmpline);
-      if(defined('WIKI_ADMIN') && strstr($tmpline, '%%ADMIN-'))
-         $tmpline = ParseAdminTokens($tmpline);
-
-
-      ///////////////////////////////////////////////////////
-      // Replace tokens
-
-      for ($i = 0; $i < $ntokens; $i++)
-	  $tmpline = str_replace($FieldSeparator.$FieldSeparator.$i.$FieldSeparator, $replacements[$i], $tmpline);
-
-
-      $html .= $tmpline . "\n";
+      return $line;
    }
 
-   $html .= SetHTMLOutputMode('', ZERO_LEVEL, 0);
+   // default mode: simple text paragraph
+   function wtm_paragraph($line, &$trfrm) {
+      $line = $trfrm->SetHTMLMode('p', ZERO_LEVEL, 0) . $line;
+      return $line;
+   }
 ?>
