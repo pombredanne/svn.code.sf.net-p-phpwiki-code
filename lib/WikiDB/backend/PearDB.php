@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.68 2004-11-20 17:35:58 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.69 2004-11-20 17:49:39 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -493,14 +493,13 @@ extends WikiDB_backend
         return new WikiDB_backend_PearDB_iter($this, $result);
     }
 
-    function get_all_pages($include_empty=false, $sortby=false, $limit=false) {
+    function get_all_pages($include_empty=false, $sortby=false, $limit=false, $exclude=false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-        // Limit clause is NOT portable!
-        // if ($limit)  $limit = "LIMIT $limit";
-        // else         $limit = '';
         $orderby = $this->sortby($sortby, 'db');
         if ($orderby) $orderby = 'ORDER BY ' . $orderby;
+        if ($exclude) // array of pagenames
+            $exclude = " AND $page_tbl.pagename NOT IN ".$this->_sql_set($exclude);
         if (strstr($orderby, 'mtime ')) { // multiple columns possible
             if ($include_empty) {
                 $sql = "SELECT "
@@ -1080,6 +1079,13 @@ extends WikiDB_backend_PearDB_generic_iter
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.68  2004/11/20 17:35:58  rurban
+// improved WantedPages SQL backends
+// PageList::sortby new 3rd arg valid_fields (override db fields)
+// WantedPages sql pager inexact for performance reasons:
+//   assume 3 wantedfrom per page, to be correct, no getTotal()
+// support exclude argument for get_all_pages, new _sql_set()
+//
 // Revision 1.67  2004/11/10 19:32:24  rurban
 // * optimize increaseHitCount, esp. for mysql.
 // * prepend dirs to the include_path (phpwiki_dir for faster searches)
