@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.91 2003-02-15 02:21:54 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.92 2003-02-16 20:04:48 dairiki Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -369,6 +369,7 @@ class WikiRequest extends Request {
     }
 
 
+    
     function finish ($errormsg = false) {
         static $in_exit = 0;
 
@@ -704,8 +705,16 @@ function main () {
     //  $LogEntry->user = $user->getId();
 
     $request->possiblyDeflowerVirginWiki();
+    
 if(defined('WIKI_XMLRPC')) return;
+
+    $validators = array('wikiname' => WIKI_NAME,
+                        'args'	=> hash($request->getArgs()),
+                        'prefs'	=> hash($request->getPrefs()));
+    $request->setValidators($validators);
+   
     $request->handleAction();
+
 if (defined('DEBUG') and DEBUG>1) phpinfo(INFO_VARIABLES);
     $request->finish();
 }
