@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.7 2002-01-24 06:50:45 carstenklapp Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.8 2002-01-24 19:10:40 rurban Exp $');
 /*
  * Code for writing XML.
  */
@@ -96,8 +96,11 @@ class XmlElement
         $start .= ">";
         return $start;
     }
-
+    /*
     function _emptyTag() {
+        return substr($this->_startTag(), 0, -1) . "/>";
+    }*/
+    function _endTag() {
         return substr($this->_startTag(), 0, -1) . "/>";
     }
     
