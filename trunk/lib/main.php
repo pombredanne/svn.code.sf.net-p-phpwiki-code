@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.53 2002-02-08 22:03:00 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.54 2002-02-12 23:21:02 carstenklapp Exp $');
 
 
 include "lib/config.php";
@@ -302,6 +302,9 @@ class WikiRequest extends Request {
             case 'unlock':
                 return WIKIAUTH_ADMIN;
             default:
+                // Temp workaround for french single-word action page 'Historique'
+                if (_("PageHistory") == $action)
+                    return WIKIAUTH_ANON; // ActionPage.
                 global $WikiNameRegexp;
                 if (preg_match("/$WikiNameRegexp\Z/A", $action))
                     return WIKIAUTH_ANON; // ActionPage.
@@ -406,10 +409,13 @@ class WikiRequest extends Request {
     }
 
     function isActionPage ($pagename) {
-        // Allow for, e.g. action=LikePages
-        global $WikiNameRegexp;
-        if (!preg_match("/$WikiNameRegexp\\Z/A", $pagename))
-            return false;
+        // Temp workaround for french single-word action page 'Historique'
+        if (! _("PageHistory") == $pagename) {
+            // Allow for, e.g. action=LikePages
+            global $WikiNameRegexp;
+            if (!preg_match("/$WikiNameRegexp\\Z/A", $pagename))
+                return false;
+            }
         $dbi = $this->getDbh();
         $page = $dbi->getPage($pagename);
         $rev = $page->getCurrentRevision();
