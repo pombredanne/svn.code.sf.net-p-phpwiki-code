@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.68 2004-10-12 13:13:19 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.69 2004-10-21 19:00:37 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -323,6 +323,11 @@ class Request {
     }
 
     function buffer_output($compress = true) {
+        // USECACHE = false turns off ob buffering also for now. (sf.net)
+        if (defined('USECACHE') and !USECACHE) {
+            $this->_is_buffering_output = false;
+            return;
+        }
         if (defined('COMPRESS_OUTPUT')) {
             if (!COMPRESS_OUTPUT)
                 $compress = false;
@@ -379,6 +384,7 @@ class Request {
             ob_start();
         }
         $this->_is_buffering_output = true;
+        $this->_ob_get_length = 0;
     }
 
     function discardOutput() {
@@ -389,12 +395,45 @@ class Request {
             trigger_error("Not buffering output", E_USER_NOTICE);
         }
     }
-    
+
+    /** 
+     * Longer texts need too much memory on tiny or memory-limit=8MB systems.
+     * We might want to flush our buffer and restart again.
+     * (This would be fine if php would release its memory)
+     * Note that this must not be called inside Template expansion or other 
+     * sections with ob_buffering.
+     */
+    function chunkOutput() {
+        if (!empty($this->_is_buffering_output)) {
+            $this->_do_chunked_output = true;
+            $this->_ob_get_length += ob_get_length();
+            while (@ob_end_flush());
+            ob_end_clean();
+            ob_start();
+        }
+    }
+
     function finish() {
         session_write_close();
         if (!empty($this->_is_buffering_output)) {
-            //header(sprintf("Content-Length: %d", ob_get_length()));
-            ob_end_flush();
+            /* This cannot work because it might destroy xml markup */
+            /*
+            if (0 and $GLOBALS['SearchHighLightQuery'] and check_php_version(4,2)) {
+                $html = str_replace($GLOBALS['SearchHighLightQuery'],
+                                    '<span class="search-term">'.$GLOBALS['SearchHighLightQuery'].'</span>',
+                                    ob_get_contents());
+                ob_clean();
+                header(sprintf("Content-Length: %d", strlen($html)));
+                echo $html;
+            } else {
+            */
+            if (empty($this->_do_chunked_output)) {
+                header(sprintf("Content-Length: %d", ob_get_length()));
+            } else {
+                header(sprintf("Content-Length: %d", $this->ob_get_length));
+            }
+            //}
+            while (@ob_end_flush());
             $this->_is_buffering_output = false;
         }
         exit;
@@ -602,8 +641,24 @@ class Request_UploadedFile {
         
         $fileinfo = &$HTTP_POST_FILES[$postname];
         if ($fileinfo['error']) {
-            trigger_error("Upload error: #" . $fileinfo['error'],
-                          E_USER_ERROR);
+            // errmsgs by Shilad Sen
+            switch ($HTTP_POST_FILES['userfile']['error']) {
+            case 1:
+                trigger_error(_("Upload error: file too big"), E_USER_ERROR);
+                break;
+            case 2:
+                trigger_error(_("Upload error: file too big"), E_USER_ERROR);
+                break;
+            case 3:
+                trigger_error(_("Upload error: file only partially recieved"), E_USER_ERROR);
+                break;
+            case 4:
+                trigger_error(_("Upload error: no file selected"), E_USER_ERROR);
+                break;
+            default:
+                trigger_error(_("Upload error: unknown error #") . $fileinfo['error'], E_USER_ERROR);
+                break;
+            }
             return false;
         }
 
@@ -1018,6 +1073,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.68  2004/10/12 13:13:19  rurban
+// php5 compatibility (5.0.1 ok)
+//
 // Revision 1.67  2004/09/25 18:56:54  rurban
 // make start_debug logic work
 //
