@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.71 2004-03-30 02:38:06 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.72 2004-03-31 06:22:22 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -401,7 +401,7 @@ class _PageList_Column_rating extends _PageList_Column {
         static $prefix = 0;
         $loader = new WikiPluginLoader();
         $args = "pagename=".$page_handle->_pagename;
-        $args .= " smallWidget=1";
+        $args .= " small=1";
         $args .= " imgPrefix=".$prefix++;
         return $loader->expandPi('<'."?plugin RateIt $args ?".'>',$GLOBALS['request'],$page_handle);
     }
@@ -608,11 +608,12 @@ class PageList {
     }
 
     /** 
-     * Handles sortby requests for the DB iterator and table header links
+     * Handle sortby requests for the DB iterator and table header links.
      * Prefix the column with + or - like "+pagename","-mtime", ...
-     * supported columns: 'pagename','mtime','hits'
+     * db supported columns: 'pagename','mtime','hits'
      * supported actions: 'flip_order' "mtime" => "+mtime" => "-mtime" ...
      *                    'db'         "-pagename" => "pagename DESC"
+     * which other column types should be sortable?
      */
     function sortby ($column, $action) {
         if (empty($column)) return;
@@ -742,6 +743,8 @@ class PageList {
             trigger_error(sprintf("%s: Bad column", $column), E_USER_NOTICE);
             return false;
         }
+        if ($column == 'rating' and !$GLOBALS['request']->_user->isSignedIn())
+            return;
 
         $col = $this->_types[$column];
         if (!empty($heading))
