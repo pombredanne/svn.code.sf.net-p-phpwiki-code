@@ -10,7 +10,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.22 2001-01-21 11:00:00 ahollosi Exp $');
+   rcs_id('$Id: config.php,v 1.23 2001-01-31 02:18:26 wainstead Exp $');
    // end essential internal stuff
 
 
@@ -43,8 +43,7 @@
    /////////////////////////////////////////////////////////////////////
 
    $WhichDatabase = 'default'; // use one of "dbm", "dba", "mysql",
-                               // "pgsql", "msql", or "file"
-
+                           // "pgsql", "msql", or "file"
 
    // DBM and DBA settings (default)
    if ($WhichDatabase == 'dbm' or $WhichDatabase == 'dba' or
@@ -61,14 +60,16 @@
       define("MAX_DBM_ATTEMPTS", 20);
 
       // for PHP3 use dbmlib, else use dbalib for PHP4
-      if (($WhichDatabase == 'default') and (floor(phpversion())) == 3) {
-         $WhichDatabase = 'dbm';
-      } else {
-         $WhichDatabase = 'dba';
+      if ($WhichDatabase == 'default') {
+         if ( floor(phpversion()) == 3) {
+            $WhichDatabase = 'dbm';
+         } else {
+            $WhichDatabase = 'dba';
+         }
       }
 
       if ($WhichDatabase == 'dbm') {
-          include "lib/dbmlib.php";
+          include "lib/dbmlib.php"; 
       } else {
           include "lib/dbalib.php";
       }
