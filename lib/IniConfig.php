@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.30 2004-06-04 12:40:21 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.31 2004-06-06 16:58:51 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -348,7 +348,7 @@ function fix_configs() {
     $WikiNameRegexp = pcre_fix_posix_classes($WikiNameRegexp);
     $KeywordLinkRegexp = pcre_fix_posix_classes($KeywordLinkRegexp);
 
-    $AllActionPages = explode(':','AllPages:BackLinks:DebugInfo:FindPage:FullRecentChanges:'
+    $AllActionPages = explode(':','AllPages:BackLinks:DebugInfo:EditMetaData:FindPage:FullRecentChanges:'
                               .'FullTextSearch:FuzzyPages:InterWikiSearch:LikePages:MostPopular:'
                               .'OrphanedPages:PageDump:PageHistory:PageInfo:RandomPage:RateIt:'
                               .'RecentChanges:RecentEdits:RelatedChanges:TitleSearch:TranslateText:'
@@ -551,6 +551,12 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.30  2004/06/04 12:40:21  rurban
+// Restrict valid usernames to prevent from attacks against external auth or compromise
+// possible holes.
+// Fix various WikiUser old issues with default IMAP,LDAP,POP3 configs. Removed these.
+// Fxied more warnings
+//
 // Revision 1.29  2004/06/04 11:58:38  rurban
 // added USE_TAGLINES
 //

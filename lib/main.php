@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.158 2004-06-04 20:32:53 rurban Exp $');
+rcs_id('$Id: main.php,v 1.159 2004-06-06 16:58:51 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -234,7 +234,7 @@ $this->version = phpwiki_version();
 
         $olduser = $this->_user;
         $user = $this->_user->AuthCheck($auth_args);
-        if (isa($user,WikiUserClassname())) {
+        if (isa($user, WikiUserClassname())) {
             // Successful login (or logout.)
             $this->_setUser($user);
         }
@@ -348,6 +348,8 @@ $this->version = phpwiki_version();
             $msg = fmt("You must sign in to %s.", $what);
         elseif ($require_level == WIKIAUTH_USER)
             $msg = fmt("You must log in to %s.", $what);
+        elseif ($require_level == WIKIAUTH_ANON)
+            $msg = fmt("Access for you is forbidden to %s.", $what);
         else
             $msg = fmt("You must be an administrator to %s.", $what);
 
@@ -990,6 +992,11 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.158  2004/06/04 20:32:53  rurban
+// Several locale related improvements suggested by Pierrick Meignen
+// LDAP fix by John Cole
+// reanable admin check without ENABLE_PAGEPERM in the admin plugins
+//
 // Revision 1.157  2004/06/04 12:40:21  rurban
 // Restrict valid usernames to prevent from attacks against external auth or compromise
 // possible holes.
