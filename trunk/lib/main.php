@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.92 2003-02-16 20:04:48 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.93 2003-02-17 05:56:26 dairiki Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -147,12 +147,12 @@ class WikiRequest extends Request {
 
     /**
      * Get requested page from the page database.
-	 * By default it will grab the page requested via the URL
+     * By default it will grab the page requested via the URL
      *
      * This is a convenience function.
-	 * @param string $pagename Name of page to get.
-	 * @return WikiDB_Page Object with methods to pull data from
-	 * database for the page requested.
+     * @param string $pagename Name of page to get.
+     * @return WikiDB_Page Object with methods to pull data from
+     * database for the page requested.
      */
     function getPage ($pagename = false) {
         if (!isset($this->_dbi))
@@ -162,6 +162,26 @@ class WikiRequest extends Request {
         return $this->_dbi->getPage($pagename);
     }
 
+    /** Get URL for POST actions.
+     *
+     * Officially, we should just use SCRIPT_NAME (or some such),
+     * but that causes problems when we try to issue a redirect, e.g.
+     * after saving a page.
+     *
+     * Some browsers (at least NS4 and Mozilla 0.97 won't accept
+     * a redirect from a page to itself.)
+     *
+     * So, as a HACK, we include pagename and action as query args in
+     * the URL.  (These should be ignored when we receive the POST
+     * request.)
+     */
+    function getPostURL ($pagename=false) {
+        if ($pagename === false)
+            $pagename = $this->getArg('pagename');
+        $action = $this->getArg('action');
+        return WikiURL($pagename, array('action' => $action));
+    }
+    
     function _handleAuthRequest ($auth_args) {
         if (!is_array($auth_args))
             return;
@@ -295,6 +315,26 @@ class WikiRequest extends Request {
     }
 
     function requiredAuthority ($action) {
+        $auth = $this->requiredAuthorityForAction($action);
+        
+        /*
+         * This is a hook for plugins to require authority
+         * for posting to them.
+         *
+         * IMPORTANT: this is not a secure check, so the plugin
+         * may not assume that any POSTs to it are authorized.
+         * All this does is cause PhpWiki to prompt for login
+         * if the user doesn't have the required authority.
+         */
+        if ($this->isPost()) {
+            $post_auth = $this->getArg('require_authority_for_post');
+            if ($post_auth !== false)
+                $auth = max($auth, $post_auth);
+        }
+        return $auth;
+    }
+        
+    function requiredAuthorityForAction ($action) {
         // FIXME: clean up. 
         // Todo: Check individual page permissions instead.
         switch ($action) {
@@ -459,11 +499,6 @@ class WikiRequest extends Request {
 
         // Allow for, e.g. action=LikePages
         if ($this->isActionPage($action))
-            return $action;
-
-        // Check for _('PhpWikiAdministration').'/'._('Remove') actions
-        $pagename = $this->getArg('pagename');
-        if (strstr($pagename,_('PhpWikiAdministration')))
             return $action;
 
         trigger_error("$action: Unknown action", E_USER_NOTICE);
@@ -664,7 +699,7 @@ class WikiRequest extends Request {
 
 //FIXME: deprecated
 function is_safe_action ($action) {
-    return WikiRequest::requiredAuthority($action) < WIKIAUTH_ADMIN;
+    return WikiRequest::requiredAuthorityForAction($action) < WIKIAUTH_ADMIN;
 }
 
 
