@@ -1,11 +1,11 @@
-To add a new page to Wiki, all you have to do is come up with a meaningful title, capatalize all the words and StringThemTogetherLikeThis. Wiki automagically recognizes it as a hyperlink.
+Um dem Wiki eine neue Seite hinzuzufügen mußt du dir nur einen sinnvollen Titel einfallen lassen, alle Wörter im Titel großschreiben und sie AufDieseArtZusammenfuegen. Wiki erkennt dies automatisch als einen Hyperlink. (Umlaute kannst du in Titeln leider nicht verwenden.)
 
-Then you can go ahead and ClickTheQuestionMark at the end of your new hyperlink, and the Wiki will give you a window for making the new page.
+Dann kannst du das Fragezeichen am Ende des neuen Hyperlinks anklicken, und Wiki öffnet einen Editor zum Erstellen der neuen Seite.
 
-If you wish to add documents with complex markup to the Wiki, you might be better off providing a URL to it than trying to add the text of the document here, like so:
+Wenn du ein Dokument mit aufwendigen Formatierungen zum Wiki hinzufügen willst, ist es vielleicht einfacher, einen Link zu diesem Dokument ins Wiki einzufügen statt das Dokument selbst. Zum Beispiel:
 
- PhpWiki project homepage: http://wcsb.org/~swain/php/wiki/
+ Die Homepage des PhpWiki Projektes: http://phpwiki.sourceforge.net/
 
-The Wiki does not support HTML tags (see TextFormatierungsRegeln).  <tags>They will just render like text.</tags> Wiki is meant to be as simple as possible to encourage use.
+Wiki unterstüzt keine HTML-Tags (siehe TextFormatierungsRegeln). <tags>werden einfach wie normaler Text angezeigt.</tags> Wiki soll so einfach wie möglich sein, damit es jeder benutzen kann.
 
-Note that there is a feature that your system administrator can enable to allow embedded HTML, but there are security risks involved.
+Es gibt eine Funktion, durch die der Systemverwalter HTML in Dokumenten erlauben kann, das führt aber zu Sicherheitsrisiken.
