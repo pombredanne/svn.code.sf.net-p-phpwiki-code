@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.28 2004-11-16 16:25:14 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.29 2004-11-29 16:08:31 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -511,6 +511,7 @@ function CheckConfigUpdate(&$request) {
     } else {
         echo _("OK");
     }
+    echo "<br />\n";
     echo _("check for GROUP_METHOD = NONE")," ... ";
     if (defined('GROUP_METHOD') and GROUP_METHOD == '') {
         echo "<br />&nbsp;&nbsp;",_("GROUP_METHOD is set to NONE, and must be changed to \"NONE\"")," ...";
@@ -563,6 +564,9 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.28  2004/11/16 16:25:14  rurban
+ fix accesslog tablename, print CREATED only if really done
+
  Revision 1.27  2004/11/07 16:02:52  rurban
  new sql access log (for spam prevention), and restructured access log class
  dbh->quote (generic)
