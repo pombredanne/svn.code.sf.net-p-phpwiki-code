@@ -23,23 +23,23 @@
       global $ScriptUrl, $pagename, $pagehash;
       $enc_name = rawurlencode($pagename);
 
-      $retval  = "<hr>\n";
-      $retval .= "<a href=\"$ScriptUrl?edit=$enc_name\">EditText</a>\n";
-      $retval .= " of this page\n";
+      $retval  = "<hr>\n" .
+		 "<a href=\"$ScriptUrl?edit=$enc_name\">EditText</a>\n" .
+		 " of this page\n";
       if (is_array($pagehash)) {
          $retval .= " (last edited " . $pagehash["date"] . ")\n";
       }
-      $retval .= "<br>\n";
-
-      $retval .= "<a href='$ScriptUrl?FindPage&value=$enc_name";
-      $retval .= "'>FindPage</a> by browsing or searching\n";
+      $retval .= "<br>\n" .
+		 "<a href=\"$ScriptUrl?FindPage&value=$enc_name\">" .
+		 "FindPage</a> by browsing or searching\n";
       return $retval;
    }
 
    // top of page
    function WikiHeader($pagename) {
       global $LogoImage, $ScriptUrl;
-      return "<html>\n<head>\n<title>$pagename</title>\n</head>\n<body>\n";
+      return "<html>\n<head>\n<title>" . htmlspecialchars($pagename) .
+	     "</title>\n</head>\n<body>\n";
    }
 
    function WikiFooter() {
@@ -51,22 +51,28 @@
       return date("F j, Y");
    }
    
+
    function LinkExistingWikiWord($wikiword) {
       global $ScriptUrl;
       $enc_word = rawurlencode($wikiword);
+      $wikiword = htmlspecialchars($wikiword);
       return "<a href=\"$ScriptUrl?$enc_word\">$wikiword</a>";
    }
 
    function LinkUnknownWikiWord($wikiword) {
       global $ScriptUrl;
       $enc_word = rawurlencode($wikiword);
+      $wikiword = htmlspecialchars($wikiword);
       return "<u>$wikiword</u><a href=\"$ScriptUrl?edit=$enc_word\">?</a>";
-
    }
 
    function LinkURL($url) {
       global $ScriptUrl;
-      return "<a href=\"$url\">$url</a>";
+      if(ereg("[<>\"]", $url)) {
+         return "<b><u>BAD URL -- remove all of &lt;, &gt;, &quot;</u></b>";
+      }
+      $enc_url = htmlspecialchars($url);
+      return "<a href=\"$url\">$enc_url</a>";
    }
 
    
@@ -283,8 +289,9 @@
       InsertPage($adbi, $newpagename, $pagehash);
    }
 
+
    function ParseAndLink($bracketlink) {
-      global $dbi;
+      global $dbi, $AllowedProtocols;
 
       // $bracketlink will start and end with brackets; in between
       // will be either a page name, a URL or both seperated by a pipe.
@@ -300,7 +307,7 @@
 
       // send back escaped ([[) bracket sets
       if (preg_match("/^\[/", $linkdata)) {
-         return "$linkdata]";
+         return htmlspecialchars($linkdata) . "]";
       }
 
       // match the contents 
@@ -308,15 +315,19 @@
 
       if (isset($matches[3])) {
          $URL = trim($matches[3]);
-         $linkname = trim($matches[1]);
-         return "<a href=\"$URL\">$linkname</a>";
+         $linkname = htmlspecialchars(trim($matches[1]));
+         if (preg_match("#^($AllowedProtocols):#", $linkname)) {
+            return "<a href=\"$URL\">$linkname</a>";
+	 } else {
+	    return "<b><u>BAD URL -- links have to start with one of " . 				   "$AllowedProtocols followed by ':'</u></b>";
+	 }
       }
-      
+
       if (isset($matches[1])) {
          $linkname = trim($matches[1]);
          if (IsWikiPage($dbi, $linkname)) {
             return LinkExistingWikiWord($linkname);
-         } elseif (preg_match("#^http://|^mailto:|^ftp:|^news://|^file://|^gopher://#", $linkname)) {
+         } elseif (preg_match("#^($AllowedProtocols):#", $linkname)) {
             return LinkURL($linkname);
          } else {
             return LinkUnknownWikiWord($linkname);
