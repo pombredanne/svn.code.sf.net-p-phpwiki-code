@@ -1,10 +1,10 @@
 <?php 
-// $Id: configurator.php,v 1.27 2005-02-16 15:53:15 rurban Exp $
+// $Id: configurator.php,v 1.28 2005-02-19 21:36:02 rurban Exp $
 /**
  * Starts automatically the first time by IniConfig("config/config.ini") 
  * if it doesn't exist.
  *
- * 1.3.11 TODO:
+ * 1.3.11 TODO: (or 1.3.12?)
  * fix SQL quotes, AUTH_ORDER quotes and file forward slashes
  * commented / optional: non-default values should not be commented!
  *                       default values if optional can be omitted.
@@ -45,7 +45,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'iso-8859-1');
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.27 2005-02-16 15:53:15 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.28 2005-02-19 21:36:02 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
@@ -65,14 +65,17 @@ td.unchangeable-variable-left  { border-top: none; background-color: #ffffee; co
 <script language="JavaScript" type="text/javascript">
 <!--
 function update(accepted, error, value, output) {
+  var msg = document.getElementById(output);
   if (accepted) {
-    document.getElementById(output).innerHTML = "<font color=\"green\">Input accepted.</font>";
+    /* MSIE 5.0 fails here */
+    if (msg && msg.innerHTML) { msg.innerHTML = "<font color=\"green\">Input accepted.</font>"; }
   } else {
     while ((index = error.indexOf("%s")) > -1) {
       error = error.substring(0, index) + value + error.substring(index+2);
     }
-    document.getElementById(output).innerHTML = "<font color=\"red\">" + error + "</font>";
+    if (msg) { msg.innerHTML = "<font color=\"red\">" + error + "</font>"; }
   }
+  if (submit = document.getElementById('submit')) submit.disabled = accepted ? false : true;
 }
 
 function validate(error, value, output, field) {
@@ -2394,7 +2397,7 @@ if (!empty($HTTP_POST_VARS['action'])
 
     echo '
 </table>
-<p><input type="submit" value="Save ',$config_file,'" /> <input type="reset" value="Clear" /></p>
+<p><input type="submit" id="submit" value="Save ',$config_file,'" /> <input type="reset" value="Clear" /></p>
 </form>
 ';
 }
