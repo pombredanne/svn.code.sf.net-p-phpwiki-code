@@ -62,14 +62,25 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 //     lib/FileFinder.php:82: Fatal[256]: DB.php: file not found
 //
-//ini_set('include_path', '.:/where/you/installed/phpwiki');
+// Define the include path for this wiki: pear plus the phpwiki path
+// $include_path = '.:/Apache/php/pear:/prog/php/phpwiki';
+//
+// // Windows needs ';' as path delimiter. cygwin, mac and unix ':'
+// if (substr(PHP_OS,0,3) == 'WIN') {
+//     $include_path = implode(';',explode(':',$include_path));
+// } elseif (substr(PHP_OS,0,6) == 'CYGWIN') {
+//     $include_path = '.:/usr/local/lib/php/pear:/usr/src/php/phpwiki';
+// } else {
+//     ;
+// }
+//ini_set('include_path', $include_path);
 
 /////////////////////////////////////////////////////////////////////
 // Part Null: Don't touch this!
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.69 2002-01-19 22:50:36 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.70 2002-01-20 18:19:25 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
