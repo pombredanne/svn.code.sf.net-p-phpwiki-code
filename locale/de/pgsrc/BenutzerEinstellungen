@@ -1,4 +1,4 @@
-From [no address given]  Tue Dec 18 02:37:25 2001
+From [no address given]  Tue Dec 18 22:49:53 2001
 Subject: BenutzerEinstellungen
 From: [no address given] (PhpWiki)
 Date: Tue, 18 Dec 2001 02:21:25 -0500
@@ -10,7 +10,7 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: quoted-printable
 
 You can now set some user preferences.  The values of these preferences =
-are currently stored in a cookie (so you must have cookies enables to use =
+are currently stored in a cookie (so you must have cookies enabled to use =
 this feature.)
 
 ! !EditArea Dimensions.
