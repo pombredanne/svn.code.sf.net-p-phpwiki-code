@@ -1,4 +1,4 @@
-<!-- $Id: wiki_dbmlib.php3,v 1.6 2000-06-28 22:22:05 wainstead Exp $ -->
+<!-- $Id: wiki_dbmlib.php3,v 1.7 2000-07-07 02:37:01 wainstead Exp $ -->
 <?
    /*
       Database functions:
@@ -11,6 +11,7 @@
       TitleSearchNextMatch($dbi, &$pos)
       InitFullSearch($dbi, $search)
       FullSearchNextMatch($dbi, &$pos)
+      GetAllWikiPagenames($dbi)
    */
 
 
@@ -161,6 +162,19 @@
       } else {
          return 0;
       }
+   }
+
+   function GetAllWikiPagenames($dbi) {
+      $namelist = array();
+      $ctr = 0;
+
+      $namelist[$ctr] = $key = dbmfirstkey($dbi);
+      while ($key = dbmnextkey($dbi, $key)) {
+         $ctr++;
+         $namelist[$ctr] = $key;
+      }
+
+      return $namelist;
    }
 
 ?>
