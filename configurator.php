@@ -1,13 +1,37 @@
-<?php 
-// $Id: configurator.php,v 1.28 2005-02-19 21:36:02 rurban Exp $
+<?php // $Id: configurator.php,v 1.29 2005-02-26 17:47:57 rurban Exp $
+/*
+ * Copyright 2002,2003,2005 $ThePhpWikiProgrammingTeam
+ * Copyright 2002 Martin Geisler <gimpster@gimpster.com> 
+ *
+ * This file is part of PhpWiki.
+ * Parts of this file were based on PHPWeather's configurator.php file.
+ *   http://sourceforge.net/projects/phpweather/
+ *
+ * PhpWiki is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * PhpWiki is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
 /**
  * Starts automatically the first time by IniConfig("config/config.ini") 
  * if it doesn't exist.
+ * Initial expand show= part (by id)
  *
  * 1.3.11 TODO: (or 1.3.12?)
  * fix SQL quotes, AUTH_ORDER quotes and file forward slashes
  * commented / optional: non-default values should not be commented!
  *                       default values if optional can be omitted.
+ * posted values validation, extend js validation for sane DB values
  * read config-default.ini
  * read config-dist.ini into sections, comments, and optional/required settings
  *
@@ -26,9 +50,10 @@
  * subsequent requests will fail. (Save INI)
  */
 
-if (!defined('ENABLE_FILE_OUTPUT')) define('ENABLE_FILE_OUTPUT', true);
+global $HTTP_SERVER_VARS, $HTTP_POST_VARS, $tdwidth;
+if (empty($_GET)) $_GET =& $GLOBALS['HTTP_GET_VARS'];
+if (empty($_ENV)) $_ENV =& $GLOBALS['HTTP_ENV_VARS'];
 
-global $HTTP_SERVER_VARS, $HTTP_POST_VARS;
 if (empty($configurator))
     $configurator = "configurator.php";
 if (!strstr($HTTP_SERVER_VARS["SCRIPT_NAME"], $configurator) and defined('DATA_PATH'))
@@ -39,13 +64,25 @@ $tdwidth = 700;
 $config_file = (substr(PHP_OS,0,3) == 'WIN') ? 'config\\config.ini' : 'config/config.ini';
 $fs_config_file = dirname(__FILE__) . (substr(PHP_OS,0,3) == 'WIN' ? '\\' : '/') . $config_file;
 if (isset($HTTP_POST_VARS['create']))  header('Location: '.$configurator.'?create=1#create');
-printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'iso-8859-1'); 
+
+// Enable write to config.ini
+// This is secure when no config.ini exists. And if so this configurator will always be called 
+// from IniConfig.php. So nobody can reset the password.
+if (!defined('ENABLE_FILE_OUTPUT')) {
+    define('ENABLE_FILE_OUTPUT', !file_exists($fs_config_file));
+} elseif (ENABLE_FILE_OUTPUT and file_exists($fs_config_file)) {
+    // require admin user in session?
+    trigger_error("Not yet implemented: Change an existing configuration for admin user only.", 
+                  E_USER_ERROR);
+}
+
+echo "<","?xml version=\"1.0\" encoding=\"'iso-8859-1'\"?",">\n"; 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.28 2005-02-19 21:36:02 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.29 2005-02-26 17:47:57 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
@@ -124,10 +161,12 @@ function do_init() {
   // Hide all groups.  We do this via JavaScript to avoid
   // hiding the groups if JavaScript is not supported...
   var rows = document.getElementsByTagName('tr');
+  var show = '<?php echo $_GET["show"] ?>';
   for (var i = 0; i < rows.length; i++) {
     var tr = rows[i];
     if (tr.className == 'header')
-      toggle_group(tr.id);
+	if (!show || tr.id != show)
+	    toggle_group(tr.id);
   }
 
   // Select text in textarea upon focus
@@ -1108,7 +1147,7 @@ This narrows the search, and is needed for LDAP group membership (if GROUP_METHO
 The entries in this ou must have a gidNumber and cn attribute.
 Default: ou=Groups");
 
-} else {
+} else { // function_exists('ldap_connect')
 
 $properties["LDAP Authentication"] =
 new unchangeable_define('LDAP Authentication', "
@@ -1167,7 +1206,7 @@ Some IMAP_AUTH_HOST samples:
   localhost, localhost:143/imap/notls, 
   localhost:993/imap/ssl/novalidate-cert (SuSE refuses non-SSL conections)");
 
-} else {
+} else { // function_exists('imap_open')
 
 $properties["IMAP Authentication"] =
   new unchangeable_define('IMAP_AUTH_HOST',"
@@ -2207,10 +2246,11 @@ extends _variable {
         return "\n".$SEPARATOR . str_replace("\n", "\n; ", $d) ."\n".$this->default_value;
     }
     function get_instructions($title) {
+	$id = preg_replace("/\W/","",$this->config_item_name);
 	$group_name = preg_replace("/\W/","",$title);
-	$i = "<tr class='header' id='$group_name'>\n<td class=\"part\" width=\"100%\" colspan=\"2\" bgcolor=\"#eeeeee\">\n";
+	$i = "<tr class=\"header\" id=\"$id\">\n<td class=\"part\" width=\"100%\" colspan=\"2\" bgcolor=\"#eeeeee\">\n";
         $i .= "<h2>" . $title . "</h2>\n    " . nl2p($this->_get_description()) ."\n";
-	$i .= "<p><a href=\"javascript:toggle_group('$group_name')\" id=\"{$group_name}_text\">Hide options.</a></p>";
+	$i .= "<p><a href=\"javascript:toggle_group('$id')\" id=\"{$id}_text\">Hide options.</a></p>";
         return  $i ."</td>\n";
     }
     function get_html() {
@@ -2330,13 +2370,6 @@ if (!empty($HTTP_POST_VARS['action'])
     }
 
     $config .= $end;
-
-    // I think writing this config file is a big security hole.
-    // If this is installed in such a way that it can write an index-user.php,
-    // then anyone can create a working index-user.php with, e.g. any
-    // admin user and pw of their choosing...
-    //
-    // So I'm disabling it...
 
     if (defined('ENABLE_FILE_OUTPUT') and ENABLE_FILE_OUPUT) {
       // We first check if the config-file exists.
