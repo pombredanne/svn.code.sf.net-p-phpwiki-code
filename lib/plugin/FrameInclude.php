@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FrameInclude.php,v 1.7 2003-02-26 22:27:19 dairiki Exp $');
+rcs_id('$Id: FrameInclude.php,v 1.8 2003-02-26 22:32:06 dairiki Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -58,7 +58,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -115,11 +115,13 @@ extends WikiPlugin
         $noframes = true;
 
         if (($which = $request->getArg('frame'))) {
+            // Generate specialized frame output (header, footer, etc...)
             $request->discardOutput();
             displayPage($request, new Template("frame-$which", $request));
             $request->finish(); //noreturn
         }
-        
+
+        // Generate the outer frameset
         $frame = HTML::frame(array('name' => $name,
                                    'src' => $src,
                                    'title' => $title,
@@ -143,75 +145,22 @@ extends WikiPlugin
         $request->discardOutput();
         displayPage($request, new Template('frameset', $request, $tokens));
         $request->finish(); //noreturn
-
-        
-        // pass FRAMEPARAMS directly to the Template call in Template.php:214
-        // which goes right after <HEAD>
-        $topuri = $request->getURLtoSelf(array('frame' => 'top'));
-        $bottomuri = $request->getURLtoSelf(array('frame' => 'bottom'));
-        $top = HTML::frame(array('name' => "top", "src" => $topuri));
-        $bottom = HTML::frame(array('name' => "bottom", "src" => $bottomuri));
-        //$bottom = "<frame name=\"bottom\" src=\"$bottomuri\" />";
-
-        $content_opts = array('name' => $name, "src" => $src,
-                              'frameborder' => $frameborder);
-        //        $content = "<frame name=\"$name\" src=\"$src\" frameborder=\"$frameborder\" ";
-        if ($marginwidth)
-            $content_opts['marginwidth'] = $marginwidth;
-        if ($marginheight)
-            $content_opts['marginheight'] = $marginheight;
-        if ($noresize)
-            $content_opts['noresize'] = "noresize";
-        $content_opts['scrolling'] = $scrolling;
-        $content = HTML::frame($content_opts);
-
-        // include this into top.tmpl instead
-        //$memo = HTML(HTML::p(array('class' => 'transclusion-title'),
-        //                     fmt("Included frame from %s", $src)));
-        if (isa($Theme, 'Theme_Sidebar')) {
-            // left also.
-            $lefturi = $request->getURLtoSelf(array('frame' => 'navbar'));
-            $frameset = HTML::frameset(array('rows' => $rows));
-            $frameset->pushContent($top);
-            $colframeset = HTML::frameset(array('cols' => $cols));
-            $colframeset->pushContent(HTML::frame(array('name' => "left",
-                                                        "src" => $lefturi)));
-            $colframeset->pushContent($content);
-            $frameset->pushContent($colframeset);
-            $frameset->pushContent($bottom);
-        } else {
-            unset($args['cols']);
-            // only top, body, bottom
-            $frameset = HTML::frameset(array('rows' => $rows));
-            $frameset->pushContent($top);
-            $frameset->pushContent($content);
-            $frameset->pushContent($bottom);
-        }
-
-        $tokens['FRAMESET'] = $frameset;
-
-        $request->discardOutput();
-        return printXML(new Template('frameset', $request, $tokens));
-        $request->finish();
-    }
-
-    function _generateFrame(&$request, $content) {
-        $request->discardOutput();
-        $head = new Template('head', $request);
-        printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
-        echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-              "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-              <html xmlns="http://www.w3.org/1999/xhtml">';
-        echo "</html>\n";
-        $head->printExpansion();
-        echo "<body>\n";
-        printXML($content);
-        echo "</body>\n";
-        $request->finish();
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2003/02/26 22:27:19  dairiki
+// Fix and refactor FrameInclude plugin (more or less).
+//
+// (This should now generate valid HTML.  Woohoo!)
+//
+// The output when using the Sidebar theme is ugly enough that it should
+// be considered broken.  (But the Sidebar theme appears pretty broken in
+// general right now.)
+//
+// (Personal comment (not to be taken personally): I must say that I
+// remain unconvinced of the usefulness of this plugin.)
+//
 // Revision 1.6  2003/01/18 21:41:01  carstenklapp
 // Code cleanup:
 // Reformatting & tabs to spaces;
