@@ -1,4 +1,7 @@
-<?php  rcs_id('$Id: wiki_dbmlib.php3,v 1.12 2000-08-29 02:37:42 aredridel Exp $');
+<?php  
+
+   rcs_id('$Id: wiki_dbmlib.php3,v 1.13 2000-09-04 05:47:35 wainstead Exp $');
+
    /*
       Database functions:
 
@@ -34,6 +37,7 @@
          while (($dbi[$key] = @dbmopen($file, "c")) < 1) {
             if ($numattempts > MAX_DBM_ATTEMPTS) {
                echo "Cannot open database '$key' : '$file', giving up.";
+               // we should close the files here... but...
                exit();
             }
             $numattempts++;
@@ -175,71 +179,72 @@
 
 
    function IncreaseHitCount($dbi, $pagename) {
-return;
-      // kluge: we ignore the $dbi for hit counting
-      global $WikiDB;
 
-      $hcdb = OpenDataBase($WikiDB['hitcount']);
-
-      if (dbmexists($hcdb['active'], $pagename)) {
+      if (dbmexists($dbi['hitcount'], $pagename)) {
          // increase the hit count
-         $count = dbmfetch($hcdb['active'], $pagename);
+         echo "$pagename there, incrementing...<br>\n";
+         $count = dbmfetch($dbi['hitcount'], $pagename);
          $count++;
-         dbmreplace($hcdb['active'], $pagename, $count);
+         dbmreplace($dbi['hitcount'], $pagename, $count);
       } else {
          // add it, set the hit count to one
+         // echo "adding $pagename to hitcount...<br>\n";
          $count = 1;
-         dbminsert($hcdb['active'], $pagename, $count);
+         dbminsert($dbi['hitcount'], $pagename, $count);
       }
-
-      CloseDataBase($hcdb);
    }
 
    function GetHitCount($dbi, $pagename) {
-return;
-      // kluge: we ignore the $dbi for hit counting
-      global $WikiDB;
 
-      $hcdb = OpenDataBase($WikiDB['hitcount']);
-      if (dbmexists($hcdb['active'], $pagename)) {
+      if (dbmexists($dbi['hitcount'], $pagename)) {
          // increase the hit count
-         $count = dbmfetch($hcdb['active'], $pagename);
+         $count = dbmfetch($dbi['hitcount'], $pagename);
          return $count;
       } else {
          return 0;
       }
-
-      CloseDataBase($hcdb);
    }
 
-
+   function cmp($a,$b) {   
+       if ($a == $b) return 0;
+       return ($a > $b) ? -1 : 1;
+   }
 
    function InitMostPopular($dbi, $limit) {
-return;
+
+      // iterate through the whole dbm file for hit counts
+      // sort the results highest to lowest, and return 
+      // n..$limit results
+
       $pagename = dbmfirstkey($dbi['hitcount']);
+
       $res[$pagename] = dbmfetch($dbi['hitcount'], $pagename);
+
       while ($pagename = dbmnextkey($dbi['hitcount'], $pagename)) {
          $res[$pagename] = dbmfetch($dbi['hitcount'], $pagename);
-         echo "got $pagename with value " . $res[$pagename] . "<br>\n";
+         //echo "got $pagename with value " . $res[$pagename] . "<br>\n";
       }
 
-      rsort($res);
-      reset($res);
+      uasort($res, cmp);
       return($res);
    }
 
-   function MostPopularNextMatch($dbi, $res) {
-return;
+   function MostPopularNextMatch($dbi, &$res) {
+
       // the return result is a two element array with 'hits'
       // and 'pagename' as the keys
 
-      if (list($index1, $index2, $pagename, $hits) = each($res)) {
-         echo "most popular next match called<br>\n";
-         echo "got $pagename, $hits back<br>\n";
+      if (count($res) == 0)
+         return 0;
+
+      if (list($pagename, $hits) = each($res)) {
+         //echo "most popular next match called<br>\n";
+         //echo "got $pagename, $hits back<br>\n";
          $nextpage = array(
             "hits" => $hits,
             "pagename" => $pagename
          );
+         $dbm_mostpopular_cntr++;
          return $nextpage;
       } else {
          return 0;
@@ -251,6 +256,7 @@ return;
       $ctr = 0;
 
       $namelist[$ctr] = $key = dbmfirstkey($dbi);
+
       while ($key = dbmnextkey($dbi, $key)) {
          $ctr++;
          $namelist[$ctr] = $key;
