@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.33 2002-01-30 23:41:54 dairiki Exp $');
+rcs_id('$Id: diff.php,v 1.34 2002-01-31 03:18:42 dairiki Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -279,15 +279,6 @@ function showDiff (&$request) {
     }
     else {
         switch ($previous) {
-        case 'major':
-            $old = $new;
-            while ($old = $page->getRevisionBefore($old)) {
-                if (! $old->get('is_minor_edit'))
-                    break;
-            }
-            $old_version = _("previous major revision");
-            $others = array('minor', 'author');
-            break;
         case 'author':
             $old = $new;
             while ($old = $page->getRevisionBefore($old)) {
@@ -298,11 +289,20 @@ function showDiff (&$request) {
             $others = array('major', 'minor');
             break;
         case 'minor':
-        default:
             $previous='minor';
             $old = $page->getRevisionBefore($new);
             $old_version = _("previous revision");
             $others = array('major', 'author');
+            break;
+        case 'major':
+        default:
+            $old = $new;
+            while ($old && $old->get('is_minor_edit'))
+                $old = $page->getRevisionBefore($old);
+            if ($old)
+                $old = $page->getRevisionBefore($old);
+            $old_version = _("predecessor to the previous major change");
+            $others = array('minor', 'author');
             break;
         }
     }
@@ -353,7 +353,7 @@ function showDiff (&$request) {
             $html->pushContent($fmt->format($diff));
         }
     }
-    
+
     include_once('lib/Template.php');
     GeneratePage($html, sprintf(_("Diff: %s"), $pagename), $new);
 }
