@@ -1,4 +1,4 @@
-<!-- $Id: wiki_pgsql.php3,v 1.11 2000-06-28 22:22:05 wainstead Exp $ -->
+<!-- $Id: wiki_pgsql.php3,v 1.12 2000-06-30 00:56:27 wainstead Exp $ -->
 <?
 
    /*
@@ -87,8 +87,7 @@
       $pagehash["pagename"] = addslashes($pagehash["pagename"]);
       $pagehash["refs"] = serialize($pagehash["refs"]);
 
-      // temporary hack until the time stuff is brought up to date
-      $pagehash["created"] = time();
+      // record the time of modification
       $pagehash["lastmodified"] = time();
 
       if (IsWikiPage($dbi, $pagename)) {
