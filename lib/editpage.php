@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.72 2004-06-14 11:31:37 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.73 2004-06-16 21:23:44 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -68,6 +68,7 @@ class PageEditor
     }
 
     function editPage () {
+        global $WikiTheme;
         $saveFailed = false;
         $tokens = &$this->tokens;
 
@@ -121,7 +122,6 @@ class PageEditor
 
         //FIXME: enable Undo button for all other buttons also, not only the search/replace button
         if (defined('JS_SEARCHREPLACE') and JS_SEARCHREPLACE) {
-            global $WikiTheme;
             $tokens['JS_SEARCHREPLACE'] = 1;
             $undo_btn = $WikiTheme->getImageURL("ed_undo.gif"); 
             $undo_d_btn = $WikiTheme->getImageURL("ed_undo_d.gif"); 
@@ -762,6 +762,14 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.72  2004/06/14 11:31:37  rurban
+ renamed global $Theme to $WikiTheme (gforge nameclash)
+ inherit PageList default options from PageList
+   default sortby=pagename
+ use options in PageList_Selectable (limit, sortby, ...)
+ added action revert, with button at action=diff
+ added option regex to WikiAdminSearchReplace
+
  Revision 1.71  2004/06/03 18:06:29  rurban
  fix file locking issues (only needed on write)
  fixed immediate LANG and THEME in-session updates if not stored in prefs
