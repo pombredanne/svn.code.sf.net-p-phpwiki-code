@@ -1,0 +1,20 @@
+Here are the beginnings of some coding guidelines for PhpWiki.
+
+! I18N: Using gettext()
+
+String literals which end up making it into the HTML output should be wrapped
+with a call to ''gettext()''.  This allows translations to be substituted when 
+PhpWiki is run in non-english environments.
+
+It is important that the argument of ''gettext()'' be a constant string
+literal, in double quotes (").
+
+ OKAY:  gettext("This is a message.");
+ OKAY:  gettext ("Fazool."); 
+ OKAY:  sprintf(gettext("Hello %s"), $name);
+
+ BAD:   gettext('This will be ignored by xgettext.');
+ BAD:   gettext("Howdy" . ", wazoo");
+ BAD:   gettext("Hello $name");
+ BAD:   define("MES", "howdy");  gettext(MES);
+
