@@ -1,3 +1,4 @@
+
 Using PhpWiki 1.3 with Mac OS X / Darwin
 
 PhpWiki works quite well and retains almost complete functionality
@@ -25,13 +26,16 @@ development. Among other niceties it provides multiple undos (even
 beyond the last file save), line numbering and syntax coloring; but
 don't rely on PB's text colors too much, it doesn't always properly
 handle coloring for \"escaped quotes\" which are frequently called for
-in PHP when generating HTML code. \\" <--(kludge for broken syntax coloring)
+in PHP when generating HTML code.
+\\" <--(kludge for broken syntax coloring)
 
 Instructions for using Project Builder with PhpWiki can be found at
 the bottom of this document.
 
+
 Database
 --------
+
 A suitable database for PhpWiki is not included with Mac OS X 10.1. If
 you decide to use one of the more popular (and free) database packages
 such as mySQL or PostgreSQL with PhpWiki, fortunately there are
@@ -46,6 +50,7 @@ given in INSTALL.mysql to prepare a new database for use with PhpWiki.
 
 Apache PHP Module
 -----------------
+
 The default PHP module for Apache as supplied by Apple does work with
 PhpWiki but is missing support for the zlib and GD libraries. Wiki
 will still produce a valid ZIP file when an administrator saves a ZIP
@@ -75,12 +80,13 @@ unless you installed PHP into a location other than the default
 
 Obtaining and Installing mySQL and libphp4.so
 ---------------------------------------------
+
 Mark Liyanage has graciously provided precompiled Mac OS X versions of
 mySQL, an updated PHP module for Apache and some installation
 instructions on his web site. He has also written some tips if you
 want to compile these programs for yourself.
 
-    <http://www.entropy.ch/software/macosx/>
+   <http://www.entropy.ch/software/macosx/>
 
 Note that whether you use the built-in PHP module or another PHP
 module, it must be activated in Apache's httpd.conf before you can use
@@ -90,33 +96,38 @@ Apache documentation for more information.
 A good place to find other distributions of mySQL or PostgreSQL which
 can be used with Mac OS X are listed at:
 
-    <http://versiontracker.com/macosx/>
+   <http://versiontracker.com/macosx/>
 
 
 PHP 4.1 and Mac OS X
 --------------------
+
 The version of PHP 4.1 from Mark Liyanage's web site requires an
 updated PEAR library. PhpWiki seems to work anyway but it will produce
-warnings about a depreciated user function with each page load. Move
-the current contents of '/System/Library/PHP' into a backup folder,
-such as '/System/Library/PHP/PEAR-4.0.6'. Take the contents of the
-'pear' folder from the official PHP 4.1 tarball (php-4.1.0.tar.gz) and
-move it into '/System/Library/PHP'. A precompiled PHP 4.1 module for
-Apache and the PearDB support files are also available at:
+warnings about a depreciated user function with each page load.
 
-    <http://homepage.mac.com/carstenklapp/>
+1. Move the current contents of '/System/Library/PHP' into a backup
+   folder, such as '/System/Library/PHP/PEAR-4.0.6'.
+
+2. Take the contents of the 'pear' folder from the official PHP 4.1
+   tarball (php-4.1.0.tar.gz) and move it into '/System/Library/PHP'.
+
+A precompiled PHP 4.1 module for Apache and the PearDB support files
+are also available at:
+
+   <http://homepage.mac.com/carstenklapp/>
 
 
 PhpWiki Configuration Notes
 ---------------------------
+
 Move the phpwiki folder into the directory used by the web server. In
 Mac OS X 10.1 this folder will be "/Library/WebServer/Documents"
-(unless you previously changed it to somewhere else in the
-configuration file "/private/etc/httpd/httpd.conf").
+(unless you previously changed it to somewhere else in the config file
+"/private/etc/httpd/httpd.conf").
 
 Follow the generalized installation instructions described in INSTALL
-but with the changes below.
-
+but with the changes to sections 1 and 2 listed below.
 
 1. The Mac OS X Apache web server runs as user "www" and this works
    fine with PhpWiki so long as "Everyone" has at least read-only
@@ -134,7 +145,7 @@ sudo chmod u+wrx /System/Library/phpwiki/dumps
 2. A few lines need to be inserted into Apache's configuration in
    order to use "nice" URLs with PhpWiki such as:
 
-    http://somehost/wiki?GoodStyle
+   http://somehost/wiki?GoodStyle
 
 Open the terminal and type in the following to edit the web server
 configuration file (enter your administration password when prompted):
@@ -171,8 +182,8 @@ control panel or from the terminal:
 
 sudo apachectl graceful
 
-Next, edit the following lines in part five of index.php to match
-the following:
+Next, edit the following lines in part five of index.php to match the
+following:
 
 define('DATA_PATH', '/wiki');
 define('USE_PATH_INFO', true);
@@ -197,12 +208,14 @@ log rotation.
 
 
 Using Apple's Project Builder with PhpWiki
------------------------------------------- A PB project file is
-available on the SourceForge CVS server to allow you to easily edit
-PhpWiki's source code using Apple's Project Builder. If you have not
-yet updated to PB 1.1.1 (Dec 2001 DevTools) it is highly recommended
-you do so because the PhpWiki source are written in ISO-8859-1, and
-some of the bug fixes are pertinent to file encoding.
+------------------------------------------
+
+A PB project file is available on the SourceForge CVS server to allow
+you to easily edit PhpWiki's source code using Apple's Project
+Builder. If you have not yet updated to PB 1.1.1 (Dec 2001 DevTools)
+it is highly recommended you do so because the PhpWiki source are
+written in ISO-8859-1, and some of the bug fixes are pertinent to file
+encoding.
 
 PB 1.1 has some bugs which makes it impossible to select the correct
 character encoding in the GUI for any pre-existing source code
@@ -221,16 +234,22 @@ To download the phpwiki.pbxproj bundle, use CVS to checkout the module
 named "phpwiki.pbxproj" then place it into the same folder which
 contains your "phpwiki" folder.
 
+
+How to use SSH with Project Builder
+-----------------------------------
+
 Project Builder 1.1.1 can be used with Sourceforge's CVS but there is
-a little bit of work to get it set up the first time.  The following
+a little bit of work to get it set up the first time. The following
 instructions were based on a tip from macosxhints.com.
 
 Preparation:
+
 Checkout phpwiki with the cvs command line tools. Make sure that your
 ssh keys have been uploaded to your account at Sourceforge and that
 you can sucessfully ssh into phpwiki.sourceforge.net.
 
 Instructions:
+
 1. Download and install "keychain" from:
 
    <http://www.gentoo.org/projects/keychain.html>.
@@ -238,8 +257,8 @@ Instructions:
 The Keychain script acts as a front-end to ssh-agent, allowing you to
 easily have one long-running ssh-agent process per system, rather than
 per login session. This dramatically reduces the number of times you
-need to enter your passphrase from once per new login session to once
-every time your local machine is rebooted.
+need to enter your passphrase, from once per new terminal window
+session to once every time your local machine is rebooted.
 
 2. Add the following to your .cshrc file (if you use the default tcsh
    shell or csh).
@@ -254,29 +273,42 @@ alias sshsf 'ssh mysfuserid@phpwiki.sourceforge.net'
 
 (bash users would substitute the following lines in the above script
 for their .bashrc file:)
+
 CVS_RSH=ssh; EXPORT CVS_RSH
 source ~/.ssh-agent-${HOSTNAME}
 alias sshsf='ssh mysfuserid@phpwiki.sourceforge.net'
 
 3. Close the terminal window then open a new one. Keychain will
-   activate ssh-agent which will ask for your ssh key password. It keeps
-   running in the background and won't ask for your password again until
-   you log out or restart.
+   activate ssh-agent which will ask for your ssh key password. It
+   keeps running in the background and won't ask for your password
+   again until you log out or restart.
 
 4. From now on, YOU MUST open Project Builder from the Terminal shell
-   for it's CVS to work with SSH. This is why We created a command alias
-   in .cshrc to launch Project Builder. If it is already running because
-   you double-clicked the PB icon, quit it, then launch it from the terminal
-   by typing pb. Once PB is running you can safely double-click a
-   project file to open it.
+   for it's CVS to work with SSH. This is why We created a command
+   alias in .cshrc to launch Project Builder. If it is already running
+   because you double-clicked the PB icon, quit it, then launch it
+   from the terminal by typing pb. Once PB is running you can safely
+   double-click a project file to open it.
 
 Using the above method, ProjectBuilder will successfully connect to
-the Sourceforge CVS with SSH. Any other server which requires ssh
-instead of rsh should work too.
+the Sourceforge CVS with SSH. Any other server which requires cvs
+connections via ssh instead of rsh should work too.
 
+Note: Renaming /usr/bin/rsh and replacing it with ssh doesn't seem to
+      work; Project Builder simply MUST be launched from the command line
+      for it to work at all with ssh.
+
+Hopefully SSH support will be improved in the future. Send an email
+to: macosx-tools-feedback@group.apple.com to let the team know that
+full support for SSH in Project Builder is important.
+
+
+Emacs Key Bindings for Project Builder
+--------------------------------------
 
 Emacs Users: You can add custom Alt-key bindings to Project Builder
-for some common Emacs stuff:  *Note the wrapped url!
+for some common Emacs stuff: *Note the wrapped url!
+
 http://developer.apple.com/techpubs/macosx/Cocoa/TasksAndConcepts/
 ProgrammingTopics/TextDisplay/Tasks/TextDefaultsAndBindings.html
 
@@ -287,8 +319,4 @@ phpwiki-talk list at phpwiki-talk@lists.sourceforge.net.
 Carsten Klapp
 carstenklapp@mac.com
 
-$Id: INSTALL.MacOSX,v 1.10 2001-12-31 00:38:02 carstenklapp Exp $
-
-
-
-
+$Id: INSTALL.MacOSX,v 1.11 2001-12-31 01:46:04 carstenklapp Exp $
