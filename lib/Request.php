@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.88 2005-01-25 07:00:23 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.89 2005-02-04 10:38:36 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -1091,17 +1091,25 @@ class Request_AccessLogEntry
     /* This is better been done by apache mod_log_sql */
     /* If ACCESS_LOG_SQL & 2 we do write it by our own */
     function write_sql() {
-        $dbh =& $GLOBALS['request']->_dbi;
+    	global $request;
+    	
+        $dbh =& $request->_dbi;
         if ($dbh and $dbh->isOpen() and $this->_accesslog->logtable) {
             $log_tbl =& $this->_accesslog->logtable;
-            if ($GLOBALS['request']->get('REQUEST_METHOD') == "POST") {
+            if ($request->get('REQUEST_METHOD') == "POST") {
+                // strangely HTTP_POST_VARS doesn't contain all posted vars.
           	if (check_php_version(4,2))
-          	  // strangely HTTP_POST_VARS doesn't contain all posted vars.
-          	  $this->request_args = substr(serialize($_POST),0,254); // if VARCHAR(255) is used.
-          	else
-          	  $this->request_args = substr(serialize($GLOBALS['HTTP_POST_VARS']),0,254);
-            } else { 
-          	$this->request_args = $GLOBALS['request']->get('QUERY_STRING'); 
+                    $args = $_POST; // copy not ref. clone not needed on hashes
+                else
+                    $args = $GLOBALS['HTTP_POST_VARS'];
+                // garble passwords
+                if (!empty($args['auth']['passwd']))    $args['auth']['passwd'] = '<not displayed>';
+                if (!empty($args['dbadmin']['passwd'])) $args['dbadmin']['passwd'] = '<not displayed>';
+                if (!empty($args['pref']['passwd']))    $args['pref']['passwd'] = '<not displayed>';
+                if (!empty($args['pref']['passwd2']))   $args['pref']['passwd2'] = '<not displayed>';
+                $this->request_args = substr(serialize($args),0,254); // if VARCHAR(255) is used.
+            } else {
+          	$this->request_args = $request->get('QUERY_STRING'); 
             }
             // duration problem: sprintf "%f" might use comma e.g. "100,201" in european locales
             $dbh->genericSqlQuery
@@ -1112,8 +1120,8 @@ class Request_AccessLogEntry
                          . " VALUES(%d,%s,%s,%s,%s,%s,%s,%s,%d,%d,%s,%s,'%s')",
                      $this->time,
                      $dbh->quote($this->host), $dbh->quote($this->user),
-                     $dbh->quote($GLOBALS['request']->get('REQUEST_METHOD')), $dbh->quote($this->request), 
-                     $dbh->quote($GLOBALS['request']->get('REQUEST_URI')), $dbh->quote($this->request_args),
+                     $dbh->quote($request->get('REQUEST_METHOD')), $dbh->quote($this->request), 
+                     $dbh->quote($request->get('REQUEST_URI')), $dbh->quote($this->request_args),
                      $dbh->quote($this->_ncsa_time($this->time)), $this->status, $this->size,
                      $dbh->quote($this->referer),
                      $dbh->quote($this->user_agent),
@@ -1320,6 +1328,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.88  2005/01/25 07:00:23  rurban
+// fix redirect,
+//
 // Revision 1.87  2005/01/08 21:27:45  rurban
 // Prevent from Overlarge session data crash
 //
