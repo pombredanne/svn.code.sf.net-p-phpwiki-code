@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.13 2004-05-15 19:48:33 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.14 2004-05-15 22:54:49 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -20,7 +20,7 @@ rcs_id('$Id: PagePerm.php,v 1.13 2004-05-15 19:48:33 rurban Exp $');
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* 
+/**
    Permissions per page and action based on current user, 
    ownership and group membership implemented with ACL's (Access Control Lists),
    opposed to the simplier unix like ugo:rwx system.
@@ -128,7 +128,7 @@ function pagePermissionsAcl($type,$perm_tree) {
 
 // view => who
 // edit => who
-function pagePermissionsAclFormat($perm_tree,$editable=false) {
+function pagePermissionsAclFormat($perm_tree, $editable=false) {
     list($type,$perm) = pagePermissionsAcl($perm_tree[0], $perm_tree);
     if ($editable)
         return $perm->asEditableTable($type);
@@ -140,8 +140,8 @@ function pagePermissionsAclFormat($perm_tree,$editable=false) {
  * Check permission per page.
  * Returns true or false.
  */
-function mayAccessPage ($access,$pagename) {
-    return _requiredAuthorityForPagename($access,$pagename);
+function mayAccessPage ($access, $pagename) {
+    return _requiredAuthorityForPagename($access, $pagename);
 }
 
 /** Check the permissions for the current action.
@@ -290,6 +290,7 @@ class PagePermission {
     var $perm;
 
     function PagePermission($hash = array()) {
+        $this->_group = &WikiGroup::getGroup($GLOBALS['request']);
         if (is_array($hash) and !empty($hash)) {
             $accessTypes = $this->accessTypes();
             foreach ($hash as $access => $requires) {
@@ -329,7 +330,8 @@ class PagePermission {
     function isMember($user,$group) {
         global $request;
         if ($group === ACL_EVERY) return true;
-        $member = &WikiGroup::getGroup($request);
+        if (!isset($this->_group)) $member =& WikiGroup::getGroup($request);
+        else $member =& $this->_group;
         //$user = & $request->_user;
         if ($group === ACL_ADMIN)   // WIKI_ADMIN or member of _("Administrators")
             return $user->isAdmin() or 
@@ -401,6 +403,14 @@ class PagePermission {
         return $perm;
     }
 
+    function sanify() {
+        foreach ($this->perm as $access => $groups) {
+            foreach ($groups as $group => $bool) {
+                $this->perm[$access][$group] = (boolean) $bool;
+            }
+        }
+    }
+    
     /**
      * returns list of all supported access types.
      */
@@ -428,16 +438,24 @@ class PagePermission {
     function retrieve($page) {
         $hash = $page->get('perm');
         if ($hash)  // hash => object
-            return new PagePermission(unserialize($hash));
+            $perm = new PagePermission(unserialize($hash));
         else 
-            return new PagePermission();
+            $perm = new PagePermission();
+        $perm->sanify();
+        return $perm;
     }
 
     function store($page) {
         // object => hash
-        return $page->set('perm',serialize(obj2hash($this->perm)));
+        $this->sanify();
+        return $page->set('perm',serialize($this->perm));
     }
 
+    function groupName ($group) {
+        if ($group[0] == '_') return constant("GROUP".$group);
+        else return $group;
+    }
+    
     /* type: page, default, inherited */
     function asTable($type) {
         $table = HTML::table();
@@ -458,47 +476,107 @@ class PagePermission {
             $table->setAttr('style','border: solid thin black; font-weight: bold;');
         return $table;
     }
-
+    
     /* type: page, default, inherited */
     function asEditableTable($type) {
+        global $Theme;
+        if (!isset($this->_group)) { 
+            $this->_group =& WikiGroup::getGroup($GLOBALS['request']);
+        }
         $table = HTML::table();
-        $table->pushContent(HTML::tr(array('valign' => 'top'),
-                                     HTML::th(array('align' => 'left'),'access'),
+        $table->pushContent(HTML::tr(
+                                     HTML::th(array('align' => 'left'),
+                                              _("Access")),
                                      HTML::th(array('align'=>'right'),
-                                              'Group/User'),
-                                     HTML::th(),
-                                     HTML::th('Description')));
-        foreach ($this->perm as $access => $perms) {
+                                              _("Group/User")),
+                                     HTML::th(_("Grant")),
+                                     HTML::th(_("Del/Add")),
+                                     HTML::th(_("Description"))));
+        
+        $allGroups = $this->_group->_specialGroups();
+        foreach ($this->_group->getAllGroupsIn() as $group) {
+            if (!in_array($group,$this->_group->specialGroups()))
+                $allGroups[] = $group;
+        }
+        //array_unique(array_merge($this->_group->getAllGroupsIn(),
+        $deletesrc = $Theme->getButtonURL('delete');
+        $nbsp = HTML::raw('&nbsp;');
+        foreach ($this->perm as $access => $groups) {
             //$permlist = HTML::table(array('class' => 'cal','valign' => 'top'));
             $first_only = true;
-            foreach ($perms as $group => $bool) {
+            $newperm = HTML::input(array('type' => 'checkbox',
+                                         'name' => "acl[_new_perm][$access]",
+                                         'value' => 1));
+            $addbutton = HTML::input(array('type' => 'checkbox',
+                                           'name' => "acl[_add_group][$access]",
+                                           //'src'  => $addsrc,
+                                           //'alt'   => "Add",
+                                           'title' => _("Add this ACL"),
+                                           'value' => 1));
+            $newgroup = HTML::select(array('name' => "acl[_new_group][$access]",
+                                           'style'=> 'text-align: right;',
+                                           'size' => 1));
+            foreach ($allGroups as $groupname) {
+                if (!isset($groups[$groupname]))
+                    $newgroup->pushContent(HTML::option(array('value' => $groupname),
+                                                        $this->groupName($groupname)));
+            }
+            if (empty($groups)) {
+                $addbutton->setAttr('checked','checked');
+                $newperm->setAttr('checked','checked');
+                $table->pushContent(
+                    HTML::tr(array('valign' => 'top'),
+                             HTML::td(HTML::strong($access.":")),
+                             HTML::td($newgroup),
+                             HTML::td($nbsp,$newperm),
+                             HTML::td($nbsp,$addbutton),
+                             HTML::td(HTML::em(getAccessDescription($access)))));
+            }
+            foreach ($groups as $group => $bool) {
                 $checkbox = HTML::input(array('type' => 'checkbox',
                                               'name' => "acl[$access][$group]",
-                                              'value' => true));
+                                              'title' => _("Allow / Deny"),
+                                              'value' => 1));
                 if ($bool) $checkbox->setAttr('checked','checked');
+                $checkbox = HTML(HTML::input(array('type' => 'hidden',
+                                                   'name' => "acl[$access][$group]",
+                                                   'value' => 0)),
+                                 $checkbox);
+                $deletebutton = HTML::input(array('type' => 'checkbox',
+                                                  'name' => "acl[_del_group][$access][$group]",
+                                                  //'src'  => $deletesrc,
+                                                  //'alt'   => "Del",
+                                                  'title' => _("Delete this ACL"),
+                                                  'value' => 1));
                 if ($first_only) {
-                    $table->pushContent(HTML::tr(array('valign' => 'top'),
-                                                 HTML::td(HTML::strong($access.":")),
-                                                 HTML::td(array('class' => 'cal-today','align'=>'right'),
-                                                          constant("GROUP".$group)),
-                                                 HTML::td($checkbox),
-                                                 HTML::td(HTML::em(getAccessDescription($access)))));
+                    $table->pushContent(
+                        HTML::tr(
+                                 HTML::td(HTML::strong($access.":")),
+                                 HTML::td(array('class' => 'cal-today','align'=>'right'),
+                                          $this->groupName($group)),
+                                 HTML::td($nbsp,$checkbox),
+                                 HTML::td($nbsp,$deletebutton),
+                                 HTML::td(HTML::em(getAccessDescription($access)))));
                     $first_only = false;
                 } else {
-                    $table->pushContent(HTML::tr(array('valign' => 'top'),
-                                                 HTML::td(),
-                                                 HTML::td(array('class' => 'cal-today','align'=>'right'),
-                                                          constant("GROUP".$group)),
-                                                 HTML::td($checkbox),
-                                                 HTML::td()));
+                    $table->pushContent(
+                        HTML::tr(
+                                 HTML::td(),
+                                 HTML::td(array('class' => 'cal-today','align'=>'right'),
+                                          $this->groupName($group)),
+                                 HTML::td($nbsp,$checkbox),
+                                 HTML::td($nbsp,$deletebutton),
+                                 HTML::td()));
                 }
             }
-            /*
-            $table->pushContent(HTML::tr(array('valign' => 'top'),
-                                         HTML::td(HTML::strong($access)),
-                                         HTML::td($permlist),
-                                         HTML::td(HTML::em(getAccessDescription($access)))));
-            */
+            if (!empty($groups))
+                $table->pushContent(
+                    HTML::tr(array('valign' => 'top'),
+                             HTML::td(array('align'=>'right'),_("add ")),
+                             HTML::td($newgroup),
+                             HTML::td($nbsp,$newperm),
+                             HTML::td($nbsp,$addbutton),
+                             HTML::td(HTML::small(_("Check to add this Acl")))));
         }
         if ($type == 'default')
             $table->setAttr('style','border: dotted thin black; background-color:#eee;');
@@ -551,6 +629,12 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2004/05/15 19:48:33  rurban
+// fix some too loose PagePerms for signed, but not authenticated users
+//  (admin, owner, creator)
+// no double login page header, better login msg.
+// moved action_pdf to lib/pdf.php
+//
 // Revision 1.12  2004/05/04 22:34:25  rurban
 // more pdf support
 //

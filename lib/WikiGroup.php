@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.27 2004-05-06 13:56:40 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.28 2004-05-15 22:54:49 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -129,6 +129,9 @@ class WikiGroup{
     function specialGroup($group){
     	return in_array($group,$this->specialGroups());
     }
+    function _specialGroup($group){
+    	return in_array($group,$this->_specialGroups());
+    }
 
     function specialGroups(){
     	return array(
@@ -138,6 +141,15 @@ class WikiGroup{
                      GROUP_SIGNED,
                      GROUP_AUTHENTICATED,
                      GROUP_ADMIN);
+    }
+    function _specialGroups(){
+    	return array(
+                     "_EVERY",
+                     "_ANONYMOUS",
+                     "_BOGOUSERS",
+                     "_SIGNED",
+                     "_AUTHENTICATED",
+                     "_ADMIN");
     }
 
     /**
@@ -1000,6 +1012,9 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.27  2004/05/06 13:56:40  rurban
+// Enable the Administrators group, and add the WIKIPAGE group default root page.
+//
 // Revision 1.26  2004/04/07 23:13:18  rurban
 // fixed pear/File_Passwd for Windows
 // fixed FilePassUser sessions (filehandle revive) and password update

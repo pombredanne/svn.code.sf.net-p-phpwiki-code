@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.55 2004-05-12 19:27:47 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.56 2004-05-15 22:54:49 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -165,8 +165,9 @@ class WikiDB {
      */
     function getPage($pagename) {
         static $error_displayed = false;
+        $pagename = (string) $pagename;
         if (DEBUG) {
-            if (!(is_string($pagename) and $pagename != '')) {
+            if ($pagename === '') {
                 if ($error_displayed) return false;
                 $error_displayed = true;
                 if (function_exists("xdebug_get_function_stack"))
@@ -174,8 +175,9 @@ class WikiDB {
                 trigger_error("empty pagename",E_USER_WARNING);
                 return false;
             }
-        } else 
-            assert(is_string($pagename) and $pagename != '');
+        } else {
+            assert($pagename != '');
+        }
         return new WikiDB_Page($this, $pagename);
     }
 
@@ -1765,6 +1767,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.55  2004/05/12 19:27:47  rurban
+// revert wrong inline optimization.
+//
 // Revision 1.54  2004/05/12 10:49:55  rurban
 // require_once fix for those libs which are loaded before FileFinder and
 //   its automatic include_path fix, and where require_once doesn't grok
