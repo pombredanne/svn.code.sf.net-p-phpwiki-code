@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.70 2004-03-30 02:14:03 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.71 2004-03-30 02:38:06 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -395,6 +395,17 @@ class _PageList_Column_acl extends _PageList_Column {
         }
     }
 };
+// TODO: only if RateIt is used
+class _PageList_Column_rating extends _PageList_Column {
+    function _getValue ($page_handle, &$revision_handle) {
+        static $prefix = 0;
+        $loader = new WikiPluginLoader();
+        $args = "pagename=".$page_handle->_pagename;
+        $args .= " smallWidget=1";
+        $args .= " imgPrefix=".$prefix++;
+        return $loader->expandPi('<'."?plugin RateIt $args ?".'>',$GLOBALS['request'],$page_handle);
+    }
+};
 
 class _PageList_Column_pagename extends _PageList_Column_base {
     var $_field = 'pagename';
@@ -710,7 +721,9 @@ class PageList {
                   => new _PageList_Column_bool('rev:is_minor_edit',
                                                _("Minor Edit"), _("minor")),
                   'markup'
-                  => new _PageList_Column('rev:markup', _("Markup"))
+                  => new _PageList_Column('rev:markup', _("Markup")),
+                  'rating'
+                  => new _PageList_Column_rating('rating', _("Rate")),
                   );
     }
 
