@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.191 2004-06-25 14:31:56 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.192 2004-06-28 12:47:43 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -636,10 +636,14 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
     
     // FIXME:
     // Trying to detect why the 2nd paragraph of OldTextFormattingRules or
-    // AnciennesR%E8glesDeFormatage crashes.
+    // AnciennesR%E8glesDeFormatage crashes. 
+    // It only crashes with CreateToc
     $debug_skip = false;
-    if (DEBUG and DEBUG & _DEBUG_PARSER and preg_match("/CreateToc/",$text)) 
+    if (preg_match("/plugin CreateToc/",$text)) {
+    	trigger_error("The CreateTocPlugin is not yet old markup compatible! Skipped.", E_USER_WARNING);
         $debug_skip = true;
+        if (!DEBUG) return $text;
+    }
 
     if (empty($subs)) {
         /*****************************************************************
@@ -694,7 +698,6 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
          * special handling...
          */
 
-        if (!$debug_skip) {
         // Indented blocks
         $blockpats[] = '[ \t]+\S(?:.*\s*\n[ \t]+\S)*';
         // Tables
@@ -706,6 +709,7 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
         // Footnote definitions
         $blockpats[] = '\[\s*(\d+)\s*\]';
 
+        if (!$debug_skip) {
         // Plugins
         $blockpats[] = '<\?plugin(?:-form)?\b.*\?>\s*$';
         }
@@ -783,7 +787,7 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
                 assert(0);
             }
             if ($leading_text) $leading_text = preg_replace($orig, $repl, $leading_text);
-            if ($block) $leading_text = preg_replace($orig, $repl, $block);
+            if ($block) $block = preg_replace($orig, $repl, $block);
             $out .= $leading_text;
             $out .= $prefix;
             $out .= $block;
@@ -1606,6 +1610,9 @@ function url_get_contents( $uri ) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.191  2004/06/25 14:31:56  rurban
+// avoid debug_skip warning
+//
 // Revision 1.190  2004/06/25 14:29:20  rurban
 // WikiGroup refactoring:
 //   global group attached to user, code for not_current user.
