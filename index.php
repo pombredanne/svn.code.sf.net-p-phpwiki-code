@@ -23,7 +23,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.0pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.17 2001-05-31 17:39:01 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.18 2001-07-12 03:21:35 wainstead Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -85,7 +85,7 @@ $DBParams = array(
    
    // Used by all DB types:
    'database' => 'wiki',
-   'prefix' => '',	// prefix for filenames or table names
+   'prefix' => 'phpwiki_',	// prefix for filenames or table names
    
    // Used by 'dbm', 'dba', 'file'
    'directory' => "/tmp",

@@ -1,14 +1,14 @@
--- $Id: schema.mysql,v 1.4 2001-06-26 17:51:30 uckelman Exp $
+-- $Id: schema.mysql,v 1.5 2001-07-12 03:21:35 wainstead Exp $
 
-drop table if exists wiki;
-drop table if exists archive;
-drop table if exists wikilinks;
-drop table if exists hitcount;
-drop table if exists wikiscore;
-drop table if exists hottopics;
+drop table if exists phpwiki_pages;
+drop table if exists phpwiki_archive;
+drop table if exists phpwiki_wikilinks;
+drop table if exists phpwiki_hitcount;
+drop table if exists phpwiki_score;
+drop table if exists phpwiki_hottopics;
 
 
-CREATE TABLE wiki (
+CREATE TABLE phpwiki_pages (
         pagename VARCHAR(100) NOT NULL,
         version INT NOT NULL DEFAULT 1,
         flags INT NOT NULL DEFAULT 0,
@@ -20,7 +20,7 @@ CREATE TABLE wiki (
         PRIMARY KEY (pagename)
         );
 
-CREATE TABLE archive (
+CREATE TABLE phpwiki_archive (
         pagename VARCHAR(100) NOT NULL,
         version INT NOT NULL DEFAULT 1,
         flags INT NOT NULL DEFAULT 0,
@@ -32,19 +32,19 @@ CREATE TABLE archive (
         PRIMARY KEY (pagename, version)
         );
 
-CREATE TABLE wikilinks (
+CREATE TABLE phpwiki_links (
         frompage VARCHAR(100) NOT NULL,
         topage VARCHAR(100) NOT NULL,
         PRIMARY KEY (frompage, topage)
         );
 
-CREATE TABLE hitcount (
+CREATE TABLE phpwiki_hitcount (
         pagename VARCHAR(100) NOT NULL,
         hits INT NOT NULL DEFAULT 0,
         PRIMARY KEY (pagename)
         );
 
-CREATE TABLE wikiscore (
+CREATE TABLE phpwiki_score (
         pagename VARCHAR(100) NOT NULL,
         score INT NOT NULL DEFAULT 0,
         PRIMARY KEY (pagename)
@@ -53,7 +53,7 @@ CREATE TABLE wikiscore (
 
 -- tables below are not yet used
 
-CREATE TABLE hottopics (                
+CREATE TABLE phpwiki_hottopics (                
         pagename VARCHAR(100) NOT NULL,
         lastmodified INT NOT NULL,
         PRIMARY KEY (pagename, lastmodified)
