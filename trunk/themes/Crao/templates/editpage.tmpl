@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.4 2004-06-18 08:40:39 rurban Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.5 2005-01-04 20:14:59 rurban Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
@@ -45,7 +45,7 @@ $s = $WikiTheme->getButtonSeparator();
  * page won't work with some browsers. (NS4 and Mozilla 0.97 won't accept
  * a redirect from a page to itself.)
  */ ?>
-<form method="post" name="editpage"
+<form method="post" id="editpage" name="editpage"
       action="<?= $request->getPostURL() ?>"
       accept-charset="<?=CHARSET?>">
   <?php /* To clear beyond a larger logo, such as in the Hawaiian theme */ ?>
@@ -60,7 +60,7 @@ $s = $WikiTheme->getButtonSeparator();
   </div></td></tr></table>
   <fieldset class="editarea">
   <legend><?=_("Page Content: ")?></legend>
-  <?=$EDIT_TEXTAREA?>
+  <a name="editarea"></a><?=$EDIT_TEXTAREA?>
 </fieldset>
 <!-- FIXME: fix layout, move CSS to CSS -->
  <fieldset class="editarea">
