@@ -175,7 +175,7 @@ img.linkicon {
   border: none;
   margin-right: 0.5ex;
   margin-left: 0.25ex;
-  vertical-align: bottom;
+  vertical-align: middle /* bottom */;
 }
    
 /*

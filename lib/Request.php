@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.5 2001-12-11 18:41:03 dairiki Exp $');
+<?php rcs_id('$Id: Request.php,v 1.6 2001-12-11 22:45:38 dairiki Exp $');
 
 // FIXME: write log entry.
 
@@ -58,6 +58,18 @@ class Request {
         $this->args[$key] = $val;
     }
 
+    function getURLtoSelf($args = false) {
+        $get_args = $this->args;
+        if ($args)
+            $get_args = array_merge($get_args, $args);
+
+        unset ($get_args['pagename']);
+        if ($get_args['action'] == 'browse')
+            unset($get_args['action']);
+
+        return WikiURL($this->getArg('pagename'), $get_args);
+    }
+    
     
     function redirect($url) {
         header("Location: $url");
