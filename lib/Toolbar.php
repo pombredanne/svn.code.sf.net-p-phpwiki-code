@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Toolbar.php,v 1.9 2002-01-05 10:32:16 carstenklapp Exp $');
+<?php rcs_id('$Id: Toolbar.php,v 1.10 2002-01-08 00:06:45 carstenklapp Exp $');
 
 //require_once("lib/ErrorManager.php");
 //require_once("lib/WikiPlugin.php");
@@ -331,6 +331,40 @@ function toolbar_Info_EditHelp() {
     $html .= "<plugin IncludePage page=" ._("TextFormattingRules")
         ."section=" ._("Synopsis") ."quiet=1>";
     $html .= "</div>";
+    return $html;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Template token: ${THANK_YOU}
+
+// Requires:
+// $pagename (from savepage.php)
+// $warnings (from savepage.php)
+// global $SignatureImg
+
+function toolbar_Info_ThankYou($pagename, $warnings) {
+    $html = "";
+    $html .= sprintf(_("Thank you for editing %s."),
+                    LinkExistingWikiWord($pagename));
+    $html .= "<br>\n";
+    $html .= _("Your careful attention to detail is much appreciated.");
+    $html .= "\n";
+
+    if ($warnings) {
+        $html .= Element('p', QElement('strong',_("Warning!")) ." "
+                         . htmlspecialchars($warnings))
+                         . QElement('br') ."\n";
+    }
+
+    global $SignatureImg;
+    if (!empty($SignatureImg)) {
+        $html .= Element('p', 
+                         QElement('img', array('alt' => $SignatureImg,
+                                               'src' => DataURL($SignatureImg))));
+    }
+
+    
+    $html .= QElement('hr', array('noshade' => 'noshade'));
     return $html;
 }
 

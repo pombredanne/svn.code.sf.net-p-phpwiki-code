@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.14 2002-01-05 10:17:07 carstenklapp Exp $');
+<?php rcs_id('$Id: Template.php,v 1.15 2002-01-08 00:06:45 carstenklapp Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -338,6 +338,9 @@ function GeneratePage($template, $content, $title, $page_revision = false) {
     $t = new WikiTemplate($template);
     if ($page_revision)
         $t->setPageRevisionTokens($page_revision);
+    global $thankyou;
+    if ($thankyou)
+        $t->replace('THANK_YOU', $thankyou);
     $t->replace('CONTENT', $content);
     $t->replace('TITLE', $title);
     return $t->getExpansion();
