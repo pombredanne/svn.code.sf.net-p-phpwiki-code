@@ -1,21 +1,23 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.33 2004-03-18 22:32:33 rurban Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.34 2004-03-24 19:39:02 rurban Exp $');
 /**
  * Code for writing the HTML subset of XML.
+ * @author: Jeff Dairiki
  *
- * FIXME: This code is not php5 compatible.
+ * FIXME: This code is not (yet) php5 compatible.
  */
 require_once("lib/XmlElement.php");
+
 /**
  * An XML element.
  */
+//apd_set_session_trace(35);
 
 class HtmlElement extends XmlElement
 {
-    //function HtmlElement ($tagname /* , $attr_or_content , ...*/) {
-    //    $this->_init(func_get_args());
-    //    $this->_properties = HTML::getTagProperties($tagname);
-    //}
-
+    function __construct ($tagname /* , $attr_or_content , ...*/) {
+        $this->_init(func_get_args());
+        //$this->_properties = HTML::getTagProperties($tagname);
+    }
 
     function _init ($args) {
         XmlElement::_init($args);
@@ -495,6 +497,9 @@ function IfJavaScript($if_content = false, $else_content = false) {
     
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.33  2004/03/18 22:32:33  rurban
+ work to make it php5 compatible
+
  Revision 1.32  2004/02/15 21:34:37  rurban
  PageList enhanced and improved.
  fixed new WikiAdmin... plugins

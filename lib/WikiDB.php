@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.37 2004-03-01 13:48:45 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.38 2004-03-24 19:39:02 rurban Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -758,8 +758,58 @@ class WikiDB_Page
         // We're doing this here rather than in createRevision because
         // postgres can't optimize while locked.
         if (time() % 50 == 0) {
-            trigger_error(sprintf(_("Optimizing %s"),'backend'), E_USER_NOTICE);
-            $backend->optimize();
+            if ($backend->optimize())
+                trigger_error(sprintf(_("Optimizing %s"),'backend'), E_USER_NOTICE);
+        }
+
+        /* Generate notification emails */
+        if (isa($newrevision, 'wikidb_pagerevision')) {
+            // Save didn't fail because of concurrent updates.
+            $notify = $this->get('notify');
+            if (!empty($notify) and is_array($notify)) {
+                foreach ($notify as $page => $users) {
+                    if (ereg($page,$this->_pagename)) {
+                        $emails = array();
+                        foreach ($users as $userid => $user) {
+                            if (!empty($user['verified']) and !empty($user['email']))
+                                $emails[] = $user['email'];
+                            elseif (DEBUG and !empty($user['email'])) {
+                                global $request;
+                                //do a dynamic emailVerified check update
+                                $u = $request->getUser();
+                                if ($u->UserName() == $userid) {
+                                    if ($request->_prefs->get('emailVerified')) {
+                                        $emails[] = $user['email'];
+                                        $notify[$page][$userid]['verified'] = 1;
+                                        $request->_dbi->set('notify',$notify);
+                                    }
+                                } else {
+                                    $u = WikiUser($userid);
+                                    if ($u->_prefs->get('emailVerified')) {
+                                        $emails[] = $user['email'];
+                                        $notify[$page][$userid]['verified'] = 1;
+                                        $request->_dbi->set('notify',$notify);
+                                    }
+                                }
+                                // do no verification
+                                if (DEBUG and !in_array($user['email'],$emails))
+                                    $emails[] = $user['email'];
+                            }
+                        }
+                        if (!empty($emails)) {
+                            $subject = sprintf(_("PageChange Notification %s"),$page);
+                            $diff = WikiUrl($this->_pagename, array('action'=>'diff',true));
+                            $emails = join(',',$emails);
+                            if (mail($emails,"[".WIKI_NAME."] ".$subject,$subject."\n".$diff))
+                                trigger_error(sprintf(_("PageChange Notification of %s sent to %s"),
+                                                      $this->_pagename, $emails), E_USER_NOTICE);
+                            else
+                                trigger_error(sprintf(_("PageChange Notification Error: Couldn't send %s to %s"),
+                                                      $this->_pagename, $emails), E_USER_WARNING);
+                        }
+                    }
+                }
+            }
         }
 
         $newrevision->_transformedContent = $formatted;
@@ -1237,7 +1287,7 @@ class WikiDB_PageRevision
         }
         else {
             // else revision has been deleted... What to do?
-            return __sprintf("Acck! Revision %s of %s seems to have been deleted!",
+            return __sprintf("Oops! Revision %s of %s seems to have been deleted!",
                              $version, $pagename);
         }
     }
@@ -1371,7 +1421,7 @@ class WikiDB_PageIterator
         $this->_pages->free();
     }
 
-    // Not yet used.
+    // Not yet used. See PageList::sortby
     function setSortby ($arg = false) {
         if (!$arg) {
             $arg = @$_GET['sortby'];

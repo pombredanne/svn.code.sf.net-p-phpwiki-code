@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_pgsql.php,v 1.6 2003-12-05 23:52:17 zorloc Exp $');
+rcs_id('$Id: PearDB_pgsql.php,v 1.7 2004-03-24 19:39:03 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB.php');
@@ -40,6 +40,7 @@ extends WikiDB_backend_PearDB
         foreach ($this->_table_names as $table) {
             $dbh->query("VACUUM ANALYZE $table");
         }
+        return 1;
     }
 
     /**

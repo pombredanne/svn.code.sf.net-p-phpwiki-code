@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_mysql.php,v 1.3 2001-12-08 16:02:35 dairiki Exp $');
+rcs_id('$Id: PearDB_mysql.php,v 1.4 2004-03-24 19:39:03 rurban Exp $');
 
 require_once('lib/WikiDB/backend/PearDB.php');
 
@@ -25,6 +25,7 @@ extends WikiDB_backend_PearDB
         foreach ($this->_table_names as $table) {
             $dbh->query("OPTIMIZE TABLE $table");
         }
+        return 1;
     }
 
     /**

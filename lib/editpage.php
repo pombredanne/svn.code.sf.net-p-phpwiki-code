@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.62 2004-03-17 18:41:05 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.63 2004-03-24 19:39:02 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -273,6 +273,9 @@ function speich() {
         include_once('lib/ArchiveCleaner.php');
         $cleaner = new ArchiveCleaner($GLOBALS['ExpireParams']);
         $cleaner->cleanPageRevisions($page);
+
+        /* generate notification emails done in WikiDB::save to catch all direct calls 
+          (admin plugins) */
 
         $dbi = $request->getDbh();
         $warnings = $dbi->GenericWarnings();
@@ -621,6 +624,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.62  2004/03/17 18:41:05  rurban
+ initial_content and template support for CreatePage
+
  Revision 1.61  2004/03/12 20:59:17  rurban
  important cookie fix by Konstantin Zadorozhny
  new editpage feature: JS_SEARCHREPLACE

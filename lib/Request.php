@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.44 2004-03-14 16:26:22 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.45 2004-03-24 19:39:02 rurban Exp $');
 /*
  Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  
@@ -381,8 +381,8 @@ class Request {
     function getCookieVar($key) {
         return $this->cookies->get($key);
     }
-    function setCookieVar($key, $val, $lifetime_in_days = false) {
-        return $this->cookies->set($key, $val, $lifetime_in_days);
+    function setCookieVar($key, $val, $lifetime_in_days = false, $path = false) {
+        return $this->cookies->set($key, $val, $lifetime_in_days, $path);
     }
     function deleteCookieVar($key) {
         return $this->cookies->delete($key);
@@ -477,23 +477,46 @@ class Request_CookieVars {
             @$val = unserialize(base64_decode($vars[$key]));
             if (!empty($val))
                 return $val;
+            @$val = urldecode($vars[$key]);
+            if (!empty($val))
+                return $val;
         }
         return false;
     }
-        
-    function set($key, $val, $persist_days = false) {
+
+    function get_old($key) {
         $vars = &$GLOBALS['HTTP_COOKIE_VARS'];
-        
+        if (isset($vars[$key])) {
+            @$val = unserialize(base64_decode($vars[$key]));
+            if (!empty($val))
+                return $val;
+            @$val = unserialize($vars[$key]);
+            if (!empty($val))
+                return $val;
+            @$val = $vars[$key];
+            if (!empty($val))
+                return $val;
+        }
+        return false;
+    }
+
+    function set($key, $val, $persist_days = false, $path = false) {
+        $vars = &$GLOBALS['HTTP_COOKIE_VARS'];
         if (is_numeric($persist_days)) {
             $expires = time() + (24 * 3600) * $persist_days;
         }
         else {
             $expires = 0;
         }
-        
-        $packedval = base64_encode(serialize($val));
+        if (is_array($val) or is_object($val))
+            $packedval = base64_encode(serialize($val));
+        else
+            $packedval = urlencode($val);
         $vars[$key] = $packedval;
-        setcookie($key, $packedval, $expires, '/');
+        if ($path)
+            setcookie($key, $packedval, $expires, $path);
+        else
+            setcookie($key, $packedval, $expires);
     }
     
     function delete($key) {
@@ -926,6 +949,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.44  2004/03/14 16:26:22  rurban
+// copyright line
+//
 // Revision 1.43  2004/03/12 20:59:17  rurban
 // important cookie fix by Konstantin Zadorozhny
 // new editpage feature: JS_SEARCHREPLACE

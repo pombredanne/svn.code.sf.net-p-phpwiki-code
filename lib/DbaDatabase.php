@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbaDatabase.php,v 1.5 2002-12-31 02:32:28 wainstead Exp $');
+<?php rcs_id('$Id: DbaDatabase.php,v 1.6 2004-03-24 19:39:02 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 // FIXME: autodetect supported handlers.
@@ -127,6 +127,7 @@ class DbaDatabase
     function optimize() {
         if (!dba_optimize($this->_dbh))
             return $this->_error("optimize()");
+        return 1;
     }
     
     function _error($mes) {
