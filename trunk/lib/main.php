@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.75 2002-09-09 15:35:32 rurban Exp $');
+rcs_id('$Id: main.php,v 1.76 2002-09-09 15:41:29 rurban Exp $');
 
 define ('DEBUG', 1);
 define ('USE_PREFS_IN_PAGE', true);
@@ -14,7 +14,8 @@ if (defined('USE_DB_SESSION') and USE_DB_SESSION and
     $DBParams['dbtype']=='SQL' and $DBParams['db_session_table']) {
     require_once('lib/DB_Session.php');
 } else {
-    define('USE_DB_SESSION','false');
+    if (!defined('USE_DB_SESSION')) 
+        define('USE_DB_SESSION','false');
 }
 
 class WikiRequest extends Request {
