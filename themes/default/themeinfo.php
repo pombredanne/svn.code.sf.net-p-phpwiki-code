@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.27 2003-03-24 22:57:20 dairiki Exp $');
+rcs_id('$Id: themeinfo.php,v 1.28 2003-12-01 18:45:47 carstenklapp Exp $');
 
 /*
  * This file defines the default appearance ("theme") of PhpWiki.
@@ -14,14 +14,14 @@ $Theme = new Theme('default');
 // expected to be in the same directory that the base style is in.
 
 // This should result in phpwiki-printer.css being used when
-// printing or print-previewing with style "PhpWiki" selected.
+// printing or print-previewing with style "PhpWiki" or "MacOSX" selected.
 $Theme->setDefaultCSS('PhpWiki',
-                      array(''		=> 'phpwiki.css',
-                            'print'	=> 'phpwiki-printer.css'));
+                       array(''      => 'phpwiki.css',
+                             'print' => 'phpwiki-printer.css'));
 
 // This allows one to manually select "Printer" style (when browsing page)
 // to see what the printer style looks like.
-//$Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css');
+$Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
 $Theme->addAlternateCSS(_("Top & bottom toolbars"), 'phpwiki-topbottombars.css');
 $Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
 
