@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.75 2004-03-01 09:34:37 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.76 2004-03-08 18:17:09 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -183,7 +183,7 @@ function Button ($action, $label = false, $page_or_rev = false) {
 
 class Theme {
     var $HTML_DUMP_SUFFIX = '';
-    var $DUMP_MODE=false, $dumped_images, $dumped_css; 
+    var $DUMP_MODE = false, $dumped_images, $dumped_css; 
 
     function Theme ($theme_name = 'default') {
         $this->_name = $theme_name;
@@ -1128,6 +1128,9 @@ class SubmitImageButton extends SubmitButton {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.75  2004/03/01 09:34:37  rurban
+// fixed button path logic: now fallback to default also
+//
 // Revision 1.74  2004/02/28 21:14:08  rurban
 // generally more PHPDOC docs
 //   see http://xarch.tu-graz.ac.at/home/rurban/phpwiki/xref/

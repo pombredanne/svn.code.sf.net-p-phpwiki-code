@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.121 2004-03-01 13:48:45 rurban Exp $');
+rcs_id('$Id: main.php,v 1.122 2004-03-08 18:17:09 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -724,6 +724,11 @@ class WikiRequest extends Request {
         LoadPostFile($this);
     }
 
+    function action_upgrade () {
+        include_once("lib/upgrade.php");
+        DoUpgrade($this);
+    }
+
     function action_loadfile () {
         include_once("lib/loadsave.php");
         LoadFileOrDir($this);
@@ -838,6 +843,10 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.121  2004/03/01 13:48:45  rurban
+// rename fix
+// p[] consistency fix
+//
 // Revision 1.120  2004/03/01 10:22:41  rurban
 // initializeTheme optimize
 //

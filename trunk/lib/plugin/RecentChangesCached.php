@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChangesCached.php,v 1.3 2003-02-21 23:01:10 dairiki Exp $');
+rcs_id('$Id: RecentChangesCached.php,v 1.4 2004-03-08 18:17:10 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -56,7 +56,7 @@ extends WikiPluginCached
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -71,12 +71,15 @@ extends WikiPluginCached
         $loader = new WikiPluginLoader;
         return $loader->expandPI('<?plugin RecentChanges '
             . WikiPluginCached::glueArgs($argarray)
-            . ' ?>', $request, $basepage);
+                                 . ' ?>', $request, $this, $basepage);
     }
 
 } // WikiPlugin_TexToPng
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2003/02/21 23:01:10  dairiki
+// Fixes to support new $basepage argument of WikiPlugin::run().
+//
 // Revision 1.2  2003/01/18 22:01:44  carstenklapp
 // Code cleanup:
 // Reformatting & tabs to spaces;

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _AuthInfo.php,v 1.8 2004-03-08 16:35:23 rurban Exp $');
+rcs_id('$Id: _AuthInfo.php,v 1.9 2004-03-08 18:17:10 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
@@ -95,8 +95,7 @@ extends WikiPlugin
         $html->pushContent(HTML(HTML::h3(fmt("Personal Auth Settings for '%s'",$userid))));
         if (!$user) {
             $html->pushContent(HTML::p(fmt("No userid")));
-        }
-        else {
+        } else {
             $table = HTML::table(array('border' => 1,
                                        'cellpadding' => 2,
                                        'cellspacing' => 0));
@@ -104,7 +103,9 @@ extends WikiPlugin
             $userdata = obj2hash($user);
             $table->pushContent($this->_showhash("User: Object of ".get_class($user), $userdata));
             $group = &WikiGroup::getGroup($request);
-            $table->pushContent($this->_showhash("Group: Object of ".get_class($group), $group));
+            $groupdata = obj2hash($group);
+            unset($groupdata['request']);
+            $table->pushContent($this->_showhash("Group: Object of ".get_class($group), $groupdata));
             $groups = $group->getAllGroupsIn();
             $groupdata = array('getAllGroupsIn' => $groups);
             foreach ($groups as $g) {
@@ -183,6 +184,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/03/08 16:35:23  rurban
+// fixed "Undefined index: auth_dsn" warning
+//
 // Revision 1.7  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //
