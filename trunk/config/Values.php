@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: Values.php,v 1.4 2003-12-07 19:25:41 carstenklapp Exp $');
+rcs_id('$Id: Values.php,v 1.5 2004-04-21 00:15:24 zorloc Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -34,15 +34,109 @@ $values[] = array(
     'name' => '',
     'section' => ,
     'defaultValue' => ,
+    'hide' => ,
     'description' => array(
         'short' => '',
         'full' => ''
+    ),
+    'example' => array(
     ),
     'validator' => array(
         'type' => ''
     )
 );
 */
+
+/**
+* Define the include path if necessary.
+*/
+$values[] = array(
+    'type' => 'Ini',
+    'name' => 'INCLUDE_PATH',
+    'section' => 0,
+    'defaultValue' => null,
+    'hide' => true,
+    'description' => array(
+        'short' => 'Redefine the php.ini \'include_path\' setting.',
+        'full' => 'If PHP needs help in finding where you installed the rest ' .
+                  'of the PhpWiki code, you can set the include_path here.\n\n' .
+                  'You should not need to do this unless you have moved index.php ' .
+                  'out of the PhpWiki install directory.\n\n' .
+                  'NOTE: On Windows installations a semicolon (;) should be used ' .
+                  'as the path seperator'
+    ),
+    'example' => array(
+        '.:/usr/local/httpd/htdocs/phpwiki'
+    ),
+    'validator' => array(
+        'type' => 'String'
+    )
+);
+
+/**
+* Enable debuging output
+*/
+$values[] = array(
+    'type' => 'Constant',
+    'name' => 'DEBUG',
+    'section' => 0,
+    'defaultValue' => false,
+    'hide' => true,
+    'description' => array(
+        'short' => 'Enable Debug Output',
+        'full' => 'Set DEBUG to \'true\' to view XHMTL and CSS validator icons, page ' .
+                  'process timer, and possibly other debugging messages at the ' .
+                  'bottom of each page'
+    ),
+    'example' => array(
+    ),
+    'validator' => array(
+        'type' => 'Boolean'
+    )
+);
+
+/**
+* Enable Experimental User Classes
+*/
+$values[] = array(
+    'type' => 'Constant',
+    'name' => 'ENABLE_USER_NEW',
+    'section' => 0,
+    'defaultValue' => true,
+    'hide' => false,
+    'description' => array(
+        'short' => 'Enable Experimental User Classes',
+        'full' => 'Enable the new method of handling WikiUsers.  This is currently an ' .
+                  'experimental feature, although it is considered fairly stable.  It is ' .
+                  'best to leave it on, and only disable it if you have problems with it.'
+    ),
+    'example' => array(
+    ),
+    'validator' => array(
+        'type' => 'Boolean'
+    )
+);
+
+/**
+* Experimental edit feature
+*/
+$values[] = array(
+    'type' => 'Constant',
+    'name' => 'JS_SEARCHREPLACE',
+    'section' => 0,
+    'defaultValue' => false,
+    'description' => array(
+        'short' => 'Enable Experimental Edit Feature',
+        'full' => ''
+    ),
+    'example' => array(
+    ),
+    'validator' => array(
+        'type' => 'Boolean'
+    )
+);
+
+
 
 /**
 * This defines the Constant that holds the name of the wiki
@@ -266,6 +360,9 @@ $values[] = array(
 
 
 //$Log: not supported by cvs2svn $
+//Revision 1.4  2003/12/07 19:25:41  carstenklapp
+//Code Housecleaning: fixed syntax errors. (php -l *.php)
+//
 //Revision 1.2  2003/01/28 18:55:25  zorloc
 //I have added all of the values for Part One of our configuration values.
 //
