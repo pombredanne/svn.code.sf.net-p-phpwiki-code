@@ -1,11 +1,12 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopular.php,v 1.1 2001-09-18 19:19:05 dairiki Exp $');
+rcs_id('$Id: MostPopular.php,v 1.2 2001-12-15 10:54:58 carstenklapp Exp $');
 /**
  */
 class WikiPlugin_MostPopular
 extends WikiPlugin
 {
     var $name = 'MostPopular';
+    var $description = 'MostPopular';
     
     function getDefaultArguments() {
         // FIXME: how to exclude multiple pages?

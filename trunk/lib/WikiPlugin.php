@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.2 2001-12-14 20:13:20 dairiki Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.3 2001-12-15 10:55:20 carstenklapp Exp $');
 
 class WikiPlugin
 {
@@ -16,6 +16,10 @@ class WikiPlugin
 
     function getName() {
         return $this->name;
+    }
+
+    function getDescription() {
+        return $this->description;
     }
 
     
@@ -94,7 +98,7 @@ class WikiPlugin
     function getDefaultLinkArguments() {
         return array('targetpage' => $this->getName(),
                      'linktext' => $this->getName(),
-                     'description' => false,
+                     'description' => $this->getDescription(),
                      'class' => 'wikiaction');
     }
     
