@@ -1,5 +1,5 @@
 /*
-  $Id: MacOSX.css,v 1.10 2002-01-18 01:25:32 dairiki Exp $
+  $Id: MacOSX.css,v 1.11 2002-01-19 01:04:22 carstenklapp Exp $
 
   Classes:
 
@@ -120,14 +120,7 @@ p.error {
 /*
  * Style for <hr>s in wiki markup.
  */
-.wikitext hr {
- background: #666;
- height: 1px;
- width: 90%;
- margin-left:auto;
- margin-right:auto;
- align:center; /* for NS4 */
-}
+.wikitext hr {}
 
 
 /*
