@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.26 2004-02-29 04:10:56 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.27 2004-03-01 09:35:13 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -583,6 +583,9 @@ extends _WikiUser
     }
 
     function checkPass($submitted_password) {
+        return false;
+        // this might happen on a old-style signin button.
+
         // By definition, the _AnonUser does not HAVE a password
         // (compared to _BogoUser, who has an EMPTY password).
         trigger_error("DEBUG: Warning: _AnonUser unexpectedly asked to checkPass()." . " "
@@ -769,7 +772,7 @@ extends _AnonUser
 
         if (empty($this->_auth_dbi)) {
             if (empty($DBAuthParams['auth_dsn'])) {
-                if ($DBParams['dbtype'] == 'SQL')
+                if ($DBParams['dbtype'] == 'SQL' or $DBParams['dbtype'] == 'ADODB')
                     $dbh = $request->getDbh(); // use phpwiki database 
                 else 
                     return false;
@@ -815,10 +818,10 @@ extends _AnonUser
     function getPreferences() {
         if (!empty($this->_prefs->_method)) {
             if ($this->_prefs->_method == 'ADODB') {
-                _AdoDbPassUser::_AdoDbPassUser();
+                _AdoDbPassUser::_AdoDbPassUser($this->_userid,$this->_prefs);
                 return _AdoDbPassUser::getPreferences();
             } elseif ($this->_prefs->_method == 'SQL') {
-                _PearDbPassUser::_PearDbPassUser();
+                _PearDbPassUser::_PearDbPassUser($this->_userid,$this->_prefs);
                 return _PearDbPassUser::getPreferences();
             }
         }
@@ -841,11 +844,11 @@ extends _AnonUser
     function setPreferences($prefs, $id_only=false) {
         if (!empty($this->_prefs->_method)) {
             if ($this->_prefs->_method == 'ADODB') {
-                _AdoDbPassUser::_AdoDbPassUser();
+                _AdoDbPassUser::_AdoDbPassUser($this->_userid,$prefs);
                 return _AdoDbPassUser::setPreferences($prefs, $id_only);
             }
             elseif ($this->_prefs->_method == 'SQL') {
-                _PearDbPassUser::_PearDbPassUser();
+                _PearDbPassUser::_PearDbPassUser($this->_userid,$prefs);
                 return _PearDbPassUser::setPreferences($prefs, $id_only);
             }
         }
@@ -1479,7 +1482,8 @@ extends _DbPassUser
                 $this->getAuthDbh();
                 $dbh = &$this->_auth_dbi;
                 $db_result = $dbh->Execute(sprintf($this->_prefs->_update,
-                                                   $dbh->qstr($packed),$dbh->qstr($this->_userid)));
+                                                   $dbh->qstr($packed),
+                                                   $dbh->qstr($this->_userid)));
                 $db_result->Close();
             } else {
                 //store prefs in homepage, not in cookie
@@ -1859,7 +1863,6 @@ extends _PassUser
 class _AdminUser
 extends _PassUser
 {
-
     function checkPass($submitted_password) {
         $stored_password = ADMIN_PASSWD;
         if ($this->_checkPass($submitted_password, $stored_password)) {
@@ -2266,6 +2269,10 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.26  2004/02/29 04:10:56  rurban
+// new POP3 auth (thanks to BiloBilo: pentothal at despammed dot com)
+// fixed syntax error in index.php
+//
 // Revision 1.25  2004/02/28 22:25:07  rurban
 // First PagePerm implementation:
 //
