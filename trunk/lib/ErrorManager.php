@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.15 2002-08-23 18:29:29 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.16 2002-09-14 22:23:36 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -368,10 +368,17 @@ class PhpError {
     }
 
     /**
-     * Print an HTMLified version of this error.
+     * Return an HTMLified version of this error.
      */
     function asXML() {
         return AsXML($this->_getDetail());
+    }
+
+    /**
+     * Return a plain-text version of this error.
+     */
+    function asString() {
+        return AsString($this->_getDetail());
     }
 }
 
