@@ -81,7 +81,7 @@ define ('DEBUG', 1);
 
 define ('PHPWIKI_VERSION', '1.3.5pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.103 2003-02-22 19:43:50 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.104 2003-02-26 02:55:52 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -160,6 +160,52 @@ define("MINOR_EDIT_TIMEOUT", 7 * 24 * 3600);
 // fashion.
 // Leave it undefined to leave the choice up to PhpWiki.
 //define('COMPRESS_OUTPUT', false);
+
+
+// CACHE_CONTROL
+//
+// This controls how PhpWiki sets the HTTP cache control
+// headers (Expires: and Cache-Control:) 
+//
+// Choose one of:
+//
+// NONE: This is roughly the old (pre 1.3.4) behavior.  PhpWiki will
+//       instruct proxies and browsers never to cache PhpWiki output.
+//
+// STRICT: Cached pages will be invalidated whenever the database global
+//       timestamp changes.  This should behave just like NONE (modulo
+//       bugs in PhpWiki and your proxies and browsers), except that
+//       things will be slightly more efficient.
+//
+// LOOSE: Cached pages will be invalidated whenever they are edited,
+//       or, if the pages include plugins, when the plugin output could
+//       concievably have changed.
+//
+//       Behavior should be much like STRICT, except that sometimes
+//       wikilinks will show up as undefined (with the question mark)
+//       when in fact they refer to (recently) created pages.
+//       (Hitting your browsers reload or perhaps shift-reload button
+//       should fix the problem.)
+//
+// ALLOW_STALE: Proxies and browsers will be allowed to used stale pages.
+//       (The timeout for stale pages is controlled by CACHE_CONTROL_MAX_AGE.)
+//
+//       This setting will result in quirky behavior.  When you edit a
+//       page your changes may not show up until you shift-reload the
+//       page, etc...
+//
+//       This setting is generally not advisable, however it may be useful
+//       in certain cases (e.g. if your wiki gets lots of page views,
+//       and few edits by knowledgable people who won't freak over the quirks.)
+//
+// The default is currently LOOSE.
+//
+if (!defined('CACHE_CONTROL')) define('CACHE_CONTROL', 'LOOSE');
+
+// Maximum page staleness, in seconds.
+//
+// This only has effect if CACHE_CONTROL is set to ALLOW_STALE.
+if (!defined('CACHE_CONTROL_MAX_AGE')) define('CACHE_CONTROL_MAX_AGE', 600);
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -692,6 +738,9 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 // End:   
 
 // $Log: not supported by cvs2svn $
+// Revision 1.103  2003/02/22 19:43:50  dairiki
+// Fix comment regarding connecting to SQL server over a unix socket.
+//
 // Revision 1.102  2003/02/22 18:53:38  dairiki
 // Renamed method Request::compress_output to Request::buffer_output.
 //

@@ -1,17 +1,6 @@
-<?php rcs_id('$Id: Request.php,v 1.31 2003-02-24 19:38:04 dairiki Exp $');
+<?php rcs_id('$Id: Request.php,v 1.32 2003-02-26 02:55:53 dairiki Exp $');
 // FIXME: write log entry.
 
-/*
- * You can set CACHE_CONTROL_MAX_AGE (in index.php) if you want to
- * allow browsers (and proxies) to be able to cache pages.  (it should
- * be set to the maximum allowed page staleness, in seconds.)
- *
- * Its probably not advisable to set CACHE_CONTROL_MAX_AGE to a
- * non-zero value, as it most likely will result in stale pages after
- * editing, and other insidious problems.
- */
-if (!defined('CACHE_CONTROL_MAX_AGE'))
-     define('CACHE_CONTROL_MAX_AGE', 0);
 
 // backward compatibility for PHP < 4.2.0
 if (!function_exists('ob_clean')) {
@@ -218,6 +207,9 @@ class Request {
 
         // Set cache control headers
         $this->cacheControl();
+
+        if (CACHE_CONTROL == 'NONE')
+            return;             // don't check conditionals...
         
         // Check conditional headers in request
         $status = $validators->checkConditionalRequest($this);
@@ -233,17 +225,22 @@ class Request {
 
     /** Set the cache control headers in the HTTP response.
      */
-    function cacheControl($max_age=CACHE_CONTROL_MAX_AGE) {
-        if ($max_age > 0)
+    function cacheControl($strategy=CACHE_CONTROL, $max_age=CACHE_CONTROL_MAX_AGE) {
+        if ($strategy == 'NONE') {
+            $cache_control = "no-cache";
+            $max_age = -20;
+        }
+        elseif ($strategy == 'ALLOW_STALE' && $max_age > 0) {
             $cache_control = sprintf("max-age=%d", $max_age);
+        }
         else {
             $cache_control = "must-revalidate";
             $max_age = -20;
         }
         header("Cache-Control: $cache_control");
         header("Expires: " . Rfc1123DateTime(time() + $max_age));
+        header("Vary: Cookie"); // FIXME: add more here?
     }
-    
     
     function setStatus($status) {
         if (preg_match('|^HTTP/.*?\s(\d+)|i', $status, $m)) {
