@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.29 2004-03-11 13:30:47 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.30 2004-03-12 20:59:17 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -542,6 +542,7 @@ extends _WikiUser
     /** Save prefs in a cookie
      */
     function setPreferences($prefs, $id_only=false) {
+        global $request;
         // Allow for multiple wikis in same domain. Encode only the
         // _prefs array of the UserPreference object. Ideally the
         // prefs array should just be imploded into a single string or
@@ -555,8 +556,8 @@ extends _WikiUser
         $updated = $this->_prefs->isChanged($prefs);
         if ($updated) {
             if ($id_only) {
-                setcookie(WIKI_NAME, serialize(array('userid' => $prefs->get('userid'))),
-                          COOKIE_EXPIRATION_DAYS, COOKIE_DOMAIN);
+                $request->setCookieVar(WIKI_NAME, serialize(array('userid' => $prefs->get('userid'))),
+                                       COOKIE_EXPIRATION_DAYS, COOKIE_DOMAIN);
             }
         }
         $packed = $prefs->store();
@@ -2194,6 +2195,7 @@ class UserPreferences
     function unpack($packed) {
         if (!$packed)
             return false;
+        //$packed = base64_decode($packed);
         if (substr($packed, 0, 2) == "O:") {
             // Looks like a serialized object
             return unserialize($packed);
@@ -2272,6 +2274,10 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.29  2004/03/11 13:30:47  rurban
+// fixed File Auth for user and group
+// missing only getMembersOf(Authenticated Users),getMembersOf(Every),getMembersOf(Signed Users)
+//
 // Revision 1.28  2004/03/08 18:17:09  rurban
 // added more WikiGroup::getMembersOf methods, esp. for special groups
 // fixed $LDAP_SET_OPTIONS

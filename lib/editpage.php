@@ -1,10 +1,11 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.60 2004-02-15 21:34:37 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.61 2004-03-12 20:59:17 rurban Exp $');
 
 require_once('lib/Template.php');
 
 // Not yet enabled, since we cannot convert HTML to Wiki Markup yet.
-//Todo: change from constant to user preference variable. (or checkbox setting)
+// We might use a HTML PageType, which is contra wiki, but some people might prefer HTML markup.
+// Todo: change from constant to user preference variable. (or checkbox setting)
 if (!defined('USE_HTMLAREA')) define('USE_HTMLAREA',false);
 if (USE_HTMLAREA) require_once('lib/htmlarea.php');
 
@@ -95,6 +96,75 @@ class PageEditor
         // FIXME: NOT_CURRENT_MESSAGE?
 
         $tokens = array_merge($tokens, $this->getFormElements());
+
+        if (defined('JS_SEARCHREPLACE') and JS_SEARCHREPLACE) {
+            $tokens['JS_SEARCHREPLACE'] = 1;
+            $GLOBALS['Theme']->addMoreHeaders(Javascript("
+var wart=0, d, f, x='', replacewin, pretxt=new Array(), pretxt_anzahl=0;
+var fag='<font face=\"arial,helvetica,sans-serif\" size=\"-1\">', fr='<font color=\"#cc0000\">', spn='<span class=\"grey\">';
+
+function define_f() {
+   f=document.getElementById('editpage');
+   f.editarea=document.getElementById('edit[content]');
+   if(f.rck.style) f.rck.style.color='#ececec';
+}
+
+function replace() {
+   replacewin=window.open('','','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,copyhistory=no,height=90,width=450');
+   replacewin.window.document.write('<html><head><title>"._("Search & Replace")."</title><style type=\"text/css\"><'+'!'+'-- input.btt {font-family:Tahoma,Verdana,Geneva,sans-serif;font-size:10pt} --'+'></style></head><body bgcolor=\"#dddddd\" onload=\"if(document.forms[0].ein.focus) document.forms[0].ein.focus()\"><form><center><table><tr><td align=\"right\">'+fag+'"._("Search").":</font></td><td align=\"left\"><input type=\"text\" name=\"ein\" size=\"50\" maxlength=\"500\"></td></tr><tr><td align=\"right\">'+fag+' "._("Replace with").":</font></td><td align=\"left\"><input type=\"text\" name=\"aus\" size=\"50\" maxlength=\"500\"></td></tr><tr><td colspan=\"2\" align=\"center\"><input class=\"btt\" type=\"button\" value=\" "._("OK")." \" onclick=\"self.opener.do_replace()\">&nbsp;&nbsp;&nbsp;<input class=\"btt\" type=\"button\" value=\""._("Close")."\" onclick=\"self.close()\"></td></tr></table></center></form></body></html>');
+   replacewin.window.document.close();
+}
+
+function do_replace() {
+   var txt=pretxt[pretxt_anzahl]=f.editarea.value, ein=new RegExp(replacewin.document.forms[0].ein.value,'g'), aus=replacewin.document.forms[0].aus.value;
+   if(ein==''||ein==null) {
+      replacewin.window.document.forms[0].ein.focus();
+      return;
+   }
+   var z_repl=txt.match(ein)? txt.match(ein).length : 0;
+   txt=txt.replace(ein,aus);
+   ein=ein.toString().substring(1,ein.toString().length-2);
+   result(z_repl, 'Substring \"'+ein+'\" found '+z_repl+' times. Replace with \"'+aus+'\"?', txt, 'String \"'+ein+'\" not found.');
+   replacewin.window.focus();
+   replacewin.window.document.forms[0].ein.focus();
+}
+function result(zahl,frage,txt,alert_txt) {
+   if(wart!=0&&wart.window) {
+      wart.window.close();
+      wart=0;
+   }
+   if(zahl>0) {
+      if(window.confirm(frage)==true) {
+         f.editarea.value=txt;
+         pretxt_anzahl++;
+         if(f.rck.style) f.rck.style.color='#000000';
+         f.rck.value='"._("Undo")."';
+      }
+   } else alert(alert_txt);
+}
+function rueck() {
+   if(pretxt_anzahl==0) return;
+   else if(pretxt_anzahl>0) {
+      f.editarea.value=pretxt[pretxt_anzahl-1];
+      pretxt[pretxt_anzahl]=null;
+      pretxt_anzahl--;
+      if(pretxt_anzahl==0) {
+         alert('Operation undone.');
+         if(f.rck.style) f.rck.style.color='#ececec';
+         f.rck.value='("._("Undo").")';
+         if(f.rck.blur) f.rck.blur();
+      }
+   }
+}
+function speich() {
+   pretxt[pretxt_anzahl]=f.editarea.value;
+   pretxt_anzahl++;
+   if(f.rck.style) f.rck.style.color='#000000';
+   f.rck.value='"._("Undo")."';
+}
+"));
+            $GLOBALS['Theme']->addMoreAttr('body'," onload='define_f()'");
+        }
 
         return $this->output('editpage', _("Edit: %s"));
     }
@@ -542,6 +612,15 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.60  2004/02/15 21:34:37  rurban
+ PageList enhanced and improved.
+ fixed new WikiAdmin... plugins
+ editpage, Theme with exp. htmlarea framework
+   (htmlarea yet committed, this is really questionable)
+ WikiUser... code with better session handling for prefs
+ enhanced UserPreferences (again)
+ RecentChanges for show_deleted: how should pages be deleted then?
+
  Revision 1.59  2003/12/07 20:35:26  carstenklapp
  Bugfix: Concurrent updates broken since after 1.3.4 release: Fatal
  error: Call to undefined function: gettransformedcontent() in

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AddComment.php,v 1.1 2004-03-12 17:32:41 rurban Exp $');
+rcs_id('$Id: AddComment.php,v 1.2 2004-03-12 20:59:18 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
@@ -45,7 +45,7 @@ extends WikiPlugin_WikiBlog
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     // Arguments:
@@ -59,7 +59,8 @@ extends WikiPlugin_WikiBlog
     //         'add'      - only show entry box for new comment
     //         'show,add' - show old comments then entry box
     //         'add,show' - show entry box followed by list of comments
-    //  jshide - boolean  - quick javascript expansion of the addcomment box
+    //  jshide - boolean  - quick javascript expansion of the comments 
+    //                      and addcomment box
 
     function getDefaultArguments() {
         return array('page'       => '[pagename]',
@@ -107,6 +108,11 @@ extends WikiPlugin_WikiBlog
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/03/12 17:32:41  rurban
+// new base class PageType_attach as base class for WikiBlog, Comment, and WikiForum.
+// new plugin AddComment, which is a WikiBlog with different pagetype and template,
+//   based on WikiBlog. WikiForum comes later.
+//
 //
 
 // For emacs users
