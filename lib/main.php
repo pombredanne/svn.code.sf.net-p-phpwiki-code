@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.208 2005-02-28 21:24:32 rurban Exp $');
+rcs_id('$Id: main.php,v 1.209 2005-04-06 06:19:30 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -1176,8 +1176,12 @@ function main () {
      *
      * See also <?plugin WikiAdminUtils action=purge-cache ?>
      */
-    if (!defined('WIKIDB_NOCACHE_MARKUP') and $request->getArg('nocache'))
-        define('WIKIDB_NOCACHE_MARKUP', $request->getArg('nocache'));
+    if (!defined('WIKIDB_NOCACHE_MARKUP')) {
+        if ($request->getArg('nocache')) // 1 or purge
+            define('WIKIDB_NOCACHE_MARKUP', $request->getArg('nocache'));
+        else
+            define('WIKIDB_NOCACHE_MARKUP', false);
+    }
     
     // Initialize with system defaults in case user not logged in.
     // Should this go into constructor?
@@ -1237,6 +1241,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.208  2005/02/28 21:24:32  rurban
+// ignore forbidden ini_set warnings. Bug #1117254 by Xavier Roche
+//
 // Revision 1.207  2005/02/10 19:03:37  rurban
 // try to avoid duoplicate lang/theme init
 //
