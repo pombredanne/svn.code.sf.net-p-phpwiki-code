@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.38 2001-04-07 00:34:30 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.39 2001-05-31 17:43:05 dairiki Exp $');
 
 
    /*
@@ -642,7 +642,7 @@ function UpdateRecentChanges($dbi, $pagename, $isnewpage)
 
    // add the updated page's name to the array
    if($isnewpage) {
-      $newpage[$k++] = "* [$pagename] (new) ..... $userid\r";
+      $newpage[$k++] = "* [$pagename] " . gettext("(new)") . " ..... $userid\r";
    } else {
       $diffurl = "phpwiki:" . rawurlencode($pagename) . "?action=diff";
       $newpage[$k++] = "* [$pagename] ([diff|$diffurl]) ..... $userid\r";

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: userauth.php,v 1.5 2001-03-14 19:45:12 dairiki Exp $');
+<?php rcs_id('$Id: userauth.php,v 1.6 2001-05-31 17:43:05 dairiki Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -76,11 +76,17 @@ class WikiUser
       return $this->is_authenticated() && $this->userid == ADMIN_USER;
    }
 
-   function must_be_admin ($action = "do that") {
-      if (! $this->is_admin())
-	 ExitWiki("You must be logged in as an administrator to $action.");
+   function must_be_admin ($action = "") {
+      if (! $this->is_admin()) 
+      {
+	 if ($action)
+	    $to_what = sprintf(gettext("to perform action '%s'"), $action);
+	 else
+	    $to_what = gettext("to do that");
+	 ExitWiki(gettext("You must be logged in as an administrator")
+		  . " $to_what");
+      }
    }
-
 
    // This is a bit of a hack:
    function setPreferences ($prefs) {
@@ -143,8 +149,10 @@ class WikiUser
    function _demand_http_authentication () {
       if (!defined('ADMIN_USER') || !defined('ADMIN_PASSWD')
 	  || ADMIN_USER == '' || ADMIN_PASSWD =='') {
-	 return "<p><b>You must set the administrator account and password " .
-	    "before you can log in.</b></p>\n";
+	 return
+	    "<p><b>"
+	    . gettext("You must set the administrator account and password before you can log in.")
+	    . "</b></p>\n";
       }
 
       // Request password

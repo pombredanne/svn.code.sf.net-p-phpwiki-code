@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.5 2001-04-07 00:34:30 dairiki Exp $');
+rcs_id('$Id: loadsave.php,v 1.6 2001-05-31 17:43:05 dairiki Exp $');
 
 require "lib/ziplib.php";
 
@@ -12,8 +12,8 @@ function StartLoadDump($title, $html = '')
 function EndLoadDump()
 {
    // FIXME: This is a hack
-   echo Element('p', QElement('b', gettext("Complete.")));
-   echo Element('p', "Return to " . LinkExistingWikiWord($GLOBALS['pagename']));
+   echo Element('p', QElement('b', gettext ("Complete.")));
+   echo Element('p', gettext ("Return to ") . LinkExistingWikiWord($GLOBALS['pagename']));
    echo "</body></html>\n";
 }
 
@@ -259,17 +259,20 @@ function LoadFile ($dbi, $filename, $text = false, $mtime = false)
    {
       usort($parts, 'SortByPageVersion');
       for (reset($parts); $page = current($parts); next($parts))
-	 SavePage($dbi, $page, $defaults, "MIME file $filename", $basename);
+	 SavePage($dbi, $page, $defaults, 
+	 	  gettext ("MIME file") . " $filename", $basename);
    }
    else if ( ($page = ParseSerializedPage($text)) )
    {
-      SavePage($dbi, $page, $defaults, "Serialized file $filename", $basename);
+      SavePage($dbi, $page, $defaults, 
+               gettext ("Serialized file") . " $filename", $basename);
    }
    else
    {
       // Assume plain text file.
       $page['content'] = preg_split('/[ \t\r]*\n/', chop($text));
-      SavePage($dbi, $page, $defaults, "plain file $filename", $basename);
+      SavePage($dbi, $page, $defaults, 
+               gettext ("plain file") . " $filename", $basename);
    }
 }
 
@@ -283,7 +286,8 @@ function LoadZip ($dbi, $zipfile, $files = false, $exclude = false)
       if ( ($files && !in_array($fn, $files))
 	   || ($exclude && in_array($fn, $exclude)) )
       {
-	 print Element('dt', LinkExistingWikiWord($fn)) . QElement('dd', 'Skipping');
+	 print Element('dt', LinkExistingWikiWord($fn))
+	    . QElement('dd', gettext("Skipping"));
 	 continue;
       }
 
@@ -357,7 +361,7 @@ function LoadFileOrDir ($dbi, $source)
 {
    StartLoadDump("Loading '$source'");
    echo "<dl>\n";
-   LoadAny($dbi, $source, false, array(gettext('RecentChanges')));
+   LoadAny($dbi, $source, false, array(gettext("RecentChanges")));
    echo "</dl>\n";
    EndLoadDump();
 }
@@ -367,12 +371,12 @@ function SetupWiki ($dbi)
    global $GenericPages, $LANG, $user;
 
    //FIXME: This is a hack
-   $user->userid = 'The PhpWiki programming team';
+   $user->userid = gettext("The PhpWiki programming team");
    
-   StartLoadDump('Loading up virgin wiki');
+   StartLoadDump(gettext("Loading up virgin wiki"));
    echo "<dl>\n";
 
-   $ignore = array(gettext('RecentChanges'));
+   $ignore = array(gettext("RecentChanges"));
 
    LoadAny($dbi, FindLocalizedFile(WIKI_PGSRC), false, $ignore);
    if ($LANG != "C")
@@ -403,7 +407,7 @@ function LoadPostFile ($dbi, $postname)
    echo "<dl>\n";
    
    if (IsZipFile($fd))
-      LoadZip($dbi, $fd, false, array(gettext('RecentChanges')));
+      LoadZip($dbi, $fd, false, array(gettext("RecentChanges")));
    else
       Loadfile($dbi, $name, fread($fd, MAX_UPLOAD_SIZE));
 
