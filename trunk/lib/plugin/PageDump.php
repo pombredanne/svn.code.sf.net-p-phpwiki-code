@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageDump.php,v 1.7 2004-05-04 17:21:06 rurban Exp $');
+rcs_id('$Id: PageDump.php,v 1.8 2004-05-25 12:43:29 rurban Exp $');
 /**
  * PhpWikiPlugin for PhpWiki developers to generate single page dumps
  * for checking into cvs, or for users or the admin to produce a
@@ -39,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -112,33 +112,37 @@ extends WikiPlugin
         $mailified = wordwrap($mailified, 70);
 
         // fixme: what about when not using VIRTUAL_PATH?
-        $dlcvs = Button(array('page' => $page,
+        $dlcvs = Button(array(//'page' => $page,
+                              'action' => $this->getName(),
                               'format'=> 'forcvs',
                               'download'=> true),
                         _("Download for CVS"),
-                        $this->getName(), //fixme: $request->getPostUrl??
+                        WikiURL($page),
                         'wikiadmin');
-        $dl = Button(array('page' => $page,
+        $dl = Button(array(//'page' => $page,
+                           'action' => $this->getName(),
                            'download'=> true),
                      _("Download for backup"),
-                     $this->getName(), //fixme: $request->getPostUrl??
+                     WikiURL($page),
                      'wikiadmin');
 
         $h2 = HTML::h2(fmt("Preview: Page dump of %s",
                            WikiLink($page, 'auto')));
         if ($format == 'forcvs') {
             $desc = _("(formatted for PhpWiki developers, not for backing up)");
-            $altpreviewbutton = Button(array('page' => $page),
+            $altpreviewbutton = Button(array(//'page' => $page, 
+                                             'action' => $this->getName()),
                                        _("Preview as backup format"),
-                                       $this->getName(), //fixme: $request->getPostUrl??
+                                       WikiURL($page),
                                        'wikiadmin');
         }
         else {
             $desc = _("(formatted for backing up)");
-            $altpreviewbutton = Button(array('page' => $page,
+            $altpreviewbutton = Button(array(//'page' => $page,
+                                             'action' => $this->getName(),
                                              'format'=> 'forcvs'),
                                        _("Preview as developer format"),
-                                       $this->getName(), //fixme: $request->getPostUrl??
+                                       WikiURL($page),
                                        'wikiadmin');
         }
         $warning = HTML(
@@ -189,7 +193,7 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
         // the wiki name and name of the page which is being
         // represented as a text message.
         $this->MessageId = implode('', explode('.', PHPWIKI_VERSION))
-            . "-" . $m2[0] . (string)date("T")
+            . "-" . $m2[0] . date("O")
             //. "-". rawurlencode(WIKI_NAME.":" . $request->getURLtoSelf())
             . "-". rawurlencode(WIKI_NAME.":" . $this->pagename)
             . "@". rawurlencode(SERVER_NAME);
@@ -251,6 +255,9 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/05/04 17:21:06  rurban
+// revert previous patch
+//
 // Revision 1.6  2004/05/03 20:44:55  rurban
 // fixed gettext strings
 // new SqlResult plugin
