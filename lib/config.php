@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.46 2001-11-29 03:00:19 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.47 2001-12-11 22:41:39 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -265,6 +265,10 @@ if (empty($DBParams['dbtype']))
 if (defined('INTERWIKI_MAP_FILE'))
 {
     include ('lib/interwiki.php');
+}
+
+if (!defined('WIKI_NAME')) {
+    define('WIKI_NAME', "An unnamed PhpWiki");
 }
 
 // FIXME: delete
