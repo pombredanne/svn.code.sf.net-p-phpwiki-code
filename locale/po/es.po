@@ -186,8 +186,8 @@ msgstr "¡Va a borrar '%s' permanentemente!"
 
 #: ../lib/removepage.php:8
 #, fuzzy, c-format
-msgid "Click <a href=\"%s\">here</a> to remove the page now."
-msgstr "Haga Click <a href=\"%s\">aquí</a> para borrar la página ahora"
+msgid "Click here to <a href=\"%s\">remove the page now</a>."
+msgstr "Haga Click aqui para <a href=\"%s\">borrar la página ahora</a>."
 
 #: ../lib/removepage.php:12
 msgid "Otherwise press the \"Back\" button of your browser."

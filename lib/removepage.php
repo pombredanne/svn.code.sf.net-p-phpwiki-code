@@ -1,15 +1,15 @@
 <?php
-rcs_id('$Id: removepage.php,v 1.1 2001-11-08 16:02:40 dairiki Exp $');
+rcs_id('$Id: removepage.php,v 1.2 2001-12-01 13:06:13 carstenklapp Exp $');
 
 if ($request->getArg('verify') != 'okay') {
     $html = sprintf(gettext ("You are about to remove '%s' permanently!"),
                     htmlspecialchars($pagename));
     $html .= "\n<P>";
-    $html .= sprintf(gettext ("Click <a href=\"%s\">here</a> to remove the page now."),
+    $html .= sprintf(gettext ("Click here to <a href=\"%s\">remove the page now</a>."),
                      htmlspecialchars(WikiURL($pagename, array('action' => 'remove',
                                                                'verify' => 'okay'))));
     $html .= "\n<P>";
-    $html .= gettext ("Otherwise press the \"Back\" button of your browser.");
+    $html .= gettext ("To cancel press the \"Back\" button of your browser.");
 }
 else {
     $dbi->deletePage($pagename);

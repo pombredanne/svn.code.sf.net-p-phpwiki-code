@@ -188,8 +188,8 @@ msgstr "Je staat op het punt '%s' voorgoed te verwijderen!"
 
 #: ../lib/removepage.php:8
 #, c-format
-msgid "Click <a href=\"%s\">here</a> to remove the page now."
-msgstr "Klik <a href=\"%s\">hier</a> om de pagina nu te verwijderen."
+msgid "Click here to <a href=\"%s\">remove the page now</a>."
+msgstr "Klik hier om <a href=\"%s\">de pagina nu te verwijderen</a>."
 
 #: ../lib/removepage.php:12
 msgid "Otherwise press the \"Back\" button of your browser."
