@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Request.php,v 1.41 2004-02-27 01:25:14 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.42 2004-03-10 15:38:48 rurban Exp $');
 
 
 // backward compatibility for PHP < 4.2.0
@@ -430,6 +430,10 @@ class Request_SessionVars {
     
     function set($key, $val) {
         $vars = &$GLOBALS['HTTP_SESSION_VARS'];
+        if ($key == 'wiki_user') {
+            $val->page   = $GLOBALS['request']->getArg('pagename');
+            $val->action = $GLOBALS['request']->getArg('action');
+        }
         if (!function_usable('ini_get') or ini_get('register_globals')) {
             // This is funky but necessary, at least in some PHP's
             $GLOBALS[$key] = $val;
@@ -904,6 +908,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.41  2004/02/27 01:25:14  rurban
+// Workarounds for upload handling
+//
 // Revision 1.40  2004/02/26 01:39:51  rurban
 // safer code
 //

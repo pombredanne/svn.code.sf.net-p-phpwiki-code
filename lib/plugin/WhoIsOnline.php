@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WhoIsOnline.php,v 1.1 2004-02-26 19:15:37 rurban Exp $');
+rcs_id('$Id: WhoIsOnline.php,v 1.2 2004-03-10 15:38:49 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
@@ -44,7 +44,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -91,7 +91,7 @@ extends WikiPlugin
         $num_online = 0; $num_guests = 0; $num_registered = 0;
         $registered = array(); $guests = array();
         $admins = array(); $uniquenames = array();
-        if (isset($request->_dbsession)) { // and pear only so far
+        if (isset($request->_dbsession)) { // only ADODB and SQL backends
             $dbsession = &$request->_dbsession;
             $sessions = $dbsession->currentSessions();
             //$num_online = count($sessions);
@@ -103,27 +103,35 @@ extends WikiPlugin
                 $num_online++;
                 $user = @unserialize($data);
                 if (!empty($user)) {
-                    if ($mode=='summary' and in_array($user->UserName(),$uniquenames)) continue;
+                    if ($mode == 'summary' and in_array($user->UserName(),$uniquenames)) continue;
                     $uniquenames[] = $user->UserName();
                     $page = _("<unknown>");  // where is he?
-                    if ($user->_level) { // registered or guest or what?
+	            $action = 'browse';
+	            $objvars = array_keys(get_object_vars($user));
+                    if (in_array('action',$objvars))
+                        $action = $user->action;
+                    if (in_array('page',$objvars))
+                        $page = $user->page;
+                    if ($user->_level and $user->UserName()) { // registered or guest or what?
                         //Todo: expose REMOTE_ADDR?
                         //Fixme: htmlentitities name may not be called here. but where then?
                         $num_registered++;
-                        $registered[] = array('name' => $user->UserName(),
-                                              'date' => $date,
-                                              'page' => $page,
+                        $registered[] = array('name'  => $user->UserName(),
+                                              'date'  => $date,
+                                              'action'=> $action,
+                                              'page'  => $page,
                                               'level' => $user->_level,
-                                              'x'    => 'x');
+                                              'x'     => 'x');
                         if ($user->_level == WIKIAUTH_ADMIN)
                            $admins[] = $registered[count($registered)-1];
                     } else {
                         $num_guests++;
-                        $guests[] = array('name' => $guestname,
-                                          'date' => $date,
-                                          'page' => $page,
+                        $guests[] = array('name'  => $guestname,
+                                          'date'  => $date,
+                                          'action'=> $action,
+                                          'page'  => $page,
                                           'level' => $user->_level,
-                                          'x'    => 'x');
+                                          'x'     => 'x');
                     }
                 }
             }
@@ -164,6 +172,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/02/26 19:15:37  rurban
+// new WhoIsOnline plugin: session explorer (postnuke style)
+//
 //
 
 // For emacs users

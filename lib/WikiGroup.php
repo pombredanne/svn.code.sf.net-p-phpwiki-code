@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.16 2004-03-10 13:54:54 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.17 2004-03-10 15:38:48 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -202,7 +202,6 @@ class WikiGroup{
                 foreach ($db_result->GetArray() as $u) {
                    $users = array_merge($users,array_values($u));
                 }
-                //$users = array_merge($users,array_values($db_result->GetArray()));
             } elseif ($GLOBALS['DBParams']['dbtype'] == 'SQL') {
                 $users = array_merge($users,$dbi->getCol($sql));
             }
@@ -214,7 +213,6 @@ class WikiGroup{
             //don't strip WHERE, only the userid stuff.
             $sql = preg_replace('/(WHERE.*?)\s+\w+\s*=\s*"\$userid"/i','\\1 AND 1',$GLOBALS['DBAuthParams']['auth_user_exists']);
             $sql = str_replace('WHERE AND 1','',$sql);
-            //$sql = preg_replace('/WHERE.*/i','',$GLOBALS['DBAuthParams']['auth_user_exists']);
             if ($GLOBALS['DBParams']['dbtype'] == 'ADODB') {
                 $db_result = $dbi->Execute($sql);
                 foreach ($db_result->GetArray() as $u) {
@@ -543,9 +541,13 @@ class GroupDb extends WikiGroup {
             return false;
         }
         _PassUser::getAuthDbh();
-        $this->_is_member = $this->_auth_dbi->prepare(str_replace(array('"$userid"','"$groupname"'),array('?','?'),$DBAuthParams['is_member']));
-        $this->_group_members = $this->_auth_dbi->prepare(str_replace('"$groupname"','?',$DBAuthParams['group_members']));
-        $this->_user_groups = $this->_auth_dbi->prepare(str_replace('"$userid"','?',$DBAuthParams['user_groups']));
+        $this->_is_member = $this->_auth_dbi->prepare(str_replace(array('"$userid"','"$groupname"'),
+                                                                  array('?','?'),
+                                                                  $DBAuthParams['is_member']));
+        $this->_group_members = $this->_auth_dbi->prepare(str_replace('"$groupname"','?',
+                                                                      $DBAuthParams['group_members']));
+        $this->_user_groups = $this->_auth_dbi->prepare(str_replace('"$userid"','?',
+                                                                    $DBAuthParams['user_groups']));
     }
 
     /**

@@ -1,5 +1,5 @@
 <?php // -*-php-*- ?>
-<!-- $Id: online.tmpl,v 1.1 2004-02-26 19:15:37 rurban Exp $ -->
+<!-- $Id: online.tmpl,v 1.2 2004-03-10 15:38:49 rurban Exp $ -->
 <?php
 // Formatting and idea borrowed from postnuke.
 
@@ -70,21 +70,21 @@ if ($MAX_ONLINE_TIME and $MAX_ONLINE_NUM)
   <?php   foreach ($ADMINS as $user) { ?>
   <tr><td class="row1" class="gensmall"><?= $user['name'] ?></td>
       <td class="row1" class="gensmall"><?= $Theme->formatDateTime($user['date']) ?></td>
-      <td class="row1" class="gensmall"><?= $user['page'] ?></td>
+      <td class="row1" class="gensmall"><?= $user['action'].' '.$user['page'] ?></td>
       </tr>
   <?php   } ?>
   <?php } ?>
   <?php foreach ($REGISTERED as $user) { ?>
   <tr><td class="row1" class="gensmall"><?= $user['name'] ?></td>
       <td class="row1" class="gensmall"><?= $Theme->formatDateTime($user['date']) ?></td>
-      <td class="row1" class="gensmall"><?= $user['page'] ?></td>
+      <td class="row1" class="gensmall"><?= $user['action'].' '.$user['page'] ?></td>
       </tr>
   <?php } ?>
    <tr><td class="cat" colspan="3"><?= _("Guests") ?></td></tr>
   <?php foreach ($GUESTS as $user) { ?>
   <tr><td class="row1" class="gensmall"><?= $user['name'] ?></td>
       <td class="row1" class="gensmall"><?= $Theme->formatDateTime($user['date']) ?></td>
-      <td class="row1" class="gensmall"><?= $user['page'] ?></td>
+      <td class="row1" class="gensmall"><?= $user['action'].' '.$user['page'] ?></td>
       </tr>
   <?php } ?>
 </table>
