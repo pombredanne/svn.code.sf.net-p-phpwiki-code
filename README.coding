@@ -1,4 +1,9 @@
-Here are the beginnings of some coding guidelines for PhpWiki.
+Here are the coding guidelines for PhpWiki.
+
+! Follow the style of the PEAR Coding Standards: 
+* http://www.php.net/manual/en/pear.standards.php
+There's code snippets for configuring Emacs and Vim as well as several
+other text editors.
 
 ! I18N: Using gettext()
 
@@ -21,16 +26,17 @@ literal, in double quotes (").
 For editing files in Emacs, set indent-tabs-mode to nil. Some people
 argue that it's better to use tabs and let people set their tab width,
 but I think we're better off using just spaces because aligned
-comments in the right region will not align correctly.
+comments in the right region will not align correctly. For a detailed
+argument see http://www.jwz.org/doc/tabs-vs-spaces.html.
 
 Use php-mode as well. This is freely available on the net
 (http://www.ontosys.com/src/php-mode.el). Put something like this
 in your .emacs file:
 
-(load "your-path-to-lisp-files/php-mode")
-(setq auto-mode-alist
-      (append '(
-                ("\\.php\\d?\\'" . php-mode)) auto-mode-alist))
+ (load "your-path-to-lisp-files/php-mode")
+ (setq auto-mode-alist
+       (append '(
+                 ("\\.php\\d?\\'" . php-mode)) auto-mode-alist))
 
 so when you open .php files in Emacs it will start PHP mode
 automatically.
@@ -41,4 +47,3 @@ http://sourceforge.net/projects/php-mode/
 I'm sure Vim has a similar mode, if someone would let us know I'll add
 it to this README.
 
-Steve Wainstead
