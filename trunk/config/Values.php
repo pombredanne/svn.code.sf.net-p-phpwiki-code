@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: Values.php,v 1.6 2004-04-21 04:12:03 zorloc Exp $');
+rcs_id('$Id: Values.php,v 1.7 2004-04-21 05:21:17 zorloc Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -359,7 +359,7 @@ $values[] = array(
         'remove : dumpserial : loadfile : upload'
     ),
     'validator' => array(
-        'type' => 'ArrayStringList',
+        'type' => 'ArrayString',
         'seperator' => ':',
         'list' => array(
             'browse',
@@ -459,7 +459,7 @@ $values[] = array(
     'example' => array(
     ),
     'validator' => array(
-        'type' => 'StringList',
+        'type' => 'String',
         'list' => array(
             'NONE',
             'STRICT',
