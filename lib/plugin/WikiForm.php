@@ -1,9 +1,9 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiForm.php,v 1.1 2002-02-07 21:17:26 dairiki Exp $');
+rcs_id('$Id: WikiForm.php,v 1.2 2002-02-14 03:58:50 carstenklapp Exp $');
 /**
  * This is a replacement for MagicPhpWikiURL forms.
  *
- * 
+ *
  */
 class WikiPlugin_WikiForm
 extends WikiPlugin
@@ -18,7 +18,7 @@ extends WikiPlugin
                      'buttontext' => false);
     }
 
-                                 
+
     function run($dbi, $argstr, $request) {
         extract($this->getArgs($argstr, $request));
 
@@ -35,38 +35,41 @@ extends WikiPlugin
                        'size' => 50);
 
         switch ($action) {
-        case 'loadfile':
-            $input['name'] = 'source';
+            case 'loadfile':
+                $input['name'] = 'source';
             if (!$default)
                 $input['value'] = '/tmp/wikidump';
-            if (!$buttontext)
-                $buttontext = _("Load File");
-            break;
-        case 'dumpserial':
-            $input['name'] = 'directory';
+                if (!$buttontext)
+                    $buttontext = _("Load File");
+                $class = 'wikiadmin';
+                break;
+            case 'dumpserial':
+                $input['name'] = 'directory';
             if (!$default)
                 $input['value'] = '/tmp/wikidump';
-            if (!$buttontext)
-                $buttontext = _("Dump Pages");
-            break;
-        case 'upload':
-            $form->setAttr('enctype', 'multipart/form-data');
-            $form->pushContent(HTML::input(array('name' => 'MAX_FILE_SIZE',
-                                                 'value' =>  MAX_UPLOAD_SIZE,
-                                                 'type'  => 'hidden')));
-            $input['name'] = 'file';
-            $input['type'] = 'file';
-            if (!$buttontext)
-                $buttontext = _("Upload");
-            break;
-        default:
-            return HTML::p(fmt("WikiForm: %s: unknown action", $action));
+                if (!$buttontext)
+                    $buttontext = _("Dump Pages");
+                $class = 'wikiadmin';
+                break;
+            case 'upload':
+                $form->setAttr('enctype', 'multipart/form-data');
+                $form->pushContent(HTML::input(array('name' => 'MAX_FILE_SIZE',
+                                                     'value' =>  MAX_UPLOAD_SIZE,
+                                                     'type'  => 'hidden')));
+                $input['name'] = 'file';
+                $input['type'] = 'file';
+                if (!$buttontext)
+                    $buttontext = _("Upload");
+                $class = false; // local OS function, so use natve OS button
+                break;
+            default:
+                return HTML::p(fmt("WikiForm: %s: unknown action", $action));
         }
 
-        
+
         $input = HTML::input($input);
         $input->addTooltip($buttontext);
-        $button = Button('submit:', $buttontext);
+        $button = Button('submit:', $buttontext, $class);
 
         $form->pushContent(HTML::table(array('cellspacing' => 0,
                                              'cellpadding' => 2,
