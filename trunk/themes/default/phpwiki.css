@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.43 2004-06-29 18:09:20 rurban Exp $
+ * $Id: phpwiki.css,v 1.44 2004-07-10 13:22:34 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -238,6 +238,7 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
   padding-top: 0.25ex;
 }
 #logo img {
+  float: right;
   /* Netscape 4 requires this 1px border.
      Without it, the paper borders below cause
      the white background to disappear. */
