@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.62 2003-02-21 04:14:52 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.63 2003-02-23 03:37:05 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -112,7 +112,7 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
         return HTML($label ? $label : $pagename);
     }
     else {
-        return $Theme->linkUnknownWikiWord($pagename, $label);
+        return $Theme->linkUnknownWikiWord($wikipage, $label);
     }
 }
 
@@ -928,6 +928,10 @@ class SubmitImageButton extends SubmitButton {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.62  2003/02/21 04:14:52  dairiki
+// New WikiLink type 'if_known'.  This gives linkified name if page
+// exists, otherwise, just plain text.
+//
 // Revision 1.61  2003/02/18 21:52:05  dairiki
 // Fix so that one can still link to wiki pages with # in their names.
 // (This was made difficult by the introduction of named tags, since
