@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.161 2004-03-12 15:48:07 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.162 2004-03-16 15:43:08 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1015,6 +1015,17 @@ function __vsprintf ($fmt, $args) {
     return call_user_func_array('sprintf', $args);
 }
 
+function file_mtime ($filename) {
+    if ($stat = stat($filename))
+        return $stat[9];
+}
+
+function sort_file_mtime ($a, $b) {
+    $ma = file_mtime($a);
+    $mb = file_mtime($b);
+    if (!$ma or !$mb or $ma == $mb) return 0;
+    return ($ma > $mb) ? -1 : 1;
+}
 
 class fileSet {
     /**
@@ -1024,8 +1035,26 @@ class fileSet {
      * (This was a function LoadDir in lib/loadsave.php)
      * See also http://www.php.net/manual/en/function.readdir.php
      */
-    function getFiles() {
-        return $this->_fileList;
+    function getFiles($exclude=false,$sortby=false,$limit=false) {
+        $list = $this->_fileList;
+        if ($sortby) {
+            switch (Pagelist::sortby($sortby,'db')) {
+            case 'pagename ASC': break;
+            case 'pagename DESC': 
+                $list = array_reverse($list); 
+                break;
+            case 'mtime ASC': 
+                usort($list,'sort_file_mtime'); 
+                break;
+            case 'mtime DESC': 
+                usort($list,'sort_file_mtime');
+                $list = array_reverse($list); 
+                break;
+            }
+        }
+        if ($limit)
+            return array_splice($list,0,$limit);
+        return $list;
     }
 
     function _filenameSelector($filename) {
@@ -1349,6 +1378,10 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.161  2004/03/12 15:48:07  rurban
+// fixed explodePageList: wrong sortby argument order in UnfoldSubpages
+// simplified lib/stdlib.php:explodePageList
+//
 // Revision 1.160  2004/02/28 21:14:08  rurban
 // generally more PHPDOC docs
 //   see http://xarch.tu-graz.ac.at/home/rurban/phpwiki/xref/
