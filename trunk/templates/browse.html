@@ -15,6 +15,7 @@
 <a class='wikiaction'
   href="###ACTION###search&amp;searchtype=full&amp;searchterm=###PAGEURL###"
 ><span class='wikiword'>###PAGE###</span></a></h1>
+
 ###IF:!ANONYMOUS###
 <p>You are logged in as <em>###USERID###</em>.
 [<a class="wikiaction" href="###ACTION###logout">Log Out</a>]</p>
@@ -26,6 +27,13 @@
 ###ENDIF:ADMIN###
 <hr noshade>
 ###ENDIF:!ANONYMOUS###
+
+###IF:ANONYMOUS###
+If you would like to, you may 
+<a class="wikiaction" href="###ACTION###login">log in</a>
+(use any WikiWord as a user ID, any password.)</p>
+###ENDIF:ANONYMOUS###
+
 <table class="outer" width="100%" cellspacing=2 border=0>
 <tr><td><table class="inner" width="100%" border=0 cellspacing=0 cellpadding=5>
 <tr><td class="wikitext">###CONTENT###</td></tr>
