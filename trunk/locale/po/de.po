@@ -5,176 +5,181 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.8\n"
-"POT-Creation-Date: 2001-12-19 10:48-0500\n"
+"POT-Creation-Date: 2001-12-21 02:13-0500\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
-"Last-Translator: Arno Hollosi <ahollosi@mail.com>\n"
+"Last-Translator: Carsten Klapp <carstenklapp@mac.com>, Arno Hollosi "
+"<ahollosi@mail.com>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../templates/browse.html:34
+#: ../templates/browse.html:32
 msgid "Note:"
 msgstr "Hinweis:"
 
-#: ../templates/browse.html:34
+#: ../templates/browse.html:32
 msgid "You are viewing an old revision of this page."
-msgstr ""
+msgstr "Du siehst eine alte Revision dieser Seite."
 
-#: ../templates/browse.html:35
+#: ../templates/browse.html:33
 msgid "View the current version"
 msgstr "Schaue die aktuellste Version"
 
-#: ../templates/browse.html:50
+#: ../templates/browse.html:48
 #, c-format
 msgid "Last edited on %s."
 msgstr "Zuletzt am %s verändert."
 
-#: ../templates/browse.html:52
+#: ../templates/browse.html:50
 #, c-format
 msgid "Version %s, saved on %s."
 msgstr "Version %s. zuletzt am %s gespeichert."
 
 #: ../lib/loadsave.php:452 ../lib/plugin/RecentChanges.php:159
 #: ../lib/plugin/RecentChanges.php:264 ../lib/plugin/RecentChanges.php:309
-#: ../templates/browse.html:56
+#: ../templates/browse.html:54
 msgid "RecentChanges"
 msgstr "FrischeSeiten"
 
-#: ../templates/browse.html:57
+#: ../templates/browse.html:55
 msgid "FindPage"
 msgstr "SeiteFinden"
 
-#: ../templates/browse.html:60
+#: ../templates/browse.html:58
 msgid "Quick Search"
 msgstr "Schnelle Suche"
 
-#: ../templates/browse.html:70
+#: ../templates/browse.html:68
 msgid "Page locked"
 msgstr "Seite gesperrt"
 
-#: ../templates/browse.html:73 ../templates/editpage.html:24
+#: ../templates/browse.html:71
 msgid "Edit"
 msgstr "Editieren"
 
-#: ../templates/browse.html:76
+#: ../templates/browse.html:74
 msgid "Edit old revision"
-msgstr "Alte Version editieren"
+msgstr "Alte Revision editieren"
 
-#: ../templates/browse.html:81
+#: ../templates/browse.html:79
 msgid "Unlock page"
 msgstr "Seite freigeben"
 
-#: ../templates/browse.html:83
+#: ../templates/browse.html:81
 msgid "Lock page"
 msgstr "Seite sperren"
 
-#: ../lib/removepage.php:20 ../templates/browse.html:85
+#: ../lib/removepage.php:20 ../templates/browse.html:83
 msgid "Remove page"
 msgstr "Seite löschen"
 
-#: ../templates/browse.html:89 ../templates/browse.html:92
+#: ../templates/browse.html:87 ../templates/browse.html:90
 msgid "Diff"
 msgstr "Vergleichen"
 
-#: ../templates/browse.html:97
+#: ../templates/browse.html:95
 #, c-format
 msgid "You are signed in as %s"
 msgstr "Du bist als %s angemeldet"
 
-#: ../templates/browse.html:98
+#: ../templates/browse.html:96
 msgid "SignOut"
 msgstr "Ausmelden"
 
-#: ../templates/browse.html:100 ../templates/editpage.html:74
+#: ../templates/browse.html:98 ../templates/editpage.html:72
 msgid "SignIn"
 msgstr "Anmelden"
 
-#: ../templates/browse.html:117
+#: ../templates/browse.html:115
 msgid "PHP Warnings"
 msgstr "PHP Warnungen"
 
-#: ../lib/plugin/_BackendInfo.php:10 ../templates/browse.html:123
-#: ../templates/browse.html:124
+#: ../lib/plugin/_BackendInfo.php:10 ../templates/browse.html:121
+#: ../templates/browse.html:122
 msgid "DebugInfo"
 msgstr "DebugInfo"
 
-#: ../templates/editpage.html:15
-msgid "Edit:"
-msgstr "Editieren:"
+#: ../templates/editpage.html:15 ../templates/editpage.html:24
+#: ../templates/editpage.html:25
+#, c-format
+msgid "Edit: %s"
+msgstr "Editiere: %s"
 
-#: ../templates/editpage.html:29
+#: ../lib/plugin/BackLinks.php:9 ../templates/editpage.html:24
+msgid "BackLinks"
+msgstr "Querverbindungen"
+
+#: ../templates/editpage.html:27
 msgid "Preview only!  Changes not saved."
 msgstr "Nur die Vorschau!  Änderungen nicht gespeichert."
 
-#: ../templates/editpage.html:35
+#: ../templates/editpage.html:33
 msgid "Warning: You are editing an old revision."
-msgstr "Warnung: alte Seite"
+msgstr "Warnung: Du editierst eine alte Revision."
 
-#: ../templates/editpage.html:36
+#: ../templates/editpage.html:34
 msgid "Saving this page will overwrite the current version."
 msgstr ""
+"Wenn die Seite jetzt gespeichert werden würde, dann würde die aktuellste "
+"Version überschrieben."
 
-#: ../templates/editpage.html:56
+#: ../templates/editpage.html:54
 msgid "Summary:"
 msgstr "Kommentar:"
 
-#: ../templates/editpage.html:63
+#: ../templates/editpage.html:61
 msgid "This is a minor change."
 msgstr "Geringfügige Änderung"
 
-#: ../templates/editpage.html:66
+#: ../templates/editpage.html:64
 msgid "Preview"
 msgstr "Vorschauen"
 
-#: ../templates/editpage.html:67
+#: ../templates/editpage.html:65
 msgid "Save"
 msgstr "Speichern"
 
-#: ../templates/editpage.html:71
+#: ../templates/editpage.html:69
 #, c-format
 msgid "You are signed in as %s."
 msgstr "Du bist als %s angemeldet."
 
-#: ../templates/editpage.html:73
+#: ../templates/editpage.html:71
 #, c-format
 msgid "Author will be logged as %s."
-msgstr ""
+msgstr "%s wird als Author aufgezeichnet."
 
-#: ../templates/editpage.html:80
+#: ../templates/editpage.html:78
 #, c-format
 msgid "You can change the size of the editing area in %s."
-msgstr ""
+msgstr "Du kannst die Form-größe in %s spezifizieren."
 
-#: ../templates/editpage.html:80
+#: ../templates/editpage.html:78
 msgid "UserPreferences"
 msgstr "BenutzerEinstellungen"
 
-#: ../templates/editpage.html:81
+#: ../templates/editpage.html:79
 #, c-format
 msgid "See %s tips for editing."
 msgstr "Sehe %s tips fürs Editieren."
 
-#: ../templates/editpage.html:81
+#: ../templates/editpage.html:79
 msgid "GoodStyle"
 msgstr "GuterStil"
 
-#: ../templates/editpage.html:85
+#: ../templates/editpage.html:83
 msgid "TextFormattingRules"
 msgstr "TextFormatierungsRegeln"
 
-#: ../templates/editpage.html:85
+#: ../templates/editpage.html:83
 msgid "Synopsis"
 msgstr "Übersicht"
-
-#: ../lib/plugin/BackLinks.php:9
-msgid "BackLinks"
-msgstr ""
 
 #: ../lib/plugin/BackLinks.php:13
 #, c-format
 msgid "Get BackLinks for %s"
-msgstr "Hole BackLinks für %s"
+msgstr "Hole Querverbindungen für %s"
 
 #: ../lib/plugin/BackLinks.php:44
 #, c-format
@@ -201,7 +206,7 @@ msgstr "Nächste Monat"
 #: ../lib/plugin/Calendar.php:114
 #, c-format
 msgid "Edit %s"
-msgstr "%s Editieren"
+msgstr "Editiere %s"
 
 #: ../lib/main.php:120 ../lib/plugin/FullTextSearch.php:12
 msgid "FullTextSearch"
@@ -235,11 +240,11 @@ msgstr "SeiteEinfügen"
 #: ../lib/plugin/IncludePage.php:58
 #, c-format
 msgid "<%s: no such section>"
-msgstr "<keiner dergleichener Sektion als: %s>"
+msgstr "<Keiner dergleichener Sektion als: %s>"
 
 #: ../lib/plugin/IncludePage.php:72
 msgid "no page specified"
-msgstr "keine Seite angegeben"
+msgstr "Keine Seite angegeben"
 
 #: ../lib/plugin/IncludePage.php:79
 #, c-format
@@ -249,7 +254,7 @@ msgstr "Fehler beim einfügen der Seite %s: sich selbst aufrufende"
 #: ../lib/plugin/IncludePage.php:88
 #, c-format
 msgid "%s(%d): no such revision"
-msgstr ""
+msgstr "Es gibt keine Revision als %s(%d)"
 
 #: ../lib/plugin/IncludePage.php:111
 #, c-format
@@ -282,7 +287,7 @@ msgstr "Diese Seiten share an initial or final title word with »%s«"
 
 #: ../lib/plugin/LikePages.php:93
 msgid "<none>"
-msgstr "<keine>"
+msgstr "<Keine>"
 
 #: ../lib/plugin/MostPopular.php:9
 msgid "MostPopular"
@@ -449,22 +454,22 @@ msgstr "um daß zu tun"
 msgid "You must be logged in as an administrator"
 msgstr "Du mußt dich als eine Systemverwalter anmelden"
 
-#: ../lib/WikiUser.php:181
+#: ../lib/WikiUser.php:180
 msgid ""
 "You must set the administrator account and password before you can log in."
 msgstr ""
 "Du mußt der Systemverwalter-Account mit Passwort zuerst schützen bevor du "
 "dich anmelden kannst."
 
-#: ../lib/WikiUser.php:193
+#: ../lib/WikiUser.php:191
 msgid "You entered an invalid login or password."
 msgstr "Du hast ein ungültiges Login oder Passwort eingegeben."
 
-#: ../lib/WikiUser.php:196
+#: ../lib/WikiUser.php:194
 msgid "You can log in using any valid WikiWord as a user ID."
 msgstr "Du kannst mit jedes gultiges WikiWort als Benutzername anmelden."
 
-#: ../lib/WikiUser.php:197
+#: ../lib/WikiUser.php:195
 msgid "(Any password will work, except, of course for the admin user.)"
 msgstr ""
 "(Irgende Wörter können als Passwort angenommen werden sowieso, aber "
@@ -573,26 +578,26 @@ msgstr "Zurück zur %s"
 
 #: ../lib/loadsave.php:125
 msgid "You must specify a directory to dump to"
-msgstr ""
+msgstr "Du mußt ein Sicherungsdateiverzeichnis spezifizieren."
 
 #: ../lib/loadsave.php:130
 #, c-format
 msgid "Cannot create directory '%s'"
-msgstr ""
+msgstr "Das Verzeichnis »%s«"
 
 #: ../lib/loadsave.php:132
 #, c-format
 msgid "Created directory '%s' for the page dump..."
-msgstr ""
+msgstr "Ich habe den Verzeichnis »%s« erzeugt um die Dateien abzulegen..."
 
 #: ../lib/loadsave.php:134
-#, fuzzy, c-format
+#, c-format
 msgid "Using directory '%s'"
-msgstr "»%s« wird abgefragt"
+msgstr "Verzeichnis »%s« wird zugeleitet"
 
 #: ../lib/loadsave.php:137
 msgid "Dumping Pages"
-msgstr ""
+msgstr "Die Seiten werden ausgeschrieben"
 
 #: ../lib/loadsave.php:148
 #, c-format
@@ -602,12 +607,12 @@ msgstr "als %s gespeichert"
 #: ../lib/loadsave.php:153
 #, c-format
 msgid "couldn't open file '%s' for writing"
-msgstr ""
+msgstr "Datei »%s« konnte nich geöffnet werden um es auszuschreiben"
 
 #: ../lib/loadsave.php:156
 #, c-format
 msgid "%s bytes written"
-msgstr ""
+msgstr "%s Bytes geschrieben"
 
 #: ../lib/loadsave.php:178
 msgid "Empty pagename!"
@@ -625,7 +630,7 @@ msgstr "neue Seite"
 #: ../lib/loadsave.php:208
 #, c-format
 msgid "is identical to current version %d"
-msgstr ""
+msgstr "ist dergleich wie aktuellste Version %d."
 
 #: ../lib/loadsave.php:210
 msgid "- skipped"
@@ -639,17 +644,17 @@ msgstr "- gespeichert zur Datenbank als Verson %d."
 #: ../lib/loadsave.php:313
 #, c-format
 msgid "MIME file %s"
-msgstr "MIME Datei %s"
+msgstr "MIME-Datei %s"
 
 #: ../lib/loadsave.php:316
 #, c-format
 msgid "Serialized file %s"
-msgstr "Serialized Datei %s"
+msgstr "Seriell-Datei %s"
 
 #: ../lib/loadsave.php:327
 #, c-format
 msgid "plain file %s"
-msgstr "plain Datei %s"
+msgstr "Normal-Datei %s"
 
 #: ../lib/loadsave.php:341 ../lib/loadsave.php:360
 msgid "Skipping"
@@ -658,29 +663,29 @@ msgstr "Wird ausgelassen"
 #: ../lib/loadsave.php:399
 #, c-format
 msgid "Bad file type: %s"
-msgstr ""
+msgstr "Filetyp von %s ungültig"
 
 #: ../lib/loadsave.php:414
 #, c-format
 msgid "Loading '%s'"
-msgstr ""
+msgstr "»%s« wird eingespeichert"
 
 #: ../lib/loadsave.php:426
 msgid "The PhpWiki programming team"
-msgstr ""
+msgstr "Die Team-PhpWiki Programmierer"
 
 #: ../lib/loadsave.php:428
 msgid "Loading up virgin wiki"
-msgstr ""
+msgstr "Unbeschrifteter Wiki wird jetzt befrucht und munter geworden"
 
 #: ../lib/loadsave.php:444
 msgid "No uploaded file to upload?"
-msgstr ""
+msgstr "Keine heraufgeladene Datei zum hochladen?"
 
 #: ../lib/loadsave.php:447
 #, c-format
 msgid "Uploading %s"
-msgstr ""
+msgstr "%s wird heraufgeladet"
 
 #: ../lib/main.php:99
 #, c-format
@@ -842,12 +847,12 @@ msgstr "!Fußnoten"
 #: ../lib/ziplib.php:651
 #, c-format
 msgid "Can't parse %s"
-msgstr ""
+msgstr "Könnte %s nicht analysieren"
 
 #: ../lib/ziplib.php:659
-#, fuzzy, c-format
+#, c-format
 msgid "Bad %s"
-msgstr "Fehler beim %s"
+msgstr "Ungültige %s"
 
 #: ../lib/ziplib.php:704
 #, c-format
@@ -870,12 +875,12 @@ msgstr "fataler Datenbank Fehler"
 #: ../lib/WikiDB/backend/cvs.php:93
 #, c-format
 msgid "Creating new repository [%s]"
-msgstr ""
+msgstr "Der Speicher [%s] wird erzeugt"
 
 #: ../lib/WikiDB/backend/cvs.php:128
 #, c-format
 msgid "Found [%s] in [%s]"
-msgstr ""
+msgstr "[%s] in [%s] gefunden"
 
 #: ../lib/WikiDB/backend/cvs.php:182
 #, c-format
@@ -884,12 +889,12 @@ msgstr "Argument %s war nicht array"
 
 #: ../lib/WikiDB/backend/cvs.php:190
 msgid "no meta data found"
-msgstr "keine meta data gefunden"
+msgstr "keine Meta-Datei gefunden"
 
 #: ../lib/WikiDB/backend/cvs.php:243
 #, c-format
 msgid "FAILED for [%s]"
-msgstr ""
+msgstr "FEHLER für [%s]"
 
 #: ../lib/WikiDB/backend/cvs.php:337 ../lib/WikiDB/backend/cvs.php:347
 #: ../lib/WikiDB/backend/cvs.php:353 ../lib/WikiDB/backend/cvs.php:450
@@ -900,15 +905,15 @@ msgstr "Nicht implementiert."
 #: ../lib/WikiDB/backend/cvs.php:520
 #, c-format
 msgid "Creating meta file for [%s]"
-msgstr ""
+msgstr "Meta-Datei für [%s] wird erzeugt"
 
 #: ../lib/WikiDB/backend/cvs.php:614
 msgid "got revision information"
-msgstr ""
+msgstr "Hab' Revision information"
 
 #: ../lib/WikiDB/backend/cvs.php:619
 msgid "is initial release"
-msgstr ""
+msgstr "ist die erste Instanz"
 
 #: ../lib/WikiDB/backend/cvs.php:622
 msgid "returning old version"
@@ -920,7 +925,7 @@ msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:699
 msgid "Unable to open file"
-msgstr ""
+msgstr "Datei könnte nicht geöffnet werden."
 
 #: ../lib/WikiDB/backend/cvs.php:709
 msgid "no message"
@@ -929,26 +934,26 @@ msgstr "keine Meldung"
 #: ../lib/WikiDB/backend/cvs.php:749
 #, c-format
 msgid "unable to locate/open [%s], turning debug off"
-msgstr ""
+msgstr "könnte [%s] nicht auffinden/öffnen, Debug wird abgeschaltet."
 
 #: ../lib/WikiDB/backend/cvs.php:760
 #, c-format
 msgid "Preparing to execute [%s]"
-msgstr ""
+msgstr "Ausfuhrung von [%s] vorbereitend"
 
 #: ../lib/WikiDB/backend/cvs.php:763
 #, c-format
 msgid "Command failed [%s], Output:"
-msgstr ""
+msgstr "Fehler beim ausfüren: [%s], Ergebnis:"
 
 #: ../lib/WikiDB/backend/cvs.php:765
 #, c-format
 msgid "Command failed [%s], Return value: %s"
-msgstr ""
+msgstr "Fehler beim ausführen: [%s], Ausgabewert: %s"
 
 #: ../lib/WikiDB/backend/cvs.php:768
 msgid "Done execution"
-msgstr ""
+msgstr "Ausgeführt."
 
 #: ../lib/WikiDB/backend/cvs.php:782
 msgid "Unable to obtain read lock."
@@ -957,7 +962,7 @@ msgstr ""
 #: ../lib/WikiDB/backend/cvs.php:789
 #, c-format
 msgid "Unable to open file '%s' for reading"
-msgstr ""
+msgstr "Konnte der Datei »%s« nich öffnen um einzuspeichern"
 
 #: ../lib/WikiDB/backend/cvs.php:808
 msgid "Timeout while obtaining lock."
@@ -966,16 +971,16 @@ msgstr ""
 #: ../lib/WikiDB/backend/cvs.php:817
 #, c-format
 msgid "Could not open file '%s' for writing"
-msgstr ""
+msgstr "Konnte »%s« nicht öffnen um zu speichern"
 
 #: ../lib/WikiDB/backend/cvs.php:827
 #, c-format
 msgid "Copying from [%s] to [%s]"
-msgstr ""
+msgstr "Kopieren von [%s] an [%s]"
 
 #: ../lib/WikiDB/backend/cvs.php:830
 msgid "Copying"
-msgstr ""
+msgstr "kopieren"
 
 #: ../lib/WikiDB/backend/cvs.php:835
 #, c-format
@@ -985,36 +990,36 @@ msgstr "Kopiert an %s"
 #: ../lib/WikiDB/backend/cvs.php:837
 #, c-format
 msgid "Failed to copy [%s]"
-msgstr ""
+msgstr "Konnte [%s] nicht kopieren"
 
 #: ../lib/WikiDB/backend/cvs.php:843
 msgid "Not copying"
-msgstr ""
+msgstr "Nicht kopieren"
 
 #: ../lib/WikiDB/backend/dba.php:23
 #, c-format
 msgid "%s: Can't open dba database"
-msgstr ""
+msgstr "%s: Konnte dba Datenbank nich öffnen."
 
 #: ../lib/WikiDB/backend/dbaBase.php:330
 #, c-format
 msgid "Bad key in linktable: %s"
-msgstr ""
+msgstr "%s: Ungültiges Datenschlüssel in Links-Tabelle"
 
 #: ../lib/WikiDB/backend/dbaBase.php:352
 #, c-format
 msgid "Bad key %s in table"
-msgstr ""
+msgstr "Datenschlüssel %s in Tabelle ist Ungültig"
 
 #: ../lib/WikiDB/backend/dbaBase.php:360
 #, c-format
 msgid "backlink entry missing for link %s"
-msgstr ""
+msgstr "Es fehlt einer Querverbindung Datensatz für Link %s"
 
 #: ../lib/WikiDB/backend/dbaBase.php:368
 #, c-format
 msgid "link entry missing for backlink %s"
-msgstr ""
+msgstr "Es fehlt einer Link Datensatz für die Querverbindung %s"
 
 #: ../lib/WikiDB/dba.php:17
 #, c-format
@@ -1022,6 +1027,12 @@ msgid ""
 "DBA files are in the %s directory. Please read the INSTALL file and move the "
 "DB file to a permanent location or risk losing all the pages!"
 msgstr ""
+"DBA Dateien sind ins Verzeichnis %s. Bitte erst lies der INSTALL Datei und "
+"ziehe der DB Datei fort, sonnst bist du auf Gefahr des ganzes Wikis zu "
+"verlieren!"
+
+#~ msgid "Edit:"
+#~ msgstr "Editieren:"
 
 #~ msgid "Click"
 #~ msgstr "Klicke"
