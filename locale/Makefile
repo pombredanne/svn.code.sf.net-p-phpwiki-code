@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.31 2003-03-12 09:31:13 carstenklapp Exp $
+# $Id: Makefile,v 1.32 2003-11-09 04:54:40 carstenklapp Exp $
 #
 # locale/Makefile
 #
@@ -181,6 +181,7 @@ ${POT_FILE}: ../lib/plugin/TexToPng.php
 ${POT_FILE}: ../lib/plugin/TitleSearch.php
 ${POT_FILE}: ../lib/plugin/Transclude.php
 ${POT_FILE}: ../lib/plugin/UnfoldSubpages.php
+${POT_FILE}: ../lib/plugin/UpLoad.php
 ${POT_FILE}: ../lib/plugin/UserPreferences.php
 ${POT_FILE}: ../lib/plugin/VisualWiki.php
 ${POT_FILE}: ../lib/plugin/WantedPages.php
