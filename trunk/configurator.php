@@ -1,5 +1,5 @@
 <?php 
-// $Id: configurator.php,v 1.24 2005-02-15 15:58:37 rurban Exp $
+// $Id: configurator.php,v 1.25 2005-02-15 17:54:37 rurban Exp $
 /**
  * Started automatically the first time by IniConfig("config/config.ini") if it doesn't exist
  *
@@ -18,17 +18,24 @@
  * A file config/config.ini will be generated.
  */
 
+global $HTTP_SERVER_VARS;
+if (empty($configurator))
+    $configurator = "configurator.php";
+if (!strstr($HTTP_SERVER_VARS["SCRIPT_NAME"], $configurator) and defined('DATA_PATH'))
+    $configurator = DATA_PATH . "/" . $configurator;
+$scriptname = str_replace('configurator.php', 'index.php', $HTTP_SERVER_VARS["SCRIPT_NAME"]);
+
 $tdwidth = 700;
 $config_file = (substr(PHP_OS,0,3) == 'WIN') ? 'config\\config.ini' : 'config/config.ini';
 $fs_config_file = dirname(__FILE__) . (substr(PHP_OS,0,3) == 'WIN' ? '\\' : '/') . $config_file;
-if (isset($HTTP_POST_VARS['create']))  header('Location: configurator.php?create=1#create');
+if (isset($HTTP_POST_VARS['create']))  header('Location: '.$configurator.'?create=1#create');
 printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'iso-8859-1'); 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.24 2005-02-15 15:58:37 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.25 2005-02-15 17:54:37 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
@@ -1398,8 +1405,6 @@ $properties["Server Port"] =
 new numeric_define_commented('SERVER_PORT', $HTTP_SERVER_VARS['SERVER_PORT'], "",
 "onchange=\"validate_ereg('Sorry, \'%s\' is no valid port number.', '^[0-9]+$', 'SERVER_PORT', this);\"");
 
-$scriptname = str_replace('configurator.php','index.php',$HTTP_SERVER_VARS["SCRIPT_NAME"]);
-
 $properties["Script Name"] =
 new _define_commented_optional('SCRIPT_NAME', $scriptname, "
 Relative URL (from the server root) of the PhpWiki script.");
@@ -2233,7 +2238,7 @@ if (!empty($HTTP_POST_VARS['action'])
     }
 
     echo "<hr />\n<p>Here's the configuration file based on your answers:</p>\n";
-    echo "<form method=\"get\" action=\"configurator.php\">\n";
+    echo "<form method=\"get\" action=\"", $configurator, "\">\n";
     echo "<textarea id='config-output' readonly='readonly' style='width:100%;' rows='30' cols='100'>\n";
     echo htmlentities($config);
     echo "</textarea></form>\n";
@@ -2246,7 +2251,7 @@ if (!empty($HTTP_POST_VARS['action'])
     // No action has been specified - we make a form.
 
     echo '
-<form action="configurator.php" method="post">
+<form action="',$configurator,'" method="post">
 <input type="hidden" name="action" value="make_config" />
 <table cellpadding="4" cellspacing="0">
 ';
