@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: HttpClient.php,v 1.2 2004-04-10 02:30:49 rurban Exp $');
+rcs_id('$Id: HttpClient.php,v 1.3 2004-04-12 17:37:32 rurban Exp $');
 
 /** 
    Version 0.9, 6th April 2003 - Simon Willison ( http://simon.incutio.com/ )
@@ -180,12 +180,12 @@ class HttpClient {
             $this->cookie_host = $this->host;
         }
         // If $persist_referers, set the referer ready for the next request
-        if ($this->persist_referers) {
+        if (isset($this->persist_referers)) {
             $this->debug('Persisting referer: '.$this->getRequestURL());
             $this->referer = $this->getRequestURL();
         }
         // Finally, if handle_redirects and a redirect is sent, do that
-        if ($this->handle_redirects) {
+        if (isset($this->handle_redirects)) {
             if (++$this->redirect_count >= $this->max_redirects) {
                 $this->errormsg = 'Number of redirects exceeded maximum ('.$this->max_redirects.')';
                 $this->debug($this->errormsg);
@@ -212,11 +212,11 @@ class HttpClient {
             $headers[] = "Accept-encoding: {$this->accept_encoding}";
         }
         $headers[] = "Accept-language: {$this->accept_language}";
-        if ($this->referer) {
+        if (!empty($this->referer)) {
             $headers[] = "Referer: {$this->referer}";
         }
     	// Cookies
-    	if ($this->cookies) {
+    	if (!empty($this->cookies)) {
     	    $cookie = 'Cookie: ';
     	    foreach ($this->cookies as $key => $value) {
     	        $cookie .= "$key=$value; ";
@@ -224,7 +224,7 @@ class HttpClient {
     	    $headers[] = $cookie;
     	}
     	// Basic authentication
-    	if ($this->username && $this->password) {
+    	if (!empty($this->username) && !empty($this->password)) {
     	    $headers[] = 'Authorization: BASIC '.base64_encode($this->username.':'.$this->password);
     	}
     	// If this is a POST, set the content type and length
