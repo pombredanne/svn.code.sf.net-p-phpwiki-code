@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: removepage.php,v 1.8 2002-01-28 18:49:08 dairiki Exp $');
+rcs_id('$Id: removepage.php,v 1.9 2002-01-29 01:17:50 carstenklapp Exp $');
 require_once('lib/Template.php');
 
 function RemovePage (&$request) {
@@ -42,7 +42,7 @@ function RemovePage (&$request) {
     }
     elseif ($request->getArg('currentversion') != $version) {
         $html = HTML(HTML::h2(_("Someone has edited the page!")),
-                     HTML::p(fmt("Since you started the deletion process, someone has saved a new version of %s.  Please check to make sure you still want to premanently remove the page from the database.", $pagelink)));
+                     HTML::p(fmt("Since you started the deletion process, someone has saved a new version of %s.  Please check to make sure you still want to permanently remove the page from the database.", $pagelink)));
     }
     else {
         // Real delete.
