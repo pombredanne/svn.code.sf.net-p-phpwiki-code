@@ -1,4 +1,4 @@
-<!-- $Id: msql.php,v 1.4 2000-11-03 05:27:51 wainstead Exp $ -->
+<!-- $Id: msql.php,v 1.5 2000-11-07 05:13:22 wainstead Exp $ -->
 <?php
 
    /*
@@ -449,6 +449,65 @@
 	 $pages[$i] = msql_result($res, $i, 'pagename');
       }
       return $pages;
+   }
+
+   ////////////////////////////////////////
+   // functionality for the wikilinks table
+
+   // takes a page name, returns array of scored incoming and outgoing links
+   function GetWikiPageLinks($dbi, $pagename) {
+      $links = array();
+      $pagename = addslashes($pagename);
+      $res = msql_query("select wikilinks.topage, wikiscore.score from wikilinks, wikiscore where wikilinks.topage=wikiscore.pagename and wikilinks.frompage='$pagename' order by score desc, topage", $dbi['dbc']);
+
+      $rows = msql_num_rows($res);
+      for ($i = 0; $i < $rows; $i++) {
+	 $out = msql_fetch_array($res);
+	 $links['out'][] = array($out['topage'], $out['score']);
+      }
+
+      $res = msql_query("select wikilinks.frompage, wikiscore.score from wikilinks, wikiscore where wikilinks.frompage=wikiscore.pagename and wikilinks.topage='$pagename' order by score desc, frompage", $dbi['dbc']);
+      $rows = msql_num_rows($res);
+      for ($i = 0; $i < $rows; $i++) {
+	 $out = msql_fetch_array($res);
+	 $links['in'][] = array($out['frompage'], $out['score']);
+      }
+
+      $res = msql_query("select distinct hitcount.pagename, hitcount.hits from wikilinks, hitcount where (wikilinks.frompage=hitcounts.pagename and wikilinks.topage='$pagename') or (wikilinks.topage=pagename and wikilinks.frompage='$pagename') order by hitcount.hits desc, wikilinks.pagename", $dbi['dbc']);
+      $rows = msql_num_rows($res);
+      for ($i = 0; $i < $rows; $i++) {
+	 $out = msql_fetch_array($res);
+	 $links['popular'][] = array($out['pagename'], $out['hits']);
+      }
+
+      return $links;
+   }
+
+
+   // takes page name, list of links it contains
+   // the $linklist is an array where the keys are the page names
+   function SetWikiPageLinks($dbi, $pagename, $linklist) {
+      $frompage = addslashes($pagename);
+
+      // first delete the old list of links
+      msql_query("delete from wikilinks where frompage='$frompage'",
+		$dbi["dbc"]);
+
+      // the page may not have links, return if not
+      if (! count($linklist))
+         return;
+      // now insert the new list of links
+      while (list($topage, $count) = each($linklist)) {
+         $topage = addslashes($topage);
+	 if($topage != $frompage) {
+            msql_query("insert into wikilinks (frompage, topage) " .
+                     "values ('$frompage', '$topage')", $dbi["dbc"]);
+	 }
+      }
+
+      // update pagescore. rotsa ruck.
+      msql_query("delete from wikiscore", $dbi["dbc"]);
+      msql_query("insert into wikiscore select w1.topage, count(*) from wikilinks as w1, wikilinks as w2 where w2.topage=w1.frompage group by w1.topage", $dbi["dbc"]);
    }
 
 
