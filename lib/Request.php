@@ -1,11 +1,10 @@
-<?php rcs_id('$Id: Request.php,v 1.3 2001-11-17 16:39:08 dairiki Exp $');
+<?php rcs_id('$Id: Request.php,v 1.4 2001-11-29 18:03:59 dairiki Exp $');
 
 // FIXME: write log entry.
 
 class Request {
         
     function Request() {
-
         $this->_fix_magic_quotes_gpc();
         $this->_fix_multipart_form_data();
 
@@ -25,7 +24,8 @@ class Request {
         $this->session = new Request_SessionVars;
         $this->cookies = new Request_CookieVars;
 
-        $this->_log_entry = new Request_AccessLogEntry($this);
+        if (ACCESS_LOG)
+            $this->_log_entry = & new Request_AccessLogEntry($this, ACCESS_LOG);
         
         $TheRequest = $this;
     }
@@ -61,7 +61,28 @@ class Request {
     
     function redirect($url) {
         header("Location: $url");
-        $this->_log_entry->setStatus(302);
+        if (isset($this->_log_entry))
+            $this->_log_entry->setStatus(302);
+    }
+
+    function setStatus($status) {
+        if (preg_match('|^HTTP/.*?\s(\d+)|i', $status, $m)) {
+            header($status);
+            $status = $m[1];
+        }
+        else {
+            $status = (integer) $status;
+            $reasons = array('200' => 'OK',
+                             '302' => 'Found',
+                             '400' => 'Bad Request',
+                             '401' => 'Unauthorized',
+                             '403' => 'Forbidden',
+                             '404' => 'Not Found');
+            header(sprintf("HTTP/1.0 %d %s", $status, $reason[$status]));
+        }
+
+        if (isset($this->_log_entry))
+            $this->_log_entry->setStatus($status);
     }
 
     function compress_output() {
@@ -270,66 +291,148 @@ class Request_UploadedFile {
     }
 }
 
+/**
+ * Create NCSA "combined" log entry for current request.
+ */
 class Request_AccessLogEntry
 {
-   function AccessLogEntry ($request) {
-      $this->host = $req->get('REMOTE_HOST');
-      $this->ident = $req->get('REMOTE_IDENT');
-      if (!$this->ident)
-          $this->ident = '-';
-      $this->user = '-';
-      $this->time = time();
-      $this->request = join(' ', array($req->get('REQUEST_METHOD'),
-                                       $req->get('REQUEST_URI'),
-                                       $req->get('SERVER_PROTOCOL')));
-      $this->status = 200;
-      $this->size = 0;
-      $this->referer = (string) $req->get('HTTP_REFERER');
-      $this->user_agent = (string) $req->get('HTTP_USER_AGENT');
-   }
+    /**
+     * Constructor.
+     *
+     * The log entry will be automatically appended to the log file
+     * when the current request terminates.
+     *
+     * If you want to modify a Request_AccessLogEntry before it gets
+     * written (e.g. via the setStatus and setSize methods) you should
+     * use an '&' on the constructor, so that you're working with the
+     * original (rather than a copy) object.
+     *
+     * <pre>
+     *    $log_entry = & new Request_AccessLogEntry($req, "/tmp/wiki_access_log");
+     *    $log_entry->setStatus(401);
+     * </pre>
+     *
+     *
+     * @param $request object  Request object for current request.
+     * @param $logfile string  Log file name.
+     */
+    function Request_AccessLogEntry ($request, $logfile) {
+        $this->logfile = $logfile;
+        
+        $this->host = $request->get('REMOTE_HOST');
+        $this->ident = $request->get('REMOTE_IDENT');
+        if (!$this->ident)
+            $this->ident = '-';
+        $this->user = '-';        // FIXME: get logged-in user name
+        $this->time = time();
+        $this->request = join(' ', array($request->get('REQUEST_METHOD'),
+                                       $request->get('REQUEST_URI'),
+                                       $request->get('SERVER_PROTOCOL')));
+        $this->status = 200;
+        $this->size = 0;
+        $this->referer = (string) $request->get('HTTP_REFERER');
+        $this->user_agent = (string) $request->get('HTTP_USER_AGENT');
 
-   //
-   // Returns zone offset, like "-0800" for PST.
-   //
-   function _zone_offset () {
-      $offset = date("Z", $this->time);
-      if ($offset < 0)
-      {
-	 $negoffset = "-";
-	 $offset = -$offset;
-      }
-      $offhours = floor($offset / 3600);
-      $offmins = $offset / 60 - $offhours * 60;
-      return sprintf("%s%02d%02d", $negoffset, $offhours, $offmins);
-   }
-  
-   // Format time into NCSA format.
-   function _ncsa_time($time = false) {
-      if (!$time)
-	 $time = time();
+        global $Request_AccessLogEntry_entries;
+        if (!isset($Request_AccessLogEntry_entries)) {
+            register_shutdown_function("Request_AccessLogEntry_shutdown_function");
+        }
+        $Request_AccessLogEntry_entries[] = &$this;
+    }
 
-      return date("d/M/Y:H:i:s", $time) .
-	 " " . $this->_zone_offset();
-   }
+    /**
+     * Set result status code.
+     *
+     * @param $status integer  HTTP status code.
+     */
+    function setStatus ($status) {
+        trigger_error("setStatus: $status", E_USER_WARNING);
+        
+        $this->status = $status;
+    }
+    
+    /**
+     * Set response size.
+     *
+     * @param $size integer
+     */
+    function setSize ($size) {
+        $this->size = $size;
+    }
+    
+    /**
+     * Get time zone offset.
+     *
+     * This is a static member function.
+     *
+     * @param $time integer Unix timestamp (defaults to current time).
+     * @return string Zone offset, e.g. "-0800" for PST.
+     */
+    function _zone_offset ($time = false) {
+        if (!$time)
+            $time = time();
+        $offset = date("Z", $time);
+        if ($offset < 0) {
+            $negoffset = "-";
+            $offset = -$offset;
+        }
+        $offhours = floor($offset / 3600);
+        $offmins = $offset / 60 - $offhours * 60;
+        return sprintf("%s%02d%02d", $negoffset, $offhours, $offmins);
+    }
 
-   function write($logfile) {
-      $entry = sprintf('%s %s %s [%s] "%s" %d %d "%s" "%s"',
-		       $this->host, $this->ident, $this->user,
-		       $this->_ncsa_time($this->time),
-		       $this->request, $this->status, $this->size,
-		       $this->referer, $this->user_agent);
-      
-      //Error log doesn't provide locking.
-      //error_log("$entry\n", 3, $logfile);
+    /**
+     * Format time in NCSA format.
+     *
+     * This is a static member function.
+     *
+     * @param $time integer Unix timestamp (defaults to current time).
+     * @return string Formatted date & time.
+     */
+    function _ncsa_time($time = false) {
+        if (!$time)
+            $time = time();
 
-      // Alternate method 
-      if (($fp = fopen($logfile, "a")))
-      {
-	 flock($fp, LOCK_EX);
-	 fputs($fp, "$entry\n");
-	 fclose($fp);
-      }
-   }
+        return date("d/M/Y:H:i:s", $time) .
+            " " . $this->_zone_offset();
+    }
+
+    /**
+     * Write entry to log file.
+     */
+    function write() {
+        $entry = sprintf('%s %s %s [%s] "%s" %d %d "%s" "%s"',
+                         $this->host, $this->ident, $this->user,
+                         $this->_ncsa_time($this->time),
+                         $this->request, $this->status, $this->size,
+                         $this->referer, $this->user_agent);
+
+        //Error log doesn't provide locking.
+        //error_log("$entry\n", 3, $this->logfile);
+
+        // Alternate method 
+        if (($fp = fopen($this->logfile, "a"))) {
+            flock($fp, LOCK_EX);
+            fputs($fp, "$entry\n");
+            fclose($fp);
+        }
+    }
+}
+
+/**
+ * Shutdown callback.
+ *
+ * @access private
+ * @see Request_AccessLogEntry
+ */
+function Request_AccessLogEntry_shutdown_function ()
+{
+    global $Request_AccessLogEntry_entries;
+    
+    foreach ($Request_AccessLogEntry_entries as $entry) {
+        $entry->write();
+    }
+    unset($Request_AccessLogEntry_entries);
 }
 
 // Local Variables:

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiUser.php,v 1.2 2001-11-26 22:37:29 dairiki Exp $');
+<?php rcs_id('$Id: WikiUser.php,v 1.3 2001-11-29 18:03:59 dairiki Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -170,10 +170,9 @@ class WikiUser
         $this->state = 'login';
       
         $this->_save();
+        $request = &$this->_request;
         header('WWW-Authenticate: Basic realm="' . $this->realm . '"');
-        header("HTTP/1.0 401 Unauthorized");
-        if (ACCESS_LOG)
-            $LogEntry->status = 401;
+        $request->setStatus("HTTP/1.0 401 Unauthorized");
         echo "<p>" . gettext ("You entered an invalid login or password.") . "\n";
         if (ALLOW_BOGO_LOGIN) {
             echo "<p>";
