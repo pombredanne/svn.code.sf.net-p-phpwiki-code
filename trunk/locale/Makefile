@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.8 2002-01-13 22:42:37 dairiki Exp $
+# $Id: Makefile,v 1.9 2002-01-14 00:06:07 dairiki Exp $
 #
 # locale/Makefile
 #
@@ -52,9 +52,10 @@ dep :
 #
 PO_FILES += po/de.po
 PO_FILES += po/es.po
+PO_FILES += po/fr.po
+PO_FILES += po/it.po
 PO_FILES += po/nl.po
 PO_FILES += po/sv.po
-PO_FILES += po/it.po
 #
 ${POT_FILE}: ../lib/ArchiveCleaner.php
 ${POT_FILE}: ../lib/config.php
