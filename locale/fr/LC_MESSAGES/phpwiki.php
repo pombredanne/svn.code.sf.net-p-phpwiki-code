@@ -32,16 +32,12 @@ $locale["HomePage"] =
    "Accueil";
 $locale["In order to recover from this situation follow these steps:"] =
    "Pour remettre de l'ordre dans cette situation, suis ces étapes :";
-$locale["Lock page"] =
-   "Verrouiller la page";
 $locale["Make changes to the file again. Paste your additions from the clipboard (or text editor)."] =
    "Ré-applique tes modifications, colle les ajouts depuis la fenêtre où tu les as placés.";
 $locale["None"] =
    "Aucune";
 $locale["Not Implemented"] =
    "Non encore implémentée";
-$locale["Page locked"] =
-   "Page verrouillée";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
    "PhpWiki n'a pu enregistrer tes modifications, parce qu'un autre utilisateur a édité et sauvegardé la page pendant que tu faisais de même. Si j'avais continué, j'aurais perdu les modifications dues à l'auteur précédent.";
 $locale["Press <b>Save</b> again."] =
@@ -64,8 +60,6 @@ $locale["Sorry for the inconvenience."] =
    "Désolé pour la gène occasionnée.";
 $locale["Thank you for editing %s."] =
    "Merci d'avoir édité %s.";
-$locale["Unlock page"] =
-   "Déverrouiller la page";
 $locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
    "Utilise la fonction <b>Retour</b> de ton navigateur pour revenir à la page d'édition.";
 $locale["Version %d"] =

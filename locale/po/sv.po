@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.9\n"
-"POT-Creation-Date: 2002-01-16 14:00-0500\n"
+"POT-Creation-Date: 2002-01-17 17:30-0800\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -14,7 +14,38 @@ msgstr ""
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../lib/config.php:271
+#: ../lib/ButtonFactory.php:217 ../themes/default/templates/browse.tmpl:8
+msgid "Edit"
+msgstr "Redigera"
+
+#: ../lib/ButtonFactory.php:219
+msgid "Diff"
+msgstr "Diff"
+
+#: ../lib/ButtonFactory.php:222
+msgid "SignOut"
+msgstr ""
+
+#: ../lib/ButtonFactory.php:224
+msgid "SignIn"
+msgstr ""
+
+#: ../lib/ButtonFactory.php:228
+#, fuzzy
+msgid "Lock Page"
+msgstr "Lås sida"
+
+#: ../lib/ButtonFactory.php:230
+#, fuzzy
+msgid "Unlock Page"
+msgstr "Lås upp sida"
+
+#: ../lib/ButtonFactory.php:232
+#, fuzzy
+msgid "Remove Page"
+msgstr "Ta bort sida"
+
+#: ../lib/config.php:274
 msgid "An unnamed PhpWiki"
 msgstr ""
 
@@ -26,103 +57,113 @@ msgstr ""
 msgid "%s failed"
 msgstr ""
 
-#: ../lib/diff.php:172
+#: ../lib/diff.php:173
 #, fuzzy, c-format
 msgid "version %s"
 msgstr "version %s"
 
-#: ../lib/diff.php:175
+#: ../lib/diff.php:176
 #, c-format
 msgid "last modified on %s"
 msgstr "senast ändrad %s"
 
-#: ../lib/diff.php:178
+#: ../lib/diff.php:179
 #, c-format
 msgid "by %s"
 msgstr "av %s"
 
-#: ../lib/diff.php:180
+#: ../lib/diff.php:181
 msgid "None"
 msgstr "ingen"
 
-#: ../lib/diff.php:201 ../lib/diff.php:211
+#: ../lib/diff.php:202 ../lib/diff.php:212
 #, c-format
 msgid "version %d"
 msgstr "version %d"
 
-#: ../lib/diff.php:205
+#: ../lib/diff.php:206
 #, fuzzy
 msgid "current version"
 msgstr "nuvarande version"
 
-#: ../lib/diff.php:222
+#: ../lib/diff.php:223
 msgid "previous major revision"
 msgstr ""
 
-#: ../lib/diff.php:231
+#: ../lib/diff.php:232
 #, fuzzy
 msgid "revision by previous author"
 msgstr "från föregående författare"
 
-#: ../lib/diff.php:238
+#: ../lib/diff.php:239
 msgid "previous revision"
 msgstr ""
 
-#: ../lib/diff.php:251
+#: ../lib/diff.php:252
 #, c-format
 msgid "Differences between %s and %s of %s."
 msgstr ""
 
-#: ../lib/diff.php:255
+#: ../lib/diff.php:256
 msgid "Previous Major Revision"
 msgstr ""
 
-#: ../lib/diff.php:256
+#: ../lib/diff.php:257
 msgid "Previous Revision"
 msgstr ""
 
-#: ../lib/diff.php:257
+#: ../lib/diff.php:258
 msgid "Previous Author"
 msgstr ""
 
-#: ../lib/diff.php:267
+#: ../lib/diff.php:268
 msgid "Other diffs:"
 msgstr ""
 
-#: ../lib/diff.php:275
+#: ../lib/diff.php:276
 #, fuzzy
 msgid "Newer page:"
 msgstr "Ta bort sida"
 
-#: ../lib/diff.php:276
+#: ../lib/diff.php:277
 msgid "Older page:"
 msgstr ""
 
-#: ../lib/diff.php:284
+#: ../lib/diff.php:285
 msgid "Versions are identical"
 msgstr "Versionerna är identiska"
 
-#: ../lib/diff.php:298
+#: ../lib/diff.php:299
 #, fuzzy, c-format
 msgid "Diff: %s"
 msgstr "Diff av %s."
 
-#: ../lib/Toolbar.php:91 ../lib/editpage.php:40 ../templates/browse.html:70
-#, fuzzy
-msgid "Note:"
-msgstr "ingen"
-
-#: ../lib/editpage.php:41
+#: ../lib/display.php:59
 #, c-format
-msgid "%s has been locked by the administrator and cannot be edited."
-msgstr "%s sidan är låst av administratören och kan ej redigeras."
+msgid "BackLinks for %s"
+msgstr ""
 
-#: ../lib/editpage.php:45 ../lib/plugin/ViewSource.php:63
+#: ../lib/display.php:67 ../lib/plugin/BackLinks.php:9
+#: ../themes/default/templates/body.tmpl:25
+msgid "BackLinks"
+msgstr ""
+
+#: ../lib/editpage.php:31 ../lib/plugin/ViewSource.php:63
 #, c-format
 msgid "Page source for %s"
 msgstr ""
 
-#: ../lib/ErrorManager.php:86 ../themes/MacOSX/templates/browse.html:105
+#: ../lib/editpage.php:32
+#, c-format
+msgid "View Source: %s"
+msgstr ""
+
+#: ../lib/editpage.php:37 ../lib/editpage.php:38
+#, c-format
+msgid "Edit: %s"
+msgstr "Redigera: %s."
+
+#: ../lib/ErrorManager.php:86
 msgid "PHP Warnings"
 msgstr ""
 
@@ -257,45 +298,45 @@ msgstr ""
 msgid "Uploading %s"
 msgstr ""
 
-#: ../lib/Toolbar.php:279 ../lib/loadsave.php:476
-#: ../lib/plugin/RecentChanges.php:163 ../lib/plugin/RecentChanges.php:272
-#: ../lib/plugin/RecentChanges.php:317 ../lib/plugin/Toolbar.php:87
-#: ../lib/plugin/Toolbar.php:105 ../lib/plugin/Toolbar.php:112
-#: ../templates/browse.html:40
+#: ../lib/loadsave.php:476 ../lib/plugin/RecentChanges.php:165
+#: ../lib/plugin/RecentChanges.php:274 ../lib/plugin/RecentChanges.php:319
+#: ../lib/plugin/Toolbar.php:87 ../lib/plugin/Toolbar.php:105
+#: ../lib/plugin/Toolbar.php:112 ../themes/default/templates/body.tmpl:16
 msgid "RecentChanges"
 msgstr "SenasteÄndringar"
 
-#: ../lib/Toolbar.php:69 ../lib/main.php:26 ../lib/main.php:85
-#: ../lib/main.php:87 ../lib/plugin/RecentChanges.php:255
+#: ../lib/main.php:33 ../lib/main.php:92 ../lib/main.php:94
+#: ../lib/plugin/RecentChanges.php:257
 msgid "HomePage"
 msgstr "Framsida"
 
-#: ../lib/main.php:99
+#: ../lib/main.php:106
 #, c-format
 msgid "Action %s is disabled in this wiki."
 msgstr ""
 
-#: ../lib/main.php:120 ../lib/plugin/FullTextSearch.php:12
+#: ../lib/main.php:127 ../lib/plugin/FullTextSearch.php:12
 #, fuzzy
 msgid "FullTextSearch"
 msgstr "Sökresultat för fulltextsökning"
 
-#: ../lib/Toolbar.php:208 ../lib/main.php:123
-#: ../lib/plugin/RecentChanges.php:263 ../lib/plugin/TitleSearch.php:12
+#: ../lib/main.php:130 ../lib/plugin/RecentChanges.php:265
+#: ../lib/plugin/TitleSearch.php:12
 msgid "TitleSearch"
 msgstr "Titelsökningen"
 
-#: ../lib/main.php:186
+#: ../lib/main.php:193
 #, fuzzy
 msgid "lock or unlock pages"
 msgstr "Ta bort sida"
 
-#: ../lib/main.php:220
+#: ../lib/main.php:227
 #, c-format
 msgid "Bad action: '%s'"
 msgstr ""
 
-#: ../lib/plugin/_BackendInfo.php:10 ../templates/browse.html:45
+#: ../lib/plugin/_BackendInfo.php:10
+#: ../themes/default/templates/browse.tmpl:19
 msgid "DebugInfo"
 msgstr ""
 
@@ -312,12 +353,6 @@ msgstr ""
 #: ../lib/plugin/_BackendInfo.php:51
 #, c-format
 msgid "No pagedata for %s"
-msgstr ""
-
-#: ../lib/Toolbar.php:187 ../lib/Toolbar.php:188 ../lib/Toolbar.php:225
-#: ../lib/Toolbar.php:226 ../lib/plugin/BackLinks.php:9
-#: ../templates/browse.html:44 ../themes/MacOSX/templates/editpage.html:19
-msgid "BackLinks"
 msgstr ""
 
 #: ../lib/plugin/BackLinks.php:13
@@ -406,9 +441,7 @@ msgstr ""
 msgid "Included from %s"
 msgstr ""
 
-#: ../lib/Toolbar.php:184 ../lib/Toolbar.php:185 ../lib/Toolbar.php:222
-#: ../lib/Toolbar.php:223 ../lib/plugin/LikePages.php:12
-#: ../templates/browse.html:43
+#: ../lib/plugin/LikePages.php:12 ../themes/default/templates/body.tmpl:24
 msgid "LikePages"
 msgstr ""
 
@@ -480,9 +513,8 @@ msgstr "Version %d"
 msgid "History of changes."
 msgstr ""
 
-#: ../lib/Toolbar.php:168 ../lib/Toolbar.php:169
 #: ../lib/plugin/PageHistory.php:200 ../lib/plugin/RecentChanges.php:44
-#: ../templates/browse.html:37
+#: ../themes/default/templates/browse.tmpl:16
 msgid "PageHistory"
 msgstr ""
 
@@ -504,52 +536,48 @@ msgstr "Ta bort sida"
 msgid "(diff)"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:126
-msgid "RSS available"
-msgstr ""
-
-#: ../lib/plugin/RecentChanges.php:136
+#: ../lib/plugin/RecentChanges.php:138
 msgid "edits"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:138
+#: ../lib/plugin/RecentChanges.php:140
 msgid "major edits"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:140
+#: ../lib/plugin/RecentChanges.php:142
 msgid "minor edits"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:144
+#: ../lib/plugin/RecentChanges.php:146
 #, fuzzy, c-format
 msgid "The %d most recent %s during the past %.1f days are listed below."
 msgstr "De senaste ändrade sidorna listas nedan."
 
-#: ../lib/plugin/RecentChanges.php:147
+#: ../lib/plugin/RecentChanges.php:149
 #, fuzzy, c-format
 msgid "The %d most recent %s are listed below."
 msgstr "De senaste ändrade sidorna listas nedan."
 
-#: ../lib/plugin/RecentChanges.php:152
+#: ../lib/plugin/RecentChanges.php:154
 #, fuzzy, c-format
 msgid "The most recent %s during the past %.1f days are listed below."
 msgstr "De senaste ändrade sidorna listas nedan."
 
-#: ../lib/plugin/RecentChanges.php:155
+#: ../lib/plugin/RecentChanges.php:157
 #, c-format
 msgid "All %s are listed below."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:163 ../lib/plugin/Toolbar.php:87
+#: ../lib/plugin/RecentChanges.php:165 ../lib/plugin/Toolbar.php:87
 #: ../lib/plugin/Toolbar.php:107 ../lib/plugin/Toolbar.php:112
 msgid "RecentEdits"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:260
+#: ../lib/plugin/RecentChanges.php:262
 msgid "Search"
 msgstr "Sök"
 
-#: ../lib/plugin/RecentChanges.php:261 ../lib/plugin/TitleSearch.php:16
+#: ../lib/plugin/RecentChanges.php:263 ../lib/plugin/TitleSearch.php:16
 msgid "Title Search"
 msgstr "Titelsökningen"
 
@@ -564,8 +592,8 @@ msgstr ""
 
 #: ../lib/plugin/text2png.php:89
 msgid ""
-"PHP was unable to create a new GD image stream. Read 'lib/plugin/text2png."
-"php' for details."
+"PHP was unable to create a new GD image stream. Read "
+"'lib/plugin/text2png.php' for details."
 msgstr ""
 
 #: ../lib/plugin/text2png.php:141
@@ -651,7 +679,7 @@ msgstr ""
 msgid "Sign in:"
 msgstr ""
 
-#: ../lib/plugin/ViewSource.php:20 ../templates/browse.html:31
+#: ../lib/plugin/ViewSource.php:20
 msgid "ViewSource"
 msgstr ""
 
@@ -660,7 +688,7 @@ msgstr ""
 msgid "View Wiki code for page '%s'."
 msgstr ""
 
-#: ../lib/plugin/ViewSource.php:52 ../lib/stdlib.php:556
+#: ../lib/plugin/ViewSource.php:52 ../lib/stdlib.php:543
 #, c-format
 msgid "I'm sorry.  Version %d of %s is not in my database."
 msgstr ""
@@ -730,17 +758,17 @@ msgstr "Annars klicka på backaknappen i din webbläsare."
 msgid "Removed page '%s' succesfully."
 msgstr "Tog bort sidan \"%s\"."
 
-#: ../lib/Toolbar.php:164 ../lib/removepage.php:20
+#: ../lib/removepage.php:20
 msgid "Remove page"
 msgstr "Ta bort sida"
 
-#: ../lib/savepage.php:31 ../lib/savepage.php:60
+#: ../lib/savepage.php:22 ../lib/savepage.php:51
 msgid "Use your browser's <b>Back</b> button to go back to the edit page."
 msgstr ""
 "Använd webbläsarens <b>backaknapp</b> för att gå tillbaka till "
 "redigeringssidan."
 
-#: ../lib/savepage.php:32
+#: ../lib/savepage.php:23
 msgid ""
 "Copy your changes to the clipboard or to another temporary place (e.g. text "
 "editor)."
@@ -748,7 +776,7 @@ msgstr ""
 "Kopiera dina ändringar till urklippet eller till ett annat temporärt ställe "
 "(t.ex. en texteditor)."
 
-#: ../lib/savepage.php:33
+#: ../lib/savepage.php:24
 msgid ""
 "<b>Reload</b> the page. You should now see the most current version of the "
 "page. Your changes are no longer there."
@@ -756,7 +784,7 @@ msgstr ""
 "<b>Ladda om</b> sidan. Du kommer nu se den senaste versionen av sidan. Dina "
 "ändringar är inte där."
 
-#: ../lib/savepage.php:34
+#: ../lib/savepage.php:25
 msgid ""
 "Make changes to the file again. Paste your additions from the clipboard (or "
 "text editor)."
@@ -764,11 +792,11 @@ msgstr ""
 "Ändra filen igen. Klistra in dina ändringar från urklippet (eller "
 "texteditorn)."
 
-#: ../lib/savepage.php:35
+#: ../lib/savepage.php:26
 msgid "Press <b>Save</b> again."
 msgstr "Klicka på <b>Spara</b> igen."
 
-#: ../lib/savepage.php:43
+#: ../lib/savepage.php:34
 msgid ""
 "PhpWiki is unable to save your changes, because another user edited and "
 "saved the page while you were editing the page too. If saving proceeded now "
@@ -778,27 +806,27 @@ msgstr ""
 "och sparade sidan under tiden som du ändrade på sidan. Sparar du nu "
 "försvinner ändringarna gjorda av den förra användaren."
 
-#: ../lib/savepage.php:46
+#: ../lib/savepage.php:37
 msgid "In order to recover from this situation follow these steps:"
 msgstr "För att lösa situtationen, följ dessa steg:"
 
-#: ../lib/savepage.php:50 ../lib/savepage.php:64
+#: ../lib/savepage.php:41 ../lib/savepage.php:55
 msgid "Sorry for the inconvenience."
 msgstr "Ledsen för allt besvär."
 
-#: ../lib/savepage.php:53
+#: ../lib/savepage.php:44
 #, c-format
 msgid "Problem while updating %s"
 msgstr "Har problem med att uppdatera %s"
 
-#: ../lib/savepage.php:59
+#: ../lib/savepage.php:50
 #, fuzzy
 msgid ""
 "This page has been locked by the administrator so your changes could not be "
 "saved."
 msgstr "Den här sidan är låst av administratören och kan ej redigeras."
 
-#: ../lib/savepage.php:61
+#: ../lib/savepage.php:52
 #, fuzzy
 msgid ""
 "Copy your changes to the clipboard. You can try editing a different page or "
@@ -807,215 +835,65 @@ msgstr ""
 "Kopiera dina ändringar till urklippet eller till ett annat temporärt ställe "
 "(t.ex. en texteditor)."
 
-#: ../lib/savepage.php:67
+#: ../lib/savepage.php:58
 #, c-format
 msgid "Problem while editing %s"
 msgstr "Har problem med att redigera %s"
 
-#: ../lib/savepage.php:73
-#, fuzzy, c-format
-msgid "Edit aborted: %s."
-msgstr "Redigera: %s."
-
-#: ../lib/savepage.php:75
-msgid "You have not made any changes."
-msgstr ""
-
-#: ../lib/savepage.php:76
-msgid "New version not saved."
-msgstr ""
-
-#: ../lib/savepage.php:82
+#: ../lib/savepage.php:63
 msgid "Bad form submission"
 msgstr ""
 
-#: ../lib/savepage.php:83
+#: ../lib/savepage.php:64
 msgid "Required form variables are missing."
 msgstr ""
 
-#: ../lib/savepage.php:85
+#: ../lib/savepage.php:66
 #, c-format
 msgid "Edit aborted: %s"
 msgstr ""
 
-#: ../lib/Toolbar.php:399 ../lib/savepage.php:194
-#, c-format
-msgid "Thank you for editing %s."
-msgstr "Tack för att du redigerade %s."
+#: ../lib/savepage.php:150 ../lib/savepage.php:151
+#, fuzzy, c-format
+msgid "Saved: %s"
+msgstr "version %s"
 
-#: ../lib/Toolbar.php:402 ../lib/savepage.php:197
-msgid "Your careful attention to detail is much appreciated."
-msgstr "Din omstänksamhet för detaljer är mycket uppskattad."
-
-#: ../lib/Toolbar.php:406 ../lib/savepage.php:202
-msgid "Warning!"
-msgstr ""
-
-#: ../lib/stdlib.php:153 ../lib/stdlib.php:219
+#: ../lib/stdlib.php:133 ../lib/stdlib.php:206
 msgid "BAD URL -- remove all of <, >, \""
 msgstr ""
 
-#: ../lib/stdlib.php:363
+#: ../lib/stdlib.php:350
 msgid "Lock page to enable link"
 msgstr ""
 
-#: ../lib/stdlib.php:482
+#: ../lib/stdlib.php:469
 #, c-format
 msgid "%d best incoming links:"
 msgstr "De %d mest använda ingående länkarna:"
 
-#: ../lib/stdlib.php:492
+#: ../lib/stdlib.php:479
 #, c-format
 msgid "%d best outgoing links:"
 msgstr "De %d mest använda utgående länkarna:"
 
-#: ../lib/stdlib.php:503
+#: ../lib/stdlib.php:490
 #, c-format
 msgid "%d most popular nearby:"
 msgstr "De %d mest populära grannarna:"
 
-#: ../lib/stdlib.php:554 ../lib/stdlib.php:560
+#: ../lib/stdlib.php:541 ../lib/stdlib.php:547
 #, fuzzy
 msgid "Bad Version"
 msgstr "version %s"
 
-#: ../lib/stdlib.php:713
+#: ../lib/stdlib.php:700
 #, c-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr ""
 
-#: ../lib/stdlib.php:722
+#: ../lib/stdlib.php:709
 #, c-format
 msgid "%s: argument index out of range"
-msgstr ""
-
-#: ../lib/Template.php:353
-msgid "Printer"
-msgstr ""
-
-#: ../lib/Toolbar.php:92 ../templates/browse.html:70
-msgid "You are viewing an old revision of this page."
-msgstr ""
-
-#: ../lib/Toolbar.php:96 ../templates/browse.html:71
-#, fuzzy
-msgid "View the current version"
-msgstr "Arkiverad version"
-
-#: ../lib/Toolbar.php:115 ../templates/browse.html:50
-#, fuzzy, c-format
-msgid "Last edited on %s."
-msgstr "senast ändrad %s"
-
-#: ../lib/Toolbar.php:118 ../templates/browse.html:52
-#, c-format
-msgid "Version %s, saved on %s."
-msgstr ""
-
-#: ../lib/Toolbar.php:139
-msgid "Page locked"
-msgstr "Sidan är låst"
-
-#: ../lib/Toolbar.php:144 ../templates/browse.html:29
-#: ../templates/editpage.html:23
-msgid "Edit"
-msgstr "Redigera"
-
-#: ../lib/Toolbar.php:149 ../templates/browse.html:29
-msgid "Edit old revision"
-msgstr ""
-
-#: ../lib/Toolbar.php:156
-msgid "Unlock page"
-msgstr "Lås upp sida"
-
-#: ../lib/Toolbar.php:160
-msgid "Lock page"
-msgstr "Lås sida"
-
-#: ../lib/Toolbar.php:174 ../lib/Toolbar.php:180
-msgid "Diff"
-msgstr "Diff"
-
-#: ../lib/Toolbar.php:211 ../templates/browse.html:41
-msgid "FindPage"
-msgstr "SökEfterSida"
-
-#: ../lib/Toolbar.php:215 ../lib/Toolbar.php:216 ../templates/browse.html:104
-#: ../themes/MacOSX/templates/browse.html:71
-#, fuzzy
-msgid "Quick Search"
-msgstr "Snabb titelsökning:"
-
-#: ../lib/Toolbar.php:248 ../templates/browse.html:113
-#: ../themes/MacOSX/templates/browse.html:79
-#, c-format
-msgid "You are signed in as %s"
-msgstr ""
-
-#: ../lib/Toolbar.php:251
-msgid "SignOut"
-msgstr ""
-
-#: ../lib/Toolbar.php:255 ../lib/Toolbar.php:346
-#: ../themes/MacOSX/templates/editpage.html:59
-msgid "SignIn"
-msgstr ""
-
-#: ../lib/Toolbar.php:259 ../lib/Toolbar.php:260
-msgid "PhpWikiAdministration"
-msgstr ""
-
-#: ../lib/Toolbar.php:314 ../templates/editpage.html:26
-msgid "Preview only!  Changes not saved."
-msgstr ""
-
-#: ../lib/Toolbar.php:319 ../templates/editpage.html:31
-msgid "Warning: You are editing an old revision."
-msgstr ""
-
-#: ../lib/Toolbar.php:321 ../templates/editpage.html:32
-msgid "Saving this page will overwrite the current version."
-msgstr ""
-
-#: ../lib/Toolbar.php:340 ../templates/editpage.html:78
-#: ../themes/MacOSX/templates/editpage.html:56
-#, c-format
-msgid "You are signed in as %s."
-msgstr ""
-
-#: ../lib/Toolbar.php:342 ../templates/editpage.html:81
-#: ../themes/MacOSX/templates/editpage.html:58
-#, c-format
-msgid "Author will be logged as %s."
-msgstr ""
-
-#: ../lib/Toolbar.php:364 ../templates/editpage.html:107
-#, c-format
-msgid "You can change the size of the editing area in %s."
-msgstr ""
-
-#: ../lib/Toolbar.php:365 ../templates/editpage.html:108
-msgid "UserPreferences"
-msgstr ""
-
-#: ../lib/Toolbar.php:366 ../templates/editpage.html:109
-#, c-format
-msgid "See %s tips for editing."
-msgstr "%s: Redigeringstips."
-
-#: ../lib/Toolbar.php:367 ../templates/editpage.html:110
-msgid "GoodStyle"
-msgstr "BraStil"
-
-#: ../lib/Toolbar.php:383 ../templates/editpage.html:117
-#: ../themes/MacOSX/templates/editpage.html:67
-msgid "TextFormattingRules"
-msgstr "Textformateringsregler"
-
-#: ../lib/Toolbar.php:384 ../templates/editpage.html:117
-#: ../themes/MacOSX/templates/editpage.html:67
-msgid "Synopsis"
 msgstr ""
 
 #: ../lib/transform.php:108
@@ -1341,36 +1219,158 @@ msgstr ""
 msgid "Unknown %s"
 msgstr ""
 
-#: ../templates/editpage.html:15 ../themes/MacOSX/templates/editpage.html:15
-#: ../themes/MacOSX/templates/editpage.html:19
-#, c-format
-msgid "Edit: %s"
-msgstr "Redigera: %s."
+#: ../themes/default/templates/body.tmpl:17
+msgid "FindPage"
+msgstr "SökEfterSida"
 
-#: ../templates/editpage.html:71 ../themes/MacOSX/templates/editpage.html:51
+#: ../themes/default/templates/browse.tmpl:8
+msgid "Edit Old Revision"
+msgstr ""
+
+#: ../themes/default/templates/browse.tmpl:10
+msgid "View Source"
+msgstr ""
+
+#: ../themes/default/templates/browse.tmpl:25
+#, fuzzy, c-format
+msgid "Last edited on %s."
+msgstr "senast ändrad %s"
+
+#: ../themes/default/templates/browse.tmpl:27
+#, c-format
+msgid "Version %s, saved on %s."
+msgstr ""
+
+#: ../themes/default/templates/browse.tmpl:34
+#: ../themes/default/templates/viewsource.tmpl:3
+#, fuzzy
+msgid "Note:"
+msgstr "ingen"
+
+#: ../themes/default/templates/browse.tmpl:35
+msgid "You are viewing an old revision of this page."
+msgstr ""
+
+#: ../themes/default/templates/browse.tmpl:37
+#, fuzzy
+msgid "View the current version"
+msgstr "Arkiverad version"
+
+#: ../themes/default/templates/browse.tmpl:66
+#, c-format
+msgid "You are signed in as %s"
+msgstr ""
+
+#: ../themes/default/templates/editpage.tmpl:5
+msgid "Preview only!  Changes not saved."
+msgstr ""
+
+#: ../themes/default/templates/editpage.tmpl:10
+msgid "Warning: You are editing an old revision."
+msgstr ""
+
+#: ../themes/default/templates/editpage.tmpl:11
+msgid "Saving this page will overwrite the current version."
+msgstr ""
+
+#: ../themes/default/templates/editpage.tmpl:50
 msgid "Preview"
 msgstr ""
 
-#: ../templates/editpage.html:75 ../themes/MacOSX/templates/editpage.html:52
+#: ../themes/default/templates/editpage.tmpl:54
 msgid "Save"
 msgstr "Spara"
 
-#: ../templates/editpage.html:85
+#: ../themes/default/templates/editpage.tmpl:57
+#, c-format
+msgid "You are signed in as %s."
+msgstr ""
+
+#: ../themes/default/templates/editpage.tmpl:60
+#, c-format
+msgid "Author will be logged as %s."
+msgstr ""
+
+#: ../themes/default/templates/editpage.tmpl:64
 msgid "backup and reload after signing in"
 msgstr ""
 
-#: ../templates/editpage.html:90 ../themes/MacOSX/templates/editpage.html:41
+#: ../themes/default/templates/editpage.tmpl:69
 msgid "Summary:"
 msgstr ""
 
-#: ../templates/editpage.html:95 ../themes/MacOSX/templates/editpage.html:48
+#: ../themes/default/templates/editpage.tmpl:74
 msgid "This is a minor change."
 msgstr ""
 
-#: ../themes/MacOSX/templates/editpage.html:20
+#: ../themes/default/templates/editpage.tmpl:86
 #, c-format
-msgid "Return to %s."
+msgid "You can change the size of the editing area in %s."
 msgstr ""
+
+#: ../themes/default/templates/editpage.tmpl:87
+msgid "UserPreferences"
+msgstr ""
+
+#: ../themes/default/templates/editpage.tmpl:88
+#, c-format
+msgid "See %s tips for editing."
+msgstr "%s: Redigeringstips."
+
+#: ../themes/default/templates/editpage.tmpl:89
+msgid "GoodStyle"
+msgstr "BraStil"
+
+#: ../themes/default/templates/editpage.tmpl:96
+msgid "TextFormattingRules"
+msgstr "Textformateringsregler"
+
+#: ../themes/default/templates/editpage.tmpl:96
+msgid "Synopsis"
+msgstr ""
+
+#: ../themes/default/templates/nochanges.tmpl:4
+#, fuzzy
+msgid "Edit aborted."
+msgstr "Redigera: %s."
+
+#: ../themes/default/templates/nochanges.tmpl:5
+msgid "You have not made any changes so no new version has been saved."
+msgstr ""
+
+#: ../themes/default/templates/savepage.tmpl:7
+#, c-format
+msgid "Thank you for editing %s."
+msgstr "Tack för att du redigerade %s."
+
+#: ../themes/default/templates/savepage.tmpl:9
+msgid "Your careful attention to detail is much appreciated."
+msgstr "Din omstänksamhet för detaljer är mycket uppskattad."
+
+#: ../themes/default/templates/savepage.tmpl:12
+msgid "Warning!"
+msgstr ""
+
+#: ../themes/default/templates/viewsource.tmpl:4
+#, fuzzy
+msgid "This page has been locked by the administrator and cannot be edited."
+msgstr "%s sidan är låst av administratören och kan ej redigeras."
+
+#: ../themes/Hawaiian/themeinfo.php:18 ../themes/MacOSX/themeinfo.php:99
+#: ../themes/WikiTrek/themeinfo.php:37 ../themes/default/themeinfo.php:17
+msgid "Printer"
+msgstr ""
+
+#: ../themes/default/themeinfo.php:18
+msgid "Modern"
+msgstr ""
+
+#~ msgid "Page locked"
+#~ msgstr "Sidan är låst"
+
+#, fuzzy
+#~ msgid "Quick Search"
+#~ msgstr "Snabb titelsökning:"
 
 #, fuzzy
 #~ msgid "version"

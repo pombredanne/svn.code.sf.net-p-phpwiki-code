@@ -12,8 +12,6 @@ $locale["%s days"] =
    "%s Tagen";
 $locale["%s failed"] =
    "Fehler bei %s";
-$locale["%s has been locked by the administrator and cannot be edited."] =
-   "%s wurde vom Systemverwalter gesperrt und kann nicht editiert werden.";
 $locale["%s(%d): no such revision"] =
    "%s(%d): unbekannte Version";
 $locale["%s: %s"] =
@@ -154,10 +152,6 @@ $locale["Edit %s"] =
    "Editiere %s";
 $locale["Edit aborted: %s"] =
    "Editieren abgebrochen: %s";
-$locale["Edit aborted: %s."] =
-   "Editieren abgebrochen: %s";
-$locale["Edit old revision"] =
-   "Alte Version editieren";
 $locale["Edit: %s"] =
    "Editiere: %s";
 $locale["Empty pagename!"] =
@@ -224,8 +218,6 @@ $locale["Loading '%s'"] =
    "»%s« wird geladen";
 $locale["Loading up virgin wiki"] =
    "Erstes Laden des noch leeren Wiki";
-$locale["Lock page"] =
-   "Seite sperren";
 $locale["Lock page to enable link"] =
    "Seite sperren, um den Link zu aktivieren";
 $locale["MIME file %s"] =
@@ -236,8 +228,6 @@ $locale["MostPopular"] =
    "MeistBesucht";
 $locale["New page."] =
    "Neue Seite.";
-$locale["New version not saved."] =
-   "Keine neue Version gespeichert.";
 $locale["Newer page:"] =
    "Neuere Seite:";
 $locale["Next"] =
@@ -268,8 +258,6 @@ $locale["PHP Warnings"] =
    "PHP Warnungen";
 $locale["Page Name"] =
    "Seitenname";
-$locale["Page locked"] =
-   "Seite gesperrt";
 $locale["Page names with prefix '%s'"] =
    "Seitenamen mit Vorsatzwort »%s«";
 $locale["Page names with suffix '%s'"] =
@@ -282,8 +270,6 @@ $locale["PageHistory for %s"] =
    "Änderungsprotokoll für Seite %s";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
    "PhpWiki kann deine Veränderungen nicht speichern, da ein anderer Benützer die Seite verändert und gespeichert hat, während du diese Seite editiert hast. Wenn die Seite jetzt gespeichert werden würde, dann würden die Veränderungen des anderen Benützers verlorengehen.";
-$locale["PhpWikiAdministration"] =
-   "PhpWikiSystemverwalten";
 $locale["Please enter your name as WordsStrungTogether (e.g. John Smith as JohnSmith)."] =
    "Gib bitte deinen Namen als ZusammenGesetztesHauptWort ein. (z.B. Hans Müller als HansMüller).";
 $locale["Please re-enter your name in this form."] =
@@ -314,10 +300,6 @@ $locale["Problem while updating %s"] =
    "Problem während dem Editieren von %s";
 $locale["Querying backend directly for '%s'"] =
    "Direkte Datenbankabfrage nach »%s«";
-$locale["Quick Search"] =
-   "SchnellSuche";
-$locale["RSS available"] =
-   "RSS verfügbar";
 $locale["RecentChanges"] =
    "FrischeSeiten";
 $locale["RecentEdits"] =
@@ -331,8 +313,6 @@ $locale["Removed page '%s' succesfully."] =
 $locale["Required form variables are missing."] =
    "Benötigen Form-Variablen sind Fehlend.";
 $locale["Return to %s"] =
-   "Zurück zu %s";
-$locale["Return to %s."] =
    "Zurück zu %s";
 $locale["Save"] =
    "Speichern";
@@ -420,8 +400,6 @@ $locale["Unexpected EOF in zip file"] =
    "Unerwartetes Dateiende in zip Datei";
 $locale["Unknown %s"] =
    "Unbekannte %s";
-$locale["Unlock page"] =
-   "Seite freigeben";
 $locale["Uploading %s"] =
    "%s wird hochgeladen";
 $locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
@@ -464,8 +442,6 @@ $locale["You can log in using any valid WikiWord as a user ID."] =
    "Du kannst dich mit irgendeinem gültigen WikiWort als Benutzername anmelden.";
 $locale["You entered an invalid login or password."] =
    "Du hast ein ungültiges Login oder Passwort eingegeben.";
-$locale["You have not made any changes."] =
-   "Du hast keine Änderungen gemacht.";
 $locale["You must be logged in as an administrator %s"] =
    "Du mußt dich als Systemverwalter anmelden %s";
 $locale["You must set the administrator account and password before you can log in."] =

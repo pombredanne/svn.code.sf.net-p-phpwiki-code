@@ -6,8 +6,6 @@ $locale["%d best outgoing links:"] =
    "De %d mest använda utgående länkarna:";
 $locale["%d most popular nearby:"] =
    "De %d mest populära grannarna:";
-$locale["%s has been locked by the administrator and cannot be edited."] =
-   "%s sidan är låst av administratören och kan ej redigeras.";
 $locale["<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."] =
    "<b>Ladda om</b> sidan. Du kommer nu se den senaste versionen av sidan. Dina ändringar är inte där.";
 $locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
@@ -28,8 +26,6 @@ $locale["HomePage"] =
    "Framsida";
 $locale["In order to recover from this situation follow these steps:"] =
    "För att lösa situtationen, följ dessa steg:";
-$locale["Lock page"] =
-   "Lås sida";
 $locale["Make changes to the file again. Paste your additions from the clipboard (or text editor)."] =
    "Ändra filen igen. Klistra in dina ändringar från urklippet (eller texteditorn).";
 $locale["MostPopular"] =
@@ -38,8 +34,6 @@ $locale["None"] =
    "ingen";
 $locale["Page Name"] =
    "namn på sidan";
-$locale["Page locked"] =
-   "Sidan är låst";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
    "PhpWiki kan inte spara dina ändringar eftersom en annan användare ändrade och sparade sidan under tiden som du ändrade på sidan. Sparar du nu försvinner ändringarna gjorda av den förra användaren.";
 $locale["Press <b>Save</b> again."] =
@@ -70,8 +64,6 @@ $locale["Title Search"] =
    "Titelsökningen";
 $locale["TitleSearch"] =
    "Titelsökningen";
-$locale["Unlock page"] =
-   "Lås upp sida";
 $locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
    "Använd webbläsarens <b>backaknapp</b> för att gå tillbaka till redigeringssidan.";
 $locale["Version %d"] =
