@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.86 2004-04-18 01:11:51 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.87 2004-04-19 09:13:23 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -522,7 +522,7 @@ class Theme {
             return $link;
         } else {
             // if AnonEditUnknownLinks show "?" only users which are allowed to edit this page
-            if (! $this->_anonEditUnknownLinks and ! mayAccessPage('edit',$request->getArg('pagename'))) {
+            if (! $this->_anonEditUnknownLinks and ! mayAccessPage('edit', $request->getArg('pagename'))) {
                 $text = HTML::span( empty($linktext) ? $wikiword : $linktext);
                 $text->setAttr('class', empty($linktext) ? 'wikiunknown' : 'named-wikiunknown');
                 return $text;
@@ -531,10 +531,9 @@ class Theme {
                 $button = $this->makeButton('?', $url);
                 $button->addTooltip(sprintf(_("Create: %s"), $wikiword));
             }
-            $link = HTML::span($button);
         }
 
-
+        $link = HTML::span();
         if (!empty($linktext)) {
             $link->pushContent(HTML::u($linktext));
             $link->setAttr('class', 'named-wikiunknown');
@@ -543,9 +542,14 @@ class Theme {
             $link->pushContent(HTML::u($this->maybeSplitWikiWord($default_text)));
             $link->setAttr('class', 'wikiunknown');
         }
+        $link->pushContent($button);
+        if ($request->getPref('googleLink')) {
+            $gbutton = $this->makeButton('G', "http://www.google.com/search?q=$wikiword");
+            $gbutton->addTooltip(sprintf(_("Google:%s"), $wikiword));
+            $link->pushContent($gbutton);
+        }
         if ($request->getArg('frame'))
             $link->setAttr('target', '_top');
-
         return $link;
     }
 
@@ -1258,6 +1262,11 @@ class RelatedExternalLinksBox extends SidebarBox {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.86  2004/04/18 01:11:51  rurban
+// more numeric pagename fixes.
+// fixed action=upload with merge conflict warnings.
+// charset changed from constant to global (dynamic utf-8 switching)
+//
 // Revision 1.85  2004/04/12 13:04:50  rurban
 // added auth_create: self-registering Db users
 // fixed IMAP auth

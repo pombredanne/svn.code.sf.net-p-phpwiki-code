@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.55 2004-04-19 09:04:44 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.56 2004-04-19 09:13:24 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -955,7 +955,7 @@ extends _AnonUser
             $prefix = $DBParams['prefix'];
             if (!stristr($stmt, $prefix)) {
                 //Do it automatically for the lazy admin? Esp. on sf.net it's nice to have
-                trigger_error("TODO: Need to prefix the DBAuthParam tablename in index.php: $stmt",
+                trigger_error("TODO: Need to prefix the DBAuthParam tablename in index.php:\n  $stmt",
                               E_USER_WARNING);
                 $stmt = str_replace(array(" user "," pref "," member "),
                                     array(" ".$prefix."user ",

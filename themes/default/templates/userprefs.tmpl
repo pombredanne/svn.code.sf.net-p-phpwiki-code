@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.46 2004-04-10 02:55:49 rurban Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.47 2004-04-19 09:13:30 rurban Exp $ -->
 <?php
 // Todo: Move the logic and code to the plugin
 // This is very experimental and the read-only part an ugly hack so far.
@@ -30,13 +30,17 @@ else
     $timeOffsetInput = $pref->get('timeOffset');
 
 $RelativeDatesCB = HTML::input(array('type' => 'checkbox',
-                                          'name' => 'pref[relativeDates]',
-                                          'value' => '1',
-                                          'checked' => (bool) $pref->get('relativeDates')));
+                                     'name' => 'pref[relativeDates]',
+                                     'value' => '1',
+                                     'checked' => (bool) $pref->get('relativeDates')));
 $NoLinkIconsCB = HTML::input(array('type' => 'checkbox',
-                                          'name' => 'pref[noLinkIcons]',
-                                          'value' => '1',
-                                          'checked' => (bool) $pref->get('noLinkIcons')));
+                                   'name' => 'pref[noLinkIcons]',
+                                   'value' => '1',
+                                   'checked' => (bool) $pref->get('noLinkIcons')));
+$GoogleLinkCB = HTML::input(array('type' => 'checkbox',
+                                  'name' => 'pref[googleLink]',
+                                  'value' => '1',
+                                  'checked' => (bool) $pref->get('googleLink')));
 
 function selectedOption ($value, $label = false) {
     return HTML::option(array('value' => $value,'selected'=>"selected"), ($label ? $label : $value) . "\n");
@@ -178,6 +182,10 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
       <tr><td align="right"><?=fmt("Hide %s:", WikiLink("LinkIcons"))?></td>
           <td><?=$NoLinkIconsCB?></td>
           <td><p class="hint"><?=_("Hide or show LinkIcons (if supported by the current theme). Useful for text-only browsers or slow connections.")?></p></tr>
+      <tr><td align="right"><?=fmt("Add %s:", WikiLink("GoogleLink"))?></td>
+          <td><?=$GoogleLinkCB?></td>
+          <td><p class="hint"><?=_("Add Google links to unknown pages behind the '?', and the create action behind the pagename instead. See MeatBall:GooglePrompt.")?></p></tr>
+
 
   <tr><td colspan="3"><h2><?=_("Edit Area Size")?></h2></td></tr>
 
