@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.67 2004-12-22 15:47:41 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.68 2004-12-22 18:33:25 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -27,7 +27,7 @@ rcs_id('$Id: ADODB.php,v 1.67 2004-12-22 15:47:41 rurban Exp $');
  * @author: Lawrence Akka, Reini Urban
  *
  * Now (phpwiki-1.3.10) with adodb-4.22, by Reini Urban:
- * 1) Extended to use all available database backend, not only mysql.
+ * 1) Extended to use all available database backends, not only mysql.
  * 2) It uses the ultra-fast binary adodb extension if loaded.
  * 3) We use FETCH_NUM instead of FETCH_ASSOC (faster and more generic)
  * 4) To support generic iterators which return ASSOC fields, and to support queries with 
@@ -268,7 +268,11 @@ extends WikiDB_backend
         // check id_cache
         global $request;
         $cache =& $request->_dbi->_cache->_id_cache;
-        if (isset($cache[$pagename])) return $cache[$pagename];
+        if (isset($cache[$pagename])) {
+            if ($cache[$pagename] or !$create_if_missing) {
+                return $cache[$pagename];
+            }
+        }
         
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
@@ -308,6 +312,7 @@ extends WikiDB_backend
         } else {
             $id = $row[0];
         }
+        assert($id);
         return $id;
     }
 
@@ -556,7 +561,7 @@ extends WikiDB_backend
         $this->unlock(array('version','recent','nonempty','page','link'));
         return $result;
     }
-            
+
 
     // The only thing we might be interested in updating which we can
     // do fast in the flags (minor_edit).   I think the default
@@ -576,11 +581,12 @@ extends WikiDB_backend
 
         if ($links) {
             $dbh->Execute("DELETE FROM $link_tbl WHERE linkfrom=$pageid");
-            foreach($links as $link) {
+            foreach ($links as $link) {
                 if (isset($linkseen[$link]))
                     continue;
                 $linkseen[$link] = true;
                 $linkid = $this->_get_pageid($link, true);
+                assert($linkid);
                 $dbh->Execute("INSERT INTO $link_tbl (linkfrom, linkto)"
                             . " VALUES ($pageid, $linkid)");
             }
@@ -1368,6 +1374,9 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.67  2004/12/22 15:47:41  rurban
+// fix wrong _update_nonempty_table on empty content (i.e. the new deletePage)
+//
 // Revision 1.66  2004/12/13 14:39:16  rurban
 // avoid warning
 //

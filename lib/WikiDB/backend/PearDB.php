@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.79 2004-12-10 02:45:27 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.80 2004-12-22 18:33:31 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -236,7 +236,11 @@ extends WikiDB_backend
         // check id_cache
         global $request;
         $cache =& $request->_dbi->_cache->_id_cache;
-        if (isset($cache[$pagename])) return $cache[$pagename];
+        if (isset($cache[$pagename])) {
+            if ($cache[$pagename] or !$create_if_missing) {
+                return $cache[$pagename];
+            }
+        }
 
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
@@ -1214,6 +1218,12 @@ extends WikiDB_backend_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.79  2004/12/10 02:45:27  rurban
+// SQL optimization:
+//   put _cached_html from pagedata into a new seperate blob, not huge serialized string.
+//   it is only rarelely needed: for current page only, if-not-modified
+//   but was extracted for every simple page iteration.
+//
 // Revision 1.78  2004/12/08 12:55:51  rurban
 // support new non-destructive delete_page via generic backend method
 //
