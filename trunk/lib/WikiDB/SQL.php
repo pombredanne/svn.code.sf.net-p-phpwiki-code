@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: SQL.php,v 1.3 2003-02-25 20:13:57 dairiki Exp $');
+<?php rcs_id('$Id: SQL.php,v 1.4 2004-02-15 15:21:25 rurban Exp $');
 
 require_once('lib/WikiDB.php');
 
@@ -19,6 +19,19 @@ class WikiDB_SQL extends WikiDB
         $this->WikiDB($backend, $dbparams);
     }
     
+    function view_dsn ($dsn = false) {
+        if (!$dsn)
+            $dsninfo = DB::parseDSN($GLOBALS['DBParams']['dsn']);
+        else
+            $dsninfo = DB::parseDSN($dsn);
+        return sprintf("%s://%s:<not displayed>@%s/%s",
+                       $dsninfo['phptype'],
+                       $dsninfo['username'],
+                       $dsninfo['hostspec'],
+                       $dsninfo['database']
+                       );
+    }
+
     
     /**
      * Determine whether page exists (in non-default form).
