@@ -1,5 +1,4 @@
-#!/usr/local/bin/php -Cq
-<?php  
+<?php // #!/usr/local/bin/php -Cq
 /* Copyright (C) 2004 Dan Frankowski <dfrankow@cs.umn.edu>
  * Copyright (C) 2004 Reini Urban <rurban@x-ray.at>
  *
@@ -235,16 +234,16 @@ if (!empty($argv)) {
     $runtests = array();
     $run_database_backends = array();
     foreach ($argv as $arg) {
-        if (in_array($arg, $alltests))
-            $runtests[] = $arg;
-        elseif (preg_match("/test=(.+)/",$arg,$m) and in_array($m[1], $alltests))
+        if (preg_match("/^test=(.+)$/",$arg,$m) and in_array($m[1], $alltests))
             $runtests[] = $m[1];
-        elseif (preg_match("/db=(.+)/",$arg,$m) and in_array($m[1], $database_backends))
+        elseif (preg_match("/^db=(.+)$/",$arg,$m) and in_array($m[1], $database_backends))
             $run_database_backends[] = $m[1];
-        elseif (preg_match("/debug=(\d+)/",$arg,$m))
+        elseif (preg_match("/^debug=(\d+)$/",$arg,$m))
             $debug_level = $m[1];
-        elseif (preg_match("/level=(\d+)/",$arg,$m))
+        elseif (preg_match("/^level=(\d+)$/",$arg,$m))
             $user_level = $m[1];
+        elseif (in_array($arg, $alltests))
+            $runtests[] = $arg;
         elseif ($debug_level & 1)
             echo "ignored arg: ", $arg, "\n";
     }
@@ -257,7 +256,8 @@ if (!empty($argv)) {
         echo "db=", join(",",$database_backends),"\n";
         echo "debug=", $debug_level,"\n";
         echo "level=", $user_level,"\n";
-        echo "pid=",getmypid(),"\n";
+        if ($debug_level & 8)
+            echo "pid=",getmypid(),"\n";
         echo "\n";
     }
     flush();
