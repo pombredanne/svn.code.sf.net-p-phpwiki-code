@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.233 2005-02-02 20:40:12 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.234 2005-02-03 05:09:25 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -587,21 +587,26 @@ class WikiPageName
         if (is_string($name)) {
             $this->shortName = $name;
             if (strstr($name, ':')) {
-            	$this->shortName = substr(strstr($name, ':'), 1);
+                list($moniker, $this->shortName) = split (":", $name, 2);
 	  	$map = getInterwikiMap(); // allow overrides to custom maps
-	  	$link = $map->link($name);
-	  	$url = $link->getAttr('href');
-	  	if (strstr($url, '?'))
-	  	    list($name,) = explode("?", $url);
-                // expand Talk or User, but not to absolute urls!
-	  	if (strstr($url, '//')) {
-            	    if ($m[1] == 'Talk')
-            	        $name = $name . SUBPAGE_SEPARATOR . _("Discussion");
-            	    elseif ($m[1] == 'User')
-            	        $name = $name;
-	  	} else {
-	  	    $name = $url;
-	  	}
+                if (isset($map->_map[$moniker])) {
+                    $url = $map->_map[$moniker];
+                    if (strstr($url, '%s'))
+                        $url = sprintf($url, $name);
+                    else
+                        $url .= $name;
+                    // expand Talk or User, but not to absolute urls!
+                    if (strstr($url, '//')) {
+                        if ($moniker == 'Talk')
+                            $name = $name . SUBPAGE_SEPARATOR . _("Discussion");
+                        elseif ($moniker == 'User')
+                            $name = $name;
+                    } else {
+                        $name = $url;
+                    }
+                    if (strstr($name, '?'))
+                        list($name, $dummy) = split("?", $name, 2);
+                }
             }
         
             if ($name == '' or $name[0] == SUBPAGE_SEPARATOR) {
@@ -1937,6 +1942,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.233  2005/02/02 20:40:12  rurban
+// fix Talk: and User: names and links
+//
 // Revision 1.232  2005/02/02 19:34:09  rurban
 // more maps: Talk, User
 //
