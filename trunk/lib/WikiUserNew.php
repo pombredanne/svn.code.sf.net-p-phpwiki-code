@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.103 2004-06-28 15:01:07 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.104 2004-06-28 15:39:37 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -2047,8 +2047,8 @@ extends _PassUser
     }
     
     function _free() {
-        if (is_resource($this->_sr))   ldap_free_result($this->_sr);
-        if (is_resource($this->_ldap)) ldap_close($this->_ldap);
+        if (isset($this->_sr)   and is_resource($this->_sr))   ldap_free_result($this->_sr);
+        if (isset($this->_ldap) and is_resource($this->_ldap)) ldap_close($this->_ldap);
         unset($this->_sr);
         unset($this->_ldap);
     }
@@ -3040,6 +3040,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.103  2004/06/28 15:01:07  rurban
+// fixed LDAP_SET_OPTION handling, LDAP error on connection problem
+//
 // Revision 1.102  2004/06/27 10:23:48  rurban
 // typo detected by Philippe Vanhaesendonck
 //
