@@ -1,5 +1,5 @@
 /**
- * $Id: SpaceWiki.css,v 1.3 2002-03-08 04:24:31 carstenklapp Exp $
+ * $Id: SpaceWiki.css,v 1.4 2002-03-08 06:19:57 carstenklapp Exp $
  *
  * This theme will probably be renamed something like "Space" to
  * avoid any potential copyright issues.
@@ -90,13 +90,24 @@ body.sidebar h2 { margin-top: 0; }
  * <hr>
  * Not all browsers support this, but it's a cool trick when it is!
  * yes=OmniWeb 4.1sp28; No=IE5.1Mac, Mozilla0.97Mac, iCAB2.6Mac.
- * It maybe better to do this with a new wiki Theme element??
  */
 div.wikitext hr {
+  visibility: hidden; /* for Mozilla */
   background-image:   url("images/hr.png");
   background-repeat:   repeat-x;
   background-position: center;
 }
+/* for Mozilla */
+div.wikitext hr:after {
+  visibility: visible;
+  display: block;
+  content: url("images/hr.png");
+  text-align: center;
+  margin-top: -2.5ex;
+  margin-bottom: 1ex;
+}
+
+
 
 div.wikitext pre { font-family: monospace; }
 
@@ -202,44 +213,61 @@ div.toolbar h1 a.wiki:hover, h1 a.wiki:hover, h2 a.wiki:hover {
 }
 
 h2, h3, h4, h5, h6 {
-  display: table;
-  width: auto;
+  display: inline;
   padding-top:      0.25ex;
-  padding-left:     0.25em;
+  padding-left:     0.5em;
   padding-right:    0.25em;
   padding-bottom:   1px;
   margin-top:    2ex;
   margin-bottom: 0;
 }
+h2:after, h3:after, h4:after, h5:after, h6:after {
+  display: block;
+  content: " | ";
+  color: black;
+  margin-left: 0.3em;
+}
+h2:after {
+  border-left: 0.5em solid #0053db;
+  border-top: 0.15ex solid #0053db;
+}
+h3:after {
+  border-left: 0.5em solid #96c;
+  border-top: 0.15ex solid #96c;
+}
+h4:after {
+  border-left: 0.5em solid #639;
+  border-top: 0.15ex solid #639;
+}
+h5:after {
+  border-left: 0.5em solid #888;
+  border-top: 0.15ex solid #888;
+}
+h6:after {
+  border-left: 0.5em solid #aaa;
+  border-top: 0.15ex solid #aaa;
+}
+
 
 h2 {
   color: #0053db;
   border-left: 0.25em solid #0053db;
-  border-right: 20em solid #0053db;
 }
-
 h3 {
   color: #96c;
   border-left: 0.25em solid #96c;
-  border-right: 26em solid #96c;
 }
-
 h4 {
   color: #639;
   border-left: 0.25em solid #639;
-  border-right: 30em solid #639;
 }
-
 h5 {
   color: #888;
   border-left: 0.25em solid #888;
-  border-right: 36em solid #888;
 }
-
 h6 {
   color: #aaa;
   border-left: 0.25em solid #aaa;
-  border-right: 42em solid #aaa;
 }
 
 
@@ -277,8 +305,7 @@ div.toolbar { margin-top: 1ex; }
 }
 .editdate {
   font-family: Arial, Helvetica, sans-serif;
-  color:            #000;
-  background-color: #96c;
+  color:            #96c;
 }
 
 .toolbar .wiki {
