@@ -1,10 +1,9 @@
 <?php // -*-html-*- ?>
-<!-- $Id: login.tmpl,v 1.4 2002-01-23 05:10:22 dairiki Exp $ -->
+<!-- $Id: login.tmpl,v 1.5 2002-01-23 20:18:21 dairiki Exp $ -->
 <!-- The login form -->
 
-<?php if ($FAILURE_MESSAGE) { ?>
-  <h2><?=_("Signin Failed")?></h2>
-  <p><?=$FAILURE_MESSAGE?></p>
+<?php if ($fail_message) { ?>
+  <p><strong><?=$fail_message?></strong></p>
   <hr noshade="noshade" />
 <?php } ?>
 

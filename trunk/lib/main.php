@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.29 2002-01-23 19:21:43 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.30 2002-01-23 20:18:21 dairiki Exp $');
 
 
 include "lib/config.php";
@@ -109,7 +109,8 @@ class WikiRequest extends Request {
         // Handle preference updates, an authentication requests, if any.
         if ($new_prefs = $this->getArg('pref')) {
             $this->setArg('pref', false);
-            $this->_setPreferences($new_prefs);
+            foreach ($new_prefs as $key => $val)
+                $this->_prefs->set($key, $val);
         }
 
         // Handle authentication request, if any.
@@ -117,12 +118,15 @@ class WikiRequest extends Request {
             $this->setArg('auth', false);
             $this->_handleAuthRequest($auth_args); // possible NORETURN
         }
-        
-        if (!$auth_args && !$this->_user->isSignedIn()) {
-            // Try to sign in as saved user.
+        elseif ( ! $this->_user->isSignedIn() ) {
+            // If not auth request, try to sign in as saved user.
             if (($saved_user = $this->getPref('userid')) != false)
                 $this->_signIn($saved_user);
         }
+
+        // Save preferences
+        $this->setSessionVar('user_prefs', $this->_prefs);
+        $this->setCookieVar('WIKI_PREFS', $this->_prefs, 365);
 
         // Ensure user has permissions for action
         $require_level = $this->requiredAuthority($this->getArg('action'));
@@ -203,11 +207,10 @@ class WikiRequest extends Request {
     function _setUser ($user) {
         $this->_user = $user;
         $this->setSessionVar('auth_state', $user);
+
         // Save userid to prefs..
-        if ($user->isSignedIn())
-            $this->_setPreferences(array('userid' => $user->getId()));
-        else
-            $this->_setPreferences(array('userid' => false));
+        $this->_prefs->set('userid',
+                           $user->isSignedIn() ? $user->getId() : '');
     }
 
     function _notAuthorized ($require_level) {
@@ -238,10 +241,14 @@ class WikiRequest extends Request {
             return WIKIAUTH_ANON;
 
         case 'zip':
+            if (defined('ZIPDUMP_AUTH') && ZIPDUMP_AUTH)
+                return WIKIAUTH_ADMIN;
             return WIKIAUTH_ANON;
             
         case 'edit':
         case 'save':            // FIXME delete
+            if (defined('REQUIRE_SIGNIN_BEFORE_EDIT') && REQUIRE_SIGNIN_BEFORE_EDIT)
+                return WIKIAUTH_BOGO;
             return WIKIAUTH_ANON;
             // return WIKIAUTH_BOGO;
 
@@ -256,18 +263,6 @@ class WikiRequest extends Request {
         }
     }
         
-    function _setPreferences ($new_prefs) {
-        if (!is_array($new_prefs))
-            return;
-
-        // Update and save preferences.
-        foreach ($new_prefs as $name => $value)
-            $this->_prefs->set($name, $value);
-        
-        $this->setSessionVar('user_prefs', $this->_prefs);
-        $this->setCookieVar('WIKI_PREFS', $this->_prefs, 365);
-    }
-
     function deflowerDatabase () {
         if ($this->getArg('action') != 'browse')
             return;

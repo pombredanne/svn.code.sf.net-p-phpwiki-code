@@ -80,7 +80,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.71 2002-01-20 19:02:00 rurban Exp $');
+rcs_id('$Id: index.php,v 1.72 2002-01-23 20:18:21 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -110,6 +110,7 @@ define('ADMIN_PASSWD', "");
 // require no authentication.
 define('ZIPDUMP_AUTH', false);
 
+
 // This setting determines the type of page dumps. Must be one of
 // "quoted-printable" or "binary".
 $pagedump_format = "quoted-printable";
@@ -134,6 +135,12 @@ define("MINOR_EDIT_TIMEOUT", 7 * 24 * 3600);
 // any/no password) using any userid which: 1) is not the ADMIN_USER,
 // 2) is a valid WikiWord (matches $WikiNameRegexp.)
 define('ALLOW_BOGO_LOGIN', true);
+
+// If set, then if an anonymous user attempts to edit a page he will
+// be required to sign in.  (If ALLOW_BOGO_LOGIN is true, of course,
+// no password is required, but the user must still sign in under
+// some sort of BogoUserId.)
+define('REQUIRE_SIGNIN_BEFORE_EDIT', false);
 
 // The login code now uses PHP's session support. Usually, the default
 // configuration of PHP is to store the session state information in
