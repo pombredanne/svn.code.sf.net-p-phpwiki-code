@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.34 2004-06-16 11:51:35 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.35 2004-06-16 12:08:25 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -905,8 +905,11 @@ class GroupLdap extends WikiGroup {
             trigger_error(_("LDAP_AUTH_HOST not defined"), E_USER_WARNING);
             return false;
         }
-        if (! function_exists('ldap_connect') and !isWindows()) {
-            dl("ldap".DLL_EXT);
+        // We should ignore multithreaded environments, not generally windows.
+        // CGI does work.
+        if (! function_exists('ldap_connect') and (!isWindows() or isCGI())) {
+            // on MacOSX >= 4.3 you'll need PHP_SHLIB_SUFFIX instead.
+            dl("ldap".defined('PHP_SHLIB_SUFFIX') ? PHP_SHLIB_SUFFIX : DLL_EXT); 
             if (! function_exists('ldap_connect')) {
                 trigger_error(_("No LDAP in this PHP version"), E_USER_WARNING);
                 return false;
@@ -1028,6 +1031,9 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.34  2004/06/16 11:51:35  rurban
+// catch dl error on Windows
+//
 // Revision 1.33  2004/06/15 10:40:35  rurban
 // minor WikiGroup cleanup: no request param, start of current user independency
 //
