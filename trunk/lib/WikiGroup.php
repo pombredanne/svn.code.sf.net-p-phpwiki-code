@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.24 2004-03-14 16:26:22 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.25 2004-03-29 10:40:36 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -623,7 +623,7 @@ class GroupDb_PearDB extends GroupDb {
         $dbh = & $this->dbh;
         $db_result = $dbh->query(sprintf($this->_user_groups,$dbh->quote($this->username)));
         if ($db_result->numRows() > 0) {
-            while (list($group) = $db_result->fetchRow()) {
+            while (list($group) = $db_result->fetchRow(DB_FETCHMODE_ORDERED)) {
                 $membership[] = $group;
                 $this->membership[$group] = true;
             }
@@ -647,7 +647,7 @@ class GroupDb_PearDB extends GroupDb {
         $dbh = & $this->dbh;
         $db_result = $dbh->query(sprintf($this->_group_members,$dbh->quote($group)));
         if ($db_result->numRows() > 0) {
-            while (list($userid) = $db_result->fetchRow()) {
+            while (list($userid) = $db_result->fetchRow(DB_FETCHMODE_ORDERED)) {
                 $members[] = $userid;
             }
         }
@@ -999,6 +999,9 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2004/03/14 16:26:22  rurban
+// copyright line
+//
 // Revision 1.23  2004/03/12 23:20:58  rurban
 // pref fixes (base64)
 //
