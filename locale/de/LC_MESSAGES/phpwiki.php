@@ -4,10 +4,22 @@ $locale[" ... first %d bytes"] =
    " ... erste %d Bytes";
 $locale[" ... first %d lines"] =
    " ... erste %d Zeilen";
+$locale[" Additionally, try to keep the latest contributions of all authors in the last %d days (even if there are more than %d of them,) but in no case keep more than %d unique author revisions."] =
+   "Versuche zusätzlich die neuesten Beiträge aller Autoren der letzten %d Tage aufzubewahren (auch wenn es mehr als %d sind), keinesfalls jedoch mehr als %d einzelne Autoren Revisionen.";
+$locale[" Keep the latest contributions of the last %d authors up to %d days."] =
+   "Aufbewahrung der neueren Beiträge der letzten %d Autoren für %d Tage.";
+$locale[" Keep up to %d minor edits, but keep them no longer than %d days."] =
+   "Aufbewahrung kleinerer Änderungen für %d, aber nicht länger als %d Tage.";
 $locale["%d UserPreferences fields successfully updated."] =
-   "%d Einstellungsfelden erfolgreich gesichert.";
+   "%d Einstellungsfelden erfolgreich auf neuesten Stand gebracht.";
+$locale["%d not-empty pages"] =
+   "%d nicht leere Seiten";
+$locale["%d page(s) with more than %d hits (>%d%%)."] =
+   "%d Seiten mit mehr als % Aufrufen (>%d%%).";
 $locale["%d pages"] =
    "%d Seiten";
+$locale["%d pages with less than %d hits (<%d%%)."] =
+   "%d Seiten mit weniger als % Aufrufen.";
 $locale["%s Kb (%s bytes)"] =
    "%s KB (%s Bytes)";
 $locale["%s at %s"] =
@@ -19,15 +31,13 @@ $locale["%s bytes written"] =
 $locale["%s days"] =
    "%s Tagen";
 $locale["%s is disallowed on this wiki."] =
-   "»%s« ist verboten.";
+   "»%s« ist auf diesem Wiki nicht zugelassen.";
 $locale["%s is empty."] =
-   "%s ist Leer.";
+   "%s ist leer.";
 $locale["%s is only allowed in locked pages."] =
    "%s werden nur in gesperrten Seiten erlaubt.";
 $locale["%s of this page"] =
    "%s von dieser Seite";
-$locale["%s or %s parameter missing"] =
-   "%s oder %s Argument fehlt";
 $locale["%s pages link to %s:"] =
    "%s Seiten sind mit %s verlinkt:";
 $locale["%s parameter missing"] =
@@ -35,7 +45,7 @@ $locale["%s parameter missing"] =
 $locale["%s words"] =
    "%s Wörter";
 $locale["%s(%d): no such revision"] =
-   "%s(%d): unbekannte Version";
+   "%s(%d): keine solche Version";
 $locale["%s: %s"] =
    "%s: %s";
 $locale["%s: Bad action"] =
@@ -43,7 +53,7 @@ $locale["%s: Bad action"] =
 $locale["%s: Can't open dba database"] =
    "%s: Konnte DBA Datenbank nicht öffnen.";
 $locale["%s: Date of new revision is %s"] =
-   "%s: Datum der aktuellsten Version ist %s";
+   "%s: Datum dieser aktuellen Neubearbeitung ist %s";
 $locale["%s: argument index out of range"] =
    "%s: Ungültiger Index in Array";
 $locale["%s: error while handling error:"] =
@@ -53,13 +63,11 @@ $locale["%s: file not found"] =
 $locale["%s: not defined"] =
    "%s: nicht definiert";
 $locale["'%s': Bad page name"] =
-   "%s: Ungültiges Seitenname";
-$locale["'%s': Bad page name: %s"] =
-   "»%s«: Ungültiger Seitenname: %s";
+   "'%s': Ungültige Seitenname";
 $locale["'%s': corrupt file"] =
    "%s: Datei korrumpiert";
 $locale["(Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor.)"] =
-   "(Kopiere deine Veränderungen in die Zwischenablage. Du kannst versuchen eine andere Seite zu editieren oder dein Text in einem Texteditor speichern.)";
+   "(Kopieren Sie Ihre Veränderungen in die Zwischenablage. Sie können versuchen eine andere Seite zu editieren oder Ihr Text in einem Texteditor speichern.)";
 $locale["(Redirected from %s)"] =
    "(Weitersandet von %s)";
 $locale["(diff)"] =
@@ -69,7 +77,7 @@ $locale["(hist)"] =
 $locale["- saved to database as version %d"] =
    "- in der Datenbank gespeichert als Version %d.";
 $locale["... first %d words"] =
-   "... erste %d wörter";
+   "... erste %d Wörter";
 $locale["1 day"] =
    "1 Tag";
 $locale["1 word"] =
@@ -79,21 +87,21 @@ $locale["<%s: no such section>"] =
 $locale["<empty>"] =
    "<leer>";
 $locale["<no matches>"] =
-   "<nichts gefunden>";
+   "<keine Treffer>";
 $locale["<none>"] =
    "<Keine>";
 $locale["<not displayed>"] =
-   "<versteckt>";
+   "<nicht angezeigt>";
 $locale["<system language>"] =
-   "<System Sprache>";
+   "<Sprache des Servers>";
 $locale["A required argument '%s' is missing."] =
    "Erforderliches Argument »%s« fehlt.";
 $locale["Acck! Revision %s of %s seems to have been deleted!"] =
-   "Aua! Version %s von %s ist gelöscht!";
+   "Hoppla! Es scheint, die Version %s von %s wurde gelöscht!";
 $locale["Action page"] =
-   "Aktionseite";
+   "Aktion Seite";
 $locale["Add %s hours to the server's local time when reporting times."] =
-   "Addiere %s Stunden zur lokalen Serverzeit, bei jeder Zeitanzeige (zB. FrischeSeiten)";
+   "Addieren Sie %s Stunden zur lokalen Serverzeit, bei jeder Zeitanzeige (z.B. NeueSeiten)";
 $locale["Adjust"] =
    "Justiere";
 $locale["All %s are listed below."] =
@@ -103,21 +111,19 @@ $locale["AllPages"] =
 $locale["AllUsers"] =
    "AlleBenutzer";
 $locale["An unnamed PhpWiki"] =
-   "Ein noch unbenanntes PhpWiki";
+   "Ein noch namenloses PhpWiki";
 $locale["Appearance"] =
    "Darstellung";
-$locale["Arguments"] =
-   "Argumente";
 $locale["Authenticated users on this wiki (%d total):"] =
-   "Angemeldete Benutzer auf diesem Wiki (Gesamt: %d):";
+   "Eingetrage Benutzer in diesem Wiki (Gesamt: %d):";
 $locale["Author will be logged as %s."] =
    "%s wird als Autor gespeichert.";
 $locale["Author:"] =
    "Autor:";
 $locale["Available plugins"] =
-   "Ferfügbarer Zusatzprogramme";
+   "Verfügbare Einschubprogramme";
 $locale["BAD URL -- remove all of <, >, \""] =
-   "URL Formfehler -- keine Zeichen <, >, \" verwenden";
+   "URL Formfehler - Entfernen Sie alle Zeichen mit <, >, \"";
 $locale["BAD phpwiki: URL"] =
    "phpwiki: URL Formfehler";
 $locale["BackLinks"] =
@@ -128,10 +134,12 @@ $locale["Bad Version"] =
    "Ungültige Version";
 $locale["Bad file type: %s"] =
    "Ungültiger Dateityp: %s";
+$locale["Bad url in src: remove all of <, >, \""] =
+   "URL Formfehler in Quellcode: alle der folgenden Zeichen entfernen <, >, \"";
 $locale["Blog page"] =
-   "Blogseite";
+   "Blog Seite";
 $locale["Browsing pages"] =
-   "Das Durchlesen der Seiten dieses Wikis";
+   "Das Durchblättern der Seiten dieses Wikis";
 $locale["Cache statistics"] =
    "Cache Statistiken";
 $locale["Calendar"] =
@@ -139,7 +147,7 @@ $locale["Calendar"] =
 $locale["Can't inflate data: zlib support not enabled in this PHP"] =
    "Kann Daten nicht dekomprimieren: Die zlib Bibiliothek wurde in PHP nicht installiert/aktiviert.";
 $locale["Can't mix '%s' with '%s' type format strings"] =
-   "Kann '%s' Typ-Formatzeichenketten nicht mit '%s' mischen.";
+   "Kann '%s' Typ-Formatzeichenketten nicht mit '%s' vermischen.";
 $locale["Can't open zip file '%s' for reading"] =
    "Konnte zip Datei »%s« nich öffnen zum lesen";
 $locale["Cancel"] =
@@ -149,19 +157,19 @@ $locale["Cannot create directory '%s'"] =
 $locale["Change Password"] =
    "Ändere Passwort";
 $locale["Change country"] =
-   "Ändere land";
+   "Land ändern";
 $locale["Check any two boxes then %s."] =
-   "Wähle zwei Versionen aus, dann %s.";
+   "Wählen Sie zwei Versionen aus, dann %s.";
 $locale["Check any two boxes to compare revisions."] =
-   "Wähle zwei Versionen zum Vergleich aus.";
+   "Wählen Sie zwei Versionen zum Vergleich aus.";
 $locale["Columns: %s."] =
    "Spalten: %s.";
 $locale["Comment"] =
    "Kommentar";
 $locale["Comment modified on %s by %s"] =
    "Kommentar am %s geändert von %s";
-$locale["Comments on %s:"] =
-   "Kommentar von %s:";
+$locale["Comment:"] =
+   "Kommentar:";
 $locale["Complete."] =
    "Fertig.";
 $locale["Conflicting Edits!"] =
@@ -169,21 +177,15 @@ $locale["Conflicting Edits!"] =
 $locale["Contents"] =
    "Inhalt";
 $locale["Count"] =
-   "Fundstellen";
-$locale["Create Homepage:"] =
-   "Erzeuge Homepage:";
+   "ZählerAnzahl";
 $locale["Create: %s"] =
-   "Erstellen: %s";
+   "Erzeugen: %s";
 $locale["Created directory '%s' for the page dump..."] =
-   "Verzeichnis »%s« erzeugt, um die Dateien abzulegen...";
-$locale["Creating pages"] =
-   "Die Erzeugung der Seiten dieses Wikis";
-$locale["Current Language"] =
-   "Aktuelle Sprache";
+   "Ein Verzeichnis »%s« wurde erzeugt, um die Dateien abzulegen...";
 $locale["Current language: '%s'"] =
-   "Aktuelle Sprache: »%s«";
+   "Ihre Sprache: '%s'";
 $locale["DBA files are in the %s directory. Please read the INSTALL file and move the DB file to a permanent location or risk losing all the pages!"] =
-   "DBA Dateien befinden sich im Verzeichnis %s. Bitte erst lies die INSTALL Datei und verschiebe die DB Datei in das richtige Verzeichnis, oder sonst läufst du Gefahr dein ganzes Wiki zu verlieren!";
+   "Die DBA Dateien liegen im Verzeichnis %s. Bitte lesen Sie jetzt zuerst die INSTALL Anleitung und verschieben Sie danach die DB Datei an einen anderen endgültigen Speicherplatz, Sie laufen sonst Gefahr, alle Seiten zu verlieren.";
 $locale["Database"] =
    "Datenbank";
 $locale["Date Format"] =
@@ -192,24 +194,24 @@ $locale["DebugInfo"] =
    "DebugInfo";
 $locale["Default InterWiki map file not loaded."] =
    "Standard-Datei der InterWiki-Karte nicht geladen.";
-$locale["Deleted %s pages with invalid names:"] =
-   "%s Seiten mit ungültiger Namen gelöscht:";
+$locale["Default language: '%s'"] =
+   "Standardsprache für dieses Wiki: '%s'";
+$locale["Delete Pages With Invalid Names"] =
+   "Seiten mit ungültiger Namen löschen";
 $locale["Deleted."] =
    "Gelöscht.";
 $locale["Describe %s here."] =
-   "Beschreibe %s hier.";
-$locale["Description"] =
-   "Beschreibung";
+   "Beschreiben Sie %s hier.";
 $locale["Diff"] =
    "Diff";
 $locale["Diff: %s"] =
    "Vergleich: %s";
 $locale["Differences between %s and %s of %s."] =
-   "Zeilenweiser Vergleich von %3\$s, von %1\$s mit %2\$s";
+   "Zeilenweiser Vergleich von %3\$s, von %1\$s mit %2\$s.";
 $locale["Diffing pages"] =
-   "Die Differenzierung der Seiten dieses Wikis";
+   "Die Inhalts-Differenz-Seiten dieses Wikis";
 $locale["Displays a url in a seperate frame inside our body. Only one frame allowed."] =
-   "Anzeige einer URL in einem Extra-Frame innerhalb unser Seite. Nur ein FrameInclude ist erlaubt.";
+   "Zeigt eine URL in einem eigenen (oder gesonderten) Rahmen innerhalb der Seite. Nur ein InnenRahmen ist erlaubt.";
 $locale["Downloading html zip dumps"] =
    "Das Herunterladen der HTML-Zipspeicherauszüge von diesem Wiki";
 $locale["Downloading zip dumps"] =
@@ -226,10 +228,12 @@ $locale["Dumping serial pages"] =
    "Die Speicherung der Seiten dieses Wikis als Dateien";
 $locale["E-Mail"] =
    "E-Mail";
+$locale["E-mail"] =
+   "E-Mail";
 $locale["Edit"] =
-   "Editieren";
+   "Bearbeiten";
 $locale["Edit %s"] =
-   "Editiere %s";
+   "Bearbeite %s";
 $locale["Edit Area Size"] =
    "Texteingabe Fenstergröße";
 $locale["Edit Area Size:"] =
@@ -239,39 +243,35 @@ $locale["Edit Old Revision"] =
 $locale["Edit aborted."] =
    "Editieren abgebrochen.";
 $locale["Edit metadata for %s"] =
-   "Editiere Meta-Daten für %s";
+   "Meta-Daten für %s bearbeiten";
+$locale["Edit user preferences"] =
+   "Benutzer Einstellungen bearbeiten";
 $locale["Edit: %s"] =
-   "Editiere: %s";
+   "Bearbeite: %s";
 $locale["EditMetaData"] =
-   "MetaDatenEditieren";
+   "MetaDatenBearbeiten";
 $locale["EditText"] =
    "EditiereText";
 $locale["Editing pages"] =
-   "Das Ändern der Seiten dieses Wikis";
+   "Seitenbearbeitung in diesem Wiki";
 $locale["Elapsed time: %s s"] =
-   "Laufzeit: %s s";
-$locale["Email Notification"] =
-   "Email Benachrichtigung";
+   "Verlaufszeit: %s s";
 $locale["Email not yet verified."] =
    "E-Mail noch nicht überprüft.";
 $locale["Email verified."] =
    "E-Mail okay.";
-$locale["Embed hidden comments in WikiPages."] =
-   "Kommentar in WikiPages Verstecken.";
 $locale["Empty pagename!"] =
    "Leerer Seitenname!";
 $locale["Encrypted passwords cannot be used: %s."] =
    "Verschlüsselte Passwörter können nicht verwendet werden: %s.";
-$locale["Enter pages seperated by space or comma. Wildcards (fileglobbing) allowed."] =
-   "Liste aller Seiten durch Leerzeichen oder Komma getrennt. Reguläre Ausdrücke (fileglobbing) erlaubt.";
 $locale["Enter your UserId to sign in"] =
-   "Trage deinen Benutzernamen ein, um dich anzumelden";
+   "Tragen Sie bitte für die Anmeldung im Wiki Ihren Benutzernamen ein";
 $locale["Error: The page with the UserPreferences plugin must be valid WikiWord or a Preferences subpage of the users HomePage. Sorry, UserPreferences cannot be saved."] =
-   "Fehler: Die Seite mit dem BenutzerEinstellungen Plugin muß entweder ein gültiges WikiWord sein, oder eine /Einstellungen Subpage der Benutzerhomepage. Leider, die Einstellungen können nicht gespeichert werden.";
+   "Fehler: Die Seite mit der BenutzerEinstellungen-Programmerweiterung muß entweder ein gültiges WikiWord sein, oder eine Einstellungen Unterseite der Benutzerhomepage. Die Angaben können deshalb leider nicht gespeichert werden.";
 $locale["ExternalSearch"] =
    "FremdSuche";
 $locale["Fatal PhpWiki Error"] =
-   "Fataler PhpWiki Fehler";
+   "FatalerWikiFehler";
 $locale["FindPage"] =
    "SeiteFinden";
 $locale["First"] =
@@ -293,7 +293,7 @@ $locale["H"] =
 $locale["Height"] =
    "Höhe";
 $locale["HelloWorld"] =
-   "HalloWelt";
+   "HelloWorld";
 $locale["History of changes."] =
    "Änderungsprotokoll.";
 $locale["Hit statistics"] =
@@ -305,25 +305,25 @@ $locale["Hits:"] =
 $locale["HomePage"] =
    "StartSeite";
 $locale["I'm just doing minor edits. Please divert the usual logging to %s instead."] =
-   "Ich mache nur geringfügige Änderungen. Protokolliere stattdessen in %s.";
+   "Ich mache nur kleinere Änderungen. Protokolliere stattdessen in %s.";
 $locale["I'm sorry.  Version %d of %s is not in the database."] =
-   "Es tut mir leid.  Version %d. von %s ist nicht in der Datenbank.";
+   "Achtung! Leider ist keine Version %d. von %s in der Datenbank.";
 $locale["Image loaded from cache file: %s"] =
    "Bild geladen von Cachedatei: %s";
 $locale["Image saved to cache file: %s"] =
    "Bild gespeichert als Cachedatei: %s";
 $locale["In the time since you started editing this page, another user has saved a new version of it."] =
-   "Seitdem du diese Seite zuerst editiert hast, hat ein anderer Benützer die Seite verändert und gespeichert.";
+   "Während der Zeit, seit Sie mit der Bearbeitung dieser Seite begonnen haben, hat ein anderer Benutzer bereits eine neuere Version gespeichert.";
 $locale["Include of '%s' failed"] =
-   "Einfügen von »%s« fehlgeschlagen";
+   "Das Einfügen von »%s« ist fehlgeschlagen";
 $locale["IncludePage"] =
    "SeiteEinfügen";
 $locale["Included from %s"] =
    "Eingefügter Text von %s";
-$locale["Included from %s:"] =
-   "Von %s eingefügt:";
+$locale["Inline images"] =
+   "Eingebundene Bilder";
 $locale["Insufficient permissions."] =
-   "Erlaubnisse nicht ausreichend.";
+   "Keine ausreichenden Zugangsrechte.";
 $locale["InterWiki Address"] =
    "InterWiki-Adresse";
 $locale["InterWikiMap"] =
@@ -331,7 +331,9 @@ $locale["InterWikiMap"] =
 $locale["InterWikiSearch"] =
    "InterWikiSuche";
 $locale["Invalid password or userid."] =
-   "Ungültiges Passwort oder Benutzername.";
+   "Ungültiges Passwort oder falscher Benutzername.";
+$locale["Keep up to %d major edits, but keep them no longer than %d days."] =
+   "Aufbewahrung größerer Änderungen für %d, aber nicht länger als %d Tage.";
 $locale["Language"] =
    "Sprache";
 $locale["Last"] =
@@ -341,33 +343,37 @@ $locale["Last Author"] =
 $locale["Last Author:"] =
    "Letzter Autor:";
 $locale["Last Modified"] =
-   "Geändert";
+   "Zuletzt geändert";
 $locale["Last Modified:"] =
    "Zuletzt Geändert:";
 $locale["Last Summary"] =
-   "Letzter Kommentar";
+   "Letzte Zusammenfassung";
 $locale["Last Summary:"] =
    "Letzter Kommentar:";
 $locale["Last edited %s."] =
-   "Letzte Änderung %s.";
+   "Zuletzt geändert %s.";
 $locale["Last edited on %s."] =
-   "Letzte Änderung am %s.";
+   "Zuletzt bearbeitet am %s.";
+$locale["Layout tables using the old markup style."] =
+   "Tabellen Entwurf unter Verwendung traditioneller Hypertext-Auszeichnungsart";
 $locale["Legend"] =
    "Legende";
 $locale["LikePages"] =
-   "GleicheSeiten";
+   "ÄhnlicheSeiten";
+$locale["Line does not begin with a '|'."] =
+   "Zeile beginnt nicht mit '|'.";
 $locale["List PageHistory for %s"] =
    "Das Änderungsprotokoll für %s auflisten";
 $locale["List all pages in this wiki."] =
    "Alle Seiten in diesem Wiki auslisten.";
 $locale["List all pages which link to %s."] =
-   "Slle Seiten die mit %s verlinkt sind auslisten.";
+   "Alle Seiten die mit %s verlinkt sind.";
 $locale["List page names which share an initial or final title word with '%s'."] =
    "Diese Seiten teilen sich einen Wordteil am Anfang oder Ende mit »%s«.";
 $locale["List the most popular pages."] =
    "Die meistbesucht Seiten auflisten.";
 $locale["Listing all pages."] =
-   "Aller Seiten dieses Wikis werden auslistet.";
+   "Alle Seiten auslisten.";
 $locale["Load File"] =
    "Datei Laden";
 $locale["Loading '%s'"] =
@@ -375,9 +381,9 @@ $locale["Loading '%s'"] =
 $locale["Loading InterWikiMap from external file %s."] =
    "Die InterWikikarte wird von der externen Datei %s geladen.";
 $locale["Loading files"] =
-   "Die Ladung der Dateien dieses Wikis";
+   "Das Dateienladen in diesem Wiki";
 $locale["Loading up virgin wiki"] =
-   "Erstes Laden des noch leeren Wiki";
+   "Erstes Hochladen des noch gänzlich unberührten Wikis";
 $locale["Lock Page"] =
    "Seite Sperren";
 $locale["Lock page to enable link"] =
@@ -385,7 +391,7 @@ $locale["Lock page to enable link"] =
 $locale["Locked"] =
    "Gesperrt";
 $locale["Locking pages"] =
-   "Das Sperrung der Seiten dieses Wikis";
+   "Das Seitensperrung in diesem Wiki";
 $locale["Login"] =
    "Anmelden";
 $locale["MIME file %s"] =
@@ -394,10 +400,8 @@ $locale["Markup"] =
    "Quelltext";
 $locale["Markup:"] =
    "Quelltextformat:";
-$locale["Merge and Edit: %s"] =
-   "Füge zusammenn und Editiere: %s";
 $locale["Minor Edit"] =
-   "Geringfügige";
+   "Kleinere Änderung";
 $locale["Modern"] =
    "Modern";
 $locale["Moniker"] =
@@ -411,7 +415,7 @@ $locale["New page."] =
 $locale["New password"] =
    "Neues Passwort";
 $locale["New users may use an empty password."] =
-   "Neue Benutzer dürfen ein leeres Passwort verwenden.";
+   "Neue Benutzer können ein beliebiges freies Passwort als Eintrittskarte ins Wike verwenden.";
 $locale["Newer page:"] =
    "Neuere Seite:";
 $locale["Next"] =
@@ -419,15 +423,13 @@ $locale["Next"] =
 $locale["Next Month"] =
    "Nächster Monat";
 $locale["No changes found"] =
-   "Keine Änderungen gefunden";
+   "Keine Änderungen gefunden.";
 $locale["No changes."] =
    "Keine Änderungen.";
 $locale["No pagedata for %s"] =
    "Keine Daten für Seiten %s";
 $locale["No pages link to %s."] =
    "Keine Seiten sind mit %s verlinkt.";
-$locale["No pages with bad names were found."] =
-   "Keine Seiten mit ungültiger Namen gefunden.";
 $locale["No revisions found"] =
    "Keine Versionen gefunden";
 $locale["No uploaded file to upload?"] =
@@ -435,13 +437,15 @@ $locale["No uploaded file to upload?"] =
 $locale["None"] =
    "Keine";
 $locale["Note that many browsers will automatically adjust the width of the editing area so that it fills the browser window.  In this case, the width preference will be ignored."] =
-   "Beachte, daß viele Browser die Breite des Texteingabe automatisch an die volle Fensterbreite des Browsers anpaßen. In diesem Fall wird die Breite ignoriert. ";
+   "Beachten Sie bitte, dass viele Browser die Breite der Textbox automatisch an ihre Fensterbreite anpassen. In diesem Fall wird die hier eingegebene Breite ignoriert.";
 $locale["Note, that user accounts with bouncing emails will be disabled."] =
-   "Beachte, daß Benutzer mit ungültigen E-Mail Addressen gelöscht werden.";
+   "Beachten Sie bitte, daß Benutzer mit ungültigen E-Mail Addressen gelöscht werden.";
 $locale["Note:"] =
    "Hinweis:";
-$locale["Okay"] =
-   "Okay";
+$locale["OldStyleTable"] =
+   "TraditionellerStilTabelle";
+$locale["OldTextFormattingRules"] =
+   "AlteTextFormatierungsRegeln";
 $locale["Older page:"] =
    "Ältere Seite:";
 $locale["One page links to %s:"] =
@@ -469,9 +473,9 @@ $locale["Page Type:"] =
 $locale["Page Version:"] =
    "Seiten Version:";
 $locale["Page names with prefix '%s'"] =
-   "Seitenamen mit Prefix »%s«";
+   "Seitenamen mit dem Anfangswort »%s«";
 $locale["Page names with suffix '%s'"] =
-   "Seitennamen mit Suffix »%s«";
+   "Seitennamen mit Endwort »%s«";
 $locale["Page now locked."] =
    "Seite jetzt gesperrt.";
 $locale["Page now unlocked."] =
@@ -485,7 +489,7 @@ $locale["PageGroup for %s"] =
 $locale["PageHistory"] =
    "SeitenProtokoll";
 $locale["PageHistory for %s"] =
-   "Änderungsprotokoll für Seite %s";
+   "Verlaufsprotokoll für Seite %s";
 $locale["PageInfo"] =
    "SeitenInfo";
 $locale["Pages in this wiki (%d total):"] =
@@ -495,27 +499,25 @@ $locale["Password"] =
 $locale["Password:"] =
    "Passwort:";
 $locale["Permanently remove all selected pages."] =
-   "Lösche alle ausgewählten Seiten.";
+   "Endgültige Löschung aller ausgewählten Seiten.";
+$locale["Permanently remove selected pages"] =
+   "Endgültige Löschung aller ausgewählten Seiten";
 $locale["Personal language:"] =
-   "Deine Sprache:";
+   "Ihre Sprache:";
 $locale["Personal theme:"] =
-   "Deine Benutzeroberfläche:";
-$locale["PhotoAlbum"] =
-   "FotoAlbum";
+   "Ihre Benutzeroberfläche:";
+$locale["PgsrcTranslation"] =
+   "PgsrcTranslation";
 $locale["PhpWiki engine version"] =
-   "PhpWikitriebswerkversion";
+   "PhpWikitriebwerksversion";
 $locale["PhpWikiAdministration"] =
-   "PhpWikiSystemverwalten";
+   "PhpWikiSystemAdministration";
 $locale["Please check it through before saving."] =
-   "Bitte den Text nochmals durchsehen bevor Speichern.";
-$locale["Plugin"] =
-   "Zusatzprogramm";
+   "Bitte überprüfen Sie erst alles, bevor Sie es abspeichern.";
 $locale["Plugin %s disabled."] =
    "Zusatzprogramm %s deaktiviert.";
 $locale["Plugin %s failed."] =
    "Zusatzprogramm %s fehlgeschlagen.";
-$locale["Plugins"] =
-   "Zusatzprogramme";
 $locale["PreferencesInfo"] =
    "EinstellungenInfo";
 $locale["PrevNext"] =
@@ -523,17 +525,17 @@ $locale["PrevNext"] =
 $locale["Preview"] =
    "Vorschau";
 $locale["Preview only!  Changes not saved."] =
-   "Nur die Vorschau! Änderungen nicht gespeichert.";
+   "Dies ist nur eine Vorschau! Die Änderungen sind noch nicht gespeichert.";
 $locale["Previous"] =
    "Vorherige";
 $locale["Previous Author"] =
    "Voriger Autor";
 $locale["Previous Major Revision"] =
-   "Vorige Hauptrevision";
+   "Vorige grössere Neubearbeitung";
 $locale["Previous Month"] =
    "Voriger Monat";
 $locale["Previous Revision"] =
-   "Vorige Revision";
+   "Vorige Neubearbeitung";
 $locale["Printer"] =
    "Drucker";
 $locale["Querying backend directly for '%s'"] =
@@ -543,21 +545,25 @@ $locale["RandomPage"] =
 $locale["Raw HTML"] =
    "HTML-Befehle";
 $locale["Raw HTML is disabled in this wiki."] =
-   "HTML-Befehle sind in diesem Wiki verboten.";
+   "HTML-Befehle sind in diesem Wiki ausser Kraft gesetzt.";
 $locale["RecentChanges"] =
-   "FrischeSeiten";
-$locale["RecentEdits"] =
-   "GeringfügigeÄnderungen";
+   "NeuesteÄnderungen";
+$locale["Recursive redirect to self: '%s'"] =
+   "Eigenbezogene Selbstrückleitung: '%s'";
+$locale["Redirect"] =
+   "Weiterleiten";
 $locale["Redirect to an external url"] =
-   "Zu einer externen Webseite Umlenken.";
+   "Weiterleitung zu einer externen Webseite";
+$locale["RedirectTo"] =
+   "Weiterleiten zu";
 $locale["Redirects to an external web site based on form input"] =
-   "Umlenkung der Suche zu einer externen Webseite";
+   "Weiterleitung der Suche zu einer externen Webseite aufgrund einer Formulareingabe";
 $locale["Redirects to another url or page."] =
-   "Umlenkung zu einer externen Webseite oder Steite.";
+   "Weiterleitung zu einer externen Webseite oder localer Seite.";
 $locale["References"] =
    "Fußnoten";
 $locale["Remove Page"] =
-   "Seite Löschen";
+   "Seite löschen";
 $locale["Remove page"] =
    "Seite löschen";
 $locale["Remove selected pages"] =
@@ -567,11 +573,13 @@ $locale["Remove the page now"] =
 $locale["Removed page '%s' succesfully."] =
    "Seite »%s« erfolgreich gelöscht.";
 $locale["Removing pages"] =
-   "Die Löschung der Seiten dieses Wikis";
+   "Die Seitenlöschung in diesem Wiki";
+$locale["Requires WikiAdmin privileges to edit."] =
+   "Verlangt Administratorenrechte zur Bearbeitung";
 $locale["Return to %s"] =
    "Zurück zu %s";
 $locale["Revision Not Found"] =
-   "Version Nicht Gefunden";
+   "Version nicht gefunden";
 $locale["Save"] =
    "Speichern";
 $locale["Saved on:"] =
@@ -579,13 +587,13 @@ $locale["Saved on:"] =
 $locale["Saved: %s"] =
    "Gespeichert: %s";
 $locale["Saving this page will overwrite the current version."] =
-   "Wenn die Seite jetzt gespeichert werden würde, dann würde die aktuellste Version überschrieben.";
+   "Wenn Sie diese Seite jetzt speichern, wird die aktuelle Version überschrieben.";
 $locale["Score"] =
    "Güte";
 $locale["Search"] =
    "Suche";
-$locale["Search the content of all pages in this wiki."] =
-   "Den Inhalt aller Seiten dieses Wikis durchsuchen.";
+$locale["Search the titles of all pages in this wiki."] =
+   "Die Titeln aller Seiten dieses Wikis durchsuchen.";
 $locale["See %s"] =
    "Siehe %s";
 $locale["See %s tips for editing."] =
@@ -595,9 +603,9 @@ $locale["See: %s"] =
 $locale["Select pages"] =
    "Wähle Seiten";
 $locale["Select your personal language:"] =
-   "Wähle deine Sprache:";
+   "Wählen Sie Ihre gewünschte Sprache:";
 $locale["Select your personal theme:"] =
-   "Wähle deine Benutzeroberfläche:";
+   "Wählen Sie Ihre persönliche Benutzeroberfläche:";
 $locale["Select: "] =
    "Wähle: ";
 $locale["Selected"] =
@@ -607,13 +615,13 @@ $locale["Serialized file %s"] =
 $locale["Show all changes for:"] =
    "Zeige alle Änderungen innerhalb von:";
 $locale["Show and add blogs for %s"] =
-   "Zeige und erzeuge Blogs von %s";
+   "Zeige und füge blogs hinzu für %s";
 $locale["Show changes for:"] =
    "Zeige Änderungen innerhalb von:";
 $locale["Show extra page Info and statistics for %s."] =
-   "Zeige zusätzliches Seiten-Info und Statistiken für %s.";
+   "Zeige zusätzliche Seiten-Info und Statistiken über %s.";
 $locale["Show minor edits for:"] =
-   "Zeige geringfügige Änderungen innerhalb von:";
+   "Zeige kleinere Änderungen innerhalb von:";
 $locale["Show relative dates using 'Today' and 'Yesterday'."] =
    "Datum mit relativen Bezeichnungen, wie »Heute« und »Gestern«.";
 $locale["Sidebar"] =
@@ -625,41 +633,45 @@ $locale["Sign Out"] =
 $locale["Simple Sample Plugin"] =
    "Einfaches Zusatzprogramm Beispiel";
 $locale["Since you started the deletion process, someone has saved a new version of %s.  Please check to make sure you still want to permanently remove the page from the database."] =
-   "Während du den Löschungsprozess begonnen hast, hat jemand anderer eine neue Version von %s gespeichert. Bitte entscheide, ob du die Seite noch von der Datenbank permanent löschen willst.";
+   "Während Sie den Löschungsvorgang begonnen haben, hat jemand anderer eine neue Version von %s gespeichert. Bitte entscheiden Sie jetzt, ob Sie die Seite immer noch endgültig von der Datenbank löschen wollen.";
+$locale["SiteMap"] =
+   "SeitenÜbersicht";
 $locale["Size:"] =
    "Größe:";
 $locale["Skipping"] =
-   "Übergeschlagen";
+   "Übersprungen";
 $locale["Some of the changes could not automatically be combined.  Please look for sections beginning with '%s', and ending with '%s'.  You will need to edit those sections by hand before you click Save."] =
-   "Einige der Änderungen konnten nicht automatisch kombiniert werden. Bitte suche nach den Teilen, die mit '%s' anfangen und mit '%s' beenden. Du mußt jene Teilen eigenhändig bearbeiten bevor du Speichern klickst.";
+   "Einige der Änderungen konnten nicht automatisch miteinander verbunden werden. Bitte suchen Sie nach den Teilen, die mit '%s' anfangen und mit '%s' enden. Sie müssen diese Teile von Hand bearbeiten, bevor Sie auf Speichern klicken.";
 $locale["Someone has edited the page!"] =
-   "Jemand hat die Seite verändert!";
+   "Jemand hat die Seite bereits bearbeitet!";
 $locale["Sorry for the inconvenience."] =
-   "Entschuldigung für die Unannehmlichkeiten.";
+   "Entschuldigen Sie bitte die hiermit für Sie verbundenen Unannehmlichkeiten.";
 $locale["Sorry, this version of PHP cannot create PNG image files."] =
-   "Leider. Diese PHP Version kann keine PNG Bilder erzeugen.";
+   "Das geht leider nicht. Diese PHP Version kann keine PNG Bilder erzeugen.";
 $locale["Sort by %s"] =
    "An %s sortieren";
 $locale["Statistics about %s."] =
    "Statistik über %s.";
-$locale["Submit"] =
-   "Eingeben";
 $locale["Submit country"] =
-   "Land Eingeben";
+   "Land eingeben";
 $locale["Submit location"] =
-   "Land Eingeben";
+   "Land eingeben";
+$locale["Subpage"] =
+   "Unterseite";
 $locale["Summary"] =
-   "Kommentar";
+   "Ihr Kommentar";
 $locale["Summary:"] =
-   "Kommentar:";
+   "Ihr Kommentar:";
 $locale["Supplanted on:"] =
    "Ersetzt am:";
+$locale["Supported languages"] =
+   "Untersützte Sprachen";
 $locale["Synopsis"] =
    "Übersicht";
 $locale["TextFormattingRules"] =
    "TextFormatierungsRegeln";
 $locale["Thank you for editing %s."] =
-   "Danke für das Ändern von %s.";
+   "Danke für das Bearbeiten von %s.";
 $locale["The %d least popular pages of this wiki:"] =
    "Die %d selten besuchten Seiten dieses Wikis:";
 $locale["The %d most popular pages of this wiki:"] =
@@ -680,22 +692,28 @@ $locale["The PhpWiki Programming Team"] =
    "Das PhpWiki Programmierer-Team";
 $locale["The PhpWiki programming team"] =
    "Das PhpWiki Programmierer-Team";
+$locale["The current page has no subpages defined."] =
+   "Diese Seite hat keine zugewiesenen Unterseiten.";
 $locale["The current time at the server is %s."] =
    "Die aktuelle Uhrzeit am Server ist %s.";
 $locale["The most recent %s during the past %s days are listed below."] =
    "Die jüngste %s innerhalb der letzten %s Tage sind unten aufgelistet.";
 $locale["The most recent %s during the past day are listed below."] =
    "Die jüngste %s innerhalb des letzten Tages sind unten aufgelistet.";
+$locale["Theme"] =
+   "Benutzeroberfläche";
+$locale["There is no image creation data available to id '%s'. Please reload referring page."] =
+   "Es sind keine neuerzeugten Abbildungsdateien vorhanden (verfügbar) für '%'. Bitte laden Sie die Bezugsseite erneut.";
 $locale["These page titles match fuzzy with '%s'"] =
-   "Diese Seiten sind das Ergebnis der ungenauen Suche nach »%s«.";
+   "Diese Seitentitel sind das Ergebnis der FuzzySuche nach »%s«.";
 $locale["These pages share an initial or final title word with '%s'"] =
    "Diese Seiten teilen sich einen Wordteil am Anfang oder Ende mit »%s«";
 $locale["This is a minor change."] =
-   "Geringfügige Änderung";
+   "Kleinere Änderung";
 $locale["This page has been locked by the administrator and cannot be edited."] =
-   "Diese Seite wurde vom Systemverwalter gesperrt und kann nicht editiert werden.";
+   "Diese Seite wurde vom Systemadministrator gesperrt und kann nicht bearbeitet werden.";
 $locale["This page has been locked by the administrator so your changes can not be saved."] =
-   "Diese Seite wurde vom Systemverwalter gesperrt und deine Veränderungen können nicht gespeichert werden.";
+   "Diese Seite wurde vom Administrator für die allgemeine Bearbeitung gesperrt. Ihre Änderungen können deshalb nicht gespeichert werden.";
 $locale["Time Zone"] =
    "Zeitzone";
 $locale["Title Search"] =
@@ -707,31 +725,35 @@ $locale["TitleSearch"] =
 $locale["Today"] =
    "Heute";
 $locale["Total of %d languages: "] =
-   "%d gesamte Sprache: ";
+   "%d Sprache gesammt: ";
 $locale["Type it again"] =
-   "Noch einmal";
+   "Bitte hier wiederholen";
 $locale["Unable to load: %s"] =
-   "Es könnte nicht geöffnet werden: %s";
+   "Konnte %s nicht laden";
 $locale["Unable to open directory '%s' for reading"] =
    "Konnte Verzeichnis »%s« nicht zum Lesen öffnen";
 $locale["Unexpected EOF in zip file"] =
    "Unerwartetes Dateiende in zip Datei";
+$locale["UnfoldSubpages"] =
+   "Entfaltete Unterseiten";
 $locale["Unlock Page"] =
    "Seite Freigeben";
 $locale["Unlocking pages"] =
-   "Das Freigebung der Seiten dieses Wikis";
+   "Die Seitenfreigabe in diesem Wiki";
 $locale["Update Preferences"] =
    "Speichere Einstellungen";
 $locale["Upload"] =
    "Hochladen";
 $locale["Uploading %s"] =
    "%s wird hochgeladen";
+$locale["Uploading failed."] =
+   "Hochladen fehlgeschalgen.";
 $locale["Uploading zip dumps"] =
-   "Das Hochladen der ZIP-Speicherauszüge zu diesem Wiki";
+   "Das Hochladen vonr ZIP-Speicherauszüge in diesem Wiki";
 $locale["Use old markup"] =
-   "Verwende altes Wiki Quelltextformat";
+   "Alten FormatierungsZeichen verwenden";
 $locale["User page"] =
-   "Benutzerseite";
+   "Benutzer Seite";
 $locale["User statistics"] =
    "Benutzer Statistiken";
 $locale["UserId"] =
@@ -751,37 +773,37 @@ $locale["Version %s"] =
 $locale["Version %s, saved %s."] =
    "Version %s. %s gespeichert.";
 $locale["Version %s, saved on %s."] =
-   "Version %s. am %s gespeichert.";
+   "Version %s. gespeichert am %s .";
 $locale["Versions are identical"] =
    "Versionen sind identisch";
 $locale["View Source"] =
-   "Quell Text";
+   "QuellTextAnsicht";
 $locale["View Source: %s"] =
    "Quell Text: %s";
 $locale["View the current version"] =
-   "Siehe die aktuellste Version";
-$locale["Viewing redirecting page."] =
-   "Das Ansehen das Umlenkung diser Seite.";
+   "Die aktuelle Version ansehen";
 $locale["Viewing the source of pages"] =
-   "Das Ansehen das Quelltext der Seiten dieses Wikis";
+   "DieQuelltextansicht der Seiten in diesem Wiki";
 $locale["Visited pages on this wiki, ordered by popularity:"] =
    "Die besuchten Seiten dieses Wikis, nach Popularität geordnet:";
 $locale["W"] =
    "Br.";
 $locale["Wanted Pages for %s (%d total):"] =
-   "Verlangte Seiten für %s (%d gesamt):";
+   "WunschZettelSeiten für %s (%d gesamt):";
 $locale["Wanted Pages in this wiki (%d total):"] =
-   "Verlangte Seiten in diesem Wiki (%d gesamt):";
+   "WunschZettelSeiten in diesem Wiki (%d gesamt):";
 $locale["WantedPages"] =
-   "VerlangteSeiten";
+   "WunschZettelSeiten";
 $locale["Warning!"] =
    "Warnung!";
 $locale["Warning: You are editing an old revision."] =
-   "Warnung: Du editierst eine alte Version.";
+   "Warnung: Sie bearbeiten eine alte Version.";
 $locale["Width"] =
    "Breite";
 $locale["Wiki Name"] =
-   "Wikiname";
+   "Name des Wikis";
+$locale["WikiAdminSelect"] =
+   "WikiAdministratorAuswahl";
 $locale["WikiBlog"] =
    "WikiBlog";
 $locale["WikiForm"] =
@@ -789,139 +811,145 @@ $locale["WikiForm"] =
 $locale["WikiForm: %s: unknown action"] =
    "WikiForm: %s: unbekannte Aktion";
 $locale["With external authentication all users which stored their Preferences. Without external authentication all once signed-in users (from version 1.3.4 on)."] =
-   "Mit externer Authentifizierung die Liste aller Benutzer, die Ihre Einstellungen geändert haben. Ohne externer Authentifizierung die Liste aller Benutzer, die sich einmal (ab Version 1.3.4) angemeldet haben.";
+   "Mit externer Authentifizierung aller Benutzer, die sich für dieses Wiki eingetragen haben. Ohne externer Authentifizierung aller Benutzer, die sich irgendwann (ab Version 1.3.4) einmal angemeldet haben.";
 $locale["With the current offset, this would be reported as %s."] =
    "Mit dem eingegebenen Zeit-Unterschied, würde die Zeit %s angezeigt.";
 $locale["You are about to remove '%s' permanently!"] =
-   "Du bist im Begriff »%s« permanent zu löschen!";
+   "Du bist im Begriff »%s« endgültig zu löschen!";
 $locale["You are signed in as %s"] =
-   "Angemeldet als %s";
+   "Sie sind angemeldet als %s";
 $locale["You are viewing an old revision of this page."] =
-   "Du siehst eine alte Version dieser Seite.";
+   "Sie sehen eine alte Version dieser Seite.";
 $locale["You have not made any changes so no new version has been saved."] =
-   "Du hast keine Änderungen gemacht, also ist keine neue Version gespeichert worden.";
+   "Sie haben keine Änderungen vorgenommen, deshalb konnte keine neue Version gespeichert werden.";
 $locale["You may sign in using any WikiWord as a UserId. (%s etc. may be used too). The UserId will be used as a link in RecentChanges to your UserId page, your HomePage."] =
-   "Du darfst dich mit jedem WikiWort als Benutzernamen eintragen. (Auch %s u.deutsche Umlaute erlaubt). Der Benutzername wird als Link in FrischeSeiten zu deinem Benutzernamen verwendet, deine HomePage.";
+   "Sie können sich mit jedem gewünschten WikiWort als Benutzernamen ins Wiki eintragen. (Auch %s u. deutsche Umlaute sind zulässig). Der Benutzername wird in NeueSeiten als Link auf Ihre HomePage verwendet. Sie können Ihre Seite in die Browser Favoriten eintragen oder auch gleich als URL verwenden: http://www.wikiname.de/IhrName";
 $locale["You must be an administrator to %s."] =
-   "Du mußt ein Systemverwalter sein %s.";
+   "Sie müssen Administratorrechte haben %s.";
 $locale["You must log in to %s."] =
-   "Du mußt dich anmelden %s.";
+   "Sie müssen sich anmelden %s.";
 $locale["You must sign in to %s."] =
-   "Du mußt dich anmelden %s.";
+   "Sie müssen sich anmelden %s.";
 $locale["You must specify a directory to dump to"] =
-   "Du mußt ein Sicherungsverzeichnis angeben.";
+   "Sie müssen zum Sichern ein Verzeichnis angeben.";
 $locale["Your E-Mail:"] =
-   "Deine E-Mail:";
+   "Ihre E-Mail-Adresse:";
 $locale["Your careful attention to detail is much appreciated."] =
-   "Deine besondere Aufmerksamkeit für Details wird sehr geschätzt.";
+   "Die besondere Aufmerksamkeit, die Sie soeben der Bearbeitung dieser Seite gewidmet haben, wird von allen Benutzern dieses Wikis gern gesehen und hoch geschätzt.";
 $locale["Your changes can not be saved as they are, since doing so would overwrite the other author's changes. So, your changes and those of the other author have been combined. The result is shown below."] =
-   "Deine Veränderungen kann nicht gespeichert werden, da würde die Veränderungen des anderen Autors überschreiben. Somit sind Deine Änderungen und die des anderen Autors kombiniert worden. Das Resultat wird unten angezeigt.";
+   "Ihre Änderungen können so, wie sie sind, nicht gespeichert werden. Das hätte unzulässigerweise die bereits gesicherten Änderungen des anderen Autors überschrieben. Deshalb sind Ihre und die Änderungen des anderen Autors miteinander kombiniert worden. Das Ergebnis sehen Sie unten.";
 $locale["Your version"] =
-   "Deine Version";
+   "Ihre Version";
 $locale["[%d] See [%s]"] =
    "[%d] Siehe [%s]";
-$locale["access this wiki via XML-RPC"] =
-   "um eine XML-RPC Datei von diesem Wiki zu herunterladen";
 $locale["argument '%s' not declared by plugin"] =
    "Argument »%s« ist nicht deklariert im Zusatzprogramm";
 $locale["browse pages in this wiki"] =
-   "um Seiten dieses Wikis durchzulesen";
+   "um Seiten in diesem Wikis durchzugehen";
 $locale["by %s"] =
    "von %s";
 $locale["cached pagedata:"] =
-   "Aufgenommene Seitendaten in den Cachespeicher:";
+   "Seitendaten in den Cachespeicher aufgenommen:";
 $locale["cached versiondata:"] =
-   "Aufgenommene Versionendaten in den Cachespeicher:";
+   "Versionendaten in den Cachespeicher aufgenommen:";
 $locale["compare revisions"] =
    "Versionen vergleichen";
 $locale["couldn't open file '%s' for writing"] =
    "Datei »%s« konnte nicht zum Schreiben geöffnet werden";
 $locale["create pages in this wiki"] =
-   "um Seiten in diesem Wiki zu Erzeugen";
+   "um Seiten in diesem Wiki zu erzeugen";
 $locale["current version"] =
    "aktuelle Version";
 $locale["days"] =
    "Tagen";
+$locale["db backend:"] =
+   "db Rückwärtiges Ende:";
 $locale["diff"] =
    "Diff";
 $locale["diff pages in this wiki"] =
-   "um Seiten dieses Wikis zu differenzieren";
+   "um Seiten innerhalb des Wikis zu vergleichen";
 $locale["download a zip dump from this wiki"] =
    "um einen Zipspeicherauszug von diesem Wiki zu herunterladen";
 $locale["download an html zip dump from this wiki"] =
-   "um eine HTML-Ziparchiv von diesem Wiki zu herunterladen";
+   "um eine HTML-Zipdatei von diesem Wiki zu herunterladen";
 $locale["dump html pages from this wiki"] =
-   "um einer HTML-Speicherauszug dieses Wikis auszuziehen";
+   "um HTML Seiten dieses Wikis zu ziehen";
 $locale["dump serial pages from this wiki"] =
-   "um Seiten dieses Wikis als Dateien zu speichern";
+   "um serienmässige Seiten dieses Wikis als Dateien zu speichern";
 $locale["edit area"] =
    "Texteingabe Fenster";
 $locale["edit pages in this wiki"] =
-   "um Seiten in diesem Wiki zu editieren";
+   "um Seiten in diesem Wiki zu bearbeiten";
+$locale["edit user preferences in this wiki"] =
+   "um Benutzer Einstellungen in diesem Wiki zu bearbeiten";
 $locale["edits"] =
    "Änderungen";
 $locale["from %s"] =
    "von %s";
 $locale["home page"] =
-   "Startseite";
-$locale["illegal pagename"] =
-   "Ungültiger Seitenname";
+   "Start Seite";
 $locale["is identical to current version %d - skipped"] =
-   "ist identisch mit der aktuellen Version %d - ausgelassen";
+   "ist identisch mit der aktuellen Version %d - übersprungen";
 $locale["load files into this wiki"] =
-   "um Seiten in diesem Wiki zu laden";
+   "um Seiten in dieses Wiki zu laden";
 $locale["lock pages in this wiki"] =
    "um Seiten in diesem Wiki zu sperren";
 $locale["locked"] =
    "gesperrt";
 $locale["major edits"] =
-   "Hauptänderungen";
+   "Grössere Änderungen";
 $locale["mean: %2.3f"] =
    "Mittel: %2.3f";
 $locale["median: %d"] =
    "Median: %d";
 $locale["minor"] =
-   "gerigne";
+   "kleinere";
 $locale["minor edit"] =
    "geringfügige";
 $locale["minor edits"] =
-   "Geringfügige Änderungen";
+   "Kleinere Änderungen";
 $locale["new page"] =
    "neue Seite";
 $locale["no cache used"] =
-   "keiner Cache verwendet";
+   "kein Cache verwendet";
 $locale["no page specified"] =
    "Keine Seite angegeben";
 $locale["not yet"] =
    "noch nicht";
 $locale["plain file %s"] =
-   "Textdatei %s";
+   "Nur-Text-Datei %s";
 $locale["predecessor to the previous major change"] =
-   "Vorgänger zur vorhergehenden Hauptänderung";
+   "Vorgänger zur vorherigen grösseren Änderung";
 $locale["previous revision"] =
-   "vorige Version";
+   "vorige Neubearbeitung";
 $locale["recursive inclusion of page %s"] =
-   "Fehler beim Einfügen der Seite %s: Rekursion (sich selbst aufrufend)";
+   "Fehler beim Einfügen der Seite %s: Selbstaufruf der Seite";
+$locale["recursive inclusion of page %s ignored"] =
+   "Fehler beim Einfügen der Seite %s: erneuter Selbstaufruf--ignoriert";
 $locale["recursive inclusion of url %s"] =
    "Fehler beim Aufruf der Seite %s: Rekursion (sich selbst aufrufend)";
 $locale["remove pages from this wiki"] =
-   "um Seiten in diesem Wiki zu löschen";
+   "um Seiten aus diesem Wiki zu entfernen";
 $locale["revision by previous author"] =
-   "Revision von vorigem Autor";
+   "Revidierte Ausgabe des vorigen Autors";
 $locale["saved as %s"] =
-   "als %s gespeichert";
+   "gespeichert als %s";
 $locale["stddev: %2.3f"] =
    "Standardabweichung: %2.3f";
+$locale["timeout:"] =
+   "Zeitüberschreitung:";
 $locale["today"] =
    "heute";
-$locale["too long"] =
-   "zu lang";
+$locale["total hits: %d"] =
+   "Anzahl aller Seitenaufrufe %d";
 $locale["trailing cruft in plugin args: '%s'"] =
    "Unbekannte Zusatzprogramm Argumente: »%s«";
 $locale["unlock pages in this wiki"] =
    "um Seiten in diesem Wiki freizugeben";
 $locale["upload a zip dump to this wiki"] =
    "um ein Ziparchiv in dieses Wiki hochzuladen";
+$locale["verify the current action"] =
+   "bestätigen Sie die gegenwärtige Aktion";
 $locale["version %d"] =
    "Version %d.";
 $locale["version %s"] =
