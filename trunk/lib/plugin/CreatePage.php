@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreatePage.php,v 1.1 2004-03-08 18:57:59 rurban Exp $');
+rcs_id('$Id: CreatePage.php,v 1.2 2004-03-17 15:37:41 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -21,49 +21,94 @@ rcs_id('$Id: CreatePage.php,v 1.1 2004-03-08 18:57:59 rurban Exp $');
  */
 
 /**
- * CreatePage plugin.
+ * This allows you to create a page geting the new pagename from a 
+ * forms-based interface, and optionally with the initial content from 
+ * some template.
  *
- * This allows you to create a page using a forms-based interface.
  * Put it <?plugin-form CreatePage ?> at some page, browse this page, 
  * enter the name of the page to create, then click the button.
  *
- * Usage:
- * <?plugin-form CreatePage ?>
+ * Usage: <?plugin-form CreatePage ?>
+ * @author: Dan Frankow
  */
 class WikiPlugin_CreatePage
 extends WikiPlugin
 {
-    function getName () {
+    function getName() {
         return _("CreatePage");
     }
 
-    function getDescription () {
-        return _("Create a Wiki page.");
+    function getDescription() {
+        return _("Create a Wiki page by the provided name.");
     }
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
-        return array('s'          => false,
-                     'targetpage' => '[pagename]',
+        return array('s'            => false,
+                     'initial_content' => false,
+                     'template'     => false,
                      //'method'     => 'POST'
                      );
     }
 
-    function run($dbi, $argstr, $request) {
-        $args = $this->getArgs($argstr, $request);
+    function run($dbi, $argstr, $request, $basepage) {
+        extract($this->getArgs($argstr, $request));
+        if (!$s)
+            return '';
 
-        if (empty($args['s'])) // or $request->getArg('action') != 'CreatePage')
-            return HTML($request->redirect(WikiURL($args['targetpage'],'', 'absurl'), true));
-
-        return HTML($request->redirect(WikiURL($args['s'], 'action=edit', 'absurl'), true));
+        $param = array('action' => 'edit');
+        if ($template and $dbi->isWikiPage($template)) {
+            $param['template'] = $template;
+        } elseif ($initial_content) { 
+        // Warning! Potential URI overflow here on the GET redirect. Better use template.
+            $param['initial_content'] = $initial_content;
+        }
+        // If the initial_content is too large, pre-save the content in the page 
+        // and redirect without that argument.
+        // URI length limit:
+        //   http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.2.1
+        $url = WikiURL($s, $param, 'absurl');
+        if (strlen($url) > 255) {
+            unset($param['initial_content']);
+            $url = WikiURL($s, $param, 'absurl');
+            $page = $dbi->getPage($s);
+            $current = $page->getCurrentRevision();
+            if ($current->getVersion()) {
+                return $this->error(fmt("%s already exists",$s));
+            } else {
+                $user = $request->getUser();
+                $meta = array('markup' => 2.0,
+                              'author' => $user->getId());
+                if ($param['template'] and !$initial_content) {
+                    $tmplpage = $dbi->getPage($template);
+                    $currenttmpl = $tmplpage->getCurrentRevision();
+                    $initial_content = $currenttmpl->getPackedContent();
+                    $meta['markup'] = $currenttmpl->_data['markup'];
+                }
+                $meta['summary'] = _("Created by CreatePage");
+                $page->save($initial_content, 1, $meta);
+            }
+        }
+        return HTML($request->redirect($url, true));
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/03/16 16:25:05  dfrankow
+// Support initial_content parameter
+//
+// Revision 1.2  2004/03/09 16:28:45  dfrankow
+// Merge the RATING branch onto the main line
+//
+// Revision 1.1  2004/03/08 18:57:59  rurban
+// Allow WikiForm overrides, such as method => POST, targetpage => [pagename]
+// in the plugin definition.
+// New simple CreatePage plugin by dfrankow.
+//
 // Revision 1.1.2.2  2004/02/23 21:22:29  dfrankow
 // Add a little doc
 //
@@ -72,21 +117,6 @@ extends WikiPlugin
 //
 // Revision 1.1.1.1  2004/01/29 14:30:28  dfrankow
 // Right out of the 1.3.7 package
-//
-// Revision 1.20  2003/11/02 20:42:35  carstenklapp
-// Allow for easy page creation when search returns no matches.
-// Based on cuthbertcat's patch, SF#655090 2002-12-17.
-//
-// Revision 1.19  2003/03/07 02:50:16  dairiki
-// Fixes for new javascript redirect.
-//
-// Revision 1.18  2003/02/21 04:16:51  dairiki
-// Don't NORETURN from redirect.
-//
-// Revision 1.17  2003/01/18 22:08:01  carstenklapp
-// Code cleanup:
-// Reformatting & tabs to spaces;
-// Added copyleft, getVersion, getDescription, rcs_id.
 //
 
 // Local Variables:
