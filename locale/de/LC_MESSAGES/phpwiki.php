@@ -267,9 +267,9 @@ $locale["See %s tips for editing."] =
 $locale["Serialized file %s"] =
    "Seriell-Datei %s";
 $locale["SignIn"] =
-   "Anmelden";
+   "AnMelden";
 $locale["SignOut"] =
-   "Ausmelden";
+   "AbMelden";
 $locale["Simple Sample Plugin"] =
    "Einfaches Zusatzprogramm Beispiel";
 $locale["Skipping"] =
@@ -349,17 +349,17 @@ $locale["You are signed in as %s."] =
 $locale["You are viewing an old revision of this page."] =
    "Du siehst eine alte Revision dieser Seite.";
 $locale["You can change the size of the editing area in %s."] =
-   "Du kannst die Form-größe in %s spezifizieren.";
+   "Du kannst die Größe des Texteingabefensters in %s ändern.";
 $locale["You can log in using any valid WikiWord as a user ID."] =
-   "Du kannst mit jedes gultiges WikiWort als Benutzername anmelden.";
+   "Du kannst mit jedes gultiges WikiWort als Benutzername AnMelden.";
 $locale["You entered an invalid login or password."] =
    "Du hast ein ungültiges Login oder Passwort eingegeben.";
 $locale["You have not made any changes."] =
    "Du hast keine Änderungen gemacht.";
 $locale["You must be logged in as an administrator"] =
-   "Du mußt dich als eine Systemverwalter anmelden";
+   "Du mußt dich als eine Systemverwalter AnMelden";
 $locale["You must set the administrator account and password before you can log in."] =
-   "Du mußt der Systemverwalter-Account mit Passwort zuerst schützen bevor du dich anmelden kannst.";
+   "Du mußt der Systemverwalter-Account mit Passwort zuerst schützen bevor du dich AnMelden kannst.";
 $locale["You must specify a directory to dump to"] =
    "Du mußt ein Sicherungsdateiverzeichnis spezifizieren.";
 $locale["Your careful attention to detail is much appreciated."] =

@@ -85,11 +85,11 @@ msgstr "Du bist als %s angemeldet"
 
 #: ../templates/browse.html:98
 msgid "SignOut"
-msgstr "Ausmelden"
+msgstr "AbMelden"
 
 #: ../templates/browse.html:100 ../templates/editpage.html:73
 msgid "SignIn"
-msgstr "Anmelden"
+msgstr "AnMelden"
 
 #: ../templates/browse.html:117
 msgid "PHP Warnings"
@@ -153,7 +153,7 @@ msgstr "%s wird als Author aufgezeichnet."
 #: ../templates/editpage.html:79
 #, c-format
 msgid "You can change the size of the editing area in %s."
-msgstr "Du kannst die Form-größe in %s spezifizieren."
+msgstr "Du kannst die Größe des Texteingabefensters in %s ändern."
 
 #: ../templates/editpage.html:79
 msgid "UserPreferences"
@@ -473,14 +473,14 @@ msgstr "um daß zu tun"
 
 #: ../lib/WikiUser.php:100
 msgid "You must be logged in as an administrator"
-msgstr "Du mußt dich als eine Systemverwalter anmelden"
+msgstr "Du mußt dich als eine Systemverwalter AnMelden"
 
 #: ../lib/WikiUser.php:180
 msgid ""
 "You must set the administrator account and password before you can log in."
 msgstr ""
 "Du mußt der Systemverwalter-Account mit Passwort zuerst schützen bevor du "
-"dich anmelden kannst."
+"dich AnMelden kannst."
 
 #: ../lib/WikiUser.php:191
 msgid "You entered an invalid login or password."
@@ -488,7 +488,7 @@ msgstr "Du hast ein ungültiges Login oder Passwort eingegeben."
 
 #: ../lib/WikiUser.php:194
 msgid "You can log in using any valid WikiWord as a user ID."
-msgstr "Du kannst mit jedes gultiges WikiWort als Benutzername anmelden."
+msgstr "Du kannst mit jedes gultiges WikiWort als Benutzername AnMelden."
 
 #: ../lib/WikiUser.php:195
 msgid "(Any password will work, except, of course for the admin user.)"
