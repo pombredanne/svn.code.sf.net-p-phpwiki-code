@@ -1,0 +1,79 @@
+
+Phpwiki can be localized and use different languages.
+
+If you would like to use one of supported languages, then
+just go to lib/config.php and set the language to use there.
+
+This README describes how to add support for a new language.
+
+
+Let's assume you would like to support Islandic (code 'is').
+
+Just copy locale/po/phpwiki.pot to locale/po/is.po.
+Then, translate all the strings inside is.po to Islandic.
+See the other *.po files as example if you are uncertain about the
+syntax. Hint: Emacs has a handy po translation mode for you.
+
+
+Most of the work, though, is in translating the pgsrc and template
+files.  Do the following:
+
+    mkdir locale/is
+    cp -rv pgsrc locale/is
+    cp -rv templates locale/is
+
+Note: it is more important to translate the templates than to translate
+the pgsrc/ files. For the pgsrc/ files it is sufficient to change their
+names to Islandic and maybe translate the FrontPage (or how it is
+called in Islandic). Again, for anything you don't know, look at the
+`nl' or `de' versions.
+
+
+After you have finished translating, you may want to check the result
+of your efforts.
+
+First you need to modify locale/translate.sh
+Add Islandic to the variable ALL_LINGUAS like this:
+	ALL_LINGUAS="nl es de is"
+
+Then (from the main directory where index.php resides) run:
+
+    ./locale/translate.sh
+
+which generates all necessary files**.
+If this step fails, because you don't have the necessary software
+installed, then just send your files to one of the phpwiki developers
+and we run translate.sh for you.
+
+
+Next edit ./lib/config.php and change the line that sets $LANG to
+make phpwiki use your language, e.g.  make them look like this:
+
+   //  Select your language - default language "C": English
+   // other languages available: Dutch "nl", Spanish "es", German "de"
+   // $LANG="C";
+   $LANG="is";
+
+Phpwiki should now speak Islandic.
+
+
+If you're unfamiliar with GNU gettext and po files, you may find some
+information at http://www.iro.umontreal.ca/contrib/po/HTML/
+
+If you succeed, you may also want to add instructions to this
+translation README for phpwiki ;-)
+
+Good luck,
+Jan Nieuwenhuizen <janneke@gnu.org>
+Arno Hollosi <ahollosi@mail.com>
+
+
+
+**)translate.sh is a simple script that tries to replace the usual
+   `make po po-update'.  It actually does these things:
+
+   * make the .pot file up to date
+   * merge differences into all translated .po files
+   * generate .mo files
+   * generate legacy php3 translation dictionary [this is the hairiest
+     part and should be dropped when we drop php3 support]
