@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.73 2004-06-16 21:23:44 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.74 2004-07-03 07:36:28 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -20,7 +20,7 @@ class PageEditor
         $this->user = $request->getUser();
         $this->page = $request->getPage();
 
-        $this->current = $this->page->getCurrentRevision();
+        $this->current = $this->page->getCurrentRevision(false);
 
         // HACKish short circuit to browse on action=create
         if ($request->getArg('action') == 'create') {
@@ -41,8 +41,8 @@ class PageEditor
             $this->version = $version;
         }
         else {
-            $this->selected = $this->current;
             $this->version = $this->current->getVersion();
+            $this->selected = $this->page->getRevision($this->version);
         }
 
         if ($this->_restoreState()) {
@@ -762,6 +762,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.73  2004/06/16 21:23:44  rurban
+ fixed non-object fatal #215
+
  Revision 1.72  2004/06/14 11:31:37  rurban
  renamed global $Theme to $WikiTheme (gforge nameclash)
  inherit PageList default options from PageList
