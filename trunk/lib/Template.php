@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.18 2002-01-11 22:51:33 carstenklapp Exp $');
+<?php rcs_id('$Id: Template.php,v 1.19 2002-01-15 21:41:10 carstenklapp Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -332,7 +332,7 @@ extends TemplateFile
             // The next line is also used by xgettext to localise the word
             // "Printer" used in the stylesheet's 'title' (see above).
             if ($key == _("Printer")) {
-                $link['media'] = 'print';
+                $link['media'] = 'print, screen';
             }
 
             if ($key != $CSS_DEFAULT) {
