@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Toolbar.php,v 1.13 2002-01-10 22:33:46 carstenklapp Exp $');
+<?php rcs_id('$Id: Toolbar.php,v 1.14 2002-01-10 23:07:02 carstenklapp Exp $');
 
 //require_once("lib/ErrorManager.php");
 //require_once("lib/WikiPlugin.php");
@@ -337,8 +337,8 @@ function toolbar_User_AuthorSignInOut($userid) {
         $html .= separator() ."<a class=\"wikiaction\" href=\""
             .WikiURL($pagename, array('action' => 'login')) ."\">"
             ._("SignIn") ."</a>";
-        $html .= "<small>*</small><br><small>"
-            ."*backup and reload after signing in</small>";
+        $html .= QElement('small', "*") .QElement('br');
+        $html .= QElement('small', "*backup and reload after signing in");
     }
     return $html;
 }
@@ -391,7 +391,7 @@ function toolbar_Info_ThankYou($pagename, $warnings) {
     $html = "";
     $html .= sprintf(_("Thank you for editing %s."),
                     LinkExistingWikiWord($pagename));
-    $html .= "<br>\n";
+    $html .= QElement('br') ."\n";
     $html .= _("Your careful attention to detail is much appreciated.");
     $html .= "\n";
 
