@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.15 2004-02-22 23:20:32 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.16 2004-03-01 11:42:36 rurban Exp $');
 
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
@@ -592,7 +592,7 @@ extends WikiDB_backend
     /**
      * Find highest or lowest hit counts.
      */
-    function most_popular($limit) {
+    function most_popular($limit=20,$sortby = '') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $order = "DESC";
@@ -600,11 +600,13 @@ extends WikiDB_backend
             $order = "ASC"; 
             $limit = -$limit;
         }
+        if ($sortby) $orderby = 'ORDER BY ' . PageList::sortby($sortby,'db');
+        else         $orderby = "ORDER BY hits $order";
         $limit = $limit ? $limit : 1;
         $result = $dbh->SelectLimit("SELECT $page_tbl.*"
                               . " FROM $nonempty_tbl, $page_tbl"
                               . " WHERE $nonempty_tbl.id=$page_tbl.id"
-                              . " ORDER BY hits $order"
+                              . " $orderby"
                               , $limit);
 
         return new WikiDB_backend_ADODB_iter($this, $result);
@@ -692,7 +694,7 @@ extends WikiDB_backend
         
         $this->lock();
         if ( ($id = $this->_get_pageid($pagename, false)) ) {
-            $dbh->query(sprintf("UPDATE $page_tbl SET pagename='%s' WHERE id=$id",
+            $dbh->query(sprintf("UPDATE $page_tbl SET pagename=%s WHERE id=$id",
                                 $dbh->qstr($to)));
         }
         $this->unlock();
