@@ -1,4 +1,4 @@
-<!-- $Id: transform.php,v 1.3 2000-10-23 16:52:05 ahollosi Exp $ -->
+<!-- $Id: transform.php,v 1.4 2000-10-24 10:32:37 ahollosi Exp $ -->
 <?php
    // expects $pagehash and $html to be set
 
@@ -159,15 +159,21 @@ your web server it is highly advised that you do not allow this.
          // uniq the list of matches
          unset($hash);
          for ($i = 0; $link[0][$i]; $i++) {
-            // $realfile = $link[0][$i];
-            $hash[$link[0][$i]]++;
+	    if(strstr($link[0][$i], '!'))	// hashval sports a value
+	       $hashval = "0000:".$link[0][$i];	// in front that guarantees
+	    else				// correct sorting
+	       $hashval = sprintf("%04d:%s", 9876-strlen($link[0][$i])
+					  , $link[0][$i]);
+            $hash[$hashval] = 1;
          }
 
 	 // all '!WikiName' entries are sorted first
          ksort($hash);
          while (list($realfile, $val) = each($hash)) {
+	    $realfile = substr($realfile, 5);	// get rid of sort value
 	    $token = $FieldSeparator . $FieldSeparator . ++$ntokens . $FieldSeparator;
 	    $tmpline = str_replace($realfile, $token, $tmpline);
+
 	    $tokens[] = $token;
 	    if (strstr($realfile, '!')) {
 	       $replacements[] = substr($realfile, 1);
