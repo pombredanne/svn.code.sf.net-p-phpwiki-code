@@ -1,0 +1,64 @@
+<?php // -*-html-*- ?>
+<!-- $Id: login.tmpl,v 1.1 2002-01-19 07:21:58 dairiki Exp $ -->
+<!-- The login form -->
+
+<?php if ($FAILURE_MESSAGE) { ?>
+  <h2><?=_("Signin Failed")?></h2>
+  <p><?=$FAILURE_MESSAGE?></p>
+  <hr noshade="noshade" />
+<?php } ?>
+
+
+<?php if (ALLOW_BOGO_LOGIN && $REQUIRE == WIKIAUTH_BOGO) { ?>
+  <p>Sign in required.</p>
+<?php } elseif ($REQUIRE >= WIKIAUTH_ADMIN) { ?>
+  <p>Administrative privileges required.</p>
+<?php } elseif ($REQUIRE > WIKIAUTH_ANON) { ?>
+  <p>Login required.</p>
+<?php } ?>
+
+<?php if (ALLOW_BOGO_LOGIN && $REQUIRE <= WIKIAUTH_BOGO) { ?>
+  <p>You may sign in using any WikiWord as a user id. You do not need to enter a password.   Yadda, yadda. (FIXME:)</p>
+<?php } ?>
+
+<form method="post" action="<?=BASE_URL?>" accept-charset="<?=CHARSET?>" name="login">
+
+<table cellspacing="4">
+<tr>
+  <td align="right">UserId:</td>
+  <td><input type="text" name="login[userid]" size="12" value="<?=$DEFAULT_USERID?>" /></td>
+</tr>
+<tr>
+  <td align="right">Password:</td>
+  <td><input type="password" name="login[password]" size="12" /></td>
+</tr>
+<tr><td align="center" colspan="2">
+  <input type="submit" name="login[submit]" value=" <?=_("Sign In")?> " />
+  <?php if (!$REQUIRE) { ?>
+    <input type="submit" name="login[cancel]" value=" <?=_("Cancel")?> " />
+  <?php } ?>
+</td></tr>
+</table>
+
+<input type="hidden" name="login[require_level]" value="<?=$REQUIRE?>" />
+<input type="hidden" name="login[login]" value="1" />
+<?php foreach ($query_args as $key => $val) { ?>
+<input type="hidden" name="<?=htmlspecialchars($key)?>" value="<?=htmlspecialchars($val)?>" />
+<?php } ?>
+</form>
+
+<script language="JavaScript" type="text/javascript">
+<!-- // Really there's got to be a simpler way to do this....
+function select_input (type) {
+    var elements = document.forms['login'].elements;
+    for (var i = 0; i < elements.length; i++) {
+        if (elements[i].type == type) {
+            elements[i].select();
+            return;
+        }
+    }
+}
+select_input('<?= $DEFAULT_USERID ? "password" : "text" ?>');
+//-->
+</script>
+

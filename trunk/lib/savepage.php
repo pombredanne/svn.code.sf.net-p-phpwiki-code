@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.28 2002-01-17 20:41:13 dairiki Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.29 2002-01-19 07:21:58 dairiki Exp $');
 require_once('lib/Template.php');
 require_once('lib/transform.php');
 require_once('lib/ArchiveCleaner.php');
@@ -73,7 +73,7 @@ function savePage ($dbi, $request) {
     if ($request->get('REQUEST_METHOD') != 'POST')
         BadFormVars($request->getArg('pagename'));
     
-    if ($request->getArg('preview')) {
+    if ($request->getArg('preview') || !$request->getArg('save')) {
         include_once('lib/editpage.php');
         return editPage($dbi, $request, 'do_preview');
     }
@@ -90,11 +90,11 @@ function savePage ($dbi, $request) {
     if ( $content === false || $editversion === false )
         BadFormVars($pagename); // noreturn
 
-    if ($page->get('locked') && !$user->is_admin())
+    if ($page->get('locked') && !$user->isAdmin())
         PageIsLocked($args->pagename); // noreturn.
 
-    $meta['author'] = $user->id();
-    $meta['author_id'] = $user->authenticated_id();
+    $meta['author'] = $user->getId();
+    $meta['author_id'] = $user->getAuthenticatedId();
     $meta['is_minor_edit'] = (bool) $request->getArg('minor_edit');
     $meta['summary'] = trim($request->getArg('summary'));
 

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiUser.php,v 1.9 2002-01-10 23:16:00 rurban Exp $');
+<?php rcs_id('$Id: WikiUser.php,v 1.10 2002-01-19 07:21:58 dairiki Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -8,99 +8,187 @@
 // HTTP authentication.
 // So we'll hack around this by storing the currently logged
 // in username and other state information in a cookie.
+
+define('WIKIAUTH_ANON', 0);
+define('WIKIAUTH_BOGO', 1);
+define('WIKIAUTH_USER', 2);     // currently unused.
+define('WIKIAUTH_ADMIN', 10);
+
 class WikiUser 
 {
-    // Arg $login_mode:
-    //   default:  Anonymous users okay.
-    //   'ANON_OK': Anonymous access is fine.
-    //   'REQUIRE_AUTH': User must be authenticated.
-    //   'LOGOUT':  Force logout.
-    //   'LOGIN':   Force authenticated login.
-    function WikiUser (&$request, $auth_mode = '') {
+    var $_userid = false;
+    var $_level  = false;
+
+    /**
+     * Constructor.
+     */
+    function WikiUser (&$request) {
         $this->_request = &$request;
-        // Restore from cookie.
+
+        // Restore from session state.
         $this->_restore();
 
-        // don't check for HTTP auth if there's nothing to worry about
-        //
-        // FIXME: the addition of this short-cut introduced a security hole.
-        //        Since $this->_restore can potentially restore $this from a
-        //        user provided cookie, a carefully constructed cookie can
-        //        be used to effectively log in (even as admin) without
-        //        a password.
-        //
-        //        For now, I'm disabling the code which saves/restores $this
-        //        in a cookie.  (Login state is still preserved in session vars.)
-        //        I'll work on a longer term solution.
-        
-        if (  $this->state == 'authorized' 
-              && $auth_mode != 'LOGIN' 
-              && $auth_mode != 'LOGOUT'  )
-            return;   
-
-        if ($this->state == 'authorized' && $auth_mode == 'LOGIN') {
-            // ...logout
-            $this->realm++;
-            $this->state = 'loggedout';
+        $login_args = $request->getArg('login');
+        if ($login_args) {
+            $request->setArg('login', false);
+            if ($request->get('REQUEST_METHOD') == 'POST')
+                $this->_handleLoginPost($login_args);
         }
-      
-        if ($auth_mode != 'LOGOUT') {
-            $user = $this->_get_authenticated_userid();
-
-            if (!$user && $auth_mode != 'ANON_OK')
-                $warning = $this->_demand_http_authentication(); //NORETURN
-        }
-        
-        if (empty($user)) {
-            // Authentication failed
-            if ($this->state == 'authorized')
-                $this->realm++;
-            $this->state = 'loggedout';
-            $this->userid = $request->get('REMOTE_HOST');
-        }
-        else {
-            // Successful authentication
-            $this->state = 'authorized';
-            $this->userid = $user;
-        }
-
-        // Save state to cookie and/or session registry.
-        $this->_save($request);
-
-        if (isset($warning))
-            echo $warning;
     }
 
-    function id () {
-        return $this->userid;
-    }
+    function _handleLoginPost ($postargs) {
+        if (!is_array($postargs))
+            return;
 
-    function authenticated_id() {
-        if ($this->is_authenticated())
-            return $this->id();
+        $keys = array('userid', 'password', 'require_level', 'login', 'logout', 'cancel');
+        foreach ($keys as $key) 
+            $args[$key] = isset($postargs[$key]) ? $postargs[$key] : false;
+        extract($args);
+        $require_level = max(0, min(WIKIAUTH_ADMIN, (int) $require_level));
+
+        if ($logout) {
+            // logout button
+            $this->logout();
+            return;
+        }
+        if ($cancel)
+            return;             // user hit cancel button.
+        if (!$login && !$userid)
+            return;
+        
+        if ($this->attemptLogin($userid, $password, $require_level))
+            return;             // login succeeded
+
+        if ($this->_pwcheck($userid, $password))
+            $failmsg = _("Insufficient permissions.");
+        elseif ($password !== false)
+            $failmsg = _("Invalid password or userid.");
         else
-            return $this->_request->get('REMOTE_ADDR');
+            $failmsg = '';
+
+        $this->showLoginForm($require_level, $userid, $failmsg);
+    }
+        
+    /**
+     */
+    function requireAuth ($require_level) {
+        if ($require_level > $this->_level)
+            $this->showLoginForm($require_level);
+    }
+    
+    function showLoginForm ($require_level = 0, $default_user = false, $fail_message = '') {
+
+        include_once('lib/Template.php');
+        
+        $login = new WikiTemplate('login');
+
+        $login->qreplace('REQUIRE', $require_level);
+        
+        if (!empty($default_user))
+            $login->qreplace('DEFAULT_USERID', $default_user);
+        elseif (!empty($this->_failed_userid))
+            $login->qreplace('DEFAULT_USERID', $this->_failed_userid);
+
+        if ($fail_message)
+            $login->qreplace('FAILURE_MESSAGE', $fail_message);
+
+        // FIXME: Need message: You must sign/log in before you can '%s' '%s'.
+        $top = new WikiTemplate('top');
+        $top->replace('TITLE', _("Sign In"));
+        $top->replace('HEADER', _("Please Sign In"));
+
+        $top->printExpansion($login);
+        ExitWiki();
+    }
+      
+    /**
+     * Logout the current user (if any).
+     */
+    function logout () {
+        $this->_level = false;
+        $this->_userid = false;
+        $this->_save();
     }
 
-    function is_authenticated () {
-        return $this->state == 'authorized';
+    /**
+     * Attempt to log in.
+     *
+     * @param $userid string Username.
+     * @param $password string Password.
+     * @return bool True iff log in was successful.
+     */
+    function attemptLogin ($userid, $password = false, $require_level = 0) {
+        $level = $this->_pwcheck ($userid, $password);
+        if ($level === false) {
+            // bad password
+            return false;
+        }
+        if ($level < $require_level) {
+            // insufficient access
+            return false;
+        }
+        
+        // Success!
+        $this->_login($userid, $level);
+        return $this->isSignedIn();
+    }
+
+        
+            
+    function getId () {
+        return ( $this->isSignedIn()
+                 ? $this->_userid
+                 : $this->_request->get('REMOTE_ADDR') ); 
+    }
+
+    function getAuthenticatedId() {
+        return ( $this->isAuthenticated()
+                 ? $this->_userid
+                 : $this->_request->get('REMOTE_ADDR') ); 
+    }
+
+    function isSignedIn () {
+        return $this->_level >= WIKIAUTH_BOGO;
+    }
+        
+    function isAuthenticated () {
+        return $this->_level >= WIKIAUTH_USER;
     }
 	 
-    function is_admin () {
-        return $this->is_authenticated() && $this->userid == ADMIN_USER;
+    function isAdmin () {
+        return $this->_level == WIKIAUTH_ADMIN;
     }
 
-    function must_be_admin ($action = "") {
-        if (! $this->is_admin()) 
-            {
-                if ($action)
-                    $to_what = sprintf(_("to perform action '%s'"), $action);
-                else
-                    $to_what = gettext("to do that");
-                ExitWiki(sprintf(_("You must be logged in as an administrator %s"),
-                         $to_what));
-            }
+    /**
+     * Login with given access level
+     *
+     * No check for correct password is done.
+     */
+    function _login ($userid, $level = WIKIAUTH_BOGO) {
+        $this->_userid = $userid;
+        $this->_level = $level;
+        $this->_save();
     }
+
+    /**
+     * Check password.
+     */
+    function _pwcheck ($userid, $passwd) {
+        global $WikiNameRegexp;
+        
+        if (!empty($userid) && $userid == ADMIN_USER) {
+            if (!empty($passwd) && $passwd == ADMIN_PASSWD)
+                return WIKIAUTH_ADMIN;
+            return false;
+        }
+        elseif (ALLOW_BOGO_LOGIN
+                && preg_match('/\A' . $WikiNameRegexp . '\z/', $userid)) {
+            return WIKIAUTH_BOGO;
+        }
+        return false;
+    }
+    
+
 
     // This is a bit of a hack:
     function setPreferences ($prefs) {
@@ -131,109 +219,57 @@ class WikiUser
         return $prefs;
     }
    
-    function _get_authenticated_userid () {
-        if ( ! ($user = $this->_get_http_authenticated_userid()) )
-            return false;
-       
-        switch ($this->state) {
-        case 'login':
-            // Either we just asked for a password, or cookies are not enabled.
-            // In either case, proceed with successful login.
-            return $user;
-        case 'loggedout':
-            // We're logged out.  Ignore http authed user.
-            return false;
-        default:
-            // FIXME: Can't reset auth cache on Mozilla (and probably others),
-            // so for now, just trust the saved state
-            return $this->userid;
-          
-            // Else, as long as the user hasn't changed, fine.
-            if ($user && $user != $this->userid)
-                return false;
-            return $user;
-        }
-    }
 
-    function _get_http_authenticated_userid () {
-        global $WikiNameRegexp;
-
-        $userid = $this->_request->get('PHP_AUTH_USER');
-        $passwd = $this->_request->get('PHP_AUTH_PW');
-
-        if (!empty($userid) && $userid == ADMIN_USER) {
-            if (!empty($passwd) && $passwd == ADMIN_PASSWD)
-                return $userid;
-        }
-        elseif (ALLOW_BOGO_LOGIN
-                && preg_match('/\A' . $WikiNameRegexp . '\z/', $userid)) {
-            // FIXME: this shouldn't count as authenticated.
-            return $userid;
-        }
-        return false;
-    }
-   
-    function _demand_http_authentication () {
-        if (!defined('ADMIN_USER') || !defined('ADMIN_PASSWD')
-            || ADMIN_USER == '' || ADMIN_PASSWD =='') {
-            echo '<html><body>';
-            ExitWiki(_("You must set the administrator account and password before you can log in."));
-        }
-
-        // Request password
-        $this->userid = '';
-        $this->state = 'login';
-      
-        $this->_save();
-        $request = &$this->_request;
-        header('WWW-Authenticate: Basic realm="' . $this->realm . '"');
-        $request->setStatus("HTTP/1.0 401 Unauthorized");
-        echo "<p>" . _("You entered an invalid login or password.") . "\n";
-        if (ALLOW_BOGO_LOGIN) {
-            echo "<p>";
-            echo _("You can log in using any valid WikiWord as a user ID.") . "\n";
-            echo _("(Any password will work, except, of course for the admin user.)") . "\n";
-        }
-      
-        ExitWiki();
-    }
 
     function _copy($saved) {
-        if (!is_array($saved) || !isset($saved['state']) || !isset($saved['realm']))
+        if (!is_array($saved) || !isset($saved['userid']) || !isset($saved['level']))
             return false;
 
-        $this->userid = $saved['userid'];
-        $this->state = $saved['state'];
-        $this->realm = $saved['realm'];
+        $this->_userid = $saved['userid'];
+        $this->_level = $saved['level'];
         return true;
     }
        
-    function _restore() {
+    function _restore () {
         $req = &$this->_request;
         
         if ( $this->_copy($req->getSessionVar('auth_state')) )
             return;
-        // FIXME: Disable restore from cookie (see note in WikiUser().)
-        //elseif ( $this->_copy($req->getCookieVar('WIKI_AUTH')) )
-        //    return;
-        else {
-            // Default state.
-            $this->userid = '';
-            $this->state = 'login';
-            $this->realm = WIKI_NAME . '0000';
-        }
+        if ( $this->_ok() )
+            return;
+        
+        // Default state: logged out.
+        $this->_userid = false;
+        $this->_level = false;
     }
 
-    function _save() {
+    function _save () {
         $req = &$this->_request;
 
-        $saved = array('userid' => $this->userid,
-                       'state' => $this->state,
-                       'realm' => $this->realm);
+        
+        $saved = array('userid' => $this->_userid,
+                       'level' => $this->_level);
         
         $req->setSessionVar('auth_state', $saved);
-        // FIXME: Disable restore from cookie (see note in WikiUser().)
-        //$req->setCookieVar('WIKI_AUTH', $saved);
+    }
+
+    /** Invariant
+     */
+    function _ok () {
+        if (empty($this->_userid) || empty($this->_level)) {
+            // This is okay if truly logged out.
+            return $this->_userid === false && $this->_level === false;
+        }
+        // User is logged in...
+        
+        // Check for valid authlevel.
+        if (!in_array($this->_level, array(WIKIAUTH_BOGO, WIKIAUTH_USER, WIKIAUTH_ADMIN)))
+            return false;
+
+        // Check for valid userid.
+        if (!is_string($this->_userid))
+            return false;
+        return true;
     }
 }
 

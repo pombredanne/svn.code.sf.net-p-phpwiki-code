@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.24 2002-01-17 20:41:13 dairiki Exp $');
+rcs_id('$Id: editpage.php,v 1.25 2002-01-19 07:21:58 dairiki Exp $');
 
 require_once('lib/transform.php');
 require_once('lib/Template.php');
@@ -27,7 +27,7 @@ function editPage($dbi, $request, $do_preview = false) {
     $wrapper = new WikiTemplate('top');
     $wrapper->setPageRevisionTokens($selected);
 
-    if ($page->get('locked') && !$user->is_admin()) {
+    if ($page->get('locked') && !$user->isAdmin()) {
         $wrapper->qreplace('TITLE', sprintf(_("Page source for %s"), $pagename));
         $wrapper->replace('HEADER', sprintf(_("View Source: %s"), $pagelink));
         $template = new WikiTemplate('viewsource');
@@ -51,7 +51,7 @@ function editPage($dbi, $request, $do_preview = false) {
     }
     else {
         $age = time() - $current->get('mtime');
-        $minor_edit = ( $age < MINOR_EDIT_TIMEOUT && $current->get('author') == $user->id() );
+        $minor_edit = ( $age < MINOR_EDIT_TIMEOUT && $current->get('author') == $user->getId() );
 
         $formvars = array('content'     => htmlspecialchars($selected->getPackedContent()),
                           'minor_edit'  => $minor_edit,

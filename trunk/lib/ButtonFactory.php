@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ButtonFactory.php,v 1.5 2002-01-18 01:25:32 dairiki Exp $');
+<?php rcs_id('$Id: ButtonFactory.php,v 1.6 2002-01-19 07:21:58 dairiki Exp $');
 
 /**
  * A class representing a clickable "button".
@@ -108,7 +108,7 @@ class ButtonFactory {
 
         if (is_array($action)) {
             $attr = $action;
-            $action = $attr['action'];
+            $action = isset($attr['action']) ? $attr['action'] : 'browse';
         }
         else
             $attr['action'] = $action;

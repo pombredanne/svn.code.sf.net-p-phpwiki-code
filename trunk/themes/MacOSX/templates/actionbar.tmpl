@@ -1,9 +1,9 @@
 <?php // -*-html-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.3 2002-01-19 00:04:50 carstenklapp Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.4 2002-01-19 07:21:58 dairiki Exp $ -->
 <?php
   $BF = &$ButtonFactory;
 
-  if (!$page->get('locked') || $user->is_admin())
+  if (!$page->get('locked') || $user->isAdmin())
       $EditB = $BF->makeActionButton("edit",
                                      $IS_CURRENT ? _("Edit") : _("Edit Old Revision"));
   else
@@ -18,7 +18,7 @@
 
   $DebugInfoB = $BF->makeActionPageButton(_("DebugInfo"));
 
-  $SignInB = $BF->makeActionButton($user->is_authenticated() ? 'logout' : 'login');
+  $SignInB = $BF->makeActionButton($user->isSignedIn() ? 'logout' : 'login');
 
   $s = $Theme->getButtonSeparator();
 ?>
@@ -35,7 +35,7 @@
 <tr valign="middle">
   <td>
     <?= $EditB ?> 
-    <?php if ($user->is_admin()) { ?>
+    <?php if ($user->isAdmin()) { ?>
      <?=$s?><?= $LockPageB ?><?=$s?><?= $RemovePageB ?>
     <?php } ?>
    <?=$s?><?= $PageHistoryB ?><?=$s?><?= $DiffB ?> 
@@ -43,7 +43,7 @@
   </td>
 
   <td align="right">
-    <?php if ($user->is_authenticated()) {
+    <?php if ($user->isSignedIn()) {
       /* This extra table data is required to properly align an image
        * button next to text. With text-only buttons, it would take up
        * too much room on small screens to align text this way, so the

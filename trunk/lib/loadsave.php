@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.26 2002-01-18 05:18:24 carstenklapp Exp $');
+rcs_id('$Id: loadsave.php,v 1.27 2002-01-19 07:21:58 dairiki Exp $');
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
 
@@ -446,8 +446,8 @@ function SetupWiki ($dbi)
 {
     global $GenericPages, $LANG, $user;
     
-    //FIXME: This is a hack
-    $user->userid = _("The PhpWiki programming team");
+    //FIXME: This is a hack (and now broken)
+    //$user->userid = _("The PhpWiki programming team");a
     
     StartLoadDump(_("Loading up virgin wiki"));
     echo "<dl>\n";
