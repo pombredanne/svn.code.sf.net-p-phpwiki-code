@@ -1,3 +1,12 @@
+Date: Sun, 27 Jan 2002 17:28:55 -0500
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
+X-Rcs-Id: $Id: WikiWikiWeb,v 1.5 2002-01-27 23:48:42 carstenklapp Exp $
+Content-Type: application/x-phpwiki;
+  pagename=WikiWikiWeb;
+  flags="";
+  charset=iso-8859-1
+Content-Transfer-Encoding: binary
+
 Un WikiWIkiWeb è un sito dove qualsiasi persona può collaborare sul
 contenuto. Il più usato e conosciuto Wiki è quello del Portland
 Pattern Repository che è possibile visitare su http://c2.com/cgi-bin/wiki?WikiWikiWeb.
