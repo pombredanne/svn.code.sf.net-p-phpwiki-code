@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.83 2005-01-18 10:11:29 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.84 2005-01-18 20:55:47 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -617,7 +617,7 @@ extends WikiDB_backend
                 $sql = "SELECT "
                     . $this->page_tbl_fields 
                     ." FROM $page_tbl"
-                    . $exclude ? " WHERE $exclude" : ''
+                    . ($exclude ? " WHERE $exclude" : '')
                     . $orderby;
             }
             else {
@@ -1204,8 +1204,9 @@ extends WikiDB_backend_search
             if (preg_match("/mysql/i", $this->_dbh->phptype))
                 return "pagename REGEXP '$word'";
         } else {
-            return $this->_case_exact ? "pagename LIKE '$word'" 
-                                      : "LOWER(pagename) LIKE '$word'";
+            return ($this->_case_exact 
+                    ? "pagename LIKE '$word'" 
+                    : "LOWER(pagename) LIKE '$word'");
         }
     }
     function _fulltext_match_clause($node) { 
@@ -1218,6 +1219,9 @@ extends WikiDB_backend_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.83  2005/01/18 10:11:29  rurban
+// Oops. Again thanks to Charles Corrigan
+//
 // Revision 1.82  2005/01/18 08:55:51  rurban
 // fix quoting
 //

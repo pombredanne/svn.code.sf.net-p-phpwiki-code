@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_mysql.php,v 1.11 2004-12-22 18:33:31 rurban Exp $');
+rcs_id('$Id: ADODB_mysql.php,v 1.12 2005-01-18 20:55:46 rurban Exp $');
 
 require_once('lib/WikiDB/backend/ADODB.php');
 
@@ -54,9 +54,10 @@ extends WikiDB_backend_ADODB
 	    if ($row["db"] == $this->_dsn['database']
 	        and $row["User"] == $this->_dsn['username']
 	        and $row["Time"] > $this->_dbparams['timeout']
-	        and $row["Command"] == "Sleep") {
-	            $process_id = $row["Id"]; 
-	            mysql_query("KILL $process_id");
+	        and $row["Command"] == "Sleep")
+            {
+                $process_id = $row["Id"]; 
+                mysql_query("KILL $process_id");
 	    }
 	}
     }
@@ -131,8 +132,8 @@ extends WikiDB_backend_ADODB
         $dbh->Execute(sprintf("UPDATE LOW_PRIORITY %s SET hits=hits+1 WHERE pagename=%s %s",
                               $this->_table_names['page_tbl'],
                               $dbh->qstr($pagename),
-                              ($this->_serverinfo['version'] >= 323.0) ? "LIMIT 1": ""
-                              ));
+                              ($this->_serverinfo['version'] >= 323.0) ? "LIMIT 1": "")
+                              );
         return;
     }
 
