@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.24 2002-01-08 00:31:24 dairiki Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.25 2002-01-08 06:46:58 carstenklapp Exp $');
 require_once('lib/Template.php');
 require_once('lib/transform.php');
 require_once('lib/ArchiveCleaner.php');
@@ -23,12 +23,13 @@ require_once('lib/ArchiveCleaner.php');
 // from these error pages.
 
 function ConcurrentUpdates($pagename) {
-   /* xgettext only knows about c/c++ line-continuation strings
+   /*
+     xgettext only knows about c/c++ line-continuation strings
      it does not know about php's dot operator.
      We want to translate this entire paragraph as one string, of course.
    */
     $html = "<p>";
-    $html .= "<h1>" .sprintf (_("Problem while updating %s"), $pagename) ."</h1>";
+    $html = QElement('h1', __sprintf("Problem while updating %s", $pagename));
     $html .= _("PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost.");
     $html .= "</p>\n<p>";
     $html .= _("In order to recover from this situation follow these steps:");
@@ -50,21 +51,26 @@ function ConcurrentUpdates($pagename) {
 
 function PageIsLocked($pagename) {
     $html = QElement('p',
-                     _("This page has been locked by the administrator and cannot be edited."));
+                     _("This page has been locked by the administrator so your changes could not be saved."));
+    $html .= '<p>' ._("Use your browser's <b>Back</b> button to go back to the edit page.");
+    $html .= _("Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor.");
+    $html .= '</p>';
     $html .= QElement('p',
                       _("Sorry for the inconvenience."));
-
+    
     echo GeneratePage('MESSAGE', $html,
                       sprintf (_("Problem while editing %s"), $pagename));
     ExitWiki ("");
 }
 
 function NoChangesMade($pagename) {
-    $html = QElement('p', _("You have not made any changes."));
+    $html = "<p>";
+    $html .= QElement('h1', __sprintf("Edit aborted: %s.", $pagename));
+    
+    $html .= QElement('p', _("You have not made any changes."));
     $html .= QElement('p', _("New version not saved."));
-    echo GeneratePage('MESSAGE', $html,
-                      sprintf(_("Edit aborted: %s"), $pagename));
-    ExitWiki ("");
+    
+    return $html;
 }
 
 function BadFormVars($pagename) {
@@ -74,14 +80,14 @@ function BadFormVars($pagename) {
                       sprintf(_("Edit aborted: %s"), $pagename));
     ExitWiki ("");
 }
-    
+
 function savePreview($dbi, $request) {
     $pagename = $request->getArg('pagename');
     $version = $request->getArg('version');
-
+    
     $page = $dbi->getPage($pagename);
     $selected = $page->getRevision($version);
-
+    
     // FIXME: sanity checking about posted variables
     // FIXME: check for simultaneous edits.
     foreach (array('minor_edit', 'convert') as $key)
@@ -89,23 +95,23 @@ function savePreview($dbi, $request) {
     foreach (array('content', 'editversion', 'summary', 'pagename',
                    'version') as $key)
         @$formvars[$key] = htmlspecialchars($request->getArg($key));
-
+    
     $template = new WikiTemplate('EDITPAGE');
     $template->setPageRevisionTokens($selected);
     $template->replace('FORMVARS', $formvars);
-
+    
     $PREVIEW_CONTENT= do_transform($request->getArg('content'));
     $template->replace('PREVIEW_CONTENT',$PREVIEW_CONTENT);
     $template->replace('EDIT_WARNINGS',
                        toolbar_Warnings_Edit(!empty($PREVIEW_CONTENT),
                                              $version == $request->getArg('editversion')));
-
+    
     echo $template->getExpansion();
 }
 
 function savePage ($dbi, $request) {
     global $user;
-
+    
     // FIXME: fail if this check fails?
     assert($request->get('REQUEST_METHOD') == 'POST');
     
@@ -114,10 +120,10 @@ function savePage ($dbi, $request) {
     
     $pagename = $request->getArg('pagename');
     $version = $request->getArg('version');
-
+    
     $page = $dbi->getPage($pagename);
     $current = $page->getCurrentRevision();
-
+    
     $content = $request->getArg('content');
     $editversion = $request->getArg('editversion');
     
@@ -137,55 +143,66 @@ function savePage ($dbi, $request) {
         $content = CookSpaces($content);
 
     if ($content == $current->getPackedContent()) {
-        NoChangesMade($pagename); // noreturn
-    }
-
-    ////////////////////////////////////////////////////////////////
-    //
-    // From here on, we're actually saving.
-    //
-    $newrevision = $page->createRevision($editversion + 1,
-                                         $content, $meta,
-                                         ExtractWikiPageLinks($content));
-
-    $template = new WikiTemplate('BROWSE');
-    $template->replace('TITLE', $pagename);
-
-    if (is_object($newrevision)) {
-        // New contents successfully saved...
-
-        // Clean out archived versions of this page.
-        $cleaner = new ArchiveCleaner($GLOBALS['ExpireParams']);
-        $cleaner->cleanPageRevisions($page);
-        
-        $warnings = $dbi->GenericWarnings();
-        global $SignatureImg;
-        if (empty($warnings)) {
-            if (empty($SignatureImg)){
-                // Do redirect to browse page if no signature has been defined.
-                // In this case, the user will most likely not see the rest of
-                // the HTML we generate (below).
-                $request->redirect(WikiURL($pagename, false, 'absolute_url'));
-            }
-        }
-        
-        $template->replace('THANK_YOU',
-                           toolbar_Info_ThankYou($pagename, $warnings));
-    } else {
         // Save failed.
         // (This is a bit kludgy...)
-        $template->replace('THANK_YOU',
-                           ConcurrentUpdates($pagename)
-                           . "<hr noshade=\"noshade\" />");
+        $template = new WikiTemplate('BROWSE');
+        $template->replace('TITLE', $pagename);
+        $template->replace('EDIT_FAIL_MESSAGES',
+                           NoChangesMade($pagename)
+                           . QElement('hr', array('noshade' => 'noshade')));
         $newrevision = $current;
-    }
+    } else {
 
+        ////////////////////////////////////////////////////////////////
+        //
+        // From here on, we're actually saving.
+        //
+        $newrevision = $page->createRevision($editversion + 1,
+                                             $content, $meta,
+                                             ExtractWikiPageLinks($content));
+        
+        $template = new WikiTemplate('BROWSE');
+        $template->replace('TITLE', $pagename);
+        
+        if (is_object($newrevision)) {
+            // New contents successfully saved...
+            
+            // Clean out archived versions of this page.
+            $cleaner = new ArchiveCleaner($GLOBALS['ExpireParams']);
+            $cleaner->cleanPageRevisions($page);
+            
+            $warnings = $dbi->GenericWarnings();
+            global $SignatureImg;
+            if (empty($warnings)) {
+                if (empty($SignatureImg)){
+                    // Do redirect to browse page if no signature has
+                    // been defined.  In this case, the user will most
+                    // likely not see the rest of the HTML we generate
+                    // (below).
+                    $request->redirect(WikiURL($pagename, false,
+                                               'absolute_url'));
+                }
+            }
+            
+            $template->replace('THANK_YOU',
+                               toolbar_Info_ThankYou($pagename, $warnings));
+        } else {
+            // Save failed.
+            // (This is a bit kludgy...)
+            $template->replace('EDIT_FAIL_MESSAGES',
+                               ConcurrentUpdates($pagename)
+                               . QElement('hr',
+                                          array('noshade' => 'noshade')));
+            $newrevision = $current;
+        }
+    }
+    
     $template->setPageRevisionTokens($newrevision);
     $template->replace('CONTENT', do_transform($newrevision->getContent()));
     echo $template->getExpansion();
 }
 
-    
+
 // Local Variables:
 // mode: php
 // tab-width: 8
