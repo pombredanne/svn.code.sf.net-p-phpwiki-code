@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.39 2002-02-10 21:42:36 carstenklapp Exp $
+ * $Id: phpwiki.css,v 1.40 2002-02-10 21:46:50 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up. It has not yet been tested against NS4.
@@ -40,6 +40,7 @@ caption {
      Mac ie5.1 ignores this*/
   width: 100%;
 }
+
 
 /**
  * Wiki
@@ -324,6 +325,7 @@ table.cal td.cal-today a.cal-hide {
 /**
  * Other
  */
+.printer { display: none; }
 
 /* PHP Warnings */
 div.errors {
