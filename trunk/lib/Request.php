@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.32 2003-02-26 02:55:53 dairiki Exp $');
+<?php rcs_id('$Id: Request.php,v 1.33 2003-03-04 01:54:17 dairiki Exp $');
 // FIXME: write log entry.
 
 
@@ -308,8 +308,10 @@ class Request {
     }
     
     function finish() {
-        if (!empty($this->_is_buffering_output))
+        if (!empty($this->_is_buffering_output)) {
+            header(sprintf("Content-Length: %d", ob_get_length()));
             ob_end_flush();
+        }
         exit;
     }
 
