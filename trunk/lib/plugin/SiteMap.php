@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SiteMap.php,v 1.1 2002-08-25 11:39:39 rurban Exp $');
+rcs_id('$Id: SiteMap.php,v 1.2 2002-09-04 16:04:41 rurban Exp $');
 /**
 http://sourceforge.net/tracker/?func=detail&aid=537380&group_id=6121&atid=306121
 
@@ -41,10 +41,13 @@ extends WikiPlugin
 
     function recursivelyGetLinks($startpage, $pagearr, 
                                  $level = '*', $reclimit = '***') {
+        static $VisitedPages = array();
+
         $startpagename = $startpage->getName();
 // echo "<br> recursivelyGetLinks( " . $startpagename . " , " . $level . " )\n";
         if ($level == $reclimit) return $pagearr;
-
+        if (in_array($startpagename,$VisitedPages)) return $pagearr;
+        array_push($VisitedPages,$startpagename);
         $pagelinks = $startpage->getLinks();
         while ($link = $pagelinks->next()) {
             $linkpagename = $link->getName();
