@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.54 2002-02-12 23:21:02 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.55 2002-02-14 03:32:08 carstenklapp Exp $');
 
 
 include "lib/config.php";
@@ -7,6 +7,8 @@ include "lib/stdlib.php";
 require_once('lib/Request.php');
 require_once("lib/WikiUser.php");
 require_once('lib/WikiDB.php');
+
+define ('DEBUG', 1);
 
 // FIXME: move to config?
 if (defined('THEME')) {
@@ -564,7 +566,6 @@ function getmicrotime(){
     list($usec, $sec) = explode(" ", microtime());
     return ((float)$usec + (float)$sec);
 }
-define ('DEBUG', 1);
 if (defined ('DEBUG')) $GLOBALS['debugclock'] = getmicrotime();
 
 main();
