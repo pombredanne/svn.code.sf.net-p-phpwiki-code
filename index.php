@@ -66,14 +66,14 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 // processing timer, and possibly other debugging messages at the
 // bottom of each page.
 if (!defined('DEBUG')) define ('DEBUG', 0);
-define('ENABLE_USER_NEW',true);
+define('ENABLE_USER_NEW',true); // this will disappear with 1.4.0
 
 /////////////////////////////////////////////////////////////////////
 // Part Null: Don't touch this!
 
-define ('PHPWIKI_VERSION', '1.3.8pre');
+define ('PHPWIKI_VERSION', '1.3.8');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.124 2004-02-16 00:20:30 rurban Exp $');
+rcs_id('$Id: index.php,v 1.125 2004-02-24 02:51:57 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -605,6 +605,10 @@ if (!defined('ALLOW_USER_LOGIN')) define('ALLOW_USER_LOGIN', false);
 //if (!defined('ALLOW_LDAP_LOGIN')) define('ALLOW_LDAP_LOGIN', true and function_exists('ldap_connect'));
 //if (!defined('ALLOW_IMAP_LOGIN')) define('ALLOW_IMAP_LOGIN', true and function_exists('imap_open'));
 
+// A interim page which gets displayed on every edit attempt
+//if (!defined('EDITING_POLICY')) define('EDITING_POLICY', "EditingPolicy");
+
+
 /////////////////////////////////////////////////////////////////////
 //
 // Part Four:
@@ -910,6 +914,9 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 include "lib/main.php";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.124  2004/02/16 00:20:30  rurban
+// new Japanses language
+//
 // Revision 1.123  2004/02/09 03:58:07  rurban
 // for now default DB_SESSION to false
 // PagePerm:
