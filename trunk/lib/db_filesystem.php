@@ -1,4 +1,4 @@
-<?php  rcs_id('$Id: db_filesystem.php,v 1.3 2001-01-01 23:13:32 ahollosi Exp $');
+<?php  rcs_id('$Id: db_filesystem.php,v 1.4 2001-01-01 23:18:46 ahollosi Exp $');
    /*
       Database functions:
 
@@ -66,7 +66,7 @@
       global $WikiPageStore;
       $pagedata = serialize($pagehash);
 
-      if (!is_dir($dbi)) {
+      if (!file_exists($dbi)) {
 	     $d = split("/", $dbi);
 		 $dt = "";
 		 while(list($key, $val) = each($d)) {
@@ -109,7 +109,7 @@
 
 
    function IsInArchive($dbi, $pagename) {
-      return is_file($dbi['archive'] . "/" . $pagename);
+      return file_exists($dbi['archive'] . "/" . $pagename);
    }
 
 
