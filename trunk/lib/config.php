@@ -6,7 +6,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.18 2000-12-30 21:09:13 ahollosi Exp $');
+   rcs_id('$Id: config.php,v 1.19 2001-01-04 18:32:43 ahollosi Exp $');
    // end essential internal stuff
 
 
@@ -216,10 +216,10 @@
                             : ($remoteuser = getenv('REMOTE_ADDR'));
    }
 
-   // constants used for HTML output. List tags like UL and 
-   // OL have a depth of one, PRE has a depth of 0.
-   define("ZERO_DEPTH", 0);
-   define("SINGLE_DEPTH", 1);
+   // constants used for HTML output. HTML tags may allow nesting
+   // other tags always start at level 0
+   define("ZERO_LEVEL", 0);
+   define("NESTED_LEVEL", 1);
 
    // constants for flags in $pagehash
    define("FLAG_PAGE_LOCKED", 1);
