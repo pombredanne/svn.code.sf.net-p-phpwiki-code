@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.42 2005-02-02 19:38:13 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.43 2005-02-04 11:44:07 rurban Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -558,7 +558,21 @@ function CheckDatabaseUpdate(&$request) {
             }
         }
     }
-
+    if ((ACCESS_LOG_SQL & 2)) {
+    	echo _("check for ACCESS_LOG_SQL passwords in POST requests")," ...";
+        // Don't display passwords in POST requests (up to 2005-02-04 12:03:20)
+        $result = $dbh->genericSqlQuery(
+                    "UPDATE ".$prefix."accesslog"
+                    .' SET request_args=CONCAT(left(request_args, LOCATE("s:6:\"passwd\"",request_args)+12),"...")'
+                    .' WHERE LOCATE("s:6:\"passwd\"", request_args)'
+                    .' AND NOT(LOCATE("s:6:\"passwd\";s:15:\"<not displayed>\"", request_args))'
+                    .' AND request_method="POST"');
+        if ((DATABASE_TYPE == 'SQL' and $backend->AffectedRows()) 
+            or (DATABASE_TYPE == 'ADODB' and $backend->Affected_Rows()))
+            echo "<b>",_("fixed"),"</b>", "<br />\n";
+        else 
+            echo _("OK"),"<br />\n";
+    }
     _upgrade_cached_html($dbh);
 
     return;
@@ -833,6 +847,9 @@ function DoUpgrade($request) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.42  2005/02/02 19:38:13  rurban
+ prefer utf8 pagenames for collate issues
+
  Revision 1.41  2005/01/31 12:15:29  rurban
  print OK
 
