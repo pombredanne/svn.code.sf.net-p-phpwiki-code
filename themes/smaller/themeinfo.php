@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.1 2004-03-01 09:38:01 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.2 2004-04-21 04:21:32 rurban Exp $');
 /**
  * tiny actionbar, only Edit (if signed in) and Info => PageInfo,
  *   all other Actionbars buttons in info.tmpl
@@ -9,7 +9,33 @@ rcs_id('$Id: themeinfo.php,v 1.1 2004-03-01 09:38:01 rurban Exp $');
 
 require_once('lib/Theme.php');
 
-$Theme = new Theme('smaller');
+class Theme_smaller extends Theme {
+
+    function makeActionButton ($action, $label = false, $page_or_rev = false) {
+        extract($this->_get_name_and_rev($page_or_rev));
+
+        if (is_array($action)) {
+            $attr = $action;
+            $action = isset($attr['action']) ? $attr['action'] : 'browse';
+        }
+        else
+            $attr['action'] = $action;
+
+        $class = is_safe_action($action) ? 'named-wiki' : 'wikiadmin';
+        if (!$label)
+            $label = $this->_labelForAction($action);
+
+        if ($version)
+            $attr['version'] = $version;
+
+        if ($action == 'browse')
+            unset($attr['action']);
+
+        return $this->makeButton($label, WikiURL($pagename, $attr), $class);
+    }
+}
+
+$Theme = new Theme_smaller('smaller');
 
 // CSS file defines fonts, colors and background images for this
 // style.  The companion '*-heavy.css' file isn't defined, it's just
