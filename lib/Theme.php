@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.100 2004-06-03 10:18:19 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.101 2004-06-03 12:59:40 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -432,7 +432,7 @@ class Theme {
             if ( $dbi->isWikiPage($owner) )
                 return fmt("Owner: %s", WikiLink($owner));
             else
-                return fmt("Owner: \"%s\"", $owner);
+                return fmt("Owner: %s", '"'.$owner.'"');
         }
     }
 
@@ -445,7 +445,7 @@ class Theme {
             if ( $dbi->isWikiPage($author) )
                 return fmt("by %s", WikiLink($author));
             else
-                return fmt("by \"%s\"", $author);
+                return fmt("by %s", '"'.$author.'"');
         }
     }
 
@@ -1346,6 +1346,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.100  2004/06/03 10:18:19  rurban
+// fix FileUser locking issues, new config ENABLE_PAGEPERM
+//
 // Revision 1.99  2004/06/01 15:27:59  rurban
 // AdminUser only ADMIN_USER not member of Administrators
 // some RateIt improvements by dfrankow

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.112 2004-06-02 18:01:46 rurban Exp $');
+rcs_id('$Id: config.php,v 1.113 2004-06-03 12:59:41 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -85,14 +85,20 @@ function isBrowserIE55() {
             browserVersion() > 5.1 and browserVersion() < 6.0);
 }
 // old Netscape prior to Mozilla
-function isBrowserNetscape() {
-    return (browserDetect('Mozilla/') and 
+function isBrowserNetscape($version = false) {
+    $agent = (browserDetect('Mozilla/') and 
             ! browserDetect('Gecko/') and
             ! browserDetect('MSIE'));
+    if ($version) return $agent and browserVersion() >= $version; 
+    else return $agent;
 }
 // NS3 or less
 function isBrowserNS3() {
     return (isBrowserNetscape() and browserVersion() < 4.0);
+}
+// NS4 or less
+function isBrowserNS4() {
+    return (isBrowserNetscape() and browserVersion() < 5.0);
 }
 // must omit display alternate stylesheets: konqueror 3.1.4
 // http://sourceforge.net/tracker/index.php?func=detail&aid=945154&group_id=6121&atid=106121
@@ -323,6 +329,12 @@ if (!function_exists('is_scalar')) { // lib/stdlib.php:hash()
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.112  2004/06/02 18:01:46  rurban
+// init global FileFinder to add proper include paths at startup
+//   adds PHPWIKI_DIR if started from another dir, lib/pear also
+// fix slashify for Windows
+// fix USER_AUTH_POLICY=old, use only USER_AUTH_ORDER methods (besides HttpAuth)
+//
 // Revision 1.111  2004/05/17 17:43:29  rurban
 // CGI: no PATH_INFO fix
 //
