@@ -39,7 +39,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.46 2001-12-30 06:10:39 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.47 2002-01-02 01:28:16 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -330,6 +330,7 @@ $templates = array("BROWSE" =>    "templates/browse.html",
 // comment out the $theme= lines to revert to the standard interface
 // which defaults to /templates and /images
 #$theme="default";
+#$theme="Hawaiian";
 #$theme="MacOSX";
 #$theme="WikiTrek";
 if (!empty($theme)) {
