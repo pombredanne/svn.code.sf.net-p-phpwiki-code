@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiFormRich.php,v 1.5 2004-11-24 10:14:36 rurban Exp $');
+rcs_id('$Id: WikiFormRich.php,v 1.6 2004-11-24 10:28:26 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -77,7 +77,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
     function getDefaultArguments() {
         return array('action' => false,     // required argument
@@ -85,6 +85,7 @@ extends WikiPlugin
                      'class'  => false,
                      'buttontext' => false, // for the submit button. default: action
                      'cancel' => false,     // boolean if the action supports cancel also
+                     'nobr' => false,       // "no break": linebreaks or not
                      );
     }
 
@@ -97,14 +98,14 @@ extends WikiPlugin
     	for ($i = 0; $i < count($arg_array); $i++) {
     	    if (preg_match("/^\s*(".join("|",$allowed).")\[\]\s+(.+)\s*$/", $arg_array[$i], $m)) {
     	    	$name = $m[1];
-                $this->inputbox[][$name] = array(); $i = count($this->inputbox) - 1;
+                $this->inputbox[][$name] = array(); $j = count($this->inputbox) - 1;
                 foreach (preg_split("/[\s]+/", $m[2]) as $attr_pair) {
-                    list($attr,$value) = preg_split("/\s*=\s*/", $attr_pair);
+                    list($attr, $value) = preg_split("/\s*=\s*/", $attr_pair);
                     if (preg_match('/^"(.*)"$/', $value, $m))
                         $value = $m[1];
                     elseif (defined($value))
                         $value = constant($value);
-                    $this->inputbox[$i][$name][$attr] = $value;
+                    $this->inputbox[$j][$name][$attr] = $value;
                 }
     	    	//trigger_error("not yet finished");
                 //eval('$this->inputbox[]["'.$m[1].'"]='.$m[2].';');
@@ -133,7 +134,8 @@ extends WikiPlugin
               case 'checkbox':
                 $input['type'] = 'checkbox';
                 if (empty($input['name']))
-                    return $this->error("A required argument '%s' is missing.","checkbox[][name]");
+                    return $this->error(fmt("A required argument '%s' is missing.",
+                                            "checkbox[][name]"));
                 if (empty($input['value'])) $input['value'] = 1;
                 if (empty($input['text'])) 
                     $input['text'] = gettext($input['name'])."=".$input['value'];
@@ -145,28 +147,39 @@ extends WikiPlugin
                 } else {
                     $input['checked'] = 'checked';
                 }
-                $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $text));
+                if ($nobr)
+                    $form->pushContent(HTML::input($input), $text);
+                else
+                    $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $text));
                 break;
               case 'editbox':
                 $input['type'] = 'text';
                 if (empty($input['name']))
-                    return $this->error("A required argument '%s' is missing.","editbox[][name]");
+                    return $this->error(fmt("A required argument '%s' is missing.",
+                                            "editbox[][name]"));
                 if (empty($input['text'])) $input['text'] = gettext($input['name']);
                 $text = $input['text'];
                 if (empty($input['value']) and ($s = $request->getArg($input['name'])))
                     $input['value'] = $s;
                 unset($input['text']);
-                $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $text));
+                if ($nobr)
+                    $form->pushContent(HTML::input($input), $text);
+                else
+                    $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $text));
                 break;
               case 'radiobutton':
                 $input['type'] = 'radio';
                 if (empty($input['name']))
-                    return $this->error("A required argument '%s' is missing.","radiobutton[][name]");
+                    return $this->error(fmt("A required argument '%s' is missing.",
+                                            "radiobutton[][name]"));
                 if (empty($input['text'])) $input['text'] = gettext($input['name']);
                 $text = $input['text'];
                 unset($input['text']);
                 if ($input['checked']) $input['checked'] = 'checked';
-                $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $text));
+                if ($nobr)
+                    $form->pushContent(HTML::input($input), $text);
+                else
+                    $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $text));
                 break;
               case 'hidden':
                 $input['type'] = 'hidden';
@@ -197,6 +210,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/11/24 10:14:36  rurban
+// fill-in request args as with plugin-form
+//
 // Revision 1.4  2004/11/23 15:17:20  rurban
 // better support for case_exact search (not caseexact for consistency),
 // plugin args simplification:
