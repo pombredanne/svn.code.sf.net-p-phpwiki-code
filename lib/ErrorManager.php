@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.26 2004-06-02 18:01:45 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.27 2004-06-13 09:38:20 rurban Exp $');
 
 require_once(dirname(__FILE__).'/HtmlElement.php');
 if (isset($GLOBALS['ErrorManager'])) return;
@@ -227,7 +227,12 @@ class ErrorManager
         }
         else if (($error->errno & error_reporting()) != 0) {
             if  (($error->errno & $this->_postpone_mask) != 0) {
-                if (isa($error,'PhpErrorOnce')) {
+                if ((function_exists('is_a') and is_a($error,'PhpErrorOnce'))
+                    or (!function_exists('is_a') and 
+                    (
+                     // stdlib independent isa()
+                     (strtolower(get_class($error)) == 'PhpErrorOnce')
+                     or (is_subclass_of($object, 'PhpErrorOnce'))))) {
                     $error->removeDoublettes($this->_postponed_errors);
                     if ( $error->_count < 2 )
                         $this->_postponed_errors[] = $error;
@@ -523,6 +528,12 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.26  2004/06/02 18:01:45  rurban
+// init global FileFinder to add proper include paths at startup
+//   adds PHPWIKI_DIR if started from another dir, lib/pear also
+// fix slashify for Windows
+// fix USER_AUTH_POLICY=old, use only USER_AUTH_ORDER methods (besides HttpAuth)
+//
 // Revision 1.25  2004/06/02 10:18:36  rurban
 // assert only if DEBUG is non-false
 //
