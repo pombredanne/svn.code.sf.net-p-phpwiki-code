@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: ziplib.php,v 1.18 2002-01-22 03:17:47 dairiki Exp $');
+rcs_id('$Id: ziplib.php,v 1.19 2002-01-23 05:10:22 dairiki Exp $');
 
 /**
  * GZIP stuff.
@@ -33,19 +33,19 @@ function gzip_tempnam () {
 function gzip_compress ($data) {
     $filename = gzip_tempnam();
     if (!($fp = gzopen($filename, "wb")))
-        ExitWiki(sprintf(_("%s failed"),'gzopen'));
+        trigger_error(sprintf(_("%s failed"), 'gzopen'), E_USER_ERROR);
     gzwrite($fp, $data, strlen($data));
     if (!gzclose($fp))
-        ExitWiki(sprintf(_("%s failed"),'gzclose'));
+        trigger_error(sprintf(_("%s failed"), 'gzclose'), E_USER_ERROR);
     
     $size = filesize($filename);
     
     if (!($fp = fopen($filename, "rb")))
-        ExitWiki(sprintf(_("%s failed"),'fopen'));
+        trigger_error(sprintf(_("%s failed"), 'fopen'), E_USER_ERROR);
     if (!($z = fread($fp, $size)) || strlen($z) != $size)
-        ExitWiki(sprintf(_("%s failed"),'fread'));
+        trigger_error(sprintf(_("%s failed"), 'fread'), E_USER_ERROR);
     if (!fclose($fp))
-        ExitWiki(sprintf(_("%s failed"),'fclose'));
+        trigger_error(sprintf(_("%s failed"), 'fclose'), E_USER_ERROR);
     
     unlink($filename);
     return $z;
@@ -54,18 +54,18 @@ function gzip_compress ($data) {
 function gzip_uncompress ($data) {
     $filename = gzip_tempnam();
     if (!($fp = fopen($filename, "wb")))
-        ExitWiki(sprintf(_("%s failed"),'fopen'));
+        trigger_error(sprintf(_("%s failed"), 'fopen'), E_USER_ERROR);
     fwrite($fp, $data, strlen($data));
     if (!fclose($fp))
-        ExitWiki(sprintf(_("%s failed"),'fclose'));
+        trigger_error(sprintf(_("%s failed"), 'fclose'), E_USER_ERROR);
     
     if (!($fp = gzopen($filename, "rb")))
-        ExitWiki(sprintf(_("%s failed"),'gzopen'));
+        trigger_error(sprintf(_("%s failed"), 'gzopen'), E_USER_ERROR);
     $unz = '';
     while ($buf = gzread($fp, 4096))
         $unz .= $buf;
     if (!gzclose($fp))
-        ExitWiki(sprintf(_("%s failed"),'gzclose'));
+        trigger_error(sprintf(_("%s failed"), 'gzclose'), E_USER_ERROR);
     
     unlink($filename);
     return $unz;
@@ -159,16 +159,17 @@ function zip_deflate ($content)
     extract(unpack("a2magic/Ccomp_type/Cflags/@9/Cos_type", $z));
     
     if ($magic != GZIP_MAGIC)
-        ExitWiki(sprintf(_("Bad %s"),"gzip magic"));
+        trigger_error(sprintf(_("Bad %s"), "gzip magic"), E_USER_ERROR);
     if ($comp_type != GZIP_DEFLATE)
-        ExitWiki(sprintf(_("Bad %s"),"gzip comp type"));
+        trigger_error(sprintf(_("Bad %s"), "gzip comp type"), E_USER_ERROR);
     if (($flags & 0x3e) != 0)
-        ExitWiki(sprintf(_("Bad %s"),sprintf("flags (0x%02x)", $flags)));
+        trigger_error(sprintf(_("Bad %s"), sprintf("flags (0x%02x)", $flags)),
+                      E_USER_ERROR);
     
     $gz_header_len = 10;
     $gz_data_len = strlen($z) - $gz_header_len - 8;
     if ($gz_data_len < 0)
-        ExitWiki("not enough gzip output?");
+        trigger_error("not enough gzip output?", E_USER_ERROR);
     
     extract(unpack("Vcrc32", substr($z, $gz_header_len + $gz_data_len)));
     
@@ -179,9 +180,11 @@ function zip_deflate ($content)
 }
 
 function zip_inflate ($data, $crc32, $uncomp_size)
-{
-    if (!function_exists('gzopen'))
-        ExitWiki(_("Can't inflate data: zlib support not enabled in this PHP"));
+{    
+    if (!function_exists('gzopen')) {
+        global $request;
+        $request->finish(_("Can't inflate data: zlib support not enabled in this PHP"));
+    }
     
     // Reconstruct gzip header and ungzip the data.
     $mtime = time();		//(Bogus mtime)
@@ -363,14 +366,14 @@ class ZipReader
         if (!is_string($zipfile))
             $this->fp = $zipfile;	// File already open
         else if (!($this->fp = fopen($zipfile, "rb")))
-            ExitWiki(sprintf(_("Can't open zip file '%s' for reading"),
-                             $zipfile));
+            trigger_error(sprintf(_("Can't open zip file '%s' for reading"),
+                                  $zipfile), E_USER_ERROR);
     }
     
     function _read ($nbytes) {
         $chunk = fread($this->fp, $nbytes);
         if (strlen($chunk) != $nbytes)
-            ExitWiki(_("Unexpected EOF in zip file"));
+            trigger_error(_("Unexpected EOF in zip file"), E_USER_ERROR);
         return $chunk;
     }
     
@@ -710,7 +713,9 @@ function ParseMimeifiedPages ($data)
     // FIXME: do we need to try harder to find a pagename if we
     //        haven't got one yet?
     if (!isset($versiondata['author'])) {
-        $versiondata['author'] = $GLOBALS['user']->getId(); //FIXME:?
+        global $request;
+        $user = $request->getUser();
+        $versiondata['author'] = $user->getId(); //FIXME:?
     }
     
     $encoding = strtolower($headers['content-transfer-encoding']);

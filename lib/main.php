@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.27 2002-01-22 03:17:47 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.28 2002-01-23 05:10:22 dairiki Exp $');
 
 
 include "lib/config.php";
@@ -8,6 +8,7 @@ require_once('lib/Request.php');
 require_once("lib/WikiUser.php");
 require_once('lib/WikiDB.php');
 
+// FIXME: move to config?
 if (defined('THEME')) {
     include("themes/" . THEME . "/themeinfo.php");
 }
@@ -16,43 +17,367 @@ if (empty($Theme)) {
 }
 assert(!empty($Theme));
 
+class UserPreferences {
+    function UserPreferences ($prefs = false) {
+        if (isa($prefs, 'UserPreferences'))
+            $this->_prefs = $prefs->_prefs;
+        else
+            $this->_prefs = array();
 
-function deduce_pagename ($request) {
-    if ($request->getArg('pagename'))
-        return $request->getArg('pagename');
-
-    if (USE_PATH_INFO) {
-        $pathinfo = $request->get('PATH_INFO');
-        if (ereg('^' . PATH_INFO_PREFIX . '(..*)$', $pathinfo, $m))
-            return $m[1];
+        $this->sanitize();
     }
 
-    $query_string = $request->get('QUERY_STRING');
-    if (preg_match('/^[^&=]+$/', $query_string))
-        return urldecode($query_string);
-    
-    return _("HomePage");
+    function sanitize() {
+        // FIXME: needs cleanup.
+        
+        $LIMITS = array('edit_area.width' => array(30, 80, 150),
+                        'edit_area.height' => array(5, 22, 80));
+
+        $prefs = $this->_prefs;
+        $new = array();
+        foreach ($LIMITS as $key => $lims) {
+            list ($min, $default, $max) = $lims;
+            if (isset($prefs[$key]))
+                $new[$key] = min($max, max($min, (int)$prefs[$key]));
+            else
+                $new[$key] = $default;
+        }
+
+        $this->_prefs = $new;
+    }
+
+    function get($key) {
+        return $this->_prefs[$key];
+    }
+
+    function setPrefs($new_prefs) {
+        if (is_array($new_prefs)) {
+            $this->_prefs = array_merge($this->_prefs, $new_prefs);
+            $this->sanitize();
+        }
+    }
 }
 
+
+class WikiRequest extends Request {
+
+    function WikiRequest () {
+        $this->Request();
+
+        // Normalize args...
+        $this->setArg('pagename', $this->_deducePagename());
+        $this->setArg('action', $this->_deduceAction());
+
+        $this->_user = new WikiUser($this->getSessionVar('auth_state'));
+
+        if (!($prefs = $this->getSessionVar('user_prefs')))
+            $prefs = $this->getCookieVar('WIKI_PREFS');
+        $this->_prefs = new UserPreferences($prefs);
+    }
+
+    function getUser () {
+        return $this->_user;
+    }
+
+    function getPref ($key) {
+        return $this->_prefs->get($key);
+    }
+
+    function getDbh () {
+        if (!isset($this->_dbi)) {
+            $this->_dbi = WikiDB::open($GLOBALS['DBParams']);
+        }
+        return $this->_dbi;
+    }
+
+    /**
+     * Get requested page from the page database.
+     *
+     * This is a convenience function.
+     */
+    function getPage () {
+        if (!isset($this->_dbi))
+            $this->getDbh();
+        return $this->_dbi->getPage($this->getArg('pagename'));
+    }
+
+
+
+    function handleAuthRequest () {
+        $auth_args = $this->getArg('auth');
+        $this->setArg('auth', false);
+        
+        if (!is_array($auth_args) || !$this->isPost())
+            return;             // Ignore if not posted.
+        
+        $user = WikiUser::AuthCheck($auth_args);
+
+        if (isa($user, 'WikiUser')) {
+            // Successful login (or logout.)
+            $this->_user = $user;
+            $this->setSessionVar('auth_state', $user);
+        }
+        elseif ($user) {
+            // Login attempt failed.
+            $fail_message = $user;
+            WikiUser::PrintLoginForm($auth_args, $fail_message);
+            $this->finish();    //NORETURN
+        }
+        else {
+            // Login request cancelled.
+        }
+    }
+
+    function checkAuthority () {
+        $action = $this->getArg('action');
+        $require_level = $this->requiredAuthority($action);
+        
+        $user = $this->getUser();
+        if (! $user->hasAuthority($require_level)) {
+            // User does not have required authority.  Prompt for login.
+            $what = HTML::em($action);
+
+            if ($require_level >= WIKIAUTH_FORBIDDEN) {
+                $this->finish(fmt("Action %s is disallowed on this wiki", $what));
+            }
+            elseif ($require_level == WIKIAUTH_BOGO)
+                $msg = fmt("You must sign in to %s this wiki", $what);
+            elseif ($require_level == WIKIAUTH_USER)
+                $msg = fmt("You must log in to %s this wiki", $what);
+            else
+                $msg = fmt("You must be an administrator to %s this wiki", $what);
+        
+            WikiUser::PrintLoginForm(compact('require_level'), $msg);
+            $this->finish();    // NORETURN
+        }
+    }
+    
+    function requiredAuthority ($action) {
+        // FIXME: clean up.
+        switch ($action) {
+        case 'browse':
+        case 'diff':
+        // case ActionPage:   
+        // case 'search':
+            return WIKIAUTH_ANON;
+
+        case 'zip':
+            return WIKIAUTH_ANON;
+            
+        case 'edit':
+        case 'save':            // FIXME delete
+            return WIKIAUTH_ANON;
+            // return WIKIAUTH_BOGO;
+
+        case 'upload':
+        case 'dumpserial':
+        case 'loadfile':
+        case 'remove':
+        case 'lock':
+        case 'unlock':
+        default:
+            return WIKIAUTH_ADMIN;
+        }
+    }
+        
+    function handleSetPrefRequest () {
+        $new_prefs = $this->getArg('pref');
+        $this->setArg('pref', false);
+        if (!is_array($pref_args))
+            return;
+
+        // Update and save preferences.
+        $this->_prefs->setPrefs($new_prefs);
+        $this->setSessionVar('user_prefs', $prefs);
+        $this->setCookieVar('WIKI_PREFS', $prefs, 365);
+    }
+
+    function deflowerDatabase () {
+        if ($this->getArg('action') != 'browse')
+            return;
+        if ($this->getArg('pagename') != _("HomePage"))
+            return;
+
+        $page = $this->getPage();
+        $current = $page->getCurrentRevision();
+        if ($current->getVersion() > 0)
+            return;             // Homepage exists.
+
+        include('lib/loadsave.php');
+        SetupWiki($this);
+        $this->finish();        // NORETURN
+    }
+
+    function handleAction () {
+        $action = $this->getArg('action');
+        $method = "action_$action";
+        if (! method_exists($this, $method)) {
+            $this->finish(fmt("%s: Bad action", $action));
+        }
+        $this->{$method}();
+    }
+        
+        
+    function finish ($errormsg = false) {
+        static $in_exit = 0;
+
+        if ($in_exit)
+            exit();		// just in case CloseDataBase calls us
+        $in_exit = true;
+
+        if (!empty($this->_dbi))
+            $this->_dbi->close();
+        unset($this->_dbi);
+        
+
+        global $ErrorManager;
+        $ErrorManager->flushPostponedErrors();
+   
+        if (!empty($errormsg)) {
+            PrintXML(array(HTML::br(),
+                           HTML::hr(),
+                           HTML::h2(_("Fatal PhpWiki Error")),
+                           $errormsg));
+            // HACK:
+            echo "\n</body></html>";
+        }
+
+        Request::finish();
+        exit;
+    }
+        
+    function _deducePagename () {
+        if ($this->getArg('pagename'))
+            return $this->getArg('pagename');
+
+        if (USE_PATH_INFO) {
+            $pathinfo = $this->get('PATH_INFO');
+            $tail = substr($pathinfo, strlen(PATH_INFO_PREFIX));
+            
+            if ($tail && $pathinfo == PATH_INFO_PREFIX . $tail) {
+                return $tail;
+            }
+        }
+
+        $query_string = $this->get('QUERY_STRING');
+        if (preg_match('/^[^&=]+$/', $query_string)) {
+            return urldecode($query_string);
+        }
+        
+    
+        return _("HomePage");
+    }
+
+    
+    function _deduceAction () {
+        if (!($action = $this->getArg('action')))
+            return 'browse';
+
+        if (! method_exists($this, "action_$action")) {
+            // unknown action.
+            trigger_error("$action: Unknown action", E_USER_NOTICE);
+            return 'browse';
+        }
+        return $action;
+    }
+
+    function action_browse () {
+        $this->compress_output();
+        include_once("lib/display.php");
+        displayPage($this);
+    }
+    
+    function action_diff () {
+        $this->compress_output();
+        include_once "lib/diff.php";
+        showDiff($this);
+    }
+
+    function action_search () {
+        // This is obsolete: reformulate URL and redirect.
+        // FIXME: this whole section should probably be deleted.
+        if ($this->getArg('searchtype') == 'full') {
+            $search_page = _("FullTextSearch");
+        }
+        else {
+            $search_page = _("TitleSearch");
+        }
+        $this->redirect(WikiURL($search_page,
+                                array('s' => $this->getArg('searchterm')),
+                                'absolute_url'));
+    }
+
+    function action_edit () {
+        $this->compress_output();
+        include "lib/editpage.php";
+        editPage($this);
+    }
+
+    // FIXME: combine this with edit
+    function action_save () {
+        $this->compress_output();
+        include "lib/savepage.php";
+        savePage($this);
+    }
+
+    function action_lock () {
+        $page = $this->getPage();
+        $page->set('locked', true);
+        $this->action_browse();
+    }
+
+    function action_unlock () {
+        // FIXME: This check is redundant.
+        //$user->requireAuth(WIKIAUTH_ADMIN);
+        $page = $this->getPage();
+        $page->set('locked', false);
+        $this->action_browse();
+    }
+
+    function action_remove () {
+        // FIXME: This check is redundant.
+        //$user->requireAuth(WIKIAUTH_ADMIN);
+        include('lib/removepage.php');
+    }
+
+    
+    function action_upload () {
+        include_once("lib/loadsave.php");
+        LoadPostFile($this);
+    }
+    
+    function action_zip () {
+        include_once("lib/loadsave.php");
+        MakeWikiZip($this);
+        // I don't think it hurts to add cruft at the end of the zip file.
+        echo "\n========================================================\n";
+        echo "PhpWiki " . PHPWIKI_VERSION . " source:\n$GLOBALS[RCS_IDS]\n";
+    }
+        
+    function action_dumpserial () {
+        include_once("lib/loadsave.php");
+        DumpToDir($this);
+    }
+
+    function action_loadfile () {
+        include_once("lib/loadsave.php");
+        LoadFileOrDir($this);
+    }
+}
+
+//FIXME: deprecated
 function is_safe_action ($action) {
-    if (! ZIPDUMP_AUTH and ($action == 'zip' || $action == 'xmldump'))
-        return true;
-    return in_array ( $action, array('browse', 'info',
-                                     'diff',   'search',
-                                     'edit',   'save',
-                                     'setprefs') );
+    return WikiRequest::requiredAuthority($action) < WIKIAUTH_ADMIN;
 }
 
-function authlevelForAction ($action) {
-    if (is_safe_action($action))
-        return WIKIAUTH_ANON;
-    else
-        return WIKIAUTH_ADMIN;
-}
 
-function main ($request) {
+function main () {
+    global $request;
+
+    $request = new WikiRequest();
+
     
-    
+    /* FIXME: is this needed anymore?
     if (USE_PATH_INFO && ! $request->get('PATH_INFO')
         && ! preg_match(',/$,', $request->get('REDIRECT_URL'))) {
         $request->redirect(SERVER_URL
@@ -61,177 +386,43 @@ function main ($request) {
                                           1));
         exit;
     }
+    */
 
-    $request->setArg('pagename', deduce_pagename($request));
-    global $pagename;               // FIXME: can we make this non-global?
-    $pagename = $request->getArg('pagename');
-    
-    $action = $request->getArg('action');
-    if (!$action) {
-        $action = 'browse';
-        $request->setArg('action', $action);
-    }
-    
-    global $user;               // FIXME: can we make this non-global?
-    $user = new WikiUser($request);
-    $user->requireAuth( authlevelForAction($action) );
-    
+    // Handle authentication requests
+    if ($request->getArg('auth'))
+        $request->handleAuthRequest();
 
-    //FIXME:
-    //if ($user->is_authenticated())
-    //  $LogEntry->user = $user->getId();
-    
-    // All requests require the database
-    global $dbi;                // FIXME: can we keep this non-global?
-    $dbi = WikiDB::open($GLOBALS['DBParams']);
+    // FIXME: deprecated
+    //global $user;               // FIXME: can we make this non-global?
+    //$user = $request->getUser();
 
-    // FIXME: need something more robust here...
-    if ( $action == 'browse' && $request->getArg('pagename') == _("HomePage") ) {
-        // if there is no HomePage, create a basic set of Wiki pages
-        if ( ! $dbi->isWikiPage(_("HomePage")) ) {
-            include_once("lib/loadsave.php");
-            SetupWiki($dbi);
-            ExitWiki();
-        }
-    }
+    // Handle adjustments to user preferences
+    if ($request->getArg('pref'))
+        $request->handleSetPrefRequest();
 
-    // FIXME: I think this is redundant.
-    //if (!is_safe_action($action))
-    //    $user->must_be_admin($action);
-
-    // FIXME: this should be moved higher in the logic.
-    if (isset($DisabledActions) && in_array($action, $DisabledActions))
-        ExitWiki(sprintf(_("Action %s is disabled in this wiki."), $action));
-   
     // Enable the output of most of the warning messages.
     // The warnings will screw up zip files and setpref though.
     global $ErrorManager;
-    if ($action != 'zip' && $action != 'setprefs') {
-        $ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE);
+    if ($request->getArg('action') != 'zip') {
+        //$ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE);
+        $ErrorManager->setPostponedErrorMask(0);
     }
+
     
+    // Ensure user has permissions for action
+    $request->checkAuthority();
     
-    switch ($action) {
-    case 'edit':
-        $request->compress_output();
-        include "lib/editpage.php";
-        editPage($dbi, $request);
-        break;
+    //FIXME:
+    //if ($user->is_authenticated())
+    //  $LogEntry->user = $user->getId();
 
-    case 'search':
-        // This is obsolete: reformulate URL and redirect.
-        // FIXME: this whole section should probably be deleted.
-        if ($request->getArg('searchtype') == 'full') {
-            $search_page = _("FullTextSearch");
-        }
-        else {
-            $search_page = _("TitleSearch");
-        }
-        $request->redirect(WikiURL($search_page,
-                                   array('s' => $request->getArg('searchterm')),
-                                   'absolute_url'));
-        break;
-        
-    case 'save':
-        $request->compress_output();
-        include "lib/savepage.php";
-        savePage($dbi, $request);
-        break;
-    case 'diff':
-        $request->compress_output();
-        include_once "lib/diff.php";
-        showDiff($dbi, $request);
-        break;
-      
-    case 'zip':
-        include_once("lib/loadsave.php");
-        MakeWikiZip($dbi, $request);
-        // I don't think it hurts to add cruft at the end of the zip file.
-        echo "\n========================================================\n";
-        echo "PhpWiki " . PHPWIKI_VERSION . " source:\n$GLOBALS[RCS_IDS]\n";
-        break;
+    $request->deflowerDatabase();
 
-    /* Not yet implemented:    
-    case 'xmldump':
-        // FIXME:
-        $limit = 1;
-        if ($request->getArg('include') == 'all')
-            $limit = 0;
-        require_once("lib/libxml.php");
-        $xmlwriter = new WikiXmlWriter;
-        $xmlwriter->begin();
-        $xmlwriter->writeComment("PhpWiki " . PHPWIKI_VERSION
-                                 . " source:\n$RCS_IDS\n");
-        $xmlwriter->writeDatabase($dbi, $limit);
-        $xmlwriter->end();
-        break;
-    */
-        
-    case 'upload':
-        include_once("lib/loadsave.php");
-        LoadPostFile($dbi, $request);
-        break;
-   
-    case 'dumpserial':
-        include_once("lib/loadsave.php");
-        DumpToDir($dbi, $request);
-        break;
-
-    case 'loadfile':
-        include_once("lib/loadsave.php");
-        LoadFileOrDir($dbi, $request);
-        break;
-
-    case 'remove':
-        include 'lib/removepage.php';
-        break;
-    
-    case 'lock':
-    case 'unlock':
-        // FIXME: This check is redundant.
-        $user->requireAuth(WIKIAUTH_ADMIN);
-        $page = $dbi->getPage($request->getArg('pagename'));
-        $page->set('locked', $action == 'lock');
-
-        $request->compress_output();
-        include_once("lib/display.php");
-        displayPage($dbi, $request);
-        break;
-
-    case 'setprefs':
-        $prefs = $user->getPreferences();
-        $edit_area_width = $request->getArg('edit_area_width');
-        $edit_area_height = $request->getArg('edit_area_height');
-        if ($edit_area_width)
-            $prefs['edit_area.width'] = $edit_area_width;
-        if ($edit_area_height)
-            $prefs['edit_area.height'] = $edit_area_height;
-        $user->setPreferences($prefs);
-        $ErrorManager->setPostponedErrorMask(E_ALL & ~E_NOTICE);
-
-        $request->compress_output();
-        include_once("lib/display.php");
-        displayPage($dbi, $request);
-        break;
-   
-    case 'browse':
-    case 'login':
-    case 'logout':
-
-        $request->compress_output();
-        include_once("lib/display.php");
-        displayPage($dbi, $request);
-        break;
-        
-    default:
-        ProntXML(HTML::p(fmt("Bad action: '%s'", $action)));
-        break;
-    }
-    ExitWiki();
+    $request->handleAction();
+    $request->finish();
 }
 
-$request = new Request;
-main($request);
+main();
 
 
 // Local Variables:

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.25 2002-01-22 03:17:47 dairiki Exp $');
+<?php rcs_id('$Id: Template.php,v 1.26 2002-01-23 05:10:22 dairiki Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -39,13 +39,13 @@ class Template
 
     
     function _printPluginPI ($pi) {
-	global $dbi, $request;	// FIXME: no globals?
+	global $request;	// FIXME: no globals?
 	static $loader;
 
         if (empty($loader))
             $loader = new WikiPluginLoader;
         
-        $this->_print($loader->expandPI($pi, $dbi, $request));
+        $this->_print($loader->expandPI($pi, $request));
     }
     
     function _print ($val) {
@@ -224,11 +224,6 @@ extends TemplateFile
 
         // FIXME: this is a bit of dangerous hackage.
         $this->qreplace('ACTION', WikiURL($pagename, array('action' => '')));
-
-        // FIXME:?
-        //$this->replace_callback('HITS', array($page, 'getHitCount'));
-        //$this->replace_callback('RELATEDPAGES', array($page, 'getHitCount'));
-        //_dotoken('RELATEDPAGES', LinkRelatedPages($dbi, $name), $page);
     }
 
     function setPageRevisionTokens(&$revision) {
@@ -254,34 +249,25 @@ extends TemplateFile
         $this->setPageTokens($page);
     }
 
-    function setWikiUserTokens(&$user) {
-	$this->replace('user', $user);
-        $this->qreplace('USERID', $user->getId());
-
-        $prefs = $user->getPreferences();
-        $this->qreplace('EDIT_AREA_WIDTH', $prefs['edit_area.width']);
-        $this->qreplace('EDIT_AREA_HEIGHT', $prefs['edit_area.height']);
-    }
-
     function setGlobalTokens () {
-        global $user, $RCS_IDS, $Theme, $request;
+        global $RCS_IDS, $Theme, $request;
         
         // FIXME: This a a bit of dangerous hackage.
         $this->replace('Theme', $Theme);
         $this->qreplace('BROWSE', WikiURL(''));
         $this->qreplace('WIKI_NAME', WIKI_NAME);
 
-        if (isset($user))
-            $this->setWikiUserTokens($user);
+        $this->replace('user', $request->getUser());
         if (isset($RCS_IDS))
             $this->qreplace('RCS_IDS', $RCS_IDS);
 
         require_once('lib/ButtonFactory.php');
         $this->replace('ButtonFactory', new ButtonFactory);
 
-        $query_args = $request->getArgs();
-        unset($query_args['login']);
-        $this->replace('query_args', $query_args);
+        $this->replace('query_args', $request->getArgs());
+
+        $this->replace('EDIT_AREA_WIDTH', $request->getPref('edit_area.width'));
+        $this->replace('EDIT_AREA_HEIGHT', $request->getPref('edit_area.height'));
     }
 };
 

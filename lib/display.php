@@ -1,7 +1,7 @@
 <?php
 // display.php: fetch page or get default content
 // calls transform.php for actual transformation of wiki markup to HTML
-rcs_id('$Id: display.php,v 1.15 2002-01-21 06:55:47 dairiki Exp $');
+rcs_id('$Id: display.php,v 1.16 2002-01-23 05:10:22 dairiki Exp $');
 
 require_once('lib/Template.php');
 require_once('lib/transform.php');
@@ -41,34 +41,35 @@ function GleanDescription ($rev) {
     return '';
 }
 
-function displayPage($dbi, $request, $tmpl = 'browse') {
+function displayPage(&$request, $tmpl = 'browse') {
     $pagename = $request->getArg('pagename');
     $version = $request->getArg('version');
-   
-    $page = $dbi->getPage($pagename);
+    $page = $request->getPage();
+    
+    
     if ($version) {
         $revision = $page->getRevision($version);
         if (!$revision)
-            NoSuchRevision($page, $version);
+            NoSuchRevision($request, $pagename, $version);
     }
     else {
         $revision = $page->getCurrentRevision();
     }
 
     $splitname = split_pagename($pagename);
-    $title_tooltip = sprintf(_("BackLinks for %s"), $pagename);
+    $pagetitle = HTML::a(array('href' => WikiURL(_("BackLinks"),
+                                                 array('page' => $pagename)),
+                               'class' => 'backlinks'),
+                         $splitname);
+    $pagetitle->addTooltip(sprintf(_("BackLinks for %s"), $pagename));
 
 
     $wrapper = new WikiTemplate('top');
     $wrapper->setPageRevisionTokens($revision);
     $wrapper->qreplace('TITLE', $splitname);
-    $wrapper->replace('HEADER',
-                      HTML::a(array('href' => WikiURL(_("BackLinks"),
-                                                      array('page' => $pagename)),
-                                    'class' => 'backlinks',
-                                    'title' => $title_tooltip),
-                              $splitname));
+    $wrapper->replace('HEADER', $pagetitle);
     $wrapper->qreplace('ROBOTS_META', 'index,follow');
+
 
     $template = new WikiTemplate($tmpl);
     $template->replace('CONTENT', do_transform($revision->getContent()));

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.31 2002-01-22 03:17:47 dairiki Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.32 2002-01-23 05:10:22 dairiki Exp $');
 require_once('lib/Template.php');
 require_once('lib/transform.php');
 require_once('lib/ArchiveCleaner.php');
@@ -18,7 +18,7 @@ function CookSpaces($pagearray) {
 // FIXME: some links so that it's easy to get back to someplace useful
 // from these error pages.
 
-function ConcurrentUpdates($pagename) {
+function ConcurrentUpdates(&$request) {
    /*
      xgettext only knows about c/c++ line-continuation strings
      it does not know about php's dot operator.
@@ -44,11 +44,11 @@ function ConcurrentUpdates($pagename) {
     $html[] = HTML::p(_("Sorry for the inconvenience."));
 
     echo GeneratePage('MESSAGE', $html,
-                      sprintf(_("Problem while updating %s"), $pagename));
-    ExitWiki();
+                      sprintf(_("Problem while updating %s"), $request->getArg('pagename')));
+    $request->finish();
 }
 
-function PageIsLocked($pagename) {
+function PageIsLocked (&$request) {
     $html[] = HTML::p(_("This page has been locked by the administrator so your changes could not be saved."));
     $html[] = HTML::p(_("Use your browser's <b>Back</b> button to go back to the edit page."),
                       ' ',
@@ -56,43 +56,44 @@ function PageIsLocked($pagename) {
     $html[] = HTML::p(_("Sorry for the inconvenience."));
     
     echo GeneratePage('MESSAGE', $html,
-                      sprintf (_("Problem while editing %s"), $pagename));
-    ExitWiki ("");
+                      sprintf (_("Problem while editing %s"), $request->getArg('pagename')));
+    $request->finish();
 }
 
-function BadFormVars($pagename) {
+function BadFormVars (&$request) {
     $html[] = HTML::p(_("Bad form submission"));
     $html[] = HTML::p(_("Required form variables are missing."));
     echo GeneratePage('MESSAGE', $html,
-                      sprintf(_("Edit aborted: %s"), $pagename));
-    ExitWiki ("");
+                      sprintf(_("Edit aborted: %s"), $request->getArg('pagename')));
+    $request->finish();
 }
 
-function savePage ($dbi, $request) {
-    global $user, $Theme;
+function savePage (&$request) {
+    global $Theme;
     
-    if ($request->get('REQUEST_METHOD') != 'POST')
-        BadFormVars($request->getArg('pagename'));
+    if (! $request->isPost())
+        BadFormVars($request);
     
     if ($request->getArg('preview') || !$request->getArg('save')) {
         include_once('lib/editpage.php');
-        return editPage($dbi, $request, 'do_preview');
+        return editPage($request, 'do_preview');
     }
     
     $pagename = $request->getArg('pagename');
     $version = $request->getArg('version');
     
-    $page = $dbi->getPage($pagename);
+    $page = $request->getPage();
     $current = $page->getCurrentRevision();
     
     $content = $request->getArg('content');
     $editversion = $request->getArg('editversion');
     
     if ( $content === false || $editversion === false )
-        BadFormVars($pagename); // noreturn
+        BadFormVars($request); // noreturn
 
+    $user = $request->getUser();
     if ($page->get('locked') && !$user->isAdmin())
-        PageIsLocked($args->pagename); // noreturn.
+        PageIsLocked($request); // noreturn.
 
     $meta['author'] = $user->getId();
     $meta['author_id'] = $user->getAuthenticatedId();
@@ -108,7 +109,7 @@ function savePage ($dbi, $request) {
         include_once('lib/display.php');
         // force browse of current version:
         $request->setArg('version', false);
-        return displayPage($dbi, $request, 'nochanges');
+        return displayPage($request, 'nochanges');
     }
 
     ////////////////////////////////////////////////////////////////
@@ -125,14 +126,15 @@ function savePage ($dbi, $request) {
         // FIXME: this should return one to the editing form,
         //        (with an explanatory message, and options to
         //        view diffs & merge...)
-        ConcurrentUpdates($pagename);
+        ConcurrentUpdates($request);
     }
     // New contents successfully saved...
 
     // Clean out archived versions of this page.
     $cleaner = new ArchiveCleaner($GLOBALS['ExpireParams']);
     $cleaner->cleanPageRevisions($page);
-    
+
+    $dbi = $request->getDbh();
     $warnings = $dbi->GenericWarnings();
 
     if (empty($warnings) && ! $Theme->getImageURL('signature')) {

@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: signin.tmpl,v 1.8 2002-01-22 22:37:15 dairiki Exp $ -->
+<!-- $Id: signin.tmpl,v 1.9 2002-01-23 05:10:22 dairiki Exp $ -->
 <?php
 
      $Sep = $Theme->getButtonSeparator();
@@ -24,21 +24,21 @@
   <?= fmt("You are signed in as %s", LinkWikiWord($user->getId())) ?>
   <?=$Sep?>
   <script language="JavaScript" type="text/javascript"><!--
-    document.write('<input type="hidden" name="login[logout]" value="0" />');
+    document.write('<input type="hidden" name="auth[logout]" value="0" />');
     function SignOut() { 
-      document.forms["<?=$FORMNAME?>"].elements["login[logout]"].value = 1;
+      document.forms["<?=$FORMNAME?>"].elements["auth[logout]"].value = 1;
       document.forms["<?=$FORMNAME?>"].submit();
     }
     document.write('<?=$SignOutB?>'); // -->
   </script>
   <noscript>
-    <?=$Theme->makeButton(_("Sign Out"), "submit:login[logout]", "wikiaction")?>
+    <?=$Theme->makeButton(_("Sign Out"), "submit:auth[logout]", "wikiaction")?>
   </noscript>
 
 <?php } else { ?>
 
   <?php $SignInInput = HTML::input(array('type' => 'text',
-                                         'name' => "login[userid]",
+                                         'name' => "auth[userid]",
                                          'size' => 12,
                                          'onchange' => "this.form.submit();"));
         $SignInInput->addTooltip(_("Sign In")) ?>
@@ -48,7 +48,7 @@
   // --></script>
   <?= $SignInInput ?>
   <noscript>
-    <?=$Theme->makeButton(_("Sign In"), "submit:login[login]", "wikiaction")?>
+    <?=$Theme->makeButton(_("Sign In"), "submit:auth[login]", "wikiaction")?>
   </noscript>
 
 <?php } ?>

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.30 2002-01-22 17:01:39 dairiki Exp $');
+rcs_id('$Id: loadsave.php,v 1.31 2002-01-23 05:10:22 dairiki Exp $');
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
 
@@ -10,10 +10,9 @@ function StartLoadDump($title, $html = '')
                       GeneratePage('MESSAGE', $html, $title, 0));
 }
 
-function EndLoadDump()
+function EndLoadDump(&$request)
 {
     // FIXME: This is a hack
-    global $request;
     $pagelink = LinkExistingWikiWord($request->getArg('pagename'));
     
     PrintXML(array(HTML::p(HTML::strong(_("Complete."))),
@@ -87,7 +86,7 @@ function FilenameForPage ($pagename)
  * is included in the zip file; otherwise all archived versions are
  * included as well.
  */
-function MakeWikiZip ($dbi, $request)
+function MakeWikiZip (&$request)
 {
     if ($request->getArg('include') == 'all') {
         $zipname         = "wikidb.zip";
@@ -102,6 +101,7 @@ function MakeWikiZip ($dbi, $request)
 
     $zip = new ZipWriter("Created by PhpWiki", $zipname);
 
+    $dbi = $request->getDbh();
     $pages = $dbi->getAllPages();
     while ($page = $pages->next()) {
         set_time_limit(30);	// Reset watchdog.
@@ -127,18 +127,17 @@ function MakeWikiZip ($dbi, $request)
     $zip->finish();
 }
 
-function DumpToDir ($dbi, $request) 
+function DumpToDir (&$request) 
 {
     global $pagedump_format;
     $directory = $request->getArg('directory');
     if (empty($directory))
-        ExitWiki(_("You must specify a directory to dump to"));
+        $request->finish(_("You must specify a directory to dump to"));
     
     // see if we can access the directory the user wants us to use
     if (! file_exists($directory)) {
         if (! mkdir($directory, 0755))
-            ExitWiki( sprintf(_("Cannot create directory '%s'"), 
-                              $directory) . "<br />\n");
+            $request->finish(fmt("Cannot create directory '%s'", $directory));
         else
             $html = sprintf(_("Created directory '%s' for the page dump..."),
                             $directory) . "<br />\n";
@@ -148,7 +147,8 @@ function DumpToDir ($dbi, $request)
 
     $html .= "MIME " . $pagedump_format . "<br />\n";
     StartLoadDump( _("Dumping Pages"), $html);
-    
+
+    $dbi = $request->getDbh();
     $pages = $dbi->getAllPages();
     
     while ($page = $pages->next()) {
@@ -167,7 +167,7 @@ function DumpToDir ($dbi, $request)
         if ( !($fd = fopen("$directory/$filename", "w")) ) {
             $msg[] = HTML::strong(fmt("couldn't open file '%s' for writing",
                                       "$directory/$filename"));
-            ExitWiki($msg);
+            $request->finish($msg);
         }
         
         $num = fwrite($fd, $data, strlen($data));
@@ -179,7 +179,7 @@ function DumpToDir ($dbi, $request)
         fclose($fd);
     }
     
-    EndLoadDump();
+    EndLoadDump($request);
 }
 
 ////////////////////////////////////////////////////////////////
@@ -188,7 +188,7 @@ function DumpToDir ($dbi, $request)
 //
 ////////////////////////////////////////////////////////////////
 
-function SavePage ($dbi, $pageinfo, $source, $filename)
+function SavePage (&$request, $pageinfo, $source, $filename)
 {
     $pagedata    = $pageinfo['pagedata'];    // Page level meta-data.
     $versiondata = $pageinfo['versiondata']; // Revision level meta-data.
@@ -203,7 +203,8 @@ function SavePage ($dbi, $pageinfo, $source, $filename)
     
     $pagename = $pageinfo['pagename'];
     $content  = $pageinfo['content'];
-    
+
+    $dbi = $request->getDbh();
     $page = $dbi->getPage($pagename);
     
     foreach ($pagedata as $key => $value) {
@@ -248,7 +249,7 @@ function SavePage ($dbi, $pageinfo, $source, $filename)
     flush();
 }
 
-function ParseSerializedPage($text, $default_pagename)
+function ParseSerializedPage($text, $default_pagename, $user)
 {
     if (!preg_match('/^a:\d+:{[si]:\d+/', $text))
         return false;
@@ -272,9 +273,9 @@ function ParseSerializedPage($text, $default_pagename)
     // Fill in defaults.
     if (empty($pagehash['pagename']))
         $pagehash['pagename'] = $default_pagename;
-    if (empty($pagehash['author']))
-        $pagehash['author'] = $GLOBALS['user']->getId(); // FIXME:?
-    
+    if (empty($pagehash['author'])) {
+        $pagehash['author'] = $user->getId();
+    }
     
     foreach ($pagehash as $key => $value) {
         switch($key) {
@@ -306,7 +307,7 @@ function SortByPageVersion ($a, $b) {
     return $a['version'] - $b['version'];
 }
 
-function LoadFile ($dbi, $filename, $text = false, $mtime = false)
+function LoadFile (&$request, $filename, $text = false, $mtime = false)
 {
     if (!is_string($text)) {
         // Read the file.
@@ -328,28 +329,31 @@ function LoadFile ($dbi, $filename, $text = false, $mtime = false)
     if ( ($parts = ParseMimeifiedPages($text)) ) {
         usort($parts, 'SortByPageVersion');
         foreach ($parts as $pageinfo)
-            SavePage($dbi, $pageinfo, sprintf(_("MIME file %s"),$filename),
+            SavePage($request, $pageinfo, sprintf(_("MIME file %s"),$filename),
                      $basename);
     }
-    else if ( ($pageinfo = ParseSerializedPage($text, $default_pagename)) ) {
-        SavePage($dbi, $pageinfo, sprintf(_("Serialized file %s"),$filename),
+    else if ( ($pageinfo = ParseSerializedPage($text, $default_pagename, $request->getUser())) ) {
+        SavePage($request, $pageinfo, sprintf(_("Serialized file %s"),$filename),
                  $basename);
     }
     else {
+        //FIXME:?
+        $user = $request->getUser();
+        
         // Assume plain text file.
         $pageinfo = array('pagename' => $default_pagename,
                           'pagedata' => array(),
                           'versiondata'
-                          => array('author' => $GLOBALS['user']->getId()), //FIXME:?
+                          => array('author' => $user->getId()),
                           'content'  => preg_replace('/[ \t\r]*\n/', "\n",
                                                      chop($text))
                           );
-        SavePage($dbi, $pageinfo, sprintf(_("plain file %s"),$filename),
+        SavePage($request, $pageinfo, sprintf(_("plain file %s"),$filename),
                  $basename);
     }
 }
 
-function LoadZip ($dbi, $zipfile, $files = false, $exclude = false) {
+function LoadZip (&$request, $zipfile, $files = false, $exclude = false) {
     $zip = new ZipReader($zipfile);
     while (list ($fn, $data, $attrib) = $zip->readFile()) {
         // FIXME: basename("filewithnoslashes") seems to return garbage sometimes.
@@ -362,11 +366,11 @@ function LoadZip ($dbi, $zipfile, $files = false, $exclude = false) {
             continue;
         }
        
-        LoadFile($dbi, $fn, $data, $attrib['mtime']);
+        LoadFile($request, $fn, $data, $attrib['mtime']);
     }
 }
 
-function LoadDir ($dbi, $dirname, $files = false, $exclude = false)
+function LoadDir (&$request, $dirname, $files = false, $exclude = false)
 {
     $handle = opendir($dir = $dirname);
     while ($fn = readdir($handle)) {
@@ -380,7 +384,7 @@ function LoadDir ($dbi, $dirname, $files = false, $exclude = false)
             continue;
         }
             
-        LoadFile($dbi, "$dir/$fn");
+        LoadFile($request, "$dir/$fn");
     }
     closedir($handle);
 }
@@ -405,7 +409,7 @@ function IsZipFile ($filename_or_fd)
 }
 
 
-function LoadAny ($dbi, $file_or_dir, $files = false, $exclude = false)
+function LoadAny (&$request, $file_or_dir, $files = false, $exclude = false)
 {
     $type = filetype($file_or_dir);
     if ($type == 'link') {
@@ -420,34 +424,35 @@ function LoadAny ($dbi, $file_or_dir, $files = false, $exclude = false)
     }
     
     if ($type == 'dir') {
-        LoadDir($dbi, $file_or_dir, $files, $exclude);
+        LoadDir($request, $file_or_dir, $files, $exclude);
     }
     else if ($type != 'file' && !preg_match('/^(http|ftp):/', $file_or_dir))
     {
-        ExitWiki( sprintf(_("Bad file type: %s"),$type) );
+        $request->finish(fmt("Bad file type: %s", $type));
     }
     else if (IsZipFile($file_or_dir)) {
-        LoadZip($dbi, $file_or_dir, $files, $exclude);
+        LoadZip($request, $file_or_dir, $files, $exclude);
     }
     else /* if (!$files || in_array(basename($file_or_dir), $files)) */
     {
-        LoadFile($dbi, $file_or_dir);
+        LoadFile($request, $file_or_dir);
     }
 }
 
-function LoadFileOrDir ($dbi, $request)
+function LoadFileOrDir (&$request)
 {
     $source = $request->getArg('source');
     StartLoadDump( sprintf(_("Loading '%s'"),$source) );
     echo "<dl>\n";
-    LoadAny($dbi, $source/*, false, array(gettext("RecentChanges"))*/);
+    LoadAny($request->getDbh(), $source/*, false, array(gettext("RecentChanges"))*/);
     echo "</dl>\n";
-    EndLoadDump();
+    EndLoadDump($request);
 }
 
-function SetupWiki ($dbi)
+function SetupWiki (&$request)
 {
-    global $GenericPages, $LANG, $user;
+    global $GenericPages, $LANG;
+    
     
     //FIXME: This is a hack (err, "interim solution")
     // This is a bogo-bogo-login:  Login without
@@ -457,28 +462,29 @@ function SetupWiki ($dbi)
     //
     // This really needs to be cleaned up...
     // (I'm working on it.)
-    $user->_userid = _("The PhpWiki programming team");
-    $user->_level = WIKIAUTH_BOGO;
+    $real_user = $request->_user;
+    $request->_user = new WikiUser(_("The PhpWiki programming team"),
+                                   WIKIAUTH_BOGO);
     
     StartLoadDump(_("Loading up virgin wiki"));
     echo "<dl>\n";
     
-    LoadAny($dbi, FindLocalizedFile(WIKI_PGSRC)/*, false, $ignore*/);
+    LoadAny($request, FindLocalizedFile(WIKI_PGSRC)/*, false, $ignore*/);
     if ($LANG != "C")
-        LoadAny($dbi, FindFile(DEFAULT_WIKI_PGSRC),
+        LoadAny($request, FindFile(DEFAULT_WIKI_PGSRC),
                 $GenericPages/*, $ignore*/);
     
     echo "</dl>\n";
-    EndLoadDump();
+    EndLoadDump($request);
 }
 
-function LoadPostFile ($dbi, $request)
+function LoadPostFile (&$request)
 {
     $upload = $request->getUploadedFile('file');
     
     if (!$upload)
         // FIXME: better message?
-        ExitWiki(_("No uploaded file to upload?"));
+        $request->finish(_("No uploaded file to upload?"));
     
     // Dump http headers.
     StartLoadDump( sprintf(_("Uploading %s"),$upload->getName()) );
@@ -486,12 +492,12 @@ function LoadPostFile ($dbi, $request)
     
     $fd = $upload->open();
     if (IsZipFile($fd))
-        LoadZip($dbi, $fd, false, array(_("RecentChanges")));
+        LoadZip($request->getDbh(), $fd, false, array(_("RecentChanges")));
     else
-        Loadfile($dbi, $upload->getName(), $upload->getContents());
+        Loadfile($request->getDbh(), $upload->getName(), $upload->getContents());
     
     echo "</dl>\n";
-    EndLoadDump();
+    EndLoadDump($request);
 }
 
 // For emacs users

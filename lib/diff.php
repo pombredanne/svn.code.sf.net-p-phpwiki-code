@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.28 2002-01-22 03:17:47 dairiki Exp $');
+rcs_id('$Id: diff.php,v 1.29 2002-01-23 05:10:22 dairiki Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -228,15 +228,14 @@ class TableUnifiedDiffFormatter extends HtmlUnifiedDiffFormatter
     
 /////////////////////////////////////////////////////////////////
 
-function PageInfoRow ($pagename, $label, $rev)
+function PageInfoRow ($label, $rev)
 {
    global $Theme;
     
    $row = HTML::tr(HTML::td(array('align' => 'right'), $label));
    if ($rev) {
-       $url = WikiURL($pagename, array('version' => $rev->getVersion()));
-       $linked_version = HTML::a(array('href' => $url), $rev->getVersion());
-       $row->pushContent(HTML::td(fmt("version %s",$linked_version)),
+       $linked_version = HTML::a(array('href' => WikiURL($rev)), $rev->getVersion());
+       $row->pushContent(HTML::td(fmt("version %s", $linked_version)),
                          HTML::td(fmt("last modified on %s",
                                       $Theme->formatDateTime($rev->get('mtime')))),
                          HTML::td(fmt("by %s", $rev->get('author'))));
@@ -246,7 +245,7 @@ function PageInfoRow ($pagename, $label, $rev)
    return $row;
 }
 
-function showDiff ($dbi, $request) {
+function showDiff (&$request) {
     $pagename = $request->getArg('pagename');
     if (is_array($versions = $request->getArg('versions'))) {
         // Version selection from pageinfo.php display:
@@ -258,10 +257,11 @@ function showDiff ($dbi, $request) {
         $previous = $request->getArg('previous');
     }
     
-    $page = $dbi->getPage($pagename);
+    $page = $request->getPage();
+    
     if ($version) {
         if (!($new = $page->getRevision($version)))
-            NoSuchRevision($page, $version);
+            NoSuchRevision($request, $page, $version);
         $new_version = fmt("version %d", $version);
     }
     else {
@@ -271,7 +271,7 @@ function showDiff ($dbi, $request) {
 
     if (preg_match('/^\d+$/', $previous)) {
         if ( !($old = $page->getRevision($previous)) )
-            NoSuchRevision($page, $previous);
+            NoSuchRevision($request, $page, $previous);
         $old_version = fmt("version %d", $previous);
         $others = array('major', 'minor', 'author');
     }
@@ -305,11 +305,10 @@ function showDiff ($dbi, $request) {
         }
     }
 
-    $new_url = WikiURL($pagename, array('version' => $new->getVersion()));
-    $new_link = HTML::a(array('href' => $new_url), $new_version);
-    $old_url = WikiURL($pagename, array('version' => $old ? $old->getVersion() : 0));
-    $old_link = HTML::a(array('href' => $old_url), $old_version);
-    $page_link = LinkExistingWikiWord($pagename);
+    $new_link = HTML::a(array('href' => WikiURL($new)), $new_version);
+    $old_link = HTML::a(array('href' => WikiURL($old ? $old : $page)),
+                        $old_version);
+    $page_link = LinkExistingWikiWord($page->getName());
     
     $html[] = HTML::p(fmt("Differences between %s and %s of %s.",
                           $new_link, $old_link, $page_link));
@@ -326,7 +325,7 @@ function showDiff ($dbi, $request) {
             $otherdiffs->pushContent(", ");
         else
             $otherdiffs->pushContent(" ");
-        $otherdiffs->pushContent(HTML::a(array('href' => WikiURL($pagename, $args),
+        $otherdiffs->pushContent(HTML::a(array('href' => WikiURL($page, $args),
                                                'class' => 'wikiaction'),
                                          $label[$other]));
     }
@@ -336,8 +335,8 @@ function showDiff ($dbi, $request) {
     if ($old and $old->getVersion() == 0)
         $old = false;
     
-    $html[] = HTML::Table(PageInfoRow($pagename, _("Newer page:"), $new),
-                          PageInfoRow($pagename, _("Older page:"), $old));
+    $html[] = HTML::Table(PageInfoRow(_("Newer page:"), $new),
+                          PageInfoRow(_("Older page:"), $old));
     
     if ($new && $old) {
         $diff = new Diff($old->getContent(), $new->getContent());
