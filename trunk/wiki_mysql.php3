@@ -1,4 +1,4 @@
-<!-- $Id: wiki_mysql.php3,v 1.4 2000-06-05 21:46:50 wainstead Exp $ -->
+<!-- $Id: wiki_mysql.php3,v 1.5 2000-06-08 22:11:05 ahollosi Exp $ -->
 <?
 
    /*
@@ -47,10 +47,10 @@
    // Return hash of page + attributes or default
    function RetrievePage($dbi, $pagename) {
       $pagename = addslashes($pagename);
-      if ($res = mysql_query("select data from $dbi[table] where page='$pagename'", $dbi['dbc'])) {
+      if ($res = mysql_query("select hash from $dbi[table] where page='$pagename'", $dbi['dbc'])) {
          if ($o = mysql_fetch_object($res)) {
             // unserialize data into a hash
-            $pagehash = unserialize($o->data);
+            $pagehash = unserialize($o->hash);
             return $pagehash;
          }
       }
@@ -64,7 +64,7 @@
       $pagename = addslashes($pagename);
       $pagedata = addslashes(serialize($pagehash));
 
-      if (!mysql_query("replace into $dbi[table] (page, data) values ('$pagename', '$pagedata')", $dbi['dbc'])) {
+      if (!mysql_query("replace into $dbi[table] (page, hash) values ('$pagename', '$pagedata')", $dbi['dbc'])) {
             echo "error writing value";
             exit();
       }
@@ -103,7 +103,7 @@
    // setup for full-text search
    function InitFullSearch($dbi, $search) {
       $search = addslashes($search);
-      $res = mysql_query("select page,data from $dbi[table] where data like '%$search%'", $dbi["dbc"]);
+      $res = mysql_query("select page,hash from $dbi[table] where hash like '%$search%'", $dbi["dbc"]);
 
       return $res;
    }
@@ -112,7 +112,7 @@
    function FullSearchNextMatch($dbi, $res) {
       if($o = mysql_fetch_object($res)) {
 	 $page['name'] = $o->page;
-	 $page['hash'] = unserialize($o->data);
+	 $page['hash'] = unserialize($o->hash);
          return $page;
       }
       else {

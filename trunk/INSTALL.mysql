@@ -23,11 +23,11 @@ For more information on mySQL go to http://www.mysql.org/
 
 	CREATE table wiki (
 		page varchar(100) primary key,
-		data mediumtext);
+		hash mediumtext);
 
 	CREATE table archive (
 		page varchar(100) primary key,
-		data mediumtext);
+		hash mediumtext);
 
 4. Edit wiki_config.php3 to reflect your settings.
 
@@ -50,4 +50,4 @@ the necessary access rights for the phpwiki tables.
 /Arno
 ahollosi@iname.com
 
-Last modified: 2000-04-15
+$Id: INSTALL.mysql,v 1.2 2000-06-08 22:11:05 ahollosi Exp $
