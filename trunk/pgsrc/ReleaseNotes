@@ -1,6 +1,6 @@
 Date: Sun, 27 Jan 2002 17:28:55 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.12 2002-01-27 22:52:21 carstenklapp Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.13 2002-02-07 22:00:05 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
   flags=PAGE_LOCKED;
@@ -56,9 +56,9 @@ agreed not to put references in a separate table, so it's not completely
 normalized. "Don't let the best be the enemy of the good.")
 
 Postgresql support has been added and the markup language is evolving, now allowing
-!!!<h1>
-!!<h2>
-!<h3>
+!!!<h2>
+!!<h3>
+!<h4>
 tags and __a new way to make text bold__, and of course the
 [new linking scheme].
 
