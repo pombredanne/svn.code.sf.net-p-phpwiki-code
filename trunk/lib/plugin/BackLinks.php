@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BackLinks.php,v 1.27 2004-09-25 16:33:52 rurban Exp $');
+rcs_id('$Id: BackLinks.php,v 1.28 2004-10-14 17:16:22 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
     
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.27 $");
+                            "\$Revision: 1.28 $");
     }
     
     function getDefaultArguments() {
@@ -68,6 +68,7 @@ extends WikiPlugin
             if (in_array('count',$info))
                 $this->_args['types']['count'] = new _PageList_Column_BackLinks_count('count', _("#"), 'center');
         }
+        $this->_args['dosort'] = !empty($this->_args['sortby']); // override DB sort
         $pagelist = new PageList($info, $exclude, $this->_args);
         $p = $dbi->getPage($page);
         $pagelist->addPages($p->getLinks());
@@ -145,6 +146,9 @@ class _PageList_Column_BackLinks_count extends _PageList_Column {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.27  2004/09/25 16:33:52  rurban
+// add support for all PageList options
+//
 // Revision 1.26  2004/09/14 10:32:32  rurban
 // support exclude = plugin-list
 //
