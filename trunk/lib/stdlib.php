@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.181 2004-05-25 10:18:44 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.182 2004-05-25 12:40:48 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1447,6 +1447,10 @@ function isUtf8String( $s ) {
 function fixTitleEncoding( $s ) {
     global $charset;
 
+    $s = trim($s);
+    // print a warning?
+    if (empty($s)) return $s;
+
     $ishigh = preg_match( '/[\x80-\xff]/', $s);
     /*
     $isutf = ($ishigh ? preg_match( '/^([\x00-\x7f]|[\xc0-\xdf][\x80-\xbf]|' .
@@ -1454,15 +1458,15 @@ function fixTitleEncoding( $s ) {
     */
     $isutf = ($ishigh ? isUtf8String($s) : true);
 
-    if( ($charset != "utf-8") and $ishigh and $isutf )
-        // TODO: check for iconv support
-        // TODO: if charset == 'iso-8859-1' then simple use utf8_decode()
-        if ($charset == 'iso-8859-1')
+    if( (strtolower($charset) != "utf-8") and $ishigh and $isutf )
+        // if charset == 'iso-8859-1' then simply use utf8_decode()
+        if (strtolower($charset) == 'iso-8859-1')
             return utf8_decode( $s );
         else
+            // TODO: check for iconv support
             return iconv( "UTF-8", $charset, $s );
 
-    if( ($charset == "utf-8") and $ishigh and !$isutf )
+    if( (strtolower($charset) == "utf-8") and $ishigh and !$isutf )
         return utf8_encode( $s );
 
     // Other languages can safely leave this function, or replace
@@ -1488,6 +1492,12 @@ function stripForSearch( $string ) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.181  2004/05/25 10:18:44  rurban
+// Check for UTF-8 URLs; Internet Explorer produces these if you
+// type non-ASCII chars in the URL bar or follow unescaped links.
+// Fixes sf.net bug #953949
+// src: languages/Language.php:checkTitleEncoding() from mediawiki
+//
 // Revision 1.180  2004/05/18 16:23:39  rurban
 // rename split_pagename to SplitPagename
 //
