@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.85 2002-09-18 22:11:21 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.86 2002-10-15 18:42:21 zorloc Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -139,13 +139,19 @@ class WikiRequest extends Request {
 
     /**
      * Get requested page from the page database.
+	 * By default it will grab the page requested via the URL
      *
      * This is a convenience function.
+	 * @param string $pagename Name of page to get.
+	 * @return WikiDB_Page Object with methods to pull data from
+	 * database for the page requested.
      */
-    function getPage () {
+    function getPage ($pagename = false) {
         if (!isset($this->_dbi))
             $this->getDbh();
-        return $this->_dbi->getPage($this->getArg('pagename'));
+		if (!$pagename) 
+			$pagename = $this->getArg('pagename');
+        return $this->_dbi->getPage($pagename);
     }
 
     function _handleAuthRequest ($auth_args) {
