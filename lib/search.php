@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: search.php,v 1.8 2001-09-18 19:16:23 dairiki Exp $');
+rcs_id('$Id: search.php,v 1.9 2001-09-19 03:24:36 wainstead Exp $');
 // Title search: returns pages having a name matching the search term
 
 require_once('lib/Template.php');
@@ -25,5 +25,14 @@ $html .= ("</ul><hr noshade>\n"
           . "\n");
 
 echo GeneratePage('MESSAGE', $html, "$search_title: $searchterm");
+
+// For emacs users
+// Local Variables:
+// mode: php
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
+// End:
 
 ?>

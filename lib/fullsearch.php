@@ -1,6 +1,6 @@
 <?php
 // Search the text of pages for a match.
-rcs_id('$Id: fullsearch.php,v 1.7 2001-09-18 19:16:23 dairiki Exp $');
+rcs_id('$Id: fullsearch.php,v 1.8 2001-09-19 03:24:36 wainstead Exp $');
 require_once('lib/Template.php');
 require_once('lib/TextSearchQuery.php');
 
@@ -48,4 +48,15 @@ $html .= ( "</dl>\n<hr noshade>"
            . "\n");
            
 echo GeneratePage('MESSAGE', $html, sprintf(gettext("Full Text Search: %s"), $searchterm));
+
+
+// For emacs users
+// Local Variables:
+// mode: php
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
+// End:
+
 ?>
