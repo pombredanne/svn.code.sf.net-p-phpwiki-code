@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.84 2004-04-10 02:30:49 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.85 2004-04-12 13:04:50 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -202,7 +202,7 @@ class Theme {
 
     function file ($file) {
         return $this->_path . "$this->_theme/$file";
-    }
+   } 
 
     function _findFile ($file, $missing_okay = false) {
         if (file_exists($this->_path . "$this->_theme/$file"))
@@ -1258,6 +1258,10 @@ class RelatedExternalLinksBox extends SidebarBox {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.84  2004/04/10 02:30:49  rurban
+// Fixed gettext problem with VIRTUAL_PATH scripts (Windows only probably)
+// Fixed "cannot setlocale..." (sf.net problem)
+//
 // Revision 1.83  2004/04/09 17:49:03  rurban
 // Added PhpWiki RssFeed to Sidebar
 // sidebar formatting
