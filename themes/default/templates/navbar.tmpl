@@ -1,5 +1,5 @@
 <?php // -*-html-*-
-    rcs_id('$Id: navbar.tmpl,v 1.20 2003-11-20 20:05:53 carstenklapp Exp $');
+    rcs_id('$Id: navbar.tmpl,v 1.21 2003-11-25 21:58:33 carstenklapp Exp $');
 
     $s = $Theme->getButtonSeparator();
 ?>
@@ -18,8 +18,8 @@
              onmouseover="window.status='<?=_("Quick Search")?>'; return true;"
              onmouseout="window.status=''; return true;" />
     <?php if (!empty($revision)) { ?>
-     <?=$s?><?= Button(_("LikePages")) ?>
-     <?=$s?><?= Button(_("BackLinks")) ?>
+     <?=$s?><?= Button("LikePages", _("LikePages")) ?>
+     <?=$s?><?= Button("BackLinks", _("BackLinks")) ?>
     <?php } ?>
     <?php if (!empty($user)) { ?>
     <?php
