@@ -1,31 +1,5 @@
 <?php
 
-$locale["You entered an invalid login or password."] =
-   "Du hast ein ungültiges Login oder Passwort eingegeben.";
-$locale["You are about to remove '%s' permanently!"] =
-   "Du bist im Begriff '%s' permanent zu löschen!";
-$locale["Click %shere%s to remove the page now."] =
-   "Klicke %shier%s um die Seite jetzt zu löschen.";
-$locale["Otherwise press the \"Back\" button of your browser."] =
-   "Anderenfalls benütze die \"Zurück\" Funktion deines Browsers.";
-$locale["Function not yet implemented."] =
-   "Funktion noch nicht implementiert.";
-$locale["Remove page"] =
-   "Seite löschen";
-$locale["Removed page '%s' succesfully."] =
-   "Seite '%s' erfolgreich gelöscht.";
-$locale["templates/browse.html"] =
-   "locale/de/templates/browse.html";
-$locale["templates/editpage.html"] =
-   "locale/de/templates/editpage.html";
-$locale["templates/editlinks.html"] =
-   "locale/de/templates/editlinks.html";
-$locale["templates/message.html"] =
-   "locale/de/templates/message.html";
-$locale["./pgsrc"] =
-   "locale/de/pgsrc";
-$locale["Current page:"] =
-   "Aktuelle Seite:";
 $locale["version %s"] =
    "Version %s";
 $locale["last modified on %s"] =
@@ -34,20 +8,18 @@ $locale["by %s"] =
    "von %s";
 $locale["None"] =
    "Keine";
+$locale["Current page:"] =
+   "Aktuelle Seite:";
 $locale["Archived page:"] =
    "Archivierte Seite:";
 $locale["Versions are identical"] =
    "Versionen sind identisch";
 $locale["Diff of %s."] =
    "Diff von %s.";
-$locale["HomePage"] =
-   "StartSeite";
 $locale["Describe %s here."] =
    "Beschreibe %s hier.";
 $locale["Copy of %s"] =
    "Kopie von %s";
-$locale["No page name passed into editpage!"] =
-   "Kein Seitenname an EditierSeite übergeben!";
 $locale["This page has been locked by the administrator and cannot be edited."] =
    "Diese Seite wurde vom Administrator gesperrt und kann nicht editiert werden.";
 $locale["Sorry for the inconvenience."] =
@@ -60,6 +32,10 @@ $locale["%d matches found in %d pages."] =
    "%d Treffer in %d Seiten.";
 $locale["Full Text Search Results"] =
    "Volltext-Suchresultate";
+$locale["as version %d"] =
+   "Version %s";
+$locale["HomePage"] =
+   "StartSeite";
 $locale["Cannot establish connection to database, giving up."] =
    "Kann Verbindung zu Datenbank nicht aufbauen - Abbruch.";
 $locale["Error message: %s"] =
@@ -78,22 +54,18 @@ $locale["Error writing page '%s'"] =
    "Fehler beim Schreiben der Seite '%s'";
 $locale["Cannot delete '%s' from table '%s'"] =
    "Kann nicht '%s' aus Tabelle '%s' löschen";
-$locale["Enter a page name"] =
-   "Seitenname eingeben";
-$locale["Go"] =
-   "Los";
-$locale["Show the page source and references"] =
-   "Zeige den Seitenquelltext und die Verweise";
-$locale["PageInfo"] =
-   "SeitenInfo";
 $locale["Page name '%s' is not in the database"] =
    "Seite '%s' ist nicht in der Datenbank";
+$locale["Show the page source"] =
+   "Zeige den Seitenquelltext und die Verweise";
 $locale["Current version"] =
    "Aktuelle Seite:";
 $locale["Archived version"] =
    "Archivierte Seite:";
-$locale["RecentChanges"] =
-   "FrischeSeiten";
+$locale["PageInfo"] =
+   "SeitenInfo";
+$locale["WikiFatalError"] =
+   "FatalerWikiFehler";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
    "PhpWiki kann deine Veränderungen nicht speichern, da ein andererBenützer die Seite verändert und gespeichert hat, während du diese Seiteeditiert hast. Wenn die Seite jetzt gespeichert werden würde, dann würdendie Veränderungen des anderen Benützers verloren gehen.";
 $locale["In order to recover from this situation follow these steps:"] =
@@ -118,19 +90,31 @@ $locale["%d pages match your query."] =
    "%d Seiten wurden gefunden.";
 $locale["Title Search Results"] =
    "Volltext-Suchresultate";
-$locale["Inserting page %s, version %s from %s"] =
-   "Füge Seite %s ein, Version %s vom %s";
-$locale["WikiFatalError"] =
-   "FatalerWikiFehler";
-$locale["Search"] =
-   "Suche";
-$locale["Stack bounds exceeded in SetHTMLOutputMode"] =
-   "Interner Fehler: Stackgrenze in SetHTMLOutputMode überschritten.";
 $locale["%d best incoming links:"] =
    "Die %d besten hereinkommenden Links:";
 $locale["%d best outgoing links:"] =
    "Die %d besten hinausgehenden Links:";
 $locale["%d most popular nearby:"] =
    "Die %d meistbesuchten Seiten in der Nähe:";
+$locale["RecentChanges"] =
+   "FrischeSeiten";
+$locale["Lists nested too deep in SetHTMLOutputMode"] =
+   "Interner Fehler: Stackgrenze in SetHTMLOutputMode überschritten.";
+$locale["Search"] =
+   "Suche";
+$locale["You entered an invalid login or password."] =
+   "Du hast ein ungültiges Login oder Passwort eingegeben.";
+$locale["Function not yet implemented."] =
+   "Funktion noch nicht implementiert.";
+$locale["You are about to remove '%s' permanently!"] =
+   "Du bist im Begriff '%s' permanent zu löschen!";
+$locale["Click <a href=\"%s\">here</a> to remove the page now."] =
+   "Klicke %shier%s um die Seite jetzt zu löschen.";
+$locale["Otherwise press the \"Back\" button of your browser."] =
+   "Anderenfalls benütze die \"Zurück\" Funktion deines Browsers.";
+$locale["Removed page '%s' succesfully."] =
+   "Seite '%s' erfolgreich gelöscht.";
+$locale["Remove page"] =
+   "Seite löschen";
 
 ;?>

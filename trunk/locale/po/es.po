@@ -12,7 +12,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.2.0\n"
-"POT-Creation-Date: 2001-02-01 07:58+0100\n"
+"POT-Creation-Date: 2001-04-06 14:15-0700\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -22,296 +22,253 @@ msgstr ""
 "Date: 2001-01-12 16:10-0500\n"
 "From:  <proca@clavo.net>\n"
 
-# admin.php:26
-#: admin.php:26
-msgid "You entered an invalid login or password."
-msgstr ""
-"Se h&aacute; introducido un nombre de usuario o palabra de paso invalido."
-
-# admin.php:47
-#: admin.php:47
-#, c-format
-msgid "You are about to remove '%s' permanently!"
-msgstr "¡Va a borrar '%s' permanentemente!"
-
-# admin.php:50
-#: admin.php:50
-#, c-format
-msgid "Click %shere%s to remove the page now."
-msgstr "Haga Click %aqu&iacute;% para borrar la p&aacute;gina ahora"
-
-# admin.php:53
-#: admin.php:53
-msgid "Otherwise press the \"Back\" button of your browser."
-msgstr ""
-"En caso contrario pulse el bot&oacute; \"Atr&aacute;s\" en su navegador"
-
-# admin.php:55
-#: admin.php:55
-msgid "Function not yet implemented."
-msgstr "Funci&oacute;n todav&iacute; no implementada"
-
-# admin.php:57 admin.php:65
-#: admin.php:57 admin.php:65
-msgid "Remove page"
-msgstr "Borrar p&aacute;gina"
-
-# admin.php:63
-#: admin.php:63
-#, c-format
-msgid "Removed page '%s' succesfully."
-msgstr "P&aacute;gina '%s' borrada satisfactoriamente."
-
-# lib/config.php:162
-#: lib/config.php:195
-msgid "templates/browse.html"
-msgstr "locale/es/templates/browse.html"
-
-# lib/config.php:163
-#: lib/config.php:196
-msgid "templates/editpage.html"
-msgstr "locale/es/templates/editpage.html"
-
-# lib/config.php:164
-#: lib/config.php:197
-msgid "templates/editlinks.html"
-msgstr "locale/es/templates/editlinks.html"
-
-# lib/config.php:165
-#: lib/config.php:198
-msgid "templates/message.html"
-msgstr "locale/es/templates/message.html"
-
-# lib/config.php:181
-#: lib/config.php:214
-msgid "./pgsrc"
-msgstr "locale/es/pgsrc"
-
 # lib/diff.php:682
-#: lib/diff.php:682
+#: lib/diff.php:714
 #, c-format
 msgid "WikiDiff::apply: line count mismatch: %s != %s"
 msgstr "WikiDiff::apply: conteo de l&iacute;neas difiere: %s != %s"
 
 # lib/diff.php:742
-#: lib/diff.php:742
+#: lib/diff.php:774
 msgid "WikiDiff::_check: failed"
 msgstr "WikiDiff::_check: fall&oacute;"
 
 # lib/diff.php:752
-#: lib/diff.php:752
+#: lib/diff.php:784
 msgid "WikiDiff::_check: edit sequence is non-optimal"
 msgstr "WikiDiff::_check: secuencia de edici&oacute;n no es &oacute;ptima"
 
 # lib/diff.php:756
-#: lib/diff.php:756
+#: lib/diff.php:788
 #, c-format
 msgid "WikiDiff Okay: LCS = %s"
 msgstr "WikiDiff Ok: LCS = %s"
 
-# lib/diff.php:997
-#: lib/diff.php:997
-msgid "Current page:"
-msgstr "P&aacute;gina actual:"
-
 # lib/diff.php:1001 lib/diff.php:1019
-#: lib/diff.php:1001 lib/diff.php:1019
+#: lib/diff.php:1037 lib/loadsave.php:173
 #, c-format
 msgid "version %s"
 msgstr "versi&oacute;n %s"
 
 # lib/diff.php:1003 lib/diff.php:1021
-#: lib/diff.php:1003 lib/diff.php:1021
+#: lib/diff.php:1039
 #, c-format
 msgid "last modified on %s"
 msgstr "modificado por &uacute;ltima vez el %s"
 
 # lib/diff.php:1006 lib/diff.php:1024
-#: lib/diff.php:1006 lib/diff.php:1024
+#: lib/diff.php:1042
 #, c-format
 msgid "by %s"
 msgstr "por %s"
 
 # lib/diff.php:1010 lib/diff.php:1028
-#: lib/diff.php:1010 lib/diff.php:1028
+#: lib/diff.php:1045
 msgid "None"
 msgstr "Ninguno"
 
+# lib/diff.php:997
+#: lib/diff.php:1056
+msgid "Current page:"
+msgstr "P&aacute;gina actual:"
+
 # lib/diff.php:1015
-#: lib/diff.php:1015
+#: lib/diff.php:1057
 msgid "Archived page:"
 msgstr "P&aacute;gina archivada:"
 
 # lib/diff.php:1037
-#: lib/diff.php:1037
+#: lib/diff.php:1065
 msgid "Versions are identical"
 msgstr "Las versiones son id&eacute;nticas"
 
 # lib/diff.php:1045
-#: lib/diff.php:1045
+#: lib/diff.php:1074
 #, c-format
 msgid "Diff of %s."
 msgstr "Diferencia de %s."
 
-# lib/display.php:14
-#: lib/display.php:12
-msgid "HomePage"
-msgstr "PaginaPrincipal"
-
 # lib/display.php:31 lib/editpage.php:50
-#: lib/display.php:29 lib/editpage.php:50
+#: lib/display.php:15 lib/editpage.php:46
 #, c-format
 msgid "Describe %s here."
 msgstr "Describe %s aqu&iacute;."
 
 # lib/editpage.php:19
-#: lib/editpage.php:19
+#: lib/editpage.php:10
 #, c-format
 msgid "Copy of %s"
 msgstr "Copia de %s"
 
-# lib/editpage.php:23
-#: lib/editpage.php:23
-msgid "No page name passed into editpage!"
-msgstr "No se h&aacute; pasado nombre de p&aacute;gina a editarpagina"
-
 # lib/editpage.php:31 lib/savepage.php:52
-#: lib/editpage.php:31 lib/savepage.php:121
+#: lib/editpage.php:21 lib/savepage.php:52
 msgid "This page has been locked by the administrator and cannot be edited."
 msgstr ""
 "Esta p&aacute;gina ha sido bloqueada por el administrador y no puede ser "
 "editada."
 
 # lib/editpage.php:33 lib/savepage.php:32 lib/savepage.php:53
-#: lib/editpage.php:33 lib/savepage.php:99 lib/savepage.php:122
+#: lib/editpage.php:23 lib/savepage.php:32 lib/savepage.php:53
 msgid "Sorry for the inconvenience."
 msgstr "Disculpe la inconveniencia."
 
 # lib/editpage.php:35 lib/savepage.php:54
-#: lib/editpage.php:35 lib/savepage.php:123
+#: lib/editpage.php:26 lib/savepage.php:55
 #, c-format
 msgid "Problem while editing %s"
 msgstr "Problema al editar %s"
 
 # lib/fullsearch.php:15
-#: lib/fullsearch.php:9 lib/search.php:9
+#: lib/fullsearch.php:11 lib/search.php:11
 #, c-format
 msgid "Searching for \"%s\" ....."
 msgstr "Buscando \"%s\" ..."
 
 # lib/fullsearch.php:45
-#: lib/fullsearch.php:41
+#: lib/fullsearch.php:43
 #, c-format
 msgid "%d matches found in %d pages."
 msgstr "%d veces encontrado en %d p&aacute;ginas."
 
 # lib/fullsearch.php:48
-#: lib/fullsearch.php:45
+#: lib/fullsearch.php:47
 msgid "Full Text Search Results"
 msgstr "Resultados de la búsqueda en el texto completo"
 
+#: lib/loadsave.php:15
+msgid "Complete."
+msgstr ""
+
+#: lib/loadsave.php:99 lib/main.php:157
+msgid "You must specify a directory to dump to"
+msgstr ""
+
+#: lib/loadsave.php:175
+#, c-format
+msgid "from %s"
+msgstr ""
+
+#: lib/loadsave.php:185
+#, c-format
+msgid "is identical to current version %d"
+msgstr ""
+
+#: lib/loadsave.php:190
+msgid "- skipped"
+msgstr ""
+
+#: lib/loadsave.php:211
+msgid "- saved"
+msgstr ""
+
+# lib/diff.php:1001 lib/diff.php:1019
+#: lib/loadsave.php:213
+#, fuzzy, c-format
+msgid "as version %d"
+msgstr "versi&oacute;n %s"
+
+# lib/display.php:14
+#: lib/main.php:41 lib/main.php:100
+msgid "HomePage"
+msgstr "PaginaPrincipal"
+
+#: lib/main.php:111
+msgid "Action $action is disabled in this wiki."
+msgstr ""
+
+#: lib/main.php:165
+msgid "You must specify a source to read from"
+msgstr ""
+
 # lib/msql.php:29 lib/mysql.php:36
-#: lib/msql.php:29 lib/mysql.php:36
+#: lib/msql.php:38 lib/mysql.php:47
 msgid "Cannot establish connection to database, giving up."
 msgstr ""
 "No se puede establecer conexi&oacute;n con la base de datos, me doy por "
 "vencido."
 
 # lib/msql.php:31 lib/msql.php:37
-#: lib/msql.php:31 lib/msql.php:37
+#: lib/msql.php:40 lib/msql.php:47
 #, c-format
 msgid "Error message: %s"
 msgstr "Mensaje de error: %s"
 
 # lib/msql.php:35 lib/mysql.php:42
-#: lib/msql.php:35 lib/mysql.php:42
+#: lib/msql.php:44 lib/mysql.php:53
 #, c-format
 msgid "Cannot open database %s, giving up."
 msgstr "No se puede abrir la base de datos %s , me doy por vencido."
 
 # lib/msql.php:210 lib/msql.php:286
-#: lib/msql.php:210 lib/msql.php:286
+#: lib/msql.php:220 lib/msql.php:296
 #, c-format
 msgid "Insert/update failed: %s"
 msgstr "Inserci&oacute;n/Actualizaci&oacute;n fall&oacute;: %s"
 
 # lib/msql.php:221 lib/msql.php:296
-#: lib/msql.php:221 lib/msql.php:296
+#: lib/msql.php:231 lib/msql.php:306
 #, c-format
 msgid "Delete on %s failed: %s"
 msgstr "Eliminaci&oacute;n en %s fall&oacute;: %s"
 
 # lib/msql.php:237 lib/msql.php:312
-#: lib/msql.php:237 lib/msql.php:312
+#: lib/msql.php:247 lib/msql.php:322
 #, c-format
 msgid "Insert into %s failed: %s"
 msgstr "Inserci&oacute;n en %s fall&oacute;: %s"
 
 # lib/mysql.php:38 lib/mysql.php:44 lib/mysql.php:118 lib/mysql.php:158
-#: lib/mysql.php:38 lib/mysql.php:44 lib/mysql.php:123 lib/mysql.php:163
+#: lib/mysql.php:49 lib/mysql.php:55 lib/mysql.php:134 lib/mysql.php:174
 #, c-format
 msgid "MySQL error: %s"
 msgstr "Error de MySQL: %s"
 
 # lib/mysql.php:116
-#: lib/mysql.php:121
+#: lib/mysql.php:132
 #, c-format
 msgid "Error writing page '%s'"
 msgstr "Error al escribir la p&aacute;gina `%s'"
 
 # lib/mysql.php:156
-#: lib/mysql.php:161
+#: lib/mysql.php:172
 #, c-format
 msgid "Cannot delete '%s' from table '%s'"
 msgstr "No se puede borrar '%s' de la tabla '%s'"
 
-#: lib/navigate.php:81
-msgid "RelatedPages"
-msgstr ""
-
-# lib/pageinfo.php:9
-#: lib/pageinfo.php:9
-msgid "Enter a page name"
-msgstr "Escriba un nombre de p&aacute;gina"
-
-# lib/pageinfo.php:10 lib/stdlib.php:239
-#: lib/pageinfo.php:10 lib/stdlib.php:116
-msgid "Go"
-msgstr "Aceptar"
-
-# lib/pageinfo.php:21
-#: lib/pageinfo.php:21
-msgid "Show the page source and references"
-msgstr "Mostrar el c&oacute;digo fuente de la p&aacute;gina y referencias"
-
-# lib/pageinfo.php:26 lib/pageinfo.php:75
-#: lib/pageinfo.php:26 lib/pageinfo.php:75
-msgid "PageInfo"
-msgstr "InformacionDeLaPagina"
-
 # lib/pageinfo.php:36
-#: lib/pageinfo.php:36
+#: lib/pageinfo.php:14
 #, c-format
 msgid "Page name '%s' is not in the database"
 msgstr "El nombre de la p&aacute;gina `%s' no est&aacute; en la base de datos"
 
+# lib/pageinfo.php:21
+#: lib/pageinfo.php:48
+#, fuzzy
+msgid "Show the page source"
+msgstr "Mostrar el c&oacute;digo fuente de la p&aacute;gina y referencias"
+
 # lib/pageinfo.php:64
-#: lib/pageinfo.php:64
+#: lib/pageinfo.php:54
 msgid "Current version"
 msgstr "Versi&oacute;n actual:"
 
 # lib/pageinfo.php:70
-#: lib/pageinfo.php:70
+#: lib/pageinfo.php:57
 msgid "Archived version"
 msgstr "Versi&oacute;n archivada:"
 
-# lib/stdlib.php:384 lib/stdlib.php:445
-#: lib/savepage.php:16 lib/savepage.php:74
-msgid "RecentChanges"
-msgstr "CambiosRecientes"
+# lib/pageinfo.php:26 lib/pageinfo.php:75
+#: lib/pageinfo.php:61
+msgid "PageInfo"
+msgstr "InformacionDeLaPagina"
+
+# lib/stdlib.php:36
+#: lib/prepend.php:59
+msgid "WikiFatalError"
+msgstr "ErrorFatalDeWiki"
 
 # lib/savepage.php:18
-#: lib/savepage.php:85
+#: lib/savepage.php:18
 msgid ""
 "PhpWiki is unable to save your changes, because another user edited and "
 "saved the page while you were editing the page too. If saving proceeded now "
@@ -323,19 +280,19 @@ msgstr ""
 "anterior se podr&iacute;an perder."
 
 # lib/savepage.php:20
-#: lib/savepage.php:87
+#: lib/savepage.php:20
 msgid "In order to recover from this situation follow these steps:"
 msgstr "Para restaurar esta situaci&oacute;n siga los siguientes pasos:"
 
 # lib/savepage.php:22
-#: lib/savepage.php:89
+#: lib/savepage.php:22
 msgid "Use your browser's <b>Back</b> button to go back to the edit page."
 msgstr ""
 "Use el bot&oacute;n <b>Atr&aacute;s<b> para retornar a la p&aacute;gina "
 "editada"
 
 # lib/savepage.php:24
-#: lib/savepage.php:91
+#: lib/savepage.php:24
 msgid ""
 "Copy your changes to the clipboard or to another temporary place (e.g. text "
 "editor)."
@@ -344,7 +301,7 @@ msgstr ""
 "textos)."
 
 # lib/savepage.php:26
-#: lib/savepage.php:93
+#: lib/savepage.php:26
 msgid ""
 "<b>Reload</b> the page. You should now see the most current version of the "
 "page. Your changes are no longer there."
@@ -354,7 +311,7 @@ msgstr ""
 "ah&iacute;."
 
 # lib/savepage.php:28
-#: lib/savepage.php:95
+#: lib/savepage.php:28
 msgid ""
 "Make changes to the file again. Paste your additions from the clipboard (or "
 "text editor)."
@@ -363,73 +320,165 @@ msgstr ""
 "portapapeles (o del editor de textos)."
 
 # lib/savepage.php:30
-#: lib/savepage.php:97
+#: lib/savepage.php:30
 msgid "Press <b>Save</b> again."
 msgstr "Pulse <b>Guardar<b> otra vez."
 
 # lib/savepage.php:36
-#: lib/savepage.php:103
+#: lib/savepage.php:36
 #, c-format
 msgid "Problem while updating %s"
 msgstr "Problema al editar %s"
 
 # lib/savepage.php:76
-#: lib/savepage.php:146
+#: lib/savepage.php:78
 #, c-format
 msgid "Thank you for editing %s."
 msgstr "Gracias por editar %s."
 
 # lib/savepage.php:106
-#: lib/savepage.php:176
+#: lib/savepage.php:97
 msgid "Your careful attention to detail is much appreciated."
 msgstr "Se agradece una cuidadosa atenci&oacute;n a los detalles."
 
-#: lib/search.php:25
+#: lib/search.php:27
 #, c-format
 msgid "%d pages match your query."
 msgstr ""
 
 # lib/fullsearch.php:48
-#: lib/search.php:28
+#: lib/search.php:30
 #, fuzzy
 msgid "Title Search Results"
 msgstr "Resultados de la búsqueda en el texto completo"
 
-# lib/setupwiki.php:21
-#: lib/setupwiki.php:21
-#, c-format
-msgid "Inserting page %s, version %s from %s"
-msgstr "Insertando p&aacute;gina %s, versi&oacute;n %s de %s"
-
-# lib/stdlib.php:36
-#: lib/stdlib.php:36
-msgid "WikiFatalError"
-msgstr "ErrorFatalDeWiki"
-
-# lib/stdlib.php:207 lib/stdlib.php:215
-#: lib/stdlib.php:83 lib/stdlib.php:91
-msgid "Search"
-msgstr "Buscar"
-
-# lib/stdlib.php:330
-#: lib/stdlib.php:228
-msgid "Stack bounds exceeded in SetHTMLOutputMode"
-msgstr "L&iacute;mites de la pila excedidos en SetHTMLOutputMode"
-
 # lib/stdlib.php:53
-#: lib/stdlib.php:350
+#: lib/stdlib.php:427
 #, c-format
 msgid "%d best incoming links:"
 msgstr "%d mejores enlaces de entrada:"
 
 # lib/stdlib.php:63
-#: lib/stdlib.php:360
+#: lib/stdlib.php:437
 #, c-format
 msgid "%d best outgoing links:"
 msgstr "%d mejores enlaces de salida:"
 
 # lib/stdlib.php:74
-#: lib/stdlib.php:371
+#: lib/stdlib.php:448
 #, c-format
 msgid "%d most popular nearby:"
 msgstr "%d las m&aacute;s populares:"
+
+# lib/stdlib.php:384 lib/stdlib.php:445
+#: lib/stdlib.php:595 lib/stdlib.php:663
+msgid "RecentChanges"
+msgstr "CambiosRecientes"
+
+#: lib/stdlib.php:609
+msgid "The most recently changed pages are listed below."
+msgstr ""
+
+#: lib/stdlib.php:611
+msgid "(first day for this Wiki)"
+msgstr ""
+
+#: lib/stdlib.php:613
+msgid "Quick title search:"
+msgstr ""
+
+# lib/stdlib.php:330
+#: lib/transform.php:114
+#, fuzzy
+msgid "Lists nested too deep in SetHTMLOutputMode"
+msgstr "L&iacute;mites de la pila excedidos en SetHTMLOutputMode"
+
+# lib/stdlib.php:207 lib/stdlib.php:215
+#: lib/transform.php:461 lib/transform.php:473
+msgid "Search"
+msgstr "Buscar"
+
+# admin.php:26
+#: lib/userauth.php:158
+msgid "You entered an invalid login or password."
+msgstr ""
+"Se h&aacute; introducido un nombre de usuario o palabra de paso invalido."
+
+#: lib/ziplib.php:657
+#, c-format
+msgid "[%d] See [%s]"
+msgstr ""
+
+#: lib/ziplib.php:665
+msgid "!References"
+msgstr ""
+
+# admin.php:55
+#: admin/removepage.php:6
+msgid "Function not yet implemented."
+msgstr "Funci&oacute;n todav&iacute; no implementada"
+
+# admin.php:47
+#: admin/removepage.php:10
+#, c-format
+msgid "You are about to remove '%s' permanently!"
+msgstr "¡Va a borrar '%s' permanentemente!"
+
+# admin.php:50
+#: admin/removepage.php:13
+#, fuzzy, c-format
+msgid "Click <a href=\"%s\">here</a> to remove the page now."
+msgstr "Haga Click %aqu&iacute;% para borrar la p&aacute;gina ahora"
+
+# admin.php:53
+#: admin/removepage.php:17
+msgid "Otherwise press the \"Back\" button of your browser."
+msgstr ""
+"En caso contrario pulse el bot&oacute; \"Atr&aacute;s\" en su navegador"
+
+# admin.php:63
+#: admin/removepage.php:22
+#, c-format
+msgid "Removed page '%s' succesfully."
+msgstr "P&aacute;gina '%s' borrada satisfactoriamente."
+
+# admin.php:57 admin.php:65
+#: admin/removepage.php:26
+msgid "Remove page"
+msgstr "Borrar p&aacute;gina"
+
+# lib/config.php:162
+#~ msgid "templates/browse.html"
+#~ msgstr "locale/es/templates/browse.html"
+
+# lib/config.php:163
+#~ msgid "templates/editpage.html"
+#~ msgstr "locale/es/templates/editpage.html"
+
+# lib/config.php:164
+#~ msgid "templates/editlinks.html"
+#~ msgstr "locale/es/templates/editlinks.html"
+
+# lib/config.php:165
+#~ msgid "templates/message.html"
+#~ msgstr "locale/es/templates/message.html"
+
+# lib/config.php:181
+#~ msgid "./pgsrc"
+#~ msgstr "locale/es/pgsrc"
+
+# lib/editpage.php:23
+#~ msgid "No page name passed into editpage!"
+#~ msgstr "No se h&aacute; pasado nombre de p&aacute;gina a editarpagina"
+
+# lib/pageinfo.php:9
+#~ msgid "Enter a page name"
+#~ msgstr "Escriba un nombre de p&aacute;gina"
+
+# lib/pageinfo.php:10 lib/stdlib.php:239
+#~ msgid "Go"
+#~ msgstr "Aceptar"
+
+# lib/setupwiki.php:21
+#~ msgid "Inserting page %s, version %s from %s"
+#~ msgstr "Insertando p&aacute;gina %s, versi&oacute;n %s de %s"

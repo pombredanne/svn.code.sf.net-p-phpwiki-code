@@ -1,31 +1,5 @@
 <?php
 
-$locale["You entered an invalid login or password."] =
-   "Je hebt een ongeldige gebruikersnaam of wachtwoord ingevoerd.";
-$locale["You are about to remove '%s' permanently!"] =
-   "Je staat op het punt '%s' voorgoed te verwijderen!";
-$locale["Click %shere%s to remove the page now."] =
-   "Klik %shier%s om de pagina nu te verwijderen.";
-$locale["Otherwise press the \"Back\" button of your browser."] =
-   "Druk anders op de \"Terug\" knop van je bladeraar.";
-$locale["Function not yet implemented."] =
-   "Functie nog niet geïmplementeerd.";
-$locale["Remove page"] =
-   "Verwijder pagina";
-$locale["Removed page '%s' succesfully."] =
-   "Pagina '%s' verwijderd.";
-$locale["templates/browse.html"] =
-   "locale/nl/templates/browse.html";
-$locale["templates/editpage.html"] =
-   "locale/nl/templates/editpage.html";
-$locale["templates/editlinks.html"] =
-   "locale/nl/templates/editlinks.html";
-$locale["templates/message.html"] =
-   "locale/nl/templates/message.html";
-$locale["./pgsrc"] =
-   "locale/nl/pgsrc";
-$locale["Current page:"] =
-   "Huidige pagina:";
 $locale["version %s"] =
    "versie %s";
 $locale["last modified on %s"] =
@@ -34,20 +8,18 @@ $locale["by %s"] =
    "door %s";
 $locale["None"] =
    "Geen";
+$locale["Current page:"] =
+   "Huidige pagina:";
 $locale["Archived page:"] =
    "Gearchiveerde pagina:";
 $locale["Versions are identical"] =
    "Versies zijn identiek";
 $locale["Diff of %s."] =
    "Diff van %s.";
-$locale["HomePage"] =
-   "VoorPagina";
 $locale["Describe %s here."] =
    "Beschrijf %s hier.";
 $locale["Copy of %s"] =
    "Kopie van %s";
-$locale["No page name passed into editpage!"] =
-   "Geen paginanaam doorgegeven aan veranderpagina";
 $locale["This page has been locked by the administrator and cannot be edited."] =
    "Deze pagina is afgesloten door de beheerder en kan niet veranderd worden.";
 $locale["Sorry for the inconvenience."] =
@@ -60,6 +32,10 @@ $locale["%d matches found in %d pages."] =
    "%d keer gevonden in %d pagina's.";
 $locale["Full Text Search Results"] =
    "Volledige tekst zoek resultaten";
+$locale["as version %d"] =
+   "versie %s";
+$locale["HomePage"] =
+   "VoorPagina";
 $locale["Cannot establish connection to database, giving up."] =
    "Kan verbinding naar data base niet tot stand brengen, geef op.";
 $locale["Error message: %s"] =
@@ -78,20 +54,18 @@ $locale["Error writing page '%s'"] =
    "Fout bij schrijven pagina `%s'";
 $locale["Cannot delete '%s' from table '%s'"] =
    "Kan '%s' niet verwijderen uit tabel '%s'";
-$locale["Enter a page name"] =
-   "Geef de naam van een pagina";
-$locale["Go"] =
-   "Ga";
-$locale["Show the page source and references"] =
-   "Toon de bron tekst en de koppelingen van de pagina";
-$locale["PageInfo"] =
-   "PaginaInfo";
 $locale["Page name '%s' is not in the database"] =
    "Pagina naam `%s' staat niet in de data base";
+$locale["Show the page source"] =
+   "Toon de bron tekst en de koppelingen van de pagina";
 $locale["Current version"] =
    "Actuele versie:";
 $locale["Archived version"] =
    "Gearchiveerde versie:";
+$locale["PageInfo"] =
+   "PaginaInfo";
+$locale["WikiFatalError"] =
+   "WikiFataleFout";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
    "PhpWiki kan je veranderingen niet bewaren, want een andere gebruiker\nheeft de pagina veranderd terwijl jij de pagina ook aan het veranderen\nwas.  Als bewaren nu doorgang zou vinden, zouden de veranderingen van\nde vorige auteur verloren gaan.";
 $locale["In order to recover from this situation follow these steps:"] =
@@ -112,21 +86,33 @@ $locale["Thank you for editing %s."] =
    "Bedankt voor het veranderen van %s.";
 $locale["Your careful attention to detail is much appreciated."] =
    "Je zorgvuldige aandacht voor detail wordt erg gewaardeerd.";
-$locale["Inserting page %s, version %s from %s"] =
-   "Voeg pagina %s toe, versie %s van %s";
-$locale["WikiFatalError"] =
-   "WikiFataleFout";
+$locale["Title Search Results"] =
+   "Volledige tekst zoek resultaten";
 $locale["%d best incoming links:"] =
    "%d beste inkomende koppelingen:";
 $locale["%d best outgoing links:"] =
    "%d beste uitgaande koppelingen:";
 $locale["%d most popular nearby:"] =
    "%d meest gevraagde in de buurt:";
-$locale["Search"] =
-   "Zoek";
-$locale["Stack bounds exceeded in SetHTMLOutputMode"] =
-   "Stack grenzen overschreden in SetHTMLOutputMode";
 $locale["RecentChanges"] =
    "RecenteVeranderingen";
+$locale["Lists nested too deep in SetHTMLOutputMode"] =
+   "Stack grenzen overschreden in SetHTMLOutputMode";
+$locale["Search"] =
+   "Zoek";
+$locale["You entered an invalid login or password."] =
+   "Je hebt een ongeldige gebruikersnaam of wachtwoord ingevoerd.";
+$locale["Function not yet implemented."] =
+   "Functie nog niet geïmplementeerd.";
+$locale["You are about to remove '%s' permanently!"] =
+   "Je staat op het punt '%s' voorgoed te verwijderen!";
+$locale["Click <a href=\"%s\">here</a> to remove the page now."] =
+   "Klik %shier%s om de pagina nu te verwijderen.";
+$locale["Otherwise press the \"Back\" button of your browser."] =
+   "Druk anders op de \"Terug\" knop van je bladeraar.";
+$locale["Removed page '%s' succesfully."] =
+   "Pagina '%s' verwijderd.";
+$locale["Remove page"] =
+   "Verwijder pagina";
 
 ;?>
