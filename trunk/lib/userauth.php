@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: userauth.php,v 1.8 2001-08-09 16:21:44 dairiki Exp $');
+<?php rcs_id('$Id: userauth.php,v 1.9 2001-08-14 21:41:10 dairiki Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -101,11 +101,16 @@ class WikiUser
 		     'edit_area.height' => 22);
 
       global $HTTP_COOKIE_VARS;
-      if (is_string($HTTP_COOKIE_VARS['WIKI_PREFS'])) {
-	 $prefcookie = unserialize(fix_magic_quotes_gpc($HTTP_COOKIE_VARS['WIKI_PREFS']));
-	 while (list($k, $v) = each($prefs))
-	    if (!empty($prefcookie[$k]))
-	       $prefs[$k] = $prefcookie[$k];
+      if (isset($HTTP_COOKIE_VARS['WIKI_PREFS'])) {
+	 $prefcookie = $HTTP_COOKIE_VARS['WIKI_PREFS'];
+	 if (is_string($prefcookie)) {
+	    $prefcookie = unserialize(fix_magic_quotes_gpc($prefcookie));
+	    if (is_array($prefcookie)) {
+	       while (list($k, $v) = each($prefs))
+		  if (!empty($prefcookie[$k]))
+		     $prefs[$k] = $prefcookie[$k];
+	    }
+	 }
       }
 
       // Some sanity checks. (FIXME: should move somewhere else)
