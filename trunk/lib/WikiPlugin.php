@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.38 2004-03-02 18:11:40 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.39 2004-03-08 18:57:58 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,7 +87,7 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.38 $");
+        //                    "\$Revision: 1.39 $");
     }
 
     function getArgs($argstr, $request=false, $defaults = false) {
@@ -225,8 +225,8 @@ class WikiPlugin
     
     function makeForm($argstr, $request) {
         $form_defaults = $this->getDefaultFormArguments();
-        $defaults = array_merge($this->getDefaultArguments(),
-                                $form_defaults);
+        $defaults = array_merge($form_defaults, 
+        			$this->getDefaultArguments());
     
         $args = $this->getArgs($argstr, $request, $defaults);
         $plugin = $this->getName();
@@ -235,12 +235,17 @@ class WikiPlugin
     
         $form = HTML::form(array('action' => WikiURL($args['targetpage']),
                                  'method' => $args['method'],
-                                 'class' => $args['class'],
+                                 'class'  => $args['class'],
                                  'accept-charset' => CHARSET));
         if (! USE_PATH_INFO ) {
             $pagename = $request->get('pagename');
             $form->pushContent(HTML::input(array('type' => 'hidden', 'name' => 'pagename', 
                                                  'value' => $args['targetpage'])));
+        }
+        if ($args['targetpage'] != $this->getName()) {
+            $form->pushContent(HTML::input(array('type' => 'hidden', 
+                                                 'name' => 'action', 
+                                                 'value' => $this->getName())));
         }
         $contents = HTML::div();
         $contents->setAttr('class', $args['class']);
