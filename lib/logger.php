@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: logger.php,v 1.1 2001-02-16 04:43:08 dairiki Exp $');
+rcs_id('$Id: logger.php,v 1.2 2001-05-31 17:41:55 dairiki Exp $');
 
 class AccessLogEntry
 {
@@ -36,7 +36,7 @@ class AccessLogEntry
    }
   
    // Format time into NCSA format.
-   function _ncsa_time() {
+   function _ncsa_time($time = false) {
       if (!$time)
 	 $time = time();
 
