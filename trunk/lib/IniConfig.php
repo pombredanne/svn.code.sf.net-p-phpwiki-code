@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.17 2004-05-06 19:26:15 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.18 2004-05-08 16:58:19 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -109,7 +109,7 @@ function IniConfig($file) {
     }
 
     // Boolean options are slightly special - if they're set to any of
-    // 'false', '0', or 'no' (all case-insensitive) then the value will
+    // '', 'false', '0', or 'no' (all case-insensitive) then the value will
     // be a boolean false, otherwise if there is anything set it'll
     // be true.
     foreach ($_IC_VALID_BOOL as $item) {
@@ -119,15 +119,16 @@ function IniConfig($file) {
         } elseif (array_key_exists($item, $rsdef)) {
             $val = $rsdef[$item];
         } else {
-            ; //trigger_error(sprintf("missing boolean config setting for %s",$item));
+            $val = false; //trigger_error(sprintf("missing boolean config setting for %s",$item));
         }
         
         // calculate them later: old or dynamic constants
-        if (!$val and in_array($item,array('USE_PATH_INFO','USE_DB_SESSION',
-                                           'ALLOW_HTTP_AUTH_LOGIN','ALLOW_LDAP_LOGIN',
-                                           'ALLOW_IMAP_LOGIN','ALLOW_USER_LOGIN',
-                                           'REQUIRE_SIGNIN_BEFORE_EDIT',
-                                           'WIKIDB_NOCACHE_MARKUP')))
+        if (!$val and $val != '' and 
+            in_array($item,array('USE_PATH_INFO','USE_DB_SESSION',
+                                 'ALLOW_HTTP_AUTH_LOGIN','ALLOW_LDAP_LOGIN',
+                                 'ALLOW_IMAP_LOGIN','ALLOW_USER_LOGIN',
+                                 'REQUIRE_SIGNIN_BEFORE_EDIT',
+                                 'WIKIDB_NOCACHE_MARKUP')))
         {
             ;
         }
@@ -520,6 +521,11 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.17  2004/05/06 19:26:15  rurban
+// improve stability, trying to find the InlineParser endless loop on sf.net
+//
+// remove end-of-zip comments to fix sf.net bug #777278 and probably #859628
+//
 // Revision 1.16  2004/05/02 15:10:05  rurban
 // new finally reliable way to detect if /index.php is called directly
 //   and if to include lib/main.php
