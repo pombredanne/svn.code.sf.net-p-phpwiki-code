@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: login.tmpl,v 1.13 2002-02-14 03:29:55 carstenklapp Exp $ -->
+<!-- $Id: login.tmpl,v 1.14 2002-02-14 19:08:14 carstenklapp Exp $ -->
 <!-- The login form -->
 
 <?php if ($fail_message) { ?>
@@ -43,7 +43,7 @@ function select_input (type) {
     var elements = document.forms['login'].elements;
     for (var i = 0; i < elements.length; i++) {
         if (elements[i].type == type) {
-            elements[i].select();
+            elements[i].focus();
             return;
         }
     }
