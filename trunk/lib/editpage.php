@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.50 2002-12-29 02:51:31 carstenklapp Exp $');
+rcs_id('$Id: editpage.php,v 1.51 2003-01-03 02:43:26 carstenklapp Exp $');
 
 require_once('lib/Template.php');
 
@@ -401,6 +401,85 @@ class PageEditor
         $this->editaction = 'edit';
     }
 }
+
+class LoadFileConflictPageEditor
+extends PageEditor
+{
+    function editPage ($saveFailed = true) {
+        $tokens = array();
+
+        if ($this->canEdit()) {
+            if ($this->isInitialEdit())
+                return $this->viewSource();
+            $tokens['PAGE_LOCKED_MESSAGE'] = $this->getLockedMessage();
+        }
+        elseif ($this->editaction == 'save') {
+            if ($this->savePage())
+                return true;    // Page saved.
+            $saveFailed = true;
+        }
+
+        if ($saveFailed || $this->isConcurrentUpdate())
+        {
+            // Get the text of the original page, and the two conflicting edits
+            // The diff class takes arrays as input.  So retrieve content as
+            // an array, or convert it as necesary.
+            $orig = $this->page->getRevision($this->_currentVersion);
+            $this_content = explode("\n", $this->_content);
+            $other_content = $this->current->getContent();
+            include_once("lib/diff.php");
+            $diff2 = new Diff($other_content, $this_content);
+            $context_lines = max(4, count($other_content) + 1,
+                                 count($this_content) + 1);
+            $fmt = new BlockDiffFormatter($context_lines);
+            $this->_content = $fmt->format($diff2);
+            $this->_currentVersion = $this->current->getVersion();
+            $this->version = $this->_currentVersion;
+            $tokens['CONCURRENT_UPDATE_MESSAGE'] = $this->getConflictMessage();
+        }
+
+        if ($this->editaction == 'preview')
+            $tokens['PREVIEW_CONTENT'] = $this->getPreview(); // FIXME: convert to _MESSAGE?
+
+        // FIXME: NOT_CURRENT_MESSAGE?
+
+        $tokens = array_merge($tokens, $this->getFormElements());
+
+        return $this->output('editpage', _("Merge and Edit: %s"), $tokens); // FIXME: this doesn't display
+    }
+
+    function output ($template, $title_fs, $tokens) {
+        $selected = &$this->selected;
+        $current = &$this->current;
+
+        if ($selected && $selected->getVersion() != $current->getVersion()) {
+            $rev = $selected;
+            $pagelink = WikiLink($selected);
+        }
+        else {
+            $rev = $current;
+            $pagelink = WikiLink($this->page);
+        }
+
+        $title = new FormattedText ($title_fs, $pagelink);
+        $template = Template($template, $tokens);
+
+        //GeneratePage($template, $title, $rev);
+        PrintXML($template);
+        return true;
+    }
+    function getConflictMessage () {
+        $message = HTML(HTML::p(fmt("Some of the changes could not automatically be combined.  Please look for sections beginning with '%s', and ending with '%s'.  You will need to edit those sections by hand before you click Save.",
+                                    "<<<<<<<",
+                                    "======="),
+                        HTML::p(_("Please check it through before saving."))));
+        return $message;
+    }
+}
+
+/**
+ $Log: not supported by cvs2svn $
+ */
 
 // Local Variables:
 // mode: php
