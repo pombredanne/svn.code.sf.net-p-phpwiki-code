@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.48 2004-07-05 13:09:37 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.49 2004-07-13 13:07:27 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -206,9 +206,14 @@ function IniConfig($file) {
     $DBParams['dba_handler'] = @$rs['DATABASE_DBA_HANDLER'];
     $DBParams['directory'] = @$rs['DATABASE_DIRECTORY'];
     $DBParams['timeout'] = @$rs['DATABASE_TIMEOUT'];
-    if (!defined('USE_DB_SESSION') and $DBParams['db_session_table'] and 
-        in_array($DBParams['dbtype'],array('SQL','ADODB'/*,'dba'*/))) {
-        define('USE_DB_SESSION', true);
+    // USE_DB_SESSION default logic:
+    if (!defined('USE_DB_SESSION')) {
+        if ($DBParams['db_session_table'] 
+            and in_array($DBParams['dbtype'], array('SQL','ADODB'/*,'dba'*/))) {
+            define('USE_DB_SESSION', true);
+        } else {
+            define('USE_DB_SESSION', false);
+        }
     }
 
     // Expiry stuff
@@ -584,16 +589,11 @@ function fix_configs() {
 
     if (defined('USE_DB_SESSION') and USE_DB_SESSION) {
         if (! $DBParams['db_session_table'] ) {
-            trigger_error(_("Empty db_session_table. Turn USE_DB_SESSION off or define the table name."), 
-                          E_USER_ERROR);
-            // this is flawed. constants cannot be changed.
-            define('USE_DB_SESSION',false);
             $DBParams['db_session_table'] = @$DBParams['prefix'] . 'session';
+            trigger_error(sprintf(_("DATABASE_SESSION_TABLE configuration set to %s."), 
+                                  $DBParams['db_session_table']),
+                          E_USER_ERROR);
         }
-    } else {
-        // default: true (since v1.3.8)
-        if (!defined('USE_DB_SESSION'))
-            define('USE_DB_SESSION',true);
     }
     // legacy:
     if (!defined('ENABLE_USER_NEW')) define('ENABLE_USER_NEW',true);
@@ -613,6 +613,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.48  2004/07/05 13:09:37  rurban
+// ENABLE_RAW_HTML_LOCKEDONLY, ENABLE_RAW_HTML_SAFE
+//
 // Revision 1.47  2004/07/03 16:51:05  rurban
 // optional DBADMIN_USER:DBADMIN_PASSWD for action=upgrade (if no ALTER permission)
 // added atomic mysql REPLACE for PearDB as in ADODB
