@@ -2,12 +2,12 @@ DiversosNavegadores tienen problemas al usar en caractaer TAB en las ReglasDeFor
 
  [[o] No puedo escribir tabs. Por favor ConvierteEspaciosEnTabs por mi cuando salve.
 
-Un grupo de espacios debe ser al menos '''tres''' espacios para ser reconocidos 
-como un tab.  Use multiplos of '''ocho''' espacios para hacer multiples tabulaciones. 
+Un grupo de espacios debe ser al menos __tres__ espacios para ser reconocidos 
+como un tab.  Use multiplos of __ocho__ espacios para hacer multiples tabulaciones. 
 Cada grupo de ocho espacios será convertido a una tabulación.  Aunque el último  
 grupo sea un poco mas pequeño no hay problema, si tiene al menos tres espacios.
 
-'''Compruebe su trabajo.'''  Sino puede obtener resultados inesperados. 
+__Compruebe su trabajo.__  Sino puede obtener resultados inesperados. 
 -----
 [Nota:  Esta página es vista cuando el usuario hace click sobre el
 enlave "ConvierteEspaciosEnTabs" en cualquier pantalla de edición.  

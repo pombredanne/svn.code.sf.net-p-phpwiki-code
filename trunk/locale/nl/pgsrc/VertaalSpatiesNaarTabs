@@ -7,13 +7,13 @@ pagina's.  Die ziet er ongeveer zo uit:
 
  [[o] Ik kan geen tabs tiepen.  VertaalSpatiesNaarTabs voor mij als ik bewaar.
 
-Een groep spaties moet minstens '''drie''' spaties lang zijn om herkend
-te worden als tab.  Gebruik veelvouden van '''acht''' spaties om meerdere
+Een groep spaties moet minstens __drie__ spaties lang zijn om herkend
+te worden als tab.  Gebruik veelvouden van __acht__ spaties om meerdere
 tabs te maken.  Elke groep van acht spaties wordt vertaald naar een tab.
 Het geeft niet als de laatste groep een beetje kort is, zolang er maar
 minstens drie spaties in de laatste (enige) groep staan.
 
-'''Controleer je werk.''' Deze methode kan leiden tot onverwachte resultaten.
+__Controleer je werk.__ Deze methode kan leiden tot onverwachte resultaten.
 -----
 [Onderhoudsnotitie: Deze pagina wordt getoond waneer de gebruiker klikt
 op de "VertaalSpatiesNaarTabs" koppeling in een veranderschem.  Het

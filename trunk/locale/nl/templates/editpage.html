@@ -1,47 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
+<!-- phpwiki source:
+###RCS_IDS###
+-->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<title>###PAGE###</title>
+###ROBOTS_META###
+<base href="###BASE_URL###">
+<title>Edit: ###SPLIT_PAGE###</title>
+<link rel="stylesheet" title="phpwiki" href="###CSS_URL###" type="text/css">
 </head>
 
-<body>
-
-<form method="POST" action="###SCRIPTURL###">
-
-<h1><a href="###SCRIPTURL###"><img src="###LOGO###" border=0 alt="[phpwiki]" width=50 height=50></a>
-Verander ###PAGE###
+<body bgcolor=ivory text=black alink=red link=darkblue vlink=darkmagenta>
+<form class="wikiaction" method="POST" action="###BROWSE_PAGE###">
+<h1><a class="wikilink" href="###BROWSE###VoorPagina"><img src="###LOGO###" border=0 alt="[phpwiki]" width=50 height=50></a>
+Verander <span="wikiword">###PAGE###</span>
 <input type="submit" value=" Bewaar "></h1>
 
-<textarea name="content" ROWS="22" COLS="80" wrap="virtual">###CONTENT###</textarea>
+<textarea name="content"
+          rows="###EDIT_AREA_HEIGHT###"
+          cols="###EDIT_AREA_WIDTH###"
+          wrap="virtual">###CONTENT###</textarea>
 <br>
-<input type="checkbox" name="minor_edit" value="yes" 
-###IF MINOR_EDIT### checked
->
-This is a minor change, don't archive old version.
-<br>
+###IF:MINOR_EDIT_CHECKBOX###
+  ###MINOR_EDIT_CHECKBOX### This is a minor change, don't archive old version.
+  <br>
+###ENDIF:MINOR_EDIT_CHECKBOX###
 <input type="checkbox" name="convert" value="tabs" >
 Ik kan geen tabs tiepen. 
-<a href="###SCRIPTURL###?VertaalSpatiesNaarTabs">VertaalSpatiesNaarTabs</a>
+<a class="wikilink" href="###BROWSE###VertaalSpatiesNaarTabs"><span class="wikiword">VertaalSpatiesNaarTabs</span></a>
 voor mij als ik bewaar.
-<p><a href="###SCRIPTURL###?GoedeStijl">GoedeStijl</a> tips for
+<p><a class="wikilink" href="###BROWSE###GoedeStijl"><span class="wikiword">GoedeStijl</span></a> tips for
 veranderen.
 
-###IF COPY###<br><a href="###SCRIPTURL###?copy=###PAGEURL###">VeranderKopie</a> van vorige auteur.
+###IF COPY###<br><a class="wikiaction" href="###ACTION###edit&amp;version=archive">VeranderKopie</a> van vorige auteur.
 
 <hr noshade>
 <small>
-<b>Nadruk:</b> '' voor schuin, ''' voor vet, ''''' voor beide.
-<br><b>Lijsten:</b> tab-* voor punt lijsten, tab-# voor genummerde lijsten, tab-Term:-tab voor definitie lijsten.
+<b>Nadruk:</b> '' voor schuin, __ voor vet, ''__ voor beide.
+<br><b>Lijsten:</b> * voor punt lijsten, # voor genummerde lijsten, ''; Term : Definitie'' voor definitie lijsten.
 <br><b>Verwijzingen:</b> KapitaliseerEnSchrijfAanElkaar of gebruik vierkante haken [pagina koppeling] of URL [http://koel.wiki.int/].
-<br><b>Verwijzingen:</b> Gebruik [1],[2],[3],... en VeranderKoppelingen.  Vermijdt kopplingen met "!": !KoppelNiet, noem koppelingen met [naam | URL].
+<br><b>Footnotes:</b> Gebruik [1],[2],[3],...
+<br><b>Preventing linking:</b> Vermijdt kopplingen met "!": !KoppelNiet, noem koppelingen met [[naam | URL].
 <br><b>Allerlei:</b>"!", "!!", "!!!" maak koppen,
-"%%%" maak regelbreuk, "- - - -" maak horizontale lijn, ontsnap "[" met "[[".
+"%%%" maak regelbreuk, "- - - -" maak horizontale lijn
 <br>meer op
-<a href="###SCRIPTURL###?TekstFormatteringsRegels">
-<b>TekstFormatteringsRegels.</b></a>
+<a class="wikilink" href="###BROWSE###TekstFormatteringsRegels">
+<b><span class="wikiword">TekstFormatteringsRegels</span>.</b></a>
 </small>
 
-<input type="hidden" name="post" value="###PAGEURL###">
+<input type="hidden" name="action" value="save">
+<input type="hidden" name="pagename" value="###PAGE###">
 <input type="hidden" name="editversion" value="###VERSION###">
 </form>
 </body>

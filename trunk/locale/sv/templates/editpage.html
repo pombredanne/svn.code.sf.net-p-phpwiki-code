@@ -1,45 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
+<!-- phpwiki source:
+###RCS_IDS###
+-->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<title>###PAGE###</title>
+###ROBOTS_META###
+<base href="###BASE_URL###">
+<title>Edit: ###SPLIT_PAGE###</title>
+<link rel="stylesheet" title="phpwiki" href="###CSS_URL###" type="text/css">
 </head>
 
-<body>
-
-<form method="POST" action="###SCRIPTURL###">
-
-<h1><a href="###SCRIPTURL###"><img src="###LOGO###" border=0 alt="[phpwiki]" width=50 height=50></a>
-Redigera ###PAGE###
+<body bgcolor=ivory text=black alink=red link=darkblue vlink=darkmagenta>
+<form class="wikiaction" method="POST" action="###BROWSE_PAGE###">
+<h1><a class="wikilink" href="###BROWSE###Framsida"><img src="###LOGO###" border=0 alt="[phpwiki]" width=50 height=50></a>
+Redigera <span="wikiword">###PAGE###</span>
 <input type="submit" value=" Spara "></h1>
 
-<textarea name="content" ROWS="22" COLS="80" wrap="virtual">###CONTENT###</textarea>
+<textarea name="content"
+          rows="###EDIT_AREA_HEIGHT###"
+          cols="###EDIT_AREA_WIDTH###"
+          wrap="virtual">###CONTENT###</textarea>
 <br>
-<input type="checkbox" name="minor_edit" value="yes" 
-###IF MINOR_EDIT### checked
->
-This is a minor change, don't archive old version.
-<br>
+###IF:MINOR_EDIT_CHECKBOX###
+  ###MINOR_EDIT_CHECKBOX### This is a minor change, don't archive old version.
+  <br>
+###ENDIF:MINOR_EDIT_CHECKBOX###
 <input type="checkbox" name="convert" value="tabs" >
 Jag kan inte skriva tabbar.
-<a href="###SCRIPTURL###?KonverteraMellanslagTillTabbar">KonverteraMellanslagTillTabbar</a>
+<a class="wikilink" href="###BROWSE###KonverteraMellanslagTillTabbar"><span class="wikiword">KonverteraMellanslagTillTabbar</span></a>
 åt mig när jag sparar.
-<p><a href="###SCRIPTURL###?BraStil">BraStil</a>: Redigeringstips.
+<p><a class="wikilink" href="###BROWSE###BraStil"><span class="wikiword">BraStil</span></a>: Redigeringstips.
 
-###IF COPY###<br><a href="###SCRIPTURL###?copy=###PAGEURL###">RedigeraKopia</a> från föregående författare
+###IF COPY###<br><a class="wikiaction" href="###ACTION###edit&amp;version=archive">RedigeraKopia</a> från föregående författare
 
 <hr noshade>
 <small>
-<b>Markering:</b> '' för lutande, ''' för fet, ''''' för både och
-<br><b>Listor:</b> tab-* för punktlistor, tab-# för numrerade listor, tab-term:-tab för definitionslistor
+<b>Markering:</b> '' för lutande, __ för fet, ''__ för både och
+<br><b>Listor:</b> * för punktlistor, # för numrerade listor, ''; term : definition'' för definitionslistor
 <br><b>Referenser:</b> BindIhopOrdMedStoraBokstäver eller använd hakar för en [länk] eller URL [http://cool.wiki.int/].
-<br><b>Referenser:</b> Använd [1],[2],[3],... och RedigeraLänkar. Undvik länkning med "!": !SkapaEjHyperlänk, namnge länkar med [text | URL]
+<br><b>''Footnotes'':</b> Använd [1],[2],[3],...
+<br><b>''Preventing Linking'':</b> och RedigeraLänkar. Undvik länkning med "!": !SkapaEjHyperlänk, namnge länkar med [[text | URL]
 <br><b>Blandat:</b>"!", "!!", "!!!" skapar rubriker,
-"%%%" skapar radbrytning, "- - - -" skapar en horisontell linje, skriv "[[" för att få "["
+"%%%" skapar radbrytning, "- - - -" skapar en horisontell linje
 <br>mer information på
-<a href="###SCRIPTURL###?Textformateringsregler"><b>Textformateringsregler</b></a>
+<a class="wikilink" href="###BROWSE###Textformateringsregler"><b><span class="wikiword">Textformateringsregler</span></b></a>
 </small>
 
-<input type="hidden" name="post" value="###PAGEURL###">
+<input type="hidden" name="action" value="save">
+<input type="hidden" name="pagename" value="###PAGE###">
 <input type="hidden" name="editversion" value="###VERSION###">
 </form>
 </body>
