@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Request.php,v 1.42 2004-03-10 15:38:48 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.43 2004-03-12 20:59:17 rurban Exp $');
 
 
 // backward compatibility for PHP < 4.2.0
@@ -456,7 +456,7 @@ class Request_CookieVars {
     function get($key) {
         $vars = &$GLOBALS['HTTP_COOKIE_VARS'];
         if (isset($vars[$key])) {
-            @$val = unserialize($vars[$key]);
+            @$val = unserialize(base64_decode($vars[$key]));
             if (!empty($val))
                 return $val;
         }
@@ -473,7 +473,7 @@ class Request_CookieVars {
             $expires = 0;
         }
         
-        $packedval = serialize($val);
+        $packedval = base64_encode(serialize($val));
         $vars[$key] = $packedval;
         setcookie($key, $packedval, $expires, '/');
     }
@@ -908,6 +908,11 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.42  2004/03/10 15:38:48  rurban
+// store current user->page and ->action in session for WhoIsOnline
+// better WhoIsOnline icon
+// fixed WhoIsOnline warnings
+//
 // Revision 1.41  2004/02/27 01:25:14  rurban
 // Workarounds for upload handling
 //

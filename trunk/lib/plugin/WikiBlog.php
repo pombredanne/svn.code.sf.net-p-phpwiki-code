@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiBlog.php,v 1.10 2004-03-12 17:32:41 rurban Exp $');
+rcs_id('$Id: WikiBlog.php,v 1.11 2004-03-12 20:59:31 rurban Exp $');
 /*
  Copyright 2002, 2003 $ThePhpWikiProgrammingTeam
  
@@ -20,7 +20,7 @@ rcs_id('$Id: WikiBlog.php,v 1.10 2004-03-12 17:32:41 rurban Exp $');
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 /**
- * Author: MichaelVanDam, major refactor by JeffDairiki
+ * @author: MichaelVanDam, major refactor by JeffDairiki
  */
 
 require_once('lib/TextSearchQuery.php');
@@ -28,7 +28,8 @@ require_once('lib/TextSearchQuery.php');
 /**
  * This plugin shows 'blogs' (comments/news) associated with a
  * particular page and provides an input form for adding a new blog.
- * It is also the base class for all attachable pagetypes: 
+ *
+ * Now it is also the base class for all attachable pagetypes: 
  *    wikiblog, comment and wikiforum
  *
  * HINTS/COMMENTS:
@@ -82,7 +83,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     // Arguments:
@@ -324,6 +325,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/03/12 17:32:41  rurban
+// new base class PageType_attach as base class for WikiBlog, Comment, and WikiForum.
+// new plugin AddComment, which is a WikiBlog with different pagetype and template,
+//   based on WikiBlog. WikiForum comes later.
+//
 // Revision 1.9  2004/02/27 02:10:50  rurban
 // Patch #891133 by pablom517
 //   "WikiBlog Plugin now sorts logs correctly"
