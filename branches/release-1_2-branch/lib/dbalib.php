@@ -1,6 +1,6 @@
 <?php  
 
-   rcs_id('$Id: dbalib.php,v 1.2.2.2 2001-11-06 20:43:11 dairiki Exp $');
+   rcs_id('$Id: dbalib.php,v 1.2.2.3 2001-11-07 03:23:24 wainstead Exp $');
 
    /*
       Database functions:
@@ -39,7 +39,7 @@
 
       reset($WikiDB);
       while (list($key, $file) = each($WikiDB)) {
-         while (($dbi[$key] = @dba_open($file, "c", "gdbm")) < 1) {
+         while (($dbi[$key] = @dba_open($file, "c", DBM_FILE_TYPE)) < 1) {
             $numattempts++;
             if ($numattempts > MAX_DBM_ATTEMPTS) {
                ExitWiki("Cannot open database '$key' : '$file', giving up.");

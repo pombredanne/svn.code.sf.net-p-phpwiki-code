@@ -24,6 +24,9 @@ directory, you can just do:
 
 http://www.foo.com/phpwiki/
 
+If you get a blank page, PhpWiki tried to open the wrong DBM file
+type, most likely. Edit the file lib/config.php and set DBM_FILE_TYPE
+to the correct type for your system. 'gdbm' or 'db2' usually work.
 
 1. CONFIGURATION
 
