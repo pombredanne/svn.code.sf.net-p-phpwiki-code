@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BackLinks.php,v 1.9 2002-01-21 19:18:16 carstenklapp Exp $');
+rcs_id('$Id: BackLinks.php,v 1.10 2002-01-22 03:17:47 dairiki Exp $');
 /**
  */
 
@@ -36,45 +36,36 @@ extends WikiPlugin
 
         $pagelist = new PageList();
 
-    // Currently only info="Last Modified" or info=hits works (I don't think
-    // anything else would be useful anyway).
+
+        // Currently only info="Last Modified" or info=hits works (I
+        // don't think anything else would be useful anyway).
 
         if ($info)
             $pagelist->insertColumn(_($info));
 
-        $n = false;
         while ($backlink = $backlinks->next()) {
             $name = $backlink->getName();
             if ($exclude && $name == $exclude)
                 continue;
             if (!$include_self && $name == $page)
                 continue;
+
             $pagelist->addPage($backlink);
-            $n = true;
         }
 
-        
-        if ($noheader)
-            return $pagelist->getContent();
+        if (!$noheader) {
+            $pagelink = LinkWikiWord($page);
+            
+            if ($pagelist->isEmpty())
+                return HTML::p(fmt("No pages link to %s.", $pagelink));
 
-//        global $Theme;
-//        $pagelink = $Theme->linkExistingWikiWord($page);
-        $pagelink = LinkExistingWikiWord($page);
+            $pagelist->setCaption(fmt("%d pages link to %s:",
+                                      $pagelist->getTotal(), $pagelink));
+            $pagelist->setMessageIfEmpty('');
+        }
 
-        if ($n)
-            //FIXME: use __sprintf
-            //$head = sprintf("These %s pages link to %s:", '%d', $pagelink);
-            $head = sprintf("These pages link to %s:", $pagelink);
-        else
-            $head = sprintf("No pages link to %s.", $pagelink);
-
-//        $head = new RawXML($pagelist->setCaption($head));
-//        $head = HTML::p(new RawXML($pagelist->setCaption($head)));
-//        $head = HTML::p($pagelist->setCaption($head));
-        return array($head, $pagelist->getContent());
+        return $pagelist;
     }
-
-
 };
 
 // For emacs users

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: interwiki.php,v 1.12 2002-01-09 17:09:31 carstenklapp Exp $');
+<?php rcs_id('$Id: interwiki.php,v 1.13 2002-01-22 03:17:47 dairiki Exp $');
 
 function generate_interwikimap_and_regexp()
 {
@@ -37,29 +37,27 @@ function LinkInterWikiLink($link, $linktext='')
     else
         $url .= $page_enc;
 
-    if ($linktext) {
-        $linktext = htmlspecialchars($linktext);
-        $class    = 'named-interwiki';
+    $link = HTML::a(array('href' => $url),
+                    IconForLink('interwiki'));
+    
+    if (!$linktext) {
+        $link->pushContent("$wiki:",
+                           HTML::span(array('class' => 'wikipage'), $page));
+        $link->setAttr('class', 'interwiki');
     }
     else {
-        $linktext = (htmlspecialchars("$wiki:")
-                     . QElement('span', array('class' => 'wikipage'), $page));
-        $class = 'interwiki';
+        $link->pushContent($linktext);
+        $link->setAttr('class', 'named-interwiki');
     }
 
-    return Element('a', array('href'  => $url,
-                              'class' => $class),
-                   IconForLink('interwiki') . $linktext);
+    return $link;
 }
 
 
 // Link InterWiki links
 // These can be protected by a '!' like Wiki words.
-function wtt_interwikilinks($match, &$trfrm)
-{
-    if ($match[0] == "!")
-        return htmlspecialchars(substr($match,1));
-    return LinkInterWikiLink($match);
+function wtt_interwikilinks($match, &$trfrm) {
+    return $match[0] == "!" ? substr($match,1) : LinkInterWikiLink($match);
 }
 
 // For emacs users

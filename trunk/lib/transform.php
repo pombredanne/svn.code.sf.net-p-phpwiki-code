@@ -1,5 +1,6 @@
-<?php rcs_id('$Id: transform.php,v 1.32 2002-01-21 06:55:47 dairiki Exp $');
+<?php rcs_id('$Id: transform.php,v 1.33 2002-01-22 03:17:47 dairiki Exp $');
 require_once('lib/WikiPlugin.php');
+require_once('lib/HtmlElement.php');
 
 define('WT_SIMPLE_MARKUP', 0);
 define('WT_TOKENIZER', 1);
@@ -91,13 +92,10 @@ class WikiTransform
     */
    function SetHTMLMode($tag, $level = 1)
    {
-      if (is_array($tag)) {
-	 $args = $tag[1];
-	 $tag = $tag[0];
-      }
-      else {
-	 $args = array();
-      }
+      if (is_array($tag))
+         $el = new HtmlElement($tag[0], $tag[1]);
+      else
+         $el = new HtmlElement($tag);
 
       $this->mode_set = 1;	// in order to prevent other mode markup
 				// to be executed
@@ -121,7 +119,7 @@ class WikiTransform
 	 // back up one more and push new tag
 	 if ($tag && $tag != $this->stack->top()) {
 	    $closetag = $this->stack->pop();
-	    $retvar .= "</$closetag>" . StartTag($tag, $args) . "\n";
+	    $retvar .= "</$closetag>" . $el->_startTag() . "\n";
 	    $this->stack->push($tag);
 	 }
    
@@ -154,17 +152,17 @@ class WikiTransform
 	       //
 	       // So now, when we need extra list elements, we use a <dl>, and
 	       // open it with an empty <dd>.
-               $el =  $this->stack->cnt() % 2 == 0 ? 'dl' : 'dd';
-               $retvar .= "<$el>";
-               $this->stack->push($el);
+               $stuff =  $this->stack->cnt() % 2 == 0 ? 'dl' : 'dd';
+               $retvar .= "<$stuff>";
+               $this->stack->push($stuff);
 	    }
 
-	    $retvar .= StartTag($tag, $args) . "\n";
+	    $retvar .= $el->_startTag() . "\n";
 	    $this->stack->push($tag);
          }
       }
       
-      return $this->token($retvar);
+      return $this->rawtoken($retvar);
    }
 
    /**
@@ -189,7 +187,7 @@ class WikiTransform
        
        $retval = $this->SetHTMLMode($list_type, 2 * $level - 1);
        if ($list_type == 'dl') {
-           $retval .= Element('dt', $defn_term);
+           $retval .= AsXML(HTML::dt($defn_term));
            $retval .= $this->SetHTMLMode('dd', 2 * $level);
        }
        else {
@@ -239,9 +237,8 @@ class WikiTransform
 	 // main loop applying all registered functions
 	 // tokenizers, markup, html mode, ...
 	 // functions are executed in order of registering
-	 for (reset($this->trfrm_func);
-	      list($flags, $func, $regexp) = current($this->trfrm_func);
-	      next($this->trfrm_func)) {
+         foreach ($this->trfrm_func as $trfrm) {
+            list($flags, $func, $regexp) = $trfrm;
 
 	    // if HTMLmode is already set then skip all following
 	    // WT_MODE_MARKUP functions
@@ -257,22 +254,27 @@ class WikiTransform
 	    else
 	       $line = $func($line, $this);
 	 }
-
+    
 	 $html .= $line . "\n";
       }
       // close all tags
       $html .= $this->SetHTMLMode('', 0);
-
-      return $this->untokenize($html);
+      
+      return new RawXml($this->untokenize($html));
    }
    // end do_transfrom()
 
    // Register a new token.
-   function token($repl) {
+   function rawtoken($repl) {
       global $FieldSeparator;
       $tok = $FieldSeparator . sizeof($this->replacements) . $FieldSeparator;
       $this->replacements[] = $repl;
       return $tok;
+   }
+
+   // Register a new token.
+   function token($repl) {
+      return $this->rawtoken(AsXML($repl));
    }
    
    // helper function which does actual tokenizing
@@ -355,7 +357,7 @@ function do_transform ($lines, $class = 'WikiPageTransform') {
         $lines = preg_split('/[ \t\r]*\n/', trim($lines));
 
     $trfm = new $class;
-    return new RawXml($trfm->do_transform('', $lines));
+    return $trfm->do_transform('', $lines);
 }
 
 class LinkTransform
@@ -419,21 +421,22 @@ function wtt_footnotes($match, &$trfrm)
    // FIXME: should this set HTML mode?
    $ftnt = trim(substr($match,1,-1)) + 0;
    $fntext = "[$ftnt]";
-   $html = Element('br');
-
-   $fnlist = $trfrm->user_data['footnotes'][$ftnt];
-   if (!is_array($fnlist))
-      return $html . $fntext;	
+   $html[] = HTML::br();
    
-   $trfrm->user_data['footnotes'][$ftnt] = 'footnote_seen';
-
-   while (list($k, $anchor) = each($fnlist))
-   {
-      $html .=  Element("a", array("name" => "footnote-$ftnt",
-				   "href" => "#$anchor",
-				   "class" => "footnote-rev"),
-			$fntext);
-      $fntext = '+';
+   $fnlist = $trfrm->user_data['footnotes'][$ftnt];
+   if (!is_array($fnlist)) {
+       $html[] = $fntext;
+   }
+   else {
+       $trfrm->user_data['footnotes'][$ftnt] = 'footnote_seen';
+       
+       while (list($k, $anchor) = each($fnlist)) {
+           $html[] = HTML::a(array("name" => "footnote-$ftnt",
+                                   "href" => "#$anchor",
+                                   "class" => "footnote-rev"),
+                             $fntext);
+           $fntext = '+';
+       }
    }
    return $html;
 }
@@ -452,59 +455,48 @@ function wtt_footnoterefs($match, &$trfrm)
       $footnote_definition_seen = true;
    
 
-   $args['href'] = "#footnote-$ftnt";
-   if (!$footnote_definition_seen)
-   {
-      $args['name'] = "footrev-$ftnt-" .
-	  count($trfrm->user_data['footnotes'][$ftnt]);
-      $trfrm->user_data['footnotes'][$ftnt][] = $args['name'];
+   $link = HTML::a(array('href' => "#footnote-$ftnt"), "[$ftnt]");
+   if (!$footnote_definition_seen) {
+       $name = "footrev-$ftnt-" . count($trfrm->user_data['footnotes'][$ftnt]);
+       $link->setAttr('name', $name);
+       $trfrm->user_data['footnotes'][$ftnt][] = $name;
    }
-   
-   return Element('sup', array('class' => 'footnote'),
-		  QElement("a", $args, "[$ftnt]"));
+   return HTML::sup(array('class' => 'footnote'), $link);
 }
 
 function wtt_bracketlinks($match, &$trfrm)
 {
-    if (preg_match('/^\[\s*\]$/', $match)) {
-        return htmlspecialchars($match);
-    }
+    if (preg_match('/^\[\s*\]$/', $match))
+        return $match;
     
-    $link = ParseAndLink($match);
-    if (strstr($link['link'], "</form>")) {
-        // FIXME: BIG HACK: see note in wtm_plugin.
-        return "</p>" . $link['link'] . "<p>";
-    }
-    return $link["link"];
-}
+    $link = LinkBracketLink($match);
+    if ($link->isInlineElement())
+        return $link;
 
+    // FIXME: BIG HACK:
+    return new RawXml("</p>" . $link->asXML() . "<p>");
+}
 
 
 // replace all URL's with tokens, so we don't confuse them
 // with Wiki words later. Wiki words in URL's break things.
 // URLs preceeded by a '!' are not linked
-function wtt_urls($match, &$trfrm)
-{
-   if ($match[0] == "!")
-      return htmlspecialchars(substr($match,1));
-   return LinkURL($match);
+function wtt_urls($match, &$trfrm) {
+    return $match[0] == "!"
+        ? substr($match,1)
+        : LinkURL($match);
 }
 
 // Link Wiki words (BumpyText)
 // Wikiwords preceeded by a '!' are not linked
-function wtt_bumpylinks($match, &$trfrm)
-{
-   global $dbi;
-   if ($match[0] == "!")
-      return htmlspecialchars(substr($match,1));
-   return LinkWikiWord($match);
+function wtt_bumpylinks($match, &$trfrm) {
+    return $match[0] == "!" ? substr($match,1) : LinkWikiWord($match);
 }
 
 
 // Just quote the token.
-function wtt_quotetoken($match, &$trfrm)
-{
-    return htmlspecialchars($match);
+function wtt_quotetoken($match, &$trfrm) {
+    return $match;
 }
 
     
@@ -513,23 +505,18 @@ function wtt_quotetoken($match, &$trfrm)
 //////////////////////////////////////////////////////////
 
 
-   //////////////////////////////////////////////////////////
-   // basic simple markup functions
+//////////////////////////////////////////////////////////
+// basic simple markup functions
 
-   // escape HTML metachars
-   function wtm_htmlchars($line, &$transformer)
-   {
-      $line = str_replace('&', '&amp;', $line);
-      $line = str_replace('>', '&gt;', $line);
-      $line = str_replace('<', '&lt;', $line);
-      return($line);
-   }
+// escape HTML metachars
+function wtm_htmlchars($line, &$transformer) {
+    return XmlElement::_quote($line);
+}
 
-
-   // %%% are linebreaks
-   function wtm_linebreak($line, &$transformer) {
-      return str_replace('%%%', Element('br'), $line);
-   }
+// %%% are linebreaks
+function wtm_linebreak($line, &$transformer) {
+    return str_replace('%%%', '<br />', $line);
+}
 
    // bold and italics
    function wtm_bold_italics($line, &$transformer) {
@@ -643,33 +630,35 @@ function wtm_table($line, &$trfrm)
    while (preg_match('/^(\|+)(v*)([<>^]?)([^|]*)/', $line, $m))
    {
       $line = substr($line, strlen($m[0]));
-      $td = array();
+
+      $td = HTML::td();
       
       if (strlen($m[1]) > 1)
-	 $td['colspan'] = strlen($m[1]);
+	 $td->setAttr('colspan', strlen($m[1]));
       if (strlen($m[2]) > 0)
-	 $td['rowspan'] = strlen($m[2]) + 1;
+	 $td->setAttr('rowspan', strlen($m[2]) + 1);
       
       if ($m[3] == '^')
-	 $td['align'] = 'center';
+	 $td->setAttr('align', 'center');
       else if ($m[3] == '>')
-	 $td['align'] = 'right';
+	 $td->setAttr('align', 'right');
       else
-	 $td['align'] = 'left';
-      
-      $row .= $trfrm->token(StartTag('td', $td) . "&nbsp;");
+	 $td->setAttr('align', 'left');
+
+      // FIXME: this is a hack: can't tokenize whole <td></td> since we
+      // haven't marked up italics, etc... yet
+      $row .= $trfrm->rawtoken($td->_startTag() . "&nbsp;");
       $row .= trim($m[4]);
-      $row .= $trfrm->token("&nbsp;</td>");
+      $row .= $trfrm->rawtoken("&nbsp;" . $td->_endTag());
    }
    assert(empty($line));
-   $row = $trfrm->token("<tr>") . $row . $trfrm->token("</tr>");
+   $row = $trfrm->rawtoken("<tr>") . $row . $trfrm->rawtoken("</tr>");
    
    return $trfrm->SetHTMLMode(array('table',
-				    array(//'align' => 'left',
-					  'cellpadding' => 1,
+				    array('cellpadding' => 1,
 					  'cellspacing' => 1,
 					  'border' => 1))) .
-      $row;
+       $row;
 }
 
    // four or more dashes to <hr>
@@ -677,17 +666,16 @@ function wtm_table($line, &$trfrm)
    // allowed within <p>'s. (e.g. "<p><hr></p>" is not valid HTML.)
    function wtm_hr($line, &$trfrm) {
       if (preg_match('/^-{4,}(.*)$/', $line, $m)) {
-         $line = $trfrm->SetHTMLMode('', 0) . Element('hr');
+         $line = $trfrm->SetHTMLMode('', 0) . '<hr />';
 	 if ($m[1])
-	    $line .= $trfrm->SetHTMLMode('p') . $m[1];
+            $line .= $trfrm->SetHTMLMode('p') . $m[1];
       }
       return $line;
    }
 
    // default mode: simple text paragraph
    function wtm_paragraph($line, &$trfrm) {
-      $line = $trfrm->SetHTMLMode('p') . $line;
-      return $line;
+      return $trfrm->SetHTMLMode('p') . $line;
    }
 
 // (c-file-style: "gnu")

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: LikePages.php,v 1.8 2002-01-21 17:53:44 carstenklapp Exp $');
+rcs_id('$Id: LikePages.php,v 1.9 2002-01-22 03:17:47 dairiki Exp $');
 
 require_once('lib/TextSearchQuery.php');
 require_once('lib/PageList.php');
@@ -51,8 +51,7 @@ extends WikiPlugin
             $exclude = $page;
             
             $descrip = fmt("These pages share an initial or final title word with '%s'",
-                           _LinkWikiWord($page));
-
+                           LinkWikiWord($page));
         }
 
         // Search for pages containing either the suffix or the prefix.
@@ -84,14 +83,14 @@ extends WikiPlugin
                 continue;
             if (!empty($exclude) && $name == $exclude)
                 continue;
+
             $pagelist->addPage($page);
         }
-        if (!$pagelist->getContent())
-            $pagelist = HTML::blockquote(_("<none>"));
 
-        if ($noheader)
-            return $pagelist;
-        return array(HTML::p($descrip), $pagelist->getContent());
+        if (!$noheader)
+            $pagelist->setCaption($descrip);
+
+        return $pagelist;
     }
 
     function _quote($str) {

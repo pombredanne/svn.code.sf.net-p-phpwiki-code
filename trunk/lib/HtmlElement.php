@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.5 2002-01-21 16:59:01 dairiki Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.6 2002-01-22 03:17:47 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -29,9 +29,22 @@ class HtmlElement extends XmlElement
     }
 
     function hasInlineContent () {
+        return ($this->_properties & HTMLTAG_ACCEPTS_INLINE) != 0;
+    }
+
+    function isInlineElement () {
         return ($this->_properties & HTMLTAG_INLINE) != 0;
     }
 };
+
+function HTML ($tag /* , ... */) {
+    $el = new HtmlElement($tag);
+    if (func_num_args() > 1)
+        $el->_init(array_slice(func_get_args(), 1));
+    return $el;
+}
+
+define('NBSP', "\xA0");         // iso-8859-x non-breaking space.
 
 class HTML {
     function raw ($html_text) {
@@ -72,6 +85,12 @@ class HTML {
 
     function img (/*...*/) {
         $el = new HtmlElement('img');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function br (/*...*/) {
+        $el = new HtmlElement('br');
         $el->_init(func_get_args());
         return $el;
     }
@@ -172,6 +191,18 @@ class HTML {
         return $el;
     }
 
+    function sup (/*...*/) {
+        $el = new HtmlElement('sup');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function sub (/*...*/) {
+        $el = new HtmlElement('sub');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
     function ul (/*...*/) {
         $el = new HtmlElement('ul');
         $el->_init(func_get_args());
@@ -268,20 +299,11 @@ class HTML {
         return $el;
     }
 
-    function isEmptyTag($tag) {
-        return (HTML::getTagProperties($tag) & HTMLTAG_EMPTY) != 0;
-    }
-
-    function canHaveInlineContent($tag) {
-        return (HTML::getTagProperties($tag) & HTMLTAG_INLINE) != 0;
-    }
-
     function getTagProperties($tag) {
         $props = &$GLOBALS['HTML_TagProperties'];
         return isset($props[$tag]) ? $props[$tag] : 0;
     }
     
-        
     function _setTagProperty($prop_flag, $tags) {
         $props = &$GLOBALS['HTML_TagProperties'];
         if (is_string($tags))
@@ -297,13 +319,15 @@ class HTML {
 
 define('HTMLTAG_EMPTY', 1);
 define('HTMLTAG_INLINE', 2);
+define('HTMLTAG_ACCEPTS_INLINE', 4);
 
 
 HTML::_setTagProperty(HTMLTAG_EMPTY,
                       'area base basefont br col frame hr img input isindex link meta param');
-HTML::_setTagProperty(HTMLTAG_INLINE,
+HTML::_setTagProperty(HTMLTAG_ACCEPTS_INLINE,
                       // %inline elements:
                       'b big i small tt ' // %fontstyle
+                      . 's strike u ' // (deprecated)
                       . 'abbr acronym cite code dfn em kbd samp strong var ' //%phrase
                       . 'a img object br script map q sub sup span bdo '//%special
                       . 'button input label select textarea ' //%formctl
@@ -317,6 +341,15 @@ HTML::_setTagProperty(HTMLTAG_INLINE,
                       . 'caption dt label legend '
                       // other with either inline or block
                       . 'dd del ins li td th ');
+
+HTML::_setTagProperty(HTMLTAG_INLINE,
+                      // %inline elements:
+                      'b big i small tt ' // %fontstyle
+                      . 's strike u ' // (deprecated)
+                      . 'abbr acronym cite code dfn em kbd samp strong var ' //%phrase
+                      . 'a img object br script map q sub sup span bdo '//%special
+                      . 'button input label select textarea ' //%formctl
+                      );
 
       
 // (c-file-style: "gnu")

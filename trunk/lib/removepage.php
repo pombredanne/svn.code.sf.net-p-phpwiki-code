@@ -1,23 +1,32 @@
 <?php
-rcs_id('$Id: removepage.php,v 1.3 2001-12-28 09:46:04 carstenklapp Exp $');
-
-if ($request->getArg('verify') != 'okay') {
-    $html = sprintf(_("You are about to remove '%s' permanently!"),
-                    htmlspecialchars($pagename));
-    $html .= "\n<P>";
-    $html .= sprintf(_("Click here to <a href=\"%s\">remove the page now</a>."),
-                     htmlspecialchars(WikiURL($pagename, array('action' => 'remove',
-                                                               'verify' => 'okay'))));
-    $html .= "\n<P>";
-    $html .= _("To cancel press the \"Back\" button of your browser.");
-}
-else {
-    $dbi->deletePage($pagename);
-    $html = sprintf(_("Removed page '%s' succesfully."),
-                    htmlspecialchars($pagename));
-}
+rcs_id('$Id: removepage.php,v 1.4 2002-01-22 03:17:47 dairiki Exp $');
 require_once('lib/Template.php');
-echo GeneratePage('MESSAGE', $html, _("Remove page"));
+
+function RemovePage ($dbi, $request) {
+    global $Theme;
+    $pagename = $request->getArg('pagename');
+    $pagelink = $Theme->linkExistingWikiWord($pagename);
+    
+    if ($request->getArg('verify') != 'okay') {
+        $url = WikiURL($pagename, array('action' => 'remove', 'verify' => 'okay'));
+
+        $removeB = $Theme->makeButton(_("Remove the page now"), $url, 'wikiadmin');
+        $cancelB = $Theme->makeButton(_("Cancel"), WikiURL($pagename), 'wikiaction');
+        
+        $html[] = HTML::h2(fmt("You are about to remove '%s' permanently!", $pagelink));
+        $html[] =HTML::div(array('class' => 'toolbar'),
+                           $removeB,
+                           $Theme->getButtonSeparator(),
+                           $cancelB));
+    }
+    else {
+        $dbi->deletePage($pagename);
+        $html[] = HTML::h2(fmt("Removed page '%s' succesfully.", $pagename));
+    }
+    echo GeneratePage('MESSAGE', $html, _("Remove page"));
+}
+
+RemovePage($dbi, $request);
 
 // For emacs users
 // Local Variables:

@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.5 2002-01-21 06:55:47 dairiki Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.6 2002-01-22 03:17:47 dairiki Exp $ -->
 <?php
   $BF = &$ButtonFactory;
 
@@ -11,7 +11,6 @@
   $EditB = fmt("%s of this page", $EditB);
 
   $mtime = $Theme->formatDateTime($revision->get('mtime'));
-  //<?plugin-link PageHistory page="[pagename]" ?>
   $PageHistoryB = $BF->makeLabelActionPageButton($mtime, _("PageHistory"));
 
   if ($IS_CURRENT)

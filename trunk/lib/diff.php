@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.27 2002-01-21 06:55:47 dairiki Exp $');
+rcs_id('$Id: diff.php,v 1.28 2002-01-22 03:17:47 dairiki Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -9,6 +9,103 @@ rcs_id('$Id: diff.php,v 1.27 2002-01-21 06:55:47 dairiki Exp $');
 //
 
 require_once('lib/difflib.php');
+require_once('lib/HtmlElement.php');
+
+class _HWLDF_WordAccumulator {
+    function _HWLDF_WordAccumulator () {
+        $this->_lines = array();
+        $this->_line = false;
+        $this->_group = false;
+        $this->_tag = '~begin';
+    }
+
+    function _flushGroup ($new_tag) {
+        if ($this->_group !== false) {
+            $this->_line[] = ( $this->_tag
+                               ? new HtmlElement($this->_tag, $this->_group)
+                               : $this->_group );
+        }
+        $this->_group = '';
+        $this->_tag = $new_tag;
+    }
+    
+    function _flushLine ($new_tag) {
+        $this->_flushGroup($new_tag);
+        if ($this->_line !== false)
+            $this->_lines[] = $this->_line;
+        $this->_line = array();
+    }
+                
+    function addWords ($words, $tag = '') {
+        if ($tag != $this->_tag)
+            $this->_flushGroup($tag);
+
+        foreach ($words as $word) {
+            // new-line should only come as first char of word.
+            if (!$word)
+                continue;
+            if ($word[0] == "\n") {
+                $this->_group .= NBSP;
+                $this->_flushLine($tag);
+                $word = substr($word, 1);
+            }
+            assert(!strstr($word, "\n"));
+            $this->_group .= $word;
+        }
+    }
+
+    function getLines() {
+        $this->_flushLine('~done');
+        return $this->_lines;
+    }
+}
+
+class WordLevelDiff extends MappedDiff
+{
+    function WordLevelDiff ($orig_lines, $final_lines) {
+        list ($orig_words, $orig_stripped) = $this->_split($orig_lines);
+        list ($final_words, $final_stripped) = $this->_split($final_lines);
+
+        
+        $this->MappedDiff($orig_words, $final_words,
+                          $orig_stripped, $final_stripped);
+    }
+
+    function _split($lines) {
+        // FIXME: fix POSIX char class.
+        if (!preg_match_all('/ ( [^\S\n]+ | [[:alnum:]]+ | . ) (?: (?!< \n) [^\S\n])? /xs',
+                            implode("\n", $lines),
+                            $m)) {
+            return array(array(''), array(''));
+        }
+        return array($m[0], $m[1]);
+    }
+
+    function orig () {
+        $orig = new _HWLDF_WordAccumulator;
+        
+        foreach ($this->edits as $edit) {
+            if ($edit->type == 'copy')
+                $orig->addWords($edit->orig);
+            elseif ($edit->orig)
+                $orig->addWords($edit->orig, 'del');
+        }
+        return $orig->getLines();
+    }
+
+    function final () {
+        $final = new _HWLDF_WordAccumulator;
+        
+        foreach ($this->edits as $edit) {
+            if ($edit->type == 'copy')
+                $final->addWords($edit->final);
+            elseif ($edit->final)
+                $final->addWords($edit->final, 'ins');
+        }
+        return $final->getLines();
+    }
+}
+
 
 /**
  * HTML unified diff formatter.
@@ -44,9 +141,7 @@ class HtmlUnifiedDiffFormatter extends UnifiedDiffFormatter
         unset($this->_block);
     }
 
-    function _lines($lines, $class, $prefix = false, $elem = false) {
-        if (!$prefix)
-            $prefix = new RawXml('&nbsp;');
+    function _lines($lines, $class, $prefix = NBSP, $elem = false) {
         
         foreach ($lines as $line) {
             if ($elem)
@@ -54,8 +149,7 @@ class HtmlUnifiedDiffFormatter extends UnifiedDiffFormatter
             $this->_block->pushContent(HTML::div(array('class' => $class),
                                                  HTML::tt(array('class' => 'prefix'),
                                                           $prefix),
-                                                 $line,
-                                                 new RawXml('&nbsp;')));
+                                                 $line, NBSP));
         }
     }
 
@@ -70,53 +164,10 @@ class HtmlUnifiedDiffFormatter extends UnifiedDiffFormatter
         $this->_lines($lines, 'added', '+', 'ins');
     }
 
-    function _pack($bits, $tag) {
-        $packed = htmlspecialchars(implode("", $bits));
-        return "<$tag>"
-            . str_replace("\n", "<tt>&nbsp;</tt></$tag>\n<$tag>",
-                          $packed)
-            . "</$tag>";
-    }
-
-    function _split($lines) {
-        preg_match_all('/ ( [^\S\n]+ | [[:alnum:]]+ | . ) (?: (?!< \n) [^\S\n])? /xs',
-                       implode("\n", $lines),
-                       $m);
-        return array($m[0], $m[1]);
-    }
-
-    function _explode_raw($lines) {
-        $split = explode("\n", $lines);
-        foreach ($split as $key => $val)
-            $split[$key] = new RawXml($split[$key]);
-        return $split;
-    }
-    
     function _changed($orig, $final) {
-        list ($orig_words, $orig_stripped) = $this->_split($orig);
-        list ($final_words, $final_stripped) = $this->_split($final);
-        
-        // Compute character-wise diff in changed region.
-        $diff = new MappedDiff($orig_words, $final_words,
-                               $orig_stripped, $final_stripped);
-
-        $orig = $final = '';
-        foreach ($diff->edits as $edit) {
-            if ($edit->type == 'copy') {
-                $orig .= implode('', $edit->orig);
-                $final .= implode('', $edit->final);
-            }
-            else {
-                if ($edit->orig)
-                    $orig .= $this->_pack($edit->orig, 'del');
-                if ($edit->final)
-                    $final .= $this->_pack($edit->final, 'ins');
-            }
-        }
-
-        // FIXME: this is a hack
-        $this->_lines($this->_explode_raw($orig),  'original', '-');
-        $this->_lines($this->_explode_raw($final), 'final', '+');
+        $diff = new WordLevelDiff($orig, $final);
+        $this->_lines($diff->orig(), 'original', '-');
+        $this->_lines($diff->final(), 'final', '+');
     }
 }
 
@@ -159,11 +210,11 @@ class TableUnifiedDiffFormatter extends HtmlUnifiedDiffFormatter
         unset($this->_block);
     }
 
-    function _lines($lines, $class, $prefix = '&nbsp;', $elem = false) {
+    function _lines($lines, $class, $prefix = NBSP, $elem = false) {
         $prefix = HTML::td(array('class' => 'prefix', 'width' => "1%"), $prefix);
         foreach ($lines as $line) {
             if (! trim($line))
-                $line = new RawXml('&nbsp');
+                $line = NBSP;
             elseif ($elem)
                 $line = new HtmlElement($elem, $line);
 	    $this->_block->pushContent(HTML::tr(array('valign' => 'top'), 
@@ -258,8 +309,7 @@ function showDiff ($dbi, $request) {
     $new_link = HTML::a(array('href' => $new_url), $new_version);
     $old_url = WikiURL($pagename, array('version' => $old ? $old->getVersion() : 0));
     $old_link = HTML::a(array('href' => $old_url), $old_version);
-    global $Theme;
-    $page_link = $Theme->linkExistingWikiWord($pagename);
+    $page_link = LinkExistingWikiWord($pagename);
     
     $html[] = HTML::p(fmt("Differences between %s and %s of %s.",
                           $new_link, $old_link, $page_link));

@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.4 2002-01-21 06:55:47 dairiki Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.5 2002-01-22 03:17:47 dairiki Exp $ -->
 <?php
 $SummaryInput = HTML::input(array('type' => 'text',
                                   'class' => 'wikitext',
@@ -71,15 +71,15 @@ $SaveB = HTML::input(array('type' => 'submit',
   <br />
   <?= $MinorEditCb ?>
   <?= fmt("I'm just doing minor edits. Please divert the usual logging to %s instead.",
-          $Theme->linkExistingWikiWord(_("RecentEdits"))) ?>
+          LinkExistingWikiWord(_("RecentEdits"))) ?>
   <br /><br />
 <div name="#edit-tips"><?php
   // FIXME: convert this to use the IncludePage plugin. ?>
 <?= fmt("See %s tips for editing.",
-        $Theme->linkExistingWikiWord(_("GoodStyle"))) ?>
+        LinkExistingWikiWord(_("GoodStyle"))) ?>
 <br />
 <?= fmt("You can change the size of the editing area in %s.",
-        $Theme->linkExistingWikiWord(_("UserPreferences"))) ?>
+        LinkExistingWikiWord(_("UserPreferences"))) ?>
 </div>
 
 <div class="wiki-edithelp">

@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: login.tmpl,v 1.1 2002-01-19 07:21:58 dairiki Exp $ -->
+<!-- $Id: login.tmpl,v 1.2 2002-01-22 03:17:47 dairiki Exp $ -->
 <!-- The login form -->
 
 <?php if ($FAILURE_MESSAGE) { ?>
@@ -43,7 +43,7 @@
 <input type="hidden" name="login[require_level]" value="<?=$REQUIRE?>" />
 <input type="hidden" name="login[login]" value="1" />
 <?php foreach ($query_args as $key => $val) { ?>
-<input type="hidden" name="<?=htmlspecialchars($key)?>" value="<?=htmlspecialchars($val)?>" />
+  <input type="hidden" name="<?=$key?>" value="<?=$val?>" />
 <?php } ?>
 </form>
 

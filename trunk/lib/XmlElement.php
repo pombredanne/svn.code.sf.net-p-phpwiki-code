@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.3 2002-01-21 16:59:01 dairiki Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.4 2002-01-22 03:17:47 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -242,6 +242,7 @@ function PrintXML ($val) {
     elseif (is_array($val)) {
         foreach ($val as $x)
             PrintXML($x);
+        return;
     }
         
     echo (string)XmlElement::_quote($val);

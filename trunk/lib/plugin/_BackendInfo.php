@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _BackendInfo.php,v 1.9 2002-01-21 06:55:47 dairiki Exp $');
+rcs_id('$Id: _BackendInfo.php,v 1.10 2002-01-22 03:17:47 dairiki Exp $');
 require_once('lib/Template.php');
 /**
  */
@@ -12,20 +12,6 @@ extends WikiPlugin
 
     function getDescription () {
         return sprintf(_("Get debugging information for %s."),'[pagename]');
-    }
-    
-    function WikiPlugin__BackendInfo() {
-        $html = '<tr bgcolor="#ffcccc">'."\n";
-        $html .= '  <td colspan="2"><?=$header?></td>'."\n";
-        $html .= '</tr>'."\n";
-        $html .= '<?php foreach ($hash as $key => $val) { ?>'."\n";
-        $html .= '  <tr>'."\n";
-        $html .= '    <td align="right" bgcolor="#cccccc">&nbsp;<?=$key?>&nbsp;</td>'."\n";
-        $html .= '    <td><?=$val?>&nbsp;</td>'."\n";
-        $html .= '  </tr>'."\n";
-        $html .= '<?php } ?>'."\n";
-        $this->_hashtemplate = new Template($html);
-
     }
     
     function getDefaultArguments() {
@@ -41,19 +27,18 @@ extends WikiPlugin
         
         $backend = &$dbi->_backend;
 
-        $html = QElement('h3',
-                         sprintf(_("Querying backend directly for '%s'"), $page));
+        $html[] = HTML::h3(fmt("Querying backend directly for '%s'", $page));
 
         
-        $rows = '';
+        $table = HTML::table(array('border' => 1,
+                                   'cellpadding' => 2,
+                                   'cellspacing' => 0));
         $pagedata = $backend->get_pagedata($page);
         if (!$pagedata)
-            $html .= QElement('p', sprintf(_("No pagedata for %s"), $page) . "\n");
+            $html[] = HTML::p(fmt("No pagedata for %s", $page));
         else {
-            ksort($pagedata);
-            $rows .= $this->_hashtemplate->
-                getExpansion(array('header' => "get_pagedata('$page')",
-                                   'hash'   => $pagedata));
+            $table->pushContent($this->_showhash("get_pagedata('$page')",
+                                                 $pagedata));
         }
         
         for ($version = $backend->get_latest_version($page);
@@ -68,19 +53,25 @@ extends WikiPlugin
             elseif (strlen($content) > 40)
                 $content = substr($content,0,40) . " ...";
 
-            $rows .= Element('tr', Element('td', array('colspan' => 2))) . "\n";
-            ksort($vdata);
-            $rows .= $this->_hashtemplate->
-                getExpansion(array('header' => "get_versiondata('$page',$version)",
-                                   'hash'   => $vdata));
-            
+            $table->pushContent(HTML::tr(HTML::td(array('colspan' => 2))));
+            $table->pushContent($this->_showhash("get_versiondata('$page',$version)",
+                                                 $vdata));
         }
 
-        $html .= Element('table', array('border' => 1,
-                                        'cellpadding' => 2,
-                                        'cellspacing' => 0),
-                         $rows) . "\n";
-        return new RawXml($html); // FIXME: avoid RawXml.
+        $html[] = $table;
+        return $html;
+    }
+
+    function _showhash ($heading, $hash) {
+        $rows[] = HTML::tr(array('bgcolor' => "#ffcccc"),
+                           HTML::td(array('colspan' => 2), $heading));
+        ksort($hash);
+        foreach ($hash as $key => $val)
+            $rows[] = HTML::tr(HTML::td(array('align' => 'right',
+                                              'bgcolor' => '#cccccc'),
+                                        NBSP . $key . NBSP),
+                               HTML::td($val ? $val : NBSP));
+        return $rows;
     }
 };
         

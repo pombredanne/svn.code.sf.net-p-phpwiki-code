@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.30 2002-01-21 06:55:47 dairiki Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.31 2002-01-22 03:17:47 dairiki Exp $');
 require_once('lib/Template.php');
 require_once('lib/transform.php');
 require_once('lib/ArchiveCleaner.php');
@@ -9,6 +9,11 @@ require_once('lib/ArchiveCleaner.php');
    This is klugey. But it works. There's probably a slicker way of
    coding it.
 */
+
+// converts spaces to tabs
+function CookSpaces($pagearray) {
+    return preg_replace("/ {3,8}/", "\t", $pagearray);
+}
 
 // FIXME: some links so that it's easy to get back to someplace useful
 // from these error pages.
@@ -25,20 +30,18 @@ function ConcurrentUpdates($pagename) {
                   _("Make changes to the file again. Paste your additions from the clipboard (or text editor)."),
                   _("Press <b>Save</b> again."));
 
-    foreach ($steps as $key => $step) {
-        $step[$key] = Element('li', $step);
-    }
     
         
-    $html = QElement('p',
-                     _("PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."));
+    $html[] = HTML::p(_("PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."));
 
-    $html .= Element('p',
-                     _("In order to recover from this situation follow these steps:"));
+    $html[] = HTML::p(_("In order to recover from this situation follow these steps:"));
 
-    $html .= Element('ol', join("\n", $steps));
+    $steps = HTML::ol();
+    foreach ($steps as $step)
+        $steps->pushContent(HTML::li($step));
+    $html[] = $steps;
 
-    $html .= QElement('p', _("Sorry for the inconvenience."));
+    $html[] = HTML::p(_("Sorry for the inconvenience."));
 
     echo GeneratePage('MESSAGE', $html,
                       sprintf(_("Problem while updating %s"), $pagename));
@@ -46,13 +49,11 @@ function ConcurrentUpdates($pagename) {
 }
 
 function PageIsLocked($pagename) {
-    $html = QElement('p',
-                     _("This page has been locked by the administrator so your changes could not be saved."));
-    $html .= '<p>' ._("Use your browser's <b>Back</b> button to go back to the edit page.");
-    $html .= _("Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor.");
-    $html .= '</p>';
-    $html .= QElement('p',
-                      _("Sorry for the inconvenience."));
+    $html[] = HTML::p(_("This page has been locked by the administrator so your changes could not be saved."));
+    $html[] = HTML::p(_("Use your browser's <b>Back</b> button to go back to the edit page."),
+                      ' ',
+                      _("Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor."));
+    $html[] = HTML::p(_("Sorry for the inconvenience."));
     
     echo GeneratePage('MESSAGE', $html,
                       sprintf (_("Problem while editing %s"), $pagename));
@@ -60,8 +61,8 @@ function PageIsLocked($pagename) {
 }
 
 function BadFormVars($pagename) {
-    $html = QElement('p', _("Bad form submission"));
-    $html .= QElement('p', _("Required form variables are missing."));
+    $html[] = HTML::p(_("Bad form submission"));
+    $html[] = HTML::p(_("Required form variables are missing."));
     echo GeneratePage('MESSAGE', $html,
                       sprintf(_("Edit aborted: %s"), $pagename));
     ExitWiki ("");

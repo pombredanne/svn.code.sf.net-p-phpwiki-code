@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.26 2002-01-21 06:55:47 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.27 2002-01-22 03:17:47 dairiki Exp $');
 
 
 include "lib/config.php";
@@ -224,7 +224,7 @@ function main ($request) {
         break;
         
     default:
-        echo QElement('p', sprintf(_("Bad action: '%s'"), urlencode($action)));
+        ProntXML(HTML::p(fmt("Bad action: '%s'", $action)));
         break;
     }
     ExitWiki();

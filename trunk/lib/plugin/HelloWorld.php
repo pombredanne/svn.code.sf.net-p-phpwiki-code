@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: HelloWorld.php,v 1.8 2002-01-21 06:55:47 dairiki Exp $');
+rcs_id('$Id: HelloWorld.php,v 1.9 2002-01-22 03:17:47 dairiki Exp $');
 /**
  * A simple demonstration WikiPlugin.
  *
@@ -38,7 +38,7 @@ extends WikiPlugin
 
         // Any text that is returned will not be further transformed,
         // so use html where necessary.
-        $html = HTML::tt(fmt('%s %s', $salutation, _LinkWikiWord($name)),
+        $html = HTML::tt(fmt('%s %s', $salutation, LinkWikiWord($name)),
                          THE_END);
         return $html;
     }
