@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopular.php,v 1.5 2002-01-09 18:06:49 carstenklapp Exp $');
+rcs_id('$Id: MostPopular.php,v 1.6 2002-01-20 08:38:06 carstenklapp Exp $');
 /**
  */
 class WikiPlugin_MostPopular
@@ -40,7 +40,7 @@ extends WikiPlugin
         if (!$noheader) {
             $html .= QElement('p',
                              sprintf(_("The %s most popular pages of this wiki:"),
-                                     $limit ? $limit : ''));
+                                     $limit > 0 ? $limit : ''));
         }
 
 
