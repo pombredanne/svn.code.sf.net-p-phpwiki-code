@@ -1,5 +1,5 @@
 <?php // -*-php-*- ?>
-<!-- $Id: login.tmpl,v 1.29 2004-03-14 16:40:45 rurban Exp $ -->
+<!-- $Id: login.tmpl,v 1.30 2004-04-10 05:03:20 rurban Exp $ -->
 <!-- The login form -->
 
 <?php if ($fail_message) { ?>
@@ -26,7 +26,12 @@ if (DEBUG) {
 if (ALLOW_BOGO_LOGIN && $require_level <= WIKIAUTH_BOGO) {
   require_once("lib/BlockParser.php");
   // This iso-8859-1 sample covers French, Spanish, Italian, German, and probably others
-  $examplechars = htmlentities("ÀñíçéàÖãæôßøü", ENT_QUOTES, 'iso-8859-1');
+  if (check_php_version(4,3))
+    $examplechars = htmlentities("ÀñíçéàÖãæôßøü", ENT_QUOTES, 'iso-8859-1');
+  elseif (check_php_version(4,0,3))
+    $examplechars = htmlentities("ÀñíçéàÖãæôßøü", ENT_QUOTES);
+  else
+    $examplechars = htmlentities("ÀñíçéàÖãæôßøü");
   // Japanese login requires utf-8 and ALLOW_NONWIKIWORD_LOGINS
   if ((CHARSET == 'utf-8') && defined('ALLOW_NONWIKIWORD_LOGINS') && ALLOW_NONWIKIWORD_LOGINS) {
     //sample Japanese login name in unicode
