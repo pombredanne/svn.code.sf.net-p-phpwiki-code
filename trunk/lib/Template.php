@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.39 2002-08-23 18:29:29 rurban Exp $');
+<?php rcs_id('$Id: Template.php,v 1.40 2002-08-23 22:10:16 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -212,8 +212,9 @@ function GeneratePage($content, $title, $page_revision = false, $args = false) {
     } else {
         // This is a hack but, it works fast enough... so beware of spaces
         // The other possibility would be to redirect to an action=FrameInclude
-        $text = &$page_revision->getPackedContent();
-        if ($page_revision and strstr($text, '<?plugin FrameInclude')) {
+        if ($page_revision and 
+            $text = &$page_revision->getPackedContent() and 
+            strstr($text, '<?plugin FrameInclude')) {
             $plugin = TransformText($page_revision);
             $args['FRAMESET'] = $plugin->_content[0];
             printXML(new Template('frameset', $request, $args));
