@@ -1,16 +1,11 @@
-From [no address given]  Thu Dec 27 22:35:18 2001
-Subject: ViewMarkup
-From: [no address given] (PhpWiki)
-Date: Thu, 27 Dec 2001 22:33:19 -0500
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-RCS: "$Id: ViewMarkup,v 1.1 2001-12-28 03:42:35 carstenklapp Exp $"
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
+X-RCS_ID: $Id: ViewMarkup,v 1.2 2002-01-09 05:35:22 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=ViewMarkup;
-  flags=PAGE_LOCKED;
+  flags="";
   lastmodified=1009510399;
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: binary
 
-View the WikiMarkup of a page without editing it. Most useful for =
-examining or copying the source code of locked pages.
+View the WikiMarkup of a page without editing it. Most useful for examining or copying the source code of locked pages.
 ----
-<?plugin ViewMarkup page||=3D'' ?>
+<?plugin ViewMarkup page||='' ?>
