@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RelatedChanges.php,v 1.1 2004-04-21 04:29:10 rurban Exp $');
+rcs_id('$Id: RelatedChanges.php,v 1.2 2004-05-08 14:06:13 rurban Exp $');
 
 /**
  * List of changes on all pages which are linked to from this page.
@@ -17,11 +17,15 @@ extends WikiPlugin_RecentChanges
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
-        $args = parent::getDefaultArguments();
+    	//php-4.0.4pl1 breaks at the parent:: line even if the 
+    	// code doesn't reach this line
+        //if (!check_php_version(4,0,6))
+        $args = WikiPlugin_RecentChanges::getDefaultArguments();
+        //else $args = parent::getDefaultArguments();
         $args['page'] = '[pagename]';
         $args['show_minor'] = true;
         $args['show_all'] = true;
@@ -88,6 +92,11 @@ class RelatedChangesRevisionIterator extends WikiDB_PageRevisionIterator
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/04/21 04:29:10  rurban
+// Two convenient RecentChanges extensions
+//   RelatedChanges (only links from current page)
+//   RecentEdits (just change the default args)
+//
 
 // (c-file-style: "gnu")
 // Local Variables:

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.27 2004-02-17 12:11:36 rurban Exp $');
+rcs_id('$Id: Calendar.php,v 1.28 2004-05-08 14:06:13 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -47,7 +47,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.27 $");
+                            "\$Revision: 1.28 $");
     }
 
     function getDefaultArguments() {
@@ -60,6 +60,32 @@ extends WikiPlugin
                      'month_format'     => '%B, %Y',
                      'wday_format'      => '%a',
                      'start_wday'       => '0');
+    }
+
+    /** Get wiki-pages linked to by plugin invocation.
+     *
+     * A plugin may override this method to add pages to the
+     * link database for the invoking page.
+     *
+     * For example, the IncludePage plugin should override this so
+     * that the including page shows up in the backlinks list for the
+     * included page.
+     *
+     * Not all plugins which generate links to wiki-pages need list
+     * those pages here.
+     *
+     * Note also that currently the links are calculated at page save
+     * time, so only static page links (e.g. those dependent on the PI
+     * args, not the rest of the wikidb state or any request query args)
+     * will work correctly here.
+     *
+     * @param string $argstr The plugin argument string.
+     * @param string $basepage The pagename the plugin is invoked from.
+     * @return array List of pagenames linked to (or false).
+     */
+    function getWikiPageLinks ($argstr, $basepage) {
+        if (isset($this->_links)) return $this->_links;
+        else return false;
     }
 
     function __header($pagename, $time) {
@@ -133,10 +159,12 @@ extends WikiPlugin
             $td->setAttr('class', 'cal-today');
         }
         else if ($dbi->isWikiPage($page_for_date)) {
+            $this->_links[] = $page_for_date;
             $td->setAttr('class', 'cal-day');
         }
 
         if ($dbi->isWikiPage($page_for_date)) {
+            $this->_links[] = $page_for_date;
             $date = HTML::a(array('class' => 'cal-day',
                                   'href'  => WikiURL($page_for_date),
                                   'title' => $page_for_date),
@@ -157,6 +185,7 @@ extends WikiPlugin
     function run($dbi, $argstr, &$request, $basepage) {
         $this->args = $this->getArgs($argstr, $request);
         $args       = &$this->args;
+        $this->_links = array();
 
         $now = localtime(time() + 3600 * $request->getPref('timeOffset'), 1);
         foreach ( array('month' => $now['tm_mon'] + 1,
@@ -219,6 +248,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.27  2004/02/17 12:11:36  rurban
+// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
+//
 // Revision 1.26  2003/01/18 21:19:25  carstenklapp
 // Code cleanup:
 // Reformatting; added copyleft, getVersion, getDescription

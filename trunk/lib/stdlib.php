@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.176 2004-05-08 11:25:15 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.177 2004-05-08 14:06:12 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -262,11 +262,35 @@ function LinkImage($url, $alt = false) {
     if(! IsSafeURL($url)) {
         $link = HTML::strong(HTML::u(array('class' => 'baduri'),
                                      _("BAD URL -- remove all of <, >, \"")));
-    }
-    else {
-        if (empty($alt))
-            $alt = $url;
+    } else {
+        // support new syntax: [image.jpg size=50% border=n]
+        $arr = split(' ',$url);
+        if (count($arr) > 1) {
+            $url = $arr[0];
+        }
+        if (empty($alt)) $alt = basename($url);
         $link = HTML::img(array('src' => $url, 'alt' => $alt));
+        if (count($arr) > 1) {
+            array_shift($arr);
+            foreach ($arr as $attr) {
+                if (preg_match('/^size=(\d+%)$/',$attr,$m)) {
+                    $link->setAttr('width',$m[1]);
+                    $link->setAttr('height',$m[1]);
+                }
+                if (preg_match('/^size=(\d+)x(\d+)$/',$attr,$m)) {
+                    $link->setAttr('width',$m[1]);
+                    $link->setAttr('height',$m[2]);
+                }
+                if (preg_match('/^border=(\d+)$/',$attr,$m))
+                    $link->setAttr('border',$m[1]);
+                if (preg_match('/^align=(\w+)$/',$attr,$m))
+                    $link->setAttr('align',$m[1]);
+                if (preg_match('/^hspace=(\d+)$/',$attr,$m))
+                    $link->setAttr('hspace',$m[1]);
+                if (preg_match('/^vspace=(\d+)$/',$attr,$m))
+                    $link->setAttr('vspace',$m[1]);
+            }
+        }
     }
     $link->setAttr('class', 'inlineimage');
     return $link;
@@ -1394,6 +1418,9 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.176  2004/05/08 11:25:15  rurban
+// php-4.0.4 fixes
+//
 // Revision 1.175  2004/05/06 17:30:38  rurban
 // CategoryGroup: oops, dos2unix eol
 // improved phpwiki_version:

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SystemInfo.php,v 1.16 2004-05-06 20:30:47 rurban Exp $');
+rcs_id('$Id: SystemInfo.php,v 1.17 2004-05-08 14:06:13 rurban Exp $');
 /**
  Copyright (C) 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -32,7 +32,7 @@ rcs_id('$Id: SystemInfo.php,v 1.16 2004-05-06 20:30:47 rurban Exp $');
  *   version, charset, pagestats, SERVER_NAME, database, discspace,
  *   cachestats, userstats, linkstats, accessstats, hitstats,
  *   revisionstats, interwikilinks, imageextensions, wikiwordregexp,
- *   availableplugins, downloadurl, ...
+ *   availableplugins, downloadurl  or any other predefined CONSTANT
  *
  * In spirit to http://www.ecyrd.com/JSPWiki/SystemInfo.jsp
  *
@@ -58,7 +58,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.16 $");
+                            "\$Revision: 1.17 $");
     }
 
     function getExpire($dbi, $argarray, $request) {
@@ -188,6 +188,7 @@ extends WikiPlugin
     //only from logging info possible. = hitstats per time.
     // total hits per day/month/year
     // view/edit rate
+    // TODO: see WhoIsOnline hit stats
     function accessstats() {
         $s  = _("not yet");
         return $s;
@@ -262,7 +263,7 @@ extends WikiPlugin
         }
         return 'not yet';
     }
-    // size of databases/files/cvs are possible plus the known size of the app.
+    // Size of databases/files/cvs are possible plus the known size of the app.
     // Todo: cache this costly operation!
     function discspace() {
         global $DBParams;
@@ -477,6 +478,9 @@ function stddev(&$hits, $total = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2004/05/06 20:30:47  rurban
+// revert and removed some comments
+//
 // Revision 1.15  2004/05/03 11:40:42  rurban
 // put listAvailableLanguages() and listAvailableThemes() from SystemInfo and
 // UserPreferences into Themes.php
