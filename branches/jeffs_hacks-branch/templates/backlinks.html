@@ -1,0 +1,11 @@
+<!-- DEFINE {Title} -->
+Backlinks for <a href="{Page:Url}">{Page:Name}</a>
+<!-- END -->
+<p><b>Pages with links to <a href="{Page:Url}">{Page:Name}</a> ....</b></p>
+<ul>
+<!-- LOOP {Search} -->
+<li><a href="{Search:Page:Url}">{Search:Page:Name}</a>
+<!-- END -->
+</ul>
+<p>{Search:Count} of {Search:TotalPages} pages link to
+<a href="{Page:Url}">{Page:Name}</a>.</p>

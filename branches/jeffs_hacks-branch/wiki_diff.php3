@@ -1,5 +1,4 @@
-<!-- $Id: wiki_diff.php3,v 1.6.2.1 2000-07-21 18:29:07 dairiki Exp $ -->
-<?
+<? rcs_id('$Id: wiki_diff.php3,v 1.6.2.2 2000-07-29 00:36:45 dairiki Exp $');
 // wiki_diff.php3
 //
 // A PHP diff engine for phpwiki.
@@ -693,6 +692,14 @@ class WikiDiff
       }
 
   /**
+   * Return true if two files were equal.
+   */
+  function isEmpty ()
+      {
+	return sizeof($this->edits) == 0;
+      }
+  
+  /**
    * Compute the length of the Longest Common Subsequence (LCS).
    *
    * This is mostly for diagnostic purposed.
@@ -959,45 +966,39 @@ class WikiUnifiedDiffFormatter extends WikiDiffFormatter
 
 
 /////////////////////////////////////////////////////////////////
-
-function PageInfoRow ($ident, $page)
+function wiki_diff ($pagename, $vers, $oldversion)
 {
-  global $datetimeformat;
+  global $dbi;
+
+  if (!($page = $dbi->retrievePage($pagename, $vers)))
+      return wiki_message('ERROR', 'BadVersion');
+  SetToken('Page', new PageTokens($page));
   
-  $row = sprintf('<td align="right">%s:</td>', htmlspecialchars($ident));
-  if (is_array($page))
+  if (!$oldversion)
+      if (!($oldversion = $dbi->previousVersion($pagename, $vers)))
+	  return wiki_message('ERROR', 'NoPreviousVersion');
+
+  if (!($orig = $dbi->retrievePage($pagename, $oldversion)))
     {
-      $row .= sprintf('<td>version %d</td>', $page['version']);
-      $row .= sprintf('<td>last modified on %s</td>',
-		      date($datetimeformat, $page['lastmodified']));
-      $row .= sprintf('<td>by %s</td>', htmlspecialchars($page['author']));
+      SetToken('Page', new PageTokens($pagename, $oldversion));
+      return wiki_message('ERROR', 'BadVersion'); //FIXME
     }
+
+  SetToken('OrigPage', new PageTokens($orig));
+
+  $orig_content = $orig->content();
+  $diff = new WikiDiff($orig_content, $page->content());
+
+  if ($diff->isEmpty())
+      SetToken('content', '<hr>[Versions are identical]');
   else
-      $row .= "<td colspan=3><em>None</em></td>";
-  return "<tr>$row</tr>";
-}
-
-      
-if ($pagename)
-{
-  $wiki = RetrievePage($dbi, $pagename);
-  $dba = OpenDataBase($ArchiveDataBase);
-  $archive= RetrievePage($dba, $pagename);
-  CloseDataBase($dba);
-
-  $html = '<table>'
-       . PageInfoRow("Current page", $wiki)
-       . PageInfoRow("Archived page", $archive)
-       . "</table>";
-
-  if (is_array($wiki) && is_array($archive))
     {
-      $diff = new WikiDiff($archive['content'], $wiki['content']);
       //$fmt = new WikiDiffFormatter;
       $fmt = new WikiUnifiedDiffFormatter;
-      $html .= '<hr>' . $fmt->format($diff, $archive['content']);
+      SetToken('content', $fmt->format($diff, $orig_content));
     }
-
-  GeneratePage('MESSAGE', $html, 'Diff of '.htmlspecialchars($pagename), 0);
+  SetToken('content', Template('DIFF'));
 }
+
+wiki_diff($pagename, $version, $oldversion);
 ?>

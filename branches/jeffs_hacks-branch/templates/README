@@ -1,4 +1,4 @@
-$Id: README,v 1.1.2.1 2000-07-21 18:29:07 dairiki Exp $
+$Id: README,v 1.1.2.2 2000-07-29 00:36:45 dairiki Exp $
 
 PhpWiki distinguishes between four different templates:
 
@@ -60,6 +60,9 @@ The following placeholders are not available for the 'MESSAGE' template:
 
 ###VERSION###
 	Revision number of the page.
+
+###LASTVERSION###
+	Revision number of the most recent version of this page.
 	Note: this is also used for detecting concurrent updates to a page.
 	See hidden input field in EDITPAGE template for how to use it.
 

@@ -1,11 +1,4 @@
-<? rcs_id('$Id: wiki_renderlib.php3,v 1.1.2.2 2000-07-22 22:25:29 dairiki Exp $');
-
-  function utime() {
-    $mtime = microtime();
-    $mtime = explode(" ",$mtime);
-    $mtime = $mtime[1] + $mtime[0];
-    return $mtime;
-  }
+<? rcs_id('$Id: wiki_renderlib.php3,v 1.1.2.3 2000-07-29 00:36:45 dairiki Exp $');
 /*
  * Various magic characters used as temporary markers during rendering.
  *
@@ -17,7 +10,7 @@
  */
 define('TOKEN_MARKER', "\x01");
 define('REPLACE_MARKER', "\x02");
-define('MATCHSEP_MARKER', "\x03"); //FIXME: implement
+define('MATCHSEP_MARKER', "\x03");
 
 /**
  *
@@ -258,8 +251,14 @@ class WikiReplacer extends WikiTransform
       }
   }
   
-  function add($orig, $rep) {
-    $this->table[$orig] = $rep;
+  function add($orig, $rep = "") {
+    if (is_array($orig))
+      {
+	while (list ($orig, $rep) = each($orig))
+	    $this->table[$orig] = $rep;
+      }
+    else
+	$this->table[$orig] = $rep;
     $this->_update_pat();
   }
 
@@ -286,7 +285,7 @@ class QuoteTransformer extends WikiTransform
   var $rep = '\\1\\2';
   var $repeat = true;
 
-  var $pre_transform = new WikiReplacer(false /* no tokenize */);
+  var $pre_transform = new WikiReplacer(false); /* no tokenize */
   var $post_transform = new WikiReplacer;
 
   var $marker = "\x81";
@@ -394,21 +393,22 @@ class WikiLinkTransformer extends WikiTransform
 }
 
 // Special placeholders:
-class SearchTransformer extends WikiTransform
+class PlaceholderTransformer extends WikiTransform
 {
-  var $pat = "/%%(Search|Fullsearch|Mostpopular)%%/";
+  var $pat = "/%%(Search|FullSearch|MostPopular|ZipSnapshot|ZipDump|AdminLogin)%%/";
   var $rep = '\\1';
 
-  var $_what = array('Search' => 'QuickSearch',
-		     'Fullsearch' => 'FullSearch',
-		     'Mostpopular' => 'MostPopular');
-  
-  function transform ($match, &$r) {
-    $what = $this->_what[$match];
-    eval("\$val = Render$what();");
-    return $val;
+  function transform ($what, &$r) {
+    SafeSetToken('Render', $what);
+    
+    // FIXME: this is hokey (search term initialization)
+    global $value;
+    SafeSetToken('content', $value);
+
+    return Template('MISC');
   }
 }
+
 
 // Lists
 class ListTransformer extends WikiLayout
@@ -446,21 +446,14 @@ class WikiPageRenderer extends WikiRenderer
     $this->registerTransforms($page_transform);
   }
   
-  function render_page ($pagehash) {
+  function render_page ($page) {
     $start = utime();
     
-    $this->refs = $pagehash['refs'];
+    $this->refs = $page->refs();
 
-    $html = $this->render_lines($pagehash['content']) . $this->element->end();
-    $pagehash['wikilinks'] = $this->wikilinks; // FIXME: hokey
-    $html .= sprintf('<hr><b>Rendering took %f seconds</b><br>',
-		     utime() - $start);
+    $html = $this->render_lines($page->content()) . $this->element->end();
 
-    $html .= "<h2>WikiLinks on this page</h2><ul>\n";
-    reset($this->wikilinks);
-    while (list($key, $junk) = each($this->wikilinks))
-	$html .= "<li><b>" . htmlspecialchars($key) . "</b>\n";
-    $html .= "</ul>\n";
+    Debug(sprintf('Rendering took %f seconds', utime() - $start));
 
     return $html;
   }
@@ -513,7 +506,7 @@ $page_transform['^^99Default'] = new WikiLayout('/^/', '<p>');
 
 
 // Special placeholders:
-$page_transform['70Placeholders'] = new SearchTransformer;
+$page_transform['25Placeholders'] = new PlaceholderTransformer;
 
 
 ////////////////////////////////////////////////////////////////
@@ -587,105 +580,4 @@ if ($page_transform['!00RawHTML'])
   $page_transform['!00RawHTML']->pat = '/^\|(?![|{}])/';
 
 
-////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
-
-/**
- * A WikiPageGenerator is used to transform a template.
- */
-class WikiPageGenerator extends WikiRenderer
-{
-  function WikiPageGenerator ($name, $pagehash) {
-    global $dbi, $ScriptUrl, $AllowedProtocols, $logo, $datetimeformat;
-    global $template_transforms;
-    
-    $this->name = $name;
-    $reps = array('###SCRIPTURL###' => $ScriptUrl,
-		  '###PAGE###' => htmlspecialchars($name),
-		  '###ALLOWEDPROTOCOLS###' => $AllowedProtocols,
-		  '###LOGO###' => $logo);
-    
-    if (is_array($pagehash))
-      {
-	$this->pagehash = $pagehash;
-	$reps['###PAGEURL###'] =  rawurlencode($pagehash['pagename']);
-	$reps['###LASTMODIFIED###']
-	     = date($datetimeformat, $pagehash['lastmodified']);
-	$reps['###LASTAUTHOR###'] = htmlspecialchars($pagehash['author']);
-	$reps['###VERSION###'] = htmlspecialchars($pagehash['version']);
-	$reps['###HITS###'] = GetHitCount($dbi, $pagehash['pagename']);
-      }
-
-    $transforms = $template_transforms;
-    $transforms[] = new WikiReplacer(false /*no tok*/, $reps);
-    $this->registerTransforms($transforms);
-  }
-  
-  function generate ($template, $content) {
-    global $templates;
-    $file = $templates[$template];
-    if ($fp = fopen($file, "r"))
-      {
-	$data = fread($fp, filesize($file));
-	fclose($fp);
-      }
-    $this->content = $content;
-    return $this->render_line($data);
-  }
-
-  function pagename () {
-    return $this->pagehash ? $this->pagehash['pagename'] : $this->name;
-  }
-}
-
-class TemplateTransform extends WikiTransform
-{
-  var $tokenize = false;
-}
-
-class TemplateIfCopy extends TemplateTransform
-{
-  var $pat = '/###IFCOPY###(.*?(?:\n|$))/';
-  var $rep = '\\1';
-  function transform ($match, &$r) {
-    return  ($r->pagehash && $r->pagehash['copy']) ? $match : "";
-  }
-}
-
-class TemplateWikiURL extends TemplateTransform
-{
-  var $pat = '/###(BROWSE|EDIT|COPY|LINKS|DIFF|INFO|BACKLINKS)(.*?)###/';
-  var $rep = '\\1' . MATCHSEP_MARKER . '\\2';
-  function transform ($match, &$r) {
-    list ($action, $page) = explode(MATCHSEP_MARKER, $match);
-    $page = $page ? trim($page) : $r->pagename();
-    return WikiURL($page, strtolower($action));
-  }
-}
-
-class TemplateRefs extends TemplateTransform
-{
-  var $pat = '/###R(\d+)###/';
-  var $rep = '\\1';
-  function transform ($match, &$r) {
-    return $r->pagehash ? $r->pagehash['refs'][$match] : "";
-  }
-}
-
-class TemplateContent extends TemplateTransform
-{
-  var $pat = '/###CONTENT###/';
-  var $rep = '';
-  var $tokenize = true;
-  
-  function transform ($match, &$r) {
-    return $r->content;
-  }
-}
-
-$template_transforms[] = new TemplateIfCopy;
-$template_transforms[] = new TemplateWikiURL;
-$template_transforms[] = new TemplateRefs;
-$template_transforms[] = new TemplateContent;
 ?>

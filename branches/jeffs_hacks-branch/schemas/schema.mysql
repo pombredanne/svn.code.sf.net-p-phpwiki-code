@@ -1,51 +1,49 @@
--- $Id: schema.mysql,v 1.2 2000-06-29 14:43:36 ahollosi Exp $
+-- $Id: schema.mysql,v 1.2.2.1 2000-07-29 00:36:45 dairiki Exp $
 
-drop table if exists wiki;
-drop table if exists archive;
-drop table if exists wikilinks;
-drop table if exists hottopics;
-drop table if exists hitcount;
+--drop table if exists wiki;
+--drop table if exists archive;
+--drop table if exists wikilinks;
 
-CREATE TABLE wiki (
+
+drop table if exists page;
+CREATE TABLE page (
+	id INT NOT NULL AUTO_INCREMENT,
         pagename VARCHAR(100) NOT NULL,
-        version INT NOT NULL DEFAULT 1,
+        latestversion INT,
         flags INT NOT NULL DEFAULT 0,
-        author VARCHAR(100),
-        lastmodified INT NOT NULL,
         created INT NOT NULL,
-        content MEDIUMTEXT NOT NULL,
-        refs TEXT,
-        PRIMARY KEY (pagename)
+        hits INT NOT NULL DEFAULT 0,    
+	PRIMARY KEY (id),
+        UNIQUE KEY (pagename)
         );
 
-CREATE TABLE archive (
-        pagename VARCHAR(100) NOT NULL,
+drop table if exists version;
+CREATE TABLE version (
+	id INT NOT NULL,
         version INT NOT NULL DEFAULT 1,
-        flags INT NOT NULL DEFAULT 0,
         author VARCHAR(100),
         lastmodified INT NOT NULL,
-        created INT NOT NULL,
         content MEDIUMTEXT NOT NULL,
         refs TEXT,
-        PRIMARY KEY (pagename)
+        PRIMARY KEY (id,version)
+	);
+
+
+drop table if exists link;
+CREATE TABLE link (
+        id INT NOT NULL,
+        link VARCHAR(100) NOT NULL,
+        KEY (id),
+        KEY (link)
         );
 
 -- tables below are not yet used
 
-CREATE TABLE wikilinks (
-        frompage VARCHAR(100) NOT NULL,
-        topage VARCHAR(100) NOT NULL,
-        PRIMARY KEY (frompage, topage)
-        );
+-- drop table if exists hottopics;
 
-CREATE TABLE hottopics (                
-        pagename VARCHAR(100) NOT NULL,
-        lastmodified INT NOT NULL,
-        PRIMARY KEY (pagename, lastmodified)
-        );
+-- CREATE TABLE hottopics (                
+--        pagename VARCHAR(100) NOT NULL,
+--        lastmodified INT NOT NULL,
+--        PRIMARY KEY (pagename, lastmodified)
+--        );
 
-CREATE TABLE hitcount (                 
-        pagename VARCHAR(100) NOT NULL, 
-        hits INT NOT NULL DEFAULT 0,    
-        PRIMARY KEY (pagename)          
-        );

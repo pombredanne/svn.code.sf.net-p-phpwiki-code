@@ -1,0 +1,26 @@
+These hacks now include:
+
+  1. New modular replacement for wiki_transform (it's in wiki_renderlib).
+
+  2. Page names in PATH_INFO.  (Supposedly you can select the old behavior
+     with the proper define in wiki_config --- but I suspect I have broken
+     that for now  ... it can be fixed...)
+
+  3. You can use a WikiZip file instead of the ./pgsrc directory as
+     a source for initial page contents of an empty database.
+
+  4. New database API.  (Supports multiple archived versions, and implements
+     the links tables.)  I've only written the backends for DBM and MySQL
+     databases...
+
+  5. New templates. (which support LOOP and IF blocks).
+     Now pretty much all output text and HTML markup is in the templates.
+
+
+WARNING WARNING:
+
+  The database schema are totally incompatible with any previous PhpWiki.
+  Be careful that you don't trash your old database.
+
+  (The new MySQL schema is in schemas/schema.mysql.)
+

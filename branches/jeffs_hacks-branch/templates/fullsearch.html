@@ -1,0 +1,14 @@
+<!-- DEFINE {Title} -->
+Full Text Search Results
+<!-- END -->
+<p><b>Searching for ``{Search:Term}'' in page text ....</b></p>
+<dl>
+<!-- LOOP {Search} -->
+<dt><b><a href="{Search:Page:Url}">{Search:Page:Name}</a></b></dt>
+<!-- LOOP {Search:Highlight} -->
+<dd><small>{Search:Highlight:Line}</small></dd>
+<!-- END -->
+<!-- END -->
+</dl>
+<hr>
+<p>Search found {Search:Count} of {Search:TotalPages} pages.</p>

@@ -1,24 +1,54 @@
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<base href="###SCRIPTURL###">
-<title>###PAGE###</title>
-</head>
+<!-- DEFINE {Title} -->
+<!-- IF ({Page:Version} == {Page:Latest:Version}) -->
+<a href="{Page:Url:Backlinks}">{Page:Name}</a>
+<!-- ELSE -->
+Archived Version of {Page:Name}
+<!-- END -->
+<!-- END -->
 
-<body bgcolor=ivory text=black alink=red link=darkblue vlink=darkmagenta>
-<table cellpadding=2>
-<tr><td bgcolor=black><a href="###SCRIPTURL###"><img src="###LOGO###" border=0 alt="[phpwiki]"></a></td>
-<td><h1><a href="###BACKLINKS###">###PAGE###</a></h1>
-</td></tr></table>
-<P>
-###CONTENT###
+<!-- IF ({Administrator}) -->
+<table><tr>
+<td><form action="{BaseUrl}" method="post">
+<input type="hidden" name="pagename" value="{Page:Name}">
+<!-- IF ({Page:Flags:Locked}) -->
+<input type="hidden" name="action" value="unlock">
+<input type="submit" value=" Unlock Page ">
+<!-- ELSE -->
+<input type="hidden" name="action" value="lock">
+<input type="submit" value=" Lock Page ">
+<!-- END -->
+</form></td></tr></table>
+<!-- END -->
 
+
+<!-- IF ({Page:Version} != {Page:Latest:Version}) -->
+This is version {Page:Version} of this page.
+The most recent is version
+<a href="{Page:Latest:Url}">{Page:Latest:Version}</a>
+(<a href="{Page:DiffVsMostRecentUrl}">diffs</a>).
+<hr>
+<!-- END -->
+
+{Page:ContentAsHtml}
 <hr noshade>
-<a href="###EDIT###">EditText</a>
- of this page (last edited ###LASTMODIFIED###
-[<a href="###INFO###">info</a>]
-[<a href="###DIFF###">diff</a>])
-<br>
-<a href="###BROWSE FindPage###">FindPage</a> by browsing or searching
-</body>
-</html>
+<!-- FIXME: should fix IF condition syntax so we don't need to do: -->
+<!-- IF (! {Page:Flags:Locked}) -->
+<a href="{Page:Url:Edit}">EditText</a>
+ of this page 
+<!-- ELSE -->
+<!-- IF ({Administrator}) -->
+<a href="{Page:Url:Edit}">EditText</a>
+ of this page 
+<!-- END -->
+<!-- END -->
+<!-- IF ({Page:Version} == {Page:Latest:Version}) -->
+(last edited {Page:LastModified:Date})
+<!-- ELSE -->
+(edited {Page:LastModified:Date})
+<!-- END --> 
+[<a href="{Page:Url:History}">hist</a>]
+<!-- IF ({Page:Previous:Version}) -->
+[<a href="{Page:Url:Diff}">diff</a>]
+[<a href="{Page:Previous:Url}">prev</a>]
+<!-- END -->
+[<a href="{Page:Url:Info}">info</a>]

@@ -1,5 +1,6 @@
-<? rcs_id("$Id: wiki_ziplib.php3,v 1.4 2000-07-20 18:30:44 dairiki Exp $");
+<? rcs_id("$Id: wiki_ziplib.php3,v 1.4.2.1 2000-07-29 00:36:45 dairiki Exp $");
 
+//FIXME: get rid of this.
 function warn ($msg)
 {
   echo "<br><b>Warning:</b> " . htmlspecialchars($msg) . "<br>\n";
@@ -515,18 +516,18 @@ function MimeMultipart ($parts)
   return $head . $sep . implode($sep, $parts) . "\r\n--${boundary}--\r\n";
 }
   
-function MimeifyPage ($pagehash) {
-  extract($pagehash);
-
-  $params = array('pagename' => rawurlencode($pagename),
-		  'author' => rawurlencode($author),
-		  'version' => $version,
-		  'flags' =>"",
-		  'lastmodified' => $lastmodified,
-		  'created' => $created);
-
-  if (($flags & FLAG_PAGE_LOCKED) != 0)
+function MimeifyPage ($page) {
+  $params = array('pagename' => rawurlencode($page->name()),
+		  'author' => rawurlencode($page->author()),
+		  'version' => $page->version(),
+		  'flags' => "",
+		  'lastmodified' => $page->lastmodified(),
+		  'hits' => $page->hits(),
+		  'created' => $page->created());
+  if ($page->isLocked())
       $params['flags'] = 'PAGE_LOCKED';
+
+  $refs = $page->refs();
   for ($i = 1; $i <= NUM_LINKS; $i++) 
       if ($ref = $refs[$i])
 	  $params["ref$i"] = rawurlencode($ref);
@@ -535,20 +536,11 @@ function MimeifyPage ($pagehash) {
   $out .= "Content-Transfer-Encoding: quoted-printable\r\n";
   $out .= "\r\n";
   
-  reset($content);
+  $content = $page->content();
   while (list($junk, $line) = each($content))
       $out .= QuotedPrintableEncode(chop($line)) . "\r\n";
   return $out;
 }
-
-function MimeifyPages ($pagehashes)
-{
-  $npages = sizeof($pagehashes);
-  for ($i = 0; $i < $npages; $i++)
-      $parts[$i] = MimeifyPage($pagehashes[$i]);
-  return $npages == 1 ? $parts[0] : MimeMultipart($parts);
-}
-
 
 /**
  * Routines for parsing Mime-ified phpwiki pages.
@@ -603,7 +595,7 @@ function ParseMimeContentType ($string)
 		    . '(?:(' . MIME_TOKEN_REGEXP . ')|"((?:[^"\\\\]|\\.)*)") \s*/sx',
 		    $string, $match))
     {
-      if ($match[2])
+      if (strlen($match[2]))
 	  $val = $match[2];
       else
 	  $val = preg_replace('/[\\\\](.)/s', '\\1', $match[3]);
@@ -666,18 +658,20 @@ function ParseMimeifiedPages ($data)
     }
 
   // FIXME: more sanity checking?
-  $pagehash = array('pagename' => rawurldecode($params['pagename']),
-		    'author' => rawurldecode($params['author']),
+  $pagename = rawurldecode($params['pagename']);
+  $pagehash = array('author' => rawurldecode($params['author']),
 		    'version' => $params['version'],
+		    'flags' => 0,
 		    'lastmodified' => $params['lastmodified'],
-		    'created' => $params['created']);
-  $pagehash['flags'] = 0;
+		    'hits' => $params['hits'],
+		    'created' => $params['created'],
+		    'refs' => array());
+
   if (preg_match('/PAGE_LOCKED/', $params['flags']))
       $pagehash['flags'] |= FLAG_PAGE_LOCKED;
   for ($i = 1; $i <= NUM_LINKS; $i++) 
       if ($ref = $params["ref$i"])
 	  $pagehash['refs'][$i] = rawurldecode($ref);
-
 
   $encoding = strtolower($headers['content-transfer-encoding']);
   if ($encoding == 'quoted-printable')
@@ -685,9 +679,9 @@ function ParseMimeifiedPages ($data)
   else if ($encoding && $encoding == 'binary')
       die("Unknown encoding type: $encoding");
   
-  $pagehash['content'] = preg_split('/[ \t\r]*\n/', chop($data));
+  $pagehash['content'] = $data;
 
-  return array($pagehash);
+  return array(new WikiPage($pagename, $pagehash));
 }
 
 ?>

@@ -1,22 +1,52 @@
-<!-- $Id: wiki_search.php3,v 1.5.2.1 2000-07-21 18:29:07 dairiki Exp $ -->
-<?
+<? rcs_id('$Id: wiki_search.php3,v 1.5.2.2 2000-07-29 00:36:45 dairiki Exp $');
    // Title search: returns pages having a name matching the search term
 
-   $found = 0;
+class SearchTokens extends PageIteratorTokens
+{
+  var $prefix = 'Search';
+  
+  function SearchTokens ($action, $search_term) {
+    global $dbi;
 
-   $result = "<P><B>Searching for \"" . htmlspecialchars($search_term) .
-		"\" ....</B></P>\n";
+    $this->term = $search_term;
+    
+    if ($action == 'search')
+	$this->iter = $dbi->titleSearch($search_term);
+    else if ($action == 'full')
+	$this->iter = $dbi->fullSearch($search_term);
+    else if ($action == 'backlinks')
+        $this->iter = $dbi->backLinks($search_term);
+    else
+	die("$action: bad action");
+  }
 
-   // quote regexp chars
-   $term = preg_quote($search_term);
+  function _get2 ($what) {
+    global $dbi;
 
-   // search matching pages
-   $query = InitTitleSearch($dbi, $term);
-   while ($page = TitleSearchNextMatch($dbi, $query)) {
-      $found++;
-      $result .= LinkExistingWikiWord($page) . "<br>\n";
-   }
+    switch ($what) {
+    case 'Highlight':
+	return new LineIteratorTokens($this->highlight_content());
+    case 'Term':       return htmlspecialchars($this->term);
+    case 'TotalPages': return strval($dbi->nPages());
+    }
+    return TOKEN_BAD;
+  }
 
-   $result .= "<hr noshade>\n$found pages match your query.\n";
-   GeneratePage('MESSAGE', $result, "Title Search Results", 0);
+  function highlight_content () {
+    $term = preg_quote(htmlspecialchars($this->term));
+    $content = $this->page->content();
+    $lines = array();
+
+    while (list ($junk, $line) = each($content))
+      {
+	$line = htmlspecialchars($line);
+	if (preg_match("|($term)|i", $line))
+	    $lines[] = preg_replace("|($term)|i", "<b>\\0</b>", $line);
+      }
+    return $lines;
+  }
+}
+  
+SetToken('Search', new SearchTokens($action, $search_term));
+SetToken('content', Template(strtoupper($action)));
 ?>

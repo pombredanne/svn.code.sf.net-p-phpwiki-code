@@ -1,201 +1,282 @@
-<? rcs_id('$Id: wiki_mysql.php3,v 1.12 2000-07-07 19:53:50 dairiki Exp $');
+<? rcs_id('$Id: wiki_mysql.php3,v 1.12.2.1 2000-07-29 00:36:45 dairiki Exp $');
 
-   /*
-      Database functions:
+class WikiMySQLPage extends WikiPage
+{
+  function WikiMySQLPage($dbi, $pagename, $hash) {
+    $this->dbi = $dbi;
+    $this->pagename = $pagename;
+    $this->hash = $hash;
+  }
 
-      OpenDataBase($dbname)
-      CloseDataBase($dbi)
-      RetrievePage($dbi, $pagename)
-      InsertPage($dbi, $pagename, $pagehash)
-      IsWikiPage($dbi, $pagename)
-      InitTitleSearch($dbi, $search)
-      TitleSearchNextMatch($dbi, &$pos)
-      InitFullSearch($dbi, $search)
-      FullSearchNextMatch($dbi, &$pos)
-      IncreaseHitCount($dbi, $pagename)  
-      GetHitCount($dbi, $pagename)   
-      InitMostPopular($dbi, $limit)   
-      MostPopularNextMatch($dbi, $res)
-      GetAllWikiPageNames($dbi)
+  function refs () {
+    return unserialize($this->_get('refs'));
+  }
 
-   */
+  function links () {
+    //FIXME:
+    die("If you need links of MySQL pages, you should implement the stuff"
+	. " needed to get them from the link table.");
+  }
+  
+  function _mysql_id () {
+    return $this->_get('id');
+  }
 
-
-   // open a database and return the handle
-   // ignores MAX_DBM_ATTEMPTS
-
-   function OpenDataBase($dbname) {
-      global $mysql_server, $mysql_user, $mysql_pwd, $mysql_db;
-
-      if (!($dbc = mysql_pconnect($mysql_server, $mysql_user, $mysql_pwd))) {
-         echo "Cannot establish connection to database, giving up.";
-	 echo "MySQL error: ", mysql_error(), "<br>\n";
-         exit();
+  function _get($field) {
+    if (!isset($this->hash[$field]))
+      {
+	Debug("RETRIEVE: $this->pagename FOR $field");
+	
+	$page = $this->dbi->retrievePage($this->pagename,
+	                                 $this->hash['version']);
+	$this->hash = $page->hash;
+	if (!isset($this->hash[$field]))
+	    die("Failed to _get field $field");
       }
-      if (!mysql_select_db($mysql_db, $dbc)) {
-         echo "Cannot open database, giving up.";
-	 echo "MySQL error: ", mysql_error(), "<br>\n";
-         exit();
+    return $this->hash[$field];
+  }
+}
+
+class WikiMySQLIterator
+{
+  function WikiMySQLIterator ($dbi, $mysql_query_res) {
+    $this->res = $mysql_query_res;
+    $this->dbi = $dbi;
+  }
+
+  function next () {
+    if ($this->res)
+      {
+	if ($hash = mysql_fetch_array($this->res))
+	    return new WikiMySQLPage($this->dbi, $hash['pagename'], $hash);
+	mysql_free_result($this->res);
+	unset($this->res);
       }
+    return false;
+  }
+}
 
-      $dbi['dbc'] = $dbc;
-      $dbi['table'] = $dbname;
-      return $dbi;
-   }
+    
+class WikiMySQLDataBase extends WikiDataBase
+{
+  var $dbc;			// MySQL Connection handle.
 
+  function _crapout ($message) {
+    echo htmlspecialchars($message) . ", giving up.<br>";
+    echo "MySQL error: ", mysql_error($this->dbc), "<br>\n";
+    exit();
+  }
 
-   function CloseDataBase($dbi) {
-      // NOP function
-      // mysql connections are established as persistant
-      // they cannot be closed through mysql_close()
-   }
+  function _query ($query) {
+    if (!($res = mysql_query($query, $this->dbc)))
+	$this->_crapout("MySQL query '$query' failed");
+    return $res;
+  }
 
+  function _query_row ($query) {
+    $res = $this->_query($query);
+    $row = mysql_fetch_array($res);
+    mysql_free_result($res);
+    return $row;
+  }
 
-   function MakeDBHash($pagename, $pagehash)
-   {
-      $pagehash["pagename"] = addslashes($pagename);
-      if (!isset($pagehash["flags"]))
-         $pagehash["flags"] = 0;
-      $pagehash["author"] = addslashes($pagehash["author"]);
-      $pagehash["content"] = implode("\n", $pagehash["content"]);
-      $pagehash["content"] = addslashes($pagehash["content"]);
-      $pagehash["refs"] = serialize($pagehash["refs"]);
- 
-      return $pagehash;
-   }
+  function _iterator ($query) {
+    return new WikiMySQLIterator($this, $this->_query($query));
+  }
 
-   function MakePageHash($dbhash)
-   {
-      // unserialize/explode content
-      $dbhash['refs'] = unserialize($dbhash['refs']);
-      $dbhash['content'] = explode("\n", $dbhash['content']);
-      return $dbhash;
-   }
+  function _lock () {
+    $this->_query("LOCK TABLES page WRITE, version WRITE, link WRITE");
+    // FIXME: some way to use pconnect() yet ensure unlockage even if PHP dies?
+  }
+  function _unlock () {
+    $this->_query("UNLOCK TABLES");
+  }
+  
+  // Open the database.
+  function WikiMySQLDataBase ($params) {
+    //defaults:
+    $server = 'localhost';
+    $user = 'guest';
+    $password = '';
+    $database = 'test';
+    extract($params);
 
+    // Don't do persistant connection (locks can get hung).
+    if (!($this->dbc = mysql_connect($server, $user, $password)))
+	$this->_crapout("Cannot establish connection to database");
+    if (!mysql_select_db($database, $this->dbc))
+	$this->_crapout("Cannot open database");
+  }
+  
+  function close() {
+    mysql_close($this->dbc);
+  }
 
-   // Return hash of page + attributes or default
-   function RetrievePage($dbi, $pagename) {
-      $pagename = addslashes($pagename);
-      if ($res = mysql_query("select * from $dbi[table] where pagename='$pagename'", $dbi['dbc'])) {
-         if ($dbhash = mysql_fetch_array($res)) {
-            return MakePageHash($dbhash);
-         }
+  
+  // Return hash of page + attributes or default
+  // If VERSION == 0, get most recent version.
+  // If VERSION > 0, get specified version.
+  function retrievePage($pagename, $version = 0) {
+    $pagename = addslashes($pagename);
+    $join = "ON page.id=version.id";
+    $pick = "pagename='$pagename'";
+    if ($version == 0)
+	$join .= " AND version=latestversion";
+    else
+	$pick .= " AND version=$version";
+	
+    $hash = $this->_query_row("SELECT page.id as id,"
+			      . " flags,created,hits,latestversion,"
+			      . " version,author,lastmodified,content,refs"
+			      . " FROM page LEFT JOIN version $join"
+			      . " WHERE $pick");
+
+    return $hash ? new WikiMySQLPage($this, $pagename, $hash) : false;
+  }
+
+  function retrieveAllVersions($pagename) {
+    $pagename = addslashes($pagename);
+    return $this->_iterator("SELECT page.id as id,pagename,"
+			    . " flags,created,hits,latestversion,"
+			    . " version,author,lastmodified,content,refs"
+			    . " FROM page LEFT JOIN version USING(id)"
+			    . " WHERE pagename='$pagename'"
+			    . " ORDER BY version DESC");
+  }
+
+  function nPages() {
+    $row = $this->_query_row("SELECT count(*) FROM page");
+    return $row ? $row[0] : 0;
+  }
+
+  function previousVersion($pagename, $version = false) {
+    if (!$version)
+	$version = "latestversion";
+    $pagename = addslashes($pagename);
+    $row = $this->_query_row("SELECT MAX(version)"
+			     . " FROM page LEFT JOIN version USING(id)"
+			     . " WHERE pagename='$pagename'"
+			     . " AND version < $version");
+    return $row ? $row[0] : 0;
+  }
+  
+  // Save a new version of a page.
+  function insertPage(&$page, $no_backup = false) {
+    $this->_lock();
+    
+    $content = addslashes($page->packedContent());
+    $refs = addslashes(serialize($page->refs()));
+    $pagename = addslashes($page->name());
+    $author = addslashes($page->author());
+    $new_version = max($page->version(), 1);
+
+    if (!($prev = $this->retrievePage($page->name())))
+      {
+	// Page does not exist.
+	$this->_query("INSERT INTO page SET"
+		      . " pagename='$pagename',"
+		      . " created=" . $page->created() . ","
+		      . " hits=" . $page->hits() . ","
+		      . " flags=" . $page->flags());
+	$id = mysql_insert_id($this->dbc);
       }
-      return -1;
-   }
-
-
-   // Either insert or replace a key/value (a page)
-   function InsertPage($dbi, $pagename, $pagehash)
-   {
-      $pagehash = MakeDBHash($pagename, $pagehash);
-
-      $COLUMNS = "author, content, created, flags, " .
-                 "lastmodified, pagename, refs, version";
-
-      $VALUES =  "'$pagehash[author]', '$pagehash[content]', " .
-                 "$pagehash[created], $pagehash[flags], " .
-                 "$pagehash[lastmodified], '$pagehash[pagename]', " .
-                 "'$pagehash[refs]', $pagehash[version]";
-
-
-      if (!mysql_query("replace into $dbi[table] ($COLUMNS) values ($VALUES)",
-      			$dbi['dbc'])) {
-            echo "error writing page '$pagename' ";
-	    echo mysql_error();
-            exit();
+    else
+      {
+	$new_version = max($new_version, $prev->version() + 1);
+	$id = $prev->_mysql_id();
       }
-   }
+  
+    $this->_query("INSERT INTO version SET"
+		  . " id=$id,version=$new_version,"
+		  . " author='$author',refs='$refs',content='$content',"
+		  . " lastmodified=" . $page->lastmodified());
 
+    $this->_query("UPDATE page SET latestversion=$new_version"
+		  . " WHERE pagename='$pagename'");
 
-   function IsWikiPage($dbi, $pagename) {
-      $pagename = addslashes($pagename);
-      if ($res = mysql_query("select count(*) from $dbi[table] where pagename='$pagename'", $dbi['dbc'])) {
-         return(mysql_result($res, 0));
-      }
-   }
+    // Delete previous version, unless we want backup.
+    if ($no_backup && $prev)
+	$this->_query("DELETE FROM version"
+		      . " WHERE id=$id"
+		      . " AND version=" . $prev->version());
 
+    // Update links table.
+    $linknames = $page->links();
+    while (list($junk,$linkname) = each($linknames))
+	$links[] = sprintf("(%d, '%s')", $id, addslashes($linkname));
+    
+    $this->_query("DELETE FROM link WHERE id=$id");
+    if ($links)
+	$this->_query("INSERT INTO link (id, link) VALUES "
+		      . implode(', ', $links));
+    
+    $this->_unlock();
+    return $new_version;
+  }
 
-   function IncreaseHitCount($dbi, $pagename)
-   {
-      $res = mysql_query("update hitcount set hits=hits+1 where pagename='$pagename'", $dbi['dbc']);
+  function isWikiPage($pagename) {
+    $pagename = addslashes($pagename);
+    $row = $this->_query_row("SELECT id FROM page WHERE pagename='$pagename'");
+    return $row ? true : false;
+  }
 
-      if (!mysql_affected_rows($dbi['dbc'])) {
-	 $res = mysql_query("insert into hitcount (pagename, hits) values ('$pagename', 1)", $dbi['dbc']);
-      }
+  function setFlags($pagename, $flags) {
+    $pagename=addslashes($pagename);
+    $this->_query("UPDATE page SET flags=$flags WHERE pagename='$pagename'");
+  }
+  
+  function increaseHitCount($pagename) {
+    $pagename=addslashes($pagename);
+    $this->_query("UPDATE page SET hits=hits+1 WHERE pagename='$pagename'");
+  }
 
-      return $res;
-   }
+  // setup for title-search
+  function titleSearch($search) {
+    $search = preg_replace("/[%_\\\\']/", '\\\\1', $search);
+    return $this->_iterator("SELECT pagename,flags,created,hits,"
+			    . " latestversion, latestversion AS version"
+			    . " FROM page"
+			    . " WHERE pagename LIKE '%$search%'"
+			    . " ORDER BY pagename");
+  }
 
-   function GetHitCount($dbi, $pagename)
-   {
-      $res = mysql_query("select hits from hitcount where pagename='$pagename'", $dbi['dbc']);
-      if (mysql_num_rows($res))
-         $hits = mysql_result($res, 0);
-      else
-         $hits = "0";
+  // setup for title-search
+  function backLinks($pagename) {
+    $pagename = addslashes($pagename);
+    return $this->_iterator("SELECT pagename,flags,created,hits,"
+			    . " latestversion, latestversion AS version"
+			    . " FROM link"
+			    . " LEFT JOIN page USING(id)"
+			    . " WHERE link='$pagename'"
+			    . " ORDER BY pagename");
+  }
 
-      return $hits;
-   }
+  // setup for full-text search
+  function fullSearch($search) {
+    $search = preg_replace("/[%_\\\\']/", '\\\\1', $search);
+    return $this->_iterator("SELECT page.id as id,pagename,"
+			    . " flags,created,hits,latestversion,"
+			    . " version,author,lastmodified,content,refs"
+			    . " FROM page LEFT JOIN version"
+			    . "  ON page.id=version.id"
+			    . "  AND latestversion=version"
+			    . " WHERE CONCAT(pagename, ' ', content)"
+			    . "    LIKE '%$search%'"
+			    . " ORDER BY pagename");
+  }
 
+  function mostPopular($limit = 20) {
+    return $this->_iterator("SELECT pagename,flags,created,hits,"
+			    . " latestversion, latestversion AS version"
+			    . " FROM page"
+			    . " WHERE hits > 0"
+			    . " ORDER BY hits DESC, pagename"
+			    . " LIMIT $limit");
+  }
 
-   // setup for title-search
-   function InitTitleSearch($dbi, $search) {
-      $search = addslashes($search);
-      $res = mysql_query("select pagename from $dbi[table] where pagename like '%$search%' order by pagename", $dbi["dbc"]);
+  function retrieveAllPages() {
+    return $this->_iterator("SELECT pagename FROM page ORDER BY pagename");
+  }
+}
 
-      return $res;
-   }
-
-
-   // iterating through database
-   function TitleSearchNextMatch($dbi, $res) {
-      if($o = mysql_fetch_object($res)) {
-         return $o->pagename;
-      }
-      else {
-         return 0;
-      }
-   }
-
-
-   // setup for full-text search
-   function InitFullSearch($dbi, $search) {
-      $search = addslashes($search);
-      $res = mysql_query("select * from $dbi[table] where content like '%$search%'", $dbi["dbc"]);
-
-      return $res;
-   }
-
-   // iterating through database
-   function FullSearchNextMatch($dbi, $res) {
-      if($hash = mysql_fetch_array($res)) {
-         return MakePageHash($hash);
-      }
-      else {
-         return 0;
-      }
-   }
-
-   function InitMostPopular($dbi, $limit) {
-      $res = mysql_query("select * from hitcount order by hits desc, pagename limit $limit");
-      
-      return $res;
-   }
-
-   function MostPopularNextMatch($dbi, $res) {
-      if ($hits = mysql_fetch_array($res))
-	 return $hits;
-      else
-         return 0;
-   }
-
-   function GetAllWikiPageNames($dbi) {
-      $res = mysql_query("select pagename from wiki");
-      $rows = mysql_num_rows($res);
-      for ($i = 0; $i < $rows; $i++) {
-	 $pages[$i] = mysql_result($res, $i);
-      }
-      return $pages;
-   }
 ?>
