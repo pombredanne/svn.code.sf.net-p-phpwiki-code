@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.37 2004-03-25 17:00:31 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.38 2004-03-25 17:37:36 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -811,7 +811,7 @@ extends _AnonUser
                         else {
                             $user = new _HttpAuthPassUser($UserName,$this->_prefs);
                             //todo: with php5 comment the following line.
-                            $this = $user;
+                            /*PHP5 patch*/$this = $user;
                             return UpgradeUser($user,$this);
                         }
                     } elseif (!empty($DBAuthParams['auth_check']) and 
@@ -821,7 +821,7 @@ extends _AnonUser
                         else {
                             $user = new _DbPassUser($UserName,$this->_prefs);
                             //todo: with php5 comment the following line.
-                            $this = $user;
+                            /*PHP5 patch*/$this = $user;
                             return UpgradeUser($user,$this);
                         }
                     } elseif (defined('LDAP_AUTH_HOST') and defined('LDAP_BASE_DN') and function_exists('ldap_open')) {
@@ -830,7 +830,7 @@ extends _AnonUser
                         else {
                             $user = new _LDAPPassUser($UserName,$this->_prefs);
                             //todo: with php5 comment the following line.
-                            $this = $user;
+                            /*PHP5 patch*/$this = $user;
                             return UpgradeUser($user,$this);
                         }
                     } elseif (defined('IMAP_AUTH_HOST') and function_exists('imap_open')) {
@@ -839,7 +839,7 @@ extends _AnonUser
                         else {
                             $user = new _IMAPPassUser($UserName,$this->_prefs);
                             //todo: with php5 comment the following line.
-                            $this = $user;
+                            /*PHP5 patch*/$this = $user;
                             return UpgradeUser($user,$this);
                         }
                     } elseif (defined('AUTH_USER_FILE')) {
@@ -848,7 +848,7 @@ extends _AnonUser
                         else {
                             $user = new _FilePassUser($UserName,$this->_prefs);
                             //todo: with php5 comment the following line.
-                            $this = $user;
+                            /*PHP5 patch*/$this = $user;
                             return UpgradeUser($user,$this);
                         }
                     } else {
@@ -857,7 +857,7 @@ extends _AnonUser
                         else {
                             $user = new _PersonalPagePassUser($UserName,$this->_prefs);
                             //todo: with php5 comment the following line.
-                            $this = $user;
+                            /*PHP5 patch*/$this = $user;
                             return UpgradeUser($user,$this);
                         }
                     }
@@ -980,14 +980,13 @@ extends _AnonUser
         $class = $this->nextClass();
         while ($user = new $class($this->_userid,$this->_prefs)) {
             //todo: with php5 comment the following line:
-            $this = $user;
+            /*PHP5 patch*/$this = $user;
             UpgradeUser($this,$user);
             if ($user->userExists()) {
                 return true;
             }
             // prevent endless loop. does this work on all PHP's?
             // it just has to set the classname, what it correctly does.
-            // $this = $user;
             $class = $user->nextClass();
             if ($class == "_ForbiddenPassUser")
                 return false;
@@ -1106,7 +1105,7 @@ extends _AnonUser
         	$class = $this->nextClass();
             while ($user = new $class($this->_userid,$this->_prefs)) {
                 //todo: with php5 comment the following line:
-                $this = $user;
+                /*PHP5 patch*/$this = $user;
                 $user = UpgradeUser($this, $user);
                 if ($user->userExists()) {
                     return true;
@@ -1144,10 +1143,8 @@ extends _PassUser
             $user = new _PersonalPagePassUser($this->_userid);
             if ($user->checkPass($submitted_password)) {
                 //todo: with php5 comment the following line:
-                $this = $user;
+                /*PHP5 patch*/$this = $user;
                 $user = UpgradeUser($this, $user);
-                //if (!check_php_version(5))
-                //    $this = $user;
                 $this->_level = WIKIAUTH_USER;
                 return $this->_level;
             } else {
@@ -1325,7 +1322,7 @@ extends _PassUser
             else {
                 $user = new _AdoDbPassUser($UserName,$this->_prefs);
                 //todo: with php5 comment the following line:
-                $this = $user;
+                /*PHP5 patch*/$this = $user;
                 return UpgradeUser($user, $this);
             }
         }
@@ -1335,7 +1332,7 @@ extends _PassUser
             else {
                 $user = new _PearDbPassUser($UserName,$this->_prefs);
                 //todo: with php5 comment the following line:
-                $this = $user;
+                /*PHP5 patch*/$this = $user;
                 return UpgradeUser($user, $this);
             }
         }
@@ -2592,6 +2589,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.37  2004/03/25 17:00:31  rurban
+// more code to convert old-style pref array to new hash
+//
 // Revision 1.36  2004/03/24 19:39:02  rurban
 // php5 workaround code (plus some interim debugging code in XmlElement)
 //   php5 doesn't work yet with the current XmlElement class constructors,
