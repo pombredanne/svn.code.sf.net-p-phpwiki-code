@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.17 2001-11-14 15:29:50 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.18 2001-11-26 22:43:24 dairiki Exp $');
 
 include "lib/config.php";
 include "lib/stdlib.php";
@@ -98,8 +98,8 @@ function main ($request) {
    
     // Enable the output of most of the warning messages.
     // The warnings will screw up zip files and setpref though.
+    global $ErrorManager;
     if ($action != 'zip' && $action != 'setprefs') {
-        global $ErrorManager;
         $ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE);
     }
 
