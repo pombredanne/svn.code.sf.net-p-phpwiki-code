@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: difflib.php,v 1.5 2002-01-21 06:55:47 dairiki Exp $');
+rcs_id('$Id: difflib.php,v 1.6 2003-01-02 22:51:43 carstenklapp Exp $');
 // difflib.php
 //
 // A PHP diff engine for phpwiki.
@@ -17,7 +17,7 @@ class _DiffOp {
     var $type;
     var $orig;
     var $final;
-    
+
     function reverse() {
         trigger_error("pure virtual", E_USER_ERROR);
     }
@@ -33,7 +33,7 @@ class _DiffOp {
 
 class _DiffOp_Copy extends _DiffOp {
     var $type = 'copy';
-    
+
     function _DiffOp_Copy ($orig, $final = false) {
         if (!is_array($final))
             $final = $orig;
@@ -48,7 +48,7 @@ class _DiffOp_Copy extends _DiffOp {
 
 class _DiffOp_Delete extends _DiffOp {
     var $type = 'delete';
-    
+
     function _DiffOp_Delete ($lines) {
         $this->orig = $lines;
         $this->final = false;
@@ -61,7 +61,7 @@ class _DiffOp_Delete extends _DiffOp {
 
 class _DiffOp_Add extends _DiffOp {
     var $type = 'add';
-    
+
     function _DiffOp_Add ($lines) {
         $this->final = $lines;
         $this->orig = false;
@@ -74,7 +74,7 @@ class _DiffOp_Add extends _DiffOp {
 
 class _DiffOp_Change extends _DiffOp {
     var $type = 'change';
-    
+
     function _DiffOp_Change ($orig, $final) {
         $this->orig = $orig;
         $this->final = $final;
@@ -84,8 +84,8 @@ class _DiffOp_Change extends _DiffOp {
         return new _DiffOp_Change($this->final, $this->orig);
     }
 }
-        
-      
+
+
 /**
  * Class used internally by Diff to actually compute the diffs.
  *
@@ -118,7 +118,7 @@ class _DiffEngine
         unset($this->seq);
         unset($this->in_seq);
         unset($this->lcs);
-         
+
         // Skip leading common lines.
         for ($skip = 0; $skip < $n_from && $skip < $n_to; $skip++) {
             if ($from_lines[$skip] != $to_lines[$skip])
@@ -132,7 +132,7 @@ class _DiffEngine
                 break;
             $this->xchanged[$xi] = $this->ychanged[$yi] = false;
         }
-        
+
         // Ignore lines which do not exist in both files.
         for ($xi = $skip; $xi < $n_from - $endskip; $xi++)
             $xhash[$from_lines[$xi]] = 1;
@@ -184,7 +184,7 @@ class _DiffEngine
             $add = array();
             while ($yi < $n_to && $this->ychanged[$yi])
                 $add[] = $to_lines[$yi++];
-            
+
             if ($delete && $add)
                 $edits[] = new _DiffOp_Change($delete, $add);
             elseif ($delete)
@@ -194,7 +194,7 @@ class _DiffEngine
         }
         return $edits;
     }
-    
+
 
     /* Divide the Largest Common Subsequence (LCS) of the sequences
      * [XOFF, XLIM) and [YOFF, YLIM) into NCHUNKS approximately equally
@@ -234,7 +234,7 @@ class _DiffEngine
 	$this->seq[0]= $yoff - 1;
 	$this->in_seq = array();
 	$ymids[0] = array();
-    
+
 	$numer = $xlim - $xoff + $nchunks - 1;
 	$x = $xoff;
 	for ($chunk = 0; $chunk < $nchunks; $chunk++) {
@@ -401,14 +401,14 @@ class _DiffEngine
 	     */
 	    while ($j < $other_len && $other_changed[$j])
 		$j++;
-	    
+	
 	    while ($i < $len && ! $changed[$i]) {
 		USE_ASSERTS && assert('$j < $other_len && ! $other_changed[$j]');
 		$i++; $j++;
 		while ($j < $other_len && $other_changed[$j])
 		    $j++;
             }
-            
+
 	    if ($i == $len)
 		break;
 
@@ -490,7 +490,7 @@ class _DiffEngine
 /**
  * Class representing a 'diff' between two sequences of strings.
  */
-class Diff 
+class Diff
 {
     var $edits;
 
@@ -539,7 +539,7 @@ class Diff
         }
         return true;
     }
-  
+
     /**
      * Compute the length of the Longest Common Subsequence (LCS).
      *
@@ -566,7 +566,7 @@ class Diff
      */
     function orig() {
         $lines = array();
-        
+
         foreach ($this->edits as $edit) {
             if ($edit->orig)
                 array_splice($lines, sizeof($lines), 0, $edit->orig);
@@ -584,7 +584,7 @@ class Diff
      */
     function final() {
         $lines = array();
-        
+
         foreach ($this->edits as $edit) {
             if ($edit->final)
                 array_splice($lines, sizeof($lines), 0, $edit->final);
@@ -593,7 +593,7 @@ class Diff
     }
 
     /**
-     * Check a Diff for validity. 
+     * Check a Diff for validity.
      *
      * This is here only for debugging purposes.
      */
@@ -622,9 +622,9 @@ class Diff
     }
 }
 
-            
 
-            
+
+
 /**
  * FIXME: bad name.
  */
@@ -659,7 +659,7 @@ extends Diff
 
         assert(sizeof($from_lines) == sizeof($mapped_from_lines));
         assert(sizeof($to_lines) == sizeof($mapped_to_lines));
-        
+
         $this->Diff($mapped_from_lines, $mapped_to_lines);
 
         $xi = $yi = 0;
@@ -669,7 +669,7 @@ extends Diff
                 $orig = array_slice($from_lines, $xi, sizeof($orig));
                 $xi += sizeof($orig);
             }
-            
+
             $final = &$this->edits[$i]->final;
             if (is_array($final)) {
                 $final = array_slice($to_lines, $yi, sizeof($final));
@@ -743,7 +743,7 @@ class DiffFormatter
             }
             else {
                 if (! is_array($block)) {
-                    $context = array_slice($context, sizeof($context) - $nlead);
+                    $context = array_slice($context, max(0, sizeof($context) - $nlead));
                     $x0 = $xi - sizeof($context);
                     $y0 = $yi - sizeof($context);
                     $block = array();
@@ -802,11 +802,11 @@ class DiffFormatter
 
         return $xbeg . ($xlen ? ($ylen ? 'c' : 'd') : 'a') . $ybeg;
     }
-    
+
     function _start_block($header) {
         echo $header;
     }
-    
+
     function _end_block() {
     }
 
@@ -814,7 +814,7 @@ class DiffFormatter
         foreach ($lines as $line)
             echo "$prefix $line\n";
     }
-    
+
     function _context($lines) {
         $this->_lines($lines);
     }
@@ -844,7 +844,7 @@ class UnifiedDiffFormatter extends DiffFormatter
         $this->leading_context_lines = $context_lines;
         $this->trailing_context_lines = $context_lines;
     }
-    
+
     function _block_header($xbeg, $xlen, $ybeg, $ylen) {
         if ($xlen != 1)
             $xbeg .= "," . $xlen;
@@ -865,11 +865,54 @@ class UnifiedDiffFormatter extends DiffFormatter
     }
 }
 
+/**
+ * block conflict diff formatter.
+ *
+ * This class will format a diff identical to Diff3 (i.e. editpage
+ * conflicts), but when there are only two source files. To be used by
+ * future enhancements to reloading / upgrading pgsrc.
+ *
+ * Functional but not finished yet, need to eliminate redundant block
+ * suffixes (i.e. "=======" immediately followed by another prefix).
+ */
+class BlockDiffFormatter extends DiffFormatter
+{
+    function BlockDiffFormatter($context_lines = 4) {
+        $this->leading_context_lines = $context_lines;
+        $this->trailing_context_lines = $context_lines;
+    }
+    function _lines($lines, $prefix = '') {
+        if (! $prefix == '')
+            echo "$prefix\n";
+        foreach ($lines as $line)
+            echo "$line\n";
+        if (! $prefix == '')
+            echo "=======\n";
+    }
+    function _added($lines) {
+        $this->_lines($lines, ">>>>>>>");
+    }
+    function _deleted($lines) {
+        $this->_lines($lines, "<<<<<<<");
+    }
+    function _block_header($xbeg, $xlen, $ybeg, $ylen) {
+        return "";
+    }
+    function _changed($orig, $final) {
+        $this->_deleted($orig);
+        $this->_added($final);
+    }
+}
+
+/**
+ $Log: not supported by cvs2svn $
+ */
+
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End:
 ?>
