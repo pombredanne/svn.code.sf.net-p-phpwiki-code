@@ -1,4 +1,4 @@
-<?php // $Id: configurator.php,v 1.29 2005-02-26 17:47:57 rurban Exp $
+<?php // $Id: configurator.php,v 1.30 2005-02-28 19:24:41 rurban Exp $
 /*
  * Copyright 2002,2003,2005 $ThePhpWikiProgrammingTeam
  * Copyright 2002 Martin Geisler <gimpster@gimpster.com> 
@@ -25,7 +25,7 @@
 /**
  * Starts automatically the first time by IniConfig("config/config.ini") 
  * if it doesn't exist.
- * Initial expand show= part (by id)
+ * Initial expand ?show=_part1 (the part id)
  *
  * 1.3.11 TODO: (or 1.3.12?)
  * fix SQL quotes, AUTH_ORDER quotes and file forward slashes
@@ -42,12 +42,12 @@
  * eval index-user.php or index.php to get the actual settings.
  * ask to store it in index.php or index-user.php
  * 
- * A file config/config.ini will be generated.
+ * A file config/config.ini will be generated, if writable.
  *
  * NOTE: If you have a starterscript outside PHOWIKI_DIR but no 
  * config/config.ini yet (very unlikely!), you must define DATA_PATH in the 
  * starterscript, otherwise the webpath to configurator is unknown, and 
- * subsequent requests will fail. (Save INI)
+ * subsequent requests will fail. (POST to save the INI)
  */
 
 global $HTTP_SERVER_VARS, $HTTP_POST_VARS, $tdwidth;
@@ -65,24 +65,85 @@ $config_file = (substr(PHP_OS,0,3) == 'WIN') ? 'config\\config.ini' : 'config/co
 $fs_config_file = dirname(__FILE__) . (substr(PHP_OS,0,3) == 'WIN' ? '\\' : '/') . $config_file;
 if (isset($HTTP_POST_VARS['create']))  header('Location: '.$configurator.'?create=1#create');
 
-// Enable write to config.ini
-// This is secure when no config.ini exists. And if so this configurator will always be called 
-// from IniConfig.php. So nobody can reset the password.
-if (!defined('ENABLE_FILE_OUTPUT')) {
-    define('ENABLE_FILE_OUTPUT', !file_exists($fs_config_file));
-} elseif (ENABLE_FILE_OUTPUT and file_exists($fs_config_file)) {
-    // require admin user in session?
-    trigger_error("Not yet implemented: Change an existing configuration for admin user only.", 
-                  E_USER_ERROR);
+// helpers from lib/WikiUser/HttpAuth.php
+    function _http_user() {
+        if (!isset($_SERVER))
+            $_SERVER = $GLOBALS['HTTP_SERVER_VARS'];
+	if (!empty($_SERVER['PHP_AUTH_USER']))
+	    return array($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+	if (!empty($_SERVER['REMOTE_USER']))
+	    return array($_SERVER['REMOTE_USER'], $_SERVER['PHP_AUTH_PW']);
+        if (!empty($GLOBALS['HTTP_ENV_VARS']['REMOTE_USER']))
+	    return array($GLOBALS['HTTP_ENV_VARS']['REMOTE_USER'], 
+	                 $GLOBALS['HTTP_ENV_VARS']['PHP_AUTH_PW']);
+	if (!empty($GLOBALS['REMOTE_USER']))
+	    return array($GLOBALS['REMOTE_USER'], $GLOBALS['PHP_AUTH_PW']);
+	    
+	// MsWindows IIS:
+	if (!empty($_SERVER['HTTP_AUTHORIZATION'])) {
+            list($userid, $passwd) = explode(':', base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));
+            return array($userid, $passwd);
+	}
+	return array('','');
+    }
+    function _http_logout() {
+        if (!isset($_SERVER))
+            $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
+        // maybe we should random the realm to really force a logout. but the next login will fail.
+        // better_srand(); $realm = microtime().rand();
+        header('WWW-Authenticate: Basic realm="'.WIKI_NAME.'"');
+        if (strstr(php_sapi_name(), 'apache'))
+            header('HTTP/1.0 401 Unauthorized'); 
+        else    
+            header("Status: 401 Access Denied"); //IIS and CGI need that
+        unset($GLOBALS['REMOTE_USER']);
+        unset($_SERVER['PHP_AUTH_USER']);
+        unset($_SERVER['PHP_AUTH_PW']);
+
+	trigger_error("Permission denied. Require ADMIN_USER.", E_USER_ERROR);
+	exit();
+    }
+
+
+// If config.ini exists, we require ADMIN_USER access by faking HttpAuth. 
+// So nobody can see or reset the password(s).
+if (file_exists($fs_config_file)) {
+    // Require admin user
+    if (!defined('ADMIN_USER') or !defined('ADMIN_PASSWD')) {
+    	if (!function_exists("IniConfig")) {
+    	    include_once("lib/prepend.php");
+	    include_once("lib/IniConfig.php");
+    	}
+	IniConfig($fs_config_file);
+    }
+    if (!defined('ADMIN_USER') or ADMIN_USER == '') {
+	trigger_error("Configuration problem:\nADMIN_USER not defined in \"$fs_config_file\".\n"
+		      . "Cannot continue: You have to fix that manually.", E_USER_ERROR);
+	exit();
+    }
+
+    list($admin_user, $admin_pw) = _http_user();
+    //$required_user = ADMIN_USER;
+    if (empty($admin_user) or $admin_user != ADMIN_USER)
+    {
+	_http_logout();
+    }
+    // check password
+    if (ENCRYPTED_PASSWORD and function_exists('crypt')) {
+        if (crypt($admin_pw, ADMIN_PASSWD) != ADMIN_PASSWD) 
+	    _http_logout();
+    } elseif ($admin_pw != ADMIN_PASSWD) {
+        _http_logout();
+    }
 }
 
-echo "<","?xml version=\"1.0\" encoding=\"'iso-8859-1'\"?",">\n"; 
+echo "<","?xml version=\"1.0\" encoding=\"'iso-8859-1'\"?",">\n";
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.29 2005-02-26 17:47:57 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.30 2005-02-28 19:24:41 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
@@ -2360,18 +2421,17 @@ if (!empty($HTTP_POST_VARS['action'])
 ";
 
     $posted = $GLOBALS['HTTP_POST_VARS'];
-
     if (defined('DEBUG'))
         printArray($GLOBALS['HTTP_POST_VARS']);
 
-    foreach($properties as $option_name => $a) {
+    foreach ($properties as $option_name => $a) {
         $posted_value = stripslashes($posted[$a->config_item_name]);
         $config .= $properties[$option_name]->get_config($posted_value);
     }
 
     $config .= $end;
 
-    if (defined('ENABLE_FILE_OUTPUT') and ENABLE_FILE_OUPUT) {
+    if (is_writable($fs_config_file)) {
       // We first check if the config-file exists.
       if (file_exists($fs_config_file)) {
         // We make a backup copy of the file
@@ -2397,7 +2457,9 @@ if (!empty($HTTP_POST_VARS['action'])
             ; //echo "<p><strong>You must rename or copy this</strong> <code><b>$config_file</b></code> <strong>file to</strong> <code><b>config/config.ini</b></code>.</p>\n";
         }
     } else {
-        echo "<p>The configuration file could <b>not</b> be written. You should copy the above configuration to a file, and manually save it as <code><b>config/config.ini</b></code>.</p>\n";
+        echo "<p>The configuration file could <b>not</b> be written.<br />\n",
+	    " You should copy the above configuration to a file, ",
+	    "and manually save it as <code><b>config/config.ini</b></code>.</p>\n";
     }
 
     echo "<hr />\n<p>Here's the configuration file based on your answers:</p>\n";
@@ -2419,7 +2481,7 @@ if (!empty($HTTP_POST_VARS['action'])
 <table cellpadding="4" cellspacing="0">
 ';
 
-    while(list($property, $obj) = each($properties)) {
+    while (list($property, $obj) = each($properties)) {
         echo $obj->get_instructions($property);
         if ($h = $obj->get_html()) {
             if (defined('DEBUG') and DEBUG)  $h = get_class($obj) . "<br />\n" . $h;
