@@ -1,7 +1,22 @@
 2000-07-31  Geoffrey T. Dairiki  <dairiki@dairiki.org>
 
+	* wiki_renderlib.php3: Move initialization of a number of class
+	variables into class constructors.  (This is for PHP4, which
+	doesn't seem to like anything but simple literals as initializers
+	for var declarations within a class.)
+
+	* wiki_diff.php3, wiki_display.php3:  Use getPage() instead of
+	retrievePage() to avoid errors for non-existing pages.
+	* wiki_stdlib.php3 (UpdateRecentChanges):  Ditto.
+
+	* wiki_template.php3: Bug fixes for some bad token reference
+	warning messages.
+	
 	* wiki_template.php3: Change "{$what}" to "\{$what}" in an effort
 	to make code PHP4 compatible.
+
+	* templates/error.html: Bug fix.
+	* templates/save.html: Minor cleanup.
 
 2000-07-30  Geoffrey T. Dairiki  <dairiki@dairiki.org>
 

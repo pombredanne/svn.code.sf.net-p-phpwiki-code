@@ -1,4 +1,4 @@
-<? rcs_id('$Id: wiki_template.php3,v 1.1.2.2 2000-07-31 18:52:28 dairiki Exp $');
+<? rcs_id('$Id: wiki_template.php3,v 1.1.2.3 2000-07-31 21:10:01 dairiki Exp $');
 // wiki_template.php3
 //
 // A new template engine for phpwiki.
@@ -571,11 +571,12 @@ class ParseToken
     $val = _GetToken($Tokens, $this->stok, 0);
     if (!is_string($val))
       {
-	$val = "{" . implode(':', $this->stok) . "}";
+	$tok = "{" . implode(':', $this->stok) . "}";
 	if ($val >= 0)
-	    $Tokens->_warning("Illegal reference to loop token $val");
+	    $Tokens->_warning("Illegal reference to loop token $tok");
 	else
-	    $Tokens->_warning("Reference to undefined token $val");
+	    $Tokens->_warning("Reference to undefined token $tok");
+	$val = $tok;
       }
     return $val;
   }
