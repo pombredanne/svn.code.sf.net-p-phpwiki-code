@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.89 2004-02-24 15:14:57 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.90 2004-02-24 17:09:24 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -190,7 +190,8 @@ function DumpToDir (&$request)
     $pages = $dbi->getAllPages();
 
     while ($page = $pages->next()) {
-        @set_time_limit(30); // Reset watchdog.
+    	if (! $request->getArg('start_debug'))
+          @set_time_limit(30); // Reset watchdog.
 
         $filename = FilenameForPage($page->getName());
 
@@ -206,7 +207,7 @@ function DumpToDir (&$request)
         else
             $data = MailifyPage($page);
 
-        if ( !($fd = fopen("$directory/$filename", "w")) ) {
+        if ( !($fd = fopen("$directory/$filename", "wb")) ) {
             $msg->pushContent(HTML::strong(fmt("couldn't open file '%s' for writing",
                                                "$directory/$filename")));
             $request->finish($msg);
@@ -275,7 +276,7 @@ function DumpHtmlToDir (&$request)
 
         $data = GeneratePageasXML($template, $pagename);
 
-        if ( !($fd = fopen("$directory/$filename", "w")) ) {
+        if ( !($fd = fopen("$directory/$filename", "wb")) ) {
             $msg->pushContent(HTML::strong(fmt("couldn't open file '%s' for writing",
                                                "$directory/$filename")));
             $request->finish($msg);
