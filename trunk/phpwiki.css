@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.57 2002-02-18 01:35:46 carstenklapp Exp $
+ * $Id: phpwiki.css,v 1.58 2002-02-18 21:38:40 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -83,7 +83,7 @@ form.wikiadmin div { background-color: #fee; }
 /**
  * Link styles
  */
-.wiki {
+.wiki, .named-wiki {
   text-decoration: none;
   font-weight: bold;
 }
