@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.22 2003-03-10 19:51:03 dairiki Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.23 2003-04-01 17:20:16 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -142,9 +142,7 @@ class XmlContent
     }
     
     function _quote ($string) {
-        return str_replace('<', '&lt;',
-                           str_replace('>', '&gt;',
-                                       str_replace('&', '&amp;', $string)));
+        return htmlspecialchars($string);
     }
 };
 
