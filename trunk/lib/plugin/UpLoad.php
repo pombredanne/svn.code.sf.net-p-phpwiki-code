@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.16 2004-10-21 19:03:37 rurban Exp $');
+rcs_id('$Id: UpLoad.php,v 1.17 2004-11-09 08:15:50 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -120,7 +120,7 @@ ws[cfh]");
         $userfile = $request->getUploadedFile('userfile');
         if ($userfile) {
             $userfile_name = $userfile->getName();
-            $userfile_name = basename($userfile_name);
+            $userfile_name = trim(basename($userfile_name));
             $userfile_tmpname = $userfile->getTmpName();
 
             if ($this->only_authenticated) {
@@ -234,6 +234,10 @@ ws[cfh]");
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2004/10/21 19:03:37  rurban
+// Be more stricter with uploads: Filenames may only contain alphanumeric
+// characters. Patch #1037825
+//
 // Revision 1.15  2004/09/22 13:46:26  rurban
 // centralize upload paths.
 // major WikiPluginCached feature enhancement:
