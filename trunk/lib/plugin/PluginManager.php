@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PluginManager.php,v 1.12 2004-01-04 18:14:49 wainstead Exp $');
+rcs_id('$Id: PluginManager.php,v 1.13 2004-01-25 03:58:44 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.12 $");
+                            "\$Revision: 1.13 $");
     }
 
     function getDefaultArguments() {
@@ -164,9 +164,7 @@ extends WikiPlugin
             else
                 $localizedPluginDocPageName = '';
 
-            global $WikiNameRegexp;
-            if (preg_match("/^$WikiNameRegexp\$/", $pluginDocPageName)
-                && $dbi->isWikiPage($pluginDocPageName))
+            if (isWikiWord($pluginDocPageName) && $dbi->isWikiPage($pluginDocPageName))
                 {
                 $pluginDocPageNamelink = HTML(WikiLink($pluginDocPageName));
             }
@@ -192,8 +190,7 @@ extends WikiPlugin
                     // already exist (Calendar, Comment, etc.)  (Non
                     // non-wikiword plugins are okay, they just can't
                     // become actionPages.)
-                    if (preg_match("/^$WikiNameRegexp\$/",
-                                   $localizedPluginName)
+                    if (isWikiWord($localizedPluginName)
                         || $dbi->isWikiPage($localizedPluginName))
                         {
                         $par->pushContent(WikiLink($localizedPluginName,
@@ -209,8 +206,7 @@ extends WikiPlugin
                 if ($localizedPluginName && $localizedPluginDocPageName)
                     $par->pushContent(HTML::br());
                 if ($localizedPluginDocPageName) {
-                    if (preg_match("/^$WikiNameRegexp\$/",
-                                   $localizedPluginDocPageName)
+                    if (isWikiWord($localizedPluginDocPageName)
                         || $dbi->isWikiPage($localizedPluginDocPageName))
                         {
                         $par->pushContent(WikiLink($localizedPluginDocPageName,
@@ -257,6 +253,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2004/01/04 18:14:49  wainstead
+// Added "Description:" to the beginning of the description string, so
+// the plugin plays nice with surrounding text.
+//
 // Revision 1.11  2003/12/10 01:01:24  carstenklapp
 // New features: Also show plugin pages for localized variants.
 // Gracefully handle broken plugins in the plugins folder (such as other

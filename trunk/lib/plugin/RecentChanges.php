@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.81 2003-11-28 21:06:31 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.82 2004-01-25 03:58:43 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -74,7 +74,7 @@ class _RecentChanges_Formatter
     function authorHasPage ($author) {
         global $WikiNameRegexp, $request;
         $dbi = $request->getDbh();
-        return preg_match("/^$WikiNameRegexp\$/", $author) && $dbi->isWikiPage($author);
+        return isWikiWord($author) && $dbi->isWikiPage($author);
     }
 
     function authorURL ($author) {
@@ -607,7 +607,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.81 $");
+                            "\$Revision: 1.82 $");
     }
 
     function managesValidators() {
@@ -774,6 +774,11 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.81  2003/11/28 21:06:31  carstenklapp
+// Enhancement: Mozilla RecentChanges sidebar now defaults to 10 changes
+// instead of 1. Make diff buttons smaller with css. Added description
+// line back in at the top.
+//
 // Revision 1.80  2003/11/27 15:17:01  carstenklapp
 // Theme & appearance tweaks: Converted Mozilla sidebar link into a Theme
 // button, to allow an image button for it to be added to Themes. Output
