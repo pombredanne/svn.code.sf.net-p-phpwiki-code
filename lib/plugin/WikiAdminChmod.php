@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminChmod.php,v 1.2 2004-02-24 03:21:40 rurban Exp $');
+rcs_id('$Id: WikiAdminChmod.php,v 1.3 2004-02-24 04:02:06 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -48,7 +48,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -97,7 +97,7 @@ extends WikiPlugin_WikiAdminSelect
     
     function run($dbi, $argstr, &$request, $basepage) {
         if (!DEBUG)
-            return $this->disabled("chmod not yet implemented");
+            return $this->disabled("WikiAdminChmod not yet enabled. Set DEBUG to try it.");
         
         $args = $this->getArgs($argstr, $request);
         $this->_args = $args;
@@ -190,6 +190,10 @@ extends WikiPlugin_WikiAdminSelect
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/02/24 03:21:40  rurban
+// enabled require_all check in WikiPoll
+// better handling of <20 min visiting client: display results so far
+//
 // Revision 1.1  2004/02/23 21:30:25  rurban
 // more PagePerm stuff: (working against 1.4.0)
 //   ACL editing and simplification of ACL's to simple rwx------ string

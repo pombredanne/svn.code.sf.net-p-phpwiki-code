@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSetAcl.php,v 1.1 2004-02-23 21:30:25 rurban Exp $');
+rcs_id('$Id: WikiAdminSetAcl.php,v 1.2 2004-02-24 04:02:07 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -47,7 +47,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -92,7 +92,7 @@ extends WikiPlugin_WikiAdminSelect
     
     function run($dbi, $argstr, &$request, $basepage) {
         if (!DEBUG)
-            return $this->disabled("setacl not yet implemented");
+            return $this->disabled("WikiAdminSetAcl not yet enabled. Set DEBUG to try it.");
         
         $args = $this->getArgs($argstr, $request);
         $this->_args = $args;
@@ -207,6 +207,11 @@ extends WikiPlugin_WikiAdminSelect
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/02/23 21:30:25  rurban
+// more PagePerm stuff: (working against 1.4.0)
+//   ACL editing and simplification of ACL's to simple rwx------ string
+//   not yet working.
+//
 //
 
 // Local Variables:
