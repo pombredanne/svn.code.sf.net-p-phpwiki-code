@@ -8,7 +8,7 @@
  * Todo: 
  * checkCredentials: set the $GLOBALS['request']->_user object for 
  *                   mayAccessPage
- * check native pecl extension
+ * enable native pecl extension (xml-rpc or soap)
  * serverurl: 
  *   Installer helper which changes server url of the default PhpWiki.wdsl
  *   Or do it dynamically in the soap class? No, the client must connect to us.
@@ -56,8 +56,15 @@ function checkCredentials(&$server, &$credentials, $access, $pagename) {
     }
     if (!isset($credentials['password'])) $credentials['password'] = '';
 
-    //Fixme: set the GLOBALS['request']->_user object
-    if (!mayAccessPage ($access,$pagename))
+    global $request;
+    if (ENABLE_USER_NEW) {
+        $request->_user = WikiUser($credentials['username']);
+    } else {
+        $request->_user = new WikiUser($request, $credentials['username']);
+    }
+    $request->_user->AuthCheck(array('userid' => $credentials['username'], 'passwd' => $credentials['password']));
+
+    if (! mayAccessPage ($access, $pagename))
         $server->fault(401,'',"no permission");
 }
 
@@ -90,7 +97,8 @@ foreach ($actions as $action) {
 // requiredAuthorityForPage($action);
 // require 'edit' access
 function doSavePage($pagename,$content,$credentials=false) {
-    checkCredentials($server,$credentials,'edit',$pagename);
+    global $server;
+    checkCredentials($server, $credentials,'edit',$pagename);
     $dbi = WikiDB::open($GLOBALS['DBParams']);
     $page = $dbi->getPage($pagename);
     $current = $page->getCurrentRevision();
@@ -102,6 +110,7 @@ function doSavePage($pagename,$content,$credentials=false) {
 
 // require 'view' access
 function getPageContent($pagename,$credentials=false) {
+    global $server;
     checkCredentials($server,$credentials,'view',$pagename);
     $dbi = WikiDB::open($GLOBALS['DBParams']);
     $page = $dbi->getPage($pagename);
@@ -111,6 +120,7 @@ function getPageContent($pagename,$credentials=false) {
 }
 // require 'view' access
 function getPageRevision($pagename,$revision,$credentials=false) {
+    global $server;
     checkCredentials($server,$credentials,'view',$pagename);
     $dbi = WikiDB::open($GLOBALS['DBParams']);
     $page = $dbi->getPage($pagename);
@@ -120,6 +130,7 @@ function getPageRevision($pagename,$revision,$credentials=false) {
 }
 // require 'view' access
 function getCurrentRevision($pagename,$credentials=false) {
+    global $server;
     checkCredentials($server,$credentials,'view',$pagename);
     if (!mayAccessPage ('view',$pagename))
         $server->fault(401,'',"no permission");
@@ -131,6 +142,7 @@ function getCurrentRevision($pagename,$credentials=false) {
 }
 // require 'change' or 'view' access ?
 function getPageMeta($pagename,$credentials=false) {
+    global $server;
     checkCredentials($server,$credentials,'view',$pagename);
     $dbi = WikiDB::open($GLOBALS['DBParams']);
     $page = $dbi->getPage($pagename);
@@ -141,6 +153,7 @@ function getPageMeta($pagename,$credentials=false) {
 }
 // require 'view' access to AllPages
 function getAllPagenames($credentials=false) {
+    global $server;
     checkCredentials($server,$credentials,'view',_("AllPages"));
     $dbi = WikiDB::open($GLOBALS['DBParams']);
     $page_iter = $dbi->getAllPages();
@@ -152,6 +165,7 @@ function getAllPagenames($credentials=false) {
 }
 // require 'view' access
 function getBacklinks($pagename,$credentials=false) {
+    global $server;
     checkCredentials($server,$credentials,'view',$pagename);
     $dbi = WikiDB::open($GLOBALS['DBParams']);
     $backend = &$dbi->_backend;
@@ -165,6 +179,7 @@ function getBacklinks($pagename,$credentials=false) {
 }
 // require 'view' access to TitleSearch
 function doTitleSearch($s, $credentials=false) {
+    global $server;
     checkCredentials($server,$credentials,'view',_("TitleSearch"));
     $dbi = WikiDB::open($GLOBALS['DBParams']);
     $query = new TextSearchQuery($s);
@@ -177,6 +192,7 @@ function doTitleSearch($s, $credentials=false) {
 }
 // require 'view' access to FullTextSearch
 function doFullTextSearch($s, $credentials=false) {
+    global $server;
     checkCredentials($server,$credentials,'view',_("FullTextSearch"));
     $dbi = WikiDB::open($GLOBALS['DBParams']);
     $query = new TextSearchQuery($s);
