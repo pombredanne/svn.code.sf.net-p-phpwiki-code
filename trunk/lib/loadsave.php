@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.104 2004-06-08 13:51:57 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.105 2004-06-08 19:48:16 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -697,7 +697,7 @@ function LoadZip (&$request, $zipfile, $files = false, $exclude = false) {
 function LoadDir (&$request, $dirname, $files = false, $exclude = false) {
     $fileset = new LimitedFileSet($dirname, $files, $exclude);
 
-    if (($skiplist = $fileset->getSkippedFiles())) {
+    if (!$files and ($skiplist = $fileset->getSkippedFiles())) {
         PrintXML(HTML::dt(HTML::strong(_("Skipping"))));
         $list = HTML::ul();
         foreach ($skiplist as $file)
@@ -859,31 +859,31 @@ function SetupWiki (&$request)
     $default_pgsrc = FindFile(DEFAULT_WIKI_PGSRC);
 
     $request->setArg('overwrite',true);
-    if ($default_pgsrc != $pgsrc)
+    if ($default_pgsrc != $pgsrc) {
         LoadAny($request, $default_pgsrc, $GenericPages);
+    }
     $request->setArg('overwrite',false);
     LoadAny($request, $pgsrc);
 
     // Ensure that all mandatory pages are loaded
     $finder = new FileFinder;
-    foreach (array_merge(explode
-                         (':',constant('HOME_PAGE')
-                          .':OldTextFormattingRules:TextFormattingRules:PhpWikiAdministration'),
-                         $GLOBALS['AllActionPages']) as $f) {
+    foreach (array_merge(explode(':','OldTextFormattingRules:TextFormattingRules:PhpWikiAdministration'),
+                         $GLOBALS['AllActionPages'],
+                         array(constant('HOME_PAGE'))) as $f) {
         $page = gettext($f);
         if (isSubPage($page))
             $page = urlencode($page);
         if (! $request->_dbi->isWikiPage(urldecode($page)) ) {
             // translated version provided?
-            if ($f = FindLocalizedFile($pgsrc . $finder->_pathsep . $page, 1))
-                LoadAny($request, $f);
-            else { // load english version
-                LoadAny($request, FindFile(DEFAULT_WIKI_PGSRC . $finder->_pathsep . $f));
-                $page = basename($f);
+            if ($lf = FindLocalizedFile($pgsrc . $finder->_pathsep . $page, 1))
+                LoadAny($request, $lf);
+            else { // load english version of required action page
+                LoadAny($request, FindFile(DEFAULT_WIKI_PGSRC . $finder->_pathsep . urlencode($f)));
+                $page = $f;
             }
         }
         if (!$request->_dbi->isWikiPage(urldecode($page))) {
-            trigger_error(sprintf("Mandatory file %s couldn't be loaded!",$page),
+            trigger_error(sprintf("Mandatory file %s couldn't be loaded!", $page),
                           E_USER_WARNING);
         }
     }
@@ -916,6 +916,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.104  2004/06/08 13:51:57  rurban
+ some comments only
+
  Revision 1.103  2004/06/08 10:54:46  rurban
  better acl dump representation, read back acl and owner
 

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.32 2004-06-08 10:54:46 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.33 2004-06-08 19:48:16 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -353,8 +353,8 @@ function fix_configs() {
                               .'OrphanedPages:PageDump:PageHistory:PageInfo:RandomPage:RateIt:'
                               .'RecentChanges:RecentEdits:RelatedChanges:TitleSearch:TranslateText:'
                               .'UpLoad:UserPreferences:WantedPages:WhoIsOnline:'
-                              .'PhpWikiAdministration/Remove'
-                              .'PhpWikiAdministration/Rename:PhpWikiAdministration/Replace'
+                              .'PhpWikiAdministration/Remove:'
+                              .'PhpWikiAdministration/Rename:PhpWikiAdministration/Replace:'
                               .'PhpWikiAdministration/SetAcl:PhpWikiAdministration/Chown'
                               );
 
@@ -555,6 +555,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.32  2004/06/08 10:54:46  rurban
+// better acl dump representation, read back acl and owner
+//
 // Revision 1.31  2004/06/06 16:58:51  rurban
 // added more required ActionPages for foreign languages
 // install now english ActionPages if no localized are found. (again)
