@@ -1,4 +1,4 @@
-<? rcs_id("$Id: wiki_ziplib.php3,v 1.3 2000-07-19 16:25:58 dairiki Exp $");
+<? rcs_id("$Id: wiki_ziplib.php3,v 1.4 2000-07-20 18:30:44 dairiki Exp $");
 
 function warn ($msg)
 {
@@ -456,44 +456,33 @@ function rfc1123date ($unix_time)
 /**
  * Routines for quoted-printable en/decoding.
  */
-function QuotedPrintableEncode ($lines)
+function QuotedPrintableEncode ($string)
 {
-  $lines = preg_replace('/\r?\n/', '', $lines);
-  reset ($lines);
-  while (list($junk, $line) = each($lines))
+  // Quote special characters in line.
+  $quoted = "";
+  while ($string)
     {
-      // Quote special characters in line.
-      $quoted = "";
-      while ($line)
-	{
-	  preg_match('/^([ !-<>-~]*)(?:([!-<>-~]$)|(.))/s', $line, $match);
-	  $quoted .= $match[1] . $match[2];
-	  if ($match[3])
-	      $quoted .= sprintf("=%02X", ord($match[3]));
-	  $line = substr($line, strlen($match[0]));
-	}
-
-      // Split line.
-      $out .= preg_replace('/(?=.{77})(.{10,75}[ \t]|.{72,74}[^=][^=])/s',
-			   "\\1=\r\n", $quoted) . "\r\n";
+      // The complicated regexp is to force quoting of trailing spaces.
+      preg_match('/^([ !-<>-~]*)(?:([!-<>-~]$)|(.))/s', $string, $match);
+      $quoted .= $match[1] . $match[2];
+      if ($match[3])
+	  $quoted .= sprintf("=%02X", ord($match[3]));
+      $string = substr($string, strlen($match[0]));
     }
-  return $out;
+  // Split line.
+  // This splits the line (preferably after white-space) into lines
+  // which are no longer than 76 chars (after adding trailing '=' for
+  // soft line break, but before adding \r\n.)
+  return preg_replace('/(?=.{77})(.{10,74}[ \t]|.{71,73}[^=][^=])/s',
+		      "\\1=\r\n", $quoted);
 }
 
 function QuotedPrintableDecode ($string)
 {
   // Eliminate soft line-breaks.
-  $string = preg_replace('/=\s*\r?\n/', '', $string);
-  // Unquote quoted chars.
-  while (preg_match('/^(.*?)=([0-9a-fA-F]{2})/s', $string, $match))
-    {
-      $unquoted .= $match[1] . chr(hexdec($match[2]));
-      $string = substr($string, strlen($match[0]));
-    }
-  return preg_split('/\r?\n/',
-		    preg_replace('/\r?\n$/', '', $unquoted . $string));
+  $string = preg_replace('/=[ \t\r]*\n/', '', $string);
+  return quoted_printable_decode($string);
 }
-
 
 define('MIME_TOKEN_REGEXP', "[-!#-'*+.0-9A-Z^-~]+");
 
@@ -542,10 +531,14 @@ function MimeifyPage ($pagehash) {
       if ($ref = $refs[$i])
 	  $params["ref$i"] = rawurlencode($ref);
   
-  $head = MimeContentTypeHeader('application', 'x-phpwiki', $params);
-  $head .= "Content-Transfer-Encoding: quoted-printable\r\n";
+  $out = MimeContentTypeHeader('application', 'x-phpwiki', $params);
+  $out .= "Content-Transfer-Encoding: quoted-printable\r\n";
+  $out .= "\r\n";
   
-  return "$head\r\n" . QuotedPrintableEncode($content);
+  reset($content);
+  while (list($junk, $line) = each($content))
+      $out .= QuotedPrintableEncode(chop($line)) . "\r\n";
+  return $out;
 }
 
 function MimeifyPages ($pagehashes)
@@ -687,13 +680,12 @@ function ParseMimeifiedPages ($data)
 
 
   $encoding = strtolower($headers['content-transfer-encoding']);
-  if (!$encoding || $encoding == 'binary')
-      $pagehash['content'] = preg_split('/\r?\n/', $data);
-  else if ($encoding == 'quoted-printable')
-      $pagehash['content'] = QuotedPrintableDecode($data);
-  else
-      die("Unknown encoding type: $enconding");
+  if ($encoding == 'quoted-printable')
+      $data = QuotedPrintableDecode($data);
+  else if ($encoding && $encoding == 'binary')
+      die("Unknown encoding type: $encoding");
   
+  $pagehash['content'] = preg_split('/[ \t\r]*\n/', chop($data));
 
   return array($pagehash);
 }
