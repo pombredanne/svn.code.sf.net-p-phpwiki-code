@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.21 2004-04-18 01:11:52 rurban Exp $');
+rcs_id('$Id: FullTextSearch.php,v 1.22 2004-05-28 11:01:58 rurban Exp $');
 /*
 Copyright 1999,2000,2001,2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -45,11 +45,12 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.21 $");
+                            "\$Revision: 1.22 $");
     }
 
     function getDefaultArguments() {
         return array('s'        => false,
+                     'hilight'  => true,
                      'case_exact' => false,  //not yet supported
                      'regex'    => false,    //not yet supported
                      'noheader' => false,
@@ -69,7 +70,7 @@ extends WikiPlugin
         $query = new TextSearchQuery($s, $case_exact, $regex);
         $pages = $dbi->fullSearch($query);
         $lines = array();
-        $hilight_re = $query->getHighlightRegexp();
+        $hilight_re = $hilight ? $query->getHighlightRegexp() : false;
         $count = 0;
         $found = 0;
 
@@ -133,6 +134,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.21  2004/04/18 01:11:52  rurban
+// more numeric pagename fixes.
+// fixed action=upload with merge conflict warnings.
+// charset changed from constant to global (dynamic utf-8 switching)
+//
 // Revision 1.20  2004/02/28 21:14:08  rurban
 // generally more PHPDOC docs
 //   see http://xarch.tu-graz.ac.at/home/rurban/phpwiki/xref/
