@@ -1,6 +1,7 @@
-<?php 
-// $Id: XmlRpcServer.php,v 1.12 2004-12-18 16:49:29 rurban Exp $
+<?php
+// $Id: XmlRpcServer.php,v 1.13 2005-01-21 14:10:36 rurban Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
+ * Copyright (C) 2004, 2005 $ThePhpWikiProgrammingTeam
  *
  * LICENCE
  * =======
@@ -23,15 +24,11 @@
  * LIBRARY USED - POSSIBLE PROBLEMS
  * ================================
  * 
- * This file provides an XML-RPC interface for PhpWiki.  It uses the XML-RPC 
- * library for PHP by Edd Dumbill - see http://xmlrpc.usefulinc.com/php.html 
- * for details.
- *
- * PHP >= 4.1.0 includes experimental support for the xmlrpc-epi c library 
- * written by Dan Libby (see http://uk2.php.net/manual/en/ref.xmlrpc.php).  
- * This is not compiled into PHP by default.  If it *is* compiled into your installation
- * (ie you have --with-xmlrpc) there may well be namespace conflicts with the xml-rpc
- * library used by this code, and you will get errors.
+ * This file provides an XML-RPC interface for PhpWiki. 
+ * It checks for the existence of the xmlrpc-epi c library by Dan Libby 
+ * (see http://uk2.php.net/manual/en/ref.xmlrpc.php), and falls back to 
+ * the slower PHP counterpart XML-RPC library by Edd Dumbill. 
+ * See http://xmlrpc.usefulinc.com/php.html for details.
  * 
  * INTERFACE SPECIFICTION
  * ======================
@@ -48,13 +45,13 @@
 
 /*
 ToDo:
-	Resolve namespace conflicts
         Remove all warnings from xmlrpc.inc 
         Return list of external links in listLinks
         Support RSS2 cloud subscription
-        Test hwiki.jar xmlrpc interface (java visualization plugin)
 Done:
+        Test hwiki.jar xmlrpc interface (java visualization plugin)
      	Make use of the xmlrpc extension if found. http://xmlrpc-epi.sourceforge.net/
+	Resolved namespace conflicts
 */
 
 // Intercept GET requests from confused users.  Only POST is allowed here!
@@ -226,7 +223,7 @@ $wiki_dmap['getRecentChanges']
 function getRecentChanges($params)
 {
     global $request;
-    // Get the first parameter as an ISO 8601 date.  Assume UTC
+    // Get the first parameter as an ISO 8601 date. Assume UTC
     $encoded_date = $params->getParam(0);
     $datetime = iso8601_decode($encoded_date->scalarval(), 1);
     $dbh = $request->getDbh();
@@ -241,10 +238,10 @@ function getRecentChanges($params)
         $version = new xmlrpcval($page->getVersion(), 'int');
 
         // Build an array of xmlrpc structs
-        $pages[] = new xmlrpcval(array('name'=>$name, 
-                                       'lastModified'=>$lastmodified,
-                                       'author'=>$author,
-                                       'version'=>$version),
+        $pages[] = new xmlrpcval(array('name' => $name, 
+                                       'lastModified' => $lastmodified,
+                                       'author' => $author,
+                                       'version' => $version),
                                  'struct');
     } 
     return new xmlrpcresp(new xmlrpcval($pages, "array"));
@@ -473,6 +470,116 @@ function listLinks($params)
     return new xmlrpcresp(new xmlrpcval ($linkstruct, "array"));
 } 
 
+/** 
+ * struct putPage(String pagename, String content, [String author[, String password]})
+ * returns a struct with elements: 
+ *   code (int): 200 on success, 400 or 401 on failure
+ *   message (string): success or failure message
+ *   version (int): version of new page
+ *
+ * @author: Arnaud Fontaine, Reini Urban
+ */
+$wiki_dmap['putPage']
+= array('signature'     => array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString)),
+        'documentation' => 'put the raw Wiki text into a page as new version',
+        'function'      => 'putPage');
+
+function _getUser($userid='') {
+    global $request;
+    
+    if (! $userid ) {
+        if (!isset($_SERVER))
+            $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
+        if (!isset($_ENV))
+            $_ENV =& $GLOBALS['HTTP_ENV_VARS'];
+        if (isset($_SERVER['REMOTE_USER']))
+            $userid = $_SERVER['REMOTE_USER'];
+        elseif (isset($_ENV['REMOTE_USER']))
+            $userid = $_ENV['REMOTE_USER'];
+        elseif (isset($_SERVER['REMOTE_ADDR']))
+            $userid = $_SERVER['REMOTE_ADDR'];
+        elseif (isset($_ENV['REMOTE_ADDR']))
+            $userid = $_ENV['REMOTE_ADDR'];
+        elseif (isset($GLOBALS['REMOTE_ADDR']))
+            $userid = $GLOBALS['REMOTE_ADDR'];
+    }
+
+    if (ENABLE_USER_NEW) {
+        return WikiUser($userid);
+    } else {
+        return new WikiUser($request, $userid);
+    }
+}
+        
+function putPage($params) {
+    global $request;
+
+    $ParamPageName = $params->getParam(0);
+    $ParamContent = $params->getParam(1);
+    $pagename = short_string_decode($ParamPageName->scalarval());
+    $content = short_string_decode($ParamContent->scalarval());
+    $passwd = '';
+    if (count($params->params) > 2) {
+        $ParamAuthor = $params->getParam(2);
+        $userid = short_string_decode($ParamAuthor->scalarval());
+        if (count($params->params) > 3) {
+            $ParamPassword = $params->getParam(3);
+            $passwd = short_string_decode($ParamPassword->scalarval());
+        }
+    } else {
+    	$userid = $request->_user->_userid;
+    }
+    $request->_user = _getUser($userid);
+    $request->_user->_group = $request->getGroup();
+    $$user = $request->_user->AuthCheck($userid, $passwd);
+                                         
+    if (! mayAccessPage ('edit', $pagename)) {
+        return new xmlrpcresp(
+                              new xmlrpcval(
+                                            array('code' => new xmlrpcval(401, "int"), 
+                                                  'version' => new xmlrpcval(0, "int"), 
+                                                  'message' => 
+                                                  short_string("no permission for "
+                                                               .$request->_user->UserName())), 
+                                            "struct"));
+    }
+
+    $now = time();
+    $dbh = $request->getDbh();
+    $page = $dbh->getPage($pagename);
+    $current = $page->getCurrentRevision();
+    $content = trim($content);
+    $version = $current->getVersion();
+    // $version = -1 will force create a new version
+    if ($current->getPackedContent() != $content) {
+        $init_meta = array('ctime' => $now,
+                           'creator' => $userid,
+                           'creator_id' => $userid,
+                           );
+        $version_meta = array('author' => $userid,
+                              'author_id' => $userid,
+                              'markup' => 2.0,
+                              'summary' => isset($summary) ? $summary : _("xml-rpc change"),
+                              'mtime' => $now,
+                              'pagetype' => 'wikitext',
+                              'wikitext' => $init_meta,
+                              );
+        $version++;
+        $res = $page->save($content, $version, $version_meta);
+        if ($res)
+            $message = "Page $pagename version $version created";
+        else
+            $message = "Problem creating version $version of page $pagename";
+    } else {
+    	$res = 0;
+    	$message = $message = "Page $pagename unchanged";
+    }
+    return new xmlrpcresp(new xmlrpcval(array('code'    => new xmlrpcval($res ? 200 : 400, "int"), 
+                                              'version' => new xmlrpcval($version, "int"), 
+                                              'message' => short_string($message)), 
+                                        "struct"));
+}
+
 /**
  * Publish-Subscribe
  * Client subscribes to a RecentChanges-like channel, getting a short 
@@ -493,7 +600,7 @@ function listLinks($params)
  * http://www.thetwowayweb.com/soapmeetsrss#rsscloudInterface
  */
 $wiki_dmap['rssPleaseNotify']
-= array('signature'	=> array(array($xmlrpcStruct, $xmlrpcBoolean)),
+= array('signature'	=> array(array($xmlrpcBoolean, $xmlrpcStruct)),
         'documentation' => 'RSS2 change notification subscriber channel',
         'function'	=> 'rssPleaseNotify');
 
@@ -503,14 +610,31 @@ function rssPleaseNotify($params)
     return new xmlrpcresp(new xmlrpcval (0, "boolean"));
 }
 
+/*
+ *  String wiki.rssPleaseNotify ( username )
+ *  returns: true or false 
+
+ */
 $wiki_dmap['mailPasswordToUser']
-= array('signature'	=> array(array($xmlrpcStruct, $xmlrpcString)),
-        'documentation' => 'RSS2 change notification subscriber channel',
+= array('signature'	=> array(array($xmlrpcBoolean, $xmlrpcString)),
+        'documentation' => 'RSS2 user management helper',
         'function'	=> 'mailPasswordToUser');
 
 function mailPasswordToUser($params)
 {
-    return new xmlrpcresp(new xmlrpcval (0, "boolean"));
+    global $request;
+    $ParamUserid = $params->getParam(0);
+    $userid = short_string_decode($ParamUserid->scalarval());
+    $request->_user = _getUser($userid);
+    //$request->_prefs =& $request->_user->_prefs;
+    $email = $request->getPref('email');
+    $success = 0;
+    if ($email) {
+        $body = WikiURL('') . "\nPassword: " . $request->getPref('passwd');
+        $success = mail($email, "[".WIKI_NAME."} Password Request", 
+                        $body);
+    }
+    return new xmlrpcresp(new xmlrpcval ($success, "boolean"));
 }
  
 /** 
