@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: body.tmpl,v 1.23 2002-02-16 06:02:23 carstenklapp Exp $ -->
+<!-- $Id: body.tmpl,v 1.24 2002-02-19 23:00:26 carstenklapp Exp $ -->
 <body>
 <div id="navbar" class="toolbar">
 <!-- The logo -->
@@ -8,9 +8,13 @@
                   ><img src="<?=$Theme->getImageURL('logo')?>"
                         border="0" alt="<?=WIKI_NAME?>: <?=HomePage?>" 
                         align="right" /></a></div>
-
+<?php
+global $HIDE_TOOLBARS;
+if (!$HIDE_TOOLBARS) {
+?>
 <!-- The top navigation/search bar -->
 <?= Template('navbar') ?>
+<?php } ?>
 
 <!-- Page title -->
 <h1><?=$HEADER?></h1>
