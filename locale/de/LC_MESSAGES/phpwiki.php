@@ -92,6 +92,10 @@ $locale["Can't parse %s"] =
    "Konnte %s nicht analysieren";
 $locale["Cannot create directory '%s'"] =
    "Das Verzeichnis »%s« kann nicht erzeugt werden";
+$locale["Check any two boxes then %s."] =
+   "Wähle zwei Versionen aus, dann %s.";
+$locale["Check any two boxes to compare revisions."] =
+   "Wähle zwei Versionen zum Vergleich aus.";
 $locale["Click here to <a href=\"%s\">remove the page now</a>."] =
    "Klicke hier um <a href=\"%s\">die Seite jetzt zu löschen</a>.";
 $locale["Command failed [%s], Output:"] =
@@ -326,6 +330,8 @@ $locale["Saving this page will overwrite the current version."] =
    "Wenn die Seite jetzt gespeichert werden würde, dann würde die aktuellste Version überschrieben.";
 $locale["Search"] =
    "Suche";
+$locale["See %s"] =
+   "Siehe %s";
 $locale["See %s tips for editing."] =
    "Sehe %s Tips fürs Editieren.";
 $locale["Serialized file %s"] =
@@ -347,7 +353,7 @@ $locale["Skipping"] =
 $locale["Sorry for the inconvenience."] =
    "Entschuldigung für die Unannehmlichkeiten.";
 $locale["Sorry, this version of PHP cannot create PNG image files."] =
-   "Leider. Diese PHP Version kenn keine PNG Bilder erzeugen.";
+   "Leider. Diese PHP Version kann keine PNG Bilder erzeugen.";
 $locale["Summary:"] =
    "Kommentar:";
 $locale["Synopsis"] =
