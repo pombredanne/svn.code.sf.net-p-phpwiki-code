@@ -1,6 +1,7 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.46 2004-05-08 19:55:29 rurban Exp $');
-/* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
+rcs_id('$Id: InlineParser.php,v 1.47 2004-05-08 20:32:56 rurban Exp $');
+/* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
+ * Copyright (C) 2004 Reini Urban
  *
  * This file is part of PhpWiki.
  * 
@@ -147,11 +148,11 @@ class RegexpSet
         // sf.net: Fatal error: Allowed memory size of 8388608 bytes exhausted 
         //         (tried to allocate 634 bytes)
 
-        // So we try to minize memory usage, by looping explicitly
+        // So we try to minize memory usage, by looping explicitly,
         // and storing only those regexp which actually match. 
         // There may be more than one, so we have to find the longest, 
         // and match inside until the shortest is empty.
-	$matched = array();
+	$matched = array(); $matched_ind = array();
         for ($i=0; $i<count($regexps); $i++) {
             // Syntax: http://www.pcre.org/pcre.txt
             //   x - EXTENDED, ignore whitespace
@@ -161,7 +162,8 @@ class RegexpSet
             $pat= "/ ( . $repeat ) ( " . $regexps[$i] . " ) /x";
             if (preg_match($pat, $text, $_m)) {
             	$m = $_m;
-                $matched[$i] = $regexps[$i];
+                $matched[] = $regexps[$i];
+                $matched_ind[] = $i;
                 $regexp_ind = $i;
             }
         }
@@ -170,13 +172,14 @@ class RegexpSet
         
         // Optimization: if the matches are only "$" and another, then omit "$"
         if (count($matched) > 2) {
-            // we could do much better, if we would know the matching markup for the longest regexp match
-            $hugepat= "/ ( . $repeat ) ( (" . join(')|(', $regexps) . ") ) /Asx";
-            //$hugepat= "/ ( . $repeat ) ( (" . join(')|(', array_values($matched)) . ") ) /Asx";
+            // We could do much better, if we would know the matching markup for the 
+            // longest regexp match:
+            //$hugepat= "/ ( . $repeat ) ( (" . join(')|(', $regexps) . ") ) /Asx";
+            $hugepat= "/ ( . $repeat ) ( (" . join(')|(', array_values($matched)) . ") ) /Asx";
             if (! preg_match($hugepat, $text, $m)) {
                 return false;
             }
-            $match->regexp_ind = count($m) - 4; // TODO: Optimisation with matched only
+            $match->regexp_ind = $matched_ind[count($m) - 4];
         } else {
             $match->regexp_ind = $regexp_ind;
         }
@@ -647,7 +650,7 @@ class InlineTransformer
             if ($match->regexp_ind == 0) {
                 // No start pattern found before end pattern.
                 // We're all done!
-                if (isa($markup,'Markup_plugin')) {
+                if (isset($markup) and is_object($markup) and isa($markup,'Markup_plugin')) {
                     $output->_content[count($output->_content)-1]->setTightness(!empty($match->prematch),false);
                 }
                 $output->pushContent($match->prematch);
