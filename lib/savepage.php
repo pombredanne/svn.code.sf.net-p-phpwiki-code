@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.20 2002-01-05 10:17:07 carstenklapp Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.21 2002-01-05 13:39:54 carstenklapp Exp $');
 require_once('lib/Template.php');
 require_once('lib/transform.php');
 require_once('lib/ArchiveCleaner.php');
@@ -15,7 +15,7 @@ require_once('lib/ArchiveCleaner.php');
 
 function ConcurrentUpdates($pagename) {
    /* xgettext only knows about c/c++ line-continuation strings
-     is does not know about php's dot operator.
+     it does not know about php's dot operator.
      We want to translate this entire paragraph as one string, of course.
    */
     $html = "<p>";
@@ -165,15 +165,19 @@ function savePage ($dbi, $request) {
     $html .= "\n";
 
     if ($warnings) {
-        $html .= Element('p', "<b>"._("Warning!")."</b> "
+        $html .= Element('p', QElement('strong',_("Warning!")) ." "
                          . htmlspecialchars($warnings)
-                         . "<br>\n");
+                         . QElement('br') ."\n");
     }
 
-    if (!empty($SignatureImg))
-        $html .= sprintf("<P><img src=\"%s\"></P>\n", DataURL($SignatureImg));
+    if (!empty($SignatureImg)) {
+        $html .= Element('p', 
+                         QElement('img', array('alt' => $SignatureImg,
+                                               'src' => DataURL($SignatureImg))));
+    }
+
     
-    $html .= "<hr noshade>\n";
+    $html .= QElement('hr', array('noshade' => 'noshade');
     $html .= do_transform($newrevision->getContent());
     echo GeneratePage('BROWSE', $html, $pagename, $newrevision);
 }
