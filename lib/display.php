@@ -1,7 +1,7 @@
 <?php
 // display.php: fetch page or get default content
 // calls transform.php for actual transformation of wiki markup to HTML
-rcs_id('$Id: display.php,v 1.17 2002-01-24 00:45:28 dairiki Exp $');
+rcs_id('$Id: display.php,v 1.18 2002-01-25 01:04:13 dairiki Exp $');
 
 require_once('lib/Template.php');
 require_once('lib/transform.php');
@@ -41,6 +41,7 @@ function GleanDescription ($rev) {
     return '';
 }
 
+
 function displayPage(&$request, $tmpl = 'browse') {
     $pagename = $request->getArg('pagename');
     $version = $request->getArg('version');
@@ -64,7 +65,16 @@ function displayPage(&$request, $tmpl = 'browse') {
     $pagetitle->addTooltip(sprintf(_("BackLinks for %s"), $pagename));
 
 
-    $template = Template($tmpl, do_transform($revision->getContent()));
+    if (0) {
+        include_once('lib/BlockParser.php');
+        global $BlockParser;
+        $content = $BlockParser->parse($revision->getPackedContent());
+        //print_r($content);
+        $template = Template($tmpl, array('CONTENT' => $content));
+    }
+    else
+        $template = Template($tmpl, do_transform($revision->getContent()));
+    
 
     GeneratePage($template, $pagetitle, $revision,
                  array('ROBOTS_META'	=> 'index,follow',
