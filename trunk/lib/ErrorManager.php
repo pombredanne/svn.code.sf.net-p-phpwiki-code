@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.2 2001-11-06 17:13:22 dairiki Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.3 2001-11-21 19:46:50 dairiki Exp $');
 
 
 define ('EM_FATAL_ERRORS',
@@ -95,10 +95,7 @@ class ErrorManager
      *        handler.  This allows the handler to "adjust" the error message.
      *
      * @access public
-     * @param $handler string or array
-     * To register a global function as a handler, just pass the functions name
-     * (as a string).  To register an object method as a handler, pass a array:
-     * the first element is the object, the second is the name of the method.
+     * @param $handler WikiCallback  Handler to call.
      */
     function pushErrorHandler($handler) {
         array_unshift($this->_handlers, $handler);
@@ -119,26 +116,10 @@ class ErrorManager
      * one argument: a PhpError object describing the fatal error.
      *
      * @access public
-     * @param $handler string or array
-     * To register a global function as a handler, just pass the functions name
-     * (as a string).  To register an object method as a handler, pass a array:
-     * the first element is the object, the second is the name of the method.
+     * @param $handler WikiCallback  Callback to call on fatal errors.
      */
     function setFatalHandler($handler) {
         $this->_fatal_handler = $handler;
-    }
-
-    function _callHandler($handler, $error) {
-        if (is_string($handler)) {
-            return call_user_func($handler, $error);
-        }
-        else if (is_array($handler)) {
-            list($object, $method) = $handler;
-            if (method_exists($object, $method))
-                return call_user_method($method, $object, $error);
-        }
-        echo "<div>ErrorManager::_callHandler: BAD HANDLER<br></div>\n";
-        return false;
     }
 
     /**
@@ -161,7 +142,7 @@ class ErrorManager
         $in_handler = true;
         
         foreach ($this->_handlers as $handler) {
-            $result = $this->_callHandler($handler, $error);
+            $result = $handler->call($error);
             if (!$result) {
                 continue;       // Handler did not handle error.
             }
@@ -207,7 +188,7 @@ class ErrorManager
         $error->printError();
         $this->_flush_errors();
         if ($this->_fatal_handler)
-            $this->_callHandler($this->_fatal_handler, $error);
+            $this->_fatal_hander->call($error);
         exit -1;
     }
         

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbaDatabase.php,v 1.1 2001-09-18 19:16:23 dairiki Exp $');
+<?php rcs_id('$Id: DbaDatabase.php,v 1.2 2001-11-21 19:46:50 dairiki Exp $');
 
 require_once('lib/ErrorManager.php');
 // FIXME: autodetect supported handlers.
@@ -28,7 +28,7 @@ class DbaDatabase
 
         global $ErrorManager;
         $this->_dba_open_error = false;
-        $ErrorManager->pushErrorHandler(array($this, '_dba_open_error_handler'));
+        $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_dba_open_error_handler'));
         while (($dbh = dba_open($this->_file, $mode, $this->_handler)) < 1) {
             if (--$watchdog <= 0)
                 break;

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.2 2001-09-19 03:24:36 wainstead Exp $');
+<?php rcs_id('$Id: Template.php,v 1.3 2001-11-21 19:46:50 dairiki Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -112,7 +112,7 @@ class Template
         //$this->_dump_template();
 
         global $ErrorManager;
-        $ErrorManager->pushErrorHandler(array($this, '_errorHandler'));
+        $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_errorHandler'));
         eval('?>' . $this->_munge_input($this->_tmpl));
         $ErrorManager->popErrorHandler();
 
