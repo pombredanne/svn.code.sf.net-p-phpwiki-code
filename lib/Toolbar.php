@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Toolbar.php,v 1.14 2002-01-10 23:07:02 carstenklapp Exp $');
+<?php rcs_id('$Id: Toolbar.php,v 1.15 2002-01-11 22:51:34 carstenklapp Exp $');
 
 //require_once("lib/ErrorManager.php");
 //require_once("lib/WikiPlugin.php");
@@ -240,8 +240,9 @@ function toolbar_action_SearchActions($pagename, $charset) {
 // $userauth = $user->is_authenticated();
 // $userid   = $user->id();
 // $pagename = $pagename;
+// $is_admin = $user->is_admin()
 
-function toolbar_User_UserSignInOut($userauth, $userid, $pagename) {
+function toolbar_User_UserSignInOut($userauth, $userid, $pagename, $is_admin) {
     $html = "";
     if ($userauth) {
         $html .= sprintf(_("You are signed in as %s"), LinkWikiWord($userid));
@@ -253,6 +254,12 @@ function toolbar_User_UserSignInOut($userauth, $userid, $pagename) {
             . WikiURL($pagename, array('action' => 'login')) ."\">"
             ._("SignIn") ."</a>";
     }
+    if ($is_admin) {
+        $html .= separator() ."<a class=\"wikiaction\" href=\""
+            . WikiURL(_("PhpWikiAdministration"), array('page' => $pagename)) ."\">"
+            ._("PhpWikiAdministration") ."</a>";
+     }
+
     return $html;
 }
 
