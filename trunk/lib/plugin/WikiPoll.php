@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiPoll.php,v 1.3 2004-02-24 03:54:46 rurban Exp $');
+rcs_id('$Id: WikiPoll.php,v 1.4 2004-02-26 01:42:27 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
@@ -65,7 +65,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -139,6 +139,7 @@ extends WikiPlugin
     }
     
     function run($dbi, $argstr, &$request, $basepage) {
+    	$request->setArg('nocache','purge');
         $args = $this->getArgs($argstr, $request);
         if (!$args['page'])
             return $this->error("No page specified");
@@ -312,6 +313,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/02/24 03:54:46  rurban
+// lock page, more questions, new require_least arg
+//
 // Revision 1.2  2004/02/24 03:21:46  rurban
 // enabled require_all check in WikiPoll
 // better handling of <20 min visiting client: display results so far
