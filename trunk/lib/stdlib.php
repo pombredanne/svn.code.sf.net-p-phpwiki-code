@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.68 2002-01-07 18:42:40 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.69 2002-01-08 02:11:32 carstenklapp Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -65,7 +65,7 @@ function CSS_URL($CSS_URLS, $CSS_DEFAULT) {
         $html .= QElement('link',
                           array('rel'   => (($CSS_DEFAULT == $key) ?
                                             'stylesheet' : 'alternate stylesheet'),
-                                'title' => _(htmlspecialchars($key)),
+                                'title' => htmlspecialchars(_($key)),
                                 'href'  => DataURL(htmlspecialchars($val)),
                                 'type'  => 'text/css'))."\n";
     }
