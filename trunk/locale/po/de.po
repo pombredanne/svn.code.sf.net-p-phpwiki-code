@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.8\n"
-"POT-Creation-Date: 2002-01-14 15:27-0500\n"
+"POT-Creation-Date: 2002-01-16 13:01-0500\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@mac.com>, Arno Hollosi <ahollosi@mail.com>\n"
@@ -104,23 +104,25 @@ msgstr "Versionen sind identisch"
 msgid "Diff: %s"
 msgstr "Vergleich: %s"
 
-#: ../lib/Toolbar.php:91 ../lib/editpage.php:40
+#: ../lib/Toolbar.php:91 ../lib/editpage.php:40 ../templates/browse.html:70
 msgid "Note:"
 msgstr "Hinweis:"
 
 #: ../lib/editpage.php:41
 #, c-format
 msgid "%s has been locked by the administrator and cannot be edited."
-msgstr ""
-"%s wurde vom Systemverwalter gesperrt und kann nicht editiert "
-"werden."
+msgstr "%s wurde vom Systemverwalter gesperrt und kann nicht editiert werden."
 
 #: ../lib/editpage.php:45 ../lib/plugin/ViewSource.php:63
 #, c-format
 msgid "Page source for %s"
 msgstr "Quelltext für die Seite »%s«"
 
-#: ../lib/ErrorManager.php:148
+#: ../lib/ErrorManager.php:86 ../themes/MacOSX/templates/browse.html:105
+msgid "PHP Warnings"
+msgstr "PHP Warnungen"
+
+#: ../lib/ErrorManager.php:169
 msgid "error while handling error:"
 msgstr "Fehler während der Fehlerbehandlung von:"
 
@@ -253,6 +255,7 @@ msgstr "%s wird hochgeladen"
 #: ../lib/plugin/RecentChanges.php:163 ../lib/plugin/RecentChanges.php:272
 #: ../lib/plugin/RecentChanges.php:317 ../lib/plugin/Toolbar.php:87
 #: ../lib/plugin/Toolbar.php:105 ../lib/plugin/Toolbar.php:112
+#: ../templates/browse.html:40
 msgid "RecentChanges"
 msgstr "FrischeSeiten"
 
@@ -284,8 +287,7 @@ msgstr "Seiten sperren oder freigeben"
 msgid "Bad action: '%s'"
 msgstr "Ungültige Aktion: »%s«"
 
-#: ../lib/plugin/_BackendInfo.php:10 ../templates/browse.html:93
-#: ../templates/browse.html:94
+#: ../lib/plugin/_BackendInfo.php:10 ../templates/browse.html:45
 msgid "DebugInfo"
 msgstr "DebugInfo"
 
@@ -306,7 +308,7 @@ msgstr "Keine Daten für Seiten %s"
 
 #: ../lib/Toolbar.php:187 ../lib/Toolbar.php:188 ../lib/Toolbar.php:225
 #: ../lib/Toolbar.php:226 ../lib/plugin/BackLinks.php:9
-#: ../templates/editpage.html:19 ../themes/MacOSX/templates/editpage.html:19
+#: ../templates/browse.html:44 ../themes/MacOSX/templates/editpage.html:19
 msgid "BackLinks"
 msgstr "BackLinks"
 
@@ -315,12 +317,16 @@ msgstr "BackLinks"
 msgid "Get BackLinks for %s"
 msgstr "Hole BackLinks für %s"
 
-#: ../lib/plugin/BackLinks.php:44
+#: ../lib/plugin/BackLinks.php:39 ../lib/plugin/MostPopular.php:28
+msgid "Page Name"
+msgstr "Seitenname"
+
+#: ../lib/plugin/BackLinks.php:57
 #, c-format
 msgid "These pages link to %s:"
 msgstr "Diese Seiten sind verlinkt zu %s:"
 
-#: ../lib/plugin/BackLinks.php:44
+#: ../lib/plugin/BackLinks.php:57
 #, c-format
 msgid "No pages link to %s."
 msgstr "Keine Seiten sind mit %s verlinkt."
@@ -393,6 +399,7 @@ msgstr "Eingefügter Text von %s"
 
 #: ../lib/Toolbar.php:184 ../lib/Toolbar.php:185 ../lib/Toolbar.php:222
 #: ../lib/Toolbar.php:223 ../lib/plugin/LikePages.php:12
+#: ../templates/browse.html:43
 msgid "LikePages"
 msgstr "GleicheSeiten"
 
@@ -432,10 +439,6 @@ msgstr "Die MeistBesuchten Seiten auflisten"
 msgid "Hits"
 msgstr "Treffer"
 
-#: ../lib/plugin/MostPopular.php:28
-msgid "Page Name"
-msgstr "Seitenname"
-
 #: ../lib/plugin/MostPopular.php:42
 #, c-format
 msgid "The %s most popular pages of this wiki:"
@@ -470,6 +473,7 @@ msgstr "Änderungsprotokoll."
 
 #: ../lib/Toolbar.php:168 ../lib/Toolbar.php:169
 #: ../lib/plugin/PageHistory.php:200 ../lib/plugin/RecentChanges.php:44
+#: ../templates/browse.html:37
 msgid "PageHistory"
 msgstr "SeitenProtokoll"
 
@@ -639,16 +643,16 @@ msgstr ""
 msgid "Sign in:"
 msgstr "Melde dich an:"
 
-#: ../lib/plugin/ViewSource.php:20 ../templates/browse.html:42
+#: ../lib/plugin/ViewSource.php:20 ../templates/browse.html:31
 msgid "ViewSource"
-msgstr ""
+msgstr "QuellText"
 
 #: ../lib/plugin/ViewSource.php:24
 #, c-format
 msgid "View Wiki code for page '%s'."
 msgstr "Quelltext für die Seite »%s«."
 
-#: ../lib/plugin/ViewSource.php:52 ../lib/stdlib.php:549
+#: ../lib/plugin/ViewSource.php:52 ../lib/stdlib.php:556
 #, c-format
 msgid "I'm sorry.  Version %d of %s is not in my database."
 msgstr "Es tut mir leid.  Version %d. von %s ist nicht in der Datenbank."
@@ -717,16 +721,45 @@ msgstr "Anderenfalls benütze die »Zurück« Funktion deines Browsers."
 msgid "Removed page '%s' succesfully."
 msgstr "Seite »%s« erfolgreich gelöscht."
 
-#: ../lib/Toolbar.php:164 ../lib/removepage.php:20 ../templates/browse.html:57
+#: ../lib/Toolbar.php:164 ../lib/removepage.php:20
 msgid "Remove page"
 msgstr "Seite löschen"
 
+#: ../lib/savepage.php:31 ../lib/savepage.php:60
+msgid "Use your browser's <b>Back</b> button to go back to the edit page."
+msgstr ""
+"Benütze die <b>Zurück</b> Funktion deines Browsers um zur Editierseite zu "
+"gelangen."
+
 #: ../lib/savepage.php:32
-#, c-format
-msgid "Problem while updating %s"
-msgstr "Problem während dem Editieren von %s"
+msgid ""
+"Copy your changes to the clipboard or to another temporary place (e.g. text "
+"editor)."
+msgstr ""
+"Kopiere deine Veränderungen in die Zwischenablage oder an einen anderen "
+"temporären Platz (z.B. einen Texteditor)"
 
 #: ../lib/savepage.php:33
+msgid ""
+"<b>Reload</b> the page. You should now see the most current version of the "
+"page. Your changes are no longer there."
+msgstr ""
+"<b>Aktualisiere</b> die Seite. Du solltest jetzt die neueste Version der "
+"Seite sehen. Deine Veränderungen sind verschwunden."
+
+#: ../lib/savepage.php:34
+msgid ""
+"Make changes to the file again. Paste your additions from the clipboard (or "
+"text editor)."
+msgstr ""
+"Editiere die Seite erneut. Kopiere deine Veränderungen aus der "
+"Zwischenablage (oder aus dem Texteditor)"
+
+#: ../lib/savepage.php:35
+msgid "Press <b>Save</b> again."
+msgstr "Drücke nochmal <b>Speichern</b>"
+
+#: ../lib/savepage.php:43
 msgid ""
 "PhpWiki is unable to save your changes, because another user edited and "
 "saved the page while you were editing the page too. If saving proceeded now "
@@ -737,50 +770,21 @@ msgstr ""
 "hast. Wenn die Seite jetzt gespeichert werden würde, dann würden die "
 "Veränderungen des anderen Benützers verlorengehen."
 
-#: ../lib/savepage.php:35
+#: ../lib/savepage.php:46
 msgid "In order to recover from this situation follow these steps:"
 msgstr ""
 "Um diese Situation zu korrigieren, folge bitte den folgenden Schritten:"
 
-#: ../lib/savepage.php:37 ../lib/savepage.php:55
-msgid "Use your browser's <b>Back</b> button to go back to the edit page."
-msgstr ""
-"Benütze die <b>Zurück</b> Funktion deines Browsers um zur Editierseite zu "
-"gelangen."
-
-#: ../lib/savepage.php:39
-msgid ""
-"Copy your changes to the clipboard or to another temporary place (e.g. text "
-"editor)."
-msgstr ""
-"Kopiere deine Veränderungen in die Zwischenablage oder an einen anderen "
-"temporären Platz (z.B. einen Texteditor)"
-
-#: ../lib/savepage.php:41
-msgid ""
-"<b>Reload</b> the page. You should now see the most current version of the "
-"page. Your changes are no longer there."
-msgstr ""
-"<b>Aktualisiere</b> die Seite. Du solltest jetzt die neueste Version der "
-"Seite sehen. Deine Veränderungen sind verschwunden."
-
-#: ../lib/savepage.php:43
-msgid ""
-"Make changes to the file again. Paste your additions from the clipboard (or "
-"text editor)."
-msgstr ""
-"Editiere die Seite erneut. Kopiere deine Veränderungen aus der "
-"Zwischenablage (oder aus dem Texteditor)"
-
-#: ../lib/savepage.php:45
-msgid "Press <b>Save</b> again."
-msgstr "Drücke nochmal <b>Speichern</b>"
-
-#: ../lib/savepage.php:47 ../lib/savepage.php:59
+#: ../lib/savepage.php:50 ../lib/savepage.php:64
 msgid "Sorry for the inconvenience."
 msgstr "Entschuldigung für die Unannehmlichkeiten."
 
-#: ../lib/savepage.php:54
+#: ../lib/savepage.php:53
+#, c-format
+msgid "Problem while updating %s"
+msgstr "Problem während dem Editieren von %s"
+
+#: ../lib/savepage.php:59
 msgid ""
 "This page has been locked by the administrator so your changes could not be "
 "saved."
@@ -788,7 +792,7 @@ msgstr ""
 "Diese Seite wurde vom Systemverwalter gesperrt und deine Veränderungen "
 "können nicht gespeichert werden."
 
-#: ../lib/savepage.php:56
+#: ../lib/savepage.php:61
 msgid ""
 "Copy your changes to the clipboard. You can try editing a different page or "
 "save your text in a text editor."
@@ -796,131 +800,145 @@ msgstr ""
 "Kopiere deine Veränderungen in die Zwischenablage. Du kannst versuchen eine "
 "andere Seite zu editieren oder dein Text in einem Texteditor speichern."
 
-#: ../lib/savepage.php:62
+#: ../lib/savepage.php:67
 #, c-format
 msgid "Problem while editing %s"
 msgstr "Problem beim Editieren von %s"
 
-#: ../lib/savepage.php:68
+#: ../lib/savepage.php:73
 #, c-format
 msgid "Edit aborted: %s."
 msgstr "Editieren abgebrochen: %s"
 
-#: ../lib/savepage.php:70
+#: ../lib/savepage.php:75
 msgid "You have not made any changes."
 msgstr "Du hast keine Änderungen gemacht."
 
-#: ../lib/savepage.php:71
+#: ../lib/savepage.php:76
 msgid "New version not saved."
 msgstr "Keine neue Version gespeichert."
 
-#: ../lib/savepage.php:77
+#: ../lib/savepage.php:82
 msgid "Bad form submission"
 msgstr ""
 
-#: ../lib/savepage.php:78
+#: ../lib/savepage.php:83
 msgid "Required form variables are missing."
 msgstr "Benötigen Form-Variablen sind Fehlend."
 
-#: ../lib/savepage.php:80
+#: ../lib/savepage.php:85
 #, c-format
 msgid "Edit aborted: %s"
 msgstr "Editieren abgebrochen: %s"
 
-#: ../lib/stdlib.php:153 ../lib/stdlib.php:212
+#: ../lib/Toolbar.php:399 ../lib/savepage.php:194
+#, c-format
+msgid "Thank you for editing %s."
+msgstr "Danke für das Ändern von %s."
+
+#: ../lib/Toolbar.php:402 ../lib/savepage.php:197
+msgid "Your careful attention to detail is much appreciated."
+msgstr "Deine besondere Aufmerksamkeit für Details wird sehr geschätzt."
+
+#: ../lib/Toolbar.php:406 ../lib/savepage.php:202
+msgid "Warning!"
+msgstr "Warnung!"
+
+#: ../lib/stdlib.php:153 ../lib/stdlib.php:219
 msgid "BAD URL -- remove all of <, >, \""
 msgstr "URL Formfehler -- keine Zeichen <, >, \" verwenden"
 
-#: ../lib/stdlib.php:356
+#: ../lib/stdlib.php:363
 msgid "Lock page to enable link"
 msgstr "Seite sperren, um den Link zu aktivieren"
 
-#: ../lib/stdlib.php:475
+#: ../lib/stdlib.php:482
 #, c-format
 msgid "%d best incoming links:"
 msgstr "Die %d besten hereinkommenden Links:"
 
-#: ../lib/stdlib.php:485
+#: ../lib/stdlib.php:492
 #, c-format
 msgid "%d best outgoing links:"
 msgstr "Die %d besten hinausgehenden Links:"
 
-#: ../lib/stdlib.php:496
+#: ../lib/stdlib.php:503
 #, c-format
 msgid "%d most popular nearby:"
 msgstr "Die %d meistbesuchten Seiten in der Nähe:"
 
-#: ../lib/stdlib.php:547 ../lib/stdlib.php:553
+#: ../lib/stdlib.php:554 ../lib/stdlib.php:560
 msgid "Bad Version"
 msgstr "Keine Version"
 
-#: ../lib/stdlib.php:706
+#: ../lib/stdlib.php:713
 #, c-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr ""
 
-#: ../lib/stdlib.php:715
+#: ../lib/stdlib.php:722
 #, c-format
 msgid "%s: argument index out of range"
 msgstr "%s: Ungültiger Index in Array"
 
-#: ../lib/Template.php:334
+#: ../lib/Template.php:353
 msgid "Printer"
 msgstr "Drucker"
 
-#: ../lib/Toolbar.php:92
+#: ../lib/Toolbar.php:92 ../templates/browse.html:70
 msgid "You are viewing an old revision of this page."
 msgstr "Du siehst eine alte Version dieser Seite."
 
-#: ../lib/Toolbar.php:96
+#: ../lib/Toolbar.php:96 ../templates/browse.html:71
 msgid "View the current version"
 msgstr "Siehe die aktuellste Version"
 
-#: ../lib/Toolbar.php:115
+#: ../lib/Toolbar.php:115 ../templates/browse.html:50
 #, c-format
 msgid "Last edited on %s."
 msgstr "Letzte Änderung: %s "
 
-#: ../lib/Toolbar.php:118
+#: ../lib/Toolbar.php:118 ../templates/browse.html:52
 #, c-format
 msgid "Version %s, saved on %s."
 msgstr "Version %s. zuletzt am %s gespeichert."
 
-#: ../lib/Toolbar.php:139 ../templates/browse.html:42
+#: ../lib/Toolbar.php:139
 msgid "Page locked"
 msgstr "Seite gesperrt"
 
-#: ../lib/Toolbar.php:144 ../templates/browse.html:45
+#: ../lib/Toolbar.php:144 ../templates/browse.html:29
+#: ../templates/editpage.html:23
 msgid "Edit"
 msgstr "Editieren"
 
-#: ../lib/Toolbar.php:149 ../templates/browse.html:48
+#: ../lib/Toolbar.php:149 ../templates/browse.html:29
 msgid "Edit old revision"
 msgstr "Alte Version editieren"
 
-#: ../lib/Toolbar.php:156 ../templates/browse.html:53
+#: ../lib/Toolbar.php:156
 msgid "Unlock page"
 msgstr "Seite freigeben"
 
-#: ../lib/Toolbar.php:160 ../templates/browse.html:55
+#: ../lib/Toolbar.php:160
 msgid "Lock page"
 msgstr "Seite sperren"
 
-#: ../lib/Toolbar.php:174 ../lib/Toolbar.php:180 ../templates/browse.html:61
-#: ../templates/browse.html:64
+#: ../lib/Toolbar.php:174 ../lib/Toolbar.php:180
 msgid "Diff"
 msgstr "Diff"
 
-#: ../lib/Toolbar.php:211
+#: ../lib/Toolbar.php:211 ../templates/browse.html:41
 msgid "FindPage"
 msgstr "SeiteFinden"
 
-#: ../lib/Toolbar.php:215 ../lib/Toolbar.php:216
+#: ../lib/Toolbar.php:215 ../lib/Toolbar.php:216 ../templates/browse.html:104
 #: ../themes/MacOSX/templates/browse.html:71
 msgid "Quick Search"
 msgstr "SchnellSuche"
 
-#: ../lib/Toolbar.php:248 ../themes/MacOSX/templates/browse.html:79
+#: ../lib/Toolbar.php:248 ../templates/browse.html:113
+#: ../themes/MacOSX/templates/browse.html:79
 #, c-format
 msgid "You are signed in as %s"
 msgstr "Angemeldet als %s"
@@ -929,81 +947,68 @@ msgstr "Angemeldet als %s"
 msgid "SignOut"
 msgstr "AbMelden"
 
-#: ../lib/Toolbar.php:255 ../lib/Toolbar.php:346 ../templates/editpage.html:59
+#: ../lib/Toolbar.php:255 ../lib/Toolbar.php:346
 #: ../themes/MacOSX/templates/editpage.html:59
 msgid "SignIn"
 msgstr "AnMelden"
 
 #: ../lib/Toolbar.php:259 ../lib/Toolbar.php:260
 msgid "PhpWikiAdministration"
-msgstr ""
+msgstr "PhpWikiSystemverwalten"
 
-#: ../lib/Toolbar.php:314
+#: ../lib/Toolbar.php:314 ../templates/editpage.html:26
 msgid "Preview only!  Changes not saved."
 msgstr "Nur die Vorschau! Änderungen nicht gespeichert."
 
-#: ../lib/Toolbar.php:319
+#: ../lib/Toolbar.php:319 ../templates/editpage.html:31
 msgid "Warning: You are editing an old revision."
 msgstr "Warnung: Du editierst eine alte Version."
 
-#: ../lib/Toolbar.php:321
+#: ../lib/Toolbar.php:321 ../templates/editpage.html:32
 msgid "Saving this page will overwrite the current version."
 msgstr ""
 "Wenn die Seite jetzt gespeichert werden würde, dann würde die aktuellste "
 "Version überschrieben."
 
-#: ../lib/Toolbar.php:340 ../templates/editpage.html:56
+#: ../lib/Toolbar.php:340 ../templates/editpage.html:78
 #: ../themes/MacOSX/templates/editpage.html:56
 #, c-format
 msgid "You are signed in as %s."
 msgstr "Angemeldet als %s."
 
-#: ../lib/Toolbar.php:342 ../templates/editpage.html:58
+#: ../lib/Toolbar.php:342 ../templates/editpage.html:81
 #: ../themes/MacOSX/templates/editpage.html:58
 #, c-format
 msgid "Author will be logged as %s."
 msgstr "%s wird als Autor gespeichert."
 
-#: ../lib/Toolbar.php:364
+#: ../lib/Toolbar.php:364 ../templates/editpage.html:107
 #, c-format
 msgid "You can change the size of the editing area in %s."
 msgstr "Du kannst die Größe des Texteingabefensters in %s ändern."
 
-#: ../lib/Toolbar.php:365
+#: ../lib/Toolbar.php:365 ../templates/editpage.html:108
 msgid "UserPreferences"
 msgstr "Einstellungen"
 
-#: ../lib/Toolbar.php:366
+#: ../lib/Toolbar.php:366 ../templates/editpage.html:109
 #, c-format
 msgid "See %s tips for editing."
 msgstr "Siehe %s Tips fürs Editieren."
 
-#: ../lib/Toolbar.php:367
+#: ../lib/Toolbar.php:367 ../templates/editpage.html:110
 msgid "GoodStyle"
 msgstr "GuterStil"
 
-#: ../lib/Toolbar.php:383 ../templates/editpage.html:67
+#: ../lib/Toolbar.php:383 ../templates/editpage.html:117
 #: ../themes/MacOSX/templates/editpage.html:67
 msgid "TextFormattingRules"
 msgstr "TextFormatierungsRegeln"
 
-#: ../lib/Toolbar.php:384 ../templates/editpage.html:67
+#: ../lib/Toolbar.php:384 ../templates/editpage.html:117
 #: ../themes/MacOSX/templates/editpage.html:67
 msgid "Synopsis"
 msgstr "Übersicht"
-
-#: ../lib/Toolbar.php:399
-#, c-format
-msgid "Thank you for editing %s."
-msgstr "Danke für das Ändern von %s."
-
-#: ../lib/Toolbar.php:402
-msgid "Your careful attention to detail is much appreciated."
-msgstr "Deine besondere Aufmerksamkeit für Details wird sehr geschätzt."
-
-#: ../lib/Toolbar.php:406
-msgid "Warning!"
-msgstr "Warnung!"
 
 #: ../lib/transform.php:108
 msgid "Lists nested too deep in SetHTMLOutputMode"
@@ -1333,37 +1338,36 @@ msgstr "Konnte %s nicht analysieren"
 msgid "Unknown %s"
 msgstr "Unbekannte %s"
 
-#: ../templates/browse.html:87 ../themes/MacOSX/templates/browse.html:105
-msgid "PHP Warnings"
-msgstr "PHP Warnungen"
-
-#: ../templates/editpage.html:15 ../templates/editpage.html:19
-#: ../themes/MacOSX/templates/editpage.html:15
+#: ../templates/editpage.html:15 ../themes/MacOSX/templates/editpage.html:15
 #: ../themes/MacOSX/templates/editpage.html:19
 #, c-format
 msgid "Edit: %s"
 msgstr "Editiere: %s"
 
-#: ../templates/editpage.html:20 ../themes/MacOSX/templates/editpage.html:20
-#, c-format
-msgid "Return to %s."
-msgstr "Zurück zu %s"
-
-#: ../templates/editpage.html:41 ../themes/MacOSX/templates/editpage.html:41
-msgid "Summary:"
-msgstr "Kommentar:"
-
-#: ../templates/editpage.html:48 ../themes/MacOSX/templates/editpage.html:48
-msgid "This is a minor change."
-msgstr "Geringfügige Änderung"
-
-#: ../templates/editpage.html:51 ../themes/MacOSX/templates/editpage.html:51
+#: ../templates/editpage.html:71 ../themes/MacOSX/templates/editpage.html:51
 msgid "Preview"
 msgstr "Vorschau"
 
-#: ../templates/editpage.html:52 ../themes/MacOSX/templates/editpage.html:52
+#: ../templates/editpage.html:75 ../themes/MacOSX/templates/editpage.html:52
 msgid "Save"
 msgstr "Speichern"
+
+#: ../templates/editpage.html:85
+msgid "backup and reload after signing in"
+msgstr ""
+
+#: ../templates/editpage.html:90 ../themes/MacOSX/templates/editpage.html:41
+msgid "Summary:"
+msgstr "Kommentar:"
+
+#: ../templates/editpage.html:95 ../themes/MacOSX/templates/editpage.html:48
+msgid "This is a minor change."
+msgstr "Geringfügige Änderung"
+
+#: ../themes/MacOSX/templates/editpage.html:20
+#, c-format
+msgid "Return to %s."
+msgstr "Zurück zu %s"
 
 #~ msgid "WantedPages"
 #~ msgstr "LeereSeiten"
