@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiBlog.php,v 1.1 2002-09-01 16:33:19 rurban Exp $');
+rcs_id('$Id: WikiBlog.php,v 1.2 2002-12-15 01:55:30 carstenklapp Exp $');
 /**
  * Author: MichaelVanDam
  */
@@ -156,7 +156,7 @@ extends WikiPlugin
             $meta = array('author' => $user_id,
                           'author_id' => $user_auth_id,
                           'markup' => 2.0,   // assume new markup
-                          'summary' => "New comment.",
+                          'summary' => _("New comment."),
                          );
 
             // FIXME: For now the page format is:
