@@ -1,6 +1,6 @@
 <?php // -*-php-*-
 
-rcs_id('$Id: themeinfo.php,v 1.19 2002-02-06 04:21:19 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.20 2002-02-06 18:45:53 carstenklapp Exp $');
 
 /**
  * This PhpWiki theme is experimental and will likely not appear as
@@ -54,7 +54,6 @@ $Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
 $Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
 $Theme->addAlternateCSS('PhpWiki', 'phpwiki.css');
 
-
 /**
  * The logo image appears on every page and links to the HomePage.
  */
@@ -69,7 +68,10 @@ $Theme->addImageAlias('logo', 'Ufp-logo.jpg');
  */
 $Theme->addImageAlias('signature', 'lights.gif');
 
-$Theme->setButtonSeparator('');
+$Theme->addImageAlias('hr', 'hr.png');
+$Theme->sethr();
+
+$Theme->setButtonSeparator(" ");
 
 /**
  * WikiWords can automatically be split by inserting spaces between
@@ -93,8 +95,8 @@ $Theme->setButtonSeparator('');
  * "real" date2startdate conversion function might be fun but not very
  * useful on a wiki.
  */
-$Theme->setDateTimeFormat("Stardate %Y%m%d.%H%M%S"); // may contain time of day
-$Theme->setDateFormat("Stardate %Y%m%d"); // must not contain time
+$Theme->setDateTimeFormat("%Y%m%d.%H%M%S"); // may contain time of day
+$Theme->setDateFormat("%Y%m%d"); // must not contain time
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

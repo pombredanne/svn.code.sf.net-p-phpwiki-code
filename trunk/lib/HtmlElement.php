@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.16 2002-02-04 03:14:38 carstenklapp Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.17 2002-02-06 18:45:55 carstenklapp Exp $');
 /*
  * Code for writing XML.
  */
@@ -12,14 +12,14 @@ class HtmlElement extends XmlElement
     //function HtmlElement ($tagname /* , $attr_or_content , ...*/) {
     //    $this->_init(func_get_args());
     //    $this->_properties = HTML::getTagProperties($tagname);
-    //} 
-    
+    //}
+
 
     function _init ($args) {
         XmlElement::_init($args);
         $this->_properties = HTML::getTagProperties($this->_tag);
     }
-        
+
     /**
      * @access protected
      * This is used by the static factory methods is class HTML.
@@ -35,7 +35,7 @@ class HtmlElement extends XmlElement
         $this->_content = $args;
         return $this;
     }
-        
+
     /** Add a "tooltip" to an element.
      *
      * @param $tooltip_text string The tooltip text.
@@ -55,7 +55,7 @@ class HtmlElement extends XmlElement
     function emptyTag () {
         if (($this->_properties & HTMLTAG_EMPTY) == 0)
             return $this->startTag() . "</$this->_tag>";
-        
+
         return substr($this->startTag(), 0, -1) . " />";
     }
 
@@ -83,7 +83,7 @@ class HTML extends HtmlElement {
         $props = &$GLOBALS['HTML_TagProperties'];
         return isset($props[$tag]) ? $props[$tag] : 0;
     }
-    
+
     function _setTagProperty($prop_flag, $tags) {
         $props = &$GLOBALS['HTML_TagProperties'];
         if (is_string($tags))
@@ -192,6 +192,10 @@ class HTML extends HtmlElement {
 
     /****************************************/
     function hr (/*...*/) {
+        // better way to do this?
+        global $Theme;
+        if ($hr = $Theme->hr())
+            return $hr;
         $el = new HtmlElement('hr');
         return $el->_init2(func_get_args());
     }
@@ -366,7 +370,7 @@ HTML::_setTagProperty(HTMLTAG_INLINE,
  *
  * @param $query_args hash  A hash mapping names to values for the hidden inputs.
  * Values in the hash can themselves be hashes.  The will result in hidden inputs
- * which will reconstruct the nested structure in the resulting query args (as
+ * which will reconstruct the nested structure in the resulting query args as
  * processed by PHP.
  *
  * Example:
@@ -385,7 +389,7 @@ HTML::_setTagProperty(HTMLTAG_INLINE,
  */
 function HiddenInputs ($query_args, $pfx = false) {
     $inputs = HTML();
-    
+
     foreach ($query_args as $key => $val) {
         $name = $pfx ? $pfx . "[$key]" : $key;
         if (is_array($val))
@@ -405,5 +409,5 @@ function HiddenInputs ($query_args, $pfx = false) {
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End:
 ?>
