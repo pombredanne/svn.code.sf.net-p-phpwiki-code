@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiFormRich.php,v 1.8 2004-11-24 10:58:50 rurban Exp $');
+rcs_id('$Id: WikiFormRich.php,v 1.9 2004-11-24 13:55:42 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -78,7 +78,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
     function getDefaultArguments() {
         return array('action' => false,     // required argument
@@ -98,12 +98,27 @@ extends WikiPlugin
         $arg = '';
     	for ($i = 0; $i < count($arg_array); $i++) {
     	    if (preg_match("/^\s*(".join("|",$allowed).")\[\]\s+(.+)\s*$/", $arg_array[$i], $m)) {
-    	    	$name = $m[1];
+    	    	$name = $m[1]; // one of the allowed input types
                 $this->inputbox[][$name] = array(); $j = count($this->inputbox) - 1;
                 foreach (preg_split("/[\s]+/", $m[2]) as $attr_pair) {
                     list($attr, $value) = preg_split("/\s*=\s*/", $attr_pair);
                     if (preg_match('/^"(.*)"$/', $value, $m))
                         $value = $m[1];
+                    elseif (in_array($name, array("pulldown","checkbox","radiobutton"))
+                            and preg_match('/^<!plugin-list.+!>$/', $value, $m))
+            	    // like pulldown[] name=test value=<!plugin-list BackLinks page=HomePage!>
+                    {
+            		$loader = new WikiPluginLoader();
+            		$markup = null;
+            		$basepage = null;
+            		$plugin_str = preg_replace(array("/^<!/","/!>$/"),array("<?","?>"), $value);
+            		// will return a pagelist object! pulldown,checkbox,radiobutton
+            		$value = $loader->expandPI($plugin_str, $GLOBALS['request'], $markup, $basepage);
+            		if (isa($value, 'PageList')) $value = $value->_pages;
+            		elseif (!is_array($value))
+    	    		    trigger_error(sprintf("Invalid argument %s ignored", htmlentities($arg_array[$i])), 
+    	    	                          E_USER_WARNING);
+                    }
                     elseif (defined($value))
                         $value = constant($value);
                     $this->inputbox[$j][$name][$attr] = $value;
@@ -121,14 +136,16 @@ extends WikiPlugin
     function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
         if (empty($action)) {
-            return $this->error(fmt("A required argument '%s' is missing.","action"));
+            return $this->error(fmt("A required argument '%s' is missing.", "action"));
         }
         $form = HTML::form(array('action' => $request->getPostURL(),
                                  'method' => $method,
                                  'class'  => 'wikiadmin',
                                  'accept-charset' => $GLOBALS['charset']),
-                           HiddenInputs(array('action' => $action,
-                                              'pagename' => $basepage)));
+                           HiddenInputs(array_merge(
+                                                    array('action' => $action),
+                                                    USE_PATH_INFO ? array() 
+                                                    : array('pagename' => $basepage))));
         if ($nobr) $nbsp = HTML::Raw('&nbsp;');
         foreach ($this->inputbox as $inputbox) {
             foreach ($inputbox as $inputtype => $input) {
@@ -138,11 +155,15 @@ extends WikiPlugin
                 if (empty($input['name']))
                     return $this->error(fmt("A required argument '%s' is missing.",
                                             "checkbox[][name]"));
-                if (empty($input['value'])) $input['value'] = 1;
                 if (!isset($input['text'])) 
                     $input['text'] = gettext($input['name']); //."=".$input['value'];
                 $text = $input['text'];
                 unset($input['text']);
+                if (empty($input['value'])) $input['value'] = 1;
+                elseif (is_array($input['value'])) {
+                    //TODO
+                    ;
+                }
                 if (empty($input['checked'])) {
                     if ($request->getArg($input['name']))
                         $input['checked'] = 'checked';
@@ -199,6 +220,8 @@ extends WikiPlugin
             $form->pushContent(HTML::input(array('name' => 'start_debug',
                                                  'value' =>  $request->getArg('start_debug'),
                                                  'type'  => 'hidden')));
+        if (!USE_PATH_INFO)
+            $form->pushContent(HiddenInputs(array('pagename' => $basepage)));
         if (empty($buttontext)) $buttontext = $action;
         $submit = Button('submit:', $buttontext, $class);
         if ($cancel) {
@@ -213,6 +236,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/11/24 10:58:50  rurban
+// just docs
+//
 // Revision 1.7  2004/11/24 10:40:04  rurban
 // better nobr, allow empty text=""
 //
