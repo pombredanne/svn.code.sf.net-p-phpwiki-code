@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.54 2004-05-04 22:34:25 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.55 2004-05-15 18:31:00 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -360,10 +360,12 @@ class Request {
     }
 
     function discardOutput() {
-        if (!empty($this->_is_buffering_output))
+        if (!empty($this->_is_buffering_output)) {
             ob_clean();
-        else
+            $this->_is_buffering_output = false;
+        } else {
             trigger_error("Not buffering output", E_USER_NOTICE);
+        }
     }
     
     function finish() {
@@ -371,6 +373,7 @@ class Request {
         if (!empty($this->_is_buffering_output)) {
             //header(sprintf("Content-Length: %d", ob_get_length()));
             ob_end_flush();
+            $this->_is_buffering_output = false;
         }
         exit;
     }
@@ -979,6 +982,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.54  2004/05/04 22:34:25  rurban
+// more pdf support
+//
 // Revision 1.53  2004/05/03 21:57:47  rurban
 // locale updates: we previously lost some words because of wrong strings in
 //   PhotoAlbum, german rewording.
