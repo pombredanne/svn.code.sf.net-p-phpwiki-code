@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.11 2002-09-18 18:34:13 dairiki Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.12 2003-01-28 21:06:05 zorloc Exp $');
 
 // FIXME: make this work with non-unix (e.g. DOS) filenames.
 
@@ -158,7 +158,7 @@ class FileFinder
             	$file = $this->slashifyPath($file);
                 if (file_exists($dir . $this->_pathsep . $file))
                     return $dir;
-            } elseif (file_exists("$dir/$file"))
+            } elseif (@file_exists("$dir/$file"))
                	return $dir;
         }
         return false;
