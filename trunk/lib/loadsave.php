@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.48 2002-01-27 22:20:11 carstenklapp Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.49 2002-01-28 14:27:14 carstenklapp Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -176,8 +176,11 @@ function DumpToDir (&$request)
             $msg[] = " ... ";
         }
         
-        $data = MailifyPage($page);
-        
+        if ($request->getArg('include') == 'all') {
+            $data = MailifyPage($page, 0);
+        else
+            $data = MailifyPage($page);
+
         if ( !($fd = fopen("$directory/$filename", "w")) ) {
             $msg[] = HTML::strong(fmt("couldn't open file '%s' for writing",
                                       "$directory/$filename"));
