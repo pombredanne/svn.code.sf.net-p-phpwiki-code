@@ -224,19 +224,28 @@ div.transclusion {
   padding-bottom: 0px;
   margin: 0.5ex 0px;
 }
- 
-.diff-added { 
-  background: #cfc;
-}
-.diff-deleted { 
-  background: #fcc;
-}
-.diff-unchanged { 
-  background: white;
-}
-.diff-notation { 
-  background: #ccc;
-}
+
+/* Diff output */
+.diff .block {
+  padding: 0.5ex 0.5em;
+  margin: 0.5ex 0;
+  border: 0.1px; /* hack for NS4 to get background color filled in whole div */
+} 
+.diff .block tt	{ font-weight: bold; }
+
+.diff .block div { position: relative; padding-left: 1.5em; }
+.diff .prefix	{ position: absolute; left: 0.5em; top: 0; }
+
+.diff .block	{ background: #ccc; }
+
+.diff .context	{ background: white; }
+.diff .deleted	{ background: #fee; }
+.diff .added	{ background: #efe; }
+.diff .changed	{ background: #ffb; }
+
+.diff del	{ background: #fbb; font-weight: bold; text-decoration: none; }
+.diff ins	{ background: #bfb; font-weight: bold; text-decoration: none; }
+
  
 /* For emacs users
  *
