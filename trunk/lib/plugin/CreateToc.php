@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.14 2004-04-21 04:29:50 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.15 2004-04-26 14:09:05 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.14 $");
+                            "\$Revision: 1.15 $");
     }
 
     function getDefaultArguments() {
@@ -68,11 +68,20 @@ extends WikiPlugin
     		case 2: $h = "h3"; break;
     		case 3: $h = "h2"; break;
     	}
+    	$heading = preg_quote($heading);
     	for ($j=$start_index; $j<count($content); $j++) {
             if (is_string($content[$j])) {
-    		$heading = preg_quote($heading);
-    		if (preg_match("/<$h>$heading<\/$h>/",$content[$j]))
+    		if (preg_match("/<$h>$heading<\/$h>/",$content[$j])) {
     		    return $j;
+    		}
+    	    } elseif (isa($content[$j],'cached_wikilink')) {
+    	    	$content[$j] = $content[$j]->asString();
+    	    	if ($content[$j] == $heading and 
+    	    	   substr($content[$j-1],-4,4) == "<$h>" and 
+    	    	   substr($content[$j+1],0,5) == "</$h>")
+    	    	{
+    		    return $j;
+    		}
     	    }
     	}
     	trigger_error("Heading <$h> $heading </$h> not found\n", E_USER_NOTICE);
@@ -117,7 +126,8 @@ extends WikiPlugin
                         //Fixme: Find wikilink'ed headers also.
                         $j = $this->searchHeader($markup->_content, $j, $s, $match[1]);
                         if (  $j and isset($markup->_content[$j]) and 
-                              is_string($markup->_content[$j])  ) {
+                              is_string($markup->_content[$j])  ) 
+                        {
                             $x = $markup->_content[$j];
                             $heading = preg_quote($s);
                             if ($x = preg_replace('/(<h\d>)('.$heading.')(<\/h\d>)/',
@@ -128,6 +138,11 @@ extends WikiPlugin
                                                       $markup->_content[$j],1);
                                 $markup->_content[$j] = $x;
                             }
+                        }
+                        elseif ($j and isa($markup->_content[$j],'cached_wikilink')) {
+                            $x =& $markup->_content[$j];
+                            $label = isset($x->_label) ? $x->_label : false;
+                            $x = HTML::a(array('name'=>$anchor),WikiLink($x->_page, 'auto', $label));
                         }
                     }
                 }
@@ -216,6 +231,9 @@ function toggletoc(a) {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2004/04/21 04:29:50  rurban
+// write WikiURL consistently (not WikiUrl)
+//
 // Revision 1.12  2004/03/22 14:13:53  rurban
 // fixed links to equal named headers
 //
