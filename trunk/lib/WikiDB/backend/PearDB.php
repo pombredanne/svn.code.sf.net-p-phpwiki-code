@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.9 2001-11-17 00:49:29 dairiki Exp $');
+rcs_id('$Id: PearDB.php,v 1.10 2001-11-21 19:49:21 dairiki Exp $');
 
 //require_once('DB.php');
 require_once('lib/WikiDB/backend.php');
@@ -16,7 +16,7 @@ extends WikiDB_backend
 
         // Install filter to handle bogus error notices from buggy DB.php's.
         global $ErrorManager;
-        $ErrorManager->pushErrorHandler(array($this, '_pear_notice_filter'));
+        $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_pear_notice_filter'));
         
         // Open connection to database
         $dsn = $dbparams['dsn'];
@@ -444,21 +444,20 @@ extends WikiDB_backend
         $table = "$nonempty_tbl, $page_tbl";
         $join_clause = "$nonempty_tbl.id=$page_tbl.id";
         $fields = "$page_tbl.*";
-        $callback = '_sql_match_clause';
+        $callback = new WikiMethodCb($this, '_sql_match_clause');
         
         if ($fullsearch) {
-            $table .= ", $recent_tbl,";
+            $table .= ", $recent_tbl";
             $join_clause .= " AND $page_tbl.id=$recent_tbl.id";
 
             $table .= ", $version_tbl";
             $join_clause .= " AND $page_tbl.id=$version_tbl.id AND latestversion=version";
 
             $fields .= ",$version_tbl.*";
-            $callback = '_fullsearch_sql_match_clause';
+            $callback = new WikiMethodCb($this, '_fullsearch_sql_match_clause');
         }
-
         
-        $search_clause = $search->makeSqlClause(array($this, $callback));
+        $search_clause = $search->makeSqlClause($callback);
         
         $result = $dbh->query("SELECT $fields FROM $table"
                               . " WHERE $join_clause"
