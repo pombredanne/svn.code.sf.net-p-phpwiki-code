@@ -1,5 +1,5 @@
 /*
-  $Id: Hawaiian.css,v 1.9 2002-01-18 20:46:12 carstenklapp Exp $
+  $Id: Hawaiian.css,v 1.10 2002-01-19 03:25:06 carstenklapp Exp $
 
   Classes:
 
@@ -132,7 +132,8 @@ p.error {
  * Link styles
  */
 /* Wiki Links */
-a.wiki { text-decoration: none; color: #506cd0;}
+a.wiki { text-decoration: none; color: #36c;}
+/*a.wiki { text-decoration: none; color: #506cd0;}*/
 .wiki  { font-weight: bold; }
 
 /* Unknown links */
@@ -159,7 +160,7 @@ i .interwiki, em .interwiki
  */
 a.wikiaction, a.wikiadmin       { text-decoration: none; }
 a.wikiaction, .wikiaction table, span.wikiaction  { font-weight: normal; color: #a6977a; }
-a.wikiadmin, .wikiadmin table   { color: #444; }
+a.wikiadmin, .wikiadmin table   { color: #ff7e00; }
 .wikiunsafe                     { color: #ccc; }
 
 /*
