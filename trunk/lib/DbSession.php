@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbSession.php,v 1.30 2005-02-01 13:42:10 rurban Exp $');
+<?php rcs_id('$Id: DbSession.php,v 1.31 2005-02-05 15:32:59 rurban Exp $');
 
 /**
  * Store sessions data in Pear DB / ADODB / dba / ....
@@ -158,9 +158,9 @@ extends DbSession
         if (strlen($res) > 4000) {
             trigger_error("Overlarge session data! ".strlen($res).
                         " gt. 4000", E_USER_WARNING);
-            //$res = '';
             $res = preg_replace('/s:6:"_cache";O:12:"WikiDB_cache".+}$/',"",$res);
             $res = preg_replace('/s:12:"_cached_html";s:.+",s:4:"hits"/','s:4:"hits"',$res);
+            if (strlen($res) > 4000) $res = '';
         }
         return $res;
     }
@@ -191,24 +191,31 @@ extends DbSession
         $time = $dbh->quote(time());
 	if (DEBUG and $sess_data == 'wiki_user|N;') {
 	    trigger_error("delete empty session $qid", E_USER_WARNING);
-	    /*echo "<pre>";
-	    print_r($GLOBALS['request']->_user);
-	    echo "</pre>";
-	    */
 	}
         // postgres can't handle binary data in a TEXT field.
         if (isa($dbh, 'DB_pgsql'))
             $sess_data = base64_encode($sess_data);
         $qdata = $dbh->quote($sess_data);
-        
-        $res = $dbh->query("UPDATE $table"
-                           . " SET sess_data=$qdata, sess_date=$time, sess_ip=$qip"
-                           . " WHERE sess_id=$qid");
-        $result = $dbh->AffectedRows();
-        if ( $result === false or $result < 1 ) { // 0 cannot happen, -1 (failure) on mysql
+
+        /* AffectedRows with sessions seems to be instable on certain platforms.
+         * Enable the safe and slow USE_SAFE_DBSESSION then.
+         */
+        if (USE_SAFE_DBSESSION) {
+            $dbh->query("DELETE FROM $table"
+                        . " WHERE sess_id=$qid");
             $res = $dbh->query("INSERT INTO $table"
                                . " (sess_id, sess_data, sess_date, sess_ip)"
                                . " VALUES ($qid, $qdata, $time, $qip)");
+        } else {
+            $res = $dbh->query("UPDATE $table"
+                               . " SET sess_data=$qdata, sess_date=$time, sess_ip=$qip"
+                               . " WHERE sess_id=$qid");
+            $result = $dbh->AffectedRows();
+            if ( $result === false or $result < 1 ) { // 0 cannot happen: time, -1 (failure) on mysql
+                $res = $dbh->query("INSERT INTO $table"
+                                   . " (sess_id, sess_data, sess_date, sess_ip)"
+                                   . " VALUES ($qid, $qdata, $time, $qip)");
+            }
         }
         $this->_disconnect();
         return ! DB::isError($res);
@@ -381,9 +388,9 @@ extends DbSession
         if (strlen($res) > 4000) {
             trigger_error("Overlarge session data! ".strlen($res).
                         " gt. 4000", E_USER_WARNING);
-            //$res = '';
             $res = preg_replace('/s:6:"_cache";O:12:"WikiDB_cache".+}$/',"",$res);
             $res = preg_replace('/s:12:"_cached_html";s:.+",s:4:"hits"/','s:4:"hits"',$res);
+            if (strlen($res) > 4000) $res = '';
         }
         return $res;
     }
@@ -416,14 +423,26 @@ extends DbSession
         if (isa($dbh, 'ADODB_postgres64'))
             $sess_data = base64_encode($sess_data);
         $qdata = $dbh->qstr($sess_data);
-        $rs = $dbh->Execute("UPDATE $table"
-                           . " SET sess_data=$qdata, sess_date=$time, sess_ip=$qip"
-                           . " WHERE sess_id=$qid");
-        $result = $dbh->Affected_Rows();
-        if ( $result === false or $result < 1 ) { // false or int > 0
+
+        /* AffectedRows with sessions seems to be instable on certain platforms.
+         * Enable the safe and slow USE_SAFE_DBSESSION then.
+         */
+        if (USE_SAFE_DBSESSION) {
+            $dbh->Execute("DELETE FROM $table"
+                          . " WHERE sess_id=$qid");
             $rs = $dbh->Execute("INSERT INTO $table"
-                               . " (sess_id, sess_data, sess_date, sess_ip)"
-                               . " VALUES ($qid, $qdata, $time, $qip)");
+                                . " (sess_id, sess_data, sess_date, sess_ip)"
+                                . " VALUES ($qid, $qdata, $time, $qip)");
+        } else {
+            $rs = $dbh->Execute("UPDATE $table"
+                                . " SET sess_data=$qdata, sess_date=$time, sess_ip=$qip"
+                                . " WHERE sess_id=$qid");
+            $result = $dbh->Affected_Rows();
+            if ( $result === false or $result < 1 ) { // false or int > 0
+                $rs = $dbh->Execute("INSERT INTO $table"
+                                    . " (sess_id, sess_data, sess_date, sess_ip)"
+                                    . " VALUES ($qid, $qdata, $time, $qip)");
+            }
         }
         $result = ! $rs->EOF;
         if ($result) $rs->free();                        
