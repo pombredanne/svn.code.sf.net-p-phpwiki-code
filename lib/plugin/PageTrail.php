@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageTrail.php,v 1.4 2004-02-27 02:49:40 rurban Exp $');
+rcs_id('$Id: PageTrail.php,v 1.5 2005-02-02 19:38:42 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -33,7 +33,7 @@ rcs_id('$Id: PageTrail.php,v 1.4 2004-02-27 02:49:40 rurban Exp $');
  */
 
 if (!defined('PAGETRAIL_ARROW'))
-    define('PAGETRAIL_ARROW', " ==> ");
+    define('PAGETRAIL_ARROW', " => ");
 
 class WikiPlugin_PageTrail
 extends WikiPlugin
@@ -52,7 +52,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     // default values
@@ -95,6 +95,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/02/27 02:49:40  rurban
+// patch #680562 "PageTrail Duplicates Patch (1.3.4)"
+//
 // Revision 1.3  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //
