@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- phpwiki source:
-$Id: browse.html,v 1.12 2002-01-12 03:33:23 carstenklapp Exp $
+$Id: browse.html,v 1.13 2002-01-12 06:00:56 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <meta http-equiv="Content-Type" content="text/html; charset=${CHARSET}" />
@@ -23,7 +23,7 @@ ${CSS}
 </head>
 <body background="themes/MacOSX/bgpaper8.png">
 ${EDIT_FAIL_MESSAGES}${THANK_YOU}<div>${LOGO}</div>
-<h1>${SPLIT_PAGE}</h1>
+<h1><?plugin-link BackLinks page="[pagename]" class="backlinks" linktext="${SPLIT_PAGE}" ?></h1>
 <div class="br"><br clear="all" class="ignore" /></div>
 ${VIEW_WARNINGS}
 <div class="wikitext">${CONTENT}</div>
