@@ -1325,7 +1325,7 @@ $locale["Saved: %s"] =
 $locale["Saving this page will overwrite the current version."] =
    "Wenn Sie diese Seite jetzt speichern, wird die aktuelle Version überschrieben.";
 $locale["Score"] =
-   "Bedeutung";
+   "Gewichtung";
 $locale["Search"] =
    "Suche";
 $locale["Search & Replace"] =
