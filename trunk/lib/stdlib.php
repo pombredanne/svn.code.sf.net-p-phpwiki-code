@@ -1,5 +1,5 @@
 <?php
-   rcs_id('$Id: stdlib.php,v 1.16 2000-12-30 21:42:50 ahollosi Exp $');
+   rcs_id('$Id: stdlib.php,v 1.17 2000-12-30 21:48:15 ahollosi Exp $');
    /*
       Standard functions for Wiki functionality
          LinkRelatedPages($dbi, $pagename)
@@ -486,6 +486,8 @@
 	 }
       } elseif (preg_match("#^phpwiki:(.*)#", $URL, $match)) {
 	 $link['type'] = "url-wiki-$linktype";
+	 if(empty($linkname))
+	    $linkname = htmlspecialchars($URL);
 	 $link['link'] = "<a href=\"$ScriptUrl$match[1]\">$linkname</a>";
       } else {
 	 $link['type'] = "wiki-unknown-$linktype";
