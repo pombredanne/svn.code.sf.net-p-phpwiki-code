@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.96 2004-06-29 08:47:42 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.97 2004-06-29 09:11:10 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -242,11 +242,24 @@ class _PageList_Column_custom extends _PageList_Column {
 }
 
 class _PageList_Column_size extends _PageList_Column {
-    function _getValue ($page_handle, &$revision_handle) {
+    function format (&$pagelist, $page_handle, &$revision_handle) {
+        return HTML::td($this->_tdattr,
+                        HTML::raw('&nbsp;'),
+                        $this->_getValue($pagelist, $page_handle, $revision_handle),
+                        HTML::raw('&nbsp;'));
+    }
+    
+    function _getValue (&$pagelist, $page_handle, &$revision_handle) {
         if (!$revision_handle or (!$revision_handle->_data['%content'] 
-                                  or $revision_handle->_data['%content'] === true))
+                                  or $revision_handle->_data['%content'] === true)) {
             $revision_handle = $page_handle->getCurrentRevision(true);
-        return $this->_getSize($revision_handle);
+            unset($revision_handle->_data['%pagedata']['_cached_html']);
+        }
+        $size = $this->_getSize($revision_handle);
+        // we can safely purge the content when it is not sortable
+        if (empty($pagelist->_sortby[$this->_field]))
+            unset($revision_handle->_data['%content']);
+        return $size;
     }
     
     function _getSortableValue ($page_handle, &$revision_handle) {
@@ -258,7 +271,6 @@ class _PageList_Column_size extends _PageList_Column {
 
     function _getSize($revision_handle) {
         $bytes = @strlen($revision_handle->_data['%content']);
-        //unset($revision_handle->_data['%content']);
         return ByteFormatter($bytes);
     }
 }
@@ -355,14 +367,19 @@ class _PageList_Column_content extends _PageList_Column {
             }
         }
     }
+    
     function _getValue ($page_handle, &$revision_handle) {
-        if (!$revision_handle or (!$revision_handle->_data['%content']
-                                  or $revision_handle->_data['%content'] === true))
+        if (!$revision_handle or (!$revision_handle->_data['%content'] 
+                                  or $revision_handle->_data['%content'] === true)) {
             $revision_handle = $page_handle->getCurrentRevision(true);
+        }
         // Not sure why implode is needed here, I thought
         // getContent() already did this, but it seems necessary.
         $c = implode("\n", $revision_handle->getContent());
+        if (empty($pagelist->_sortby[$this->_field]))
+            unset($revision_handle->_data['%content']);
         if ($this->_field == 'hi_content') {
+            unset($revision_handle->_data['%pagedata']['_cached_html']);
             $search = $_POST['admin_replace']['from'];
             if ($search and ($i = strpos($c,$search))) {
                 $l = strlen($search);
@@ -385,6 +402,8 @@ class _PageList_Column_content extends _PageList_Column {
         include_once('lib/BlockParser.php');
         // false --> don't bother processing hrefs for embedded WikiLinks
         $ct = TransformText($c, $revision_handle->get('markup'), false);
+        if (empty($pagelist->_sortby[$this->_field]))
+            unset($revision_handle->_data['%pagedata']['_cached_html']);
         return HTML::div(array('style' => 'font-size:x-small'),
                          HTML::div(array('class' => 'transclusion'), $ct),
                          // Don't show bytes here if size column present too
@@ -1251,6 +1270,10 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.96  2004/06/29 08:47:42  rurban
+// Memory optimization (reference to parent, smart bool %content)
+// Fixed class grouping in table
+//
 // Revision 1.95  2004/06/28 19:00:01  rurban
 // removed non-portable LIMIT 1 (it's getOne anyway)
 // removed size from info=most: needs to much memory
