@@ -1,5 +1,5 @@
 /*
-  $Id: phpwiki.css,v 1.27 2002-01-26 04:38:54 dairiki Exp $
+  $Id: phpwiki.css,v 1.28 2002-01-26 09:19:42 carstenklapp Exp $
 
   Classes:
 
@@ -274,8 +274,8 @@ div.wiki-edithelp {
 .diff ins	{ background: #9f9; }
 
 /* PageList output */
-tr.pagelist .evenrow { background: #eeeeee; }
-tr.pagelist .oddrow  { background: white; }
+.pagelist tr.evenrow { background: #eeeeee; }
+.pagelist tr.oddrow  { background: white; }
 
 /* For emacs users
  *

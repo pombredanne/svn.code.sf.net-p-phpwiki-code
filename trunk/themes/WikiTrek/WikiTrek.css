@@ -1,5 +1,5 @@
 /**
- * $Id: WikiTrek.css,v 1.15 2002-01-26 03:14:35 carstenklapp Exp $
+ * $Id: WikiTrek.css,v 1.16 2002-01-26 09:19:42 carstenklapp Exp $
  *
  * This PhpWiki theme is experimental and will likely not appear as
  * part of any release. ("accessories not included"--download
@@ -232,6 +232,6 @@ div.wiki-edithelp { font-size: smaller;
 
 
 /* PageList output */
-tr.pagelist .evenrow  { background: #111; }
-tr.pagelist .oddrow   { background: black url("images/tchecker-black.png") repeat; }
+.pagelist tr.evenrow  { background: #111; }
+.pagelist tr.oddrow   { background: black url("images/tchecker-black.png") repeat; }
 

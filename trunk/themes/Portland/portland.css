@@ -1,5 +1,5 @@
 /**
- * $Id: portland.css,v 1.4 2002-01-22 15:36:43 dairiki Exp $
+ * $Id: portland.css,v 1.5 2002-01-26 09:19:42 carstenklapp Exp $
  *
  * PhpWiki style sheet for the printed page:
  * Black on white only, with no toolbar commands and no link icons.
@@ -56,6 +56,5 @@ img {
 .wiki-edithelp { font-size: smaller; }
 
 /* PageList output */
-tr.pagelist .evenrow { background: #eeeeee; }
-tr.pagelist .oddrow  { background: white; }
-
+.pagelist tr.evenrow { background: #eeeeee; }
+.pagelist tr.oddrow  { background: white; }
