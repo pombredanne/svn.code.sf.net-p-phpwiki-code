@@ -1,5 +1,5 @@
 /*
-  $Id: MacOSX.css,v 1.4 2002-01-05 16:12:19 carstenklapp Exp $
+  $Id: MacOSX.css,v 1.5 2002-01-05 16:13:02 carstenklapp Exp $
 
   Classes:
 
@@ -28,7 +28,7 @@ TODO: Get rid of tables in wikiaction forms.
 /* NS4 doesn't grok @import.  This allows us to put things which
  * break NS4 in another file. As of OmniWeb 4.1, OW now @imports :-(
  */
-@import url(phpwiki-heavy.css);
+@import url(MacOSX-heavy.css);
 
 BODY { background: #fafafa url("bgpaper8.png"); }
 
