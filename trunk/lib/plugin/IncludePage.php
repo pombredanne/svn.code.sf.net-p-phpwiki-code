@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: IncludePage.php,v 1.22 2003-03-13 18:57:56 dairiki Exp $');
+rcs_id('$Id: IncludePage.php,v 1.23 2003-03-25 21:01:52 dairiki Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.22 $");
+                            "\$Revision: 1.23 $");
     }
 
     function getDefaultArguments() {
@@ -95,7 +95,7 @@ extends WikiPlugin
 
     function getWikiPageLinks($argstr, $basepage) {
         extract($this->getArgs($argstr));
-        print "PAGE: $page<br>\n";
+
         if ($page) {
             // Expand relative page names.
             $page = new WikiPageName($page, $basepage);
@@ -192,6 +192,10 @@ extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.22  2003/03/13 18:57:56  dairiki
+// Hack so that (when using the IncludePage plugin) the including page shows
+// up in the BackLinks of the included page.
+//
 // Revision 1.21  2003/02/21 04:12:06  dairiki
 // Minor fixes for new cached markup.
 //
