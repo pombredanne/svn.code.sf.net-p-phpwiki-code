@@ -1,8 +1,8 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.17 2002-02-06 02:41:25 carstenklapp Exp $');
+rcs_id('$Id: Calendar.php,v 1.18 2002-02-06 03:08:34 dairiki Exp $');
 
 if (!defined('SECONDS_PER_DAY'))
-define('SECONDS_PER_DAY', 24 * 3600);
+    define('SECONDS_PER_DAY', 24 * 3600);
 
 // FIXME: Still needs:
 //
@@ -14,38 +14,6 @@ define('SECONDS_PER_DAY', 24 * 3600);
 // It would be nice to have some way to get from the individual date
 // pages back to the calendar page. (Subpage support might make this
 // easier.)
-
-/**
- * A class representing a clickable day "button".
- */
-class DayButton extends HtmlElement {
-    /** Constructor
-     *
-     */
-    function DayButton ($page_for_date, $mday, $isWikiPage, $istoday) {
-
-        $this->HtmlElement('td', array('align' => 'center'));
-
-        if ($isWikiPage) {
-            $class = 'cal-day';
-            $title = $page_for_date;
-            $mday = HTML::em($mday);
-        }
-        else {
-            $class = 'cal-hide';
-            $title = sprintf(_("Edit %s"), $page_for_date);
-        }
-        if ($istoday) {
-            $mday = HTML::strong($mday);
-            $this->setAttr('class', 'cal-today');
-        }
-        $url = WikiURL($page_for_date, array('action' => 'edit'));
-        $this->pushContent(HTML::a(array('href'  => $url,
-                                         'class' => $class,
-                                         'title' => $title), $mday));
-    }
-
-};
 
 /**
  */
@@ -61,15 +29,15 @@ extends WikiPlugin
     }
 
     function getDefaultArguments() {
-        return array('prefix'       => '[pagename].',
-                     'date_format'  => '%Y-%m-%d',
-                     'year'         => '',
-                     'month'        => '',
-                     'month_offset' => 0,
+        return array('prefix'		=> '[pagename].',
+                     'date_format'	=> '%Y-%m-%d',
+                     'year'		=> '',
+                     'month'		=> '',
+                     'month_offset'	=> 0,
 
-                     'month_format' => '%B, %Y',
-                     'wday_format'  => '%a',
-                     'start_wday'   => '0');
+                     'month_format'	=> '%B, %Y',
+                     'wday_format'	=> '%a',
+                     'start_wday'	=> '0');
     }
 
     function __header($pagename, $time) {
@@ -98,7 +66,7 @@ extends WikiPlugin
                                  HTML::strong(array('class' => 'cal-header'),
                                               strftime($args['month_format'], $time))),
                         HTML::td(array('align' => 'right'), $next));
-
+        
         return HTML::tr(HTML::td(array('colspan' => 7,
                                        'align'   => 'center'),
                                  HTML::table(array('width' => '100%',
@@ -131,12 +99,30 @@ extends WikiPlugin
         $page_for_date = $args['prefix'] . strftime($args['date_format'],
                                                     $time);
         $t = localtime($time, 1);
+
+        $td = HTML::td(array('align' => 'center'));
+
         $mday = $t['tm_mday'];
+        if ($mday == $this->_today) {
+            $mday = HTML::strong($mday);
+            $td->setAttr('class', 'cal-today');
+        }
 
-        $isWikiPage = $dbi->isWikiPage($page_for_date);
-        $istoday = $mday == $this->_today;
-
-        return new DayButton($page_for_date, $mday, $isWikiPage, $istoday);
+        if ($dbi->isWikiPage($page_for_date)) {
+            $date = HTML::a(array('class' => 'cal-day',
+                                  'href'  => WikiURL($page_for_date),
+                                  'title' => $page_for_date),
+                            HTML::em($mday));
+        }
+        else {
+            $date = HTML::a(array('class' => 'cal-hide',
+                                  'href'  => WikiURL($page_for_date,
+                                                     array('action' => 'edit')),
+                                  'title' => sprintf(_("Edit %s"), $page_for_date)),
+                            $mday);
+        }
+        $td->pushContent(NBSP, $date, NBSP);
+        return $td;
     }
 
     function run($dbi, $argstr, $request) {
@@ -171,10 +157,10 @@ extends WikiPlugin
             $this->_today = $now['tm_mday'];
         else
             $this->_today = false;
-
-
+        
+        
         $row = HTML::tr();
-
+        
         $col = (7 + $t['tm_wday'] - $args['start_wday']) % 7;
         if ($col > 0)
             $row->pushContent(HTML::td(array('colspan' => $col)));
