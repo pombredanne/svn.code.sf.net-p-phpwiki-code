@@ -11,7 +11,7 @@
 These links lead to zip files, generated on the fly, which contain the most
 recent versions of all pages in the PhpWiki. The pages are stored, one per
 file, as MIME (RFC2045) e-mail (RFC822) messages, with the content type
-application/x-phpwiki for the snapshot and content type mulipart/mixed for
+application/x-phpwiki for the snapshot and content type multipart/mixed for
 the dump. In the latter case, there is one subpart (with type
 application/x-phpwiki) for each version of the
 page (in chronological order). The message body contains the page text,
