@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.16 2002-01-08 00:31:24 dairiki Exp $');
+<?php rcs_id('$Id: Template.php,v 1.17 2002-01-11 19:43:15 dairiki Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -293,11 +293,11 @@ extends TemplateFile
     }
 
     function setGlobalTokens () {
-        global $user, $logo, $CSS_URLS, $CSS_DEFAULT, $RCS_IDS;
+        global $user, $logo, $RCS_IDS;
         
         // FIXME: This a a bit of dangerous hackage.
         $this->qreplace('BROWSE', WikiURL(''));
-        $this->replace('CSS', CSS_URL($CSS_URLS, $CSS_DEFAULT));
+        $this->replace('CSS', WikiTemplate::__css_links());
         $this->qreplace('WIKI_NAME', WIKI_NAME);
 
         if (isset($user))
@@ -313,6 +313,41 @@ extends TemplateFile
                         //WikiURL($GLOBALS['pagename'], false, 'absolute_url')
                         BaseURL()
                         );
+    }
+
+    
+    function __css_links () {
+        global $CSS_URLS, $CSS_DEFAULT;
+        
+        $html = array();
+        foreach  ($CSS_URLS as $key => $val) {
+            $link = array('rel'     => 'stylesheet',
+                          'title'   => _($key),
+                          'href'    => DataURL($val),
+                          'type'    => 'text/css',
+                          'charset' => CHARSET);
+            // FIXME: why the charset?  Is a style-sheet really ever going to
+            // be other than US-ASCII?
+
+            // The next line is also used by xgettext to localise the word
+            // "Printer" used in the stylesheet's 'title' (see above).
+            if ($key == _("Printer")) {
+                $link['media'] = 'print';
+            }
+
+            if ($key != $CSS_DEFAULT) {
+                $link['rel'] = 'alternate stylesheet';
+                $html[] = Element('link', $link);
+            }
+            else {
+                // Default CSS should be listed first, otherwise some
+                // browsers (incl. Galeon) don't seem to treat it as
+                // default (regardless of whether rel="stylesheet" or
+                // rel="alternate stylesheet".)
+                array_unshift($html, Element('link', $link));
+            }
+        }
+        return join("\n", $html);
     }
 };
 
