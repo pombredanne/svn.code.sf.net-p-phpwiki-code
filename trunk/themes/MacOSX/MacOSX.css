@@ -1,33 +1,32 @@
 /*
-  $Id: MacOSX.css,v 1.26 2002-03-01 17:04:54 carstenklapp Exp $
+ $Id: MacOSX.css,v 1.27 2002-03-03 03:58:10 carstenklapp Exp $
 
-  Classes:
+ Classes:
 
-  div.wikitext - the transformed wiki page text.
+ div.wikitext - the transformed wiki page text.
 
-  a.wiki             - link to page in wiki.
-  a.named-wiki       - a named link to page in wiki (from e.g. [name|WikiPage]).
-  a.interwiki        - link to page in another wiki
-    span.wikipage    - page name within interwiki link.
-  a.named-interwiki  - link to page in another wiki
-  a.url              - link to external URL from wiki page.
-  a.named-url        - link to external URL from wiki page.
+ a.wiki             - link to page in wiki.
+ a.named-wiki       - a named link to page in wiki (from e.g. [name|WikiPage]).
+ a.interwiki        - link to page in another wiki
+ span.wikipage    - page name within interwiki link.
+ a.named-interwiki  - link to page in another wiki
+ a.url              - link to external URL from wiki page.
+ a.named-url        - link to external URL from wiki page.
 
-  .wikiunknown a, .wikiunknown u
-  .named-wikiunknown a, .named-wikiunknown u
-  
-  a.wikiaction
-  a.wikiadmin
-  .wikiunsafe
+ .wikiunknown a, .wikiunknown u
+ .named-wikiunknown a, .named-wikiunknown u
 
-  a.backlinks
-  
-TODO: Get rid of tables in wikiaction forms.
-*/
+ a.wikiaction
+ a.wikiadmin
+ .wikiunsafe
+
+ a.backlinks
+
+ TODO: Get rid of tables in wikiaction forms.
+ */
 
 /* NS4 doesn't grok @import.  This allows us to put things which
- * break NS4 in another file. As of OmniWeb 4.1, OW now @imports :-(
- */
+ * break NS4 in another file. */
 @import url(MacOSX-heavy.css);
 
 body { background: #fafafa url("image/bgpaper8.png"); }
@@ -38,7 +37,7 @@ body { }
 /*
  * NS4, defaults from body don't always propagate correctly.
  * So we need this:
- */ 
+ */
 h1, h2, h3, .toolbar, td { font-family: "Lucida Grande", Helvetica, Arial, sans-serif; }
 
 input.button { font-family: "Lucida Grande", Helvetica, Arial, sans-serif; }
@@ -78,18 +77,22 @@ div.wikitext {
   border-left:   1px solid #c3c3c3;
   border-bottom: 1px solid #dddddd;
   border-right:  1px solid #c3c3c3;
-  padding-left: 0.8em; 
-  padding-right: 0.8em; 
+  padding-left: 0.8em;
+  padding-right: 0.8em;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   margin: 0.5ex 0px;
- /* This breaks Netscape 4: (display does not go full width).
-    width: auto;
- */
- clear: both;
+  /* This breaks Netscape 4: (display does not go full width).
+  width: auto;
+  */
+clear: both;
 }
 
 input.wikitext { margin:0px; }
+input[type=text] {
+  height: 2.7ex;
+  padding: 0.4ex 0.3ex;
+}
 
 div.toolbar { margin: 1ex 0ex; }
 
@@ -106,39 +109,47 @@ div.toolbar { margin: 1ex 0ex; }
 .interwiki-moniker { background: #eee; }
 .interwiki-url { background: #f8f8f8; }
 
- 
+
 div.errors {
- background: #eee;
- border: medium;
- border-color: red;
- border-style: solid;
- padding-left: 0.8em; 
- padding-right: 0.8em; 
- padding-top: 0px;
- padding-bottom: 0px;
- margin: 1em;
- /* This breaks Netscape 4: (display does not go full width).
-    width: auto;
- */
- clear: both;
+  background: #eee;
+  border: 1px solid gray;
+  padding-left: 0.8em;
+  padding-right: 0.8em;
+  padding-top: 0.8ex;
+  padding-bottom: 0;
+  margin-top: 1em;
+  clear: both;
+  font-size: smaller;
 }
 
 .errors h4 {
- color:red;
- text-decoration: underline;
- margin:0px;
+  color: black;
+  text-decoration: underline;
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin-top: 0;
+  margin-bottom: 0.5ex;
 }
 
-p.error {
- font-size: smaller;
- font-family: Monaco, monospace;
- margin:0px;
+.error {
+  font-family: Monaco, monospace;
+  margin: 0;
+  font-size: smaller;
 }
-.error ul
-{
- font-size: smaller;
- font-family: Monaco, monospace;
+.error ul {
+  font-size: smaller;
+  font-family: Monaco, monospace;
 }
+/* Debug */
+.debug {
+  color: black;
+  background: white;
+  font-family: monospace;
+  font-size: smaller;
+  margin: 1ex 0;
+  padding: 0.5ex 0.5em;
+  border: 1px solid #eee;
+}
+
 
 /*
  * Style for <hr>s in wiki markup.
@@ -151,71 +162,69 @@ p.error {
  */
 /* Wiki Links */
 a.wiki { text-decoration: none; }
-.wiki, .named-wiki  { font-weight: bold; color:#1d42be; } /*blue*/
+.wiki, .named-wiki { font-weight: bold; color:#1d42be; } /*blue*/
 /* This is obscene in NS4
-b .wiki, STRONG .wiki { font-size: larger; }
-*/
+  b .wiki, STRONG .wiki { font-size: larger; }
+ */
 
 /* Unknown links */
-.wikiunknown a, .named-wikiunknown a, .wikiunknown U
-{ text-decoration: none; }
+.wikiunknown a, .named-wikiunknown a, .wikiunknown U { text-decoration: none; }
 
-.wikiunknown, .named-wikiunknown
-{color: #555; }
+.wikiunknown, .named-wikiunknown {color: #555; }
 
 /* Interwiki links */
 a.interwiki { text-decoration: none; }
 .wikipage   { font-weight: bold; }
 
 .interwiki,
-i .interwiki .wikipage, em .interwiki .wikipage
-{ font-style: oblique; }
+i .interwiki .wikipage, em .interwiki .wikipage { font-style: oblique; }
 
 .interwiki .wikipage,
-i .interwiki, em .interwiki  
-{ font-style: normal; }
+i .interwiki, em .interwiki { font-style: normal; }
 
 /*
  * wikiaction, wikiadmin, wikiunsafe:
  */
-a.wikiaction, a.wikiadmin       { text-decoration: none; }
+a.wikiaction, a.wikiadmin { text-decoration: none; }
 
 /*
  * No border on external link icons.
  */
-img.linkicon, img.rssicon	{ border: 0px; }
-img.rssicon		{ vertical-align: middle; }
-/* This screws up NS4, moved to phpwiki-heavy.css 
-img.linkicon		{ vertical-align: middle; }
+img.linkicon, img.rssicon { border: 0px; }
+img.rssicon { vertical-align: middle; }
+/* This screws up NS4, moved to phpwiki-heavy.css
+img.linkicon { vertical-align: middle; }
 */
-img.wiki-button		{ vertical-align: middle; }
+img.wiki-button { vertical-align: middle; }
 
 .wikiaction { border: 0; }
- 
+
 /* backlinks */
 a.backlinks { color: #006; }
 
 /* Make the textarea on the edit page full width */
 textarea.wikiedit { width: 100%; margin-top: 1ex; }
 
-p.editdate { font-size: smaller; margin-bottom: -1ex; font-family: "Lucida Grande", Helvetica, Arial, sans-serif; }
+p.editdate { font-size: smaller; margin-bottom: 0; font-family: "Lucida Grande", Helvetica, Arial, sans-serif; }
 
 /* Calendar plugin */
 a.cal-hide,
- a.cal-arrow { text-decoration: none; }
-.cal-arrow   { font-weight: bold; }
-.cal-dayname { font-size: smaller;
-               text-decoration: none; }
-table.cal   {
+a.cal-arrow { text-decoration: none; }
+.cal-arrow { font-weight: bold; }
+.cal-dayname {
+  font-size: smaller;
+  text-decoration: none;
+}
+table.cal {
   /* for NS4 */
-/*border: 1px solid black;
+  /*border: 1px solid black;
 
   border-top:    1px solid #7c7c7c;
   border-left:   1px solid #c3c3c3;
   border-bottom: 1px solid #dddddd;
   border-right:  1px solid #c3c3c3;
   background: #bebebe;*/
-} 
+}
 table.cal td {
   background: white;
   /* for NS4 */
@@ -229,7 +238,8 @@ table.cal td {
 table.cal-header td {
   font-size:  larger;
   background: white;
-  border: 0px; }
+  border: 0px;
+}
 table.cal td.cal-dayname { background: #e8e8e8; }
 table.cal td.cal-today {
   background:    #f4f4f4;
@@ -249,9 +259,9 @@ table.cal td.cal-today {
   font-size: smaller; /* 0.75em; */
   text-decoration: underline;
   text-align: right;
-} 
+}
 
-div.transclusion { 
+div.transclusion {
   /* background: #fff url("images/bgpaper8.png"); */
   /* background: white; */
   background: #fdfdfd;
@@ -263,8 +273,8 @@ div.transclusion {
   border-bottom: 1px solid #dddddd;
   border-right:  1px solid #c3c3c3;
 
-  padding-left:  0.8em; 
-  padding-right: 0.8em; 
+  padding-left:  0.8em;
+  padding-right: 0.8em;
   padding-top:    0px;
   padding-bottom: 0px;
   margin: 0.5ex ;
@@ -277,9 +287,7 @@ div.wiki-edithelp .transclusion {
   padding: 0.5ex 0.5em;
   margin: 0.2ex 5%;
 }
-div.wiki-edithelp .transclusion p {
-  margin: 0;
-}
+div.wiki-edithelp .transclusion p { margin: 0; }
 div.wiki-edithelp {
   /* background: #fff url("images/bgpaper8.png"); */
   background: white;
@@ -319,7 +327,7 @@ div.wiki-message {
 .diff .block {
   background: #ccc;
   /* for NS4 */
-/*  border: none;*/
+  /*  border: none;*/
 }
 
 /* individual blocks */
@@ -384,7 +392,7 @@ div.wiki-message {
  * Search Results
  */
 .search-context { background: white; }
-.search-term  {
+.search-term {
   background: #9bdaff;
   font-weight: normal;
 }
