@@ -1,4 +1,5 @@
-<?php rcs_id("$Id: ziplib.php,v 1.1 2000-10-08 17:33:26 wainstead Exp $");
+<?php
+rcs_id('$Id: ziplib.php,v 1.2 2001-01-01 23:13:32 ahollosi Exp $');
 
 //FIXME: get rid of this.
 function warn ($msg)
@@ -559,7 +560,7 @@ function ParseRFC822Headers (&$string)
       $string = substr($string, strlen($match[0]));
     }
 
-  if (!$headers)
+  if (empty($headers))
       return false;
 
   if (! preg_match("/^\r?\n/", $string, $match))

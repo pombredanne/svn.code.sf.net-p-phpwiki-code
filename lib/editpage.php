@@ -1,4 +1,4 @@
-<!-- $Id: editpage.php,v 1.7 2000-11-08 15:40:00 ahollosi Exp $ -->
+<!-- $Id: editpage.php,v 1.8 2001-01-01 23:13:32 ahollosi Exp $ -->
 <?php
 
    // editpage relies on $pagename and $ScriptUrl
@@ -51,6 +51,8 @@
 				htmlspecialchars($pagename));
       unset($pagehash);
       $pagehash["version"] = 0;
+      $pagehash["lastmodified"] = time();
+      $pagehash["author"] = '';
    }
 
    GeneratePage('EDITPAGE', $textarea, $pagename, $pagehash);   
