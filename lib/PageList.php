@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.28 2002-01-29 20:04:19 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.29 2002-01-30 18:25:18 carstenklapp Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -137,6 +137,7 @@ class PageList {
         $this->_caption = "";
         $this->_columns = array(new _PageList_Column_pagename);
         $this->_pages = array();
+        $this->_pages_excluded = array();
         $this->_messageIfEmpty = _("<no matches>");
         $this->_group_rows = 3;
     }
@@ -207,9 +208,25 @@ class PageList {
     }
 
     function addPage ($page_handle) {
-        if(! $this->page_exists(&$page_handle)) {
-            array_push($this->_pages, &$page_handle);
+        if(! $this->page_excluded($page_handle->getName())) {
+            if(! $this->page_exists(&$page_handle)) {
+                array_push($this->_pages, &$page_handle);
+            }
         }
+    }
+
+    function excludePageName ($pagename) {
+        if(! $this->page_excluded($pagename)) {
+            array_push($this->_pages_excluded, $pagename);
+        }
+    }
+
+    function page_excluded ($pagename) {
+        foreach ($this->_pages_excluded as $val) {
+            if ($val == $pagename)
+                return true;
+        }
+        return false;
     }
 
     function getTotal () {
