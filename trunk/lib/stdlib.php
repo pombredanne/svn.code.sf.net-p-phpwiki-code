@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.57 2001-12-11 17:47:10 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.58 2001-12-11 18:16:12 dairiki Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -105,7 +105,6 @@ function IconForLink($protocol_or_url) {
     global $URL_LINK_ICONS;
 
     list ($proto) = explode(':', $protocol_or_url, 2);
-    echo "PROTO: $proto<br>\n";
     
     if (isset($URL_LINK_ICONS[$proto])) {
         $linkimg = $URL_LINK_ICONS[$proto];
@@ -114,8 +113,6 @@ function IconForLink($protocol_or_url) {
         $linkimg = $URL_LINK_ICONS['*'];
     }
 
-    echo "IMG: $linkimg<br>\n";
-    
     if (empty($linkimg))
         return '';
     
@@ -582,10 +579,23 @@ function Iso8601DateTime ($time = false) {
  * @param $time time_t Time.  Default: now.
  * @return string Date and time in RFC-2822 format.
  */
-function Rfc822DateTime ($time = false) {
+function Rfc2822DateTime ($time = false) {
     if ($time === false)
         $time = time();
-    return date('D, d F H:i:s ', $time) . TimezoneOffset($time, 'no colon');
+    return date('D, j M Y H:i:s ', $time) . TimezoneOffset($time, 'no colon');
+}
+
+/**
+ * Format time to standard 'ctime' format.
+ *
+ * @param $time time_t Time.  Default: now.
+ * @return string Date and time in RFC-2822 format.
+ */
+function CTime ($time = false)
+{
+    if ($time === false)
+        $time = time();
+    return date("D M j H:i:s Y", $time);
 }
 
 // (c-file-style: "gnu")
