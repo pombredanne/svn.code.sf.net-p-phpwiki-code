@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.110 2004-10-15 11:05:10 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.111 2004-10-21 20:20:53 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -196,6 +196,8 @@ class Theme {
         $this->_themes_dir = NormalizeLocalFileName("themes");
         $this->_path  = defined('PHPWIKI_DIR') ? NormalizeLocalFileName("") : "";
         $this->_theme = "themes/$theme_name";
+        if (USE_DOUBLECLICKEDIT) // by pixels
+            $this->initDoubleClickEdit();
 
         if ($theme_name != 'default')
             $this->_default_theme = new Theme;
@@ -1074,7 +1076,13 @@ class Theme {
     }
 
     var $_MoreAttr = array();
-    function addMoreAttr ($id,$element) {
+    function addMoreAttr ($id, $element) {
+        // protect from duplicate attr (body jscript: themes, prefs, ...)
+        static $_attr_cache = array();
+        $hash = md5($id."/".$element);
+        if (!empty($_attr_cache[$hash])) return;
+        $_attr_cache[$hash] = 1;
+
         if (empty($this->_MoreAttr) or !is_array($this->_MoreAttr[$id]))
             $this->_MoreAttr[$id] = array($element);
         else
@@ -1122,6 +1130,12 @@ class Theme {
         }
     }
 
+    // Works only on action=browse. Patch #970004 by pixels
+    // Usage: call $WikiTheme->initDoubleClickEdit() from theme init or 
+    // define USE_DOUBLECLICKEDIT
+    function initDoubleClickEdit() {
+        $this->addMoreAttr('body', HTML::Raw(" ondblclick=\"url = document.URL; url2 = url; if (url.indexOf('?') != -1) url2 = url.slice(0, url.indexOf('?')); if ((url.indexOf('action') == -1) || (url.indexOf('action=browse') != -1)) document.location = url2 + '?action=edit';\""));
+    }
 };
 
 
@@ -1362,6 +1376,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.110  2004/10/15 11:05:10  rurban
+// fix yesterdays premature dumphtml fix for $default_text (thanks John Shen)
+//
 // Revision 1.109  2004/10/14 21:06:02  rurban
 // fix dumphtml with USE_PATH_INFO (again). fix some PageList refs
 //
