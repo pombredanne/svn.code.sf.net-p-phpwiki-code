@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.138 2003-02-21 04:12:36 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.139 2003-02-21 22:16:27 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -7,7 +7,6 @@
     LinkURL($url, $linktext)
     LinkImage($url, $alt)
 
-    MakeWikiForm ($pagename, $args, $class, $button_text)
     SplitQueryArgs ($query_args)
     LinkPhpwikiURL($url, $text)
     ConvertOldMarkup($content)
@@ -262,18 +261,6 @@ class Stack {
 }  
 // end class definition
 
-
-function MakeWikiForm ($pagename, $args, $class, $button_text = '') {
-    // HACK: so as to not completely break old PhpWikiAdministration pages.
-    trigger_error("MagicPhpWikiURL forms are no longer supported.  "
-                  . "Use the WikiFormPlugin instead.", E_USER_NOTICE);
-
-    global $request;
-    $loader = new WikiPluginLoader;
-    @$action = (string)$args['action'];
-    return $loader->expandPI("<?plugin WikiForm action=$action ?>", $request);
-}
-
 function SplitQueryArgs ($query_args = '') 
 {
     $split_args = split('&', $query_args);
@@ -331,9 +318,6 @@ function LinkPhpwikiURL($url, $text = '') {
         $class = 'wikiadmin';
     }
     
-    // FIXME: ug, don't like this
-    if (preg_match('/=\d*\(/', $qargs))
-        return MakeWikiForm($pagename, $args, $class, $text);
     if (!$text)
         $text = HTML::span(array('class' => 'rawurl'), $url);
 
@@ -1188,6 +1172,15 @@ class Alert {
                       
         
 // $Log: not supported by cvs2svn $
+// Revision 1.138  2003/02/21 04:12:36  dairiki
+// WikiPageName: fixes for new cached links.
+//
+// Alert: new class for displaying alerts.
+//
+// ExtractWikiPageLinks and friends are now gone.
+//
+// LinkBracketLink moved to InlineParser.php
+//
 // Revision 1.137  2003/02/18 23:13:40  dairiki
 // Wups again.  Typo fix.
 //
