@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.95 2004-06-28 19:00:01 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.96 2004-06-29 08:47:42 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -215,7 +215,8 @@ class _PageList_Column extends _PageList_Column_base {
     function _getValue ($page_handle, &$revision_handle) {
         if ($this->_need_rev) {
             if (!$revision_handle)
-                $revision_handle = $page_handle->getCurrentRevision();
+                // columns which need the %content should override this. (size, hi_content)
+                $revision_handle = $page_handle->getCurrentRevision(false);
             return $revision_handle->get($this->_field);
         }
         else {
@@ -242,20 +243,22 @@ class _PageList_Column_custom extends _PageList_Column {
 
 class _PageList_Column_size extends _PageList_Column {
     function _getValue ($page_handle, &$revision_handle) {
-        if (!$revision_handle)
-            $revision_handle = $page_handle->getCurrentRevision();
+        if (!$revision_handle or (!$revision_handle->_data['%content'] 
+                                  or $revision_handle->_data['%content'] === true))
+            $revision_handle = $page_handle->getCurrentRevision(true);
         return $this->_getSize($revision_handle);
     }
     
     function _getSortableValue ($page_handle, &$revision_handle) {
         if (!$revision_handle)
-            $revision_handle = $page_handle->getCurrentRevision();
+            $revision_handle = $page_handle->getCurrentRevision(true);
     	return (empty($revision_handle->_data['%content'])) 
     	       ? 0 : strlen($revision_handle->_data['%content']);
     }
 
     function _getSize($revision_handle) {
         $bytes = @strlen($revision_handle->_data['%content']);
+        //unset($revision_handle->_data['%content']);
         return ByteFormatter($bytes);
     }
 }
@@ -353,8 +356,9 @@ class _PageList_Column_content extends _PageList_Column {
         }
     }
     function _getValue ($page_handle, &$revision_handle) {
-        if (!$revision_handle)
-            $revision_handle = $page_handle->getCurrentRevision();
+        if (!$revision_handle or (!$revision_handle->_data['%content']
+                                  or $revision_handle->_data['%content'] === true))
+            $revision_handle = $page_handle->getCurrentRevision(true);
         // Not sure why implode is needed here, I thought
         // getContent() already did this, but it seems necessary.
         $c = implode("\n", $revision_handle->getContent());
@@ -468,16 +472,16 @@ class _PageList_Page {
     var $_pagelist;
     var $_page;
 
-    function _PageList_Page($pagelist, $page_handle) {
+    function _PageList_Page(&$pagelist, &$page_handle) {
         $this->_pagelist = $pagelist;
         $this->_page = $page_handle;
     }
 
-    function getPageList() {
+    function & getPageList() {
         return $this->_pagelist;
     }
 
-    function getPage() {
+    function & getPage() {
         return $this->_page;
     }
 }
@@ -556,8 +560,8 @@ class PageList {
     // the calling plugin may simply merge this with its own default arguments 
     function supportedArgs () {
         return array(//Currently supported options:
-                     'info'              => 'pagename',
-                     'exclude'           => '',          // also wildcards and comma-seperated lists
+                     'info'     => 'pagename',
+                     'exclude'  => '',          // also wildcards and comma-seperated lists
 
                      /* select pages by meta-data: */
                      'author'   => false, // current user by []
@@ -565,7 +569,7 @@ class PageList {
                      'creator'  => false, // current user by []
 
                      // for the sort buttons in <th>
-                     'sortby'            => 'pagename', // same as for WikiDB::getAllPages
+                     'sortby'   => '', // same as for WikiDB::getAllPages (unsorted is faster)
 
                      //PageList pager options:
                      // These options may also be given to _generate(List|Table) later
@@ -623,7 +627,7 @@ class PageList {
      * Take a PageList_Page object, and return an HTML object to display
      * it in a table or list row.
      */
-    function _renderPageRow ($pagelist_page) {
+    function _renderPageRow ($pagelist_page, $i = 0) {
         $page_handle = $pagelist_page->getPage();
 
         $page_handle = $this->_getPageFromHandle($page_handle);
@@ -640,7 +644,7 @@ class PageList {
         if (!mayAccessPage('view',$page_handle->getName()))
             return;
 
-        $group = (int)($this->getTotal() / $this->_group_rows);
+        $group = (int)($i / $this->_group_rows);
         $class = ($group % 2) ? 'oddrow' : 'evenrow';
         $revision_handle = false;
         $this->_maxlen = max($this->_maxlen, strlen($page_handle->getName()));
@@ -1003,7 +1007,7 @@ class PageList {
      * Compare _PageList_Page objects.
      **/
     function _pageCompare($a, $b) {
-        $pagelist = $a->getPageList();
+        $pagelist =& $a->_pagelist;
         $pagea = $a->getPage();
         $pageb = $b->getPage();
         if (count($pagelist->_sortby) == 0) {
@@ -1064,11 +1068,11 @@ class PageList {
     
     // make a table given the caption
     function _generateTable($caption) {
-        $this->_sortPages();
+        if (count($this->_sortby) > 0) $this->_sortPages();
 
-        $rows = array();
+        $rows = array(); $i = 0;
         foreach ($this->_pages as $pagenum => $page) {
-            $rows[] = $this->_renderPageRow($page);
+            $rows[] = $this->_renderPageRow($page, $i++);
         }
 
         $table = HTML::table(array('cellpadding' => 0,
@@ -1231,7 +1235,7 @@ extends PageList {
         } else {
             $columns = array('checkbox','pagename');
         }
-        PageList::PageList($columns, $exclude, $options);
+        $this->PageList($columns, $exclude, $options);
     }
 
     function addPageList ($array) {
@@ -1247,6 +1251,10 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.95  2004/06/28 19:00:01  rurban
+// removed non-portable LIMIT 1 (it's getOne anyway)
+// removed size from info=most: needs to much memory
+//
 // Revision 1.94  2004/06/27 10:26:02  rurban
 // oci8 patch by Philippe Vanhaesendonck + some ADODB notes+fixes
 //
