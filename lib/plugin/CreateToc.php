@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.9 2004-03-09 19:24:20 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.10 2004-03-14 20:30:21 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
@@ -196,7 +196,8 @@ function toggletoc() {
     toc.style.display='none';
   }
 }"));
-            $html->pushContent(HTML::h2(HTML::a(array('name'=>'TOC','class'=>'gridbutton',
+            $html->pushContent(HTML::h4(HTML::a(array('name'=>'TOC',
+                                                      'class'=>'wikiaction',
                                                       'title'=>_("Click to display"),
                                                       'onclick'=>"toggletoc()"),
                                                 _("Table Of Contents"))));
@@ -212,6 +213,10 @@ function toggletoc() {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/03/09 19:24:20  rurban
+// custom indentstr
+// h2 toc header
+//
 // Revision 1.8  2004/03/09 19:05:12  rurban
 // new liststyle arg. default: dl (no bullets)
 //

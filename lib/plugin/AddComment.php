@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AddComment.php,v 1.3 2004-03-14 16:26:21 rurban Exp $');
+rcs_id('$Id: AddComment.php,v 1.4 2004-03-14 20:30:21 rurban Exp $');
 /*
  Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  
@@ -45,7 +45,7 @@ extends WikiPlugin_WikiBlog
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     // Arguments:
@@ -87,27 +87,55 @@ extends WikiPlugin_WikiBlog
         // Now we display previous comments and/or provide entry box
         // for new comments
         $html = HTML();
+        if ($args['jshide']) {
+            $div = HTML::div(array('id'=>'comments','style'=>'display:none;'));
+            //$list->setAttr('style','display:none;');
+            $div->pushContent(Javascript("
+function togglecomments() {
+  comments=document.getElementById('comments');
+  if (comments.style.display=='none') {
+    comments.style.display='block';
+  } else {
+    comments.style.display='none';
+  }
+}"));
+            $html->pushContent(HTML::h4(HTML::a(array('name'=>'comment-header',
+                                                      'class'=>'wikiaction',
+                                                      'title'=>_("Click to display"),
+                                                      'onclick'=>"togglecomments()"),
+                                                _("Comments"))));
+        } else {
+            $div = HTML::div(array('id'=>'comments'));
+        }
         foreach (explode(',', $args['mode']) as $show) {
             if (!empty($seen[$show]))
                 continue;
             $seen[$show] = 1;
             switch ($show) {
             case 'show':
-                $html->pushContent($this->showAll($request, $args, 'comment'));
+                $show = $this->showAll($request, $args, 'comment');
+                //if ($args['jshide']) $show->setAttr('style','display:none;');
+                $div->pushContent($show);
                 break;
             case 'add':
-                $html->pushContent($this->showForm($request, $args, 'addcomment'));
+                $add = $this->showForm($request, $args, 'addcomment');
+                //if ($args['jshide']) $add->setAttr('style','display:none;');
+                $div->pushContent($add);
                 break;
             default:
                 return $this->error(sprintf("Bad mode ('%s')", $show));
             }
         }
+        $html->pushContent($div);
         return $html;
     }
    
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/03/14 16:26:21  rurban
+// copyright line
+//
 // Revision 1.2  2004/03/12 20:59:18  rurban
 // important cookie fix by Konstantin Zadorozhny
 // new editpage feature: JS_SEARCHREPLACE
