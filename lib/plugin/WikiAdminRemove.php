@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.19 2004-04-12 09:12:23 rurban Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.20 2004-05-03 11:02:30 rurban Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.19 $");
+                            "\$Revision: 1.20 $");
     }
 
     function getDefaultArguments() {
@@ -129,7 +129,7 @@ extends WikiPlugin
         $args = $this->getArgs($argstr, $request);
         if (!is_numeric($args['min_age']))
             $args['min_age'] = -1;
-        $this->_args = $args;
+        $this->_args =& $args;
         
         if (!empty($args['exclude']))
             $exclude = explodePageList($args['exclude']);
@@ -162,6 +162,12 @@ extends WikiPlugin
                     $name = str_replace(array('%5B','%5D'),array('[',']'),$name);
                     $pages[$name] = $c;
                 }
+            }
+        } elseif (is_array($p) && !$request->isPost()) { // from WikiAdminSelect
+            $next_action = 'verify';
+            foreach ($p as $name => $c) {
+                $name = str_replace(array('%5B','%5D'),array('[',']'),$name);
+                $pages[$name] = $c;
             }
         }
         if ($next_action == 'select') {
@@ -230,6 +236,9 @@ class _PageList_Column_remove extends _PageList_Column {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.19  2004/04/12 09:12:23  rurban
+// fix syntax errors
+//
 // Revision 1.18  2004/04/07 23:13:19  rurban
 // fixed pear/File_Passwd for Windows
 // fixed FilePassUser sessions (filehandle revive) and password update
