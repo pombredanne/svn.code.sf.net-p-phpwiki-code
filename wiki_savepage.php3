@@ -1,4 +1,4 @@
-<!-- $Id: wiki_savepage.php3,v 1.10 2000-06-27 19:41:23 ahollosi Exp $ -->
+<!-- $Id: wiki_savepage.php3,v 1.11 2000-07-04 21:19:58 ahollosi Exp $ -->
 <?
 
 /*
@@ -25,8 +25,7 @@
 	   "the clipboard (or text editor).\n" .
 	   "<LI>Press <B>Save</B> again.</OL>\n" .
 	   "<P>Sorry for the inconvinience.</P>";
-      GeneratePage('MESSAGE', $html, "Problem while updating " .
-		   htmlspecialchars($pagename), 0);
+      GeneratePage('MESSAGE', $html, "Problem while updating $pagename, 0);
       exit;
    }
 
