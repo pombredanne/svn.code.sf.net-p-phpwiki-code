@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.36 2002-01-22 22:37:14 dairiki Exp $');
+rcs_id('$Id: themeinfo.php,v 1.37 2002-01-23 03:00:32 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -147,10 +147,6 @@ $Theme->addButtonAlias('?', 'uww');
 $Theme->addButtonAlias(_("Lock Page"), "Lock Page");
 $Theme->addButtonAlias(_("Unlock Page"), "Unlock Page");
 $Theme->addButtonAlias(_("Page Locked"), "Page Locked");
-
-// FIXME: Until button text gets changed:
-$Theme->addButtonAlias(_("Sign In"), _("SignIn"));
-$Theme->addButtonAlias(_("Sign Out"), _("SignOut"));
 
 /**
  * WikiWords can automatically be split by inserting spaces between
