@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.8\n"
-"POT-Creation-Date: 2002-01-02 16:21-0500\n"
+"POT-Creation-Date: 2002-01-05 07:29-0500\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Carsten Klapp <carstenklapp@mac.com>, Arno Hollosi "
 "<ahollosi@mail.com>\n"
@@ -14,170 +14,101 @@ msgstr ""
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../templates/browse.html:34
-msgid "Note:"
-msgstr "Hinweis:"
-
-#: ../templates/browse.html:34
-msgid "You are viewing an old revision of this page."
-msgstr "Du siehst eine alte Revision dieser Seite."
-
-#: ../templates/browse.html:35
-msgid "View the current version"
-msgstr "Schaue die aktuellste Version"
-
-#: ../templates/browse.html:42
-#, c-format
-msgid "Last edited on %s."
-msgstr "Zuletzt am %s verändert."
-
-#: ../templates/browse.html:44
-#, c-format
-msgid "Version %s, saved on %s."
-msgstr "Version %s. zuletzt am %s gespeichert."
-
-#: ../templates/browse.html:57
+#: ../lib/Toolbar.php:136 ../templates/browse.html:41
 msgid "Page locked"
 msgstr "Seite gesperrt"
 
-#: ../templates/browse.html:60
+#: ../lib/Toolbar.php:139 ../templates/browse.html:44
 msgid "Edit"
 msgstr "Editieren"
 
-#: ../templates/browse.html:63
+#: ../lib/Toolbar.php:142 ../templates/browse.html:47
 msgid "Edit old revision"
 msgstr "Alte Revision editieren"
 
-#: ../templates/browse.html:68
+#: ../lib/Toolbar.php:147 ../templates/browse.html:52
 msgid "Unlock page"
 msgstr "Seite freigeben"
 
-#: ../templates/browse.html:70
+#: ../lib/Toolbar.php:149 ../templates/browse.html:54
 msgid "Lock page"
 msgstr "Seite sperren"
 
-#: ../lib/removepage.php:20 ../templates/browse.html:72
+#: ../lib/Toolbar.php:151 ../lib/removepage.php:20 ../templates/browse.html:56
 msgid "Remove page"
 msgstr "Seite löschen"
 
-#: ../templates/browse.html:76 ../templates/browse.html:79
+#: ../lib/Toolbar.php:157 ../lib/Toolbar.php:160 ../templates/browse.html:60
+#: ../templates/browse.html:63
 msgid "Diff"
 msgstr "Diff"
 
-#: ../lib/loadsave.php:452 ../lib/plugin/RecentChanges.php:159
-#: ../lib/plugin/RecentChanges.php:264 ../lib/plugin/RecentChanges.php:309
-#: ../templates/browse.html:83
-msgid "RecentChanges"
-msgstr "FrischeSeiten"
-
-#: ../templates/browse.html:84
-msgid "FindPage"
-msgstr "SeiteFinden"
-
-#: ../templates/browse.html:87
-msgid "Quick Search"
-msgstr "Schnelle Suche"
-
-#: ../templates/browse.html:97
-#, c-format
-msgid "You are signed in as %s"
-msgstr "Du bist als %s angemeldet"
-
-#: ../templates/browse.html:98
-msgid "SignOut"
-msgstr "AbMelden"
-
-#: ../templates/browse.html:100 ../templates/editpage.html:73
-msgid "SignIn"
-msgstr "AnMelden"
-
-#: ../templates/browse.html:120
+#: ../templates/browse.html:86
 msgid "PHP Warnings"
 msgstr "PHP Warnungen"
 
-#: ../lib/plugin/_BackendInfo.php:10 ../templates/browse.html:126
-#: ../templates/browse.html:127
+#: ../lib/plugin/_BackendInfo.php:10 ../templates/browse.html:92
+#: ../templates/browse.html:93
 msgid "DebugInfo"
 msgstr "DebugInfo"
 
-#: ../lib/plugin/ViewMarkup.php:12 ../templates/browse.html:131
-#: ../templates/browse.html:132
+#: ../lib/plugin/ViewMarkup.php:12 ../templates/browse.html:97
+#: ../templates/browse.html:98
 msgid "ViewMarkup"
 msgstr ""
 
-#: ../templates/editpage.html:16 ../templates/editpage.html:25
-#: ../templates/editpage.html:26
+#: ../templates/editpage.html:14 ../templates/editpage.html:19
+#: ../templates/editpage.html:20 ../templates/editpage~.html:14
+#: ../templates/editpage~.html:19 ../templates/editpage~.html:20
 #, c-format
 msgid "Edit: %s"
 msgstr "Editiere: %s"
 
-#: ../lib/plugin/BackLinks.php:9 ../templates/editpage.html:25
+#: ../lib/Toolbar.php:163 ../lib/plugin/BackLinks.php:9
+#: ../templates/editpage.html:19 ../templates/editpage~.html:19
 msgid "BackLinks"
 msgstr "BackLinks"
 
-#: ../templates/editpage.html:28
-msgid "Preview only!  Changes not saved."
-msgstr "Nur die Vorschau!  Änderungen nicht gespeichert."
-
-#: ../templates/editpage.html:34
-msgid "Warning: You are editing an old revision."
-msgstr "Warnung: Du editierst eine alte Revision."
-
-#: ../templates/editpage.html:35
-msgid "Saving this page will overwrite the current version."
-msgstr ""
-"Wenn die Seite jetzt gespeichert werden würde, dann würde die aktuellste "
-"Version überschrieben."
-
-#: ../templates/editpage.html:55
+#: ../templates/editpage.html:41 ../templates/editpage~.html:38
 msgid "Summary:"
 msgstr "Kommentar:"
 
-#: ../templates/editpage.html:62
+#: ../templates/editpage.html:48 ../templates/editpage~.html:45
 msgid "This is a minor change."
 msgstr "Geringfügige Änderung"
 
-#: ../templates/editpage.html:65
+#: ../templates/editpage.html:51 ../templates/editpage~.html:48
 msgid "Preview"
 msgstr "Vorschauen"
 
-#: ../templates/editpage.html:66
+#: ../templates/editpage.html:52 ../templates/editpage~.html:49
 msgid "Save"
 msgstr "Speichern"
 
-#: ../templates/editpage.html:70
+#: ../lib/Toolbar.php:292 ../templates/editpage.html:56
+#: ../templates/editpage~.html:53
 #, c-format
 msgid "You are signed in as %s."
 msgstr "Du bist als %s angemeldet."
 
-#: ../templates/editpage.html:72
+#: ../lib/Toolbar.php:294 ../templates/editpage.html:58
+#: ../templates/editpage~.html:55
 #, c-format
 msgid "Author will be logged as %s."
 msgstr "%s wird als Author aufgezeichnet."
 
-#: ../templates/editpage.html:79
-#, c-format
-msgid "You can change the size of the editing area in %s."
-msgstr "Du kannst die Größe des Texteingabefensters in %s ändern."
+#: ../lib/Toolbar.php:216 ../lib/Toolbar.php:295 ../templates/editpage.html:59
+#: ../templates/editpage~.html:56
+msgid "SignIn"
+msgstr "AnMelden"
 
-#: ../templates/editpage.html:79
-msgid "UserPreferences"
-msgstr "Einstellungen"
-
-#: ../templates/editpage.html:80
-#, c-format
-msgid "See %s tips for editing."
-msgstr "Sehe %s tips fürs Editieren."
-
-#: ../templates/editpage.html:80
-msgid "GoodStyle"
-msgstr "GuterStil"
-
-#: ../templates/editpage.html:84
+#: ../lib/Toolbar.php:331 ../templates/editpage.html:67
+#: ../templates/editpage~.html:64
 msgid "TextFormattingRules"
 msgstr "TextFormatierungsRegeln"
 
-#: ../templates/editpage.html:84
+#: ../lib/Toolbar.php:332 ../templates/editpage.html:67
+#: ../templates/editpage~.html:64
 msgid "Synopsis"
 msgstr "Übersicht"
 
@@ -266,7 +197,7 @@ msgstr "Es gibt keine Revision als %s(%d)"
 msgid "Included from %s"
 msgstr "Eingefügter Text von %s"
 
-#: ../lib/plugin/LikePages.php:12
+#: ../lib/Toolbar.php:192 ../lib/plugin/LikePages.php:12
 msgid "LikePages"
 msgstr "GleicheSeiten"
 
@@ -342,7 +273,8 @@ msgstr "Version %d."
 msgid "History of changes."
 msgstr "Das Änderungsprotokoll."
 
-#: ../lib/plugin/PageHistory.php:200 ../lib/plugin/RecentChanges.php:42
+#: ../lib/Toolbar.php:154 ../lib/plugin/PageHistory.php:200
+#: ../lib/plugin/RecentChanges.php:42
 msgid "PageHistory"
 msgstr "SeiteProtokoll"
 
@@ -363,61 +295,67 @@ msgstr "Neue Seite."
 msgid "(diff)"
 msgstr "(Diff)"
 
-#: ../lib/plugin/RecentChanges.php:122
+#: ../lib/plugin/RecentChanges.php:124
 msgid "RSS available"
 msgstr "RSS verfügbar"
 
-#: ../lib/plugin/RecentChanges.php:132
+#: ../lib/plugin/RecentChanges.php:134
 msgid "edits"
 msgstr "Änderungen"
 
-#: ../lib/plugin/RecentChanges.php:134
+#: ../lib/plugin/RecentChanges.php:136
 msgid "major edits"
 msgstr "Hauptänderungen"
 
-#: ../lib/plugin/RecentChanges.php:136
+#: ../lib/plugin/RecentChanges.php:138
 msgid "minor edits"
 msgstr "geringe Änderungen"
 
-#: ../lib/plugin/RecentChanges.php:140
+#: ../lib/plugin/RecentChanges.php:142
 #, c-format
 msgid "The %d most recent %s during the past %.1f days are listed below."
 msgstr "Die %d Jüngste %s innerhalb von %.1f Tagen sind unten auflistet."
 
-#: ../lib/plugin/RecentChanges.php:143
+#: ../lib/plugin/RecentChanges.php:145
 #, c-format
 msgid "The %d most recent %s are listed below."
 msgstr "Die %d Jüngste %s sind unten auflistet."
 
-#: ../lib/plugin/RecentChanges.php:148
+#: ../lib/plugin/RecentChanges.php:150
 #, c-format
 msgid "The most recent %s during the past %.1f days are listed below."
 msgstr "Die Jüngste %s innerhalb von %.1f Tagen sind unten auflistet."
 
-#: ../lib/plugin/RecentChanges.php:151
+#: ../lib/plugin/RecentChanges.php:153
 #, c-format
 msgid "All %s are listed below."
 msgstr "Alle %s sind unten auflistet."
 
-#: ../lib/plugin/RecentChanges.php:159
+#: ../lib/plugin/RecentChanges.php:161
 msgid "RecentEdits"
 msgstr "GeringeÄnderungen"
 
-#: ../lib/main.php:26 ../lib/main.php:85 ../lib/main.php:87
-#: ../lib/plugin/RecentChanges.php:247
+#: ../lib/Toolbar.php:234 ../lib/loadsave.php:452
+#: ../lib/plugin/RecentChanges.php:161 ../lib/plugin/RecentChanges.php:266
+#: ../lib/plugin/RecentChanges.php:311
+msgid "RecentChanges"
+msgstr "FrischeSeiten"
+
+#: ../lib/Toolbar.php:68 ../lib/main.php:26 ../lib/main.php:85
+#: ../lib/main.php:87 ../lib/plugin/RecentChanges.php:249
 msgid "HomePage"
 msgstr "StartSeite"
 
-#: ../lib/plugin/RecentChanges.php:252
+#: ../lib/plugin/RecentChanges.php:254
 msgid "Search"
 msgstr "Suche"
 
-#: ../lib/plugin/RecentChanges.php:253 ../lib/plugin/TitleSearch.php:16
+#: ../lib/plugin/RecentChanges.php:255 ../lib/plugin/TitleSearch.php:16
 msgid "Title Search"
 msgstr "Titelsuche"
 
-#: ../lib/main.php:123 ../lib/plugin/RecentChanges.php:255
-#: ../lib/plugin/TitleSearch.php:12
+#: ../lib/Toolbar.php:183 ../lib/main.php:123
+#: ../lib/plugin/RecentChanges.php:257 ../lib/plugin/TitleSearch.php:12
 msgid "TitleSearch"
 msgstr "Titelsuche"
 
@@ -523,6 +461,77 @@ msgstr "Fehler während die Fehlerbehandlung von:"
 #, c-format
 msgid "%s: file not found"
 msgstr "%s Datei nicht gefunden"
+
+#: ../lib/Toolbar.php:90
+msgid "Note:"
+msgstr "Hinweis:"
+
+#: ../lib/Toolbar.php:91
+msgid "You are viewing an old revision of this page."
+msgstr "Du siehst eine alte Revision dieser Seite."
+
+#: ../lib/Toolbar.php:95
+msgid "View the current version"
+msgstr "Schaue die aktuellste Version"
+
+#: ../lib/Toolbar.php:114
+#, c-format
+msgid "Last edited on %s."
+msgstr "Zuletzt am %s verändert."
+
+#: ../lib/Toolbar.php:117
+#, c-format
+msgid "Version %s, saved on %s."
+msgstr "Version %s. zuletzt am %s gespeichert."
+
+#: ../lib/Toolbar.php:184
+msgid "FindPage"
+msgstr "SeiteFinden"
+
+#: ../lib/Toolbar.php:187 ../lib/Toolbar.php:188
+msgid "Quick Search"
+msgstr "Schnelle Suche"
+
+#: ../lib/Toolbar.php:213
+#, c-format
+msgid "You are signed in as %s"
+msgstr "Du bist als %s angemeldet"
+
+#: ../lib/Toolbar.php:214
+msgid "SignOut"
+msgstr "AbMelden"
+
+#: ../lib/Toolbar.php:266
+msgid "Preview only!  Changes not saved."
+msgstr "Nur die Vorschau!  Änderungen nicht gespeichert."
+
+#: ../lib/Toolbar.php:271
+msgid "Warning: You are editing an old revision."
+msgstr "Warnung: Du editierst eine alte Revision."
+
+#: ../lib/Toolbar.php:273
+msgid "Saving this page will overwrite the current version."
+msgstr ""
+"Wenn die Seite jetzt gespeichert werden würde, dann würde die aktuellste "
+"Version überschrieben."
+
+#: ../lib/Toolbar.php:312
+#, c-format
+msgid "You can change the size of the editing area in %s."
+msgstr "Du kannst die Größe des Texteingabefensters in %s ändern."
+
+#: ../lib/Toolbar.php:313
+msgid "UserPreferences"
+msgstr "Einstellungen"
+
+#: ../lib/Toolbar.php:314
+#, c-format
+msgid "See %s tips for editing."
+msgstr "Sehe %s tips fürs Editieren."
+
+#: ../lib/Toolbar.php:315
+msgid "GoodStyle"
+msgstr "GuterStil"
 
 #: ../lib/WikiDB.php:353
 #, c-format
@@ -908,57 +917,61 @@ msgstr ""
 msgid "Required form variables are missing."
 msgstr "Benötigen Form-Variablen sind Fehlend."
 
-#: ../lib/savepage.php:155
+#: ../lib/savepage.php:161
 #, c-format
 msgid "Thank you for editing %s."
 msgstr "Danke für das Editieren von %s."
 
-#: ../lib/savepage.php:158
+#: ../lib/savepage.php:164
 msgid "Your careful attention to detail is much appreciated."
 msgstr "Deine besondere Aufmerksamkeit für Details wird sehr geschätzt."
 
-#: ../lib/savepage.php:162
+#: ../lib/savepage.php:168
 msgid "Warning!"
 msgstr "Warnung!"
 
-#: ../lib/stdlib.php:134 ../lib/stdlib.php:199
+#: ../lib/stdlib.php:61
+msgid "Printer"
+msgstr "Drucker"
+
+#: ../lib/stdlib.php:153 ../lib/stdlib.php:218
 msgid "BAD URL -- remove all of <, >, \""
 msgstr "URL Formfehler -- aller Zeichen <, >, \" wegnehmen"
 
-#: ../lib/stdlib.php:340
+#: ../lib/stdlib.php:359
 msgid "Lock page to enable link"
 msgstr "Seite sperren um das Link zu verbinden"
 
-#: ../lib/stdlib.php:459
+#: ../lib/stdlib.php:478
 #, c-format
 msgid "%d best incoming links:"
 msgstr "Die %d besten hereinkommenden Links:"
 
-#: ../lib/stdlib.php:469
+#: ../lib/stdlib.php:488
 #, c-format
 msgid "%d best outgoing links:"
 msgstr "Die %d besten hinausgehenden Links:"
 
-#: ../lib/stdlib.php:480
+#: ../lib/stdlib.php:499
 #, c-format
 msgid "%d most popular nearby:"
 msgstr "Die %d meistbesuchten Seiten in der Nähe:"
 
-#: ../lib/stdlib.php:530 ../lib/stdlib.php:536
+#: ../lib/stdlib.php:549 ../lib/stdlib.php:555
 msgid "Bad Version"
 msgstr "Version nicht vorliegend"
 
-#: ../lib/stdlib.php:532
+#: ../lib/stdlib.php:551
 #, c-format
 msgid "I'm sorry.  Version %d of %s is not in my database."
 msgstr "Es tut mir leid.  Version %d. von %s war nicht in meine Datenbank."
 
-#: ../lib/stdlib.php:684
+#: ../lib/stdlib.php:703
 #, c-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr ""
 
-#: ../lib/stdlib.php:692
+#: ../lib/stdlib.php:711
 #, c-format
 msgid "%s: argument index out of range"
 msgstr "%s: Index des Arguments außer Reichweite"
