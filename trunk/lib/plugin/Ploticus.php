@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Ploticus.php,v 1.1 2004-06-02 19:12:42 rurban Exp $');
+rcs_id('$Id: Ploticus.php,v 1.2 2004-06-02 19:37:07 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -36,41 +36,15 @@ rcs_id('$Id: Ploticus.php,v 1.1 2004-06-02 19:12:42 rurban Exp $');
  *   No EPS, PS, SVG or SVGZ support due to limitations in WikiPluginCached.
  *
  * Usage:
-<?plugin Ploticus device=png
-#proc page
-#if @DEVICE in gif,png
-  scale: 0.7
-#endif
-
-//  specify data using {proc getdata}
-#proc getdata
-data:	Brazil 22
-	Columbia 17
-	"Costa Rica" 22
-	Guatemala 3
-	Honduras 12
-	Mexico 14
-	Nicaragua 28
-	Belize 9
- 	United\nStates 21
-	Canada 8
-
-//  render the pie graph using {proc pie}
-#proc pie
-firstslice: 90
-explode: .2 0 0 0 0  .2 0
-datafield: 2
-labelfield: 1
-labelmode: line+label
-center: 4 4
-radius: 2
-colors: yellow pink pink pink pink yellow pink
-labelfarout: 1.05
+<?plugin Ploticus device=png [ploticus options...]
+   multiline ploticus script ...
 ?>
-
-Or: 
-<?plugin Ploticus -prefab vbars  data=myfile.dat  delim=tab  y=1 clickmapurl="http://abc.com/cgi-bin/showcase?caseid=@2" clickmaplabel="@3" -csmap ?>
-*/
+ * or without any script: 
+<?plugin Ploticus -prefab vbars data=myfile.dat delim=tab y=1 clickmapurl="http://mywiki.url/wiki/?pagename=@2" clickmaplabel="@3" -csmap ?>
+ *
+ * TODO: PloticusSql - create intermediate data from SQL. Similar to SqlResult, just in graphic form.
+ * For example to proeduce nice looking pagehit statistics or ratings statistics.
+ */
 
 if (isWindows())
     define('PLOTICUS_EXE','pl.exe');
@@ -82,9 +56,10 @@ require_once "lib/WikiPluginCached.php";
 class WikiPlugin_Ploticus
 extends WikiPluginCached
 {
-
     /**
-     * Sets plugin type to map production
+     * Sets plugin type to MAP if -csmap (-map or -mapdemo or -csmapdemo not supported)
+     * or HTML if the imagetype is not supported by GD (EPS, SVG, SVGZ) (not yet)
+     * or IMAGE if device = png, gif or jpeg
      */
     function getPluginType() {
     	if (!empty($this->_args['-csmap']))
@@ -103,12 +78,13 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
     function getDefaultArguments() {
         return array(
-                     'device' => 'png', // png,gif,svgz,svg,
+                     'device' => 'png', // png,gif,svgz,svg,...
                      '-csmap' => false,
+                     'alt'    => false,
                      'help'   => false,
                      );
     }
@@ -134,7 +110,7 @@ extends WikiPluginCached
      *  this case, because png will definitely have the
      *  best results.)
      *
-     * @return string 'png', 'svgz', 'svg', 'eps', 'gif'
+     * @return string 'png', 'jpeg', 'gif'
      */
     function getImageType($dbi, $argarray, $request) {
         return $argarray['device'];
@@ -142,18 +118,17 @@ extends WikiPluginCached
 
     /**
      * This gives an alternative text description of
-     * the image map. I do not know whether it interferes
-     * with the <code>title</code> attributes in &lt;area&gt;
-     * tags of the image map. Perhaps this will be removed.
-     * @return string
+     * the image.
      */
     function getAlt($dbi, $argstr, $request) {
-        return $this->getDescription();
-    } 
+        return (!empty($this->_args['alt'])) ? $this->_args['alt']
+                                             : $this->getDescription();
+    }
 
     /**
      * Returns an image containing a usage description of the plugin.
-     * TODO: Point to the Ploticus documentation at sf.net
+     *
+     * TODO: -csmap pointing to the Ploticus documentation at sf.net.
      * @return string image handle
      */
     function helpImage() {
@@ -163,7 +138,11 @@ extends WikiPluginCached
         $helparr = array(
             '<?plugin Ploticus ' .
             'device'           => ' = "' . $def['device'] . "(default)|" . join('|',$GLOBALS['CacheParams']['imgtypes']).'"',
-            '-csmap'           => ' = bool: clickable map?',
+            'alt'              => ' = "alternate text"',
+            '-csmap'           => ' bool: clickable map?',
+            'help'             => ' bool: displays this screen',
+            '...'              => ' all further lines below the first plugin line ',
+            ''                 => ' and inside the tags are the ploticus script.',
             "\n  ?>"
             );
         $length = 0;
@@ -274,6 +253,9 @@ extends WikiPluginCached
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/06/02 19:12:42  rurban
+// new Ploticus plugin
+//
 //
 
 // For emacs users
