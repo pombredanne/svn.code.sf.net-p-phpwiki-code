@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.109 2004-11-25 17:20:50 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.110 2004-11-26 18:39:01 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -330,8 +330,8 @@ class WikiDB {
      * @return WikiDB_PageIterator A WikiDB_PageIterator containing the matching pages.
      * @see TextSearchQuery
      */
-    function titleSearch($search, $case_exact=false) {
-        $result = $this->_backend->text_search($search, false, $case_exact);
+    function titleSearch($search) {
+        $result = $this->_backend->text_search($search, false);
         return new WikiDB_PageIterator($this, $result);
     }
 
@@ -351,8 +351,8 @@ class WikiDB {
      * @return WikiDB_PageIterator A WikiDB_PageIterator containing the matching pages.
      * @see TextSearchQuery
      */
-    function fullSearch($search, $case_exact=false) {
-        $result = $this->_backend->text_search($search, 'full_text', $case_exact);
+    function fullSearch($search) {
+        $result = $this->_backend->text_search($search, true);
         return new WikiDB_PageIterator($this, $result);
     }
 
@@ -2096,6 +2096,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.109  2004/11/25 17:20:50  rurban
+// and again a couple of more native db args: backlinks
+//
 // Revision 1.108  2004/11/23 13:35:31  rurban
 // add case_exact search
 //

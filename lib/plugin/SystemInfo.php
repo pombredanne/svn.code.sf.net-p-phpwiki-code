@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SystemInfo.php,v 1.20 2004-11-20 11:28:49 rurban Exp $');
+rcs_id('$Id: SystemInfo.php,v 1.21 2004-11-26 18:39:02 rurban Exp $');
 /**
  Copyright (C) 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -39,11 +39,11 @@ rcs_id('$Id: SystemInfo.php,v 1.20 2004-11-20 11:28:49 rurban Exp $');
  * Todo: Some calculations are heavy (~5-8 secs), so we should cache
  *       the result. In the page or with WikiPluginCached?
  */
-//require_once "lib/WikiPluginCached.php";
 
+require_once "lib/WikiPluginCached.php";
 class WikiPlugin_SystemInfo
-//extends WikiPluginCached
-extends WikiPlugin
+extends WikiPluginCached
+//extends WikiPlugin
 {
     function getPluginType() {
         return PLUGIN_CACHED_HTML;
@@ -58,7 +58,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.20 $");
+                            "\$Revision: 1.21 $");
     }
 
     function getExpire($dbi, $argarray, $request) {
@@ -138,19 +138,9 @@ extends WikiPlugin
     }
     function pagestats() {
         global $request;
-        $e = 0;
-        $a = 0;
         $dbi = $request->getDbh();
-        $include_empty = true;
-        $iter = $dbi->getAllPages($include_empty);
-        while ($page = $iter->next())
-            $e++;
-        $s  = sprintf(_("%d pages"), $e);
-        $include_empty = false;
-        $iter = $dbi->getAllPages($include_empty);
-        while ($page = $iter->next())
-            $a++;
-        $s  .= ", " . sprintf(_("%d not-empty pages"), $a);
+        $s  = sprintf(_("%d pages"), $dbi->numPages(true));
+        $s  .= ", " . sprintf(_("%d not-empty pages"), $dbi->numPages(false));
         // more bla....
         // $s  .= ", " . sprintf(_("earliest page from %s"), $earliestdate);
         // $s  .= ", " . sprintf(_("latest page from %s"), $latestdate);
@@ -188,7 +178,7 @@ extends WikiPlugin
     //only from logging info possible. = hitstats per time.
     // total hits per day/month/year
     // view/edit rate
-    // TODO: see WhoIsOnline hit stats
+    // TODO: see WhoIsOnline hit stats, and sql accesslogs
     function accessstats() {
         $s  = _("not yet");
         return $s;
@@ -454,6 +444,14 @@ function stddev(&$hits, $total = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2004/11/20 11:28:49  rurban
+// fix a yet unused PageList customPageListColumns bug (merge class not decl to _types)
+// change WantedPages to use PageList
+// change WantedPages to print the list of referenced pages, not just the count.
+//   the old version was renamed to WantedPagesOld
+//   fix and add handling of most standard PageList arguments (limit, exclude, ...)
+// TODO: pagename sorting, dumb/WantedPagesIter and SQL optimization
+//
 // Revision 1.19  2004/06/19 11:49:42  rurban
 // dont print db passwords
 //

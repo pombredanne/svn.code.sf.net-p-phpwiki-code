@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TitleSearch.php,v 1.24 2004-11-25 08:30:58 rurban Exp $');
+rcs_id('$Id: TitleSearch.php,v 1.25 2004-11-26 18:39:02 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.24 $");
+                            "\$Revision: 1.25 $");
     }
 
     function getDefaultArguments() {
@@ -49,7 +49,8 @@ extends WikiPlugin
                    'noheader'      => false,
                    'exclude'       => false,
                    'info'          => false,
-                   'case_exact'     => false
+                   'case_exact'    => false,
+                   'regex'     	   => 'auto',
                    ));
     }
     // info arg allows multiple columns
@@ -62,8 +63,8 @@ extends WikiPlugin
             return '';
         //extract($args);
 
-        $query = new TextSearchQuery($args['s'], $args['case_exact']);
-        $pages = $dbi->titleSearch($query, $args['case_exact']);
+        $query = new TextSearchQuery($args['s'], $args['case_exact'], $args['regex']);
+        $pages = $dbi->titleSearch($query);
 
         $pagelist = new PageList($args['info'], $args['exclude'], $args);
         while ($page = $pages->next()) {
@@ -87,6 +88,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2004/11/25 08:30:58  rurban
+// dont extract args
+//
 // Revision 1.23  2004/11/23 15:17:19  rurban
 // better support for case_exact search (not caseexact for consistency),
 // plugin args simplification:

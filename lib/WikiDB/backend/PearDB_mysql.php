@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_mysql.php,v 1.12 2004-11-11 14:34:12 rurban Exp $');
+rcs_id('$Id: PearDB_mysql.php,v 1.13 2004-11-26 18:39:02 rurban Exp $');
 
 require_once('lib/WikiDB/backend/PearDB.php');
 
@@ -152,9 +152,10 @@ extends WikiDB_backend_PearDB
         // have a record in the page table.  Since it's just the
         // hit count, who cares?
         // LIMIT since 3.23
-        $dbh->query(sprintf("UPDATE LOW_PRIORITY %s SET hits=hits+1 WHERE pagename='%s' LIMIT 1",
+        $dbh->query(sprintf("UPDATE LOW_PRIORITY %s SET hits=hits+1 WHERE pagename='%s' %s",
                             $this->_table_names['page_tbl'],
-                            $dbh->escapeSimple($pagename)));
+                            $dbh->escapeSimple($pagename),
+                            ($this->_serverinfo['version'] >= 323.0) ? "LIMIT 1": ""));
         return;
     }
 
