@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: dbaBase.php,v 1.17 2004-11-29 17:13:42 rurban Exp $');
+<?php rcs_id('$Id: dbaBase.php,v 1.18 2004-11-29 17:44:52 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -317,13 +317,13 @@ extends WikiDB_backend_iterator
         $this->_options = $options;
         if ($pages) { 
             if (!empty($options['sortby'])) {
-                $sortby = $this->sortby($options['sortby'], 'db', array('pagename','mtime'));
+                $sortby = WikiDB_backend::sortby($options['sortby'], 'db', array('pagename','mtime'));
                 if ($sortby and !strstr($sortby, "hits ")) { // check for which column to sortby
                     usort($pages, 'WikiDB_backend_dbaBase_sortby_'.str_replace(' ','_',$sortby));
                 }
             }
             if (!empty($options['limit'])) {
-                list($offset,$limit) = $this->limit($options['limit']);
+                list($offset,$limit) = WikiDB_backend::limit($options['limit']);
                 $pages = array_slice($pages, $offset, $limit);
             }
             $this->_pages = $pages;
