@@ -1,5 +1,5 @@
 /*
- $Id: MacOSX.css,v 1.36 2003-12-05 20:54:14 carstenklapp Exp $
+ $Id: MacOSX.css,v 1.37 2003-12-09 06:04:42 carstenklapp Exp $
 
  Classes:
 
@@ -344,7 +344,7 @@ div.wiki-message {
   border-right:  1px solid #c3c3c3;
 }
 .diff .block {
-  background: #ccc;
+  background: #d8d8d8;
   /* for NS4 */
   /*  border: none;*/
 }
@@ -356,36 +356,55 @@ div.wiki-message {
   border: none;
 }
 /* + - line prefix */
-.diff .block tt {
+.diff .block tt.prefix {
   font-weight: normal;
   font-family: monospace;
-  margin-left: -0.6em;
+  margin-left: -1.6em;
   color: black;
   /* for NS4 */
   border: none;
 }
 /* changed words */
-.diff del, .diff ins {
-  font-weight: bold;
-  text-decoration: none;
-}
+.diff ins { font-weight: bolder; }
+.diff ins { text-decoration: none; }
 
 /* blocks containing deleted or added words */
-.diff .original, .diff .deleted,
-.diff .final, .diff .added {
+.diff .original,
+.diff .deleted,
+.diff .final,
+.diff .added {
   background: white;
 }
 /* blocks containing deleted words */
-.diff .original, .diff .deleted {
+.diff .original:first-child,
+.diff .deleted:first-child {
+  border-top: 2px solid #f99; /* fcc */
+}
+.diff .original,
+.diff .deleted {
   background: white;
-  border: 2px solid #f99; /* fcc */
+  border-left: 2px solid #f99; /* fcc */
+  border-right: 2px solid #f99; /* fcc */
+}
+.diff .original:last-child,
+.diff .deleted:last-child {
+  border-bottom: 2px solid #f99; /* fcc */
 }
 /* blocks containing added words */
-.diff .final, .diff .added {
-  background: white;
-  border: 2px solid #9f9; /* cfc */
+.diff .final:first-child,
+.diff .added:first-child {
+  border-top: 2px solid #9f9; /* cfc */
 }
-
+.diff .final,
+.diff .added {
+  background: white;
+  border-left: 2px solid #9f9; /* cfc */
+  border-right: 2px solid #9f9; /* cfc */
+}
+.diff .final:last-child,
+.diff .added:last-child {
+  border-bottom: 2px solid #9f9; /* cfc */
+}
 /* These don't work in NS4 -- it completely ignores <del> and <ins>. */
 /* deleted words */
 .diff del { background: #fcc; } /* f99 */
@@ -405,9 +424,17 @@ div.wiki-message {
   font-size: smaller;
 }
 .pagelist thead td u { text-decoration: none; }
-/* Yellow highlight for every td of mouseover'd tr in pagelist tbody */
-.pagelist tbody tr:hover>td { background: #ffff99; }
-
+/* Yellow highlight for every td of mouseover'd tr in pagelist tbody
+   ie mac ignores all these */
+/*.pagelist tbody tr:hover>td { background: #ffff99; }*/
+.pagelist tbody tr:hover>td {
+  border: solid #ffff99 2px;
+}
+/* some browsers give wacky expanding :hover cells,
+   use transparent border here instead of padding change */
+.pagelist tbody tr>td {
+  border: solid transparent 2px;
+}
 
 /**
  * Search Results
