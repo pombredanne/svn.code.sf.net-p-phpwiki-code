@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.13 2004-03-08 18:17:09 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.14 2004-03-08 19:30:01 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -191,7 +191,7 @@ class WikiGroup{
 
         /* WikiDB users from prefs (not from users): */
         $dbi = _PassUser::getAuthDbh();
-        if ($GLOBALS['DBAuthParams']['pref_select']) {
+        if ($dbi and $GLOBALS['DBAuthParams']['pref_select']) {
             //get prefs table
             $sql = str_replace(' prefs ',' userid ',$GLOBALS['DBAuthParams']['pref_select']);
             $sql = preg_replace('/WHERE.*/i','',$sql);
@@ -202,7 +202,19 @@ class WikiGroup{
                 $users = array_merge($users,$dbi->getCol($sql));
             }
         }
-        return $users;
+
+        /* WikiDB users from users: */
+        if ($dbi and $GLOBALS['DBAuthParams']['auth_user_exists']) {
+            $sql = preg_replace('/WHERE.*/i','',$GLOBALS['DBAuthParams']['auth_user_exists']);
+            if ($GLOBALS['DBParams']['dbtype'] == 'ADODB') {
+                $db_result = $dbi->Execute($sql);
+                $users = array_merge($users,$db_result->GetArray());
+            } elseif ($GLOBALS['DBParams']['dbtype'] == 'SQL') {
+                $users = array_merge($users,$dbi->getCol($sql));
+            }
+        }
+
+        return array_unique($users);
     }
 
     /**
@@ -835,6 +847,11 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2004/03/08 18:17:09  rurban
+// added more WikiGroup::getMembersOf methods, esp. for special groups
+// fixed $LDAP_SET_OPTIONS
+// fixed _AuthInfo group methods
+//
 // Revision 1.12  2004/02/23 21:30:25  rurban
 // more PagePerm stuff: (working against 1.4.0)
 //   ACL editing and simplification of ACL's to simple rwx------ string
