@@ -1,6 +1,6 @@
 <?php // -*-php-*-
 
-rcs_id('$Id: themeinfo.php,v 1.7 2002-01-05 06:17:01 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.8 2002-01-05 15:24:18 carstenklapp Exp $');
 
 /**
  * This PhpWiki theme is experimental and will likely not appear as
@@ -38,7 +38,12 @@ $CSS_URLS = array_merge($CSS_URLS,
                         array("$CSS_DEFAULT" => "themes/$theme/${CSS_DEFAULT}.css"));
 
 // Logo image appears on every page and links to the HomePage.
-$logo = "themes/$theme/Ufp-logo.png";
+$logo = "themes/$theme/Ufp-logo.jpg";
+
+// RSS logo icon (path relative to index.php)
+// If this is left blank (or unset), the default "images/rss.png"
+// will be used.
+//$rssicon = "images/rss.png";
 
 // Signature image which is shown after saving an edited page.  If
 // this is left blank, any signature defined in index.php will be
