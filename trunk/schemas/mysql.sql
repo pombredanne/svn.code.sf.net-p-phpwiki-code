@@ -1,4 +1,4 @@
--- $Id: mysql.sql,v 1.4 2003-03-04 05:26:49 dairiki Exp $
+-- $Id: mysql.sql,v 1.5 2004-01-27 23:25:51 rurban Exp $
 
 drop table if exists page;
 CREATE TABLE page (
@@ -39,7 +39,7 @@ CREATE TABLE nonempty (
 
 drop table if exists link;
 CREATE TABLE link (
-        linkfrom        INT NOT NULL,
+	linkfrom        INT NOT NULL,
         linkto          INT NOT NULL,
 	INDEX (linkfrom),
         INDEX (linkto)
@@ -47,8 +47,31 @@ CREATE TABLE link (
 
 drop table if exists session;
 CREATE TABLE session (
-    sess_id varchar(32) not null default '',
-    sess_data blob not null,
-    sess_date INT UNSIGNED NOT NULL,
-    PRIMARY KEY (sess_id)
+    	sess_id 	VARCHAR(32) NOT NULL DEFAULT '',
+    	sess_data 	BLOB NOT NULL,
+    	sess_date 	INT UNSIGNED NOT NULL,
+    	PRIMARY KEY (sess_id)
 );
+
+-- don't know if the pref table can hold the password. (it's stored there)
+drop table if exists pref;
+CREATE TABLE pref (
+  	userid 	CHAR(48) BINARY NOT NULL UNIQUE,
+  	prefs  	TEXT NULL DEFAULT '',
+  	PRIMARY KEY (userid)
+) TYPE=MyISAM;
+
+drop table if exists user;
+CREATE TABLE user (
+  	userid 	CHAR(48) BINARY NOT NULL UNIQUE,
+  	passwd 	CHAR(48) BINARY DEFAULT '',
+--	groupname CHAR(48) BINARY DEFAULT 'users',
+  	PRIMARY KEY (userid)
+) TYPE=MyISAM;
+
+CREATE TABLE member (
+	userid    CHAR(48) BINARY NOT NULL,
+   	groupname CHAR(48) BINARY NOT NULL DEFAULT 'users',
+   	INDEX (userid),
+   	INDEX (groupname)
+) TYPE=MyISAM;

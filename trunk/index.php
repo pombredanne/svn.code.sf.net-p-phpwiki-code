@@ -71,9 +71,9 @@ define('ENABLE_USER_NEW',true);
 /////////////////////////////////////////////////////////////////////
 // Part Null: Don't touch this!
 
-define ('PHPWIKI_VERSION', '1.3.7');
+define ('PHPWIKI_VERSION', '1.3.8a');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.116 2004-01-25 04:21:02 rurban Exp $');
+rcs_id('$Id: index.php,v 1.117 2004-01-27 23:25:50 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -248,8 +248,8 @@ if (!defined('CACHE_CONTROL_MAX_AGE')) define('CACHE_CONTROL_MAX_AGE', 600);
 /////////////////////////////////////////////////////////////////////
 // PHP Session settings:
 //
-// Only for 'dbtype' => 'SQL'. See schemas/mysql.sql or schemas/psql.sql
-//  $DBParams['db_session_table'] must be defined
+// Only for $DBParams['dbtype'] => 'SQL'. See schemas/mysql.sql or 
+// schemas/psql.sql. $DBParams['db_session_table'] must be defined.
 //define('USE_DB_SESSION',true);
 
 // If your php was compiled with --enable-trans-sid it tries to
@@ -424,52 +424,55 @@ $ExpireParams['author'] = array('max_age'  => 365,
 // of auth methods to get and check the passwords:
 //
 // ALLOW_ANON_USER         default true
+// ALLOW_ANON_EDIT         default true
 // ALLOW_BOGO_LOGIN        default true
 // ALLOW_USER_PASSWORDS    default true
 
 // allow anon users to view pages! (not edit)
 if (!defined('ALLOW_ANON_USER')) define('ALLOW_ANON_USER', true); 
+// allow anon users to edit pages
+if (!defined('ALLOW_ANON_EDIT')) define('ALLOW_ANON_EDIT', true); 
+
+// This was replaced by ALLOW_ANON_EDIT
+if (!defined('REQUIRE_SIGNIN_BEFORE_EDIT')) define('REQUIRE_SIGNIN_BEFORE_EDIT', ! ALLOW_ANON_EDIT);
 
 // If ALLOW_BOGO_LOGIN is true, users are allowed to login (with
 // any/no password) using any userid which: 
-//  1) is not the ADMIN_USER,
+//  1) is not the ADMIN_USER, and
 //  2) is a valid WikiWord (matches $WikiNameRegexp.)
 // If true, users may be created by themselves. Otherwise we need seperate auth. 
+// If such a user will create a so called HomePage with his userid, he will 
+// be able to store his preferneces abnd password there.
 if (!defined('ALLOW_BOGO_LOGIN')) define('ALLOW_BOGO_LOGIN', true);
-
-// This will go away, with true page permissions.
-// If set, then if an anonymous user attempts to edit a page he will
-// be required to sign in.  (If ALLOW_BOGO_LOGIN is true, of course,
-// no password is required, but the user must still sign in under
-// some sort of WikiWordName.)
-if (!defined('REQUIRE_SIGNIN_BEFORE_EDIT')) define('REQUIRE_SIGNIN_BEFORE_EDIT', true);
 
 // True User Authentification:
 // To require user passwords:
+//   ALLOW_ANON_USER = false
+//   ALLOW_ANON_EDIT = false
 //   ALLOW_BOGO_LOGIN = false,
 //   ALLOW_USER_PASSWORDS = true.
 // Otherwise any anon or bogo user might login without any or a wrong password.
 if (!defined('ALLOW_USER_PASSWORDS')) define('ALLOW_USER_PASSWORDS', true);
 
-// Below we define which methods exists and in which order theys are used:
-// PersonalPage:  Store passwords in the users homepage metadata (simple)
-// HttpAuth:  Use the protection by the webserver, either .htaccess or httpd.conf
-// Db:        Use $DBAuthParams[] (see below) with the PearDB or ADODB only.
-//            If 'auth_dsn' is undefined, and wiki pages are stored via SQL or ADODB,
-//            it uses the same database. (fastest)
-// LDAP:      Authenticate against LDAP_AUTH_HOST with the LDAP_AUTH_SEARCH settings
-// IMAP:      Authenticate against IMAP_AUTH_HOST (e.g. an existing email account)
-// File:      Store username:crypted-passwords in .htaccess like files. 
-//            Use Apache's htpasswd to manage this file.
+// Below we define which methods exists and in which order 
+// they are used:
+//   BogoLogin:     WikiWord enough, but with PASSWORD_LENGTH_MINIMUM
+//   PersonalPage:  Store passwords in the users homepage metadata (simple)
+//   HttpAuth:      Use the protection by the webserver (.htaccess)
+//   Db:            Use $DBAuthParams[] (see below) with the PearDB or 
+//		    ADODB only.
+//   LDAP:          Authenticate against LDAP_AUTH_HOST with LDAP_AUTH_SEARCH
+//   IMAP:          Authenticate against IMAP_AUTH_HOST (email account)
+//   File:          Store username:crypted-passwords in .htaccess like files. 
+//                  Use Apache's htpasswd to manage this file.
 
 if (defined('ALLOW_USER_PASSWORDS')) {
 
-    if (!defined('PASSWORD_LENGTH_MINIMUM')) define('PASSWORD_LENGTH_MINIMUM', 6);
-    
     // use the following order of authentification methods:
     if (!isset($USER_AUTH_ORDER))
         $USER_AUTH_ORDER = 
             array(
+//                "BogoLogin",
                   "PersonalPage",
 //                "HttpAuth",
                   "Db",
@@ -478,16 +481,19 @@ if (defined('ALLOW_USER_PASSWORDS')) {
 //                "File"   // define AUTH_USER_FILE and opt. AUTH_USER_FILE_STORABLE
                   ) ;
 
+    if (!defined('PASSWORD_LENGTH_MINIMUM')) define('PASSWORD_LENGTH_MINIMUM', 6);
+    
     if (!defined('USER_AUTH_POLICY'))
-        // we support the following auth policies:
+        //We support the following auth policies:
         // first-only: use only the first method in USER_AUTH_ORDER
         // old:        ignore USER_AUTH_ORDER and try to use all available 
         //             methods as in the previous PhpWiki releases (slow)
         // strict:     check if the user exists for all methods: 
         //             on the first existing user, try the password. 
         //             dont try the other methods on failure then
-        // stacked:    check the given user - password combination for all methods and return 
-        //             true on the first success.
+        // stacked:    check the given user - password combination for all methods 
+	//             and return true on the first success.
+
         //define('USER_AUTH_POLICY','first-only');
         define('USER_AUTH_POLICY','old');
         //define('USER_AUTH_POLICY','strict');
@@ -501,44 +507,27 @@ if (!defined('LDAP_AUTH_SEARCH')) define('LDAP_AUTH_SEARCH', "ou=mycompany.com,o
 
 // IMAP auth: 
 //   check userid/passwords from a imap server, defaults to localhost
-if (!defined('IMAP_AUTH_HOST'))   define('IMAP_AUTH_HOST', 'localhost');
+if (!defined('IMAP_AUTH_HOST'))   define('IMAP_AUTH_HOST', 'localhost:143/imap/notls');
+// Other IMAP_AUTH_HOST samples:
+//   "localhost"
+//   "localhost:993/imap/ssl/novalidate-cert" (SuSE refuses non-SSL conections)
+//   "localhost:143/imap/notls"
 
 // File auth:
 //if (!defined('AUTH_USER_FILE')) define('AUTH_USER_FILE', '/etc/shadow'); // or '/etc/httpd/.htpasswd'
 // set this to true if the user may change his password into this file.
 //if (!defined('AUTH_USER_FILE_STORABLE')) define('AUTH_USER_FILE_STORABLE',false);
+
+
+// Group membership
+$group_method = 0; 
+define('GROUP_NONE',	$group_method++);
+define('GROUP_WIKIPAGE',$group_method++); 
+define('GROUP_DB',	$group_method++);
+define('GROUP_FILE',	$group_method++);
+define('GROUP_LDAP',	$group_method++);
+if (!defined('GROUP_METHOD')) define('GROUP_METHOD', GROUP_WIKIPAGE);
 //if (!defined('AUTH_GROUP_FILE')) define('AUTH_GROUP_FILE', '/etc/groups'); // or '/etc/httpd/.htgroup'
-
-// Sample of external AuthDB mysql tables to check against
-//TODO: PhpNuke setup
-/*
-use phpwiki;
-CREATE TABLE pref (
-  userid char(48) binary NOT NULL UNIQUE,
-  preferences text NULL default '',
-  PRIMARY KEY (userid)
-) TYPE=MyISAM;
-INSERT INTO user VALUES ('ReiniUrban', 'a:1:{s:6:"passwd";s:13:"7cyrcMAh0grMI";}');
-
-// or password only
-CREATE TABLE user (
-  userid char(48) binary NOT NULL UNIQUE,
-  passwd char(48) binary default '*',
-  PRIMARY KEY (userid)
-) TYPE=MyISAM;
-
-*/
-// external mysql member table
-/*
- CREATE TABLE member (
-   user  char(48) NOT NULL,
-   group char(48) NOT NULL default 'users',
-   PRIMARY KEY (user),
-   KEY groupname (groupname)
- ) TYPE=MyISAM;
- INSERT INTO member VALUES ('wikiadmin', 'root');
- INSERT INTO member VALUES ('TestUser', 'users');
-*/
 
 // 
 // Seperate DB User Authentication. 
@@ -546,36 +535,49 @@ CREATE TABLE user (
 //   apache auth_mysql or something else.
 // The default is to store the data as metadata in the users PersonalPage.
 // The most likely dsn option is the same dsn as the wikipages.
-$DBAuthParams = array(
+$DBAuthParams = array (
+   // if not defined use $DBParams['dsn'] i.e. the phpwiki database
    //'auth_dsn'         => 'mysql://localhost/phpwiki',
 
    // USER => PASSWORD
-   'auth_check'  => 'SELECT passwd FROM user WHERE username="$userid"',
+   // plaintext passwords:
+   //'auth_check'  => 'SELECT IF(passwd="$password",1,0) as ok FROM user WHERE username="$userid"',
+   // database (md5) passwords:
+   'auth_check'  => 'SELECT IF(passwd=PASSWORD("$password"),1,0) as ok FROM user WHERE userid="$userid"',
+   // crypt passwords:
+   //'auth_check'  => 'SELECT password as password FROM user WHERE username="$userid"',
+   // this is only needed with auth_crypt_method plain:
+   'auth_user_exists'  => 'SELECT userid FROM user WHERE userid="$userid"',
 
-   'auth_crypt_method'  => 'crypt',     // 'crypt' (unix) or 'plain' (also for mysql md5)
-   // 'auth_crypt_method'  => 'plain',
+   //'auth_crypt_method'  => 'crypt',     // 'crypt' (unix)
+   'auth_crypt_method'  => 'plain',       // plain or mysql PASSWORD()
 
    // If 'auth_update' is not defined but 'auth_check' is defined, the user cannot 
    // change his password.
    // $password is processed  by the 'auth_crypt_method'.
-   'auth_update'  => 'UPDATE user SET password="$password" WHERE username="$userid"',
+   'auth_update'  => 'UPDATE user SET passwd="$password" WHERE userid="$userid"',
    // for mysql md5 use 'auth_crypt_method'  => 'plain'
-   //'auth_update'  => 'UPDATE user SET password=PASSWORD("$password") WHERE username="$userid"',
+   'auth_update'  => 'UPDATE user SET passwd=PASSWORD("$password") WHERE userid="$userid"',
 
    // USER => PREFERENCES
    //   This can be optionally defined in an external DB. 
    //   The default is the users homepage.
-   'pref_select' => 'SELECT pref from user WHERE username="$userid"',
-   'pref_update' => 'UPDATE user SET prefs="$pref_blob" WHERE username="$userid"',
+   'pref_select' => 'SELECT pref FROM user WHERE userid="$userid"',
+   'pref_update' => 'UPDATE user SET prefs="$pref_blob" WHERE userid="$userid"',
 
    // USERS <=> GROUPS
    //   DB methods for lib/WikiGroup.php, see also AUTH_GROUP_FILE above.
-   //   This can be optionally defined in an external DB. The default is a 
-   //   special locked wikipage for groupmembers .(which?)
-   // All members of the group:
-   'group_members' => 'SELECT username FROM grouptable WHERE groupname="$group"',
-   // All groups this user belongs to:
-   'user_groups' => 'SELECT groupname FROM grouptable WHERE username="$userid"',
+   // you can define 1:n or n:m user<=>group relations, as you wish.
+   // Sample configurations
+   //   only one group per user:
+   //'is_member' => 'SELECT 1 FROM user WHERE user=$userid"" AND group="$groupname"',
+   //'group_members' => 'SELECT user FROM user WHERE group="$groupname"',
+   //'user_groups' => 'SELECT group FROM user WHERE user="$userid"',
+   // or
+   //   multiple groups per user (n:m):
+   'is_member' => 'SELECT 1 FROM member WHERE userid=$userid"" AND groupname="$groupname"',
+   'group_members' => 'SELECT DISTINCT userid FROM member WHERE groupname="$groupname"',
+   'user_groups' => 'SELECT groupname FROM member WHERE userid="$userid"',
 
    'dummy' => false,
 );
@@ -901,6 +903,9 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 include "lib/main.php";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.116  2004/01/25 04:21:02  rurban
+// WikiUserNew support (temp. ENABLE_USER_NEW constant)
+//
 // Revision 1.115  2003/12/22 04:58:11  carstenklapp
 // Incremented release version.
 //
