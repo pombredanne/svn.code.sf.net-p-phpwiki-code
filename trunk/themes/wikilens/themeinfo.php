@@ -1,6 +1,8 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.5 2004-06-14 11:26:54 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.6 2004-06-18 14:43:41 rurban Exp $');
 /**
+ * The wikilens theme is just a normal Theme (can be based on any, here based on default)
+ * with additionally loads some wikilens libraries.
  */
 require_once('lib/Theme.php');
 
@@ -82,64 +84,9 @@ $WikiTheme->setTimeFormat("%H:%M");
  */
 //$WikiTheme->setDateFormat("%B %d, %Y", false); 
 
-/**
- * Custom UserPreferences:
- * A list of name => _UserPreference class pairs.
- * Rationale: Certain themes should be able to extend the predefined list 
- * of preferences. Display/editing is done in the theme specific userprefs.tmpl
- * but storage/sanification/update/... must be extended to the Get/SetPreferences methods.
- */
+require_once("lib/wikilens/PageListColumns.php");
 
-class _UserPreference_recengine // recommendation engine method
-extends _UserPreference
-{
-    var $valid_values = array('php','mysuggest','mymovielens','mycluto');
-    var $default_value = 'php';
-
-    function sanify ($value) {
-        if (!in_array($value,$this->valid_values)) return $this->default_value;
-        else return $value;
-    }
-}
-
-class _UserPreference_recalgo // recommendation engine algorithm
-extends _UserPreference
-{
-    var $valid_values = array
-        (
-         'itemCos',  // Item-based Top-N recommendation algorithm with cosine-based similarity function
-         'itemProb', // Item-based Top-N recommendation algorithm with probability-based similarity function. 
-                     // This algorithms tends to outperform the rest.
-         'userCos',  // User-based Top-N recommendation algorithm with cosine-based similarity function.
-         'bayes');   // Naïve Bayesian Classifier
-    var $default_value = 'itemProb';
-
-    function sanify ($value) {
-        if (!in_array($value,$this->valid_values)) return $this->default_value;
-        else return $value;
-    }
-}
-
-class _UserPreference_recnnbr // recommendation engine key clustering, neighborhood size
-extends _UserPreference_numeric{}
-
-$WikiTheme->customUserPreferences(array(
-                                   'recengine' => new _UserPreference_recengine('php'),
-                                   'recalgo'   => new _UserPreference_recalgo('itemProb'),
-                                   //recnnbr: typically 15-30 for item-based, 40-80 for user-based algos
-                                   'recnnbr'   => new _UserPreference_recnnbr(10,14,80),
-                                   ));
-
-require_once('lib/PageList.php');
-
-/**
- *  Custom PageList classes
- *  Rationale: Certain themes should be able to extend the predefined list 
- *  of pagelist types. E.g. certain plugins, like MostPopular might use 
- *  info=pagename,hits,rating
- *  which displays the rating column whenever the wikilens theme is active.
- *  Similarly as in certain plugins, like WikiAdminRename or _WikiTranslation
- */
+/*
 class _PageList_Column_rating extends _PageList_Column {
     function _getValue ($page_handle, &$revision_handle) {
         static $prefix = 0;
@@ -151,11 +98,7 @@ class _PageList_Column_rating extends _PageList_Column {
                                  $GLOBALS['request'], $page_handle);
     }
 };
-
-// register custom PageList type
-$WikiTheme->addPageListColumn(array('rating' => 
-                                new _PageList_Column_rating('rating', _("Rate"))));
-
+*/
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // (c-file-style: "gnu")
