@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.39 2003-10-28 21:13:46 carstenklapp Exp $');
+rcs_id('$Id: WikiUser.php,v 1.40 2003-11-21 16:54:58 carstenklapp Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -166,8 +166,10 @@ class WikiUser {
 
     function PrintLoginForm (&$request, $args, $fail_message = false,
                              $seperate_page = true) {
-        include_once('lib/Template.php');
-
+        require_once('lib/Template.php');
+        // Call update_locale in case the system's default language is not 'en'.
+        // (We have no user pref for lang at this point yet, no one is logged in.)
+        update_locale(DEFAULT_LANGUAGE);
         $userid = '';
         $require_level = 0;
         extract($args); // fixme
@@ -649,6 +651,9 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.39  2003/10/28 21:13:46  carstenklapp
+// Security bug fix for admin password, submitted by Julien Charbon.
+//
 // Revision 1.38  2003/09/13 22:25:38  carstenklapp
 // Hook for new user preference 'noLinkIcons'.
 //
