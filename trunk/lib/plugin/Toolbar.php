@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Toolbar.php,v 1.4 2002-01-08 21:09:39 carstenklapp Exp $');
+rcs_id('$Id: Toolbar.php,v 1.5 2002-01-08 22:59:33 carstenklapp Exp $');
 /**
  * Usage:
  *
@@ -47,15 +47,20 @@ extends WikiPlugin
                      );
     }
 
-    function mkimg($key, $val, &$html, &$ToolbarURLs) {
-        $html .= "<td><a href=\"". $ToolbarURLs[$key]."\"><img alt=\"$key\" src=\"$val\" border=\"0\"></a></td>";
+    function mklinks($text, $action) {
+        return do_transform("[$text|$action]", 'LinkTransform');
     }
 
-    function mklinks($text, $action) {
-        return "[$text|$action]";
+    function mkimglinks($text, $action, $imgurl) {
+        // ImageLinks would be helpful here
+        if ($imgurl)
+            return "<a href=\"". BaseURL() .$action ."\"><img alt=\"$text\" src=\"" .($imgurl) ."\" border=\"0\"></a>";
+        else
+            return "&nbsp;". $this->mklinks($text, 'phpwiki:' .$action) ."&nbsp;";
     }
 
     function run($dbi, $argstr, $request) {
+
         $args = $this->getArgs($argstr, $request);
         extract($args);
         if (empty($go) && empty($days)) {
@@ -75,94 +80,77 @@ extends WikiPlugin
             return $html;
         }
 
-
+        if ($style == 'img')
+            $style = 'image';
 
         global $theme;
-        if ($theme == "MacOSX" && $name=="RecentChanges") {
-            global $ToolbarImages;
-                $ToolbarURLs = array(
-                '1 day'		=> "RecentChanges?days=1",
-                '3 days'	=> "RecentChanges?days=3",
-                '7 days'	=> "RecentChanges?days=7",
-                '30 days'	=> "RecentChanges?days=30",
-                '90 days'	=> "RecentChanges?days=90",
-                '...'		=> "RecentChanges?days=-1"
-                );
-
-
-
-//            if (in_array ($name, $ToolbarImages)) {
-                $rcimages = $ToolbarImages[$name];
-                $html = "<table summary=\"RecentChanges\" border=0 cellspacing=0 cellpadding=0><tr valign=\"middle\"><td>Show changes for: ";
-                //array_walk($rcimages, 'makeimg'); //doesn't work???
-                while(list($key, $val) = each($rcimages)) {
-                    $this->mkimg($key, $val, $html, $ToolbarURLs);
-                }
-                return "</tr>".$html;
-                //reset($rcimages);
-//            }
-
-//            if (array_key_exists("first", $search_array)) {
-//                echo "The 'first' element is in the array";
-//            }
-
+        if ($theme == "MacOSX" && ($name == _("RecentChanges") || $name == _("RecentEdits"))) {
+            $style = "image";
         }
 
-        switch ($style) {
-        case "text":
-            // add spaces
-            switch ($sep) {
-            case '|':
+        // add spaces
+        switch ($sep) {
+        case '|':
             $sep = " | ";
-                break;
-            case ',':
-                $sep = ", ";
-                break;
-            //default:
-                //$sep = $sep ." ";
+            break;
+        case ',':
+            $sep = ", ";
+            break;
+        //default:
+            //$sep = $sep ." ";
+        }
+
+        if (($name == _("RecentChanges") || $name == _("RecentEdits")) && $days) {
+
+            $days = explode(",", $days);
+
+            $day1    = _("1 day");
+            $ndays   = _("%s days");
+            $alldays = "...";
+
+            $links = array();
+            if ($style == "image") {
+                global $ToolbarImages;
+                $rcimages = $ToolbarImages['RecentChanges'];
             }
+            foreach ($days as $val) {
 
-            if (($name==_("RecentChanges")||_("RecentEdits")) && $days) {
+                if ($val == 1)
+                    $text = $day1;
+                elseif ($val == -1)
+                    $text = $alldays;
+                else
+                    $text = sprintf($ndays, $val);
 
-                $days = explode(",", $days);
-
-                $day1    = _("1 day");
-                $ndays   = _("%s days");
-                $alldays = "...";
-
-                $links = array();
-                foreach ($days as $val) {
-                    if ($val == 1)
-                        $text = $day1;
-                    elseif ($val == -1)
-                        $text = $alldays;
-                    else
-                        $text = sprintf($ndays, $val);
+                if ($style == "image") {
+                    $action = $name ."?days=" .$val;
+                    $imgurl = $rcimages[$text];
+                    $links[] = $this->mkimglinks($text, $action, $imgurl);
+                } else {
                     $action = 'phpwiki:' .$name ."?days=" .$val;
-
                     $links[] = $this->mklinks($text, $action);
                 }
-            $links = join($sep, $links);
-
-            } else {
-                $links = "[" .str_replace(",", "]" .$sep ."[", $go) ."]";
             }
-            $content = sprintf(_($label),$links);
-            // TODO: (maybe) localise individual item labels (the
-            // parts of the $go text before the "|"s)
+            // final assembly of label and the links
+            if ($style == "image") {
+                $links = join("</td><td>", $links);
+                $html = sprintf("<table summary=\"". $name ."\" border=0
+cellspacing=0 cellpadding=0><tr valign=\"middle\"><td>" ._($label) ."</td>","<td>" .$links)."</tr></td>";
+            } else {
+                $links = join($sep, $links);
+                $html = sprintf(_($label),$links);
+            }
 
-            $html = do_transform($content, 'LinkTransform');
-            return $html;
-            break;
-        case "img":
-            $style = 'image';
-        case "image":
-            $error_text = "WikiPlugin_" .$this->getName() .": ";
-            $error_text .= 'style=image: ' ._("Not Implemented");
-            $html = $error_text;
-            return $html;
-            break;
+        } else {
+            $links = "[" .str_replace(",", ("]" .$sep ."["), $go) ."]";
+            $links = do_transform($links, 'LinkTransform');
+            $html = sprintf(_($label),$links);
+
         }
+        // TODO: (maybe) localise individual item labels (the
+        // parts of the $go text before the "|"s)
+
+        return $html;
     }
 };
         
