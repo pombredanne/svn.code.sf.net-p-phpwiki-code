@@ -1,8 +1,7 @@
 <?php // -*-html-*-
-  rcs_id('$Id: debug.tmpl,v 1.1 2004-12-14 21:30:37 rurban Exp $');
+  rcs_id('$Id: debug.tmpl,v 1.2 2004-12-15 17:47:32 rurban Exp $');
 ?>
 <?php global $RUNTIMER; ?>
-<div align="center" id="xhtml-validator"><a href="http://validator.w3.org/check/referer" target="_top">Valid XHTML 1.0</a><a href="http://jigsaw.w3.org/css-validator/check/referer" target="_top">Valid CSS!</a>
+<p align="center" id="xhtml-validator"><a href="http://validator.w3.org/check/referer" target="_top">Valid XHTML 1.0</a>  <a href="http://jigsaw.w3.org/css-validator/check/referer" target="_top">Valid CSS!</a>
 <span class="debug"><?=fmt("Page Execution took %s seconds", $RUNTIMER->getStats())?></span>
-</div>
-<br clear="all" class="clear-floats" />
+</p>

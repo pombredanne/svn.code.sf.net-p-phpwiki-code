@@ -145,10 +145,6 @@ div.wikitext {
   margin-top: 12px;
 }
 
-#bottom {
-  margin-left: 25px auto;
-}
-
 pre {
   overflow: hidden;
   padding: 2px;
@@ -175,6 +171,7 @@ div.comments {
 }
 
 #footer {
+  font-size: 0.81em;
   background-color: #eee;
   background: url("images/kubrickfooter.png") no-repeat bottom center;
   border: none;
@@ -186,7 +183,8 @@ div.comments {
 
 #footer p {
   margin: 0;
-  padding: 20px 0;
+  padding: 0;
+/*  padding: 20px 0; */
 }
 
 .widecolumn .entry p {
@@ -221,6 +219,7 @@ tt {
   font-family: 'Andale Mono', 'Lucida Console', 'Courier New', monospaced;
   font-size: 1.05em;
 }
+
 pre {
   width: 486px;
   font-size: 10px;
@@ -371,7 +370,10 @@ a.named-interwiki {
   background: url("images/interwiki.png") right top no-repeat;
 } 
 
-  
+#xhtml-validator { 
+  padding-bottom: 0;
+  vertical-align: middle;
+}
 
 #searchholder {
   float: right;
@@ -385,7 +387,6 @@ a.named-interwiki {
   height: 13px;
   width: 100px;
 }
-
 
 .narrowcolumn, #logincontent, #editcontent {
   float: left;
