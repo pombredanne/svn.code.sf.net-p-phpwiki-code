@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.225 2004-12-22 19:02:29 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.226 2004-12-26 17:12:06 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -156,7 +156,12 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
     if (is_array($args)) {
         $enc_args = array();
         foreach ($args as $key => $val) {
-            if (!is_array($val)) // ugly hack for getURLtoSelf() which also takes POST vars
+            // avoid default args
+            if (USE_PATH_INFO and $key == 'pagename')
+            	; 
+            elseif ($key == 'action' and $val == 'browse')
+        	;
+            elseif (!is_array($val)) // ugly hack for getURLtoSelf() which also takes POST vars
               $enc_args[] = urlencode($key) . '=' . urlencode($val);
         }
         $args = join('&', $enc_args);
@@ -1401,12 +1406,14 @@ function explodePageList($input, $include_empty=false, $sortby='pagename', $limi
  * or a sub-type of $class. 
  */
 function isa ($object, $class) {
-    if (check_php_version(4,2)) 
+    //if (check_php_version(5)) 
+    //    return $object instanceof $class;
+    if (check_php_version(4,2) and !check_php_version(5)) 
         return is_a($object, $class);
 
-    $lclass = strtolower($class);
+    $lclass = check_php_version(5) ? $class : strtolower($class);
     return is_object($object)
-        && ( strtolower(get_class($object)) == $lclass
+        && ( strtolower(get_class($object)) == strtolower($class)
              || is_subclass_of($object, $lclass) );
 }
 
@@ -1840,6 +1847,9 @@ function printSimpleTrace($bt) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.225  2004/12/22 19:02:29  rurban
+// fix glob for starting * or ?
+//
 // Revision 1.224  2004/12/20 12:11:50  rurban
 // fix "lib/stdlib.php:1348: Warning[2]: Compilation failed: unmatched parentheses at offset 2"
 //   not reproducable other than on sf.net, but this seems to fix it.
