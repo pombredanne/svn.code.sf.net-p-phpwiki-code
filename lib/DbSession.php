@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbSession.php,v 1.20 2004-06-28 16:34:30 rurban Exp $');
+<?php rcs_id('$Id: DbSession.php,v 1.21 2004-07-01 09:29:40 rurban Exp $');
 
 /**
  * Store sessions data in Pear DB / ADODB / dba / ....
@@ -158,6 +158,11 @@ extends DbSession
         if (isa($dbh, 'DB_pgsql'))
             //if (preg_match('|^[a-zA-Z0-9/+=]+$|', $res))
             $res = base64_decode($res);
+        if (strlen($res) > 4000) {
+            trigger_error("Overlarge session data!", E_USER_WARNING);
+            $res = '';
+            //$res = preg_replace('/s:6:"_cache";O:12:"WikiDB_cache".+}$/',"",$res);
+        }    
         return $res;
     }
   
@@ -373,6 +378,10 @@ extends DbSession
         $this->_disconnect();
         if (!empty($res) and preg_match('|^[a-zA-Z0-9/+=]+$|', $res))
             $res = base64_decode($res);
+        if (strlen($res) > 4000) {
+            trigger_error("Overlarge session data!", E_USER_WARNING);
+            $res = '';
+        }
         return $res;
     }
   
