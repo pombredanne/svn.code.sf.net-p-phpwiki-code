@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.91 2005-01-25 07:05:49 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.92 2005-01-29 20:37:21 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -135,7 +135,7 @@ class PageEditor
         // FIXME: NOT_CURRENT_MESSAGE?
         $tokens = array_merge($tokens, $this->getFormElements());
 
-        if (ENABLE_EDIT_TOOLBAR or JS_SEARCHREPLACE) {
+        if (ENABLE_EDIT_TOOLBAR) {
             include_once("lib/EditToolbar.php");
             $toolbar = new EditToolbar();
             $tokens = array_merge($tokens, $toolbar->getTokens());
@@ -710,6 +710,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.91  2005/01/25 07:05:49  rurban
+ extract toolbar code, support new tags to get rid of php inside templates
+
  Revision 1.90  2005/01/22 12:46:15  rurban
  fix oldmakrup button label
  update pref[edit*] settings
