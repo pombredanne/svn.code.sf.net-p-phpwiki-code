@@ -1,90 +1,75 @@
-Date: Sat, 5 Jun 2004 16:49:56 +0200
+Date: Tue, 22 Jun 2004 17:18:38 +0200
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
-X-Rcs-Id: $Id: PluginCalendrier,v 1.3 2004-06-08 14:19:03 rurban Exp $
+X-Rcs-Id: $Id: PluginCalendrier,v 1.4 2004-06-22 15:49:31 pmeignen Exp $
 Content-Type: application/x-phpwiki;
   pagename=PluginCalendrier;
-  pgsrc_version="2 $Revision: 1.3 $";
+  pgsrc_version="2 $Revision: 1.4 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-Le PluginCalendrier peut être utilisé pour générer un calendrier mensuel 
-au sein d'une page du wiki. C'est une pratique pour les d'obtenir des WikiPersonnel~s.
+!!Description
 
-Les dates individuelles dans le calendrier lient à des pages wiki spécifiquement nommées. Les noms des "pages du jour" sont formées par défaut en ajoutant la date au nom de la page sur laquelle apparaît le calendrier.
+Le PluginCalendrier peut être utilisé pour générer un calendrier mensuel
+au sein d'une page du wiki. C'est pratique pour des WikiPersonnel~s.
 
-''Cette fonctionnalité a été inspirée par [Manila|http://manila.userland.com/], et a été tout d'abord implémentée par GaryBenson. Elle fut par la suite implémentée sous forme de PluginWiki par JeffDairiki.''
+Les dates individuelles dans le calendrier sont liées à des pages wiki spécialement nommées : le nom d'une "page du jour" est formé par défaut en ajoutant la date au nom de la page sur laquelle apparaît le calendrier.
 
-!! Usage :
+!!Usage
 
-<verbatim> 
-<?plugin Calendar?> 
+<verbatim>
+<?plugin Calendar?>
 </verbatim>
 
 vous donnera :
 <?plugin Calendar?>
 
---------
 
 !! Arguments
 
 !Sélection du Mois
 
-__year__: 
-
+__year__ |
   spécifie l'année du calendrier (l'année actuelle par défaut)
-
-__month__: 
-
+__month__ |
   spécifie le mois du calendrier (le mois actuel par défaut)
-__month_offset__: 
+__month_offset__ |
+  ajouté au ''mois''. Peut être utilisé pour inclure l'équivalent de plusieurs mois sur une seule page du wiki.
 
-  ajouté au ''mois''. Peut être utilisé pour inclure l'équivalent 
-  de plusieurs mois sur une seule page du wiki.
+Le calendrier suivant affiche systématiquement le mois suivant le mois courant :
 
 <?plugin Calendar month_offset=+1?>
 
-! Noms de la "Page du Jour"
+!Nom de la "Page du Jour"
 
-__date_format__:
+__date_format__ |
+  [Strftime| php-function:strftime] format de la chaîne utilisée pour générer le nom des pages pour les "pages du jour". La valeur par défaut est =%Y-%m-%d=.
+__prefix__ | 
+  Préfixe pour la date (formatée par ''date_format'') pour générer les noms des "pages du jour". La valeur par défaut est =~[pagename]/=.
 
-  [Strftime| php-function:strftime] format de la chaîne utilisée pour 
-  générer le nom des pages pour les "pages du jour". La valeur par défaut 
-  est =%Y-%m-%d=.
+!Apparence
 
-__prefix__: 
-  
-  Préfixe pour la date (formatée par ''date_format'') pour générer les noms 
-  des "pages du jour". La valeur par défaut est =~[pagename]/=.
+__month_format__ |
+  [Strftime| php-function:strftime] format de la chaîne utilisée pour générer le titre du calendrier. La valeur par défaut est =%B, %Y=.
+__wday_format__ |
+  [Strftime| php-function:strftime] format de la chaîne utilisée pour générer le nom des jours de la semaine au-dessus du calendrier.
+__start_wday__ |
+  Le premier jour de la semaine. Il doit être spécifié par un entier de zéro (dimanche) à six (samedi) inclus.
 
-! Apparence
-
-__month_format__: 
-
-  [Strftime| php-function:strftime] format de la chaîne utilisée pour 
-  générer le titre du calendrier. La valeur par défaut est =%B, %Y=.
-
-__wday_format__: 
-
-  [Strftime| php-function:strftime] format de la chaîne utilisée pour générer 
-  le nom des jours de la semaine au-dessus du calendrier.
-
-__start_wday__: 
-
-  Le premier jour de la semaine. Il doit être spécifié par un entier de 
-  zéro (dimanche) à six (samedi) inclus.
+Par exemple, le calendrier suivant commence les semaines le lundi :
 
 <?plugin Calendar start_wday=1 ?>
 -----
 
-! Patch for 1.2
+!!Auteur
 
-GaryBenson a écrit la première implémentation pour PhpWiki 1.2 
-(car avant PhpWiki ne supportait pas les plugins). Gary propose une copie d'écran à 
-http://inauspicious.org/files/screenshots/calender.png , un 
-[patch|http://inauspicious.org/files/phpwiki/phpwiki-1.2.0-calendar.patch] (on 1.2.0), et 
-[calendar.php |http://inauspicious.org/files/phpwiki/calendar.php] 
+''Cette fonctionnalité a été inspirée par [Manila|http://manila.userland.com/], et a été tout d'abord implémentée par GaryBenson. Elle fut par la suite implémentée sous forme de PluginWiki par JeffDairiki.''
+
+GaryBenson a écrit la première implémentation pour PhpWiki 1.2
+(car avant PhpWiki ne supportait pas les plugins). Gary propose une copie d'écran à
+http://inauspicious.org/files/screenshots/calender.png , et
+[calendar.php |http://inauspicious.org/files/phpwiki/calendar.php]
 pour une vue du calendrier sur l'année.
 
 ----
