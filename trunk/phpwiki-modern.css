@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki-modern.css,v 1.13 2002-02-10 05:36:18 carstenklapp Exp $
+ * $Id: phpwiki-modern.css,v 1.14 2002-02-10 22:13:05 carstenklapp Exp $
  *
  * Inspiration for this stylesheet:
  *
@@ -50,21 +50,22 @@ body {
   /* light gray */
   background: #eee;
   font-family: Arial, Helvetica, sans-serif;
+  margin: 1ex 1em;
 }
 
 hr { height: 1px; }
 
 div.wikitext {
   background: white;
-  border-top:    0.5pt #888 solid;
   border-bottom: 0.5pt #888 solid;
   padding-top:    0.75ex; 
   padding-bottom: 0.75ex; 
   padding-left:  0.8em; 
   padding-right: 0.8em; 
-  margin-left:  1em;
-  margin-right: 1em;
+  margin-top:    0ex;
   margin-bottom: 0;
+  margin-left:  0em;
+  margin-right: 0em;
   /*This breaks Netscape 4: (display does not go full width).
    * width: auto;
    */
@@ -75,9 +76,9 @@ div.wikitext {
 
 #logo {
   position: absolute;
-  right: 1.5em;
+  right: 1.25em;
   /* This breaks when the navbar wraps to the second line. Ideas? */
-  top: 5.1ex;
+  top: 5.5ex;
 }
 
 /**
@@ -139,13 +140,10 @@ h1 {
   color:            white;
   background-color: black;
   padding-top:    1.1ex;
-  padding-left:   0.8em;
+  padding-left:   0.3em;
   padding-bottom: 0.2ex;
   padding-right:  0.6em;
   margin: 0;
-  /* for Mozilla */
-  margin-left:  -8px;
-  margin-right: -8px;
 }
 h1 .backlinks {
   color: white;
@@ -214,8 +212,8 @@ caption { font-family: Arial, Helvetica, sans-serif; }
   background: #ddd; /* dark gray */
   margin-top:    0.1ex;
   margin-bottom: 1ex;
-  margin-left:  1em;
-  margin-right: 1em;
+  margin-left:  0em;
+  margin-right: 0em;
 }
 
 #actionbar table, #navbar {
@@ -270,7 +268,7 @@ textarea.wikiedit {
 .transclusion-title {
   text-align: right;
   margin-right:  0.25em;
-  margin-bottom: 0.1ex;
+  margin-bottom: 0.15ex;
   font-style: oblique;
   font-size:  smaller;
   text-decoration: underline;
@@ -410,12 +408,14 @@ table.cal td.cal-today a.cal-hide {
 /**
  * Other
  */
+.printer { display: none; }
 
 /* PHP Warnings */
 div.errors {
   color: black;
   background: white;
-  margin:  2em;
+  margin-top:    2em;
+  margin-bottom: 2em;
   padding: 1ex;
   font-size: smaller;
   border: thin dashed red;
@@ -435,8 +435,8 @@ div.errors {
   color: black;
   background: white;
   font-family: monospace;
-  margin:  1em;
-  padding: 2px;
+  margin: 1ex 0;
+  padding: 0.5ex 0.5em;
 }
 
 
