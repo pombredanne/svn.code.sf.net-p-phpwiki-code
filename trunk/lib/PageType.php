@@ -1,23 +1,23 @@
-<?php rcs_id('$Id: PageType.php,v 1.8 2002-02-19 03:42:36 carstenklapp Exp $');
+<?php rcs_id('$Id: PageType.php,v 1.9 2002-02-21 08:52:56 carstenklapp Exp $');
 /*
-Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+ Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
-This file is part of PhpWiki.
+ This file is part of PhpWiki.
 
-PhpWiki is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-PhpWiki is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with PhpWiki; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 
 include_once('lib/BlockParser.php');
@@ -25,7 +25,7 @@ include_once('lib/BlockParser.php');
 
 /**
  * Get a PageType
- * 
+ *
  * usage:
  *
  * require_once('lib/PageType.php');
@@ -95,7 +95,9 @@ class PageType {
     }
 
     function _defineSections() {
-        // section_id => ('css_class', $this->_section_function)
+        /**
+         * ... section_id => ('css_class', $this->_section_function)
+         */
         $this->_divs = array('wikitext' => array('wikitext', $this->_extractText()));
     }
 
@@ -127,19 +129,16 @@ class PageType {
 class interWikiMapPageType extends PageType {
 
     function _defineSections() {
-        // section_id => ('css_class', $this->_section_function)
+        /**
+         * section_id => ('css_class', $this->_section_function)
+         */
         $this->_divs = array('interwikimap-header' => array('wikitext', $this->_extractStartText()),
                              'interwikimap'        => array('wikitext', $this->_getMap()),
                              'interwikimap-footer' => array('wikitext', $this->_extractEndText()));
     }
 
     function _getMap() {
-        // plain text
-        // return TransformText("<verbatim>" . $this->_extractMap() . "</verbatim>", $this->markup);
         global $request;
-        // table with links
-        //return $this->_arrayToTable($this->_extractMap(), $request);
-
         // let interwiki.php get the map
         include_once("lib/interwiki.php");
         $map = InterWikiMap::GetMap($request);
@@ -161,7 +160,7 @@ class interWikiMapPageType extends PageType {
             }
             $moniker = HTML::td(array('class' => 'interwiki-moniker'), $moniker);
             $interurl = HTML::td(array('class' =>'interwiki-url'), HTML::tt($interurl));
-    
+
             $tbody->pushContent(HTML::tr($moniker, $interurl));
         }
         $table = HTML::table();
@@ -173,7 +172,7 @@ class interWikiMapPageType extends PageType {
     }
 
     function _extractStartText() {
-        // cut the map out of the text
+        // get the start block of text
         $v = strpos($this->_content, "<verbatim>");
         if ($v)
             list($wikitext, $cruft) = explode("<verbatim>", $this->_content);
@@ -187,7 +186,7 @@ class interWikiMapPageType extends PageType {
     }
 
     function _extractEndText() {
-        // cut the map out of the text
+        // get the ending block of text
         $v = strpos($this->_content, "</verbatim>");
         if ($v) {
             list($cruft, $endtext) = explode("</verbatim>", $this->_content);
@@ -197,23 +196,6 @@ class interWikiMapPageType extends PageType {
         return "";
     }
 
-    /*
-    function _extractMap() {
-        if (preg_match('|^<verbatim>\n(.*)^</verbatim>|ms',
-                    $this->_content['rawmarkup'], $m)) {
-            $maptext = $m[1];
-        }
-        //return $maptext;
-        global $AllowedProtocols;
-        if (!preg_match_all("/^\s*(\S+)\s+(\S+)/m",
-                            $maptext, $matches, PREG_SET_ORDER))
-            return false;
-        foreach ($matches as $m) {
-            $map[$m[1]] = $m[2];
-        }
-        return $map;
-    }
-    */
 };
 
 
@@ -223,5 +205,5 @@ class interWikiMapPageType extends PageType {
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End:
 ?>
