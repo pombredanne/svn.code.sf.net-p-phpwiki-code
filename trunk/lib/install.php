@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: install.php,v 1.2 2005-02-26 17:47:57 rurban Exp $');
+rcs_id('$Id: install.php,v 1.3 2005-02-28 20:24:23 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -43,8 +43,8 @@ function init_install() {
  */
 function run_install($part = '') {
     if ($part) {
-        global $HTTP_GET_VARS;
-        $HTTP_GET_VARS['show'] = $part;
+        if (empty($_GET)) $_GET =& $GLOBALS['HTTP_GET_VARS'];
+        $_GET['show'] = $part;
     }
     include(dirname(__FILE__)."/../configurator.php");
 }
@@ -53,6 +53,12 @@ init_install();
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.2  2005/02/26 17:47:57  rurban
+ configurator: add (c), support show=_part1 initial expand, enable
+   ENABLE_FILE_OUTPUT, use part.id not name
+ install.php: fixed for multiple invocations (on various missing vars)
+ IniConfig: call install.php on more errors with expanded part.
+
  Revision 1.1  2004/12/06 19:49:58  rurban
  enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
  renamed delete_page to purge_page.
