@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PluginManager.php,v 1.14 2004-02-17 12:11:36 rurban Exp $');
+rcs_id('$Id: PluginManager.php,v 1.15 2004-05-25 13:17:12 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.14 $");
+                            "\$Revision: 1.15 $");
     }
 
     function getDefaultArguments() {
@@ -116,10 +116,10 @@ extends WikiPlugin
             $temppluginclass = "<? plugin $pluginName ?>"; // hackish
             $p = $w->getPlugin($pluginName, false); // second arg?
             // trap php files which aren't WikiPlugin~s
-            if (!substr(get_parent_class($p), 0, 10) == 'wikiplugin') {
+            if (!strtolower(substr(get_parent_class($p), 0, 10)) == 'wikiplugin') {
                 // Security: Hide names of extraneous files within
                 // plugin dir from non-admins.
-                if ($request->_user->isadmin())
+                if ($request->_user->isAdmin())
                     trigger_error(sprintf(_("%s does not appear to be a WikiPlugin."),
                                           $pluginName . ".php"));
                 continue; // skip this non WikiPlugin file
@@ -150,8 +150,7 @@ extends WikiPlugin
             // Maybe FIXME? warn about case language != en and _(p) == "p"?
             if (_($pluginName) != $pluginName) {
                 $localizedPluginName = _($pluginName);
-            }
-            else
+            } else
                 $localizedPluginName = '';
             $pluginNamelink = WikiLink($pluginName, 'if_known');
             // make another link for the localized plugin description
@@ -160,15 +159,13 @@ extends WikiPlugin
             // Also look for pages in the current locale
             if (_($pluginDocPageName) != $pluginDocPageName) {
                 $localizedPluginDocPageName = _($pluginDocPageName);
-            }
-            else
+            } else
                 $localizedPluginDocPageName = '';
 
-            if (isWikiWord($pluginDocPageName) && $dbi->isWikiPage($pluginDocPageName))
-                {
+            if (isWikiWord($pluginDocPageName) && 
+                $dbi->isWikiPage($pluginDocPageName)) {
                 $pluginDocPageNamelink = HTML(WikiLink($pluginDocPageName));
-            }
-            else {
+            } else {
                 // don't link to actionpages and plugins starting with
                 // an _ from page list
                 if (!preg_match("/^_/", $pluginName)
@@ -176,9 +173,8 @@ extends WikiPlugin
                     ) {
                     $pluginDocPageNamelink = WikiLink($pluginDocPageName,
                                                       'unknown');
-                }
-                else
-                    $pluginDocPageNamelink = false;
+                } else
+                    $pluginDocPageNamelink = HTML();
             }
             // insert any found locale-specific pages at the bottom of
             // the td
@@ -253,6 +249,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2004/02/17 12:11:36  rurban
+// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
+//
 // Revision 1.13  2004/01/25 03:58:44  rurban
 // use stdlib:isWikiWord()
 //
