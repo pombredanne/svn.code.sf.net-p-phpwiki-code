@@ -1,5 +1,5 @@
 /*
-  $Id: phpwiki-modern.css,v 1.4 2002-01-14 05:21:16 carstenklapp Exp $
+  $Id: phpwiki-modern.css,v 1.5 2002-01-15 00:59:06 carstenklapp Exp $
 
   Inspiration for this stylesheet:
 
@@ -44,13 +44,13 @@ BODY {
  margin: 0;
 }
 
-BODY { font-family: arial, helvetica, sans-serif; }
+BODY { /* user's browser settings */ }
 
 /*
  * NS4, defaults from BODY don't always propagate correctly.
  * So we need this:
  */ 
-.wikitext, .toolbar, P, TD { font-family: arial, helvetica, sans-serif; }
+.toolbar, TD { font-family: arial, helvetica, sans-serif; }
 
 INPUT.button { font-family: arial, helvetica, sans-serif; }
 
@@ -75,9 +75,10 @@ DIV.wikitext {
  clear: both;
 }
 
+h1, h2, h3 { font-family: Arial, Helvetica, sans-serif; }
+
 h1 {    color :            #ffffff;
         background-color : #000000;
-        width :               100%;
         padding-top :          1em;
         padding-left :       0.6em;
         padding-bottom :     0.2em;
@@ -92,20 +93,19 @@ h1 A.backlinks {
 h2 {
         color :            #ffffff;
         background-color : #525D76;
-        width :               100%;
-        padding-top :        0.2em;
-        padding-left :       0.3em;
+        padding-top :       0.15em;
+        padding-left :       0.6em;
         padding-bottom :     0.1em;
-        padding-right :      0.3em;
+        padding-right :      0.6em;
 }
 
 h3 {    color :            #ffffff;
         background-color : #828DA6;
-        width :               100%;
-        padding-top :        0.2em;
-        padding-left :       0.3em;
+        padding-top :       0.15em;
+        padding-left :       0.6em;
         padding-bottom :     0.1em;
-        padding-right :      0.3em;
+        padding-right :      0.6em;
+        margin-left :          1em;
 }
 
 INPUT.wikitext { margin: 0px; }
