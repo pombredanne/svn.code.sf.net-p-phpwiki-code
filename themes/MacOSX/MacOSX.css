@@ -1,5 +1,5 @@
 /*
-  $Id: MacOSX.css,v 1.24 2002-02-19 03:40:10 carstenklapp Exp $
+  $Id: MacOSX.css,v 1.25 2002-02-19 21:36:19 carstenklapp Exp $
 
   Classes:
 
@@ -53,12 +53,15 @@ input.numeric {
 /**
  * Wiki
  */
-div.wikitext, textarea.wikiedit, input.wikitext, textarea.summary {
+div.wikitext {
   background: white;
-  border-top:    solid 1px #7c7c7c;
-  border-left:   solid 1px #c3c3c3;
-  border-bottom: solid 1px #dddddd;
-  border-right:  solid 1px #c3c3c3;
+  /* for NS4 */
+  border: 1px solid black;
+
+  border-top:    1px solid #7c7c7c;
+  border-left:   1px solid #c3c3c3;
+  border-bottom: 1px solid #dddddd;
+  border-right:  1px solid #c3c3c3;
   padding-left: 0.8em; 
   padding-right: 0.8em; 
   padding-top: 0.5em;
@@ -187,18 +190,26 @@ a.cal-hide,
 .cal-arrow   { font-weight: bold; }
 .cal-dayname { font-size: smaller;
                text-decoration: none; }
-table.cal   { 
-  border-top:    solid 1px #7c7c7c;
-  border-left:   solid 1px #c3c3c3;
-  border-bottom: solid 1px #dddddd;
-  border-right:  solid 1px #c3c3c3;
-  background:    #bebebe; } 
+table.cal   {
+  /* for NS4 */
+  border: 1px solid black;
+
+  border-top:    1px solid #7c7c7c;
+  border-left:   1px solid #c3c3c3;
+  border-bottom: 1px solid #dddddd;
+  border-right:  1px solid #c3c3c3;
+  background: #bebebe;
+} 
 table.cal td {
   background: white;
-  border-top:    solid 1px #7c7c7c;
-  border-left:   solid 1px #c3c3c3;
-  border-bottom: solid 1px #dddddd;
-  border-right:  solid 1px #c3c3c3; }
+  /* for NS4 */
+  border: 1px solid black;
+
+  border-top:    1px solid #7c7c7c;
+  border-left:   1px solid #c3c3c3;
+  border-bottom: 1px solid #dddddd;
+  border-right:  1px solid #c3c3c3;
+}
 table.cal-header td {
   font-size:  larger;
   background: white;
@@ -206,10 +217,14 @@ table.cal-header td {
 table.cal td.cal-dayname { background: #f4f4f4; }
 table.cal td.cal-today {
   background:    #f4f4f4;
-  border-top:    solid 1px #7c7c7c;
-  border-left:   solid 1px #c3c3c3;
-  border-bottom: solid 1px #dddddd;
-  border-right:  solid 1px #c3c3c3; }
+  /* for NS4 */
+  border: 1px solid black;
+
+  border-top:    1px solid #7c7c7c;
+  border-left:   1px solid #c3c3c3;
+  border-bottom: 1px solid #dddddd;
+  border-right:  1px solid #c3c3c3;
+}
 
 /* IncludePage plugin */
 .transclusion-title {
@@ -224,16 +239,19 @@ div.transclusion {
   /* background: #fff url("images/bgpaper8.png"); */
   /* background: white; */
   background: #fdfdfd;
-  border-top:    solid 1px #7c7c7c;
-  border-left:   solid 1px #c3c3c3;
-  border-bottom: solid 1px #dddddd;
-  border-right:  solid 1px #c3c3c3;
+  /* for NS4 */
+  border: 1px solid black;
 
-  padding-left: 0.8em; 
+  border-top:    1px solid #7c7c7c;
+  border-left:   1px solid #c3c3c3;
+  border-bottom: 1px solid #dddddd;
+  border-right:  1px solid #c3c3c3;
+
+  padding-left:  0.8em; 
   padding-right: 0.8em; 
-  padding-top: 0px;
+  padding-top:    0px;
   padding-bottom: 0px;
-  margin: 0.5ex 0px;
+  margin: 0.5ex ;
 }
 
 /* The transclusion of the TextEditingRules Synopsis on templates/editpage.html */
@@ -249,10 +267,13 @@ div.wiki-edithelp .transclusion p {
 div.wiki-edithelp {
   /* background: #fff url("images/bgpaper8.png"); */
   background: white;
-  border-top:    solid 1px #7c7c7c;
-  border-left:   solid 1px #c3c3c3;
-  border-bottom: solid 1px #dddddd;
-  border-right:  solid 1px #c3c3c3;
+  /* for NS4 */
+  border: 1px solid black;
+
+  border-top:    1px solid #7c7c7c;
+  border-left:   1px solid #c3c3c3;
+  border-bottom: 1px solid #dddddd;
+  border-right:  1px solid #c3c3c3;
 
   font-size: smaller;
   padding: 6pt;
@@ -269,17 +290,36 @@ div.wiki-message {
  * Diff Output
  */
 /* main box */
-.diff { background: white; }
-.diff .block { background: #ccc; }
+.diff {
+  background: white;
+  /* for NS4 */
+  border: 1px solid black;
+
+  border-top:    1px solid #7c7c7c;
+  border-left:   1px solid #c3c3c3;
+  border-bottom: 1px solid #dddddd;
+  border-right:  1px solid #c3c3c3;
+}
+.diff .block {
+  background: #ccc;
+  /* for NS4 */
+/*  border: none;*/
+}
 
 /* individual blocks */
-.diff .context { background: white; }
+.diff .context {
+  background: white;
+  /* for NS4 */
+  border: none;
+}
 /* + - line prefix */
 .diff .block tt {
   font-weight: normal;
   font-family: monospace;
   margin-left: -0.6em;
   color: black;
+  /* for NS4 */
+  border: none;
 }
 /* changed words */
 .diff del, .diff ins {
@@ -287,10 +327,21 @@ div.wiki-message {
   text-decoration: none;
 }
 
+/* blocks containing deleted or added words */
+.diff .original, .diff .deleted,
+.diff .final, .diff .added {
+  background: white;
+}
 /* blocks containing deleted words */
-/* .diff .original, .diff .deleted { background: #fcc; } */
+.diff .original, .diff .deleted {
+  background: white;
+  border: 2px solid #f99; /* fcc */
+}
 /* blocks containing added words */
-/* .diff .final, .diff .added { background: #cfc; } */
+.diff .final, .diff .added {
+  background: white;
+  border: 2px solid #9f9; /* cfc */
+}
 
 /* These don't work in NS4 -- it completely ignores <del> and <ins>. */
 /* deleted words */
