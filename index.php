@@ -7,7 +7,7 @@ Copyright 2000??, 2001, 2002 $ThePhpWikiProgrammingTeam = array(
 "Jon Åslund", "Marco Milanesi", "Carsten Klapp", "Joel Uckelman",
 "Pablo Roca Rozas", "Scott R. Anderson", "Neil Brown", "Jan Hidders",
 "Antti Kaihola", "Jeremie Kass", "John Jorgensen", "Tim Voght",
-"Grant Morgan", "Clifford A. Adams");
+"Grant Morgan", "Clifford A. Adams", "Reini Urban");
 
 This file is part of PhpWiki.
 
@@ -68,7 +68,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.57 2002-01-10 01:03:51 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.58 2002-01-10 20:03:33 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
