@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.53 2003-02-15 23:20:27 dairiki Exp $');
+rcs_id('$Id: editpage.php,v 1.54 2003-02-16 19:47:16 dairiki Exp $');
 
 require_once('lib/Template.php');
 
@@ -135,6 +135,8 @@ class PageEditor
                 $page = &$this->page;
                 $lock = $this->meta['locked'];
                 $this->setPageLockChanged($isadmin, $lock, $page);
+                $dbi = $request->getDbh();
+                $dbi->touch();
             }
             // Save failed. No changes made.
             $this->_redirectToBrowsePage();
@@ -170,7 +172,8 @@ class PageEditor
 
         $dbi = $request->getDbh();
         $warnings = $dbi->GenericWarnings();
-
+        $dbi->touch();
+        
         global $Theme;
         if (empty($warnings) && ! $Theme->getImageURL('signature')) {
             // Do redirect to browse page if no signature has
@@ -498,6 +501,10 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.53  2003/02/15 23:20:27  dairiki
+ Redirect back to browse current version of page upon save,
+ even when no changes were made.
+
  Revision 1.52  2003/01/03 22:22:00  carstenklapp
  Minor adjustments to diff block markers ("<<<<<<<"). Source reformatting.
 
