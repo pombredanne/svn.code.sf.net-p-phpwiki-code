@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RssParser.php,v 1.8 2004-06-08 21:03:20 rurban Exp $');
+rcs_id('$Id: RssParser.php,v 1.9 2004-06-08 21:12:02 rurban Exp $');
 /**
  * Simple RSSParser Class
  * Based on Duncan Gough RSSParser class
@@ -128,7 +128,7 @@ extends XmlParser {
                 break;
             }
         }
-    } // characterData
+    }
     
     function parse($content, $is_final = true) {
         xml_parse($this->_parser, $content, $is_final) or 
@@ -137,16 +137,21 @@ extends XmlParser {
                                   xml_get_current_line_number($this->_parser)),
                           E_USER_WARNING);
         //OO workaround: parser object looses its params. we have to store them in globals
-    	if (empty($this->items)) {
-            $this->items = $GLOBALS['rss_parser_items'];
-            $this->channel = $GLOBALS['rss_parser_channel'];
-    	}
-    	unset($GLOBALS['rss_parser_items']);
-    	unset($GLOBALS['rss_parser_channel']);
+        if ($is_final) {
+    	    if (empty($this->items)) {
+                $this->items = $GLOBALS['rss_parser_items'];
+                $this->channel = $GLOBALS['rss_parser_channel'];
+    	    }
+    	    unset($GLOBALS['rss_parser_items']);
+    	    unset($GLOBALS['rss_parser_channel']);
+        }
     }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/06/08 21:03:20  rurban
+// updated RssParser for XmlParser quirks (store parser object params in globals)
+//
 // Revision 1.7  2004/05/24 17:31:31  rurban
 // new XmlParser and HtmlParser, RssParser based on that.
 //
