@@ -1,4 +1,6 @@
-<?php rcs_id('$Id: loadsave.php,v 1.71 2003-01-03 02:48:05 carstenklapp Exp $');
+<?php
+rcs_id('$Id: loadsave.php,v 1.72 2003-01-03 22:25:53 carstenklapp Exp $');
+
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -378,14 +380,16 @@ function SavePage (&$request, $pageinfo, $source, $filename)
     $page = $dbi->getPage($pagename);
 
     $current = $page->getCurrentRevision();
-    // Try to merge if updated pgsrc contents are different
-    // This whole thing is hackish
+    // Try to merge if updated pgsrc contents are different. This
+    // whole thing is hackish
+    //
     // TODO: try merge unless:
-    // if (current contents = default contents && pgsrc_version >= pgsrc_version) then just upgrade this pgsrc
+    // if (current contents = default contents && pgsrc_version >=
+    // pgsrc_version) then just upgrade this pgsrc
     $needs_merge = false;
     $merging = false;
     $overwrite = false;
-    
+
     if ($request->getArg('merge')) {
         $merging = true;
     }
@@ -394,8 +398,8 @@ function SavePage (&$request, $pageinfo, $source, $filename)
     }
 
     if ( (! $current->hasDefaultContents())
-        && ($current->getPackedContent() != $content)
-        && ($merging == true) ) {
+         && ($current->getPackedContent() != $content)
+         && ($merging == true) ) {
         require_once('lib/editpage.php');
         $request->setArg('pagename', $pagename);
         $r = $current->getVersion();
@@ -428,14 +432,15 @@ function SavePage (&$request, $pageinfo, $source, $filename)
              && ($current->getPackedContent() != $content) ) {
             if ($overwrite) {
                 $mesg->pushContent(' ',
-                                fmt("has edit conflicts but overwriting anyway"
-                                    ));
+                                   fmt("has edit conflicts - overwriting anyway"));
                 $skip = false;
+                if (substr_count($source, 'pgsrc')) {
+                    $versiondata['author'] = _("The PhpWiki programming team");
+                    // but leave authorid as userid who loaded the file
+                }
             }
             else {
-                $mesg->pushContent(' ',
-                                fmt("has edit conflicts - skipped"
-                                    ));
+                $mesg->pushContent(' ', fmt("has edit conflicts - skipped"));
                 $needs_merge = true; // hackish
                 $skip = true;
             }
@@ -465,14 +470,14 @@ function SavePage (&$request, $pageinfo, $source, $filename)
         $f = str_replace(sprintf(_("Serialized file %s"), ''), '', $f);
         $f = str_replace(sprintf(_("plain file %s"), ''), '', $f);
         global $Theme;
-        $meb = $Theme->makeButton($text = sprintf(_("Merge and edit %s"), $pagename),
-                                $url = _("PhpWikiAdministration")
-                                        . "?action=loadfile&source=$f&merge=1",
-                                $class = false);
-        $owb = $Theme->makeButton($text = sprintf(_("Load and overwrite %s"), $pagename),
-                                $url = _("PhpWikiAdministration")
-                                        . "?action=loadfile&source=$f&overwrite=1",
-                                $class = false);
+        $meb = $Theme->makeButton($text = ("Merge Edit"),
+                                  $url = _("PhpWikiAdministration")
+                                  . "?action=loadfile&source=$f&merge=1",
+                                  $class = 'wikiadmin');
+        $owb = $Theme->makeButton($text = _("Restore Anyway"),
+                                  $url = _("PhpWikiAdministration")
+                                  . "?action=loadfile&source=$f&overwrite=1",
+                                  $class = 'wikiunsafe');
         $mesg->pushContent(' ', $meb, " ", $owb);
     }
 
@@ -520,30 +525,30 @@ function ParseSerializedPage($text, $default_pagename, $user)
 {
     if (!preg_match('/^a:\d+:{[si]:\d+/', $text))
         return false;
-    
+
     $pagehash = unserialize($text);
-    
+
     // Split up pagehash into four parts:
     //   pagename
     //   content
     //   page-level meta-data
     //   revision-level meta-data
-    
+
     if (!defined('FLAG_PAGE_LOCKED'))
         define('FLAG_PAGE_LOCKED', 1);
     $pageinfo = array('pagedata'    => array(),
                       'versiondata' => array());
-    
+
     $pagedata = &$pageinfo['pagedata'];
     $versiondata = &$pageinfo['versiondata'];
-    
+
     // Fill in defaults.
     if (empty($pagehash['pagename']))
         $pagehash['pagename'] = $default_pagename;
     if (empty($pagehash['author'])) {
         $pagehash['author'] = $user->getId();
     }
-    
+
     foreach ($pagehash as $key => $value) {
         switch($key) {
             case 'pagename':
@@ -631,8 +636,8 @@ function LoadZip (&$request, $zipfile, $files = false, $exclude = false) {
         // FIXME: basename("filewithnoslashes") seems to return
         // garbage sometimes.
         $fn = basename("/dummy/" . $fn);
-        if ( ($files && !in_array($fn, $files)) || ($exclude && in_array($fn, $exclude)) ) {
-
+        if ( ($files && !in_array($fn, $files))
+             || ($exclude && in_array($fn, $exclude)) ) {
             PrintXML(HTML::dt(WikiLink($fn)),
                      HTML::dd(_("Skipping")));
             continue;
@@ -676,7 +681,8 @@ class LimitedFileSet extends FileSet {
         $incl = &$this->_include;
         $excl = &$this->_exclude;
 
-        if (($incl && !in_array($fn, $incl)) || ($excl && in_array($fn, $excl))) {
+        if ( ($incl && !in_array($fn, $incl))
+             || ($excl && in_array($fn, $excl)) ) {
             $this->_skiplist[] = $fn;
             return false;
         } else {
@@ -721,7 +727,8 @@ function LoadAny (&$request, $file_or_dir, $files = false, $exclude = false)
             $file_or_dir = FindFile($file_or_dir);
             // Panic
             if (!file_exists($file_or_dir))
-                $file_or_dir = dirname($file_or_dir) ."/".urlencode(basename($file_or_dir));
+                $file_or_dir = dirname($file_or_dir) . "/"
+                    . urlencode(basename($file_or_dir));
         } else {
             // This is probably just a file.
             $file_or_dir = urlencode($file_or_dir);
@@ -822,6 +829,13 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.71  2003/01/03 02:48:05  carstenklapp
+ function SavePage: Added loadfile options for overwriting or merge &
+ compare a loaded pgsrc file with an existing page.
+
+ function LoadAny: Added a general error message when unable to load a
+ file instead of defaulting to "Bad file type".
+
  */
 
 // For emacs users
