@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.167 2004-06-16 13:21:16 rurban Exp $');
+rcs_id('$Id: main.php,v 1.168 2004-06-17 10:39:18 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -725,23 +725,20 @@ $this->version = phpwiki_version();
             return $cache[$action] = $translation;
 
         // Allow for, e.g. action=LikePages
-        global $WikiNameRegexp;
-        if (!preg_match("/$WikiNameRegexp\\Z/A", $action))
+        if (!isWikiWord($action))
             return $cache[$action] = false;
 
         // check for translated version (default language)
         global $LANG;
-        if ($LANG != DEFAULT_LANGUAGE and $LANG != "en") {
-            $save_lang = $LANG;
-            //trigger_error("DEBUG: findActionPage() ". DEFAULT_LANGUAGE." calling update_locale()...");
-            update_locale(DEFAULT_LANGUAGE);
-            $default = gettext($action);
-            //trigger_error("DEBUG: findActionPage() ". $save_lang." restoring save_lang, calling update_locale()...");
-            update_locale($save_lang);
+        if ($LANG != "en") {
+            require_once("lib/WikiPlugin.php");
+            require_once("lib/plugin/_WikiTranslation.php");
+            $trans = new WikiPlugin__WikiTranslation();
+            $trans->lang = $LANG;
+	    $default = $trans->translate_to_en($action, $LANG);
             if ($this->_isActionPage($default))
                 return $cache[$action] = $default;
-        }
-        else {
+        } else {
             $default = $translation;
         }
         
@@ -1049,6 +1046,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.167  2004/06/16 13:21:16  rurban
+// stabilize on failing ldap queries or bind
+//
 // Revision 1.166  2004/06/15 09:15:52  rurban
 // IMPORTANT: fixed passwd handling for passwords stored in prefs:
 //   fix encrypted usage, actually store and retrieve them from db
