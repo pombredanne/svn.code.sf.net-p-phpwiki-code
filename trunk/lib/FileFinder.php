@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.4 2001-12-13 08:22:47 carstenklapp Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.5 2001-12-28 09:53:11 carstenklapp Exp $');
 
 // FIXME: make this work with non-unix (e.g. DOS) filenames.
 
@@ -79,7 +79,7 @@ class FileFinder
      * @return bool false.
      */
     function _not_found($file) {
-        trigger_error("$file: file not found", E_USER_ERROR);
+        trigger_error(sprintf(_("%s: file not found"),$file), E_USER_ERROR);
         return false;
     }
     

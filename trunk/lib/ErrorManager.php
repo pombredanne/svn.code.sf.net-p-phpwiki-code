@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.4 2001-12-13 05:06:06 dairiki Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.5 2001-12-28 09:53:06 carstenklapp Exp $');
 
 
 define ('EM_FATAL_ERRORS',
@@ -135,7 +135,7 @@ class ErrorManager
         static $in_handler;
         
         if (!empty($in_handler)) {
-            echo "<p>ErrorManager: error while handling error:</p>\n";
+            echo "<p>ErrorManager: "._("error while handling error:")."</p>\n";
             echo $error->printError();
             return;
         }

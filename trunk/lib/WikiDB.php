@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.2 2001-10-29 17:58:37 dairiki Exp $');
+rcs_id('$Id: WikiDB.php,v 1.3 2001-12-28 09:53:29 carstenklapp Exp $');
 
 //FIXME: arg on get*Revision to hint that content is wanted.
 
@@ -350,7 +350,7 @@ class WikiDB_Page
         $latestversion = $backend->get_latest_version($pagename);
         if ($latestversion && $version == $latestversion) {
             $backend->unlock();
-            trigger_error("Attempt to delete most recent revision of '$pagename'",
+            trigger_error(sprintf(_("Attempt to delete most recent revision of '%s'"),$pagename),
                           E_USER_ERROR);
             return;
         }
@@ -398,7 +398,7 @@ class WikiDB_Page
         $latestversion = $backend->get_latest_version($pagename);
         if ($latestversion && $version == $latestversion) {
             $backend->unlock();
-            trigger_error("Attempt to merge most recent revision of '$pagename'",
+            trigger_error(sprintf(_("Attempt to merge most recent revision of '%s'"),$pagename),
                           E_USER_ERROR);
             return;
         }
@@ -485,7 +485,7 @@ class WikiDB_Page
             // Ensure mtimes are monotonic.
             $pdata = $cache->get_versiondata($pagename, $latestversion);
             if ($data['mtime'] < $pdata['mtime']) {
-                trigger_error("$pagename: Date of new revision non-monotonic",
+                trigger_error(sprintf(_("%s: Date of new revision is %s"),$pagename,"'non-monotonic'"),
                               E_USER_NOTICE);
                 $data['orig_mtime'] = $data['mtime'];
                 $data['mtime'] = $pdata['mtime'];
@@ -510,7 +510,7 @@ class WikiDB_Page
 	// FIXME: probably should have some global state information in the backend
         // to control when to optimize.
         if (time() % 50 == 0) {
-            trigger_error('"Optimizing" backend', E_USER_NOTICE);
+            trigger_error(sprintf(_("Optimizing %s"),'backend'), E_USER_NOTICE);
             $backend->optimize();
         }
 
@@ -834,8 +834,8 @@ class WikiDB_PageRevision
         
         if (empty($data['%content'])) {
             // Replace empty content with default value.
-            return sprintf(gettext("Describe [%s] here."),
-                           $this->_pagename);
+            return sprintf(_("Describe %s here."),
+                           "[". $this->_pagename ."]");
         }
 
         // There is (non-default) content.
