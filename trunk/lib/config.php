@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.94 2004-04-10 02:38:03 rurban Exp $');
+rcs_id('$Id: config.php,v 1.95 2004-04-10 04:23:10 rurban Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -34,7 +34,11 @@ set_magic_quotes_runtime(0);
 // "\x80"-"\x9f" (and "\x00" - "\x1f") are non-printing control
 // chars in iso-8859-*
 // $FieldSeparator = "\263"; //this is a superscript 3 in ISO-8859-1.
-$FieldSeparator = "\x81";
+// $FieldSeparator = "\xFF"; // this byte should never appear in utf-8
+if (strtolower(CHARSET) == 'utf-8')
+    $FieldSeparator = "\xFF";
+else
+    $FieldSeparator = "\x81";
 
 /** 
  * Browser Detection Functions
