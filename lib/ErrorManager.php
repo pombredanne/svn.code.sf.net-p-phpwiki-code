@@ -1,10 +1,10 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.32 2004-07-08 13:50:32 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.33 2004-09-14 10:28:21 rurban Exp $');
 
 if (isset($GLOBALS['ErrorManager'])) return;
 
 // TODO with php5: ignore E_STRICT (var warnings)
 define ('EM_FATAL_ERRORS',
-	E_ERROR | E_PARSE | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR);
+            E_ERROR | E_PARSE | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR);
 define ('EM_WARNING_ERRORS',
 	E_WARNING | E_CORE_WARNING | E_COMPILE_WARNING | E_USER_WARNING);
 define ('EM_NOTICE_ERRORS', E_NOTICE | E_USER_NOTICE);
@@ -14,7 +14,7 @@ define ('EM_NOTICE_ERRORS', E_NOTICE | E_USER_NOTICE);
    Only where absolute speed is necessary you might want to turn 
    them off.
 */
-if (defined('DEBUG') and DEBUG)
+if (1 or (defined('DEBUG') and DEBUG))
     assert_options (ASSERT_ACTIVE, 1);
 else
     assert_options (ASSERT_ACTIVE, 0);
@@ -566,6 +566,9 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.32  2004/07/08 13:50:32  rurban
+// various unit test fixes: print error backtrace on _DEBUG_TRACE; allusers fix; new PHPWIKI_NOMAIN constant for omitting the mainloop
+//
 // Revision 1.31  2004/07/02 09:55:58  rurban
 // more stability fixes: new DISABLE_GETIMAGESIZE if your php crashes when loading LinkIcons: failing getimagesize in old phps; blockparser stabilized
 //
