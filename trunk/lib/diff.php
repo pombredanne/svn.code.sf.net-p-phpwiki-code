@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: diff.php,v 1.50 2005-02-04 13:44:45 rurban Exp $');
+rcs_id('$Id: diff.php,v 1.51 2005-02-04 15:26:57 rurban Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -285,8 +285,9 @@ function showDiff (&$request) {
     $page = $request->getPage();
     $current = $page->getCurrentRevision();
     if ($current->getVersion() < 1) {
-        $html = HTML(HTML::p(fmt("I'm sorry, there is no such page as %s.",
-                                 WikiLink($pagename, 'unknown'))));
+        $html = HTML::div(array('id'=>'content'),
+                          HTML::p(fmt("I'm sorry, there is no such page as %s.",
+                                      WikiLink($pagename, 'unknown'))));
         include_once('lib/Template.php');
         GeneratePage($html, sprintf(_("Diff: %s"), $pagename), false);
         return; //early return
@@ -342,8 +343,9 @@ function showDiff (&$request) {
     $old_link = $old ? WikiLink($old, '', $old_version) : $old_version;
     $page_link = WikiLink($page);
 
-    $html = HTML(HTML::p(fmt("Differences between %s and %s of %s.",
-                             $new_link, $old_link, $page_link)));
+    $html = HTML::div(array('id'=>'content'),
+                     HTML::p(fmt("Differences between %s and %s of %s.",
+                                 $new_link, $old_link, $page_link)));
 
     $otherdiffs = HTML::p(_("Other diffs:"));
     $label = array('major' => _("Previous Major Revision"),
@@ -393,6 +395,9 @@ function showDiff (&$request) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.50  2005/02/04 13:44:45  rurban
+// prevent from php5 nameclash
+//
 // Revision 1.49  2004/11/21 11:59:19  rurban
 // remove final \n to be ob_cache independent
 //
