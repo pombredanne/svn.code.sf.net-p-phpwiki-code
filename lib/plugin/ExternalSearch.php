@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ExternalSearch.php,v 1.10 2004-05-17 13:36:49 rurban Exp $');
+rcs_id('$Id: ExternalSearch.php,v 1.11 2004-09-17 14:25:45 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -21,7 +21,7 @@ rcs_id('$Id: ExternalSearch.php,v 1.10 2004-05-17 13:36:49 rurban Exp $');
  */
 
 /**
- * Redirects to an external web site based on form input
+ * Redirects to an external web site based on form input.
  * See http://phpwiki.sourceforge.net/phpwiki/ExternalSearchPlugin
  *
  * useimage sample:
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     function _getInterWikiUrl(&$request) {
@@ -106,6 +106,7 @@ extends WikiPlugin
                                  //'class'  => 'class', //fixme
                                  'accept-charset' => $GLOBALS['charset']),
                            HiddenInputs(array('pagename' => $basepage)));
+
         $form->pushContent(HTML::input(array('type' => 'hidden',
                                              'name'  => 'url',
                                              'value' => $this->_url)));
@@ -133,7 +134,12 @@ extends WikiPlugin
         return $form;
     }
 };
+
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/05/17 13:36:49  rurban
+// Apply RFE #952323 "ExternalSearchPlugin improvement", but
+//   with <button><img></button>
+//
 // Revision 1.9  2004/04/19 18:27:46  rurban
 // Prevent from some PHP5 warnings (ref args, no :: object init)
 //   php5 runs now through, just one wrong XmlElement object init missing

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.121 2004-09-08 13:38:00 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.122 2004-09-17 14:25:45 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -44,9 +44,11 @@ function _dump_error_handler(&$error) {
 
 function StartLoadDump(&$request, $title, $html = '')
 {
+    // MockRequest is from the unit testsuite, a faked request. (may be cmd-line)
+    // We are silent on unittests.
     if (isa($request,'MockRequest'))
         return;
-    // FIXME: This is a hack
+    // FIXME: This is a hack. This really is the worst overall hack in phpwiki.
     if ($html)
         $html->pushContent('%BODY%');
     $tmpl = Template('html', array('TITLE' => $title,
@@ -1170,6 +1172,11 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.121  2004/09/08 13:38:00  rurban
+ improve loadfile stability by using markup=2 as default for undefined markup-style.
+ use more refs for huge objects.
+ fix debug=static issue in WikiPluginCached
+
  Revision 1.120  2004/07/08 19:04:42  rurban
  more unittest fixes (file backend, metadata RatingsDb)
 

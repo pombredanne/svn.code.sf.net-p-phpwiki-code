@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.108 2004-09-17 12:46:22 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.109 2004-09-17 14:22:10 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -49,19 +49,14 @@
  *   paging support: limit, offset args
  *   check PagePerm "list" access-type,
  *   all columns are sortable (Thanks to the wikilens team).
- *
- * TODO: 
- *   rows arguments for multiple pages/multiple rows.
- *
+ *   cols > 1, comma, azhead, ordered (OL lists)
  *   ->supportedArgs() which arguments are supported, so that the plugin 
  *                     doesn't explictly need to declare it 
- *   Status: already merged in some plugins calls
  *
- *   new method:
- *     list not as <ul> or table, but as simple comma-seperated list
- *
- *   fix memory exhaustion on large pagelists. 
- *   Status: fixed 2004-06-25 16:19:36 rurban but needs further testing.
+ * TODO: 
+ *   fix memory exhaustion on large pagelists with old --memory-limit php's only. 
+ *   Status: improved 2004-06-25 16:19:36 rurban 
+ *     but needs further testing.
  */
 class _PageList_Column_base {
     var $_tdattr = array();
@@ -114,7 +109,7 @@ class _PageList_Column_base {
         return HTML::th(array('align' => 'center'),$s);
     }
 
-    // new grid-style
+    // new grid-style sortable heading
     // see activeui.js 
     function button_heading ($pagelist, $colNum) {
         global $WikiTheme, $request;
@@ -1435,6 +1430,11 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.108  2004/09/17 12:46:22  rurban
+// seperate pagingTokens()
+// support new default args: comma (1 and 2), commasep, ordered, cols,
+//                           azhead (1 only)
+//
 // Revision 1.107  2004/09/14 10:29:08  rurban
 // exclude pages already in addPages to simplify plugins
 //

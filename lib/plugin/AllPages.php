@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllPages.php,v 1.30 2004-07-09 10:06:50 rurban Exp $');
+rcs_id('$Id: AllPages.php,v 1.31 2004-09-17 14:25:45 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.30 $");
+                            "\$Revision: 1.31 $");
     }
 
     function getDefaultArguments() {
@@ -72,14 +72,15 @@ extends WikiPlugin
         //extract($args);
         $pages = isset($args['pages']) ? $args['pages'] : false;
         // Todo: extend given _GET args
-        if ($sorted = $request->getArg('sortby'))
+        // TODO: shouldn't the REQUEST sortby,limit override be handled in getArgs for all?
+        if ($sorted = $request->getArg('sortby')) 
             $args['sortby'] = $sorted;
         elseif (!empty($args['sortby']))
-            $request->setArg('sortby',$args['sortby']);
-
+            $request->setArg('sortby', $args['sortby']);
         if ($args['debug'])
             $timer = new DebugTimer;
         $caption = _("All pages in this wiki (%d total):");
+        
         if ( !empty($args['owner']) ) {
             $pages = PageList::allPagesByOwner($args['owner'],$args['include_empty'],$args['sortby'],$args['limit']);
             if ($args['owner'])
@@ -131,6 +132,15 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.30  2004/07/09 10:06:50  rurban
+// Use backend specific sortby and sortable_columns method, to be able to
+// select between native (Db backend) and custom (PageList) sorting.
+// Fixed PageList::AddPageList (missed the first)
+// Added the author/creator.. name to AllPagesBy...
+//   display no pages if none matched.
+// Improved dba and file sortby().
+// Use &$request reference
+//
 // Revision 1.29  2004/07/08 21:32:36  rurban
 // Prevent from more warnings, minor db and sort optimizations
 //
