@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PluginManager.php,v 1.10 2003-11-30 18:23:48 carstenklapp Exp $');
+rcs_id('$Id: PluginManager.php,v 1.11 2003-12-10 01:01:24 carstenklapp Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -20,10 +20,6 @@ rcs_id('$Id: PluginManager.php,v 1.10 2003-11-30 18:23:48 carstenklapp Exp $');
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// TODO:
-// Some of this code can be simplified with the relatively new
-// WikiLink($p, 'auto') function.
-
 // Set this to true if you don't want regular users to view this page.
 // So far there are no known security issues.
 define('REQUIRE_ADMIN', false);
@@ -41,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     function getDefaultArguments() {
@@ -101,111 +97,133 @@ extends WikiPlugin
     }
 
     function _generateTableBody(&$info, &$dbi, &$request, &$table) {
-        $row_no = 0;
         $plugin_dir = 'lib/plugin';
         if (defined('PHPWIKI_DIR'))
             $plugin_dir = PHPWIKI_DIR . "/$plugin_dir";
         $pd = new fileSet($plugin_dir, '*.php');
         $plugins = $pd->getFiles();
+        unset($pd);
         sort($plugins);
+
         // table body
         $tbody = HTML::tbody();
-        global $WikiNameRegexp;
-        foreach($plugins as $pname) {
+        $row_no = 0;
+
+        $w = new WikiPluginLoader;
+        foreach($plugins as $pluginName) {
             // instantiate a plugin
-            $pname = str_replace(".php", "", $pname);
-            $temppluginclass = "<? plugin $pname ?>"; // hackish
-            $w = new WikiPluginLoader;
-            // obtain plugin name & description
-            $p = $w->getPlugin($pname, false); // second arg?
+            $pluginName = str_replace(".php", "", $pluginName);
+            $temppluginclass = "<? plugin $pluginName ?>"; // hackish
+            $p = $w->getPlugin($pluginName, false); // second arg?
+            // trap php files which aren't WikiPlugin~s
+            if (!substr(get_parent_class($p), 0, 10) == 'wikiplugin') {
+                // Security: Hide names of extraneous files within
+                // plugin dir from non-admins.
+                if ($request->_user->isadmin())
+                    trigger_error(sprintf(_("%s does not appear to be a WikiPlugin."),
+                                          $pluginName . ".php"));
+                continue; // skip this non WikiPlugin file
+            }
             $desc = $p->getDescription();
-            // obtain plugin version
-            if (method_exists($p, 'getVersion')) {
-                $ver = $p->getVersion();
-            }
-            else {
-                $ver = "--";
-            }
-            // obtain plugin's default arguments
-            $arguments = HTML();
+            $ver = $p->getVersion();
             $args = $p->getDefaultArguments();
-            
+            unset($p); //done querying plugin object, release from memory
+
+            $arguments = HTML();
             foreach ($args as $arg => $default) {
-                if (stristr($default, ' '))
-                    $default = "'$default'";
+                // Word around UserPreferences plugin to avoid error
+                if ((is_array($default))) {
+                    $default = '(array)';
+                    // This is a bit flawed with UserPreferences object
+                    //$default = sprintf("array('%s')",
+                    //                   implode("', '", array_keys($default)));
+                }
+                else
+                    if (stristr($default, ' '))
+                        $default = "'$default'";
                 $arguments->pushcontent("$arg=$default", HTML::br());
             }
             // make a link if an actionpage exists
-            $pnamelink = $pname;
-            $plink = false;
+            $pluginNamelink = $pluginName;
+            $pluginDocPageNamelink = false;
             // Also look for pages in the current locale
-            if (_($pname) != $pname) {
-                $l1 = _($pname);
+            // Maybe FIXME? warn about case language != en and _(p) == "p"?
+            if (_($pluginName) != $pluginName) {
+                $localizedPluginName = _($pluginName);
             }
             else
-                $l1 = '';
-            if (preg_match("/^$WikiNameRegexp\$/", $pname)
-                && $dbi->isWikiPage($pname)) {
-                $pnamelink = HTML(WikiLink($pname));
-            }
-            // make another link if an XxxYyyPlugin page exists
-            $ppname = $pname . "Plugin";
+                $localizedPluginName = '';
+            $pluginNamelink = WikiLink($pluginName, 'if_known');
+            // make another link for the localized plugin description
+            // page if it exists
+            $pluginDocPageName = $pluginName . "Plugin";
             // Also look for pages in the current locale
-            if (_($ppname) != $ppname) {
-                $l2 = _($ppname);
+            if (_($pluginDocPageName) != $pluginDocPageName) {
+                $localizedPluginDocPageName = _($pluginDocPageName);
             }
             else
-                $l2 = '';
-            if (preg_match("/^$WikiNameRegexp\$/", $ppname)
-                && $dbi->isWikiPage($ppname)) {
-                $plink = HTML(WikiLink($ppname));
+                $localizedPluginDocPageName = '';
+
+            global $WikiNameRegexp;
+            if (preg_match("/^$WikiNameRegexp\$/", $pluginDocPageName)
+                && $dbi->isWikiPage($pluginDocPageName))
+                {
+                $pluginDocPageNamelink = HTML(WikiLink($pluginDocPageName));
             }
             else {
                 // don't link to actionpages and plugins starting with
                 // an _ from page list
-                if (!preg_match("/^_/", $pname)
-                    //&& !(@$request->isActionPage($pname)) //FIXME?
+                if (!preg_match("/^_/", $pluginName)
+                    //&& !(@$request->isActionPage($pluginName)) //FIXME?
                     ) {
-                    // $plink = WikiLink($ppname, 'unknown');
-                    global $Theme;
-                    $plink = $Theme->linkUnknownWikiWord($ppname);
+                    $pluginDocPageNamelink = WikiLink($pluginDocPageName,
+                                                      'unknown');
                 }
                 else
-                    $plink = false;
+                    $pluginDocPageNamelink = false;
             }
             // insert any found locale-specific pages at the bottom of
             // the td
-            if ($l1 || $l2) {
-                // really this should all just be put into a new <p>
+            if ($localizedPluginName || $localizedPluginDocPageName) {
                 $par = HTML::p();
-                //$plink->pushContent(HTML::br());
-                //$plink->pushContent(HTML::br());
-                if ($l1) {
+                if ($localizedPluginName) {
                     // Don't offer to create a link to a non-wikiword
                     // localized plugin page but show those that
                     // already exist (Calendar, Comment, etc.)  (Non
                     // non-wikiword plugins are okay, they just can't
                     // become actionPages.)
-                    if (preg_match("/^$WikiNameRegexp\$/", $l1) || $dbi->isWikiPage($l1)) {
-                        $par->pushContent(WikiLink($l1, 'auto'));
+                    if (preg_match("/^$WikiNameRegexp\$/",
+                                   $localizedPluginName)
+                        || $dbi->isWikiPage($localizedPluginName))
+                        {
+                        $par->pushContent(WikiLink($localizedPluginName,
+                                                   'auto'));
                     }
                     else {
-                        // probably incorrectly translated, so no page link
-                        $par->pushContent($l1, ' ' . _("(Not a WikiWord)"));
+                        // probably incorrectly translated, so no page
+                        // link
+                        $par->pushContent($localizedPluginName, ' '
+                                          . _("(Not a WikiWord)"));
                     }
                 }
-                if ($l1 && $l2)
+                if ($localizedPluginName && $localizedPluginDocPageName)
                     $par->pushContent(HTML::br());
-                if ($l2) {
-                    if (preg_match("/^$WikiNameRegexp\$/", $l2) || $dbi->isWikiPage($l2)) {
-                        $par->pushContent(WikiLink($l2, 'auto'));
+                if ($localizedPluginDocPageName) {
+                    if (preg_match("/^$WikiNameRegexp\$/",
+                                   $localizedPluginDocPageName)
+                        || $dbi->isWikiPage($localizedPluginDocPageName))
+                        {
+                        $par->pushContent(WikiLink($localizedPluginDocPageName,
+                                                   'auto'));
                     }
                     else {
-                        // probably incorrectly translated, so no page link
-                        $par->pushContent($l2, ' ' . _("(Not a WikiWord)"));
+                        // probably incorrectly translated, so no page
+                        // link
+                        $par->pushContent($localizedPluginDocPageName, ' '
+                                          . _("(Not a WikiWord)"));
                     }
                 }
-                $plink->pushContent($par);
+                $pluginDocPageNamelink->pushContent($par);
             }
 
             // highlight alternate rows
@@ -214,15 +232,16 @@ extends WikiPlugin
             $class = ($group % 2) ? 'evenrow' : 'oddrow';
             // generate table row
             $tr = HTML::tr(array('class' => $class));
-            if ($plink) {
-                // plugin has a XxxYyyPlugin page
-                $tr->pushContent(HTML::td($pnamelink, HTML::br(), $plink));
-                $plink = false;
+            if ($pluginDocPageNamelink) {
+                // plugin has a description page 'PluginName' . 'Plugin'
+                $tr->pushContent(HTML::td($pluginNamelink, HTML::br(),
+                                          $pluginDocPageNamelink));
+                $pluginDocPageNamelink = false;
                 //$row_no++;
             }
             else {
                 // plugin just has an actionpage
-                $tr->pushContent(HTML::td($pnamelink));
+                $tr->pushContent(HTML::td($pluginNamelink));
             }
             $tr->pushContent(HTML::td($ver), HTML::td($desc));
             if ($info == 'args') {
@@ -238,6 +257,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2003/11/30 18:23:48  carstenklapp
+// Code housekeeping: PEAR coding standards reformatting only.
+//
 // Revision 1.9  2003/11/19 00:02:42  carstenklapp
 // Include found locale-specific pages for the current (non-English)
 // locale.
