@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.156 2004-06-03 17:58:16 rurban Exp $');
+rcs_id('$Id: main.php,v 1.157 2004-06-04 12:40:21 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -82,7 +82,7 @@ $this->version = phpwiki_version();
 
     function initializeLang () {
         $user_lang = $this->getPref('lang');
-        $_lang = $this->_prefs->_prefs['lang'];
+        $_lang = @$this->_prefs->_prefs['lang'];
         //check changed LANG and THEME inside a session. 
         // (e.g. by using another baseurl)
         if (isset($this->_user->_authhow) and 
@@ -104,7 +104,7 @@ $this->version = phpwiki_version();
 
         // Load theme
         $user_theme = $this->getPref('theme');
-        $_theme = $this->_prefs->_prefs['theme'];
+        $_theme = @$this->_prefs->_prefs['theme'];
         //check changed LANG and THEME inside a session. 
         // (e.g. by using another baseurl)
         if (isset($this->_user->_authhow) and 
@@ -283,13 +283,14 @@ $this->version = phpwiki_version();
     function _setUser ($user) {
         $this->_user = $user;
         define('MAIN_setUser',true);
-        $this->setCookieVar('WIKI_ID', $user->getAuthenticatedId(), COOKIE_EXPIRATION_DAYS, COOKIE_DOMAIN);
+        $this->setCookieVar('WIKI_ID', $user->getAuthenticatedId(),
+                            COOKIE_EXPIRATION_DAYS, COOKIE_DOMAIN);
         $this->setSessionVar('wiki_user', $user);
         if ($user->isSignedIn())
             $user->_authhow = 'signin';
 
         // Save userid to prefs..
-        if ( ! $this->_user->_prefs ) {
+        if ( empty($this->_user->_prefs)) {
             $this->_user->_prefs = $this->_user->getPreferences();
             $this->_prefs =& $this->_user->_prefs;
         }
@@ -989,6 +990,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.156  2004/06/03 17:58:16  rurban
+// support immediate LANG and THEME switch inside a session
+//
 // Revision 1.155  2004/06/03 10:18:19  rurban
 // fix FileUser locking issues, new config ENABLE_PAGEPERM
 //

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.86 2004-06-03 18:06:29 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.87 2004-06-04 12:40:21 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -195,7 +195,7 @@ function _determineBogoUserOrPassUser($UserName) {
     }
     if (_isUserPasswordsAllowed()) {
     	// PassUsers override BogoUsers if a password is stored
-        if (isset($_BogoUser) and $_BogoUser->_prefs->get('passwd'))
+        if (isset($_BogoUser) and isset($_BogoUser->_prefs) and $_BogoUser->_prefs->get('passwd'))
             return new _PassUser($UserName,$_BogoUser->_prefs);
         else { 
             $_PassUser = new _PassUser($UserName,isset($_BogoUser) ? $_BogoUser->_prefs : false);
@@ -523,6 +523,12 @@ class _WikiUser
         return $this->_level >= $require_level;
     }
 
+    function isValidName ($userid = false) {
+        if (!$userid)
+            $userid = $this->_userid;
+        return preg_match("/^[\w\.@\-]+$/",$userid) and strlen($userid) < 32;
+    }
+
     /**
      * Called on an auth_args POST request, such as login, logout or signin.
      * TODO: Check BogoLogin users with empty password. (self-signed users)
@@ -546,14 +552,29 @@ class _WikiUser
         elseif (!$login && !$userid)
             return false;       // Nothing to do?
 
+        if (!$this->isValidName($userid))
+            return _("Invalid username.");;
+
         $authlevel = $this->checkPass($passwd === false ? '' : $passwd);
-        if (!$authlevel) {
+        if ($authlevel <= 0) { // anon or forbidden
             if ($passwd)	
                 return _("Invalid password.");
             else
                 return _("Invalid password or userid.");
-        } elseif ($authlevel < $require_level)
+        } elseif ($authlevel < $require_level) { // auth ok, but not enough 
+            if (!empty($this->_current_method) and strtolower(get_class($this)) == '_passuser') 
+            {
+                // upgrade class
+                $class = "_" . $this->_current_method . "PassUser";
+                $user = new $class($userid,$this->_prefs);
+                /*PHP5 patch*/$this = $user;
+                $this->_level = $authlevel;
+                return $user;
+            }
+            $this->_userid = $userid;
+            $this->_level = $authlevel;
             return _("Insufficient permissions.");
+        }
 
         // Successful login.
         //$user = $GLOBALS['request']->_user;
@@ -822,6 +843,8 @@ extends _AnonUser
     function _PassUser($UserName='', $prefs=false) {
         //global $DBAuthParams, $DBParams;
         if ($UserName) {
+            if (!$this->isValidName($UserName))
+                return false;
             $this->_userid = $UserName;
             if ($this->hasHomePage())
                 $this->_HomePagehandle = $GLOBALS['request']->getPage($this->_userid);
@@ -1362,7 +1385,7 @@ extends _PassUser
     function userExists() {
         // todo: older php's
         $username = $this->_http_username();
-        if (empty($username) or $username != $this->_userid) {
+        if (empty($username) or strtolower($username) != strtolower($this->_userid)) {
             header('WWW-Authenticate: Basic realm="'.WIKI_NAME.'"');
             header('HTTP/1.0 401 Unauthorized'); 
             exit;
@@ -1476,6 +1499,10 @@ extends _PassUser
         }
         if (!isset($this->_prefs->_method))
            _PassUser::_PassUser($UserName);
+        elseif (!$this->isValidName($UserName)) {
+            trigger_error(_("Invalid username."),E_USER_WARNING);
+            return false;
+        }
         $this->_authmethod = 'Db';
         //$this->getAuthDbh();
         //$this->_auth_crypt_method = @$GLOBALS['DBAuthParams']['auth_crypt_method'];
@@ -1529,6 +1556,10 @@ extends _DbPassUser
         }
         if (!isset($this->_prefs->_method))
             _PassUser::_PassUser($UserName);
+        elseif (!$this->isValidName($UserName)) {
+            trigger_error(_("Invalid username."), E_USER_WARNING);
+            return false;
+        }
         $this->_userid = $UserName;
         // make use of session data. generally we only initialize this every time, 
         // but do auth checks only once
@@ -1598,6 +1629,9 @@ extends _DbPassUser
         if (!$dbh) { // needed?
             return $this->_tryNextUser();
         }
+        if (!$this->isValidName()) {
+            return $this->_tryNextUser();
+        }
         $dbi =& $GLOBALS['request']->_dbi;
         // Prepare the configured auth statements
         if ($dbi->getAuthParam('auth_check') and empty($this->_authselect)) {
@@ -1646,6 +1680,9 @@ extends _DbPassUser
         if (!$this->_auth_dbi) {  // needed?
             return $this->_tryNextPass($submitted_password);
         }
+        if (!$this->isValidName()) {
+            return $this->_tryNextPass($submitted_password);
+        }
         if (!isset($this->_authselect))
             $this->userExists();
         if (!isset($this->_authselect))
@@ -1678,6 +1715,9 @@ extends _DbPassUser
     }
 
     function storePass($submitted_password) {
+        if (!$this->isValidName()) {
+            return false;
+        }
         $this->getAuthDbh();
         $dbh = &$this->_auth_dbi;
         $dbi =& $GLOBALS['request']->_dbi;
@@ -1723,6 +1763,10 @@ extends _DbPassUser
             if ($prefs) $this->_prefs = $prefs;
             if (!isset($this->_prefs->_method))
               _PassUser::_PassUser($UserName);
+        }
+        if (!$this->isValidName($UserName)) {
+            trigger_error(_("Invalid username."),E_USER_WARNING);
+            return false;
         }
         $this->_userid = $UserName;
         $this->getAuthDbh();
@@ -1793,6 +1837,9 @@ extends _DbPassUser
         if (!$dbh) { // needed?
             return $this->_tryNextUser();
         }
+        if (!$this->isValidName()) {
+            return $this->_tryNextUser();
+        }
         $dbi =& $GLOBALS['request']->_dbi;
         if (empty($this->_authselect) and $dbi->getAuthParam('auth_check')) {
             $this->_authselect = $this->prepare($dbi->getAuthParam('auth_check'),
@@ -1849,6 +1896,9 @@ extends _DbPassUser
         //global $DBAuthParams;
         $this->getAuthDbh();
         if (!$this->_auth_dbi) {  // needed?
+            return $this->_tryNextPass($submitted_password);
+        }
+        if (!$this->isValidName()) {
             return $this->_tryNextPass($submitted_password);
         }
         $dbh =& $this->_auth_dbi;
@@ -1927,7 +1977,6 @@ extends _DbPassUser
         $rs->Close();
         return $rs;
     }
-
 }
 
 class _LDAPPassUser
@@ -1943,6 +1992,9 @@ extends _PassUser
 
         $this->_authmethod = 'LDAP';
         $userid = $this->_userid;
+        if (!$this->isValidName()) {
+            return $this->_tryNextPass($submitted_password);
+        }
         if (strstr($userid,'*')) {
             trigger_error(fmt("Invalid username '%s' for LDAP Auth",$userid),E_USER_WARNING);
             return WIKIAUTH_FORBIDDEN;
@@ -2046,6 +2098,9 @@ extends _PassUser
  */
 {
     function checkPass($submitted_password) {
+        if (!$this->isValidName()) {
+            return $this->_tryNextPass($submitted_password);
+        }
         $userid = $this->_userid;
         $mbox = @imap_open( "{" . IMAP_AUTH_HOST . "}",
                             $userid, $submitted_password, OP_HALFOPEN );
@@ -2083,6 +2138,9 @@ extends _IMAPPassUser {
  * Preferences are handled in _PassUser
  */
     function checkPass($submitted_password) {
+        if (!$this->isValidName()) {
+            return $this->_tryNextPass($submitted_password);
+        }
         $userid = $this->_userid;
         $pass = $submitted_password;
         $host = defined('POP3_AUTH_HOST') ? POP3_AUTH_HOST : 'localhost:110';
@@ -2151,7 +2209,6 @@ extends _PassUser
             if (!isset($this->_prefs->_method))
               _PassUser::_PassUser($UserName);
         }
-
         $this->_userid = $UserName;
         // read the .htaccess style file. We use our own copy of the standard pear class.
         //include_once 'lib/pear/File_Passwd.php';
@@ -2172,6 +2229,9 @@ extends _PassUser
     }
 
     function userExists() {
+        if (!$this->isValidName()) {
+            return $this->_tryNextUser();
+        }
         $this->_authmethod = 'File';
         if (isset($this->_file->users[$this->_userid]))
             return true;
@@ -2180,6 +2240,9 @@ extends _PassUser
     }
 
     function checkPass($submitted_password) {
+        if (!$this->isValidName()) {
+            return $this->_tryNextPass($submitted_password);
+        }
         //include_once 'lib/pear/File_Passwd.php';
         if ($this->_file->verifyPassword($this->_userid, $submitted_password)) {
             $this->_authmethod = 'File';
@@ -2191,6 +2254,9 @@ extends _PassUser
     }
 
     function storePass($submitted_password) {
+        if (!$this->isValidName()) {
+            return false;
+        }
         if ($this->_may_change) {
             $this->_file = new File_Passwd($this->_file->_filename, true, $this->_file->_filename.'.lock');
             $result = $this->_file->modUser($this->_userid,$submitted_password);
@@ -2230,8 +2296,8 @@ extends _PassUser
     	if ($this->_userid == ADMIN_USER)
             $stored_password = ADMIN_PASSWD;
         else {
+            return $this->_tryNextPass($submitted_password);
             // TODO: safety check if really member of the ADMIN group?
-            
             $stored_password = $this->_pref->get('passwd');
         }
         if ($this->_checkPass($submitted_password, $stored_password)) {
@@ -2920,6 +2986,11 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.86  2004/06/03 18:06:29  rurban
+// fix file locking issues (only needed on write)
+// fixed immediate LANG and THEME in-session updates if not stored in prefs
+// advanced editpage toolbars (search & replace broken)
+//
 // Revision 1.85  2004/06/03 12:46:03  rurban
 // fix signout, level must be 0 not -1
 //
