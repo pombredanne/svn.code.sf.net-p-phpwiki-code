@@ -1,5 +1,5 @@
 /*
-  $Id: phpwiki-modern.css,v 1.6 2002-01-16 20:04:04 carstenklapp Exp $
+  $Id: phpwiki-modern.css,v 1.7 2002-01-26 03:14:36 carstenklapp Exp $
 
   Inspiration for this stylesheet:
 
@@ -107,6 +107,8 @@ h3 {    color :            #ffffff;
         padding-right :      0.6em;
         margin-left :          1em;
 }
+
+h2, h3 { margin-top : 2em; }
 
 input.wikitext { margin: 0px; }
 

@@ -1,5 +1,5 @@
 /**
- * $Id: WikiTrek.css,v 1.14 2002-01-23 03:22:15 carstenklapp Exp $
+ * $Id: WikiTrek.css,v 1.15 2002-01-26 03:14:35 carstenklapp Exp $
  *
  * This PhpWiki theme is experimental and will likely not appear as
  * part of any release. ("accessories not included"--download
@@ -96,6 +96,7 @@ h2 , h3 , h4 {
         padding-left :     0.5ex;
         padding-right :    0.5ex;
         padding-bottom :   1px;
+        margin-top:        2em;
 }
 
 .wiki {
