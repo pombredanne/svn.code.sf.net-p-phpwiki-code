@@ -73,7 +73,7 @@ define('ENABLE_USER_NEW',true); // this will disappear with 1.4.0
 
 define ('PHPWIKI_VERSION', '1.3.8');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.127 2004-02-28 21:18:29 rurban Exp $');
+rcs_id('$Id: index.php,v 1.128 2004-02-29 02:06:05 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -896,6 +896,8 @@ if (!defined('AUTHORPAGE_URL')) define('AUTHORPAGE_URL',
  */
 //if (!defined('DISABLE_HTTP_REDIRECT')) define ('DISABLE_HTTP_REDIRECT', true);
 
+if (defined('WIKI_SOAP')) and WIKI_SOAP) return;
+
 ////////////////////////////////////////////////////////////////
 // PrettyWiki
 // Check if we were included by some other wiki version 
@@ -931,6 +933,11 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 //include "lib/main.php";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.127  2004/02/28 21:18:29  rurban
+// new SQL auth_create, don't ever use REPLACE sql calls!
+// moved HttpAuth to the end of the chain
+// PrettyWiki enabled again
+//
 // Revision 1.126  2004/02/27 16:27:48  rurban
 // REPLACE is a dirty hack, and erases passwd btw.
 //
