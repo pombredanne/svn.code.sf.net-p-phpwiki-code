@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbaDatabase.php,v 1.4 2002-01-24 06:50:45 carstenklapp Exp $');
+<?php rcs_id('$Id: DbaDatabase.php,v 1.5 2002-12-31 02:32:28 wainstead Exp $');
 
 require_once('lib/ErrorManager.php');
 // FIXME: autodetect supported handlers.
@@ -29,6 +29,12 @@ class DbaDatabase
         global $ErrorManager;
         $this->_dba_open_error = false;
         $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_dba_open_error_handler'));
+
+        // oops, you don't have DBM support.
+        if (!function_exists("dba_open")) {
+            echo "You don't seem to have DBM file support compiled into PHP.";
+        }
+
         while (($dbh = dba_open($this->_file, $mode, $this->_handler)) < 1) {
             if (--$watchdog <= 0)
                 break;
