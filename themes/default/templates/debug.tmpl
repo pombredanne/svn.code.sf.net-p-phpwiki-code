@@ -1,9 +1,10 @@
 <?php // -*-html-*- ?>
-<!-- $Id: debug.tmpl,v 1.1 2002-02-16 06:02:23 carstenklapp Exp $ -->
+<!-- $Id: debug.tmpl,v 1.2 2002-08-20 14:03:14 rurban Exp $ -->
 
 <?php $t = round(getmicrotime()-$GLOBALS['debugclock'], 3); ?>
 <p class="debug">Page Execution took <?= $t ?> seconds</p>
 
+<?php if ($Theme->_name != 'Portland') { ?>
 <div id="xhtml-validator"><a href="http://validator.w3.org/check/referer"><img
         id="xhtml" border="0"
         src="http://www.w3.org/Icons/valid-xhtml10"
@@ -13,3 +14,4 @@
         src="http://jigsaw.w3.org/css-validator/images/vcss"
         alt="Valid CSS!" /></a>
 </div>
+<?php } ?>
