@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.48 2003-03-24 22:57:21 dairiki Exp $');
+rcs_id('$Id: themeinfo.php,v 1.49 2003-09-13 22:47:04 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -118,6 +118,7 @@ $Theme->setLinkIcon('https');
 $Theme->setLinkIcon('ftp');
 $Theme->setLinkIcon('mailto');
 $Theme->setLinkIcon('interwiki');
+$Theme->setLinkIcon('wikiuser');
 $Theme->setLinkIcon('*', 'url');
 
 $Theme->setButtonSeparator(""); //use no separator instead of default
