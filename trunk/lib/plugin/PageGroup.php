@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageGroup.php,v 1.3 2002-02-01 04:59:51 carstenklapp Exp $');
+<?php rcs_id('$Id: PageGroup.php,v 1.4 2002-02-16 02:08:26 carstenklapp Exp $');
 /**
  * Usage:
  *
@@ -59,15 +59,15 @@ extends WikiPlugin
         if (empty($parent)) {
             // FIXME: WikiPlugin has no way to report when
             // required args are missing?
-            $error_text = "WikiPlugin_" .$this->getName() .": ";
-            $error_text .= sprintf(_("A required argument '%s' is missing."),
-                                   'parent');
+            $error_text = fmt("%s: %s", "WikiPlugin_" .$this->getName(),
+                              $error_text);
+            $error_text .= " " . sprintf(_("A required argument '%s' is missing."),
+                                         'parent');
             $html = $error_text;
             return $html;
         }
 
-        $directions = array (
-                             'next'     => _("Next"),
+        $directions = array ('next'     => _("Next"),
                              'previous' => _("Previous"),
                              'contents' => _("Contents"),
                              'first'    => _("First"),
@@ -101,7 +101,7 @@ extends WikiPlugin
         $c = $r->getContent();
         $c = $this->extractSection($section, $c, $parent);
 
-       $pagename = $request->getArg('pagename');
+        $pagename = $request->getArg('pagename');
 
         // The ordered list of page names determines the page
         // ordering. Right now it doesn't work with a WikiList, only
@@ -163,12 +163,12 @@ extends WikiPlugin
     }
 
 };
-        
+
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End:
 ?>

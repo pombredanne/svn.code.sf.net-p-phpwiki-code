@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.25 2002-02-08 03:01:11 dairiki Exp $');
+rcs_id('$Id: display.php,v 1.26 2002-02-16 02:09:01 carstenklapp Exp $');
 
 require_once('lib/Template.php');
 require_once('lib/BlockParser.php');
@@ -55,8 +55,9 @@ function actionPage(&$request, $action) {
     $actionrev = $actionpage->getCurrentRevision();
 
     $splitname = split_pagename($pagename);
-    $pagetitle = HTML($actionpage->getName(), ": ",
-                      $Theme->linkExistingWikiWord($pagename, false, $version));
+
+    $pagetitle = HTML(fmt("%s: %s", $actionpage->getName(),
+                      $Theme->linkExistingWikiWord($pagename, false, $version)));
 
     $template = Template('browse', array('CONTENT' => TransformText($actionrev)));
     
