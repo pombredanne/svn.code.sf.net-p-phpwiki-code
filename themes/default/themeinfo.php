@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.9 2002-01-11 22:43:57 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.10 2002-01-13 02:42:55 carstenklapp Exp $');
 
 /**
  * This is really just a template to copy for designing new
@@ -55,7 +55,7 @@ $URL_LINK_ICONS = array(
                         'ftp'       => "themes/$theme/icons/ftp.png",
                         'mailto'    => "themes/$theme/icons/mailto.png",
                         'interwiki' => "themes/$theme/icons/interwiki.png",
-                        '*'         => "themes/$theme/icons/zapg.png"
+                        '*'         => "themes/$theme/icons/url.png"
                         );
 */
 
