@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.15 2001-12-19 13:04:06 carstenklapp Exp $');
+rcs_id('$Id: PearDB.php,v 1.16 2002-01-10 23:11:01 carstenklapp Exp $');
 
 //require_once('DB.php');
 require_once('lib/WikiDB/backend.php');
@@ -54,7 +54,7 @@ extends WikiDB_backend
         if (!$this->_dbh)
             return;
         if ($this->_lock_count) {
-            trigger_error( _("WARNING: database still locked") . '(lock_count = $this->_lock_count)' . "\n<br>",
+            trigger_error( _("WARNING: database still locked") . '(lock_count = $this->_lock_count)' . "\n<br />",
                           E_USER_WARNING);
         }
         $this->_dbh->setErrorHandling(PEAR_ERROR_PRINT);	// prevent recursive loops.

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ViewMarkup.php,v 1.5 2002-01-07 23:28:19 dairiki Exp $');
+rcs_id('$Id: ViewMarkup.php,v 1.6 2002-01-10 23:11:00 carstenklapp Exp $');
 require_once('lib/Template.php');
 /**
  * A handy plugin for viewing the WikiMarkup of locked (and unlocked) pages.
@@ -67,7 +67,7 @@ extends WikiPlugin
         $html = Element('h2', __sprintf("Page source for %s", $link));
 
         /* <tt> seems to be a good compromise in IE and OmniWeb
-           it doesn't combine newlines and <br>, and renders monospaced */
+           it doesn't combine newlines and <br />, and renders monospaced */
         //$html .= Element('tt', nl2br(htmlspecialchars($rev->getPackedContent())));
 
         /* Display page source in a <textarea>:

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.22 2002-01-09 17:04:51 carstenklapp Exp $');
+rcs_id('$Id: loadsave.php,v 1.23 2002-01-10 23:11:01 carstenklapp Exp $');
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
 
@@ -136,12 +136,12 @@ function DumpToDir ($dbi, $request)
     if (! file_exists($directory)) {
         if (! mkdir($directory, 0755))
             ExitWiki( sprintf(_("Cannot create directory '%s'"), 
-                              $directory) . "<br>\n");
+                              $directory) . "<br />\n");
         else
             $html = sprintf(_("Created directory '%s' for the page dump..."),
-                            $directory) . "<br>\n";
+                            $directory) . "<br />\n";
     } else {
-        $html = sprintf(_("Using directory '%s'"),$directory) . "<br>\n";
+        $html = sprintf(_("Using directory '%s'"),$directory) . "<br />\n";
     }
     
     StartLoadDump( _("Dumping Pages"), $html);
@@ -153,7 +153,7 @@ function DumpToDir ($dbi, $request)
         $enc_name = htmlspecialchars($page->getName());
         $filename = FilenameForPage($page->getName());
         
-        echo "<br>$enc_name ... ";
+        echo "<br />$enc_name ... ";
         if($page->getName() != $filename)
             echo "<small>" . sprintf(_("saved as %s"),$filename)
                 . "</small> ... ";

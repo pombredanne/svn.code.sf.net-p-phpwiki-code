@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: walkabout.php,v 1.2 2002-01-10 06:06:48 carstenklapp Exp $');
+rcs_id('$Id: walkabout.php,v 1.3 2002-01-10 23:11:00 carstenklapp Exp $');
 /**
  * Usage:
  *
@@ -130,7 +130,7 @@ extends WikiPlugin
 
         //debugging only
         //foreach ( $c as $line ) {
-        //    echo $line ."<br>";
+        //    echo $line ."<br />";
         //}
 
        $pagename = $request->getArg('pagename');
