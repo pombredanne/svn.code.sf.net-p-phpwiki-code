@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.83 2005-02-28 21:24:32 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.84 2005-03-27 18:23:40 rurban Exp $');
 
 /**
  * A configurator intended to read its config from a PHP-style INI file,
@@ -681,7 +681,7 @@ function fixup_dynamic_configs($file) {
         if (isWindows())
             $bindtextdomain_path = str_replace("/", "\\", $bindtextdomain_path);
         $bindtextdomain_real = @bindtextdomain("phpwiki", $bindtextdomain_path);
-        if ($bindtextdomain_real != $bindtextdomain_path) {
+        if (realpath($bindtextdomain_real) != realpath($bindtextdomain_path)) {
             // this will happen with virtual_paths. chdir and try again.
             chdir($bindtextdomain_path);
             $chback = 1;
@@ -830,6 +830,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.83  2005/02/28 21:24:32  rurban
+// ignore forbidden ini_set warnings. Bug #1117254 by Xavier Roche
+//
 // Revision 1.82  2005/02/28 20:14:19  rurban
 // prevent from recursion (configurator.php)
 //

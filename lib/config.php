@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.133 2005-02-08 13:26:59 rurban Exp $');
+rcs_id('$Id: config.php,v 1.134 2005-03-27 18:23:39 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -128,7 +128,7 @@ function guessing_lang ($languages=false) {
     if (!$languages) {
     	// make this faster
     	$languages = array("en","de","es","fr","it","ja","zh","nl","sv");
-        // ignore possible "_territory" and codeset "ja.utf8"
+        // ignore possible "_<territory>" and codeset "ja.utf8"
         /*
         require_once("lib/Theme.php");
         $languages = listAvailableLanguages();
@@ -269,14 +269,12 @@ function guessing_setlocale ($category, $locale) {
 function update_locale($loc) {
     // $LANG or DEFAULT_LANGUAGE is too less information, at least on unix for
     // setlocale(), for bindtextdomain() to succeed.
-    $newlocale = guessing_setlocale(LC_ALL, $loc); // [56ms]
-    if (!$newlocale) {
-        $newlocale = FileFinder::_get_lang();
-        list ($newlocale,) = split('_', $newlocale, 2);
-        $loc = guessing_setlocale(LC_ALL, $newlocale); // try again
-        if (!$loc) $loc = $newlocale;
-    } else {
-        $loc = $newlocale;
+    $setlocale = guessing_setlocale(LC_ALL, $loc); // [56ms]
+    if (!$setlocale) { // system has no locale for this language, so gettext might fail
+        $setlocale = FileFinder::_get_lang();
+        list ($setlocale,) = split('_', $setlocale, 2);
+        $setlocale = guessing_setlocale(LC_ALL, $setlocale); // try again
+        if (!$setlocale) $setlocale = $loc;
     }
     // Try to put new locale into environment (so any
     // programs we run will get the right locale.)
@@ -291,7 +289,7 @@ function update_locale($loc) {
     } else {
         // If PHP is in safe mode, this is not allowed,
         // so hide errors...
-        @putenv("LC_ALL=$loc");
+        @putenv("LC_ALL=$setlocale");
         @putenv("LANG=$loc");
         @putenv("LANGUAGE=$loc");
     }
@@ -317,7 +315,7 @@ function update_locale($loc) {
     if (setlocale(LC_CTYPE, 0) == 'C') {
         $x = setlocale(LC_CTYPE, 'en_US.' . $GLOBALS['charset']);
     } else {
-        $x = setlocale(LC_CTYPE, $loc);
+        $x = setlocale(LC_CTYPE, $setlocale);
     }
 
     return $loc;
@@ -528,6 +526,9 @@ function getUploadDataPath() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.133  2005/02/08 13:26:59  rurban
+//  improve the locale splitter
+//
 // Revision 1.132  2005/02/07 15:39:02  rurban
 // another locale fix
 //
