@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.2 2001-09-19 03:24:36 wainstead Exp $');
+rcs_id('$Id: backend.php,v 1.3 2002-01-10 23:32:04 carstenklapp Exp $');
 
 /*
   Pagedata
@@ -464,7 +464,7 @@ class WikiDB_backend_iterator
      * If this is a page iterator, it must contain the 'pagename' entry --- the others
      * are optional.
      *
-     * If this is a version iterator, the 'pagename', 'version', <b>and</b> 'versiondata'
+     * If this is a version iterator, the 'pagename', 'version', <strong>and</strong> 'versiondata'
      * entries are mandatory.  ('pagedata' is optional.)
      */
     function next() {
