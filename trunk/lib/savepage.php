@@ -1,4 +1,4 @@
-<!-- $Id: savepage.php,v 1.3 2000-10-26 15:38:38 ahollosi Exp $ -->
+<!-- $Id: savepage.php,v 1.4 2000-10-26 15:47:51 ahollosi Exp $ -->
 <?php
 
 /*
@@ -14,14 +14,23 @@
         is does not know about php's dot operator.
         We want to translate this entire paragraph as one string, of course.
       */
-      $html = "<P>" . gettext ("PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost.") . "</P>\n<P>" .
-	gettext ("In order to recover from this situation follow these steps:") . "\n<OL><LI>" .
-	gettext ("Use your browser's <b>Back</b> button to go back to the edit page.") . "\n<LI>" .
-	gettext ("Copy your changes to the clipboard or to another temporary place (e.g. text editor).") . "\n<LI>" .
-	gettext ("<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there.") . "\n<LI>" .
-	gettext ("Make changes to the file again. Paste your additions from the clipboard (or text editor).") . "\n<LI>" .
-	gettext ("Press <b>Save</b> again.") . "</OL>\n<P>" .
-	gettext ("Sorry for the inconvenience.") ."</P>";
+      $html = "<P>";
+      $html .= gettext ("PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost.");
+      $html .= "</P>\n<P>";
+      $html .= gettext ("In order to recover from this situation follow these steps:");
+      $html .= "\n<OL><LI>";
+      $html .= gettext ("Use your browser's <b>Back</b> button to go back to the edit page.");
+      $html .= "\n<LI>";
+      $html .= gettext ("Copy your changes to the clipboard or to another temporary place (e.g. text editor).");
+      $html .= "\n<LI>";
+      $html .= gettext ("<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there.");
+      $html .= "\n<LI>";
+      $html .= gettext ("Make changes to the file again. Paste your additions from the clipboard (or text editor).");
+      $html .= "\n<LI>";
+      $html .= gettext ("Press <b>Save</b> again.");
+      $html .= "</OL>\n<P>";
+      $html .= gettext ("Sorry for the inconvenience.");
+      $html .= "</P>";
 
       GeneratePage('MESSAGE', $html,
 	sprintf (gettext ("Problem while updating %s"), $pagename), 0);
@@ -39,9 +48,17 @@
       $pagehash["flags"] = 0;
       $newpage = 1;
    } else {
+      if (($pagehash['flags'] & FLAG_PAGE_LOCKED) && !$admin_edit) {
+	 $html = "<p>" . gettext ("This page has been locked by the administrator and cannot be edited.");
+	 $html .= "\n<p>" . gettext ("Sorry for the inconvenience.");
+	 GeneratePage('MESSAGE', $html, sprintf (gettext ("Problem while editing %s"), $pagename), 0);
+	 ExitWiki ("");
+      }
+
       if(isset($editversion) && ($editversion != $pagehash["version"])) {
          ConcurrentUpdates($pagename);
       }
+
       // archive it if it's a new author
       if ($pagehash["author"] != $remoteuser) {
          SaveCopyToArchive($dbi, $pagename, $pagehash);
