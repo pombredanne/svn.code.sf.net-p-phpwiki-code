@@ -1,6 +1,6 @@
 -- http://www.hezmatt.org/~mpalmer/sqlite-phpwiki/sqlite.sql
 
--- $Id: sqlite.sql,v 1.2 2004-04-06 20:00:11 rurban Exp $
+-- $Id: sqlite.sql,v 1.3 2004-06-23 07:59:50 rurban Exp $
 
 CREATE TABLE page (
 	id              INT NOT NULL,
@@ -61,7 +61,7 @@ CREATE INDEX sessip_index ON session (sess_ip);
 -- in the DBAuthParam SQL statements also.
 
 CREATE TABLE pref (
-  	userid 	CHAR(48) BINARY NOT NULL UNIQUE,
+  	userid 	CHAR(48) NOT NULL UNIQUE,
   	prefs  	TEXT NULL DEFAULT '',
   	PRIMARY KEY (userid)
 );
