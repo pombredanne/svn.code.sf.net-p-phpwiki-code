@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: browse.tmpl,v 1.16 2002-02-08 22:03:04 dairiki Exp $ -->
+<!-- $Id: browse.tmpl,v 1.17 2002-02-09 08:07:58 carstenklapp Exp $ -->
 <div class="br"><br clear="all" class="ignore" /></div>
 
 <?php if (! $revision->isCurrent()) { ?>
@@ -13,8 +13,8 @@
 <div class="wikitext"><?=$CONTENT?></div>
 <hr class="ignore" noshade="noshade" />
 
-<p class="editdate"><?= $Theme->getLastModifiedMessage($revision) ?></p>
 <div id="actionbar">
+<p class="editdate"><?= $Theme->getLastModifiedMessage($revision) ?></p>
 <hr class="toolbar" noshade="noshade" />
 <?= Template('actionbar') ?>
 <!-- RELATEDPAGES were here. -->
