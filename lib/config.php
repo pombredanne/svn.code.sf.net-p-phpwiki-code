@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.89 2004-03-14 16:32:18 rurban Exp $');
+rcs_id('$Id: config.php,v 1.90 2004-03-17 19:36:31 rurban Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -84,10 +84,10 @@ function FindLocalizedButtonFile ($file, $missing_okay = false, $re_init = false
 function guessing_setlocale ($category, $locale) {
     if ($res = setlocale($category, $locale))
         return $res;
-// gettext problem on windows
     $alt = array('en' => array('C', 'en_US', 'en_GB', 'en_AU', 'en_CA', 'english'),
-                 'de' => array('de_DE', 'German_Austria.1252', 'de_DE@euro', 'de_AT@euro', 'deutsch', 
-                               'german', 'German', 'de_AT', 'ge'),
+                 'de' => array('de_DE', 'de_DE', 'de_DE@euro', 
+                               'de_AT@euro', 'de_AT', 'German_Austria.1252', 'deutsch', 
+                               'german', 'German', 'ge'),
                  'es' => array('es_ES', 'es_MX', 'es_AR', 'spanish'),
                  'nl' => array('nl_NL', 'dutch'),
                  'fr' => array('fr_FR', 'français', 'french'),
@@ -95,13 +95,17 @@ function guessing_setlocale ($category, $locale) {
                  'sv' => array('sv_SE'),
                  'ja' => array('ja_JP','ja_JP.eucJP')
                  );
-    
-    list ($lang) = split('_', $locale);
+    if (strlen($locale) == 2)
+        $lang = $locale;
+    else 
+        list ($lang) = split('_', $locale);
     if (!isset($alt[$lang]))
         return false;
         
     foreach ($alt[$lang] as $try) {
-        // Try first with charset appended...
+        if ($res = setlocale($category, $try))
+            return $res;
+        // Try with charset appended...
         $try = $try . '.' . CHARSET;
         if ($res = setlocale($category, $try))
             return $res;
@@ -123,7 +127,7 @@ function guessing_setlocale ($category, $locale) {
 function update_locale($loc) {
     $newlocale = guessing_setlocale(LC_ALL, $loc);
     if (!$newlocale) {
-        trigger_error(sprintf(_("Can't set locale: '%s'"), $loc), E_USER_NOTICE);
+        trigger_error(sprintf(_("Can't setlocale(LC_ALL,'%s')"), $loc), E_USER_NOTICE);
         // => LC_COLLATE=C;LC_CTYPE=German_Austria.1252;LC_MONETARY=C;LC_NUMERIC=C;LC_TIME=C
         $loc = setlocale(LC_CTYPE, '');  // pull locale from environment.
         list ($loc,) = split('_', $loc, 2);
@@ -382,7 +386,7 @@ if (empty($DBParams['dbtype']))
 if (!defined('THEME'))
     define('THEME', 'default');
 
-update_locale(DEFAULT_LANGUAGE);
+update_locale(isset($LANG) ? $LANG : DEFAULT_LANGUAGE);
 
 if (!defined('WIKI_NAME'))
     define('WIKI_NAME', _("An unnamed PhpWiki"));
