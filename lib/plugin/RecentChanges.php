@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.71 2003-02-16 20:04:48 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.72 2003-02-17 02:19:01 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -133,7 +133,7 @@ extends _RecentChanges_Formatter
         return $Theme->makeButton(_("(hist)"), $this->historyURL($rev), 'wiki-rc-action');
     }
 
-    function pageLink ($rev) {
+    function pageLink ($rev, $link_text=false) {
         $page = $rev->getPage();
         global $Theme;
         if ($this->include_versions_in_URLs()) {
@@ -146,9 +146,9 @@ extends _RecentChanges_Formatter
             $exists = !$cur->hasDefaultContents();
         }
         if ($exists)
-            return $Theme->linkExistingWikiWord($page->getName(), false, $version);
+            return $Theme->linkExistingWikiWord($page->getName(), $link_text, $version);
         else
-            return $Theme->linkUnknownWikiWord($page->getName(), false, $version);
+            return $Theme->linkUnknownWikiWord($page->getName(), $link_text);
     }
 
     function authorLink ($rev) {
@@ -253,6 +253,11 @@ extends _RecentChanges_Formatter
                      $this->sidebar_link());
     }
 
+    function empty_message () {
+        return _("No changes found");
+    }
+    
+        
     function sidebar_link() {
         extract($this->_args);
         $pagetitle = $show_minor ? _("RecentEdits") : _("RecentChanges");
@@ -312,6 +317,10 @@ extends _RecentChanges_Formatter
         }
         if ($lines)
             $html->pushContent($lines);
+        if ($first)
+            $html->pushContent(HTML::p(array('class' => 'rc-empty'),
+                                       $this->empty_message()));
+        
         return $html;
     }
 
@@ -597,7 +606,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.71 $");
+                            "\$Revision: 1.72 $");
     }
 
     function managesValidators() {
@@ -760,6 +769,11 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.71  2003/02/16 20:04:48  dairiki
+// Refactor the HTTP validator generation/checking code.
+//
+// This also fixes a number of bugs with yesterdays validator mods.
+//
 // Revision 1.70  2003/02/16 05:09:43  dairiki
 // Starting to fix handling of the HTTP validator headers, Last-Modified,
 // and ETag.
