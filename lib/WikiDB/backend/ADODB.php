@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.22 2004-04-16 14:11:55 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.23 2004-04-16 14:19:39 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -26,7 +26,7 @@ rcs_id('$Id: ADODB.php,v 1.22 2004-04-16 14:11:55 rurban Exp $');
  * Based on PearDB.php. 
  * @author: Lawrence Akka
  *
- * Now (phpwiki-1.3.10) with adodb-4.21, by Reini Urban:
+ * Now (phpwiki-1.3.10) with adodb-4.22, by Reini Urban:
  * 1) Extended to use all available database backend, not only mysql.
  * 2) It uses the ultra-fast binary adodb extension if loaded.
  * 3) We use FETCH_NUM instead of FETCH_ASSOC (faster and more generic)
@@ -34,35 +34,8 @@ rcs_id('$Id: ADODB.php,v 1.22 2004-04-16 14:11:55 rurban Exp $');
  *    variable columns, some trickery was needed to use recordset specific fetchMode.
  *    The first Execute uses the global fetchMode (ASSOC), then it's resetted back to NUM 
  *    and the recordset fetchmode is set to ASSOC.
- * 5) 2 patches to the adodb-4.21 library where needed:
-
-$ diff -bu ../../adodb/drivers/adodb-mysql.inc.php lib/WikiDB/adodb/drivers/adodb-mysql.inc.php
---- ../../adodb/drivers/adodb-mysql.inc.php     2004-03-20 09:20:29.000000000 +0100
-+++ lib/WikiDB/adodb/drivers/adodb-mysql.inc.php        2004-04-16 12:00:33.234375000 +0100
-@@ -552,7 +551,7 @@
-        function &GetRowAssoc($upper=true)
-        {
-                if ($this->fetchMode == MYSQL_ASSOC && !$upper) return $this->fields;
--               $row =& ADORecordSet::GetRowAssoc($upper);
-+               $row =& parent::GetRowAssoc($upper);
-                return $row;
-        }
-
-@@ -604,7 +603,13 @@
-
-        function _fetch()
-        {
--               $this->fields =  @mysql_fetch_array($this->_queryID,$this->fetchMode);
-+               // workaround for strange mysql_fetch_array bug, ignoring the mode arg
-+               if ($this->fetchMode == MYSQL_ASSOC)
-+                   $this->fields =  @mysql_fetch_assoc($this->_queryID);
-+               elseif ($this->fetchMode == MYSQL_NUM)
-+                   $this->fields =  @mysql_fetch_row($this->_queryID);
-+                else
-+                   $this->fields =  @mysql_fetch_array($this->_queryID, $this->fetchMode);
-                return is_array($this->fields);
-        }
-
+ * 5) Transaction support, but no locking yet.
+ *
  * ADODB basic differences to PearDB: It pre-fetches the first row into fields, 
  * is dirtier in style, layout and more low-level ("worse is better").
  * It has less needed basic features (modifyQuery, locks, ...), but some more 
@@ -1065,7 +1038,7 @@ extends WikiDB_backend_ADODB_generic_iter
         return $parsed;
     }
 
-
+// $Log: not supported by cvs2svn $
 
 // (c-file-style: "gnu")
 // Local Variables:

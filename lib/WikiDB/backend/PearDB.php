@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.44 2004-04-16 14:11:55 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.45 2004-04-16 14:19:39 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -913,6 +913,7 @@ extends WikiDB_backend_PearDB_generic_iter
         return $rec;
     }
 }
+// $Log: not supported by cvs2svn $
 
 // (c-file-style: "gnu")
 // Local Variables:
