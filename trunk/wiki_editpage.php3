@@ -1,4 +1,4 @@
-<!-- $Id: wiki_editpage.php3,v 1.4 2000-06-05 21:46:50 wainstead Exp $ -->
+<!-- $Id: wiki_editpage.php3,v 1.5 2000-06-07 11:07:23 ahollosi Exp $ -->
 <?
 
 /*
@@ -24,6 +24,23 @@
       exit();
    }
 
+   $pagehash = RetrievePage($dbi, $pagename);
+
+   if (is_array($pagehash)) {
+      $textarea = implode($pagehash["text"], "\n");
+      $version = $copy ? $pagehash["version"]+1 : $pagehash["version"];
+      if (($pagehash["version"] > 1) &&
+          ($pagehash["author"] != $remoteuser)) {
+         $lastcopy = $pagename;
+      } else {
+         $lastcopy = false;
+      }
+   } else {
+      $textarea = "Describe " . htmlspecialchars($pagename) . " here.";
+      $lastcopy = false;
+      $version = 0;
+   }
+   
    echo WikiHeader($pagename); 
 ?>
 
@@ -33,20 +50,7 @@
 </h1>
 
 <textarea name="text" ROWS="22" COLS="80" wrap="virtual"><?
-   $pagehash = RetrievePage($dbi, $pagename);
-   if (is_array($pagehash)) {
-      echo implode($pagehash["text"], "\n");
-      if (($pagehash["version"] > 1) &&
-          ($pagehash["author"] != $remoteuser)) {
-         $lastcopy = $pagename;
-      } else {
-         $lastcopy = false;
-      }
-   } else {
-      echo "Describe " . htmlspecialchars($pagename) . " here.";
-      $lastcopy = false;
-   }
-?></textarea>
+echo $textarea ?></textarea>
 <br>
 
 <input type="checkbox" name="convert" value="tabs" >
@@ -74,9 +78,8 @@ to other web servers.
    }
 
 ?>
-<input type="hidden" size=1 name="post"
-value="<? echo rawurlencode($pagename); ?>">
-
+<input type="hidden" name="post" value="<? echo rawurlencode($pagename); ?>">
+<input type="hidden" name="editversion" value="<? echo $version+0 ?>">
 </form>
 
 <? echo WikiFooter(); ?>
