@@ -2,7 +2,7 @@
 
 /*
 Copyright 2000??, 2001, 2002 $ThePhpWikiProgrammingTeam = array(
-"Steve Waistead",
+"Steve Wainstead",
 );
 
 This file is part of PhpWiki.
@@ -63,7 +63,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.50 2002-01-03 22:40:59 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.51 2002-01-03 22:55:56 wainstead Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
