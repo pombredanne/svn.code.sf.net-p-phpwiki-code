@@ -1,0 +1,45 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>###PAGE###</title>
+</head>
+
+<body>
+
+<form method="POST" action="###SCRIPTURL###">
+
+<h1><a href="###SCRIPTURL###"><img src="###LOGO###" border=0 alt="[phpwiki]" width=50 height=50></a>
+Redigera ###PAGE###
+<input type="submit" value=" Spara "></h1>
+
+<textarea name="content" ROWS="22" COLS="80" wrap="virtual">###CONTENT###</textarea>
+<br>
+
+<input type="checkbox" name="convert" value="tabs" >
+Jag kan inte skriva tabbar.
+<a href="###SCRIPTURL###?KonverteraMellanslagTillTabbar">KonverteraMellanslagTillTabbar</a>
+åt mig när jag sparar.
+<p><a href="###SCRIPTURL###?BraStil">BraStil</a>: Redigeringstips.
+
+<br>
+<a href="###SCRIPTURL###?links=###PAGEURL###">RedigeraLänkar</a> till andra webbservrar.
+
+###IF COPY###<br><a href="###SCRIPTURL###?copy=###PAGEURL###">RedigeraKopia</a> från föregående författare
+
+<hr noshade>
+<small>
+<b>Markering:</b> '' för lutande, ''' för fet, ''''' för både och
+<br><b>Listor:</b> tab-* för punktlistor, tab-# för numrerade listor, tab-term:-tab för definitionslistor
+<br><b>Referenser:</b> BindIhopOrdMedStoraBokstäver eller använd hakar för en [länk] eller URL [http://cool.wiki.int/].
+<br><b>Referenser:</b> Använd [1],[2],[3],... och RedigeraLänkar. Undvik länkning med "!": !SkapaEjHyperlänk, namnge länkar med [text | URL]
+<br><b>Blandat:</b>"!", "!!", "!!!" skapar rubriker,
+"%%%" skapar radbrytning, "- - - -" skapar en horisontell linje, skriv "[[" för att få "["
+<br>mer information på
+<a href="###SCRIPTURL###?Textformateringsregler"><b>Textformateringsregler</b></a>
+</small>
+
+<input type="hidden" name="post" value="###PAGEURL###">
+<input type="hidden" name="editversion" value="###VERSION###">
+</form>
+</body>
+</html>

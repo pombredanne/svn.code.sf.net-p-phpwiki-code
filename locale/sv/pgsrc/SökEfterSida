@@ -1,0 +1,21 @@
+Här är några bra startpunkter för att leta.
+
+* [HurManAnvänderWiki] är en snabb introduktion till hur man skriver i Wiki.
+* [SenasteÄndringar] ändras automatiskt.
+* MerOmMekanismerna om hur man söker och ändrar på den här servern.
+
+Här är titelsökningen. Försök med ord wom ''wiki'' eller ''smörgås''.
+
+%%Search%%
+
+Använd följande för fulltextsökning. Det kan ta några
+sekunder. Resultatet visar alla rader på en sidan som innehåller
+en träff.
+
+%%Fullsearch%%
+
+------
+Separera ord med mellanslag. Alla ord måste matcha.
+%%%För att exkludera ord sätt ett "-" framför.
+%%%Exempel: "wiki text -php" söker på alla sidor som innehåller orden "wiki"
+__och__ "text", men __inte__ innehåller ordet "php".
