@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.34 2004-11-01 10:43:55 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.35 2004-11-15 15:56:40 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -138,17 +138,6 @@ function pagePermissionsAclFormat($perm_tree, $editable=false) {
         return $perm->asEditableTable($type);
     else
         return $perm->asTable($type);
-}
-
-/**
- * Check permission per page.
- * Returns true or false.
- */
-function mayAccessPage ($access, $pagename) {
-    if (ENABLE_PAGEPERM)
-        return _requiredAuthorityForPagename($access, $pagename);
-    else
-        return true;
 }
 
 /** 
@@ -729,6 +718,12 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.34  2004/11/01 10:43:55  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 // Revision 1.33  2004/09/26 11:47:52  rurban
 // fix another reecursion loop when . exists: deny if ACL not defined; implement pageperm cache
 //
