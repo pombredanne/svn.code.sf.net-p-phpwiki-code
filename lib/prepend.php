@@ -5,7 +5,48 @@
  */
 $RCS_IDS = '';
 function rcs_id ($id) { $GLOBALS['RCS_IDS'] .= "$id\n"; }
-rcs_id('$Id: prepend.php,v 1.13 2002-09-18 19:23:25 dairiki Exp $');
+rcs_id('$Id: prepend.php,v 1.14 2003-02-21 04:08:25 dairiki Exp $');
+
+// Used for debugging purposes
+class DebugTimer {
+    function DebugTimer() {
+        $this->_start = $this->microtime();
+        $this->_times = posix_times();
+    }
+
+    /**
+     * @param string $which  One of 'real', 'utime', 'stime', 'cutime', 'sutime'
+     * @return float Seconds.
+     */
+    function getTime($which='real', $now=false) {
+        if ($which == 'real')
+            return $this->microtime() - $this->_start;
+        
+        if (!$now) $now = posix_times();
+        $ticks = $now[$which] - $this->_times[$which];
+        return $ticks / $this->_CLK_TCK();
+    }
+
+    function getStats() {
+        $now = posix_times();
+        return sprintf("real: %.3f, user: %.3f, sys: %.3f",
+                       $this->getTime('real', $now),
+                       $this->getTime('utime', $now),
+                       $this->getTime('stime', $now));
+    }
+        
+    function _CLK_TCK() {
+        // FIXME: this is clearly not always right.
+        // But how to figure out the right value?
+        return 100.0;
+    }
+
+    function microtime(){
+        list($usec, $sec) = explode(" ", microtime());
+        return ((float)$usec + (float)$sec);
+    }
+}
+$RUNTIMER = new DebugTimer;
 
 error_reporting(E_ALL);
 require_once('lib/ErrorManager.php');

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllUsers.php,v 1.4 2003-01-18 21:19:25 carstenklapp Exp $');
+rcs_id('$Id: AllUsers.php,v 1.5 2003-02-21 04:08:26 dairiki Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -79,8 +79,7 @@ extends WikiPlugin
         if (defined('DEBUG'))
             $debug = true;
 
-        if ($debug)
-            $time_start = $this->getmicrotime();
+        $timer = new DebugTimer;
 
         $page_iter = $dbi->getAllPages($include_empty);
         while ($page = $page_iter->next()) {
@@ -88,12 +87,9 @@ extends WikiPlugin
                 $pagelist->addPage($page);
         }
 
-        if ($debug)
-            $time_end = $this->getmicrotime();
-
         if ($debug) {
-            $time = round($time_end - $time_start, 3);
-            return HTML($pagelist,HTML::p(fmt("Elapsed time: %s s", $time)));
+            return HTML($pagelist,
+                        HTML::p(fmt("Elapsed time: %s s", $timer->getStats())));
         } else {
             return $pagelist;
         }
@@ -106,6 +102,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2003/01/18 21:19:25  carstenklapp
+// Code cleanup:
+// Reformatting; added copyleft, getVersion, getDescription
+//
 
 // Local Variables:
 // mode: php
