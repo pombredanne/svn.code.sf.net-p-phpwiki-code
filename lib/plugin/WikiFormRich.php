@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiFormMore.php,v 1.3 2004-07-01 13:59:25 rurban Exp $');
+rcs_id('$Id: WikiFormRich.php,v 1.1 2004-07-02 11:03:53 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
 
@@ -25,55 +25,70 @@ rcs_id('$Id: WikiFormMore.php,v 1.3 2004-07-01 13:59:25 rurban Exp $');
  * Previously encoded with the "phpwiki:" syntax.
  *
  * Enhanced WikiForm to be more generic:
- * - editboxes 
- * - check boxes (flags)
- * - radio buttons (selections)
- * - pulldowns (selections) (not yet)
- * - hidden args
- * - action, submit buttontext, optional cancel button
- * - GET or POST.
+ * - editbox[] 		name=.. value=.. text=..
+ * - checkbox[] 	name=.. value=0|1 checked text=..
+ * - radiobutton[] 	name=.. value=.. text=..
+ * - pulldown[]		name=.. value=.. text=..
+ * - hidden[]		name=.. value=..
+ * - action, submit buttontext, optional cancel button (bool)
+ * - method=GET or POST.
 
  Samples:
-   <?plugin WikiFormMore action=dumpserial method=GET 
-            checkbox[]=array('name'=>"include",'value'=>"all") 
-            editbox[]=array('name'=>"directory",'value'=>DEFAULT_DUMP_DIR) 
-            editbox[]=array('name'=>"pages",'value'=>"*") 
-            editbox[]=array('name'=>"exclude",'value'=>"") ?>
-   <?plugin WikiFormMore action=dumphtml method=GET 
-            editbox[]=array('name'=>"directory",'value'=>HTML_DUMP_DIR) 
-            editbox[]=array('name'=>"pages",'value'=>"*") 
-            editbox[]=array('name'=>"exclude",'value'=>"") ?>
+   <?plugin WikiFormRich action=dumpserial method=GET 
+            checkbox[] name=include value="all" 
+            editbox[] name=directory value=DEFAULT_DUMP_DIR
+            editbox[] name=pages value=*
+            editbox[] name=exclude value="" ?>
+   <?plugin WikiFormRich action=dumphtml method=GET 
+            editbox[] name=directory value=HTML_DUMP_DIR
+            editbox[] name=pages value="*"
+            editbox[] name=exclude value="" ?>
+
+   <?plugin WikiFormRich action=loadfile method=GET 
+            editbox[]  name=source value=DEFAULT_WIKI_PGSRC
+            checkbox[] name=overwrite value=1
+            editbox[]  name=exclude value="" ?>
  */
-class WikiPlugin_WikiFormMore
+class WikiPlugin_WikiFormRich
 extends WikiPlugin
 {
     function getName () {
-        return _("WikiForm");
+        return _("Provide generic WikiForm input buttons");
     }
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.1 $");
     }
 
     function getDefaultArguments() {
-        return array('action' => false,
-                     'method' => 'POST',
-                     'class' => false,
-                     'buttontext' => false,
-                     'cancel'  => false,
+        return array('action' => false,     // required argument
+                     'method' => 'POST',    // or GET
+                     'class'  => false,
+                     'buttontext' => false, // for the submit button
+                     'cancel' => false,     // boolean if the action supports cancel also
                      );
     }
 
     function handle_plugin_args_cruft($argstr, $args) {
     	$allowed = array("editbox", "hidden", "checkbox", "radiobutton", "pulldown");
     	// no editbox[] = array(...) allowed (space)
-    	$arg_array = preg_split("/[\n\s]+/", $argstr);
+    	$arg_array = preg_split("/\n/", $argstr);
     	// for security we should check this better
         $arg = '';
     	for ($i = 0; $i < count($arg_array); $i++) {
-    	    if (preg_match("/^(".join("|",$allowed).")\[\d*\]\s*=(.+)/", $arg_array[$i], $m)) {
-                eval('$this->inputbox[]["'.$m[1].'"]='.$m[2].';');
+    	    if (preg_match("/^\s*(".join("|",$allowed).")\[\]\s+(.+)\s*$/", $arg_array[$i], $m)) {
+                $this->inputbox[][$name] = array(); $i = count($this->inputbox) - 1;
+                foreach (preg_split("/[\s+]/", $m[2]) as $attr_pair) {
+                    list($attr,$value) = preg_split("/\s*=\s*/", $attr_pair);
+                    if (preg_match('/^".*"$/', $value, $m))
+                        $value = $m[1];
+                    elseif (defined($value))
+                        $value = constant($value);
+                    $this->inputbox[$i][$name][$attr] = $value;
+                }
+    	    	//trigger_error("not yet finished");
+                //eval('$this->inputbox[]["'.$m[1].'"]='.$m[2].';');
             } else {
     	    	trigger_error(sprintf("Invalid argument %s ignored",htmlentities($arg_array[$i])), 
     	    	              E_USER_WARNING);
@@ -99,7 +114,7 @@ extends WikiPlugin
               case 'checkbox':
                 $input['type'] = 'checkbox';
                 if (empty($input['name']))
-                    return $this->error("A required argument '%s' is missing.","checkboxes[][name]");
+                    return $this->error("A required argument '%s' is missing.","checkbox[][name]");
                 if (empty($input['value'])) $input['value'] = 1;
                 if (empty($input['text'])) 
                     $input['text'] = gettext($input['name'])."=".$input['value'];
@@ -111,7 +126,7 @@ extends WikiPlugin
               case 'editbox':
                 $input['type'] = 'text';
                 if (empty($input['name']))
-                    return $this->error("A required argument '%s' is missing.","editboxes[][name]");
+                    return $this->error("A required argument '%s' is missing.","editbox[][name]");
                 if (empty($input['text'])) $input['text'] = gettext($input['name']);
                 $text = $input['text'];
                 unset($input['text']);
@@ -120,11 +135,10 @@ extends WikiPlugin
               case 'radiobutton':
                 $input['type'] = 'radio';
                 if (empty($input['name']))
-                    return $this->error("A required argument '%s' is missing.","radiobuttons[][name]");
+                    return $this->error("A required argument '%s' is missing.","radiobutton[][name]");
                 if (empty($input['text'])) $input['text'] = gettext($input['name']);
                 $text = $input['text'];
                 unset($input['text']);
-                if (empty($input['value'])) $input['value'] = 1;
                 if ($input['checked']) $input['checked'] = 'checked';
                 $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $text));
                 break;
@@ -134,6 +148,8 @@ extends WikiPlugin
                     return $this->error("A required argument '%s' is missing.","hidden[][name]");
                 unset($input['text']);
                 $form->pushContent(HTML::input($input));
+              case 'pulldown':
+                    return $this->error("Sorry, pulldown not yet supported");
               }
             }
         }
@@ -155,6 +171,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/07/01 13:59:25  rurban
+// enhanced to allow arbitrary order of args and stricter eval checking
+//
 // Revision 1.2  2004/07/01 13:14:01  rurban
 // desc only
 //
