@@ -1,9 +1,12 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.7 2002-02-05 22:36:47 lakka Exp $');
+rcs_id('$Id: WikiDB.php,v 1.8 2002-02-07 17:07:58 lakka Exp $');
 
 //FIXME: arg on get*Revision to hint that content is wanted.
 
 define('WIKIDB_FORCE_CREATE', -1);
+
+//FIXME:  Use this to use new cache.  Remove refs to it before release
+//define('USECACHE', 1);
 
 /** 
  * Abstract base class for the database used by PhpWiki.
@@ -358,7 +361,7 @@ class WikiDB_Page
             return;
 
         $backend->lock();
-        $latestversion = $backend->get_latest_version($pagename);
+        $latestversion = $cache->get_latest_version($pagename);
         if ($latestversion && $version == $latestversion) {
             $backend->unlock();
             trigger_error(sprintf("Attempt to delete most recent revision of '%s'",
@@ -367,6 +370,7 @@ class WikiDB_Page
         }
 
         $cache->delete_versiondata($pagename, $version);
+		
         $backend->unlock();
     }
 
@@ -546,7 +550,7 @@ class WikiDB_Page
         $pagename = &$this->_pagename;
 
         $backend->lock();
-        $version = $backend->get_latest_version($pagename);
+        $version = $cache->get_latest_version($pagename);
         $revision = $this->getRevision($version);
         $backend->unlock();
         assert($revision);
@@ -1102,18 +1106,21 @@ class WikiDB_PageRevisionIterator
  */
 class WikiDB_cache 
 {
-    // FIXME: cache (limited) version data, too.
+    // FIXME: beautify versiondata cache.  Cache only limited data?
 
     function WikiDB_cache (&$backend) {
         $this->_backend = &$backend;
 
         $this->_pagedata_cache = array();
 		$this->_versiondata_cache = array();
+		array_push ($this->_versiondata_cache, array());
+		$this->_glv_cache = array();
     }
     
     function close() {
         $this->_pagedata_cache = false;
 		$this->_versiondata_cache = false;
+		$this->_glv_cache = false;
     }
 
     function get_pagedata($pagename) {
@@ -1143,11 +1150,14 @@ class WikiDB_cache
 
     function invalidate_cache($pagename) {
         $this->_pagedata_cache[$pagename] = false;
+		$this->_versiondata_cache[$pagename] = false;
+		$this->_glv_cache[$pagename] = false;
     }
     
     function delete_page($pagename) {
         $this->_backend->delete_page($pagename);
         $this->_pagedata_cache[$pagename] = false;
+		$this->_glv_cache[$pagename] = false;
     }
 
     // FIXME: ugly
@@ -1158,20 +1168,22 @@ class WikiDB_cache
     
     function get_versiondata($pagename, $version, $need_content = false) {
 		//  FIXME: Seriously ugly hackage
-if (true){
+	if (defined ('USECACHE')){   //temporary - for debugging
+        assert(is_string($pagename) && $pagename);
+		$nc = $need_content ? '1':'0';
         $cache = &$this->_versiondata_cache;
-
-        if (!isset($cache[$pagename][$version][$need_content]) ) {
-            $cache[$pagename][$version][$need_content] = $this->_backend->get_versiondata($pagename,
-																			$version, $need_content);
+        if (!isset($cache[$pagename][$version][$nc])||
+				!(is_array ($cache[$pagename])) && is_array ($cache[$pagename][$version])) {
+            $cache[$pagename][$version][$nc] = 
+				$this->_backend->get_versiondata($pagename,$version, $need_content);
 			}
 		
-        $vdata = $cache[$pagename][$version][$need_content];
-}
-else
-{
+        $vdata = $cache[$pagename][$version][$nc];
+	}
+	else
+	{
     $vdata = $this->_backend->get_versiondata($pagename, $version, $need_content);
-}
+	}
         // FIXME: ugly
         if ($vdata && !empty($vdata['%pagedata']))
             $this->_pagedata_cache[$pagename] = $vdata['%pagedata'];
@@ -1181,23 +1193,41 @@ else
     function set_versiondata($pagename, $version, $data) {
         $new = $this->_backend->
              set_versiondata($pagename, $version, $data);
-		// invalidate the cache.  Instead, we could updated it ...
-		$this->_versiondata_cache[$pagename][$version] = false;
+		// Update the cache
+		$this->_versiondata_cache[$pagename][$version]['1'] = $data;
 		
     }
 
     function update_versiondata($pagename, $version, $data) {
         $new = $this->_backend->
              update_versiondata($pagename, $version, $data);
-		// invalidate the cache.  Instead, we could updated it ...
-		$this->_versiondata_cache[$pagename][$version] = false;
+		// Update the cache
+		$this->_versiondata_cache[$pagename][$version]['1'] = $data;
     }
 
     function delete_versiondata($pagename, $version) {
         $new = $this->_backend->
              delete_versiondata($pagename, $version);
-	 	$this->_versiondata_cache[$pagename][$version] = false;
+	 	$this->_versiondata_cache[$pagename][(string)$version] = false;
+		// No need to delete entry from _glv_cache because most recent version is not deleted
     }
+	
+	function get_latest_version($pagename)  {
+	if(defined('USECACHE')){
+		assert (is_string($pagename) && $pagename);
+        $cache = &$this->_glv_cache;	
+        if (!isset($cache[$pagename]) || !is_array($cache[$pagename])) {
+            $cache[$pagename] = $this->_backend->get_latest_version($pagename);
+            if (empty($cache[$pagename]))
+                $cache[$pagename] = 0;
+        }
+
+        return $cache[$pagename];}
+	else {
+		return $this->_backend->get_latest_version($pagename); 
+		}
+	}
+	
 };
 
 // Local Variables:
