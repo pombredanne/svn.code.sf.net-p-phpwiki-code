@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.124 2005-01-27 16:28:15 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.125 2005-02-03 05:09:56 rurban Exp $');
 /* Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -196,12 +196,16 @@ class Theme {
         $this->_themes_dir = NormalizeLocalFileName("themes");
         $this->_path  = defined('PHPWIKI_DIR') ? NormalizeLocalFileName("") : "";
         $this->_theme = "themes/$theme_name";
+
         if (ENABLE_DOUBLECLICKEDIT) // by pixels
             $this->initDoubleClickEdit();
 
         if ($theme_name != 'default')
             $this->_default_theme = new Theme;
 
+        if (defined("ENABLE_LIVESEARCH") and ENABLE_LIVESEARCH) { // by bitflux.ch. not yet enabled
+            $this->initLiveSearch();
+        }
         $this->_css = array();
     }
 
@@ -1156,6 +1160,17 @@ class Theme {
         if (!$this->HTML_DUMP_SUFFIX)
             $this->addMoreAttr('body', 'DoubleClickEdit', HTML::Raw(" ondblclick=\"url = document.URL; url2 = url; if (url.indexOf('?') != -1) url2 = url.slice(0, url.indexOf('?')); if ((url.indexOf('action') == -1) || (url.indexOf('action=browse') != -1)) document.location = url2 + '?action=edit';\""));
     }
+
+    // Immediate title search results via XMLHttpRequest
+    // by Bitflux GmbH, bitflux.ch
+    // Google's is better.
+    function initLiveSearch() {
+        if (!$this->HTML_DUMP_SUFFIX) {
+            $this->addMoreAttr('body', 'LiveSearch', HTML::Raw(" onload=\"liveSearchInit()"));
+            $this->addMoreHeaders(JavaScript('var liveSearchURI="'.WikiURL(_("TitleSearch"),false,true).'";'));
+            $this->addMoreHeaders(JavaScript('', array('src' => $this->_findData('livesearch.js'))));
+        }
+    }
 };
 
 
@@ -1409,6 +1424,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.124  2005/01/27 16:28:15  rurban
+// especially for Google: nofollow on unauthenticated edit,diff,create,pdf
+//
 // Revision 1.123  2005/01/25 07:03:02  rurban
 // change addMoreAttr() to support named attr, to remove DoubleClickEdit for htmldumps
 //

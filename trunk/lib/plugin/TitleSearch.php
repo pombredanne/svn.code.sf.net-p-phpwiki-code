@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: TitleSearch.php,v 1.26 2004-11-27 14:39:05 rurban Exp $');
+rcs_id('$Id: TitleSearch.php,v 1.27 2005-02-03 05:09:57 rurban Exp $');
 /**
- Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
+ Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -49,7 +49,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.26 $");
+                            "\$Revision: 1.27 $");
     }
 
     function getDefaultArguments() {
@@ -63,6 +63,7 @@ extends WikiPlugin
                    'info'          => false,
                    'case_exact'    => false,
                    'regex'     	   => 'auto',
+                   'format'    	   => false,
                    ));
     }
     // info arg allows multiple columns
@@ -81,6 +82,17 @@ extends WikiPlugin
         while ($page = $pages->next()) {
             $pagelist->addPage($page);
             $last_name = $page->getName();
+        }
+        if ($args['format'] == 'livesearch') {
+            $request->discardOutput();
+            $request->buffer_output(false);
+            echo '<div class="LSRes">';
+            echo $pagelist->asXml();
+            echo '</div>';
+            if (empty($WikiTheme->DUMP_MODE)) {
+                unset($GLOBALS['ErrorManager']->_postponed_errors);
+                $request->finish();
+            }
         }
         // Provide an unknown WikiWord link to allow for page creation
         // when a search returns no results
@@ -101,6 +113,18 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.26  2004/11/27 14:39:05  rurban
+// simpified regex search architecture:
+//   no db specific node methods anymore,
+//   new sql() method for each node
+//   parallel to regexp() (which returns pcre)
+//   regex types bitmasked (op's not yet)
+// new regex=sql
+// clarified WikiDB::quote() backend methods:
+//   ->quote() adds surrounsing quotes
+//   ->qstr() (new method) assumes strings and adds no quotes! (in contrast to ADODB)
+//   pear and adodb have now unified quote methods for all generic queries.
+//
 // Revision 1.25  2004/11/26 18:39:02  rurban
 // new regex search parser and SQL backends (90% complete, glob and pcre backends missing)
 //
