@@ -56,15 +56,15 @@ BlokCitatenNadoen)
 
 '''Nadruk'''
 
-	* Gebruik twee enkele aanhalingtekens ('') voor nadruk (meestal
-schuin).
+	* Gebruik twee paar enkele aanhalingtekens ('') voor nadruk (meestal
+cursief).
 
-	* Gebuik drie enkele aanhalingtekens (''') voor sterke nadruk (meestal
-vet).
+	* Gebuik drie paar enkele aanhalingtekens (''') voor sterke nadruk
+(meestal vet).
 
-	* Gebruik vijf enkele aanhalingstekens ('''''), of drie binnen dubbele,
-voor een ander soort van nadruk (VetSchuinInWiki), maar wees voorzichtig met
-luizen in de Wiki nadruk logica...
+	* Gebruik vijf paar enkele aanhalingstekens ('''''), of drie binnen
+dubbele, voor een ander soort van nadruk (VetCursiefInWiki), maar wees
+op je hoede voor luizen in de Wiki nadruk logica...
 
 	* Nadruk kan meerdere malen in een regel worden gebruikt, maar kan
 regelbreuken niet oversteken.
@@ -94,7 +94,7 @@ Deze zijn anders dan de nieuwere manier van koppelen; verwijzingen zijn
 per pagina uniek.
 
 	* De oude manier van URL koppeling wordt nog steeds ondersteund:
-tiep voor de URLs "http:", "ftp:' of "mailto:" ome een automatische koppeling
+tiep voor de URLs "http:", "ftp:' of "mailto:" ome een automatiese koppeling
 te maken, als in: http://c2.com/.
 
 	* URLs die eindigen op .png worden ingebed ''wanneer ingevoerd als
@@ -110,6 +110,6 @@ een externe verwijzing''.
 	* De & tekens werken toch niet.
 
 	* Als je nou echt zo nodig HTML moet gebruiken, begin elke regel met
-een staaf (|).  Noot dat dit kunstje mogelijk gemaakt moet worden door
+een staaf (|).  Merk op dat dit kunstje mogelijk gemaakt moet worden door
 de systeembeheerder.
 

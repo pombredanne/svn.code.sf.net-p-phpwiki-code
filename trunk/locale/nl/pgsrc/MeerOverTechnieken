@@ -1,17 +1,16 @@
-PhpWiki is written in the server-side scripting language PHP, available from http://www.php.net/. PHP resembles C and Perl in its syntax, and functions much like ASP, EmbPerl or JSP.
+PhpWiki is geschreven in de server-zijde scripttaal PHP, die verkrijgbaar is op http://www.php.net/.  PHP lijkt kwa syntax op C en Perl en functioneert goed vergelijkbaar met ASP, EmbPerl of JSP.
 
-PhpWiki consists of a dozen or so files of mixed PHP and HTML. The web pages that make up a WikiWikiWeb based on PHP live in a DBM file with backup copies of previous versions of pages stored in a second DBM file.
+PhpWiki bestaat uit een tal bestanden met een mengsel van PHP en HTML.  De webpagina's waaruit het WikiWikiWeb gebaseerd op PHP bestaat, komen uit een data base, waarin ook backups van vorige versies worden bewaard.
 
-Every time a user hits the site the page requested is pulled from the DBM and rendered on the fly. The user only ever requests the file index.php3, which then decides which other php files to include.
+Steeds wanneer een gebruiker de site bezoekt, wordt de gevraagde pagina uit de data base gehaald en weergegeven.  De gebruiker vraagt enkel altijd het bestand index.php op, dat dan beslist welke andere php bestanden worden ingevoegd.
 
-Links to pages in the wiki are automatically linked: PhpWiki. This might be the single most compelling aspect of a wiki, the ability to add pages simply by linking to them. The next most compelling thing is how easily external URL's link:
-	# http://www.wcsb.org/
-	# ftp://ftp.redhat.com/
+Koppelingen naar pagina's in de Wiki worden automaties gemaakt: PhpWiki.  Dit zou best wel eens het aantrekkelijkste onderdeel van een Wiki kunnen zijn, de mogelijkheid van pagina's toevoegen, enkel door het maken van een koppeling.  Het op een na aantrekkelijkst is het gemak waarmee externe URL's gekoppeld kunnen worden:
+
+	# http://www.lilypond.org/
+	# ftp://ftp.nl.debian.org/
 	# news://news.mozilla.org/
 
-Combined with one namespace and a simple markup, a Wiki exhibits many of the characteristics of WabiSabi.
+Gecombineerd met een enkele naamruimte en eenvoudige opmaak, vertoont een Wiki vele karakteristieken van WabiSabi.
 
-PhpWiki is licensed under the Gnu General Public license, which you should be able to see here: http://www.gnu.org/copyleft/gpl.txt.
-
-
+PhpWiki wordt uitgebracht onder de GNU Algemene Openbare Licentie ([GNU General Public License | http://www.gnu.org/copyleft/gpl.html]).
 
