@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SyntaxHighlighter.php,v 1.5 2004-06-14 11:31:39 rurban Exp $');
+rcs_id('$Id: SyntaxHighlighter.php,v 1.6 2004-06-29 18:47:40 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -46,17 +46,20 @@ Fixes by Reini Urban:
   php version switch
   HIGHLIGHT_DATA_DIR, HIGHLIGHT_EXE
 */
-
-define('HIGHLIGHT_EXE','highlight');
+if (!defined('HIGHLIGHT_EXE'))
+    define('HIGHLIGHT_EXE','highlight');
 //define('HIGHLIGHT_EXE','/usr/local/bin/highlight');
+//define('HIGHLIGHT_EXE','/home/groups/p/ph/phpwiki/bin/highlight');
 
 // highlight requires two subdirs themes and langDefs somewhere.
 // Best by highlight.conf in $HOME, but the webserver user usually 
 // doesn't have a $HOME
-if (isWindows())
-    define('HIGHLIGHT_DATA_DIR','f:\cygnus\usr\local\share\highlight');
-else
-    define('HIGHLIGHT_DATA_DIR','/usr/share/highlight');
+if (!defined('HIGHLIGHT_DATA_DIR'))
+    if (isWindows())
+        define('HIGHLIGHT_DATA_DIR','f:\cygnus\usr\local\share\highlight');
+    else
+        define('HIGHLIGHT_DATA_DIR','/usr/share/highlight');
+        //define('HIGHLIGHT_DATA_DIR','/home/groups/p/ph/phpwiki/share/highlight');
 
 class WikiPlugin_SyntaxHighlighter
 extends WikiPlugin
@@ -72,7 +75,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
     function getDefaultArguments() {
         return array(
@@ -180,6 +183,14 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/06/14 11:31:39  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.4  2004/05/18 14:49:52  rurban
 // Simplified strings for easier translation
 //
