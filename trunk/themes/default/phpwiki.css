@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.20 2004-03-14 16:40:45 rurban Exp $
+ * $Id: phpwiki.css,v 1.21 2004-03-15 09:54:13 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -111,8 +111,8 @@ form.wikiadmin div { background-color: #fee; }
  */
 .wiki, .named-wiki {
   text-decoration: none;
-  font-weight: normal;
-  /* font-weight: bold; */
+  /* font-weight: normal; */
+  font-weight: bold;
 }
 
 /* Action buttons */
