@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.56 2002-02-17 01:28:10 carstenklapp Exp $
+ * $Id: phpwiki.css,v 1.57 2002-02-18 01:35:46 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -284,34 +284,36 @@ table.cal td.cal-today a.cal-hide {  }
 /**
  * Diff Output
  */
-
 /* main box */
 .diff .block {
   background: #ccc;
   padding: 0.5ex 0.5em;
   margin:  0.5ex 0;
 }
-
-/* individual lines */
+/* individual blocks */
 .diff .context { background: white; }
-
 /* + - line prefix */
-.diff .block tt{
+.diff .block tt {
   font-weight: bold;
   font-family: monospace;
   margin-left: -.6em;
   color: black;
 }
-
+/* changed words */
 .diff del, .diff ins {
   font-weight: bold;
   text-decoration: none;
 }
+
+/* blocks containing deleted words */
 .diff .original, .diff .deleted { background: #fcc; }
+/* blocks containing added words */
 .diff .final, .diff .added { background: #cfc; }
 
 /* These don't work in NS4 -- it completely ignores <del> and <ins>. */
+/* deleted words */
 .diff del { background: #f99; }
+/* added words */
 .diff ins { background: #9f9; }
 
 
