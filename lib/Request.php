@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.83 2004-12-10 02:36:43 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.84 2004-12-17 16:37:30 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -399,6 +399,7 @@ class Request {
         if (!empty($this->_is_buffering_output) or 
             (function_exists('ob_get_level') and @ob_get_level())) {
             $this->_do_chunked_output = true;
+            if (empty($this->_ob_get_length)) $this->_ob_get_length = 0;
             $this->_ob_get_length += ob_get_length();
             while (@ob_end_flush());
             ob_end_clean();
@@ -1308,6 +1309,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.83  2004/12/10 02:36:43  rurban
+// More help with the new native xmlrpc lib. no warnings, no user cookie on xmlrpc.
+//
 // Revision 1.82  2004/12/06 19:49:55  rurban
 // enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
 // renamed delete_page to purge_page.
