@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.106 2005-02-02 19:39:10 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.107 2005-02-04 13:45:28 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -503,11 +503,12 @@ extends _RecentChanges_HtmlFormatter
         $first = true;
         $html = HTML();
         $counter = 1;
-        $sp = HTML::Raw('&middot; ');
+        $sp = HTML::Raw("\n&nbsp;&middot;&nbsp;");
         while ($rev = $changes->next()) {
             // enforce view permission
             if (mayAccessPage('view',$rev->_pagename)) {
-            	if ($link = $this->pageLink($rev)) // some entries may be empty (/Blog/.. interim pages)
+            	if ($link = $this->pageLink($rev)) // some entries may be empty 
+                    				   // (/Blog/.. interim pages)
                     $html->pushContent($sp, $link, HTML::br());
                 if ($first)
                     $this->setValidators($rev);
@@ -735,7 +736,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.106 $");
+                            "\$Revision: 1.107 $");
     }
 
     function managesValidators() {
@@ -922,6 +923,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.106  2005/02/02 19:39:10  rurban
+// honor show_all=false
+//
 // Revision 1.105  2005/01/25 03:50:54  uckelman
 // pre_description is a member function, so call with $this->.
 //
