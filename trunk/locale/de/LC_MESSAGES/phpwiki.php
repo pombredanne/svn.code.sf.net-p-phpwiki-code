@@ -1,15 +1,17 @@
 <?php
 
-$locale["%d pages link to %s:"] =
-   "%d Seiten sind mit %s verlinkt:";
 $locale["%s bytes written"] =
    "%s Bytes geschrieben";
 $locale["%s days"] =
    "%s Tagen";
 $locale["%s is empty."] =
    "%s ist Leer.";
+$locale["%s of the page. You should now see the most current version of the page. Your changes are no longer there."] =
+   "%s von die Seite. Du solltest jetzt die neueste Version der Seite sehen. Deine Veränderungen sind verschwunden.";
 $locale["%s of this page"] =
    "%s von dieser Seite";
+$locale["%s pages link to %s:"] =
+   "%s Seiten sind mit %s verlinkt:";
 $locale["%s(%d): no such revision"] =
    "%s(%d): unbekannte Version";
 $locale["%s: %s"] =
@@ -26,6 +28,8 @@ $locale["%s: error while handling error:"] =
    "%s: Fehler während der Fehlerbehandlung von:";
 $locale["%s: file not found"] =
    "%s: Datei nicht gefunden";
+$locale["(Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor.)"] =
+   "(Kopiere deine Veränderungen in die Zwischenablage. Du kannst versuchen eine andere Seite zu editieren oder dein Text in einem Texteditor speichern.)";
 $locale["(diff)"] =
    "(Diff)";
 $locale["(last edited %s)"] =
@@ -38,8 +42,6 @@ $locale["1 day"] =
    "1 Tag";
 $locale["<%s: no such section>"] =
    "<%s: unbekannte Sektion>";
-$locale["<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."] =
-   "<b>Aktualisiere</b> die Seite. Du solltest jetzt die neueste Version der Seite sehen. Deine Veränderungen sind verschwunden.";
 $locale["<no matches>"] =
    "<nichts gefunden>";
 $locale["A required argument '%s' is missing."] =
@@ -72,8 +74,6 @@ $locale["Bad Version"] =
    "Keine Version";
 $locale["Bad file type: %s"] =
    "Ungültiger Dateityp: %s";
-$locale["Bad form submission"] =
-   "Ungültiges Formular eingesendet";
 $locale["Calendar"] =
    "Kalender";
 $locale["Can't inflate data: zlib support not enabled in this PHP"] =
@@ -92,12 +92,12 @@ $locale["Check any two boxes to compare revisions."] =
    "Wähle zwei Versionen zum Vergleich aus.";
 $locale["Complete."] =
    "Fertig.";
+$locale["Conflicting Edits!"] =
+   "Widersprechende Änderungen!";
 $locale["Contents"] =
    "Inhalt";
 $locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
    "Kopiere deine Veränderungen in die Zwischenablage oder an einen anderen temporären Platz (z.B. einen Texteditor)";
-$locale["Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor."] =
-   "Kopiere deine Veränderungen in die Zwischenablage. Du kannst versuchen eine andere Seite zu editieren oder dein Text in einem Texteditor speichern.";
 $locale["Created directory '%s' for the page dump..."] =
    "Verzeichnis »%s« erzeugt, um die Dateien abzulegen...";
 $locale["DBA files are in the %s directory. Please read the INSTALL file and move the DB file to a permanent location or risk losing all the pages!"] =
@@ -126,8 +126,8 @@ $locale["Edit Old Revision"] =
    "Alte Version Editieren";
 $locale["Edit aborted."] =
    "Editieren abgebrochen.";
-$locale["Edit aborted: %s"] =
-   "Editieren abgebrochen: %s";
+$locale["Edit the new version"] =
+   "Editiere die neue Version";
 $locale["Edit: %s"] =
    "Editiere: %s";
 $locale["EditText"] =
@@ -174,7 +174,7 @@ $locale["Image loaded from cache file: %s"] =
    "Bild geladen von Cachedatei: %s";
 $locale["Image saved to cache file: %s"] =
    "Bild gespeichert als Cachedatei: %s";
-$locale["In order to recover from this situation follow these steps:"] =
+$locale["In order to recover from this situation, follow these steps:"] =
    "Um diese Situation zu korrigieren, folge bitte den folgenden Schritten:";
 $locale["Include of '%s' failed"] =
    "Einfügen von »%s« fehlgeschlagen";
@@ -246,6 +246,8 @@ $locale["Note:"] =
    "Hinweis:";
 $locale["Older page:"] =
    "Ältere Seite:";
+$locale["One page links to %s:"] =
+   "Eine Seite ist mit %s verlinkt:";
 $locale["Optimizing %s"] =
    "%s wird optimiert";
 $locale["Other diffs:"] =
@@ -260,6 +262,10 @@ $locale["Page names with prefix '%s'"] =
    "Seitenamen mit Prefix »%s«";
 $locale["Page names with suffix '%s'"] =
    "Seitennamen mit Suffix »%s«";
+$locale["PageGroup"] =
+   "SeitenGruppe";
+$locale["PageGroup for %s"] =
+   "SeitenGruppe für »%s«";
 $locale["PageHistory"] =
    "SeitenProtokoll";
 $locale["PageHistory for %s"] =
@@ -268,12 +274,8 @@ $locale["Pages in this wiki (%d total):"] =
    "Seiten in dieser wiki (%d gesamt):";
 $locale["Password"] =
    "Passwort";
-$locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
-   "PhpWiki kann deine Veränderungen nicht speichern, da ein anderer Benützer die Seite verändert und gespeichert hat, während du diese Seite editiert hast. Wenn die Seite jetzt gespeichert werden würde, dann würden die Veränderungen des anderen Benützers verlorengehen.";
 $locale["PhpWikiAdministration"] =
    "PhpWikiSystemverwalten";
-$locale["Press <b>Save</b> again."] =
-   "Drücke nochmal <b>Speichern</b>";
 $locale["Preview"] =
    "Vorschau";
 $locale["Preview only!  Changes not saved."] =
@@ -290,10 +292,6 @@ $locale["Previous Revision"] =
    "Vorige Revision";
 $locale["Printer"] =
    "Drucker";
-$locale["Problem while editing %s"] =
-   "Problem beim Editieren von %s";
-$locale["Problem while updating %s"] =
-   "Problem während dem Editieren von %s";
 $locale["Querying backend directly for '%s'"] =
    "Direkte Datenbankabfrage nach »%s«";
 $locale["RandomPage"] =
@@ -314,8 +312,6 @@ $locale["Removed page '%s' succesfully."] =
    "Seite »%s« erfolgreich gelöscht.";
 $locale["Request Cancelled!"] =
    "Anforderung abgebrochen!";
-$locale["Required form variables are missing."] =
-   "Benötigen Form-Variablen sind Fehlend.";
 $locale["Return to %s"] =
    "Zurück zu %s";
 $locale["Return to %s."] =
@@ -324,6 +320,8 @@ $locale["Revision Not Found"] =
    "Version Nicht Gefunden";
 $locale["Save"] =
    "Speichern";
+$locale["Save your updated changes."] =
+   "Speichere deine neue Veränderungen.";
 $locale["Saved: %s"] =
    "Gespeichert: %s";
 $locale["Saving this page will overwrite the current version."] =
@@ -382,7 +380,7 @@ $locale["This is a minor change."] =
    "Geringfügige Änderung";
 $locale["This page has been locked by the administrator and cannot be edited."] =
    "Diese Seite wurde vom Systemverwalter gesperrt und kann nicht editiert werden.";
-$locale["This page has been locked by the administrator so your changes could not be saved."] =
+$locale["This page has been locked by the administrator so your changes can not be saved."] =
    "Diese Seite wurde vom Systemverwalter gesperrt und deine Veränderungen können nicht gespeichert werden.";
 $locale["Title Search"] =
    "TitelSuche";
@@ -402,8 +400,6 @@ $locale["Uploading %s"] =
    "%s wird hochgeladen";
 $locale["Use new markup"] =
    "verwende neues Wiki Quelltextformat";
-$locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
-   "Benütze die <b>Zurück</b> Funktion deines Browsers um zur Editierseite zu gelangen.";
 $locale["UserId"] =
    "Benutzername";
 $locale["UserPreferences"] =
@@ -492,8 +488,6 @@ $locale["no page specified"] =
    "Keine Seite angegeben";
 $locale["plain file %s"] =
    "Textdatei %s";
-$locale["previous major revision"] =
-   "Vorige Hauptrevision";
 $locale["previous revision"] =
    "vorige Version";
 $locale["recursive inclusion of page %s"] =
@@ -508,9 +502,5 @@ $locale["version %d"] =
    "Version %d.";
 $locale["version %s"] =
    "Version %s.";
-$locale["walkabout"] =
-   "walkabout";
-$locale["walkabout for %s"] =
-   "walkabout für %s";
 
 ?>
