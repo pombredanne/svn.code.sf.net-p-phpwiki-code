@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.52 2004-10-21 19:52:10 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.53 2005-01-29 20:36:44 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -201,7 +201,8 @@ class BlockParser_Input {
     }
 
     function advance () {
-        $this->_atSpace = $this->_lines[$this->_pos++] === '';
+        $this->_atSpace = ($this->_lines[$this->_pos] === '');
+        $this->_pos++;
     }
     
     function getPos () {
@@ -347,7 +348,9 @@ class ParsedBlock extends Block_HtmlElement {
     }
 
     function _parse (&$input) {
-        for ($block = $this->_getBlock($input); $block; $block = $nextBlock) {
+        // php5 failed to advance the block. php5 copies objects by ref.
+        // nextBlock == block, both are the same objects. So we have to clone it.
+        for ($block = $this->_getBlock($input); $block; $block = clone($nextBlock)) {
             while ($nextBlock = $this->_getBlock($input)) {
                 // Attempt to merge current with following block.
                 if (! ($merged = $block->merge($nextBlock)) ) {
@@ -392,12 +395,14 @@ class ParsedBlock extends Block_HtmlElement {
         }
         $tight_top = !$this->_atSpace;
         $re_set = &$this->_regexpset;
+        //FIXME: php5 fails to advance here!
         for ($m = $re_set->match($line); $m; $m = $re_set->nextMatch($line, $m)) {
-            $block = $this->_block_types[$m->regexp_ind];
+            $block = clone($this->_block_types[$m->regexp_ind]);
             if (DEBUG & _DEBUG_PARSER)
                 $input->_debug('>', get_class($block));
             
             if ($block->_match($input, $m)) {
+            	//$block->_text = $line;
                 if (DEBUG & _DEBUG_PARSER)
                     $input->_debug('<', get_class($block));
                 $tight_bottom = ! $input->skipSpace();
@@ -479,7 +484,6 @@ class BlockMarkup {
 class Block_blockquote extends BlockMarkup
 {
     var $_depth;
-
     var $_re = '\ +(?=\S)';
 
     function _match (&$input, $m) {
@@ -511,7 +515,6 @@ class Block_list extends BlockMarkup
                   | [o](?=\ )
                   | [*] (?!(?=\S)[^*]*(?<=\S)[*](?:\\s|[-)}>"\'\\/:.,;!?_*=]) )
                 )\ *(?=\S)';
-
     var $_content = array();
 
     function _match (&$input, $m) {
@@ -1014,6 +1017,7 @@ class Block_p extends BlockMarkup
 {
     var $_tag = 'p';
     var $_re = '\S.*';
+    var $_text = '';
 
     function _match (&$input, $m) {
         $this->_text = $m->match;
@@ -1066,9 +1070,6 @@ function TransformTextPre ($text, $markup = 2.0, $basepage=false) {
     //set_time_limit(3);
     $output = new WikiText($text);
 
-    /* if (0 and DEBUG and DEBUG & _DEBUG_VERBOSE and check_php_version(5)) {
-        echo "<pre>"; var_dump($output); echo "</pre>"; 
-    } */
     return $output;
 }
 
@@ -1088,6 +1089,9 @@ function TransformText ($text, $markup = 2.0, $basepage=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.52  2004/10/21 19:52:10  rurban
+// Patch #994487: Allow callers to get the parse tree for a page (danfr)
+//
 // Revision 1.51  2004/09/14 09:54:04  rurban
 // cache ParsedBlock::_initBlockTypes
 //
