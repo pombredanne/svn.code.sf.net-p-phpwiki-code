@@ -299,7 +299,7 @@ msgstr ""
 
 #: ../lib/plugin/MostPopular.php:9
 msgid "MostPopular"
-msgstr ""
+msgstr "MestPopulär"
 
 #: ../lib/plugin/MostPopular.php:13
 msgid "List the most popular pages"
