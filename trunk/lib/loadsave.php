@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.62 2002-02-24 21:21:14 rurban Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.63 2002-02-25 15:57:11 carstenklapp Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -265,6 +265,46 @@ function DumpHtmlToDir (&$request)
     //CopyImageFiles() will go here;
 
     EndLoadDump($request);
+}
+
+function MakeWikiZipHtml (&$request)
+{
+    $zipname = "wikihtml.zip";
+    $zip = new ZipWriter("Created by PhpWiki", $zipname);
+    $dbi = $request->getDbh();
+    $pages = $dbi->getAllPages();
+    while ($page = $pages->next()) {
+        if (! get_cfg_var('safe_mode'))
+            set_time_limit(30);	// Reset watchdog.
+
+        $current = $page->getCurrentRevision();
+        if ($current->getVersion() == 0)
+            continue;
+
+        $attrib = array('mtime'    => $current->get('mtime'),
+                        'is_ascii' => 1);
+        if ($page->get('locked'))
+            $attrib['write_protected'] = 1;
+
+        $pagename = $page->getName();
+        $filename = FilenameForPage($pagename);
+        //$filename = $filename . ".html";
+
+        $revision = $page->getCurrentRevision();
+
+        require_once('lib/PageType.php');
+        $transformedContent = PageType($revision);
+
+        $template = new Template('browse', $request,
+                                  array('revision' => $revision,
+                                        'CONTENT' => $transformedContent));
+
+        $data = GeneratePageasXML($template, $pagename);
+
+        $zip->addRegularFile( $filename, $data, $attrib);
+    }
+    // FIXME: Deal with images here.
+    $zip->finish();
 }
 
 
