@@ -52,10 +52,9 @@ define('RATING_STORAGE','WIKIPAGE');
 define('PHPWIKI_NOMAIN',true);
 
 # Other needed files
+define('DEBUG', 9); //_DEBUG_VERBOSE | _DEBUG_TRACE
 require_once $rootdir.'index.php';
 require_once $rootdir.'lib/main.php';
-
-define('DEBUG', _DEBUG_TRACE);
 
 function printSimpleTrace($bt) {
     //print_r($bt);
@@ -156,7 +155,7 @@ function purge_dir($dir) {
         $finder = new FileFinder;
     }
     $fileSet = new fileSet($dir);
-    assert($dir);
+    assert(!empty($dir));
     foreach ($fileSet->getFiles() as $f) {
     	unlink("$dir/$f");
     }
@@ -165,7 +164,7 @@ function purge_dir($dir) {
 function purge_testbox() {
     global $db_params;	
     $dir = $db_params['directory'];
-    assert($dir);
+    assert(!empty($dir));
     foreach (array('latest_ver','links','page_data','ver_data') as $d) {
     	purge_dir("$dir/$d");
     }
@@ -177,7 +176,7 @@ function purge_testbox() {
 }
 
 global $ErrorManager;
-$ErrorManager->setPostponedErrorMask(E_FATAL|E_NOTICE|E_USER_NOTICE|E_USER_WARNING|E_WARNING);
+$ErrorManager->setPostponedErrorMask(EM_FATAL_ERRORS|EM_WARNING_ERRORS|EM_NOTICE_ERRORS);
 $request = new MockRequest($db_params);
 
 /*
@@ -218,6 +217,21 @@ class phpwiki_TestCase extends PHPUnit_TestCase {
     function tearDown() {
         global $request;
         $request->_args = $this->_savedargs;
+        if (DEBUG & _DEBUG_TRACE) {
+            echo "-- MEMORY USAGE: ";
+            if (function_exists('memory_get_usage')) {
+                echo memory_get_usage(),"\n";
+            } elseif (function_exists('getrusage')) {
+                $u = getrusage();
+                echo $u['ru_maxrss'],"\n";
+            } elseif (!isWindows()) { // only on unix, not on cygwin:
+	        $pid = getmypid();
+	        echo `ps -eo%mem,rss,pid | grep $pid`,"\n";
+            } else { // requires a newer cygwin
+	        echo `cat /proc/meminfo | grep Mem:|perl -ane"print \$F[2];"`,"\n";
+            }
+            flush();
+        }
     }
 }
 
