@@ -31,7 +31,6 @@
 This is not
 
 !Indented Paragraphs
-''(Quotes)''
 
 * semicolon-colon -- works like <BLOCKQUOTE>
 
@@ -39,8 +38,8 @@ This is not
 
 ! Emphasis
 
-* Use doubled single-quotes ('') for emphasis (usually ''italics'')
-* Use doubled underscores (__) for strong emphasis (usually __bold__)
+* Use doubled single-quotes ('____') for emphasis (usually ''italics'')
+* Use doubled underscores (_''''_) for strong emphasis (usually __bold__)
 * Mix them at will: __''bold italics''__
 * ''Emphasis'' can be used ''multiple'' times within a line, but ''cannot'' cross line boundaries:
 
