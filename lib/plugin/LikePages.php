@@ -1,7 +1,8 @@
 <?php // -*-php-*-
-rcs_id('$Id: LikePages.php,v 1.7 2002-01-21 06:55:47 dairiki Exp $');
+rcs_id('$Id: LikePages.php,v 1.8 2002-01-21 17:53:44 carstenklapp Exp $');
 
 require_once('lib/TextSearchQuery.php');
+require_once('lib/PageList.php');
 
 /**
  */
@@ -51,6 +52,7 @@ extends WikiPlugin
             
             $descrip = fmt("These pages share an initial or final title word with '%s'",
                            _LinkWikiWord($page));
+
         }
 
         // Search for pages containing either the suffix or the prefix.
@@ -72,21 +74,24 @@ extends WikiPlugin
         $match_re = '/' . join('|', $match) . '/';
 
         $pages = $dbi->titleSearch($query);
-        $list = HTML::ul();
+        $pagelist = new PageList();
+        //$pagelist->insertColumn(_("Hits"));
+        //$pagelist->addcolumn(_("Last Modified"));
+
         while ($page = $pages->next()) {
             $name = $page->getName();
             if (!preg_match($match_re, $name))
                 continue;
             if (!empty($exclude) && $name == $exclude)
                 continue;
-            $list->pushContent(HTML::li(_LinkWikiWord($name)));
+            $pagelist->addPage($page);
         }
-        if (!$list->getContent())
-            $list = HTML::blockquote(_("<none>"));
+        if (!$pagelist->getContent())
+            $pagelist = HTML::blockquote(_("<none>"));
 
         if ($noheader)
-            return $list;
-        return array(HTML::p($descrip), $list);
+            return $pagelist;
+        return array(HTML::p($descrip), $pagelist->getContent());
     }
 
     function _quote($str) {
