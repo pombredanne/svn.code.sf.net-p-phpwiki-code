@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: userauth.php,v 1.3 2001-02-13 05:54:38 dairiki Exp $');
+<?php rcs_id('$Id: userauth.php,v 1.4 2001-02-16 04:43:08 dairiki Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -18,7 +18,7 @@ class WikiUser
    //   'LOGIN':   Force authenticated login.
    function WikiUser ($auth_mode = '') {
       // Restore from cookie.
-      global $WIKI_AUTH;
+      global $WIKI_AUTH, $REMOTE_HOST, $REMOTE_ADDR;
       if (empty($WIKI_AUTH)) 
       {
 	 $this->userid = '';
@@ -49,7 +49,7 @@ class WikiUser
 	 if ($this->state == 'authorized')
 	    $this->realm++;
 	 $this->state = 'loggedout';
-	 $this->userid = get_remote_host(); // Anonymous user id is hostname.
+	 $this->userid = empty($REMOTE_HOST) ? $REMOTE_ADDR : $REMOTE_HOST;
       }
       else
       {
@@ -153,6 +153,8 @@ class WikiUser
       setcookie('WIKI_AUTH', serialize($this), 0, '/');
       header('WWW-Authenticate: Basic realm="' . $this->realm . '"');
       header("HTTP/1.0 401 Unauthorized");
+      if (ACCESS_LOG)
+	 $LogEntry->status = 401;
       echo gettext ("You entered an invalid login or password.");
       ExitWiki();
    }

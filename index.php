@@ -11,7 +11,7 @@
 /////////////////////////////////////////////////////////////////////
 define ('PHPWIKI_VERSION', '1.3.0pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.10 2001-02-14 22:02:05 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.11 2001-02-16 04:43:07 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -43,6 +43,10 @@ define("MINOR_EDIT_TIMEOUT", 7 * 24 * 3600);
 
 // Actions listed in this array will not be allowed.
 //$DisabledActions = array('dumpserial', 'loadfile');
+
+// PhpWiki can generate an access_log (in "NCSA combined log" format)
+// for you.  If you want one, define this to the name of the log file.
+define('ACCESS_LOG', '/tmp/wiki_access_log')
 
 /////////////////////////////////////////////////////////////////////
 //

@@ -1,11 +1,21 @@
 <?php
-rcs_id('$Id: main.php,v 1.4 2001-02-15 19:32:34 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.5 2001-02-16 04:43:08 dairiki Exp $');
 include "lib/config.php";
 include "lib/stdlib.php";
 include "lib/userauth.php";
 
+if (ACCESS_LOG)
+{
+   include "lib/logger.php";
+   $LogEntry = new AccessLogEntry;
+
+   function _write_log () { $GLOBALS['LogEntry']->write(ACCESS_LOG); }
+   register_shutdown_function('_write_log');
+}
+
 if (USE_PATH_INFO && !isset($PATH_INFO))
 {
+   $LogEntry->status = 302;	// "302 Found"
    header("Location: " . SERVER_URL . $REQUEST_URI);
    exit;
 }
@@ -72,7 +82,12 @@ function get_auth_mode ($action)
    }
 }
 
+   
 $user = new WikiUser(get_auth_mode($action));
+if (ACCESS_LOG and $user->is_authenticated())
+   $LogEntry->user = $user->id;
+
+
 
 // All requests require the database
 $dbi = OpenDataBase($WikiPageStore);

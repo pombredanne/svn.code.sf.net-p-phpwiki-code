@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.33 2001-02-15 05:57:18 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.34 2001-02-16 04:43:07 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
  *
@@ -26,7 +26,6 @@ define("FLAG_PAGE_LOCKED", 1);
 //
 // Set up localization
 //
-
 if (empty($LANG))
    $LANG = "C";
 
@@ -231,6 +230,15 @@ if (defined('INTERWIKI_MAP_FILE'))
    include ('lib/interwiki.php');
 }
 
+// Access log
+if (!defined('ACCESS_LOG'))
+   define('ACCESS_LOG', '');
+   
+// Get remote host name, if apache hasn't done it for us
+if (empty($REMOTE_HOST) && ENABLE_REVERSE_DNS)
+   $REMOTE_HOST = gethostbyaddr($REMOTE_ADDR);
+
+   
 // For emacs users
 // Local Variables:
 // mode: php
