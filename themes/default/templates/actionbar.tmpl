@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.10 2002-02-02 20:59:02 carstenklapp Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.11 2002-02-04 21:27:31 carstenklapp Exp $ -->
 <?php
   if (!$page->get('locked') || $user->isAdmin())
       $EditB = Button("edit",
@@ -22,14 +22,14 @@
        cellpadding="0" cellspacing="0" border="0">
 <tr valign="baseline">
   <td>
-    <?= $EditB ?> 
-    <?php if ($user->isAdmin()) { ?>
-     <?=$Sep?><?= Button($page->get('locked') ? 'unlock' : 'lock') ?>
-     <?=$Sep?><?= Button('remove') ?>
-    <?php } ?>
-   <?=$Sep?><?= Button(_("PageHistory")) ?>
-   <?=$Sep?><?= Button("diff") ?> 
-   <?=$Sep?><?= Button(_("DebugInfo")) ?> <!-- For debugging only, really -->
+	<?= $EditB ?> 
+	<?php if ($user->isAdmin()) { ?>
+      <?=$Sep?><?= Button($page->get('locked') ? 'unlock' : 'lock') ?>
+      <?=$Sep?><?= Button('remove') ?>
+	<?php } ?>
+	<?=$Sep?><?= Button(_("PageHistory")) ?>
+	<?=$Sep?><?= Button("diff") ?> 
+	<?=$Sep?><?= Button(_("DebugInfo")) ?> <!-- For debugging only, really -->
   </td>
   <td align="right">
     <?= Template('signin') ?>
