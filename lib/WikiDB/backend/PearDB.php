@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.75 2004-11-28 20:42:33 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.76 2004-11-30 17:45:53 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -148,8 +148,7 @@ extends WikiDB_backend
     function get_pagedata($pagename) {
         $dbh = &$this->_dbh;
         //trigger_error("GET_PAGEDATA $pagename", E_USER_NOTICE);
-        $result = $dbh->getRow(sprintf("SELECT %s FROM %s WHERE pagename='%s'",
-                                       "hits,pagedata",
+        $result = $dbh->getRow(sprintf("SELECT hits,pagedata FROM %s WHERE pagename='%s'",
                                        $this->_table_names['page_tbl'],
                                        $dbh->escapeSimple($pagename)),
                                DB_FETCHMODE_ASSOC);
@@ -200,7 +199,7 @@ extends WikiDB_backend
         }
 
         /* Portability issue -- not all DBMS supports huge strings 
-         * so we need to 'bind' instead of building a SQL statment.
+         * so we need to 'bind' instead of building a simple SQL statment.
          * Note that we do not need to escapeSimple when we bind
         $dbh->query(sprintf("UPDATE $page_tbl"
                             . " SET hits=%d, pagedata='%s'"
@@ -512,6 +511,28 @@ extends WikiDB_backend
         }
         
         return new WikiDB_backend_PearDB_iter($this, $result);
+    }
+
+    /**
+     * Find if a page links to another page
+     */
+    function exists_link($pagename, $link, $reversed=false) {
+        $dbh = &$this->_dbh;
+        extract($this->_table_names);
+
+        if ($reversed)
+            list($have, $want) = array('linkee', 'linker');
+        else
+            list($have, $want) = array('linker', 'linkee');
+        $qpagename = $dbh->escapeSimple($pagename);
+        $qlink = $dbh->escapeSimple($link);
+        $row = $dbh->GetRow("SELECT IF($want.pagename,1,0) as result"
+                                . " FROM $link_tbl, $page_tbl linker, $page_tbl linkee, $nonempty_tbl"
+                                . " WHERE linkfrom=linker.id AND linkto=linkee.id"
+                                . " AND $have.pagename=$qpagename"
+                                . " AND $want.pagename=$qlink"
+                                . "LIMIT 1");
+        return $row['result'];
     }
 
     function get_all_pages($include_empty=false, $sortby=false, $limit=false, $exclude='') {
@@ -1150,6 +1171,9 @@ extends WikiDB_backend_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.75  2004/11/28 20:42:33  rurban
+// Optimize PearDB _extract_version_data and _extract_page_data.
+//
 // Revision 1.74  2004/11/27 14:39:05  rurban
 // simpified regex search architecture:
 //   no db specific node methods anymore,

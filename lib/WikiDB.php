@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.111 2004-11-28 20:39:43 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.112 2004-11-30 17:45:53 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -1195,8 +1195,11 @@ class WikiDB_Page
     /**
      * possibly faster link existance check. not yet accelerated.
      */
-    function existLink($link, $reversed = false) {
-        $cache = &$this->_wikidb->_cache;
+    function existLink($link, $reversed=false) {
+        $backend = &$this->_wikidb->_backend;
+        if (method_exists($backend,'exists_link'))
+            return $backend->exists_link($this->_pagename, $link, $reversed);
+        //$cache = &$this->_wikidb->_cache;
         // TODO: check cache if it is possible
         $iter = $this->getLinks($reversed, false);
         while ($page = $iter->next()) {
@@ -2097,6 +2100,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.111  2004/11/28 20:39:43  rurban
+// deactivate pagecache overwrite: it is wrong
+//
 // Revision 1.110  2004/11/26 18:39:01  rurban
 // new regex search parser and SQL backends (90% complete, glob and pcre backends missing)
 //
