@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.22 2003-02-18 21:52:04 dairiki Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.23 2003-02-18 21:53:30 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -255,7 +255,6 @@ class Markup_bracketlink  extends SimpleMarkup
     var $_match_regexp = "\\#? \\[ .*?\S.*? \\]";
     
     function markup ($match) {
-	print "LINK: " . htmlspecialchars($match) . "<br>\n";
         $link = LinkBracketLink($match);
         assert($link->isInlineElement());
         return $link;
