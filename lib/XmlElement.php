@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.17 2002-08-17 15:52:51 rurban Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.18 2003-02-15 02:14:52 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -242,14 +242,15 @@ class XmlElement extends XmlContent
                 echo "\n";
             XmlContent::printXML();
             echo "</$this->_tag>";
-            if (!$this->isInlineElement())
-                echo "\n";
         }
+        if (!$this->isInlineElement())
+            echo "\n";
     }
 
     function asXML () {
-        if ($this->isEmpty())
-            return $this->emptyTag();
+        if ($this->isEmpty()) {
+            $xml = $this->emptyTag();
+        }
         else {
             $xml = $this->startTag();
             // FIXME: The next two lines could be removed for efficiency
@@ -257,10 +258,10 @@ class XmlElement extends XmlContent
                 $xml .= "\n";
             $xml .= XmlContent::asXML();
             $xml .= "</$this->_tag>";
-            if (!$this->isInlineElement())
-                $xml .= "\n";
-            return $xml;
         }
+        if (!$this->isInlineElement())
+            $xml .= "\n";
+        return $xml;
     }
 
     /**
