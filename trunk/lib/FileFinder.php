@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.27 2004-10-14 19:23:58 rurban Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.28 2004-11-06 17:02:33 rurban Exp $');
 
 require_once(dirname(__FILE__).'/stdlib.php');
 
@@ -66,6 +66,13 @@ class FileFinder
                 if (isMac()) $from = ":";
                 elseif (isWindows()) $from = "\\";
                 else $from = "\\";
+                // PHP is stupid enough to use \\ instead of \
+                if (isWindows()) {
+                    if (substr($path,0,2) != '\\\\')
+                        $path = str_replace('\\\\','\\',$path);
+                    else // UNC paths
+                        $path = '\\\\' . str_replace('\\\\','\\',substr($path,2));
+                }
                 return strtr($path, $from, $sep);
             } else 
                 return $path;
@@ -561,6 +568,9 @@ function isCygwin() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.27  2004/10/14 19:23:58  rurban
+// remove debugging prints
+//
 // Revision 1.26  2004/10/14 19:19:33  rurban
 // loadsave: check if the dumped file will be accessible from outside.
 // and some other minor fixes. (cvsclient native not yet ready)
