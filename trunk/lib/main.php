@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.202 2005-01-21 12:02:32 rurban Exp $');
+rcs_id('$Id: main.php,v 1.203 2005-01-21 14:11:23 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -661,12 +661,12 @@ TODO: check against these cases:
                 $loader = new WikiPluginLoader();
                 $plugin = $loader->getPlugin("ModeratedPage");
             	if ($plugin->handler($this, $page)) {
-            	    $CONTENT = HTML::div(array('class' => 'wikitext'),
+            	    $CONTENT = HTML::div(array('class' => 'wiki-edithelp'),
             	                                 fmt("%s: action forwarded to a moderator.", 
             	    				     $action), 
                                          HTML::br(),
                                          _("You must wait for moderator approval."));
-                    if ($plugin->_tokens['CONTENT'])
+                    if (!empty($plugin->_tokens['CONTENT']))
                         $plugin->_tokens['CONTENT']->pushContent
                             (
                              HTML::br(),
@@ -1234,6 +1234,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.202  2005/01/21 12:02:32  rurban
+// deduce username for xmlrpc also
+//
 // Revision 1.201  2005/01/20 10:18:17  rurban
 // reformatting
 //
