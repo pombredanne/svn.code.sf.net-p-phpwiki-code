@@ -1,10 +1,11 @@
-<?php rcs_id('$Id: Theme.php,v 1.9 2002-01-19 20:37:22 carstenklapp Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.10 2002-01-19 22:32:01 dairiki Exp $');
 
 class Theme {
     function Theme ($theme_name) {
         $this->_name = $theme_name;
         $themes_dir = defined('PHPWIKI_DIR') ? PHPWIKI_DIR . "/themes" : "themes";
-        $this->_path = array("$themes_dir/$theme_name",
+        $this->_theme_dir = "$themes_dir/$theme_name";
+        $this->_path = array($this->_theme_dir,
                              "$themes_dir/default");
     }
 
@@ -34,11 +35,8 @@ class Theme {
         return $path;
     }
 
-    function requireFile ($file) {
-        $path = $this->_findFile($file);
-        if (!$path)
-            return false;
-        return require_once($path);
+    function file ($file) {
+        return "$this->_theme_dir/$file";
     }
     
     ////////////////////////////////////////////////////////////////
@@ -184,8 +182,15 @@ class Theme {
         return false;
     }
 
-    // FIXME: need buttonAlias map?
+    function addButtonAlias ($text, $alias) {
+        $this->_buttonAliases[$text] = $alias;
+    }
+
     function getButtonURL ($text) {
+        $aliases = &$this->_buttonAliases;
+        if (isset($aliases[$text]))
+            $text = $aliases[$text];
+        
         $qtext = urlencode($text);
         // FIXME: search other languages too.
         foreach (array("buttons/en/$qtext.png",
@@ -203,7 +208,7 @@ class Theme {
     //
     ////////////////////////////////////////////////////////////////
 
-    function makeButton ($text, $url, $class) {
+    function makeButton ($text, $url, $class = false) {
         // FIXME: don't always try for image button?
         
         $imgurl = $this->getButtonURL($text);

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ButtonFactory.php,v 1.6 2002-01-19 07:21:58 dairiki Exp $');
+<?php rcs_id('$Id: ButtonFactory.php,v 1.7 2002-01-19 22:32:01 dairiki Exp $');
 
 /**
  * A class representing a clickable "button".
@@ -13,9 +13,10 @@ class Button {
      * @param $url string The url (href) for the button.
      * @param $class string The CSS class for the button.
      */
-    function Button ($text, $url, $class) {
-        $this->_attr = array('href' => $url,
-                             'class' => $class);
+    function Button ($text, $url, $class = false) {
+        $this->_attr = array('href' => $url);
+        if ($class)
+            $this->_attr['class'] = $class;
         $this->_text = $text;
     }
 

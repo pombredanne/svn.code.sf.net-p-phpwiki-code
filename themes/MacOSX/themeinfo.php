@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.29 2002-01-19 20:38:09 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.30 2002-01-19 22:32:02 dairiki Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -63,15 +63,15 @@ class Theme_MacOSX extends Theme {
     }
 
     function getRecentChangesFormatter ($format) {
-        $this->requireFile('lib/RecentChanges.php');
-        if ($format == 'rss')
+        include_once($this->file('lib/RecentChanges.php'));
+        if (preg_match('/^rss/', $format))
             return false;       // use default
         return '_MacOSX_RecentChanges_Formatter';
     }
 
     function getPageHistoryFormatter ($format) {
-        $this->requireFile('lib/RecentChanges.php');
-        if ($format == 'rss')
+        include_once($this->file('lib/RecentChanges.php'));
+        if (preg_match('/^rss/', $format))
             return false;       // use default
         return '_MacOSX_PageHistory_Formatter';
     }
@@ -85,12 +85,11 @@ class Theme_MacOSX extends Theme {
         } else
             $class = 'named-wikiunknown';
 
+        $qmark = $this->makeButton('?', WikiURL($wikiword, array('action' => 'edit')));
+        
         return Element('span', array('class' => $class),
-                       Element('u', $linktext)
-                       . Element('a', array('href' => WikiURL($wikiword, array('action' => 'edit'))),
-                                 '<img src="themes/MacOSX/buttons/uww.png" border="0" align="top">'));
+                       Element('u', $linktext) . $qmark->asHTML());
     }
-
 }
 
 $Theme = new Theme_MacOSX('MacOSX');
@@ -128,6 +127,7 @@ $Theme->setLinkIcon('*', 'url');
 
 $Theme->setButtonSeparator(' ');
 
+$Theme->addButtonAlias('?', 'uww');
 /**
  * WikiWords can automatically be split by inserting spaces between
  * the words. The default is to leave WordsSmashedTogetherLikeSo.
