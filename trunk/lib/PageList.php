@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.125 2004-11-25 17:20:49 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.126 2004-12-16 18:26:57 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -470,11 +470,11 @@ class _PageList_Column_pagename extends _PageList_Column_base {
 
     function _getValue ($page_handle, &$revision_handle) {
         if ($this->dbi->isWikiPage($page_handle->getName()))
-            return WikiLink($page_handle);
+            return WikiLink($page_handle, 'known');
         else
             return WikiLink($page_handle, 'unknown');
     }
-    
+
     function _getSortableValue ($page_handle, &$revision_handle) {
     	return $page_handle->getName();
     }
@@ -1440,6 +1440,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.125  2004/11/25 17:20:49  rurban
+// and again a couple of more native db args: backlinks
+//
 // Revision 1.124  2004/11/23 15:17:14  rurban
 // better support for case_exact search (not caseexact for consistency),
 // plugin args simplification:
