@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AppendText.php,v 1.6 2005-02-12 17:24:23 rurban Exp $');
+rcs_id('$Id: AppendText.php,v 1.7 2005-04-02 03:05:43 uckelman Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
@@ -93,7 +93,7 @@ extends WikiPlugin
                 ? preg_replace("/(\n${before})/",
                                "\n" .  preg_quote($text, "/") . "\\1",
                                $oldtext) 
-                : $this->_fallback($text, $oldtext, $args['before'], &$message);
+                : $this->_fallback($text, $oldtext, $args['before'], $message);
         } elseif (!empty($args['after'])) {
             // Insert after
             $after = preg_quote($args['after'], "/");
@@ -101,7 +101,7 @@ extends WikiPlugin
                 ? preg_replace("/(\n${after})/",
                                "\\1\n" .  preg_quote($text, "/"),
                                $oldtext)
-                : $this->_fallback($text, $oldtext, $args['after'], &$message);
+                : $this->_fallback($text, $oldtext, $args['after'], $message);
         } else {
             // Append at the end
             $newtext = $oldtext .
@@ -137,6 +137,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2005/02/12 17:24:23  rurban
+// locale update: missing . : fixed. unified strings
+// proper linebreaks
+//
 // Revision 1.5  2004/11/26 18:39:02  rurban
 // new regex search parser and SQL backends (90% complete, glob and pcre backends missing)
 //

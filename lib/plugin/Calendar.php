@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.29 2004-12-06 19:15:04 rurban Exp $');
+rcs_id('$Id: Calendar.php,v 1.30 2005-04-02 03:05:44 uckelman Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -47,7 +47,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.29 $");
+                            "\$Revision: 1.30 $");
     }
 
     function getDefaultArguments() {
@@ -74,7 +74,7 @@ extends WikiPlugin
             return $this->_links;
         else {
             global $request;	
-            $this->run($request->_dbi, $argstr, &$request, $basepage);
+            $this->run($request->_dbi, $argstr, $request, $basepage);
             return $this->_links;
         }
     }
@@ -239,6 +239,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.29  2004/12/06 19:15:04  rurban
+// save edit-time links as requested in #946679
+//
 // Revision 1.28  2004/05/08 14:06:13  rurban
 // new support for inlined image attributes: [image.jpg size=50x30 align=right]
 // minor stability and portability fixes
