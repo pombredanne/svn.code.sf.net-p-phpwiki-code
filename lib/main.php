@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.89 2002-11-14 22:54:01 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.90 2002-11-19 07:07:37 carstenklapp Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -100,6 +100,7 @@ class WikiRequest extends Request {
         // Save preferences in session and cookie
         // FIXME: hey! what about anonymous users?   Can't they have
         // preferences too?
+
         $id_only = true; 
         $this->_user->setPreferences($this->_prefs, $id_only);
 
@@ -670,9 +671,14 @@ function main () {
     global $request;
 
     $request = new WikiRequest();
-    $request->updateAuthAndPrefs();
-    $request->initializeLang();
+    // Initialize with system defaults in case user not logged in.
+    // Should this go into constructor?
     $request->initializeTheme();
+
+    $request->updateAuthAndPrefs();
+    // initialize again with user's prefs
+    $request->initializeTheme();
+    $request->initializeLang();
     
     /* FIXME: is this needed anymore?
         if (USE_PATH_INFO && ! $request->get('PATH_INFO')
