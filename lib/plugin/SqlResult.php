@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SqlResult.php,v 1.1 2004-05-03 20:44:58 rurban Exp $');
+rcs_id('$Id: SqlResult.php,v 1.2 2004-05-03 21:57:47 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
@@ -35,7 +35,10 @@ rcs_id('$Id: SqlResult.php,v 1.1 2004-05-03 20:44:58 rurban Exp $');
  *                   PASSWORD('xx')
  *   ?>
  *   <?plugin SqlResult alias=videos template=videos
- *            SELECT * FROM video LIMIT 50
+ *            SELECT rating,title,date 
+ *                   FROM video 
+ *                   ORDER BY rating DESC 
+ *                   LIMIT 5
  *   ?>
  *
  * @author: ReiniUrban
@@ -56,7 +59,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -109,6 +112,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/05/03 20:44:58  rurban
+// fixed gettext strings
+// new SqlResult plugin
+// _WikiTranslation: fixed init_locale
+//
 
 // For emacs users
 // Local Variables:

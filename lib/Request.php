@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.52 2004-05-03 13:16:47 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.53 2004-05-03 21:57:47 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -476,6 +476,8 @@ class Request_SessionVars {
             $GLOBALS[$key] = $val;
         }
         $vars[$key] = $val;
+        if (isset($_SESSION))
+            $_SESSION[$key] = $val;
         session_register($key);
     }
     
@@ -976,6 +978,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.52  2004/05/03 13:16:47  rurban
+// fixed UserPreferences update, esp for boolean and int
+//
 // Revision 1.51  2004/05/02 21:26:38  rurban
 // limit user session data (HomePageHandle and auth_dbi have to invalidated anyway)
 //   because they will not survive db sessions, if too large.
