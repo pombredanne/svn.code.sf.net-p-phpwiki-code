@@ -14,9 +14,9 @@ class SetupWiki extends PHPUnit_TestCase {
 
     function testSetupWiki() {
         global $request;
+
         $request->setArg('source', FindFile('pgsrc'));
         $request->setArg('overwrite', 1);
-
         LoadAny($request, $request->getArg('source'));
         
         $dbh = $request->getDbh();
