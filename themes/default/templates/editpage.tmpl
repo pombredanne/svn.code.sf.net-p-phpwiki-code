@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.13 2002-01-26 01:51:13 dairiki Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.14 2002-01-26 08:18:28 carstenklapp Exp $ -->
 <?php
 $SummaryInput = HTML::input(array('type'  => 'text',
                                   'class' => 'wikitext',
@@ -114,12 +114,11 @@ $s = $Theme->getButtonSeparator();
 </tr>
 </table>
 
-<!-- FIXME: do we need this at all?  If so, it could probably be moved to TextFormattingRules -->
-<p><?= fmt("See %s tips for editing.", $GoodStyleB) ?></p>
-
 <hr noshade="noshade" />
 
 <div class="wiki-edithelp">
+<!-- FIXME: do we need this at all?  If so, it could probably be moved to TextFormattingRules -->
+<p><?= fmt("See %s tips for editing.", $GoodStyleB) ?></p>
 <?plugin IncludePage page=_("TextFormattingRules") section=_("Synopsis") quiet=1?>
 </div>
 
