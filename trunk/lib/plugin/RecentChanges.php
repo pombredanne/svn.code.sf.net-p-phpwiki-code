@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.62 2002-02-16 02:31:49 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.63 2002-02-26 06:33:11 carstenklapp Exp $');
 /**
  */
 
@@ -399,6 +399,7 @@ class NonDeletedRevisionIterator extends WikiDB_PageRevisionIterator
     }
 
     function next () {
+        static $mostrecentlymodified = false;
         while (($rev = $this->_revisions->next())) {
             if ($this->_check_current_revision) {
                 $page = $rev->getPage();
@@ -406,6 +407,11 @@ class NonDeletedRevisionIterator extends WikiDB_PageRevisionIterator
             }
             else {
                 $check_rev = $rev;
+            }
+            if (! $mostrecentlymodified) {
+                // set http header to date of most recently modified page
+                $mostrecentlymodified = $check_rev->get('mtime');
+                header("Last-Modified: " . Rfc2822DateTime($mostrecentlymodified));
             }
             if (! $check_rev->hasDefaultContents())
                 return $rev;
