@@ -35,7 +35,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.0-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.29 2001-11-26 06:23:38 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.30 2001-11-28 20:12:48 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -246,14 +246,24 @@ $LANG='C';
 // the correct setting:
 //putenv('LC_TIME=de_DE');
 
-// Default PhpWiki theme is vanilla
-// Page logo and signature images are in the theme folder.
-// The appearance can be customized by creating additional folders inside templates.
-// See the file templates/vanilla/theme.php for additional info.
-// Eventually this could be set in user preferences, for now it's just a global.
-$theme = "vanilla";
+// If you specify a relative URL for the CSS and images,
+// the are interpreted relative to DATA_PATH (see below).
+// (The default value of DATA_PATH is the directory in which
+// index.php (this file) resides.)
 
-include "templates/$theme/$theme.php";
+// CSS location
+//
+// Note that if you use the stock phpwiki style sheet, 'phpwiki.css',
+// you should make sure that it's companion 'phpwiki-heavy.css'
+// is installed in the same directory that the base style file is.
+define("CSS_URL", "phpwiki.css");
+
+// logo image (path relative to index.php)
+$logo = "images/wikibase.png";
+
+// Signature image which is shown after saving an edited page
+// If this is left blank (or unset), the signature will be omitted.
+//$SignatureImg = "images/signature.png";
 
 // Date & time formats used to display modification times, etc.
 // Formats are given as format strings to PHP strftime() function
