@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SiteMap.php,v 1.7 2003-02-21 04:12:06 dairiki Exp $');
+rcs_id('$Id: SiteMap.php,v 1.8 2004-01-24 23:24:07 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -56,7 +56,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -92,7 +92,7 @@ extends WikiPlugin
         while ($link = $pagelinks->next()) {
             $linkpagename = $link->getName();
             if (($linkpagename != $startpagename)
-                && !in_array($linkpagename, $this->ExcludedPages)) {
+                && !preg_match("/$this->ExcludedPages/", $linkpagename)) {
                 $pagearr[$level . " [$linkpagename]"] = $link;
                 $pagearr = $this->recursivelyGetBackLinks($link, $pagearr,
                                                           $level . '*',
@@ -120,7 +120,7 @@ extends WikiPlugin
         while ($link = $pagelinks->next()) {
             $linkpagename = $link->getName();
             if (($linkpagename != $startpagename)
-                && !in_array($linkpagename, $this->ExcludedPages)) {
+                && !preg_match("/$this->ExcludedPages/", $linkpagename)) {
                 if (!$this->excludeunknown
                     || $this->dbi->isWikiPage($linkpagename)) {
                     $pagearr[$level . " [$linkpagename]"] = $link;
@@ -145,7 +145,7 @@ extends WikiPlugin
         $exclude = $exclude ? explode(",", $exclude) : array();
         if (!$include_self)
             $exclude[] = $page;
-        $this->ExcludedPages = $exclude;
+        $this->ExcludedPages = "^(?:" . join("|", $exclude) . ")";
         $this->_default_limit = str_pad('', 3, '*');
         if (is_numeric($reclimit)) {
             if ($reclimit < 0)
@@ -184,6 +184,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2003/02/21 04:12:06  dairiki
+// Minor fixes for new cached markup.
+//
 // Revision 1.6  2003/01/18 22:08:01  carstenklapp
 // Code cleanup:
 // Reformatting & tabs to spaces;
