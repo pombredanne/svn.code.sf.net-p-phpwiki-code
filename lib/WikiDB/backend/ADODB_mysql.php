@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_mysql.php,v 1.1 2002-02-01 23:57:30 lakka Exp $');
+rcs_id('$Id: ADODB_mysql.php,v 1.2 2002-02-02 22:50:24 lakka Exp $');
 
 require_once('lib/WikiDB/backend/ADODB.php');
 
@@ -23,7 +23,7 @@ extends WikiDB_backend_ADODB
     function optimize() {
         $dbh = &$this->_dbh;
         foreach ($this->_table_names as $table) {
-            $dbh->query("OPTIMIZE TABLE $table");
+            $dbh->Execute("OPTIMIZE TABLE $table");
         }
     }
 
