@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.35 2004-06-16 12:08:25 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.36 2004-06-16 13:21:05 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -963,32 +963,53 @@ class GroupLdap extends WikiGroup {
         }
         // must be a valid LDAP server, and username must not contain a wildcard
         if ($ldap = ldap_connect(LDAP_AUTH_HOST) and !strstr($this->username,'*')) { 
-            if (defined('LDAP_AUTH_USER'))
-                if (defined('LDAP_AUTH_PASSWORD'))
-                    // Windows Active Directory Server is strict
-                    $r = @ldap_bind($ldap,LDAP_AUTH_USER,LDAP_AUTH_PASSWORD); 
-                else
-                    $r = @ldap_bind($ldap,LDAP_AUTH_USER); 
-            else
-                $r = @ldap_bind($ldap); // this is an anonymous bind
             if (!empty($LDAP_SET_OPTION)) {
                 foreach ($LDAP_SET_OPTION as $key => $value) {
+                    if (is_string($key) and defined($key))
+                        $key = constant($key);
                     ldap_set_option($ldap,$key,$value);
                 }
             }
-            $st_search = defined('LDAP_SEARCH_FIELD') 
+
+            if (defined('LDAP_AUTH_USER'))
+                if (defined('LDAP_AUTH_PASSWORD'))
+                    // Windows Active Directory Server is strict
+                    $r = @ldap_bind($ldap, LDAP_AUTH_USER, LDAP_AUTH_PASSWORD); 
+                else
+                    $r = @ldap_bind($ldap, LDAP_AUTH_USER);
+            else
+                $r = @ldap_bind($ldap); // this is an anonymous bind
+            if (!$r) {
+                ldap_close($ldap);
+                trigger_error(fmt("Unable to bind LDAP server %s", LDAP_AUTH_HOST), 
+                              E_USER_WARNING);
+                return $this->membership;
+            }
+
+            $st_search = defined('LDAP_SEARCH_FIELD')
                 ? LDAP_SEARCH_FIELD."=".$this->username
                 : "uid=".$this->username;
-            $sr = ldap_search($ldap, "ou=Users,".$this->base_dn,$st_search);
+            
+            $sr = ldap_search($ldap, "ou=Users".($this->base_dn ? ",".$this->base_dn : ''), $st_search);
+            if (!$sr) {
+                ldap_close($ldap);
+                return $this->membership;
+            }
             $info = ldap_get_entries($ldap, $sr);
+            if (empty($info["count"])) {
+                ldap_close($ldap);
+                return $this->membership;
+            }
             for ($i = 0; $i < $info["count"]; $i++) {
             	if ($info[$i]["gidnumber"]["count"]) {
-                  $gid = $info[$i]["gidnumber"][0];
-                  $sr2 = ldap_search($ldap, "ou=Groups,".$this->base_dn,"gidNumber=$gid");
-                  $info2 = ldap_get_entries($ldap, $sr2);
-                  if ($info2["count"])
-                    $membership[] =  $info2[0]["cn"][0];
-            	}
+                    $gid = $info[$i]["gidnumber"][0];
+                    $sr2 = ldap_search($ldap, "ou=Groups".($this->base_dn ? ",".$this->base_dn : ''),"gidNumber=$gid");
+                    if ($sr2) {
+                        $info2 = ldap_get_entries($ldap, $sr2);
+                        if (!empty($info2["count"]))
+                            $membership[] =  $info2[0]["cn"][0];
+                    }
+                }
             }
         } else {
             trigger_error(fmt("Unable to connect to LDAP server %s", LDAP_AUTH_HOST), 
@@ -1031,6 +1052,9 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.35  2004/06/16 12:08:25  rurban
+// better desc
+//
 // Revision 1.34  2004/06/16 11:51:35  rurban
 // catch dl error on Windows
 //

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.96 2004-06-16 12:42:06 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.97 2004-06-16 13:21:16 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -2025,24 +2025,33 @@ extends _PassUser
                 foreach ($LDAP_SET_OPTION as $key => $value) {
                     if (is_string($key) and defined($key))
                         $key = constant($key);
-                    ldap_set_option($ldap,$key,$value);
+                    ldap_set_option($ldap, $key, $value);
                 }
             }
             if (defined('LDAP_AUTH_USER'))
                 if (defined('LDAP_AUTH_PASSWORD'))
                     // Windows Active Directory Server is strict
-                    $r = @ldap_bind($ldap,LDAP_AUTH_USER,LDAP_AUTH_PASSWORD); 
+                    $r = @ldap_bind($ldap, LDAP_AUTH_USER, LDAP_AUTH_PASSWORD); 
                 else
-                    $r = @ldap_bind($ldap,LDAP_AUTH_USER); 
+                    $r = @ldap_bind($ldap, LDAP_AUTH_USER); 
             else
                 $r = @ldap_bind($ldap); // this is an anonymous bind
-
-            // Need to set the right root search information. see ../index.php
+            if (!$r) {    
+                ldap_close($ldap);
+                trigger_error(fmt("Unable to bind LDAP server %s", LDAP_AUTH_HOST), 
+                              E_USER_WARNING);
+                return $this->_tryNextPass($submitted_password);
+            }
+            // Need to set the right root search information. See config/config.ini
             $st_search = defined('LDAP_SEARCH_FIELD') 
                 ? LDAP_SEARCH_FIELD."=$userid"
                 : "uid=$userid";
             $sr = ldap_search($ldap, LDAP_BASE_DN, $st_search);
             $info = ldap_get_entries($ldap, $sr); 
+            if (empty($info["count"])) {
+                ldap_close($ldap);
+                return $this->_tryNextPass($submitted_password);
+            }
             // there may be more hits with this userid.
             // of course it would be better to narrow down the BASE_DN
             for ($i = 0; $i < $info["count"]; $i++) {
@@ -2069,25 +2078,32 @@ extends _PassUser
 
         $userid = $this->_userid;
         if (strstr($userid,'*')) {
-            trigger_error(fmt("Invalid username '%s' for LDAP Auth",$userid),E_USER_WARNING);
-            return WIKIAUTH_FORBIDDEN;
+            trigger_error(fmt("Invalid username '%s' for LDAP Auth", $userid),
+                          E_USER_WARNING);
+            return false;
         }
         if ($ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
             if (!empty($LDAP_SET_OPTION)) {
                 foreach ($LDAP_SET_OPTION as $key => $value) {
                     if (is_string($key) and defined($key))
                         $key = constant($key);
-                    ldap_set_option($ldap,$key,$value);
+                    ldap_set_option($ldap, $key, $value);
                 }
             }
             if (defined('LDAP_AUTH_USER'))
                 if (defined('LDAP_AUTH_PASSWORD'))
                     // Windows Active Directory Server is strict
-                    $r = @ldap_bind($ldap,LDAP_AUTH_USER,LDAP_AUTH_PASSWORD); 
+                    $r = @ldap_bind($ldap, LDAP_AUTH_USER, LDAP_AUTH_PASSWORD); 
                 else
                     $r = @ldap_bind($ldap,LDAP_AUTH_USER); 
             else
                 $r = @ldap_bind($ldap); // this is an anonymous bind
+            if (!$r) {    
+                ldap_close($ldap);
+                trigger_error(fmt("Unable to bind LDAP server %s", LDAP_AUTH_HOST), 
+                              E_USER_WARNING);
+                return $this->_tryNextPass($submitted_password);
+            }
 
             // Need to set the right root search information. see ../index.php
             $st_search = defined('LDAP_SEARCH_FIELD') 
@@ -2143,9 +2159,9 @@ extends _PassUser
     //CHECKME: this will not be okay for the auth policy strict
     function userExists() {
         return true;
+
         if (checkPass($this->_prefs->get('passwd')))
             return true;
-            
         return $this->_tryNextUser();
     }
 
@@ -3015,6 +3031,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.96  2004/06/16 12:42:06  rurban
+// fix homepage prefs
+//
 // Revision 1.95  2004/06/16 10:38:58  rurban
 // Disallow refernces in calls if the declaration is a reference
 // ("allow_call_time_pass_reference clean").
