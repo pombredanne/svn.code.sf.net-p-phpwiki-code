@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.192 2004-11-21 11:59:20 rurban Exp $');
+rcs_id('$Id: main.php,v 1.193 2004-11-30 07:51:08 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -1038,9 +1038,9 @@ function validateSessionPath() {
                      _("The session.save_path directory"))
              . "\n"
              . sprintf(_("Please ensure that %s is writable, or redefine %s in config/config.ini."),
-                       sprintf(_("the directory '%s'"),
+                       sprintf(_("the session.save_path directory '%s'"),
                                ini_get('session.save_path')),
-                       'session.save_path')
+                       'SESSION_SAVE_PATH')
              . "\n"
              . sprintf(_("Attempting to use the directory '%s' instead."),
                        $tmpdir)
@@ -1148,6 +1148,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.192  2004/11/21 11:59:20  rurban
+// remove final \n to be ob_cache independent
+//
 // Revision 1.191  2004/11/19 19:22:03  rurban
 // ModeratePage part1: change status
 //
