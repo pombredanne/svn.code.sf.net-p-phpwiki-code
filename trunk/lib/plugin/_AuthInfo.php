@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _AuthInfo.php,v 1.12 2004-03-12 15:48:08 rurban Exp $');
+rcs_id('$Id: _AuthInfo.php,v 1.13 2004-04-02 15:06:56 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.12 $");
+                            "\$Revision: 1.13 $");
     }
 
     function getDefaultArguments() {
@@ -143,7 +143,7 @@ extends WikiPlugin
                     if ($heading == "Object of wikidb_sql") $val = $heading;
                     elseif (substr($heading,0,13) == "Object of db_") $val = $heading;
                     elseif (!isset($seen[$heading])) {
-                        if (empty($seen[$heading])) $seen[$heading] = 1;
+                        //if (empty($seen[$heading])) $seen[$heading] = 1;
                         $val = HTML::table(array('border' => 1,
                                                  'cellpadding' => 2,
                                                  'cellspacing' => 0),
@@ -154,7 +154,7 @@ extends WikiPlugin
                 } elseif (is_array($val)) {
                     $heading = $key."[]";
                     if (!isset($seen[$heading])) {
-                        if (empty($seen[$heading])) $seen[$heading] = 1;
+                        //if (empty($seen[$heading])) $seen[$heading] = 1;
                         $val = HTML::table(array('border' => 1,
                                                  'cellpadding' => 2,
                                                  'cellspacing' => 0),
@@ -172,7 +172,7 @@ extends WikiPlugin
                                                   'style' => 'color:#000000'),
                                             $val ? $val : HTML::raw('&nbsp;'))
                                    );
-                if (empty($seen[$key])) $seen[$key] = 1;
+                //if (empty($seen[$key])) $seen[$key] = 1;
             }
         }
         return $rows;
@@ -190,6 +190,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2004/03/12 15:48:08  rurban
+// fixed explodePageList: wrong sortby argument order in UnfoldSubpages
+// simplified lib/stdlib.php:explodePageList
+//
 // Revision 1.11  2004/03/12 11:18:25  rurban
 // fixed ->membership chache
 //

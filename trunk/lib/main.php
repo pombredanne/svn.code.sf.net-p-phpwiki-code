@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.127 2004-03-25 17:00:31 rurban Exp $');
+rcs_id('$Id: main.php,v 1.128 2004-04-02 15:06:55 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -37,11 +37,17 @@ class WikiRequest extends Request {
         // Restore auth state. This doesn't check for proper authorization!
         if (ENABLE_USER_NEW) {
             $userid = $this->_deduceUsername();	
-            if (isset($this->_user) and $this->_user->_authhow == 'session') {
+            if (isset($this->_user) and 
+                !empty($this->_user->_authhow) and 
+                $this->_user->_authhow == 'session')
+            {
                 // users might switch in a session between the two objects.
                 // restore old auth level here or in updateAuthAndPrefs?
                 //$user = $this->getSessionVar('wiki_user');
                 // revive db handle, because these don't survive sessions
+                if (isset($this->_user) and (!isa($this->_user,WikiUserClassname()))) {
+                    $this->_user = new WikiUser($this, $this->_deduceUsername());
+                }
 	        unset($this->_user->_HomePagehandle);
 	        $this->_user->hasHomePage();
 	        /*
@@ -52,10 +58,7 @@ class WikiRequest extends Request {
             	$this->_prefs = & $this->_user->_prefs;
             } else {
                 $user = WikiUser($userid);
-                //Todo: upgrade later at updateAuthAndPrefs()
-                if (isset($this->_user)) 
-                  $user = UpgradeUser($this->_user,$user);
-                $this->_user = $user;
+                $this->_user = & $user;
                 $this->_prefs = & $this->_user->_prefs;
             }
         } else {
@@ -90,12 +93,16 @@ class WikiRequest extends Request {
     // to be initialized before we do this stuff.
     function updateAuthAndPrefs () {
 
+        if (isset($this->_user) and (!isa($this->_user,WikiUserClassname()))) {
+            $this->_user = false;	
+        }
         // Handle authentication request, if any.
         if ($auth_args = $this->getArg('auth')) {
             $this->setArg('auth', false);
             $this->_handleAuthRequest($auth_args); // possible NORETURN
         }
-        elseif ( ! $this->_user or ! $this->_user->isSignedIn() ) {
+        elseif ( ! $this->_user or 
+                 (isa($this->_user,WikiUserClassname()) and ! $this->_user->isSignedIn())) {
             // If not auth request, try to sign in as saved user.
             if (($saved_user = $this->getPref('userid')) != false) {
                 $this->_signIn($saved_user);
@@ -199,9 +206,11 @@ class WikiRequest extends Request {
             $auth_args['pass_required'] = true;
             // If no password was submitted, it's not really
             // a failure --- just need to prompt for password...
-            if (!isset($auth_args['passwd'])) {
-                 //$auth_args['pass_required'] = false;
-                 $fail_message = false;
+            if (!ALLOW_USER_PASSWORDS 
+                and ALLOW_BOGO_LOGIN 
+                and !isset($auth_args['passwd'])) 
+            {
+                $fail_message = false;
             }
             $olduser->PrintLoginForm($this, $auth_args, $fail_message);
             $this->finish();    //NORETURN
@@ -552,9 +561,10 @@ class WikiRequest extends Request {
             return ENABLE_USER_NEW ? $user->UserName() : $this->_user;
         }
         if ($userid = $this->getCookieVar('WIKI_ID')) {
-            if (!empty($this->_user))
+            if (!empty($userid) and substr($userid,0,2) != 's:') {
                 $this->_user->authhow = 'cookie';
-            return $userid;
+                return $userid;
+            }
         }
         return false;
     }
@@ -857,6 +867,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.127  2004/03/25 17:00:31  rurban
+// more code to convert old-style pref array to new hash
+//
 // Revision 1.126  2004/03/24 19:39:03  rurban
 // php5 workaround code (plus some interim debugging code in XmlElement)
 //   php5 doesn't work yet with the current XmlElement class constructors,

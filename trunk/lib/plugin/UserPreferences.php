@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.22 2004-03-24 19:39:03 rurban Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.23 2004-04-02 15:06:56 rurban Exp $');
 /**
  Copyright (C) 2001, 2002, 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -36,7 +36,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.22 $");
+                            "\$Revision: 1.23 $");
     }
 
     function getDefaultArguments() {
@@ -72,9 +72,9 @@ extends WikiPlugin
             return Template('userprefs', $no_args);
         }
         $userid = $user->UserName();
-        if (((defined('ALLOW_BOGO_LOGIN') && ALLOW_BOGO_LOGIN && $user->isSignedIn())
-             || $user->isAuthenticated())
-            && !empty($userid)) {
+        if (// ((defined('ALLOW_BOGO_LOGIN') && ALLOW_BOGO_LOGIN && $user->isSignedIn()) ||
+             $user->isAuthenticated() and !empty($userid)) 
+        {
             $pref = $user->getPreferences();
             //trigger_error("DEBUG: reading prefs from getPreferences".print_r($pref));
  
@@ -159,12 +159,27 @@ extends WikiPlugin
         }
         else {
             // wrong or unauthenticated user
-            return $user->PrintLoginForm ($request, $args, false, false);
+            return $request->_notAuthorized(WIKIAUTH_BOGO);
+            //return $user->PrintLoginForm ($request, $args, false, false);
         }
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.22  2004/03/24 19:39:03  rurban
+// php5 workaround code (plus some interim debugging code in XmlElement)
+//   php5 doesn't work yet with the current XmlElement class constructors,
+//   WikiUserNew does work better than php4.
+// rewrote WikiUserNew user upgrading to ease php5 update
+// fixed pref handling in WikiUserNew
+// added Email Notification
+// added simple Email verification
+// removed emailVerify userpref subclass: just a email property
+// changed pref binary storage layout: numarray => hash of non default values
+// print optimize message only if really done.
+// forced new cookie policy: delete pref cookies, use only WIKI_ID as plain string.
+//   prefs should be stored in db or homepage, besides the current session.
+//
 // Revision 1.21  2004/03/14 16:26:21  rurban
 // copyright line
 //

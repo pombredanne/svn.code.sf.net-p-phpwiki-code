@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.46 2004-04-01 06:29:51 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.47 2004-04-02 15:06:55 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -540,9 +540,12 @@ extends _WikiUser
         // Try to read deprecated 1.3.x style cookies
         if ($cookie = $request->cookies->get_old(WIKI_NAME)) {
             if (! $unboxedcookie = $this->_prefs->retrieve($cookie)) {
-                trigger_error(_("Format of UserPreferences cookie not recognised.") . " "
+                trigger_error(_("Empty Preferences or format of UserPreferences cookie not recognised.") 
+                              . "\n"
+                              . sprintf("%s='%s'", WIKI_NAME, $cookie)
+                              . "\n"
                               . _("Default preferences will be used."),
-                              E_USER_WARNING);
+                              E_USER_NOTICE);
             }
             /**
              * Only set if it matches the UserName who is
@@ -550,11 +553,14 @@ extends _WikiUser
              * username). (Remember, _BogoUser and higher inherit this
              * function too!).
              */
-            if (! $UserName || $UserName == $unboxedcookie['userid']) {
+            if (! $UserName || $UserName == @$unboxedcookie['userid']) {
                 $updated = $this->_prefs->updatePrefs($unboxedcookie);
                 //$this->_prefs = new UserPreferences($unboxedcookie);
-                $this->_userid = $unboxedcookie['userid'];
-                $UserName = $this->_userid;
+                $UserName = @$unboxedcookie['userid'];
+                if (is_string($UserName) and (substr($UserName,0,2) != 's:'))
+                    $this->_userid = $UserName;
+                else 
+                    $UserName = false;    
             }
             // v1.3.8 policy: don't set PhpWiki cookies, only plaintext WIKI_ID cookies
             $request->deleteCookieVar(WIKI_NAME);
@@ -565,8 +571,11 @@ extends _WikiUser
                 if (! $UserName || $UserName == $unboxedcookie['userid']) {
                     $updated = $this->_prefs->updatePrefs($unboxedcookie);
                     //$this->_prefs = new UserPreferences($unboxedcookie);
-                    $this->_userid = $unboxedcookie['userid'];
-                    $UserName = $this->_userid;
+                    $UserName = $unboxedcookie['userid'];
+                    if (is_string($UserName) and (substr($UserName,0,2) != 's:'))
+                        $this->_userid = $UserName;
+                    else 
+                        $UserName = false;    
                 }
                 $request->deleteCookieVar("WIKI_PREF2");
             }
@@ -574,12 +583,15 @@ extends _WikiUser
         if (! $UserName ) {
             // Try reading userid from old PhpWiki cookie formats:
             if ($cookie = $request->cookies->get_old('WIKI_ID')) {
-                if (is_string($cookie))
-                    $this->_userid = $cookie;
+                if (is_string($cookie) and (substr($cookie,0,2) != 's:'))
+                    $UserName = $cookie;
                 elseif (is_array($cookie) and !empty($cookie['userid']))
-                    $this->_userid = $cookie['userid'];
+                    $UserName = $cookie['userid'];
             }
-            $UserName = $this->_userid;
+            if (! $UserName )
+                $request->deleteCookieVar("WIKI_ID");
+            else
+                $this->_userid = $UserName;
         }
 
         // initializeTheme() needs at least an empty object
@@ -1428,7 +1440,6 @@ extends _DbPassUser
             $packed = $this->_prefs->store();
             if (!$id_only and isset($this->_prefs->_update)) {
                 $dbh = &$this->_auth_dbi;
-                
                 $dbh->simpleQuery(sprintf($this->_prefs->_update,
                                           $dbh->quote($packed),
                                           $dbh->quote($this->_userid)));
@@ -2368,6 +2379,9 @@ class UserPreferences
         // userid stored too, to ensure the prefs are being loaded for
         // the correct (currently signing in) userid if stored in a
         // cookie.
+        // Update: for db prefs we disallow passwd. 
+        // userid is needed for pref reflexion. current pref must know its username, 
+        // if some app needs prefs from different users, different from current user.
         $this->_prefs
             = array(
                     'userid'        => new _UserPreference(''),
@@ -2391,6 +2405,10 @@ class UserPreferences
                                                                    TIMEOFFSET_MAX_HOURS),
                     'relativeDates' => new _UserPreference_bool()
                     );
+        if (isset($this->_method) and $this->_method == 'SQL') {
+            //unset($this->_prefs['userid']);
+            unset($this->_prefs['passwd']);
+        }
 
         if (is_array($saved_prefs)) {
             foreach ($saved_prefs as $name => $value)
@@ -2438,10 +2456,11 @@ class UserPreferences
            return true;
         */
         if (!isset($pref->{$value}) or $pref->{$value} != $pref->default_value) {
-            $newvalue = $pref->sanify($value);
+            if ($name == 'emailVerified') $newvalue = $value;
+            else $newvalue = $pref->sanify($value);
 	    $pref->set($name,$newvalue);
         }
-        $this->_prefs[$name] = $pref;
+        $this->_prefs[$name] =& $pref;
         return true;
     }
     /**
@@ -2466,6 +2485,10 @@ class UserPreferences
                 }
             }
         } elseif (is_array($prefs)) {
+            //unset($this->_prefs['userid']);
+	    if (isset($this->_method) and $this->_method == 'SQL') {
+                unset($this->_prefs['passwd']);
+	    }
             $type = 'emailVerified'; $obj =& $this->_prefs['email'];
             $obj->_init = $init;
             if (isset($prefs[$type]) and $obj->get($type) !== $prefs[$type]) {
@@ -2640,6 +2663,10 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.46  2004/04/01 06:29:51  rurban
+// better wording
+// RateIt also for ADODB
+//
 // Revision 1.45  2004/03/30 02:14:03  rurban
 // fixed yet another Prefs bug
 // added generic PearDb_iter
