@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: pdf.php,v 1.2 2004-05-04 22:34:25 rurban Exp $');
+rcs_id('$Id: pdf.php,v 1.3 2004-05-15 19:49:09 rurban Exp $');
 
 // PDF functions taken from FPDF http://www.fpdf.org
 // Edited for PHPWebthings by Don Sebà 
@@ -105,6 +105,37 @@ class PDF extends FPDF {
         $this->SetTextColor(0);
     }
 }
+
+function ConvertAndDisplayPdf (&$request) {
+    if (empty($request->_is_buffering_output))
+        $request->buffer_output(false/*'nocompress'*/);
+    if ($GLOBALS['LANG'] == 'ja') {
+        include_once("lib/fpdf/japanese.php");
+        $pdf = new PDF_Japanese;
+    } elseif ($GLOBALS['LANG'] == 'zh') {
+        include_once("lib/fpdf/chinese.php");
+        $pdf = new PDF_Chinese;
+    } else {
+        $pdf = new PDF;
+    }
+    include_once("lib/display.php");
+    displayPage($request);
+    $html = ob_get_contents();
+    $pdf->Open();
+    $pdf->AddPage();
+    $pdf->ConvertFromHTML($html);
+    $request->discardOutput();
+        
+    $request->buffer_output(false/*'nocompress'*/);
+    $pagename = $request->getArg('pagename');
+    $dest = $request->getArg('dest');
+    $pdf->Output($pagename.".pdf", $dest ? $dest : 'F');
+    if (!empty($errormsg)) {
+        $request->discardOutput();
+    }
+}
+
+// $Log: not supported by cvs2svn $
 
 // Local Variables:
 // mode: php
