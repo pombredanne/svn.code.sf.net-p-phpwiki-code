@@ -4,7 +4,7 @@
 <html>
 <head>
 <!-- phpwiki source:
-$Id: editpage.html,v 1.22 2001-11-14 21:25:32 dairiki Exp $
+$Id: editpage.html,v 1.23 2001-11-29 02:59:21 dairiki Exp $
 ${RCS_IDS}
 -->
 <base href="${BASE_URL}" />
@@ -12,7 +12,7 @@ ${RCS_IDS}
 <meta name="robots" content="noindex,nofollow" />
 <link rel="stylesheet" title="phpwiki" href="${CSS_URL}" type="text/css" />
 
-<title>Edit: ${SPLIT_PAGE}</title>
+<title>$_("Edit:") ${SPLIT_PAGE}</title>
 </head>
 
 <body>
@@ -21,19 +21,19 @@ ${RCS_IDS}
         ><img src="${LOGO}" border="0" align="right"
 	     alt="[phpwiki]" width="50" height="50" /></a></div>
 <h1>
-Edit <a href="${BROWSE}${PAGEURL}"  
+$_("Edit") <a href="${BROWSE}${PAGEURL}"  
         class="wikilink"><span class="wikiword">${PAGE}</span></a>
 </h1>
 
 <?php if (!empty($PREVIEW_CONTENT)) { ?>
-  <p><strong>Preview only!  Changes not saved.</strong></p>
+  <p><strong>$_("Preview only!  Changes not saved.")</strong></p>
   <div class="wikitext">${PREVIEW_CONTENT}</div>
   <hr class="ignore" noshade />
 <?php } ?>
 
 <?php if (!$IS_CURRENT) { ?>
-  <p><strong>Warning: You are editing an old revision.
-        Saving this page will overwrite the current version.</strong></p>
+  <p><strong>$_("Warning: You are editing an old revision.")
+        $_("Saving this page will overwrite the current version.")</strong></p>
   <hr class="ignore" noshade />
 <?php } ?>
 
@@ -53,56 +53,55 @@ Edit <a href="${BROWSE}${PAGEURL}"
           wrap="virtual">$FORMVARS[content]</textarea>
 
 <div class="toolbar" style="text-align: center;">
-  Summary:<input type="text" class="wikitext"
-                 name="summary" value="$FORMVARS[summary]" size="50" />
+  $_("Summary:")<input type="text" class="wikitext"
+                       name="summary" value="$FORMVARS[summary]" size="50" />
 </div>
 <table class="toolbar" width="100%"
        cellpadding="0" cellspacing="0" border="0"><tr valign="baseline">
   <td>
     <input type="checkbox" name="minor_edit" value="checked" $FORMVARS[minor_edit] />
-    This is a minor change.
+    $_("This is a minor change.")
   </td>
   <td align="center">
-    <input type="submit" class="button" name="preview" value="Preview" />
-    | <input type="submit" class="button" value="Save" />
+    <input type="submit" class="button" name="preview" value=_("Preview") />
+    | <input type="submit" class="button" value=_("Save") />
   </td>
   <td align="right">
     <?php if ($user->is_authenticated()) { ?>
-      You are signed in as <?php echo LinkWikiWord($USERID); ?>
+      $_("You are signed in as") <?php echo LinkWikiWord($USERID); ?>
     <?php } else { ?>
-      Author will be logged as <i>${USERID}</i>.
+      $_("Author will be logged as") <i>${USERID}</i>.
     <?php } ?>
   </td>
 </tr></table>
 <p style="clear: both; padding: 2ex 0ex 0ex;">
-  You can change the size of the editing area.
-  See <?php echo LinkExistingWikiWord('UserPreferences'); ?>.
-  Also see <?php echo LinkExistingWikiWord('GoodStyle') ?> tips for editing.
+  $_("You can change the size of the editing area.")
+  $_("See") <?php echo LinkExistingWikiWord(_("UserPreferences")); ?>.
+  $_("Also see") <?php echo LinkExistingWikiWord(_("GoodStyle")) ?> $_("tips for editing.")
 </p>
 <hr noshade="noshade" />
 <small>
-<b>Emphasis:</b>
-  '' for italics,
-  __ for bold,
-  ''__ for both
-<br /><b>Lists:</b>
-  * for bullet lists,
-  # for numbered lists,
-  ''; term : definition'' for definition lists
-<br /><b>References:</b>
-  JoinCapitalizedWords or use square brackets for a [page link]
-  or URL [http://cool.wiki.int/].
-<br /><b>Footnotes:</b>
-   Use [1],[2],[3],... 
-<br /><b>Preventing linking:</b>
-   Avoid linking with "!": !DoNotHyperlink,
-   name links like [[text | URL] (double up on the "[")
-<br /><b>Misc:</b>
-   "!", "!!", "!!!" make headings,
-   "%%%" makes a linebreak,
-   "- - - -" makes a horizontal rule
+<b>$_("Emphasis:")</b>
+  '' $_("for italics"),
+  __ $_("for bold"),
+  ''__ $_("for both")
+<br /><b>$_("Lists:")</b>
+  * $_("for bullet lists"), #
+              $_("for numbered lists"),
+  ''; $_("term") : $_("definition")'' $_("for definition lists")
+<br /><b>$_("References:")</b>
+  $_("JoinCapitalizedWords or use square brackets for a [page link] or URL [http://cool.wiki.int/].")
+<br /><b>$_("Footnotes:")</b>
+   $_("Use [1],[2],[3],...")
+<br /><b>$_("Preventing linking:")</b>
+   $_("Avoid linking with '!': !DoNotHyperlink,")
+   $_("name links like [[text | URL] (double up on the '[')")
+<br /><b>$_("Misc:")</b>
+   "!", "!!", "!!!" $_("make headings"),
+   "%%%" $_("makes a linebreak"),
+   "- - - -" $_("makes a horizontal rule")
 <br />
-more on <?php echo LinkExistingWikiWord('TextFormattingRules') ?>
+$_("more on") <?php echo LinkExistingWikiWord(_("TextFormattingRules")) ?>
 </small>
 
 <input type="hidden" name="action" value="save" />

@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- phpwiki source:
-$Id: browse.html,v 1.22 2001-11-14 21:25:32 dairiki Exp $
+$Id: browse.html,v 1.23 2001-11-29 02:59:21 dairiki Exp $
 ${RCS_IDS}
 -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
@@ -22,78 +22,78 @@ ${RCS_IDS}
               border="0" alt="[phpwiki]" 
               align="right" width="50" height="50" /></a></div>
 <h1>
-<?plugin-link BackLinks description="Get BackLinks for [pagename]"
+<?plugin-link BackLinks description=_("Get BackLinks for [pagename]")
                         page="[pagename]" class="backlinks"
                         linktext="${SPLIT_PAGE}" ?>
 </h1>
 <div class="br"><br clear="all" class="ignore" /></div>
 <?php if (! $IS_CURRENT) { ?>
-  <p><strong>Note</strong>: You are viewing an old revision of this page.
-     Click <a href="${BROWSE}${PAGEURL}">here</a> to view the current version.</p>
+  <p><strong>$_("Note:")</strong> $_("You are viewing an old revision of this page.")
+     $_("Click") <a href="${BROWSE}${PAGEURL}">$_("here")</a> $_("to view the current version.")</p>
   <hr class="ignore" noshade="noshade" />
 <?php } ?>
 <div class="wikitext">${CONTENT}</div>
 <hr class="ignore" noshade="noshade" />
-<form action="<?php echo WikiURL('TitleSearch'); ?>" method="get">
+<form action='<?php echo WikiURL(_("TitleSearch")); ?>' method="get">
 <!-- I would like not to have to use these tables, and managed to
      get this stuff to work more or less correctly using
-     CSS's float:left; and float:right;.  However float:right; seems
+     CSSs float:left; and float:right;.  However float:right; seems
      to cause MSIE4.01/NT to hang. 
      So, we use tables...  -->
 <table class="toolbar" width="100%"
        cellpadding="0" cellspacing="0" border="0"><tr valign="baseline">
   <td>
     <?php if ($IS_CURRENT) { ?>
-      Last edited on ${LASTMODIFIED}
+      $_("Last edited on") ${LASTMODIFIED}
     <?php } else { ?>
-      Version ${VERSION}, saved on ${LASTMODIFIED}
+      $_("Version") ${VERSION} $_(", saved on") ${LASTMODIFIED}
     <?php } ?>
   </td>
   <td align="right">
-  <?php echo LinkExistingWikiWord('FindPage') ?> 
+  <?php echo LinkExistingWikiWord(_("FindPage")) ?> 
   | <span><input type="hidden" name="auto_redirect" value="1" />
     <input type="text"  name="s" size="12"
-           title="Quick Search"
-           onmouseover="window.status='Quick Search'; return true;"
+           title=_("Quick Search")
+           onmouseover="window.status='$_("Quick Search")'; return true;"
            onmouseout="window.status=''; return true;" /></span>
-  | <?plugin-link LikePages page="[pagename]" description="List LikePages for [pagename]"?>
+  | <?plugin-link LikePages page="[pagename]" description=_("List LikePages for [pagename]")?>
   </td>
 </tr></table>
 <table class="toolbar" width="100%"
        cellpadding="0" cellspacing="0" border="0"><tr valign="baseline">
   <td>
     <?php if ($page->get('locked') && !$user->is_admin()) { ?>
-      Page locked
+      $_("Page locked")
     <?php } else { ?>
       <?php if ($IS_CURRENT) { ?>
-        <a class="wikiaction" href="${ACTION}edit">Edit</a>
+        <a class="wikiaction" href="${ACTION}edit">$_("Edit")</a>
       <?php } else { ?>
         <a class="wikiaction" href="${ACTION}edit&amp;version=${VERSION}"
-          >Edit old revision</a>
+          >$_("Edit old revision")</a>
       <?php } ?>
     <?php } ?>
     <?php if ($user->is_admin()) { ?>
       <?php if ($page->get('locked')) { ?>
-        | <a class="wikiadmin" href="${ACTION}unlock">Unlock page</a>
+        | <a class="wikiadmin" href="${ACTION}unlock">$_("Unlock page")</a>
       <?php } else { ?>
-        | <a class="wikiadmin" href="${ACTION}lock">Lock page</a>
+        | <a class="wikiadmin" href="${ACTION}lock">$_("Lock page")</a>
       <?php } ?>
-      | <a class="wikiadmin" href="${ACTION}remove">Remove page</a>
+      | <a class="wikiadmin" href="${ACTION}remove">$_("Remove page")</a>
     <?php } ?>
-    | <a class="wikiaction" href="${ACTION}info">History</a>
+    | <a class="wikiaction" href="${ACTION}info">$_("History")</a>
     <?php if ($IS_CURRENT) { ?>
-      | <a class="wikiaction" href="${ACTION}diff&amp;previous=major">Diff</a>
+      | <a class="wikiaction" href="${ACTION}diff&amp;previous=major">$_("Diff")</a>
     <?php } else { ?>
       | <a class="wikiaction" 
-           href="${ACTION}diff&amp;version=${VERSION}&amp;previous=major">Diff</a>
+           href="${ACTION}diff&amp;version=${VERSION}&amp;previous=major">$_("Diff")</a>
     <?php } ?>
   </td>
   <td align="right">
     <?php if ($user->is_authenticated()) { ?>
-      You are signed in as <?php echo LinkWikiWord($USERID); ?>
-      | <a class="wikiaction" href="${ACTION}logout">SignOut</a>
+      $_("You are signed in as") <?php echo LinkWikiWord($USERID); ?>
+      | <a class="wikiaction" href="${ACTION}logout">$_("SignOut")</a>
     <?php } else { ?>
-      <a class="wikiaction" href="${ACTION}login">SignIn</a>
+      <a class="wikiaction" href="${ACTION}login">$_("SignIn")</a>
     <?php } ?>
   </td>
 </tr></table>
@@ -109,15 +109,17 @@ $ErrorManager->flushPostponedErrors();
 $errmsgs = ob_get_contents();
 ob_end_clean();
 if ($errmsgs)
-    echo "<div class='errors'><h4>PHP Warnings</h4>$errmsgs</div>";
+    echo Element('div', array('class' => 'errors'),
+                 QElement('h4', _("PHP Warnings"))
+		 . $errmsgs);
 ?>
 <div class="toolbar">
   <!-- For debugging only, really: -->
   <?plugin-link _BackendInfo 
-                linktext=DebugInfo
-                targetpage=DebugInfo
+                linktext=_("DebugInfo")
+                targetpage=_("DebugInfo")
                 page=[pagename]
-                description="Get debugging information for [pagename]."?>
+                description=_("Get debugging information for [pagename].")?>
 </div>
 </form>
 </body>

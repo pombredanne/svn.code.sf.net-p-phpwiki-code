@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.3 2001-11-21 19:46:50 dairiki Exp $');
+<?php rcs_id('$Id: Template.php,v 1.4 2001-11-29 02:59:21 dairiki Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -22,7 +22,13 @@ class Template
 	$pluginLoader = new WikiPluginLoader;
 	foreach (array_unique($m[0]) as $plugin_pi) {
 	    $orig[] = '/' . preg_quote($plugin_pi, '/') . '/s';
-	    $repl[] = $pluginLoader->expandPI($plugin_pi, $dbi, $request);
+            // Plugin args like 'description=_("Get backlinks")' get
+            // gettexted.
+            // FIXME: move this to WikiPlugin.php.
+            $translated_pi = preg_replace('/(\s\w+=)_\("((?:[^"\\\\]|\\.)*)"\)/xse',
+                                          '"\1\"" . gettext("\2") . "\""',
+                                          $plugin_pi);
+	    $repl[] = $pluginLoader->expandPI($translated_pi, $dbi, $request);
 	}
 
          // Convert ${VAR} to < ?php echo "$VAR"; ? >
@@ -35,7 +41,21 @@ class Template
         $orig[] = '/\$(\w[\w\d]*)\[([\w\d]+)\]/e';
         $repl[] = '$this->_getReplacement("\1", "\2")';
 
+        // Convert $_("String") to < ?php echo htmlspecialchars(gettext("String")); ? >
+        $orig[] = '/\$_\(("(?:[^"\\\\]|\\.)*")\)/xs';
+        $repl[] = "<?php echo htmlspecialchars(gettext(\\1)); ?>";
+        
+        // Convert tag attributes like foo=_("String") to foo="String" (with gettext mapping).
+        $orig[] = '/( < \w [^>]* \w=)_\("((?:[^"\\\\]|\\.)*)"\)/xse';
+        $repl[] = '"\1\"" . htmlspecialchars(gettext("\2")) . "\""';
+        
         return preg_replace($orig, $repl, $template);
+
+        $ret = preg_replace($orig, $repl, $template);
+        echo QElement('pre', $ret);
+        return $ret;
+        
+
     }
 
     function _getReplacement($varname, $index = false) {
@@ -173,8 +193,9 @@ extends TemplateFile
      */
     function WikiTemplate($template, $page_revision = false) {
         global $templates;
-        
-        $this->TemplateFile(FindLocalizedFile($templates[$template]));
+
+        $this->TemplateFile(FindFile($templates[$template]));
+
         $this->_template_name = $template;
 
         $this->setGlobalTokens();
