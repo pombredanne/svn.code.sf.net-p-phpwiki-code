@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.22 2002-01-15 23:40:25 dairiki Exp $');
+rcs_id('$Id: editpage.php,v 1.23 2002-01-16 04:38:42 carstenklapp Exp $');
 
 require_once('lib/transform.php');
 require_once('lib/Template.php');
@@ -23,10 +23,10 @@ function editPage($dbi, $request) {
 
     global $user;               // FIXME: make this non-global.
     if ($page->get('locked') && !$user->is_admin()) {
-        // Perhaps this can be worked into display.php. It would be nice if:
+        // Perhaps this can be worked into editpage.html. It would be nice if:
         // 'Note: You are viewing an old revision of this page. "View the current version".'
         // would link to "View source of the current version".
-        // Also the <h1> is hard-coded in brwose.html / editpage.html
+        // Also the <h1> is hard-coded in browse.html / editpage.html
         // so we can't get a nice title like "Page source for %s".
         if ($version) {
             $link = QElement('a',
@@ -40,12 +40,13 @@ function editPage($dbi, $request) {
         $html .= QElement('strong', _("Note:")) . " ";
         $html .= sprintf(_("%s has been locked by the administrator and cannot be edited."), $link);
         $html .= "\n";
+        $html .= Element('h2', sprintf(_("Page source for %s"), LinkExistingWikiWord($pagename)));
 
         $template = new WikiTemplate('BROWSE');
+        // FIXME: TITLE doesn't work in BROWSE
         $template->replace('TITLE', sprintf(_("Page source for %s"), $pagename));
-        $template->replace('EDIT_FAIL_MESSAGES', $html
-                           . QElement('hr', array('noshade' => 'noshade'))
-                           . "\n");
+
+        $template->replace('SAVEPAGE_MESSAGES', $html . "\n");
         $prefs = $user->getPreferences();
         $template->replace('CONTENT', 
                            Element('p',
