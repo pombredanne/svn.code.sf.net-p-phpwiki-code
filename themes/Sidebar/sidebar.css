@@ -1,5 +1,5 @@
 /**
- * $Id: sidebar.css,v 1.16 2002-03-01 17:05:46 carstenklapp Exp $
+ * $Id: sidebar.css,v 1.17 2002-03-07 03:47:00 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -12,7 +12,7 @@
  * This also has not yet been tested against NS4.
  * 
  */
-@import url("../../phpwiki.css");
+@import url("../default/phpwiki.css");
 
 
 /**
