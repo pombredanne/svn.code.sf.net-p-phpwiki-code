@@ -1,4 +1,4 @@
-<!-- $Id: wiki_stdlib.php3,v 1.12 2000-06-09 10:20:45 ahollosi Exp $ -->
+<!-- $Id: wiki_stdlib.php3,v 1.13 2000-06-14 03:38:06 wainstead Exp $ -->
 <?
    /*
       Standard functions for Wiki functionality
@@ -241,17 +241,17 @@
          $isNewDay = FALSE;
       }
 
-      $numlines = sizeof($recentchanges["text"]);
+      $numlines = sizeof($recentchanges["content"]);
       $newpage = array();
       $k = 0;
 
       // scroll through the page to the first date and break
       for ($i = 0; $i < ($numlines + 1); $i++) {
          if (preg_match("/^\w\w\w+ \d\d?, \d\d\d\d\r$/",
-                        $recentchanges["text"][$i])) {
+                        $recentchanges["content"][$i])) {
             break;
          } else {
-            $newpage[$k++] = $recentchanges["text"][$i];
+            $newpage[$k++] = $recentchanges["content"][$i];
          }
       }
 
@@ -261,7 +261,7 @@
       if ($isNewDay) {
          $newpage[$k++] = "$currentdate\r";
       } else {
-         $newpage[$k++] = $recentchanges["text"][$i++];
+         $newpage[$k++] = $recentchanges["content"][$i++];
       }
       if($isnewpage) {
          $newpage[$k++] = "\t* [$pagename] (new) ..... $remoteuser\r";
@@ -273,14 +273,14 @@
       $pagename = preg_quote($pagename);
       for (; $i < ($numlines + 1); $i++) {
          // skip previous entry for $pagename
-         if (preg_match("/\[$pagename\]/", $recentchanges["text"][$i])) {
+         if (preg_match("/\[$pagename\]/", $recentchanges["content"][$i])) {
             continue;
          } else {
-            $newpage[$k++] = $recentchanges["text"][$i];
+            $newpage[$k++] = $recentchanges["content"][$i];
          }
       }
 
-      $recentchanges["text"] = $newpage;
+      $recentchanges["content"] = $newpage;
 
       InsertPage($dbi, "RecentChanges", $recentchanges);
    }

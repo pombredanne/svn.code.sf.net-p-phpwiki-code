@@ -1,4 +1,4 @@
-<!-- $Id: wiki_savepage.php3,v 1.5 2000-06-07 11:10:46 ahollosi Exp $ -->
+<!-- $Id: wiki_savepage.php3,v 1.6 2000-06-14 03:35:40 wainstead Exp $ -->
 <?
 
 /*
@@ -68,11 +68,11 @@
       // magic_quotes_gpc
       if(get_magic_quotes_gpc()) { $text = stripslashes($text); }
 
-      $pagehash["text"] = explode("\n", $text);
+      $pagehash["content"] = explode("\n", $text);
 
       // convert spaces to tabs at user request
       if ($convert) {
-         $pagehash["text"] = CookSpaces($pagehash["text"]);      
+         $pagehash["content"] = CookSpaces($pagehash["content"]);      
       }
    }
 

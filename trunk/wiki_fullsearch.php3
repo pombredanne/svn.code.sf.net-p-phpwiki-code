@@ -1,4 +1,4 @@
-<!-- $Id: wiki_fullsearch.php3,v 1.4 2000-06-05 21:46:50 wainstead Exp $ -->
+<!-- $Id: wiki_fullsearch.php3,v 1.5 2000-06-14 03:33:43 wainstead Exp $ -->
 <?
    /*
       Search the text of pages for a match.
@@ -26,10 +26,10 @@
       $count++;
 
       // print out all matching lines, highlighting the match
-      for ($j = 0; $j < (count($pagehash["text"])); $j++) {
-         if (preg_match("/$full/i", $pagehash["text"][$j], $pmatches)) {
+      for ($j = 0; $j < (count($pagehash["content"])); $j++) {
+         if (preg_match("/$full/i", $pagehash["content"][$j], $pmatches)) {
             $matched = preg_replace("/$full/i", "<b>\\0</b>",
-                                    $pagehash["text"][$j]);
+                                    $pagehash["content"][$j]);
             echo "<li>", $matched, "</li>\n";
             $found += count($pmatches);
          }
