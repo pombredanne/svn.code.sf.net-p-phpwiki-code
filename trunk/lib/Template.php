@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.37 2002-03-25 20:21:57 carstenklapp Exp $');
+<?php rcs_id('$Id: Template.php,v 1.38 2002-08-22 23:28:31 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -33,7 +33,7 @@ class Template
     function _munge_input($template) {
 
         // Convert < ?plugin expr ? > to < ?php $this->_printPluginPI("expr"); ? >
-	$orig[] = '/<\?plugin.*?\?>/se';
+        $orig[] = '/<\?plugin.*?\?>/se';
         $repl[] = "\$this->_mungePlugin('\\0')";
         
         // Convert < ?= expr ? > to < ?php $this->_print(expr); ? >
@@ -213,7 +213,7 @@ function GeneratePage($content, $title, $page_revision = false, $args = false) {
  * For dumping pages as html to a file.
  */
 function GeneratePageasXML($content, $title, $page_revision = false, $args = false) {
-    global $request, $HIDE_TOOLBARS, $NO_BASEHREF, $HTML_DUMP;
+    global $request;
     
     if (!is_array($args))
         $args = array();
@@ -225,6 +225,7 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
     if (!isset($args['HEADER']))
         $args['HEADER'] = split_pagename($title);
     
+    global $HIDE_TOOLBARS, $NO_BASEHREF, $HTML_DUMP;
     $HIDE_TOOLBARS = true;
     $HTML_DUMP = true;
 

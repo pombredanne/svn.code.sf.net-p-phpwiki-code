@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.67 2002-08-19 11:32:30 rurban Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.68 2002-08-22 23:28:31 rurban Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -654,8 +654,9 @@ function LoadAny (&$request, $file_or_dir, $files = false, $exclude = false)
         // with broken dirname or basename functions.
         // FIXME: windows uses \ and :
         if (is_integer(strpos($file_or_dir, "/"))) {
-            $file_or_dir = dirname($file_or_dir) ."/".
-            urlencode(basename($file_or_dir));
+            $file_or_dir = FindFile($file_or_dir);
+            if (!file_exists($file_or_dir))
+                $file_or_dir = dirname($file_or_dir) ."/".urlencode(basename($file_or_dir));
         } else {
             // This is probably just a file.
             $file_or_dir = urlencode($file_or_dir);

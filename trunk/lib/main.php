@@ -1,130 +1,14 @@
 <?php
-rcs_id('$Id: main.php,v 1.66 2002-08-20 21:55:05 rurban Exp $');
+rcs_id('$Id: main.php,v 1.67 2002-08-22 23:28:31 rurban Exp $');
 
+define ('DEBUG', 1);
+define ('USE_PREFS_IN_PAGE', true);
 
 include "lib/config.php";
 include "lib/stdlib.php";
 require_once('lib/Request.php');
 require_once("lib/WikiUser.php");
 require_once('lib/WikiDB.php');
-
-define ('DEBUG', 1);
-
-// FIXME: move to config?
-if (defined('THEME')) {
-    include("themes/" . THEME . "/themeinfo.php");
-}
-if (empty($Theme)) {
-    include("themes/default/themeinfo.php");
-}
-assert(!empty($Theme));
-
-class _UserPreference
-{
-    function _UserPreference ($default_value) {
-        $this->default_value = $default_value;
-    }
-
-    function sanify ($value) {
-        return (string) $value;
-    }
-}
-
-class _UserPreference_numeric extends _UserPreference
-{
-    function _UserPreference_numeric ($default, $minval = false, $maxval = false) {
-        $this->_UserPreference((double) $default);
-        $this->_minval = (double) $minval;
-        $this->_maxval = (double) $maxval;
-    }
-
-    function sanify ($value) {
-        $value = (double) $value;
-        if ($this->_minval !== false && $value < $this->_minval)
-            $value = $this->_minval;
-        if ($this->_maxval !== false && $value > $this->_maxval)
-            $value = $this->_maxval;
-        return $value;
-    }
-}
-
-class _UserPreference_int extends _UserPreference_numeric
-{
-    function _UserPreference_int ($default, $minval = false, $maxval = false) {
-        $this->_UserPreference_numeric((int) $default, (int)$minval, (int)$maxval);
-    }
-
-    function sanify ($value) {
-        return (int) parent::sanify((int)$value);
-    }
-}
-
-class _UserPreference_bool extends _UserPreference
-{
-    function _UserPreference_bool ($default = false) {
-        $this->_UserPreference((bool) $default);
-    }
-
-    function sanify ($value) {
-        if (is_array($value)) {
-            /* This allows for constructs like:
-             *
-             *   <input type="hidden" name="pref[boolPref][]" value="0" />
-             *   <input type="checkbox" name="pref[boolPref][]" value="1" />
-             *
-             * (If the checkbox is not checked, only the hidden input gets sent.
-             * If the checkbox is sent, both inputs get sent.)
-             */
-            foreach ($value as $val) {
-                if ($val)
-                    return true;
-            }
-            return false;
-        }
-        return (bool) $value;
-    }
-}
-
-$UserPreferences = array('editWidth' => new _UserPreference_int(80, 30, 150),
-                         'editHeight' => new _UserPreference_int(22, 5, 80),
-                         'timeOffset' => new _UserPreference_numeric(0, -26, 26),
-                         'relativeDates' => new _UserPreference_bool(),
-                         'userid' => new _UserPreference(''));
-
-class UserPreferences {
-    function UserPreferences ($saved_prefs = false) {
-        $this->_prefs = array();
-
-        if (isa($saved_prefs, 'UserPreferences')) {
-            foreach ($saved_prefs->_prefs as $name => $value)
-                $this->set($name, $value);
-        }
-    }
-
-    function _getPref ($name) {
-        global $UserPreferences;
-        if (!isset($UserPreferences[$name])) {
-            trigger_error("$name: unknown preference", E_USER_NOTICE);
-            return false;
-        }
-        return $UserPreferences[$name];
-    }
-
-    function get ($name) {
-        if (isset($this->_prefs[$name]))
-            return $this->_prefs[$name];
-        if (!($pref = $this->_getPref($name)))
-            return false;
-        return $pref->default_value;
-    }
-
-    function set ($name, $value) {
-        if (!($pref = $this->_getPref($name)))
-            return false;
-        $this->_prefs[$name] = $pref->sanify($value);
-    }
-}
-
 
 class WikiRequest extends Request {
 
@@ -137,38 +21,63 @@ class WikiRequest extends Request {
 
         // Restore auth state
         $this->_user = new WikiUser($this->getSessionVar('wiki_user'));
-
-        // Restore saved preferences
-        if (!($prefs = $this->getCookieVar('WIKI_PREFS2')))
-            $prefs = $this->getSessionVar('wiki_prefs');
-        $this->_prefs = new UserPreferences($prefs);
+        // WikiDB Auth later
+        // $this->_user = new WikiDB_User($this->getSessionVar('wiki_user'), $this->getAuthDbh());
+        $this->_prefs = $this->_user->getPreferences();
     }
 
     // This really maybe should be part of the constructor, but since it
     // may involve HTML/template output, the global $request really needs
     // to be initialized before we do this stuff.
     function updateAuthAndPrefs () {
+    	global $Theme;
         // Handle preference updates, an authentication requests, if any.
         if ($new_prefs = $this->getArg('pref')) {
             $this->setArg('pref', false);
-            foreach ($new_prefs as $key => $val)
+            if ($this->isPost() and isset($new_prefs['passwd2']) and 
+                ($new_prefs['passwd2'] != $new_prefs['passwd'])) {
+                $this->_prefs->set('passwd','');
+                // $this->_prefs->set('passwd2',''); // This is not stored anyway
+                include_once("themes/" . THEME . "/themeinfo.php");
+                return false;
+            }
+            foreach ($new_prefs as $key => $val) {
+            	if ($key == 'passwd') {
+            	  $val = crypt('passwd');
+            	}
                 $this->_prefs->set($key, $val);
+            }
         }
 
         // Handle authentication request, if any.
         if ($auth_args = $this->getArg('auth')) {
             $this->setArg('auth', false);
+            include_once("themes/" . THEME . "/themeinfo.php");
             $this->_handleAuthRequest($auth_args); // possible NORETURN
         }
         elseif ( ! $this->_user->isSignedIn() ) {
             // If not auth request, try to sign in as saved user.
-            if (($saved_user = $this->getPref('userid')) != false)
+            if (($saved_user = $this->getPref('userid')) != false) {
+            	include_once("themes/" . THEME . "/themeinfo.php");
                 $this->_signIn($saved_user);
+            }
         }
 
-        // Save preferences
-        $this->setSessionVar('wiki_prefs', $this->_prefs);
-        $this->setCookieVar('WIKI_PREFS2', $this->_prefs, 365);
+        // Save preferences in session and cookie
+        $id_only = true;
+        $this->_user->setPreferences($this->_prefs, $id_only);
+
+        if ($theme = $this->getPref('theme') ) {
+            // Load user-defined theme
+            include_once("themes/$theme/themeinfo.php");
+        } else {
+            // site theme
+            include_once("themes/" . THEME . "/themeinfo.php");
+        }
+        if (empty($Theme)) {
+            include_once("themes/default/themeinfo.php");
+        }
+        assert(!empty($Theme));
 
         // Ensure user has permissions for action
         $require_level = $this->requiredAuthority($this->getArg('action'));
@@ -191,9 +100,24 @@ class WikiRequest extends Request {
 
     function getDbh () {
         if (!isset($this->_dbi)) {
+            // needs PHP 4.1. better use $this->_user->...
             $this->_dbi = WikiDB::open($GLOBALS['DBParams']);
         }
         return $this->_dbi;
+    }
+
+    function getAuthDbh () {
+        global $DBParams, $DBAuthParams;
+        if (!isset($this->_auth_dbi)) {
+            if ($DBParams['dbtype'] == 'dba' or empty($DBAuthParams['auth_dsn']))
+                $this->_auth_dbi = $this->getDbh(); // use phpwiki database 
+            elseif ($DBAuthParams['auth_dsn'] == $DBParams['dsn'])
+                $this->_auth_dbi = $this->getDbh(); // same phpwiki database 
+            else // use external database 
+                // needs PHP 4.1. better use $this->_user->...
+                $this->_auth_dbi = WikiDB_User::open($DBAuthParams);
+        }
+        return $this->_auth_dbi;
     }
 
     /**
@@ -211,11 +135,11 @@ class WikiRequest extends Request {
         if (!is_array($auth_args))
             return;
 
-        // Ignore password unless POSTed.
+        // Ignore password unless POST'ed.
         if (!$this->isPost())
-            unset($auth_args['password']);
+            unset($auth_args['passwd']);
 
-        $user = WikiUser::AuthCheck($auth_args);
+        $user = $this->_user->AuthCheck($auth_args);
 
         if (isa($user, 'WikiUser')) {
             // Successful login (or logout.)
@@ -224,11 +148,14 @@ class WikiRequest extends Request {
         elseif ($user) {
             // Login attempt failed.
             $fail_message = $user;
+            $auth_args['pass_required'] = true;
             // If no password was submitted, it's not really
             // a failure --- just need to prompt for password...
-            if (!isset($auth_args['password']))
-                $fail_message = false;
-            WikiUser::PrintLoginForm($this, $auth_args, $fail_message);
+            if (!isset($auth_args['passwd'])) {
+                 //$auth_args['pass_required'] = false;
+                 $fail_message = false;
+            }
+            $this->_user->PrintLoginForm($this, $auth_args, $fail_message);
             $this->finish();    //NORETURN
         }
         else {
@@ -245,13 +172,15 @@ class WikiRequest extends Request {
      * @access private
      */
     function _signIn ($userid) {
-        $user = WikiUser::AuthCheck(array('userid' => $userid));
-        if (isa($user, 'WikiUser'))
+        $user = $this->_user->AuthCheck(array('userid' => $userid));
+        if (isa($user, 'WikiUser')) {
             $this->_setUser($user); // success!
+        }
     }
 
     function _setUser ($user) {
         $this->_user = $user;
+        $this->setCookieVar('WIKI_ID', $user->_userid, 365);
         $this->setSessionVar('wiki_user', $user);
 
         // Save userid to prefs..
@@ -273,8 +202,9 @@ class WikiRequest extends Request {
             $msg = fmt("You must log in to %s.", $what);
         else
             $msg = fmt("You must be an administrator to %s.", $what);
+        $pass_required = ($require_level >= WIKIAUTH_USER);
 
-        WikiUser::PrintLoginForm($this, compact('require_level'), $msg);
+        $this->_user->PrintLoginForm($this, compact('require_level','pass_required'), $msg);
         $this->finish();    // NORETURN
     }
 
@@ -362,7 +292,7 @@ class WikiRequest extends Request {
                 return WIKIAUTH_ADMIN;
             default:
                 // Temp workaround for french single-word action page 'Historique'
-                $singleWordActionPages = array("Historique", "Info");
+                $singleWordActionPages = array("Historique", "Info", _('Today'));
                 if (in_array($action, $singleWordActionPages))
                     return WIKIAUTH_ANON; // ActionPage.
                 global $WikiNameRegexp;
@@ -473,13 +403,25 @@ class WikiRequest extends Request {
         return 'browse';
     }
 
+    function _deduceUsername () {
+        if ($userid = $this->getSessionVar('wiki_user'))
+            return $userid;
+        if ($userid = $this->getCookieVar('WIKI_ID'))
+            return $userid;
+        return false;
+    }
+    
     function isActionPage ($pagename) {
+        if (isSubPage($pagename)) 
+            $subpagename = subPageSlice($pagename,-1); // last element
+        else 
+            $subpagename = $pagename;
         // Temp workaround for french single-word action page 'Historique'
-        $singleWordActionPages = array("Historique", "Info");
-        if (! in_array($pagename, $singleWordActionPages)) {
+        $singleWordActionPages = array("Historique", "Info", _('Preferences'));
+        if (! in_array($subpagename, $singleWordActionPages)) {
             // Allow for, e.g. action=LikePages
             global $WikiNameRegexp;
-            if (!preg_match("/$WikiNameRegexp\\Z/A", $pagename))
+            if (!preg_match("/$WikiNameRegexp\\Z/A", $subpagename))
                 return false;
         }
         $dbi = $this->getDbh();
