@@ -1,3 +1,4 @@
+FIXME: these instructions are slightly broken.
 
 Installing phpwiki with mySQL 
 -----------------------------
@@ -52,4 +53,4 @@ if (!extension_loaded("mysql"))  { dl("mysql.so"); }
 /Arno
 ahollosi@mail.com
 
-$Id: INSTALL.mysql,v 1.7 2001-07-15 15:49:44 wainstead Exp $
+$Id: INSTALL.mysql,v 1.8 2001-09-18 19:16:23 dairiki Exp $

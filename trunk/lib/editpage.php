@@ -1,44 +1,62 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.16 2001-06-26 18:08:32 uckelman Exp $');
+rcs_id('$Id: editpage.php,v 1.17 2001-09-18 19:16:23 dairiki Exp $');
 
-   // editpage relies on $pagename, $version
+require_once('lib/Template.php');
 
-   $currentpage = RetrievePage($dbi, $pagename, SelectStore($dbi, $pagename, $version, $WikiPageStore, $ArchivePageStore), $version);
+function editPage($dbi, $request) {
+    // editpage relies on $pagename, $version
+    $pagename = $request->getArg('pagename');
+    $version = $request->getArg('version');
+    
+    $page = $dbi->getPage($pagename);
+    $current = $page->getCurrentRevision();
 
-	$banner = htmlspecialchars($pagename);
-	$pagehash = $currentpage;
+    if ($version === false) {
+        $selected = $current;
+    }
+    else {
+        $selected = $page->getRevision($version);
+        if (!$selected)
+            NoSuchRevision($page, $version); // noreturn
+    }
 
-   if (is_array($pagehash)) {
-		if (($pagehash['flags'] & FLAG_PAGE_LOCKED) && !$user->is_admin()) {
-		 $html = "<p>";
-		 $html .= gettext ("This page has been locked by the administrator and cannot be edited.");
-		 $html .= "\n<p>";
-		 $html .= gettext ("Sorry for the inconvenience.");
-		 $html .= "\n";
-		 echo GeneratePage('MESSAGE', $html, sprintf (gettext ("Problem while editing %s"), $pagename), 0);
-		 ExitWiki ("");
-      }
+    global $user;               // FIXME: make this non-global.
+    if ($page->get('locked') && !$user->is_admin()) {
+        $html = "<p>";
+        $html .= gettext ("This page has been locked by the administrator and cannot be edited.");
+        $html .= "\n<p>";
+        $html .= gettext ("Sorry for the inconvenience.");
+        $html .= "\n";
 
-		$textarea = htmlspecialchars(implode("\n", $pagehash["content"]));
-	}
-	else {
-      if (preg_match("/^${WikiNameRegexp}\$/", $pagename)) $newpage = $pagename;
-      else $newpage = "[$pagename]";
-      
-		$textarea = htmlspecialchars(sprintf(gettext("Describe %s here."), $newpage));
+        echo GeneratePage('MESSAGE', $html,
+                          sprintf(gettext("Problem while editing %s"), $args->pagename),
+                          $selected);
+        ExitWiki ("");
+    }
 
-      unset($pagehash);
-      $pagehash["version"] = 0;
-      $pagehash["lastmodified"] = time();
-      $pagehash["author"] = '';
-      $currentpage = $pagehash;
-   }
 
-   echo GeneratePage('EDITPAGE', $textarea, $pagename, $pagehash);   
+    $age = time() - $current->get('mtime');
+    $minor_edit = ( $age < MINOR_EDIT_TIMEOUT && $current->get('author') == $user->id() );
 
-// For emacs users
+    $formvars = array('content' => htmlspecialchars($selected->getPackedContent()),
+                      'minor_edit' => $minor_edit ? 'checked' : '',
+                      'version' => $selected->getVersion(),
+                      'editversion' => $current->getVersion(),
+                      'summary' => '',
+                      'convert' => '',
+                      'pagename' => htmlspecialchars($pagename));
+
+    $template = new WikiTemplate('EDITPAGE');
+    $template->setPageRevisionTokens($selected);
+    $template->replace('FORMVARS', $formvars);
+    echo $template->getExpansion();
+}
+
 // Local Variables:
 // mode: php
-// c-file-style: "ellemtel"
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
 // End:   
 ?>

@@ -7,11 +7,11 @@ Here are some good starting points for browsing.
 Here's a title search.   Try something like ''wiki'' 
 or ''sandwich''.
 
-%%Search%%
+<?plugin-form TitleSearch?>
 
 Use the following for a full text search. This takes a few seconds. The results will show all lines on a given page that contain a match.
 
-%%Fullsearch%%
+<?plugin-form FullTextSearch?>
 
 ------
 Separate words with a space. All words have to match.

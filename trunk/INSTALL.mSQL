@@ -1,3 +1,6 @@
+FIXME: The flatfile backend has not yet been ported to the new database
+scheme.  For now, it is broken.
+
 Note: mSQL will not be supported in the 1.3 development branch, unless
 someone wants to assume responsibility for it. When the new version of
 mSQL is released we might reconsider it, but there has been no demand
@@ -56,4 +59,4 @@ README for more information, plus the comments in lib/config.php.
 --Steve Wainstead
 swain@panix.com
 
-$Id: INSTALL.mSQL,v 1.4 2001-03-02 00:38:50 wainstead Exp $
+$Id: INSTALL.mSQL,v 1.5 2001-09-18 19:16:23 dairiki Exp $

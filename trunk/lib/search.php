@@ -1,37 +1,29 @@
 <?php
-
+rcs_id('$Id: search.php,v 1.8 2001-09-18 19:16:23 dairiki Exp $');
 // Title search: returns pages having a name matching the search term
 
-rcs_id('$Id: search.php,v 1.7 2001-07-07 17:44:25 wainstead Exp $');
+require_once('lib/Template.php');
+require_once('lib/TextSearchQuery.php');
 
-if (empty($searchterm)) {
-    $searchterm = '';		// FIXME: do something better here?
-}
+$search_title = gettext("Title Search");
+$search_descrip = sprintf(gettext("Title search results for '%s'"),
+                          $args->get('searchterm'));
+$search_descrip = htmlspecialchars($search_descrip);
 
-fix_magic_quotes_gpc($searchterm);
+$html = "<p><b>$search_descrip</b></p>\n<ul>";
 
-$html = "<P><B>"
-      . sprintf(gettext ("Searching for \"%s\" ....."),
-        htmlspecialchars($searchterm))
-      . "</B></P>\n";
+$iter = $dbi->titleSearch(new TextSearchQuery($args->get('searchterm')));
 
-// quote regexp chars
-$search = preg_quote($searchterm);
-
-
-// search matching pages
-$query = InitTitleSearch($dbi, $searchterm);
 $found = 0;
-
-while ($page = TitleSearchNextMatch($dbi, $query)) {
+while ($page = $iter->next()) {
     $found++;
-    $html .= LinkExistingWikiWord($page) . "<br>\n";
+    $html .= "<li>" . LinkExistingWikiWord($page->getName()) . "\n";
 }
 
-$html .= "<hr noshade>\n"
-      . sprintf(gettext ("%d pages match your query."), $found)
-      . "\n";
+$html .= ("</ul><hr noshade>\n"
+          . sprintf(gettext ("%d pages match your query."), $found)
+          . "\n");
 
-echo GeneratePage('MESSAGE', $html, gettext ("Title Search Results"), 0);
+echo GeneratePage('MESSAGE', $html, "$search_title: $searchterm");
 
 ?>

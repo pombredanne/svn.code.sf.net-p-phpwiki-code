@@ -1,3 +1,6 @@
+FIXME: The flatfile backend has not yet been ported to the new database
+scheme.  For now, it is broken.
+
 If you cannot run PhpWiki on top of a relational database like
 MySQL or Postgresql, and your system does not support DBM files
 or (worse) has a broken implementation like NDBM on Solaris, then
@@ -129,4 +132,4 @@ phpwiki-talk list at phpwiki-talk@lists.sourceforge.net.
 Steve Wainstead
 swain@panix.com
 
-$Id: INSTALL.flatfile,v 1.4 2001-04-06 18:21:36 wainstead Exp $
+$Id: INSTALL.flatfile,v 1.5 2001-09-18 19:16:23 dairiki Exp $

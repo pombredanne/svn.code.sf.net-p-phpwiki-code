@@ -14,7 +14,7 @@ They won't work unless you have set an admin username and password in the PhpWik
 -----------
 ! Log In
 
- __[Log In | phpwiki:?action=login]__
+__[Log In | phpwiki:?action=login]__
 
 This allows you to login.
 While you are logged in you will be able to ''lock'', ''unlock'' and ''delete'' pages.

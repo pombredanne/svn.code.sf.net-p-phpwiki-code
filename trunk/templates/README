@@ -1,4 +1,4 @@
-$Id: README,v 1.6 2001-04-06 18:21:37 wainstead Exp $
+$Id: README,v 1.7 2001-09-18 19:16:24 dairiki Exp $
 
 PhpWiki distinguishes between three different templates:
 
@@ -16,6 +16,17 @@ PhpWiki distinguishes between three different templates:
   
 The location of the template files is defined in lib/config.php
 The specification is relative to the index.php script.
+
+
+=========
+Tue Sep 18 12:00:12 PDT 2001 Jeff Dairiki <dairiki@dairiki.org>
+
+The rest of this file is currently obsolete, and should be ignored.
+The template situation is in a state of flux, and will probably be
+changed again very soon.  See lib/Template.php for more, but mostly
+just "stay tuned" for details.
+
+=========
 
 Template files are regular HTML files, which contain special
 placeholders. Placeholders are surrounded by '###'.

@@ -1,11 +1,5 @@
 <?php
-rcs_id('$Id: ziplib.php,v 1.7 2001-02-13 05:54:38 dairiki Exp $');
-
-//FIXME: get rid of this.
-function warn ($msg)
-{
-  echo "<br><b>Warning:</b> " . htmlspecialchars($msg) . "<br>\n";
-}
+rcs_id('$Id: ziplib.php,v 1.8 2001-09-18 19:16:23 dairiki Exp $');
 
 /**
  * GZIP stuff.
@@ -512,45 +506,31 @@ function MimeMultipart ($parts)
   return $head . $sep . implode($sep, $parts) . "\r\n--${boundary}--\r\n";
 }
   
-function MimeifyPage ($pagehash) {
-  extract($pagehash);
-  // FIXME: add 'hits' to $params 
-  $params = array('pagename' => rawurlencode($pagename),
-		  'author' => rawurlencode($author),
-		  'version' => $version,
-		  'flags' =>"",
-		  'lastmodified' => $lastmodified,
-		  'created' => $created);
+function MimeifyPageRevision ($revision) {
+    $page = $revision->getPage();
+    // FIXME: add 'hits' to $params 
+    $params = array('pagename' => rawurlencode($page->getName()),
+                    'author' => rawurlencode($revision->get('author')),
+                    'version' => $revision->getVersion(),
+                    'flags' =>"",
+                    'lastmodified' => $revision->get('mtime'));
+    if ($page->get('mtime'))
+        $params['created'] = $page->get('mtime');
+    if ($page->get('locked'))
+        $params['flags'] = 'PAGE_LOCKED';
+    if ($revision->get('author_id'))
+        $params['author_id'] = $revision->get('author_id');
+      
 
-  if (($flags & FLAG_PAGE_LOCKED) != 0)
-      $params['flags'] = 'PAGE_LOCKED';
-
-  if (isset($refs) && is_array($refs))
-    {
-      // phpwiki's with versions > 1.2.x shouldn't have references.
-      for ($i = 1; $i <= 12 /*NUM_LINKS*/; $i++) 
-	  if (!empty($refs[$i]))
-	      $params["ref$i"] = rawurlencode($refs[$i]);
+    $out = MimeContentTypeHeader('application', 'x-phpwiki', $params);
+    $out .= "Content-Transfer-Encoding: quoted-printable\r\n";
+    $out .= "\r\n";
+  
+    foreach ($revision->getContent() as $line) {
+        $out .= QuotedPrintableEncode(chop($line)) . "\r\n";
     }
-  
-  $out = MimeContentTypeHeader('application', 'x-phpwiki', $params);
-  $out .= "Content-Transfer-Encoding: quoted-printable\r\n";
-  $out .= "\r\n";
-  
-  reset($content);
-  while (list($junk, $line) = each($content))
-      $out .= QuotedPrintableEncode(chop($line)) . "\r\n";
-  return $out;
+    return $out;
 }
-
-function MimeifyPages ($pagehashes)
-{
-  $npages = sizeof($pagehashes);
-  for ($i = 0; $i < $npages; $i++)
-      $parts[$i] = MimeifyPage($pagehashes[$i]);
-  return $npages == 1 ? $parts[0] : MimeMultipart($parts);
-}
-
 
 /**
  * Routines for parsing Mime-ified phpwiki pages.
@@ -675,56 +655,83 @@ function GenerateFootnotesFromRefs($params)
 // references.
 function ParseMimeifiedPages ($data)
 {
-  if (!($headers = ParseRFC822Headers($data))
-      || empty($headers['content-type']))
-    {
-      //warn("Can't find content-type header");
-      return false;
+    if (!($headers = ParseRFC822Headers($data))
+        || empty($headers['content-type'])) {
+        //trigger_error("Can't find content-type header", E_USER_WARNING);
+        return false;
     }
-  $typeheader = $headers['content-type'];
+    $typeheader = $headers['content-type'];
   
-  if (!(list ($type, $subtype, $params) = ParseMimeContentType($typeheader)))
-    {
-      warn("Can't parse content-type: ("
-	   . htmlspecialchars($typeheader) . ")");
-      return false;
+    if (!(list ($type, $subtype, $params) = ParseMimeContentType($typeheader))) {
+        trigger_error("Can't parse content-type: ("
+             . htmlspecialchars($typeheader) . ")", E_USER_WARNING);
+        return false;
     }
-  if ("$type/$subtype" == 'multipart/mixed')
-      return ParseMimeMultipart($data, $params['boundary']);
-  else if ("$type/$subtype" != 'application/x-phpwiki')
-    {
-      warn("Bad content-type: $type/$subtype");
-      return false;
+    if ("$type/$subtype" == 'multipart/mixed') {
+        return ParseMimeMultipart($data, $params['boundary']);
     }
-
-  // FIXME: more sanity checking?
-  $pagehash = array('pagename' => '',
-		    'author' => '',
-		    'version' => 0,
-		    'lastmodified' => '',
-		    'created' => '');
-  while(list($key, $val) = each ($pagehash))
-      if (!empty($params[$key]))
-	  $pagehash[$key] = rawurldecode($params[$key]);
-
-  $pagehash['flags'] = 0;
-  if (!empty($params['flags']))
-    {
-      if (preg_match('/PAGE_LOCKED/', $params['flags']))
-	  $pagehash['flags'] |= FLAG_PAGE_LOCKED;
+    else if ("$type/$subtype" != 'application/x-phpwiki') {
+        trigger_error("Bad content-type: $type/$subtype", E_USER_WARNING);
+        return false;
     }
 
-  $encoding = strtolower($headers['content-transfer-encoding']);
-  if ($encoding == 'quoted-printable')
-      $data = QuotedPrintableDecode($data);
-  else if ($encoding && $encoding != 'binary')
-      ExitWiki("Unknown encoding type: $encoding");
+    // FIXME: more sanity checking?
+    $page = array();
+    $pagedata = array();
+    $versiondata = array();
 
-  $data .= GenerateFootnotesFromRefs($params);
-  
-  $pagehash['content'] = preg_split('/[ \t\r]*\n/', chop($data));
+    foreach ($params as $key => $value) {
+        if (empty($value))
+            continue;
+        $value = rawurldecode($value);
+        switch ($key) {
+        case 'pagename':
+        case 'version':
+            $page[$key] = $value;
+            break;
+        case 'flags':
+            if (preg_match('/PAGE_LOCKED/', $value))
+                $pagedata['locked'] = 'yes';
+            break;
+        case 'created':
+            $pagedata[$key] = $value;
+            break;
+        case 'lastmodified':
+            $versiondata['mtime'] = $value;
+            break;
+        case 'author':
+        case 'author_id':
+            $versiondata[$key] = $value;
+            break;
+        }
+    }
 
-  return array($pagehash);
+    // FIXME: do we need to try harder to find a pagename if we
+    //   haven't got one yet?
+    if (!isset($versiondata['author'])) {
+        $versiondata['author'] = $GLOBALS['user']->id();
+    }
+    
+    $encoding = strtolower($headers['content-transfer-encoding']);
+    if ($encoding == 'quoted-printable')
+        $data = QuotedPrintableDecode($data);
+    else if ($encoding && $encoding != 'binary')
+        ExitWiki("Unknown encoding type: $encoding");
+
+    $data .= GenerateFootnotesFromRefs($params);
+
+    $page['content'] = preg_replace('/[ \t\r]*\n/', "\n", chop($data));
+    $page['pagedata'] = $pagedata;
+    $page['versiondata'] = $versiondata;
+
+    return array($page);
 }
 
+// Local Variables:
+// mode: php
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
+// End:   
 ?>

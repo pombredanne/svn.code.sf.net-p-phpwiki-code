@@ -1,4 +1,7 @@
-<?php rcs_id('$Id: savepage.php,v 1.15 2001-06-26 18:08:32 uckelman Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.16 2001-09-18 19:16:23 dairiki Exp $');
+require_once('lib/Template.php');
+require_once('lib/transform.php');
+require_once('lib/ArchiveCleaner.php');
 
 /*
    All page saving events take place here.
@@ -7,104 +10,173 @@
    coding it.
 */
 
+// FIXME: some links so that it's easy to get back to someplace useful from these
+// error pages.
 
-   function ConcurrentUpdates($pagename)
-   {
-      /* xgettext only knows about c/c++ line-continuation strings
-        is does not know about php's dot operator.
-        We want to translate this entire paragraph as one string, of course.
-      */
-      $html = "<P>";
-      $html .= gettext ("PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost.");
-      $html .= "</P>\n<P>";
-      $html .= gettext ("In order to recover from this situation follow these steps:");
-      $html .= "\n<OL><LI>";
-      $html .= gettext ("Use your browser's <b>Back</b> button to go back to the edit page.");
-      $html .= "\n<LI>";
-      $html .= gettext ("Copy your changes to the clipboard or to another temporary place (e.g. text editor).");
-      $html .= "\n<LI>";
-      $html .= gettext ("<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there.");
-      $html .= "\n<LI>";
-      $html .= gettext ("Make changes to the file again. Paste your additions from the clipboard (or text editor).");
-      $html .= "\n<LI>";
-      $html .= gettext ("Press <b>Save</b> again.");
-      $html .= "</OL>\n<P>";
-      $html .= gettext ("Sorry for the inconvenience.");
-      $html .= "</P>";
+function ConcurrentUpdates($pagename) {
+   /* xgettext only knows about c/c++ line-continuation strings
+     is does not know about php's dot operator.
+     We want to translate this entire paragraph as one string, of course.
+   */
+    $html = "<P>";
+    $html .= gettext ("PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost.");
+    $html .= "</P>\n<P>";
+    $html .= gettext ("In order to recover from this situation follow these steps:");
+    $html .= "\n<OL><LI>";
+    $html .= gettext ("Use your browser's <b>Back</b> button to go back to the edit page.");
+    $html .= "\n<LI>";
+    $html .= gettext ("Copy your changes to the clipboard or to another temporary place (e.g. text editor).");
+    $html .= "\n<LI>";
+    $html .= gettext ("<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there.");
+    $html .= "\n<LI>";
+    $html .= gettext ("Make changes to the file again. Paste your additions from the clipboard (or text editor).");
+    $html .= "\n<LI>";
+    $html .= gettext ("Press <b>Save</b> again.");
+    $html .= "</OL>\n<P>";
+    $html .= gettext ("Sorry for the inconvenience.");
+    $html .= "</P>";
 
-      echo GeneratePage('MESSAGE', $html,
-			sprintf (gettext ("Problem while updating %s"), $pagename), 0);
-      ExitWiki();
-   }
+    echo GeneratePage('MESSAGE', $html,
+                      sprintf (gettext ("Problem while updating %s"), $pagename));
+    ExitWiki();
+}
 
+function PageIsLocked($pagename) {
+    $html = QElement('p',
+                     gettext("This page has been locked by the administrator and cannot be edited."));
+    $html .= QElement('p',
+                      gettext ("Sorry for the inconvenience."));
 
-   $pagehash = RetrievePage($dbi, $pagename, $WikiPageStore, 0);
+    echo GeneratePage('MESSAGE', $html,
+                      sprintf (gettext ("Problem while editing %s"), $pagename));
+    ExitWiki ("");
+}
 
-   // if this page doesn't exist yet, now's the time!
-   if (! is_array($pagehash)) {
-      $pagehash = array();
-      $pagehash['version'] = 0;
-      $pagehash['created'] = time();
-      $pagehash['flags'] = 0;
-      $newpage = 1;
-   } else {
-		if (($pagehash['flags'] & FLAG_PAGE_LOCKED) && ! $user->is_admin()) {
-			$html = "<p>" . gettext ("This page has been locked by the administrator and cannot be edited.");
-			$html .= "\n<p>" . gettext ("Sorry for the inconvenience.");
-			echo GeneratePage('MESSAGE', $html,
-			sprintf (gettext ("Problem while editing %s"), $pagename), 0);
-			 ExitWiki ("");
-      }
+function NoChangesMade($pagename) {
+    $html = QElement('p', gettext ("You have not made any changes."));
+    $html .= QElement('p', gettext ("New version not saved."));
+    echo GeneratePage('MESSAGE', $html,
+                      sprintf(gettext("Edit aborted: %s"), $pagename));
+    ExitWiki ("");
+}
 
-      if(isset($editversion) && ($editversion != $pagehash['version'])) {
-         ConcurrentUpdates($pagename);
-      }
+function BadFormVars($pagename) {
+    $html = QElement('p', gettext ("Bad form submission"));
+    $html .= QElement('p', gettext ("Required form variables are missing."));
+    echo GeneratePage('MESSAGE', $html,
+                      sprintf(gettext("Edit aborted: %s"), $pagename));
+    ExitWiki ("");
+}
+    
+function savePreview($dbi, $request) {
+    $pagename = $request->getArg('pagename');
+    $version = $request->getArg('version');
 
-		SavePageToArchive($pagename, $pagehash);
-		$newpage = 0;
-	}
+    $page = $dbi->getPage($pagename);
+    $selected = $page->getRevision($version);
 
-   // set new pageinfo
-   $pagehash['lastmodified'] = time();
-   $pagehash['version']++;
-   $pagehash['author'] = $user->id();
+    // FIXME: sanity checking about posted variables
+    // FIXME: check for simultaneous edits.
+    foreach (array('minor_edit', 'convert') as $key)
+        $formvars[$key] = $request->getArg($key) ? 'checked' : '';
+    foreach (array('content', 'editversion', 'summary', 'pagename', 'version') as $key)
+        @$formvars[$key] = htmlspecialchars($request->getArg($key));
 
-   // create page header
-   $html = sprintf(gettext("Thank you for editing %s."),
-		   LinkExistingWikiWord($pagename));
-   $html .= "<br>\n";
+    $template = new WikiTemplate('EDITPAGE');
+    $template->setPageRevisionTokens($selected);
+    $template->replace('FORMVARS', $formvars);
+    $template->replace('PREVIEW_CONTENT', do_transform($request->getArg('content')));
+    echo $template->getExpansion();
+}
 
-   if (! empty($content)) {
-      // patch from Grant Morgan <grant@ryuuguu.com> for magic_quotes_gpc
-      fix_magic_quotes_gpc($content);
+function savePage ($dbi, $request) {
+    global $user;
 
-      $pagehash['content'] = preg_split('/[ \t\r]*\n/', chop($content));
+    // FIXME: fail if this check fails?
+    assert($request->get('REQUEST_METHOD') == 'POST');
+    
+    if ($request->getArg('preview'))
+        return savePreview($dbi, $request);
+    
+    $pagename = $request->getArg('pagename');
+    $version = $request->getArg('version');
 
-      // convert spaces to tabs at user request
-      if (isset($convert)) {
-         $pagehash['content'] = CookSpaces($pagehash['content']);
-      }
-   }
+    $page = $dbi->getPage($pagename);
+    $current = $page->getCurrentRevision();
 
-   ReplaceCurrentPage($pagename, $pagehash);
-	UpdateRecentChanges($dbi, $pagename, $newpage);
+    $content = $request->getArg('content');
+    $editversion = $request->getArg('editversion');
+    
+    if ( $content === false || $editversion === false )
+        BadFormVars($pagename); // noreturn
 
-   $html .= gettext ("Your careful attention to detail is much appreciated.");
-   $html .= "\n";
+    if ($page->get('locked') && !$user->is_admin())
+        PageIsLocked($args->pagename); // noreturn.
 
-   // fixme: no test for flat file db system
-   if (!empty($DBWarning)) {
-      $html .= "<P><B>Warning: $DBWarning" .
-		"Please read the INSTALL file and move " .
-		"the DB file to a permanent location or risk losing " .
-		"all the pages!</B>\n";
-   }
+    $meta['author'] = $user->id();
+    $meta['author_id'] = $user->authenticated_id();
+    $meta['is_minor_edit'] = (bool) $request->getArg('minor_edit');
+    $meta['summary'] = trim($request->getArg('summary'));
 
-   if (!empty($SignatureImg))
-      $html .= sprintf("<P><img src=\"%s\"></P>\n", DataURL($SignatureImg));
-      
-   $html .= "<hr noshade>\n";
-   include('lib/transform.php');
+    $content = preg_replace('/[ \t\r]+\n/', "\n", chop($content));
+    if ($request->getArg('convert'))
+        $content = CookSpaces($content);
 
-   echo GeneratePage('BROWSE', $html, $pagename, $pagehash);
+    if ($content == $current->getPackedContent()) {
+        NoChangesMade($pagename); // noreturn
+    }
+
+    ////////////////////////////////////////////////////////////////
+    //
+    // From here on, we're actually saving.
+    //
+    $newrevision = $page->createRevision($editversion + 1,
+                                         $content, $meta,
+                                         ExtractWikiPageLinks($content));
+    if (!is_object($newrevision)) {
+        // Save failed.
+        ConcurrentUpdates($pagename);
+    }
+
+    // Clean out archived versions of this page.
+    $cleaner = new ArchiveCleaner($GLOBALS['ExpireParams']);
+    $cleaner->cleanPageRevisions($page);
+    
+    $warnings = $dbi->GenericWarnings();
+    if (empty($warnings)) {
+        // Do redirect to browse page.
+        // In this case, the user will most likely not see the rest of
+        // the HTML we generate (below).
+        $request->redirect(WikiURL($pagename, false, 'absolute_url'));
+    }
+
+    $html = sprintf(gettext("Thank you for editing %s."),
+                    LinkExistingWikiWord($pagename));
+    $html .= "<br>\n";
+    $html .= gettext ("Your careful attention to detail is much appreciated.");
+    $html .= "\n";
+
+    if ($warnings) {
+        $html .= Element('p', "<b>Warning!</b> "
+                         . htmlspecialchars($warnings)
+                         . "<br>\n");
+    }
+
+    global $SignatureImg;
+    if (!empty($SignatureImg))
+        $html .= sprintf("<P><img src=\"%s\"></P>\n", DataURL($SignatureImg));
+    
+    $html .= "<hr noshade>\n";
+    $html .= do_transform($newrevision->getContent());
+    echo GeneratePage('BROWSE', $html, $pagename, $newrevision);
+}
+
+    
+// Local Variables:
+// mode: php
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
+// End:   
 ?>

@@ -21,9 +21,9 @@
 /////////////////////////////////////////////////////////////////////
 // Part Null: Don't touch this!
 
-define ('PHPWIKI_VERSION', '1.3.0pre');
+define ('PHPWIKI_VERSION', '1.3.0-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.20 2001-07-20 17:40:12 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.21 2001-09-18 19:16:23 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -80,43 +80,107 @@ define('ALLOW_BOGO_LOGIN', true);
 //
 $DBParams = array(
    // Select the database type:
-   // Uncomment one of these, or leave all commented for the default
-   // data base type ('dba' if supported, else 'dbm'.)
-   //'dbtype' => 'dba',
-   //'dbtype' => 'dbm',
-   //'dbtype' => 'mysql',
-   //'dbtype' => 'pgsql',
-   //'dbtype' => 'msql',
-   //'dbtype' => 'file',
+   //'dbtype' => 'SQL',
+   'dbtype' => 'dba',
+   
+   // For SQL based backends, specify the database as a DSN
+   // The most general form of a DSN looks like:
+   //
+   //   phptype(dbsyntax)://username:password@protocol+hostspec/database
+   //
+   // For a MySQL database, the following should work:
+   //
+   //   mysql://user:password@host/databasename
+   //
+   // FIXME: My version Pear::DB seems to be broken enough that there is
+   //    no way to connect to a mysql server over a socket right now.
+   //'dsn' => 'mysql://guest@:/var/lib/mysql/mysql.sock/test',
+   //'dsn' => 'mysql://guest@localhost/test',
+   'dsn' => 'pgsql://localhost/test',
    
    // Used by all DB types:
-   'database' => 'wiki',
+
    // prefix for filenames or table names
    /* 
     * currently you MUST EDIT THE SQL file too (in the schemas/ directory
     * because we aren't doing on the fly sql generation during the
     * installation.
    */
-   'prefix' => 'phpwiki_',
+   //'prefix' => 'phpwiki_',
    
-   // Used by 'dbm', 'dba', 'file'
+   // Used by 'dba'
    'directory' => "/tmp",
-
-   // 'dbm' and 'dba create files named "$directory/${database}{$prefix}*".
-   // 'file' creates files named "$directory/${database}/{$prefix}*/*".
-   // The sql types use tables named "{$prefix}*"
-   
-   // Used by 'dbm', 'dba'
+   'dba_handler' => 'gdbm',   // Either of 'gdbm' or 'db2' work great for me.
+   //'dba_handler' => 'db2',
+   //'dba_handler' => 'db3',    // doesn't work at all for me....
    'timeout' => 20,
-   
-   // Used by *sql as neccesary to log in to server:
-   'server'   => 'localhost',
-   'port'     => '',
-   'socket'   => '',
-   'user'     => 'guest',
-   'password' => ''
+   //'timeout' => 5
 );
 
+/////////////////////////////////////////////////////////////////////
+//
+// The next section controls how many old revisions of each page
+// are kept in the database.
+//
+// There are two basic classes of revisions: major and minor.
+// Which class a revision belongs in is determined by whether the
+// author checked the "this is a minor revision" checkbox when they
+// saved the page.
+// 
+// There is, additionally, a third class of revisions: author revisions.
+// The most recent non-mergable revision from each distinct author is
+// and author revision.
+//
+// The expiry parameters for each of those three classes of revisions
+// can be adjusted seperately.   For each class there are five
+// parameters (usually, only two or three of the five are actually set)
+// which control how long those revisions are kept in the database.
+//
+//   max_keep: If set, this specifies an absolute maximum for the number
+//             of archived revisions of that class.  This is meant to be
+//             used as a safety cap when a non-zero min_age is specified.
+//             It should be set relatively high, and it's purpose is to
+//             prevent malicious or accidental database overflow due
+//             to someone causing an unreasonable number of edits in a short
+//             period of time.
+//
+//   min_age:  Revisions younger than this (based upon the supplanted date)
+//             will be kept unless max_keep is exceeded.  The age should
+//             be specified in days.  It should be a non-negative,
+//             real number,
+//
+//   min_keep: At least this many revisions will be kept.
+//
+//   keep:     No more than this many revisions will be kept.
+//
+//   max_age:  No revision older than this age will be kept.
+//
+// Supplanted date:  Revisions are timestamped at the instant that they cease
+// being the current revision.  Revision age is computed using this timestamp,
+// not the edit time of the page.
+//
+// Merging: When a minor revision is deleted, if the preceding revision is by
+// the same author, the minor revision is merged with the preceding revision
+// before it is deleted.  Essentially: this replaces the content (and supplanted
+// timestamp) of the previous revision with the content after the merged minor
+// edit, the rest of the page metadata for the preceding version (summary, mtime, ...)
+// is not changed.
+//
+// Keep up to 8 major edits, but keep them no longer than a month.
+$ExpireParams['major'] = array('max_age' => 32,
+                               'keep'	   => 8);
+// Keep up to 4 minor edits, but keep them no longer than a week.
+$ExpireParams['minor'] = array('max_age' => 7,
+                               'keep'    => 4);
+// Keep the latest contributions of the last 8 authors up to a year.
+// Additionally, (in the case of a particularly active page) try to keep the
+// latest contributions of all authors in the last week (even if there are
+// more than eight of them,) but in no case keep more than twenty unique
+// author revisions.
+$ExpireParams['author'] = array('max_age'  => 365,
+                                'keep'     => 8,
+                                'min_age'  => 7,
+                                'max_keep' => 20);
 
 /////////////////////////////////////////////////////////////////////
 // 
@@ -160,6 +224,10 @@ $LANG='C';
 // index.php (this file) resides.)
 
 // CSS location
+//
+// Note that if you use the stock phpwiki style sheet, 'phpwiki.css',
+// you should make sure that it's companion 'phpwiki-heavy.css'
+// is installed in the same directory that the base style file is.
 define("CSS_URL", "phpwiki.css");
 
 // logo image (path relative to index.php)
@@ -175,6 +243,7 @@ $logo = "images/wikibase.png";
 $datetimeformat = "%B %e, %Y";	// may contain time of day
 $dateformat = "%B %e, %Y";	// must not contain time
 
+// FIXME: delete
 // this defines how many page names to list when displaying
 // the MostPopular pages; the default is to show the 20 most popular pages
 define("MOST_POPULAR_LIST_LENGTH", 20);
@@ -197,6 +266,7 @@ $templates = array("BROWSE" =>    "templates/browse.html",
  */
 define('WIKI_PGSRC', "pgsrc"); // Default (old) behavior.
 //define('WIKI_PGSRC', 'wiki.zip'); // New style.
+//define('WIKI_PGSRC', '../../../Logs/Hamwiki/hamwiki-20010830.zip'); // New style.
 
 // DEFAULT_WIKI_PGSRC is only used when the language is *not*
 // the default (English) and when reading from a directory:
@@ -313,9 +383,12 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
 
 include "lib/main.php";
 
-// For emacs users
+// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
-// c-file-style: "ellemtel"
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
 // End:   
 ?>
