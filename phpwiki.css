@@ -1,5 +1,5 @@
 /*
-  $Id: phpwiki.css,v 1.33 2002-02-08 22:56:36 carstenklapp Exp $
+  $Id: phpwiki.css,v 1.34 2002-02-09 05:56:48 carstenklapp Exp $
 
   Classes:
 
@@ -55,7 +55,8 @@ div.wikitext {
  padding-right: 0.8em; 
  padding-top:     0px;
  padding-bottom:  0px;
- margin:    0.5ex 0px;
+ margin-left:   0.5ex;
+ margin-right:  0.5ex;
  /* This breaks Netscape 4: (display does not go full width).
     width: auto;
  */
