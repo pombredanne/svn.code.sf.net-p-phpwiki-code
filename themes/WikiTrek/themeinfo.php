@@ -1,6 +1,6 @@
 <?php // -*-php-*-
 
-rcs_id('$Id: themeinfo.php,v 1.15 2002-01-19 20:38:09 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.16 2002-01-28 19:23:25 carstenklapp Exp $');
 
 /**
  * This PhpWiki theme is experimental and will likely not appear as
@@ -27,7 +27,24 @@ rcs_id('$Id: themeinfo.php,v 1.15 2002-01-19 20:38:09 carstenklapp Exp $');
 
 require_once('lib/Theme.php');
 
-$Theme = new Theme('WikiTrek');
+class Theme_WikiTrek extends Theme {
+    function getRecentChangesFormatter ($format) {
+        include_once($this->file('lib/RecentChanges.php'));
+        if (preg_match('/^rss/', $format))
+            return false;       // use default
+        return '_WikiTrek_RecentChanges_Formatter';
+    }
+
+    function getPageHistoryFormatter ($format) {
+        include_once($this->file('lib/RecentChanges.php'));
+        if (preg_match('/^rss/', $format))
+            return false;       // use default
+        return '_WikiTrek_PageHistory_Formatter';
+    }
+
+}
+
+$Theme = new Theme_WikiTrek('WikiTrek');
 
 // CSS file defines fonts, colors and background images for this
 // style.  The companion '*-heavy.css' file isn't defined, it's just
