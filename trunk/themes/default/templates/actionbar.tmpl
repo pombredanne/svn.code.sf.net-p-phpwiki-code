@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-  rcs_id('$Id: actionbar.tmpl,v 1.34 2004-12-14 21:32:46 rurban Exp $');
+rcs_id('$Id: actionbar.tmpl,v 1.35 2005-02-02 19:01:03 rurban Exp $');
 if ((!$page->get('locked') || $user->isAdmin()) and $revision)
     $EditB = Button("edit",
                     $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
