@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: login.tmpl,v 1.22 2003-10-28 21:24:09 carstenklapp Exp $ -->
+<!-- $Id: login.tmpl,v 1.23 2003-11-17 16:00:08 carstenklapp Exp $ -->
 <!-- The login form -->
 
 <?php if ($fail_message) { ?>
@@ -10,9 +10,9 @@
 <?php if (ALLOW_BOGO_LOGIN && $require_level <= WIKIAUTH_BOGO) {
   // This iso-8859-1 sample covers French, Spanish, Italian, German, and probably others
   $examplechars = htmlentities("ÀñíçéàÖãæôßøü", ENT_QUOTES, 'iso-8859-1');
-  // Japanese login doesn't work yet
+  // Japanese login requires utf-8 and ALLOW_NONWIKIWORD_LOGINS
   /*if ((CHARSET == 'utf-8') && defined('ALLOW_NONWIKIWORD_LOGINS') && ALLOW_NONWIKIWORD_LOGINS) {
-    //sample Japanese loginname in unicode
+    //sample Japanese login name in unicode
     $examplechars = $examplechars . "&#22825;&#36947;&#12354;&#12363;&#12397;";
   }*/ ?>
   <p><?= printf(_("You may sign in using any WikiWord as a UserId. (%s etc. may be used too). The UserId will be used as a link in RecentChanges to your UserId page, your HomePage."), $examplechars) ?>
@@ -40,7 +40,8 @@
   $checked = (!empty($userid) and $dbi->isWikiPage($userid)) ? '' : 'checked="checked"';
 <tr>
   <td align="right"><?= _("Create Homepage:") ?></td>
-  <td><input type="checkbox" name="auth[homepage]" <?=$checked?> /></td>
+  <td><input type="checkbox" name="auth[homepage]"<?php if ($checked) {
+  ?> checked="checked"<?php }?> /></td>
 </tr>
 */
 ?>
