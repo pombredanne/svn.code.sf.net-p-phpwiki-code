@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.6 2001-12-26 10:40:18 carstenklapp Exp $');
+<?php rcs_id('$Id: Template.php,v 1.7 2001-12-26 14:00:32 carstenklapp Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -271,11 +271,11 @@ extends TemplateFile
     }
 
     function setGlobalTokens () {
-        global $user, $logo, $RCS_IDS;
+        global $user, $logo, $CSS_URL, $RCS_IDS;
         
         // FIXME: This a a bit of dangerous hackage.
         $this->qreplace('BROWSE', WikiURL(''));
-        $this->qreplace('CSS_URL', DataURL(CSS_URL));
+        $this->qreplace('CSS_URL', DataURL($CSS_URL));
         $this->qreplace('WIKI_NAME', WIKI_NAME);
 
         if (isset($user))
