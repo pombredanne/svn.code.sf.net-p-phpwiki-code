@@ -68,7 +68,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.64 2002-01-17 20:34:01 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.65 2002-01-17 20:58:40 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -79,6 +79,7 @@ rcs_id('$Id: index.php,v 1.64 2002-01-17 20:34:01 dairiki Exp $');
 
 // The name of your wiki.
 // This is used to generate a keywords meta tag in the HTML templates,
+// in bookmark titles for any bookmarks made to pages in your wiki,
 // and during RSS generation for the <title> of the RSS channel.
 //define('WIKI_NAME', 'PhpWiki');
 
