@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.104 2005-01-24 23:15:16 uckelman Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.105 2005-01-25 03:50:54 uckelman Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -261,7 +261,7 @@ extends _RecentChanges_Formatter
     }    
 
     function description() {
-        return HTML::p(false, pre_description());
+        return HTML::p(false, $this->pre_description());
     }
 
 
@@ -735,7 +735,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.104 $");
+                            "\$Revision: 1.105 $");
     }
 
     function managesValidators() {
@@ -922,6 +922,10 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.104  2005/01/24 23:15:16  uckelman
+// The extra description for RelatedChanges was appearing in RecentChanges
+// and PageHistory due to a bad test in _RecentChanges_HtmlFormatter. Fixed.
+//
 // Revision 1.103  2004/12/15 17:45:09  rurban
 // fix box method
 //

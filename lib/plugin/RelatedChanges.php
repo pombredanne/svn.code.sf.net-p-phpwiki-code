@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RelatedChanges.php,v 1.4 2005-01-24 23:15:27 uckelman Exp $');
+rcs_id('$Id: RelatedChanges.php,v 1.5 2005-01-25 03:50:54 uckelman Exp $');
 
 /**
  * List of changes on all pages which are linked to from this page.
@@ -14,7 +14,7 @@ class _RelatedChanges_HtmlFormatter
 extends _RecentChanges_HtmlFormatter
 {
     function description() {
-        return HTML::p(false, pre_description(),
+        return HTML::p(false, $this->pre_description(),
          fmt(" (to pages linked from \"%s\")",$this->_args['page']));
     }
 }
@@ -29,7 +29,7 @@ extends WikiPlugin_RecentChanges
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -130,6 +130,10 @@ class RelatedChangesRevisionIterator extends WikiDB_PageRevisionIterator
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2005/01/24 23:15:27  uckelman
+// The extra description for RelatedChanges was appearing in RecentChanges
+// and PageHistory due to a bad test in _RecentChanges_HtmlFormatter. Fixed.
+//
 // Revision 1.3  2004/06/03 18:58:27  rurban
 // days links requires action=RelatedChanges arg
 //
