@@ -20,8 +20,8 @@
 // so that PHP can find the pear code.  If not (or if you change
 // include_path here) make sure you include the path to the PEAR
 // code in include_path.  (To find the PEAR code on your system, search
-//
 // for a file named 'PEAR.php'.   Some common locations are:
+//
 //   Unixish systems:
 //     /usr/share/php
 //     /usr/local/share/php
@@ -35,7 +35,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.0-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.27 2001-11-14 15:36:41 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.28 2001-11-14 17:07:07 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
