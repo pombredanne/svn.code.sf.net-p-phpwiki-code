@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.30 2002-01-24 21:22:24 dairiki Exp $');
+<?php rcs_id('$Id: Template.php,v 1.31 2002-01-25 00:32:39 dairiki Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -107,9 +107,8 @@ class Template
         $user = &$request->getUser();
         $page = &$request->getPage();
 
-        global $Theme, $RCS_IDS, $ButtonFactory;
-        if (empty($ButtonFactory))
-            $ButtonFactory = new ButtonFactory();
+        global $Theme, $RCS_IDS;
+        $ButtonFactory = new ButtonFactory($request);
         
         //$this->_dump_template();
 

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ButtonFactory.php,v 1.12 2002-01-23 03:34:05 carstenklapp Exp $');
+<?php rcs_id('$Id: ButtonFactory.php,v 1.13 2002-01-25 00:32:39 dairiki Exp $');
 
 require_once("lib/HtmlElement.php");
 
@@ -103,6 +103,10 @@ class SubmitImageButton extends SubmitButton {
  */
 class ButtonFactory {
 
+    function ButtonFactory (&$request) {
+        $this->_request = &$request;
+    }
+    
     /**
      * Action on current page.
      *
@@ -210,9 +214,8 @@ class ButtonFactory {
         $version = false;
         
         if (empty($page_or_rev)) {
-            global $request;
-            $pagename = $request->getArg("pagename");
-            $version = $request->getArg("version");
+            $pagename = $this->_request->getArg("pagename");
+            $version = $this->_request->getArg("version");
         }
         elseif (is_object($page_or_rev)) {
             if (isa($page_or_rev, 'WikiDB_PageRevision')) {
