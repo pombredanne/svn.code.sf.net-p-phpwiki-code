@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.47 2004-05-08 20:32:56 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.48 2004-05-08 22:55:12 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004 Reini Urban
  *
@@ -154,11 +154,10 @@ class RegexpSet
         // and match inside until the shortest is empty.
 	$matched = array(); $matched_ind = array();
         for ($i=0; $i<count($regexps); $i++) {
-            // Syntax: http://www.pcre.org/pcre.txt
-            //   x - EXTENDED, ignore whitespace
-            //   s - DOTALL
-            //   A - ANCHORED
-            //   S - STUDY
+            if (!trim($regexps[$i])) {
+                trigger_error("empty regexp $i",E_USER_WARNING);
+                continue;
+            }
             $pat= "/ ( . $repeat ) ( " . $regexps[$i] . " ) /x";
             if (preg_match($pat, $text, $_m)) {
             	$m = $_m;
@@ -171,6 +170,11 @@ class RegexpSet
         $match = new RegexpSet_match;
         
         // Optimization: if the matches are only "$" and another, then omit "$"
+        // Syntax: http://www.pcre.org/pcre.txt
+        //   x - EXTENDED, ignore whitespace
+        //   s - DOTALL
+        //   A - ANCHORED
+        //   S - STUDY
         if (count($matched) > 2) {
             // We could do much better, if we would know the matching markup for the 
             // longest regexp match:
@@ -188,15 +192,22 @@ class RegexpSet
         $match->prematch = $m[1];
         $match->match = $m[2];
 
-        /* DEBUGGING
+        /* DEBUGGING */
+        /*
+        if (DEBUG == 4) {
+          var_dump($regexps); var_dump($matched); var_dump($matched_inc); 
         PrintXML(HTML::dl(HTML::dt("input"),
                           HTML::dd(HTML::pre($text)),
+                          HTML::dt("regexp"),
+                          HTML::dd(HTML::pre($match->regexp_ind, ":", $regexps[$match->regexp_ind])),
+                          HTML::dt("prematch"),
+                          HTML::dd(HTML::pre($match->prematch)),
                           HTML::dt("match"),
                           HTML::dd(HTML::pre($match->match)),
-                          HTML::dt("regexp"),
-                          HTML::dd(HTML::pre($regexps[$match->regexp_ind])),
-                          HTML::dt("prematch"),
-                          HTML::dd(HTML::pre($match->prematch))));
+                          HTML::dt("postmatch"),
+                          HTML::dd(HTML::pre($match->postmatch))
+                          ));
+        }
         */
         return $match;
     }
@@ -428,6 +439,7 @@ class Markup_wikiword extends SimpleMarkup
 {
     function getMatchRegexp () {
         global $WikiNameRegexp;
+        if (!trim($WikiNameRegexp)) return " " . WIKI_NAME_REGEXP;
         return " $WikiNameRegexp";
     }
 
@@ -612,7 +624,6 @@ class InlineTransformer
                                   'interwiki', 'wikiword', 'linebreak',
                                   'old_emphasis', 'nestled_emphasis',
                                   'html_emphasis', 'html_abbr', 'plugin');
-
         foreach ($markup_types as $mtype) {
             $class = "Markup_$mtype";
             /*if ($GLOBALS['HTTP_SERVER_VARS']['SERVER_NAME'] == 'phpwiki.sourceforge.net' and 

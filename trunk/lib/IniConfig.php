@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.20 2004-05-08 20:21:00 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.21 2004-05-08 22:55:12 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -71,7 +71,8 @@ function IniConfig($file) {
          'ALLOWED_PROTOCOLS', 'INLINE_IMAGES', 'SUBPAGE_SEPARATOR',
          'INTERWIKI_MAP_FILE', 'COPYRIGHTPAGE_TITLE', 'COPYRIGHTPAGE_URL',
          'AUTHORPAGE_TITLE', 'AUTHORPAGE_URL', 'SERVER_NAME', 'SERVER_PORT',
-         'SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH');
+         'SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH',
+         'WIKI_NAME_REGEXP');
 
     // List of all valid config options to be define()d which take booleans.
     $_IC_VALID_BOOL = array
@@ -123,7 +124,7 @@ function IniConfig($file) {
         }
         
         // calculate them later: old or dynamic constants
-        if ($val === false and
+        if (!array_key_exists($item, $rs) and
             in_array($item,array('USE_PATH_INFO','USE_DB_SESSION',
                                  'ALLOW_HTTP_AUTH_LOGIN','ALLOW_LDAP_LOGIN',
                                  'ALLOW_IMAP_LOGIN','ALLOW_USER_LOGIN',
@@ -241,23 +242,26 @@ function IniConfig($file) {
     global $GenericPages;
     $GenericPages = preg_split('/\s*:\s*/', @$rs['DEFAULT_WIKI_PAGES']);
 
-    // Wiki name regexp.  Should be a define(), but too many places want
-    // to use it as a variable for me to be bothered changing them all.
-    // Major TODO item, there.
+    // Wiki name regexp:  Should be a define(), but might needed to be changed at runtime
+    // (different LC_CHAR need different posix classes)
     global $WikiNameRegexp;
-    $WikiNameRegexp = @$rs['WIKI_NAME_REGEXP'];
+    $WikiNameRegexp = constant('WIKI_NAME_REGEXP');
+    if (!trim($WikiNameRegexp))
+       $WikiNameRegexp = '(?<![[:alnum:]])(?:[[:upper:]][[:lower:]]+){2,}(?![[:alnum:]])';
 
     // Another "too-tricky" redefine
     global $KeywordLinkRegexp;
-    if (!isset($rs['KEYWORDS']))
-        $rs['KEYWORDS'] = "Category:Topic";
+    if (!isset($rs['KEYWORDS'])) $rs['KEYWORDS'] = "Category:Topic";
     $keywords = preg_split('/\s*:\s*/', $rs['KEYWORDS']);
-    if (empty($keywords))
-        $keywords = array("Category","Topic");
+    if (empty($keywords)) $keywords = array("Category","Topic");
     $KeywordLinkRegexp = '(?<=' . implode('|^', $keywords) . ')[[:upper:]].*$';
         
     global $DisabledActions;
     $DisabledActions = preg_split('/\s*:\s*/', @$rs['DISABLED_ACTIONS']);
+    
+    /*global $AllowedProtocols, $InlineImages;
+    $AllowedProtocols = constant("ALLOWED_PROTOCOLS");
+    $InlineImages = constant("INLINE_IMAGES");*/
 
     fix_configs();
 }
@@ -521,6 +525,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2004/05/08 20:21:00  rurban
+// remove php tags in Log
+//
 // Revision 1.19  2004/05/08 19:55:29  rurban
 // support <span>inlined plugin-result</span>:
 //   if the plugin is parsed inside a line, use <span> instead of
