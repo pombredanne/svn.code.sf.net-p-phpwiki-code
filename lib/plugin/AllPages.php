@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllPages.php,v 1.22 2004-06-13 15:33:20 rurban Exp $');
+rcs_id('$Id: AllPages.php,v 1.23 2004-06-13 15:51:37 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
 
@@ -23,6 +23,9 @@ rcs_id('$Id: AllPages.php,v 1.22 2004-06-13 15:33:20 rurban Exp $');
 require_once('lib/PageList.php');
 
 /**
+ * TODO: support author=[] (current user) and owner, creator
+ * to be able to have pages: 
+ * AllPagesCreatedByMe, AllPagesOwnedByMe, AllPagesLastAuthoredByMe
  */
 class WikiPlugin_AllPages
 extends WikiPlugin
@@ -37,16 +40,16 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.22 $");
+                            "\$Revision: 1.23 $");
     }
 
     function getDefaultArguments() {
         return array('noheader'      => false,
                      'include_empty' => false,
                      /* select pages by meta-data: */
-                     'author'   => false,
-                     'owner'    => false,
-                     'creator'  => false,
+                     'author'   => false, // current user with '[]'
+                     'owner'    => false, // current user with '[]'
+                     'creator'  => false, // current user with '[]'
                      'exclude'       => '',
                      'info'          => '',
                      'sortby'        => 'pagename',   // +mtime,-pagename
@@ -85,8 +88,12 @@ extends WikiPlugin
             $args['count'] = count($pages);
         $pagelist = new PageList($info, $exclude, $args);
         //if (!$sortby) $sorted='pagename';
-        if (!$noheader)
-            $pagelist->setCaption(_("Pages in this wiki (%d total):"));
+        if (!$noheader) {
+            if (empty($pages))
+                $pagelist->setCaption(_("All pages in this wiki (%d total):"));
+            else
+                $pagelist->setCaption(_("List of pages (%d total):"));
+        }
 
         // deleted pages show up as version 0.
         if ($include_empty)
@@ -111,6 +118,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.22  2004/06/13 15:33:20  rurban
+// new support for arguments owner, author, creator in most relevant
+// PageList plugins. in WikiAdmin* via preSelectS()
+//
 // Revision 1.21  2004/04/20 00:06:53  rurban
 // paging support
 //
