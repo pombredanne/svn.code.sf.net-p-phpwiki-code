@@ -1,10 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: index.php,v 1.2 2000-10-11 13:57:47 ahollosi Exp $ -->
+<!-- $Id: index.php,v 1.3 2000-10-25 09:58:53 ahollosi Exp $ -->
 <?php
    /*
       The main page, i.e. the main loop.
       This file is always called first.
    */
+
+   set_magic_quotes_runtime(0);
 
    include "lib/config.php";
    include "lib/stdlib.php";
