@@ -1,4 +1,4 @@
-<!-- $Id: wiki_pgsql.php3,v 1.7 2000-06-21 04:53:11 wainstead Exp $ -->
+<!-- $Id: wiki_pgsql.php3,v 1.8 2000-06-23 01:01:24 wainstead Exp $ -->
 <?
 
    /*
@@ -184,8 +184,8 @@
       global $search_counter;
       if ($hash = @pg_fetch_array($res, $search_counter)) {
          $search_counter++;
-	 $page['name'] = $hash["pagename"];
-	 $page['hash']['content'] = explode("\n", $hash["content"]);
+	 $page['pagename'] = $hash["pagename"];
+	 $page['content'] = explode("\n", $hash["content"]);
          return $page;
       }
       else {
