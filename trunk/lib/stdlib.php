@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.162 2004-03-16 15:43:08 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.163 2004-03-17 18:41:49 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -64,8 +64,7 @@ define('MAX_PAGENAME_LENGTH', 100);
  * @param string $str
  * @return string
  */
-function MangleXmlIdentifier($str) 
-{
+function MangleXmlIdentifier($str) {
     if (!$str)
         return 'empty.';
     
@@ -73,7 +72,6 @@ function MangleXmlIdentifier($str)
                         "'x' . sprintf('%02x', ord('\\0')) . '.'",
                         $str);
 }
-    
 
 /**
  * Generates a valid URL for a given Wiki pagename.
@@ -1168,8 +1166,7 @@ function explodePageList($input, $perm=false, $sortby='pagename', $limit=false) 
  * @return bool True iff $object is a $class
  * or a sub-type of $class. 
  */
-function isa ($object, $class) 
-{
+function isa ($object, $class) {
     $lclass = strtolower($class);
 
     return is_object($object)
@@ -1183,8 +1180,7 @@ function isa ($object, $class)
  * @param $method string Method name
  * @return bool True iff $object is an object with has method $method.
  */
-function can ($object, $method) 
-{
+function can ($object, $method) {
     return is_object($object) && method_exists($object, strtolower($method));
 }
 
@@ -1201,8 +1197,7 @@ function can ($object, $method)
  * @param string $function_name  Function name
  * @return bool  True iff function can be used.
  */
-function function_usable($function_name)
-{
+function function_usable($function_name) {
     static $disabled;
     if (!is_array($disabled)) {
         $disabled = array();
@@ -1378,6 +1373,9 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.162  2004/03/16 15:43:08  rurban
+// make fileSet sortable to please PageList
+//
 // Revision 1.161  2004/03/12 15:48:07  rurban
 // fixed explodePageList: wrong sortby argument order in UnfoldSubpages
 // simplified lib/stdlib.php:explodePageList
