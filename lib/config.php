@@ -1,10 +1,12 @@
 <?php
-rcs_id('$Id: config.php,v 1.98 2004-04-20 18:10:28 rurban Exp $');
+rcs_id('$Id: config.php,v 1.99 2004-04-21 14:04:24 zorloc Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
  * The run-time code have been moved to lib/IniConfig.php:fix_configs()
  */
+ 
+require_once 'lib/FileFinder.php';
 
 if (!defined("LC_ALL")) {
     // Backward compatibility (for PHP < 4.0.5)
@@ -281,6 +283,14 @@ function IsProbablyRedirectToIndex () {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.98  2004/04/20 18:10:28  rurban
+// config refactoring:
+//   FileFinder is needed for WikiFarm scripts calling index.php
+//   config run-time calls moved to lib/IniConfig.php:fix_configs()
+//   added PHPWIKI_DIR smart-detection code (Theme finder)
+//   moved FileFind to lib/FileFinder.php
+//   cleaned lib/config.php
+//
 // Revision 1.97  2004/04/18 01:11:52  rurban
 // more numeric pagename fixes.
 // fixed action=upload with merge conflict warnings.
