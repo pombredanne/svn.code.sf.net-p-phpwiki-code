@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Toolbar.php,v 1.6 2002-01-08 23:17:21 carstenklapp Exp $');
+rcs_id('$Id: Toolbar.php,v 1.7 2002-01-08 23:18:53 carstenklapp Exp $');
 /**
  * Usage:
  *
@@ -105,7 +105,7 @@ extends WikiPlugin
             case _("RecentChanges") :
                 $label = _("Show changes for: %s");
             case _("RecentEdits") :
-                $label = _("Show edits for: %s");
+                $label = _("Show minor edits for: %s");
             }
         }
 
