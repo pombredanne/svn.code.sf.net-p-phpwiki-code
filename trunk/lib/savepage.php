@@ -1,4 +1,4 @@
-<!-- $Id: savepage.php,v 1.2 2000-10-19 21:36:50 ahollosi Exp $ -->
+<!-- $Id: savepage.php,v 1.3 2000-10-26 15:38:38 ahollosi Exp $ -->
 <?php
 
 /*
@@ -10,22 +10,21 @@
 
    function ConcurrentUpdates($pagename)
    {
-      $html = "<P>PhpWiki is unable to save your changes, because\n" .
-	   "another user edited and saved the page while you\n" .
-	   "were editing the page too. If saving proceeded now\n" .
-	   "changes from the previous author would be lost.</P>\n" .
-	   "<P>In order to recover from this situation follow these steps:\n" .
-	   "<OL><LI>Use your browsers <B>Back</B> button to go back " .
-	   "to the edit page.\n" .
-	   "<LI>Copy your changes to the clipboard or to another temporary " .
-	   "place (e.g. text editor).\n" .
-	   "<LI><B>Reload</B> the page. You should now see the most current" .
-	   " version of the page. Your changes are no longer there.\n" .
-	   "<LI>Make changes to the file again. Paste your additions from " .
-	   "the clipboard (or text editor).\n" .
-	   "<LI>Press <B>Save</B> again.</OL>\n" .
-	   "<P>Sorry for the inconvinience.</P>";
-      GeneratePage('MESSAGE', $html, "Problem while updating $pagename", 0);
+      /* xgettext only knows about c/c++ line-continuation strings
+        is does not know about php's dot operator.
+        We want to translate this entire paragraph as one string, of course.
+      */
+      $html = "<P>" . gettext ("PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost.") . "</P>\n<P>" .
+	gettext ("In order to recover from this situation follow these steps:") . "\n<OL><LI>" .
+	gettext ("Use your browser's <b>Back</b> button to go back to the edit page.") . "\n<LI>" .
+	gettext ("Copy your changes to the clipboard or to another temporary place (e.g. text editor).") . "\n<LI>" .
+	gettext ("<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there.") . "\n<LI>" .
+	gettext ("Make changes to the file again. Paste your additions from the clipboard (or text editor).") . "\n<LI>" .
+	gettext ("Press <b>Save</b> again.") . "</OL>\n<P>" .
+	gettext ("Sorry for the inconvenience.") ."</P>";
+
+      GeneratePage('MESSAGE', $html,
+	sprintf (gettext ("Problem while updating %s"), $pagename), 0);
       exit;
    }
 

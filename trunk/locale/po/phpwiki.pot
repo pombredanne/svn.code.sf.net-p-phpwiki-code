@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2000-10-24 12:00+0200\n"
+"POT-Creation-Date: 2000-10-26 17:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -110,8 +110,8 @@ msgstr ""
 msgid "This page has been locked by the administrator and cannot be edited."
 msgstr ""
 
-#: lib/editpage.php:33
-msgid "Sorry for the inconvinience."
+#: lib/editpage.php:33 lib/savepage.php:24
+msgid "Sorry for the inconvenience."
 msgstr ""
 
 #: lib/editpage.php:35
@@ -201,12 +201,54 @@ msgstr ""
 msgid "Archived version"
 msgstr ""
 
-#: lib/savepage.php:60
+#: lib/savepage.php:17
+msgid ""
+"PhpWiki is unable to save your changes, because another user edited and "
+"saved the page while you were editing the page too. If saving proceeded now "
+"changes from the previous author would be lost."
+msgstr ""
+
+#: lib/savepage.php:18
+msgid "In order to recover from this situation follow these steps:"
+msgstr ""
+
+#: lib/savepage.php:19
+msgid "Use your browser's <b>Back</b> button to go back to the edit page."
+msgstr ""
+
+#: lib/savepage.php:20
+msgid ""
+"Copy your changes to the clipboard or to another temporary place (e.g. text "
+"editor)."
+msgstr ""
+
+#: lib/savepage.php:21
+msgid ""
+"<b>Reload</b> the page. You should now see the most current version of the "
+"page. Your changes are no longer there."
+msgstr ""
+
+#: lib/savepage.php:22
+msgid ""
+"Make changes to the file again. Paste your additions from the clipboard (or "
+"text editor)."
+msgstr ""
+
+#: lib/savepage.php:23
+msgid "Press <b>Save</b> again."
+msgstr ""
+
+#: lib/savepage.php:27
+#, c-format
+msgid "Problem while updating %s"
+msgstr ""
+
+#: lib/savepage.php:59
 #, c-format
 msgid "Thank you for editing %s."
 msgstr ""
 
-#: lib/savepage.php:90
+#: lib/savepage.php:89
 msgid "Your careful attention to detail is much appreciated."
 msgstr ""
 
@@ -234,10 +276,14 @@ msgstr ""
 msgid "%d most popular nearby:"
 msgstr ""
 
-#: lib/stdlib.php:288
+#: lib/stdlib.php:186 lib/stdlib.php:194
+msgid "Search"
+msgstr ""
+
+#: lib/stdlib.php:292
 msgid "Stack bounds exceeded in SetHTMLOutputMode"
 msgstr ""
 
-#: lib/stdlib.php:343 lib/stdlib.php:406
+#: lib/stdlib.php:347 lib/stdlib.php:410
 msgid "RecentChanges"
 msgstr ""

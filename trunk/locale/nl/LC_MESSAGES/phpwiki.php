@@ -1,4 +1,5 @@
 <?php
+
 $locale["./pgsrc"] =
    "locale/nl/pgsrc";
 $locale["templates/browse.html"] =
@@ -9,14 +10,6 @@ $locale["templates/editlinks.html"] =
    "locale/nl/templates/editlinks.html";
 $locale["templates/message.html"] =
    "locale/nl/templates/message.html";
-$locale["WikiDiff::apply: line count mismatch: %s != %s"] =
-   "";
-$locale["WikiDiff::_check: failed"] =
-   "";
-$locale["WikiDiff::_check: edit sequence is non-optimal"] =
-   "";
-$locale["WikiDiff Okay: LCS = %s"] =
-   "";
 $locale["Current page:"] =
    "Huidige pagina:";
 $locale["version %s"] =
@@ -42,8 +35,8 @@ $locale["Copy of %s"] =
 $locale["No page name passed into editpage!"] =
    "Geen paginanaam doorgegeven aan veranderpagina";
 $locale["This page has been locked by the administrator and cannot be edited."] =
-   "";
-$locale["Sorry for the inconvinience."] =
+   "Deze pagina is afgesloten door de beheerder en kan niet veranderd worden.";
+$locale["Sorry for the inconvenience."] =
    "Excuses voor het ongemak.";
 $locale["Problem while editing %s"] =
    "Probleem tijdens veranderen %s";
@@ -83,6 +76,22 @@ $locale["Current version"] =
    "Actuele versie:";
 $locale["Archived version"] =
    "Gearchiveerde versie:";
+$locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
+   "PhpWiki kan je veranderingen niet bewaren, want een andere gebruiker\nheeft de pagina veranderd terwijl jij de pagina ook aan het veranderen\nwas.  Als bewaren nu doorgang zou vinden, zouden de veranderingen van\nde vorige auteur verloren gaan.";
+$locale["In order to recover from this situation follow these steps:"] =
+   "Om uit deze benarde situatie te geraken, volg je deze stappen:";
+$locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
+   "Gebruik de <b>Terug</b> knop van je bladeraar om terug te gaan naar de verander tekst pagina.";
+$locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
+   "Kopiëer je veranderingen naar het klipbord of een andere tijdelijke plaats (bijv. een tekst editor).";
+$locale["<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."] =
+   "<b>Reload</b> de pagina.  Je zou nu de meest recente versie van de pagina moeten zien.  Jouw veranderingen staan er nu niet meer.";
+$locale["Make changes to the file again. Paste your additions from the clipboard (or text editor)."] =
+   "Breng je veranderingen aan de pagina opnieuw aan.  Plak je toevoeginen van het klipbord (of tekst editor).";
+$locale["Press <b>Save</b> again."] =
+   "Druk opnieuw op <b>Bewaar</b>.";
+$locale["Problem while updating %s"] =
+   "Probleem tijdens veranderen van %s";
 $locale["Thank you for editing %s."] =
    "Bedankt voor het veranderen van %s.";
 $locale["Your careful attention to detail is much appreciated."] =
@@ -97,8 +106,5 @@ $locale["%d best outgoing links:"] =
    "%d beste uitgaande koppelingen:";
 $locale["%d most popular nearby:"] =
    "%d meest gevraagde in de buurt:";
-$locale["Stack bounds exceeded in SetHTMLOutputMode"] =
-   "";
-$locale["RecentChanges"] =
-   "RecenteVeranderingen";
-?>
+
+;?>
