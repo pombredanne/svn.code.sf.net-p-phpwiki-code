@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_pgsql.php,v 1.2 2001-11-21 19:46:50 dairiki Exp $');
+rcs_id('$Id: PearDB_pgsql.php,v 1.3 2003-02-23 18:58:42 dairiki Exp $');
 
 require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB.php');
@@ -62,6 +62,21 @@ extends WikiDB_backend_PearDB
     function _unlock_tables() {
         $dbh = &$this->_dbh;
         $dbh->query("COMMIT WORK");
+    }
+
+    
+    // Use Postgres' caseless ILIKE
+    function _sql_match_clause($word) {
+        $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
+        $word = $this->_dbh->quoteString($word);
+        return "pagename ILIKE '%$word%'";
+    }
+
+    // Use Postgres' caseless ILIKE
+    function _fullsearch_sql_match_clause($word) {
+        $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
+        $word = $this->_dbh->quoteString($word);
+        return "pagename ILIKE '%$word%' OR content ILIKE '%$word%'";
     }
 };
 
