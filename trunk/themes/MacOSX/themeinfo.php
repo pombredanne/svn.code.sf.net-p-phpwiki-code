@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.42 2002-02-01 22:35:02 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.43 2002-02-02 20:53:43 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -18,18 +18,11 @@ rcs_id('$Id: themeinfo.php,v 1.42 2002-02-01 22:35:02 carstenklapp Exp $');
  *
  * Do you like the icons used in the buttons?
  *
- * The button toolbars use tables for positioning. Yuck. (It will do
- * for now).
- *
  * See buttons/README for more info on the buttons.
  *
- * The CSS is still mostly the same as phpwiki.css. I'd like to change
- * it a bit but have no specific plans yet. Just a general feeling
- * that it should look and feel like a Mac interface: with subtle
- * effects and a fine color scheme. Since I'm sick of the stripes
- * Mr. Jobs thoughtfully plastered all over my screen, I've chosen a
- * brushed paper (or stucco?) texture effect very close to white. If
- * your monitor isn't calibrated well you might not even see it.
+ * The background image is a subtle brushed paper texture or stucco
+ * effect very close to white. If your monitor isn't calibrated well
+ * you may not see it.
  * */
 
 require_once('lib/Theme.php');
@@ -100,7 +93,7 @@ $Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
  * is not defined by index.php or in here then the "Thank you for
  * editing..." screen will be omitted.
  */
-//$Theme->addImageAlias('signature', 'signature.png');
+$Theme->addImageAlias('signature', 'signature.png');
 
 /*
  * Link icons.
