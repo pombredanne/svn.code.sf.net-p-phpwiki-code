@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.40 2002-01-23 14:17:31 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.41 2002-01-28 19:21:31 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -39,9 +39,9 @@ class Theme_MacOSX extends Theme {
         // FIXME: this is a hack which will not be needed once
         //        we have dynamic CSS.
         $css = Theme::getCSS();
-        $css[] = HTML::style(array('type' => 'text/css'),
+        $css->pushcontent(HTML::style(array('type' => 'text/css'),
                              new RawXml(sprintf("<!--\nbody {background-image: url(%s);}\n-->\n",
-                                                $this->getImageURL('bgpaper8'))));
+                                                $this->getImageURL('bgpaper8')))));
                                 //for non-browse pages, like former editpage, message etc.
                                 //$this->getImageURL('bggranular')));
         return $css;
