@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: random.php,v 1.5 2002-01-05 06:17:02 carstenklapp Exp $');
+rcs_id('$Id: random.php,v 1.6 2002-01-10 01:06:23 carstenklapp Exp $');
 
 // FIXME: This whole file could be refactored and turned in a
 //        RandomImage plugin.
@@ -54,9 +54,9 @@ function imagelist($dirname) {
 
                 if ($fn[0] == '.' || filetype("$dir/$fn") != 'file')
                     continue;
-                // FIXME: Use $InlineImages instead of just ".jpg"
-                //        hardcoded.
-                if (substr($fn,-4) == ".jpg")
+                global $InlineImages;
+                // Add any files with image suffixes as defined in index.php
+                if (preg_match("/($InlineImages)$/i", $fn)) 
                     array_push($imagelist, "$fn");
 
             }
