@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.44 2001-10-29 21:08:09 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.45 2001-11-09 16:22:43 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -45,7 +45,10 @@ function FindLocalizedFile ($file, $missing_okay = false)
 
 // Setup localisation
 setlocale(LC_ALL, "$LANG");
-putenv("LC_ALL=$LANG");
+
+// I think this putenv is unnecessary, and it causes trouble
+// if PHP's safe_mode is enabled:
+//putenv("LC_ALL=$LANG");
 
 if (!function_exists ('gettext'))
 {
