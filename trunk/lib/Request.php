@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.70 2004-10-21 19:59:18 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.71 2004-10-22 09:20:36 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -256,13 +256,15 @@ class Request {
         $validators = &$this->_validators;
         
         // Set validator headers
-        if (($etag = $validators->getETag()) !== false)
-            header("ETag: " . $etag->asString());
-        if (($mtime = $validators->getModificationTime()) !== false)
-            header("Last-Modified: " . Rfc1123DateTime($mtime));
+        if ($this->_is_buffering_output or !headers_sent()) {
+            if (($etag = $validators->getETag()) !== false)
+                header("ETag: " . $etag->asString());
+            if (($mtime = $validators->getModificationTime()) !== false)
+                header("Last-Modified: " . Rfc1123DateTime($mtime));
 
-        // Set cache control headers
-        $this->cacheControl();
+            // Set cache control headers
+            $this->cacheControl();
+        }
 
         if (CACHE_CONTROL == 'NO_CACHE')
             return;             // don't check conditionals...
@@ -1076,6 +1078,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.70  2004/10/21 19:59:18  rurban
+// Patch #991494 (ppo): Avoid notice in PHP >= 4.3.3 if session already started
+//
 // Revision 1.69  2004/10/21 19:00:37  rurban
 // upload errmsgs by Shilad Sen.
 // chunkOutput support: flush the buffer piecewise (dumphtml, large pagelists)
