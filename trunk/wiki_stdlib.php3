@@ -1,4 +1,4 @@
-<!-- $Id: wiki_stdlib.php3,v 1.21 2000-07-04 21:26:43 ahollosi Exp $ -->
+<!-- $Id: wiki_stdlib.php3,v 1.22 2000-07-05 14:52:04 ahollosi Exp $ -->
 <?
    /*
       Standard functions for Wiki functionality
@@ -299,6 +299,7 @@
 
       if ($isNewDay) {
          $newpage[$k++] = "____$today\r";
+         $newpage[$k++] = "\r";
       } else {
          $newpage[$k++] = $recentchanges["content"][$i++];
       }
