@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-# $Id: maketest.pl,v 1.3 2002-01-29 22:10:24 wainstead Exp $
+# $Id: maketest.pl,v 1.4 2004-09-06 08:30:44 rurban Exp $
 
 # read in a file, generate Java code to run a test.
 # Steve Wainstead, March 2001.
@@ -9,20 +9,26 @@
 # but a fairly cut and dry script relying on "if" clauses to parse the input
 # files. It was the shortest route to the answer for now, though certainly not
 # the best one.
-
-use constant BASEURL => 'http://127.0.0.1/~swain/projects/phpwiki-1.3.x/';
+#
 
 die <<"EOLN" unless $ARGV[0];
 
-Usage: $0 <inputfile0> [ <inputfile1> <inputfile2> ... <inputfileN> ]
+Usage: $0 [-b baseurl] <inputfile0> [ <inputfile1> <inputfile2> ... <inputfileN> ]
     where 'inputfile' is the name of a configuration file that specifies
     the form fields and values. The name of the file should be similar to
     ClassName.inputs, and this script will produce a Java file called
     ClassName.java. 
 EOLN
 
-#print "passed in: ", join(" ", @ARGV), "\n";
+#use constant BASEURL => 'http://127.0.0.1/~swain/projects/phpwiki-1.3.x/';
+my $baseurl = 'http://127.0.0.1/~swain/projects/phpwiki-1.3.x/';
+my (%opts);
+use Getopt::Std;
+getopt('b', \%opts);
+# TODO: Get the BASEURL from config.ini
+$baseurl = $opts{b} if $opts{b};
 
+#print "passed in: ", join(" ", @ARGV), "\n";
 my ($start_of_file, $end_of_file);
 
 # read in the skeleton file from this script below the END tag
@@ -111,7 +117,7 @@ EOLN
 sub starting_page {
     my $block = shift;
     $block =~ m/start_url:\s*(http.*?)$/m;
-    my $start_url = BASEURL . $1;
+    my $start_url = $baseurl . $1;
     my $assertions = &get_assertions($block);
 
     print OUTFILE <<"EOLN"
