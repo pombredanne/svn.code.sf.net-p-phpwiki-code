@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.32 2005-01-21 14:09:08 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.33 2005-01-30 19:47:19 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004, 2005 $ThePhpWikiProgrammingTeam
  *
@@ -498,7 +498,7 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 	if (isset($this->_tightenable)) {
 	    if ($this->_tightenable == 3) {
                 $span = HTML::span(array('class' => 'plugin'), $xml);
-                if ($id)
+                if (!empty($id))
                     $span->setAttr('id', $id);
 	        return $span;
             }
