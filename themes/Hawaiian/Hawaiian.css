@@ -1,5 +1,5 @@
 /*
-  $Id: Hawaiian.css,v 1.19 2002-02-08 22:56:37 carstenklapp Exp $
+  $Id: Hawaiian.css,v 1.20 2002-02-10 22:24:10 carstenklapp Exp $
 
   Classes:
 
@@ -229,7 +229,7 @@ div.wiki-edithelp {
   font-size: smaller;
   padding: 0.05ex 1%;
 }
-  
+.printer { display: none; }
 /****************************************************************
  **
  ** Diff Output
