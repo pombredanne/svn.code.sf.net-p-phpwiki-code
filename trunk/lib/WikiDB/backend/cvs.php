@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: cvs.php,v 1.16 2004-03-16 13:30:48 rurban Exp $');
+rcs_id('$Id: cvs.php,v 1.17 2004-04-27 16:03:05 rurban Exp $');
 /**
  * Backend for handling CVS repository. 
  *
@@ -925,6 +925,10 @@ extends WikiDB_backend_iterator
             return $rVal;
         }
         return false;
+    }
+
+    function count() {
+    	return count($this->_array);
     }
 
     function free()
