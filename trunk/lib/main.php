@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.196 2004-12-10 02:36:43 rurban Exp $');
+rcs_id('$Id: main.php,v 1.197 2004-12-17 16:39:55 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -191,6 +191,8 @@ $this->version = phpwiki_version();
                 (!isset($this->_user->_authhow) or $this->_user->_authhow != 'session')) {
                 $id_only = true; 
                 $this->_user->setPreferences($this->_prefs, $id_only);
+                if (isa($this->_user, "_HttpAuthPassUser"))
+                    $this->setSessionVar('wiki_user', $this->_user);
             } else {
                 $this->setSessionVar('wiki_user', $this->_user);
                 //$this->setSessionVar('wiki_prefs', $this->_prefs);
@@ -1183,6 +1185,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.196  2004/12/10 02:36:43  rurban
+// More help with the new native xmlrpc lib. no warnings, no user cookie on xmlrpc.
+//
 // Revision 1.195  2004/12/09 22:24:44  rurban
 // optimize on _DEBUG_SQL only. but now again on every 50th request, not just save.
 //
