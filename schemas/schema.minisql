@@ -1,10 +1,15 @@
-# $Id: schema.minisql,v 1.2 2000-06-25 07:34:36 wainstead Exp $
+# $Id: schema.minisql,v 1.3 2000-06-25 19:40:16 wainstead Exp $
 
 drop table wiki\g
+drop table wikipages\g
 drop table archive\g
+drop table archivepages\g
+
 drop table wikilinks\g
 drop table hottopics\g
 drop table hitcount\g
+
+# metadata about the page
 
 CREATE TABLE wiki (
         pagename CHAR(100) NOT NULL,
@@ -13,14 +18,14 @@ CREATE TABLE wiki (
         author CHAR(100),
         lastmodified INT NOT NULL,
         created INT NOT NULL,
-        content TEXT(1024),
-        refs TEXT(100),
-        searchterms char(2048)
+        refs TEXT(100)
         )
 \g
 
 CREATE UNIQUE INDEX wiki_index ON wiki (pagename)
 \g
+
+# archive for page metadata
 
 CREATE TABLE archive (
         pagename CHAR(100) NOT NULL,
@@ -29,14 +34,40 @@ CREATE TABLE archive (
         author CHAR(100),
         lastmodified INT NOT NULL,
         created INT NOT NULL,
-        content TEXT(1024),
-        refs TEXT(100),
-        searchterms char(2048)
+        refs TEXT(100)
         )
 \g
 
 CREATE UNIQUE INDEX archive_index ON archive (pagename, version)
 \g
+
+
+# table for the pages themselves... stored in lines
+
+CREATE TABLE wikipages (
+	pagename CHAR(100) NOT NULL,
+        lineno INT NOT NULL,
+        line CHAR(256)
+)
+\g
+
+CREATE UNIQUE INDEX wp_idx ON wikipages (pagename, lineno)
+\g
+
+
+# archive of page lines
+
+CREATE TABLE archivepages (
+	pagename CHAR(100) NOT NULL,
+        lineno INT NOT NULL,
+        line CHAR(256)
+)
+\g
+
+CREATE UNIQUE INDEX ap_idx ON archivepages (pagename, lineno)
+\g
+
+
 
 # tables below are not yet used
 
