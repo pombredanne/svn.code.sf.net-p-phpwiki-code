@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.37 2003-02-22 20:49:55 dairiki Exp $');
+rcs_id('$Id: WikiUser.php,v 1.38 2003-09-13 22:25:38 carstenklapp Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -31,6 +31,7 @@ $UserPreferences = array(
                          'theme'         => new _UserPreference_theme(THEME),
                          'lang'          => new _UserPreference_language(DEFAULT_LANGUAGE),
                          'editWidth'     => new _UserPreference_int(80, 30, 150),
+                         'noLinkIcons'   => new _UserPreference_bool(),
                          'editHeight'    => new _UserPreference_int(22, 5, 80),
                          'timeOffset'    => new _UserPreference_numeric(0, -26, 26),
                          'relativeDates' => new _UserPreference_bool()
@@ -646,6 +647,9 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.37  2003/02/22 20:49:55  dairiki
+// Fixes for "Call-time pass by reference has been deprecated" errors.
+//
 // Revision 1.36  2003/02/21 22:50:51  dairiki
 // Ensure that language preference is a string.
 //
