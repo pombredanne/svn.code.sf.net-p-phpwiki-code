@@ -1,8 +1,15 @@
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
+X-RCS_ID: $Id: CambiamentiRecenti,v 1.5 2002-01-23 06:59:30 carstenklapp Exp $
+Content-Type: application/x-phpwiki;
+  pagename=CambiamentiRecenti;
+  flags=PAGE_LOCKED;
+  lastmodified=1010523613
+Content-Transfer-Encoding: binary
+
 Le pagine aggiornate più frequentemente sono elencate qua sotto.
 
-The most recently changed pages are listed below.  See RecentEdits for a list of all recent changes.
+Here's a list of recently changed pages on this wiki. (See RecentEdits for all recent minor edits and changes).
 
-Show changes for: [1 day|phpwiki:?days=1] | [3 days|phpwiki:?days=3] | [7 days|phpwiki:?days=7] | [30 days|phpwiki:?days=30] | [90 days|phpwiki:?days=90] | [...|phpwiki:?days=-1]
+<?plugin RecentChanges daylist=1,3,7,30,90,-1 ?>
 --------
-<?plugin RecentChanges days||=30?>
--------
+<?plugin RecentChanges days||=30 show_all||=0 show_minor||=0 ?>
