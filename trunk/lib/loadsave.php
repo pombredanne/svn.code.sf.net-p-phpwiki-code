@@ -1,5 +1,5 @@
-<?php
-rcs_id('$Id: loadsave.php,v 1.80 2003-03-07 02:46:57 dairiki Exp $');
+<?php //-*-php-*-
+rcs_id('$Id: loadsave.php,v 1.81 2003-11-18 18:28:35 carstenklapp Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -467,11 +467,15 @@ function SavePage (&$request, $pageinfo, $source, $filename)
         global $Theme;
         $meb = $Theme->makeButton($text = ("Merge Edit"),
                                   $url = _("PhpWikiAdministration")
-                                  . "?action=loadfile&source=$f&merge=1",
+                                  . "?action=loadfile&source="
+                                  . FilenameForPage($f)
+                                  . "&merge=1",
                                   $class = 'wikiadmin');
         $owb = $Theme->makeButton($text = _("Restore Anyway"),
                                   $url = _("PhpWikiAdministration")
-                                  . "?action=loadfile&source=$f&overwrite=1",
+                                  . "?action=loadfile&source="
+                                  . FilenameForPage($f)
+                                  . "&overwrite=1",
                                   $class = 'wikiunsafe');
         $mesg->pushContent(' ', $meb, " ", $owb);
     }
@@ -826,6 +830,11 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.80  2003/03/07 02:46:57  dairiki
+ Omit checks for safe_mode before set_time_limit().  Just prefix the
+ set_time_limit() calls with @ so that they fail silently if not
+ supported.
+
  Revision 1.79  2003/02/26 01:56:05  dairiki
  Only zip pages with legal pagenames.
 
