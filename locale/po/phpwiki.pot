@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.3.2-jeffs-hacks\n"
-"POT-Creation-Date: 2002-02-18 23:17-0500\n"
+"POT-Creation-Date: 2002-02-22 15:07-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -93,9 +93,10 @@ msgstr ""
 msgid "Diff: %s"
 msgstr ""
 
-#: ../lib/display.php:59 ../lib/main.php:495 ../lib/plugin/PageGroup.php:62
+#: ../lib/display.php:59 ../lib/plugin/PageGroup.php:62
 #: ../lib/plugin/PageGroup.php:128 ../lib/plugin/PageGroup.php:136
 #: ../lib/plugin/PageGroup.php:148 ../lib/plugin/PageGroup.php:154
+#: ../themes/default/templates/top.tmpl:48
 #, c-format
 msgid "%s: %s"
 msgstr ""
@@ -194,16 +195,16 @@ msgstr ""
 msgid "%s: error while handling error:"
 msgstr ""
 
-#: ../lib/FileFinder.php:82 ../lib/loadsave.php:280
+#: ../lib/FileFinder.php:82 ../lib/loadsave.php:345
 #, c-format
 msgid "%s: file not found"
 msgstr ""
 
-#: ../lib/interwiki.php:7 ../lib/loadsave.php:223
+#: ../lib/PageType.php:59 ../lib/interwiki.php:7 ../lib/loadsave.php:288
 msgid "InterWikiMap"
 msgstr ""
 
-#: ../lib/interwiki.php:88 ../lib/loadsave.php:292
+#: ../lib/interwiki.php:88 ../lib/loadsave.php:357
 #, c-format
 msgid "Loading InterWikiMap from external file %s."
 msgstr ""
@@ -217,123 +218,124 @@ msgstr ""
 msgid "Return to %s"
 msgstr ""
 
-#: ../lib/loadsave.php:149
+#: ../lib/loadsave.php:149 ../lib/loadsave.php:206
 msgid "You must specify a directory to dump to"
 msgstr ""
 
-#: ../lib/loadsave.php:154
+#: ../lib/loadsave.php:154 ../lib/loadsave.php:211
 #, c-format
 msgid "Cannot create directory '%s'"
 msgstr ""
 
-#: ../lib/loadsave.php:156
+#: ../lib/loadsave.php:156 ../lib/loadsave.php:213
 #, c-format
 msgid "Created directory '%s' for the page dump..."
 msgstr ""
 
-#: ../lib/loadsave.php:159
+#: ../lib/loadsave.php:159 ../lib/loadsave.php:216
 #, c-format
 msgid "Using directory '%s'"
 msgstr ""
 
-#: ../lib/loadsave.php:162
+#: ../lib/loadsave.php:162 ../lib/loadsave.php:219
 msgid "Dumping Pages"
 msgstr ""
 
-#: ../lib/loadsave.php:174
+#: ../lib/loadsave.php:174 ../lib/loadsave.php:231
 #, c-format
 msgid "saved as %s"
 msgstr ""
 
-#: ../lib/loadsave.php:184 ../lib/plugin/text2png.php:154
+#: ../lib/loadsave.php:184 ../lib/loadsave.php:246
+#: ../lib/plugin/text2png.php:154
 #, c-format
 msgid "couldn't open file '%s' for writing"
 msgstr ""
 
-#: ../lib/loadsave.php:190
+#: ../lib/loadsave.php:190 ../lib/loadsave.php:252
 #, c-format
 msgid "%s bytes written"
 msgstr ""
 
-#: ../lib/loadsave.php:213
+#: ../lib/loadsave.php:278
 msgid "Empty pagename!"
 msgstr ""
 
-#: ../lib/loadsave.php:237
+#: ../lib/loadsave.php:302
 #, c-format
 msgid "from %s"
 msgstr ""
 
-#: ../lib/loadsave.php:242
+#: ../lib/loadsave.php:307
 msgid "new page"
 msgstr ""
 
-#: ../lib/loadsave.php:249
+#: ../lib/loadsave.php:314
 #, c-format
 msgid "is identical to current version %d - skipped"
 msgstr ""
 
-#: ../lib/loadsave.php:261
+#: ../lib/loadsave.php:326
 #, c-format
 msgid "- saved to database as version %d"
 msgstr ""
 
-#: ../lib/loadsave.php:276
+#: ../lib/loadsave.php:341
 #, c-format
 msgid "%s: not defined"
 msgstr ""
 
-#: ../lib/loadsave.php:285
+#: ../lib/loadsave.php:350
 msgid "Default InterWiki map file not loaded."
 msgstr ""
 
-#: ../lib/loadsave.php:384
+#: ../lib/loadsave.php:451
 #, c-format
 msgid "MIME file %s"
 msgstr ""
 
-#: ../lib/loadsave.php:389
+#: ../lib/loadsave.php:456
 #, c-format
 msgid "Serialized file %s"
 msgstr ""
 
-#: ../lib/loadsave.php:403
+#: ../lib/loadsave.php:470
 #, c-format
 msgid "plain file %s"
 msgstr ""
 
-#: ../lib/loadsave.php:417 ../lib/loadsave.php:429
+#: ../lib/loadsave.php:484 ../lib/loadsave.php:496
 msgid "Skipping"
 msgstr ""
 
-#: ../lib/loadsave.php:526
+#: ../lib/loadsave.php:593
 #, c-format
 msgid "Bad file type: %s"
 msgstr ""
 
-#: ../lib/loadsave.php:540
+#: ../lib/loadsave.php:607
 #, c-format
 msgid "Loading '%s'"
 msgstr ""
 
-#: ../lib/loadsave.php:561
+#: ../lib/loadsave.php:628
 msgid "The PhpWiki programming team"
 msgstr ""
 
-#: ../lib/loadsave.php:564
+#: ../lib/loadsave.php:631
 msgid "Loading up virgin wiki"
 msgstr ""
 
-#: ../lib/loadsave.php:581
+#: ../lib/loadsave.php:648
 msgid "No uploaded file to upload?"
 msgstr ""
 
-#: ../lib/loadsave.php:585
+#: ../lib/loadsave.php:652
 #, c-format
 msgid "Uploading %s"
 msgstr ""
 
-#: ../lib/RSSWriter091.php:115 ../lib/loadsave.php:590
+#: ../lib/RSSWriter091.php:115 ../lib/loadsave.php:657
 #: ../lib/plugin/RecentChanges.php:223 ../lib/plugin/RecentChanges.php:349
 #: ../lib/plugin/RecentChanges.php:426
 #: ../themes/Portland/templates/navbar.tmpl:28
@@ -361,7 +363,7 @@ msgstr ""
 msgid "You must be an administrator to %s this wiki"
 msgstr ""
 
-#: ../lib/main.php:309 ../lib/main.php:416 ../lib/plugin/PageHistory.php:224
+#: ../lib/main.php:309 ../lib/plugin/PageHistory.php:224
 #: ../lib/plugin/RecentChanges.php:47
 #: ../themes/Portland/templates/actionbar.tmpl:18
 #: ../themes/default/templates/actionbar.tmpl:29
@@ -377,17 +379,13 @@ msgstr ""
 msgid "Fatal PhpWiki Error"
 msgstr ""
 
-#: ../lib/main.php:454 ../lib/plugin/FullTextSearch.php:12
+#: ../lib/main.php:455 ../lib/plugin/FullTextSearch.php:12
 msgid "FullTextSearch"
 msgstr ""
 
-#: ../lib/main.php:457 ../lib/plugin/RecentChanges.php:340
+#: ../lib/main.php:458 ../lib/plugin/RecentChanges.php:340
 #: ../lib/plugin/TitleSearch.php:13
 msgid "TitleSearch"
-msgstr ""
-
-#: ../lib/main.php:495
-msgid "Info"
 msgstr ""
 
 #: ../lib/PageList.php:129
@@ -419,7 +417,7 @@ msgid "Last Author"
 msgstr ""
 
 #: ../lib/PageList.php:271 ../themes/default/templates/editpage.tmpl:94
-#: ../themes/default/templates/info.tmpl:108
+#: ../themes/default/templates/info.tmpl:117
 msgid "Locked"
 msgstr ""
 
@@ -442,6 +440,14 @@ msgstr ""
 #: ../lib/PageList.php:326
 #, c-format
 msgid "Columns: %s."
+msgstr ""
+
+#: ../lib/PageType.php:150
+msgid "Name"
+msgstr ""
+
+#: ../lib/PageType.php:151
+msgid "InterWiki Address"
 msgstr ""
 
 #: ../lib/plugin/AllPages.php:12
@@ -504,7 +510,7 @@ msgid "%s pages link to %s:"
 msgstr ""
 
 #: ../lib/plugin/Calendar.php:24 ../lib/plugin/Calendar.php:28
-#: ../themes/default/templates/top.tmpl:70
+#: ../themes/default/templates/top.tmpl:77
 msgid "Calendar"
 msgstr ""
 
@@ -880,11 +886,15 @@ msgstr ""
 msgid "Dump Pages"
 msgstr ""
 
-#: ../lib/plugin/WikiForm.php:62
+#: ../lib/plugin/WikiForm.php:59
+msgid "Dump Pages as XHTML"
+msgstr ""
+
+#: ../lib/plugin/WikiForm.php:70
 msgid "Upload"
 msgstr ""
 
-#: ../lib/plugin/WikiForm.php:66
+#: ../lib/plugin/WikiForm.php:74
 #, c-format
 msgid "WikiForm: %s: unknown action"
 msgstr ""
@@ -1048,7 +1058,7 @@ msgstr ""
 
 #: ../lib/Theme.php:696
 #, c-format
-msgid "Redefinition of default CSS: %s"
+msgid "Redefinition of %s: %s"
 msgstr ""
 
 #: ../lib/transform.php:111
@@ -1144,7 +1154,12 @@ msgstr ""
 
 #: ../themes/Portland/templates/actionbar.tmpl:10
 #: ../themes/default/templates/actionbar.tmpl:8
+#: ../themes/default/templates/top.tmpl:48
 msgid "View Source"
+msgstr ""
+
+#: ../themes/default/templates/actionbar.tmpl:31
+msgid "Info"
 msgstr ""
 
 #: ../themes/Portland/templates/browse.tmpl:9
@@ -1205,7 +1220,7 @@ msgstr ""
 
 #: ../themes/Portland/templates/editpage.tmpl:60
 #: ../themes/default/templates/editpage.tmpl:70
-#: ../themes/default/templates/info.tmpl:61
+#: ../themes/default/templates/info.tmpl:70
 msgid "Summary:"
 msgstr ""
 
@@ -1264,48 +1279,48 @@ msgstr ""
 msgid "Original (1.2 or 1.0)"
 msgstr ""
 
-#: ../themes/default/templates/info.tmpl:54
+#: ../themes/default/templates/info.tmpl:63
 msgid "Last Modified:"
 msgstr ""
 
-#: ../themes/default/templates/info.tmpl:55
+#: ../themes/default/templates/info.tmpl:64
 msgid "Last Author:"
 msgstr ""
 
-#: ../themes/default/templates/info.tmpl:56
+#: ../themes/default/templates/info.tmpl:65
 msgid "Last Summary:"
 msgstr ""
 
-#: ../themes/default/templates/info.tmpl:59
+#: ../themes/default/templates/info.tmpl:68
 msgid "Saved on:"
 msgstr ""
 
-#: ../themes/default/templates/info.tmpl:60
+#: ../themes/default/templates/info.tmpl:69
 msgid "Author:"
 msgstr ""
 
-#: ../themes/default/templates/info.tmpl:64
+#: ../themes/default/templates/info.tmpl:73
 #, c-format
 msgid "Statistics about %s."
 msgstr ""
 
-#: ../themes/default/templates/info.tmpl:74
+#: ../themes/default/templates/info.tmpl:83
 msgid "Supplanted on:"
 msgstr ""
 
-#: ../themes/default/templates/info.tmpl:86
+#: ../themes/default/templates/info.tmpl:95
 msgid "Page Version:"
 msgstr ""
 
-#: ../themes/default/templates/info.tmpl:89
+#: ../themes/default/templates/info.tmpl:98
 msgid "Markup:"
 msgstr ""
 
-#: ../themes/default/templates/info.tmpl:92
+#: ../themes/default/templates/info.tmpl:101
 msgid "Size:"
 msgstr ""
 
-#: ../themes/default/templates/info.tmpl:97
+#: ../themes/default/templates/info.tmpl:106
 msgid "Hits:"
 msgstr ""
 
@@ -1372,6 +1387,10 @@ msgstr ""
 
 #: ../themes/default/templates/signin.tmpl:42
 msgid "Enter your UserId to sign in"
+msgstr ""
+
+#: ../themes/default/templates/top.tmpl:34
+msgid "The PhpWiki Programming Team"
 msgstr ""
 
 #: ../themes/default/templates/userprefs.tmpl:26
