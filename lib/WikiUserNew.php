@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.125 2005-02-08 13:25:50 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.126 2005-02-28 20:30:46 rurban Exp $');
 /* Copyright (C) 2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -166,11 +166,11 @@ function _determineAdminUserOrOtherUser($UserName) {
     if (!$UserName)
         return $GLOBALS['ForbiddenUser'];
 
-    //FIXME: check admin membership later at checkPass. now we cannot raise the level.
+    //FIXME: check admin membership later at checkPass. Now we cannot raise the level.
     //$group = &WikiGroup::getGroup($GLOBALS['request']);
     if ($UserName == ADMIN_USER)
         return new _AdminUser($UserName);
-    /* elseif ($group->isMember(GROUP_ADMIN)) {
+    /* elseif ($group->isMember(GROUP_ADMIN)) { // unneeded code
         return _determineBogoUserOrPassUser($UserName);
     }
     */
@@ -1320,7 +1320,8 @@ extends _PassUser
     	if ($this->_userid == ADMIN_USER)
             $stored_password = ADMIN_PASSWD;
         else {
-            return $this->_tryNextPass($submitted_password);
+            // Should not happen! Only ADMIN_USER should use this class.
+            // return $this->_tryNextPass($submitted_password); // ???
             // TODO: safety check if really member of the ADMIN group?
             $stored_password = $this->_pref->get('passwd');
         }
@@ -1336,10 +1337,15 @@ extends _PassUser
             //$this->_level = WIKIAUTH_ANON;
             //return $this->_level;
         }
-        
     }
+
     function storePass($submitted_password) {
-        return false;
+    	if ($this->_userid == ADMIN_USER)
+            return false;
+        else {
+            // should not happen! only ADMIN_USER should use this class.
+            return parent::storePass($submitted_password);
+        }
     }
 }
 
@@ -2032,6 +2038,10 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.125  2005/02/08 13:25:50  rurban
+// encrypt password. fix strict logic.
+// both bugs reported by Mikhail Vladimirov
+//
 // Revision 1.124  2005/01/30 23:11:00  rurban
 // allow self-creating passuser on login
 //
