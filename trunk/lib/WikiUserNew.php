@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.84 2004-06-03 12:36:03 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.85 2004-06-03 12:46:03 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -539,6 +539,7 @@ class _WikiUser
         if ($logout) { // Log out
             $GLOBALS['request']->_user = new _AnonUser();
             $GLOBALS['request']->_user->_userid = '';
+            $GLOBALS['request']->_user->_level = WIKIAUTH_ANON;
             return $GLOBALS['request']->_user; 
         } elseif ($cancel)
             return false;        // User hit cancel button.
@@ -2919,6 +2920,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.84  2004/06/03 12:36:03  rurban
+// fix eval warning on signin
+//
 // Revision 1.83  2004/06/03 10:18:19  rurban
 // fix FileUser locking issues, new config ENABLE_PAGEPERM
 //
