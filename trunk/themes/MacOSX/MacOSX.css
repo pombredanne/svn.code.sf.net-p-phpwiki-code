@@ -1,5 +1,5 @@
 /*
- $Id: MacOSX.css,v 1.35 2003-11-30 19:35:09 carstenklapp Exp $
+ $Id: MacOSX.css,v 1.36 2003-12-05 20:54:14 carstenklapp Exp $
 
  Classes:
 
@@ -423,15 +423,7 @@ div.wiki-message {
 }
 
 dl {
-/*   position: relative; */
-display:table;
-/*   width: 85%; */
-  padding-top: 1.5ex;
-  padding-left: 0.75em;
-  padding-right: 0.75em;
-  border-style: solid;
-  border-width: thin;
-  border-color: #ccc;
+  display:table;
 }
 /* dotted underline each dt. use display:table to shrink width */
 dt {
