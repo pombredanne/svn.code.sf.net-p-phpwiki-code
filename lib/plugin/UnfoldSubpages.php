@@ -1,6 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UnfoldSubpages.php,v 1.4 2003-01-05 02:37:30 carstenklapp Exp $');
-
+rcs_id('$Id: UnfoldSubpages.php,v 1.5 2003-01-18 22:11:44 carstenklapp Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -180,6 +179,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2003/01/05 02:37:30  carstenklapp
+// New: Implemented 'smalltitle' argument and date sorting fix from
+// Cuthbert Cat's sf patch 655095. Added getVersion & getDescription;
+// code rewrapping.
+//
 // Revision 1.3  2003/01/04 22:46:07  carstenklapp
 // Workaround: when page has no subpages avoid include of nonexistant pages.
 //

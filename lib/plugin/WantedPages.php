@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WantedPages.php,v 1.3 2002-02-25 01:10:24 carstenklapp Exp $');
+rcs_id('$Id: WantedPages.php,v 1.4 2003-01-18 22:14:24 carstenklapp Exp $');
 /*
  This file is part of PhpWiki.
 
@@ -34,7 +34,12 @@ extends WikiPlugin
     }
 
     function getDescription () {
-        return _("Wanted Pages");
+        return _("Lists referenced page names which do not exist yet.");
+    }
+
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -42,7 +47,8 @@ extends WikiPlugin
                      'exclude'  => _("PgsrcTranslation"),
                      'page'     => '[pagename]');
     }
-    // info arg allows multiple columns info=mtime,hits,summary,version,author,locked,minor,markup or all
+    // info arg allows multiple columns
+    // info=mtime,hits,summary,version,author,locked,minor,markup or all
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
 
     function run($dbi, $argstr, $request) {
@@ -56,11 +62,12 @@ extends WikiPlugin
         if ($page == _("WantedPages"))
             $page = "";
 
-        // The PageList class can't handle the 'count' column needed for this table
+        // The PageList class can't handle the 'count' column needed
+        // for this table
         $this->pagelist = array();
 
-        // There's probably a more efficient way to do this (eg a tailored SQL query via the
-        // backend, but this does the job
+        // There's probably a more efficient way to do this (eg a
+        // tailored SQL query via the backend, but this does the job
 
         if (!$page) {
             $allpages_iter = $dbi->getAllPages($include_empty = false);
@@ -82,7 +89,8 @@ extends WikiPlugin
         $this->_messageIfEmpty = _("<none>");
 
         if ($page) {
-            // link count always seems to be 1 for a single page so omit count column
+            // link count always seems to be 1 for a single page so
+            // omit count column
             foreach ($this->pagelist as $key => $val) {
                 $row = HTML::li(WikiLink($key, 'unknown'));
                 $this->_rows->pushContent($row);
@@ -93,7 +101,8 @@ extends WikiPlugin
                 else
                     $pagelink = WikiLink($page, 'unknown');
                 $c = count($this->pagelist);
-                $caption = fmt("Wanted Pages for %s (%d total):", $pagelink, $c);
+                $caption = fmt("Wanted Pages for %s (%d total):",
+                               $pagelink, $c);
             }
             return $this->_generateList($caption);
 
@@ -101,12 +110,14 @@ extends WikiPlugin
             $spacer = new RawXml("&nbsp;&nbsp;&nbsp;&nbsp;");
             foreach ($this->pagelist as $key => $val) {
                 $row = HTML::tr(HTML::td(array('align' => 'right'), $val),
-                                HTML::td(HTML($spacer, WikiLink($key, 'unknown'))));
+                                HTML::td(HTML($spacer,
+                                              WikiLink($key, 'unknown'))));
                 $this->_rows->pushContent($row);
             }
             $c = count($this->pagelist);
             if (!$noheader)
-                $caption = sprintf(_("Wanted Pages in this wiki (%d total):"), $c);
+                $caption = sprintf(_("Wanted Pages in this wiki (%d total):"),
+                                   $c);
             $this->_columns = array(_("Count"), _("Page Name"));
             if ($c > 0)
                 return $this->_generateTable($caption);
@@ -119,21 +130,24 @@ extends WikiPlugin
 
         if (count($this->pagelist) > 0) {
             $table = HTML::table(array('cellpadding' => 0,
-                                    'cellspacing' => 1,
-                                    'border'      => 0,
-                                    'class'       => 'pagelist'));
+                                       'cellspacing' => 1,
+                                       'border'      => 0,
+                                       'class'       => 'pagelist'));
             if ($caption)
-                $table->pushContent(HTML::caption(array('align'=>'top'), $caption));
-    
+                $table->pushContent(HTML::caption(array('align'=>'top'),
+                                                  $caption));
+
             $row = HTML::tr();
             $spacer = new RawXml("&nbsp;&nbsp;&nbsp;&nbsp;");
             foreach ($this->_columns as $col_heading) {
-                $row->pushContent(HTML::td(HTML($spacer, HTML::u($col_heading))));
+                $row->pushContent(HTML::td(HTML($spacer,
+                                                HTML::u($col_heading))));
                 $table_summary[] = $col_heading;
             }
             // Table summary for non-visual browsers.
-            $table->setAttr('summary', sprintf(_("Columns: %s."), implode(", ", $table_summary)));
-    
+            $table->setAttr('summary', sprintf(_("Columns: %s."),
+                                               implode(", ", $table_summary)));
+
             $table->pushContent(HTML::thead($row),
                                 HTML::tbody(false, $this->_rows));
         } else {
@@ -171,9 +185,9 @@ extends WikiPlugin
                     $this->pagelist[$linkname] += 1;
         }
     }
-
 };
 
+// $Log: not supported by cvs2svn $
 
 // Local Variables:
 // mode: php

@@ -1,10 +1,32 @@
 <?php // -*-php-*-
-rcs_id('$Id: Transclude.php,v 1.3 2002-09-17 03:34:06 dairiki Exp $');
+rcs_id('$Id: Transclude.php,v 1.4 2003-01-18 22:08:01 carstenklapp Exp $');
+/**
+ Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+
+ This file is part of PhpWiki.
+
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
 /**
  * Transclude:  Include an external web page within the body of a wiki page.
- * 
- * Usage:   
- *  <?plugin Transclude src=http://www.internet-technology.de/fourwins_de.htm ?>
+ *
+ * Usage:
+ *  <?plugin Transclude
+ *           src=http://www.internet-technology.de/fourwins_de.htm
+ *  ?>
  *
  * @author Geoffrey T. Dairiki
  *
@@ -22,7 +44,6 @@ rcs_id('$Id: Transclude.php,v 1.3 2002-09-17 03:34:06 dairiki Exp $');
  *  Sometimes the auto-vertical resize code doesn't seem to make the iframe
  *  quite big enough --- the scroll bars remain.  Not sure why.
  */
-
 class WikiPlugin_Transclude
 extends WikiPlugin
 {
@@ -34,14 +55,19 @@ extends WikiPlugin
       return _("Include an external web page within the body of a wiki page.");
     }
 
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.4 $");
+    }
+
     function getDefaultArguments() {
-        return array( 'src'	=> false, // the src url to include
-                      'height'	=> 450 // height of the iframe
+        return array( 'src'     => false, // the src url to include
+                      'height'  => 450 // height of the iframe
                     );
     }
 
     function run($dbi, $argstr, $request) {
-    	global $Theme;
+        global $Theme;
 
         $args = ($this->getArgs($argstr, $request));
         extract($args);
@@ -72,7 +98,7 @@ extends WikiPlugin
         $noframe_msg[] = '  ';
         $noframe_msg[] = fmt("Click %s to view the transcluded page",
                              HTML::a(array('href' => $src), _("here")));
-        
+
         $noframe_msg = HTML::div(array('class' => 'transclusion'),
                                  HTML::p(array(), $noframe_msg));
 
@@ -81,7 +107,7 @@ extends WikiPlugin
         /* This doesn't work very well...  maybe because CSS screws up NS4 anyway...
         $iframe = new HtmlElement('ilayer', array('src' => $src), $iframe);
         */
-        
+
         return HTML(HTML::p(array('class' => 'transclusion-title'),
                             fmt("Transcluded from %s", LinkURL($src))),
                     $this->_js(), $iframe);
@@ -102,12 +128,12 @@ extends WikiPlugin
         if ($seen)
             return '';
         $seen = true;
-        
+
         $script = '
           function adjust_iframe_height(frame) {
             var content = frame.contentDocument;
             try {
-	      frame.height = content.height + 2 * frame.marginHeight;
+                frame.height = content.height + 2 * frame.marginHeight;
             }
             catch (e) {
               // Can not get content.height unless transcluded doc
@@ -123,12 +149,13 @@ extends WikiPlugin
           }, false);
           ';
 
-        return  HTML::script(array('language' => 'JavaScript',
-                                   'type'     => 'text/javascript'),
-                             new RawXml("<!-- //\n$script\n// -->"));
+        return HTML::script(array('language' => 'JavaScript',
+                                  'type'     => 'text/javascript'),
+                            new RawXml("<!-- //\n$script\n// -->"));
     }
 };
 
+// $Log: not supported by cvs2svn $
 
 // (c-file-style: "gnu")
 // Local Variables:
@@ -137,5 +164,5 @@ extends WikiPlugin
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End:
 ?>

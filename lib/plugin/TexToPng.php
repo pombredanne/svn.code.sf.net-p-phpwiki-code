@@ -1,4 +1,25 @@
 <?php // -*-php-*-
+rcs_id('$Id: TexToPng.php,v 1.4 2003-01-18 22:08:01 carstenklapp Exp $');
+/**
+ Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+
+ This file is part of PhpWiki.
+
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
 // +---------------------------------------------------------------------+
 // | TexToPng.php                                                        |
 // +---------------------------------------------------------------------+
@@ -80,6 +101,11 @@ class WikiPlugin_TexToPng extends WikiPluginCached
 
     function getDescription() {
         return _("Converts TeX to an image. May be used to embed formulas in PhpWiki.");
+    }
+    
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -204,17 +230,17 @@ class WikiPlugin_TexToPng extends WikiPluginCached
     function createTexFile($texfile,$texstr) {
         if ($ok=($fp=fopen($texfile, 'w'))!=0 ) {
             // prepare .tex file
-   	    $texcommands = 
+            $texcommands = 
                 '\nopagenumbers'   . "\n" .
                 '\hoffset=0cm'     . "\n" .
-	        '\voffset=0cm'     . "\n" . 
-	    //    '\hsize=20cm'    . "\n" .
+                '\voffset=0cm'     . "\n" . 
+            //    '\hsize=20cm'    . "\n" .
             //    '\vsize=10ex'    . "\n" .
                 $texstr            . "\n" .
                 '\vfill\eject'     . "\n" .
                 '\end'             . "\n\n";
             
-	    $ok = fwrite($fp, $texcommands);
+            $ok = fwrite($fp, $texcommands);
             $ok = fclose($fp) && $ok;  // close anyway
         }
         if (!$ok) {
@@ -260,12 +286,12 @@ class WikiPlugin_TexToPng extends WikiPluginCached
         if ( !TexToPng_debug || (TexToPng_debug && $ok))  {
             if ($tempfiles) {
                 unlink($tempfiles);
-                unlink($tempfiles.'.ps');        
-                unlink($tempfiles.'.tex');
-                //unlink($tempfiles.'.aux');
-                unlink($tempfiles.'.dvi');
-                unlink($tempfiles.'.log');
-                unlink($tempfiles.'.png');
+                unlink($tempfiles . '.ps');        
+                unlink($tempfiles . '.tex');
+                //unlink($tempfiles . '.aux');
+                unlink($tempfiles . '.dvi');
+                unlink($tempfiles . '.log');
+                unlink($tempfiles . '.png');
             }
         }
 
@@ -276,7 +302,7 @@ class WikiPlugin_TexToPng extends WikiPluginCached
     } // TexToImg
 } // WikiPlugin_TexToPng
 
-
+// $Log: not supported by cvs2svn $
 
 // For emacs users
 // Local Variables:

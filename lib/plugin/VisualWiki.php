@@ -1,4 +1,5 @@
-<?php rcs_id('$Id: VisualWiki.php,v 1.5 2002-09-01 16:33:19 rurban Exp $');
+<?php // -*-php-*-
+rcs_id('$Id: VisualWiki.php,v 1.6 2003-01-18 22:11:45 carstenklapp Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -17,7 +18,8 @@
  You should have received a copy of the GNU General Public License
  along with PhpWiki; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */ 
+ */
+
 /**
  * Produces graphical site map of PhpWiki
  * Example for an image map creating plugin. It produces a graphical
@@ -26,18 +28,21 @@
  * @author Johannes Große
  * @version 0.8
  */
-define('VISUALWIKI_ALLOWOPTIONS',true);
+define('VISUALWIKI_ALLOWOPTIONS', true);
 // Name of the Truetypefont - Helvetica is probably easier to read
-//define('VISUALWIKIFONT','Helvetica');
-//define('VISUALWIKIFONT','Times');
-define('VISUALWIKIFONT','Arial');
+//define('VISUALWIKIFONT', 'Helvetica');
+//define('VISUALWIKIFONT', 'Times');
+define('VISUALWIKIFONT', 'Arial');
 $dotbin = '/usr/local/bin/dot';
 
-if (!defined('VISUALWIKI_ALLOWOPTIONS')) define('VISUALWIKI_ALLOWOPTIONS',false); 
+if (!defined('VISUALWIKI_ALLOWOPTIONS'))
+    define('VISUALWIKI_ALLOWOPTIONS', false);
 
 require_once "lib/WikiPluginCached.php";
 
-class WikiPlugin_VisualWiki extends WikiPluginCached {
+class WikiPlugin_VisualWiki
+extends WikiPluginCached
+{
     /**
      * Sets plugin type to map production
      */
@@ -47,18 +52,23 @@ class WikiPlugin_VisualWiki extends WikiPluginCached {
 
     /**
      * Sets the plugin's name to VisualWiki. It can be called by
-     * <code>&lt;?plugin VisualWiki?&gt;</code>, now. This 
+     * <code>&lt;?plugin VisualWiki?&gt;</code>, now. This
      * name must correspond to the filename and the class name.
      */
     function getName() {
         return "VisualWiki";
     }
 
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.6 $");
+    }
+
     /**
      * Sets textual description.
      */
     function getDescription() {
-        return 'Visualizes the Wiki structure in a graph.';
+        return _("Visualizes the Wiki structure in a graph using the 'dot' commandline tool from graphviz.");
     }
 
     /**
@@ -72,21 +82,21 @@ class WikiPlugin_VisualWiki extends WikiPluginCached {
                      'height'         => 7,
                      'colorby'        => 'age', // sort by 'age' or 'revtime'
                      'fillnodes'      => 'off',
-                     'label'          => 'name', 
+                     'label'          => 'name',
                      'shape'          => 'ellipse',
                      'large_nb'       => 5,
                      'recent_nb'      => 5,
                      'refined_nb'     => 15,
                      'backlink_nb'    => 5,
                      'neighbour_list' => '',
-                     'exclude_list'   => '', 
-                     'include_list'   => '', 
+                     'exclude_list'   => '',
+                     'include_list'   => '',
                      'fontsize'       => 10,
                      'help'           => false );
     }
 
     /**
-     * Sets the default arguments. WikiPlugin also regards these as 
+     * Sets the default arguments. WikiPlugin also regards these as
      * the allowed arguments. Since WikiPluginCached stores an image
      * for each different set of parameters, there can be a lot of
      * these (large) graphs if you allow different parameters.
@@ -99,34 +109,55 @@ class WikiPlugin_VisualWiki extends WikiPluginCached {
             return $this->defaultarguments();
         else
             return array();
-    } 
- 
-    /** 
+    }
+
+    /**
      * Substitutes each forbidden parameter value by the default value
      * defined in <code>defaultarguments</code>.
      */
     function checkArguments(&$arg) {
         extract($arg);
         $def = $this->defaultarguments();
-        if (($width<3)   ||($width>15))    $arg['width']    = $def['width'];
-        if (($height<3)  ||($height>20))   $arg['height']   = $def['height'];
-        if (($fontsize<8) ||($fontsize>24))   $arg['fontsize']   = $def['fontsize'];
-        if (!in_array($label,array('name','number')))
+
+        if (($width < 3) || ($width > 15))
+            $arg['width'] = $def['width'];
+
+        if (($height < 3) || ($height > 20))
+            $arg['height'] = $def['height'];
+
+        if (($fontsize < 8) || ($fontsize > 24))
+            $arg['fontsize'] = $def['fontsize'];
+
+        if (!in_array($label, array('name', 'number')))
             $arg['label'] = $def['label'];
-        if (!in_array($shape,array('ellipse','box','point','circle','plaintext')))
+
+        if (!in_array($shape, array('ellipse', 'box', 'point', 'circle',
+                                    'plaintext')))
             $arg['shape'] = $def['shape'];
-        if (!in_array($colorby,array('age','revtime')))
+
+        if (!in_array($colorby, array('age', 'revtime')))
             $arg['colorby'] = $def['colorby'];
-        if (!in_array($fillnodes,array('on','off')))
+
+        if (!in_array($fillnodes, array('on', 'off')))
             $arg['fillnodes'] = $def['fillnodes'];
-        if (($large_nb<0)   ||($large_nb>50))    $arg['large_nb']    = $def['large_nb'];
-        if (($recent_nb<0)  ||($recent_nb>50))   $arg['recent_nb']   = $def['recent_nb'];
-        if (($refined_nb<0) ||($refined_nb>50))  $arg['refined_nb']  = $def['refined_nb'];
-        if (($backlink_nb<0)||($backlink_nb>50)) $arg['backlink_nb'] = $def['backlink_nb'];
-	// ToDo: check if "ImageCreateFrom$imgtype"() exists.
-        if (!in_array($imgtype,$GLOBALS['CacheParams']['imgtypes']))
+
+        if (($large_nb < 0) || ($large_nb > 50))
+            $arg['large_nb'] = $def['large_nb'];
+
+        if (($recent_nb < 0)  || ($recent_nb > 50))
+            $arg['recent_nb'] = $def['recent_nb'];
+
+        if (($refined_nb < 0 ) || ( $refined_nb > 50))
+            $arg['refined_nb'] = $def['refined_nb'];
+
+        if (($backlink_nb < 0) || ($backlink_nb > 50))
+            $arg['backlink_nb'] = $def['backlink_nb'];
+
+        // ToDo: check if "ImageCreateFrom$imgtype"() exists.
+        if (!in_array($imgtype, $GLOBALS['CacheParams']['imgtypes']))
             $arg['imgtype'] = $def['imgtype'];
-	if (empty($fontname)) $arg['fontname'] = VISUALWIKIFONT;
+        if (empty($fontname))
+            $arg['fontname'] = VISUALWIKIFONT;
     }
 
     /**
@@ -136,38 +167,38 @@ class WikiPlugin_VisualWiki extends WikiPluginCached {
      */
     function getMap($dbi, $argarray, $request) {
         if (!VISUALWIKI_ALLOWOPTIONS)
-            $argarray = $this->defaultarguments();        
+            $argarray = $this->defaultarguments();
         $this->checkArguments($argarray);
         //extract($argarray);
-        if ($argarray['help']) 
+        if ($argarray['help'])
             return array($this->helpImage(), ' '); // FIXME
         $this->createColors();
-        $this->extract_wikipages($dbi, $argarray); 
-/*          ($dbi,  $large, $recent, $refined, $backlink, 
-            $neighbour, $excludelist, $includelist,$color );*/
+        $this->extract_wikipages($dbi, $argarray);
+        /* ($dbi,  $large, $recent, $refined, $backlink,
+            $neighbour, $excludelist, $includelist, $color); */
         return $this->invokeDot($argarray);
-/*($width,$height,$color,$shape,$text);*/
+        /* ($width, $height, $color, $shape, $text); */
     }
 
     /**
      * Sets the expire time to one day (so the image producing
-     * functions are called seldomly) or to about two minutes 
+     * functions are called seldomly) or to about two minutes
      * if a help screen is created.
      */
     function getExpire($dbi, $argarray, $request) {
         if ($argarray['help'])
             return '+120'; // 2 minutes
-        return sprintf('+%d',3*86000); // approx 3 days
+        return sprintf('+%d', 3*86000); // approx 3 days
     }
 
-    /** 
-     * Sets the imagetype according to user wishes and 
+    /**
+     * Sets the imagetype according to user wishes and
      * relies on WikiPluginCached to catch illegal image
      * formats.
-     * (I feel unsure whether this option is reasonable in 
-     *  this case, because png will definitely have the 
+     * (I feel unsure whether this option is reasonable in
+     *  this case, because png will definitely have the
      *  best results.)
-     * 
+     *
      * @return string 'png', 'gif', 'jpeg'
      */
     function getImageType($dbi, $argarray, $request) {
@@ -175,14 +206,14 @@ class WikiPlugin_VisualWiki extends WikiPluginCached {
     }
 
     /**
-     * This gives an alternative text description of 
+     * This gives an alternative text description of
      * the image map. I do not know whether it interferes
      * with the <code>title</code> attributes in &lt;area&gt;
      * tags of the image map. Perhaps this will be removed.
-     * @return string 
+     * @return string
      */
     function getAlt($dbi, $argstr, $request) {
-        return $this->getDescription(); 
+        return $this->getDescription();
     }
 
     // ------------------------------------------------------------------------------------------
@@ -193,19 +224,19 @@ class WikiPlugin_VisualWiki extends WikiPluginCached {
      */
     function helpImage() {
         $def = $this->defaultarguments();
-	$other_imgtypes = $GLOBALS['CacheParams']['imgtypes'];
-	unset ($other_imgtypes[$def['imgtype']]);
+        $other_imgtypes = $GLOBALS['CacheParams']['imgtypes'];
+        unset ($other_imgtypes[$def['imgtype']]);
         $helparr = array(
-            '<?plugin '.$this->getName() . 
+            '<?plugin '.$this->getName() .
             ' img'             => ' = "' . $def['imgtype'] . "(default)|" . join('|',$GLOBALS['CacheParams']['imgtypes']).'"',
             'width'            => ' = "width in inches"',
             'height'           => ' = "height in inches"',
-	    'fontname'         => ' = "font family"',
-	    'fontsize'         => ' = "fontsize in points"',
+            'fontname'         => ' = "font family"',
+            'fontsize'         => ' = "fontsize in points"',
             'colorby'          => ' = "age|revtime|none"',
             'fillnodes'        => ' = "on|off"',
             'shape'            => ' = "ellipse(default)|box|circle|point"',
-            'label'            => ' = "name|number"', 
+            'label'            => ' = "name|number"',
             'large_nb'         => ' = "number of largest pages to be selected"',
             'recent_nb'        => ' = "number of youngest pages"',
             'refined_nb'       => ' = "#pages with smallest time between revisions"',
@@ -213,24 +244,25 @@ class WikiPlugin_VisualWiki extends WikiPluginCached {
             'neighbour_list'   => ' = "find pages linked from and to these pages"',
             'exclude_list'     => ' = "colon separated list of pages to be excluded"',
             'include_list'     => ' = "colon separated list"     ?>'
-        );
+            );
         $length = 0;
         foreach($helparr as $alignright => $alignleft) {
             $length = max($length, strlen($alignright));
-        }   
-        $helptext ='';         
+        }
+        $helptext ='';
         foreach($helparr as $alignright => $alignleft) {
             $helptext .= substr('                                                        '
                                 . $alignright, -$length).$alignleft."\n";
-        }        
-        return $this->text2img($helptext,4,array(1,0,0), array(255,255,255));
+        }
+        return $this->text2img($helptext, 4, array(1, 0, 0),
+                               array(255, 255, 255));
     }
 
 
     /**
      * Selects the first (smallest or biggest) WikiPages in
      * a given category.
-     * 
+     *
      * @param  number   integer  number of page names to be found
      * @param  category string   attribute of the pages which is used
      *                           to compare them
@@ -243,32 +275,34 @@ class WikiPlugin_VisualWiki extends WikiPluginCached {
         $names = &$this->names;
 
         $selected = array();
-        $i=0;
+        $i = 0;
         foreach($names as $name) {
-           if ($i++>=$number) break;
-           $selected[$name] = $pages[$name][$category]; 
+            if ($i++>=$number)
+                break;
+            $selected[$name] = $pages[$name][$category];
         }
-//echo "<pre>$category "; var_dump($selected); "</pre>";
+        //echo "<pre>$category "; var_dump($selected); "</pre>";
         $compareto = $minimum ? 0x79999999 : -0x79999999;
 
-        $i=0;
+        $i = 0;
         foreach ($names as $name) {
-            if ($i++<$number) continue;
+            if ($i++<$number)
+                continue;
             if ($minimum) {
                 if (($crit = $pages[$name][$category]) < $compareto) {
                     $selected[$name] = $crit;
-                    asort($selected,SORT_NUMERIC);
+                    asort($selected, SORT_NUMERIC);
                     array_pop($selected);
                     $compareto = end($selected);
-                }     
+                }
             } elseif (($crit = $pages[$name][$category]) > $compareto)  {
                 $selected[$name] = $crit;
-                arsort($selected,SORT_NUMERIC);
+                arsort($selected, SORT_NUMERIC);
                 array_pop($selected);
                 $compareto = end($selected);
             }
         }
-//echo "<pre>$category "; var_dump($selected); "</pre>";
+        //echo "<pre>$category "; var_dump($selected); "</pre>";
 
         return array_keys($selected);
     }
@@ -282,40 +316,44 @@ class WikiPlugin_VisualWiki extends WikiPluginCached {
     *
     * @param  dbi         WikiDB   database handle to access all Wiki pages
     * @param  LARGE       integer  number of largest pages which should
-    *                              be included 
+    *                              be included
     * @param  RECENT      integer  number of the youngest pages to be included
-    * @param  REFINED     integer  number of the pages with shortes revision interval
+    * @param  REFINED     integer  number of the pages with shortes revision
+    *                              interval
     * @param  BACKLINK    integer  number of the pages with most backlinks
-    * @param  EXCLUDELIST string   colon ':' separated list of page names which 
-    *                              should not be displayed (like PhpWiki, for example)
-    * @param  INCLUDELIST string   colon separated list of pages which are allways 
-    *                              included (for example your own page :)
-    * @param  COLOR       string   'age', 'revtime' or 'none'; Selects which page 
-    *                              feature is used to determine the filling color of 
-    *                              the nodes in the graph.
+    * @param  EXCLUDELIST string   colon ':' separated list of page names which
+    *                              should not be displayed (like PhpWiki, for
+    *                              example)
+    * @param  INCLUDELIST string   colon separated list of pages which are
+    *                              allways included (for example your own
+    *                              page :)
+    * @param  COLOR       string   'age', 'revtime' or 'none'; Selects which
+    *                              page feature is used to determine the
+    *                              filling color of the nodes in the graph.
     * @return void
     */
     function extract_wikipages($dbi, $argarray) {
-// $LARGE, $RECENT, $REFINED, $BACKLINK, $NEIGHBOUR, $EXCLUDELIST, $INCLUDELIST,$COLOR 
+        // $LARGE, $RECENT, $REFINED, $BACKLINK, $NEIGHBOUR,
+        // $EXCLUDELIST, $INCLUDELIST,$COLOR
         $now = time();
 
         extract($argarray);
         // FIXME: gettextify?
-        $exclude_list   = explode(':',$exclude_list);
-        $include_list   = explode(':',$include_list);   
-        $neighbour_list = explode(':',$neighbour_list);
+        $exclude_list   = explode(':', $exclude_list);
+        $include_list   = explode(':', $include_list);
+        $neighbour_list = explode(':', $neighbour_list);
 
         // FIXME remove INCLUDED from EXCLUDED
 
         // collect all pages
         $allpages = $dbi->getAllPages();
         $pages = &$this->pages;
-        $countpages=0;
+        $countpages = 0;
         while ($page = $allpages->next()) {
             $name = $page->getName();
 
             // skip exluded pages
-            if (in_array($name,$exclude_list)) continue;
+            if (in_array($name, $exclude_list)) continue;
 
             // false = get links from actual page
             // true  = get links to actual page ("backlinks")
@@ -333,8 +371,8 @@ class WikiPlugin_VisualWiki extends WikiPluginCached {
                 $con = array();
                 while ($link = $l->next()) {
                     array_push($con, $link->getName());
-                }            
-                $include_list = array_merge($include_list,$bconnection,$con);
+                }
+                $include_list = array_merge($include_list, $bconnection, $con);
                 unset($l);
                 unset($con);
             }
@@ -350,24 +388,24 @@ class WikiPlugin_VisualWiki extends WikiPluginCached {
                 'backlinks'   => $bconnection,
                 'size'        => 1000 // FIXME
                 );
-            $pages[$name]['revtime'] = $pages[$name]['age']/($pages[$name]['revnr']);
+            $pages[$name]['revtime'] = $pages[$name]['age'] / ($pages[$name]['revnr']);
 
             unset($page);
-        } 
+        }
         unset($allpages);
         $this->names = array_keys($pages);
 
-        $countpages = count($pages); 
+        $countpages = count($pages);
 
         // now select each page matching to given parameters
         $all_selected = array_unique(array_merge(
             $this->findbest($recent_nb,   'age',         true),
             $this->findbest($refined_nb,  'revtime',     true),
-            $x=$this->findbest($backlink_nb, 'backlink_nb', false),
+            $x = $this->findbest($backlink_nb, 'backlink_nb', false),
 //            $this->findbest($large_nb,    'size',        false),
             $include_list));
 
-        foreach($all_selected as $name) 
+        foreach($all_selected as $name)
             if (isset($pages[$name]))
                 $newpages[$name] = $pages[$name];
         unset($this->names);
@@ -376,9 +414,9 @@ class WikiPlugin_VisualWiki extends WikiPluginCached {
         $pages = &$this->pages;
         $this->names = array_keys($pages);
         unset($newpages);
-        unset($all_selected);            
-        
-        $countpages = count($pages); 
+        unset($all_selected);
+
+        $countpages = count($pages);
 
         // remove dead links and collect links
         reset($pages);
@@ -389,125 +427,131 @@ class WikiPlugin_VisualWiki extends WikiPluginCached {
                     if ( !isset($pages[$link]) || $link == $name ) {
                         unset($pages[$name]['backlinks'][$index]);
                     } else {
-                        array_push($pages[$link]['links'],$name);                        
+                        array_push($pages[$link]['links'],$name);
                         //array_push($this->everylink, array($link,$name));
                     }
-                } 
+                }
             }
         }
 
-        if ($colorby=='none') return;
+        if ($colorby == 'none')
+            return;
         list($oldestname) = $this->findbest(1, $colorby, false);
         $this->oldest = $pages[$oldestname][$colorby];
-        foreach($this->names as $name)  
-            $pages[$name]['color'] = $this->getColor($pages[$name][$colorby]/$this->oldest);        
+        foreach($this->names as $name)
+            $pages[$name]['color'] = $this->getColor($pages[$name][$colorby] / $this->oldest);
     } // extract_wikipages
 
     /**
-     * Creates the text file description of the graph needed to invoke 
-     * <code>dot</code>. 
-     * 
+     * Creates the text file description of the graph needed to invoke
+     * <code>dot</code>.
+     *
      * @param filename  string  name of the dot file to be created
      * @param width     float   width of the output graph in inches
      * @param height    float   height of the graph in inches
-     * @param colorby   string  color sceme beeing used ('age','revtime','none')
-     * @param shape     string  node shape; 'ellipse','box','circle','point'
-     * @param label     string  'name': label by name, 'number': label by unique number
+     * @param colorby   string  color sceme beeing used ('age', 'revtime',
+     *                                                   'none')
+     * @param shape     string  node shape; 'ellipse', 'box', 'circle', 'point'
+     * @param label     string  'name': label by name,
+     *                          'number': label by unique number
      * @return boolean          error status; true=ok; false=error
      */
-    function createDotFile($filename,$argarray) {
+    function createDotFile($filename, $argarray) {
         extract($argarray);
-        if (!$fp=fopen($filename, 'w'))
+        if (!$fp = fopen($filename, 'w'))
             return false;
 
-        $fillstring = ($fillnodes=='on')?'style=filled,':'';
+        $fillstring = ($fillnodes == 'on') ? 'style=filled,' : '';
 
         $ok = true;
         $names = &$this->names;
         $pages = &$this->pages;
-        
+
         $nametonumber = array_flip($names);
 
         $dot = "digraph VisualWiki {\n" // }
              . "    size=\"$width,$height\";\n    ";
 
-        switch ($shape) { 
-            case 'point':
-               $dot .= "edge [arrowhead=none];\nnode [shape=$shape,fontname=$fontname,width=0.15,height=0.15,fontsize=$fontsize];\n";
-               break;
-            case 'box':
-               $dot .= "node [shape=$shape,fontname=$fontname,width=0.4,height=0.4,fontsize=$fontsize];\n";
-               break;    
-            case 'circle':
-               $dot .= "node [shape=$shape,fontname=$fontname,width=0.25,height=0.25,fontsize=$fontsize];\n";
-               break;    
-            default :
-               $dot .= "node [fontname=$fontname,shape=$shape,fontsize=$fontsize];\n" ;
+        switch ($shape) {
+        case 'point':
+            $dot .= "edge [arrowhead=none];\nnode [shape=$shape,fontname=$fontname,width=0.15,height=0.15,fontsize=$fontsize];\n";
+            break;
+        case 'box':
+            $dot .= "node [shape=$shape,fontname=$fontname,width=0.4,height=0.4,fontsize=$fontsize];\n";
+            break;
+        case 'circle':
+            $dot .= "node [shape=$shape,fontname=$fontname,width=0.25,height=0.25,fontsize=$fontsize];\n";
+            break;
+        default :
+            $dot .= "node [fontname=$fontname,shape=$shape,fontsize=$fontsize];\n" ;
         }
         $dot .= "\n";
-        $i=0;
+        $i = 0;
         foreach ($names as $name) {
 
             $url = rawurlencode($name);
-	    // patch to allow Page/SubPage
-	    $url = preg_replace('/' . urlencode(SUBPAGE_SEPARATOR) . '/',SUBPAGE_SEPARATOR,$url);
-            $nodename = ($label!='name'?$nametonumber[$name]+1:$name);
+            // patch to allow Page/SubPage
+            $url = preg_replace('/' . urlencode(SUBPAGE_SEPARATOR) . '/',
+                                SUBPAGE_SEPARATOR, $url);
+            $nodename = ($label != 'name' ? $nametonumber[$name] + 1 : $name);
 
             $dot .= "    \"$nodename\" [URL=\"$url\"";
             if ($colorby != 'none') {
-                $col = $pages[$name]['color']; 
-                $dot .= sprintf(',%scolor="#%02X%02X%02X"',$fillstring, $col[0],$col[1],$col[2]);
+                $col = $pages[$name]['color'];
+                $dot .= sprintf(',%scolor="#%02X%02X%02X"', $fillstring,
+                                $col[0], $col[1], $col[2]);
             }
             $dot .= "];\n";
 
             if (!empty($pages[$name]['links'])) {
                 unset($linkarray);
-                if ($label!='name') 
+                if ($label != 'name')
                     foreach($pages[$name]['links'] as $linkname)
-                        $linkarray[] = $nametonumber[$linkname]+1;
-                else                  
+                        $linkarray[] = $nametonumber[$linkname] + 1;
+                else
                     $linkarray = $pages[$name]['links'];
-                $linkstring = join('"; "', $linkarray );                
+                $linkstring = join('"; "', $linkarray );
 
                 $c = count($pages[$name]['links']);
-                $dot .= "        \"$nodename\" -> "  
+                $dot .= "        \"$nodename\" -> "
                      . ($c>1?'{':'')
                      . "\"$linkstring\";"
-                     . ($c>1?'}':'')  
-                     . "\n";   
+                     . ($c>1?'}':'')
+                     . "\n";
             }
         }
-        if ($colorby!='none') {
+        if ($colorby != 'none') {
             $dot .= "\n    subgraph cluster_legend {\n"
                  . "         node[fontname=$fontname,shape=box,width=0.4,height=0.4,fontsize=$fontsize];\n"
                  . "         fillcolor=lightgrey;\n"
                  . "         style=filled;\n"
                  . "         fontname=$fontname;\n"
-		 . "         fontsize=$fontsize;\n"
+                 . "         fontsize=$fontsize;\n"
                  . "         label=\"".gettext("Legend")."\";\n";
-            $oldest= ceil($this->oldest/(24*3600));
+            $oldest= ceil($this->oldest / (24 * 3600));
             $max = 5;
             $legend = array();
-            for($i=0;$i<$max;$i++) {
-                 $time = floor($i/$max*$oldest);
-                 $name = '"'.$time.' '.gettext('days').'"';
-                 $col = $this->getColor($i/$max);
-                 $dot .= sprintf('       %s [%scolor="#%02X%02X%02X"];',
-                     $name, $fillstring,$col[0],$col[1],$col[2]) . "\n";
-                 $legend[] = $name;
+            for($i = 0; $i < $max; $i++) {
+                $time = floor($i / $max * $oldest);
+                $name = '"' . $time .' '. _("days") .'"';
+                $col = $this->getColor($i/$max);
+                $dot .= sprintf('       %s [%scolor="#%02X%02X%02X"];',
+                                $name, $fillstring, $col[0], $col[1], $col[2])
+                    . "\n";
+                $legend[] = $name;
             }
             $dot .= '        '. join(' -> ', $legend)
                  . ";\n    }\n";
-                 
+
         }
 
         // {
         $dot .= "}\n";
 
-	$ok = fwrite($fp, $dot);
+        $ok = fwrite($fp, $dot);
         $ok = fclose($fp) && $ok;  // close anyway
-      
-        return $ok;        
+
+        return $ok;
     }
 
     /**
@@ -528,65 +572,68 @@ class WikiPlugin_VisualWiki extends WikiPluginCached {
      *
      * @param width     float   width of the output graph in inches
      * @param height    float   height of the graph in inches
-     * @param colorby   string  color sceme beeing used ('age','revtime','none')
-     * @param shape     string  node shape; 'ellipse','box','circle','point'
+     * @param colorby   string  color sceme beeing used ('age', 'revtime',
+     *                                                   'none')
+     * @param shape     string  node shape; 'ellipse', 'box', 'circle', 'point'
      * @param label     string  not used anymore
      */
     function invokeDot($argarray) {
-	global $dotbin;
-        $cacheparams = $GLOBALS['CacheParams'];        
-        $tempfiles = tempnam($cacheparams['cache_dir'],'VisualWiki');
-	$gif = $argarray['imgtype'];
-	$ImageCreateFromFunc = "ImageCreateFrom$gif";
-        $ok =  $tempfiles 
+        global $dotbin;
+        $cacheparams = $GLOBALS['CacheParams'];
+        $tempfiles = tempnam($cacheparams['cache_dir'], 'VisualWiki');
+        $gif = $argarray['imgtype'];
+        $ImageCreateFromFunc = "ImageCreateFrom$gif";
+        $ok =  $tempfiles
             && $this->createDotFile($tempfiles.'.dot',$argarray)
             && $this->execute("$dotbin -T$gif $tempfiles.dot -o $tempfiles.$gif")
             && $this->execute("$dotbin -Timap $tempfiles.dot -o $tempfiles.map")
             && file_exists( "$tempfiles.$gif" )
             && file_exists( $tempfiles.'.map' )
             && ($img = $ImageCreateFromFunc( "$tempfiles.$gif" ))
-            && ($fp = fopen($tempfiles.'.map','r')); 
+            && ($fp = fopen($tempfiles.'.map','r'));
 
         $map = HTML();
         if ($ok) {
             while (!feof($fp)) {
-                $line = fgets($fp,1000);
-                if (substr($line,0,1)=='#') continue;
-                list($shape,$url,$e1,$e2,$e3,$e4) = sscanf($line,"%s %s %d,%d %d,%d");
-                
-                if ($shape!='rect') continue;
-                
+                $line = fgets($fp, 1000);
+                if (substr($line, 0, 1) == '#')
+                    continue;
+                list($shape, $url, $e1, $e2, $e3, $e4) = sscanf($line,
+                                                                "%s %s %d,%d %d,%d");
+                if ($shape != 'rect')
+                    continue;
+
                 // dot sometimes gives not allways the right order so
                 // so we have to sort a bit
-                $x1 = min($e1,$e3);
-                $x2 = max($e1,$e3);
-                $y1 = min($e2,$e4);
-                $y2 = max($e2,$e4);
-                $map->pushContent(HTML::area( array( 
+                $x1 = min($e1, $e3);
+                $x2 = max($e1, $e3);
+                $y1 = min($e2, $e4);
+                $y2 = max($e2, $e4);
+                $map->pushContent(HTML::area(array(
                             'shape'  => 'rect',
                             'coords' => "$x1,$y1,$x2,$y2",
                             'href'   => $url,
                             'title'  => rawurldecode($url),
-			    'alt' => $url)));
+                            'alt' => $url)));
                 }
-            fclose($fp); 
+            fclose($fp);
         }
 
         // clean up tempfiles
-        if ($ok and empty($_GET['debug']) and $tempfiles) { 
+        if ($ok && empty($_GET['debug']) && $tempfiles) {
             unlink($tempfiles);
             unlink("$tempfiles.$gif");
-            unlink($tempfiles.'.map');
-            unlink($tempfiles.'.dot');
+            unlink($tempfiles . '.map');
+            unlink($tempfiles . '.dot');
         }
 
         if ($ok)
-            return array($img,$map);
+            return array($img, $map);
         else
-            return array(false,false);
+            return array(false, false);
     } // invokeDot
 
-    /** 
+    /**
      * Prepares some rainbow colors for the nodes of the graph
      * and stores them in an array which may be accessed with
      * <code>getColor</code>.
@@ -600,19 +647,23 @@ class WikiPlugin_VisualWiki extends WikiPluginCached {
              array('red' =>   0, 'green' =>   0, 'blue' => 255),
              array('red' => 100, 'green' => 100, 'blue' => 100)
              );
-      
+
         $steps = 2;
-        $numberofcolors = count($predefcolors)*$steps;
+        $numberofcolors = count($predefcolors) * $steps;
 
         $promille = -1;
         foreach($predefcolors as $color) {
-            if ($promille < 0) { $oldcolor = $color; $promille=0; continue; }
-            for ($i=0; $i<$steps; $i++) 
+            if ($promille < 0) {
+                $oldcolor = $color;
+                $promille = 0;
+                continue;
+            }
+            for ($i = 0; $i < $steps; $i++)
                 $this->ColorTab[++$promille / $numberofcolors * 1000] = array(
                     floor(interpolate( $oldcolor['red'],   $color['red'],   $i/$steps )),
                     floor(interpolate( $oldcolor['green'], $color['green'], $i/$steps )),
                     floor(interpolate( $oldcolor['blue'],  $color['blue'],  $i/$steps ))
-                );          
+                );
             $oldcolor = $color;
         }
 //echo"<pre>";  var_dump($this->ColorTab); echo "</pre>";
@@ -642,7 +693,16 @@ class WikiPlugin_VisualWiki extends WikiPluginCached {
  */
 
 function interpolate($a, $b, $pos) {
-    return $a + ($b-$a)*$pos;
+    return $a + ($b - $a) * $pos;
 }
 
+// $Log: not supported by cvs2svn $
+
+// Local Variables:
+// mode: php
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
+// End:
 ?>

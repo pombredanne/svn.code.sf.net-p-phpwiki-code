@@ -1,26 +1,45 @@
 <?php // -*-php-*-
-rcs_id('$Id: SiteMap.php,v 1.5 2002-11-04 19:17:16 carstenklapp Exp $');
+rcs_id('$Id: SiteMap.php,v 1.6 2003-01-18 22:08:01 carstenklapp Exp $');
 /**
-http://sourceforge.net/tracker/?func=detail&aid=537380&group_id=6121&atid=306121
+ Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
-Submitted By: Cuthbert Cat (cuthbertcat)
+ This file is part of PhpWiki.
 
-This is a quick mod of BackLinks to do the job recursively. If your
-site is categorized correctly, and all the categories are listed in
-CategoryCategory, then a RecBackLinks there will produce a contents
-page for the entire site.
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-The list is as deep as the recursion level.
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-direction: Get BackLinks or forward links (links listed on the page)
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
-firstreversed: If true, get BackLinks for the first page and forward
-links for the rest. Only applicable when direction = 'forward'.
-
-excludeunknown: If true (default) then exclude any mentioned pages
-which don't exist yet.  Only applicable when direction = 'forward'.
-*/
-
+/**
+ * http://sourceforge.net/tracker/?func=detail&aid=537380&group_id=6121&atid=306121
+ *
+ * Submitted By: Cuthbert Cat (cuthbertcat)
+ *
+ * This is a quick mod of BackLinks to do the job recursively. If your
+ * site is categorized correctly, and all the categories are listed in
+ * CategoryCategory, then a RecBackLinks there will produce a contents
+ * page for the entire site.
+ *
+ * The list is as deep as the recursion level.
+ *
+ * direction: Get BackLinks or forward links (links listed on the page)
+ *
+ * firstreversed: If true, get BackLinks for the first page and forward
+ * links for the rest. Only applicable when direction = 'forward'.
+ *
+ * excludeunknown: If true (default) then exclude any mentioned pages
+ * which don't exist yet.  Only applicable when direction = 'forward'.
+ */
 require_once('lib/PageList.php');
 
 class WikiPlugin_SiteMap
@@ -31,31 +50,35 @@ extends WikiPlugin
     }
 
     function getDescription () {
-        return sprintf(_("SiteMap: Recursively get BackLinks or links for %s"),
+        return sprintf(_("Recursively get BackLinks or links for %s"),
                        '[pagename]');
     }
 
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.6 $");
+    }
+
     function getDefaultArguments() {
-        return array('exclude'		=> '',
-                     'include_self'	=> 0,
-                     'noheader'         => 0,
-                     'page'		=> '[pagename]',
-                     'description'	=> $this->getDescription(),
-                     'reclimit'         => 4,
-                     'info'		=> false,
-                     'direction'	=> 'back',
-                     'firstreversed'	=> false,
-                     'excludeunknown'	=> true
+        return array('exclude'        => '',
+                     'include_self'   => 0,
+                     'noheader'       => 0,
+                     'page'           => '[pagename]',
+                     'description'    => $this->getDescription(),
+                     'reclimit'       => 4,
+                     'info'           => false,
+                     'direction'      => 'back',
+                     'firstreversed'  => false,
+                     'excludeunknown' => true
                      );
     }
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor
-    //
     // exclude arg allows multiple pagenames
     // exclude=HomePage,RecentChanges
 
-    function recursivelyGetBackLinks($startpage, $pagearr, $level = '*', 
-                                 $reclimit = '***') {
+    function recursivelyGetBackLinks($startpage, $pagearr, $level = '*',
+                                     $reclimit = '***') {
         static $VisitedPages = array();
 
         $startpagename = $startpage->getName();
@@ -71,14 +94,15 @@ extends WikiPlugin
             if (($linkpagename != $startpagename)
                 && !in_array($linkpagename, $this->ExcludedPages)) {
                 $pagearr[$level . " [$linkpagename]"] = $link;
-                $pagearr = $this->recursivelyGetBackLinks($link, $pagearr, 
-                                                      $level . '*', $reclimit);
+                $pagearr = $this->recursivelyGetBackLinks($link, $pagearr,
+                                                          $level . '*',
+                                                          $reclimit);
             }
         }
         return $pagearr;
     }
 
-    function recursivelyGetLinks($startpage, $pagearr, $level = '*', 
+    function recursivelyGetLinks($startpage, $pagearr, $level = '*',
                                  $reclimit = '***') {
         static $VisitedPages = array();
 
@@ -89,17 +113,20 @@ extends WikiPlugin
         if (in_array($startpagename, $VisitedPages))
             return $pagearr;
         array_push($VisitedPages, $startpagename);
-        $reversed = (($this->firstreversed) && ($startpagename == $this->initialpage));
+        $reversed = (($this->firstreversed)
+                     && ($startpagename == $this->initialpage));
         //trigger_error("DEBUG: \$reversed = $reversed");
         $pagelinks = $startpage->getLinks($reversed);
         while ($link = $pagelinks->next()) {
             $linkpagename = $link->getName();
             if (($linkpagename != $startpagename)
                 && !in_array($linkpagename, $this->ExcludedPages)) {
-                if (!$this->excludeunknown || $this->dbi->isWikiPage($linkpagename)) {
+                if (!$this->excludeunknown
+                    || $this->dbi->isWikiPage($linkpagename)) {
                     $pagearr[$level . " [$linkpagename]"] = $link;
-                    $pagearr = $this->recursivelyGetLinks($link, $pagearr, 
-                                                      $level . '*', $reclimit);
+                    $pagearr = $this->recursivelyGetLinks($link, $pagearr,
+                                                          $level . '*',
+                                                          $reclimit);
                 }
             }
         }
@@ -127,15 +154,17 @@ extends WikiPlugin
         } else {
             $limit = '***';
         }
-        if (! $noheader) 
+        if (! $noheader)
             $out .= $description ." ". sprintf(_("(max. recursion level: %d)"),
                                                $reclimit) . ":\n\n";
         $pagelist = new PageList($info, $exclude);
         $p = $dbi->getPage($page);
 
         $pagearr = array();
-        if ($direction == 'back')
-            $pagearr = $this->recursivelyGetBackLinks($p, $pagearr, "*", $limit);
+        if ($direction == 'back') {
+            $pagearr = $this->recursivelyGetBackLinks($p, $pagearr, "*",
+                                                      $limit);
+        }
         else {
             $this->dbi = $dbi;
             $this->initialpage = $page;
@@ -143,7 +172,7 @@ extends WikiPlugin
             $this->excludeunknown = $excludeunknown;
             $pagearr = $this->recursivelyGetLinks($p, $pagearr, "*", $limit);
         }
-        
+
         reset($pagearr);
         while (list($key, $link) = each($pagearr)) {
             $out .= $key . "\n";
@@ -152,6 +181,8 @@ extends WikiPlugin
     }
 };
 
+// $Log: not supported by cvs2svn $
+
 // For emacs users
 // Local Variables:
 // mode: php
@@ -159,6 +190,5 @@ extends WikiPlugin
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:      
-        
+// End:
 ?>
