@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.34 2003-02-18 19:01:35 dairiki Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.35 2003-02-21 04:09:11 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -18,6 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 require_once('lib/HtmlElement.php');
+require_once('lib/CachedMarkup.php');
 require_once('lib/InlineParser.php');
 
 ////////////////////////////////////////////////////////////////
@@ -148,16 +149,18 @@ class BlockParser_Input {
 
         $this->_lines = preg_split('/[^\S\n]*\n/', $text);
         $this->_pos = 0;
-        $this->_atSpace = true;
+
+        // Strip leading blank lines.
+        while ($this->_lines and ! $this->_lines[0])
+            array_shift($this->_lines);
+        $this->_atSpace = false;
     }
 
     function skipSpace () {
-        // For top-level input, the end of file looks like a space.
-        // (The last block is not of class tight-bottom.)
         $nlines = count($this->_lines);
         while (1) {
             if ($this->_pos >= $nlines) {
-                $this->_atSpace = true;
+                $this->_atSpace = false;
                 break;
             }
             if ($this->_lines[$this->_pos] != '')
@@ -523,23 +526,26 @@ class Block_list extends BlockMarkup
 class Block_dl extends Block_list
 {
     var $_tag = 'dl';
-    var $_re = '\ {0,4}\S.*(?<! ~):\s*$';
+
+    function Block_dl () {
+        $this->_re = '\ {0,4}\S.*(?<!'.ESCAPE_CHAR.'):\s*$';
+    }
 
     function _match (&$input, $m) {
         if (!($p = $this->_do_match($input, $m)))
             return false;
         list ($term, $defn, $loose) = $p;
-        
+
         $this->_content[] = new Block_HtmlElement('dt', false, $term);
         $this->_content[] = $defn;
-	$this->_tight_defn = !$loose;
+        $this->_tight_defn = !$loose;
         return true;
     }
 
     function _setTightness($top, $bot) {
         $dt = &$this->_content[0];
         $dd = &$this->_content[1];
-        
+
         $dt->setTightness($top, $this->_tight_defn);
         $dd->setTightness($this->_tight_defn, $bot);
     }
@@ -553,7 +559,7 @@ class Block_dl extends Block_list
         $input->advance();
         $loose = $input->skipSpace();
         $line = $input->currentLine();
-        
+
         if (!$line || !preg_match($pat, $line, $mm)) {
             $input->setPos($pos);
             return false;       // No body found.
@@ -714,7 +720,9 @@ class Block_table_dl extends Block_dl
 {
     var $_tag = 'dl-table';     // phony.
 
-    var $_re = '\ {0,4} (?:\S.*)? (?<! ~) \| \s* $';
+    function Block_table_dl() {
+        $this->_re = '\ {0,4} (?:\S.*)? (?<!'.ESCAPE_CHAR.') \| \s* $';
+    }
 
     function _match (&$input, $m) {
         if (!($p = $this->_do_match($input, $m)))
@@ -850,7 +858,7 @@ class Block_plugin extends Block_pre
     function _match (&$input, $m) {
         $pos = $input->getPos();
         $pi = $m->match . $m->postmatch;
-        while (!preg_match('/(?<!~)\?>\s*$/', $pi)) {
+        while (!preg_match('/(?<!'.ESCAPE_CHAR.')\?>\s*$/', $pi)) {
             if (($line = $input->nextLine()) === false) {
                 $input->setPos($pos);
                 return false;
@@ -859,11 +867,7 @@ class Block_plugin extends Block_pre
         }
         $input->advance();
 
-        global $request;
-        $loader = new WikiPluginLoader;
-        $expansion = $loader->expandPI($pi, $request);
-        $this->_element = new Block_HtmlElement('div', array('class' => 'plugin'),
-                                                $expansion);
+	$this->_element = new Cached_PluginInvocation($pi);
         return true;
     }
 }
@@ -953,7 +957,7 @@ class Block_p extends BlockMarkup
 ////////////////////////////////////////////////////////////////
 //
 
-function TransformText ($text, $markup = 2.0) {
+function TransformText ($text, $markup = 2.0, $basepage=false) {
     if (isa($text, 'WikiDB_PageRevision')) {
         $rev = $text;
         $text = $rev->getPackedContent();
@@ -972,6 +976,14 @@ function TransformText ($text, $markup = 2.0) {
     //set_time_limit(3);
 
     $output = new WikiText($text);
+
+    if ($basepage) {
+        // This is for immediate consumption.
+        // We must bind the contents to a base pagename so that
+        // relative page links can be properly linkified...
+        return new CacheableMarkup($output->getContent(), $basepage);
+    }
+    
     return new XmlContent($output->getContent());
 }
 
