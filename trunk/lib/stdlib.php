@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.118 2002-09-01 16:18:52 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.119 2002-09-14 22:58:06 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -321,7 +321,7 @@ function ExtractWikiPageLinks($content) {
         // remove escaped '['
         $line = str_replace('[[', ' ', $line);
         // remove footnotes
-        $line = preg_replace('/[\d+]/', ' ', $line);
+        $line = preg_replace('/\[\d+\]/', ' ', $line);
         
         // bracket links (only type wiki-* is of interest)
         $numBracketLinks = preg_match_all("/\[\s*([^\]|]+\|)?\s*(\S.*?)\s*\]/",
