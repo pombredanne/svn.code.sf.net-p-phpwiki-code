@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.50 2002-02-07 04:11:44 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.51 2002-02-07 22:01:33 dairiki Exp $');
 
 
 include "lib/config.php";
@@ -46,10 +46,36 @@ class _UserPreference_int extends _UserPreference
     }
 }
 
+class _UserPreference_bool extends _UserPreference
+{
+    function _UserPreference_bool ($default = false) {
+        $this->_UserPreference((bool) $default);
+    }
+
+    function sanify ($value) {
+        if (is_array($value)) {
+            /* This allows for constructs like:
+             *
+             *   <input type="hidden" name="pref[boolPref][]" value="0" />
+             *   <input type="checkbox" name="pref[boolPref][]" value="1" />
+             *
+             * (If the checkbox is not checked, only the hidden input gets sent.
+             * If the checkbox is sent, both inputs get sent.)
+             */
+            foreach ($value as $val) {
+                if ($val)
+                    return true;
+            }
+            return false;
+        }
+        return (bool) $value;
+    }
+}
+
 $UserPreferences = array('editWidth' => new _UserPreference_int(80, 30, 150),
                          'editHeight' => new _UserPreference_int(22, 5, 80),
                          'timeOffset' => new _UserPreference(TimezoneOffset(false, true)),
-                         'relativeDates' => new _UserPreference(false),
+                         'relativeDates' => new _UserPreference_bool(),
                          'userid' => new _UserPreference(''));
 
 class UserPreferences {
