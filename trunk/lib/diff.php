@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.22 2001-12-18 06:28:16 carstenklapp Exp $');
+rcs_id('$Id: diff.php,v 1.23 2001-12-19 05:07:14 dairiki Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -248,8 +248,8 @@ function showDiff ($dbi, $request) {
     $page_link = LinkExistingWikiWord($pagename);
     
     $html = Element('p',
-                    sprintf(htmlspecialchars(_("Differences between %s and %s of %s.")),
-                            $new_link, $old_link, $page_link));
+                    __sprintf("Differences between %s and %s of %s.",
+                              $new_link, $old_link, $page_link));
 
     $otherdiffs='';
     $label = array('major' => _("Previous Major Revision"),
