@@ -81,7 +81,7 @@ define ('DEBUG', 1);
 
 define ('PHPWIKI_VERSION', '1.3.5pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.105 2003-03-04 02:08:08 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.106 2003-03-07 02:48:23 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -722,7 +722,22 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
  
 if (!defined('RECENT_CHANGES')) define ('RECENT_CHANGES', 'RecentChanges');
 
-
+/*
+ * Disable HTTP redirects.
+ *
+ * (You probably don't need to touch this.)
+ *
+ * PhpWiki uses HTTP redirects for some of it's functionality.
+ * (e.g. after saving changes, PhpWiki redirects your browser to
+ * view the page you just saved.)
+ *
+ * Some web service providers (notably free European Lycos) don't seem to
+ * allow these redirects.  (On Lycos the result in an "Internal Server Error"
+ * report.)  In that case you can set DISABLE_HTTP_REDIRECT to true.
+ * (In which case, PhpWiki will revert to sneakier tricks to try to
+ * redirect the browser...)
+ */
+//if (!defined('DISABLE_HTTP_REDIRECT')) define ('DISABLE_HTTP_REDIRECT', true);
 
 ////////////////////////////////////////////////////////////////
 // Check if we were included by some other wiki version 
@@ -758,6 +773,9 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 // End:   
 
 // $Log: not supported by cvs2svn $
+// Revision 1.105  2003/03/04 02:08:08  dairiki
+// Fix and document the WIKIDB_NOCACHE_MARKUP config define.
+//
 // Revision 1.104  2003/02/26 02:55:52  dairiki
 // New config settings in index.php to control cache control strictness.
 //
