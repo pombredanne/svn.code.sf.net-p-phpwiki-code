@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.144 2003-02-26 00:39:30 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.145 2003-03-04 01:55:05 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -126,6 +126,30 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
     if ($anchor)
         $url .= "#" . MangleXmlIdentifier($anchor);
     return $url;
+}
+
+/** Convert relative URL to absolute URL.
+ *
+ * This converts a relative URL to one of PhpWiki's support files
+ * to an absolute one.
+ *
+ * @param string $url
+ * @return string Absolute URL
+ */
+function AbsoluteURL ($url) {
+    if (preg_match('/^https?:/', $url))
+        return $url;
+    if ($url[0] != '/') {
+        $base = USE_PATH_INFO ? VIRTUAL_PATH : dirname(SCRIPT_NAME);
+        while ($base != '/' and substr($url, 0, 3) == "../") {
+            $url = substr($url, 3);
+            $base = dirname($base);
+        }
+        if ($base != '/')
+            $base .= '/';
+        $url = $base . $url;
+    }
+    return SERVER_URL . $url;
 }
 
 /**
@@ -1238,6 +1262,10 @@ class Alert {
                       
         
 // $Log: not supported by cvs2svn $
+// Revision 1.144  2003/02/26 00:39:30  dairiki
+// Bug fix: for magic PhpWiki URLs, "lock page to enable link" message was
+// being displayed at incorrect times.
+//
 // Revision 1.143  2003/02/26 00:10:26  dairiki
 // More/better/different checks for bad page names.
 //
