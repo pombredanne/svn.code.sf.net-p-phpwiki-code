@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageDump.php,v 1.8 2004-05-25 12:43:29 rurban Exp $');
+rcs_id('$Id: PageDump.php,v 1.9 2004-06-07 19:50:41 rurban Exp $');
 /**
  * PhpWikiPlugin for PhpWiki developers to generate single page dumps
  * for checking into cvs, or for users or the admin to produce a
@@ -39,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
@@ -236,7 +236,7 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
             hits=146;
         */
         $killme = array("author", "version", "lastmodified",
-                        "author_id", "hits");
+                        "author_id", "hits", "owner");
         // UltraNasty, fixme:
         foreach ($killme as $pattern) {
             $array = preg_replace("/^\s\s$pattern\=.*;/",
@@ -255,6 +255,9 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/05/25 12:43:29  rurban
+// ViewSource link, better actionpage usage
+//
 // Revision 1.7  2004/05/04 17:21:06  rurban
 // revert previous patch
 //
