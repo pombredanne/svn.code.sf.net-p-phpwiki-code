@@ -1,11 +1,11 @@
 <?php
    // Title search: returns pages having a name matching the search term
-   rcs_id('$Id: search.php,v 1.2 2000-12-30 21:09:13 ahollosi Exp $');
+   rcs_id('$Id: search.php,v 1.3 2001-01-02 00:10:28 wainstead Exp $');
 
    if(get_magic_quotes_gpc())
       $search = stripslashes($search);
 
-   $html = "<P><B>" .
+   $html = "<P><B>"
 	   . sprintf(gettext ("Searching for \"%s\" ....."),
 		     htmlspecialchars($search))
 	   . "</B></P>\n";
