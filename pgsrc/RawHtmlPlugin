@@ -1,9 +1,9 @@
 Date: Sun, 4 Jan 2004 12:48:26 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.7)
-X-Rcs-Id: $Id: RawHtmlPlugin,v 1.1 2004-01-04 17:41:14 wainstead Exp $
+X-Rcs-Id: $Id: RawHtmlPlugin,v 1.2 2004-01-04 18:28:15 wainstead Exp $
 Content-Type: application/x-phpwiki;
-  pagename=;
-  pgsrc_version="2 $Revision: 1.1 $";
+  pagename=RawHtmlPlugin;
+  pgsrc_version="2 $Revision: 1.2 $";
   flags="";
   markup=2;
   charset=iso-8859-1
