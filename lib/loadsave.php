@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.44 2002-01-26 07:03:31 carstenklapp Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.45 2002-01-26 14:46:25 dairiki Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -6,8 +6,10 @@ require_once("lib/Template.php");
 function StartLoadDump(&$request, $title, $html = '')
 {
     // FIXME: This is a hack
-    $tmpl = Template('top', array('TITLE' => $title, 'HEADER' => $title));
-    echo ereg_replace('</body>.*', '', $tmpl->getExpansion($html));
+    $tmpl = Template('top', array('TITLE' => $title,
+                                  'HEADER' => $title,
+                                  'CONTENT' => '%BODY%'));
+    echo ereg_replace('%BODY%.*', '', $tmpl->getExpansion($html));
 }
 
 function EndLoadDump(&$request)
@@ -351,7 +353,6 @@ function LoadFile (&$request, $filename, $text = false, $mtime = false)
                                               $filename), $basename);
     }
     else {
-        //FIXME:?
         $user = $request->getUser();
         
         // Assume plain text file.
@@ -387,42 +388,61 @@ function LoadZip (&$request, $zipfile, $files = false, $exclude = false) {
 }
 
 function LoadDir (&$request, $dirname, $files = false, $exclude = false) {
-    $skiplist = array();
-    $loadfileset = new loadFileSet($dirname, $files, $exclude, $skiplist);
+    $fileset = new LimitedFileSet($dirname, $files, $exclude);
 
-    if ($skiplist) {
+    
+    if (($skiplist = $fileset->getSkippedFiles())) {
         // FIXME: use PageList?
-        PrintXML(HTML::h2(_("Skipping")));
+        // Note: I'm not sure using PageLists here is a good idea.
+        // This is the one place where it's nice to be able to flush
+        // output on a file by file basis.  I don't think it's worth
+        // the effort to modify PageList so that it can do that.
+        // (File loading doesn't really happen very often anyway,
+        // so it doesn't matter so much if the output is
+        // themed or artfully pretty.)
+        //
+        // In any case, for now, all these Load* functions are
+        // called within the middle of a <dl>, so you can't
+        // print anything but <dt>'s and <dd>'s.
+        
+        PrintXML(HTML::dt(HTML::strong(_("Skipping"))));
         $list = HTML::ul();
         global $Theme;
-        foreach ($skiplist as $line)
-            $list->pushContent(HTML::li($Theme->LinkExistingWikiWord($line)));
-        $list->PrintXML();
+        foreach ($skiplist as $file)
+            $list->pushContent(HTML::li($Theme->LinkExistingWikiWord($file)));
+        PrintXML(HTML::dd($list));
     }
 
-    PrintXML(HTML::h2(_("Loading")));
-    $candidate_files = $loadfileset->getFiles();
-    foreach ($candidate_files as $file) {
+    //PrintXML(HTML::h2(_("Loading")));
+
+    foreach ($fileset->getFiles() as $file) {
         // TODO: pass PageLists to LoadFile for output
         LoadFile($request, "$dirname/$file");
     }
 }
 
-class loadFileSet extends fileSet {
-    function loadFileSet($dirname, &$files, &$exclude, &$skiplist) {
-        $this->_files = &$files;
-        $this->_exclude = &$exclude;
-        $this->_skiplist = &$skiplist;
-        parent::fileSet($dirname);
+class LimitedFileSet extends FileSet {
+    function LimitedFileSet($dirname, $_include, $exclude) {
+        $this->_includefiles = $_include;
+        $this->_exclude = $exclude;
+        $this->_skiplist = array();
+        parent::FileSet($dirname);
     }
-    function _filenameSelector($filename) {
-        if (($this->_files && !in_array($fn, $this->_files)) || ($this->_exclude && in_array($fn, $this->_exclude)))
-        {
-            $this->_skiplist[] = $filename;
+
+    function _filenameSelector($fn) {
+        $incl = &$this->_include;
+        $excl = &$this->_exclude;
+
+        if (($incl && !in_array($fn, $incl)) || ($excl && in_array($fn, $excl))) {
+            $this->_skiplist[] = $fn;
             return false;
         } else {
             return true;
         }
+    }
+
+    function getSkippedFiles () {
+        return $this->_skiplist;
     }
 }
 
@@ -496,7 +516,7 @@ function LoadFileOrDir (&$request)
     $source = $request->getArg('source');
     StartLoadDump($request, sprintf(_("Loading '%s'"), $source));
     echo "<dl>\n";
-    LoadAny($request, $source/*, false, array(_("RecentChanges"))*/);
+    LoadAny($request, $source);
     echo "</dl>\n";
     EndLoadDump($request);
 }
@@ -521,10 +541,10 @@ function SetupWiki (&$request)
     StartLoadDump($request, _("Loading up virgin wiki"));
     echo "<dl>\n";
     
-    LoadAny($request, FindLocalizedFile(WIKI_PGSRC)/*, false, $ignore*/);
+    LoadAny($request, FindLocalizedFile(WIKI_PGSRC));
     if ($LANG != "C")
         LoadAny($request, FindFile(DEFAULT_WIKI_PGSRC),
-                $GenericPages/*, $ignore*/);
+                $GenericPages);
     
     echo "</dl>\n";
     EndLoadDump($request);
