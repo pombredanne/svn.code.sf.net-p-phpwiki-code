@@ -1,15 +1,17 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.13 2002-01-30 23:41:55 dairiki Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.14 2002-02-07 03:47:27 carstenklapp Exp $ -->
 <?php
 
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
+                            'maxlength' => 4,
                             'name' => 'pref[editWidth]',
                             'value' => $request->getPref('editWidth'),
                             'onchange' => 'this.form.submit();'));
 
 $HeightI = HTML::input(array('type' => 'text',
                              'size' => 3,
+                             'maxlength' => 4,
                              'name' => 'pref[editHeight]',
                              'value' => $request->getPref('editHeight'),
                              'onchange' => 'this.form.submit();'));
@@ -51,7 +53,7 @@ $s = $Theme->getButtonSeparator();
   </td>
 </tr>
 </table>
-<?=$EDIT_TEXTAREA?>
+<a name="editarea" id="editarea"><?=$EDIT_TEXTAREA?></a>
 <br />
 <?=_("Summary:")?> <?= $SUMMARY_INPUT ?>
 <br />
