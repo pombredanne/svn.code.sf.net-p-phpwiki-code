@@ -2,7 +2,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.inc,v 1.1 2000-09-18 04:36:03 wainstead Exp $');
+   rcs_id('$Id: config.inc,v 1.2 2000-10-07 17:47:19 wainstead Exp $');
 
    /*
       Constants and settings. Edit the values below for
@@ -17,7 +17,7 @@
    // the if/else that follows. The if/else sets the server address
    // dynamically, and you can save some cycles on the server by
    // setting $ServerAddress yourself.
-   //$ServerAddress = "http://38.26.5.230:8080/phpwiki/";
+   //$ServerAddress = "http://127.0.0.1:8080/phpwiki/";
 
 
    if (preg_match("#(.*?)([^/]*$)#", $REQUEST_URI, $matches)) {
@@ -181,5 +181,9 @@
    // the MostPopular pages; i.e. setting this to 20 will show
    // the 20 most popular pages
    define("MOST_POPULAR_LIST_LENGTH", 20);
+
+   // this defines how many page names to list when displaying
+   // scored related pages
+   define("NUM_RELATED_PAGES", 5);
 
 ?>

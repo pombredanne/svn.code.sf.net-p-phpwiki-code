@@ -1,4 +1,4 @@
-<!-- $Id: search.inc,v 1.1 2000-09-18 04:36:04 wainstead Exp $ -->
+<!-- $Id: search.inc,v 1.2 2000-10-07 17:47:20 wainstead Exp $ -->
 <?php
    // Title search: returns pages having a name matching the search term
 

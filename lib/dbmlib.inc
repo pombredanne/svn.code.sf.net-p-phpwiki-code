@@ -1,6 +1,6 @@
 <?php  
 
-   rcs_id('$Id: dbmlib.inc,v 1.1 2000-09-18 04:36:03 wainstead Exp $');
+   rcs_id('$Id: dbmlib.inc,v 1.2 2000-10-07 17:47:19 wainstead Exp $');
 
    /*
       Database functions:
@@ -182,7 +182,7 @@
 
       if (dbmexists($dbi['hitcount'], $pagename)) {
          // increase the hit count
-         echo "$pagename there, incrementing...<br>\n";
+         // echo "$pagename there, incrementing...<br>\n";
          $count = dbmfetch($dbi['hitcount'], $pagename);
          $count++;
          dbmreplace($dbi['hitcount'], $pagename, $count);

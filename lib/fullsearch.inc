@@ -1,4 +1,4 @@
-<!-- $Id: fullsearch.inc,v 1.1 2000-09-18 04:36:04 wainstead Exp $ -->
+<!-- $Id: fullsearch.inc,v 1.2 2000-10-07 17:47:19 wainstead Exp $ -->
 <?php
    /*
       Search the text of pages for a match.
@@ -26,8 +26,12 @@
       // print out all matching lines, highlighting the match
       for ($j = 0; $j < (count($pagehash["content"])); $j++) {
          if ($hits = preg_match_all("|$full|i", $pagehash["content"][$j], $dummy)) {
-            $matched = preg_replace("|$full|i", "<b>\\0</b>",
-                                    $pagehash["content"][$j]);
+            $matched = preg_replace("|$full|i",
+				"${FieldSeparator}OT\\0${FieldSeparator}CT",
+                                $pagehash["content"][$j]);
+	    $matched = htmlspecialchars($matched);
+	    $matched = str_replace("${FieldSeparator}OT", '<b>', $matched);
+	    $matched = str_replace("${FieldSeparator}CT", '</b>', $matched);
             $result .= "<dd><small>$matched</small></dd>\n";
             $found += $hits;
          }

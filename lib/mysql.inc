@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: mysql.inc,v 1.1 2000-09-18 04:36:04 wainstead Exp $');
+<?php rcs_id('$Id: mysql.inc,v 1.2 2000-10-07 17:47:19 wainstead Exp $');
 
    /*
       Database functions:
@@ -9,6 +9,7 @@
       InsertPage($dbi, $pagename, $pagehash)
       SaveCopyToArchive($dbi, $pagename, $pagehash) 
       IsWikiPage($dbi, $pagename)
+      IsInArchive($dbi, $pagename)
       InitTitleSearch($dbi, $search)
       TitleSearchNextMatch($dbi, &$pos)
       InitFullSearch($dbi, $search)
@@ -18,9 +19,9 @@
       InitMostPopular($dbi, $limit)   
       MostPopularNextMatch($dbi, $res)
       GetAllWikiPageNames($dbi)
-
+      GetWikiPageLinks($dbi, $pagename)
+      SetWikiPageLinks($dbi, $pagename, $linklist)
    */
-
 
    // open a database and return the handle
    // ignores MAX_DBM_ATTEMPTS
@@ -38,7 +39,6 @@
 	 echo "MySQL error: ", mysql_error(), "<br>\n";
          exit();
       }
-
       $dbi['dbc'] = $dbc;
       $dbi['table'] = $dbname;
       return $dbi;
@@ -77,7 +77,7 @@
    // Return hash of page + attributes or default
    function RetrievePage($dbi, $pagename, $pagestore) {
       $pagename = addslashes($pagename);
-      if ($res = mysql_query("select * from $dbi[$pagestore] where pagename='$pagename'", $dbi['dbc'])) {
+      if ($res = mysql_query("select * from $pagestore where pagename='$pagename'", $dbi['dbc'])) {
          if ($dbhash = mysql_fetch_array($res)) {
             return MakePageHash($dbhash);
          }
@@ -89,6 +89,13 @@
    // Either insert or replace a key/value (a page)
    function InsertPage($dbi, $pagename, $pagehash)
    {
+      global $WikiPageStore; // ugly hack
+
+      if ($dbi['table'] == $WikiPageStore) { // HACK
+         $linklist = ExtractWikiPageLinks($pagehash['content']);
+	 SetWikiPageLinks($dbi, $pagename, $linklist);
+      }
+
       $pagehash = MakeDBHash($pagename, $pagehash);
 
       $COLUMNS = "author, content, created, flags, " .
@@ -98,7 +105,6 @@
                  "$pagehash[created], $pagehash[flags], " .
                  "$pagehash[lastmodified], '$pagehash[pagename]', " .
                  "'$pagehash[refs]', $pagehash[version]";
-
 
       if (!mysql_query("replace into $dbi[table] ($COLUMNS) values ($VALUES)",
       			$dbi['dbc'])) {
@@ -112,10 +118,8 @@
    // for archiving pages to a seperate dbm
    function SaveCopyToArchive($dbi, $pagename, $pagehash) {
       global $ArchivePageStore;
-
       $adbi = OpenDataBase($ArchivePageStore);
-      $newpagename = $pagename; // what the hell does this do?
-      InsertPage($adbi, $newpagename, $pagehash);
+      InsertPage($adbi, $pagename, $pagehash);
    }
 
 
@@ -124,6 +128,17 @@
       if ($res = mysql_query("select count(*) from $dbi[table] where pagename='$pagename'", $dbi['dbc'])) {
          return(mysql_result($res, 0));
       }
+      return 0;
+   }
+
+   function IsInArchive($dbi, $pagename) {
+      global $ArchivePageStore;
+
+      $pagename = addslashes($pagename);
+      if ($res = mysql_query("select count(*) from $ArchivePageStore where pagename='$pagename'", $dbi['dbc'])) {
+         return(mysql_result($res, 0));
+      }
+      return 0;
    }
 
 
@@ -189,7 +204,7 @@
    }
 
    function InitMostPopular($dbi, $limit) {
-      $res = mysql_query("select * from hitcount order by hits desc, pagename limit $limit");
+      $res = mysql_query("select * from hitcount order by hits desc, pagename limit $limit", $dbi["dbc"]);
       
       return $res;
    }
@@ -202,11 +217,75 @@
    }
 
    function GetAllWikiPageNames($dbi) {
-      $res = mysql_query("select pagename from wiki");
+      $res = mysql_query("select pagename from wiki", $dbi["dbc"]);
       $rows = mysql_num_rows($res);
       for ($i = 0; $i < $rows; $i++) {
 	 $pages[$i] = mysql_result($res, $i);
       }
       return $pages;
    }
+   
+   
+   ////////////////////////////////////////
+   // functionality for the wikilinks table
+
+   // takes a page name, returns array of scored incoming and outgoing links
+   function GetWikiPageLinks($dbi, $pagename) {
+      $pagename = addslashes($pagename);
+      $res = mysql_query("select topage, score from wikilinks, wikiscore where topage=pagename and frompage='$pagename' order by score desc, topage");
+      $rows = mysql_num_rows($res);
+      for ($i = 0; $i < $rows; $i++) {
+	 $out = mysql_fetch_array($res);
+	 $links['out'][] = array($out['topage'], $out['score']);
+      }
+
+      $res = mysql_query("select frompage, score from wikilinks, wikiscore where frompage=pagename and topage='$pagename' order by score desc, frompage");
+      $rows = mysql_num_rows($res);
+      for ($i = 0; $i < $rows; $i++) {
+	 $out = mysql_fetch_array($res);
+	 $links['in'][] = array($out['frompage'], $out['score']);
+      }
+
+      $res = mysql_query("select distinct pagename, hits from wikilinks, hitcount where (frompage=pagename and topage='$pagename') or (topage=pagename and frompage='$pagename') order by hits desc, pagename");
+      $rows = mysql_num_rows($res);
+      for ($i = 0; $i < $rows; $i++) {
+	 $out = mysql_fetch_array($res);
+	 $links['popular'][] = array($out['pagename'], $out['hits']);
+      }
+
+      return $links;
+   }
+
+
+   // takes page name, list of links it contains
+   // the $linklist is an array where the keys are the page names
+   function SetWikiPageLinks($dbi, $pagename, $linklist) {
+      $frompage = addslashes($pagename);
+
+      // first delete the old list of links
+      mysql_query("delete from wikilinks where frompage='$frompage'",
+		$dbi["dbc"]);
+
+      // the page may not have links, return if not
+      if (! count($linklist))
+         return;
+      // now insert the new list of links
+      while (list($topage, $count) = each($linklist)) {
+         $topage = addslashes($topage);
+	 if($topage != $frompage) {
+            mysql_query("insert into wikilinks (frompage, topage) " .
+                     "values ('$frompage', '$topage')", $dbi["dbc"]);
+	 }
+      }
+
+      // update pagescore
+      mysql_query("delete from wikiscore", $dbi["dbc"]);
+      mysql_query("insert into wikiscore select w1.topage, count(*) from wikilinks as w1, wikilinks as w2 where w2.topage=w1.frompage group by w1.topage", $dbi["dbc"]);
+   }
+
+/* more mysql queries:
+
+orphans:
+select pagename from wiki left join wikilinks on pagename=topage where topage is NULL;
+*/
 ?>

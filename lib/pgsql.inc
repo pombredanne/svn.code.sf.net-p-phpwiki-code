@@ -1,4 +1,4 @@
-<!-- $Id: pgsql.inc,v 1.1 2000-09-18 04:36:04 wainstead Exp $ -->
+<!-- $Id: pgsql.inc,v 1.2 2000-10-07 17:47:19 wainstead Exp $ -->
 <?php
 
    /*
@@ -379,9 +379,8 @@
 
    ////////////////////////////////////////
    // functionality for the wikilinks table
-
+/*
    // takes a page name, returns array of links
-
    function GetWikiPageLinks($dbi, $pagename) {
 
       $query = "select frompage from wikilinks where topage='$pagename'";
@@ -421,5 +420,6 @@
          $res = pg_exec($dbi['dbc'], $query);
       }
    }
+*/
 
 ?>
