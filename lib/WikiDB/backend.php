@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.20 2004-11-29 17:58:57 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.21 2004-12-08 12:55:50 rurban Exp $');
 
 /*
   Pagedata
@@ -153,19 +153,43 @@ class WikiDB_backend
     }
 
     /**
-     * Delete page from the database.
-     *
-     * Delete page (and all it's revisions) from the database.
-     *
+     * Delete page from the database with backup possibility.
      * This should remove all links (from the named page) from
      * the link database.
      *
      * @param $pagename string Page name.
+     * i.e save_page('') and DELETE nonempty id
+     * Can be undone and is seen in RecentChanges.
      */
     function delete_page($pagename) {
+        $mtime = time();
+        $user =& $GLOBALS['request']->_user;
+        $vdata = array('author' => $user->getId(),
+                       'author_id' => $user->getAuthenticatedId(),
+                       'mtime' => $mtime);
+
+        $this->lock(); // critical section:
+        $version = $this->get_latest_version($pagename);
+        $this->set_versiondata($pagename, $version+1, $vdata);
+        $this->set_links($pagename, false); // links are purged.
+        if (! WIKIDB_NOCACHE_MARKUP) {
+            // need the hits, perms and LOCKED, otherwise you can reset the perm 
+            // by action=remove and re-create it with default perms
+            $pagedata = $this->get_pagedata($pagename); 
+            unset($pagedata['_cached_html']);
+            $this->update_pagedata($pagename, $pagedata);
+        }
+        $this->unlock();
+    }
+
+    /**
+     * Delete page (and all it's revisions) from the database.
+     *
+     */
+    function purge_page($pagename) {
         trigger_error("virtual", E_USER_ERROR);
     }
-            
+
     /**
      * Delete an old revision of a page.
      *
@@ -248,7 +272,7 @@ class WikiDB_backend
     function get_links($pagename, $reversed, $include_empty=false,
                        $sortby=false, $limit=false, $exclude=false) {
         //FIXME: implement simple (but slow) link finder.
-        die("FIXME");
+        die("FIXME get_links");
     }
 
     /**

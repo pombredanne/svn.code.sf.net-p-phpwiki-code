@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.62 2004-12-06 19:50:04 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.63 2004-12-08 12:55:51 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -463,6 +463,7 @@ extends WikiDB_backend
 
     /**
      * Delete page from the database with backup possibility.
+     * i.e save_page('') and DELETE nonempty id
      * 
      * deletePage increments latestversion in recent to a non-existent version, 
      * and removes the nonempty row,
@@ -479,13 +480,13 @@ extends WikiDB_backend
             $dbh->RollbackTrans( );
             return false;
         }
-        $version = $this->get_latest_version($pagename);
         $mtime = time();
         $user =& $GLOBALS['request']->_user;
         $meta = array('author' => $user->getId(),
                       'author_id' => $user->getAuthenticatedId(),
                       'mtime' => $mtime);
         $this->lock(array('version','recent','nonempty','page','link'));
+        $version = $this->get_latest_version($pagename);
         if ($dbh->Execute("UPDATE $recent_tbl SET latestversion=latestversion+1,latestmajor=latestversion+1,latestminor=NULL WHERE id=$id")
             and $dbh->Execute("INSERT INTO $version_tbl"
                                 . " (id,version,mtime,minor_edit,content,versiondata)"
@@ -494,8 +495,10 @@ extends WikiDB_backend
                                         '', $this->_serialize($meta)))
             and $dbh->Execute("DELETE FROM $nonempty_tbl WHERE id=$id")
             and $this->set_links($pagename, false)
-            and $dbh->Execute("UPDATE $page_tbl SET pagedata='' WHERE id=$id") // keep hits but delete meta-data 
-           ) 
+            // need to keep perms and LOCKED, otherwise you can reset the perm 
+            // by action=remove and re-create it with default perms
+            //and $dbh->Execute("UPDATE $page_tbl SET pagedata='' WHERE id=$id") // keep hits but delete meta-data 
+           )
         {
             $this->unlock(array('version','recent','nonempty','page','link'));	
             $dbh->CommitTrans( );
@@ -1363,6 +1366,14 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.62  2004/12/06 19:50:04  rurban
+// enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
+// renamed delete_page to purge_page.
+// enable action=edit&version=-1 to force creation of a new version.
+// added BABYCART_PATH config
+// fixed magiqc in adodb.inc.php
+// and some more docs
+//
 // Revision 1.61  2004/11/30 17:45:53  rurban
 // exists_links backend implementation
 //

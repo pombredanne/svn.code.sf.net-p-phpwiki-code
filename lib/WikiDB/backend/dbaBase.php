@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: dbaBase.php,v 1.19 2004-12-06 19:50:04 rurban Exp $');
+<?php rcs_id('$Id: dbaBase.php,v 1.20 2004-12-08 12:55:51 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -140,10 +140,9 @@ extends WikiDB_backend
         
     /**
      * See ADODB for a better delete_page(), which can be undone and is seen in RecentChanges.
+     * See backend.php
      */
-    function delete_page($pagename) {
-        $this->purge_page($pagename);
-    }
+    //function delete_page($pagename) { $this->purge_page($pagename);  }
 
     /**
      * Completely delete page from the database.
