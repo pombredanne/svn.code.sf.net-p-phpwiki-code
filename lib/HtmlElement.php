@@ -1,6 +1,8 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.32 2004-02-15 21:34:37 rurban Exp $');
-/*
- * Code for writing XML.
+<?php rcs_id('$Id: HtmlElement.php,v 1.33 2004-03-18 22:32:33 rurban Exp $');
+/**
+ * Code for writing the HTML subset of XML.
+ *
+ * FIXME: This code is not php5 compatible.
  */
 require_once("lib/XmlElement.php");
 /**
@@ -493,6 +495,15 @@ function IfJavaScript($if_content = false, $else_content = false) {
     
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.32  2004/02/15 21:34:37  rurban
+ PageList enhanced and improved.
+ fixed new WikiAdmin... plugins
+ editpage, Theme with exp. htmlarea framework
+   (htmlarea yet committed, this is really questionable)
+ WikiUser... code with better session handling for prefs
+ enhanced UserPreferences (again)
+ RecentChanges for show_deleted: how should pages be deleted then?
+
  Revision 1.31  2003/02/27 22:47:26  dairiki
  New functions in HtmlElement:
 
