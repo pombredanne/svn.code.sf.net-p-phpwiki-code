@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.137 2003-02-18 23:13:40 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.138 2003-02-21 04:12:36 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -10,8 +10,6 @@
     MakeWikiForm ($pagename, $args, $class, $button_text)
     SplitQueryArgs ($query_args)
     LinkPhpwikiURL($url, $text)
-    LinkBracketLink($bracketlink)
-    ExtractWikiPageLinks($content)
     ConvertOldMarkup($content)
     
     class Stack { push($item), pop(), cnt(), top() }
@@ -41,11 +39,6 @@
   gone see: lib/plugin/RecentChanges.php
 */
 
-/**
- * This is the character used in wiki markup to escape characters with
- * special meaning.
- */
-define('ESCAPE_CHAR', '~');
 
 /**
  * Convert string to a valid XML identifier.
@@ -360,6 +353,7 @@ class WikiPagename
     /** Short name for page.
      *
      * This is the value of $name passed to the constructor.
+     * (For use, e.g. as a default label for links to the page.)
      */
     var $shortName;
 
@@ -377,37 +371,46 @@ class WikiPagename
     
     /** Constructor
      *
-     * @param string $name Page name.
-     * This can be a relative subpage name (like '/SubPage'), and can also
-     * include an anchor (e.g. 'SandBox#anchorname' or just '#anchor').
+     * @param mixed $name Page name.
+     * WikiDB_Page, WikiDB_PageRevision, or string.
+     * This can be a relative subpage name (like '/SubPage'),
+     * or can be the empty string to refer to the $basename.
      *
-     * If you want to include the character '#' within the page name,
-     * you can escape it with ~.  (The escape character doesn't work for '/').
+     * @param string $anchor For links to anchors in page.
+     *
+     * @param mixed $basename Page name from which to interpret
+     * relative or other non-fully-specified page names.
      */
-    function WikiPageName($name, $basename) {
- 	$this->shortName = $this->unescape($name);
+    function WikiPageName($name, $basename=false, $anchor=false) {
+        if (is_string($name)) {
+            $this->shortName = $name;
+        
+            if ($anchor === false and preg_match('/\A(.*)#(.*?)?\Z/', $name, $m))
+                list(, $name, $anchor) = $m;
+            
+            if (empty($name) or $name[0] == SUBPAGE_SEPARATOR) {
+                if ($basename)
+                    $name = $this->_pagename($basename) . $name;
+                else
+                    $name = $this->_normalize_bad_pagename($name);
+            }
+        }
+        else {
+            $name = $this->_pagename($name);
+            $this->shortName = $name;
+        }
 
-        if ($name[0] == SUBPAGE_SEPARATOR or $name[0] == '#')
-            $name = $this->_pagename($basename) . $name;
-	
-	$split = preg_split("/\s*(?<!" . ESCAPE_CHAR . ")#\s*/", $name, 2);
-        if (count($split) > 1)
-	    list ($name, $anchor) = $split;
-	else
-	    $anchor = '';
-
-	$this->name = $this->unescape($name);
-	$this->anchor = $this->unescape($anchor);
+        $this->name = $name;
+        $this->anchor = (string)$anchor;
     }
 
-    function escape($page) {
-	return str_replace('#', ESCAPE_CHAR . '#', $page);
+    function getParent() {
+        $name = $this->name;
+        if (!($tail = strrchr($name, SUBPAGE_SEPARATOR)))
+            return false;
+        return substr($name, 0, -strlen($tail));
     }
-
-    function unescape($page) {
-	return preg_replace('/' . ESCAPE_CHAR . '(.)/', '\1', $page);
-    }
-
+    
     function _pagename($page) {
 	if (isa($page, 'WikiDB_Page'))
 	    return $page->getName();
@@ -415,182 +418,25 @@ class WikiPagename
 	    return $page->getPageName();
         elseif (isa($page, 'WikiPageName'))
 	    return $page->name;
-	assert(is_string($page));
+        if (!is_string($page)) {
+            print "PAGE: " . gettype($page) . " " . get_class($page) . "<br>\n";
+        }
+	//assert(is_string($page));
 	return $page;
     }
-}
 
-function LinkBracketLink($bracketlink) {
-    global $request, $AllowedProtocols, $InlineImages;
+    function _normalize_bad_pagename($name) {
+        trigger_error("Bad pagename: " . $name, E_USER_WARNING);
 
-    include_once("lib/interwiki.php");
-    $intermap = InterWikiMap::GetMap($request);
-    
-    // $bracketlink will start and end with brackets; in between will
-    // be either a page name, a URL or both separated by a pipe.
-    
-    // strip brackets and leading space
-    preg_match('/(\#?) \[\s* (?: (.+?) \s* (?<!' . ESCAPE_CHAR . ')(\|) )? \s* (.+?) \s*\]/x',
-	       $bracketlink, $matches);
-    list (, $hash, $label, $bar, $link) = $matches;
-
-    $wikipage = new WikiPageName($link, $request->getPage());
-    $label = WikiPageName::unescape($label);
-    $link = WikiPageName::unescape($link);
-
-    // if label looks like a url to an image, we want an image link.
-    if (preg_match("/\\.($InlineImages)$/i", $label)) {
-        $imgurl = $label;
-        if (! preg_match("#^($AllowedProtocols):#", $imgurl)) {
-            // linkname like 'images/next.gif'.
-            global $Theme;
-            $imgurl = $Theme->getImageURL($linkname);
+        // Punt...  You really shouldn't get here.
+        if (empty($name)) {
+            global $request;
+            return $request->getArg('pagename');
         }
-        $label = LinkImage($imgurl, $link);
-    }
-
-    if ($hash) {
-        // It's an anchor, not a link...
-        $id = MangleXmlIdentifier($link);
-        return HTML::a(array('name' => $id, 'id' => $id),
-                       $bar ? $label : $link);
-    }
-
-    $dbi = $request->getDbh();
-    if ($dbi->isWikiPage($wikipage->name)) {
-        return WikiLink($wikipage, 'known', $label);
-    }
-    elseif (preg_match("#^($AllowedProtocols):#", $link)) {
-        // if it's an image, embed it; otherwise, it's a regular link
-        if (preg_match("/\\.($InlineImages)$/i", $link))
-            // no image link, just the src. see [img|link] above
-            return LinkImage($link, $label);
-        else
-            return LinkURL($link, $label);
-    }
-    elseif (preg_match("/^phpwiki:/", $link))
-        return LinkPhpwikiURL($link, $label);
-    elseif (preg_match("/^" . $intermap->getRegexp() . ":/", $link))
-        return $intermap->link($link, $label);
-    else {
-        return WikiLink($wikipage, 'unknown', $label);
+        assert($name[0] == SUBPAGE_SEPARATOR);
+        return substr($name, 1);
     }
 }
-
-/**
- * Extract internal links from wiki page.
- *
- * @param mixed $content The raw wiki-text, either as
- * an array of lines or as one big string.
- *
- * @return array List of the names of pages linked to.
- */
-function ExtractWikiPageLinks($content) {
-    list ($wikilinks,) = ExtractLinks($content);
-    return $wikilinks;
-}      
-
-/**
- * Extract external links from a wiki page.
- *
- * @param mixed $content The raw wiki-text, either as
- * an array of lines or as one big string.
- *
- * @return array List of the names of pages linked to.
- */
-function ExtractExternalLinks($content) {
-    list (, $urls) = ExtractLinks($content);
-    return $urls;
-}      
-
-/**
- * Extract links from wiki page.
- *
- * FIXME: this should be done by the transform code.
- *
- * @param mixed $content The raw wiki-text, either as
- * an array of lines or as one big string.
- *
- * @return array List of two arrays.  The first contains
- * the internal links (names of pages linked to), the second
- * contains external URLs linked to.
- */
-function ExtractLinks($content) {
-    include_once('lib/interwiki.php');
-    global $request, $WikiNameRegexp, $AllowedProtocols;
-    
-    if (is_string($content))
-        $content = explode("\n", $content);
-    
-    $wikilinks = array();
-    $urls = array();
-    
-    foreach ($content as $line) {
-        // remove plugin code
-        $line = preg_replace('/<\?plugin\s+\w.*?\?>/', '', $line);
-        // remove escaped '['
-        $line = str_replace('[[', ' ', $line);
-        // remove footnotes
-        $line = preg_replace('/\[\d+\]/', ' ', $line);
-        
-        // bracket links (only type wiki-* is of interest)
-        $numBracketLinks = preg_match_all("/\[\s*([^\]|]+\|)?\s*(\S.*?)\s*\]/",
-                                          $line, $brktlinks);
-        for ($i = 0; $i < $numBracketLinks; $i++) {
-            $link = LinkBracketLink($brktlinks[0][$i]);
-            $class = $link->getAttr('class');
-            if (preg_match('/^(named-)?wiki(unknown)?$/', $class)) {
-                if ($brktlinks[2][$i][0] == SUBPAGE_SEPARATOR) {
-                    $wikilinks[$request->getArg('pagename') . $brktlinks[2][$i]] = 1;
-                } else {
-                    $wikilinks[$brktlinks[2][$i]] = 1;
-                }
-            }
-            elseif (preg_match('/^(namedurl|rawurl|(named-)?interwiki)$/', $class)) {
-                $urls[$brktlinks[2][$i]] = 1;
-            }
-            $line = str_replace($brktlinks[0][$i], '', $line);
-        }
-        
-        // Raw URLs
-        preg_match_all("/!?\b($AllowedProtocols):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]/",
-                       $line, $link);
-        foreach ($link[0] as $url) {
-            if ($url[0] <> '!') {
-                $urls[$url] = 1;
-            }
-            $line = str_replace($url, '', $line);
-        }
-
-        // Interwiki links
-        $map = InterWikiMap::GetMap($request);
-        $regexp = pcre_fix_posix_classes("!?(?<![[:alnum:]])") 
-            . $map->getRegexp() . ":[^\\s.,;?()]+";
-        preg_match_all("/$regexp/", $line, $link);
-        foreach ($link[0] as $interlink) {
-            if ($interlink[0] <> '!') {
-                $link = $map->link($interlink);
-                $urls[$link->getAttr('href')] = 1;
-            }
-            $line = str_replace($interlink, '', $line);
-        }
-
-        // BumpyText old-style wiki links
-        if (preg_match_all("/!?$WikiNameRegexp/", $line, $link)) {
-            for ($i = 0; isset($link[0][$i]); $i++) {
-                if($link[0][$i][0] <> '!') {
-                    if ($link[0][$i][0] == SUBPAGE_SEPARATOR) {
-                        $wikilinks[$request->getArg('pagename') . $link[0][$i]] = 1;
-                    } else {
-                        $wikilinks[$link[0][$i]] = 1;
-                    }
-                }
-            }
-        }
-    }
-    return array(array_keys($wikilinks), array_keys($urls));
-}      
-
 
 /**
  * Convert old page markup to new-style markup.
@@ -1280,7 +1126,71 @@ function subPageSlice($pagename, $pos) {
     return $pages[0];
 }
 
+/**
+ * Alert
+ *
+ * Class for "popping up" and alert box.  (Except that right now, it doesn't
+ * pop up...)
+ *
+ * FIXME:
+ * This is a hackish and needs to be refactored.  However it would be nice to
+ * unify all the different methods we use for showing Alerts and Dialogs.
+ * (E.g. "Page deleted", login form, ...)
+ */
+class Alert {
+    /** Constructor
+     *
+     * @param object $request
+     * @param mixed $head  Header ("title") for alert box.
+     * @param mixed $body  The text in the alert box.
+     * @param hash $buttons  An array mapping button labels to URLs.
+     *    The default is a single "Okay" button pointing to $request->getURLtoSelf().
+     */
+    function Alert($head, $body, $buttons=false) {
+        if ($buttons === false)
+            $buttons = array();
+
+        $this->_tokens = array('HEADER' => $head, 'CONTENT' => $body);
+        $this->_buttons = $buttons;
+    }
+
+    /**
+     * Show the alert box.
+     */
+    function show(&$request) {
+        global $request;
+
+        $tokens = $this->_tokens;
+        $tokens['BUTTONS'] = $this->_getButtons();
+        
+        $request->discardOutput();
+        $tmpl = new Template('dialog', $request, $tokens);
+        $tmpl->printXML();
+        $request->finish();
+    }
+
+
+    function _getButtons() {
+        global $request;
+
+        $buttons = $this->_buttons;
+        if (!$buttons)
+            $buttons = array(_("Okay") => $request->getURLtoSelf());
+        
+        global $Theme;
+        foreach ($buttons as $label => $url)
+            print "$label $url\n";
+            $out[] = $Theme->makeButton($label, $url, 'wikiaction');
+        return new XmlContent($out);
+    }
+}
+
+                      
+        
 // $Log: not supported by cvs2svn $
+// Revision 1.137  2003/02/18 23:13:40  dairiki
+// Wups again.  Typo fix.
+//
 // Revision 1.136  2003/02/18 21:52:07  dairiki
 // Fix so that one can still link to wiki pages with # in their names.
 // (This was made difficult by the introduction of named tags, since
