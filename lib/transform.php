@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.26 2001-11-16 21:02:58 dairiki Exp $');
+<?php rcs_id('$Id: transform.php,v 1.27 2001-11-16 22:59:02 dairiki Exp $');
 require_once('lib/WikiPlugin.php');
 
 define('WT_SIMPLE_MARKUP', 0);
@@ -10,65 +10,6 @@ define("NESTED_LEVEL", 1);
 
 class WikiTransform
 {
-   /*
-   function WikiTransform() -- init
-
-   function register($type, $function, [$regexp])
-	Registers transformer functions
-	This should be done *before* calling do_transform
-
-	$type:
-	   WT_MODE_MARKUP
-	          If one WT_MODE_MARKUP really sets the html mode, then
-		  all successive WT_MODE_MARKUP functions are skipped
-           WT_TOKENIZER
-		  The transformer function is called once for each match
-		  of the $regexp in the line.  The matched values are tokenized
-		  to protect them from further transformation.
-
-	$function: function name
-
-        $regexp:  Required for WT_TOKENIZER functions.  Optional for others.
-	          If given, the transformer function will only be called if the
-		  line matches the $regexp.
-	
-   function SetHTMLMode($tag, $tagtype, $level)
-        This is a helper function used to keep track of what HTML
-	block-level element we are currently processing.
-	Block-level elements are things like paragraphs "<p>",
-	pre-formatted text "<pre>", and the various list elements:
-	"<ul>", "<ol>" and "<dl>".  Note that some of these elements
-	can be nested, while others can not.  (In particular, according to
-	the HTML 4.01 specification,  a paragraph "<p>" element is not
-	allowed to contain any other block-level elements.  Also <pre>,
-	<li>,  <dt>, <dd>, <h1> ... have this same restriction.)
-
-	SetHTMLMode generates whatever HTML is necessary to get us into
-	the requested element type at the requested nesting level.
-
-	$tag ... type of HTML element to open.
-            If $tag is an array, $tag[0] gives the element type,
-	    and $tag[1] should be a hash containing attribute-value
-	    pairs for the element.
-
-	    If $tag is the empty string, all open elements (down to the
-	    level requested by $level) are closed.  Use
-	    SetHTMLMode('',0) to close all open block-level elements.
-                  
-	$level ... requested nesting level for current element.
-	    The nesting level for top level block is one (which is
-	    the default).
-
- 	    Nesting is arbitrary limited to 10 levels
-
-   function do_transform($html, $content)
-	contains main-loop and calls transformer functions
-
-	$html ... HTML header (if needed, otherwise '')
-	$content ... wiki markup as array of lines
-   */
-
-
    // public variables (only meaningful during do_transform)
    var $linenumber;	// current linenumber
    var $replacements;	// storage for tokenized strings of current line
@@ -81,21 +22,73 @@ class WikiTransform
    var $trfrm_func;	// array of registered functions
    var $stack;		// stack for SetHTMLMode (keeping track of open tags)
 
-   // init function
+   /** init function */
    function WikiTransform()
    {
       $this->trfrm_func = array();
       $this->stack = new Stack;
    }
 
-   // register transformation functions
+   /**
+    * Register transformation functions
+    *
+    * This should be done *before* calling do_transform
+    *
+    * @param $type enum  <dl>
+    * <dt>WT_MODE_MARKUP</dt>
+    * <dd>If one WT_MODE_MARKUP really sets the html mode, then
+    *	  all successive WT_MODE_MARKUP functions are skipped.</dd>
+    * <dt>WT_TOKENIZER</dt>
+    * <dd> The transformer function is called once for each match
+    *      of the $regexp in the line.  The matched values are tokenized
+    *      to protect them from further transformation.</dd>
+    *
+    * @param $function string  Function name
+    * @param $regexp string  Required for WT_TOKENIZER functions.
+    * Optional for others. If given, the transformer function will only be
+    * called if the line matches the $regexp.
+    */
    function register($type, $function, $regexp = false)
    {
       $this->trfrm_func[] = array ($type, $function, $regexp);
    }
-   
-   // sets current mode like list, preformatted text, plain text, ...
-   // takes care of closing (open) tags
+
+   /**
+    * Sets current mode like list, preformatted text, plain text
+    *
+    * Takes care of closing (open) tags
+    *
+    * This is a helper function used to keep track of what HTML
+    * block-level element we are currently processing.
+    * Block-level elements are things like paragraphs "<p>",
+    * pre-formatted text "<pre>", and the various list elements:
+    * "<ul>", "<ol>" and "<dl>".  Now, SetHTMLMode is also used to
+    * keep track of "<li>" and "<dd>" elements. Note that some of these elements
+    * can be nested, while others can not.  (In particular, according to
+    * the HTML 4.01 specification,  a paragraph "<p>" element is not
+    * allowed to contain any other block-level elements.  Also <pre>,
+    * <li>,  <dt>, <dd>, <h1> ... have this same restriction.)
+    *
+    * SetHTMLMode generates whatever HTML is necessary to get us into
+    * the requested element type at the requested nesting level.
+    *
+    * @param $tag string Type of HTML element to open.
+    *
+    * If $tag is an array, $tag[0] gives the element type,
+    * and $tag[1] should be a hash containing attribute-value
+    * pairs for the element.
+    *
+    * If $tag is the empty string, all open elements (down to the
+    * level requested by $level) are closed.  Use
+    * SetHTMLMode('',0) to close all open block-level elements.
+    *
+    * @param $level string  Rrequested nesting level for current element.
+    * The nesting level for top level block is one (which is
+    * the default).
+    * Nesting is arbitrary limited to 20 levels.
+    *
+    * @return string Returns the HTML markup to open the specified element.
+    */
    function SetHTMLMode($tag, $level = 1)
    {
       if (is_array($tag)) {
@@ -110,7 +103,7 @@ class WikiTransform
 				// to be executed
       $retvar = '';
 	 
-      if ($level > 10) {
+      if ($level > 20) {
 	 // arbitrarily limit tag nesting
 	 ExitWiki(gettext ("Lists nested too deep in SetHTMLOutputMode"));
       }
@@ -132,14 +125,15 @@ class WikiTransform
 	    $this->stack->push($tag);
 	 }
    
-      } else {// $level > $this->stack->cnt()
+      }
+      else {// $level > $this->stack->cnt()
 	 // Test for and close top level elements which are not allowed to contain
 	 // other block-level elements.
 	 if ($this->stack->cnt() == 1 and
 	     preg_match('/^(p|pre|h\d)$/i', $this->stack->top()))
 	 {
-	    $closetag = $this->stack->pop();
-	    $retvar .= "</$closetag>";
+            $closetag = $this->stack->pop();
+            $retvar .= "</$closetag>";
 	 }
 	       
 	 // we add the diff to the stack
@@ -160,8 +154,9 @@ class WikiTransform
 	       //
 	       // So now, when we need extra list elements, we use a <dl>, and
 	       // open it with an empty <dd>.
-	       $retvar .= "<dl><dd>";
-	       $this->stack->push('dl');
+               $el =  $this->stack->cnt() % 2 == 0 ? 'dl' : 'dd';
+               $retvar .= "<$el>";
+               $this->stack->push($el);
 	    }
 
 	    $retvar .= StartTag($tag, $args) . "\n";
@@ -171,11 +166,50 @@ class WikiTransform
       
       return $this->token($retvar);
    }
-   // end SetHTMLMode
+
+   /**
+    * Start new list item element.
+    *
+    * This closes any currently open list items at the specified level or deeper,
+    * then opens a new list item element.
+    *
+    * @param $list_type string  Type of list element to open.  This should
+    * be one of 'dl', 'ol', or 'ul'.
+    *
+    * @param $level integer  Nesting depth for list item.  Should be a positive integer.
+    *
+    * @param $defn_term string  Definition term.  Specifies the contents for the
+    * &lt;dt&gt; element.  Only used if $list_type is 'dl'.
+    *
+    * @return string HTML
+    */
+   function ListItem($list_type, $level, $defn_term = '')
+   {
+       $retval = $this->SetHTMLMode($list_type, 2 * $level - 1);
+       if ($list_type == 'dl') {
+           $retval .= Element('dt', $defn_term);
+           $retval .= $this->SetHTMLMode('dd', 2 * $level);
+       }
+       else {
+           $retval .= $this->SetHTMLMode('li', 2 * $level);
+       }
+       return $retval;
+   }
 
 
-   // work horse and main loop
-   // this function does the transform from wiki markup to HTML
+   /** Work horse and main loop.
+    *
+    * This function does the transform from wiki markup to HTML.
+    *
+    * Contains main-loop and calls transformer functions.
+    *
+    * @param $html string  HTML header (if needed, otherwise '')
+    * (This string is prepended to the return value.)
+    *
+    * @param $content array  Wiki markup as array of lines
+    *
+    * @return string HTML
+    */
    function do_transform($html, $content)
    {
       global $FieldSeparator;
@@ -509,8 +543,7 @@ function wtm_plugin($line, &$transformer) {
       if (preg_match("/^([#*;]*\*)[^#]/", $line, $matches)) {
          $numtabs = strlen($matches[1]);
          $line = preg_replace("/^([#*]*\*)/", '', $line);
-         $html = $trfrm->SetHTMLMode('ul', $numtabs);
-         $line = $html . Element('li', $line);
+         $line = $trfrm->ListItem('ul', $numtabs) . $line;
       }
       return $line;
    }
@@ -520,8 +553,7 @@ function wtm_plugin($line, &$transformer) {
       if (preg_match("/^([#*;]*\#)/", $line, $matches)) {
          $numtabs = strlen($matches[1]);
          $line = preg_replace("/^([#*]*\#)/", "", $line);
-         $html = $trfrm->SetHTMLMode('ol', $numtabs);
-         $line = $html . Element('li', $line);
+         $line = $trfrm->ListItem('ol', $numtabs) . $line;
       }
       return $line;
    }
@@ -531,10 +563,7 @@ function wtm_plugin($line, &$transformer) {
    function wtm_list_dl($line, &$trfrm) {
       if (preg_match("/^([#*;]*;)(.*?):(.*$)/", $line, $matches)) {
          $numtabs = strlen($matches[1]);
-         $line = $trfrm->SetHTMLMode('dl', $numtabs);
-	 if(trim($matches[2]))
-            $line .= Element('dt', $matches[2]);
-	 $line .= Element('dd', $matches[3]);
+         $line = $trfrm->ListItem('dl', $numtabs, $matches[2]) . $matches[3];
       }
       return $line;
    }
