@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.50 2002-02-01 19:21:25 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.51 2002-02-01 19:32:43 carstenklapp Exp $');
 /**
  */
 
@@ -466,12 +466,16 @@ extends WikiPlugin
             // Defaults
             $url_show_minor = "";
             $url_show_all = "";
-
+            $whichpage = _("RecentChanges");
+            
             // RecentEdits args
-            if ($show_minor)
+            if ($show_minor) {
                 $url_show_minor = "&show_minor=1";
+                $whichpage = _("RecentEdits");
+            }
             if ($show_all)
                 $url_show_all = "&show_all=1";
+
             // Custom caption
             if (! $caption) {
                 if ($url_show_minor)
@@ -481,7 +485,6 @@ extends WikiPlugin
                         $caption = _("Show all changes for:");
                     else
                         $caption = _("Show changes for:");
-                       
                 }
             }
 
@@ -498,7 +501,7 @@ extends WikiPlugin
                     $label = sprintf(_("%s days"), $daynum);
 
                 // Build the button's url
-                $b->addButton($label, "RecentChanges?days=" .$daynum
+                $b->addButton($label, "$whichpage?days=" .$daynum
                                       .$url_show_minor .$url_show_all,
                               'wiki-rc-action');
             }
