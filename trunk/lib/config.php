@@ -6,7 +6,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.16 2000-11-13 14:54:08 ahollosi Exp $');
+   rcs_id('$Id: config.php,v 1.17 2000-11-17 03:01:26 wainstead Exp $');
    // end essential internal stuff
 
 
@@ -203,6 +203,18 @@
    $LogoImage = "<a href=\"$ScriptUrl\">$LogoImage</a>";
 
    $FieldSeparator = "\263";
+
+   if (isset($PHP_AUTH_USER)) {
+        $remoteuser = $PHP_AUTH_USER;
+   } else {
+
+      // Apache won't show REMOTE_HOST unless the admin configured it
+      // properly. We'll be nice and see if it's there.
+
+      getenv('REMOTE_HOST') ? ($remoteuser = getenv('REMOTE_HOST'))
+                            : ($remoteuser = getenv('REMOTE_ADDR'));
+   }
+
 
    // Apache won't show REMOTE_HOST unless the admin configured it
    // properly. We'll be nice and see if it's there.
