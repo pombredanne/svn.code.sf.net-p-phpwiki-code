@@ -1,5 +1,5 @@
-<!-- $Id: stdlib.php,v 1.8 2000-11-01 11:31:41 ahollosi Exp $ -->
 <?php
+   rcs_id('$Id: stdlib.php,v 1.9 2000-11-08 15:40:00 ahollosi Exp $');
    /*
       Standard functions for Wiki functionality
          LinkRelatedPages($dbi, $pagename)
@@ -37,7 +37,7 @@
          print $errormsg;
          print "\n</BODY></HTML>";
       }
-      exit();
+      exit;
    }
 
 
@@ -92,56 +92,75 @@
       if (!is_array($hash))
          unset($hash);
 
+      function _dotoken ($id, $val, &$page) {
+	 global $FieldSeparator;
+         $page = str_replace("$FieldSeparator#$id$FieldSeparator#",
+				$val, $page);
+      }
+
+      function _iftoken ($id, $condition, &$page) {
+         global $FieldSeparator;
+
+	 // line based IF directive
+	 $lineyes = "$FieldSeparator#IF $id$FieldSeparator#";
+	 $lineno = "$FieldSeparator#IF !$id$FieldSeparator#";
+         // block based IF directive
+	 $blockyes = "$FieldSeparator#IF:$id$FieldSeparator#";
+	 $blockyesend = "$FieldSeparator#ENDIF:$id$FieldSeparator#";
+	 $blockno = "$FieldSeparator#IF:!$id$FieldSeparator#";
+	 $blocknoend = "$FieldSeparator#ENDIF:!$id$FieldSeparator#";
+
+	 if ($condition) {
+	    $page = str_replace($lineyes, '', $page);
+	    $page = str_replace($blockyes, '', $page);
+	    $page = str_replace($blockyesend, '', $page);
+	    $page = preg_replace("/$blockno(.*?)$blocknoend/s", '', $page);
+	    $page = ereg_replace("{$lineno}[^\n]*\n", '', $page);
+         } else {
+	    $page = str_replace($lineno, '', $page);
+	    $page = str_replace($blockno, '', $page);
+	    $page = str_replace($blocknoend, '', $page);
+	    $page = preg_replace("/$blockyes(.*?)$blockyesend/s", '', $page);
+	    $page = ereg_replace("{$lineyes}[^\n]*\n", '', $page);
+	 }
+      }
+
       $page = join('', file($templates[$template]));
-      $page = str_replace('###', "#$FieldSeparator#", $page);
+      $page = str_replace('###', "$FieldSeparator#", $page);
 
       // valid for all pagetypes
-      $page = str_replace("#$FieldSeparator#SCRIPTURL#$FieldSeparator#",
-			$ScriptUrl, $page);
-      $page = str_replace("#$FieldSeparator#PAGE#$FieldSeparator#",
-			htmlspecialchars($name), $page);
-      $page = str_replace("#$FieldSeparator#ALLOWEDPROTOCOLS#$FieldSeparator#",
-			$AllowedProtocols, $page);
-      $page = str_replace("#$FieldSeparator#LOGO#$FieldSeparator#",
-                        $logo, $page);
+      _iftoken('COPY', isset($hash['copy']), $page);
+      _iftoken('LOCK',	(isset($hash['flags']) &&
+			($hash['flags'] & FLAG_PAGE_LOCKED)), $page);
+      _iftoken('ADMIN', defined('WIKI_ADMIN'), $page);
 
+      _dotoken('SCRIPTURL', $ScriptUrl, $page);
+      _dotoken('PAGE', htmlspecialchars($name), $page);
+      _dotoken('ALLOWEDPROTOCOLS', $AllowedProtocols, $page);
+      _dotoken('LOGO', $logo, $page);
+      
       // invalid for messages (search results, error messages)
       if ($template != 'MESSAGE') {
-         $page = str_replace("#$FieldSeparator#PAGEURL#$FieldSeparator#",
-			rawurlencode($name), $page);
-         $page = str_replace("#$FieldSeparator#LASTMODIFIED#$FieldSeparator#",
+         _dotoken('PAGEURL', rawurlencode($name), $page);
+         _dotoken('LASTMODIFIED',
 			date($datetimeformat, $hash['lastmodified']), $page);
-         $page = str_replace("#$FieldSeparator#LASTAUTHOR#$FieldSeparator#",
-			$hash['author'], $page);
-         $page = str_replace("#$FieldSeparator#VERSION#$FieldSeparator#",
-			$hash['version'], $page);
-	 if (strstr($page, "#$FieldSeparator#HITS#$FieldSeparator#")) {
-            $page = str_replace("#$FieldSeparator#HITS#$FieldSeparator#",
-			GetHitCount($dbi, $name), $page);
+         _dotoken('LASTAUTHOR', $hash['author'], $page);
+         _dotoken('VERSION', $hash['version'], $page);
+	 if (strstr($page, "$FieldSeparator#HITS$FieldSeparator#")) {
+            _dotoken('HITS', GetHitCount($dbi, $name), $page);
 	 }
-	 if (strstr($page, "#$FieldSeparator#RELATEDPAGES#$FieldSeparator#")) {
-            $page = str_replace("#$FieldSeparator#RELATEDPAGES#$FieldSeparator#",
-			LinkRelatedPages($dbi, $name), $page);
+	 if (strstr($page, "$FieldSeparator#RELATEDPAGES$FieldSeparator#")) {
+            _dotoken('RELATEDPAGES', LinkRelatedPages($dbi, $name), $page);
 	 }
       }
 
       // valid only for EditLinks
       if ($template == 'EDITLINKS') {
 	 for ($i = 1; $i <= NUM_LINKS; $i++)
-	    $page = str_replace("#$FieldSeparator#R$i#$FieldSeparator#",
-			$hash['refs'][$i], $page);
+	    _dotoken("R$i", $hash['refs'][$i], $page);
       }
 
-      if (isset($hash['copy'])) {
-	 $page = str_replace("#$FieldSeparator#IFCOPY#$FieldSeparator#",
-			'', $page);
-      } else {
-	 $page = ereg_replace("#$FieldSeparator#IFCOPY#$FieldSeparator#[^\n]*",
-			'', $page);
-      }
-
-      $page = str_replace("#$FieldSeparator#CONTENT#$FieldSeparator#",
-			$content, $page);
+      _dotoken('CONTENT', $content, $page);
       print $page;
    }
 
@@ -206,6 +225,20 @@
       $result .= "</DL>\n";
       
       return $result;
+   }
+
+   function ParseAdminTokens($line) {
+      global $ScriptUrl;
+      
+      while (preg_match("/%%ADMIN-INPUT-(.*?)-(\w+)%%/", $line, $matches)) {
+	 $head = str_replace("_", " ", $matches[2]);
+         $form = "<FORM ACTION=\"$ScriptUrl\" METHOD=POST>"
+		."$head: <INPUT NAME=$matches[1] SIZE=20> "
+		."<INPUT TYPE=SUBMIT VALUE=\"" . gettext("Go") . "\">"
+		."</FORM>";
+	 $line = str_replace($matches[0], $form, $line);
+      }
+      return $line;
    }
 
    // converts spaces to tabs

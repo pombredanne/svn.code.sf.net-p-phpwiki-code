@@ -1,4 +1,4 @@
-<!-- $Id: editpage.php,v 1.6 2000-11-01 11:31:41 ahollosi Exp $ -->
+<!-- $Id: editpage.php,v 1.7 2000-11-08 15:40:00 ahollosi Exp $ -->
 <?php
 
    // editpage relies on $pagename and $ScriptUrl
@@ -26,7 +26,7 @@
 
    if (is_array($pagehash)) {
 
-      if (($pagehash['flags'] & FLAG_PAGE_LOCKED) && !$admin_edit) {
+      if (($pagehash['flags'] & FLAG_PAGE_LOCKED) && !defined('WIKI_ADMIN')) {
 	 $html = "<p>";
 	 $html .= gettext ("This page has been locked by the administrator and cannot be edited.");
 	 $html .= "\n<p>";

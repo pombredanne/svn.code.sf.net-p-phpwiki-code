@@ -1,4 +1,4 @@
-<!-- $Id: savepage.php,v 1.5 2000-11-01 11:31:41 ahollosi Exp $ -->
+<!-- $Id: savepage.php,v 1.6 2000-11-08 15:40:00 ahollosi Exp $ -->
 <?php
 
 /*
@@ -48,7 +48,7 @@
       $pagehash["flags"] = 0;
       $newpage = 1;
    } else {
-      if (($pagehash['flags'] & FLAG_PAGE_LOCKED) && !$admin_edit) {
+      if (($pagehash['flags'] & FLAG_PAGE_LOCKED) && !defined('WIKI_ADMIN')) {
 	 $html = "<p>" . gettext ("This page has been locked by the administrator and cannot be edited.");
 	 $html .= "\n<p>" . gettext ("Sorry for the inconvenience.");
 	 GeneratePage('MESSAGE', $html, sprintf (gettext ("Problem while editing %s"), $pagename), 0);
