@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _AuthInfo.php,v 1.13 2004-04-02 15:06:56 rurban Exp $');
+rcs_id('$Id: _AuthInfo.php,v 1.14 2004-05-18 14:49:52 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -32,7 +32,7 @@ class WikiPlugin__AuthInfo
 extends WikiPlugin
 {
     function getName () {
-        return _("_AuthInfo");
+        return _("AuthInfo");
     }
 
     function getDescription () {
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.13 $");
+                            "\$Revision: 1.14 $");
     }
 
     function getDefaultArguments() {
@@ -190,6 +190,13 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2004/04/02 15:06:56  rurban
+// fixed a nasty ADODB_mysql session update bug
+// improved UserPreferences layout (tabled hints)
+// fixed UserPreferences auth handling
+// improved auth stability
+// improved old cookie handling: fixed deletion of old cookies with paths
+//
 // Revision 1.12  2004/03/12 15:48:08  rurban
 // fixed explodePageList: wrong sortby argument order in UnfoldSubpages
 // simplified lib/stdlib.php:explodePageList

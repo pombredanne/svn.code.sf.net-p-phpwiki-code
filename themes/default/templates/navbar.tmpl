@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-    rcs_id('$Id: navbar.tmpl,v 1.29 2004-05-18 13:37:06 rurban Exp $');
+    rcs_id('$Id: navbar.tmpl,v 1.30 2004-05-18 14:47:21 rurban Exp $');
 
     $s = $Theme->getButtonSeparator();
 ?>
@@ -19,7 +19,7 @@
        onmouseout="window.status=''; return true;" />
 <?php if (!empty($revision)) { ?>
 <?=$s?><?= $Theme->makeLinkButton($revision,_("LikePages"),_("LikePages")) ?><?=$s?><?= $Theme->makeLinkButton($revision,_("BackLinks"),_("BackLinks")) ?><?php
-  $links = $page->getLinks(false);
+  $links = $page->getPageLinks();
   if ($links->count() > 1) { ?><?=$s?><?= $Theme->makeLinkButton($revision,_("RelatedChanges"),_("RelatedChanges")) ?><?php } ?>
 <?php } ?>
 <?php if (!empty($user) && $user->isSignedIn()) { ?>
@@ -41,3 +41,10 @@
 <?=$s?><?= WikiLink(_("PhpWikiAdministration"), "button", _("Admin")) ?>
 <?php } ?></div>
 </form>
+<?php if (DEBUG & 2) {
+        if (isset($links)) {
+            $s = '';
+            while ($p = $links->next()) { $s .= $p->_pagename.', '; }
+            echo asXML(HTML::strong("PageLinks: "),$s ? HTML::em($s) : HTML::em('<none>'));
+        }
+} ?>

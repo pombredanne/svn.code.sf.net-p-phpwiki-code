@@ -1,5 +1,5 @@
 <?php // -*-php-*- ?>
-<!-- $Id: info.tmpl,v 1.1 2004-03-01 09:38:01 rurban Exp $ -->
+<!-- $Id: info.tmpl,v 1.2 2004-05-18 14:47:21 rurban Exp $ -->
 <?php
 
 $modifed = $Theme->formatDateTime($revision->get('mtime'));
@@ -68,14 +68,14 @@ if ($is_current = $revision->isCurrent()) {
         $LOCKED_CB->setAttr('onclick', $clickcheckb);
     }
 
-    $label['date'] = _("Last Modified:");
-    $label['author'] = _("Last Author:");
-    $label['summary'] = _("Last Summary:");
+    $label['date'] = _("Last Modified").':';
+    $label['author'] = _("Last Author").':';
+    $label['summary'] = _("Last Summary").':';
 
 } else {
     $label['date'] = _("Saved on:");
-    $label['author'] = _("Author:");
-    $label['summary'] = _("Summary:");
+    $label['author'] = _("Author").':';
+    $label['summary'] = _("Summary").':';
 }
 
 $tableSummary = fmt("Statistics about %s.", $page->getName());
@@ -187,6 +187,10 @@ if (0 and isSubPage($page->getName())) {
 <?php
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/03/01 09:38:01  rurban
+// Theme with less buttons and shorter descriptions:
+//   More behind "Info"
+//
 // Revision 1.15  2003/12/11 19:38:29  carstenklapp
 // Internal change: Fix PHP Warning: Call-time pass-by-reference has been deprecated
 //

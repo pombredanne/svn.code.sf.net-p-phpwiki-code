@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SyntaxHighlighter.php,v 1.3 2004-05-14 17:33:12 rurban Exp $');
+rcs_id('$Id: SyntaxHighlighter.php,v 1.4 2004-05-18 14:49:52 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -72,7 +72,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
     function getDefaultArguments() {
         return array(
@@ -147,7 +147,7 @@ extends WikiPlugin
     function run($dbi, $argstr, $request) {
         extract($this->getArgs($argstr, $request));
         $source =& $this->source;
-        if (empty($syntax)) return $this->error(_("Syntax language not specified)"));
+        if (empty($syntax)) return $this->error(_("Syntax language not specified."));
         if (!empty($source)) {
             $args = "";
             if (defined('HIGHLIGHT_DATA_DIR'))
@@ -180,6 +180,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/05/14 17:33:12  rurban
+// new plugin RecentChanges
+//
 // Revision 1.2  2004/05/14 15:56:16  rurban
 // protect color argument, more error handling, added default css
 //
