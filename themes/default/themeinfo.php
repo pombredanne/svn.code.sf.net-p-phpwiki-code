@@ -1,40 +1,41 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.5 2001-12-27 18:11:49 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.6 2002-01-01 07:36:15 carstenklapp Exp $');
 
-// FIXME: these files are moved to a subfolder in /templates
-// e.g. /templates/vanilla so relative paths to index.php
-// should be irrelevant.
+/**
+ * This is really just a template to copy for designing new themes.
+ * The real "default" theme is built into index.php, none of the
+ * variables here point to any real files.
+ * */
 
-// The current .htaccess in /templates generates an error in apache 1.3.20.
-// It should be removed or changed to allow access for themes to work.
-
-// If you specify a relative URL for the CSS and images,
-// the are interpreted relative to DATA_PATH (see below).
-// (The default value of DATA_PATH is the directory in which
-// index.php (this file) resides.)
-
-//use this setting in index.php:
+// To activate this theme, specify this setting in index.php:
 //$theme="default";
+// To deactivate themes, comment out all the $theme=lines in index.php.
 
 // CSS location
 //
-// Note that if you use the stock phpwiki style sheet, 'phpwiki.css',
-// you should make sure that it's companion 'phpwiki-heavy.css'
-// is installed in the same directory that the base style file is.
+// CSS file defines fonts, colors and background images for this style.
+// The companion '*-heavy.css' file isn't defined, it's just expected to
+// be in the same directory that the base style is in.
 $CSS_URL = "themes/$theme/phpwiki.css";
 
-// logo image
+// Logo image appears on every page and links to the HomePage.
 $logo = "themes/$theme/wikibase.png";
 
-// Signature image which is shown after saving an edited page
-// If this is left blank (or unset), the signature will be omitted.
+// Signature image which is shown after saving an edited page.
+// If this is left blank, any signature defined in index.php will be
+// used. If it is not defined by index.php or in here then the
+// "Thank you for editing..." screen will be omitted.
 $SignatureImg = "themes/$theme/signature.png";
 
+// If this theme defines any templates, they will completely override
+// whatever templates have been defined in index.php.
 $templates = array('BROWSE' =>    "themes/$theme/templates/browse.html",
 		   'EDITPAGE' =>  "themes/$theme/templates/editpage.html",
 		   'MESSAGE' =>   "themes/$theme/templates/message.html");
 
+// If this theme defines any custom link icons, they will completely override
+// any link icon settings defined in index.php.
 $URL_LINK_ICONS = array(
                     'http'	=> "themes/$theme/icons/http.png",
                     'https'	=> "themes/$theme/icons/https.png",
@@ -43,8 +44,6 @@ $URL_LINK_ICONS = array(
                     'interwiki' => "themes/$theme/icons/interwiki.png",
                     '*'		=> "themes/$theme/icons/zapg.png"
                     );
-
-rcs_id('$Id: themeinfo.php,v 1.5 2001-12-27 18:11:49 carstenklapp Exp $');
 
 // (c-file-style: "gnu")
 // Local Variables:

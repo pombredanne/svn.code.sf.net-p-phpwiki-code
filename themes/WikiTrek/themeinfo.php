@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.4 2002-01-01 07:18:42 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.5 2002-01-01 07:36:15 carstenklapp Exp $');
 
 /**
  * This PhpWiki theme is experimental and will likely not appear as 
@@ -26,16 +26,31 @@ rcs_id('$Id: themeinfo.php,v 1.4 2002-01-01 07:18:42 carstenklapp Exp $');
 
 // To activate this theme, specify this setting in index.php:
 //$theme="WikiTrek";
+// To deactivate themes, comment out all the $theme=lines in index.php.
 
+// CSS location
+//
 // CSS file defines fonts, colors and background images for this style.
+// The companion '*-heavy.css' file isn't defined, it's just expected to
+// be in the same directory that the base style is in.
 $CSS_URL = "themes/$theme/WikiTrek.css";
 
-// Logo image appears on every page.
+// Logo image appears on every page and links to the HomePage.
 $logo = "themes/$theme/Ufp-logo.png";
 
-// Signature image which is shown after saving an edited page
-// If this is left blank (or unset), the signature will be omitted.
+// Signature image which is shown after saving an edited page.
+// If this is left blank, any signature defined in index.php will be
+// used. If it is not defined by index.php or in here then the
+// "Thank you for editing..." screen will be omitted.
 $SignatureImg = "themes/$theme/lights.gif";
+
+// If this theme defines any templates, they will completely override
+// whatever templates have been defined in index.php.
+/*
+$templates = array('BROWSE' =>    "themes/$theme/templates/browse.html",
+		   'EDITPAGE' =>  "themes/$theme/templates/editpage.html",
+		   'MESSAGE' =>   "themes/$theme/templates/message.html");
+*/
 
 // If this theme defines any custom link icons, it will completely override
 // any link icon settings defined in index.php.
