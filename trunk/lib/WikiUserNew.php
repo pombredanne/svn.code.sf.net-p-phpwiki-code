@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.76 2004-05-18 13:30:04 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.77 2004-05-18 14:49:51 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -23,7 +23,7 @@ rcs_id('$Id: WikiUserNew.php,v 1.76 2004-05-18 13:30:04 rurban Exp $');
  * configurable external authentication methods.
  *
  * There's only one entry point, the function WikiUser which returns 
- * a WikiUser object, which contains the user's preferences.
+ * a WikiUser object, which contains the name, authlevel and user's preferences.
  * This object might get upgraded during the login step and later also.
  * There exist three preferences storage methods: cookie, homepage and db,
  * and multiple password checking methods.
@@ -2853,6 +2853,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.76  2004/05/18 13:30:04  rurban
+// prevent from endless loop with oldstyle warnings
+//
 // Revision 1.75  2004/05/16 22:07:35  rurban
 // check more config-default and predefined constants
 // various PagePerm fixes:
