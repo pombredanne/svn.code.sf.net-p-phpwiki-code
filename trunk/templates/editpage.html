@@ -4,7 +4,7 @@
 <html>
 <head>
 <!-- phpwiki source:
-$Id: editpage.html,v 1.38 2002-01-03 19:28:23 carstenklapp Exp $
+$Id: editpage.html,v 1.39 2002-01-05 09:22:25 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <base href="${BASE_URL}" />
@@ -18,18 +18,7 @@ ${CSS}
 <!--This hack allows the h1 to be localised. FIXME: move out of html template into php-->
 <h1><?php printf(_("Edit: %s"),"<a class=\"backlinks\" href=\"${BROWSE}"._("BackLinks")."?page=${PAGE}\">${PAGE}</a>"); ?></h1>
 <!--=this line=<?php $bl='<plugin-link BackLinks page="[pagename]" class="backlinks" linktext="${SPLIT_PAGE}" ?>';printf(_("Edit: %s"),"$bl"); ?>=doesn't work=-->
-<?php if (!empty($PREVIEW_CONTENT)) { ?>
-  <p><strong>$_("Preview only!  Changes not saved.")</strong></p>
-  <div class="wikitext">${PREVIEW_CONTENT}</div>
-  <hr class="ignore" noshade />
-<?php } ?>
-
-<?php if (!$IS_CURRENT) { ?>
-  <p><strong>$_("Warning: You are editing an old revision.")
-        $_("Saving this page will overwrite the current version.")</strong></p>
-  <hr class="ignore" noshade />
-<?php } ?>
-
+${EDIT_WARNINGS}
 <?php /*
  * FIXME: Hack! 
  * The URL used for the form action parameter is bogus.
@@ -69,7 +58,7 @@ ${CSS}
     <?php } ?>
   </td>
 </tr></table>
-<p style="clear: both; padding: 2ex 0ex 0ex;">${EditTips}</p>
+<p style="clear: both; padding: 2ex 0ex 0ex;">${EDIT_TIPS}</p>
 <hr noshade="noshade" />
 <div class="wiki-edithelp">
 <?plugin IncludePage page=_("TextFormattingRules") section=_("Synopsis") quiet=1?>
