@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: Tools.php,v 1.5 2003-12-07 19:25:41 carstenklapp Exp $');
+rcs_id('$Id: Tools.php,v 1.6 2004-04-16 23:30:41 zorloc Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -22,9 +22,9 @@ rcs_id('$Id: Tools.php,v 1.5 2003-12-07 19:25:41 carstenklapp Exp $');
 
 
 /**
- * Base class for Configuration properties
+ * Class for Configuration properties
  * 
- * Class provides the base functions for subclasses to get and set 
+ * Class provides the functions to get and set 
  * valid values for configuration properties.
  * @author Joby Walker<zorloc@imperium.org>
  */
@@ -84,11 +84,10 @@ class ConfigValue {
     * @static
     */
     function getConfig($params){
-        $class = 'Config' . $params['type'];
         if (isset($params['validator'])) {
             $params['validator'] = &Validator::getValidator($params['validator']);
         }
-        return new $class ($params);
+        return new ConfigValue($params);
     }
 
     /**
@@ -173,69 +172,6 @@ class ConfigValue {
     }
 }
 
-/**
-* Configuration class for Constants
-* 
-* Subclass of ConfigValue which overrides the getStarting method 
-* to provide the true value currently used.
-* @author Joby Walker<zorloc@imperium.org>
-*/
-class ConfigConstant extends ConfigValue {
-
-    /**
-    * Determines the currently used value of this constant
-    * @return mixed The value currently used.
-    */
-    function getStarting(){
-        if (defined($this->name)) {
-            $starting = constant($this->name);
-            if ($this->valid($starting)) {
-                return $starting;
-            }
-        }
-        return $this->defaultValue;
-    }
-}
-
-/**
-* Configuration class for Variables
-* 
-* Subclass of ConfigValue which overrides the getStarting method 
-* to provide the true value currently used
-* @author Joby Walker<zorloc@imperium.org>
-*/
-class ConfigVariable extends ConfigValue {
-
-    /**
-    * Determines the currently used value of this variable
-    * @return mixed The value currently used.
-    */
-    function getStarting(){
-        if (isset(${$this->name})) {
-            $starting = ${$this->name};
-            if ($this->valid($starting)) {
-                return $starting;
-            }
-        }
-        return $this->defaultValue;
-    }
-}
-
-
-class ConfigArray extends ConfigVariable {
-
-
-    function ConfigArray($params){
-        $this->name = $params['name'];
-        $this->description = $params['description'];
-        $number = 0;
-        foreach ($params['defaultValue'] as $config){
-            $this->value = &ConfigValue::getConfig($config);
-            $number++;
-        }
-        return;
-    }
-}
 
 
 
@@ -676,6 +612,9 @@ class ValidatorArrayStringList extends Validator {
 
 
 //$Log: not supported by cvs2svn $
+//Revision 1.5  2003/12/07 19:25:41  carstenklapp
+//Code Housecleaning: fixed syntax errors. (php -l *.php)
+//
 //Revision 1.3  2003/01/28 18:53:25  zorloc
 //Added some more Validator subclasses to handle arrays of for which the
 //validation criteria should be the same for all members.
