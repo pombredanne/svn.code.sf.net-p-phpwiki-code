@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.2 2001-02-13 05:54:38 dairiki Exp $');
+rcs_id('$Id: loadsave.php,v 1.3 2001-02-14 05:22:49 dairiki Exp $');
 
 require "lib/ziplib.php";
 
@@ -372,9 +372,11 @@ function SetupWiki ($dbi)
    StartLoadDump('Loading up virgin wiki');
    echo "<dl>\n";
 
-   LoadAny($dbi, SearchPath(WIKI_PGSRC));
+   $ignore = array(gettext('RecentChanges'));
+
+   LoadAny($dbi, SearchPath(WIKI_PGSRC), false, $ignore);
    if ($LANG != "C")
-      LoadAny($dbi, SearchPath(DEFAULT_WIKI_PGSRC), $GenericPages);
+      LoadAny($dbi, SearchPath(DEFAULT_WIKI_PGSRC), $GenericPages, $ignore);
 
    echo "</dl>\n";
    EndLoadDump();

@@ -4,7 +4,7 @@
 /////////////////////////////////////////////////////////////////////
 define ('PHPWIKI_VERSION', '1.3.0pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.8 2001-02-13 05:54:38 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.9 2001-02-14 05:22:49 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -91,6 +91,14 @@ $DBParams = array(
 // other languages available: Dutch "nl", Spanish "es", German "de",
 // and Swedish "sv"
 $LANG = "C";
+
+// If you specify a relative URL for the CSS and images,
+// the are interpreted relative to DATA_PATH (see below).
+// (The default value of DATA_PATH is the directory in which
+// index.php (this file) resides.)
+
+// CSS location
+define("CSS_URL", "phpwiki.css");
 
 // logo image (path relative to index.php)
 $logo = "images/wikibase.png";

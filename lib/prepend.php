@@ -1,11 +1,11 @@
 <?php
 /* lib/prepend.php
  *
- * Things which must be done before all else.
+ * Things which must be done and defined before anything else.
  */
 $RCS_IDS = '';
 function rcs_id ($id) { $GLOBALS['RCS_IDS'] .= "$id\n"; }
-rcs_id('$Id: prepend.php,v 1.1 2001-02-13 05:54:38 dairiki Exp $');
+rcs_id('$Id: prepend.php,v 1.2 2001-02-14 05:22:49 dairiki Exp $');
 
 error_reporting(E_ALL);
 
@@ -112,6 +112,25 @@ function PostponeErrorHandler ($errno, $errstr, $errfile, $errline)
 set_error_handler('PostponeErrorHandler');
 
 PostponeErrorMessages(E_ALL);
+
+
+function SearchPath ($file, $missing_ok = false, $path = false) 
+{
+   if (ereg('^/', $file))
+      return $file;		// absolute path.
+
+   if (!$path)
+      $path = $GLOBALS['DataPath'];
+   
+   while (list($i, $dir) = each($path))
+   {
+      if (file_exists("$dir/$file"))
+	 return "$dir/$file";
+   }
+   if ($missing_ok)
+      return false;
+   ExitWiki("$file: file not found");
+}
 
 // For emacs users
 // Local Variables:

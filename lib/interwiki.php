@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: interwiki.php,v 1.2 2001-02-12 01:43:10 dairiki Exp $');
+<?php rcs_id('$Id: interwiki.php,v 1.3 2001-02-14 05:22:49 dairiki Exp $');
 
 function generate_interwikimap_and_regexp()
 {
@@ -25,34 +25,30 @@ function LinkInterWikiLink($link, $linktext='')
    global $interwikimap;
 
    list( $wiki, $page ) = split( ":", $link );
-   
+
    $url = $interwikimap[$wiki] . urlencode($page);
-   return LinkURL($url, $linktext ? $linktext : $link);
+
+   if ($linktext)
+      $linktext = htmlspecialchars($linktext);
+   else
+      $linktext = Element('span', array('class' => 'interwiki'),
+			  htmlspecialchars("$wiki:") .
+			  QElement('span', array('class' => 'wikiword'), $page));
+   
+   return Element('a', array('href' => $url,
+			     'class' => 'interwikilink'),
+		  $linktext);
 }
 
 // Link InterWiki links
 // These can be protected by a '!' like Wiki words.
-function wtt_interwikilinks($line, &$trfrm)
+function wtt_interwikilinks($match, &$trfrm)
 {
    global $InterWikiLinkRegexp, $WikiNameRegexp;
 
-   $n = $ntok = $trfrm->tokencounter;
-
-   // FIXME: perhaps WikiNameRegexp is a bit too restrictive?
-   $line = wt_tokenize($line, "!?(?<![A-Za-z0-9])$InterWikiLinkRegexp:$WikiNameRegexp",
-		       $trfrm->replacements, $ntok);
-   while ($n < $ntok) {
-      $old = $trfrm->replacements[$n];
-      if ($old[0] == '!') {
-	 $trfrm->replacements[$n] = substr($old,1);
-      } else {
-	 $trfrm->replacements[$n] = LinkInterWikiLink($old);
-      }
-      $n++;
-   }
-
-   $trfrm->tokencounter = $ntok;
-   return $line;
+   if ($match[0] == "!")
+      return htmlspecialchars(substr($match,1));
+   return LinkInterWikiLink($match);
 }
 
 // For emacs users

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.12 2001-02-13 05:54:38 dairiki Exp $');
+rcs_id('$Id: editpage.php,v 1.13 2001-02-14 05:22:49 dairiki Exp $');
 
    // editpage relies on $pagename, $version
 
@@ -67,7 +67,7 @@ rcs_id('$Id: editpage.php,v 1.12 2001-02-13 05:54:38 dairiki Exp $');
 	  = Element('input', array('type' => 'checkbox',
 				   'name' => 'minor_edit',
 				   'value' => 'yes',
-				   'checked' => ($do_archive == 'probably')));
+				   'checked' => ($do_archive == 'maybe')));
    }
 
    echo GeneratePage('EDITPAGE', $textarea, $pagename, $pagehash);   
