@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Transclude.php,v 1.6 2003-02-25 05:45:34 carstenklapp Exp $');
+rcs_id('$Id: Transclude.php,v 1.7 2003-02-27 22:47:27 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -57,7 +57,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
@@ -126,7 +126,7 @@ extends WikiPlugin
             return '';
         $seen = true;
 
-        $script = '
+        return JavaScript('
           function adjust_iframe_height(frame) {
             var content = frame.contentDocument;
             try {
@@ -144,15 +144,17 @@ extends WikiPlugin
             for (var i = 0; i < f.length; i++)
               adjust_iframe_height(f[i]);
           }, false);
-          ';
-
-        return HTML::script(array('language' => 'JavaScript',
-                                  'type'     => 'text/javascript'),
-                            new RawXml("<!-- //\n$script\n// -->"));
+          ');
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2003/02/25 05:45:34  carstenklapp
+// Added "See: " in front of url, so for browsers that do not support
+// <iframe> at least there is an indication to the user that this
+// plugin is actually doing something while at the same time without
+// being (subjectively) too disruptive to page content.
+//
 // Revision 1.5  2003/02/24 14:34:44  carstenklapp
 // Added iframe title (bobby.org accessibility guidelines).
 // Simplified output for non-iframe and non-visual browsers (as suggested

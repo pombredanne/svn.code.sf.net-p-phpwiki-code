@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.30 2003-02-17 06:02:25 dairiki Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.31 2003-02-27 22:47:26 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -440,8 +440,62 @@ function HiddenInputs ($query_args, $pfx = false, $exclude = array()) {
     return $inputs;
 }
 
+
+/** Generate a <script> tag containing javascript.
+ *
+ * @param string $js  The javascript.
+ * @return HtmlElement A <script> element.
+ */
+function JavaScript($js) {
+    return HTML::script(array('language' => 'JavaScript',
+                              'type'     => 'text/javascript'),
+                        new RawXml("<!-- //\n${js}\n// -->"));
+}
+
+/** Conditionally display content based of whether javascript is supported.
+ *
+ * This conditionally (on the client side) displays one of two alternate
+ * contents depending on whether the client supports javascript.
+ *
+ * NOTE:
+ * The content you pass as arguments to this function must be block-level.
+ * (This is because the <noscript> tag is block-level.)
+ *
+ * @param mixed $if_content Content to display if the browser supports
+ * javascript.
+ *
+ * @param mixed $else_content Content to display if the browser does
+ * not support javascript.
+ *
+ * @return XmlContent
+ */
+function IfJavaScript($if_content = false, $else_content = false) {
+    $html = array();
+    if ($if_content) {
+        $xml = AsXML($if_content);
+        $js = sprintf('document.write("%s");',
+                      addcslashes($xml, "\0..\37!@\\\177..\377"));
+        $html[] = JavaScript($js);
+    }
+    if ($else_content) {
+        $html[] = HTML::noscript(false, $else_content);
+    }
+    return HTML($html);
+}
+    
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.30  2003/02/17 06:02:25  dairiki
+ Remove functions HiddenGets() and HiddenPosts().
+
+ These functions were evil.  They didn't check the request method,
+ so they often resulted in GET args being converted to POST args,
+ etc...
+
+ One of these is still used in lib/plugin/WikiAdminSelect.php,
+ but, so far as I can tell, that code is both broken _and_ it
+ doesn't do anything.
+
  Revision 1.29  2003/02/15 01:54:19  dairiki
  Added HTML::meta() for <meta> tag.
 
