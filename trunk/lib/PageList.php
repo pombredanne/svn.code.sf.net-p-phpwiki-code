@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.118 2004-11-01 10:43:55 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.119 2004-11-11 14:34:11 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -645,15 +645,17 @@ class PageList {
      */
     function _renderPageRow (&$page_handle, $i = 0) {
         $page_handle = $this->_getPageFromHandle($page_handle);
-        if (!isset($page_handle) || empty($page_handle)
-            || in_array($page_handle->getName(), $this->_excluded_pages))
-            return; // exclude page.
-            
         //FIXME. only on sf.net
         if (!is_object($page_handle)) {
             trigger_error("PageList: Invalid page_handle $page_handle", E_USER_WARNING);
             return;
         }
+        if (!isset($page_handle)
+            or empty($page_handle)
+            or (!empty($this->_excluded_pages)
+                and in_array($page_handle->getName(), $this->_excluded_pages)))
+            return; // exclude page.
+            
         // enforce view permission
         if (!mayAccessPage('view', $page_handle->getName()))
             return;
@@ -1429,6 +1431,12 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.118  2004/11/01 10:43:55  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 // Revision 1.117  2004/10/14 21:06:01  rurban
 // fix dumphtml with USE_PATH_INFO (again). fix some PageList refs
 //

@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.214 2004-11-11 11:01:20 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.215 2004-11-11 14:34:12 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1769,6 +1769,9 @@ function isExternalReferrer(&$request) {
     return false;
 }
 
+/**
+ * useful for PECL overrides: cvsclient, ldap, soap.
+ */
 function loadPhpExtension($extension) {
     if (!extension_loaded($extension)) {
         $soname = (isWindows() ? 'php_' : '') . $extension . (isWindows() ? '.dll' : '.so');
@@ -1796,6 +1799,9 @@ function longer_timeout($secs = 30) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.214  2004/11/11 11:01:20  rurban
+// fix loadPhpExtension
+//
 // Revision 1.213  2004/11/01 10:43:57  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session

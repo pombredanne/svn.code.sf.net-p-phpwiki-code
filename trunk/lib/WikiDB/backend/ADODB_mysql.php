@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_mysql.php,v 1.8 2004-11-10 19:32:24 rurban Exp $');
+rcs_id('$Id: ADODB_mysql.php,v 1.9 2004-11-11 14:34:12 rurban Exp $');
 
 require_once('lib/WikiDB/backend/ADODB.php');
 
@@ -127,6 +127,7 @@ extends WikiDB_backend_ADODB
         // Note that this will fail silently if the page does not
         // have a record in the page table.  Since it's just the
         // hit count, who cares?
+        // LIMIT since 3.23
         $dbh->Execute(sprintf("UPDATE LOW_PRIORITY %s SET hits=hits+1 WHERE pagename=%s LIMIT 1",
                               $this->_table_names['page_tbl'],
                               $dbh->qstr($pagename)));
