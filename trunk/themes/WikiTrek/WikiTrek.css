@@ -1,5 +1,5 @@
 /**
- * $Id: WikiTrek.css,v 1.21 2002-02-08 07:34:00 carstenklapp Exp $
+ * $Id: WikiTrek.css,v 1.22 2002-02-08 07:38:22 carstenklapp Exp $
  *
  * This theme will probably be renamed something like "Space" to
  * avoid any potential copyright issues.
@@ -56,7 +56,7 @@ img.linkicon, img.rssicon {
  */
 .wikitext hr {
   background-image:   url("images/hr.png");
-  background-repeat:   repeat;
+  background-repeat:   repeat-x;
   background-position: center;
 }
 
