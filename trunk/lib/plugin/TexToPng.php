@@ -13,10 +13,15 @@
 
 /*-----------------------------------------------------------------------
  | CONFIGURATION
- *----------------------------------------------------------------------- 
- | output mere debug messages (should be set to false in a stable 
- | version)
- |                                                                      */  
+ *----------------------------------------------------------------------*/
+// needs (la)tex, dvips, gs, netpbm, libpng
+// LaTeX2HTML ftp://ftp.dante.de/tex-archive/support/latex2html
+$texbin = '/usr/bin/tex';
+$dvipsbin = '/usr/bin/dvips';
+$pstoimgbin = '/usr/bin/pstoimg';
+
+// output mere debug messages (should be set to false in a stable 
+// version)
    define('TexToPng_debug', false);                                          
 
 /*-----------------------------------------------------------------------
@@ -237,9 +242,9 @@ class WikiPlugin_TexToPng extends WikiPluginCached
         $ok= $tempfiles &&
              $this->createTexFile($tempfiles.'.tex',$texstr) &&
              $this->execute('cd '.$cacheparams['cache_dir'].'; '.
-                            'tex '.$tempfiles.'.tex',true) &&                  
-             $this->execute('dvips -o'.$tempfiles.'.ps '.$tempfiles.'.dvi') &&  
-             $this->execute('pstoimg '.$options.
+                            "$texbin ".$tempfiles.'.tex',true) &&                  
+             $this->execute("$dvipsbin -o".$tempfiles.'.ps '.$tempfiles.'.dvi') &&  
+             $this->execute("$pstoimgbin $options"
                             ' -out '.$tempfiles.'.png '.
                             $tempfiles.'.ps'               ) &&
              file_exists( $tempfiles.'.png' );

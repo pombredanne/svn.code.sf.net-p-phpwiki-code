@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.65 2002-03-08 03:29:51 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.66 2002-08-20 18:26:12 rurban Exp $');
 /**
  */
 
@@ -457,7 +457,7 @@ extends _RecentChanges_Formatter
             return false;
 
         return array('title' => WIKI_NAME,
-                     'link' => WikiURL(HomePage, false, 'absurl'),
+                     'link' => WikiURL(HOME_PAGE, false, 'absurl'),
                      'url' => $img_url);
     }
 
