@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Toolbar.php,v 1.6 2002-01-03 19:28:24 carstenklapp Exp $');
+<?php rcs_id('$Id: Toolbar.php,v 1.7 2002-01-05 09:34:29 carstenklapp Exp $');
 
 //require_once("lib/ErrorManager.php");
 //require_once("lib/WikiPlugin.php");
@@ -25,66 +25,109 @@ function separator() {
 
 /*
 
-These functions will replace the PHP logic currently embedded in
-the html templates, used to build the Wiki commands and navigation
-links at the bottom of the screen.
+These functions will replace the PHP logic currently embedded in the
+html templates, used to build the Wiki commands and navigation links
+at the bottom of the screen.
 
 If you feel inspired please contribute here!
 
 (This is all in a state of flux, so don't count on any of this being
 the same tomorrow...)
 
+
+Some of these functions are already to be used as ${tokens} in the
+xhtml templates.
+
+FIXME: IncludePage plugin for EditHelp needs to be dealt with.
+
+Plugins shuold be cleaned up, in this state they won't display any
+mouseover text.
+
+The raw html should be replaced with calls to Element() and/or
+QElement()
+
 */
 
-// Some of these functions are ready to be used as ${tokens}
-// in the xhtml templates.
-//
-// FIXME:
-// IncludePage plugin for EditHelp needs to be dealt with.
-//
-// Plugins shuold be cleaned up, in this state they won't display
-// any mouseover text
-//
-// The raw html should be replaced with calls to
-// Element() and/or QElement()
 
+/////////////////////////////////////////////////////////////////////
+// Global Page Elements
 
-// BrowsePage stuff
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Template token: ${LOGO}
+// Done.
 
-//Calling function should provide: - done
-//$is_current = ($current->getVersion() == $revision->getVersion());
-//$pagename = ($pagename);
-function toolbar_Warning_IsCurrent($is_current, $pagename) {
+// Requires:
+// $wiki_name = WIKI_NAME;
+// $logo      = $logo;
+
+function toolbar_action_Logo($wiki_name, $logo) {
+    $html = "";
+    $html = Element('a', array('href' => WikiURL(_("HomePage"))),
+                    QElement('img', array('alt'    => $wiki_name,
+                                          'src'    => DataURL($logo),
+                                          'border' => '0',
+                                          'align'  => 'right')));
+    return $html;
+}
+
+/////////////////////////////////////////////////////////////////////
+// View Page Elemets
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Template token: ${VIEW_WARNINGS}
+// Done.
+
+// Requires:
+// $is_current = $current->getVersion() == $revision->getVersion();
+// $pagename   = $pagename;
+
+function toolbar_Warnings_View($is_current, $pagename) {
     $html = "";
     if (!$is_current) {
-        $html .= "<p><strong>" ._("Note:") ."</strong> " ._("You are viewing an old revision of this page.");
-        $html .= "<a href=\"" .WikiURL('') .rawurlencode($pagename) ."\"> " ._("View the current version") ."</a></p>";
-	$html .= "<hr class=\"ignore\" noshade=\"noshade\" />";
+        $html .= Element('p', QElement('strong', _("Note:")) ." "
+                         ._("You are viewing an old revision of this page.")
+                         ." "
+                         .QElement('a', array('href' => WikiURL('')
+                                              .rawurlencode($pagename)),
+                                   _("View the current version")) .".");
+        $html .= QElement('hr', array('class'   => 'ignore',
+                                      'noshade' => 'noshade'));
     }
     return $html;
 }
 
-//Calling function should provide: - done
-//$is_current = ($current->getVersion() == $revision->getVersion());
-//$lastmodified = (strftime($datetimeformat, $revision->get('mtime')));
-//$version = ($revision->getVersion());
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Template token: ${LASTMODIFIED}
+// Done.
+
+// Requires:
+// $is_current   = $current->getVersion() == $revision->getVersion();
+// $lastmodified = strftime($datetimeformat, $revision->get('mtime'));
+// $version      = $revision->getVersion();
+
 function toolbar_Info_LastModified($is_current, $lastmodified, $version) {
     $html = "";
     if ($is_current) {
-       $html .= sprintf(_("Last edited on %s."), $lastmodified);
+        $html .= QElement('p', sprintf(_("Last edited on %s."),
+                                       $lastmodified));
     } else {
-       $html .= sprintf(_("Version %s, saved on %s."),$version, $lastmodified);
+        $html .= QElement('p', sprintf(_("Version %s, saved on %s."),
+                                       $version, $lastmodified));
     }
     return $html;
 }
 
-//Calling function should provide:
-//$pagelocked = ($page->get('locked'));
-//$userisadmin = ($user->is_admin());
-//$is_current = ($current->getVersion() == $revision->getVersion());
-//$version = ($revision->getVersion());
-//$pagename = ($page->getName());
-function toolabr_action_PageActions($pagelocked, $userisadmin, $is_current, $version, $pagename) {
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Template token: ${PAGE_ACTIONS} not working yet
+
+// Requires:
+// $pagelocked  = $page->get('locked');
+// $userisadmin = $user->is_admin();
+// $is_current  = $current->getVersion() == $revision->getVersion();
+// $version     = $revision->getVersion();
+// $pagename    = $page->getName();
+
+function toolbar_action_PageActions($pagelocked, $userisadmin, $is_current, $version, $pagename) {
     $html = "";
     if ($pagelocked && !$userisadmin) {
         $html .= _("Page locked");
@@ -119,9 +162,19 @@ function toolabr_action_PageActions($pagelocked, $userisadmin, $is_current, $ver
     return $html;
 }
 
-//Calling function should provide: - done
-//$pagename = ($page->getName());
-//$charset = (CHARSET);
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Template token: ${SEARCH}
+
+// FIXME: use Element()
+
+// FIXME: Figure out a better way to prevent unwanted newlines in html?
+// current hack is by moving the <form> and </form> around the
+// template.
+
+// Requires:
+// $pagename = $page->getName();
+// $charset  = CHARSET;
+
 function toolbar_action_SearchActions($pagename, $charset) {
     $html = "";
     $html .= "<form action=\"" .WikiURL(_("TitleSearch")) ."\" method=\"get\" accept-charset=\"" .$charset ."\">";
@@ -139,10 +192,18 @@ function toolbar_action_SearchActions($pagename, $charset) {
     return $html;
 }
 
-//Calling function should provide: done - WARNING: hackage! $pagename is not being passed here yet
-//$userauth = ($user->is_authenticated();
-//$userid = ($user->id());
-//$pagename = ($pagename);
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Template token: ${SIGNIN}
+
+// FIXME: use Element()
+
+// WARNING: Hackage! $pagename is not being passed here yet.
+
+// Requires:
+// $userauth = $user->is_authenticated();
+// $userid   = $user->id();
+// $pagename = $pagename;
+
 function toolbar_User_UserSignInOut($userauth, $userid, $pagename) {
     $html = "";
     if ($userauth) {
@@ -154,58 +215,69 @@ function toolbar_User_UserSignInOut($userauth, $userid, $pagename) {
     return $html;
 }
 
-//Calling function should provide: - done
-//$wiki_name = (WIKI_NAME);
-//$logo = ($logo);
-function toolbar_action_Logo($wiki_name, $logo) {
-    $html = "";
-    $html .= "<a class=\"wikilink\" href=\"" .WikiURL(_("HomePage")) ."\">";
-    $html .= "<img alt=\"" .$wiki_name .":" ._("HomePage") ."\"";
-    $html .= " src=\"" . DataURL($logo) ."\"";
-    $html .= " border=\"0\" align=\"right\" /></a>";
-    return $html;
-}
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Template token: ${NAVIGATION}
 
-//Calling function should provide: - done
-//$pagename = ($pagename);
+// FIXME: use Element()
+
+// NOTE: This token works but is not used in the template, instead it
+//       is called by ${SEARCH} to avoid extra newlines in the html.
+//
+// Requires:
+// $pagename = ($pagename);
 function toolbar_action_Navigation($pagename) {
     $html = "";
     $html .= LinkExistingWikiWord(_("RecentChanges"));
+    // These lines are here for future anticipated plugins:
     //$html .= separator() ."<plugin-link RandomPage page=\"" .$pagename ."\" >";
-    //FIXME: What to use instead of WikiURL?
-//    $html .= separator() ."<a class=\"wikiaction\" href=\"" .WikiURL('_("RandomPage")', array('page' => $pagename)) ."\">" ._("RandomPage") ."</a>";
+    // FIXME: What to use instead of WikiURL()?
+    //$html .= separator() ."<a class=\"wikiaction\" href=\"" .WikiURL('_("RandomPage")', array('page' => $pagename)) ."\">" ._("RandomPage") ."</a>";
     //$html .= separator() ."<plugin-link WantedPages >";
-//    $html .= separator() ."<a class=\"wikiaction\" href=\"" . WikiURL(_("WantedPages")) ."\">" ._("WantedPages") ."</a>";
-//    $html .= separator() .LinkExistingWikiWord(_("SandBox"));
+    //$html .= separator() ."<a class=\"wikiaction\" href=\"" . WikiURL(_("WantedPages")) ."\">" ._("WantedPages") ."</a>";
+    //$html .= separator() .LinkExistingWikiWord(_("SandBox"));
     return $html;
 }
 
+/////////////////////////////////////////////////////////////////////
+// Edit Page Elements
 
-//EditPage stuff
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Template token: ${EDIT_WARNINGS}
+// Done.
 
-//Calling function should provide:
-//$ispreview = (!empty($PREVIEW_CONTENT));
-function toolbar_Warning_Preview($ispreview) {
+// Requires:
+// $ispreview  = !empty($PREVIEW_CONTENT);
+// $is_current = $current->getVersion() == $revision->getVersion();
+
+function toolbar_Warnings_Edit($ispreview, $is_current) {
     $html = "";
-    if ($ispreview) {
-        $html .= "<p><strong>" ._("Preview only!  Changes not saved.") ."</strong></p>";
+    if ($ispreview or !$is_current) {
+        if ($ispreview) {
+            $html .= Element('p',
+                             QElement('strong',
+                                      _("Preview only!  Changes not saved.")));
+        }
+        if (!$is_current) {
+            $html .= Element('p',
+                             QElement('strong',
+                                      _("Warning: You are editing an old revision.")
+                                      ." "
+                                      ._("Saving this page will overwrite the current version.")));
+        }
+        $html .= QElement('hr', array('class'   => 'ignore',
+                                      'noshade' => 'noshade'));
     }
     return $html;
 }
 
-//Calling function should provide:
-//$is_current = ($current->getVersion() == $revision->getVersion());
-function toolbar_Warning_OldRevision($is_current) {
-    $html = "";
-    if (!$is_current) {
-        $html .= "<p><strong>" ._("Warning: You are editing an old revision.");
-        $html .= " " ._("Saving this page will overwrite the current version.") ."</strong></p>";
-        $html .= "<hr class=\"ignore\" noshade />";
-    }
-    return $html;
-}
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Template token: ${} not working yet (maybe ${EDITPAGE_AUTHOR}?)
 
-//$userid = ($user->id())
+// FIXME: use Elements()
+
+// Requires:
+// $userid = ($user->id())
+
 function toolbar_User_AuthorSignInOut($userid) {
     $html = "";
     if ($user->is_authenticated()) {
@@ -218,27 +290,58 @@ function toolbar_User_AuthorSignInOut($userid) {
     return $html;
 }
 
-//done
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Template token: ${EDIT_TIPS}
+
+// FIXME: use Elements()
+
+// Requires:
+// none
+
 function toolbar_Info_EditTips() {
     $html = "";
-    $html .= sprintf(_("You can change the size of the editing area in %s."), LinkExistingWikiWord(_("UserPreferences")));
-    $html .= " " .sprintf(_("See %s tips for editing."),LinkExistingWikiWord(_("GoodStyle")));
+    $html .= Element('p',
+                     sprintf(_("You can change the size of the editing area in %s."),
+                             LinkExistingWikiWord(_("UserPreferences")))
+                     ." " .sprintf(_("See %s tips for editing."),
+                                   LinkExistingWikiWord(_("GoodStyle")))
+                     );
     return $html;
 }
 
-//FIXME: plugin IncludePage
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Template token: ${EDIT_HELP}
+
+// FIXME: how to call plugin IncludePage from here?
+
+// Requires:
+// none
+
 function toolbar_Info_EditHelp() {
     $html = "";
     $html .= "<div class=\"wiki-edithelp\">";
-    $html .= "<plugin IncludePage page=" ._("TextFormattingRules") ."section=" ._("Synopsis") ."quiet=1>";
+    $html .= "<plugin IncludePage page=" ._("TextFormattingRules")
+        ."section=" ._("Synopsis") ."quiet=1>";
     $html .= "</div>";
     return $html;
 }
 
 
+/////////////////////////////////////////////////////////////////////
 // This is a stub for a Toolbar class to eventually replace the
 // functions above.
+//
 // 
+//               Nothing below this line works yet.
+//
+// 
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+
+
+
 
 class Toolbar
 {
