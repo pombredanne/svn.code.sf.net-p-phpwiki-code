@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.50 2004-11-24 18:58:41 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.51 2004-11-27 14:39:04 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -650,7 +650,8 @@ class GroupDb_PearDB extends GroupDb {
             return $this->membership[$group];
         }
         $dbh = & $this->dbh;
-        $db_result = $dbh->query(sprintf($this->_is_member,$dbh->quote($this->username),
+        $db_result = $dbh->query(sprintf($this->_is_member,
+                                         $dbh->quote($this->username),
                                          $dbh->quote($group)));
         if ($db_result->numRows() > 0) {
             $this->membership[$group] = true;
@@ -674,7 +675,7 @@ class GroupDb_PearDB extends GroupDb {
     	$membership = array();
 
         $dbh = & $this->dbh;
-        $db_result = $dbh->query(sprintf($this->_user_groups,$dbh->quote($this->username)));
+        $db_result = $dbh->query(sprintf($this->_user_groups, $dbh->quote($this->username)));
         if ($db_result->numRows() > 0) {
             while (list($group) = $db_result->fetchRow(DB_FETCHMODE_ORDERED)) {
                 $membership[] = $group;
@@ -1092,6 +1093,9 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.50  2004/11/24 18:58:41  rurban
+// bug #1063463
+//
 // Revision 1.49  2004/11/23 13:06:30  rurban
 // several fixes and suggestions by Charles Corrigan:
 // * fix GROUP_BOGO_USER check

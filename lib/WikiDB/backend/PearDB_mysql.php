@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_mysql.php,v 1.13 2004-11-26 18:39:02 rurban Exp $');
+rcs_id('$Id: PearDB_mysql.php,v 1.14 2004-11-27 14:39:05 rurban Exp $');
 
 require_once('lib/WikiDB/backend/PearDB.php');
 
@@ -160,6 +160,20 @@ extends WikiDB_backend_PearDB
     }
 
 };
+
+class WikiDB_backend_PearDB_mysql_search
+extends WikiDB_backend_PearDB_search
+{
+    function _pagename_match_clause($node) { 
+        $word = $node->sql();
+        if ($node->op == 'REGEX') { // posix regex extensions
+            return "pagename REGEXP '$word'";
+        } else {
+            return $this->_case_exact ? "pagename LIKE '$word'" 
+                                      : "LOWER(pagename) LIKE '$word'";
+        }
+    }
+}
 
 // (c-file-style: "gnu")
 // Local Variables:

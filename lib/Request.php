@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.80 2004-11-21 11:59:16 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.81 2004-11-27 14:39:04 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -829,8 +829,8 @@ class Request_AccessLog {
         }
         if (!empty($this->_dbi)) {
             // check same hosts in referer and request and remove them
-            $ext_where = " AND LEFT(referer,$blen) <> '$base'"
-                        ." AND LEFT(referer,$blen) <> LEFT(CONCAT('".SERVER_URL."',request_uri),$blen)";
+            $ext_where = " AND LEFT(referer,$blen) <> ".$this->_dbi->quote($base)
+                ." AND LEFT(referer,$blen) <> LEFT(CONCAT(".$this->_dbi->quote(SERVER_URL).",request_uri),$blen)";
             return $this->_read_sql_query("(referer <>'' AND NOT(ISNULL(referer)))"
                                           .($external_only ? $ext_where : '')
                                           ." ORDER BY time_stamp DESC"
@@ -859,7 +859,7 @@ class Request_AccessLog {
     function get_host($host, $since_minutes=20) {
         if ($this->logtable) {
             // mysql specific only:
-            return $this->read_sql("request_host=".$dbh->quote($host)." AND time_stamp > ". (time()-$since_minutes*60) 
+            return $this->read_sql("request_host=".$this->_dbi->quote($host)." AND time_stamp > ". (time()-$since_minutes*60) 
                             ." ORDER BY time_stamp DESC");
         } else {
             $iter = new WikiDB_Array_generic_iter();
@@ -1305,6 +1305,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.80  2004/11/21 11:59:16  rurban
+// remove final \n to be ob_cache independent
+//
 // Revision 1.79  2004/11/11 18:29:44  rurban
 // (write_sql) isOpen really is useless in non-SQL, do more explicit check
 //

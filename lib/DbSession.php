@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbSession.php,v 1.24 2004-11-21 11:59:14 rurban Exp $');
+<?php rcs_id('$Id: DbSession.php,v 1.25 2004-11-27 14:39:04 rurban Exp $');
 
 /**
  * Store sessions data in Pear DB / ADODB / dba / ....
@@ -56,10 +56,7 @@ class DbSession
     function query($sql) {
         return $this->_backend->query($sql);
     }
-    function quote($string) {
-        return $this->_backend->quote($string);
-    }
-
+    function quote($string) { return $string; }
 }
 
 class DbSession_SQL
@@ -98,7 +95,7 @@ extends DbSession
     function query($sql) {
         return $this->_dbh->query($sql);
     }
-
+    // adds surrounding quotes
     function quote($string) {
         return $this->_dbh->quote($string);
     }

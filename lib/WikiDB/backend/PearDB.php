@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.73 2004-11-26 18:39:02 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.74 2004-11-27 14:39:05 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -575,7 +575,8 @@ extends WikiDB_backend
         extract($this->_table_names);
 
         $searchclass = get_class($this)."_search";
-        if (!class_exists($searchclass)) // no need to define it everywhere and then fallback. memory
+        // no need to define it everywhere and then fallback. memory!
+        if (!class_exists($searchclass))
             $searchclass = "WikiDB_backend_PearDB_search";
         $searchobj = new $searchclass($search, $dbh);
         
@@ -1125,37 +1126,18 @@ extends WikiDB_backend_search
         $this->_dbh = $dbh;
         $this->_case_exact = $search->_case_exact;
     }
-    function _quote($word) {
-        $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
-        return $this->_dbh->escapeSimple($this->_case_exact ? $word : strtolower($word));
-    }
-    function EXACT($word) { return $this->_quote($word); }
-    function STARTS_WITH($word) { return $this->_quote($word)."%"; }
-    function ENDS_WITH($word) { return "%".$this->_quote($word); }
-    function WORD($word) { return "%".$this->_quote($word)."%"; } // substring
-    function REGEX($word) { // posix regex
-        // we really must know if the backend supports posix REGEXP 
-        // or if it has to be converted to SQL matching. * => %, ? => _
-    	return $this->_dbh->escapeSimple($word);
-    }
-
     function _pagename_match_clause($node) { 
-        $method = $node->op;
-        $word = $this->$method($node->word);
-        if ($method == 'REGEX') { // posix regex extensions
+        $word = $node->sql();
+        if ($node->op == 'REGEX') { // posix regex extensions
             if (preg_match("/mysql/i", $this->_dbh->phptype))
                 return "pagename REGEXP '$word'";
-            elseif (preg_match("/pgsql/i", $this->_dbh->phptype))
-                return $this->_case_exact ? "pagename ~* '$word'"
-                                          : "pagename ~ '$word'";
         } else {
             return $this->_case_exact ? "pagename LIKE '$word'" 
                                       : "LOWER(pagename) LIKE '$word'";
         }
     }
     function _fulltext_match_clause($node) { 
-        $method = $node->op;
-        $word = $this->WORD($node->word);
+        $word = $node->sql();
         return $this->_pagename_match_clause($node)
                // probably convert this MATCH AGAINST or SUBSTR/POSITION without wildcards
                . ($this->_case_exact ? " OR content LIKE '$word'" 
@@ -1164,6 +1146,9 @@ extends WikiDB_backend_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.73  2004/11/26 18:39:02  rurban
+// new regex search parser and SQL backends (90% complete, glob and pcre backends missing)
+//
 // Revision 1.72  2004/11/25 17:20:51  rurban
 // and again a couple of more native db args: backlinks
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.8 2004-11-10 19:32:23 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.9 2004-11-27 14:39:04 rurban Exp $');
 
 require_once('lib/WikiDB.php');
 
@@ -44,7 +44,7 @@ class WikiDB_ADODB extends WikiDB
         return $this->_cache->_id_cache[$pagename];
     }
 
-    // ADODB handles everything as string
+    // add surrounding quotes '' if string
     function quote ($in) {
         if (is_int($in) || is_double($in)) {
             return $in;
@@ -55,6 +55,11 @@ class WikiDB_ADODB extends WikiDB
         } else {
             return $this->_backend->_dbh->qstr($in);
         }
+    }
+    // ADODB handles everything as string
+    // Don't add surrounding quotes '', same as in PearDB
+    function qstr ($in) {
+        return $this->_backend->_dbh->addq($in);
     }
 
     function isOpen () {

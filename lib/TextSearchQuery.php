@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.11 2004-11-26 18:39:01 rurban Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.12 2004-11-27 14:39:04 rurban Exp $');
 /**
  * A text search query, converting queries to PCRE or SQL matchers.
  *
@@ -44,26 +44,43 @@
  * Force regex on "re:word" => posix-style, "/word/" => pcre-style 
  * or use regex='glob' to use file wildcard-like matching. (not yet)
  *
- * The parseed tree is then converted to the needed PCRE (highlight, simple backends) 
- * or SQL functions.
+ * The parsed tree is then converted to the needed PCRE (highlight, simple backends) 
+ * or SQL functions. 
  *
  * @author: Jeff Dairiki
- * @author: Reini Urban (case and regex, enhanced sql callbacks)
+ * @author: Reini Urban (case and regex detection, enhanced sql callbacks)
  */
+
+// regex-style: 'auto', 'none', 'glob', 'posix', 'pcre', 'sql'
+define ('TSQ_REGEX_NONE', 0);
+define ('TSQ_REGEX_AUTO', 1);
+define ('TSQ_REGEX_POSIX', 2);
+define ('TSQ_REGEX_GLOB', 4);
+define ('TSQ_REGEX_PCRE', 8);
+define ('TSQ_REGEX_SQL', 16);
+
 class TextSearchQuery {
     /**
      * Create a new query.
      *
      * @param $search_query string The query.  Syntax is as described above.
      * Note that an empty $search_query will match anything.
+     * @param $case_exact boolean
+     * @param $regex string one of 'auto', 'none', 'glob', 'posix', 'pcre', 'sql'
      * @see TextSearchQuery
-     * TODO: support $regex arg, try to detect regex from $search_query (glob-style)
      */
     function TextSearchQuery($search_query, $case_exact=false, $regex='auto') {
-        $parser = new TextSearchQuery_Parser;
-        $this->_isregex = $regex; // default: auto
+        if ($regex == 'none' or !$regex) 
+            $this->_regex = 0;
+        elseif (defined("TSQ_REGEX_".strtoupper($regex)))
+            $this->_regex = constant("TSQ_REGEX_".strtoupper($regex));
+        else {
+            trigger_error(fmt("Unsupported argument: %s=%s", 'regex', $regex));
+            $this->_regex = 0;
+        }
         $this->_case_exact = $case_exact;
-        $this->_tree = $parser->parse($search_query, $case_exact, $regex);
+        $parser = new TextSearchQuery_Parser;
+        $this->_tree = $parser->parse($search_query, $case_exact, $this->_regex);
         $this->_optimize();
     }
 
@@ -76,7 +93,7 @@ class TextSearchQuery {
      */
     function asRegexp() {
         if (!isset($this->_regexp)) {
-            if ($this->_isregex) // TODO: convert glob-style regex to pcre
+            if ($this->_regex)
                 $this->_regexp =  '/' . $this->_tree->regexp() . '/'.($this->_case_exact?'':'i').'sS';
             else
                 $this->_regexp =  '/^' . $this->_tree->regexp() . '/'.($this->_case_exact?'':'i').'sS';
@@ -93,6 +110,7 @@ class TextSearchQuery {
     function match($string) {
         return preg_match($this->asRegexp(), $string);
     }
+
     
     /**
      * Get a regular expression suitable for highlighting matched words.
@@ -107,8 +125,7 @@ class TextSearchQuery {
             $words = array_unique($this->_tree->highlight_words());
             if (!$words) {
                 $this->_hilight_regexp = false;
-            }
-            else {
+            } else {
                 foreach ($words as $key => $word)
                     $words[$key] = preg_quote($word, '/');
                 $this->_hilight_regexp = '(?:' . join('|', $words) . ')';
@@ -118,7 +135,7 @@ class TextSearchQuery {
     }
 
     /**
-     * Make an SQL clause which matches the query.
+     * Make an SQL clause which matches the query. (deprecated, use makeSqlClause instead)
      *
      * @param $make_sql_clause_cb WikiCallback
      * A callback which takes a single word as an argument and
@@ -129,9 +146,8 @@ class TextSearchQuery {
      * TODO: support db-specific extensions, like MATCH AGAINST or REGEX
      *       mysql => 4.0.1 can also do Google: MATCH AGAINST IN BOOLEAN MODE
      *       How? WikiDB backend method?
-     *       Case-sensitivity option.
      *
-     * Example usage:
+     * Old example usage:
      * <pre>
      *     function sql_title_match($word) {
      *         return sprintf("LOWER(title) like '%s'",
@@ -147,30 +163,15 @@ class TextSearchQuery {
      * This will result in $sql_clause containing something like
      * "(LOWER(title) like 'wiki') AND NOT (LOWER(title) like 'page')".
      *
-     * @return string The PCRE regexp.
+     * @return string The SQL clause.
      */
     function makeSqlClause($sql_clause_cb) {
-        $this->_sql_clause_cb = $make_sql_clause_cb;
+        $this->_sql_clause_cb = $sql_clause_cb;
         return $this->_sql_clause($this->_tree);
     }
-
-    // get away with the callback and use a db-specific search class instead.
-    // "WikiDB_backend_PearDB_search"
-    // methods named as the op's.
-    function makeSqlClauseObj(&$sql_search_cb) {
-        $this->_sql_clause_cb = $sql_search_cb;
-        return $this->_sql_clause_obj($this->_tree);
-    }
-
+    // deprecated: use _sql_clause_obj now.
     function _sql_clause($node) {
         switch ($node->op) {
-/*      case 'EXACT':       // word => word
-            return $this->_sql_clause_cb->call($node->word);
-        case 'STARTS_WITH': // word => word%
-            return $this->_sql_clause_cb->call($node->word);
-        case 'ENDS_WITH':   // word => %word
-            return $this->_sql_clause_cb->call($node->word);
-*/
         case 'WORD':        // word => %word%
             return $this->_sql_clause_cb->call($node->word);
         case 'NOT':
@@ -185,6 +186,14 @@ class TextSearchQuery {
             assert($node->op == VOID);
             return '1=1';
         }
+    }
+
+    /** Get away with the callback and use a db-specific search class instead.
+     * @see WikiDB_backend_PearDB_search
+     */
+    function makeSqlClauseObj(&$sql_search_cb) {
+        $this->_sql_clause_cb = $sql_search_cb;
+        return $this->_sql_clause_obj($this->_tree);
     }
 
     function _sql_clause_obj($node) {
@@ -287,55 +296,74 @@ class TextSearchQuery_node
 }
 
 /**
- * A whitespace seperated word.
+ * A word.
  */
 class TextSearchQuery_node_word
-extends TextSearchQuery_node {
+extends TextSearchQuery_node
+{
     var $op = "WORD";
     
     function TextSearchQuery_node_word($word) {
         $this->word = $word;
     }
-
     function regexp() {
         return '(?=.*' . preg_quote($this->word, '/') . ')';
     }
-
     function highlight_words($negated = false) {
         return $negated ? array() : array($this->word);
     }
+    function _sql_quote() {
+        $word = preg_replace('/(?=[%_\\\\])/', "\\", $this->word);
+        return $GLOBALS['request']->_dbi->qstr($word);
+    }
+    function sql()    { return '%'.$this->_sql_quote($this->word).'%'; }
 }
 
 class TextSearchQuery_node_starts_with
 extends TextSearchQuery_node_word {
     var $op = "STARTS_WITH";
     function regexp() { return '(?=' . preg_quote($this->word, '/') . ')'; }
+    function sql()    { return $this->_sql_quote($this->word).'%'; }
 }
+
 class TextSearchQuery_node_ends_with
 extends TextSearchQuery_node_word {
     var $op = "ENDS_WITH";
     function regexp() { return '(?=' . preg_quote($this->word, '/') . '.*)'; }
+    function sql()    { return '%'.$this->_sql_quote($this->word); }
 }
+
 class TextSearchQuery_node_exact
 extends TextSearchQuery_node_word {
     var $op = "EXACT";
     function regexp() { return '(?=\B' . preg_quote($this->word, '/') . '\b)'; }
+    function sql()    { return $this->_sql_squote($this->word); }
 }
-class TextSearchQuery_node_glob
+
+class TextSearchQuery_node_regex // posix regex. FIXME!
 extends TextSearchQuery_node_word {
-    var $op = "REGEX";
-    function regexp() { return '(?=\B' . preg_quote(glob_to_pcre($this->word), '/') . '\b)'; }
+    var $op = "REGEX"; // using REGEXP or ~ extension
+    function regexp() { return '(?=\B' . $this->word . '\b)'; }
+    function sql()    { return $this->_sql_quote($this->word); }
 }
-class TextSearchQuery_node_regex
-extends TextSearchQuery_node_word {
-    var $op = "REGEX";
-    function regexp() { return '(?=\B' . preg_quote($this->word, '/') . '\b)'; }
+
+class TextSearchQuery_node_regex_glob
+extends TextSearchQuery_node_regex {
+    var $op = "REGEX_GLOB";
+    function regexp() { return '(?=\B' . glob_to_pcre($this->word) . '\b)'; }
 }
-// FIXME for SQL
-class TextSearchQuery_node_pcre
-extends TextSearchQuery_node_word {
-    var $op = "REGEX";
-    function regexp() { return '(?=\B' . preg_quote($this->word, '/') . '\b)'; }
+
+class TextSearchQuery_node_regex_pcre // how to handle pcre modifiers? /i
+extends TextSearchQuery_node_regex {
+    var $op = "REGEX_PCRE";
+    function regexp() { return $this->word; }
+}
+
+class TextSearchQuery_node_regex_sql
+extends TextSearchQuery_node_regex {
+    var $op = "REGEX_SQL"; // using LIKE
+    function regexp() { return str_replace(array("/%/","/_/"), array(".*","."), $this->word); }
+    function sql()    { return $this->word; }
 }
 
 /**
@@ -500,17 +528,20 @@ extends TextSearchQuery_node_binop
 //   op's (and, or, not) are forced to lowercase in the tokenizer.
 //
 ////////////////////////////////////////////////////////////////
-define ('TSQ_TOK_WORD',   1);
-define ('TSQ_TOK_BINOP',  2);
-define ('TSQ_TOK_NOT',    4);
-define ('TSQ_TOK_LPAREN', 8);
-define ('TSQ_TOK_RPAREN', 16);
+define ('TSQ_TOK_BINOP',  1);
+define ('TSQ_TOK_NOT',    2);
+define ('TSQ_TOK_LPAREN', 4);
+define ('TSQ_TOK_RPAREN', 8);
+define ('TSQ_TOK_WORD',   16);
 define ('TSQ_TOK_STARTS_WITH', 32);
 define ('TSQ_TOK_ENDS_WITH', 64);
 define ('TSQ_TOK_EXACT', 128);
-define ('TSQ_TOK_REGEX_POSIX', 256);
-define ('TSQ_TOK_REGEX_PCRE', 512);
-define ('TSQ_TOK_REGEX_GLOB', 1024);
+define ('TSQ_TOK_REGEX', 256);
+define ('TSQ_TOK_REGEX_GLOB', 512);
+define ('TSQ_TOK_REGEX_PCRE', 1024);
+define ('TSQ_TOK_REGEX_SQL', 2048);
+// all bits from word to the last.
+define ('TSQ_ALLWORDS', (2048*2)-1 - (16-1));
 
 class TextSearchQuery_Parser 
 {
@@ -545,16 +576,16 @@ class TextSearchQuery_Parser
      * /[^-()\s][^()\s]*  WORD
      * /"[^"]*"/	  WORD
      * /'[^']*'/	  WORD
+     *
      * ^WORD              STARTS_WITH
      * WORD*              STARTS_WITH
      * *WORD              ENDS_WITH
      * ^WORD$             EXACT
-     * /regex/            PCRE-style REGEX
-     * re:WORD            POSIX-style REGEX
      */
 
-    function parse ($search_expr, $case_exact=false, $regex='auto') {
+    function parse ($search_expr, $case_exact=false, $regex=TSQ_REGEX_AUTO) {
         $this->lexer = new TextSearchQuery_Lexer($search_expr, $case_exact, $regex);
+        $this->_regex = $regex;
         $tree = $this->get_list('toplevel');
         assert($this->lexer->eof());
         unset($this->lexer);
@@ -572,7 +603,6 @@ class TextSearchQuery_Parser
         
         while ( ($expr = $this->get_expr())
                 || ($expr = $this->get_word($accept_as_words)) ) {
-            
             $list[] = $expr;
         }
 
@@ -611,9 +641,7 @@ class TextSearchQuery_Parser
     
 
     function get_atom() {
-        if ($word = $this->get_word(TSQ_TOK_WORD + TSQ_TOK_STARTS_WITH + TSQ_TOK_ENDS_WITH 
-        			   + TSQ_TOK_EXACT + TSQ_TOK_REGEX_GLOB + TSQ_TOK_REGEX_PCRE
-        			   + TSQ_TOK_REGEX_POSIX))
+        if ($word = $this->get_word(TSQ_ALLWORDS))
             return $word;
 
         $savedpos = $this->lexer->tell();
@@ -629,28 +657,21 @@ class TextSearchQuery_Parser
         return false;
     }
 
-    function get_word($accept = TSQ_TOK_WORD) {
-        if ( $accept & TSQ_TOK_WORD and ($word = $this->lexer->get(TSQ_TOK_WORD)) )
-            return new TextSearchQuery_node_word($word);
-        if ( $accept & TSQ_TOK_STARTS_WITH and ($word = $this->lexer->get(TSQ_TOK_STARTS_WITH)) )
-            return new TextSearchQuery_node_starts_with($word);
-        if ( $accept & TSQ_TOK_ENDS_WITH and ($word = $this->lexer->get(TSQ_TOK_ENDS_WITH)) )
-            return new TextSearchQuery_node_ends_with($word);
-        if ( $accept & TSQ_TOK_EXACT and ($word = $this->lexer->get(TSQ_TOK_EXACT)) )
-            return new TextSearchQuery_node_exact($word);
-        if ( $accept & TSQ_TOK_REGEX_GLOB and ($word = $this->lexer->get(TSQ_TOK_REGEX_GLOB)) )
-            return new TextSearchQuery_node_glob($word);
-        if ( $accept & TSQ_TOK_REGEX_POSIX and ($word = $this->lexer->get(TSQ_TOK_REGEX_POSIX)) )
-            return new TextSearchQuery_node_regex($word);
-        if ( $accept & TSQ_TOK_REGEX_PCRE and ($word = $this->lexer->get(TSQ_TOK_REGEX_PCRE)) )
-            return new TextSearchQuery_node_pcre($word);
+    function get_word($accept = TSQ_ALLWORDS) {
+        foreach (array("WORD","STARTS_WITH","ENDS_WITH","EXACT",
+                       "REGEX","REGEX_GLOB","REGEX_PCRE") as $tok) {
+            $const = constant("TSQ_TOK_".$tok);
+            if ( $accept & $const and ($word = $this->lexer->get($const)) ) {
+                $classname = "TextSearchQuery_node_".strtolower($tok);
+                return new $classname($word);
+            }
+        }
         return false;
     }
 }
 
-//TODO: support glob-style regex: $regex='glob'
 class TextSearchQuery_Lexer {
-    function TextSearchQuery_Lexer ($query_str, $case_exact=false, $regex='auto') {
+    function TextSearchQuery_Lexer ($query_str, $case_exact=false, $regex=TSQ_REGEX_AUTO) {
         $this->tokens = $this->tokenize($query_str, $case_exact, $regex);
         $this->pos = 0;
     }
@@ -666,8 +687,12 @@ class TextSearchQuery_Lexer {
     function eof() {
         return $this->pos == count($this->tokens);
     }
-
-    function tokenize($string, $case_exact=false, $regex='auto') {
+    
+    /**
+     * TODO: support more regex styles, esp. prefer the forced ones over auto
+     * re: and // stuff
+     */
+    function tokenize($string, $case_exact=false, $regex=TSQ_REGEX_AUTO) {
         $tokens = array();
         $buf = $case_exact ? ltrim($string) : strtolower(ltrim($string));
         while (!empty($buf)) {
@@ -683,40 +708,41 @@ class TextSearchQuery_Lexer {
                 $val = $m[1];
                 $type = $m[1] == '(' ? TSQ_TOK_LPAREN : TSQ_TOK_RPAREN;
             }
-            elseif (preg_match('/^re:([^-()][^()\s]*)\s*/', $buf, $m)) {
-            	$regex = true; // posix-style
-                $val = $m[1];
-                $type = TSQ_TOK_REGEX_POSIX;
-            }
-            elseif (preg_match('/^\/([^-()][^()\s]*)\/\s*/', $buf, $m)) {
-            	$regex = true; // pcre-style
-                $val = $m[1];
-                $type = TSQ_TOK_REGEX_PCRE;
-            }
-            elseif ($regex and preg_match('/^\^([^-()][^()\s]*)\$\s*/', $buf, $m)) {
-                $val = $m[1];
-                $type = TSQ_TOK_EXACT;
-            }
-            elseif ($regex and preg_match('/^\^([^-()][^()\s]*)\s*/', $buf, $m)) {
+            // ^word
+            elseif ($regex & (TSQ_REGEX_AUTO|TSQ_REGEX_POSIX|TSQ_REGEX_PCRE)
+                    and preg_match('/^\^([^-()][^()\s]*)\s*/', $buf, $m)) {
                 $val = $m[1];
                 $type = TSQ_TOK_STARTS_WITH;
             }
-            elseif ($regex and preg_match('/^([^-()][^()\s]*)\*\s*/', $buf, $m)) {
+            // word*
+            elseif ($regex & (TSQ_REGEX_AUTO|TSQ_REGEX_POSIX|TSQ_REGEX_PCRE)
+                    and preg_match('/^([^-()][^()\s]*)\*\s*/', $buf, $m)) {
                 $val = $m[1];
                 $type = TSQ_TOK_STARTS_WITH;
             }
-            elseif ($regex and preg_match('/^\*([^-()][^()\s]*)\s*/', $buf, $m)) {
+            // *word
+            elseif ($regex & (TSQ_REGEX_AUTO|TSQ_REGEX_POSIX|TSQ_REGEX_PCRE)
+                    and preg_match('/^\*([^-()][^()\s]*)\s*/', $buf, $m)) {
                 $val = $m[1];
                 $type = TSQ_TOK_ENDS_WITH;
             }
+            // ^word$
+            elseif ($regex & (TSQ_REGEX_AUTO|TSQ_REGEX_POSIX|TSQ_REGEX_PCRE)
+                    and preg_match('/^\^([^-()][^()\s]*)\$\s*/', $buf, $m)) {
+                $val = $m[1];
+                $type = TSQ_TOK_EXACT;
+            }
+            // "words "
             elseif (preg_match('/^ " ( (?: [^"]+ | "" )* ) " \s*/x', $buf, $m)) {
                 $val = str_replace('""', '"', $m[1]);
                 $type = TSQ_TOK_WORD;
             }
+            // 'words '
             elseif (preg_match("/^ ' ( (?:[^']+|'')* ) ' \s*/x", $buf, $m)) {
                 $val = str_replace("''", "'", $m[1]);
                 $type = TSQ_TOK_WORD;
             }
+            // word
             elseif (preg_match('/^([^-()][^()\s]*)\s*/', $buf, $m)) {
                 $val = $m[1];
                 $type = TSQ_TOK_WORD;
@@ -727,8 +753,7 @@ class TextSearchQuery_Lexer {
             }
             $buf = substr($buf, strlen($m[0]));
 
-            /* refine the simple parsing from above: bla*bla, bla?bla
-             
+            /* refine the simple parsing from above: bla*bla, bla?bla, ...
             if ($regex and $type == TSQ_TOK_WORD) {
             	if (substr($val,0,1) == "^")
             	    $type = TSQ_TOK_STARTS_WITH;
@@ -736,7 +761,8 @@ class TextSearchQuery_Lexer {
             	    $type = TSQ_TOK_ENDS_WITH;
             	elseif (substr($val,-1,1) == "*")
             	    $type = TSQ_TOK_STARTS_WITH;
-            } */
+            }
+            */
             $tokens[] = array($type, $val);
         }
         return $tokens;

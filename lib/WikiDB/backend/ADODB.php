@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.58 2004-11-26 18:39:02 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.59 2004-11-27 14:39:05 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -625,7 +625,7 @@ extends WikiDB_backend
         $join_clause = "$nonempty_tbl.id=$page_tbl.id";
         $fields = $this->page_tbl_fields;
         $field_list = $this->page_tbl_field_list;
-        $searchobj = new WikiDB_backend_PearDB_search($search, $dbh);
+        $searchobj = new WikiDB_backend_ADODB_search($search, $dbh);
         
         if ($fullsearch) {
             $table .= ", $recent_tbl";
@@ -1105,26 +1105,14 @@ extends WikiDB_backend_search
         $this->_dbh =& $dbh;
         $this->_case_exact = $search->_case_exact;
     }
-    function _quote($word) {
-        $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
-        return $this->_dbh->addq($this->_case_exact ? $word : strtolower($word)); // without '...'
-    }
-    function EXACT($word) { return $this->_quote($word); }
-    function STARTS_WITH($word) { return $this->_quote($word)."%"; }
-    function ENDS_WITH($word) { return "%".$this->_quote($word); }
-    function WORD($word) { return "%".$this->_quote($word)."%"; }
-    function REGEX($word) { return $this->_quote($word); }
-
     function _pagename_match_clause($node) {
-        $method = $node->op;
-        $word = $this->$method($node->word);
+        $word = $node->sql($word);
         return $this->_case_exact 
             ? "pagename LIKE '$word'"
             : "LOWER(pagename) LIKE '$word'";
     }
     function _fulltext_match_clause($node) { 
-        $method = $node->op;
-        $word = $this->$method($node->word);
+        $word = $node->sql($word);
         return $this->_case_exact
             ? "pagename LIKE '$word' OR content LIKE '$word'"
             : "LOWER(pagename) LIKE '$word' OR content LIKE '$word'";
@@ -1291,6 +1279,9 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.58  2004/11/26 18:39:02  rurban
+// new regex search parser and SQL backends (90% complete, glob and pcre backends missing)
+//
 // Revision 1.57  2004/11/25 17:20:51  rurban
 // and again a couple of more native db args: backlinks
 //
