@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.38 2003-02-27 23:55:52 dairiki Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.39 2004-03-14 16:40:45 rurban Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
@@ -16,7 +16,6 @@ $HeightI = HTML::input(array('type' => 'text',
                              'name' => 'pref[editHeight]',
                              'value' => $request->getPref('editHeight'),
                              'onchange' => 'this.form.submit();'));
-
 
 $s = $Theme->getButtonSeparator();
 ?>
@@ -53,12 +52,19 @@ $s = $Theme->getButtonSeparator();
  *
  */ ?>
 
-<form method="post" name="editpage"
+<form method="post" id="editpage" name="editpage"
       action="<?= $request->getPostURL() ?>"
       accept-charset="<?=CHARSET?>">
   <?php /* To clear beyond a larger logo, such as in the Hawaiian theme */ ?>
   <br clear="all" class="clear-floats" />
   <div id="editarea-size">
+  <?php if (isset($JS_SEARCHREPLACE)) { ?>
+  <span id="search-replace">
+    <?php /*TODO: use image icons here instead of text */ ?>
+    <input class="gridbutton" name="rck" type="button" value="(<?= _("Undo") ?>)" onfocus="if(this.blur && pretxt_anzahl==0) this.blur()" onclick="rueck()"><input class="gridbutton" type="button" value="<?= _("Redo") ?>" onclick="speich()">
+    <input type="button" class="gridbutton" value="<?=_("Search & Replace")?>" onclick="replace()">
+  </span>
+  <?php } ?>
     <?=_("Edit Area Size:")?>
     <b><?=_("H")?></b> <?=$HeightI?>
     <b><?=_("W")?></b> <?=$WidthI?>

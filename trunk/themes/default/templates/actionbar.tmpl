@@ -1,5 +1,5 @@
 <?php // -*-html-*-
-  rcs_id('$Id: actionbar.tmpl,v 1.23 2003-12-03 02:09:26 carstenklapp Exp $');
+  rcs_id('$Id: actionbar.tmpl,v 1.24 2004-03-14 16:40:45 rurban Exp $');
   if (!$page->get('locked') || $user->isAdmin())
       $EditB = Button("edit",
                       $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
@@ -31,11 +31,11 @@
     <!-- Buttons really only for debugging -->
     <?=$Sep?><?= Button("DebugInfo", _("DebugInfo")) ?>
 <?php
-     $purgeb = Button(array('nocache' => 'purge'),
+     $PurgeCache = Button(array('nocache' => 'purge'),
                      _("PurgeHtmlCache"), $page->getName());
-     $purgeb->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed."));
+     $PurgeCache->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed."));
 ?>
-    <?=$Sep?><?= $purgeb ?>
+    <?=$Sep?><?= $PurgeCache ?>
 
     <!-- End debugging buttons -->
 <?php } ?>
@@ -45,9 +45,11 @@
 /* valign="top" is not ideal here but required to get reasonable alignment
    with the other action buttons in some browsers, like OmniWeb and Safari
    (therefore probably Konquorer too) */
+if (empty($NOSIGNIN)) {
 ?>
   <td align="right" valign="top">
     <div id="signin"><?= Template('signin') ?></div>
   </td>
 </tr>
 </table>
+<?php } ?>

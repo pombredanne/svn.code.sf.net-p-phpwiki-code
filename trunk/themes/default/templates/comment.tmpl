@@ -1,7 +1,6 @@
-<!-- $Id: comment.tmpl,v 1.1 2004-03-12 17:32:44 rurban Exp $ -->
+<!-- $Id: comment.tmpl,v 1.2 2004-03-14 16:40:45 rurban Exp $ -->
 <?php
 $CDATE = $Theme->formatDateTime($COMMENT_CTIME);
-
 $buttons = $modified = '';
 
 if ($user->isAdmin() or $user->getId() == $COMMENT_CREATOR) {

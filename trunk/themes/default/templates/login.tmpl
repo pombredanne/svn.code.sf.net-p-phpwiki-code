@@ -1,5 +1,5 @@
 <?php // -*-php-*- ?>
-<!-- $Id: login.tmpl,v 1.28 2004-02-07 10:41:25 rurban Exp $ -->
+<!-- $Id: login.tmpl,v 1.29 2004-03-14 16:40:45 rurban Exp $ -->
 <!-- The login form -->
 
 <?php if ($fail_message) { ?>
@@ -28,16 +28,25 @@ if (ALLOW_BOGO_LOGIN && $require_level <= WIKIAUTH_BOGO) {
   // This iso-8859-1 sample covers French, Spanish, Italian, German, and probably others
   $examplechars = htmlentities("ÀñíçéàÖãæôßøü", ENT_QUOTES, 'iso-8859-1');
   // Japanese login requires utf-8 and ALLOW_NONWIKIWORD_LOGINS
-  /*if ((CHARSET == 'utf-8') && defined('ALLOW_NONWIKIWORD_LOGINS') && ALLOW_NONWIKIWORD_LOGINS) {
+  if ((CHARSET == 'utf-8') && defined('ALLOW_NONWIKIWORD_LOGINS') && ALLOW_NONWIKIWORD_LOGINS) {
     //sample Japanese login name in unicode
     $examplechars = $examplechars . "&#22825;&#36947;&#12354;&#12363;&#12397;";
-  }*/
-  $t = TransformText(_("You may sign in using any [WikiWord|AddingPages] as a user id. (Any characters in %s etc. may be used too). The user id will be used as a link in RecentChanges to your home page."), 2.0, true);
-  printf(asXML($t), $examplechars);
+  }
+  $t = asXML(TransformText(_("You may sign in using any [WikiWord|AddingPages] as a user id. (Any characters in %s etc. may be used too). The user id will be used as a link in RecentChanges to your home page."), 2.0, true));
+  if (substr_count($t,"%s") == 1) {
+      $s = @sprintf($t, $examplechars);
+      // FIXME: Workaround gettext or sprintf problem
+      if (empty($s)) echo $t;
+      else echo sprintf($t, $examplechars);
+  } else {
+      echo $t;
+  }
   /* On disabled DbPrefs (PagePrefs only) note the user to create his PersonalPage. */
+  /* don't understand why I put this in --rurban
   if (!(!empty($GLOBALS['DBAuthParams']['pref_update']) and $GLOBALS['DBParams']['dbtype'] == 'SQL')) {
     echo asXML(TransformText(_("Note: If you create your personal HomePage with same the pagename as your user id, you will be able to store your UserPreferences also. Otherwise not."))); 
   }
+  */
   if (empty($pass_required)) ?>
   <p><?= _("New users may use an empty password.") ?></p>
 <?php } ?>
@@ -53,19 +62,6 @@ if (ALLOW_BOGO_LOGIN && $require_level <= WIKIAUTH_BOGO) {
   <td align="right"><?= _("Password:") ?></td>
   <td><input type="password" name="auth[passwd]" size="12" maxlength="256" /></td>
 </tr>
-<?php
-/* Related code for this doesn't seem to work yet.
-   Commented out for now until it is fixed or removed.
-   (I personally don't see the need for this feature. --CarstenKlapp)
-  $dbi = $request->getDbh();
-  $checked = (!empty($userid) and $dbi->isWikiPage($userid)) ? '' : 'checked="checked"';
-<tr>
-  <td align="right"><?= _("Create Homepage:") ?></td>
-  <td><input type="checkbox" name="auth[homepage]"<?php if ($checked) {
-  ?> checked="checked"<?php }?> /></td>
-</tr>
-*/
-?>
 <tr><td align="center" colspan="2">
   <?=Button("submit:", _("Sign In"), 'wikiaction')?>
   <?php if (!$require_level) { ?>

@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.19 2004-03-10 15:38:49 rurban Exp $
+ * $Id: phpwiki.css,v 1.20 2004-03-14 16:40:45 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -226,6 +226,11 @@ textarea.wikiedit {
 #editarea-size {
   margin-top: 1ex;
   text-align: right;
+  font-size: smaller;
+}
+#search-replace {
+  margin-top: 1ex;
+  text-align: left;
   font-size: smaller;
 }
 
@@ -730,7 +735,7 @@ th.gridbutton {
   border-style: solid;
   border-color: threedhighlight threeddarkshadow threeddarkshadow threedhighlight;
 }
-a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
+input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
   text-decoration: none;
   font-size: small;
   font-weight: normal;
