@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: ExternalReferrer.php,v 1.2 2004-09-26 14:55:55 rurban Exp $');
+rcs_id('$Id: ExternalReferrer.php,v 1.3 2004-10-12 14:22:14 rurban Exp $');
 
 /** 
  * Detect external referrers
@@ -96,7 +96,8 @@ class SearchEngines {
             return false;
         }
         $url = @parse_url(strtolower($url));
-        $url = $url["query"];
+        if (!empty($url["query"]))
+            $url = $url["query"];
         if ($query1 and @stristr($url, $query1)) {
              $query = @explode($query1, $url);
         }
@@ -112,6 +113,9 @@ class SearchEngines {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/09/26 14:55:55  rurban
+// fixed warning
+//
 // Revision 1.1  2004/09/26 12:20:28  rurban
 // Detect external referrers, handle search engines
 //
