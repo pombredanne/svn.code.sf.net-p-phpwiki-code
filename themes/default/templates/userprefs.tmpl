@@ -1,5 +1,28 @@
-<?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.4 2002-02-02 00:05:19 carstenklapp Exp $ -->
+<?php // -*-html-*-
+
+$serverzone = intval( array_pop(explode(" ", Rfc2822DateTime())));
+$select = HTML();
+for ($z = -14; $z < 12; $z++) {
+    // would prefer to actually have the string formatted like: "GMT+0430"
+    $selected = $serverzone == intval(sprintf("%s00", $z)) ? array('selected' => 'true') : '';
+    $select->pushContent(HTML::option(
+                         array_merge(array('value' => sprintf("%s00", $z)),
+                                     $selected),
+                         sprintf("GMT%s00",$z)
+                         ));
+
+    $selected = $serverzone == intval(sprintf("%s30", $z)) ? array('selected' => 'true') : '';
+
+    $select->pushContent(HTML::option(
+                         array_merge(array('value' => sprintf("%s30", $z - 1)),
+                                     $selected),
+                         sprintf("GMT%s30", $z - 1)
+                         ));
+}
+$TimeZoneSelect = HTML::select(array('name' => "pref[timeOffset]"), $select);
+
+?>
+<!-- $Id: userprefs.tmpl,v 1.5 2002-02-02 02:00:42 carstenklapp Exp $ -->
 <form action="<?=WikiURL($page)?>" method="post">
   <input type="hidden" name="pagename" value="<?=$request->getArg('pagename')?>" />
   <blockquote>
@@ -29,36 +52,7 @@
     </tr><tr>
       <td align="right"><?=_("Your time:")?></td>
       <td>
-        <select name="pref[timeOffset]">
-          <option value="+12">GMT+12</option>
-          <option value="+11">GMT+11</option>
-          <option value="+10">GMT+10</option>
-          <option value="+9">GMT+9</option>
-          <option value="+8">GMT+8</option>
-          <option value="+7">GMT+7</option>
-          <option value="+6">GMT+6</option>
-          <option value="+5">GMT+5</option>
-          <option value="+4">GMT+4</option>
-          <option value="+3">GMT+3</option>
-          <option value="+2">GMT+2</option>
-          <option value="+1">GMT+1</option>
-          <option value="0">GMT</option>
-          <option value="-1">GMT-1</option>
-          <option value="-2">GMT-2</option>
-          <option value="-3">GMT-3</option>
-          <option value="-4">GMT-4</option>
-          <option value="-5">GMT-5</option>
-          <option value="-6">GMT-6</option>
-          <option value="-7">GMT-7</option>
-          <option value="-8">GMT-8</option>
-          <option value="-9">GMT-9</option>
-          <option value="-10">GMT-10</option>
-          <option value="-11">GMT-11</option>
-          <option value="-12">GMT-12</option>
-          <option value="-13">GMT-13</option>
-          <option value="-14">GMT-14</option>
-        </select>
-(unimplemented)
+        <?= $TimeZoneSelect ?> (unimplemented)
       </td>
     </tr>
   </table>
