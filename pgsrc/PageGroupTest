@@ -1,0 +1,25 @@
+Date: Sun, 27 Jan 2002 17:28:55 -0500
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
+X-Rcs-Id: $Id: PageGroupTest,v 1.1 2002-01-31 07:23:06 carstenklapp Exp $
+Content-Type: application/x-phpwiki;
+  pagename=PageGroupTest;
+  author=CarstenKlapp;
+  flags="";
+  author_id=CarstenKlapp;
+  charset=iso-8859-1
+Content-Transfer-Encoding: binary
+
+PageGroupTest is a test of the PageGroup plugin.
+
+Click the first page to start the tour of this experimental plugin.
+
+!Table of Contents
+PageGroupTestOne
+PageGroupTestTwo
+PageGroupTestThree
+PageGroupTestFour
+
+To do: Accept page names as an ordered list.
+----
+For reference, here are all the pages that link to PageGroupTest (note that one is missing):
+<?plugin BackLinks page=PageGroupTest ?>
