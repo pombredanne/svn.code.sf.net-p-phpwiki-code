@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.51 2003-01-03 02:43:26 carstenklapp Exp $');
+rcs_id('$Id: editpage.php,v 1.52 2003-01-03 22:22:00 carstenklapp Exp $');
 
 require_once('lib/Template.php');
 
@@ -65,7 +65,8 @@ class PageEditor
             include_once("lib/diff3.php");
             $diff = new diff3($orig_content, $this_content, $other_content);
             $output = $diff->merged_output(_("Your version"), _("Other version"));
-            // Set the content of the textarea to the merged diff output, and update the version
+            // Set the content of the textarea to the merged diff
+            // output, and update the version
             $this->_content = implode ("\n", $output);
             $this->_currentVersion = $this->current->getVersion();
             $this->version = $this->_currentVersion;
@@ -228,10 +229,10 @@ class PageEditor
 
     function getLockedMessage () {
         return
-        HTML(HTML::h2(_("Page Locked")),
-             HTML::p(_("This page has been locked by the administrator so your changes can not be saved.")),
-             HTML::p(_("(Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor.)")),
-             HTML::p(_("Sorry for the inconvenience.")));
+            HTML(HTML::h2(_("Page Locked")),
+                 HTML::p(_("This page has been locked by the administrator so your changes can not be saved.")),
+                 HTML::p(_("(Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor.)")),
+                 HTML::p(_("Sorry for the inconvenience.")));
     }
 
     function getConflictMessage ($unresolved = false) {
@@ -258,25 +259,27 @@ class PageEditor
           HTML::li(_("Make changes to the file again. Paste your additions from the clipboard (or text editor).")),
           HTML::li(_("Save your updated changes.")));
         */
-        return HTML(HTML::h2(_("Conflicting Edits!")),
-                    HTML::p(_("In the time since you started editing this page, another user has saved a new version of it.")),
-                    HTML::p(_("Your changes can not be saved as they are, since doing so would overwrite the other author's changes. So, your changes and those of the other author have been combined. The result is shown below.")),
-                    $message);
+        return
+            HTML(HTML::h2(_("Conflicting Edits!")),
+                 HTML::p(_("In the time since you started editing this page, another user has saved a new version of it.")),
+                 HTML::p(_("Your changes can not be saved as they are, since doing so would overwrite the other author's changes. So, your changes and those of the other author have been combined. The result is shown below.")),
+                 $message);
     }
 
 
     function getTextArea () {
         $request = &$this->request;
 
-        // wrap=virtual is not HTML4, but without it NS4 doesn't wrap long lines
+        // wrap=virtual is not HTML4, but without it NS4 doesn't wrap
+        // long lines
         $readonly = $this->canEdit(); // || $this->isConcurrentUpdate();
 
-        return HTML::textarea(array('class'    => 'wikiedit',
-                                    'name'     => 'edit[content]',
-                                    'rows'     => $request->getPref('editHeight'),
-                                    'cols'     => $request->getPref('editWidth'),
+        return HTML::textarea(array('class' => 'wikiedit',
+                                    'name' => 'edit[content]',
+                                    'rows' => $request->getPref('editHeight'),
+                                    'cols' => $request->getPref('editWidth'),
                                     'readonly' => (bool) $readonly,
-                                    'wrap'     => 'virtual'),
+                                    'wrap' => 'virtual'),
                               $this->_content);
     }
 
@@ -320,7 +323,8 @@ class PageEditor
                                 'disabled' => (bool) !$this->user->isadmin(),
                                 'checked'  => (bool) $this->meta['locked']));
 
-        $el['PREVIEW_B'] = Button('submit:edit[preview]', _("Preview"), 'wikiaction');
+        $el['PREVIEW_B'] = Button('submit:edit[preview]', _("Preview"),
+                                  'wikiaction');
 
         //if (!$this->isConcurrentUpdate() && !$this->canEdit())
         $el['SAVE_B'] = Button('submit:edit[save]', _("Save"), 'wikiaction');
@@ -337,7 +341,8 @@ class PageEditor
         $posted = $request->getArg('edit');
         $request->setArg('edit', false);
 
-        if (!$posted || !$request->isPost() || $request->getArg('action') != 'edit')
+        if (!$posted || !$request->isPost()
+            || $request->getArg('action') != 'edit')
             return false;
 
         if (!isset($posted['content']) || !is_string($posted['content']))
@@ -432,7 +437,14 @@ extends PageEditor
             $context_lines = max(4, count($other_content) + 1,
                                  count($this_content) + 1);
             $fmt = new BlockDiffFormatter($context_lines);
+
             $this->_content = $fmt->format($diff2);
+            // FIXME: integrate this into class BlockDiffFormatter
+            $this->_content = str_replace(">>>>>>>\n<<<<<<<\n", "=======\n",
+                                          $this->_content);
+            $this->_content = str_replace("<<<<<<<\n>>>>>>>\n", "=======\n",
+                                          $this->_content);
+
             $this->_currentVersion = $this->current->getVersion();
             $this->version = $this->_currentVersion;
             $tokens['CONCURRENT_UPDATE_MESSAGE'] = $this->getConflictMessage();
@@ -445,7 +457,8 @@ extends PageEditor
 
         $tokens = array_merge($tokens, $this->getFormElements());
 
-        return $this->output('editpage', _("Merge and Edit: %s"), $tokens); // FIXME: this doesn't display
+        return $this->output('editpage', _("Merge and Edit: %s"), $tokens);
+        // FIXME: this doesn't display
     }
 
     function output ($template, $title_fs, $tokens) {
@@ -472,13 +485,17 @@ extends PageEditor
         $message = HTML(HTML::p(fmt("Some of the changes could not automatically be combined.  Please look for sections beginning with '%s', and ending with '%s'.  You will need to edit those sections by hand before you click Save.",
                                     "<<<<<<<",
                                     "======="),
-                        HTML::p(_("Please check it through before saving."))));
+                                HTML::p(_("Please check it through before saving."))));
         return $message;
     }
 }
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.51  2003/01/03 02:43:26  carstenklapp
+ New class LoadFileConflictPageEditor, for merging / comparing a loaded
+ pgsrc file with an existing page.
+
  */
 
 // Local Variables:
