@@ -1,4 +1,24 @@
-<?php rcs_id('$Id: loadsave.php,v 1.65 2002-03-25 20:21:57 carstenklapp Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.66 2002-03-28 07:08:10 carstenklapp Exp $');
+/*
+ Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+
+ This file is part of PhpWiki.
+
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -114,13 +134,13 @@ function MakeWikiZip (&$request)
 
 
 
-    $zip = new ZipWriter("Created by PhpWiki", $zipname);
+    $zip = new ZipWriter("Created by PhpWiki " . PHPWIKI_VERSION, $zipname);
 
     $dbi = $request->getDbh();
     $pages = $dbi->getAllPages();
     while ($page = $pages->next()) {
         if (! get_cfg_var('safe_mode'))
-            set_time_limit(30);	// Reset watchdog.
+            set_time_limit(30); // Reset watchdog.
 
         $current = $page->getCurrentRevision();
         if ($current->getVersion() == 0)
@@ -167,7 +187,7 @@ function DumpToDir (&$request)
 
     while ($page = $pages->next()) {
         if (! get_cfg_var('safe_mode'))
-            set_time_limit(30);	// Reset watchdog.
+            set_time_limit(30); // Reset watchdog.
 
         $filename = FilenameForPage($page->getName());
 
@@ -230,11 +250,12 @@ function DumpHtmlToDir (&$request)
 
     while ($page = $pages->next()) {
         if (! get_cfg_var('safe_mode'))
-            set_time_limit(30);	// Reset watchdog.
+            set_time_limit(30); // Reset watchdog.
 
-        $filename = FilenameForPage($page->getName()) . $Theme->HTML_DUMP_SUFFIX;
+        $pagename = $page->getName();
+        $filename = FilenameForPage($pagename) . $Theme->HTML_DUMP_SUFFIX;
 
-        $msg = HTML(HTML::br(), $page->getName(), ' ... ');
+        $msg = HTML(HTML::br(), $pagename, ' ... ');
 
         if($page->getName() != $filename) {
             $msg->pushContent(HTML::small(fmt("saved as %s", $filename)),
@@ -247,9 +268,10 @@ function DumpHtmlToDir (&$request)
         $transformedContent = PageType($revision);
 
         $template = new Template('browse', $request,
-                                  array('revision' => $revision, 'CONTENT' => $transformedContent));
+                                 array('revision' => $revision,
+                                       'CONTENT' => $transformedContent));
 
-        $data = GeneratePageasXML($template, $page->getName());
+        $data = GeneratePageasXML($template, $pagename);
 
         if ( !($fd = fopen("$directory/$filename", "w")) ) {
             $msg->pushContent(HTML::strong(fmt("couldn't open file '%s' for writing",
@@ -272,15 +294,30 @@ function DumpHtmlToDir (&$request)
     EndLoadDump($request);
 }
 
+/* Known problem: any plugins or other code which echo()s text will
+ * lead to a corrupted html zip file which may produce the following
+ * errors upon unzipping:
+ *
+ * warning [wikihtml.zip]:  2401 extra bytes at beginning or within zipfile
+ * file #58:  bad zipfile offset (local header sig):  177561
+ *  (attempting to re-compensate)
+ *
+ * However, the actual wiki page data should be unaffected.
+ */
 function MakeWikiZipHtml (&$request)
 {
     $zipname = "wikihtml.zip";
-    $zip = new ZipWriter("Created by PhpWiki", $zipname);
+    $zip = new ZipWriter("Created by PhpWiki " . PHPWIKI_VERSION, $zipname);
     $dbi = $request->getDbh();
     $pages = $dbi->getAllPages();
+
+    global $HTML_DUMP_SUFFIX, $Theme;
+    if ($HTML_DUMP_SUFFIX)
+        $Theme->HTML_DUMP_SUFFIX = $HTML_DUMP_SUFFIX;
+
     while ($page = $pages->next()) {
         if (! get_cfg_var('safe_mode'))
-            set_time_limit(30);	// Reset watchdog.
+            set_time_limit(30); // Reset watchdog.
 
         $current = $page->getCurrentRevision();
         if ($current->getVersion() == 0)
@@ -292,17 +329,15 @@ function MakeWikiZipHtml (&$request)
             $attrib['write_protected'] = 1;
 
         $pagename = $page->getName();
-        $filename = FilenameForPage($pagename);
-        //$filename = $filename . ".html";
-
+        $filename = FilenameForPage($pagename) . $Theme->HTML_DUMP_SUFFIX;
         $revision = $page->getCurrentRevision();
 
         require_once('lib/PageType.php');
         $transformedContent = PageType($revision);
 
         $template = new Template('browse', $request,
-                                  array('revision' => $revision,
-                                        'CONTENT' => $transformedContent));
+                                 array('revision' => $revision,
+                                       'CONTENT' => $transformedContent));
 
         $data = GeneratePageasXML($template, $pagename);
 
@@ -310,6 +345,7 @@ function MakeWikiZipHtml (&$request)
     }
     // FIXME: Deal with images here.
     $zip->finish();
+    $Theme->$HTML_DUMP_SUFFIX = '';
 }
 
 
@@ -419,7 +455,7 @@ function _tryinsertInterWikiMap($content) {
 function ParseSerializedPage($text, $default_pagename, $user)
 {
     if (!preg_match('/^a:\d+:{[si]:\d+/', $text))
-        return false;
+    return false;
     
     $pagehash = unserialize($text);
     
@@ -430,7 +466,7 @@ function ParseSerializedPage($text, $default_pagename, $user)
     //   revision-level meta-data
     
     if (!defined('FLAG_PAGE_LOCKED'))
-        define('FLAG_PAGE_LOCKED', 1);
+    define('FLAG_PAGE_LOCKED', 1);
     $pageinfo = array('pagedata'    => array(),
                       'versiondata' => array());
     
@@ -488,13 +524,13 @@ function LoadFile (&$request, $filename, $text = false, $mtime = false)
     }
 
     if (! get_cfg_var('safe_mode'))
-        set_time_limit(30);	// Reset watchdog.
+        set_time_limit(30); // Reset watchdog.
 
     // FIXME: basename("filewithnoslashes") seems to return garbage sometimes.
     $basename = basename("/dummy/" . $filename);
 
     if (!$mtime)
-        $mtime = time();	// Last resort.
+        $mtime = time();    // Last resort.
 
     $default_pagename = rawurldecode($basename);
 
