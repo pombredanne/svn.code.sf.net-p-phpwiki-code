@@ -2,7 +2,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: wiki_config.php3,v 1.20 2000-08-07 22:47:40 wainstead Exp $');
+   rcs_id('$Id: wiki_config.php3,v 1.21 2000-08-15 02:44:16 wainstead Exp $');
 
    /*
       Constants and settings. Edit the values below for
@@ -66,8 +66,9 @@
 /*
    // PostgreSQL settings. 
    include "wiki_pgsql.php3";
-   $WikiPageStore = "wiki";
-   $ArchivePageStore = "archive";
+   $WikiDataBase  = "wiki"; // name of the database in Postgresql
+   $WikiPageStore = "wiki"; // name of the table where pages are stored
+   $ArchivePageStore = "archive"; // name of the table where pages are archived
    $pg_dbhost    = "localhost";
    $pg_dbport    = "5432";
 */
