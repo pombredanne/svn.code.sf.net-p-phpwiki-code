@@ -1,5 +1,5 @@
 <?php // -*-php-*- ?>
-<!-- $Id: login.tmpl,v 1.26 2004-02-04 17:20:48 rurban Exp $ -->
+<!-- $Id: login.tmpl,v 1.27 2004-02-04 17:30:28 rurban Exp $ -->
 <!-- The login form -->
 
 <?php if ($fail_message) { ?>
@@ -24,8 +24,9 @@
 		     ALLOW_BOGO_LOGIN ? "true" : "false",
 		     ALLOW_USER_PASSWORDS ? "true" : "false");
     if (ALLOW_USER_PASSWORDS) {
-      $t .= sprintf("  USER_AUTH_ORDER: %s",join(" / ",$GLOBALS['USER_AUTH_ORDER'])) .
-	    sprintf(",  USER_AUTH_POLICY: %s",USER_AUTH_POLICY);
+      $t .= sprintf("  USER_AUTH_ORDER: %s",join(" => ",$GLOBALS['USER_AUTH_ORDER'])) .
+	    sprintf(",  USER_AUTH_POLICY: %s",USER_AUTH_POLICY) .
+	    sprintf(",  PASSWORD_LENGTH_MINIMUM: %s",PASSWORD_LENGTH_MINIMUM);
     }
     echo asXML(HTML::div(array('class' => 'debug'),$t));
     echo "<br />\n";
