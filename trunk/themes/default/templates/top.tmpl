@@ -1,28 +1,80 @@
 <?php  // -*-html-*-
-/* $Id: top.tmpl,v 1.6 2002-02-04 02:19:36 carstenklapp Exp $
+/* $Id: top.tmpl,v 1.7 2002-02-16 10:34:39 carstenklapp Exp $
  *
  * This template is responsible mainly for the outer level <html> stuff and the and <head>.
  */
-  printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
+printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: top.tmpl,v 1.6 2002-02-04 02:19:36 carstenklapp Exp $ -->
+<!-- $Id: top.tmpl,v 1.7 2002-02-16 10:34:39 carstenklapp Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
-<?php if ($ROBOTS_META) { ?>
-  <meta name="robots" content="<?= $ROBOTS_META ?>" />
-<?php } else { ?>
-  <meta name="robots" content="noindex,nofollow" />
-<?php } ?>
+<?php
+if ($ROBOTS_META) {
+  ?><meta name="robots" content="<?= $ROBOTS_META ?>" /><?php
+} else {
+  ?><meta name="robots" content="noindex,nofollow" /><?php
+}
+?>
 <meta name="keywords" content="<?=split_pagename($page->getName())?>, <?=WIKI_NAME?>" />
-<?php if (!empty($PAGE_DESCRIPTION)) { ?>
-  <meta name="description" content="<?=$PAGE_DESCRIPTION?>" />
-<?php } ?>
+<?php
+if (!empty($PAGE_DESCRIPTION)) {
+  ?><meta name="description" content="<?=$PAGE_DESCRIPTION?>" /><?php
+}
+?>
 <meta name="PHPWIKI_VERSION" content="<?=PHPWIKI_VERSION?>" />
 <base href="<?=BASE_URL?>" />
 <link rel="shortcut icon" href="<?=$Theme->getImageURL('favicon.ico')?>" />
+<?php
+/**
+ * Additional navigation links are provided here in the html header for browsers
+ * which support them: Mozilla, iCab, Amaya (and certain versions of Opera??).
+ *
+ * See http://www.w3.org/TR/html401/struct/links.html#edef-LINK
+ *     http://www.euronet.nl/~tekelenb/WWW/LINK/index.html
+ */
+if (!($page->getName() == HomePage)) {
+  global $LANG; $l = $LANG == 'C' ? false : " hreflang=\"$LANG\" lang=\"$LANG\"";
+  ?><link rel="home" title="<?=HomePage?>" href="<?=WikiURL(HomePage)?>"<?=$l?> /><?php
+}
+?>
+<link rel="copyright" title="GNU General Public License" href="http://www.gnu.org/copyleft/gpl.html#SEC1" />
+<link rel="author" title="<?=_("The PhpWiki Programming Team")?>" href="http://phpwiki.sourceforge.net/phpwiki/ThePhpWikiProgrammingTeam" />
+<?php /*
+<link rel="author" title="Your Name Here" href="<?=WikiURL("YourNameAsWikiWordHere")?>" />
+*/ ?>
+<link rel="help" title="<?=_("HowToUseWiki")?>" href="<?=WikiURL(_("HowToUseWiki"))?>" />
+<link rel="search" title="<?=_("FindPage")?>" href="<?=WikiURL(_("FindPage"))?>" />
+<?php
+/* Provide alternate variations of the page content:
+ * 'viewsource' and 'browse'.
+ * RSS or translated pages could go here too. */
+if (!empty($revision)) {
+  $args = $request->getargs(); $a = $args['action'];
+  if (!($a == "viewsource")) {
+    ?><link rel="alternate" title="<?= fmt("%s: %s",_("View Source"), $page->getName())?>" href="<?= WikiURL($revision, array('action' => 'viewsource'))?>" /><?php
+  }
+  if (!($a == "browse")) {
+    ?><link rel="alternate" title="<?=$page->getName()?>" href="<?= WikiURL($revision, array('action' => 'browse'))?>" /><?php
+  }
+}
+?>
+<?php
+/* Add some user-specific links. */
+if ($user->isadmin()) {
+  ?><link rel="bookmark" title="<?=_("PhpWikiAdministration")?>" href="<?=WikiURL(_("PhpWikiAdministration"))?>" /><?php
+}
+if ($user->isSignedIn()) {
+  $cal = $user->getId() . "'s"._("Calendar");
+  ?><link rel="bookmark" title="<?= $cal ?>" href="<?=WikiURL($cal)?>" /><?php
+  ?><link rel="bookmark" title="<?=_("UserPreferences")?>" href="<?=WikiURL(_("UserPreferences"))?>" /><?php
+} else {
+  ?><link rel="bookmark" title="<?=_("SandBox")?>" href="<?=WikiURL(_("SandBox"))?>" /><?php
+  ?><link rel="bookmark" title="<?=_("WikiWikiWeb")?>" href="<?=WikiURL(_("WikiWikiWeb"))?>" /><?php
+}
+?>
 <?= $Theme->getCSS() ?>
 <title><?=WIKI_NAME?> - <?=AsString($TITLE)?></title>
 </head>
