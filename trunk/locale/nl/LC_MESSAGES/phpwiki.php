@@ -60,12 +60,8 @@ $locale["Lock Page"] =
    "Open Pagina";
 $locale["Locked"] =
    "Låst";
-$locale["MIME file %s"] =
-   "MIME bestand %";
 $locale["MostPopular"] =
    "Meestbezochte";
-$locale["New page."] =
-   "Nieuw pagina.";
 $locale["Next"] =
    "Volgende";
 $locale["None"] =
@@ -90,8 +86,6 @@ $locale["References"] =
    "Referenties";
 $locale["Remove Page"] =
    "Verwijder Pagina";
-$locale["Remove page"] =
-   "Verwijder pagina";
 $locale["Removed page '%s' successfully."] =
    "Pagina '%s' verwijderd.";
 $locale["Return to %s"] =
@@ -156,8 +150,6 @@ $locale["W"] =
    "B";
 $locale["Width"] =
    "Breedte";
-$locale["You are about to remove '%s' permanently!"] =
-   "Je staat op het punt '%s' voorgoed te verwijderen!";
 $locale["You must specify a directory to dump to"] =
    "Je moet een directory specificeren om in te storten";
 $locale["Your careful attention to detail is much appreciated."] =
@@ -174,10 +166,6 @@ $locale["from %s"] =
    "van %s";
 $locale["locked"] =
    "låst";
-$locale["new page"] =
-   "nieuw pagina";
-$locale["plain file %s"] =
-   "plat bestand %";
 $locale["saved as %s"] =
    "bewaard als %s";
 $locale["version %d"] =

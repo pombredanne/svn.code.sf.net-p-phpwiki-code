@@ -114,8 +114,6 @@ $locale["RecentChanges"] =
    "SenasteÄndringar";
 $locale["Remove Page"] =
    "Ta bort sida";
-$locale["Remove page"] =
-   "Ta bort sida";
 $locale["Removed page '%s' successfully."] =
    "Tog bort sidan '%s'.";
 $locale["Return to %s"] =
@@ -178,8 +176,6 @@ $locale["Warning!"] =
    "Varning!";
 $locale["Width"] =
    "Bredd";
-$locale["You are about to remove '%s' permanently!"] =
-   "Du kommer att ta bort \"%s\" permanent!";
 $locale["Your careful attention to detail is much appreciated."] =
    "Din omstänksamhet för detaljer är mycket uppskattad.";
 $locale["by %s"] =
