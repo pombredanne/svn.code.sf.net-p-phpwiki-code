@@ -1,0 +1,47 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>###PAGE###</title>
+</head>
+
+<body>
+
+<form method="POST" action="###SCRIPTURL###">
+
+<table cellpadding="2">
+<tr><td bgcolor="black"><a href="###SCRIPTURL###"><img src="###LOGO###" border=0 alt="[phpwiki]"></a></td>
+<td><h1>###PAGE### editieren
+<input type="submit" value=" Speichern "></h1>
+</td></tr></table>
+
+<textarea name="content" ROWS="22" COLS="80" wrap="virtual">###CONTENT###</textarea>
+<br>
+
+<input type="checkbox" name="convert" value="tabs" >
+Ich kann keine Tabulatoren verwenden.
+Bitte <a href="###SCRIPTURL###?KonvertiereLeerzeichenZuTabs">KonvertiereLeerzeichenZuTabs</a>
+für mich, wenn ich speichere.
+<p><a href="###SCRIPTURL###?GuterStil">GuterStil</a>: Tips fürs Editieren.
+
+<br>
+<a href="###SCRIPTURL###?links=###PAGEURL###">EditiereVerweise</a> zu anderen Webseiten.
+
+###IF COPY###<br><a href="###SCRIPTURL###?copy=###PAGEURL###">EditiereArchivSeite</a> vom vorhergenden Autor.
+
+<hr noshade>
+<small>
+<b>Emphasis:</b> '' for italics, ''' for bold, ''''' for both
+<br><b>Lists:</b> tab-* for bullet lists, tab-# for numbered lists, tab-Term:-tab for definition lists
+<br><b>References:</b> JoinCapitalizedWords or use square brackets for a [page link] or URL [http://cool.wiki.int/].
+<br><b>References:</b> Use [1],[2],[3],... and EditLinks. Avoid linking with "!": !DoNotHyperlink, name links like [text | URL]
+<br><b>Misc:</b>"!", "!!", "!!!" make headings,
+"%%%" makes a linebreak, "- - - -" makes a horizontal rule, escape "[" with "[["
+<br>more on
+<a href="###SCRIPTURL###?TextFormattingRules"><b>TextFormattingRules</b></a>
+</small>
+
+<input type="hidden" name="post" value="###PAGEURL###">
+<input type="hidden" name="editversion" value="###VERSION###">
+</form>
+</body>
+</html>
