@@ -1,4 +1,4 @@
-<?php  rcs_id('$Id: db_filesystem.php,v 1.4.2.8 2005-01-07 13:59:58 rurban Exp $');
+<?php  rcs_id('$Id: db_filesystem.php,v 1.4.2.9 2005-01-07 14:02:28 rurban Exp $');
    /*
       Database functions:
 
@@ -88,7 +88,6 @@
 
    // Either insert or replace a key/value (a page)
    function Filesystem_WritePage($dbi, $pagename, $pagehash) {
-      global $WikiPageStore;
       $pagedata = serialize($pagehash);
 
       if (!file_exists($dbi)) {
@@ -126,27 +125,24 @@
       return Filesystem_WritePage($dbi['wiki'], $pagename, $pagehash);
    }
 
-   // for archiving pages to a seperate dbm
+   // for archiving pages to a seperate file
    function SaveCopyToArchive($dbi, $pagename, $pagehash) {
       global $ArchivePageStore;
       return Filesystem_WritePage($dbi[$ArchivePageStore], $pagename, $pagehash);
    }
 
-
    function IsWikiPage($dbi, $pagename) {
       return file_exists($dbi['wiki'] . "/" . EncodePagename($pagename));
    }
-
 
    function IsInArchive($dbi, $pagename) {
       return file_exists($dbi['archive'] . "/" . EncodePagename($pagename));
    }
 
-
    // setup for title-search
    function InitTitleSearch($dbi, $search) { 
       $pos['search'] = '=' . preg_quote($search) . '=i';
-      $pos['data'] = GetAllWikiPageNames($dbi['wiki']);
+      $pos['data'] = GetAllWikiPageNames($dbi);
 
       return $pos;
    }
@@ -211,7 +207,7 @@
    // setup for back-link search
    function InitBackLinkSearch($dbi, $pagename) {
       $pos['search'] = MakeBackLinkSearchRegexp($pagename);
-      $pos['data'] = GetAllWikiPageNames($dbi['wiki']);
+      $pos['data'] = GetAllWikiPageNames($dbi);
 
       return $pos;
    }
@@ -235,67 +231,55 @@
    }
 
    function IncreaseHitCount($dbi, $pagename) {
-      return;
-return;
-      // kluge: we ignore the $dbi for hit counting
-      global $WikiDB;
-
-      $hcdb = OpenDataBase($WikiDB['hitcount']);
-
-      if (dbmexists($hcdb['active'], $pagename)) {
-         // increase the hit count
-         $count = dbmfetch($hcdb['active'], $pagename);
-         $count++;
-         dbmreplace($hcdb['active'], $pagename, $count);
-      } else {
-         // add it, set the hit count to one
-         $count = 1;
-         dbminsert($hcdb['active'], $pagename, $count);
-      }
-
-      CloseDataBase($hcdb);
+        $file = 'hitcount.data'; $pagestore = 'hitcount';
+        $pagehash = RetrievePage($dbi, $file, $pagestore);
+        if (!is_array($pagehash)) {
+            $pagehash = array();
+        }
+        unset($pagehash['pagename']);
+        if (empty($pagehash[$pagename]))
+           $pagehash[$pagename] = 1;
+        else
+           $pagehash[$pagename]++;
+        Filesystem_WritePage($dbi[$pagestore], $file, $pagehash);
    }
 
    function GetHitCount($dbi, $pagename) {
+        $file = 'hitcount.data'; $pagestore = 'hitcount';
+        $pagehash = RetrievePage($dbi, $file, $pagestore);
+        if (!is_array($pagehash)) {
+           printf(gettext("%s: bad data<br>\n"), htmlspecialchars($dir . "/" . $file));
       return;
-      // kluge: we ignore the $dbi for hit counting
-      global $WikiDB;
-
-      $hcdb = OpenDataBase($WikiDB['hitcount']);
-      if (dbmexists($hcdb['active'], $pagename)) {
-         // increase the hit count
-         $count = dbmfetch($hcdb['active'], $pagename);
-         return $count;
-      } else {
-         return 0;
       }
-
-      CloseDataBase($hcdb);
+        unset($pagehash['pagename']);
+        if (empty($pagehash[$pagename]))
+           return 0;
+        else
+           return $pagehash[$pagename];
    }
-
 
    function InitMostPopular($dbi, $limit) {
-     return;
-      $pagename = dbmfirstkey($dbi['hitcount']);
-      $res[$pagename] = dbmfetch($dbi['hitcount'], $pagename);
-      while ($pagename = dbmnextkey($dbi['hitcount'], $pagename)) {
-         $res[$pagename] = dbmfetch($dbi['hitcount'], $pagename);
-         echo "got $pagename with value " . $res[$pagename] . "<br>\n";
+       global $MostPopularHash;
+       $file = 'hitcount.data'; $pagestore = 'hitcount';
+       $MostPopularHash = RetrievePage($dbi, $file, $pagestore);
+       if (!is_array($MostPopularHash))
+           return array();
+       unset($MostPopularHash['pagename']);
+       uksort($MostPopularHash, '_cmp_file_hits');
+       return array_slice($MostPopularHash, 0, $limit);
+   }
+   
+   function _cmp_file_hits($a, $b) {
+   	global $MostPopularHash;
+   	if ($MostPopularHash[$a] == $MostPopularHash[$b]) return 0;
+   	return $MostPopularHash[$a] > $MostPopularHash[$b] ? -1 : 1;
       }
 
-      rsort($res);
-      reset($res);
-      return($res);
-   }
+   function MostPopularNextMatch($dbi, &$res) {
+      if (count($res) == 0)
+         return 0;
 
-   function MostPopularNextMatch($dbi, $res) {
-      return;
-      // the return result is a two element array with 'hits'
-      // and 'pagename' as the keys
-
-      if (list($index1, $index2, $pagename, $hits) = each($res)) {
-         echo "most popular next match called<br>\n";
-         echo "got $pagename, $hits back<br>\n";
+      if (list($pagename, $hits) = each($res)) {
          $nextpage = array(
             "hits" => $hits,
             "pagename" => $pagename
