@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.2 2001-09-20 18:26:14 dairiki Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.3 2001-10-29 20:43:18 dairiki Exp $');
 
 // FIXME: make this work with non-unix (e.g. DOS) filenames.
 
@@ -100,6 +100,17 @@ class FileFinder
     }
 
     /**
+     * The system-dependent path-separator character.  On UNIX systems,
+     * this character is ':'; on Win32 systems it is ';'.
+     *
+     * @access private
+     * @return string path_separator.
+     */
+    function _get_path_separator () {
+        return preg_match('/^Windows/', php_uname()) ? ';' : ':';
+    }
+        
+    /**
      * Get the value of PHP's include_path.
      *
      * @access private
@@ -109,7 +120,7 @@ class FileFinder
         $path = ini_get('include_path');
         if (empty($path))
             $path = '.';
-        return explode(':', $path);
+        return explode($this->_get_path_separator(), $path);
     }
     
     /**
@@ -138,7 +149,7 @@ class FileFinder
          * This following line should be in the above if-block,
          * but we put it here, as it seems to work-around the bug. 
          */
-        ini_set('include_path', implode(':', $path));
+        ini_set('include_path', implode($this->_get_path_separator(), $path));
     }
 }
 
