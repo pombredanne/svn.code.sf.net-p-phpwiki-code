@@ -184,10 +184,6 @@ your web server it is highly advised that you do not allow this.
          }
 
 
-         // Insert search boxes, if needed
-         $tmpline = ereg_replace("\[Search]", RenderQuickSearch(), $tmpline);
-         $tmpline = ereg_replace("\[Fullsearch]", RenderFullSearch(), $tmpline);
-
          // match and replace all user-defined links ([1], [2], [3]...)
          preg_match_all("|\[(\d+)\]|", $tmpline, $match);
          if (count($match[0])) {
