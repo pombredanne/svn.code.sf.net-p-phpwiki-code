@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.117 2004-11-10 15:29:21 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.118 2004-11-19 19:22:03 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1526,7 +1526,7 @@ extends _UserPreference
         if (empty($notify))
             $data = array();
         else 
-            $data = & $notify;
+            $data =& $notify;
         // expand to existing pages only or store matches?
         // for now we store (glob-style) matches which is easier for the user
         $pages = $this->_page_split($value);
@@ -2022,6 +2022,13 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.117  2004/11/10 15:29:21  rurban
+// * requires newer Pear_DB (as the internal one): quote() uses now escapeSimple for strings
+// * ACCESS_LOG_SQL: fix cause request not yet initialized
+// * WikiDB: moved SQL specific methods upwards
+// * new Pear_DB quoting: same as ADODB and as newer Pear_DB.
+//   fixes all around: WikiGroup, WikiUserNew SQL methods, SQL logging
+//
 // Revision 1.116  2004/11/05 21:03:27  rurban
 // new DEBUG flag: _DEBUG_LOGIN (64)
 //   verbose login debug-msg (settings and reason for failure)

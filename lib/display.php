@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.59 2004-11-17 20:03:58 rurban Exp $');
+rcs_id('$Id: display.php,v 1.60 2004-11-19 19:22:03 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -126,6 +126,10 @@ function displayPage(&$request, $template=false) {
         $redirect_message = HTML::span(array('class' => 'redirectfrom'),
                                        fmt("(Redirected from %s)",
                                            RedirectorLink($redirect_from)));
+    // abuse the $redirected template var for some status update notice                                       
+    } elseif ($request->getArg('errormsg')) { 
+        $redirect_message = $request->getArg('errormsg');
+        $request->setArg('errormsg', false);
     }
 
     $request->appendValidators(array('pagerev' => $revision->getVersion(),
@@ -215,6 +219,9 @@ function displayPage(&$request, $template=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.59  2004/11/17 20:03:58  rurban
+// Typo: call SearchHighlight not SearchHighLight
+//
 // Revision 1.58  2004/11/09 17:11:16  rurban
 // * revert to the wikidb ref passing. there's no memory abuse there.
 // * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively

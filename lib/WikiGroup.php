@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.47 2004-11-19 13:23:47 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.48 2004-11-19 19:22:03 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -302,7 +302,7 @@ class WikiGroup{
      */ 
     function getMembersOf($group){
     	if ($this->specialGroup($group)) {
-    	    return getSpecialMembersOf($group);
+    	    return $this->getSpecialMembersOf($group);
     	}
         trigger_error(__sprintf("Method '%s' not implemented in this GROUP_METHOD %s",
                                 'getMembersOf', GROUP_METHOD),
@@ -1096,6 +1096,10 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.47  2004/11/19 13:23:47  rurban
+//
+// Another catch by Charles Corrigan: check against the dbi backend, not the WikiDB class.
+//
 // Revision 1.46  2004/11/18 09:52:23  rurban
 // more safety, requested by Charles Corrigan
 //

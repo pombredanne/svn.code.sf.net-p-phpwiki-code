@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.103 2004-11-16 17:29:04 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.104 2004-11-19 19:22:03 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -895,10 +895,29 @@ class WikiDB_Page
         foreach ($notify as $page => $users) {
             if (glob_match($page, $this->_pagename)) {
                 foreach ($users as $userid => $user) {
-                    if (!empty($user['verified']) and !empty($user['email'])) {
+                    if (!$user) { // handle the case for ModeratePage: no prefs, just userid's.
+                        global $request;
+                        $u = $request->getUser();
+                        if ($u->UserName() == $userid) {
+                            $prefs = $u->getPreferences();
+                        } else {
+                            // not current user
+                            if (ENABLE_USER_NEW) {
+                                $u = WikiUser($userid);
+                                $u->getPreferences();
+                                $prefs = &$u->_prefs;
+                            } else {
+                                $u = new WikiUser($GLOBALS['request'], $userid);
+                                $prefs = $u->getPreferences();
+                            }
+                        }
+                        $emails[] = $prefs->get('email');
+                        $userids[] = $userid;
+                    } else {
+                      if (!empty($user['verified']) and !empty($user['email'])) {
                         $emails[]  = $user['email'];
                         $userids[] = $userid;
-                    } elseif (!empty($user['email'])) {
+                      } elseif (!empty($user['email'])) {
                         global $request;
                         // do a dynamic emailVerified check update
                         $u = $request->getUser();
@@ -934,12 +953,13 @@ class WikiDB_Page
                         }
                         */
                     }
+                  }
                 }
             }
         }
         $emails = array_unique($emails);
         $userids = array_unique($userids);
-        return array($emails,$userids);
+        return array($emails, $userids);
     }
 
     /**
@@ -1136,8 +1156,6 @@ class WikiDB_Page
     function getLinks($reversed = true, $include_empty=false) {
         $backend = &$this->_wikidb->_backend;
         $result =  $backend->get_links($this->_pagename, $reversed, $include_empty=false);
-        //if (empty($this->_iwpcache) and !$include_empty)
-        //    $this->_iwpcache = $result->asArray();
         return new WikiDB_PageIterator($this->_wikidb, $result, array('include_empty' => $include_empty));
     }
 
@@ -1152,6 +1170,21 @@ class WikiDB_Page
      */
     function getPageLinks($include_empty=false) {
         return $this->getLinks(false, $include_empty=false);
+    }
+    
+    /**
+     * possibly faster link existance check. not yet accelerated.
+     */
+    function existLink($link, $reversed = false) {
+        $cache = &$this->_wikidb->_cache;
+        // TODO: check cache if it is possible
+        $iter = $this->getLinks($reversed, false);
+        while ($page = $iter->next()) {
+            if ($page->getName() == $link)
+                return $page;
+        }
+        $iter->free();
+        return false;
     }
             
     /**
@@ -2043,6 +2076,10 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.103  2004/11/16 17:29:04  rurban
+// fix remove notification error
+// fix creation + update id_cache update
+//
 // Revision 1.102  2004/11/11 18:31:26  rurban
 // add simple backtrace on such general failures to get at least an idea where
 //
