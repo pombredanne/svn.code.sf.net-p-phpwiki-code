@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ModeratedPage.php,v 1.1 2004-11-19 19:22:35 rurban Exp $');
+rcs_id('$Id: ModeratedPage.php,v 1.2 2004-11-30 17:46:49 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
@@ -41,7 +41,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
     function getDefaultArguments() {
         return array('page'          => '[pagename]',
@@ -81,7 +81,7 @@ extends WikiPlugin
     }
 
     /**
-     * resolve moderators and require_access from actionpage plugin argstr
+     * resolve moderators and require_access (not yet) from actionpage plugin argstr
      */
     function resolve_argstr(&$request, $argstr) {
         $args = $this->getArgs($argstr);
@@ -92,11 +92,11 @@ extends WikiPlugin
             $args['moderators'] = array_merge($admins, array(ADMIN_USER));
         } else { 
             // resolve possible group names
-            $moderators = explode(',',$args['moderators']); 
-            for ($i=0; $i<count($moderators); $i++) {
+            $moderators = explode(',', $args['moderators']); 
+            for ($i=0; $i < count($moderators); $i++) {
                 $members = $group->getMembersOf($moderators[$i]);
                 if (!empty($members)) {
-                    array_splice($moderators,$i,1,$members);
+                    array_splice($moderators, $i, 1, $members);
                 }
             }
             if (!$moderators) $moderators = array(ADMIN_USER);
@@ -116,39 +116,47 @@ extends WikiPlugin
     }
     
     /**
-     * Handle moderation change request by the user.
+     * Handle client-side moderation change request.
      * Hook called on the lock action, if moderation metadata already exists.
      */
     function lock_check(&$request, &$page, $moderated) {
         $action_page = $request->getPage(_("ModeratedPage"));
-        $old_moderation = $this->getStatus($request, $page, $action_page);
-        if (is_array($old_moderation)) {
-            $page->set('moderation', $moderation);
+        $status = $this->getSiteStatus($request, $action_page);
+        if (is_array($status)) {
+            if (!empty($status['emails'])) {
+                trigger_error(_("ModeratedPage: No emails for the moderators defined"), E_USER_WARNING);
+                return false;
+            }
+            $page->set('moderation', array('_status' => $status));
             return $this->notice(
                        fmt("ModeratedPage status update:\n  Moderators: '%s'\n  require_access: '%s'", 
-                       join(',',$moderation['moderators']), $moderation['require_access']));
+                       join(',', $status['moderators']), $status['require_access']));
         } else {
             $page->set('moderation', false);
-            return $this->notice(HTML($old_moderation,
+            return $this->notice(HTML($status,
                         fmt("'%s' is no ModeratedPage anymore.", $page->getName()))); 
         }
     }
 
     /**
-     * Handle moderation change request by the user.
+     * Handle client-side moderation change request by the user.
      * Hook called on the lock action, if moderation metadata should be added.
      * Need to store the the plugin args (who, when) in the page meta-data
      */
     function lock_add(&$request, &$page, &$action_page) {
-        $moderation = $this->getStatus($request, $page, $action_page);
-        if (is_array($moderation)) {
-            $page->set('moderation', $moderation);
+        $status = $this->getSiteStatus($request, $action_page);
+        if (is_array($status)) {
+            if (!empty($status['emails'])) {
+                trigger_error(_("ModeratedPage: No emails for the moderators defined"), E_USER_WARNING);
+                return false;
+            }
+            $page->set('moderation', array('_status' => $status));
             return $this->notice(
                        fmt("ModeratedPage status update: '%s' is now a ModeratedPage.\n  Moderators: '%s'\n  require_access: '%s'", 
-                       $page->getName(), join(',',$moderation['moderators']), $moderation['require_access']));
+                       $page->getName(), join(',', $status['moderators']), $status['require_access']));
         }
         else { // error
-            return $moderation;
+            return $status;
         }
     }
     
@@ -156,7 +164,89 @@ extends WikiPlugin
     	return HTML::div(array('class' => 'wiki-edithelp'), $msg);
     }
 
-    function getStatus(&$request, &$page, &$action_page) {
+    function generateId() {
+        better_srand();
+        $s = "";
+        for ($i = 1; $i <= 16; $i++) {
+            $r = function_exists('mt_rand') ? mt_rand(55, 90) : rand(55, 90);
+            $s .= chr($r < 65 ? $r-17 : $r);
+        }
+        return $s;
+    }
+
+    /** 
+     * Handle client-side moderation request on any moderated page.
+     *   if ($page->get('moderation')) WikiPlugin_ModeratedPage::handler(...);
+     * return false if not handled (pass through), true if handled and displayed.
+     */
+    function handler(&$request, &$page) {
+    	$action = $request->getArg('action');
+    	$moderated = $page->get('moderated');
+    	// cached version, need re-lock of each page to update moderators
+    	if (!empty($moderated['_status'])) 
+    	    $status = $moderated['_status'];
+    	else {
+            $action_page = $request->getPage(_("ModeratedPage"));
+            $status = $this->getSiteStatus($request, $action_page);
+            $moderated['_status'] = $status;
+    	}
+        if (!empty($status['emails'])) {
+            trigger_error(_("ModeratedPage: No emails for the moderators defined"), E_USER_WARNING);
+            return true;
+        }
+        // which action?
+    	if ($action == 'edit') {
+    	    //$moderated = $page->get('moderated');
+    	    $id = $this->generateId();
+    	    while (!empty($moderated[$id])) $id = $this->generateId(); // avoid duplicates
+    	    $moderated['id'] = $id;
+    	    $moderated['data'][$id] = array('args' => $request->getArgs(),
+    	                                    'timestamp' => time(),
+    	    	          		    'userid' => $request->_user->getId());
+            $this->_tokens['CONTENT'] = HTML::div(array('class' => 'wikitext'),
+            					  fmt("%s: action forwarded to moderator %s", 
+                                                      $action, 
+                                                      join(", ", $status['moderators'])
+                                                      ));
+	    //send email
+            $pagename = $page->getName();
+            $subject = "[".WIKI_NAME.'] '.$action.': '._("ModeratedPage").' '.$pagename;
+            if (mail(join(",", $status['emails']), 
+                     $subject, 
+                     $action.': '._("ModeratedPage").' '.$pagename."\n"
+                     . serialize($moderated['data'][$id])
+                     ."\n<".WikiURL($pagename, array('id' => $id,'pass' => 'approve'),1).">"
+                     ."\n<".WikiURL($pagename, array('id' => $id,'pass' => 'reject'),1).">\n"
+                     )) {
+                $page->set('moderated', $moderated);
+                return false; // pass thru
+            } else {
+            	//FIXME: This will msg get lost on the edit redirect
+                trigger_error(_("ModeratedPage Notification Error: Couldn't send email"), E_USER_WARNING);
+                return true;
+            }
+    	}
+        return false;
+    }
+
+    /** 
+     * Handle admin-side moderation resolve.
+     */
+    function approve($args, $moderation) {
+        ;
+    }
+    /** 
+     * Handle admin-side moderation resolve.
+     */
+    function reject($args, $moderation) {
+        ;
+    }
+    
+    /**
+     * Get the side-wide ModeratedPage status, reading the action-page args.
+     * Who are the moderators? What actions should be moderated?
+     */
+    function getSiteStatus(&$request, &$action_page) {
         $loader = new WikiPluginLoader();
         $rev = $action_page->getCurrentRevision();
         $content = $rev->getPackedContent();
@@ -179,6 +269,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/11/19 19:22:35  rurban
+// ModeratePage part1: change status
+//
 
 // For emacs users
 // Local Variables:
