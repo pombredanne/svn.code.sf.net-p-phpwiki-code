@@ -1,32 +1,65 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.205 2004-09-23 13:59:35 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.206 2004-09-25 16:28:36 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
-    WikiURL($pagename, $args, $get_abs_url)
-    IconForLink($protocol_or_url)
-    LinkURL($url, $linktext)
-    LinkImage($url, $alt)
+    WikiURL ($pagename, $args, $get_abs_url)
+    AbsoluteURL ($url)
+    IconForLink ($protocol_or_url)
+    PossiblyGlueIconToText($proto_or_url, $text)
+    IsSafeURL($url)
+    LinkURL ($url, $linktext)
+    LinkImage ($url, $alt)
 
     SplitQueryArgs ($query_args)
-    LinkPhpwikiURL($url, $text)
-    ConvertOldMarkup($content)
+    LinkPhpwikiURL ($url, $text, $basepage)
+    ConvertOldMarkup ($content, $markup_type = "block")
+    MangleXmlIdentifier($str)
+    UnMangleXmlIdentifier($str)
     
     class Stack { push($item), pop(), cnt(), top() }
+    class Alert { show() }
+    class WikiPageName {getParent(),isValid(),getWarnings() }
 
+    expand_tabs($str, $tab_width = 8)
     SplitPagename ($page)
     NoSuchRevision ($request, $page, $version)
     TimezoneOffset ($time, $no_colon)
     Iso8601DateTime ($time)
     Rfc2822DateTime ($time)
+    ParseRfc1123DateTime ($timestr)
     CTime ($time)
+    ByteFormatter ($bytes = 0, $longformat = false)
     __printf ($fmt)
     __sprintf ($fmt)
     __vsprintf ($fmt, $args)
-    better_srand($seed = '')
-    count_all($arg)
-    isSubPage($pagename)
-    subPageSlice($pagename, $pos)
-    explodePageList($input, $perm = false)
+
+    file_mtime ($filename)
+    sort_file_mtime ($a, $b)
+    class fileSet {fileSet($directory, $filepattern = false), getFiles($exclude=false, $sortby=false, $limit=false) }
+    class ListRegexExpand { listMatchCallback($item, $key),  expandRegex ($index, &$pages) }
+
+    glob_to_pcre ($glob)
+    glob_match ($glob, $against, $case_sensitive = true)
+    explodeList ($input, $allnames, $glob_style = true, $case_sensitive = true)
+    explodePageList ($input, $perm = false)
+    isa ($object, $class)
+    can ($object, $method)
+    function_usable ($function_name)
+    hash ($x)
+    better_srand ($seed = '')
+    count_all ($arg)
+    isSubPage ($pagename)
+    subPageSlice ($pagename, $pos)
+
+    phpwiki_version ()
+    isWikiWord ($word)
+    obj2hash ($obj, $exclude = false, $fields = false)
+    isUtf8String ($s)
+    fixTitleEncoding ($s)
+    url_get_contents ($uri)
+    GenerateId ($name)
+    firstNWordsOfContent ($n, $content)
+    extractSection ($section, $content, $page, $quiet = false, $sectionhead = false)
 
   function: LinkInterWikiLink($link, $linktext)
   moved to: lib/interwiki.php
@@ -38,7 +71,7 @@
   gone see: lib/plugin/RecentChanges.php
 */
 if (defined('_PHPWIKI_STDLIB_LOADED')) return;
-else define('_PHPWIKI_STDLIB_LOADED',true);
+else define('_PHPWIKI_STDLIB_LOADED', true);
 
 define('MAX_PAGENAME_LENGTH', 100);
 
@@ -601,18 +634,20 @@ class WikiPageName
         if ($pagename != $orig)
             $this->_errors[] = sprintf(_("Leading %s not allowed"), SUBPAGE_SEPARATOR);
 
-        if (preg_match('/[:;]/', $pagename))
-            $this->_warnings[] = _("';' and ':' in pagenames are deprecated");
+        if (preg_match('/[:;]/', $pagename)) {
+            $this->_warnings[] = _("';' and ':' are deprecated");
+            $pagename = str_replace(':', '', $pagename);
+            $pagename = str_replace(';', '', $pagename);
+        }
         
         if (strlen($pagename) > MAX_PAGENAME_LENGTH) {
             $pagename = substr($pagename, 0, MAX_PAGENAME_LENGTH);
             $this->_errors[] = _("too long");
         }
-        
 
-        if ($pagename == '.' or $pagename == '..') {
-            $this->_errors[] = sprintf(_("illegal pagename"), $pagename);
-            $pagename = '';
+        if (strstr($pagename, '..')) {
+            $this->_warnings[] = sprintf(_("illegal .. removed"), $pagename);
+            $pagename = str_replace('..', '', $pagename);
         }
         
         return $pagename;
@@ -1649,23 +1684,66 @@ function GenerateId($name) {
 // content: string or array of strings
 function firstNWordsOfContent( $n, $content ) {
     if ($content and $n > 0) {
-    	if (is_array($content))
+    	if (is_array($content)) {
     	    // fixme: return a list of lines then?
     	    $content = join("\n", $content);
-        // fixme: use better whitespace/word seperators
-        $words = explode(' ', $content);
-        if (count($words) > $n) {
-            return join(' ', array_slice($words, 0, $n))
-                   . sprintf(_("... (first %s words)"), $n);
+            $return_array = true;
+            $wordcount = 0;
+            foreach ($content as $line) {
+                $words = explode(' ', $line);
+                if ($wordcount + count($words) > $n) {
+                    $new[] = implode(' ', array_slice($words, 0, $n - $wordcount))
+                           . sprintf(_("... (first %s words)"), $n);
+                    return $new;
+                } else {
+                    $wordcount += count($words);
+                    $new[] = $line;
+                }
+            }
+            return $new;
         } else {
-            return $content;
+            // fixme: use better whitespace/word seperators
+            $words = explode(' ', $content);
+            if (count($words) > $n) {
+                return join(' ', array_slice($words, 0, $n))
+                       . sprintf(_("... (first %s words)"), $n);
+            } else {
+                return $content;
+            }
         }
-    } else return '';
+    } else {
+        return '';
+    }
 }
- 
+
+// moved from lib/plugin/IncludePage.php
+function extractSection ($section, $content, $page, $quiet = false, $sectionhead = false) {
+    $qsection = preg_replace('/\s+/', '\s+', preg_quote($section, '/'));
+
+    if (preg_match("/ ^(!{1,})\\s*$qsection" // section header
+                   . "  \\s*$\\n?"           // possible blank lines
+                   . "  ( (?: ^.*\\n? )*? )" // some lines
+                   . "  (?= ^\\1 | \\Z)/xm", // sec header (same or higher level) (or EOF)
+                   implode("\n", $content),
+                   $match)) {
+        // Strip trailing blanks lines and ---- <hr>s
+        $text = preg_replace("/\\s*^-{4,}\\s*$/m", "", $match[2]);
+        if ($sectionhead)
+            $text = $match[1] . $section ."\n". $text;
+        return explode("\n", $text);
+    }
+    if ($quiet)
+        $mesg = $page ." ". $section;
+    else
+        $mesg = $section;
+    return array(sprintf(_("<%s: no such section>"), $mesg));
+}
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.205  2004/09/23 13:59:35  rurban
+// Before removing a page display a sample of 100 words.
+//
 // Revision 1.204  2004/09/17 13:19:15  rurban
 // fix LinkPhpwikiURL bug reported in http://phpwiki.sourceforge.net/phpwiki/KnownBugs
 // by SteveBennett.
