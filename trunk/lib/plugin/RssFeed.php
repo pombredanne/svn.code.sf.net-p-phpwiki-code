@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RssFeed.php,v 1.1 2004-04-09 17:46:40 rurban Exp $');
+rcs_id('$Id: RssFeed.php,v 1.2 2004-04-12 16:21:01 rurban Exp $');
 /*
  Copyright 2003 Arnaud Fontaine
 
@@ -39,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     // Establish default values for each of this plugin's arguments.
@@ -62,7 +62,7 @@ extends WikiPlugin
         if (!empty($rss_parser->channel['link']))  $url  = $rss_parser->channel['link'];
         if (!empty($rss_parser->channel['description'])) 
             $description = $rss_parser->channel['description'];
-
+        
         if (!empty($feed)) {
             if (!empty($url)) {
                 $titre = HTML::span(HTML::a(array('href'=>$rss_parser->channel['link']),
@@ -74,11 +74,13 @@ extends WikiPlugin
             if (!empty($description))
                 $th->pushContent(HTML::p(array('class' => 'chandesc'),
                                          HTML::raw($description)));
+        } else {
+            $th = HTML();
         }
 
         if (!empty($rss_parser->channel['date']))
             $th->pushContent(HTML::raw("<!--".$rss_parser->channel['date']."-->"));
-        $html = HTML::div(array('class'=> 'rss'),$th);
+        $html = HTML::div(array('class'=> 'rss'), $th);
 
         // limitation du nombre d'items affichs
         if ($maxitem > 0) $rss_parser->items = array_slice($rss_parser->items, 0, $maxitem);
