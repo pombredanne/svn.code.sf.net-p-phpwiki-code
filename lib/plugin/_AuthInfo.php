@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _AuthInfo.php,v 1.5 2004-02-09 03:58:20 rurban Exp $');
+rcs_id('$Id: _AuthInfo.php,v 1.6 2004-02-15 15:21:24 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
@@ -81,9 +81,13 @@ extends WikiPlugin
                                     $this->_buildConstHash(array("GROUP_METHOD","AUTH_GROUP_FILE","GROUP_LDAP_QUERY"))));
         $table->pushContent($this->_showhash("\$USER_AUTH_ORDER[]", $GLOBALS['USER_AUTH_ORDER']));
         $table->pushContent($this->_showhash("USER_AUTH_POLICY", array("USER_AUTH_POLICY"=>USER_AUTH_POLICY)));
-        $table->pushContent($this->_showhash("\$DBParams[]", $GLOBALS['DBParams']));
-        unset($GLOBALS['DBAuthParams']['dummy']);
-        $table->pushContent($this->_showhash("\$DBAuthParams[]", $GLOBALS['DBAuthParams']));
+        $DBParams = $GLOBALS['DBParams'];
+        $DBParams['dsn'] = class_exists('WikiDB_SQL') ? WikiDB_SQL::view_dsn($DBParams['dsn']) : '';
+        $table->pushContent($this->_showhash("\$DBParams[]", $DBParams));
+        $DBAuthParams = $GLOBALS['DBAuthParams'];
+        $DBAuthParams['auth_dsn'] = class_exists('WikiDB_SQL') ? WikiDB_SQL::view_dsn($DBAuthParams['auth_dsn']) : '';
+        unset($DBAuthParams['dummy']);
+        $table->pushContent($this->_showhash("\$DBAuthParams[]", $DBAuthParams));
         $html->pushContent($table);
         $html->pushContent(HTML(HTML::h3(fmt("Personal Auth Settings for '%s'",$userid))));
         if (!$user) {
@@ -176,6 +180,21 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/02/09 03:58:20  rurban
+// for now default DB_SESSION to false
+// PagePerm:
+//   * not existing perms will now query the parent, and not
+//     return the default perm
+//   * added pagePermissions func which returns the object per page
+//   * added getAccessDescription
+// WikiUserNew:
+//   * added global ->prepare (not yet used) with smart user/pref/member table prefixing.
+//   * force init of authdbh in the 2 db classes
+// main:
+//   * fixed session handling (not triple auth request anymore)
+//   * don't store cookie prefs with sessions
+// stdlib: global obj2hash helper from _AuthInfo, also needed for PagePerm
+//
 // Revision 1.4  2004/02/07 10:41:25  rurban
 // fixed auth from session (still double code but works)
 // fixed GroupDB
