@@ -1,5 +1,5 @@
 /**
- * $Id: Hawaiian.css,v 1.23 2002-02-18 21:45:35 carstenklapp Exp $
+ * $Id: Hawaiian.css,v 1.24 2002-03-03 04:08:37 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up. It has not yet been tested against NS4.
@@ -248,7 +248,7 @@ table.cal thead {
 table.cal table.cal-header td {
   padding-top: 110px;
 }
-table.cal table.cal-header tr:first-child {
+table.cal thead tr:first-child {
   background: url("images/pictures/SteamVolcanoDusk.jpg") no-repeat;
   background-position: center;
   font-size: larger;
