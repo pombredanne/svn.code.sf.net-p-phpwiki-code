@@ -2,7 +2,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.2 2000-10-08 18:12:14 wainstead Exp $');
+   rcs_id('$Id: config.php,v 1.3 2000-10-08 19:46:53 wainstead Exp $');
 
    /*
       Constants and settings. Edit the values below for
@@ -13,18 +13,27 @@
       can just give the URL without the script name.
    */
 
-   // You should set the $ServerAddress below, and comment out
-   // the if/else that follows. The if/else sets the server address
-   // dynamically, and you can save some cycles on the server by
-   // setting $ServerAddress yourself.
+   // An empty server address:
+
+   $ServerAddress = "";
+
+   // works quite well thanks to relative URIs.  If find that you 
+   // want an explicit address, you can set one yourself by changing 
+   // and uncommenting:
    //$ServerAddress = "http://127.0.0.1:8080/phpwiki/";
 
 
-   if (preg_match("#(.*?)([^/]*$)#", $REQUEST_URI, $matches)) {
-      $ServerAddress = "http://$SERVER_NAME:$SERVER_PORT" . $matches[1];
-   } else {
-      $ServerAddress = "http://$SERVER_NAME:$SERVER_PORT$REQUEST_URI";
-   }
+   // Or you could use the if/else statement below to deduce
+   // the $ServerAddress dynamically.
+
+
+   //if (preg_match("#(.*?)([^/]*$)#", $REQUEST_URI, $matches)) {
+   //   $ServerAddress = "http://$SERVER_NAME:$SERVER_PORT" . $matches[1];
+   //} else {
+   //   $ServerAddress = "http://$SERVER_NAME:$SERVER_PORT$REQUEST_URI";
+   //}
+
+
 
    // if you are using MySQL instead of a DBM to store your
    // Wiki pages, use mysql.php instead of dbmlib.php
