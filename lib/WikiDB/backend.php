@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.18 2004-11-29 17:44:53 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.19 2004-11-29 17:46:06 rurban Exp $');
 
 /*
   Pagedata
@@ -478,10 +478,13 @@ class WikiDB_backend
     function sortby ($column, $action, $sortable_columns=false) {
         if (empty($column)) return '';
         //support multiple comma-delimited sortby args: "+hits,+pagename"
-        if (strstr($column,',')) {
+        if (strstr($column, ',')) {
             $result = array();
-            foreach (explode(',',$column) as $col) {
-                $result[] = WikiDB_backend::sortby($col,$action);
+            foreach (explode(',', $column) as $col) {
+                if (empty($this))
+                    $result[] = WikiDB_backend::sortby($col, $action);
+                else
+                    $result[] = $this->sortby($col, $action);
             }
             return join(",",$result);
         }
