@@ -1,4 +1,4 @@
--- $Id: mysql.sql,v 1.3 2002-09-09 15:26:20 rurban Exp $
+-- $Id: mysql.sql,v 1.4 2003-03-04 05:26:49 dairiki Exp $
 
 drop table if exists page;
 CREATE TABLE page (
@@ -49,6 +49,6 @@ drop table if exists session;
 CREATE TABLE session (
     sess_id varchar(32) not null default '',
     sess_data blob not null,
-    sess_date timestamp,
+    sess_date INT UNSIGNED NOT NULL,
     PRIMARY KEY (sess_id)
 );
