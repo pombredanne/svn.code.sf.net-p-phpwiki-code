@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: IncludePage.php,v 1.20 2003-01-18 21:41:02 carstenklapp Exp $');
+rcs_id('$Id: IncludePage.php,v 1.21 2003-02-21 04:12:06 dairiki Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.20 $");
+                            "\$Revision: 1.21 $");
     }
 
     function getDefaultArguments() {
@@ -135,7 +135,7 @@ extends WikiPlugin
         array_push($included_pages, $page);
 
         include_once('lib/BlockParser.php');
-        $content = TransformText(implode("\n", $c), $r->get('markup'));
+        $content = TransformText(implode("\n", $c), $r->get('markup'), $page);
 
         array_pop($included_pages);
 
@@ -176,6 +176,11 @@ extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2003/01/18 21:41:02  carstenklapp
+// Code cleanup:
+// Reformatting & tabs to spaces;
+// Added copyleft, getVersion, getDescription, rcs_id.
+//
 
 // For emacs users
 // Local Variables:

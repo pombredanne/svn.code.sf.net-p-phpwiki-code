@@ -1,5 +1,5 @@
 <?php 
-// $Id: XmlRpcServer.php,v 1.4 2002-09-17 23:26:09 dairiki Exp $
+// $Id: XmlRpcServer.php,v 1.5 2003-02-21 04:12:05 dairiki Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  *
  * LICENCE
@@ -283,17 +283,15 @@ function getPageHTML($params)
     if (!$revision)
         return NoSuchPage();
     
-    include_once('lib/PageType.php');
-    $content = array(PageType($revision));
-
-    // Get rid of outer <div class="wikitext">
-    while (count($content) == 1 && isa($content[0], 'XmlContent')) {
-        if (isa($content[0], 'XmlElement') && $content[0]->getTag() != 'div')
-            break;
-        $content = $content[0]->getContent();
+    $content = $revision->getTransformedContent();
+    $html = $content->asXML();
+    // HACK: Get rid of outer <div class="wikitext">
+    if (preg_match('/^\s*<div class="wikitext">/', $html, $m1)
+	&& preg_match('@</div>\s*$@', $html, $m2)) {
+	$html = substr($html, strlen($m1[0]), -strlen($m2[0]));
     }
 
-    return new xmlrpcresp(long_string(AsXML($content)));
+    return new xmlrpcresp(long_string($html));
 } 
 
 /**
@@ -429,32 +427,19 @@ function listLinks($params)
     */
     
     $current = $page->getCurrentRevision();
-    list ($pages, $urls) = ExtractLinks($current->getContent());
+    $content = $current->getTransformedContent();
+    $links = $content->getLinkInfo();
 
-    $type = new xmlrpcval("internal");
-    foreach ($pages as $wikiword) {
-        $name = short_string($wikiword);
-        $args = array();
-        if (! $dbh->isWikiPage($wikiword))
-            $args['action'] = 'edit';
-        // FIXME: see comments in above commented sections
-        // about possible screwed up absolute URLS...
-        $href = short_string(WikiURL($wikiword, $args, 'abspath'));
-        $linkstruct[] = new xmlrpcval(array('name'=> $name,
-                                            'type'=> $type,
-                                            'href' => $href),
+    foreach ($links as $link) {
+        // We used to give an href for unknown pages that
+        // included action=edit.  I think that's probably the
+        // wrong thing to do.
+        $linkstruct[] = new xmlrpcval(array('name'=> short_string($link->page),
+                                            'type'=> new xmlrpcval($link->type),
+                                            'href' => short_string($link->href)),
                                       "struct");
     }
         
-    $type = new xmlrpcval("external");
-    foreach ($urls as $url) {
-        $href = short_string($url);
-        $linkstruct[] = new xmlrpcval(array('name'=> $href,
-                                            'type'=> $type,
-                                            'href' => $href),
-                                      "struct");
-    }
-    
     return new xmlrpcresp(new xmlrpcval ($linkstruct, "array"));
 } 
  
