@@ -1,5 +1,4 @@
-<!-- $Id: wiki_dbmlib.php3,v 1.7 2000-07-07 02:37:01 wainstead Exp $ -->
-<?
+<?  rcs_id('$Id: wiki_dbmlib.php3,v 1.8 2000-07-07 19:53:50 dairiki Exp $');
    /*
       Database functions:
       OpenDataBase($dbname)
