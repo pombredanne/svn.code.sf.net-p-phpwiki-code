@@ -1,4 +1,4 @@
-<!-- $Id: wiki_msql.php3,v 1.1 2000-06-25 03:43:33 wainstead Exp $ -->
+<!-- $Id: wiki_msql.php3,v 1.2 2000-06-25 07:33:29 wainstead Exp $ -->
 <?
 
    /*
@@ -52,11 +52,39 @@
       $pagehash["pagename"] = addslashes($pagename);
       if (!isset($pagehash["flags"]))
          $pagehash["flags"] = 0;
+
+      // build a list of unique words for this page
+      $list = $pagehash["content"];
+
+      // strip nonalphanumeric characters
+      reset($list);
+      $list = preg_replace("/\W/", " ", $list);
+
+      reset($list);
+      while($line = next($list)) {
+         //echo "<br><b>doing:</b> $line<br>\n";
+         $words = preg_split("/\s+/", $line);
+         reset($words);
+         while ($word = next($words)) {
+            //echo "$word ";
+            $terms[strtolower($word)]++;
+         }
+      }
+      //echo "<hr>\n";
+      reset($terms);
+      while (list($key, $val) = each($terms)) {
+         $pagehash["searchterms"] .= "$key ";         
+      }
+      //echo "<hr>\n";
+      //echo "size of search terms: ", strlen($pagehash["searchterms"]), "<br>\n";
+      //echo "<hr>\n";
+      //echo $pagehash["searchterms"];
+      //echo "<hr>\n";
       $pagehash["author"] = addslashes($pagehash["author"]);
       $pagehash["content"] = implode("\n", $pagehash["content"]);
       $pagehash["content"] = addslashes($pagehash["content"]);
       $pagehash["refs"] = serialize($pagehash["refs"]);
-      $pagehash["searchterms"] = "foo bar bah bash"; 
+
       return $pagehash;
    }
 
@@ -144,7 +172,9 @@
    // setup for title-search
    function InitTitleSearch($dbi, $search) {
       $search = addslashes($search);
-      $res = msql_query("select pagename from $dbi[table] where pagename like '%$search%' order by pagename", $dbi["dbc"]);
+      $query = "select pagename from $dbi[table] " .
+               "where pagename clike '%$search%' order by pagename";
+      $res = msql_query($query, $dbi["dbc"]);
 
       return $res;
    }
@@ -164,7 +194,8 @@
    // setup for full-text search
    function InitFullSearch($dbi, $search) {
       $search = addslashes($search);
-      $res = msql_query("select * from $dbi[table] where content like '%$search%'", $dbi["dbc"]);
+      $query = "select * from $dbi[table] where searchterms clike '%$search%'";
+      $res = msql_query($query, $dbi["dbc"]);
 
       return $res;
    }
