@@ -1,5 +1,5 @@
 /**
- * $Id: SpaceWiki.css,v 1.2 2002-03-03 03:54:31 carstenklapp Exp $
+ * $Id: SpaceWiki.css,v 1.3 2002-03-08 04:24:31 carstenklapp Exp $
  *
  * This theme will probably be renamed something like "Space" to
  * avoid any potential copyright issues.
@@ -73,6 +73,18 @@ body {
 div.wikitext {
   clear: both;
 }
+
+/* Mozilla RecentChanges Sidebar */
+body.sidebar {
+  font-size: smaller;
+  margin: 0.5em;
+}
+body.sidebar div.wikitext {
+  padding: 0.5em;
+}
+body.sidebar div.wikitext ul { padding-left: 1em; }
+body.sidebar h2 { margin-top: 0; }
+
 
 /**
  * <hr>
