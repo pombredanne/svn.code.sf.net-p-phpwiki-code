@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_mysql.php,v 1.14 2004-11-27 14:39:05 rurban Exp $');
+rcs_id('$Id: PearDB_mysql.php,v 1.15 2004-12-22 15:47:41 rurban Exp $');
 
 require_once('lib/WikiDB/backend/PearDB.php');
 
@@ -97,6 +97,7 @@ extends WikiDB_backend_PearDB
                     . " GROUP BY id" );
     }
 
+    /* // REPLACE will not delete empy pages, so it was removed --ru
     function _update_nonempty_table($pageid = false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
@@ -114,6 +115,7 @@ extends WikiDB_backend_PearDB
                     . "  AND content<>''"
                     . ( $pageid ? " AND $recent_tbl.id=$pageid" : ""));
     }
+    */
    
     /**
      * Pack tables.
