@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.8\n"
-"POT-Creation-Date: 2002-02-04 17:06-0500\n"
+"POT-Creation-Date: 2002-02-07 17:30-0500\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@mac.com>, Arno Hollosi <ahollosi@mail.com>\n"
@@ -115,7 +115,7 @@ msgstr "BackLinks"
 msgid "BackLinks for %s"
 msgstr "BackLinks für %s"
 
-#: ../lib/Theme.php:287 ../lib/editpage.php:64
+#: ../lib/Theme.php:295 ../lib/editpage.php:64
 #, c-format
 msgid "Edit: %s"
 msgstr "Editiere: %s"
@@ -203,11 +203,11 @@ msgid "In order to recover from this situation, follow these steps:"
 msgstr ""
 "Um diese Situation zu korrigieren, folge bitte den folgenden Schritten:"
 
-#: ../lib/editpage.php:292
+#: ../lib/editpage.php:293
 msgid "Preview"
 msgstr "Vorschau"
 
-#: ../lib/editpage.php:295
+#: ../lib/editpage.php:296
 msgid "Save"
 msgstr "Speichern"
 
@@ -347,47 +347,47 @@ msgid "Uploading %s"
 msgstr "%s wird hochgeladen"
 
 #: ../lib/RSSWriter091.php:115 ../lib/loadsave.php:552
-#: ../lib/plugin/RecentChanges.php:212 ../lib/plugin/RecentChanges.php:333
-#: ../lib/plugin/RecentChanges.php:410
+#: ../lib/plugin/RecentChanges.php:212 ../lib/plugin/RecentChanges.php:338
+#: ../lib/plugin/RecentChanges.php:415
 #: ../themes/Portland/templates/navbar.tmpl:30
 #: ../themes/default/templates/navbar.tmpl:12
 msgid "RecentChanges"
 msgstr "FrischeSeiten"
 
-#: ../lib/main.php:227
+#: ../lib/main.php:254
 #, c-format
 msgid "Action %s is disallowed on this wiki"
 msgstr "Aktion »%s« ist in diesem Wiki verboten."
 
-#: ../lib/main.php:230
+#: ../lib/main.php:257
 #, c-format
 msgid "You must sign in to %s this wiki"
 msgstr "Du mußt dich anmelden in dieser wiki zu %s"
 
-#: ../lib/main.php:232
+#: ../lib/main.php:259
 #, c-format
 msgid "You must log in to %s this wiki"
 msgstr "Du mußt dich anmelden in dieser wiki zu %s"
 
-#: ../lib/main.php:234
+#: ../lib/main.php:261
 #, c-format
 msgid "You must be an administrator to %s this wiki"
 msgstr "Du mußt ein Systemverwalter sein in dieser wiki zu %s"
 
-#: ../lib/main.php:301
+#: ../lib/main.php:328
 #, c-format
 msgid "%s: Bad action"
 msgstr "%s: Ungültige Aktion"
 
-#: ../lib/main.php:324
+#: ../lib/main.php:351
 msgid "Fatal PhpWiki Error"
 msgstr "FatalerWikiFehler"
 
-#: ../lib/main.php:407 ../lib/plugin/FullTextSearch.php:12
+#: ../lib/main.php:434 ../lib/plugin/FullTextSearch.php:12
 msgid "FullTextSearch"
 msgstr "VolltextSuche"
 
-#: ../lib/main.php:410 ../lib/plugin/RecentChanges.php:324
+#: ../lib/main.php:437 ../lib/plugin/RecentChanges.php:329
 #: ../lib/plugin/TitleSearch.php:13
 msgid "TitleSearch"
 msgstr "TitelSuche"
@@ -420,7 +420,7 @@ msgstr "Version"
 msgid "Last Author"
 msgstr "Voriger Autor"
 
-#: ../lib/PageList.php:253 ../themes/default/templates/editpage.tmpl:91
+#: ../lib/PageList.php:253 ../themes/default/templates/editpage.tmpl:93
 msgid "Locked"
 msgstr "Gesperrt"
 
@@ -449,12 +449,12 @@ msgstr "AlleSeiten"
 msgid "All Pages"
 msgstr "Alle Seiten"
 
-#: ../lib/plugin/AllPages.php:37
+#: ../lib/plugin/AllPages.php:35
 #, c-format
 msgid "Pages in this wiki (%d total):"
 msgstr "Seiten in dieser wiki (%d gesamt):"
 
-#: ../lib/plugin/AllPages.php:47
+#: ../lib/plugin/AllPages.php:48
 #, c-format
 msgid "elapsed time: %s s"
 msgstr "Ablaufzeit: %s s"
@@ -501,22 +501,22 @@ msgstr "Eine Seite ist mit %s verlinkt:"
 msgid "%s pages link to %s:"
 msgstr "%s Seiten sind mit %s verlinkt:"
 
-#: ../lib/plugin/Calendar.php:36
-#, c-format
-msgid "Edit %s"
-msgstr "Editiere %s"
-
-#: ../lib/plugin/Calendar.php:57 ../lib/plugin/Calendar.php:61
+#: ../lib/plugin/Calendar.php:24 ../lib/plugin/Calendar.php:28
 msgid "Calendar"
 msgstr "Kalender"
 
-#: ../lib/plugin/Calendar.php:89
+#: ../lib/plugin/Calendar.php:56
 msgid "Previous Month"
 msgstr "Voriger Monat"
 
-#: ../lib/plugin/Calendar.php:93
+#: ../lib/plugin/Calendar.php:60
 msgid "Next Month"
 msgstr "Nächster Monat"
+
+#: ../lib/plugin/Calendar.php:121
+#, c-format
+msgid "Edit %s"
+msgstr "Editiere %s"
 
 #: ../lib/plugin/FullTextSearch.php:16
 msgid "Full Text Search"
@@ -745,7 +745,8 @@ msgstr "Die %d jüngste %s innerhalb des letzten Tages sind unten aufgelistet."
 #: ../lib/plugin/RecentChanges.php:189
 #, c-format
 msgid "The %d most recent %s during the past %s days are listed below."
-msgstr "Die %d jüngste %s innerhalb der letzten %s Tage sind unten aufgelistet."
+msgstr ""
+"Die %d jüngste %s innerhalb der letzten %s Tage sind unten aufgelistet."
 
 #: ../lib/plugin/RecentChanges.php:192
 #, c-format
@@ -768,35 +769,35 @@ msgid "All %s are listed below."
 msgstr "Alle %s sind unten aufgelistet."
 
 #: ../lib/plugin/RecentChanges.php:212
-#: ../themes/Portland/templates/editpage.tmpl:62
+#: ../themes/Portland/templates/editpage.tmpl:64
 msgid "RecentEdits"
 msgstr "GeringfügigeÄnderungen"
 
-#: ../lib/plugin/RecentChanges.php:321
+#: ../lib/plugin/RecentChanges.php:326
 msgid "Search"
 msgstr "Suche"
 
-#: ../lib/plugin/RecentChanges.php:322 ../lib/plugin/TitleSearch.php:17
+#: ../lib/plugin/RecentChanges.php:327 ../lib/plugin/TitleSearch.php:17
 msgid "Title Search"
 msgstr "TitelSuche"
 
-#: ../lib/plugin/RecentChanges.php:510
+#: ../lib/plugin/RecentChanges.php:515
 msgid "Show minor edits for:"
 msgstr "Zeige geringfügige Änderungen innerhalb von: %s"
 
-#: ../lib/plugin/RecentChanges.php:512
+#: ../lib/plugin/RecentChanges.php:517
 msgid "Show all changes for:"
 msgstr "Zeige alle Änderungen innerhalb von:"
 
-#: ../lib/plugin/RecentChanges.php:514
+#: ../lib/plugin/RecentChanges.php:519
 msgid "Show changes for:"
 msgstr "Zeige Änderungen innerhalb von:"
 
-#: ../lib/plugin/RecentChanges.php:534
+#: ../lib/plugin/RecentChanges.php:539
 msgid "1 day"
 msgstr "1 Tag"
 
-#: ../lib/plugin/RecentChanges.php:538
+#: ../lib/plugin/RecentChanges.php:543
 #, c-format
 msgid "%s days"
 msgstr "%s Tagen"
@@ -887,43 +888,43 @@ msgstr "Seite löschen"
 msgid "BAD URL -- remove all of <, >, \""
 msgstr "URL Formfehler -- keine Zeichen <, >, \" verwenden"
 
-#: ../lib/stdlib.php:209
+#: ../lib/stdlib.php:171
 msgid "BAD phpwiki: URL"
 msgstr "phpwiki: URL Formfehler"
 
-#: ../lib/stdlib.php:246
+#: ../lib/stdlib.php:208
 msgid "Lock page to enable link"
 msgstr "Seite sperren, um den Link zu aktivieren"
 
-#: ../lib/stdlib.php:383
+#: ../lib/stdlib.php:345
 msgid "Revision Not Found"
 msgstr "Version Nicht Gefunden"
 
-#: ../lib/stdlib.php:384
+#: ../lib/stdlib.php:346
 #, c-format
 msgid "I'm sorry.  Version %d of %s is not in my database."
 msgstr "Es tut mir leid.  Version %d. von %s ist nicht in der Datenbank."
 
-#: ../lib/stdlib.php:387
+#: ../lib/stdlib.php:349
 msgid "Bad Version"
 msgstr "Keine Version"
 
-#: ../lib/XmlElement.php:333 ../lib/stdlib.php:570
+#: ../lib/XmlElement.php:333 ../lib/stdlib.php:532
 #, c-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr "Kann '%s' Typ-Formatzeichenketten nicht mit '%s' mischen."
 
-#: ../lib/stdlib.php:579
+#: ../lib/stdlib.php:541
 #, c-format
 msgid "%s: argument index out of range"
 msgstr "%s: Ungültiger Index in Array"
 
-#: ../lib/stdlib.php:613 ../themes/Hawaiian/lib/random.php:20
+#: ../lib/stdlib.php:575 ../themes/Hawaiian/lib/random.php:20
 #, c-format
 msgid "%s is empty."
 msgstr "%s ist Leer."
 
-#: ../lib/stdlib.php:620
+#: ../lib/stdlib.php:582
 #, c-format
 msgid "Unable to open directory '%s' for reading"
 msgstr "Konnte Verzeichnis »%s« nicht zum Lesen öffnen"
@@ -941,45 +942,45 @@ msgstr "Heute"
 msgid "Yesterday"
 msgstr "Gestern"
 
-#: ../lib/Theme.php:205
+#: ../lib/Theme.php:210
 #, c-format
 msgid "Today at %s"
 msgstr "Heute um %s"
 
-#: ../lib/Theme.php:207
+#: ../lib/Theme.php:212
 #, c-format
 msgid "Yesterday at %s"
 msgstr "Gestern um %s"
 
-#: ../lib/Theme.php:540 ../themes/Sidebar/templates/actionbar.tmpl:10
+#: ../lib/Theme.php:569 ../themes/Sidebar/templates/actionbar.tmpl:10
 #: ../themes/default/templates/actionbar.tmpl:6
 msgid "Edit"
 msgstr "Editieren"
 
-#: ../lib/Theme.php:541
+#: ../lib/Theme.php:570
 msgid "Diff"
 msgstr "Diff"
 
-#: ../lib/Theme.php:542 ../themes/default/templates/signin.tmpl:6
+#: ../lib/Theme.php:571 ../themes/default/templates/signin.tmpl:6
 #: ../themes/default/templates/signin.tmpl:32
 msgid "Sign Out"
 msgstr "Abmelden"
 
-#: ../lib/Theme.php:543 ../lib/WikiUser.php:132
+#: ../lib/Theme.php:572 ../lib/WikiUser.php:132
 #: ../themes/default/templates/login.tmpl:28
-#: ../themes/default/templates/signin.tmpl:48
+#: ../themes/default/templates/signin.tmpl:49
 msgid "Sign In"
 msgstr "Anmelden"
 
-#: ../lib/Theme.php:544 ../themes/MacOSX/themeinfo.php:111
+#: ../lib/Theme.php:573 ../themes/MacOSX/themeinfo.php:111
 msgid "Lock Page"
 msgstr "Seite Sperren"
 
-#: ../lib/Theme.php:545 ../themes/MacOSX/themeinfo.php:112
+#: ../lib/Theme.php:574 ../themes/MacOSX/themeinfo.php:112
 msgid "Unlock Page"
 msgstr "Seite Freigeben"
 
-#: ../lib/Theme.php:546
+#: ../lib/Theme.php:575
 msgid "Remove Page"
 msgstr "Seite Löschen"
 
@@ -987,22 +988,22 @@ msgstr "Seite Löschen"
 msgid "Lists nested too deep in SetHTMLOutputMode"
 msgstr "Interner Fehler: Stackgrenze in SetHTMLOutputMode überschritten."
 
-#: ../lib/WikiDB.php:501
+#: ../lib/WikiDB.php:505
 #, c-format
 msgid "%s: Date of new revision is %s"
 msgstr "%s: Datum der aktuellsten Version ist %s"
 
-#: ../lib/WikiDB.php:528
+#: ../lib/WikiDB.php:532
 #, c-format
 msgid "Optimizing %s"
 msgstr "%s wird optimiert"
 
-#: ../lib/WikiDB.php:874
+#: ../lib/WikiDB.php:878
 #, c-format
 msgid "Describe %s here."
 msgstr "Beschreibe %s hier."
 
-#: ../lib/WikiDB.php:909
+#: ../lib/WikiDB.php:913
 #, c-format
 msgid "Acck! Revision %s of %s seems to have been deleted!"
 msgstr "Aua! Version %s von %s ist gelöscht!"
@@ -1032,7 +1033,7 @@ msgstr "Argument »%s« ist nicht deklariert im Zusatzprogramm"
 msgid "trailing cruft in plugin args: '%s'"
 msgstr "Unbekannte Zusatzprogramm Argumente: »%s«"
 
-#: ../lib/WikiPlugin.php:276
+#: ../lib/WikiPlugin.php:268
 #, c-format
 msgid "Include of '%s' failed"
 msgstr "Einfügen von »%s« fehlgeschlagen"
@@ -1126,81 +1127,81 @@ msgstr "Du siehst eine alte Version dieser Seite."
 msgid "View the current version"
 msgstr "Siehe die aktuellste Version"
 
-#: ../themes/Portland/templates/editpage.tmpl:76
-#: ../themes/default/templates/editpage.tmpl:21
+#: ../themes/Portland/templates/editpage.tmpl:78
+#: ../themes/default/templates/editpage.tmpl:23
 msgid "Preview only!  Changes not saved."
 msgstr "Nur die Vorschau! Änderungen nicht gespeichert."
 
-#: ../themes/Portland/templates/editpage.tmpl:42
-#: ../themes/default/templates/editpage.tmpl:34
+#: ../themes/Portland/templates/editpage.tmpl:44
+#: ../themes/default/templates/editpage.tmpl:36
 msgid "Warning: You are editing an old revision."
 msgstr "Warnung: Du editierst eine alte Version."
 
-#: ../themes/Portland/templates/editpage.tmpl:43
-#: ../themes/default/templates/editpage.tmpl:35
+#: ../themes/Portland/templates/editpage.tmpl:45
+#: ../themes/default/templates/editpage.tmpl:37
 msgid "Saving this page will overwrite the current version."
 msgstr ""
 "Wenn die Seite jetzt gespeichert werden würde, dann würde die aktuellste "
 "Version überschrieben."
 
-#: ../themes/Portland/templates/editpage.tmpl:65
-#: ../themes/default/templates/editpage.tmpl:56
+#: ../themes/Portland/templates/editpage.tmpl:67
+#: ../themes/default/templates/editpage.tmpl:58
 msgid "Edit Area Size:"
 msgstr "Texteingabefenstergröße:"
 
-#: ../themes/Portland/templates/editpage.tmpl:65
-#: ../themes/default/templates/editpage.tmpl:56
+#: ../themes/Portland/templates/editpage.tmpl:67
+#: ../themes/default/templates/editpage.tmpl:58
 msgid "H"
 msgstr "H."
 
-#: ../themes/Portland/templates/editpage.tmpl:67
-#: ../themes/default/templates/editpage.tmpl:58
+#: ../themes/Portland/templates/editpage.tmpl:69
+#: ../themes/default/templates/editpage.tmpl:60
 msgid "W"
 msgstr "Br."
 
-#: ../themes/Portland/templates/editpage.tmpl:69
-#: ../themes/default/templates/editpage.tmpl:60
+#: ../themes/Portland/templates/editpage.tmpl:71
+#: ../themes/default/templates/editpage.tmpl:62
 msgid "Adjust"
 msgstr "Justiere"
 
-#: ../themes/Portland/templates/editpage.tmpl:56
-#: ../themes/default/templates/editpage.tmpl:67
+#: ../themes/Portland/templates/editpage.tmpl:58
+#: ../themes/default/templates/editpage.tmpl:69
 msgid "Summary:"
 msgstr "Kommentar:"
 
-#: ../themes/default/templates/editpage.tmpl:73
+#: ../themes/default/templates/editpage.tmpl:75
 msgid "This is a minor change."
 msgstr "Geringfügige Änderung"
 
-#: ../themes/Portland/templates/editpage.tmpl:71
-#: ../themes/default/templates/editpage.tmpl:74
+#: ../themes/Portland/templates/editpage.tmpl:73
+#: ../themes/default/templates/editpage.tmpl:76
 msgid "Use new markup"
 msgstr "verwende neues Wiki Quelltextformat"
 
-#: ../themes/Portland/templates/editpage.tmpl:58
-#: ../themes/default/templates/editpage.tmpl:85
+#: ../themes/Portland/templates/editpage.tmpl:60
+#: ../themes/default/templates/editpage.tmpl:87
 #, c-format
 msgid "Author will be logged as %s."
 msgstr "%s wird als Autor gespeichert."
 
-#: ../themes/Portland/templates/editpage.tmpl:81
-#: ../themes/default/templates/editpage.tmpl:100
+#: ../themes/Portland/templates/editpage.tmpl:83
+#: ../themes/default/templates/editpage.tmpl:102
 #, c-format
 msgid "See %s tips for editing."
 msgstr "Siehe %s Tips fürs Editieren."
 
-#: ../themes/Portland/templates/editpage.tmpl:81
-#: ../themes/default/templates/editpage.tmpl:100
+#: ../themes/Portland/templates/editpage.tmpl:83
+#: ../themes/default/templates/editpage.tmpl:102
 msgid "GoodStyle"
 msgstr "GuterStil"
 
-#: ../themes/Portland/templates/editpage.tmpl:83
-#: ../themes/default/templates/editpage.tmpl:101
+#: ../themes/Portland/templates/editpage.tmpl:85
+#: ../themes/default/templates/editpage.tmpl:103
 msgid "TextFormattingRules"
 msgstr "TextFormatierungsRegeln"
 
-#: ../themes/Portland/templates/editpage.tmpl:83
-#: ../themes/default/templates/editpage.tmpl:101
+#: ../themes/Portland/templates/editpage.tmpl:85
+#: ../themes/default/templates/editpage.tmpl:103
 msgid "Synopsis"
 msgstr "Übersicht"
 
@@ -1270,35 +1271,43 @@ msgstr "Warnung!"
 msgid "You are signed in as %s"
 msgstr "Angemeldet als %s"
 
-#: ../themes/default/templates/signin.tmpl:41
+#: ../themes/default/templates/signin.tmpl:42
 msgid "Enter your UserId to sign in"
 msgstr "Trage deinen Benutzernamen ein, um dich anzumelden"
 
-#: ../themes/default/templates/userprefs.tmpl:39
+#: ../themes/default/templates/userprefs.tmpl:45
 msgid "Edit Area Size"
 msgstr "Texteingabefenstergröße"
 
-#: ../themes/default/templates/userprefs.tmpl:41
+#: ../themes/default/templates/userprefs.tmpl:47
 msgid "Height"
 msgstr "Höhe"
 
-#: ../themes/default/templates/userprefs.tmpl:48
+#: ../themes/default/templates/userprefs.tmpl:54
 msgid "Width"
 msgstr "Breite"
 
-#: ../themes/default/templates/userprefs.tmpl:56
+#: ../themes/default/templates/userprefs.tmpl:62
 msgid "Time Zone"
 msgstr "Zeitzone"
 
-#: ../themes/default/templates/userprefs.tmpl:58
+#: ../themes/default/templates/userprefs.tmpl:64
 msgid "Server time:"
 msgstr "Die Zeit des Servers:"
 
-#: ../themes/default/templates/userprefs.tmpl:61
+#: ../themes/default/templates/userprefs.tmpl:67
 msgid "Your time:"
 msgstr "Ihre Zeit:"
 
-#: ../themes/default/templates/userprefs.tmpl:75
+#: ../themes/default/templates/userprefs.tmpl:78
+msgid "Date Format"
+msgstr ""
+
+#: ../themes/default/templates/userprefs.tmpl:84
+msgid "Show relative dates using 'Today' and 'Yesterday'."
+msgstr ""
+
+#: ../themes/default/templates/userprefs.tmpl:90
 msgid "Update Preferences"
 msgstr "Bestimme Einstellungen"
 
@@ -1311,13 +1320,13 @@ msgstr ""
 
 #: ../themes/Hawaiian/themeinfo.php:18 ../themes/MacOSX/themeinfo.php:82
 #: ../themes/Portland/themeinfo.php:48 ../themes/Sidebar/themeinfo.php:32
-#: ../themes/WikiTrek/themeinfo.php:72 ../themes/default/themeinfo.php:17
+#: ../themes/WikiTrek/themeinfo.php:53 ../themes/default/themeinfo.php:17
 msgid "Printer"
 msgstr "Drucker"
 
 #: ../themes/Hawaiian/themeinfo.php:19 ../themes/MacOSX/themeinfo.php:83
 #: ../themes/Portland/themeinfo.php:49 ../themes/Sidebar/themeinfo.php:33
-#: ../themes/WikiTrek/themeinfo.php:73 ../themes/default/themeinfo.php:18
+#: ../themes/WikiTrek/themeinfo.php:54 ../themes/default/themeinfo.php:18
 msgid "Modern"
 msgstr "Modern"
 
@@ -1353,7 +1362,7 @@ msgstr "Version %s. %s gespeichert."
 msgid "version %s, saved on %s."
 msgstr "Version %s. am %s gespeichert."
 
-#: ../themes/Portland/templates/editpage.tmpl:61
+#: ../themes/Portland/templates/editpage.tmpl:63
 #, c-format
 msgid ""
 "I'm just doing minor edits. Please divert the usual logging to %s instead."
