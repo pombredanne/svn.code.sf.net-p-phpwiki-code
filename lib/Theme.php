@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.16 2002-01-22 16:38:27 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.17 2002-01-22 22:37:14 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 require_once('lib/ButtonFactory.php');
@@ -198,8 +198,15 @@ class Theme {
         return false;
     }
 
-    function addButtonAlias ($text, $alias) {
-        $this->_buttonAliases[$text] = $alias;
+    function addButtonAlias ($text, $alias = false) {
+        $aliases = &$this->_buttonAliases;
+
+        if (is_array($text))
+            $aliases = array_merge($aliases, $text);
+        elseif ($alias === false)
+            unset($aliases[$text]);
+        else
+            $aliases[$text] = $alias;
     }
 
     function getButtonURL ($text) {
@@ -253,12 +260,26 @@ class Theme {
 
     function makeButton ($text, $url, $class = false) {
         // FIXME: don't always try for image button?
+
+        // Special case: URLs like 'submit:preview' generate form
+        // submission buttons.
+        if (preg_match('/^submit:(.*)$/', $url, $m))
+            return $this->makeSubmitButton($text, $m[1], $class);
         
         $imgurl = $this->getButtonURL($text);
         if ($imgurl)
             return new ImageButton($text, $url, $class, $imgurl);
         else
             return new Button($text, $url, $class);
+    }
+
+    function makeSubmitButton ($text, $name, $class = false) {
+        $imgurl = $this->getButtonURL($text);
+
+        if ($imgurl)
+            return new SubmitImageButton($text, $name, $class, $imgurl);
+        else
+            return new SubmitButton($text, $name, $class);
     }
 
     function setButtonSeparator($separator=false) {

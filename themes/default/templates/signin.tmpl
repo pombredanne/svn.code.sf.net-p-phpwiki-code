@@ -1,9 +1,9 @@
 <?php // -*-html-*- ?>
-<!-- $Id: signin.tmpl,v 1.7 2002-01-22 17:41:56 dairiki Exp $ -->
+<!-- $Id: signin.tmpl,v 1.8 2002-01-22 22:37:15 dairiki Exp $ -->
 <?php
 
      $Sep = $Theme->getButtonSeparator();
-     $SignOutB = $Theme->makeButton(_("SignOut"), "javascript:SignOut();", 'wikiaction');
+     $SignOutB = $Theme->makeButton(_("Sign Out"), "javascript:SignOut();", 'wikiaction');
 
      if (empty($FORMNAME))
          $FORMNAME = 'signin';
@@ -32,22 +32,23 @@
     document.write('<?=$SignOutB?>'); // -->
   </script>
   <noscript>
-    <input type="submit" name="login[logout]" value="<?=_("SignOut")?>" />
+    <?=$Theme->makeButton(_("Sign Out"), "submit:login[logout]", "wikiaction")?>
   </noscript>
 
 <?php } else { ?>
 
+  <?php $SignInInput = HTML::input(array('type' => 'text',
+                                         'name' => "login[userid]",
+                                         'size' => 12,
+                                         'onchange' => "this.form.submit();"));
+        $SignInInput->addTooltip(_("Sign In")) ?>
+
   <script language="JavaScript" type="text/javascript"><!--
-    document.write("<?=_("Sign In")?> ");
+    document.write("<small><?=_("Sign In")?></small> ");
   // --></script>
-  <?php $SignIn = HTML::input(array('type' => 'text',
-                                    'name' => "login[userid]",
-                                    'size' => 12,
-                                    'onchange' => "this.form.submit();"));
-        $SignIn->addTooltip(_("SignIn")) ?>
-  <?= $SignIn ?>
+  <?= $SignInInput ?>
   <noscript>
-    <input type="submit" name="login[login]" value="<?=_("SignIn")?>" />
+    <?=$Theme->makeButton(_("Sign In"), "submit:login[login]", "wikiaction")?>
   </noscript>
 
 <?php } ?>
