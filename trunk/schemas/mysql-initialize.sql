@@ -1,4 +1,4 @@
--- $Id: mysql-initialize.sql,v 1.5 2005-01-25 08:13:14 rurban Exp $
+-- $Id: mysql-initialize.sql,v 1.6 2005-02-07 15:18:52 rurban Exp $
 
 CREATE TABLE page (
 	id              INT NOT NULL AUTO_INCREMENT,
@@ -53,7 +53,7 @@ CREATE TABLE session (
     	sess_ip 	CHAR(15) NOT NULL,
     	PRIMARY KEY (sess_id),
 	INDEX (sess_date)
-); -- TYPE=heap; -- if your Mysql supports it and you have enough RAM
+);
 
 -- upgrade to 1.3.8: (see lib/upgrade.php)
 -- ALTER TABLE session ADD sess_ip CHAR(15) NOT NULL;
@@ -71,7 +71,7 @@ CREATE TABLE pref (
   	userid 	CHAR(48) BINARY NOT NULL UNIQUE,
   	prefs  	TEXT NULL DEFAULT '',
   	PRIMARY KEY (userid)
-) TYPE=MyISAM;
+);
 
 -- better use the extra pref table where such users can be created easily 
 -- without password.
@@ -81,14 +81,14 @@ CREATE TABLE user (
 --	prefs  	TEXT NULL DEFAULT '',
 --	groupname CHAR(48) BINARY DEFAULT 'users',
   	PRIMARY KEY (userid)
-) TYPE=MyISAM;
+);
 
 CREATE TABLE member (
 	userid    CHAR(48) BINARY NOT NULL,
    	groupname CHAR(48) BINARY NOT NULL DEFAULT 'users',
    	INDEX (userid),
    	INDEX (groupname)
-) TYPE=MyISAM;
+);
 
 -- only if you plan to use the wikilens theme
 CREATE TABLE rating (
