@@ -1,28 +1,32 @@
-<?php rcs_id('$Id: PageList.php,v 1.14 2002-01-22 05:06:50 dairiki Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.15 2002-01-22 06:57:22 carstenklapp Exp $');
 
-// This relieves some work for these plugins:
-//
-// BackLinks, LikePages, Mostpopular, TitleSearch
-//
-// It also allows dynamic expansion of those plugins to include more
-// columns in their output.
-//
-//
-// There are still a few rough edges.
-//
-// FIXME: Make caption work properly with new HtmlElement
-//
-// FIXME: Add error recovery! If the column title isn't found due to a
-//        typo, the wiki craps out, you will not even be able to edit the
-//        page again to fix the typo in the column name!
-
-
-// FIXME: In this refactoring I have un-implemented _ctime, _cauthor, and
-// number-of-revision.  Note the _ctime and _cauthor as they were implemented
-// were somewhat flawed: revision 1 of a page doesn't have to exist in the
-// database.  If lots of revisions have been made to a page, it's more than likely
-// that some older revisions (include revision 1) have been cleaned (deleted).
-
+/**
+ * This library relieves some work for these plugins:
+ *
+ * BackLinks, LikePages, Mostpopular, TitleSearch
+ *
+ * It also allows dynamic expansion of those plugins to include more
+ * columns in their output.
+ *
+ *
+ * Column arguments:
+ *
+ * 'mtime'   _("Last Modified")
+ * 'hits'    _("Hits")
+ * 'summary' _("Last Summary")
+ * 'author'  _("Last Author")),
+ * 'locked'  _("Locked"), _("locked")
+ * 'minor'   _("Minor Edit"), _("minor")
+ *
+ *
+ * FIXME?: Make caption work properly with new HtmlElement
+ *
+ * FIXME: In this refactoring I have un-implemented _ctime, _cauthor, and
+ * number-of-revision.  Note the _ctime and _cauthor as they were implemented
+ * were somewhat flawed: revision 1 of a page doesn't have to exist in the
+ * database.  If lots of revisions have been made to a page, it's more than likely
+ * that some older revisions (include revision 1) have been cleaned (deleted).
+ */
 class _PageList_Column_base {
     function _PageList_Column_base ($default_heading, $align = false) {
         $this->_heading = $default_heading;
