@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.7 2001-01-04 18:30:32 ahollosi Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.8 2001-02-07 22:14:35 dairiki Exp $');
 
 /*
    All page saving events take place here.
@@ -129,7 +129,7 @@
       }
 
       // archive it if it's a new author
-      if ($pagehash['author'] != $remoteuser) {
+      if (empty($minor_edit)) {
          SaveCopyToArchive($dbi, $pagename, $pagehash);
       }
       $newpage = 0;

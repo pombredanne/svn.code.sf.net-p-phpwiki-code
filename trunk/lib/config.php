@@ -10,7 +10,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.24 2001-01-31 07:38:10 ahollosi Exp $');
+   rcs_id('$Id: config.php,v 1.25 2001-02-07 22:14:35 dairiki Exp $');
    // end essential internal stuff
 
 
@@ -160,6 +160,13 @@
    // URLs ending with the following extension should be inlined as images
    $InlineImages = "png|jpg|gif";
 
+
+   // If the last edit is older than MINOR_EDIT_TIMEOUT seconds, the default
+   // state for the "minor edit" checkbox on the edit page form will be off
+   // (even if the page author hasn't changed.)
+   define("MINOR_EDIT_TIMEOUT", 7 * 24 * 3600);
+
+ 
    // Perl regexp for WikiNames
    // (?<!..) & (?!...) used instead of '\b' because \b matches '_' as well
    $WikiNameRegexp = "(?<![A-Za-z0-9])([A-Z][a-z]+){2,}(?![A-Za-z0-9])";

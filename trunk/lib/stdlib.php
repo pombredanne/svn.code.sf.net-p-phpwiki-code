@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.23 2001-02-07 17:21:33 ahollosi Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.24 2001-02-07 22:14:35 dairiki Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -315,6 +315,7 @@
       _iftoken('LOCK',	(isset($hash['flags']) &&
 			($hash['flags'] & FLAG_PAGE_LOCKED)), $page);
       _iftoken('ADMIN', defined('WIKI_ADMIN'), $page);
+      _iftoken('MINOR_EDIT', isset($hash['minor_edit']), $page);	
 
       _dotoken('SCRIPTURL', $ScriptUrl, $page);
       _dotoken('PAGE', htmlspecialchars($name), $page);
