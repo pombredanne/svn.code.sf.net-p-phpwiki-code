@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.6 2002-01-19 03:10:45 carstenklapp Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.7 2002-01-19 03:23:45 carstenklapp Exp $');
 
 class Theme {
     function Theme ($theme_name) {
@@ -94,7 +94,7 @@ class Theme {
 
     function getWikiMark() {
         if (! @$this->_wikiMark)
-            $this->setWikiMark("?%s");
+            $this->setWikiMark();
         
         return $this->_wikiMark;
     }

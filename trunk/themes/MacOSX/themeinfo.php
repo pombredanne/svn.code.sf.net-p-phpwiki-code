@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.24 2002-01-19 01:03:50 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.25 2002-01-19 03:23:45 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -87,6 +87,8 @@ $Theme = new Theme_MacOSX('MacOSX');
 // expected to be in the same directory that the base style is in.
 $Theme->setDefaultCSS("MacOSX", "MacOSX.css");
 $Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
+$Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
+$Theme->addAlternateCSS('PhpWiki', 'phpwiki.css');
 
 /*
  * Link icons.
@@ -105,8 +107,7 @@ $Theme->setDateFormat("%A, %B %e, %Y"); // must not contain time
 
 // Controls whether the '?' appears before or after UnknownWikiWords.
 // The PhpWiki default is for the '?' to appear before.
-define('WIKIMARK_AFTER', true);
-
+$Theme->setWikiMark('%s?');
 
 /*
 $ToolbarImages = array(
