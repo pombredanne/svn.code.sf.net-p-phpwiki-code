@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageType.php,v 1.1 2002-02-18 08:58:10 carstenklapp Exp $');
+<?php rcs_id('$Id: PageType.php,v 1.2 2002-02-18 09:20:11 carstenklapp Exp $');
 /*
 Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -55,8 +55,8 @@ function PageType(&$rev, $pagename = false, $markup = false) {
     // PageType currently only works with InterWikiMap.
     // Once a contentType field has been implemented in the
     // database then that can be used instead of this pagename check.
-    switch( _($pagename) ) {
-        case "InterWikiMap":
+    switch($pagename) {
+        case _("InterWikiMap"):
             $ContentTemplateName = 'interwikimap';
             break;
         default:
