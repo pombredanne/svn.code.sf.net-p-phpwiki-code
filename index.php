@@ -23,7 +23,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.0pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.18 2001-07-12 03:21:35 wainstead Exp $');
+rcs_id('$Id: index.php,v 1.19 2001-07-12 03:49:05 wainstead Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -85,7 +85,13 @@ $DBParams = array(
    
    // Used by all DB types:
    'database' => 'wiki',
-   'prefix' => 'phpwiki_',	// prefix for filenames or table names
+   // prefix for filenames or table names
+   /* 
+    * currently you MUST EDIT THE SQL file too (in the schemas/ directory
+    * because we aren't doing on the fly sql generation during the
+    * installation.
+   */
+   'prefix' => 'phpwiki_',
    
    // Used by 'dbm', 'dba', 'file'
    'directory' => "/tmp",
