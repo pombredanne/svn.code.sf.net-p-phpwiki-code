@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.32 2002-01-24 01:26:55 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.33 2002-01-24 21:23:40 dairiki Exp $');
 
 
 include "lib/config.php";
@@ -462,8 +462,8 @@ function main () {
     // The warnings will screw up zip files and setpref though.
     global $ErrorManager;
     if ($request->getArg('action') != 'zip') {
-        //$ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE);
-        $ErrorManager->setPostponedErrorMask(0);
+        $ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE);
+        //$ErrorManager->setPostponedErrorMask(0);
     }
 
     
