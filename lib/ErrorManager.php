@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.27 2004-06-13 09:38:20 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.28 2004-06-16 11:51:04 rurban Exp $');
 
 require_once(dirname(__FILE__).'/HtmlElement.php');
 if (isset($GLOBALS['ErrorManager'])) return;
@@ -232,7 +232,7 @@ class ErrorManager
                     (
                      // stdlib independent isa()
                      (strtolower(get_class($error)) == 'PhpErrorOnce')
-                     or (is_subclass_of($object, 'PhpErrorOnce'))))) {
+                     or (is_subclass_of($error, 'PhpErrorOnce'))))) {
                     $error->removeDoublettes($this->_postponed_errors);
                     if ( $error->_count < 2 )
                         $this->_postponed_errors[] = $error;
@@ -528,6 +528,9 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.27  2004/06/13 09:38:20  rurban
+// isa() workaround, if stdlib.php is not loaded
+//
 // Revision 1.26  2004/06/02 18:01:45  rurban
 // init global FileFinder to add proper include paths at startup
 //   adds PHPWIKI_DIR if started from another dir, lib/pear also
