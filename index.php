@@ -1,4 +1,12 @@
 <?php // -*-php-*-
+// iso-8859-1
+
+// IMPORTANT NOTE: Use of the ***configurator.php*** to generate an
+// index.php is depreciated, because it is out of date and a new
+// configuration system is in the works (see the config directory, not
+// finished yet though). DO compare or diff the configurator's output
+// against this file if you feel you must use it to generate an
+// index.php!
 
 /*
 Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam = array(
@@ -54,6 +62,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 // as the path separator.
 //ini_set('include_path', '.:/usr/local/httpd/phpwiki');
 
+// Set DEBUG to 1 to view the XHTML and CSS validator icons, page
+// processing timer, and possibly other debugging messages at the
+// bottom of each page.
 if (!defined('DEBUG')) define ('DEBUG', 0);
 
 /////////////////////////////////////////////////////////////////////
@@ -61,7 +72,7 @@ if (!defined('DEBUG')) define ('DEBUG', 0);
 
 define ('PHPWIKI_VERSION', '1.3.7pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.112 2003-11-17 15:49:21 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.113 2003-12-05 15:51:37 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -71,27 +82,51 @@ rcs_id('$Id: index.php,v 1.112 2003-11-17 15:49:21 carstenklapp Exp $');
 /////////////////////////////////////////////////////////////////////
 
 // The name of your wiki.
+//
 // This is used to generate a keywords meta tag in the HTML templates,
 // in bookmark titles for any bookmarks made to pages in your wiki,
 // and during RSS generation for the <title> of the RSS channel.
+//
+// To use your own logo and signature files, name them PhpWikiLogo.png
+// and PhpWikiSignature.png and put them into themes/default/images
+// (substituting "PhpWiki" in the filename with the name you define
+// here).
+//
+// It is recommended this be a relatively short WikiWord like the
+// InterWiki monikers found in the InterWikiMap. (For examples, see
+// lib/interwiki.map).
 if (!defined('WIKI_NAME')) define('WIKI_NAME', 'PhpWiki');
 
-// If set, we will perform reverse dns lookups to try to convert the
-// users IP number to a host name, even if the http server didn't do
-// it for us.
+// Visitor Hostname Lookup
+//
+// If set, reverse dns lookups will be performed to attempt to convert
+// the user's IP number into a host name, in the case where the http
+// server does not do this.
 if (!defined('ENABLE_REVERSE_DNS')) define('ENABLE_REVERSE_DNS', true);
 
 // Username and password of administrator.
-// Set these to your preferences. For heaven's sake
-// pick a good password or use our passwordencrypt.php tool.
+//
+// Set these to your preferences. For heaven's sake pick a good
+// password and use the passencrypt.php tool. See:
+// http://wolfram.org/writing/howto/password.html
+// 
+// Log into the wiki with the admin user and password to lock, unlock,
+// or remove pages and to perform other PhpWikiAdministration
+// functions. On all other occasions you should simply log in with
+// your regular WikiName.
 if (!defined('ADMIN_USER')) define('ADMIN_USER', "");
 if (!defined('ADMIN_PASSWD')) define('ADMIN_PASSWD', "");
-// If you used the passencrypt.php utility to encode the password
-// then uncomment this line. Recommended!
+// It is recommended to use the passencrypt.php utility to encode the
+// admin password, in the unlikely event someone gains ftp or ssh
+// access to the server and directory containing phpwiki. Once you
+// have pasted the encrypted password into ADMIN_PASSWD, uncomment
+// this next line.
 //if (!defined('ENCRYPTED_PASSWD')) define('ENCRYPTED_PASSWD', true);
 
-// If true, only the admin user can make zip dumps, else zip dumps
-// require no authentication.
+// Private ZIP Dumps of All Wiki Pages
+//
+// If true, only the admin user can make zip dumps. Otherwise anyone
+// may download all wiki pages as a single zip archive.
 if (!defined('ZIPDUMP_AUTH')) define('ZIPDUMP_AUTH', false);
 
 // Define to false to disable the RawHtml plugin.
@@ -107,7 +142,7 @@ if (!defined('ZIPDUMP_AUTH')) define('ZIPDUMP_AUTH', false);
 // to be generated, so that the resulting dumps are valid
 // RFC 2822 e-mail messages.
 //
-// Probably, you can just leave this set to false, in which case you get
+// Probably you can just leave this set to false, in which case you get
 // raw ('binary' content-encoding) page dumps.
 if (!defined('STRICT_MAILABLE_PAGEDUMPS')) define('STRICT_MAILABLE_PAGEDUMPS', false);
 
@@ -123,15 +158,18 @@ if (!defined('MAX_UPLOAD_SIZE')) define('MAX_UPLOAD_SIZE', 16 * 1024 * 1024);
 // will be off.
 if (!defined('MINOR_EDIT_TIMEOUT')) define("MINOR_EDIT_TIMEOUT", 7 * 24 * 3600);
 
-// Actions listed in this array will not be allowed.
+// Actions listed in this array will not be allowed. The complete list
+// of actions can be found in lib/main.php within the function
+// getActionDescription.
 //$DisabledActions = array('dumpserial', 'loadfile');
 
 // PhpWiki can generate an access_log (in "NCSA combined log" format)
-// for you. If you want one, define this to the name of the log file.
-//define('ACCESS_LOG', '/tmp/wiki_access_log');
+// for you. If you want one, define this to the name of the log
+// file. The server must have write access to the directory specified.
+//define('ACCESS_LOG', '/var/tmp/wiki_access_log');
 
 
-// By default PhpWiki will try to have PHP compress it's output
+// By default PhpWiki will try to have PHP compress its output
 // before sending it to the browser (if you have a recent enough
 // version of PHP and the browser supports it.)
 // Define COMPRESS_OUTPUT to false to prevent output compression.
@@ -221,7 +259,10 @@ if (!defined('CACHE_CONTROL_MAX_AGE')) define('CACHE_CONTROL_MAX_AGE', 600);
 //
 $DBParams = array(
    // Select the database type:
-   // Choose ADODB or SQL to use an SQL database with ADODB or PEAR.
+   //
+   // Choose ADODB or SQL to use an SQL database with ADODB or PEAR
+   // respectively (both ADODB and PEAR libraries are already included
+   // with PhpWiki).
    // Choose dba to use one of the standard UNIX dbm libraries.
    // Choose file to use a flat file database.
    //'dbtype' => 'ADODB',
@@ -348,7 +389,7 @@ $ExpireParams['author'] = array('max_age'  => 365,
 /////////////////////////////////////////////////////////////////////
 //
 // Part Three: (optional)
-// User Authentification
+// User Authentication
 //
 /////////////////////////////////////////////////////////////////////
 
@@ -357,24 +398,26 @@ $ExpireParams['author'] = array('max_age'  => 365,
 if (!defined('ALLOW_HTTP_AUTH_LOGIN')) define('ALLOW_HTTP_AUTH_LOGIN', false);
 
 // If ALLOW_USER_LOGIN is true, any defined internal and external
-// authentification method is tried. 
-// If not, we don't care about passwords, but listen to the next 
-// two constants.
-if (!defined('ALLOW_USER_LOGIN')) define('ALLOW_USER_LOGIN', true); 
+// authentication method is tried. If not, we don't care about
+// passwords, but listen to the next two constants. Note that external
+// authentication is not supported at this time, you will likely have
+// to patch code yourself to get PhpWiki to recognise userids and
+// passwords from an external source.
+if (!defined('ALLOW_USER_LOGIN')) define('ALLOW_USER_LOGIN', false);
 
 // If ALLOW_BOGO_LOGIN is true, users are allowed to login (with
 // any/no password) using any userid which: 
 //  1) is not the ADMIN_USER,
 //  2) is a valid WikiWord (matches $WikiNameRegexp.)
-// If true, users may be created by themselves. Otherwise we need seperate auth. 
-// This might be renamed to ALLOW_SELF_REGISTRATION.
+// If true, users may be created by themselves. Otherwise we need
+// seperate auth. This might be renamed to ALLOW_SELF_REGISTRATION.
 if (!defined('ALLOW_BOGO_LOGIN')) define('ALLOW_BOGO_LOGIN', true);
 
 // This will go away, with true page permissions.
 // If set, then if an anonymous user attempts to edit a page he will
 // be required to sign in.  (If ALLOW_BOGO_LOGIN is true, of course,
 // no password is required, but the user must still sign in under
-// some sort of BogoUserId.)
+// some sort of WikiWordName.)
 if (!defined('REQUIRE_SIGNIN_BEFORE_EDIT')) define('REQUIRE_SIGNIN_BEFORE_EDIT', false);
 
 // The login code now uses PHP's session support. Usually, the default
@@ -440,7 +483,7 @@ CREATE TABLE user (
 */
 
 // 
-// Seperate DB User Authentification. 
+// Seperate DB User Authentication. 
 //   Can be external, like radius, phpnuke, courier authmysql,
 //   apache auth_mysql or something else.
 // The default is to store the data as metadata in WikiPages.
@@ -515,12 +558,15 @@ define('THEME', 'default');
 // character set.
 //
 // If you change the default from iso-8859-1 PhpWiki may not work
-// properly and it will require code modifications. However, character
-// sets similar to iso-8859-1 may work with little or no modification
-// depending on your setup. The database must also support the same
-// charset, and of course the same is true for the web browser. (Some
-// work is in progress hopefully to allow more flexibility in this
-// area in the future).
+// properly and will require code modifications, at the very least you
+// will have to convert the files in pgsrc or locale/xx/pgsrc to
+// match!
+//
+// Character sets similar to iso-8859-1 may work with little or no
+// modification depending on your setup. The database must also
+// support the same charset, and of course the same is true for the
+// web browser. (Some work is in progress hopefully to allow more
+// flexibility in this area in the future).
 if (!defined('CHARSET')) define("CHARSET", "iso-8859-1");
 
 // Select your language/locale - default language is "en" for English.
@@ -533,7 +579,7 @@ if (!defined('CHARSET')) define("CHARSET", "iso-8859-1");
 // Swedish "sv" (Svenska    - Framsida)
 // Italian "it" (Italiano   - PaginaPrincipale)
 //
-// If you set DEFAULT_LANGUAGE to the empty string, your systems
+// If you set DEFAULT_LANGUAGE to the empty string, your system's
 // default language (as determined by the applicable environment
 // variables) will be used.
 //
@@ -592,7 +638,7 @@ if (!defined('SUBPAGE_SEPARATOR')) define('SUBPAGE_SEPARATOR', '/');
 define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
 
 // Display a warning if the internal lib/interwiki.map is used, and 
-// not the public InterWikiMap page. This map is not readable from outside.
+// not the public InterWikiMap page. This file is not readable from outside.
 //define('WARN_NONPUBLIC_INTERWIKIMAP', false);
 
 // Regexp used for automatic keyword extraction.
@@ -603,7 +649,26 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
 // used as the keyword.
 //
 // The default behavior is to match Category* and Topic* links.
-$KeywordLinkRegexp = '(?<=^Category|^Topic)[[:upper:]].*$';
+$keywords = array(_("Category"), _("Topic"));
+$KeywordLinkRegexp = '(?<=^'. join('|^', $keywords) . ')[[:upper:]].*$';
+
+// Author and Copyright Site Navigation Links
+//
+// These will be inserted as <link rel> tags in the html header of
+// every page, for search engines and for browsers like Mozilla which
+// take advantage of link rel site navigation.
+//
+// If you have your own copyright and contact information pages change
+// these as appropriate.
+if (!defined('COPYRIGHTPAGE_TITLE')) define('COPYRIGHTPAGE_TITLE',
+    "GNU General Public License");
+if (!defined('COPYRIGHTPAGE_URL')) define('COPYRIGHTPAGE_URL',
+    'http://www.gnu.org/copyleft/gpl.html#SEC1');
+if (!defined('AUTHORPAGE_TITLE')) define('AUTHORPAGE_TITLE',
+    _("The PhpWiki Programming Team"));
+if (!defined('AUTHORPAGE_URL')) define('AUTHORPAGE_URL',
+    'http://phpwiki.sourceforge.net/phpwiki/ThePhpWikiProgrammingTeam');
+
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -716,12 +781,6 @@ $KeywordLinkRegexp = '(?<=^Category|^Topic)[[:upper:]].*$';
 /////////////////////////////////////////////////////////////////////
 
 /*
- * Page name of RecentChanges page.  Used for RSS Auto-discovery
- */
- 
-if (!defined('RECENT_CHANGES')) define ('RECENT_CHANGES', 'RecentChanges');
-
-/*
  * Disable HTTP redirects.
  *
  * (You probably don't need to touch this.)
@@ -772,6 +831,13 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 // End:   
 
 // $Log: not supported by cvs2svn $
+// Revision 1.112  2003/11/17 15:49:21  carstenklapp
+// Updated version number to 1.3.7pre (beyond current release
+// 1.3.6). Disabled DEBUG output by default (hide DebugInfo, XHTML &
+// CSS validator buttons). Note the DebugInfo button remains visible
+// for the Admin, and can be accessed by anyone else by adding
+// "?action=DebugInfo" to the URL for the occasional use.
+//
 // Revision 1.111  2003/03/18 21:40:04  dairiki
 // Copy Lawrence's memo on USE_PATH_INFO/AcceptPathInfo to configurator.php
 // (as promised).
