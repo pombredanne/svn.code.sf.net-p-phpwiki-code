@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.130 2005-01-28 12:07:36 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.131 2005-02-04 10:48:06 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -1111,7 +1111,7 @@ class PageList {
                     $need_sort = true;
             }
             if ($need_sort) { // There are some columns to sort by
-                usort(&$this->_pages, array($this, '_pageCompare'));
+                usort($this->_pages, array($this, '_pageCompare'));
             }
         }
         //unset($GLOBALS['PhpWiki_pagelist']);
@@ -1449,6 +1449,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.130  2005/01/28 12:07:36  rurban
+// reformatting
+//
 // Revision 1.129  2005/01/25 06:58:21  rurban
 // reformatting
 //
