@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: VisualWiki.php,v 1.12 2004-09-06 12:08:50 rurban Exp $');
+rcs_id('$Id: VisualWiki.php,v 1.13 2004-09-06 12:13:00 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -46,7 +46,8 @@ elseif (isWindows()) {
   define('VISUALWIKIFONT', 'Arial');
 } else { // other os
     $dotbin = '/usr/local/bin/dot';
-    // $dotbin = '/home/groups/p/ph/phpwiki/bin/dot';
+    if ($_SERVER["SERVER_NAME"] == 'phpwiki.sourceforge.net')
+        $dotbin = '/home/groups/p/ph/phpwiki/bin/dot';
 
     // Name of the Truetypefont - Helvetica is probably easier to read
     //define('VISUALWIKIFONT', 'Helvetica');
@@ -85,7 +86,7 @@ extends WikiPluginCached
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.12 $");
+                            "\$Revision: 1.13 $");
     }
 
     /**
@@ -740,6 +741,10 @@ function interpolate($a, $b, $pos) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2004/09/06 12:08:50  rurban
+// memory_limit on unix workaround
+// VisualWiki: default autosize image
+//
 // Revision 1.11  2004/09/06 10:10:27  rurban
 // fixed syntax error
 //
