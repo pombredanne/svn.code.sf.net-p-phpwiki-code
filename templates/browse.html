@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- phpwiki source:
-$Id: browse.html,v 1.37 2002-01-03 00:09:18 carstenklapp Exp $
+$Id: browse.html,v 1.38 2002-01-03 19:12:41 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <meta name="keywords" content="${SPLIT_PAGE}, ${WIKI_NAME}" />
@@ -21,27 +21,13 @@ ${CSS}
 -->
 </head>
 <body>
-<div><a class="wikilink" 
-        href="${BROWSE}$_("HomePage")"
-        ><img src="${LOGO}"
-              border="0" alt="${WIKI_NAME}: $_("HomePage")" 
-              align="right" /></a></div>
+<div>${LOGO}</div>
 <h1><?plugin-link BackLinks page="[pagename]" class="backlinks" linktext="${SPLIT_PAGE}" ?></h1>
 <div class="br"><br clear="all" class="ignore" /></div>
-<?php if (! $IS_CURRENT) { ?>
-  <p><strong>$_("Note:")</strong> $_("You are viewing an old revision of this page.")
-     <a href="${BROWSE}${PAGEURL}">$_("View the current version")</a>.</p>
-  <hr class="ignore" noshade="noshade" />
-<?php } ?>
+${NOT_VIEWING_CURRENT}
 <div class="wikitext">${CONTENT}</div>
 <hr class="ignore" noshade="noshade" />
-
-    <?php if ($IS_CURRENT) { ?>
-       <?php printf(_("Last edited on %s."),"${LASTMODIFIED}"); ?>
-    <?php } else { ?>
-       <?php printf(_("Version %s, saved on %s."),"${VERSION}","${LASTMODIFIED}"); ?>
-    <?php } ?>
-<form action='<?php echo WikiURL(_("TitleSearch")); ?>' method="get" accept-charset="${CHARSET}">
+${LASTMODIFIED}
 <hr color="black" class="toolbar" />
 <!-- I would like not to have to use these tables, and managed to
      get this stuff to work more or less correctly using
@@ -77,30 +63,12 @@ ${CSS}
            href="${ACTION}diff&amp;version=${VERSION}&amp;previous=major">$_("Diff")</a>
     <?php } ?>
   </td>
-  <td align="right">
-  <?php echo LinkExistingWikiWord(_("RecentChanges")) ?> 
-  | <?php echo LinkExistingWikiWord(_("FindPage")) ?> 
-  | <span><input type="hidden" name="auto_redirect" value="1" />
-    <input type="text"  name="s" size="12"
-           title=_("Quick Search")
-           onmouseover="window.status='$_("Quick Search")'; return true;"
-           onmouseout="window.status=''; return true;" /></span>
-  | <?plugin-link LikePages page="[pagename]" ?>
-  </td>
+  <td align="right">${SEARCH}</td>
 </tr></table>
 <table summary="Toolbar 2: Sign in." class="toolbar" width="100%"
        cellpadding="0" cellspacing="0" border="0"><tr valign="baseline">
-  <td>
-    <?php if ($user->is_authenticated()) { ?>
-      <?php printf(_("You are signed in as %s"), LinkWikiWord($USERID)); ?>
-      | <a class="wikiaction" href="${ACTION}logout">$_("SignOut")</a>
-    <?php } else { ?>
-      <a class="wikiaction" href="${ACTION}login">$_("SignIn")</a>
-    <?php } ?>
-  </td>
-
-  <td align="right">
-  </td>
+  <td>${SIGNIN}</td>
+  <td align="right"></td>
 </tr></table>
 
 <?php /*

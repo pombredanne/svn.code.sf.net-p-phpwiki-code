@@ -1,7 +1,7 @@
-<?php rcs_id('$Id: Toolbar.php,v 1.4 2002-01-03 15:47:06 carstenklapp Exp $');
+<?php rcs_id('$Id: Toolbar.php,v 1.5 2002-01-03 19:12:39 carstenklapp Exp $');
 
-require_once("lib/ErrorManager.php");
-require_once("lib/WikiPlugin.php");
+//require_once("lib/ErrorManager.php");
+//require_once("lib/WikiPlugin.php");
 
 function separator() {
 /*
@@ -51,27 +51,27 @@ the same tomorrow...)
 
 // BrowsePage stuff
 
-//Calling function should provide:
-//$is_current = ($current->getVersion() == $revision->getVersion())
-//$pagename = ($pagename)
+//Calling function should provide: - done
+//$is_current = ($current->getVersion() == $revision->getVersion());
+//$pagename = ($pagename);
 function toolbar_Warning_IsCurrent($is_current, $pagename) {
     $html = "";
     if (!$is_current) {
         $html .= "<p><strong>" ._("Note:") ."</strong> " ._("You are viewing an old revision of this page.");
-        $html .= "<a href=\"" .WikiURL('') .rawurlencode($pagename) ."\">" ._("View the current version") ."</a>.</p>";
+        $html .= "<a href=\"" .WikiURL('') .rawurlencode($pagename) ."\"> " ._("View the current version") ."</a></p>";
 	$html .= "<hr class=\"ignore\" noshade=\"noshade\" />";
     }
     return $html;
 }
 
-//Calling function should provide:
-//$is_current = ($current->getVersion() == $revision->getVersion())
-//$lastmodified = (strftime($datetimeformat, $revision->get('mtime')))
-//$version = ($revision->getVersion())
+//Calling function should provide: - done
+//$is_current = ($current->getVersion() == $revision->getVersion());
+//$lastmodified = (strftime($datetimeformat, $revision->get('mtime')));
+//$version = ($revision->getVersion());
 function toolbar_Info_LastModified($is_current, $lastmodified, $version) {
     $html = "";
     if ($is_current) {
-       $html .= sprintf(_("Last edited on %s.") $lastmodified);
+       $html .= sprintf(_("Last edited on %s."), $lastmodified);
     } else {
        $html .= sprintf(_("Version %s, saved on %s."),$version, $lastmodified);
     }
@@ -79,11 +79,11 @@ function toolbar_Info_LastModified($is_current, $lastmodified, $version) {
 }
 
 //Calling function should provide:
-//$pagelocked = ($page->get('locked'))
-//$userisadmin = ($user->is_admin())
-//$is_current = ($current->getVersion() == $revision->getVersion())
-//$version = ($revision->getVersion()))
-//$pagename = ($page->getName())
+//$pagelocked = ($page->get('locked'));
+//$userisadmin = ($user->is_admin());
+//$is_current = ($current->getVersion() == $revision->getVersion());
+//$version = ($revision->getVersion());
+//$pagename = ($page->getName());
 function toolabr_action_PageActions($pagelocked, $userisadmin, $is_current, $version, $pagename) {
     $html = "";
     if ($pagelocked && !$userisadmin) {
@@ -104,47 +104,46 @@ function toolabr_action_PageActions($pagelocked, $userisadmin, $is_current, $ver
         }
         $html .= separator() ."<a class=\"wikiadmin\" href=\"" .WikiURL($pagename, array('action' => 'remove')) ."\">" ._("Remove page") ."</a>";
     }
-        //$html .= separator() ."<?plugin-link PageHistory page=\"" .$pagename ."\"";
+        //$html .= separator() ."<plugin-link PageHistory page=\"" .$pagename ."\"";
         $html .= separator() ."<a class=\"wikiaction\" href=\"" . WikiURL(_("PageHistory"), array('page' => $pagename)) ."\">" ._("PageHistory") ."</a>";
 
     if ($is_current) {
         $html .= separator() ."<a class=\"wikiaction\" href=\"" . WikiURL($pagename, array('action' => 'diff&amp;previous=major')) ."\">" ._("Diff") ."</a>";
     } else {
-        $html .= separator() ."<a class=\"wikiaction\""; 
+        $html .= separator() ."<a class=\"wikiaction\"";
         $html .= "href=\"" . WikiURL($pagename, array('action' => 'diff&amp;version=' .$version .'&amp;previous=major')) ."\">" ._("Diff") ."</a>";
     }
-        $html .= 
-        //$html .= separator() ."<?plugin-link BackLinks page=\"" .$pagename ."\"";
+        //$html .= separator() ."<plugin-link BackLinks page=\"" .$pagename ."\"";
         $html .= separator() ."<a class=\"wikiaction\" href=\"" . WikiURL(_("BackLinks"), array('page' => $pagename)) ."\">" ._("BackLinks") ."</a>";
 
     return $html;
 }
 
 //Calling function should provide:
-//$pagename = ($page->getName())
-//$charset = (CHARSET)
+//$pagename = ($page->getName());
+//$charset = (CHARSET);
 function toolbar_action_SearchActions($pagename, $charset) {
     $html = "";
     $html .= "<form action=\"" .WikiURL(_("TitleSearch")) ."\" method=\"get\" accept-charset=\"" .$charset ."\">";
-    $html .= LinkExistingWikiWord(_("RecentChanges"));
-    $html .= separator() .LinkExistingWikiWord(_("FindPage"));
+    $html .= toolbar_action_Navigation($pagename) .separator() .LinkExistingWikiWord(_("FindPage"));
     $html .= separator() ."<span><input type=\"hidden\" name=\"auto_redirect\" value=\"1\" />";
     $html .= "<input type=\"text\"  name=\"s\" size=\"12\"";
     $html .= " title=" ._("Quick Search");
     $html .= " onmouseover=\"window.status='" ._("Quick Search") ."'; return true;";
     $html .= " onmouseout=\"window.status=''; return true;\" /></span>";
 
-    //$html .= separator() ."<?plugin-link LikePages page=\"" .$pagename ."\" ?>";
+    //$html .= separator() ."<plugin-link LikePages page=\"" .$pagename ."\" >";
     $html .= separator() ."<a class=\"wikiaction\" href=\"" . WikiURL(_("LikePages"), array('page' => $pagename)) ."\">" ._("LikePages") ."</a>";
 
-    $html .= "</form>";
+//    $html .= "</form>";
     return $html;
 }
 
-//Calling function should provide:
-//$userauth = ($user->is_authenticated()
-//$userid = ($user->id())
-function toolbar_User_UserSignInOut($userauth, $userid) {
+//Calling function should provide: done - WARNING: hackage! $pagename is not being passed here yet
+//$userauth = ($user->is_authenticated();
+//$userid = ($user->id());
+//$pagename = ($pagename);
+function toolbar_User_UserSignInOut($userauth, $userid, $pagename) {
     $html = "";
     if ($userauth) {
         $html .= sprintf(_("You are signed in as %s"), LinkWikiWord($userid));
@@ -155,27 +154,28 @@ function toolbar_User_UserSignInOut($userauth, $userid) {
     return $html;
 }
 
-//Calling function should provide:
-//$wiki_name = (WIKI_NAME)
-//$logo = ($logo)
+//Calling function should provide: - done
+//$wiki_name = (WIKI_NAME);
+//$logo = ($logo);
 function toolbar_action_Logo($wiki_name, $logo) {
     $html = "";
-    $html .= "<div>";
     $html .= "<a class=\"wikilink\" href=\"" .WikiURL(_("HomePage")) ."\">";
-    $html .= "<img alt=\"" .$wiki_name .":" ._("HomePage");
+    $html .= "<img alt=\"" .$wiki_name .":" ._("HomePage") ."\"";
     $html .= " src=\"" . DataURL($logo) ."\"";
-    $html .= " border=\"0\" align=\"right\" />";
-    $html .= "</a></div>";
+    $html .= " border=\"0\" align=\"right\" /></a>";
     return $html;
 }
 
-function toolbar_action_Navigation() {
+//Calling function should provide: - done
+//$pagename = ($pagename);
+function toolbar_action_Navigation($pagename) {
     $html = "";
     $html .= LinkExistingWikiWord(_("RecentChanges"));
-    //$html .= separator() ."<?plugin-link RandomPage page=\"" .$pagename ."\" ?>";
-    $html .= separator() ."<a class=\"wikiaction\" href=\"" . WikiURL(_("RandomPage"), array('page' => $pagename)) ."\">" ._("RandomPage") ."</a>";
-    //$html .= separator() ."<?plugin-link WantedPages ?>";
-    $html .= separator() ."<a class=\"wikiaction\" href=\"" . LinkExistingWikiWord(_("WantedPages")) ."\">" ._("WantedPages") ."</a>";
+    //$html .= separator() ."<plugin-link RandomPage page=\"" .$pagename ."\" >";
+    //FIXME: What to use instead of WikiURL?
+//    $html .= separator() ."<a class=\"wikiaction\" href=\"" .WikiURL('_("RandomPage")', array('page' => $pagename)) ."\">" ._("RandomPage") ."</a>";
+    //$html .= separator() ."<plugin-link WantedPages >";
+//    $html .= separator() ."<a class=\"wikiaction\" href=\"" . WikiURL(_("WantedPages")) ."\">" ._("WantedPages") ."</a>";
 //    $html .= separator() .LinkExistingWikiWord(_("SandBox"));
     return $html;
 }
@@ -184,7 +184,7 @@ function toolbar_action_Navigation() {
 //EditPage stuff
 
 //Calling function should provide:
-//$ispreview = (!empty($PREVIEW_CONTENT))
+//$ispreview = (!empty($PREVIEW_CONTENT));
 function toolbar_Warning_Preview($ispreview) {
     $html = "";
     if ($ispreview) {
@@ -194,7 +194,7 @@ function toolbar_Warning_Preview($ispreview) {
 }
 
 //Calling function should provide:
-//$is_current = ($current->getVersion() == $revision->getVersion())
+//$is_current = ($current->getVersion() == $revision->getVersion());
 function toolbar_Warning_OldRevision($is_current) {
     $html = "";
     if (!$is_current) {
@@ -229,7 +229,7 @@ function toolbar_Info_EditTips() {
 function toolbar_Info_EditHelp() {
     $html = "";
     $html .= "<div class=\"wiki-edithelp\">";
-    $html .= "<?plugin IncludePage page=" ._("TextFormattingRules") ."section=" ._("Synopsis") ."quiet=1?>";
+    $html .= "<plugin IncludePage page=" ._("TextFormattingRules") ."section=" ._("Synopsis") ."quiet=1>";
     $html .= "</div>";
     return $html;
 }
@@ -316,5 +316,5 @@ extends Toolbar
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End:  
 ?>
