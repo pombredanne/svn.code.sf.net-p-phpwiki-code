@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.21 2004-06-13 09:45:23 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.22 2004-06-15 14:56:37 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -50,7 +50,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.21 $");
+                            "\$Revision: 1.22 $");
     }
 
     function getDefaultArguments() {
@@ -223,7 +223,9 @@ extends WikiPlugin
         }
         if (defined('TOC_FULL_SYNTAX') and TOC_FULL_SYNTAX)
             require_once("lib/InlineParser.php");
-        if ($headers = $this->extractHeaders(&$content, &$dbi->_markup, $with_toclink, $levels, $basepage)) {
+        if ($headers = $this->extractHeaders($content, $dbi->_markup, 
+                                             $with_toclink, $levels, $basepage)) 
+        {
             foreach ($headers as $h) {
                 // proper heading indent
                 $level = $h['level'];
@@ -266,6 +268,9 @@ function toggletoc(a) {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.21  2004/06/13 09:45:23  rurban
+// display bug workaround for MacIE browsers, jshide: 0
+//
 // Revision 1.20  2004/05/11 13:57:46  rurban
 // enable TOC_FULL_SYNTAX per default
 // don't <a name>$header</a> to disable css formatting for such anchors
