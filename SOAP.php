@@ -8,6 +8,7 @@
  * Todo: 
  * checkCredentials: set the $GLOBALS['request']->_user object for 
  *                   mayAccessPage
+ * check native pecl extension
  * serverurl: 
  *   Installer helper which changes server url of the default PhpWiki.wdsl
  *   Or do it dynamically in the soap class? No, the client must connect to us.
@@ -155,32 +156,34 @@ function getBacklinks($pagename,$credentials=false) {
     $dbi = WikiDB::open($GLOBALS['DBParams']);
     $backend = &$dbi->_backend;
     $result =  $backend->get_links($pagename);
-    $page_iter = new WikiDB_PageIterator(/*$dbi,*/ $result);
+    $page_iter = new WikiDB_PageIterator($dbi, $result);
     $pages = array();
     while ($page = $page_iter->next()) {
-        $pages[] = array('pagename' => $page->_pagename);
+        $pages[] = array('pagename' => $page->getName());
     }
     return $pages;
 }
 // require 'view' access to TitleSearch
-function doTitleSearch($query,$credentials=false) {
+function doTitleSearch($s, $credentials=false) {
     checkCredentials($server,$credentials,'view',_("TitleSearch"));
     $dbi = WikiDB::open($GLOBALS['DBParams']);
+    $query = new TextSearchQuery($s);
     $page_iter = $dbi->titleSearch($query);
     $pages = array();
     while ($page = $page_iter->next()) {
-        $pages[] = array('pagename' => $page->_pagename);
+        $pages[] = array('pagename' => $page->getName());
     }
     return $pages;
 }
 // require 'view' access to FullTextSearch
-function doFullTextSearch($query,$credentials=false) {
+function doFullTextSearch($s, $credentials=false) {
     checkCredentials($server,$credentials,'view',_("FullTextSearch"));
     $dbi = WikiDB::open($GLOBALS['DBParams']);
+    $query = new TextSearchQuery($s);
     $page_iter = $dbi->fullSearch($query);
     $pages = array();
     while ($page = $page_iter->next()) {
-        $pages[] = array('pagename' => $page->_pagename);
+        $pages[] = array('pagename' => $page->getName());
     }
     return $pages;
 }
