@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.55 2002-02-14 03:32:08 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.56 2002-02-16 00:08:00 carstenklapp Exp $');
 
 
 include "lib/config.php";
@@ -281,6 +281,7 @@ class WikiRequest extends Request {
         // FIXME: clean up.
         switch ($action) {
             case 'browse':
+            case 'info':
             case 'viewsource':
             case 'diff':
                 return WIKIAUTH_ANON;
@@ -472,6 +473,36 @@ class WikiRequest extends Request {
         include "lib/editpage.php";
         $e = new PageEditor ($this);
         $e->viewSource();
+    }
+
+    function action_info () {
+        // this should probably be incorporated into display.php
+        global $Theme, $request;
+        //require_once('lib/display.php');
+        //displayPage(&$request, 'info'); // this adds to hit counter
+    
+        $pagename = $request->getArg('pagename');
+        $version = $request->getArg('version');
+        $pagehandle = $request->getPage();
+        if ($version) {
+            $revision = $pagehandle->getRevision($version);
+            if (!$revision)
+                NoSuchRevision($request, $pagehandle, $version);
+        } else {
+            $revision = $pagehandle->getCurrentRevision();
+        }
+    
+        $pagetitle = HTML("Info for", ": ",
+                        $Theme->linkExistingWikiWord($pagename, false, $version));
+    
+        //$pagetitle->addTooltip(sprintf(_("Page info for %s"), $pagename));
+    
+        require_once("lib/Template.php");
+        $i = Template('info', $this);
+        $t = Template('browse', array('CONTENT' => $i));
+    
+        GeneratePage($t, $pagetitle, $revision);
+        flush();
     }
 
     function action_lock () {
