@@ -1,4 +1,4 @@
-<!-- $Id: wiki_transform.php3,v 1.12 2000-07-11 03:59:06 wainstead Exp $ -->
+<!-- $Id: wiki_transform.php3,v 1.13 2000-07-12 18:47:53 dairiki Exp $ -->
 <?
    // expects $pagehash and $html to be set
 
@@ -19,6 +19,10 @@
 
    // Loop over all lines of the page and apply transformation rules
    for ($index = 0; $index < $numlines; $index++) {
+      unset($tokens);
+      unset($replacements);
+      $ntokens = 0;
+      
       $tmpline = $pagehash["content"][$index];
 
       if (!strlen($tmpline) || $tmpline == "\r") {
@@ -47,16 +51,42 @@ your web server it is highly advised that you do not allow this.
       // match anything between brackets except only numbers
       // trying: 
       $numBracketLinks = preg_match_all("/\[.+?\]/", $tmpline, $brktlinks);
+      /* On 12 Jul,2000 Jeff <dairiki@dairiki.org> adds:
+       *
+       * Simple sorting doesnt work, since (in ASCII) '[' comes between
+       * the upper- and lower-case characters.
+       *
+       * Using sort "[[Link] [Link]" will come out wrong, using
+       * rsort "[[link] [link]" will come out wrong.
+       * (An appropriate usort would work.)
+       *
+       * I've added a look-behind assertion to the preg_replace which,
+       * I think, fixes the problem.  I only hope that all PHP versions
+       * support look-behind assertions....
       // sort instead of rsort or "[[link] [link]" will be rendered wrong.
       sort($brktlinks[0]);
       reset($brktlinks[0]);
+       */
 
       for ($i = 0; $i < $numBracketLinks; $i++) {
          $brktlink = preg_quote($brktlinks[0][$i]);
-         $linktoken = "${FieldSeparator}brkt${i}brkt${FieldSeparator}";
-         $tmpline = preg_replace("|$brktlink|",
+         $linktoken = $FieldSeparator . $FieldSeparator . ++$ntokens . $FieldSeparator;
+	 /* PS:
+	  * If you're wondering about the double $FieldSeparator,
+	  * consider what happens to (the admittedly sick):
+	  *   "[Link1] [Link2]1[Link3]"
+	  *
+	  * Answer: without the double field separator, it gets
+	  *  tokenized to "%1% %2%1%3%" (using % to represent $FieldSeparator),
+	  *  which will get munged as soon as '%1%' is substituted with it's
+	  *  final value.
+	  */
+         $tmpline = preg_replace("|(?<!\[)$brktlink|",
                                  $linktoken,
                                  $tmpline);
+
+	 $tokens[] = $linktoken;
+         $replacements[] = ParseAndLink($brktlinks[0][$i]);
       }
 
       //////////////////////////////////////////////////////////
@@ -73,10 +103,13 @@ your web server it is highly advised that you do not allow this.
 
       for ($i = 0; $i < $hasURLs; $i++) {
          $inplaceURL = preg_quote($urls[0][$i]);
-         $URLtoken = "${FieldSeparator}${i}${FieldSeparator}";
+         $URLtoken = $FieldSeparator . $FieldSeparator . ++$ntokens . $FieldSeparator;
          $tmpline = preg_replace("|$inplaceURL|",
                                  $URLtoken,
                                  $tmpline);
+
+	 $tokens[] = $URLtoken;
+         $replacements[] = LinkURL($urls[0][$i]);
       }
 
       // escape HTML metachars
@@ -125,52 +158,25 @@ your web server it is highly advised that you do not allow this.
 	 // all '!WikiName' entries are sorted first
          ksort($hash);
          while (list($realfile, $val) = each($hash)) {
+	    $token = $FieldSeparator . $FieldSeparator . ++$ntokens . $FieldSeparator;
+	    $tmpline = str_replace($realfile, $token, $tmpline);
+	    $tokens[] = $token;
 	    if (strstr($realfile, '!')) {
-	      $tmpline = str_replace($realfile,
-			   "${FieldSeparator}nlnk${FieldSeparator}" .
-			     substr($realfile, 1),
-		 	   $tmpline);
+	       $replacements[] = substr($realfile, 1);
 	    }	       
             elseif (IsWikiPage($dbi, $realfile)) {
-               $tmpline = preg_replace(
-			   "#([^$FieldSeparator]|^)\b$realfile\b#",
-                           "\\1" . LinkExistingWikiWord($realfile),
-                           $tmpline);
+	       $replacements[] = LinkExistingWikiWord($realfile);
             } else {
-               $tmpline = preg_replace(
-			   "#([^$FieldSeparator]|^)\b$realfile\b#",
-                           "\\1" . LinkUnknownWikiWord($realfile),
-                           $tmpline);
+	       $replacements[] = LinkUnknownWikiWord($realfile);
             }
          }
-	 // get rid of placeholders
-	 $tmpline = str_replace("${FieldSeparator}nlnk${FieldSeparator}",
-	    		   "", $tmpline);
       }
 
       ///////////////////////////////////////////////////////
-      // put bracketed links back, linked
-      for ($i = 0; $i < $numBracketLinks; $i++) {
-         // forms: [free style text link]
-         //        [Named link to site|http://c2.com/]
-         //        [mailto:anystylelink@somewhere.com]
-         $brktlink = ParseAndLink($brktlinks[0][$i]);
-         $linktoken = "${FieldSeparator}brkt${i}brkt${FieldSeparator}";
-         $tmpline = preg_replace("|$linktoken|", 
-                                 $brktlink,
-                                 $tmpline);
-      }
-
-      ///////////////////////////////////////////////////////
-      // put URLs back, linked
-      for ($i = 0; $i < $hasURLs; $i++) {
-         $inplaceURL = LinkURL($urls[0][$i]);
-         $URLtoken = "${FieldSeparator}${i}${FieldSeparator}";
-         $tmpline = preg_replace("|$URLtoken|", 
-                                 $inplaceURL,
-                                 $tmpline);
-      }
-
+      // Replace tokens
+      for ($i = 0; $i < $ntokens; $i++)
+	  $tmpline = str_replace($tokens[$i], $replacements[$i], $tmpline);
+      
 
       // match and replace all user-defined links ([1], [2], [3]...)
       preg_match_all("|\[(\d+)\]|", $tmpline, $match);
