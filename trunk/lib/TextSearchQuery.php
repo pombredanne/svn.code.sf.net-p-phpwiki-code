@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.13 2004-11-28 20:42:18 rurban Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.14 2004-11-29 17:55:47 rurban Exp $');
 /**
  * A text search query, converting queries to PCRE or SQL matchers.
  *
@@ -724,6 +724,12 @@ class TextSearchQuery_Lexer {
             // *word
             elseif ($regex & (TSQ_REGEX_AUTO|TSQ_REGEX_POSIX|TSQ_REGEX_PCRE)
                     and preg_match('/^\*([^-()][^()\s]*)\s*/', $buf, $m)) {
+                $val = $m[1];
+                $type = TSQ_TOK_ENDS_WITH;
+            }
+            // word$
+            elseif ($regex & (TSQ_REGEX_AUTO|TSQ_REGEX_POSIX|TSQ_REGEX_PCRE)
+                    and preg_match('/^([^-()][^()\s]*)\$\s*/', $buf, $m)) {
                 $val = $m[1];
                 $type = TSQ_TOK_ENDS_WITH;
             }
