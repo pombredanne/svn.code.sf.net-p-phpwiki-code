@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.88 2004-09-25 18:16:40 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.89 2004-09-26 10:54:42 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -898,7 +898,7 @@ class WikiDB_Page
             if (!empty($notify) and is_array($notify)) {
                 list($emails, $userids) = $this->getPageChangeEmails($notify);
                 if (!empty($emails)) {
-                    if (is_array($GLOBALS['deferredPageChangeNotification'])) {
+                    if (@is_array($GLOBALS['deferredPageChangeNotification'])) {
                         $GLOBALS['deferredPageChangeNotification'][] = array($this->_pagename, $emails, $userids);
                     } else {
                         $this->sendPageChangeNotification($wikitext, $version, $meta, $emails, $userids);
@@ -1990,6 +1990,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.88  2004/09/25 18:16:40  rurban
+// unset more unneeded _cached_html. (Guess this should fix sf.net now)
+//
 // Revision 1.87  2004/09/25 16:25:40  rurban
 // notify on rename and remove (to be improved)
 //
