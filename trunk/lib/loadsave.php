@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.70 2002-09-18 18:34:13 dairiki Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.71 2003-01-03 02:48:05 carstenklapp Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -377,6 +377,36 @@ function SavePage (&$request, $pageinfo, $source, $filename)
     $dbi = $request->getDbh();
     $page = $dbi->getPage($pagename);
 
+    $current = $page->getCurrentRevision();
+    // Try to merge if updated pgsrc contents are different
+    // This whole thing is hackish
+    // TODO: try merge unless:
+    // if (current contents = default contents && pgsrc_version >= pgsrc_version) then just upgrade this pgsrc
+    $needs_merge = false;
+    $merging = false;
+    $overwrite = false;
+    
+    if ($request->getArg('merge')) {
+        $merging = true;
+    }
+    else if ($request->getArg('overwrite')) {
+        $overwrite = true;
+    }
+
+    if ( (! $current->hasDefaultContents())
+        && ($current->getPackedContent() != $content)
+        && ($merging == true) ) {
+        require_once('lib/editpage.php');
+        $request->setArg('pagename', $pagename);
+        $r = $current->getVersion();
+        $request->setArg('revision', $current->getVersion());
+        $p = new LoadFileConflictPageEditor($request);
+        $p->_content = $content;
+        $p->_currentVersion = $r - 1;
+        $p->editPage($saveFailed = true);
+        return; //early return
+    }
+
     foreach ($pagedata as $key => $value) {
         if (!empty($value))
             $page->set($key, $value);
@@ -394,8 +424,24 @@ function SavePage (&$request, $pageinfo, $source, $filename)
         $isnew = true;
     }
     else {
-        if ($current->getPackedContent() == $content
-            && $current->get('author') == $versiondata['author']) {
+        if ( (! $current->hasDefaultContents())
+             && ($current->getPackedContent() != $content) ) {
+            if ($overwrite) {
+                $mesg->pushContent(' ',
+                                fmt("has edit conflicts but overwriting anyway"
+                                    ));
+                $skip = false;
+            }
+            else {
+                $mesg->pushContent(' ',
+                                fmt("has edit conflicts - skipped"
+                                    ));
+                $needs_merge = true; // hackish
+                $skip = true;
+            }
+        }
+        else if ($current->getPackedContent() == $content
+                 && $current->get('author') == $versiondata['author']) {
             $mesg->pushContent(' ',
                                fmt("is identical to current version %d - skipped",
                                    $current->getVersion()));
@@ -412,6 +458,24 @@ function SavePage (&$request, $pageinfo, $source, $filename)
         $mesg->pushContent(' ', fmt("- saved to database as version %d",
                                     $new->getVersion()));
     }
+    if ($needs_merge) {
+        $f = $source;
+        // hackish, $source contains needed path+filename
+        $f = str_replace(sprintf(_("MIME file %s"), ''), '', $f);
+        $f = str_replace(sprintf(_("Serialized file %s"), ''), '', $f);
+        $f = str_replace(sprintf(_("plain file %s"), ''), '', $f);
+        global $Theme;
+        $meb = $Theme->makeButton($text = sprintf(_("Merge and edit %s"), $pagename),
+                                $url = _("PhpWikiAdministration")
+                                        . "?action=loadfile&source=$f&merge=1",
+                                $class = false);
+        $owb = $Theme->makeButton($text = sprintf(_("Load and overwrite %s"), $pagename),
+                                $url = _("PhpWikiAdministration")
+                                        . "?action=loadfile&source=$f&overwrite=1",
+                                $class = false);
+        $mesg->pushContent(' ', $meb, " ", $owb);
+    }
+
     if ($skip)
         PrintXML(HTML::dt(HTML::em(WikiLink($pagename))), $mesg);
     else
@@ -676,7 +740,10 @@ function LoadAny (&$request, $file_or_dir, $files = false, $exclude = false)
             $type = 'dir';
     }
 
-    if ($type == 'dir') {
+    if (! $type) {
+        $request->finish(fmt("Unable to load: %s", $file_or_dir));
+    }
+    else if ($type == 'dir') {
         LoadDir($request, $file_or_dir, $files, $exclude);
     }
     else if ($type != 'file' && !preg_match('/^(http|ftp):/', $file_or_dir))
@@ -752,6 +819,10 @@ function LoadPostFile (&$request)
     echo "</dl>\n";
     EndLoadDump($request);
 }
+
+/**
+ $Log: not supported by cvs2svn $
+ */
 
 // For emacs users
 // Local Variables:
