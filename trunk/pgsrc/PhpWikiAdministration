@@ -1,6 +1,6 @@
 Date: Sun, 27 Jan 2002 17:28:55 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: PhpWikiAdministration,v 1.14 2002-01-27 22:52:21 carstenklapp Exp $
+X-Rcs-Id: $Id: PhpWikiAdministration,v 1.15 2002-02-07 21:17:26 dairiki Exp $
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiAdministration;
   flags=PAGE_LOCKED;
@@ -9,15 +9,6 @@ Content-Transfer-Encoding: binary
 
 __Note__: Most of the actions on this page require administrative privileges.
 They won't work unless you have set an admin username and password in the PhpWiki config file.
-
------------
-! Log In
-
-__[Log In | phpwiki:?action=login]__
-
-This allows you to login.
-While you are logged in you will be able to ''lock'', ''unlock'' and ''delete'' pages.
-You will also be able to edit ''locked'' pages.
 
 ----------
 !! Cleanup
@@ -46,7 +37,7 @@ otherwise they will just be stored.
 
 Here you can dump pages of your Wiki into a directory of your choice.
 
-[ Dump Pages | phpwiki:?action=dumpserial&directory=(/tmp/wikidump) ]
+<?plugin WikiForm action=dumpserial?>
 
 The most recent version of each page will written out to the
 directory, one page per file.
@@ -66,7 +57,7 @@ the pages from the directory (or zip file) which you don't want to load.
 Here you can upload ZIP archives, or individual files from
 your (client) machine.
 
-[ Upload | phpwiki:?action=upload&file=50()upload ]
+<?plugin WikiForm action=upload?>
 
 ! Load File
 
@@ -74,14 +65,13 @@ Here you can load ZIP archives, individual files or entire directories.
 The file or directory must be local to the http server.
 You can also use this form to load from an http: or ftp: URL.
 
-[ Load | phpwiki:?action=loadfile&source=50(/tmp/wikidump) ]
+<?plugin WikiForm action=loadfile?>
 
 -----------
 !! Format of the files
 
-Currently the pages are stored, one per
-file, as MIME ([ RFC2045 | http://www.faqs.org/rfcs/rfc2045.html ]) e-mail
-([ RFC822 | http://www.faqs.org/rfcs/rfc822.html ]) messages.
+Currently the pages are stored, one per file, as MIME (RFC:2045)
+e-mail (RFC:822) messages.
 The content-type ''application/x-phpwiki'' is used, and page meta-data
 is encoded in the content-type parameters.
 (If the file contains several versions of a page, it will have
