@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.29 2002-02-03 01:33:02 carstenklapp Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.30 2002-02-03 19:04:42 carstenklapp Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -180,7 +180,11 @@ class Theme {
     }
 
     function formatDate ($time_t) {
-        return strftime($this->_dateFormat, $time_t);
+        return HTML(strftime($this->_dateFormat,
+                             $time_t + PrefTimezoneOffset()),
+                    HTML::small("*"));
+        // The asterisk is temporary, for debugging it indicates a
+        // time has been converted to the user's local time.
     }
 
     function setDateTimeFormat ($fs) {
@@ -188,16 +192,20 @@ class Theme {
     }
 
     function formatDateTime ($time_t) {
-        return strftime($this->_dateTimeFormat, $time_t);
+        return HTML(strftime($this->_dateTimeFormat,
+                             $time_t + PrefTimezoneOffset()),
+                    HTML::small("*"));
+        // The asterisk is temporary, for debugging it indicates a
+        // time has been converted to the user's local time.
     }
 
     
     function formatTime ($time_t) {
         //FIXME: make 24-hour mode configurable?
         $offset_time = $time_t + PrefTimezoneOffset();
-        return preg_replace('/^0/', ' ',
-                            strtolower(strftime("%I:%M %p", $offset_time)))
-            . "*";
+        return HTML(preg_replace('/^0/', ' ',
+                            strtolower(strftime("%I:%M %p", $offset_time))),
+                    HTML::small("*"));
         // The asterisk is temporary, for debugging it indicates a
         // time has been converted to the user's local time.
     }
