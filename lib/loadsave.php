@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.29 2002-01-22 03:17:47 dairiki Exp $');
+rcs_id('$Id: loadsave.php,v 1.30 2002-01-22 17:01:39 dairiki Exp $');
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
 
@@ -407,12 +407,16 @@ function IsZipFile ($filename_or_fd)
 
 function LoadAny ($dbi, $file_or_dir, $files = false, $exclude = false)
 {
-    // FIXME: This is a partial workaround for sf bug #501145
-
-    if (substr_count($file_or_dir,"/") < 1) {
-        $type = filetype(rawurlencode($file_or_dir));
-    } else {
-        $type = filetype($file_or_dir);
+    $type = filetype($file_or_dir);
+    if ($type == 'link') {
+        // For symbolic links, use stat() to determine
+        // the type of the underlying file.
+        list(,,$mode) = stat($file_or_dir);
+        $type = ($mode >> 12) & 017;
+        if ($type == 010)
+            $type = 'file';
+        elseif ($type == 004)
+            $type = 'dir';
     }
     
     if ($type == 'dir') {
