@@ -12,13 +12,17 @@ class DumpHtml extends PHPUnit_TestCase {
        $this->PHPUnit_TestCase($name);
     }
 
+    function testRateIt() {
+        global $request;
+        $request->setArg('directory','.dumphtml');
+        $request->setArg('pages','RateIt');
+        DumpHtmlToDir($request);
+    }
+
     function testDumpHtml() {
         global $request;
         $request->setArg('directory','.dumphtml');
-
         DumpHtmlToDir($request);
-        
-        //$this->assertEquals(2, $pl->getTotal(), "count 2");
     }
 }
 

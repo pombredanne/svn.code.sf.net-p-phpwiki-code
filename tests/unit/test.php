@@ -204,25 +204,23 @@ $alltests = array('InlineParserTest','HtmlParserTest','PageListTest','ListPagesT
 			      'SetupWiki','DumpHtml','AllPagesTest','AllUsersTest','OrphanedPagesTest');
 if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']) and !empty($HTTP_GET_VARS['tests']))
     $argv = explode(',',$HTTP_GET_VARS['tests']);
+if (!empty($argv) and preg_match("/test\.php$/", $argv[0]))
+    array_shift($argv);
 if (!empty($argv)) {
-	if (count($argv) == 1 and preg_match("/test\.php$/", $argv[0]))
-	    ;
-	else {
-	    $runtests = array();
-	    print_r($argv);
-	    foreach ($argv as $test) {
-	        if (in_array($test,$alltests))
-                $runtests[] = $test;
-	    }
-	    $alltests = $runtests;
-	}
+    $runtests = array();
+    foreach ($argv as $test) {
+        if (in_array($test,$alltests))
+            $runtests[] = $test;
+    }
+    $alltests = $runtests;
+    print_r($runtests);
 }
 
 foreach ($alltests as $test) {
-	if (file_exists(dirname(__FILE__).'/lib/'.$test.'.php'))
-	    require_once dirname(__FILE__).'/lib/'.$test.'.php';
-	else    
-	    require_once dirname(__FILE__).'/lib/plugin/'.$test.'.php';
+    if (file_exists(dirname(__FILE__).'/lib/'.$test.'.php'))
+        require_once dirname(__FILE__).'/lib/'.$test.'.php';
+    else    
+        require_once dirname(__FILE__).'/lib/plugin/'.$test.'.php';
     $suite->addTest( new PHPUnit_TestSuite($test) );
 }
 $result = PHPUnit::run($suite); 
