@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.2 2001-05-21 17:28:44 dairiki Exp $
+# $Id: Makefile,v 1.3 2001-11-29 03:04:36 dairiki Exp $
 #
 # locale/Makefile
 #
@@ -12,7 +12,7 @@ PO_FILES = $(patsubst %, po/%.po, ${ALL_LINGUAS})
 MO_FILES = $(patsubst %, %/LC_MESSAGES/phpwiki.mo, ${ALL_LINGUAS})
 PHP_FILES = ${MO_FILES:.mo=.php}
 
-PHP_SRC := $(wildcard ../lib/*.php ../admin/*.php)
+PHP_SRC := $(wildcard ../lib/*.php ../admin/*.php ../templates/*.html)
 
 .PHONY: all po mo
 
@@ -21,12 +21,12 @@ po 	: ${PO_FILES}
 mo	: ${MO_FILES} ${PHP_FILES}
 
 po/phpwiki.pot : ${PHP_SRC}
-	xgettext -L C++ -o $@ $^
+	xgettext -L C++ -k_ -o $@ $^
 
 po/%.po : po/phpwiki.pot
 	test -f $@ || touch $@
-	mv -f $@ $@~
-	msgmerge -o $@ $@~ $^
+	cp -f $@ $@~
+	msgmerge -o $@.new $@~ $^ && mv -f $@.new $@
 
 %/LC_MESSAGES/phpwiki.mo : po/%.po
 	mkdir -p $*/LC_MESSAGES
