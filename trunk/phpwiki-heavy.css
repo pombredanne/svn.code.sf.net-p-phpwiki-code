@@ -1,5 +1,5 @@
 /* 
- * $Id: phpwiki-heavy.css,v 1.6 2002-01-16 18:12:34 dairiki Exp $
+ * $Id: phpwiki-heavy.css,v 1.7 2002-01-23 03:24:01 carstenklapp Exp $
  *
  * phpwiki-heavy.css
  *
@@ -19,10 +19,6 @@ div.wikitext { width: auto; }
 b .wiki, strong .wiki,
 b .wikipage, strong .wikipage
 { font-size: larger; }
-
-/* This renders the ? invisible in OW4 */
-.wikiunknown a, .named-wikiunknown
-{ color: white; background-color: #600; }
 
 /* Make wikiaction links look like buttons */ 
 a.wikiaction, a.wikiadmin, input.button
