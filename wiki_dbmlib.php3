@@ -1,4 +1,4 @@
-<?  rcs_id('$Id: wiki_dbmlib.php3,v 1.10.2.1 2000-07-29 00:36:45 dairiki Exp $');
+<?  rcs_id('$Id: wiki_dbmlib.php3,v 1.10.2.2 2000-07-30 22:05:38 dairiki Exp $');
 
 class WikiDBMPage extends WikiPage
 {
@@ -343,6 +343,7 @@ class WikiDBMDataBase extends WikiDataBase
     for ($page = dbmfirstkey($db); $page; $page = dbmnextkey($db, $page))
 	$pages[] = $page;
     $this->_npages = sizeof($pages);
+    sort($pages);
     return new WikiDBMPageIterator($this, $pages);
   }
 }
