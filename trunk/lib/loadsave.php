@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.50 2002-01-28 16:45:18 carstenklapp Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.51 2002-01-28 18:49:08 dairiki Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -18,8 +18,8 @@ function EndLoadDump(&$request)
     global $Theme;
     $pagelink = $Theme->LinkExistingWikiWord($request->getArg('pagename'));
     
-    PrintXML(array(HTML::p(HTML::strong(_("Complete."))),
-                   HTML::p(fmt("Return to %s", $pagelink))));
+    PrintXML(HTML::p(HTML::strong(_("Complete."))),
+             HTML::p(fmt("Return to %s", $pagelink)));
     echo "</body></html>\n";
 }
 
@@ -169,11 +169,11 @@ function DumpToDir (&$request)
         
         $filename = FilenameForPage($page->getName());
         
-        $msg = array(HTML::br(), $page->getName(), ' ... ');
+        $msg = HTML(HTML::br(), $page->getName(), ' ... ');
         
         if($page->getName() != $filename) {
-            $msg[] = HTML::small(fmt("saved as %s", $filename));
-            $msg[] = " ... ";
+            $msg->pushContent(HTML::small(fmt("saved as %s", $filename)),
+                              " ... ");
         }
         
         if ($request->getArg('include') == 'all')
@@ -182,13 +182,13 @@ function DumpToDir (&$request)
             $data = MailifyPage($page);
 
         if ( !($fd = fopen("$directory/$filename", "w")) ) {
-            $msg[] = HTML::strong(fmt("couldn't open file '%s' for writing",
-                                      "$directory/$filename"));
+            $msg->pushContent(HTML::strong(fmt("couldn't open file '%s' for writing",
+                                               "$directory/$filename")));
             $request->finish($msg);
         }
         
         $num = fwrite($fd, $data, strlen($data));
-        $msg[] = HTML::small(fmt("%s bytes written", $num));
+        $msg->pushContent(HTML::small(fmt("%s bytes written", $num)));
         PrintXML($msg);
         
         flush();
@@ -263,7 +263,7 @@ function SavePage (&$request, $pageinfo, $source, $filename)
     global $Theme;
     $pagelink = $Theme->LinkExistingWikiWord($pagename);
     
-    PrintXML(array(HTML::dt($pagelink), $mesg));
+    PrintXML(HTML::dt($pagelink), $mesg);
     flush();
 }
 
@@ -380,9 +380,8 @@ function LoadZip (&$request, $zipfile, $files = false, $exclude = false) {
         $fn = basename("/dummy/" . $fn);
         if ( ($files && !in_array($fn, $files)) || ($exclude && in_array($fn, $exclude)) ) {
 
-            PrintXML(array(HTML::dt($Theme->LinkExistingWikiWord($fn)),
-                           HTML::dd(_("Skipping"))));
-           
+            PrintXML(HTML::dt($Theme->LinkExistingWikiWord($fn)),
+                     HTML::dd(_("Skipping")));
             continue;
         }
        

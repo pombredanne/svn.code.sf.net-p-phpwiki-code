@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.39 2002-01-28 18:44:24 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.40 2002-01-28 18:49:08 dairiki Exp $');
 /**
  */
 
@@ -183,9 +183,9 @@ extends _RecentChanges_Formatter
     }
 
     function format ($changes) {
-        $html[] = HTML::h2(false, $this->title());
+        $html = HTML(HTML::h2(false, $this->title()));
         if (($desc = $this->description()))
-            $html[] = HTML::p(false, $desc);
+            $html->pushContent(HTML::p(false, $desc));
         
         $last_date = '';
         $lines = false;
@@ -193,15 +193,15 @@ extends _RecentChanges_Formatter
         while ($rev = $changes->next()) {
             if (($date = $this->date($rev)) != $last_date) {
                 if ($lines)
-                    $html[] = $lines;
-                $html[] = HTML::h3($date);
+                    $html->pushContent($lines);
+                $html->pushContent(HTML::h3($date));
                 $lines = HTML::ul();
                 $last_date = $date;
             }
             $lines->pushContent($this->format_revision($rev));
         }
         if ($lines)
-            $html[] = $lines;
+            $html->pushContent($lines);
         return $html;
     }
 
@@ -501,12 +501,12 @@ class buttonSet {
     function buttonSet() {
         $this->caption = "";
         $this->content = "";
-        $this->_b = array();
+        $this->_b = HTML();
     }
 
     function addButton($label, $url, $action) {
         global $Theme;
-        $this->_b[] = $Theme->makeButton($label, $url, $action);
+        $this->_b->pushContent($Theme->makeButton($label, $url, $action));
     }
 
     function getContent() {

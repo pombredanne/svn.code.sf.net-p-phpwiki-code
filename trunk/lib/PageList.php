@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.26 2002-01-27 04:23:26 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.27 2002-01-28 18:49:08 dairiki Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -316,18 +316,16 @@ class PageList {
             $list->pushContent(HTML::li(array('class' => $class),
                                         LinkWikiWord($page_handle->getName())));
         }
-        if ($caption)
-            $html[] = HTML::p($caption);
-        $html[] = $list;
-        return $html;
+
+        return $caption ? HTML(HTML::p($caption), $list) : $list;
     }
 
     function _emptyList($caption) {
-        $html = array();
+        $html = HTML();
         if ($caption)
-            $html[] = HTML::p($caption);
+            $html->pushContent(HTML::p($caption));
         if ($this->_messageIfEmpty)
-            $html[] = HTML::blockquote(HTML::p($this->_messageIfEmpty));
+            $html->pushContent(HTML::blockquote(HTML::p($this->_messageIfEmpty)));
         return $html;
     }
 };

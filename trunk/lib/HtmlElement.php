@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.12 2002-01-26 01:51:13 dairiki Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.13 2002-01-28 18:49:08 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -52,13 +52,11 @@ class HtmlElement extends XmlElement
         $this->setAttr('onmouseout', "window.status='';return true;");
     }
 
-    function _emptyTag () {
-        if (!$this->_tag)
-            return '';
-        elseif (($this->_properties & HTMLTAG_EMPTY) == 0)
-            return $this->_startTag() . "</$this->_tag>";
-
-        return substr($this->_startTag(), 0, -1) . " />";
+    function emptyTag () {
+        if (($this->_properties & HTMLTAG_EMPTY) == 0)
+            return $this->startTag() . "</$this->_tag>";
+        
+        return substr($this->startTag(), 0, -1) . " />";
     }
 
     function hasInlineContent () {
@@ -70,11 +68,8 @@ class HtmlElement extends XmlElement
     }
 };
 
-function HTML ($tag /* , ... */) {
-    $el = new HtmlElement($tag);
-    if (func_num_args() > 1)
-        $el->_init(func_get_args());
-    return $el;
+function HTML (/* $content, ... */) {
+    return new XmlContent(func_get_args());
 }
 
 define('NBSP', "\xA0");         // iso-8859-x non-breaking space.

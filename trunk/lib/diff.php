@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.31 2002-01-24 00:45:28 dairiki Exp $');
+rcs_id('$Id: diff.php,v 1.32 2002-01-28 18:49:08 dairiki Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -21,9 +21,11 @@ class _HWLDF_WordAccumulator {
 
     function _flushGroup ($new_tag) {
         if ($this->_group !== false) {
-            $this->_line[] = ( $this->_tag
-                               ? new HtmlElement($this->_tag, $this->_group)
-                               : $this->_group );
+            if (!$this->_line)
+                $this->_line = HTML();
+            $this->_line->pushContent( $this->_tag
+                                       ? new HtmlElement($this->_tag, $this->_group)
+                                       : $this->_group );
         }
         $this->_group = '';
         $this->_tag = $new_tag;
@@ -31,9 +33,9 @@ class _HWLDF_WordAccumulator {
     
     function _flushLine ($new_tag) {
         $this->_flushGroup($new_tag);
-        if ($this->_line !== false)
+        if ($this->_line)
             $this->_lines[] = $this->_line;
-        $this->_line = array();
+        $this->_line = HTML();
     }
                 
     function addWords ($words, $tag = '') {
@@ -142,10 +144,10 @@ class HtmlUnifiedDiffFormatter extends UnifiedDiffFormatter
     }
 
     function _lines($lines, $class, $prefix = NBSP, $elem = false) {
-        
         foreach ($lines as $line) {
             if ($elem)
                 $line = new HtmlElement($elem, $line);
+            
             $this->_block->pushContent(HTML::div(array('class' => $class),
                                                  HTML::tt(array('class' => 'prefix'),
                                                           $prefix),
@@ -310,9 +312,9 @@ function showDiff (&$request) {
     $old_link = HTML::a(array('href' => WikiURL($old ? $old : $page)),
                         $old_version);
     $page_link = $Theme->LinkExistingWikiWord($page->getName());
-    
-    $html[] = HTML::p(fmt("Differences between %s and %s of %s.",
-                          $new_link, $old_link, $page_link));
+
+    $html = HTML(HTML::p(fmt("Differences between %s and %s of %s.",
+                             $new_link, $old_link, $page_link)));
 
     $otherdiffs = HTML::p(_("Other diffs:"));
     $label = array('major' => _("Previous Major Revision"),
@@ -330,21 +332,21 @@ function showDiff (&$request) {
                                                'class' => 'wikiaction'),
                                          $label[$other]));
     }
-    $html[] = $otherdiffs;
+    $html->pushContent($otherdiffs);
         
             
     if ($old and $old->getVersion() == 0)
         $old = false;
     
-    $html[] = HTML::Table(PageInfoRow(_("Newer page:"), $new),
-                          PageInfoRow(_("Older page:"), $old));
+    $html->pushContent(HTML::Table(PageInfoRow(_("Newer page:"), $new),
+                                   PageInfoRow(_("Older page:"), $old)));
     
     if ($new && $old) {
         $diff = new Diff($old->getContent(), $new->getContent());
         
         if ($diff->isEmpty()) {
-            $html[] = HTML::hr();
-            $html[] = HTML::p('[', _("Versions are identical"), ']');
+            $html->pushContent(HTML::hr(),
+                               HTML::p('[', _("Versions are identical"), ']'));
         }
         else {
             // New CSS formatted unified diffs (ugly in NS4).
@@ -352,7 +354,7 @@ function showDiff (&$request) {
 
             // Use this for old table-formatted diffs.
             //$fmt = new TableUnifiedDiffFormatter;
-            $html[] = $fmt->format($diff);
+            $html->pushContent($fmt->format($diff));
         }
     }
     

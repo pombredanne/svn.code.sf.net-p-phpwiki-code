@@ -1,7 +1,7 @@
 <?php
 // display.php: fetch page or get default content
 // calls transform.php for actual transformation of wiki markup to HTML
-rcs_id('$Id: display.php,v 1.21 2002-01-28 01:01:26 dairiki Exp $');
+rcs_id('$Id: display.php,v 1.22 2002-01-28 18:49:08 dairiki Exp $');
 
 require_once('lib/Template.php');
 //require_once('lib/transform.php');
@@ -55,8 +55,8 @@ function actionPage(&$request, $actionpage) {
     $view = $actionpage->getCurrentRevision();
 
     $splitname = split_pagename($pagename);
-    $pagetitle = array($actionpage->getName(), ": ",
-                       $Theme->linkExistingWikiWord($pagename, false, $version));
+    $pagetitle = HTML($actionpage->getName(), ": ",
+                      $Theme->linkExistingWikiWord($pagename, false, $version));
 
     $template = Template('browse', array('CONTENT' => TransformRevision($view)));
     

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.37 2002-01-26 03:30:23 dairiki Exp $');
+<?php rcs_id('$Id: transform.php,v 1.38 2002-01-28 18:49:08 dairiki Exp $');
 require_once('lib/WikiPlugin.php');
 require_once('lib/HtmlElement.php');
 
@@ -422,20 +422,20 @@ function wtt_footnotes($match, &$trfrm)
    // FIXME: should this set HTML mode?
    $ftnt = trim(substr($match,1,-1)) + 0;
    $fntext = "[$ftnt]";
-   $html[] = HTML::br();
+   $html = HTML(HTML::br());
    
    $fnlist = $trfrm->user_data['footnotes'][$ftnt];
    if (!is_array($fnlist)) {
-       $html[] = $fntext;
+       $html->pushContent($fntext);
    }
    else {
        $trfrm->user_data['footnotes'][$ftnt] = 'footnote_seen';
        
        while (list($k, $anchor) = each($fnlist)) {
-           $html[] = HTML::a(array("name" => "footnote-$ftnt",
-                                   "href" => "#$anchor",
-                                   "class" => "footnote-rev"),
-                             $fntext);
+           $html->pushContent(HTML::a(array("name" => "footnote-$ftnt",
+                                            "href" => "#$anchor",
+                                            "class" => "footnote-rev"),
+                                      $fntext));
            $fntext = '+';
        }
    }
