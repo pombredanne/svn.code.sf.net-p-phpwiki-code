@@ -1,8 +1,7 @@
-<?php rcs_id('$Id: Template.php,v 1.31 2002-01-25 00:32:39 dairiki Exp $');
+<?php rcs_id('$Id: Template.php,v 1.32 2002-01-28 01:01:26 dairiki Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
-require_once("lib/ButtonFactory.php");
 
 
 /** An HTML template.
@@ -108,7 +107,6 @@ class Template
         $page = &$request->getPage();
 
         global $Theme, $RCS_IDS;
-        $ButtonFactory = new ButtonFactory($request);
         
         //$this->_dump_template();
 

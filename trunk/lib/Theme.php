@@ -1,8 +1,6 @@
-<?php rcs_id('$Id: Theme.php,v 1.23 2002-01-24 01:01:33 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.24 2002-01-28 01:01:26 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
-require_once('lib/ButtonFactory.php');
-
 
 class Theme {
     function Theme ($theme_name = 'default') {
@@ -289,6 +287,122 @@ class Theme {
             return new SubmitButton($text, $name, $class);
     }
 
+    /**
+     * Make button to perform action.
+     *
+     * This constructs a button which performs an action on the
+     * currently selected version of the current page.  (Or another
+     * page or version, if you want...)
+     *
+     * @param $action string The action to perform (e.g. 'edit', 'lock').
+     * This can also be the name of an "action page" like 'LikePages'.
+     *
+     * @param $label string Textual label for the button.  If left empty,
+     * a suitable name will be guessed.
+     *
+     * @param $page_or_rev mixed  The page to link to.  This can be
+     * given as a string (the page name), a WikiDB_Page object, or as
+     * WikiDB_PageRevision object.  If given as a WikiDB_PageRevision
+     * object, the button will link to a specific version of the
+     * designated page, otherwise the button links to the most recent
+     * version of the page.
+     *
+     * @return object A Button object.
+     */
+    function makeActionButton ($action, $label = false, $page_or_rev = false) {
+        extract($this->_get_name_and_rev($page_or_rev));
+
+        if (is_array($action)) {
+            $attr = $action;
+            $action = isset($attr['action']) ? $attr['action'] : 'browse';
+        }
+        else
+            $attr['action'] = $action;
+
+        $class = is_safe_action($action) ? 'wikiaction' : 'wikiadmin';
+        if (!$label)
+            $label = $this->_labelForAction($action);
+
+        if ($version)
+            $attr['version'] = $version;
+
+        if ($action == 'browse')
+            unset($attr['action']);
+
+        return $this->makeButton($label, WikiURL($pagename, $attr), $class);
+    }
+
+    /**
+     * Make a "button" which links to a wiki-page.
+     *
+     * These are really just regular WikiLinks, possibly
+     * disguised (e.g. behind an image button) by the theme.
+     *
+     * This method should probably only be used for links
+     * which appear in page navigation bars, or similar places.
+     *
+     * Use linkExistingWikiWord, or LinkWikiWord for normal links.
+     *
+     * @param $page_or_rev mixed The page to link to.  This can be
+     * given as a string (the page name), a WikiDB_Page object, or as
+     * WikiDB_PageRevision object.  If given as a WikiDB_PageRevision
+     * object, the button will link to a specific version of the
+     * designated page, otherwise the button links to the most recent
+     * version of the page.
+     *
+     * @return object A Button object.
+     */
+    function makeLinkButton ($page_or_rev) {
+        extract($this->_get_name_and_rev($page_or_rev));
+        
+        $args = $version ? array('version' => $version) : false;
+        
+        return $this->makeButton($pagename, WikiURL($pagename, $args), 'wiki');
+    }
+
+    function _get_name_and_rev ($page_or_rev) {
+        $version = false;
+        
+        if (empty($page_or_rev)) {
+            global $request;
+            $pagename = $request->getArg("pagename");
+            $version = $request->getArg("version");
+        }
+        elseif (is_object($page_or_rev)) {
+            if (isa($page_or_rev, 'WikiDB_PageRevision')) {
+                $rev = $page_or_rev;
+                $page = $rev->getPage();
+                $version = $rev->getVersion();
+            }
+            else {
+                $page = $page_or_rev;
+            }
+            $pagename = $page->getName();
+        }
+        else {
+            $pagename = (string) $page_or_rev;
+        }
+        return compact('pagename', 'version');
+    }
+
+    function _labelForAction ($action) {
+        switch ($action) {
+        case 'edit':	return _("Edit");
+        case 'diff':	return _("Diff");
+        case 'logout':	return _("Sign Out");
+        case 'login':	return _("Sign In");
+        case 'lock':	return _("Lock Page");
+        case 'unlock':	return _("Unlock Page");
+        case 'remove':	return _("Remove Page");
+        default:
+            // I don't think the rest of these actually get used.
+            // 'setprefs'
+            // 'upload' 'dumpserial' 'loadfile' 'zip'
+            // 'save' 'browse'
+            return ucfirst($action);
+        }
+    }
+ 
     //----------------------------------------------------------------
     var $_buttonSeparator = ' | ';
     
@@ -300,7 +414,7 @@ class Theme {
         return $this->_buttonSeparator;
     }
 
-    
+
     ////////////////////////////////////////////////////////////////
     //
     // CSS
@@ -344,6 +458,103 @@ class Theme {
     }
 };
 
+
+/**
+ * A class representing a clickable "button".
+ *
+ * In it's simplest (default) form, a "button" is just a link associated
+ * with some sort of wiki-action.
+ */
+class Button extends HtmlElement {
+    /** Constructor
+     *
+     * @param $text string The text for the button.
+     * @param $url string The url (href) for the button.
+     * @param $class string The CSS class for the button.
+     */
+    function Button ($text, $url, $class = false) {
+        $this->HtmlElement('a', array('href' => $url));
+        if ($class)
+            $this->setAttr('class', $class);
+        $this->pushContent($text);
+    }
+
+};
+
+
+/**
+ * A clickable image button.
+ */
+class ImageButton extends Button {
+    /** Constructor
+     *
+     * @param $text string The text for the button.
+     * @param $url string The url (href) for the button.
+     * @param $class string The CSS class for the button.
+     * @param $img_url string URL for button's image.
+     * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
+     */
+    function ImageButton ($text, $url, $class, $img_url, $img_attr = false) {
+        $this->HtmlElement('a', array('href' => $url));
+        if ($class)
+            $this->setAttr('class', $class);
+ 
+        if (!is_array($img_attr))
+            $img_attr = array();
+        $img_attr['src'] = $img_url;
+        $img_attr['alt'] = $text;
+        $img_attr['class'] = 'wiki-button';
+        $img_attr['border'] = 0;
+        $this->pushContent(HTML::img($img_attr));
+    }
+};
+
+/**
+ * A class representing a form <samp>submit</samp> button.
+ */
+class SubmitButton extends HtmlElement {
+    /** Constructor
+     *
+     * @param $text string The text for the button.
+     * @param $name string The name of the form field.
+     * @param $class string The CSS class for the button.
+     */
+    function SubmitButton ($text, $name = false, $class = false) {
+        $this->HtmlElement('input', array('type' => 'submit',
+                                          'value' => $text));
+        if ($name)
+            $this->setAttr('name', $name);
+        if ($class)
+            $this->setAttr('class', $class);
+    }
+
+};
+
+
+/**
+ * A class representing an image form <samp>submit</samp> button.
+ */
+class SubmitImageButton extends SubmitButton {
+    /** Constructor
+     *
+     * @param $text string The text for the button.
+     * @param $name string The name of the form field.
+     * @param $class string The CSS class for the button.
+     * @param $img_url string URL for button's image.
+     * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
+     */
+    function SubmitImageButton ($text, $name = false, $class = false, $img_url) {
+        $this->HtmlElement('input', array('type' => 'image',
+                                          'src' => $img_url,
+                                          'value' => $text,
+                                          'alt' => $text));
+        if ($name)
+            $this->setAttr('name', $name);
+        if ($class)
+            $this->setAttr('class', $class);
+    }
+
+};
 
 // (c-file-style: "gnu")
 // Local Variables:

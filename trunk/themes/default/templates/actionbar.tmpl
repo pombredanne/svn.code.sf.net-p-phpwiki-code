@@ -1,21 +1,19 @@
 <?php // -*-html-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.6 2002-01-24 00:45:28 dairiki Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.7 2002-01-28 01:01:27 dairiki Exp $ -->
 <?php
-  $BF = &$ButtonFactory;
-
   if (!$page->get('locked') || $user->isAdmin())
-      $EditB = $BF->makeActionButton("edit",
+      $EditB = $Theme->makeActionButton("edit",
                                      $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
   else
-      $EditB = $BF->makeActionButton("edit", _("View Source"));
+      $EditB = $Theme->makeActionButton("edit", _("View Source"));
 
-  $LockPageB = $BF->makeActionButton($page->get('locked') ? 'unlock' : 'lock');
-  $RemovePageB = $BF->makeActionButton('remove');
+  $LockPageB = $Theme->makeActionButton($page->get('locked') ? 'unlock' : 'lock');
+  $RemovePageB = $Theme->makeActionButton('remove');
 
-  $PageHistoryB = $BF->makeActionPageButton(_("PageHistory"));
-  $DiffB = $BF->makeActionButton(array('action' => 'diff', 'previous' => 'major'));
+  $PageHistoryB = $Theme->makeActionButton(_("PageHistory"));
+  $DiffB = $Theme->makeActionButton(array('action' => 'diff', 'previous' => 'major'));
 
-  $DebugInfoB = $BF->makeActionPageButton(_("DebugInfo"));
+  $DebugInfoB = $Theme->makeActionButton(_("DebugInfo"));
 
   $Sep = $Theme->getButtonSeparator();
 ?>

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageHistory.php,v 1.10 2002-01-23 05:13:38 carstenklapp Exp $');
+rcs_id('$Id: PageHistory.php,v 1.11 2002-01-28 01:01:27 dairiki Exp $');
 /**
  */
 require_once('lib/plugin/RecentChanges.php');
@@ -83,15 +83,12 @@ extends _RecentChanges_HtmlFormatter
 
     function description() {
         // Doesn't work (PHP bug?): $desc = parent::description() . "\n";
-        $desc[] = _RecentChanges_HtmlFormatter::description() . "\n";
-
-        $desc[] = $this->_javascript(sprintf('document.write("%s");',
-                                             _("Check any two boxes to compare revisions.")));
         $button = HTML::input(array('type'  => 'submit',
                                     'value' => _("compare revisions")));
-        $desc[] = HTML::noscript(fmt("Check any two boxes then %s.", $button));
-
-        return $desc;
+        return array(_RecentChanges_HtmlFormatter::description(), "\n",
+                     $this->_javascript(sprintf('document.write("%s");',
+                                                _("Check any two boxes to compare revisions."))),
+                     HTML::noscript(fmt("Check any two boxes then %s.", $button)));
     }
 
 
@@ -212,7 +209,7 @@ extends WikiPlugin_RecentChanges
                      'show_minor'	=> true,
                      'show_major'	=> true,
                      'limit'		=> false,
-                     'page'		=> false,
+                     'page'		=> '[pagename]',
                      'format'		=> false);
     }
 

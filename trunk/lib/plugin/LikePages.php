@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: LikePages.php,v 1.12 2002-01-27 04:23:26 carstenklapp Exp $');
+rcs_id('$Id: LikePages.php,v 1.13 2002-01-28 01:01:27 dairiki Exp $');
 
 require_once('lib/TextSearchQuery.php');
 require_once('lib/PageList.php');
@@ -19,7 +19,7 @@ extends WikiPlugin
     
     function getDefaultArguments() {
         // FIXME: how to exclude multiple pages?
-        return array('page'	=> false,
+        return array('page'	=> '[pagename]',
                      'prefix'	=> false,
                      'suffix'	=> false,
                      'exclude'	=> false,

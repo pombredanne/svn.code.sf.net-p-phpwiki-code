@@ -1,10 +1,11 @@
 <?php
 // display.php: fetch page or get default content
 // calls transform.php for actual transformation of wiki markup to HTML
-rcs_id('$Id: display.php,v 1.20 2002-01-26 01:51:13 dairiki Exp $');
+rcs_id('$Id: display.php,v 1.21 2002-01-28 01:01:26 dairiki Exp $');
 
 require_once('lib/Template.php');
-require_once('lib/transform.php');
+//require_once('lib/transform.php');
+require_once('lib/BlockParser.php');
 
 /**
  * Guess a short description of the page.
@@ -42,13 +43,33 @@ function GleanDescription ($rev) {
 }
 
 
+function actionPage(&$request, $actionpage) {
+    global $Theme;
+    
+    $pagename = $request->getArg('pagename');
+    $version = $request->getArg('version');
+
+    $page = $request->getPage();
+    $revision = $page->getCurrentRevision();
+    
+    $view = $actionpage->getCurrentRevision();
+
+    $splitname = split_pagename($pagename);
+    $pagetitle = array($actionpage->getName(), ": ",
+                       $Theme->linkExistingWikiWord($pagename, false, $version));
+
+    $template = Template('browse', array('CONTENT' => TransformRevision($view)));
+    
+    GeneratePage($template, $pagetitle, $revision);
+    flush();
+}
+
 function displayPage(&$request, $tmpl = 'browse') {
     $pagename = $request->getArg('pagename');
     $version = $request->getArg('version');
     $page = $request->getPage();
-    
-    
     if ($version) {
+        $page = $request->getPage();
         $revision = $page->getRevision($version);
         if (!$revision)
             NoSuchRevision($request, $page, $version);
@@ -71,6 +92,7 @@ function displayPage(&$request, $tmpl = 'browse') {
                  array('ROBOTS_META'	=> 'index,follow',
                        'PAGE_DESCRIPTION' => GleanDescription($revision)));
     flush();
+
     $page->increaseHitCount();
 }
 
