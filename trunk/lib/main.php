@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.145 2004-05-12 10:49:55 rurban Exp $');
+rcs_id('$Id: main.php,v 1.146 2004-05-15 18:31:01 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -28,8 +28,8 @@ class WikiRequest extends Request {
             $dbi = $this->getDbh();
             $this->_dbsession = & new DB_Session($dbi,$prefix . $GLOBALS['DBParams']['db_session_table']);
         }
-        // Fixme: Does pear reset the error mask to 1? We have to find the culprit
-        $x = error_reporting();
+// Fixme: Does pear reset the error mask to 1? We have to find the culprit
+$x = error_reporting();
 $this->version = phpwiki_version();
         $this->Request();
 
@@ -718,6 +718,7 @@ $this->version = phpwiki_version();
     function action_lock () {
         $page = $this->getPage();
         $page->set('locked', true);
+        $this->_dbi->touch();
         $this->action_browse();
     }
 
@@ -726,6 +727,7 @@ $this->version = phpwiki_version();
         //$user->requireAuth(WIKIAUTH_ADMIN);
         $page = $this->getPage();
         $page->set('locked', false);
+        $this->_dbi->touch();
         $this->action_browse();
     }
 
@@ -790,7 +792,8 @@ $this->version = phpwiki_version();
     }
 
     function action_pdf () {
-        $this->buffer_output('nocompress');
+    	if (empty($this->_is_buffering_output))
+            $this->buffer_output(false/*'nocompress'*/);
         if ($GLOBALS['LANG'] == 'ja') {
             include_once("lib/fpdf/japanese.php");
             $pdf = new PDF_Japanese;
@@ -809,18 +812,22 @@ $this->version = phpwiki_version();
         $pdf->ConvertFromHTML($html);
         $this->discardOutput();
         
-        $this->buffer_output('nocompress');
-        $pdf->Output();
-        $GLOBALS['ErrorManager']->flushPostponedErrors();
+        $this->buffer_output(false/*'nocompress'*/);
+        $pagename = $this->getArg('pagename');
+        $dest = $this->getArg('dest');
+        $pdf->Output($pagename.".pdf",$dest ? $dest : 'I');
         if (!empty($errormsg)) {
             $this->discardOutput();
+            /*
+            $GLOBALS['ErrorManager']->flushPostponedErrors();
             PrintXML(HTML::br(),
                      HTML::hr(),
                      HTML::h2(_("Fatal PhpWiki Error")),
                      $errormsg);
             echo "\n</body></html>";
+            */
         } else {
-            ob_end_flush();
+            ; //ob_end_flush(); flushed by Request::finish()
         }
     }
 }
@@ -937,6 +944,13 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.145  2004/05/12 10:49:55  rurban
+// require_once fix for those libs which are loaded before FileFinder and
+//   its automatic include_path fix, and where require_once doesn't grok
+//   dirname(__FILE__) != './lib'
+// upgrade fix with PearDB
+// navbar.tmpl: remove spaces for IE &nbsp; button alignment
+//
 // Revision 1.144  2004/05/06 19:26:16  rurban
 // improve stability, trying to find the InlineParser endless loop on sf.net
 //

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.72 2004-05-12 10:49:55 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.73 2004-05-15 18:31:01 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1802,7 +1802,9 @@ extends _DbPassUser
             $this->_authcreate = $this->prepare($DBAuthParams['auth_create'],
                                                 array("userid","password"));
         }
-        if (!empty($this->_authcreate)) {
+        if (!empty($this->_authcreate) and 
+            isset($GLOBALS['HTTP_POST_VARS']['auth']) and
+            isset($GLOBALS['HTTP_POST_VARS']['auth']['passwd'])) {
             $dbh->Execute(sprintf($this->_authcreate,
                                   $dbh->qstr($GLOBALS['HTTP_POST_VARS']['auth']['passwd']),
                                   $dbh->qstr($this->_userid)));
@@ -2867,6 +2869,13 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.72  2004/05/12 10:49:55  rurban
+// require_once fix for those libs which are loaded before FileFinder and
+//   its automatic include_path fix, and where require_once doesn't grok
+//   dirname(__FILE__) != './lib'
+// upgrade fix with PearDB
+// navbar.tmpl: remove spaces for IE &nbsp; button alignment
+//
 // Revision 1.71  2004/05/10 12:34:47  rurban
 // stabilize DbAuthParam statement pre-prozessor:
 //   try old-style and new-style (double-)quoting
