@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.37 2002-01-23 03:00:32 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.38 2002-01-23 06:39:50 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -147,6 +147,7 @@ $Theme->addButtonAlias('?', 'uww');
 $Theme->addButtonAlias(_("Lock Page"), "Lock Page");
 $Theme->addButtonAlias(_("Unlock Page"), "Unlock Page");
 $Theme->addButtonAlias(_("Page Locked"), "Page Locked");
+$Theme->addButtonAlias("...", "alltime");
 
 /**
  * WikiWords can automatically be split by inserting spaces between
@@ -165,19 +166,6 @@ $Theme->addButtonAlias(_("Page Locked"), "Page Locked");
 $Theme->setDateTimeFormat("%A, %B %e, %Y. %l:%M:%S %p %Z"); // may contain time of day
 $Theme->setDateFormat("%A, %B %e, %Y"); // must not contain time
 
-/*
-$ToolbarImages = array(
-'RecentChanges' => array(
-'1 day'		=> "themes/$theme/buttons/en/1+day.png",
-'2 days'	=> "themes/$theme/buttons/en/2+days.png",
-'3 days'	=> "themes/$theme/buttons/en/3+days.png",
-'4 days'	=> "themes/$theme/buttons/en/4+days.png",
-'7 days'	=> "themes/$theme/buttons/en/7+days.png",
-'30 days'	=> "themes/$theme/buttons/en/30+days.png",
-'90 days'	=> "themes/$theme/buttons/en/90+days.png",
-'...'		=> "themes/$theme/buttons/en/alltime.png")
-);
-*/
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // (c-file-style: "gnu")
