@@ -7,7 +7,7 @@
    coding it.
 */
 
-   $pagename = $post;
+   $pagename = rawurldecode($post);
    $pagehash = RetrievePage($dbi, $pagename);
 
    // if this page doesn't exist yet, now's the time!
@@ -38,21 +38,19 @@
       }
    }
 
-   // Ward Cunningham has deprecated these, but I already 
-   // implented them. You are discouraged from using them.
-   if (! empty($r1)) { $pagehash["r1"] = $r1; } 
-   if (! empty($r2)) { $pagehash["r2"] = $r2; }
-   if (! empty($r3)) { $pagehash["r3"] = $r3; } 
-   if (! empty($r4)) { $pagehash["r4"] = $r4; }
+   for ($i = 1; $i <= NUM_LINKS; $i++) {
+        if (! empty(${'r'.$i}))
+              $pagehash['r'.$i] = ${'r'.$i};
+   }
 
    InsertPage($dbi, $pagename, $pagehash);
    UpdateRecentChanges($dbi, $pagename);
-   WikiHeader("Thanks for $pagename Edits");
+   echo WikiHeader("Thanks for $pagename Edits");
 ?>
 Thank you for editing
 <?
-
-   echo "<a href=\"$ScriptUrl?$pagename\">$pagename</a><br>\n";
+   $enc_name = rawurlencode($pagename);
+   echo "<a href=\"$ScriptUrl?$enc_name\">$pagename</a><br>\n";
 
 ?>
 Your careful attention to detail is much appreciated.<br>
@@ -66,5 +64,5 @@ p.s. Be sure to <em>Reload</em> your old pages.<br>
       echo "the DBM file to a permanent location or risk losing ";
       echo "all the pages!</h2>\n";
    }
-   WikiFooter();
+   echo WikiFooter();
 ?>

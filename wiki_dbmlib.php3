@@ -5,20 +5,21 @@
       CloseDataBase($dbi)
       RetrievePage($dbi, $pagename)
       InsertPage($dbi, $pagename, $pagehash)
-      UpdateRecentChanges($dbi, $pagename) 
       IsWikiPage($dbi, $pagename)
-      SaveCopyToArchive($pagename, $pagehash) 
-      PageExists($dbi, $pagename)
+      InitTitleSearch($dbi, $search)
+      TitleSearchNextMatch($dbi, &$pos)
+      InitFullSearch($dbi, $search)
+      FullSearchNextMatch($dbi, &$pos)
    */
 
 
    // open a database and return the handle
    // loop until we get a handle; php has its own
-   // locking mechanism, thank god. This prints
-   // an ugly error message. Cannot prevent.
+   // locking mechanism, thank god.
+   // Suppress ugly error message with @.
 
    function OpenDataBase($dbname) {
-      while (($dbi = dbmopen($dbname, "c")) < 1) {
+      while (($dbi = @dbmopen($dbname, "c")) < 1) {
          if ($numattempts > MAX_DBM_ATTEMPTS) {
             echo "Cannot open database, giving up.";
             exit();
@@ -59,58 +60,52 @@
       } 
    }
 
-   // The Recent Changes file is solely handled here
-   function UpdateRecentChanges($dbi, $pagename) {
-      global $remoteuser;
-
-      $recentchanges = RetrievePage($dbi, "RecentChanges");
-
-      if ($recentchanges == -1) {
-         $recentchanges = array(); // First-time user, eh? :-)
-      }
-
-      $recentchanges["text"] = preg_replace("/.*$pagename.*/",
-                                            "",
-                                            $recentchanges["text"]);
-
-      $numlines = sizeof($recentchanges["text"]);
-      $currentdate = GetCurrentDate();
-
-      if ($recentchanges["date"] != $currentdate) {
-         $recentchanges["text"][$numlines++] = "$currentdate";
-         $recentchanges["text"][$numlines++] = "\n";
-         $recentchanges["date"] = "$currentdate";
-      }
-
-
-      $recentchanges["text"][$numlines] = "\t*$pagename .....  $remoteuser";
-
-      // Clear out blank lines (they are size zero, not even \n)
-      $k = 0;
-      for ($i = 0; $i < ($numlines + 1); $i++) {
-         if (strlen($recentchanges["text"][$i]) != 0) {
-            $newpage[$k++] = $recentchanges["text"][$i];
-         }
-      }
-      $recentchanges["text"] = $newpage;
-
-      InsertPage($dbi, "RecentChanges", $recentchanges);
-   }
-
 
    function IsWikiPage($dbi, $pagename) {
       return dbmexists($dbi, $pagename);
    }
 
 
-   // for archiving pages to a seperate dbm
-   function SaveCopyToArchive($pagename, $pagehash) {
-      global $ArchiveDataBase;
-      $adbi = OpenDataBase($ArchiveDataBase);
-      $newpagename = $pagename;
-      InsertPage($adbi, $newpagename, $pagehash);
-      dbmclose($adbi);
+   // setup for title-search
+   function InitTitleSearch($dbi, $search) {
+      $pos['search'] = $search;
+      $pos['key'] = dbmfirstkey($dbi);
+
+      return $pos;
    }
 
+   // iterating through database
+   function TitleSearchNextMatch($dbi, &$pos) {
+      while ($pos['key']) {
+         $page = $pos['key'];
+         $pos['key'] = dbmnextkey($dbi, $pos['key']);
 
+         if (eregi($pos['search'], $page)) {
+            return $page;
+         }
+      }
+      return 0;
+   }
+
+   // setup for full-text search
+   function InitFullSearch($dbi, $search) {
+      return InitTitleSearch($dbi, $search);
+   }
+
+   //iterating through database
+   function FullSearchNextMatch($dbi, &$pos) {
+      while ($pos['key']) {
+         $key = $pos['key'];
+         $pos['key'] = dbmnextkey($dbi, $pos['key']);
+
+         $pagedata = dbmfetch($dbi, $key);
+         // test the serialized data
+         if (eregi($pos['search'], $pagedata)) {
+	    $page['name'] = $key;
+	    $page['hash'] = unserialize($pagedata);
+	    return $page;
+	 }
+      }
+      return 0;
+   }
 ?>

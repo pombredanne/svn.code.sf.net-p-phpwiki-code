@@ -18,11 +18,32 @@
       $ServerAddress = "http://$SERVER_NAME:$SERVER_PORT$REQUEST_URI";
    }
 
-   $ScriptName = "index.php3";
+   // if you are using MySQL instead of a DBM to store your
+   // Wiki pages, use wiki_mysql.php3 instead of wiki_dbmlib.php3
+   // See INSTALL.mysql for details on using MySQL
+
+   // DBM settings (default)
+   include "wiki_dbmlib.php3";
    $WikiDataBase = "/tmp/wikidb"; // must be server-writable!
    $ArchiveDataBase = "/tmp/wikiarchive"; // see above!
+
+   // MySQL settings (thanks Arno Hollosi! <ahollosi@iname.com>)
+   // Comment out the lines above (for the DBM) if you use these
+/*
+   include "wiki_mysql.php3";
+   $WikiDataBase = "wiki"; 
+   $ArchiveDataBase = "archive";
+   $mysql_server = 'localhost';
+   $mysql_user = 'root';
+   $mysql_pwd = '';
+   $mysql_db = 'wiki';
+*/
+
+
+   $ScriptName = "index.php3";
    $SignatureImg = "$ServerAddress/signature.png";
    $logo = "wikibase.png";
+
 
    // you shouldn't have to edit anyting below this line
 
@@ -39,7 +60,7 @@
 
 
    // number of user-defined external links, i.e. "[1]"
-   define("NUM_LINKS", 4);
+   define("NUM_LINKS", 12);
 
    // try this many times if the dbm is unavailable
    define("MAX_DBM_ATTEMPTS", 20);

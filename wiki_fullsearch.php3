@@ -4,44 +4,36 @@
       A few too many regexps for my liking, but it works.
    */
 
-   WikiHeader("Search Results");
+   echo WikiHeader("Search Results");
    echo "<h1>$LogoImage Search Results</h1>\n";
 
    $found = $count = 0;
 
    // from classic wiki: $pat =~ s/[+?.*()[\]{}|\\]/\\$&/g;
+   // disallow _'_ and _%_ too, _\_ have to be doubled
+   $full = preg_replace("/[+?.*()'%[\\]{}|\\\\]/", "", $full);
 
-   $full = preg_replace("/[+?.*()[\]{}|\\\]/", "", $full);
+   // search matching pages
+   $query = InitFullSearch($dbi, $full);
+   while ($page = FullSearchNextMatch($dbi, $query)) {
+      $pagename = $page['name'];
+      $pagehash = $page['hash'];
 
-   // looping through all keys
-   $key = dbmfirstkey($dbi);
-
-   while ($key) {
-      $pagedata = dbmfetch($dbi, $key);   
-
-      // test the serialized data first, before going further
-      if (preg_match("/$full/i", $pagedata)) {
-
-         echo "<h3>", LinkExistingWikiWord($key), "</h3>\n";
-         $pagehash = unserialize($pagedata);
-
-         // print out all matching lines, highlighting the match
-         for ($j = 0; $j < (count($pagehash["text"])); $j++) {
-            if (preg_match("/$full/i", $pagehash["text"][$j], $pmatches)) {
-               $matched = preg_replace("/$full/i", "<b>\\0</b>",
-                                       $pagehash["text"][$j]);
-               $found += count($pmatches);
-               echo "<li>", $matched, "</li>\n";
-            }
-         }
-         echo "<hr>\n";
-      }
+      echo "<h3>", LinkExistingWikiWord($pagename), "</h3>\n";
       $count++;
-      $key = dbmnextkey($dbi, $key);
+
+      // print out all matching lines, highlighting the match
+      for ($j = 0; $j < (count($pagehash["text"])); $j++) {
+         if (preg_match("/$full/i", $pagehash["text"][$j], $pmatches)) {
+            $matched = preg_replace("/$full/i", "<b>\\0</b>",
+                                    $pagehash["text"][$j]);
+            echo "<li>", $matched, "</li>\n";
+            $found += count($pmatches);
+         }
+      }
+      echo "<hr>\n";
    }
 
-   echo "$found matches found out of $count pages searched.\n";
-   WikiFooter();
-
-
+   echo "$found matches found in $count pages.\n";
+   echo WikiFooter();
 ?>
