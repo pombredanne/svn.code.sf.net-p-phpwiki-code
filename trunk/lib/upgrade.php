@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.36 2004-12-20 12:56:11 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.37 2005-01-20 10:19:08 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -100,6 +100,7 @@ function isActionPage($filename) {
                             "PhpWikiRecentChanges" => "RssFeed",
                             "ProjectSummary"  	=> "RssFeed",
                             "RecentReleases"  	=> "RssFeed",
+                            "InterWikiMap"      => "InterWikiMap",
                             );
     $base = preg_replace("/\..{1,4}$/","",basename($filename));
     if (isset($special[$base])) return $special[$base];
@@ -646,6 +647,9 @@ function DoUpgrade($request) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.36  2004/12/20 12:56:11  rurban
+ patch #1088128 by Kai Krakow. avoid chicken & egg problem
+
  Revision 1.35  2004/12/13 14:35:41  rurban
  verbose arg
 
