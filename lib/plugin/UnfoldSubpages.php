@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UnfoldSubpages.php,v 1.13 2004-03-12 15:48:08 rurban Exp $');
+rcs_id('$Id: UnfoldSubpages.php,v 1.14 2004-07-03 08:19:40 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -42,7 +42,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.13 $");
+                            "\$Revision: 1.14 $");
     }
 
     function getDefaultArguments() {
@@ -118,8 +118,9 @@ extends WikiPlugin
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
-        include_once('lib/BlockParser.php');
-
+        static $included_pages = false;
+        if (!$included_pages) $included_pages = array($basepage);
+        
         $args = $this->getArgs($argstr, $request);
         extract($args);
         $subpages = explodePageList($pagename . SUBPAGE_SEPARATOR . '*',false,$sortby,$limit);
@@ -130,9 +131,11 @@ extends WikiPlugin
         if ($maxpages) {
           $subpages = array_slice ($subpages, 0, $maxpages);
         }
+
+        include_once('lib/BlockParser.php');
+
         foreach ($subpages as $page) {
             // A page cannot include itself. Avoid doublettes.
-            static $included_pages = array();
             if (in_array($page, $included_pages)) {
                 $content->pushContent(HTML::p(sprintf(_("recursive inclusion of page %s ignored"),
                                                       $page)));
@@ -143,7 +146,15 @@ extends WikiPlugin
                 $p = $dbi->getPage($page);
                 $r = $p->getCurrentRevision();
                 $c = $r->getContent();
-
+                $ct = implode("\n", $c);
+                // trap recursive redirects
+                if (preg_match('/<'.'\?plugin\s+RedirectTo\s+page=(\w+)\s+\?'.'>/',$ct,$m)) {
+                    if (in_array($m[1], $included_pages)) {
+                        //$content->pushContent(HTML::p(sprintf(_("recursive inclusion of page %s ignored"),
+                        //                              $page.' => '.$m[1])));
+                        continue;
+                    }
+                }
                 if ($section)
                     $c = $this->extractSection($section, $c, $page, $quiet,
                                                $sectionhead);
@@ -163,11 +174,11 @@ extends WikiPlugin
                     $pname = array_pop(explode("/", $page)); // get last subpage name
                     // Use _("%s: %s") instead of .": ". for French punctuation
                     $ct = TransformText(sprintf(_("%s: %s"), "[$pname|$page]",
-                                                implode("\n", $c)),
+                                                $ct),
                                         $r->get('markup'), $page);
                 }
                 else {
-                    $ct = TransformText(implode("\n", $c), $r->get('markup'), $page);
+                    $ct = TransformText($ct, $r->get('markup'), $page);
                 }
                 array_pop($included_pages);
                 if (! $smalltitle) {
@@ -186,6 +197,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2004/03/12 15:48:08  rurban
+// fixed explodePageList: wrong sortby argument order in UnfoldSubpages
+// simplified lib/stdlib.php:explodePageList
+//
 // Revision 1.12  2004/02/22 23:20:33  rurban
 // fixed DumpHtmlToDir,
 // enhanced sortby handling in PageList
