@@ -1,6 +1,6 @@
 Date: Thu, 31 Jan 2002 03:19:34 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: PageGroupTest,v 1.4 2004-05-02 15:10:08 rurban Exp $
+X-Rcs-Id: $Id: PageGroupTest,v 1.5 2004-05-03 15:36:12 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=PageGroupTest;
   flags="";
@@ -10,20 +10,22 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-PageGroupTest is a test of the !PageGroup plugin.
+PageGroupTest is a test of the ~PageGroup plugin.
 
 Click the first page to start the tour of this experimental plugin.
 
 !Table of Contents
-/One
-/Two
-/Three
-/Four
+# [PageGroupTest/One]
+# [PageGroupTest/Two]
+# [/Three]
+# [/Four]
 
 ! TODO
 
-Page names currently must be listed one per line. An ordered or
-unordered list would be better.
+* Page names currently must be listed one per line. An ordered or
+  unordered list would be better.
+
+* Support absolute and relative subpages and ~[page~] links.
 
 %%% %%% %%% %%% %%% %%% %%%
 
