@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.14 2004-05-15 22:54:49 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.15 2004-05-16 22:07:35 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -62,7 +62,7 @@ rcs_id('$Id: PagePerm.php,v 1.14 2004-05-15 22:54:49 rurban Exp $');
 /* Symbolic special ACL groups. Untranslated to be stored in page metadata*/
 define('ACL_EVERY',	   '_EVERY');
 define('ACL_ANONYMOUS',	   '_ANONYMOUS');
-define('ACL_BOGOUSERS',	   '_BOGOUSERS');
+define('ACL_BOGOUSER',	   '_BOGOUSER');
 define('ACL_HASHOMEPAGE',  '_HASHOMEPAGE');
 define('ACL_SIGNED',	   '_SIGNED');
 define('ACL_AUTHENTICATED','_AUTHENTICATED');
@@ -276,6 +276,25 @@ function getAccessDescription($access) {
         return $access;
 }
 
+// from php.net docs
+function array_diff_assoc_recursive($array1, $array2) {
+    foreach ($array1 as $key => $value) {
+         if (is_array($value)) {
+             if (!is_array($array2[$key])) {
+                 $difference[$key] = $value;
+             } else {
+                 $new_diff = array_diff_assoc_recursive($value, $array2[$key]);
+                 if ($new_diff != false) {
+                     $difference[$key] = $new_diff;
+                 } 
+             }
+         } elseif(!isset($array2[$key]) || $array2[$key] != $value) {
+             $difference[$key] = $value;
+         }
+    }
+    return !isset($difference) ? 0 : $difference;
+}
+
 /**
  * The ACL object per page. It is stored in a page, but can also 
  * be merged with ACL's from other pages or taken from the master (pseudo) dot-file.
@@ -327,7 +346,7 @@ class PagePermission {
      * Translate the various special groups to the actual users settings 
      * (userid, group membership).
      */
-    function isMember($user,$group) {
+    function isMember($user, $group) {
         global $request;
         if ($group === ACL_EVERY) return true;
         if (!isset($this->_group)) $member =& WikiGroup::getGroup($request);
@@ -339,8 +358,10 @@ class PagePermission {
                    $member->isMember(GROUP_ADMIN));
         if ($group === ACL_ANONYMOUS) 
             return ! $user->isSignedIn();
-        if ($group === ACL_BOGOUSERS)
-            if (ENABLE_USER_NEW) return isa($user,'_BogoUser');
+        if ($group === ACL_BOGOUSER)
+            if (ENABLE_USER_NEW)
+                return isa($user,'_BogoUser') or 
+                      (isWikiWord($user->_userid) and $user->_level >= WIKIAUTH_BOGO);
             else return isWikiWord($user->UserName());
         if ($group === ACL_HASHOMEPAGE)
             return $user->hasHomePage();
@@ -350,18 +371,18 @@ class PagePermission {
             return $user->isAuthenticated();
         if ($group === ACL_OWNER) {
             $page = $request->getPage();
-            return ($page->get('author') === $user->UserName() and 
-                    $user->isAuthenticated());
+            return ($user->isAuthenticated() and 
+                    $page->getOwner() === $user->UserName());
         }
         if ($group === ACL_CREATOR) {
             $page = $request->getPage();
-            $rev = $page->getRevision(1);
-            return ($rev->get('author') === $user->UserName() and 
-                    $user->isAuthenticated());
+            return ($user->isAuthenticated() and 
+                    $page->getCreator() === $user->UserName());
         }
         /* Or named groups or usernames.
-         Note: We don't seperate groups and users here. 
-         Users overrides groups with the same name. */
+           Note: We don't seperate groups and users here. 
+           Users overrides groups with the same name. 
+        */
         return $user->UserName() === $group or
                $member->isMember($group);
     }
@@ -372,7 +393,7 @@ class PagePermission {
      */
     function defaultPerms() {
         //Todo: check for the existance of '.' and take this instead.
-        //Todo: honor more index.php auth settings here
+        //Todo: honor more config.ini auth settings here
         $perm = array('view'   => array(ACL_EVERY => true),
                       'edit'   => array(ACL_EVERY => true),
                       'create' => array(ACL_EVERY => true),
@@ -381,24 +402,27 @@ class PagePermission {
                                         ACL_OWNER => true),
                       'change' => array(ACL_ADMIN => true,
                                         ACL_OWNER => true));
-        if (defined('ZIPDUMP_AUTH') && ZIPDUMP_AUTH)
+        if (ZIPDUMP_AUTH)
             $perm['dump'] = array(ACL_ADMIN => true,
                                   ACL_OWNER => true);
         else
             $perm['dump'] = array(ACL_EVERY => true);
-        if (defined('REQUIRE_SIGNIN_BEFORE_EDIT') && REQUIRE_SIGNIN_BEFORE_EDIT)
-            $perm['edit'] = array(ACL_SIGNED => true);
-        if (defined('ALLOW_ANON_USER') && ! ALLOW_ANON_USER) {
-            if (defined('ALLOW_BOGO_USER') && ALLOW_BOGO_USER) {
-                $perm['view'] = array(ACL_BOGOUSER => true);
-                $perm['edit'] = array(ACL_BOGOUSER => true);
-            } elseif (defined('ALLOW_USER_PASSWORDS') && ALLOW_USER_PASSWORDS) {
-                $perm['view'] = array(ACL_AUTHENTICATED => true);
-                $perm['edit'] = array(ACL_AUTHENTICATED => true);
-            } else {
-                $perm['view'] = array(ACL_SIGNED => true);
-                $perm['edit'] = array(ACL_SIGNED => true);
-            }
+        // view:
+        if (!ALLOW_ANON_USER) {
+            if (!ALLOW_USER_PASSWORDS) 
+            	$perm['view'] = array(ACL_SIGNED => true);
+            else		
+            	$perm['view'] = array(ACL_AUTHENTICATED => true);
+            $perm['view'][ACL_BOGOUSER] = ALLOW_BOGO_LOGIN ? true : false;
+        }
+        // edit:
+        if (!ALLOW_ANON_EDIT) {
+            if (!ALLOW_USER_PASSWORDS) 
+            	$perm['edit'] = array(ACL_SIGNED => true);
+            else		
+            	$perm['edit'] = array(ACL_AUTHENTICATED => true);
+            $perm['edit'][ACL_BOGOUSER] = ALLOW_BOGO_LOGIN ? true : false;
+            $perm['create'] = $perm['edit'];
         }
         return $perm;
     }
@@ -409,6 +433,14 @@ class PagePermission {
                 $this->perm[$access][$group] = (boolean) $bool;
             }
         }
+    }
+
+    /**
+     * do a recursive comparison
+     */
+    function equal($otherperm) {
+        $diff = array_diff_assoc_recursive($this->perm, $otherperm);
+        return empty($diff);
     }
     
     /**
@@ -553,7 +585,7 @@ class PagePermission {
                         HTML::tr(
                                  HTML::td(HTML::strong($access.":")),
                                  HTML::td(array('class' => 'cal-today','align'=>'right'),
-                                          $this->groupName($group)),
+                                          HTML::strong($this->groupName($group))),
                                  HTML::td($nbsp,$checkbox),
                                  HTML::td($nbsp,$deletebutton),
                                  HTML::td(HTML::em(getAccessDescription($access)))));
@@ -563,7 +595,7 @@ class PagePermission {
                         HTML::tr(
                                  HTML::td(),
                                  HTML::td(array('class' => 'cal-today','align'=>'right'),
-                                          $this->groupName($group)),
+                                          HTML::strong($this->groupName($group))),
                                  HTML::td($nbsp,$checkbox),
                                  HTML::td($nbsp,$deletebutton),
                                  HTML::td()));
@@ -629,6 +661,10 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2004/05/15 22:54:49  rurban
+// fixed important WikiDB bug with DEBUG > 0: wrong assertion
+// improved SetAcl (works) and PagePerms, some WikiGroup helpers.
+//
 // Revision 1.13  2004/05/15 19:48:33  rurban
 // fix some too loose PagePerms for signed, but not authenticated users
 //  (admin, owner, creator)

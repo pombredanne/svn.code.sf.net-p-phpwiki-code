@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.28 2004-05-15 22:54:49 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.29 2004-05-16 22:07:35 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -20,9 +20,6 @@ rcs_id('$Id: WikiGroup.php,v 1.28 2004-05-15 22:54:49 rurban Exp $');
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// For now we provide no default membership method. This might change.
-// (!defined('GROUP_METHOD')) define('GROUP_METHOD', "WIKIPAGE");
-
 if (!defined('GROUP_METHOD') or 
     !in_array(GROUP_METHOD,
               array('NONE','WIKIPAGE','DB','FILE','LDAP')))
@@ -31,7 +28,7 @@ if (!defined('GROUP_METHOD') or
 /* Special group names for ACL */    
 define('GROUP_EVERY',		_("Every"));
 define('GROUP_ANONYMOUS',	_("Anonymous Users"));
-define('GROUP_BOGOUSERS',	_("Bogo Users"));
+define('GROUP_BOGOUSER',	_("Bogo Users"));
 define('GROUP_HASHOMEPAGE',     _("HasHomePage"));
 define('GROUP_SIGNED',		_("Signed Users"));
 define('GROUP_AUTHENTICATED',	_("Authenticated Users"));
@@ -109,7 +106,7 @@ class WikiGroup{
                 } elseif ($GLOBALS['DBParams']['dbtype'] == 'SQL') {
                     return new GroupDb_PearDB($request);
                 } else {
-                    trigger_error("GroupDb: unsupported dbtype " . $DBParams['dbtype'],
+                    trigger_error("GROUP_METHOD = DB: Unsupported dbtype " . $DBParams['dbtype'],
                                   E_USER_ERROR);
                 }
                 break;
@@ -137,7 +134,7 @@ class WikiGroup{
     	return array(
                      GROUP_EVERY,
                      GROUP_ANONYMOUS,
-                     GROUP_BOGOUSERS,
+                     GROUP_BOGOUSER,
                      GROUP_SIGNED,
                      GROUP_AUTHENTICATED,
                      GROUP_ADMIN);
@@ -146,7 +143,7 @@ class WikiGroup{
     	return array(
                      "_EVERY",
                      "_ANONYMOUS",
-                     "_BOGOUSERS",
+                     "_BOGOUSER",
                      "_SIGNED",
                      "_AUTHENTICATED",
                      "_ADMIN");
@@ -169,7 +166,8 @@ class WikiGroup{
             switch ($group) {
             case GROUP_EVERY: 		return $this->membership[$group] = true;
             case GROUP_ANONYMOUS: 	return $this->membership[$group] = ! $user->isSignedIn();
-            case GROUP_BOGOUSERS: 	return $this->membership[$group] = isa($user,'_BogoUser');
+            case GROUP_BOGOUSER: 	return $this->membership[$group] = (isa($user,'_BogoUser') and 
+                                                                            $user->_level >= WIKIAUTH_BOGO);
             case GROUP_SIGNED:    	return $this->membership[$group] = $user->isSignedIn();
             case GROUP_AUTHENTICATED: 	return $this->membership[$group] = $user->isAuthenticated();
             case GROUP_ADMIN:		return $this->membership[$group] = $user->isAdmin();
@@ -275,7 +273,7 @@ class WikiGroup{
                 return $all;
             case GROUP_ANONYMOUS: 	
                 return $users;
-            case GROUP_BOGOUSERS: 	
+            case GROUP_BOGOUSER:
                 foreach ($all as $u) {
                     if (isWikiWord($user)) $users[] = $u;
                 }
@@ -574,16 +572,16 @@ class GroupDb extends WikiGroup {
             trigger_error(_("No or not enough GROUP_DB SQL statements defined"), E_USER_WARNING);
             return new GroupNone(&$request);
         }
-        $this->_is_member = str_replace(array('"$userid"','"$groupname"'),
-                                        array('%s','%s'),
-                                        $DBAuthParams['is_member']);
-        $this->_group_members = str_replace('"$groupname"',
-                                            '%s',
-                                            $DBAuthParams['group_members']);
-        $this->_user_groups = str_replace('"$userid"',
-                                          '%s',
-                                          $DBAuthParams['user_groups']);
-        $this->dbh = _PassUser::getAuthDbh();
+        // use _PassUser::prepare instead
+        if (isa($request->_user,'_PassUser'))
+            $user =& $request->_user;
+        else
+            $user = new _PassUser($this->username);
+        $this->_is_member = $user->prepare($DBAuthParams['is_member'],
+                                           array('userid','groupname'));
+        $this->_group_members = $user->prepare($DBAuthParams['group_members'],'groupname');
+        $this->_user_groups = $user->prepare($DBAuthParams['user_groups'],'userid');
+        $this->dbh = $user->_auth_dbi;
     }
 }
 
@@ -605,7 +603,8 @@ class GroupDb_PearDB extends GroupDb {
             return $this->membership[$group];
         }
         $dbh = & $this->dbh;
-        $db_result = $dbh->query(sprintf($this->_is_member,$dbh->quote($this->username),$dbh->quote($group)));
+        $db_result = $dbh->query(sprintf($this->_is_member,$dbh->quote($this->username),
+                                         $dbh->quote($group)));
         if ($db_result->numRows() > 0) {
             $this->membership[$group] = true;
             return true;
@@ -687,7 +686,8 @@ class GroupDb_ADODB extends GroupDb {
             return $this->membership[$group];
         }
         $dbh = & $this->dbh;
-        $rs = $dbh->Execute(sprintf($this->_is_member,$dbh->qstr($this->username),$dbh->qstr($group)));
+        $rs = $dbh->Execute(sprintf($this->_is_member,$dbh->qstr($this->username),
+                                    $dbh->qstr($group)));
         if ($rs->EOF) {
             $rs->Close();
         } else {
@@ -1012,6 +1012,10 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.28  2004/05/15 22:54:49  rurban
+// fixed important WikiDB bug with DEBUG > 0: wrong assertion
+// improved SetAcl (works) and PagePerms, some WikiGroup helpers.
+//
 // Revision 1.27  2004/05/06 13:56:40  rurban
 // Enable the Administrators group, and add the WIKIPAGE group default root page.
 //

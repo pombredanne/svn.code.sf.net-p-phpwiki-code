@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.21 2004-05-08 22:55:12 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.22 2004-05-16 22:07:35 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -93,13 +93,19 @@ function IniConfig($file) {
          
     $rs = @parse_ini_file($file);
     $rsdef = @parse_ini_file(dirname(__FILE__)."/../config/config-default.ini");
+    foreach ($rsdef as $k => $v) {
+    	if (defined($k))
+    	    $rs[$k] = constant($k);
+    	elseif (!isset($rs[$k]))
+    	    $rs[$k] = $v;
+    }
 
     foreach ($_IC_VALID_VALUE as $item) {
         if (defined($item)) continue;
         if (array_key_exists($item, $rs)) {
             define($item, $rs[$item]);
-        } elseif (array_key_exists($item, $rsdef)) {
-            define($item, $rsdef[$item]);
+        //} elseif (array_key_exists($item, $rsdef)) {
+        //    define($item, $rsdef[$item]);
         // calculate them later:
         } elseif (in_array($item,array('DATABASE_PREFIX', 'SERVER_NAME', 'SERVER_PORT',
          	'SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH'))) {
@@ -117,8 +123,8 @@ function IniConfig($file) {
         if (defined($item)) continue;
         if (array_key_exists($item, $rs)) {
             $val = $rs[$item];
-        } elseif (array_key_exists($item, $rsdef)) {
-            $val = $rsdef[$item];
+        //} elseif (array_key_exists($item, $rsdef)) {
+        //    $val = $rsdef[$item];
         } else {
             $val = false; //trigger_error(sprintf("missing boolean config setting for %s",$item));
         }
@@ -138,6 +144,8 @@ function IniConfig($file) {
         }
         elseif (strtolower($val) == 'false' ||
                 strtolower($val) == 'no' ||
+                $val == '' ||
+                $val == false ||
                 $val == '0') {
             define($item, false);
         }
@@ -167,38 +175,36 @@ function IniConfig($file) {
     $DBParams['directory'] = @$rs['DATABASE_DIRECTORY'];
     $DBParams['timeout'] = @$rs['DATABASE_TIMEOUT'];
     if (!defined('USE_DB_SESSION') and $DBParams['db_session_table'] and 
-        in_array($DBParams['dbtype'],array('SQL','ADODB','dba'))) {
+        in_array($DBParams['dbtype'],array('SQL','ADODB'/*,'dba'*/))) {
         define('USE_DB_SESSION', true);
     }
 
     // Expiry stuff
     global $ExpireParams;
-
     $ExpireParams['major'] = array(
-                                   'max_age' => @$rs['MAJOR_MAX_AGE'],
-                                   'min_age' => @$rs['MAJOR_MIN_AGE'],
+                                   'max_age'  => @$rs['MAJOR_MAX_AGE'],
+                                   'min_age'  => @$rs['MAJOR_MIN_AGE'],
                                    'min_keep' => @$rs['MAJOR_MIN_KEEP'],
-                                   'keep' => @$rs['MAJOR_KEEP'],
+                                   'keep'     => @$rs['MAJOR_KEEP'],
                                    'max_keep' => @$rs['MAJOR_MAX_KEEP']
                                    );
     $ExpireParams['minor'] = array(
-                                   'max_age' => @$rs['MINOR_MAX_AGE'],
-                                   'min_age' => @$rs['MINOR_MIN_AGE'],
+                                   'max_age'  => @$rs['MINOR_MAX_AGE'],
+                                   'min_age'  => @$rs['MINOR_MIN_AGE'],
                                    'min_keep' => @$rs['MINOR_MIN_KEEP'],
-                                   'keep' => @$rs['MINOR_KEEP'],
+                                   'keep'     => @$rs['MINOR_KEEP'],
                                    'max_keep' => @$rs['MINOR_MAX_KEEP']
                                    );
     $ExpireParams['author'] = array(
-                                    'max_age' => @$rs['AUTHOR_MAX_AGE'],
-                                    'min_age' => @$rs['AUTHOR_MIN_AGE'],
+                                    'max_age'  => @$rs['AUTHOR_MAX_AGE'],
+                                    'min_age'  => @$rs['AUTHOR_MIN_AGE'],
                                     'min_keep' => @$rs['AUTHOR_MIN_KEEP'],
-                                    'keep' => @$rs['AUTHOR_KEEP'],
+                                    'keep'     => @$rs['AUTHOR_KEEP'],
                                     'max_keep' => @$rs['AUTHOR_MAX_KEEP']
                                     );
 
     // User authentication
-    global $USER_AUTH_ORDER;
-    $USER_AUTH_ORDER = preg_split('/\s*:\s*/', @$rs['USER_AUTH_ORDER']);
+    $GLOBALS['USER_AUTH_ORDER'] = preg_split('/\s*:\s*/', $rs['USER_AUTH_ORDER']);
 
     // LDAP bind options
     global $LDAP_SET_OPTION;
@@ -214,7 +220,7 @@ function IniConfig($file) {
     }
 
     // Now it's the external DB authentication stuff's turn
-    if (in_array('Db', $USER_AUTH_ORDER) && empty($rs['DBAUTH_AUTH_DSN'])) {
+    if (in_array('Db', $GLOBALS['USER_AUTH_ORDER']) && empty($rs['DBAUTH_AUTH_DSN'])) {
         $rs['DBAUTH_AUTH_DSN'] = $DBParams['dsn'];
     }
     
@@ -231,10 +237,11 @@ function IniConfig($file) {
                       'DBAUTH_GROUP_MEMBERS' => 'group_members',
                       'DBAUTH_USER_GROUPS' => 'user_groups'
                       );
-
     foreach ($DBAP_MAP as $rskey => $apkey) {
         if (isset($rs[$rskey])) {
             $DBAuthParams[$apkey] = $rs[$rskey];
+        } elseif (isset($rsdef[$rskey])) {
+            $DBAuthParams[$apkey] = $rsdef[$rskey];
         }
     }
 
@@ -525,6 +532,10 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.21  2004/05/08 22:55:12  rurban
+// Fixed longstanding sf.net:demo problem. endless loop, caused by an empty definition of
+// WIKI_NAME_REGEXP. Exactly this constant wasn't checked for its default setting.
+//
 // Revision 1.20  2004/05/08 20:21:00  rurban
 // remove php tags in Log
 //

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.81 2004-05-13 12:30:35 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.82 2004-05-16 22:07:35 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -21,8 +21,8 @@
  * 'minor'    _("Minor Edit"), _("minor")
  * 'markup'   _("Markup")
  * 'size'     _("Size")
- * 'owner'    _("Owner"),  //todo: implement this again for PagePerm
- * 'group'    _("Group"),  //todo: implement this for PagePerm
+ * 'creator'  _("Creator"),  //todo: implement this again for PagePerm
+ * 'owner'    _("Owner"),    //todo: implement this again for PagePerm
  * 'checkbox'  A selectable checkbox appears at the left.
  *             Todo: move this admin action away, not really an info column
  * 'content'  
@@ -332,14 +332,31 @@ class _PageList_Column_content extends _PageList_Column {
 class _PageList_Column_author extends _PageList_Column {
     function _PageList_Column_author ($field, $default_heading, $align = false) {
         _PageList_Column::_PageList_Column($field, $default_heading, $align);
-        global $WikiNameRegexp, $request;
-        $this->WikiNameRegexp = $WikiNameRegexp;
-        $this->dbi = &$request->getDbh();
+        $this->dbi =& $GLOBALS['request']->getDbh();
     }
 
     function _getValue ($page_handle, &$revision_handle) {
         $author = _PageList_Column::_getValue($page_handle, $revision_handle);
-        if (preg_match("/^$this->WikiNameRegexp\$/", $author) && $this->dbi->isWikiPage($author))
+        if (isWikiWord($author) && $this->dbi->isWikiPage($author))
+            return WikiLink($author);
+        else
+            return $author;
+    }
+};
+
+class _PageList_Column_owner extends _PageList_Column_author {
+    function _getValue ($page_handle, &$revision_handle) {
+        $author = $page_handle->getOwner();
+        if (isWikiWord($author) && $this->dbi->isWikiPage($author))
+            return WikiLink($author);
+        else
+            return $author;
+    }
+};
+class _PageList_Column_creator extends _PageList_Column_author {
+    function _getValue ($page_handle, &$revision_handle) {
+        $author = $page_handle->getCreator();
+        if (isWikiWord($author) && $this->dbi->isWikiPage($author))
             return WikiLink($author);
         else
             return $author;
@@ -664,9 +681,13 @@ class PageList {
                   'author'
                   => new _PageList_Column_author('rev:author', _("Last Author")),
                   'owner'
-                  => new _PageList_Column_author('owner', _("Owner")),
+                  => new _PageList_Column_owner('author_id', _("Owner")),
+                  'creator'
+                  => new _PageList_Column_creator('author_id', _("Creator")),
+                  /*
                   'group'
                   => new _PageList_Column_author('group', _("Group")),
+                  */
                   'locked'
                   => new _PageList_Column_bool('locked', _("Locked"),
                                                _("locked")),
@@ -896,6 +917,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.81  2004/05/13 12:30:35  rurban
+// fix for MacOSX border CSS attr, and if sort buttons are not found
+//
 // Revision 1.80  2004/04/20 00:56:00  rurban
 // more paging support and paging fix for shorter lists
 //
