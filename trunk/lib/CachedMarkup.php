@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: CachedMarkup.php,v 1.4 2003-02-26 00:39:30 dairiki Exp $');
+<?php rcs_id('$Id: CachedMarkup.php,v 1.5 2003-03-07 21:46:55 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -92,7 +92,7 @@ class CacheableMarkup extends XmlContent {
 	}
 	return array_values($links);
     }
-	    
+
     function _append($item) {
 	if (is_array($item)) {
 	    foreach ($item as $subitem)
@@ -117,6 +117,9 @@ class CacheableMarkup extends XmlContent {
 		foreach ($item->getContent() as $subitem)
 		    $this->_append($subitem);
 		$this->_buf .= "</$item->_tag>";
+
+                if (!isset($this->_description) and $item->getTag() == 'p')
+                    $this->_glean_description($item->asString());
 	    }
 	    if (!$item->isInlineElement())
 		$this->_buf .= "\n";
@@ -136,6 +139,37 @@ class CacheableMarkup extends XmlContent {
 	}
     }
 
+    function _glean_description($text) {
+        static $two_sentences;
+        if (!$two_sentences) {
+            $two_sentences = pcre_fix_posix_classes("[.?!][\")]*\s+[\"(]*[[:upper:])]"
+                                                    . ".*"
+                                                    . "[.?!][\")]*\s*[\"(]*([[:upper:])]|$)");
+        }
+        
+        if (!isset($this->_description) and preg_match("/$two_sentences/sx", $text))
+            $this->_description = preg_replace("/\s*\n\s*/", " ", trim($text));
+    }
+
+    /**
+     * Guess a short description of the page.
+     *
+     * Algorithm:
+     *
+     * This algorithm was suggested on MeatballWiki by
+     * Alex Schroeder <kensanata@yahoo.com>.
+     *
+     * Use the first paragraph in the page which contains at least two
+     * sentences.
+     *
+     * @see http://www.usemod.com/cgi-bin/mb.pl?MeatballWikiSuggestions
+     *
+     * @return string
+     */
+    function getDescription () {
+        return isset($this->_description) ? $this->_description : '';
+    }
+    
     function asXML () {
 	$xml = '';
         $basepage = $this->_basepage;
@@ -253,6 +287,12 @@ class Cached_WikiLink extends Cached_Link {
         $page = new WikiPageName($this->_page, $basepage, $anchor);
 	return WikiLink($page, 'auto', $label);
     }
+
+    function asString() {
+        if (isset($this->_label))
+            return $this->_label;
+        return $this->_page;
+    }
 }
 
 class Cached_WikiLinkIfKnown extends Cached_WikiLink
@@ -282,6 +322,12 @@ class Cached_PhpwikiURL extends Cached_DynamicContent
         $label = isset($this->_label) ? $this->_label : false;
         return LinkPhpwikiURL($this->_url, $label, $basepage);
     }
+
+    function asString() {
+        if (isset($this->_label))
+            return $this->_label;
+        return $this->_url;
+    }
 }    
     
 class Cached_ExternalLink extends Cached_Link {
@@ -304,6 +350,12 @@ class Cached_ExternalLink extends Cached_Link {
     function expand($basepage) {
 	$label = isset($this->_label) ? $this->_label : false;
 	return LinkURL($this->_url, $label);
+    }
+
+    function asString() {
+        if (isset($this->_label))
+            return $this->_label;
+        return $this->_url;
     }
 }
 
@@ -330,6 +382,12 @@ class Cached_InterwikiLink extends Cached_ExternalLink {
 	$intermap = InterWikiMap::GetMap($GLOBALS['request']);
 	$label = isset($this->_label) ? $this->_label : false;
 	return $intermap->link($this->_link, $label);
+    }
+
+    function asString() {
+        if (isset($this->_label))
+            return $this->_label;
+        return $this->_link;
     }
 }
 
@@ -368,6 +426,10 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 	}
 
 	return $xml;
+    }
+
+    function asString() {
+        return $this->_pi;
     }
 }
 
