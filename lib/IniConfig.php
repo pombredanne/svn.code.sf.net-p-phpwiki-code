@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.42 2004-06-28 15:01:07 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.43 2004-06-29 06:48:02 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -92,7 +92,8 @@ function IniConfig($file) {
         ( 
          'DEBUG', 'TEMP_DIR',
          'LDAP_AUTH_HOST','LDAP_SET_OPTION','LDAP_BASE_DN', 'LDAP_AUTH_USER',
-         'LDAP_AUTH_PASSWORD','LDAP_SEARCH_FIELD','AUTH_USER_FILE','DBAUTH_AUTH_DSN',
+         'LDAP_AUTH_PASSWORD','LDAP_SEARCH_FIELD','LDAP_OU_GROUP','LDAP_OU_USERS',
+         'AUTH_USER_FILE','DBAUTH_AUTH_DSN',
          'IMAP_AUTH_HOST', 'POP3_AUTH_HOST',
          'AUTH_USER_FILE', 'AUTH_GROUP_FILE', 'AUTH_SESS_USER', 'AUTH_SESS_LEVEL',
          'GOOGLE_LICENSE_KEY','FORTUNE_DIR',
@@ -609,6 +610,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.42  2004/06/28 15:01:07  rurban
+// fixed LDAP_SET_OPTION handling, LDAP error on connection problem
+//
 // Revision 1.41  2004/06/25 14:29:17  rurban
 // WikiGroup refactoring:
 //   global group attached to user, code for not_current user.
