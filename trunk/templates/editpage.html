@@ -17,6 +17,8 @@
 Edit <span="wikiword">###PAGE###</span>
 <input type="submit" value=" Save "></h1>
 
+###IF !CURRENT###<b>Editing old revision ###VERSION###. Saving this page will replace the current version with this text.</b>
+
 <textarea name="content"
           rows="###EDIT_AREA_HEIGHT###"
           cols="###EDIT_AREA_WIDTH###"
@@ -34,8 +36,6 @@ for me when I save.
 See <a class="wikilink" href="###BROWSE###UserPreferences"><span class="wikiword">UserPreferences</span></a>.</p>
 <p><a class="wikilink" href="###BROWSE###GoodStyle"><span class="wikiword">GoodStyle</span></a> tips for editing.</p>
 
-###IF COPY###<br><a class="wikiaction" href="###ACTION###edit&amp;version=archive">EditCopy</a> from previous author
-
 <hr noshade>
 <small>
 <b>Emphasis:</b> '' for italics, __ for bold, ''__ for both
@@ -52,7 +52,7 @@ See <a class="wikilink" href="###BROWSE###UserPreferences"><span class="wikiword
 
 <input type="hidden" name="action" value="save">
 <input type="hidden" name="pagename" value="###PAGE###">
-<input type="hidden" name="editversion" value="###VERSION###">
+<input type="hidden" name="editversion" value="###CURRENT_VERSION###">
 </form>
 </body>
 </html>
