@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.23 2004-05-17 17:43:29 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.24 2004-05-18 13:33:13 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -357,7 +357,7 @@ function fix_configs() {
         define('SCRIPT_NAME', deduce_script_name());
 
     if (!defined('USE_PATH_INFO')) {
-        if (substr($GLOBALS['HTTP_SERVER_VARS']['GATEWAY_INTERFACE'],0,3) == 'CGI')
+        if (isCGI())
             define('USE_PATH_INFO', false);
         else {
             /*
@@ -536,6 +536,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.23  2004/05/17 17:43:29  rurban
+// CGI: no PATH_INFO fix
+//
 // Revision 1.22  2004/05/16 22:07:35  rurban
 // check more config-default and predefined constants
 // various PagePerm fixes:
