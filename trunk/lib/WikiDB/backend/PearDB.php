@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.84 2005-01-18 20:55:47 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.85 2005-01-25 08:03:35 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -42,10 +42,13 @@ extends WikiDB_backend
         // Open connection to database
         $this->_dsn = $dbparams['dsn'];
 	$this->_dbparams = $dbparams;
-        $dboptions = array('persistent' => true,
+        $this->_lock_count = 0;
+
+        // persistent is usually a DSN option: we override it with a config value.
+        //   phptype://username:password@hostspec/database?persistent=false
+        $dboptions = array('persistent' => DATABASE_PERSISTENT,
                            'debug' => 2);
-        if (preg_match('/^pgsql/',$this->_dsn))
-            $dboptions['persistent'] = false;
+        //if (preg_match('/^pgsql/', $this->_dsn)) $dboptions['persistent'] = false;
         $this->_dbh = DB::connect($this->_dsn, $dboptions);
         $dbh = &$this->_dbh;
         if (DB::isError($dbh)) {
@@ -77,7 +80,6 @@ extends WikiDB_backend
                     'notempty'     => "<>''",
                     'iscontent'    => "content<>''");
         
-        $this->_lock_count = 0;
     }
     
     /**
@@ -1219,6 +1221,9 @@ extends WikiDB_backend_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.84  2005/01/18 20:55:47  rurban
+// reformatting and two bug fixes: adding missing parens
+//
 // Revision 1.83  2005/01/18 10:11:29  rurban
 // Oops. Again thanks to Charles Corrigan
 //
