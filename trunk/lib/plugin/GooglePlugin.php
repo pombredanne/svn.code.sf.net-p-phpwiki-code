@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: GooglePlugin.php,v 1.4 2004-06-13 14:15:28 rurban Exp $');
+rcs_id('$Id: GooglePlugin.php,v 1.5 2004-06-13 14:30:26 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -49,7 +49,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -89,7 +89,7 @@ extends WikiPlugin
                     $list = HTML::ol();
                     foreach ($result->resultElements as $res) {
                     	$li = HTML::li(LinkURL($res['URL'],$res['directoryTitle']),HTML::br(),
-                    	               HTML::raw('&nbsp;&nbsp;'),HTML::em($res['summary']),' -- ',LinkURL($res['URL']));
+                    	               $res['directoryTitle'] ? HTML(HTML::raw('&nbsp;&nbsp;'),HTML::em($res['summary']),' -- ',LinkURL($res['URL'])) : '');
                         $list->pushContent($li);
                     }
                     $html->pushContent($list);
@@ -123,6 +123,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/06/13 14:15:28  rurban
+// GooglePlugin now actually works (templated result missing)
+//
 // Revision 1.3  2004/06/13 13:54:25  rurban
 // Catch fatals on the four dump calls (as file and zip, as html and mimified)
 // FoafViewer: Check against external requirements, instead of fatal.
