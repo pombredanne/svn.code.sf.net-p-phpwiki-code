@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.28 2002-02-25 03:33:10 carstenklapp Exp $');
+rcs_id('$Id: display.php,v 1.29 2002-02-26 21:58:49 carstenklapp Exp $');
 
 require_once('lib/Template.php');
 require_once('lib/BlockParser.php');
@@ -63,6 +63,9 @@ function actionPage(&$request, $action) {
     $transformedContent = PageType($actionrev);
     $template = Template('browse', array('CONTENT' => $transformedContent));
 
+    header("Content-Type: text/html; charset=" . CHARSET);
+    header("Last-Modified: ".Rfc2822DateTime($revision->get('mtime')));
+
     GeneratePage($template, $pagetitle, $revision);
     flush();
 }
@@ -91,6 +94,11 @@ function displayPage(&$request, $tmpl = 'browse') {
     require_once('lib/PageType.php');
     $transformedContent = PageType($revision);
     $template = Template('browse', array('CONTENT' => $transformedContent));
+
+    header("Content-Type: text/html; charset=" . CHARSET);
+    // don't clobber date header given by RC
+    if ( ! ($pagename == _("RecentChanges") || $pagename == _("RecentEdits")) )
+        header("Last-Modified: ".Rfc2822DateTime($revision->get('mtime')));
 
     GeneratePage($template, $pagetitle, $revision,
                  array('ROBOTS_META'	=> 'index,follow',
