@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: diff.php,v 1.43 2003-01-29 19:17:37 carstenklapp Exp $');
+rcs_id('$Id: diff.php,v 1.44 2003-02-17 02:17:31 dairiki Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -275,7 +275,9 @@ function showDiff (&$request) {
 
     // abort if page doesn't exist
     $dbi = $request->getDbh();
-    if (! $dbi->isWikiPage($pagename)) {
+    $page = $request->getPage();
+    $current = $page->getCurrentRevision();
+    if ($current->getVersion() < 1) {
         $html = HTML(HTML::p(fmt("I'm sorry, there is no such page as %s.",
                                  WikiLink($pagename, 'unknown'))));
         include_once('lib/Template.php');
@@ -283,15 +285,13 @@ function showDiff (&$request) {
         return; //early return
     }
 
-    $page = $request->getPage();
-
     if ($version) {
         if (!($new = $page->getRevision($version)))
             NoSuchRevision($request, $page, $version);
         $new_version = fmt("version %d", $version);
     }
     else {
-        $new = $page->getCurrentRevision();
+        $new = $current;
         $new_version = _("current version");
     }
 
@@ -386,6 +386,9 @@ function showDiff (&$request) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.43  2003/01/29 19:17:37  carstenklapp
+// Bugfix for &nbsp showing on diff page.
+//
 // Revision 1.42  2003/01/11 23:05:04  carstenklapp
 // Tweaked diff formatting.
 //
