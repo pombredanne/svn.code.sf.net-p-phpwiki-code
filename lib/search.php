@@ -1,6 +1,6 @@
 <?php
    // Title search: returns pages having a name matching the search term
-   rcs_id('$Id: search.php,v 1.3.2.1 2001-11-07 20:30:47 dairiki Exp $');
+   rcs_id('$Id: search.php,v 1.3.2.2 2001-11-07 21:42:34 dairiki Exp $');
 
    if(get_magic_quotes_gpc())
       $search = stripslashes($search);
@@ -14,13 +14,18 @@
    //$search = preg_quote($search);
 
    // search matching pages
-   $query = InitTitleSearch($dbi, $search);
    $found = 0;
-   while ($page = TitleSearchNextMatch($dbi, $query)) {
-      $found++;
-      $html .= LinkExistingWikiWord($page) . "<br>\n";
+   if (strlen($search)) {           
+      $query = InitTitleSearch($dbi, $search);
+      while ($page = TitleSearchNextMatch($dbi, $query)) {
+         $found++;
+         $html .= LinkExistingWikiWord($page) . "<br>\n";
+      }
    }
-
+   else {
+      $html .= gettext("(You entered an empty search string)") . "<br>\n";
+   }   
+     
    $html .= "<hr noshade>\n"
 	    . sprintf(gettext ("%d pages match your query."), $found)
 	    . "\n";
