@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.82 2004-06-03 09:39:51 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.83 2004-06-03 10:18:19 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -2156,18 +2156,10 @@ extends _PassUser
         $this->_may_change = defined('AUTH_USER_FILE_STORABLE') && AUTH_USER_FILE_STORABLE;
         if (empty($file) and defined('AUTH_USER_FILE'))
             $file = AUTH_USER_FILE;
-        // if passwords may be changed we have to lock them:
-        if ($this->_may_change) {
-            $lock = true;
-            $lockfile = $file . ".lock";
-        } else {
-            $lock = false;
-            $lockfile = false;
-        }
         include_once(dirname(__FILE__)."/pear/File_Passwd.php"); // same style as in main.php
         // "__PHP_Incomplete_Class"
         if (!empty($file) or empty($this->_file) or !isa($this->_file,"File_Passwd"))
-            $this->_file = new File_Passwd($file, $lock, $lockfile);
+            $this->_file = new File_Passwd($file, false);
         else
             return false;
         return $this;
@@ -2187,7 +2179,7 @@ extends _PassUser
 
     function checkPass($submitted_password) {
         //include_once 'lib/pear/File_Passwd.php';
-        if ($this->_file->verifyPassword($this->_userid,$submitted_password)) {
+        if ($this->_file->verifyPassword($this->_userid, $submitted_password)) {
             $this->_authmethod = 'File';
             $this->_level = WIKIAUTH_USER;
             return $this->_level;
@@ -2198,11 +2190,11 @@ extends _PassUser
 
     function storePass($submitted_password) {
         if ($this->_may_change) {
-            if ($this->_file->modUser($this->_userid,$submitted_password)) {
-                $this->_file->close();
-                $this->_file = new File_Passwd($this->_file->_filename, true, $this->_file->lockfile);
-                return true;
-            }
+            $this->_file = new File_Passwd($this->_file->_filename, true, $this->_file->_filename.'.lock');
+            $result = $this->_file->modUser($this->_userid,$submitted_password);
+            $this->_file->close();
+            $this->_file = new File_Passwd($this->_file->_filename, false);
+            return $result;
         }
         return false;
     }
@@ -2926,6 +2918,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.82  2004/06/03 09:39:51  rurban
+// fix LDAP injection (wildcard in username) detected by Steve Christey, MITRE
+//
 // Revision 1.81  2004/06/02 18:01:45  rurban
 // init global FileFinder to add proper include paths at startup
 //   adds PHPWIKI_DIR if started from another dir, lib/pear also

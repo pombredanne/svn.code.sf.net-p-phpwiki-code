@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.154 2004-06-02 18:01:46 rurban Exp $');
+rcs_id('$Id: main.php,v 1.155 2004-06-03 10:18:19 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -412,7 +412,7 @@ $this->version = phpwiki_version();
     }
         
     function requiredAuthorityForAction ($action) {
-    	if (class_exists("PagePermission")) {
+    	if (ENABLE_PAGEPERM and class_exists("PagePermission")) {
     	    return requiredAuthorityForPage($action);
     	} else {
           // FIXME: clean up. 
@@ -606,7 +606,6 @@ $this->version = phpwiki_version();
                     return 'xmlrpc';
                 }
             }
-
             return 'browse';    // Default if no action specified.
         }
 
@@ -616,6 +615,16 @@ $this->version = phpwiki_version();
         // Allow for, e.g. action=LikePages
         if ($this->isActionPage($action))
             return $action;
+
+        // Handle untranslated actionpages in non-english
+        // (people playing with switching languages)
+        if (0 and $GLOBALS['LANG'] != 'en') {
+            require_once("lib/plugin/_WikiTranslation.php");
+            $trans = new WikiPlugin__WikiTranslation();
+            $en_action = $trans->translate($action,'en',$GLOBALS['LANG']);
+            if ($this->isActionPage($en_action))
+                return $en_action;
+        }
 
         trigger_error("$action: Unknown action", E_USER_NOTICE);
         return 'browse';
@@ -957,6 +966,12 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.154  2004/06/02 18:01:46  rurban
+// init global FileFinder to add proper include paths at startup
+//   adds PHPWIKI_DIR if started from another dir, lib/pear also
+// fix slashify for Windows
+// fix USER_AUTH_POLICY=old, use only USER_AUTH_ORDER methods (besides HttpAuth)
+//
 // Revision 1.153  2004/06/01 15:28:00  rurban
 // AdminUser only ADMIN_USER not member of Administrators
 // some RateIt improvements by dfrankow

@@ -16,7 +16,7 @@
 // | Author: Rasmus Lerdorf <rasmus@php.net>                              |
 // +----------------------------------------------------------------------+
 //
-// $Id: File_Passwd.php,v 1.7 2004-05-27 17:49:06 rurban Exp $
+// $Id: File_Passwd.php,v 1.8 2004-06-03 10:18:20 rurban Exp $
 //
 // Manipulate standard UNIX passwd,.htpasswd and CVS pserver passwd files
 
@@ -85,7 +85,7 @@ class File_Passwd {
     function File_Passwd($file, $lock = 0, $lockfile = "") {
         $this->filename = $file;
         if( !empty( $lockfile) ) {
-            $this->lockfile = $lockfile ;
+            $this->lockfile = $lockfile;
         }
 
         if ($lock) {
