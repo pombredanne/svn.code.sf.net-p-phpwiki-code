@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.55 2003-02-21 04:10:58 dairiki Exp $');
+rcs_id('$Id: editpage.php,v 1.56 2003-02-21 18:07:14 dairiki Exp $');
 
 require_once('lib/Template.php');
 
@@ -61,6 +61,7 @@ class PageEditor
             // The diff3 class takes arrays as input.  So retrieve content as
             // an array, or convert it as necesary.
             $orig = $this->page->getRevision($this->_currentVersion);
+            // FIXME: what if _currentVersion has be deleted?
             $orig_content = $orig->getContent();
             $this_content = explode("\n", $this->_content);
             $other_content = $this->current->getContent();
@@ -156,8 +157,11 @@ class PageEditor
 
         // Include any meta-data from original page version which
         // has not been explicitly updated.
-        $meta = array_merge($this->selected->getMetaData(),
-                            $this->meta);
+        // (Except don't propagate pgsrc_version --- moot for now,
+        //  because at present it never gets into the db...)
+        $meta = $this->selected->getMetaData();
+        unset($meta['pgsrc_version']);
+        $meta = array_merge($meta, $this->meta);
         
         // Save new revision
         $newrevision = $page->save($this->_content, $this->_currentVersion + 1, $meta);
@@ -499,6 +503,10 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.55  2003/02/21 04:10:58  dairiki
+ Fixes for new cached markup.
+ Some minor code cleanups.
+
  Revision 1.54  2003/02/16 19:47:16  dairiki
  Update WikiDB timestamp when editing or deleting pages.
 
