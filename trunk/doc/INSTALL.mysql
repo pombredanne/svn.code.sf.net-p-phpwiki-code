@@ -41,7 +41,7 @@ For more information on MySQL go to http://www.mysql.org/
    error. In that case remove existing tables manually and delete
    the "drop tables" lines from schemas/mysql.sql - it should work now
 
-4. Edit DATABASE settings in config/config.ini to reflect your settings.
+4. Edit the DATABASE settings in config/config.ini to reflect your settings.
 
 	a) DATABASE_TYPE should be set to 'SQL' or 'ADODB'.
 	b) DATABASE_DSN should be set to something like
@@ -77,4 +77,4 @@ action=upgrade also brings all changed pgsrc files up-to-date.
 
 /Reini and Arno ahollosi@mail.com
 
-$Id: INSTALL.mysql,v 1.4 2004-06-28 13:40:33 rurban Exp $
+$Id: INSTALL.mysql,v 1.5 2004-06-28 13:54:55 rurban Exp $
