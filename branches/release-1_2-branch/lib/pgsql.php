@@ -1,5 +1,4 @@
-<!-- $Id: pgsql.php,v 1.4.2.2 2001-09-21 21:57:07 wainstead Exp $ -->
-<?php
+<?php rcs_id('$Id: pgsql.php,v 1.4.2.3 2001-11-04 03:46:10 dairiki Exp $');
 
    /*
       Database functions:
