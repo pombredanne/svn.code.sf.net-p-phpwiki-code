@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.83 2002-01-19 20:37:21 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.84 2002-01-21 01:46:18 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -700,6 +700,17 @@ function isa ($object, $class)
 
     return get_class($object) == strtolower($lclass)
         || is_subclass_of($object, $lclass);
+}
+
+/** Determine whether (possible) object has method.
+ *
+ * @param $object mixed Object
+ * @param $method string Method name
+ * @return bool True iff $object is an object with has method $method.
+ */
+function can ($object, $method) 
+{
+    return is_object($object) && method_exists($object, strtolower($method));
 }
 
 // (c-file-style: "gnu")
