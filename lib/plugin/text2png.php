@@ -1,8 +1,15 @@
 <?php // -*-php-*-
-rcs_id('$Id: text2png.php,v 1.8 2002-01-09 18:06:49 carstenklapp Exp $');
+rcs_id('$Id: text2png.php,v 1.9 2002-01-10 04:16:33 carstenklapp Exp $');
 /**
  * File loading and saving diagnostic messages, to see whether an
  * image was saved to or loaded from the cache and what the path is
+ *
+ * PHP must be compiled with support for the GD library version 1.6 or
+ * later to create PNG image files:
+ *
+ * ./configure --with-gd
+ *
+ * See <http://www.php.net/manual/pl/ref.image.php> for more info.
  */
 define('text2png_debug', true);
 
@@ -21,8 +28,21 @@ extends WikiPlugin
         }
 
     function run($dbi, $argstr, $request) {
-        extract($this->getArgs($argstr, $request));
-        return $this->text2png($text,$l);
+        if (ImageTypes() & IMG_PNG) {
+            // we have gd & png so go ahead.
+            extract($this->getArgs($argstr, $request));
+            return $this->text2png($text,$l);
+        } else {
+            // we don't have png and/or gd.
+            $error_html = _("Sorry, this version of PHP cannot create PNG image files.");
+            $link = QElement('a',
+                             array('href'  => "http://www.php.net/manual/pl/ref.image.php",
+                                   'class' => 'rawurl'),
+                             "http://www.php.net/manual/pl/ref.image.php");
+            $error_html .= sprintf(_("See %s"), $link) .".";
+            trigger_error( $error_html, E_USER_NOTICE );
+            return;
+        }
     }
 
     function text2png($text,$l) {
@@ -61,18 +81,20 @@ extends WikiPlugin
              * prepare a new image
              *
              * FIXME: needs a dynamic image size depending on text
-             *        width and height $im = @ImageCreate(150, 50);
+             *        width and height
              */
+            $im = @ImageCreate(150, 50);
 
             if (empty($im)) {
-                $error_text = _("Unable to create a new GD image stream. PHP must be compiled with support for the GD library version 1.6 or later to create PNG image files.");
+                $error_html = _("PHP was unable to create a new GD image stream. Read 'lib/plugin/text2png.php' for details.");
                 // FIXME: Error manager does not transform URLs passed
                 //        through it.
-                $error_text .= QElement('a',
+                $error_html .= QElement('a',
                                         array('href'  => "http://www.php.net/manual/en/function.imagecreate.php",
                                               'class' => 'rawurl'),
                                         "PHP web page");
-                trigger_error( $error_text, E_USER_NOTICE );
+                trigger_error( $error_html, E_USER_NOTICE );
+                return;
             }
             // get ready to draw
             $bg_color = ImageColorAllocate($im, 255, 255, 255);
