@@ -1,12 +1,18 @@
-Date: Fri, 19 Sep 2003 22:22:00 -0500
+Date: Sun, 16 Nov 2003 01:36:08 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.5pre)
-X-Rcs-Id: $Id: AlleBenutzer,v 1.1 2003-09-20 02:26:23 carstenklapp Exp $
+X-Rcs-Id: $Id: AlleBenutzer,v 1.2 2003-11-16 00:41:30 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=AlleBenutzer;
-  pgsrc_version="2 $Revision: 1.1 $";
-  flags="";
+  pgsrc_version="2 $Revision: 1.2 $";
+  flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
+Hier befindet sich eine Liste der Eingetrage Benutzer die ein
+Homepage in diesem Wiki gemacht haben und auch ihre
+BenutzerEinstellungen schon einmal gespeichert.
+----
 <?plugin AllUsers?>
+----
+WikiPlugin PluginManager
