@@ -5,7 +5,7 @@
  */
 $RCS_IDS = '';
 function rcs_id ($id) { $GLOBALS['RCS_IDS'] .= "$id\n"; }
-rcs_id('$Id: prepend.php,v 1.12 2002-09-09 08:38:19 rurban Exp $');
+rcs_id('$Id: prepend.php,v 1.13 2002-09-18 19:23:25 dairiki Exp $');
 
 error_reporting(E_ALL);
 require_once('lib/ErrorManager.php');
@@ -38,6 +38,11 @@ if (!defined('DEBUG') or (defined('DEBUG') and DEBUG > 2)) {
   $ErrorManager->setPostponedErrorMask(E_ALL);
   $ErrorManager->setFatalHandler(new WikiFunctionCb('ExitWiki'));
 }
+else 
+{
+  $ErrorManager->setPostponedErrorMask(E_USER_NOTICE | E_NOTICE);
+}
+
 
 // (c-file-style: "gnu")
 // Local Variables:
