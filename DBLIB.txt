@@ -1,4 +1,4 @@
-$Id: DBLIB.txt,v 1.5 2000-06-29 03:08:37 wainstead Exp $
+$Id: DBLIB.txt,v 1.6 2000-06-30 00:44:23 wainstead Exp $
 
 This is a description of the database interface for PhpWiki. Regardless
 of what kind of data store is used (RDBMS, DBM files, flat text files)
@@ -34,6 +34,8 @@ A few notes:
      refs         => array (where each element is a reference)
   };
 
+The functions are:
+
       OpenDataBase($dbname)
       takes:   a string, the name of the database
       returns: a reference to the database (a handle)
@@ -41,7 +43,8 @@ A few notes:
 
       CloseDataBase($dbi)
       takes:   a reference to the database (handle)
-      returns: the value of the close
+      returns: the value of the close. For databases with persistent
+               connections, this doesn't return anything.
 
 
       RetrievePage($dbi, $pagename)
@@ -87,3 +90,25 @@ A few notes:
 		  'name' -- contains the page name
 		  'hash' -- contains the hash of the page data
                (advances $pos to next result field as well)
+
+
+      IncreaseHitCount($dbi, $pagename)
+      takes: db reference, string (name of a page)
+      returns: nothing (MySQL implementation returns the last result
+               set but it is not used by the caller)
+	       
+
+      GetHitCount($dbi, $pagename)
+      takes: db reference, string (page name)
+      returns: an integer, the number of hits the page has received
+
+
+      InitMostPopular($dbi, $limit)
+      takes: a db reference and an integer, which is the limit of the
+             number of pages you want returned.
+      returns: the result set from the query
+
+
+      MostPopularNextMatch($dbi, $res)
+      takes: db reference, the result set returned by InitMostPopular
+      returns: the next row from the result set, as a PHP array type
