@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: random.php,v 1.9 2002-01-28 15:52:40 carstenklapp Exp $');
+<?php rcs_id('$Id: random.php,v 1.10 2004-04-19 23:13:04 zorloc Exp $');
 /**
  */
 class randomImage {
@@ -41,8 +41,7 @@ class imageSet extends fileSet {
      * $InlineImages.
      */
     function _filenameSelector($filename) {
-        global $InlineImages;
-        return preg_match("/($InlineImages)$/i", $filename);
+        return preg_match("/(" . INLINE_IMAGES . ")$/i", $filename);
     }
 };
 

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.95 2004-04-18 01:11:52 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.96 2004-04-19 23:13:03 zorloc Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -250,9 +250,9 @@ function DumpHtmlToDir (&$request)
     $dbi = $request->getDbh();
     $pages = $dbi->getAllPages();
 
-    global $HTML_DUMP_SUFFIX, $Theme;
-    if ($HTML_DUMP_SUFFIX)
-        $Theme->HTML_DUMP_SUFFIX = $HTML_DUMP_SUFFIX;
+    global $Theme;
+    if (defined('HTML_DUMP_SUFFIX'))
+        $Theme->HTML_DUMP_SUFFIX = HTML_DUMP_SUFFIX;
     $Theme->DUMP_MODE = 'HTML';
 
     while ($page = $pages->next()) {
@@ -346,9 +346,9 @@ function MakeWikiZipHtml (&$request)
     $dbi = $request->getDbh();
     $pages = $dbi->getAllPages();
 
-    global $HTML_DUMP_SUFFIX, $Theme;
-    if ($HTML_DUMP_SUFFIX)
-        $Theme->HTML_DUMP_SUFFIX = $HTML_DUMP_SUFFIX;
+    global $Theme;
+    if (defined('HTML_DUMP_SUFFIX'))
+        $Theme->HTML_DUMP_SUFFIX = HTML_DUMP_SUFFIX;
 
     while ($page = $pages->next()) {
     	if (! $request->getArg('start_debug'))
@@ -881,6 +881,11 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.95  2004/04/18 01:11:52  rurban
+ more numeric pagename fixes.
+ fixed action=upload with merge conflict warnings.
+ charset changed from constant to global (dynamic utf-8 switching)
+
  Revision 1.94  2004/03/14 16:36:37  rurban
  dont load backup files
 

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.36 2004-04-19 18:27:45 rurban Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.37 2004-04-19 23:13:03 zorloc Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -255,8 +255,6 @@ class Markup_escape  extends SimpleMarkup
 }
 
 function LinkBracketLink($bracketlink) {
-    global $AllowedProtocols, $InlineImages;
-
     //include_once("lib/interwiki.php");
     $intermap = getInterwikiMap();
     
@@ -282,12 +280,12 @@ function LinkBracketLink($bracketlink) {
 
     // [label|link]
     // if label looks like a url to an image, we want an image link.
-    if (preg_match("/\\.($InlineImages)$/i", $label)) {
+    if (preg_match("/\\.(" . INLINE_IMAGES . ")$/i", $label)) {
         $imgurl = $label;
         if (preg_match("/^" . $intermap->getRegexp() . ":/", $label)) {
             $imgurl = $intermap->link($label);
             $imgurl = $imgurl->getAttr('href');
-        } elseif (! preg_match("#^($AllowedProtocols):#", $imgurl)) {
+        } elseif (! preg_match("#^(" . ALLOWED_PROTOCOLS . "):#", $imgurl)) {
             // local theme linkname like 'images/next.gif'.
             global $Theme;
             $imgurl = $Theme->getImageURL($imgurl);
@@ -302,9 +300,9 @@ function LinkBracketLink($bracketlink) {
                        $bar ? $label : $link);
     }
 
-    if (preg_match("#^($AllowedProtocols):#", $link)) {
+    if (preg_match("#^(" . ALLOWED_PROTOCOLS . "):#", $link)) {
         // if it's an image, embed it; otherwise, it's a regular link
-        if (preg_match("/\\.($InlineImages)$/i", $link))
+        if (preg_match("/\\.(" . INLINE_IMAGES . ")$/i", $link))
             return LinkImage($link, $label);
         else
             return new Cached_ExternalLink($link, $label);
@@ -319,7 +317,7 @@ function LinkBracketLink($bracketlink) {
      * [File:my_image.gif|what a pic] shows a inlimed image linked to the page "what a pic"
      */
     elseif (preg_match("/^" . $intermap->getRegexp() . ":/", $link)) {
-        if (empty($label) && preg_match("/\\.($InlineImages)$/i", $link)) {
+        if (empty($label) && preg_match("/\\.(" . INLINE_IMAGES . ")$/i", $link)) {
             // if without label => inlined image [File:xx.gif]
             $imgurl = $intermap->link($link);
             return LinkImage($imgurl->getAttr('href'), $label);
@@ -356,8 +354,7 @@ class Markup_bracketlink  extends SimpleMarkup
 class Markup_url extends SimpleMarkup
 {
     function getMatchRegexp () {
-        global $AllowedProtocols;
-        return "(?<![[:alnum:]]) (?:$AllowedProtocols) : [^\s<>\"']+ (?<![ ,.?; \] \) ])";
+        return "(?<![[:alnum:]]) (?:" . ALLOWED_PROTOCOLS . ") : [^\s<>\"']+ (?<![ ,.?; \] \) ])";
     }
     
     function markup ($match) {

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: InterWikiSearch.php,v 1.5 2004-02-19 22:06:53 rurban Exp $');
+rcs_id('$Id: InterWikiSearch.php,v 1.6 2004-04-19 23:13:03 zorloc Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
@@ -48,7 +48,7 @@ extends WikiPlugin
         $args = $this->getArgs($argstr, $request);
         extract($args);
 
-        if (!DEBUG)
+        if (defined('DEBUG') && !DEBUG)
             return $this->disabled("Sorry, this plugin is currently out of order.");
 
         $page = $dbi->getPage($request->getArg('pagename'));
@@ -67,7 +67,7 @@ extends WikiPlugin
 /**
  * @desc
  */
-if (DEBUG) {
+if (defined('DEBUG') && DEBUG) {
 class PageFormatter_searchableInterWikiMap 
 extends PageFormatter_interwikimap {}
 
@@ -122,6 +122,9 @@ extends PageType_interwikimap
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/02/19 22:06:53  rurban
+// use new class, to be able to get rid of lib/interwiki.php
+//
 // Revision 1.4  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //

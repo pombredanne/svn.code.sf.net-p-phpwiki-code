@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SystemInfo.php,v 1.13 2004-04-18 01:11:52 rurban Exp $');
+rcs_id('$Id: SystemInfo.php,v 1.14 2004-04-19 23:13:04 zorloc Exp $');
 /**
  Copyright (C) 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -58,7 +58,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.13 $");
+                            "\$Revision: 1.14 $");
     }
 
     function getExpire($dbi, $argarray, $request) {
@@ -290,13 +290,13 @@ extends WikiPlugin
     }
 
     function inlineimages () {
-        return implode(' ', explode('|', $GLOBALS['InlineImages']));
+        return implode(' ', explode('|', INLINE_IMAGES));
     }
     function wikinameregexp () {
         return $GLOBALS['WikiNameRegexp'];
     }
     function allowedprotocols () {
-        return implode(' ', explode('|', $GLOBALS['AllowedProtocols']));
+        return implode(' ', explode('|', ALLOWED_PROTOCOLS));
     }
     function available_plugins () {
         $fileset = new FileSet(FindFile('lib/plugin'), '*.php');
@@ -519,6 +519,11 @@ function stddev(&$hits, $total = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2004/04/18 01:11:52  rurban
+// more numeric pagename fixes.
+// fixed action=upload with merge conflict warnings.
+// charset changed from constant to global (dynamic utf-8 switching)
+//
 // Revision 1.12  2004/03/14 16:26:21  rurban
 // copyright line
 //
