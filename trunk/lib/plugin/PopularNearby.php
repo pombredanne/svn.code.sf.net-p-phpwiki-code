@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PopularNearby.php,v 1.3 2004-05-01 11:41:09 rurban Exp $');
+rcs_id('$Id: PopularNearby.php,v 1.4 2004-05-01 18:02:41 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -50,7 +50,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -144,21 +144,17 @@ extends WikiPlugin
 
     function sortByHits($links) {
         if (!$links) return array();
-        if (check_php_version(4,1,0)) // new sort algorithm
-            usort($links,array('WikiPlugin_PopularNearby','cmp_hits'));
-        else    
-            uksort($links,'WikiPlugin_PopularNearby::cmp_hits');
+        usort($links,'cmp_by_hits'); // php-4.0.6 cannot use methods
         reset($links);
         return $links;
     }
-
-    function cmp_hits($a, $b) {
-    	if ($a['hits'] == $b['hits']) return 0;
-        return $a['hits'] < $b['hits'] ? 1 : -1;
-    }
-
-
 };
+
+function cmp_by_hits($a, $b) {
+     if ($a['hits'] == $b['hits']) return 0;
+     return $a['hits'] < $b['hits'] ? 1 : -1;
+}
+
 
 // $Log: not supported by cvs2svn $
 // Revision 1.2  2004/04/29 23:25:12  rurban
