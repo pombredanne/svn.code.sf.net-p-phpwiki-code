@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.9 2002-01-24 20:08:55 carstenklapp Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.10 2002-01-24 20:11:34 carstenklapp Exp $');
 /*
  * Code for writing XML.
  */
@@ -161,6 +161,7 @@ class XmlElement
 
     function _quoteAttr ($value) {
         return str_replace('"', '&quot;', XmlElement::_quote($value));
+        //"<--kludge for brain-dead syntax coloring
     }
 };
 
