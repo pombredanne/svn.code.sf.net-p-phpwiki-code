@@ -1,9 +1,9 @@
 Date: Sat, 13 Mar 2004 11:26:41 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.8)
-X-Rcs-Id: $Id: CreateTocPlugin,v 1.2 2004-03-17 18:33:31 rurban Exp $
+X-Rcs-Id: $Id: CreateTocPlugin,v 1.3 2004-07-04 08:41:39 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=CreateTocPlugin;
-  pgsrc_version="2 $Revision: 1.2 $";
+  pgsrc_version="2 $Revision: 1.3 $";
   flags="";
   markup=2;
   charset=iso-8859-1
@@ -42,3 +42,6 @@ If any header contains a link or a ~WikiWord or non-word characters, ~CreateToc 
 !! Examples
 
 See for example PhpWikiDemo:en/TextFormattingRules
+-------------
+
+PhpWikiDocumentation WikiPlugin
