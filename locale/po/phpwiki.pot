@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.4pre\n"
-"POT-Creation-Date: 2003-03-12 04:24-0500\n"
+"POT-Creation-Date: 2003-11-09 13:41-0500\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,7 +94,7 @@ msgstr ""
 msgid "InterWiki Address"
 msgstr ""
 
-#: ../lib/RSSWriter091.php:116 ../lib/loadsave.php:819
+#: ../lib/RSSWriter091.php:116 ../lib/loadsave.php:821
 #: ../lib/plugin/RecentChanges.php:250 ../lib/plugin/RecentChanges.php:263
 #: ../lib/plugin/RecentChanges.php:363 ../lib/plugin/RecentChanges.php:434
 #: ../lib/plugin/RecentChanges.php:525 ../lib/plugin/RecentChanges.php:601
@@ -164,21 +164,21 @@ msgid "Diff"
 msgstr ""
 
 #: ../lib/Theme.php:779 ../themes/default/templates/signin.tmpl:5
-#: ../themes/default/templates/signin.tmpl:29
+#: ../themes/default/templates/signin.tmpl:32
 msgid "Sign Out"
 msgstr ""
 
-#: ../lib/Theme.php:780 ../lib/WikiUser.php:182
-#: ../themes/default/templates/login.tmpl:44
-#: ../themes/default/templates/signin.tmpl:55
+#: ../lib/Theme.php:780 ../lib/WikiUser.php:183
+#: ../themes/default/templates/login.tmpl:48
+#: ../themes/default/templates/signin.tmpl:58
 msgid "Sign In"
 msgstr ""
 
-#: ../lib/Theme.php:781 ../themes/MacOSX/themeinfo.php:126
+#: ../lib/Theme.php:781 ../themes/MacOSX/themeinfo.php:147
 msgid "Lock Page"
 msgstr ""
 
-#: ../lib/Theme.php:782 ../themes/MacOSX/themeinfo.php:127
+#: ../lib/Theme.php:782 ../themes/MacOSX/themeinfo.php:148
 msgid "Unlock Page"
 msgstr ""
 
@@ -196,12 +196,12 @@ msgstr ""
 msgid "Optimizing %s"
 msgstr ""
 
-#: ../lib/WikiDB.php:1147
+#: ../lib/WikiDB.php:1149
 #, c-format
 msgid "Describe %s here."
 msgstr ""
 
-#: ../lib/WikiDB.php:1182
+#: ../lib/WikiDB.php:1184
 #, c-format
 msgid "Acck! Revision %s of %s seems to have been deleted!"
 msgstr ""
@@ -223,27 +223,31 @@ msgid ""
 "DB file to a permanent location or risk losing all the pages!"
 msgstr ""
 
-#: ../lib/WikiPlugin.php:85
+#: ../lib/WikiPlugin.php:88
+msgid "n/a"
+msgstr ""
+
+#: ../lib/WikiPlugin.php:117
 #, c-format
 msgid "argument '%s' not declared by plugin"
 msgstr ""
 
-#: ../lib/WikiPlugin.php:150
+#: ../lib/WikiPlugin.php:181
 #, c-format
 msgid "trailing cruft in plugin args: '%s'"
 msgstr ""
 
-#: ../lib/WikiPlugin.php:259
+#: ../lib/WikiPlugin.php:290
 #, c-format
 msgid "Plugin %s failed."
 msgstr ""
 
-#: ../lib/WikiPlugin.php:265
+#: ../lib/WikiPlugin.php:296
 #, c-format
 msgid "Plugin %s disabled."
 msgstr ""
 
-#: ../lib/WikiPlugin.php:331
+#: ../lib/WikiPlugin.php:383
 #, c-format
 msgid "Include of '%s' failed"
 msgstr ""
@@ -255,60 +259,60 @@ msgid ""
 "referring page."
 msgstr ""
 
-#: ../lib/WikiUser.php:155
+#: ../lib/WikiUser.php:156
 msgid "Invalid password or userid."
 msgstr ""
 
-#: ../lib/WikiUser.php:157
+#: ../lib/WikiUser.php:158
 msgid "Insufficient permissions."
 msgstr ""
 
-#: ../lib/WikiUser.php:208
+#: ../lib/WikiUser.php:211
 msgid ""
 "You forgot to set ENCRYPTED_PASSWD to true. Please update your /index.php"
 msgstr ""
 
-#: ../lib/WikiUser.php:424
+#: ../lib/WikiUser.php:427
 #, c-format
 msgid ""
 "Old UserPage %s without stored password updated with empty password. Set a "
 "password in your UserPreferences."
 msgstr ""
 
-#: ../lib/XmlElement.php:403 ../lib/stdlib.php:961
+#: ../lib/XmlElement.php:401 ../lib/stdlib.php:970
 #, c-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr ""
 
-#: ../lib/config.php:145
+#: ../lib/config.php:146
 #, c-format
 msgid "Can't set locale: '%s'"
 msgstr ""
 
-#: ../lib/config.php:376
+#: ../lib/config.php:378
 msgid "An unnamed PhpWiki"
 msgstr ""
 
-#: ../lib/config.php:382 ../lib/imagecache.php:55
-#: ../themes/default/templates/userprefs.tmpl:109
+#: ../lib/config.php:384 ../lib/imagecache.php:55
+#: ../themes/default/templates/userprefs.tmpl:117
 msgid "HomePage"
 msgstr ""
 
-#: ../lib/config.php:397
+#: ../lib/config.php:399
 #, c-format
 msgid "Encrypted passwords cannot be used: %s."
 msgstr ""
 
-#: ../lib/config.php:403
+#: ../lib/config.php:405
 msgid "The admin password cannot be empty. Please update your /index.php"
 msgstr ""
 
-#: ../lib/config.php:407
+#: ../lib/config.php:409
 #, c-format
 msgid "You can use %s only with %s"
 msgstr ""
 
-#: ../lib/config.php:413
+#: ../lib/config.php:415
 msgid ""
 "Empty db_session_table. Turn USE_DB_SESSION off or define the table name."
 msgstr ""
@@ -449,7 +453,7 @@ msgstr ""
 msgid "Saved: %s"
 msgstr ""
 
-#: ../lib/editpage.php:244 ../themes/MacOSX/themeinfo.php:128
+#: ../lib/editpage.php:244 ../themes/MacOSX/themeinfo.php:149
 msgid "Page Locked"
 msgstr ""
 
@@ -587,7 +591,7 @@ msgstr ""
 msgid "has edit conflicts - overwriting anyway"
 msgstr ""
 
-#: ../lib/loadsave.php:435 ../lib/loadsave.php:787
+#: ../lib/loadsave.php:435 ../lib/loadsave.php:789
 msgid "The PhpWiki programming team"
 msgstr ""
 
@@ -605,17 +609,17 @@ msgstr ""
 msgid "- saved to database as version %d"
 msgstr ""
 
-#: ../lib/loadsave.php:464 ../lib/loadsave.php:603
+#: ../lib/loadsave.php:464 ../lib/loadsave.php:605
 #, c-format
 msgid "MIME file %s"
 msgstr ""
 
-#: ../lib/loadsave.php:465 ../lib/loadsave.php:608
+#: ../lib/loadsave.php:465 ../lib/loadsave.php:610
 #, c-format
 msgid "Serialized file %s"
 msgstr ""
 
-#: ../lib/loadsave.php:466 ../lib/loadsave.php:622
+#: ../lib/loadsave.php:466 ../lib/loadsave.php:624
 #, c-format
 msgid "plain file %s"
 msgstr ""
@@ -639,34 +643,34 @@ msgstr ""
 msgid "Default InterWiki map file not loaded."
 msgstr ""
 
-#: ../lib/loadsave.php:636 ../lib/loadsave.php:648
+#: ../lib/loadsave.php:638 ../lib/loadsave.php:650
 msgid "Skipping"
 msgstr ""
 
-#: ../lib/loadsave.php:745
+#: ../lib/loadsave.php:747
 #, c-format
 msgid "Unable to load: %s"
 msgstr ""
 
-#: ../lib/loadsave.php:752
+#: ../lib/loadsave.php:754
 #, c-format
 msgid "Bad file type: %s"
 msgstr ""
 
-#: ../lib/loadsave.php:766
+#: ../lib/loadsave.php:768
 #, c-format
 msgid "Loading '%s'"
 msgstr ""
 
-#: ../lib/loadsave.php:790
+#: ../lib/loadsave.php:792
 msgid "Loading up virgin wiki"
 msgstr ""
 
-#: ../lib/loadsave.php:810
+#: ../lib/loadsave.php:812
 msgid "No uploaded file to upload?"
 msgstr ""
 
-#: ../lib/loadsave.php:814
+#: ../lib/loadsave.php:816
 #, c-format
 msgid "Uploading %s"
 msgstr ""
@@ -712,127 +716,135 @@ msgid "edit pages in this wiki"
 msgstr ""
 
 #: ../lib/main.php:267
-msgid "create pages in this wiki"
+msgid "edit user preferences in this wiki"
 msgstr ""
 
 #: ../lib/main.php:268
-msgid "load files into this wiki"
+msgid "create pages in this wiki"
 msgstr ""
 
 #: ../lib/main.php:269
-msgid "lock pages in this wiki"
+msgid "load files into this wiki"
 msgstr ""
 
 #: ../lib/main.php:270
-msgid "remove pages from this wiki"
+msgid "lock pages in this wiki"
 msgstr ""
 
 #: ../lib/main.php:271
-msgid "unlock pages in this wiki"
+msgid "remove pages from this wiki"
 msgstr ""
 
 #: ../lib/main.php:272
-msgid "upload a zip dump to this wiki"
+msgid "unlock pages in this wiki"
 msgstr ""
 
 #: ../lib/main.php:273
-msgid "verify the current action"
+msgid "upload a zip dump to this wiki"
 msgstr ""
 
 #: ../lib/main.php:274
-msgid "view the source of pages in this wiki"
+msgid "verify the current action"
 msgstr ""
 
 #: ../lib/main.php:275
-msgid "access this wiki via XML-RPC"
+msgid "view the source of pages in this wiki"
 msgstr ""
 
 #: ../lib/main.php:276
-msgid "download a zip dump from this wiki"
+msgid "access this wiki via XML-RPC"
 msgstr ""
 
 #: ../lib/main.php:277
+msgid "download a zip dump from this wiki"
+msgstr ""
+
+#: ../lib/main.php:278
 msgid "download an html zip dump from this wiki"
 msgstr ""
 
-#: ../lib/main.php:289
+#: ../lib/main.php:290
 msgid "Browsing pages"
 msgstr ""
 
-#: ../lib/main.php:290
+#: ../lib/main.php:291
 msgid "Diffing pages"
 msgstr ""
 
-#: ../lib/main.php:291
+#: ../lib/main.php:292
 msgid "Dumping html pages"
 msgstr ""
 
-#: ../lib/main.php:292
+#: ../lib/main.php:293
 msgid "Dumping serial pages"
 msgstr ""
 
-#: ../lib/main.php:293
+#: ../lib/main.php:294
 msgid "Editing pages"
 msgstr ""
 
-#: ../lib/main.php:294
-msgid "Creating pages"
-msgstr ""
-
 #: ../lib/main.php:295
-msgid "Loading files"
+msgid "Edit user preferences"
 msgstr ""
 
 #: ../lib/main.php:296
-msgid "Locking pages"
+msgid "Creating pages"
 msgstr ""
 
 #: ../lib/main.php:297
-msgid "Removing pages"
+msgid "Loading files"
 msgstr ""
 
 #: ../lib/main.php:298
-msgid "Unlocking pages"
+msgid "Locking pages"
 msgstr ""
 
 #: ../lib/main.php:299
-msgid "Uploading zip dumps"
+msgid "Removing pages"
 msgstr ""
 
 #: ../lib/main.php:300
-msgid "Verify the current action"
+msgid "Unlocking pages"
 msgstr ""
 
 #: ../lib/main.php:301
-msgid "Viewing the source of pages"
+msgid "Uploading zip dumps"
 msgstr ""
 
 #: ../lib/main.php:302
-msgid "XML-RPC access"
+msgid "Verify the current action"
 msgstr ""
 
 #: ../lib/main.php:303
-msgid "Downloading zip dumps"
+msgid "Viewing the source of pages"
 msgstr ""
 
 #: ../lib/main.php:304
+msgid "XML-RPC access"
+msgstr ""
+
+#: ../lib/main.php:305
+msgid "Downloading zip dumps"
+msgstr ""
+
+#: ../lib/main.php:306
 msgid "Downloading html zip dumps"
 msgstr ""
 
-#: ../lib/main.php:407
+#: ../lib/main.php:411
 #, c-format
 msgid "%s: Bad action"
 msgstr ""
 
-#: ../lib/main.php:429
+#: ../lib/main.php:433
 msgid "Fatal PhpWiki Error"
 msgstr ""
 
-#: ../lib/main.php:604 ../lib/plugin/FullTextSearch.php:31
+#: ../lib/main.php:608 ../lib/plugin/FullTextSearch.php:31
 msgid "FullTextSearch"
 msgstr ""
 
-#: ../lib/main.php:607 ../lib/plugin/RecentChanges.php:515
+#: ../lib/main.php:611 ../lib/plugin/RecentChanges.php:515
 #: ../lib/plugin/TitleSearch.php:31
 msgid "TitleSearch"
 msgstr ""
@@ -963,7 +975,7 @@ msgid ""
 "Displays a url in a seperate frame inside our body. Only one frame allowed."
 msgstr ""
 
-#: ../lib/plugin/FrameInclude.php:93 ../lib/plugin/IncludePage.php:108
+#: ../lib/plugin/FrameInclude.php:93 ../lib/plugin/IncludePage.php:124
 #, c-format
 msgid "recursive inclusion of page %s"
 msgstr ""
@@ -1045,16 +1057,16 @@ msgstr ""
 msgid "<%s: no such section>"
 msgstr ""
 
-#: ../lib/plugin/IncludePage.php:101
+#: ../lib/plugin/IncludePage.php:117
 msgid "no page specified"
 msgstr ""
 
-#: ../lib/plugin/IncludePage.php:117 ../lib/plugin/PageGroup.php:121
+#: ../lib/plugin/IncludePage.php:133 ../lib/plugin/PageGroup.php:121
 #, c-format
 msgid "%s(%d): no such revision"
 msgstr ""
 
-#: ../lib/plugin/IncludePage.php:146
+#: ../lib/plugin/IncludePage.php:162
 #, c-format
 msgid "Included from %s"
 msgstr ""
@@ -1251,27 +1263,28 @@ msgstr ""
 msgid "PageTrail Plugin"
 msgstr ""
 
-#: ../lib/plugin/PhotoAlbum.php:53
+#: ../lib/plugin/PhotoAlbum.php:138 ../lib/stdlib.php:1019
+#: ../themes/Hawaiian/lib/random.php:20
+#, c-format
+msgid "%s is empty."
+msgstr ""
+
+#: ../lib/plugin/PhotoAlbum.php:297
 msgid "PhotoAlbum"
 msgstr ""
 
-#: ../lib/plugin/PhotoAlbum.php:57
+#: ../lib/plugin/PhotoAlbum.php:301
 msgid ""
 "Displays a set of photos listed in a text file with optional descriptions"
 msgstr ""
 
-#: ../lib/plugin/PhotoAlbum.php:80 ../lib/plugin/Transclude.php:76
+#: ../lib/plugin/PhotoAlbum.php:330 ../lib/plugin/Transclude.php:76
 #, c-format
 msgid "%s parameter missing"
 msgstr ""
 
-#: ../lib/plugin/PhotoAlbum.php:84 ../lib/plugin/Transclude.php:85
+#: ../lib/plugin/PhotoAlbum.php:333 ../lib/plugin/Transclude.php:85
 msgid "Bad url in src: remove all of <, >, \""
-msgstr ""
-
-#: ../lib/plugin/PhotoAlbum.php:90
-#, c-format
-msgid "Unable to read %s "
 msgstr ""
 
 #: ../lib/plugin/PhpHighlight.php:54
@@ -1282,7 +1295,7 @@ msgstr ""
 msgid "PHP syntax highlighting"
 msgstr ""
 
-#: ../lib/plugin/PhpHighlight.php:163
+#: ../lib/plugin/PhpHighlight.php:165
 #, c-format
 msgid "Invalid color: %s"
 msgstr ""
@@ -1374,11 +1387,11 @@ msgstr ""
 msgid "Displays a list of randomly chosen pages or redirects to a random page."
 msgstr ""
 
-#: ../lib/plugin/RawHtml.php:45
+#: ../lib/plugin/RawHtml.php:39
 msgid "A plugin to provide for raw HTML within wiki pages."
 msgstr ""
 
-#: ../lib/plugin/RawHtml.php:55
+#: ../lib/plugin/RawHtml.php:56
 msgid "Raw HTML is disabled in this wiki."
 msgstr ""
 
@@ -1399,7 +1412,7 @@ msgstr ""
 msgid "New page."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:128
+#: ../lib/plugin/RecentChanges.php:128 ../themes/MacOSX/themeinfo.php:103
 msgid "(diff)"
 msgstr ""
 
@@ -1765,7 +1778,7 @@ msgstr ""
 msgid "Search the titles of all pages in this wiki."
 msgstr ""
 
-#: ../lib/plugin/TitleSearch.php:67
+#: ../lib/plugin/TitleSearch.php:74
 #, c-format
 msgid "Title search results for '%s'"
 msgstr ""
@@ -1829,22 +1842,64 @@ msgstr ""
 msgid "Included from %s:"
 msgstr ""
 
-#: ../lib/plugin/UserPreferences.php:14
+#: ../lib/plugin/UpLoad.php:54
+msgid "Simple Plugin to load files up to server"
+msgstr ""
+
+#: ../lib/plugin/UpLoad.php:80 ../lib/plugin/WikiForm.php:100
+msgid "Upload"
+msgstr ""
+
+#: ../lib/plugin/UpLoad.php:103
+msgid "ACCESS DENIED: Please log in to upload files"
+msgstr ""
+
+#: ../lib/plugin/UpLoad.php:117
+#, c-format
+msgid "Files with extension %s are not allowed"
+msgstr ""
+
+#: ../lib/plugin/UpLoad.php:123
+#, c-format
+msgid "There is already a file with name %s uploaded"
+msgstr ""
+
+#: ../lib/plugin/UpLoad.php:129
+msgid "Sorry but this file is too big"
+msgstr ""
+
+#: ../lib/plugin/UpLoad.php:134
+msgid "File successfully uploaded to location:"
+msgstr ""
+
+#: ../lib/plugin/UpLoad.php:142
+msgid "Error: the upload log is not writable"
+msgstr ""
+
+#: ../lib/plugin/UpLoad.php:146
+msgid "Error: can't open the upload logfile"
+msgstr ""
+
+#: ../lib/plugin/UpLoad.php:165
+msgid "Uploading failed."
+msgstr ""
+
+#: ../lib/plugin/UserPreferences.php:34
 msgid "UserPreferences"
 msgstr ""
 
-#: ../lib/plugin/UserPreferences.php:48
+#: ../lib/plugin/UserPreferences.php:76
 msgid ""
 "Error: The page with the UserPreferences plugin must be valid WikiWord or a "
 "Preferences subpage of the users HomePage. Sorry, UserPreferences cannot be "
 "saved."
 msgstr ""
 
-#: ../lib/plugin/UserPreferences.php:62
+#: ../lib/plugin/UserPreferences.php:92
 msgid "No changes."
 msgstr ""
 
-#: ../lib/plugin/UserPreferences.php:64
+#: ../lib/plugin/UserPreferences.php:94
 #, c-format
 msgid "%d UserPreferences fields successfully updated."
 msgstr ""
@@ -1935,8 +1990,8 @@ msgstr ""
 
 #: ../lib/plugin/WikiAdminRemove.php:197 ../lib/plugin/WikiAdminSelect.php:154
 #: ../lib/plugin/WikiAdminSelect.php:173 ../lib/removepage.php:22
-#: ../themes/default/templates/login.tmpl:46
-#: ../themes/default/templates/userprefs.tmpl:195
+#: ../themes/default/templates/login.tmpl:50
+#: ../themes/default/templates/userprefs.tmpl:204
 msgid "Cancel"
 msgstr ""
 
@@ -1983,7 +2038,7 @@ msgstr ""
 msgid "WikiAdminUtils says:"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:95 ../lib/stdlib.php:1283
+#: ../lib/plugin/WikiAdminUtils.php:95 ../lib/stdlib.php:1292
 msgid "Okay"
 msgstr ""
 
@@ -2044,10 +2099,6 @@ msgstr ""
 
 #: ../lib/plugin/WikiForm.php:89
 msgid "Dump Pages as XHTML"
-msgstr ""
-
-#: ../lib/plugin/WikiForm.php:100
-msgid "Upload"
 msgstr ""
 
 #: ../lib/plugin/WikiForm.php:104
@@ -2143,105 +2194,100 @@ msgstr ""
 msgid "Remove page"
 msgstr ""
 
-#: ../lib/stdlib.php:226 ../lib/stdlib.php:245
+#: ../lib/stdlib.php:236 ../lib/stdlib.php:255
 msgid "BAD URL -- remove all of <, >, \""
 msgstr ""
 
-#: ../lib/stdlib.php:306
+#: ../lib/stdlib.php:316
 msgid "BAD phpwiki: URL"
 msgstr ""
 
-#: ../lib/stdlib.php:344
+#: ../lib/stdlib.php:354
 msgid "Lock page to enable link"
 msgstr ""
 
-#: ../lib/stdlib.php:446
+#: ../lib/stdlib.php:453
 #, c-format
 msgid "'%s': Bad page name: %s"
 msgstr ""
 
-#: ../lib/stdlib.php:481
+#: ../lib/stdlib.php:490
 msgid "White space converted to single space"
 msgstr ""
 
-#: ../lib/stdlib.php:486
+#: ../lib/stdlib.php:495
 msgid "Control characters not allowed"
 msgstr ""
 
-#: ../lib/stdlib.php:495
+#: ../lib/stdlib.php:504
 #, c-format
 msgid "Leading %s not allowed"
 msgstr ""
 
-#: ../lib/stdlib.php:498
+#: ../lib/stdlib.php:507
 msgid "';' and ':' in pagenames are deprecated"
 msgstr ""
 
-#: ../lib/stdlib.php:502
+#: ../lib/stdlib.php:511
 msgid "too long"
 msgstr ""
 
-#: ../lib/stdlib.php:507
+#: ../lib/stdlib.php:516
 msgid "illegal pagename"
 msgstr ""
 
-#: ../lib/stdlib.php:749
+#: ../lib/stdlib.php:758
 msgid "Revision Not Found"
 msgstr ""
 
-#: ../lib/stdlib.php:750
+#: ../lib/stdlib.php:759
 #, c-format
 msgid "I'm sorry.  Version %d of %s is not in the database."
 msgstr ""
 
-#: ../lib/stdlib.php:753
+#: ../lib/stdlib.php:762
 msgid "Bad Version"
 msgstr ""
 
-#: ../lib/stdlib.php:970
+#: ../lib/stdlib.php:979
 #, c-format
 msgid "%s: argument index out of range"
 msgstr ""
 
-#: ../lib/stdlib.php:1010 ../themes/Hawaiian/lib/random.php:20
-#, c-format
-msgid "%s is empty."
-msgstr ""
-
-#: ../lib/stdlib.php:1017
+#: ../lib/stdlib.php:1026
 #, c-format
 msgid "Unable to open directory '%s' for reading"
 msgstr ""
 
-#: ../lib/ziplib.php:185
+#: ../lib/ziplib.php:209
 msgid "Can't inflate data: zlib support not enabled in this PHP"
 msgstr ""
 
-#: ../lib/ziplib.php:375
+#: ../lib/ziplib.php:399
 #, c-format
 msgid "Can't open zip file '%s' for reading"
 msgstr ""
 
-#: ../lib/ziplib.php:382
+#: ../lib/ziplib.php:406
 msgid "Unexpected EOF in zip file"
 msgstr ""
 
-#: ../lib/ziplib.php:679
+#: ../lib/ziplib.php:703
 #, c-format
 msgid "[%d] See [%s]"
 msgstr ""
 
-#: ../lib/ziplib.php:687
+#: ../lib/ziplib.php:711
 msgid "References"
 msgstr ""
 
-#: ../themes/Hawaiian/themeinfo.php:29 ../themes/MacOSX/themeinfo.php:97
+#: ../themes/Hawaiian/themeinfo.php:29 ../themes/MacOSX/themeinfo.php:116
 #: ../themes/Portland/themeinfo.php:59 ../themes/Sidebar/themeinfo.php:32
 #: ../themes/SpaceWiki/themeinfo.php:43
 msgid "Printer"
 msgstr ""
 
-#: ../themes/Hawaiian/themeinfo.php:30 ../themes/MacOSX/themeinfo.php:98
+#: ../themes/Hawaiian/themeinfo.php:30 ../themes/MacOSX/themeinfo.php:117
 #: ../themes/Portland/themeinfo.php:60 ../themes/Sidebar/themeinfo.php:33
 #: ../themes/SpaceWiki/themeinfo.php:44 ../themes/default/themeinfo.php:26
 msgid "Modern"
@@ -2315,7 +2361,7 @@ msgid ""
 msgstr ""
 
 #: ../themes/Portland/templates/editpage.tmpl:69
-#: ../themes/default/templates/userprefs.tmpl:158
+#: ../themes/default/templates/userprefs.tmpl:167
 msgid "Edit Area Size"
 msgstr ""
 
@@ -2347,7 +2393,6 @@ msgstr ""
 #: ../themes/Portland/templates/editpage.tmpl:103
 #: ../themes/Portland/templates/editpage.tmpl:108
 #: ../themes/default/templates/editpage.tmpl:120
-#: ../themes/default/templates/editpage.tmpl:125
 #, c-format
 msgid "See %s tips for editing."
 msgstr ""
@@ -2355,24 +2400,23 @@ msgstr ""
 #: ../themes/Portland/templates/editpage.tmpl:103
 #: ../themes/Portland/templates/editpage.tmpl:108
 #: ../themes/default/templates/editpage.tmpl:120
-#: ../themes/default/templates/editpage.tmpl:125
 msgid "GoodStyle"
 msgstr ""
 
 #: ../themes/Portland/templates/editpage.tmpl:104
-#: ../themes/default/templates/editpage.tmpl:121
+#: ../themes/default/templates/editpage.tmpl:123
 msgid "OldTextFormattingRules"
 msgstr ""
 
 #: ../themes/Portland/templates/editpage.tmpl:104
 #: ../themes/Portland/templates/editpage.tmpl:109
-#: ../themes/default/templates/editpage.tmpl:121
-#: ../themes/default/templates/editpage.tmpl:126
+#: ../themes/default/templates/editpage.tmpl:122
+#: ../themes/default/templates/editpage.tmpl:124
 msgid "Synopsis"
 msgstr ""
 
 #: ../themes/Portland/templates/editpage.tmpl:109
-#: ../themes/default/templates/editpage.tmpl:126
+#: ../themes/default/templates/editpage.tmpl:121
 msgid "TextFormattingRules"
 msgstr ""
 
@@ -2557,10 +2601,6 @@ msgstr ""
 msgid "Password:"
 msgstr ""
 
-#: ../themes/default/templates/login.tmpl:40
-msgid "Create Homepage:"
-msgstr ""
-
 #: ../themes/default/templates/navbar.tmpl:33
 msgid "Today"
 msgstr ""
@@ -2600,187 +2640,186 @@ msgstr ""
 msgid "Warning!"
 msgstr ""
 
-#: ../themes/default/templates/signin.tmpl:17
+#: ../themes/default/templates/signin.tmpl:19
 #, c-format
 msgid "You are signed in as %s"
 msgstr ""
 
-#: ../themes/default/templates/signin.tmpl:37
+#: ../themes/default/templates/signin.tmpl:40
 msgid "Enter your UserId to sign in"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:51
-#: ../themes/default/templates/userprefs.tmpl:53
+#: ../themes/default/templates/userprefs.tmpl:59
+#: ../themes/default/templates/userprefs.tmpl:61
 msgid "<system theme>"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:62
+#: ../themes/default/templates/userprefs.tmpl:70
 msgid "Select your personal theme:"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:68
-#: ../themes/default/templates/userprefs.tmpl:70
+#: ../themes/default/templates/userprefs.tmpl:76
+#: ../themes/default/templates/userprefs.tmpl:78
 msgid "<system language>"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:79
+#: ../themes/default/templates/userprefs.tmpl:87
 msgid "Select your personal language:"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:88
+#: ../themes/default/templates/userprefs.tmpl:96
 msgid "Personal theme:"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:89
+#: ../themes/default/templates/userprefs.tmpl:97
 msgid "Personal language:"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:104
+#: ../themes/default/templates/userprefs.tmpl:112
 msgid "UserId"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:106
+#: ../themes/default/templates/userprefs.tmpl:114
 msgid "Password"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:108
+#: ../themes/default/templates/userprefs.tmpl:116
 msgid "Auth Level"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:108
+#: ../themes/default/templates/userprefs.tmpl:116
 msgid "Auth Method"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:110
+#: ../themes/default/templates/userprefs.tmpl:118
 msgid "E-Mail"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:111
+#: ../themes/default/templates/userprefs.tmpl:119
 msgid "Notify"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:112
+#: ../themes/default/templates/userprefs.tmpl:120
 msgid "Theme"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:112
+#: ../themes/default/templates/userprefs.tmpl:120
 msgid "Current Theme"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:113
+#: ../themes/default/templates/userprefs.tmpl:121
 msgid "Language"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:113
+#: ../themes/default/templates/userprefs.tmpl:121
 msgid "Current Language"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:118
+#: ../themes/default/templates/userprefs.tmpl:126
 msgid "Change Password"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:119
+#: ../themes/default/templates/userprefs.tmpl:127
 msgid "New password"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:120
+#: ../themes/default/templates/userprefs.tmpl:128
 msgid "Type it again"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:123
-msgid "Email Notification"
+#: ../themes/default/templates/userprefs.tmpl:131
+msgid "E-mail"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:124
+#: ../themes/default/templates/userprefs.tmpl:132
 msgid "Your E-Mail:"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:131
+#: ../themes/default/templates/userprefs.tmpl:139
 msgid "Status:"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:133
+#: ../themes/default/templates/userprefs.tmpl:141
 msgid "Email verified."
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:135
+#: ../themes/default/templates/userprefs.tmpl:143
 msgid "Email not yet verified."
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:138
+#: ../themes/default/templates/userprefs.tmpl:146
 msgid "Note, that user accounts with bouncing emails will be disabled."
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:139
-msgid "Get an email notification at changes of the following pages:"
-msgstr ""
-
-#: ../themes/default/templates/userprefs.tmpl:143
-msgid ""
-"Enter pages seperated by space or comma. Wildcards (fileglobbing) allowed."
-msgstr ""
-
-#: ../themes/default/templates/userprefs.tmpl:149
+#: ../themes/default/templates/userprefs.tmpl:159
 msgid "Appearance"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:151
-msgid "Default system theme:"
-msgstr ""
-
-#: ../themes/default/templates/userprefs.tmpl:151
-msgid "Default system language:"
-msgstr ""
-
-#: ../themes/default/templates/userprefs.tmpl:156
+#: ../themes/default/templates/userprefs.tmpl:160
 msgid ""
 "Here you can override site-specific default values. Currently not "
 "recommended!"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:159
+#: ../themes/default/templates/userprefs.tmpl:162
+#: ../themes/default/templates/userprefs.tmpl:163
+msgid "System default:"
+msgstr ""
+
+#: ../themes/default/templates/userprefs.tmpl:164
+#, c-format
+msgid "Hide %s."
+msgstr ""
+
+#: ../themes/default/templates/userprefs.tmpl:165
+msgid ""
+"Hide or show LinkIcons (if supported by the current theme). Useful for text-"
+"only browsers or slow connections."
+msgstr ""
+
+#: ../themes/default/templates/userprefs.tmpl:168
 msgid "Height"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:166
+#: ../themes/default/templates/userprefs.tmpl:175
 msgid "Width"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:174
+#: ../themes/default/templates/userprefs.tmpl:183
 msgid ""
 "Note that many browsers will automatically adjust the width of the editing "
 "area so that it fills the browser window.  In this case, the width "
 "preference will be ignored."
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:176
+#: ../themes/default/templates/userprefs.tmpl:185
 msgid "Time Zone"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:178
+#: ../themes/default/templates/userprefs.tmpl:187
 #, c-format
 msgid "Add %s hours to the server's local time when reporting times."
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:182
+#: ../themes/default/templates/userprefs.tmpl:191
 #, c-format
 msgid "The current time at the server is %s."
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:184
+#: ../themes/default/templates/userprefs.tmpl:193
 #, c-format
 msgid "With the current offset, this would be reported as %s."
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:188
+#: ../themes/default/templates/userprefs.tmpl:197
 msgid "Date Format"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:190
+#: ../themes/default/templates/userprefs.tmpl:199
 msgid "Show relative dates using 'Today' and 'Yesterday'."
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:195
+#: ../themes/default/templates/userprefs.tmpl:204
 msgid "Update Preferences"
 msgstr ""
 
