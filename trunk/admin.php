@@ -1,4 +1,4 @@
-<?php // $Id: admin.php,v 1.4 2000-11-09 16:29:10 ahollosi Exp $
+<?php // $Id: admin.php,v 1.5 2000-11-13 10:59:27 ahollosi Exp $
 
    function rcs_id($id) {}   // otherwise this gets in the way
 
@@ -23,7 +23,7 @@
        ($PHP_AUTH_PW   != $adminpasswd)) {
       Header("WWW-Authenticate: Basic realm=\"PhpWiki\"");
       Header("HTTP/1.0 401 Unauthorized");
-      echo "You entered an invalid login or password.\n";
+      echo gettext ("You entered an invalid login or password.");
       exit;
    }
 
@@ -44,21 +44,25 @@
       if (get_magic_quotes_gpc())
          $remove = stripslashes($remove);
       if (function_exists('RemovePage')) {
-         $html .= "You are about to remove '" . htmlspecialchars($remove)
-	       . "' permanently!<P>Click <A HREF=\"$ScriptUrl?removeok="
-	       . rawurlencode($remove) . "\">here</A> to remove the page now."
-	       . "<P>Otherwise press the \"Back\" button of your browser.";
+         $html .= sprintf(gettext ("You are about to remove '%s' permanently!"), htmlspecialchars($remove));
+	 $html .= "\n<P>";
+	 $url = rawurlencode($remove);
+	 $html .= sprintf(gettext ("Click %shere%s to remove the page now."),
+		  "<A HREF=\"$ScriptUrl?removeok=$url\">", "</A>");
+	 $html .= "\n<P>";
+	 $html .= gettext ("Otherwise press the \"Back\" button of your browser.");
       } else {
-         $html = "Function not yet implemented.";
+         $html = gettext ("Function not yet implemented.");
       }
-      GeneratePage('MESSAGE', $html, 'Remove page', 0);
+      GeneratePage('MESSAGE', $html, gettext ("Remove page"), 0);
       ExitWiki('');
    } elseif (isset($removeok)) {
       if (get_magic_quotes_gpc())
 	 $removeok = stripslashes($removeok);
       RemovePage($dbi, $removeok);
-      $html = "Removed page '".htmlspecialchars($removeok)."' successfully.'";
-      GeneratePage('MESSAGE', $html, 'Removed page', 0);
+      $html = sprintf(gettext ("Removed page '%s' succesfully."),
+		      htmlspecialchars($removeok));
+      GeneratePage('MESSAGE', $html, gettext ("Remove page"), 0);
       ExitWiki('');
    }
 
