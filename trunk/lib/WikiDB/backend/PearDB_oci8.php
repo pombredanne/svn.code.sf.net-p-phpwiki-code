@@ -1,16 +1,15 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_oci8.php,v 1.3 2004-11-10 15:29:21 rurban Exp $');
+rcs_id('$Id: PearDB_oci8.php,v 1.4 2004-11-26 18:39:02 rurban Exp $');
 
 /**
  * Oracle extensions for the Pear DB backend.
  * @author: Philippe.Vanhaesendonck@topgame.be
  */
 
-require_once('lib/ErrorManager.php');
-require_once('lib/WikiDB/backend/PearDB.php');
+require_once('lib/WikiDB/backend/PearDB_pgsql.php');
 
 class WikiDB_backend_PearDB_oci8
-extends WikiDB_backend_PearDB
+extends WikiDB_backend_PearDB_pgsql
 {
     /**
      * Constructor
@@ -47,13 +46,13 @@ extends WikiDB_backend_PearDB
     /**
      * Lock all tables we might use.
      */
-    function _lock_tables($write_lock = true) {
+    function _lock_tables($write_lock=true) {
         $dbh = &$this->_dbh;
         
         // Not sure if we really need to lock tables here, the Oracle row
         // locking mechanism should be more than enough
         // For the time being, lets stay on the safe side and lock...
-        if($write_lock) {
+        if ($write_lock) {
             // Next line is default behaviour, so just skip it
             // $dbh->query("SET TRANSACTION READ WRITE");
             foreach ($this->_table_names as $table) {
@@ -64,60 +63,25 @@ extends WikiDB_backend_PearDB
             $dbh->query("SET TRANSACTION READ ONLY");
         }
     }
+};
 
-    /**
-     * Unlock all tables.
-     */
-    function _unlock_tables() {
-        $dbh = &$this->_dbh;
-        $dbh->query("COMMIT WORK");
-    }
-
-    
-    // Search callabcks
-    // Page name
-    function _sql_match_clause($word) {
-        $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
-        $word = $this->_dbh->escapeSimple($word);
-        return "LOWER(pagename) LIKE '%$word%'";
-    }
-
-    // Fulltext -- case sensisitive :-\
+class WikiDB_backend_PearDB_oci8_search
+extends WikiDB_backend_PearDB_search
+{
     // If we want case insensitive search, one need to create a Context
     // Index on the CLOB. While it is very efficient, it requires the
     // Intermedia Text option, so let's stick to the 'simple' thing
-    function _fullsearch_sql_match_clause($word) {
-        $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
-        $word = $this->_dbh->escapeSimple($word);
-        return "LOWER(pagename) LIKE '%$word%' " 
-               . "OR DBMS_LOB.INSTR(content, '$word') > 0";
+    // Note that this does only an exact fulltext search, not using MATCH or LIKE.
+    function _fulltext_match_clause($node) { 
+        $method = $node->op;
+        $page = $this->$method($node->word);
+        $exactword = $this->_quote($node->word);
+        return $this->_case_exact 
+            ? "pagename LIKE '$page' OR DBMS_LOB.INSTR(content, '$exactword') > 0"
+            : "LOWER(pagename) LIKE '$page' OR DBMS_LOB.INSTR(content, '$exactword') > 0";
     }
+}
 
-
-    /**
-     * Serialize data
-     */
-    function _serialize($data) {
-        if (empty($data))
-            return '';
-        assert(is_array($data));
-        return base64_encode(serialize($data));
-    }
-
-    /**
-     * Unserialize data
-     */
-    function _unserialize($data) {
-        if (empty($data))
-            return array();
-        // Base64 encoded data does not contain colons.
-        //  (only alphanumerics and '+' and '/'.)
-        if (substr($data,0,2) == 'a:')
-            return unserialize($data);
-        return unserialize(base64_decode($data));
-    }
-
-};
 
 // (c-file-style: "gnu")
 // Local Variables:

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_pgsql.php,v 1.11 2004-11-10 15:29:21 rurban Exp $');
+rcs_id('$Id: PearDB_pgsql.php,v 1.12 2004-11-26 18:39:02 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB.php');
@@ -36,9 +36,8 @@ extends WikiDB_backend_PearDB
      * Pack tables.
      */
     function optimize() {
-        $dbh = &$this->_dbh;
         foreach ($this->_table_names as $table) {
-            $dbh->query("VACUUM ANALYZE $table");
+            $this->_dbh->query("VACUUM ANALYZE $table");
         }
         return 1;
     }
@@ -47,41 +46,15 @@ extends WikiDB_backend_PearDB
      * Lock all tables we might use.
      */
     function _lock_tables($write_lock = true) {
-        $dbh = &$this->_dbh;
-        
-        $dbh->query("BEGIN WORK");
-        if (0) {
-            foreach ($this->_table_names as $table) {
-                // FIXME: can we use less restrictive locking.
-                //        (postgres supports transactions, after all.)
-                $dbh->query("LOCK TABLE $table");
-            }
-        }
+        $this->_dbh->query("BEGIN WORK");
     }
 
     /**
      * Unlock all tables.
      */
     function _unlock_tables() {
-        $dbh = &$this->_dbh;
-        $dbh->query("COMMIT WORK");
+        $this->_dbh->query("COMMIT WORK");
     }
-
-    
-    // Use Postgres' caseless ILIKE
-    function _sql_match_clause($word) {
-        $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
-        $word = $this->_dbh->escapeSimple($word);
-        return "pagename ILIKE '%$word%'";
-    }
-
-    // Use Postgres' caseless ILIKE
-    function _fullsearch_sql_match_clause($word) {
-        $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
-        $word = $this->_dbh->escapeSimple($word);
-        return "pagename ILIKE '%$word%' OR content ILIKE '%$word%'";
-    }
-
 
     /**
      * Serialize data
@@ -107,6 +80,25 @@ extends WikiDB_backend_PearDB
     }
 
 };
+
+class WikiDB_backend_PearDB_pgsql_search
+extends WikiDB_backend_PearDB_search
+{
+    function _pagename_match_clause($node) { 
+        $method = $node->op;
+        $word = $this->$method($node->word);
+        return $this->_case_exact 
+            ? "pagename LIKE '$word'"
+            : "pagename ILIKE '$word'";
+    }
+    function _fulltext_match_clause($node) { 
+        $method = $node->op;
+        $word = $this->$method($node->word);
+        return $this->_case_exact 
+            ? "pagename LIKE '$word' OR content LIKE '$word'"
+            : "pagename ILIKE '$word' OR content ILIKE '$word'";
+    }
+}
 
 // (c-file-style: "gnu")
 // Local Variables:

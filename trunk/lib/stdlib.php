@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.218 2004-11-25 08:28:48 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.219 2004-11-26 18:39:02 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1554,14 +1554,15 @@ class Alert {
 // 1.3.8     => 1030.08
 // 1.3.9-p1  => 1030.091
 // 1.3.10pre => 1030.099
+// 1.3.11pre-20041120 => 1030.1120041120
 function phpwiki_version() {
     static $PHPWIKI_VERSION;
     if (!isset($PHPWIKI_VERSION)) {
         $arr = explode('.',preg_replace('/\D+$/','', PHPWIKI_VERSION)); // remove the pre
         $arr[2] = preg_replace('/\.+/','.',preg_replace('/\D/','.',$arr[2]));
         $PHPWIKI_VERSION = $arr[0]*1000 + $arr[1]*10 + 0.01*$arr[2];
-        if (substr(PHPWIKI_VERSION,-3,3) == 'pre')
-            $PHPWIKI_VERSION -= 0.001;
+        if (strstr(PHPWIKI_VERSION, 'pre'))
+            $PHPWIKI_VERSION -= 0.01;
     }
     return $PHPWIKI_VERSION;
 }
@@ -1811,6 +1812,9 @@ function printSimpleTrace($bt) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.218  2004/11/25 08:28:48  rurban
+// support exclude
+//
 // Revision 1.217  2004/11/16 17:31:03  rurban
 // re-enable old block markup conversion
 //

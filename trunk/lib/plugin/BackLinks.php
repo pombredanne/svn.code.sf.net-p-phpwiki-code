@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BackLinks.php,v 1.30 2004-11-25 17:20:52 rurban Exp $');
+rcs_id('$Id: BackLinks.php,v 1.31 2004-11-26 18:39:02 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
     
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.30 $");
+                            "\$Revision: 1.31 $");
     }
     
     function getDefaultArguments() {
@@ -59,7 +59,7 @@ extends WikiPlugin
         extract($args);
         if (empty($page) and $page != '0')
             return '';
-        // exclude is already expanded in WikiPlugin::getArgs()
+        // exclude is now already expanded in WikiPlugin::getArgs()
         if (empty($exclude)) $exclude = array();
         if (!$include_self)
             $exclude[] = $page;
@@ -69,7 +69,7 @@ extends WikiPlugin
                 $args['types']['count'] = 
                     new _PageList_Column_BackLinks_count('count', _("#"), 'center');
         }
-        $args['dosort'] = !empty($args['sortby']); // override DB sort
+        $args['dosort'] = !empty($args['sortby']); // override DB sort (??)
         $pagelist = new PageList($info, $exclude, $args);
         $p = $dbi->getPage($page);
         $pagelist->addPages($p->getBackLinks(false, $sortby, $limit, $exclude));
@@ -82,7 +82,7 @@ extends WikiPlugin
         // distinction as it does with English in this case. :)
         if (!$noheader) {
             if ($page == $request->getArg('pagename')
-                && !$dbi->isWikiPage($page)) {
+                and !$dbi->isWikiPage($page)) {
                     // BackLinks plugin is more than likely being called
                     // upon for an empty page on said page, while either
                     // 'browse'ing, 'create'ing or 'edit'ing.
@@ -147,6 +147,9 @@ class _PageList_Column_BackLinks_count extends _PageList_Column {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.30  2004/11/25 17:20:52  rurban
+// and again a couple of more native db args: backlinks
+//
 // Revision 1.29  2004/11/23 15:17:19  rurban
 // better support for case_exact search (not caseexact for consistency),
 // plugin args simplification:

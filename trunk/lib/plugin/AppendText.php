@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AppendText.php,v 1.4 2004-11-25 17:20:52 rurban Exp $');
+rcs_id('$Id: AppendText.php,v 1.5 2004-11-26 18:39:02 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -49,6 +49,7 @@ extends WikiPlugin
                      's'        => '',  // Text to append.
                      'before'   => '',  // Add before (ignores after if defined)
                      'after'    => '',  // Add after line beginning with this
+                     'redirect' => false // Redirect to modified page
                      );
     }
 
@@ -73,9 +74,9 @@ extends WikiPlugin
         $page = $dbi->getPage($pagename);
         $message = HTML();
 
-        if (!$page->exists()) { // create it?
-            $message->pushContent(sprintf(_("Page could not be updated. %s doesn't exist!\n",
-                                            $pagename)));
+        if (!$page->exists()) { // We might want to create it?
+            $message->pushContent(sprintf(_("Page could not be updated. %s doesn't exist!\n"),
+                                            $pagename));
             return $message;
         }
             
@@ -110,10 +111,24 @@ extends WikiPlugin
         $meta = $current->_data;
         $meta['summary'] = sprintf(_("AppendText to %s"), $pagename);
         if ($page->save($newtext, $current->getVersion() + 1, $meta)) {
-            // if ($basepage == pagename) $errmsg = _("AppendText");
             $message->pushContent(_("Page successfully updated."), HTML::br());
-            $message->pushContent(_("Go to "));
-            $message->pushContent(HTML::em(WikiLink($pagename)));
+        }
+        
+        // AppendText has been called from the same page that got modified
+        // so we directly show the page.
+        if ( $request->getArg($pagename) == $pagename ) {
+            // TODO: Just invalidate the cache, if AppendText didn't 
+            // change anything before.
+            // 
+            return $request->redirect(WikiURL($pagename, false, 'absurl'), false);
+
+        // The user asked to be redirected to the modified page
+        } elseif ($args['redirect']) {
+            return $request->redirect(WikiURL($pagename, false, 'absurl'), false);
+            
+        } else {
+            $link = HTML::em(WikiLink($pagename));
+            $message->pushContent(HTML::Raw(sprintf(_("Go to %s."), $link->asXml())));
         }
 
         return $message;
@@ -121,13 +136,25 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision ext-1.4  2004/11/25 15:39:40  Pascal Giard <evilynux@gmail.com>
+// * Directly including modified page when AppendText got called from 
+//   the page to be modified.
+// * Translatable link to page.
+//
+// Revision ext-1.3  2004/11/25  9:44:45  Pascal Giard <evilynux@gmail.com>
+// * text modified to s to workaround mozilla bug.
+// * Added redirect parameter allowing you to be redirected to the modified page.
+//
+// Revision 1.4  2004/11/25 17:20:52  rurban
+// and again a couple of more native db args: backlinks
+//
 // Revision 1.3  2004/11/25 13:56:23  rurban
 // renamed text to s because of nasty mozilla radio button bug
 //
 // Revision 1.2  2004/11/25 08:29:43  rurban
 // update from Pascal
 //
-// Revision 1.2  2004/11/24 11:22:30  Pascal Giard <evilynux@gmail.com>
+// Revision ext-1.2  2004/11/24 11:22:30  Pascal Giard <evilynux@gmail.com>
 // * Integrated rurban's modifications.
 //
 // Revision 1.1  2004/11/24 09:25:35  rurban

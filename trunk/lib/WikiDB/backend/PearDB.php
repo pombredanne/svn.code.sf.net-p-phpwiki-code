@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.72 2004-11-25 17:20:51 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.73 2004-11-26 18:39:02 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -11,7 +11,7 @@ extends WikiDB_backend
     var $_dbh;
 
     function WikiDB_backend_PearDB ($dbparams) {
-        // Find and include PEAR's DB.php.
+        // Find and include PEAR's DB.php. maybe we should force our private version again...
         // if DB would have exported its version number, it would be easier.
         @require_once('DB/common.php'); // Either our local pear copy or the system one
         // check the version!
@@ -32,7 +32,7 @@ extends WikiDB_backend
         }
 
         // Install filter to handle bogus error notices from buggy DB.php's.
-        //TODO: check the Pear_DB version, but how?
+        // TODO: check the Pear_DB version, but how?
         if (0) {
             global $ErrorManager;
             $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_pear_notice_filter'));
@@ -570,9 +570,14 @@ extends WikiDB_backend
     /**
      * Title search.
      */
-    function text_search($search='', $fulltext=false, $case_exact=false) {
+    function text_search($search, $fulltext=false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
+
+        $searchclass = get_class($this)."_search";
+        if (!class_exists($searchclass)) // no need to define it everywhere and then fallback. memory
+            $searchclass = "WikiDB_backend_PearDB_search";
+        $searchobj = new $searchclass($search, $dbh);
         
         $table = "$nonempty_tbl, $page_tbl";
         $join_clause = "$nonempty_tbl.id=$page_tbl.id";
@@ -586,15 +591,11 @@ extends WikiDB_backend
             $join_clause .= " AND $page_tbl.id=$version_tbl.id AND latestversion=version";
 
             $fields .= ", $page_tbl.pagedata as pagedata, " . $this->version_tbl_fields;
-            $callback = new WikiMethodCb($this, $case_exact 
-                                         ? '_fullsearch_sql_casematch_clause'
-                                         : '_fullsearch_sql_match_clause');
+            $callback = new WikiMethodCb($searchobj, "_fulltext_match_clause");
         } else {
-            $callback = new WikiMethodCb($this, $case_exact
-                                         ? '_sql_casematch_clause'
-                                         : '_sql_match_clause');
+            $callback = new WikiMethodCb($searchobj, "_pagename_match_clause");
         }
-        $search_clause = $search->makeSqlClause($callback);
+        $search_clause = $search->makeSqlClauseObj($callback);
         
         $result = $dbh->query("SELECT $fields FROM $table"
                               . " WHERE $join_clause"
@@ -1116,7 +1117,56 @@ extends WikiDB_backend_PearDB_generic_iter
     }
 }
 
+// word search
+class WikiDB_backend_PearDB_search
+extends WikiDB_backend_search
+{
+    function WikiDB_backend_PearDB_search(&$search, &$dbh) {
+        $this->_dbh = $dbh;
+        $this->_case_exact = $search->_case_exact;
+    }
+    function _quote($word) {
+        $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
+        return $this->_dbh->escapeSimple($this->_case_exact ? $word : strtolower($word));
+    }
+    function EXACT($word) { return $this->_quote($word); }
+    function STARTS_WITH($word) { return $this->_quote($word)."%"; }
+    function ENDS_WITH($word) { return "%".$this->_quote($word); }
+    function WORD($word) { return "%".$this->_quote($word)."%"; } // substring
+    function REGEX($word) { // posix regex
+        // we really must know if the backend supports posix REGEXP 
+        // or if it has to be converted to SQL matching. * => %, ? => _
+    	return $this->_dbh->escapeSimple($word);
+    }
+
+    function _pagename_match_clause($node) { 
+        $method = $node->op;
+        $word = $this->$method($node->word);
+        if ($method == 'REGEX') { // posix regex extensions
+            if (preg_match("/mysql/i", $this->_dbh->phptype))
+                return "pagename REGEXP '$word'";
+            elseif (preg_match("/pgsql/i", $this->_dbh->phptype))
+                return $this->_case_exact ? "pagename ~* '$word'"
+                                          : "pagename ~ '$word'";
+        } else {
+            return $this->_case_exact ? "pagename LIKE '$word'" 
+                                      : "LOWER(pagename) LIKE '$word'";
+        }
+    }
+    function _fulltext_match_clause($node) { 
+        $method = $node->op;
+        $word = $this->WORD($node->word);
+        return $this->_pagename_match_clause($node)
+               // probably convert this MATCH AGAINST or SUBSTR/POSITION without wildcards
+               . ($this->_case_exact ? " OR content LIKE '$word'" 
+                                     : " OR LOWER(content) LIKE '$word'");
+    }
+}
+
 // $Log: not supported by cvs2svn $
+// Revision 1.72  2004/11/25 17:20:51  rurban
+// and again a couple of more native db args: backlinks
+//
 // Revision 1.71  2004/11/23 13:35:48  rurban
 // add case_exact search
 //

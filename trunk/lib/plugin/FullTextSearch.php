@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.23 2004-11-23 15:17:19 rurban Exp $');
+rcs_id('$Id: FullTextSearch.php,v 1.24 2004-11-26 18:39:02 rurban Exp $');
 /*
 Copyright 1999,2000,2001,2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.23 $");
+                            "\$Revision: 1.24 $");
     }
 
     function getDefaultArguments() {
@@ -54,8 +54,8 @@ extends WikiPlugin
              PageList::supportedArgs(), // paging and more.
              array('s'        => false,
                    'hilight'  => true,
-                   'case_exact' => false, //not yet supported
-                   'regex'    => false,   //not yet supported
+                   'case_exact' => false,
+                   'regex'    => 'auto',
                    'noheader' => false,
                    'exclude'  => false,   //comma-seperated list of glob
                    'limit'    => false,
@@ -136,6 +136,14 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.23  2004/11/23 15:17:19  rurban
+// better support for case_exact search (not caseexact for consistency),
+// plugin args simplification:
+//   handle and explode exclude and pages argument in WikiPlugin::getArgs
+//     and exclude in advance (at the sql level if possible)
+//   handle sortby and limit from request override in WikiPlugin::getArgs
+// ListSubpages: renamed pages to maxpages
+//
 // Revision 1.22  2004/05/28 11:01:58  rurban
 // support to disable highlighting
 // example: s=ReiniUrban&hilight=0&noheader=1

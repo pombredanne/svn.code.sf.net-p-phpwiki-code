@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.15 2004-11-25 17:20:51 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.16 2004-11-26 18:39:02 rurban Exp $');
 
 /*
   Pagedata
@@ -303,7 +303,7 @@ class WikiDB_backend
      *
      * @see WikiDB::titleSearch
      */
-    function text_search($search='', $fulltext=false, $case_exact=false) {
+    function text_search($search='', $fulltext=false) {
         // This is method implements a simple linear search
         // through all the pages in the database.
         //
@@ -311,7 +311,7 @@ class WikiDB_backend
         // method with something more efficient.
         include_once('lib/WikiDB/backend/dumb/TextSearchIter.php');
         $pages = $this->get_all_pages(false);
-        return new WikiDB_backend_dumb_TextSearchIter($this, $pages, $search, $fulltext, $case_exact);
+        return new WikiDB_backend_dumb_TextSearchIter($this, $pages, $search, $fulltext);
     }
 
     /**
@@ -568,6 +568,33 @@ class WikiDB_backend_iterator
     function free() {
     }
 };
+
+/**
+ * search baseclass, pcre-specific. only overriden by sql backends.
+ */
+class WikiDB_backend_search
+{
+    function WikiDB_backend_search(&$dbh, $search) {
+        $this->_dbh = $dbh;
+        $this->_case_exact = $search->_case_exact;
+    }
+    function _quote($word) {
+        return preg_quote($word, "/");
+    }
+    //TODO: use word anchors
+    function EXACT($word) { return "^".$this->_quote($word)."$"; }
+    function STARTS_WITH($word) { return "^".$this->_quote($word); }
+    function ENDS_WITH($word) { return $this->_quote($word)."$"; }
+    function WORD($word) { return $this->_quote($word); }
+    function REGEX($word) { return $word; }
+    //TESTME
+    function _pagename_match_clause($node) {
+        $method = $node->op;
+        $word = $this->$method($node->word);
+        return "preg_match(\"/\".$word.\"/\"".($this->_case_exact ? "i":"").")";
+    }
+
+}
 
 // For emacs users
 // Local Variables:

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiBlog.php,v 1.18 2004-05-14 20:55:04 rurban Exp $');
+rcs_id('$Id: WikiBlog.php,v 1.19 2004-11-26 18:39:02 rurban Exp $');
 /*
  Copyright 2002, 2003 $ThePhpWikiProgrammingTeam
  
@@ -83,7 +83,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.18 $");
+                            "\$Revision: 1.19 $");
     }
 
     // Arguments:
@@ -322,7 +322,7 @@ extends WikiPlugin
         $prefix = $parent . SUBPAGE_SEPARATOR;
         $pfxlen = strlen($prefix);
         require_once('lib/TextSearchQuery.php');
-        $pages = $dbi->titleSearch(new TextSearchQuery($prefix));
+        $pages = $dbi->titleSearch(new TextSearchQuery($prefix, true));
 
         $blogs = array();
         while ($page = $pages->next()) {
@@ -350,6 +350,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.18  2004/05/14 20:55:04  rurban
+// simplified RecentComments
+//
 // Revision 1.17  2004/05/14 17:33:12  rurban
 // new plugin RecentChanges
 //

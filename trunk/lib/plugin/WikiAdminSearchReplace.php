@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSearchReplace.php,v 1.18 2004-11-23 15:17:20 rurban Exp $');
+rcs_id('$Id: WikiAdminSearchReplace.php,v 1.19 2004-11-26 18:39:02 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -43,7 +43,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.18 $");
+                            "\$Revision: 1.19 $");
     }
 
     function getDefaultArguments() {
@@ -57,7 +57,7 @@ extends WikiPlugin_WikiAdminSelect
                    ));
     }
 
-    function replaceHelper(&$dbi, $pagename, $from, $to, $case_exact = true, $regex = false) {
+    function replaceHelper(&$dbi, $pagename, $from, $to, $case_exact=true, $regex=false) {
         $page = $dbi->getPage($pagename);
         if ($page->exists()) {// don't replace default contents
             $current = $page->getCurrentRevision();
@@ -264,6 +264,14 @@ function stri_replace($find,$replace,$string) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.18  2004/11/23 15:17:20  rurban
+// better support for case_exact search (not caseexact for consistency),
+// plugin args simplification:
+//   handle and explode exclude and pages argument in WikiPlugin::getArgs
+//     and exclude in advance (at the sql level if possible)
+//   handle sortby and limit from request override in WikiPlugin::getArgs
+// ListSubpages: renamed pages to maxpages
+//
 // Revision 1.17  2004/09/17 14:24:06  rurban
 // support exclude=<!plugin-list !>, p not yet
 //

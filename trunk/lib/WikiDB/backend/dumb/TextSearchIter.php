@@ -1,15 +1,16 @@
 <?php // -*-php-*-
-rcs_id('$Id: TextSearchIter.php,v 1.2 2004-11-23 15:17:19 rurban Exp $');
+rcs_id('$Id: TextSearchIter.php,v 1.3 2004-11-26 18:39:02 rurban Exp $');
 
 class WikiDB_backend_dumb_TextSearchIter
 extends WikiDB_backend_iterator
 {
-    function WikiDB_backend_dumb_TextSearchIter(&$backend, &$pages, $search, $fulltext=false, $case_exact=false) {
+    function WikiDB_backend_dumb_TextSearchIter(&$backend, &$pages, $search, $fulltext=false) {
         $this->_backend = &$backend;
         $this->_pages = $pages;
         $this->_fullsearch = $fulltext;
         $this->_search = $search;
-        $this->_case_exact = $case_exact;
+        //$this->_case_exact = $search->_case_exact;
+        //$this->_isregex = $search->_isregex;
     }
 
     function _get_content(&$page) {
