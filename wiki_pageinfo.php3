@@ -1,4 +1,4 @@
-<!-- $Id: wiki_pageinfo.php3,v 1.2 2000-06-21 22:57:17 ahollosi Exp $ -->
+<!-- $Id: wiki_pageinfo.php3,v 1.3 2000-06-26 20:10:05 ahollosi Exp $ -->
 <!-- Display the internal structure of a page. Steve Wainstead, June 2000 -->
 <?
    $encname = htmlspecialchars($info);
@@ -34,10 +34,15 @@
 	    if ($key > 0 || !$key) #key is an array index
 	       continue;
             if ((gettype($val) == "array") && ($showpagesource == "on")) {
-               $val = implode($val, "<br>\n");
+               $val = implode($val, "$FieldSeparator#BR#$FieldSeparator\n");
+	       $val = htmlspecialchars($val);
+	       $val = str_replace("$FieldSeparator#BR#$FieldSeparator", "<br>", $val);
             }
-	    if (($key == 'lastmodified') || ($key == 'created'))
+	    elseif (($key == 'lastmodified') || ($key == 'created'))
 	       $val = date($datetimeformat, $val);
+	    else
+	       $val = htmlspecialchars($val);
+
             $table .= "<tr><td>$key</td><td>$val</td></tr>\n";
 	 }
 
