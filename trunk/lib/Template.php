@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.55 2004-04-02 15:06:55 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.56 2004-04-12 13:04:50 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -19,10 +19,18 @@ class Template
         $this->_basepage = $request->getArg('pagename');
         
         $file = $Theme->findTemplate($name);
+        if (!$file) {
+            trigger_error("no template for $name found", E_USER_WARNING);
+            return;
+        }
         $fp = fopen($file, "rb");
+        if (!$fp) {
+            trigger_error("$file not found", E_USER_WARNING);
+            return;
+        }
         $this->_tmpl = fread($fp, filesize($file));
         fclose($fp);
-$userid = $request->_user->_userid;
+        //$userid = $request->_user->_userid;
         if (is_array($args))
             $this->_locals = $args;
         elseif ($args)
@@ -245,6 +253,13 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.55  2004/04/02 15:06:55  rurban
+// fixed a nasty ADODB_mysql session update bug
+// improved UserPreferences layout (tabled hints)
+// fixed UserPreferences auth handling
+// improved auth stability
+// improved old cookie handling: fixed deletion of old cookies with paths
+//
 // Revision 1.54  2004/03/02 18:11:39  rurban
 // CreateToc support: Pass the preparsed markup to each plugin as $dbi->_markup
 // to be able to know about its context, and even let the plugin change it.

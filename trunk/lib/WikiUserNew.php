@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.51 2004-04-11 10:42:02 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.52 2004-04-12 13:04:50 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -1520,8 +1520,13 @@ extends _DbPassUser
             $this->_authcreate = str_replace(array('"$userid"','"$password"'),array('%s','%s'),
                                               $DBAuthParams['auth_create']);
         }
-        if (!empty($this->_authcreate)) return true;
-
+        if (!empty($this->_authcreate)) {
+            $dbh->simpleQuery(sprintf($this->_authcreate,
+                                      $dbh->quote($GLOBALS['HTTP_POST_VARS']['auth']['passwd']),
+                                      $dbh->quote($this->_userid)
+                                      ));
+            return true;
+        }
         return $this->_tryNextUser();
     }
  
@@ -1531,7 +1536,9 @@ extends _DbPassUser
         if (!$this->_auth_dbi) {  // needed?
             return $this->_tryNextPass($submitted_password);
         }
-        if (empty($this->_authselect))
+        if (!isset($this->_authselect))
+            $this->userExists();
+        if (!isset($this->_authselect))
             trigger_error("Either \$DBAuthParams['auth_check'] is missing or \$DBParams['dbtype'] != 'SQL'",
                           E_USER_WARNING);
 
@@ -1709,7 +1716,12 @@ extends _DbPassUser
             $this->_authcreate = str_replace(array('"$userid"','"$password"'),array('%s','%s'),
                                               $DBAuthParams['auth_create']);
         }
-        if (!empty($this->_authcreate)) return true;
+        if (!empty($this->_authcreate)) {
+            $dbh->Execute(sprintf($this->_authcreate,
+                                  $dbh->qstr($GLOBALS['HTTP_POST_VARS']['auth']['passwd']),
+                                  $dbh->qstr($this->_userid)));
+            return true;
+        }
         
         return $this->_tryNextUser();
     }
@@ -1720,6 +1732,8 @@ extends _DbPassUser
             $this->_authselect = str_replace(array('"$userid"','"$password"'),array('%s','%s'),
                                               $DBAuthParams['auth_check']);
         }
+        if (!isset($this->_authselect))
+            $this->userExists();
         if (!isset($this->_authselect))
             trigger_error("Either \$DBAuthParams['auth_check'] is missing or \$DBParams['dbtype'] != 'ADODB'",
                           E_USER_WARNING);
@@ -1893,7 +1907,7 @@ extends _PassUser
 {
     function checkPass($submitted_password) {
         $userid = $this->_userid;
-        $mbox = @imap_open( "{" . IMAP_AUTH_HOST . "}INBOX",
+        $mbox = @imap_open( "{" . IMAP_AUTH_HOST . "}",
                             $userid, $submitted_password, OP_HALFOPEN );
         if ($mbox) {
             imap_close($mbox);
@@ -2717,6 +2731,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.51  2004/04/11 10:42:02  rurban
+// pgsrc/CreatePagePlugin
+//
 // Revision 1.50  2004/04/10 05:34:35  rurban
 // sf bug#830912
 //
