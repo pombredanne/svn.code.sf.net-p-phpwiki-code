@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.32 2003-02-17 06:08:25 dairiki Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.33 2003-09-13 22:39:32 carstenklapp Exp $ -->
 <?php
 // Todo: Move the logic and code to the plugin
 // This is very experimental and the read-only part an ugly hack so far.
@@ -34,6 +34,14 @@ $RelativeDatesCB = HTML(HTML::input(array('type' => 'hidden',
                                           'name' => 'pref[relativeDates][]',
                                           'value' => '1',
                                           'checked' => (bool) $request->getPref('relativeDates'))));
+
+$NoLinkIconsCB = HTML(HTML::input(array('type' => 'hidden',
+                                          'name' => 'pref[noLinkIcons][]',
+                                          'value' => '0')),
+                        HTML::input(array('type' => 'checkbox',
+                                          'name' => 'pref[noLinkIcons][]',
+                                          'value' => '1',
+                                          'checked' => (bool) $request->getPref('noLinkIcons'))));
 
 function selectedOption ($value, $label = false) {
     return HTML::option(array('value' => $value,'selected'=>"selected"), ($label ? $label : $value) . "\n");
@@ -154,6 +162,9 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
      <tr align="center"><td><?= $SelectThemes ?></td>    <td><?= $SelectLanguages ?></td></tr>
    </table>
      <p class="hint"><?=_("Here you can override site-specific default values. Currently not recommended!")?></p>
+
+  <p><?=$NoLinkIconsCB?> <?=fmt("Hide %s.", WikiLink("LinkIcons"))?></p>
+  <p class="hint"><?=_("Hide or show LinkIcons (if supported by the current theme). Useful for text-only browsers or slow connections.")?></p>
 
   <h2><?=_("Edit Area Size")?></h2>
   <p><?=_("Height")?>

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.28 2003-03-18 16:47:32 dairiki Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.29 2003-09-13 22:43:00 carstenklapp Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -363,9 +363,30 @@ class Markup_wikiword extends SimpleMarkup
         global $WikiNameRegexp;
         return " $WikiNameRegexp";
     }
-        
+
     function markup ($match) {
-        return new Cached_WikiLink($match);
+        if ($this->_isWikiUserPage($match))
+            return $this->_UserLink($match);
+        else
+            return new Cached_WikiLink($match);
+    }
+
+    // FIXME: there's probably a more useful place to put these two functions    
+    function _isWikiUserPage ($page) {
+        global $request;
+        $dbi = $request->getDbh();
+        $page_handle = $dbi->getPage($page);
+        if ($page_handle->get('pref'))
+            return true;
+        else
+            return false;
+    }
+
+    function _UserLink($PageName) {
+        $link = HTML::a(array('href' => $PageName));
+        $link->pushContent(PossiblyGlueIconToText('wikiuser', $PageName));
+        $link->setAttr('class', 'wikiuser');
+        return $link;
     }
 }
 
