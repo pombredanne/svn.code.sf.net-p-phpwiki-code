@@ -1,6 +1,6 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.124 2005-01-30 23:11:00 rurban Exp $');
-/* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
+rcs_id('$Id: WikiUserNew.php,v 1.125 2005-02-08 13:25:50 rurban Exp $');
+/* Copyright (C) 2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
  * 
@@ -1145,6 +1145,10 @@ extends _AnonUser
             $this->_level = WIKIAUTH_USER;
             return $this->_level;
         } else {
+            if ((USER_AUTH_POLICY === 'strict') and $this->userExists()) {
+                $this->_level = WIKIAUTH_FORBIDDEN;
+                return $this->_level;
+            }
             return $this->_tryNextPass($submitted_password);
         }
     }
@@ -1219,22 +1223,28 @@ extends _AnonUser
     }
 
     /** The default method is storing the password in prefs. 
-     *  Child methods (DB,File) may store in external auth also, but this 
+     *  Child methods (DB, File) may store in external auth also, but this 
      *  must be explicitly enabled.
      *  This may be called by plugin/UserPreferences or by ->SetPreferences()
      */
     function changePass($submitted_password) {
         $stored_password = $this->_prefs->get('passwd');
         // check if authenticated
-        if ($this->isAuthenticated() and $stored_password != $submitted_password) {
-            $this->_prefs->set('passwd',$submitted_password);
+        if (!$this->isAuthenticated()) return false;
+        if (ENCRYPTED_PASSWD) {
+            $submitted_password = crypt($submitted_password);
+        }
+        // check other restrictions, with side-effects only.
+        $result = $this->_checkPass($submitted_password, $stored_password);
+        if ($stored_password != $submitted_password) {
+            $this->_prefs->set('passwd', $submitted_password);
             //update the storage (session, homepage, ...)
             $this->SetPreferences($this->_prefs);
             return true;
         }
         //Todo: return an error msg to the caller what failed? 
         // same password or no privilege
-        return false;
+        return ENCRYPTED_PASSWD ? true : false;
     }
 
     function _tryNextPass($submitted_password) {
@@ -2022,6 +2032,9 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.124  2005/01/30 23:11:00  rurban
+// allow self-creating passuser on login
+//
 // Revision 1.123  2005/01/25 06:58:21  rurban
 // reformatting
 //
