@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.95 2002-01-30 23:41:54 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.96 2002-01-31 05:10:28 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -260,8 +260,9 @@ function LinkPhpwikiURL($url, $text = '') {
 
 function LinkBracketLink($bracketlink) {
     global $request, $AllowedProtocols, $InlineImages;
-    global $InterWikiLinkRegexp;
 
+    include_once("lib/interwiki.php");
+    $intermap = InterWikiMap::GetMap($request);
     
     // $bracketlink will start and end with brackets; in between will
     // be either a page name, a URL or both separated by a pipe.
@@ -293,9 +294,8 @@ function LinkBracketLink($bracketlink) {
     }
     elseif (preg_match("/^phpwiki:/", $URL))
         return LinkPhpwikiURL($URL, $linkname);
-    elseif (function_exists('LinkInterWikiLink')
-            && preg_match("/^$InterWikiLinkRegexp:/", $URL))
-        return LinkInterWikiLink($URL, $linkname);
+    elseif (preg_match("/^" . $intermap->getRegexp() . ":/", $URL))
+        return $intermap->link($URL, $linkname);
     else {
         return WikiLink($URL, 'unknown', $linkname);
     }

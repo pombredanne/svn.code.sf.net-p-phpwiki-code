@@ -1,6 +1,7 @@
-<?php rcs_id('$Id: transform.php,v 1.39 2002-01-30 23:41:54 dairiki Exp $');
+<?php rcs_id('$Id: transform.php,v 1.40 2002-01-31 05:10:28 dairiki Exp $');
 require_once('lib/WikiPlugin.php');
 require_once('lib/HtmlElement.php');
+require_once('lib/interwiki.php');
 
 define('WT_SIMPLE_MARKUP', 0);
 define('WT_TOKENIZER', 1);
@@ -312,7 +313,7 @@ class WikiTransform
 class WikiPageTransform
 extends WikiTransform {
     function WikiPageTransform() {
-        global $WikiNameRegexp, $AllowedProtocols, $InterWikiLinkRegexp;
+        global $WikiNameRegexp, $AllowedProtocols, $request;
 
         $this->WikiTransform();
 
@@ -329,11 +330,11 @@ extends WikiTransform {
         $this->register(WT_TOKENIZER, 'wtt_urls',
                         "!?\b($AllowedProtocols):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]");
 
-        if (function_exists('wtt_interwikilinks')) {
-            $this->register(WT_TOKENIZER, 'wtt_interwikilinks',
-                            pcre_fix_posix_classes("!?(?<![[:alnum:]])") .
-                            "$InterWikiLinkRegexp:[^\\s.,;?()]+");
-        }
+        $map = InterWikiMap::GetMap($request);
+        $this->register(WT_TOKENIZER, 'wtt_interwikilinks',
+                        pcre_fix_posix_classes("!?(?<![[:alnum:]])") 
+                        . $map->getRegexp() . ":[^\\s.,;?()]+");
+
         $this->register(WT_TOKENIZER, 'wtt_bumpylinks', "!?$WikiNameRegexp");
 
         if (function_exists('wtm_table')) {
@@ -364,7 +365,7 @@ function do_transform ($lines, $class = 'WikiPageTransform') {
 class LinkTransform
 extends WikiTransform {
     function LinkTransform() {
-        global $WikiNameRegexp, $AllowedProtocols, $InterWikiLinkRegexp;
+        global $WikiNameRegexp, $AllowedProtocols, $request;
 
         $this->WikiTransform();
 
@@ -377,10 +378,11 @@ extends WikiTransform {
         $this->register(WT_TOKENIZER, 'wtt_urls',
                         "!?\b($AllowedProtocols):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]");
 
+        $map = InterWikiMap::GetMap($request);
         if (function_exists('wtt_interwikilinks')) {
             $this->register(WT_TOKENIZER, 'wtt_interwikilinks',
-                            pcre_fix_posix_classes("!?(?<![[:alnum:]])") .
-                            "$InterWikiLinkRegexp:[^\\s.,;?()]+");
+                            pcre_fix_posix_classes("!?(?<![[:alnum:]])")
+                            . $map->getRegexp() . ":[^\\s.,;?()]+");
         }
         $this->register(WT_TOKENIZER, 'wtt_bumpylinks', "!?$WikiNameRegexp");
         $this->register(WT_SIMPLE_MARKUP, 'wtm_htmlchars');
@@ -488,6 +490,18 @@ function wtt_urls($match, &$trfrm) {
     return $match[0] == "!"
         ? substr($match,1)
         : LinkURL($match);
+}
+
+
+// Link InterWiki links
+// These can be protected by a '!' like Wiki words.
+function wtt_interwikilinks($match, &$trfrm) {
+    if ($match[0] == '!')
+        return substr($match, 1);
+    
+    global $request;
+    $map = InterWikiMap::GetMap($request);
+    return $map->link($match);
 }
 
 // Link Wiki words (BumpyText)

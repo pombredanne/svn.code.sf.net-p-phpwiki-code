@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.54 2002-01-27 22:00:58 carstenklapp Exp $');
+rcs_id('$Id: config.php,v 1.55 2002-01-31 05:10:28 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -270,13 +270,6 @@ define('BASE_URL',
 if (empty($DBParams['dbtype']))
 {
     $DBParams['dbtype'] = 'dba';
-}
-
-// InterWiki linking -- wiki-style links to other wikis on the web
-//
-if (defined('INTERWIKI_MAP_FILE'))
-{
-    include ('lib/interwiki.php');
 }
 
 if (!defined('WIKI_NAME')) {

@@ -1,13 +1,18 @@
-Date: Sun, 27 Jan 2002 17:28:55 -0500
+Date: Wed, 30 Jan 2002 21:01:33 -0800
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: InterWiki,v 1.3 2002-01-27 22:52:21 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=InterWiki;
   flags="";
+  author=admin;
+  version=2;
+  lastmodified=1012453293;
+  author_id=admin;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
 This wiki supports InterWiki links in a style copied from UseModWiki. Links to pages in other wikis can be made without having to know or type the full URLs, for example: MeatBall:InterWiki will link to the page named "!InterWiki" at MeatballWiki.
+
+The InterWiki map is taken from the the <verbatim> block in InterWikiMap.  That page must be locked for this to work.  (This is deny the hackers the ability to nefariously change every interwiki link on the wiki to point to some evil URL.) If no map is found in InterWikiMap (or the page is not locked), PhpWiki will fall back to using the file lib/interwiki.map.
 
 The InterWiki map file in use at PhpWiki can be viewed at [http://phpwiki.sf.net/interwiki.map] (lib/interwiki.map, in your phpwiki distribution). The map file is manually updated. It is based upon and periodically synchronized with the UseMod:InterMap, but is not quite identical. One notable difference from UseModWiki is that PhpWiki supports '%s' within the URLs in the map--see the entry for RFC for an example.
 
