@@ -1,5 +1,5 @@
 <?php 
-// $Id: XmlRpcServer.php,v 1.8 2004-12-06 19:49:56 rurban Exp $
+// $Id: XmlRpcServer.php,v 1.9 2004-12-10 00:14:41 rurban Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  *
  * LICENCE
@@ -40,17 +40,22 @@
  * http://www.ecyrd.com/JSPWiki/Wiki.jsp?page=WikiRPCInterface
  * 
  * See also http://www.usemod.com/cgi-bin/mb.pl?XmlRpc
+ * or http://www.devshed.com/c/a/PHP/Using-XMLRPC-with-PHP/
  * 
- * NB:  All XMLRPC methods should be prefixed with "wiki."
- * eg  wiki.getAllPages
- * 
+ * Note: All XMLRPC methods are automatically prefixed with "wiki."
+ *       eg. "wiki.getAllPages"
 */
 
-// ToDo:  
-//        Make use of the xmlrpc extension if found. Resolve namespace conflicts
-//        Remove all warnings from xmlrpc.inc 
-//        Return list of external links in listLinks
-//        RSS2 cloud subscription
+/*
+ToDo:
+	Resolve namespace conflicts
+        Remove all warnings from xmlrpc.inc 
+        Return list of external links in listLinks
+        Support RSS2 cloud subscription
+        Test hwiki.jar xmlrpc interface (java visualization plugin)
+Done:
+     	Make use of the xmlrpc extension if found. http://xmlrpc-epi.sourceforge.net/
+*/
 
 // Intercept GET requests from confused users.  Only POST is allowed here!
 // There is some indication that $HTTP_SERVER_VARS is deprecated in php > 4.1.0
@@ -60,8 +65,6 @@ if ($GLOBALS['HTTP_SERVER_VARS']['REQUEST_METHOD'] != "POST")
     die('This is the address of the XML-RPC interface.' .
         '  You must use XML-RPC calls to access information here');
 }
-
-// Include the php XML-RPC library
 
 // All these global declarations make it so that this file
 // (XmlRpcServer.php) can be included within a function body
@@ -77,11 +80,26 @@ global $xmlrpcName, $xmlrpcVersion;
 global $xmlrpcerruser, $xmlrpcerrxml;
 global $xmlrpc_backslash;
 global $_xh;
-include_once("lib/XMLRPC/xmlrpc.inc");
 
-global $_xmlrpcs_dmap;
-global $_xmlrpcs_debug;
-include_once("lib/XMLRPC/xmlrpcs.inc");
+if (loadPhpExtension('xmlrpc')) { // fast c lib
+    define('XMLRPC_EXT_LOADED', true);
+
+    global $xmlrpc_util_path;
+    $xmlrpc_util_path = dirname(__FILE__)."/XMLRPC/";
+    include_once("lib/XMLRPC/xmlrpc_emu.inc"); 
+    include_once("lib/XMLRPC/xmlrpcs_emu.inc");
+
+ } else { // slow php lib
+    define('XMLRPC_EXT_LOADED', true);
+
+    // Include the php XML-RPC library
+    include_once("lib/XMLRPC/xmlrpc.inc");
+
+    global $_xmlrpcs_dmap;
+    global $_xmlrpcs_debug;
+    include_once("lib/XMLRPC/xmlrpcs.inc");
+}
+ 
 
 //  API version
 define ("WIKI_XMLRPC_VERSION", "1.1");
@@ -471,7 +489,7 @@ $wiki_dmap['rssPleaseNotify']
 function rssPleaseNotify($params)
 {
     // register the clients IP
-    return new xmlrpcresp(new xmlrpcval (false, "boolean"));
+    return new xmlrpcresp(new xmlrpcval (0, "boolean"));
 }
 
 $wiki_dmap['mailPasswordToUser']
@@ -481,12 +499,13 @@ $wiki_dmap['mailPasswordToUser']
 
 function mailPasswordToUser($params)
 {
-    return new xmlrpcresp(new xmlrpcval (false, "boolean"));
+    return new xmlrpcresp(new xmlrpcval (0, "boolean"));
 }
  
 /** 
- * Construct the server instance, and set up the dispatch map, which maps
- * the XML-RPC methods on to the wiki functions.
+ * Construct the server instance, and set up the dispatch map, 
+ * which maps the XML-RPC methods on to the wiki functions.
+ * Provide the "wiki." prefix to each function
  */
 class XmlRpcServer extends xmlrpc_server
 {
@@ -494,7 +513,7 @@ class XmlRpcServer extends xmlrpc_server
         global $wiki_dmap;
         foreach ($wiki_dmap as $name => $val)
             $dmap['wiki.' . $name] = $val;
-        
+
         $this->xmlrpc_server($dmap, 0 /* delay service*/);
     }
 
