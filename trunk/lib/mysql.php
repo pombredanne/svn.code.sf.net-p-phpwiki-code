@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: mysql.php,v 1.3 2000-10-20 11:42:52 ahollosi Exp $');
+<?php rcs_id('$Id: mysql.php,v 1.4 2000-11-08 15:40:56 ahollosi Exp $');
 
    /*
       Database functions:
@@ -142,6 +142,31 @@
          return(mysql_result($res, 0));
       }
       return 0;
+   }
+
+
+   function RemovePage($dbi, $pagename) {
+      global $WikiPageStore, $ArchivePageStore;
+
+      $pagename = addslashes($pagename);
+      $msg = gettext ("Cannot delete '%s' from table '%s'");
+      $msg .= "<br>\n";
+      $msg .= gettext ("MySQL error: %s");
+
+      if (!mysql_query("delete from $WikiPageStore where pagename='$pagename'", $dbi['dbc']))
+         ExitWiki(sprintf($msg, $pagename, $WikiPageStore, mysql_error()));
+
+      if (!mysql_query("delete from $ArchivePageStore where pagename='$pagename'", $dbi['dbc']))
+         ExitWiki(sprintf($msg, $pagename, $ArchivePageStore, mysql_error()));
+
+      if (!mysql_query("delete from wikilinks where frompage='$pagename'", $dbi['dbc']))
+         ExitWiki(sprintf($msg, $pagename, 'wikilinks', mysql_error()));
+
+      if (!mysql_query("delete from hitcount where pagename='$pagename'", $dbi['dbc']))
+         ExitWiki(sprintf($msg, $pagename, 'hitcount', mysql_error()));
+
+      if (!mysql_query("delete from wikiscore where pagename='$pagename'", $dbi['dbc']))
+         ExitWiki(sprintf($msg, $pagename, 'wikiscore', mysql_error()));
    }
 
 
