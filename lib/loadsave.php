@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.133 2004-12-08 12:57:41 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.134 2004-12-20 16:05:01 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
@@ -97,11 +97,11 @@ function EndLoadDump(&$request)
                  _("LoadDump")."\n".
                  $editedby."\n\n".
                  $content))
-            trigger_error(sprintf(_("PageChange Notification sent to %s"),
-                                  join(',',$all_users)), E_USER_NOTICE);
+            trigger_error(sprintf(_("PageChange Notification of %s sent to %s"),
+                                  join("\n",$pages), join(',',$all_users)), E_USER_NOTICE);
         else
-            trigger_error(sprintf(_("PageChange Notification Error: Couldn't send to %s"),
-                                  join(',',$all_users)), E_USER_WARNING);
+            trigger_error(sprintf(_("PageChange Notification Error: Couldn't send %s to %s"),
+                                  join("\n",$pages), join(',',$all_users)), E_USER_WARNING);
         unset($pages);
         unset($all_emails);
         unset($all_users);
@@ -722,7 +722,7 @@ function SavePage (&$request, &$pageinfo, $source, $filename)
     	$current = $page->getCurrentRevision();
     }
     if ($current->getVersion() == 0) {
-        $mesg->pushContent(' - ', _("new page"));
+        $mesg->pushContent(' - ', _("New page"));
         $isnew = true;
     }
     else {
@@ -1255,6 +1255,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.133  2004/12/08 12:57:41  rurban
+ page-specific timeouts for long multi-page requests
+
  Revision 1.132  2004/12/08 01:18:33  rurban
  Disallow loading config*.ini files. Detected by Santtu Jarvi.
 

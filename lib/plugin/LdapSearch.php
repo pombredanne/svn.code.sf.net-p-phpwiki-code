@@ -1,8 +1,8 @@
-<?php // -*-php-*- rcs_id('$Id: LdapSearch.php,v 1.2 2004-10-04 23:39:34 rurban Exp $');
+<?php // -*-php-*- rcs_id('$Id: LdapSearch.php,v 1.3 2004-12-20 16:05:14 rurban Exp $');
 /**
  Copyright 2004 John Lines
 
- This file is (not yet) part of PhpWiki.
+ This file is part of PhpWiki.
 
  PhpWiki is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
     function getDefaultArguments() {
         return array('host' 	=> "localhost", // change to LDAP_AUTH_HOST
@@ -160,6 +160,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/10/04 23:39:34  rurban
+// just aesthetics
+//
 // Revision 1.1  2004/09/23 12:28:12  rurban
 // initial checkin from http://phpwiki.org/LdapSearchPlugin
 //   by John Lines

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: File.php,v 1.2 2004-12-19 00:58:02 rurban Exp $');
+rcs_id('$Id: File.php,v 1.3 2004-12-20 16:05:01 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 
@@ -54,7 +54,7 @@ extends _PassUser
 
     function checkPass($submitted_password) {
         if (!$this->isValidName()) {
-            trigger_error(_("Invalid username"),E_USER_WARNING);
+            trigger_error(_("Invalid username."),E_USER_WARNING);
             return $this->_tryNextPass($submitted_password);
         }
         if (!$this->_checkPassLength($submitted_password)) {
@@ -90,6 +90,12 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/12/19 00:58:02  rurban
+// Enforce PASSWORD_LENGTH_MINIMUM in almost all PassUser checks,
+// Provide an errormessage if so. Just PersonalPage and BogoLogin not.
+// Simplify httpauth logout handling and set sessions for all methods.
+// fix main.php unknown index "x" getLevelDescription() warning.
+//
 // Revision 1.1  2004/11/01 10:43:58  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session
