@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.106 2004-07-01 08:49:38 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.107 2004-10-04 23:42:15 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -79,6 +79,7 @@ rcs_id('$Id: WikiUserNew.php,v 1.106 2004-07-01 08:49:38 rurban Exp $');
  *          $this = $user;
  *    A /php5-patch.php is provided, which patches the src automatically 
  *    for php4 and php5. Default is php4.
+ *    Update: not needed anymore. we use eval to fool the load-time syntax checker.
  * 2004-03-24 rurban
  * 6) enforced new cookie policy: prefs don't get stored in cookies
  *    anymore, only in homepage and/or database, but always in the 
@@ -1420,12 +1421,18 @@ extends _PassUser
             exit;
         }
         $this->_userid = $username;
+        // we should check if he is a member of admin, 
+        // because HttpAuth has its own logic.
         $this->_level = WIKIAUTH_USER;
+        if ($this->isAdmin())
+            $this->_level = WIKIAUTH_ADMIN;
         return $this;
     }
         
     function checkPass($submitted_password) {
-        return $this->userExists() ? WIKIAUTH_USER : WIKIAUTH_ANON;
+        return $this->userExists() 
+            ? ($this->isAdmin() ? WIKIAUTH_ADMIN : WIKIAUTH_USER)
+            : WIKIAUTH_ANON;
     }
 
     function mayChangePass() {
@@ -3048,6 +3055,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.106  2004/07/01 08:49:38  rurban
+// obsolete php5-patch.php: minor php5 login problem though
+//
 // Revision 1.105  2004/06/29 06:48:03  rurban
 // Improve LDAP auth and GROUP_LDAP membership:
 //   no error message on false password,
@@ -3314,253 +3324,6 @@ extends UserPreferences
 // Revision 1.46  2004/04/01 06:29:51  rurban
 // better wording
 // RateIt also for ADODB
-//
-// Revision 1.45  2004/03/30 02:14:03  rurban
-// fixed yet another Prefs bug
-// added generic PearDb_iter
-// $request->appendValidators no so strict as before
-// added some box plugin methods
-// PageList commalist for condensed output
-//
-// Revision 1.44  2004/03/27 22:01:03  rurban
-// two catches by Konstantin Zadorozhny
-//
-// Revision 1.43  2004/03/27 19:40:09  rurban
-// init fix and validator reset
-//
-// Revision 1.40  2004/03/25 22:54:31  rurban
-// fixed HttpAuth
-//
-// Revision 1.38  2004/03/25 17:37:36  rurban
-// helper to patch to and from php5 (workaround for stricter parser, no macros in php)
-//
-// Revision 1.37  2004/03/25 17:00:31  rurban
-// more code to convert old-style pref array to new hash
-//
-// Revision 1.36  2004/03/24 19:39:02  rurban
-// php5 workaround code (plus some interim debugging code in XmlElement)
-//   php5 doesn't work yet with the current XmlElement class constructors,
-//   WikiUserNew does work better than php4.
-// rewrote WikiUserNew user upgrading to ease php5 update
-// fixed pref handling in WikiUserNew
-// added Email Notification
-// added simple Email verification
-// removed emailVerify userpref subclass: just a email property
-// changed pref binary storage layout: numarray => hash of non default values
-// print optimize message only if really done.
-// forced new cookie policy: delete pref cookies, use only WIKI_ID as plain string.
-//   prefs should be stored in db or homepage, besides the current session.
-//
-// Revision 1.35  2004/03/18 22:18:31  rurban
-// workaround for php5 object upgrading problem
-//
-// Revision 1.34  2004/03/18 21:41:09  rurban
-// fixed sqlite support
-// WikiUserNew: PHP5 fixes: don't assign $this (untested)
-//
-// Revision 1.33  2004/03/16 15:42:04  rurban
-// more fixes for undefined property warnings
-//
-// Revision 1.32  2004/03/14 16:30:52  rurban
-// db-handle session revivification, dba fixes
-//
-// Revision 1.31  2004/03/12 23:20:58  rurban
-// pref fixes (base64)
-//
-// Revision 1.30  2004/03/12 20:59:17  rurban
-// important cookie fix by Konstantin Zadorozhny
-// new editpage feature: JS_SEARCHREPLACE
-//
-// Revision 1.29  2004/03/11 13:30:47  rurban
-// fixed File Auth for user and group
-// missing only getMembersOf(Authenticated Users),getMembersOf(Every),getMembersOf(Signed Users)
-//
-// Revision 1.28  2004/03/08 18:17:09  rurban
-// added more WikiGroup::getMembersOf methods, esp. for special groups
-// fixed $LDAP_SET_OPTIONS
-// fixed _AuthInfo group methods
-//
-// Revision 1.27  2004/03/01 09:35:13  rurban
-// fixed DbPassuser pref init; lost userid
-//
-// Revision 1.26  2004/02/29 04:10:56  rurban
-// new POP3 auth (thanks to BiloBilo: pentothal at despammed dot com)
-// fixed syntax error in index.php
-//
-// Revision 1.25  2004/02/28 22:25:07  rurban
-// First PagePerm implementation:
-//
-// $WikiTheme->setAnonEditUnknownLinks(false);
-//
-// Layout improvement with dangling links for mostly closed wiki's:
-// If false, only users with edit permissions will be presented the
-// special wikiunknown class with "?" and Tooltip.
-// If true (default), any user will see the ?, but will be presented
-// the PrintLoginForm on a click.
-//
-// Revision 1.24  2004/02/28 21:14:08  rurban
-// generally more PHPDOC docs
-//   see http://xarch.tu-graz.ac.at/home/rurban/phpwiki/xref/
-// fxied WikiUserNew pref handling: empty theme not stored, save only
-//   changed prefs, sql prefs improved, fixed password update,
-//   removed REPLACE sql (dangerous)
-// moved gettext init after the locale was guessed
-// + some minor changes
-//
-// Revision 1.23  2004/02/27 13:21:17  rurban
-// several performance improvements, esp. with peardb
-// simplified loops
-// storepass seperated from prefs if defined so
-// stacked and strict still not working
-//
-// Revision 1.22  2004/02/27 05:15:40  rurban
-// more stability. detected by Micki
-//
-// Revision 1.21  2004/02/26 20:43:49  rurban
-// new HttpAuthPassUser class (forces http auth if in the auth loop)
-// fixed user upgrade: don't return _PassUser in the first hand.
-//
-// Revision 1.20  2004/02/26 01:29:11  rurban
-// important fixes: endless loops in certain cases. minor rewrite
-//
-// Revision 1.19  2004/02/25 17:15:17  rurban
-// improve stability
-//
-// Revision 1.18  2004/02/24 15:20:05  rurban
-// fixed minor warnings: unchecked args, POST => Get urls for sortby e.g.
-//
-// Revision 1.17  2004/02/17 12:16:42  rurban
-// started with changePass support. not yet used.
-//
-// Revision 1.16  2004/02/15 22:23:45  rurban
-// oops, fixed showstopper (endless recursion)
-//
-// Revision 1.15  2004/02/15 21:34:37  rurban
-// PageList enhanced and improved.
-// fixed new WikiAdmin... plugins
-// editpage, Theme with exp. htmlarea framework
-//   (htmlarea yet committed, this is really questionable)
-// WikiUser... code with better session handling for prefs
-// enhanced UserPreferences (again)
-// RecentChanges for show_deleted: how should pages be deleted then?
-//
-// Revision 1.14  2004/02/15 17:30:13  rurban
-// workaround for lost db connnection handle on session restauration (->_auth_dbi)
-// fixed getPreferences() (esp. from sessions)
-// fixed setPreferences() (update and set),
-// fixed AdoDb DB statements,
-// update prefs only at UserPreferences POST (for testing)
-// unified db prefs methods (but in external pref classes yet)
-//
-// Revision 1.13  2004/02/09 03:58:12  rurban
-// for now default DB_SESSION to false
-// PagePerm:
-//   * not existing perms will now query the parent, and not
-//     return the default perm
-//   * added pagePermissions func which returns the object per page
-//   * added getAccessDescription
-// WikiUserNew:
-//   * added global ->prepare (not yet used) with smart user/pref/member table prefixing.
-//   * force init of authdbh in the 2 db classes
-// main:
-//   * fixed session handling (not triple auth request anymore)
-//   * don't store cookie prefs with sessions
-// stdlib: global obj2hash helper from _AuthInfo, also needed for PagePerm
-//
-// Revision 1.12  2004/02/07 10:41:25  rurban
-// fixed auth from session (still double code but works)
-// fixed GroupDB
-// fixed DbPassUser upgrade and policy=old
-// added GroupLdap
-//
-// Revision 1.11  2004/02/03 09:45:39  rurban
-// LDAP cleanup, start of new Pref classes
-//
-// Revision 1.10  2004/02/01 09:14:11  rurban
-// Started with Group_Ldap (not yet ready)
-// added new _AuthInfo plugin to help in auth problems (warning: may display passwords)
-// fixed some configurator vars
-// renamed LDAP_AUTH_SEARCH to LDAP_BASE_DN
-// changed PHPWIKI_VERSION from 1.3.8a to 1.3.8pre
-// USE_DB_SESSION defaults to true on SQL
-// changed GROUP_METHOD definition to string, not constants
-// changed sample user DBAuthParams from UPDATE to REPLACE to be able to
-//   create users. (Not to be used with external databases generally, but
-//   with the default internal user table)
-//
-// fixed the IndexAsConfigProblem logic. this was flawed:
-//   scripts which are the same virtual path defined their own lib/main call
-//   (hmm, have to test this better, phpwiki.sf.net/demo works again)
-//
-// Revision 1.9  2004/01/30 19:57:58  rurban
-// fixed DBAuthParams['pref_select']: wrong _auth_dbi object used.
-//
-// Revision 1.8  2004/01/30 18:46:15  rurban
-// fix "lib/WikiUserNew.php:572: Notice[8]: Undefined variable: DBParams"
-//
-// Revision 1.7  2004/01/27 23:23:39  rurban
-// renamed ->Username => _userid for consistency
-// renamed mayCheckPassword => mayCheckPass
-// fixed recursion problem in WikiUserNew
-// fixed bogo login (but not quite 100% ready yet, password storage)
-//
-// Revision 1.6  2004/01/26 09:17:49  rurban
-// * changed stored pref representation as before.
-//   the array of objects is 1) bigger and 2)
-//   less portable. If we would import packed pref
-//   objects and the object definition was changed, PHP would fail.
-//   This doesn't happen with an simple array of non-default values.
-// * use $prefs->retrieve and $prefs->store methods, where retrieve
-//   understands the interim format of array of objects also.
-// * simplified $prefs->get() and fixed $prefs->set()
-// * added $user->_userid and class '_WikiUser' portability functions
-// * fixed $user object ->_level upgrading, mostly using sessions.
-//   this fixes yesterdays problems with loosing authorization level.
-// * fixed WikiUserNew::checkPass to return the _level
-// * fixed WikiUserNew::isSignedIn
-// * added explodePageList to class PageList, support sortby arg
-// * fixed UserPreferences for WikiUserNew
-// * fixed WikiPlugin for empty defaults array
-// * UnfoldSubpages: added pagename arg, renamed pages arg,
-//   removed sort arg, support sortby arg
-//
-// Revision 1.5  2004/01/25 03:05:00  rurban
-// First working version, but has some problems with the current main loop.
-// Implemented new auth method dispatcher and policies, all the external
-// _PassUser classes (also for ADODB and Pear DB).
-// The two global funcs UserExists() and CheckPass() are probably not needed,
-// since the auth loop is done recursively inside the class code, upgrading
-// the user class within itself.
-// Note: When a higher user class is returned, this doesn't mean that the user
-// is authorized, $user->_level is still low, and only upgraded on successful
-// login.
-//
-// Revision 1.4  2003/12/07 19:29:48  carstenklapp
-// Code Housecleaning: fixed syntax errors. (php -l *.php)
-//
-// Revision 1.3  2003/12/06 19:10:46  carstenklapp
-// Finished off logic for determining user class, including
-// PassUser. Removed ability of BogoUser to save prefs into a page.
-//
-// Revision 1.2  2003/12/03 21:45:48  carstenklapp
-// Added admin user, password user, and preference classes. Added
-// password checking functions for users and the admin. (Now the easy
-// parts are nearly done).
-//
-// Revision 1.1  2003/12/02 05:46:36  carstenklapp
-// Complete rewrite of WikiUser.php.
-//
-// This should make it easier to hook in user permission groups etc. some
-// time in the future. Most importantly, to finally get UserPreferences
-// fully working properly for all classes of users: AnonUser, BogoUser,
-// AdminUser; whether they have a NamesakePage (PersonalHomePage) or not,
-// want a cookie or not, and to bring back optional AutoLogin with the
-// UserName stored in a cookie--something that was lost after PhpWiki had
-// dropped the default http auth login method.
-//
-// Added WikiUser classes which will (almost) work together with existing
-// UserPreferences class. Other parts of PhpWiki need to be updated yet
-// before this code can be hooked up.
 //
 
 // Local Variables:
