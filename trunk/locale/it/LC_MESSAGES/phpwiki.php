@@ -5,7 +5,9 @@ $locale["%d best incoming links:"] =
 $locale["%d best outgoing links:"] =
    "%s migliori link in uscita:";
 $locale["%d most popular nearby:"] =
-   "%d pi&ugrave; popolari:";
+   "%d più popolari:";
+$locale["%s has been locked by the administrator and cannot be edited."] =
+   "%s è stata bloccata dall'amministratore e non può essere modificata";
 $locale["<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."] =
    "<b>Aggiorna</b> la pagina. Dovresti vedere l'ultima versione senzamodifiche";
 $locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
@@ -37,7 +39,7 @@ $locale["Page Name"] =
 $locale["Page locked"] =
    "Pagina bloccata";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
-   "PhpWiki non &egrave; riuscito a salvare i tuoi cambiamenti perch&egrave; un altro utente ha cambiato la pagina mentre la stavi modificando. Se il salvataggio viene comunque fatto, i cambiamenti dell'altro utente verranno persi.";
+   "PhpWiki non è riuscito a salvare i tuoi cambiamenti perchè un altro utente ha cambiato la pagina mentre la stavi modificando. Se il salvataggio viene comunque fatto, i cambiamenti dell'altro utente verranno persi.";
 $locale["Press <b>Save</b> again."] =
    "Premi ancora <b>Salva</b>";
 $locale["Problem while editing %s"] =
@@ -47,7 +49,7 @@ $locale["Problem while updating %s"] =
 $locale["Remove page"] =
    "Rimuovi la pagina";
 $locale["Removed page '%s' succesfully."] =
-   "La pagina '%s' &egrave; stata rimossa correttamente.";
+   "La pagina '%s' è stata rimossa correttamente.";
 $locale["Search"] =
    "Ricerca";
 $locale["See %s tips for editing."] =
@@ -60,8 +62,6 @@ $locale["TextFormattingRules"] =
    "RegoleDiFormattazioneDelTesto";
 $locale["Thank you for editing %s."] =
    "Grazie per le modifiche! %s.";
-$locale["This page has been locked by the administrator and cannot be edited."] =
-   "Questa pagina &grave; stata bloccata dall'amministratore e non pu&ograve; essere modificata";
 $locale["Title search results for '%s'"] =
    "Risultati della ricerca su tutto il testo '%s'";
 $locale["Unlock page"] =
@@ -77,8 +77,8 @@ $locale["You are about to remove '%s' permanently!"] =
 $locale["You entered an invalid login or password."] =
    "Nome utente o password errata.";
 $locale["Your careful attention to detail is much appreciated."] =
-   "La tua cura verso il dettaglio &egrave; molto apprezzata.";
+   "La tua cura verso il dettaglio è molto apprezzata.";
 $locale["by %s"] =
    "di %s";
 
-;?>
+?>
