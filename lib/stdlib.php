@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.198 2004-07-02 10:30:36 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.199 2004-08-05 10:38:15 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1184,6 +1184,8 @@ class fileSet {
      * See also http://www.php.net/manual/en/function.readdir.php
      */
     function getFiles($exclude=false,$sortby=false,$limit=false) {
+        require_once('lib/PageList.php');
+
         $list = $this->_fileList;
         if ($sortby) {
             switch (Pagelist::sortby($sortby,'db')) {
@@ -1630,6 +1632,9 @@ function url_get_contents( $uri ) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.198  2004/07/02 10:30:36  rurban
+// always disable getimagesize for < php-4.3 with external png's
+//
 // Revision 1.197  2004/07/02 09:55:58  rurban
 // more stability fixes: new DISABLE_GETIMAGESIZE if your php crashes when loading LinkIcons: failing getimagesize in old phps; blockparser stabilized
 //
