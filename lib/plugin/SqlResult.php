@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SqlResult.php,v 1.4 2004-09-17 14:23:21 rurban Exp $');
+rcs_id('$Id: SqlResult.php,v 1.5 2004-09-24 18:50:46 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
@@ -56,6 +56,8 @@ rcs_id('$Id: SqlResult.php,v 1.4 2004-09-17 14:23:21 rurban Exp $');
  * @author: ReiniUrban
  */
 
+require_once("lib/PageList.php");
+
 class WikiPlugin_SqlResult
 extends WikiPlugin
 {
@@ -71,7 +73,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -110,7 +112,8 @@ extends WikiPlugin
             $sql = str_replace("%%where%%", $where, $sql);
         // TODO: use a SQL construction library?
         if ($limit) {
-            $limit = PageList::limit($limit);
+            $pagelist = new PageList();
+            $limit = $pagelist->limit($limit);
             if (strstr($sql, "%%limit%%"))
                 $sql = str_replace("%%limit%%", $limit, $sql);
             else {
@@ -123,11 +126,11 @@ extends WikiPlugin
                 $sql = preg_replace("/ORDER BY .*%%sortby%%\s/m", "", $sql);
             else
                 $sql = str_replace("%%sortby%%", $sortby, $sql);
-        } else { // add sorting: support paging sortby links
+        } elseif (PageList::sortby($sortby,'db')) { // add sorting: support paging sortby links
             if (preg_match("/\sORDER\s/",$sql))
                 $sql = preg_replace("/ORDER BY\s\S+\s/m", "ORDER BY " . PageList::sortby($sortby,'db'), $sql);
             else
-                $sql .= "ORDER BY " . PageList::sortby($sortby,'db');
+                $sql .= " ORDER BY " . PageList::sortby($sortby,'db');
         }
 
         $inidsn = $this->getDsn($alias);
@@ -139,6 +142,9 @@ extends WikiPlugin
         if ($DBParams['dbtype'] == 'SQL') {
             $dbh = DB::connect($inidsn);
             $all = $dbh->getAll($sql);
+            if (DB::isError($all)) {
+            	return $this->error($all->getMessage(). ' ' . $all->userinfo);
+            }
         } else {
             if ($DBParams['dbtype'] != 'ADODB') {
                 // require_once('lib/WikiDB/adodb/adodb-errorhandler.inc.php');
@@ -148,6 +154,8 @@ extends WikiPlugin
             $dbh = &ADONewConnection($parsed['phptype']); 
             $conn = $dbh->Connect($parsed['hostspec'],$parsed['username'], 
                                   $parsed['password'], $parsed['database']); 
+            if (!$conn)
+                return $this->error($dbh->errorMsg());
             $GLOBALS['ADODB_FETCH_MODE'] = ADODB_FETCH_ASSOC;
             $dbh->SetFetchMode(ADODB_FETCH_ASSOC);
 
@@ -155,10 +163,12 @@ extends WikiPlugin
 
             $GLOBALS['ADODB_FETCH_MODE'] = ADODB_FETCH_NUM;
             $dbh->SetFetchMode(ADODB_FETCH_NUM);
+            if (!$all)
+                return $this->error($dbh->errorMsg());
         }
         $args = array();
         if ($limit) { // fill paging vars (see PageList)
-            $args = $this->pagingTokens(count($all), count($all[0]), $limit);
+            $args = $pagelist->pagingTokens(count($all), count($all[0]), $limit);
             if (!$args) $args = array();
         }
 
@@ -174,34 +184,45 @@ extends WikiPlugin
         } else {
             if ($ordered) {
                 $html = HTML::ol(array('class'=>'sqlresult'));
-                foreach ($all as $row) {
+                if ($all)
+                  foreach ($all as $row) {
                     $html->pushContent(HTML::li(array('class'=> $i++ % 2 ? 'evenrow' : 'oddrow'), $row[0]));
-                }
+                  }
             } else {
                 $html = HTML::table(array('class'=>'sqlresult'));
                 $i = 0;
+                if ($all)
                 foreach ($all as $row) {
                     $tr = HTML::tr(array('class'=> $i++ % 2 ? 'evenrow' : 'oddrow'));
-                    foreach ($row as $col) {
-                        $tr->pushContent(HTML::td($col));
-                    }
+                    if ($row)
+                        foreach ($row as $col) {
+                            $tr->pushContent(HTML::td($col));
+                        }
                     $html->pushContent($tr);
                 }
             }
         }
         // do paging via pagelink template
-        if (args['NUMPAGES']) {
+        if (!empty($args['NUMPAGES'])) {
             $paging = Template("pagelink", $args);
             $html = $table->pushContent(HTML::thead($paging),
                                         HTML::tbody($html),
                                         HTML::tfoot($paging));
         }
+        if (0 and DEBUG) { // test deferred error/warning/notice collapsing
+            trigger_error("test notice",  E_USER_NOTICE);
+            trigger_error("test warning", E_USER_WARNING);
+        }
+
         return $html;
     }
 
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/09/17 14:23:21  rurban
+// support paging, force limit 50
+//
 // Revision 1.3  2004/09/06 08:36:28  rurban
 // support templates, with some vars
 //
