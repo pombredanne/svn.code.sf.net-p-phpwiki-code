@@ -1,3 +1,11 @@
+!Synopsis
+__Enfasi:__ '____' per corsivo, __ per grassetto, '____'_''''_ per entrambi.%%%
+__Liste:__ * per liste puntate, # per liste numerate, ''; term : definition'' per liste di definizioni.
+%%%__Collegamenti:__ UnisciParoleConInizialiInMaiuscolo o usa le parentesi quadre per un [[collegamento ad una pagina] o un URL [[http://cool.wiki.int/].
+%%%__Footnotes:__ Use [[1],[[2],[[3],...
+%%%__Preventing linking:__ Prefix with "!": !!DoNotHyperlink, name links like [[[text | URL] (double up on the "[").
+%%%__Varie:__ "!", "!!", "!!!" definisce le intestazioni, "%''''%%" va a capo, "-''''---" crea una linea orizzontale, usa "[" con "[[" per le sequenze di escape.
+
 ! Paragrafi
 
 * Non identare i paragrafi
