@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: random.php,v 1.5 2002-01-23 11:32:18 carstenklapp Exp $');
+<?php rcs_id('$Id: random.php,v 1.6 2002-01-23 18:12:51 carstenklapp Exp $');
 /**
  */
 class randomImage {
@@ -10,49 +10,55 @@ class randomImage {
      */
     function randomImage ($dirname) {
 
-        $this->filename ="";
+        $this->filename = ""; // Pick up your filename here.
 
-        $imageSet  = new imageSet($dirname);
-        $imageList = $imageSet->getFiles();
-        if (empty($imageList)) {
+        $_imageSet  = new imageSet($dirname);
+        $this->imageList = $_imageSet->getFiles();
+        unset($_imageSet);
+
+        if (empty($this->imageList)) {
             trigger_error(sprintf(_("%s is empty."), $dirname),
                           E_USER_NOTICE);
-            return; // early return
+        } else {
+            $dummy = $this->pickRandom();
         }
+    }
 
-        //FIXME:
-        //srand(seed()); // Start with a good seed.
-
-        if ($imageList) {
-            $this->filename = $imageList[array_rand($imageList)];
-            //trigger_error(sprintf(_("random image chosen: %s"), $imgname),
-            //              E_USER_NOTICE);//debugging
-        }
+    function pickRandom() {
+        better_srand(); // Start with a good seed.
+        $this->filename = $this->imageList[array_rand($this->imageList)];
+        //trigger_error(sprintf(_("random image chosen: %s"),
+        //                      $this->filename),
+        //              E_USER_NOTICE); //debugging
+        return $this->filename;
     }
 };
 
 
 /**
- * Prepare a random seed.
+ * Seed the random number generator.
+ *
+ * better_srand() ensures the randomizer is seeded only once.
  * 
- * How random do you want it? See
- * http://download.php.net/manual/en/function.srand.php
- * mt_srand ((double) microtime() * 1000000 / pi())
+ * How random do you want it? See:
+ * http://www.php.net/manual/en/function.srand.php
+ * http://www.php.net/manual/en/function.mt-srand.php
  */
-function seed($seed = '') {
+function better_srand($seed = '') {
     static $wascalled = FALSE;
     if (!$wascalled) {
         $seed = $seed === '' ? (double) microtime() * 1000000 : $seed;
         srand($seed);
         $wascalled = TRUE;
-        //trigger_error("new random seed", E_USER_NOTICE);//debugging
+        //trigger_error("new random seed", E_USER_NOTICE); //debugging
     }
 }
 
 
 class imageSet extends fileSet {
     /**
-     * Files are considered images when it's suffix matches one from $InlineImages.
+     * A file is considered an image when the suffix matches one from
+     * $InlineImages.
      */
     function _filenameSelector($filename) {
         global $InlineImages;
@@ -80,7 +86,7 @@ class fileSet {
         $this->_fileList = array();
 
         if (empty($directory)) {
-            trigger_error(sprintf(_("%s is empty."), 'dirname'),
+            trigger_error(sprintf(_("%s is empty."), 'directoryname'),
                           E_USER_NOTICE);
             return; // early return
         }
@@ -97,7 +103,8 @@ class fileSet {
                 continue;
             if ($this->_filenameSelector($filename)) {
                 array_push($this->_fileList, "$filename");
-            //trigger_error(sprintf(_("found file %s"), $filename), E_USER_NOTICE);//debugging
+            //trigger_error(sprintf(_("found file %s"), $filename),
+            //                      E_USER_NOTICE); //debugging
             }
         }
         closedir($dir_handle);
