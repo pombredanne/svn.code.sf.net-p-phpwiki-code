@@ -1,10 +1,10 @@
-<?php rcs_id('$Id: stdlib.php,v 1.21 2001-01-15 12:32:57 ahollosi Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.21.2.1 2001-02-08 18:28:31 dairiki Exp $');
 
    /*
       Standard functions for Wiki functionality
          ExitWiki($errormsg)
-         LinkExistingWikiWord($wikiword) 
-         LinkUnknownWikiWord($wikiword) 
+         LinkExistingWikiWord($wikiword, $linktext) 
+         LinkUnknownWikiWord($wikiword, $linktext) 
          LinkURL($url, $linktext)
          LinkImage($url, $alt)
          RenderQuickSearch($value)
