@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.3 2001-12-07 22:28:21 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.4 2001-12-08 16:30:44 dairiki Exp $');
 /**
  */
 define('RSS_ENCODING', 'ISO-8859-1');
@@ -72,7 +72,7 @@ extends WikiPlugin
         while ($rev = $changes->next()) {
             $created = $rev->get('mtime');
             $date = strftime($dateformat, $created);
-            $time = strftime("%l:%M %P", $created); // Make configurable.
+            $time = strftime("%l:%M %p", $created); // Make configurable.
             if ($date != $last_date) {
                 if ($lines) {
                     $html .= Element('ul', join("\n", $lines));
