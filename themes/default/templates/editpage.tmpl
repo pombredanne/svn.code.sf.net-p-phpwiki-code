@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.43 2004-05-27 17:51:57 rurban Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.44 2004-06-01 15:23:10 rurban Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
@@ -58,21 +58,24 @@ $s = $Theme->getButtonSeparator();
   <?php if (!empty($_GET['start_debug'])) echo '<input type="hidden" name="start_debug" value="1" >'; ?>
   <?php /* To clear beyond a larger logo, such as in the Hawaiian theme */ ?>
   <br clear="all" class="clear-floats" />
-  <?= $EDIT_TOOLBAR ?>
-  <div id="editarea-size">
-  <?php if (0 and isset($JS_SEARCHREPLACE)) { ?>
-  <span id="search-replace">
-    <?php /*TODO: use image icons here instead of text */ ?>
-    <?php /*TODO: replace this with Template('toolbar') */ ?>
-    <input class="gridbutton" name="rck" type="button" value="(<?= _("Undo") ?>)" onfocus="if(this.blur && pretxt_anzahl==0) this.blur()" onclick="rueck()"><input class="gridbutton" type="button" value="<?= _("Redo") ?>" onclick="speich()">
-    <input type="button" class="gridbutton" value="<?=_("Search & Replace")?>" onclick="replace()">
-  </span>
+  <table width="100%"><tr><td><?= $EDIT_TOOLBAR ?></td>
+  <?php if (isset($JS_SEARCHREPLACE)) { ?>
+    <td align="left"><div id="search-replace">
+<?php $undo_btn = $Theme->_findData("images/ed_undo.gif"); 
+      $redo_btn = $Theme->_findData("images/ed_redo.gif"); 
+      $sr_btn   = $Theme->_findData("images/ed_replace.gif"); 
+?>
+<?php /*TODO: replace this with Template('toolbar') */ ?>
+<input name="rck" type="image" src="<?= $undo_btn ?>" onfocus="if(this.blur && pretxt_anzahl==0) this.blur()" onclick="rueck()"><input type="image" src="<?= $redo_btn ?>" onclick="speich()">
+<input type="image" src="<?= $sr_btn ?>" onclick="replace()">
+</div></td>
   <?php } ?>
+    <td align="right"><div id="editarea-size">
     <?=_("Edit Area Size:")?>
     <b><?=_("H")?></b> <?=$HeightI?>
     <b><?=_("W")?></b> <?=$WidthI?>
     <noscript><?=Button("submit:", _("Adjust"), 'wikiaction')?></noscript>
-  </div>
+  </div></td></tr></table>
   <a name="editarea"></a><?=$EDIT_TEXTAREA?>
 
 <!-- FIXME: fix layout, move CSS to CSS -->
