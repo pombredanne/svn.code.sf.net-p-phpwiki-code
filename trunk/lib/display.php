@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.43 2003-02-26 22:27:19 dairiki Exp $');
+rcs_id('$Id: display.php,v 1.44 2003-02-27 20:02:47 dairiki Exp $');
 
 require_once('lib/Template.php');
 
@@ -149,8 +149,7 @@ function displayPage(&$request, $template=false) {
     
     $toks['CONTENT'] = new Template('browse', $request,
                                     $revision->getTransformedContent());
-    
-    $request->checkValidators();
+        
     
     $toks['TITLE'] = $pagetitle;
     $toks['HEADER'] = $pageheader;
@@ -162,8 +161,10 @@ function displayPage(&$request, $template=false) {
         $template = new Template('html', $request);
 
     $template->printExpansion($toks);
-    flush();
     $page->increaseHitCount();
+
+    $request->checkValidators();
+    flush();
 }
 
 // For emacs users
