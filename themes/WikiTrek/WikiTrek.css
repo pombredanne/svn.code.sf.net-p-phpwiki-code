@@ -1,5 +1,5 @@
 /**
- * $Id: WikiTrek.css,v 1.10 2002-01-18 22:19:38 carstenklapp Exp $
+ * $Id: WikiTrek.css,v 1.11 2002-01-20 23:24:33 carstenklapp Exp $
  *
  * This PhpWiki theme is experimental and will likely not appear as
  * part of any release. ("accessories not included"--download
@@ -50,6 +50,8 @@ body {
                       Arial, sans-serif;
 }
 
+.wikitext td { color: white; }
+
 input.button {
         font-family : "Helvetica Narrow", "Arial Narrow", Helvetica,
                       Arial, sans-serif;
@@ -61,7 +63,7 @@ input.button {
 
 div.wikitext {
         color :       #fff;
-        background :  #000;
+        background :  url("images/tchecker-black.png") repeat;
         font-weight : normal;
         padding :     1em;
         margin :      0.5ex;
@@ -192,6 +194,10 @@ img.rssicon {
     background-image :   url("images/lights.gif");
     background-repeat:   no-repeat;
     background-position: center;
+}
+
+div.wiki-edithelp { font-size: smaller;
+               background: url("images/tchecker-black.png") repeat;
 }
 
 /****************************************************************
