@@ -1,7 +1,5 @@
 <?php
 
-$locale["\nYou stored an empty password in your '%s' page.\n"] =
-   "\n 你在你的 '%s' 儲存了空白密碼.\n";
 $locale["  %d%% (%d/%d)"] =
    "  %d%% (%d/%d)";
 $locale[" ... around %s"] =
@@ -144,8 +142,6 @@ $locale["(hist)"] =
    "(歷程)";
 $locale["(max. recursion level: %d)"] =
    "(最大遞迴層級: %d)";
-$locale["(no regex) Case-exact: "] =
-   "(no regex) 大小寫需符合: ";
 $locale["(no regex, case-sensitive)"] =
    "(no regex, 不分大小寫)";
 $locale["(ugo : rwx)"] =
@@ -716,8 +712,6 @@ $locale["Invalid color: %s"] =
    "錯誤的顏色值: %s";
 $locale["Invalid password or userid."] =
    "錯誤的密碼或使用者帳號.";
-$locale["It's free however."] =
-   "然而它是自由的.";
 $locale["Keep up to %d major edits, but keep them no longer than %d days."] =
    "保持 %d 份主要編輯,但不超過 %d 天.";
 $locale["LDAP_AUTH_HOST not defined"] =
@@ -984,8 +978,6 @@ $locale["PageTrail Plugin"] =
    "PageTrail Plugin";
 $locale["Pagedata size: %d Kb"] =
    "頁面資料大小: %d Kb";
-$locale["Pages in this wiki (%d total):"] =
-   "在此 wiki 中的頁面 (共 %d):";
 $locale["Password cannot be changed."] =
    "無法變更密碼.";
 $locale["Password updated."] =
@@ -1214,8 +1206,6 @@ $locale["Search and replace text in selected wiki pages."] =
    "在選定的頁面中搜尋並更換文字.";
 $locale["Search for page titles similar to %s."] =
    "搜尋與 %s 相似的頁面標題";
-$locale["Search string '%s' not found in page '%s'."] =
-   "搜尋字串 '%s' 未在頁面 '%s' 找到.";
 $locale["Search the content of all pages in this wiki."] =
    "在此 wiki 所有頁面中搜尋內容.";
 $locale["Search the titles of all pages in this wiki."] =
@@ -1470,8 +1460,6 @@ $locale["Type: "] =
    "型態:";
 $locale["Unable to connect to IMAP server "] =
    "無法連結到 IMAP 伺服器";
-$locale["Unable to connect to LDAP server "] =
-   "無法連結到 LDAP 伺服器";
 $locale["Unable to connect to LDAP server %s"] =
    "無法連結到 LDAP 伺服器 %s";
 $locale["Unable to load: %s"] =
@@ -1510,8 +1498,6 @@ $locale["Upload files to the local InterWiki Upload:<filename>"] =
    "上傳檔案到本地 InterWiki. Upload:<filename>";
 $locale["Uploading %s"] =
    "上傳中 %s";
-$locale["Uploading failed: "] =
-   "上傳失敗:";
 $locale["Uploading zip dumps"] =
    "上傳 zip dumps";
 $locale["Use old markup"] =
@@ -1550,8 +1536,6 @@ $locale["View Source"] =
    "查看源碼";
 $locale["View Source: %s"] =
    "查看源碼: %s";
-$locale["View source"] =
-   "查看源碼";
 $locale["View the current version"] =
    "查看目前版本";
 $locale["View this page and all subpages"] =
@@ -1664,8 +1648,6 @@ $locale["You must be an administrator to %s."] =
    "你必須是一個管理者才能 %s.";
 $locale["You must be an administrator to use this plugin."] =
    "你必須是管理者才能使用此 plugin.";
-$locale["You must first obtain a license key at %s to be able to use the Google API."] =
-   "你必須在 %s 取得 license key 才能使用 Google API.";
 $locale["You must log in to %s."] =
    "你必須登入才能 %s.";
 $locale["You must sign in"] =
@@ -1700,8 +1682,6 @@ $locale["Your version"] =
    "你的版本";
 $locale["[%d] See [%s]"] =
    "[%d] 參閱 [%s]";
-$locale["_PreferencesInfo"] =
-   "_PreferencesInfo";
 $locale["_WikiTranslation"] =
    "_WikiTranslation";
 $locale["access this wiki via XML-RPC"] =

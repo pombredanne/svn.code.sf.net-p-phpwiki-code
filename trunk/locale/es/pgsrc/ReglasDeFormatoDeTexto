@@ -1,6 +1,6 @@
-Date: Thu, 28 Mar 2002 14:57:00 -0500
+Date: Thu, 28 Mar 2003 14:57:00 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: ReglasDeFormatoDeTexto,v 1.9 2004-06-28 12:15:57 rurban Exp $
+X-Rcs-Id: $Id: ReglasDeFormatoDeTexto,v 1.10 2004-06-28 17:53:57 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReglasDeFormatoDeTexto;
   flags=PAGE_LOCKED;
@@ -13,7 +13,7 @@ ReglasDeFormatoDeTexto%%%
 __Énfasis:__ '____' para ''itálicas'', _''''_ para __bold__, '____'_''''_ para ''__ambos__''.%%%
 __Listas:__ * para listas de balazos, # para listas numeradas, ''__;__ term __:__ definición'' para listas de definiciones.%%%
 __Referencias:__ !UnirPalabrasEnMayúsculas o usar corchetes para una [[enlace hacia una página] o URL [[!http://cool.wiki.int/].%%%
-__Anotaciones:__ Use [[1],[[2],[[3],...%%%
+__Anotaciones:__ Use [[1],[[2],[[3],... %%% 
 __Preveción enlazar:__ Evite hacer enlaces con "!": !!NoHiperEnlaces. Enlaces con nombres como [[[[text | URL] (doble "["). %%%
 __Varios:__ "!", "!!", "!!!" para hacer títulos, "%''''%%" hace un salto de línea, "-''''---" Hace una linea horizontal.
 

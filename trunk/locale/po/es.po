@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.4pre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-28 13:09+0100\n"
+"POT-Creation-Date: 2004-06-28 18:50+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -29,7 +29,7 @@ msgstr ""
 msgid "Set USE_DB_SESSION to false."
 msgstr ""
 
-#: ../lib/DbSession.php:528 ../lib/DbSession.php:530
+#: ../lib/DbSession.php:532 ../lib/DbSession.php:534
 #: ../lib/WikiDB/backend/dba.php:23 ../lib/WikiDB/backend/dba.php:25
 #, c-format
 msgid "%s: Can't open dba database"
@@ -55,27 +55,27 @@ msgstr ""
 msgid "%s: file not found"
 msgstr "%s: fichero no encontrado"
 
-#: ../lib/IniConfig.php:554
+#: ../lib/IniConfig.php:556
 msgid "An unnamed PhpWiki"
 msgstr "Un PhpWiki sin un nombre"
 
-#: ../lib/IniConfig.php:557 ../lib/upgrade.php:148
+#: ../lib/IniConfig.php:559 ../lib/upgrade.php:148
 #: ../themes/Wordpress/templates/actionbar.tmpl:21
 #: ../themes/default/templates/userprefs.tmpl:119
 msgid "HomePage"
 msgstr "PáginaPrincipal"
 
-#: ../lib/IniConfig.php:571
+#: ../lib/IniConfig.php:573
 #, c-format
 msgid "Encrypted passwords cannot be used: %s."
 msgstr ""
 
-#: ../lib/IniConfig.php:577
+#: ../lib/IniConfig.php:579
 msgid ""
 "The admin password cannot be empty. Please update your config/config.ini"
 msgstr ""
 
-#: ../lib/IniConfig.php:581
+#: ../lib/IniConfig.php:583
 msgid ""
 "Empty db_session_table. Turn USE_DB_SESSION off or define the table name."
 msgstr ""
@@ -304,7 +304,7 @@ msgstr ""
 #: ../lib/RSSWriter091.php:116 ../lib/loadsave.php:1039
 #: ../lib/plugin/RecentChanges.php:260 ../lib/plugin/RecentChanges.php:275
 #: ../lib/plugin/RecentChanges.php:377 ../lib/plugin/RecentChanges.php:453
-#: ../lib/plugin/RecentChanges.php:586 ../lib/plugin/RecentChanges.php:656
+#: ../lib/plugin/RecentChanges.php:585 ../lib/plugin/RecentChanges.php:655
 #: ../themes/Crao/templates/head.tmpl:63
 #: ../themes/Crao/templates/navbar.tmpl:21
 #: ../themes/MonoBook/templates/navbar.tmpl:13
@@ -594,29 +594,24 @@ msgstr "GrupoCategoría"
 msgid "No or not enough GROUP_DB SQL statements defined"
 msgstr ""
 
-#: ../lib/WikiGroup.php:815
+#: ../lib/WikiGroup.php:817
 msgid "AUTH_GROUP_FILE not defined"
 msgstr ""
 
-#: ../lib/WikiGroup.php:819
+#: ../lib/WikiGroup.php:821
 #, c-format
 msgid "Cannot open AUTH_GROUP_FILE %s"
 msgstr ""
 
-#: ../lib/WikiGroup.php:926
+#: ../lib/WikiGroup.php:929
 msgid "LDAP_AUTH_HOST not defined"
 msgstr ""
 
-#: ../lib/WikiGroup.php:935
+#: ../lib/WikiGroup.php:938
 msgid "No LDAP in this PHP version"
 msgstr ""
 
-#: ../lib/WikiGroup.php:1005
-#, c-format
-msgid "Unable to bind LDAP server %s"
-msgstr ""
-
-#: ../lib/WikiGroup.php:1036
+#: ../lib/WikiGroup.php:1020
 #, c-format
 msgid "Unable to connect to LDAP server %s"
 msgstr ""
@@ -634,7 +629,7 @@ msgstr ""
 #: ../themes/Portland/templates/navbar.tmpl:30
 #: ../themes/Sidebar/templates/navbar.tmpl:26
 #: ../themes/Wordpress/templates/actionbar.tmpl:28
-#: ../themes/default/templates/head.tmpl:84
+#: ../themes/default/templates/head.tmpl:83
 #: ../themes/default/templates/navbar.tmpl:45
 #: ../themes/smaller/templates/navbar.tmpl:22
 #: ../themes/wikilens/templates/head.tmpl:78
@@ -797,27 +792,27 @@ msgstr ""
 msgid "%s is missing"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:2064 ../lib/WikiUserNew.php:2101
+#: ../lib/WikiUserNew.php:2064 ../lib/WikiUserNew.php:2104
 #, c-format
 msgid "Invalid username '%s' for LDAP Auth"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:2149
+#: ../lib/WikiUserNew.php:2155
 msgid "Unable to connect to IMAP server "
 msgstr ""
 
 # lib/msql.php:29 lib/mysql.php:36
-#: ../lib/WikiUserNew.php:2217
+#: ../lib/WikiUserNew.php:2223
 #, fuzzy, c-format
 msgid "Couldn't connect to %s"
 msgstr ""
 "No se puede establecer conexión con la base de datos %s, me doy por vencido."
 
-#: ../lib/WikiUserNew.php:2630
+#: ../lib/WikiUserNew.php:2636
 msgid "Email Verification"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:2631
+#: ../lib/WikiUserNew.php:2637
 #, c-format
 msgid ""
 "Welcome to %s!\n"
@@ -826,17 +821,17 @@ msgid ""
 "See %s"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:2647
+#: ../lib/WikiUserNew.php:2653
 #, c-format
 msgid "E-Mail address '%s' is not properly formatted"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:2651
+#: ../lib/WikiUserNew.php:2657
 #, c-format
 msgid "E-Mail address '%s' is properly formatted"
 msgstr ""
 
-#: ../lib/XmlElement.php:455 ../lib/stdlib.php:1119
+#: ../lib/XmlElement.php:455 ../lib/stdlib.php:1128
 #, c-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr ""
@@ -976,7 +971,7 @@ msgstr ""
 
 # lib/stdlib.php:207 lib/stdlib.php:215
 #: ../lib/editpage.php:161 ../lib/plugin/InterWikiSearch.php:91
-#: ../lib/plugin/RecentChanges.php:573
+#: ../lib/plugin/RecentChanges.php:572
 #: ../themes/Sidebar/templates/body.tmpl:17
 msgid "Search"
 msgstr "Buscar"
@@ -1448,9 +1443,8 @@ msgid "dump html pages"
 msgstr ""
 
 #: ../lib/main.php:399
-#, fuzzy
 msgid "dump serial pages"
-msgstr "Las %d páginas más populares de este wiki:"
+msgstr ""
 
 #: ../lib/main.php:400
 msgid "edit this page"
@@ -1617,7 +1611,7 @@ msgid "FullTextSearch"
 msgstr "BúsquedaDelTexto"
 
 # lib/fullsearch.php:48
-#: ../lib/main.php:847 ../lib/plugin/RecentChanges.php:576
+#: ../lib/main.php:847 ../lib/plugin/RecentChanges.php:575
 #: ../lib/plugin/TitleSearch.php:31 ../themes/Sidebar/templates/navbar.tmpl:20
 #: ../themes/default/templates/navbar.tmpl:8
 #: ../themes/default/templates/navbar.tmpl:15
@@ -1659,7 +1653,7 @@ msgstr ""
 msgid "No pagename specified"
 msgstr ""
 
-#: ../lib/plugin/AddComment.php:111 ../lib/plugin/CreateToc.php:256
+#: ../lib/plugin/AddComment.php:111 ../lib/plugin/CreateToc.php:264
 msgid "Click to display"
 msgstr ""
 
@@ -1808,7 +1802,7 @@ msgstr ""
 #: ../themes/Sidebar/templates/body.tmpl:23
 #: ../themes/Sidebar/templates/body.tmpl:28 ../themes/Sidebar/themeinfo.php:38
 #: ../themes/Wordpress/templates/actionbar.tmpl:34
-#: ../themes/default/templates/head.tmpl:92
+#: ../themes/default/templates/head.tmpl:91
 #: ../themes/default/templates/homepage.tmpl:15
 #: ../themes/default/templates/navbar.tmpl:35
 #: ../themes/wikilens/templates/head.tmpl:89
@@ -1859,20 +1853,24 @@ msgstr ""
 msgid "Created by CreatePage"
 msgstr "Cree par CreeLaPágina"
 
-#: ../lib/plugin/CreateToc.php:44
+#: ../lib/plugin/CreateToc.php:45
 msgid "CreateToc"
 msgstr "CreeToc"
 
-#: ../lib/plugin/CreateToc.php:48
+#: ../lib/plugin/CreateToc.php:49
 msgid "Automatically link headers at the top"
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:191 ../lib/plugin/IncludePage.php:116
+#: ../lib/plugin/CreateToc.php:192 ../lib/plugin/IncludePage.php:116
 #: ../lib/plugin/RateIt.php:203
 msgid "no page specified"
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:258 ../lib/plugin/CreateToc.php:261
+#: ../lib/plugin/CreateToc.php:203
+msgid "CreateToc disabled for old markup"
+msgstr ""
+
+#: ../lib/plugin/CreateToc.php:266 ../lib/plugin/CreateToc.php:269
 msgid "Table Of Contents"
 msgstr ""
 
@@ -2500,12 +2498,16 @@ msgstr ""
 msgid "Ploticus image creation"
 msgstr ""
 
-#: ../lib/plugin/Ploticus.php:242
+#: ../lib/plugin/Ploticus.php:234
+msgid "shell commands not allowed in Ploticus"
+msgstr ""
+
+#: ../lib/plugin/Ploticus.php:254
 #, c-format
 msgid "Ploticus error: Outputfile '%s' not created"
 msgstr ""
 
-#: ../lib/plugin/Ploticus.php:247 ../lib/plugin/SyntaxHighlighter.php:177
+#: ../lib/plugin/Ploticus.php:261 ../lib/plugin/SyntaxHighlighter.php:177
 msgid "empty source"
 msgstr ""
 
@@ -2761,30 +2763,30 @@ msgid "No changes found"
 msgstr ""
 
 # lib/fullsearch.php:48
-#: ../lib/plugin/RecentChanges.php:574
+#: ../lib/plugin/RecentChanges.php:573
 msgid "Title Search"
 msgstr "Una búsqueda de títulos"
 
 # lib/pageinfo.php:21
-#: ../lib/plugin/RecentChanges.php:807
+#: ../lib/plugin/RecentChanges.php:806
 msgid "Show minor edits for:"
 msgstr ""
 
 # lib/pageinfo.php:21
-#: ../lib/plugin/RecentChanges.php:809
+#: ../lib/plugin/RecentChanges.php:808
 msgid "Show all changes for:"
 msgstr ""
 
 # lib/pageinfo.php:21
-#: ../lib/plugin/RecentChanges.php:811
+#: ../lib/plugin/RecentChanges.php:810
 msgid "Show changes for:"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:831
+#: ../lib/plugin/RecentChanges.php:830
 msgid "1 day"
 msgstr "1 día"
 
-#: ../lib/plugin/RecentChanges.php:835
+#: ../lib/plugin/RecentChanges.php:834
 #, c-format
 msgid "%s days"
 msgstr "%s dias"
@@ -3353,7 +3355,7 @@ msgstr ""
 #: ../themes/Crao/templates/head.tmpl:86
 #: ../themes/Crao/templates/navbar.tmpl:31
 #: ../themes/MonoBook/templates/navbar.tmpl:49
-#: ../themes/default/templates/head.tmpl:89
+#: ../themes/default/templates/head.tmpl:88
 #: ../themes/default/templates/homepage.tmpl:11
 #: ../themes/default/templates/navbar.tmpl:30
 #: ../themes/smaller/templates/navbar.tmpl:25
@@ -3927,7 +3929,7 @@ msgstr ""
 msgid "WikiAdminUtils says:"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:98 ../lib/stdlib.php:1464
+#: ../lib/plugin/WikiAdminUtils.php:98 ../lib/stdlib.php:1473
 msgid "Okay"
 msgstr ""
 
@@ -4381,7 +4383,7 @@ msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:112
 #: ../themes/Crao/templates/head.tmpl:73 ../themes/Crao/templates/head.tmpl:74
-#: ../themes/default/templates/head.tmpl:78
+#: ../themes/default/templates/head.tmpl:77
 #: ../themes/wikilens/templates/head.tmpl:71
 #: ../themes/wikilens/templates/head.tmpl:72
 msgid "WikiWikiWeb"
@@ -4500,57 +4502,71 @@ msgstr ""
 msgid "illegal pagename"
 msgstr ""
 
-#: ../lib/stdlib.php:880
+#: ../lib/stdlib.php:645
+msgid "The CreateTocPlugin is not yet old markup compatible! "
+msgstr ""
+
+#: ../lib/stdlib.php:646
+msgid ""
+"Please remove the CreateToc line to be able to reformat this page to old "
+"markup. "
+msgstr ""
+
+#: ../lib/stdlib.php:647
+msgid "Skipped."
+msgstr ""
+
+#: ../lib/stdlib.php:889
 msgid "Revision Not Found"
 msgstr ""
 
 # lib/pageinfo.php:36
-#: ../lib/stdlib.php:881
+#: ../lib/stdlib.php:890
 #, c-format
 msgid "I'm sorry.  Version %d of %s is not in the database."
 msgstr ""
 
-#: ../lib/stdlib.php:884
+#: ../lib/stdlib.php:893
 msgid "Bad Version"
 msgstr ""
 
-#: ../lib/stdlib.php:1020
+#: ../lib/stdlib.php:1029
 msgid "-???"
 msgstr ""
 
-#: ../lib/stdlib.php:1023
+#: ../lib/stdlib.php:1032
 #, c-format
 msgid "%s b"
 msgstr "%s o"
 
-#: ../lib/stdlib.php:1025 ../themes/MonoBook/templates/info.tmpl:29
+#: ../lib/stdlib.php:1034 ../themes/MonoBook/templates/info.tmpl:29
 #: ../themes/smaller/templates/info.tmpl:29
 #, c-format
 msgid "%s bytes"
 msgstr "%s octetos"
 
-#: ../lib/stdlib.php:1030
+#: ../lib/stdlib.php:1039
 #, c-format
 msgid "%s k"
 msgstr ""
 
-#: ../lib/stdlib.php:1032 ../themes/MonoBook/templates/info.tmpl:32
+#: ../lib/stdlib.php:1041 ../themes/MonoBook/templates/info.tmpl:32
 #: ../themes/smaller/templates/info.tmpl:32
 #, c-format
 msgid "%s Kb (%s bytes)"
 msgstr "%s Kb (%s octetos)"
 
-#: ../lib/stdlib.php:1128
+#: ../lib/stdlib.php:1137
 #, c-format
 msgid "%s: argument index out of range"
 msgstr ""
 
-#: ../lib/stdlib.php:1199 ../themes/Hawaiian/lib/random.php:20
+#: ../lib/stdlib.php:1208 ../themes/Hawaiian/lib/random.php:20
 #, c-format
 msgid "%s is empty."
 msgstr ""
 
-#: ../lib/stdlib.php:1206
+#: ../lib/stdlib.php:1215
 #, c-format
 msgid "Unable to open directory '%s' for reading"
 msgstr ""
@@ -4940,7 +4956,7 @@ msgid "HowToUseWiki"
 msgstr ""
 
 #: ../themes/Crao/templates/head.tmpl:70 ../themes/Crao/templates/head.tmpl:71
-#: ../themes/default/templates/head.tmpl:76
+#: ../themes/default/templates/head.tmpl:75
 #: ../themes/wikilens/templates/head.tmpl:68
 #: ../themes/wikilens/templates/head.tmpl:69
 msgid "SandBox"
