@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.12 2002-02-27 19:04:30 carstenklapp Exp $');
+rcs_id('$Id: FullTextSearch.php,v 1.13 2002-02-28 00:46:51 carstenklapp Exp $');
 
 require_once('lib/TextSearchQuery.php');
 
@@ -17,13 +17,12 @@ extends WikiPlugin
     }
 
     function getDefaultArguments() {
-        return array('s'        => false,
-                     'size'     => false, //default in WikiPlugin function makeForm
+        return array('s'	=> false,
                      'noheader' => false);
         // TODO: multiple page exclude
     }
 
-
+        
     function run($dbi, $argstr, $request) {
 
         $args = $this->getArgs($argstr, $request);
@@ -31,7 +30,7 @@ extends WikiPlugin
             return '';
 
         extract($args);
-
+        
         $query = new TextSearchQuery($s);
         $pages = $dbi->fullSearch($query);
         $lines = array();
@@ -53,7 +52,7 @@ extends WikiPlugin
 
         if ($noheader)
             return $list;
-
+        
         return HTML(HTML::p(fmt("Full text search results for '%s'", $s)),
                     $list);
     }
@@ -79,12 +78,12 @@ extends WikiPlugin
         return $html;
     }
 };
-
+        
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:
+// End:   
 ?>

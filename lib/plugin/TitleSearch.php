@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TitleSearch.php,v 1.14 2002-02-27 19:04:30 carstenklapp Exp $');
+rcs_id('$Id: TitleSearch.php,v 1.15 2002-02-28 00:46:51 carstenklapp Exp $');
 
 require_once('lib/TextSearchQuery.php');
 require_once('lib/PageList.php');
@@ -16,12 +16,11 @@ extends WikiPlugin
     function getDescription () {
         return _("Title Search");
     }
-
+    
     function getDefaultArguments() {
-        return array('s'                => false,
-                     'size'             => false, //default in WikiPlugin function makeForm
-                     'auto_redirect'    => false,
-                     'noheader'         => false,
+        return array('s'		=> false,
+                     'auto_redirect'	=> false,
+                     'noheader'		=> false,
                      'exclude'          => '',
                      'info'             => false
                      );
@@ -35,7 +34,7 @@ extends WikiPlugin
             return '';
 
         extract($args);
-
+        
         $query = new TextSearchQuery($s);
         $pages = $dbi->titleSearch($query);
 
@@ -54,12 +53,12 @@ extends WikiPlugin
         return $pagelist;
     }
 };
-
+        
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:
+// End:   
 ?>
