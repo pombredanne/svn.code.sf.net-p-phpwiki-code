@@ -1,0 +1,48 @@
+More comprehensive updgrading information is forthcoming... however in
+the meantime, this message is in the Open Discussion board on
+Sourceforge (see URL below for the thread). In it Jeff describes how
+to dump your current Wiki to a zip file and load the zip file into a
+new Wiki.
+
+To: noreply@sourceforge.net
+Subject: [phpwiki - Open Discussion] RE: convert dbm to mySql
+From: nobody <nobody@sourceforge.net>
+Date: Fri, 09 Feb 2001 16:42:57 -0800
+
+Read and respond to this message at: 
+http://sourceforge.net/forum/message.php?msg_id=107858
+By: dairiki
+
+Yes this is a little clumsy and non-obvious.
+I'm currently working on making it better (at least
+in the development branch.)
+
+In the mean time, here's how I suggest you
+
+Get either a zip dump, or a serialized dump from your
+old wiki.
+
+(If your using a zip dump, it must (for now) be
+on the server machine.  Copy it there if it's not
+there yet.)
+
+Edit lib/config.php in the new wiki and set WIKI_PGSRC
+to point either to your zip file, or the the serialized
+dump directory.
+
+Blow away the database of your new wiki.
+(Delete the db files for a db base wiki,
+or do something like:
+  mysql -u <user> -p <database> < schemas/schema.mysql
+to blow away a mysql based wiki.
+
+Now with your web browser, go browse to
+the FrontPage of your new wiki.  It will detect
+that it's working with a virgin database and
+will pull in the pages from the source
+specified in WIKI_PGSRC.
+
+Jeff
+
+
+$Id: UPGRADING,v 1.1 2001-02-11 20:18:58 wainstead Exp $
