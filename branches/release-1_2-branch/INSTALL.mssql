@@ -1,0 +1,574 @@
+From swain@panix.com Tue May  1 11:28:09 2001 -0400
+Return-Path: <Andrew.Pearson@barclayscapital.com>
+Received: from avon0.barclayscapital.com (hermes.barclayscapital.com [141.228.4.66])
+	by mail3.panix.com (Postfix) with SMTP id B1954983BC
+	for <swain@panix.com>; Tue,  1 May 2001 11:28:05 -0400 (EDT)
+Received: from hermes.barclayscapital.com ([141.228.4.66]) by avon0.barclayscapital.com
+          via smtpd (for mail3.panix.com [166.84.0.167]) with SMTP; 1 May 2001 15:28:06 UT
+Received: from avon1.barclayscapital.com (localhost [127.0.0.1])
+	by hermes.barclayscapital.com with SMTP id QAA23136
+	for <swain@panix.com>; Tue, 1 May 2001 16:31:29 +0100 (BST)
+From: Andrew.Pearson@barclayscapital.com
+Received: from exlpseg011.ldn.bzwint.com by avon1.barclayscapital.com
+          via smtpd (for hermesint.barclayscapital.com [141.228.4.34]) with SMTP; 1 May 2001 15:26:56 UT
+Received: (private information removed)
+Received: (private information removed)
+Message-ID: <07F26630F244D311B6A300805F57215301B6825F@exlpseu011.ldn.bzwint.com>
+To: swain@panix.com
+Cc: phpwiki-talk@lists.sourceforge.net
+Subject: PHPWiki with Microsoft SQL-Server
+Date: Tue, 1 May 2001 16:26:50 +0100 
+MIME-Version: 1.0
+X-Mailer: Internet Mail Service (5.5.2448.0)
+Content-Type: multipart/mixed ; boundary="----_=_NextPart_000_01C0D253.2568B8F4"
+X-Eagle-Notice: Sender not 8-bit clean in '\tby hermes.barclayscapital.com with SMTP\234 id QAA23136'
+Status: RO
+X-Status: A
+
+This message is in MIME format. Since your mail reader does not understand
+this format, some or all of this message may not be legible.
+
+------_=_NextPart_000_01C0D253.2568B8F4
+Content-Type: text/plain;
+	charset="iso-8859-1"
+
+
+My colleague John Clayton set up PHPWiki for our development team using
+Apache and MySQL on Windows NT 4.  He then left, and I was asked to port
+this to IIS and SQLServer. Please note this is not a reflection of the
+Apache and MySQL products, which were performing the task admirably, but had
+more to do with consistency of our environment. Since PHP does work with
+SQL-Server, the whole migration took about a day. Here are the steps I
+carried out:
+
+1. Wrote a sql-server library called mssql.php to reside in wiki\lib.
+ <<mssql.php>> 
+2. Added the following clause to wiki\lib\config.php
+   // MS SQLServer settings
+   } elseif ($WhichDatabase == 'mssql') {
+      $WikiPageStore = "wiki";
+      $ArchivePageStore = "archive";
+      $WikiLinksStore = "wikilinks";
+      $WikiScoreStore = "wikiscore";
+      $HitCountStore = "hitcount";
+      $mssql_server = 'servername';
+      $mssql_user = 'wikiweb';
+      $mssql_pwd = 'wikiweb';
+      $mssql_db = 'wiki';
+      include "lib/mssql.php";
+}
+
+3. Set $WhichDatabase='mssql' in config.php
+
+4. Dumped out the mysql wiki database (mysqldump --user=john
+--host=localhost wiki) and wrote the following perl script to convert to
+sql-server compatible sql
+ <<translate_mysql.pl>> 
+
+5. Loaded the translated db script into SQL-Server and granted relevant
+permissions/logins etc. 
+
+6. Set "magic_quotes_sybase=On" in php.ini to handle embedded quote
+characters in strings. This is because SQL-Server, like Sybase, uses ''
+instead of \' within strings to cope with embedded quotes.
+
+We had some problems initially with the PHP extension dll for sql-server,
+but I installed a newer version from http://www.mm4.de. In fact I unpacked
+their whole php4.0.5-rc1 distribution.
+
+I make no claims about all this working 100%, but our existing site seems to
+work okay in its new IIS/SQL-Server home :-)
+
+Andrew Pearson
+Barclays Capital, UK
+
+
+
+
+--------------------------------------------------------------------------------------
+For more information about Barclays Capital, please
+visit our web site at http://www.barcap.com.
+
+
+Internet communications are not secure and therefore the Barclays Group
+does not accept legal responsibility for the contents of this message.
+Any views or opinions presented are solely those of the author and do 
+not necessarily represent those of the Barclays Group unless otherwise 
+specifically stated.
+
+--------------------------------------------------------------------------------------
+
+------_=_NextPart_000_01C0D253.2568B8F4
+Content-Type: application/octet-stream;
+	name="mssql.php"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment;
+	filename="mssql.php"
+
+<?php=20
+
+   /* Microsoft SQL-Server library for PHPWiki
+      Author: Andrew K. Pearson
+	  Date:   01 May 2001
+	*/
+
+   /*
+      Database functions:
+      OpenDataBase($dbname)
+      CloseDataBase($dbi)
+      MakeDBHash($pagename, $pagehash)
+      MakePageHash($dbhash)
+      RetrievePage($dbi, $pagename, $pagestore)
+      InsertPage($dbi, $pagename, $pagehash)
+      SaveCopyToArchive($dbi, $pagename, $pagehash)
+      IsWikiPage($dbi, $pagename)
+      IsInArchive($dbi, $pagename)
+      RemovePage($dbi, $pagename)
+      IncreaseHitCount($dbi, $pagename)
+      GetHitCount($dbi, $pagename)
+      MakeSQLSearchClause($search, $column)
+      InitTitleSearch($dbi, $search)
+      TitleSearchNextMatch($dbi, $res)
+      InitFullSearch($dbi, $search)
+      FullSearchNextMatch($dbi, $res)
+      InitMostPopular($dbi, $limit)
+      MostPopularNextMatch($dbi, $res)
+      GetAllWikiPageNames($dbi)
+      GetWikiPageLinks($dbi, $pagename)
+      SetWikiPageLinks($dbi, $pagename, $linklist)
+   */
+
+   // open a database and return the handle
+   // ignores MAX_DBM_ATTEMPTS
+
+   function OpenDataBase($dbname) {
+      global $mssql_server, $mssql_user, $mssql_pwd, $mssql_db;
+
+      if (!($dbc =3D mssql_pconnect($mssql_server, $mssql_user, =
+$mssql_pwd))) {
+         $msg =3D gettext ("Cannot establish connection to database, =
+giving up.");
+	     $msg .=3D "<BR>";
+	     $msg .=3D sprintf(gettext ("MSSQL error: %s"), =
+mssql_get_last_message());
+	     ExitWiki($msg);
+      }
+	  // flush message
+	  mssql_get_last_message();
+
+      if (!mssql_select_db($mssql_db, $dbc)) {
+         $msg =3D  sprintf(gettext ("Cannot open database %s, giving =
+up."), $mssql_db);
+	     $msg .=3D "<BR>";
+	     $msg .=3D sprintf(gettext ("MSSQL error: %s"), =
+mssql_get_last_message());
+	     ExitWiki($msg);
+      }
+	  // flush message
+	  mssql_get_last_message();
+
+      $dbi['dbc'] =3D $dbc;
+      $dbi['table'] =3D $dbname;
+      return $dbi;
+   }
+
+
+   function CloseDataBase($dbi) {
+      // NOP function
+      // mssql connections are established as persistant
+      // they cannot be closed through mssql_close()
+   }
+
+
+   // prepare $pagehash for storing in mssql
+   function MakeDBHash($pagename, $pagehash)
+   {
+      $pagehash["pagename"] =3D addslashes($pagename);
+      if (!isset($pagehash["flags"]))
+         $pagehash["flags"] =3D 0;
+      $pagehash["author"] =3D addslashes($pagehash["author"]);
+      $pagehash["content"] =3D implode("\n", $pagehash["content"]);
+      $pagehash["content"] =3D addslashes($pagehash["content"]);
+      if (!isset($pagehash["refs"]))
+         $pagehash["refs"] =3D array();
+      $pagehash["refs"] =3D serialize($pagehash["refs"]);
+=20
+      return $pagehash;
+   }
+
+
+   // convert mssql result $dbhash to $pagehash
+   function MakePageHash($dbhash)
+   {
+      // unserialize/explode content
+      $dbhash['refs'] =3D unserialize($dbhash['refs']);
+      $dbhash['content'] =3D explode("\n", $dbhash['content']);
+      return $dbhash;
+   }
+
+
+   // Return hash of page + attributes or default
+   function RetrievePage($dbi, $pagename, $pagestore) {
+      $pagename =3D addslashes($pagename);
+      if ($res =3D mssql_query("select * from $pagestore where =
+pagename=3D'$pagename'", $dbi['dbc'])) {
+         if ($dbhash =3D mssql_fetch_array($res)) {
+            return MakePageHash($dbhash);
+         }
+      }
+      return -1;
+   }
+
+
+   // Either insert or replace a key/value (a page)
+   function InsertPage($dbi, $pagename, $pagehash) {
+
+      $pagehash =3D MakeDBHash($pagename, $pagehash);
+
+      // record the time of modification
+      $pagehash["lastmodified"] =3D time();
+
+      if (IsWikiPage($dbi, $pagename)) {
+
+         $PAIRS =3D "author=3D'$pagehash[author]'," .
+				  "content=3D'$pagehash[content]'," .
+                  "created=3D$pagehash[created]," .
+                  "flags=3D$pagehash[flags]," .
+                  "lastmodified=3D$pagehash[lastmodified]," .
+                  "pagename=3D'$pagehash[pagename]'," .
+                  "refs=3D'$pagehash[refs]'," .
+                  "version=3D$pagehash[version]";
+
+         $query  =3D "UPDATE $dbi[table] SET $PAIRS WHERE =
+pagename=3D'$pagename'";
+
+      } else {
+         // do an insert
+         // build up the column names and values for the query
+
+         $COLUMNS =3D "author, content, created, flags, lastmodified, " =
+.
+                    "pagename, refs, version";
+
+         $VALUES =3D  "'$pagehash[author]', '$pagehash[content]', " .
+                    "$pagehash[created], $pagehash[flags], " .
+                    "$pagehash[lastmodified], '$pagehash[pagename]', " =
+.
+                    "'$pagehash[refs]', $pagehash[version]";
+
+
+         $query =3D "INSERT INTO $dbi[table] ($COLUMNS) =
+VALUES($VALUES)";
+      }
+
+      //echo "<p>Insert/Update Query: $query<p>\n";
+
+      $retval =3D mssql_query($query);
+      if ($retval =3D=3D false) {
+	     printf(gettext ("Insert/Update failed: %s <br>\n"), =
+mssql_get_last_message());
+      }
+   }
+
+
+   // for archiving pages to a seperate dbm
+   function SaveCopyToArchive($dbi, $pagename, $pagehash) {
+      global $ArchivePageStore;
+      $adbi =3D OpenDataBase($ArchivePageStore);
+      InsertPage($adbi, $pagename, $pagehash);
+   }
+
+
+   function IsWikiPage($dbi, $pagename) {
+      $pagename =3D addslashes($pagename);
+      if ($res =3D mssql_query("select count(*) from $dbi[table] where =
+pagename=3D'$pagename'", $dbi['dbc'])) {
+         return(mssql_result($res, 0, 0));
+      }
+      return 0;
+   }
+
+   function IsInArchive($dbi, $pagename) {
+      global $ArchivePageStore;
+
+      $pagename =3D addslashes($pagename);
+      if ($res =3D mssql_query("select count(*) from $ArchivePageStore =
+where pagename=3D'$pagename'", $dbi['dbc'])) {
+         return(mssql_result($res, 0, 0));
+      }
+      return 0;
+   }
+
+
+   function RemovePage($dbi, $pagename) {
+      global $WikiPageStore, $ArchivePageStore;
+      global $WikiLinksStore, $HitCountStore, $WikiScoreStore;
+
+      $pagename =3D addslashes($pagename);
+      $msg =3D gettext ("Cannot delete '%s' from table '%s'");
+      $msg .=3D "<br>\n";
+      $msg .=3D gettext ("MSSQL error: %s");
+
+      if (!mssql_query("delete from $WikiPageStore where =
+pagename=3D'$pagename'", $dbi['dbc']))
+         ExitWiki(sprintf($msg, $pagename, $WikiPageStore, =
+mssql_get_last_message()));
+
+      if (!mssql_query("delete from $ArchivePageStore where =
+pagename=3D'$pagename'", $dbi['dbc']))
+         ExitWiki(sprintf($msg, $pagename, $ArchivePageStore, =
+mssql_get_last_message()));
+
+      if (!mssql_query("delete from $WikiLinksStore where =
+frompage=3D'$pagename'", $dbi['dbc']))
+         ExitWiki(sprintf($msg, $pagename, $WikiLinksStore, =
+mssql_get_last_message()));
+
+      if (!mssql_query("delete from $HitCountStore where =
+pagename=3D'$pagename'", $dbi['dbc']))
+         ExitWiki(sprintf($msg, $pagename, $HitCountStore, =
+mssql_get_last_message()));
+
+      if (!mssql_query("delete from $WikiScoreStore where =
+pagename=3D'$pagename'", $dbi['dbc']))
+         ExitWiki(sprintf($msg, $pagename, $WikiScoreStore, =
+mssql_get_last_message()));
+   }
+
+
+   function IncreaseHitCount($dbi, $pagename)
+   {
+      global $HitCountStore;
+
+      $rowexists =3D 0;
+      if ($res =3D mssql_query("select count(*) from $dbi[table] where =
+pagename=3D'$pagename'", $dbi['dbc'])) {
+         $rowexists =3D (mssql_result($res, 0, 0));
+      }
+
+      if ($rowexists)
+         $res =3D mssql_query("update $HitCountStore set hits=3Dhits+1 =
+where pagename=3D'$pagename'", $dbi['dbc']);
+      else
+	     $res =3D mssql_query("insert into $HitCountStore (pagename, hits) =
+values ('$pagename', 1)", $dbi['dbc']);
+
+      return $res;
+   }
+
+   function GetHitCount($dbi, $pagename)
+   {
+      global $HitCountStore;
+
+      $res =3D mssql_query("select hits from $HitCountStore where =
+pagename=3D'$pagename'", $dbi['dbc']);
+      if (mssql_num_rows($res))
+         $hits =3D mssql_result($res, 0, 0);
+      else
+         $hits =3D "0";
+
+      return $hits;
+   }
+
+   function MakeSQLSearchClause($search, $column)
+   {
+      $search =3D addslashes(preg_replace("/\s+/", " ", $search));
+      $term =3D strtok($search, ' ');
+      $clause =3D '';
+      while($term) {
+         $word =3D "$term";
+	 if ($word[0] =3D=3D '-') {
+	    $word =3D substr($word, 1);
+	    $clause .=3D "not ($column like '%$word%') ";
+	 } else {
+	    $clause .=3D "($column like '%$word%') ";
+	 }
+	 if ($term =3D strtok(' '))
+	    $clause .=3D 'and ';
+      }
+      return $clause;
+   }
+
+   // setup for title-search
+   function InitTitleSearch($dbi, $search) {
+      $clause =3D MakeSQLSearchClause($search, 'pagename');
+      $res =3D mssql_query("select pagename from $dbi[table] where =
+$clause order by pagename", $dbi["dbc"]);
+
+      return $res;
+   }
+
+
+   // iterating through database
+   function TitleSearchNextMatch($dbi, $res) {
+      if($o =3D mssql_fetch_object($res)) {
+         return $o->pagename;
+      }
+      else {
+         return 0;
+      }
+   }
+
+
+   // setup for full-text search
+   function InitFullSearch($dbi, $search) {
+      $clause =3D MakeSQLSearchClause($search, 'content');
+      $res =3D mssql_query("select * from $dbi[table] where $clause", =
+$dbi["dbc"]);
+
+      return $res;
+   }
+
+   // iterating through database
+   function FullSearchNextMatch($dbi, $res) {
+      if($hash =3D mssql_fetch_array($res)) {
+         return MakePageHash($hash);
+      }
+      else {
+         return 0;
+      }
+   }
+
+   function InitMostPopular($dbi, $limit) {
+      global $HitCountStore;
+      $res =3D mssql_query("select top $limit * from $HitCountStore =
+order by hits desc, pagename", $dbi["dbc"]);
+     =20
+      return $res;
+   }
+
+   function MostPopularNextMatch($dbi, $res) {
+      if ($hits =3D mssql_fetch_array($res))
+	 return $hits;
+      else
+         return 0;
+   }
+
+   function GetAllWikiPageNames($dbi) {
+      global $WikiPageStore;
+      $res =3D mssql_query("select pagename from $WikiPageStore", =
+$dbi["dbc"]);
+      $rows =3D mssql_num_rows($res);
+      for ($i =3D 0; $i < $rows; $i++) {
+	 $pages[$i] =3D mssql_result($res, $i, 0);
+      }
+      return $pages;
+   }
+  =20
+  =20
+   ////////////////////////////////////////
+   // functionality for the wikilinks table
+
+   // takes a page name, returns array of scored incoming and outgoing =
+links
+   function GetWikiPageLinks($dbi, $pagename) {
+      global $WikiLinksStore, $WikiScoreStore, $HitCountStore;
+
+      $pagename =3D addslashes($pagename);
+      $res =3D mssql_query("select topage, score from $WikiLinksStore, =
+$WikiScoreStore where topage=3Dpagename and frompage=3D'$pagename' =
+order by score desc, topage");
+      $rows =3D mssql_num_rows($res);
+      for ($i =3D 0; $i < $rows; $i++) {
+	 $out =3D mssql_fetch_array($res);
+	 $links['out'][] =3D array($out['topage'], $out['score']);
+      }
+
+      $res =3D mssql_query("select frompage, score from =
+$WikiLinksStore, $WikiScoreStore where frompage=3Dpagename and =
+topage=3D'$pagename' order by score desc, frompage");
+      $rows =3D mssql_num_rows($res);
+      for ($i =3D 0; $i < $rows; $i++) {
+	 $out =3D mssql_fetch_array($res);
+	 $links['in'][] =3D array($out['frompage'], $out['score']);
+      }
+
+      $res =3D mssql_query("select distinct pagename, hits from =
+$WikiLinksStore, $HitCountStore where (frompage=3Dpagename and =
+topage=3D'$pagename') or (topage=3Dpagename and frompage=3D'$pagename') =
+order by hits desc, pagename");
+      $rows =3D mssql_num_rows($res);
+      for ($i =3D 0; $i < $rows; $i++) {
+	 $out =3D mssql_fetch_array($res);
+	 $links['popular'][] =3D array($out['pagename'], $out['hits']);
+      }
+
+      return $links;
+   }
+
+
+   // takes page name, list of links it contains
+   // the $linklist is an array where the keys are the page names
+   function SetWikiPageLinks($dbi, $pagename, $linklist) {
+      global $WikiLinksStore, $WikiScoreStore;
+
+      $frompage =3D addslashes($pagename);
+
+      // first delete the old list of links
+      mssql_query("delete from $WikiLinksStore where =
+frompage=3D'$frompage'",
+		$dbi["dbc"]);
+
+      // the page may not have links, return if not
+      if (! count($linklist))
+         return;
+      // now insert the new list of links
+      while (list($topage, $count) =3D each($linklist)) {
+         $topage =3D addslashes($topage);
+	 if($topage !=3D $frompage) {
+            mssql_query("insert into $WikiLinksStore (frompage, topage) =
+" .
+                     "values ('$frompage', '$topage')", $dbi["dbc"]);
+	 }
+      }
+
+      // update pagescore
+      mssql_query("delete from $WikiScoreStore", $dbi["dbc"]);
+      mssql_query("insert into $WikiScoreStore select w1.topage, =
+count(*) from $WikiLinksStore as w1, $WikiLinksStore as w2 where =
+w2.topage=3Dw1.frompage group by w1.topage", $dbi["dbc"]);
+   }
+
+/* more mssql queries:
+
+orphans:
+select pagename from wiki left join wikilinks on pagename=3Dtopage =
+where topage is NULL;
+*/
+?>
+
+------_=_NextPart_000_01C0D253.2568B8F4
+Content-Type: application/octet-stream;
+	name="translate_mysql.pl"
+Content-Disposition: attachment;
+	filename="translate_mysql.pl"
+
+
+# Convert MySQL wiki database dump to a Microsoft SQL-Server compatible SQL script
+# NB This is not a general-purpose MySQL->SQL-Server conversion script
+
+# Author: Andrew K. Pearson
+# Date:   01 May 2001
+
+# Example usage: perl translate_mysql.pl dump.sql > dump2.sql
+
+# NB I did not use sed because the version I have is limited to input lines of <1K in size
+
+while (<>)
+{
+	$newvalue = $_;
+
+	$newvalue =~ s/\\\"/\'\'/g;
+	$newvalue =~ s/\\\'/\'\'/g;
+	$newvalue =~ s/\\n/\'+char(10)+\'/g;
+	$newvalue =~ s/TYPE=MyISAM;//g;
+	$newvalue =~ s/int\(.+\)/int/g;
+	$newvalue =~ s/mediumtext/text/g;
+	$newvalue =~ s/^#/--/g;
+
+	print $newvalue;
+}
+
+
+------_=_NextPart_000_01C0D253.2568B8F4--
+
