@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.3 2002-02-03 01:59:54 dairiki Exp $');
+rcs_id('$Id: ADODB.php,v 1.4 2002-02-06 03:04:10 dairiki Exp $');
 
 /*This file is part of PhpWiki.
 
@@ -488,7 +488,7 @@ extends WikiDB_backend
         $result = $dbh->Execute("SELECT $want.*"
                               . " FROM $link_tbl, $page_tbl AS linker, $page_tbl AS linkee"
                               . " WHERE linkfrom=linker.id AND linkto=linkee.id"
-                              . "  AND $have.pagename='$qpagename'"
+                              . "  AND $have.pagename=$qpagename"
                               //. " GROUP BY $want.id"
                               . " ORDER BY $want.pagename");
         
