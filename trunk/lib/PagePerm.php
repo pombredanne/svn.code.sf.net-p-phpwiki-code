@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.30 2004-09-25 16:24:02 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.31 2004-09-25 18:34:45 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -225,7 +225,12 @@ function _requiredAuthorityForPagename($access, $pagename) {
     }
     // no ACL defined; check for special dotfile or walk down
     if (! ($perm = getPagePermissions($page))) { 
-        if ($pagename[0] == '.') {
+        if ($pagename == '.') {
+            trigger_error(". (dotpage == rootpage for inheriting pageperm ACLs) exists without any ACL!\n".
+                          "Please do ?action=setacl&pagename=.", E_USER_WARNING);
+            $perm = new PagePermission();
+            return ($perm->isAuthorized($access, $request->_user) === true);
+        } elseif ($pagename[0] == '.') {
             $perm = new PagePermission(PagePermission::dotPerms());
             return ($perm->isAuthorized($access, $request->_user) === true);
         }
@@ -233,7 +238,7 @@ function _requiredAuthorityForPagename($access, $pagename) {
     }
     // ACL defined; check if isAuthorized returns true or false or undecided
     $authorized = $perm->isAuthorized($access, $request->_user);
-    if ($authorized !== 'undecided') // interestingly true is also -1, so we use a string
+    if ($authorized !== -1) // interestingly true is also -1
         return $authorized;
     else
         return _requiredAuthorityForPagename($access, getParentPage($pagename));
@@ -348,7 +353,7 @@ class PagePermission {
                 }
             }
         }
-        return 'undecided'; // undecided
+        return -1; // undecided
     }
 
     /**
@@ -699,6 +704,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.30  2004/09/25 16:24:02  rurban
+// fix interesting PagePerm problem: -1 == true
+//
 // Revision 1.29  2004/07/03 08:04:19  rurban
 // fixed implicit PersonalPage login (e.g. on edit), fixed to check against create ACL on create, not edit
 //
