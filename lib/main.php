@@ -1,10 +1,10 @@
 <?php
-rcs_id('$Id: main.php,v 1.98 2003-03-04 05:33:00 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.99 2003-03-07 02:39:47 dairiki Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
 include "lib/config.php";
-include "lib/stdlib.php";
+require_once("lib/stdlib.php");
 require_once('lib/Request.php');
 require_once("lib/WikiUser.php");
 require_once('lib/WikiDB.php');
@@ -13,10 +13,11 @@ class WikiRequest extends Request {
     // var $_dbi;
 
     function WikiRequest () {
+        $this->_dbi = WikiDB::open($GLOBALS['DBParams']);
+
         if (USE_DB_SESSION) {
             include_once('lib/DB_Session.php');
-            $this->_dbi = $this->getDbh();
-            $this->_dbsession = & new DB_Session($this->_dbi,
+            $this->_dbsession = & new DB_Session($this->getDbh(),
                                                  $GLOBALS['DBParams']['db_session_table']);
         }
         
@@ -121,10 +122,6 @@ class WikiRequest extends Request {
     }
 
     function getDbh () {
-        if (!isset($this->_dbi)) {
-            // needs PHP 4.1. better use $this->_user->...
-            $this->_dbi = WikiDB::open($GLOBALS['DBParams']);
-        }
         return $this->_dbi;
     }
 
@@ -341,14 +338,11 @@ class WikiRequest extends Request {
             case 'viewsource':
             case 'diff':
             case 'select':
-            case 'xmlrpc':    
+            case 'xmlrpc':
+            case 'search':
                 return WIKIAUTH_ANON;
 
             case 'zip':
-                if (defined('ZIPDUMP_AUTH') && ZIPDUMP_AUTH)
-                    return WIKIAUTH_ADMIN;
-                return WIKIAUTH_ANON;
-
             case 'ziphtml':
                 if (defined('ZIPDUMP_AUTH') && ZIPDUMP_AUTH)
                     return WIKIAUTH_ADMIN;
@@ -759,6 +753,14 @@ if(defined('WIKI_XMLRPC')) return;
         $validators['mtime'] = $timestamp;
         $validators['%mtime'] = (int)$timestamp;
     }
+    // FIXME: we should try to generate strong validators when possible,
+    // but for now, our validator is weak, since equal validators do not
+    // indicate byte-level equality of content.  (Due to DEBUG timing output, etc...)
+    //
+    // (If DEBUG if off, this may be a strong validator, but I'm going
+    // to go the paranoid route here pending further study and testing.)
+    //
+    $validators['%weak'] = true;
     
     $request->setValidators($validators);
    
