@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.114 2004-11-11 18:31:26 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.115 2004-11-17 17:24:02 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -225,7 +225,7 @@ class Theme {
             if (DEBUG & function_exists('debug_backtrace')) { // >= 4.3.0
                 echo "<pre>", printSimpleTrace(debug_backtrace()), "</pre>\n";
             }
-            trigger_error("$file: not found", E_USER_NOTICE);
+            trigger_error("$this->_theme/$file: not found", E_USER_NOTICE);
         }
         return false;
     }
@@ -1054,10 +1054,20 @@ class Theme {
         }
         return HTML($css);
     }
-    
 
     function findTemplate ($name) {
-        return $this->_path . $this->_findFile("templates/$name.tmpl");
+    	if ($tmp = $this->_findFile("templates/$name.tmpl", 1))
+            return $this->_path . $tmp;
+        else {
+            $f1 = $this->file("templates/$name.tmpl");
+            trigger_error("pwd: ".getcwd(), E_USER_ERROR);
+            if (isset($this->_default_theme)) {
+               $f2 = $this->_default_theme->file("templates/$name.tmpl");
+               trigger_error("$f1 nor $f2 found", E_USER_ERROR);
+            } else 
+               trigger_error("$f1 not found", E_USER_ERROR);
+            return false;
+        }
     }
 
     var $_MoreHeaders = array();
@@ -1379,6 +1389,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.114  2004/11/11 18:31:26  rurban
+// add simple backtrace on such general failures to get at least an idea where
+//
 // Revision 1.113  2004/11/09 17:11:04  rurban
 // * revert to the wikidb ref passing. there's no memory abuse there.
 // * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively
