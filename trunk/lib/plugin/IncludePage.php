@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: IncludePage.php,v 1.6 2002-01-09 18:06:49 carstenklapp Exp $');
+rcs_id('$Id: IncludePage.php,v 1.7 2002-01-20 08:20:28 carstenklapp Exp $');
 /**
  * IncludePage:  include text from another wiki page in this one
  * usage:   <?plugin IncludePage page=OtherPage rev=6 quiet=1 words=50 lines=6?>
@@ -72,10 +72,14 @@ extends WikiPlugin
             return '';
         }
 
+        // Bypass recursion error message for the special case when
+        // editing the TextFormattingRules page itself.
         static $included_pages = array();
         if ($page == $request->getArg('pagename')
             || in_array($page, $included_pages)) {
-            $this->error(sprintf(_("recursive inclusion of page %s"), $page));
+            if (! ($page == _("TextFormattingRules") && $quiet) ) {
+                $this->error(sprintf(_("recursive inclusion of page %s"), $page));
+            }
             return '';
         }
 
