@@ -26,6 +26,8 @@ $locale["EditText"] =
    "RedigeraText";
 $locale["Empty pagename!"] =
    "Ange ett sidnamn!";
+$locale["Fatal PhpWiki Error"] =
+   "PhpWiki Fatal Error";
 $locale["FindPage"] =
    "SökEfterSida";
 $locale["Full Text Search"] =
@@ -37,7 +39,7 @@ $locale["FullTextSearch"] =
 $locale["GoodStyle"] =
    "BraStil";
 $locale["Hits"] =
-   "antal träffar";
+   "Träffar";
 $locale["HomePage"] =
    "Framsida";
 $locale["I'm sorry.  Version %d of %s is not in my database."] =
@@ -46,18 +48,26 @@ $locale["In order to recover from this situation follow these steps:"] =
    "För att lösa situtationen, följ dessa steg:";
 $locale["Include of '%s' failed"] =
    "Insättning för '%s' misslyckades";
+$locale["Included from %s"] =
+   "Insättning från %s";
+$locale["Last Modified"] =
+   "Senast Ändrad";
 $locale["Last edited on %s."] =
    "Senast ändrad %s.";
 $locale["Lists nested too deep in SetHTMLOutputMode"] =
    "Stackgräns överskriden i SetHTMLOutputMode";
 $locale["Lock Page"] =
    "Lås Sida";
+$locale["Locked"] =
+   "Låst";
 $locale["Make changes to the file again. Paste your additions from the clipboard (or text editor)."] =
    "Ändra filen igen. Klistra in dina ändringar från urklippet (eller texteditorn).";
 $locale["MostPopular"] =
    "MestPopulär";
 $locale["None"] =
    "ingen";
+$locale["Page Locked"] =
+   "Sidan är Låst";
 $locale["Page Name"] =
    "Namn på Sidan";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
@@ -80,6 +90,8 @@ $locale["Removed page '%s' succesfully."] =
    "Tog bort sidan '%s'.";
 $locale["Save"] =
    "Spara";
+$locale["Saved: %s"] =
+   "Sparade: %s";
 $locale["Search"] =
    "Sök";
 $locale["See %s tips for editing."] =
@@ -90,6 +102,8 @@ $locale["TextFormattingRules"] =
    "Textformateringsregler";
 $locale["Thank you for editing %s."] =
    "Tack för att du redigerade %s.";
+$locale["The %d most popular pages of this wiki:"] =
+   "De %d mest populära sidorna för den här wikin:";
 $locale["The %d most recent %s are listed below."] =
    "De %d senaste %s sidorna listas nedan.";
 $locale["This page has been locked by the administrator and cannot be edited."] =
@@ -104,6 +118,8 @@ $locale["Unlock Page"] =
    "Lås upp Sida";
 $locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
    "Använd webbläsarens <b>backaknapp</b> för att gå tillbaka till redigeringssidan.";
+$locale["Version"] =
+   "Version";
 $locale["Version %d"] =
    "Version %d";
 $locale["Version %s, saved on %s."] =
@@ -122,10 +138,14 @@ $locale["by %s"] =
    "av %s";
 $locale["current version"] =
    "nuvarande version";
+$locale["diff"] =
+   "diff";
 $locale["from %s"] =
    "från %s";
 $locale["last modified on %s"] =
    "senast ändrad %s";
+$locale["locked"] =
+   "låst";
 $locale["revision by previous author"] =
    "version från föregående författare";
 $locale["version %d"] =

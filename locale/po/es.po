@@ -292,26 +292,23 @@ msgid "%s: Bad action"
 msgstr ""
 
 #: ../lib/main.php:323
-#, fuzzy
 msgid "Fatal PhpWiki Error"
-msgstr "ErrorFatalDeWiki"
+msgstr "Error Fatal De PhpWiki"
 
 # lib/fullsearch.php:48
 #: ../lib/main.php:406 ../lib/plugin/FullTextSearch.php:12
-#, fuzzy
 msgid "FullTextSearch"
-msgstr "una búsqueda completa de texto"
+msgstr "BúsquedaDelTexto"
 
 # lib/fullsearch.php:48
 #: ../lib/main.php:409 ../lib/plugin/RecentChanges.php:278
 #: ../lib/plugin/TitleSearch.php:13
-#, fuzzy
 msgid "TitleSearch"
-msgstr "una búsqueda de títulos"
+msgstr "BúsquedaDeTítulos"
 
 #: ../lib/PageList.php:125
 msgid "Page Name"
-msgstr "Nombre de la página"
+msgstr "Nombre de la Página"
 
 #: ../lib/PageList.php:140 ../lib/plugin/FullTextSearch.php:51
 msgid "<no matches>"
@@ -339,14 +336,12 @@ msgid "Last Author"
 msgstr ""
 
 #: ../lib/PageList.php:253
-#, fuzzy
 msgid "Locked"
-msgstr "Bloquear Página"
+msgstr "Bloqueada"
 
 #: ../lib/PageList.php:253
-#, fuzzy
 msgid "locked"
-msgstr "Página bloqueada"
+msgstr "bloqueada"
 
 #: ../lib/PageList.php:256
 msgid "Minor Edit"
@@ -425,14 +420,13 @@ msgstr "Editar %s"
 
 # lib/fullsearch.php:48
 #: ../lib/plugin/FullTextSearch.php:16
-#, fuzzy
 msgid "Full Text Search"
-msgstr "una búsqueda completa de texto"
+msgstr "Una búsqueda completa de texto"
 
 #: ../lib/plugin/FullTextSearch.php:56
-#, fuzzy, c-format
+#, c-format
 msgid "Full text search results for '%s'"
-msgstr "Resultados de la búsqueda en el texto completo '%s'"
+msgstr "Resultados de la búsqueda en el texto completo para '%s'"
 
 #: ../lib/plugin/HelloWorld.php:23
 msgid "HelloWorld"
@@ -504,9 +498,9 @@ msgid "List the most popular pages"
 msgstr ""
 
 #: ../lib/plugin/MostPopular.php:49
-#, fuzzy, c-format
+#, c-format
 msgid "The %d most popular pages of this wiki:"
-msgstr "Las %s páginas más populares de este wiki:"
+msgstr "Las %d páginas más populares de este wiki:"
 
 #: ../lib/plugin/MostPopular.php:51
 msgid "Visited pages on this wiki, ordered by popularity:"
@@ -560,9 +554,8 @@ msgstr ""
 
 #: ../lib/plugin/RandomPage.php:12 ../lib/plugin/RandomPage.php:16
 #: ../lib/plugin/RandomPage.php:41
-#, fuzzy
 msgid "RandomPage"
-msgstr "BuscarPágina"
+msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:87
 msgid "Deleted."
@@ -577,9 +570,8 @@ msgid "(diff)"
 msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:153
-#, fuzzy
 msgid "edits"
-msgstr "Editar"
+msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:155
 msgid "major edits"
@@ -621,9 +613,8 @@ msgstr "Buscar"
 
 # lib/fullsearch.php:48
 #: ../lib/plugin/RecentChanges.php:276 ../lib/plugin/TitleSearch.php:17
-#, fuzzy
 msgid "Title Search"
-msgstr "una búsqueda de títulos"
+msgstr "Una búsqueda de títulos"
 
 # lib/pageinfo.php:21
 #: ../lib/plugin/RecentChanges.php:468
@@ -702,19 +693,19 @@ msgstr ""
 
 #: ../lib/plugin/walkabout.php:90
 msgid "Next"
-msgstr ""
+msgstr "Siguiente"
 
 #: ../lib/plugin/walkabout.php:91
 msgid "Previous"
-msgstr ""
+msgstr "Anterior"
 
 #: ../lib/plugin/walkabout.php:93
 msgid "First"
-msgstr ""
+msgstr "Primera"
 
 #: ../lib/plugin/walkabout.php:94
 msgid "Last"
-msgstr ""
+msgstr "Final"
 
 #: ../lib/plugin/walkabout.php:112 ../lib/plugin/walkabout.php:159
 #: ../lib/plugin/walkabout.php:165 ../lib/plugin/walkabout.php:177
@@ -1155,7 +1146,7 @@ msgid "Synopsis"
 msgstr "Sinopsis"
 
 #: ../themes/default/templates/login.tmpl:12
-msgid "You may sign in using any WikiWord as a UserId. (ÀÖØöøÿßö etc. may be used too). The UserId will be used as link in RecentChanges to your UserId page, your HomePage. You do not need to enter a password."
+msgid "You may sign in using any WikiWord as a UserId. (ÀÖØöøÿßö etc. may be used too). The UserId will be used as a link in RecentChanges to your UserId page, your HomePage. You do not need to enter a password."
 msgstr ""
 
 #: ../themes/default/templates/login.tmpl:20
@@ -1238,9 +1229,8 @@ msgid "Modern"
 msgstr ""
 
 #: ../themes/MacOSX/themeinfo.php:121
-#, fuzzy
 msgid "Page Locked"
-msgstr "Página bloqueada"
+msgstr "Página Bloqueada"
 
 #: ../themes/Portland/templates/actionbar.tmpl:6
 #, fuzzy

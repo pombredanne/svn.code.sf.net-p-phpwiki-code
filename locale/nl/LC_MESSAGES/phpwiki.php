@@ -12,6 +12,8 @@ $locale["- saved to database as version %d"] =
    "- bewaard in de data base als versie %d";
 $locale["<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."] =
    "<b>Reload</b> de pagina.  Je zou nu de meest recente versie van de pagina moeten zien.  Jouw veranderingen staan er nu niet meer.";
+$locale["Action %s is disallowed on this wiki"] =
+   "Actie %s is niet beschikbaar in deze wiki";
 $locale["Complete."] =
    "Klaar.";
 $locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
@@ -28,6 +30,8 @@ $locale["Edit: %s"] =
    "Verander: %s";
 $locale["EditText"] =
    "VeranderTekst";
+$locale["Fatal PhpWiki Error"] =
+   "PhpWiki Fatale Fout";
 $locale["FindPage"] =
    "ZoekPagina";
 $locale["Full Text Search"] =
@@ -46,14 +50,20 @@ $locale["In order to recover from this situation follow these steps:"] =
    "Om uit deze benarde situatie te geraken, volg je deze stappen:";
 $locale["Include of '%s' failed"] =
    "Insert van '%s' gefaald";
+$locale["Last Author"] =
+   "Vorige Auteur";
 $locale["Last edited on %s."] =
    "Meest recente verandering op %s.";
+$locale["List the most popular pages"] =
+   "Lijst de meestbezochte pagina's";
 $locale["Lists nested too deep in SetHTMLOutputMode"] =
    "Lijsten nesten te diep in SetHTMLOutputMode";
 $locale["Loading up virgin wiki"] =
    "Laden van maagdelijke wiki";
 $locale["Lock Page"] =
    "Open Pagina";
+$locale["Locked"] =
+   "Låst";
 $locale["MIME file %s"] =
    "MIME bestand %";
 $locale["Make changes to the file again. Paste your additions from the clipboard (or text editor)."] =
@@ -64,6 +74,8 @@ $locale["New page."] =
    "Nieuw pagina.";
 $locale["None"] =
    "Geen";
+$locale["Page Locked"] =
+   "Sidan är Låst";
 $locale["Page Name"] =
    "Pagina Naam";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
@@ -88,6 +100,8 @@ $locale["Removed page '%s' succesfully."] =
    "Pagina '%s' verwijderd.";
 $locale["Return to %s"] =
    "Terug naar %s";
+$locale["Return to %s."] =
+   "Terug naar %s.";
 $locale["Save"] =
    "Bewaar";
 $locale["Saved: %s"] =
@@ -106,6 +120,8 @@ $locale["TextFormattingRules"] =
    "TekstFormatteringsRegels";
 $locale["Thank you for editing %s."] =
    "Bedankt voor het veranderen van %s.";
+$locale["The %d most popular pages of this wiki:"] =
+   "De %d meestbezochte pagina's van deze Wiki:";
 $locale["The %d most recent %s are listed below."] =
    "De %d meest recent %s staan hieronder.";
 $locale["The PhpWiki programming team"] =
@@ -126,6 +142,8 @@ $locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
    "Gebruik de <b>Terug</b> knop van je bladeraar om terug te gaan naar de verander tekst pagina.";
 $locale["UserPreferences"] =
    "GebruikersVoorkeuren";
+$locale["Version"] =
+   "Versie";
 $locale["Version %d"] =
    "Versie %d";
 $locale["Version %s, saved on %s."] =
@@ -140,8 +158,8 @@ $locale["You are about to remove '%s' permanently!"] =
    "Je staat op het punt '%s' voorgoed te verwijderen!";
 $locale["You are signed in as %s"] =
    "Je bent ingelogd als %s";
-$locale["You can change the size of the editing area in %s."] =
-   "Je kunt de afmetingen van het invoerveld veranderen. Zie %s.";
+$locale["You must be an administrator to %s this wiki"] =
+   "Je moet ingelogd zijn als beheerder om te %s in deze wiki";
 $locale["You must specify a directory to dump to"] =
    "Je moet een directory specificeren om in te storten";
 $locale["Your careful attention to detail is much appreciated."] =
@@ -152,10 +170,14 @@ $locale["by %s"] =
    "door %s";
 $locale["current version"] =
    "huidige versie";
+$locale["diff"] =
+   "diff";
 $locale["from %s"] =
    "van %s";
 $locale["last modified on %s"] =
    "meest recente verandering op %s";
+$locale["locked"] =
+   "låst";
 $locale["new page"] =
    "nieuw pagina";
 $locale["plain file %s"] =

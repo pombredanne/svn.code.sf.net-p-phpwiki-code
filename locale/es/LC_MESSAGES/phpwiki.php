@@ -14,8 +14,18 @@ $locale["Edit %s"] =
    "Editar %s";
 $locale["Edit: %s"] =
    "Editar: %s";
+$locale["Fatal PhpWiki Error"] =
+   "Error Fatal De PhpWiki";
 $locale["FindPage"] =
    "BuscarPágina";
+$locale["First"] =
+   "Primera";
+$locale["Full Text Search"] =
+   "Una búsqueda completa de texto";
+$locale["Full text search results for '%s'"] =
+   "Resultados de la búsqueda en el texto completo para '%s'";
+$locale["FullTextSearch"] =
+   "BúsquedaDelTexto";
 $locale["GoodStyle"] =
    "BuenEstilo";
 $locale["Hits"] =
@@ -26,22 +36,32 @@ $locale["In order to recover from this situation follow these steps:"] =
    "Para restaurar esta situación siga los siguientes pasos:";
 $locale["Include of '%s' failed"] =
    "Inserción de '%s' falló";
+$locale["Last"] =
+   "Final";
 $locale["Last edited on %s."] =
    "Editada por última vez %s.";
 $locale["Lists nested too deep in SetHTMLOutputMode"] =
    "Límites de la pila excedidos en SetHTMLOutputMode";
 $locale["Lock Page"] =
    "Bloquear Página";
+$locale["Locked"] =
+   "Bloqueada";
 $locale["Make changes to the file again. Paste your additions from the clipboard (or text editor)."] =
    "Haga cambios a la página otra vez. Pegue sus modificaciones del portapapeles (o del editor de textos).";
+$locale["Next"] =
+   "Siguiente";
 $locale["None"] =
    "Ninguno";
+$locale["Page Locked"] =
+   "Página Bloqueada";
 $locale["Page Name"] =
-   "Nombre de la página";
+   "Nombre de la Página";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
    "PhpWiki no es capaz de grabar sus cambios, debido a que otro usuariohá editado y guardado la página mientras usted estaba editando esta página. Si se guarda ahora los cambios del autor anterior se podrían perder.";
 $locale["Press <b>Save</b> again."] =
    "Pulse <b>Guardar<b> otra vez.";
+$locale["Previous"] =
+   "Anterior";
 $locale["Problem while editing %s"] =
    "Problema al editar %s";
 $locale["Problem while updating %s"] =
@@ -66,14 +86,22 @@ $locale["TextFormattingRules"] =
    "ReglasDeFormatoDeTexto";
 $locale["Thank you for editing %s."] =
    "Gracias por editar %s.";
+$locale["The %d most popular pages of this wiki:"] =
+   "Las %d páginas más populares de este wiki:";
 $locale["This is a minor change."] =
    "Esto es un cambio pequeño.";
 $locale["This page has been locked by the administrator and cannot be edited."] =
    "Esta página ha sido bloqueada por el administrador y no puede ser editada.";
+$locale["Title Search"] =
+   "Una búsqueda de títulos";
+$locale["TitleSearch"] =
+   "BúsquedaDeTítulos";
 $locale["Unlock Page"] =
    "Desbloquear Página";
 $locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
    "Use el botón <b>Atrás<b> para retornar a la página editada";
+$locale["Version"] =
+   "Versión";
 $locale["Version %d"] =
    "Versión %d";
 $locale["Versions are identical"] =
@@ -86,6 +114,8 @@ $locale["by %s"] =
    "por %s";
 $locale["last modified on %s"] =
    "modificado por última vez el %s";
+$locale["locked"] =
+   "bloqueada";
 $locale["version %d"] =
    "versión %d";
 $locale["version %s"] =

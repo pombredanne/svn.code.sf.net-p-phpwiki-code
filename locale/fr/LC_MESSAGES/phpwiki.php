@@ -1,5 +1,7 @@
 <?php
 
+$locale["%d pages link to %s:"] =
+   "Lien de %d pages à la %s :";
 $locale["%s bytes written"] =
    "%s octets enregistrés";
 $locale["%s days"] =
@@ -8,6 +10,8 @@ $locale["%s(%d): no such revision"] =
    "%s(%d) : aucune une telle révision";
 $locale["%s: %s"] =
    "%s : %s";
+$locale["%s: error while handling error:"] =
+   "%s : erreur pendant la manipulation de l'erreur :";
 $locale["%s: file not found"] =
    "%s : fichier non trouvé";
 $locale["(diff)"] =
@@ -26,6 +30,10 @@ $locale["<no matches>"] =
    "< aucun d'résultat >";
 $locale["All %s are listed below."] =
    "Toutes les %s sont énumérées ci-dessous.";
+$locale["All Pages"] =
+   "Toutes les Pages";
+$locale["AllPages"] =
+   "ToutesLesPages";
 $locale["An unnamed PhpWiki"] =
    "Un PhpWiki sans le titre";
 $locale["Author will be logged as %s."] =
@@ -62,6 +70,8 @@ $locale["Edit: %s"] =
    "Editer : %s";
 $locale["Empty pagename!"] =
    "La page n'a aucun titre!";
+$locale["Fatal PhpWiki Error"] =
+   "Erreur Fatale De PhpWiki";
 $locale["FindPage"] =
    "ChercherPage";
 $locale["First"] =
@@ -94,6 +104,10 @@ $locale["Included from %s"] =
    "Inséré de la %s";
 $locale["Last"] =
    "Finale";
+$locale["Last Author"] =
+   "Auteur Précédent";
+$locale["Last Modified"] =
+   "Dernière Modification le";
 $locale["Last edited on %s."] =
    "Dernière modification le %s.";
 $locale["List the most popular pages"] =
@@ -106,8 +120,12 @@ $locale["Lock Page"] =
    "Verrouiller la Page";
 $locale["Lock page to enable link"] =
    "Verrouillez la page pour permettre le lien";
+$locale["Locked"] =
+   "Verrouillée";
 $locale["Make changes to the file again. Paste your additions from the clipboard (or text editor)."] =
    "Ré-applique tes modifications, colle les ajouts depuis la fenêtre où tu les as placés.";
+$locale["Minor Edit"] =
+   "Petite Modif";
 $locale["Modern"] =
    "Moderne";
 $locale["MostPopular"] =
@@ -130,6 +148,8 @@ $locale["Optimizing %s"] =
    "Optimalisant %s";
 $locale["Other diffs:"] =
    "D'autres comparaisons :";
+$locale["Page Locked"] =
+   "Page Verrouillée";
 $locale["Page Name"] =
    "Nom de Page";
 $locale["Page names with prefix '%s'"] =
@@ -166,10 +186,14 @@ $locale["Remove Page"] =
    "Supprimer la Page";
 $locale["Remove page"] =
    "Supprimer la page";
+$locale["Remove the page now"] =
+   "Supprimer la page maintenant";
 $locale["Removed page '%s' succesfully."] =
    "Page ' %s ' supprimée avec succès.";
 $locale["Return to %s"] =
    "Retour à la %s";
+$locale["Return to %s."] =
+   "Retour à la %s.";
 $locale["Save"] =
    "Enregistrer";
 $locale["Saved: %s"] =
@@ -182,6 +206,12 @@ $locale["See %s"] =
    "Voir %s";
 $locale["See %s tips for editing."] =
    "Voir les conseils pour éditer les pages dans %s.";
+$locale["Show all changes for:"] =
+   "Indiquez toutes les changements dans les :";
+$locale["Show changes for:"] =
+   "Indiquez les changements dans les :";
+$locale["Show minor edits for:"] =
+   "Indiquez les petits modifs dans les :";
 $locale["Simple Sample Plugin"] =
    "Exemple Plugin Facile";
 $locale["Sorry for the inconvenience."] =
@@ -194,6 +224,8 @@ $locale["TextFormattingRules"] =
    "RéglesDeFormatageDesTextes";
 $locale["Thank you for editing %s."] =
    "Merci d'avoir édité %s.";
+$locale["The %d most popular pages of this wiki:"] =
+   "Les %s des pages les plus populaires de ce wiki :";
 $locale["The %d most recent %s are listed below."] =
    "Les %d %s les plus récents sont énumérés ci-dessous";
 $locale["The %d most recent %s during the past %.1f days are listed below."] =
@@ -224,6 +256,8 @@ $locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
    "Utilise la fonction <b>Retour</b> de ton navigateur pour revenir à la page d'édition.";
 $locale["UserPreferences"] =
    "PréférencesUtilisateurs";
+$locale["Version"] =
+   "Version";
 $locale["Version %d"] =
    "version %d";
 $locale["Version %s, saved on %s."] =
@@ -250,14 +284,22 @@ $locale["compare revisions"] =
    "comparez les révisions";
 $locale["current version"] =
    "Version actuelle";
+$locale["diff"] =
+   "diff";
 $locale["edits"] =
    "modifications";
 $locale["from %s"] =
    "de %s";
 $locale["last modified on %s"] =
    "dernière modification le %s";
+$locale["locked"] =
+   "verrouillée";
 $locale["major edits"] =
    "principales modifications";
+$locale["minor"] =
+   "petite";
+$locale["minor edit"] =
+   "petite modif";
 $locale["minor edits"] =
    "petites modifications";
 $locale["new page"] =
