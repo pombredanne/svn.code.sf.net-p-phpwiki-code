@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Toolbar.php,v 1.10 2002-01-08 00:06:45 carstenklapp Exp $');
+<?php rcs_id('$Id: Toolbar.php,v 1.11 2002-01-09 16:34:35 carstenklapp Exp $');
 
 //require_once("lib/ErrorManager.php");
 //require_once("lib/WikiPlugin.php");
@@ -14,41 +14,42 @@ function separator() {
         $separator = ", ";
         break;
     case "image" :
-        $separator = "<img alt=\" | \" src=\"" .DATA_URL( '$placeholder' ) ."\" />";
+        $separator = "<img alt=\" | \" src=\"" .DATA_URL( '$placeholder' )
+        ."\" />";
         break;
-    }
-    return $separator;
+        }
+        return $separator;
 */
     // just using a hardcoded separator for now
     return " | ";
 }
 
 /*
-
-These functions will replace the PHP logic currently embedded in the
-html templates, used to build the Wiki commands and navigation links
-at the bottom of the screen.
-
-If you feel inspired please contribute here!
-
-(This is all in a state of flux, so don't count on any of this being
-the same tomorrow...)
-
-
-Some of these functions are already to be used as ${tokens} in the
-xhtml templates.
-
-FIXME: IncludePage plugin for EditHelp needs to be dealt with.
-
-Plugins shuold be cleaned up, in this state they won't display any
-mouseover text.
-
-The raw html should be replaced with calls to Element(QElement()) or
-QElement().
-
-Reminder: xgettext only knows about c/c++ line-continuation strings,
-          it does not know about php's dot operator.
-
+  
+  These functions will replace the PHP logic currently embedded in the
+  html templates, used to build the Wiki commands and navigation links
+  at the bottom of the screen.
+  
+  If you feel inspired please contribute here!
+  
+  (This is all in a state of flux, so don't count on any of this being
+  the same tomorrow...)
+  
+  
+  Some of these functions are already to be used as ${tokens} in the
+  xhtml templates.
+  
+  FIXME: IncludePage plugin for EditHelp needs to be dealt with.
+  
+  Plugins shuold be cleaned up, in this state they won't display any
+  mouseover text.
+  
+  The raw html should be replaced with calls to Element(QElement()) or
+  QElement().
+  
+  Reminder: xgettext only knows about c/c++ line-continuation strings,
+            it does not know about php's dot operator.
+  
 */
 
 
@@ -136,31 +137,50 @@ function toolbar_action_PageActions($pagelocked, $userisadmin, $is_current, $ver
         $html .= _("Page locked");
     } else {
 	if ($is_current) {
-            $html .= "<a class=\"wikiaction\" href=\"" .WikiURL($pagename, array('action' => 'edit')) ."\">" ._("Edit") ."</a>";
+            $html .= "<a class=\"wikiaction\" href=\""
+                .WikiURL($pagename, array('action' => 'edit')) ."\">"
+                ._("Edit") ."</a>";
         } else {
-            $html .= "<a class=\"wikiaction\" href=\"" .WikiURL($pagename, array('action' => 'edit&amp;version=' .$version));
+            $html .= "<a class=\"wikiaction\" href=\""
+                .WikiURL($pagename, array('action' => 'edit&amp;version='
+                                          .$version));
             $html .= ">" ._("Edit old revision") ."</a>";
         }
     }
     if ($userisadmin) {
 	if ($pagelocked) {
-            $html .= separator() ."<a class=\"wikiadmin\" href=\"" .WikiURL($pagename, array('action' => 'unlock')) ."\">" ._("Unlock page") ."</a>";
+            $html .= separator() ."<a class=\"wikiadmin\" href=\""
+                .WikiURL($pagename, array('action' => 'unlock')) ."\">"
+                ._("Unlock page") ."</a>";
         } else {
-            $html .= separator() ."<a class=\"wikiadmin\" href=\"" .WikiURL($pagename, array('action' => 'lock')) ."\">" ._("Lock page") ."</a>";
+            $html .= separator() ."<a class=\"wikiadmin\" href=\""
+                .WikiURL($pagename, array('action' => 'lock')) ."\">"
+                ._("Lock page") ."</a>";
         }
-        $html .= separator() ."<a class=\"wikiadmin\" href=\"" .WikiURL($pagename, array('action' => 'remove')) ."\">" ._("Remove page") ."</a>";
+        $html .= separator() ."<a class=\"wikiadmin\" href=\""
+            .WikiURL($pagename, array('action' => 'remove')) ."\">"
+            ._("Remove page") ."</a>";
     }
-        //$html .= separator() ."<plugin-link PageHistory page=\"" .$pagename ."\"";
-        $html .= separator() ."<a class=\"wikiaction\" href=\"" . WikiURL(_("PageHistory"), array('page' => $pagename)) ."\">" ._("PageHistory") ."</a>";
+    //$html .= separator() ."<plugin-link PageHistory page=\"" .$pagename ."\"";
+    $html .= separator() ."<a class=\"wikiaction\" href=\"" .
+        WikiURL(_("PageHistory"), array('page' => $pagename)) ."\">"
+        ._("PageHistory") ."</a>";
 
     if ($is_current) {
-        $html .= separator() ."<a class=\"wikiaction\" href=\"" . WikiURL($pagename, array('action' => 'diff&amp;previous=major')) ."\">" ._("Diff") ."</a>";
+        $html .= separator() ."<a class=\"wikiaction\" href=\""
+            . WikiURL($pagename, array('action' => 'diff&amp;previous=major'))
+            ."\">" ._("Diff") ."</a>";
     } else {
         $html .= separator() ."<a class=\"wikiaction\"";
-        $html .= "href=\"" . WikiURL($pagename, array('action' => 'diff&amp;version=' .$version .'&amp;previous=major')) ."\">" ._("Diff") ."</a>";
+        $html .= "href=\""
+            . WikiURL($pagename, array('action' => 'diff&amp;version='
+                                       .$version .'&amp;previous=major'))
+            ."\">" ._("Diff") ."</a>";
     }
-        //$html .= separator() ."<plugin-link BackLinks page=\"" .$pagename ."\"";
-        $html .= separator() ."<a class=\"wikiaction\" href=\"" . WikiURL(_("BackLinks"), array('page' => $pagename)) ."\">" ._("BackLinks") ."</a>";
+    //$html .= separator() ."<plugin-link BackLinks page=\"" .$pagename ."\"";
+    $html .= separator() ."<a class=\"wikiaction\" href=\""
+        . WikiURL(_("BackLinks"), array('page' => $pagename)) ."\">"
+        ._("BackLinks") ."</a>";
 
     return $html;
 }
@@ -180,18 +200,24 @@ function toolbar_action_PageActions($pagelocked, $userisadmin, $is_current, $ver
 
 function toolbar_action_SearchActions($pagename, $charset) {
     $html = "";
-    $html .= "<form action=\"" .WikiURL(_("TitleSearch")) ."\" method=\"get\" accept-charset=\"" .$charset ."\">";
-    $html .= toolbar_action_Navigation($pagename) .separator() .LinkExistingWikiWord(_("FindPage"));
-    $html .= separator() ."<span><input type=\"hidden\" name=\"auto_redirect\" value=\"1\" />";
+    $html .= "<form action=\"" .WikiURL(_("TitleSearch"))
+        ."\" method=\"get\" accept-charset=\"" .$charset ."\">";
+    $html .= toolbar_action_Navigation($pagename) .separator()
+        .LinkExistingWikiWord(_("FindPage"));
+    $html .= separator()
+        ."<span><input type=\"hidden\" name=\"auto_redirect\" value=\"1\" />";
     $html .= "<input type=\"text\"  name=\"s\" size=\"12\"";
     $html .= " title=" ._("Quick Search");
-    $html .= " onmouseover=\"window.status='" ._("Quick Search") ."'; return true;";
+    $html .= " onmouseover=\"window.status='" ._("Quick Search")
+        ."'; return true;";
     $html .= " onmouseout=\"window.status=''; return true;\" /></span>";
 
     //$html .= separator() ."<plugin-link LikePages page=\"" .$pagename ."\" >";
-    $html .= separator() ."<a class=\"wikiaction\" href=\"" . WikiURL(_("LikePages"), array('page' => $pagename)) ."\">" ._("LikePages") ."</a>";
+    $html .= separator() ."<a class=\"wikiaction\" href=\""
+        . WikiURL(_("LikePages"), array('page' => $pagename)) ."\">"
+        ._("LikePages") ."</a>";
 
-//    $html .= "</form>";
+    //$html .= "</form>";
     return $html;
 }
 
@@ -211,9 +237,13 @@ function toolbar_User_UserSignInOut($userauth, $userid, $pagename) {
     $html = "";
     if ($userauth) {
         $html .= sprintf(_("You are signed in as %s"), LinkWikiWord($userid));
-        $html .= separator() ."<a class=\"wikiaction\" href=\"" . WikiURL($pagename, array('action' => 'logout')) ."\">" ._("SignOut") ."</a>";
+        $html .= separator() ."<a class=\"wikiaction\" href=\""
+            . WikiURL($pagename, array('action' => 'logout')) ."\">"
+            ._("SignOut") ."</a>";
     } else {
-        $html .= "<a class=\"wikiaction\" href=\"" . WikiURL($pagename, array('action' => 'login')) ."\">" ._("SignIn") ."</a>";
+        $html .= "<a class=\"wikiaction\" href=\""
+            . WikiURL($pagename, array('action' => 'login')) ."\">"
+            ._("SignIn") ."</a>";
     }
     return $html;
 }
@@ -238,9 +268,12 @@ function toolbar_action_Navigation($pagename) {
     //$html .= separator() ."<plugin-link RandomPage page=\"" .$pagename ."\" >";
 
     // FIXME: What to use instead of WikiURL()?
-    //$html .= separator() ."<a class=\"wikiaction\" href=\"" .WikiURL('_("RandomPage")', array('page' => $pagename)) ."\">" ._("RandomPage") ."</a>";
+    //$html .= separator() ."<a class=\"wikiaction\" href=\""
+    //    .WikiURL('_("RandomPage")', array('page' => $pagename)) ."\">"
+    //    ._("RandomPage") ."</a>";
     //$html .= separator() ."<plugin-link WantedPages >";
-    //$html .= separator() ."<a class=\"wikiaction\" href=\"" . WikiURL(_("WantedPages")) ."\">" ._("WantedPages") ."</a>";
+    //$html .= separator() ."<a class=\"wikiaction\" href=\""
+    //    .WikiURL(_("WantedPages")) ."\">" ._("WantedPages") ."</a>";
     //$html .= separator() .LinkExistingWikiWord(_("SandBox"));
 
     return $html;
@@ -291,9 +324,13 @@ function toolbar_User_AuthorSignInOut($userid) {
     if ($user->is_authenticated()) {
         $html .= sprintf(_("You are signed in as %s."), LinkWikiWord($userid));
     } else {
-        $html .= sprintf(_("Author will be logged as %s."),"<em>" .$userid ."</em>");
-        $html .= separator() ."<a class=\"wikiaction\" href=\"" .WikiURL($pagename, array('action' => 'login')) ."\">" ._("SignIn") ."</a>";
-        $html .= "<small>*</small><br><small>*backup and reload after signing in</small>";
+        $html .= sprintf(_("Author will be logged as %s."),
+                         Element('em', $userid));
+        $html .= separator() ."<a class=\"wikiaction\" href=\""
+            .WikiURL($pagename, array('action' => 'login')) ."\">"
+            ._("SignIn") ."</a>";
+        $html .= "<small>*</small><br><small>"
+            ."*backup and reload after signing in</small>";
     }
     return $html;
 }
