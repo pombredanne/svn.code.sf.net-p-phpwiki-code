@@ -2,10 +2,11 @@
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2002-01-28 19:51-0500\n"
+"POT-Creation-Date: 2002-01-29 09:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -13,11 +14,11 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../lib/config.php:283
+#: ../lib/config.php:297
 msgid "An unnamed PhpWiki"
 msgstr ""
 
-#: ../lib/config.php:286
+#: ../lib/config.php:300
 msgid "HomePage"
 msgstr ""
 
@@ -706,7 +707,7 @@ msgstr ""
 msgid "Remove the page now"
 msgstr ""
 
-#: ../lib/removepage.php:27 ../themes/default/templates/login.tmpl:28
+#: ../lib/removepage.php:27 ../themes/default/templates/login.tmpl:30
 msgid "Cancel"
 msgstr ""
 
@@ -883,7 +884,7 @@ msgid "Sign Out"
 msgstr ""
 
 #: ../lib/Theme.php:393 ../lib/WikiUser.php:132
-#: ../themes/default/templates/login.tmpl:26
+#: ../themes/default/templates/login.tmpl:28
 #: ../themes/default/templates/signin.tmpl:51
 msgid "Sign In"
 msgstr ""
@@ -904,22 +905,22 @@ msgstr ""
 msgid "Lists nested too deep in SetHTMLOutputMode"
 msgstr ""
 
-#: ../lib/WikiDB.php:501
+#: ../lib/WikiDB.php:516
 #, c-format
 msgid "%s: Date of new revision is %s"
 msgstr ""
 
-#: ../lib/WikiDB.php:528
+#: ../lib/WikiDB.php:543
 #, c-format
 msgid "Optimizing %s"
 msgstr ""
 
-#: ../lib/WikiDB.php:874
+#: ../lib/WikiDB.php:889
 #, c-format
 msgid "Describe %s here."
 msgstr ""
 
-#: ../lib/WikiDB.php:909
+#: ../lib/WikiDB.php:924
 #, c-format
 msgid "Acck! Revision %s of %s seems to have been deleted!"
 msgstr ""
@@ -1110,6 +1111,18 @@ msgstr ""
 #: ../themes/Portland/templates/editpage.tmpl:109
 #: ../themes/default/templates/editpage.tmpl:112
 msgid "Synopsis"
+msgstr ""
+
+#: ../themes/default/templates/login.tmpl:12
+msgid "You may sign in using any WikiWord as a UserId. (ÀÖØöøÿßö etc. may be used too). The UserId will be used as link in RecentChanges to your UserId page, your HomePage. You do not need to enter a password."
+msgstr ""
+
+#: ../themes/default/templates/login.tmpl:20
+msgid "UserId"
+msgstr ""
+
+#: ../themes/default/templates/login.tmpl:24
+msgid "Password"
 msgstr ""
 
 #: ../themes/Portland/templates/navbar.tmpl:17
