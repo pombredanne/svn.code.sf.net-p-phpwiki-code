@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.9 2001-12-15 10:55:07 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.10 2001-12-15 17:03:45 dairiki Exp $');
 /**
  */
 
@@ -186,7 +186,7 @@ extends _RecentChanges_Formatter
     
     function format_revision ($rev) {
         if ( ($summary = $this->summary($rev)) )
-            $summary = QElement('b', "[$summary]");
+            $summary = "[" . QElement('b', array('class' => 'wiki:summary'), $summary) . "]";
 
         $class = 'rc-' . $this->importance($rev);
         
