@@ -4,11 +4,11 @@ require_once 'lib/WikiPlugin.php';
 require_once 'lib/plugin/WantedPages.php';
 require_once 'PHPUnit.php';
 
-class OrphanedPagesTest extends phpwiki_TestCase {
+class WantedPagesTest extends phpwiki_TestCase {
     /**
-     * Test that we can instantiate and run OrphanedPages plugin without error.
+     * Test that we can instantiate and run WantedPages plugin without error.
      */
-    function testOrphanedPages() {
+    function testWantedPages() {
         global $request;
 
         $lp = new WikiPlugin_WantedPages();
@@ -17,11 +17,11 @@ class OrphanedPagesTest extends phpwiki_TestCase {
         $basepage = "";
         $args = "";
         $result = $lp->run($request->getDbh(), $args, $request, $basepage);
-        $this->assertType('object',$result,'isa PageList');
+        $this->assertType('object', $result, 'isa PageList');
 
         $args = "HomePage";
         $result = $lp->run($request->getDbh(), $args, $request, $basepage);
-        $this->assertType('object',$result,'isa PageList');
+        $this->assertType('object', $result, 'isa PageList');
     }
 }
 
