@@ -1,4 +1,4 @@
--- $Id: psql.sql,v 1.7 2004-04-15 16:42:07 rurban Exp $
+-- $Id: psql-initialize.sql,v 1.1 2004-07-22 16:49:20 dfrankow Exp $
 
 \set QUIET
 
@@ -63,8 +63,6 @@
 \set pref_tbl		:prefix 'pref'
 \set pref_id		:prefix 'pref_id'
 
-\echo Dropping :page_tbl
-DROP TABLE :page_tbl;
 \echo Creating :page_tbl
 CREATE TABLE :page_tbl (
 	id		INT NOT NULL,
@@ -75,8 +73,6 @@ CREATE TABLE :page_tbl (
 CREATE UNIQUE INDEX :page_id ON :page_tbl (id);
 CREATE UNIQUE INDEX :page_nm ON :page_tbl (pagename);
 
-\echo Dropping :version_tbl
-DROP TABLE :version_tbl;
 \echo Creating :version_tbl
 CREATE TABLE :version_tbl (
 	id		INT NOT NULL,
@@ -90,8 +86,6 @@ CREATE TABLE :version_tbl (
 CREATE UNIQUE INDEX :vers_id ON :version_tbl (id,version);
 CREATE INDEX :vers_mtime ON :version_tbl (mtime);
 
-\echo Dropping :recent_tbl
-DROP TABLE :recent_tbl;
 \echo Creating :recent_tbl
 CREATE TABLE :recent_tbl (
 	id		INT NOT NULL,
@@ -102,8 +96,6 @@ CREATE TABLE :recent_tbl (
 CREATE UNIQUE INDEX :recent_id ON :recent_tbl (id);
 
 
-\echo Dropping :nonempty_tbl
-DROP TABLE :nonempty_tbl;
 \echo Creating :nonempty_tbl
 CREATE TABLE :nonempty_tbl (
 	id		INT NOT NULL
@@ -111,8 +103,6 @@ CREATE TABLE :nonempty_tbl (
 CREATE UNIQUE INDEX :nonmt_id
 	ON :nonempty_tbl (id);
 
-\echo Dropping :link_tbl
-DROP TABLE :link_tbl;
 \echo Creating :link_tbl
 CREATE TABLE :link_tbl (
         linkfrom	INT NOT NULL,
@@ -121,8 +111,6 @@ CREATE TABLE :link_tbl (
 CREATE INDEX :link_from ON :link_tbl (linkfrom);
 CREATE INDEX :link_to   ON :link_tbl (linkto);
 
-\echo Dropping :session_tbl
-DROP TABLE :session_tbl;
 \echo Creating :session_tbl
 CREATE TABLE :session_tbl (
 	sess_id 	CHAR(32) NOT NULL DEFAULT '',
@@ -138,8 +126,6 @@ CREATE INDEX :sess_ip   ON :session_tbl (sess_ip);
 -- For these tables below the default table prefix must be used 
 -- in the DBAuthParam SQL statements also.
 
-\echo Dropping :pref_tbl
-DROP TABLE :pref_tbl;
 \echo Creating :pref_tbl
 CREATE TABLE :pref_tbl (
   	userid 	CHAR(48) NOT NULL,
