@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiUser.php,v 1.27 2002-10-12 08:52:06 carstenklapp Exp $');
+<?php rcs_id('$Id: WikiUser.php,v 1.28 2002-11-14 22:08:05 carstenklapp Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -507,7 +507,7 @@ class _UserPreference_bool extends _UserPreference
 
 class _UserPreference_language extends _UserPreference
 {
-    function _UserPreference_language ($default = 'en') {
+    function _UserPreference_language ($default = DEFAULT_LANGUAGE) {
         $this->_UserPreference($default);
     }
 
@@ -515,15 +515,11 @@ class _UserPreference_language extends _UserPreference
         // FIXME: check for valid locale
         return $value;
     }
-
-    function update ($newvalue) {
-        update_locale ($newvalue);
-    }
 }
 
 class _UserPreference_theme extends _UserPreference
 {
-    function _UserPreference_theme ($default = 'default') {
+    function _UserPreference_theme ($default = THEME) {
         $this->_UserPreference($default);
     }
 
@@ -537,7 +533,7 @@ class _UserPreference_theme extends _UserPreference
         global $Theme;
         include($this->_themefile($newvalue));
         if (empty($Theme))
-            include($this->_themefile('default'));
+            include($this->_themefile(THEME));
     }
 
     function _themefile ($theme) {
