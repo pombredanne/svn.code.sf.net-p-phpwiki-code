@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.49 2002-01-28 14:27:14 carstenklapp Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.50 2002-01-28 16:45:18 carstenklapp Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -176,7 +176,7 @@ function DumpToDir (&$request)
             $msg[] = " ... ";
         }
         
-        if ($request->getArg('include') == 'all') {
+        if ($request->getArg('include') == 'all')
             $data = MailifyPage($page, 0);
         else
             $data = MailifyPage($page);
