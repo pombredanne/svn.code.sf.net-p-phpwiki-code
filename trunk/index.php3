@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: index.php3,v 1.6 2000-06-30 17:51:53 ahollosi Exp $ -->
+<!-- $Id: index.php3,v 1.7 2000-07-04 22:32:17 ahollosi Exp $ -->
 <?
    /*
       The main page, i.e. the main loop.
@@ -23,6 +23,7 @@
 
 
    if ($edit) {
+      $admin_edit = 0;
       include "wiki_editpage.php3";
    } elseif ($links) {
       include "wiki_editlinks.php3";

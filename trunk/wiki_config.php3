@@ -1,4 +1,4 @@
-<!-- $Id: wiki_config.php3,v 1.14 2000-06-29 04:35:06 wainstead Exp $ -->
+<!-- $Id: wiki_config.php3,v 1.15 2000-07-04 22:32:17 ahollosi Exp $ -->
 <?
    /*
       Constants and settings. Edit the values below for
@@ -126,4 +126,6 @@
    define("ZERO_DEPTH", 0);
    define("SINGLE_DEPTH", 1);
 
+   // constants for flags in $pagehash
+   define("FLAG_PAGE_LOCKED", 1);
 ?>

@@ -1,4 +1,4 @@
-<!-- $Id: wiki_editpage.php3,v 1.9 2000-06-21 23:55:45 ahollosi Exp $ -->
+<!-- $Id: wiki_editpage.php3,v 1.10 2000-07-04 22:32:17 ahollosi Exp $ -->
 <?
 
    // editpage relies on $pagename and $ScriptUrl
@@ -23,6 +23,15 @@
    $pagehash = RetrievePage($dbi, $pagename);
 
    if (is_array($pagehash)) {
+
+      if (($pagehash['flags'] & FLAG_PAGE_LOCKED) && !$admin_edit) {
+	 $html = "<p>This page has been locked by the administrator\n" .
+		 "and cannot be edited.\n" .
+		 "<p>Sorry for the inconvinience.\n";
+	 GeneratePage('MESSAGE', $html, "Problem while editing $pagename", 0);
+	 exit;
+      }
+
       $textarea = implode("\n", $pagehash["content"]);
       if($copy) {
 	 $cdbi = OpenDataBase($WikiDataBase);
