@@ -1,5 +1,6 @@
 <?php
-rcs_id('$Id: difflib.php,v 1.6 2003-01-02 22:51:43 carstenklapp Exp $');
+rcs_id('$Id: difflib.php,v 1.7 2003-01-03 22:27:17 carstenklapp Exp $');
+
 // difflib.php
 //
 // A PHP diff engine for phpwiki.
@@ -873,7 +874,8 @@ class UnifiedDiffFormatter extends DiffFormatter
  * future enhancements to reloading / upgrading pgsrc.
  *
  * Functional but not finished yet, need to eliminate redundant block
- * suffixes (i.e. "=======" immediately followed by another prefix).
+ * suffixes (i.e. "=======" immediately followed by another prefix)
+ * see class LoadFileConflictPageEditor
  */
 class BlockDiffFormatter extends DiffFormatter
 {
@@ -887,7 +889,7 @@ class BlockDiffFormatter extends DiffFormatter
         foreach ($lines as $line)
             echo "$line\n";
         if (! $prefix == '')
-            echo "=======\n";
+            echo "$prefix\n";
     }
     function _added($lines) {
         $this->_lines($lines, ">>>>>>>");
@@ -906,6 +908,13 @@ class BlockDiffFormatter extends DiffFormatter
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.6  2003/01/02 22:51:43  carstenklapp
+ Specifying a leading diff context size larger than the available
+ context now returns the available number of lines instead of the
+ default. (Prevent negative offsets to array_slice() when $nlead >
+ sizeof($context)). Added BlockDiffFormatter, to be used by future
+ enhancements to reload / upgrade pgsrc.
+
  */
 
 // Local Variables:
