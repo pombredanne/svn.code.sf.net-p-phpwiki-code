@@ -1,11 +1,5 @@
 <?php
 
-$locale["%d best incoming links:"] =
-   "%d meilleurs liens entrants :";
-$locale["%d best outgoing links:"] =
-   "%d meilleurs liens sortants :";
-$locale["%d most popular nearby:"] =
-   "%d pages les plus visitées aux alentours :";
 $locale["%s bytes written"] =
    "%s octets enregistrés";
 $locale["%s days"] =
@@ -32,8 +26,6 @@ $locale["<b>Reload</b> the page. You should now see the most current version of 
    "<b>Recharge</b> la page. Tu devrais alors voir la version actuelle de la page. Tes modifications n'y sont pas.";
 $locale["<no matches>"] =
    "< aucun d'résultat >";
-$locale["<none>"] =
-   "< acune >";
 $locale["All %s are listed below."] =
    "Toutes les %s sont énumérées ci-dessous.";
 $locale["An unnamed PhpWiki"] =
@@ -48,8 +40,6 @@ $locale["Calendar"] =
    "Calendrier";
 $locale["Can't connect to database: %s"] =
    "Impossible d'établir une connexion à la base de données : %s";
-$locale["Click here to <a href=\"%s\">remove the page now</a>."] =
-   "Clique ici pour <a href=\"%s\">supprimer la page maintenant</a>.";
 $locale["Complete."] =
    "Complet.";
 $locale["Contents"] =
@@ -152,8 +142,6 @@ $locale["Optimizing %s"] =
    "Optimalisant %s";
 $locale["Other diffs:"] =
    "D'autres comparaisons :";
-$locale["PHP %s Warnings"] =
-   "PHP %s Avertissements";
 $locale["Page Name"] =
    "Nom de Page";
 $locale["Page names with prefix '%s'"] =
@@ -208,10 +196,6 @@ $locale["See %s"] =
    "Voir %s";
 $locale["See %s tips for editing."] =
    "Voir les conseils pour éditer les pages dans %s.";
-$locale["Show changes for: %s"] =
-   "Indiquez les changements dans les : %s";
-$locale["Show minor edits for: %s"] =
-   "Indiquez les petits modifs dans les : %s";
 $locale["Simple Sample Plugin"] =
    "Exemple Plugin Facile";
 $locale["Sorry for the inconvenience."] =
@@ -228,14 +212,10 @@ $locale["The %d most recent %s are listed below."] =
    "Les %d %s les plus récents sont énumérés ci-dessous";
 $locale["The %d most recent %s during the past %.1f days are listed below."] =
    "Les %d %s les plus récentes pendant les derniers %.1f jours sont énumérées ci-dessous.";
-$locale["The %s most popular pages of this wiki:"] =
-   "Les %s des pages les plus populaires de ce wiki :";
 $locale["The PhpWiki programming team"] =
    "L'équipe de programmeurs de PhpWiki";
 $locale["The most recent %s during the past %.1f days are listed below."] =
    "Les %s les plus récentes pendant les derniers %.1f jours sont énumérées ci-dessous.";
-$locale["These pages link to %s:"] =
-   "Lien de ces pages à %s :";
 $locale["These pages share an initial or final title word with '%s'"] =
    "Ces pages partagent un premier ou final mot de titre avec ' %s '";
 $locale["This is a minor change."] =
@@ -250,8 +230,6 @@ $locale["Title search results for '%s'"] =
    "Résultat de recherche sur les titres de pages pour ' %s '";
 $locale["TitleSearch"] =
    "RechercheParTitre";
-$locale["To cancel press the \"Back\" button of your browser."] =
-   "Pour annuler presse le bouton \"Retour\" de ton navigateur.";
 $locale["Unknown %s"] =
    "Inconnu %s";
 $locale["Unlock Page"] =
@@ -274,14 +252,10 @@ $locale["View Source: %s"] =
    "Afficher la Source : %s";
 $locale["View the current version"] =
    "Visualisez le version actuelle";
-$locale["ViewSource"] =
-   "AfficherLaSource";
 $locale["Warning!"] =
    "Avertissement!";
 $locale["Warning: You are editing an old revision."] =
    "Avertissement : Tu editer une version archivée.";
-$locale["WikiFatalError"] =
-   "ErreurFataleDeWiki";
 $locale["You are about to remove '%s' permanently!"] =
    "Tu es sur le point de supprimer ' %s ' de façon permanente!";
 $locale["Your careful attention to detail is much appreciated."] =
@@ -294,12 +268,8 @@ $locale["current version"] =
    "Version actuelle";
 $locale["edits"] =
    "modifications";
-$locale["error while handling error:"] =
-   "erreur pendant la manipulation de l'erreur :";
 $locale["from %s"] =
    "de %s";
-$locale["is identical to current version %d"] =
-   "est identique à la version en cours %d";
 $locale["is initial release"] =
    "est la première version";
 $locale["last modified on %s"] =
@@ -326,8 +296,6 @@ $locale["saved as %s"] =
    "enregistré à %s";
 $locale["version %d"] =
    "version %d";
-$locale["version %d of %s"] =
-   "version %d de la %s";
 $locale["version %s"] =
    "version %s";
 

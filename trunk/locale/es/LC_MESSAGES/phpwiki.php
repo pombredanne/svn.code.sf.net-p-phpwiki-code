@@ -1,17 +1,9 @@
 <?php
 
-$locale["%d best incoming links:"] =
-   "%d mejores enlaces de entrada:";
-$locale["%d best outgoing links:"] =
-   "%d mejores enlaces de salida:";
-$locale["%d most popular nearby:"] =
-   "%d las más populares:";
 $locale["(last edited %s)"] =
    "(editada por última vez %s)";
 $locale["<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."] =
    "<b>Vuelva a cargar</b> la página. Ahora podrá ver la versión mas actual de la página. Sus cambios no están ahí.";
-$locale["Click here to <a href=\"%s\">remove the page now</a>."] =
-   "Haga Click aqui para <a href=\"%s\">borrar la página ahora</a>.";
 $locale["Copied to [%s]"] =
    "Copia de [%s]";
 $locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
@@ -78,8 +70,6 @@ $locale["TextFormattingRules"] =
    "ReglasDeFormatoDeTexto";
 $locale["Thank you for editing %s."] =
    "Gracias por editar %s.";
-$locale["The %s most popular pages of this wiki:"] =
-   "Las %s páginas más populares de este wiki:";
 $locale["This is a minor change."] =
    "Esto es un cambio pequeño.";
 $locale["This page has been locked by the administrator and cannot be edited."] =
@@ -92,8 +82,6 @@ $locale["Version %d"] =
    "Versión %d";
 $locale["Versions are identical"] =
    "Las versiones son idénticas";
-$locale["WikiFatalError"] =
-   "ErrorFatalDeWiki";
 $locale["You are about to remove '%s' permanently!"] =
    "¡Va a borrar '%s' permanentemente!";
 $locale["Your careful attention to detail is much appreciated."] =
@@ -104,8 +92,6 @@ $locale["last modified on %s"] =
    "modificado por última vez el %s";
 $locale["version %d"] =
    "versión %d";
-$locale["version %d of %s"] =
-   "versión %s de %s";
 $locale["version %s"] =
    "versión %s";
 

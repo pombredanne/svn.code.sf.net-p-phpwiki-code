@@ -1,11 +1,5 @@
 <?php
 
-$locale["%d best incoming links:"] =
-   "%d migliori link in entrata:";
-$locale["%d best outgoing links:"] =
-   "%s migliori link in uscita:";
-$locale["%d most popular nearby:"] =
-   "%d più popolari:";
 $locale["%s days"] =
    "%s giorni";
 $locale["%s of this page"] =
@@ -28,8 +22,6 @@ $locale["<b>Reload</b> the page. You should now see the most current version of 
    "<b>Aggiorna</b> la pagina. Dovresti vedere l'ultima versione senzamodifiche";
 $locale["Calendar"] =
    "Calendario";
-$locale["Click here to <a href=\"%s\">remove the page now</a>."] =
-   "Per <a href=\"%s\">rimuovere la pagina</a> clicca qua.";
 $locale["Contents"] =
    "Indice";
 $locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
@@ -78,8 +70,6 @@ $locale["Not Implemented"] =
    "Funzione non implementata.";
 $locale["Note:"] =
    "Nota:";
-$locale["PHP %s Warnings"] =
-   "Avvertimenti Di PHP 4.1";
 $locale["Page Name"] =
    "Nome Della Pagina";
 $locale["Page source for %s"] =
@@ -108,8 +98,6 @@ $locale["Search"] =
    "Ricerca";
 $locale["See %s tips for editing."] =
    "%s consigli per le modifiche.";
-$locale["Show minor edits for: %s"] =
-   "Mostrare le modifiche secondarie per: %s";
 $locale["Sorry for the inconvenience."] =
    "Scusa per l'inconveniente.";
 $locale["Synopsis"] =
@@ -136,8 +124,6 @@ $locale["View the current version"] =
    "Mostra il versione corrente";
 $locale["Warning!"] =
    "Avvertimento!";
-$locale["WikiFatalError"] =
-   "ErroreFataleDiWiki";
 $locale["You are about to remove '%s' permanently!"] =
    "Stai per rimuovere %s";
 $locale["Your careful attention to detail is much appreciated."] =
@@ -156,8 +142,6 @@ $locale["saved as %s"] =
    "salvata a %s";
 $locale["version %d"] =
    "versione %d";
-$locale["version %d of %s"] =
-   "versione %d della %s";
 $locale["version %s"] =
    "versione %s";
 
