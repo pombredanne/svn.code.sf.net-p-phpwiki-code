@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.47 2004-01-25 07:58:29 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.48 2004-01-25 10:52:18 rurban Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -31,11 +31,7 @@
  * database.  If lots of revisions have been made to a page, it's more than likely
  * that some older revisions (include revision 1) have been cleaned (deleted).
  *
- * FIXME:
- * The 'sortby' option is handled here correctly, but at the backends at 
- * the page iterator not yet.
- *
- * TODO: order, sortby, limit, offset, rows arguments for multiple pages/multiple rows.
+ * TODO: limit, offset, rows arguments for multiple pages/multiple rows.
  */
 class _PageList_Column_base {
     var $_tdattr = array();
