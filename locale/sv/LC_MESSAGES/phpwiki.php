@@ -1,19 +1,23 @@
 <?php
 
 $locale["You entered an invalid login or password."] =
-   "Du har angett ett otillåtet användarnamn eller lösenord.";
+   "Du har angivit ett felaktigt användarnamn eller lösenord.";
 $locale["You are about to remove '%s' permanently!"] =
    "Du kommer att ta bort \"%s\" permanent!";
 $locale["Click %shere%s to remove the page now."] =
    "Klicka %shär%s för att ta bort sidan nu.";
 $locale["Otherwise press the \"Back\" button of your browser."] =
-   "Annars klicka på backaknappen i din webbläsare.";
+   "Klicka annars på backaknappen i din webbläsare.";
 $locale["Function not yet implemented."] =
    "Funktionen är ännu inte implementerad.";
 $locale["Remove page"] =
    "Ta bort sida";
 $locale["Removed page '%s' succesfully."] =
-   "Tog bort sidan \"%s\".";
+   "Tog bort sidan '%s'.";
+$locale["Pages which link to %s"] =
+   "Sidor som länkar till %s";
+$locale["%d pages link to %s."] =
+   "%d sidor länkar till %s.";
 $locale["templates/browse.html"] =
    "locale/sv/templates/browse.html";
 $locale["templates/editpage.html"] =
@@ -24,12 +28,18 @@ $locale["templates/message.html"] =
    "locale/sv/templates/message.html";
 $locale["./pgsrc"] =
    "locale/sv/pgsrc";
+$locale["'%s': corrupt file"] =
+   "\"%s\": trasig fil";
+$locale["%s: bad data<br>\n"] =
+   "%s: felaktig data<br>\n";
+$locale["%s: Bad filename in database<br>\n"] =
+   "%s: felaktigt filnamn i databasen<br>\n";
 $locale["WikiDiff::apply: line count mismatch: %s != %s"] =
    "WikiDiff::apply: radantalet stämmer inte: %s != %s";
 $locale["WikiDiff::_check: failed"] =
    "WikiDiff::_check: misslyckades";
 $locale["WikiDiff::_check: edit sequence is non-optimal"] =
-   "WikiDiff::_check: ändringssekvensen är icke optimal";
+   "WikiDiff::_check: ändringssekvensen är ej optimal";
 $locale["WikiDiff Okay: LCS = %s"] =
    "WikiDiff Ok: LCS = %s";
 $locale["Current page:"] =
@@ -61,9 +71,11 @@ $locale["This page has been locked by the administrator and cannot be edited."] 
 $locale["Sorry for the inconvenience."] =
    "Ledsen för allt besvär.";
 $locale["Problem while editing %s"] =
-   "Har problem med att redigera %s";
+   "Kan ej redigera %s";
 $locale["Searching for \"%s\" ....."] =
    "Söker efter \"%s\" .....";
+$locale["(You entered an empty search string)"] =
+   "(Du har angivit en tom söksträng)";
 $locale["%d matches found in %d pages."] =
    "%d träffar funna på %d sidor.";
 $locale["Full Text Search Results"] =
@@ -74,18 +86,24 @@ $locale["Error message: %s"] =
    "Felmeddelande: %s";
 $locale["Cannot open database %s, giving up."] =
    "Ger upp, kan ej öppna databasen %s.";
-$locale["Insert/update failed: %s"] =
-   "Insättning/uppdatering misslyckades: %s";
+$locale["Insert/update to table 'wiki' failed: %s"] =
+   "Insättning/uppdatering i wikitabellen 'wiki' misslyckades: %s";
 $locale["Delete on %s failed: %s"] =
    "Borttagning på %s misslyckades: %s";
 $locale["Insert into %s failed: %s"] =
    "Insättning till %s misslyckades: %s";
+$locale["Insert/update into table 'archive' failed: %s"] =
+   "Insättning/uppdatering  i wikitabellen 'archive' misslyckades: %s";
+$locale["MSSQL error: %s"] =
+   "MSSQL-fel: %s";
+$locale["Insert/Update failed: %s"] =
+   "Insättning/uppdatering misslyckades: %s";
+$locale["Cannot delete '%s' from table '%s'"] =
+   "Kan ej ta bort \"%s\" från tabellen \"%s\"";
 $locale["MySQL error: %s"] =
    "MySQL-fel: %s";
 $locale["Error writing page '%s'"] =
    "Kunde inte spara sidan \"%s\"";
-$locale["Cannot delete '%s' from table '%s'"] =
-   "Kan ej ta bort \"%s\" från tabellen \"%s\"";
 $locale["Enter a page name"] =
    "Ange ett sidnamn";
 $locale["Go"] =
@@ -95,7 +113,7 @@ $locale["Show the page source and references"] =
 $locale["PageInfo"] =
    "Sidinformation för";
 $locale["Page name '%s' is not in the database"] =
-   "Sidnamnet \"%s\" finns inte i databasen";
+   "Sidan \"%s\" finns inte i databasen";
 $locale["Current version"] =
    "Nuvarande version";
 $locale["Archived version"] =
@@ -117,23 +135,21 @@ $locale["Make changes to the file again. Paste your additions from the clipboard
 $locale["Press <b>Save</b> again."] =
    "Klicka på <b>Spara</b> igen.";
 $locale["Problem while updating %s"] =
-   "Har problem med att uppdatera %s";
+   "Kan ej uppdatera %s";
 $locale["Thank you for editing %s."] =
    "Tack för att du redigerade %s.";
 $locale["Your careful attention to detail is much appreciated."] =
-   "Din omstänksamhet för detaljer är mycket uppskattad.";
+   "Din uppmärksamhet för detaljer är mycket uppskattad.";
 $locale["%d pages match your query."] =
    "%d sidor matchar din fråga.";
 $locale["Title Search Results"] =
-   "Sökresultat för fulltextsökning";
+   "Sökresultat";
 $locale["Inserting page %s, version %s from %s"] =
    "Sätter in sidan %s, version %s från %s";
 $locale["WikiFatalError"] =
    "WikiFatalError";
 $locale["Search"] =
    "Sök";
-$locale["Nesting depth exceeded in SetHTMLOutputMode"] =
-   "Stackgräns överskriden i SetHTMLOutputMode";
 $locale["%d best incoming links:"] =
    "De %d mest använda ingående länkarna:";
 $locale["%d best outgoing links:"] =

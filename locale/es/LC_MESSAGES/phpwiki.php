@@ -74,18 +74,24 @@ $locale["Error message: %s"] =
    "Mensaje de error: %s";
 $locale["Cannot open database %s, giving up."] =
    "No se puede abrir la base de datos %s , me doy por vencido.";
-$locale["Insert/update failed: %s"] =
-   "Inserci&oacute;n/Actualizaci&oacute;n fall&oacute;: %s";
+$locale["Insert/update to table 'wiki' failed: %s"] =
+   "Inserci&oacute;n/Actualizaci&oacute;n 'wiki' fall&oacute;: %s";
 $locale["Delete on %s failed: %s"] =
    "Eliminaci&oacute;n en %s fall&oacute;: %s";
 $locale["Insert into %s failed: %s"] =
    "Inserci&oacute;n en %s fall&oacute;: %s";
+$locale["Insert/update into table 'archive' failed: %s"] =
+   "Inserci&oacute;n/Actualizaci&oacute;n 'archive' fall&oacute;: %s";
+$locale["MSSQL error: %s"] =
+   "Error de MSSQL: %s";
+$locale["Insert/Update failed: %s"] =
+   "Inserci&oacute;n/Actualizaci&oacute;n fall&oacute;: %s";
+$locale["Cannot delete '%s' from table '%s'"] =
+   "No se puede borrar '%s' de la tabla '%s'";
 $locale["MySQL error: %s"] =
    "Error de MySQL: %s";
 $locale["Error writing page '%s'"] =
    "Error al escribir la p&aacute;gina `%s'";
-$locale["Cannot delete '%s' from table '%s'"] =
-   "No se puede borrar '%s' de la tabla '%s'";
 $locale["Enter a page name"] =
    "Escriba un nombre de p&aacute;gina";
 $locale["Go"] =
@@ -123,15 +129,13 @@ $locale["Thank you for editing %s."] =
 $locale["Your careful attention to detail is much appreciated."] =
    "Se agradece una cuidadosa atenci&oacute;n a los detalles.";
 $locale["Title Search Results"] =
-   "Resultados de la búsqueda en el texto completo";
+   "Resultados de la búsqueda";
 $locale["Inserting page %s, version %s from %s"] =
    "Insertando p&aacute;gina %s, versi&oacute;n %s de %s";
 $locale["WikiFatalError"] =
    "ErrorFatalDeWiki";
 $locale["Search"] =
    "Buscar";
-$locale["Nesting depth exceeded in SetHTMLOutputMode"] =
-   "L&iacute;mites de la pila excedidos en SetHTMLOutputMode";
 $locale["%d best incoming links:"] =
    "%d mejores enlaces de entrada:";
 $locale["%d best outgoing links:"] =

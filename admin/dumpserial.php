@@ -1,4 +1,4 @@
-<!-- $Id: dumpserial.php,v 1.1.2.1.2.3 2005-01-07 14:02:27 rurban Exp $ -->
+<!-- $Id: dumpserial.php,v 1.1.2.1.2.4 2005-01-07 14:23:04 rurban Exp $ -->
 
 <?php
    /*
@@ -14,18 +14,18 @@
    // see if we can access the directory the user wants us to use
    if (! file_exists($directory)) {
       if (! mkdir($directory, 0755))
-         ExitWiki("Cannot create directory '$directory'<br>\n");
+         ExitWiki("Cannot create directory '$directory'<br />\n");
       else
-         $html = "Created directory '$directory' for the page dump...<br>\n";
+         $html = "Created directory '$directory' for the page dump...<br />\n";
    } else {
-      $html = "Using directory '$directory'<br>\n";
+      $html = "Using directory '$directory'<br />\n";
    }
 
    $numpages = count($pages);
    for ($x = 0; $x < $numpages; $x++) {
       $pagename = htmlspecialchars($pages[$x]);
       $filename = preg_replace('/^\./', '%2e', rawurlencode($pages[$x]));
-      $html .= "<br>$pagename ... ";
+      $html .= "<br />$pagename ... ";
       if($pagename != $filename)
          $html .= "<small>saved as $filename</small> ... ";
 
@@ -38,7 +38,7 @@
       }
    }
 
-   $html .= "<p><b>Dump complete.</b>";
+   $html .= "<p></p><b>Dump complete.</b>";
    GeneratePage('MESSAGE', $html, 'Dump serialized pages', 0);
    ExitWiki('');
 ?>

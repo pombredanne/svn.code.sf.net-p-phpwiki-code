@@ -3,7 +3,7 @@
 <title>Importing phpwiki 1.0.x dbm files</title>
 </head>
 <body bgcolor="navajowhite">
-<!-- $Id: wiki_port1_0.php,v 1.1.2.1.2.3 2005-01-07 14:02:27 rurban Exp $ -->
+<!-- $Id: wiki_port1_0.php,v 1.1.2.1.2.4 2005-01-07 14:23:04 rurban Exp $ -->
 
 <?php
    function port1_0RenderHash($dbi, $dbmh, $pagename) {
@@ -12,7 +12,7 @@
 	// array fields for pagehash 1.0
 	// 'version', 'date' as string, 'author', 'text'
 	 
-      echo "$pagename<br>\n";
+      echo "$pagename<br />\n";
 
       $newhash['version'] = isset($pagehash['version']) ?
 			    $pagehash['version'] : 1;
@@ -38,16 +38,16 @@
    echo "opening dbm file: $portdbmfile ... \n";
 
    if (! file_exists($portdbmfile)) {
-      echo "File '$portdbmfile' does not exist.<br>\n";
+      echo "File '$portdbmfile' does not exist.<br />\n";
       exit;
    }
 
    if (! ($dbmh = dbmopen($portdbmfile, "r"))) {
-      echo "Cannot open '$portdbmfile'<br>\n";
+      echo "Cannot open '$portdbmfile'<br />\n";
       exit;
    }
 
-   echo " ok ($dbmh)<p>\n";
+   echo " ok ($dbmh)<p></p>\n";
 
    $namelist = array();
    $ctr = 0;

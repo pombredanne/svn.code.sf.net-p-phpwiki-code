@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.7.2.3.2.3 2005-01-07 14:02:28 rurban Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.7.2.3.2.4 2005-01-07 14:23:05 rurban Exp $');
 
 /*
    All page saving events take place here.
@@ -93,23 +93,23 @@
         is does not know about php's dot operator.
         We want to translate this entire paragraph as one string, of course.
       */
-      $html = "<P>";
+      $html = "<p>";
       $html .= gettext ("PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost.");
-      $html .= "</P>\n<P>";
+      $html .= "</p>\n<p>";
       $html .= gettext ("In order to recover from this situation follow these steps:");
-      $html .= "\n<OL><LI>";
+      $html .= "\n<ol><li>";
       $html .= gettext ("Use your browser's <b>Back</b> button to go back to the edit page.");
-      $html .= "\n<LI>";
+      $html .= "\n<li>";
       $html .= gettext ("Copy your changes to the clipboard or to another temporary place (e.g. text editor).");
-      $html .= "\n<LI>";
+      $html .= "\n<li>";
       $html .= gettext ("<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there.");
-      $html .= "\n<LI>";
+      $html .= "\n<li>";
       $html .= gettext ("Make changes to the file again. Paste your additions from the clipboard (or text editor).");
-      $html .= "\n<LI>";
+      $html .= "\n<li>";
       $html .= gettext ("Press <b>Save</b> again.");
-      $html .= "</OL>\n<P>";
+      $html .= "</ol>\n<p>";
       $html .= gettext ("Sorry for the inconvenience.");
-      $html .= "</P>";
+      $html .= "</p>";
 
       GeneratePage('MESSAGE', $html,
 	sprintf (gettext ("Problem while updating %s"), $pagename), 0);
@@ -132,8 +132,8 @@
       $newpage = 1;
    } else {
       if (($pagehash['flags'] & FLAG_PAGE_LOCKED) && !defined('WIKI_ADMIN')) {
-	 $html = "<p>" . gettext ("This page has been locked by the administrator and cannot be edited.");
-	 $html .= "\n<p>" . gettext ("Sorry for the inconvenience.");
+	 $html = "<p>" . gettext ("This page has been locked by the administrator and cannot be edited.") . "</p>";
+	 $html .= "\n<p>" . gettext ("Sorry for the inconvenience.") . "</p>";
 	 GeneratePage('MESSAGE', $html, sprintf (gettext ("Problem while editing %s"), $pagename), 0);
 	 ExitWiki ("");
       }
@@ -142,8 +142,8 @@
          ConcurrentUpdates($pagename);
       }
 
-      // archive it if it's a new author
-      if ($pagehash['author'] != $remoteuser) {
+      // archive it if it's a new author or the minor_edit checkbox is not selected
+      if ($pagehash['author'] != $remoteuser or empty($minor_edit)) {
          SaveCopyToArchive($dbi, $pagename, $pagehash);
       }
       $newpage = 0;
@@ -159,7 +159,7 @@
    $enc_name = htmlspecialchars($pagename);
    $html = sprintf(gettext("Thank you for editing %s."),
 		   "<a href=\"$ScriptUrl?$enc_url\">$enc_name</a>");
-   $html .= "<br>\n";
+   $html .= "<br />\n";
 
    if (! empty($content)) {
       // patch from Grant Morgan <grant@ryuuguu.com> for magic_quotes_gpc
@@ -179,8 +179,8 @@
 	   if (preg_match("#^($AllowedProtocols):#", ${'r'.$i}))
               $pagehash['refs'][$i] = ${'r'.$i};
 	   else
-	      $html .= "<P>Link [$i]: <B>unknown protocol</B>" .
-	           " - use one of $AllowedProtocols - link discarded.</P>\n";
+	      $html .= "<p>Link [$i]: <b>unknown protocol</b>" .
+	           " - use one of $AllowedProtocols - link discarded.</p>\n";
 	}
    }
 
@@ -192,16 +192,16 @@
 
    // fixme: no test for flat file db system
    if (isset($DBMdir) && preg_match('@^/tmp\b@', $DBMdir)) {
-      $html .= "<P><B>Warning: the Wiki DB files still live in the " .
+      $html .= "<p><b>Warning: the Wiki DB files still live in the " .
 		"/tmp directory. Please read the INSTALL file and move " .
 		"the DB files to a permanent location or risk losing " .
-		"all the pages!</B>\n";
+		"all the pages!</b></p>\n";
    }
 
    if (!empty($SignatureImg))
-      $html .= "<P><img src=\"$SignatureImg\"></P>\n";
+      $html .= "<p><img src=\"$SignatureImg\" alt=\"Signature\"></p>\n";
 
-   $html .= "<hr noshade><P>";
+   $html .= "<hr noshade><p></p>";
    include('lib/transform.php');
 
    GeneratePage('BROWSE', $html, $pagename, $pagehash);
