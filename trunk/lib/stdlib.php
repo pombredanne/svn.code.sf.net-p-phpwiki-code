@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.106 2002-02-08 16:55:00 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.107 2002-02-08 17:49:37 carstenklapp Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -75,13 +75,21 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
 
 function IconForLink($protocol_or_url) {
     global $Theme;
-
-    list ($proto) = explode(':', $protocol_or_url, 2);
-    $src = $Theme->getLinkIconURL($proto);
-    if ($src)
-        return HTML::img(array('src' => $src, 'alt' => $proto, 'class' => 'linkicon', 'border' => 0));
-    else
-        return false;
+    if ($filename_suffix = false) {
+        // display apache style icon for file type instead of protocol icon
+        // - archive: unix:gz,bz2,tgz,tar,z; mac:dmg,dmgz,bin,img,cpt,sit; pc:zip;
+        // - document: html, htm, text, txt, rtf, pdf, doc
+        // - non-inlined image: jpg,jpeg,png,gif,tiff,tif,swf,pict,psd,eps,ps
+        // - audio: mp3,mp2,aiff,aif,au
+        // - multimedia: mpeg,mpg,mov,qt
+    } else {
+        list ($proto) = explode(':', $protocol_or_url, 2);
+        $src = $Theme->getLinkIconURL($proto);
+        if ($src)
+            return HTML::img(array('src' => $src, 'alt' => $proto, 'class' => 'linkicon', 'border' => 0));
+        else
+            return false;
+    }
 }
 
 function LinkURL($url, $linktext = '') {
@@ -91,9 +99,11 @@ function LinkURL($url, $linktext = '') {
                                      _("BAD URL -- remove all of <, >, \"")));
     }
     else {
-        $link = HTML::a(array('href' => $url),
+        $link = HTML::a(array('href' => $url/*, 'type' => 'application/x-gzip'*/),
+                                            // do any browsers support use of <a href= type=?/?
+                                            // (instead of wiki creating an IconForLink for the doc type?)
                         IconForLink($url),
-                        $linktext ? $linktext : $url);
+                        $linktext ? $linktext : str_replace("mailto:", "", $url));
     }
     $link->setAttr('class', $linktext ? 'namedurl' : 'rawurl');
     return $link;
