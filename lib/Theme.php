@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.123 2005-01-25 07:03:02 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.124 2005-01-27 16:28:15 rurban Exp $');
 /* Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1184,6 +1184,10 @@ class Button extends HtmlElement {
             $this->setAttr('class', $class);
         if ($request->getArg('frame'))
             $this->setAttr('target', '_top');
+        // Google honors this
+        if (in_array(strtolower($text), array('edit','create','diff','pdf'))
+            and !$request->_user->isAuthenticated())
+            $this->setAttr('rel', 'nofollow');
         $this->pushContent($GLOBALS['WikiTheme']->maybeSplitWikiWord($text));
     }
 
@@ -1206,6 +1210,10 @@ class ImageButton extends Button {
         $this->__construct('a', array('href' => $url));
         if ($class)
             $this->setAttr('class', $class);
+        // Google honors this
+        if (in_array(strtolower($text), array('edit','create','diff','pdf'))
+            and !$GLOBALS['request']->_user->isAuthenticated())
+            $this->setAttr('rel', 'nofollow');
 
         if (!is_array($img_attr))
             $img_attr = array();
@@ -1401,6 +1409,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.123  2005/01/25 07:03:02  rurban
+// change addMoreAttr() to support named attr, to remove DoubleClickEdit for htmldumps
+//
 // Revision 1.122  2005/01/21 11:51:22  rurban
 // changed (c)
 //
