@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.25 2002-01-19 03:23:45 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.26 2002-01-19 09:43:28 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -107,7 +107,8 @@ $Theme->setDateFormat("%A, %B %e, %Y"); // must not contain time
 
 // Controls whether the '?' appears before or after UnknownWikiWords.
 // The PhpWiki default is for the '?' to appear before.
-$Theme->setWikiMark('%s?');
+//$Theme->setWikiMark('%s?');
+$Theme->setWikiMark('%s<img src="themes/MacOSX/buttons/uww.png" border="0" align="top">');
 
 /*
 $ToolbarImages = array(
