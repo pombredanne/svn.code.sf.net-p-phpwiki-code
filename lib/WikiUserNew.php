@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.14 2004-02-15 17:30:13 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.15 2004-02-15 21:34:37 rurban Exp $');
 
 // This is a complete OOP rewrite of the old WikiUser code with various
 // configurable external authentification methods.
@@ -612,7 +612,7 @@ extends _AnonUser
         }
         // Check the configured Prefs methods
         if (  !empty($DBAuthParams['pref_select']) ) {
-            if ( $DBParams['dbtype'] == 'SQL' and !is_int($this->_prefselect)) {
+            if ( $DBParams['dbtype'] == 'SQL' and !@is_int($this->_prefselect)) {
                 $this->_prefmethod = 'SQL'; // really pear db
                 $this->getAuthDbh();
                 // preparate the SELECT statement
@@ -631,7 +631,7 @@ extends _AnonUser
         }
         if (  !empty($DBAuthParams['pref_update']) and 
               $DBParams['dbtype'] == 'SQL' and
-              !is_int($this->_prefupdate)) {
+              !@is_int($this->_prefupdate)) {
             $this->_prefmethod = 'SQL';
             $this->getAuthDbh();
             $this->_prefupdate = $this->_auth_dbi->prepare(
@@ -640,7 +640,7 @@ extends _AnonUser
         }
         if (  !empty($DBAuthParams['pref_update']) and 
               $DBParams['dbtype'] == 'ADODB' and
-              !is_int($this->_prefupdate)) {
+              !isset($this->_prefupdate)) {
             $this->_prefmethod = 'ADODB'; // uses a simplier execute syntax
             $this->getAuthDbh();
             // preparate the SELECT statement
@@ -958,13 +958,13 @@ extends _DbPassUser
         $this->getAuthDbh();
         $this->_auth_crypt_method = $GLOBALS['DBAuthParams']['auth_crypt_method'];
         // Prepare the configured auth statements
-        if (!empty($DBAuthParams['auth_check']) and !is_int($this->_authselect)) {
+        if (!empty($DBAuthParams['auth_check']) and !@is_int($this->_authselect)) {
             $this->_authselect = $this->_auth_dbi->prepare (
                      str_replace(array('"$userid"','"$password"'),array('?','?'),
                                   $DBAuthParams['auth_check'])
                      );
         }
-        if (!empty($DBAuthParams['auth_update']) and !is_int($this->_authupdate)) {
+        if (!empty($DBAuthParams['auth_update']) and !@is_int($this->_authupdate)) {
             $this->_authupdate = $this->_auth_dbi->prepare(
                     str_replace(array('"$userid"','"$password"'),array('?','?'),
                                 $DBAuthParams['auth_update'])
@@ -978,7 +978,7 @@ extends _DbPassUser
         // clutter the homepage metadata with prefs.
         _AnonUser::getPreferences();
         $this->getAuthDbh();
-        if ((! $this->_prefs) && is_int($this->_prefselect)) {
+        if ((! $this->_prefs) && @is_int($this->_prefselect)) {
             $db_result = $this->_auth_dbi->execute($this->_prefselect,$this->_userid);
             list($prefs_blob) = $db_result->fetchRow();
             if ($restored_from_db = $this->_prefs->retrieve($prefs_blob)) {
@@ -1011,7 +1011,7 @@ extends _DbPassUser
             //$request->setSessionVar('wiki_prefs', $this->_prefs);
             $request->setSessionVar('wiki_user', $request->_user);
         }
-        if (is_int($this->_prefupdate)) {
+        if (@is_int($this->_prefupdate)) {
             $db_result = $this->_auth_dbi->execute($this->_prefupdate,
                                                    array($packed,$this->_userid));
         } else {
@@ -1052,7 +1052,7 @@ extends _DbPassUser
     }
  
     function checkPass($submitted_password) {
-        if (!is_int($this->_authselect))
+        if (!@is_int($this->_authselect))
             trigger_error("Either \$DBAuthParams['auth_check'] is missing or \$DBParams['dbtype'] != 'SQL'",
                           E_USER_WARNING);
 
@@ -1089,7 +1089,7 @@ extends _DbPassUser
     }
 
     function storePass($submitted_password) {
-        if (!is_int($this->_authupdate)) {
+        if (!@is_int($this->_authupdate)) {
             //CHECKME
             trigger_warning("Either \$DBAuthParams['auth_update'] not defined or \$DBParams['dbtype'] != 'SQL'",
                           E_USER_WARNING);
@@ -1887,6 +1887,14 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2004/02/15 17:30:13  rurban
+// workaround for lost db connnection handle on session restauration (->_auth_dbi)
+// fixed getPreferences() (esp. from sessions)
+// fixed setPreferences() (update and set),
+// fixed AdoDb DB statements,
+// update prefs only at UserPreferences POST (for testing)
+// unified db prefs methods (but in external pref classes yet)
+//
 // Revision 1.13  2004/02/09 03:58:12  rurban
 // for now default DB_SESSION to false
 // PagePerm:

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.37 2003-02-26 17:17:52 dairiki Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.38 2004-02-15 21:34:22 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -31,7 +31,7 @@ require_once('lib/InlineParser.php');
  *    (old-style) tables
  */
 
-// FIXME: unify this with the RegexpSet in InlinePArser.
+// FIXME: unify this with the RegexpSet in InlineParser.
 
 /**
  * Return type from RegexpSet::match and RegexpSet::nextMatch.

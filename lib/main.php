@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.114 2004-02-15 17:30:13 rurban Exp $');
+rcs_id('$Id: main.php,v 1.115 2004-02-15 21:34:37 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -193,7 +193,7 @@ class WikiRequest extends Request {
         if ($pagename === false)
             $pagename = $this->getArg('pagename');
         $action = $this->getArg('action');
-        if ($this->getArg('start_debug')) // zend ide support
+        if (!empty($_GET['start_debug'])) // zend ide support
             return WikiURL($pagename, array('action' => $action, 'start_debug' => 1));
         else
             return WikiURL($pagename, array('action' => $action));
@@ -864,6 +864,14 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.114  2004/02/15 17:30:13  rurban
+// workaround for lost db connnection handle on session restauration (->_auth_dbi)
+// fixed getPreferences() (esp. from sessions)
+// fixed setPreferences() (update and set),
+// fixed AdoDb DB statements,
+// update prefs only at UserPreferences POST (for testing)
+// unified db prefs methods (but in external pref classes yet)
+//
 // Revision 1.113  2004/02/12 13:05:49  rurban
 // Rename functional for PearDB backend
 // some other minor changes

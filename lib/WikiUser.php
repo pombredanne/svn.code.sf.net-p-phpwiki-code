@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.48 2004-02-01 09:14:11 rurban Exp $');
+rcs_id('$Id: WikiUser.php,v 1.49 2004-02-15 21:34:37 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -325,11 +325,15 @@ class WikiUser {
     }
 
     // No cookies anymore for all prefs, only the userid. PHP creates
-    // a session cookie in memory, which is much more efficient.
+    // a session cookie in memory, which is much more efficient, 
+    // but not persistent. Get persistency with a homepage or DB Prefs
     //
-    // Return the number of changed entries?
+    // Return the number of changed entries
     function setPreferences($prefs, $id_only = false) {
-        // update the id
+        if (!is_object($prefs)) {
+            $prefs = new UserPreferences($prefs);
+        }
+        // update the session and id
         $this->_request->setSessionVar('wiki_prefs', $prefs);
         // $this->_request->setCookieVar('WIKI_PREFS2', $this->_prefs, 365);
         // simple unpacked cookie
@@ -715,6 +719,22 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.48  2004/02/01 09:14:11  rurban
+// Started with Group_Ldap (not yet ready)
+// added new _AuthInfo plugin to help in auth problems (warning: may display passwords)
+// fixed some configurator vars
+// renamed LDAP_AUTH_SEARCH to LDAP_BASE_DN
+// changed PHPWIKI_VERSION from 1.3.8a to 1.3.8pre
+// USE_DB_SESSION defaults to true on SQL
+// changed GROUP_METHOD definition to string, not constants
+// changed sample user DBAuthParams from UPDATE to REPLACE to be able to
+//   create users. (Not to be used with external databases generally, but
+//   with the default internal user table)
+//
+// fixed the IndexAsConfigProblem logic. this was flawed:
+//   scripts which are the same virtual path defined their own lib/main call
+//   (hmm, have to test this better, phpwiki.sf.net/demo works again)
+//
 // Revision 1.47  2004/01/27 23:23:39  rurban
 // renamed ->Username => _userid for consistency
 // renamed mayCheckPassword => mayCheckPass
