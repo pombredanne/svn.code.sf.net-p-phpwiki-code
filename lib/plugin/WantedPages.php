@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WantedPages.php,v 1.9 2004-04-10 04:15:06 rurban Exp $');
+rcs_id('$Id: WantedPages.php,v 1.10 2004-04-18 01:44:02 rurban Exp $');
 /*
  This file is part of PhpWiki.
 
@@ -39,13 +39,15 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
         return array('noheader' => false,
                      'exclude'  => _("PgsrcTranslation"),
-                     'page'     => '[pagename]');
+                     'page'     => '[pagename]',
+                     'sortby'   => false,
+                     'limit'    => false);
     }
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor,markup or all
@@ -70,7 +72,8 @@ extends WikiPlugin
         // a tailored SQL query via the backend, but this gets the job
         // done.
         if (!$page) {
-            $allpages_iter = $dbi->getAllPages($include_empty = false);
+            $include_empty = false;
+            $allpages_iter = $dbi->getAllPages($include_empty,$sortby,$limit);
             while ($page_handle = $allpages_iter->next()) {
                 $name = $page_handle->getName();
                 if ($name == _("InterWikiMap")) continue;
@@ -208,6 +211,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/04/10 04:15:06  rurban
+// sf.net 927122 Suggestion
+//
 // Revision 1.8  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //
