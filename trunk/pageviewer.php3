@@ -1,4 +1,4 @@
-<!-- $Id: pageviewer.php3,v 1.1 2000-06-14 01:34:51 wainstead Exp $ -->
+<!-- $Id: pageviewer.php3,v 1.2 2000-06-14 01:47:53 wainstead Exp $ -->
 <!-- Display the internal structure of a page. Steve Wainstead, June 2000 -->
 <html>
 <head>
@@ -21,7 +21,11 @@
 
    $dbi = OpenDataBase($WikiDataBase);
    $pagehash = RetrievePage($dbi, $pagename);
-
+   if ($pagehash == -1) {
+      echo "Page name '$pagename' is not in the database<br>\n";
+      echo "(return code was -1)<br>\n";
+      exit();
+   }
    reset($pagehash);
    
 ?>
