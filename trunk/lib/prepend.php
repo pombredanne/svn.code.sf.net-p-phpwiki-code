@@ -5,9 +5,9 @@
  */
 $RCS_IDS = '';
 function rcs_id ($id) { $GLOBALS['RCS_IDS'] .= "$id\n"; }
-rcs_id('$Id: prepend.php,v 1.28 2004-12-10 02:45:27 rurban Exp $');
+rcs_id('$Id: prepend.php,v 1.29 2004-12-22 19:03:15 rurban Exp $');
 
-define ('PHPWIKI_VERSION', '1.3.11pre-20041210');
+define ('PHPWIKI_VERSION', '1.3.11pre-20041222');
 
 /** 
  * Returns true if current php version is at mimimum a.b.c 
