@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RawHtml.php,v 1.9 2004-07-05 13:04:47 rurban Exp $');
+rcs_id('$Id: RawHtml.php,v 1.10 2004-07-05 13:09:37 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -20,9 +20,10 @@ rcs_id('$Id: RawHtml.php,v 1.9 2004-07-05 13:04:47 rurban Exp $');
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-//FIXME: Move this to IniConfig and config-default.ini
+// Moved to IniConfig and config-default.ini
 // Define ENABLE_RAW_HTML to false (in config.ini) to disable the RawHtml 
 // plugin completely
+/*
 if (!defined('ENABLE_RAW_HTML'))
     define('ENABLE_RAW_HTML', true);
 // must be locked
@@ -31,12 +32,14 @@ if (!defined('ENABLE_RAW_HTML_LOCKEDONLY'))
 // sanitize to safe html code
 if (!defined('ENABLE_RAW_HTML_SAFE'))
     define('ENABLE_RAW_HTML_SAFE', true);
+*/    
 
-/** We'll define a better policy when to allow RawHtml:
+/** We defined a better policy when to allow RawHtml:
  *   ENABLE_RAW_HTML_LOCKEDONLY:
  *  - Allowed if page is locked by ADMIN_USER.
  *   ENABLE_RAW_HTML_SAFE:
  *  - Allow some sort of "safe" html tags and attributes.
+ *    Unsafe attributes are automatically stripped. (Experimental!)
  *    See http://phpwiki.sourceforge.net/phpwiki/allowing%20safe%20HTML
  */
 
@@ -56,7 +59,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function managesValidators() {
@@ -221,6 +224,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/07/05 13:04:47  rurban
+// new RawHtml policies: ENABLE_RAW_HTML_LOCKEDONLY, ENABLE_RAW_HTML_SAFE
+//
 // Revision 1.8  2003/11/22 17:50:32  carstenklapp
 // Minor internal change: Removed redundant call to gettext within
 // fmt(). (locale make: RawHtml.php:65: warning: keyword nested in
