@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SiteMap.php,v 1.2 2002-09-04 16:04:41 rurban Exp $');
+rcs_id('$Id: SiteMap.php,v 1.3 2002-11-04 06:45:48 carstenklapp Exp $');
 /**
 http://sourceforge.net/tracker/?func=detail&aid=537380&group_id=6121&atid=306121
 
@@ -51,7 +51,8 @@ extends WikiPlugin
         $pagelinks = $startpage->getLinks();
         while ($link = $pagelinks->next()) {
             $linkpagename = $link->getName();
-            if ($linkpagename != $startpagename) {
+            if (($linkpagename != $startpagename)
+                && !in_array($linkpagename, $this->ExcludedPages)) {
                 $pagearr[$level . " [$linkpagename]"] = $link;
                 $pagearr = $this->recursivelyGetLinks($link, $pagearr, $level . '*', $reclimit);
             }
@@ -66,6 +67,7 @@ extends WikiPlugin
         $out = '';
         $exclude = $exclude ? explode(",", $exclude) : array();
         if (!$include_self) $exclude[] = $page;
+        $this->ExcludedPages = $exclude;
         $this->_default_limit = str_pad('',3,'*');
         if (is_numeric($reclimit)) {
             if ($reclimit < 0) $reclimit = 0;
