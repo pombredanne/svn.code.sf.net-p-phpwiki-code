@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.72 2004-11-01 10:43:55 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.73 2004-11-06 04:51:25 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -61,9 +61,10 @@ class Request {
                             'ACCESS_LOG')
                     , E_USER_NOTICE);
             }
-            else
-                $this->_log_entry = & new Request_AccessLogEntry($this,
-                                                                ACCESS_LOG);
+            else {
+                $this->_log_entry = & new Request_AccessLogEntry(ACCESS_LOG);
+                $this->_log_entry->push($this);
+            }
         }
         
         $GLOBALS['request'] = $this;
@@ -763,9 +764,16 @@ class Request_AccessLogEntry
      * @param $request object  Request object for current request.
      * @param $logfile string  Log file name.
      */
-    function Request_AccessLogEntry (&$request, $logfile) {
+    function Request_AccessLogEntry ($logfile) {
         $this->logfile = $logfile;
-        
+
+        global $Request_AccessLogEntry_entries;
+        if (!isset($Request_AccessLogEntry_entries)) {
+            register_shutdown_function("Request_AccessLogEntry_shutdown_function");
+        }
+    }
+
+    function push(&$request) {
         $this->host  = $request->get('REMOTE_HOST');
         $this->ident = $request->get('REMOTE_IDENT');
         if (!$this->ident)
@@ -780,10 +788,6 @@ class Request_AccessLogEntry
         $this->referer = (string) $request->get('HTTP_REFERER');
         $this->user_agent = (string) $request->get('HTTP_USER_AGENT');
 
-        global $Request_AccessLogEntry_entries;
-        if (!isset($Request_AccessLogEntry_entries)) {
-            register_shutdown_function("Request_AccessLogEntry_shutdown_function");
-        }
         $Request_AccessLogEntry_entries[] = &$this;
     }
 
@@ -855,12 +859,33 @@ class Request_AccessLogEntry
 
         //Error log doesn't provide locking.
         //error_log("$entry\n", 3, $this->logfile);
-
         // Alternate method
         if (($fp = fopen($this->logfile, "a"))) {
             flock($fp, LOCK_EX);
             fputs($fp, "$entry\n");
             fclose($fp);
+        }
+    }
+
+    /**
+     * Read sequentially previous entries from log file.
+     * while ($logentry = Request_AccessLogEntry::read()) ;
+     * For internal log analyzers: RecentReferrers, WikiAccessRestrictions
+     */
+    function read() {
+        global $Request_AccessLogEntry_reader;
+        if (!$Request_AccessLogEntry_reader) // start at the beginning
+            $Request_AccessLogEntry_reader = fopen(ACCESS_LOG, "r");
+        if ($s = fgets($Request_AccessLogEntry_reader)) {
+            if (preg_match('/^(\S+)\s(\S+)\s(\S+)\s\[(.+?)\] "([^"]+)" (\d+) (\d+) "([^"]*)" "([^"]*)"$/',$s,$m)) {
+            	list(,$this->host, $this->ident, $this->user, $this->time,
+                     $this->request, $this->status, $this->size,
+                     $this->referer, $this->user_agent) = $m;
+            }
+            return $this;
+        } else { // until the end
+            fclose($Request_AccessLogEntry_reader);
+            return false;
         }
     }
 }
@@ -873,8 +898,12 @@ class Request_AccessLogEntry
  */
 function Request_AccessLogEntry_shutdown_function ()
 {
-    global $Request_AccessLogEntry_entries;
+    global $Request_AccessLogEntry_entries, $Request_AccessLogEntry_reader;
     
+    if (!empty($Request_AccessLogEntry_reader)) {
+        fclose($Request_AccessLogEntry_reader);
+        unset($Request_AccessLogEntry_reader);
+    }
     foreach ($Request_AccessLogEntry_entries as $entry) {
         $entry->write();
     }
@@ -1062,6 +1091,12 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.72  2004/11/01 10:43:55  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 // Revision 1.71  2004/10/22 09:20:36  rurban
 // fix for USECACHE=false
 //
