@@ -16,7 +16,7 @@
 // | Author: Rasmus Lerdorf <rasmus@php.net>                              |
 // +----------------------------------------------------------------------+
 //
-// $Id: File_Passwd.php,v 1.2 2004-01-25 04:04:34 rurban Exp $
+// $Id: File_Passwd.php,v 1.3 2004-03-11 13:30:47 rurban Exp $
 //
 // Manipulate standard UNIX passwd,.htpasswd and CVS pserver passwd files
 
@@ -100,10 +100,13 @@ class File_Passwd {
         }
         while(!feof($fp)) {
             $line = fgets($fp, 128);
-            list($user, $pass, $cvsuser) = explode(':', $line);
-            if(strlen($user)) {
-                $this->users[$user] = trim($pass);
-                $this->cvs[$user] = trim($cvsuser);	
+            $array = explode(':', $line);
+            if (count($array) and strlen(trim($array[0]))) {
+                $user = trim($array[0]);
+                if (empty($array[1])) $array[1]='';
+                $this->users[$user] = trim($array[1]);
+                if (count($array) >= 3)
+                    $this->cvs[$user] = trim($array[2]);	
             }
         }
         fclose($fp);
