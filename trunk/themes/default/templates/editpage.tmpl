@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.22 2002-02-08 23:04:13 carstenklapp Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.23 2002-02-09 23:53:58 carstenklapp Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
@@ -55,12 +55,10 @@ $s = $Theme->getButtonSeparator();
 <form method="post" name="editpage"
       action="<?=WikiURL($page,array('action'=>'edit'))?>"
       accept-charset="<?=CHARSET?>">
-  <!-- FIXME: fix layout, move CSS to CSS -->
-  <div style="text-align: right; vertical-align: top;">
-    <small><?=_("Edit Area Size:")?> <b><?=_("H")?></b></small>
-    <?=$HeightI?>
-    <small><b><?=_("W")?></b></small>
-    <?=$WidthI?>
+  <div id="editarea-size">
+    <?=_("Edit Area Size:")?>
+    <b><?=_("H")?></b> <?=$HeightI?>
+    <b><?=_("W")?></b> <?=$WidthI?>
     <noscript><?=Button("submit:", _("Adjust"))?></noscript>
   </div>
 
