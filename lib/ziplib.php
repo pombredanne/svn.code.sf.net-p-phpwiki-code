@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.27 2002-02-20 17:27:51 dairiki Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.28 2003-02-15 23:21:16 dairiki Exp $');
 
 /**
  * GZIP stuff.
@@ -260,6 +260,13 @@ class ZipWriter
               else
                   unset($crc32);	// force plain store.
           }
+      else
+          {
+              // Punt:
+              $os_type = 0;     // 0 = FAT --- hopefully this is good enough.
+              /* (Another choice might be 3 = Unix) */
+          }
+
       if (!isset($crc32))
           {
               $comp_type = ZIP_STORE;
