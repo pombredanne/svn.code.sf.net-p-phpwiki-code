@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.8.2.1 2001-03-02 03:48:47 dairiki Exp $');
+<?php rcs_id('$Id: transform.php,v 1.8.2.2 2001-09-21 19:15:12 dairiki Exp $');
    // expects $pagehash and $html to be set
 
    function tokenize($str, $pattern, &$orig, &$ntokens) {
@@ -30,12 +30,6 @@
          }
       }
    }
-
-
-   // only call these once, for efficiency
-   $quick_search_box  = RenderQuickSearch();
-   $full_search_box   = RenderFullSearch();
-   $most_popular_list = RenderMostPopular();
 
 
    // Loop over all lines of the page and apply transformation rules
@@ -245,9 +239,12 @@ your web server it is highly advised that you do not allow this.
       // These are still problems as far as generating correct HTML is
       // concerned.  Paragraph (<p>) elements are not allowed to contain
       // other block-level elements (like <form>s). 
-      $tmpline = str_replace('%%Search%%', $quick_search_box, $tmpline);
-      $tmpline = str_replace('%%Fullsearch%%', $full_search_box, $tmpline);
-      $tmpline = str_replace('%%Mostpopular%%', $most_popular_list, $tmpline);
+      if (strstr($tmpline, '%%Search%%'))
+         $tmpline = str_replace('%%Search%%', RenderQuickSearch(), $tmpline);
+      if (strstr($tmpline, '%%Fullsearch%%'))
+         $tmpline = str_replace('%%Fullsearch%%', RenderFullSearch(), $tmpline);
+      if (strstr($tmpline, '%%Mostpopular%%'))
+         $tmpline = str_replace('%%Mostpopular%%', RenderMostPopular(), $tmpline);
       if(defined('WIKI_ADMIN') && strstr($tmpline, '%%ADMIN-'))
          $tmpline = ParseAdminTokens($tmpline);
 
