@@ -1,8 +1,8 @@
--- $Id: schema.mysql,v 1.5 2001-07-12 03:21:35 wainstead Exp $
+-- $Id: schema.mysql,v 1.6 2001-07-17 15:58:28 dairiki Exp $
 
 drop table if exists phpwiki_pages;
 drop table if exists phpwiki_archive;
-drop table if exists phpwiki_wikilinks;
+drop table if exists phpwiki_links;
 drop table if exists phpwiki_hitcount;
 drop table if exists phpwiki_score;
 drop table if exists phpwiki_hottopics;
