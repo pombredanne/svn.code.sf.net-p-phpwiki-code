@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: OldStyleTable.php,v 1.6 2003-02-21 04:12:06 dairiki Exp $');
+rcs_id('$Id: OldStyleTable.php,v 1.7 2003-02-21 23:00:35 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -55,17 +55,17 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
         return array();
     }
 
-    function run($dbi, $argstr, $request) {
+    function run($dbi, $argstr, $request, $basepage) {
         global $Theme;
         include_once('lib/InlineParser.php');
-        
+
         $lines = preg_split('/\s*?\n\s*/', $argstr);
         $table = HTML::table(array('cellpadding' => 1,
                                    'cellspacing' => 1,
@@ -76,15 +76,17 @@ extends WikiPlugin
                 continue;
             if ($line[0] != '|')
                 return $this->error(fmt("Line does not begin with a '|'."));
-            $table->pushContent($this->_parse_row($line));
+            $table->pushContent($this->_parse_row($line, $basepage));
         }
 
         return $table;
     }
 
-    function _parse_row ($line) {
-
-        preg_match_all('/(\|+)(v*)([<>^]?)\s*(.*?)\s*(?=\||$)/',
+    function _parse_row ($line, $basepage) {
+        $brkt_link = "\\[ .*? [^]\s] .*? \\]";
+        $cell_content  = "(?: [^[] | ".ESCAPE_CHAR."\\[ | $brkt_link )*?";
+        
+        preg_match_all("/(\\|+) (v*) ([<>^]?) \s* ($cell_content) \s* (?=\\||\$)/x",
                        $line, $matches, PREG_SET_ORDER);
 
         $row = HTML::tr();
@@ -105,7 +107,7 @@ extends WikiPlugin
                 $attr['align'] = 'left';
 
             // Assume new-style inline markup.
-            $content = TransformInline($m[4]);
+            $content = TransformInline($m[4], 2.0, $basepage);
 
             $row->pushContent(HTML::td($attr, HTML::raw('&nbsp;'),
                                        $content, HTML::raw('&nbsp;')));
@@ -115,6 +117,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2003/02/21 04:12:06  dairiki
+// Minor fixes for new cached markup.
+//
 // Revision 1.5  2003/01/18 21:48:59  carstenklapp
 // Code cleanup:
 // Reformatting & tabs to spaces;
