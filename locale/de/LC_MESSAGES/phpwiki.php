@@ -54,8 +54,8 @@ $locale["Diff"] =
    "Vergleichen";
 $locale["Diff: %s"] =
    "Vergleich: %s";
-$locale["Differences between %1$s and %2$s of %3$s."] =
-   "Der Unterschiedsergebnis von %3$s, zwischen %1$s und %2$s.";
+$locale["Differences between %s and %s of %s."] =
+   "Der Unterschiedsergebnis zwischen %s und %s von %s.";
 $locale["Edit"] =
    "Editieren";
 $locale["Edit %s"] =
