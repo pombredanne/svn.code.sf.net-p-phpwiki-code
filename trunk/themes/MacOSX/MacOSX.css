@@ -1,5 +1,5 @@
 /*
-  $Id: MacOSX.css,v 1.22 2002-02-18 01:34:48 carstenklapp Exp $
+  $Id: MacOSX.css,v 1.23 2002-02-18 21:46:19 carstenklapp Exp $
 
   Classes:
 
@@ -133,7 +133,7 @@ p.error {
  */
 /* Wiki Links */
 a.wiki { text-decoration: none; }
-.wiki  { font-weight: bold; color:#1d42be; } /*blue*/
+.wiki, .named-wiki  { font-weight: bold; color:#1d42be; } /*blue*/
 /* This is obscene in NS4
 b .wiki, STRONG .wiki { font-size: larger; }
 */
