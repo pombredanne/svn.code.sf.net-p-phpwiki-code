@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.1 2002-03-06 02:21:16 carstenklapp Exp $
+ * $Id: phpwiki.css,v 1.2 2002-03-08 03:29:50 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -79,6 +79,17 @@ div.wikitext {
   clear: both;
 }
 .interwiki-map thead td { text-decoration: underline; }
+
+/* Mozilla RecentChanges Sidebar */
+body.sidebar {
+  font-size: smaller;
+  margin: 0.5em;
+}
+body.sidebar div.wikitext {
+  padding: 0.5em;
+}
+body.sidebar div.wikitext ul { padding-left: 1em; }
+body.sidebar h2 { margin-top: 0; }
 
 
 /**
