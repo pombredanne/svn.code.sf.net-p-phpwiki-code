@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: signin.tmpl,v 1.4 2002-01-22 06:58:13 dairiki Exp $ -->
+<!-- $Id: signin.tmpl,v 1.5 2002-01-22 08:28:36 carstenklapp Exp $ -->
 <?php
 
      $Sep = $Theme->getButtonSeparator();
@@ -19,27 +19,34 @@
   <?php } ?>
 <?php } ?>
 
+<table summary="Toolbar: login / logout." class="toolbar"
+       cellpadding="0" cellspacing="0" border="0"><tr valign="middle">
+
 <?php if ($user->isSignedIn()) {  ?>
-
-  <?= fmt("You are signed in as %s", LinkWikiWord($user->getId())) ?>
-  <?=$Sep?>
-  <script language="JavaScript" type="text/javascript"><!--
-    document.write('<input type="hidden" name="login[logout]" value="0" />');
-    function SignOut() { 
-      document.forms["<?=$FORMNAME?>"].elements["login[logout]"].value = 1;
-      document.forms["<?=$FORMNAME?>"].submit();
-    }
-    document.write('<?=$SignOutB?>'); // -->
-  </script>
-  <noscript>
-    <input type="submit" name="login[logout]" value="<?=_("SignOut")?>" />
-  </noscript>
-
+  <td>
+    <?= fmt("You are signed in as %s", LinkWikiWord($user->getId())) ?>
+    <?=$Sep?></td>
+  <td>
+    &nbsp;
+    <script language="JavaScript" type="text/javascript"><!--
+      document.write('<input type="hidden" name="login[logout]" value="0" />');
+      function SignOut() { 
+        document.forms["<?=$FORMNAME?>"].elements["login[logout]"].value = 1;
+        document.forms["<?=$FORMNAME?>"].submit();
+      }
+      document.write('<?=$SignOutB?>'); // -->
+    </script>
+    <noscript>
+      <input type="submit" name="login[logout]" value="<?=_("SignOut")?>" />
+    </noscript>
+  </td>
 <?php } else { ?>
-
-  <script language="JavaScript" type="text/javascript"><!--
-    document.write("<?=_("Sign In")?> ");
-  // --></script>
+  <td>
+    <script language="JavaScript" type="text/javascript"><!--
+      document.write("<?=_("Sign In")?> ");
+    // --></script>
+  </td>
+  <td>
   <?php $SignIn = HTML::input(array('type' => 'text',
                                     'name' => "login[userid]",
                                     'size' => 12,
@@ -49,9 +56,10 @@
   <noscript>
     <input type="submit" name="login[login]" value="<?=_("SignIn")?>" />
   </noscript>
-
+  </td>
+  <td>
 <?php } ?>
-
+</tr></table>
 <?php if (empty($NOFORM)) { ?>
   </form>
 <?php } ?>
