@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _WikiTranslation.php,v 1.12 2004-06-17 10:39:18 rurban Exp $');
+rcs_id('$Id: _WikiTranslation.php,v 1.13 2004-06-18 14:38:22 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -127,7 +127,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.12 $");
+                            "\$Revision: 1.13 $");
     }
 
     function getDefaultArguments() {
@@ -234,12 +234,12 @@ extends WikiPlugin
                 array_shift($available_languages);
             }
             // put from_lang to the very end.
-            if (in_array($from_lang,$available_languages))
+            if (in_array($from_lang, $available_languages))
                 $languages = $available_languages;
             else
-            	$languages = array_merge($available_languages,array($from_lang));
+            	$languages = array_merge($available_languages, array($from_lang));
         } elseif (strstr($languages,',')) {
-            $languages = explode(',',$languages);
+            $languages = explode(',', $languages);
         } else {
             $languages = array($languages);
         }
@@ -251,7 +251,7 @@ extends WikiPlugin
         }
         $to_lang = $languages[0];
         if (!empty($string) and count($languages)==1) {
-            return $this->translate($string,$to_lang,$from_lang);
+            return $this->translate($string, $to_lang, $from_lang);
         }
         if (!empty($page)) {
             $pagename = $page;
@@ -261,13 +261,13 @@ extends WikiPlugin
             	if (in_array($from_lang,array('en','fr'))) {
                     $url = "http://translate.google.com/translate";
                     $url .= "?langpair=" . urlencode($from_lang."|".$to_lang);
-                    $url .= "&u=" . urlencode(WikiURL($pagename,false,true));
+                    $url .= "&u=" . urlencode(WikiURL($pagename, false, true));
             	}
             	// redirect or transclude?
 	        if ($url)
 	            return $request->redirect($url);
             	return HTML(fmt("TODO: Google can only translate from english and french. Find a translation service for %s to language %s",
-            	                WikiURL($pagename,false,true),
+            	                WikiURL($pagename, false, true),
             	                $to_lang));
             } else
                 return $this->error(fmt("%s is empty",$pagename));
@@ -278,9 +278,7 @@ extends WikiPlugin
         foreach ($languages as $lang) {
             if ($lang == $from_lang) continue;
             $field = "custom:$lang";
-            $column = new _PageList_Column_custom($field,$from_lang,$this);
-            $pagelist->_types["custom"] = $column;
-            $pagelist->_addColumn($field);
+            $pagelist->addColumnObject(new _PageList_Column_customlang($field, $from_lang, $this));
         }
         if (!empty($string)) {
             $pagelist->addPage( $string );
@@ -293,15 +291,15 @@ extends WikiPlugin
         case 'pages':
             // not all pages, only the pgsrc pages
             if (!is_array($exclude))
-                $exclude = $pagelist->explodePageList($exclude,false,$sortby,$limit);
+                $exclude = $pagelist->explodePageList($exclude, false, $sortby, $limit);
             $path = FindLocalizedFile(WIKI_PGSRC);
             $pgsrc = new fileSet($path);
-            foreach ($pgsrc->getFiles($exclude,$sortby,$limit) as $pagename) {
+            foreach ($pgsrc->getFiles($exclude, $sortby, $limit) as $pagename) {
                 $pagename = urldecode($pagename);
                 if (substr($pagename,-1,1) == '~') continue;
 	        if (in_array($pagename, $exclude))
         	    continue;             // exclude page.
-                if ($match != '*' and !glob_match($match,$pagename))
+                if ($match != '*' and !glob_match($match, $pagename))
                     continue;
                 $page_handle = $dbi->getPage($pagename);
                 $pagelist->addPage( $page_handle );
@@ -315,7 +313,7 @@ extends WikiPlugin
             if (is_array($locale)) {
                 $count = 0;
                 foreach ($locale as $from => $to) {
-                    if ($match != '*' and !glob_match($match,$from))
+                    if ($match != '*' and !glob_match($match, $from))
                         continue;
                     if (isWikiWord($from)) {
                         $count++;
@@ -332,7 +330,7 @@ extends WikiPlugin
             $buttons = $GLOBALS['AllActionPages'];
             $fileset = new FileSet(FindFile("themes/MacOSX/buttons/en"), "*.png");
             foreach ($fileset->getFiles() as $file) {
-                $b = urldecode(substr($file,0,-4));
+                $b = urldecode(substr($file, 0, -4));
                 if (!in_array($b,$buttons))
                     $buttons[] = $b;
             }
@@ -347,8 +345,8 @@ extends WikiPlugin
     }
 };
 
-class _PageList_Column_custom extends _PageList_Column {
-    function _PageList_Column_custom($field, $from_lang, $plugin) {
+class _PageList_Column_customlang extends _PageList_Column {
+    function _PageList_Column_customlang($field, $from_lang, $plugin) {
         $this->_field = $field;
         $this->_from_lang = $from_lang;
         $this->_plugin =& $plugin;
@@ -358,9 +356,9 @@ class _PageList_Column_custom extends _PageList_Column {
         $this->_iscustom = substr($field, 0, 7) == 'custom:';
         if ($this->_iscustom)
             $this->_field = substr($field, 7);
-        $heading = $field;
+        //$heading = $field;
         $this->dbi = &$GLOBALS['request']->getDbh();
-        $this->_PageList_Column_base($field);
+        $this->_PageList_Column_base($this->_field);
     }
     
     function _getValue($page, &$revision_handle) {
@@ -393,7 +391,7 @@ class _PageList_Column_custom extends _PageList_Column {
                 return '';
         } elseif (is_object($page)) {
             if (!$this->_nolinks)
-                return WikiLink($trans,'auto');
+                return WikiLink($trans, 'auto');
             else
                 return $trans;
         } else {
@@ -403,6 +401,9 @@ class _PageList_Column_custom extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2004/06/17 10:39:18  rurban
+// fix reverse translation of possible actionpage
+//
 // Revision 1.11  2004/06/14 11:31:39  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList
