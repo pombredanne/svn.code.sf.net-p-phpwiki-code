@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminChmod.php,v 1.13 2004-12-06 19:50:05 rurban Exp $');
+rcs_id('$Id: WikiAdminChmod.php,v 1.14 2004-12-13 14:36:35 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -28,8 +28,6 @@ rcs_id('$Id: WikiAdminChmod.php,v 1.13 2004-12-06 19:50:05 rurban Exp $');
  * Author:  Reini Urban <rurban@x-ray.at>
  *
  * KNOWN ISSUES:
- * Currently we must be Admin. Later we use PagePermissions authorization.
- *   (require_authority_for_post' => WIKIAUTH_ADMIN)
  * Requires PHP 4.2 so far.
  */
 require_once('lib/PageList.php');
@@ -48,7 +46,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.13 $");
+                            "\$Revision: 1.14 $");
     }
 
     function getDefaultArguments() {
@@ -139,7 +137,7 @@ extends WikiPlugin_WikiAdminSelect
         if ($next_action == 'verify') {
             $args['info'] = "checkbox,pagename,perm,author,mtime";
         }
-        $args['types'] = array('perm' => new _PageList_Column_perm('perm', _("Permission")));
+        $args['types'] = array('perm' => new _PageList_Column_chmod_perm('perm', _("Permission")));
         $pagelist = new PageList_Selectable($args['info'], $args['exclude'], $args);
         $pagelist->addPageList($pages);
 
@@ -196,7 +194,8 @@ extends WikiPlugin_WikiAdminSelect
     }
 }
 
-class _PageList_Column_perm extends _PageList_Column {
+// conflicts with WikiAdminSetAcl
+class _PageList_Column_chmod_perm extends _PageList_Column {
     function _getValue ($page_handle, &$revision_handle) {
         $perm_array = pagePermissions($page_handle->_pagename);
         return pagePermissionsSimpleFormat($perm_array,
@@ -206,6 +205,14 @@ class _PageList_Column_perm extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2004/12/06 19:50:05  rurban
+// enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
+// renamed delete_page to purge_page.
+// enable action=edit&version=-1 to force creation of a new version.
+// added BABYCART_PATH config
+// fixed magiqc in adodb.inc.php
+// and some more docs
+//
 // Revision 1.12  2004/11/23 15:17:19  rurban
 // better support for case_exact search (not caseexact for consistency),
 // plugin args simplification:
