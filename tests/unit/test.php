@@ -245,7 +245,9 @@ class phpwiki_TestCase extends PHPUnit_TestCase {
         $request->_args = $this->_savedargs;
         if (DEBUG & _DEBUG_TRACE) {
             echo "-- MEMORY USAGE: ";
-            if (function_exists('memory_get_usage')) {
+            if (isWindows()) { // requires a newer cygwin
+	        echo `cat /proc/meminfo | grep Mem:|perl -ane"print \$F[2];"`,"\n";
+            } elseif (function_exists('memory_get_usage')) {
                 echo memory_get_usage(),"\n";
             } elseif (function_exists('getrusage')) {
                 $u = getrusage();
@@ -253,8 +255,6 @@ class phpwiki_TestCase extends PHPUnit_TestCase {
             } elseif (!isWindows()) { // only on unix, not on cygwin:
 	        $pid = getmypid();
 	        echo `ps -eo%mem,rss,pid | grep $pid`,"\n";
-            } else { // requires a newer cygwin
-	        echo `cat /proc/meminfo | grep Mem:|perl -ane"print \$F[2];"`,"\n";
             }
             flush();
         }
