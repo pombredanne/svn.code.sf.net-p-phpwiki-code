@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.7 2002-01-21 17:13:47 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.8 2002-01-21 17:59:42 carstenklapp Exp $');
 
 // This will relieve some of the work of plugins like LikePages,
 // MostPopular and allows dynamic expansion of those plugins do
@@ -49,7 +49,7 @@ class PageList {
         return $this->_total;
     }
     
-    function getHTML() {
+    function getContent() {
         $caption = HTML::div(array('align' => 'left'), $this->getCaption());
 
         if (count($this->_columns) == 1) {
