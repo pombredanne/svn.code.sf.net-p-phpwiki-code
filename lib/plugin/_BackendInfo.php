@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _BackendInfo.php,v 1.23 2005-01-21 14:13:23 rurban Exp $');
+rcs_id('$Id: _BackendInfo.php,v 1.24 2005-01-29 19:47:43 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -36,7 +36,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.23 $");
+                            "\$Revision: 1.24 $");
     }
 
     function getDefaultArguments() {
@@ -102,6 +102,9 @@ extends WikiPlugin
                 $data[$key] = HTML::pre(ob_get_contents());
                 ob_end_clean();
             }
+            elseif (is_bool($val)) {
+            	$data[$key] = $val ? "<true>" : "<false>";
+            }
             elseif (is_string($val) && (substr($val, 0, 2) == 'a:')) {
                 // how to indent this table?
                 $val = unserialize($val);
@@ -129,7 +132,6 @@ extends WikiPlugin
         }
         unset($data['%pagedata']); // problem in backend
     }
-
             
     function _showhash ($heading, $hash, $pagename = '') {
         $rows = array();
@@ -156,6 +158,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.23  2005/01/21 14:13:23  rurban
+// stabilize on numeric keys (strange php problem)
+//
 // Revision 1.22  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //
