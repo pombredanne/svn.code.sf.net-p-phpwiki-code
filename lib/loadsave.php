@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.59 2002-02-20 17:13:49 dairiki Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.60 2002-02-21 08:27:24 carstenklapp Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -223,7 +223,7 @@ function DumpHtmlToDir (&$request)
 
     while ($page = $pages->next()) {
 
-        $filename = FilenameForPage($page->getName()) . ".html";
+        $filename = FilenameForPage($page->getName()); /* . ".html";*/
 
         $msg = HTML(HTML::br(), $page->getName(), ' ... ');
 
@@ -237,12 +237,9 @@ function DumpHtmlToDir (&$request)
         require_once('lib/PageType.php');
         $transformedContent = PageType($revision);
 
-        require_once('lib/Template.php');
-        //Can't get the template to work...
-        //$transformedContent = array('CONTENT' => $transformedContent);
-        //$transformedContent = array_merge($request, array('CONTENT' => $transformedContent));
-        $template = $transformedContent; //this works but no template!!
-        //$template = Template('browse', $transformedContent);
+        $template = new Template('browse', $request,
+                                  array('revision' => $revision, 'CONTENT' => $transformedContent));
+
         $data = GeneratePageasXML($template, $page->getName());
 
         if ( !($fd = fopen("$directory/$filename", "w")) ) {
@@ -259,6 +256,8 @@ function DumpHtmlToDir (&$request)
         assert($num == strlen($data));
         fclose($fd);
     }
+
+    //CopyImageFiles() will go here;
 
     EndLoadDump($request);
 }
