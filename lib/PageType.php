@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.14 2003-01-06 00:08:08 carstenklapp Exp $');
+rcs_id('$Id: PageType.php,v 1.15 2003-01-06 01:46:31 carstenklapp Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -68,8 +68,14 @@ function PageType(&$rev, $pagename = false, $markup = false) {
      * Check whether pagename indicates a blog. Adapted from the
      * WikiBlog plugin.
      */
-    // get subpage basename
-    $escpage = array_shift(explode(SUBPAGE_SEPARATOR, $pagename));
+    // get subpage basename, don't forget subpages of subpages
+    $basename = explode(SUBPAGE_SEPARATOR, $pagename);
+    array_pop($basename);
+    $escpage = implode(SUBPAGE_SEPARATOR, $basename);
+    // from WikiBlog plugin:
+    // If page contains '/', we must escape them
+    // FIXME: only works for '/' SUBPAGE_SEPARATOR
+    $escpage = preg_replace ("/\//", '\/', $escpage);
     if (preg_match("/^$escpage\/Blog-([[:digit:]]{14})$/", $pagename, $matches))
         $isWikiBlog = $pagename;
     else
@@ -269,6 +275,9 @@ extends PageType
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2003/01/06 00:08:08  carstenklapp
+// Added a basic WikiBlog page type, takes advantage of editpage summary field.
+//
 
 // Local Variables:
 // mode: php
