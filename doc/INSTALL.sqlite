@@ -13,7 +13,7 @@ To setup the initial tables you currently need the external sqlite
 executable client. On Microsoft Windows download the sqlite.exe binary
 from http://www.sqlite.org/sqlite.zip
 We work on a solution to setup the database on a virgin wiki 
-automatically, so that the sqlite binary is needed anymore.
+automatically, so that the sqlite binary is not needed anymore.
 
 sqlite /tmp/phpwiki-sqlite.db < schemas/sqlite.sql
 
@@ -38,4 +38,4 @@ sqlite /tmp/phpwiki-sqlite.db < dump.sql
 Authors: 
 ReiniUrban (phpwiki developer) and Matthew Palmer (phpwiki debian maintainer)
 
-$Id: INSTALL.sqlite,v 1.5 2004-06-28 14:47:06 rurban Exp $
+$Id: INSTALL.sqlite,v 1.6 2004-07-09 09:52:57 rurban Exp $
