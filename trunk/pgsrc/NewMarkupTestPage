@@ -1,6 +1,6 @@
 Date: Sun, 27 Jan 2002 17:28:55 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: NewMarkupTestPage,v 1.3 2002-02-08 03:01:12 dairiki Exp $
+X-Rcs-Id: $Id: NewMarkupTestPage,v 1.4 2002-02-24 21:41:01 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=NewMarkupTestPage;
   author=JeffDairiki;
@@ -23,18 +23,18 @@ New lists: asterisks, hash marks, and ";text:def" (wrong...)
 Term1:
   definition1.1
 
-  defintion1.2
+  definition1.2
 Term2 :
-    defintion2
+    definition2
 
     Term3:
-      defintion3
+      definition3
       Term4:
           definition4
 
-          defintion4.2
+          definition4.2
       Term5 :
-        defintion5
+        definition5
 
 Mixed -
  * ul1
