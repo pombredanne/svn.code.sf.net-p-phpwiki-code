@@ -15,6 +15,7 @@ INSTALL.sqlite         for using PhpWiki with SQLite
 INSTALL.flatfile       for using PhpWiki with flat files, no database
 INSTALL.MacOSX         for using PhpWiki in MacOSX
 README.phpwiki-auth    for using authentication
+README.security        for notes on implementing a more secure PhpWiki
 README.phpwiki-cache   for using cached plugins content (VisualWiki, ...)
 README.coding          for notes on modifying PhpWiki
 README.foaf            for notes on the Friend Of A Friend network
