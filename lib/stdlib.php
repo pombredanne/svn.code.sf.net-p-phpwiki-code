@@ -1,5 +1,5 @@
 <?php
-   rcs_id('$Id: stdlib.php,v 1.11 2000-11-11 12:15:35 ahollosi Exp $');
+   rcs_id('$Id: stdlib.php,v 1.12 2000-11-16 08:52:51 ahollosi Exp $');
    /*
       Standard functions for Wiki functionality
          LinkRelatedPages($dbi, $pagename)
@@ -527,7 +527,7 @@
       $numlines = count($content);
       for($l = 0; $l < $numlines; $l++)
       {
-         $line = $content[$l];
+         $line = str_replace('[[', ' ', $content[$l]);  // remove escaped '['
 	 $numBracketLinks = preg_match_all("/\[\s*(.+?)\s*\]/", $line, $brktlinks);
 	 for ($i = 0; $i < $numBracketLinks; $i++) {
 	    $link = ParseAndLink($brktlinks[0][$i]);
