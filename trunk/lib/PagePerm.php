@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.22 2004-06-07 22:44:14 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.23 2004-06-08 10:05:11 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -201,6 +201,7 @@ function action2access ($action) {
     case 'upgrade':
     case 'chown':
     case 'setacl':
+    case 'rename':
             return 'change';
     default:
         //Todo: Plugins should be able to override its access type
@@ -629,20 +630,23 @@ class PagePermission {
     }
 
     // Print ACL as lines of [+-]user[,group,...]:access[,access...]
-    // Seperate acl's by whitespace (here "\n", but " " is also acceptable on reading)
+    // Seperate acl's by "; " or whitespace
     // See http://opag.ca/wiki/HelpOnAccessControlLists
     // As used by WikiAdminSetAclSimple
-    function asAclLines($group=false) {
+    function asAclLines() {
         $s = '';
         $this->sanify();
         foreach ($this->perm as $access => $groups) {
-            // TODO: unify groups for same access+bool
-            //    +CREATOR,OWNER:view
-            // TODO: unify access for same groups+bool
-            //    +OWNER:view,edit
+            // unify groups for same access+bool
+            //    view:CREATOR,-OWNER,
+            $s .= $access.':';
             foreach ($groups as $group => $bool) {
-                $s .= ($bool?'+':'-').$this->groupName($group).':'.$access."\n";
+                $s .= ($bool?'':'-').$group.",";
             }
+            if (substr($s,-1,1) == ',')
+                $s = substr($s,-1)."; ";
+            else 
+                $s = '';
         }
         return $s;
     }
@@ -691,6 +695,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.22  2004/06/07 22:44:14  rurban
+// added simplified chown, setacl actions
+//
 // Revision 1.21  2004/06/07 22:28:03  rurban
 // add acl field to mimified dump
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSetAcl.php,v 1.14 2004-06-07 22:28:06 rurban Exp $');
+rcs_id('$Id: WikiAdminSetAcl.php,v 1.15 2004-06-08 10:05:12 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -46,7 +46,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.14 $");
+                            "\$Revision: 1.15 $");
     }
 
     function getDefaultArguments() {
@@ -119,6 +119,9 @@ extends WikiPlugin_WikiAdminSelect
     function run($dbi, $argstr, &$request, $basepage) {
         //if (!DEBUG)
         //    return $this->disabled("WikiAdminSetAcl not yet enabled. Set DEBUG to try it.");
+        if ($request->getArg('action') != 'browse')
+            if ($request->getArg('action') != _("PhpWikiAdministration/SetAcl"))
+                return $this->disabled("(action != 'browse')");
         
         $args = $this->getArgs($argstr, $request);
         $this->_args = $args;
@@ -291,6 +294,9 @@ class _PageList_Column_perm extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2004/06/07 22:28:06  rurban
+// add acl field to mimified dump
+//
 // Revision 1.13  2004/06/04 20:32:54  rurban
 // Several locale related improvements suggested by Pierrick Meignen
 // LDAP fix by John Cole
