@@ -74,12 +74,6 @@ $locale["Last"] =
    "Ultima";
 $locale["Last Modified"] =
    "Ultima Modifica";
-$locale["Last Modified:"] =
-   "Ultima Modifica:";
-$locale["Last edited %s."] =
-   "Ultima modifica %s.";
-$locale["Last edited on %s."] =
-   "Ultima modifica su %s.";
 $locale["Lock Page"] =
    "Blocca la Pagina";
 $locale["Locked"] =
@@ -160,10 +154,6 @@ $locale["Version %d"] =
    "Versione %d";
 $locale["Version %s"] =
    "Versione %s";
-$locale["Version %s, saved %s."] =
-   "Versione %s, salvata %s.";
-$locale["Version %s, saved on %s."] =
-   "Versione %s, salvata su %s.";
 $locale["Versions are identical"] =
    "Le versioni sono identiche";
 $locale["View the current version"] =

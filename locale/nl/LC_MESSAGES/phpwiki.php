@@ -50,8 +50,6 @@ $locale["Include of '%s' failed"] =
    "Insert van '%s' gefaald";
 $locale["Last Author"] =
    "Vorige Auteur";
-$locale["Last edited on %s."] =
-   "Meest recente verandering op %s.";
 $locale["Loading up virgin wiki"] =
    "Laden van maagdelijke wiki";
 $locale["Lock Page"] =
@@ -140,10 +138,6 @@ $locale["Version"] =
    "Versie";
 $locale["Version %d"] =
    "Versie %d";
-$locale["Version %s, saved %s."] =
-   "Versie %s, bewarrd %s.";
-$locale["Version %s, saved on %s."] =
-   "Versie %s, bewarrd op %s.";
 $locale["Versions are identical"] =
    "Versies zijn identiek";
 $locale["View Source"] =

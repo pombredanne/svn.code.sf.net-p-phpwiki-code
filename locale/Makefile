@@ -1,4 +1,4 @@
- # $Id: Makefile,v 1.40 2004-04-29 23:59:04 rurban Exp $
+ # $Id: Makefile,v 1.41 2004-06-04 20:35:24 rurban Exp $
 #
 # locale/Makefile
 #
@@ -70,7 +70,7 @@ ${POT_FILE}: ../lib/Amazon.php
 ${POT_FILE}: ../lib/ArchiveCleaner.php
 ${POT_FILE}: ../lib/BlockParser.php
 ${POT_FILE}: ../lib/CachedMarkup.php
-${POT_FILE}: ../lib/DB_Session.php
+${POT_FILE}: ../lib/DbSession.php
 ${POT_FILE}: ../lib/DbaDatabase.php
 ${POT_FILE}: ../lib/DbaListSet.php
 ${POT_FILE}: ../lib/DbaPartition.php
@@ -177,11 +177,13 @@ ${POT_FILE}: ../lib/difflib.php
 ${POT_FILE}: ../lib/display.php
 ${POT_FILE}: ../lib/editpage.php
 ${POT_FILE}: ../lib/fpdf.php
+${POT_FILE}: ../lib/fpdf/chinese.php
 ${POT_FILE}: ../lib/fpdf/courier.php
 ${POT_FILE}: ../lib/fpdf/helvetica.php
 ${POT_FILE}: ../lib/fpdf/helveticab.php
 ${POT_FILE}: ../lib/fpdf/helveticabi.php
 ${POT_FILE}: ../lib/fpdf/helveticai.php
+${POT_FILE}: ../lib/fpdf/japanese.php
 ${POT_FILE}: ../lib/fpdf/symbol.php
 ${POT_FILE}: ../lib/fpdf/times.php
 ${POT_FILE}: ../lib/fpdf/timesb.php
@@ -196,7 +198,6 @@ ${POT_FILE}: ../lib/loadsave.php
 ${POT_FILE}: ../lib/main.php
 ${POT_FILE}: ../lib/nusoap/nusoap.php
 ${POT_FILE}: ../lib/pdf.php
-${POT_FILE}: ../lib/pdf_japanese.php
 ${POT_FILE}: ../lib/pear/Cache.php
 ${POT_FILE}: ../lib/pear/Cache/Container.php
 ${POT_FILE}: ../lib/pear/Cache/Container/file.php
@@ -236,7 +237,6 @@ ${POT_FILE}: ../lib/plugin/BackLinks.php
 ${POT_FILE}: ../lib/plugin/CacheTest.php
 ${POT_FILE}: ../lib/plugin/Calendar.php
 ${POT_FILE}: ../lib/plugin/CalendarList.php
-${POT_FILE}: ../lib/plugin/CategoryPage.php
 ${POT_FILE}: ../lib/plugin/Comment.php
 ${POT_FILE}: ../lib/plugin/CreatePage.php
 ${POT_FILE}: ../lib/plugin/CreateToc.php
@@ -252,7 +252,6 @@ ${POT_FILE}: ../lib/plugin/HelloWorld.php
 ${POT_FILE}: ../lib/plugin/IncludePage.php
 ${POT_FILE}: ../lib/plugin/IncludeSiteMap.php
 ${POT_FILE}: ../lib/plugin/InterWikiSearch.php
-${POT_FILE}: ../lib/plugin/JabberPresence.php
 ${POT_FILE}: ../lib/plugin/LikePages.php
 ${POT_FILE}: ../lib/plugin/ListSubpages.php
 ${POT_FILE}: ../lib/plugin/MostPopular.php
@@ -275,6 +274,7 @@ ${POT_FILE}: ../lib/plugin/RateIt.php
 ${POT_FILE}: ../lib/plugin/RawHtml.php
 ${POT_FILE}: ../lib/plugin/RecentChanges.php
 ${POT_FILE}: ../lib/plugin/RecentChangesCached.php
+${POT_FILE}: ../lib/plugin/RecentComments.php
 ${POT_FILE}: ../lib/plugin/RecentEdits.php
 ${POT_FILE}: ../lib/plugin/RedirectTo.php
 ${POT_FILE}: ../lib/plugin/RelatedChanges.php
@@ -282,6 +282,7 @@ ${POT_FILE}: ../lib/plugin/RichTable.php
 ${POT_FILE}: ../lib/plugin/RssFeed.php
 ${POT_FILE}: ../lib/plugin/SiteMap.php
 ${POT_FILE}: ../lib/plugin/SqlResult.php
+${POT_FILE}: ../lib/plugin/SyntaxHighlighter.php
 ${POT_FILE}: ../lib/plugin/SystemInfo.php
 ${POT_FILE}: ../lib/plugin/TexToPng.php
 ${POT_FILE}: ../lib/plugin/TitleSearch.php
@@ -315,6 +316,20 @@ ${POT_FILE}: ../lib/removepage.php
 ${POT_FILE}: ../lib/stdlib.php
 ${POT_FILE}: ../lib/upgrade.php
 ${POT_FILE}: ../lib/ziplib.php
+${POT_FILE}: ../themes/Crao/templates/actionbar.tmpl
+${POT_FILE}: ../themes/Crao/templates/blogform.tmpl
+${POT_FILE}: ../themes/Crao/templates/body.tmpl
+${POT_FILE}: ../themes/Crao/templates/bottom.tmpl
+${POT_FILE}: ../themes/Crao/templates/browse.tmpl
+${POT_FILE}: ../themes/Crao/templates/editpage.tmpl
+${POT_FILE}: ../themes/Crao/templates/head.tmpl
+${POT_FILE}: ../themes/Crao/templates/html.tmpl
+${POT_FILE}: ../themes/Crao/templates/htmldump.tmpl
+${POT_FILE}: ../themes/Crao/templates/navbar.tmpl
+${POT_FILE}: ../themes/Crao/templates/signin.tmpl
+${POT_FILE}: ../themes/Crao/templates/top.tmpl
+${POT_FILE}: ../themes/Crao/templates/wikiblog.tmpl
+${POT_FILE}: ../themes/Crao/themeinfo.php
 ${POT_FILE}: ../themes/Hawaiian/lib/random.php
 ${POT_FILE}: ../themes/Hawaiian/themeinfo.php
 ${POT_FILE}: ../themes/MacOSX/buttons/de/index.php

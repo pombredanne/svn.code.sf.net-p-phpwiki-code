@@ -74,20 +74,10 @@ $locale["Last"] =
    "Senaste";
 $locale["Last Author"] =
    "Göregående Författare";
-$locale["Last Author:"] =
-   "Göregående Författare:";
 $locale["Last Modified"] =
    "Ändringsdatum";
-$locale["Last Modified:"] =
-   "Ändringsdatum:";
 $locale["Last Summary"] =
    "Senaste Kommentar";
-$locale["Last Summary:"] =
-   "Senaste Kommentar:";
-$locale["Last edited %s."] =
-   "Senast ändrad %s.";
-$locale["Last edited on %s."] =
-   "Senast ändrad %s.";
 $locale["Lock Page"] =
    "Lås Sida";
 $locale["Locked"] =
@@ -122,8 +112,6 @@ $locale["Remove Page"] =
    "Ta bort sida";
 $locale["Remove page"] =
    "Ta bort sida";
-$locale["Remove the page now"] =
-   "Ta bort sida nu";
 $locale["Removed page '%s' successfully."] =
    "Tog bort sidan '%s'.";
 $locale["Return to %s"] =
@@ -170,10 +158,6 @@ $locale["Version"] =
    "Version";
 $locale["Version %d"] =
    "Version %d";
-$locale["Version %s, saved %s."] =
-   "Version %s, sparade %s";
-$locale["Version %s, saved on %s."] =
-   "Version %s, sparade %s";
 $locale["Versions are identical"] =
    "Versionerna är identiska";
 $locale["View Source"] =
