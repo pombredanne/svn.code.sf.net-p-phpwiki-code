@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.7 2004-03-09 11:51:54 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.8 2004-03-09 19:05:12 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -50,7 +50,8 @@ extends WikiPlugin
                       'noheader'  => 0,            // omit <h1>Table of Contents</h1>
                       'align'     => 'left',
                       'with_toclink' => 0,         // link back to TOC
-                      'jshide'    => 0,            // collapsed TOC as DHTML button 
+                      'jshide'    => 0,            // collapsed TOC as DHTML button
+                      'liststyle' => 'dl',         // or 'ul' or 'ol'
                       );
     }
 
@@ -147,7 +148,12 @@ extends WikiPlugin
         $current = $page->getCurrentRevision();
         $content = $current->getContent();
         $html = HTML::div(array('class' => 'toc','align' => $align));
-        $list = HTML::ul(array('name'=>'toclist','id'=>'toclist','class' => 'toc'));
+        if ($liststyle == 'dl')
+            $list = HTML::dl(array('name'=>'toclist','id'=>'toclist','class' => 'toc'));
+        elseif ($liststyle == 'ul')
+            $list = HTML::ul(array('name'=>'toclist','id'=>'toclist','class' => 'toc'));
+        elseif ($liststyle == 'ol')
+            $list = HTML::ol(array('name'=>'toclist','id'=>'toclist','class' => 'toc'));
         if (!strstr($headers,",")) {
             $headers = array($headers);	
         } else {
@@ -167,23 +173,36 @@ extends WikiPlugin
         }
         if ($headers = $this->extractHeaders(&$content, &$dbi->_markup, $with_toclink, $levels, $basepage)) {
             foreach ($headers as $h) {
-                //proper heading indent
+                // proper heading indent
                 $level = $h['level'];
                 $indent = 3 - $level;
                 $link = new WikiPageName($pagename,$page,$h['anchor']);
                 $li = WikiLink($link,'known',$h['text']);
                 if ($indent == 1)
-                    $list->pushContent(HTML::li(HTML::raw("-&nbsp;"),$li));
+                    $t = HTML(HTML::raw("&nbsp;&nbsp;"),$li);
                 elseif ($indent == 2)
-                    $list->pushContent(HTML::li(HTML::raw("-&nbsp;-&nbsp;"),$li));
+                    $t = HTML(HTML::raw("&nbsp;&nbsp;&nbsp;&nbsp;"),$li);
                 else
-                    $list->pushContent(HTML::li($li));
+                    $t = $li;
+                if ($liststyle == 'dl')
+                    $list->pushContent(HTML::dt($t));
+                else
+                    $list->pushContent(HTML::li($t));
             }
         }
         if ($jshide) {
             $list->setAttr('style','display:none;');
-            $html->pushContent(Javascript("function toggletoc(){toc=document.getElementById('toclist'); if (toc.style.display=='none') { toc.style.display='block';} else {toc.style.display='none';}}"));
-            $html->pushContent(HTML::h1(HTML::a(array('name'=>'TOC','class'=>'gridbutton','title'=>_("Click to display"),
+            $html->pushContent(Javascript("
+function toggletoc() {
+  toc=document.getElementById('toclist');
+  if (toc.style.display=='none') {
+    toc.style.display='block';
+  } else {
+    toc.style.display='none';
+  }
+}"));
+            $html->pushContent(HTML::h1(HTML::a(array('name'=>'TOC','class'=>'gridbutton',
+                                                      'title'=>_("Click to display"),
                                                       'onclick'=>"toggletoc()"),
                                                 _("Table Of Contents"))));
         } else {
@@ -198,6 +217,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/03/09 11:51:54  rurban
+// support jshide=1: DHTML button hide/unhide TOC
+//
 // Revision 1.6  2004/03/09 10:25:37  rurban
 // slightly better formatted TOC indentation
 //
