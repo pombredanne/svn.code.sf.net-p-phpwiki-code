@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: OldStyleTable.php,v 1.5 2003-01-18 21:48:59 carstenklapp Exp $');
+rcs_id('$Id: OldStyleTable.php,v 1.6 2003-02-21 04:12:06 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -55,7 +55,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
@@ -64,7 +64,8 @@ extends WikiPlugin
 
     function run($dbi, $argstr, $request) {
         global $Theme;
-
+        include_once('lib/InlineParser.php');
+        
         $lines = preg_split('/\s*?\n\s*/', $argstr);
         $table = HTML::table(array('cellpadding' => 1,
                                    'cellspacing' => 1,
@@ -114,6 +115,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2003/01/18 21:48:59  carstenklapp
+// Code cleanup:
+// Reformatting & tabs to spaces;
+// Added copyleft, getVersion, getDescription, rcs_id.
+//
 
 // (c-file-style: "gnu")
 // Local Variables:

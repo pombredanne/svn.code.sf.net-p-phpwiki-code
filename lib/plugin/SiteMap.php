@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SiteMap.php,v 1.6 2003-01-18 22:08:01 carstenklapp Exp $');
+rcs_id('$Id: SiteMap.php,v 1.7 2003-02-21 04:12:06 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -56,7 +56,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
@@ -135,6 +135,8 @@ extends WikiPlugin
 
 
     function run($dbi, $argstr, $request) {
+        include_once('lib/BlockParser.php');
+        
         $args = $this->getArgs($argstr, $request, false);
         extract($args);
         if (!$page)
@@ -177,11 +179,16 @@ extends WikiPlugin
         while (list($key, $link) = each($pagearr)) {
             $out .= $key . "\n";
         }
-        return TransformText($out);
+        return TransformText($out, 1, $page /*dunno if this last arg is right...*/); 
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2003/01/18 22:08:01  carstenklapp
+// Code cleanup:
+// Reformatting & tabs to spaces;
+// Added copyleft, getVersion, getDescription, rcs_id.
+//
 
 // For emacs users
 // Local Variables:

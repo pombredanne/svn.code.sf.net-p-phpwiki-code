@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UnfoldSubpages.php,v 1.6 2003-02-11 09:34:34 rurban Exp $');
+rcs_id('$Id: UnfoldSubpages.php,v 1.7 2003-02-21 04:12:06 dairiki Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -39,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
@@ -115,6 +115,8 @@ extends WikiPlugin
     }
 
     function run($dbi, $argstr, $request) {
+        include_once('lib/BlockParser.php');
+        
         $pagename = $request->getArg('pagename');
         $subpages = explodePageList($pagename . SUBPAGE_SEPARATOR . '*');
         if (! $subpages) {
@@ -161,10 +163,10 @@ extends WikiPlugin
                     // Use _("%s: %s") instead of .": ". for French punctuation
                     $ct = TransformText(sprintf(_("%s: %s"), "[$pname|$page]",
                                                 implode("\n", $c)),
-                                        $r->get('markup'));
+                                        $r->get('markup'), $page);
                 }
                 else {
-                    $ct = TransformText(implode("\n", $c), $r->get('markup'));
+                    $ct = TransformText(implode("\n", $c), $r->get('markup'), $page);
                 }
                 array_pop($included_pages);
                 if (! $smalltitle) {
@@ -183,6 +185,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2003/02/11 09:34:34  rurban
+// fix by Steven D. Brewer <sbrewer@bio.umass.edu> to respect the $pages argument
+//
 // Revision 1.5  2003/01/18 22:11:44  carstenklapp
 // Code cleanup:
 // Reformatting & tabs to spaces;

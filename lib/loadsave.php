@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.76 2003-02-16 19:47:17 dairiki Exp $');
+rcs_id('$Id: loadsave.php,v 1.77 2003-02-21 04:12:05 dairiki Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -266,8 +266,7 @@ function DumpHtmlToDir (&$request)
 
         $revision = $page->getCurrentRevision();
 
-        require_once('lib/PageType.php');
-        $transformedContent = PageType($revision);
+        $transformedContent = $revision->getTransformedContent();
 
         $template = new Template('browse', $request,
                                  array('revision' => $revision,
@@ -334,8 +333,7 @@ function MakeWikiZipHtml (&$request)
         $filename = FilenameForPage($pagename) . $Theme->HTML_DUMP_SUFFIX;
         $revision = $page->getCurrentRevision();
 
-        require_once('lib/PageType.php');
-        $transformedContent = PageType($revision);
+        $transformedContent = $revision->getTransformedContent();
 
         $template = new Template('browse', $request,
                                  array('revision' => $revision,
@@ -456,9 +454,7 @@ function SavePage (&$request, $pageinfo, $source, $filename)
     }
 
     if (! $skip) {
-        $new = $page->createRevision(WIKIDB_FORCE_CREATE, $content,
-                                     $versiondata,
-                                     ExtractWikiPageLinks($content));
+        $new = $page->save($content, WIKIDB_FORCE_CREATE, $versiondata);
         $dbi->touch();
         $mesg->pushContent(' ', fmt("- saved to database as version %d",
                                     $new->getVersion()));
@@ -832,6 +828,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.76  2003/02/16 19:47:17  dairiki
+ Update WikiDB timestamp when editing or deleting pages.
+
  Revision 1.75  2003/02/15 03:04:30  dairiki
  Fix for WikiUser constructor API change.
 

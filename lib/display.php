@@ -1,9 +1,8 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.41 2003-02-16 20:04:47 dairiki Exp $');
+rcs_id('$Id: display.php,v 1.42 2003-02-21 04:12:05 dairiki Exp $');
 
 require_once('lib/Template.php');
-require_once('lib/BlockParser.php');
 
 /**
  * Guess a short description of the page.
@@ -80,16 +79,12 @@ function actionPage(&$request, $action) {
     $request->appendValidators(array('actionpagerev' => $actionrev->getVersion(),
                                      '%mtime' => $actionrev->get('mtime')));
 
-    require_once('lib/PageType.php');
-    $transformedContent = PageType($actionrev);
+    $transformedContent = $actionrev->getTransformedContent();
     $template = Template('browse', array('CONTENT' => $transformedContent));
 
     header("Content-Type: text/html; charset=" . CHARSET);
-    $request->checkValidators();
-    
-    // $template = Template('browse', array('CONTENT' => TransformText($actionrev)));
-    
     GeneratePage($template, $pagetitle, $revision);
+    $request->checkValidators();
     flush();
 }
 
@@ -146,28 +141,26 @@ function displayPage(&$request, $tmpl = 'browse') {
     $request->appendValidators(array('pagerev' => $revision->getVersion(),
                                      '%mtime' => $revision->get('mtime')));
 
-    require_once('lib/PageType.php');
     if ($frame = $request->getArg('frame')) {
         if (in_array($frame, array('body','browse','editpage')))
-            $template = Template($frame, array('CONTENT' => PageType($revision)));
+            $template = Template($frame, array('CONTENT' => $revision->getTransformedContent()));
         elseif ($frame == 'top')
             $template = Template($frame, array('framesrc' => $request->getArg('framesrc')));
         else
             $template = Template($frame);
     } else {
-        $transformedContent = PageType($revision);
+        $transformedContent = $revision->getTransformedContent();
         $template = Template('browse', array('CONTENT' => $transformedContent));
     }
 
     header("Content-Type: text/html; charset=" . CHARSET); // FIXME: this gets done twice?
-    $request->checkValidators();
     
     GeneratePage($template, $pagetitle, $revision,
                  array('ROBOTS_META'	=> 'index,follow',
                        'PAGE_DESCRIPTION' => GleanDescription($revision),
                        'REDIRECT_FROM' => $redirect_from));
+    $request->checkValidators();
     flush();
-
     $page->increaseHitCount();
 }
 
