@@ -1,3 +1,19 @@
+1.2.0 02/01/01
+* Support for PHP 4.0.4 (using the dba_* interface for DBM files),
+  thanks to Joel Uckelman
+* Swedish translation added, thanks to Jon Åslund
+* dbmlib.php has all functions in mysql/postgresql, thanks to Jan Hidder
+* German version updated
+* Dutch translation updated
+* Spanish version updated
+* More robust support for flat file based Wiki (INSTALL.flatfile
+  included)
+* "named internal links," i.e. [wow | FrontPage]
+* New IF syntax added to templates
+* New PhpWikiAdministration page added
+* New term/defintion syntax (for <DT><DD> tags)
+* Plenty of bug fixes
+
 1.1.9 11/05/00: 
 * Spanish language support added, thanks to Sandino Araico 
   Sánchez <sandino@sandino.net>
