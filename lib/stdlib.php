@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.223 2004-12-18 16:49:29 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.224 2004-12-20 12:11:50 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1333,15 +1333,32 @@ class ListRegexExpand {
     }
 }
 
-// convert fileglob to regex style
+// convert fileglob to regex style:
+// convert some wildcards to pcre style, escape the rest
+// escape . \\ + * ? [ ^ ] $ ( ) { } = ! < > | : 
 function glob_to_pcre ($glob) {
-    $re = preg_replace('/\./', '\\.', $glob);
-    $re = preg_replace(array('/\*/','/\?/'), array('.*','.'), $glob);
+    // check simple case: no need to escape
+    if (strcspn($glob, ".\\+*?[^]$(){}=!<>|:") == strlen($glob))
+        return $glob;
+    // preg_replace cannot handle "\\\\\\2" so convert \\ to \xff
+    $glob = strtr($glob, "\\", "\xff");
+    // first convert some unescaped expressions to pcre style: . => \.
+    $escape = ".^$";
+    $re = preg_replace('/([^\xff])(['.preg_quote($escape).'])/', "\\1\xff\\2", $glob);
+
+    // * => .*, ? => .
+    $re = preg_replace('/([^\xff])\*/', '$1.*', $re);
+    $re = preg_replace('/([^\xff])\?/', '$1.', $re);
     if (!preg_match('/^[\?\*]/',$glob))
         $re = '^' . $re;
     if (!preg_match('/[\?\*]$/',$glob))
         $re = $re . '$';
-    return $re;
+
+    // .*? handled above, now escape the rest
+    $escape = '\[](){}=!<>|:';
+    while (strcspn($re, $escape) != strlen($re)) // loop strangely needed
+        $re = preg_replace('/([^\xff])(['.preg_quote($escape).'])/', "\\1\xff\\2", $re);
+    return str_replace("\xff", "\\", $re);
 }
 
 function glob_match ($glob, $against, $case_sensitive = true) {
@@ -1823,6 +1840,9 @@ function printSimpleTrace($bt) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.223  2004/12/18 16:49:29  rurban
+// fix RPC for !USE_PATH_INFO, add debugging helper
+//
 // Revision 1.222  2004/12/17 16:40:45  rurban
 // add not yet used url helper
 //
