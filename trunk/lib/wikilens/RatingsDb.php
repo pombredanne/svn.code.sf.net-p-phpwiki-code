@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RatingsDb.php,v 1.8 2004-07-20 18:00:50 dfrankow Exp $');
+rcs_id('$Id: RatingsDb.php,v 1.9 2004-10-05 00:33:44 rurban Exp $');
 
 /*
  * @author:  Dan Frankowski (wikilens author), Reini Urban (as plugin)
@@ -24,6 +24,7 @@ rcs_id('$Id: RatingsDb.php,v 1.8 2004-07-20 18:00:50 dfrankow Exp $');
  );
 */
 
+//FIXME! for other than SQL backends
 //define('RATING_STORAGE','WIKIPAGE');   // not fully supported yet
 define('RATING_STORAGE','SQL');          // only for mysql yet.
 // leave undefined for internal, slow php engine.
@@ -41,17 +42,23 @@ class RatingsDb extends WikiDB {
         $this->_backend = &$this->_dbi->_backend;
         $this->dimension = null;
         if (RATING_STORAGE == 'SQL') {
+            $this->_sqlbackend = &$this->_backend;
             if (isa($this->_backend, 'WikiDB_backend_PearDB'))
                 $this->dbtype = "PearDB";
-            else
+            elseif (isa($this->_backend, 'WikiDB_backend_ADODOB'))
                 $this->dbtype = "ADODB";
+            else {
+            	include_once("lib/WikiDB/backend/ADODB.php");
+                $this->_sqlbackend = new WikiDB_backend_ADODB($GLOBALS['DBParams']);
+            	$this->dbtype = "ADODB";
+            }
             $this->iter_class = "WikiDB_backend_".$this->dbtype."_generic_iter";
         
             extract($this->_backend->_table_names);
             if (empty($rating_tbl)) {
                 $rating_tbl = (!empty($GLOBALS['DBParams']['prefix']) 
                                ? $GLOBALS['DBParams']['prefix'] : '') . 'rating';
-                $request->_dbi->_backend->_table_names['rating_tbl'] = $rating_tbl;
+                $this->_backend->_table_names['rating_tbl'] = $rating_tbl;
             }
         } else {
         	$this->iter_class = "WikiDB_Array_PageIterator";
@@ -279,13 +286,13 @@ class RatingsDb extends WikiDB {
         if (is_null($pagename))  $pagename = $this->pagename;
 
         if (RATING_STORAGE == 'SQL') {
-            $dbi = &$this->_dbi->_backend;
+            $dbh = &$this->_dbi->_backend;
             if (isset($pagename))
-                $page = $dbi->_get_pageid($pagename);
+                $page = $dbh->_get_pageid($pagename);
             else 
                 return 0;
             if (isset($userid))
-                $user = $dbi->_get_pageid($userid);
+                $user = $dbh->_get_pageid($userid);
             else 
                 return 0;
         }
@@ -341,10 +348,10 @@ class RatingsDb extends WikiDB {
         if (is_null($dimension)) $dimension = $this->dimension;
         if (is_null($pagename))  $pagename = $this->pagename;
         if (RATING_STORAGE == 'SQL') {
-            $dbi = &$this->_dbi->_backend;
+            $dbi = &$this->_sqlbackend;
             $where = "WHERE 1";
             if (isset($pagename)) {
-                $raterid = $dbi->_get_pageid($pagename, true);
+                $raterid = $this->_backend->_get_pageid($pagename, true);
                 $where .= " AND raterpage=$raterid";
             }
             if (isset($dimension)) {
@@ -428,7 +435,7 @@ class RatingsDb extends WikiDB {
         // pageinfo must be 'rater' or 'ratee'
         if (($pageinfo != "ratee") && ($pageinfo != "rater"))
             return;
-        $dbi = &$this->_dbi->_backend;
+        $dbi = &$this->_sqlbackend;
         //$dbh = &$this->_dbi;
         extract($dbi->_table_names);
         $where = "WHERE r." . $pageinfo . "page = p.id";
@@ -436,14 +443,14 @@ class RatingsDb extends WikiDB {
             $where .= " AND dimension=$dimension";
         }
         if (isset($rater)) {
-            $raterid = $dbi->_get_pageid($rater, true);
+            $raterid = $this->_backend->_get_pageid($rater, true);
             $where .= " AND raterpage=$raterid";
         }
         if (isset($ratee)) {
             if(is_array($ratee)){
         		$where .= " AND (";
         		for($i = 0; $i < count($ratee); $i++){
-        			$rateeid = $dbi->_get_pageid($ratee[$i], true);
+        			$rateeid = $this->_backend->_get_pageid($ratee[$i], true);
             		$where .= "rateepage=$rateeid";
         			if($i != (count($ratee) - 1)){
         				$where .= " OR ";
@@ -451,7 +458,7 @@ class RatingsDb extends WikiDB {
         		}
         		$where .= ")";
         	} else {
-        		$rateeid = $dbi->_get_pageid($ratee, true);
+        		$rateeid = $this->_backend->_get_pageid($ratee, true);
             	$where .= " AND rateepage=$rateeid";
         	}
         }
@@ -485,12 +492,12 @@ class RatingsDb extends WikiDB {
      */
     function sql_delete_rating($rater, $ratee, $dimension) {
         //$dbh = &$this->_dbi;
-        $dbi = &$this->_dbi->_backend;
+        $dbi = &$this->_sqlbackend;
         extract($dbi->_table_names);
 
         $dbi->lock();
-        $raterid = $dbi->_get_pageid($rater, true);
-        $rateeid = $dbi->_get_pageid($ratee, true);
+        $raterid = $this->_backend->_get_pageid($rater, true);
+        $rateeid = $this->_backend->_get_pageid($ratee, true);
         $where = "WHERE raterpage=$raterid and rateepage=$rateeid";
         if (isset($dimension)) {
             $where .= " AND dimension=$dimension";
@@ -516,14 +523,14 @@ class RatingsDb extends WikiDB {
      */
     //               ($this->userid, $this->pagename, $this->dimension, $rating);
     function sql_rate($rater, $ratee, $rateeversion, $dimension, $rating) {
-        $dbi = &$this->_dbi->_backend;
+        $dbi = &$this->_sqlbackend;
         extract($dbi->_table_names);
         if (empty($rating_tbl))
             $rating_tbl = $this->_dbi->getParam('prefix') . 'rating';
 
         //$dbi->lock();
-        $raterid = $dbi->_get_pageid($rater, true);
-        $rateeid = $dbi->_get_pageid($ratee, true);
+        $raterid = $this->_backend->_get_pageid($rater, true);
+        $rateeid = $this->_backend->_get_pageid($ratee, true);
         assert($raterid);
         assert($rateeid);
         //we changed back to delete and insert because update didn't work if it was a new rating
@@ -690,6 +697,12 @@ extends WikiDB_backend_PearDB {
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/07/20 18:00:50  dfrankow
+// Add EXPLICIT_RATINGS_DIMENSION constant.  More dimensions on the way
+// for lists.
+//
+// Fix delete_rating().
+//
 // Revision 1.7  2004/07/08 19:14:57  rurban
 // more metadata fixes
 //
