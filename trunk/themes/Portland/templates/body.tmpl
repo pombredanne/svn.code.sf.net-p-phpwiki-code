@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: body.tmpl,v 1.1 2002-01-19 22:48:42 carstenklapp Exp $ -->
+<!-- $Id: body.tmpl,v 1.2 2002-01-19 23:38:47 carstenklapp Exp $ -->
 <body>
 <!-- Page title and logo -->
 <h1><a class="wikilink" 
@@ -8,9 +8,6 @@
              border="0" alt="<?=$WIKI_NAME?>: <?=_("HomePage")?>" 
              align="bottom" /></a> <?=$HEADER?></h1>
 <?= $CONTENT ?>
-<hr />
-<?= new WikiTemplate('actionbar') ?>
-<!-- The bottom navigation/search bar -->
 <?= new WikiTemplate('navbar') ?>
 <!-- RELATEDPAGES were here. -->
 <br />
