@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.63 2005-01-21 14:07:50 rurban Exp $');
+rcs_id('$Id: WikiUser.php,v 1.64 2005-02-08 13:25:50 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -520,9 +520,13 @@ class WikiUser {
                           E_USER_ERROR);
             return false;
         }
+        if (!$this->isAuthenticated()) return false;
+
         $prefs = $this->getPreferences();
-        //$oldpasswd = $prefs->get('passwd');
-        $prefs->set('passwd', crypt($newpasswd));
+        if (ENCRYPTED_PASSWD)
+            $prefs->set('passwd', crypt($newpasswd));
+        else 
+            $prefs->set('passwd', $newpasswd);
         $this->setPreferences($prefs);
         return true;
     }
@@ -741,6 +745,9 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.63  2005/01/21 14:07:50  rurban
+// reformatting
+//
 // Revision 1.62  2004/11/21 11:59:16  rurban
 // remove final \n to be ob_cache independent
 //
