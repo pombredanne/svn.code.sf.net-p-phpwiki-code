@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.112 2002-08-17 15:52:51 rurban Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.113 2002-08-19 06:31:17 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -265,7 +265,7 @@ function LinkBracketLink($bracketlink) {
     }
 
     $dbi = $request->getDbh();
-    if (substr($URL,0,1) == '/') { // relative link to page below
+    if (substr($URL,0,1) == SUBPAGE_SEPARATOR) { // relative link to page below
         if (!$linkname) $linkname = $URL;
         $URL = $request->getArg('pagename') . $URL;
     }
@@ -324,7 +324,7 @@ function ExtractWikiPageLinks($content) {
         for ($i = 0; $i < $numBracketLinks; $i++) {
             $link = LinkBracketLink($brktlinks[0][$i]);
             if (preg_match('/^(named-)?wiki(unknown)?$/', $link->getAttr('class')))
-                if ($brktlinks[2][$i][0] == '/') {
+                if ($brktlinks[2][$i][0] == SUBPAGE_SEPARATOR) {
                     global $request;
                     $wikilinks[$request->getArg('pagename') . $brktlinks[2][$i]] = 1;
                 } else {
@@ -339,7 +339,7 @@ function ExtractWikiPageLinks($content) {
         if (preg_match_all("/!?$WikiNameRegexp/", $line, $link)) {
             for ($i = 0; isset($link[0][$i]); $i++) {
                 if($link[0][$i][0] <> '!') {
-                    if ($link[0][$i][0] == '/') {
+                    if ($link[0][$i][0] == SUBPAGE_SEPARATOR) {
                         global $request;
                         $wikilinks[$request->getArg('pagename') . $link[0][$i]] = 1;
                     } else {
