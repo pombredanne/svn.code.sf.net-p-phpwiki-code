@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.40 2002-02-12 07:43:16 carstenklapp Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.41 2002-02-14 03:39:15 carstenklapp Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -112,7 +112,7 @@ function Button ($action, $label = false, $page_or_rev = false) {
     global $Theme;
 
     if (!is_array($action) && preg_match('/submit:(.*)/A', $action, $m))
-        return $Theme->makeSubmitButton($label, $m[1], 'button');
+        return $Theme->makeSubmitButton($label, $m[1], $class = $page_or_rev);
     else
         return $Theme->makeActionButton($action, $label, $page_or_rev);
 }
