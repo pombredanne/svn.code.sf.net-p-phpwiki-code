@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: info.tmpl,v 1.5 2002-02-21 06:43:04 carstenklapp Exp $ -->
+<!-- $Id: info.tmpl,v 1.6 2002-02-23 01:51:55 carstenklapp Exp $ -->
 <?php
 
 $modifed = $Theme->formatDateTime($revision->get('mtime'));
@@ -30,6 +30,13 @@ else {
     $kb = round($bytes / 1024, 1);
     $size = fmt("%s Kb (%s bytes)", $kb, $bytes);
 }
+// Count words
+preg_match_all('/\\w+\\W*/', &$data['%content'], $whitespacematches);
+if (1 == $c = count_all($whitespacematches))
+  $wordcount = fmt("1 word");
+else
+  $wordcount = fmt("%s words", $c);
+
 
 $markupVersion = ($markupVersion = $revision->get('markup'))
                ? fmt("Version %s", $markupVersion)
@@ -99,7 +106,7 @@ $tableSummary = fmt("Statistics about %s.", $page->getName());
     <td><?= $markupVersion ?></td>
   </tr><tr>
     <td align="right" class="pageinfo"><?=_("Size:")?></td>
-    <td><?= $size ?></td>
+    <td><?= $wordcount ?>, <?= $size ?></td>
 
 <?php if ($is_current) { ?>
   </tr><tr>
