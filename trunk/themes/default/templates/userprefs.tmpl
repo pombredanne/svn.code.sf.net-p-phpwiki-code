@@ -1,10 +1,16 @@
 <?php // -*-html-*-
 
 $serverzone = intval( array_pop(explode(" ", Rfc2822DateTime())));
+$PreftimeOffset = $request->getPref('timeOffset');
 $select = HTML();
+
 for ($z = -14; $z < 12; $z++) {
     // would prefer to actually have the string formatted like: "GMT+0430"
-    $selected = $serverzone == intval(sprintf("%s00", $z)) ? array('selected' => 'selected') : array();
+    if ($PreftimeOffset)
+        $selected = $PreftimeOffset == intval(sprintf("%s00", $z)) ? array('selected' => 'selected') : array();
+    else
+        $selected = $serverzone == intval(sprintf("%s00", $z)) ? array('selected' => 'selected') : array();
+
     $select->pushContent(HTML::option(
                          array_merge(array('value' => sprintf("%s00", $z)),
                                      $selected),
@@ -22,7 +28,7 @@ for ($z = -14; $z < 12; $z++) {
 $TimeZoneSelect = HTML::select(array('name' => "pref[timeOffset]"), $select);
 
 ?>
-<!-- $Id: userprefs.tmpl,v 1.6 2002-02-02 02:05:44 carstenklapp Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.7 2002-02-02 10:36:37 carstenklapp Exp $ -->
 <form action="<?=WikiURL($page)?>" method="post">
   <input type="hidden" name="pagename" value="<?=$request->getArg('pagename')?>" />
   <blockquote>
