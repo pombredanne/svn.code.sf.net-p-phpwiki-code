@@ -1,40 +1,86 @@
 <?php // -*-html-*- ?>
-<!-- $Id: blog.tmpl,v 1.1 2003-01-06 02:17:08 carstenklapp Exp $ -->
+<!-- $Id: blog.tmpl,v 1.2 2003-01-11 22:22:57 carstenklapp Exp $ -->
 <?php
-if (empty($noheader))
-    $noheader = false;
-$tableSummary = sprintf(_("Comments on %s by %s."), $pagename, $author);
+$tableSummary = sprintf(_("Comments on %s by %s."), $PAGENAME, $AUTHOR);
+
+// FIXME: move to css
+//$div_wikiblog = "border:1px solid cyan;margin-bottom:1ex;margin-left:2em;margin-right:2em"; // border for visual debugging only
+$div_wikiblog = "margin-bottom:1ex;margin-left:2em;margin-right:2em";
+///////////////////////////////////////////////////////////////////////
 ?>
+<?php // Blog Heading
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ?>
+<?php if ($SHOWHEADER) { ?>
+<div class="wikiblog" style="<?=$div_wikiblog?>">
+<h4><?=fmt("Comments on %s:", $PAGELINK)?></h4>
+<?php } // SHOWHEADER ?>
 
-<?php if (!$noheader) { ?>
-  <h4><?=fmt("Comments on %s:", $pagelink)?></h4>
-<?php } ?>
-
-<div class="wikiblog" margin-bottom="330px" margin-left="1.0em" margin-right="1.0em">
+<?php // One Blog comment
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ?>
+<?php if ($SHOWBLOG) { ?>
+  <?php if (!$SHOWHEADER) { ?>
+<div class="wikiblog" style="<?=$div_wikiblog?>">
+  <?php } //!SHOWHEADER ?>
 <!-- FIXME: move table formatting to css -->
-<table summary="<?= $tableSummary ?>" class="wikiblog" border="0" align="center" width="96%">
-  <tr bgcolor="#ccccff">
-    <td align="left"><strong><?=$date?></strong></td>
-    <td align="right"><strong><?=$authorlink?></strong></td>
+<table summary="<?=$tableSummary?>" class="wikiblog" border="0"
+       align="center" width="100%">
+  <tr bgcolor="#ccf">
+    <td align="left"><strong><?= $DATELINK ?></strong></td>
+    <td align="right"><strong><?= $AUTHORLINK ?></strong></td>
   </tr>
-  <tr bgcolor="#EEEEEE">
-    <td colspan="2"><strong><?=$summary?></strong><br /><?=$comment?></td>
+  <tr bgcolor="#eee">
+    <td colspan="1"><strong><?= $SUMMARY ?></strong>
+    <br /><?= $CONTENT ?></td><td></td>
   </tr>
-
-<?php if ($datemodified) { ?>
-  <tr bgcolor="#eeeeff">
-    <td align="right" colspan="2">
-      <small><?= fmt("Comment modified on %s by %s", $datemodified, $authormodified) ?></small>
-    </td>
-  </tr>
+  <tr bgcolor="#eef">
+    <td><small><?= $EDITLINK ?> <?= $REMOVELINK ?></small></td>
+    <td align="right">
+<?php if ($DATEMODIFIED) { ?>
+      <small><?= fmt("Comment modified on %s by %s", $datemodified,
+                     $authormodified) ?></small>
 <?php } ?>
-
-  <tr>
-    <td colspan="2"><?=$browselink?> <?= $user->_userid==$author ? $editlink : "" ?> <?= $user->isadmin() ? $removelink : "" ?></td>
+    </td>
   </tr>
 </table>
 </div>
+<?php } //SHOWBLOG ?>
+
+<?php // New comment form
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ?>
+<?php if ($SHOWBLOGFORM) { ?>
+
+<div class="wikiblog" style="<?=$div_wikiblog?>">
+<h4><?=_("Add new comment:")?></h4>
+<form action="<?=$PAGENAME?>" method="post" class="wikiaction"
+      accept-charset="<?=CHARSET?>">
+  <div class="wikiaction">
+  <input type="hidden" name="blog[page]" value="<?=$PAGENAME?>" />
+  <table align="center" border="0">
+     <tr bgcolor="#eee">
+         <th><?=_("Summary:")?></th>
+         <td><input class="wikitext" type="text" size="60"
+                    maxlength="256" name="blog[summary]" value="" /></td>
+        </tr>
+     <tr bgcolor="#eee">
+         <th><?=_("Comment:")?></th>
+         <td><textarea class="blogedit" rows="5" cols="51"
+                       name="blog[body]" wrap="virtual"></textarea></td>
+        </tr>
+     <tr>
+        <th></th>
+        <td align="right"><input type="submit" value="<?=_("Submit")?>"
+                                  name="addblog" class="wikiaction" /></td>
+       </tr>
+  </table>
+  </div>
+</form>
+</div>
+<?php } //SHOWBLOGFORM ?>
 
 <?php
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2003/01/06 02:17:08  carstenklapp
+// New template for WikiBlog plugin.
+//
 ?>
