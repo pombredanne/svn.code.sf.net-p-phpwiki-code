@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.166 2004-06-15 09:15:52 rurban Exp $');
+rcs_id('$Id: main.php,v 1.167 2004-06-16 13:21:16 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -182,8 +182,9 @@ $this->version = phpwiki_version();
 
     // Convenience function:
     function getPref ($key) {
-        if (isset($this->_prefs))
+        if (isset($this->_prefs)) {
             return $this->_prefs->get($key);
+        }
     }
 
     function getDbh () {
@@ -1048,6 +1049,14 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.166  2004/06/15 09:15:52  rurban
+// IMPORTANT: fixed passwd handling for passwords stored in prefs:
+//   fix encrypted usage, actually store and retrieve them from db
+//   fix bogologin with passwd set.
+// fix php crashes with call-time pass-by-reference (references wrongly used
+//   in declaration AND call). This affected mainly Apache2 and IIS.
+//   (Thanks to John Cole to detect this!)
+//
 // Revision 1.165  2004/06/14 11:31:37  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList
