@@ -1,4 +1,4 @@
-<!-- $Id: wiki_pgsql.php3,v 1.17 2000-09-04 16:55:54 wainstead Exp $ -->
+<!-- $Id: wiki_pgsql.php3,v 1.18 2000-09-05 03:33:18 wainstead Exp $ -->
 <?php
 
    /*
@@ -83,6 +83,9 @@
       $pagename = addslashes($pagename);
 //      echo "<p>dbi in InsertPage: '$dbi' '$dbi[table]' '$dbi[dbc]'<p>";
 
+      // update the wikilinks table
+      UpdateWikiLinks($dbi, $pagename, implode(" ",$pagehash['content']));
+
       // prepare the content for storage
       if (!isset($pagehash["pagename"]))
          $pagehash["pagename"] = $pagename;
@@ -96,6 +99,7 @@
 
       // record the time of modification
       $pagehash["lastmodified"] = time();
+
 
       if (IsWikiPage($dbi, $pagename)) {
 
@@ -186,6 +190,36 @@
       if ($retval == false) 
          echo "Insert/update failed: " . pg_errormessage($dbi['dbc']);
 
+
+   }
+
+
+   function UpdateWikiLinks($dbi, $pagename, $pagetext) {
+
+echo "strlen: ", strlen($pagetext), "<br>\n";
+      // extract all links from the page, both [] and OldStyle
+
+      // this is [bracketlinks]
+//      $numBracketLinks = preg_match_all("/\[.+?\]/s", $pagetext, $brktlinks);
+
+      // this is OldSchoolLinking
+      $numWikiLinks = preg_match_all("#!?\b(([A-Z][a-z]+){2,})\b#",
+                         $pagetext, $wikilinks);
+
+echo "num wiki links matched: '$numWikiLinks'<br>\n";      
+
+      for ($x = 0; $x < $numWikiLinks; $x++) {
+         $alllinks[$wikilinks[0][$x]]++;
+echo "MATCH: ", $wikilinks[0][$x], "<P>\n";
+echo "assigned ", $alllinks[$wikilinks[0][$x]], " ", $wikilinks[0][$x], " <br>\n";
+      }
+/*
+      for (; $x < $numWikiLinks + $numBracketLinks; $x++) {
+         $alllinks[$x] = $brktlinks[0][$x - $numBracketLinks];
+      }
+*/
+      // call the right function to update the table
+      SetWikiPageLinks($dbi, $pagename, $alllinks);
 
    }
 
@@ -351,21 +385,24 @@
 
 
    // takes page name, list of links it contains
+   // the $linklist is an array where the keys are the page names
 
    function SetWikiPageLinks($dbi, $pagename, $linklist) {
 
-      $pagename = addslashes($pagename);
-      //array_walk($linklist, 'addslashes');
+      $frompage = addslashes($pagename);
 
       // first delete the old list of links
-      $query = "delete * from wikilinks where frompage='$pagename'";
+      $query = "delete from wikilinks where frompage='$frompage'";
+      echo "$query<br>\n";
       $res = pg_exec($dbi['dbc'], $query);
 
       // now insert the new list of links
-      $numlinks = count($linklist);
-      for ($x = 0; $x < $numlinks; $x++) {
+      reset($linklist);
+      while (list($topage, $count) = each($linklist)) {
+         $topage = addslashes($topage);
          $query = "insert into wikilinks (frompage, topage) " .
-                  "values ('$pagename', '$linklist[$x]')";
+                  "values ('$frompage', '$topage')";
+         echo "$query<br>\n";
          $res = pg_exec($dbi['dbc'], $query);
       }
    }
