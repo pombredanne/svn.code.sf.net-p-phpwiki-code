@@ -1,5 +1,5 @@
 <?php // -*-php-*- ?>
-<!-- $Id: online.tmpl,v 1.6 2004-06-28 16:10:28 rurban Exp $ -->
+<!-- $Id: online.tmpl,v 1.7 2005-04-02 15:13:45 rurban Exp $ -->
 <?php
 // Formatting and idea borrowed from postnuke.
 
@@ -21,13 +21,13 @@ if ($MAX_ONLINE_TIME and $MAX_ONLINE_NUM)
   <tr><td class="row1" rowspan="3"><?= $ONLINE_ICON ?></td>
       <td class="row1" class="gensmall"><?= fmt("Our users created a total of %d pages.",$NUM_PAGES) ?><br />
 	  <?= fmt("We have a total of %d registered users.",$NUM_USERS) ?><br />
-          <?= $NEWEST_USER ? fmt("The newest registered user is %s",$NEWEST_USER) : ''?>
+          <?= $NEWEST_USER ? fmt("The newest registered user is %s.",$NEWEST_USER) : ''?>
           </td></tr>
   <?php if ($SESSDATA_BOOL) { ?>
   <tr><td class="row1" class="gensmall">
-          <?= fmt("In total there are %d user sessions online :: Unique %d Registered and %d Guests",
+          <?= fmt("In total there are %d user sessions online. :: Unique %d Registered and %d Guests",
 	          $NUM_ONLINE,$NUM_REGISTERED,$NUM_GUESTS) ?><br />
-          <?= $MAX_ONLINE_NUM ? fmt("Most users ever online was %d at %s",$MAX_ONLINE_NUM,$MAX_ONLINE_TIME) : '' ?><br />
+          <?= $MAX_ONLINE_NUM ? fmt("Most users ever online was %d at %s.",$MAX_ONLINE_NUM,$MAX_ONLINE_TIME) : '' ?><br />
           <?= fmt("Registered Users Online: ") ?>
 <?php 
     $s='';
@@ -44,7 +44,7 @@ if ($MAX_ONLINE_TIME and $MAX_ONLINE_NUM)
 <?php } ?>
   </td></tr>
   <tr><td class="row1" class="gensmall">
-    <?= fmt("This data is based on users active over the past %s",$SESSION_TIME) ?><br />
+    <?= fmt("This data is based on users active over the past %s.",$SESSION_TIME) ?><br />
     </td></tr>
   <?php } else { ?>
   <tr><td class="row1" class="gensmall"><br />
