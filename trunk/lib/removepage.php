@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: removepage.php,v 1.25 2004-12-09 22:10:54 rurban Exp $');
+rcs_id('$Id: removepage.php,v 1.26 2004-12-20 12:12:31 rurban Exp $');
 require_once('lib/Template.php');
 
 function RemovePage (&$request) {
@@ -60,7 +60,7 @@ function RemovePage (&$request) {
         	     HTML::div($link), HTML::hr());
     }
 
-    GeneratePage($html, _("Remove page"));
+    GeneratePage($html, _("Remove Page"));
 }
 
 
