@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.230 2005-01-25 07:10:51 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.231 2005-01-30 19:48:52 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -1900,7 +1900,7 @@ function getMemoryUsage() {
         //   (requires pslist from sysinternals.com)
         $memstr = exec("pslist $pid|grep -A1 Mem|sed 1d|perl -ane\"print \$"."F[5]\"");
         return (integer) trim($memstr);
-    } elseif (0) {
+    } elseif (1) {
         $pid = getmypid();
         //%MEM: Percentage of total memory in use by this process
         //VSZ: Total virtual memory size, in 1K blocks.
@@ -1913,6 +1913,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.230  2005/01/25 07:10:51  rurban
+// add getMemoryUsage to stdlib
+//
 // Revision 1.229  2005/01/21 11:51:22  rurban
 // changed (c)
 //
