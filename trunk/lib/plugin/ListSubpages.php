@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ListSubpages.php,v 1.1 2003-11-23 16:33:02 carstenklapp Exp $');
+rcs_id('$Id: ListSubpages.php,v 1.2 2003-11-30 18:23:48 carstenklapp Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -60,8 +60,9 @@ extends WikiPlugin
         $pagename = $request->getArg('pagename');
 
 
-        // FIXME: explodePageList from stdlib doesn't seem to work as expected
-        //        when there are no subpages. (see also UnfoldSubPages plugin)
+        // FIXME: explodePageList from stdlib doesn't seem to work as
+        // expected when there are no subpages. (see also
+        // UnfoldSubPages plugin)
         $subpages = explodePageList($pagename . SUBPAGE_SEPARATOR . '*');
         if (! $subpages) {
             return $this->error(_("The current page has no subpages defined."));
@@ -77,7 +78,7 @@ extends WikiPlugin
         }
 
         $descrip = fmt("SubPages of %s:",
-                        WikiLink($pagename, 'auto'));
+                       WikiLink($pagename, 'auto'));
         $pagelist = new PageList($info, $exclude);
         if (!$noheader)
             $pagelist->setCaption($descrip);
@@ -104,6 +105,12 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2003/11/23 16:33:02  carstenklapp
+// New plugin to list names of SubPages of the currrent
+// page. (Unfortunately this plugin reveals a bug in
+// stdlib/explodePageList(), the function doesn't seem to work as
+// expected when there are no subpages (see also UnfoldSubPages plugin).
+//
 
 // For emacs users
 // Local Variables:
