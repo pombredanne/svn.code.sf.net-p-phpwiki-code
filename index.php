@@ -80,7 +80,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.77 2002-01-31 05:10:28 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.78 2002-02-01 18:11:21 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -314,6 +314,7 @@ $ExpireParams['author'] = array('max_age'  => 365,
 //define('THEME', 'Hawaiian');
 //define('THEME', 'MacOSX');
 //define('THEME', 'Portland');
+//define('THEME', 'Sidebar');
 //define('THEME', 'WikiTrek');
 
 // Select a valid charset name to be inserted into the xml/html pages,
