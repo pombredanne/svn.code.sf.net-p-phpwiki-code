@@ -2,7 +2,7 @@
 /* Get the Compatibility info for phpwiki
    http://pear.php.net/package/PHP_CompatInfo
 
-   $Id: CompatInfo.php,v 1.2 2004-08-24 00:27:29 rurban Exp $
+   $Id: CompatInfo.php,v 1.3 2004-11-03 16:47:09 rurban Exp $
 */
 /*
  * Copyright (C) 2004 Reini Urban <rurban@x-ray.at>
@@ -80,9 +80,9 @@ out_row($cols,1);
 foreach ($r as $key => $info) {
 
     if ($key == 'extensions')
-        out_row(array("<b>$key</b>", '', join(',',$info), ''));
+        out_row(array("<b>$key</b>", '', join(', ',$info), ''));
     elseif ($key == 'constants')
-        out_row(array("<b>$key</b>", '', '', join(',',$info)));
+        out_row(array("<b>$key</b>", '', '', join(', ',$info)));
     elseif ($key == 'version')
         out_row(array("<b>$key</b>", $info, '', ''));
     elseif ($key == 'ignored_files')
@@ -154,6 +154,9 @@ if ($debug) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/08/24 00:27:29  rurban
+// Turn recursion on
+//
 // Revision 1.1  2004/08/24 00:21:57  rurban
 // Print the PHP compatibility info for phpwiki.
 // per file and per project,

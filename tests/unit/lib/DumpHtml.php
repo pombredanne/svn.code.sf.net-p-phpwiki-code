@@ -11,7 +11,7 @@ class DumpHtml extends phpwiki_TestCase {
     function _dumpPage($pagename) {
         global $request, $cur_dir;
 
-        $request->setArg('directory','.dumphtml');
+        $request->setArg('directory',$cur_dir.'/.dumphtml');
         $request->setArg('pages', $pagename);
         $request->setArg('action', 'dumphtml');
         unlink($cur_dir."/.dumphtml/$pagename.html");
@@ -34,7 +34,7 @@ class DumpHtml extends phpwiki_TestCase {
     function test99DumpHtml() {
         global $request, $cur_dir;
 
-        $request->setArg('directory','.dumphtml');
+        $request->setArg('directory',$cur_dir.'/.dumphtml');
         purge_dir($cur_dir."/.dumphtml");
         purge_dir($cur_dir."/.dumphtml/images");
         $request->setArg('pages','');
