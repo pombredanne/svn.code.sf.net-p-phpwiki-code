@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.4pre\n"
-"POT-Creation-Date: 2003-03-12 04:24-0500\n"
+"POT-Creation-Date: 2003-11-17 12:53-0500\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -111,9 +111,9 @@ msgid "RecentChanges"
 msgstr "RecenteVeranderingen"
 
 #: ../lib/Template.php:152
-#, fuzzy, c-format
+#, c-format
 msgid "%4d  %s\n"
-msgstr "%s: %s"
+msgstr "%4d  %s\n"
 
 #: ../lib/Theme.php:344
 msgid "Never edited."
@@ -171,21 +171,21 @@ msgid "Diff"
 msgstr "Diff"
 
 #: ../lib/Theme.php:779 ../themes/default/templates/signin.tmpl:5
-#: ../themes/default/templates/signin.tmpl:29
+#: ../themes/default/templates/signin.tmpl:32
 msgid "Sign Out"
 msgstr ""
 
-#: ../lib/Theme.php:780 ../lib/WikiUser.php:182
-#: ../themes/default/templates/login.tmpl:44
-#: ../themes/default/templates/signin.tmpl:55
+#: ../lib/Theme.php:780 ../lib/WikiUser.php:183
+#: ../themes/default/templates/login.tmpl:49
+#: ../themes/default/templates/signin.tmpl:60
 msgid "Sign In"
 msgstr ""
 
-#: ../lib/Theme.php:781 ../themes/MacOSX/themeinfo.php:126
+#: ../lib/Theme.php:781 ../themes/MacOSX/themeinfo.php:127
 msgid "Lock Page"
 msgstr "Open Pagina"
 
-#: ../lib/Theme.php:782 ../themes/MacOSX/themeinfo.php:127
+#: ../lib/Theme.php:782 ../themes/MacOSX/themeinfo.php:128
 msgid "Unlock Page"
 msgstr "Sluit Pagina Af"
 
@@ -203,12 +203,12 @@ msgstr ""
 msgid "Optimizing %s"
 msgstr ""
 
-#: ../lib/WikiDB.php:1147
+#: ../lib/WikiDB.php:1149
 #, c-format
 msgid "Describe %s here."
 msgstr "Beschrijf %s hier."
 
-#: ../lib/WikiDB.php:1182
+#: ../lib/WikiDB.php:1184
 #, c-format
 msgid "Acck! Revision %s of %s seems to have been deleted!"
 msgstr ""
@@ -230,27 +230,31 @@ msgid ""
 "DB file to a permanent location or risk losing all the pages!"
 msgstr ""
 
-#: ../lib/WikiPlugin.php:85
+#: ../lib/WikiPlugin.php:88
+msgid "n/a"
+msgstr ""
+
+#: ../lib/WikiPlugin.php:117
 #, c-format
 msgid "argument '%s' not declared by plugin"
 msgstr ""
 
-#: ../lib/WikiPlugin.php:150
+#: ../lib/WikiPlugin.php:181
 #, c-format
 msgid "trailing cruft in plugin args: '%s'"
 msgstr ""
 
-#: ../lib/WikiPlugin.php:259
+#: ../lib/WikiPlugin.php:290
 #, fuzzy, c-format
 msgid "Plugin %s failed."
 msgstr "Insert van '%s' gefaald"
 
-#: ../lib/WikiPlugin.php:265
+#: ../lib/WikiPlugin.php:296
 #, fuzzy, c-format
 msgid "Plugin %s disabled."
 msgstr "Insert van '%s' gefaald"
 
-#: ../lib/WikiPlugin.php:331
+#: ../lib/WikiPlugin.php:383
 #, c-format
 msgid "Include of '%s' failed"
 msgstr "Insert van '%s' gefaald"
@@ -262,61 +266,61 @@ msgid ""
 "referring page."
 msgstr ""
 
-#: ../lib/WikiUser.php:155
+#: ../lib/WikiUser.php:156
 msgid "Invalid password or userid."
 msgstr ""
 
-#: ../lib/WikiUser.php:157
+#: ../lib/WikiUser.php:158
 msgid "Insufficient permissions."
 msgstr ""
 
-#: ../lib/WikiUser.php:208
+#: ../lib/WikiUser.php:211
 msgid ""
 "You forgot to set ENCRYPTED_PASSWD to true. Please update your /index.php"
 msgstr ""
 
-#: ../lib/WikiUser.php:424
+#: ../lib/WikiUser.php:427
 #, c-format
 msgid ""
 "Old UserPage %s without stored password updated with empty password. Set a "
 "password in your UserPreferences."
 msgstr ""
 
-#: ../lib/XmlElement.php:403 ../lib/stdlib.php:961
+#: ../lib/XmlElement.php:401 ../lib/stdlib.php:970
 #, c-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr ""
 
-#: ../lib/config.php:145
+#: ../lib/config.php:154
 #, fuzzy, c-format
 msgid "Can't set locale: '%s'"
 msgstr "Kan verbinding naar data base niet tot stand brengen, geef op."
 
-#: ../lib/config.php:376
+#: ../lib/config.php:386
 #, fuzzy
 msgid "An unnamed PhpWiki"
 msgstr "Naamloos PhpWiki"
 
-#: ../lib/config.php:382 ../lib/imagecache.php:55
-#: ../themes/default/templates/userprefs.tmpl:109
+#: ../lib/config.php:392 ../lib/imagecache.php:55
+#: ../themes/default/templates/userprefs.tmpl:117
 msgid "HomePage"
 msgstr "ThuisPagina"
 
-#: ../lib/config.php:397
+#: ../lib/config.php:407
 #, c-format
 msgid "Encrypted passwords cannot be used: %s."
 msgstr ""
 
-#: ../lib/config.php:403
+#: ../lib/config.php:413
 msgid "The admin password cannot be empty. Please update your /index.php"
 msgstr ""
 
-#: ../lib/config.php:407
+#: ../lib/config.php:417
 #, c-format
 msgid "You can use %s only with %s"
 msgstr ""
 
-#: ../lib/config.php:413
+#: ../lib/config.php:423
 msgid ""
 "Empty db_session_table. Turn USE_DB_SESSION off or define the table name."
 msgstr ""
@@ -465,7 +469,7 @@ msgstr "Sidan är Sluit"
 msgid "Saved: %s"
 msgstr "Bewaard: %s"
 
-#: ../lib/editpage.php:244 ../themes/MacOSX/themeinfo.php:128
+#: ../lib/editpage.php:244 ../themes/MacOSX/themeinfo.php:129
 msgid "Page Locked"
 msgstr "Sidan är Låst"
 
@@ -693,195 +697,195 @@ msgstr ""
 msgid "Uploading %s"
 msgstr "plat bestand %"
 
-#: ../lib/main.php:243
+#: ../lib/main.php:244
 #, fuzzy, c-format
 msgid "%s is disallowed on this wiki."
 msgstr "Actie %s is niet beschikbaar in deze wiki"
 
-#: ../lib/main.php:247
+#: ../lib/main.php:248
 #, fuzzy, c-format
 msgid "You must sign in to %s."
 msgstr "Je bent ingelogd als %s."
 
-#: ../lib/main.php:249
+#: ../lib/main.php:250
 #, fuzzy, c-format
 msgid "You must log in to %s."
 msgstr "Je bent ingelogd als %s."
 
-#: ../lib/main.php:251 ../lib/plugin/PluginManager.php:65
+#: ../lib/main.php:252 ../lib/plugin/PluginManager.php:65
 #, fuzzy, c-format
 msgid "You must be an administrator to %s."
 msgstr "Je moet ingelogd zijn als beheerder om te %s in deze wiki"
 
-#: ../lib/main.php:262
+#: ../lib/main.php:263
 #, fuzzy
 msgid "browse pages in this wiki"
 msgstr "HTML is niet beschikbaar in deze wiki"
 
-#: ../lib/main.php:263
+#: ../lib/main.php:264
 #, fuzzy
 msgid "diff pages in this wiki"
 msgstr "De %d meestbezochte pagina's van deze Wiki:"
 
-#: ../lib/main.php:264
+#: ../lib/main.php:265
 #, fuzzy
 msgid "dump html pages from this wiki"
 msgstr "De %d meestbezochte pagina's van deze Wiki:"
 
-#: ../lib/main.php:265
+#: ../lib/main.php:266
 #, fuzzy
 msgid "dump serial pages from this wiki"
 msgstr "De %d meestbezochte pagina's van deze Wiki:"
 
-#: ../lib/main.php:266
+#: ../lib/main.php:267
 #, fuzzy
 msgid "edit pages in this wiki"
 msgstr "De %d meestbezochte pagina's van deze Wiki:"
 
-#: ../lib/main.php:267
+#: ../lib/main.php:268
 #, fuzzy
 msgid "create pages in this wiki"
 msgstr "De %d meestbezochte pagina's van deze Wiki:"
 
-#: ../lib/main.php:268
+#: ../lib/main.php:269
 #, fuzzy
 msgid "load files into this wiki"
 msgstr "HTML is niet beschikbaar in deze wiki"
 
-#: ../lib/main.php:269
+#: ../lib/main.php:270
 #, fuzzy
 msgid "lock pages in this wiki"
 msgstr "De %d meestbezochte pagina's van deze Wiki:"
 
-#: ../lib/main.php:270
+#: ../lib/main.php:271
 #, fuzzy
 msgid "remove pages from this wiki"
 msgstr "De %d meestbezochte pagina's van deze Wiki:"
 
-#: ../lib/main.php:271
+#: ../lib/main.php:272
 #, fuzzy
 msgid "unlock pages in this wiki"
 msgstr "De %d meestbezochte pagina's van deze Wiki:"
 
-#: ../lib/main.php:272
+#: ../lib/main.php:273
 #, fuzzy
 msgid "upload a zip dump to this wiki"
 msgstr "HTML is niet beschikbaar in deze wiki"
 
-#: ../lib/main.php:273
+#: ../lib/main.php:274
 #, fuzzy
 msgid "verify the current action"
 msgstr "huidige versie"
 
-#: ../lib/main.php:274
+#: ../lib/main.php:275
 #, fuzzy
 msgid "view the source of pages in this wiki"
 msgstr "De %d meestbezochte pagina's van deze Wiki:"
 
-#: ../lib/main.php:275
+#: ../lib/main.php:276
 msgid "access this wiki via XML-RPC"
 msgstr ""
 
-#: ../lib/main.php:276
+#: ../lib/main.php:277
 #, fuzzy
 msgid "download a zip dump from this wiki"
 msgstr "De %d meestbezochte pagina's van deze Wiki:"
 
-#: ../lib/main.php:277
+#: ../lib/main.php:278
 #, fuzzy
 msgid "download an html zip dump from this wiki"
 msgstr "De %d meestbezochte pagina's van deze Wiki:"
 
-#: ../lib/main.php:289
+#: ../lib/main.php:290
 #, fuzzy
 msgid "Browsing pages"
 msgstr "Fout bij schrijven pagina '%s'"
 
-#: ../lib/main.php:290
+#: ../lib/main.php:291
 #, fuzzy
 msgid "Diffing pages"
 msgstr "Fout bij schrijven pagina '%s'"
 
-#: ../lib/main.php:291
+#: ../lib/main.php:292
 #, fuzzy
 msgid "Dumping html pages"
 msgstr "Verwijder pagina"
 
-#: ../lib/main.php:292
+#: ../lib/main.php:293
 #, fuzzy
 msgid "Dumping serial pages"
 msgstr "De %d meestbezochte pagina's van deze Wiki:"
 
-#: ../lib/main.php:293
+#: ../lib/main.php:294
 #, fuzzy
 msgid "Editing pages"
 msgstr "Fout bij schrijven pagina '%s'"
 
-#: ../lib/main.php:294
+#: ../lib/main.php:295
 #, fuzzy
 msgid "Creating pages"
 msgstr "Fout bij schrijven pagina '%s'"
 
-#: ../lib/main.php:295
+#: ../lib/main.php:296
 #, fuzzy
 msgid "Loading files"
 msgstr "plat bestand %"
 
-#: ../lib/main.php:296
+#: ../lib/main.php:297
 #, fuzzy
 msgid "Locking pages"
 msgstr "Open Pagina"
 
-#: ../lib/main.php:297
+#: ../lib/main.php:298
 #, fuzzy
 msgid "Removing pages"
 msgstr "Verwijder pagina"
 
-#: ../lib/main.php:298
+#: ../lib/main.php:299
 #, fuzzy
 msgid "Unlocking pages"
 msgstr "Sluit Pagina Af"
 
-#: ../lib/main.php:299
+#: ../lib/main.php:300
 msgid "Uploading zip dumps"
 msgstr ""
 
-#: ../lib/main.php:300
+#: ../lib/main.php:301
 #, fuzzy
 msgid "Verify the current action"
 msgstr "huidige versie"
 
-#: ../lib/main.php:301
+#: ../lib/main.php:302
 #, fuzzy
 msgid "Viewing the source of pages"
 msgstr "De %d meestbezochte pagina's van deze Wiki:"
 
-#: ../lib/main.php:302
+#: ../lib/main.php:303
 msgid "XML-RPC access"
 msgstr ""
 
-#: ../lib/main.php:303
+#: ../lib/main.php:304
 msgid "Downloading zip dumps"
 msgstr ""
 
-#: ../lib/main.php:304
+#: ../lib/main.php:305
 msgid "Downloading html zip dumps"
 msgstr ""
 
-#: ../lib/main.php:407
+#: ../lib/main.php:408
 #, c-format
 msgid "%s: Bad action"
 msgstr ""
 
-#: ../lib/main.php:429
+#: ../lib/main.php:430
 msgid "Fatal PhpWiki Error"
 msgstr "PhpWiki Fatale Fout"
 
-#: ../lib/main.php:604 ../lib/plugin/FullTextSearch.php:31
+#: ../lib/main.php:606 ../lib/plugin/FullTextSearch.php:31
 msgid "FullTextSearch"
 msgstr "VolledigeTekstZoek"
 
-#: ../lib/main.php:607 ../lib/plugin/RecentChanges.php:515
+#: ../lib/main.php:609 ../lib/plugin/RecentChanges.php:515
 #: ../lib/plugin/TitleSearch.php:31
 msgid "TitleSearch"
 msgstr "TitelZoek"
@@ -1017,7 +1021,7 @@ msgid ""
 "Displays a url in a seperate frame inside our body. Only one frame allowed."
 msgstr ""
 
-#: ../lib/plugin/FrameInclude.php:93 ../lib/plugin/IncludePage.php:108
+#: ../lib/plugin/FrameInclude.php:93 ../lib/plugin/IncludePage.php:124
 #, c-format
 msgid "recursive inclusion of page %s"
 msgstr ""
@@ -1102,16 +1106,16 @@ msgstr ""
 msgid "<%s: no such section>"
 msgstr ""
 
-#: ../lib/plugin/IncludePage.php:101
+#: ../lib/plugin/IncludePage.php:117
 msgid "no page specified"
 msgstr ""
 
-#: ../lib/plugin/IncludePage.php:117 ../lib/plugin/PageGroup.php:121
+#: ../lib/plugin/IncludePage.php:133 ../lib/plugin/PageGroup.php:121
 #, c-format
 msgid "%s(%d): no such revision"
 msgstr ""
 
-#: ../lib/plugin/IncludePage.php:146
+#: ../lib/plugin/IncludePage.php:162
 #, fuzzy, c-format
 msgid "Included from %s"
 msgstr "van %s"
@@ -1439,11 +1443,11 @@ msgstr "ThuisPagina"
 msgid "Displays a list of randomly chosen pages or redirects to a random page."
 msgstr ""
 
-#: ../lib/plugin/RawHtml.php:45
+#: ../lib/plugin/RawHtml.php:39
 msgid "A plugin to provide for raw HTML within wiki pages."
 msgstr ""
 
-#: ../lib/plugin/RawHtml.php:55
+#: ../lib/plugin/RawHtml.php:56
 #, fuzzy
 msgid "Raw HTML is disabled in this wiki."
 msgstr "HTML is niet beschikbaar in deze wiki"
@@ -1837,7 +1841,7 @@ msgstr ""
 msgid "Search the titles of all pages in this wiki."
 msgstr "De %d meestbezochte pagina's van deze Wiki:"
 
-#: ../lib/plugin/TitleSearch.php:67
+#: ../lib/plugin/TitleSearch.php:74
 #, c-format
 msgid "Title search results for '%s'"
 msgstr "Titel zoek resultaten naar '%s'"
@@ -1903,22 +1907,65 @@ msgstr ""
 msgid "Included from %s:"
 msgstr "van %s"
 
-#: ../lib/plugin/UserPreferences.php:14
+#: ../lib/plugin/UpLoad.php:54
+msgid "Simple Plugin to load files up to server"
+msgstr ""
+
+#: ../lib/plugin/UpLoad.php:80 ../lib/plugin/WikiForm.php:100
+msgid "Upload"
+msgstr ""
+
+#: ../lib/plugin/UpLoad.php:103
+msgid "ACCESS DENIED: Please log in to upload files"
+msgstr ""
+
+#: ../lib/plugin/UpLoad.php:117
+#, c-format
+msgid "Files with extension %s are not allowed"
+msgstr ""
+
+#: ../lib/plugin/UpLoad.php:123
+#, c-format
+msgid "There is already a file with name %s uploaded"
+msgstr ""
+
+#: ../lib/plugin/UpLoad.php:129
+msgid "Sorry but this file is too big"
+msgstr ""
+
+#: ../lib/plugin/UpLoad.php:134
+msgid "File successfully uploaded to location:"
+msgstr ""
+
+#: ../lib/plugin/UpLoad.php:142
+msgid "Error: the upload log is not writable"
+msgstr ""
+
+#: ../lib/plugin/UpLoad.php:146
+msgid "Error: can't open the upload logfile"
+msgstr ""
+
+#: ../lib/plugin/UpLoad.php:165
+#, fuzzy
+msgid "Uploading failed."
+msgstr "plat bestand %"
+
+#: ../lib/plugin/UserPreferences.php:34
 msgid "UserPreferences"
 msgstr "GebruikersVoorkeuren"
 
-#: ../lib/plugin/UserPreferences.php:48
+#: ../lib/plugin/UserPreferences.php:76
 msgid ""
 "Error: The page with the UserPreferences plugin must be valid WikiWord or a "
 "Preferences subpage of the users HomePage. Sorry, UserPreferences cannot be "
 "saved."
 msgstr ""
 
-#: ../lib/plugin/UserPreferences.php:62
+#: ../lib/plugin/UserPreferences.php:92
 msgid "No changes."
 msgstr ""
 
-#: ../lib/plugin/UserPreferences.php:64
+#: ../lib/plugin/UserPreferences.php:94
 #, c-format
 msgid "%d UserPreferences fields successfully updated."
 msgstr ""
@@ -2016,8 +2063,8 @@ msgstr ""
 
 #: ../lib/plugin/WikiAdminRemove.php:197 ../lib/plugin/WikiAdminSelect.php:154
 #: ../lib/plugin/WikiAdminSelect.php:173 ../lib/removepage.php:22
-#: ../themes/default/templates/login.tmpl:46
-#: ../themes/default/templates/userprefs.tmpl:195
+#: ../themes/default/templates/login.tmpl:51
+#: ../themes/default/templates/userprefs.tmpl:203
 msgid "Cancel"
 msgstr "Annuleer"
 
@@ -2067,7 +2114,7 @@ msgstr "Je moet ingelogd zijn als beheerder om te %s in deze wiki"
 msgid "WikiAdminUtils says:"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:95 ../lib/stdlib.php:1283
+#: ../lib/plugin/WikiAdminUtils.php:95 ../lib/stdlib.php:1292
 msgid "Okay"
 msgstr ""
 
@@ -2131,10 +2178,6 @@ msgstr ""
 msgid "Dump Pages as XHTML"
 msgstr ""
 
-#: ../lib/plugin/WikiForm.php:100
-msgid "Upload"
-msgstr ""
-
 #: ../lib/plugin/WikiForm.php:104
 #, c-format
 msgid "WikiForm: %s: unknown action"
@@ -2168,6 +2211,11 @@ msgstr ""
 #: ../lib/plugin/_BackendInfo.php:95
 msgid "<empty>"
 msgstr ""
+
+#: ../lib/plugin/_MailifyPage.php:54
+#, fuzzy, c-format
+msgid "Page %s not found."
+msgstr "Sidan är Sluit"
 
 #: ../lib/plugin/_PreferencesInfo.php:30
 #: ../themes/default/templates/userprefs.tmpl:12
@@ -2230,96 +2278,96 @@ msgstr ""
 msgid "Remove page"
 msgstr "Verwijder pagina"
 
-#: ../lib/stdlib.php:226 ../lib/stdlib.php:245
+#: ../lib/stdlib.php:236 ../lib/stdlib.php:255
 msgid "BAD URL -- remove all of <, >, \""
 msgstr ""
 
-#: ../lib/stdlib.php:306
+#: ../lib/stdlib.php:316
 msgid "BAD phpwiki: URL"
 msgstr ""
 
-#: ../lib/stdlib.php:344
+#: ../lib/stdlib.php:354
 msgid "Lock page to enable link"
 msgstr ""
 
-#: ../lib/stdlib.php:446
+#: ../lib/stdlib.php:453
 #, c-format
 msgid "'%s': Bad page name: %s"
 msgstr ""
 
-#: ../lib/stdlib.php:481
+#: ../lib/stdlib.php:490
 msgid "White space converted to single space"
 msgstr ""
 
-#: ../lib/stdlib.php:486
+#: ../lib/stdlib.php:495
 msgid "Control characters not allowed"
 msgstr ""
 
-#: ../lib/stdlib.php:495
+#: ../lib/stdlib.php:504
 #, c-format
 msgid "Leading %s not allowed"
 msgstr ""
 
-#: ../lib/stdlib.php:498
+#: ../lib/stdlib.php:507
 msgid "';' and ':' in pagenames are deprecated"
 msgstr ""
 
-#: ../lib/stdlib.php:502
+#: ../lib/stdlib.php:511
 msgid "too long"
 msgstr ""
 
-#: ../lib/stdlib.php:507
+#: ../lib/stdlib.php:516
 msgid "illegal pagename"
 msgstr ""
 
-#: ../lib/stdlib.php:749
+#: ../lib/stdlib.php:758
 msgid "Revision Not Found"
 msgstr ""
 
-#: ../lib/stdlib.php:750
+#: ../lib/stdlib.php:759
 #, fuzzy, c-format
 msgid "I'm sorry.  Version %d of %s is not in the database."
 msgstr "Pagina naam '%s' staat niet in de data base"
 
-#: ../lib/stdlib.php:753
+#: ../lib/stdlib.php:762
 #, fuzzy
 msgid "Bad Version"
 msgstr "versie"
 
-#: ../lib/stdlib.php:970
+#: ../lib/stdlib.php:979
 #, c-format
 msgid "%s: argument index out of range"
 msgstr ""
 
-#: ../lib/stdlib.php:1010 ../themes/Hawaiian/lib/random.php:20
+#: ../lib/stdlib.php:1019 ../themes/Hawaiian/lib/random.php:20
 #, c-format
 msgid "%s is empty."
 msgstr ""
 
-#: ../lib/stdlib.php:1017
+#: ../lib/stdlib.php:1026
 #, c-format
 msgid "Unable to open directory '%s' for reading"
 msgstr ""
 
-#: ../lib/ziplib.php:185
+#: ../lib/ziplib.php:209
 msgid "Can't inflate data: zlib support not enabled in this PHP"
 msgstr ""
 
-#: ../lib/ziplib.php:375
+#: ../lib/ziplib.php:399
 #, c-format
 msgid "Can't open zip file '%s' for reading"
 msgstr ""
 
-#: ../lib/ziplib.php:382
+#: ../lib/ziplib.php:406
 msgid "Unexpected EOF in zip file"
 msgstr ""
 
-#: ../lib/ziplib.php:679
+#: ../lib/ziplib.php:703
 #, c-format
 msgid "[%d] See [%s]"
 msgstr "[%d] Zie [%s]"
 
-#: ../lib/ziplib.php:687
+#: ../lib/ziplib.php:711
 msgid "References"
 msgstr "Referenties"
 
@@ -2406,7 +2454,7 @@ msgid ""
 msgstr ""
 
 #: ../themes/Portland/templates/editpage.tmpl:69
-#: ../themes/default/templates/userprefs.tmpl:158
+#: ../themes/default/templates/userprefs.tmpl:166
 #, fuzzy
 msgid "Edit Area Size"
 msgstr "InvoerVeld Afmetingen"
@@ -2669,11 +2717,6 @@ msgstr ""
 msgid "Password:"
 msgstr ""
 
-#: ../themes/default/templates/login.tmpl:40
-#, fuzzy
-msgid "Create Homepage:"
-msgstr "Huidige pagina:"
-
 #: ../themes/default/templates/navbar.tmpl:33
 msgid "Today"
 msgstr ""
@@ -2715,187 +2758,186 @@ msgstr "Je zorgvuldige aandacht voor detail wordt erg gewaardeerd."
 msgid "Warning!"
 msgstr ""
 
-#: ../themes/default/templates/signin.tmpl:17
+#: ../themes/default/templates/signin.tmpl:19
 #, c-format
 msgid "You are signed in as %s"
 msgstr "Je bent ingelogd als %s"
 
-#: ../themes/default/templates/signin.tmpl:37
+#: ../themes/default/templates/signin.tmpl:40
 msgid "Enter your UserId to sign in"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:51
-#: ../themes/default/templates/userprefs.tmpl:53
+#: ../themes/default/templates/signin.tmpl:55
+msgid "Sign in:"
+msgstr ""
+
+#: ../themes/default/templates/userprefs.tmpl:59
+#: ../themes/default/templates/userprefs.tmpl:61
 msgid "<system theme>"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:62
+#: ../themes/default/templates/userprefs.tmpl:70
 msgid "Select your personal theme:"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:68
-#: ../themes/default/templates/userprefs.tmpl:70
+#: ../themes/default/templates/userprefs.tmpl:76
+#: ../themes/default/templates/userprefs.tmpl:78
 msgid "<system language>"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:79
+#: ../themes/default/templates/userprefs.tmpl:87
 msgid "Select your personal language:"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:88
+#: ../themes/default/templates/userprefs.tmpl:96
 msgid "Personal theme:"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:89
+#: ../themes/default/templates/userprefs.tmpl:97
 msgid "Personal language:"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:104
+#: ../themes/default/templates/userprefs.tmpl:112
 msgid "UserId"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:106
-msgid "Password"
-msgstr ""
-
-#: ../themes/default/templates/userprefs.tmpl:108
+#: ../themes/default/templates/userprefs.tmpl:116
 msgid "Auth Level"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:108
+#: ../themes/default/templates/userprefs.tmpl:116
 msgid "Auth Method"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:110
+#: ../themes/default/templates/userprefs.tmpl:118
 msgid "E-Mail"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:111
+#: ../themes/default/templates/userprefs.tmpl:119
 msgid "Notify"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:112
+#: ../themes/default/templates/userprefs.tmpl:120
 msgid "Theme"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:112
+#: ../themes/default/templates/userprefs.tmpl:120
 msgid "Current Theme"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:113
+#: ../themes/default/templates/userprefs.tmpl:121
 msgid "Language"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:113
+#: ../themes/default/templates/userprefs.tmpl:121
 msgid "Current Language"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:118
+#: ../themes/default/templates/userprefs.tmpl:126
 msgid "Change Password"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:119
+#: ../themes/default/templates/userprefs.tmpl:127
 msgid "New password"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:120
+#: ../themes/default/templates/userprefs.tmpl:128
 msgid "Type it again"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:123
-msgid "Email Notification"
+#: ../themes/default/templates/userprefs.tmpl:131
+msgid "E-mail"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:124
+#: ../themes/default/templates/userprefs.tmpl:132
 msgid "Your E-Mail:"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:131
+#: ../themes/default/templates/userprefs.tmpl:138
 msgid "Status:"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:133
+#: ../themes/default/templates/userprefs.tmpl:140
 msgid "Email verified."
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:135
+#: ../themes/default/templates/userprefs.tmpl:142
 msgid "Email not yet verified."
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:138
+#: ../themes/default/templates/userprefs.tmpl:145
 msgid "Note, that user accounts with bouncing emails will be disabled."
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:139
-msgid "Get an email notification at changes of the following pages:"
-msgstr ""
-
-#: ../themes/default/templates/userprefs.tmpl:143
-msgid ""
-"Enter pages seperated by space or comma. Wildcards (fileglobbing) allowed."
-msgstr ""
-
-#: ../themes/default/templates/userprefs.tmpl:149
+#: ../themes/default/templates/userprefs.tmpl:158
 msgid "Appearance"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:151
-msgid "Default system theme:"
-msgstr ""
-
-#: ../themes/default/templates/userprefs.tmpl:151
-msgid "Default system language:"
-msgstr ""
-
-#: ../themes/default/templates/userprefs.tmpl:156
+#: ../themes/default/templates/userprefs.tmpl:159
 msgid ""
 "Here you can override site-specific default values. Currently not "
 "recommended!"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:159
+#: ../themes/default/templates/userprefs.tmpl:161
+#: ../themes/default/templates/userprefs.tmpl:162
+msgid "System default:"
+msgstr ""
+
+#: ../themes/default/templates/userprefs.tmpl:163
+#, c-format
+msgid "Hide %s."
+msgstr ""
+
+#: ../themes/default/templates/userprefs.tmpl:164
+msgid ""
+"Hide or show LinkIcons (if supported by the current theme). Useful for text-"
+"only browsers or slow connections."
+msgstr ""
+
+#: ../themes/default/templates/userprefs.tmpl:167
 msgid "Height"
 msgstr "Hoogte"
 
-#: ../themes/default/templates/userprefs.tmpl:166
+#: ../themes/default/templates/userprefs.tmpl:174
 msgid "Width"
 msgstr "Breedte"
 
-#: ../themes/default/templates/userprefs.tmpl:174
+#: ../themes/default/templates/userprefs.tmpl:182
 msgid ""
 "Note that many browsers will automatically adjust the width of the editing "
 "area so that it fills the browser window.  In this case, the width "
 "preference will be ignored."
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:176
+#: ../themes/default/templates/userprefs.tmpl:184
 msgid "Time Zone"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:178
+#: ../themes/default/templates/userprefs.tmpl:186
 #, c-format
 msgid "Add %s hours to the server's local time when reporting times."
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:182
+#: ../themes/default/templates/userprefs.tmpl:190
 #, c-format
 msgid "The current time at the server is %s."
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:184
+#: ../themes/default/templates/userprefs.tmpl:192
 #, c-format
 msgid "With the current offset, this would be reported as %s."
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:188
+#: ../themes/default/templates/userprefs.tmpl:196
 msgid "Date Format"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:190
+#: ../themes/default/templates/userprefs.tmpl:198
 msgid "Show relative dates using 'Today' and 'Yesterday'."
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:195
+#: ../themes/default/templates/userprefs.tmpl:203
 msgid "Update Preferences"
 msgstr "Zet Voorkeuren"
 
@@ -2907,6 +2949,10 @@ msgstr "meest recente verandering op %s"
 #: ../themes/default/themeinfo.php:25
 msgid "Top & bottom toolbars"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Create Homepage:"
+#~ msgstr "Huidige pagina:"
 
 #~ msgid "Return to %s."
 #~ msgstr "Terug naar %s."
