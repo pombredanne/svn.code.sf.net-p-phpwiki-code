@@ -1,4 +1,4 @@
-<!-- $Id: wiki_stdlib.php3,v 1.9 2000-06-05 21:46:50 wainstead Exp $ -->
+<!-- $Id: wiki_stdlib.php3,v 1.10 2000-06-06 06:17:38 ahollosi Exp $ -->
 <?
    /*
       Standard functions for Wiki functionality
@@ -141,25 +141,25 @@
       $retvar = "";
    
       if ($tagdepth == SINGLE_DEPTH) {
-   
          if ($tabcount < $stack->cnt()) {
-   
-            // there are fewer tabs than stack, reduce stack
-            // to one less than tab count; then push new tag
-            while ($stack->cnt() > ($tabcount - 1)) {
+            // there are fewer tabs than stack,
+	    // reduce stack to that tab count
+            while ($stack->cnt() > $tabcount) {
                $closetag = $stack->pop();
                if ($closetag == false) {
                   //echo "bounds error in tag stack";
-                  //exit();
                   break;
                }
-               #echo "</$closetag>\n";
                $retvar .= "</$closetag>\n";
             }
-   
-            #echo "<$tag>\n";
-            $retvar .= "<$tag>\n";
-            $stack->push($tag);
+
+	    // if list type isn't the same,
+	    // back up one more and push new tag
+	    if ($tag != $stack->top()) {
+	       $closetag = $stack->pop();
+	       $retvar .= "</$closetag><$tag>\n";
+	       $stack->push($tag);
+	    }
    
          } elseif ($tabcount > $stack->cnt()) {
             // we add the diff to the stack
