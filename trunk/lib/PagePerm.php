@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.2 2004-02-08 13:17:48 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.3 2004-02-09 03:58:12 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -28,6 +28,7 @@ rcs_id('$Id: PagePerm.php,v 1.2 2004-02-08 13:17:48 rurban Exp $');
 
    Permissions maybe inherited its parent pages, and ultimativly the 
    optional master page (".")
+   Pagenames starting with "." have special default permissions.
    For Authentification see WikiUserNew.php, WikiGroup.php and main.php
    Page Permssions are in PhpWiki since v1.3.9 and enabled since v1.4.0
 
@@ -48,7 +49,7 @@ rcs_id('$Id: PagePerm.php,v 1.2 2004-02-08 13:17:48 rurban Exp $');
        just returns the level per action, will be replaced with the 
        action + page pair
 
-     The defined main.php actions map to simplier access types here:
+     The defined main.php actions map to simplier access types:
        browse => view
        edit   => edit
        create => edit or create
@@ -68,13 +69,40 @@ define('ACL_ADMIN',	   '_ADMIN');
 define('ACL_OWNER',	   '_OWNER');
 define('ACL_CREATOR',	   '_CREATOR');
 
+// Return the page permissions object for this page.
+// To provide ui helpers to view and change page permissions:
+//   <tr><th>Group</th><th>Access</th><th>Allow or Forbid</th></tr>
+//   <tr><td>$group</td><td>_($access)</td><td> [ ] </td></tr>
+function pagePermissions($pagename) {
+    global $request;
+    $page = $request->getPage($pagename);
+    // Page not found (new page); returned inherited permissions, to be displayed in gray
+    if (! $page ) {
+        if ($pagename == '.') // stop recursion
+            return array('default' => new PagePermissions());
+        else
+            return array('inherited' => pagePermissions(getParentPage($pagename)));
+    } elseif ($perm = getPagePermissions($page)) {
+        return array('ok' => $perm);
+    // or no permissions defined; returned inherited permissions, to be displayed in gray
+    } else {
+        return array('inherited' => pagePermissions(getParentPage($pagename)));
+    }
+}
+
+// Check the permissions for the current action.
 // Walk down the inheritance tree. Collect all permissions until 
 // the minimum required level is gained, which is not 
 // overruled by more specific forbid rules.
-// Todo: cache result per access and page in session
+// Todo: cache result per access and page in session?
 function requiredAuthorityForPage ($action) {
+    return _requiredAuthorityForPagename(action2access($action),
+                                         $GLOBALS['request']->getArg('pagename'));
+}
+
+// Translate action or plugin to the simplier access types:
+function action2access ($action) {
     global $request;
-    // translate action to access
     switch ($action) {
     case 'browse':
     case 'viewsource':
@@ -82,19 +110,19 @@ function requiredAuthorityForPage ($action) {
     case 'select':
     case 'xmlrpc':
     case 'search':
-        $access = 'view'; break;
+        return 'view';
     case 'zip':
     case 'ziphtml':
-        $access = 'dump'; break;
+        return 'dump';
     case 'edit':
-        $access = 'edit'; break;
+        return 'edit';
     case 'create':
-        $page = $this->getPage();
+        $page = $request->getPage();
         $current = $page->getCurrentRevision();
         if ($current->hasDefaultContents())
-            $access = 'edit';
+            return 'edit';
         else
-            $access = 'view'; 
+            return 'view'; 
         break;
     case 'upload':
     case 'dumpserial':
@@ -103,36 +131,45 @@ function requiredAuthorityForPage ($action) {
     case 'remove':
     case 'lock':
     case 'unlock':
-            $access = 'change'; break;
+            return 'change';
     default:
+        //Todo: Plugins should be able to override its access type
         if (isWikiWord($action))
-            $access = 'view';
+            return 'view';
         else
-            $access = 'change';
+            return 'change';
         break;
     }
-    return _requiredAuthorityForPagename($access,$request->getArg('pagename'));
 }
 
-function _requiredAuthorityForPagename ($access,$pagename) {
+// Recursive helper to do the real work
+function _requiredAuthorityForPagename($access, $pagename) {
     global $request;
     $page = $request->getPage($pagename);
+    // Page not found; check against default permissions
     if (! $page ) {
-        $perm = new PagePermission(); // check against default permissions
+        $perm = new PagePermission();
         return ($perm->isAuthorized($access,$request->_user) === true);
     }
-    $perm = getPagePermissions($page);
+    // no ACL defined; check for special dotfile or walk down
+    if (! ($perm = getPagePermissions($page))) { 
+        if ($pagename[0] == '.') {
+            $perm = new PagePermission(PagePermission::dotPerms());
+            return ($perm->isAuthorized($access,$request->_user) === true);
+        }
+        return _requiredAuthorityForPagename($access,getParentPage($pagename));
+    }
+    // ACL defined; check if isAuthorized returns true or false
     $authorized = $perm->isAuthorized($access,$request->_user);
-    if ($authorized != -1)
+    if ($authorized != -1) // -1 for undecided
         return $authorized ? $request->_user->_level : WIKIAUTH_FORBIDDEN;
     else
         return _requiredAuthorityForPagename($access,getParentPage($pagename));
 }
 
-
-/*
+/**
  * @param  string $pagename   page from which the parent page is searched.
- * @return string parent pagename or the (possibly pseudo) dot-pagename.
+ * @return string parent      pagename or the (possibly pseudo) dot-pagename.
  */
 function getParentPage($pagename) {
     global $request;
@@ -143,23 +180,38 @@ function getParentPage($pagename) {
     }
 }
 
-// read the ACL from the page
+// Read the ACL from the page
+// Done: Not existing pages should NOT be queried. 
+// Check the parent page instead and don't take the default ACL's
 function getPagePermissions ($page) {
-    $hash = $page->get('perm');
-    if ($hash)  // hash => object
+    if ($hash = $page->get('perm'))  // hash => object
         return new PagePermission(unserialize($hash));
     else 
-        return new PagePermission();
+        return false;
 }
 
-// store the ACL in the page
+// Store the ACL in the page
 function setPagePermissions ($page,$perm) {
     $perm->store($page);
 }
 
-// provide ui helpers to view and change page permissions
-function displayPagePermissions () {
-    return '';
+function getAccessDescription($access) {
+    static $accessDescriptions;
+    if (! $accessDescriptions) {
+        $accessDescriptions = array(
+                                    'list'     => _("List this page and all subpages"),
+                                    'view'     => _("View this page and all subpages"),
+                                    'edit'     => _("Edit this page and all subpages"),
+                                    'create'   => _("Create a new (sub)page"),
+                                    'dump'     => _("Download the page contents"),
+                                    'change'   => _("Change page attributes"),
+                                    'remove'   => _("Remove this page"),
+                                    );
+    }
+    if (in_array($action, array_keys($accessDescriptions)))
+        return $accessDescriptions[$access];
+    else
+        return $access;
 }
 
 /**
@@ -317,6 +369,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/02/08 13:17:48  rurban
+// This should be the functionality. Needs testing and some minor todos.
+//
 // Revision 1.1  2004/02/08 12:29:30  rurban
 // initial version, not yet hooked into lib/main.php
 //

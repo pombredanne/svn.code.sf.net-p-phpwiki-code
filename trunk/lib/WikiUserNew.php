@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.12 2004-02-07 10:41:25 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.13 2004-02-09 03:58:12 rurban Exp $');
 
 // This is a complete OOP rewrite of the old WikiUser code with various
 // configurable external authentification methods.
@@ -633,7 +633,7 @@ extends _AnonUser
         $this->getPreferences();
 
         // Upgrade to the next parent _PassUser class. Avoid recursion.
-        if ( get_class($this) === '_passuser' ) {
+        if ( get_class($this) === '_passuser' ) { // hopefully PHP will keep this lowercase
             //auth policy: Check the order of the configured auth methods
             // 1. first-only: Upgrade the class here in the constructor
             // 2. old:       ignore USER_AUTH_ORDER and try to use all available methods as in the previous PhpWiki releases (slow)
@@ -685,6 +685,33 @@ extends _AnonUser
             $this->_auth_dbi = & $dbh->_backend->_dbh;    
         }
         return $this->_auth_dbi;
+    }
+
+    function prepare ($stmt, $variables) {
+        global $DBParams, $request;
+        // preparate the SELECT statement, for ADODB and PearDB (MDB not)
+        $this->getAuthDbh();
+        $place = ($DBParams['dbtype'] == 'ADODB') ? '%s' : '?';
+        if (is_array($variables)) {
+            $new = array();
+            foreach ($variables as $v) { $new[] = $place; }
+        } else {
+            $new = $place;
+        }
+        // probably prefix table names if in same database
+        if (!empty($DBParams['prefix']) and 
+            $this->_auth_dbi === $request->_dbi->_backend->_dbh) {
+            if (!stristr($DBParams['prefix'],$stmt)) {
+                //Do it automatically for the lazy admin? Esp. on sf.net it's nice to have
+                trigger_error("TODO: Need to prefix the DBAuthParam tablename in index.php: $stmt",
+                              E_USER_WARNING);
+                $stmt = str_replace(array(" user "," pref "," member "),
+                                    array(" ".$prefix."user ",
+                                          " ".$prefix."prefs ",
+                                          " ".$prefix."member "),$stmt);
+            }
+        }
+        return $this->_auth_dbi->prepare(str_replace($variables,$new,$stmt));
     }
 
     //TODO: password changing
@@ -883,7 +910,7 @@ extends _PassUser
         if (!$this->_prefs)
             _PassUser::_PassUser($UserName);
         $this->_authmethod = 'DB';
-        $this->_auth_dbi = $this->getAuthDbh();
+        $this->getAuthDbh();
         $this->_auth_crypt_method = $GLOBALS['DBAuthParams']['auth_crypt_method'];
 
         if ($GLOBALS['DBParams']['dbtype'] == 'ADODB') 
@@ -908,6 +935,8 @@ extends _DbPassUser
         global $DBAuthParams;
         if (!$this->_prefs)
             _PassUser::_PassUser($UserName);
+        $this->getAuthDbh();
+        $this->_auth_crypt_method = $GLOBALS['DBAuthParams']['auth_crypt_method'];
         // Prepare the configured auth statements
         if (!empty($DBAuthParams['auth_check']) and !isset($this->_authselect)) {
             $this->_authselect = $this->_auth_dbi->prepare (
@@ -1053,6 +1082,8 @@ extends _DbPassUser
         global $DBAuthParams;
         if (!$this->_prefs)
             _PassUser::_PassUser($UserName);
+        $this->getAuthDbh();
+        $this->_auth_crypt_method = $GLOBALS['DBAuthParams']['auth_crypt_method'];
         // Prepare the configured auth statements
         if (!empty($DBAuthParams['auth_check'])) {
             $this->_authselect = str_replace(array('"$userid"','"$password"'),array('%s','%s'),
@@ -1762,6 +1793,12 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2004/02/07 10:41:25  rurban
+// fixed auth from session (still double code but works)
+// fixed GroupDB
+// fixed DbPassUser upgrade and policy=old
+// added GroupLdap
+//
 // Revision 1.11  2004/02/03 09:45:39  rurban
 // LDAP cleanup, start of new Pref classes
 //
