@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.48 2002-02-13 23:12:49 carstenklapp Exp $
+ * $Id: phpwiki.css,v 1.49 2002-02-14 00:53:29 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up. It has not yet been tested against NS4.
@@ -10,8 +10,8 @@
  */
 
 /**
- * NS4 doesn't grok @import.  This allows us to put things which
- * break NS4 in another file. As of OmniWeb 4.1, OW now @imports :-(
+ * NS4 doesn't grok @import. This allows us to put things which
+ * break NS4 in another file.
  */
 @import url(phpwiki-heavy.css);
 
@@ -81,7 +81,7 @@ div.wikitext pre { font-family: monospace; }
 }
 
 /* wikiaction, wikiadmin, wikiunsafe: */
-.wikiaction, .wikiadmin, .wiki-rc-action, .wikiunknown {
+.wikiaction, .wikiadmin, .wiki-rc-action {
   text-decoration: none;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -89,16 +89,21 @@ div.wikitext pre { font-family: monospace; }
 .wikiaction, .wikiaction table, span.wikiaction, input.button { background-color: #ddd; }
 .wikiadmin, .wikiadmin table { background-color: #fdd; }
 .wikiunsafe { background-color: #ccc; }
-
-/* Unknown links */
-.wikiunknown a, .named-wikiunknown a, .wikiunknown u {
-  text-decoration: none;
+.
+/**
+ * Unknown links
+ */
+.wikiunknown, .named-wikiunknown {
   font-weight: normal;
+  font-size: normal;
 }
  /* QuestionMark #600 */
-.wikiunknown a, .named-wikiunknown {
+.wikiunknown a, .named-wikiunknown a {
   color: black;
   background-color: #ddd;
+  text-decoration: none;
+  font-weight: normal;
+  font-size: smaller;
 }
 
 .backlinks {
