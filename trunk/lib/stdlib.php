@@ -1,5 +1,5 @@
 <?php
-   rcs_id('$Id: stdlib.php,v 1.9 2000-11-08 15:40:00 ahollosi Exp $');
+   rcs_id('$Id: stdlib.php,v 1.10 2000-11-08 16:52:00 ahollosi Exp $');
    /*
       Standard functions for Wiki functionality
          LinkRelatedPages($dbi, $pagename)
@@ -165,18 +165,20 @@
    }
 
 
-   function LinkExistingWikiWord($wikiword) {
+   function LinkExistingWikiWord($wikiword, $linktext='') {
       global $ScriptUrl;
       $enc_word = rawurlencode($wikiword);
-      $wikiword = htmlspecialchars($wikiword);
-      return "<a href=\"$ScriptUrl?$enc_word\">$wikiword</a>";
+      if(empty($linktext))
+         $linktext = htmlspecialchars($wikiword);
+      return "<a href=\"$ScriptUrl?$enc_word\">$linktext</a>";
    }
 
-   function LinkUnknownWikiWord($wikiword) {
+   function LinkUnknownWikiWord($wikiword, $linktext='') {
       global $ScriptUrl;
       $enc_word = rawurlencode($wikiword);
-      $wikiword = htmlspecialchars($wikiword);
-      return "<u>$wikiword</u><a href=\"$ScriptUrl?edit=$enc_word\">?</a>";
+      if(empty($linktext))
+         $linktext = htmlspecialchars($wikiword);
+      return "<u>$linktext</u><a href=\"$ScriptUrl?edit=$enc_word\">?</a>";
    }
 
    function LinkURL($url) {
@@ -465,7 +467,10 @@
          $URL = trim($matches[3]);
          $linkname = htmlspecialchars(trim($matches[1]));
          // assert proper URL's
-         if (preg_match("#^($AllowedProtocols):#", $URL)) {
+         if (IsWikiPage($dbi, $URL)) {
+            $link['type'] = 'wiki-named';
+            $link['link'] = LinkExistingWikiWord($URL, $linkname);
+         } elseif (preg_match("#^($AllowedProtocols):#", $URL)) {
             if (preg_match("/($InlineImages)$/i", $URL)) {
 	       $link['type'] = 'image-named';
                $link['link'] = LinkImage($URL, $linkname);
@@ -477,9 +482,8 @@
 	    $link['type'] = 'url-wiki-named';
 	    $link['link'] = "<a href=\"$ScriptUrl$match[1]\">$linkname</a>";
 	 } else {
-            $link['type'] = 'url-bad';
-            $link['link'] = "<b><u>BAD URL -- links have to start with one" . 
-                   "of $AllowedProtocols followed by ':'</u></b>";
+	    $link['type'] = 'wiki-unknown-named';
+            $link['link'] = LinkUnknownWikiWord($URL, $linkname);
          }
 	 return $link;
       }
