@@ -1,29 +1,25 @@
-<!-- $Id: fullsearch.php,v 1.3 2000-11-18 13:50:36 ahollosi Exp $ -->
 <?php
-   /*
-      Search the text of pages for a match.
-      A few too many regexps for my liking, but it works.
-   */
-
-   $found = 0;
-   $count = 0;
+   // Search the text of pages for a match.
+   rcs_id('$Id: fullsearch.php,v 1.4 2000-12-30 21:09:13 ahollosi Exp $');
 
    if(get_magic_quotes_gpc())
       $full = stripslashes($full);
 
-   $result = "<P><B>";
-   $result .= sprintf(gettext ("Searching for \"%s\" ....."),
-      htmlspecialchars($full));
-   $result .= "</B></P>\n<DL>\n";
+   $html = "<P><B>"
+	   . sprintf(gettext ("Searching for \"%s\" ....."),
+		   htmlspecialchars($full))
+	   . "</B></P>\n<DL>\n";
 
    // search matching pages
    $query = InitFullSearch($dbi, $full);
 
-   // quote regexp chars
+   // quote regexp chars (space are treated as "or" operator)
    $full = preg_replace("/\s+/", "|", preg_quote($full));
 
+   $found = 0;
+   $count = 0;
    while ($pagehash = FullSearchNextMatch($dbi, $query)) {
-      $result .= "<DT><B>" . LinkExistingWikiWord($pagehash["pagename"]) . "</B>\n";
+      $html .= "<DT><B>" . LinkExistingWikiWord($pagehash["pagename"]) . "</B>\n";
       $count++;
 
       // print out all matching lines, highlighting the match
@@ -35,15 +31,16 @@
 	    $matched = htmlspecialchars($matched);
 	    $matched = str_replace("${FieldSeparator}OT", '<b>', $matched);
 	    $matched = str_replace("${FieldSeparator}CT", '</b>', $matched);
-            $result .= "<dd><small>$matched</small></dd>\n";
+            $html .= "<dd><small>$matched</small></dd>\n";
             $found += $hits;
          }
       }
    }
 
-   $result .= "</dl>\n<hr noshade>";
-   $result .= sprintf (gettext ("%d matches found in %d pages."),
-     $found, $count);
-   $result .= "\n";
-   GeneratePage('MESSAGE', $result, gettext ("Full Text Search Results"), 0);
+   $html .= "</dl>\n<hr noshade>"
+	    . sprintf (gettext ("%d matches found in %d pages."),
+		       $found, $count)
+	    . "\n";
+
+   GeneratePage('MESSAGE', $html, gettext ("Full Text Search Results"), 0);
 ?>

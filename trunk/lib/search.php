@@ -1,25 +1,29 @@
-<!-- $Id: search.php,v 1.1 2000-10-08 17:33:26 wainstead Exp $ -->
 <?php
    // Title search: returns pages having a name matching the search term
-
-   $found = 0;
+   rcs_id('$Id: search.php,v 1.2 2000-12-30 21:09:13 ahollosi Exp $');
 
    if(get_magic_quotes_gpc())
       $search = stripslashes($search);
 
-   $result = "<P><B>Searching for \"" . htmlspecialchars($search) .
-		"\" ....</B></P>\n";
+   $html = "<P><B>" .
+	   . sprintf(gettext ("Searching for \"%s\" ....."),
+		     htmlspecialchars($search))
+	   . "</B></P>\n";
 
    // quote regexp chars
    $search = preg_quote($search);
 
    // search matching pages
    $query = InitTitleSearch($dbi, $search);
+   $found = 0;
    while ($page = TitleSearchNextMatch($dbi, $query)) {
       $found++;
-      $result .= LinkExistingWikiWord($page) . "<br>\n";
+      $html .= LinkExistingWikiWord($page) . "<br>\n";
    }
 
-   $result .= "<hr noshade>\n$found pages match your query.\n";
-   GeneratePage('MESSAGE', $result, "Title Search Results", 0);
+   $html .= "<hr noshade>\n"
+	    . sprintf(gettext ("%d pages match your query."), $found)
+	    . "\n";
+
+   GeneratePage('MESSAGE', $html, gettext ("Title Search Results"), 0);
 ?>

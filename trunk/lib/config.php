@@ -6,7 +6,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.17 2000-11-17 03:01:26 wainstead Exp $');
+   rcs_id('$Id: config.php,v 1.18 2000-12-30 21:09:13 ahollosi Exp $');
    // end essential internal stuff
 
 
@@ -24,8 +24,9 @@
    $AdminUrl = "";
 
    //  Select your language - default language "C": English
-   // other languages available: Dutch "nl", Spanish "es"
+   // other languages available: Dutch "nl", Spanish "es", German "de"
    $LANG="C";
+
    /////////////////////////////////////////////////////////////////////
    // Database section
    // set your database here and edit the according section below
@@ -214,12 +215,6 @@
       getenv('REMOTE_HOST') ? ($remoteuser = getenv('REMOTE_HOST'))
                             : ($remoteuser = getenv('REMOTE_ADDR'));
    }
-
-
-   // Apache won't show REMOTE_HOST unless the admin configured it
-   // properly. We'll be nice and see if it's there.
-   getenv('REMOTE_HOST') ? ($remoteuser = getenv('REMOTE_HOST'))
-                         : ($remoteuser = getenv('REMOTE_ADDR'));
 
    // constants used for HTML output. List tags like UL and 
    // OL have a depth of one, PRE has a depth of 0.
