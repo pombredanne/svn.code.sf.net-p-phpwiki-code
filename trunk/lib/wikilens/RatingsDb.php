@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RatingsDb.php,v 1.3 2004-06-30 20:05:36 dfrankow Exp $');
+rcs_id('$Id: RatingsDb.php,v 1.4 2004-07-07 19:47:36 dfrankow Exp $');
 
 /*
  * @author:  Dan Frankowski (wikilens author), Reini Urban (as plugin)
@@ -425,8 +425,20 @@ class RatingsDb extends WikiDB {
             $where .= " AND raterpage=$raterid";
         }
         if (isset($ratee)) {
-            $rateeid = $dbi->_get_pageid($ratee, true);
-            $where .= " AND rateepage=$rateeid";
+            if(is_array($ratee)){
+        		$where .= " AND (";
+        		for($i = 0; $i < count($ratee); $i++){
+        			$rateeid = $dbi->_get_pageid($ratee[$i], true);
+            		$where .= "rateepage=$rateeid";
+        			if($i != (count($ratee) - 1)){
+        				$where .= " OR ";
+        			}
+        		}
+        		$where .= ")";
+        	} else {
+        		$rateeid = $dbi->_get_pageid($ratee, true);
+            	$where .= " AND rateepage=$rateeid";
+        	}
         }
         $orderbyStr = "";
         if (isset($orderby)) {
@@ -434,7 +446,7 @@ class RatingsDb extends WikiDB {
         }
         if (isset($rater) or isset($ratee)) $what = '*';
         // same as _get_users_rated_result()
-        else $what = 'DISTINCT p.pagename, r.ratingvalue, r.dimension';
+        else $what = 'DISTINCT p.pagename';
 
         $query = "SELECT $what"
                . " FROM $rating_tbl r, $page_tbl p "
@@ -661,6 +673,15 @@ extends WikiDB_backend_PearDB {
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/06/30 20:05:36  dfrankow
+// + Add getTheRatingsDb() singleton.
+// + Remove defaulting of dimension, userid, pagename in getRating--
+//   it didn't work
+// + Fix typo in get_rating.
+// + Fix _sql_get_rating_result
+// + Fix sql_rate().  It's now not transactionally safe yet, but at least it
+//   works.
+//
 // Revision 1.2  2004/06/19 10:22:41  rurban
 // outcomment the pear specific methods to let all pages load
 //
