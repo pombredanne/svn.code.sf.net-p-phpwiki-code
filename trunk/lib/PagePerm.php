@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.8 2004-03-14 16:24:35 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.9 2004-04-29 17:18:19 zorloc Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -155,7 +155,7 @@ function requiredAuthorityForPage ($action) {
                                       $GLOBALS['request']->getArg('pagename')))
         return $GLOBALS['request']->_user->_level;
     else
-        return WIKIAUTH_FORBIDDEN;
+        return WIKIAUTH_UNOBTAINABLE;
 }
 
 // Translate action or plugin to the simplier access types:
@@ -543,6 +543,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/03/14 16:24:35  rurban
+// authenti(fi)cation spelling
+//
 // Revision 1.7  2004/02/28 22:25:07  rurban
 // First PagePerm implementation:
 //
