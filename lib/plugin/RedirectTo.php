@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RedirectTo.php,v 1.2 2002-09-02 10:01:08 rurban Exp $');
+rcs_id('$Id: RedirectTo.php,v 1.3 2002-09-14 18:28:54 dairiki Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -27,8 +27,19 @@ rcs_id('$Id: RedirectTo.php,v 1.2 2002-09-02 10:01:08 rurban Exp $');
  *          at the VERY FIRST LINE in the content! Otherwise it will be ignored.
  * Author:  Reini Urban <rurban@x-ray.at>
  *
+ * BUGS/COMMENTS:
+ *
+ * Actually, it seems that this plugin can be invoked from anywhere on a page.
+ * (Not just the first line.)
+ *
+ * This plugin could probably result in a lot of confusion, especially when
+ * redirecting to external sites.  (Perhaps it can even be used for dastardly
+ * purposes?)  Maybe it should be disabled by default.
+ *
+ * It would be nice, when redirecting to another wiki page, to (as
+ * UseModWiki does) add a note to the top of the target page saying
+ * something like "(Redirected from SomeRedirectingPage)".
  */
-
 class WikiPlugin_RedirectTo
 extends WikiPlugin
 {
@@ -54,14 +65,25 @@ extends WikiPlugin
         $page = $args['page'];
         if (!$href and !$page)
             return $this->error(sprintf(_("%s or %s parameter missing"), 'href', 'page'));
-        // FIXME: unmunged url hack
-        if ($href)
-            $url = preg_replace('/href=(.*)\Z/','$1',$argstr);
+        if ($href) {
+            /*
+             * I don't think this hack is needed. 
+             * Just use quotes on the href argument value, like:
+             *
+             *   <?plugin RedirectTo href="http://funky.com/a b \" c.htm" ?>
+             */
+            // // FIXME: unmunged url hack
+            // $url = preg_replace('/href=(.*)\Z/','$1',$argstr);
+            $url = $href;
+            //
+            // FIXME: may want some checking on href to avoid malicious
+            // uses of the plugin?
+        }
         else {
             $url = $request->getURLtoSelf(array_merge(array('pagename' => $page), 
                                                       SplitQueryArgs($args['args'])));
         }
-        if ($page == $request->getArg($pagename)) {
+        if ($page == $request->getArg('pagename')) {
             return $this->error(sprintf(_("Recursive redirect to self: '%s'"), $url));
         }
         return $request->redirect($url);
