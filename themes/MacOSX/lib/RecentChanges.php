@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: RecentChanges.php,v 1.2 2002-01-21 06:55:47 dairiki Exp $');
+<?php rcs_id('$Id: RecentChanges.php,v 1.3 2002-01-28 18:56:34 carstenklapp Exp $');
 /*
  * Extensions/modifications to the stock RecentChanges (and PageHistory) format.
  */
@@ -13,7 +13,8 @@ function MacOSX_RC_revision_formatter (&$fmt, &$rev) {
     return HTML::li(array('class' => $class),
                     $fmt->diffLink($rev), ' ',
                     $fmt->pageLink($rev), ' ',
-                    $fmt->time($rev),
+                    $fmt->time($rev), ' ',
+                    ($fmt->importance($rev)=='minor') ? _("(minor edit)") ." " : '',
                     ' . . . ',
                     $fmt->summaryAsHTML($rev),
                     ' -- ',
