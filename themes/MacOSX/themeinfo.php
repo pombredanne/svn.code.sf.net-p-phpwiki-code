@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.4 2002-01-04 01:59:27 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.5 2002-01-04 02:02:31 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -30,6 +30,9 @@ rcs_id('$Id: themeinfo.php,v 1.4 2002-01-04 01:59:27 carstenklapp Exp $');
  * This should make editing the MacOSX theme template files much easier
  * as well as providing a generic localization method for any other
  * toolbars (whether image or text).
+ *
+ * There is an image for a BackLinks button but it's not used yet either.
+ * For now BackLinks are still accessed by clicking in the title.
  *
  * The CSS is still mostly the same as phpwiki.css. I'd like to change it a
  * bit but have no specific plans yet. Just a general feeling that it should
