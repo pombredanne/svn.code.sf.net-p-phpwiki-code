@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.77 2005-01-31 12:14:15 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.78 2005-02-10 19:01:19 rurban Exp $');
 
 /**
  * A configurator intended to read its config from a PHP-style INI file,
@@ -280,9 +280,9 @@ function IniConfig($file) {
             unset($rsdef[$item]);
         }
     }
-    if (!in_array(DATABASE_TYPE, array('SQL','ADODB','dba','file','cvs')))
+    if (!in_array(DATABASE_TYPE, array('SQL','ADODB','PDO','dba','file','cvs','cvsclient')))
         trigger_error(sprintf(_("Invalid DATABASE_TYPE=%s. Choose one of %s"), 
-                              DATABASE_TYPE, "SQL,ADODB,dba,file,cvs"));
+                              DATABASE_TYPE, "SQL,ADODB,PDO,dba,file,cvs,clsclient"));
     // USE_DB_SESSION default logic:
     if (!defined('USE_DB_SESSION')) {
         if ($DBParams['db_session_table']
@@ -590,12 +590,13 @@ function fixup_dynamic_configs() {
         define('DEFAULT_LANGUAGE', ''); // detect from client
 
     update_locale(isset($LANG) ? $LANG : DEFAULT_LANGUAGE);
-    if (empty($LANG))
+    if (empty($LANG)) {
         if (!defined("DEFAULT_LANGUAGE") or !DEFAULT_LANGUAGE)
             // TODO: defer this to WikiRequest::initializeLang()
             $LANG = guessing_lang(); 
         else    
             $LANG = DEFAULT_LANGUAGE;
+    }
  
     // Set up (possibly fake) gettext()
     // Todo: this could be moved to fixup_static_configs()
@@ -638,7 +639,8 @@ function fixup_dynamic_configs() {
 
     // language dependent updates:
     $WikiNameRegexp = pcre_fix_posix_classes($WikiNameRegexp);
-    $KeywordLinkRegexp = pcre_fix_posix_classes($KeywordLinkRegexp);
+    if ($KeywordLinkRegexp)
+    	$KeywordLinkRegexp = pcre_fix_posix_classes($KeywordLinkRegexp);
     if (!defined('CATEGORY_GROUP_PAGE'))
         define('CATEGORY_GROUP_PAGE',_("CategoryGroup"));
     if (!defined('WIKI_NAME'))
@@ -772,6 +774,9 @@ function fixup_dynamic_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.77  2005/01/31 12:14:15  rurban
+// correct spelling
+//
 // Revision 1.76  2005/01/31 00:31:00  rurban
 // translate errmsg
 //

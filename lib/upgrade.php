@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.44 2005-02-07 15:40:42 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.45 2005-02-10 19:01:19 rurban Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -168,7 +168,7 @@ function CheckPgsrcUpdate(&$request) {
  */
 function installTable(&$dbh, $table, $backend_type) {
     global $DBParams;
-    if (!in_array($DBParams['dbtype'],array('SQL','ADODB'))) return;
+    if (!in_array($DBParams['dbtype'],array('SQL','ADODB','PDO'))) return;
     echo _("MISSING")," ... \n";
     $backend = &$dbh->_backend->_dbh;
     /*
@@ -350,7 +350,7 @@ CREATE TABLE $log_tbl (
  */
 function CheckDatabaseUpdate(&$request) {
     global $DBParams, $DBAuthParams;
-    if (!in_array($DBParams['dbtype'], array('SQL','ADODB'))) return;
+    if (!in_array($DBParams['dbtype'], array('SQL','ADODB','PDO'))) return;
     echo "<h3>",_("check for necessary database updates"), " - ", $DBParams['dbtype'], "</h3>\n";
 
     $dbh = $request->getDbh(); 
@@ -392,6 +392,7 @@ function CheckDatabaseUpdate(&$request) {
         }
     }
     $backend = &$dbh->_backend->_dbh;
+    extract($dbh->_backend->_table_names);
 
     // 1.3.8 added session.sess_ip
     if (phpwiki_version() >= 1030.08 and USE_DB_SESSION and isset($request->_dbsession)) {
@@ -416,9 +417,11 @@ function CheckDatabaseUpdate(&$request) {
             $result = $dbh->genericSqlQuery("DESCRIBE $session_tbl");
             if ($DBParams['dbtype'] == 'SQL') {
             	$iter = new WikiDB_backend_PearDB_generic_iter($backend, $result);
-            } else {
+            } elseif ($DBParams['dbtype'] == 'ADODB') {
             	$iter = new WikiDB_backend_ADODB_generic_iter($backend, $result, 
             		        array("Field", "Type", "Null", "Key", "Default", "Extra"));
+            } elseif ($DBParams['dbtype'] == 'PDO') {
+            	$iter = new WikiDB_backend_PDO_generic_iter($backend, $result);
             }
             while ($col = $iter->next()) {
                 if ($col["Field"] == 'sess_id' and !strstr(strtolower($col["Type"]), 'char(32)')) {
@@ -435,13 +438,15 @@ function CheckDatabaseUpdate(&$request) {
     }
 
     // mysql >= 4.0.4 requires LOCK TABLE privileges
-    if (substr($backend_type,0,5) == 'mysql') {
+    if (substr($backend_type,0,5) == 'mysql'/* and $DBParams['dbtype'] != 'PDO' */) {
   	echo _("check for mysql LOCK TABLE privilege")," ...";
         $mysql_version = $dbh->_backend->_serverinfo['version'];
         if ($mysql_version > 400.40) {
-            if (function_exists('parseDSN')) // ADODB
+            if (!empty($dbh->_backend->_parsedDSN))
+                $parseDSN = $dbh->_backend->_parsedDSN;
+            elseif (function_exists('parseDSN')) // ADODB or PDO
                 $parseDSN = parseDSN($DBParams['dsn']);
-            else // pear
+            else 			     // pear
                 $parseDSN = DB::parseDSN($DBParams['dsn']);
             $username = $dbh->_backend->qstr($parseDSN['username']);
             // on db level
@@ -449,17 +454,18 @@ function CheckDatabaseUpdate(&$request) {
             //mysql_select_db("mysql", $dbh->_backend->connection());
             $db_fields = $dbh->_backend->listOfFields("mysql", "db");
             if (!strstr(strtolower(join(':', $db_fields)), "lock_tables_priv")) {
+                echo join(':', $db_fields);
             	die("lock_tables_priv missing. The DB Admin must run mysql_fix_privilege_tables");
             }
-            $row = $backend->getRow($query);
-            if ($row and $row[0] == 'N') {
+            $row = $dbh->_backend->getRow($query);
+            if (isset($row[0]) and $row[0] == 'N') {
                 $dbh->genericSqlQuery("UPDATE mysql.db SET lock_tables_priv='Y' WHERE mysql.user='$username'");
                 $dbh->genericSqlQuery("FLUSH PRIVILEGES");
                 echo "mysql.db user='$username'", _("fixed"), "<br />\n";
             } elseif (!$row) {
                 // or on user level
                 $query = "SELECT lock_tables_priv FROM mysql.user WHERE user='$username'";
-                $row = $backend->getRow($query);
+                $row = $dbh->_backend->getRow($query);
                 if ($row and $row[0] == 'N') {
                     $dbh->genericSqlQuery("UPDATE mysql.user SET lock_tables_priv='Y' WHERE mysql.user='$username'");
                     $dbh->genericSqlQuery("FLUSH PRIVILEGES");
@@ -482,9 +488,8 @@ function CheckDatabaseUpdate(&$request) {
 
     // 1.3.10 mysql requires page.id auto_increment
     // mysql, mysqli or mysqlt
-    if (phpwiki_version() >= 1030.099 and substr($backend_type,0,5) == 'mysql') {
+    if (phpwiki_version() >= 1030.099 and substr($backend_type,0,5) == 'mysql' and $DBParams['dbtype'] != 'PDO') {
   	echo _("check for mysql page.id auto_increment flag")," ...";
-        extract($dbh->_backend->_table_names);
         assert(!empty($page_tbl));
   	$database = $dbh->_backend->database();
   	$fields = mysql_list_fields($database, $page_tbl, $dbh->_backend->connection());
@@ -524,7 +529,7 @@ function CheckDatabaseUpdate(&$request) {
         if ($mysql_version < 401.0) { 
             echo sprintf(_("version <em>%s</em> not affected"), $mysql_version),"<br />\n";
         } elseif ($mysql_version >= 401.6) { // FIXME: since which version?
-            $row = $backend->getRow("SHOW CREATE TABLE $page_tbl");
+            $row = $dbh->_backend->getRow("SHOW CREATE TABLE $page_tbl");
             $result = join(" ", $row);
             if (strstr(strtolower($result), "character set") 
                 and strstr(strtolower($result), "collate")) 
@@ -538,7 +543,7 @@ function CheckDatabaseUpdate(&$request) {
                                       //."pagename VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL");
                 echo sprintf(_("version <em>%s</em> <b>FIXED</b>"), $mysql_version),"<br />\n";
             }
-        } else {
+        } elseif ($DBParams['dbtype'] != 'PDO') {
             // check if already fixed
             extract($dbh->_backend->_table_names);
             assert(!empty($page_tbl));
@@ -572,7 +577,8 @@ function CheckDatabaseUpdate(&$request) {
                     .' AND NOT(LOCATE("s:6:\"passwd\";s:15:\"<not displayed>\"", request_args))'
                     .' AND request_method="POST"');
         if ((DATABASE_TYPE == 'SQL' and $backend->AffectedRows()) 
-            or (DATABASE_TYPE == 'ADODB' and $backend->Affected_Rows()))
+            or (DATABASE_TYPE == 'ADODB' and $backend->Affected_Rows())
+            or (DATABASE_TYPE == 'PDO' and $result))
             echo "<b>",_("fixed"),"</b>", "<br />\n";
         else 
             echo _("OK"),"<br />\n";
@@ -584,14 +590,14 @@ function CheckDatabaseUpdate(&$request) {
 
 function _upgrade_db_init (&$dbh) {
     global $request, $DBParams, $DBAuthParams;
-    if (!in_array($DBParams['dbtype'], array('SQL','ADODB'))) return;
+    if (!in_array($DBParams['dbtype'], array('SQL','ADODB','PDO'))) return;
 
     if (DBADMIN_USER) {
         // if need to connect as the root user, for CREATE and ALTER privileges
         $AdminParams = $DBParams;
         if ($DBParams['dbtype'] == 'SQL')
             $dsn = DB::parseDSN($AdminParams['dsn']);
-        else
+        else // ADODB or PDO
             $dsn = parseDSN($AdminParams['dsn']);
         $AdminParams['dsn'] = sprintf("%s://%s:%s@%s/%s",
                                       $dsn['phptype'],
@@ -599,6 +605,11 @@ function _upgrade_db_init (&$dbh) {
                                       DBADMIN_PASSWD,
                                       $dsn['hostspec'],
                                       $dsn['database']);
+        if (DEBUG & _DEBUG_SQL and $DBParams['dbtype'] == 'PDO') {
+            echo "<br>\nDBParams['dsn']: '", $DBParams['dsn'], "'";
+            echo "<br>\ndsn: '", print_r($dsn), "'";
+            echo "<br>\nAdminParams['dsn']: '", $AdminParams['dsn'], "'";
+        }
         $dbh = WikiDB::open($AdminParams);
     } elseif ($dbadmin = $request->getArg('dbadmin')) {
         if (empty($dbadmin['user']) or isset($dbadmin['cancel']))
@@ -851,6 +862,9 @@ function DoUpgrade($request) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.44  2005/02/07 15:40:42  rurban
+ use defined CHARSET for db. more comments
+
  Revision 1.43  2005/02/04 11:44:07  rurban
  check passwd in access_log
 
