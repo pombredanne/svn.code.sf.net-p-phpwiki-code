@@ -2,7 +2,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.10 2000-10-30 07:41:10 ahollosi Exp $');
+   rcs_id('$Id: config.php,v 1.11 2000-10-31 16:18:42 ahollosi Exp $');
 
    /*
       Constants and settings. Edit the values below for
@@ -193,7 +193,8 @@
    $InlineImages = "png|jpg|gif";
 
    // Perl regexp for WikiNames
-   $WikiNameRegexp = "\b([A-Z][a-z]+){2,}\b";
+   // (?<!..) & (?!...) used instead of '\b' because \b matches '_' as well
+   $WikiNameRegexp = "(?<![A-Za-z0-9])([A-Z][a-z]+){2,}(?![A-Za-z0-9])";
 
    // this defines how many page names to list when displaying
    // the MostPopular pages; i.e. setting this to 20 will show
