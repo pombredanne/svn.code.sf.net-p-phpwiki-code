@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.34 2002-01-25 17:39:15 dairiki Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.35 2002-01-25 17:58:19 dairiki Exp $');
 require_once('lib/Template.php');
 require_once('lib/transform.php');
 require_once('lib/ArchiveCleaner.php');
@@ -24,7 +24,7 @@ function ConcurrentUpdates(&$request) {
      it does not know about php's dot operator.
      We want to translate this entire paragraph as one string, of course.
    */
-    $step = array(_("Use your browser's <b>Back</b> button to go back to the edit page."),
+    $steps = array(_("Use your browser's <b>Back</b> button to go back to the edit page."),
                   _("Copy your changes to the clipboard or to another temporary place (e.g. text editor)."),
                   _("<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."),
                   _("Make changes to the file again. Paste your additions from the clipboard (or text editor)."),
@@ -36,10 +36,13 @@ function ConcurrentUpdates(&$request) {
 
     $html[] = HTML::p(_("In order to recover from this situation follow these steps:"));
 
-    $steps = HTML::ol();
-    foreach ($steps as $step)
-        $steps->pushContent(HTML::li($step));
-    $html[] = $steps;
+    $list = HTML::ol();
+    foreach ($steps as $step) {
+        // The usage of HTML::raw is a hack, but generation of this message
+        // is soon to be refactored anyway.
+        $list->pushContent(HTML::li(HTML::raw($step)));
+    }
+    $html[] = $list;
 
     $html[] = HTML::p(_("Sorry for the inconvenience."));
 
