@@ -91,33 +91,35 @@ $HTTP_SERVER_VARS['REMOTE_ADDR'] = '127.0.0.1';
 $HTTP_SERVER_VARS['HTTP_USER_AGENT'] = "PHPUnit";
 
 function printMemoryUsage($msg = '') {
+    static $mem = 0;
     if ($msg) echo $msg,"\n";
     if ((defined('DEBUG') and (DEBUG & 8)) or !defined('DEBUG')) {
         echo "-- MEMORY USAGE: ";
+        $oldmem = $mem;
         if (function_exists('memory_get_usage') and memory_get_usage()) {
-            echo memory_get_usage(),"\n";
-        /*
-        } elseif (function_exists('getrusage')) {
-            $u = getrusage();
-            echo $u['ru_maxrss'],"\n";
-        */
+            $mem = memory_get_usage();
+        } elseif (function_exists('getrusage') and ($u = getrusage()) and !empty($u['ru_maxrss'])) {
+            $mem = $u['ru_maxrss'];
         } elseif (substr(PHP_OS,0,3)=='WIN') { // requires a newer cygwin
             // what we want is the process memory only: apache or php
             $pid = getmypid();
-            // this works only if it's a cygwin process (apache or php)
-            //echo `cat /proc/$pid/statm |cut -f1`,"\n";
-
+            // This works only if it's a cygwin process (apache or php)
+            //$mem = (integer) trim(system("cat /proc/$pid/statm |cut -f1"));
             // if it's native windows use something like this: 
-            // (requires pslist from systinternals.com)
-            echo `pslist $pid|grep -A1 Mem|perl -ane"print \$F[5]"`,"\n";
+            //   (requires pslist from sysinternals.com)
+            $memstr = system("pslist $pid|grep -A1 Mem|sed 1d|perl -ane\"print \$"."F[5]\"");
+            $mem = (integer) trim($memstr);
         } else {
             $pid = getmypid();
             //%MEM: Percentage of total memory in use by this process
             //VSZ: Total virtual memory size, in 1K blocks.
             //RSS: Real Set Size, the actual amount of physical memory allocated to this process.
             //CPU time used by process since it started.
-            echo "%",`ps -o%mem,vsz,rss,time -p $pid|sed 1d`,"\n";
+            //echo "%",`ps -o%mem,vsz,rss,time -p $pid|sed 1d`,"\n";
+            $memstr = system("ps -orss -p $pid|sed 1d");
+            $mem = (integer) trim($memstr);
         }
+        echo sprintf("%8d (%+4d)\n", $mem, $mem - $oldmem);
         flush();
     }
 }
