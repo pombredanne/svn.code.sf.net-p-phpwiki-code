@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.41 2004-12-26 17:08:36 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.42 2005-02-26 18:29:07 rurban Exp $');
 
 if (isset($GLOBALS['ErrorManager'])) return;
 
@@ -531,7 +531,7 @@ class PhpWikiError extends PhpError {
     }
 
     function _getDetail() {
-        return HTML::div(//array('class' => $this->getHtmlClass()), 
+        return HTML::div(array('class' => $this->getHtmlClass()), 
                          HTML::p($this->getDescription() . ": $this->errstr"));
     }
 }
@@ -571,7 +571,7 @@ class PhpErrorOnce extends PhpError {
     
     function _getDetail($count=0) {
     	if (!$count) $count = $this->_count;
-	$dir = defined('PHPWIKI_DIR') ? PHPWIKI_DIR : substr(dirname(__FILE__),0,-4);
+	    $dir = defined('PHPWIKI_DIR') ? PHPWIKI_DIR : substr(dirname(__FILE__),0,-4);
         if (substr(PHP_OS,0,3) == 'WIN') {
            $dir = str_replace('/','\\',$dir);
            $this->errfile = str_replace('/','\\',$this->errfile);
@@ -579,7 +579,10 @@ class PhpErrorOnce extends PhpError {
         } else 
            $dir .= '/';
         $errfile = preg_replace('|^' . preg_quote($dir) . '|', '', $this->errfile);
-        $lines = explode("\n", $this->errstr);
+        if (is_string($this->errstr))
+	        $lines = explode("\n", $this->errstr);
+	    elseif (is_object($this->errstr))
+	        $lines = array($this->errstr->asXML());
         $errtype = (DEBUG & _DEBUG_VERBOSE) ? sprintf("%s[%d]", $this->getDescription(), $this->errno)
                                             : sprintf("%s", $this->getDescription());
         $msg = sprintf("%s:%d: %s: %s %s",
@@ -588,7 +591,7 @@ class PhpErrorOnce extends PhpError {
                        array_shift($lines),
                        $count > 1 ? sprintf(" (...repeated %d times)",$count) : ""
                        );
-        $html = HTML::div(//array('class' => $this->getHtmlClass()), 
+        $html = HTML::div(array('class' => $this->getHtmlClass()), 
                           HTML::p($msg));
         if ($lines) {
             $list = HTML::ul();
@@ -608,6 +611,9 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.41  2004/12/26 17:08:36  rurban
+// php5 fixes: case-sensitivity, no & new
+//
 // Revision 1.40  2004/12/13 14:39:46  rurban
 // aesthetics
 //
