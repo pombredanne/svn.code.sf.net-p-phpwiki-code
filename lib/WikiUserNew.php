@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.3 2003-12-06 19:10:46 carstenklapp Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.4 2003-12-07 19:29:48 carstenklapp Exp $');
 
 // This is a complete rewrite of the old WikiUser code but it is not
 // implemented yet. Much of the existing UserPreferences class should
@@ -159,7 +159,7 @@ class _WikiUser
 {
     var $_level = WIKIAUTH_FORBIDDEN;
     var $_prefs = false;
-    var _HomePagehandle = false;
+    var $_HomePagehandle = false;
 
     var $UserName = '';
 
@@ -599,6 +599,10 @@ class UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2003/12/06 19:10:46  carstenklapp
+// Finished off logic for determining user class, including
+// PassUser. Removed ability of BogoUser to save prefs into a page.
+//
 // Revision 1.2  2003/12/03 21:45:48  carstenklapp
 // Added admin user, password user, and preference classes. Added
 // password checking functions for users and the admin. (Now the easy

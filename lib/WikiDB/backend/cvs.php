@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: cvs.php,v 1.11 2002-02-09 23:07:01 lakka Exp $');
+rcs_id('$Id: cvs.php,v 1.12 2003-12-07 19:27:53 carstenklapp Exp $');
 /**
  * Backend for handling CVS repository. 
  *
@@ -437,7 +437,7 @@ extends WikiDB_backend
         }
         if($rev){
 		arsort( $mp, SORT_NUMERIC );
-		} else
+		} else {
 		asort( $mr, SORT_NUMERIC );
 		}
         if ( isset( $limit ) ) {

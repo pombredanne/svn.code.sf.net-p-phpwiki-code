@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.5 2003-02-22 20:49:55 dairiki Exp $')
+rcs_id('$Id: WikiGroup.php,v 1.6 2003-12-07 19:29:11 carstenklapp Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -354,6 +354,9 @@ class GroupWikiPage extends WikiGroup{
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2003/02/22 20:49:55  dairiki
+// Fixes for "Call-time pass by reference has been deprecated" errors.
+//
 // Revision 1.4  2003/01/21 04:02:39  zorloc
 // Added Log entry and page footer.
 //

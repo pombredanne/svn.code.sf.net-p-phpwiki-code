@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: Values.php,v 1.3 2003-12-07 19:23:48 carstenklapp Exp $')
+rcs_id('$Id: Values.php,v 1.4 2003-12-07 19:25:41 carstenklapp Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: Tools.php,v 1.4 2003-12-07 19:23:48 carstenklapp Exp $')
+rcs_id('$Id: Tools.php,v 1.5 2003-12-07 19:25:41 carstenklapp Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -88,7 +88,7 @@ class ConfigValue {
         if (isset($params['validator'])) {
             $params['validator'] = &Validator::getValidator($params['validator']);
         }
-        return &new $class ($params);
+        return new $class ($params);
     }
 
     /**
@@ -274,15 +274,15 @@ class Validator {
         $class = 'Validator' . $type;
         if (isset($list)){
             $class .= 'List';
-            return &new $class ($list);
+            return new $class ($list);
         } elseif (isset($range)) {
             $class .= 'Range';
-            return &new $class ($range);
+            return new $class ($range);
         } elseif (isset($pcre)){
             $class .= 'Pcre';
-            return &new $class ($pcre);
+            return new $class ($pcre);
         }
-        return &new $class ();
+        return new $class ();
     
     }
 
@@ -449,7 +449,7 @@ class ValidatorStringList extends ValidatorString {
     * @var array
     * @access protected
     */
-    var stringList;
+    var $stringList;
     
     /**
     * Constructor
@@ -490,7 +490,7 @@ class ValidatorStringPcre extends ValidatorString {
     * @var array
     * @access protected
     */
-    var pattern;
+    var $pattern;
 
     /**
     * Constructor
@@ -550,7 +550,7 @@ class ValidatorConstantList extends Validator {
     * @var array
     * @access protected
     */
-    var constantList;
+    var $constantList;
 
     /**
     * Constructor
@@ -596,7 +596,7 @@ class ValidatorArray extends Validator {
         if(is_array($array)){
             return $this->validMembers($array);
         }
-        return false
+        return false;
     }
     
     /**
@@ -642,7 +642,7 @@ class ValidatorArrayStringList extends Validator {
     * @var array
     * @access protected
     */
-    var stringList;
+    var $stringList;
 
     /**
     * Constructor
