@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.176 2004-08-05 17:33:22 rurban Exp $');
+rcs_id('$Id: main.php,v 1.177 2004-09-14 10:31:09 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -1072,14 +1072,20 @@ if (defined('WIKI_SOAP')   and WIKI_SOAP)   return;
     $request->finish();
 }
 
-$x = error_reporting(); // why is it 1 here? should be E_ALL
-error_reporting(E_ALL);
+$x = error_reporting();  // DEBUG: why is it 1 here? should be E_ALL
+if (defined('E_STRICT') and (E_ALL & E_STRICT)) // strict php5?
+    error_reporting(E_ALL & ~E_STRICT); 	// exclude E_STRICT
+else
+    error_reporting(E_ALL); // php4
 // don't run the main loop for special requests (test, getimg, xmlrpc, soap, ...)
 if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
     main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.176  2004/08/05 17:33:22  rurban
+// aesthetic typo
+//
 // Revision 1.175  2004/07/13 13:08:25  rurban
 // fix PEAR memory waste issues
 //
