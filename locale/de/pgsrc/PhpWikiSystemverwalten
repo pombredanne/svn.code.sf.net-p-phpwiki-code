@@ -1,9 +1,9 @@
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
-X-RCS_ID: $Id: PhpWikiSystemverwalten,v 1.6 2002-01-11 07:40:28 carstenklapp Exp $
+X-RCS_ID: $Id: PhpWikiSystemverwalten,v 1.7 2002-01-11 22:35:11 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiSystemverwalten;
   flags=PAGE_LOCKED;
-  lastmodified=1010734456;
+  lastmodified=1010734457;
 Content-Transfer-Encoding: binary
 
 __Beachtung__: Du mußt der Systemverwalter-Account mit Passwort zuerst schützen, sonnst werden ziemlich viel von diesen Administrationsbefehlen nicht funkionieren.
@@ -18,7 +18,7 @@ This allows you to login. While you are logged in you will be able to''lock'', '
 ----------
 !! Aufräumen
 
-Eine Wiki Sandkiste wird ganz einfach aufgeraümt. Hier kannst du es von locale/de/pgsrc erneut beladen wodurch es wieder unberührt gemacht würde: [ Putze die SandKiste aus | phpwiki:?action=loadfile&source=locale/de/pgsrc/SandKiste ].
+Eine Wiki SandKiste wird ganz einfach aufgeraümt. Hier kannst du es von locale/de/pgsrc erneut beladen wodurch es wieder unberührt gemacht würde: [ Putze die SandKiste aus | phpwiki:?action=loadfile&source=locale/de/pgsrc/SandKiste ].
 
 ----------
 !! Speicherauszug und Archiv-Datenversicherung
