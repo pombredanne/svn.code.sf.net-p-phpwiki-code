@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: msql.php,v 1.6.2.6 2001-11-16 02:42:27 wainstead Exp $');
+<?php rcs_id('$Id: msql.php,v 1.6.2.7 2001-11-16 02:53:21 wainstead Exp $');
 
    /*
       Database functions:
@@ -209,7 +209,7 @@
       // first, insert the metadata
       $retval = msql_query($query, $dbi['dbc']);
       if ($retval == false) {
-         printf(gettext ("Insert/update failed: %s"), msql_error());
+         printf(gettext ("Insert/update to table 'wiki' failed: %s"), msql_error());
          print "<br>\n";
       }
 
@@ -230,11 +230,12 @@
 
       for ($x = 0; $x < count($pagehash["content"]); $x++) {
          $line = addslashes($pagehash["content"][$x]);
+         if ($line == '') continue; // why do we always have 127 lines?
          $esc_pagename = addslashes($pagename);
          $query = "INSERT INTO $dbi[page_table] " .
                   "(pagename, lineno, line) " .
                   "VALUES('$esc_pagename', $x, '$line')";
-          echo "Page line insert query: $query<br>\n";
+         //echo "Page line insert query: $query<br>\n";
          $retval = msql_query($query, $dbi['dbc']);
          if ($retval == false) { 
             printf(gettext ("Insert into %s failed: %s"), $dbi[page_table],
@@ -286,7 +287,7 @@
       // first, insert the metadata
       $retval = msql_query($query, $dbi['dbc']);
       if ($retval == false) {
-         printf(gettext ("Insert/update failed: %s"), msql_error());
+         printf(gettext ("Insert/update into table 'archive' failed: %s"), msql_error());
 	 print "<br>\n";
       }
 
