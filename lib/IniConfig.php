@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.15 2004-05-01 15:59:29 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.16 2004-05-02 15:10:05 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -236,10 +236,8 @@ function IniConfig($file) {
         }
     }
 
-    // Default Wiki pages
+    // Default Wiki pages to force loading from pgsrc
     global $GenericPages;
-    if (!isset($rs['DEFAULT_WIKI_PAGES']))
-        $rs['DEFAULT_WIKI_PAGES'] = "ReleaseNotes:SteveWainstead:TestPage";
     $GenericPages = preg_split('/\s*:\s*/', @$rs['DEFAULT_WIKI_PAGES']);
 
     // Wiki name regexp.  Should be a define(), but too many places want
@@ -263,7 +261,7 @@ function IniConfig($file) {
 
 // moved from lib/config.php
 function fix_configs() {
-    global $FieldSeparator, $charset, $WikiNameRegexp, $KeywordLinkRegexp;
+    global $FieldSeparator, $charset, $WikiNameRegexp, $KeywordLinkRegexp, $AllActionPages;
     global $DisabledActions, $HTTP_SERVER_VARS, $DBParams, $LANG;
 
     // "\x80"-"\x9f" (and "\x00" - "\x1f") are non-printing control
@@ -323,6 +321,12 @@ function fix_configs() {
     $WikiNameRegexp = pcre_fix_posix_classes($WikiNameRegexp);
     $KeywordLinkRegexp = pcre_fix_posix_classes($KeywordLinkRegexp);
 
+    $AllActionPages = explode(':','AllPages:BackLinks:DebugInfo:FindPage:FullRecentChanges:'
+                              .'FullTextSearch:FuzzyPages:InterWikiSearch:LikePages:MostPopular:'
+                              .'OrphanedPages:PageDump:PageHistory:PageInfo:RandomPage:RateIt:'
+                              .'RecentChanges:RecentEdits:RelatedChanges:TitleSearch:TranslateText:'
+                              .'UpLoad:UserPreferences:WantedPages:WhoIsOnline');
+
     //////////////////////////////////////////////////////////////////
     // Autodetect URL settings:
     //
@@ -363,10 +367,6 @@ function fix_configs() {
             }
         }
      
-    // If user has not defined DATA_PATH, we want to use relative URLs.
-    if (!defined('DATA_PATH') && USE_PATH_INFO)
-        define('DATA_PATH', '..');
-
     // If user has not defined PHPWIKI_DIR, and we need it
     if (!defined('PHPWIKI_DIR') and !file_exists("themes/default")) {
     	$themes_dir = FindFile("themes");
@@ -399,10 +399,27 @@ function fix_configs() {
             and ! IsProbablyRedirectToIndex()) {
             // FIXME: This is a hack, and won't work if the requested
             // pagename has a slash in it.
-            define('VIRTUAL_PATH', dirname($REDIRECT_URL . 'x'));
+            $temp = strtr(dirname($REDIRECT_URL . 'x'),"\\",'/');
+            if ( ($temp == '/') || ($temp == '\\') )
+                $temp = '';
+            define('VIRTUAL_PATH', $temp);
         } else {
             define('VIRTUAL_PATH', SCRIPT_NAME);
         }
+    }
+
+    // If user has not defined DATA_PATH, we want to use relative URLs.
+    if (!defined('DATA_PATH')) {
+        // fix similar to the one suggested by jkalmbach for 
+        // installations in the webrootdir, like "http://phpwiki.org/HomePage"
+        $temp = dirname(SCRIPT_NAME);
+        if ( ($temp == '/') || ($temp == '\\') )
+            $temp = '';
+        define('DATA_PATH', $temp);
+        /*
+        if (USE_PATH_INFO)
+            define('DATA_PATH', '..');
+        */
     }
 
     if (SERVER_PORT
@@ -422,9 +439,20 @@ function fix_configs() {
     else
         define('PATH_INFO_PREFIX', '/');
 
-
     define('PHPWIKI_BASE_URL',
            SERVER_URL . (USE_PATH_INFO ? VIRTUAL_PATH . '/' : SCRIPT_NAME));
+
+    // Detect PrettyWiki setup (not loading index.php directly)
+    // $SCRIPT_FILENAME should be the same as __FILE__ in index.php
+    if (!isset($SCRIPT_FILENAME))
+        $SCRIPT_FILENAME = @$HTTP_SERVER_VARS['SCRIPT_FILENAME'];
+    if (!isset($SCRIPT_FILENAME))
+        $SCRIPT_FILENAME = @$HTTP_ENV_VARS['SCRIPT_FILENAME'];
+    if (!isset($SCRIPT_FILENAME))
+        $SCRIPT_FILENAME = dirname(__FILE__.'/../') . '/index.php';
+    if (isWindows())
+        $SCRIPT_FILENAME = strtr($SCRIPT_FILENAME,'/','\\');
+    define('SCRIPT_FILENAME',$SCRIPT_FILENAME);
 
     //////////////////////////////////////////////////////////////////
     // Select database
@@ -490,6 +518,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2004/05/01 15:59:29  rurban
+// more php-4.0.6 compatibility: superglobals
+//
 // Revision 1.14  2004/04/29 23:25:12  rurban
 // re-ordered locale init (as in 1.3.9)
 // fixed loadfile with subpages, and merge/restore anyway

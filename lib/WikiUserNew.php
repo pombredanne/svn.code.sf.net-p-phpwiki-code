@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.63 2004-05-01 15:59:29 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.64 2004-05-02 15:10:06 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -817,23 +817,18 @@ extends _AnonUser
         }
 
         // Check the configured Prefs methods
-        if ( !isset($this->_prefs->_select) and !empty($DBAuthParams['pref_select']) 
-             and in_array($DBParams['dbtype'],array('SQL','ADODB'))) {
+        $dbi = $this->getAuthDbh();
+        if ( $dbi and !isset($this->_prefs->_select) and !empty($DBAuthParams['pref_select'])) {
             $this->_prefs->_method = $DBParams['dbtype'];
-            // preparate the SELECT statement
             $this->_prefs->_select = $this->prepare($DBAuthParams['pref_select'], 
                                                     "'\$userid'");
-        //} else {
-        //    unset($this->_prefs->_select);
+            // read-only prefs?
+            if ( !isset($this->_prefs->_update) and !empty($DBAuthParams['pref_update'])) {
+                $this->_prefs->_update = $this->prepare($DBAuthParams['pref_update'], 
+                                                        array("'\$userid'","'\$pref_blob'"));
+            }
         } else {
             $this->_prefs->_method = 'HomePage';
-        }
-        if (  !isset($this->_prefs->_update) and !empty($DBAuthParams['pref_update'])
-             and in_array($DBParams['dbtype'],array('SQL','ADODB'))) {
-            $this->_prefs->_method = $DBParams['dbtype'];
-            // preparate the SELECT statement
-            $this->_prefs->_update = $this->prepare($DBAuthParams['pref_update'], 
-                                                    array("'\$userid'","'\$pref_blob'"));
         }
         
         // Upgrade to the next parent _PassUser class. Avoid recursion.
@@ -2805,6 +2800,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.63  2004/05/01 15:59:29  rurban
+// more php-4.0.6 compatibility: superglobals
+//
 // Revision 1.62  2004/04/29 18:31:24  rurban
 // Prevent from warning where no db pref was previously stored.
 //

@@ -15,7 +15,6 @@ from http://www.sqlite.org/sqlite.zip
 We work on a solution to setup the database on a virgin wiki 
 automatically, so that the sqlite binary is needed anymore.
 
-sqlite -init /tmp/phpwiki-sqlite.db 
 sqlite /tmp/phpwiki-sqlite.db < schemas/sqlite.sql
 
 Edit $DBParams in index.php to reflect your settings.
@@ -33,7 +32,15 @@ Edit $DBParams in index.php to reflect your settings.
 
 That's it. PhpWiki should now work.
 
+UPGRADING the schema
+--------------------
+
+echo ".dump" | sqlite /tmp/phpwiki-sqlite.db > dump.sql
+# fix the dump.sql file: adding indices or columns
+mv /tmp/phpwiki-sqlite.db /tmp/phpwiki-sqlite.old
+sqlite /tmp/phpwiki-sqlite.db < dump.sql
+
 Authors: 
 ReiniUrban (phpwiki developer) and Matthew Palmer (phpwiki debian maintainer)
 
-$Id: INSTALL.sqlite,v 1.1 2004-03-18 20:00:45 rurban Exp $
+$Id: INSTALL.sqlite,v 1.2 2004-05-02 15:10:05 rurban Exp $

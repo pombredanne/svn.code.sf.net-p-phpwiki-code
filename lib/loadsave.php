@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.98 2004-04-29 23:25:12 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.99 2004-05-02 15:10:07 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -547,12 +547,11 @@ function _tryinsertInterWikiMap($content) {
     if (!empty($error_html))
         trigger_error(_("Default InterWiki map file not loaded.")
                       . $error_html, E_USER_NOTICE);
-
     if ($goback)
         return $content;
 
-    trigger_error(sprintf(_("Loading InterWikiMap from external file %s."),
-                          $$mapfile), E_USER_NOTICE);
+    // if loading from virgin setup do echo, otherwise trigger_error E_USER_NOTICE
+    echo sprintf(_("Loading InterWikiMap from external file %s."), $mapfile),"<br />";
 
     $fd = fopen ($mapfile, "rb");
     $data = fread ($fd, filesize($mapfile));
@@ -811,6 +810,8 @@ function LoadAny (&$request, $file_or_dir, $files = false, $exclude = false)
 function LoadFileOrDir (&$request)
 {
     $source = $request->getArg('source');
+    $finder = new FileFinder;
+    $source = $finder->slashifyPath($source);
     $page = rawurldecode(basename($source));
     StartLoadDump($request, fmt("Loading '%s'", 
     	HTML(dirname($source),
@@ -848,11 +849,33 @@ function SetupWiki (&$request)
 
     $pgsrc = FindLocalizedFile(WIKI_PGSRC);
     $default_pgsrc = FindFile(DEFAULT_WIKI_PGSRC);
-    
+
     if ($default_pgsrc != $pgsrc)
         LoadAny($request, $default_pgsrc, $GenericPages);
-
+    $request->setArg('overwrite',true);
     LoadAny($request, $pgsrc);
+
+    // Ensure that all mandatory pages are loaded
+    $finder = new FileFinder;
+    foreach (array_merge(explode(':',constant('HOME_PAGE')
+                                 .':OldTextFormattingRules:TextFormattingRules'),
+                         $GLOBALS['AllActionPages'])) as $f) {
+        $page = gettext($f);
+        if (! $request->_dbi->isWikiPage($page) ) {
+            // translated version provided?
+            if ($f = FindLocalizedFile($pgsrc . $finder->_pathsep . $page, 1))
+                LoadAny($request, $f);
+            /*
+            else {
+                LoadAny($request, FindFile(WIKI_PGSRC . $finder->_pathsep . $f));
+                $page = basename($f);
+            }
+            */
+        }
+        if (!$request->_dbi->isWikiPage($page)) {
+            trigger_error("Mandatory file %s couldn't be loaded!",E_USER_WARNING);
+        }
+    }
 
     echo "</dl>\n";
     EndLoadDump($request);
@@ -882,6 +905,11 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.98  2004/04/29 23:25:12  rurban
+ re-ordered locale init (as in 1.3.9)
+ fixed loadfile with subpages, and merge/restore anyway
+   (sf.net bug #844188)
+
  Revision 1.96  2004/04/19 23:13:03  zorloc
  Connect the rest of PhpWiki to the IniConfig system.  Also the keyword regular expression is not a config setting
 

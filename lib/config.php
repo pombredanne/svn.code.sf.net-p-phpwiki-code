@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.104 2004-05-01 11:26:37 rurban Exp $');
+rcs_id('$Id: config.php,v 1.105 2004-05-02 15:10:06 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -270,14 +270,15 @@ function deduce_script_name() {
 
 function IsProbablyRedirectToIndex () {
     // This might be a redirect to the DirectoryIndex,
-    // e.g. REQUEST_URI = /dir/  got redirected
+    // e.g. REQUEST_URI = /dir/?some_action got redirected
     // to SCRIPT_NAME = /dir/index.php
 
     // In this case, the proper virtual path is still
     // $SCRIPT_NAME, since pages appear at
     // e.g. /dir/index.php/HomePage.
 
-    $requri = preg_quote($GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI'], '%');
+    $requri = preg_replace('/\?.*$/','',$GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI']);
+    $requri = preg_quote($requri, '%');
     return preg_match("%^${requri}[^/]*$%", $GLOBALS['HTTP_SERVER_VARS']['SCRIPT_NAME']);
 }
 
@@ -290,6 +291,9 @@ if (!function_exists('array_key_exists')) { // lib/IniConfig.php, sqlite, adodb,
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.104  2004/05/01 11:26:37  rurban
+// php-4.0.x support: array_key_exists (PHP 4 >= 4.1.0)
+//
 // Revision 1.103  2004/04/30 00:04:14  rurban
 // zh (chinese language) support
 //
