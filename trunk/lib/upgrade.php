@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.11 2004-05-15 13:06:17 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.12 2004-05-18 13:59:15 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -171,7 +171,7 @@ function installTable(&$dbh, $table, $backend_type) {
     case 'session':
         assert($session_tbl);
         if ($backend_type == 'mysql') {
-            $dbh->simpleQuery("
+            $dbh->genericQuery("
 CREATE TABLE $session_tbl (
     	sess_id 	CHAR(32) NOT NULL DEFAULT '',
     	sess_data 	BLOB NOT NULL,
@@ -181,57 +181,57 @@ CREATE TABLE $session_tbl (
 	INDEX (sess_date)
 )");
         } else {
-            $dbh->simpleQuery("
+            $dbh->genericQuery("
 CREATE TABLE $session_tbl (
 	sess_id 	CHAR(32) NOT NULL DEFAULT '',
     	sess_data 	".($backend_type == 'pgsql'?'TEXT':'BLOB')." NOT NULL,
     	sess_date 	INT,
     	sess_ip 	CHAR(15) NOT NULL
 )");
-            $dbh->simpleQuery("CREATE UNIQUE INDEX sess_id ON $session_tbl (sess_id)");
+            $dbh->genericQuery("CREATE UNIQUE INDEX sess_id ON $session_tbl (sess_id)");
         }
-        $dbh->simpleQuery("CREATE INDEX sess_date on session (sess_date)");
+        $dbh->genericQuery("CREATE INDEX sess_date on session (sess_date)");
         break;
     case 'user':
         $user_tbl = $prefix.'user';
         if ($backend_type == 'mysql') {
-            $dbh->simpleQuery("
+            $dbh->genericQuery("
 CREATE TABLE $user_tbl (
   	userid 	CHAR(48) BINARY NOT NULL UNIQUE,
   	passwd 	CHAR(48) BINARY DEFAULT '',
   	PRIMARY KEY (userid)
 )");
         } else {
-            $dbh->simpleQuery("
+            $dbh->genericQuery("
 CREATE TABLE $user_tbl (
   	userid 	CHAR(48) NOT NULL,
   	passwd 	CHAR(48) DEFAULT ''
 )");
-            $dbh->simpleQuery("CREATE UNIQUE INDEX userid ON $user_tbl (userid)");
+            $dbh->genericQuery("CREATE UNIQUE INDEX userid ON $user_tbl (userid)");
         }
         break;
     case 'pref':
         $pref_tbl = $prefix.'pref';
         if ($backend_type == 'mysql') {
-            $dbh->simpleQuery("
+            $dbh->genericQuery("
 CREATE TABLE $pref_tbl (
   	userid 	CHAR(48) BINARY NOT NULL UNIQUE,
   	prefs  	TEXT NULL DEFAULT '',
   	PRIMARY KEY (userid)
 )");
         } else {
-            $dbh->simpleQuery("
+            $dbh->genericQuery("
 CREATE TABLE $pref_tbl (
   	userid 	CHAR(48) NOT NULL,
   	prefs  	TEXT NULL DEFAULT '',
 )");
-            $dbh->simpleQuery("CREATE UNIQUE INDEX userid ON $pref_tbl (userid)");
+            $dbh->genericQuery("CREATE UNIQUE INDEX userid ON $pref_tbl (userid)");
         }
         break;
     case 'member':
         $member_tbl = $prefix.'member';
         if ($backend_type == 'mysql') {
-            $dbh->simpleQuery("
+            $dbh->genericQuery("
 CREATE TABLE $member_tbl (
 	userid    CHAR(48) BINARY NOT NULL,
    	groupname CHAR(48) BINARY NOT NULL DEFAULT 'users',
@@ -239,19 +239,19 @@ CREATE TABLE $member_tbl (
    	INDEX (groupname)
 )");
         } else {
-            $dbh->simpleQuery("
+            $dbh->genericQuery("
 CREATE TABLE $member_tbl (
 	userid    CHAR(48) NOT NULL,
    	groupname CHAR(48) NOT NULL DEFAULT 'users',
 )");
-            $dbh->simpleQuery("CREATE INDEX userid ON $member_tbl (userid)");
-            $dbh->simpleQuery("CREATE INDEX groupname ON $member_tbl (groupname)");
+            $dbh->genericQuery("CREATE INDEX userid ON $member_tbl (userid)");
+            $dbh->genericQuery("CREATE INDEX groupname ON $member_tbl (groupname)");
         }
         break;
     case 'rating':
         $rating_tbl = $prefix.'rating';
         if ($backend_type == 'mysql') {
-            $dbh->simpleQuery("
+            $dbh->genericQuery("
 CREATE TABLE $rating_tbl (
         dimension INT(4) NOT NULL,
         raterpage INT(11) NOT NULL,
@@ -262,7 +262,7 @@ CREATE TABLE $rating_tbl (
         PRIMARY KEY (dimension, raterpage, rateepage)
 )");
         } else {
-            $dbh->simpleQuery("
+            $dbh->genericQuery("
 CREATE TABLE $rating_tbl (
         dimension INT(4) NOT NULL,
         raterpage INT(11) NOT NULL,
@@ -271,7 +271,7 @@ CREATE TABLE $rating_tbl (
         rateeversion INT(11) NOT NULL,
         tstamp TIMESTAMP(14) NOT NULL,
 )");
-            $dbh->simpleQuery("CREATE UNIQUE INDEX rating ON $rating_tbl (dimension, raterpage, rateepage)");
+            $dbh->genericQuery("CREATE UNIQUE INDEX rating ON $rating_tbl (dimension, raterpage, rateepage)");
         }
         break;
     }
@@ -311,7 +311,7 @@ function CheckDatabaseUpdate($request) {
         //FIXME: adodb seem to uppercase the fields
         if (!strstr(strtolower(join(':',$sess_fields)),"sess_ip")) {
             echo "<b>",_("ADDING"),"</b>"," ... ";		
-            $dbh->simpleQuery("ALTER TABLE $session_tbl ADD sess_ip CHAR(15) NOT NULL");
+            $dbh->genericQuery("ALTER TABLE $session_tbl ADD sess_ip CHAR(15) NOT NULL");
         } else {
             echo _("OK");
         }
@@ -333,7 +333,7 @@ function CheckDatabaseUpdate($request) {
                     echo "<b>",_("ADDING"),"</b>"," ... ";		
                     // MODIFY col_def valid since mysql 3.22.16,
                     // older mysql's need CHANGE old_col col_def
-                    $dbh->simpleQuery("ALTER TABLE $page_tbl CHANGE id id INT NOT NULL AUTO_INCREMENT");
+                    $dbh->genericQuery("ALTER TABLE $page_tbl CHANGE id id INT NOT NULL AUTO_INCREMENT");
                     $fields = mysql_list_fields($database,$page_tbl);
                     if (!strstr(strtolower(mysql_field_flags($fields, $i)),"auto_increment"))
                         echo " <b><font color=\"red\">",_("FAILED"),"</font></b><br />\n";		
@@ -389,6 +389,9 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.11  2004/05/15 13:06:17  rurban
+ skip the HomePage, at first upgrade the ActionPages, then the database, then the rest
+
  Revision 1.10  2004/05/15 01:19:41  rurban
  upgrade prefix fix by Kai Krakow
 

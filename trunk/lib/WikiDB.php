@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.57 2004-05-16 22:07:35 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.58 2004-05-18 13:59:14 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -502,26 +502,27 @@ class WikiDB {
         $gd->set('__global', $data);
     }
 
-    // simple select or create/update queries which do trigger_error
-    function simpleQuery($sql) {
+    // simple select or create/update queries
+    function genericQuery($sql) {
         global $DBParams;
         if ($DBParams['dbtype'] == 'SQL') {
             $result = $this->_backend->_dbh->query($sql);
             if (DB::isError($result)) {
                 $msg = $result->getMessage();
-                trigger_error("SQL Error: ".DB::errorMessage($result),E_USER_WARNING);
+                trigger_error("SQL Error: ".DB::errorMessage($result), E_USER_WARNING);
                 return false;
             } else {
                 return $result;
             }
         } elseif ($DBParams['dbtype'] == 'ADODB') {
             if (!($result = $this->_backend->_dbh->Execute($sql))) {
-                trigger_error("SQL Error: ".$this->_backend->_dbh->ErrorMsg(),E_USER_WARNING);
+                trigger_error("SQL Error: ".$this->_backend->_dbh->ErrorMsg(), E_USER_WARNING);
                 return false;
             } else {
                 return $result;
             }
         }
+        return false;
     }
 
 };
@@ -1007,6 +1008,13 @@ class WikiDB_Page
         $result =  $backend->get_links($this->_pagename, $reversed);
         return new WikiDB_PageIterator($this->_wikidb, $result);
     }
+
+    function getBackLinks() {
+        return $this->getLinks(true);
+    }
+    function getPageLinks() {
+        return $this->getLinks(false);
+    }
             
     /**
      * Access WikiDB_Page meta-data.
@@ -1167,8 +1175,8 @@ class WikiDB_Page
 
     // The authenticated author of the first revision or empty if not authenticated then.
     function getCreator() {
-        $current = $this->getRevision(1);
-        return $current->get('author_id');
+        if ($current = $this->getRevision(1)) return $current->get('author_id');
+        else return '';
     }
 
 };
@@ -1789,6 +1797,14 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.57  2004/05/16 22:07:35  rurban
+// check more config-default and predefined constants
+// various PagePerm fixes:
+//   fix default PagePerms, esp. edit and view for Bogo and Password users
+//   implemented Creator and Owner
+//   BOGOUSERS renamed to BOGOUSER
+// fixed syntax errors in signin.tmpl
+//
 // Revision 1.56  2004/05/15 22:54:49  rurban
 // fixed important WikiDB bug with DEBUG > 0: wrong assertion
 // improved SetAcl (works) and PagePerms, some WikiGroup helpers.
