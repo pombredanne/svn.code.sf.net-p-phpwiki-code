@@ -12,6 +12,10 @@ $locale["%s days"] =
    "%s Tagen";
 $locale["%s failed"] =
    "Fehler bei %s";
+$locale["%s is empty."] =
+   "%s ist Leer.";
+$locale["%s of this page"] =
+   "%s von dieser Seite";
 $locale["%s(%d): no such revision"] =
    "%s(%d): unbekannte Version";
 $locale["%s: %s"] =
@@ -28,10 +32,12 @@ $locale["%s: no such class"] =
    "Unbekannte Klasse: »%s«";
 $locale["%s: not a subclass of WikiPlugin"] =
    "»%s«: keine Unterklasse von WikiPlugin";
-$locale["(Any password will work, except, of course for the admin user.)"] =
-   "(Jedes Wort wird als Passwort akzeptiert, außer für den Systemverwalter.)";
 $locale["(diff)"] =
    "(Diff)";
+$locale["(last edited %s)"] =
+   "(letzte Änderung %s)";
+$locale["(version %s, saved on %s)"] =
+   "(Version %s. zuletzt am %s gespeichert)";
 $locale["- saved to database as version %d"] =
    "- in der Datenbank gespeichert als Version %d.";
 $locale["- skipped"] =
@@ -79,7 +85,7 @@ $locale["Bad action: '%s'"] =
 $locale["Bad file type: %s"] =
    "Ungültiger Dateityp: %s";
 $locale["Bad header type: %s"] =
-   "Ungültiger Dateikopf form: %s ";
+   "Ungültiger Dateiheader: %s ";
 $locale["Bad key %s in table"] =
    "Ungültiges Datenfeld %s in Tabelle";
 $locale["Bad key in linktable: %s"] =
@@ -92,6 +98,8 @@ $locale["Can't connect to database: %s"] =
    "Kann Verbindung zu Datenbank nicht aufbauen: %s";
 $locale["Can't inflate data: zlib support not enabled in this PHP"] =
    "Kann Daten nicht dekomprimieren: Die zlib Bibiliothek wurde in PHP nicht installiert/aktiviert.";
+$locale["Can't mix '%s' with '%s' type format strings"] =
+   "Kann '%s' Typ-Formatzeichenketten nicht mit '%s' mischen.";
 $locale["Can't open zip file '%s' for reading"] =
    "Konnte zip Datei »%s« nich öffnen zum lesen";
 $locale["Can't parse %s"] =
@@ -110,6 +118,8 @@ $locale["Command failed [%s], Return value: %s"] =
    "Fehler beim Befehl: [%s], Rückgabewert: %s";
 $locale["Complete."] =
    "Fertig.";
+$locale["Compression method %s unsupported"] =
+   "Kompressionsmethode %s wird nicht unterstützt";
 $locale["Contents"] =
    "Inhalt";
 $locale["Copied to [%s]"] =
@@ -160,8 +170,12 @@ $locale["Edit aborted: %s"] =
    "Editieren abgebrochen: %s";
 $locale["Edit: %s"] =
    "Editiere: %s";
+$locale["EditText"] =
+   "EditiereText";
 $locale["Empty pagename!"] =
    "Leerer Seitenname!";
+$locale["Encryption and/or zip patches not supported."] =
+   "zip Verschlüsselung und/oder Patches noch nicht unterstützt.";
 $locale["FAILED for [%s]"] =
    "FEHLER für [%s]";
 $locale["Failed to copy [%s]"] =
@@ -232,6 +246,8 @@ $locale["MIME file %s"] =
    "MIME-Datei %s";
 $locale["Make changes to the file again. Paste your additions from the clipboard (or text editor)."] =
    "Editiere die Seite erneut. Kopiere deine Veränderungen aus der Zwischenablage (oder aus dem Texteditor)";
+$locale["Modern"] =
+   "Modern";
 $locale["MostPopular"] =
    "MeistBesucht";
 $locale["New page."] =
@@ -262,8 +278,10 @@ $locale["Optimizing %s"] =
    "%s wird optimiert";
 $locale["Other diffs:"] =
    "Andere Vergleiche:";
-$locale["PHP Warnings"] =
-   "PHP Warnungen";
+$locale["PHP %s Warnings"] =
+   "PHP %s Warnungen";
+$locale["PHP was unable to create a new GD image stream. Read 'lib/plugin/text2png.php' for details."] =
+   "PHP konnten keinen neues GD Bild erzeugen. Lese 'lib/plugin/text2png.php' für Details.";
 $locale["Page Name"] =
    "Seitenname";
 $locale["Page names with prefix '%s'"] =
@@ -278,10 +296,14 @@ $locale["PageHistory for %s"] =
    "Änderungsprotokoll für Seite %s";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
    "PhpWiki kann deine Veränderungen nicht speichern, da ein anderer Benützer die Seite verändert und gespeichert hat, während du diese Seite editiert hast. Wenn die Seite jetzt gespeichert werden würde, dann würden die Veränderungen des anderen Benützers verlorengehen.";
+$locale["PhpWikiAdministration"] =
+   "PhpWikiSystemverwalten";
 $locale["Please enter your name as WordsStrungTogether (e.g. John Smith as JohnSmith)."] =
    "Gib bitte deinen Namen als ZusammenGesetztesHauptWort ein. (z.B. Hans Müller als HansMüller).";
 $locale["Please re-enter your name in this form."] =
    "Gib bitte deinen Namen noch einmal ein.";
+$locale["Postponed CRC not yet supported."] =
+   "Nachträgliches CRC noch nicht unterstützt.";
 $locale["Preparing to execute [%s]"] =
    "Ausfuhrung von [%s] vorbereitend";
 $locale["Press <b>Save</b> again."] =
@@ -342,6 +364,8 @@ $locale["Show changes for: %s"] =
    "Zeige Änderungen innerhalb von: %s";
 $locale["Show minor edits for: %s"] =
    "Zeige geringfügige Änderungen innerhalb von: %s";
+$locale["Sign In"] =
+   "AnMelden";
 $locale["Sign in:"] =
    "Melde dich an:";
 $locale["SignIn"] =
@@ -404,12 +428,14 @@ $locale["Unable to delete file, lock was not obtained."] =
    "Konnte Datei nicht löschen. Datei ist anderweitig gesperrt.";
 $locale["Unable to obtain read lock."] =
    "Konnte Lesesperre nicht anfordern.";
+$locale["Unable to open directory '%s' for reading"] =
+   "Konnte Verzeichnis »%s« nicht zum Lesen öffnen";
 $locale["Unable to open file"] =
    "Datei könnte nicht geöffnet werden.";
 $locale["Unable to open file '%s' for reading"] =
    "Konnte Datei »%s« nicht zum Lesen öffnen";
 $locale["Uncompressed size mismatch"] =
-   "Größe des Dekomprimierte Datei stimmt nicht";
+   "Größe der dekomprimierten Datei stimmt nicht";
 $locale["Unexpected EOF in zip file"] =
    "Unerwartetes Dateiende in zip Datei";
 $locale["Unknown %s"] =
@@ -452,22 +478,12 @@ $locale["You are about to remove '%s' permanently!"] =
    "Du bist im Begriff »%s« permanent zu löschen!";
 $locale["You are signed in as %s"] =
    "Angemeldet als %s";
-$locale["You are signed in as %s."] =
-   "Angemeldet als %s.";
 $locale["You are viewing an old revision of this page."] =
    "Du siehst eine alte Version dieser Seite.";
 $locale["You can change the size of the editing area in %s."] =
    "Du kannst die Größe des Texteingabefensters in %s ändern.";
-$locale["You can log in using any valid WikiWord as a user ID."] =
-   "Du kannst dich mit irgendeinem gültigen WikiWort als Benutzername anmelden.";
-$locale["You entered an invalid login or password."] =
-   "Du hast ein ungültiges Login oder Passwort eingegeben.";
 $locale["You have not made any changes so no new version has been saved."] =
    "Du hast keine Änderungen gemacht also ist keine neue Version gespeichert worden.";
-$locale["You must be logged in as an administrator %s"] =
-   "Du mußt dich als Systemverwalter anmelden %s";
-$locale["You must set the administrator account and password before you can log in."] =
-   "Du mußt zuerst den Systemverwalter-Account mit einem Passwort schützen,bevor du dich anmelden kannst.";
 $locale["You must specify a directory to dump to"] =
    "Du mußt ein Sicherungsverzeichnis angeben.";
 $locale["You should be logged in now."] =
@@ -509,9 +525,7 @@ $locale["is initial release"] =
 $locale["last modified on %s"] =
    "zuletzt am %s geändert";
 $locale["link entry missing for backlink %s"] =
-   "Es fehlt eine Link Datenfeld für den BackLink %s";
-$locale["lock or unlock pages"] =
-   "Seiten sperren oder freigeben";
+   "Es fehlt ein Link Datenfeld für den BackLink %s";
 $locale["major edits"] =
    "Hauptänderungen";
 $locale["minor edits"] =
@@ -538,10 +552,6 @@ $locale["revision by previous author"] =
    "Revision von vorigem Autor";
 $locale["saved as %s"] =
    "als %s gespeichert";
-$locale["to do that"] =
-   "um das zu tun";
-$locale["to perform action '%s'"] =
-   "um »%s« auszuführen";
 $locale["trailing cruft in plugin args: '%s'"] =
    "Unbekannte Zusatzprogramm Argumente: »%s«";
 $locale["unable to locate/open [%s], turning debug off"] =
@@ -552,5 +562,7 @@ $locale["version %d of %s"] =
    "Version %d. von %s";
 $locale["version %s"] =
    "Version %s.";
+$locale["walkabout for %s"] =
+   "walkabout für %s";
 
 ?>
