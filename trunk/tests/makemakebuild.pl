@@ -3,7 +3,7 @@
 #  Write out a Makefile and a build.xml file based on the *.inputs files
 #  in the current directory. Steve Wainstead, April 2001.
 
-# $Id: makemakebuild.pl,v 1.2 2001-12-22 03:56:29 rurban Exp $
+# $Id: makemakebuild.pl,v 1.3 2001-12-22 05:14:16 rurban Exp $
 
 # read in all the input files, loop over each one and build up 
 # text blocks that we will subsitute into the skeletons for Makefile
@@ -102,12 +102,12 @@ all: buildtests classes.zip dotest
 dotest: \$(classes)
 \texport CLASSPATH=\$(CLASSPATH)
 \tant 
-#\tjava -classpath "httpunit.jar:classes.zip:\${ANT_HOME}\\lib\\ant.jar" -Dant.home="\${ANT_HOME}" org.apache.tools.ant.Main \$(<:.class=)
+#\tjava -classpath "\$(CLASSPATH):\${ANT_HOME}\\lib\\ant.jar" -Dant.home="\${ANT_HOME}" org.apache.tools.ant.Main \$(<:.class=)
+
+buildtests: \$(javas) classes.zip
 
 classes.zip: \$(classes)
 \tzip \$@ \$?
-
-buildtests: \$(javas)
 
 clean:
 \t-rm -f \$(javas) \$(classes) classes.zip
