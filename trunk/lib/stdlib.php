@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.180 2004-05-18 16:23:39 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.181 2004-05-25 10:18:44 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1419,7 +1419,78 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
     return $a;
 }
 
+/**
+ * isUtf8String($string) - cheap utf-8 detection
+ *
+ * segfaults for strings longer than 10kb!
+ * Use http://www.phpdiscuss.com/article.php?id=565&group=php.i18n or
+ * checkTitleEncoding() at http://cvs.sourceforge.net/viewcvs.py/wikipedia/phase3/languages/Language.php
+ */
+function isUtf8String( $s ) {
+    $ptrASCII  = '[\x00-\x7F]';
+    $ptr2Octet = '[\xC2-\xDF][\x80-\xBF]';
+    $ptr3Octet = '[\xE0-\xEF][\x80-\xBF]{2}';
+    $ptr4Octet = '[\xF0-\xF4][\x80-\xBF]{3}';
+    $ptr5Octet = '[\xF8-\xFB][\x80-\xBF]{4}';
+    $ptr6Octet = '[\xFC-\xFD][\x80-\xBF]{5}';
+    return preg_match("/^($ptrASCII|$ptr2Octet|$ptr3Octet|$ptr4Octet|$ptr5Octet|$ptr6Octet)*$/s", $s);
+}
+
+/** 
+ * Check for UTF-8 URLs; Internet Explorer produces these if you
+ * type non-ASCII chars in the URL bar or follow unescaped links.
+ * Requires urldecoded pagename.
+ * Fixes sf.net bug #953949
+ *
+ * src: languages/Language.php:checkTitleEncoding() from mediawiki
+ */
+function fixTitleEncoding( $s ) {
+    global $charset;
+
+    $ishigh = preg_match( '/[\x80-\xff]/', $s);
+    /*
+    $isutf = ($ishigh ? preg_match( '/^([\x00-\x7f]|[\xc0-\xdf][\x80-\xbf]|' .
+                                    '[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xf7][\x80-\xbf]{3})+$/', $s ) : true );
+    */
+    $isutf = ($ishigh ? isUtf8String($s) : true);
+
+    if( ($charset != "utf-8") and $ishigh and $isutf )
+        // TODO: check for iconv support
+        // TODO: if charset == 'iso-8859-1' then simple use utf8_decode()
+        if ($charset == 'iso-8859-1')
+            return utf8_decode( $s );
+        else
+            return iconv( "UTF-8", $charset, $s );
+
+    if( ($charset == "utf-8") and $ishigh and !$isutf )
+        return utf8_encode( $s );
+
+    // Other languages can safely leave this function, or replace
+    // it with one to detect and convert another legacy encoding.
+    return $s;
+}
+
+/** 
+ * MySQL fulltext index doesn't grok utf-8, so we
+ * need to fold cases and convert to hex.
+ * src: languages/Language.php:stripForSearch() from mediawiki
+ */
+/*
+function stripForSearch( $string ) {
+    global $wikiLowerChars; 
+    // '/(?:[a-z]|\xc3[\x9f-\xbf]|\xc4[\x81\x83\x85\x87])/' => "a-z\xdf-\xf6\xf8-\xff"
+    return preg_replace(
+                        "/([\\xc0-\\xff][\\x80-\\xbf]*)/e",
+                        "'U8' . bin2hex( strtr( \"\$1\", \$wikiLowerChars ) )",
+                        $string );
+}
+*/
+
+
 // $Log: not supported by cvs2svn $
+// Revision 1.180  2004/05/18 16:23:39  rurban
+// rename split_pagename to SplitPagename
+//
 // Revision 1.179  2004/05/18 16:18:37  rurban
 // AutoSplit at subpage seperators
 // RssFeed stability fix for empty feeds or broken connections

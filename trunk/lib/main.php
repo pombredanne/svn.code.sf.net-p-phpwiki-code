@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.149 2004-05-18 13:31:19 rurban Exp $');
+rcs_id('$Id: main.php,v 1.150 2004-05-25 10:18:44 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -529,7 +529,7 @@ $this->version = phpwiki_version();
 
     function _deducePagename () {
         if ($this->getArg('pagename'))
-            return $this->getArg('pagename');
+            return fixTitleEncoding($this->getArg('pagename'));
 
         if (USE_PATH_INFO) {
             $pathinfo = $this->get('PATH_INFO');
@@ -542,7 +542,7 @@ $this->version = phpwiki_version();
             $tail = substr($pathinfo, strlen(PATH_INFO_PREFIX));
 
             if ($tail != '' and $pathinfo == PATH_INFO_PREFIX . $tail) {
-                return $tail;
+                return fixTitleEncoding($tail);
             }
         }
         elseif ($this->isPost()) {
@@ -560,7 +560,7 @@ $this->version = phpwiki_version();
              */
             global $HTTP_GET_VARS;
             if (isset($HTTP_GET_VARS['pagename'])) { 
-                return $HTTP_GET_VARS['pagename'];
+                return fixTitleEncoding(urldecode($HTTP_GET_VARS['pagename']));
             }
         }
 
@@ -569,10 +569,10 @@ $this->version = phpwiki_version();
          */
         $query_string = $this->get('QUERY_STRING');
         if (preg_match('/^[^&=]+$/', $query_string)) {
-            return urldecode($query_string);
+            return fixTitleEncoding(urldecode($query_string));
         }
 
-        return HOME_PAGE;
+        return fixTitleEncoding(HOME_PAGE);
     }
 
     function _deduceAction () {
@@ -934,6 +934,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.149  2004/05/18 13:31:19  rurban
+// hold warnings until headers are sent. new Error-style with collapsed output of repeated messages
+//
 // Revision 1.148  2004/05/17 17:43:29  rurban
 // CGI: no PATH_INFO fix
 //
