@@ -1,7 +1,7 @@
 <?php
 // display.php: fetch page or get default content
 // calls transform.php for actual transformation of wiki markup to HTML
-rcs_id('$Id: display.php,v 1.12 2001-12-11 22:41:40 dairiki Exp $');
+rcs_id('$Id: display.php,v 1.13 2002-01-09 17:30:39 carstenklapp Exp $');
 
 require_once('lib/Template.php');
 require_once('lib/transform.php');
@@ -14,7 +14,8 @@ require_once('lib/transform.php');
  * This algorithm was suggested on MeatballWiki by
  * Alex Schroeder <kensanata@yahoo.com>.
  *
- * Use the first paragraph in the page which contains at least two sentences.
+ * Use the first paragraph in the page which contains at least two
+ * sentences.
  *
  * @see http://www.usemod.com/cgi-bin/mb.pl?MeatballWikiSuggestions
  */
@@ -41,26 +42,26 @@ function GleanDescription ($rev) {
 }
 
 function displayPage($dbi, $request) {
-   $pagename = $request->getArg('pagename');
-   $version = $request->getArg('version');
+    $pagename = $request->getArg('pagename');
+    $version = $request->getArg('version');
    
-   $page = $dbi->getPage($pagename);
-   if ($version) {
-      $revision = $page->getRevision($version);
-      if (!$revision)
-         NoSuchRevision($page, $version);
-   }
-   else {
-      $revision = $page->getCurrentRevision();
-   }
+    $page = $dbi->getPage($pagename);
+    if ($version) {
+        $revision = $page->getRevision($version);
+        if (!$revision)
+            NoSuchRevision($page, $version);
+    }
+    else {
+        $revision = $page->getCurrentRevision();
+    }
 
-   $template = new WikiTemplate('BROWSE');
-   $template->setPageRevisionTokens($revision);
-   $template->replace('CONTENT', do_transform($revision->getContent()));
-   $template->qreplace('PAGE_DESCRIPTION', GleanDescription($revision));
-   echo $template->getExpansion();
-   flush();
-   $page->increaseHitCount();
+    $template = new WikiTemplate('BROWSE');
+    $template->setPageRevisionTokens($revision);
+    $template->replace('CONTENT', do_transform($revision->getContent()));
+    $template->qreplace('PAGE_DESCRIPTION', GleanDescription($revision));
+    echo $template->getExpansion();
+    flush();
+    $page->increaseHitCount();
 }
 
 // For emacs users
