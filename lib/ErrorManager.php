@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.39 2004-11-05 18:04:20 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.40 2004-12-13 14:39:46 rurban Exp $');
 
 if (isset($GLOBALS['ErrorManager'])) return;
 
@@ -281,7 +281,7 @@ class ErrorManager
         $in_handler = false;
     }
 
-    function warning($msg, $errno=E_USER_NOTICE) {
+    function warning($msg, $errno = E_USER_NOTICE) {
         $this->handleError(new PhpWikiError($errno, $msg));
     }
     
@@ -605,6 +605,9 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.39  2004/11/05 18:04:20  rurban
+// print errno only if _DEBUG_VERBOSE
+//
 // Revision 1.38  2004/10/19 17:34:55  rurban
 // <4.3 fix
 //
