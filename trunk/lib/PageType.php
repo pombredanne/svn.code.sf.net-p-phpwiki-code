@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageType.php,v 1.10 2002-03-06 01:02:59 carstenklapp Exp $');
+<?php rcs_id('$Id: PageType.php,v 1.11 2002-08-20 08:37:41 rurban Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -60,14 +60,16 @@ function PageType(&$rev, $pagename = false, $markup = false) {
     switch($pagename) {
         case $i:
             $ContentTemplateName = 'interwikimap';
-            $content_template = new interWikiMapPageType($text, $markup);
             break;
         default:
             $ContentTemplateName = 'wikitext';
-            $content_template = new PageType($text, $markup);
     }
 
+    $_ContentTemplates = array('wikitext' => new PageType($text, $markup),
+                               'interwikimap' => new interWikiMapPageType($text, $markup));
+
     // Start making the actual content
+    $content_template = $_ContentTemplates[$ContentTemplateName];
     return $content_template->getContent();
 }
 
@@ -152,14 +154,16 @@ class interWikiMapPageType extends PageType {
 
         $tbody = HTML::tbody();
         $dbi = $request->getDbh();
-        foreach ($array as $moniker => $interurl) {
-            if ($dbi->isWikiPage($moniker)) {
-                $moniker = WikiLink($moniker);
+        if ($array) {
+            foreach ($array as $moniker => $interurl) {
+                if ($dbi->isWikiPage($moniker)) {
+                    $moniker = WikiLink($moniker);
+                }
+                $moniker = HTML::td(array('class' => 'interwiki-moniker'), $moniker);
+                $interurl = HTML::td(array('class' =>'interwiki-url'), HTML::tt($interurl));
+                
+                $tbody->pushContent(HTML::tr($moniker, $interurl));
             }
-            $moniker = HTML::td(array('class' => 'interwiki-moniker'), $moniker);
-            $interurl = HTML::td(array('class' =>'interwiki-url'), HTML::tt($interurl));
-
-            $tbody->pushContent(HTML::tr($moniker, $interurl));
         }
         $table = HTML::table();
         $table->setAttr('class', 'interwiki-map');
