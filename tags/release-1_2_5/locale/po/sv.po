@@ -1,0 +1,347 @@
+# sv.po -- PhpWiki's Swedish language file
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# Jon Åslund <jooon@hem.passagen.se>, 2001.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: phpwiki 1.1.9\n"
+"POT-Creation-Date: 2001-05-21 08:27-0700\n"
+"PO-Revision-Date: 2001-01-27 01:58+0200\n"
+"Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin.php:26
+msgid "You entered an invalid login or password."
+msgstr "Du har angett ett otillåtet användarnamn eller lösenord."
+
+#: admin.php:47
+#, c-format
+msgid "You are about to remove '%s' permanently!"
+msgstr "Du kommer att ta bort \"%s\" permanent!"
+
+#: admin.php:50
+#, c-format
+msgid "Click %shere%s to remove the page now."
+msgstr "Klicka %shär%s för att ta bort sidan nu."
+
+#: admin.php:53
+msgid "Otherwise press the \"Back\" button of your browser."
+msgstr "Annars klicka på backaknappen i din webbläsare."
+
+#: admin.php:55
+msgid "Function not yet implemented."
+msgstr "Funktionen är ännu inte implementerad."
+
+#: admin.php:57 admin.php:65
+msgid "Remove page"
+msgstr "Ta bort sida"
+
+#: admin.php:63
+#, fuzzy, c-format
+msgid "Removed page '%s' succesfully."
+msgstr "Tog bort sidan \"%s\"."
+
+#: lib/config.php:197
+msgid "templates/browse.html"
+msgstr "locale/sv/templates/browse.html"
+
+#: lib/config.php:198
+msgid "templates/editpage.html"
+msgstr "locale/sv/templates/editpage.html"
+
+#: lib/config.php:199
+msgid "templates/editlinks.html"
+msgstr "locale/sv/templates/editlinks.html"
+
+#: lib/config.php:200
+msgid "templates/message.html"
+msgstr "locale/sv/templates/message.html"
+
+#: lib/config.php:216
+msgid "./pgsrc"
+msgstr "locale/sv/pgsrc"
+
+#: lib/diff.php:711
+#, c-format
+msgid "WikiDiff::apply: line count mismatch: %s != %s"
+msgstr "WikiDiff::apply: radantalet stämmer inte: %s != %s"
+
+#: lib/diff.php:771
+msgid "WikiDiff::_check: failed"
+msgstr "WikiDiff::_check: misslyckades"
+
+#: lib/diff.php:781
+msgid "WikiDiff::_check: edit sequence is non-optimal"
+msgstr "WikiDiff::_check: ändringssekvensen är icke optimal"
+
+#: lib/diff.php:785
+#, c-format
+msgid "WikiDiff Okay: LCS = %s"
+msgstr "WikiDiff Ok: LCS = %s"
+
+#: lib/diff.php:1026
+msgid "Current page:"
+msgstr "Nuvarande sida:"
+
+#: lib/diff.php:1030 lib/diff.php:1048
+#, c-format
+msgid "version %s"
+msgstr "version %s"
+
+#: lib/diff.php:1032 lib/diff.php:1050
+#, c-format
+msgid "last modified on %s"
+msgstr "senast ändrad %s"
+
+#: lib/diff.php:1035 lib/diff.php:1053
+#, c-format
+msgid "by %s"
+msgstr "av %s"
+
+#: lib/diff.php:1039 lib/diff.php:1057
+msgid "None"
+msgstr "ingen"
+
+#: lib/diff.php:1044
+msgid "Archived page:"
+msgstr "Arkiverad sida:"
+
+#: lib/diff.php:1066
+msgid "Versions are identical"
+msgstr "Versionerna är identiska"
+
+#: lib/diff.php:1074
+#, c-format
+msgid "Diff of %s."
+msgstr "Diff av %s."
+
+#: lib/display.php:15
+msgid "FrontPage"
+msgstr "Framsida"
+
+#: lib/display.php:32 lib/editpage.php:56
+#, c-format
+msgid "Describe %s here."
+msgstr "Beskriv %s här."
+
+#: lib/editpage.php:19
+#, c-format
+msgid "Copy of %s"
+msgstr "Kopia av %s"
+
+#: lib/editpage.php:23
+msgid "No page name passed into editpage!"
+msgstr "Ingen sida är angiven!"
+
+#: lib/editpage.php:31 lib/savepage.php:121
+msgid "This page has been locked by the administrator and cannot be edited."
+msgstr "Den här sidan är låst av administratören och kan ej redigeras."
+
+#: lib/editpage.php:33 lib/savepage.php:99 lib/savepage.php:122
+msgid "Sorry for the inconvenience."
+msgstr "Ledsen för allt besvär."
+
+#: lib/editpage.php:35 lib/savepage.php:123
+#, c-format
+msgid "Problem while editing %s"
+msgstr "Har problem med att redigera %s"
+
+#: lib/fullsearch.php:9 lib/search.php:9
+#, c-format
+msgid "Searching for \"%s\" ....."
+msgstr "Söker efter \"%s\" ....."
+
+#: lib/fullsearch.php:41
+#, c-format
+msgid "%d matches found in %d pages."
+msgstr "%d träffar funna på %d sidor."
+
+#: lib/fullsearch.php:45
+msgid "Full Text Search Results"
+msgstr "Sökresultat för fulltextsökning"
+
+#: lib/msql.php:29 lib/mysql.php:36
+msgid "Cannot establish connection to database, giving up."
+msgstr "Ger upp, kan ej skapa anslutning till databasen."
+
+#: lib/msql.php:31 lib/msql.php:37
+#, c-format
+msgid "Error message: %s"
+msgstr "Felmeddelande: %s"
+
+#: lib/msql.php:35 lib/mysql.php:42
+#, c-format
+msgid "Cannot open database %s, giving up."
+msgstr "Ger upp, kan ej öppna databasen %s."
+
+#: lib/msql.php:210 lib/msql.php:286
+#, c-format
+msgid "Insert/update failed: %s"
+msgstr "Insättning/uppdatering misslyckades: %s"
+
+#: lib/msql.php:221 lib/msql.php:296
+#, c-format
+msgid "Delete on %s failed: %s"
+msgstr "Borttagning på %s misslyckades: %s"
+
+#: lib/msql.php:237 lib/msql.php:312
+#, c-format
+msgid "Insert into %s failed: %s"
+msgstr "Insättning till %s misslyckades: %s"
+
+#: lib/mysql.php:38 lib/mysql.php:44 lib/mysql.php:123 lib/mysql.php:163
+#, c-format
+msgid "MySQL error: %s"
+msgstr "MySQL-fel: %s"
+
+#: lib/mysql.php:121
+#, c-format
+msgid "Error writing page '%s'"
+msgstr "Kunde inte spara sidan \"%s\""
+
+#: lib/mysql.php:161
+#, c-format
+msgid "Cannot delete '%s' from table '%s'"
+msgstr "Kan ej ta bort \"%s\" från tabellen \"%s\""
+
+#: lib/pageinfo.php:9
+msgid "Enter a page name"
+msgstr "Ange ett sidnamn"
+
+#: lib/pageinfo.php:10 lib/stdlib.php:116
+msgid "Go"
+msgstr "\"Gå till sidan\""
+
+#: lib/pageinfo.php:21
+msgid "Show the page source and references"
+msgstr "Visa källkoden och referenser för sidan"
+
+#: lib/pageinfo.php:26 lib/pageinfo.php:75
+msgid "PageInfo"
+msgstr "Sidinformation för"
+
+#: lib/pageinfo.php:36
+#, c-format
+msgid "Page name '%s' is not in the database"
+msgstr "Sidnamnet \"%s\" finns inte i databasen"
+
+#: lib/pageinfo.php:64
+msgid "Current version"
+msgstr "Nuvarande version"
+
+#: lib/pageinfo.php:70
+msgid "Archived version"
+msgstr "Arkiverad version"
+
+#: lib/savepage.php:16 lib/savepage.php:74
+msgid "RecentChanges"
+msgstr "SenasteÄndringar"
+
+#: lib/savepage.php:85
+msgid ""
+"PhpWiki is unable to save your changes, because another user edited and "
+"saved the page while you were editing the page too. If saving proceeded now "
+"changes from the previous author would be lost."
+msgstr ""
+"PhpWiki kan inte spara dina ändringar eftersom en annan användare ändrade "
+"och sparade sidan under tiden som du ändrade på sidan. Sparar du nu "
+"försvinner ändringarna gjorda av den förra användaren."
+
+#: lib/savepage.php:87
+msgid "In order to recover from this situation follow these steps:"
+msgstr "För att lösa situtationen, följ dessa steg:"
+
+#: lib/savepage.php:89
+msgid "Use your browser's <b>Back</b> button to go back to the edit page."
+msgstr ""
+"Använd webbläsarens <b>backaknapp</b> för att gå tillbaka till "
+"redigeringssidan."
+
+#: lib/savepage.php:91
+msgid ""
+"Copy your changes to the clipboard or to another temporary place (e.g. text "
+"editor)."
+msgstr ""
+"Kopiera dina ändringar till urklippet eller till ett annat temporärt ställe "
+"(t.ex. en texteditor)."
+
+#: lib/savepage.php:93
+msgid ""
+"<b>Reload</b> the page. You should now see the most current version of the "
+"page. Your changes are no longer there."
+msgstr ""
+"<b>Ladda om</b> sidan. Du kommer nu se den senaste versionen av sidan. Dina "
+"ändringar är inte där."
+
+#: lib/savepage.php:95
+msgid ""
+"Make changes to the file again. Paste your additions from the clipboard (or "
+"text editor)."
+msgstr ""
+"Ändra filen igen. Klistra in dina ändringar från urklippet (eller "
+"texteditorn)."
+
+#: lib/savepage.php:97
+msgid "Press <b>Save</b> again."
+msgstr "Klicka på <b>Spara</b> igen."
+
+#: lib/savepage.php:103
+#, c-format
+msgid "Problem while updating %s"
+msgstr "Har problem med att uppdatera %s"
+
+#: lib/savepage.php:146
+#, c-format
+msgid "Thank you for editing %s."
+msgstr "Tack för att du redigerade %s."
+
+#: lib/savepage.php:176
+msgid "Your careful attention to detail is much appreciated."
+msgstr "Din omstänksamhet för detaljer är mycket uppskattad."
+
+#: lib/search.php:25
+#, c-format
+msgid "%d pages match your query."
+msgstr "%d sidor matchar din fråga."
+
+#: lib/search.php:28
+#, fuzzy
+msgid "Title Search Results"
+msgstr "Sökresultat för fulltextsökning"
+
+#: lib/setupwiki.php:21
+#, c-format
+msgid "Inserting page %s, version %s from %s"
+msgstr "Sätter in sidan %s, version %s från %s"
+
+#: lib/stdlib.php:36
+msgid "WikiFatalError"
+msgstr "WikiFatalError"
+
+#: lib/stdlib.php:83 lib/stdlib.php:91
+msgid "Search"
+msgstr "Sök"
+
+#: lib/stdlib.php:185
+#, fuzzy
+msgid "Nesting depth exceeded in SetHTMLOutputMode"
+msgstr "Stackgräns överskriden i SetHTMLOutputMode"
+
+#: lib/stdlib.php:381
+#, c-format
+msgid "%d best incoming links:"
+msgstr "De %d mest använda ingående länkarna:"
+
+#: lib/stdlib.php:391
+#, c-format
+msgid "%d best outgoing links:"
+msgstr "De %d mest använda utgående länkarna:"
+
+#: lib/stdlib.php:402
+#, c-format
+msgid "%d most popular nearby:"
+msgstr "De %d mest populära grannarna:"
