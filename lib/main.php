@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.37 2002-01-27 22:00:58 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.38 2002-01-28 01:01:26 dairiki Exp $');
 
 
 include "lib/config.php";
@@ -236,8 +236,7 @@ class WikiRequest extends Request {
         switch ($action) {
         case 'browse':
         case 'diff':
-        // case ActionPage:   
-        // case 'search':
+        case 'actionpage':
             return WIKIAUTH_ANON;
 
         case 'zip':
@@ -258,8 +257,13 @@ class WikiRequest extends Request {
         case 'remove':
         case 'lock':
         case 'unlock':
-        default:
             return WIKIAUTH_ADMIN;
+        default:
+            global $WikiNameRegexp;
+            if (preg_match("/$WikiNameRegexp\Z/A", $action))
+                return WIKIAUTH_ANON; // ActionPage.
+            else
+                return WIKIAUTH_ADMIN;
         }
     }
         
@@ -344,18 +348,38 @@ class WikiRequest extends Request {
         if (!($action = $this->getArg('action')))
             return 'browse';
 
-        if (! method_exists($this, "action_$action")) {
-            // unknown action.
-            trigger_error("$action: Unknown action", E_USER_NOTICE);
+        if ($action != 'actionpage' && method_exists($this, "action_$action"))
+            return $action;
+
+        // Allow for, e.g. action=LikePages
+        global $WikiNameRegexp;
+        if (preg_match("/$WikiNameRegexp\\Z/A", $action)) {
+            $dbi = $this->getDbh();
+            $actionpage = $dbi->getPage($action);
+            $rev = $actionpage->getCurrentRevision();
+            // FIXME: more restrictive check for sane plugin?
+            if (strstr($rev->getPackedContent(), '<?plugin')) {
+                $this->_actionpage = $actionpage;
+                return 'actionpage';
+            }
+            trigger_error("$action: Does not appera to be an 'action page'", E_USER_NOTICE);
             return 'browse';
         }
-        return $action;
+                
+        trigger_error("$action: Unknown action", E_USER_NOTICE);
+        return 'browse';
     }
 
     function action_browse () {
-        //$this->compress_output();
+        $this->compress_output();
         include_once("lib/display.php");
         displayPage($this);
+    }
+
+    function action_actionpage () {
+        $this->compress_output();
+        include_once("lib/display.php");
+        actionPage($this, $this->_actionpage);
     }
     
     function action_diff () {

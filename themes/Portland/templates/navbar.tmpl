@@ -1,24 +1,22 @@
 <?php // -*-html-*- ?>
-<!-- $Id: navbar.tmpl,v 1.5 2002-01-24 00:45:28 dairiki Exp $ -->
+<!-- $Id: navbar.tmpl,v 1.6 2002-01-28 01:01:27 dairiki Exp $ -->
 <?php
 
-  $BF = &$ButtonFactory;
+  $LockPageB = $Theme->makeActionButton($page->get('locked') ? 'unlock' : 'lock');
+  $RemovePageB = $Theme->makeActionButton('remove');
 
-  $LockPageB = $BF->makeActionButton($page->get('locked') ? 'unlock' : 'lock');
-  $RemovePageB = $BF->makeActionButton('remove');
+  $DiffB = $Theme->makeActionButton(array('action' => 'diff', 'previous' => 'major'));
 
-  $DiffB = $BF->makeActionButton(array('action' => 'diff', 'previous' => 'major'));
-
-  $DebugInfoB = $BF->makeActionPageButton(_("DebugInfo"));
+  $DebugInfoB = $Theme->makeActionButton(_("DebugInfo"));
 
   $Sep = $Theme->getButtonSeparator();
 
 ?>
 <!-- The bottom navigation/search bar -->
 
-    <?= $BF->makeLinkButton(_("FindPage")) ?> by searching
+    <?= $Theme->makeLinkButton(_("FindPage")) ?> by searching
     <?php if (!empty($revision)) { ?>
-      (or browse <?= $ButtonFactory->makeActionPageButton(_("LikePages")) ?>)
+      (or browse <?= $Theme->makeActionButton(_("LikePages")) ?>)
     <?php } ?>
     <?php if ($user->isAdmin()) { ?>
      <?=$Sep?><?= $LockPageB ?><?=$Sep?><?= $RemovePageB ?>
@@ -37,9 +35,9 @@
        id="actionbar">
 <tr valign="baseline">
   <td>
-   <?= $BF->makeLinkButton(_("RecentChanges")) ?>
+   <?= $Theme->makeLinkButton(_("RecentChanges")) ?>
     <?php if (!empty($user) && $user->isAdmin()) { ?>
-     <?=$Sep?><?= $ButtonFactory->makeLinkButton(_("PhpWikiAdministration")) ?>
+     <?=$Sep?><?= $Theme->makeLinkButton(_("PhpWikiAdministration")) ?>
     <?php } ?>
   </td>
   <td align="right">

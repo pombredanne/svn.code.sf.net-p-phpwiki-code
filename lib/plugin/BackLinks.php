@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BackLinks.php,v 1.13 2002-01-27 04:23:26 carstenklapp Exp $');
+rcs_id('$Id: BackLinks.php,v 1.14 2002-01-28 01:01:27 dairiki Exp $');
 /**
  */
 
@@ -21,7 +21,7 @@ extends WikiPlugin
         return array('exclude'		=> '',
                      'include_self'	=> 0,
                      'noheader'		=> 0,
-                     'page'		=> false,
+                     'page'		=> '[pagename]',
                      'info'		=> false
                      );
     }

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _BackendInfo.php,v 1.10 2002-01-22 03:17:47 dairiki Exp $');
+rcs_id('$Id: _BackendInfo.php,v 1.11 2002-01-28 01:01:27 dairiki Exp $');
 require_once('lib/Template.php');
 /**
  */
@@ -15,8 +15,7 @@ extends WikiPlugin
     }
     
     function getDefaultArguments() {
-        return array('page'	=> false);
-        
+        return array('page'	=> '[pagename]');
     }
     
     function run($dbi, $argstr, $request) {

@@ -1,8 +1,7 @@
 <?php // -*-html-*- ?>
-<!-- $Id: navbar.tmpl,v 1.4 2002-01-24 00:45:28 dairiki Exp $ -->
+<!-- $Id: navbar.tmpl,v 1.5 2002-01-28 01:01:27 dairiki Exp $ -->
 <?php
 
-$BF = &$ButtonFactory;
 $s = $Theme->getButtonSeparator();
 
 ?>
@@ -10,19 +9,19 @@ $s = $Theme->getButtonSeparator();
 <form action="<?= WikiURL(_("TitleSearch"))?>"
       method="get" accept-charset="<?=CHARSET?>">
   <div class="toolbar" id="navbar">
-   <?= $BF->makeLinkButton(_("RecentChanges")) ?>
-   <?=$s?><?= $BF->makeLinkButton(_("FindPage")) ?>
+   <?= $Theme->makeLinkButton(_("RecentChanges")) ?>
+   <?=$s?><?= $Theme->makeLinkButton(_("FindPage")) ?>
    <?=$s?><input type="hidden" name="auto_redirect" value="1" />
       <input type="text"  name="s" size="12"
              title='<?=_("Quick Search")?>'
              onmouseover="window.status='<?=_("Quick Search")?>'; return true;"
              onmouseout="window.status=''; return true;" />
     <?php if (!empty($revision)) { ?>
-     <?=$s?><?= $ButtonFactory->makeActionPageButton(_("LikePages")) ?>
-     <?=$s?><?= $ButtonFactory->makeActionPageButton(_("BackLinks")) ?>
+     <?=$s?><?= $Theme->makeActionButton(_("LikePages")) ?>
+     <?=$s?><?= $Theme->makeActionButton(_("BackLinks")) ?>
     <?php } ?>
     <?php if (!empty($user) && $user->isAdmin()) { ?>
-     <?=$s?><?= $ButtonFactory->makeLinkButton(_("PhpWikiAdministration")) ?>
+     <?=$s?><?= $Theme->makeLinkButton(_("PhpWikiAdministration")) ?>
     <?php } ?>
   </div>
 </form>

@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.9 2002-01-26 08:13:16 carstenklapp Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.10 2002-01-28 01:01:27 dairiki Exp $ -->
 <?php
 $SummaryInput = HTML::input(array('type' => 'text',
                                   'class' => 'wikitext',
@@ -35,7 +35,7 @@ $HeightI = HTML::input(array('type' => 'text',
 $AdjustB = $Theme->makeButton(_("Adjust"), "submit:");
 
 
-$GoodStyleB = $ButtonFactory->makeLinkButton(_("GoodStyle"));
+$GoodStyleB = $Theme->makeLinkButton(_("GoodStyle"));
 
 
 $Markup['old'] = new HtmlElement('option', array('value' => 'old'),
