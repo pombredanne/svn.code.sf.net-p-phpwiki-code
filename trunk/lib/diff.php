@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.34 2002-01-31 03:18:42 dairiki Exp $');
+rcs_id('$Id: diff.php,v 1.35 2002-02-03 23:55:59 carstenklapp Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -232,19 +232,24 @@ class TableUnifiedDiffFormatter extends HtmlUnifiedDiffFormatter
 
 function PageInfoRow ($label, $rev)
 {
-   global $Theme;
+    global $Theme;
     
-   $row = HTML::tr(HTML::td(array('align' => 'right'), $label));
-   if ($rev) {
-       $linked_version = WikiLink($rev, 'existing', $rev->getVersion());
-       $row->pushContent(HTML::td(fmt("version %s", $linked_version)),
-                         HTML::td(fmt("last modified on %s",
-                                      $Theme->formatDateTime($rev->get('mtime')))),
-                         HTML::td(fmt("by %s", $rev->get('author'))));
-   } else {
-       $row->pushContent(HTML::td(array('colspan' => '3'), _("None")));
-   }
-   return $row;
+    $row = HTML::tr(HTML::td(array('align' => 'right'), $label));
+    if ($rev) {
+        $mtime = $rev->get('mtime');
+        if (istoday($mtime) || isyesterday($mtime))
+            $lastmodifiedmessage = _("last modified %s");
+        else
+            $lastmodifiedmessage = _("last modified on %s");
+        $linked_version = WikiLink($rev, 'existing', $rev->getVersion());
+        $row->pushContent(HTML::td(fmt("version %s", $linked_version)),
+                          HTML::td(fmt($lastmodifiedmessage,
+                                       $Theme->formatDateTime($mtime))),
+                          HTML::td(fmt("by %s", $rev->get('author'))));
+    } else {
+        $row->pushContent(HTML::td(array('colspan' => '3'), _("None")));
+    }
+    return $row;
 }
 
 function showDiff (&$request) {
