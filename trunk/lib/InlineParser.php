@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.4 2002-01-30 23:41:54 dairiki Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.5 2002-01-31 02:01:59 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -300,10 +300,12 @@ class Markup_old_emphasis  extends BalancedMarkup
 
 class Markup_nestled_emphasis extends BalancedMarkup
 {
-    var $_start_regexp = "(?<! [[:alnum:]] ) [*_=] (?=[[:alnum:]])";
+    //var $_start_regexp = "(?<! [[:alnum:]] ) [*_=] (?=[[:alnum:]])";
+    var $_start_regexp = "(?<= \s | ^  ) [*_=] (?= \S)";
 
     function getEndRegexp ($match) {
-        return "(?<= [[:alnum:]]) \\$match (?![[:alnum:]])";
+        //return "(?<= [[:alnum:]]) \\$match (?![[:alnum:]])";
+        return "(?<= \S) \\$match (?= \s | $)";
     }
     
     function markup ($match, $body) {
