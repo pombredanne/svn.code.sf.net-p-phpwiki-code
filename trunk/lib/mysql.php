@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: mysql.php,v 1.6 2000-11-13 14:54:08 ahollosi Exp $');
+<?php rcs_id('$Id: mysql.php,v 1.7 2000-11-18 13:50:36 ahollosi Exp $');
 
    /*
       Database functions:
@@ -14,6 +14,7 @@
       RemovePage($dbi, $pagename)
       IncreaseHitCount($dbi, $pagename)
       GetHitCount($dbi, $pagename)
+      MakeSQLSearchClause($search, $column)
       InitTitleSearch($dbi, $search)
       TitleSearchNextMatch($dbi, $res)
       InitFullSearch($dbi, $search)
@@ -199,11 +200,28 @@
       return $hits;
    }
 
+   function MakeSQLSearchClause($search, $column)
+   {
+      $search = addslashes(preg_replace("/\s+/", " ", $search));
+      $term = strtok($search, ' ');
+      while($term) {
+         $word = "$term";
+	 if ($word[0] == '-') {
+	    $word = substr($word, 1);
+	    $clause .= "not ($column like '%$word%') ";
+	 } else {
+	    $clause .= "($column like '%$word%') ";
+	 }
+	 if ($term = strtok(' '))
+	    $clause .= 'and ';
+      }
+      return $clause;
+   }
 
    // setup for title-search
    function InitTitleSearch($dbi, $search) {
-      $search = addslashes($search);
-      $res = mysql_query("select pagename from $dbi[table] where pagename like '%$search%' order by pagename", $dbi["dbc"]);
+      $clause = MakeSQLSearchClause($search, 'pagename');
+      $res = mysql_query("select pagename from $dbi[table] where $clause order by pagename", $dbi["dbc"]);
 
       return $res;
    }
@@ -222,8 +240,8 @@
 
    // setup for full-text search
    function InitFullSearch($dbi, $search) {
-      $search = addslashes($search);
-      $res = mysql_query("select * from $dbi[table] where content like '%$search%'", $dbi["dbc"]);
+      $clause = MakeSQLSearchClause($search, 'content');
+      $res = mysql_query("select * from $dbi[table] where $clause", $dbi["dbc"]);
 
       return $res;
    }
