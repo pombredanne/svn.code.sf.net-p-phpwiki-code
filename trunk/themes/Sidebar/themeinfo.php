@@ -1,9 +1,11 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.22 2005-02-03 07:11:32 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.23 2005-02-04 13:25:07 rurban Exp $');
 
 /*
- * This file defines the Sidebar appearance ("theme") of PhpWiki.
- * This use the dynamic jscalendar, which doesn't need extra requests per month/year change..
+ * This file defines the Sidebar appearance ("theme") of PhpWiki,
+ * which can be used as parent class for all sidebar themes. See blog.
+ * This use the dynamic jscalendar, which doesn't need extra requests 
+ * per month/year change.
  */
 
 require_once('lib/Theme.php');
@@ -25,7 +27,7 @@ class Theme_Sidebar extends Theme {
 
         $this->calendarInit();
 
-        if (defined("ENABLE_LIVESEARCH") and ENABLE_LIVESEARCH) { // by bitflux.ch. not yet enabled
+        if (defined("ENABLE_LIVESEARCH") and ENABLE_LIVESEARCH) { // by bitflux.ch
             $this->initLiveSearch();
         }
     }
@@ -33,16 +35,10 @@ class Theme_Sidebar extends Theme {
     function findTemplate ($name) {
         // hack for navbar.tmpl to hide the buttonseparator
         if ($name == "navbar") {
-            //$old = $WikiTheme->getButtonSeparator();
-            $this->setButtonSeparator(HTML::Raw('<br /> &middot; '));
-            //$this->setButtonSeparator("\n");
-            //$WikiTheme->setButtonSeparator($old);
+            $this->setButtonSeparator(HTML::Raw("<br />\n&nbsp;&middot;&nbsp;"));
         }
         if ($name == "actionbar" || $name == "signin") {
-            //$old = $WikiTheme->getButtonSeparator();
-            //$this->setButtonSeparator(HTML::br());
             $this->setButtonSeparator(" ");
-            //$WikiTheme->setButtonSeparator($old);
         }
         return parent::findTemplate($name);
     }
