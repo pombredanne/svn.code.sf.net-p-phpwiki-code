@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.15 2002-01-19 00:04:50 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.16 2002-01-19 03:23:44 carstenklapp Exp $');
 
 /*
  * This file defines the default appearance ("theme") of PhpWiki.
@@ -39,14 +39,9 @@ $Theme->setLinkIcon('*', 'url');
 
 //$Theme->setButtonSeparator(' | ');
 
-// This defines separators used in RecentChanges and RecentEdits lists.
-// If undefined, defaults to '' (nothing) and '...' (three periods).
-//define("RC_SEPARATOR_A", '. . . ');
-//define("RC_SEPARATOR_B", '. . . . . ');
-
 // Controls whether the '?' appears before or after UnknownWikiWords.
 // The PhpWiki default is for the '?' to appear before.
-//define('WIKIMARK_AFTER', true);
+//$Theme->setWikiMark('?%s');
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // (c-file-style: "gnu")

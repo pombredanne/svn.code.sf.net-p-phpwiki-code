@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.13 2002-01-19 00:04:50 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.14 2002-01-19 03:23:45 carstenklapp Exp $');
 
 /**
  * WikiWiki Hawaiian theme for PhpWiki.
@@ -16,6 +16,8 @@ $Theme = new Theme('Hawaiian');
 
 $Theme->setDefaultCSS('Hawaiian', 'Hawaiian.css');
 $Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
+$Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
+$Theme->addAlternateCSS('PhpWiki', 'phpwiki.css');
 
 // Logo image appears on every page and links to the HomePage.
 $Theme->addImageAlias('logo', 'PalmBeach.jpg');
@@ -48,7 +50,7 @@ $Theme->setLinkIcon('*', 'flower.png');
 
 // Controls whether the '?' appears before or after UnknownWikiWords.
 // The PhpWiki default is for the '?' to appear before.
-//define('WIKIMARK_AFTER', true);
+//$Theme->setWikiMark('?%s');
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

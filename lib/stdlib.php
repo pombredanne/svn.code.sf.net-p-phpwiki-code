@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.79 2002-01-17 23:14:22 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.80 2002-01-19 03:23:45 carstenklapp Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -185,16 +185,14 @@ function LinkUnknownWikiWord($wikiword, $linktext = '', $version = false) {
     if ($version !== false)
         $attr['version'] = $version;
 
+    //FIXME: do this without global
+    global $Theme;
     $qmark = QElement('a', array('href' => WikiURL($wikiword, $attr)),
-                      '?');
-    $text = QElement('u', $linktext);
+                      $Theme->getWikiMark());
 
-    if (defined('WIKIMARK_AFTER') && WIKIMARK_AFTER)
-        $text .= $qmark;
-    else 
-        $text = $qmark . $text;
+    $html = sprintf($qmark, QElement('u', $linktext));
     
-    return Element('span', array('class' => $class), $text);
+    return Element('span', array('class' => $class), $html);
 }
 
 function LinkImage($url, $alt = '[External Image]') {
