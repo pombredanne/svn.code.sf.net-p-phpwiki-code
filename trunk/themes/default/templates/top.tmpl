@@ -1,13 +1,10 @@
 <?php // -*-html-*- ?>
-<!-- $Id: top.tmpl,v 1.20 2002-12-15 01:30:47 carstenklapp Exp $ -->
+<!-- $Id: top.tmpl,v 1.21 2002-12-31 19:54:07 carstenklapp Exp $ -->
 <div id="navbar" class="toolbar">
 <?php
 global $HIDE_TOOLBARS;
 if (!$HIDE_TOOLBARS) {
 ?>
-<!-- The top navigation/search bar -->
-<?= Template('navbar') ?>
-<?php } ?>
 <!-- The logo -->
 <div align="right" id="logo"><a class="wikilink" 
                   href="<?=WikiURL(HOME_PAGE)?>" target="_top"
@@ -15,6 +12,9 @@ if (!$HIDE_TOOLBARS) {
                         border="0" alt="<?=fmt(_("%s: %s"), WIKI_NAME, HOME_PAGE) ?>"
                         align="right" /></a></div>
 
+<!-- The top navigation/search bar -->
+<?= Template('navbar') ?>
+<?php } ?>
 <!-- Page title -->
 <h1><?= $HEADER ?></h1>
 </div>
