@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<!-- $Id: passencrypt.php,v 1.2 2002-09-08 12:05:14 rurban Exp $ -->
+<!-- $Id: passencrypt.php,v 1.3 2002-09-08 18:34:35 rurban Exp $ -->
 <title>Password Encryption Tool</title>
 <!--
 Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
