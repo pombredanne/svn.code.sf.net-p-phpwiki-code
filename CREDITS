@@ -41,8 +41,15 @@ Please report bugs to mailto:phpwiki-talk@lists.sourceforge.net
 ;[Neil Brown | mailto:neilb@cse.unsw.edu.au ] :
 ;: has contributed numerous useful patches e.g. nested definition lists
 
+;[Jan Hidders | mailto:hidders@win.tue.nl ] :
+;: has contributed a patch for dbmlib.php for the wikilinks stuff and page removal.
+
+;[Antti Kaihola | mailto:akaihola@siba.fi ] :
+;: patch for named internal links
+
 ;[Jeremie Kass | mailto:jeremie@umich.edu ] :
 ;: contributed a patch so the logo is decided in the templates instead of being hardcoded.
+
 
 
 ------------
