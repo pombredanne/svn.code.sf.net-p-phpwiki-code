@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.70 2004-05-06 19:26:16 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.71 2004-05-10 12:34:47 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -821,12 +821,11 @@ extends _AnonUser
         $dbi = $this->getAuthDbh();
         if ( $dbi and !isset($this->_prefs->_select) and !empty($DBAuthParams['pref_select'])) {
             $this->_prefs->_method = $DBParams['dbtype'];
-            $this->_prefs->_select = $this->prepare($DBAuthParams['pref_select'], 
-                                                    "'\$userid'");
+            $this->_prefs->_select = $this->prepare($DBAuthParams['pref_select'],"userid");
             // read-only prefs?
             if ( !isset($this->_prefs->_update) and !empty($DBAuthParams['pref_update'])) {
                 $this->_prefs->_update = $this->prepare($DBAuthParams['pref_update'], 
-                                                        array("'\$userid'","'\$pref_blob'"));
+                                                        array("userid","pref_blob"));
             }
         } else {
             $this->_prefs->_method = 'HomePage';
@@ -948,23 +947,51 @@ extends _AnonUser
         return $this->_auth_dbi;
     }
 
+    function _normalize_stmt_var($var, $oldstyle = false) {
+        static $valid_variables = array('userid','password','pref_blob','groupname');
+        // old-style: "'$userid'"
+        // new-style: '"\$userid"' or just "userid"
+        $new = str_replace(array("'",'"','\$','$'),'',$var);
+        if (!in_array($new,$valid_variables)) {
+            trigger_error("Unknown DBAuthParam statement variable: ". $var, E_USER_ERROR);
+            return false;
+        }
+        return !$oldstyle ? "'$".$new."'" : '"\$'.$new.'"';
+    }
+
     // TODO: use it again for the auth and member tables
-    function prepare ($stmt, $variables) {
+    function prepare ($stmt, $variables, $oldstyle = false) {
         global $DBParams, $request;
         $this->getAuthDbh();
         // "'\$userid"' => '%s'
+        // variables can be old-style: '"\$userid"' or new-style: "'$userid'" or just "userid"
+        // old-style strings don't survive pear/Config/IniConfig treatment, that's why we changed it.
+        $new = array();
         if (is_array($variables)) {
-            $new = array();
-            foreach ($variables as $v) { $new[] = '%s'; }
+            for ($i=0; $i<count($variables); $i++) { 
+                $var = $this->_normalize_stmt_var($variables[$i],$oldstyle);
+                if (!$var)
+                    trigger_error(sprintf("DbAuthParams: Undefined or empty statement variable %s in %s",
+                                          $variables[$i], $stmt), E_USER_WARNING);
+                $variables[$i] = $var;
+                if (!$var) $new[] = '';
+                else $new[] = '%s';
+            }
         } else {
-            $new = '%s';
+            $var = $this->_normalize_stmt_var($variables,$oldstyle);
+            if (!$var)
+                trigger_error(sprintf("DbAuthParams: Undefined or empty statement variable %s in %s",
+                                      $variables,$stmt), E_USER_WARNING);
+            $variables = $var;
+            if (!$var) $new = ''; 
+            else $new = '%s'; 
         }
         // probably prefix table names if in same database
         if (!empty($DBParams['prefix']) and 
             isset($this->_auth_dbi) and 
             isset($request->_dbi->_backend->_dbh) and 
             (!empty($GLOBALS['DBAuthParams']['auth_dsn']) and
-             $DBParams['dsn'] == $GLOBALS['DBAuthParams']['auth_dsn']))
+             $DBParams['dsn'] == $GLOBALS['DBAuthParams']['auth_dsn'])) 
         {
             $prefix = $DBParams['prefix'];
             if (!stristr($stmt, $prefix)) {
@@ -977,9 +1004,15 @@ extends _AnonUser
                                           " ".$prefix."member "),$stmt);
             }
         }
-        // preparate the SELECT statement, for ADODB and PearDB (MDB not)
-        // simple sprintf-style.
-        return str_replace($variables,$new,$stmt);
+        // Preparate the SELECT statement, for ADODB and PearDB (MDB not).
+        // Simple sprintf-style.
+        $new_stmt = str_replace($variables,$new,$stmt);
+        if ($new_stmt == $stmt) {
+            trigger_error(sprintf("DbAuthParams: Old statement quoting style in %s",
+                                  $stmt), E_USER_WARNING);
+            $new_stmt = $this->prepare($stmt, $variables, 'oldstyle');
+        }
+        return $new_stmt;
     }
 
     function getPreferences() {
@@ -1543,9 +1576,8 @@ extends _DbPassUser
         }
         // Prepare the configured auth statements
         if (!empty($DBAuthParams['auth_check']) and empty($this->_authselect)) {
-            $this->_authselect = str_replace(array("'\$userid'","'\$password'"),
-                                             array('%s','%s'),
-                                             $DBAuthParams['auth_check']);
+            $this->_authselect = $this->prepare($DBAuthParams['auth_check'], 
+                                                array("userid","password"));
         }
         if (empty($this->_authselect))
             trigger_error("Either \$DBAuthParams['auth_check'] is missing or \$DBParams['dbtype'] != 'SQL'",
@@ -1560,8 +1592,7 @@ extends _DbPassUser
             if (! $GLOBALS['DBAuthParams']['auth_user_exists'])
                 trigger_error("\$DBAuthParams['auth_user_exists'] is missing",
                               E_USER_WARNING);
-            $this->_authcheck = str_replace("'\$userid'",'%s',
-                                             $DBAuthParams['auth_user_exists']);
+            $this->_authcheck = $this->prepare($DBAuthParams['auth_user_exists'],"userid");
             $rs = $dbh->query(sprintf($this->_authcheck,$dbh->quote($this->_userid)));
             if ($rs->numRows())
                 return true;
@@ -1570,9 +1601,8 @@ extends _DbPassUser
         // external databases, but maybe wanted for the wiki database, for performance 
         // reasons
         if (empty($this->_authcreate) and !empty($DBAuthParams['auth_create'])) {
-            $this->_authcreate = str_replace(array("'\$userid'","'\$password'"),
-                                             array('%s','%s'),
-                                             $DBAuthParams['auth_create']);
+            $this->_authcreate = $this->prepare($DBAuthParams['auth_create'],
+                                                array("userid","password"));
         }
         if (!empty($this->_authcreate)) {
             $dbh->simpleQuery(sprintf($this->_authcreate,
@@ -1623,11 +1653,9 @@ extends _DbPassUser
 
     function storePass($submitted_password) {
         global $DBAuthParams;
-        $dbh = &$this->_auth_dbi;
         if (!empty($DBAuthParams['auth_update']) and empty($this->_authupdate)) {
-            $this->_authupdate = str_replace(array("'\$userid'","'\$password'"),
-                                             array('%s','%s'),
-                                             $DBAuthParams['auth_update']);
+            $this->_authupdate = $this->prepare($DBAuthParams['auth_update'],
+                                                array("userid","password"));
         }
         if (empty($this->_authupdate)) {
             trigger_error("Either \$DBAuthParams['auth_update'] not defined or \$DBParams['dbtype'] != 'SQL'",
@@ -1639,6 +1667,8 @@ extends _DbPassUser
             if (function_exists('crypt'))
                 $submitted_password = crypt($submitted_password);
         }
+        $this->getAuthDbh();
+        $dbh = &$this->_auth_dbi;
         $dbh->simpleQuery(sprintf($this->_authupdate,
                                   $dbh->quote($submitted_password),
         			  $dbh->quote($this->_userid)
@@ -1730,16 +1760,18 @@ extends _DbPassUser
  
     function userExists() {
         global $DBAuthParams;
+        $this->getAuthDbh();
+        $dbh = &$this->_auth_dbi;
+        if (!$dbh) { // needed?
+            return $this->_tryNextUser();
+        }
         if (empty($this->_authselect) and !empty($DBAuthParams['auth_check'])) {
-            $this->_authselect = str_replace(array("'\$userid'","'\$password'"),
-                                             array('%s','%s'),
-                                             $DBAuthParams['auth_check']);
+            $this->_authselect = $this->prepare($DBAuthParams['auth_check'],
+                                                array("userid","password"));
         }
         if (empty($this->_authselect))
             trigger_error("Either \$DBAuthParams['auth_check'] is missing or \$DBParams['dbtype'] != 'ADODB'",
                           E_USER_WARNING);
-        //$this->getAuthDbh();
-        $dbh = &$this->_auth_dbi;
         //NOTE: for auth_crypt_method='crypt' no special auth_user_exists is needed
         if ($this->_auth_crypt_method == 'crypt') {
             $rs = $dbh->Execute(sprintf($this->_authselect,$dbh->qstr($this->_userid)));
@@ -1754,8 +1786,7 @@ extends _DbPassUser
             if (! $DBAuthParams['auth_user_exists'])
                 trigger_error("\$DBAuthParams['auth_user_exists'] is missing",
                               E_USER_WARNING);
-            $this->_authcheck = str_replace("'\$userid'",'%s',
-                                             $DBAuthParams['auth_user_exists']);
+            $this->_authcheck = $this->prepare($DBAuthParams['auth_user_exists'],'userid');
             $rs = $dbh->Execute(sprintf($this->_authcheck,$dbh->qstr($this->_userid)));
             if (!$rs->EOF) {
                 $rs->Close();
@@ -1768,9 +1799,8 @@ extends _DbPassUser
         // external databases, but maybe wanted for the wiki database, for performance 
         // reasons
         if (empty($this->_authcreate) and !empty($DBAuthParams['auth_create'])) {
-            $this->_authcreate = str_replace(array("'\$userid'","'\$password'"),
-                                             array('%s','%s'),
-                                             $DBAuthParams['auth_create']);
+            $this->_authcreate = $this->prepare($DBAuthParams['auth_create'],
+                                                array("userid","password"));
         }
         if (!empty($this->_authcreate)) {
             $dbh->Execute(sprintf($this->_authcreate,
@@ -1784,17 +1814,19 @@ extends _DbPassUser
 
     function checkPass($submitted_password) {
         global $DBAuthParams;
+        $this->getAuthDbh();
+        if (!$this->_auth_dbi) {  // needed?
+            return $this->_tryNextPass($submitted_password);
+        }
         if (empty($this->_authselect) and !empty($DBAuthParams['auth_check'])) {
-            $this->_authselect = str_replace(array("'\$userid'","'\$password'"),
-                                             array('%s','%s'),
-                                              $DBAuthParams['auth_check']);
+            $this->_authselect = $this->prepare($DBAuthParams['auth_check'],
+                                                array("userid","password"));
         }
         if (!isset($this->_authselect))
             $this->userExists();
         if (!isset($this->_authselect))
             trigger_error("Either \$DBAuthParams['auth_check'] is missing or \$DBParams['dbtype'] != 'ADODB'",
                           E_USER_WARNING);
-        //$this->getAuthDbh();
         $dbh = &$this->_auth_dbi;
         //NOTE: for auth_crypt_method='crypt'  defined('ENCRYPTED_PASSWD',true) must be set
         if ($this->_auth_crypt_method == 'crypt') {
@@ -1833,9 +1865,8 @@ extends _DbPassUser
     function storePass($submitted_password) {
     	global $DBAuthParams;
         if (!isset($this->_authupdate) and !empty($DBAuthParams['auth_update'])) {
-            $this->_authupdate = str_replace(array("'\$userid'","'\$password'"),
-                                             array("%s","%s"),
-                                              $DBAuthParams['auth_update']);
+            $this->_authupdate = $this->prepare($DBAuthParams['auth_update'],
+                                                array("userid","password"));
         }
         if (!isset($this->_authupdate)) {
             trigger_error("Either \$DBAuthParams['auth_update'] not defined or \$DBParams['dbtype'] != 'ADODB'",
@@ -2836,6 +2867,11 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.70  2004/05/06 19:26:16  rurban
+// improve stability, trying to find the InlineParser endless loop on sf.net
+//
+// remove end-of-zip comments to fix sf.net bug #777278 and probably #859628
+//
 // Revision 1.69  2004/05/06 13:56:40  rurban
 // Enable the Administrators group, and add the WIKIPAGE group default root page.
 //
