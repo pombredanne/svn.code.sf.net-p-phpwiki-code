@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.31 2003-02-21 22:58:57 dairiki Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.32 2003-03-13 18:57:54 dairiki Exp $');
 
 class WikiPlugin
 {
@@ -35,6 +35,31 @@ class WikiPlugin
                       E_USER_ERROR);
     }
 
+    /** Get wiki-pages linked to by plugin invocation.
+     *
+     * A plugin may override this method to add pages to the
+     * link database for the invoking page.
+     *
+     * For example, the IncludePage plugin should override this so
+     * that the including page shows up in the backlinks list for the
+     * included page.
+     *
+     * Not all plugins which generate links to wiki-pages need list
+     * those pages here.
+     *
+     * Note also that currently the links are calculated at page save
+     * time, so only static page links (e.g. those dependent on the PI
+     * args, not the rest of the wikidb state or any request query args)
+     * will work correctly here.
+     *
+     * @param string $argstr The plugin argument string.
+     * @param string $basepage The pagename the plugin is invoked from.
+     * @return array List of pagenames linked to (or false).
+     */
+    function getWikiPageLinks ($argstr, $basepage) {
+        return false;
+    }
+    
     /**
      * Get name of plugin.
      *
@@ -59,7 +84,7 @@ class WikiPlugin
     }
 
 
-    function getArgs($argstr, $request, $defaults = false) {
+    function getArgs($argstr, $request=false, $defaults = false) {
         if ($defaults === false)
             $defaults = $this->getDefaultArguments();
 
@@ -68,14 +93,15 @@ class WikiPlugin
         foreach ($defaults as $arg => $default_val) {
             if (isset($argstr_args[$arg]))
                 $args[$arg] = $argstr_args[$arg];
-            elseif ( ($argval = $request->getArg($arg)) !== false )
+            elseif ( $request and ($argval = $request->getArg($arg)) !== false )
                 $args[$arg] = $argval;
             elseif (isset($argstr_defaults[$arg]))
                 $args[$arg] = (string) $argstr_defaults[$arg];
             else
                 $args[$arg] = $default_val;
 
-            $args[$arg] = $this->expandArg($args[$arg], $request);
+            if ($request)
+                $args[$arg] = $this->expandArg($args[$arg], $request);
 
             unset($argstr_args[$arg]);
             unset($argstr_defaults[$arg]);
@@ -93,7 +119,6 @@ class WikiPlugin
         return preg_replace('/\[(\w[\w\d]*)\]/e', '$request->getArg("$1")',
                             $argval);
     }
-
 
     function parseArgStr($argstr) {
         $arg_p = '\w+';
@@ -273,11 +298,10 @@ class WikiPluginLoader {
     var $_errors;
 
     function expandPI($pi, &$request, $basepage=false) {
-        if (!preg_match('/^\s*<\?(plugin(?:-form|-link)?)\s+(\w+)\s*(.*?)\s*\?>\s*$/s', $pi, $m))
-            return $this->_error(sprintf("Bad %s", 'PI'));
+        if (!($ppi = $this->parsePi($pi)))
+            return false;
+        list($pi_name, $plugin, $plugin_args) = $ppi;
 
-        list(, $pi_name, $plugin_name, $plugin_args) = $m;
-        $plugin = $this->getPlugin($plugin_name, $pi);
         if (!is_object($plugin)) {
             return new HtmlElement($pi_name == 'plugin-link' ? 'span' : 'p',
                                    array('class' => 'plugin-error'),
@@ -314,6 +338,27 @@ class WikiPluginLoader {
         }
     }
 
+    function getWikiPageLinks($pi, $basepage) {
+        if (!($ppi = $this->parsePi($pi)))
+            return false;
+        list($pi_name, $plugin, $plugin_args) = $ppi;
+        if (!is_object($plugin))
+            return false;
+        if ($pi_name != 'plugin')
+            return false;
+        return $plugin->getWikiPageLinks($plugin_args, $basepage);
+    }
+    
+    function parsePI($pi) {
+        if (!preg_match('/^\s*<\?(plugin(?:-form|-link)?)\s+(\w+)\s*(.*?)\s*\?>\s*$/s', $pi, $m))
+            return $this->_error(sprintf("Bad %s", 'PI'));
+
+        list(, $pi_name, $plugin_name, $plugin_args) = $m;
+        $plugin = $this->getPlugin($plugin_name, $pi);
+
+        return array($pi_name, $plugin, $plugin_args);
+    }
+    
     function getPlugin($plugin_name, $pi) {
         global $ErrorManager;
 
