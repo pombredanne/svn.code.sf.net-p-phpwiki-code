@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.65 2002-09-12 17:36:01 rurban Exp $');
+rcs_id('$Id: config.php,v 1.66 2002-09-18 18:34:13 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -67,10 +67,9 @@ function FindLocalizedButtonFile ($file, $missing_okay = false)
     return $buttonfinder->findFile($file, $missing_okay);
 }
 
-// I think this putenv is unnecessary, and it causes trouble
-// if PHP's safe_mode is enabled:
-//putenv("LC_ALL=$LANG");
-
+//
+// Set up (possibly fake) gettext()
+//
 if (!function_exists ('bindtextdomain')) {
     $locale = array();
 
@@ -84,88 +83,120 @@ if (!function_exists ('bindtextdomain')) {
     function _ ($text) {
         return gettext($text);
     }
-
-    if ( ($lcfile = FindLocalizedFile("LC_MESSAGES/phpwiki.php", 'missing_ok')) ) {
-        include($lcfile);
-    }
+}
+else {
+    bindtextdomain("phpwiki", FindFile("locale", false, true));
+    textdomain("phpwiki");
 }
 
-// Setup localisation
-// This is currently broken, after trying to enable dynamic UserPreferences 
-// on the language.
-function update_locale ($language) {
-    global $locale, $LC_ALL, $language_locales;
-    if (!$language and $GLOBALS['default_language']) {
-        return $GLOBALS['default_language'];
+
+/**
+ * Smart? setlocale().
+ *
+ * This is a version of the builtin setlocale() which is
+ * smart enough to try some alternatives...
+ *
+ * @param mixed $category
+ * @param string $locale
+ * @return string The new locale, or <code>false</code> if unable
+ *  to set the requested locale.
+ * @see setlocale
+ */
+function guessing_setlocale ($category, $locale) {
+    if ($res = setlocale($category, $locale))
+        return $res;
+
+    $alt = array('en' => array('C', 'en_US', 'en_GB', 'en_AU', 'en_CA', 'english'),
+                 'de' => array('de_DE', 'deutsch', 'german'),
+                 'es' => array('es_ES', 'es_MX', 'es_AR', 'spanish'),
+                 'nl' => array('nl_NL', 'dutch'),
+                 'fr' => array('fr_FR', 'français', 'french'),
+                 'it' => array('it_IT'),
+                 'sv' => array('sv_SE')
+                 );
+    
+    list ($lang) = split('_', $locale);
+    if (!isset($alt[$lang]))
+        return false;
+        
+    foreach ($alt[$lang] as $try) {
+        // Try first with charset appended...
+        $try = $try . '.' . CHARSET;
+        if ($res = setlocale($category, $try))
+            return $res;
+        foreach (array('@', ".", '_') as $sep) {
+            list ($try) = split($sep, $try);
+            if ($res = setlocale($category, $try))
+                return $res;
+        }
+    }
+    return false;
+
+    // A standard locale name is typically of  the  form
+    // language[_territory][.codeset][@modifier],  where  language is
+    // an ISO 639 language code, territory is an ISO 3166 country code,
+    // and codeset  is  a  character  set or encoding identifier like
+    // ISO-8859-1 or UTF-8.
+}
+
+function update_locale ($loc) {
+    $newlocale = guessing_setlocale(LC_ALL, $loc);
+    if (!$newlocale) {
+        trigger_error(fmt("Can't set locale: '%s'", $loc), E_USER_NOTICE);
+        $loc = setlocale(LC_ALL, '');  // pull locale from environment.
+        list ($loc,) = split('_', $loc, 2);
+        $GLOBALS['LANG'] = $loc;
+        return false;
     }
 
-    // shortterm LANG fix. We really should define LC_ALL as "C" and LANG as "en"
-    if ($language == 'C') {
-        $language = 'en'; $LC_ALL = 'C';
-    }
-    if (empty($LC_ALL)) {
-    	if (empty($language_locales[$language]))
-      	    $LC_ALL = $language;
-    	else
-      	    $LC_ALL = $language_locales[$language];
-    }
-    if (empty($LC_ALL))
-       $LC_ALL = $language;
-
-    // Fixme: Currently we just check the dirs under locale for all 
-    // available languages, but with setlocale we must use the long form, 
-    // like 'de_DE','nl_NL', 'es_MX', 'es_AR', 'fr_FR'. For Windows maybe even 'german'.
-    $result = setlocale(LC_ALL, $LC_ALL);
-    if (!$result and !($result = setlocale(LC_ALL, substr($LC_ALL,0,2)))) {
-    	putenv("LANG=$LC_ALL");
-	// The system supported locale. E.g. my Windows returns "German_Austria.1252"
-    	$result = setlocale(LC_ALL,'');
-    }
-    if ($result) {
-    	$LC_ALL = $result;
-    	putenv("LC_ALL=$LC_ALL");
-    }
-    putenv("LANG=$LC_ALL");
-            
+    $GLOBALS['LANG'] = $loc;
+    // Try to put new locale into environment (so any
+    // programs we run will get the right locale.)
+    //
+    // If PHP is in safe mode, this is not allowed,
+    // so hide errors...
+    @putenv("LC_ALL=$newlocale");
+    @putenv("LANG=$newlocale");
+    
     if (!function_exists ('bindtextdomain')) {
+        // Reinitialize translation array.
+        global $locale;
+        $locale = array();
         if ( ($lcfile = FindLocalizedFile("LC_MESSAGES/phpwiki.php", 'missing_ok')) ) {
             include($lcfile);
         }
-    } else {
-        if (empty($language_locales[$language])) {
-            trigger_error(sprintf(_("No default locale for this language '%s'"), $language), E_USER_NOTICE);
-        }
-        // Setup localisation
-        $f = FindFile("locale", false, true);
-        
-        bindtextdomain ("phpwiki", $f);
-        textdomain ("phpwiki");
     }
-    $GLOBALS['LANG'] = $language;
-}
-$default_language = $LANG;
-update_locale ($LANG);
 
-// To get the POSIX character classes in the PCRE's (e.g.
-// [[:upper:]]) to match extended characters (e.g. GrüßGott), we have
-// to set the locale, using setlocale().
-//
-// The problem is which locale to set?  We would like to recognize all
-// upper-case characters in the iso-8859-1 character set as upper-case
-// characters --- not just the ones which are in the current $LANG.
-//
-// As it turns out, at least on my system (Linux/glibc-2.2) as long as
-// you setlocale() to anything but "C" it works fine.  (I'm not sure
-// whether this is how it's supposed to be, or whether this is a bug
-// in the libc...)
-//
-// We don't currently use the locale setting for anything else, so for
-// now, just set the locale to US English.
-//
-// FIXME: Not all environments may support en_US?  We should probably
-// have a list of locales to try.
-if (setlocale(LC_CTYPE, 0) == 'C')
-     setlocale(LC_CTYPE, 'en_US.' . CHARSET );
+    // To get the POSIX character classes in the PCRE's (e.g.
+    // [[:upper:]]) to match extended characters (e.g. GrüßGott), we have
+    // to set the locale, using setlocale().
+    //
+    // The problem is which locale to set?  We would like to recognize all
+    // upper-case characters in the iso-8859-1 character set as upper-case
+    // characters --- not just the ones which are in the current $LANG.
+    //
+    // As it turns out, at least on my system (Linux/glibc-2.2) as long as
+    // you setlocale() to anything but "C" it works fine.  (I'm not sure
+    // whether this is how it's supposed to be, or whether this is a bug
+    // in the libc...)
+    //
+    // We don't currently use the locale setting for anything else, so for
+    // now, just set the locale to US English.
+    //
+    // FIXME: Not all environments may support en_US?  We should probably
+    // have a list of locales to try.
+    if (setlocale(LC_CTYPE, 0) == 'C')
+        setlocale(LC_CTYPE, 'en_US.' . CHARSET );
+    else
+        setlocale(LC_CTYPE, $newlocale);
+
+    return $newlocale;
+}
+
+if (!defined('DEFAULT_LANGUAGE'))
+     define('DEFAULT_LANGUAGE', 'en');
+update_locale(DEFAULT_LANGUAGE);
+
 
 /** string pcre_fix_posix_classes (string $regexp)
 *

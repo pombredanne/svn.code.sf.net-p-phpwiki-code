@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: SystemInfo.php,v 1.2 2002-09-02 08:44:49 rurban Exp $');
+<?php rcs_id('$Id: SystemInfo.php,v 1.3 2002-09-18 18:34:13 dairiki Exp $');
 /**
  * Usage: <?plugin SystemInfo all ?>
  *        or <?plugin SystemInfo pagestats cachestats discspace hitstats ?> 
@@ -273,14 +273,12 @@ extends WikiPlugin
             $dir->close();
         }
         natcasesort($available_languages);
-        // keep this only for a short time.
-        if (empty($GLOBALS['default_language'])) 
-            $GLOBALS['default_language'] = $GLOBALS['LANG'];
+
         return sprintf(_("Total %d languages: "),count($available_languages)) . 
             implode(', ',$available_languages) . ". " .
             sprintf(_("Current language: '%s'"), $GLOBALS['LANG']) .
-            (($GLOBALS['default_language'] != $GLOBALS['LANG']) 
-              ? ". " . sprintf(_("System default: '%s'"), $GLOBALS['default_language'])
+            ((DEFAULT_LANGUAGE != $GLOBALS['LANG']) 
+              ? ". " . sprintf(_("System default: '%s'"), DEFAULT_LANGUAGE)
               : '');
     }
 
@@ -328,9 +326,9 @@ extends WikiPlugin
             array ('appname' => create_function('',"return 'PhpWiki';"),
                    'version' => create_function('',"return sprintf('%s',PHPWIKI_VERSION);"),
                    'LANG'    => create_function('','return $GLOBALS["LANG"];'),
-                   'LC_ALL'  => create_function('','return $GLOBALS["LC_ALL"];'),
+                   'LC_ALL'  => create_function('','return setlocale(LC_ALL, 0);'),
                    'current_language' => create_function('','return $GLOBALS["LANG"];'),
-                   'system_language' => create_function('','return $GLOBALS["default_language"];'),
+                   'system_language' => create_function('','return DEFAULT_LANGUAGE;'),
                    'current_theme' => create_function('','return $GLOBALS["Theme"]->_name;'),
                    'system_theme'  => create_function('','return THEME;'),
                    // more here or as method.

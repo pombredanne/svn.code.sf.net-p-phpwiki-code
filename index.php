@@ -81,7 +81,7 @@ define ('DEBUG', 1);
 
 define ('PHPWIKI_VERSION', '1.3.4pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.96 2002-09-12 11:45:33 rurban Exp $');
+rcs_id('$Id: index.php,v 1.97 2002-09-18 18:34:13 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -472,45 +472,7 @@ define("CHARSET", "iso-8859-1");
 // (as determined by the applicable environment variables) will be
 // used.
 //
-if (empty($LANG)) $LANG='en';
-//$LANG='nl';
-
-// Setting the LANG environment variable (accomplished above) may or
-// may not be sufficient to cause PhpWiki to produce dates in your
-// native language. (It depends on the configuration of the operating
-// system on your http server.)  The problem is that, e.g. 'de' is
-// often not a valid locale.
-//
-// A standard locale name is typically of  the  form
-// language[_territory][.codeset][@modifier],  where  language is
-// an ISO 639 language code, territory is an ISO 3166 country code,
-// and codeset  is  a  character  set or encoding identifier like
-// ISO-8859-1 or UTF-8.
-//
-// You can tailor the locale used for time and date formatting by
-// setting the LC_TIME environment variable. You'll have to experiment
-// to find the correct setting.
-// gettext() fix: With setlocale() we must use the long form, 
-// like 'de_DE','nl_NL', 'es_MX', 'es_AR', 'fr_FR'. 
-// For Windows maybe even 'german'. You might fix this accordingly.
-// At least on windows the best locale is found automatically, dependent 
-// on the system locale.
-$language_locales = array(
-                          'en' => 'C',
-                          'de' => 'de_DE',
-                          'es' => 'es_MX',
-                          'nl' => 'nl_NL',
-                          'fr' => 'fr_FR',
-                          'it' => 'it_IT',
-                          'sv' => 'sv_SV'
-                          );
-if (empty($LC_ALL)) {
-  if (empty($language_locales[$LANG])) 
-     $LC_ALL = $LANG;
-  else
-     $LC_ALL = $language_locales[$LANG];
-}
-putenv("LC_TIME=$LC_ALL");
+define('DEFAULT_LANGUAGE', 'en');
 
 /* WIKI_PGSRC -- specifies the source for the initial page contents of
  * the Wiki. The setting of WIKI_PGSRC only has effect when the wiki is
