@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.47 2003-03-07 21:52:34 dairiki Exp $');
+rcs_id('$Id: display.php,v 1.48 2003-11-04 18:20:20 carstenklapp Exp $');
 
 require_once('lib/Template.php');
 
@@ -121,7 +121,6 @@ function displayPage(&$request, $template=false) {
         $redirect_message = HTML::span(array('class' => 'redirectfrom'),
                                        fmt("(Redirected from %s)",
                                            RedirectorLink($redirect_from)));
-        $pageheader = HTML($pagetitle, $redirect_message);
     }
 
     $request->appendValidators(array('pagerev' => $revision->getVersion(),
@@ -137,6 +136,8 @@ function displayPage(&$request, $template=false) {
     $toks['TITLE'] = $pagetitle;
     $toks['HEADER'] = $pageheader;
     $toks['revision'] = $revision;
+    if (!empty($redirect_message))
+        $toks['redirected'] = $redirect_message;
     $toks['ROBOTS_META'] = 'index,follow';
     $toks['PAGE_DESCRIPTION'] = $page_content->getDescription();
     $toks['PAGE_KEYWORDS'] = GleanKeywords($page);
