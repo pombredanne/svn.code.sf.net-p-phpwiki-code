@@ -547,7 +547,7 @@ $locale["locked"] =
 $locale["major edits"] =
    "modifications majeures";
 $locale["minor"] =
-   "petite";
+   "mineure";
 $locale["minor edit"] =
    "édition mineure";
 $locale["minor edits"] =
