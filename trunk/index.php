@@ -73,7 +73,7 @@ define('ENABLE_USER_NEW',true); // this will disappear with 1.4.0
 
 define ('PHPWIKI_VERSION', '1.3.8');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.126 2004-02-27 16:27:48 rurban Exp $');
+rcs_id('$Id: index.php,v 1.127 2004-02-28 21:18:29 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -322,10 +322,11 @@ $DBParams = array(
 //
 
 // Only for $DBParams['dbtype'] => 'SQL'. See schemas/mysql.sql or 
-// schemas/psql.sql. $DBParams['db_session_table'] must be defined.
-if (!defined('USE_DB_SESSION') and 
+// schemas/psql.sql. 
+// $DBParams['db_session_table'] must be defined.
+if (!defined('USE_DB_SESSION')   and 
     $DBParams['dbtype'] == 'SQL' and 
-    $DBParams['db_session_table'])
+    !empty($DBParams['db_session_table']))
   define('USE_DB_SESSION',true);
 
 // If your php was compiled with --enable-trans-sid it tries to
@@ -463,13 +464,14 @@ if (!defined('ALLOW_USER_PASSWORDS')) define('ALLOW_USER_PASSWORDS', true);
 // they are used:
 //   BogoLogin:     WikiWord enough, but with PASSWORD_LENGTH_MINIMUM
 //   PersonalPage:  Store passwords in the users homepage metadata (simple)
-//   HttpAuth:      Use the protection by the webserver (.htaccess)
 //   Db:            Use $DBAuthParams[] (see below) with the PearDB or 
 //		    ADODB only.
 //   LDAP:          Authenticate against LDAP_AUTH_HOST with LDAP_BASE_DN
 //   IMAP:          Authenticate against IMAP_AUTH_HOST (email account)
 //   File:          Store username:crypted-passwords in .htaccess like files. 
 //                  Use Apache's htpasswd to manage this file.
+//   HttpAuth:      Use the protection by the webserver (.htaccess) or 
+//                  enforce it
 
 if (defined('ALLOW_USER_PASSWORDS')) {
 
@@ -479,11 +481,11 @@ if (defined('ALLOW_USER_PASSWORDS')) {
             array(
 //                "BogoLogin",
                   "PersonalPage",
-//                "HttpAuth",
                   "Db",
 //		  "LDAP",  // define LDAP_AUTH_HOST and LDAP_BASE_DN
 //                "IMAP",  // define IMAP_AUTH_HOST
-//                "File"   // define AUTH_USER_FILE and opt. AUTH_USER_FILE_STORABLE
+//                "File",   // define AUTH_USER_FILE and opt. AUTH_USER_FILE_STORABLE
+//                "HttpAuth",
                   ) ;
 
     if (!defined('PASSWORD_LENGTH_MINIMUM')) define('PASSWORD_LENGTH_MINIMUM', 2);
@@ -547,6 +549,8 @@ if (!defined('GROUP_METHOD')) define('GROUP_METHOD', "WIKIPAGE");
 //   apache auth_mysql or something else.
 // The default is to store the data as metadata in the users PersonalPage.
 // The most likely dsn option is the same dsn as the wikipages.
+// 
+// Note: Order of variables important!
 $DBAuthParams = array (
    // if not defined use $DBParams['dsn'] i.e. the phpwiki database
    //'auth_dsn'         => 'mysql://localhost/phpwiki',
@@ -566,23 +570,21 @@ $DBAuthParams = array (
 
    // If 'auth_update' is not defined but 'auth_check' is defined, the user cannot 
    // change his password.
-   //don't create new users:
-   // $password is processed  by the 'auth_crypt_method', don't create.
+   // $password is processed  by the 'auth_crypt_method'
    //'auth_update'  => 'UPDATE user SET passwd="$password" WHERE userid="$userid"',
    // for mysql md5 use 'auth_crypt_method'  => 'plain'
    'auth_update'  => 'UPDATE user SET passwd=PASSWORD("$password") WHERE userid="$userid"',
-   //or create new users automatically, with auth_crypt_method = plain
-   // Order important: Password first!
-   //'auth_update'  => 'REPLACE INTO user SET passwd=PASSWORD("$password"), userid="$userid"',
+
+   // Let a user create himself. Generally in external databases not wanted.
+   //'auth_create'  => 'INSERT INTO user SET passwd=PASSWORD("$password"),userid="$userid"',
 
    // USER => PREFERENCES
    //   This can be optionally defined in the phpwiki db.
    //   The default is to store it the users homepage.
    'pref_select' => 'SELECT prefs FROM user WHERE userid="$userid"',
    //users must be predefined:
+   //Don't use replace here or all other fields here get erased! (passwords e.g.)
    'pref_update' => 'UPDATE user SET prefs="$pref_blob" WHERE userid="$userid"',
-   //or users can create themselves:
-   //'pref_update' => 'REPLACE INTO user SET prefs="$pref_blob", userid="$userid"',
 
    // USERS <=> GROUPS
    //   DB methods for lib/WikiGroup.php, see also AUTH_GROUP_FILE above.
@@ -895,6 +897,7 @@ if (!defined('AUTHORPAGE_URL')) define('AUTHORPAGE_URL',
 //if (!defined('DISABLE_HTTP_REDIRECT')) define ('DISABLE_HTTP_REDIRECT', true);
 
 ////////////////////////////////////////////////////////////////
+// PrettyWiki
 // Check if we were included by some other wiki version 
 // (getimg.php, en, de, wiki, ...) or not. 
 // If the server requested this index.php fire up the code by loading lib/main.php.
@@ -902,15 +905,19 @@ if (!defined('AUTHORPAGE_URL')) define('AUTHORPAGE_URL',
 // main configuration, extend or redefine some settings and 
 // load lib/main.php by themselves. See the file 'wiki'.
 // This overcomes the IndexAsConfigProblem.
+// Generally a simple 
+//   define('VIRTUAL_PATH', $_SERVER['SCRIPT_NAME']);
+// is enough in the wiki file, plus the action definition in a .htaccess file
 ////////////////////////////////////////////////////////////////
-/*
-// Tested: Works with CGI also.
+
+// If your lib/main.php is not loaded, comment that out, and  
+// uncomment the include "lib/main.php" line below.
 if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
-    if ($HTTP_SERVER_VARS['SCRIPT_NAME'] == VIRTUAL_PATH) {
+    if ($HTTP_SERVER_VARS['SCRIPT_NAME'] != VIRTUAL_PATH) {
         include "lib/main.php";
     }
     elseif (defined('SCRIPT_NAME') and 
-            ($HTTP_SERVER_VARS['SCRIPT_NAME'] == SCRIPT_NAME)) {
+            ($HTTP_SERVER_VARS['SCRIPT_NAME'] != SCRIPT_NAME)) {
         include "lib/main.php";
     }
 } else {
@@ -921,10 +928,12 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
         include "lib/main.php";
     }
 }
-*/
-include "lib/main.php";
+//include "lib/main.php";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.126  2004/02/27 16:27:48  rurban
+// REPLACE is a dirty hack, and erases passwd btw.
+//
 // Revision 1.125  2004/02/24 02:51:57  rurban
 // release 1.3.8 ready
 //
