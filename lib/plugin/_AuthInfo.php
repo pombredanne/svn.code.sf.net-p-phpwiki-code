@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _AuthInfo.php,v 1.10 2004-03-10 13:54:53 rurban Exp $');
+rcs_id('$Id: _AuthInfo.php,v 1.11 2004-03-12 11:18:25 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -25,7 +25,6 @@ require_once('lib/Template.php');
  * Used to debug auth problems and settings.
  *
  * Warning! This may display db and user passwords in cleartext.
- * Fixme: How to avoid caching?
  */
 class WikiPlugin__AuthInfo
 extends WikiPlugin
@@ -40,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     function getDefaultArguments() {
@@ -103,6 +102,7 @@ extends WikiPlugin
             $userdata = obj2hash($user);
             $table->pushContent($this->_showhash("User: Object of ".get_class($user), $userdata));
             $group = &WikiGroup::getGroup($request);
+            $groups = $group->getAllGroupsIn();
             $groupdata = obj2hash($group);
             unset($groupdata['request']);
             $table->pushContent($this->_showhash("Group: Object of ".get_class($group), $groupdata));
@@ -184,6 +184,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/03/10 13:54:53  rurban
+// adodb WikiGroup fix
+//
 // Revision 1.9  2004/03/08 18:17:10  rurban
 // added more WikiGroup::getMembersOf methods, esp. for special groups
 // fixed $LDAP_SET_OPTIONS
