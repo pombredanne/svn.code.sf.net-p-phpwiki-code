@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.22 2004-02-27 05:15:40 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.23 2004-02-27 13:21:17 rurban Exp $');
 
 /**
  * This is a complete OOP rewrite of the old WikiUser code with various
@@ -135,20 +135,21 @@ function _determineBogoUserOrPassUser($UserName) {
         return $ForbiddenUser;
 
     // Check for password and possibly upgrade user object.
-    $_BogoUser = new _BogoUser($UserName);
+    // $_BogoUser = new _BogoUser($UserName);
+    if (_isBogoUserAllowed()) {
+        $_BogoUser = new _BogoLoginPassUser($UserName);
+        if ($_BogoUser->userExists())
+            return $_BogoUser;
+    }
     if (_isUserPasswordsAllowed()) {
-        if (/*$has_password =*/ $_BogoUser->_prefs->get('passwd'))
-            return new _PassUser($UserName);
+        if (isset($_BogoUser) and $_BogoUser->_prefs->get('passwd'))
+            return new _PassUser($UserName,$_BogoUser->_prefs);
         else { // PassUsers override BogoUsers if they exist
-            $_PassUser = new _PassUser($UserName);
+            $_PassUser = new _PassUser($UserName,isset($_BogoUser) ? $_BogoUser->_prefs : false);
             if ($_PassUser->userExists())
                 return $_PassUser;
         }
     }
-    // User has no password.
-    if (_isBogoUserAllowed())
-        return $_BogoUser;
-
     // Passwords are not allowed, and Bogo is disallowed too. (Only
     // the admin can sign in).
     return $ForbiddenUser;
@@ -235,7 +236,7 @@ function UserExists ($UserName) {
         return true;
     }
     if (isa($user,'_BogoUser'))
-      $user = new _PassUser($UserName);
+        $user = new _PassUser($UserName,$user->_prefs);
     while ($user = $user->nextClass()) {
         return $user->userExists($UserName);
         $this = $user; // does this work on all PHP version?
@@ -256,13 +257,16 @@ class _WikiUser
     var $_HomePagehandle = false;
 
     // constructor
-    function _WikiUser($UserName = '') {
+    function _WikiUser($UserName='', $prefs=false) {
 
         $this->_userid = $UserName;
         if ($UserName) {
-            $this->_HomePagehandle = $this->hasHomePage();
+            $this->hasHomePage();
         }
-        $this->getPreferences();
+        if (!$this->_prefs) {
+            if ($prefs) $this->_prefs = $prefs;
+            else $this->getPreferences();
+        }
     }
 
     function UserName() {
@@ -434,7 +438,7 @@ class _WikiUser
         elseif (!$login && !$userid)
             return false;       // Nothing to do?
 
-        $authlevel = $this->checkPass($passwd);
+        $authlevel = $this->checkPass($passwd === false ? '' : $passwd);
         if (!$authlevel)
             return _("Invalid password or userid.");
         elseif ($authlevel < $require_level)
@@ -598,65 +602,51 @@ extends _AnonUser
  *  TODO: email verification
  */
 {
-    var $_auth_dbi, $_prefmethod, $_prefselect, $_prefupdate;
+    var $_auth_dbi, $_prefs;
     var $_current_method, $_current_index;
 
     // check and prepare the auth and pref methods only once
-    function _PassUser($UserName = '') {
+    function _PassUser($UserName='', $prefs=false) {
         global $DBAuthParams, $DBParams;
-
         if ($UserName) {
             $this->_userid = $UserName;
             if ($this->hasHomePage())
                 $this->_HomePagehandle = $GLOBALS['request']->getPage($this->_userid);
         }
+        $this->_authmethod = substr(get_class($this),1,-8);
+        if (!$this->_prefs) {
+            if ($prefs) $this->_prefs = $prefs;
+            else $this->getPreferences();
+        }
+
         // Check the configured Prefs methods
-        if (  !empty($DBAuthParams['pref_select']) ) {
-            if ( $DBParams['dbtype'] == 'SQL' and !@is_int($this->_prefselect)) {
-                $this->_prefmethod = 'SQL'; // really pear db
-                $this->getAuthDbh();
-                // preparate the SELECT statement
-                $this->_prefselect = $this->_auth_dbi->prepare(
-		    str_replace('"$userid"','?',$DBAuthParams['pref_select'])
-	        );
-            }
-            if (  $DBParams['dbtype'] == 'ADODB' and !isset($this->_prefselect)) {
-                $this->_prefmethod = 'ADODB'; // uses a simplier execute syntax
-                $this->getAuthDbh();
-                // preparate the SELECT statement
-                $this->_prefselect = str_replace('"$userid"','%s',$DBAuthParams['pref_select']);
-            }
-        } else {
-            unset($this->_prefselect);
-        }
-        if (  !empty($DBAuthParams['pref_update']) and 
-              $DBParams['dbtype'] == 'SQL' and
-              !@is_int($this->_prefupdate)) {
-            $this->_prefmethod = 'SQL';
-            $this->getAuthDbh();
-            $this->_prefupdate = $this->_auth_dbi->prepare(
-                str_replace(array('"$userid"','"$pref_blob"'),array('?','?'),$DBAuthParams['pref_update'])
-	    );
-        }
-        if (  !empty($DBAuthParams['pref_update']) and 
-              $DBParams['dbtype'] == 'ADODB' and
-              !isset($this->_prefupdate)) {
-            $this->_prefmethod = 'ADODB'; // uses a simplier execute syntax
+        if ( !isset($this->_prefs->_select) and !empty($DBAuthParams['pref_select']) 
+             and in_array($DBParams['dbtype'],array('SQL','ADODB'))) {
+            $this->_prefs->_method = $DBParams['dbtype'];
             $this->getAuthDbh();
             // preparate the SELECT statement
-            $this->_prefupdate = str_replace(array('"$userid"','"$pref_blob"'),array('%s','%s'),
+            $this->_prefs->_select = str_replace('"$userid"','%s',$DBAuthParams['pref_select']);
+        //} else {
+        //    unset($this->_prefs->_select);
+        }
+        if (  !isset($this->_prefs->_update) and !empty($DBAuthParams['pref_update'])
+             and in_array($DBParams['dbtype'],array('SQL','ADODB'))) {
+            $this->_prefs->_method = $DBParams['dbtype'];
+            $this->getAuthDbh();
+            // preparate the SELECT statement
+            $this->_prefs->_update = str_replace(array('"$userid"','"$pref_blob"'),array('%s','%s'),
                                              $DBAuthParams['pref_update']);
         }
-        $this->getPreferences();
-
+        
         // Upgrade to the next parent _PassUser class. Avoid recursion.
-        if ( get_class($this) === '_passuser' ) { // hopefully PHP will keep this lowercase
+        if ( strtolower(get_class($this)) === '_passuser' ) {
             //auth policy: Check the order of the configured auth methods
             // 1. first-only: Upgrade the class here in the constructor
-            // 2. old:       ignore USER_AUTH_ORDER and try to use all available methods as in the previous PhpWiki releases (slow)
+            // 2. old:       ignore USER_AUTH_ORDER and try to use all available methods as 
+            ///              in the previous PhpWiki releases (slow)
             // 3. strict:    upgrade the class after checking the user existance in userExists()
             // 4. stacked:   upgrade the class after the password verification in checkPass()
-            // Methods: PersonalPage, HTTP_AUTH, DB, LDAP, IMAP, File
+            // Methods: PersonalPage, HttpAuth, DB, Ldap, Imap, File
             if (!defined('USER_AUTH_POLICY')) define('USER_AUTH_POLICY','old');
             if (defined('USER_AUTH_POLICY')) {
                 // policy 1: only pre-define one method for all users
@@ -670,18 +660,24 @@ extends _AnonUser
                 elseif (USER_AUTH_POLICY === 'old') {
                     // default: try to be smart
                     if (!empty($GLOBALS['PHP_AUTH_USER'])) {
-                        return new _HttpAuthPassUser($UserName);
+                    	$this = new _HttpAuthPassUser($UserName,$this->_prefs);
+                    	return $this;
                     } elseif (!empty($DBAuthParams['auth_check']) and 
                               (!empty($DBAuthParams['auth_dsn']) or !empty($GLOBALS ['DBParams']['dsn']))) {
-                        return new _DbPassUser($UserName);
+                        $this = new _DbPassUser($UserName,$this->_prefs);
+                    	return $this;
                     } elseif (defined('LDAP_AUTH_HOST') and defined('LDAP_BASE_DN') and function_exists('ldap_open')) {
-                        return new _LDAPPassUser($UserName);
+			$this = new _LDAPPassUser($UserName,$this->_prefs);
+                    	return $this;
                     } elseif (defined('IMAP_AUTH_HOST') and function_exists('imap_open')) {
-                        return new _IMAPPassUser($UserName);
+                        $this = new _IMAPPassUser($UserName,$this->_prefs);
+                    	return $this;
                     } elseif (defined('AUTH_USER_FILE')) {
-                        return new _FilePassUser($UserName);
+                        $this = new _FilePassUser($UserName,$this->_prefs);
+                    	return $this;
                     } else {
-                        return new _PersonalPagePassUser($UserName);
+                        $this = new _PersonalPagePassUser($UserName,$this->_prefs);
+                    	return $this;
                     }
                 }
                 else 
@@ -717,6 +713,7 @@ extends _AnonUser
         return $this->_auth_dbi;
     }
 
+    // not used anymore.
     function prepare ($stmt, $variables) {
         global $DBParams, $request;
         // preparate the SELECT statement, for ADODB and PearDB (MDB not)
@@ -745,11 +742,11 @@ extends _AnonUser
     }
 
     function getPreferences() {
-        if (!empty($this->_prefmethod)) {
-            if ($this->_prefmethod == 'ADODB') {
+        if (!empty($this->_prefs->_method)) {
+            if ($this->_prefs->_method == 'ADODB') {
                 _AdoDbPassUser::_AdoDbPassUser();
                 return _AdoDbPassUser::getPreferences();
-            } elseif ($this->_prefmethod == 'SQL') {
+            } elseif ($this->_prefs->_method == 'SQL') {
                 _PearDbPassUser::_PearDbPassUser();
                 return _PearDbPassUser::getPreferences();
             }
@@ -771,12 +768,12 @@ extends _AnonUser
     }
 
     function setPreferences($prefs, $id_only=false) {
-        if (!empty($this->_prefmethod)) {
-            if ($this->_prefmethod == 'ADODB') {
+        if (!empty($this->_prefs->_method)) {
+            if ($this->_prefs->_method == 'ADODB') {
                 _AdoDbPassUser::_AdoDbPassUser();
                 return _AdoDbPassUser::setPreferences($prefs, $id_only);
             }
-            elseif ($this->_prefmethod == 'SQL') {
+            elseif ($this->_prefs->_method == 'SQL') {
                 _PearDbPassUser::_PearDbPassUser();
                 return _PearDbPassUser::setPreferences($prefs, $id_only);
             }
@@ -825,22 +822,12 @@ extends _AnonUser
     // child methods obtain $stored_password from external auth.
     function checkPass($submitted_password) {
         $stored_password = $this->_prefs->get('passwd');
-        $result = $this->_checkPass($submitted_password, $stored_password);
-        if ($result) $this->_level = WIKIAUTH_USER;
-
-        if (!$result) {
-            if (USER_AUTH_POLICY === 'strict') {
-                if ($user = $this->nextClass()) {
-                    if ($user = $user->userExists())
-                        return $user->checkPass($submitted_password);
-                }
-            }
-            if (USER_AUTH_POLICY === 'stacked' or USER_AUTH_POLICY === 'old') {
-                if ($user = $this->nextClass())
-                    return $user->checkPass($submitted_password);
-            }
+        if ($this->_checkPass($submitted_password, $stored_password)) {
+            $this->_level = WIKIAUTH_USER;
+            return $this->_level;
+        } else {
+            return $this->_tryNextPass($submitted_password);
         }
-        return $this->_level;
     }
 
     //TODO: remove crypt() function check from config.php:396 ??
@@ -898,11 +885,45 @@ extends _AnonUser
         return false;
     }
 
+    function _tryNextPass($submitted_password) {
+        if (USER_AUTH_POLICY === 'strict') {
+            if ($user = $this->nextClass()) {
+                if ($user->userExists()) {
+                    return $user->checkPass($submitted_password);
+                }
+            }
+        }
+        if (USER_AUTH_POLICY === 'stacked' or USER_AUTH_POLICY === 'old') {
+            if ($user = $this->nextClass())
+                return $user->checkPass($submitted_password);
+        }
+        return $this->_level;
+    }
+
+    function _tryNextUser() {
+        if (USER_AUTH_POLICY === 'strict') {
+            while ($user = $this->nextClass()) {
+                if ($user->userExists()) {
+                    $this = $user;
+                    return true;
+                }
+                $this = $user;
+            }
+            /*
+            if ($user = $this->nextClass())
+                return $user->userExists();
+            */
+        }
+        return false;
+    }
+
 }
 
-class _BogoLoginUser
+// without stored password. this is then PersonalPagePassUser
+class _BogoLoginPassUser
 extends _PassUser
 {
+    var $_authmethod = 'BogoLogin';
     function userExists() {
         if (isWikiWord($this->_userid)) {
             $this->_level = WIKIAUTH_BOGO;
@@ -914,7 +935,19 @@ extends _PassUser
     }
 
     function checkPass($submitted_password) {
-        // A BogoLoginUser requires PASSWORD_LENGTH_MINIMUM. hmm..
+        // A BogoLoginUser requires no password at all
+        // But if there's one stored, we should prefer PersonalPage instead
+        if ($this->_prefs->get('passwd')) {
+            $user = new _PersonalPagePassUser($this->_userid);
+            if ($user->checkPass($submitted_password)) {
+                $this = $user;
+                $this->_level = WIKIAUTH_USER;
+                return $this->_level;
+            } else {
+                $this->_level = WIKIAUTH_ANON;
+                return $this->_level;
+            }
+        }
         $this->userExists();
         return $this->_level;
     }
@@ -928,6 +961,8 @@ extends _PassUser
  * It inherits almost all all methods from _PassUser.
  */
 {
+    var $_authmethod = 'PersonalPage';
+
     function userExists() {
         return $this->_HomePagehandle and $this->_HomePagehandle->exists();
     }
@@ -958,10 +993,11 @@ extends _PassUser
 class _HttpAuthPassUser
 extends _PassUser
 {
-
-    function _HttpAuthPassUser($UserName='') {
-        if (!$this->_prefs)
-            _PassUser::_PassUser($UserName);
+    function _HttpAuthPassUser($UserName='',$prefs=false) {
+        if (!$this->_prefs) {
+            if ($prefs) $this->_prefs = $prefs;
+            else _PassUser::_PassUser($UserName);
+        }
         $this->_authmethod = 'HttpAuth';
         if ($this->userExists())
             return $this;
@@ -1045,17 +1081,22 @@ extends _PassUser
 
     // This can only be called from _PassUser, because the parent class 
     // sets the auth_dbi and pref methods, before this class is initialized.
-    function _DbPassUser($UserName='') {
-        if (!$this->_prefs)
-            _PassUser::_PassUser($UserName);
-        $this->_authmethod = 'DB';
-        $this->getAuthDbh();
-        $this->_auth_crypt_method = @$GLOBALS['DBAuthParams']['auth_crypt_method'];
-
-        if ($GLOBALS['DBParams']['dbtype'] == 'ADODB') 
-            return new _AdoDbPassUser($UserName);
-        else 
-            return new _PearDbPassUser($UserName);
+    function _DbPassUser($UserName='',$prefs=false) {
+        if (!$this->_prefs) {
+            if ($prefs) $this->_prefs = $prefs;
+            else _PassUser::_PassUser($UserName);
+        }
+        $this->_authmethod = 'Db';
+        //$this->getAuthDbh();
+        //$this->_auth_crypt_method = @$GLOBALS['DBAuthParams']['auth_crypt_method'];
+        if ($GLOBALS['DBParams']['dbtype'] == 'ADODB') {
+            $this = new _AdoDbPassUser($UserName,$this->_prefs);
+            return $this;
+        }
+        else {
+            $this = new _PearDbPassUser($UserName,$this->_prefs);
+            return $this;
+        }
     }
 
     function mayChangePass() {
@@ -1068,27 +1109,20 @@ class _PearDbPassUser
 extends _DbPassUser
 /**
  * Pear DB methods
+ * optimized not to use prepare, ...query(sprintf($sql,quote())) instead.
  */
 {
-    function _PearDbPassUser($UserName='') {
+    function _PearDbPassUser($UserName='',$prefs=false) {
         global $DBAuthParams;
-        if (!$this->_prefs and isa($this,"_PearDbPassUser"))
-            _PassUser::_PassUser($UserName);
-        $this->getAuthDbh();
+        if (!$this->_prefs and isa($this,"_PearDbPassUser")) {
+            if ($prefs) $this->_prefs = $prefs;
+            else _PassUser::_PassUser($UserName);
+        }
+        $this->_userid = $UserName;
+        // make use of session data. generally we only initialize this every time, 
+        // but do auth checks only once
         $this->_auth_crypt_method = @$GLOBALS['DBAuthParams']['auth_crypt_method'];
-        // Prepare the configured auth statements
-        if (!empty($DBAuthParams['auth_check']) and !@is_int($this->_authselect)) {
-            $this->_authselect = $this->_auth_dbi->prepare (
-                     str_replace(array('"$userid"','"$password"'),array('?','?'),
-                                  $DBAuthParams['auth_check'])
-                     );
-        }
-        if (!empty($DBAuthParams['auth_update']) and !@is_int($this->_authupdate)) {
-            $this->_authupdate = $this->_auth_dbi->prepare(
-                    str_replace(array('"$userid"','"$password"'),array('?','?'),
-                                $DBAuthParams['auth_update'])
-                    );
-        }
+        $this->getAuthDbh();
         return $this;
     }
 
@@ -1097,8 +1131,9 @@ extends _DbPassUser
         // clutter the homepage metadata with prefs.
         _AnonUser::getPreferences();
         $this->getAuthDbh();
-        if ((! $this->_prefs) && @is_int($this->_prefselect)) {
-            $db_result = $this->_auth_dbi->execute($this->_prefselect,$this->_userid);
+        $dbh = &$this->_auth_dbi;
+        if ((! $this->_prefs) and $this->_prefs->_select) {
+            $db_result = $dbh->query(sprintf($this->_prefs->_select,$dbh->quote($this->_userid)));
             list($prefs_blob) = $db_result->fetchRow();
             if ($restored_from_db = $this->_prefs->retrieve($prefs_blob)) {
                 $this->_prefs = new UserPreferences($restored_from_db);
@@ -1128,11 +1163,14 @@ extends _DbPassUser
             $request->_prefs =& $this->_prefs; 
             $request->_user->_prefs =& $this->_prefs; 
             //$request->setSessionVar('wiki_prefs', $this->_prefs);
+            //todo: we don't have to store the dbi chain
             $request->setSessionVar('wiki_user', $request->_user);
         }
-        if (@is_int($this->_prefupdate)) {
-            $db_result = $this->_auth_dbi->execute($this->_prefupdate,
-                                                   array($packed,$this->_userid));
+        if ($this->_prefs->_update) {
+            $dbh = &$this->_auth_dbi;
+            $dbh->simpleQuery(sprintf($this->_prefs->_update,
+                                      $dbh->quote($packed),
+                                      $dbh->quote($this->_userid)));
         } else {
             _AnonUser::setPreferences($prefs, $id_only);
             $this->_HomePagehandle->set('pref', $packed);
@@ -1141,14 +1179,21 @@ extends _DbPassUser
     }
 
     function userExists() {
+        global $DBAuthParams;
+        $this->getAuthDbh();
+        $dbh = &$this->_auth_dbi;
+        // Prepare the configured auth statements
+        if (!empty($DBAuthParams['auth_check']) and !$this->_authselect) {
+            $this->_authselect = str_replace(array('"$userid"','"$password"'),
+                                             array('%s','%s'),
+                                             $DBAuthParams['auth_check']);
+        }
         if (!$this->_authselect)
             trigger_error("Either \$DBAuthParams['auth_check'] is missing or \$DBParams['dbtype'] != 'SQL'",
                           E_USER_WARNING);
-        $this->getAuthDbh();
-        $dbh = &$this->_auth_dbi;
         //NOTE: for auth_crypt_method='crypt' no special auth_user_exists is needed
         if ($this->_auth_crypt_method == 'crypt') {
-            $rs = $dbh->Execute($this->_authselect,$this->_userid) ;
+            $rs = $dbh->query(sprintf($this->_authselect,$dbh->quote($this->_userid)));
             if ($rs->numRows())
                 return true;
         }
@@ -1156,59 +1201,51 @@ extends _DbPassUser
             if (! $GLOBALS['DBAuthParams']['auth_user_exists'])
                 trigger_error("\$DBAuthParams['auth_user_exists'] is missing",
                               E_USER_WARNING);
-            $this->_authcheck = str_replace('"$userid"','?',
-                                             $GLOBALS['DBAuthParams']['auth_user_exists']);
-            $rs = $dbh->Execute($this->_authcheck,$this->_userid) ;
+            $this->_authcheck = str_replace('"$userid"','%s',
+                                             $DBAuthParams['auth_user_exists']);
+            $rs = $dbh->query(sprintf($this->_authcheck,$dbh->quote($this->_userid)));
             if ($rs->numRows())
                 return true;
         }
-        
-        if (USER_AUTH_POLICY === 'strict') {
-            if ($user = $this->nextClass()) {
-                return $user->userExists();
-            }
-        }
+        return $this->_tryNextUser();
     }
  
     function checkPass($submitted_password) {
-        if (!@is_int($this->_authselect))
+        global $DBAuthParams;
+        $this->getAuthDbh();
+        if (!$this->_authselect)
             trigger_error("Either \$DBAuthParams['auth_check'] is missing or \$DBParams['dbtype'] != 'SQL'",
                           E_USER_WARNING);
 
         //NOTE: for auth_crypt_method='crypt'  defined('ENCRYPTED_PASSWD',true) must be set
-        $this->getAuthDbh();
+        $dbh = &$this->_auth_dbi;
         if ($this->_auth_crypt_method == 'crypt') {
-            $db_result = $this->_auth_dbi->execute($this->_authselect,$this->_userid);
-            list($stored_password) = $db_result->fetchRow();
+            $stored_password = $dbh->getOne(sprintf($this->_authselect,$dbh->quote($this->_userid)));
             $result = $this->_checkPass($submitted_password, $stored_password);
         } else {
-            //Fixme: The prepared params get reversed somehow! 
-            //cannot find the pear bug for now
-            $db_result = $this->_auth_dbi->execute($this->_authselect,
-                                                   array($submitted_password,$this->_userid));
-            list($okay) = $db_result->fetchRow();
+            $okay = $dbh->getOne(sprintf($this->_authselect,
+                                         $dbh->quote($submitted_password),
+                                         $dbh->quote($this->_userid)));
             $result = !empty($okay);
         }
 
         if ($result) {
             $this->_level = WIKIAUTH_USER;
+            return $this->_level;
         } else {
-            if (USER_AUTH_POLICY === 'strict') {
-                if ($user = $this->nextClass()) {
-                    if ($user = $user->userExists())
-                        return $user->checkPass($submitted_password);
-                }
-            }
-            if (USER_AUTH_POLICY === 'stacked' or USER_AUTH_POLICY === 'old') {
-                if ($user = $this->nextClass())
-                    return $user->checkPass($submitted_password);
-            }
+            return $this->_tryNextPass($submitted_password);
         }
-        return $this->_level;
     }
 
     function storePass($submitted_password) {
-        if (!@is_int($this->_authupdate)) {
+        global $DBAuthParams;
+        $dbh = &$this->_auth_dbi;
+        if (!empty($DBAuthParams['auth_update']) and !$this->_authupdate) {
+            $this->_authupdate = str_replace(array('"$userid"','"$password"'),
+                                             array('%s','%s'),
+                                             $DBAuthParams['auth_update']);
+        }
+        if (!$this->_authupdate) {
             //CHECKME
             trigger_warning("Either \$DBAuthParams['auth_update'] not defined or \$DBParams['dbtype'] != 'SQL'",
                           E_USER_WARNING);
@@ -1219,10 +1256,10 @@ extends _DbPassUser
             if (function_exists('crypt'))
                 $submitted_password = crypt($submitted_password);
         }
-        //Fixme: The prepared params get reversed somehow! 
-        //cannot find the pear bug for now
-        $db_result = $this->_auth_dbi->execute($this->_authupdate,
-                                               array($submitted_password,$this->_userid));
+        $dbh->simpleQuery(sprintf($this->_authupdate,
+                                  $dbh->quote($submitted_password),
+        			  $dbh->quote($this->_userid)
+                                  ));
     }
 
 }
@@ -1233,31 +1270,25 @@ extends _DbPassUser
  * ADODB methods
  */
 {
-    function _AdoDbPassUser($UserName='') {
-        global $DBAuthParams;
-        if (!$this->_prefs and isa($this,"_AdoDbPassUser"))
-            _PassUser::_PassUser($UserName);
-        $this->getAuthDbh();
+    function _AdoDbPassUser($UserName='',$prefs=false) {
+        if (!$this->_prefs and isa($this,"_AdoDbPassUser")) {
+            if ($prefs) $this->_prefs = $prefs;
+            else _PassUser::_PassUser($UserName);
+        }
+        $this->_userid = $UserName;
         $this->_auth_crypt_method = $GLOBALS['DBAuthParams']['auth_crypt_method'];
-        // Prepare the configured auth statements
-        if (!empty($DBAuthParams['auth_check'])) {
-            $this->_authselect = str_replace(array('"$userid"','"$password"'),array('%s','%s'),
-                                              $DBAuthParams['auth_check']);
-        }
-        if (!empty($DBAuthParams['auth_update'])) {
-            $this->_authupdate = str_replace(array('"$userid"','"$password"'),array("%s","%s"),
-                                              $DBAuthParams['auth_update']);
-        }
+        $this->getAuthDbh();
+        // Don't prepare the configured auth statements anymore
         return $this;
     }
 
     function getPreferences() {
         // override the generic slow method here for efficiency
         _AnonUser::getPreferences();
-        $this->getAuthDbh();
-        if ((! $this->_prefs) and isset($this->_prefselect)) {
+        //$this->getAuthDbh();
+        if ((! $this->_prefs) and isset($this->_prefs->_select)) {
             $dbh = & $this->_auth_dbi;
-            $rs = $dbh->Execute(sprintf($this->_prefselect,$dbh->qstr($this->_userid)));
+            $rs = $dbh->Execute(sprintf($this->_prefs->_select,$dbh->qstr($this->_userid)));
             if ($rs->EOF) {
                 $rs->Close();
             } else {
@@ -1282,7 +1313,7 @@ extends _DbPassUser
         if (!is_object($prefs)) {
             $prefs = new UserPreferences($prefs);
         }
-        $this->getAuthDbh();
+        //$this->getAuthDbh();
         $packed = $prefs->store();
         $unpacked = $prefs->unpack($packed);
         if (count($unpacked)) {
@@ -1293,23 +1324,29 @@ extends _DbPassUser
             //$request->setSessionVar('wiki_prefs', $this->_prefs);
             $request->setSessionVar('wiki_user', $request->_user);
         }
-        if (isset($this->_prefupdate)) {
+        if (isset($this->_prefs->_update)) {
             $dbh = & $this->_auth_dbi;
-            $db_result = $dbh->Execute(sprintf($this->_prefupdate,
+            $db_result = $dbh->Execute(sprintf($this->_prefs->_update,
                                                $dbh->qstr($packed),$dbh->qstr($this->_userid)));
             $db_result->Close();
         } else {
             _AnonUser::setPreferences($prefs, $id_only);
-            $this->_HomePagehandle->set('pref', $serialized);
+            if ($this->_HomePagehandle)
+                $this->_HomePagehandle->set('pref', $serialized);
         }
         return count($unpacked);
     }
  
     function userExists() {
+        global $DBAuthParams;
+        if (!$this->_authselect and !empty($DBAuthParams['auth_check'])) {
+            $this->_authselect = str_replace(array('"$userid"','"$password"'),array('%s','%s'),
+                                              $DBAuthParams['auth_check']);
+        }
         if (!$this->_authselect)
             trigger_error("Either \$DBAuthParams['auth_check'] is missing or \$DBParams['dbtype'] != 'ADODB'",
                           E_USER_WARNING);
-        $this->getAuthDbh();
+        //$this->getAuthDbh();
         $dbh = &$this->_auth_dbi;
         //NOTE: for auth_crypt_method='crypt' no special auth_user_exists is needed
         if ($this->_auth_crypt_method == 'crypt') {
@@ -1322,11 +1359,11 @@ extends _DbPassUser
             }
         }
         else {
-            if (! $GLOBALS['DBAuthParams']['auth_user_exists'])
+            if (! $DBAuthParams['auth_user_exists'])
                 trigger_error("\$DBAuthParams['auth_user_exists'] is missing",
                               E_USER_WARNING);
             $this->_authcheck = str_replace('"$userid"','%s',
-                                             $GLOBALS['DBAuthParams']['auth_user_exists']);
+                                             $DBAuthParams['auth_user_exists']);
             $rs = $dbh->Execute(sprintf($this->_authcheck,$dbh->qstr($this->_userid)));
             if (!$rs->EOF) {
                 $rs->Close();
@@ -1336,18 +1373,19 @@ extends _DbPassUser
             }
         }
         
-        if (USER_AUTH_POLICY === 'strict') {
-            if ($user = $this->nextClass())
-                return $user->userExists();
-        }
-        return false;
+        return $this->_tryNextUser();
     }
 
     function checkPass($submitted_password) {
+        global $DBAuthParams;
+        if (!$this->_authselect and !empty($DBAuthParams['auth_check'])) {
+            $this->_authselect = str_replace(array('"$userid"','"$password"'),array('%s','%s'),
+                                              $DBAuthParams['auth_check']);
+        }
         if (!isset($this->_authselect))
             trigger_error("Either \$DBAuthParams['auth_check'] is missing or \$DBParams['dbtype'] != 'ADODB'",
                           E_USER_WARNING);
-        $this->getAuthDbh();
+        //$this->getAuthDbh();
         $dbh = &$this->_auth_dbi;
         //NOTE: for auth_crypt_method='crypt'  defined('ENCRYPTED_PASSWD',true) must be set
         if ($this->_auth_crypt_method == 'crypt') {
@@ -1372,25 +1410,20 @@ extends _DbPassUser
 
         if ($result) { 
             $this->_level = WIKIAUTH_USER;
+            return $this->_level;
         } else {
-            if (USER_AUTH_POLICY === 'strict') {
-                if ($user = $this->nextClass()) {
-                    if ($user = $user->userExists())
-                        return $user->checkPass($submitted_password);
-                }
-            }
-            if (USER_AUTH_POLICY === 'stacked' or USER_AUTH_POLICY === 'old') {
-                if ($user = $this->nextClass())
-                    return $user->checkPass($submitted_password);
-            }
+            return $this->_tryNextPass($submitted_password);
         }
-        return $this->_level;
     }
 
     function storePass($submitted_password) {
+    	global $DBAuthParams;
+        if (!isset($this->_authupdate) and !empty($DBAuthParams['auth_update'])) {
+            $this->_authupdate = str_replace(array('"$userid"','"$password"'),array("%s","%s"),
+                                              $DBAuthParams['auth_update']);
+        }
         if (!isset($this->_authupdate)) {
-            //CHECKME
-            trigger_warning("Either \$DBAuthParams['auth_update'] not defined or \$DBParams['dbtype'] != 'ADODB'",
+            trigger_error("Either \$DBAuthParams['auth_update'] not defined or \$DBParams['dbtype'] != 'ADODB'",
                           E_USER_WARNING);
             return false;
         }
@@ -1403,7 +1436,8 @@ extends _DbPassUser
         $dbh = &$this->_auth_dbi;
         $rs = $dbh->Execute(sprintf($this->_authupdate,
                                     $dbh->qstr($submitted_password),
-                                    $dbh->qstr($this->_userid)));
+                                    $dbh->qstr($this->_userid)
+                                    ));
         $rs->Close();
     }
 
@@ -1421,10 +1455,27 @@ extends _PassUser
         $this->_authmethod = 'LDAP';
         $userid = $this->_userid;
         if ($ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
-            $r = @ldap_bind($ldap); // this is an anonymous bind
+            if (defined('LDAP_AUTH_USER'))
+                if (defined('LDAP_AUTH_PASSWORD'))
+                    // Windows Active Directory Server is strict
+                    $r = @ldap_bind($ldap,LDAP_AUTH_USER,LDAP_AUTH_PASSWORD); 
+                else
+                    $r = @ldap_bind($ldap,LDAP_AUTH_USER); 
+            else
+                $r = @ldap_bind($ldap); // this is an anonymous bind
+            if (!empty($LDAP_SET_OPTION)) {
+                foreach ($LDAP_SET_OPTION as $key => $value) {
+                    ldap_set_option($ldap,$key,$value);
+                }
+            }
             // Need to set the right root search information. see ../index.php
-            $sr = ldap_search($ldap, LDAP_BASE_DN, "uid=$userid");
-            $info = ldap_get_entries($ldap, $sr); // there may be more hits with this userid. try every
+            $st_search = defined('LDAP_SEARCH_FIELD') 
+                ? LDAP_SEARCH_FIELD."=$userid"
+                : "uid=$userid";
+            $sr = ldap_search($ldap, LDAP_BASE_DN, $st_search);
+            $info = ldap_get_entries($ldap, $sr); 
+            // there may be more hits with this userid.
+            // of course it would be better to narrow down the BASE_DN
             for ($i = 0; $i < $info["count"]; $i++) {
                 $dn = $info[$i]["dn"];
                 // The password is still plain text.
@@ -1441,25 +1492,33 @@ extends _PassUser
             //return false;
         }
 
-        if (USER_AUTH_POLICY === 'strict') {
-            if ($user = $this->nextClass()) {
-                if ($user = $user->userExists())
-                    return $user->checkPass($submitted_password);
-            }
-        }
-        if (USER_AUTH_POLICY === 'stacked' or USER_AUTH_POLICY === 'old') {
-            if ($user = $this->nextClass())
-                return $user->checkPass($submitted_password);
-        }
-        return false;
+        return $this->_tryNextPass($submitted_password);
     }
 
     function userExists() {
         $userid = $this->_userid;
+
         if ($ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
-            $r = @ldap_bind($ldap);                 // this is an anonymous bind
-            $sr = ldap_search($ldap, LDAP_BASE_DN, "uid=$userid");
-            $info = ldap_get_entries($ldap, $sr);
+            if (defined('LDAP_AUTH_USER'))
+                if (defined('LDAP_AUTH_PASSWORD'))
+                    // Windows Active Directory Server is strict
+                    $r = @ldap_bind($ldap,LDAP_AUTH_USER,LDAP_AUTH_PASSWORD); 
+                else
+                    $r = @ldap_bind($ldap,LDAP_AUTH_USER); 
+            else
+                $r = @ldap_bind($ldap); // this is an anonymous bind
+            if (!empty($LDAP_SET_OPTION)) {
+                foreach ($LDAP_SET_OPTION as $key => $value) {
+                    ldap_set_option($ldap,$key,$value);
+                }
+            }
+            // Need to set the right root search information. see ../index.php
+            $st_search = defined('LDAP_SEARCH_FIELD') 
+                ? LDAP_SEARCH_FIELD."=$userid"
+                : "uid=$userid";
+            $sr = ldap_search($ldap, LDAP_BASE_DN, $st_search);
+            $info = ldap_get_entries($ldap, $sr); 
+
             if ($info["count"] > 0) {
                 ldap_close($ldap);
                 return true;
@@ -1468,11 +1527,7 @@ extends _PassUser
             trigger_error(_("Unable to connect to LDAP server "). LDAP_AUTH_HOST, E_USER_WARNING);
         }
 
-        if (USER_AUTH_POLICY === 'strict') {
-            if ($user = $this->nextClass())
-                return $user->userExists();
-        }
-        return false;
+        return $this->_tryNextUser();
     }
 
     function mayChangePass() {
@@ -1501,17 +1556,8 @@ extends _PassUser
         } else {
             trigger_error(_("Unable to connect to IMAP server "). IMAP_AUTH_HOST, E_USER_WARNING);
         }
-        if (USER_AUTH_POLICY === 'strict') {
-            if ($user = $this->nextClass()) {
-                if ($user = $user->userExists())
-                    return $user->checkPass($submitted_password);
-            }
-        }
-        if (USER_AUTH_POLICY === 'stacked' or USER_AUTH_POLICY === 'old') {
-            if ($user = $this->nextClass())
-                return $user->checkPass($submitted_password);
-        }
-        return false;
+
+        return $this->_tryNextPass($submitted_password);
     }
 
     //CHECKME: this will not be okay for the auth policy strict
@@ -1519,10 +1565,7 @@ extends _PassUser
         if (checkPass($this->_prefs->get('passwd')))
             return true;
             
-        if (USER_AUTH_POLICY === 'strict') {
-            if ($user = $this->nextClass())
-                return $user->userExists();
-        }
+        return $this->_tryNextUser();
     }
 
     function mayChangePass() {
@@ -1569,10 +1612,7 @@ extends _PassUser
         if (isset($this->_file->users[$this->_userid]))
             return true;
             
-        if (USER_AUTH_POLICY === 'strict') {
-            if ($user = $this->nextClass())
-                return $user->userExists();
-        }
+        return $this->_tryNextUser();
     }
 
     function checkPass($submitted_password) {
@@ -1582,17 +1622,7 @@ extends _PassUser
             return $this->_level;
         }
         
-        if (USER_AUTH_POLICY === 'strict') {
-            if ($user = $this->nextClass()) {
-                if ($user = $user->userExists())
-                    return $user->checkPass($submitted_password);
-            }
-        }
-        if (USER_AUTH_POLICY === 'stacked' or USER_AUTH_POLICY === 'old') {
-            if ($user = $this->nextClass())
-                return $user->checkPass($submitted_password);
-        }
-        return false;
+        return $this->_tryNextPass($submitted_password);
     }
 
     function storePass($submitted_password) {
@@ -1606,6 +1636,8 @@ extends _PassUser
 
 /**
  * Insert more auth classes here...
+ * For example a customized db class for another db connection 
+ * or a socket-based auth server
  *
  */
 
@@ -1617,7 +1649,6 @@ extends _PassUser
 class _AdminUser
 extends _PassUser
 {
-    //var $_level = WIKIAUTH_ADMIN;
 
     function checkPass($submitted_password) {
         $stored_password = ADMIN_PASSWD;
@@ -1626,7 +1657,7 @@ extends _PassUser
             return $this->_level;
         } else {
             $this->_level = WIKIAUTH_ANON;
-            return false;
+            return $this->_level;
         }
     }
 
@@ -1769,7 +1800,7 @@ extends _UserPreference
     }
 
     function sanify ($value) {
-        if (file_exists($this->_themefile($value)))
+        if (FindFile($this->_themefile($value)))
             return $value;
         return $this->default_value;
     }
@@ -1982,9 +2013,9 @@ extends UserPreferences
         // override the generic slow method here for efficiency
         _AnonUser::getPreferences();
         $this->getAuthDbh();
-        if ((! $this->_prefs) and isset($this->_prefselect)) {
+        if ((! $this->_prefs) and isset($this->_prefs->_select)) {
             $dbh = & $this->_auth_dbi;
-            $rs = $dbh->Execute(sprintf($this->_prefselect,$dbh->qstr($this->_userid)));
+            $rs = $dbh->Execute(sprintf($this->_prefs->_select,$dbh->qstr($this->_userid)));
             if ($rs->EOF) {
                 $rs->Close();
             } else {
@@ -2008,6 +2039,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.22  2004/02/27 05:15:40  rurban
+// more stability. detected by Micki
+//
 // Revision 1.21  2004/02/26 20:43:49  rurban
 // new HttpAuthPassUser class (forces http auth if in the auth loop)
 // fixed user upgrade: don't return _PassUser in the first hand.
