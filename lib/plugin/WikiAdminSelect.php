@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSelect.php,v 1.20 2004-10-04 23:39:34 rurban Exp $');
+rcs_id('$Id: WikiAdminSelect.php,v 1.21 2004-11-23 15:17:20 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -46,7 +46,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.20 $");
+                            "\$Revision: 1.21 $");
     }
 
     function getDefaultArguments() {
@@ -68,8 +68,8 @@ extends WikiPlugin
      * Default collector for all WikiAdmin* plugins.
      * preSelectS() is similar, but fills $this->_list
      */
-    function collectPages(&$list, &$dbi, $sortby, $limit=0) {
-        $allPages = $dbi->getAllPages(0,$sortby,$limit);
+    function collectPages(&$list, &$dbi, $sortby, $limit=0, $exclude=false) {
+        $allPages = $dbi->getAllPages(0, $sortby, $limit, $exclude);
         while ($pagehandle = $allPages->next()) {
             $pagename = $pagehandle->getName();
             if (empty($list[$pagename]))
@@ -91,11 +91,11 @@ extends WikiPlugin
         if (!empty($request->getArg['s']))
             $args['s'] = $request->getArg['s'];
         if ( !empty($args['owner']) )
-            $sl = PageList::allPagesByOwner($args['owner'],false,$args['sortby'],$args['limit']);
+            $sl = PageList::allPagesByOwner($args['owner'],false,$args['sortby'],$args['limit'],$args['exclude']);
         elseif ( !empty($args['author']) )
-            $sl = PageList::allPagesByAuthor($args['author'],false,$args['sortby'],$args['limit']);
+            $sl = PageList::allPagesByAuthor($args['author'],false,$args['sortby'],$args['limit'],$args['exclude']);
         elseif ( !empty($args['creator']) )
-            $sl = PageList::allPagesByCreator($args['creator'],false,$args['sortby'],$args['limit']);
+            $sl = PageList::allPagesByCreator($args['creator'],false,$args['sortby'],$args['limit'],$args['exclude']);
         elseif ( !empty($args['s']) or !empty($args['only']) ) {
             // all pages by name
             $sl = explodePageList(empty($args['only']) ? $args['s'] : $args['only']);
@@ -103,11 +103,9 @@ extends WikiPlugin
         $this->_list = array();
         if (!empty($sl)) {
             $request->setArg('verify', 1);
-            if (!empty($args['exclude']))
-                $exclude = explodePageList($args['exclude']);
             foreach ($sl as $name) {
                 if (!empty($args['exclude'])) {
-                    if (!in_array($name, $exclude))
+                    if (!in_array($name, $args['exclude']))
                         $this->_list[$name] = 1;
                 } else {
                     $this->_list[$name] = 1;
@@ -198,7 +196,7 @@ extends WikiPlugin
             // List all pages to select from.
             $this->_list = $this->collectPages($this->_list, $dbi, $args['sortby'], $args['limit']);
         }
-        $pagelist = new PageList_Selectable($info, $exclude, $args);
+        $pagelist = new PageList_Selectable($info, $args['exclude'], $args);
         $pagelist->addPageList($this->_list);
         $form->pushContent($pagelist->getContent());
         foreach ($args as $k => $v) {
@@ -249,6 +247,9 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2004/10/04 23:39:34  rurban
+// just aesthetics
+//
 // Revision 1.19  2004/06/29 08:52:24  rurban
 // Use ...version() $need_content argument in WikiDB also:
 // To reduce the memory footprint for larger sets of pagelists,

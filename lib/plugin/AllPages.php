@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllPages.php,v 1.33 2004-11-01 10:43:59 rurban Exp $');
+rcs_id('$Id: AllPages.php,v 1.34 2004-11-23 15:17:19 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.33 $");
+                            "\$Revision: 1.34 $");
     }
 
     function getDefaultArguments() {
@@ -64,20 +64,7 @@ extends WikiPlugin
     // 2004-07-08 22:05:35 rurban: turned off &$request to prevent from strange bug below
     function run($dbi, $argstr, $request, $basepage) {
         $args = $this->getArgs($argstr, $request);
-        // very strange php reference bug: dbi gets destroyed at array_merge with defaults
-        //if (!is_object($dbi)) $dbi = $request->getDbh();
-        //if (!is_object($request->_dbi)) {
-        //	trigger_error("strange php reference bug destroyed request->_dbi", E_USER_WARNING);
-        //	return HTML();
-        //}
-        //extract($args);
-        //$pages = isset($args['pages']) ? $args['pages'] : false;
         // Todo: extend given _GET args
-        // TODO: shouldn't the REQUEST sortby,limit override be handled in getArgs for all?
-        if ($sorted = $request->getArg('sortby')) 
-            $args['sortby'] = $sorted;
-        elseif (!empty($args['sortby']))
-            $request->setArg('sortby', $args['sortby']);
         if ($args['debug'])
             $timer = new DebugTimer;
         $caption = _("All pages in this wiki (%d total):");
@@ -135,6 +122,12 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.33  2004/11/01 10:43:59  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 // Revision 1.32  2004/10/05 17:00:04  rurban
 // support paging for simple lists
 // fix RatingDb sql backend.

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.9 2004-11-23 13:35:31 rurban Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.10 2004-11-23 15:17:16 rurban Exp $');
 /**
  * A text search query.
  *
@@ -51,6 +51,8 @@ class TextSearchQuery {
     function TextSearchQuery($search_query, $case_exact=false, $regex=false) {
         $parser = new TextSearchQuery_Parser;
         $this->_tree = $parser->parse($search_query, $case_exact);
+        $this->_case_exact = $case_exact;
+        $this->_isregex = $regex;
         $this->_optimize();
     }
 
@@ -62,8 +64,12 @@ class TextSearchQuery {
      * Get a regexp which matches the query.
      */
     function asRegexp() {
-        if (!isset($this->_regexp))
-            $this->_regexp =  '/^' . $this->_tree->regexp() . '/isS';
+        if (!isset($this->_regexp)) {
+            if ($this->_isregex) // already regex? glob or pcre
+                $this->_regexp =  '/' . $this->_tree->regexp() . '/'.($this->_case_exact?'':'i').'sS';
+            else
+                $this->_regexp =  '/^' . $this->_tree->regexp() . '/'.($this->_case_exact?'':'i').'sS';
+        }
         return $this->_regexp;
     }
 

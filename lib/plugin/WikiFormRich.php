@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiFormRich.php,v 1.3 2004-07-09 13:05:34 rurban Exp $');
+rcs_id('$Id: WikiFormRich.php,v 1.4 2004-11-23 15:17:20 rurban Exp $');
 /**
- Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
+ Copyright 2004 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -46,29 +46,40 @@ rcs_id('$Id: WikiFormRich.php,v 1.3 2004-07-09 13:05:34 rurban Exp $');
             editbox[] name=directory value=HTML_DUMP_DIR
             editbox[] name=pages value="*"
             editbox[] name=exclude value="" ?>
-
    <?plugin WikiFormRich action=loadfile method=GET 
             editbox[]  name=source value=DEFAULT_WIKI_PGSRC
             checkbox[] name=overwrite value=1
             editbox[]  name=exclude value="" ?>
- */
+  <?plugin WikiFormRich action=TitleSearch
+  	   editbox[] name=s text=""
+  	   checkbox[] name=case_exact
+  	  checkbox[] name=regex ?>
+  <?plugin WikiFormRich action=FullTextSearch
+  	   editbox[] name=s text=""
+  	   checkbox[] name=case_exact
+  	   checkbox[] name=regex ?>
+  <?plugin WikiFormRich action=FuzzyPages
+  	   editbox[] name=s text=""
+  	   checkbox[] name=case_exact ?>
+*/
 class WikiPlugin_WikiFormRich
 extends WikiPlugin
 {
     function getName () {
+        return "WikiFormRich";
+    }
+    function getDescription () {
         return _("Provide generic WikiForm input buttons");
     }
-
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
-
     function getDefaultArguments() {
         return array('action' => false,     // required argument
                      'method' => 'POST',    // or GET
                      'class'  => false,
-                     'buttontext' => false, // for the submit button
+                     'buttontext' => false, // for the submit button. default: action
                      'cancel' => false,     // boolean if the action supports cancel also
                      );
     }
@@ -175,6 +186,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/07/09 13:05:34  rurban
+// just aesthetics
+//
 // Revision 1.2  2004/07/09 10:25:52  rurban
 // fix the args parser
 //
@@ -189,7 +203,6 @@ extends WikiPlugin
 //
 // Revision 1.1  2004/07/01 13:11:53  rurban
 // more generic forms
-//
 //
 
 // For emacs users

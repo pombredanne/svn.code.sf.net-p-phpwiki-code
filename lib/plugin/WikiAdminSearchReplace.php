@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSearchReplace.php,v 1.17 2004-09-17 14:24:06 rurban Exp $');
+rcs_id('$Id: WikiAdminSearchReplace.php,v 1.18 2004-11-23 15:17:20 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -43,7 +43,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.17 $");
+                            "\$Revision: 1.18 $");
     }
 
     function getDefaultArguments() {
@@ -57,16 +57,16 @@ extends WikiPlugin_WikiAdminSelect
                    ));
     }
 
-    function replaceHelper(&$dbi, $pagename, $from, $to, $caseexact = true, $regex = false) {
+    function replaceHelper(&$dbi, $pagename, $from, $to, $case_exact = true, $regex = false) {
         $page = $dbi->getPage($pagename);
         if ($page->exists()) {// don't replace default contents
             $current = $page->getCurrentRevision();
             $version = $current->getVersion();
             $text = $current->getPackedContent();
             if ($regex) {
-                $newtext = preg_replace("/".$from."/".($caseexact?'':'i'), $to, $text);
+                $newtext = preg_replace("/".$from."/".($case_exact?'':'i'), $to, $text);
             } else {
-                if ($caseexact) {
+                if ($case_exact) {
                     $newtext = str_replace($from, $to, $text);
                 } else {
                     //not all PHP have this enabled. use a workaround
@@ -91,12 +91,12 @@ extends WikiPlugin_WikiAdminSelect
         $ul = HTML::ul();
         $count = 0;
         $post_args = $request->getArg('admin_replace');
-        $caseexact = !empty($post_args['caseexact']);
+        $case_exact = !empty($post_args['case_exact']);
         $regex = !empty($post_args['regex']);
         foreach ($pages as $pagename) {
             if (!mayAccessPage('edit',$pagename)) {
 		$ul->pushContent(HTML::li(fmt("Access denied to change page '%s'.",$pagename)));
-            } elseif (($result = $this->replaceHelper($dbi, $pagename, $from, $to, $caseexact, $regex))) {
+            } elseif (($result = $this->replaceHelper($dbi, $pagename, $from, $to, $case_exact, $regex))) {
                 $ul->pushContent(HTML::li(fmt("Replaced '%s' with '%s' in page '%s'.", $from, $to, WikiLink($pagename))));
                 $count++;
             } else {
@@ -121,11 +121,6 @@ extends WikiPlugin_WikiAdminSelect
         
         $args = $this->getArgs($argstr, $request);
         $this->_args = $args;
-        if (!empty($args['exclude']))
-            $exclude = is_string($args['exclude']) ? explodePageList($args['exclude']) 
-                                                   : $args['exclude']; // <! plugin-list !>
-        else
-            $exclude = false;
             
         //TODO: support p from <!plugin-list !>
         $this->preSelectS($args, $request);
@@ -160,13 +155,13 @@ extends WikiPlugin_WikiAdminSelect
         if ($next_action == 'select' and empty($pages)) {
             // List all pages to select from.
             //TODO: check for permissions and list only the allowed
-            $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit']);
+            $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit'], $args['exclude']);
         }
 
         if ($next_action == 'verify') {
             $args['info'] = "checkbox,pagename,hi_content";
         }
-        $pagelist = new PageList_Selectable($args['info'], $exclude,
+        $pagelist = new PageList_Selectable($args['info'], $args['exclude'],
                                             array_merge
                                             (
                                              $args,
@@ -223,9 +218,9 @@ extends WikiPlugin_WikiAdminSelect
         $header->pushContent(HTML::input(array('name' => 'admin_replace[to]',
                                                'value' => $post_args['to'])));
         $checkbox = HTML::input(array('type' => 'checkbox',
-                                      'name' => 'admin_replace[caseexact]',
+                                      'name' => 'admin_replace[case_exact]',
                                       'value' => 1));
-        if (!empty($post_args['caseexact']))
+        if (!empty($post_args['case_exact']))
             $checkbox->setAttr('checked','checked');
         $header->pushContent(HTML::br(),$checkbox," ",_("case-exact"));
         $checkbox_re = HTML::input(array('type' => 'checkbox',
@@ -269,6 +264,9 @@ function stri_replace($find,$replace,$string) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.17  2004/09/17 14:24:06  rurban
+// support exclude=<!plugin-list !>, p not yet
+//
 // Revision 1.16  2004/06/16 10:38:59  rurban
 // Disallow refernces in calls if the declaration is a reference
 // ("allow_call_time_pass_reference clean").

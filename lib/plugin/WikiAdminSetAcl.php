@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSetAcl.php,v 1.20 2004-11-01 10:43:59 rurban Exp $');
+rcs_id('$Id: WikiAdminSetAcl.php,v 1.21 2004-11-23 15:17:20 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.20 $");
+                            "\$Revision: 1.21 $");
     }
 
     function getDefaultArguments() {
@@ -122,10 +122,6 @@ extends WikiPlugin_WikiAdminSelect
         
         $args = $this->getArgs($argstr, $request);
         $this->_args = $args;
-        if (!empty($args['exclude']))
-            $exclude = explodePageList($args['exclude']);
-        else
-            $exclude = false;
         $this->preSelectS($args, $request);
 
         $p = $request->getArg('p');
@@ -160,13 +156,13 @@ extends WikiPlugin_WikiAdminSelect
         }
         if ($next_action == 'select' and empty($pages)) {
             // List all pages to select from.
-            $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit']);
+            $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit'], $args['exclude']);
         }
         if ($next_action == 'verify') {
             $args['info'] = "checkbox,pagename,perm,mtime,owner,author";
         }
         $pagelist = new PageList_Selectable($args['info'], 
-                                            $exclude,
+                                            $args['exclude'],
                                             array('types' => array(
                                                   'perm'
                                                   => new _PageList_Column_perm('perm', _("Permission")),
@@ -280,6 +276,12 @@ class _PageList_Column_perm extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2004/11/01 10:43:59  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 // Revision 1.19  2004/06/16 10:38:59  rurban
 // Disallow refernces in calls if the declaration is a reference
 // ("allow_call_time_pass_reference clean").

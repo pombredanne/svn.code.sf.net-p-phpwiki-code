@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: LikePages.php,v 1.21 2004-09-25 16:33:52 rurban Exp $');
+rcs_id('$Id: LikePages.php,v 1.22 2004-11-23 15:17:19 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -39,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.21 $");
+                            "\$Revision: 1.22 $");
     }
 
     function getDefaultArguments() {
@@ -49,7 +49,6 @@ extends WikiPlugin
              array('page'     => '[pagename]',
                    'prefix'   => false,
                    'suffix'   => false,
-                   'exclude'  => '',
                    'noheader' => false,
                    ));
     }
@@ -120,6 +119,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.21  2004/09/25 16:33:52  rurban
+// add support for all PageList options
+//
 // Revision 1.20  2004/05/18 16:23:40  rurban
 // rename split_pagename to SplitPagename
 //

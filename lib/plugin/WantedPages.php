@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WantedPages.php,v 1.15 2004-11-23 13:35:49 rurban Exp $');
+rcs_id('$Id: WantedPages.php,v 1.16 2004-11-23 15:17:19 rurban Exp $');
 /*
  Copyright (C) 2002, 2004 $ThePhpWikiProgrammingTeam
  
@@ -43,7 +43,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.15 $");
+                            "\$Revision: 1.16 $");
     }
     function getDefaultArguments() {
         return array_merge
@@ -61,6 +61,10 @@ extends WikiPlugin
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
+        if (!empty($args['exclude_from']))
+            $args['exclude_from'] = is_string($args['exclude_from'])
+                ? explodePageList($args['exclude_from']) 
+                : $args['exclude_from']; // <! plugin-list !>
         extract($args);
         if ($page == _("WantedPages")) $page = "";
 
@@ -73,8 +77,6 @@ extends WikiPlugin
             $GLOBALS['WikiTheme']->addPageListColumn(
                 array('wanted' => array('_PageList_Column_WantedPages_wanted', 'custom:wanted', _("Wanted From"), 'left')));
         $pagelist = new PageList($page ? '' : 'pagename,wanted', $exclude, $args); // search button?
-        if ($exclude_from) $exclude_from = $pagelist->explodePageList($exclude_from);
-        else $exclude_from = array();
         $pagelist->_wpagelist = array();
 
         if (!$page) {
@@ -140,6 +142,9 @@ class _PageList_Column_WantedPages_wanted extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2004/11/23 13:35:49  rurban
+// add case_exact search
+//
 // Revision 1.14  2004/11/20 17:35:58  rurban
 // improved WantedPages SQL backends
 // PageList::sortby new 3rd arg valid_fields (override db fields)

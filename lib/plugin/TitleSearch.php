@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TitleSearch.php,v 1.22 2004-11-23 13:35:49 rurban Exp $');
+rcs_id('$Id: TitleSearch.php,v 1.23 2004-11-23 15:17:19 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.22 $");
+                            "\$Revision: 1.23 $");
     }
 
     function getDefaultArguments() {
@@ -47,9 +47,9 @@ extends WikiPlugin
              array('s'             => false,
                    'auto_redirect' => false,
                    'noheader'      => false,
-                   'exclude'       => '',
+                   'exclude'       => false,
                    'info'          => false,
-                   'caseexact'     => false
+                   'case_exact'     => false
                    ));
     }
     // info arg allows multiple columns
@@ -60,11 +60,10 @@ extends WikiPlugin
         $args = $this->getArgs($argstr, $request);
         if (empty($args['s']))
             return '';
-
         extract($args);
 
-        $query = new TextSearchQuery($s, $caseexact);
-        $pages = $dbi->titleSearch($query, $caseexact);
+        $query = new TextSearchQuery($s, $case_exact);
+        $pages = $dbi->titleSearch($query, $case_exact);
 
         $pagelist = new PageList($info, $exclude, $args);
         while ($page = $pages->next()) {
@@ -88,6 +87,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.22  2004/11/23 13:35:49  rurban
+// add case_exact search
+//
 // Revision 1.21  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //
