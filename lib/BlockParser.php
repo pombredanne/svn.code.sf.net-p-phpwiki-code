@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.11 2002-01-28 21:48:44 dairiki Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.12 2002-01-28 21:53:31 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -430,109 +430,6 @@ class Block_dl extends Block_list
     }
 }
 
-/*
-class Block_table_dl_row extends HtmlElement
-{
-    function Block_table_dl_row ($defn) {
-        $this->HtmlElement('tr',
-                           HTML::td(false, $defn));
-        $this->_ncols = 2;
-    }
-
-    function setWidth ($ncols) {
-        assert ($ncols >= $this->_ncols);
-        if ($ncols <= $this->_ncols)
-            return;
-        $last_td = &$this->_content[count($this->_content) - 1];
-        $span = max(1, (int)$last_td->getAttr('colspan'));
-        $last_td->setAttr('colspan', $span + $ncols - $this->_ncols);
-        $this->_ncols = $ncols;
-    }
-
-    function setTerm ($term, $rowspan = 1) {
-        if ($term->isEmpty())
-            $term = NBSP;
-        
-        $th = HTML::th($term);
-        if ($rowspan > 1)
-            $th->setAttr('rowspan', $rowspan);
-        $this->unshiftContent($th);
-    }
-}
-
-class Block_table_dl extends Block_list
-{
-    var $_tag = 'table';
-    var $_attr = array('class' => 'wiki-dl-table',
-                       'border' => 2, // FIXME: CSS?
-                       'cellspacing' => 0,
-                       'cellpadding' => 6);
-    
-
-    var $_re = '(\ {0,4})((?![\s!]).*)?[|]\s*?\n(?=(?:\s*^)+(\1\ +)\S)';
-    //          1-------12-----------2                      3-----3
-
-    function _parse (&$input, $m) {
-        $term = TransformInline(rtrim($m->getMatch(2)));
-        $indent = $m->getMatch(3);
-
-        $input->accept($m);
-        $defn = BlockParser::parse($input->subBlock($indent),
-                                   BLOCK_NOTIGHTEN_AFTER);
-
-        $this->_pushDefinition($term, $defn);
-        return true;
-    }
-
-    function _pushDefinition ($term, $defn) {
-        if (!is_array($defn))
-            $defn = array($defn);
-
-        $rows = array();
-        $grp = array();
-
-        foreach ($defn as $item) {
-            if (! isa($item, 'HtmlElement')
-                || $item->getTag() != 'table'
-                || $item->getAttr('class') != 'wiki-dl-table') {
-
-                $grp[] = $item;
-                continue;
-            }
-
-            if ($grp) {
-                $rows[] = new Block_table_dl_row($grp);
-                $grp = array();
-            }
-
-            $subtable = $item;
-            foreach ($subtable->getContent() as $tr) {
-                $tr->_ncols++;
-                $rows[] = $tr;
-            }
-        }
-
-        if ($grp || !$rows)
-            $rows[] = new Block_table_dl_row($grp);
-        
-        $nrows = count($rows);
-        $rows[0]->setTerm($term, $nrows);
-        $this->_pushContent($rows);
-    }
-            
-    function finish () {
-        $rows = &$this->_content;
-
-        $ncols = 0;
-        foreach ($rows as $tr)
-            $ncols = max($ncols, $tr->_ncols);
-        foreach ($rows as $key => $tr)
-            $rows[$key]->setWidth($ncols);
-
-        return parent::finish();
-    }
-}
-*/
 
 
 class Block_table_dl_defn extends XmlContent
