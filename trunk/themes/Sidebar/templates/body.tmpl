@@ -1,0 +1,23 @@
+<?php // -*-html-*-
+rcs_id('$Id: body.tmpl,v 1.1 2004-03-26 03:13:23 rurban Exp $');
+?>
+<body<?= $Theme->getMoreAttr('body') ?>>
+
+<div id="header"><?php // for top-and-bottom toolbars style sheet ?>
+  <?= Template('top') ?>
+</div>
+<?php
+  /* Today's calendar page for the user, if the Calender subpage is defined. */
+  $UserCalPageTitle = $user->getId() . SUBPAGE_SEPARATOR . _("Calendar");
+  $dbi = $request->getDbh();
+  // display flat calender dhtml under the clock
+  if ($dbi->isWikiPage($UserCalPageTitle)) { ?>
+    <?= Template('calendar') ?>
+<?php } else { ?>
+<div id="clock">
+<? include($Theme->_findFile("clock.php")); ?>
+</div>
+<?php } ?>
+<?= $CONTENT ?>
+<?= Template('bottom') ?>
+</body>
