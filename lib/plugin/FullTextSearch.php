@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.10 2002-01-30 23:41:54 dairiki Exp $');
+rcs_id('$Id: FullTextSearch.php,v 1.11 2002-02-01 21:59:59 dairiki Exp $');
 
 require_once('lib/TextSearchQuery.php');
 
@@ -53,8 +53,8 @@ extends WikiPlugin
         if ($noheader)
             return $list;
         
-        return array(HTML::p(fmt("Full text search results for '%s'", $s)),
-                     $list);
+        return HTML(HTML::p(fmt("Full text search results for '%s'", $s)),
+                    $list);
     }
 
     function showhits($page, $hilight_re) {
