@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.97 2004-06-29 09:11:10 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.98 2004-07-01 08:51:22 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -565,7 +565,7 @@ class PageList {
         $this->_options['sortby'] = $this->sortby($this->_options['sortby'], 'init');
         if ($exclude) {
             if (!is_array($exclude))
-                $exclude = $this->explodePageList($exclude,false,
+                $exclude = $this->explodePageList($exclude, false,
                                                   $this->_options['sortby'],
                                                   $this->_options['limit']);
             $this->_excluded_pages = $exclude;
@@ -1270,6 +1270,11 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.97  2004/06/29 09:11:10  rurban
+// More memory optimization:
+//   don't cache unneeded _cached_html and %content for content and size columns
+//   (only if sortable, which will fail for too many pages)
+//
 // Revision 1.96  2004/06/29 08:47:42  rurban
 // Memory optimization (reference to parent, smart bool %content)
 // Fixed class grouping in table
