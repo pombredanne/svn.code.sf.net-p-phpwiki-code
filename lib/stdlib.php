@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.42 2001-09-18 19:16:23 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.43 2001-10-29 18:41:11 dairiki Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -497,6 +497,8 @@ function NoSuchRevision ($page, $version) {
     $html .= sprintf(gettext("I'm sorry.  Version %d of %s is not in my database."),
                      $version, htmlspecialchars($page->getName()));
     $html .= "\n";
+
+    include_once('lib/Template.php');
     echo GeneratePage('MESSAGE', $html, gettext("Bad Version"));
     ExitWiki ("");
 }
