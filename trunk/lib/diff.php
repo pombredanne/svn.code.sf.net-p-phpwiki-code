@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: diff.php,v 1.51 2005-02-04 15:26:57 rurban Exp $');
+rcs_id('$Id: diff.php,v 1.52 2005-04-01 14:45:14 rurban Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -48,7 +48,7 @@ class _HWLDF_WordAccumulator {
             if (!$word)
                 continue;
             if ($word[0] == "\n") {
-                $this->_group .= PrintXML(HTML::raw('&nbsp;'));
+                $this->_group .= " ";
                 $this->_flushLine($tag);
                 $word = substr($word, 1);
             }
@@ -395,6 +395,9 @@ function showDiff (&$request) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.51  2005/02/04 15:26:57  rurban
+// need div=content for blog
+//
 // Revision 1.50  2005/02/04 13:44:45  rurban
 // prevent from php5 nameclash
 //
