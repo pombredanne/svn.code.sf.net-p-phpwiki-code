@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.9 2002-01-03 00:09:18 carstenklapp Exp $');
+<?php rcs_id('$Id: Template.php,v 1.10 2002-01-03 00:32:33 carstenklapp Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -289,7 +289,6 @@ extends TemplateFile
         $this->qreplace('BASE_URL',
 			// FIXME:
                         //WikiURL($GLOBALS['pagename'], false, 'absolute_url')
-                        //added this for phpwiki-printer.css
                         BaseURL()
                         );
     }
