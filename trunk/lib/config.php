@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.84 2004-02-26 01:41:24 rurban Exp $');
+rcs_id('$Id: config.php,v 1.85 2004-02-27 02:37:16 rurban Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -285,6 +285,7 @@ if (!defined('USE_PATH_INFO'))
      */
     switch (php_sapi_name()) {
     case 'apache':
+    case 'apache2handler':
         define('USE_PATH_INFO', true);
         break;
     case 'cgi':
