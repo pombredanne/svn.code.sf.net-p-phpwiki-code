@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.12 2002-01-28 21:53:31 dairiki Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.13 2002-01-29 05:06:30 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -18,9 +18,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 require_once('lib/HtmlElement.php');
-//FIXME:
-require_once('lib/transform.php');
+require_once('lib/InlineParser.php');
 
+require_once('lib/transform.php');
+/*
 class InlineTransform
 extends WikiTransform {
     function InlineTransform() {
@@ -74,7 +75,7 @@ function TransformInline ($text) {
     }
     return new RawXml($out);
 }
-
+*/
 
 ////////////////////////////////////////////////////////////////
 //
