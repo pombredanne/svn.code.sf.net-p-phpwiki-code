@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.89 2005-02-04 10:38:36 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.90 2005-02-26 18:30:01 rurban Exp $');
 /*
- Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
+ Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  
  This file is part of PhpWiki.
 
@@ -1328,6 +1328,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.89  2005/02/04 10:38:36  rurban
+// do not log passwords! Thanks to Charles Corrigan
+//
 // Revision 1.88  2005/01/25 07:00:23  rurban
 // fix redirect,
 //
