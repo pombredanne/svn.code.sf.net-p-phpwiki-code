@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.110 2004-10-14 19:19:33 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.111 2004-10-21 21:03:50 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -489,7 +489,7 @@ class _WikiUser
 
     /** This is password checked for sure.
      */
-    function isAuthenticated () {
+    function isAuthenticated() {
         //return isa($this,'_PassUser');
         //return isa($this,'_BogoUser') || isa($this,'_PassUser');
         return $this->_level >= WIKIAUTH_BOGO;
@@ -498,6 +498,8 @@ class _WikiUser
     function isAdmin () {
         static $group; 
         if ($this->_level == WIKIAUTH_ADMIN) return true;
+        if (!$this->isSignedIn()) return false;
+        if (!$this->isAuthenticated()) return false;
 
         if (!$group) $group = &$GLOBALS['request']->getGroup();
         return ($this->_level > WIKIAUTH_BOGO and $group->isMember(GROUP_ADMIN));
@@ -2995,6 +2997,7 @@ class UserPreferences
  *  These are currently user specific and should be rewritten to be pref specific.
  *  i.e. $this == $user->_prefs
  */
+/*
 class CookieUserPreferences
 extends UserPreferences
 {
@@ -3056,9 +3059,13 @@ extends UserPreferences
         return $this->_prefs;
     }
 }
-
+*/
 
 // $Log: not supported by cvs2svn $
+// Revision 1.110  2004/10/14 19:19:33  rurban
+// loadsave: check if the dumped file will be accessible from outside.
+// and some other minor fixes. (cvsclient native not yet ready)
+//
 // Revision 1.109  2004/10/07 16:08:58  rurban
 // fixed broken FileUser session handling.
 //   thanks to Arnaud Fontaine for detecting this.
