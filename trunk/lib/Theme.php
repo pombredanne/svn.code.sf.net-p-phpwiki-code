@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.93 2004-05-12 10:49:55 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.94 2004-05-13 11:52:34 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -684,9 +684,8 @@ class Theme {
             $this->_button_path = $this->_getButtonPath();
 
         foreach ($this->_button_path as $dir) {
-            $path = "$dir/$button_file";
-            if (file_exists($this->_path . $path))
-                return defined('DATA_PATH') ? DATA_PATH . "/$path" : $path;
+            if ($path = $this->_findData("$dir/$button_file", 1))
+                return $path; 
         }
         return false;
     }
@@ -697,6 +696,7 @@ class Theme {
         if (!file_exists($path_dir) || !is_dir($path_dir))
             return array();
         $path = array($button_dir);
+        
         $dir = dir($path_dir);
         while (($subdir = $dir->read()) !== false) {
             if ($subdir[0] == '.')
@@ -705,6 +705,19 @@ class Theme {
                 continue;
             if (is_dir("$path_dir/$subdir"))
                 $path[] = "$button_dir/$subdir";
+        }
+        $dir->close();
+        // add default buttons
+        $path[] = "themes/default/buttons";
+        $path_dir = $this->_path . "themes/default/buttons";
+        $dir = dir($path_dir);
+        while (($subdir = $dir->read()) !== false) {
+            if ($subdir[0] == '.')
+                continue;
+            if ($subdir == 'CVS')
+                continue;
+            if (is_dir("$path_dir/$subdir"))
+                $path[] = "themes/default/buttons/$subdir";
         }
         $dir->close();
 
@@ -1306,6 +1319,13 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.93  2004/05/12 10:49:55  rurban
+// require_once fix for those libs which are loaded before FileFinder and
+//   its automatic include_path fix, and where require_once doesn't grok
+//   dirname(__FILE__) != './lib'
+// upgrade fix with PearDB
+// navbar.tmpl: remove spaces for IE &nbsp; button alignment
+//
 // Revision 1.92  2004/05/03 21:57:47  rurban
 // locale updates: we previously lost some words because of wrong strings in
 //   PhotoAlbum, german rewording.
