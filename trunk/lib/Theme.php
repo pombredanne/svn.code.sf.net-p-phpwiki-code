@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.89 2004-04-29 21:25:45 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.90 2004-05-02 19:12:14 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -917,6 +917,8 @@ class Theme {
     function _CSSlink($title, $css_file, $media, $is_alt = false) {
         // Don't set title on default style.  This makes it clear to
         // the user which is the default (i.e. most supported) style.
+        if ($is_alt and isBrowserKonqueror())
+            return HTML();
         $link = HTML::link(array('rel'     => $is_alt ? 'alternate stylesheet' : 'stylesheet',
                                  'type'    => 'text/css',
                                  'charset' => $GLOBALS['charset'],
@@ -1267,6 +1269,10 @@ class RelatedExternalLinksBox extends SidebarBox {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.89  2004/04/29 21:25:45  rurban
+// default theme navbar consistency: linkButtons instead of action buttons
+//   3rd makeLinkButtin arg for action support
+//
 // Revision 1.88  2004/04/19 18:27:45  rurban
 // Prevent from some PHP5 warnings (ref args, no :: object init)
 //   php5 runs now through, just one wrong XmlElement object init missing
