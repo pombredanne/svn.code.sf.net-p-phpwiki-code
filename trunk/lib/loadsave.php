@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.83 2003-11-20 22:18:54 carstenklapp Exp $');
+rcs_id('$Id: loadsave.php,v 1.84 2003-11-26 20:47:47 carstenklapp Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -466,17 +466,16 @@ function SavePage (&$request, $pageinfo, $source, $filename)
         $f = str_replace(sprintf(_("plain file %s"), ''), '', $f);
         global $Theme;
         $meb = Button(array('action' => 'loadfile',
-                            'merge'=> 1,
+                            'merge'=> true,
                             'source'=> dirname($f) . "/"
-                                       . FilenameForPage(basename($f))),
+                                       . basename($f)),
                       _("Merge Edit"),
                       _("PhpWikiAdministration"),
                       'wikiadmin');
         $owb = Button(array('action' => 'loadfile',
-                            'merge'=> 1,
-                            'overwrite'=> 1,
+                            'overwrite'=> true,
                             'source'=> dirname($f) . "/"
-                                       . FilenameForPage(basename($f))),
+                                       . basename($f)),
                       _("Restore Anyway"),
                       _("PhpWikiAdministration"),
                       'wikiunsafe');
@@ -836,6 +835,12 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.83  2003/11/20 22:18:54  carstenklapp
+ New feature: h1 during merge-edit displays WikiLink to original page.
+ Internal changes: Replaced some hackish url-generation code in
+ function SavePage (for pgsrc merge-edit) with appropriate Button()
+ calls.
+
  Revision 1.82  2003/11/18 19:48:01  carstenklapp
  Fixed missing gettext _() for button name.
 
