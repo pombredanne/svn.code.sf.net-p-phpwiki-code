@@ -1,4 +1,4 @@
-# $Id: schema.minisql,v 1.5 2000-06-29 04:30:31 wainstead Exp $
+# $Id: schema.minisql,v 1.6 2000-11-03 05:50:52 wainstead Exp $
 
 drop table wiki\g
 drop table wikipages\g
@@ -8,6 +8,7 @@ drop table archivepages\g
 drop table wikilinks\g
 drop table hottopics\g
 drop table hitcount\g
+drop table wikiscore\g
 
 # metadata about the page
 
@@ -98,3 +99,11 @@ CREATE TABLE hitcount (
 CREATE UNIQUE INDEX hitcount_index ON hitcount (pagename)
 \g
 
+CREATE TABLE wikiscore (
+        pagename CHAR(100) NOT NULL,
+        score INT NOT NULL
+        )
+\g
+
+CREATE UNIQUE INDEX hitcount_index ON wikiscore (pagename)
+\g
