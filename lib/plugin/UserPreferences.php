@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.12 2003-12-01 22:21:33 carstenklapp Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.13 2003-12-04 20:27:00 carstenklapp Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -36,7 +36,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.12 $");
+                            "\$Revision: 1.13 $");
     }
 
     function getDefaultArguments() {
@@ -75,11 +75,8 @@ extends WikiPlugin
                     // replace only changed prefs in $pref with those from request
                     $rp = $request->_prefs->_prefs;
                     //trigger_error("DEBUG: reading prefs from request".print_r($rp));
-                    while (list($key, $newvalue) = each ($rp)) {
-                        $pref->_prefs[$key] = $newvalue;
-                    }
                     //trigger_error("DEBUG: writing prefs with setPreferences".print_r($pref));
-                    $num = $user->setPreferences($pref);
+                    $num = $user->setPreferences(new UserPreferences($rp));
                     if (!$num) {
                         $errmsg = _("No changes.");
                     }
@@ -133,6 +130,12 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2003/12/01 22:21:33  carstenklapp
+// Bugfix: UserPreferences are no longer clobbered when signing in after
+// the previous session has ended (i.e. user closed browser then signed
+// in again). This is still a bit of a mess, and the preferences do not
+// take effect until the next page browse/link has been clicked.
+//
 // Revision 1.11  2003/09/19 22:01:19  carstenklapp
 // BOGO users allowed preferences too when ALLOW_BOGO_LOGIN == true.
 //
