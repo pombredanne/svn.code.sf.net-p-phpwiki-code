@@ -17,9 +17,9 @@
 // |          Christian Stocker <chregu@nomad.ch>                         |
 // +----------------------------------------------------------------------+
 //
-// $Id: Container.php,v 1.1 2002-08-19 06:41:28 rurban Exp $
+// $Id: Container.php,v 1.2 2004-04-26 20:44:36 rurban Exp $
 
-require_once 'lib/pear/Cache/Error.php';
+require_once 'Cache/Error.php';
 
 /**
 * Common base class of all cache storage container.
@@ -39,7 +39,7 @@ require_once 'lib/pear/Cache/Error.php';
 * not recommended!
 * 
 * @author   Ulf Wendel <ulf.wendel@phpdoc.de>
-* @version  $Id: Container.php,v 1.1 2002-08-19 06:41:28 rurban Exp $
+* @version  $Id: Container.php,v 1.2 2004-04-26 20:44:36 rurban Exp $
 * @package  Cache
 * @access   public
 * @abstract

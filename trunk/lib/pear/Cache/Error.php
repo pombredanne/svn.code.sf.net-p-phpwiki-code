@@ -15,9 +15,9 @@
 // | Authors: Ulf Wendel <ulf.wendel@phpdoc.de>                           |
 // +----------------------------------------------------------------------+
 //
-// $Id: Error.php,v 1.1 2002-08-19 06:41:28 rurban Exp $
+// $Id: Error.php,v 1.2 2004-04-26 20:44:36 rurban Exp $
 
-require_once 'lib/pear/PEAR.php';
+require_once 'PEAR.php';
 
 /**
 * Cache Error class

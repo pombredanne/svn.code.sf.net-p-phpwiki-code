@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.25 2004-04-20 00:06:04 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.26 2004-04-26 20:44:35 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -24,7 +24,7 @@ rcs_id('$Id: ADODB.php,v 1.25 2004-04-20 00:06:04 rurban Exp $');
 
 /**
  * Based on PearDB.php. 
- * @author: Lawrence Akka
+ * @author: Lawrence Akka, Reini Urban
  *
  * Now (phpwiki-1.3.10) with adodb-4.22, by Reini Urban:
  * 1) Extended to use all available database backend, not only mysql.
@@ -34,7 +34,7 @@ rcs_id('$Id: ADODB.php,v 1.25 2004-04-20 00:06:04 rurban Exp $');
  *    variable columns, some trickery was needed to use recordset specific fetchMode.
  *    The first Execute uses the global fetchMode (ASSOC), then it's resetted back to NUM 
  *    and the recordset fetchmode is set to ASSOC.
- * 5) Transaction support, but no locking yet.
+ * 5) Transaction support, and locking as fallback.
  *
  * ADODB basic differences to PearDB: It pre-fetches the first row into fields, 
  * is dirtier in style, layout and more low-level ("worse is better").
@@ -107,11 +107,6 @@ extends WikiDB_backend
             = array('maxmajor'     => "MAX(CASE WHEN minor_edit=0 THEN version END)",
                     'maxminor'     => "MAX(CASE WHEN minor_edit<>0 THEN version END)",
                     'maxversion'   => "MAX(version)");
-        /*
-        // FIXME: Older MySQL's don't have CASE WHEN ... END
-        $this->_expressions['maxmajor'] = "MAX(IF(minor_edit=0,version,0))";
-        $this->_expressions['maxminor'] = "MAX(IF(minor_edit<>0,version,0))"; 
-        */
         $this->_lock_count = 0;
     }
     
@@ -126,7 +121,7 @@ extends WikiDB_backend
                           E_USER_WARNING);
         }
 //      $this->_dbh->setErrorHandling(PEAR_ERROR_PRINT);	// prevent recursive loops.
-        $this->unlock('force');
+        $this->unlock(false,'force');
 
         $this->_dbh->close();
         $this->_dbh = false;
@@ -237,18 +232,18 @@ extends WikiDB_backend
             return $row ? $row[0] : false;
         }
         $row = $dbh->GetRow($query);
-        if (! $row) {
+        if (! $row ) {
             if ((substr($dbh->databaseType,0,5) == 'mysql') or isa($dbh,'ADODB_sqlite')) {
                 // have auto-incrementing and atomic version
                 $rs = $dbh->Execute(sprintf("INSERT INTO $page_tbl"
                                             . " (pagename,hits)"
-                                            . " VALUES (%s,0)",
+                			    . " VALUES(%s,0)",
                                             $dbh->qstr($pagename)));
                 $id = $dbh->_insertid();
             } else {
                 //$id = $dbh->GenID($page_tbl . 'seq');
                 // Better generic version than with adodob::genID
-                $this->lock();
+                $this->lock(array('page'));
                 $dbh->BeginTrans( );
                 $dbh->CommitLock($page_tbl);
                 $row = $dbh->GetRow("SELECT MAX(id) FROM $page_tbl");
@@ -259,7 +254,7 @@ extends WikiDB_backend
                                             $id, $dbh->qstr($pagename)));
                 if ($rs) $dbh->CommitTrans( );
                 else $dbh->RollbackTrans( );
-                $this->unlock();
+                $this->unlock(array('page'));
             }
         } else {
             $id = $row[0];
@@ -386,7 +381,7 @@ extends WikiDB_backend
         unset($data['%content']);
         unset($data['%pagedata']);
         
-        $this->lock();
+        $this->lock(array('page','recent','version','nonempty'));
         $dbh->BeginTrans( );
         $dbh->CommitLock($version_tbl);
         $id = $this->_get_pageid($pagename, true);
@@ -414,7 +409,7 @@ extends WikiDB_backend
         $this->_update_nonempty_table($id);
         if ($rs) $dbh->CommitTrans( );
         else $dbh->RollbackTrans( );
-        $this->unlock();
+        $this->unlock(array('page','recent','version','nonempty'));
     }
     
     /**
@@ -424,7 +419,7 @@ extends WikiDB_backend
         $dbh = &$this->_dbh;
         extract($this->_table_names);
 
-        $this->lock();
+        $this->lock(array('version'));
         if ( ($id = $this->_get_pageid($pagename)) ) {
             $dbh->Execute("DELETE FROM $version_tbl"
                         . " WHERE id=$id AND version=$version");
@@ -433,7 +428,7 @@ extends WikiDB_backend
             // never gets deleted.)  But, let's be safe.
             $this->_update_nonempty_table($id);
         }
-        $this->unlock();
+        $this->unlock(array('version'));
     }
 
     /**
@@ -443,15 +438,14 @@ extends WikiDB_backend
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         
-        $this->lock();
+        $this->lock(array('version','recent','nonempty','page','link'));
         if ( ($id = $this->_get_pageid($pagename, false)) ) {
             $dbh->Execute("DELETE FROM $version_tbl  WHERE id=$id");
             $dbh->Execute("DELETE FROM $recent_tbl   WHERE id=$id");
             $dbh->Execute("DELETE FROM $nonempty_tbl WHERE id=$id");
             $dbh->Execute("DELETE FROM $link_tbl     WHERE linkfrom=$id");
-            $rs = $dbh->Execute("SELECT COUNT(*) AS C FROM $link_tbl WHERE linkto=$id");
-            $nlinks = $rs->fields['C'];
-            if ($nlinks) {
+            $row = $dbh->GetRow("SELECT COUNT(*) FROM $link_tbl WHERE linkto=$id");
+            if ($row and $row[0]) {
                 // We're still in the link table (dangling link) so we can't delete this
                 // altogether.
                 $dbh->Execute("UPDATE $page_tbl SET hits=0, pagedata='' WHERE id=$id");
@@ -462,7 +456,7 @@ extends WikiDB_backend
             $this->_update_recent_table();
             $this->_update_nonempty_table();
         }
-        $this->unlock();
+        $this->unlock(array('version','recent','nonempty','page','link'));
     }
             
 
@@ -479,7 +473,7 @@ extends WikiDB_backend
         $dbh = &$this->_dbh;
         extract($this->_table_names);
 
-        $this->lock();
+        $this->lock(array('link'));
         $pageid = $this->_get_pageid($pagename, true);
 
         $dbh->Execute("DELETE FROM $link_tbl WHERE linkfrom=$pageid");
@@ -494,7 +488,7 @@ extends WikiDB_backend
                             . " VALUES ($pageid, $linkid)");
             }
 	}
-        $this->unlock();
+        $this->unlock(array('link'));
     }
     
     /**
@@ -731,7 +725,7 @@ extends WikiDB_backend
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         
-        $this->lock();
+        $this->lock(array('page'));
         if ( ($id = $this->_get_pageid($pagename, false)) ) {
             if ($new = $this->_get_pageid($to, false)) {
                 //cludge alert!
@@ -743,7 +737,7 @@ extends WikiDB_backend
             $dbh->query(sprintf("UPDATE $page_tbl SET pagename=%s WHERE id=$id",
                                 $dbh->qstr($to)));
         }
-        $this->unlock();
+        $this->unlock(array('page'));
         return $id;
     }
 
@@ -763,7 +757,7 @@ extends WikiDB_backend
                           . ( $pageid ? " WHERE id=$pageid" : "")
                           . " GROUP BY id" );
         } else {
-            $this->lock();
+            $this->lock(array('recent'));
             $dbh->Execute("DELETE FROM $recent_tbl"
                       . ( $pageid ? " WHERE id=$pageid" : ""));
             $dbh->Execute( "INSERT INTO $recent_tbl"
@@ -772,7 +766,7 @@ extends WikiDB_backend
                            . " FROM $version_tbl"
                            . ( $pageid ? " WHERE id=$pageid" : "")
                            . " GROUP BY id" );
-            $this->unlock();
+            $this->unlock(array('recent'));
         }
     }
 
@@ -792,7 +786,7 @@ extends WikiDB_backend
                           . "  AND content<>''"
                           . ( $pageid ? " AND $recent_tbl.id=$pageid" : ""));
         } else {
-            $this->lock();
+            $this->lock(array('nonempty'));
             $dbh->Execute("DELETE FROM $nonempty_tbl"
                           . ( $pageid ? " WHERE id=$pageid" : ""));
             $dbh->Execute("INSERT INTO $nonempty_tbl (id)"
@@ -802,7 +796,7 @@ extends WikiDB_backend
                           . "       AND version=latestversion"
                           . "  AND content<>''"
                           . ( $pageid ? " AND $recent_tbl.id=$pageid" : ""));
-            $this->unlock();
+            $this->unlock(array('nonempty'));
         }
     }
 
@@ -815,18 +809,19 @@ extends WikiDB_backend
      *
      * @access protected
      */
-    function lock($write_lock = true) {
+    function lock($tables, $write_lock = true) {
     	$this->_dbh->StartTrans();
-        if ($this->_lock_count++ == 0)
-            $this->_lock_tables($write_lock);
+        if ($this->_lock_count++ == 0) {
+            $this->_current_lock = $tables;
+            $this->_lock_tables($tables, $write_lock);
+        }
     }
 
     /**
-     * Actually lock the required tables.
+     * Overridden by non-transaction safe backends.
      */
-    function _lock_tables($write_lock) {
-        return;
-        trigger_error("virtual", E_USER_ERROR);
+    function _lock_tables($tables, $write_lock) {
+        return $this->_current_lock;
     }
     
     /**
@@ -839,24 +834,25 @@ extends WikiDB_backend
      *
      * @see _lock_database
      */
-    function unlock($force = false) {
+    function unlock($tables = false, $force = false) {
         if ($this->_lock_count == 0) {
             $this->_dbh->CompleteTrans(! $force);
+            $this->_current_lock = false;
             return;
         }
         if (--$this->_lock_count <= 0 || $force) {
-            $this->_unlock_tables();
+            $this->_unlock_tables($tables);
+            $this->_current_lock = false;
             $this->_lock_count = 0;
         }
     	$this->_dbh->CompleteTrans(! $force);
     }
 
     /**
-     * Actually unlock the required tables.
+     * overridden by non-transaction safe backends
      */
-    function _unlock_tables($write_lock) {
+    function _unlock_tables($tables, $write_lock) {
         return;
-        trigger_error("virtual", E_USER_ERROR);
     }
 };
 
@@ -1052,6 +1048,9 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.25  2004/04/20 00:06:04  rurban
+// themable paging support
+//
 // Revision 1.24  2004/04/18 01:34:20  rurban
 // protect most_popular from sortby=mtime
 //

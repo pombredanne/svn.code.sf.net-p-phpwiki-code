@@ -16,7 +16,7 @@
 // | Author: Sterling Hughes <sterling@php.net>                           |
 // +----------------------------------------------------------------------+
 //
-// $Id: mssql.php,v 1.1 2002-09-12 11:47:07 rurban Exp $
+// $Id: mssql.php,v 1.2 2004-04-26 20:44:37 rurban Exp $
 //
 // Database independent query interface definition for PHP's Microsoft SQL Server
 // extension.
@@ -24,10 +24,10 @@
 // Based on DB 1.3 from the pear.php.net repository. 
 // The only modifications made have been modification of the include paths. 
 //
-rcs_id('$Id: mssql.php,v 1.1 2002-09-12 11:47:07 rurban Exp $');
+rcs_id('$Id: mssql.php,v 1.2 2004-04-26 20:44:37 rurban Exp $');
 rcs_id('From Pear CVS: Id: mssql.php,v 1.4 2002/05/23 09:09:39 cox Exp');
 
-require_once 'lib/pear/DB/common.php';
+require_once 'DB/common.php';
 
 class DB_mssql extends DB_common
 {

@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.171 2004-04-19 23:13:03 zorloc Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.172 2004-04-26 20:44:34 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -70,6 +70,14 @@ function MangleXmlIdentifier($str) {
     
     return preg_replace('/[^-_:A-Za-z0-9]|(?<=^)[^A-Za-z]/e',
                         "'x' . sprintf('%02x', ord('\\0')) . '.'",
+                        $str);
+}
+
+function UnMangleXmlIdentifier($str) {
+    if ($str == 'empty.')
+        return '';
+    return preg_replace('/x(\w\w)\./e',
+                        "sprintf('%c', hex('\\0'))",
                         $str);
 }
 
@@ -1382,6 +1390,9 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.171  2004/04/19 23:13:03  zorloc
+// Connect the rest of PhpWiki to the IniConfig system.  Also the keyword regular expression is not a config setting
+//
 // Revision 1.170  2004/04/19 18:27:45  rurban
 // Prevent from some PHP5 warnings (ref args, no :: object init)
 //   php5 runs now through, just one wrong XmlElement object init missing

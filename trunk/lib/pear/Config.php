@@ -15,19 +15,19 @@
 // | Author: Bertrand Mansion <bmansion@mamasam.com>                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: Config.php,v 1.3 2004-04-20 17:08:38 rurban Exp $
+// $Id: Config.php,v 1.4 2004-04-26 20:44:36 rurban Exp $
 
-require_once('lib/pear/PEAR.php');
-require_once('lib/pear/Config/Container.php');
+require_once('PEAR.php');
+require_once('Config/Container.php');
 
 $GLOBALS['CONFIG_TYPES'] = 
         array(
-            'apache'        =>array('lib/pear/Config/Container/Apache.php','Config_Container_Apache'),
-            'genericconf'   =>array('lib/pear/Config/Container/GenericConf.php','Config_Container_GenericConf'),
-            'inifile'       =>array('lib/pear/Config/Container/IniFile.php','Config_Container_IniFile'),
-            'inicommented'  =>array('lib/pear/Config/Container/IniCommented.php','Config_Container_IniCommented'),
-            'phparray'      =>array('lib/pear/Config/Container/PHPArray.php','Config_Container_PHPArray'),
-            'xml'           =>array('lib/pear/Config/Container/XML.php','Config_Container_XML')
+            'apache'        =>array('Config/Container/Apache.php','Config_Container_Apache'),
+            'genericconf'   =>array('Config/Container/GenericConf.php','Config_Container_GenericConf'),
+            'inifile'       =>array('Config/Container/IniFile.php','Config_Container_IniFile'),
+            'inicommented'  =>array('Config/Container/IniCommented.php','Config_Container_IniCommented'),
+            'phparray'      =>array('Config/Container/PHPArray.php','Config_Container_PHPArray'),
+            'xml'           =>array('Config/Container/XML.php','Config_Container_XML')
             );
 
 /**

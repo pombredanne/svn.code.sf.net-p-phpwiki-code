@@ -22,13 +22,13 @@
 // The only modifications made have been modification of the include paths,
 // plus the inclusion depricated DB_Warning class.
 //
-rcs_id('$Id: DB.php,v 1.3 2004-02-04 17:04:18 rurban Exp $');
+rcs_id('$Id: DB.php,v 1.4 2004-04-26 20:44:36 rurban Exp $');
 rcs_id('From Pear CVS: Id: DB.php,v 1.20 2003/05/07 16:54:45 mj Exp');
 //
 // Database independent query interface.
 //
 
-require_once "lib/pear/PEAR.php";
+require_once "PEAR.php";
 
 // {{{ constants
 // {{{ error codes
@@ -230,7 +230,7 @@ class DB
 
     function &factory($type)
     {
-        @include_once("lib/pear/DB/${type}.php");
+        @include_once("DB/${type}.php");
 
         $classname = "DB_${type}";
 
@@ -279,9 +279,9 @@ class DB
         if (is_array($options) && isset($options["debug"]) &&
             $options["debug"] >= 2) {
             // expose php errors with sufficient debug level
-            include_once "lib/pear/DB/${type}.php";
+            include_once "DB/${type}.php";
         } else {
-            @include_once "lib/pear/DB/${type}.php";
+            @include_once "DB/${type}.php";
         }
 
         $classname = "DB_${type}";

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.27 2004-04-19 23:13:03 zorloc Exp $');
+rcs_id('$Id: PageType.php,v 1.28 2004-04-26 20:44:34 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004 $ThePhpWikiProgrammingTeam
 
@@ -426,7 +426,7 @@ class PageFormatter_pdf extends PageFormatter
         $pdf = new PDF();
         $pdf->SetTitle($pagename);
         $pdf->SetAuthor($this->_page->get('author'));
-        $pdf->SetCreator(WikiUrl($pagename,false,1));
+        $pdf->SetCreator(WikiURL($pagename,false,1));
         $pdf->AliasNbPages();
         $pdf->AddPage();
         //TODO: define fonts

@@ -1,8 +1,8 @@
-<?php rcs_id('$Id: SQL.php,v 1.5 2004-03-18 21:41:09 rurban Exp $');
+<?php rcs_id('$Id: SQL.php,v 1.6 2004-04-26 20:44:34 rurban Exp $');
 
 require_once('lib/WikiDB.php');
 //require_once('lib/WikiDB/backend/PearDB.php');
-//require_once('lib/pear/DB.php'); // Always favor use our local pear copy
+//require_once('DB.php'); // Always favor use our local pear copy
 
 /**
  *

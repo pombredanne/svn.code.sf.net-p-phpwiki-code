@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiPluginCached.php,v 1.7 2004-02-17 12:17:34 rurban Exp $');
+<?php rcs_id('$Id: WikiPluginCached.php,v 1.8 2004-04-26 20:44:34 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -32,7 +32,7 @@ require_once "lib/plugincache-config.php";
 // Try the installed pear class first. It might be newer. Not yet.
 // @require_once('Cache.php');
 // if (!class_exists('Cache'))
-require_once('lib/pear/Cache.php'); // We have to create your own copy here.
+require_once('Cache.php'); // We have to create your own copy here.
 
 define('PLUGIN_CACHED_HTML',0);
 define('PLUGIN_CACHED_IMG_INLINE',1);

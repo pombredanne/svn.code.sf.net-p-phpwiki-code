@@ -20,7 +20,7 @@
 // Based on DB 1.5.0RC2 from the pear.php.net repository. 
 // The only modification is the include path.
 //
-rcs_id('$Id: sqlite.php,v 1.2 2004-03-18 21:41:11 rurban Exp $');
+rcs_id('$Id: sqlite.php,v 1.3 2004-04-26 20:44:37 rurban Exp $');
 rcs_id('From Pear CVS: $Id: sqlite.php,v 1.14 2003/09/11 12:55:23 tuupola Exp');
 // 
 //
@@ -84,8 +84,8 @@ rcs_id('From Pear CVS: $Id: sqlite.php,v 1.14 2003/09/11 12:55:23 tuupola Exp');
 *
 */
 
-//require_once 'lib/pear/DB.php';
-require_once 'lib/pear/DB/common.php';
+//require_once 'DB.php';
+require_once 'DB/common.php';
 
 // {{{ constants
 // {{{ fetch modes

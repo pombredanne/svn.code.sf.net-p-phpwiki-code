@@ -16,15 +16,15 @@
 // |          Sebastian Bergmann <sb@sebastian-bergmann.de>               |
 // +----------------------------------------------------------------------+
 //
-// $Id: file.php,v 1.2 2004-03-14 16:24:36 rurban Exp $
+// $Id: file.php,v 1.3 2004-04-26 20:44:36 rurban Exp $
 
-require_once('lib/pear/Cache/Container.php');
+require_once('Cache/Container.php');
 
 /**
 * Stores cache contents in a file.
 *
 * @author   Ulf Wendel  <ulf.wendel@phpdoc.de>
-* @version  $Id: file.php,v 1.2 2004-03-14 16:24:36 rurban Exp $
+* @version  $Id: file.php,v 1.3 2004-04-26 20:44:36 rurban Exp $
 */
 class Cache_Container_file extends Cache_Container {
 

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbSession.php,v 1.11 2004-04-19 18:27:45 rurban Exp $');
+<?php rcs_id('$Id: DbSession.php,v 1.12 2004-04-26 20:44:34 rurban Exp $');
 
 /**
  * Store sessions data in Pear DB / ADODB ....
@@ -171,6 +171,7 @@ extends DB_Session
     function write ($id, $sess_data) {
         
         $dbh = &$this->_connect();
+        //$dbh->unlock(false,1);
         $table = $this->_table;
         $qid = $dbh->quote($id);
         $qip = $dbh->quote($GLOBALS['HTTP_SERVER_VARS']['REMOTE_ADDR']);
@@ -285,7 +286,7 @@ extends DB_Session
         global $DBParams;
         static $parsed = false;
         $dbh = &$this->_dbh;
-        if (!$dbh) {
+        if (!$dbh or !is_resource($dbh->_connectionID)) {
             if (!$parsed) $parsed = parseDSN($DBParams['dsn']);
             $this->_dbh = &ADONewConnection($parsed['phptype']); // Probably only MySql works just now
             $this->_dbh->Connect($parsed['hostspec'],$parsed['username'], 
