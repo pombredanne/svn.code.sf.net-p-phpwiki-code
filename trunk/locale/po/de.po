@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.8\n"
-"POT-Creation-Date: 2001-12-19 07:00-0500\n"
+"POT-Creation-Date: 2001-12-19 10:48-0500\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Arno Hollosi <ahollosi@mail.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -22,28 +22,18 @@ msgid "You are viewing an old revision of this page."
 msgstr ""
 
 #: ../templates/browse.html:35
-msgid "Click"
-msgstr "Klicke"
-
-#: ../templates/browse.html:35
-msgid "here"
-msgstr "hier"
-
-#: ../templates/browse.html:35
-msgid "to view the current version."
-msgstr "um die aktuellste Version zu schauen."
+msgid "View the current version"
+msgstr "Schaue die aktuellste Version"
 
 #: ../templates/browse.html:50
-msgid "Last edited on"
-msgstr "Zuletzt verändert am"
+#, c-format
+msgid "Last edited on %s."
+msgstr "Zuletzt am %s verändert."
 
 #: ../templates/browse.html:52
-msgid "Version"
-msgstr "Version"
-
-#: ../templates/browse.html:52
-msgid ", saved on"
-msgstr ", seite zuletzt verändert am"
+#, c-format
+msgid "Version %s, saved on %s."
+msgstr "Version %s. zuletzt am %s gespeichert."
 
 #: ../lib/loadsave.php:452 ../lib/plugin/RecentChanges.php:159
 #: ../lib/plugin/RecentChanges.php:264 ../lib/plugin/RecentChanges.php:309
@@ -87,9 +77,10 @@ msgstr "Seite löschen"
 msgid "Diff"
 msgstr "Vergleichen"
 
-#: ../templates/browse.html:97 ../templates/editpage.html:71
-msgid "You are signed in as"
-msgstr "Du bist eingemeldet als"
+#: ../templates/browse.html:97
+#, c-format
+msgid "You are signed in as %s"
+msgstr "Du bist als %s angemeldet"
 
 #: ../templates/browse.html:98
 msgid "SignOut"
@@ -140,35 +131,39 @@ msgstr "Vorschauen"
 msgid "Save"
 msgstr "Speichern"
 
+#: ../templates/editpage.html:71
+#, c-format
+msgid "You are signed in as %s."
+msgstr "Du bist als %s angemeldet."
+
 #: ../templates/editpage.html:73
-msgid "Author will be logged as"
+#, c-format
+msgid "Author will be logged as %s."
 msgstr ""
 
 #: ../templates/editpage.html:80
-msgid "You can change the size of the editing area in"
+#, c-format
+msgid "You can change the size of the editing area in %s."
 msgstr ""
 
-#: ../templates/editpage.html:81
+#: ../templates/editpage.html:80
 msgid "UserPreferences"
 msgstr "BenutzerEinstellungen"
 
-#: ../templates/editpage.html:82
-msgid "See"
-msgstr "Sehe"
+#: ../templates/editpage.html:81
+#, c-format
+msgid "See %s tips for editing."
+msgstr "Sehe %s tips fürs Editieren."
 
-#: ../templates/editpage.html:82
+#: ../templates/editpage.html:81
 msgid "GoodStyle"
 msgstr "GuterStil"
 
-#: ../templates/editpage.html:82
-msgid "tips for editing."
-msgstr "tips fürs Editieren."
-
-#: ../templates/editpage.html:86
+#: ../templates/editpage.html:85
 msgid "TextFormattingRules"
 msgstr "TextFormatierungsRegeln"
 
-#: ../templates/editpage.html:86
+#: ../templates/editpage.html:85
 msgid "Synopsis"
 msgstr "Übersicht"
 
@@ -342,6 +337,7 @@ msgid "PageHistory"
 msgstr "SeiteProtokoll"
 
 #: ../lib/plugin/PageHistory.php:204
+#, c-format
 msgid "List PageHistory for %s"
 msgstr "Das Änderungsprotokoll für %s auslisten"
 
@@ -1026,6 +1022,15 @@ msgid ""
 "DBA files are in the %s directory. Please read the INSTALL file and move the "
 "DB file to a permanent location or risk losing all the pages!"
 msgstr ""
+
+#~ msgid "Click"
+#~ msgstr "Klicke"
+
+#~ msgid "here"
+#~ msgstr "hier"
+
+#~ msgid "See"
+#~ msgstr "Sehe"
 
 #~ msgid "Current page:"
 #~ msgstr "Aktuelle Seite:"

@@ -60,8 +60,6 @@ $locale["Unlock page"] =
    "Desbloquear página";
 $locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
    "Use el botón <b>Atrás<b> para retornar a la página editada";
-$locale["Version"] =
-   "Versión";
 $locale["Versions are identical"] =
    "Las versiones son idénticas";
 $locale["WikiFatalError"] =
@@ -76,8 +74,6 @@ $locale["by %s"] =
    "por %s";
 $locale["last modified on %s"] =
    "modificado por última vez el %s";
-$locale["tips for editing."] =
-   "tips para editar.";
 $locale["version"] =
    "versión";
 $locale["version %d"] =

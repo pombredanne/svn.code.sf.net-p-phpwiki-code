@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2001-12-19 07:00-0500\n"
+"POT-Creation-Date: 2001-12-19 10:48-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,27 +23,17 @@ msgid "You are viewing an old revision of this page."
 msgstr ""
 
 #: ../templates/browse.html:35
-msgid "Click"
-msgstr ""
-
-#: ../templates/browse.html:35
-msgid "here"
-msgstr ""
-
-#: ../templates/browse.html:35
-msgid "to view the current version."
+msgid "View the current version"
 msgstr ""
 
 #: ../templates/browse.html:50
-msgid "Last edited on"
+#, c-format
+msgid "Last edited on %s."
 msgstr ""
 
 #: ../templates/browse.html:52
-msgid "Version"
-msgstr ""
-
-#: ../templates/browse.html:52
-msgid ", saved on"
+#, c-format
+msgid "Version %s, saved on %s."
 msgstr ""
 
 #: ../lib/loadsave.php:452 ../lib/plugin/RecentChanges.php:159
@@ -88,8 +78,9 @@ msgstr ""
 msgid "Diff"
 msgstr ""
 
-#: ../templates/browse.html:97 ../templates/editpage.html:71
-msgid "You are signed in as"
+#: ../templates/browse.html:97
+#, c-format
+msgid "You are signed in as %s"
 msgstr ""
 
 #: ../templates/browse.html:98
@@ -141,35 +132,39 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
+#: ../templates/editpage.html:71
+#, c-format
+msgid "You are signed in as %s."
+msgstr ""
+
 #: ../templates/editpage.html:73
-msgid "Author will be logged as"
+#, c-format
+msgid "Author will be logged as %s."
 msgstr ""
 
 #: ../templates/editpage.html:80
-msgid "You can change the size of the editing area in"
+#, c-format
+msgid "You can change the size of the editing area in %s."
 msgstr ""
 
-#: ../templates/editpage.html:81
+#: ../templates/editpage.html:80
 msgid "UserPreferences"
 msgstr ""
 
-#: ../templates/editpage.html:82
-msgid "See"
+#: ../templates/editpage.html:81
+#, c-format
+msgid "See %s tips for editing."
 msgstr ""
 
-#: ../templates/editpage.html:82
+#: ../templates/editpage.html:81
 msgid "GoodStyle"
 msgstr ""
 
-#: ../templates/editpage.html:82
-msgid "tips for editing."
-msgstr ""
-
-#: ../templates/editpage.html:86
+#: ../templates/editpage.html:85
 msgid "TextFormattingRules"
 msgstr ""
 
-#: ../templates/editpage.html:86
+#: ../templates/editpage.html:85
 msgid "Synopsis"
 msgstr ""
 
@@ -343,6 +338,7 @@ msgid "PageHistory"
 msgstr ""
 
 #: ../lib/plugin/PageHistory.php:204
+#, c-format
 msgid "List PageHistory for %s"
 msgstr ""
 
