@@ -1,20 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: index.php,v 1.4 2000-11-01 11:31:40 ahollosi Exp $ -->
+<!-- $Id: index.php,v 1.5 2000-11-08 15:34:06 ahollosi Exp $ -->
 <?php
    /*
       The main page, i.e. the main loop.
       This file is always called first.
    */
 
-   set_magic_quotes_runtime(0);
-   error_reporting(E_ALL ^ E_NOTICE);   // remove E_NOTICE for debugging
+   if (!defined('WIKI_ADMIN')) { // index.php not included by admin.php?
+      include "lib/config.php";
+      include "lib/stdlib.php";
 
-   include "lib/config.php";
-   include "lib/stdlib.php";
-
-   // All requests require the database
-   $dbi = OpenDataBase($WikiPageStore);
-
+      // All requests require the database
+      $dbi = OpenDataBase($WikiPageStore);
+   }
 
    // Allow choice of submit buttons to determine type of search:
    if (isset($searchtype) && ($searchtype == 'full'))
@@ -23,7 +21,6 @@
       $search = $searchstring;
 
    if (isset($edit)) {
-      $admin_edit = 0;
       include "lib/editpage.php";
    } elseif (isset($links)) {
       include "lib/editlinks.php";
