@@ -1,4 +1,4 @@
-<!-- $Id: wiki_config.php3,v 1.11 2000-06-25 03:46:18 wainstead Exp $ -->
+<!-- $Id: wiki_config.php3,v 1.12 2000-06-25 20:00:22 wainstead Exp $ -->
 <?
    /*
       Constants and settings. Edit the values below for
@@ -58,10 +58,15 @@
    // MiniSQL (mSQL) settings.
    include "wiki_msql.php3";
    $msql_db = "wiki";
-   $WikiDataBase = "wiki";
-   $ArchiveDataBase = "archive";
-*/
 
+   $WikiDataBase = array();
+   $ArchiveDataBase = array();
+
+   $WikiDataBase['table']         = "wiki";
+   $WikiDataBase['page_table']    = "wikipages";
+   $ArchiveDataBase['table']      = "archive";
+   $ArchiveDataBase['page_table'] = "archivepages";
+*/
 
    $ScriptName = "index.php3";
 
