@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.42 2004-05-06 19:51:05 rurban Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.43 2004-05-06 20:30:46 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -536,10 +536,10 @@ class Markup_html_abbr extends BalancedMarkup
 }
 
 // Special version for single-line plugins formatting, 
-//  like: '<small>< ? plugin PopularNearby ? ></small>'
+//  like: '<small>< ?plugin PopularNearby ? ></small>'
 class Markup_plugin extends SimpleMarkup
 {
-    var $_match_regexp = '(?: <\?plugin(?:-form)?\s[^\n]+?\?> )';
+    var $_match_regexp = '<\?plugin(?:-form)?\s[^\n]+?\?>';
 
     function markup ($match) {
 	return new Cached_PluginInvocation($match);
@@ -629,11 +629,11 @@ class InlineTransformer
     }
 
     function _parse_markup_body ($markup, $match, &$text, $end_regexps) {
-        if (!$markup) return false;
         if (isa($markup, 'SimpleMarkup'))
             return true;        // Done. SimpleMarkup is simple.
-
         array_unshift($end_regexps, $markup->getEndRegexp($match));
+
+        if (!is_object($markup)) return false;
         // Optimization: if no end pattern in text, we know the
         // parse will fail.  This is an important optimization,
         // e.g. when text is "*lots *of *start *delims *with

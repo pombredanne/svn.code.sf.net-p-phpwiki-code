@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SystemInfo.php,v 1.15 2004-05-03 11:40:42 rurban Exp $');
+rcs_id('$Id: SystemInfo.php,v 1.16 2004-05-06 20:30:47 rurban Exp $');
 /**
  Copyright (C) 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -58,7 +58,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.15 $");
+                            "\$Revision: 1.16 $");
     }
 
     function getExpire($dbi, $argarray, $request) {
@@ -336,7 +336,7 @@ extends WikiPlugin
     function call ($arg, &$availableargs) {
         if (!empty($availableargs[$arg]))
             return $availableargs[$arg]();
-        elseif (method_exists($this, $arg)) // any defined SystemInfo->method()system
+        elseif (method_exists($this, $arg)) // any defined SystemInfo->method()
             return call_user_func_array(array(&$this, $arg), '');
         elseif (defined($arg) && $arg != 'ADMIN_PASSWD') // any defined constant
             return constant($arg);
@@ -466,22 +466,9 @@ function gensym($prefix = "_gensym") {
         r      (mapcar (function (lambda (x) (std-sqr (- x _dev_m)))) numlst))
   (sqrt (* (std-mean r) (/ n (float (- n 1))))))
 */
-/*
-function stddev(&$hits, $total=false) {
-    $n = count($hits);
-    if (!$total) $total = array_reduce($hits, 'rsum');
-    $mean = gensym("_mean");
-    $GLOBALS[$mean] = $total / $n;
-    $cb = "global ${$mean}; return (\$i-${$mean})*(\$i-${$mean});";
-    $r = array_map(create_function('$i',"global ${$mean}; return (\$i-${$mean})*(\$i-${$mean});"),$hits);
-    unset($GLOBALS[$mean]);
-    return (float) sqrt(mean($r,$total) * ($n / (float)($n -1)));
-}
-*/
 function stddev(&$hits, $total = false) {
     $n = count($hits);
-    if (!$total)
-        $total = array_reduce($hits, 'rsum');
+    if (!$total) $total = array_reduce($hits, 'rsum');
     $GLOBALS['mean'] = $total / $n;
     $r = array_map(create_function('$i', 'global $mean; return ($i-$mean)*($i-$mean);'),
                    $hits);
@@ -490,6 +477,10 @@ function stddev(&$hits, $total = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2004/05/03 11:40:42  rurban
+// put listAvailableLanguages() and listAvailableThemes() from SystemInfo and
+// UserPreferences into Themes.php
+//
 // Revision 1.14  2004/04/19 23:13:04  zorloc
 // Connect the rest of PhpWiki to the IniConfig system.  Also the keyword regular expression is not a config setting
 //
