@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.49 2004-11-10 15:29:21 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.50 2004-11-10 19:32:23 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -169,22 +169,33 @@ extends WikiDB_backend
                             . " WHERE $nonempty_tbl.id=$page_tbl.id");
         return $result[0];
     }
-    
+
+    function increaseHitCount($pagename) {
+        $dbh = &$this->_dbh;
+        // Hits is the only thing we can update in a fast manner.
+        // Note that this will fail silently if the page does not
+        // have a record in the page table.  Since it's just the
+        // hit count, who cares?
+        $dbh->Execute(sprintf("UPDATE %s SET hits=hits+1 WHERE pagename=%s LIMIT 1",
+                              $this->_table_names['page_tbl'],
+                              $dbh->qstr($pagename)));
+        return;
+    }
+
     /**
      * Read page information from database.
      */
     function get_pagedata($pagename) {
         $dbh = &$this->_dbh;
-        $page_tbl = $this->_table_names['page_tbl'];
-        $row = $dbh->GetRow(sprintf("SELECT hits, pagedata FROM $page_tbl WHERE pagename=%s",
-                                       $dbh->qstr($pagename)));
-        return $row ? $this->_extract_page_data($row[1],$row[0]) : false;
+        $row = $dbh->GetRow(sprintf("SELECT id,pagename,hits,pagedata FROM %s WHERE pagename=%s",
+                                    $this->_table_names['page_tbl'],
+                                    $dbh->qstr($pagename)));
+        return $row ? $this->_extract_page_data($row[3], $row[2]) : false;
     }
 
     function  _extract_page_data($data, $hits) {
-        $pagedata = empty($data) ? array() : $this->_unserialize($data);
-        $pagedata['hits'] = $hits;
-        return $pagedata;
+        if (empty($data)) return array();
+        else return array_merge(array('hits' => $hits), $this->_unserialize($data));
     }
 
     function update_pagedata($pagename, $newdata) {
@@ -484,7 +495,7 @@ extends WikiDB_backend
 
     function set_links($pagename, $links) {
         // Update link table.
-        // FIXME: optimize: mysql can do this all in one big INSERT.
+        // FIXME: optimize: mysql can do this all in one big INSERT/REPLACE.
 
         $dbh = &$this->_dbh;
         extract($this->_table_names);
@@ -1179,6 +1190,13 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.49  2004/11/10 15:29:21  rurban
+// * requires newer Pear_DB (as the internal one): quote() uses now escapeSimple for strings
+// * ACCESS_LOG_SQL: fix cause request not yet initialized
+// * WikiDB: moved SQL specific methods upwards
+// * new Pear_DB quoting: same as ADODB and as newer Pear_DB.
+//   fixes all around: WikiGroup, WikiUserNew SQL methods, SQL logging
+//
 // Revision 1.48  2004/11/09 17:11:16  rurban
 // * revert to the wikidb ref passing. there's no memory abuse there.
 // * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively

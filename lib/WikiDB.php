@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.100 2004-11-10 15:29:20 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.101 2004-11-10 19:32:22 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -1227,6 +1227,7 @@ class WikiDB_Page
      * <pre> $page->increaseHitCount(); </pre>
      * is functionally identical to
      * <pre> $page->set('hits',$page->get('hits')+1); </pre>
+     * but less expensive (ignores the pagadata string)
      *
      * Note that this method may be implemented in more efficient ways
      * in certain backends.
@@ -1235,7 +1236,7 @@ class WikiDB_Page
      */
     function increaseHitCount() {
         if (method_exists($this->_wikidb->_backend, 'increaseHitCount'))
-            $this->_backend->increaseHitCount();
+            $this->_wikidb->_backend->increaseHitCount($this->_pagename);
         else {
             @$newhits = $this->get('hits') + 1;
             $this->set('hits', $newhits);
@@ -2029,6 +2030,13 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.100  2004/11/10 15:29:20  rurban
+// * requires newer Pear_DB (as the internal one): quote() uses now escapeSimple for strings
+// * ACCESS_LOG_SQL: fix cause request not yet initialized
+// * WikiDB: moved SQL specific methods upwards
+// * new Pear_DB quoting: same as ADODB and as newer Pear_DB.
+//   fixes all around: WikiGroup, WikiUserNew SQL methods, SQL logging
+//
 // Revision 1.99  2004/11/09 17:11:05  rurban
 // * revert to the wikidb ref passing. there's no memory abuse there.
 // * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively

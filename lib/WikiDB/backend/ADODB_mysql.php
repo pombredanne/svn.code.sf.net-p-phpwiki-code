@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_mysql.php,v 1.7 2004-07-05 12:57:54 rurban Exp $');
+rcs_id('$Id: ADODB_mysql.php,v 1.8 2004-11-10 19:32:24 rurban Exp $');
 
 require_once('lib/WikiDB/backend/ADODB.php');
 
@@ -120,6 +120,19 @@ extends WikiDB_backend_ADODB
             $this->_dbh->Execute("UNLOCK TABLES");
         }
     }
+
+    function increaseHitCount($pagename) {
+        $dbh = &$this->_dbh;
+        // Hits is the only thing we can update in a fast manner.
+        // Note that this will fail silently if the page does not
+        // have a record in the page table.  Since it's just the
+        // hit count, who cares?
+        $dbh->Execute(sprintf("UPDATE LOW_PRIORITY %s SET hits=hits+1 WHERE pagename=%s LIMIT 1",
+                              $this->_table_names['page_tbl'],
+                              $dbh->qstr($pagename)));
+        return;
+    }
+
 };
 
 // (c-file-style: "gnu")
