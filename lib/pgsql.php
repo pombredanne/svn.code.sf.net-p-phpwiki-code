@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: pgsql.php,v 1.6 2001-02-13 05:54:38 dairiki Exp $');
+rcs_id('$Id: pgsql.php,v 1.7 2001-07-15 16:03:26 wainstead Exp $');
 
    /*
       Database functions:
@@ -24,11 +24,11 @@ rcs_id('$Id: pgsql.php,v 1.6 2001-02-13 05:54:38 dairiki Exp $');
       SetWikiPageLinks($dbi, $pagename, $linklist)
    */
 
-$WikiPageStore = $DBParams['prefix'] . "wiki";
-$ArchivePageStore = $DBParams['prefix'] . "archive";
-$WikiLinksPageStore = $DBParams['prefix'] . "wikilinks";
+$WikiPageStore = $DBParams['prefix']      . "pages";
+$ArchivePageStore = $DBParams['prefix']   . "archive";
+$WikiLinksPageStore = $DBParams['prefix'] . "links";
 $HotTopicsPageStore = $DBParams['prefix'] . "hottopics";
-$HitCountPageStore = $DBParams['prefix'] . "hitcount";
+$HitCountPageStore = $DBParams['prefix']  . "hitcount";
 
    // open a database and return a hash
 
@@ -434,5 +434,7 @@ $HitCountPageStore = $DBParams['prefix'] . "hitcount";
 // Local Variables:
 // mode: php
 // c-file-style: "ellemtel"
+// tab-width: 4
+// indent-tabs-mode: nil
 // End:   
 ?>
