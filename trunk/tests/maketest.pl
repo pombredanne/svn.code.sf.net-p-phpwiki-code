@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-# $Id: maketest.pl,v 1.1 2001-09-20 20:53:19 wainstead Exp $
+# $Id: maketest.pl,v 1.2 2001-09-21 01:04:54 wainstead Exp $
 
 # read in a file, generate Java code to run a test.
 # Steve Wainstead, March 2001.
@@ -430,7 +430,7 @@ sub assert_text {
             $return_text .= <<"EOLN";
 
             // find the text string '$search_string' in the page source
-            if ( response.toString().indexOf( "$search_string" ) != -1)
+            if ( response.getText().indexOf( "$search_string" ) != -1)
                 System.out.println( "I found the text '$search_string' in the page OK" );
             else 
                 throw new Exception( "Couldn't find text: '$search_string'" );
