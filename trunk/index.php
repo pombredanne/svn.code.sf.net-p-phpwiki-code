@@ -81,7 +81,7 @@ define ('DEBUG', 1);
 
 define ('PHPWIKI_VERSION', '1.3.5pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.106 2003-03-07 02:48:23 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.107 2003-03-07 20:51:54 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -615,6 +615,16 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
 // not the public InterWikiMap page. This map is not readable from outside.
 //define('WARN_NONPUBLIC_INTERWIKIMAP', false);
 
+// Regexp used for automatic keyword extraction.
+//
+// Any links on a page to pages whose names match this regexp will
+// be used keywords in the keywords meta tag.  (This is an aid to
+// classification by search engines.)  The value of the match is
+// used as the keyword.
+//
+// The default behavior is to match Category* and Topic* links.
+$KeywordLinkRegexp = '(?<=^Category|^Topic)[[:upper:]].*$';
+
 /////////////////////////////////////////////////////////////////////
 //
 // Part Six:
@@ -773,6 +783,9 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 // End:   
 
 // $Log: not supported by cvs2svn $
+// Revision 1.106  2003/03/07 02:48:23  dairiki
+// Add option to prevent HTTP redirect.
+//
 // Revision 1.105  2003/03/04 02:08:08  dairiki
 // Fix and document the WIKIDB_NOCACHE_MARKUP config define.
 //
