@@ -1,5 +1,11 @@
 <?php
 
+$locale["%s Kb (%s bytes)"] =
+   "%s Kb (%s byte)";
+$locale["%s at %s"] =
+   "%s a %s";
+$locale["%s bytes"] =
+   "%s byte";
 $locale["%s days"] =
    "%s giorni";
 $locale["%s of this page"] =
@@ -8,20 +14,28 @@ $locale["%s: %s"] =
    "%s: %s";
 $locale["%s: file not found"] =
    "%s: archivio non trovato";
+$locale["(Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor.)"] =
+   "(Copia le tue modifiche nella clipboard. Potete provare a modificare un'altra pagina o registra il vostro testo in un editor di testo.)";
 $locale["(diff)"] =
    "(diff)";
-$locale["(last edited %s)"] =
-   "(ultima modifica %s)";
 $locale["- saved to database as version %d"] =
    "- salvata a base di dati a versione %d";
 $locale["1 day"] =
    "1 giorno";
+$locale["<no matches>"] =
+   "<nessun risultati>";
+$locale["Author:"] =
+   "Autore:";
 $locale["Calendar"] =
    "Calendario";
+$locale["Cancel"] =
+   "Annulla";
+$locale["Columns: %s."] =
+   "Caratteri: %s.";
 $locale["Contents"] =
    "Indice";
-$locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
-   "Copia le tue modifiche nella clipboard o temporaneamente in unaltro posto (es: un editor di testo)";
+$locale["Deleted."] =
+   "Rimossa.";
 $locale["Describe %s here."] =
    "Descrivi %s qui.";
 $locale["Diff"] =
@@ -42,10 +56,16 @@ $locale["First"] =
    "Prima";
 $locale["Full Text Search"] =
    "Una ricerca completa del testo";
+$locale["Full text search results for '%s'"] =
+   "Risultati della ricerca su tutto il testo per '%s'";
 $locale["FullTextSearch"] =
    "RicercaDelTesto";
 $locale["GoodStyle"] =
    "BuonStile";
+$locale["H"] =
+   "A";
+$locale["Height"] =
+   "Altezza";
 $locale["HomePage"] =
    "PaginaPrincipale";
 $locale["Include of '%s' failed"] =
@@ -54,6 +74,8 @@ $locale["Last"] =
    "Ultima";
 $locale["Last Modified"] =
    "Ultima Modifica";
+$locale["Last Modified:"] =
+   "Ultima Modifica:";
 $locale["Last edited %s."] =
    "Ultima modifica %s.";
 $locale["Last edited on %s."] =
@@ -62,18 +84,22 @@ $locale["Lock Page"] =
    "Blocca la Pagina";
 $locale["Locked"] =
    "Bloccata";
-$locale["Make changes to the file again. Paste your additions from the clipboard (or text editor)."] =
-   "Cambia ancora il file ed installa le tue modifiche dalla clipboard (o dall'editor di testo)";
 $locale["Modern"] =
    "Moderno";
 $locale["MostPopular"] =
    "PiùPopolari";
+$locale["Name"] =
+   "Nome";
+$locale["New page."] =
+   "Nuova pagina.";
 $locale["Next"] =
    "Seguente";
 $locale["None"] =
    "Nessuno";
 $locale["Note:"] =
    "Nota:";
+$locale["Optimizing %s"] =
+   "Ottimizzando %s";
 $locale["Page Locked"] =
    "Pagina Bloccata";
 $locale["Page Name"] =
@@ -88,16 +114,26 @@ $locale["Remove page"] =
    "Rimuovi la pagina";
 $locale["Removed page '%s' succesfully."] =
    "La pagina '%s' è stata rimossa correttamente.";
+$locale["Save"] =
+   "Registra";
+$locale["Saved on:"] =
+   "Salvata su: %s";
 $locale["Saved: %s"] =
    "Salvata: %s";
 $locale["Search"] =
    "Ricerca";
 $locale["See %s tips for editing."] =
-   "%s consigli per le modifiche.";
+   "Vedere %s consigli per le modifiche.";
 $locale["Show minor edits for:"] =
    "Mostrare le modifiche secondarie per:";
+$locale["Size:"] =
+   "Dimensione:";
+$locale["Someone has edited the page!"] =
+   "Qualcuno ha modificato la pagina!";
 $locale["Sorry for the inconvenience."] =
    "Scusa per l'inconveniente.";
+$locale["Summary:"] =
+   "Commenti:";
 $locale["Synopsis"] =
    "Sinossi";
 $locale["TextFormattingRules"] =
@@ -108,12 +144,14 @@ $locale["The %d most popular pages of this wiki:"] =
    "Le %d pagine più popolari di questo wiki sono:";
 $locale["This page has been locked by the administrator and cannot be edited."] =
    "Questa pagina è stata bloccata dall'amministratore e non può essere modificata.";
+$locale["This page has been locked by the administrator so your changes can not be saved."] =
+   "Questa pagina è stata bloccata dall'amministratore in modo da i vostri cambiamenti non possono essere salvati.";
 $locale["Time Zone"] =
    "Fuso Orario";
 $locale["Title Search"] =
    "La ricerca su tutto il testo";
 $locale["Title search results for '%s'"] =
-   "Risultati della ricerca su tutto il testo '%s'";
+   "Risultati della ricerca su tutto il testo per '%s'";
 $locale["TitleSearch"] =
    "RicercaSuTutto";
 $locale["Unlock Page"] =
@@ -122,6 +160,8 @@ $locale["Version"] =
    "Versione";
 $locale["Version %d"] =
    "Versione %d";
+$locale["Version %s"] =
+   "Versione %s";
 $locale["Version %s, saved %s."] =
    "Versione %s, salvata %s.";
 $locale["Version %s, saved on %s."] =
@@ -130,8 +170,12 @@ $locale["Versions are identical"] =
    "Le versioni sono identiche";
 $locale["View the current version"] =
    "Mostra il versione corrente";
+$locale["W"] =
+   "L";
 $locale["Warning!"] =
    "Avvertimento!";
+$locale["Width"] =
+   "Larghezza";
 $locale["Your careful attention to detail is much appreciated."] =
    "La tua cura verso il dettaglio è molto apprezzata.";
 $locale["by %s"] =
@@ -142,21 +186,21 @@ $locale["diff"] =
    "diff";
 $locale["from %s"] =
    "dalla %s";
-$locale["last modified on %s"] =
-   "ultima modifica su %s";
 $locale["locked"] =
    "bloccata";
+$locale["new page"] =
+   "nuova pagina";
 $locale["plain file %s"] =
    "archivio del testo %s";
 $locale["saved as %s"] =
    "salvata a %s";
+$locale["today"] =
+   "oggi";
 $locale["version %d"] =
    "versione %d";
 $locale["version %s"] =
    "versione %s";
-$locale["version %s, saved %s."] =
-   "versione %s, salvata %s.";
-$locale["version %s, saved on %s."] =
-   "versione %s, salvata su %s.";
+$locale["yesterday"] =
+   "ieri";
 
 ?>
