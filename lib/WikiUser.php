@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiUser.php,v 1.20 2002-08-27 21:51:31 rurban Exp $');
+<?php rcs_id('$Id: WikiUser.php,v 1.21 2002-08-30 04:49:59 wainstead Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -249,7 +249,7 @@ class WikiUser {
         // I'd rather prefer only to store the UserId in the cookie or session,
         // and get the preferences from the db or page.
         if (!($prefs = $this->_request->getCookieVar('WIKI_PREFS2')))
-            $prefs = $this->request->getSessionVar('wiki_prefs');
+            $prefs = $this->_request->getSessionVar('wiki_prefs');
 
         if (!$this->_userid and !empty($GLOBALS['HTTP_COOKIE_VARS']['WIKI_ID'])) {
             $this->_userid = $GLOBALS['HTTP_COOKIE_VARS']['WIKI_ID'];
