@@ -1,4 +1,4 @@
-<!-- $Id: wiki_stdlib.php3,v 1.25 2000-08-10 15:23:35 wainstead Exp $ -->
+<!-- $Id: wiki_stdlib.php3,v 1.26 2000-08-15 02:49:06 wainstead Exp $ -->
 <?
    /*
       Standard functions for Wiki functionality
@@ -14,7 +14,6 @@
          class Stack
          SetHTMLOutputMode($newmode, $depth)
          UpdateRecentChanges($dbi, $pagename, $isnewpage) 
-         SaveCopyToArchive($pagename, $pagehash) 
          ParseAndLink($bracketlink)
    */
 
@@ -271,8 +270,9 @@
       global $remoteuser; // this is set in the config
       global $dateformat;
       global $ScriptUrl;
+      global $WikiPageStore;
 
-      $recentchanges = RetrievePage($dbi, "RecentChanges");
+      $recentchanges = RetrievePage($dbi, "RecentChanges", $WikiPageStore);
 
       // this shouldn't be necessary, since PhpWiki loads 
       // default pages if this is a new baby Wiki
@@ -337,15 +337,6 @@
       InsertPage($dbi, "RecentChanges", $recentchanges);
    }
 
-
-   // for archiving pages to a seperate dbm
-   function SaveCopyToArchive($pagename, $pagehash) {
-      global $ArchivePageStore;
-
-      $adbi = OpenDataBase($ArchivePageStore);
-      $newpagename = $pagename; // what the hell does this do?
-      InsertPage($adbi, $newpagename, $pagehash);
-   }
 
 
    function ParseAndLink($bracketlink) {
