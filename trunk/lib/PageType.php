@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.40 2005-01-31 12:15:08 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.41 2005-02-02 19:34:09 rurban Exp $');
 /*
- Copyright 1999,2000,2001,2002,2003,2004 $ThePhpWikiProgrammingTeam
+ Copyright 1999,2000,2001,2002,2003,2004,2005 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -203,13 +203,29 @@ class PageType_interwikimap extends PageType
         if (!preg_match_all("/^\s*(\S+)\s+(\S+)/m",
                             $text, $matches, PREG_SET_ORDER))
             return false;
+
         foreach ($matches as $m) {
             $map[$m[1]] = $m[2];
         }
-        // add virtual "Upload:" moniker
-        if (empty($map['Upload'])) $map['Upload'] = getUploadDataPath();
 
-        // maybe add other monikers also (SemanticWeb link predicates?)
+        // Add virtual monikers: Upload:, Talk:, User:
+        if (empty($map['Upload'])) 
+            $map['Upload'] = getUploadDataPath();
+        if (empty($map["Talk"])) {
+            $pagename = $GLOBALS['request']->getArg('pagename');
+            if (string_ends_with($pagename, SUBPAGE_SEPARATOR._("Discussion")))
+                $map["Talk"] = WikiURL($pagename);
+            else
+                $map["Talk"] = WikiURL($pagename.SUBPAGE_SEPARATOR._("Discussion"));
+        }
+        // User:ReiniUrban => ReiniUrban or Users/ReiniUrban
+        // Can be easily overriden by a customized InterWikiMap: 
+        //   User Users/%s
+        if (empty($map["User"])) {
+            $map["User"] = "%s";
+        }
+
+        // Maybe add other monikers also (SemanticWeb link predicates?)
         // Should they be defined in a RDF? (strict mode)
         // Or should the SemanticWeb lib add it by itself? 
         // (adding only a subset dependent on the context = model)
@@ -456,6 +472,9 @@ class PageFormatter_pdf extends PageFormatter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.40  2005/01/31 12:15:08  rurban
+// avoid some cornercase intermap warning. Thanks to Stefan <sonstiges@bayern-mail.de>
+//
 // Revision 1.39  2005/01/25 06:59:35  rurban
 // fix bogus InterWikiMap warning
 //

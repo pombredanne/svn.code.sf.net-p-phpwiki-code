@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.231 2005-01-30 19:48:52 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.232 2005-02-02 19:34:09 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -1855,6 +1855,9 @@ function loadPhpExtension($extension) {
 function string_starts_with($string, $prefix) {
     return (substr($string, 0, strlen($prefix)) == $prefix);
 }
+function string_ends_with($string, $suffix) {
+    return (substr($string, -strlen($suffix)) == $suffix);
+}
 
 /** 
  * Ensure that the script will have another $secs time left. 
@@ -1913,6 +1916,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.231  2005/01/30 19:48:52  rurban
+// enable ps memory on unix
+//
 // Revision 1.230  2005/01/25 07:10:51  rurban
 // add getMemoryUsage to stdlib
 //
