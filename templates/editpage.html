@@ -4,7 +4,7 @@
 <html>
 <head>
 <!-- phpwiki source:
-$Id: editpage.html,v 1.28 2001-12-17 16:41:25 dairiki Exp $
+$Id: editpage.html,v 1.29 2001-12-18 09:17:38 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <base href="${BASE_URL}" />
@@ -70,7 +70,9 @@ $_("Edit") <a href="${BROWSE}${PAGEURL}"
     <?php if ($user->is_authenticated()) { ?>
       $_("You are signed in as") <?php echo LinkWikiWord($USERID); ?>
     <?php } else { ?>
-      $_("Author will be logged as") <i>${USERID}</i>.
+      $_("Author will be logged as") <i>${USERID}</i> 
+       | <a class="wikiaction" href="${ACTION}login">$_("SignIn")<small>*</small></a>
+<br><small>*backup and reload after signing in</small>
     <?php } ?>
   </td>
 </tr></table>
