@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.60 2004-06-15 09:15:52 rurban Exp $');
+rcs_id('$Id: WikiUser.php,v 1.61 2004-10-21 21:02:04 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -214,6 +214,7 @@ class WikiUser {
                               compact('pagename', 'userid', 'require_level',
                                       'fail_message', 'pass_required'));
         if ($seperate_page) {
+            $request->discardOutput();
             $page = $request->getPage($pagename);
             $revision = $page->getCurrentRevision();
             return GeneratePage($login,_("Sign In"),$revision);
@@ -740,6 +741,14 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.60  2004/06/15 09:15:52  rurban
+// IMPORTANT: fixed passwd handling for passwords stored in prefs:
+//   fix encrypted usage, actually store and retrieve them from db
+//   fix bogologin with passwd set.
+// fix php crashes with call-time pass-by-reference (references wrongly used
+//   in declaration AND call). This affected mainly Apache2 and IIS.
+//   (Thanks to John Cole to detect this!)
+//
 // Revision 1.59  2004/06/14 11:31:36  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList
