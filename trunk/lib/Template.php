@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.69 2004-11-17 20:07:17 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.70 2005-01-25 07:01:26 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -134,14 +134,15 @@ class Template
         $ErrorManager->popErrorHandler();
     }
 
-    // FIXME: find a way to do template expansion less memory intensive. 
-    // 1.3.4 needed no memory at all for dumphtml, now it needs +15MB
+    // FIXME (1.3.12)
+    // Find a way to do template expansion less memory intensive and faster.
+    // 1.3.4 needed no memory at all for dumphtml, now it needs +15MB.
     // Smarty? As before?
     function getExpansion ($defaults = false) {
         ob_start();
         $this->printExpansion($defaults);
         $xml = ob_get_contents();
-        ob_end_clean(); 	// PHP problem: doesn't release its memory?
+        ob_end_clean(); 	// PHP problem: Doesn't release its memory?
         return $xml;
     }
 
@@ -270,6 +271,9 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.69  2004/11/17 20:07:17  rurban
+// just whitespace
+//
 // Revision 1.68  2004/11/09 17:11:04  rurban
 // * revert to the wikidb ref passing. there's no memory abuse there.
 // * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively
