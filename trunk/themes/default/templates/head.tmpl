@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-  rcs_id('$Id: head.tmpl,v 1.8 2003-03-05 21:38:15 dairiki Exp $');
+  rcs_id('$Id: head.tmpl,v 1.9 2003-03-07 02:45:51 dairiki Exp $');
 ?>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
@@ -14,7 +14,7 @@
 <meta name="document-rating" content="General" />
 <meta name="generator" content="phpWiki" />
 <meta name="PHPWIKI_VERSION" content="<?=PHPWIKI_VERSION?>" />
-<base href="<?=BASE_URL?>" />
+<base href="<?=PHPWIKI_BASE_URL?>" />
 <link rel="shortcut icon" href="<?=$Theme->getImageURL('favicon.ico')?>" />
 <?php /**
        * Additional navigation links are provided here in the html header for browsers
@@ -106,6 +106,12 @@
 <?php
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2003/03/05 21:38:15  dairiki
+// More HTML comment reduction patches by "Klaus-Guenter Leiss"
+// <Leiss.Klaus-Guenter@epost.de>
+//
+// (With a few adjustments by me.  Any bugs are probably my fault.)
+//
 // Revision 1.7  2003/02/26 22:27:17  dairiki
 // Fix and refactor FrameInclude plugin (more or less).
 //
