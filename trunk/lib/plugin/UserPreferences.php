@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.18 2004-02-24 15:20:06 rurban Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.19 2004-02-27 13:21:17 rurban Exp $');
 /**
  Copyright 2001, 2002, 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -36,7 +36,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.18 $");
+                            "\$Revision: 1.19 $");
     }
 
     function getDefaultArguments() {
@@ -73,6 +73,7 @@ extends WikiPlugin
             //trigger_error("DEBUG: reading prefs from getPreferences".print_r($pref));
  
             if ($request->isPost()) {
+            	$errmsg = '';
                 if ($rp = $request->getArg('pref')) {
                     // replace only changed prefs in $pref with those from request
                     if (!empty($rp['passwd']) and ($rp['passwd2'] != $rp['passwd'])) {
@@ -80,13 +81,22 @@ extends WikiPlugin
                     } else {
                         //trigger_error("DEBUG: reading prefs from request".print_r($rp));
                         //trigger_error("DEBUG: writing prefs with setPreferences".print_r($pref));
+                        if (empty($rp['passwd']))
+                            unset($rp['passwd']);
                         $num = $user->setPreferences($rp);
-                        if (!$num) {
-                            $errmsg = _("No changes.");
+                        if (!empty($rp['passwd'])) {
+                            if ($user->mayChangePass()) {
+                                $user->storePass($rp['passwd']);
+                                $errmsg = _("Password updated.");
+                            } else {
+                                $errmsg = _("Password cannot be changed.");
+                            }
                         }
-                        else {
+                        if (!$num) {
+                            $errmsg .= " " ._("No changes.");
+                        } else {
                             $pref = $user->_prefs;	
-                            $errmsg = fmt("%d UserPreferences fields successfully updated.", $num);
+                            $errmsg .= sprintf(_("%d UserPreferences fields successfully updated."), $num);
                         }
                     }
                     $args['errmsg'] = HTML(HTML::h2($errmsg), HTML::hr());
@@ -137,6 +147,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.18  2004/02/24 15:20:06  rurban
+// fixed minor warnings: unchecked args, POST => Get urls for sortby e.g.
+//
 // Revision 1.17  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //
