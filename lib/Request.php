@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.47 2004-04-02 15:06:55 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.48 2004-04-13 09:13:50 rurban Exp $');
 /*
  Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  
@@ -332,7 +332,9 @@ class Request {
             $compress = false;
         }
 
-        if (!function_exists('ob_gzhandler'))
+        // Should we compress even when apache_note is not available?
+        // sf.net bug #933183 and http://bugs.php.net/17557
+        if (!function_exists('ob_gzhandler') or !function_exists('apache_note'))
             $compress = false;
         
         if ($compress) {
@@ -344,7 +346,8 @@ class Request {
              * to zip for us, and then let it ... but I have yet to figure
              * out how to do that.
              */
-            @apache_note('no-gzip', 1);
+            if (function_exists('apache_note'))
+                @apache_note('no-gzip', 1);
         }
         else {
             // Now we alway buffer output.
@@ -957,6 +960,13 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.47  2004/04/02 15:06:55  rurban
+// fixed a nasty ADODB_mysql session update bug
+// improved UserPreferences layout (tabled hints)
+// fixed UserPreferences auth handling
+// improved auth stability
+// improved old cookie handling: fixed deletion of old cookies with paths
+//
 // Revision 1.46  2004/03/30 02:14:03  rurban
 // fixed yet another Prefs bug
 // added generic PearDb_iter
