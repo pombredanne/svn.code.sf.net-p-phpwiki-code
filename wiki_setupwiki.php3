@@ -1,12 +1,14 @@
-<!-- $Id: wiki_setupwiki.php3,v 1.5 2000-06-14 03:43:38 wainstead Exp $ -->
+<!-- $Id: wiki_setupwiki.php3,v 1.6 2000-06-14 04:09:20 wainstead Exp $ -->
 <?
 
    /* Add the very first pages to a wiki */
 
    $page = array();
-   $page["date"] = GetCurrentDate();
    $page["version"] = 1;
-
+   $page["flags"] = 0;
+   $page["author"] = "The PhpWiki prgramming team";
+   $page["lastmodified"] = GetCurrentDate();
+   $page["created"] = GetCurrentDate();
 
    $handle = opendir('./pgsrc');
 
