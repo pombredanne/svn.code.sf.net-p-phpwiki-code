@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: pageinfo.php,v 1.12 2001-10-29 18:24:26 dairiki Exp $');
+rcs_id('$Id: pageinfo.php,v 1.13 2001-12-13 18:29:24 dairiki Exp $');
 require_once('lib/Template.php');
 
 global $datetimeformat;
@@ -11,8 +11,7 @@ $page = $dbi->getPage($pagename);
 $rows[] = Element('tr',
                   "\n"
                   . Element('th', 'Version') . "\n"
-                  . Element('th', 'Newer') . "\n"
-                  . Element('th', 'Older') . "\n"
+                  . Element('th', 'Diff') . "\n"
                   . Element('th', 'Created') . "\n"
                   . Element('th', 'Summary') . "\n"
                   . Element('th', 'Author') . "\n"
@@ -41,16 +40,11 @@ while ($rev = $iter->next()) {
     
 
     $cols[] = Element('td', array('align' => 'center'),
-                      QElement('input', array('type' => 'radio',
-                                              'name' => 'version',
+                      QElement('input', array('type' => 'checkbox',
+                                              'name' => 'versions[]',
                                               'value' => $version,
-                                              'checked' => $i == 0)));
-    
-    $cols[] = Element('td', array('align' => 'center'),
-                      QElement('input', array('type' => 'radio',
-                                              'name' => 'previous',
-                                              'value' => $version,
-                                              'checked' => $i++ == 1)));
+                                              'onClick' => "check_cb(this);",
+                                              'checked' => ($i++ <= 1))));
     
     $cols[] = QElement('td', array('align' => 'right'),
                        strftime($datetimeformat, $rev->get('mtime'))
@@ -79,10 +73,39 @@ $table = ("\n"
 $formargs['action'] = USE_PATH_INFO ? WikiURL($pagename) : SCRIPT_NAME;
 $formargs['method'] = 'post';
 
-$html = Element('p',
+$jscript = 'function check_cb(checkbox) {
+  // If more than two diff selection checkboxes are checked,
+  // uncheck some.  (But don\'t uncheck either the currently
+  // clicked or the previously clicked box.)
+  form = checkbox.form;
+
+  selected = checkbox.value;
+  previous = form.previous_selection;
+  form.previous_selection = selected;
+
+  deletable = new Array();
+  nchecked = 0;
+  for (i = 0; i < form.elements.length; i++) {
+    cb = form.elements[i];
+    if (cb.name != "versions[]" || ! cb.checked)
+      continue;
+
+    nchecked++;
+    if (cb.value != selected && cb.value != previous)
+      deletable[deletable.length] = cb;
+  }
+
+  for (i = 0; i < nchecked - 2; i++)
+    deletable[i].checked = false;
+}';
+
+$html = Element('script', array('language' => 'JavaScript'),
+                "<!-- //\n$jscript\n//-->") . "\n";
+
+$html .= Element('p',
                 htmlspecialchars(gettext("Currently archived versions of"))
                 . " "
-                . LinkExistingWikiWord($pagename));
+                . LinkExistingWikiWord($pagename)) . "\n";
 $html .= Element('form', $formargs, $table);
 
 echo GeneratePage('MESSAGE', $html, gettext("Revision History: ") . $pagename);

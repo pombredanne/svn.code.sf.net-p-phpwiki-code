@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.17 2001-12-13 05:10:04 dairiki Exp $');
+rcs_id('$Id: diff.php,v 1.18 2001-12-13 18:29:24 dairiki Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -183,11 +183,17 @@ function PageInfoRow ($pagename, $label, $rev)
 
 function showDiff ($dbi, $request) {
     $pagename = $request->getArg('pagename');
-    $version = $request->getArg('version');
-    $previous = $request->getArg('previous');
+    if (is_array($versions = $request->getArg('versions'))) {
+        // Version selection from pageinfo.php display:
+        rsort($versions);
+        list ($version, $previous) = $versions;
+    }
+    else {
+        $version = $request->getArg('version');
+        $previous = $request->getArg('previous');
+    }
     
     $page = $dbi->getPage($pagename);
-
     if ($version) {
         if (!($new = $page->getRevision($version)))
             NoSuchRevision($page, $version);
