@@ -1,0 +1,26 @@
+<?php // -*-html-*- ?>
+<!-- $Id: userprefs.tmpl,v 1.1 2002-01-23 19:20:05 dairiki Exp $ -->
+<form action="<?=WikiURL($request->getArg('pagename'))?>" method="post">
+  <input type="hidden" name="pagename" value="<?=$request->getArg('pagename')?>" />
+  <h2>Edit Area Size</h2>
+  <blockquote>
+  <table>
+    <tr>
+      <td align="right"><?=_("Height")?></td>
+      <td>
+        <input type="text" name="pref[editHeight]" size=4
+               value="<?=$preferences->get('editHeight')?>" />
+      </td>
+    </tr>
+    <tr>
+      <td align="right"><?=_("Width")?></td>
+      <td>
+        <input type="text" name="pref[editWidth]" size=4
+               value="<?=$preferences->get('editWidth')?>" />
+      </td>
+    </tr>
+  </table>
+  </blockquote>
+  <hr />
+  <?=$Theme->makeButton(_("Update Preferences"), "submit:")?>
+</form>
