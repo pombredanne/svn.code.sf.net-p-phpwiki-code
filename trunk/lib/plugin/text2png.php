@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: text2png.php,v 1.11 2003-01-18 22:08:01 carstenklapp Exp $');
+rcs_id('$Id: text2png.php,v 1.12 2003-02-22 19:21:47 dairiki Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -48,7 +48,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     function getDefaultArguments() {
@@ -174,8 +174,10 @@ extends WikiPlugin
                                   E_USER_NOTICE);
                 }
             }
-            $urlpath = DATA_PATH . "/images/$l/";
-            $html->pushContent(HTML::img(array('src' => $urlpath . $filename,
+            $url = "images/$l/$filename";
+            if (defined('DATA_PATH'))
+                $url = DATA_PATH . "/$url";
+            $html->pushContent(HTML::img(array('src' => $url,
                                                'alt' => $text)));
         } else {
             trigger_error(sprintf(_("couldn't open file '%s' for writing"),
@@ -186,6 +188,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2003/01/18 22:08:01  carstenklapp
+// Code cleanup:
+// Reformatting & tabs to spaces;
+// Added copyleft, getVersion, getDescription, rcs_id.
+//
 
 // For emacs users
 // Local Variables:

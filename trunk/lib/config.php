@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.69 2003-02-21 19:44:54 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.70 2003-02-22 19:21:47 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -257,12 +257,6 @@ if (!defined('SERVER_PROTOCOL')) {
 
 if (!defined('SCRIPT_NAME')) define('SCRIPT_NAME', $HTTP_SERVER_VARS['SCRIPT_NAME']);
 
-if (!defined('DATA_PATH')) {
-    // Hack so that if phpwiki in in the htdoc root,
-    // DATA_PATH == '' rather than '/'.
-    define('DATA_PATH', substr(dirname('x' . SCRIPT_NAME), 1));
-}
-
 if (!defined('USE_PATH_INFO'))
 {
     /*
@@ -280,6 +274,9 @@ if (!defined('USE_PATH_INFO'))
         define('USE_PATH_INFO', ereg('\.(php3?|cgi)$', $SCRIPT_NAME));
 }
 
+// If user has not defined DATA_PATH, we want to use relative URLs.
+if (!defined('DATA_PATH') && USE_PATH_INFO)
+     define('DATA_PATH', '..');
 
 function IsProbablyRedirectToIndex () {
     // This might be a redirect to the DirectoryIndex,
