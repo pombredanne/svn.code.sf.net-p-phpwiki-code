@@ -8,6 +8,8 @@ $locale["(diff)"] =
    "(diff)";
 $locale["- saved to database as version %d"] =
    "- bewaard in de data base als versie %d";
+$locale["An unnamed PhpWiki"] =
+   "Naamloos PhpWiki";
 $locale["BackLinks"] =
    "TerugLinks";
 $locale["Cancel"] =
@@ -26,6 +28,8 @@ $locale["Edit: %s"] =
    "Verander: %s";
 $locale["EditText"] =
    "VeranderTekst";
+$locale["Edited by: %s"] =
+   "Verander von: %s";
 $locale["Fatal PhpWiki Error"] =
    "PhpWiki Fatale Fout";
 $locale["FindPage"] =
@@ -50,6 +54,8 @@ $locale["Include of '%s' failed"] =
    "Insert van '%s' gefaald";
 $locale["Last Author"] =
    "Vorige Auteur";
+$locale["Last Modified"] =
+   "meest recente verandering";
 $locale["Last edited %s"] =
    "Meest recente verandering %s";
 $locale["Last edited on %s"] =
@@ -66,12 +72,24 @@ $locale["Next"] =
    "Volgende";
 $locale["None"] =
    "Geen";
+$locale["OldTextFormattingRules"] =
+   "OudTekstFormatteringsRegels";
 $locale["Page Locked"] =
    "Sidan är Låst";
 $locale["Page Name"] =
    "Pagina Naam";
+$locale["Page removed %s"] =
+   "Verwijder %s";
 $locale["PageHistory"] =
    "PaginaGeschiedenis";
+$locale["PhpWikiAdministration"] =
+   "PhpWikiBeheer";
+$locale["PhpWikiAdministration/Chmod"] =
+   "PhpWikiBeheer/Chmod";
+$locale["PhpWikiAdministration/Replace"] =
+   "PhpWikiBeheer/Vervangt";
+$locale["PhpWikiDocumentation"] =
+   "PhpWikiDocumentatie";
 $locale["Preview"] =
    "Voorvertonig";
 $locale["Previous"] =
@@ -82,10 +100,16 @@ $locale["Printer"] =
    "Drukker";
 $locale["RecentChanges"] =
    "RecenteVeranderingen";
+$locale["RecentVisitors"] =
+   "RecenteBezoekers";
 $locale["References"] =
    "Referenties";
+$locale["ReleaseNotes"] =
+   "UitgaveNoten";
 $locale["Remove Page"] =
    "Verwijder Pagina";
+$locale["Removed by: %s"] =
+   "Verwijder von: %s";
 $locale["Removed page '%s' successfully."] =
    "Pagina '%s' verwijderd.";
 $locale["Return to %s"] =
@@ -96,6 +120,8 @@ $locale["Saved: %s"] =
    "Bewaard: %s";
 $locale["Search"] =
    "Zoek";
+$locale["Search & Replace"] =
+   "Zoek & Vervangt";
 $locale["See %s"] =
    "Zie %s";
 $locale["See %s tips for editing."] =
@@ -150,6 +176,8 @@ $locale["W"] =
    "B";
 $locale["Width"] =
    "Breedte";
+$locale["You are about to remove '%s'!"] =
+   "Je staat te verwijderen '%s' op het punt!";
 $locale["You must specify a directory to dump to"] =
    "Je moet een directory specificeren om in te storten";
 $locale["Your careful attention to detail is much appreciated."] =
